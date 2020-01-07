@@ -1,0 +1,44 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+  "css.validate": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "files.exclude": {
+    "**/.DS_Store": true,
+    "**/.git": true,
+    "**/.hg": true,
+    "**/.svn": true,
+    "**/node_modules": true,
+    ".{dev,shadowenv.d}": true,
+    "build-intermediate/": true,
+    "build/": true,
+    "docs/": true,
+    "esnext/": true,
+    "index.*": true,
+    "sandbox": true,
+    "styles.{css,min.css,scss}": true,
+    "styles/": true,
+    "types/": true
+  },
+  "javascript.validate.enable": false,
+  "jest.autoEnable": false,
+  "scss.validate": false,
+  "search.exclude": {
+    "**/bower_components": true,
+    "**/node_modules": true,
+    ".{dev,shadowenv.d}": true,
+    "build-intermediate/": true,
+    "build/": true,
+    "docs/": true,
+    "esnext/": true,
+    "index.*": true,
+    "sandbox": true,
+    "styles.{css,min.css,scss}": true,
+    "styles/": true,
+    "types/": true
+  },
+  "typescript.tsdk": "./node_modules/typescript/lib"
+}

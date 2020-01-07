@@ -1,0 +1,16 @@
+ci:
+  hide:
+    - shrink-ray
+    - codecov/patch
+  require:
+    - 'ci/circleci: check'
+
+merge:
+  require:
+    - 'ci/circleci: check'
+    - shrink-ray
+  ignore:
+    - codecov/patch
+
+deploy:
+  max_commits: false

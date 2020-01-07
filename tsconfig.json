@@ -1,0 +1,17 @@
+{
+  "extends": "@shopify/typescript-configs/library",
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "rootDir": "./",
+    "declarationDir": "types",
+    "declarationMap": false,
+    "jsx": "react-native",
+    // strictFunctionTypes & strictPropertyInitialization are implictly
+    // enabled by strict mode but we're not yet compliant, so disable for now
+    "strictFunctionTypes": false,
+    "strictPropertyInitialization": false,
+    "importHelpers": true,
+    "skipLibCheck": false
+  },
+  "include": ["./config/typescript/**/*", "./src/**/*", "./tests/**/*"]
+}

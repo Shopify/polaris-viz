@@ -1,0 +1,138 @@
+{
+  "name": "@shopify/polaris-viz",
+  "description": "Shopify’s viz component library",
+  "version": "0.0.1",
+  "private": true,
+  "license": "SEE LICENSE IN LICENSE.md",
+  "author": "Shopify <dev@shopify.com>",
+  "publishConfig": {
+    "access": "private"
+  },
+  "main": "index.js",
+  "module": "index.es.js",
+  "jsnext:main": "index.es.js",
+  "types": "types/index.d.ts",
+  "scripts": {
+    "lint": "sewing-kit lint",
+    "format": "sewing-kit format",
+    "type-check": "sewing-kit type-check",
+    "test": "sewing-kit test",
+    "test:coverage": "CI=true yarn test --coverage",
+    "posttest:coverage": "yarn open:coverage",
+    "open:coverage": "open build/coverage/index.html",
+    "test:ci": "yarn test --coverage",
+    "check": "npm-run-all lint type-check test",
+    "check:ci": "npm-run-all lint type-check test:ci",
+    "clean": "rimraf build esnext styles types docs \"build-intermediate\" \"index.*\" \"./src/styles/polaris-tokens\" \"styles.{css,min.css,scss}\"",
+    "clean:build": "rimraf \"build/!(cache|coverage)\" esnext styles types docs \"build-intermediate\" \"index.*\" \"./src/styles/polaris-tokens\" \"styles.{css,min.css,scss}\"",
+    "optimize": "sewing-kit optimize",
+    "prebuild": "npm-run-all clean:build optimize copy-polaris-tokens",
+    "build": "node ./scripts/build.js",
+    "prebuild-consumer": "yarn run build",
+    "build-consumer": "node ./scripts/build-consumer",
+    "build-shrink-ray": "yarn run copy-polaris-tokens && node ./scripts/build-shrink-ray.js",
+    "secrets": "ejson decrypt -o secrets.json secrets.ejson",
+    "prenew-version-pr-generator": "rimraf sandbox && yarn run secrets",
+    "new-version-pr-generator": "node ./scripts/new-version-pr-generator",
+    "copy-polaris-tokens": "rimraf ./src/styles/polaris-tokens && shx cp -r ./node_modules/@shopify/polaris-tokens/dist ./src/styles/polaris-tokens",
+    "prepublish": "in-publish && yarn run build || :",
+    "postpublish": "in-publish && npm-run-all new-version-pr-generator",
+    "dev": "sewing-kit playground",
+    "readme-update-version": "node ./scripts/readme-update-version",
+    "version": "yarn run readme-update-version",
+    "splash": "babel-node --extensions '.tsx','.ts' ./scripts/splash/index.tsx"
+  },
+  "stylelint": {
+    "extends": [
+      "stylelint-config-shopify/prettier"
+    ],
+    "rules": {
+      "selector-class-pattern": "^[a-zA-Z][a-zA-Z0-9-]+$",
+      "selector-pseudo-class-no-unknown": [
+        true,
+        {
+          "ignorePseudoClasses": [
+            "global"
+          ]
+        }
+      ]
+    }
+  },
+  "browserslist": [
+    "last 3 chrome versions",
+    "last 3 chromeandroid versions",
+    "last 3 firefox versions",
+    "last 3 opera versions",
+    "last 2 edge versions",
+    "safari >= 10",
+    "ios >= 9"
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.6.0",
+    "@babel/node": "^7.6.1",
+    "@shopify/jest-dom-mocks": "^2.0.2",
+    "@shopify/react-testing": "^1.8.0",
+    "@shopify/sewing-kit": "^0.112.0",
+    "@shopify/shrink-ray": "^1.0.0",
+    "@shopify/splash": "^0.0.8",
+    "@types/node": "^12.7.5",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-loader": "^8.0.6",
+    "babel-preset-shopify": "^20.1.0",
+    "change-case": "^3.1.0",
+    "codecov": "^3.5.0",
+    "copyfiles": "^2.1.1",
+    "cssnano": "^4.1.10",
+    "fs-extra": "^7.0.1",
+    "glob": "^7.1.4",
+    "in-publish": "^2.0.0",
+    "ink": "^2.3.0",
+    "isomorphic-fetch": "^2.2.1",
+    "js-yaml": "^3.13.1",
+    "node-sass": "^4.12.0",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^7.0.18",
+    "postcss-modules-extract-imports": "^2.0.0",
+    "postcss-modules-local-by-default": "^2.0.6",
+    "postcss-modules-parser": "^1.1.1",
+    "postcss-modules-scope": "^2.1.0",
+    "postcss-modules-values": "^2.0.0",
+    "postcss-shopify": "^2.2.1",
+    "rimraf": "^3.0.0",
+    "rollup": "^1.10.1",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-commonjs": "^9.3.4",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-node-resolve": "^4.2.3",
+    "rollup-pluginutils": "^2.8.2",
+    "semver": "^6.3.0",
+    "shelljs": "^0.8.3",
+    "shx": "^0.3.2",
+    "typescript": "~3.7.2"
+  },
+  "peerDependencies": {
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "files": [
+    "esnext",
+    "styles",
+    "types",
+    "locales",
+    "docs",
+    "index.js",
+    "index.es.js",
+    "styles.css",
+    "styles.min.css",
+    "styles.scss"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.1.6",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "@shopify/polaris-tokens": "^2.6.0",
+    "@types/react": "^16.8.15",
+    "@types/react-dom": "^16.8.4",
+    "tslib": "^1.9.3"
+  }
+}

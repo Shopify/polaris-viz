@@ -1,0 +1,10 @@
+org_line: Shopify Core
+owners:
+  - Shopify/polaris-viz
+classification: library
+slack_channels:
+  - polaris-data-viz
+  - polaris-help
+security:
+  data_management:
+    contains_pii: false

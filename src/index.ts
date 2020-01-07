@@ -1,0 +1,1 @@
+export {NormalizedStackedBar} from './components';
