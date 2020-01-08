@@ -1,0 +1,11 @@
+@import '../../../../styles/foundation/utilities';
+
+.BarSegment {
+  margin-right: rem(1px);
+  margin-bottom: rem(1px);
+  margin: 0 1px 1px 0;
+
+  &:last-of-type {
+    margin: 0;
+  }
+}

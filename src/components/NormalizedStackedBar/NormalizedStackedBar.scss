@@ -1,3 +1,39 @@
-.Bar {
-  background: red;
+@import '../../../styles/polaris-tokens/spacing.map';
+@import '../../../styles/polaris-tokens/typography.map';
+
+.Container {
+  display: flex;
+  flex-direction: column;
+}
+
+.BaseFont {
+  font-family: map-get($polaris-typography-map, 'font-stack-base');
+}
+
+.VerticalContainer {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  height: 100%;
+}
+
+.BarContainer {
+  display: flex;
+}
+
+.VerticalBarContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.LabelContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min-content, 150px));
+}
+
+.VerticalLabelContainer {
+  display: flex;
+  flex-flow: column wrap;
+  margin-left: map-get($polaris-spacing-map, 'spacing-base');
 }

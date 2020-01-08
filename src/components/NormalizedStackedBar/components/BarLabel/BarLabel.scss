@@ -1,0 +1,20 @@
+@import '../../../../../styles/polaris-tokens/spacing.map';
+@import '../../../../styles/foundation/utilities';
+
+.BarLabelColor {
+  border-radius: 3px;
+  height: rem(10px);
+  width: rem(10px);
+}
+
+.BarLabel {
+  flex: 1;
+  margin-left: map-get($polaris-spacing-map, 'spacing-loose');
+  word-break: break-word;
+}
+
+.BarLabelContainer {
+  display: flex;
+  margin-bottom: map-get($polaris-spacing-map, 'spacing-extra-loose');
+  margin-right: map-get($polaris-spacing-map, 'spacing-extra-loose');
+}
