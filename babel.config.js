@@ -1,6 +1,6 @@
 module.exports = function(api) {
-  // When building (using rollup) or running storybook (using babel-loader) we
-  // want to compile for the web otherwise compile for node usage (within jest)
+  // When building (using rollup) we want to compile for the web
+  // otherwise compile for node usage (within jest)
   const isWeb = api.caller((caller = {}) => {
     return ['babel-loader', 'rollup-plugin-babel'].includes(caller.name);
   });

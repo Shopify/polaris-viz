@@ -10,6 +10,7 @@ const BASE_BRANCH = 'master';
 const repo = 'polaris-viz';
 const sha = process.env.CIRCLE_SHA1;
 
+// not sure what to do here instead
 const report = resolve(
   __dirname,
   '../build/storybook/bundle-analysis/report.html',
@@ -28,6 +29,7 @@ if (sha) {
   buildPackages();
 }
 
+// not sure what to do here instead
 function buildPackages() {
   execSync('yarn run storybook:build', {
     stdio: 'inherit',
