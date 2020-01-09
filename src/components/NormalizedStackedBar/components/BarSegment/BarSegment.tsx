@@ -3,21 +3,21 @@ import {Orientation} from '../../types';
 import * as styles from './BarSegment.scss';
 
 interface Props {
-  barWidth: number;
+  scale: number;
   color: string;
   size: number;
   orientation: Orientation;
 }
 
-export function BarSegment({color, barWidth, size, orientation}: Props) {
-  const widthNeedsRounding = barWidth > 0 && barWidth < 1.5;
-  const safeWidth = widthNeedsRounding ? 1.5 : barWidth;
+export function BarSegment({color, scale, size, orientation}: Props) {
+  const scaleNeedsRounding = scale > 0 && scale < 1.5;
+  const safeScale = scaleNeedsRounding ? 1.5 : scale;
   const sizeStyle =
     orientation === Orientation.Horizontal ? {height: size} : {width: size};
 
   return (
     <div
-      style={{flex: `${safeWidth} 0 0`, ...sizeStyle, background: color}}
+      style={{flex: `${safeScale} 0 0`, ...sizeStyle, background: color}}
       className={styles.BarSegment}
     />
   );

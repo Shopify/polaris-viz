@@ -13,7 +13,6 @@ interface Props {
   size?: number;
   orientation?: Orientation;
   colors?: Color[] | ColorScheme;
-  customFont?: boolean;
 }
 
 export function NormalizedStackedBar({
@@ -22,7 +21,6 @@ export function NormalizedStackedBar({
   size = Size.Small,
   orientation = Orientation.Horizontal,
   colors = ColorScheme.Classic,
-  customFont = false,
 }: Props) {
   const containsNegatives = data.some(({value}) => value < 0);
   const isDevelopment = process.env.NODE_ENV === 'development';
@@ -59,7 +57,6 @@ export function NormalizedStackedBar({
       aria-label={accessibilityLabel}
       className={classNames(
         styles.Container,
-        !customFont && styles.BaseFont,
         isVertical && styles.VerticalContainer,
       )}
     >
@@ -69,16 +66,14 @@ export function NormalizedStackedBar({
           isVertical && styles.VerticalLabelContainer,
         )}
       >
-        {slicedData.map(({label, formattedValue}, index) => {
-          return (
-            <BarLabel
-              key={`${label}-${formattedValue}`}
-              label={label}
-              value={formattedValue}
-              color={colorPalette[index]}
-            />
-          );
-        })}
+        {slicedData.map(({label, formattedValue}, index) => (
+          <BarLabel
+            key={`${label}-${formattedValue}`}
+            label={label}
+            value={formattedValue}
+            color={colorPalette[index]}
+          />
+        ))}
       </div>
 
       <div
@@ -87,17 +82,15 @@ export function NormalizedStackedBar({
           isVertical && styles.VerticalBarContainer,
         )}
       >
-        {slicedData.map(({value, label}, index) => {
-          return (
-            <BarSegment
-              orientation={orientation}
-              size={size}
-              barWidth={xScale(value)}
-              key={`${label}-${value}`}
-              color={colorPalette[index]}
-            />
-          );
-        })}
+        {slicedData.map(({value, label}, index) => (
+          <BarSegment
+            orientation={orientation}
+            size={size}
+            scale={xScale(value)}
+            key={`${label}-${value}`}
+            color={colorPalette[index]}
+          />
+        ))}
       </div>
     </div>
   );
