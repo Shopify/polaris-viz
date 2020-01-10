@@ -11,3 +11,6 @@ node_modules
 /styles.scss
 /styles
 /src/styles/polaris-tokens
+/config
+/scripts
+/playground

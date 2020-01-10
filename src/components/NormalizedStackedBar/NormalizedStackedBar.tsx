@@ -1,4 +1,5 @@
 import React from 'react';
+
 import styles from './NormalizedStackedBar.scss';
 
 export function NormalizedStackedBar() {

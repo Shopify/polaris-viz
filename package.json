@@ -70,7 +70,6 @@
   "devDependencies": {
     "@babel/core": "^7.6.0",
     "@babel/node": "^7.6.1",
-    "@shopify/jest-dom-mocks": "^2.0.2",
     "@shopify/react-testing": "^1.8.0",
     "@shopify/sewing-kit": "^0.112.0",
     "@shopify/shrink-ray": "^1.0.0",
@@ -128,11 +127,11 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.1.6",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
     "@shopify/polaris-tokens": "^2.6.0",
     "@types/react": "^16.8.15",
     "@types/react-dom": "^16.8.4",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
     "tslib": "^1.9.3"
   }
 }
