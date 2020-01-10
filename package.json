@@ -23,40 +23,23 @@
     "test:ci": "yarn test --coverage",
     "check": "npm-run-all lint type-check test",
     "check:ci": "npm-run-all lint type-check test:ci",
-    "clean": "rimraf build esnext styles types docs \"build-intermediate\" \"index.*\" \"./src/styles/polaris-tokens\" \"styles.{css,min.css,scss}\"",
-    "clean:build": "rimraf \"build/!(cache|coverage)\" esnext styles types docs \"build-intermediate\" \"index.*\" \"./src/styles/polaris-tokens\" \"styles.{css,min.css,scss}\"",
+    "clean": "rimraf build esnext types \"build-intermediate\" \"index.*\"",
+    "clean:build": "rimraf \"build/!(cache|coverage)\" esnext types \"build-intermediate\" \"index.*\"",
     "optimize": "sewing-kit optimize",
-    "prebuild": "npm-run-all clean:build optimize copy-polaris-tokens",
+    "prebuild": "npm-run-all clean:build optimize",
     "build": "node ./scripts/build.js",
     "prebuild-consumer": "yarn run build",
     "build-consumer": "node ./scripts/build-consumer",
-    "build-shrink-ray": "yarn run copy-polaris-tokens && node ./scripts/build-shrink-ray.js",
+    "build-shrink-ray": "yarn run && node ./scripts/build-shrink-ray.js",
     "secrets": "ejson decrypt -o secrets.json secrets.ejson",
     "prenew-version-pr-generator": "rimraf sandbox && yarn run secrets",
     "new-version-pr-generator": "node ./scripts/new-version-pr-generator",
-    "copy-polaris-tokens": "rimraf ./src/styles/polaris-tokens && shx cp -r ./node_modules/@shopify/polaris-tokens/dist ./src/styles/polaris-tokens",
     "prepublish": "in-publish && yarn run build || :",
     "postpublish": "in-publish && npm-run-all new-version-pr-generator",
     "dev": "sewing-kit playground",
     "readme-update-version": "node ./scripts/readme-update-version",
     "version": "yarn run readme-update-version",
     "splash": "babel-node --extensions '.tsx','.ts' ./scripts/splash/index.tsx"
-  },
-  "stylelint": {
-    "extends": [
-      "stylelint-config-shopify/prettier"
-    ],
-    "rules": {
-      "selector-class-pattern": "^[a-zA-Z][a-zA-Z0-9-]+$",
-      "selector-pseudo-class-no-unknown": [
-        true,
-        {
-          "ignorePseudoClasses": [
-            "global"
-          ]
-        }
-      ]
-    }
   },
   "browserslist": [
     "last 3 chrome versions",
@@ -88,7 +71,6 @@
     "ink": "^2.3.0",
     "isomorphic-fetch": "^2.2.1",
     "js-yaml": "^3.13.1",
-    "node-sass": "^4.12.0",
     "npm-run-all": "^4.1.5",
     "postcss": "^7.0.18",
     "postcss-modules-extract-imports": "^2.0.0",
@@ -115,18 +97,15 @@
   },
   "files": [
     "esnext",
-    "styles",
     "types",
     "locales",
-    "docs",
     "index.js",
-    "index.es.js",
-    "styles.css",
-    "styles.min.css",
-    "styles.scss"
+    "index.es.js"
   ],
   "dependencies": {
     "@babel/runtime": "^7.1.6",
+    "@emotion/core": "^10.0.27",
+    "@emotion/styled": "^10.0.27",
     "@shopify/polaris-tokens": "^2.6.0",
     "@types/react": "^16.8.15",
     "@types/react-dom": "^16.8.4",
