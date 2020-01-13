@@ -17,7 +17,7 @@ describe('<BarSegment />', () => {
         />,
       );
 
-      expect(barSegment.find(Segment)!.props.theme!.height).toBe(Size.Small);
+      expect(barSegment.find(Segment)!.props.height).toBe(Size.Small);
     });
 
     it('applies the bar size prop to the div width when the chart is vertical', () => {
@@ -30,7 +30,7 @@ describe('<BarSegment />', () => {
         />,
       );
 
-      expect(barSegment.find(Segment)!.props.theme!.width).toBe(Size.Small);
+      expect(barSegment.find(Segment)!.props.width).toBe(Size.Small);
     });
 
     it('does not round up a 0 scale', () => {
@@ -43,7 +43,7 @@ describe('<BarSegment />', () => {
         />,
       );
 
-      expect(barSegment.find(Segment)!.props.theme!.scale).toBe(0);
+      expect(barSegment.find(Segment)!.props.scale).toBe(0);
     });
 
     it('rounds up a scale above 0 and below 1.5', () => {
@@ -56,7 +56,7 @@ describe('<BarSegment />', () => {
         />,
       );
 
-      expect(barSegment.find(Segment)!.props.theme!.scale).toBe(1.5);
+      expect(barSegment.find(Segment)!.props.scale).toBe(1.5);
     });
 
     it('does not round up a scale above 1.5', () => {
@@ -69,7 +69,7 @@ describe('<BarSegment />', () => {
         />,
       );
 
-      expect(barSegment.find(Segment)!.props.theme!.scale).toBe(1.51);
+      expect(barSegment.find(Segment)!.props.scale).toBe(1.51);
     });
   });
 });

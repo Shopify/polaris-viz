@@ -16,7 +16,6 @@ export const Label = styled.div`
   flex: 1;
   margin-left: ${spacingTight};
   word-break: break-word;
-  font-size: 14px;
 `;
 
 export const Container = styled.div`
