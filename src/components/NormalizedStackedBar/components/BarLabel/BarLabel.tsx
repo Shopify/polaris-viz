@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {LabelColor, Label, Container} from './BarLabel.style';
+import {LabelColor, Label, Container, Value} from './BarLabel.style';
 
 export interface Props {
   label: string;
@@ -11,10 +11,10 @@ export interface Props {
 export function BarLabel({label, value, color}: Props) {
   return (
     <Container>
-      <LabelColor theme={{color}} />
+      <LabelColor color={color} />
       <Label>
         <strong>{label}</strong>
-        <p>{value}</p>
+        <Value>{value}</Value>
       </Label>
     </Container>
   );

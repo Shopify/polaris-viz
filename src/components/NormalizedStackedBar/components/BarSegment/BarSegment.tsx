@@ -17,12 +17,10 @@ export function BarSegment({color, scale, size, orientation}: Props) {
 
   return (
     <Segment
-      theme={{
-        scale: safeScale,
-        height: orientation === Orientation.Horizontal ? size : 0,
-        width: orientation === Orientation.Vertical ? size : 0,
-        background: color,
-      }}
+      scale={safeScale}
+      height={orientation === Orientation.Horizontal ? size : 0}
+      width={orientation === Orientation.Vertical ? size : 0}
+      background={color}
     />
   );
 }

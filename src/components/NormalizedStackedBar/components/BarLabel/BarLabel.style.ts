@@ -1,25 +1,30 @@
 import styled from '@emotion/styled';
-import tokens from '@shopify/polaris-tokens';
+import {
+  spacingExtraTight,
+  spacingTight,
+  spacingExtraLoose,
+} from '@shopify/polaris-tokens';
 
-interface Theme {
-  color: string;
-}
-
-export const LabelColor = styled.div(({theme}: {theme: Theme}) => ({
-  background: theme.color,
+export const LabelColor = styled.div(({color}: {color: string}) => ({
+  background: color,
   borderRadius: '3px',
-  height: '15px',
-  width: '15px',
+  height: '10px',
+  width: '10px',
 }));
 
 export const Label = styled.div`
   flex: 1;
-  margin-left: ${tokens.spacingLoose};
+  margin-left: ${spacingTight};
   word-break: break-word;
+  font-size: 14px;
 `;
 
 export const Container = styled.div`
   display: flex;
-  margin-bottom: ${tokens.spacingExtraLoose};
-  margin-right: ${tokens.spacingExtraLoose};
+  align-items: baseline;
+  margin-bottom: ${spacingExtraLoose};
+`;
+
+export const Value = styled.div`
+  margin-top: ${spacingExtraTight};
 `;

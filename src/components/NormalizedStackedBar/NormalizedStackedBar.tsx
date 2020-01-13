@@ -56,8 +56,12 @@ export function NormalizedStackedBar({
       : getTokensFromColors(colors);
 
   return (
-    <Container theme={{isVertical}} aria-label={accessibilityLabel} role="img">
-      <LabelContainer theme={{isVertical}}>
+    <Container
+      isVertical={isVertical}
+      aria-label={accessibilityLabel}
+      role="img"
+    >
+      <LabelContainer isVertical={isVertical}>
         {slicedData.map(({label, formattedValue}, index) => (
           <BarLabel
             key={`${label}-${formattedValue}`}
@@ -68,7 +72,7 @@ export function NormalizedStackedBar({
         ))}
       </LabelContainer>
 
-      <BarContainer theme={{isVertical}}>
+      <BarContainer isVertical={isVertical}>
         {slicedData.map(({value, label}, index) => (
           <BarSegment
             orientation={orientation}
