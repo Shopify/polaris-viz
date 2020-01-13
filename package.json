@@ -107,8 +107,12 @@
     "@emotion/core": "^10.0.27",
     "@emotion/styled": "^10.0.27",
     "@shopify/polaris-tokens": "^2.6.0",
+    "@types/d3-array": "^2.0.0",
+    "@types/d3-scale": "^2.1.1",
     "@types/react": "^16.8.15",
     "@types/react-dom": "^16.8.4",
+    "d3-array": "^2.4.0",
+    "d3-scale": "^3.2.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "tslib": "^1.9.3"
