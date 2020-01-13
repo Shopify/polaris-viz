@@ -42,12 +42,7 @@ copy(['./src/**/*.md', docs], {up: 1}).catch((error) => {
   process.exit(1);
 });
 
-copy(['./src/**/*.{scss,svg,png,jpg,jpeg,json}', intermediateBuild], {up: 1})
-  .then(() => {
-    [resolvePath(intermediateBuild, './styles/global.scss')].forEach((file) => {
-      writeFileSync(file, readFileSync(file, 'utf8'));
-    });
-  })
+copy(['./src/**/*.{svg,png,jpg,jpeg,json}', intermediateBuild], {up: 1})
   // Custom build consumed by Sewing Kit: it preserves all ESNext features
   // including imports/ exports for better tree shaking.
   .then(() => ensureDirSync(finalEsnext))
@@ -55,22 +50,13 @@ copy(['./src/**/*.{scss,svg,png,jpg,jpeg,json}', intermediateBuild], {up: 1})
   .then(() => {
     const indexPath = join(finalEsnext, 'index.js');
     const esnextIndex = readFileSync(indexPath, 'utf8');
-    writeFileSync(
-      indexPath,
-      esnextIndex.replace(/import '.\/styles\/global\.scss';/g, ''),
-    );
   })
   // Main CJS and ES modules bundles: supports all our supported browsers and
-  // uses the full class names for any Sass imports
   .then(() => runRollup())
   .then(() =>
     Promise.all([
       cp('build/polaris-viz.js', './index.js'),
       cp('build/polaris-viz.es.js', './index.es.js'),
-      cp('build/polaris-viz.css', './styles.css'),
-      cp('build/polaris-viz.min.css', './styles.min.css'),
-      cp('build/styles.scss', './styles.scss'),
-      cp('-r', 'build/styles', './styles'),
     ]),
   )
   .catch((error) => {

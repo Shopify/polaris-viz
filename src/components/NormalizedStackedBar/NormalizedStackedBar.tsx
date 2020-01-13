@@ -1,7 +1,12 @@
 import React from 'react';
+import styled from '@emotion/styled';
+import tokens from '@shopify/polaris-tokens';
 
-import styles from './NormalizedStackedBar.scss';
+const Bar = styled.div`
+  background: ${tokens.colorPurple};
+  color: ${tokens.colorWhite};
+`;
 
 export function NormalizedStackedBar() {
-  return <div className={styles.Bar}>NormalizedStackedBar</div>;
+  return <Bar>NormalizedStackedBar</Bar>;
 }

@@ -16,8 +16,6 @@ const getEmojiForExtension = (extension) => {
     case '.tsx':
     case '.ts':
       return '🧩';
-    case '.scss':
-      return '🎨';
     default:
       return '📄';
   }
