@@ -10,8 +10,8 @@ describe('<BarLabel />', () => {
         <BarLabel label="Google" value="200" color="rgb(255, 255, 255)" />,
       );
 
-      expect(barLabel.text()).toContain('Google');
-      expect(barLabel.text()).toContain('200');
+      expect(barLabel).toContainReactText('Google');
+      expect(barLabel).toContainReactText('200');
     });
   });
 });
