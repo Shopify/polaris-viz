@@ -1380,11 +1380,11 @@
     webpack-virtual-modules "^0.1.12"
 
 "@shopify/react-testing@^1.8.0":
-  version "1.8.6"
-  resolved "https://registry.yarnpkg.com/@shopify/react-testing/-/react-testing-1.8.6.tgz#910a90910d443812dba6f4067a7e55ff44fe4a14"
-  integrity sha512-9QagkYVOUiIjsHQG6yuGITUZErMDaKjpARPqSCa3tiIASZuRpNdXIy0B881zSWlKsVahV/u+8Z+uRl7bVL698w==
+  version "1.8.7"
+  resolved "https://registry.yarnpkg.com/@shopify/react-testing/-/react-testing-1.8.7.tgz#a3128eaf840f370afc99244a51207957aded3890"
+  integrity sha512-/csLu+8a/EI3r3u4mME2TCGUO8fjKLDVNw7JDE9SCmHHqnEC72Wt7lH/TyIjkLgBsIjNQP5aFbuT/zeYqbFjXg==
   dependencies:
-    "@shopify/useful-types" "^2.1.2"
+    "@shopify/useful-types" "^2.1.3"
     jest-matcher-utils "^24.5.0"
     react-reconciler "^0.20.2"
 
@@ -1555,6 +1555,13 @@
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/@shopify/useful-types/-/useful-types-2.1.2.tgz#b489005c8ee72c0d22c89bb1114aca2aaf0059b4"
   integrity sha512-2gBvMeY5J6nyJBm3mLZS+P4LOT3aVi0kE1OIYNfCbonr8jiWquBI4YqJ4n2nhG1rmSW1bizSe0xz0ZZXgfGkBg==
+  dependencies:
+    tslib "^1.9.3"
+
+"@shopify/useful-types@^2.1.3":
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/@shopify/useful-types/-/useful-types-2.1.3.tgz#d08bc53bd6b9d603ce7fcdc03cc35420ea64ef01"
+  integrity sha512-KpqWKqcj1DLmznq9AXmT70MRMKDWA8OmzkT0eHxw4lvOUkws48YBHV9WVxf3JmrCw7xm4Bd4rEGJzx5TFxS6/Q==
   dependencies:
     tslib "^1.9.3"
 
@@ -1835,6 +1842,20 @@
   dependencies:
     "@types/istanbul-lib-coverage" "*"
     "@types/istanbul-lib-report" "*"
+
+"@types/jest-diff@*":
+  version "24.3.0"
+  resolved "https://registry.yarnpkg.com/@types/jest-diff/-/jest-diff-24.3.0.tgz#29e237a3d954babfe6e23cc59b57ecd8ca8d858d"
+  integrity sha512-vx1CRDeDUwQ0Pc7v+hS61O1ETA81kD04IMEC0hS1kPyVtHDdZrokAvpF7MT9VI/fVSzicelUZNCepDvhRV1PeA==
+  dependencies:
+    jest-diff "*"
+
+"@types/jest@24.0.19":
+  version "24.0.19"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-24.0.19.tgz#f7036058d2a5844fe922609187c0ad8be430aff5"
+  integrity sha512-YYiqfSjocv7lk5H/T+v5MjATYjaTMsUkbDnjGqSMoO88jWdtJXJV4ST/7DKZcoMHMBvB2SeSfyOzZfkxXHR5xg==
+  dependencies:
+    "@types/jest-diff" "*"
 
 "@types/jest@^24.0.18":
   version "24.0.25"
@@ -8386,7 +8407,7 @@ jest-config@^24.9.0:
     pretty-format "^24.9.0"
     realpath-native "^1.1.0"
 
-jest-diff@^24.3.0, jest-diff@^24.9.0:
+jest-diff@*, jest-diff@^24.3.0, jest-diff@^24.9.0:
   version "24.9.0"
   resolved "https://registry.yarnpkg.com/jest-diff/-/jest-diff-24.9.0.tgz#931b7d0d5778a1baf7452cb816e325e3724055da"
   integrity sha512-qMfrTs8AdJE2iqrTp0hzh7kTd2PQWrsFyj9tORoKmu32xjPjeE4NyjVRDz8ybYwqS2ik8N4hsIpiVTyFeo2lBQ==
