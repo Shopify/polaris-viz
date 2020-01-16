@@ -1,21 +1,8 @@
 # Polaris Viz
 
-Polaris Viz is a data visualization component library built to help Shopify merchants better understand their data.
+Polaris Viz is a data visualization React component library. It was built to help Shopify merchants better understand their data.
 
-## Components
-
-<table>
-  <thead>
-    <th>Name</th>
-    <th>Preview</th>
-    <th>Use cases</th>
-    <th>Props</th>
-  <thead>
-  <tbody>
-  </tbody>
-</table>
-
-## Using the components
+## Installation
 
 Run the following command using [npm](https://www.npmjs.com/):
 
@@ -28,6 +15,47 @@ If you prefer [Yarn](https://yarnpkg.com/en/), use the following command instead
 ```bash
 yarn add @shopify/polaris-viz
 ```
+
+## Components
+
+<table>
+  <thead>
+    <th>Viz</th>
+    <th>Use cases</th>
+    <th>Props</th>
+  <thead>
+  <tbody>
+  <tr>
+    <td>
+      Normalized stacked bar chart
+      <br />
+      <br />
+      <img src="documentation/images/stackedchart.jpg"/>
+    </td>
+    <td>
+      Used for positive datasets with two to four items. If your dataset has more than four items, consider grouping the fourth item and the remainder into an “other” category before passing data to the component.
+    </td>
+    <td><ul>
+    <li><strong>data (required):</strong>
+    <code>{formattedValue: string, value: number, label: string}[]</code>
+    </li>
+    <li><strong>accessibilityLabel:</strong>
+    <code>string</code>
+    </li>
+    <li><strong>size:</strong>
+    <code>small | medium | large</code>
+    </li>
+    <li><strong>orientation:</strong>
+    <code>vertical | horizontal</code>
+    </li>
+    <li><strong>colors:</strong>
+    <code><a href="https://github.com/Shopify/polaris-viz/blob/master/src/components/NormalizedStackedBar/types.ts#L13">colors</a>[] | <a href="https://github.com/Shopify/polaris-viz/blob/master/src/components/NormalizedStackedBar/types.ts#L3">ColorScheme</a></code>
+    </li>
+    </ul></td>
+    </tr>
+
+  </tbody>
+</table>
 
 ## Contributing
 
