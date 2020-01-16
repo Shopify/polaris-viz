@@ -2,11 +2,11 @@
   "name": "@shopify/polaris-viz",
   "description": "Shopify’s viz component library",
   "version": "0.0.1",
-  "private": true,
+  "private": false,
   "license": "SEE LICENSE IN LICENSE.md",
   "author": "Shopify <dev@shopify.com>",
   "publishConfig": {
-    "access": "private"
+    "access": "public"
   },
   "main": "index.js",
   "module": "index.es.js",
@@ -32,13 +32,8 @@
     "build-consumer": "node ./scripts/build-consumer",
     "build-shrink-ray": "yarn run && node ./scripts/build-shrink-ray.js",
     "secrets": "ejson decrypt -o secrets.json secrets.ejson",
-    "prenew-version-pr-generator": "rimraf sandbox && yarn run secrets",
-    "new-version-pr-generator": "node ./scripts/new-version-pr-generator",
     "prepublish": "in-publish && yarn run build || :",
-    "postpublish": "in-publish && npm-run-all new-version-pr-generator",
     "dev": "sewing-kit playground",
-    "readme-update-version": "node ./scripts/readme-update-version",
-    "version": "yarn run readme-update-version",
     "splash": "babel-node --extensions '.tsx','.ts' ./scripts/splash/index.tsx"
   },
   "browserslist": [
