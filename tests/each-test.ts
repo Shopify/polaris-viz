@@ -1,8 +1,7 @@
 import {destroyAll} from '@shopify/react-testing';
 import '@shopify/react-testing/matchers';
 
-describe('setup', () => {
-  afterEach(() => {
-    destroyAll();
-  });
+// eslint-disable-next-line jest/require-top-level-describe
+afterEach(() => {
+  destroyAll();
 });

@@ -5,9 +5,21 @@
   "private": false,
   "license": "SEE LICENSE IN LICENSE.md",
   "author": "Shopify <dev@shopify.com>",
+  "repository": "https://github.com/Shopify/polaris-viz",
+  "bugs": {
+    "url": "https://github.com/Shopify/polaris-viz/issues"
+  },
   "publishConfig": {
     "access": "public"
   },
+  "keywords": [
+    "shopify",
+    "polaris",
+    "react",
+    "components",
+    "component library",
+    "viz"
+  ],
   "main": "index.js",
   "module": "index.es.js",
   "jsnext:main": "index.es.js",
@@ -23,8 +35,8 @@
     "test:ci": "yarn test --coverage",
     "check": "npm-run-all lint type-check test",
     "check:ci": "npm-run-all lint type-check test:ci",
-    "clean": "rimraf build esnext types \"build-intermediate\" \"index.*\"",
-    "clean:build": "rimraf \"build/!(cache|coverage)\" esnext types \"build-intermediate\" \"index.*\"",
+    "clean": "rimraf build esnext types docs \"build-intermediate\" \"index.*\"",
+    "clean:build": "rimraf \"build/!(cache|coverage|storybook)\" esnext types docs \"build-intermediate\" \"index.*\"",
     "optimize": "sewing-kit optimize",
     "prebuild": "npm-run-all clean:build optimize",
     "build": "node ./scripts/build.js",
@@ -32,9 +44,16 @@
     "build-consumer": "node ./scripts/build-consumer",
     "build-shrink-ray": "yarn run && node ./scripts/build-shrink-ray.js",
     "secrets": "ejson decrypt -o secrets.json secrets.ejson",
+    "copy-polaris-tokens": "rimraf ./src/styles/polaris-tokens && shx cp -r ./node_modules/@shopify/polaris-tokens/dist ./src/styles/polaris-tokens",
     "prepublish": "in-publish && yarn run build || :",
-    "dev": "sewing-kit playground",
-    "splash": "babel-node --extensions '.tsx','.ts' ./scripts/splash/index.tsx"
+    "dev": "npm-run-all storybook",
+    "test:percy": "yarn run storybook:build && percy-storybook --build_dir build/storybook/static",
+    "test:a11y": "yarn run storybook:build && node ./scripts/pa11y.js",
+    "start": "serve -l ${PORT} -c .storybook/serve.json",
+    "readme-update-version": "node ./scripts/readme-update-version",
+    "version": "yarn run readme-update-version",
+    "storybook": "start-storybook -p 6006 --quiet",
+    "storybook:build": "yarn run build-storybook -o build/storybook/static"
   },
   "browserslist": [
     "last 3 chrome versions",
@@ -48,25 +67,39 @@
   "devDependencies": {
     "@babel/core": "^7.6.0",
     "@babel/node": "^7.6.1",
-    "@shopify/react-testing": "^1.8.0",
+    "@shopify/jest-dom-mocks": "^2.8.8",
+    "@shopify/react-testing": "^1.8.7",
     "@shopify/sewing-kit": "^0.112.0",
     "@shopify/shrink-ray": "^1.0.0",
     "@shopify/splash": "^0.0.8",
+    "@storybook/addon-a11y": "^5.2.4",
+    "@storybook/addon-actions": "^5.2.4",
+    "@storybook/addon-console": "^1.2.1",
+    "@storybook/addon-contexts": "^5.2.4",
+    "@storybook/addon-notes": "^5.2.4",
+    "@storybook/addon-viewport": "^5.2.4",
+    "@storybook/react": "^5.2.4",
+    "@storybook/theming": "^5.2.4",
     "@types/node": "^12.7.5",
     "babel-core": "7.0.0-bridge.0",
     "babel-loader": "^8.0.6",
     "babel-preset-shopify": "^20.1.0",
+    "chalk": "^2.4.2",
     "change-case": "^3.1.0",
     "codecov": "^3.5.0",
     "copyfiles": "^2.1.1",
     "cssnano": "^4.1.10",
     "fs-extra": "^7.0.1",
     "glob": "^7.1.4",
+    "gray-matter": "^4.0.2",
     "in-publish": "^2.0.0",
     "ink": "^2.3.0",
     "isomorphic-fetch": "^2.2.1",
     "js-yaml": "^3.13.1",
+    "marked": "^0.7.0",
+    "mutationobserver-shim": "^0.3.3",
     "npm-run-all": "^4.1.5",
+    "pa11y": "^5.2.0",
     "postcss": "^7.0.18",
     "postcss-modules-extract-imports": "^2.0.0",
     "postcss-modules-local-by-default": "^2.0.6",
@@ -74,6 +107,9 @@
     "postcss-modules-scope": "^2.1.0",
     "postcss-modules-values": "^2.0.0",
     "postcss-shopify": "^2.2.1",
+    "puppeteer": "^1.20.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
     "rimraf": "^3.0.0",
     "rollup": "^1.10.1",
     "rollup-plugin-babel": "^4.3.3",
@@ -84,7 +120,9 @@
     "semver": "^6.3.0",
     "shelljs": "^0.8.3",
     "shx": "^0.3.2",
-    "typescript": "~3.7.2"
+    "storybook-chromatic": "^3.1.0",
+    "typescript": "~3.7.2",
+    "@types/jest": "24.0.19"
   },
   "peerDependencies": {
     "react": "^16.8.6",
@@ -94,6 +132,7 @@
     "esnext",
     "types",
     "locales",
+    "docs",
     "index.js",
     "index.es.js"
   ],
@@ -107,10 +146,13 @@
     "@types/jest": "24.0.19",
     "@types/react": "^16.8.15",
     "@types/react-dom": "^16.8.4",
+<<<<<<< HEAD
     "d3-array": "^2.4.0",
     "d3-scale": "^3.2.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+=======
+>>>>>>> 511e872... Add more stuff
     "tslib": "^1.9.3"
   }
 }

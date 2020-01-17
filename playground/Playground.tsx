@@ -1,8 +1,8 @@
 import React from 'react';
 
-import {NormalizedStackedBar} from '../src/components';
+import {NormalizedStackedBar} from '../src';
 
-export default function Playground() {
+export function Playground() {
   return (
     <div style={{height: '501px', margin: '40px'}}>
       <NormalizedStackedBar />
