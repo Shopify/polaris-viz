@@ -1,1 +1,3 @@
-export {NormalizedStackedBar} from './components';
+export * from './types';
+
+export * from './components';

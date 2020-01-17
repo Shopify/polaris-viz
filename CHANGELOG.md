@@ -21,3 +21,7 @@
 ### Added
 
 - NormalizedStackedBar chart is now available
+
+## [0.0.1] - 2020-17-01
+
+- Initial release

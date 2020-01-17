@@ -8,6 +8,10 @@
   "publishConfig": {
     "access": "public"
   },
+  "repository": "https://github.com/Shopify/polaris-viz",
+  "bugs": {
+    "url": "https://github.com/Shopify/polaris-viz/issues"
+  },
   "main": "index",
   "types": "types/index.d.ts",
   "scripts": {
@@ -21,8 +25,8 @@
     "test:ci": "yarn test --coverage",
     "check": "npm-run-all lint type-check test",
     "check:ci": "npm-run-all lint type-check test:ci",
-    "clean": "rimraf build esnext types \"build-intermediate\" \"index.*\"",
-    "clean:build": "rimraf \"build/!(cache|coverage)\" esnext types \"build-intermediate\" \"index.*\"",
+    "clean": "rimraf build esnext types docs \"build-intermediate\" \"index.*\"",
+    "clean:build": "rimraf \"build/!(cache|coverage|storybook)\" esnext types docs \"build-intermediate\" \"index.*\"",
     "optimize": "sewing-kit optimize",
     "prebuild": "npm-run-all clean:build optimize",
     "build": "node ./scripts/build.js",
@@ -30,8 +34,21 @@
     "build-consumer": "node ./scripts/build-consumer",
     "build-shrink-ray": "yarn run && node ./scripts/build-shrink-ray.js",
     "prepublish": "in-publish && yarn run build || :",
-    "dev": "sewing-kit playground"
+    "dev": "npm-run-all storybook",
+    "start": "serve -l ${PORT} -c .storybook/serve.json",
+    "readme-update-version": "node ./scripts/readme-update-version",
+    "version": "yarn run readme-update-version",
+    "storybook": "start-storybook -p 6006 --quiet",
+    "storybook:build": "yarn run build-storybook -o build/storybook/static"
   },
+  "keywords": [
+    "shopify",
+    "polaris",
+    "react",
+    "components",
+    "component library",
+    "viz"
+  ],
   "stylelint": {
     "extends": [
       "stylelint-config-shopify/prettier"
@@ -60,9 +77,9 @@
   "devDependencies": {
     "@babel/core": "^7.6.0",
     "@babel/node": "^7.6.1",
-    "@shopify/react-testing": "^1.8.0",
+    "@shopify/jest-dom-mocks": "^2.8.8",
+    "@shopify/react-testing": "^1.8.7",
     "@shopify/sewing-kit": "^0.112.0",
-    "@types/d3-array": "^2.0.0",
     "@types/d3-scale": "^2.1.1",
     "@types/jest": "24.0.19",
     "@types/node": "^12.7.5",
@@ -73,6 +90,25 @@
     "babel-preset-shopify": "^20.1.0",
     "change-case": "^3.1.0",
     "copyfiles": "^2.1.1",
+    "@storybook/addon-a11y": "5.3.2",
+    "@storybook/addon-actions": "5.3.2",
+    "@storybook/addon-console": "^1.2.1",
+    "@storybook/addon-contexts": "5.3.2",
+    "@storybook/addon-notes": "5.3.2",
+    "marked": "^0.7.0",
+    "mutationobserver-shim": "^0.3.3",
+    "serve": "^11.3.0",
+    "storybook-chromatic": "^3.1.0",
+    "gray-matter": "^4.0.2",
+    "pa11y": "^5.2.0",
+    "puppeteer": "^1.20.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "@storybook/addon-viewport": "5.3.2",
+    "chalk": "^2.4.2",
+    "@storybook/react": "5.3.2",
+    "@storybook/theming": "5.3.2",
+    "@types/d3-array": "^2.0.0",
     "cssnano": "^4.1.10",
     "fs-extra": "^7.0.1",
     "glob": "^7.1.4",
@@ -110,6 +146,7 @@
     "styles",
     "types",
     "locales",
+    "docs",
     "index.js",
     "index.es.js",
     "styles.css",
@@ -119,8 +156,6 @@
     "@shopify/css-utilities": "^1.0.0",
     "@shopify/polaris-tokens": "^2.6.0",
     "d3-array": "^2.4.0",
-    "d3-scale": "^1.0.7",
-    "react": "16.9.0-alpha.0",
-    "react-dom": "16.9.0-alpha.0"
+    "d3-scale": "^1.0.7"
   }
 }

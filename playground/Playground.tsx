@@ -1,11 +1,7 @@
 import React from 'react';
 
-import {NormalizedStackedBar} from '../src/components';
+import {} from '../src';
 
-export default function Playground() {
-  return (
-    <div style={{height: '501px', margin: '40px'}}>
-      <NormalizedStackedBar />
-    </div>
-  );
+export function Playground() {
+  return <div>{/* Add the code you want to test in here */}</div>;
 }

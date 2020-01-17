@@ -2,14 +2,15 @@
 
 const {resolve} = require('path');
 const {execSync} = require('child_process');
-const {writeFileSync, readFileSync} = require('fs-extra');
+const {writeFileSync, readFileSync, existsSync} = require('fs-extra');
 const {version: newVersion} = require('../package.json');
 const {semverRegExp, readmes} = require('./utilities');
 
 const root = resolve(__dirname, '..');
 
-console.log(`🆕 Updating version in ${readmes.join(', ')}...`);
-readmes
+const readmeFiles = readmes.filter((file) => existsSync(file));
+console.log(`🆕 Updating version in ${readmeFiles.join(', ')}...`);
+readmeFiles
   .map((readme) => resolve(root, readme))
   .forEach((file) => {
     writeFileSync(
@@ -18,6 +19,6 @@ readmes
     );
   });
 
-console.log(`🏃‍♂️ Running \`git add -A ${readmes.join(' ')}\`...`);
+console.log(`🏃‍♂️ Running \`git add -A ${readmeFiles.join(' ')}\`...`);
 const execOpts = {stdio: 'inherit'};
-execSync(`git add -A ${readmes.join(' ')}`, execOpts);
+execSync(`git add -A ${readmeFiles.join(' ')}`, execOpts);
