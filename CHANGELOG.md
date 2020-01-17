@@ -7,3 +7,7 @@ The format is based on [these versioning and changelog guidelines](https://git.i
 <!-- Unreleased changes should go to UNRELEASED.md -->
 
 ---
+
+## 0.0.1 - 2020-XX-XX
+
+- Initial release

@@ -70,7 +70,9 @@ describe('build', () => {
       expect(fs.existsSync('esnext/index.js')).toBe(true);
     });
 
-    it('preserves classes to facilitate class-level tree shaking', () => {
+    // Add back when ever we have a class component
+    // eslint-disable-next-line jest/no-disabled-tests
+    it.skip('preserves classes to facilitate class-level tree shaking', () => {
       expect(
         fs.readFileSync('esnext/components/Collapsible/Collapsible.js', 'utf8'),
       ).toMatch('class Collapsible');
@@ -82,7 +84,7 @@ describe('build', () => {
           'esnext/components/NormalizedStackedBar/NormalizedStackedBar.js',
           'utf8',
         ),
-      ).toMatch(/return <div .+?<\/div>/);
+      ).toMatch(/return <Bar.+?<\/Bar>/);
     });
 
     it('preserves ES script imports', () => {
