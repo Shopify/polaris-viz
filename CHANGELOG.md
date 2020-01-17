@@ -8,6 +8,6 @@ The format is based on [these versioning and changelog guidelines](https://git.i
 
 ---
 
-## 0.0.1 - 2020-XX-XX
+## 0.0.1 - 2020-17-01
 
 - Initial release
