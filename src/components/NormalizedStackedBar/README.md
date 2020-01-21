@@ -1,9 +1,7 @@
 ---
-name: Heading
+name: NormalizedStackedBar
 category: Category
 platforms:
-  - android
-  - ios
   - web
 keywords:
   - keywords
@@ -36,7 +34,9 @@ example
 Use for the title of each top-level page section.
 
 ```jsx
-<NormalizedStackedBar />
+<NormalizedStackedBar
+  data={[{formattedValue: '10', value: 10, label: 'ten'}]}
+/>
 ```
 
 ---
