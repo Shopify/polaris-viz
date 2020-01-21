@@ -1,9 +1,21 @@
 /* eslint-disable no-console */
 
+const glob = require('glob');
 const {execSync} = require('child_process');
-const {join, resolve: resolvePath} = require('path');
+const {
+  join,
+  resolve: resolvePath,
+  basename,
+  extname,
+  dirname,
+} = require('path');
 
-const {ensureDirSync, writeFileSync, readFileSync} = require('fs-extra');
+const {
+  ensureDirSync,
+  writeFileSync,
+  readFileSync,
+  renameSync,
+} = require('fs-extra');
 const {rollup} = require('rollup');
 const {cp, mv, rm} = require('shelljs');
 const copyfiles = require('copyfiles');
@@ -50,6 +62,16 @@ copy(['./src/**/*.{svg,png,jpg,jpeg,json}', intermediateBuild], {up: 1})
   .then(() => {
     const indexPath = join(finalEsnext, 'index.js');
     const esnextIndex = readFileSync(indexPath, 'utf8');
+  })
+  .then(() => {
+    glob(`${finalEsnext}/**/*.js`, (err, files) => {
+      for (const file of files) {
+        renameSync(
+          file,
+          join(dirname(file), `${basename(file, '.js')}.esnext`),
+        );
+      }
+    });
   })
   // Main CJS and ES modules bundles: supports all our supported browsers and
   .then(() => runRollup())
