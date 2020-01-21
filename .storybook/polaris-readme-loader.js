@@ -11,7 +11,7 @@ const HOOK_PREFIX = 'use';
  * that adheres Storybook's Component Story Format that describes the stories
  * contained in the readme.
  *
- * We don't know what Polaris exports are needed by a given component, so we
+ * We don't know what `polaris-viz` exports are needed by a given component, so we
  * import all of Polaris into the scope. This means that any time we add
  * examples for a new component we need to add it to the list of components that
  * are imported in this loader.

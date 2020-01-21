@@ -17,8 +17,6 @@ addParameters({
       appBg: tokens.colorSkyLight,
       contentBg: tokens.colorSkyLight,
       textColor: tokens.colorInk,
-      // TODO more pretty brand colors?
-      // SEE https://github.com/storybooks/storybook/blob/next/docs/src/pages/configurations/theming/index.md
     }),
   },
 });
