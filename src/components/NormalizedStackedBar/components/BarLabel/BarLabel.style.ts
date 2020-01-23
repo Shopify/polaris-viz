@@ -15,7 +15,7 @@ export const LabelColor = styled.div(({color}: {color: string}) => ({
 
 export const Label = styled.div(() => ({
   flex: 1,
-  marginLeft: spacingTight,
+  margin: `0 ${spacingTight}`,
   wordBreak: 'break-word',
 }));
 
