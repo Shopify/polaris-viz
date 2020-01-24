@@ -1,9 +1,10 @@
 import React from 'react';
 import {sum} from 'd3-array';
 import {scaleLinear} from 'd3-scale';
+import {Color} from 'types';
 
 import {BarSegment, BarLabel} from './components';
-import {Size, ColorScheme, Color, Data, Orientation} from './types';
+import {Size, ColorScheme, Data, Orientation} from './types';
 import {getColorPalette, getTokensFromColors} from './utilities';
 import {
   Container,
