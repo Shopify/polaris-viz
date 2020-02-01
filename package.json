@@ -10,7 +10,7 @@
   },
   "main": "index.js",
   "module": "index.es.js",
-  "jsnext:main": "index.es.js",
+  "jsnext:main": "esnext/index.esnext",
   "types": "types/index.d.ts",
   "scripts": {
     "lint": "sewing-kit lint",
@@ -35,6 +35,22 @@
     "prepublish": "in-publish && yarn run build || :",
     "dev": "sewing-kit playground",
     "splash": "babel-node --extensions '.tsx','.ts' ./scripts/splash/index.tsx"
+  },
+  "stylelint": {
+    "extends": [
+      "stylelint-config-shopify/prettier"
+    ],
+    "rules": {
+      "selector-class-pattern": "^[a-zA-Z][a-zA-Z0-9-]+$",
+      "selector-pseudo-class-no-unknown": [
+        true,
+        {
+          "ignorePseudoClasses": [
+            "global"
+          ]
+        }
+      ]
+    }
   },
   "browserslist": [
     "last 3 chrome versions",
@@ -92,10 +108,14 @@
   },
   "files": [
     "esnext",
+    "styles",
     "types",
     "locales",
     "index.js",
-    "index.es.js"
+    "index.es.js",
+    "styles.css",
+    "styles.min.css",
+    "polaris-viz.scss"
   ],
   "dependencies": {
     "@babel/runtime": "^7.1.6",

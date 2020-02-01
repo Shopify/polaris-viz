@@ -10,6 +10,7 @@ import {
   BarContainer,
   LabelContainer,
 } from './NormalizedStackedBar.style';
+import styles from './NormalizedStackedBar.scss';
 
 interface Props {
   data: Data[];
@@ -66,6 +67,7 @@ export function NormalizedStackedBar({
       aria-label={accessibilityLabel}
       role="img"
     >
+      <div className={styles.Test}>test</div>
       <LabelContainer isVertical={isVertical}>
         {slicedData.map(({label, formattedValue}, index) => (
           <BarLabel
