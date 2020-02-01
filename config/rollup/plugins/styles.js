@@ -108,7 +108,6 @@ module.exports = function styles(options = {}) {
       await Promise.all([
         writeFile(output, css),
         generateMinifiedCss(output, css),
-        // generateSass(output, css),
       ]);
     },
   };
@@ -130,11 +129,3 @@ function generateMinifiedCss(sourceFilePath, css) {
     .process(css, {from: sourceFilePath, to: outputPath})
     .then((result) => writeFile(outputPath, result.css));
 }
-
-// function generateSass(sourceFilePath, css) {
-//   const outputPath = `${sourceFilePath.slice(0, -4)}.scss`;
-
-//   return cssnano
-//     .process(css, {from: sourceFilePath, to: outputPath})
-//     .then((result) => writeFile(outputPath, result.css));
-// }

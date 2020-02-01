@@ -94,7 +94,7 @@ copy(['./src/**/*.{scss,svg,png,jpg,jpeg,json}', intermediateBuild], {up: 1})
 function runRollup() {
   const config = createRollupConfig({
     entry: mainEntry,
-    cssPath: resolvePath(build, 'polaris-viz.scss'),
+    cssPath: resolvePath(build, 'polaris-viz.css'),
   });
 
   return rollup(config).then((bundle) =>
