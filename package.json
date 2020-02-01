@@ -8,9 +8,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "index.js",
-  "module": "index.es.js",
-  "jsnext:main": "index.es.js",
+  "main": "index",
   "types": "types/index.d.ts",
   "scripts": {
     "lint": "sewing-kit lint",
@@ -36,6 +34,22 @@
     "dev": "sewing-kit playground",
     "splash": "babel-node --extensions '.tsx','.ts' ./scripts/splash/index.tsx"
   },
+  "stylelint": {
+    "extends": [
+      "stylelint-config-shopify/prettier"
+    ],
+    "rules": {
+      "selector-class-pattern": "^[a-zA-Z][a-zA-Z0-9-]+$",
+      "selector-pseudo-class-no-unknown": [
+        true,
+        {
+          "ignorePseudoClasses": [
+            "global"
+          ]
+        }
+      ]
+    }
+  },
   "browserslist": [
     "last 3 chrome versions",
     "last 3 chromeandroid versions",
@@ -52,7 +66,12 @@
     "@shopify/sewing-kit": "^0.112.0",
     "@shopify/shrink-ray": "^1.0.0",
     "@shopify/splash": "^0.0.8",
+    "@types/d3-array": "^2.0.0",
+    "@types/d3-scale": "^2.1.1",
+    "@types/jest": "24.0.19",
     "@types/node": "^12.7.5",
+    "@types/react": "^16.8.15",
+    "@types/react-dom": "^16.8.4",
     "babel-core": "7.0.0-bridge.0",
     "babel-loader": "^8.0.6",
     "babel-preset-shopify": "^20.1.0",
@@ -84,6 +103,7 @@
     "semver": "^6.3.0",
     "shelljs": "^0.8.3",
     "shx": "^0.3.2",
+    "tslib": "^1.9.3",
     "typescript": "~3.7.2"
   },
   "peerDependencies": {
@@ -92,25 +112,22 @@
   },
   "files": [
     "esnext",
+    "index.esnext",
+    "styles",
     "types",
     "locales",
     "index.js",
-    "index.es.js"
+    "index.es.js",
+    "styles.css",
+    "styles.min.css"
   ],
   "dependencies": {
     "@babel/runtime": "^7.1.6",
-    "@emotion/core": "^10.0.27",
-    "@emotion/styled": "^10.0.27",
+    "@shopify/css-utilities": "^1.0.5",
     "@shopify/polaris-tokens": "^2.6.0",
-    "@types/d3-array": "^2.0.0",
-    "@types/d3-scale": "^2.1.1",
-    "@types/jest": "24.0.19",
-    "@types/react": "^16.8.15",
-    "@types/react-dom": "^16.8.4",
     "d3-array": "^2.4.0",
     "d3-scale": "^3.2.1",
     "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "tslib": "^1.9.3"
+    "react-dom": "^16.12.0"
   }
 }

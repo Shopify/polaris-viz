@@ -2,33 +2,36 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 
 import {BarSegment} from '../BarSegment';
-import {Segment} from '../BarSegment.style';
 
 describe('<BarSegment />', () => {
-  it('applies the bar size prop to the div height when the chart is horizontal', () => {
+  it('gives the child a horizontal small class name', () => {
     const barSegment = mount(
       <BarSegment
         scale={64}
         color="rgb(255, 255, 255)"
-        size={10}
+        size="small"
         orientation="horizontal"
       />,
     );
 
-    expect(barSegment.find(Segment)!.props.height).toBe(10);
+    expect(barSegment).toContainReactComponent('div', {
+      className: 'Segment horizontal-small',
+    });
   });
 
-  it('applies the bar size prop to the div width when the chart is vertical', () => {
+  it('gives the child a vertical small class name', () => {
     const barSegment = mount(
       <BarSegment
         scale={64}
         color="rgb(255, 255, 255)"
-        size={10}
+        size="small"
         orientation="vertical"
       />,
     );
 
-    expect(barSegment.find(Segment)!.props.width).toBe(10);
+    expect(barSegment).toContainReactComponent('div', {
+      className: 'Segment vertical-small',
+    });
   });
 
   it('does not round up a 0 scale', () => {
@@ -36,12 +39,14 @@ describe('<BarSegment />', () => {
       <BarSegment
         scale={0}
         color="rgb(255, 255, 255)"
-        size={10}
+        size="small"
         orientation="horizontal"
       />,
     );
 
-    expect(barSegment.find(Segment)!.props.scale).toBe(0);
+    const barSegmentFlex = barSegment.find('div')!.props!.style!.flex;
+
+    expect(barSegmentFlex).toBe('0 0 0%');
   });
 
   it('rounds up a scale above 0 and below 1.5', () => {
@@ -49,12 +54,14 @@ describe('<BarSegment />', () => {
       <BarSegment
         scale={0.1}
         color="rgb(255, 255, 255)"
-        size={10}
+        size="small"
         orientation="horizontal"
       />,
     );
 
-    expect(barSegment.find(Segment)!.props.scale).toBe(1.5);
+    const barSegmentFlex = barSegment.find('div')!.props!.style!.flex;
+
+    expect(barSegmentFlex).toBe('0 0 1.5%');
   });
 
   it('does not round up a scale above 1.5', () => {
@@ -62,11 +69,13 @@ describe('<BarSegment />', () => {
       <BarSegment
         scale={1.51}
         color="rgb(255, 255, 255)"
-        size={10}
+        size="small"
         orientation="horizontal"
       />,
     );
 
-    expect(barSegment.find(Segment)!.props.scale).toBe(1.51);
+    const barSegmentFlex = barSegment.find('div')!.props!.style!.flex;
+
+    expect(barSegmentFlex).toBe('0 0 1.51%');
   });
 });

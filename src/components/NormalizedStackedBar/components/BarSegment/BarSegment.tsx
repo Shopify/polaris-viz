@@ -1,13 +1,14 @@
 import React from 'react';
+import {classNames} from '@shopify/css-utilities';
 
-import {Orientation} from '../../types';
+import {Orientation, Size} from '../../types';
 
-import {Segment} from './BarSegment.style';
+import styles from './BarSegment.scss';
 
 interface Props {
   scale: number;
   color: string;
-  size: number;
+  size: Size;
   orientation: Orientation;
 }
 
@@ -16,11 +17,9 @@ export function BarSegment({color, scale, size, orientation}: Props) {
   const safeScale = scaleNeedsRounding ? 1.5 : scale;
 
   return (
-    <Segment
-      scale={safeScale}
-      height={orientation === 'horizontal' ? size : 0}
-      width={orientation === 'vertical' ? size : 0}
-      background={color}
+    <div
+      className={classNames(styles.Segment, styles[`${orientation}-${size}`])}
+      style={{flex: `0 0 ${safeScale}%`, background: color}}
     />
   );
 }

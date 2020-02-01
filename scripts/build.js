@@ -1,9 +1,21 @@
 /* eslint-disable no-console */
 
 const {execSync} = require('child_process');
-const {join, resolve: resolvePath} = require('path');
+const {
+  join,
+  resolve: resolvePath,
+  basename,
+  extname,
+  dirname,
+} = require('path');
+const glob = require('glob');
 
-const {ensureDirSync, writeFileSync, readFileSync} = require('fs-extra');
+const {
+  ensureDirSync,
+  writeFileSync,
+  readFileSync,
+  renameSync,
+} = require('fs-extra');
 const {rollup} = require('rollup');
 const {cp, mv, rm} = require('shelljs');
 const copyfiles = require('copyfiles');
@@ -35,6 +47,11 @@ execSync(
 mv(resolvePath(root, 'types/src/*'), types);
 rm('-rf', resolvePath(root, 'types/src'));
 
+writeFileSync(
+  join(root, 'index.esnext'),
+  'export * from "./esnext/index.esnext";',
+);
+
 mv(resolvePath(intermediateBuild, 'src/*'), intermediateBuild);
 
 copy(['./src/**/*.md', docs], {up: 1}).catch((error) => {
@@ -42,7 +59,7 @@ copy(['./src/**/*.md', docs], {up: 1}).catch((error) => {
   process.exit(1);
 });
 
-copy(['./src/**/*.{svg,png,jpg,jpeg,json}', intermediateBuild], {up: 1})
+copy(['./src/**/*.{scss,svg,png,jpg,jpeg,json}', intermediateBuild], {up: 1})
   // Custom build consumed by Sewing Kit: it preserves all ESNext features
   // including imports/ exports for better tree shaking.
   .then(() => ensureDirSync(finalEsnext))
@@ -51,12 +68,27 @@ copy(['./src/**/*.{svg,png,jpg,jpeg,json}', intermediateBuild], {up: 1})
     const indexPath = join(finalEsnext, 'index.js');
     const esnextIndex = readFileSync(indexPath, 'utf8');
   })
+  .then(() => {
+    glob(`${finalEsnext}/**/*.js`, (err, files) => {
+      for (const file of files) {
+        renameSync(
+          file,
+          join(dirname(file), `${basename(file, '.js')}.esnext`),
+        );
+      }
+    });
+  })
   // Main CJS and ES modules bundles: supports all our supported browsers and
+  // uses the full class names for any Sass imports
   .then(() => runRollup())
   .then(() =>
     Promise.all([
       cp('build/polaris-viz.js', './index.js'),
       cp('build/polaris-viz.es.js', './index.es.js'),
+      cp('build/polaris-viz.css', './styles.css'),
+      cp('build/polaris-viz.min.css', './styles.min.css'),
+      cp('build/styles.scss', './styles.scss'),
+      cp('-r', 'build/styles', './styles'),
     ]),
   )
   .catch((error) => {
