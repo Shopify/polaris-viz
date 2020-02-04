@@ -2,9 +2,16 @@
 
 <!-- ## [Unreleased] -->
 
-<!-- ### Changed -->
+## [0.0.4] - 2020-02-04
+
+### Changed
+
+- Remove unused dependencies
+- Fix documentation image link
 
 ## [0.0.3] - 2020-02-04
+
+### Changed
 
 - Remove use of Emotion styled components in favour of Sass
 - Use .esnext file extensions in esnext directory, as required for consumption of esnext files by Sewing Kit

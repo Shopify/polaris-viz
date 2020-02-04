@@ -40,7 +40,7 @@ import '@shopify/polaris-viz/styles.css';
       Normalized stacked bar chart
       <br />
       <br />
-      <img src="documentation/images/stackedchart.jpg"/>
+      <img src="https://github.com/Shopify/polaris-viz/raw/master/documentation/images/stackedchart.jpg"/>
     </td>
     <td>
       Used for positive datasets with two to four items. If your dataset has more than four items, consider grouping the fourth item and the remainder into an “other” category before passing data to the component.
