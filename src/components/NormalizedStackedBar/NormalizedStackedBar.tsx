@@ -1,15 +1,12 @@
 import React from 'react';
 import {sum} from 'd3-array';
 import {scaleLinear} from 'd3-scale';
+import {classNames} from '@shopify/css-utilities';
 
 import {BarSegment, BarLabel} from './components';
 import {Size, ColorScheme, Color, Data, Orientation} from './types';
 import {getColorPalette, getTokensFromColors} from './utilities';
-import {
-  Container,
-  BarContainer,
-  LabelContainer,
-} from './NormalizedStackedBar.style';
+import styles from './NormalizedStackedBar.scss';
 
 interface Props {
   data: Data[];
@@ -18,12 +15,6 @@ interface Props {
   orientation?: Orientation;
   colors?: Color[] | ColorScheme;
 }
-
-const SIZES = {
-  small: 16,
-  medium: 36,
-  large: 56,
-};
 
 export function NormalizedStackedBar({
   data,
@@ -61,12 +52,21 @@ export function NormalizedStackedBar({
     : getColorPalette(colors);
 
   return (
-    <Container
-      isVertical={isVertical}
+    <div
+      className={classNames(
+        styles.Container,
+        isVertical ? styles.VerticalContainer : styles.HorizontalContainer,
+      )}
       aria-label={accessibilityLabel}
       role="img"
     >
-      <LabelContainer isVertical={isVertical}>
+      <div
+        className={
+          isVertical
+            ? styles.VerticalLabelContainer
+            : styles.HorizontailLabelContainer
+        }
+      >
         {slicedData.map(({label, formattedValue}, index) => (
           <BarLabel
             key={`${label}-${formattedValue}`}
@@ -75,19 +75,26 @@ export function NormalizedStackedBar({
             color={colorPalette[index]}
           />
         ))}
-      </LabelContainer>
+      </div>
 
-      <BarContainer isVertical={isVertical}>
+      <div
+        className={classNames(
+          styles.BarContainer,
+          isVertical
+            ? styles.VerticalBarContainer
+            : styles.HorizontalBarContainer,
+        )}
+      >
         {slicedData.map(({value, label}, index) => (
           <BarSegment
             orientation={orientation}
-            size={SIZES[size]}
+            size={size}
             scale={xScale(value)}
             key={`${label}-${value}`}
             color={colorPalette[index]}
           />
         ))}
-      </BarContainer>
-    </Container>
+      </div>
+    </div>
   );
 }

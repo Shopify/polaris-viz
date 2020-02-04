@@ -1,0 +1,41 @@
+@import 'node_modules/@shopify/polaris-tokens/dist/index';
+
+.Container {
+  font-family: $font-stack-base;
+  font-size: 14px;
+  display: flex;
+}
+
+.VerticalContainer {
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  height: 100%;
+}
+
+.HorizontalContainer {
+  flex-direction: column;
+  justify-content: normal;
+}
+
+.BarContainer {
+  display: flex;
+}
+
+.VerticalBarContainer {
+  flex-direction: column;
+}
+
+.HorizontalBarContainer {
+  flex-direction: row;
+}
+
+.VerticalLabelContainer {
+  display: flex;
+  flex-flow: column wrap;
+  margin: $spacing-loose;
+}
+
+.HorizontailLabelContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min-content, 150px));
+}

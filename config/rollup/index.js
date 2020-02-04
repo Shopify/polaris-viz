@@ -6,6 +6,7 @@ const commonjs = require('rollup-plugin-commonjs');
 const {dependencies, peerDependencies} = require('../../package.json');
 
 const image = require('./plugins/image');
+const styles = require('./plugins/styles');
 
 const externalPackages = [
   ...Object.keys(dependencies),
@@ -37,6 +38,9 @@ module.exports = function createRollupConfig({entry, cssPath}) {
         runtimeHelpers: true,
       }),
       commonjs(),
+      styles({
+        output: cssPath,
+      }),
       image({
         exclude: ['node_modules/**'],
       }),
