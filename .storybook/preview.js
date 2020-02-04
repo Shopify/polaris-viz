@@ -1,23 +1,18 @@
 import React from 'react';
-import {configure, addParameters, addDecorator} from '@storybook/react';
+import {addParameters, addDecorator} from '@storybook/react';
 import {setConsoleOptions} from '@storybook/addon-console';
 import {withContexts} from '@storybook/addon-contexts/react';
-import {create} from '@storybook/theming';
-import tokens from '@shopify/polaris-tokens';
+
+import {AppProvider} from '../src';
+import enTranslations from '../locales/en.json';
 
 addParameters({
   options: {
-    panelPosition: 'bottom',
-    theme: create({
-      base: 'light',
-      brandTitle: 'Shopify Polaris Viz Storybook',
-      brandUrl: '/',
-      brandImage: null,
-      appBorderRadius: 0,
-      appBg: tokens.colorSkyLight,
-      contentBg: tokens.colorSkyLight,
-      textColor: tokens.colorInk,
-    }),
+    // showRoots: true,
+  },
+  percy: {
+    skip: true,
+    widths: [375, 1280],
   },
 });
 
@@ -56,13 +51,3 @@ setConsoleOptions((opts) => {
   ];
   return opts;
 });
-
-configure(
-  [
-    // Playground stories
-    require.context('../playground', true, /stories.tsx$/),
-    // Component readme stories
-    require.context('../src/components', true, /\/.+\/README.md$/),
-  ],
-  module,
-);

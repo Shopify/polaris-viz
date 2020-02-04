@@ -11,7 +11,7 @@ const HOOK_PREFIX = 'use';
  * that adheres Storybook's Component Story Format that describes the stories
  * contained in the readme.
  *
- * We don't know what `polaris-viz` exports are needed by a given component, so we
+ * We don't know what `polaris-viz`` exports are needed by a given component, so we
  * import all of Polaris into the scope. This means that any time we add
  * examples for a new component we need to add it to the list of components that
  * are imported in this loader.
@@ -81,7 +81,7 @@ import React, {${hooks}} from 'react';
 import {withA11y} from '@storybook/addon-a11y';
 import {
   NormalizedStackedBar,
-} from '@shopify/polaris';
+} from '@shopify/polaris-viz';
 
 export default { title: ${JSON.stringify(`All Components|${readme.name}`)} };
 
