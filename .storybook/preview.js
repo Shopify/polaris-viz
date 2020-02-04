@@ -10,10 +10,6 @@ addParameters({
   options: {
     // showRoots: true,
   },
-  percy: {
-    skip: true,
-    widths: [375, 1280],
-  },
 });
 
 addDecorator(function PaddingDecorator(story) {
