@@ -28,12 +28,15 @@ import '@shopify/polaris-viz/styles.css';
 
 ## Components
 
+Components inherit their sizes from their containers, so place your component inside an element with a width and height specified.
+
 <table>
   <thead>
     <th>Viz</th>
     <th>Use cases</th>
     <th>Props</th>
   <thead>
+
   <tbody>
   <tr>
     <td>
@@ -63,7 +66,34 @@ import '@shopify/polaris-viz/styles.css';
     </li>
     </ul></td>
     </tr>
-
+      <tr>
+    <td>
+     Sparkline
+      <br />
+      <br />
+      <img src="https://github.com/Shopify/polaris-viz/raw/master/documentation/images/sparkline.png"/>
+    </td>
+    <td>
+      Used in small sizes to give an overview of how a metric has performed over time.
+    </td>
+    <td><ul>
+    <li><strong>data (required):</strong>
+    <code>{x: number, y: number}[]</code>
+    </li>
+    <li><strong>accessibilityLabel:</strong>
+    <code>string</code>
+    </li>
+    <li><strong>color:</strong>
+    <code><a href="https://github.com/Shopify/polaris-viz/blob/master/src/components/NormalizedStackedBar/types.ts#L13">Color</a></code>
+    </li>
+    <li><strong>useAnimation:</strong>
+    <code>boolean</code>
+    </li>
+    <li><strong>showArea:</strong>
+    <code>boolean</code>
+    </li>
+    </ul></td>
+    </tr>
   </tbody>
 </table>
 

@@ -4,8 +4,9 @@ import tokens, {
   colorTeal,
   colorSkyDark,
 } from '@shopify/polaris-tokens';
+import {Color} from 'types';
 
-import {ColorScheme, Color} from './types';
+import {ColorScheme} from './types';
 
 export function getColorPalette(colors: ColorScheme) {
   const colorMap = {
