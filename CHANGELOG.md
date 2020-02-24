@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## [0.0.5] - 2020-02-24
+
 ### Added
 
 Sparkline component
