@@ -1,8 +1,8 @@
-import React, {createRef, useEffect} from 'react';
+import React, {createRef, useEffect, useState} from 'react';
 import {scaleLinear, ScaleLinear} from 'd3-scale';
 import {line} from 'd3-shape';
 import {axisBottom, axisLeft} from 'd3-axis';
-import {select} from 'd3-selection';
+import {select, customEvent, mouse} from 'd3-selection';
 
 // becomes props/dynamic
 const width = 700;
@@ -29,6 +29,7 @@ const data2 = [
 ];
 
 const data3 = [
+  {x: 0, y: 100},
   {x: 1, y: 100},
   {x: 2, y: -10},
   {x: 3, y: 100},
@@ -98,6 +99,13 @@ function Line({
 }
 
 export function LineChart() {
+  const [closestXPosition, setClosestXPosition] = useState<number | null>(null);
+  const [mousePosition, setMousePosition] = useState<{
+    x: number;
+    y: number;
+  } | null>(null);
+  const svgContainer = createRef<SVGSVGElement>();
+
   const greatestXValues = allData.map((arr) =>
     arr.reduce((max, p) => (p.x > max ? p.x : max), 0),
   );
@@ -119,19 +127,83 @@ export function LineChart() {
     .range([height - axisWidthAndHeight, axisWidthAndHeight])
     .domain([Math.min(...lowestYValues), Math.max(...greatestYValues)]);
 
+  const currentValues = allData.map((dataSet) =>
+    dataSet.filter((data) => data.x === closestXPosition),
+  );
+
   return (
-    <svg width={width} height={height}>
-      {allData.map((item, index) => (
-        <Line
-          key={index}
-          xScale={xScale}
-          yScale={yScale}
-          data={item}
-          stroke={colors[index]}
-        />
-      ))}
-      <XAxis xScale={xScale} />
-      <YAxis yScale={yScale} />
-    </svg>
+    <>
+      <svg
+        ref={svgContainer}
+        width={width}
+        height={height}
+        onMouseLeave={() => {
+          setClosestXPosition(null);
+        }}
+        onMouseMove={(event) => {
+          const [mouseX] = customEvent(
+            event,
+            () => mouse(event.currentTarget),
+            {},
+          );
+
+          // not quite right position
+          const xPositon =
+            event.pageX -
+            svgContainer.current.getBoundingClientRect().x +
+            (40 + axisWidthAndHeight);
+
+          const yPosition =
+            event.pageY -
+            svgContainer.current.getBoundingClientRect().y +
+            axisWidthAndHeight;
+
+          setMousePosition({x: xPositon, y: yPosition});
+
+          const indexAtMouse = xScale.invert(mouseX - axisWidthAndHeight);
+
+          const closestXValue = data
+            .map((x) => x.x)
+            .reduce((a, b) => {
+              return Math.abs(b - indexAtMouse) < Math.abs(a - indexAtMouse)
+                ? b
+                : a;
+            });
+
+          setClosestXPosition(closestXValue);
+        }}
+      >
+        {allData.map((item, index) => (
+          <Line
+            key={index}
+            xScale={xScale}
+            yScale={yScale}
+            data={item}
+            stroke={colors[index]}
+          />
+        ))}
+        <XAxis xScale={xScale} />
+        <YAxis yScale={yScale} />
+      </svg>
+
+      {closestXPosition == null ? null : (
+        <div
+          style={{
+            position: 'absolute',
+            display: 'block',
+            left: mousePosition ? mousePosition.x : 0,
+            top: mousePosition ? mousePosition.y : 0,
+            background: 'white',
+          }}
+        >
+          {currentValues.map((currentValue, i) => (
+            <>
+              <div>{`Line ${i} x value: ${currentValue[0].x}`}</div>
+              <div>{`Line ${i} y value: ${currentValue[0].y}`}</div>
+            </>
+          ))}
+        </div>
+      )}
+    </>
   );
 }
