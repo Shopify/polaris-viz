@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## [0.0.6] - 2020-02-25
+
 ### Changed
 
 - Unpin React version in dependencies
