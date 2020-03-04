@@ -1151,6 +1151,13 @@
   resolved "https://registry.yarnpkg.com/@shopify/integrity-sha-utils/-/integrity-sha-utils-1.0.5.tgz#26e32b104950aad49f9531378684782aaec8dc58"
   integrity sha512-w10TkoJgCVTIiLbkCuzb5259PWXpvIwBJAifr4mc6aHEXeJLE+yZ3dW/5wTV7OuMMn/Xa1AsBo3nmgLQVe3ZIQ==
 
+"@shopify/network@^1.4.2":
+  version "1.4.6"
+  resolved "https://registry.yarnpkg.com/@shopify/network/-/network-1.4.6.tgz#fa2b1b44cb1cf84563ae721625bfc021d29d6b1e"
+  integrity sha512-QMikWQ5gWg70sDnVjwjYmBsqIwUubN41WcLe/CiFO5a1IwAPt4kWuMHY9TC9QVNAYJ3bSW7TtnvoZQOyPIZzNA==
+  dependencies:
+    tslib "^1.9.3"
+
 "@shopify/polaris-tokens@^2.6.0":
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/@shopify/polaris-tokens/-/polaris-tokens-2.7.0.tgz#6e36249d3c7bcbedbd079f4c5e6e35e4f12c45af"
@@ -1300,6 +1307,15 @@
     webpack-plugin-hash-output "npm:@shopify/webpack-plugin-hash-output@3.0.7"
     whatwg-url "^6.1.0"
     yargs "^12.0.2"
+
+"@shopify/shrink-ray@^2.3.1":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@shopify/shrink-ray/-/shrink-ray-2.3.1.tgz#38c2c7933d46d2e8721a9dac19c67adc2798a1b4"
+  integrity sha512-YO9lgIkcsmDybMJV4+qQI6BVt2ZJ0lM1oAJhxMOmlJaaPN7FJC6heA9xvAyGT1ivLMHgR7F4DZJWOxWpc7pDzw==
+  dependencies:
+    "@shopify/network" "^1.4.2"
+    async "^3.1.0"
+    isomorphic-fetch "^2.2.1"
 
 "@shopify/typescript-configs@^2.0.1":
   version "2.0.1"
@@ -2548,6 +2564,11 @@ async@^2.1.4, async@^2.6.2:
   integrity sha512-zflvls11DCy+dQWzTW2dzuilv8Z5X/pjfmZOWba6TNIVDm+2UDaJmXSOXlasHKfNBs8oo3M0aT50fDEWfKZjXg==
   dependencies:
     lodash "^4.17.14"
+
+async@^3.1.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/async/-/async-3.2.0.tgz#b3a2685c5ebb641d3de02d161002c60fc9f85720"
+  integrity sha512-TR2mEZFVOj2pLStYxLht7TyfuRzaydfpxr3k9RpHIzMgw7A64dzsdqCxH1WJyQdoe8T10nDXd9wnEigmiuHIZw==
 
 asynckit@^0.4.0:
   version "0.4.0"
