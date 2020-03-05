@@ -28,7 +28,6 @@
     "build": "node ./scripts/build.js",
     "prebuild-consumer": "yarn run build",
     "build-consumer": "node ./scripts/build-consumer",
-    "build-shrink-ray": "yarn run && node ./scripts/build-shrink-ray.js",
     "prepublish": "in-publish && yarn run build || :",
     "dev": "sewing-kit playground"
   },
