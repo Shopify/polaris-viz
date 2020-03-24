@@ -1,1 +1,1 @@
-export {NormalizedStackedBar, Sparkline} from './components';
+export {LineChart, NormalizedStackedBar, Sparkline} from './components';
