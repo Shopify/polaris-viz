@@ -20,7 +20,7 @@ yarn add @shopify/polaris-viz
 
 If your app is set up to consume `esnext` builds, import components where you want to use them and the styles will automatically be applied.
 
-If your app is not set up for `esnext`, import the styles where you import components from the libary:
+If your app is not set up for `esnext`, import the styles where you import components from the library:
 
 ```js
 import '@shopify/polaris-viz/styles.css';
