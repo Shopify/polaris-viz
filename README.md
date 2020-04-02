@@ -89,7 +89,7 @@ Components inherit their sizes from their containers, so place your component in
     <li><strong>useAnimation:</strong>
     <code>boolean</code>
     </li>
-    <li><strong>showArea:</strong>
+    <li><strong>includeArea:</strong>
     <code>boolean</code>
     </li>
     </ul></td>
