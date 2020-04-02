@@ -1,6 +1,10 @@
 import React, {useMemo} from 'react';
 import {ScaleLinear} from 'd3-scale';
-import {colorSkyDark, colorInkLighter} from '@shopify/polaris-tokens';
+import {
+  colorSkyDark,
+  colorInkLighter,
+  spacingLoose,
+} from '@shopify/polaris-tokens';
 
 import {Margin} from '../../constants';
 import {ChartDimensions} from '../../types';
@@ -56,7 +60,7 @@ export function XAxis({xScale, labels, dimensions}: Props) {
               style={{
                 fontSize: '12px',
                 textAnchor: 'middle',
-                transform: 'translateY(20px)',
+                transform: `translateY(${spacingLoose})`,
               }}
             >
               {value}

@@ -4,6 +4,7 @@ import {
   colorSkyDark,
   colorInkLighter,
   colorInkLightest,
+  spacingTight,
 } from '@shopify/polaris-tokens';
 
 import {Margin} from '../../constants';
@@ -45,7 +46,7 @@ export function YAxis({yScale, formatYAxisValue, dimensions}: Props) {
               style={{
                 fontSize: '12px',
                 textAnchor: 'end',
-                transform: 'translateX(-10px)',
+                transform: `translateX(-${spacingTight})`,
               }}
             >
               {formattedValue}

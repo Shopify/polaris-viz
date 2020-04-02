@@ -93,7 +93,7 @@ export function LineChart({
 
             if (path == null) {
               throw new Error(
-                'Could not generate attribute `d` for path element',
+                `Could not generate line path for series ${name}`,
               );
             }
 
