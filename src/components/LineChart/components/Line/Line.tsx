@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  colorPurpleDark,
-  colorBlueDark,
-  colorTeal,
-} from '@shopify/polaris-tokens';
+import tokens from '@shopify/polaris-tokens';
 
 import {Series} from '../../types';
 
@@ -13,23 +9,8 @@ interface Props {
 }
 
 export function Line({path, series}: Props) {
-  const {name, style = {}} = series;
-  const {color = 'purple', lineStyle = 'solid'} = style;
-
-  let strokeColor;
-  switch (color) {
-    case 'purple':
-      strokeColor = colorPurpleDark;
-      break;
-    case 'teal':
-      strokeColor = colorTeal;
-      break;
-    case 'blue':
-      strokeColor = colorBlueDark;
-      break;
-    default:
-      throw new Error(`Invalid line color ${color} for series named ${name}`);
-  }
+  const {style = {}} = series;
+  const {color = 'colorPurple', lineStyle = 'solid'} = style;
 
   return (
     <path
@@ -37,7 +18,7 @@ export function Line({path, series}: Props) {
       fill="none"
       strokeWidth="2px"
       paintOrder="stroke"
-      stroke={strokeColor}
+      stroke={tokens[color]}
       strokeLinejoin="round"
       strokeLinecap="round"
       strokeDasharray={lineStyle === 'dashed' ? '2 4' : 'unset'}

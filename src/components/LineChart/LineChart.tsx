@@ -22,7 +22,7 @@ export function LineChart({
     width: 0,
     height: 0,
   });
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<SVGSVGElement | null>(null);
 
   function updateDimensions() {
     if (containerRef.current != null) {
@@ -61,9 +61,9 @@ export function LineChart({
     .domain([Math.min(0, minY), maxY * Y_SCALE_PADDING])
     .nice();
 
-  const lineGenerator = line<[string, number]>()
+  const lineGenerator = line<{x: string; y: number}>()
     .x((_, index) => xScale(index))
-    .y(([, yValue]) => yScale(yValue));
+    .y(({y}) => yScale(y));
 
   return (
     <svg width="100%" height="100%" ref={containerRef}>

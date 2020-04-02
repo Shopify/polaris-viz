@@ -1,12 +1,16 @@
+import {Color} from 'types';
+
 export interface Series {
-  data: [string, number][];
+  data: {
+    x: string;
+    y: number;
+  }[];
   name: string;
   formatY?(value: number): string;
   style?: Partial<{
-    color: 'purple' | 'blue' | 'teal';
+    color: Color;
     lineStyle: 'dashed' | 'solid';
   }>;
-  primary?: boolean;
 }
 
 export interface ChartDimensions {

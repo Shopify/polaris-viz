@@ -1,6 +1,10 @@
 import React, {useMemo} from 'react';
 import {ScaleLinear} from 'd3-scale';
-import {colorSkyDark, colorInkLighter} from '@shopify/polaris-tokens';
+import {
+  colorSkyDark,
+  colorInkLighter,
+  colorInkLightest,
+} from '@shopify/polaris-tokens';
 
 import {Margin} from '../../constants';
 import {ChartDimensions} from '../../types';
@@ -21,19 +25,20 @@ export function YAxis({yScale, formatYAxisValue, dimensions}: Props) {
     );
 
     return yScale.ticks(maxTicks).map((value) => ({
-      value: formatYAxisValue(value),
+      value,
+      formattedValue: formatYAxisValue(value),
       yOffset: yScale(value),
     }));
   }, [dimensions.height, formatYAxisValue, yScale]);
 
   return (
     <g>
-      {ticks.map(({value, yOffset}) => {
+      {ticks.map(({value, formattedValue, yOffset}) => {
         return (
           <g key={value} transform={`translate(0,${yOffset})`}>
             <line
               x2={`${dimensions.width - Margin.Left - Margin.Right}`}
-              stroke={colorSkyDark}
+              stroke={value === 0 ? colorInkLightest : colorSkyDark}
             />
             <text
               fill={colorInkLighter}
@@ -43,7 +48,7 @@ export function YAxis({yScale, formatYAxisValue, dimensions}: Props) {
                 transform: 'translateX(-10px)',
               }}
             >
-              {value}
+              {formattedValue}
             </text>
           </g>
         );

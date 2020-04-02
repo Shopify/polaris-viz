@@ -11,6 +11,7 @@ interface Props {
   dimensions: ChartDimensions;
 }
 
+const TICK_SIZE = 6;
 const MIN_LABEL_SPACE = 75;
 
 export function XAxis({xScale, labels, dimensions}: Props) {
@@ -30,10 +31,12 @@ export function XAxis({xScale, labels, dimensions}: Props) {
     });
   }, [dimensions, xScale, labels]);
 
+  const [xScaleMin, xScaleMax] = xScale.range();
+
   return (
     <g transform={`translate(${Margin.Left},0)`}>
       <path
-        d={`M ${xScale.range()[0]} ${6} v ${-6} H ${xScale.range()[1]} v ${6}`}
+        d={`M ${xScaleMin} ${TICK_SIZE} v ${-TICK_SIZE} H ${xScaleMax} v ${TICK_SIZE}`}
         fill="none"
         stroke={colorSkyDark}
       />
@@ -41,7 +44,7 @@ export function XAxis({xScale, labels, dimensions}: Props) {
       {ticks.map(({value, xOffset}) => {
         return (
           <g key={value} transform={`translate(${xOffset}, 0)`}>
-            <line y2="6" stroke={colorSkyDark} />
+            <line y2={TICK_SIZE} stroke={colorSkyDark} />
             <line
               y1="0"
               y2={-(dimensions.height - Margin.Bottom - Margin.Top)}
