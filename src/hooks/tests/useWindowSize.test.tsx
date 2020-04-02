@@ -2,7 +2,7 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {act} from 'react-dom/test-utils';
 
-import {useWindowSize} from '../hooks';
+import {useWindowSize} from '../useWindowSize';
 
 const TIMEOUT_DELAY = 1000;
 const MOCK_WIDTH = 100;
