@@ -60,7 +60,7 @@
     "@babel/core": "^7.6.0",
     "@babel/node": "^7.6.1",
     "@shopify/react-testing": "^1.8.0",
-    "@shopify/sewing-kit": "^0.112.0",
+    "@shopify/sewing-kit": "^0.120.0",
     "@types/d3-array": "^2.0.0",
     "@types/d3-scale": "^2.1.1",
     "@types/d3-shape": "^1.3.2",
@@ -89,6 +89,8 @@
     "postcss-modules-scope": "^2.1.0",
     "postcss-modules-values": "^2.0.0",
     "postcss-shopify": "^2.2.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
     "rimraf": "^3.0.0",
     "rollup": "^1.10.1",
     "rollup-plugin-babel": "^4.3.3",
@@ -122,8 +124,6 @@
     "d3-array": "^2.4.0",
     "d3-scale": "^1.0.7",
     "d3-shape": "^1.3.7",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
     "react-spring": "^8.0.27",
     "use-debounce": "^3.3.0"
   }
