@@ -1,1 +1,6 @@
 @import 'node_modules/@shopify/polaris-tokens/dist/index';
+
+.Container {
+  position: relative;
+  height: 100%;
+}
