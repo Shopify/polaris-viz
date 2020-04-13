@@ -12,8 +12,3 @@ export interface Series {
     lineStyle: 'dashed' | 'solid';
   }>;
 }
-
-export interface ChartDimensions {
-  height: number;
-  width: number;
-}
