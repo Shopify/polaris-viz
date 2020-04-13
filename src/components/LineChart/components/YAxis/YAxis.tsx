@@ -8,12 +8,11 @@ import {
 } from '@shopify/polaris-tokens';
 
 import {Margin} from '../../constants';
-import {ChartDimensions} from '../../types';
 
 interface Props {
   yScale: ScaleLinear<number, number>;
   formatYAxisValue(value: number): string;
-  dimensions: ChartDimensions;
+  dimensions: DOMRect;
 }
 
 const MIN_LABEL_SPACE = 80;
