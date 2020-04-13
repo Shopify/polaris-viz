@@ -7,12 +7,11 @@ import {
 } from '@shopify/polaris-tokens';
 
 import {Margin} from '../../constants';
-import {ChartDimensions} from '../../types';
 
 interface Props {
   xScale: ScaleLinear<number, number>;
   labels: string[];
-  dimensions: ChartDimensions;
+  dimensions: DOMRect;
 }
 
 const TICK_SIZE = 6;

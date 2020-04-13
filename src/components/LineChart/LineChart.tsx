@@ -3,7 +3,7 @@ import {line} from 'd3-shape';
 import {scaleLinear} from 'd3-scale';
 
 import {Margin, Y_SCALE_PADDING} from './constants';
-import {ChartDimensions, Series} from './types';
+import {Series} from './types';
 import {yAxisMinMax} from './utilities';
 import {Line, XAxis, YAxis} from './components';
 
@@ -18,18 +18,12 @@ export function LineChart({
   xAxisLabels,
   formatYAxisValue = (value) => `${value}`,
 }: Props) {
-  const [svgDimensions, setSvgDimensions] = useState<ChartDimensions>({
-    width: 0,
-    height: 0,
-  });
+  const [svgDimensions, setSvgDimensions] = useState<DOMRect>(new DOMRect());
   const containerRef = useRef<SVGSVGElement | null>(null);
 
   function updateDimensions() {
     if (containerRef.current != null) {
-      setSvgDimensions({
-        height: containerRef.current.clientHeight,
-        width: containerRef.current.clientWidth,
-      });
+      setSvgDimensions(containerRef.current.getBoundingClientRect());
     }
   }
 
