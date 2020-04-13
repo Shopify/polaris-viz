@@ -4,8 +4,8 @@ import {scaleLinear} from 'd3-scale';
 
 import {Margin, Y_SCALE_PADDING} from './constants';
 import {Series} from './types';
-import {yAxisMinMax} from './utilities';
-import {Line, XAxis, YAxis} from './components';
+import {eventPoint, yAxisMinMax} from './utilities';
+import {Crosshair, Line, XAxis, YAxis} from './components';
 
 interface Props {
   series: Series[];
@@ -20,6 +20,7 @@ export function LineChart({
 }: Props) {
   const [svgDimensions, setSvgDimensions] = useState<DOMRect>(new DOMRect());
   const containerRef = useRef<SVGSVGElement | null>(null);
+  const [activePointIndex, setActivePointIndex] = useState<number | null>(null);
 
   function updateDimensions() {
     if (containerRef.current != null) {
@@ -59,8 +60,33 @@ export function LineChart({
     .x((_, index) => xScale(index))
     .y(({y}) => yScale(y));
 
+  function handleInteraction(
+    event: React.MouseEvent<SVGSVGElement> | React.TouchEvent<SVGSVGElement>,
+  ) {
+    const point = eventPoint(event);
+    if (point == null) {
+      return;
+    }
+
+    const {svgX} = point;
+    if (svgX < Margin.Left) {
+      return;
+    }
+
+    const closestIndex = Math.round(xScale.invert(svgX - Margin.Left));
+    setActivePointIndex(closestIndex);
+  }
+
   return (
-    <svg width="100%" height="100%" ref={containerRef}>
+    <svg
+      width="100%"
+      height="100%"
+      ref={containerRef}
+      onMouseMove={handleInteraction}
+      onTouchMove={handleInteraction}
+      onTouchEnd={() => setActivePointIndex(null)}
+      onMouseLeave={() => setActivePointIndex(null)}
+    >
       <g transform={`translate(0,${svgDimensions.height - Margin.Bottom})`}>
         <XAxis
           xScale={xScale}
@@ -77,6 +103,12 @@ export function LineChart({
         />
       </g>
 
+      {activePointIndex == null ? null : (
+        <g transform={`translate(${Margin.Left},${Margin.Top})`}>
+          <Crosshair x={xScale(activePointIndex)} dimensions={svgDimensions} />
+        </g>
+      )}
+
       <g transform={`translate(${Margin.Left},${Margin.Top})`}>
         {series
           .slice()
@@ -91,7 +123,16 @@ export function LineChart({
               );
             }
 
-            return <Line key={name} series={singleSeries} path={path} />;
+            return (
+              <Line
+                key={name}
+                xScale={xScale}
+                yScale={yScale}
+                series={singleSeries}
+                path={path}
+                activePointIndex={activePointIndex}
+              />
+            );
           })}
       </g>
     </svg>
