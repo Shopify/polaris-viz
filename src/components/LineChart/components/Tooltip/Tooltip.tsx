@@ -60,13 +60,18 @@ export function Tooltip({
           return null;
         }
 
-        const {color = 'colorPurple'} = style;
+        const {color = 'colorPurple', lineStyle = 'solid'} = style;
 
         return (
           <React.Fragment key={name}>
             <div>
-              <svg width="16px" height="5px">
-                <path d="M0,0L100,0" stroke={tokens[color]} strokeWidth="4" />
+              <svg width="15px" height="5px">
+                <path
+                  d="M0,0L100,0"
+                  stroke={tokens[color]}
+                  strokeWidth="4"
+                  strokeDasharray={lineStyle === 'dashed' ? '3 2' : 'unset'}
+                />
               </svg>
             </div>
             <p className={styles.SeriesName}>{name}</p>
