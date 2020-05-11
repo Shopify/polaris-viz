@@ -1,5 +1,7 @@
 import {Color} from 'types';
 
+export type LineStyle = 'dashed' | 'solid';
+
 export interface Series {
   data: {
     x: string;
@@ -9,6 +11,6 @@ export interface Series {
   formatY?(value: number): string;
   style?: Partial<{
     color: Color;
-    lineStyle: 'dashed' | 'solid';
+    lineStyle: LineStyle;
   }>;
 }

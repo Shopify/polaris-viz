@@ -1,0 +1,22 @@
+@import 'node_modules/@shopify/polaris-tokens/dist/index';
+
+.Container {
+  column-gap: $spacing-loose;
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: end;
+  padding: $spacing-loose 0;
+}
+
+.Series {
+  align-items: baseline;
+  column-gap: $spacing-tight;
+  display: grid;
+  grid-auto-flow: column;
+}
+
+.SeriesName {
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0;
+}

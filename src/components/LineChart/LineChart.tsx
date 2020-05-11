@@ -5,18 +5,20 @@ import {scaleLinear} from 'd3-scale';
 import {Margin, Y_SCALE_PADDING} from './constants';
 import {Series} from './types';
 import {eventPoint, yAxisMinMax} from './utilities';
-import {Crosshair, Line, Tooltip, XAxis, YAxis} from './components';
+import {Crosshair, Legend, Line, Tooltip, XAxis, YAxis} from './components';
 import * as styles from './LineChart.scss';
 
 interface Props {
   series: Series[];
   xAxisLabels: string[];
+  height?: string | number;
   formatYAxisValue?(value: number): string;
 }
 
 export function LineChart({
   series,
   xAxisLabels,
+  height = 250,
   formatYAxisValue = (value) => `${value}`,
 }: Props) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect>(
@@ -89,77 +91,83 @@ export function LineChart({
   }
 
   return (
-    <div className={styles.Container} ref={containerRef}>
-      <svg
-        width="100%"
-        height="100%"
-        onMouseMove={handleInteraction}
-        onTouchMove={handleInteraction}
-        onTouchEnd={() => setActivePointIndex(null)}
-        onMouseLeave={() => setActivePointIndex(null)}
-      >
-        <g transform={`translate(0,${chartDimensions.height - Margin.Bottom})`}>
-          <XAxis
-            xScale={xScale}
-            labels={xAxisLabels}
-            dimensions={chartDimensions}
-          />
-        </g>
-
-        <g transform={`translate(${Margin.Left},${Margin.Top})`}>
-          <YAxis
-            yScale={yScale}
-            formatYAxisValue={formatYAxisValue}
-            dimensions={chartDimensions}
-          />
-        </g>
-
-        {activePointIndex == null ? null : (
-          <g transform={`translate(${Margin.Left},${Margin.Top})`}>
-            <Crosshair
-              x={xScale(activePointIndex)}
+    <React.Fragment>
+      <div className={styles.Container} style={{height}} ref={containerRef}>
+        <svg
+          width="100%"
+          height="100%"
+          onMouseMove={handleInteraction}
+          onTouchMove={handleInteraction}
+          onTouchEnd={() => setActivePointIndex(null)}
+          onMouseLeave={() => setActivePointIndex(null)}
+        >
+          <g
+            transform={`translate(0,${chartDimensions.height - Margin.Bottom})`}
+          >
+            <XAxis
+              xScale={xScale}
+              labels={xAxisLabels}
               dimensions={chartDimensions}
             />
           </g>
-        )}
 
-        <g transform={`translate(${Margin.Left},${Margin.Top})`}>
-          {series
-            .slice()
-            .reverse()
-            .map((singleSeries) => {
-              const {data, name} = singleSeries;
-              const path = lineGenerator(data);
+          <g transform={`translate(${Margin.Left},${Margin.Top})`}>
+            <YAxis
+              yScale={yScale}
+              formatYAxisValue={formatYAxisValue}
+              dimensions={chartDimensions}
+            />
+          </g>
 
-              if (path == null) {
-                throw new Error(
-                  `Could not generate line path for series ${name}`,
+          {activePointIndex == null ? null : (
+            <g transform={`translate(${Margin.Left},${Margin.Top})`}>
+              <Crosshair
+                x={xScale(activePointIndex)}
+                dimensions={chartDimensions}
+              />
+            </g>
+          )}
+
+          <g transform={`translate(${Margin.Left},${Margin.Top})`}>
+            {series
+              .slice()
+              .reverse()
+              .map((singleSeries) => {
+                const {data, name} = singleSeries;
+                const path = lineGenerator(data);
+
+                if (path == null) {
+                  throw new Error(
+                    `Could not generate line path for series ${name}`,
+                  );
+                }
+
+                return (
+                  <Line
+                    key={name}
+                    xScale={xScale}
+                    yScale={yScale}
+                    series={singleSeries}
+                    path={path}
+                    activePointIndex={activePointIndex}
+                  />
                 );
-              }
+              })}
+          </g>
+        </svg>
 
-              return (
-                <Line
-                  key={name}
-                  xScale={xScale}
-                  yScale={yScale}
-                  series={singleSeries}
-                  path={path}
-                  activePointIndex={activePointIndex}
-                />
-              );
-            })}
-        </g>
-      </svg>
+        {tooltipPosition == null || activePointIndex == null ? null : (
+          <Tooltip
+            activePointIndex={activePointIndex}
+            currentX={tooltipPosition.x}
+            currentY={tooltipPosition.y}
+            formatYAxisValue={formatYAxisValue}
+            series={series}
+          />
+        )}
+      </div>
 
-      {tooltipPosition == null || activePointIndex == null ? null : (
-        <Tooltip
-          activePointIndex={activePointIndex}
-          currentX={tooltipPosition.x}
-          currentY={tooltipPosition.y}
-          formatYAxisValue={formatYAxisValue}
-          series={series}
-        />
-      )}
-    </div>
+      <Legend series={series} />
+    </React.Fragment>
   );
 }
