@@ -1,5 +1,4 @@
 import React, {useEffect, useRef, useState} from 'react';
-import tokens from '@shopify/polaris-tokens';
 import {useSpring, animated} from 'react-spring';
 
 import {Margin} from '../../constants';
