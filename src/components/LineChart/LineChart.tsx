@@ -11,14 +11,14 @@ import * as styles from './LineChart.scss';
 interface Props {
   series: Series[];
   xAxisLabels: string[];
-  height?: string | number;
+  chartHeight?: string | number;
   formatYAxisValue?(value: number): string;
 }
 
 export function LineChart({
   series,
   xAxisLabels,
-  height = 250,
+  chartHeight = 250,
   formatYAxisValue = (value) => `${value}`,
 }: Props) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect>(
@@ -92,7 +92,11 @@ export function LineChart({
 
   return (
     <React.Fragment>
-      <div className={styles.Container} style={{height}} ref={containerRef}>
+      <div
+        className={styles.Container}
+        style={{height: chartHeight}}
+        ref={containerRef}
+      >
         <svg
           width="100%"
           height="100%"
