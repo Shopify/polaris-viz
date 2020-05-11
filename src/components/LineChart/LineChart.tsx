@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {line} from 'd3-shape';
 import {scaleLinear} from 'd3-scale';
+import {useDebouncedCallback} from 'use-debounce';
 
 import {Margin, Y_SCALE_PADDING} from './constants';
 import {Series} from './types';
@@ -29,11 +30,11 @@ export function LineChart({
     y: number;
   } | null>(null);
 
-  function updateDimensions() {
+  const [updateDimensions] = useDebouncedCallback(() => {
     if (containerRef.current != null) {
       setChartDimensions(containerRef.current.getBoundingClientRect());
     }
-  }
+  }, 100);
 
   useEffect(() => {
     if (containerRef.current != null) {
@@ -45,7 +46,7 @@ export function LineChart({
     return () => {
       window.removeEventListener('resize', updateDimensions);
     };
-  }, [containerRef]);
+  }, [containerRef, updateDimensions]);
 
   const longestSeriesLength = series.reduce<number>(
     (max, currentSeries) => Math.max(max, currentSeries.data.length - 1),
