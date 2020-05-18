@@ -1,0 +1,26 @@
+@import 'node_modules/@shopify/polaris-tokens/dist/index';
+
+.Container {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  // These negative margins are to support good spacing around the flex children
+  margin: (-1 * $spacing-extra-tight) (-1 * $spacing-loose);
+  flex-wrap: wrap;
+  padding: $spacing-base-tight;
+}
+
+.Series {
+  align-items: baseline;
+  column-gap: $spacing-tight;
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: end;
+  padding: $spacing-extra-tight $spacing-loose;
+}
+
+.SeriesName {
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0;
+}
