@@ -1,9 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react';
-import tokens from '@shopify/polaris-tokens';
 import {useSpring, animated} from 'react-spring';
 
 import {Margin} from '../../constants';
 import {Series} from '../../types';
+import {LinePreview} from '../LinePreview';
 
 import styles from './Tooltip.scss';
 
@@ -64,16 +64,7 @@ export function Tooltip({
 
         return (
           <React.Fragment key={name}>
-            <div>
-              <svg width="15px" height="5px">
-                <path
-                  d="M0,0L100,0"
-                  stroke={tokens[color]}
-                  strokeWidth="4"
-                  strokeDasharray={lineStyle === 'dashed' ? '3 2' : 'unset'}
-                />
-              </svg>
-            </div>
+            <LinePreview color={color} lineStyle={lineStyle} />
             <p className={styles.SeriesName}>{name}</p>
             <p className={styles.Value}>{formatYAxisValue(point.y)}</p>
           </React.Fragment>
