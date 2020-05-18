@@ -11,7 +11,7 @@ import * as styles from './LineChart.scss';
 interface Props {
   series: Series[];
   xAxisLabels: string[];
-  chartHeight?: string | number;
+  chartHeight?: number;
   formatYAxisValue?(value: number): string;
 }
 
