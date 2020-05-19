@@ -94,6 +94,40 @@ Components inherit their sizes from their containers, so place your component in
     </li>
     </ul></td>
     </tr>
+    <tr>
+    <td>
+    Line chart
+    <br />
+    <br />
+    <img src="https://github.com/Shopify/polaris-viz/raw/master/documentation/images/linechart.png"/>
+    </td>
+    <td>
+    Used to show change over time, comparisons, and trends.
+    </td>
+    <td>
+    <ul>
+    <li><strong>xAxisLabels (required):</strong> <code>string[]</code></li>
+    <li>
+    <strong>series (required):</strong> <code>Series[]</code>
+    <ul>
+    <li><strong>data (required):</strong> <code>{x: string, y: number}[]</code>
+    </li>
+    <li><strong>name (required):</strong> <code>string</code></li>
+    <li><strong>formatY:</strong> <code>(value: number): string;</code></li>
+    <li>
+    <strong>style (all properties optional):</strong>
+    <ul>
+      <li><strong>color:</strong> <code>Color</code></li>
+      <li><strong>lineStyle:</strong> <code>'dashed' | 'solid'</code></li>
+    </ul>
+    </li>
+    </ul>
+    </li>
+    <li><strong>chartHeight:</strong> <code>number</code></li>
+    <li><strong>formatYAxisValue:</strong> <code>(value: number): string;</code></li>
+    </ul>
+    </td>
+    </tr>
   </tbody>
 </table>
 
