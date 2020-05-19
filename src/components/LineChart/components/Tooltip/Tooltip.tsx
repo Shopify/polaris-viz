@@ -53,7 +53,7 @@ export function Tooltip({
       }}
       ref={tooltipRef}
     >
-      {series.map(({name, data, style = {}}) => {
+      {series.map(({name, data, formatY, style = {}}) => {
         const point = data[activePointIndex];
 
         if (point == null) {
@@ -61,12 +61,14 @@ export function Tooltip({
         }
 
         const {color = 'colorPurple', lineStyle = 'solid'} = style;
+        const formattedYValue =
+          formatY == null ? formatYAxisValue(point.y) : formatY(point.y);
 
         return (
           <React.Fragment key={name}>
             <LinePreview color={color} lineStyle={lineStyle} />
             <p className={styles.SeriesName}>{name}</p>
-            <p className={styles.Value}>{formatYAxisValue(point.y)}</p>
+            <p className={styles.Value}>{formattedYValue}</p>
           </React.Fragment>
         );
       })}
