@@ -29,6 +29,9 @@ export function Tooltip({
   const rightOfCursorPosition = currentX + 10;
 
   const spring = useSpring({
+    config: {
+      duration: 0,
+    },
     top: Math.max(Margin.Top, currentY - tooltipDimensions.height - 10),
     left:
       leftOfCursorPosition < Margin.Left
