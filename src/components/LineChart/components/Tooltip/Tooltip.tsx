@@ -13,6 +13,7 @@ interface Props {
   currentY: number;
   formatYAxisValue(value: number): string;
   series: Series[];
+  chartDimensions: DOMRect;
 }
 
 export function Tooltip({
@@ -23,17 +24,36 @@ export function Tooltip({
   series,
 }: Props) {
   const tooltipRef = useRef<HTMLDivElement | null>(null);
-  const [tooltipDimensions, setTooltipDimensions] = useState(new DOMRect());
-
-  const leftOfCursorPosition = currentX - tooltipDimensions.width - 20;
-  const rightOfCursorPosition = currentX + 10;
+  const [tooltipDimensions, setTooltipDimensions] = useState<DOMRect | null>(
+    null,
+  );
+  const firstRender = useRef(true);
 
   const spring = useSpring({
-    top: Math.max(Margin.Top, currentY - tooltipDimensions.height - 10),
-    left:
-      leftOfCursorPosition < Margin.Left
-        ? rightOfCursorPosition
-        : leftOfCursorPosition,
+    from: {
+      left: 0,
+      top: 0,
+    },
+    to: async (next) => {
+      if (tooltipDimensions == null) {
+        return;
+      }
+
+      const leftOfCursorPosition = currentX - tooltipDimensions.width - 20;
+      const rightOfCursorPosition = currentX + 10;
+
+      const shouldRenderImmediate = firstRender.current;
+      firstRender.current = false;
+
+      await next({
+        top: Math.max(Margin.Top, currentY - tooltipDimensions.height - 10),
+        left:
+          leftOfCursorPosition < Margin.Left
+            ? rightOfCursorPosition
+            : leftOfCursorPosition,
+        immediate: shouldRenderImmediate,
+      });
+    },
   });
 
   useEffect(() => {
