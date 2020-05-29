@@ -84,7 +84,7 @@ export function LineChart({
     }
 
     const closestIndex = Math.round(xScale.invert(svgX - Margin.Left));
-    setActivePointIndex(closestIndex);
+    setActivePointIndex(Math.min(longestSeriesLength, closestIndex));
     setTooltipPosition({
       x: clientX - chartDimensions.left,
       y: clientY - chartDimensions.top,
@@ -168,6 +168,7 @@ export function LineChart({
             currentY={tooltipPosition.y}
             formatYAxisValue={formatYAxisValue}
             series={series}
+            chartDimensions={chartDimensions}
           />
         )}
       </div>

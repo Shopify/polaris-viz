@@ -3,12 +3,13 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "rootDir": "./",
+    "target": "ES5",
     "declarationDir": "types",
     "declarationMap": false,
     "jsx": "react-native",
     "strict": true,
     "importHelpers": true,
-    "skipLibCheck": false
+    "skipLibCheck": true
   },
   "include": ["./config/typescript/**/*", "./src/**/*", "./tests/**/*"]
 }
