@@ -9,6 +9,7 @@ interface Props {
   series: Series[];
   xAxisLabels: string[];
   chartHeight?: number;
+  accessibilityLabel?: string;
   formatYAxisValue?(value: number): string;
 }
 
@@ -17,6 +18,7 @@ export function LineChart({
   xAxisLabels,
   chartHeight = 250,
   formatYAxisValue = (value) => `${value}`,
+  accessibilityLabel,
 }: Props) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -40,7 +42,7 @@ export function LineChart({
   }, [containerRef, updateDimensions]);
 
   return (
-    <React.Fragment>
+    <div aria-label={accessibilityLabel} role="img">
       <div style={{height: chartHeight}} ref={containerRef}>
         {chartDimensions == null ? null : (
           <Chart
@@ -53,6 +55,6 @@ export function LineChart({
       </div>
 
       <Legend series={series} />
-    </React.Fragment>
+    </div>
   );
 }
