@@ -1,9 +1,9 @@
 import React, {useMemo} from 'react';
 import {ScaleLinear} from 'd3-scale';
 import {
+  colorSky,
   colorSkyDark,
   colorInkLighter,
-  colorInkLightest,
   spacingTight,
 } from '@shopify/polaris-tokens';
 
@@ -38,7 +38,7 @@ export function YAxis({yScale, formatYAxisValue, dimensions}: Props) {
           <g key={value} transform={`translate(0,${yOffset})`}>
             <line
               x2={`${dimensions.width - Margin.Left - Margin.Right}`}
-              stroke={value === 0 ? colorInkLightest : colorSkyDark}
+              stroke={value === 0 ? colorSkyDark : colorSky}
             />
             <text
               fill={colorInkLighter}
