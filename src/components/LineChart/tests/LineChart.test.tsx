@@ -24,6 +24,21 @@ const primarySeries: Series = {
 };
 
 describe('<LineChart />', () => {
+  it('renders the provided accessibility label on an "img" role container', () => {
+    const lineChart = mount(
+      <LineChart
+        accessibilityLabel="Test label"
+        series={[primarySeries]}
+        xAxisLabels={['Jan 1']}
+      />,
+    );
+
+    expect(lineChart).toContainReactComponent('div', {
+      role: 'img',
+      'aria-label': 'Test label',
+    });
+  });
+
   it('renders a <Chart /> if container dimensions have been measured', () => {
     jest.useFakeTimers();
     const lineChart = mount(
