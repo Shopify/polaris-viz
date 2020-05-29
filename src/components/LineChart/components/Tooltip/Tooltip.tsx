@@ -13,7 +13,11 @@ interface Props {
   currentY: number;
   formatYAxisValue(value: number): string;
   series: Series[];
+  chartDimensions: DOMRect;
 }
+
+// The space between the cursor and the tooltip
+const TOOLTIP_MARGIN = 10;
 
 export function Tooltip({
   activePointIndex,
@@ -21,19 +25,72 @@ export function Tooltip({
   currentY,
   formatYAxisValue,
   series,
+  chartDimensions,
 }: Props) {
   const tooltipRef = useRef<HTMLDivElement | null>(null);
-  const [tooltipDimensions, setTooltipDimensions] = useState(new DOMRect());
+  const [tooltipDimensions, setTooltipDimensions] = useState<DOMRect | null>(
+    null,
+  );
+  const firstRender = useRef(true);
 
-  const leftOfCursorPosition = currentX - tooltipDimensions.width - 20;
-  const rightOfCursorPosition = currentX + 10;
+  const spring: any = useSpring({
+    from: {
+      translate: [0, 0, 0],
+      opacity: 0,
+    },
+    to: async (next: any) => {
+      if (tooltipDimensions == null) {
+        return;
+      }
 
-  const spring = useSpring({
-    top: Math.max(Margin.Top, currentY - tooltipDimensions.height - 10),
-    left:
-      leftOfCursorPosition < Margin.Left
-        ? rightOfCursorPosition
-        : leftOfCursorPosition,
+      const chartLeftBound = Margin.Left;
+      const chartRightBound = chartDimensions.width - Margin.Right;
+
+      const naturalLeftBound =
+        currentX - tooltipDimensions.width - TOOLTIP_MARGIN;
+      const hasSpaceToLeft = naturalLeftBound > chartLeftBound;
+
+      const naturalRightBound =
+        currentX + tooltipDimensions.width + TOOLTIP_MARGIN;
+      const hasSpaceToRight = naturalRightBound < chartRightBound;
+
+      let xTranslation = 0;
+
+      if (hasSpaceToLeft) {
+        xTranslation = naturalLeftBound;
+      } else if (hasSpaceToRight) {
+        xTranslation = currentX + TOOLTIP_MARGIN;
+      } else {
+        const centeredLeftBound = currentX - tooltipDimensions.width / 2;
+        const centeredRightBound = currentX + tooltipDimensions.width / 2;
+
+        if (centeredRightBound > chartRightBound) {
+          xTranslation = chartRightBound - tooltipDimensions.width;
+        } else if (centeredLeftBound < chartLeftBound) {
+          xTranslation = chartLeftBound;
+        } else {
+          xTranslation = centeredLeftBound;
+        }
+      }
+
+      const shouldRenderImmediate = firstRender.current;
+      firstRender.current = false;
+
+      // react-spring docs do not return the `next` callback
+      // eslint-disable-next-line callback-return
+      await next({
+        translate: [
+          xTranslation,
+          Math.max(
+            Margin.Top,
+            currentY - tooltipDimensions.height - TOOLTIP_MARGIN,
+          ),
+          0,
+        ],
+        opacity: 1,
+        immediate: shouldRenderImmediate,
+      });
+    },
   });
 
   useEffect(() => {
@@ -48,8 +105,14 @@ export function Tooltip({
     <animated.div
       className={styles.Container}
       style={{
-        top: spring.top,
-        left: spring.left,
+        top: 0,
+        left: 0,
+        opacity: spring.opacity,
+        transform: spring.translate.interpolate(
+          // eslint-disable-next-line id-length
+          (x: number, y: number, z: number) =>
+            `translate3d(${x}px, ${y}px, ${z}px)`,
+        ),
       }}
       ref={tooltipRef}
     >
