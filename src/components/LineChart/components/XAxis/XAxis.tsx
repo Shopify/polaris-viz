@@ -1,10 +1,6 @@
 import React, {useMemo} from 'react';
 import {ScaleLinear} from 'd3-scale';
-import {
-  colorSkyDark,
-  colorInkLighter,
-  spacingLoose,
-} from '@shopify/polaris-tokens';
+import {colorSky, colorInkLighter, spacingLoose} from '@shopify/polaris-tokens';
 
 import {Margin} from '../../constants';
 
@@ -41,7 +37,7 @@ export function XAxis({xScale, labels, dimensions}: Props) {
       <path
         d={`M ${xScaleMin} ${TICK_SIZE} v ${-TICK_SIZE} H ${xScaleMax} v ${TICK_SIZE}`}
         fill="none"
-        stroke={colorSkyDark}
+        stroke={colorSky}
       />
 
       {ticks.map(({value, xOffset}) => {
@@ -51,11 +47,11 @@ export function XAxis({xScale, labels, dimensions}: Props) {
 
         return (
           <g key={value} transform={`translate(${xOffset}, 0)`}>
-            <line y2={TICK_SIZE} stroke={colorSkyDark} />
+            <line y2={TICK_SIZE} stroke={colorSky} />
             <line
               y1="0"
               y2={-(dimensions.height - Margin.Bottom - Margin.Top)}
-              stroke={colorSkyDark}
+              stroke={colorSky}
               strokeDasharray="3 2"
             />
             <text
