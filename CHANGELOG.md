@@ -18,6 +18,10 @@
 
 - Move React and React DOM to dev dependencies
 
+### Added
+
+- Line chart component
+
 ## [0.0.6] - 2020-02-25
 
 ### Changed
