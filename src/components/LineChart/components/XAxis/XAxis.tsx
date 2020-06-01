@@ -45,6 +45,10 @@ export function XAxis({xScale, labels, dimensions}: Props) {
       />
 
       {ticks.map(({value, xOffset}) => {
+        if (value == null) {
+          return null;
+        }
+
         return (
           <g key={value} transform={`translate(${xOffset}, 0)`}>
             <line y2={TICK_SIZE} stroke={colorSkyDark} />
