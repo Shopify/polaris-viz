@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Added
+
+- Line chart component
+
 ## [0.0.7] - 2020-06-02
 
 ### Changed
