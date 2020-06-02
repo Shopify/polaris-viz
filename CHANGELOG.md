@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+## [0.0.7] - 2020-06-02
+
+### Changed
+
+- Move React and React DOM to dev dependencies
+
 ## [0.0.6] - 2020-02-25
 
 ### Changed
