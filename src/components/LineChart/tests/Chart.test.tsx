@@ -43,6 +43,14 @@ const mockProps = {
 };
 
 describe('<Chart />', () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
   it('renders an svg element', () => {
     const chart = mount(<Chart {...mockProps} />);
 
@@ -58,7 +66,7 @@ describe('<Chart />', () => {
       svg.trigger('onMouseMove', fakeSVGEvent);
     });
 
-    expect(chart).toContainReactComponent(Line, {activePointIndex: 0});
+    expect(chart).toContainReactComponent(Line, {activePointIndex: 1});
   });
 
   it('renders an <XAxis />', () => {
@@ -69,82 +77,10 @@ describe('<Chart />', () => {
     });
   });
 
-  it('creates an x scale with a domain corresponding to the longest series', () => {
-    const longSeries: Series = {
-      name: 'Long series',
-      data: [
-        {x: '1', y: 1},
-        {x: '2', y: 2},
-        {x: '3', y: 3},
-        {x: '4', y: 4},
-        {x: '5', y: 5},
-        {x: '6', y: 6},
-        {x: '7', y: 7},
-        {x: '8', y: 8},
-        {x: '9', y: 9},
-        {x: '10', y: 10},
-      ],
-    };
-    const lineChart = mount(
-      <Chart {...mockProps} series={[primarySeries, longSeries]} />,
-    );
-
-    expect(
-      lineChart
-        .find(XAxis)!
-        .prop('xScale')
-        .domain(),
-    ).toStrictEqual([0, 9]);
-  });
-
-  it('creates an x scale with range from 0 to the width of the chart, minus margins', () => {
-    const chart = mount(<Chart {...mockProps} />);
-
-    expect(
-      chart
-        .find(XAxis)!
-        .prop('xScale')
-        .range(),
-    ).toStrictEqual([0, 420]);
-  });
-
   it('renders a <YAxis />', () => {
     const chart = mount(<Chart {...mockProps} />);
 
     expect(chart).toContainReactComponent(YAxis);
-  });
-
-  it('creates a y scale with a domain corresponding to the minimum and maximum values in the data set, plus some padding', () => {
-    const deeplyNegative: Series = {
-      name: 'Deeply negative',
-      data: [{x: '1', y: -10000}],
-    };
-    const highlyPositive: Series = {
-      name: 'Highly positive',
-      data: [{x: '1', y: 10000}],
-    };
-    const lineChart = mount(
-      <Chart {...mockProps} series={[deeplyNegative, highlyPositive]} />,
-    );
-
-    // We expect the Y_SCALE_PADDING to be 1.2, so the max will be 12,000
-    expect(
-      lineChart
-        .find(YAxis)!
-        .prop('yScale')
-        .domain(),
-    ).toStrictEqual([-10000, 12000]);
-  });
-
-  it('creates a y scale with range from the height of the chart, minus margins to 0', () => {
-    const chart = mount(<Chart {...mockProps} />);
-
-    expect(
-      chart
-        .find(YAxis)!
-        .prop('yScale')
-        .range(),
-    ).toStrictEqual([205, 0]);
   });
 
   it('renders a <Crosshair /> if there is an active point', () => {

@@ -2,18 +2,17 @@ import React, {useMemo} from 'react';
 import {ScaleLinear} from 'd3-scale';
 import {colorSky, colorInkLighter, spacingLoose} from '@shopify/polaris-tokens';
 
-import {Margin} from '../../constants';
-
 interface Props {
   xScale: ScaleLinear<number, number>;
   labels: string[];
   dimensions: DOMRect;
+  drawableHeight: number;
 }
 
 const TICK_SIZE = 6;
-const MIN_LABEL_SPACE = 75;
+const MIN_LABEL_SPACE = 100;
 
-export function XAxis({xScale, labels, dimensions}: Props) {
+export function XAxis({xScale, labels, dimensions, drawableHeight}: Props) {
   const ticks = useMemo(() => {
     const maxTicks = Math.max(
       1,
@@ -33,7 +32,7 @@ export function XAxis({xScale, labels, dimensions}: Props) {
   const [xScaleMin, xScaleMax] = xScale.range();
 
   return (
-    <g transform={`translate(${Margin.Left},0)`}>
+    <React.Fragment>
       <path
         d={`M ${xScaleMin} ${TICK_SIZE} v ${-TICK_SIZE} H ${xScaleMax} v ${TICK_SIZE}`}
         fill="none"
@@ -50,7 +49,7 @@ export function XAxis({xScale, labels, dimensions}: Props) {
             <line y2={TICK_SIZE} stroke={colorSky} />
             <line
               y1="0"
-              y2={-(dimensions.height - Margin.Bottom - Margin.Top)}
+              y2={-drawableHeight}
               stroke={colorSky}
               strokeDasharray="3 2"
             />
@@ -67,6 +66,6 @@ export function XAxis({xScale, labels, dimensions}: Props) {
           </g>
         );
       })}
-    </g>
+    </React.Fragment>
   );
 }
