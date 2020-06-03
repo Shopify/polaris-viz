@@ -1,21 +1,19 @@
 import React from 'react';
 import {colorSky} from '@shopify/polaris-tokens';
 
-import {CROSSHAIR_WIDTH, Margin} from '../../constants';
+import {CROSSHAIR_WIDTH} from '../../constants';
 
 interface Props {
   x: number;
-  dimensions: DOMRect;
+  height: number;
 }
 
-export function Crosshair({x, dimensions}: Props) {
-  const {height} = dimensions;
-
+export function Crosshair({x, height}: Props) {
   return (
     <rect
       x={x - CROSSHAIR_WIDTH / 2}
       width={CROSSHAIR_WIDTH}
-      height={height - Margin.Bottom - Margin.Top}
+      height={height}
       fill={colorSky}
       stroke="none"
     />

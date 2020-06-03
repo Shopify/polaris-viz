@@ -18,8 +18,8 @@ jest.mock('d3-scale', () => ({
 }));
 
 (global as any).DOMRect = class DOMRect {
-  width = 150;
-  height = 100;
+  width = 200;
+  height = 200;
 };
 
 describe('<XAxis />', () => {
@@ -33,6 +33,7 @@ describe('<XAxis />', () => {
           xScale={xScale}
           labels={['Test label 1', 'Test label 2', 'Test label 3']}
           dimensions={new DOMRect()}
+          drawableHeight={150}
         />
       </svg>,
     );
@@ -47,6 +48,7 @@ describe('<XAxis />', () => {
           xScale={scaleLinear()}
           labels={['Test label 1', 'Test label 2', 'Test label 3']}
           dimensions={new DOMRect()}
+          drawableHeight={150}
         />
       </svg>,
     );
@@ -64,6 +66,7 @@ describe('<XAxis />', () => {
           xScale={scaleLinear()}
           labels={['Test label 1', 'Test label 2', 'Test label 3']}
           dimensions={new DOMRect()}
+          drawableHeight={150}
         />
       </svg>,
     );
@@ -71,19 +74,20 @@ describe('<XAxis />', () => {
     expect(axis).toContainReactComponentTimes('line', 3, {y2: 6});
   });
 
-  it('renders a vertical gridline for each tick', () => {
+  it('renders a vertical gridline for each tick using drawableHeight', () => {
     const axis = mount(
       <svg>
         <XAxis
           xScale={scaleLinear()}
           labels={['Test label 1', 'Test label 2', 'Test label 3']}
           dimensions={new DOMRect()}
+          drawableHeight={150}
         />
       </svg>,
     );
 
     // -55 is the height mocked above minus the top and bottom margin
-    expect(axis).toContainReactComponentTimes('line', 3, {y1: '0', y2: -55});
+    expect(axis).toContainReactComponentTimes('line', 3, {y1: '0', y2: -150});
   });
 
   it('renders a label for each tick', () => {
@@ -94,6 +98,7 @@ describe('<XAxis />', () => {
           xScale={scaleLinear()}
           labels={labels}
           dimensions={new DOMRect()}
+          drawableHeight={150}
         />
       </svg>,
     );

@@ -1,10 +1,10 @@
-import React, {useMemo, useState} from 'react';
+import React, {useState} from 'react';
 import {line} from 'd3-shape';
-import {scaleLinear} from 'd3-scale';
 
-import {yAxisMinMax, eventPoint} from './utilities';
+import {eventPoint} from './utilities';
 import {Series} from './types';
-import {Margin, Y_SCALE_PADDING} from './constants';
+import {Margin} from './constants';
+import {useXScale, useYScale} from './hooks';
 import {Crosshair, Line, Tooltip, XAxis, YAxis} from './components';
 import styles from './Chart.scss';
 
@@ -27,29 +27,26 @@ export function Chart({
     y: number;
   } | null>(null);
 
+  const drawableHeight = dimensions.height - Margin.Top - Margin.Bottom;
+
+  const {axisMargin, ticks, yScale} = useYScale({
+    drawableHeight,
+    series,
+    formatYAxisValue,
+  });
+
+  const drawableWidth =
+    axisMargin == null ? null : dimensions.width - Margin.Right - axisMargin;
   const longestSeriesLength = series.reduce<number>(
     (max, currentSeries) => Math.max(max, currentSeries.data.length - 1),
     0,
   );
 
-  const [minY, maxY] = yAxisMinMax(series);
+  const {xScale} = useXScale({drawableWidth, longestSeriesLength});
 
-  const xScale = useMemo(
-    () =>
-      scaleLinear()
-        .range([0, dimensions.width - Margin.Left - Margin.Right])
-        .domain([0, longestSeriesLength]),
-    [longestSeriesLength, dimensions],
-  );
-
-  const yScale = useMemo(
-    () =>
-      scaleLinear()
-        .range([dimensions.height - (Margin.Top + Margin.Bottom), 0])
-        .domain([Math.min(0, minY), maxY * Y_SCALE_PADDING])
-        .nice(),
-    [dimensions, minY, maxY],
-  );
+  if (xScale == null || drawableWidth == null || axisMargin == null) {
+    return null;
+  }
 
   const lineGenerator = line<{x: string; y: number}>()
     .x((_, index) => xScale(index))
@@ -58,17 +55,21 @@ export function Chart({
   function handleInteraction(
     event: React.MouseEvent<SVGSVGElement> | React.TouchEvent<SVGSVGElement>,
   ) {
+    if (axisMargin == null || xScale == null) {
+      return;
+    }
+
     const point = eventPoint(event);
     if (point == null) {
       return;
     }
 
     const {svgX, clientX, clientY} = point;
-    if (svgX < Margin.Left) {
+    if (svgX < axisMargin) {
       return;
     }
 
-    const closestIndex = Math.round(xScale.invert(svgX - Margin.Left));
+    const closestIndex = Math.round(xScale.invert(svgX - axisMargin));
     setActivePointIndex(Math.min(longestSeriesLength, closestIndex));
     setTooltipPosition({
       x: clientX - dimensions.left,
@@ -86,25 +87,29 @@ export function Chart({
         onTouchEnd={() => setActivePointIndex(null)}
         onMouseLeave={() => setActivePointIndex(null)}
       >
-        <g transform={`translate(0,${dimensions.height - Margin.Bottom})`}>
-          <XAxis xScale={xScale} labels={xAxisLabels} dimensions={dimensions} />
-        </g>
-
-        <g transform={`translate(${Margin.Left},${Margin.Top})`}>
-          <YAxis
-            yScale={yScale}
-            formatYAxisValue={formatYAxisValue}
+        <g
+          transform={`translate(${axisMargin},${dimensions.height -
+            Margin.Bottom})`}
+        >
+          <XAxis
+            xScale={xScale}
+            labels={xAxisLabels}
             dimensions={dimensions}
+            drawableHeight={drawableHeight}
           />
         </g>
 
+        <g transform={`translate(${axisMargin},${Margin.Top})`}>
+          <YAxis ticks={ticks} drawableWidth={drawableWidth} />
+        </g>
+
         {activePointIndex == null ? null : (
-          <g transform={`translate(${Margin.Left},${Margin.Top})`}>
-            <Crosshair x={xScale(activePointIndex)} dimensions={dimensions} />
+          <g transform={`translate(${axisMargin},${Margin.Top})`}>
+            <Crosshair x={xScale(activePointIndex)} height={drawableHeight} />
           </g>
         )}
 
-        <g transform={`translate(${Margin.Left},${Margin.Top})`}>
+        <g transform={`translate(${axisMargin},${Margin.Top})`}>
           {series
             .slice()
             .reverse()
