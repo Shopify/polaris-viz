@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {line} from 'd3-shape';
 import {scaleLinear} from 'd3-scale';
 
@@ -34,14 +34,22 @@ export function Chart({
 
   const [minY, maxY] = yAxisMinMax(series);
 
-  const xScale = scaleLinear()
-    .range([0, dimensions.width - Margin.Left - Margin.Right])
-    .domain([0, longestSeriesLength]);
+  const xScale = useMemo(
+    () =>
+      scaleLinear()
+        .range([0, dimensions.width - Margin.Left - Margin.Right])
+        .domain([0, longestSeriesLength]),
+    [longestSeriesLength, dimensions],
+  );
 
-  const yScale = scaleLinear()
-    .range([dimensions.height - (Margin.Top + Margin.Bottom), 0])
-    .domain([Math.min(0, minY), maxY * Y_SCALE_PADDING])
-    .nice();
+  const yScale = useMemo(
+    () =>
+      scaleLinear()
+        .range([dimensions.height - (Margin.Top + Margin.Bottom), 0])
+        .domain([Math.min(0, minY), maxY * Y_SCALE_PADDING])
+        .nice(),
+    [dimensions, minY, maxY],
+  );
 
   const lineGenerator = line<{x: string; y: number}>()
     .x((_, index) => xScale(index))
