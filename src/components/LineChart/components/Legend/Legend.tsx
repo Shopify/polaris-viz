@@ -3,7 +3,7 @@ import React from 'react';
 import {Series} from '../../types';
 import {LinePreview} from '../LinePreview';
 
-import * as styles from './Legend.scss';
+import styles from './Legend.scss';
 
 interface Props {
   series: Series[];
