@@ -12,11 +12,11 @@
 
 .Series {
   align-items: baseline;
-  column-gap: $spacing-tight;
+  column-gap: $spacing-extra-tight;
   display: grid;
   grid-auto-flow: column;
   justify-content: end;
-  padding: $spacing-extra-tight $spacing-loose;
+  padding: $spacing-extra-tight $spacing-base-tight;
 }
 
 .SeriesName {

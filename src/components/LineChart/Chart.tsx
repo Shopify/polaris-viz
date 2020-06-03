@@ -6,7 +6,7 @@ import {yAxisMinMax, eventPoint} from './utilities';
 import {Series} from './types';
 import {Margin, Y_SCALE_PADDING} from './constants';
 import {Crosshair, Line, Tooltip, XAxis, YAxis} from './components';
-import * as styles from './Chart.scss';
+import styles from './Chart.scss';
 
 interface Props {
   series: Series[];
