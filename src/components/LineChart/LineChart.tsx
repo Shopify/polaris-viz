@@ -7,7 +7,7 @@ import {Legend} from './components';
 
 interface Props {
   series: Series[];
-  xAxisLabels: string[];
+  xAxisLabels?: string[];
   chartHeight?: number;
   accessibilityLabel?: string;
   formatYAxisValue?(value: number): string;

@@ -3,14 +3,14 @@ import {line} from 'd3-shape';
 
 import {eventPoint} from './utilities';
 import {Series} from './types';
-import {Margin} from './constants';
+import {Margin, SPACING_TIGHT} from './constants';
 import {useXScale, useYScale} from './hooks';
 import {Crosshair, Line, Tooltip, XAxis, YAxis} from './components';
 import styles from './Chart.scss';
 
 interface Props {
   series: Series[];
-  xAxisLabels: string[];
+  xAxisLabels?: string[];
   formatYAxisValue(value: number): string;
   dimensions: DOMRect;
 }
@@ -27,7 +27,8 @@ export function Chart({
     y: number;
   } | null>(null);
 
-  const drawableHeight = dimensions.height - Margin.Top - Margin.Bottom;
+  const marginBottom = xAxisLabels == null ? SPACING_TIGHT : Margin.Bottom;
+  const drawableHeight = dimensions.height - Margin.Top - marginBottom;
 
   const {axisMargin, ticks, yScale} = useYScale({
     drawableHeight,
@@ -89,7 +90,7 @@ export function Chart({
       >
         <g
           transform={`translate(${axisMargin},${dimensions.height -
-            Margin.Bottom})`}
+            marginBottom})`}
         >
           <XAxis
             xScale={xScale}
