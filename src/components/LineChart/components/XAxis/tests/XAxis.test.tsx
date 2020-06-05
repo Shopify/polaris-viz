@@ -110,4 +110,20 @@ describe('<XAxis />', () => {
 
     expect(textContent).toStrictEqual(labels);
   });
+
+  it('does not render any labels if the labels prop is not provided', () => {
+    const axis = mount(
+      <svg>
+        <XAxis
+          xScale={scaleLinear()}
+          dimensions={new DOMRect()}
+          drawableHeight={150}
+        />
+      </svg>,
+    );
+
+    const text = axis.findAll('text')!;
+
+    expect(text).toHaveLength(0);
+  });
 });

@@ -4,7 +4,7 @@ import {colorSky, colorInkLighter, spacingLoose} from '@shopify/polaris-tokens';
 
 interface Props {
   xScale: ScaleLinear<number, number>;
-  labels: string[];
+  labels?: string[];
   dimensions: DOMRect;
   drawableHeight: number;
 }
@@ -14,6 +14,10 @@ const MIN_LABEL_SPACE = 100;
 
 export function XAxis({xScale, labels, dimensions, drawableHeight}: Props) {
   const ticks = useMemo(() => {
+    if (labels == null) {
+      return [];
+    }
+
     const maxTicks = Math.max(
       1,
       Math.floor(dimensions.width / MIN_LABEL_SPACE),

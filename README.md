@@ -106,13 +106,13 @@ Components inherit their sizes from their containers, so place your component in
     </td>
     <td>
     <ul>
-    <li><strong>xAxisLabels (required):</strong> <code>string[]</code></li>
     <li>
     <strong>series (required):</strong> <code>Series[]</code>
     <ul>
     <li><strong>data (required):</strong> <code>{x: string, y: number}[]</code>
     </li>
     <li><strong>name (required):</strong> <code>string</code></li>
+    <li><strong>xAxisLabels:</strong> <code>string[]</code></li>
     <li><strong>formatY:</strong> <code>(value: number): string;</code></li>
     <li>
     <strong>style (all properties optional):</strong>
