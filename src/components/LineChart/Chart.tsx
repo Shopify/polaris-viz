@@ -65,7 +65,7 @@ export function Chart({
       return;
     }
 
-    const {svgX, clientX, clientY} = point;
+    const {svgX, svgY} = point;
     if (svgX < axisMargin) {
       return;
     }
@@ -73,8 +73,8 @@ export function Chart({
     const closestIndex = Math.round(xScale.invert(svgX - axisMargin));
     setActivePointIndex(Math.min(longestSeriesLength, closestIndex));
     setTooltipPosition({
-      x: clientX - dimensions.left,
-      y: clientY - dimensions.top,
+      x: svgX,
+      y: svgY,
     });
   }
 
