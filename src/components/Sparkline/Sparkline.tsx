@@ -4,7 +4,8 @@ import {area} from 'd3-shape';
 import {Color} from 'types';
 import tokens from '@shopify/polaris-tokens';
 import {animated, useSpring} from 'react-spring';
-import {useWindowSize} from 'hooks';
+
+import {useWindowSize} from '../../hooks';
 
 import {getPathLength} from './utilities';
 import styles from './Sparkline.scss';

@@ -1,5 +1,6 @@
 import {MouseEvent, TouchEvent} from 'react';
-import {isTouchEvent, isMouseEvent} from 'utilities';
+
+import {isTouchEvent, isMouseEvent} from '../../../utilities';
 
 export function eventPoint(
   event: MouseEvent<SVGSVGElement> | TouchEvent<SVGSVGElement>,

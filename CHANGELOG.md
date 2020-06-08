@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Fixed
+
+- Use relative imports to fix `esnext` build problems (https://github.com/Shopify/polaris-viz/pull/57)
+
 ## [0.0.8] - 2020-06-05
 
 ### Added
