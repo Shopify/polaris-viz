@@ -1,2 +1,1 @@
-export {isMouseEvent} from './is-mouse-event';
-export {isTouchEvent} from './is-touch-event';
+export {eventPoint} from './event-point';
