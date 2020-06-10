@@ -1,7 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
-import {animated, OpaqueInterpolation} from 'react-spring';
 
+import {TooltipContainer} from '../../../..';
 import {LinePreview} from '../../LinePreview';
 import {Tooltip} from '../Tooltip';
 
@@ -23,18 +23,15 @@ const mockProps = {
 };
 
 describe('<Tooltip />', () => {
-  it('is wrapped in an animated.div at top: 0, left: 0 with an animated transform style', () => {
+  it('renders a TooltipContainer', () => {
     const tooltip = mount(<Tooltip {...mockProps} />);
-
-    const animatedDiv = tooltip.find(animated.div)!;
-    const styles = animatedDiv.prop('style')!;
-
-    expect(styles.left).toStrictEqual(0);
-    expect(styles.top).toStrictEqual(0);
-    // Checking that the styles are being controlled by react spring
-    expect(
-      ((styles.transform as unknown) as OpaqueInterpolation<number>).getValue,
-    ).toBeDefined();
+    expect(tooltip).toContainReactComponent(TooltipContainer, {
+      activePointIndex: 0,
+      currentX: 0,
+      currentY: 0,
+      chartDimensions: new DOMRect(),
+      children: expect.any(Object),
+    });
   });
 
   describe('Content', () => {

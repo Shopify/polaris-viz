@@ -1,20 +1,5 @@
 @import 'node_modules/@shopify/polaris-tokens/dist/index';
 
-.Container {
-  position: absolute;
-  background: $color-white;
-  border: 1px solid $color-sky-dark;
-  border-radius: 4px;
-  padding: $spacing-tight;
-  pointer-events: none;
-  display: grid;
-  grid-template-columns: 1fr auto auto;
-  align-items: center;
-  column-gap: $spacing-tight;
-  row-gap: $spacing-tight;
-  max-width: 70%;
-}
-
 .SeriesName {
   font-size: 13px;
   font-weight: 600;
