@@ -3,7 +3,8 @@ import {mount} from '@shopify/react-testing';
 
 import {Chart} from '../Chart';
 import {Series} from '../types';
-import {Crosshair, Line, Tooltip, XAxis, YAxis} from '../components';
+import {Crosshair, Line, Tooltip, XAxis} from '../components';
+import {YAxis} from '../../YAxis';
 
 (global as any).DOMRect = class DOMRect {
   width = 500;

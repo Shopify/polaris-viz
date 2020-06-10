@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 import {line} from 'd3-shape';
 
+import {YAxis} from '../YAxis';
+
 import {eventPoint} from './utilities';
 import {Series} from './types';
 import {Margin, SPACING_TIGHT} from './constants';
 import {useXScale, useYScale} from './hooks';
-import {Crosshair, Line, Tooltip, XAxis, YAxis} from './components';
+import {Crosshair, Line, Tooltip, XAxis} from './components';
 import styles from './Chart.scss';
 
 interface Props {
