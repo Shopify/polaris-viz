@@ -4,6 +4,7 @@ import {BarData} from '../../types';
 import {Color} from 'types';
 import tokens from '@shopify/polaris-tokens';
 import {eventPoint} from 'utilities';
+import {XAxis} from '../XAxis';
 import {YAxis, TooltipContainer} from 'components';
 
 interface Props {
@@ -13,6 +14,9 @@ interface Props {
   color: Color;
 }
 
+const FAKE_YAXIS_WIDTH = 40;
+
+//seperate about and determine if these numbers are best
 const Margin = {Top: 20, Right: 20, Bottom: 70, Left: 40};
 
 export function Chart({data, chartDimensions, histogram, color}: Props) {
@@ -25,6 +29,7 @@ export function Chart({data, chartDimensions, histogram, color}: Props) {
   function handleInteraction(
     event: React.MouseEvent<SVGSVGElement> | React.TouchEvent<SVGSVGElement>,
   ) {
+    // 0 to be replaced with actual max width of labels // need to add the math
     const axisMargin = 20;
 
     if (axisMargin == null || xScale == null) {
@@ -86,27 +91,33 @@ export function Chart({data, chartDimensions, histogram, color}: Props) {
         onMouseMove={handleInteraction}
         onTouchMove={handleInteraction}
       >
+        {/* replace 40 with actual calculated left margin */}
+        <g
+          transform={`translate(${FAKE_YAXIS_WIDTH},${chartDimensions.height -
+            Margin.Bottom})`}
+        >
+          <XAxis data={data} xScale={xScale} dimensions={chartDimensions} />
+          <rect width="10" height="10" fill="purple" />
+        </g>
+
         <g transform={`translate(${Margin.Left},${Margin.Top})`}>
           <YAxis
             ticks={ticks}
-            // 0 to be replaced with actual max width of labels
-            drawableWidth={chartDimensions.width - Margin.Right - 0}
+            //40 to be replaced with actual max width of labels // need to add the math
+            drawableWidth={
+              chartDimensions.width - Margin.Right - FAKE_YAXIS_WIDTH
+            }
           />
         </g>
 
         <g transform={`translate(${Margin.Left},${Margin.Top})`}>
           {data.map(({rawValue}, index) => (
             <rect
-              style={{cursor: 'pointer'}}
               key={index}
               onMouseMove={() => {
                 setActiveBar(index);
               }}
               onTouchMove={() => {
-                // setActivePoint({
-                //   x: event!.changedTouches[0].clientX,
-                //   y: event!.changedTouches[0].clientY,
-                // });
                 setActiveBar(index);
               }}
               onTouchEnd={() => {
@@ -125,21 +136,7 @@ export function Chart({data, chartDimensions, histogram, color}: Props) {
         </g>
       </svg>
 
-      {/* <div
-        style={{
-          background: 'white',
-          padding: '20px',
-          display: activeBar == null ? 'none' : 'block',
-          position: 'absolute',
-          top: activePoint == null ? 0 : activePoint.y,
-          left: activePoint == null ? 0 : activePoint.x,
-        }}
-      >
-        {activeBar == null ? null : data[activeBar].label}
-        {activeBar == null ? null : data[activeBar].formattedValue}
-      </div> */}
-
-      {tooltipPosition && activeBar != null ? (
+      {tooltipPosition != null && activeBar != null ? (
         <TooltipContainer
           activePointIndex={activeBar}
           currentX={tooltipPosition!.x}
@@ -147,10 +144,9 @@ export function Chart({data, chartDimensions, histogram, color}: Props) {
           chartDimensions={chartDimensions}
           margin={Margin}
         >
-          <>
-            <p>{data[activeBar].label}</p>
-            <p>{data[activeBar].formattedValue}</p>
-          </>
+          {/* to be improved */}
+          <strong>{data[activeBar].label}</strong>
+          <p>{data[activeBar].formattedValue}</p>
         </TooltipContainer>
       ) : null}
     </div>

@@ -142,7 +142,7 @@ export default function Playground() {
             {rawValue: 1, formattedValue: '1', label: 'Strawberries'},
           ]}
         />
-        <LineChart
+        {/* <LineChart
           xAxisLabels={series[0].data.map(({x}) =>
             formatDate(new Date(2020, 3, parseInt(x, 10) + 1)),
           )}
@@ -170,7 +170,7 @@ export default function Playground() {
           >
             Change data set
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );
