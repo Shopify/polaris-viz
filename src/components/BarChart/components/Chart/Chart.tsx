@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {scaleBand, scaleLinear} from 'd3-scale';
+import {animated, useSpring} from 'react-spring';
 import {BarData} from '../../types';
 import {Color} from 'types';
 import tokens from '@shopify/polaris-tokens';
@@ -12,6 +13,7 @@ interface Props {
   chartDimensions: DOMRect;
   histogram?: boolean;
   color: Color;
+  highlightColor?: Color;
   formatValue(value: number): string;
 }
 
@@ -25,6 +27,7 @@ export function Chart({
   chartDimensions,
   histogram,
   color,
+  highlightColor,
   formatValue,
 }: Props) {
   const [activeBar, setActiveBar] = useState<number | null>(null);
@@ -79,9 +82,13 @@ export function Chart({
 
   const ticks = yScale.ticks(maxTicks).map((value) => ({
     value,
-    formattedValue: value.toString(),
+    formattedValue: formatValue(value),
     yOffset: yScale(value),
   }));
+
+  const prefersReducedMotion = window.matchMedia(
+    '(prefers-reduced-motion: reduce)',
+  ).matches;
 
   return (
     <div
@@ -117,28 +124,40 @@ export function Chart({
         </g>
 
         <g transform={`translate(${Margin.Left},${Margin.Top})`}>
-          {data.map(({rawValue}, index) => (
-            <rect
-              key={index}
-              onMouseMove={() => {
-                setActiveBar(index);
-              }}
-              onTouchMove={() => {
-                setActiveBar(index);
-              }}
-              onTouchEnd={() => {
-                setActiveBar(null);
-              }}
-              onMouseLeave={() => {
-                setActiveBar(null);
-              }}
-              x={xScale(index.toString())}
-              y={yScale(Math.max(0, rawValue))}
-              fill={tokens[color]}
-              width={xScale.bandwidth()}
-              height={Math.abs(yScale(rawValue) - yScale(0))}
-            />
-          ))}
+          {data.map(({rawValue}, index) => {
+            const fill = useSpring({
+              config: {duration: 200},
+              immediate: !highlightColor || prefersReducedMotion,
+              color:
+                activeBar === index && highlightColor != null
+                  ? tokens[highlightColor]
+                  : tokens[color],
+              from: {color: tokens[color]},
+            });
+
+            return (
+              <animated.rect
+                key={index}
+                onMouseMove={() => {
+                  setActiveBar(index);
+                }}
+                onTouchMove={() => {
+                  setActiveBar(index);
+                }}
+                onTouchEnd={() => {
+                  setActiveBar(null);
+                }}
+                onMouseLeave={() => {
+                  setActiveBar(null);
+                }}
+                x={xScale(index.toString())}
+                y={yScale(Math.max(0, rawValue))}
+                fill={fill.color}
+                width={xScale.bandwidth()}
+                height={Math.abs(yScale(rawValue) - yScale(0))}
+              />
+            );
+          })}
         </g>
       </svg>
 
@@ -150,9 +169,8 @@ export function Chart({
           chartDimensions={chartDimensions}
           margin={Margin}
         >
-          {/* to be improved */}
           <strong>{data[activeBar].label}</strong>
-          <p>{formatValue(data[activeBar].rawValue)}</p>
+          {formatValue(data[activeBar].rawValue)}
         </TooltipContainer>
       ) : null}
     </div>

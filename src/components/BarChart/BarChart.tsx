@@ -10,6 +10,7 @@ interface Props {
   histogram?: boolean;
   accessibilityLabel?: string;
   color?: Color;
+  highlightColor?: Color;
   formatValue?(value: number): string;
 }
 
@@ -18,6 +19,7 @@ export function BarChart({
   chartHeight = 300,
   histogram,
   color = 'colorPurple',
+  highlightColor,
   formatValue = (value) => value.toString(),
 }: Props) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
@@ -49,6 +51,7 @@ export function BarChart({
           chartDimensions={chartDimensions}
           histogram={histogram}
           color={color}
+          highlightColor={highlightColor}
           formatValue={formatValue}
         />
       )}

@@ -131,6 +131,7 @@ export default function Playground() {
       >
         <BarChart
           formatValue={(val) => `$${val}`}
+          highlightColor="colorPurpleDark"
           data={[
             {rawValue: 10, label: 'Apples'},
             {rawValue: 5, label: 'Peaches'},
