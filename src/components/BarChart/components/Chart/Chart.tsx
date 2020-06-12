@@ -12,6 +12,7 @@ interface Props {
   chartDimensions: DOMRect;
   histogram?: boolean;
   color: Color;
+  formatValue(value: number): string;
 }
 
 const FAKE_YAXIS_WIDTH = 40;
@@ -19,7 +20,13 @@ const FAKE_YAXIS_WIDTH = 40;
 //seperate about and determine if these numbers are best
 const Margin = {Top: 20, Right: 20, Bottom: 70, Left: 40};
 
-export function Chart({data, chartDimensions, histogram, color}: Props) {
+export function Chart({
+  data,
+  chartDimensions,
+  histogram,
+  color,
+  formatValue,
+}: Props) {
   const [activeBar, setActiveBar] = useState<number | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState<{
     x: number;
@@ -30,7 +37,7 @@ export function Chart({data, chartDimensions, histogram, color}: Props) {
     event: React.MouseEvent<SVGSVGElement> | React.TouchEvent<SVGSVGElement>,
   ) {
     // 0 to be replaced with actual max width of labels // need to add the math
-    const axisMargin = 20;
+    const axisMargin = FAKE_YAXIS_WIDTH;
 
     if (axisMargin == null || xScale == null) {
       return;
@@ -97,7 +104,6 @@ export function Chart({data, chartDimensions, histogram, color}: Props) {
             Margin.Bottom})`}
         >
           <XAxis data={data} xScale={xScale} dimensions={chartDimensions} />
-          <rect width="10" height="10" fill="purple" />
         </g>
 
         <g transform={`translate(${Margin.Left},${Margin.Top})`}>
@@ -146,7 +152,7 @@ export function Chart({data, chartDimensions, histogram, color}: Props) {
         >
           {/* to be improved */}
           <strong>{data[activeBar].label}</strong>
-          <p>{data[activeBar].formattedValue}</p>
+          <p>{formatValue(data[activeBar].rawValue)}</p>
         </TooltipContainer>
       ) : null}
     </div>

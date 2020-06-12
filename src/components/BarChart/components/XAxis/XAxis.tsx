@@ -10,11 +10,24 @@ interface Props {
 }
 
 const TICK_SIZE = 6;
-const MIN_LABEL_SPACE = 100;
+const MAX_LABEL_SPACE = 15;
+
+function truncateString(str: string) {
+  if (str.length > MAX_LABEL_SPACE) {
+    let subStr = str.substring(0, MAX_LABEL_SPACE);
+    return subStr + '...';
+  } else {
+    return str;
+  }
+}
 
 export function XAxis({xScale, data, dimensions}: Props) {
   const [xScaleMin, xScaleMax] = xScale.range();
   const barWidthOffset = xScale.bandwidth() / 2;
+
+  //to do:
+  // truncate strings if they are longer than bar width
+  // OR only show some bar labels if there are many of them
 
   const ticks = useMemo(() => {
     return data.map(({label}, index) => {
@@ -22,7 +35,7 @@ export function XAxis({xScale, data, dimensions}: Props) {
       const xOffset =
         pointOffset == null ? barWidthOffset : barWidthOffset + pointOffset;
       return {
-        value: label,
+        value: truncateString(label),
         xOffset,
       };
     });

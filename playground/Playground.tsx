@@ -130,16 +130,20 @@ export default function Playground() {
         }}
       >
         <BarChart
+          formatValue={(val) => `$${val}`}
           data={[
-            {rawValue: 10, formattedValue: '10', label: 'Apples'},
-            {rawValue: 5, formattedValue: '5', label: 'Peaches'},
-            {rawValue: -20, formattedValue: '-20', label: 'Strawberries'},
-            {rawValue: 20, formattedValue: '20', label: 'Strawberries'},
-            {rawValue: 25, formattedValue: '25', label: 'Strawberries'},
-            {rawValue: 60, formattedValue: '60', label: 'Strawberries'},
-            {rawValue: 1, formattedValue: '1', label: 'Strawberries'},
-            {rawValue: -20, formattedValue: '-20', label: 'Strawberries'},
-            {rawValue: 1, formattedValue: '1', label: 'Strawberries'},
+            {rawValue: 10, label: 'Apples'},
+            {rawValue: 5, label: 'Peaches'},
+            {rawValue: -20, label: 'Strawberries'},
+            {
+              rawValue: 20,
+              label: 'Strawberries that have a super long name for some reason',
+            },
+            {rawValue: 25, label: 'Strawberries'},
+            {rawValue: 60, label: 'Strawberries'},
+            {rawValue: 1, label: 'Strawberries'},
+            {rawValue: -20, label: 'Strawberries'},
+            {rawValue: 1, label: 'Strawberries'},
           ]}
         />
         {/* <LineChart
