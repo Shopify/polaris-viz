@@ -133,7 +133,7 @@ export default function Playground() {
           formatValue={(val) => `$${val}`}
           highlightColor="colorPurpleDark"
           data={[
-            {rawValue: 10, label: 'Apples'},
+            {rawValue: 100, label: 'Apples'},
             {rawValue: 5, label: 'Peaches'},
             {rawValue: -20, label: 'Strawberries'},
             {

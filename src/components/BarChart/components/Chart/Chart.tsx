@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {scaleBand, scaleLinear} from 'd3-scale';
+import {scaleBand} from 'd3-scale';
 import {animated, useSpring} from 'react-spring';
 import {BarData} from '../../types';
 import {Color} from 'types';
@@ -7,6 +7,7 @@ import tokens from '@shopify/polaris-tokens';
 import {eventPoint} from 'utilities';
 import {XAxis} from '../XAxis';
 import {YAxis, TooltipContainer} from 'components';
+import {useYScale} from '../../hooks/use-y-scale';
 
 interface Props {
   data: BarData[];
@@ -16,8 +17,6 @@ interface Props {
   highlightColor?: Color;
   formatValue(value: number): string;
 }
-
-const FAKE_YAXIS_WIDTH = 40;
 
 //seperate about and determine if these numbers are best
 const Margin = {Top: 20, Right: 20, Bottom: 70, Left: 40};
@@ -39,9 +38,6 @@ export function Chart({
   function handleInteraction(
     event: React.MouseEvent<SVGSVGElement> | React.TouchEvent<SVGSVGElement>,
   ) {
-    // 0 to be replaced with actual max width of labels // need to add the math
-    const axisMargin = FAKE_YAXIS_WIDTH;
-
     if (axisMargin == null || xScale == null) {
       return;
     }
@@ -62,29 +58,21 @@ export function Chart({
     });
   }
 
-  const width = chartDimensions.width - Margin.Left - Margin.Right;
   const height = chartDimensions.height - Margin.Top - Margin.Bottom;
 
-  const min = Math.min(...data.map(({rawValue}) => rawValue));
-  const max = Math.max(...data.map(({rawValue}) => rawValue));
+  const {yScale, ticks, axisMargin} = useYScale({
+    drawableHeight: height,
+    data,
+    formatValue,
+  });
+
+  const drawableWidth =
+    axisMargin == null ? 0 : chartDimensions.width - Margin.Right - axisMargin;
 
   const xScale = scaleBand()
-    .rangeRound([0, width])
+    .rangeRound([0, drawableWidth])
     .padding(histogram ? 0 : 0.1)
     .domain(data.map((_, index) => index.toString()));
-
-  const yScale = scaleLinear()
-    .range([height, 0])
-    .domain([min, max]);
-
-  //to do: memo and separate out
-  const maxTicks = 5;
-
-  const ticks = yScale.ticks(maxTicks).map((value) => ({
-    value,
-    formattedValue: formatValue(value),
-    yOffset: yScale(value),
-  }));
 
   const prefersReducedMotion = window.matchMedia(
     '(prefers-reduced-motion: reduce)',
@@ -101,29 +89,21 @@ export function Chart({
       <svg
         width="100%"
         height="100%"
-        transform={`translate(${0}, ${Margin.Top})`}
         onMouseMove={handleInteraction}
         onTouchMove={handleInteraction}
       >
-        {/* replace 40 with actual calculated left margin */}
         <g
-          transform={`translate(${FAKE_YAXIS_WIDTH},${chartDimensions.height -
+          transform={`translate(${axisMargin},${chartDimensions.height -
             Margin.Bottom})`}
         >
           <XAxis data={data} xScale={xScale} dimensions={chartDimensions} />
         </g>
 
-        <g transform={`translate(${Margin.Left},${Margin.Top})`}>
-          <YAxis
-            ticks={ticks}
-            //40 to be replaced with actual max width of labels // need to add the math
-            drawableWidth={
-              chartDimensions.width - Margin.Right - FAKE_YAXIS_WIDTH
-            }
-          />
+        <g transform={`translate(${axisMargin},${Margin.Top})`}>
+          <YAxis ticks={ticks} drawableWidth={drawableWidth} />
         </g>
 
-        <g transform={`translate(${Margin.Left},${Margin.Top})`}>
+        <g transform={`translate(${axisMargin},${Margin.Top})`}>
           {data.map(({rawValue}, index) => {
             const fill = useSpring({
               config: {duration: 200},
