@@ -17,7 +17,7 @@ export function useYScale({
   const [maxTickLength, setMaxTickLength] = useState<number>();
 
   const {yScale, ticks} = useMemo(() => {
-    const min = Math.min(...data.map(({rawValue}) => rawValue));
+    const min = Math.min(...data.map(({rawValue}) => rawValue), 0);
     const max = Math.max(...data.map(({rawValue}) => rawValue));
 
     const yScale = scaleLinear()

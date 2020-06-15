@@ -73,7 +73,7 @@ const LOTS_OF_DATA = [
       {x: '12', y: -40},
       {x: '13', y: -20},
       {x: '14', y: -40},
-      {x: '15', y: 250},
+      {x: '15', y: -250},
       {x: '16', y: 100},
     ],
     name: 'Data 1',
@@ -135,15 +135,15 @@ export default function Playground() {
           data={[
             {rawValue: 100, label: 'Apples'},
             {rawValue: 5, label: 'Peaches'},
-            {rawValue: -20, label: 'Strawberries'},
+            {rawValue: 1, label: 'Strawberries'},
             {
               rawValue: 20,
               label: 'Strawberries that have a super long name for some reason',
             },
             {rawValue: 25, label: 'Strawberries'},
-            {rawValue: 60, label: 'Strawberries'},
             {rawValue: 1, label: 'Strawberries'},
-            {rawValue: -20, label: 'Strawberries'},
+            {rawValue: 1, label: 'Strawberries'},
+            {rawValue: -1, label: 'Strawberries'},
             {rawValue: 1, label: 'Strawberries'},
           ]}
         />

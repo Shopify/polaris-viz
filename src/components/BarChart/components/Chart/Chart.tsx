@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import {scaleBand} from 'd3-scale';
 import {animated, useSpring} from 'react-spring';
 import {BarData} from '../../types';
 import {Color} from 'types';
@@ -7,7 +6,9 @@ import tokens from '@shopify/polaris-tokens';
 import {eventPoint} from 'utilities';
 import {XAxis} from '../XAxis';
 import {YAxis, TooltipContainer} from 'components';
+//add index
 import {useYScale} from '../../hooks/use-y-scale';
+import {useXScale} from '../../hooks/use-x-scale';
 
 interface Props {
   data: BarData[];
@@ -20,6 +21,7 @@ interface Props {
 
 //seperate about and determine if these numbers are best
 const Margin = {Top: 20, Right: 20, Bottom: 70, Left: 40};
+const MIN_BAR_HEIGHT = 3;
 
 export function Chart({
   data,
@@ -69,10 +71,12 @@ export function Chart({
   const drawableWidth =
     axisMargin == null ? 0 : chartDimensions.width - Margin.Right - axisMargin;
 
-  const xScale = scaleBand()
-    .rangeRound([0, drawableWidth])
-    .padding(histogram ? 0 : 0.1)
-    .domain(data.map((_, index) => index.toString()));
+  const {xScale, xAxisLabels} = useXScale({
+    drawableWidth,
+    histogram,
+    data,
+    dimensions: chartDimensions,
+  });
 
   const prefersReducedMotion = window.matchMedia(
     '(prefers-reduced-motion: reduce)',
@@ -96,7 +100,7 @@ export function Chart({
           transform={`translate(${axisMargin},${chartDimensions.height -
             Margin.Bottom})`}
         >
-          <XAxis data={data} xScale={xScale} dimensions={chartDimensions} />
+          <XAxis labels={xAxisLabels} range={xScale.range()} />
         </g>
 
         <g transform={`translate(${axisMargin},${Margin.Top})`}>
@@ -105,15 +109,27 @@ export function Chart({
 
         <g transform={`translate(${axisMargin},${Margin.Top})`}>
           {data.map(({rawValue}, index) => {
-            const fill = useSpring({
+            const currentColor =
+              activeBar === index && highlightColor != null
+                ? tokens[highlightColor]
+                : tokens[color];
+
+            const animation = useSpring({
               config: {duration: 200},
-              immediate: !highlightColor || prefersReducedMotion,
-              color:
-                activeBar === index && highlightColor != null
-                  ? tokens[highlightColor]
-                  : tokens[color],
+              immediate: highlightColor == null || prefersReducedMotion,
+              color: currentColor,
               from: {color: tokens[color]},
             });
+
+            const rawHeight = Math.abs(yScale(rawValue) - yScale(0));
+            const needsMinHeight = rawHeight < MIN_BAR_HEIGHT;
+            const height = needsMinHeight ? MIN_BAR_HEIGHT : rawHeight;
+            const modifiedYPosition =
+              rawValue > 0 ? yScale(0) - MIN_BAR_HEIGHT : yScale(0);
+
+            const yPosition = needsMinHeight
+              ? modifiedYPosition
+              : yScale(Math.max(0, rawValue));
 
             return (
               <animated.rect
@@ -131,10 +147,10 @@ export function Chart({
                   setActiveBar(null);
                 }}
                 x={xScale(index.toString())}
-                y={yScale(Math.max(0, rawValue))}
-                fill={fill.color}
+                y={yPosition}
+                fill={animation.color}
                 width={xScale.bandwidth()}
-                height={Math.abs(yScale(rawValue) - yScale(0))}
+                height={height}
               />
             );
           })}
