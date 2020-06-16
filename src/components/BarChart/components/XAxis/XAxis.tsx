@@ -1,5 +1,6 @@
 import React from 'react';
 import {colorSky, colorInkLighter, spacingLoose} from '@shopify/polaris-tokens';
+
 import {TICK_SIZE, LINE_HEIGHT} from '../../constants';
 
 export function XAxis({

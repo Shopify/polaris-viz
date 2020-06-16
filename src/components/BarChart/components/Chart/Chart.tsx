@@ -1,13 +1,14 @@
 import React, {useState} from 'react';
-import {animated, useSpring} from 'react-spring';
-import {BarData} from '../../types';
 import {Color} from 'types';
-import tokens from '@shopify/polaris-tokens';
-import {eventPoint} from 'utilities';
+import {eventPoint, getTextWidth} from 'utilities';
+
+import {BarData} from '../../types';
 import {XAxis} from '../XAxis';
-import {YAxis, TooltipContainer} from 'components';
-import {useYScale, useXScale, useAxisMargin} from '../../hooks';
-import {MIN_BAR_HEIGHT, MARGIN, LINE_HEIGHT} from '../../constants';
+import {Bar} from '../Bar';
+import {YAxis} from '../../../YAxis';
+import {TooltipContainer} from '../../../TooltipContainer';
+import {useYScale, useXScale} from '../../hooks';
+import {MIN_BAR_HEIGHT, MARGIN, LINE_HEIGHT, SPACING} from '../../constants';
 
 interface Props {
   data: BarData[];
@@ -32,7 +33,11 @@ export function Chart({
     y: number;
   } | null>(null);
 
-  const axisMargin = useAxisMargin({data, formatValue});
+  const axisMargin =
+    SPACING +
+    data
+      .map(({rawValue}) => getTextWidth(formatValue(rawValue)))
+      .reduce((acc, currentValue) => Math.max(acc, currentValue));
 
   const drawableWidth = chartDimensions.width - MARGIN.Right - axisMargin;
 
@@ -85,18 +90,6 @@ export function Chart({
 
         <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
           {data.map(({rawValue}, index) => {
-            const currentColor =
-              activeBar === index && highlightColor != null
-                ? tokens[highlightColor]
-                : tokens[color];
-
-            const animation = useSpring({
-              config: {duration: 200},
-              immediate: highlightColor == null,
-              color: currentColor,
-              from: {color: tokens[color]},
-            });
-
             const rawHeight = Math.abs(yScale(rawValue) - yScale(0));
             const needsMinHeight = rawHeight < MIN_BAR_HEIGHT;
             const height = needsMinHeight ? MIN_BAR_HEIGHT : rawHeight;
@@ -108,25 +101,17 @@ export function Chart({
               : yScale(Math.max(0, rawValue));
 
             return (
-              <animated.rect
+              <Bar
                 key={index}
-                onMouseMove={() => {
-                  setActiveBar(index);
-                }}
-                onTouchMove={() => {
-                  setActiveBar(index);
-                }}
-                onTouchEnd={() => {
-                  setActiveBar(null);
-                }}
-                onMouseLeave={() => {
-                  setActiveBar(null);
-                }}
+                onMove={() => setActiveBar(index)}
+                onEnd={() => setActiveBar(null)}
                 x={xScale(index.toString())}
                 y={yPosition}
-                fill={animation.color}
                 width={xScale.bandwidth()}
                 height={height}
+                isSelected={index === activeBar}
+                color={color}
+                highlightColor={highlightColor}
               />
             );
           })}
@@ -136,8 +121,8 @@ export function Chart({
       {tooltipPosition != null && activeBar != null ? (
         <TooltipContainer
           activePointIndex={activeBar}
-          currentX={tooltipPosition!.x}
-          currentY={tooltipPosition!.y}
+          currentX={tooltipPosition.x}
+          currentY={tooltipPosition.y}
           chartDimensions={chartDimensions}
           margin={MARGIN}
         >

@@ -1,5 +1,6 @@
 import {useMemo} from 'react';
 import {scaleBand} from 'd3-scale';
+
 import {BarData} from '../types';
 import {wrapLabel} from '../../../utilities';
 
@@ -21,16 +22,16 @@ export function useXScale({
 
   const xAxisLabels = useMemo(() => {
     return data.map(({label}, index) => {
-      const pointOffset = xScale(index.toString());
+      const barXPosition = xScale(index.toString());
       const xOffset =
-        pointOffset == null ? barWidthOffset : barWidthOffset + pointOffset;
+        barXPosition == null ? barWidthOffset : barWidthOffset + barXPosition;
 
       return {
         value: wrapLabel(label, xScale.bandwidth()),
         xOffset,
       };
     });
-  }, [xScale, data]);
+  }, [data, xScale, barWidthOffset]);
 
   return {xScale, xAxisLabels};
 }

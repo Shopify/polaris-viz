@@ -1,8 +1,8 @@
 import {useMemo} from 'react';
 import {scaleLinear} from 'd3-scale';
-import {BarData} from '../types';
 
-export const MIN_Y_LABEL_SPACE = 80;
+import {BarData} from '../types';
+import {MIN_Y_LABEL_SPACE} from '../constants';
 
 export function useYScale({
   drawableHeight,

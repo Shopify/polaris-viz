@@ -1,8 +1,9 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
+import {Color} from 'types';
+
 import {Chart} from './components';
 import {BarData} from './types';
-import {Color} from 'types';
 
 interface Props {
   data: BarData[];
