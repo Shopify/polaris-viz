@@ -13,16 +13,12 @@ export function breakString({
   const lines: string[] = [];
   let currentLine = '';
 
-  characters.forEach((character, index) => {
+  characters.forEach((character) => {
     const nextLine = `${currentLine}${character}`;
     const lineWidth = getTextWidth({text: nextLine, fontSize: fontSize});
 
     if (lineWidth >= maxWidth) {
-      const currentCharacter = index + 1;
-      const isLastLine = characters.length === currentCharacter;
-      const hyphenatedNextLine = `${nextLine}-`;
-
-      lines.push(isLastLine ? nextLine : hyphenatedNextLine);
+      lines.push(nextLine);
       currentLine = '';
     } else {
       currentLine = nextLine;

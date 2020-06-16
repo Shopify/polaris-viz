@@ -146,35 +146,32 @@ export default function Playground() {
             {rawValue: -2, label: 'CoutuKitsch Accra Studs'},
           ]}
         />
-        {/* <LineChart
-          xAxisLabels={series[0].data.map(({x}) =>
-            formatDate(new Date(2020, 3, parseInt(x, 10) + 1)),
-          )}
-          formatYAxisValue={formatNumber}
-          series={series}
+      </div>
+
+      <div
+        style={{
+          maxWidth: 800,
+          margin: 'auto',
+          background: 'white',
+          padding: 12,
+          borderRadius: 6,
+          border: `1px solid ${colorSky}`,
+        }}
+      >
+        <BarChart
+          formatValue={(val) => `$${val}`}
+          highlightColor="colorPurpleDark"
+          data={[
+            {rawValue: 1000, label: 'Dec. 1'},
+            {rawValue: 50, label: 'Dec. 2'},
+            {rawValue: 100, label: 'Dec. 3'},
+            {rawValue: 200, label: 'Dec. 4'},
+            {rawValue: 2000, label: 'Dec. 5'},
+            {rawValue: 300, label: 'Dec. 6'},
+            {rawValue: 400, label: 'Dec. 8'},
+            {rawValue: -200, label: 'Dec. 9'},
+          ]}
         />
-
-        <br />
-        <hr style={{border: 0, height: 1, background: colorSkyDark}} />
-        <br />
-
-        <div style={{textAlign: 'left'}}>
-          <button
-            style={{
-              border: `2px solid ${colorBlue}`,
-              fontSize: 13,
-              borderRadius: 8,
-              color: colorBlue,
-              padding: '7px 18px',
-              fontWeight: 600,
-              cursor: 'pointer',
-              outline: 'none',
-            }}
-            onClick={() => handleChangeDataSet()}
-          >
-            Change data set
-          </button>
-        </div> */}
       </div>
     </div>
   );
