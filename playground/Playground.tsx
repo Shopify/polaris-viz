@@ -133,19 +133,17 @@ export default function Playground() {
           formatValue={(val) => `$${val}`}
           highlightColor="colorPurpleDark"
           data={[
-            {rawValue: 1000, label: 'Apples'},
-            {rawValue: 5, label: 'Peaches'},
-            {rawValue: 2, label: 'Strawberries'},
+            {rawValue: 1000, label: 'AJ Morgan Sunglasses'},
+            {rawValue: 5, label: 'Alisha Davidson Dog Hat'},
+            {rawValue: 2, label: 'All Tied Up Scrunchie'},
             {
               rawValue: 20,
-              label:
-                'Strawberries that have a super long name for some reason!!!!!!!!!!!!!!!!!!!',
+              label: 'Amanda Moss Box Crew (Black)',
             },
-            {rawValue: 2500, label: 'Strawberries'},
-            {rawValue: 2, label: 'Strawberries'},
-            {rawValue: 1, label: 'Strawberries'},
-            {rawValue: -2, label: 'Strawberries'},
-            {rawValue: -1, label: 'Strawberries'},
+            {rawValue: 2500, label: 'Amanda Moss Nico Turtleneck (Navy)'},
+            {rawValue: 2, label: 'Bianca Barr Stormy Earrings'},
+            {rawValue: 1, label: 'Bodybag Maho Dress (Black)'},
+            {rawValue: -2, label: 'CoutuKitsch Accra Studs'},
           ]}
         />
         {/* <LineChart

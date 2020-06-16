@@ -33,10 +33,14 @@ export function Chart({
     y: number;
   } | null>(null);
 
+  const fontSize = chartDimensions.width < 300 ? 10 : 12;
+
   const axisMargin =
     SPACING +
     data
-      .map(({rawValue}) => getTextWidth(formatValue(rawValue)))
+      .map(({rawValue}) =>
+        getTextWidth({text: formatValue(rawValue), fontSize}),
+      )
       .reduce((acc, currentValue) => Math.max(acc, currentValue));
 
   const drawableWidth = chartDimensions.width - MARGIN.Right - axisMargin;
@@ -45,6 +49,7 @@ export function Chart({
     drawableWidth,
     histogram,
     data,
+    fontSize,
   });
 
   const xAxisLabelHeight = xAxisLabels

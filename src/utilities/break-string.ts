@@ -1,13 +1,21 @@
 import {getTextWidth} from './get-text-width';
 
-export function breakString(word: string, maxWidth: number) {
+export function breakString({
+  word,
+  maxWidth,
+  fontSize,
+}: {
+  word: string;
+  maxWidth: number;
+  fontSize: number;
+}) {
   const characters = word.split('');
   const lines: string[] = [];
   let currentLine = '';
 
   characters.forEach((character, index) => {
     const nextLine = `${currentLine}${character}`;
-    const lineWidth = getTextWidth(nextLine);
+    const lineWidth = getTextWidth({text: nextLine, fontSize: fontSize});
 
     if (lineWidth >= maxWidth) {
       const currentCharacter = index + 1;

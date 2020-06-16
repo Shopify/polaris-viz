@@ -1,13 +1,19 @@
-export function getTextWidth(text: string) {
-  const tick = document.createElement('p');
-  tick.style.fontSize = '12px';
-  tick.style.display = 'inline-block';
-  tick.style.visibility = 'hidden';
-  document.body.appendChild(tick);
-  tick.innerText = text;
-  const width = tick.clientWidth;
+export function getTextWidth({
+  text,
+  fontSize,
+}: {
+  text: string;
+  fontSize: number;
+}) {
+  const paragraph = document.createElement('p');
+  paragraph.style.fontSize = fontSize.toString();
+  paragraph.style.display = 'inline-block';
+  paragraph.style.visibility = 'hidden';
+  document.body.appendChild(paragraph);
+  paragraph.innerText = text;
+  const width = paragraph.clientWidth;
 
-  document.body.removeChild(tick);
+  document.body.removeChild(paragraph);
 
   return width;
 }

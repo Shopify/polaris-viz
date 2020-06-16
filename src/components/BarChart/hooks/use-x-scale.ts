@@ -8,10 +8,12 @@ export function useXScale({
   drawableWidth,
   histogram,
   data,
+  fontSize,
 }: {
   drawableWidth: number;
   histogram?: boolean;
   data: BarData[];
+  fontSize: number;
 }) {
   const xScale = scaleBand()
     .rangeRound([0, drawableWidth])
@@ -27,7 +29,11 @@ export function useXScale({
         barXPosition == null ? barWidthOffset : barWidthOffset + barXPosition;
 
       return {
-        value: wrapLabel(label, xScale.bandwidth()),
+        value: wrapLabel({
+          label,
+          maxWidth: xScale.bandwidth(),
+          fontSize,
+        }),
         xOffset,
       };
     });
