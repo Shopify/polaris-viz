@@ -133,18 +133,19 @@ export default function Playground() {
           formatValue={(val) => `$${val}`}
           highlightColor="colorPurpleDark"
           data={[
-            {rawValue: 100, label: 'Apples'},
+            {rawValue: 1000, label: 'Apples'},
             {rawValue: 5, label: 'Peaches'},
-            {rawValue: 1, label: 'Strawberries'},
+            {rawValue: 2, label: 'Strawberries'},
             {
               rawValue: 20,
-              label: 'Strawberries that have a super long name for some reason',
+              label:
+                'Strawberries that have a super long name for some reason!!!!!!!!!!!!!!!!!!!',
             },
-            {rawValue: 25, label: 'Strawberries'},
+            {rawValue: 2500, label: 'Strawberries'},
+            {rawValue: 2, label: 'Strawberries'},
             {rawValue: 1, label: 'Strawberries'},
-            {rawValue: 1, label: 'Strawberries'},
+            {rawValue: -2, label: 'Strawberries'},
             {rawValue: -1, label: 'Strawberries'},
-            {rawValue: 1, label: 'Strawberries'},
           ]}
         />
         {/* <LineChart

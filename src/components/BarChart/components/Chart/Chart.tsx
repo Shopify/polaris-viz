@@ -6,9 +6,8 @@ import tokens from '@shopify/polaris-tokens';
 import {eventPoint} from 'utilities';
 import {XAxis} from '../XAxis';
 import {YAxis, TooltipContainer} from 'components';
-//add index
-import {useYScale} from '../../hooks/use-y-scale';
-import {useXScale} from '../../hooks/use-x-scale';
+import {useYScale, useXScale, useAxisMargin} from '../../hooks';
+import {MIN_BAR_HEIGHT, MARGIN, LINE_HEIGHT} from '../../constants';
 
 interface Props {
   data: BarData[];
@@ -18,10 +17,6 @@ interface Props {
   highlightColor?: Color;
   formatValue(value: number): string;
 }
-
-//seperate about and determine if these numbers are best
-const Margin = {Top: 20, Right: 20, Bottom: 70, Left: 40};
-const MIN_BAR_HEIGHT = 3;
 
 export function Chart({
   data,
@@ -37,50 +32,30 @@ export function Chart({
     y: number;
   } | null>(null);
 
-  function handleInteraction(
-    event: React.MouseEvent<SVGSVGElement> | React.TouchEvent<SVGSVGElement>,
-  ) {
-    if (axisMargin == null || xScale == null) {
-      return;
-    }
+  const axisMargin = useAxisMargin({data, formatValue});
 
-    const point = eventPoint(event);
-    if (point == null) {
-      return;
-    }
-
-    const {svgX, svgY} = point;
-    if (svgX < axisMargin) {
-      return;
-    }
-
-    setTooltipPosition({
-      x: svgX,
-      y: svgY,
-    });
-  }
-
-  const height = chartDimensions.height - Margin.Top - Margin.Bottom;
-
-  const {yScale, ticks, axisMargin} = useYScale({
-    drawableHeight: height,
-    data,
-    formatValue,
-  });
-
-  const drawableWidth =
-    axisMargin == null ? 0 : chartDimensions.width - Margin.Right - axisMargin;
+  const drawableWidth = chartDimensions.width - MARGIN.Right - axisMargin;
 
   const {xScale, xAxisLabels} = useXScale({
     drawableWidth,
     histogram,
     data,
-    dimensions: chartDimensions,
   });
 
-  const prefersReducedMotion = window.matchMedia(
-    '(prefers-reduced-motion: reduce)',
-  ).matches;
+  const xAxisLabelHeight = xAxisLabels
+    .map(({value}) => value.length)
+    .reduce((acc, currentValue) => Math.max(acc, currentValue));
+
+  const xAxisLabelSpace = (xAxisLabelHeight - 1) * LINE_HEIGHT;
+
+  const drawableHeight =
+    chartDimensions.height - MARGIN.Top - MARGIN.Bottom - xAxisLabelSpace;
+
+  const {yScale, ticks} = useYScale({
+    drawableHeight,
+    data,
+    formatValue,
+  });
 
   return (
     <div
@@ -98,16 +73,17 @@ export function Chart({
       >
         <g
           transform={`translate(${axisMargin},${chartDimensions.height -
-            Margin.Bottom})`}
+            MARGIN.Bottom -
+            xAxisLabelSpace})`}
         >
           <XAxis labels={xAxisLabels} range={xScale.range()} />
         </g>
 
-        <g transform={`translate(${axisMargin},${Margin.Top})`}>
+        <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
           <YAxis ticks={ticks} drawableWidth={drawableWidth} />
         </g>
 
-        <g transform={`translate(${axisMargin},${Margin.Top})`}>
+        <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
           {data.map(({rawValue}, index) => {
             const currentColor =
               activeBar === index && highlightColor != null
@@ -116,7 +92,7 @@ export function Chart({
 
             const animation = useSpring({
               config: {duration: 200},
-              immediate: highlightColor == null || prefersReducedMotion,
+              immediate: highlightColor == null,
               color: currentColor,
               from: {color: tokens[color]},
             });
@@ -163,7 +139,7 @@ export function Chart({
           currentX={tooltipPosition!.x}
           currentY={tooltipPosition!.y}
           chartDimensions={chartDimensions}
-          margin={Margin}
+          margin={MARGIN}
         >
           <strong>{data[activeBar].label}</strong>
           {formatValue(data[activeBar].rawValue)}
@@ -171,4 +147,27 @@ export function Chart({
       ) : null}
     </div>
   );
+
+  function handleInteraction(
+    event: React.MouseEvent<SVGSVGElement> | React.TouchEvent<SVGSVGElement>,
+  ) {
+    if (xScale == null) {
+      return;
+    }
+
+    const point = eventPoint(event);
+    if (point == null) {
+      return;
+    }
+
+    const {svgX, svgY} = point;
+    if (svgX < axisMargin) {
+      return;
+    }
+
+    setTooltipPosition({
+      x: svgX,
+      y: svgY,
+    });
+  }
 }

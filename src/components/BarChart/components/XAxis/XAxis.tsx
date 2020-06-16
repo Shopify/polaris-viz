@@ -1,20 +1,14 @@
 import React from 'react';
 import {colorSky, colorInkLighter, spacingLoose} from '@shopify/polaris-tokens';
-
-const TICK_SIZE = 6;
+import {TICK_SIZE, LINE_HEIGHT} from '../../constants';
 
 export function XAxis({
   labels,
   range,
 }: {
   range: number[];
-  labels: {value: string; xOffset: number}[];
+  labels: {value: string[]; xOffset: number}[];
 }) {
-  //to do:
-  // adjust font-size based on space
-  // slant the label if it would be a better fit
-  // truncate strings if they are still too long
-
   const [xScaleMin, xScaleMax] = range;
 
   return (
@@ -41,7 +35,11 @@ export function XAxis({
                 transform: `translateY(${spacingLoose})`,
               }}
             >
-              {value}
+              {value.map((labelPart, index) => (
+                <tspan key={labelPart} x={0} dy={index === 0 ? 0 : LINE_HEIGHT}>
+                  {labelPart}
+                </tspan>
+              ))}
             </text>
           </g>
         );

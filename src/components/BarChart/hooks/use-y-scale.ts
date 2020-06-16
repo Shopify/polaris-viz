@@ -1,9 +1,8 @@
-import {useMemo, useEffect, useState} from 'react';
+import {useMemo} from 'react';
 import {scaleLinear} from 'd3-scale';
 import {BarData} from '../types';
 
 export const MIN_Y_LABEL_SPACE = 80;
-export const SPACING_TIGHT = 8;
 
 export function useYScale({
   drawableHeight,
@@ -14,8 +13,6 @@ export function useYScale({
   data: BarData[];
   formatValue(value: number): string;
 }) {
-  const [maxTickLength, setMaxTickLength] = useState<number>();
-
   const {yScale, ticks} = useMemo(() => {
     const min = Math.min(...data.map(({rawValue}) => rawValue), 0);
     const max = Math.max(...data.map(({rawValue}) => rawValue));
@@ -38,27 +35,5 @@ export function useYScale({
     return {yScale, ticks};
   }, [drawableHeight, data, formatValue]);
 
-  useEffect(() => {
-    let currentMaxTickLength = 0;
-
-    const tick = document.createElement('p');
-    tick.style.fontSize = '12px';
-    tick.style.display = 'inline-block';
-    tick.style.visibility = 'hidden';
-    document.body.appendChild(tick);
-
-    ticks.forEach(({formattedValue}) => {
-      tick.innerText = formattedValue;
-
-      currentMaxTickLength = Math.max(currentMaxTickLength, tick.clientWidth);
-    });
-
-    document.body.removeChild(tick);
-
-    setMaxTickLength(currentMaxTickLength);
-  }, [ticks, maxTickLength]);
-
-  const axisMargin = maxTickLength == null ? 0 : maxTickLength + SPACING_TIGHT;
-
-  return {yScale, ticks, axisMargin};
+  return {yScale, ticks};
 }
