@@ -9,11 +9,13 @@ export function useXScale({
   histogram,
   data,
   fontSize,
+  formatXAxisLabel,
 }: {
   drawableWidth: number;
   histogram?: boolean;
   data: BarData[];
   fontSize: number;
+  formatXAxisLabel?(value: string, index: number): string;
 }) {
   const xScale = scaleBand()
     .rangeRound([0, drawableWidth])
@@ -28,9 +30,13 @@ export function useXScale({
       const xOffset =
         barXPosition == null ? barWidthOffset : barWidthOffset + barXPosition;
 
+      const formattedLabel = formatXAxisLabel
+        ? formatXAxisLabel(label, index)
+        : label;
+
       return {
         value: wrapLabel({
-          label,
+          label: formattedLabel,
           maxWidth: xScale.bandwidth(),
           fontSize,
         }),

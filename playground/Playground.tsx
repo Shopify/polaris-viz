@@ -130,7 +130,10 @@ export default function Playground() {
         }}
       >
         <BarChart
-          formatValue={(val) => `$${val}`}
+          formatYValue={(val) => `$${val}`}
+          formatXAxisLabel={(val) => {
+            return val.substr(0, 20);
+          }}
           highlightColor="colorPurpleDark"
           data={[
             {rawValue: 1000, label: 'AJ Morgan Sunglasses'},
@@ -159,7 +162,14 @@ export default function Playground() {
         }}
       >
         <BarChart
-          formatValue={(val) => `$${val}`}
+          formatYValue={(val) => `$${val}`}
+          formatXAxisLabel={(val, index) => {
+            if (index % 2 != 0) {
+              return '';
+            } else {
+              return val;
+            }
+          }}
           highlightColor="colorPurpleDark"
           data={[
             {rawValue: 1000, label: 'Dec. 1'},

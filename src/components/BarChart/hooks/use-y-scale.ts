@@ -7,11 +7,11 @@ import {MIN_Y_LABEL_SPACE} from '../constants';
 export function useYScale({
   drawableHeight,
   data,
-  formatValue,
+  formatYValue,
 }: {
   drawableHeight: number;
   data: BarData[];
-  formatValue(value: number): string;
+  formatYValue(value: number): string;
 }) {
   const {yScale, ticks} = useMemo(() => {
     const min = Math.min(...data.map(({rawValue}) => rawValue), 0);
@@ -28,12 +28,12 @@ export function useYScale({
 
     const ticks = yScale.ticks(maxTicks).map((value) => ({
       value,
-      formattedValue: formatValue(value),
+      formattedValue: formatYValue(value),
       yOffset: yScale(value),
     }));
 
     return {yScale, ticks};
-  }, [drawableHeight, data, formatValue]);
+  }, [drawableHeight, data, formatYValue]);
 
   return {yScale, ticks};
 }

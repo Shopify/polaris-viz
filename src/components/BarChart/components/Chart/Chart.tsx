@@ -16,7 +16,8 @@ interface Props {
   histogram?: boolean;
   color: Color;
   highlightColor?: Color;
-  formatValue(value: number): string;
+  formatYValue(value: number): string;
+  formatXAxisLabel?(value: string, index: number): string;
 }
 
 export function Chart({
@@ -25,7 +26,8 @@ export function Chart({
   histogram,
   color,
   highlightColor,
-  formatValue,
+  formatYValue,
+  formatXAxisLabel,
 }: Props) {
   const [activeBar, setActiveBar] = useState<number | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState<{
@@ -39,7 +41,7 @@ export function Chart({
     SPACING +
     data
       .map(({rawValue}) =>
-        getTextWidth({text: formatValue(rawValue), fontSize}),
+        getTextWidth({text: formatYValue(rawValue), fontSize}),
       )
       .reduce((acc, currentValue) => Math.max(acc, currentValue));
 
@@ -50,6 +52,7 @@ export function Chart({
     histogram,
     data,
     fontSize,
+    formatXAxisLabel,
   });
 
   const xAxisLabelHeight = xAxisLabels
@@ -64,7 +67,7 @@ export function Chart({
   const {yScale, ticks} = useYScale({
     drawableHeight,
     data,
-    formatValue,
+    formatYValue,
   });
 
   return (
@@ -132,7 +135,7 @@ export function Chart({
           margin={MARGIN}
         >
           <strong>{data[activeBar].label}</strong>
-          {formatValue(data[activeBar].rawValue)}
+          {formatYValue(data[activeBar].rawValue)}
         </TooltipContainer>
       ) : null}
     </div>
