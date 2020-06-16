@@ -15,7 +15,7 @@ export function breakString({
 
   characters.forEach((character) => {
     const nextLine = `${currentLine}${character}`;
-    const lineWidth = getTextWidth({text: nextLine, fontSize: fontSize});
+    const lineWidth = getTextWidth({text: nextLine, fontSize});
 
     if (lineWidth >= maxWidth) {
       lines.push(nextLine);

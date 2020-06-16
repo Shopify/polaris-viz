@@ -43,7 +43,7 @@ export function useXScale({
         xOffset,
       };
     });
-  }, [data, xScale, barWidthOffset]);
+  }, [data, xScale, barWidthOffset, formatXAxisLabel, fontSize]);
 
   return {xScale, xAxisLabels};
 }
