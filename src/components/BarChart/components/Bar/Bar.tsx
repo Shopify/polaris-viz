@@ -29,7 +29,10 @@ export function Bar({
   const animation = useSpring({
     config: {duration: 300},
     immediate: highlightColor == null,
-    color: isSelected ? tokens[highlightColor] : tokens[color],
+    color:
+      isSelected && highlightColor != null
+        ? tokens[highlightColor]
+        : tokens[color],
     from: {color: tokens[color]},
   });
 
