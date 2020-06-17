@@ -13,3 +13,11 @@
   padding-left: $spacing-extra-tight;
   text-align: right;
 }
+
+.Container {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  column-gap: $spacing-tight;
+  row-gap: $spacing-tight;
+}

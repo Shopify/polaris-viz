@@ -1,0 +1,9 @@
+@import 'node_modules/@shopify/polaris-tokens/dist/index';
+
+.Tooltip {
+  font-size: 12px;
+  display: grid;
+  max-width: 160px;
+  grid-template-columns: 1fr auto;
+  grid-gap: $spacing-tight;
+}
