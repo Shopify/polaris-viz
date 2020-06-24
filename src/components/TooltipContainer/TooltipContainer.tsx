@@ -10,6 +10,7 @@ interface Props {
   currentX: number;
   currentY: number;
   chartDimensions: DOMRect;
+  position?: 'center' | 'auto';
 }
 
 // The space between the cursor and the tooltip
@@ -22,6 +23,7 @@ export function TooltipContainer({
   chartDimensions,
   children,
   margin,
+  position = 'auto',
 }: Props) {
   const tooltipRef = useRef<HTMLDivElement | null>(null);
   const [tooltipDimensions, setTooltipDimensions] = useState<DOMRect | null>(
@@ -52,7 +54,9 @@ export function TooltipContainer({
 
       let xTranslation = 0;
 
-      if (hasSpaceToLeft) {
+      if (position === 'center') {
+        xTranslation = currentX - tooltipDimensions.width / 2;
+      } else if (hasSpaceToLeft) {
         xTranslation = naturalLeftBound;
       } else if (hasSpaceToRight) {
         xTranslation = currentX + TOOLTIP_MARGIN;
