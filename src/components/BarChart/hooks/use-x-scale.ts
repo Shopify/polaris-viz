@@ -6,20 +6,20 @@ import {wrapLabel} from '../../../utilities';
 
 export function useXScale({
   drawableWidth,
-  histogram,
+  barMargin,
   data,
   fontSize,
   formatXAxisLabel,
 }: {
   drawableWidth: number;
-  histogram: boolean;
+  barMargin: number;
   data: BarData[];
   fontSize: number;
   formatXAxisLabel(value: string, index: number): string;
 }) {
   const xScale = scaleBand()
     .rangeRound([0, drawableWidth])
-    .padding(histogram ? 0 : 0.1)
+    .paddingInner(barMargin)
     .domain(data.map((_, index) => index.toString()));
 
   const barWidthOffset = xScale.bandwidth() / 2;

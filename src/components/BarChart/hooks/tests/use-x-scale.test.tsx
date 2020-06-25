@@ -23,14 +23,14 @@ describe('useXScale', () => {
       rangeSpy = jest.fn(() => scale);
       scale.rangeRound = rangeSpy;
       scale.bandwidth = () => 10;
-      scale.padding = () => scale;
+      scale.paddingInner = () => scale;
       return scale;
     });
 
     function TestComponent() {
       useXScale({
         drawableWidth: 200,
-        histogram: false,
+        barMargin: 0,
         data: [{rawValue: 10, label: ''}],
         fontSize: 12,
         formatXAxisLabel: () => '',
@@ -51,7 +51,7 @@ describe('useXScale', () => {
       scale.range = (range: any) => range;
       scale.rangeRound = () => scale;
       scale.bandwidth = () => 10;
-      scale.padding = () => scale;
+      scale.paddingInner = () => scale;
       domainSpy = jest.fn(() => scale);
       scale.domain = domainSpy;
       return scale;
@@ -60,7 +60,7 @@ describe('useXScale', () => {
     function TestComponent() {
       useXScale({
         drawableWidth: 200,
-        histogram: false,
+        barMargin: 0,
         data: [
           {rawValue: 0, label: ''},
           {rawValue: 1000, label: ''},
@@ -83,7 +83,7 @@ describe('useXScale', () => {
       scale.range = () => scale;
       scale.rangeRound = () => scale;
       scale.bandwidth = () => 10;
-      scale.padding = () => scale;
+      scale.paddingInner = () => scale;
       scale.domain = () => scale;
       return scale;
     });
@@ -91,7 +91,7 @@ describe('useXScale', () => {
     function TestComponent() {
       const {xAxisLabels} = useXScale({
         drawableWidth: 200,
-        histogram: false,
+        barMargin: 0,
         data: [{rawValue: 0, label: 'Test 1'}],
         fontSize: 12,
         formatXAxisLabel: (val: string) => `${val}!`,

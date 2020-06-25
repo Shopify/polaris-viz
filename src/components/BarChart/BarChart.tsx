@@ -3,11 +3,11 @@ import {useDebouncedCallback} from 'use-debounce';
 import {Color} from 'types';
 
 import {Chart} from './Chart';
-import {BarData} from './types';
+import {BarData, BarMargin} from './types';
 
 interface Props {
   data: BarData[];
-  histogram?: boolean;
+  barMargin?: keyof typeof BarMargin;
   accessibilityLabel?: string;
   color?: Color;
   highlightColor?: Color;
@@ -19,7 +19,7 @@ export function BarChart({
   data,
   highlightColor,
   accessibilityLabel,
-  histogram = false,
+  barMargin = 'Medium',
   color = 'colorPurple',
   formatYValue = (value) => value.toString(),
   formatXAxisLabel = (value) => value.toString(),
@@ -56,7 +56,7 @@ export function BarChart({
         <Chart
           data={data}
           chartDimensions={chartDimensions}
-          histogram={histogram}
+          barMargin={BarMargin[barMargin]}
           color={color}
           highlightColor={highlightColor}
           formatYValue={formatYValue}
