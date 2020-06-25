@@ -8,19 +8,23 @@ import styles from './XAxis.scss';
 export function XAxis({
   labels,
   range,
+  histogram,
 }: {
   range: number[];
   labels: {value: string[]; xOffset: number}[];
+  histogram: boolean;
 }) {
   const [xScaleMin, xScaleMax] = range;
 
   return (
     <React.Fragment>
-      <path
-        d={`M ${xScaleMin} ${TICK_SIZE} v ${-TICK_SIZE} H ${xScaleMax} v ${TICK_SIZE}`}
-        fill="none"
-        stroke={colorSky}
-      />
+      {histogram ? null : (
+        <path
+          d={`M ${xScaleMin} ${TICK_SIZE} v ${-TICK_SIZE} H ${xScaleMax} v ${TICK_SIZE}`}
+          fill="none"
+          stroke={colorSky}
+        />
+      )}
 
       {labels.map(({value, xOffset}, index) => {
         return (

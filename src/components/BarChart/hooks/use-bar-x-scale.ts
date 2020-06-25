@@ -4,22 +4,20 @@ import {scaleBand} from 'd3-scale';
 import {BarData} from '../types';
 import {wrapLabel} from '../../../utilities';
 
-export function useXScale({
+export function useBarXScale({
   drawableWidth,
-  histogram,
   data,
   fontSize,
   formatXAxisLabel,
 }: {
   drawableWidth: number;
-  histogram: boolean;
   data: BarData[];
   fontSize: number;
   formatXAxisLabel(value: string, index: number): string;
 }) {
   const xScale = scaleBand()
     .rangeRound([0, drawableWidth])
-    .padding(histogram ? 0 : 0.1)
+    .padding(0.1)
     .domain(data.map((_, index) => index.toString()));
 
   const barWidthOffset = xScale.bandwidth() / 2;
@@ -41,5 +39,11 @@ export function useXScale({
     });
   }, [data, xScale, barWidthOffset, formatXAxisLabel, fontSize]);
 
-  return {xScale, xAxisLabels};
+  return {
+    xScale: (input: number) => xScale(input.toString()),
+    xAxisLabels,
+    bandwidth: xScale.bandwidth(),
+    step: xScale.step(),
+    range: xScale.range(),
+  };
 }

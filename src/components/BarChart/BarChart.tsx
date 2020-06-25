@@ -7,19 +7,19 @@ import {BarData} from './types';
 
 interface Props {
   data: BarData[];
-  histogram?: boolean;
   accessibilityLabel?: string;
   color?: Color;
   highlightColor?: Color;
   formatYValue?(value: number): string;
   formatXAxisLabel?(value: string, index: number): string;
+  histogramStartValue?: string;
 }
 
 export function BarChart({
   data,
   highlightColor,
   accessibilityLabel,
-  histogram = false,
+  histogramStartValue,
   color = 'colorPurple',
   formatYValue = (value) => value.toString(),
   formatXAxisLabel = (value) => value.toString(),
@@ -56,11 +56,11 @@ export function BarChart({
         <Chart
           data={data}
           chartDimensions={chartDimensions}
-          histogram={histogram}
           color={color}
           highlightColor={highlightColor}
           formatYValue={formatYValue}
           formatXAxisLabel={formatXAxisLabel}
+          histogramStartValue={histogramStartValue}
         />
       )}
     </div>
