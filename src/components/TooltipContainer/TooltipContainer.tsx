@@ -16,6 +16,10 @@ interface Props {
 // The space between the cursor and the tooltip
 const TOOLTIP_MARGIN = 10;
 
+function clamp({amount, min, max}: {amount: number; min: number; max: number}) {
+  return Math.min(Math.max(amount, min), max);
+}
+
 export function TooltipContainer({
   activePointIndex,
   currentX,
@@ -55,7 +59,11 @@ export function TooltipContainer({
       let xTranslation = 0;
 
       if (position === 'center') {
-        xTranslation = currentX - tooltipDimensions.width / 2;
+        xTranslation = clamp({
+          amount: currentX - tooltipDimensions.width / 2,
+          max: chartRightBound - tooltipDimensions.width,
+          min: chartLeftBound,
+        });
       } else if (hasSpaceToLeft) {
         xTranslation = naturalLeftBound;
       } else if (hasSpaceToRight) {

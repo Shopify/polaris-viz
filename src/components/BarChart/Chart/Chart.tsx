@@ -3,7 +3,7 @@ import {Color} from 'types';
 import {eventPoint, getTextWidth} from 'utilities';
 
 import {BarData} from '../types';
-import {XAxis, Bar} from '../components';
+import {XAxis, Bar, Tooltip} from '../components';
 import {YAxis} from '../../YAxis';
 import {TooltipContainer} from '../../TooltipContainer';
 import {useYScale, useXScale} from '../hooks';
@@ -131,10 +131,10 @@ export function Chart({
           margin={MARGIN}
           position="center"
         >
-          <div className={styles.Tooltip}>
-            <strong>{data[activeBar].label}</strong>
-            {formatYValue(data[activeBar].rawValue)}
-          </div>
+          <Tooltip
+            label={data[activeBar].label}
+            value={formatYValue(data[activeBar].rawValue)}
+          />
         </TooltipContainer>
       ) : null}
     </div>
