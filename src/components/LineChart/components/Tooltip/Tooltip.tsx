@@ -32,7 +32,7 @@ export function Tooltip({
       chartDimensions={chartDimensions}
       margin={Margin}
     >
-      <div className={styles.Container} key={name}>
+      <div className={styles.Container}>
         {series.map(({name, data, formatY, style = {}}) => {
           const point = data[activePointIndex];
 
