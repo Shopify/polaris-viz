@@ -172,7 +172,7 @@ export function Chart({
     const xPosition = xScale(currentIndex.toString());
     const value = data[currentIndex].rawValue;
     const tooltipXPositon =
-      xPosition == null ? 0 : xPosition + axisMargin + xScale.step() / 2;
+      xPosition == null ? 0 : xPosition + axisMargin + xScale.bandwidth() / 2;
 
     setActiveBar(currentIndex);
     setTooltipPosition({
