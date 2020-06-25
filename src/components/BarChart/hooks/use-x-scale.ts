@@ -27,7 +27,8 @@ export function useXScale({
   const xAxisLabels = useMemo(() => {
     return data.map(({label}, index) => {
       const barXPosition = xScale(index.toString());
-      const xOffset =
+      const histogramOffset = barXPosition == null ? 0 : barXPosition;
+      const barOffset =
         barXPosition == null ? barWidthOffset : barWidthOffset + barXPosition;
 
       return {
@@ -36,7 +37,7 @@ export function useXScale({
           maxWidth: xScale.bandwidth(),
           fontSize,
         }),
-        xOffset,
+        xOffset: histogram ? histogramOffset : barOffset,
       };
     });
   }, [data, xScale, barWidthOffset, formatXAxisLabel, fontSize]);

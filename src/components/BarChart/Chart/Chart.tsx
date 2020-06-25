@@ -21,21 +21,21 @@ import styles from './Chart.scss';
 interface Props {
   data: BarData[];
   chartDimensions: DOMRect;
-  histogram: boolean;
   color: Color;
   highlightColor?: Color;
   formatYValue(value: number): string;
   formatXAxisLabel(value: string, index: number): string;
+  histogram: boolean;
 }
 
 export function Chart({
   data,
   chartDimensions,
-  histogram,
   color,
   highlightColor,
   formatYValue,
   formatXAxisLabel,
+  histogram,
 }: Props) {
   const [activeBar, setActiveBar] = useState<number | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState<{
@@ -95,7 +95,11 @@ export function Chart({
             MARGIN.Bottom -
             xAxisLabelSpace})`}
         >
-          <XAxis labels={xAxisLabels} range={xScale.range()} />
+          <XAxis
+            labels={xAxisLabels}
+            range={xScale.range()}
+            histogram={histogram}
+          />
         </g>
 
         <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
@@ -132,7 +136,9 @@ export function Chart({
           position="center"
         >
           <div className={styles.Tooltip}>
-            <strong>{data[activeBar].label}</strong>
+            {histogram == null ? (
+              <strong>{data[activeBar].label}</strong>
+            ) : null}
             {formatYValue(data[activeBar].rawValue)}
           </div>
         </TooltipContainer>
@@ -166,7 +172,7 @@ export function Chart({
     const xPosition = xScale(currentIndex.toString());
     const value = data[currentIndex].rawValue;
     const tooltipXPositon =
-      xPosition == null ? 0 : xPosition + axisMargin + xScale.bandwidth() / 2;
+      xPosition == null ? 0 : xPosition + axisMargin + xScale.step() / 2;
 
     setActiveBar(currentIndex);
     setTooltipPosition({
