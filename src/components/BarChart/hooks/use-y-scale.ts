@@ -17,14 +17,15 @@ export function useYScale({
     const min = Math.min(...data.map(({rawValue}) => rawValue), 0);
     const max = Math.max(...data.map(({rawValue}) => rawValue));
 
-    const yScale = scaleLinear()
-      .range([drawableHeight, 0])
-      .domain([min, max]);
-
     const maxTicks = Math.max(
-      1,
+      3,
       Math.floor(drawableHeight / MIN_Y_LABEL_SPACE),
     );
+
+    const yScale = scaleLinear()
+      .range([drawableHeight, 0])
+      .domain([min, max])
+      .nice(maxTicks);
 
     const ticks = yScale.ticks(maxTicks).map((value) => ({
       value,
