@@ -1,6 +1,8 @@
 import React, {useEffect, useRef, useState, ReactNode} from 'react';
 import {useSpring, animated} from 'react-spring';
 
+import {clamp} from '../../utilities';
+
 import styles from './TooltipContainer.scss';
 
 interface Props {
@@ -15,10 +17,6 @@ interface Props {
 
 // The space between the cursor and the tooltip
 const TOOLTIP_MARGIN = 10;
-
-function clamp({amount, min, max}: {amount: number; min: number; max: number}) {
-  return Math.min(Math.max(amount, min), max);
-}
 
 export function TooltipContainer({
   activePointIndex,
