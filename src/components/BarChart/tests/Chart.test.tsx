@@ -37,6 +37,7 @@ describe('Chart />', () => {
     color: 'colorPurple' as Color,
     formatYValue: (value: number) => value.toString(),
     formatXAxisLabel: (value: string) => value,
+    barMargin: 0,
   };
 
   it('renders an SVG element', () => {

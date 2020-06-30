@@ -21,7 +21,7 @@ import styles from './Chart.scss';
 interface Props {
   data: BarData[];
   chartDimensions: DOMRect;
-  histogram: boolean;
+  barMargin: number;
   color: Color;
   highlightColor?: Color;
   formatYValue(value: number): string;
@@ -31,7 +31,7 @@ interface Props {
 export function Chart({
   data,
   chartDimensions,
-  histogram,
+  barMargin,
   color,
   highlightColor,
   formatYValue,
@@ -54,7 +54,7 @@ export function Chart({
 
   const {xScale, xAxisLabels} = useXScale({
     drawableWidth,
-    histogram,
+    barMargin,
     data,
     fontSize,
     formatXAxisLabel,
