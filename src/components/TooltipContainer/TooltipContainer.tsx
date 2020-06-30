@@ -1,6 +1,8 @@
 import React, {useEffect, useRef, useState, ReactNode} from 'react';
 import {useSpring, animated} from 'react-spring';
 
+import {clamp} from '../../utilities';
+
 import styles from './TooltipContainer.scss';
 
 interface Props {
@@ -55,7 +57,11 @@ export function TooltipContainer({
       let xTranslation = 0;
 
       if (position === 'center') {
-        xTranslation = currentX - tooltipDimensions.width / 2;
+        xTranslation = clamp({
+          amount: currentX - tooltipDimensions.width / 2,
+          max: chartRightBound - tooltipDimensions.width,
+          min: chartLeftBound,
+        });
       } else if (hasSpaceToLeft) {
         xTranslation = naturalLeftBound;
       } else if (hasSpaceToRight) {

@@ -32,25 +32,27 @@ export function Tooltip({
       chartDimensions={chartDimensions}
       margin={Margin}
     >
-      {series.map(({name, data, formatY, style = {}}) => {
-        const point = data[activePointIndex];
+      <div className={styles.Container}>
+        {series.map(({name, data, formatY, style = {}}) => {
+          const point = data[activePointIndex];
 
-        if (point == null) {
-          return null;
-        }
+          if (point == null) {
+            return null;
+          }
 
-        const {color = 'colorPurple', lineStyle = 'solid'} = style;
-        const formattedYValue =
-          formatY == null ? formatYAxisValue(point.y) : formatY(point.y);
+          const {color = 'colorPurple', lineStyle = 'solid'} = style;
+          const formattedYValue =
+            formatY == null ? formatYAxisValue(point.y) : formatY(point.y);
 
-        return (
-          <React.Fragment key={name}>
-            <LinePreview color={color} lineStyle={lineStyle} />
-            <p className={styles.SeriesName}>{name}</p>
-            <p className={styles.Value}>{formattedYValue}</p>
-          </React.Fragment>
-        );
-      })}
+          return (
+            <React.Fragment key={name}>
+              <LinePreview color={color} lineStyle={lineStyle} />
+              <p className={styles.SeriesName}>{name}</p>
+              <p className={styles.Value}>{formattedYValue}</p>
+            </React.Fragment>
+          );
+        })}
+      </div>
     </TooltipContainer>
   );
 }

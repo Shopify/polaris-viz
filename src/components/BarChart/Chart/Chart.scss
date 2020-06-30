@@ -1,14 +1,3 @@
-@import 'node_modules/@shopify/polaris-tokens/dist/index';
-
-.Tooltip {
-  font-size: 12px;
-  display: grid;
-  grid-template-columns: 1fr auto auto;
-  align-items: center;
-  column-gap: $spacing-tight;
-  row-gap: $spacing-tight;
-}
-
 .ChartContainer {
   position: relative;
 }

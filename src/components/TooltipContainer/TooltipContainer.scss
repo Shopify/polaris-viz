@@ -7,10 +7,5 @@
   border-radius: 4px;
   padding: $spacing-tight;
   pointer-events: none;
-  display: grid;
-  grid-template-columns: 1fr auto auto;
-  align-items: center;
-  column-gap: $spacing-tight;
-  row-gap: $spacing-tight;
   max-width: 70%;
 }
