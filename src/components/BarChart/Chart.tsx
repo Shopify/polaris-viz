@@ -2,11 +2,12 @@ import React, {useState} from 'react';
 import {Color} from 'types';
 import {eventPoint, getTextWidth} from 'utilities';
 
-import {BarData} from '../types';
-import {XAxis, Bar, Tooltip} from '../components';
-import {YAxis} from '../../YAxis';
-import {TooltipContainer} from '../../TooltipContainer';
-import {useYScale, useXScale} from '../hooks';
+import {YAxis} from '../YAxis';
+import {TooltipContainer} from '../TooltipContainer';
+
+import {BarData} from './types';
+import {XAxis, Bar, Tooltip} from './components';
+import {useYScale, useXScale} from './hooks';
 import {
   MARGIN,
   LINE_HEIGHT,
@@ -14,8 +15,7 @@ import {
   SMALL_FONT_SIZE,
   FONT_SIZE,
   SMALL_SCREEN,
-} from '../constants';
-
+} from './constants';
 import styles from './Chart.scss';
 
 interface Props {
