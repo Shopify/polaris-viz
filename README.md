@@ -62,7 +62,7 @@ Components inherit their sizes from their containers, so place your component in
     <code>vertical | horizontal</code>
     </li>
     <li><strong>colors:</strong>
-    <code><a href="https://github.com/Shopify/polaris-viz/blob/master/src/components/NormalizedStackedBar/types.ts#L13">colors</a>[] | <a href="https://github.com/Shopify/polaris-viz/blob/master/src/components/NormalizedStackedBar/types.ts#L3">ColorScheme</a></code>
+    <code><a href="https://github.com/Shopify/polaris-viz/blob/master/src/types.ts#L1">colors</a>[] | <a href="https://github.com/Shopify/polaris-viz/blob/master/src/components/NormalizedStackedBar/types.ts#L3">ColorScheme</a></code>
     </li>
     </ul></td>
     </tr>
@@ -84,7 +84,7 @@ Components inherit their sizes from their containers, so place your component in
     <code>string</code>
     </li>
     <li><strong>color:</strong>
-    <code><a href="https://github.com/Shopify/polaris-viz/blob/master/src/components/NormalizedStackedBar/types.ts#L13">Color</a></code>
+    <code><a href="https://github.com/Shopify/polaris-viz/blob/master/src/types.ts#L1">Color</a></code>
     </li>
     <li><strong>useAnimation:</strong>
     <code>boolean</code>
@@ -117,7 +117,7 @@ Components inherit their sizes from their containers, so place your component in
     <li>
     <strong>style (all properties optional):</strong>
     <ul>
-      <li><strong>color:</strong> <code>Color</code></li>
+      <li><strong>color:</strong> <a href="https://github.com/Shopify/polaris-viz/blob/master/src/types.ts#L1"><code>Color</code></a></li>
       <li><strong>lineStyle:</strong> <code>'dashed' | 'solid'</code></li>
     </ul>
     </li>
@@ -125,6 +125,31 @@ Components inherit their sizes from their containers, so place your component in
     </li>
     <li><strong>chartHeight:</strong> <code>number</code></li>
     <li><strong>formatYAxisValue:</strong> <code>(value: number): string;</code></li>
+    </ul>
+    </td>
+    </tr>
+        <tr>
+    <td>
+    Bar chart
+    <br />
+    <br />
+    <img src="https://github.com/Shopify/polaris-viz/raw/master/documentation/images/barchart.png"/>
+    </td>
+    <td>
+    Shows comparison across categories.
+    </td>
+    <td>
+    <ul>
+    <li>
+    <strong>data (required):</strong>
+    <code>{rawValue: number; label: string;}[]</code>
+    </li>
+    <li><strong>barMargin:</strong> <code>number</code></li>
+    <li><strong>accessibilityLabel:</strong> <code>string</code></li>
+    <li><strong>color:</strong> <a href="https://github.com/Shopify/polaris-viz/blob/master/src/types.ts#L1"><code>Color</code></a></li>
+    <li><strong>highlightColor:</strong> <a href="https://github.com/Shopify/polaris-viz/blob/master/src/types.ts#L1"><code>Color</code></a></li>
+    <li><strong>formatYValue:</strong><code>(value: number): string;</code></li>
+    <li><strong>formatXAxisValue:</strong><code>(value: number, index: number): string;</code></li>
     </ul>
     </td>
     </tr>
