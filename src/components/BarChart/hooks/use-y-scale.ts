@@ -18,7 +18,7 @@ export function useYScale({
     const max = Math.max(...data.map(({rawValue}) => rawValue));
 
     const maxTicks = Math.max(
-      3,
+      1,
       Math.floor(drawableHeight / MIN_Y_LABEL_SPACE),
     );
 
