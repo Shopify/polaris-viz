@@ -144,7 +144,7 @@ Components inherit their sizes from their containers, so place your component in
     <strong>data (required):</strong>
     <code>{rawValue: number; label: string;}[]</code>
     </li>
-    <li><strong>barMargin:</strong> <code>number</code></li>
+    <li><strong>barMargin:</strong> <code>Small | Medium | Large | None</code></li>
     <li><strong>accessibilityLabel:</strong> <code>string</code></li>
     <li><strong>color:</strong> <a href="https://github.com/Shopify/polaris-viz/blob/master/src/types.ts#L1"><code>Color</code></a></li>
     <li><strong>highlightColor:</strong> <a href="https://github.com/Shopify/polaris-viz/blob/master/src/types.ts#L1"><code>Color</code></a></li>
