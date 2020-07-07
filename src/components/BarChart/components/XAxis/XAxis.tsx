@@ -1,7 +1,7 @@
 import React from 'react';
 import {colorSky, colorInkLighter} from '@shopify/polaris-tokens';
 
-import {TICK_SIZE, LINE_HEIGHT, SPACING, SPACING_LOOSE} from '../../constants';
+import {TICK_SIZE, LINE_HEIGHT, SPACING_TIGHT, SPACING} from '../../constants';
 
 import styles from './XAxis.scss';
 
@@ -30,7 +30,7 @@ export function XAxis({
               fill={colorInkLighter}
               className={styles.Text}
               style={{
-                transform: `translateY(${SPACING + SPACING_LOOSE}px)`,
+                transform: `translateY(${SPACING_TIGHT + SPACING}px)`,
               }}
             >
               {value.map((labelPart, index) => (
