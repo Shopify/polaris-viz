@@ -6,7 +6,7 @@ export function getTextWidth({
   fontSize: number;
 }) {
   const paragraph = document.createElement('p');
-  paragraph.style.fontSize = fontSize.toString();
+  paragraph.style.fontSize = `${fontSize}px`;
   paragraph.style.display = 'inline-block';
   paragraph.style.visibility = 'hidden';
   document.body.appendChild(paragraph);

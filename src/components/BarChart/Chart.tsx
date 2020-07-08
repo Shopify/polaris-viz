@@ -43,14 +43,17 @@ export function Chart({
     y: number;
   } | null>(null);
 
-  const fontSize =
-    chartDimensions.width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
-
   const yAxisLabelWidth = data
-    .map(({rawValue}) => getTextWidth({text: formatYValue(rawValue), fontSize}))
+    .map(({rawValue}) =>
+      getTextWidth({text: formatYValue(rawValue), fontSize: FONT_SIZE}),
+    )
     .reduce((acc, currentValue) => Math.max(acc, currentValue));
+
   const axisMargin = SPACING + yAxisLabelWidth;
   const drawableWidth = chartDimensions.width - MARGIN.Right - axisMargin;
+
+  const fontSize =
+    chartDimensions.width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
 
   const {xScale, xAxisLabels} = useXScale({
     drawableWidth,
