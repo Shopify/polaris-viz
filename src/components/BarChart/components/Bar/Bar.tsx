@@ -37,7 +37,8 @@ export function Bar({
   });
 
   const rawHeight = Math.abs(yScale(rawValue) - yScale(0));
-  const needsMinHeight = rawHeight < MIN_BAR_HEIGHT;
+
+  const needsMinHeight = rawHeight < MIN_BAR_HEIGHT && rawHeight !== 0;
   const height = needsMinHeight ? MIN_BAR_HEIGHT : rawHeight;
   const modifiedYPosition =
     rawValue > 0 ? yScale(0) - MIN_BAR_HEIGHT : yScale(0);

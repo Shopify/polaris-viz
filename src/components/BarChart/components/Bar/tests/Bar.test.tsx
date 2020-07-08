@@ -54,6 +54,26 @@ describe('<Bar/>', () => {
     });
   });
 
+  it('does not give a 0 value a min height', () => {
+    const bar = mount(
+      <svg>
+        <Bar
+          color="colorPurple"
+          isSelected={false}
+          x={0}
+          rawValue={0}
+          width={100}
+          yScale={scaleBand() as any}
+        />
+        ,
+      </svg>,
+    );
+
+    expect(bar).toContainReactComponent('rect', {
+      height: 0,
+    });
+  });
+
   it('uses the primary color when the bar is not selected', () => {
     const bar = mount(
       <svg>
