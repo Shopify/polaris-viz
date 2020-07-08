@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.0.11] - 2020-07-08
+
+### Added
+
+- Vertical `<BarChart />` component
+
 ## [0.0.10] - 2020-06-17
 
 ### Changed
