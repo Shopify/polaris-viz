@@ -8,9 +8,11 @@ import styles from './XAxis.scss';
 export function XAxis({
   labels,
   range,
+  fontSize,
 }: {
   range: number[];
   labels: {value: string[]; xOffset: number}[];
+  fontSize: number;
 }) {
   const [xScaleMin, xScaleMax] = range;
 
@@ -31,6 +33,7 @@ export function XAxis({
               className={styles.Text}
               style={{
                 transform: `translateY(${SPACING_TIGHT + SPACING}px)`,
+                fontSize,
               }}
             >
               {value.map((labelPart, index) => (

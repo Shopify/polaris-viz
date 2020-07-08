@@ -98,7 +98,11 @@ export function Chart({
             MARGIN.Bottom -
             xAxisLabelSpace})`}
         >
-          <XAxis labels={xAxisLabels} range={xScale.range()} />
+          <XAxis
+            labels={xAxisLabels}
+            range={xScale.range()}
+            fontSize={fontSize}
+          />
         </g>
 
         <g transform={`translate(${axisMargin},${MARGIN.Top})`}>

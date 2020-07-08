@@ -7,6 +7,7 @@ import {XAxis} from '../XAxis';
 describe('<XAxis/>', () => {
   const mockProps = {
     range: [0, 100],
+    fontSize: 10,
     labels: [
       {value: ['A label', 'that is long'], xOffset: 10},
       {value: ['Label'], xOffset: 20},
