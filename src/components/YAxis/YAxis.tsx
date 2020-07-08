@@ -3,7 +3,7 @@ import {
   colorSky,
   colorSkyDark,
   colorInkLighter,
-  spacingTight,
+  spacingBase,
   spacingExtraTight,
 } from '@shopify/polaris-tokens';
 
@@ -31,7 +31,7 @@ export function YAxis({ticks, drawableWidth}: Props) {
               style={{
                 fontSize: '12px',
                 textAnchor: 'end',
-                transform: `translateX(-${spacingTight}) translateY(${spacingExtraTight})`,
+                transform: `translateX(-${spacingBase}) translateY(${spacingExtraTight})`,
               }}
             >
               {formattedValue}

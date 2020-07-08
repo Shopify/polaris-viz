@@ -1,6 +1,8 @@
 import React, {useEffect, useRef, useState, ReactNode} from 'react';
 import {useSpring, animated} from 'react-spring';
 
+import {clamp} from '../../utilities';
+
 import styles from './TooltipContainer.scss';
 
 interface Props {
@@ -10,6 +12,7 @@ interface Props {
   currentX: number;
   currentY: number;
   chartDimensions: DOMRect;
+  position?: 'center' | 'auto';
 }
 
 // The space between the cursor and the tooltip
@@ -22,6 +25,7 @@ export function TooltipContainer({
   chartDimensions,
   children,
   margin,
+  position = 'auto',
 }: Props) {
   const tooltipRef = useRef<HTMLDivElement | null>(null);
   const [tooltipDimensions, setTooltipDimensions] = useState<DOMRect | null>(
@@ -52,7 +56,13 @@ export function TooltipContainer({
 
       let xTranslation = 0;
 
-      if (hasSpaceToLeft) {
+      if (position === 'center') {
+        xTranslation = clamp({
+          amount: currentX - tooltipDimensions.width / 2,
+          max: chartRightBound - tooltipDimensions.width,
+          min: chartLeftBound,
+        });
+      } else if (hasSpaceToLeft) {
         xTranslation = naturalLeftBound;
       } else if (hasSpaceToRight) {
         xTranslation = currentX + TOOLTIP_MARGIN;

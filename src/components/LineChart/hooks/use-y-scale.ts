@@ -2,7 +2,7 @@ import {useMemo, useEffect, useState} from 'react';
 import {scaleLinear} from 'd3-scale';
 
 import {yAxisMinMax} from '../utilities';
-import {Y_SCALE_PADDING, MIN_Y_LABEL_SPACE, SPACING_TIGHT} from '../constants';
+import {Y_SCALE_PADDING, MIN_Y_LABEL_SPACE, SPACING} from '../constants';
 import {Series} from '../types';
 
 export function useYScale({
@@ -58,8 +58,7 @@ export function useYScale({
     setMaxTickLength(currentMaxTickLength);
   }, [ticks, maxTickLength]);
 
-  const axisMargin =
-    maxTickLength == null ? null : maxTickLength + SPACING_TIGHT;
+  const axisMargin = maxTickLength == null ? null : maxTickLength + SPACING;
 
   return {yScale, ticks, axisMargin};
 }
