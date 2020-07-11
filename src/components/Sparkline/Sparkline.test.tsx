@@ -6,7 +6,7 @@ import {Sparkline} from './Sparkline';
 
 const MOCK_PATH_LENGTH = 10;
 
-jest.mock('./utilities.ts', () => {
+jest.mock('../../utilities/get-path-length.ts', () => {
   return {
     getPathLength: () => {
       return MOCK_PATH_LENGTH;

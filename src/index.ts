@@ -3,4 +3,5 @@ export {
   LineChart,
   NormalizedStackedBar,
   Sparkline,
+  RadialGauge,
 } from './components';

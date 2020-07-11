@@ -4,10 +4,10 @@ import {area} from 'd3-shape';
 import {Color} from 'types';
 import tokens from '@shopify/polaris-tokens';
 import {animated, useSpring} from 'react-spring';
+import {getPathLength} from 'utilities/get-path-length';
 
 import {useWindowSize} from '../../hooks';
 
-import {getPathLength} from './utilities';
 import styles from './Sparkline.scss';
 
 const MAX_AREA_OPACITY = 0.4;
