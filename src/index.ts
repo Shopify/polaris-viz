@@ -3,4 +3,5 @@ export {
   LineChart,
   NormalizedStackedBar,
   Sparkline,
+  GroupedBarChart,
 } from './components';

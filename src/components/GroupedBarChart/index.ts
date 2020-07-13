@@ -1,0 +1,1 @@
+export {GroupedBarChart} from './GroupedBarChart';

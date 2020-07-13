@@ -1,0 +1,21 @@
+@import 'node_modules/@shopify/polaris-tokens/dist/index';
+
+.Container {
+  font-size: 12px;
+  display: grid;
+  max-width: 160px;
+  grid-template-columns: auto auto 1fr;
+  grid-gap: $spacing-tight;
+  align-items: center;
+}
+
+.Value {
+  justify-self: end;
+  margin-left: $spacing-base;
+}
+
+.ColorPreview {
+  width: 10px;
+  height: 10px;
+  border-radius: 10%;
+}
