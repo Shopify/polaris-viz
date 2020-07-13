@@ -12,7 +12,7 @@ import {
   LINE_HEIGHT,
   SPACING,
   FONT_SIZE,
-  SMALL_SCREEN,
+  SMALL_WIDTH,
   SMALL_FONT_SIZE,
 } from './constants';
 import styles from './Chart.scss';
@@ -47,7 +47,8 @@ export function Chart({
     .reduce((acc, currentValue) => acc.concat(currentValue), [])
     .reduce((acc, currentValue) => Math.max(acc, currentValue));
 
-  const axisMargin = SPACING + yAxisLabelWidth;
+  const axisStartBuffer = SPACING;
+  const axisMargin = axisStartBuffer + yAxisLabelWidth;
 
   const drawableWidth = chartDimensions.width - MARGIN.Right - axisMargin;
 
@@ -61,7 +62,7 @@ export function Chart({
     labels,
   });
 
-  const fontSize = drawableWidth < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
+  const fontSize = drawableWidth < SMALL_WIDTH ? SMALL_FONT_SIZE : FONT_SIZE;
   const longestLabel = Math.max(
     ...xAxisLabels.map(({value}) => getTextWidth({text: value, fontSize})),
   );

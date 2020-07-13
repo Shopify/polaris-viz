@@ -4,6 +4,7 @@ import {useDebouncedCallback} from 'use-debounce';
 import {Chart} from './Chart';
 import {Data} from './types';
 import {Legend} from './components';
+import {DEFAULT_HEIGHT} from './constants';
 
 interface Props {
   series: Data[];
@@ -19,7 +20,7 @@ export function GroupedBarChart({
   series,
   accessibilityLabel,
   timeSeries = false,
-  chartHeight = 250,
+  chartHeight = DEFAULT_HEIGHT,
   formatYValue = (value) => value.toString(),
 }: Props) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
