@@ -48,6 +48,7 @@ export function XAxis({
             <text
               fill={colorInkLighter}
               textAnchor={needsDiagonalLabels ? 'end' : 'middle'}
+              transform={transform}
               style={{
                 transform,
                 fontSize,
