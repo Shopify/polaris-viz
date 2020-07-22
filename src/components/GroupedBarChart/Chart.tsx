@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {eventPoint, getTextWidth} from 'utilities';
 
+import {eventPoint, getTextWidth} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {TooltipContainer} from '../TooltipContainer';
 
@@ -67,9 +67,8 @@ export function Chart({
     ...xAxisLabels.map(({value}) => getTextWidth({text: value, fontSize})),
   );
   const overflowingLabel = longestLabel > xScale.bandwidth();
-  const needsDiagonalLabels = overflowingLabel && !timeSeries;
 
-  const xAxisLabelSpace = needsDiagonalLabels ? longestLabel : LINE_HEIGHT;
+  const xAxisLabelSpace = overflowingLabel ? longestLabel : LINE_HEIGHT;
 
   const drawableHeight =
     chartDimensions.height - MARGIN.Top - MARGIN.Bottom - xAxisLabelSpace;
@@ -107,7 +106,7 @@ export function Chart({
           <XAxis
             labels={xAxisLabels}
             xScale={xScale}
-            needsDiagonalLabels={needsDiagonalLabels}
+            needsDiagonalLabels={overflowingLabel}
             showAlternateLabels={timeSeries && overflowingLabel}
             fontSize={fontSize}
           />

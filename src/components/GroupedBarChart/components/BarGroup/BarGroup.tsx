@@ -1,13 +1,15 @@
 import React from 'react';
 import {animated, useSpring} from 'react-spring';
 import {ScaleLinear} from 'd3-scale';
+import {Color} from 'types';
+import tokens from '@shopify/polaris-tokens';
+
 import {
   MIN_BAR_HEIGHT,
   FULL_OPACITY,
   SUBDUED_OPACITY,
-} from 'components/GroupedBarChart/constants';
-import {Color} from 'types';
-import tokens from '@shopify/polaris-tokens';
+  BAR_SPACING,
+} from '../../constants';
 
 interface Props {
   x: number;
@@ -37,6 +39,8 @@ export function BarGroup({
     from: {opacity: baseOpacity},
   });
 
+  const barWidth = width / data.length - BAR_SPACING;
+
   return (
     <React.Fragment>
       {data.map((value, index) => {
@@ -49,8 +53,7 @@ export function BarGroup({
           ? modifiedYPosition
           : yScale(Math.max(0, value));
 
-        const barWidth = width / data.length;
-        const xPosition = x + barWidth * index;
+        const xPosition = x + (barWidth + BAR_SPACING) * index;
 
         return (
           <animated.rect

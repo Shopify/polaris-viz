@@ -82,7 +82,7 @@ describe('<XAxis/>', () => {
 
     const text = axis.find('text');
     expect(text!.props.textAnchor).toBe('middle');
-    expect(text!.props.style!.transform).toBe('translateY(24px)');
+    expect(text!.props.transform).toBe('translate(0 24)');
   });
 
   it('displays text diagonally if needsDiagonalLabels is true', () => {
@@ -94,8 +94,6 @@ describe('<XAxis/>', () => {
 
     const text = axis.find('text');
     expect(text!.props.textAnchor).toBe('end');
-    expect(text!.props.style!.transform).toBe(
-      'translateY(20px) translateX(4px) rotate(-40deg)',
-    );
+    expect(text!.props.transform).toBe('translate(4 20) rotate(-40)');
   });
 });

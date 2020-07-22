@@ -26,8 +26,8 @@ export function XAxis({
   const [xScaleMin, xScaleMax] = xScale.range();
 
   const transform = needsDiagonalLabels
-    ? `translateY(${SPACING_LOOSE}px) translateX(${SPACING_EXTRA_TIGHT}px) rotate(-40deg)`
-    : `translateY(${SPACING_TIGHT + SPACING}px)`;
+    ? `translate(${SPACING_EXTRA_TIGHT} ${SPACING_LOOSE}) rotate(-40)`
+    : `translate(0 ${SPACING_TIGHT + SPACING})`;
 
   return (
     <React.Fragment>
@@ -50,7 +50,6 @@ export function XAxis({
               textAnchor={needsDiagonalLabels ? 'end' : 'middle'}
               transform={transform}
               style={{
-                transform,
                 fontSize,
               }}
             >

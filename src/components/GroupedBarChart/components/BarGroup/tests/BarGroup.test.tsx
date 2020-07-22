@@ -1,7 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
-import {MIN_BAR_HEIGHT} from 'components/BarChart/constants';
+import {MIN_BAR_HEIGHT, BAR_SPACING} from '../../../constants';
 import {Color} from 'types';
 
 import {BarGroup} from '../BarGroup';
@@ -31,7 +31,7 @@ describe('<Bar/>', () => {
     expect(barGroup).toContainReactComponentTimes('rect', 4);
   });
 
-  it("gives each bar a width that together totals the group's full width", () => {
+  it("gives each bar a width that together totals the group's full width, minus spacing", () => {
     const barGroup = mount(
       <svg>
         <BarGroup {...mockProps} />,
@@ -41,7 +41,8 @@ describe('<Bar/>', () => {
     const bars = barGroup
       .findAll('rect')
       .filter(
-        ({props}) => props.width === mockProps.width / mockProps.data.length,
+        ({props}) =>
+          props.width === mockProps.width / mockProps.data.length - BAR_SPACING,
       );
 
     expect(bars).toHaveLength(4);
