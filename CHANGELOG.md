@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.0.11] - 2020-07-27
+
+### Added
+
+- `<GroupedBarChart />` component
+
 ## [0.0.11] - 2020-07-08
 
 ### Added
