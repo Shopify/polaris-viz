@@ -18,7 +18,7 @@ jest.mock('d3-scale', () => ({
 }));
 
 (global as any).DOMRect = class DOMRect {
-  width = 200;
+  width = 300;
   height = 200;
 };
 
@@ -34,6 +34,7 @@ describe('<XAxis />', () => {
           labels={['Test label 1', 'Test label 2', 'Test label 3']}
           dimensions={new DOMRect()}
           drawableHeight={150}
+          axisMargin={0}
         />
       </svg>,
     );
@@ -49,6 +50,7 @@ describe('<XAxis />', () => {
           labels={['Test label 1', 'Test label 2', 'Test label 3']}
           dimensions={new DOMRect()}
           drawableHeight={150}
+          axisMargin={0}
         />
       </svg>,
     );
@@ -59,7 +61,7 @@ describe('<XAxis />', () => {
     });
   });
 
-  it('renders a small, outer tick for each tick', () => {
+  it('renders a small, outer tick for each tick that there is space for', () => {
     const axis = mount(
       <svg>
         <XAxis
@@ -67,6 +69,7 @@ describe('<XAxis />', () => {
           labels={['Test label 1', 'Test label 2', 'Test label 3']}
           dimensions={new DOMRect()}
           drawableHeight={150}
+          axisMargin={0}
         />
       </svg>,
     );
@@ -74,7 +77,7 @@ describe('<XAxis />', () => {
     expect(axis).toContainReactComponentTimes('line', 3, {y2: 6});
   });
 
-  it('renders a vertical gridline for each tick using drawableHeight', () => {
+  it('renders a vertical gridline for each tick that there is space for using drawableHeight', () => {
     const axis = mount(
       <svg>
         <XAxis
@@ -82,6 +85,7 @@ describe('<XAxis />', () => {
           labels={['Test label 1', 'Test label 2', 'Test label 3']}
           dimensions={new DOMRect()}
           drawableHeight={150}
+          axisMargin={0}
         />
       </svg>,
     );
@@ -99,6 +103,7 @@ describe('<XAxis />', () => {
           labels={labels}
           dimensions={new DOMRect()}
           drawableHeight={150}
+          axisMargin={0}
         />
       </svg>,
     );
@@ -111,6 +116,32 @@ describe('<XAxis />', () => {
     expect(textContent).toStrictEqual(labels);
   });
 
+  it('renders a label for each tick that there is space for', () => {
+    (global as any).DOMRect = class DOMRect {
+      width = 100;
+      height = 200;
+    };
+
+    const labels = ['Test label 1', 'Test label 2', 'Test label 3'];
+    const axis = mount(
+      <svg>
+        <XAxis
+          xScale={scaleLinear()}
+          labels={labels}
+          dimensions={new DOMRect()}
+          drawableHeight={150}
+          axisMargin={0}
+        />
+      </svg>,
+    );
+
+    expect(axis).toContainReactComponent('text', {children: 'Test label 1'});
+    expect(axis).toContainReactComponent('text', {children: 'Test label 2'});
+    expect(axis).not.toContainReactComponent('text', {
+      children: 'Test label 3',
+    });
+  });
+
   it('does not render any labels if the labels prop is not provided', () => {
     const axis = mount(
       <svg>
@@ -118,6 +149,7 @@ describe('<XAxis />', () => {
           xScale={scaleLinear()}
           dimensions={new DOMRect()}
           drawableHeight={150}
+          axisMargin={0}
         />
       </svg>,
     );

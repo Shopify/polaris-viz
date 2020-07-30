@@ -99,6 +99,7 @@ export function Chart({
             labels={xAxisLabels}
             dimensions={dimensions}
             drawableHeight={drawableHeight}
+            axisMargin={axisMargin}
           />
         </g>
 
