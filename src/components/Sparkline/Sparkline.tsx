@@ -1,4 +1,5 @@
 import React, {useState, useLayoutEffect, useRef} from 'react';
+import {useDebouncedCallback} from 'use-debounce';
 import {scaleLinear} from 'd3-scale';
 import {area} from 'd3-shape';
 import {Color} from 'types';
@@ -41,16 +42,7 @@ export function Sparkline({
   const [pathLength, setPathLength] = useState(getPathLength(pathRef.current));
   const [windowWidth, windowHeight] = useWindowSize();
 
-  const containerWidth =
-    containerRef != null && containerRef.current != null
-      ? containerRef.current.clientWidth
-      : 0;
-
-  useLayoutEffect(() => {
-    setPathLength(getPathLength(pathRef.current));
-  }, [containerWidth]);
-
-  useLayoutEffect(() => {
+  const [updateMeasurements] = useDebouncedCallback(() => {
     if (containerRef.current == null) {
       throw new Error('No SVG rendered');
     }
@@ -59,11 +51,18 @@ export function Sparkline({
       height: containerRef.current.clientHeight,
       width: containerRef.current.clientWidth,
     });
-  }, [containerRef, windowWidth, windowHeight]);
 
-  const prefersReducedMotion = window.matchMedia(
-    '(prefers-reduced-motion: reduce)',
-  ).matches;
+    setPathLength(getPathLength(pathRef.current));
+  }, 10);
+
+  useLayoutEffect(() => {
+    updateMeasurements();
+  }, [windowWidth, windowHeight, updateMeasurements]);
+
+  const prefersReducedMotion =
+    typeof window === 'undefined'
+      ? false
+      : window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const areaAnimation = useSpring({
     config: ANIMATION_CONFIG,

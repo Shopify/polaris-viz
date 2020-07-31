@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Fixed
+
+- `<Sparkline />` animation on resize
+
 ## [0.0.12] - 2020-07-27
 
 ### Added
