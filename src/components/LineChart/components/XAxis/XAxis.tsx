@@ -1,14 +1,15 @@
 import React, {useMemo} from 'react';
 import {ScaleLinear} from 'd3-scale';
 import {colorSky, colorInkLighter, spacingLoose} from '@shopify/polaris-tokens';
-import {getTextWidth} from 'utilities';
+
+import {getTextWidth} from '../../../../utilities';
 import {
   SPACING_TIGHT,
   SMALL_WIDTH,
   MIN_LABEL_SPACE,
   TICK_SIZE,
   FONT_SIZE,
-} from 'components/LineChart/constants';
+} from '../../constants';
 
 interface Props {
   xScale: ScaleLinear<number, number>;
