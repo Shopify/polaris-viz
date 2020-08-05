@@ -1,4 +1,3 @@
-export const Y_SCALE_PADDING = 1.1;
 export const MIN_Y_LABEL_SPACE = 50;
 export const CROSSHAIR_WIDTH = 5;
 export const SPACING_TIGHT = 8;

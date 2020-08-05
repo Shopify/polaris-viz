@@ -2,7 +2,7 @@ import {useMemo, useEffect, useState} from 'react';
 import {scaleLinear} from 'd3-scale';
 
 import {yAxisMinMax} from '../utilities';
-import {Y_SCALE_PADDING, MIN_Y_LABEL_SPACE, SPACING_LOOSE} from '../constants';
+import {MIN_Y_LABEL_SPACE, SPACING_LOOSE} from '../constants';
 import {Series} from '../types';
 
 export function useYScale({
@@ -19,15 +19,15 @@ export function useYScale({
   const {yScale, ticks} = useMemo(() => {
     const [minY, maxY] = yAxisMinMax(series);
 
-    const yScale = scaleLinear()
-      .range([drawableHeight, 0])
-      .domain([Math.min(0, minY) * Y_SCALE_PADDING, maxY * Y_SCALE_PADDING])
-      .nice();
-
     const maxTicks = Math.max(
       1,
       Math.floor(drawableHeight / MIN_Y_LABEL_SPACE),
     );
+
+    const yScale = scaleLinear()
+      .range([drawableHeight, 0])
+      .domain([Math.min(0, minY), maxY])
+      .nice(maxTicks);
 
     const ticks = yScale.ticks(maxTicks).map((value) => ({
       value,

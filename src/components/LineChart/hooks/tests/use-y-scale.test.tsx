@@ -80,8 +80,7 @@ describe('useYScale', () => {
 
     mount(<TestComponent />);
 
-    // We expect the Y_SCALE_PADDING to be 1.1, so the max will be 11,000
-    expect(domainSpy).toHaveBeenCalledWith([-11000, 11000]);
+    expect(domainSpy).toHaveBeenCalledWith([-10000, 10000]);
   });
 
   it('creates a y scale with range equal to the drawable height', () => {
