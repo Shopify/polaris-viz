@@ -60,6 +60,19 @@ describe('<NormalizedBarChart />', () => {
 
       expect(barChart.findAll(BarSegment)).toHaveLength(0);
     });
+
+    it('does not render a bar for 0 values', () => {
+      const barChart = mount(
+        <NormalizedStackedBar
+          data={[
+            {label: 'Bin', value: 200, formattedValue: '$200.00'},
+            {label: 'Stuff', value: 0, formattedValue: '$0.00'},
+          ]}
+        />,
+      );
+
+      expect(barChart.findAll(BarSegment)).toHaveLength(1);
+    });
   });
 
   describe('Labels', () => {
