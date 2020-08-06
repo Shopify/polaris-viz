@@ -32,7 +32,6 @@ describe('useXScale', () => {
         drawableWidth: 200,
         barMargin: 0,
         data: [{rawValue: 10, label: ''}],
-        fontSize: 12,
         formatXAxisLabel: () => '',
       });
 
@@ -66,7 +65,6 @@ describe('useXScale', () => {
           {rawValue: 1000, label: ''},
           {rawValue: -1000, label: ''},
         ],
-        fontSize: 12,
         formatXAxisLabel: (val: string) => val,
       });
       return null;
@@ -93,7 +91,6 @@ describe('useXScale', () => {
         drawableWidth: 200,
         barMargin: 0,
         data: [{rawValue: 0, label: 'Test 1'}],
-        fontSize: 12,
         formatXAxisLabel: (val: string) => `${val}!`,
       });
       return (
@@ -106,6 +103,6 @@ describe('useXScale', () => {
     }
 
     const testComponent = mount(<TestComponent />);
-    expect(testComponent).toContainReactText('Test 1!-50');
+    expect(testComponent).toContainReactText('T-50');
   });
 });

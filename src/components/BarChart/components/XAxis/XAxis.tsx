@@ -1,20 +1,36 @@
 import React from 'react';
 import {colorSky, colorInkLighter} from '@shopify/polaris-tokens';
+import {ScaleBand} from 'd3-scale';
 
-import {TICK_SIZE, LINE_HEIGHT, SPACING_TIGHT, SPACING} from '../../constants';
-
-import styles from './XAxis.scss';
+import {
+  TICK_SIZE,
+  SPACING,
+  SPACING_TIGHT,
+  SPACING_EXTRA_TIGHT,
+  SPACING_LOOSE,
+  DIAGONAL_ANGLE,
+} from '../../constants';
 
 export function XAxis({
   labels,
-  range,
+  xScale,
   fontSize,
+  showFewerLabels,
+  needsDiagonalLabels,
 }: {
-  range: number[];
-  labels: {value: string[]; xOffset: number}[];
+  xScale: ScaleBand<string>;
+  labels: {value: string; xOffset: number}[];
+  needsDiagonalLabels: boolean;
   fontSize: number;
+  showFewerLabels: boolean;
 }) {
-  const [xScaleMin, xScaleMax] = range;
+  const [xScaleMin, xScaleMax] = xScale.range();
+
+  const transform = needsDiagonalLabels
+    ? `translate(${SPACING_EXTRA_TIGHT} ${SPACING_LOOSE}) rotate(${DIAGONAL_ANGLE})`
+    : `translate(0 ${SPACING_TIGHT + SPACING})`;
+
+  const textAnchor = needsDiagonalLabels ? 'end' : 'middle';
 
   return (
     <React.Fragment>
@@ -25,26 +41,22 @@ export function XAxis({
       />
 
       {labels.map(({value, xOffset}, index) => {
+        if (showFewerLabels && index % 2 !== 0) {
+          return null;
+        }
+
         return (
           <g key={index} transform={`translate(${xOffset}, 0)`}>
             <line y2={TICK_SIZE} stroke={colorSky} />
             <text
               fill={colorInkLighter}
-              className={styles.Text}
+              textAnchor={textAnchor}
+              transform={transform}
               style={{
-                transform: `translateY(${SPACING_TIGHT + SPACING}px)`,
                 fontSize,
               }}
             >
-              {value.map((labelPart, index) => (
-                <tspan
-                  key={`${labelPart}${index}`}
-                  x={0}
-                  dy={index === 0 ? 0 : LINE_HEIGHT}
-                >
-                  {labelPart}
-                </tspan>
-              ))}
+              {value}
             </text>
           </g>
         );

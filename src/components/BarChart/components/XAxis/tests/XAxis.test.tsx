@@ -1,17 +1,33 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
-import {LINE_HEIGHT} from 'components/BarChart/constants';
+import {scaleBand} from 'd3-scale';
 
 import {XAxis} from '../XAxis';
+
+jest.mock('d3-scale', () => ({
+  scaleBand: () => {
+    function scale(value: any) {
+      return value;
+    }
+
+    scale.ticks = () => [0, 1, 2];
+    scale.range = () => [0, 2];
+
+    return scale;
+  },
+}));
 
 describe('<XAxis/>', () => {
   const mockProps = {
     range: [0, 100],
     fontSize: 10,
     labels: [
-      {value: ['A label', 'that is long'], xOffset: 10},
-      {value: ['Label'], xOffset: 20},
+      {value: 'A label that is long', xOffset: 10},
+      {value: 'Label', xOffset: 20},
     ],
+    xScale: scaleBand(),
+    needsDiagonalLabels: false,
+    showFewerLabels: false,
   };
 
   it('renders a path', () => {
@@ -47,36 +63,37 @@ describe('<XAxis/>', () => {
     expect(axis).toContainReactComponentTimes('text', 2);
   });
 
-  it('renders a tspan for each array item within each label', () => {
+  it('hides alternating elements if showFewerLabels is true', () => {
     const axis = mount(
       <svg>
-        <XAxis {...mockProps} />,
+        <XAxis {...mockProps} showFewerLabels />,
       </svg>,
     );
 
-    expect(axis).toContainReactComponentTimes('tspan', 3);
+    expect(axis).toContainReactComponentTimes('text', 1);
   });
 
-  it('gives the first tspan a dy of 0', () => {
+  it('displays text horizontally by default', () => {
     const axis = mount(
       <svg>
         <XAxis {...mockProps} />,
       </svg>,
     );
 
-    expect(axis).toContainReactComponent('tspan', {children: 'A label', dy: 0});
+    const text = axis.find('text');
+    expect(text!.props.textAnchor).toBe('middle');
+    expect(text!.props.transform).toBe('translate(0 24)');
   });
 
-  it('gives subsequent tspans a dy of the line height', () => {
+  it('displays text diagonally if needsDiagonalLabels is true', () => {
     const axis = mount(
       <svg>
-        <XAxis {...mockProps} />,
+        <XAxis {...mockProps} needsDiagonalLabels />,
       </svg>,
     );
 
-    expect(axis).toContainReactComponent('tspan', {
-      children: 'that is long',
-      dy: LINE_HEIGHT,
-    });
+    const text = axis.find('text');
+    expect(text!.props.textAnchor).toBe('end');
+    expect(text!.props.transform).toBe('translate(4 20) rotate(-40)');
   });
 });

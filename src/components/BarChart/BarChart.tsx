@@ -13,6 +13,7 @@ interface Props {
   highlightColor?: Color;
   formatYValue?(value: number): string;
   formatXAxisLabel?(value: string, index: number): string;
+  timeSeries?: boolean;
 }
 
 export function BarChart({
@@ -21,6 +22,7 @@ export function BarChart({
   accessibilityLabel,
   barMargin = 'Medium',
   color = 'colorPurple',
+  timeSeries = false,
   formatYValue = (value) => value.toString(),
   formatXAxisLabel = (value) => value.toString(),
 }: Props) {
@@ -61,6 +63,7 @@ export function BarChart({
           highlightColor={highlightColor}
           formatYValue={formatYValue}
           formatXAxisLabel={formatXAxisLabel}
+          timeSeries={timeSeries}
         />
       )}
     </div>

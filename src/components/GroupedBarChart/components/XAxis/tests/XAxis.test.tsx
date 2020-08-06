@@ -21,7 +21,7 @@ describe('<XAxis/>', () => {
   const mockProps = {
     range: [0, 100],
     xScale: scaleBand(),
-    showAlternateLabels: false,
+    showFewerLabels: false,
     needsDiagonalLabels: false,
     fontSize: 12,
     labels: [
@@ -63,10 +63,10 @@ describe('<XAxis/>', () => {
     expect(axis).toContainReactComponentTimes('text', 2);
   });
 
-  it('hides alternating elements if showAlternateLabels is true', () => {
+  it('hides alternating elements if showFewerLabels is true', () => {
     const axis = mount(
       <svg>
-        <XAxis {...mockProps} showAlternateLabels />,
+        <XAxis {...mockProps} showFewerLabels />,
       </svg>,
     );
 

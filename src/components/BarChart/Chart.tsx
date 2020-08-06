@@ -15,6 +15,7 @@ import {
   SMALL_FONT_SIZE,
   FONT_SIZE,
   SMALL_SCREEN,
+  DIAGONAL_ANGLE,
 } from './constants';
 import styles from './Chart.scss';
 
@@ -26,6 +27,7 @@ interface Props {
   highlightColor?: Color;
   formatYValue(value: number): string;
   formatXAxisLabel(value: string, index: number): string;
+  timeSeries: boolean;
 }
 
 export function Chart({
@@ -36,6 +38,7 @@ export function Chart({
   highlightColor,
   formatYValue,
   formatXAxisLabel,
+  timeSeries,
 }: Props) {
   const [activeBar, setActiveBar] = useState<number | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState<{
@@ -57,19 +60,25 @@ export function Chart({
 
   const {xScale, xAxisLabels} = useXScale({
     drawableWidth,
-    barMargin,
     data,
-    fontSize,
+    barMargin,
     formatXAxisLabel,
   });
 
-  const xAxisLabelLines =
-    xAxisLabels
-      .map(({value}) => value.length)
-      .reduce((acc, currentValue) => Math.max(acc, currentValue)) - 1;
-  const xAxisLabelSpace = xAxisLabelLines * LINE_HEIGHT;
+  const longestLabel = Math.max(
+    ...xAxisLabels.map(({value}) => getTextWidth({text: value, fontSize})),
+  );
+
+  const overflowingLabel = longestLabel > xScale.bandwidth();
+
+  const labelAngle = 90 + DIAGONAL_ANGLE;
+  const radians = (labelAngle * Math.PI) / 180;
+  const angledLabelHeight = Math.cos(radians) * longestLabel;
+
+  const maxXLabelHeight = overflowingLabel ? angledLabelHeight : LINE_HEIGHT;
+
   const drawableHeight =
-    chartDimensions.height - MARGIN.Top - MARGIN.Bottom - xAxisLabelSpace;
+    chartDimensions.height - MARGIN.Top - MARGIN.Bottom - maxXLabelHeight;
 
   const {yScale, ticks} = useYScale({
     drawableHeight,
@@ -96,12 +105,14 @@ export function Chart({
         <g
           transform={`translate(${axisMargin},${chartDimensions.height -
             MARGIN.Bottom -
-            xAxisLabelSpace})`}
+            maxXLabelHeight})`}
         >
           <XAxis
             labels={xAxisLabels}
-            range={xScale.range()}
+            xScale={xScale}
             fontSize={fontSize}
+            showFewerLabels={timeSeries && overflowingLabel}
+            needsDiagonalLabels={overflowingLabel}
           />
         </g>
 
@@ -164,7 +175,7 @@ export function Chart({
       currentIndex < 0 ||
       currentIndex > data.length - 1 ||
       svgY <= MARGIN.Top ||
-      svgY > drawableHeight + MARGIN.Bottom + xAxisLabelSpace
+      svgY > drawableHeight + MARGIN.Bottom + maxXLabelHeight
     ) {
       setActiveBar(null);
       return;

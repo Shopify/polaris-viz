@@ -38,6 +38,7 @@ describe('Chart />', () => {
     formatYValue: (value: number) => value.toString(),
     formatXAxisLabel: (value: string) => value,
     barMargin: 0,
+    timeSeries: false,
   };
 
   it('renders an SVG element', () => {

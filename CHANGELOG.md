@@ -12,6 +12,7 @@
 ### Fixed
 
 - `<Sparkline />` animation on resize
+- `<BarChart />`, `<GroupedBarChart />` long label handling
 - `<LineChart />` first and last labels getting cut off
 
 ## [0.0.12] - 2020-07-27
