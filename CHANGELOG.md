@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Fixed
+
+- `<LineChart />` yScale improvements
+
 ## [0.0.13] - 2020-08-05
 
 ### Fixed
