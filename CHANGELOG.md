@@ -5,6 +5,7 @@
 ### Fixed
 
 - `<LineChart />` yScale improvements
+- `<NormalizedStackedBar />` do not show bar for 0 values
 
 ## [0.0.13] - 2020-08-05
 

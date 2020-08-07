@@ -86,15 +86,17 @@ export function NormalizedStackedBar({
             : styles.HorizontalBarContainer,
         )}
       >
-        {slicedData.map(({value, label}, index) => (
-          <BarSegment
-            orientation={orientation}
-            size={size}
-            scale={xScale(value)}
-            key={`${label}-${value}`}
-            color={colorPalette[index]}
-          />
-        ))}
+        {slicedData.map(({value, label}, index) =>
+          value === 0 ? null : (
+            <BarSegment
+              orientation={orientation}
+              size={size}
+              scale={xScale(value)}
+              key={`${label}-${value}`}
+              color={colorPalette[index]}
+            />
+          ),
+        )}
       </div>
     </div>
   );
