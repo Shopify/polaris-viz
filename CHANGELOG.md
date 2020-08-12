@@ -1,18 +1,18 @@
 # Changelog
 
-## Unreleased
+## [0.0.14] - 2020-08-12
 
 ### Fixed
 
 - `<LineChart />` yScale improvements
 - `<NormalizedStackedBar />` do not show bar for 0 values
+- `<BarChart />`, `<GroupedBarChart />` long label handling
 
 ## [0.0.13] - 2020-08-05
 
 ### Fixed
 
 - `<Sparkline />` animation on resize
-- `<BarChart />`, `<GroupedBarChart />` long label handling
 - `<LineChart />` first and last labels getting cut off
 
 ## [0.0.12] - 2020-07-27
