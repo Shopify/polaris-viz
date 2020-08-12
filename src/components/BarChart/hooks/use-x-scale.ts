@@ -2,20 +2,17 @@ import {useMemo} from 'react';
 import {scaleBand} from 'd3-scale';
 
 import {BarData} from '../types';
-import {wrapLabel} from '../../../utilities';
 
 export function useXScale({
   drawableWidth,
   barMargin,
   data,
-  fontSize,
   formatXAxisLabel,
 }: {
   drawableWidth: number;
   barMargin: number;
   data: BarData[];
-  fontSize: number;
-  formatXAxisLabel(value: string, index: number): string;
+  formatXAxisLabel: (value: string, index: number) => string;
 }) {
   const xScale = scaleBand()
     .rangeRound([0, drawableWidth])
@@ -31,15 +28,11 @@ export function useXScale({
         barXPosition == null ? barWidthOffset : barWidthOffset + barXPosition;
 
       return {
-        value: wrapLabel({
-          label: formatXAxisLabel(label, index),
-          maxWidth: xScale.bandwidth(),
-          fontSize,
-        }),
+        value: formatXAxisLabel(label, index),
         xOffset,
       };
     });
-  }, [data, xScale, barWidthOffset, formatXAxisLabel, fontSize]);
+  }, [data, xScale, barWidthOffset, formatXAxisLabel]);
 
   return {xScale, xAxisLabels};
 }

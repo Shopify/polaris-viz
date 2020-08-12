@@ -14,6 +14,7 @@ import {
   FONT_SIZE,
   SMALL_WIDTH,
   SMALL_FONT_SIZE,
+  DIAGONAL_ANGLE,
 } from './constants';
 import styles from './Chart.scss';
 
@@ -68,10 +69,14 @@ export function Chart({
   );
   const overflowingLabel = longestLabel > xScale.bandwidth();
 
-  const xAxisLabelSpace = overflowingLabel ? longestLabel : LINE_HEIGHT;
+  const labelAngle = 90 + DIAGONAL_ANGLE;
+  const radians = (labelAngle * Math.PI) / 180;
+  const angledLabelHeight = Math.cos(radians) * longestLabel;
+
+  const maxXLabelHeight = overflowingLabel ? angledLabelHeight : LINE_HEIGHT;
 
   const drawableHeight =
-    chartDimensions.height - MARGIN.Top - MARGIN.Bottom - xAxisLabelSpace;
+    chartDimensions.height - MARGIN.Top - MARGIN.Bottom - maxXLabelHeight;
 
   const {yScale, ticks} = useYScale({
     drawableHeight,
@@ -101,13 +106,13 @@ export function Chart({
         <g
           transform={`translate(${axisMargin},${chartDimensions.height -
             MARGIN.Bottom -
-            xAxisLabelSpace})`}
+            maxXLabelHeight})`}
         >
           <XAxis
             labels={xAxisLabels}
             xScale={xScale}
             needsDiagonalLabels={overflowingLabel}
-            showAlternateLabels={timeSeries && overflowingLabel}
+            showFewerLabels={timeSeries && overflowingLabel}
             fontSize={fontSize}
           />
         </g>
@@ -173,7 +178,7 @@ export function Chart({
       currentIndex < 0 ||
       currentIndex > sortedData.length - 1 ||
       svgY <= MARGIN.Top ||
-      svgY > drawableHeight + MARGIN.Bottom + xAxisLabelSpace
+      svgY > drawableHeight + MARGIN.Bottom + maxXLabelHeight
     ) {
       setActiveBarGroup(null);
       return;

@@ -8,25 +8,26 @@ import {
   SPACING_TIGHT,
   SPACING_EXTRA_TIGHT,
   SPACING_LOOSE,
+  DIAGONAL_ANGLE,
 } from '../../constants';
 
 export function XAxis({
   labels,
   xScale,
   fontSize,
-  showAlternateLabels,
+  showFewerLabels,
   needsDiagonalLabels,
 }: {
   xScale: ScaleBand<string>;
   labels: {value: string; xOffset: number}[];
   needsDiagonalLabels: boolean;
   fontSize: number;
-  showAlternateLabels: boolean;
+  showFewerLabels: boolean;
 }) {
   const [xScaleMin, xScaleMax] = xScale.range();
 
   const transform = needsDiagonalLabels
-    ? `translate(${SPACING_EXTRA_TIGHT} ${SPACING_LOOSE}) rotate(-40)`
+    ? `translate(${SPACING_EXTRA_TIGHT} ${SPACING_LOOSE}) rotate(${DIAGONAL_ANGLE})`
     : `translate(0 ${SPACING_TIGHT + SPACING})`;
 
   return (
@@ -38,7 +39,7 @@ export function XAxis({
       />
 
       {labels.map(({value, xOffset}, index) => {
-        if (showAlternateLabels && index % 2 !== 0) {
+        if (showFewerLabels && index % 2 !== 0) {
           return null;
         }
 
