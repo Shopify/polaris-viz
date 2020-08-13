@@ -4,7 +4,7 @@ import {scaleLinear} from 'd3-scale';
 import {colorPurple, colorGreen} from '@shopify/polaris-tokens';
 
 import {Line} from '../Line';
-import {Point} from '../components';
+import {Point} from '../../../..';
 
 jest.mock('d3-scale', () => ({
   scaleLinear: jest.fn(() => jest.fn(() => 250)),

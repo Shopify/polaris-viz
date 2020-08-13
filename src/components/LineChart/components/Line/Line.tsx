@@ -3,8 +3,7 @@ import {ScaleLinear} from 'd3-scale';
 import tokens from '@shopify/polaris-tokens';
 
 import {Series} from '../../types';
-
-import {Point} from './components';
+import {Point} from '../../../Point';
 
 interface Props {
   path: string;

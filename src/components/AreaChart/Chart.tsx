@@ -1,28 +1,32 @@
 import React, {useState} from 'react';
-import {line} from 'd3-shape';
+import {area, stack, stackOffsetDiverging} from 'd3-shape';
+import tokens from '@shopify/polaris-tokens';
+import {Color} from 'types';
 
 import {YAxis} from '../YAxis';
 import {eventPoint} from '../../utilities';
 import {Crosshair} from '../Crosshair';
+import {Point} from '../Point';
 
-import {Series} from './types';
 import {Margin, SPACING_TIGHT} from './constants';
 import {useXScale, useYScale} from './hooks';
-import {Line, Tooltip, XAxis} from './components';
+import {Area, Tooltip, XAxis} from './components';
 import styles from './Chart.scss';
 
 interface Props {
-  series: Series[];
-  xAxisLabels?: string[];
+  data: {x: string; values: number[]}[];
+  dataCategories: string[];
   formatYAxisValue(value: number): string;
   dimensions: DOMRect;
+  colors: Color[];
 }
 
 export function Chart({
-  series,
+  data,
+  dataCategories,
   dimensions,
-  xAxisLabels,
   formatYAxisValue,
+  colors,
 }: Props) {
   const [activePointIndex, setActivePointIndex] = useState<number | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState<{
@@ -30,21 +34,37 @@ export function Chart({
     y: number;
   } | null>(null);
 
+  const xAxisLabels = data.map(({x}) => x);
+
   const marginBottom = xAxisLabels == null ? SPACING_TIGHT : Margin.Bottom;
   const drawableHeight = dimensions.height - Margin.Top - marginBottom;
 
+  const areaStack = stack()
+    .keys(dataCategories)
+    .offset(stackOffsetDiverging);
+
+  const formattedData = data.map(({values}) =>
+    dataCategories
+      .slice()
+      .reverse()
+      .reduce(
+        (acc, key, index) => Object.assign(acc, {[key]: values[index]}),
+        {},
+      ),
+  );
+
+  const stackedValues = areaStack(formattedData);
+
   const {axisMargin, ticks, yScale} = useYScale({
     drawableHeight,
-    series,
+    stackedValues,
     formatYAxisValue,
   });
 
   const drawableWidth =
     axisMargin == null ? null : dimensions.width - Margin.Right - axisMargin;
-  const longestSeriesLength = series.reduce<number>(
-    (max, currentSeries) => Math.max(max, currentSeries.data.length - 1),
-    0,
-  );
+  const longestSeriesLength =
+    Math.max(...stackedValues.map((stack) => stack.length)) - 1;
 
   const {xScale} = useXScale({drawableWidth, longestSeriesLength});
 
@@ -52,9 +72,10 @@ export function Chart({
     return null;
   }
 
-  const lineGenerator = line<{x: string; y: number}>()
+  const areaShape = area<number[]>()
     .x((_, index) => xScale(index))
-    .y(({y}) => yScale(y));
+    .y0(([firstPoint]) => yScale(firstPoint))
+    .y1(([, lastPoint]) => yScale(lastPoint));
 
   function handleInteraction(
     event: React.MouseEvent<SVGSVGElement> | React.TouchEvent<SVGSVGElement>,
@@ -108,37 +129,45 @@ export function Chart({
           <YAxis ticks={ticks} drawableWidth={drawableWidth} />
         </g>
 
+        <g transform={`translate(${axisMargin},${Margin.Top})`}>
+          {stackedValues
+            .slice()
+            .reverse()
+            .map((value, index) => {
+              const shape = areaShape(value);
+
+              if (shape == null) {
+                return null;
+              }
+
+              return (
+                <Area key={index} shape={shape} fill={tokens[colors[index]]} />
+              );
+            })}
+        </g>
+
         {activePointIndex == null ? null : (
           <g transform={`translate(${axisMargin},${Margin.Top})`}>
-            <Crosshair x={xScale(activePointIndex)} height={drawableHeight} />
+            <Crosshair
+              x={xScale(activePointIndex)}
+              height={drawableHeight}
+              opacity={0.5}
+            />
           </g>
         )}
 
         <g transform={`translate(${axisMargin},${Margin.Top})`}>
-          {series
-            .slice()
-            .reverse()
-            .map((singleSeries) => {
-              const {data, name} = singleSeries;
-              const path = lineGenerator(data);
-
-              if (path == null) {
-                throw new Error(
-                  `Could not generate line path for series ${name}`,
-                );
-              }
-
-              return (
-                <Line
-                  key={name}
-                  xScale={xScale}
-                  yScale={yScale}
-                  series={singleSeries}
-                  path={path}
-                  activePointIndex={activePointIndex}
-                />
-              );
-            })}
+          {stackedValues.map((value, stackIndex) => {
+            return value.map(([, dataPoint], index) => (
+              <Point
+                key={index}
+                color={colors.slice().reverse()[stackIndex]}
+                cx={xScale(index)}
+                cy={yScale(dataPoint)}
+                active={index === activePointIndex}
+              />
+            ));
+          })}
         </g>
       </svg>
 
@@ -148,8 +177,10 @@ export function Chart({
           currentX={tooltipPosition.x}
           currentY={tooltipPosition.y}
           formatYAxisValue={formatYAxisValue}
-          series={series}
           chartDimensions={dimensions}
+          data={data}
+          colors={colors}
+          dataCategories={dataCategories}
         />
       )}
     </div>
