@@ -1,22 +1,22 @@
 import React, {useState} from 'react';
 import {Color} from 'types';
-
-import {eventPoint, getTextWidth} from '../../utilities';
-import {YAxis} from '../YAxis';
-import {TooltipContainer} from '../TooltipContainer';
-
-import {BarData} from './types';
-import {XAxis, Bar, Tooltip} from './components';
-import {useYScale, useXScale} from './hooks';
 import {
   MARGIN,
   LINE_HEIGHT,
   SPACING,
   SMALL_FONT_SIZE,
   FONT_SIZE,
-  SMALL_SCREEN,
   DIAGONAL_ANGLE,
-} from './constants';
+} from 'components/constants';
+
+import {eventPoint, getTextWidth} from '../../utilities';
+import {YAxis} from '../YAxis';
+import {TooltipContainer} from '../TooltipContainer';
+
+import {SMALL_SCREEN} from './constants';
+import {BarData} from './types';
+import {XAxis, Bar, Tooltip} from './components';
+import {useYScale, useXScale} from './hooks';
 import styles from './Chart.scss';
 
 interface Props {

@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {line} from 'd3-shape';
+import {SPACING_TIGHT} from 'components/constants';
 
 import {LinearXAxis} from '../LinearXAxis';
 import {YAxis} from '../YAxis';
@@ -7,7 +8,7 @@ import {eventPoint} from '../../utilities';
 import {Crosshair} from '../Crosshair';
 
 import {Series} from './types';
-import {Margin, SPACING_TIGHT} from './constants';
+import {Margin} from './constants';
 import {useXScale, useYScale} from './hooks';
 import {Line, Tooltip} from './components';
 import styles from './Chart.scss';

@@ -1,4 +1,12 @@
 import React, {useState} from 'react';
+import {
+  MARGIN,
+  LINE_HEIGHT,
+  SPACING,
+  FONT_SIZE,
+  SMALL_FONT_SIZE,
+  DIAGONAL_ANGLE,
+} from 'components/constants';
 
 import {eventPoint, getTextWidth} from '../../utilities';
 import {YAxis} from '../YAxis';
@@ -7,15 +15,7 @@ import {TooltipContainer} from '../TooltipContainer';
 import {Data} from './types';
 import {XAxis, BarGroup, Tooltip} from './components';
 import {useYScale, useXScale} from './hooks';
-import {
-  MARGIN,
-  LINE_HEIGHT,
-  SPACING,
-  FONT_SIZE,
-  SMALL_WIDTH,
-  SMALL_FONT_SIZE,
-  DIAGONAL_ANGLE,
-} from './constants';
+import {SMALL_WIDTH} from './constants';
 import styles from './Chart.scss';
 
 interface Props {
