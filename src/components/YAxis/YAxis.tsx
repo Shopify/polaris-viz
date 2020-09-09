@@ -6,6 +6,7 @@ import {
   spacingBase,
   spacingExtraTight,
 } from '@shopify/polaris-tokens';
+import {animated, useSpring} from 'react-spring';
 
 interface Props {
   ticks: {
@@ -16,9 +17,16 @@ interface Props {
   drawableWidth: number;
 }
 
-export function YAxis({ticks, drawableWidth}: Props) {
+function Axis({ticks, drawableWidth}: Props) {
+  const props = useSpring({
+    config: {duration: 800},
+    opacity: '100%',
+    from: {opacity: '0%'},
+    reset: true,
+  });
+
   return (
-    <g>
+    <animated.g {...props}>
       {ticks.map(({value, formattedValue, yOffset}) => {
         return (
           <g key={value} transform={`translate(0,${yOffset})`}>
@@ -39,6 +47,8 @@ export function YAxis({ticks, drawableWidth}: Props) {
           </g>
         );
       })}
-    </g>
+    </animated.g>
   );
 }
+
+export const YAxis = React.memo(Axis);

@@ -7,6 +7,7 @@ import {
   SPACING_LOOSE,
   SPACING_EXTRA_TIGHT,
 } from '../constants';
+import {getTextWidth} from 'utilities';
 
 export function useYScale({
   drawableHeight,
@@ -24,7 +25,7 @@ export function useYScale({
 }) {
   const [maxTickLength, setMaxTickLength] = useState<number>();
 
-  const {yScale, ticks} = useMemo(() => {
+  const {yScale, ticks, axisMargin} = useMemo(() => {
     const minY = Math.min(
       ...stackedValues[0].map((pathPoints) => pathPoints[0]),
     );
@@ -51,33 +52,24 @@ export function useYScale({
       yOffset: yScale(value),
     }));
 
-    return {yScale, ticks};
-  }, [drawableHeight, stackedValues, formatYAxisValue]);
+    const axisMargin =
+      maxTickLength == null
+        ? null
+        : maxTickLength + SPACING_LOOSE + SPACING_EXTRA_TIGHT;
+
+    return {yScale, ticks, axisMargin};
+  }, [formatYAxisValue, drawableHeight, stackedValues, maxTickLength]);
 
   useEffect(() => {
     let currentMaxTickLength = 0;
 
-    const tick = document.createElement('p');
-    tick.style.fontSize = '12px';
-    tick.style.display = 'inline-block';
-    tick.style.visibility = 'hidden';
-    document.body.appendChild(tick);
-
     ticks.forEach(({formattedValue}) => {
-      tick.innerText = formattedValue;
-
-      currentMaxTickLength = Math.max(currentMaxTickLength, tick.clientWidth);
+      const width = getTextWidth({fontSize: 12, text: formattedValue});
+      currentMaxTickLength = Math.max(currentMaxTickLength, width);
     });
-
-    document.body.removeChild(tick);
 
     setMaxTickLength(currentMaxTickLength);
   }, [ticks, maxTickLength]);
-
-  const axisMargin =
-    maxTickLength == null
-      ? null
-      : maxTickLength + SPACING_LOOSE + SPACING_EXTRA_TIGHT;
 
   return {yScale, ticks, axisMargin};
 }

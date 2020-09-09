@@ -49,13 +49,7 @@ function getTextXTransform({
   }
 }
 
-export function XAxis({
-  xScale,
-  drawableHeight,
-  dimensions,
-  labels,
-  axisMargin,
-}: Props) {
+function Axis({xScale, drawableHeight, dimensions, labels, axisMargin}: Props) {
   const ticks = useMemo(() => {
     if (labels == null) {
       return [];
@@ -132,3 +126,5 @@ export function XAxis({
     </React.Fragment>
   );
 }
+
+export const XAxis = React.memo(Axis);

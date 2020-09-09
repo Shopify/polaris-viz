@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useMemo} from 'react';
 import {area, stack, stackOffsetDiverging} from 'd3-shape';
 import tokens from '@shopify/polaris-tokens';
 import {Color} from 'types';
@@ -34,26 +34,37 @@ export function Chart({
     y: number;
   } | null>(null);
 
-  const xAxisLabels = data.map(({x}) => x);
+  const xAxisLabels = useMemo(() => data.map(({x}) => x), [data]);
 
   const marginBottom = xAxisLabels == null ? SPACING_TIGHT : Margin.Bottom;
   const drawableHeight = dimensions.height - Margin.Top - marginBottom;
 
-  const areaStack = stack()
-    .keys(dataCategories)
-    .offset(stackOffsetDiverging);
-
-  const formattedData = data.map(({values}) =>
-    dataCategories
-      .slice()
-      .reverse()
-      .reduce(
-        (acc, key, index) => Object.assign(acc, {[key]: values[index]}),
-        {},
-      ),
+  const areaStack = useMemo(
+    () =>
+      stack()
+        .keys(dataCategories)
+        .offset(stackOffsetDiverging),
+    [dataCategories],
   );
 
-  const stackedValues = areaStack(formattedData);
+  const formattedData = useMemo(
+    () =>
+      data.map(({values}) =>
+        dataCategories
+          .slice()
+          .reverse()
+          .reduce(
+            (acc, key, index) => Object.assign(acc, {[key]: values[index]}),
+            {},
+          ),
+      ),
+    [data, dataCategories],
+  );
+
+  const stackedValues = useMemo(() => areaStack(formattedData), [
+    areaStack,
+    formattedData,
+  ]);
 
   const {axisMargin, ticks, yScale} = useYScale({
     drawableHeight,
@@ -76,6 +87,8 @@ export function Chart({
     .x((_, index) => xScale(index))
     .y0(([firstPoint]) => yScale(firstPoint))
     .y1(([, lastPoint]) => yScale(lastPoint));
+
+  const zeroShape = areaShape(Array(formattedData.length).fill([0, 0]));
 
   function handleInteraction(
     event: React.MouseEvent<SVGSVGElement> | React.TouchEvent<SVGSVGElement>,
@@ -136,12 +149,17 @@ export function Chart({
             .map((value, index) => {
               const shape = areaShape(value);
 
-              if (shape == null) {
+              if (shape == null || zeroShape == null) {
                 return null;
               }
 
               return (
-                <Area key={index} shape={shape} fill={tokens[colors[index]]} />
+                <Area
+                  zeroShape={zeroShape}
+                  key={index}
+                  shape={shape}
+                  fill={tokens[colors[index]]}
+                />
               );
             })}
         </g>

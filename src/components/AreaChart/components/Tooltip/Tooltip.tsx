@@ -5,6 +5,8 @@ import {Color} from 'types';
 import {TooltipContainer} from '../../../TooltipContainer';
 import {Margin} from '../../constants';
 
+import styles from './Tooltip.scss';
+
 interface Props {
   activePointIndex: number;
   currentX: number;
@@ -39,7 +41,7 @@ export function Tooltip({
       chartDimensions={chartDimensions}
       margin={Margin}
     >
-      <div>
+      <div className={styles.Container}>
         {activePoint.values.map((value, index) => (
           <React.Fragment key={`${value}-${index}`}>
             {/* make comp to share with legend */}
@@ -50,8 +52,8 @@ export function Tooltip({
                 height: '10px',
               }}
             />
-            <strong>{dataCategories[index]}</strong>
-            <div>{formatYAxisValue(value)}</div>
+            <p className={styles.SeriesName}>{dataCategories[index]}</p>
+            <p className={styles.Value}>{formatYAxisValue(value)}</p>
           </React.Fragment>
         ))}
       </div>
