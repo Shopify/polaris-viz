@@ -27,12 +27,14 @@ export function useYScale({
 
   const {yScale, ticks, axisMargin} = useMemo(() => {
     const minY = Math.min(
-      ...stackedValues[0].map((pathPoints) => pathPoints[0]),
+      ...stackedValues.map((value) =>
+        Math.min(...value.map(([startingValue]) => startingValue)),
+      ),
     );
 
     const maxY = Math.max(
-      ...stackedValues[stackedValues.length - 1].map(
-        (pathPoints) => pathPoints[1],
+      ...stackedValues.map((value) =>
+        Math.max(...value.map(([, endingValue]) => endingValue)),
       ),
     );
 

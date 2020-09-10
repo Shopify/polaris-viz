@@ -14,7 +14,7 @@ import {Area, Tooltip, XAxis} from './components';
 import styles from './Chart.scss';
 
 interface Props {
-  data: {x: string; values: number[]}[];
+  data: {label: string; values: number[]}[];
   dataCategories: string[];
   formatYAxisValue(value: number): string;
   dimensions: DOMRect;
@@ -34,7 +34,7 @@ export function Chart({
     y: number;
   } | null>(null);
 
-  const xAxisLabels = useMemo(() => data.map(({x}) => x), [data]);
+  const xAxisLabels = useMemo(() => data.map(({label}) => label), [data]);
 
   const marginBottom = xAxisLabels == null ? SPACING_TIGHT : Margin.Bottom;
   const drawableHeight = dimensions.height - Margin.Top - marginBottom;

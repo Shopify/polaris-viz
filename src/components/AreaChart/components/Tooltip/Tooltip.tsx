@@ -14,7 +14,7 @@ interface Props {
   formatYAxisValue(value: number): string;
   chartDimensions: DOMRect;
   data: {
-    x: string;
+    label: string;
     values: number[];
   }[];
   colors: Color[];
@@ -32,6 +32,11 @@ export function Tooltip({
   dataCategories,
 }: Props) {
   const activePoint = data[activePointIndex];
+
+  const totalValue = activePoint.values.reduce(
+    (current, accumulator) => current + accumulator,
+    0,
+  );
 
   return (
     <TooltipContainer
@@ -57,6 +62,9 @@ export function Tooltip({
           </React.Fragment>
         ))}
       </div>
+
+      {/* have optional total value prop to return string */}
+      <p>{totalValue}</p>
     </TooltipContainer>
   );
 }

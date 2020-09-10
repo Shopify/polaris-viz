@@ -11,7 +11,7 @@ interface Props {
   formatYAxisValue?(value: number): string;
   dataCategories: string[];
   colors?: Color[];
-  data: {x: string; values: number[]}[];
+  data: {label: string; values: number[]}[];
 }
 
 export function AreaChart({
