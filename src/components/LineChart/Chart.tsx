@@ -51,9 +51,9 @@ export function Chart({
     return null;
   }
 
-  const lineGenerator = line<{x: string; y: number}>()
+  const lineGenerator = line<{rawValue: number}>()
     .x((_, index) => xScale(index))
-    .y(({y}) => yScale(y));
+    .y(({rawValue}) => yScale(rawValue));
 
   function handleInteraction(
     event: React.MouseEvent<SVGSVGElement> | React.TouchEvent<SVGSVGElement>,

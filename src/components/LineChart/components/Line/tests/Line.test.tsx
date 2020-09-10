@@ -15,8 +15,8 @@ const mockProps = {
   series: {
     name: 'Test series',
     data: [
-      {x: 'Jan 1', y: 0},
-      {x: 'Jan 2', y: 10},
+      {label: 'Jan 1', rawValue: 0},
+      {label: 'Jan 2', rawValue: 10},
     ],
   },
   xScale: scaleLinear(),
@@ -89,7 +89,9 @@ describe('<Line />', () => {
       );
 
       expect(mockProps.xScale).toHaveBeenCalledWith(0);
-      expect(mockProps.yScale).toHaveBeenCalledWith(mockProps.series.data[0].y);
+      expect(mockProps.yScale).toHaveBeenCalledWith(
+        mockProps.series.data[0].rawValue,
+      );
     });
 
     it('renders with active: true if the point index matches the activePointIndex', () => {

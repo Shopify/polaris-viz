@@ -5,9 +5,9 @@ export function yAxisMinMax(series: Series[]) {
   let maxY = -Infinity;
 
   series.forEach(({data}) => {
-    data.forEach(({y}) => {
-      minY = Math.min(minY, y);
-      maxY = Math.max(maxY, y);
+    data.forEach(({rawValue}) => {
+      minY = Math.min(minY, rawValue);
+      maxY = Math.max(maxY, rawValue);
     });
   });
 

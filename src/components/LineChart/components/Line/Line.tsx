@@ -31,13 +31,13 @@ export function Line({path, series, xScale, yScale, activePointIndex}: Props) {
         strokeDasharray={lineStyle === 'dashed' ? '2 4' : 'unset'}
       />
 
-      {data.map(({y}, index) => {
+      {data.map(({rawValue}, index) => {
         return (
           <Point
             key={index}
             color={color}
             cx={xScale(index)}
-            cy={yScale(y)}
+            cy={yScale(rawValue)}
             active={index === activePointIndex}
           />
         );

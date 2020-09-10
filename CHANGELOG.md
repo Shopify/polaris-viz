@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+### Fixed
+
+- `<LineChart />` prop improvements to rename `x` to `label` and `y` to `rawValue`
+- `<LineChart />` displays label value on tooltip rather than Series name
+- `<LineChart />` returns null when empty data is passed in
+
 ## [0.0.15] - 2020-09-10
 
 ### Added
