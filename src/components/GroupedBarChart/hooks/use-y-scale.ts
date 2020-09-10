@@ -1,25 +1,23 @@
 import {useMemo} from 'react';
 import {scaleLinear} from 'd3-scale';
 
-import {Data} from '../types';
+import {Data, StackSeries} from '../types';
 import {MIN_Y_LABEL_SPACE} from '../constants';
+import {getMinMax} from '../utilities';
 
 export function useYScale({
   drawableHeight,
   data,
   formatYValue,
+  stackedValues,
 }: {
   drawableHeight: number;
   data: Data[];
   formatYValue(value: number): string;
+  stackedValues?: StackSeries[] | null;
 }) {
   const {yScale, ticks} = useMemo(() => {
-    const vals = data
-      .map(({data}) => data)
-      .reduce((acc, currentValue) => acc.concat(currentValue), []);
-
-    const min = Math.min(...vals, 0);
-    const max = Math.max(...vals);
+    const {min, max} = getMinMax(stackedValues, data);
 
     const maxTicks = Math.max(
       1,
@@ -38,7 +36,7 @@ export function useYScale({
     }));
 
     return {yScale, ticks};
-  }, [drawableHeight, data, formatYValue]);
+  }, [data, drawableHeight, formatYValue, stackedValues]);
 
   return {yScale, ticks};
 }

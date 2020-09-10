@@ -1,3 +1,4 @@
+import {Series} from 'd3-shape';
 import {Color} from 'types';
 
 export interface Data {
@@ -5,3 +6,10 @@ export interface Data {
   color: Color;
   label: string;
 }
+
+export type StackSeries = Series<
+  {
+    [key: string]: number;
+  },
+  string
+>;

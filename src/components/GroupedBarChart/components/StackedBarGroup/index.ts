@@ -1,0 +1,1 @@
+export {StackedBarGroup} from './StackedBarGroup';

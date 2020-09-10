@@ -13,13 +13,15 @@ interface Props {
   accessibilityLabel?: string;
   formatYValue?(value: number): string;
   chartHeight?: number;
+  stacked?: boolean;
 }
 
 export function GroupedBarChart({
   labels,
   series,
-  accessibilityLabel,
+  stacked = false,
   timeSeries = false,
+  accessibilityLabel,
   chartHeight = DEFAULT_HEIGHT,
   formatYValue = (value) => value.toString(),
 }: Props) {
@@ -54,6 +56,7 @@ export function GroupedBarChart({
             chartDimensions={chartDimensions}
             formatYValue={formatYValue}
             timeSeries={timeSeries}
+            stacked={stacked}
           />
         )}
       </div>
