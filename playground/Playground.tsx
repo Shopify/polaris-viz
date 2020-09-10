@@ -3,70 +3,69 @@ import {colorSky, colorSkyDark, colorBlue} from '@shopify/polaris-tokens';
 
 import {AreaChart} from '../src/components';
 
-function random() {
-  const num = Math.round(Math.random() * 100) + 5;
-  return num;
-}
-
+const formatNumber = new Intl.NumberFormat('en').format;
 const formatDate = new Intl.DateTimeFormat('en', {
-  month: 'long',
+  month: 'short',
   day: 'numeric',
 }).format;
 
-const formatNumber = new Intl.NumberFormat('en').format;
-
-const data = [
-  {
-    x: formatDate(new Date(2015, 0, 1)),
-    values: [1000 * random(), 1920 * random(), 800 * random()],
-  },
-  {
-    x: formatDate(new Date(2015, 1, 1)),
-    values: [1600 * random(), 1440 * random(), 100 * random()],
-  },
-  {
-    x: formatDate(new Date(2015, 2, 1)),
-    values: [640 * random(), 960 * random(), 310 * random()],
-  },
-  {
-    x: formatDate(new Date(2015, 3, 1)),
-    values: [3820 * random(), 480 * random(), 880 * random()],
-  },
-  {
-    x: formatDate(new Date(2015, 4, 1)),
-    values: [5320 * random(), 480 * random(), 100 * random()],
-  },
-];
-
 export default function Playground() {
-  const [dataSet, setDataSet] = useState(data);
+  const [randomNumbers, setRandomNumbers] = useState([
+    Math.round(Math.random() * 10),
+    Math.round(Math.random() * 10),
+    Math.round(Math.random() * 19),
+  ]);
 
-  function handleChangeDataSet() {
-    setDataSet([
-      {
-        x: formatDate(new Date(2015, 0, 1)),
-        values: [1000 * random(), 1920 * random(), 800 * random()],
-      },
-      {
-        x: formatDate(new Date(2015, 1, 1)),
-        values: [1600 * random(), 1440 * random(), 100 * random()],
-      },
-      {
-        x: formatDate(new Date(2015, 2, 1)),
-        values: [640 * random(), 960 * random(), 310 * random()],
-      },
-      {
-        x: formatDate(new Date(2015, 3, 1)),
-        values: [3820 * random(), 480 * random(), 880 * random()],
-      },
-      {
-        x: formatDate(new Date(2015, 4, 1)),
-        values: [5320 * random(), 480 * random(), 100 * random()],
-      },
-    ]);
-  }
-
-  const dataCategories = ['Online store', 'POS', 'Facebook'];
+  const data = [
+    {
+      label: formatDate(new Date(2015, 0, 1)),
+      values: [
+        10 * randomNumbers[0],
+        1 * randomNumbers[1],
+        // 8 * randomNumbers[2],
+      ],
+    },
+    {
+      label: formatDate(new Date(2015, 1, 1)),
+      values: [
+        16 * randomNumbers[2],
+        14 * randomNumbers[1],
+        // 10 * randomNumbers[0],
+      ],
+    },
+    {
+      label: formatDate(new Date(2015, 2, 1)),
+      values: [
+        6 * randomNumbers[0],
+        9 * randomNumbers[1],
+        // 3 * randomNumbers[2],
+      ],
+    },
+    {
+      label: formatDate(new Date(2015, 3, 1)),
+      values: [
+        3 * randomNumbers[2],
+        4 * randomNumbers[0],
+        // 8 * randomNumbers[1],
+      ],
+    },
+    {
+      label: formatDate(new Date(2015, 4, 1)),
+      values: [
+        5 * randomNumbers[0],
+        40 * randomNumbers[2],
+        // 10 * randomNumbers[1],
+      ],
+    },
+    {
+      label: formatDate(new Date(2015, 0, 1)),
+      values: [
+        10 * randomNumbers[0],
+        1.9 * randomNumbers[1],
+        // 8 * randomNumbers[2],
+      ],
+    },
+  ];
 
   return (
     <div
@@ -88,8 +87,43 @@ export default function Playground() {
       >
         <AreaChart
           formatYAxisValue={formatNumber}
-          data={dataSet}
-          dataCategories={dataCategories}
+          chartHeight={500}
+          xAxisLabels={[
+            'Day 1',
+            'Day 2',
+            'Day 3',
+            'Day 4',
+            'Day 5',
+            'Day 6',
+            'Day 7',
+          ]}
+          series={[
+            {
+              name: 'Asia',
+              data: [502, 1000, 2000, 1000, 100, 1000, 5000],
+              color: 'colorPurple',
+            },
+            {
+              name: 'Africa',
+              data: [106, 107, 111, 133, 100, 767, 1766],
+              color: 'colorInk',
+            },
+            {
+              name: 'Europe',
+              data: [163, 203, 276, 408, 547, 729, 1028],
+              color: 'colorGreen',
+            },
+            {
+              name: 'America',
+              data: [180, 310, 540, 156, 339, 818, 1201],
+              color: 'colorOrange',
+            },
+            {
+              name: 'Ocenia',
+              data: [200, 200, 200, 600, 10000, 300, 460],
+              color: 'colorRed',
+            },
+          ]}
         />
 
         <div style={{textAlign: 'left'}}>
@@ -104,7 +138,13 @@ export default function Playground() {
               cursor: 'pointer',
               outline: 'none',
             }}
-            onClick={() => handleChangeDataSet()}
+            onClick={() =>
+              setRandomNumbers([
+                Math.round(Math.random() * 10),
+                Math.round(Math.random() * 10),
+                Math.round(Math.random() * 19),
+              ])
+            }
           >
             Change data set
           </button>

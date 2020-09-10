@@ -14,19 +14,17 @@ import {Area, Tooltip, XAxis} from './components';
 import styles from './Chart.scss';
 
 interface Props {
-  data: {label: string; values: number[]}[];
-  dataCategories: string[];
+  xAxisLabels: string[];
+  series: {name: string; data: number[]; color: Color}[];
   formatYAxisValue(value: number): string;
   dimensions: DOMRect;
-  colors: Color[];
 }
 
 export function Chart({
-  data,
-  dataCategories,
+  xAxisLabels,
+  series,
   dimensions,
   formatYAxisValue,
-  colors,
 }: Props) {
   const [activePointIndex, setActivePointIndex] = useState<number | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState<{
@@ -34,37 +32,40 @@ export function Chart({
     y: number;
   } | null>(null);
 
-  const xAxisLabels = useMemo(() => data.map(({label}) => label), [data]);
-
-  const marginBottom = xAxisLabels == null ? SPACING_TIGHT : Margin.Bottom;
-  const drawableHeight = dimensions.height - Margin.Top - marginBottom;
+  const keys = series.map(({name}) => name);
 
   const areaStack = useMemo(
     () =>
       stack()
-        .keys(dataCategories)
+        .keys(keys)
+        // does this offset make the most sense?
+        // without it, negatives aren't really shown accurately
+        // with it, we can get some awkward shapes but they are at least accurate
         .offset(stackOffsetDiverging),
-    [dataCategories],
+    [],
   );
 
   const formattedData = useMemo(
     () =>
-      data.map(({values}) =>
-        dataCategories
-          .slice()
-          .reverse()
+      xAxisLabels.map((_, labelIndex) =>
+        series
+          // .slice()
+          // .reverse()
           .reduce(
-            (acc, key, index) => Object.assign(acc, {[key]: values[index]}),
+            (acc, {name, data}) =>
+              Object.assign(acc, {[name]: data[labelIndex]}),
             {},
           ),
       ),
-    [data, dataCategories],
+    [],
   );
 
-  const stackedValues = useMemo(() => areaStack(formattedData), [
-    areaStack,
-    formattedData,
-  ]);
+  const colors = series.map(({color}) => color);
+
+  const stackedValues = useMemo(() => areaStack(formattedData), []);
+
+  const marginBottom = xAxisLabels == null ? SPACING_TIGHT : Margin.Bottom;
+  const drawableHeight = dimensions.height - Margin.Top - marginBottom;
 
   const {axisMargin, ticks, yScale} = useYScale({
     drawableHeight,
@@ -89,31 +90,6 @@ export function Chart({
     .y1(([, lastPoint]) => yScale(lastPoint));
 
   const zeroShape = areaShape(Array(formattedData.length).fill([0, 0]));
-
-  function handleInteraction(
-    event: React.MouseEvent<SVGSVGElement> | React.TouchEvent<SVGSVGElement>,
-  ) {
-    if (axisMargin == null || xScale == null) {
-      return;
-    }
-
-    const point = eventPoint(event);
-    if (point == null) {
-      return;
-    }
-
-    const {svgX, svgY} = point;
-    if (svgX < axisMargin) {
-      return;
-    }
-
-    const closestIndex = Math.round(xScale.invert(svgX - axisMargin));
-    setActivePointIndex(Math.min(longestSeriesLength, closestIndex));
-    setTooltipPosition({
-      x: svgX,
-      y: svgY,
-    });
-  }
 
   return (
     <div className={styles.Container}>
@@ -143,25 +119,22 @@ export function Chart({
         </g>
 
         <g transform={`translate(${axisMargin},${Margin.Top})`}>
-          {stackedValues
-            .slice()
-            .reverse()
-            .map((value, index) => {
-              const shape = areaShape(value);
+          {stackedValues.map((value, index) => {
+            const shape = areaShape(value);
 
-              if (shape == null || zeroShape == null) {
-                return null;
-              }
+            if (shape == null || zeroShape == null) {
+              return null;
+            }
 
-              return (
-                <Area
-                  zeroShape={zeroShape}
-                  key={index}
-                  shape={shape}
-                  fill={tokens[colors[index]]}
-                />
-              );
-            })}
+            return (
+              <Area
+                zeroShape={zeroShape}
+                key={index}
+                shape={shape}
+                fill={tokens[colors[index]]}
+              />
+            );
+          })}
         </g>
 
         {activePointIndex == null ? null : (
@@ -179,7 +152,7 @@ export function Chart({
             return value.map(([, dataPoint], index) => (
               <Point
                 key={index}
-                color={colors.slice().reverse()[stackIndex]}
+                color={colors[stackIndex]}
                 cx={xScale(index)}
                 cy={yScale(dataPoint)}
                 active={index === activePointIndex}
@@ -188,7 +161,6 @@ export function Chart({
           })}
         </g>
       </svg>
-
       {tooltipPosition == null || activePointIndex == null ? null : (
         <Tooltip
           activePointIndex={activePointIndex}
@@ -196,11 +168,35 @@ export function Chart({
           currentY={tooltipPosition.y}
           formatYAxisValue={formatYAxisValue}
           chartDimensions={dimensions}
-          data={data}
+          data={formattedData}
           colors={colors}
-          dataCategories={dataCategories}
         />
       )}
     </div>
   );
+
+  function handleInteraction(
+    event: React.MouseEvent<SVGSVGElement> | React.TouchEvent<SVGSVGElement>,
+  ) {
+    if (axisMargin == null || xScale == null) {
+      return;
+    }
+
+    const point = eventPoint(event);
+    if (point == null) {
+      return;
+    }
+
+    const {svgX, svgY} = point;
+    if (svgX < axisMargin) {
+      return;
+    }
+
+    const closestIndex = Math.round(xScale.invert(svgX - axisMargin));
+    setActivePointIndex(Math.min(longestSeriesLength, closestIndex));
+    setTooltipPosition({
+      x: svgX,
+      y: svgY,
+    });
+  }
 }

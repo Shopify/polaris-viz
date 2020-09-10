@@ -13,12 +13,8 @@ interface Props {
   currentY: number;
   formatYAxisValue(value: number): string;
   chartDimensions: DOMRect;
-  data: {
-    label: string;
-    values: number[];
-  }[];
+  data: {[key: string]: number}[];
   colors: Color[];
-  dataCategories: string[];
 }
 
 export function Tooltip({
@@ -29,14 +25,20 @@ export function Tooltip({
   chartDimensions,
   data,
   colors,
-  dataCategories,
 }: Props) {
   const activePoint = data[activePointIndex];
 
-  const totalValue = activePoint.values.reduce(
-    (current, accumulator) => current + accumulator,
-    0,
-  );
+  // const totalValue = activePoint.values.reduce(
+  //   (current, accumulator) => current + accumulator,
+  //   0,
+  // );
+
+  const labels = Object.keys(activePoint);
+  // .slice()
+  // .reverse();
+  const values = Object.values(activePoint);
+  // .slice()
+  // .reverse();
 
   return (
     <TooltipContainer
@@ -47,8 +49,8 @@ export function Tooltip({
       margin={Margin}
     >
       <div className={styles.Container}>
-        {activePoint.values.map((value, index) => (
-          <React.Fragment key={`${value}-${index}`}>
+        {labels.map((label, index) => (
+          <React.Fragment key={`${label}-${index}`}>
             {/* make comp to share with legend */}
             <div
               style={{
@@ -57,14 +59,14 @@ export function Tooltip({
                 height: '10px',
               }}
             />
-            <p className={styles.SeriesName}>{dataCategories[index]}</p>
-            <p className={styles.Value}>{formatYAxisValue(value)}</p>
+            <p className={styles.SeriesName}>{label}</p>
+            <p className={styles.Value}>{formatYAxisValue(values[index])}</p>
           </React.Fragment>
         ))}
       </div>
 
       {/* have optional total value prop to return string */}
-      <p>{totalValue}</p>
+      {/* <p>{totalValue}</p> */}
     </TooltipContainer>
   );
 }

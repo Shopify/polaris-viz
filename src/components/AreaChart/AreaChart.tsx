@@ -9,18 +9,16 @@ interface Props {
   chartHeight?: number;
   accessibilityLabel?: string;
   formatYAxisValue?(value: number): string;
-  dataCategories: string[];
-  colors?: Color[];
-  data: {label: string; values: number[]}[];
+  xAxisLabels: string[];
+  series: {name: string; data: number[]; color: Color}[];
 }
 
 export function AreaChart({
-  data,
-  dataCategories,
+  xAxisLabels,
+  series,
   chartHeight = 250,
   formatYAxisValue = (value) => `${value}`,
   accessibilityLabel,
-  colors = ['colorPurpleDark', 'colorBlue', 'colorTeal'],
 }: Props) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -48,16 +46,15 @@ export function AreaChart({
       <div style={{height: chartHeight}} ref={containerRef}>
         {chartDimensions == null ? null : (
           <Chart
-            data={data}
-            dataCategories={dataCategories}
+            xAxisLabels={xAxisLabels}
+            series={series}
             formatYAxisValue={formatYAxisValue}
             dimensions={chartDimensions}
-            colors={colors}
           />
         )}
       </div>
 
-      <Legend colors={colors} dataCategories={dataCategories} />
+      {/* <Legend colors={colors} dataCategories={dataCategories} /> */}
     </div>
   );
 }
