@@ -4,9 +4,10 @@ import {scaleLinear} from 'd3-scale';
 import {classNames} from '@shopify/css-utilities';
 import {Color} from 'types';
 
+import {getColorValue} from '../../utilities';
+
 import {BarSegment, BarLabel} from './components';
-import {Size, ColorScheme, Data, Orientation} from './types';
-import {getColorPalette, getTokensFromColors} from './utilities';
+import {Size, Data, Orientation} from './types';
 import styles from './NormalizedStackedBar.scss';
 
 interface Props {
@@ -14,7 +15,7 @@ interface Props {
   accessibilityLabel?: string;
   size?: Size;
   orientation?: Orientation;
-  colors?: Color[] | ColorScheme;
+  colors?: Color[];
 }
 
 export function NormalizedStackedBar({
@@ -22,7 +23,7 @@ export function NormalizedStackedBar({
   accessibilityLabel,
   size = 'small',
   orientation = 'horizontal',
-  colors = 'classic',
+  colors = ['colorPurpleDark', 'colorBlue', 'colorTeal', 'colorSkyDark'],
 }: Props) {
   const containsNegatives = data.some(({value}) => value < 0);
   const isDevelopment = process.env.NODE_ENV === 'development';
@@ -48,9 +49,7 @@ export function NormalizedStackedBar({
     .domain([0, totalValue]);
 
   const isVertical = orientation === 'vertical';
-  const colorPalette = Array.isArray(colors)
-    ? getTokensFromColors(colors)
-    : getColorPalette(colors);
+  const colorPalette = colors.map((color) => getColorValue(color));
 
   return (
     <div

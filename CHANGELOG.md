@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- New viz colors
+
+### Changed
+
+- Removed ColorScheme option from `<NormalizedStackedBar />`
+
 ## [0.0.14] - 2020-08-12
 
 ### Fixed

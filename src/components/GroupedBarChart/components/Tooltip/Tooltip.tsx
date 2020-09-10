@@ -1,6 +1,7 @@
 import React from 'react';
 import {Color} from 'types';
-import tokens from '@shopify/polaris-tokens';
+
+import {getColorValue} from '../../../../utilities';
 
 import styles from './Tooltip.scss';
 
@@ -18,7 +19,7 @@ export function Tooltip({colors, labels, values, formatValue}: Props) {
         <React.Fragment key={color}>
           <div
             className={styles.ColorPreview}
-            style={{background: tokens[color]}}
+            style={{background: getColorValue(color)}}
           />
           <strong>{labels[index]}</strong>
           <div className={styles.Value}>{formatValue(values[index])}</div>

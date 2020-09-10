@@ -1,7 +1,7 @@
 import React from 'react';
-import tokens from '@shopify/polaris-tokens';
 import {Color} from 'types';
 
+import {getColorValue} from '../../../../utilities';
 import {LineStyle} from '../../types';
 
 interface Props {
@@ -15,7 +15,7 @@ export function LinePreview({color, lineStyle}: Props) {
       <svg width="15px" height="5px">
         <path
           d="M0,0L100,0"
-          stroke={tokens[color]}
+          stroke={getColorValue(color)}
           strokeWidth="4"
           strokeDasharray={lineStyle === 'dashed' ? '3 2' : 'unset'}
         />

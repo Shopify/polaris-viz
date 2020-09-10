@@ -4,6 +4,7 @@ import tokens from '@shopify/polaris-tokens';
 import {Color} from 'types';
 import {ScaleLinear} from 'd3-scale';
 
+import {getColorValue} from '../../../../utilities';
 import {MIN_BAR_HEIGHT} from '../../constants';
 
 interface Props {
@@ -27,14 +28,14 @@ export function Bar({
 }: Props) {
   const currentColor =
     isSelected && highlightColor != null
-      ? tokens[highlightColor]
-      : tokens[color];
+      ? getColorValue(highlightColor)
+      : getColorValue(color);
 
   const animation = useSpring({
     config: {duration: tokens.durationFast},
     immediate: highlightColor == null,
     color: currentColor,
-    from: {color: tokens[color]},
+    from: {color: getColorValue(color)},
   });
 
   const rawHeight = Math.abs(yScale(rawValue) - yScale(0));

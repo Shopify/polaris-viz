@@ -1,4 +1,6 @@
-export type Color =
+export type Color = TokensColor | VizPaletteColor;
+
+export type TokensColor =
   | 'colorBlack'
   | 'colorBlue'
   | 'colorBlueDark'
@@ -56,3 +58,12 @@ export type Color =
   | 'colorYellowDarker'
   | 'colorYellowLight'
   | 'colorYellowLighter';
+
+export type VizPaletteColor =
+  | 'primary'
+  | 'secondary'
+  | 'tertiary'
+  | 'quaternary'
+  | 'pastComparison'
+  | 'positive'
+  | 'negative';
