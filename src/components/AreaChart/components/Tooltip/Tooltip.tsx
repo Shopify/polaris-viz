@@ -33,12 +33,14 @@ export function Tooltip({
   //   0,
   // );
 
-  const labels = Object.keys(activePoint);
-  // .slice()
-  // .reverse();
-  const values = Object.values(activePoint);
-  // .slice()
-  // .reverse();
+  const flippedColors = colors.slice().reverse();
+
+  const labels = Object.keys(activePoint)
+    .slice()
+    .reverse();
+  const values = Object.values(activePoint)
+    .slice()
+    .reverse();
 
   return (
     <TooltipContainer
@@ -54,7 +56,7 @@ export function Tooltip({
             {/* make comp to share with legend */}
             <div
               style={{
-                background: tokens[colors[index]],
+                background: tokens[flippedColors[index]],
                 width: '10px',
                 height: '10px',
               }}

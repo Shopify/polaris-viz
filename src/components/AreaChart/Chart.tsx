@@ -32,35 +32,23 @@ export function Chart({
     y: number;
   } | null>(null);
 
-  const keys = series.map(({name}) => name);
+  const flippedData = series.slice().reverse();
+  const keys = flippedData.map(({name}) => name);
 
-  const areaStack = useMemo(
-    () =>
-      stack()
-        .keys(keys)
-        // does this offset make the most sense?
-        // without it, negatives aren't really shown accurately
-        // with it, we can get some awkward shapes but they are at least accurate
-        .offset(stackOffsetDiverging),
-    [],
-  );
+  const areaStack = useMemo(() => stack().keys(keys), []);
 
   const formattedData = useMemo(
     () =>
       xAxisLabels.map((_, labelIndex) =>
-        series
-          // .slice()
-          // .reverse()
-          .reduce(
-            (acc, {name, data}) =>
-              Object.assign(acc, {[name]: data[labelIndex]}),
-            {},
-          ),
+        flippedData.reduce(
+          (acc, {name, data}) => Object.assign(acc, {[name]: data[labelIndex]}),
+          {},
+        ),
       ),
     [],
   );
 
-  const colors = series.map(({color}) => color);
+  const colors = flippedData.map(({color}) => color);
 
   const stackedValues = useMemo(() => areaStack(formattedData), []);
 

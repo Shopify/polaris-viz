@@ -115,7 +115,7 @@ export default function Playground() {
             },
             {
               name: 'America',
-              data: [180, 310, 540, 156, 339, 818, 1201],
+              data: [180, 310, 540, -156, 339, 818, 1201],
               color: 'colorOrange',
             },
             {
