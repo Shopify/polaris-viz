@@ -1,21 +1,23 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
-import {Color} from 'types';
 
 import {Chart} from './Chart';
 import {Legend} from './components';
+import {Series} from './types';
 
 interface Props {
   chartHeight?: number;
   accessibilityLabel?: string;
   formatYAxisValue?(value: number): string;
   xAxisLabels: string[];
-  series: {name: string; data: number[]; color: Color}[];
+  series: Series[];
+  totalMessage?: string;
 }
 
 export function AreaChart({
   xAxisLabels,
   series,
+  totalMessage,
   chartHeight = 250,
   formatYAxisValue = (value) => `${value}`,
   accessibilityLabel,
@@ -50,11 +52,12 @@ export function AreaChart({
             series={series}
             formatYAxisValue={formatYAxisValue}
             dimensions={chartDimensions}
+            totalMessage={totalMessage}
           />
         )}
       </div>
 
-      {/* <Legend colors={colors} dataCategories={dataCategories} /> */}
+      <Legend series={series} />
     </div>
   );
 }

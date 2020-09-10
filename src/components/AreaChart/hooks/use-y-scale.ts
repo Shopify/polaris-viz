@@ -1,13 +1,13 @@
 import {useMemo, useEffect, useState} from 'react';
 import {scaleLinear} from 'd3-scale';
 import {Series} from 'd3-shape';
+import {getTextWidth} from 'utilities';
 
 import {
   MIN_Y_LABEL_SPACE,
   SPACING_LOOSE,
   SPACING_EXTRA_TIGHT,
 } from '../constants';
-import {getTextWidth} from 'utilities';
 
 export function useYScale({
   drawableHeight,

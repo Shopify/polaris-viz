@@ -9,63 +9,36 @@ const formatDate = new Intl.DateTimeFormat('en', {
   day: 'numeric',
 }).format;
 
-export default function Playground() {
-  const [randomNumbers, setRandomNumbers] = useState([
-    Math.round(Math.random() * 10),
-    Math.round(Math.random() * 10),
-    Math.round(Math.random() * 19),
-  ]);
+const geoData = [
+  {
+    name: 'Asia',
+    data: [502, 1000, 2000, 1000, 100, 1000, 5000],
+    color: 'colorPurple',
+  },
+  {
+    name: 'Africa',
+    data: [106, 107, 111, 133, 100, 767, 1766],
+    color: 'colorTeal',
+  },
+  {
+    name: 'Europe',
+    data: [163, 203, 276, 408, 547, 729, 1028],
+    color: 'colorGreen',
+  },
+  {
+    name: 'America',
+    data: [180, 310, 540, 156, 339, 818, 1201],
+    color: 'colorIndigo',
+  },
+  {
+    name: 'Ocenia',
+    data: [200, 200, 200, 600, 10000, 300, 460],
+    color: 'colorBlue',
+  },
+];
 
-  const data = [
-    {
-      label: formatDate(new Date(2015, 0, 1)),
-      values: [
-        10 * randomNumbers[0],
-        1 * randomNumbers[1],
-        // 8 * randomNumbers[2],
-      ],
-    },
-    {
-      label: formatDate(new Date(2015, 1, 1)),
-      values: [
-        16 * randomNumbers[2],
-        14 * randomNumbers[1],
-        // 10 * randomNumbers[0],
-      ],
-    },
-    {
-      label: formatDate(new Date(2015, 2, 1)),
-      values: [
-        6 * randomNumbers[0],
-        9 * randomNumbers[1],
-        // 3 * randomNumbers[2],
-      ],
-    },
-    {
-      label: formatDate(new Date(2015, 3, 1)),
-      values: [
-        3 * randomNumbers[2],
-        4 * randomNumbers[0],
-        // 8 * randomNumbers[1],
-      ],
-    },
-    {
-      label: formatDate(new Date(2015, 4, 1)),
-      values: [
-        5 * randomNumbers[0],
-        40 * randomNumbers[2],
-        // 10 * randomNumbers[1],
-      ],
-    },
-    {
-      label: formatDate(new Date(2015, 0, 1)),
-      values: [
-        10 * randomNumbers[0],
-        1.9 * randomNumbers[1],
-        // 8 * randomNumbers[2],
-      ],
-    },
-  ];
+export default function Playground() {
+  const [data, setData] = useState(geoData);
 
   return (
     <div
@@ -87,43 +60,9 @@ export default function Playground() {
       >
         <AreaChart
           formatYAxisValue={formatNumber}
-          chartHeight={500}
-          xAxisLabels={[
-            'Day 1',
-            'Day 2',
-            'Day 3',
-            'Day 4',
-            'Day 5',
-            'Day 6',
-            'Day 7',
-          ]}
-          series={[
-            {
-              name: 'Asia',
-              data: [502, 1000, 2000, 1000, 100, 1000, 5000],
-              color: 'colorPurple',
-            },
-            {
-              name: 'Africa',
-              data: [106, 107, 111, 133, 100, 767, 1766],
-              color: 'colorInk',
-            },
-            {
-              name: 'Europe',
-              data: [163, 203, 276, 408, 547, 729, 1028],
-              color: 'colorGreen',
-            },
-            {
-              name: 'America',
-              data: [180, 310, 540, -156, 339, 818, 1201],
-              color: 'colorOrange',
-            },
-            {
-              name: 'Ocenia',
-              data: [200, 200, 200, 600, 10000, 300, 460],
-              color: 'colorRed',
-            },
-          ]}
+          xAxisLabels={data[3].data.map((_, i) => `Day ${i + 1}`)}
+          series={data}
+          totalMessage="Total"
         />
 
         <div style={{textAlign: 'left'}}>
@@ -138,13 +77,76 @@ export default function Playground() {
               cursor: 'pointer',
               outline: 'none',
             }}
-            onClick={() =>
-              setRandomNumbers([
-                Math.round(Math.random() * 10),
-                Math.round(Math.random() * 10),
-                Math.round(Math.random() * 19),
-              ])
-            }
+            onClick={() => {
+              setData([
+                {
+                  name: 'Asia',
+                  data: [
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    // Math.random() * 100,
+                  ],
+                  color: 'colorPurple',
+                },
+                {
+                  name: 'Africa',
+                  data: [
+                    Math.random() * 100,
+
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    // Math.random() * 100,
+                  ],
+                  color: 'colorTeal',
+                },
+                {
+                  name: 'Europe',
+                  data: [
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                  ],
+                  color: 'colorGreen',
+                },
+                {
+                  name: 'America',
+                  data: [
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                  ],
+                  color: 'colorIndigo',
+                },
+                {
+                  name: 'Ocenia',
+                  data: [
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                  ],
+                  color: 'colorBlue',
+                },
+              ]);
+            }}
           >
             Change data set
           </button>

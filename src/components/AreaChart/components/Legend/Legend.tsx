@@ -1,29 +1,21 @@
 import React from 'react';
-import tokens from '@shopify/polaris-tokens';
-
-import {Color} from '../../../../types';
+import {Series} from 'components/AreaChart/types';
+import {SquareColorPreview} from 'components';
 
 import styles from './Legend.scss';
 
 interface Props {
-  colors: Color[];
-  dataCategories: string[];
+  series: Series[];
 }
 
-export function Legend({colors, dataCategories}: Props) {
+export function Legend({series}: Props) {
   return (
     <div className={styles.Container}>
-      {dataCategories.map((category, index) => {
+      {series.map(({name, color}) => {
         return (
-          <div className={styles.Series} key={category}>
-            <div
-              style={{
-                background: tokens[colors[index]],
-                width: '10px',
-                height: '10px',
-              }}
-            />
-            <p className={styles.SeriesName}>{category}</p>
+          <div className={styles.Series} key={name}>
+            <SquareColorPreview color={color} />
+            <p className={styles.SeriesName}>{name}</p>
           </div>
         );
       })}

@@ -8,3 +8,4 @@ export {LineChart} from './LineChart';
 export {NormalizedStackedBar} from './NormalizedStackedBar';
 export {GroupedBarChart} from './GroupedBarChart';
 export {AreaChart} from './AreaChart';
+export {SquareColorPreview} from './SquareColorPreview';

@@ -1,5 +1,6 @@
 import React from 'react';
 import {animated, useSpring} from 'react-spring';
+
 import {AREA_OPACITY} from '../../constants';
 
 interface Props {
@@ -10,12 +11,11 @@ interface Props {
 
 export function Area({shape, fill, zeroShape}: Props) {
   const spring = useSpring({
-    d: shape,
+    shape,
     from: {
-      //just use shape if you don't want animation on page load
-      d: zeroShape,
+      shape: zeroShape,
     },
   });
 
-  return <animated.path opacity={AREA_OPACITY} d={spring.d} fill={fill} />;
+  return <animated.path opacity={AREA_OPACITY} d={spring.shape} fill={fill} />;
 }

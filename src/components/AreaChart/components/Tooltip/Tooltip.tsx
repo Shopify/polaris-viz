@@ -1,6 +1,6 @@
 import React from 'react';
-import tokens from '@shopify/polaris-tokens';
 import {Color} from 'types';
+import {SquareColorPreview} from 'components';
 
 import {TooltipContainer} from '../../../TooltipContainer';
 import {Margin} from '../../constants';
@@ -15,6 +15,7 @@ interface Props {
   chartDimensions: DOMRect;
   data: {[key: string]: number}[];
   colors: Color[];
+  totalMessage?: string;
 }
 
 export function Tooltip({
@@ -23,24 +24,15 @@ export function Tooltip({
   currentY,
   formatYAxisValue,
   chartDimensions,
+  totalMessage,
   data,
   colors,
 }: Props) {
   const activePoint = data[activePointIndex];
 
-  // const totalValue = activePoint.values.reduce(
-  //   (current, accumulator) => current + accumulator,
-  //   0,
-  // );
-
-  const flippedColors = colors.slice().reverse();
-
-  const labels = Object.keys(activePoint)
-    .slice()
-    .reverse();
-  const values = Object.values(activePoint)
-    .slice()
-    .reverse();
+  const labels = Object.keys(activePoint);
+  const values = Object.values(activePoint);
+  const total = values.reduce((acc, value) => acc + value, 0);
 
   return (
     <TooltipContainer
@@ -53,22 +45,19 @@ export function Tooltip({
       <div className={styles.Container}>
         {labels.map((label, index) => (
           <React.Fragment key={`${label}-${index}`}>
-            {/* make comp to share with legend */}
-            <div
-              style={{
-                background: tokens[flippedColors[index]],
-                width: '10px',
-                height: '10px',
-              }}
-            />
+            <SquareColorPreview color={colors[index]} />
             <p className={styles.SeriesName}>{label}</p>
             <p className={styles.Value}>{formatYAxisValue(values[index])}</p>
           </React.Fragment>
         ))}
+        {totalMessage == null ? null : (
+          <React.Fragment>
+            <div />
+            <p className={styles.SeriesName}>{totalMessage}</p>
+            <p className={styles.Value}>{formatYAxisValue(total)}</p>
+          </React.Fragment>
+        )}
       </div>
-
-      {/* have optional total value prop to return string */}
-      {/* <p>{totalValue}</p> */}
     </TooltipContainer>
   );
 }

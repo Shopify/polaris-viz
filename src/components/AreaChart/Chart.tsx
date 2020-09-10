@@ -1,7 +1,6 @@
 import React, {useState, useMemo} from 'react';
-import {area, stack, stackOffsetDiverging} from 'd3-shape';
+import {area, stack, stackOffsetDiverging, stackOrderReverse} from 'd3-shape';
 import tokens from '@shopify/polaris-tokens';
-import {Color} from 'types';
 
 import {YAxis} from '../YAxis';
 import {eventPoint} from '../../utilities';
@@ -12,12 +11,14 @@ import {Margin, SPACING_TIGHT} from './constants';
 import {useXScale, useYScale} from './hooks';
 import {Area, Tooltip, XAxis} from './components';
 import styles from './Chart.scss';
+import {Series} from './types';
 
 interface Props {
   xAxisLabels: string[];
-  series: {name: string; data: number[]; color: Color}[];
+  series: Series[];
   formatYAxisValue(value: number): string;
   dimensions: DOMRect;
+  totalMessage?: string;
 }
 
 export function Chart({
@@ -25,6 +26,7 @@ export function Chart({
   series,
   dimensions,
   formatYAxisValue,
+  totalMessage,
 }: Props) {
   const [activePointIndex, setActivePointIndex] = useState<number | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState<{
@@ -32,25 +34,31 @@ export function Chart({
     y: number;
   } | null>(null);
 
-  const flippedData = series.slice().reverse();
-  const keys = flippedData.map(({name}) => name);
-
-  const areaStack = useMemo(() => stack().keys(keys), []);
+  const areaStack = useMemo(
+    () =>
+      stack()
+        .keys(series.map(({name}) => name))
+        .order(stackOrderReverse)
+        .offset(stackOffsetDiverging),
+    [series],
+  );
 
   const formattedData = useMemo(
     () =>
       xAxisLabels.map((_, labelIndex) =>
-        flippedData.reduce(
-          (acc, {name, data}) => Object.assign(acc, {[name]: data[labelIndex]}),
-          {},
-        ),
+        series.reduce((acc, {name, data}) => {
+          const indexData = data[labelIndex];
+          const newObject = {[name]: indexData == null ? 0 : indexData};
+          return Object.assign(acc, newObject);
+        }, {}),
       ),
-    [],
+    [xAxisLabels, series],
   );
 
-  const colors = flippedData.map(({color}) => color);
-
-  const stackedValues = useMemo(() => areaStack(formattedData), []);
+  const stackedValues = useMemo(() => areaStack(formattedData), [
+    areaStack,
+    formattedData,
+  ]);
 
   const marginBottom = xAxisLabels == null ? SPACING_TIGHT : Margin.Bottom;
   const drawableHeight = dimensions.height - Margin.Top - marginBottom;
@@ -78,6 +86,7 @@ export function Chart({
     .y1(([, lastPoint]) => yScale(lastPoint));
 
   const zeroShape = areaShape(Array(formattedData.length).fill([0, 0]));
+  const colors = series.map(({color}) => color);
 
   return (
     <div className={styles.Container}>
@@ -158,6 +167,7 @@ export function Chart({
           chartDimensions={dimensions}
           data={formattedData}
           colors={colors}
+          totalMessage={totalMessage}
         />
       )}
     </div>
