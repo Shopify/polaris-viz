@@ -147,14 +147,6 @@ describe('<NormalizedBarChart />', () => {
 
       expect(barChart.find(BarSegment)!.props.color).toBe('rgb(156, 106, 222)');
     });
-
-    it('handles color palettes', () => {
-      const barChart = mount(
-        <NormalizedStackedBar {...mockProps} colors="classic" />,
-      );
-
-      expect(barChart.find(BarSegment)!.props.color).toBe('rgb(80, 36, 143)');
-    });
   });
 
   describe('Orientation', () => {

@@ -62,7 +62,7 @@ Components inherit their sizes from their containers, so place your component in
     <code>vertical | horizontal</code>
     </li>
     <li><strong>colors:</strong>
-    <code><a href="https://github.com/Shopify/polaris-viz/blob/master/src/types.ts#L1">colors</a>[] | <a href="https://github.com/Shopify/polaris-viz/blob/master/src/components/NormalizedStackedBar/types.ts#L3">ColorScheme</a></code>
+    <code><a href="https://github.com/Shopify/polaris-viz/blob/master/src/types.ts#L1">colors</a>[]</code>
     </li>
     </ul></td>
     </tr>

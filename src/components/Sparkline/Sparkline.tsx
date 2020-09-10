@@ -3,9 +3,9 @@ import {useDebouncedCallback} from 'use-debounce';
 import {scaleLinear} from 'd3-scale';
 import {area} from 'd3-shape';
 import {Color} from 'types';
-import tokens from '@shopify/polaris-tokens';
 import {animated, useSpring} from 'react-spring';
 
+import {getColorValue} from '../../utilities';
 import {useWindowSize} from '../../hooks';
 
 import {getPathLength} from './utilities';
@@ -106,7 +106,12 @@ export function Sparkline({
       {accessibilityLabel ? (
         <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
       ) : null}
-      <svg aria-hidden width={width} height={height} color={tokens[color]}>
+      <svg
+        aria-hidden
+        width={width}
+        height={height}
+        color={getColorValue(color)}
+      >
         <g>
           <animated.path
             ref={pathRef}

@@ -1,6 +1,7 @@
 import React from 'react';
-import tokens from '@shopify/polaris-tokens';
 import {Data} from 'components/GroupedBarChart/types';
+
+import {getColorValue} from '../../../../utilities';
 
 import styles from './Legend.scss';
 
@@ -15,7 +16,7 @@ export function Legend({series}: Props) {
         <div key={label} className={styles.InnerContainer}>
           <div
             className={styles.ColorPreview}
-            style={{background: tokens[color]}}
+            style={{background: getColorValue(color)}}
           />
           <div className={styles.Label}>{label}</div>
         </div>

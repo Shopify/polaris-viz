@@ -1,2 +1,2 @@
 export {NormalizedStackedBar} from './NormalizedStackedBar';
-export {Orientation, Size, ColorScheme} from './types';
+export {Orientation, Size} from './types';

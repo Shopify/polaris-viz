@@ -1,7 +1,7 @@
 import React from 'react';
 import {ScaleLinear} from 'd3-scale';
-import tokens from '@shopify/polaris-tokens';
 
+import {getColorValue} from '../../../../utilities';
 import {Series} from '../../types';
 
 import {Point} from './components';
@@ -25,7 +25,7 @@ export function Line({path, series, xScale, yScale, activePointIndex}: Props) {
         fill="none"
         strokeWidth="2px"
         paintOrder="stroke"
-        stroke={tokens[color]}
+        stroke={getColorValue(color)}
         strokeLinejoin="round"
         strokeLinecap="round"
         strokeDasharray={lineStyle === 'dashed' ? '2 4' : 'unset'}

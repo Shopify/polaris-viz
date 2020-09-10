@@ -4,6 +4,7 @@ import {ScaleLinear} from 'd3-scale';
 import {Color} from 'types';
 import tokens from '@shopify/polaris-tokens';
 
+import {getColorValue} from '../../../../utilities';
 import {
   MIN_BAR_HEIGHT,
   FULL_OPACITY,
@@ -60,7 +61,7 @@ export function BarGroup({
             key={index}
             x={xPosition}
             y={yPosition}
-            fill={tokens[colors[index]]}
+            fill={getColorValue(colors[index])}
             opacity={animation.opacity}
             width={barWidth}
             height={height}
