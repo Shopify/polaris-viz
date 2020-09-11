@@ -16,8 +16,8 @@ const mockProps = {
   currentY: 0,
   formatYAxisValue: (value: number) => `${value}`,
   series: [
-    {name: 'Test series 1', data: [{x: 'Jan 1', y: 100}]},
-    {name: 'Test series 2', data: [{x: 'Dec 1', y: 300}]},
+    {name: 'Test series 1', data: [{label: 'Jan 1', rawValue: 100}]},
+    {name: 'Test series 2', data: [{label: 'Dec 1', rawValue: 300}]},
   ],
   chartDimensions: new DOMRect(),
 };
@@ -41,11 +41,11 @@ describe('<Tooltip />', () => {
       expect(tooltip).toContainReactComponentTimes(LinePreview, 2);
     });
 
-    it('renders a series name for each series at the active point', () => {
+    it('renders the label for each series at the active point', () => {
       const tooltip = mount(<Tooltip {...mockProps} />);
 
-      expect(tooltip).toContainReactText('Test series 1');
-      expect(tooltip).toContainReactText('Test series 2');
+      expect(tooltip).toContainReactText('Jan 1');
+      expect(tooltip).toContainReactText('Dec 1');
     });
 
     it('renders a formatted y-axis value for each series at the active point', () => {

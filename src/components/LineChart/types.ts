@@ -4,8 +4,8 @@ export type LineStyle = 'dashed' | 'solid';
 
 export interface Series {
   data: {
-    x: string;
-    y: number;
+    label: string;
+    rawValue: number;
   }[];
   name: string;
   formatY?(value: number): string;

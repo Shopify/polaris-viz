@@ -42,12 +42,14 @@ export function Tooltip({
 
           const {color = 'colorPurple', lineStyle = 'solid'} = style;
           const formattedYValue =
-            formatY == null ? formatYAxisValue(point.y) : formatY(point.y);
+            formatY == null
+              ? formatYAxisValue(point.rawValue)
+              : formatY(point.rawValue);
 
           return (
             <React.Fragment key={name}>
               <LinePreview color={color} lineStyle={lineStyle} />
-              <p className={styles.SeriesName}>{name}</p>
+              <p className={styles.SeriesName}>{point.label}</p>
               <p className={styles.Value}>{formattedYValue}</p>
             </React.Fragment>
           );

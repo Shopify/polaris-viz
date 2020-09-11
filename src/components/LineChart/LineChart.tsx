@@ -41,6 +41,10 @@ export function LineChart({
     };
   }, [containerRef, updateDimensions]);
 
+  if (series.length === 0) {
+    return null;
+  }
+
   return (
     <div aria-label={accessibilityLabel} role="img">
       <div style={{height: chartHeight}} ref={containerRef}>

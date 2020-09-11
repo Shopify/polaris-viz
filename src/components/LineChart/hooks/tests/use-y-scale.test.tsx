@@ -61,11 +61,11 @@ describe('useYScale', () => {
 
     const deeplyNegative: Series = {
       name: 'Deeply negative',
-      data: [{x: '1', y: -10000}],
+      data: [{label: '1', rawValue: -10000}],
     };
     const highlyPositive: Series = {
       name: 'Highly positive',
-      data: [{x: '1', y: 10000}],
+      data: [{label: '1', rawValue: 10000}],
     };
 
     function TestComponent() {

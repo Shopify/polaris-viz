@@ -109,7 +109,7 @@ Components inherit their sizes from their containers, so place your component in
     <li>
     <strong>series (required):</strong> <code>Series[]</code>
     <ul>
-    <li><strong>data (required):</strong> <code>{x: string, y: number}[]</code>
+    <li><strong>data (required):</strong> <code>{label: string, rawValue: number}[]</code>
     </li>
     <li><strong>name (required):</strong> <code>string</code></li>
     <li><strong>xAxisLabels:</strong> <code>string[]</code></li>
