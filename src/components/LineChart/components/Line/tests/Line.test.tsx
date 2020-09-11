@@ -2,9 +2,9 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
 import {colorPurple, colorGreen} from '@shopify/polaris-tokens';
+import {Point} from 'components';
 
 import {Line} from '../Line';
-import {Point} from '../components';
 
 jest.mock('d3-scale', () => ({
   scaleLinear: jest.fn(() => jest.fn(() => 250)),

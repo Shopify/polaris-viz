@@ -16,7 +16,7 @@ interface Props {
   drawableWidth: number;
 }
 
-export function YAxis({ticks, drawableWidth}: Props) {
+function Axis({ticks, drawableWidth}: Props) {
   return (
     <g>
       {ticks.map(({value, formattedValue, yOffset}) => {
@@ -42,3 +42,5 @@ export function YAxis({ticks, drawableWidth}: Props) {
     </g>
   );
 }
+
+export const YAxis = React.memo(Axis);

@@ -1,0 +1,1 @@
+export {SquareColorPreview} from './SquareColorPreview';

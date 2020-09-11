@@ -1,6 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {Color} from 'types';
+import {SquareColorPreview} from 'components';
 
 import {Tooltip} from '../Tooltip';
 
@@ -29,11 +30,11 @@ describe('<Tooltip/>', () => {
   it('renders color previews', () => {
     const tooltip = mount(<Tooltip {...mockProps} />);
 
-    expect(tooltip).toContainReactComponent('div', {
-      style: {background: 'rgb(156, 106, 222)'},
+    expect(tooltip).toContainReactComponent(SquareColorPreview, {
+      color: 'colorRed',
     });
-    expect(tooltip).toContainReactComponent('div', {
-      style: {background: 'rgb(222, 54, 24)'},
+    expect(tooltip).toContainReactComponent(SquareColorPreview, {
+      color: 'colorPurple',
     });
   });
 });

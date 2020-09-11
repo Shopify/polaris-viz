@@ -1,6 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {Color} from 'types';
+import {SquareColorPreview} from 'components';
 
 import {Legend} from '../Legend';
 
@@ -30,11 +31,11 @@ describe('<Legend />', () => {
   it('renders each color preview', () => {
     const legend = mount(<Legend {...mockProps} />);
 
-    expect(legend).toContainReactComponent('div', {
-      style: {background: 'rgb(222, 54, 24)'},
+    expect(legend).toContainReactComponent(SquareColorPreview, {
+      color: 'colorRed',
     });
-    expect(legend).toContainReactComponent('div', {
-      style: {background: 'rgb(156, 106, 222)'},
+    expect(legend).toContainReactComponent(SquareColorPreview, {
+      color: 'colorPurple',
     });
   });
 });
