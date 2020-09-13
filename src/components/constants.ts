@@ -10,3 +10,4 @@ export const SPACING_LOOSE = 20;
 export const FONT_SIZE = 12;
 export const SMALL_FONT_SIZE = 10;
 export const DIAGONAL_ANGLE = -40;
+export const SMALL_WIDTH = 500;

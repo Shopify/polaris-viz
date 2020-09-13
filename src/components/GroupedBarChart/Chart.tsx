@@ -6,6 +6,7 @@ import {
   FONT_SIZE,
   SMALL_FONT_SIZE,
   DIAGONAL_ANGLE,
+  SMALL_WIDTH,
 } from 'components/constants';
 
 import {eventPoint, getTextWidth} from '../../utilities';
@@ -15,7 +16,6 @@ import {TooltipContainer} from '../TooltipContainer';
 import {Data} from './types';
 import {XAxis, BarGroup, Tooltip} from './components';
 import {useYScale, useXScale} from './hooks';
-import {SMALL_WIDTH} from './constants';
 import styles from './Chart.scss';
 
 interface Props {

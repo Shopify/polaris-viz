@@ -7,13 +7,13 @@ import {
   SMALL_FONT_SIZE,
   FONT_SIZE,
   DIAGONAL_ANGLE,
+  SMALL_WIDTH,
 } from 'components/constants';
 
 import {eventPoint, getTextWidth} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {TooltipContainer} from '../TooltipContainer';
 
-import {SMALL_SCREEN} from './constants';
 import {BarData} from './types';
 import {XAxis, Bar, Tooltip} from './components';
 import {useYScale, useXScale} from './hooks';
@@ -56,7 +56,7 @@ export function Chart({
   const drawableWidth = chartDimensions.width - MARGIN.Right - axisMargin;
 
   const fontSize =
-    chartDimensions.width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
+    chartDimensions.width < SMALL_WIDTH ? SMALL_FONT_SIZE : FONT_SIZE;
 
   const {xScale, xAxisLabels} = useXScale({
     drawableWidth,
