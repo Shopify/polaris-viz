@@ -1,5 +1,4 @@
 export const MIN_Y_LABEL_SPACE = 50;
-export const CROSSHAIR_WIDTH = 5;
 export const SPACING_TIGHT = 8;
 export const SPACING = 16;
 export const SPACING_LOOSE = 20;
