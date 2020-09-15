@@ -64,7 +64,7 @@ describe('<Sparkline />', () => {
   describe('Animations', () => {
     it('starts with a strokeDashoffset for the line path when animations are used', () => {
       const sparkline = mount(
-        <Sparkline useAnimation data={mockData} includeArea />,
+        <Sparkline isAnimated data={mockData} includeArea />,
       );
 
       expect(sparkline).toContainReactComponent('path', {
@@ -82,7 +82,7 @@ describe('<Sparkline />', () => {
 
     it('starts with 0 opacity for the area path when animations are used', () => {
       const sparkline = mount(
-        <Sparkline useAnimation data={mockData} includeArea />,
+        <Sparkline isAnimated data={mockData} includeArea />,
       );
 
       expect(sparkline).toContainReactComponent('path', {

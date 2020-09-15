@@ -7,6 +7,8 @@ import {
   spacingExtraTight,
 } from '@shopify/polaris-tokens';
 
+import {FONT_SIZE} from '../../constants';
+
 interface Props {
   ticks: {
     value: number;
@@ -29,7 +31,7 @@ function Axis({ticks, drawableWidth}: Props) {
             <text
               fill={colorInkLighter}
               style={{
-                fontSize: '12px',
+                fontSize: `${FONT_SIZE}px`,
                 textAnchor: 'end',
                 transform: `translateX(-${spacingBase}) translateY(${spacingExtraTight})`,
               }}

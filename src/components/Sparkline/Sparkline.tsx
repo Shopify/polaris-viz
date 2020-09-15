@@ -6,7 +6,7 @@ import {Color} from 'types';
 import {animated, useSpring} from 'react-spring';
 
 import {getColorValue} from '../../utilities';
-import {useWindowSize} from '../../hooks';
+import {useWindowSize, usePrefersReducedMotion} from '../../hooks';
 
 import {getPathLength} from './utilities';
 import styles from './Sparkline.scss';
@@ -24,7 +24,7 @@ interface Coordinates {
 interface Props {
   data: Coordinates[];
   color?: Color;
-  useAnimation?: boolean;
+  isAnimated?: boolean;
   includeArea?: boolean;
   accessibilityLabel?: string;
 }
@@ -33,7 +33,7 @@ export function Sparkline({
   data,
   accessibilityLabel,
   color = 'colorTeal',
-  useAnimation = false,
+  isAnimated = false,
   includeArea = false,
 }: Props) {
   const pathRef = useRef<SVGPathElement>(null);
@@ -41,6 +41,7 @@ export function Sparkline({
   const [svgDimensions, setSvgDimensions] = useState({width: 0, height: 0});
   const [pathLength, setPathLength] = useState(getPathLength(pathRef.current));
   const [windowWidth, windowHeight] = useWindowSize();
+  const {prefersReducedMotion} = usePrefersReducedMotion();
 
   const [updateMeasurements] = useDebouncedCallback(() => {
     if (containerRef.current == null) {
@@ -59,14 +60,9 @@ export function Sparkline({
     updateMeasurements();
   }, [windowWidth, windowHeight, updateMeasurements]);
 
-  const prefersReducedMotion =
-    typeof window === 'undefined'
-      ? false
-      : window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
   const areaAnimation = useSpring({
     config: ANIMATION_CONFIG,
-    immediate: !useAnimation || prefersReducedMotion,
+    immediate: !isAnimated || prefersReducedMotion,
     opacity: MAX_AREA_OPACITY,
     from: {opacity: 0},
     reset: true,
@@ -74,7 +70,7 @@ export function Sparkline({
 
   const pathAnimation = useSpring({
     config: ANIMATION_CONFIG,
-    immediate: !useAnimation || prefersReducedMotion,
+    immediate: !isAnimated || prefersReducedMotion,
     strokeDashoffset: 0,
     from: {strokeDashoffset: pathLength},
     reset: true,
