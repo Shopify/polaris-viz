@@ -1,6 +1,6 @@
+import {SPACING_LOOSE} from 'consts';
 import {useMemo, useEffect, useState} from 'react';
 import {scaleLinear} from 'd3-scale';
-import {SPACING_LOOSE} from 'components/constants';
 
 import {yAxisMinMax} from '../utilities';
 import {MIN_Y_LABEL_SPACE} from '../constants';

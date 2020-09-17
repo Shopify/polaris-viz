@@ -1,4 +1,3 @@
-import React, {useState} from 'react';
 import {
   MARGIN,
   LINE_HEIGHT,
@@ -7,7 +6,8 @@ import {
   SMALL_FONT_SIZE,
   DIAGONAL_ANGLE,
   SMALL_WIDTH,
-} from 'components/constants';
+} from 'consts';
+import React, {useState} from 'react';
 
 import {eventPoint, getTextWidth} from '../../utilities';
 import {YAxis} from '../YAxis';

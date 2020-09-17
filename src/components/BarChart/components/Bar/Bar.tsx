@@ -1,9 +1,9 @@
+import {MIN_BAR_HEIGHT} from 'consts';
 import React from 'react';
 import {animated, useSpring} from 'react-spring';
 import tokens from '@shopify/polaris-tokens';
 import {Color} from 'types';
 import {ScaleLinear} from 'd3-scale';
-import {MIN_BAR_HEIGHT} from 'components/constants';
 
 import {getColorValue} from '../../../../utilities';
 

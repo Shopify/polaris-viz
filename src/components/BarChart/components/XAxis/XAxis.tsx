@@ -8,7 +8,7 @@ import {
   SPACING_EXTRA_TIGHT,
   SPACING_LOOSE,
   DIAGONAL_ANGLE,
-} from 'components/constants';
+} from 'consts';
 
 import styles from './XAxis.scss';
 

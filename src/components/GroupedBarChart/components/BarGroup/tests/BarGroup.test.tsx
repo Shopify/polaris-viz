@@ -2,7 +2,7 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
 import {Color} from 'types';
-import {MIN_BAR_HEIGHT} from 'components/constants';
+import {MIN_BAR_HEIGHT} from 'consts';
 
 import {BAR_SPACING} from '../../../constants';
 import {BarGroup} from '../BarGroup';
