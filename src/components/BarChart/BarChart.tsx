@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useLayoutEffect, useRef} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 import {Color} from 'types';
 
@@ -35,9 +35,9 @@ export function BarChart({
     }
   }, 100);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (containerRef.current != null) {
-      updateDimensions();
+      setChartDimensions(containerRef.current.getBoundingClientRect());
     }
 
     window.addEventListener('resize', updateDimensions);

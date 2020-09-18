@@ -19,21 +19,9 @@ describe('BarChart />', () => {
     });
   });
 
-  it('renders a <Chart /> if container dimensions have been measured', () => {
-    jest.useFakeTimers();
+  it('renders a <Chart />', () => {
     const barChart = mount(<BarChart {...mockProps} />);
-
-    barChart.act(() => {
-      jest.runAllTimers();
-    });
 
     expect(barChart).toContainReactComponent(Chart);
-    jest.useRealTimers();
-  });
-
-  it('does not render a <Chart /> if container dimensions have not been measured', () => {
-    const barChart = mount(<BarChart {...mockProps} />);
-
-    expect(barChart).not.toContainReactComponent(Chart);
   });
 });

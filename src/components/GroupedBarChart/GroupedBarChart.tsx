@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useLayoutEffect, useRef} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 
 import {Chart} from './Chart';
@@ -32,9 +32,9 @@ export function GroupedBarChart({
     }
   }, 100);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (containerRef.current != null) {
-      updateDimensions();
+      setChartDimensions(containerRef.current.getBoundingClientRect());
     }
 
     window.addEventListener('resize', updateDimensions);

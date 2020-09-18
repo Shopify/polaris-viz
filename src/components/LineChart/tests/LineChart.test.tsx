@@ -39,26 +39,12 @@ describe('<LineChart />', () => {
     });
   });
 
-  it('renders a <Chart /> if container dimensions have been measured', () => {
-    jest.useFakeTimers();
+  it('renders a <Chart />', () => {
     const lineChart = mount(
       <LineChart series={[primarySeries]} xAxisLabels={['Jan 1']} />,
     );
-
-    lineChart.act(() => {
-      jest.runAllTimers();
-    });
 
     expect(lineChart).toContainReactComponent(Chart);
-    jest.useRealTimers();
-  });
-
-  it('does not render a <Chart /> if container dimensions have not been measured', () => {
-    const lineChart = mount(
-      <LineChart series={[primarySeries]} xAxisLabels={['Jan 1']} />,
-    );
-
-    expect(lineChart).not.toContainReactComponent(Chart);
   });
 
   it('renders a Legend', () => {
