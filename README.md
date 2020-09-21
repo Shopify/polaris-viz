@@ -72,6 +72,8 @@ Components inherit their sizes from their containers, so place your component in
       <br />
       <br />
       <img src="https://github.com/Shopify/polaris-viz/raw/master/documentation/images/sparkline.png"/>
+      <br />
+      <a href="src/components/Sparkline/Sparkline.md">View full documentation</a>
     </td>
     <td>
       Used in small sizes to give an overview of how a metric has performed over time.
