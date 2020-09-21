@@ -2,8 +2,8 @@
 @import '../../../../styles/common';
 
 .SeriesName {
-  @include tooltip-emphasis;
   margin: 0;
+  @include tooltip-emphasis;
 }
 
 .Value {

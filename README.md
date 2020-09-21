@@ -86,7 +86,7 @@ Components inherit their sizes from their containers, so place your component in
     <li><strong>color:</strong>
     <code><a href="https://github.com/Shopify/polaris-viz/blob/master/src/types.ts#L1">Color</a></code>
     </li>
-    <li><strong>useAnimation:</strong>
+    <li><strong>isAnimated:</strong>
     <code>boolean</code>
     </li>
     <li><strong>includeArea:</strong>

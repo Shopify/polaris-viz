@@ -1,7 +1,8 @@
 @import 'node_modules/@shopify/polaris-tokens/dist/index';
+@import '../../../../styles/common';
 
 .Tooltip {
-  font-size: 12px;
+  @include tooltip-text;
   display: grid;
   max-width: 160px;
   grid-template-columns: 1fr auto;
