@@ -1,4 +1,4 @@
-import {useMemo, useEffect, useState} from 'react';
+import {useMemo} from 'react';
 import {scaleLinear} from 'd3-scale';
 import {Series} from 'd3-shape';
 
@@ -20,8 +20,6 @@ export function useYScale({
   >[];
   formatYAxisValue(value: number): string;
 }) {
-  const [maxTickLength, setMaxTickLength] = useState<number>();
-
   const {yScale, ticks, axisMargin} = useMemo(() => {
     const minY = Math.min(
       ...stackedValues.map((value) =>
@@ -51,24 +49,16 @@ export function useYScale({
       yOffset: yScale(value),
     }));
 
-    const axisMargin =
-      maxTickLength == null
-        ? null
-        : maxTickLength + Spacing.Loose + Spacing.ExtraTight;
+    const maxTickWidth = Math.max(
+      ...ticks.map(({formattedValue}) =>
+        getTextWidth({fontSize: FONT_SIZE, text: formattedValue}),
+      ),
+    );
+
+    const axisMargin = maxTickWidth + Spacing.Loose + Spacing.ExtraTight;
 
     return {yScale, ticks, axisMargin};
-  }, [formatYAxisValue, drawableHeight, stackedValues, maxTickLength]);
-
-  useEffect(() => {
-    let currentMaxTickLength = 0;
-
-    ticks.forEach(({formattedValue}) => {
-      const width = getTextWidth({fontSize: FONT_SIZE, text: formattedValue});
-      currentMaxTickLength = Math.max(currentMaxTickLength, width);
-    });
-
-    setMaxTickLength(currentMaxTickLength);
-  }, [ticks, maxTickLength]);
+  }, [formatYAxisValue, drawableHeight, stackedValues]);
 
   return {yScale, ticks, axisMargin};
 }
