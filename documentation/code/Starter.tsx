@@ -14,6 +14,9 @@ export default function Starter() {
     placeItems: 'center',
   };
 
+  document.body.style.fontFamily =
+    "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif";
+
   return (
     <div style={outerContainerStyle}>
       <div style={innerContainerStyle}>{/* Component goes here */}</div>
