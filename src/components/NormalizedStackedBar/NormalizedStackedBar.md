@@ -67,11 +67,11 @@ Visually hidden text for screen readers.
 
 #### colors
 
-| type                                                                                                                    | default                                                         |
-| ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
-| `(primary \| secondary \| tertiary \| quaternary \| pastComparison \| colorTeal \| colorPurple \| colorBlack \| ...)[]` | `['colorPurpleDark', 'colorBlue', 'colorTeal', 'colorSkyDark']` |
+| type      | default                                                         |
+| --------- | --------------------------------------------------------------- |
+| `Color[]` | `['colorPurpleDark', 'colorBlue', 'colorTeal', 'colorSkyDark']` |
 
-An array of colors that determines the fill colors of each bar. The colors are applied sequentially to the chart. Aside from the nominal values (e.g. `primary`, `secondary`, etc), all options for the named color values can be found on [Polaris Tokens](https://shopify.github.io/polaris-tokens/).
+An array of colors that determines the fill colors of each bar. The colors are applied sequentially to the chart. This accepts any [Polaris Viz accepted color](/documentation/Polaris-Viz-colors.md).
 
 #### orientation
 
