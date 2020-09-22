@@ -1,0 +1,90 @@
+# Normalized stacked bar chart
+
+Used for positive datasets with two to four items. If your dataset has more than four items, consider grouping the fourth item and the remainder into an “other” category before passing data to the component.
+
+## Example
+
+<img src="normalized-stacked-bar-chart.png" alt="Normalized stacked bar chart example image" />
+
+```tsx
+<NormalizedStackedBar
+  data={[
+    {
+      label: 'Direct',
+      value: 200,
+      formattedValue: '$200',
+    },
+    {label: 'Facebook', value: 100, formattedValue: '$100'},
+    {label: 'Twitter', value: 100, formattedValue: '$100'},
+    {
+      label: 'Google',
+      value: 20,
+      formattedValue: '$20',
+    },
+  ]}
+  accessibilityLabel="A chart showing the breakdown of ad revenue"
+  colors={['primary', 'secondary', 'tertiary', 'quaternary']}
+  orientation="horizontal"
+  size="large"
+/>
+```
+
+## Usage
+
+The Normalized stacked bar chart interface looks like this:
+
+```typescript
+{
+  data: Data[];
+  accessibilityLabel?: string;
+  colors?: Color[];
+  orientation?: Orientation;
+  size?: Size;
+}
+```
+
+This component derives its size from its parent container. When the Normalized stacked bar chart is oriented horizontally, it is constrained by the parent's width; in vertical orientation, it's constrained by the parent's height.
+
+### Required Props
+
+#### data
+
+| type                                                       |
+| ---------------------------------------------------------- |
+| `{formattedValue: string, value: number, label: string}[]` |
+
+The prop to determine the chart's drawn area. The chart uses the value to compute the width of each bar, and the label and formatted value are used in the chart legend.
+
+### Optional Props
+
+#### accessibilityLabel
+
+| type     | default      |
+| -------- | ------------ |
+| `string` | empty string |
+
+Visually hidden text for screen readers.
+
+#### colors
+
+| type                                                                                                                    | default                                                         |
+| ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| `(primary \| secondary \| tertiary \| quaternary \| pastComparison \| colorTeal \| colorPurple \| colorBlack \| ...)[]` | `['colorPurpleDark', 'colorBlue', 'colorTeal', 'colorSkyDark']` |
+
+An array of colors that determines the fill colors of each bar. The colors are applied sequentially to the chart. Aside from the nominal values (e.g. `primary`, `secondary`, etc), all options for the named color values can be found on [Polaris Tokens](https://shopify.github.io/polaris-tokens/).
+
+#### orientation
+
+| type                     | default      |
+| ------------------------ | ------------ |
+| `horizontal \| vertical` | `horizontal` |
+
+Determines the orientation of the chart.
+
+#### size
+
+| type             | default |
+| ---------------- | ------- |
+| `small \| large` | `small` |
+
+Determines the thickness of the chart.

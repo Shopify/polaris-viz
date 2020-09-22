@@ -30,6 +30,25 @@ import '@shopify/polaris-viz/styles.css';
 
 Components inherit their sizes from their containers, so place your component inside an element with a width and height specified.
 
+1. [Normalized stacked bar chart](#normalized-stacked-bar-chart)
+2. [Sparkline](#sparkline)
+
+### Normalized stacked bar chart
+
+<img src="src/components/NormalizedStackedBar/normalized-stacked-bar-chart.png"/>
+
+Used for positive datasets with two to four items.
+
+[View documentation →](src/components/NormalizedStackedBar/NormalizedStackedBar.md)
+
+### Sparkline
+
+<img src="src/components/Sparkline/sparkline.png"/>
+
+Used in small sizes to give an overview of how a metric has performed over time.
+
+[View documentation →](src/components/Sparkline/Sparkline.md)
+
 <table>
   <thead>
     <th>Viz</th>
@@ -39,146 +58,88 @@ Components inherit their sizes from their containers, so place your component in
 
   <tbody>
   <tr>
-    <td>
-      Normalized stacked bar chart
-      <br />
-      <br />
-      <img src="https://github.com/Shopify/polaris-viz/raw/master/documentation/images/stackedchart.jpg"/>
-    </td>
-    <td>
-      Used for positive datasets with two to four items. If your dataset has more than four items, consider grouping the fourth item and the remainder into an “other” category before passing data to the component.
-    </td>
-    <td><ul>
-    <li><strong>data (required):</strong>
-    <code>{formattedValue: string, value: number, label: string}[]</code>
-    </li>
-    <li><strong>accessibilityLabel:</strong>
-    <code>string</code>
-    </li>
-    <li><strong>size:</strong>
-    <code>small | medium | large</code>
-    </li>
-    <li><strong>orientation:</strong>
-    <code>vertical | horizontal</code>
-    </li>
-    <li><strong>colors:</strong>
-    <code><a href="https://github.com/Shopify/polaris-viz/blob/master/src/types.ts#L1">colors</a>[]</code>
-    </li>
-    </ul></td>
-    </tr>
-      <tr>
-    <td>
-     Sparkline
-      <br />
-      <br />
-      <img src="https://github.com/Shopify/polaris-viz/raw/master/documentation/images/sparkline.png"/>
-      <br />
-      <a href="src/components/Sparkline/Sparkline.md">View full documentation</a>
-    </td>
-    <td>
-      Used in small sizes to give an overview of how a metric has performed over time.
-    </td>
-    <td><ul>
-    <li><strong>data (required):</strong>
-    <code>{x: number, y: number}[]</code>
-    </li>
-    <li><strong>accessibilityLabel:</strong>
-    <code>string</code>
-    </li>
-    <li><strong>color:</strong>
-    <code><a href="https://github.com/Shopify/polaris-viz/blob/master/src/types.ts#L1">Color</a></code>
-    </li>
-    <li><strong>useAnimation:</strong>
-    <code>boolean</code>
-    </li>
-    <li><strong>includeArea:</strong>
-    <code>boolean</code>
-    </li>
-    </ul></td>
-    </tr>
-    <tr>
-    <td>
-    Line chart
-    <br />
-    <br />
-    <img src="https://github.com/Shopify/polaris-viz/raw/master/documentation/images/linechart.png"/>
-    </td>
-    <td>
-    Used to show change over time, comparisons, and trends.
-    </td>
-    <td>
-    <ul>
-    <li>
-    <strong>series (required):</strong> <code>Series[]</code>
-    <ul>
-    <li><strong>data (required):</strong> <code>{label: string, rawValue: number}[]</code>
-    </li>
-    <li><strong>name (required):</strong> <code>string</code></li>
-    <li><strong>xAxisLabels:</strong> <code>string[]</code></li>
-    <li><strong>formatY:</strong> <code>(value: number): string;</code></li>
-    <li>
-    <strong>style (all properties optional):</strong>
-    <ul>
-      <li><strong>color:</strong> <a href="https://github.com/Shopify/polaris-viz/blob/master/src/types.ts#L1"><code>Color</code></a></li>
-      <li><strong>lineStyle:</strong> <code>'dashed' | 'solid'</code></li>
-    </ul>
-    </li>
-    </ul>
-    </li>
-    <li><strong>chartHeight:</strong> <code>number</code></li>
-    <li><strong>formatYAxisValue:</strong> <code>(value: number): string;</code></li>
-    </ul>
-    </td>
-    </tr>
-        <tr>
-    <td>
-    Bar chart
-    <br />
-    <br />
-    <img src="https://github.com/Shopify/polaris-viz/raw/master/documentation/images/barchart.png"/>
-    </td>
-    <td>
-    Shows comparison across categories.
-    </td>
-    <td>
-    <ul>
-    <li>
-    <strong>data (required):</strong>
-    <code>{rawValue: number; label: string;}[]</code>
-    </li>
-    <li><strong>barMargin:</strong> <code>Small | Medium | Large | None</code></li>
-    <li><strong>accessibilityLabel:</strong> <code>string</code></li>
+  <td>
+  Line chart
+  <br />
+  <br />
+  <img src="https://github.com/Shopify/polaris-viz/raw/master/documentation/images/linechart.png"/>
+  </td>
+  <td>
+  Used to show change over time, comparisons, and trends.
+  </td>
+  <td>
+  <ul>
+  <li>
+  <strong>series (required):</strong> <code>Series[]</code>
+  <ul>
+  <li><strong>data (required):</strong> <code>{label: string, rawValue: number}[]</code>
+  </li>
+  <li><strong>name (required):</strong> <code>string</code></li>
+  <li><strong>xAxisLabels:</strong> <code>string[]</code></li>
+  <li><strong>formatY:</strong> <code>(value: number): string;</code></li>
+  <li>
+  <strong>style (all properties optional):</strong>
+  <ul>
     <li><strong>color:</strong> <a href="https://github.com/Shopify/polaris-viz/blob/master/src/types.ts#L1"><code>Color</code></a></li>
-    <li><strong>highlightColor:</strong> <a href="https://github.com/Shopify/polaris-viz/blob/master/src/types.ts#L1"><code>Color</code></a></li>
-    <li><strong>formatYValue:</strong><code>(value: number): string;</code></li>
-    <li><strong>formatXAxisValue:</strong><code>(value: number, index: number): string;</code></li>
-    </ul>
-    </td>
-    </tr>
-    <tr>
-    <td>
-    Grouped bar chart
-    <br />
-    <br />
-    <img src="https://github.com/Shopify/polaris-viz/raw/master/documentation/images/groupedbarchart.png"/>
-    </td>
-    <td>
-    Shows comparison of different types, across categories.
-    </td>
-    <td>
-    <ul>
-    <li>
-    <strong>series (required):</strong>
-    <code>{data: number[]; color:</code> <a href="https://github.com/Shopify/polaris-viz/blob/master/src/types.ts#L1"><code>Color</code></a><code>;  label: string;}[]</code>
-    </li>
-    <li><strong>labels (required):</strong><code>string[]</code></li>
-    <li><strong>timeSeries: </strong><code>boolean</code></li>
-    <li><strong>accessibilityLabel:</strong> <code>string</code></li>
-    <li><strong>formatYValue:</strong><code>(value: number): string;</code></li>
-    <li><strong>chartHeight:</strong> <code>number</code></li>
-    </ul>
-    </td>
-    </tr>
+    <li><strong>lineStyle:</strong> <code>'dashed' | 'solid'</code></li>
+  </ul>
+  </li>
+  </ul>
+  </li>
+  <li><strong>chartHeight:</strong> <code>number</code></li>
+  <li><strong>formatYAxisValue:</strong> <code>(value: number): string;</code></li>
+  </ul>
+  </td>
+  </tr>
+      <tr>
+  <td>
+  Bar chart
+  <br />
+  <br />
+  <img src="https://github.com/Shopify/polaris-viz/raw/master/documentation/images/barchart.png"/>
+  </td>
+  <td>
+  Shows comparison across categories.
+  </td>
+  <td>
+  <ul>
+  <li>
+  <strong>data (required):</strong>
+  <code>{rawValue: number; label: string;}[]</code>
+  </li>
+  <li><strong>barMargin:</strong> <code>Small | Medium | Large | None</code></li>
+  <li><strong>accessibilityLabel:</strong> <code>string</code></li>
+  <li><strong>color:</strong> <a href="https://github.com/Shopify/polaris-viz/blob/master/src/types.ts#L1"><code>Color</code></a></li>
+  <li><strong>highlightColor:</strong> <a href="https://github.com/Shopify/polaris-viz/blob/master/src/types.ts#L1"><code>Color</code></a></li>
+  <li><strong>formatYValue:</strong><code>(value: number): string;</code></li>
+  <li><strong>formatXAxisValue:</strong><code>(value: number, index: number): string;</code></li>
+  </ul>
+  </td>
+  </tr>
+  <tr>
+  <td>
+  Grouped bar chart
+  <br />
+  <br />
+  <img src="https://github.com/Shopify/polaris-viz/raw/master/documentation/images/groupedbarchart.png"/>
+  </td>
+  <td>
+  Shows comparison of different types, across categories.
+  </td>
+  <td>
+  <ul>
+  <li>
+  <strong>series (required):</strong>
+  <code>{data: number[]; color:</code> <a href="https://github.com/Shopify/polaris-viz/blob/master/src/types.ts#L1"><code>Color</code></a><code>;  label: string;}[]</code>
+  </li>
+  <li><strong>labels (required):</strong><code>string[]</code></li>
+  <li><strong>timeSeries: </strong><code>boolean</code></li>
+  <li><strong>accessibilityLabel:</strong> <code>string</code></li>
+  <li><strong>formatYValue:</strong><code>(value: number): string;</code></li>
+  <li><strong>chartHeight:</strong> <code>number</code></li>
+  </ul>
+  </td>
+  </tr>
 
   </tbody>
 </table>
