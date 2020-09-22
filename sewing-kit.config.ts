@@ -6,6 +6,8 @@ interface InitialOptions extends jest.InitialOptions {
   setupFilesAfterEnv: string[];
 }
 
+const globalStyles = join(__dirname, 'src/main.scss');
+
 // eslint-disable-next-line import/no-default-export
 export default function sewingKitConfig(
   plugins: Plugins,
@@ -14,6 +16,9 @@ export default function sewingKitConfig(
     name: 'polaris-viz',
     library: true,
     plugins: [
+      plugins.sass({
+        autoInclude: [globalStyles],
+      }),
       plugins.jest((config: InitialOptions) => {
         config.roots = [join(__dirname, 'src'), join(__dirname, 'tests')];
 
