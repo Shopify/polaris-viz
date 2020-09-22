@@ -1,4 +1,5 @@
 import React, {useMemo} from 'react';
+import isEqual from 'lodash.isequal';
 import {animated, useSpring} from 'react-spring';
 import {area, Series} from 'd3-shape';
 import {Color} from 'types';
@@ -6,6 +7,8 @@ import {ScaleLinear} from 'd3-scale';
 
 import {getColorValue, uniqueId} from '../../../../utilities';
 import {usePrefersReducedMotion} from '../../../../hooks';
+
+import {usePrevious} from './hooks';
 
 type StackedSeries = Series<
   {
@@ -38,6 +41,8 @@ export function Areas({
   isAnimated,
 }: Props) {
   const {prefersReducedMotion} = usePrefersReducedMotion();
+  const prevstackedValues = usePrevious(stackedValues);
+  const valuesHaveNotUpdated = isEqual(prevstackedValues, stackedValues);
 
   const spring = useSpring({
     config: {duration: 1000},
@@ -45,7 +50,7 @@ export function Areas({
     from: {
       width: 0,
     },
-    immediate: prefersReducedMotion || !isAnimated,
+    immediate: prefersReducedMotion || !isAnimated || valuesHaveNotUpdated,
     reset: true,
   });
 
