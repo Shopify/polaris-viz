@@ -20,6 +20,7 @@ export function LineChart({
   formatYAxisValue = (value) => `${value}`,
   accessibilityLabel,
 }: Props) {
+  console.log('NICE!!!!!!!');
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 

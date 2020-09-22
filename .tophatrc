@@ -1,0 +1,4 @@
+{
+  "buildDirectory": "build",
+  "buildCommand": "microbundle --jsx React.createElement"
+}

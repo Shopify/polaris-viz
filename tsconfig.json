@@ -7,6 +7,7 @@
     "declarationDir": "types",
     "declarationMap": false,
     "jsx": "react-native",
+    "allowSyntheticDefaultImports": true,
     "strict": true,
     "importHelpers": true,
     "skipLibCheck": true
