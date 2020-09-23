@@ -2,7 +2,10 @@ import React, {useState, useMemo} from 'react';
 import {stack, stackOffsetNone, stackOrderReverse} from 'd3-shape';
 
 import {eventPoint} from '../../utilities';
-import {YAxis, Crosshair, Point, LinearXAxis} from '../../components';
+import {YAxis} from '../YAxis';
+import {Crosshair} from '../Crosshair';
+import {Point} from '../Point';
+import {LinearXAxis} from '../LinearXAxis';
 
 import {Margin, Spacing} from './constants';
 import {useXScale, useYScale} from './hooks';

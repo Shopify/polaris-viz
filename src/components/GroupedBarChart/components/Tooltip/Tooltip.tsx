@@ -1,6 +1,7 @@
 import React from 'react';
 import {Color} from 'types';
-import {SquareColorPreview} from 'components';
+
+import {SquareColorPreview} from '../../../SquareColorPreview';
 
 import styles from './Tooltip.scss';
 
