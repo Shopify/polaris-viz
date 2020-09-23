@@ -1,6 +1,7 @@
 import React from 'react';
 import {Data} from 'components/GroupedBarChart/types';
-import {SquareColorPreview} from 'components';
+
+import {SquareColorPreview} from '../../../SquareColorPreview';
 
 import styles from './Legend.scss';
 

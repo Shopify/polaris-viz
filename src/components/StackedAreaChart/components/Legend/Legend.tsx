@@ -1,6 +1,6 @@
 import React from 'react';
-import {SquareColorPreview} from 'components';
 
+import {SquareColorPreview} from '../../../SquareColorPreview';
 import {Series} from '../../types';
 
 import styles from './Legend.scss';

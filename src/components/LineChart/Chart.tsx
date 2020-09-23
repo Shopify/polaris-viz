@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {line} from 'd3-shape';
-import {LinearXAxis} from 'components';
 
+import {LinearXAxis} from '../LinearXAxis';
 import {YAxis} from '../YAxis';
 import {eventPoint} from '../../utilities';
 import {Crosshair} from '../Crosshair';

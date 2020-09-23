@@ -1,7 +1,7 @@
 import React from 'react';
 import {ScaleLinear} from 'd3-scale';
-import {Point} from 'components';
 
+import {Point} from '../../../Point';
 import {getColorValue} from '../../../../utilities';
 import {Series} from '../../types';
 
