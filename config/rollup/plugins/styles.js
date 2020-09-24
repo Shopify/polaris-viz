@@ -57,8 +57,15 @@ module.exports = function styles(options = {}) {
         return null;
       }
 
+      const autoIncludeGlobalStyles = (globalStylePath, data) => {
+        const regex = /(@import ['|"])(~)/gm;
+
+        const globalStyles = readFileSync(globalStylePath, 'utf8');
+        return `${globalStyles.replace(regex, `$1node_modules/`)} ${data}`;
+      };
+
       const sassOutput = await renderSass({
-        data: source,
+        data: autoIncludeGlobalStyles(options.autoInclude || '', source),
         includePaths: [path.dirname(id)],
       }).then((result) => result.css.toString());
 

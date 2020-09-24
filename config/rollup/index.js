@@ -1,3 +1,4 @@
+const path = require('path');
 const nodeResolve = require('rollup-plugin-node-resolve');
 const babel = require('rollup-plugin-babel');
 const json = require('rollup-plugin-json');
@@ -39,6 +40,7 @@ module.exports = function createRollupConfig({entry, cssPath}) {
       }),
       commonjs(),
       styles({
+        autoInclude: path.join(__dirname, '../../src/global.scss'),
         output: cssPath,
       }),
       image({

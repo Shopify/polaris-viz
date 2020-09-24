@@ -6,7 +6,7 @@ interface InitialOptions extends jest.InitialOptions {
   setupFilesAfterEnv: string[];
 }
 
-const globalStyles = join(__dirname, 'src/main.scss');
+const globalStyles = join(__dirname, 'src/global.scss');
 
 // eslint-disable-next-line import/no-default-export
 export default function sewingKitConfig(
