@@ -9,6 +9,10 @@ jest.mock('d3-scale', () => ({
   scaleLinear: jest.fn(() => jest.fn(() => 250)),
 }));
 
+jest.mock('utilities/unique-id', () => ({
+  uniqueId: jest.fn(() => 'stackedAreas-1'),
+}));
+
 describe('<StackedAreas />', () => {
   beforeAll(() => {
     Object.defineProperty(window, 'matchMedia', {
@@ -69,7 +73,7 @@ describe('<StackedAreas />', () => {
     );
 
     expect(stackedArea).toContainReactComponent('g', {
-      clipPath: 'url(#stackedAreas-3)',
+      clipPath: 'url(#stackedAreas-1)',
     });
   });
 
