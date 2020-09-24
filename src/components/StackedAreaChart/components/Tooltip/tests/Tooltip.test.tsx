@@ -43,6 +43,9 @@ describe('<Tooltip/>', () => {
       color: 'colorPurple',
     });
     expect(tooltip).toContainReactComponent(SquareColorPreview, {
+      color: 'colorBlue',
+    });
+    expect(tooltip).toContainReactComponent(SquareColorPreview, {
       color: 'primary',
     });
   });
@@ -104,7 +107,7 @@ describe('<Tooltip/>', () => {
     });
   });
 
-  it('renders a total message if a totalMessage string is provided', () => {
+  it('renders a sum description message if a tooltipSumDescriptor string is provided', () => {
     const tooltip = mount(
       <Tooltip
         data={mockData}
