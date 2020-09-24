@@ -49,6 +49,14 @@ Used in small sizes to give an overview of how a metric has performed over time.
 
 [View documentation →](src/components/Sparkline/Sparkline.md)
 
+### Line chart
+
+<img src="src/components/LineChart/line-chart.png"/>
+
+Used to show change over time, comparisons, and trends.
+
+[View documentation →](src/components/LineChart/LineChart.md)
+
 <table>
   <thead>
     <th>Viz</th>
@@ -58,40 +66,6 @@ Used in small sizes to give an overview of how a metric has performed over time.
 
   <tbody>
   <tr>
-  <td>
-  Line chart
-  <br />
-  <br />
-  <img src="https://github.com/Shopify/polaris-viz/raw/master/documentation/images/linechart.png"/>
-  </td>
-  <td>
-  Used to show change over time, comparisons, and trends.
-  </td>
-  <td>
-  <ul>
-  <li>
-  <strong>series (required):</strong> <code>Series[]</code>
-  <ul>
-  <li><strong>data (required):</strong> <code>{label: string, rawValue: number}[]</code>
-  </li>
-  <li><strong>name (required):</strong> <code>string</code></li>
-  <li><strong>xAxisLabels:</strong> <code>string[]</code></li>
-  <li><strong>formatY:</strong> <code>(value: number): string;</code></li>
-  <li>
-  <strong>style (all properties optional):</strong>
-  <ul>
-    <li><strong>color:</strong> <a href="https://github.com/Shopify/polaris-viz/blob/master/src/types.ts#L1"><code>Color</code></a></li>
-    <li><strong>lineStyle:</strong> <code>'dashed' | 'solid'</code></li>
-  </ul>
-  </li>
-  </ul>
-  </li>
-  <li><strong>chartHeight:</strong> <code>number</code></li>
-  <li><strong>formatYAxisValue:</strong> <code>(value: number): string;</code></li>
-  </ul>
-  </td>
-  </tr>
-      <tr>
   <td>
   Bar chart
   <br />

@@ -76,11 +76,11 @@ Visually hidden text for screen readers.
 
 #### color
 
-| type                                                                                                                | default     |
-| ------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `primary \| secondary \| tertiary \| quaternary \| pastComparison \| colorTeal \| colorPurple \| colorBlack \| ...` | `colorTeal` |
+| type    | default     |
+| ------- | ----------- |
+| `Color` | `colorTeal` |
 
-The sparkline stroke and fill color. Aside from the nominal values (e.g. `primary`, `secondary`, etc), all options for the named color values can be found on [Polaris Tokens](https://shopify.github.io/polaris-tokens/).
+The sparkline stroke and fill color. This accepts any [Polaris Viz accepted color](/documentation/Polaris-Viz-colors.md).
 
 #### includeArea
 
