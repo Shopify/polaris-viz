@@ -32,7 +32,7 @@ Used in small sizes to give an overview of how a metric has performed over time.
 
 ## Usage
 
-The Sparkline interface looks like this:
+The sparkline interface looks like this:
 
 ```typescript
 {
@@ -52,7 +52,7 @@ This component determines its width and height based off its parent element. The
 </div>
 ```
 
-### Required Props
+### Required props
 
 #### data
 
@@ -64,7 +64,7 @@ The prop to determine the chart's drawn area.
 
 ---
 
-### Optional Props
+### Optional props
 
 #### accessibilityLabel
 
