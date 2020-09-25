@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import {ScaleLinear} from 'd3-scale';
 import {colorSky, colorInkLighter, spacingLoose} from '@shopify/polaris-tokens';
 
-import {getTextWidth} from '../../../../utilities';
+import {getTextWidth} from '../../utilities';
 import {
   SPACING_TIGHT,
   SMALL_WIDTH,
@@ -49,13 +49,7 @@ function getTextXTransform({
   }
 }
 
-export function XAxis({
-  xScale,
-  drawableHeight,
-  dimensions,
-  labels,
-  axisMargin,
-}: Props) {
+function Axis({xScale, drawableHeight, dimensions, labels, axisMargin}: Props) {
   const ticks = useMemo(() => {
     if (labels == null) {
       return [];
@@ -132,3 +126,5 @@ export function XAxis({
     </React.Fragment>
   );
 }
+
+export const LinearXAxis = React.memo(Axis);

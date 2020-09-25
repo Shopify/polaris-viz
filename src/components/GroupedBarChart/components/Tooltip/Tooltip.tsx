@@ -1,7 +1,7 @@
 import React from 'react';
 import {Color} from 'types';
 
-import {getColorValue} from '../../../../utilities';
+import {SquareColorPreview} from '../../../SquareColorPreview';
 
 import styles from './Tooltip.scss';
 
@@ -17,10 +17,7 @@ export function Tooltip({colors, labels, values, formatValue}: Props) {
     <div className={styles.Container}>
       {colors.map((color, index) => (
         <React.Fragment key={color}>
-          <div
-            className={styles.ColorPreview}
-            style={{background: getColorValue(color)}}
-          />
+          <SquareColorPreview color={color} />
           <strong>{labels[index]}</strong>
           <div className={styles.Value}>{formatValue(values[index])}</div>
         </React.Fragment>

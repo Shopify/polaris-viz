@@ -11,6 +11,7 @@ import {area} from 'd3-shape';
 import {Color} from 'types';
 import {animated, useSpring} from 'react-spring';
 
+import {usePrefersReducedMotion} from '../../hooks';
 import {getColorValue, uniqueId} from '../../utilities';
 
 import {getPathLength, rgbToRgba} from './utilities';
@@ -30,7 +31,7 @@ interface Coordinates {
 interface Props {
   data: Coordinates[];
   color?: Color;
-  useAnimation?: boolean;
+  isAnimated?: boolean;
   areaFillStyle?: 'none' | 'solid' | 'gradient';
   accessibilityLabel?: string;
 }
@@ -39,7 +40,7 @@ export function Sparkline({
   data,
   accessibilityLabel,
   color = 'colorTeal',
-  useAnimation = false,
+  isAnimated = false,
   areaFillStyle = 'none',
 }: Props) {
   const pathRef = useRef<SVGPathElement>(null);
@@ -47,6 +48,7 @@ export function Sparkline({
   const [svgDimensions, setSvgDimensions] = useState({width: 0, height: 0});
   const [pathLength, setPathLength] = useState(getPathLength(pathRef.current));
   const [hasNewData, setNewData] = useState(true);
+  const {prefersReducedMotion} = usePrefersReducedMotion();
 
   useEffect(() => {
     setNewData(true);
@@ -84,12 +86,7 @@ export function Sparkline({
       window.removeEventListener('resize', () => updateSVG({isNewData: false}));
   }, [updateMeasurements]);
 
-  const prefersReducedMotion =
-    typeof window === 'undefined'
-      ? false
-      : window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  const immediate = !useAnimation || prefersReducedMotion || !hasNewData;
+  const immediate = !isAnimated || prefersReducedMotion || !hasNewData;
 
   const areaAnimation = useSpring({
     config: ANIMATION_CONFIG,

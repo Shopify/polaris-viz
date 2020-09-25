@@ -2,7 +2,7 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
 
-import {XAxis} from '../XAxis';
+import {LinearXAxis} from '../LinearXAxis';
 
 jest.mock('d3-scale', () => ({
   scaleLinear: () => {
@@ -22,14 +22,14 @@ jest.mock('d3-scale', () => ({
   height = 200;
 };
 
-describe('<XAxis />', () => {
+describe('<LinearXAxis />', () => {
   it("provides a best estimate number of ticks to d3's ticks utility to choose the ideal number of ticks", () => {
     const xScale = scaleLinear();
     const ticksSpy = jest.spyOn(xScale, 'ticks');
 
     mount(
       <svg>
-        <XAxis
+        <LinearXAxis
           xScale={xScale}
           labels={['Test label 1', 'Test label 2', 'Test label 3']}
           dimensions={new DOMRect()}
@@ -45,7 +45,7 @@ describe('<XAxis />', () => {
   it('renders an axis line with a tick at the start and end of the axis', () => {
     const axis = mount(
       <svg>
-        <XAxis
+        <LinearXAxis
           xScale={scaleLinear()}
           labels={['Test label 1', 'Test label 2', 'Test label 3']}
           dimensions={new DOMRect()}
@@ -64,7 +64,7 @@ describe('<XAxis />', () => {
   it('renders a small, outer tick for each tick that there is space for', () => {
     const axis = mount(
       <svg>
-        <XAxis
+        <LinearXAxis
           xScale={scaleLinear()}
           labels={['Test label 1', 'Test label 2', 'Test label 3']}
           dimensions={new DOMRect()}
@@ -80,7 +80,7 @@ describe('<XAxis />', () => {
   it('renders a vertical gridline for each tick that there is space for using drawableHeight', () => {
     const axis = mount(
       <svg>
-        <XAxis
+        <LinearXAxis
           xScale={scaleLinear()}
           labels={['Test label 1', 'Test label 2', 'Test label 3']}
           dimensions={new DOMRect()}
@@ -98,7 +98,7 @@ describe('<XAxis />', () => {
     const labels = ['Test label 1', 'Test label 2', 'Test label 3'];
     const axis = mount(
       <svg>
-        <XAxis
+        <LinearXAxis
           xScale={scaleLinear()}
           labels={labels}
           dimensions={new DOMRect()}
@@ -125,7 +125,7 @@ describe('<XAxis />', () => {
     const labels = ['Test label 1', 'Test label 2', 'Test label 3'];
     const axis = mount(
       <svg>
-        <XAxis
+        <LinearXAxis
           xScale={scaleLinear()}
           labels={labels}
           dimensions={new DOMRect()}
@@ -145,7 +145,7 @@ describe('<XAxis />', () => {
   it('does not render any labels if the labels prop is not provided', () => {
     const axis = mount(
       <svg>
-        <XAxis
+        <LinearXAxis
           xScale={scaleLinear()}
           dimensions={new DOMRect()}
           drawableHeight={150}

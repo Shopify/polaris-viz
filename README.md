@@ -73,6 +73,14 @@ Used to show comparison of different types, across categories.
 
 [View documentation →](src/components/GroupedBarChart/GroupedBarChart.md)
 
+### Stacked area chart
+
+<img src="src/components/StackedAreaChart/stacked-area-chart.png"/>
+
+Used to compare multiple series of data and display the total value.
+
+[View documentation →](src/components/StackedAreaChart/StackedAreaChart.md)
+
 ## Contributing
 
 Pull requests are welcome.
