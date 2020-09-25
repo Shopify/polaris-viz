@@ -1,7 +1,6 @@
 import React from 'react';
 import {Color} from 'types';
-
-import {getColorValue} from '../../../../utilities';
+import {getColorValue} from 'utilities';
 
 import styles from './Tooltip.scss';
 

@@ -1,8 +1,8 @@
 import React from 'react';
+import {TooltipContainer} from 'components/TooltipContainer';
+import {Margin} from 'components/LineChart/constants';
+import {Series} from 'components/LineChart/types';
 
-import {TooltipContainer} from '../../../TooltipContainer';
-import {Margin} from '../../constants';
-import {Series} from '../../types';
 import {LinePreview} from '../LinePreview';
 
 import styles from './Tooltip.scss';

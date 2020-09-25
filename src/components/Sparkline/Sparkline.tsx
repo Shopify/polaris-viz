@@ -4,9 +4,8 @@ import {scaleLinear} from 'd3-scale';
 import {area} from 'd3-shape';
 import {Color} from 'types';
 import {animated, useSpring} from 'react-spring';
-
-import {getColorValue} from '../../utilities';
-import {useWindowSize} from '../../hooks';
+import {getColorValue} from 'utilities';
+import {useWindowSize} from 'hooks';
 
 import {getPathLength} from './utilities';
 import styles from './Sparkline.scss';

@@ -1,7 +1,6 @@
 import React from 'react';
 import {classNames} from '@shopify/css-utilities';
-
-import {Orientation, Size} from '../../types';
+import {Orientation, Size} from 'components/NormalizedStackedBar/types';
 
 import styles from './BarSegment.scss';
 

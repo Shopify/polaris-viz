@@ -3,9 +3,8 @@ import {animated, useSpring} from 'react-spring';
 import tokens from '@shopify/polaris-tokens';
 import {Color} from 'types';
 import {ScaleLinear} from 'd3-scale';
-
-import {getColorValue} from '../../../../utilities';
-import {MIN_BAR_HEIGHT} from '../../constants';
+import {getColorValue} from 'utilities';
+import {MIN_BAR_HEIGHT} from 'components/BarChart/constants';
 
 interface Props {
   color: Color;

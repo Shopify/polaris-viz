@@ -3,8 +3,7 @@ import {sum} from 'd3-array';
 import {scaleLinear} from 'd3-scale';
 import {classNames} from '@shopify/css-utilities';
 import {Color} from 'types';
-
-import {getColorValue} from '../../utilities';
+import {getColorValue} from 'utilities';
 
 import {BarSegment, BarLabel} from './components';
 import {Size, Data, Orientation} from './types';

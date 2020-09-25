@@ -1,6 +1,6 @@
 import React from 'react';
+import {Series} from 'components/LineChart/types';
 
-import {Series} from '../../types';
 import {LinePreview} from '../LinePreview';
 
 import styles from './Legend.scss';

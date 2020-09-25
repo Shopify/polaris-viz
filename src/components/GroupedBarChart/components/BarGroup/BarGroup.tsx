@@ -3,14 +3,13 @@ import {animated, useSpring} from 'react-spring';
 import {ScaleLinear} from 'd3-scale';
 import {Color} from 'types';
 import tokens from '@shopify/polaris-tokens';
-
-import {getColorValue} from '../../../../utilities';
+import {getColorValue} from 'utilities';
 import {
   MIN_BAR_HEIGHT,
   FULL_OPACITY,
   SUBDUED_OPACITY,
   BAR_SPACING,
-} from '../../constants';
+} from 'components/GroupedBarChart/constants';
 
 interface Props {
   x: number;

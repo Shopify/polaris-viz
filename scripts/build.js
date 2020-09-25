@@ -7,6 +7,7 @@ const {
   basename,
   extname,
   dirname,
+  relative,
 } = require('path');
 const glob = require('glob');
 
@@ -19,8 +20,10 @@ const {
 const {rollup} = require('rollup');
 const {cp, mv, rm} = require('shelljs');
 const copyfiles = require('copyfiles');
+const fs = require('fs');
 
 const createRollupConfig = require('../config/rollup');
+const {dependencies, peerDependencies} = require('../package.json');
 
 const root = resolvePath(__dirname, '..');
 const build = resolvePath(root, 'build');
@@ -33,6 +36,13 @@ const mainEntry = resolvePath(intermediateBuild, './index.js');
 const scripts = resolvePath(root, 'scripts');
 const types = resolvePath(root, 'types');
 const tsBuild = resolvePath(scripts, 'tsconfig.json');
+
+const externalPackages = [
+  ...Object.keys(dependencies),
+  ...Object.keys(peerDependencies),
+  '@shopify/react-testing',
+  'tslib',
+];
 
 execSync(
   `${resolvePath(
@@ -71,10 +81,54 @@ copy(['./src/**/*.{scss,svg,png,jpg,jpeg,json}', intermediateBuild], {up: 1})
   .then(() => {
     glob(`${finalEsnext}/**/*.js`, (err, files) => {
       for (const file of files) {
-        renameSync(
-          file,
-          join(dirname(file), `${basename(file, '.js')}.esnext`),
+        const newFileName = join(
+          dirname(file),
+          `${basename(file, '.js')}.esnext`,
         );
+        renameSync(file, newFileName);
+
+        fs.readFile(newFileName, 'utf8', function(err, fileData) {
+          if (err) return console.log(err);
+
+          const imports = fileData
+            .split('\n')
+            .filter((line) => line.startsWith('import'))
+            .map((importLine) =>
+              importLine
+                .split('from')
+                .pop()
+                .trim()
+                .replace("'", '')
+                .replace("'", '')
+                .replace(/\\/g, '')
+                .replace(';', ''),
+            );
+
+          const filteredImports = imports.filter(
+            (importLine) =>
+              !importLine.startsWith('/') &&
+              !importLine.startsWith('.') &&
+              !externalPackages.includes(importLine) &&
+              !importLine.includes('tslib') &&
+              !importLine.includes('@shopify/react-testing'),
+          );
+
+          let modifiedFile = fileData;
+
+          filteredImports.map((filteredImport) => {
+            const currentDir = dirname(dirname(newFileName));
+            const relativePath = relative(currentDir, filteredImport);
+
+            modifiedFile = modifiedFile.replace(
+              `'${filteredImport}'`,
+              `'${relativePath}'`,
+            );
+
+            fs.writeFile(newFileName, modifiedFile, 'utf8', function(err) {
+              if (err) return console.log(err);
+            });
+          });
+        });
       }
     });
   })

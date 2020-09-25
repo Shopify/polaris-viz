@@ -1,7 +1,6 @@
 import React from 'react';
 import {colorSky, colorInkLighter} from '@shopify/polaris-tokens';
 import {ScaleBand} from 'd3-scale';
-
 import {
   TICK_SIZE,
   SPACING,
@@ -9,7 +8,7 @@ import {
   SPACING_EXTRA_TIGHT,
   SPACING_LOOSE,
   DIAGONAL_ANGLE,
-} from '../../constants';
+} from 'components/GroupedBarChart/constants';
 
 export function XAxis({
   labels,

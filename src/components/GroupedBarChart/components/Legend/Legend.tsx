@@ -1,7 +1,6 @@
 import React from 'react';
 import {Data} from 'components/GroupedBarChart/types';
-
-import {getColorValue} from '../../../../utilities';
+import {getColorValue} from 'utilities';
 
 import styles from './Legend.scss';
 

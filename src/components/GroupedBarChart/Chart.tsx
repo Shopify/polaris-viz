@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
+import {eventPoint, getTextWidth} from 'utilities';
 
-import {eventPoint, getTextWidth} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {TooltipContainer} from '../TooltipContainer';
 

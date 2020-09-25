@@ -1,8 +1,7 @@
 import React from 'react';
 import {Color} from 'types';
-
-import {getColorValue} from '../../../../utilities';
-import {LineStyle} from '../../types';
+import {getColorValue} from 'utilities';
+import {LineStyle} from 'components/LineChart/types';
 
 interface Props {
   color: Color;

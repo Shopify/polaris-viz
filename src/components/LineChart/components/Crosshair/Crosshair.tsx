@@ -1,7 +1,6 @@
 import React from 'react';
 import {colorSky} from '@shopify/polaris-tokens';
-
-import {CROSSHAIR_WIDTH} from '../../constants';
+import {CROSSHAIR_WIDTH} from 'components/LineChart/constants';
 
 interface Props {
   x: number;

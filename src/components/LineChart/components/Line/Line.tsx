@@ -1,8 +1,7 @@
 import React from 'react';
 import {ScaleLinear} from 'd3-scale';
-
-import {getColorValue} from '../../../../utilities';
-import {Series} from '../../types';
+import {getColorValue} from 'utilities';
+import {Series} from 'components/LineChart/types';
 
 import {Point} from './components';
 
