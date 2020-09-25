@@ -143,9 +143,9 @@ The prop to determine the chart's drawn area. Each `Series` object corresponds t
 
 #### accessibilityLabel
 
-| type     | default      |
-| -------- | ------------ |
-| `string` | empty string |
+| type     | default     |
+| -------- | ----------- |
+| `string` | `undefined` |
 
 Visually hidden text for screen readers.
 
