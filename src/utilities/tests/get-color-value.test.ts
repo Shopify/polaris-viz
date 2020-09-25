@@ -8,7 +8,7 @@ describe('getColorValue', () => {
 
   it('returns viz colors', () => {
     const actual = getColorValue('primary');
-    expect(actual).toBe('#00A19F');
+    expect(actual).toBe('rgb(0,161,159)');
   });
 
   it('throws an error for other colors', () => {

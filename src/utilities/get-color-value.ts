@@ -2,13 +2,13 @@ import tokens from '@shopify/polaris-tokens';
 import {Color, TokensColor, VizPaletteColor} from 'types';
 
 const vizColors = {
-  primary: '#00A19F',
-  secondary: '#292370',
-  tertiary: '#0D8CED',
-  quaternary: '#9D35C1',
-  pastComparison: '#919EAB',
-  positive: '#008060',
-  negative: '#D72C0D',
+  primary: 'rgb(0,161,159)',
+  secondary: 'rgb(41,35,112)',
+  tertiary: 'rgb(13,140,237)',
+  quaternary: 'rgb(157,53,193)',
+  pastComparison: 'rgb(145,158,171)',
+  positive: 'rgb(0,128,96)',
+  negative: 'rgb(215,44,13)',
 };
 
 function isTokenType(color: Color): color is TokensColor {

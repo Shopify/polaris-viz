@@ -1,15 +1,21 @@
-import React, {useState, useLayoutEffect, useRef} from 'react';
+import React, {
+  useState,
+  useLayoutEffect,
+  useRef,
+  useEffect,
+  useMemo,
+} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 import {scaleLinear} from 'd3-scale';
 import {area} from 'd3-shape';
 import {Color} from 'types';
 import {animated, useSpring} from 'react-spring';
 
-import {getColorValue} from '../../utilities';
-import {useWindowSize} from '../../hooks';
+import {getColorValue, uniqueId} from '../../utilities';
 
-import {getPathLength} from './utilities';
+import {getPathLength, rgbToRgba} from './utilities';
 import styles from './Sparkline.scss';
+import {LinearGradient} from './components';
 
 const MAX_AREA_OPACITY = 0.4;
 const SVG_MARGIN = 2;
@@ -25,7 +31,7 @@ interface Props {
   data: Coordinates[];
   color?: Color;
   useAnimation?: boolean;
-  includeArea?: boolean;
+  areaFillStyle?: 'none' | 'solid' | 'gradient';
   accessibilityLabel?: string;
 }
 
@@ -34,13 +40,18 @@ export function Sparkline({
   accessibilityLabel,
   color = 'colorTeal',
   useAnimation = false,
-  includeArea = false,
+  areaFillStyle = 'none',
 }: Props) {
   const pathRef = useRef<SVGPathElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [svgDimensions, setSvgDimensions] = useState({width: 0, height: 0});
   const [pathLength, setPathLength] = useState(getPathLength(pathRef.current));
-  const [windowWidth, windowHeight] = useWindowSize();
+  const [hasNewData, setNewData] = useState(true);
+
+  useEffect(() => {
+    setNewData(true);
+    setPathLength(getPathLength(pathRef.current));
+  }, [data]);
 
   const [updateMeasurements] = useDebouncedCallback(() => {
     if (containerRef.current == null) {
@@ -56,25 +67,41 @@ export function Sparkline({
   }, 10);
 
   useLayoutEffect(() => {
-    updateMeasurements();
-  }, [windowWidth, windowHeight, updateMeasurements]);
+    if (containerRef.current == null) {
+      throw new Error('No SVG rendered');
+    }
+
+    function updateSVG({isNewData}: {isNewData: boolean}) {
+      setNewData(isNewData);
+      updateMeasurements();
+    }
+
+    updateSVG({isNewData: true});
+
+    window.addEventListener('resize', () => updateSVG({isNewData: false}));
+
+    return () =>
+      window.removeEventListener('resize', () => updateSVG({isNewData: false}));
+  }, [updateMeasurements]);
 
   const prefersReducedMotion =
     typeof window === 'undefined'
       ? false
       : window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  const immediate = !useAnimation || prefersReducedMotion || !hasNewData;
+
   const areaAnimation = useSpring({
     config: ANIMATION_CONFIG,
-    immediate: !useAnimation || prefersReducedMotion,
-    opacity: MAX_AREA_OPACITY,
+    immediate,
+    opacity: areaFillStyle === 'gradient' ? 1 : MAX_AREA_OPACITY,
     from: {opacity: 0},
     reset: true,
   });
 
   const pathAnimation = useSpring({
     config: ANIMATION_CONFIG,
-    immediate: !useAnimation || prefersReducedMotion,
+    immediate,
     strokeDashoffset: 0,
     from: {strokeDashoffset: pathLength},
     reset: true,
@@ -101,17 +128,16 @@ export function Sparkline({
     .y0(height)
     .y1(({y}) => yScale(y))(data);
 
+  const colorValue = getColorValue(color);
+  const id = useMemo(() => uniqueId('sparkline'), []);
+
   return (
     <div style={{width: '100%', height: '100%'}} ref={containerRef}>
       {accessibilityLabel ? (
         <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
       ) : null}
-      <svg
-        aria-hidden
-        width={width}
-        height={height}
-        color={getColorValue(color)}
-      >
+
+      <svg aria-hidden width={width} height={height} color={colorValue}>
         <g>
           <animated.path
             ref={pathRef}
@@ -121,13 +147,24 @@ export function Sparkline({
             strokeDasharray={`${pathLength} ${pathLength}`}
             strokeDashoffset={pathAnimation.strokeDashoffset}
           />
-          {includeArea ? (
-            <animated.path
-              opacity={areaAnimation.opacity}
-              fill="currentColor"
-              d={areaShape == null ? '' : areaShape}
+
+          {areaFillStyle === 'gradient' ? (
+            <LinearGradient
+              id={id}
+              startColor={rgbToRgba({rgb: colorValue, alpha: 0})}
+              endColor={rgbToRgba({rgb: colorValue, alpha: 0.8})}
             />
           ) : null}
+
+          {areaFillStyle === 'none' ? null : (
+            <animated.path
+              fill={
+                areaFillStyle === 'gradient' ? `url(#${id})` : 'currentColor'
+              }
+              opacity={areaAnimation.opacity}
+              d={areaShape == null ? '' : areaShape}
+            />
+          )}
         </g>
       </svg>
     </div>
