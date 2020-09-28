@@ -64,7 +64,7 @@ return (
 
 ## Usage
 
-The Line chart interface looks like this:
+The line chart interface looks like this:
 
 ```typescript
 {
@@ -129,7 +129,7 @@ The `formatY` function is used to format `rawValue` for the tooltip. This falls 
 
 The `style` prop accepts an object to configure the given series' style. It allows you to pass any [Polaris Viz accepted color](/documentation/Polaris-Viz-colors.md) for the `color` value.
 
-### Required Props
+### Required props
 
 #### series
 
@@ -139,7 +139,7 @@ The `style` prop accepts an object to configure the given series' style. It allo
 
 The prop to determine the chart's drawn area. Each `Series` object corresponds to a line drawn on the chart, and is explained in greater detail above.
 
-### Optional Props
+### Optional props
 
 #### accessibilityLabel
 

@@ -31,7 +31,7 @@ Used for positive datasets with two to four items. If your dataset has more than
 
 ## Usage
 
-The Normalized stacked bar chart interface looks like this:
+The normalized stacked bar chart interface looks like this:
 
 ```typescript
 {
@@ -45,7 +45,7 @@ The Normalized stacked bar chart interface looks like this:
 
 This component derives its size from its parent container. When the Normalized stacked bar chart is oriented horizontally, it is constrained by the parent's width; in vertical orientation, it's constrained by the parent's height.
 
-### Required Props
+### Required props
 
 #### data
 
@@ -55,7 +55,7 @@ This component derives its size from its parent container. When the Normalized s
 
 The prop to determine the chart's drawn area. The chart uses the value to compute the width of each bar, and the label and formatted value are used in the chart legend.
 
-### Optional Props
+### Optional props
 
 #### accessibilityLabel
 

@@ -65,41 +65,13 @@ Used to show comparison across categories.
 
 [View documentation →](src/components/BarChart/BarChart.md)
 
-<table>
-  <thead>
-    <th>Viz</th>
-    <th>Use cases</th>
-    <th>Props</th>
-  <thead>
+### Grouped bar chart
 
-  <tbody>
-  <tr>
-  <td>
-  Grouped bar chart
-  <br />
-  <br />
-  <img src="https://github.com/Shopify/polaris-viz/raw/master/documentation/images/groupedbarchart.png"/>
-  </td>
-  <td>
-  Shows comparison of different types, across categories.
-  </td>
-  <td>
-  <ul>
-  <li>
-  <strong>series (required):</strong>
-  <code>{data: number[]; color:</code> <a href="https://github.com/Shopify/polaris-viz/blob/master/src/types.ts#L1"><code>Color</code></a><code>;  label: string;}[]</code>
-  </li>
-  <li><strong>labels (required):</strong><code>string[]</code></li>
-  <li><strong>timeSeries: </strong><code>boolean</code></li>
-  <li><strong>accessibilityLabel:</strong> <code>string</code></li>
-  <li><strong>formatYValue:</strong><code>(value: number): string;</code></li>
-  <li><strong>chartHeight:</strong> <code>number</code></li>
-  </ul>
-  </td>
-  </tr>
+<img src="src/components/GroupedBarChart/grouped-bar-chart.png"/>
 
-  </tbody>
-</table>
+Used to show comparison of different types, across categories.
+
+[View documentation →](src/components/GroupedBarChart/GroupedBarChart.md)
 
 ## Contributing
 

@@ -31,7 +31,7 @@ return <BarChart formatYValue={formatYValue} color="primary" data={data} />;
 
 ## Usage
 
-The Bar chart interface looks like this:
+The bar chart interface looks like this:
 
 ```typescript
 {
@@ -46,7 +46,7 @@ The Bar chart interface looks like this:
 }
 ```
 
-### Required Props
+### Required props
 
 #### data
 
@@ -56,7 +56,7 @@ The Bar chart interface looks like this:
 
 The array of objects that the chart uses to draw the chart.
 
-### Optional Props
+### Optional props
 
 #### accessibilityLabel
 
