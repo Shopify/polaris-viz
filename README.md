@@ -57,6 +57,14 @@ Used to show change over time, comparisons, and trends.
 
 [View documentation →](src/components/LineChart/LineChart.md)
 
+### Bar chart
+
+<img src="src/components/BarChart/bar-chart.png"/>
+
+Used to show comparison across categories.
+
+[View documentation →](src/components/BarChart/BarChart.md)
+
 <table>
   <thead>
     <th>Viz</th>
@@ -65,31 +73,6 @@ Used to show change over time, comparisons, and trends.
   <thead>
 
   <tbody>
-  <tr>
-  <td>
-  Bar chart
-  <br />
-  <br />
-  <img src="https://github.com/Shopify/polaris-viz/raw/master/documentation/images/barchart.png"/>
-  </td>
-  <td>
-  Shows comparison across categories.
-  </td>
-  <td>
-  <ul>
-  <li>
-  <strong>data (required):</strong>
-  <code>{rawValue: number; label: string;}[]</code>
-  </li>
-  <li><strong>barMargin:</strong> <code>Small | Medium | Large | None</code></li>
-  <li><strong>accessibilityLabel:</strong> <code>string</code></li>
-  <li><strong>color:</strong> <a href="https://github.com/Shopify/polaris-viz/blob/master/src/types.ts#L1"><code>Color</code></a></li>
-  <li><strong>highlightColor:</strong> <a href="https://github.com/Shopify/polaris-viz/blob/master/src/types.ts#L1"><code>Color</code></a></li>
-  <li><strong>formatYValue:</strong><code>(value: number): string;</code></li>
-  <li><strong>formatXAxisValue:</strong><code>(value: number, index: number): string;</code></li>
-  </ul>
-  </td>
-  </tr>
   <tr>
   <td>
   Grouped bar chart

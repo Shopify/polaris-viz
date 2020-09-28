@@ -68,9 +68,9 @@ The prop to determine the chart's drawn area.
 
 #### accessibilityLabel
 
-| type     | default      |
-| -------- | ------------ |
-| `string` | empty string |
+| type     | default     |
+| -------- | ----------- |
+| `string` | `undefined` |
 
 Visually hidden text for screen readers.
 
