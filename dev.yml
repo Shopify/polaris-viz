@@ -2,7 +2,7 @@ name: polaris-viz
 up:
   - node:
       yarn: v1.13.0
-      version: v10.13.0 # to be kept in sync with .nvmrc and .circleci/config.yml
+      version: v10.16.0
 
 open:
   app: http://localhost:6006/

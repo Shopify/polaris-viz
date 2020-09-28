@@ -1,15 +1,21 @@
 {
-  "extends": "@shopify/typescript-configs/library",
   "compilerOptions": {
-    "baseUrl": "./src",
-    "rootDir": "./",
+    "baseUrl": ".",
+    "rootDir": "src",
+    "outDir": "build",
     "target": "ES5",
-    "declarationDir": "types",
-    "declarationMap": false,
-    "jsx": "react-native",
+    "module": "ES5",
+    "allowSyntheticDefaultImports": true,
     "strict": true,
     "importHelpers": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "jsx": "react",
+    "paths": {
+      "components/*": ["src/components/*"],
+      "types": ["src/types"],
+      "utilities": ["src/utilities"]
+    }
   },
-  "include": ["./config/typescript/**/*", "./src/**/*", "./tests/**/*"]
+  "include": ["./config/typescript/**/*"]
 }

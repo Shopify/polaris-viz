@@ -14,3 +14,5 @@ node_modules
 /playground
 .DS_Store
 *.scss.d.ts
+/dist
+.cache
