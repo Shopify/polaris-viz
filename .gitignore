@@ -11,5 +11,6 @@ node_modules
 /styles.scss
 /styles
 /sandbox
+/playground
 .DS_Store
 *.scss.d.ts
