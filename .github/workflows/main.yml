@@ -20,13 +20,3 @@ jobs:
           ${{ runner.os }}-yarn-
     - name: Install dependencies
       run: yarn
-    - name: Lint 💅
-      run: yarn lint
-    - name: Run tests 👩🏻‍🔬
-      run: yarn test
-      env: 
-        CI: true
-    - name: Type check ⌨️
-      run: yarn type-check
-      env: 
-        CI: true
