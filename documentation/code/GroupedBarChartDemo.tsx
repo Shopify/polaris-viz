@@ -3,9 +3,9 @@ import React from 'react';
 // eslint-disable-next-line shopify/strict-component-boundaries
 import {GroupedBarChart} from '../../src/components';
 
-// eslint-disable-next-line import/no-default-export
-export default function GroupedBarChartDemo() {
-  const outerContainerStyle = {background: 'white', padding: '3rem'};
+import {OUTER_CONTAINER_STYLE} from './constants';
+
+export function GroupedBarChartDemo() {
   const innerContainerStyle = {
     width: '900px',
     background: 'white',
@@ -53,12 +53,13 @@ export default function GroupedBarChartDemo() {
     }).format(val);
 
   return (
-    <div style={outerContainerStyle}>
+    <div style={OUTER_CONTAINER_STYLE}>
       <div style={innerContainerStyle}>
         <GroupedBarChart
           formatYValue={formatYValue}
           labels={labels}
           series={series}
+          chartHeight={253}
         />
       </div>
     </div>

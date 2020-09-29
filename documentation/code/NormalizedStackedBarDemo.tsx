@@ -3,16 +3,12 @@ import React from 'react';
 // eslint-disable-next-line shopify/strict-component-boundaries
 import {NormalizedStackedBar} from '../../src/components';
 
-// eslint-disable-next-line import/no-default-export
-export default function NormalizedStackedBarDemo() {
-  const outerContainerStyle = {
-    background: 'white',
-    padding: '3rem',
-  };
+import {OUTER_CONTAINER_STYLE} from './constants';
 
+export function NormalizedStackedBarDemo() {
   const innerContainerStyle = {
     width: '900px',
-    height: '200px',
+    height: '300px',
     background: 'white',
     padding: '2rem',
     borderRadius: '6px',
@@ -26,7 +22,7 @@ export default function NormalizedStackedBarDemo() {
     "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif";
 
   return (
-    <div style={outerContainerStyle}>
+    <div style={OUTER_CONTAINER_STYLE}>
       <div style={innerContainerStyle}>
         <NormalizedStackedBar
           data={[

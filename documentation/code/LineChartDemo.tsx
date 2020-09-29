@@ -3,9 +3,9 @@ import React from 'react';
 // eslint-disable-next-line shopify/strict-component-boundaries
 import {LineChart} from '../../src/components';
 
-// eslint-disable-next-line import/no-default-export
-export default function LineChartDemo() {
-  const outerContainerStyle = {background: 'white', padding: '3rem'};
+import {OUTER_CONTAINER_STYLE} from './constants';
+
+export function LineChartDemo() {
   const innerContainerStyle = {
     width: '900px',
     background: 'white',
@@ -84,9 +84,10 @@ export default function LineChartDemo() {
   );
 
   return (
-    <div style={outerContainerStyle}>
+    <div style={OUTER_CONTAINER_STYLE}>
       <div style={innerContainerStyle}>
         <LineChart
+          chartHeight={229}
           xAxisLabels={xAxisLabels}
           formatYAxisValue={formatAxisValue}
           series={series}
