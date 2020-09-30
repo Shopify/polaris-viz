@@ -24,7 +24,7 @@ Used in small sizes to give an overview of how a metric has performed over time.
     ]}
     accessibilityLabel="Customer growth over time"
     color="primary"
-    includeArea
+    areaFillStyle="solid"
     useAnimation
   />
 </div>
@@ -39,7 +39,7 @@ The sparkline interface looks like this:
   data: Coordinates[];
   accessibilityLabel?: string;
   color?: Color;
-  includeArea?: boolean;
+  areaFillStyle?: 'none' | 'solid' | 'gradient';
   useAnimation?: boolean;
 }
 ```
@@ -82,13 +82,13 @@ Visually hidden text for screen readers.
 
 The sparkline stroke and fill color. This accepts any [Polaris Viz accepted color](/documentation/Polaris-Viz-colors.md).
 
-#### includeArea
+#### areaFillStyle
 
-| type      | default |
-| --------- | ------- |
-| `boolean` | `false` |
+| type                      | default |
+| ------------------------- | ------- |
+| `none | solid | gradient` | `none`  |
 
-Determines whether or not to shade in the area beneath the line.
+Determines whether to fill in the area beneath the line and what kind of shading to use.
 
 #### useAnimation
 

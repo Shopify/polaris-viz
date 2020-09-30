@@ -1,5 +1,10 @@
 # Changelog
 
+### Unreleased
+
+- `<Sparkline />` adds an option for a gradient fill style
+- `<Sparkline />` no longer animates on resize
+
 ## [0.0.16] - 2020-09-18
 
 ### Fixed
