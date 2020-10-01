@@ -1,10 +1,12 @@
-# Grouped bar chart
+# Multi-series bar chart
 
 Used to show comparison of different types, across categories.
 
 ## Example
 
-<img src="grouped-bar-chart.png" alt="Grouped bar chart example image" />
+| Grouped                                                                                  | Stacked                                                                                  |
+| ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| <img src="grouped-bar-example.png" alt="Multi-series bar chart grouped example image" /> | <img src="stacked-bar-example.png" alt="Multi-series bar chart stacked example image" /> |
 
 ```tsx
 const series = [
@@ -43,7 +45,7 @@ const formatYValue = (val: number) =>
   }).format(val);
 
 return (
-  <GroupedBarChart
+  <MultiSeriesBarChart
     formatYValue={formatYValue}
     labels={labels}
     series={series}
@@ -53,7 +55,7 @@ return (
 
 ## Usage
 
-The grouped bar chart interface looks like this:
+The mult-series bar chart interface looks like this:
 
 ```typescript
 {
@@ -63,6 +65,7 @@ The grouped bar chart interface looks like this:
   chartHeight?: number;
   formatYValue?(value: number): string;
   timeSeries?: boolean;
+  isStacked?: boolean;
 }
 ```
 
@@ -119,3 +122,11 @@ This utility function is called for every y axis value when the chart is drawn.
 | `boolean` | `false` |
 
 This indicates to the chart if the data provide is time series data. If `true`, the x-axis will display fewer labels as needed according to the data.
+
+#### isStacked
+
+| type      | default |
+| --------- | ------- |
+| `boolean` | `false` |
+
+This changes the grouping of the bars. If `true` the bar groups will stack vertically, otherwise they will render individual bars for each data point in each group. To see an example of stacked vs. grouped orientations, refer to the images above.

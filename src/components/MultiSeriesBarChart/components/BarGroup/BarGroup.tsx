@@ -1,16 +1,10 @@
 import React from 'react';
-import {animated, useSpring} from 'react-spring';
 import {ScaleLinear} from 'd3-scale';
 import {Color} from 'types';
-import tokens from '@shopify/polaris-tokens';
 
 import {getColorValue} from '../../../../utilities';
-import {
-  MIN_BAR_HEIGHT,
-  FULL_OPACITY,
-  SUBDUED_OPACITY,
-  BAR_SPACING,
-} from '../../constants';
+import {MIN_BAR_HEIGHT, BAR_SPACING} from '../../constants';
+import styles from '../../shared.scss';
 
 interface Props {
   x: number;
@@ -18,8 +12,8 @@ interface Props {
   width: number;
   data: number[];
   colors: Color[];
+  highlightColors: Color[];
   isActive: boolean;
-  hasActiveGroup: boolean;
 }
 
 export function BarGroup({
@@ -29,17 +23,8 @@ export function BarGroup({
   width,
   colors,
   isActive,
-  hasActiveGroup,
+  highlightColors,
 }: Props) {
-  const baseOpacity = hasActiveGroup ? SUBDUED_OPACITY : FULL_OPACITY;
-  const opacity = isActive ? FULL_OPACITY : baseOpacity;
-
-  const animation = useSpring({
-    config: {duration: tokens.durationFast},
-    opacity,
-    from: {opacity: baseOpacity},
-  });
-
   const barWidth = width / data.length - BAR_SPACING;
 
   return (
@@ -56,13 +41,17 @@ export function BarGroup({
 
         const xPosition = x + (barWidth + BAR_SPACING) * index;
 
+        const fillColor = isActive
+          ? getColorValue(highlightColors[index])
+          : getColorValue(colors[index]);
+
         return (
-          <animated.rect
+          <rect
+            className={styles.Bar}
             key={index}
             x={xPosition}
             y={yPosition}
-            fill={getColorValue(colors[index])}
-            opacity={animation.opacity}
+            fill={fillColor}
             width={barWidth}
             height={height}
           />

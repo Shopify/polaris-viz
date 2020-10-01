@@ -1,11 +1,15 @@
 import React from 'react';
 
 // eslint-disable-next-line shopify/strict-component-boundaries
-import {GroupedBarChart} from '../../src/components';
+import {MultiSeriesBarChart} from '../../src/components';
 
 import {OUTER_CONTAINER_STYLE} from './constants';
 
-export function GroupedBarChartDemo() {
+interface Props {
+  isStacked?: boolean;
+}
+
+export function MultiSeriesBarChartDemo({isStacked = false}: Props) {
   const innerContainerStyle = {
     width: '900px',
     background: 'white',
@@ -20,16 +24,19 @@ export function GroupedBarChartDemo() {
   const series = [
     {
       color: 'primary',
+      highlightColor: 'primaryProminent',
       label: 'Breakfast',
       data: [3, 7, 4, 8, 10, 0, 1],
     },
     {
       color: 'secondary',
+      highlightColor: 'secondaryProminent',
       label: 'Lunch',
       data: [4, 3, 5, 15, 8, 10, 2],
     },
     {
       color: 'tertiary',
+      highlightColor: 'tertiaryProminent',
       label: 'Dinner',
       data: [7, 2, 6, 12, 10, 5, 3],
     },
@@ -55,11 +62,12 @@ export function GroupedBarChartDemo() {
   return (
     <div style={OUTER_CONTAINER_STYLE}>
       <div style={innerContainerStyle}>
-        <GroupedBarChart
+        <MultiSeriesBarChart
           formatYValue={formatYValue}
           labels={labels}
           series={series}
           chartHeight={253}
+          isStacked={isStacked}
         />
       </div>
     </div>

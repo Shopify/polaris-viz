@@ -116,15 +116,27 @@ Used to show comparison across categories. [View documentation&nbsp;→](src/com
   </tr>
   <tr>
   <td>
-<a href="src/components/GroupedBarChart/GroupedBarChart.md">
-  <img src="src/components/GroupedBarChart/grouped-bar-chart.png"/>
+<a href="src/components/MultiSeriesBarChart/MultiSeriesBarChart.md">
+  <img src="src/components/MultiSeriesBarChart/grouped-bar-example.png"/>
 </a>
 
-#### Grouped bar chart
+#### Multi-series grouped bar chart
 
-Used to show comparison of different types, across categories. [View documentation&nbsp;→](src/components/GroupedBarChart/GroupedBarChart.md)
+Used to show a grouped comparison of different types, across categories. [View documentation&nbsp;→](src/components/MultiSeriesBarChart/MultiSeriesBarChart.md)
 
   </td>
+
+  <td>
+<a href="src/components/MultiSeriesBarChart/MultiSeriesBarChart.md">
+  <img src="src/components/MultiSeriesBarChart/stacked-bar-example.png"/>
+</a>
+
+#### Multi-series stacked bar chart
+
+Used to show a stacked comparison of different types, across categories. [View documentation&nbsp;→](src/components/MultiSeriesBarChart/MultiSeriesBarChart.md)
+
+  </td>
+  <tr>
   <td>
 <a href="src/components/StackedAreaChart/StackedAreaChart.md">
   <img src="src/components/StackedAreaChart/stacked-area-chart.png"/>
