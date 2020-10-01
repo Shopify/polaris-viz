@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.0.19] - 2020-10-29
+
+### Changed
+
+- Renamed `<GroupBarChart />` to `<MultiSeriesBarChart />`
+- Updated `<MultiSeriesBarChart />` documentation
+
+### Added
+
+- Added the `stacked` bolean prop to `<MultiSeriesBarChart />`
+- Added `<StackedBarGroup />` to `<MultiSeriesBarChart />` to allow for vertically stacked bars
+
 ### [0.0.18] - 2020-10-09
 
 ### Fixed

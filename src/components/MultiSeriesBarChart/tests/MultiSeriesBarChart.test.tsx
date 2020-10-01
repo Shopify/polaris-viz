@@ -2,11 +2,11 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {Color} from 'types';
 
-import {GroupedBarChart} from '../GroupedBarChart';
+import {MultiSeriesBarChart} from '../MultiSeriesBarChart';
 import {Chart} from '../Chart';
 import {Legend} from '../components';
 
-describe('GroupedBarChart />', () => {
+describe('<MultiSeriesBarChart />', () => {
   const mockProps = {
     series: [
       {data: [10, 20, 30], color: 'colorBlack' as Color, label: 'LABEL1'},
@@ -16,25 +16,25 @@ describe('GroupedBarChart />', () => {
 
   it('renders accessibility props', () => {
     const label = 'A bar chart showing sales data';
-    const groupedBarChart = mount(
-      <GroupedBarChart {...mockProps} accessibilityLabel={label} />,
+    const multiSeriesBarChart = mount(
+      <MultiSeriesBarChart {...mockProps} accessibilityLabel={label} />,
     );
 
-    expect(groupedBarChart).toContainReactComponent('div', {
+    expect(multiSeriesBarChart).toContainReactComponent('div', {
       'aria-label': label,
       role: 'img',
     });
   });
 
   it('renders a <Legend />', () => {
-    const groupedBarChart = mount(<GroupedBarChart {...mockProps} />);
+    const multiSeriesBarChart = mount(<MultiSeriesBarChart {...mockProps} />);
 
-    expect(groupedBarChart).toContainReactComponent(Legend);
+    expect(multiSeriesBarChart).toContainReactComponent(Legend);
   });
 
   it('renders a <Chart />', () => {
-    const groupedBarChart = mount(<GroupedBarChart {...mockProps} />);
+    const multiSeriesBarChart = mount(<MultiSeriesBarChart {...mockProps} />);
 
-    expect(groupedBarChart).toContainReactComponent(Chart);
+    expect(multiSeriesBarChart).toContainReactComponent(Chart);
   });
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Data} from 'components/GroupedBarChart/types';
+import {Data} from 'components/MultiSeriesBarChart/types';
 
 import {SquareColorPreview} from '../../../SquareColorPreview';
 

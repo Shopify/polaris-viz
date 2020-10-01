@@ -4,8 +4,9 @@ import {eventPoint, getTextWidth} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {TooltipContainer} from '../TooltipContainer';
 
+import {getStackedValues} from './utilities';
 import {Data} from './types';
-import {XAxis, BarGroup, Tooltip} from './components';
+import {XAxis, BarGroup, Tooltip, StackedBarGroup} from './components';
 import {useYScale, useXScale} from './hooks';
 import {
   MARGIN,
@@ -24,6 +25,7 @@ interface Props {
   chartDimensions: DOMRect;
   formatYValue(value: number): string;
   timeSeries: boolean;
+  isStacked: boolean;
 }
 
 export function Chart({
@@ -32,6 +34,7 @@ export function Chart({
   formatYValue,
   labels,
   timeSeries,
+  isStacked,
 }: Props) {
   const [activeBarGroup, setActiveBarGroup] = useState<number | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState<{
@@ -78,14 +81,20 @@ export function Chart({
   const drawableHeight =
     chartDimensions.height - MARGIN.Top - MARGIN.Bottom - maxXLabelHeight;
 
+  const stackedValues = isStacked ? getStackedValues(series, labels) : null;
+
   const {yScale, ticks} = useYScale({
     drawableHeight,
     data: series,
     formatYValue,
+    stackedValues,
   });
 
   const barColors = series.map(({color}) => color);
   const barGroupLabels = series.map(({label}) => label);
+  const barHighlightColors = series.map(({highlightColor}, index) =>
+    highlightColor != null ? highlightColor : barColors[index],
+  );
 
   return (
     <div
@@ -120,24 +129,38 @@ export function Chart({
         <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
           <YAxis ticks={ticks} drawableWidth={drawableWidth} />
         </g>
-
         <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
-          {sortedData.map((item, index) => {
-            const xPosition = xScale(index.toString());
+          {stackedValues != null
+            ? stackedValues.map((stackData, stackIndex) => {
+                return (
+                  <StackedBarGroup
+                    key={stackIndex}
+                    groupIndex={stackIndex}
+                    activeBarGroup={activeBarGroup}
+                    data={stackData}
+                    xScale={xScale}
+                    yScale={yScale}
+                    colors={barColors}
+                    highlightColors={barHighlightColors}
+                  />
+                );
+              })
+            : sortedData.map((item, index) => {
+                const xPosition = xScale(index.toString());
 
-            return (
-              <BarGroup
-                key={index}
-                x={xPosition == null ? 0 : xPosition}
-                isActive={activeBarGroup === index}
-                hasActiveGroup={activeBarGroup != null}
-                yScale={yScale}
-                data={item}
-                width={xScale.bandwidth()}
-                colors={barColors}
-              />
-            );
-          })}
+                return (
+                  <BarGroup
+                    key={index}
+                    x={xPosition == null ? 0 : xPosition}
+                    isActive={activeBarGroup === index}
+                    yScale={yScale}
+                    data={item}
+                    width={xScale.bandwidth()}
+                    colors={barColors}
+                    highlightColors={barHighlightColors}
+                  />
+                );
+              })}
         </g>
       </svg>
 
