@@ -40,6 +40,7 @@ describe('useYScale', () => {
           {data: [1, 2, 3], color: 'colorBlack', label: 'LABEL1'},
           {data: [5, 7, 10], color: 'colorBlack', label: 'LABEL1'},
         ],
+        stackedValues: null,
       });
 
       return null;
@@ -71,6 +72,7 @@ describe('useYScale', () => {
           {data: [1, 2, 3], color: 'colorBlack', label: 'LABEL1'},
           {data: [5, 7, 10], color: 'colorBlack', label: 'LABEL1'},
         ],
+        stackedValues: null,
       });
 
       return null;
@@ -102,6 +104,7 @@ describe('useYScale', () => {
           {data: [1, 2, 3], color: 'colorBlack', label: 'LABEL1'},
           {data: [5, 7, 10], color: 'colorBlack', label: 'LABEL1'},
         ],
+        stackedValues: null,
       });
 
       return null;
