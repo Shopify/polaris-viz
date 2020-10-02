@@ -1,9 +1,14 @@
 # Changelog
 
-### Unreleased
+### [0.0.17] - 2020-10-02
+
+### Fixed
+
+- `<Sparkline />` no longer animates on resize
+
+### Changed
 
 - `<Sparkline />` adds an option for a gradient fill style
-- `<Sparkline />` no longer animates on resize
 - `<Sparkline />` `useAnimation` prop is renamed to `isAnimated`
 
 ### Added
