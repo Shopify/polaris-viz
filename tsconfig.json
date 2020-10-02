@@ -6,7 +6,7 @@
     "target": "ES5",
     "module": "ES5",
     "allowSyntheticDefaultImports": true,
-    "strict": true,
+    "strict": false,
     "importHelpers": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
