@@ -2,6 +2,7 @@
 
 const {resolve} = require('path');
 const {cp, mkdir, rm} = require('shelljs');
+const fs = require('fs');
 
 const packageJSON = require('../package.json');
 
@@ -19,23 +20,18 @@ const projectPolarisDir = resolve(
   root,
   `../${projectDir}/node_modules/@shopify/polaris-viz`,
 );
-const files = [
-  'package.json',
-  'README.md',
-  'LICENSE.md',
-  'CHANGELOG.md',
-  ...packageJSON.files,
-];
 
 console.log('Cleaning up old build...');
 rm('-rf', projectPolarisDir);
 
-console.log('Creating new build directory...');
-mkdir(projectPolarisDir);
+const rootDir = resolve(__dirname, '..');
 
-console.log('Copying build to node_modules...');
-cp('-R', files, projectPolarisDir);
+console.log('Copying build to new directory');
 
-console.log(
-  'Build copied to consuming project. You can now run the consuming app and it will include your changes from Polaris Viz.',
-);
+fs.rename(`${rootDir}/build`, projectPolarisDir, function(err) {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log('Successfully copied to consumer.');
+  }
+});

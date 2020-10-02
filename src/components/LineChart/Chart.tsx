@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {line} from 'd3-shape';
 
 import {YAxis} from '../YAxis';
-import {eventPoint} from '../../utilities';
+import {eventPoint} from 'utilities';
 
 import {Series} from './types';
 import {Margin, SPACING_TIGHT} from './constants';

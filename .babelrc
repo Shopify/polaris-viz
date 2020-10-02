@@ -1,0 +1,13 @@
+{
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "root": ["."],
+        "alias": {
+          "utilities": "./src/utilities"
+        }
+      }
+    ]
+  ]
+}
