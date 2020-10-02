@@ -14,7 +14,7 @@ export function useYScale({
   drawableHeight: number;
   data: Data[];
   formatYValue(value: number): string;
-  stackedValues?: StackSeries[] | null;
+  stackedValues: StackSeries[] | null;
 }) {
   const {yScale, ticks} = useMemo(() => {
     const {min, max} = getMinMax(stackedValues, data);

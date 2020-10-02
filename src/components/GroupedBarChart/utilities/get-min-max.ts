@@ -1,9 +1,6 @@
 import {Data, StackSeries} from '../types';
 
-export function getMinMax(
-  stackedValues: StackSeries[] | null | undefined,
-  data: Data[],
-) {
+export function getMinMax(stackedValues: StackSeries[] | null, data: Data[]) {
   if (stackedValues != null) {
     const minStackedValues = stackedValues.map((value) =>
       Math.min(...value.map(([startingValue]) => startingValue)),
