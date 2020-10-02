@@ -1,9 +1,10 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
+import {Crosshair, LinearXAxis} from 'components';
 
 import {Chart} from '../Chart';
 import {Series} from '../types';
-import {Crosshair, Line, Tooltip, XAxis} from '../components';
+import {Line, Tooltip} from '../components';
 import {YAxis} from '../../YAxis';
 
 (global as any).DOMRect = class DOMRect {
@@ -70,10 +71,10 @@ describe('<Chart />', () => {
     expect(chart).toContainReactComponent(Line, {activePointIndex: 1});
   });
 
-  it('renders an <XAxis />', () => {
+  it('renders an <LinearXAxis />', () => {
     const chart = mount(<Chart {...mockProps} />);
 
-    expect(chart).toContainReactComponent(XAxis, {
+    expect(chart).toContainReactComponent(LinearXAxis, {
       labels: ['Jan 1'],
     });
   });

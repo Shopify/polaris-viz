@@ -1,31 +1,14 @@
 @import 'node_modules/@shopify/polaris-tokens/dist/index';
+@import '../../../../styles/common';
 
 .Container {
-  align-items: center;
-  display: flex;
-  justify-content: flex-end;
-  flex-wrap: wrap;
-  padding: $spacing-base-tight $spacing-tight $spacing-base-tight
-    $spacing-base-tight;
-}
-
-.ColorPreview {
-  width: 10px;
-  height: 10px;
-  border-radius: 10%;
+  @include legend-container;
 }
 
 .InnerContainer {
-  align-items: center;
-  column-gap: $spacing-extra-tight;
-  display: grid;
-  grid-auto-flow: column;
-  justify-content: end;
-  padding: $spacing-extra-tight $spacing-base-tight;
+  @include legend-series;
 }
 
 .Label {
-  color: $color-ink-light;
-  font-size: 13px;
-  font-weight: 500;
+  @include legend-label;
 }

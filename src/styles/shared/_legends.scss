@@ -1,0 +1,25 @@
+// stylelint-disable scss/partial-no-import
+@import 'node_modules/@shopify/polaris-tokens/dist/index';
+
+@mixin legend-label {
+  color: $color-ink-light;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+@mixin legend-container {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  padding: $spacing-base-tight 0 $spacing-base-tight $spacing-base-tight;
+}
+
+@mixin legend-series {
+  align-items: center;
+  column-gap: $spacing-extra-tight;
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: end;
+  padding: $spacing-extra-tight $spacing-base-tight;
+}

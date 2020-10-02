@@ -1,7 +1,8 @@
 @import 'node_modules/@shopify/polaris-tokens/dist/index';
+@import '../../../../styles/common';
 
 .Container {
-  font-size: 12px;
+  @include tooltip-text;
   display: grid;
   max-width: 160px;
   grid-template-columns: auto auto 1fr;
@@ -12,10 +13,4 @@
 .Value {
   justify-self: end;
   margin-left: $spacing-base;
-}
-
-.ColorPreview {
-  width: 10px;
-  height: 10px;
-  border-radius: 10%;
 }

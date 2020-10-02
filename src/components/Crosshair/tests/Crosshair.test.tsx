@@ -23,4 +23,24 @@ describe('<Crosshair />', () => {
 
     expect(crosshair).toContainReactComponent('rect', {height: 500});
   });
+
+  it('gives the rect full opacity by default', () => {
+    const crosshair = mount(
+      <svg>
+        <Crosshair x={50} height={500} />
+      </svg>,
+    );
+
+    expect(crosshair).toContainReactComponent('rect', {style: {opacity: 1}});
+  });
+
+  it('applies opacity from props to the rect', () => {
+    const crosshair = mount(
+      <svg>
+        <Crosshair x={50} height={500} opacity={0.8} />
+      </svg>,
+    );
+
+    expect(crosshair).toContainReactComponent('rect', {style: {opacity: 0.8}});
+  });
 });

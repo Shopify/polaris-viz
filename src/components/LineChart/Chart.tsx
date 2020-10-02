@@ -1,13 +1,15 @@
 import React, {useState} from 'react';
 import {line} from 'd3-shape';
 
+import {LinearXAxis} from '../LinearXAxis';
 import {YAxis} from '../YAxis';
 import {eventPoint} from '../../utilities';
+import {Crosshair} from '../Crosshair';
 
 import {Series} from './types';
 import {Margin, SPACING_TIGHT} from './constants';
 import {useXScale, useYScale} from './hooks';
-import {Crosshair, Line, Tooltip, XAxis} from './components';
+import {Line, Tooltip} from './components';
 import styles from './Chart.scss';
 
 interface Props {
@@ -94,7 +96,7 @@ export function Chart({
           transform={`translate(${axisMargin},${dimensions.height -
             marginBottom})`}
         >
-          <XAxis
+          <LinearXAxis
             xScale={xScale}
             labels={xAxisLabels}
             dimensions={dimensions}

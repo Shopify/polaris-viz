@@ -4,6 +4,11 @@
 
 - `<Sparkline />` adds an option for a gradient fill style
 - `<Sparkline />` no longer animates on resize
+- `<Sparkline />` `useAnimation` prop is renamed to `isAnimated`
+
+### Added
+
+- `<StackedAreaChart />`
 
 ## [0.0.16] - 2020-09-18
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Data} from 'components/GroupedBarChart/types';
 
-import {getColorValue} from '../../../../utilities';
+import {SquareColorPreview} from '../../../SquareColorPreview';
 
 import styles from './Legend.scss';
 
@@ -14,10 +14,7 @@ export function Legend({series}: Props) {
     <div className={styles.Container}>
       {series.map(({label, color}) => (
         <div key={label} className={styles.InnerContainer}>
-          <div
-            className={styles.ColorPreview}
-            style={{background: getColorValue(color)}}
-          />
+          <SquareColorPreview color={color} />
           <div className={styles.Label}>{label}</div>
         </div>
       ))}

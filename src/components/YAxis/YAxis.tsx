@@ -7,6 +7,8 @@ import {
   spacingExtraTight,
 } from '@shopify/polaris-tokens';
 
+import {FONT_SIZE} from '../../constants';
+
 interface Props {
   ticks: {
     value: number;
@@ -16,7 +18,7 @@ interface Props {
   drawableWidth: number;
 }
 
-export function YAxis({ticks, drawableWidth}: Props) {
+function Axis({ticks, drawableWidth}: Props) {
   return (
     <g>
       {ticks.map(({value, formattedValue, yOffset}) => {
@@ -29,7 +31,7 @@ export function YAxis({ticks, drawableWidth}: Props) {
             <text
               fill={colorInkLighter}
               style={{
-                fontSize: '12px',
+                fontSize: `${FONT_SIZE}px`,
                 textAnchor: 'end',
                 transform: `translateX(-${spacingBase}) translateY(${spacingExtraTight})`,
               }}
@@ -42,3 +44,5 @@ export function YAxis({ticks, drawableWidth}: Props) {
     </g>
   );
 }
+
+export const YAxis = React.memo(Axis);

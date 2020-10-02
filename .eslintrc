@@ -37,7 +37,7 @@
     "react/no-unsafe": ["error", {"checkAliases": true}],
     "shopify/jsx-no-complex-expressions": "off",
     "shopify/jsx-prefer-fragment-wrappers": "off",
-    "shopify/no-ancestor-directory-import": "error",
+    "import/no-useless-path-segments": "off",
     "shopify/react-prefer-private-members": "off",
     "jsx-a11y/label-has-for": [
       2,

@@ -1,0 +1,23 @@
+@import 'node_modules/@shopify/polaris-tokens/dist/index';
+@import '../../../../styles/common';
+
+.SeriesName {
+  margin: 0;
+  @include tooltip-emphasis;
+}
+
+.Value {
+  font-feature-settings: 'tnum';
+  margin: 0;
+  padding-left: $spacing-extra-tight;
+  text-align: right;
+}
+
+.Container {
+  @include tooltip-text;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  column-gap: $spacing-tight;
+  row-gap: $spacing-tight;
+}

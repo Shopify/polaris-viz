@@ -1,20 +1,20 @@
 @import 'node_modules/@shopify/polaris-tokens/dist/index';
+@import '../../../../styles/common';
 
 .SeriesName {
-  font-size: 13px;
-  font-weight: 600;
+  @include tooltip-emphasis;
   margin: 0;
 }
 
 .Value {
   font-feature-settings: 'tnum';
-  font-size: 13px;
   margin: 0;
   padding-left: $spacing-extra-tight;
   text-align: right;
 }
 
 .Container {
+  @include tooltip-text;
   display: grid;
   grid-template-columns: 1fr auto auto;
   align-items: center;

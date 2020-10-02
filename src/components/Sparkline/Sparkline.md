@@ -90,7 +90,7 @@ The sparkline stroke and fill color. This accepts any [Polaris Viz accepted colo
 
 Determines whether to fill in the area beneath the line and what kind of shading to use.
 
-#### useAnimation
+#### isAnimated
 
 | type      | default |
 | --------- | ------- |
