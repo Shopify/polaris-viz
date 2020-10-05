@@ -1,7 +1,8 @@
 import React from 'react';
-import {colorSky} from '@shopify/polaris-tokens';
 
 import {CROSSHAIR_WIDTH} from '../../constants';
+
+import styles from './Crosshair.scss';
 
 interface Props {
   x: number;
@@ -15,9 +16,11 @@ export function Crosshair({x, height, opacity = 1}: Props) {
       x={x - CROSSHAIR_WIDTH / 2}
       width={CROSSHAIR_WIDTH}
       height={height}
-      fill={colorSky}
-      style={{opacity}}
       stroke="none"
+      className={styles.Crosshair}
+      style={{
+        opacity,
+      }}
     />
   );
 }

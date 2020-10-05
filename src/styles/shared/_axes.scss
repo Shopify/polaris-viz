@@ -1,0 +1,14 @@
+$label-color: rgb(99, 115, 129);
+$axis-color: rgb(223, 227, 232);
+
+@mixin axis-label {
+  fill: $label-color;
+}
+
+@mixin axis-line {
+  stroke: $axis-color;
+}
+
+@mixin axis-crosshair {
+  fill: $axis-color;
+}

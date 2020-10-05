@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import {ScaleLinear} from 'd3-scale';
-import {colorSky, colorInkLighter, spacingLoose} from '@shopify/polaris-tokens';
+import {colorSky, spacingLoose} from '@shopify/polaris-tokens';
 
 import {getTextWidth} from '../../utilities';
 import {
@@ -10,6 +10,8 @@ import {
   TICK_SIZE,
   FONT_SIZE,
 } from '../../constants';
+
+import styles from './LinearXAxis.scss';
 
 interface Props {
   xScale: ScaleLinear<number, number>;
@@ -111,7 +113,7 @@ function Axis({xScale, drawableHeight, dimensions, labels, axisMargin}: Props) {
               strokeDasharray="3 2"
             />
             <text
-              fill={colorInkLighter}
+              className={styles.Text}
               style={{
                 fontSize: `${FONT_SIZE}px`,
                 textAnchor: 'middle',
