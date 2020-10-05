@@ -40,6 +40,7 @@ describe('Chart />', () => {
       {data: [10, 20, 30], color: 'colorBlack' as Color, label: 'LABEL1'},
       {data: [10, 20, 30], color: 'colorRed' as Color, label: 'LABEL2'},
     ],
+    stacked: false,
     labels: ['stuff 1', 'stuff 2', 'stuff 3'],
     chartDimensions: new DOMRect(),
     formatYValue: (value: number) => value.toString(),
