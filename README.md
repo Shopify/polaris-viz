@@ -67,7 +67,8 @@ Components inherit their sizes from their containers, so place your component in
 
 <table>
   <tr>
-  <td width="50%">
+  <td>
+
 <a href="src/components/NormalizedStackedBar/NormalizedStackedBar.md">
   <img src="src/components/NormalizedStackedBar/normalized-stacked-bar-chart.png"/>
 </a>
