@@ -1,11 +1,11 @@
 import React from 'react';
 
-// eslint-disable-next-line import/no-default-export
-export default function Starter() {
-  const outerContainerStyle = {background: 'white', padding: '3rem'};
+import {OUTER_CONTAINER_STYLE} from './constants';
+
+export function Starter() {
   const innerContainerStyle = {
     width: '900px',
-    height: '200px',
+    height: '300px',
     background: 'white',
     padding: '2rem',
     borderRadius: '6px',
@@ -18,7 +18,7 @@ export default function Starter() {
     "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif";
 
   return (
-    <div style={outerContainerStyle}>
+    <div style={OUTER_CONTAINER_STYLE}>
       <div style={innerContainerStyle}>{/* Component goes here */}</div>
     </div>
   );

@@ -1,8 +1,22 @@
-# Polaris Viz
-
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<a name="polaris-viz" href="#polaris-viz">
+  <img height="73" src="documentation/images/header/polaris-viz.png" alt="Polaris viz" />
+</a><br/>
 Polaris Viz is a data visualization React component library. It was built to help Shopify merchants better understand their data.
 
-## Installation
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<a name="installation" href="#installation">
+  <img height="36" src="documentation/images/header/installation.png" alt="Installation" />
+</a>
 
 Run the following command using [npm](https://www.npmjs.com/):
 
@@ -16,7 +30,13 @@ If you prefer [Yarn](https://yarnpkg.com/en/), use the following command instead
 yarn add @shopify/polaris-viz
 ```
 
-## Usage
+<br/>
+<br/>
+<br/>
+<br/>
+<a name="usage" href="#usage">
+  <img height="36" src="documentation/images/header/usage.png" alt="Usage" />
+</a>
 
 If your app is set up to consume `esnext` builds, import components where you want to use them and the styles will automatically be applied.
 
@@ -26,65 +46,113 @@ If your app is not set up for `esnext`, import the styles where you import compo
 import '@shopify/polaris-viz/styles.css';
 ```
 
-## Components
+<br/>
+<br/>
+<br/>
+<br/>
+<a name="components" href="#components">
+  <img height="36" src="documentation/images/header/components.png" alt="Components" />
+</a>
 
 Components inherit their sizes from their containers, so place your component inside an element with a width and height specified.
 
+<!--
 1. [Normalized stacked bar chart](#normalized-stacked-bar-chart)
 2. [Sparkline](#sparkline)
+3. [Line chart](#line-chart)
+4. [Bar chart](#bar-chart)
+5. [Grouped bar chart](#grouped-bar-chart) -->
 
-### Normalized stacked bar chart
+<br/>
 
-<img src="src/components/NormalizedStackedBar/normalized-stacked-bar-chart.png"/>
+<table>
+  <tr>
+  <td width="50%">
+<a href="src/components/NormalizedStackedBar/NormalizedStackedBar.md">
+  <img src="src/components/NormalizedStackedBar/normalized-stacked-bar-chart.png"/>
+</a>
 
-Used for positive datasets with two to four items.
+#### Normalized stacked bar chart
 
-[View documentation →](src/components/NormalizedStackedBar/NormalizedStackedBar.md)
+Used for positive datasets with two to four items. [View documentation&nbsp;→](src/components/NormalizedStackedBar/NormalizedStackedBar.md)
 
-### Sparkline
+  </td>
+  <td>
 
-<img src="src/components/Sparkline/sparkline.png"/>
+<a href="src/components/Sparkline/Sparkline.md">
+  <img src="src/components/Sparkline/sparkline.png"/>
+</a>
 
-Used in small sizes to give an overview of how a metric has performed over time.
+#### Sparkline
 
-[View documentation →](src/components/Sparkline/Sparkline.md)
+Used in small sizes to give an overview of how a metric has performed over time. [View documentation&nbsp;→](src/components/Sparkline/Sparkline.md)
 
-### Line chart
+  </td>  
+  </tr>
+  
+  <tr>
+  <td>
+<a href="src/components/LineChart/LineChart.md">
+  <img src="src/components/LineChart/line-chart.png"/>
+</a>
 
-<img src="src/components/LineChart/line-chart.png"/>
+#### Line chart
 
-Used to show change over time, comparisons, and trends.
+Used to show change over time, comparisons, and trends. [View documentation&nbsp;→](src/components/LineChart/LineChart.md)
 
-[View documentation →](src/components/LineChart/LineChart.md)
+  </td>
+  <td>
 
-### Bar chart
+<a href="src/components/BarChart/BarChart.md">
+  <img src="src/components/BarChart/bar-chart.png"/>
+</a>
 
-<img src="src/components/BarChart/bar-chart.png"/>
+#### Bar chart
 
-Used to show comparison across categories.
+Used to show comparison across categories. [View documentation&nbsp;→](src/components/BarChart/BarChart.md)
 
-[View documentation →](src/components/BarChart/BarChart.md)
+  </td>  
+  </tr>
+  <tr>
+  <td>
+<a href="src/components/GroupedBarChart/GroupedBarChart.md">
+  <img src="src/components/GroupedBarChart/grouped-bar-chart.png"/>
+</a>
 
-### Grouped bar chart
+#### Grouped bar chart
 
-<img src="src/components/GroupedBarChart/grouped-bar-chart.png"/>
+Used to show comparison of different types, across categories. [View documentation&nbsp;→](src/components/GroupedBarChart/GroupedBarChart.md)
 
-Used to show comparison of different types, across categories.
+  </td>
+  <td>
+<a href="src/components/StackedAreaChart/StackedAreaChart.md">
+  <img src="src/components/StackedAreaChart/stacked-area-chart.png"/>
+</a>
 
-[View documentation →](src/components/GroupedBarChart/GroupedBarChart.md)
+#### Stacked area chart
 
-### Stacked area chart
+Used to compare multiple series of data and display the total value. [View documentation&nbsp;→](src/components/StackedAreaChart/StackedAreaChart.md)
 
-<img src="src/components/StackedAreaChart/stacked-area-chart.png"/>
+  </td>  
+  </tr>  
+</table>
 
-Used to compare multiple series of data and display the total value.
-
-[View documentation →](src/components/StackedAreaChart/StackedAreaChart.md)
-
-## Contributing
+<br/>
+<br/>
+<br/>
+<br/>
+<a name="contributing" href="#contributing">
+  <img height="36" src="documentation/images/header/contributing.png" alt="Contributing" />
+</a>
 
 Pull requests are welcome.
 
-## Licenses
+<br/>
+<br/>
+<br/>
+<br/>
+<a name="licenses" href="#licenses">
+  <img height="36" src="documentation/images/header/licenses.png" alt="Licenses" />
+</a>
 
 - Source code is under a [custom license](https://github.com/Shopify/polaris-viz/blob/master/LICENSE.md) based on MIT. The license restricts Polaris Viz usage to applications that integrate or interoperate with Shopify software or services, with additional restrictions for external, stand-alone applications.

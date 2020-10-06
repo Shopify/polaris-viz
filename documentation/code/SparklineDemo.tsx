@@ -3,8 +3,9 @@ import React from 'react';
 // eslint-disable-next-line shopify/strict-component-boundaries
 import {Sparkline} from '../../src/components';
 
-// eslint-disable-next-line import/no-default-export
-export default function SparklineDemo() {
+import {OUTER_CONTAINER_STYLE} from './constants';
+
+export function SparklineDemo() {
   const data = [
     {x: 0, y: 100},
     {x: 1, y: 200},
@@ -19,10 +20,9 @@ export default function SparklineDemo() {
     {x: 10, y: 400},
   ];
 
-  const outerContainerStyle = {background: 'white', padding: '3rem'};
   const innerContainerStyle = {
     width: '900px',
-    height: '200px',
+    height: '300px',
     background: 'white',
     padding: '2rem',
     borderRadius: '6px',
@@ -32,7 +32,7 @@ export default function SparklineDemo() {
   };
 
   return (
-    <div style={outerContainerStyle}>
+    <div style={OUTER_CONTAINER_STYLE}>
       <div style={innerContainerStyle}>
         <div
           style={{
@@ -42,8 +42,8 @@ export default function SparklineDemo() {
         >
           <Sparkline
             color="primary"
-            useAnimation
-            includeArea
+            isAnimated
+            areaFillStyle="gradient"
             accessibilityLabel="Customer growth over time"
             data={data}
           />
