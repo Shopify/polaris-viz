@@ -1,6 +1,6 @@
 # Changelog
 
-### Unreleased
+### [0.0.18] - 2020-10-09
 
 ### Fixed
 
