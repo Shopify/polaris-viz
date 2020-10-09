@@ -1,5 +1,11 @@
 # Changelog
 
+### Unreleased
+
+### Fixed
+
+- Made axes and label colors consistent
+
 ### [0.0.17] - 2020-10-02
 
 ### Fixed

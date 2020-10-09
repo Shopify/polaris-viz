@@ -1,13 +1,9 @@
 import React from 'react';
-import {
-  colorSky,
-  colorSkyDark,
-  colorInkLighter,
-  spacingBase,
-  spacingExtraTight,
-} from '@shopify/polaris-tokens';
+import {spacingBase, spacingExtraTight} from '@shopify/polaris-tokens';
 
 import {FONT_SIZE} from '../../constants';
+
+import styles from './YAxis.scss';
 
 interface Props {
   ticks: {
@@ -24,12 +20,9 @@ function Axis({ticks, drawableWidth}: Props) {
       {ticks.map(({value, formattedValue, yOffset}) => {
         return (
           <g key={value} transform={`translate(0,${yOffset})`}>
-            <line
-              x2={drawableWidth}
-              stroke={value === 0 ? colorSkyDark : colorSky}
-            />
+            <line x2={drawableWidth} className={styles.Line} />
             <text
-              fill={colorInkLighter}
+              className={styles.Text}
               style={{
                 fontSize: `${FONT_SIZE}px`,
                 textAnchor: 'end',

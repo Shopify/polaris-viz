@@ -1,5 +1,5 @@
 import React from 'react';
-import {colorSky, colorInkLighter} from '@shopify/polaris-tokens';
+import {colorSky} from '@shopify/polaris-tokens';
 import {ScaleBand} from 'd3-scale';
 
 import {
@@ -10,6 +10,8 @@ import {
   SPACING_LOOSE,
   DIAGONAL_ANGLE,
 } from '../../constants';
+
+import styles from './XAxis.scss';
 
 export function XAxis({
   labels,
@@ -49,7 +51,7 @@ export function XAxis({
           <g key={index} transform={`translate(${xOffset}, 0)`}>
             <line y2={TICK_SIZE} stroke={colorSky} />
             <text
-              fill={colorInkLighter}
+              className={styles.Text}
               textAnchor={textAnchor}
               transform={transform}
               style={{
