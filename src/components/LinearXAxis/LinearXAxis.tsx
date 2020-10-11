@@ -1,10 +1,15 @@
-import {SPACING_TIGHT, TICK_SIZE, FONT_SIZE} from 'consts';
 import React, {useMemo} from 'react';
 import {ScaleLinear} from 'd3-scale';
 import {colorSky, spacingLoose} from '@shopify/polaris-tokens';
 
+import {
+  SPACING_TIGHT,
+  TICK_SIZE,
+  FONT_SIZE,
+  SMALL_WIDTH,
+  MIN_LABEL_SPACE,
+} from '../../constants';
 import {getTextWidth} from '../../utilities';
-import {SMALL_WIDTH, MIN_LABEL_SPACE} from '../../constants';
 
 import styles from './LinearXAxis.scss';
 

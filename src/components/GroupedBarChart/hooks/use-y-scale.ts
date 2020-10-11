@@ -1,7 +1,7 @@
-import {MIN_Y_LABEL_SPACE} from 'consts';
 import {useMemo} from 'react';
 import {scaleLinear} from 'd3-scale';
 
+import {MIN_Y_LABEL_SPACE} from '../constants';
 import {Data} from '../types';
 
 export function useYScale({

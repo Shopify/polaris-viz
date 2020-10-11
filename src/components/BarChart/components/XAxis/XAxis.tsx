@@ -1,6 +1,7 @@
 import React from 'react';
 import {colorSky} from '@shopify/polaris-tokens';
 import {ScaleBand} from 'd3-scale';
+
 import {
   TICK_SIZE,
   SPACING,
@@ -8,7 +9,7 @@ import {
   SPACING_EXTRA_TIGHT,
   SPACING_LOOSE,
   DIAGONAL_ANGLE,
-} from 'consts';
+} from '../../../../constants';
 
 import styles from './XAxis.scss';
 

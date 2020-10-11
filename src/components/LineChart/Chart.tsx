@@ -1,7 +1,7 @@
-import {SPACING_TIGHT} from 'consts';
 import React, {useState} from 'react';
 import {line} from 'd3-shape';
 
+import {SPACING_TIGHT} from '../../constants';
 import {LinearXAxis} from '../LinearXAxis';
 import {YAxis} from '../YAxis';
 import {eventPoint} from '../../utilities';

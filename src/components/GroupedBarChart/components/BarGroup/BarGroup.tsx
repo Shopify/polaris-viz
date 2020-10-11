@@ -1,12 +1,12 @@
-import {MIN_BAR_HEIGHT} from 'consts';
 import React from 'react';
 import {animated, useSpring} from 'react-spring';
 import {ScaleLinear} from 'd3-scale';
 import {Color} from 'types';
 import tokens from '@shopify/polaris-tokens';
 
-import {getColorValue} from '../../../../utilities';
+import {MIN_BAR_HEIGHT} from '../../../../constants';
 import {FULL_OPACITY, SUBDUED_OPACITY, BAR_SPACING} from '../../constants';
+import {getColorValue} from '../../../../utilities';
 
 interface Props {
   x: number;

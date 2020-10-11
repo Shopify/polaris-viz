@@ -1,8 +1,8 @@
-import {MIN_BAR_HEIGHT} from 'consts';
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleBand} from 'd3-scale';
 
+import {MIN_BAR_HEIGHT} from '../../../../../constants';
 import {Bar} from '../Bar';
 
 jest.mock('d3-scale', () => ({

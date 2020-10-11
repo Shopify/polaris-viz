@@ -1,3 +1,6 @@
+import React, {useState} from 'react';
+import {Color} from 'types';
+
 import {
   MARGIN,
   LINE_HEIGHT,
@@ -6,10 +9,7 @@ import {
   FONT_SIZE,
   DIAGONAL_ANGLE,
   SMALL_WIDTH,
-} from 'consts';
-import React, {useState} from 'react';
-import {Color} from 'types';
-
+} from '../../constants';
 import {eventPoint, getTextWidth} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {TooltipContainer} from '../TooltipContainer';

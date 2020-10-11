@@ -1,4 +1,4 @@
-import {SPACING_TIGHT, SPACING_EXTRA_TIGHT} from 'consts';
+import {SPACING_TIGHT, SPACING_EXTRA_TIGHT} from '../../constants';
 
 export const SMALL_WIDTH = 300;
 export const MIN_Y_LABEL_SPACE = 50;
