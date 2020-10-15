@@ -148,6 +148,8 @@ Used to compare multiple series of data and display the total value. [View docum
 
 Pull requests are welcome.
 
+For local development, clone this repo. Run `yarn run dev` to start the server. Import the components you'd like to work with into `Playground.tsx` and see your changes reflected on your localhost.
+
 <br/>
 <br/>
 <br/>
