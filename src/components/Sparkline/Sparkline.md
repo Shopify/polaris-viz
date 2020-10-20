@@ -25,7 +25,7 @@ Used in small sizes to give an overview of how a metric has performed over time.
     accessibilityLabel="Customer growth over time"
     color="primary"
     areaFillStyle="solid"
-    useAnimation
+    isAnimated
   />
 </div>
 ```
@@ -40,7 +40,7 @@ The sparkline interface looks like this:
   accessibilityLabel?: string;
   color?: Color;
   areaFillStyle?: 'none' | 'solid' | 'gradient';
-  useAnimation?: boolean;
+  isAnimated?: boolean;
 }
 ```
 
