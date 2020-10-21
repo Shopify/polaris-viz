@@ -97,15 +97,37 @@ describe('Chart />', () => {
     });
   });
 
-  it('passes hasActiveGroup to BarGroups that are not active', () => {
+  it('passes highlightColors with default colors to barGroup when no highlightColor is defined', () => {
     const chart = mount(<Chart {...mockProps} />);
 
-    const svg = chart.find('svg')!;
-    svg.trigger('onMouseMove', fakeSVGEvent);
+    expect(chart).toContainReactComponent(BarGroup, {
+      highlightColors: ['colorBlack', 'colorRed'],
+    });
+  });
+
+  it('passes highlightColors barGroup', () => {
+    const chart = mount(
+      <Chart
+        {...mockProps}
+        series={[
+          {
+            data: [10, 20, 30],
+            color: 'colorBlack' as Color,
+            highlightColor: 'primary' as Color,
+            label: 'LABEL1',
+          },
+          {
+            data: [10, 20, 30],
+            color: 'colorRed' as Color,
+            highlightColor: 'secondary' as Color,
+            label: 'LABEL2',
+          },
+        ]}
+      />,
+    );
 
     expect(chart).toContainReactComponent(BarGroup, {
-      isActive: false,
-      hasActiveGroup: true,
+      highlightColors: ['primary', 'secondary'],
     });
   });
 });
