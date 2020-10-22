@@ -1,6 +1,8 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
+import {Data, StackSeries} from 'components/GroupedBarChart/types';
+import {getStackedValues} from 'components/GroupedBarChart/utilities';
 
 import {useYScale} from '../use-y-scale';
 
@@ -14,6 +16,31 @@ jest.mock('d3-scale', () => ({
     return scale;
   }),
 }));
+let domainSpy = jest.fn();
+
+const mockData: Data[] = [
+  {data: [10, 20, 30], color: 'colorBlack', label: 'LABEL1'},
+  {data: [1, 2, 3], color: 'colorBlack', label: 'LABEL2'},
+  {data: [5, 7, 10], color: 'colorBlack', label: 'LABEL3'},
+];
+
+const labels: string[] = ['Monday', 'Tuesday', 'Wednesday'];
+
+interface Props {
+  stackedValues: StackSeries[] | null;
+  data: Data[];
+}
+
+function TestComponent({stackedValues, data}: Props) {
+  useYScale({
+    drawableHeight: 500,
+    formatYValue: jest.fn(),
+    data,
+    stackedValues,
+  });
+
+  return null;
+}
 
 describe('useYScale', () => {
   afterEach(() => {
@@ -31,28 +58,12 @@ describe('useYScale', () => {
       return scale;
     });
 
-    function TestComponent() {
-      useYScale({
-        drawableHeight: 500,
-        formatYValue: jest.fn(),
-        data: [
-          {data: [10, 20, 30], color: 'colorBlack', label: 'LABEL1'},
-          {data: [1, 2, 3], color: 'colorBlack', label: 'LABEL1'},
-          {data: [5, 7, 10], color: 'colorBlack', label: 'LABEL1'},
-        ],
-        stackedValues: null,
-      });
-
-      return null;
-    }
-
-    mount(<TestComponent />);
+    mount(<TestComponent stackedValues={null} data={mockData} />);
 
     expect(ticksSpy).toHaveBeenCalledWith(6);
   });
 
   it('creates a y scale with a domain corresponding to the minimum and maximum values in the data set', () => {
-    let domainSpy = jest.fn();
     (scaleLinear as jest.Mock).mockImplementation(() => {
       const scale = (value: any) => value;
       scale.ticks = (numTicks: number) => Array.from(Array(numTicks));
@@ -63,24 +74,83 @@ describe('useYScale', () => {
       return scale;
     });
 
-    function TestComponent() {
-      useYScale({
-        drawableHeight: 500,
-        formatYValue: jest.fn(),
-        data: [
-          {data: [10, 20, 30], color: 'colorBlack', label: 'LABEL1'},
-          {data: [1, 2, 3], color: 'colorBlack', label: 'LABEL1'},
-          {data: [5, 7, 10], color: 'colorBlack', label: 'LABEL1'},
-        ],
-        stackedValues: null,
-      });
-
-      return null;
-    }
-
-    mount(<TestComponent />);
+    mount(<TestComponent stackedValues={null} data={mockData} />);
 
     expect(domainSpy).toHaveBeenCalledWith([0, 30]);
+  });
+
+  it('creates a y scale with a domain corresponding to the minimum and maximum values with stacked data set', () => {
+    (scaleLinear as jest.Mock).mockImplementation(() => {
+      const scale = (value: any) => value;
+      scale.ticks = (numTicks: number) => Array.from(Array(numTicks));
+      scale.range = (range: any) => (range ? scale : range);
+      domainSpy = jest.fn((domain: any) => (domain ? scale : domain));
+      scale.domain = domainSpy;
+      scale.nice = () => scale;
+      return scale;
+    });
+
+    mount(
+      <TestComponent
+        stackedValues={getStackedValues(mockData, labels)}
+        data={mockData}
+      />,
+    );
+
+    expect(domainSpy).toHaveBeenCalledWith([0, 43]);
+  });
+
+  it('creates a y scale with a domain handling negative values with stacked data set', () => {
+    (scaleLinear as jest.Mock).mockImplementation(() => {
+      const scale = (value: any) => value;
+      scale.ticks = (numTicks: number) => Array.from(Array(numTicks));
+      scale.range = (range: any) => (range ? scale : range);
+      domainSpy = jest.fn((domain: any) => (domain ? scale : domain));
+      scale.domain = domainSpy;
+      scale.nice = () => scale;
+      return scale;
+    });
+
+    mount(
+      <TestComponent
+        stackedValues={getStackedValues(
+          [
+            {data: [-10, 20, 30], color: 'colorBlack', label: 'LABEL1'},
+            {data: [1, 2, 3], color: 'colorBlack', label: 'LABEL2'},
+            {data: [5, 7, 10], color: 'colorBlack', label: 'LABEL3'},
+          ],
+          labels,
+        )}
+        data={mockData}
+      />,
+    );
+
+    expect(domainSpy).toHaveBeenCalledWith([-10, 43]);
+  });
+
+  it('creates a y scale with a domain handling negative values with regular data set', () => {
+    (scaleLinear as jest.Mock).mockImplementation(() => {
+      const scale = (value: any) => value;
+      scale.ticks = (numTicks: number) => Array.from(Array(numTicks));
+      scale.range = (range: any) => (range ? scale : range);
+      domainSpy = jest.fn((domain: any) => (domain ? scale : domain));
+      scale.domain = domainSpy;
+      scale.nice = () => scale;
+      return scale;
+    });
+
+    mount(
+      <TestComponent
+        stackedValues={null}
+        data={[
+          {data: [-10, 20, 30], color: 'colorBlack', label: 'LABEL1'},
+          {data: [1, 2, 3], color: 'colorBlack', label: 'LABEL2'},
+          {data: [5, 7, 10], color: 'colorBlack', label: 'LABEL3'},
+        ]}
+      />,
+    );
+
+    expect(domainSpy).toHaveBeenCalledWith([-10, 30]);
   });
 
   it('creates a y scale with range equal to the drawable height', () => {
@@ -95,22 +165,7 @@ describe('useYScale', () => {
       return scale;
     });
 
-    function TestComponent() {
-      useYScale({
-        drawableHeight: 500,
-        formatYValue: jest.fn(),
-        data: [
-          {data: [10, 20, 30], color: 'colorBlack', label: 'LABEL1'},
-          {data: [1, 2, 3], color: 'colorBlack', label: 'LABEL1'},
-          {data: [5, 7, 10], color: 'colorBlack', label: 'LABEL1'},
-        ],
-        stackedValues: null,
-      });
-
-      return null;
-    }
-
-    mount(<TestComponent />);
+    mount(<TestComponent stackedValues={null} data={mockData} />);
 
     expect(rangeSpy).toHaveBeenCalledWith([500, 0]);
   });

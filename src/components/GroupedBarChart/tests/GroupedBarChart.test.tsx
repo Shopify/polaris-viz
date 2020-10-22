@@ -6,7 +6,7 @@ import {GroupedBarChart} from '../GroupedBarChart';
 import {Chart} from '../Chart';
 import {Legend} from '../components';
 
-describe('GroupedBarChart />', () => {
+describe('<GroupedBarChart />', () => {
   const mockProps = {
     series: [
       {data: [10, 20, 30], color: 'colorBlack' as Color, label: 'LABEL1'},

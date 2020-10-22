@@ -4,7 +4,7 @@ import {Color} from 'types';
 import {YAxis, TooltipContainer} from 'components';
 
 import {Chart} from '../Chart';
-import {XAxis, Tooltip, BarGroup} from '../components';
+import {XAxis, Tooltip, BarGroup, StackedBarGroup} from '../components';
 
 (global as any).DOMRect = class DOMRect {
   width = 500;
@@ -80,54 +80,122 @@ describe('Chart />', () => {
     expect(chart).toContainReactComponent(Tooltip);
   });
 
-  it('renders a BarGroup for each data item', () => {
-    const chart = mount(<Chart {...mockProps} />);
+  describe('<BarGroup />', () => {
+    it('renders a BarGroup for each data item', () => {
+      const chart = mount(<Chart {...mockProps} />);
 
-    expect(chart).toContainReactComponentTimes(BarGroup, 3);
-  });
+      expect(chart).toContainReactComponentTimes(BarGroup, 3);
+    });
 
-  it('passes active props to the BarGroup that is being hovered on', () => {
-    const chart = mount(<Chart {...mockProps} />);
+    it('passes active props to the BarGroup that is being hovered', () => {
+      const chart = mount(<Chart {...mockProps} />);
 
-    const svg = chart.find('svg')!;
-    svg.trigger('onMouseMove', fakeSVGEvent);
+      const svg = chart.find('svg')!;
+      svg.trigger('onMouseMove', fakeSVGEvent);
 
-    expect(chart).toContainReactComponent(BarGroup, {
-      isActive: true,
+      expect(chart).toContainReactComponent(BarGroup, {
+        isActive: true,
+      });
+    });
+
+    it('passes highlightColors with default colors to barGroup when no highlightColors are provided', () => {
+      const chart = mount(<Chart {...mockProps} />);
+
+      expect(chart).toContainReactComponent(BarGroup, {
+        highlightColors: ['colorBlack', 'colorRed'],
+      });
+    });
+
+    it('passes highlightColors barGroup', () => {
+      const chart = mount(
+        <Chart
+          {...mockProps}
+          series={[
+            {
+              data: [10, 20, 30],
+              color: 'colorBlack' as Color,
+              highlightColor: 'primary' as Color,
+              label: 'LABEL1',
+            },
+            {
+              data: [10, 20, 30],
+              color: 'colorRed' as Color,
+              highlightColor: 'secondary' as Color,
+              label: 'LABEL2',
+            },
+          ]}
+        />,
+      );
+
+      expect(chart).toContainReactComponent(BarGroup, {
+        highlightColors: ['primary', 'secondary'],
+      });
+    });
+
+    it('does not render BarGroup is stacked is true', () => {
+      const chart = mount(<Chart {...mockProps} stacked />);
+
+      expect(chart).not.toContainReactComponent(BarGroup);
     });
   });
 
-  it('passes highlightColors with default colors to barGroup when no highlightColor is defined', () => {
-    const chart = mount(<Chart {...mockProps} />);
+  describe('<StackedBarGroup />', () => {
+    it('renders StackedBarGroup if stacked is true', () => {
+      const chart = mount(<Chart {...mockProps} stacked />);
 
-    expect(chart).toContainReactComponent(BarGroup, {
-      highlightColors: ['colorBlack', 'colorRed'],
+      expect(chart).toContainReactComponent(StackedBarGroup);
     });
-  });
 
-  it('passes highlightColors to barGroup', () => {
-    const chart = mount(
-      <Chart
-        {...mockProps}
-        series={[
-          {
-            data: [10, 20, 30],
-            color: 'colorBlack' as Color,
-            highlightColor: 'primary' as Color,
-            label: 'LABEL1',
-          },
-          {
-            data: [10, 20, 30],
-            color: 'colorRed' as Color,
-            highlightColor: 'secondary' as Color,
-            label: 'LABEL2',
-          },
-        ]}
-      />,
-    );
+    it('renders a StackedBarGroup for each stacked data item', () => {
+      const chart = mount(<Chart {...mockProps} stacked />);
 
-    expect(chart).toContainReactComponent(BarGroup, {
-      highlightColors: ['primary', 'secondary'],
+      expect(chart).toContainReactComponentTimes(StackedBarGroup, 2);
+    });
+
+    it('passes highlightColors StackedBarGroup', () => {
+      const chart = mount(
+        <Chart
+          {...mockProps}
+          series={[
+            {
+              data: [10, 20, 30],
+              color: 'colorBlack' as Color,
+              highlightColor: 'primary' as Color,
+              label: 'LABEL1',
+            },
+            {
+              data: [10, 20, 30],
+              color: 'colorRed' as Color,
+              highlightColor: 'secondary' as Color,
+              label: 'LABEL2',
+            },
+          ]}
+          stacked
+        />,
+      );
+
+      expect(chart).toContainReactComponent(StackedBarGroup, {
+        highlightColors: ['primary', 'secondary'],
+      });
+    });
+
+    it('passes highlightColors with default colors to StackedBarGroup when no highlightColors are provided', () => {
+      const chart = mount(<Chart {...mockProps} stacked />);
+
+      expect(chart).toContainReactComponent(StackedBarGroup, {
+        highlightColors: ['colorBlack', 'colorRed'],
+      });
+    });
+
+    it('passes active props to the BarGroup that is being hovered', () => {
+      const chart = mount(<Chart {...mockProps} stacked />);
+
+      const svg = chart.find('svg')!;
+      svg.trigger('onMouseMove', fakeSVGEvent);
+
+      expect(chart).toContainReactComponent(StackedBarGroup, {
+        activeBarGroup: 0,
+      });
     });
   });
 });
