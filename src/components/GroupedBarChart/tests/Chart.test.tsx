@@ -105,7 +105,7 @@ describe('Chart />', () => {
     });
   });
 
-  it('passes highlightColors barGroup', () => {
+  it('passes highlightColors to barGroup', () => {
     const chart = mount(
       <Chart
         {...mockProps}
