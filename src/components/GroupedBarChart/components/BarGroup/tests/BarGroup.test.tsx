@@ -17,6 +17,12 @@ describe('<Bar/>', () => {
     width: 100,
     data: [10, 20, 0, 1],
     colors: ['colorPurple', 'colorTeal', 'colorRed', 'colorOrange'] as Color[],
+    highlightColors: [
+      'primary',
+      'secondary',
+      'tertiary',
+      'quaternary',
+    ] as Color[],
     isActive: false,
     hasActiveGroup: false,
   };
@@ -102,19 +108,7 @@ describe('<Bar/>', () => {
     });
   });
 
-  it('gives rects a 75% opacity if there is another active BarGroup', () => {
-    const barGroup = mount(
-      <svg>
-        <BarGroup {...mockProps} hasActiveGroup />,
-      </svg>,
-    );
-
-    expect(barGroup).toContainReactComponent('rect', {
-      opacity: '75%',
-    });
-  });
-
-  it('gives rects a 100% opacity if it is active', () => {
+  it('renders bar with highlightColor value when isActive prop is true', () => {
     const barGroup = mount(
       <svg>
         <BarGroup {...mockProps} isActive />,
@@ -122,7 +116,16 @@ describe('<Bar/>', () => {
     );
 
     expect(barGroup).toContainReactComponent('rect', {
-      opacity: '100%',
+      fill: 'rgb(0,161,159)',
+    });
+    expect(barGroup).toContainReactComponent('rect', {
+      fill: 'rgb(41,35,112)',
+    });
+    expect(barGroup).toContainReactComponent('rect', {
+      fill: 'rgb(13,140,237)',
+    });
+    expect(barGroup).toContainReactComponent('rect', {
+      fill: 'rgb(157,53,193)',
     });
   });
 });

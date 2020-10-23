@@ -92,6 +92,9 @@ export function Chart({
 
   const barColors = series.map(({color}) => color);
   const barGroupLabels = series.map(({label}) => label);
+  const barHighlightColors = series.map(({highlightColor}, index) =>
+    highlightColor != null ? highlightColor : barColors[index],
+  );
 
   return (
     <div
@@ -133,10 +136,12 @@ export function Chart({
                   <StackedBarGroup
                     key={stackIndex}
                     groupIndex={stackIndex}
+                    activeBarGroup={activeBarGroup}
                     data={stackData}
                     xScale={xScale}
                     yScale={yScale}
                     colors={barColors}
+                    highlightColors={barHighlightColors}
                   />
                 );
               })
@@ -148,11 +153,11 @@ export function Chart({
                     key={index}
                     x={xPosition == null ? 0 : xPosition}
                     isActive={activeBarGroup === index}
-                    hasActiveGroup={activeBarGroup != null}
                     yScale={yScale}
                     data={item}
                     width={xScale.bandwidth()}
                     colors={barColors}
+                    highlightColors={barHighlightColors}
                   />
                 );
               })}

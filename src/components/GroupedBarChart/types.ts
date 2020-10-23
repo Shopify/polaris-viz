@@ -4,6 +4,7 @@ import {Color} from 'types';
 export interface Data {
   data: number[];
   color: Color;
+  highlightColor?: Color;
   label: string;
 }
 

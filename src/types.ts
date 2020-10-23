@@ -64,6 +64,10 @@ export type VizPaletteColor =
   | 'secondary'
   | 'tertiary'
   | 'quaternary'
+  | 'primaryProminent'
+  | 'secondaryProminent'
+  | 'tertiaryProminent'
+  | 'quaternaryProminent'
   | 'pastComparison'
   | 'positive'
   | 'negative';
