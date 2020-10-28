@@ -2,7 +2,7 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleBand, scaleLinear} from 'd3-scale';
 import {Color} from 'types';
-import {StackSeries} from 'components/GroupedBarChart/types';
+import {StackSeries} from 'components/MultiSeriesBarChart/types';
 
 import {StackedBarGroup} from '../StackedBarGroup';
 
