@@ -1,4 +1,4 @@
-import {Data} from 'components/GroupedBarChart/types';
+import {Data} from 'components/MultiSeriesBarChart/types';
 import {stack} from 'd3-shape';
 
 import {getStackedValues} from '../get-stacked-values';

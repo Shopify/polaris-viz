@@ -1,4 +1,4 @@
-import {Data, StackSeries} from 'components/GroupedBarChart/types';
+import {Data, StackSeries} from 'components/MultiSeriesBarChart/types';
 
 import {getMinMax} from '../get-min-max';
 
