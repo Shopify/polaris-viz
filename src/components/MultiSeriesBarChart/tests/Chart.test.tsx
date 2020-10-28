@@ -48,9 +48,9 @@ describe('Chart />', () => {
   };
 
   it('renders an SVG element', () => {
-    const groupedBarChart = mount(<Chart {...mockProps} />);
+    const multiSeriesBarChart = mount(<Chart {...mockProps} />);
 
-    expect(groupedBarChart).toContainReactComponent('svg');
+    expect(multiSeriesBarChart).toContainReactComponent('svg');
   });
 
   it('renders an xAxis', () => {

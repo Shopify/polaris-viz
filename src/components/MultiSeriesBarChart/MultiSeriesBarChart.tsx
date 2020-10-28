@@ -16,7 +16,7 @@ interface Props {
   stacked?: boolean;
 }
 
-export function GroupedBarChart({
+export function MultiSeriesBarChart({
   labels,
   series,
   stacked = false,

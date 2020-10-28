@@ -1,8 +1,6 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
-import {Data, StackSeries} from 'components/GroupedBarChart/types';
-import {getStackedValues} from 'components/GroupedBarChart/utilities';
 
 import {useYScale} from '../use-y-scale';
 

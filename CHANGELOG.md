@@ -5,6 +5,18 @@
 - `<Sparkline />` adds an option for a gradient fill style
 - `<Sparkline />` no longer animates on resize
 
+## [0.0.17] - 2020-09-18
+
+### Changed
+
+- Renamed `<GroupBarChart />` to `<MultiSeriesBarChart />`
+- Updated `<MultiSeriesBarChart />` documentation
+
+### Added
+
+- Added the `stacked` bolean prop to `<MultiSeriesBarChart />`
+- Added `<StackedBarGroup />` to `<MultiSeriesBarChart />` to allow for vertically stacked bars
+
 ## [0.0.16] - 2020-09-18
 
 ### Fixed

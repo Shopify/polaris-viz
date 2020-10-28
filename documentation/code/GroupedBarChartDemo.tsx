@@ -1,10 +1,10 @@
 import React from 'react';
 
 // eslint-disable-next-line shopify/strict-component-boundaries
-import {GroupedBarChart} from '../../src/components';
+import {MultiSeriesBarChart} from '../../src/components';
 
 // eslint-disable-next-line import/no-default-export
-export default function GroupedBarChartDemo() {
+export default function MultiSeriesBarChartDemo() {
   const outerContainerStyle = {background: 'white', padding: '3rem'};
   const innerContainerStyle = {
     width: '900px',
@@ -55,7 +55,7 @@ export default function GroupedBarChartDemo() {
   return (
     <div style={outerContainerStyle}>
       <div style={innerContainerStyle}>
-        <GroupedBarChart
+        <MultiSeriesBarChart
           formatYValue={formatYValue}
           labels={labels}
           series={series}

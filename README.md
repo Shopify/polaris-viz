@@ -65,13 +65,15 @@ Used to show comparison across categories.
 
 [View documentation →](src/components/BarChart/BarChart.md)
 
-### Grouped bar chart
+### Multi-series bar chart
 
-<img src="src/components/GroupedBarChart/grouped-bar-chart.png"/>
+| Grouped                                                                                                                     | Stacked                                                                                                                     |
+| --------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| <img src="src/components/MultiSeriesBarChart/grouped-bar-example.png" alt="Multi-series bar chart grouped example image" /> | <img src="src/components/MultiSeriesBarChart/stacked-bar-example.png" alt="Multi-series bar chart stacked example image" /> |
 
 Used to show comparison of different types, across categories.
 
-[View documentation →](src/components/GroupedBarChart/GroupedBarChart.md)
+[View documentation →](src/components/MultiSeriesBarChart/MultiSeriesBarChart.md)
 
 ## Contributing
 
