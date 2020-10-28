@@ -1,6 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
+import {Data, StackSeries} from 'components/MultiSeriesBarChart/types';
 
 import {useYScale} from '../use-y-scale';
 
@@ -21,8 +22,6 @@ const mockData: Data[] = [
   {data: [1, 2, 3], color: 'colorBlack', label: 'LABEL2'},
   {data: [5, 7, 10], color: 'colorBlack', label: 'LABEL3'},
 ];
-
-const labels: string[] = ['Monday', 'Tuesday', 'Wednesday'];
 
 interface Props {
   stackedValues: StackSeries[] | null;
@@ -90,7 +89,14 @@ describe('useYScale', () => {
 
     mount(
       <TestComponent
-        stackedValues={getStackedValues(mockData, labels)}
+        stackedValues={
+          [
+            [
+              [0, 0],
+              [0, 43],
+            ],
+          ] as StackSeries[]
+        }
         data={mockData}
       />,
     );
@@ -111,14 +117,14 @@ describe('useYScale', () => {
 
     mount(
       <TestComponent
-        stackedValues={getStackedValues(
+        stackedValues={
           [
-            {data: [-10, 20, 30], color: 'colorBlack', label: 'LABEL1'},
-            {data: [1, 2, 3], color: 'colorBlack', label: 'LABEL2'},
-            {data: [5, 7, 10], color: 'colorBlack', label: 'LABEL3'},
-          ],
-          labels,
-        )}
+            [
+              [-10, 0],
+              [0, 43],
+            ],
+          ] as StackSeries[]
+        }
         data={mockData}
       />,
     );
