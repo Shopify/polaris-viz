@@ -4,7 +4,7 @@ owners:
 classification: library
 slack_channels:
   - polaris-data-viz
-  - polaris-help
+  - polaris
 security:
   data_management:
     contains_pii: false
