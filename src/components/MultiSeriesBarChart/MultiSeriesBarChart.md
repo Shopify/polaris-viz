@@ -129,4 +129,4 @@ This indicates to the chart if the data provide is time series data. If `true`, 
 | --------- | ------- |
 | `boolean` | `false` |
 
-This changes the grouping of the bars. If `true` the bar groups will stack vertically, otherwise they will render individual bars for each data point in each group.
+This changes the grouping of the bars. If `true` the bar groups will stack vertically, otherwise they will render individual bars for each data point in each group. To see an example of stacked vs. grouped orientations, refer to the images above.
