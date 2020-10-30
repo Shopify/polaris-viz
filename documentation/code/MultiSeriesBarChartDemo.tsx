@@ -9,8 +9,7 @@ interface Props {
   isStacked?: boolean;
 }
 
-// eslint-disable-next-line import/no-default-export
-export default function MultiSeriesBarChartDemo({isStacked = false}: Props) {
+export function MultiSeriesBarChartDemo({isStacked = false}: Props) {
   const innerContainerStyle = {
     width: '900px',
     background: 'white',
