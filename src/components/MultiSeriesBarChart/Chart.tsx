@@ -208,7 +208,9 @@ export function Chart({
     }
 
     const xPosition = xScale(currentIndex.toString());
-    const highestValue = Math.max(...sortedData[currentIndex]);
+    const highestValue = isStacked
+      ? sortedData[currentIndex].reduce(sumPositiveData, 0)
+      : Math.max(...sortedData[currentIndex]);
     const tooltipXPositon =
       xPosition == null ? 0 : xPosition + axisMargin + xScale.bandwidth() / 2;
 
@@ -218,4 +220,8 @@ export function Chart({
       y: yScale(highestValue),
     });
   }
+}
+
+function sumPositiveData(prevValue: number, currValue: number) {
+  return currValue < 0 ? prevValue : prevValue + currValue;
 }
