@@ -3,6 +3,6 @@ export {
   LineChart,
   NormalizedStackedBar,
   Sparkline,
-  GroupedBarChart,
   StackedAreaChart,
+  MultiSeriesBarChart,
 } from './components';
