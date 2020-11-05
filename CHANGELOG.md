@@ -9,7 +9,7 @@
 
 ### Added
 
-- Added the `stacked` bolean prop to `<MultiSeriesBarChart />`
+- Added the `isStacked` bolean prop to `<MultiSeriesBarChart />`
 - Added `<StackedBarGroup />` to `<MultiSeriesBarChart />` to allow for vertically stacked bars
 
 ### [0.0.18] - 2020-10-09
