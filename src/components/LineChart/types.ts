@@ -8,7 +8,6 @@ export interface Series {
     rawValue: number;
   }[];
   name: string;
-  formatY?(value: number): string;
   style?: Partial<{
     color: Color;
     lineStyle: LineStyle;

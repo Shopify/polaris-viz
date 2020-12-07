@@ -1,6 +1,8 @@
 import React, {useState, useLayoutEffect, useRef} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 
+import {StringLabelFormatter, NumberLabelFormatter} from '../types';
+
 import {Chart} from './Chart';
 import {Data} from './types';
 import {Legend} from './components';
@@ -11,7 +13,8 @@ interface Props {
   labels: string[];
   timeSeries?: boolean;
   accessibilityLabel?: string;
-  formatYValue?(value: number): string;
+  formatXAxisLabel?: StringLabelFormatter;
+  formatYAxisLabel?: NumberLabelFormatter;
   chartHeight?: number;
   isStacked?: boolean;
 }
@@ -23,7 +26,8 @@ export function MultiSeriesBarChart({
   timeSeries = false,
   accessibilityLabel,
   chartHeight = DEFAULT_HEIGHT,
-  formatYValue = (value) => value.toString(),
+  formatXAxisLabel = (value) => value.toString(),
+  formatYAxisLabel = (value) => value.toString(),
 }: Props) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -54,7 +58,8 @@ export function MultiSeriesBarChart({
             series={series}
             labels={labels}
             chartDimensions={chartDimensions}
-            formatYValue={formatYValue}
+            formatXAxisLabel={formatXAxisLabel}
+            formatYAxisLabel={formatYAxisLabel}
             timeSeries={timeSeries}
             isStacked={isStacked}
           />

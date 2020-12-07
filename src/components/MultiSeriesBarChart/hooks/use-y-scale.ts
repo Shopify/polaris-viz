@@ -4,16 +4,17 @@ import {scaleLinear} from 'd3-scale';
 import {Data, StackSeries} from '../types';
 import {MIN_Y_LABEL_SPACE} from '../constants';
 import {getMinMax} from '../utilities';
+import {NumberLabelFormatter} from '../../types';
 
 export function useYScale({
   drawableHeight,
   data,
-  formatYValue,
+  formatYAxisLabel,
   stackedValues,
 }: {
   drawableHeight: number;
   data: Data[];
-  formatYValue(value: number): string;
+  formatYAxisLabel: NumberLabelFormatter;
   stackedValues: StackSeries[] | null;
 }) {
   const {yScale, ticks} = useMemo(() => {
@@ -31,12 +32,12 @@ export function useYScale({
 
     const ticks = yScale.ticks(maxTicks).map((value) => ({
       value,
-      formattedValue: formatYValue(value),
+      formattedValue: formatYAxisLabel(value),
       yOffset: yScale(value),
     }));
 
     return {yScale, ticks};
-  }, [data, drawableHeight, formatYValue, stackedValues]);
+  }, [data, drawableHeight, formatYAxisLabel, stackedValues]);
 
   return {yScale, ticks};
 }

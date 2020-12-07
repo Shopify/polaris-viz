@@ -5,11 +5,12 @@ import {Series} from 'd3-shape';
 import {getTextWidth} from '../../../utilities';
 import {MIN_Y_LABEL_SPACE, Spacing} from '../constants';
 import {FONT_SIZE} from '../../../constants';
+import {NumberLabelFormatter} from '../../types';
 
 export function useYScale({
   drawableHeight,
   stackedValues,
-  formatYAxisValue,
+  formatYAxisLabel,
 }: {
   drawableHeight: number;
   stackedValues: Series<
@@ -18,7 +19,7 @@ export function useYScale({
     },
     string
   >[];
-  formatYAxisValue(value: number): string;
+  formatYAxisLabel: NumberLabelFormatter;
 }) {
   const {yScale, ticks, axisMargin} = useMemo(() => {
     const minY = Math.min(
@@ -45,7 +46,7 @@ export function useYScale({
 
     const ticks = yScale.ticks(maxTicks).map((value) => ({
       value,
-      formattedValue: formatYAxisValue(value),
+      formattedValue: formatYAxisLabel(value),
       yOffset: yScale(value),
     }));
 
@@ -58,7 +59,7 @@ export function useYScale({
     const axisMargin = maxTickWidth + Spacing.Loose + Spacing.ExtraTight;
 
     return {yScale, ticks, axisMargin};
-  }, [formatYAxisValue, drawableHeight, stackedValues]);
+  }, [formatYAxisLabel, drawableHeight, stackedValues]);
 
   return {yScale, ticks, axisMargin};
 }

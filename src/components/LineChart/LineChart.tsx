@@ -1,6 +1,8 @@
 import React, {useLayoutEffect, useRef, useState} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 
+import {StringLabelFormatter, NumberLabelFormatter} from '../types';
+
 import {Chart} from './Chart';
 import {Series} from './types';
 import {Legend} from './components';
@@ -10,14 +12,16 @@ interface Props {
   xAxisLabels?: string[];
   chartHeight?: number;
   accessibilityLabel?: string;
-  formatYAxisValue?(value: number): string;
+  formatXAxisLabel?: StringLabelFormatter;
+  formatYAxisLabel?: NumberLabelFormatter;
 }
 
 export function LineChart({
   series,
   xAxisLabels,
   chartHeight = 250,
-  formatYAxisValue = (value) => `${value}`,
+  formatXAxisLabel = (value) => value.toString(),
+  formatYAxisLabel = (value) => value.toString(),
   accessibilityLabel,
 }: Props) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
@@ -52,7 +56,8 @@ export function LineChart({
           <Chart
             series={series}
             xAxisLabels={xAxisLabels}
-            formatYAxisValue={formatYAxisValue}
+            formatXAxisLabel={formatXAxisLabel}
+            formatYAxisLabel={formatYAxisLabel}
             dimensions={chartDimensions}
           />
         )}

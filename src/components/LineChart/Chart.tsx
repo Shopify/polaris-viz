@@ -5,6 +5,7 @@ import {LinearXAxis} from '../LinearXAxis';
 import {YAxis} from '../YAxis';
 import {eventPoint} from '../../utilities';
 import {Crosshair} from '../Crosshair';
+import {StringLabelFormatter, NumberLabelFormatter} from '../types';
 
 import {Series} from './types';
 import {Margin, SPACING_TIGHT} from './constants';
@@ -15,7 +16,8 @@ import styles from './Chart.scss';
 interface Props {
   series: Series[];
   xAxisLabels?: string[];
-  formatYAxisValue(value: number): string;
+  formatXAxisLabel: StringLabelFormatter;
+  formatYAxisLabel: NumberLabelFormatter;
   dimensions: DOMRect;
 }
 
@@ -23,7 +25,8 @@ export function Chart({
   series,
   dimensions,
   xAxisLabels,
-  formatYAxisValue,
+  formatXAxisLabel,
+  formatYAxisLabel,
 }: Props) {
   const [activePointIndex, setActivePointIndex] = useState<number | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState<{
@@ -34,10 +37,13 @@ export function Chart({
   const marginBottom = xAxisLabels == null ? SPACING_TIGHT : Margin.Bottom;
   const drawableHeight = dimensions.height - Margin.Top - marginBottom;
 
+  const formattedLabels =
+    xAxisLabels == null ? undefined : xAxisLabels.map(formatXAxisLabel);
+
   const {axisMargin, ticks, yScale} = useYScale({
     drawableHeight,
     series,
-    formatYAxisValue,
+    formatYAxisLabel,
   });
 
   const drawableWidth =
@@ -98,7 +104,7 @@ export function Chart({
         >
           <LinearXAxis
             xScale={xScale}
-            labels={xAxisLabels}
+            labels={formattedLabels}
             dimensions={dimensions}
             drawableHeight={drawableHeight}
             axisMargin={axisMargin}
@@ -148,7 +154,7 @@ export function Chart({
           activePointIndex={activePointIndex}
           currentX={tooltipPosition.x}
           currentY={tooltipPosition.y}
-          formatYAxisValue={formatYAxisValue}
+          formatYAxisLabel={formatYAxisLabel}
           series={series}
           chartDimensions={dimensions}
         />

@@ -4,15 +4,16 @@ import {scaleLinear} from 'd3-scale';
 import {yAxisMinMax} from '../utilities';
 import {MIN_Y_LABEL_SPACE, SPACING_LOOSE} from '../constants';
 import {Series} from '../types';
+import {NumberLabelFormatter} from '../../types';
 
 export function useYScale({
   drawableHeight,
   series,
-  formatYAxisValue,
+  formatYAxisLabel,
 }: {
   drawableHeight: number;
   series: Series[];
-  formatYAxisValue(value: number): string;
+  formatYAxisLabel: NumberLabelFormatter;
 }) {
   const [maxTickLength, setMaxTickLength] = useState<number>();
 
@@ -31,12 +32,12 @@ export function useYScale({
 
     const ticks = yScale.ticks(maxTicks).map((value) => ({
       value,
-      formattedValue: formatYAxisValue(value),
+      formattedValue: formatYAxisLabel(value),
       yOffset: yScale(value),
     }));
 
     return {yScale, ticks};
-  }, [drawableHeight, series, formatYAxisValue]);
+  }, [drawableHeight, series, formatYAxisLabel]);
 
   useEffect(() => {
     let currentMaxTickLength = 0;
