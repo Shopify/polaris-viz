@@ -32,6 +32,7 @@ describe('Chart />', () => {
   });
 
   afterEach(() => {
+    jest.resetAllMocks();
     jest.useRealTimers();
   });
 
@@ -43,7 +44,8 @@ describe('Chart />', () => {
     isStacked: false,
     labels: ['stuff 1', 'stuff 2', 'stuff 3'],
     chartDimensions: new DOMRect(),
-    formatYValue: (value: number) => value.toString(),
+    formatXAxisLabel: jest.fn((value: string) => value),
+    formatYAxisLabel: (value: number) => value.toString(),
     timeSeries: false,
   };
 
@@ -61,6 +63,11 @@ describe('Chart />', () => {
   it('renders an yAxis', () => {
     const chart = mount(<Chart {...mockProps} />);
     expect(chart).toContainReactComponent(YAxis);
+  });
+
+  it('formats the x axis labels', () => {
+    mount(<Chart {...mockProps} />);
+    expect(mockProps.formatXAxisLabel).toHaveBeenCalledTimes(3);
   });
 
   it('does not render a <Tooltip /> or <TooltipContainer /> if there is no active point', () => {

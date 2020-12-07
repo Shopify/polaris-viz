@@ -14,7 +14,7 @@ const mockProps = {
   activePointIndex: 0,
   currentX: 0,
   currentY: 0,
-  formatYAxisValue: (value: number) => `${value}`,
+  formatYAxisLabel: (value: number) => `${value}`,
   series: [
     {name: 'Test series 1', data: [{label: 'Jan 1', rawValue: 100}]},
     {name: 'Test series 2', data: [{label: 'Dec 1', rawValue: 300}]},
@@ -52,7 +52,7 @@ describe('<Tooltip />', () => {
       const tooltip = mount(
         <Tooltip
           {...mockProps}
-          formatYAxisValue={(value: number) => `formatted: ${value}`}
+          formatYAxisLabel={(value: number) => `formatted: ${value}`}
         />,
       );
 

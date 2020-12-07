@@ -62,7 +62,7 @@ describe('useYScale', () => {
     function TestComponent() {
       useYScale({
         drawableHeight: 250,
-        formatYAxisValue: jest.fn(),
+        formatYAxisLabel: jest.fn(),
         stackedValues: mockData as any,
       });
 
@@ -89,7 +89,7 @@ describe('useYScale', () => {
     function TestComponent() {
       useYScale({
         drawableHeight: 250,
-        formatYAxisValue: jest.fn(),
+        formatYAxisLabel: jest.fn(),
         stackedValues: mockData as any,
       });
 
@@ -116,7 +116,7 @@ describe('useYScale', () => {
     function TestComponent() {
       useYScale({
         drawableHeight: 250,
-        formatYAxisValue: jest.fn(),
+        formatYAxisLabel: jest.fn(),
         stackedValues: mockData as any,
       });
 
@@ -126,5 +126,32 @@ describe('useYScale', () => {
     mount(<TestComponent />);
 
     expect(rangeSpy).toHaveBeenCalledWith([250, 0]);
+  });
+
+  it('formats the tick labels with the provided function', () => {
+    (scaleLinear as jest.Mock).mockImplementation(() => {
+      const scale = (value: any) => value;
+      scale.ticks = () => [33];
+      scale.range = (range: any) => (range ? scale : range);
+      scale.domain = (domain: any) => (domain ? scale : domain);
+      scale.nice = () => scale;
+      return scale;
+    });
+
+    function TestComponent() {
+      const {ticks} = useYScale({
+        drawableHeight: 250,
+        formatYAxisLabel: (value) => `Formatted: ${value}`,
+        stackedValues: mockData as any,
+      });
+
+      const {formattedValue} = ticks[0];
+
+      return <p>{formattedValue}</p>;
+    }
+
+    const wrapper = mount(<TestComponent />);
+
+    expect(wrapper).toContainReactText('Formatted: 33');
   });
 });
