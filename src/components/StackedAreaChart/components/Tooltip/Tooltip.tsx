@@ -11,7 +11,7 @@ interface Props {
   activePointIndex: number;
   currentX: number;
   currentY: number;
-  formatYAxisValue(value: number): string;
+  formatYAxisLabel(value: number): string;
   chartDimensions: DOMRect;
   data: {[key: string]: number}[];
   colors: Color[];
@@ -22,7 +22,7 @@ export function Tooltip({
   activePointIndex,
   currentX,
   currentY,
-  formatYAxisValue,
+  formatYAxisLabel,
   chartDimensions,
   tooltipSumDescriptor,
   data,
@@ -45,14 +45,14 @@ export function Tooltip({
           <React.Fragment key={`${label}-${index}`}>
             <SquareColorPreview color={colors[index]} />
             <p className={styles.SeriesName}>{label}</p>
-            <p className={styles.Value}>{formatYAxisValue(values[index])}</p>
+            <p className={styles.Value}>{formatYAxisLabel(values[index])}</p>
           </React.Fragment>
         ))}
         {tooltipSumDescriptor == null ? null : (
           <React.Fragment>
             <div />
             <p className={styles.SeriesName}>{tooltipSumDescriptor}</p>
-            <p className={styles.Value}>{formatYAxisValue(total)}</p>
+            <p className={styles.Value}>{formatYAxisLabel(total)}</p>
           </React.Fragment>
         )}
       </div>

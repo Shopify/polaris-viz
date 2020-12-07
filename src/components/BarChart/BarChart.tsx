@@ -2,6 +2,8 @@ import React, {useState, useLayoutEffect, useRef} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 import {Color} from 'types';
 
+import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
+
 import {Chart} from './Chart';
 import {BarData, BarMargin} from './types';
 
@@ -11,8 +13,8 @@ interface Props {
   accessibilityLabel?: string;
   color?: Color;
   highlightColor?: Color;
-  formatYValue?(value: number): string;
-  formatXAxisLabel?(value: string, index: number): string;
+  formatXAxisLabel?: StringLabelFormatter;
+  formatYAxisLabel?: NumberLabelFormatter;
   timeSeries?: boolean;
 }
 
@@ -23,8 +25,8 @@ export function BarChart({
   barMargin = 'Medium',
   color = 'colorPurple',
   timeSeries = false,
-  formatYValue = (value) => value.toString(),
   formatXAxisLabel = (value) => value.toString(),
+  formatYAxisLabel = (value) => value.toString(),
 }: Props) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -61,8 +63,8 @@ export function BarChart({
           barMargin={BarMargin[barMargin]}
           color={color}
           highlightColor={highlightColor}
-          formatYValue={formatYValue}
           formatXAxisLabel={formatXAxisLabel}
+          formatYAxisLabel={formatYAxisLabel}
           timeSeries={timeSeries}
         />
       )}

@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.0.20] - 2020-12-08
+
+### Added
+
+- Added formatting functions for axes labels (`formatXAxisLabel` and `formatYAxisLabel`) to `<BarChart>`, `<LineChart>`, `<MultiSeriesBarChart>`, and `<StackedAreaChart>`
+
+### Changed
+
+- `formatYValue` on `<BarChart>` has been renamed to `formatYAxisLabel`
+- `formatYValue` on `<MultiSeriesBarChart>` has been renamed to `formatYAxisLabel`
+- `formatYAxisValue` on `<LineChart>` has been renamed to `formatYAxisLabel`
+- `formatYAxisValue` on `<StackedAreaChart>` has been renamed to `formatYAxisLabel`
+
 ## [0.0.19] - 2020-11-04
 
 ### Changed

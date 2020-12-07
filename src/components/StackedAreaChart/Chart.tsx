@@ -6,6 +6,7 @@ import {YAxis} from '../YAxis';
 import {Crosshair} from '../Crosshair';
 import {Point} from '../Point';
 import {LinearXAxis} from '../LinearXAxis';
+import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
 import {Margin, Spacing} from './constants';
 import {useXScale, useYScale} from './hooks';
@@ -16,7 +17,8 @@ import {Series} from './types';
 interface Props {
   xAxisLabels: string[];
   series: Series[];
-  formatYAxisValue(value: number): string;
+  formatXAxisLabel: StringLabelFormatter;
+  formatYAxisLabel: NumberLabelFormatter;
   dimensions: DOMRect;
   tooltipSumDescriptor?: string;
   opacity: number;
@@ -27,7 +29,8 @@ export function Chart({
   xAxisLabels,
   series,
   dimensions,
-  formatYAxisValue,
+  formatXAxisLabel,
+  formatYAxisLabel,
   tooltipSumDescriptor,
   opacity,
   isAnimated,
@@ -60,6 +63,8 @@ export function Chart({
     [xAxisLabels, series],
   );
 
+  const formattedXAxisLabels = xAxisLabels.map(formatXAxisLabel);
+
   const stackedValues = useMemo(() => areaStack(formattedData), [
     areaStack,
     formattedData,
@@ -73,7 +78,7 @@ export function Chart({
   const {axisMargin, ticks, yScale} = useYScale({
     drawableHeight,
     stackedValues,
-    formatYAxisValue,
+    formatYAxisLabel,
   });
 
   const drawableWidth =
@@ -104,7 +109,7 @@ export function Chart({
         >
           <LinearXAxis
             xScale={xScale}
-            labels={xAxisLabels}
+            labels={formattedXAxisLabels}
             dimensions={dimensions}
             drawableHeight={drawableHeight}
             axisMargin={axisMargin}
@@ -156,11 +161,11 @@ export function Chart({
           activePointIndex={activePointIndex}
           currentX={tooltipPosition.x}
           currentY={tooltipPosition.y}
-          formatYAxisValue={formatYAxisValue}
           chartDimensions={dimensions}
           data={formattedData}
           colors={colors}
           tooltipSumDescriptor={tooltipSumDescriptor}
+          formatYAxisLabel={formatYAxisLabel}
         />
       )}
     </div>

@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import {eventPoint, getTextWidth} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {TooltipContainer} from '../TooltipContainer';
+import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
 import {getStackedValues} from './utilities';
 import {Data} from './types';
@@ -23,7 +24,8 @@ interface Props {
   series: Data[];
   labels: string[];
   chartDimensions: DOMRect;
-  formatYValue(value: number): string;
+  formatXAxisLabel: StringLabelFormatter;
+  formatYAxisLabel: NumberLabelFormatter;
   timeSeries: boolean;
   isStacked: boolean;
 }
@@ -31,8 +33,9 @@ interface Props {
 export function Chart({
   series,
   chartDimensions,
-  formatYValue,
   labels,
+  formatXAxisLabel,
+  formatYAxisLabel,
   timeSeries,
   isStacked,
 }: Props) {
@@ -45,7 +48,7 @@ export function Chart({
   const yAxisLabelWidth = series
     .map(({data}) =>
       data.map((value) =>
-        getTextWidth({text: formatYValue(value), fontSize: FONT_SIZE}),
+        getTextWidth({text: formatYAxisLabel(value), fontSize: FONT_SIZE}),
       ),
     )
     .reduce((acc, currentValue) => acc.concat(currentValue), [])
@@ -60,10 +63,11 @@ export function Chart({
     return series.map((type) => type.data[index]);
   });
 
+  const formattedXAxisLabels = labels.map(formatXAxisLabel);
   const {xScale, xAxisLabels} = useXScale({
     drawableWidth,
     data: sortedData,
-    labels,
+    labels: formattedXAxisLabels,
   });
 
   const fontSize = drawableWidth < SMALL_WIDTH ? SMALL_FONT_SIZE : FONT_SIZE;
@@ -86,7 +90,7 @@ export function Chart({
   const {yScale, ticks} = useYScale({
     drawableHeight,
     data: series,
-    formatYValue,
+    formatYAxisLabel,
     stackedValues,
   });
 
@@ -177,7 +181,7 @@ export function Chart({
             colors={barColors}
             labels={barGroupLabels}
             values={sortedData[activeBarGroup]}
-            formatValue={formatYValue}
+            formatValue={formatYAxisLabel}
           />
         </TooltipContainer>
       ) : null}

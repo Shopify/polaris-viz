@@ -15,7 +15,7 @@ import styles from './LinearXAxis.scss';
 
 interface Props {
   xScale: ScaleLinear<number, number>;
-  labels?: string[];
+  labels?: string[] | null;
   dimensions: DOMRect;
   drawableHeight: number;
   axisMargin: number;

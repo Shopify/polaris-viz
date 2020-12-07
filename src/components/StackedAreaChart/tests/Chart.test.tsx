@@ -47,7 +47,8 @@ describe('<Chart />', () => {
 
   const mockProps = {
     xAxisLabels: ['Day 1', 'Day 2'],
-    formatYAxisValue: (val: number) => val.toString(),
+    formatXAxisLabel: (val: string) => val,
+    formatYAxisLabel: (val: number) => val.toString(),
     dimensions: new DOMRect(),
     opacity: 1,
     isAnimated: true,
@@ -79,6 +80,18 @@ describe('<Chart />', () => {
       drawableHeight: 212,
       axisMargin: 24,
     });
+  });
+
+  it('formats the x axis labels before passing them to the LinearAxis', () => {
+    const formatXAxisLabelSpy = jest.fn((value) => `Formatted: ${value}`);
+    const chart = mount(
+      <Chart {...mockProps} formatXAxisLabel={formatXAxisLabelSpy} />,
+    );
+
+    expect(chart).toContainReactComponent(LinearXAxis, {
+      labels: ['Formatted: Day 1', 'Formatted: Day 2'],
+    });
+    expect(formatXAxisLabelSpy).toHaveBeenCalledTimes(2);
   });
 
   it('renders a YAxis', () => {

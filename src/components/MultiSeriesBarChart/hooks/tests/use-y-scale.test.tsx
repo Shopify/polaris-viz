@@ -31,7 +31,7 @@ interface Props {
 function TestComponent({stackedValues, data}: Props) {
   useYScale({
     drawableHeight: 500,
-    formatYValue: jest.fn(),
+    formatYAxisLabel: jest.fn(),
     data,
     stackedValues,
   });
@@ -172,5 +172,33 @@ describe('useYScale', () => {
     mount(<TestComponent stackedValues={null} data={mockData} />);
 
     expect(rangeSpy).toHaveBeenCalledWith([500, 0]);
+  });
+
+  it('formats the tick labels with the formatYAxisLabel function', () => {
+    (scaleLinear as jest.Mock).mockImplementation(() => {
+      const scale = (value: any) => value;
+      scale.ticks = () => [25];
+      scale.range = (range: any) => (range ? scale : range);
+      scale.domain = (domain: any) => (domain ? scale : domain);
+      scale.nice = () => scale;
+      return scale;
+    });
+
+    function TestFormattersComponent() {
+      const {ticks} = useYScale({
+        drawableHeight: 500,
+        formatYAxisLabel: (value) => `Formatted: ${value}`,
+        data: [mockData[0]],
+        stackedValues: null,
+      });
+
+      const {formattedValue} = ticks[0];
+
+      return <p>{formattedValue}</p>;
+    }
+
+    const wrapper = mount(<TestFormattersComponent />);
+
+    expect(wrapper).toContainReactText('Formatted: 25');
   });
 });
