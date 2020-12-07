@@ -19,14 +19,16 @@ const data = [
   {rawValue: 4.19, label: 'Cake Shake'},
 ];
 
-const formatYValue = (val) =>
+const formatYAxisLabel = (val) =>
   new Intl.NumberFormat('en-CA', {
     style: 'currency',
     currency: 'CAD',
     maximumSignificantDigits: 3,
   }).format(val);
 
-return <BarChart formatYValue={formatYValue} color="primary" data={data} />;
+return (
+  <BarChart formatYAxisLabel={formatYAxisLabel} color="primary" data={data} />
+);
 ```
 
 ## Usage
@@ -39,8 +41,8 @@ The bar chart interface looks like this:
   accessibilityLabel?: string;
   barMargin?: 'Small' | 'Medium' | 'Large' | 'None';
   color?: Color;
-  formatXAxisLabel?(value: string, index: number): string;
-  formatYValue?(value: number): string;
+  formatXAxisLabel?(value: string, index?: number, data?: string[]): string;
+  formatYAxisLabel?(value: number): string;
   highlightColor?: Color;
   timeSeries?: boolean;
 }
@@ -84,19 +86,19 @@ The bar fill color. This accepts any [Polaris Viz accepted color](/documentation
 
 #### formatXAxisLabel
 
-| type                                      | default                       |
-| ----------------------------------------- | ----------------------------- |
-| `(value: string, index: number): string;` | `(value) => value.toString()` |
+| type                                                        | default                       |
+| ----------------------------------------------------------- | ----------------------------- |
+| `(value: string, index?: number, data?: string[]): string;` | `(value) => value.toString()` |
 
-This accepts a function that is called when the chart draws its X axis.
+This accepts a function that is called to format the labels when the chart draws its X axis.
 
-#### formatYValue
+#### formatYAxisLabel
 
 | type                      | default                       |
 | ------------------------- | ----------------------------- |
 | `(value: number): string` | `(value) => value.toString()` |
 
-This accepts a function that is called when the Y value (`rawValue`) is formatted for the tooltip.
+This accepts a function that is called when the Y value (`rawValue`) is formatted for the tooltip and for the Y Axis.
 
 #### highlightColor
 

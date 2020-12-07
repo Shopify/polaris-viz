@@ -52,7 +52,7 @@ export function MultiSeriesBarChartDemo({isStacked = false}: Props) {
     'Sunday',
   ];
 
-  const formatYValue = (val: number) =>
+  const formatYAxisLabel = (val: number) =>
     new Intl.NumberFormat('en-CA', {
       style: 'currency',
       currency: 'CAD',
@@ -63,7 +63,7 @@ export function MultiSeriesBarChartDemo({isStacked = false}: Props) {
     <div style={OUTER_CONTAINER_STYLE}>
       <div style={innerContainerStyle}>
         <MultiSeriesBarChart
-          formatYValue={formatYValue}
+          formatYAxisLabel={formatYAxisLabel}
           labels={labels}
           series={series}
           chartHeight={253}

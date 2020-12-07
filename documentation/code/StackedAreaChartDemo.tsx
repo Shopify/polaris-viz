@@ -6,13 +6,14 @@ import {StackedAreaChart} from '../../src/components';
 import {OUTER_CONTAINER_STYLE} from './constants';
 
 export function StackedAreaChartDemo() {
-  function formatNumber(date: any) {
+  const formatYAxisLabel = (value?: number) => {
     const formatter = new Intl.NumberFormat('en').format;
-    if (date == null) {
+    if (value == null) {
       return '-';
     }
-    return formatter(date);
-  }
+
+    return formatter(value);
+  };
 
   const innerContainerStyle = {
     width: '900px',
@@ -42,7 +43,7 @@ export function StackedAreaChartDemo() {
     <div style={OUTER_CONTAINER_STYLE}>
       <div style={innerContainerStyle}>
         <StackedAreaChart
-          formatYAxisValue={formatNumber}
+          formatYAxisLabel={formatYAxisLabel}
           xAxisLabels={[
             'January',
             'February',

@@ -37,7 +37,7 @@ const labels = [
   'Sunday',
 ];
 
-const formatYValue = (val: number) =>
+const formatYAxisLabel = (val: number) =>
   new Intl.NumberFormat('en-CA', {
     style: 'currency',
     currency: 'CAD',
@@ -46,7 +46,7 @@ const formatYValue = (val: number) =>
 
 return (
   <MultiSeriesBarChart
-    formatYValue={formatYValue}
+    formatYAxisLabel={formatYAxisLabel}
     labels={labels}
     series={series}
   />
@@ -63,7 +63,8 @@ The mult-series bar chart interface looks like this:
   labels: string[];
   accessibilityLabel?: string;
   chartHeight?: number;
-  formatYValue?(value: number): string;
+  formatXAxisLabel?(value: string, index?: number, data?: string[]): string;
+  formatYAxisLabel?(value: number): string;
   timeSeries?: boolean;
   isStacked?: boolean;
 }
@@ -107,11 +108,19 @@ Visually hidden text for screen readers.
 
 Determines the height of the chart.
 
-#### formatYValue
+#### formatXAxisLabel
 
-| type                       | default                     |
-| -------------------------- | --------------------------- |
-| `(value: number): string;` | `` (value) => `${value}` `` |
+| type                                                        | default                       |
+| ----------------------------------------------------------- | ----------------------------- |
+| `(value: string, index?: number, data?: string[]): string;` | `(value) => value.toString()` |
+
+This accepts a function that is called to format the labels when the chart draws its X axis.
+
+#### formatYAxisLabel
+
+| type                       | default                       |
+| -------------------------- | ----------------------------- |
+| `(value: number): string;` | `(value) => value.toString()` |
 
 This utility function is called for every y axis value when the chart is drawn.
 

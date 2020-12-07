@@ -17,7 +17,7 @@ export function LineChartDemo() {
   document.body.style.fontFamily =
     "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif";
 
-  const formatAxisValue = new Intl.NumberFormat('en', {
+  const formatYAxisLabel = new Intl.NumberFormat('en', {
     style: 'currency',
     currency: 'CAD',
     currencyDisplay: 'narrowSymbol',
@@ -77,11 +77,12 @@ export function LineChartDemo() {
     },
   ];
 
-  const formatDate = (date: Date) =>
-    date.toLocaleDateString('en-CA', {day: 'numeric', month: 'numeric'});
-  const xAxisLabels = series[0].data.map(
-    ({label}) => `${formatDate(new Date(label))}`,
-  );
+  const xAxisLabels = series[0].data.map(({label}) => label);
+
+  const formatXAxisLabel = (value: string) => {
+    const date = new Date(value);
+    return date.toLocaleDateString('en-CA', {day: 'numeric', month: 'numeric'});
+  };
 
   return (
     <div style={OUTER_CONTAINER_STYLE}>
@@ -89,7 +90,8 @@ export function LineChartDemo() {
         <LineChart
           chartHeight={229}
           xAxisLabels={xAxisLabels}
-          formatYAxisValue={formatAxisValue}
+          formatXAxisLabel={formatXAxisLabel}
+          formatYAxisLabel={formatYAxisLabel}
           series={series}
         />
       </div>
