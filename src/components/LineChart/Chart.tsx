@@ -38,7 +38,7 @@ export function Chart({
   const drawableHeight = dimensions.height - Margin.Top - marginBottom;
 
   const formattedLabels =
-    xAxisLabels == null ? undefined : xAxisLabels.map(formatXAxisLabel);
+    xAxisLabels == null ? null : xAxisLabels.map(formatXAxisLabel);
 
   const {axisMargin, ticks, yScale} = useYScale({
     drawableHeight,
