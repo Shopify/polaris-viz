@@ -1,7 +1,7 @@
 import React, {useLayoutEffect, useRef, useState} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 
-import {StringLabelFormatter, NumberLabelFormatter} from '../types';
+import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
 import {Chart} from './Chart';
 import {Series} from './types';

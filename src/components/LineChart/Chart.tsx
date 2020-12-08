@@ -5,7 +5,7 @@ import {LinearXAxis} from '../LinearXAxis';
 import {YAxis} from '../YAxis';
 import {eventPoint} from '../../utilities';
 import {Crosshair} from '../Crosshair';
-import {StringLabelFormatter, NumberLabelFormatter} from '../types';
+import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
 import {Series} from './types';
 import {Margin, SPACING_TIGHT} from './constants';

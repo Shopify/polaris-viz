@@ -6,7 +6,7 @@ import {YAxis} from '../YAxis';
 import {Crosshair} from '../Crosshair';
 import {Point} from '../Point';
 import {LinearXAxis} from '../LinearXAxis';
-import {StringLabelFormatter, NumberLabelFormatter} from '../types';
+import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
 import {Margin, Spacing} from './constants';
 import {useXScale, useYScale} from './hooks';

@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import {eventPoint, getTextWidth} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {TooltipContainer} from '../TooltipContainer';
-import {StringLabelFormatter, NumberLabelFormatter} from '../types';
+import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
 import {getStackedValues} from './utilities';
 import {Data} from './types';

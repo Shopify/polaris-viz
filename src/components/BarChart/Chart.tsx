@@ -4,7 +4,7 @@ import {Color} from 'types';
 import {eventPoint, getTextWidth} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {TooltipContainer} from '../TooltipContainer';
-import {StringLabelFormatter, NumberLabelFormatter} from '../types';
+import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
 import {BarData} from './types';
 import {XAxis, Bar, Tooltip} from './components';

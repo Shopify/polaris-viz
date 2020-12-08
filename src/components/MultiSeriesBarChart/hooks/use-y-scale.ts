@@ -4,7 +4,7 @@ import {scaleLinear} from 'd3-scale';
 import {Data, StackSeries} from '../types';
 import {MIN_Y_LABEL_SPACE} from '../constants';
 import {getMinMax} from '../utilities';
-import {NumberLabelFormatter} from '../../types';
+import {NumberLabelFormatter} from '../../../types';
 
 export function useYScale({
   drawableHeight,

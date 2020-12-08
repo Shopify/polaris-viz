@@ -5,7 +5,7 @@ import {Series} from 'd3-shape';
 import {getTextWidth} from '../../../utilities';
 import {MIN_Y_LABEL_SPACE, Spacing} from '../constants';
 import {FONT_SIZE} from '../../../constants';
-import {NumberLabelFormatter} from '../../types';
+import {NumberLabelFormatter} from '../../../types';
 
 export function useYScale({
   drawableHeight,
