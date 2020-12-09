@@ -1,6 +1,8 @@
 import React, {useLayoutEffect, useRef, useState} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 
+import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
+
 import {Chart} from './Chart';
 import {Legend} from './components';
 import {Series} from './types';
@@ -8,7 +10,8 @@ import {Series} from './types';
 interface Props {
   chartHeight?: number;
   accessibilityLabel?: string;
-  formatYAxisValue?(value: number): string;
+  formatXAxisLabel?: StringLabelFormatter;
+  formatYAxisLabel?: NumberLabelFormatter;
   xAxisLabels: string[];
   series: Series[];
   tooltipSumDescriptor?: string;
@@ -21,7 +24,8 @@ export function StackedAreaChart({
   series,
   tooltipSumDescriptor,
   chartHeight = 250,
-  formatYAxisValue = (value) => `${value}`,
+  formatXAxisLabel = (value) => value.toString(),
+  formatYAxisLabel = (value) => value.toString(),
   accessibilityLabel,
   opacity = 1,
   isAnimated = false,
@@ -58,7 +62,8 @@ export function StackedAreaChart({
           <Chart
             xAxisLabels={xAxisLabels}
             series={series}
-            formatYAxisValue={formatYAxisValue}
+            formatXAxisLabel={formatXAxisLabel}
+            formatYAxisLabel={formatYAxisLabel}
             dimensions={chartDimensions}
             tooltipSumDescriptor={tooltipSumDescriptor}
             opacity={opacity}

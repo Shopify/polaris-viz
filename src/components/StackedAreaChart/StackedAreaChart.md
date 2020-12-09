@@ -30,17 +30,18 @@ const xAxisLabels = [
   'July',
 ];
 
-function formatNumber(date: Date | null) {
+const formatYAxisLabel = (value?: number) => {
   const formatter = new Intl.NumberFormat('en').format;
-  if (date == null) {
+  if (value == null) {
     return '-';
   }
-  return formatter(date);
-}
+
+  return formatter(value);
+};
 
 return (
   <StackedAreaChart
-    formatYAxisValue={formatNumber}
+    formatYAxisLabel={formatYAxisLabel}
     xAxisLabels={xAxisLabels}
     series={series}
   />
@@ -57,7 +58,8 @@ The stacked area chart interface looks like this:
   series: Series[];
   chartHeight?: number;
   accessibilityLabel?: string;
-  formatYAxisValue?(value: number): string;
+  formatXAxisLabel?(value: string, index?: number, data?: string[]): string;
+  formatYAxisLabel?(value: number): string;
   tooltipSumDescriptor?: string;
   opacity?: number;
   isAnimated?: boolean;
@@ -118,13 +120,21 @@ The prop to determine the chart's drawn area. Each `Series` object corresponds t
 
 Visually hidden text for screen readers.
 
-#### formatYAxisValue
+#### formatXAxisLabel
 
-| type                      | default               |
-| ------------------------- | --------------------- |
-| `(value: number): string` | `(value) => ${value}` |
+| type                                                        | default                       |
+| ----------------------------------------------------------- | ----------------------------- |
+| `(value: string, index?: number, data?: string[]): string;` | `(value) => value.toString()` |
 
-The `formatYAxisValue` function formats the values displayed on the yAxis and in the tooltip.
+This accepts a function that is called to format the labels when the chart draws its X axis. This is only called if there is a value passed in for `xAxisLabels`.
+
+#### formatYAxisLabel
+
+| type                       | default                       |
+| -------------------------- | ----------------------------- |
+| `(value: number): string;` | `(value) => value.toString()` |
+
+The `formatYAxisLabel` function formats the values displayed on the yAxis and in the tooltip.
 
 #### chartHeight
 

@@ -7,11 +7,17 @@ Used to show change over time, comparisons, and trends.
 <img src="line-chart.png" alt="Line chart example image" />
 
 ```tsx
-const formatAxisValue = new Intl.NumberFormat('en', {
+const formatXAxisLabel = (value: string) => {
+  const date = new Date(value);
+  return date.toLocaleDateString('en-CA', {day: 'numeric', month: 'numeric'});
+};
+
+const formatYAxisLabel = new Intl.NumberFormat('en', {
   style: 'currency',
   currency: 'CAD',
   currencyDisplay: 'narrowSymbol',
 }).format;
+
 const formatY = new Intl.NumberFormat('en', {
   style: 'currency',
   currency: 'CAD',
@@ -47,16 +53,13 @@ const series = [
   },
 ];
 
-const formatDate = (date: Date) =>
-  date.toLocaleDateString('en-CA', {day: 'numeric', month: 'numeric'});
-const xAxisLabels = series[0].data.map(
-  ({label}) => `${formatDate(new Date(label))}`,
-);
+const xAxisLabels = series[0].data.map(({label}) => label);
 
 return (
   <LineChart
     xAxisLabels={xAxisLabels}
-    formatYAxisValue={formatYAxisValue}
+    formatXAxisLabel={formatXAxisLabel}
+    formatYAxisLabel={formatYAxisLabel}
     series={series}
   />
 );
@@ -71,7 +74,8 @@ The line chart interface looks like this:
   series: Series[];
   accessibilityLabel?: string;
   chartHeight?: number;
-  formatYAxisValue?(value: number): string;
+  formatXAxisLabel?(value: string, index?: number, data?: string[]): string;
+  formatYAxisLabel?(value: number): string;
   xAxisLabels?: string[];
 }
 ```
@@ -117,9 +121,9 @@ The name of the series. This appears in the chart legend.
 
 | type                      | default            |
 | ------------------------- | ------------------ |
-| `(value: number): string` | `formatYAxisValue` |
+| `(value: number): string` | `formatYAxisLabel` |
 
-The `formatY` function is used to format `rawValue` for the tooltip. This falls back to whatever function is passed to `formatYAxisValue`.
+The `formatY` function is used to format `rawValue` for the tooltip. This falls back to whatever function is passed to `formatYAxisLabel`.
 
 #### style
 
@@ -157,13 +161,21 @@ Visually hidden text for screen readers.
 
 Determines the height of the chart.
 
-#### formatYAxisValue
+#### formatXAxisLabel
 
-| type                       | default                     |
-| -------------------------- | --------------------------- |
-| `(value: number): string;` | `` (value) => `${value}` `` |
+| type                                                        | default                       |
+| ----------------------------------------------------------- | ----------------------------- |
+| `(value: string, index?: number, data?: string[]): string;` | `(value) => value.toString()` |
 
-This utilty function is called when the chart is laid out for every y axis value.
+This accepts a function that is called to format the labels when the chart draws its X axis. This is only called if there is a value passed in for `xAxisLabels`.
+
+#### formatYAxisLabel
+
+| type                       | default                       |
+| -------------------------- | ----------------------------- |
+| `(value: number): string;` | `(value) => value.toString()` |
+
+This utilty function is called to format the labels for every y axis value when the chart is laid out.
 
 ### xAxisLabels
 

@@ -93,16 +93,17 @@ describe('useXScale', () => {
         data: [{rawValue: 0, label: 'Test 1'}],
         formatXAxisLabel: (val: string) => `${val}!`,
       });
+
       return (
         <React.Fragment>
           {xAxisLabels.map(({value, xOffset}, index) => (
-            <div key={index}>{`${value[0]}-${xOffset}`}</div>
+            <div key={index}>{`${value}-${xOffset}`}</div>
           ))}
         </React.Fragment>
       );
     }
 
     const testComponent = mount(<TestComponent />);
-    expect(testComponent).toContainReactText('T-50');
+    expect(testComponent).toContainReactText('Test 1!-50');
   });
 });

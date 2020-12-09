@@ -41,7 +41,8 @@ const mockProps = {
   series: [primarySeries],
   xAxisLabels: ['Jan 1'],
   dimensions: new DOMRect(),
-  formatYAxisValue: jest.fn(),
+  formatXAxisLabel: jest.fn((value) => value),
+  formatYAxisLabel: jest.fn((value) => value),
 };
 
 describe('<Chart />', () => {
@@ -71,11 +72,26 @@ describe('<Chart />', () => {
     expect(chart).toContainReactComponent(Line, {activePointIndex: 1});
   });
 
-  it('renders an <LinearXAxis />', () => {
-    const chart = mount(<Chart {...mockProps} />);
+  describe('<LinearAxis />', () => {
+    it('renders a <LinearXAxis />', () => {
+      const chart = mount(<Chart {...mockProps} />);
 
-    expect(chart).toContainReactComponent(LinearXAxis, {
-      labels: ['Jan 1'],
+      expect(chart).toContainReactComponent(LinearXAxis, {
+        labels: ['Jan 1'],
+      });
+    });
+
+    it('passes formatted labels to the <LinearXAxis>, formatting them with formatXAxisLabel', () => {
+      const chart = mount(
+        <Chart
+          {...mockProps}
+          formatXAxisLabel={(value) => `Formatted: ${value}`}
+        />,
+      );
+
+      expect(chart).toContainReactComponent(LinearXAxis, {
+        labels: ['Formatted: Jan 1'],
+      });
     });
   });
 

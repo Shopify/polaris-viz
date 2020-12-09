@@ -3,15 +3,16 @@ import {scaleLinear} from 'd3-scale';
 
 import {BarData} from '../types';
 import {MIN_Y_LABEL_SPACE} from '../constants';
+import {NumberLabelFormatter} from '../../../types';
 
 export function useYScale({
   drawableHeight,
   data,
-  formatYValue,
+  formatYAxisLabel,
 }: {
   drawableHeight: number;
   data: BarData[];
-  formatYValue(value: number): string;
+  formatYAxisLabel: NumberLabelFormatter;
 }) {
   const {yScale, ticks} = useMemo(() => {
     const min = Math.min(...data.map(({rawValue}) => rawValue), 0);
@@ -29,12 +30,12 @@ export function useYScale({
 
     const ticks = yScale.ticks(maxTicks).map((value) => ({
       value,
-      formattedValue: formatYValue(value),
+      formattedValue: formatYAxisLabel(value),
       yOffset: yScale(value),
     }));
 
     return {yScale, ticks};
-  }, [drawableHeight, data, formatYValue]);
+  }, [drawableHeight, data, formatYAxisLabel]);
 
   return {yScale, ticks};
 }

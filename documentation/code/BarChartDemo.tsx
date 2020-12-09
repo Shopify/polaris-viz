@@ -32,7 +32,7 @@ export function BarChartDemo() {
     {rawValue: 4.19, label: 'Cake Shake'},
   ];
 
-  const formatYValue = (val) =>
+  const formatYAxisLabel = (val) =>
     new Intl.NumberFormat('en-CA', {
       style: 'currency',
       currency: 'CAD',
@@ -42,7 +42,11 @@ export function BarChartDemo() {
   return (
     <div style={OUTER_CONTAINER_STYLE}>
       <div style={innerContainerStyle}>
-        <BarChart formatYValue={formatYValue} color="primary" data={data} />
+        <BarChart
+          formatYAxisLabel={formatYAxisLabel}
+          color="primary"
+          data={data}
+        />
       </div>
     </div>
   );

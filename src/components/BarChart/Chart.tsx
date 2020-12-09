@@ -4,6 +4,7 @@ import {Color} from 'types';
 import {eventPoint, getTextWidth} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {TooltipContainer} from '../TooltipContainer';
+import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
 import {BarData} from './types';
 import {XAxis, Bar, Tooltip} from './components';
@@ -25,8 +26,8 @@ interface Props {
   barMargin: number;
   color: Color;
   highlightColor?: Color;
-  formatYValue(value: number): string;
-  formatXAxisLabel(value: string, index: number): string;
+  formatXAxisLabel: StringLabelFormatter;
+  formatYAxisLabel: NumberLabelFormatter;
   timeSeries: boolean;
 }
 
@@ -36,8 +37,8 @@ export function Chart({
   barMargin,
   color,
   highlightColor,
-  formatYValue,
   formatXAxisLabel,
+  formatYAxisLabel,
   timeSeries,
 }: Props) {
   const [activeBar, setActiveBar] = useState<number | null>(null);
@@ -48,7 +49,7 @@ export function Chart({
 
   const yAxisLabelWidth = data
     .map(({rawValue}) =>
-      getTextWidth({text: formatYValue(rawValue), fontSize: FONT_SIZE}),
+      getTextWidth({text: formatYAxisLabel(rawValue), fontSize: FONT_SIZE}),
     )
     .reduce((acc, currentValue) => Math.max(acc, currentValue));
 
@@ -83,7 +84,7 @@ export function Chart({
   const {yScale, ticks} = useYScale({
     drawableHeight,
     data,
-    formatYValue,
+    formatYAxisLabel,
   });
 
   return (
@@ -151,7 +152,7 @@ export function Chart({
         >
           <Tooltip
             label={data[activeBar].label}
-            value={formatYValue(data[activeBar].rawValue)}
+            value={formatYAxisLabel(data[activeBar].rawValue)}
           />
         </TooltipContainer>
       ) : null}

@@ -33,7 +33,7 @@ describe('<Tooltip/>', () => {
         activePointIndex={1}
         currentX={0}
         currentY={0}
-        formatYAxisValue={(val) => val.toString()}
+        formatYAxisLabel={(val) => val.toString()}
         colors={['colorPurple', 'colorBlue', 'primary']}
         chartDimensions={new DOMRect()}
       />,
@@ -57,7 +57,7 @@ describe('<Tooltip/>', () => {
         activePointIndex={1}
         currentX={0}
         currentY={0}
-        formatYAxisValue={(val) => val.toString()}
+        formatYAxisLabel={(val) => val.toString()}
         colors={['colorPurple', 'colorBlue', 'primary']}
         chartDimensions={new DOMRect()}
       />,
@@ -75,7 +75,7 @@ describe('<Tooltip/>', () => {
         activePointIndex={1}
         currentX={0}
         currentY={0}
-        formatYAxisValue={(val) => `$${val.toString()}`}
+        formatYAxisLabel={(val) => `$${val.toString()}`}
         colors={['colorPurple', 'colorBlue', 'primary']}
         chartDimensions={new DOMRect()}
       />,
@@ -93,7 +93,7 @@ describe('<Tooltip/>', () => {
         activePointIndex={1}
         currentX={0}
         currentY={0}
-        formatYAxisValue={(val) => val.toString()}
+        formatYAxisLabel={(val) => val.toString()}
         colors={['colorPurple', 'colorBlue', 'primary']}
         chartDimensions={new DOMRect()}
       />,
@@ -114,7 +114,7 @@ describe('<Tooltip/>', () => {
         activePointIndex={1}
         currentX={0}
         currentY={0}
-        formatYAxisValue={(val) => val.toString()}
+        formatYAxisLabel={(val) => val.toString()}
         colors={['colorPurple', 'colorBlue', 'primary']}
         chartDimensions={new DOMRect()}
         tooltipSumDescriptor="Toplam"

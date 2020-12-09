@@ -11,7 +11,7 @@ interface Props {
   activePointIndex: number;
   currentX: number;
   currentY: number;
-  formatYAxisValue(value: number): string;
+  formatYAxisLabel(value: number): string;
   series: Series[];
   chartDimensions: DOMRect;
 }
@@ -20,7 +20,7 @@ export function Tooltip({
   activePointIndex,
   currentX,
   currentY,
-  formatYAxisValue,
+  formatYAxisLabel,
   series,
   chartDimensions,
 }: Props) {
@@ -33,7 +33,7 @@ export function Tooltip({
       margin={Margin}
     >
       <div className={styles.Container}>
-        {series.map(({name, data, formatY, style = {}}) => {
+        {series.map(({name, data, style = {}}) => {
           const point = data[activePointIndex];
 
           if (point == null) {
@@ -41,16 +41,13 @@ export function Tooltip({
           }
 
           const {color = 'colorPurple', lineStyle = 'solid'} = style;
-          const formattedYValue =
-            formatY == null
-              ? formatYAxisValue(point.rawValue)
-              : formatY(point.rawValue);
+          const formattedValue = formatYAxisLabel(point.rawValue);
 
           return (
             <React.Fragment key={name}>
               <LinePreview color={color} lineStyle={lineStyle} />
               <p className={styles.SeriesName}>{point.label}</p>
-              <p className={styles.Value}>{formattedYValue}</p>
+              <p className={styles.Value}>{formattedValue}</p>
             </React.Fragment>
           );
         })}
