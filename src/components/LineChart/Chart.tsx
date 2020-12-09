@@ -12,6 +12,7 @@ import {Margin, SPACING_TIGHT} from './constants';
 import {useXScale, useYScale} from './hooks';
 import {Line, Tooltip} from './components';
 import styles from './Chart.scss';
+import {TooltipContainer} from 'components';
 
 interface Props {
   series: Series[];
@@ -29,6 +30,7 @@ export function Chart({
   formatYAxisLabel,
 }: Props) {
   const [activePointIndex, setActivePointIndex] = useState<number | null>(null);
+  const [activeAnnotation, setActiveAnnotation] = useState(false);
   const [tooltipPosition, setTooltipPosition] = useState<{
     x: number;
     y: number;
@@ -143,13 +145,17 @@ export function Chart({
                   series={singleSeries}
                   path={path}
                   activePointIndex={activePointIndex}
+                  setActiveAnnotation={setActiveAnnotation}
+                  activeAnnotation={activeAnnotation}
                 />
               );
             })}
         </g>
       </svg>
 
-      {tooltipPosition == null || activePointIndex == null ? null : (
+      {tooltipPosition == null ||
+      activePointIndex == null ||
+      activeAnnotation ? null : (
         <Tooltip
           activePointIndex={activePointIndex}
           currentX={tooltipPosition.x}
@@ -159,6 +165,29 @@ export function Chart({
           chartDimensions={dimensions}
         />
       )}
+
+      {tooltipPosition != null &&
+      activePointIndex != null &&
+      activeAnnotation ? (
+        <TooltipContainer
+          activePointIndex={activePointIndex}
+          currentX={tooltipPosition.x}
+          currentY={tooltipPosition.y}
+          chartDimensions={dimensions}
+          margin={{Top: 0, Left: 0, Bottom: 0, Right: 0}}
+        >
+          <div>
+            <p style={{fontSize: 12, fontWeight: 'bold'}}>
+              ⓘ Anomaly detection
+            </p>
+            <ul style={{fontSize: 12, paddingLeft: 30}}>
+              <li>Sales up 100%</li>
+              <li>Notable events: Black Friday</li>
+              <li>Active marketing campaign: BFCM</li>
+            </ul>
+          </div>
+        </TooltipContainer>
+      ) : null}
     </div>
   );
 }
