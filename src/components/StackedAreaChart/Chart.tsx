@@ -1,6 +1,7 @@
 import React, {useState, useMemo} from 'react';
 import {stack, stackOffsetNone, stackOrderReverse} from 'd3-shape';
 
+import {TooltipContainer, Tooltip} from '../../components';
 import {eventPoint} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {Crosshair} from '../Crosshair';
@@ -10,7 +11,7 @@ import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
 import {Margin, Spacing} from './constants';
 import {useXScale, useYScale} from './hooks';
-import {Tooltip, StackedAreas} from './components';
+import {StackedAreas} from './components';
 import styles from './Chart.scss';
 import {Series} from './types';
 
@@ -89,6 +90,41 @@ export function Chart({
 
   const {xScale} = useXScale({drawableWidth, longestSeriesLength});
 
+  const tooltipMarkup = useMemo(() => {
+    if (activePointIndex == null) {
+      return null;
+    }
+
+    const labels = Object.keys(formattedData[activePointIndex]);
+    const values = Object.values<number>(formattedData[activePointIndex]);
+    const formattedValues = values.map(formatYAxisLabel);
+
+    const total = values.reduce((totalValue, value) => totalValue + value);
+    const formattedTotal = formatYAxisLabel(total);
+
+    return (
+      <Tooltip
+        colors={colors}
+        labels={labels}
+        values={formattedValues}
+        total={
+          tooltipSumDescriptor != null
+            ? {
+                label: tooltipSumDescriptor,
+                value: formattedTotal,
+              }
+            : null
+        }
+      />
+    );
+  }, [
+    activePointIndex,
+    colors,
+    formatYAxisLabel,
+    formattedData,
+    tooltipSumDescriptor,
+  ]);
+
   if (xScale == null || drawableWidth == null || axisMargin == null) {
     return null;
   }
@@ -157,16 +193,15 @@ export function Chart({
         </g>
       </svg>
       {tooltipPosition == null || activePointIndex == null ? null : (
-        <Tooltip
+        <TooltipContainer
           activePointIndex={activePointIndex}
           currentX={tooltipPosition.x}
           currentY={tooltipPosition.y}
           chartDimensions={dimensions}
-          data={formattedData}
-          colors={colors}
-          tooltipSumDescriptor={tooltipSumDescriptor}
-          formatYAxisLabel={formatYAxisLabel}
-        />
+          margin={Margin}
+        >
+          {tooltipMarkup}
+        </TooltipContainer>
       )}
     </div>
   );
