@@ -1,5 +1,10 @@
 import React, {useState, useMemo} from 'react';
-import {stack, stackOffsetNone, stackOrderReverse} from 'd3-shape';
+import {
+  stack,
+  stackOffsetNone,
+  stackOrderReverse,
+  curveCatmullRom,
+} from 'd3-shape';
 
 import {eventPoint} from '../../utilities';
 import {YAxis} from '../YAxis';
@@ -104,14 +109,9 @@ export function Chart({
         onMouseLeave={() => setActivePointIndex(null)}
       >
         <defs>
-          <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#f8f8f8" stopOpacity="0.5" />
-            <stop offset="50%" stopColor="#fc00ff" stopOpacity="1" />
-            <stop offset="100%" stopColor="#f8f8f8" stopOpacity="0.5" />
-          </linearGradient>
-
-          <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+          <linearGradient id="gradient" x1="0%" x2="0%" y1="100%" y2="0%">
             <stop offset="0%" stopColor="#05a" />
+            <stop offset="100%" stopColor="#0a5" />
             <stop offset="100%" stopColor="#0a5" />
           </linearGradient>
         </defs>
@@ -179,6 +179,7 @@ export function Chart({
           colors={colors}
           tooltipSumDescriptor={tooltipSumDescriptor}
           formatYAxisLabel={formatYAxisLabel}
+          xAxisLabels={xAxisLabels}
         />
       )}
     </div>

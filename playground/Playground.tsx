@@ -130,17 +130,12 @@ export default function Playground() {
         <StackedAreaChart
           formatXAxisLabel={formatXAxisLabel}
           formatYAxisLabel={formatYAxisLabel}
-          xAxisLabels={[
-            'All sessions',
-            'Added to chart',
-            'Reached checkout',
-            'Converted',
-          ]}
+          xAxisLabels={['Added to cart', 'Reached checkout', 'Converted']}
           series={[
             {
               label: 'Last 28 days',
               // total_sessions, total_carts, total_reached_checkouts,
-              data: [17625684, 957398, 5, 0],
+              data: [957398, 5, 0],
               color: 'url(#gradient)',
             },
           ]}
@@ -150,19 +145,15 @@ export default function Playground() {
       <div style={innerContainerStyle}>
         <p>27285192778</p>
         <StackedAreaChart
+          isAnimated
           formatXAxisLabel={formatXAxisLabel}
           formatYAxisLabel={formatYAxisLabel}
-          xAxisLabels={[
-            'All sessions',
-            'Added to chart',
-            'Reached checkout',
-            'Converted',
-          ]}
+          xAxisLabels={['Added to cart', 'Reached checkout', 'Converted']}
           series={[
             {
               label: 'Last 28 days',
               // total_sessions, total_carts, total_reached_checkouts,
-              data: [893, 10, 4, 3],
+              data: [10, 4, 3],
               color: 'url(#gradient)',
             },
           ]}
@@ -172,19 +163,69 @@ export default function Playground() {
       <div style={innerContainerStyle}>
         <p>23215947</p>
         <StackedAreaChart
+          isAnimated
           formatXAxisLabel={formatXAxisLabel}
           formatYAxisLabel={formatYAxisLabel}
-          xAxisLabels={[
-            'All sessions',
-            'Added to chart',
-            'Reached checkout',
-            'Converted',
-          ]}
+          xAxisLabels={['Added to cart', 'Reached checkout', 'Converted']}
           series={[
             {
               label: 'Last 28 days',
               // total_sessions, total_carts, total_reached_checkouts,
-              data: [4027305, 261785, 157580, 109252],
+              data: [261785, 157580, 109252],
+              color: 'url(#gradient)',
+            },
+          ]}
+        />
+      </div>
+
+      <div style={innerContainerStyle}>
+        <p>1571717219</p>
+        <StackedAreaChart
+          isAnimated
+          formatXAxisLabel={formatXAxisLabel}
+          formatYAxisLabel={formatYAxisLabel}
+          xAxisLabels={['Added to cart', 'Reached checkout', 'Converted']}
+          series={[
+            {
+              label: 'Last 28 days',
+              // total_sessions, total_carts, total_reached_checkouts, orders placed
+              data: [37, 37, 37],
+              color: 'url(#gradient)',
+            },
+          ]}
+        />
+      </div>
+
+      <div style={innerContainerStyle}>
+        <p>8559034453</p>
+        <StackedAreaChart
+          isAnimated
+          formatXAxisLabel={formatXAxisLabel}
+          formatYAxisLabel={formatYAxisLabel}
+          xAxisLabels={['Added to cart', 'Reached checkout', 'Converted']}
+          series={[
+            {
+              label: 'Last 28 days',
+              // total_sessions, total_carts, total_reached_checkouts, orders placed
+              data: [0, 210, 235],
+              color: 'url(#gradient)',
+            },
+          ]}
+        />
+      </div>
+
+      <div style={innerContainerStyle}>
+        <p>26017660999</p>
+        <StackedAreaChart
+          isAnimated
+          formatXAxisLabel={formatXAxisLabel}
+          formatYAxisLabel={formatYAxisLabel}
+          xAxisLabels={['Added to cart', 'Reached checkout', 'Converted']}
+          series={[
+            {
+              label: 'Last 28 days',
+              // total_sessions, total_carts, total_reached_checkouts, orders placed
+              data: [0, 4, 4],
               color: 'url(#gradient)',
             },
           ]}

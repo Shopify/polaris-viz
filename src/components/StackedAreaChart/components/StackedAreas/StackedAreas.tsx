@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react';
 import isEqual from 'lodash.isequal';
 import {animated, useSpring} from 'react-spring';
-import {area, Series} from 'd3-shape';
+import {area, Series, curveMonotoneX} from 'd3-shape';
 import {Color} from 'types';
 import {ScaleLinear} from 'd3-scale';
 
@@ -54,13 +54,22 @@ export function Areas({
     reset: true,
   });
 
+  // const areaShape = area<number[]>()
+  //   .defined(
+  //     ([firstPoint, lastPoint]) => !isNaN(firstPoint) && !isNaN(lastPoint),
+  //   )
+  //   .x((_, index) => xScale(index))
+  //   .y0(([firstPoint]) => yScale(firstPoint))
+  //   .y1(([, lastPoint]) => yScale(lastPoint));
+
   const areaShape = area<number[]>()
     .defined(
       ([firstPoint, lastPoint]) => !isNaN(firstPoint) && !isNaN(lastPoint),
     )
     .x((_, index) => xScale(index))
     .y0(([firstPoint]) => yScale(firstPoint))
-    .y1(([, lastPoint]) => yScale(lastPoint));
+    .y1(([, lastPoint]) => yScale(lastPoint))
+    .curve(curveMonotoneX);
 
   const id = useMemo(() => uniqueId('stackedAreas'), []);
 

@@ -16,6 +16,7 @@ interface Props {
   data: {[key: string]: number}[];
   colors: Color[];
   tooltipSumDescriptor?: string;
+  xAxisLabels: string[];
 }
 
 export function Tooltip({
@@ -27,8 +28,8 @@ export function Tooltip({
   tooltipSumDescriptor,
   data,
   colors,
+  xAxisLabels,
 }: Props) {
-  const labels = Object.keys(data[activePointIndex]);
   const values = Object.values(data[activePointIndex]);
   const total = values.reduce((acc, value) => acc + value, 0);
 
@@ -41,10 +42,10 @@ export function Tooltip({
       margin={Margin}
     >
       <div className={styles.Container}>
-        {labels.map((label, index) => (
+        {values.map((label, index) => (
           <React.Fragment key={`${label}-${index}`}>
-            <SquareColorPreview color={colors[index]} />
-            <p className={styles.SeriesName}>{label}</p>
+            {/* <SquareColorPreview color={colors[index]} /> */}
+            <p className={styles.SeriesName}>{xAxisLabels[activePointIndex]}</p>
             <p className={styles.Value}>{formatYAxisLabel(values[index])}</p>
           </React.Fragment>
         ))}
