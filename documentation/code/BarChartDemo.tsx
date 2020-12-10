@@ -1,7 +1,7 @@
 import React from 'react';
 
 // eslint-disable-next-line shopify/strict-component-boundaries
-import {BarChart} from '../../src/components';
+import {BarChart, BarChartTooltip} from '../../src/components';
 
 import {OUTER_CONTAINER_STYLE} from './constants';
 
@@ -21,31 +21,63 @@ export function BarChartDemo() {
     "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif";
 
   const data = [
-    {rawValue: 3.19, label: 'Chicago Hot Dog'},
-    {rawValue: 6.29, label: 'Italian Beef'},
-    {rawValue: 4.79, label: 'Polish Sausage'},
+    {rawValue: 324.19, label: '2020-01-01T12:00:00Z'},
+    {rawValue: 613.29, label: '2020-01-02T12:00:00Z'},
+    {rawValue: 422.79, label: '2020-01-03T12:00:00Z'},
     {
-      rawValue: 0.6,
-      label: 'Hot Peppers',
+      rawValue: 25.6,
+      label: '2020-01-04T12:00:00Z',
     },
-    {rawValue: 2.69, label: 'French Fries'},
-    {rawValue: 4.19, label: 'Cake Shake'},
+    {rawValue: 277.69, label: '2020-01-05T12:00:00Z'},
+    {rawValue: 421.19, label: '2020-01-06T12:00:00Z'},
   ];
 
-  const formatYAxisLabel = (val) =>
-    new Intl.NumberFormat('en-CA', {
+  function formatXAxisLabel(value: string) {
+    return new Date(value).toLocaleDateString('en-CA', {
+      day: 'numeric',
+      month: 'short',
+    });
+  }
+
+  function formatYAxisLabel(value: number) {
+    return new Intl.NumberFormat('en-CA', {
       style: 'currency',
       currency: 'CAD',
-      maximumSignificantDigits: 3,
-    }).format(val);
+      maximumSignificantDigits: 2,
+    }).format(value);
+  }
+
+  function formatTooltipLabel(value: string) {
+    return new Date(value).toLocaleDateString('en-CA', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    });
+  }
+
+  function formatTooltipValue(value: number) {
+    return new Intl.NumberFormat('en-CA', {
+      style: 'currency',
+      currency: 'CAD',
+    }).format(value);
+  }
+
+  function renderTooltip({label, value}: {label: string; value: number}) {
+    const formattedLabel = formatTooltipLabel(label);
+    const formattedValue = formatTooltipValue(value);
+
+    return <BarChartTooltip label={formattedLabel} value={formattedValue} />;
+  }
 
   return (
     <div style={OUTER_CONTAINER_STYLE}>
       <div style={innerContainerStyle}>
         <BarChart
-          formatYAxisLabel={formatYAxisLabel}
-          color="primary"
           data={data}
+          color="primary"
+          formatXAxisLabel={formatXAxisLabel}
+          formatYAxisLabel={formatYAxisLabel}
+          renderTooltip={renderTooltip}
         />
       </div>
     </div>

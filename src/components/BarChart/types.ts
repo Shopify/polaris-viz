@@ -9,3 +9,8 @@ export enum BarMargin {
   Large = 0.3,
   None = 0,
 }
+
+export interface RenderTooltipProps {
+  label: string;
+  value: number;
+}

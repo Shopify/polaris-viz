@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useMemo} from 'react';
 import {Color} from 'types';
 
 import {eventPoint, getTextWidth} from '../../utilities';
@@ -6,8 +6,8 @@ import {YAxis} from '../YAxis';
 import {TooltipContainer} from '../TooltipContainer';
 import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
-import {BarData} from './types';
-import {XAxis, Bar, Tooltip} from './components';
+import {BarData, RenderTooltipProps} from './types';
+import {XAxis, Bar} from './components';
 import {useYScale, useXScale} from './hooks';
 import {
   MARGIN,
@@ -29,6 +29,7 @@ interface Props {
   formatXAxisLabel: StringLabelFormatter;
   formatYAxisLabel: NumberLabelFormatter;
   timeSeries: boolean;
+  renderTooltip: (props: RenderTooltipProps) => React.ReactNode;
 }
 
 export function Chart({
@@ -40,6 +41,7 @@ export function Chart({
   formatXAxisLabel,
   formatYAxisLabel,
   timeSeries,
+  renderTooltip,
 }: Props) {
   const [activeBar, setActiveBar] = useState<number | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState<{
@@ -86,6 +88,17 @@ export function Chart({
     data,
     formatYAxisLabel,
   });
+
+  const tooltipMarkup = useMemo(() => {
+    if (activeBar == null) {
+      return null;
+    }
+
+    return renderTooltip({
+      label: data[activeBar].label,
+      value: data[activeBar].rawValue,
+    });
+  }, [activeBar, data, renderTooltip]);
 
   return (
     <div
@@ -150,10 +163,7 @@ export function Chart({
           margin={MARGIN}
           position="center"
         >
-          <Tooltip
-            label={data[activeBar].label}
-            value={formatYAxisLabel(data[activeBar].rawValue)}
-          />
+          {tooltipMarkup}
         </TooltipContainer>
       ) : null}
     </div>

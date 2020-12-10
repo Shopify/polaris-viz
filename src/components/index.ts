@@ -1,6 +1,6 @@
 export {Point} from './Point';
 export {Crosshair} from './Crosshair';
-export {BarChart} from './BarChart';
+export {BarChart, BarChartTooltip} from './BarChart';
 export {LineChart} from './LineChart';
 export {NormalizedStackedBar} from './NormalizedStackedBar';
 export {Sparkline} from './Sparkline';

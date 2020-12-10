@@ -4,8 +4,9 @@ import {Color} from 'types';
 
 import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
+import {Tooltip} from './components';
 import {Chart} from './Chart';
-import {BarData, BarMargin} from './types';
+import {BarData, BarMargin, RenderTooltipProps} from './types';
 
 interface Props {
   data: BarData[];
@@ -16,6 +17,7 @@ interface Props {
   formatXAxisLabel?: StringLabelFormatter;
   formatYAxisLabel?: NumberLabelFormatter;
   timeSeries?: boolean;
+  renderTooltip?: (props: RenderTooltipProps) => React.ReactNode;
 }
 
 export function BarChart({
@@ -27,6 +29,7 @@ export function BarChart({
   timeSeries = false,
   formatXAxisLabel = (value) => value.toString(),
   formatYAxisLabel = (value) => value.toString(),
+  renderTooltip,
 }: Props) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -49,6 +52,13 @@ export function BarChart({
     };
   }, [containerRef, updateDimensions]);
 
+  function renderDefaultTooltip({label, value}: RenderTooltipProps) {
+    const formattedLabel = formatXAxisLabel(label);
+    const formattedValue = formatYAxisLabel(value);
+
+    return <Tooltip label={formattedLabel} value={formattedValue} />;
+  }
+
   return (
     <div
       aria-label={accessibilityLabel}
@@ -66,6 +76,7 @@ export function BarChart({
           formatXAxisLabel={formatXAxisLabel}
           formatYAxisLabel={formatYAxisLabel}
           timeSeries={timeSeries}
+          renderTooltip={renderTooltip || renderDefaultTooltip}
         />
       )}
     </div>

@@ -4,7 +4,6 @@
 .Tooltip {
   @include tooltip-text;
   display: grid;
-  max-width: 160px;
   grid-template-columns: 1fr auto;
   grid-gap: $spacing-tight;
 }
