@@ -103,6 +103,19 @@ export function Chart({
         onTouchEnd={() => setActivePointIndex(null)}
         onMouseLeave={() => setActivePointIndex(null)}
       >
+        <defs>
+          <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#f8f8f8" stopOpacity="0.5" />
+            <stop offset="50%" stopColor="#fc00ff" stopOpacity="1" />
+            <stop offset="100%" stopColor="#f8f8f8" stopOpacity="0.5" />
+          </linearGradient>
+
+          <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#05a" />
+            <stop offset="100%" stopColor="#0a5" />
+          </linearGradient>
+        </defs>
+
         <g
           transform={`translate(${axisMargin},${dimensions.height -
             marginBottom})`}
@@ -132,7 +145,7 @@ export function Chart({
           isAnimated={isAnimated}
         />
 
-        {activePointIndex == null ? null : (
+        {/* {activePointIndex == null ? null : (
           <g transform={`translate(${axisMargin},${Margin.Top})`}>
             <Crosshair
               x={xScale(activePointIndex)}
@@ -140,7 +153,7 @@ export function Chart({
               opacity={0.5}
             />
           </g>
-        )}
+        )} */}
 
         <g transform={`translate(${axisMargin},${Margin.Top})`}>
           {stackedValues.map((value, stackIndex) =>

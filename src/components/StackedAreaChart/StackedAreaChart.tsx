@@ -71,8 +71,6 @@ export function StackedAreaChart({
           />
         )}
       </div>
-
-      <Legend series={series} />
     </div>
   );
 }
