@@ -110,9 +110,8 @@ export function Chart({
       >
         <defs>
           <linearGradient id="gradient" x1="0%" x2="0%" y1="100%" y2="0%">
-            <stop offset="0%" stopColor="#05a" />
-            <stop offset="100%" stopColor="#0a5" />
-            <stop offset="100%" stopColor="#0a5" />
+            <stop offset="0%" stopColor="rgba(0, 161, 159, 0)" />
+            <stop offset="100%" stopColor="rgba(0, 161, 159, 0.3)" />
           </linearGradient>
         </defs>
 
