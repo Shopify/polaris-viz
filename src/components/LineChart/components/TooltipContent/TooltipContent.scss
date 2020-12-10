@@ -1,7 +1,7 @@
 @import 'node_modules/@shopify/polaris-tokens/dist/index';
 @import '../../../../styles/common';
 
-.SeriesName {
+.Name {
   @include tooltip-emphasis;
   margin: 0;
 }
