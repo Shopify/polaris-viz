@@ -120,6 +120,7 @@
     "styles.min.css"
   ],
   "dependencies": {
+    "@shopify/condense-number": "^0.7.0",
     "@shopify/css-utilities": "^1.0.0",
     "@shopify/polaris-tokens": "^2.6.0",
     "d3-array": "^2.4.0",

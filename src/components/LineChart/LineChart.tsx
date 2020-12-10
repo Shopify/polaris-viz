@@ -63,7 +63,7 @@ export function LineChart({
         )}
       </div>
 
-      <Legend series={series} />
+      {/* <Legend series={series} /> */}
     </div>
   );
 }

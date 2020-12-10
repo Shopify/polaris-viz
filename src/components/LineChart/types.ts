@@ -6,6 +6,8 @@ export interface Series {
   data: {
     label: string;
     rawValue: number;
+    prediction?: boolean;
+    annotate?: boolean;
   }[];
   name: string;
   style?: Partial<{

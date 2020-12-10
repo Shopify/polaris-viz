@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {line} from 'd3-shape';
+import {line, curveCatmullRom} from 'd3-shape';
 
 import {LinearXAxis} from '../LinearXAxis';
 import {YAxis} from '../YAxis';
@@ -61,9 +61,11 @@ export function Chart({
     return null;
   }
 
-  const lineGenerator = line<{rawValue: number}>()
-    .x((_, index) => xScale(index))
-    .y(({rawValue}) => yScale(rawValue));
+  // function getIndexFromString(label: string, series: Series) {
+  //   return series.data.findIndex(
+  //     (singleSeries) => singleSeries.label === label,
+  //   );
+  // }
 
   function handleInteraction(
     event: React.MouseEvent<SVGSVGElement> | React.TouchEvent<SVGSVGElement>,
@@ -100,6 +102,19 @@ export function Chart({
         onTouchEnd={() => setActivePointIndex(null)}
         onMouseLeave={() => setActivePointIndex(null)}
       >
+        <defs>
+          <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#f8f8f8" stopOpacity="0.5" />
+            <stop offset="50%" stopColor="#fc00ff" stopOpacity="1" />
+            <stop offset="100%" stopColor="#f8f8f8" stopOpacity="0.5" />
+          </linearGradient>
+
+          <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#05a" />
+            <stop offset="100%" stopColor="#0a5" />
+          </linearGradient>
+        </defs>
+
         <g
           transform={`translate(${axisMargin},${dimensions.height -
             marginBottom})`}
@@ -117,11 +132,11 @@ export function Chart({
           <YAxis ticks={ticks} drawableWidth={drawableWidth} />
         </g>
 
-        {activePointIndex == null ? null : (
+        {/* {activePointIndex == null ? null : (
           <g transform={`translate(${axisMargin},${Margin.Top})`}>
             <Crosshair x={xScale(activePointIndex)} height={drawableHeight} />
           </g>
-        )}
+        )} */}
 
         <g transform={`translate(${axisMargin},${Margin.Top})`}>
           {series
@@ -129,25 +144,68 @@ export function Chart({
             .reverse()
             .map((singleSeries) => {
               const {data, name} = singleSeries;
-              const path = lineGenerator(data);
 
-              if (path == null) {
+              const predictionIndexStart =
+                data.findIndex((x) => x.prediction === true) - 1;
+              const nonPredictionData = data.filter((x) => !x.prediction);
+              const predictionData = [
+                nonPredictionData[nonPredictionData.length - 1],
+                ...data.filter((x) => x.prediction),
+              ];
+
+              const pastLineGenerator = line<{
+                rawValue: number;
+                label: string;
+              }>()
+                .x((_, index) => xScale(index))
+                .y(({rawValue}) => yScale(rawValue))
+                .curve(curveCatmullRom.alpha(0.5));
+
+              const pastLine = pastLineGenerator(nonPredictionData);
+
+              const futureLineGenerator = line<{
+                rawValue: number;
+                label: string;
+              }>()
+                .x((_, index) => xScale(index + predictionIndexStart))
+                .y(({rawValue}) => yScale(rawValue))
+                .curve(curveCatmullRom.alpha(0.5));
+
+              const futureLine = futureLineGenerator(predictionData);
+
+              if (pastLine == null) {
                 throw new Error(
                   `Could not generate line path for series ${name}`,
                 );
               }
 
               return (
-                <Line
-                  key={name}
-                  xScale={xScale}
-                  yScale={yScale}
-                  series={singleSeries}
-                  path={path}
-                  activePointIndex={activePointIndex}
-                  setActiveAnnotation={setActiveAnnotation}
-                  activeAnnotation={activeAnnotation}
-                />
+                <>
+                  <Line
+                    key={`${name}future`}
+                    xScale={xScale}
+                    yScale={yScale}
+                    series={singleSeries}
+                    path={pastLine}
+                    activePointIndex={activePointIndex}
+                    setActiveAnnotation={setActiveAnnotation}
+                    activeAnnotation={activeAnnotation}
+                  />
+
+                  {predictionData.length === 0 || futureLine == null ? null : (
+                    <Line
+                      key={`${name}past`}
+                      xScale={xScale}
+                      yScale={yScale}
+                      series={singleSeries}
+                      path={futureLine}
+                      activePointIndex={activePointIndex}
+                      setActiveAnnotation={setActiveAnnotation}
+                      activeAnnotation={activeAnnotation}
+                      prediction
+                    />
+                  )}
+                </>
               );
             })}
         </g>
@@ -181,7 +239,7 @@ export function Chart({
               ⓘ Anomaly detection
             </p>
             <ul style={{fontSize: 12, paddingLeft: 30}}>
-              <li>Sales up 100%</li>
+              <li>Sales: $514K (↑ 90%)</li>
               <li>Notable events: Black Friday</li>
               <li>Active marketing campaign: BFCM</li>
             </ul>

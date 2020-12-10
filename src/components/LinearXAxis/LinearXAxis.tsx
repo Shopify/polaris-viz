@@ -106,12 +106,9 @@ function Axis({xScale, drawableHeight, dimensions, labels, axisMargin}: Props) {
         return (
           <g key={`${value}-${index}`} transform={`translate(${xOffset}, 0)`}>
             <line y2={TICK_SIZE} stroke={colorSky} />
-            <line
-              y1="0"
-              y2={-drawableHeight}
-              stroke={colorSky}
-              strokeDasharray="3 2"
-            />
+            {index === 0 ? (
+              <line y1="0" y2={-drawableHeight} stroke={colorSky} />
+            ) : null}
             <text
               className={styles.Text}
               style={{

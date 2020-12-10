@@ -13,6 +13,7 @@ interface Props {
   activePointIndex: number | null;
   setActiveAnnotation: any;
   activeAnnotation: boolean;
+  prediction: boolean;
 }
 
 export function Line({
@@ -23,6 +24,7 @@ export function Line({
   activePointIndex,
   setActiveAnnotation,
   activeAnnotation,
+  prediction,
 }: Props) {
   const {style = {}, data} = series;
   const {color = 'colorPurple', lineStyle = 'solid'} = style;
@@ -37,7 +39,7 @@ export function Line({
         stroke={getColorValue(color)}
         strokeLinejoin="round"
         strokeLinecap="round"
-        strokeDasharray={lineStyle === 'dashed' ? '2 4' : 'unset'}
+        strokeDasharray={lineStyle === 'dashed' || prediction ? '2 4' : 'unset'}
       />
 
       {data.map(({rawValue, annotate}, index) => {
@@ -45,7 +47,7 @@ export function Line({
           return (
             <Point
               key={index}
-              color={'colorYellowLight'}
+              color={'colorPurpleDark'}
               cx={xScale(index)}
               cy={yScale(rawValue) - 12}
               active={true}

@@ -29,6 +29,6 @@ export function getColorValue(color: Color) {
   } else if (isTokenType(color)) {
     return tokens[color];
   } else {
-    throw new Error('Color value is not valid.');
+    return color;
   }
 }

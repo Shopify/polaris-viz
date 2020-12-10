@@ -20,7 +20,7 @@ function Axis({ticks, drawableWidth}: Props) {
       {ticks.map(({value, formattedValue, yOffset}) => {
         return (
           <g key={value} transform={`translate(0,${yOffset})`}>
-            <line x2={drawableWidth} className={styles.Line} />
+            {/* <line x2={drawableWidth} className={styles.Line} /> */}
             <text
               className={styles.Text}
               style={{

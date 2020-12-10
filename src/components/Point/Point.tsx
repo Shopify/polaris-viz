@@ -35,11 +35,7 @@ export function Point({
         cx={cx}
         cy={cy}
         r={isAnnotation ? 7 : active ? 5 : 0}
-        fill={
-          activeAnnotation === true
-            ? getColorValue('colorYellow')
-            : getColorValue(color)
-        }
+        fill={getColorValue(color)}
         stroke={tokens.colorWhite}
         strokeWidth={1.5}
         onClick={() => setActiveAnnotation(isAnnotation)}

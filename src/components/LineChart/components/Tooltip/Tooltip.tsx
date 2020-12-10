@@ -42,11 +42,19 @@ export function Tooltip({
 
           const {color = 'colorPurple', lineStyle = 'solid'} = style;
           const formattedValue = formatYAxisLabel(point.rawValue);
+          const isPrediction = data[activePointIndex].prediction;
+
+          const label = isPrediction
+            ? `Prediction: ${point.label}`
+            : point.label;
 
           return (
             <React.Fragment key={name}>
-              <LinePreview color={color} lineStyle={lineStyle} />
-              <p className={styles.SeriesName}>{point.label}</p>
+              {/* <LinePreview
+                color={color}
+                lineStyle={isPrediction ? 'dashed' : lineStyle}
+              /> */}
+              <p className={styles.SeriesName}>{label}</p>
               <p className={styles.Value}>{formattedValue}</p>
             </React.Fragment>
           );
