@@ -1,5 +1,12 @@
 @import 'node_modules/@shopify/polaris-tokens/dist/index';
-@import '../../../../styles/common';
+@import '../../styles/common';
+
+.Title {
+  @include tooltip-emphasis;
+  text-align: center;
+  grid-column: 1 / span 3;
+  margin-bottom: $spacing-extra-tight;
+}
 
 .SeriesName {
   margin: 0;

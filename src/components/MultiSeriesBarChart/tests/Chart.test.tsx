@@ -1,10 +1,10 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {Color} from 'types';
-import {YAxis, TooltipContainer} from 'components';
+import {YAxis, TooltipContainer, Tooltip} from 'components';
 
 import {Chart} from '../Chart';
-import {XAxis, Tooltip, BarGroup, StackedBarGroup} from '../components';
+import {XAxis, BarGroup, StackedBarGroup} from '../components';
 
 (global as any).DOMRect = class DOMRect {
   width = 500;

@@ -1,13 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, useMemo} from 'react';
 
+import {Tooltip, TooltipContainer} from '../../components';
 import {eventPoint, getTextWidth} from '../../utilities';
 import {YAxis} from '../YAxis';
-import {TooltipContainer} from '../TooltipContainer';
 import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
 import {getStackedValues} from './utilities';
 import {Data} from './types';
-import {XAxis, BarGroup, Tooltip, StackedBarGroup} from './components';
+import {XAxis, BarGroup, StackedBarGroup} from './components';
 import {useYScale, useXScale} from './hooks';
 import {
   MARGIN,
@@ -100,6 +100,22 @@ export function Chart({
     highlightColor != null ? highlightColor : barColors[index],
   );
 
+  const tooltipMarkup = useMemo(() => {
+    if (activeBarGroup == null) {
+      return null;
+    }
+
+    const formattedValues = sortedData[activeBarGroup].map(formatYAxisLabel);
+
+    return (
+      <Tooltip
+        colors={barColors}
+        labels={barGroupLabels}
+        values={formattedValues}
+      />
+    );
+  }, [activeBarGroup, barColors, barGroupLabels, formatYAxisLabel, sortedData]);
+
   return (
     <div
       className={styles.ChartContainer}
@@ -177,12 +193,7 @@ export function Chart({
           margin={MARGIN}
           position="center"
         >
-          <Tooltip
-            colors={barColors}
-            labels={barGroupLabels}
-            values={sortedData[activeBarGroup]}
-            formatValue={formatYAxisLabel}
-          />
+          {tooltipMarkup}
         </TooltipContainer>
       ) : null}
     </div>
