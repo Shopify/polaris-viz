@@ -34,22 +34,22 @@ function formatYAxisLabel(value: number) {
   }).format(value);
 }
 
-function formatTooltipLabel(value: string) {
-  return new Date(value).toLocaleDateString('en-CA', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  });
-}
-
-function formatTooltipValue(value: number) {
-  return new Intl.NumberFormat('en-CA', {
-    style: 'currency',
-    currency: 'CAD',
-  }).format(value);
-}
-
 function renderTooltip({label, value}: {label: string; value: number}) {
+  function formatTooltipLabel(value: string) {
+    return new Date(value).toLocaleDateString('en-CA', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    });
+  }
+
+  function formatTooltipValue(value: number) {
+    return new Intl.NumberFormat('en-CA', {
+      style: 'currency',
+      currency: 'CAD',
+    }).format(value);
+  }
+
   const formattedLabel = formatTooltipLabel(label);
   const formattedValue = formatTooltipValue(value);
 

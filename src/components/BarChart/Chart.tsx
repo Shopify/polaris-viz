@@ -6,7 +6,7 @@ import {YAxis} from '../YAxis';
 import {TooltipContainer} from '../TooltipContainer';
 import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
-import {BarData, RenderTooltipProps} from './types';
+import {BarData, RenderTooltipData} from './types';
 import {XAxis, Bar} from './components';
 import {useYScale, useXScale} from './hooks';
 import {
@@ -29,7 +29,7 @@ interface Props {
   formatXAxisLabel: StringLabelFormatter;
   formatYAxisLabel: NumberLabelFormatter;
   timeSeries: boolean;
-  renderTooltip: (props: RenderTooltipProps) => React.ReactNode;
+  renderTooltip: (data: RenderTooltipData) => React.ReactNode;
 }
 
 export function Chart({
