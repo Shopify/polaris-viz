@@ -2,7 +2,7 @@ export {
   Sparkline,
   NormalizedStackedBar,
   BarChart,
-  BarChartTooltip,
+  BarChartTooltipContent,
   LineChart,
   StackedAreaChart,
   MultiSeriesBarChart,

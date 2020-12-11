@@ -1,7 +1,7 @@
 import React from 'react';
 
 // eslint-disable-next-line shopify/strict-component-boundaries
-import {BarChart, BarChartTooltip} from '../../src/components';
+import {BarChart, BarChartTooltipContent} from '../../src/components';
 
 import {OUTER_CONTAINER_STYLE} from './constants';
 
@@ -72,7 +72,9 @@ export function BarChartDemo() {
     const formattedLabel = formatTooltipLabel(label);
     const formattedValue = formatTooltipValue(value);
 
-    return <BarChartTooltip label={formattedLabel} value={formattedValue} />;
+    return (
+      <BarChartTooltipContent label={formattedLabel} value={formattedValue} />
+    );
   }
 
   return (
@@ -83,7 +85,7 @@ export function BarChartDemo() {
           color="primary"
           formatXAxisLabel={formatXAxisLabel}
           formatYAxisLabel={formatYAxisLabel}
-          renderTooltipContent={renderTooltip}
+          renderTooltipContent={renderTooltipContent}
         />
       </div>
     </div>

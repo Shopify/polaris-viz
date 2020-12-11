@@ -4,7 +4,7 @@ import {Color} from 'types';
 
 import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
-import {Tooltip} from './components';
+import {TooltipContent} from './components';
 import {Chart} from './Chart';
 import {BarData, BarMargin, RenderTooltipContentData} from './types';
 
@@ -59,7 +59,7 @@ export function BarChart({
     const formattedLabel = formatXAxisLabel(label);
     const formattedValue = formatYAxisLabel(value);
 
-    return <Tooltip label={formattedLabel} value={formattedValue} />;
+    return <TooltipContent label={formattedLabel} value={formattedValue} />;
   }
 
   return (

@@ -53,7 +53,9 @@ function renderTooltipContent({label, value}: {label: string; value: number}) {
   const formattedLabel = formatTooltipLabel(label);
   const formattedValue = formatTooltipValue(value);
 
-  return <BarChartTooltip label={formattedLabel} value={formattedValue} />;
+  return (
+    <BarChartTooltipContent label={formattedLabel} value={formattedValue} />
+  );
 }
 
 return (
