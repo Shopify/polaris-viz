@@ -145,7 +145,7 @@ This accepts a function that is called when the Y value (`rawValue`) is formatte
 | -------------------------------------------------------------------- |
 | `({label, value}: {label: string; value: number}): React.ReactNode;` |
 
-This accepts a function that is called to render the tooltip markup. By default it calls `formatXAxisLabel` and `formatYAxisLabel` to format the the tooltip values and passes them to `<BarChartTooltip />`. Note that this only affects the content inside the `<TooltipContainer />`. The container provides the positioning and border for the content.
+This accepts a function that is called to render the tooltip content. By default it calls `formatXAxisLabel` and `formatYAxisLabel` to format the the tooltip values and passes them to `<BarChartTooltipContent />`.
 
 #### highlightColor
 
