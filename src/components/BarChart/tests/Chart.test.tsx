@@ -39,7 +39,7 @@ describe('Chart />', () => {
     formatYAxisLabel: (value: number) => value.toString(),
     barMargin: 0,
     timeSeries: false,
-    renderTooltip: jest.fn(() => <p>Mock Tooltip</p>),
+    renderTooltipContent: jest.fn(() => <p>Mock Tooltip</p>),
   };
 
   it('renders an SVG element', () => {

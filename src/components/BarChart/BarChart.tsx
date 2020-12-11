@@ -6,7 +6,7 @@ import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
 import {Tooltip} from './components';
 import {Chart} from './Chart';
-import {BarData, BarMargin, RenderTooltipData} from './types';
+import {BarData, BarMargin, RenderTooltipContentData} from './types';
 
 interface Props {
   data: BarData[];
@@ -17,7 +17,7 @@ interface Props {
   formatXAxisLabel?: StringLabelFormatter;
   formatYAxisLabel?: NumberLabelFormatter;
   timeSeries?: boolean;
-  renderTooltip?: (data: RenderTooltipData) => React.ReactNode;
+  renderTooltipContent?: (data: RenderTooltipContentData) => React.ReactNode;
 }
 
 export function BarChart({
@@ -29,7 +29,7 @@ export function BarChart({
   timeSeries = false,
   formatXAxisLabel = (value) => value.toString(),
   formatYAxisLabel = (value) => value.toString(),
-  renderTooltip,
+  renderTooltipContent,
 }: Props) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -52,7 +52,10 @@ export function BarChart({
     };
   }, [containerRef, updateDimensions]);
 
-  function renderDefaultTooltip({label, value}: RenderTooltipData) {
+  function renderDefaultTooltipContent({
+    label,
+    value,
+  }: RenderTooltipContentData) {
     const formattedLabel = formatXAxisLabel(label);
     const formattedValue = formatYAxisLabel(value);
 
@@ -76,8 +79,10 @@ export function BarChart({
           formatXAxisLabel={formatXAxisLabel}
           formatYAxisLabel={formatYAxisLabel}
           timeSeries={timeSeries}
-          renderTooltip={
-            renderTooltip != null ? renderTooltip : renderDefaultTooltip
+          renderTooltipContent={
+            renderTooltipContent != null
+              ? renderTooltipContent
+              : renderDefaultTooltipContent
           }
         />
       )}

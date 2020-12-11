@@ -6,7 +6,7 @@ import {YAxis} from '../YAxis';
 import {TooltipContainer} from '../TooltipContainer';
 import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
-import {BarData, RenderTooltipData} from './types';
+import {BarData, RenderTooltipContentData} from './types';
 import {XAxis, Bar} from './components';
 import {useYScale, useXScale} from './hooks';
 import {
@@ -29,7 +29,7 @@ interface Props {
   formatXAxisLabel: StringLabelFormatter;
   formatYAxisLabel: NumberLabelFormatter;
   timeSeries: boolean;
-  renderTooltip: (data: RenderTooltipData) => React.ReactNode;
+  renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
 }
 
 export function Chart({
@@ -41,7 +41,7 @@ export function Chart({
   formatXAxisLabel,
   formatYAxisLabel,
   timeSeries,
-  renderTooltip,
+  renderTooltipContent,
 }: Props) {
   const [activeBar, setActiveBar] = useState<number | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState<{
@@ -51,7 +51,10 @@ export function Chart({
 
   const yAxisLabelWidth = data
     .map(({rawValue}) =>
-      getTextWidth({text: formatYAxisLabel(rawValue), fontSize: FONT_SIZE}),
+      getTextWidth({
+        text: formatYAxisLabel(rawValue),
+        fontSize: FONT_SIZE,
+      }),
     )
     .reduce((acc, currentValue) => Math.max(acc, currentValue));
 
@@ -94,11 +97,11 @@ export function Chart({
       return null;
     }
 
-    return renderTooltip({
+    return renderTooltipContent({
       label: data[activeBar].label,
       value: data[activeBar].rawValue,
     });
-  }, [activeBar, data, renderTooltip]);
+  }, [activeBar, data, renderTooltipContent]);
 
   return (
     <div

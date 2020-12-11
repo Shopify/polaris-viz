@@ -47,7 +47,13 @@ export function BarChartDemo() {
     }).format(value);
   }
 
-  function renderTooltip({label, value}: {label: string; value: number}) {
+  function renderTooltipContent({
+    label,
+    value,
+  }: {
+    label: string;
+    value: number;
+  }) {
     function formatTooltipLabel(value: string) {
       return new Date(value).toLocaleDateString('en-CA', {
         day: 'numeric',
@@ -77,7 +83,7 @@ export function BarChartDemo() {
           color="primary"
           formatXAxisLabel={formatXAxisLabel}
           formatYAxisLabel={formatYAxisLabel}
-          renderTooltip={renderTooltip}
+          renderTooltipContent={renderTooltip}
         />
       </div>
     </div>

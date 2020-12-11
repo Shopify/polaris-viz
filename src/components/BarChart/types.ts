@@ -10,7 +10,7 @@ export enum BarMargin {
   None = 0,
 }
 
-export interface RenderTooltipData {
+export interface RenderTooltipContentData {
   label: string;
   value: number;
 }

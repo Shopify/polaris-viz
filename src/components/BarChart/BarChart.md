@@ -34,7 +34,7 @@ function formatYAxisLabel(value: number) {
   }).format(value);
 }
 
-function renderTooltip({label, value}: {label: string; value: number}) {
+function renderTooltipContent({label, value}: {label: string; value: number}) {
   function formatTooltipLabel(value: string) {
     return new Date(value).toLocaleDateString('en-CA', {
       day: 'numeric',
@@ -62,7 +62,7 @@ return (
     color="primary"
     formatXAxisLabel={formatXAxisLabel}
     formatYAxisLabel={formatYAxisLabel}
-    renderTooltip={renderTooltip}
+    renderTooltipContent={renderTooltip}
   />
 );
 ```
@@ -79,7 +79,7 @@ The bar chart interface looks like this:
   color?: Color;
   formatXAxisLabel?(value: string, index?: number, data?: string[]): string;
   formatYAxisLabel?(value: number): string;
-  renderTooltip?({label, value}: {lable: string, value: string}): React.ReactNode;
+  renderTooltipContent?({label, value}: {lable: string, value: string}): React.ReactNode;
   highlightColor?: Color;
   timeSeries?: boolean;
 }
@@ -137,7 +137,7 @@ This accepts a function that is called to format the labels when the chart draws
 
 This accepts a function that is called when the Y value (`rawValue`) is formatted for the tooltip and for the Y Axis.
 
-#### renderTooltip
+#### renderTooltipContent
 
 | type                                                                 |
 | -------------------------------------------------------------------- |
