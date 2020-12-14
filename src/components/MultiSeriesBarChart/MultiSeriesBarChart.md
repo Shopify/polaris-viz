@@ -44,11 +44,41 @@ const formatYAxisLabel = (val: number) =>
     maximumSignificantDigits: 3,
   }).format(val);
 
+const renderTooltipContent: MultiSeriesBarChartProps['renderTooltipContent'] = ({
+  data,
+  title,
+}) => {
+  const formatTooltipValue = (val: number) =>
+    new Intl.NumberFormat('en-CA', {
+      style: 'currency',
+      currency: 'CAD',
+    }).format(val);
+
+  const formattedData = data.map(({label, value, color}) => ({
+    color,
+    label,
+    value: formatTooltipValue(value),
+  }));
+
+  const total = data.reduce((totalValue, {value}) => totalValue + value, 0);
+
+  return (
+    <TooltipContent
+      title={title}
+      data={formattedData}
+      total={{label: 'Total', value: formatTooltipValue(total)}}
+    />
+  );
+};
+
 return (
   <MultiSeriesBarChart
     formatYAxisLabel={formatYAxisLabel}
     labels={labels}
     series={series}
+    chartHeight={250}
+    isStacked={isStacked}
+    renderTooltipContent={renderTooltipContent}
   />
 );
 ```
@@ -63,14 +93,32 @@ The mult-series bar chart interface looks like this:
   labels: string[];
   accessibilityLabel?: string;
   chartHeight?: number;
-  formatXAxisLabel?(value: string, index?: number, data?: string[]): string;
-  formatYAxisLabel?(value: number): string;
   timeSeries?: boolean;
   isStacked?: boolean;
+  formatXAxisLabel?(value: string, index?: number, data?: string[]): string;
+  formatYAxisLabel?(value: number): string;
+  renderTooltipContent?: (data: RenderTooltipContentData): React.ReactNode;
 }
 ```
 
 This component derives its size from its parent container and fills the width of its parent's container. It has a default height of `250`, which is configurable via the `chartHeight` prop. The `chartHeight` specifically affects the height of chart, and does not include or affect the height of the legend.
+
+### The `RenderTooltipContentData` type
+
+The `RenderTooltipContentData` type looks very similar to the `Series` type. Its interface looks like this:
+
+```tsx
+interface RenderTooltipContentData {
+  data: {
+    color: Color;
+    label: string;
+    value: number;
+  }[];
+  title: string;
+}
+```
+
+The distinction between the `RenderTooltipContentData` and series `Data` types is that `RenderTooltipContentData` is for a single data point, instead of an entire series of data.
 
 ### Required props
 
@@ -139,3 +187,11 @@ This indicates to the chart if the data provide is time series data. If `true`, 
 | `boolean` | `false` |
 
 This changes the grouping of the bars. If `true` the bar groups will stack vertically, otherwise they will render individual bars for each data point in each group. To see an example of stacked vs. grouped orientations, refer to the images above.
+
+#### renderTooltipContent
+
+| type                                                 |
+| ---------------------------------------------------- |
+| `(data: RenderTooltipContentData): React.ReactNode;` |
+
+This accepts a function that is called to render the tooltip content. By default it calls `formatYAxisLabel` to format the the tooltip value and passes it to `<TooltipContent />`.
