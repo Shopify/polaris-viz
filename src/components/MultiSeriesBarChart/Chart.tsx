@@ -1,12 +1,12 @@
 import React, {useState, useMemo} from 'react';
 
-import {TooltipContent, TooltipContainer} from '../../components';
+import {TooltipContainer} from '../../components';
 import {eventPoint, getTextWidth} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
 import {getStackedValues} from './utilities';
-import {Data} from './types';
+import {Data, RenderTooltipContentData} from './types';
 import {XAxis, BarGroup, StackedBarGroup} from './components';
 import {useYScale, useXScale} from './hooks';
 import {
@@ -26,6 +26,7 @@ interface Props {
   chartDimensions: DOMRect;
   formatXAxisLabel: StringLabelFormatter;
   formatYAxisLabel: NumberLabelFormatter;
+  renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
   timeSeries: boolean;
   isStacked: boolean;
 }
@@ -36,6 +37,7 @@ export function Chart({
   labels,
   formatXAxisLabel,
   formatYAxisLabel,
+  renderTooltipContent,
   timeSeries,
   isStacked,
 }: Props) {
@@ -99,7 +101,7 @@ export function Chart({
     highlightColor != null ? highlightColor : barColors[index],
   );
 
-  const tooltipMarkup = useMemo(() => {
+  const tooltipContentMarkup = useMemo(() => {
     if (activeBarGroup == null) {
       return null;
     }
@@ -108,12 +110,15 @@ export function Chart({
       return {
         label,
         color,
-        value: formatYAxisLabel(data[activeBarGroup]),
+        value: data[activeBarGroup],
       };
     });
 
-    return <TooltipContent data={data} />;
-  }, [activeBarGroup, formatYAxisLabel, series]);
+    return renderTooltipContent({
+      data,
+      title: labels[activeBarGroup],
+    });
+  }, [activeBarGroup, labels, renderTooltipContent, series]);
 
   return (
     <div
@@ -192,7 +197,7 @@ export function Chart({
           margin={MARGIN}
           position="center"
         >
-          {tooltipMarkup}
+          {tooltipContentMarkup}
         </TooltipContainer>
       ) : null}
     </div>

@@ -8,4 +8,7 @@ export {
   LineChartTooltipContent,
   StackedAreaChart,
   MultiSeriesBarChart,
+  MultiSeriesBarChartProps,
+  TooltipContent,
+  TooltipContentProps,
 } from './components';
