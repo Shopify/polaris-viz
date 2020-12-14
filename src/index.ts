@@ -1,8 +1,9 @@
 export {
-  BarChart,
-  LineChart,
-  NormalizedStackedBar,
   Sparkline,
+  NormalizedStackedBar,
+  BarChart,
+  BarChartTooltipContent,
+  LineChart,
   StackedAreaChart,
   MultiSeriesBarChart,
 } from './components';
