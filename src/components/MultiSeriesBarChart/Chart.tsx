@@ -1,12 +1,12 @@
 import React, {useState, useMemo} from 'react';
 
-import {Tooltip, TooltipContainer} from '../../components';
+import {TooltipContainer} from '../TooltipContainer';
 import {eventPoint, getTextWidth} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
 import {getStackedValues} from './utilities';
-import {Data} from './types';
+import {Data, RenderTooltipContentData} from './types';
 import {XAxis, BarGroup, StackedBarGroup} from './components';
 import {useYScale, useXScale} from './hooks';
 import {
@@ -26,6 +26,7 @@ interface Props {
   chartDimensions: DOMRect;
   formatXAxisLabel: StringLabelFormatter;
   formatYAxisLabel: NumberLabelFormatter;
+  renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
   timeSeries: boolean;
   isStacked: boolean;
 }
@@ -36,6 +37,7 @@ export function Chart({
   labels,
   formatXAxisLabel,
   formatYAxisLabel,
+  renderTooltipContent,
   timeSeries,
   isStacked,
 }: Props) {
@@ -95,26 +97,28 @@ export function Chart({
   });
 
   const barColors = series.map(({color}) => color);
-  const barGroupLabels = series.map(({label}) => label);
   const barHighlightColors = series.map(({highlightColor}, index) =>
     highlightColor != null ? highlightColor : barColors[index],
   );
 
-  const tooltipMarkup = useMemo(() => {
+  const tooltipContentMarkup = useMemo(() => {
     if (activeBarGroup == null) {
       return null;
     }
 
-    const formattedValues = sortedData[activeBarGroup].map(formatYAxisLabel);
+    const data = series.map(({data, color, label}) => {
+      return {
+        label,
+        color,
+        value: data[activeBarGroup],
+      };
+    });
 
-    return (
-      <Tooltip
-        colors={barColors}
-        labels={barGroupLabels}
-        values={formattedValues}
-      />
-    );
-  }, [activeBarGroup, barColors, barGroupLabels, formatYAxisLabel, sortedData]);
+    return renderTooltipContent({
+      data,
+      title: labels[activeBarGroup],
+    });
+  }, [activeBarGroup, labels, renderTooltipContent, series]);
 
   return (
     <div
@@ -193,7 +197,7 @@ export function Chart({
           margin={MARGIN}
           position="center"
         >
-          {tooltipMarkup}
+          {tooltipContentMarkup}
         </TooltipContainer>
       ) : null}
     </div>

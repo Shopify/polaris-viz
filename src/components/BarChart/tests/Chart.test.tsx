@@ -4,7 +4,7 @@ import {Color} from 'types';
 import {YAxis, TooltipContainer} from 'components';
 
 import {Chart} from '../Chart';
-import {XAxis, Tooltip, Bar} from '../components';
+import {XAxis, Bar} from '../components';
 
 (global as any).DOMRect = class DOMRect {
   width = 500;
@@ -35,10 +35,11 @@ describe('Chart />', () => {
     chartDimensions: new DOMRect(),
     histogram: false,
     color: 'colorPurple' as Color,
-    formatXAxisLabel: (value: string) => value,
+    formatXAxisLabel: (value: string) => value.toString(),
     formatYAxisLabel: (value: number) => value.toString(),
     barMargin: 0,
     timeSeries: false,
+    renderTooltipContent: jest.fn(() => <p>Mock Tooltip</p>),
   };
 
   it('renders an SVG element', () => {
@@ -56,21 +57,32 @@ describe('Chart />', () => {
     expect(barChart).toContainReactComponent(YAxis);
   });
 
-  it('does not render a <Tooltip /> or <TooltipContainer /> if there is no active point', () => {
+  it('does not render a <TooltipContainer /> if there is no active point', () => {
     const chart = mount(<Chart {...mockProps} />);
 
     expect(chart).not.toContainReactComponent(TooltipContainer);
-    expect(chart).not.toContainReactComponent(Tooltip);
   });
 
-  it('renders a <Tooltip /> and <TooltipContainer /> if there is an active point', () => {
+  it('renders a <TooltipContainer /> if there is an active point', () => {
     const chart = mount(<Chart {...mockProps} />);
     const svg = chart.find('svg')!;
 
     svg.trigger('onMouseMove', fakeSVGEvent);
 
     expect(chart).toContainReactComponent(TooltipContainer);
-    expect(chart).toContainReactComponent(Tooltip);
+  });
+
+  it('renders the tooltip content in a <TooltipContainer /> if there is an active point', () => {
+    const chart = mount(<Chart {...mockProps} />);
+    const svg = chart.find('svg')!;
+
+    svg.trigger('onMouseMove', fakeSVGEvent);
+
+    const tooltipContainer = chart.find(TooltipContainer)!;
+
+    expect(tooltipContainer).toContainReactComponent('p', {
+      children: 'Mock Tooltip',
+    });
   });
 
   it('renders a Bar for each data item', () => {

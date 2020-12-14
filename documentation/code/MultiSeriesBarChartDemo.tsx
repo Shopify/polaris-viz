@@ -1,7 +1,11 @@
 import React from 'react';
 
 // eslint-disable-next-line shopify/strict-component-boundaries
-import {MultiSeriesBarChart} from '../../src/components';
+import {
+  MultiSeriesBarChart,
+  MultiSeriesBarChartProps,
+  TooltipContent,
+} from '../../src/components';
 
 import {OUTER_CONTAINER_STYLE} from './constants';
 
@@ -59,6 +63,33 @@ export function MultiSeriesBarChartDemo({isStacked = false}: Props) {
       maximumSignificantDigits: 3,
     }).format(val);
 
+  const renderTooltipContent: MultiSeriesBarChartProps['renderTooltipContent'] = ({
+    data,
+    title,
+  }) => {
+    const formatTooltipValue = (val: number) =>
+      new Intl.NumberFormat('en-CA', {
+        style: 'currency',
+        currency: 'CAD',
+      }).format(val);
+
+    const formattedData = data.map(({label, value, color}) => ({
+      color,
+      label,
+      value: formatTooltipValue(value),
+    }));
+
+    const total = data.reduce((totalValue, {value}) => totalValue + value, 0);
+
+    return (
+      <TooltipContent
+        title={title}
+        data={formattedData}
+        total={{label: 'Total', value: formatTooltipValue(total)}}
+      />
+    );
+  };
+
   return (
     <div style={OUTER_CONTAINER_STYLE}>
       <div style={innerContainerStyle}>
@@ -68,6 +99,7 @@ export function MultiSeriesBarChartDemo({isStacked = false}: Props) {
           series={series}
           chartHeight={253}
           isStacked={isStacked}
+          renderTooltipContent={renderTooltipContent}
         />
       </div>
     </div>

@@ -1,10 +1,10 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
-import {Crosshair, LinearXAxis} from 'components';
+import {Crosshair, LinearXAxis, TooltipContainer} from 'components';
 
 import {Chart} from '../Chart';
 import {Series} from '../types';
-import {Line, Tooltip} from '../components';
+import {Line} from '../components';
 import {YAxis} from '../../YAxis';
 
 (global as any).DOMRect = class DOMRect {
@@ -43,6 +43,7 @@ const mockProps = {
   dimensions: new DOMRect(),
   formatXAxisLabel: jest.fn((value) => value),
   formatYAxisLabel: jest.fn((value) => value),
+  renderTooltipContent: jest.fn(() => <p>Mock Tooltip</p>),
 };
 
 describe('<Chart />', () => {
@@ -125,16 +126,19 @@ describe('<Chart />', () => {
     expect(chart).toContainReactComponentTimes(Line, 2);
   });
 
-  it('renders a <Tooltip /> if there is an active point', () => {
+  it('renders tooltip content inside a <TooltipContainer /> if there is an active point', () => {
     const chart = mount(<Chart {...mockProps} />);
 
     // No tooltip if there is no active point
-    expect(chart).not.toContainReactComponent(Tooltip);
+    expect(chart).not.toContainReactText('Mock Tooltip');
+    expect(chart).not.toContainReactComponent(TooltipContainer);
 
     // create an active point
     const svg = chart.find('svg')!;
     svg.trigger('onMouseMove', fakeSVGEvent);
 
-    expect(chart).toContainReactComponent(Tooltip);
+    const tooltipContainer = chart.find(TooltipContainer)!;
+
+    expect(tooltipContainer).toContainReactText('Mock Tooltip');
   });
 });

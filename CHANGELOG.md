@@ -2,13 +2,20 @@
 
 ## Unreleased
 
-### Fixed
+### Added
 
-- Horizontal `<NormalizedStackedBar />` does not prematurely wrap label text
+- Added `renderTooltipContent` callback to `<BarChart />`, `<LineChart />`, `<MultiSeriesBarChart />`, and `<StackedAreaChart />`
+- Added `<TooltipContent />`, `<LineChartTooltipContent />`, and `<BarChartTooltipContent />`
 
 ### Changed
 
+- Removed the `formatY` prop on the `LineChartProps` `series` interface (replaced by `renderTooltipContent`)
+- Removed the `tooltipSumDescriptor` prop on the `StackedAreaChartProps` interface (replaced by `renderTooltipContent`)
 - `<NormalizedStackedBar />` has been renamed to `<NormalizedStackedBarChart />`
+
+### Fixed
+
+- Horizontal `<NormalizedStackedBarChart />` does not prematurely wrap label text
 
 ## [0.0.20] - 2020-12-08
 

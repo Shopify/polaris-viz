@@ -2,19 +2,20 @@ import React, {useLayoutEffect, useRef, useState} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 
 import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
+import {TooltipContent} from '../TooltipContent';
 
 import {Chart} from './Chart';
 import {Legend} from './components';
-import {Series} from './types';
+import {Series, RenderTooltipContentData} from './types';
 
-interface Props {
+export interface StackedAreaChartProps {
   chartHeight?: number;
   accessibilityLabel?: string;
   formatXAxisLabel?: StringLabelFormatter;
   formatYAxisLabel?: NumberLabelFormatter;
+  renderTooltipContent?(data: RenderTooltipContentData): React.ReactNode;
   xAxisLabels: string[];
   series: Series[];
-  tooltipSumDescriptor?: string;
   opacity?: number;
   isAnimated?: boolean;
 }
@@ -22,14 +23,14 @@ interface Props {
 export function StackedAreaChart({
   xAxisLabels,
   series,
-  tooltipSumDescriptor,
   chartHeight = 250,
   formatXAxisLabel = (value) => value.toString(),
   formatYAxisLabel = (value) => value.toString(),
   accessibilityLabel,
+  renderTooltipContent,
   opacity = 1,
   isAnimated = false,
-}: Props) {
+}: StackedAreaChartProps) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -55,6 +56,19 @@ export function StackedAreaChart({
     return null;
   }
 
+  function renderDefaultTooltipContent({
+    title,
+    data,
+  }: RenderTooltipContentData) {
+    const formattedData = data.map(({label, value, color}) => ({
+      color,
+      label,
+      value: formatYAxisLabel(value),
+    }));
+
+    return <TooltipContent title={title} data={formattedData} />;
+  }
+
   return (
     <div aria-label={accessibilityLabel} role="img">
       <div style={{height: chartHeight}} ref={containerRef}>
@@ -65,7 +79,11 @@ export function StackedAreaChart({
             formatXAxisLabel={formatXAxisLabel}
             formatYAxisLabel={formatYAxisLabel}
             dimensions={chartDimensions}
-            tooltipSumDescriptor={tooltipSumDescriptor}
+            renderTooltipContent={
+              renderTooltipContent != null
+                ? renderTooltipContent
+                : renderDefaultTooltipContent
+            }
             opacity={opacity}
             isAnimated={isAnimated}
           />
