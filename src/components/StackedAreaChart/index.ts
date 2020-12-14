@@ -1,1 +1,1 @@
-export {StackedAreaChart} from './StackedAreaChart';
+export {StackedAreaChart, StackedAreaChartProps} from './StackedAreaChart';

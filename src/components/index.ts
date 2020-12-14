@@ -7,7 +7,7 @@ export {Sparkline} from './Sparkline';
 export {YAxis} from './YAxis';
 export {TooltipContainer} from './TooltipContainer';
 export {SquareColorPreview} from './SquareColorPreview';
-export {StackedAreaChart} from './StackedAreaChart';
+export {StackedAreaChart, StackedAreaChartProps} from './StackedAreaChart';
 export {LinearXAxis} from './LinearXAxis';
 export {
   MultiSeriesBarChart,

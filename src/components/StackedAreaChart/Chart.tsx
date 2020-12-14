@@ -1,11 +1,7 @@
 import React, {useState, useMemo} from 'react';
 import {stack, stackOffsetNone, stackOrderReverse} from 'd3-shape';
 
-import {
-  TooltipContainer,
-  TooltipContent,
-  TooltipContentProps,
-} from '../../components';
+import {TooltipContainer} from '../../components';
 import {eventPoint} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {Crosshair} from '../Crosshair';
@@ -17,15 +13,15 @@ import {Margin, Spacing} from './constants';
 import {useXScale, useYScale} from './hooks';
 import {StackedAreas} from './components';
 import styles from './Chart.scss';
-import {Series} from './types';
+import {Series, RenderTooltipContentData} from './types';
 
 interface Props {
   xAxisLabels: string[];
   series: Series[];
   formatXAxisLabel: StringLabelFormatter;
   formatYAxisLabel: NumberLabelFormatter;
+  renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
   dimensions: DOMRect;
-  tooltipSumDescriptor?: string;
   opacity: number;
   isAnimated: boolean;
 }
@@ -36,7 +32,7 @@ export function Chart({
   dimensions,
   formatXAxisLabel,
   formatYAxisLabel,
-  tooltipSumDescriptor,
+  renderTooltipContent,
   opacity,
   isAnimated,
 }: Props) {
@@ -99,44 +95,26 @@ export function Chart({
       return null;
     }
 
-    const data = series.reduce<TooltipContentProps['data']>(
+    const data = series.reduce<RenderTooltipContentData['data']>(
       function removeNullsAndFormatData(tooltipData, {color, label, data}) {
         const value = data[activePointIndex];
         if (value == null) {
           return tooltipData;
         }
 
-        tooltipData.push({color, label, value: formatYAxisLabel(value)});
+        tooltipData.push({color, label, value});
         return tooltipData;
       },
       [],
     );
 
-    const total = series.reduce((totalValue, {data}) => {
-      const value = data[activePointIndex];
-      if (value == null) {
-        return totalValue;
-      }
+    const title = xAxisLabels[activePointIndex];
 
-      return totalValue + value;
-    }, 0);
-
-    const formattedTotal = formatYAxisLabel(total);
-
-    return (
-      <TooltipContent
-        data={data}
-        total={
-          tooltipSumDescriptor != null
-            ? {
-                label: tooltipSumDescriptor,
-                value: formattedTotal,
-              }
-            : null
-        }
-      />
-    );
-  }, [activePointIndex, formatYAxisLabel, series, tooltipSumDescriptor]);
+    return renderTooltipContent({
+      data,
+      title,
+    });
+  }, [activePointIndex, series, xAxisLabels, renderTooltipContent]);
 
   if (xScale == null || drawableWidth == null || axisMargin == null) {
     return null;
