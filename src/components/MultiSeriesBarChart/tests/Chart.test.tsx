@@ -1,7 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {Color} from 'types';
-import {YAxis, TooltipContainer, Tooltip} from 'components';
+import {YAxis, TooltipContainer, TooltipContent} from 'components';
 
 import {Chart} from '../Chart';
 import {XAxis, BarGroup, StackedBarGroup} from '../components';
@@ -70,21 +70,21 @@ describe('Chart />', () => {
     expect(mockProps.formatXAxisLabel).toHaveBeenCalledTimes(3);
   });
 
-  it('does not render a <Tooltip /> or <TooltipContainer /> if there is no active point', () => {
+  it('does not render <TooltipContent /> or <TooltipContainer /> if there is no active point', () => {
     const chart = mount(<Chart {...mockProps} />);
 
     expect(chart).not.toContainReactComponent(TooltipContainer);
-    expect(chart).not.toContainReactComponent(Tooltip);
+    expect(chart).not.toContainReactComponent(TooltipContent);
   });
 
-  it('renders a <Tooltip /> and <TooltipContainer /> if there is an active point', () => {
+  it('renders <TooltipContent /> and <TooltipContainer /> if there is an active point', () => {
     const chart = mount(<Chart {...mockProps} />);
     const svg = chart.find('svg')!;
 
     svg.trigger('onMouseMove', fakeSVGEvent);
 
     expect(chart).toContainReactComponent(TooltipContainer);
-    expect(chart).toContainReactComponent(Tooltip);
+    expect(chart).toContainReactComponent(TooltipContent);
   });
 
   describe('<BarGroup />', () => {

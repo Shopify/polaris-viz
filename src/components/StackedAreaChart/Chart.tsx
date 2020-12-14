@@ -1,7 +1,11 @@
 import React, {useState, useMemo} from 'react';
 import {stack, stackOffsetNone, stackOrderReverse} from 'd3-shape';
 
-import {TooltipContainer, Tooltip} from '../../components';
+import {
+  TooltipContainer,
+  TooltipContent,
+  TooltipContentProps,
+} from '../../components';
 import {eventPoint} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {Crosshair} from '../Crosshair';
@@ -95,18 +99,33 @@ export function Chart({
       return null;
     }
 
-    const labels = Object.keys(formattedData[activePointIndex]);
-    const values = Object.values<number>(formattedData[activePointIndex]);
-    const formattedValues = values.map(formatYAxisLabel);
+    const data = series.reduce<TooltipContentProps['data']>(
+      function removeNullsAndFormatData(tooltipData, {color, label, data}) {
+        const value = data[activePointIndex];
+        if (value == null) {
+          return tooltipData;
+        }
 
-    const total = values.reduce((totalValue, value) => totalValue + value);
+        tooltipData.push({color, label, value: formatYAxisLabel(value)});
+        return tooltipData;
+      },
+      [],
+    );
+
+    const total = series.reduce((totalValue, {data}) => {
+      const value = data[activePointIndex];
+      if (value == null) {
+        return totalValue;
+      }
+
+      return totalValue + value;
+    }, 0);
+
     const formattedTotal = formatYAxisLabel(total);
 
     return (
-      <Tooltip
-        colors={colors}
-        labels={labels}
-        values={formattedValues}
+      <TooltipContent
+        data={data}
         total={
           tooltipSumDescriptor != null
             ? {
@@ -117,13 +136,7 @@ export function Chart({
         }
       />
     );
-  }, [
-    activePointIndex,
-    colors,
-    formatYAxisLabel,
-    formattedData,
-    tooltipSumDescriptor,
-  ]);
+  }, [activePointIndex, formatYAxisLabel, series, tooltipSumDescriptor]);
 
   if (xScale == null || drawableWidth == null || axisMargin == null) {
     return null;
