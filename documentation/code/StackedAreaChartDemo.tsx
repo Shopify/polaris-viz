@@ -54,6 +54,7 @@ export function StackedAreaChartDemo() {
             'July',
           ]}
           series={series}
+          tooltipSumDescriptor="Total"
         />
       </div>
     </div>

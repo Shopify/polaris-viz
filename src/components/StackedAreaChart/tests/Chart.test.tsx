@@ -3,7 +3,7 @@ import {mount} from '@shopify/react-testing';
 import {Color} from 'types';
 import {LinearXAxis} from 'components/LinearXAxis';
 import {YAxis} from 'components/YAxis';
-import {Point, Crosshair, TooltipContainer, Tooltip} from 'components';
+import {Point, Crosshair, TooltipContainer, TooltipContent} from 'components';
 
 import {StackedAreas} from '../components';
 import {Chart} from '../Chart';
@@ -183,7 +183,7 @@ describe('<Chart />', () => {
     expect(chart).toContainReactComponent(TooltipContainer);
   });
 
-  it('renders a <Tooltip /> inside a <TooltipContainer /> if there is an active point', () => {
+  it('renders <TooltipContent /> inside a <TooltipContainer /> if there is an active point', () => {
     const chart = mount(<Chart {...mockProps} />);
 
     const svg = chart.find('svg')!;
@@ -191,6 +191,6 @@ describe('<Chart />', () => {
 
     const tooltipContainer = chart.find(TooltipContainer)!;
 
-    expect(tooltipContainer).toContainReactComponent(Tooltip);
+    expect(tooltipContainer).toContainReactComponent(TooltipContent);
   });
 });

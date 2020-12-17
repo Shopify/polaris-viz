@@ -1,6 +1,6 @@
 import React, {useState, useMemo} from 'react';
 
-import {Tooltip, TooltipContainer} from '../../components';
+import {TooltipContent, TooltipContainer} from '../../components';
 import {eventPoint, getTextWidth} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
@@ -95,7 +95,6 @@ export function Chart({
   });
 
   const barColors = series.map(({color}) => color);
-  const barGroupLabels = series.map(({label}) => label);
   const barHighlightColors = series.map(({highlightColor}, index) =>
     highlightColor != null ? highlightColor : barColors[index],
   );
@@ -105,16 +104,16 @@ export function Chart({
       return null;
     }
 
-    const formattedValues = sortedData[activeBarGroup].map(formatYAxisLabel);
+    const data = series.map(({data, color, label}) => {
+      return {
+        label,
+        color,
+        value: formatYAxisLabel(data[activeBarGroup]),
+      };
+    });
 
-    return (
-      <Tooltip
-        colors={barColors}
-        labels={barGroupLabels}
-        values={formattedValues}
-      />
-    );
-  }, [activeBarGroup, barColors, barGroupLabels, formatYAxisLabel, sortedData]);
+    return <TooltipContent data={data} />;
+  }, [activeBarGroup, formatYAxisLabel, series]);
 
   return (
     <div
