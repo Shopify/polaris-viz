@@ -2,19 +2,21 @@ import React, {useState, useLayoutEffect, useRef} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 
 import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
+import {TooltipContent} from '../../components';
 
 import {Chart} from './Chart';
-import {Data} from './types';
+import {Data, RenderTooltipContentData} from './types';
 import {Legend} from './components';
 import {DEFAULT_HEIGHT} from './constants';
 
-interface Props {
+export interface MultiSeriesBarChartProps {
   series: Data[];
   labels: string[];
   timeSeries?: boolean;
   accessibilityLabel?: string;
   formatXAxisLabel?: StringLabelFormatter;
   formatYAxisLabel?: NumberLabelFormatter;
+  renderTooltipContent?(data: RenderTooltipContentData): React.ReactNode;
   chartHeight?: number;
   isStacked?: boolean;
 }
@@ -28,7 +30,8 @@ export function MultiSeriesBarChart({
   chartHeight = DEFAULT_HEIGHT,
   formatXAxisLabel = (value) => value.toString(),
   formatYAxisLabel = (value) => value.toString(),
-}: Props) {
+  renderTooltipContent,
+}: MultiSeriesBarChartProps) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -50,6 +53,16 @@ export function MultiSeriesBarChart({
     };
   }, [containerRef, updateDimensions]);
 
+  function renderDefaultTooltipContent({data}: RenderTooltipContentData) {
+    const formattedData = data.map(({label, value, color}) => ({
+      color,
+      label,
+      value: formatYAxisLabel(value),
+    }));
+
+    return <TooltipContent data={formattedData} />;
+  }
+
   return (
     <div aria-label={accessibilityLabel} role="img">
       <div style={{height: chartHeight}} ref={containerRef}>
@@ -60,6 +73,11 @@ export function MultiSeriesBarChart({
             chartDimensions={chartDimensions}
             formatXAxisLabel={formatXAxisLabel}
             formatYAxisLabel={formatYAxisLabel}
+            renderTooltipContent={
+              renderTooltipContent != null
+                ? renderTooltipContent
+                : renderDefaultTooltipContent
+            }
             timeSeries={timeSeries}
             isStacked={isStacked}
           />

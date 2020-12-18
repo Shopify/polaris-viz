@@ -1,7 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {Color} from 'types';
-import {YAxis, TooltipContainer, TooltipContent} from 'components';
+import {YAxis, TooltipContainer} from 'components';
 
 import {Chart} from '../Chart';
 import {XAxis, BarGroup, StackedBarGroup} from '../components';
@@ -36,6 +36,8 @@ describe('Chart />', () => {
     jest.useRealTimers();
   });
 
+  const renderTooltipContent = () => <p>Mock Tooltip</p>;
+
   const mockProps = {
     series: [
       {data: [10, 20, 30], color: 'colorBlack' as Color, label: 'LABEL1'},
@@ -47,6 +49,7 @@ describe('Chart />', () => {
     formatXAxisLabel: jest.fn((value: string) => value),
     formatYAxisLabel: (value: number) => value.toString(),
     timeSeries: false,
+    renderTooltipContent,
   };
 
   it('renders an SVG element', () => {
@@ -70,21 +73,21 @@ describe('Chart />', () => {
     expect(mockProps.formatXAxisLabel).toHaveBeenCalledTimes(3);
   });
 
-  it('does not render <TooltipContent /> or <TooltipContainer /> if there is no active point', () => {
+  it('does not render <TooltipContainer /> if there is no active point', () => {
     const chart = mount(<Chart {...mockProps} />);
 
     expect(chart).not.toContainReactComponent(TooltipContainer);
-    expect(chart).not.toContainReactComponent(TooltipContent);
   });
 
-  it('renders <TooltipContent /> and <TooltipContainer /> if there is an active point', () => {
+  it('renders tooltip content inside a <TooltipContainer /> if there is an active point', () => {
     const chart = mount(<Chart {...mockProps} />);
     const svg = chart.find('svg')!;
 
     svg.trigger('onMouseMove', fakeSVGEvent);
 
-    expect(chart).toContainReactComponent(TooltipContainer);
-    expect(chart).toContainReactComponent(TooltipContent);
+    const tooltipContainer = chart.find(TooltipContainer)!;
+
+    expect(tooltipContainer).toContainReactText('Mock Tooltip');
   });
 
   describe('<BarGroup />', () => {

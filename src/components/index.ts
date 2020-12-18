@@ -9,5 +9,8 @@ export {TooltipContainer} from './TooltipContainer';
 export {SquareColorPreview} from './SquareColorPreview';
 export {StackedAreaChart} from './StackedAreaChart';
 export {LinearXAxis} from './LinearXAxis';
-export {MultiSeriesBarChart} from './MultiSeriesBarChart';
+export {
+  MultiSeriesBarChart,
+  MultiSeriesBarChartProps,
+} from './MultiSeriesBarChart';
 export {TooltipContent, TooltipContentProps} from './TooltipContent';
