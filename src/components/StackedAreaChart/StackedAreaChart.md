@@ -83,6 +83,8 @@ The stacked area chart interface looks like this:
 }
 ```
 
+You can access this interface by importing `StackedAreaChartProps`.
+
 This component derives its size from its parent container and fills the width of its parent's container. It has a default height of `250`, which is configurable via the `chartHeight` prop. The `chartHeight` specifically affects the height of chart, and does not include or affect the height of the legend.
 
 ### The `Series` type
@@ -208,4 +210,4 @@ Whether to animate the chart when it is initially rendered and its data is updat
 | ---------------------------------------------------- |
 | `(data: RenderTooltipContentData): React.ReactNode;` |
 
-This accepts a function that is called to render the tooltip content. By default it calls `formatYAxisLabel` to format the the tooltip value and passes it to `<TooltipContent />`.
+This accepts a function that is called to render the tooltip content. By default it calls `formatYAxisLabel` to format the the tooltip value and passes it to `<TooltipContent />`. For more information about tooltip content, read the [tooltip content documentation](/src/components/TooltipContent/TooltipContent.md).

@@ -54,14 +54,7 @@ import '@shopify/polaris-viz/styles.css';
   <img height="36" src="documentation/images/header/components.png" alt="Components" />
 </a>
 
-Components inherit their sizes from their containers, so place your component inside an element with a width and height specified.
-
-<!--
-1. [Normalized stacked bar chart](#normalized-stacked-bar-chart)
-2. [Sparkline](#sparkline)
-3. [Line chart](#line-chart)
-4. [Bar chart](#bar-chart)
-5. [Grouped bar chart](#grouped-bar-chart) -->
+Chart components inherit their sizes from their containers, so place your chart components inside an element with a width and height specified.
 
 <br/>
 
@@ -146,7 +139,17 @@ Used to show a stacked comparison of different types, across categories. [View d
 
 Used to compare multiple series of data and display the total value. [View documentation&nbsp;→](src/components/StackedAreaChart/StackedAreaChart.md)
 
-  </td>  
+  </td> 
+  <td>
+<a href="src/components/TooltipContent/TooltipContent.md">
+  <img src="src/components/TooltipContent/tooltip-content.png"/>
+</a>
+
+#### Tooltip content
+
+Used to format content in tooltips. [View documentation&nbsp;→](src/components/TooltipContent/TooltipContent.md)
+
+  </td>    
   </tr>  
 </table>
 

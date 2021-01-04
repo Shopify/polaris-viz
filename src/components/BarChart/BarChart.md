@@ -87,6 +87,8 @@ The bar chart interface looks like this:
 }
 ```
 
+You can access this interface by importing `BarChartProps`.
+
 ### Required props
 
 #### data
@@ -145,7 +147,7 @@ This accepts a function that is called when the Y value (`rawValue`) is formatte
 | -------------------------------------------------------------------- |
 | `({label, value}: {label: string; value: number}): React.ReactNode;` |
 
-This accepts a function that is called to render the tooltip content. By default it calls `formatXAxisLabel` and `formatYAxisLabel` to format the the tooltip values and passes them to `<BarChartTooltipContent />`.
+This accepts a function that is called to render the tooltip content. By default it calls `formatXAxisLabel` and `formatYAxisLabel` to format the the tooltip values and passes them to `<BarChartTooltipContent />`. For more information about tooltip content, read the [tooltip content documentation](/src/components/TooltipContent/TooltipContent.md).
 
 #### highlightColor
 

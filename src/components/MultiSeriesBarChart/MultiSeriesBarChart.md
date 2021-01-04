@@ -101,6 +101,8 @@ The mult-series bar chart interface looks like this:
 }
 ```
 
+You can access this interface by importing `MultiSeriesBarChartProps`.
+
 This component derives its size from its parent container and fills the width of its parent's container. It has a default height of `250`, which is configurable via the `chartHeight` prop. The `chartHeight` specifically affects the height of chart, and does not include or affect the height of the legend.
 
 ### The `RenderTooltipContentData` type
@@ -194,4 +196,4 @@ This changes the grouping of the bars. If `true` the bar groups will stack verti
 | ---------------------------------------------------- |
 | `(data: RenderTooltipContentData): React.ReactNode;` |
 
-This accepts a function that is called to render the tooltip content. By default it calls `formatYAxisLabel` to format the the tooltip value and passes it to `<TooltipContent />`.
+This accepts a function that is called to render the tooltip content. By default it calls `formatYAxisLabel` to format the the tooltip value and passes it to `<TooltipContent />`. For more information about tooltip content, read the [tooltip content documentation](/src/components/TooltipContent/TooltipContent.md).

@@ -1,2 +1,5 @@
 export {BarChart, BarChartProps} from './BarChart';
-export {TooltipContent as BarChartTooltipContent} from './components';
+export {
+  TooltipContent as BarChartTooltipContent,
+  TooltipContentProps as BarChartTooltipContentProps,
+} from './components';

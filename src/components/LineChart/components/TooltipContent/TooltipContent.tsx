@@ -14,11 +14,11 @@ interface TooltipData {
   style?: Partial<LineChartStyle>;
 }
 
-interface Props {
+export interface TooltipContentProps {
   data: TooltipData[];
 }
 
-export function TooltipContent({data}: Props) {
+export function TooltipContent({data}: TooltipContentProps) {
   return (
     <div className={styles.Container}>
       {data.map(({name, point: {label, value}, style = {}}) => {
