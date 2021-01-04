@@ -3,7 +3,7 @@ import {mount} from '@shopify/react-testing';
 import {Color} from 'types';
 import {LinearXAxis} from 'components/LinearXAxis';
 import {YAxis} from 'components/YAxis';
-import {Point, Crosshair, TooltipContainer, TooltipContent} from 'components';
+import {Point, Crosshair, TooltipContainer} from 'components';
 
 import {StackedAreas} from '../components';
 import {Chart} from '../Chart';
@@ -46,13 +46,6 @@ describe('<Chart />', () => {
   };
 
   const mockProps = {
-    xAxisLabels: ['Day 1', 'Day 2'],
-    formatXAxisLabel: (val: string) => val,
-    formatYAxisLabel: (val: number) => val.toString(),
-    dimensions: new DOMRect(),
-    opacity: 1,
-    isAnimated: true,
-    totalMesage: 'Total',
     series: [
       {
         label: 'Asia',
@@ -65,6 +58,13 @@ describe('<Chart />', () => {
         color: 'colorTeal' as Color,
       },
     ],
+    xAxisLabels: ['Day 1', 'Day 2'],
+    dimensions: new DOMRect(),
+    opacity: 1,
+    isAnimated: true,
+    formatXAxisLabel: (val: string) => val,
+    formatYAxisLabel: (val: number) => val.toString(),
+    renderTooltipContent: jest.fn(() => <p>Mock Tooltip Content</p>),
   };
 
   it('renders an SVG', () => {
@@ -183,14 +183,13 @@ describe('<Chart />', () => {
     expect(chart).toContainReactComponent(TooltipContainer);
   });
 
-  it('renders <TooltipContent /> inside a <TooltipContainer /> if there is an active point', () => {
+  it('renders tooltip content inside a <TooltipContainer /> if there is an active point', () => {
     const chart = mount(<Chart {...mockProps} />);
 
     const svg = chart.find('svg')!;
     svg.trigger('onMouseMove', fakeSVGEvent);
 
     const tooltipContainer = chart.find(TooltipContainer)!;
-
-    expect(tooltipContainer).toContainReactComponent(TooltipContent);
+    expect(tooltipContainer).toContainReactText('Mock Tooltip Content');
   });
 });
