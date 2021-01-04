@@ -28,7 +28,7 @@ interface Coordinates {
   y: number;
 }
 
-interface Props {
+export interface SparklineProps {
   data: Coordinates[];
   color?: Color;
   isAnimated?: boolean;
@@ -42,7 +42,7 @@ export function Sparkline({
   color = 'colorTeal',
   isAnimated = false,
   areaFillStyle = 'none',
-}: Props) {
+}: SparklineProps) {
   const pathRef = useRef<SVGPathElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [svgDimensions, setSvgDimensions] = useState({width: 0, height: 0});

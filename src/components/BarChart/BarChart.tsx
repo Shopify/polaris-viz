@@ -8,7 +8,7 @@ import {TooltipContent} from './components';
 import {Chart} from './Chart';
 import {BarData, BarMargin, RenderTooltipContentData} from './types';
 
-interface Props {
+export interface BarChartProps {
   data: BarData[];
   barMargin?: keyof typeof BarMargin;
   accessibilityLabel?: string;
@@ -30,7 +30,7 @@ export function BarChart({
   formatXAxisLabel = (value) => value.toString(),
   formatYAxisLabel = (value) => value.toString(),
   renderTooltipContent,
-}: Props) {
+}: BarChartProps) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
