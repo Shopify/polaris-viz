@@ -1,9 +1,12 @@
 export {Point} from './Point';
 export {Crosshair} from './Crosshair';
-export {BarChart, BarChartTooltipContent} from './BarChart';
+export {BarChart, BarChartProps, BarChartTooltipContent} from './BarChart';
 export {LineChart, LineChartProps, LineChartTooltipContent} from './LineChart';
-export {NormalizedStackedBar} from './NormalizedStackedBar';
-export {Sparkline} from './Sparkline';
+export {
+  NormalizedStackedBar,
+  NormalizedStackedBarProps,
+} from './NormalizedStackedBar';
+export {Sparkline, SparklineProps} from './Sparkline';
 export {YAxis} from './YAxis';
 export {TooltipContainer} from './TooltipContainer';
 export {SquareColorPreview} from './SquareColorPreview';

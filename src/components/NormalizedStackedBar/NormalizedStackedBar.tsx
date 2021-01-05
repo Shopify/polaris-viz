@@ -10,7 +10,7 @@ import {BarSegment, BarLabel} from './components';
 import {Size, Data, Orientation} from './types';
 import styles from './NormalizedStackedBar.scss';
 
-interface Props {
+export interface NormalizedStackedBarProps {
   data: Data[];
   accessibilityLabel?: string;
   size?: Size;
@@ -24,7 +24,7 @@ export function NormalizedStackedBar({
   size = 'small',
   orientation = 'horizontal',
   colors = ['colorPurpleDark', 'colorBlue', 'colorTeal', 'colorSkyDark'],
-}: Props) {
+}: NormalizedStackedBarProps) {
   const containsNegatives = data.some(({value}) => value < 0);
   const isDevelopment = process.env.NODE_ENV === 'development';
 
