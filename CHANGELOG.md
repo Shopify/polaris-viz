@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Fixed
+
+- Horizontal `<NormalizedStackedBar />` does not prematurely wrap label text
+
 ## [0.0.20] - 2020-12-08
 
 ### Added
