@@ -11,31 +11,16 @@ import {
 
 import {OUTER_CONTAINER_STYLE} from './constants';
 
-export function TooltipContentDemo() {
-  document.body.style.fontFamily =
-    "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif";
-
-  const innerContainerStyle = {
-    width: '900px',
-    height: '300px',
-    background: 'white',
-    padding: '2rem',
-    borderRadius: '6px',
-    border: '2px solid #EAECEF',
-    display: 'flex',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-  };
-
-  const TooltipContainer = ({
-    children,
-    title,
-    width,
-  }: {
-    children: React.ReactNode;
-    title: string;
-    width: string;
-  }) => (
+function TooltipContainer({
+  children,
+  title,
+  width,
+}: {
+  children: React.ReactNode;
+  title: string;
+  width: string;
+}) {
+  return (
     <div
       style={{
         display: 'flex',
@@ -60,6 +45,23 @@ export function TooltipContentDemo() {
       </div>
     </div>
   );
+}
+
+export function TooltipContentDemo() {
+  document.body.style.fontFamily =
+    "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif";
+
+  const innerContainerStyle = {
+    width: '900px',
+    height: '300px',
+    background: 'white',
+    padding: '2rem',
+    borderRadius: '6px',
+    border: '2px solid #EAECEF',
+    display: 'flex',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+  };
 
   const tooltipContentData: TooltipContentProps['data'] = [
     {
