@@ -88,7 +88,7 @@ return (
 The mult-series bar chart interface looks like this:
 
 ```typescript
-{
+interface MultiSeriesBarChartProps {
   series: Data[];
   labels: string[];
   accessibilityLabel?: string;
@@ -100,8 +100,6 @@ The mult-series bar chart interface looks like this:
   renderTooltipContent?: (data: RenderTooltipContentData): React.ReactNode;
 }
 ```
-
-You can access this interface by importing `MultiSeriesBarChartProps`.
 
 This component derives its size from its parent container and fills the width of its parent's container. It has a default height of `250`, which is configurable via the `chartHeight` prop. The `chartHeight` specifically affects the height of chart, and does not include or affect the height of the legend.
 

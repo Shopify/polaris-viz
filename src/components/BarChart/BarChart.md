@@ -74,20 +74,24 @@ return (
 The bar chart interface looks like this:
 
 ```typescript
-{
-  data: {rawValue: number, label: string}[];
+interface BarChartProps {
+  data: {rawValue: number; label: string}[];
   accessibilityLabel?: string;
   barMargin?: 'Small' | 'Medium' | 'Large' | 'None';
   color?: Color;
   formatXAxisLabel?(value: string, index?: number, data?: string[]): string;
   formatYAxisLabel?(value: number): string;
-  renderTooltipContent?({label, value}: {lable: string, value: string}): React.ReactNode;
+  renderTooltipContent?({
+    label,
+    value,
+  }: {
+    lable: string;
+    value: string;
+  }): React.ReactNode;
   highlightColor?: Color;
   timeSeries?: boolean;
 }
 ```
-
-You can access this interface by importing `BarChartProps`.
 
 ### Required props
 

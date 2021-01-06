@@ -1,4 +1,4 @@
-# Tooltip Content
+# Tooltip content
 
 Used to format content within a chart's tooltip.
 
@@ -71,7 +71,9 @@ return (
 
 ## Usage
 
-Polaris Viz charts have `renderTooltipContent` callbacks in order to customize the content displayed inside of a tooltip. You can use `<TooltipContent />`, `<LineChartTooltipContent />`, and `<BarChartTooltipContent />` to make organizing your content easier.
+Polaris Viz charts provide a default tooltip, but sometimes you need more control. The bar chart, line chart, multi-series bar chart, and stacked area chart components expose a `renderTooltipContent` callback. This allows you to return JSX to customize the content inside of a tooltip.
+
+You can reuse the same components that Polaris Viz uses to format tooltip content. It is recommended to use the `<TooltipContent />` component with the multi-series bar chart and stacked area chart. Use `<LineChartTooltipContent />` for line chart tooltips and `<BarChartTooltipContent />` for bar chart tooltips.
 
 No formatting will be applied in any case to values passed to tooltip content components. They expect pre-formatted values.
 
@@ -82,7 +84,7 @@ No formatting will be applied in any case to values passed to tooltip content co
 The props interface for `<TooltipContent />` looks like this:
 
 ```typescript
-{
+interface TooltipContentProps {
   title?: string;
   data: {
     color: Color;
@@ -95,8 +97,6 @@ The props interface for `<TooltipContent />` looks like this:
   };
 }
 ```
-
-You can access this interface by importing `TooltipContentProps`.
 
 #### Required props
 
@@ -131,7 +131,7 @@ This allows you to add a total row at the bottom of all the data rows.
 The props interface for `<LineChartTooltipContent />` looks like this:
 
 ```typescript
-{
+interface LineChartTooltipContentProps {
   data: {
     name: string;
     point: {
@@ -146,7 +146,7 @@ The props interface for `<LineChartTooltipContent />` looks like this:
 }
 ```
 
-You can access this interface by importing `LineChartTooltipContentProps`. This is meant to be used alongside `<LineChart />`.
+This is meant to be used alongside `<LineChart />`.
 
 #### Required props
 
@@ -181,13 +181,13 @@ This sets the style for the line drawn next to the point label. `color` accepts 
 The props interface for `<BarChartTooltipContent />` looks like this:
 
 ```typescript
-{
+interface BarChartTooltipContentProps {
   label: string;
   value: string;
 }
 ```
 
-You can access this interface by importing `BarChartTooltipContentProps`. This is meant to be used alongside `<BarChart />`.
+This is meant to be used alongside `<BarChart />`.
 
 #### Required props
 
