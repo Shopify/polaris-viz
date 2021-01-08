@@ -6,6 +6,10 @@
 
 - Horizontal `<NormalizedStackedBar />` does not prematurely wrap label text
 
+### Changed
+
+- `<NormalizedStackedBar />` has been renamed to `<NormalizedStackedBarChart />`
+
 ## [0.0.20] - 2020-12-08
 
 ### Added

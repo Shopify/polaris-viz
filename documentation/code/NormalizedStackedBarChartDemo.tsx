@@ -1,11 +1,11 @@
 import React from 'react';
 
 // eslint-disable-next-line shopify/strict-component-boundaries
-import {NormalizedStackedBar} from '../../src/components';
+import {NormalizedStackedBarChart} from '../../src/components';
 
 import {OUTER_CONTAINER_STYLE} from './constants';
 
-export function NormalizedStackedBarDemo() {
+export function NormalizedStackedBarChartDemo() {
   const innerContainerStyle = {
     width: '900px',
     height: '300px',
@@ -24,7 +24,7 @@ export function NormalizedStackedBarDemo() {
   return (
     <div style={OUTER_CONTAINER_STYLE}>
       <div style={innerContainerStyle}>
-        <NormalizedStackedBar
+        <NormalizedStackedBarChart
           data={[
             {
               label: 'Direct',
