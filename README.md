@@ -158,9 +158,7 @@ Used to compare multiple series of data and display the total value. [View docum
   <img height="36" src="documentation/images/header/contributing.png" alt="Contributing" />
 </a>
 
-Pull requests are welcome.
-
-For local development, clone this repo. Run `yarn run dev` to start the server. Import the components you'd like to work with into `Playground.tsx` and see your changes reflected on your localhost.
+Pull requests are welcome. See the <a href="/CONTRIBUTING.md">contribution guidelines</a> for more information.
 
 <br/>
 <br/>
