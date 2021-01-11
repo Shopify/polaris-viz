@@ -1,11 +1,7 @@
 import React from 'react';
 
-import {NormalizedStackedBar} from '../src/components';
-import {
-  Orientation,
-  Size,
-  ColorScheme,
-} from '../src/components/NormalizedStackedBar';
+import {NormalizedStackedBarChart} from '../src/components';
+import {Orientation, Size} from '../src/components/NormalizedStackedBarChart';
 
 const mockProps = {
   // size: Size.Small,
@@ -30,7 +26,7 @@ const mockProps = {
 export default function Playground() {
   return (
     <div style={{height: '501px', margin: '40px'}}>
-      <NormalizedStackedBar
+      <NormalizedStackedBarChart
         size="large"
         // orientation="vertical"
         {...mockProps}

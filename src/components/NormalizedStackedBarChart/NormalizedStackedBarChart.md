@@ -7,7 +7,7 @@ Used for positive datasets with two to four items. If your dataset has more than
 <img src="normalized-stacked-bar-chart.png" alt="Normalized stacked bar chart example image" />
 
 ```tsx
-<NormalizedStackedBar
+<NormalizedStackedBarChart
   data={[
     {
       label: 'Direct',

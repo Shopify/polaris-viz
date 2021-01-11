@@ -1,7 +1,7 @@
 export {
   BarChart,
   LineChart,
-  NormalizedStackedBar,
+  NormalizedStackedBarChart,
   Sparkline,
   StackedAreaChart,
   MultiSeriesBarChart,

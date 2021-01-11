@@ -8,7 +8,7 @@ import {getColorValue} from '../../utilities';
 
 import {BarSegment, BarLabel} from './components';
 import {Size, Data, Orientation} from './types';
-import styles from './NormalizedStackedBar.scss';
+import styles from './NormalizedStackedBarChart.scss';
 
 interface Props {
   data: Data[];
@@ -18,7 +18,7 @@ interface Props {
   colors?: Color[];
 }
 
-export function NormalizedStackedBar({
+export function NormalizedStackedBarChart({
   data,
   accessibilityLabel,
   size = 'small',

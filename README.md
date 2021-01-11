@@ -69,13 +69,13 @@ Components inherit their sizes from their containers, so place your component in
   <tr>
   <td>
 
-<a href="src/components/NormalizedStackedBar/NormalizedStackedBar.md">
-  <img src="src/components/NormalizedStackedBar/normalized-stacked-bar-chart.png"/>
+<a href="src/components/NormalizedStackedBarChart/NormalizedStackedBarChart.md">
+  <img src="src/components/NormalizedStackedBarChart/normalized-stacked-bar-chart.png"/>
 </a>
 
 #### Normalized stacked bar chart
 
-Used for positive datasets with two to four items. [View documentation&nbsp;→](src/components/NormalizedStackedBar/NormalizedStackedBar.md)
+Used for positive datasets with two to four items. [View documentation&nbsp;→](src/components/NormalizedStackedBarChart/NormalizedStackedBarChart.md)
 
   </td>
   <td>

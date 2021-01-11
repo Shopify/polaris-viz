@@ -1,6 +1,6 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
-import {NormalizedStackedBar} from 'components';
+import {NormalizedStackedBarChart} from 'components';
 
 import {BarSegment, BarLabel} from '../components';
 
@@ -16,7 +16,7 @@ describe('<NormalizedBarChart />', () => {
 
   describe('Bars', () => {
     it('renders 4 bars when given 4 data items', () => {
-      const barChart = mount(<NormalizedStackedBar {...mockProps} />);
+      const barChart = mount(<NormalizedStackedBarChart {...mockProps} />);
 
       expect(barChart.findAll(BarSegment)).toHaveLength(4);
     });
@@ -46,7 +46,7 @@ describe('<NormalizedBarChart />', () => {
           {label: 'Bin', value: 200, formattedValue: '$200.00'},
         ],
       };
-      const barChart = mount(<NormalizedStackedBar {...highEdgeProps} />);
+      const barChart = mount(<NormalizedStackedBarChart {...highEdgeProps} />);
 
       expect(barChart.findAll(BarSegment)).toHaveLength(4);
     });
@@ -56,14 +56,14 @@ describe('<NormalizedBarChart />', () => {
         data: [],
       };
 
-      const barChart = mount(<NormalizedStackedBar {...lowEdgeProps} />);
+      const barChart = mount(<NormalizedStackedBarChart {...lowEdgeProps} />);
 
       expect(barChart.findAll(BarSegment)).toHaveLength(0);
     });
 
     it('does not render a bar for 0 values', () => {
       const barChart = mount(
-        <NormalizedStackedBar
+        <NormalizedStackedBarChart
           data={[
             {label: 'Bin', value: 200, formattedValue: '$200.00'},
             {label: 'Stuff', value: 0, formattedValue: '$0.00'},
@@ -112,7 +112,7 @@ describe('<NormalizedBarChart />', () => {
         ],
       };
 
-      const barChart = mount(<NormalizedStackedBar {...highEdgeProps} />);
+      const barChart = mount(<NormalizedStackedBarChart {...highEdgeProps} />);
 
       expect(barChart.findAll(BarLabel)).toHaveLength(4);
     });
@@ -133,7 +133,7 @@ describe('<NormalizedBarChart />', () => {
         ],
       };
 
-      const barChart = mount(<NormalizedStackedBar {...lowEdgeProps} />);
+      const barChart = mount(<NormalizedStackedBarChart {...lowEdgeProps} />);
 
       expect(barChart.findAll(BarLabel)).toHaveLength(2);
     });
@@ -142,7 +142,7 @@ describe('<NormalizedBarChart />', () => {
   describe('Colors', () => {
     it('handles arrays of color tokens', () => {
       const barChart = mount(
-        <NormalizedStackedBar {...mockProps} colors={['colorPurple']} />,
+        <NormalizedStackedBarChart {...mockProps} colors={['colorPurple']} />,
       );
 
       expect(barChart.find(BarSegment)!.props.color).toBe('rgb(156, 106, 222)');
@@ -151,14 +151,14 @@ describe('<NormalizedBarChart />', () => {
 
   describe('Orientation', () => {
     it('defaults to horizontal orientation and passes it to BarSegment', () => {
-      const barChart = mount(<NormalizedStackedBar {...mockProps} />);
+      const barChart = mount(<NormalizedStackedBarChart {...mockProps} />);
 
       expect(barChart.find(BarSegment)!.props.orientation).toBe('horizontal');
     });
 
     it('accepts vertical orientation and passes it to BarSegment', () => {
       const barChart = mount(
-        <NormalizedStackedBar {...mockProps} orientation="vertical" />,
+        <NormalizedStackedBarChart {...mockProps} orientation="vertical" />,
       );
 
       expect(barChart.find(BarSegment)!.props.orientation).toBe('vertical');
@@ -167,7 +167,7 @@ describe('<NormalizedBarChart />', () => {
 
   describe('Accessibility', () => {
     it('sets an img role on the parent div', () => {
-      const barChart = mount(<NormalizedStackedBar {...mockProps} />);
+      const barChart = mount(<NormalizedStackedBarChart {...mockProps} />);
 
       expect(barChart.find('div')!.props.role).toBe('img');
     });
@@ -175,7 +175,7 @@ describe('<NormalizedBarChart />', () => {
     it('adds an aria label when one is passed in', () => {
       const label = 'A stacked bar chart showing sales by channel.';
       const barChart = mount(
-        <NormalizedStackedBar {...mockProps} accessibilityLabel={label} />,
+        <NormalizedStackedBarChart {...mockProps} accessibilityLabel={label} />,
       );
 
       expect(barChart.find('div')!.props['aria-label']).toBe(label);
