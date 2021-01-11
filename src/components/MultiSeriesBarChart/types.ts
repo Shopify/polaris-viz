@@ -14,3 +14,12 @@ export type StackSeries = Series<
   },
   string
 >;
+
+export interface RenderTooltipContentData {
+  data: {
+    color: Color;
+    label: string;
+    value: number;
+  }[];
+  title: string;
+}

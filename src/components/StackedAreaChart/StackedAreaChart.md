@@ -20,15 +20,7 @@ const series = [
   },
 ];
 
-const xAxisLabels = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-];
+const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
 
 const formatYAxisLabel = (value?: number) => {
   const formatter = new Intl.NumberFormat('en').format;
@@ -39,11 +31,36 @@ const formatYAxisLabel = (value?: number) => {
   return formatter(value);
 };
 
+const renderTooltipContent: StackedAreaChartProps['renderTooltipContent'] = ({
+  data,
+  title,
+}) => {
+  const formatTooltipValue = (val: number) =>
+    new Intl.NumberFormat('en').format(val);
+
+  const formattedData = data.map(({label, value, color}) => ({
+    color,
+    label,
+    value: formatTooltipValue(value),
+  }));
+
+  const total = data.reduce((totalValue, {value}) => totalValue + value, 0);
+
+  return (
+    <TooltipContent
+      title={title}
+      data={formattedData}
+      total={{label: 'Total', value: formatTooltipValue(total)}}
+    />
+  );
+};
+
 return (
   <StackedAreaChart
-    formatYAxisLabel={formatYAxisLabel}
-    xAxisLabels={xAxisLabels}
     series={series}
+    xAxisLabels={labels}
+    formatYAxisLabel={formatYAxisLabel}
+    renderTooltipContent={renderTooltipContent}
   />
 );
 ```
@@ -53,16 +70,16 @@ return (
 The stacked area chart interface looks like this:
 
 ```typescript
-{
+interface StackedAreaChartProps {
   xAxisLabels: string[];
   series: Series[];
   chartHeight?: number;
   accessibilityLabel?: string;
-  formatXAxisLabel?(value: string, index?: number, data?: string[]): string;
-  formatYAxisLabel?(value: number): string;
-  tooltipSumDescriptor?: string;
   opacity?: number;
   isAnimated?: boolean;
+  formatXAxisLabel?(value: string, index?: number, data?: string[]): string;
+  formatYAxisLabel?(value: number): string;
+  renderTooltipContent?: (data: RenderTooltipContentData): React.ReactNode;
 }
 ```
 
@@ -96,9 +113,26 @@ The array that the chart uses to plot the area. Null values are not displayed.
 
 The label for the series. This appears in the chart legend and tooltip.
 
-### color
+#### color
 
 It allows you to pass any [Polaris Viz accepted color](/documentation/Polaris-Viz-colors.md) for the `color` value.
+
+### The `RenderTooltipContentData` type
+
+The `RenderTooltipContentData` type looks very similar to the `Series` type. Its interface looks like this:
+
+```tsx
+interface RenderTooltipContentData {
+  data: {
+    color: Color;
+    label: string;
+    value: number;
+  }[];
+  title: string;
+}
+```
+
+The distinction between the `RenderTooltipContentData` and series `Data` types is that `RenderTooltipContentData` is for a single data point, instead of an entire series of data.
 
 ### Required Props
 
@@ -152,14 +186,6 @@ Determines the height of the chart.
 
 The labels to display on the x axis of the chart. If no labels are passed, there are no labels rendered on the x axis of the chart.
 
-### tooltipSumDescriptor
-
-| type     | default     |
-| -------- | ----------- |
-| `string` | `undefined` |
-
-The text used to describe the total value of all series at a given point. If a descriptor isn't given, the total will not be displayed in the tooltip.
-
 ### opacity
 
 | type     | default |
@@ -175,3 +201,11 @@ Determines the opacity of all area shapes. Consider reducing the opacity below 1
 | `boolean` | `false` |
 
 Whether to animate the chart when it is initially rendered and its data is updated. Even if `isAnimated` is set to true, animations will not be displayed for users with reduced motion preferences.
+
+#### renderTooltipContent
+
+| type                                                 |
+| ---------------------------------------------------- |
+| `(data: RenderTooltipContentData): React.ReactNode;` |
+
+This accepts a function that is called to render the tooltip content. By default it calls `formatYAxisLabel` to format the the tooltip value and passes it to `<TooltipContent />`. For more information about tooltip content, read the [tooltip content documentation](/src/components/TooltipContent/TooltipContent.md).

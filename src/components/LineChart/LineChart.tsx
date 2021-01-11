@@ -4,16 +4,17 @@ import {useDebouncedCallback} from 'use-debounce';
 import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
 import {Chart} from './Chart';
-import {Series} from './types';
-import {Legend} from './components';
+import {Series, RenderTooltipContentData} from './types';
+import {Legend, TooltipContent} from './components';
 
-interface Props {
+export interface LineChartProps {
   series: Series[];
   xAxisLabels?: string[];
   chartHeight?: number;
   accessibilityLabel?: string;
   formatXAxisLabel?: StringLabelFormatter;
   formatYAxisLabel?: NumberLabelFormatter;
+  renderTooltipContent?: (data: RenderTooltipContentData) => React.ReactNode;
 }
 
 export function LineChart({
@@ -23,7 +24,8 @@ export function LineChart({
   formatXAxisLabel = (value) => value.toString(),
   formatYAxisLabel = (value) => value.toString(),
   accessibilityLabel,
-}: Props) {
+  renderTooltipContent,
+}: LineChartProps) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -49,6 +51,18 @@ export function LineChart({
     return null;
   }
 
+  function renderDefaultTooltipContent({data}: RenderTooltipContentData) {
+    const formattedData = data.map(({name, point: {label, value}, style}) => ({
+      name,
+      style,
+      point: {
+        value: formatYAxisLabel(value),
+        label,
+      },
+    }));
+    return <TooltipContent data={formattedData} />;
+  }
+
   return (
     <div aria-label={accessibilityLabel} role="img">
       <div style={{height: chartHeight}} ref={containerRef}>
@@ -59,6 +73,11 @@ export function LineChart({
             formatXAxisLabel={formatXAxisLabel}
             formatYAxisLabel={formatYAxisLabel}
             dimensions={chartDimensions}
+            renderTooltipContent={
+              renderTooltipContent != null
+                ? renderTooltipContent
+                : renderDefaultTooltipContent
+            }
           />
         )}
       </div>

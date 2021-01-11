@@ -1,3 +1,3 @@
 export {Legend} from './Legend';
 export {Line} from './Line';
-export {Tooltip} from './Tooltip';
+export {TooltipContent, TooltipContentProps} from './TooltipContent';

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useMemo} from 'react';
 import {line} from 'd3-shape';
 
 import {LinearXAxis} from '../LinearXAxis';
@@ -6,11 +6,12 @@ import {YAxis} from '../YAxis';
 import {eventPoint} from '../../utilities';
 import {Crosshair} from '../Crosshair';
 import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
+import {TooltipContainer} from '../TooltipContainer';
 
-import {Series} from './types';
+import {Series, RenderTooltipContentData} from './types';
 import {Margin, SPACING_TIGHT} from './constants';
 import {useXScale, useYScale} from './hooks';
-import {Line, Tooltip} from './components';
+import {Line} from './components';
 import styles from './Chart.scss';
 
 interface Props {
@@ -19,6 +20,7 @@ interface Props {
   formatXAxisLabel: StringLabelFormatter;
   formatYAxisLabel: NumberLabelFormatter;
   dimensions: DOMRect;
+  renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
 }
 
 export function Chart({
@@ -27,6 +29,7 @@ export function Chart({
   xAxisLabels,
   formatXAxisLabel,
   formatYAxisLabel,
+  renderTooltipContent,
 }: Props) {
   const [activePointIndex, setActivePointIndex] = useState<number | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState<{
@@ -54,6 +57,27 @@ export function Chart({
   );
 
   const {xScale} = useXScale({drawableWidth, longestSeriesLength});
+
+  const tooltipMarkup = useMemo(() => {
+    if (activePointIndex == null) {
+      return null;
+    }
+
+    const data = series
+      .filter(function removeEmptyDataPoints({data}) {
+        return data[activePointIndex] != null;
+      })
+      .map(({name, data, style}) => ({
+        point: {
+          label: data[activePointIndex].label,
+          value: data[activePointIndex].rawValue,
+        },
+        name,
+        style,
+      }));
+
+    return renderTooltipContent({data});
+  }, [activePointIndex, renderTooltipContent, series]);
 
   if (xScale == null || drawableWidth == null || axisMargin == null) {
     return null;
@@ -150,14 +174,15 @@ export function Chart({
       </svg>
 
       {tooltipPosition == null || activePointIndex == null ? null : (
-        <Tooltip
+        <TooltipContainer
           activePointIndex={activePointIndex}
           currentX={tooltipPosition.x}
           currentY={tooltipPosition.y}
-          formatYAxisLabel={formatYAxisLabel}
-          series={series}
           chartDimensions={dimensions}
-        />
+          margin={Margin}
+        >
+          {tooltipMarkup}
+        </TooltipContainer>
       )}
     </div>
   );

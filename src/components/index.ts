@@ -1,13 +1,29 @@
 export {Point} from './Point';
 export {Crosshair} from './Crosshair';
-export {BarChart} from './BarChart';
-export {LineChart} from './LineChart';
-export {NormalizedStackedBarChart} from './NormalizedStackedBarChart';
-export {Sparkline} from './Sparkline';
+export {Sparkline, SparklineProps} from './Sparkline';
+export {
+  BarChart,
+  BarChartProps,
+  BarChartTooltipContent,
+  BarChartTooltipContentProps,
+} from './BarChart';
+export {
+  LineChart,
+  LineChartProps,
+  LineChartTooltipContent,
+  LineChartTooltipContentProps,
+} from './LineChart';
+export {
+  NormalizedStackedBarChart,
+  NormalizedStackedBarChartProps,
+} from './NormalizedStackedBarChart';
 export {YAxis} from './YAxis';
 export {TooltipContainer} from './TooltipContainer';
 export {SquareColorPreview} from './SquareColorPreview';
-export {StackedAreaChart} from './StackedAreaChart';
+export {StackedAreaChart, StackedAreaChartProps} from './StackedAreaChart';
 export {LinearXAxis} from './LinearXAxis';
-export {MultiSeriesBarChart} from './MultiSeriesBarChart';
-export {Tooltip} from './Tooltip';
+export {
+  MultiSeriesBarChart,
+  MultiSeriesBarChartProps,
+} from './MultiSeriesBarChart';
+export {TooltipContent, TooltipContentProps} from './TooltipContent';

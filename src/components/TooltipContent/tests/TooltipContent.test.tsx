@@ -1,7 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {Tooltip} from '../Tooltip';
+import {TooltipContent} from '../TooltipContent';
 import {SquareColorPreview} from '../../SquareColorPreview';
 
 (global as any).DOMRect = class DOMRect {
@@ -11,20 +11,29 @@ import {SquareColorPreview} from '../../SquareColorPreview';
   left = 100;
 };
 
-describe('<Tooltip/>', () => {
+describe('<TooltipContent/>', () => {
   const mockProps = {
-    colors: [
-      'primary' as 'primary',
-      'secondary' as 'secondary',
-      'tertiary' as 'tertiary',
+    data: [
+      {
+        label: 'Apple',
+        color: 'primary' as 'primary',
+        value: '$5',
+      },
+      {
+        label: 'Orange',
+        color: 'secondary' as 'secondary',
+        value: '$2',
+      },
+      {
+        label: 'Banana',
+        color: 'tertiary' as 'tertiary',
+        value: '$3',
+      },
     ],
-
-    labels: ['Apple', 'Orange', 'Banana'],
-    values: ['$5', '$2', '$3'],
   };
 
   it('renders a <SquareColorPreview /> for each color', () => {
-    const tooltip = mount(<Tooltip {...mockProps} />);
+    const tooltip = mount(<TooltipContent {...mockProps} />);
 
     expect(tooltip).toContainReactComponent(SquareColorPreview, {
       color: 'primary',
@@ -38,7 +47,7 @@ describe('<Tooltip/>', () => {
   });
 
   it('renders a label for each of the labels', () => {
-    const tooltip = mount(<Tooltip {...mockProps} />);
+    const tooltip = mount(<TooltipContent {...mockProps} />);
 
     expect(tooltip).toContainReactText('Apple');
     expect(tooltip).toContainReactText('Orange');
@@ -46,7 +55,7 @@ describe('<Tooltip/>', () => {
   });
 
   it('renders a value for each of the values', () => {
-    const tooltip = mount(<Tooltip {...mockProps} />);
+    const tooltip = mount(<TooltipContent {...mockProps} />);
 
     expect(tooltip).toContainReactText('$5');
     expect(tooltip).toContainReactText('$2');
@@ -54,14 +63,14 @@ describe('<Tooltip/>', () => {
   });
 
   it('renders a title if a title is provided', () => {
-    const tooltip = mount(<Tooltip {...mockProps} title="Fruits" />);
+    const tooltip = mount(<TooltipContent {...mockProps} title="Fruits" />);
 
     expect(tooltip).toContainReactText('Fruits');
   });
 
   it('renders a total if a total is provided', () => {
     const tooltip = mount(
-      <Tooltip {...mockProps} total={{label: 'Total', value: '$10'}} />,
+      <TooltipContent {...mockProps} total={{label: 'Total', value: '$10'}} />,
     );
 
     expect(tooltip).toContainReactText('Total');
