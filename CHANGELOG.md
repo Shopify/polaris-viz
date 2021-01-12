@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Changed
+
+- Unified the data interfaces for `<LineChart />`, `<MultiSeriesBarChart />`, and `<StackedAreaChart />`
+
 ## [0.1.0] - 2021-01-11
 
 ### Added
