@@ -40,8 +40,24 @@ describe('Chart />', () => {
 
   const mockProps = {
     series: [
-      {data: [10, 20, 30], color: 'colorBlack' as Color, label: 'LABEL1'},
-      {data: [10, 20, 30], color: 'colorRed' as Color, label: 'LABEL2'},
+      {
+        data: [
+          {label: 'stuff 1', rawValue: 10},
+          {label: 'stuff 2', rawValue: 20},
+          {label: 'stuff 3', rawValue: 30},
+        ],
+        color: 'colorBlack' as Color,
+        name: 'LABEL1',
+      },
+      {
+        data: [
+          {label: 'stuff 1', rawValue: 10},
+          {label: 'stuff 2', rawValue: 20},
+          {label: 'stuff 3', rawValue: 30},
+        ],
+        color: 'colorRed' as Color,
+        name: 'LABEL2',
+      },
     ],
     isStacked: false,
     labels: ['stuff 1', 'stuff 2', 'stuff 3'],
@@ -122,16 +138,24 @@ describe('Chart />', () => {
           {...mockProps}
           series={[
             {
-              data: [10, 20, 30],
+              data: [
+                {label: 'stuff 1', rawValue: 10},
+                {label: 'stuff 2', rawValue: 20},
+                {label: 'stuff 3', rawValue: 30},
+              ],
               color: 'colorBlack' as Color,
               highlightColor: 'primary' as Color,
-              label: 'LABEL1',
+              name: 'LABEL1',
             },
             {
-              data: [10, 20, 30],
+              data: [
+                {label: 'stuff 1', rawValue: 10},
+                {label: 'stuff 2', rawValue: 20},
+                {label: 'stuff 3', rawValue: 30},
+              ],
               color: 'colorRed' as Color,
               highlightColor: 'secondary' as Color,
-              label: 'LABEL2',
+              name: 'LABEL2',
             },
           ]}
         />,
@@ -168,16 +192,24 @@ describe('Chart />', () => {
           {...mockProps}
           series={[
             {
-              data: [10, 20, 30],
+              data: [
+                {label: 'stuff 1', rawValue: 10},
+                {label: 'stuff 2', rawValue: 20},
+                {label: 'stuff 3', rawValue: 30},
+              ],
               color: 'colorBlack' as Color,
               highlightColor: 'primary' as Color,
-              label: 'LABEL1',
+              name: 'LABEL1',
             },
             {
-              data: [10, 20, 30],
+              data: [
+                {label: 'stuff 1', rawValue: 10},
+                {label: 'stuff 2', rawValue: 20},
+                {label: 'stuff 3', rawValue: 30},
+              ],
               color: 'colorRed' as Color,
               highlightColor: 'secondary' as Color,
-              label: 'LABEL2',
+              name: 'LABEL2',
             },
           ]}
           isStacked

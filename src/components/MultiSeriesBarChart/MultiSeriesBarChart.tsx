@@ -5,12 +5,12 @@ import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 import {TooltipContent} from '../TooltipContent';
 
 import {Chart} from './Chart';
-import {Data, RenderTooltipContentData} from './types';
+import {Series, RenderTooltipContentData} from './types';
 import {Legend} from './components';
 import {DEFAULT_HEIGHT} from './constants';
 
 export interface MultiSeriesBarChartProps {
-  series: Data[];
+  series: Series[];
   labels: string[];
   timeSeries?: boolean;
   accessibilityLabel?: string;
