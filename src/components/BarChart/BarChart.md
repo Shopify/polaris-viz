@@ -64,7 +64,7 @@ return (
     color="primary"
     formatXAxisLabel={formatXAxisLabel}
     formatYAxisLabel={formatYAxisLabel}
-    renderTooltipContent={renderTooltip}
+    renderTooltipContent={renderTooltipContent}
   />
 );
 ```
