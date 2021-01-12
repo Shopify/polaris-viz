@@ -14,8 +14,7 @@ interface Props {
 }
 
 export function Line({path, series, xScale, yScale, activePointIndex}: Props) {
-  const {style = {}, data} = series;
-  const {color = 'colorPurple', lineStyle = 'solid'} = style;
+  const {color = 'colorPurple', lineStyle = 'solid', data} = series;
 
   return (
     <React.Fragment>
