@@ -1,21 +1,21 @@
 import React from 'react';
-import {Data} from 'components/MultiSeriesBarChart/types';
+import {Series} from 'components/MultiSeriesBarChart/types';
 
 import {SquareColorPreview} from '../../../SquareColorPreview';
 
 import styles from './Legend.scss';
 
 interface Props {
-  series: Data[];
+  series: Series[];
 }
 
 export function Legend({series}: Props) {
   return (
     <div className={styles.Container}>
-      {series.map(({label, color}) => (
-        <div key={label} className={styles.InnerContainer}>
+      {series.map(({name, color}) => (
+        <div key={name} className={styles.InnerContainer}>
           <SquareColorPreview color={color} />
-          <div className={styles.Label}>{label}</div>
+          <div className={styles.Name}>{name}</div>
         </div>
       ))}
     </div>

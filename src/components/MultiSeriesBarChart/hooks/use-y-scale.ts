@@ -1,7 +1,7 @@
 import {useMemo} from 'react';
 import {scaleLinear} from 'd3-scale';
 
-import {Data, StackSeries} from '../types';
+import {Series, StackSeries} from '../types';
 import {MIN_Y_LABEL_SPACE} from '../constants';
 import {getMinMax} from '../utilities';
 import {NumberLabelFormatter} from '../../../types';
@@ -13,7 +13,7 @@ export function useYScale({
   stackedValues,
 }: {
   drawableHeight: number;
-  data: Data[];
+  data: Series[];
   formatYAxisLabel: NumberLabelFormatter;
   stackedValues: StackSeries[] | null;
 }) {

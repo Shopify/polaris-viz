@@ -1,7 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
-import {Data, StackSeries} from 'components/MultiSeriesBarChart/types';
+import {Series, StackSeries} from 'components/MultiSeriesBarChart/types';
 
 import {useYScale} from '../use-y-scale';
 
@@ -17,15 +17,39 @@ jest.mock('d3-scale', () => ({
 }));
 let domainSpy = jest.fn();
 
-const mockData: Data[] = [
-  {data: [10, 20, 30], color: 'colorBlack', label: 'LABEL1'},
-  {data: [1, 2, 3], color: 'colorBlack', label: 'LABEL2'},
-  {data: [5, 7, 10], color: 'colorBlack', label: 'LABEL3'},
+const mockData: Series[] = [
+  {
+    data: [
+      {label: 'label', rawValue: 10},
+      {label: 'label', rawValue: 20},
+      {label: 'label', rawValue: 30},
+    ],
+    color: 'colorBlack',
+    name: 'LABEL1',
+  },
+  {
+    data: [
+      {label: 'label', rawValue: 1},
+      {label: 'label', rawValue: 2},
+      {label: 'label', rawValue: 3},
+    ],
+    color: 'colorBlack',
+    name: 'LABEL2',
+  },
+  {
+    data: [
+      {label: 'label', rawValue: 5},
+      {label: 'label', rawValue: 7},
+      {label: 'label', rawValue: 10},
+    ],
+    color: 'colorBlack',
+    name: 'LABEL3',
+  },
 ];
 
 interface Props {
   stackedValues: StackSeries[] | null;
-  data: Data[];
+  data: Series[];
 }
 
 function TestComponent({stackedValues, data}: Props) {
@@ -147,9 +171,33 @@ describe('useYScale', () => {
       <TestComponent
         stackedValues={null}
         data={[
-          {data: [-10, 20, 30], color: 'colorBlack', label: 'LABEL1'},
-          {data: [1, 2, 3], color: 'colorBlack', label: 'LABEL2'},
-          {data: [5, 7, 10], color: 'colorBlack', label: 'LABEL3'},
+          {
+            data: [
+              {label: 'label', rawValue: -10},
+              {label: 'label', rawValue: 20},
+              {label: 'label', rawValue: 30},
+            ],
+            color: 'colorBlack',
+            name: 'LABEL1',
+          },
+          {
+            data: [
+              {label: 'label', rawValue: 1},
+              {label: 'label', rawValue: 2},
+              {label: 'label', rawValue: 3},
+            ],
+            color: 'colorBlack',
+            name: 'LABEL2',
+          },
+          {
+            data: [
+              {label: 'label', rawValue: 5},
+              {label: 'label', rawValue: 7},
+              {label: 'label', rawValue: 10},
+            ],
+            color: 'colorBlack',
+            name: 'LABEL3',
+          },
         ]}
       />,
     );
