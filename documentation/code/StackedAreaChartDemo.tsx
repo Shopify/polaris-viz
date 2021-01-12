@@ -24,13 +24,29 @@ export function StackedAreaChartDemo() {
 
   const series = [
     {
-      label: 'First-time',
-      data: [4237, 5024, 5730, 5587, 5303, 5634, 3238],
+      name: 'First-time',
+      data: [
+        {label: 'January', rawValue: 4237},
+        {label: 'February', rawValue: 5024},
+        {label: 'March', rawValue: 5730},
+        {label: 'April', rawValue: 5587},
+        {label: 'May', rawValue: 5303},
+        {label: 'June', rawValue: 5634},
+        {label: 'July', rawValue: 3238},
+      ],
       color: 'primary',
     },
     {
-      label: 'Returning',
-      data: [5663, 7349, 9795, 7396, 7028, 12484, 4878],
+      name: 'Returning',
+      data: [
+        {label: 'January', rawValue: 5663},
+        {label: 'February', rawValue: 7349},
+        {label: 'March', rawValue: 9795},
+        {label: 'April', rawValue: 7396},
+        {label: 'May', rawValue: 7028},
+        {label: 'June', rawValue: 12484},
+        {label: 'July', rawValue: 4878},
+      ],
       color: 'secondary',
     },
   ];
