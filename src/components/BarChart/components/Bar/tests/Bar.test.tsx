@@ -15,6 +15,7 @@ describe('<Bar/>', () => {
       <svg>
         <Bar
           color="colorPurple"
+          highlightColor="colorPurple"
           isSelected={false}
           x={0}
           rawValue={1000}
@@ -39,6 +40,7 @@ describe('<Bar/>', () => {
       <svg>
         <Bar
           color="colorPurple"
+          highlightColor="colorPurple"
           isSelected={false}
           x={0}
           rawValue={1}
@@ -59,6 +61,7 @@ describe('<Bar/>', () => {
       <svg>
         <Bar
           color="colorPurple"
+          highlightColor="colorPurple"
           isSelected={false}
           x={0}
           rawValue={0}

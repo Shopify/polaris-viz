@@ -1,12 +1,12 @@
 import React, {useState, useMemo} from 'react';
-import {Color} from 'types';
+import {Color, Data} from 'types';
 
 import {eventPoint, getTextWidth} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {TooltipContainer} from '../TooltipContainer';
 import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
-import {BarData, RenderTooltipContentData} from './types';
+import {RenderTooltipContentData} from './types';
 import {XAxis, Bar} from './components';
 import {useYScale, useXScale} from './hooks';
 import {
@@ -21,11 +21,11 @@ import {
 import styles from './Chart.scss';
 
 interface Props {
-  data: BarData[];
+  data: Data[];
   chartDimensions: DOMRect;
   barMargin: number;
   color: Color;
-  highlightColor?: Color;
+  highlightColor: Color;
   formatXAxisLabel: StringLabelFormatter;
   formatYAxisLabel: NumberLabelFormatter;
   timeSeries: boolean;

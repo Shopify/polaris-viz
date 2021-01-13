@@ -5,43 +5,34 @@ import {Series} from 'components/LineChart/types';
 import {LinePreview} from '../../LinePreview';
 import {Legend} from '../Legend';
 
-const mockSeriesWithStyles: Series = {
-  data: [],
-  name: 'Test series 1',
-  style: {color: 'colorGreen', lineStyle: 'dashed'},
-};
-const mockSeriesWithoutStyles: Series = {data: [], name: 'Test series 2'};
-const allMockSeries = [mockSeriesWithStyles, mockSeriesWithoutStyles];
+const mockSeries: Required<Series>[] = [
+  {
+    data: [],
+    name: 'Test series 1',
+    color: 'colorGreen',
+    lineStyle: 'dashed',
+  },
+];
 
 describe('<Legend />', () => {
   it('renders the name of each series', () => {
-    const legend = mount(<Legend series={allMockSeries} />);
+    const legend = mount(<Legend series={mockSeries} />);
 
     expect(legend).toContainReactText('Test series 1');
-    expect(legend).toContainReactText('Test series 2');
   });
 
   it('renders a LinePreview for each series', () => {
-    const legend = mount(<Legend series={allMockSeries} />);
+    const legend = mount(<Legend series={mockSeries} />);
 
-    expect(legend).toContainReactComponentTimes(LinePreview, 2);
+    expect(legend).toContainReactComponentTimes(LinePreview, 1);
   });
 
-  it('renders a LinePreview with the series style when provided', () => {
-    const legend = mount(<Legend series={[mockSeriesWithStyles]} />);
+  it('renders a LinePreview with the provided series styles', () => {
+    const legend = mount(<Legend series={mockSeries} />);
 
     expect(legend).toContainReactComponent(LinePreview, {
-      color: mockSeriesWithStyles.style!.color,
-      lineStyle: mockSeriesWithStyles.style!.lineStyle,
-    });
-  });
-
-  it('renders a LinePreview with a solid, purple line when no style is provided', () => {
-    const legend = mount(<Legend series={[mockSeriesWithoutStyles]} />);
-
-    expect(legend).toContainReactComponent(LinePreview, {
-      color: 'colorPurple',
-      lineStyle: 'solid',
+      color: 'colorGreen',
+      lineStyle: 'dashed',
     });
   });
 });

@@ -1,9 +1,9 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
-import {colorPurple, colorGreen} from '@shopify/polaris-tokens';
 import {Point} from 'components';
 
+import {getColorValue} from '../../../../../utilities';
 import {Line} from '../Line';
 
 jest.mock('d3-scale', () => ({
@@ -18,6 +18,8 @@ const mockProps = {
       {label: 'Jan 1', rawValue: 0},
       {label: 'Jan 2', rawValue: 10},
     ],
+    color: 'primary' as 'primary',
+    lineStyle: 'solid' as 'solid',
   },
   xScale: scaleLinear(),
   yScale: scaleLinear(),
@@ -37,27 +39,14 @@ describe('<Line />', () => {
       expect(line).toContainReactComponent('path', {d: 'M0,0L10,10'});
     });
 
-    it('renders a solid, purple line if no series style is provided', () => {
-      const line = mount(
-        <svg>
-          <Line {...mockProps} />
-        </svg>,
-      );
-
-      expect(line).toContainReactComponent('path', {
-        strokeDasharray: 'unset',
-        stroke: colorPurple,
-      });
-    });
-
-    it('renders a line with the series styles when provided', () => {
+    it('renders a line with the series styles', () => {
       const line = mount(
         <svg>
           <Line
             {...mockProps}
             series={{
               ...mockProps.series,
-              style: {color: 'colorGreen', lineStyle: 'dashed'},
+              lineStyle: 'dashed',
             }}
           />
         </svg>,
@@ -65,7 +54,7 @@ describe('<Line />', () => {
 
       expect(line).toContainReactComponent('path', {
         strokeDasharray: '2 4',
-        stroke: colorGreen,
+        stroke: getColorValue('primary'),
       });
     });
   });
@@ -104,7 +93,7 @@ describe('<Line />', () => {
       expect(line).toContainReactComponentTimes(Point, 1, {active: true});
     });
 
-    it('renders with colorPurple by default', () => {
+    it('renders with the provided series color', () => {
       const line = mount(
         <svg>
           <Line {...mockProps} />
@@ -112,25 +101,7 @@ describe('<Line />', () => {
       );
 
       expect(line).toContainReactComponent(Point, {
-        color: 'colorPurple',
-      });
-    });
-
-    it('renders with the provided series color', () => {
-      const line = mount(
-        <svg>
-          <Line
-            {...mockProps}
-            series={{
-              ...mockProps.series,
-              style: {color: 'colorGreen'},
-            }}
-          />
-        </svg>,
-      );
-
-      expect(line).toContainReactComponent(Point, {
-        color: 'colorGreen',
+        color: 'primary',
       });
     });
   });
