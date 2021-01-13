@@ -57,7 +57,8 @@ describe('<Line />', () => {
             {...mockProps}
             series={{
               ...mockProps.series,
-              style: {color: 'colorGreen', lineStyle: 'dashed'},
+              color: 'colorGreen',
+              lineStyle: 'dashed',
             }}
           />
         </svg>,
@@ -123,7 +124,7 @@ describe('<Line />', () => {
             {...mockProps}
             series={{
               ...mockProps.series,
-              style: {color: 'colorGreen'},
+              color: 'colorGreen',
             }}
           />
         </svg>,

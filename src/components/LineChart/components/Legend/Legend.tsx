@@ -12,9 +12,7 @@ interface Props {
 export function Legend({series}: Props) {
   return (
     <div className={styles.Container}>
-      {series.map(({name, style = {}}) => {
-        const {color = 'colorPurple', lineStyle = 'solid'} = style;
-
+      {series.map(({name, color = 'colorPurple', lineStyle = 'solid'}) => {
         return (
           <div className={styles.Series} key={name}>
             <LinePreview color={color} lineStyle={lineStyle} />

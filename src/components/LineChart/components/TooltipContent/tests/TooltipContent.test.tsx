@@ -12,9 +12,7 @@ const mockProps = {
         label: 'Apr 1, 2020',
         value: 'CA$1,240.55',
       },
-      style: {
-        color: 'primary' as 'primary',
-      },
+      color: 'primary' as 'primary',
     },
     {
       name: 'March',
@@ -22,10 +20,8 @@ const mockProps = {
         label: 'Mar 1, 2020',
         value: 'CA$926.22',
       },
-      style: {
-        color: 'pastComparison' as 'pastComparison',
-        lineStyle: 'dashed' as 'dashed',
-      },
+      color: 'pastComparison' as 'pastComparison',
+      lineStyle: 'dashed' as 'dashed',
     },
   ],
 };

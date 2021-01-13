@@ -1,19 +1,10 @@
-import {Color} from 'types';
+import {Color, DataSeries} from 'types';
 
 export type LineStyle = 'dashed' | 'solid';
 
-export interface LineChartStyle {
-  color: Color;
-  lineStyle: LineStyle;
-}
-
-export interface Series {
-  name: string;
-  data: {
-    label: string;
-    rawValue: number;
-  }[];
-  style?: Partial<LineChartStyle>;
+export interface Series extends DataSeries {
+  color?: Color;
+  lineStyle?: LineStyle;
 }
 
 interface TooltipData {
@@ -22,7 +13,8 @@ interface TooltipData {
     label: string;
     value: number;
   };
-  style?: Partial<LineChartStyle>;
+  color?: Color;
+  lineStyle?: LineStyle;
 }
 
 export interface RenderTooltipContentData {

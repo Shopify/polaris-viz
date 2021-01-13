@@ -40,9 +40,7 @@ export function LineChartDemo() {
         {rawValue: 5500, label: '2020-04-13T12:00:00'},
         {rawValue: 7000, label: '2020-04-14T12:00:00'},
       ],
-      style: {
-        color: 'primary',
-      },
+      color: 'primary',
     },
     {
       name: 'Mar 01–Mar 14, 2020',
@@ -62,10 +60,8 @@ export function LineChartDemo() {
         {rawValue: 2000, label: '2020-03-13T12:00:00'},
         {rawValue: 3000, label: '2020-03-14T12:00:00'},
       ],
-      style: {
-        color: 'pastComparison',
-        lineStyle: 'dashed' as 'dashed',
-      },
+      color: 'pastComparison',
+      lineStyle: 'dashed' as 'dashed',
     },
   ];
 
@@ -105,14 +101,17 @@ export function LineChartDemo() {
       });
     }
 
-    const formattedData = data.map(({name, point: {label, value}, style}) => ({
-      name,
-      style,
-      point: {
-        value: formatTooltipValue(value),
-        label: formatTooltipLabel(label),
-      },
-    }));
+    const formattedData = data.map(
+      ({name, point: {label, value}, color, lineStyle}) => ({
+        name,
+        color,
+        lineStyle,
+        point: {
+          value: formatTooltipValue(value),
+          label: formatTooltipLabel(label),
+        },
+      }),
+    );
 
     return <LineChartTooltipContent data={formattedData} />;
   };
