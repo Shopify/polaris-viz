@@ -52,14 +52,17 @@ export function LineChart({
   }
 
   function renderDefaultTooltipContent({data}: RenderTooltipContentData) {
-    const formattedData = data.map(({name, point: {label, value}, style}) => ({
-      name,
-      style,
-      point: {
-        value: formatYAxisLabel(value),
-        label,
-      },
-    }));
+    const formattedData = data.map(
+      ({name, point: {label, value}, color, lineStyle}) => ({
+        name,
+        color,
+        lineStyle,
+        point: {
+          value: formatYAxisLabel(value),
+          label,
+        },
+      }),
+    );
     return <TooltipContent data={formattedData} />;
   }
 

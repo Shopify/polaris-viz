@@ -6,15 +6,19 @@ Throughout Polaris Viz, there are two types of accepted colors: nominal and Pola
 
 The nominal colors are named colors according a hierarchy. The following values are valid:
 
-| name             | color                                                  |
-| ---------------- | ------------------------------------------------------ |
-| `primary`        | <img src="images/colors/nominal-primary.png" />        |
-| `secondary`      | <img src="images/colors/nominal-secondary.png" />      |
-| `tertiary`       | <img src="images/colors/nominal-tertiary.png" />       |
-| `quaternary`     | <img src="images/colors/nominal-quaternary.png" />     |
-| `pastComparison` | <img src="images/colors/nominal-pastComparison.png" /> |
-| `positive`       | <img src="images/colors/nominal-positive.png" />       |
-| `negative`       | <img src="images/colors/nominal-negative.png" />       |
+| name                  | color                                                       |
+| --------------------- | ----------------------------------------------------------- |
+| `primary`             | <img src="images/colors/nominal-primary.png" />             |
+| `secondary`           | <img src="images/colors/nominal-secondary.png" />           |
+| `tertiary`            | <img src="images/colors/nominal-tertiary.png" />            |
+| `quaternary`          | <img src="images/colors/nominal-quaternary.png" />          |
+| `primaryProminent`    | <img src="images/colors/nominal-primaryProminent.png" />    |
+| `secondaryProminent`  | <img src="images/colors/nominal-secondaryProminent.png" />  |
+| `tertiaryProminent`   | <img src="images/colors/nominal-tertiaryProminent.png" />   |
+| `quaternaryProminent` | <img src="images/colors/nominal-quaternaryProminent.png" /> |
+| `pastComparison`      | <img src="images/colors/nominal-pastComparison.png" />      |
+| `positive`            | <img src="images/colors/nominal-positive.png" />            |
+| `negative`            | <img src="images/colors/nominal-negative.png" />            |
 
 ## Polaris tokens
 

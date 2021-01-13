@@ -8,7 +8,8 @@ import {Legend} from '../Legend';
 const mockSeriesWithStyles: Series = {
   data: [],
   name: 'Test series 1',
-  style: {color: 'colorGreen', lineStyle: 'dashed'},
+  color: 'colorGreen',
+  lineStyle: 'dashed',
 };
 const mockSeriesWithoutStyles: Series = {data: [], name: 'Test series 2'};
 const allMockSeries = [mockSeriesWithStyles, mockSeriesWithoutStyles];
@@ -31,8 +32,8 @@ describe('<Legend />', () => {
     const legend = mount(<Legend series={[mockSeriesWithStyles]} />);
 
     expect(legend).toContainReactComponent(LinePreview, {
-      color: mockSeriesWithStyles.style!.color,
-      lineStyle: mockSeriesWithStyles.style!.lineStyle,
+      color: mockSeriesWithStyles.color,
+      lineStyle: mockSeriesWithStyles.lineStyle,
     });
   });
 

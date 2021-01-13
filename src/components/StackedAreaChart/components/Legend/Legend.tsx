@@ -12,11 +12,11 @@ interface Props {
 export function Legend({series}: Props) {
   return (
     <div className={styles.Container}>
-      {series.map(({label, color}) => {
+      {series.map(({name, color}) => {
         return (
-          <div className={styles.Series} key={label}>
+          <div className={styles.Series} key={name}>
             <SquareColorPreview color={color} />
-            <p className={styles.SeriesName}>{label}</p>
+            <p className={styles.SeriesName}>{name}</p>
           </div>
         );
       })}

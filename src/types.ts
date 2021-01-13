@@ -1,3 +1,13 @@
+export interface Data {
+  label: string;
+  rawValue: number;
+}
+
+export interface DataSeries {
+  name: string;
+  data: Data[];
+}
+
 export type Color = TokensColor | VizPaletteColor;
 
 export type TokensColor =

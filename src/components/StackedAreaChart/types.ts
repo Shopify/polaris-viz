@@ -1,9 +1,12 @@
 import {Color} from 'types';
 
-type Data = number | null;
+export interface Data {
+  label: string;
+  rawValue: number | null;
+}
 
 export interface Series {
-  label: string;
+  name: string;
   data: Data[];
   color: Color;
 }

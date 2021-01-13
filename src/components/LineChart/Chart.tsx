@@ -67,13 +67,14 @@ export function Chart({
       .filter(function removeEmptyDataPoints({data}) {
         return data[activePointIndex] != null;
       })
-      .map(({name, data, style}) => ({
+      .map(({name, data, color, lineStyle}) => ({
         point: {
           label: data[activePointIndex].label,
           value: data[activePointIndex].rawValue,
         },
         name,
-        style,
+        color,
+        lineStyle,
       }));
 
     return renderTooltipContent({data});
