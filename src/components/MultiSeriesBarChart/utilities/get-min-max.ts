@@ -14,23 +14,13 @@ export function getMinMax(stackedValues: StackSeries[] | null, data: Series[]) {
       max: Math.max(...maxStackedValues),
     };
   } else {
-    const groupedDataPoints = data
-      .map(function getDataFromSeries(series) {
-        return series.data;
-      })
-      .reduce<number[][]>(function getValuesFromDataObjects(
-        values,
-        data,
-      ): number[][] {
-        const rawValuesFromDataObjects = data.map(({rawValue}) => rawValue);
-        values.push(rawValuesFromDataObjects);
-
-        return values;
+    const groupedDataPoints = data.reduce<number[]>(
+      (groupedData, series): number[] => {
+        const rawValues = series.data.map(({rawValue}) => rawValue);
+        return groupedData.concat(rawValues);
       },
-      [])
-      .reduce(function combineValuesIntoSingleArray(acc, currentValue) {
-        return acc.concat(currentValue);
-      }, []);
+      [],
+    );
 
     return {
       min: Math.min(...groupedDataPoints, 0),

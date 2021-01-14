@@ -10,11 +10,11 @@ export function getStackedValues(series: Series[], labels: string[]) {
   const formattedData = labels.map((_, labelIndex) =>
     series.reduce((acc, {name, data}) => {
       const indexData = data[labelIndex];
-      const newObject = {
+      const namedData = {
         [name]: indexData.rawValue == null ? 0 : indexData.rawValue,
       };
 
-      return Object.assign(acc, newObject);
+      return Object.assign(acc, namedData);
     }, {}),
   );
 
