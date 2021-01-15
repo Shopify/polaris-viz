@@ -11,19 +11,46 @@ Used to show comparison of different types, across categories.
 ```tsx
 const series = [
   {
+    name: 'Breakfast',
     color: 'primary',
-    label: 'Breakfast',
-    data: [3, 7, 4, 8, 10, 0, 1],
+    highlightColor: 'primaryProminent',
+    data: [
+      {label: 'Monday', rawValue: 3},
+      {label: 'Tuesday', rawValue: 7},
+      {label: 'Wednesday', rawValue: 4},
+      {label: 'Thursday', rawValue: 8},
+      {label: 'Friday', rawValue: 10},
+      {label: 'Saturday', rawValue: 0},
+      {label: 'Sunday', rawValue: 1},
+    ],
   },
   {
+    name: 'Lunch',
     color: 'secondary',
-    label: 'Lunch',
-    data: [4, 3, 5, 15, 8, 10, 2],
+    highlightColor: 'secondaryProminent',
+    data: [
+      {label: 'Monday', rawValue: 4},
+      {label: 'Tuesday', rawValue: 3},
+      {label: 'Wednesday', rawValue: 5},
+      {label: 'Thursday', rawValue: 15},
+      {label: 'Friday', rawValue: 8},
+      {label: 'Saturday', rawValue: 10},
+      {label: 'Sunday', rawValue: 2},
+    ],
   },
   {
+    name: 'Dinner',
     color: 'tertiary',
-    label: 'Dinner',
-    data: [7, 2, 6, 12, 10, 5, 3],
+    highlightColor: 'tertiaryProminent',
+    data: [
+      {label: 'Monday', rawValue: 7},
+      {label: 'Tuesday', rawValue: 2},
+      {label: 'Wednesday', rawValue: 6},
+      {label: 'Thursday', rawValue: 12},
+      {label: 'Friday', rawValue: 10},
+      {label: 'Saturday', rawValue: 5},
+      {label: 'Sunday', rawValue: 3},
+    ],
   },
 ];
 
@@ -89,7 +116,7 @@ The mult-series bar chart interface looks like this:
 
 ```typescript
 interface MultiSeriesBarChartProps {
-  series: Data[];
+  series: Series[];
   labels: string[];
   accessibilityLabel?: string;
   chartHeight?: number;
@@ -102,6 +129,56 @@ interface MultiSeriesBarChartProps {
 ```
 
 This component derives its size from its parent container and fills the width of its parent's container. It has a default height of `250`, which is configurable via the `chartHeight` prop. The `chartHeight` specifically affects the height of chart, and does not include or affect the height of the legend.
+
+### The `Series` type
+
+#### series
+
+The `Series` type gives the user a lot of flexibility to define exactly what each bar group should look like. Its interface looks like this:
+
+```typescript
+{
+  name: string;
+  data: {
+    label: string;
+    rawValue: number;
+  }[];
+  color: Color;
+  highlightColor?: Color;
+}
+```
+
+#### name
+
+| type     |
+| -------- |
+| `string` |
+
+The name of the series/group.
+
+#### data
+
+| type                                  |
+| ------------------------------------- |
+| `{label: string, rawValue: number}[]` |
+
+The array of objects that the chart uses to draw the groups.
+
+#### color
+
+| type    |
+| ------- |
+| `Color` |
+
+This accepts any [Polaris Viz color](/documentation/Polaris-Viz-colors.md) value, and corresponds to the color of the bar for that series.
+
+#### highlightColor
+
+| type    | default                      |
+| ------- | ---------------------------- |
+| `Color` | the current value of `color` |
+
+This accepts any [Polaris Viz color](/documentation/Polaris-Viz-colors.md) value, and corresponds to the color of the bar for that series when you hover over a bar group. It defaults to the current color of the bar (remains unchanged on hover). The four 'promiment' Polaris Viz colors (`primaryProminent`, `secondaryProminent`, `tertiaryProminent`, `quaternaryProminent`) exist as a good option for a complimentary hover color.
 
 ### The `RenderTooltipContentData` type
 
@@ -124,11 +201,11 @@ The distinction between the `RenderTooltipContentData` and series `Data` types i
 
 #### series
 
-| type                                              |
-| ------------------------------------------------- |
-| `{data: number[], color: Color, label: string}[]` |
+| type       |
+| ---------- |
+| `Series[]` |
 
-The data prop to determine the chart's drawn area. Each series object contains a `data` array, which contains all of the values for that given group. The `color` attribute accepts any [Polaris Viz color](documentation/Polaris-Viz-colors.md). The `label` attribute gives a name to each series (or group) of data.
+The prop to determine the chart's drawn area. Each `Series` object corresponds to a group drawn on the chart, and is explained in greater detail [above](#the-series-type).
 
 #### labels
 

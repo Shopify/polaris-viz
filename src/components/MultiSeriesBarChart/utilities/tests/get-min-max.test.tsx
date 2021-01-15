@@ -1,10 +1,26 @@
-import {Data, StackSeries} from 'components/MultiSeriesBarChart/types';
+import {Series, StackSeries} from 'components/MultiSeriesBarChart/types';
 
 import {getMinMax} from '../get-min-max';
 
-const mockData: Data[] = [
-  {data: [10, 20, 30], color: 'colorBlack', label: 'LABEL1'},
-  {data: [1, 2, 3], color: 'colorBlack', label: 'LABEL2'},
+const mockData: Series[] = [
+  {
+    data: [
+      {label: 'label', rawValue: 10},
+      {label: 'label', rawValue: 20},
+      {label: 'label', rawValue: 30},
+    ],
+    color: 'colorBlack',
+    name: 'LABEL1',
+  },
+  {
+    data: [
+      {label: 'label', rawValue: 1},
+      {label: 'label', rawValue: 2},
+      {label: 'label', rawValue: 3},
+    ],
+    color: 'colorBlack',
+    name: 'LABEL2',
+  },
 ];
 const mockStackedData = [
   [

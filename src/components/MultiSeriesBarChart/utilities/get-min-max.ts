@@ -1,6 +1,6 @@
-import {Data, StackSeries} from '../types';
+import {Series, StackSeries} from '../types';
 
-export function getMinMax(stackedValues: StackSeries[] | null, data: Data[]) {
+export function getMinMax(stackedValues: StackSeries[] | null, data: Series[]) {
   if (stackedValues != null) {
     const minStackedValues = stackedValues.map((value) =>
       Math.min(...value.map(([startingValue]) => startingValue)),
@@ -14,9 +14,13 @@ export function getMinMax(stackedValues: StackSeries[] | null, data: Data[]) {
       max: Math.max(...maxStackedValues),
     };
   } else {
-    const groupedDataPoints = data
-      .map(({data}) => data)
-      .reduce((acc, currentValue) => acc.concat(currentValue), []);
+    const groupedDataPoints = data.reduce<number[]>(
+      (groupedData, series): number[] => {
+        const rawValues = series.data.map(({rawValue}) => rawValue);
+        return groupedData.concat(rawValues);
+      },
+      [],
+    );
 
     return {
       min: Math.min(...groupedDataPoints, 0),

@@ -1,14 +1,12 @@
-import {Series} from 'd3-shape';
-import {Color} from 'types';
+import {Series as ShapeSeries} from 'd3-shape';
+import {Color, DataSeries} from 'types';
 
-export interface Data {
-  data: number[];
+export interface Series extends DataSeries {
   color: Color;
   highlightColor?: Color;
-  label: string;
 }
 
-export type StackSeries = Series<
+export type StackSeries = ShapeSeries<
   {
     [key: string]: number;
   },
