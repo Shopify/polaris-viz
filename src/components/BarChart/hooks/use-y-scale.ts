@@ -15,8 +15,8 @@ export function useYScale({
   formatYAxisLabel: NumberLabelFormatter;
 }) {
   const {yScale, ticks} = useMemo(() => {
-    const min = Math.min(...data.map(({rawValue}) => rawValue), 0);
-    const max = Math.max(...data.map(({rawValue}) => rawValue));
+    const min = Math.floor(Math.min(...data.map(({rawValue}) => rawValue), 0));
+    const max = Math.ceil(Math.max(...data.map(({rawValue}) => rawValue)));
 
     const maxTicks = Math.max(
       1,
@@ -28,11 +28,14 @@ export function useYScale({
       .domain([min, max])
       .nice(maxTicks);
 
-    const ticks = yScale.ticks(maxTicks).map((value) => ({
-      value,
-      formattedValue: formatYAxisLabel(value),
-      yOffset: yScale(value),
-    }));
+    const ticks = yScale
+      .ticks(maxTicks)
+      .filter((tick) => Number.isInteger(tick))
+      .map((value) => ({
+        value,
+        formattedValue: formatYAxisLabel(value),
+        yOffset: yScale(value),
+      }));
 
     return {yScale, ticks};
   }, [drawableHeight, data, formatYAxisLabel]);

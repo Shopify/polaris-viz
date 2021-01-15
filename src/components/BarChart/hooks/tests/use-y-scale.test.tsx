@@ -81,6 +81,37 @@ describe('useYScale', () => {
     expect(domainSpy).toHaveBeenCalledWith([-89, 1000]);
   });
 
+  it('rounds the domain max and min', () => {
+    let domainSpy = jest.fn();
+    (scaleLinear as jest.Mock).mockImplementation(() => {
+      const scale = (value: any) => value;
+      scale.ticks = (numTicks: number) => Array.from(Array(numTicks));
+      scale.range = (range: any) => (range ? scale : range);
+      domainSpy = jest.fn((domain: any) => (domain ? scale : domain));
+      scale.domain = domainSpy;
+      scale.nice = () => scale;
+      return scale;
+    });
+
+    function TestComponent() {
+      useYScale({
+        drawableHeight: 400,
+        formatYAxisLabel: jest.fn(),
+        data: [
+          {rawValue: 1000.1, label: 'test'},
+          {rawValue: -80.5, label: 'test'},
+          {rawValue: 300, label: 'test'},
+        ],
+      });
+
+      return null;
+    }
+
+    mount(<TestComponent />);
+
+    expect(domainSpy).toHaveBeenCalledWith([-81, 1001]);
+  });
+
   it('creates a y scale with range equal to the drawable height', () => {
     let rangeSpy = jest.fn();
     (scaleLinear as jest.Mock).mockImplementation(() => {
@@ -133,5 +164,30 @@ describe('useYScale', () => {
     const wrapper = mount(<TestComponent />);
 
     expect(wrapper).toContainReactText('Formatted value: 50');
+  });
+
+  it('only returns ticks for full integers', () => {
+    (scaleLinear as jest.Mock).mockImplementation(() => {
+      const scale = (value: any) => value;
+      scale.ticks = () => [0, 0.5, 1];
+      scale.range = (range: any) => (range ? scale : range);
+      scale.domain = (domain: any) => (domain ? scale : domain);
+      scale.nice = () => scale;
+      return scale;
+    });
+
+    function TestComponent() {
+      const {ticks} = useYScale({
+        drawableHeight: 250,
+        formatYAxisLabel: jest.fn((value) => `Formatted value: ${value}`),
+        data: [{rawValue: 10, label: ''}],
+      });
+
+      return <p>{ticks.map(({value}) => `${value.toString()}-`)}</p>;
+    }
+
+    const wrapper = mount(<TestComponent />);
+
+    expect(wrapper).toContainReactText('0-1-');
   });
 });

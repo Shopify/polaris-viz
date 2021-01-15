@@ -30,11 +30,14 @@ export function useYScale({
       .domain([min, max])
       .nice(maxTicks);
 
-    const ticks = yScale.ticks(maxTicks).map((value) => ({
-      value,
-      formattedValue: formatYAxisLabel(value),
-      yOffset: yScale(value),
-    }));
+    const ticks = yScale
+      .ticks(maxTicks)
+      .filter((tick) => Number.isInteger(tick))
+      .map((value) => ({
+        value,
+        formattedValue: formatYAxisLabel(value),
+        yOffset: yScale(value),
+      }));
 
     return {yScale, ticks};
   }, [data, drawableHeight, formatYAxisLabel, stackedValues]);

@@ -33,4 +33,14 @@ describe('get-min-max', () => {
     expect(min).toStrictEqual(0);
     expect(max).toStrictEqual(33);
   });
+
+  it('rounds the min and max to the closest integer', () => {
+    const {min, max} = getMinMax(null, [
+      {data: [-0.5, -0.1, 0], color: 'colorBlack', label: 'LABEL1'},
+      {data: [0, 0.2, 0.3], color: 'colorBlack', label: 'LABEL2'},
+    ]);
+
+    expect(min).toStrictEqual(-1);
+    expect(max).toStrictEqual(1);
+  });
 });

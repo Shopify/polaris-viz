@@ -1,8 +1,9 @@
-import {useMemo, useEffect, useState} from 'react';
+import {useMemo} from 'react';
 import {scaleLinear} from 'd3-scale';
+import {getTextWidth} from 'utilities';
 
 import {yAxisMinMax} from '../utilities';
-import {MIN_Y_LABEL_SPACE, SPACING_LOOSE} from '../constants';
+import {MIN_Y_LABEL_SPACE, SPACING_LOOSE, FONT_SIZE} from '../constants';
 import {Series} from '../types';
 import {NumberLabelFormatter} from '../../../types';
 
@@ -15,8 +16,6 @@ export function useYScale({
   series: Series[];
   formatYAxisLabel: NumberLabelFormatter;
 }) {
-  const [maxTickLength, setMaxTickLength] = useState<number>();
-
   const {yScale, ticks} = useMemo(() => {
     const [minY, maxY] = yAxisMinMax(series);
 
@@ -27,40 +26,28 @@ export function useYScale({
 
     const yScale = scaleLinear()
       .range([drawableHeight, 0])
-      .domain([Math.min(0, minY), maxY])
+      .domain([Math.floor(Math.min(0, minY)), Math.ceil(maxY)])
       .nice(maxTicks);
 
-    const ticks = yScale.ticks(maxTicks).map((value) => ({
-      value,
-      formattedValue: formatYAxisLabel(value),
-      yOffset: yScale(value),
-    }));
+    const ticks = yScale
+      .ticks(maxTicks)
+      .filter((tick) => Number.isInteger(tick))
+      .map((value) => ({
+        value,
+        formattedValue: formatYAxisLabel(value),
+        yOffset: yScale(value),
+      }));
 
     return {yScale, ticks};
   }, [drawableHeight, series, formatYAxisLabel]);
 
-  useEffect(() => {
-    let currentMaxTickLength = 0;
+  const maxTickWidth = Math.max(
+    ...ticks.map(({formattedValue}) =>
+      getTextWidth({fontSize: FONT_SIZE, text: formattedValue}),
+    ),
+  );
 
-    const tick = document.createElement('p');
-    tick.style.fontSize = '12px';
-    tick.style.display = 'inline-block';
-    tick.style.visibility = 'hidden';
-    document.body.appendChild(tick);
-
-    ticks.forEach(({formattedValue}) => {
-      tick.innerText = formattedValue;
-
-      currentMaxTickLength = Math.max(currentMaxTickLength, tick.clientWidth);
-    });
-
-    document.body.removeChild(tick);
-
-    setMaxTickLength(currentMaxTickLength);
-  }, [ticks, maxTickLength]);
-
-  const axisMargin =
-    maxTickLength == null ? null : maxTickLength + SPACING_LOOSE;
+  const axisMargin = maxTickWidth + SPACING_LOOSE;
 
   return {yScale, ticks, axisMargin};
 }

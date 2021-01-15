@@ -19,8 +19,8 @@ export function getMinMax(stackedValues: StackSeries[] | null, data: Data[]) {
       .reduce((acc, currentValue) => acc.concat(currentValue), []);
 
     return {
-      min: Math.min(...groupedDataPoints, 0),
-      max: Math.max(...groupedDataPoints),
+      min: Math.floor(Math.min(...groupedDataPoints, 0)),
+      max: Math.ceil(Math.max(...groupedDataPoints)),
     };
   }
 }

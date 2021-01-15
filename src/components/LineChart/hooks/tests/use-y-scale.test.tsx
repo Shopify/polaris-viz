@@ -83,6 +83,42 @@ describe('useYScale', () => {
     expect(domainSpy).toHaveBeenCalledWith([-10000, 10000]);
   });
 
+  it('rounds min and maxes to the closest integer', () => {
+    let domainSpy = jest.fn();
+    (scaleLinear as jest.Mock).mockImplementation(() => {
+      const scale = (value: any) => value;
+      scale.ticks = (numTicks: number) => Array.from(Array(numTicks));
+      scale.range = (range: any) => (range ? scale : range);
+      domainSpy = jest.fn((domain: any) => (domain ? scale : domain));
+      scale.domain = domainSpy;
+      scale.nice = () => scale;
+      return scale;
+    });
+
+    function TestComponent() {
+      useYScale({
+        drawableHeight: 250,
+        formatYAxisLabel: jest.fn(),
+        series: [
+          {
+            name: 'min',
+            data: [{label: 'min', rawValue: -10.4}],
+          },
+          {
+            name: 'max',
+            data: [{label: 'max', rawValue: 10.4}],
+          },
+        ],
+      });
+
+      return null;
+    }
+
+    mount(<TestComponent />);
+
+    expect(domainSpy).toHaveBeenCalledWith([-11, 11]);
+  });
+
   it('creates a y scale with range equal to the drawable height', () => {
     let rangeSpy = jest.fn();
     (scaleLinear as jest.Mock).mockImplementation(() => {
@@ -135,5 +171,31 @@ describe('useYScale', () => {
     const wrapper = mount(<TestComponent />);
 
     expect(wrapper).toContainReactText('Formatted value: 25');
+  });
+
+  it('filters out non-integer numbers', () => {
+    (scaleLinear as jest.Mock).mockImplementation(() => {
+      const ticksSpy = jest.fn(() => [0, 0.5, 1]);
+      const scale = (value: any) => value;
+      scale.ticks = ticksSpy;
+      scale.range = (range: any) => (range ? scale : range);
+      scale.domain = (domain: any) => (domain ? scale : domain);
+      scale.nice = () => scale;
+      return scale;
+    });
+
+    function TestComponent() {
+      const {ticks} = useYScale({
+        drawableHeight: 250,
+        formatYAxisLabel: jest.fn(),
+        series: [],
+      });
+
+      return <p>{ticks.map(({value}) => `${value.toString()}-`)}</p>;
+    }
+
+    const wrapper = mount(<TestComponent />);
+
+    expect(wrapper).toContainReactText('0-1-');
   });
 });

@@ -201,4 +201,31 @@ describe('useYScale', () => {
 
     expect(wrapper).toContainReactText('Formatted: 25');
   });
+
+  it('filters out non-integer numbers', () => {
+    (scaleLinear as jest.Mock).mockImplementation(() => {
+      const scale = (value: any) => value;
+      const ticksSpy = jest.fn(() => [0, 25.6, 50]);
+      scale.ticks = ticksSpy;
+      scale.range = (range: any) => (range ? scale : range);
+      scale.domain = (domain: any) => (domain ? scale : domain);
+      scale.nice = () => scale;
+      return scale;
+    });
+
+    function TestFormattersComponent() {
+      const {ticks} = useYScale({
+        drawableHeight: 300,
+        formatYAxisLabel: jest.fn(),
+        data: [mockData[0]],
+        stackedValues: null,
+      });
+
+      return <p>{ticks.map(({value}) => `${value.toString()}-`)}</p>;
+    }
+
+    const wrapper = mount(<TestFormattersComponent />);
+
+    expect(wrapper).toContainReactText('0-50-');
+  });
 });

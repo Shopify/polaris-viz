@@ -41,14 +41,17 @@ export function useYScale({
 
     const yScale = scaleLinear()
       .range([drawableHeight, 0])
-      .domain([Math.min(0, minY), maxY])
+      .domain([Math.min(0, Math.floor(minY)), Math.ceil(maxY)])
       .nice(maxTicks);
 
-    const ticks = yScale.ticks(maxTicks).map((value) => ({
-      value,
-      formattedValue: formatYAxisLabel(value),
-      yOffset: yScale(value),
-    }));
+    const ticks = yScale
+      .ticks(maxTicks)
+      .filter((tick) => Number.isInteger(tick))
+      .map((value) => ({
+        value,
+        formattedValue: formatYAxisLabel(value),
+        yOffset: yScale(value),
+      }));
 
     const maxTickWidth = Math.max(
       ...ticks.map(({formattedValue}) =>
