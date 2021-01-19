@@ -1,7 +1,11 @@
 import React, {useState, useMemo} from 'react';
 import {Color} from 'types';
 
-import {eventPoint, getTextWidth} from '../../utilities';
+import {
+  eventPoint,
+  getTextWidth,
+  getTextContainerHeight,
+} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {TooltipContainer} from '../TooltipContainer';
 import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
@@ -53,11 +57,11 @@ export function Chart({
   //calculate this the way it was before
   const fontSize = 12;
 
-  const longestXLabel = Math.max(
-    ...data.map(({label}) =>
-      getTextWidth({text: formatXAxisLabel(label), fontSize}),
-    ),
-  );
+  // const longestXLabel = Math.max(
+  //   ...data.map(({label}) =>
+  //     getTextWidth({text: formatXAxisLabel(label), fontSize}),
+  //   ),
+  // );
 
   const roughYAxisWidth =
     SPACING +
@@ -67,29 +71,35 @@ export function Chart({
       ),
     );
 
-  const overflowingLabel =
-    longestXLabel > (chartDimensions.width - roughYAxisWidth) / data.length;
+  const labelSpace = (chartDimensions.width - roughYAxisWidth) / data.length;
+  //make this more smart, actually use the longest one
+  const longestLabel = formatXAxisLabel(data[0].label);
+  const longestLabelLength = getTextWidth({text: longestLabel, fontSize});
 
-  const labelAngle = 90 + DIAGONAL_ANGLE;
-  const radians = (labelAngle * Math.PI) / 180;
-  const angledLabelHeight = Math.cos(radians) * longestXLabel;
+  const xLabelHeight = getTextContainerHeight({
+    text: longestLabel,
+    fontSize,
+    containerWidth: labelSpace,
+  });
 
-  const maxXLabelHeight = overflowingLabel
-    ? angledLabelHeight
-    : // to account for spacing in the xaxis
-      LINE_HEIGHT + SPACING_TIGHT;
+  //actually determine this in a smart way
+  const overflowingLabel = true;
 
-  // max diagonal length = distance between first tick and left side = ~105 in this case
-  // CALCULATE THAT
-  // const firstTickPosition =
-  //   (chartDimensions.width + roughYAxisWidth) / data.length / 2;
-  // console.log({firstTickPosition});
-  const chartWidth = chartDimensions.width - roughYAxisWidth;
-  const barSpace = chartWidth / data.length - barMargin;
-  const firstTickPosition = barSpace / 2 + roughYAxisWidth;
-  console.log({firstTickPosition});
+  // this will be different if labels are diagonal
 
-  ////
+  //1. find out what the longest label will be on an angle
+  // const labelAngle = 90 + DIAGONAL_ANGLE;
+  // const radians = (labelAngle * Math.PI) / 180;
+  // const angledLabelHeight = Math.cos(radians) * longestLabelLength;
+  // console.log({angledLabelHeight});
+
+  // const maxXLabelHeight = overflowingLabel ? angledLabelHeight : xLabelHeight;
+
+  //2. find out what the max label allowance is for the first tick
+
+  //3. take the smaller of the two
+  const angledLabelHeight = 100;
+  const maxXLabelHeight = overflowingLabel ? angledLabelHeight : xLabelHeight;
 
   const drawableHeight =
     chartDimensions.height - MARGIN.Top - MARGIN.Bottom - maxXLabelHeight;
@@ -154,6 +164,8 @@ export function Chart({
             fontSize={fontSize}
             showFewerLabels={timeSeries && overflowingLabel}
             needsDiagonalLabels={overflowingLabel}
+            xLabelHeight={maxXLabelHeight}
+            angledLabelHeight={angledLabelHeight}
           />
         </g>
 

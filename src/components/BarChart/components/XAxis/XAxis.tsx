@@ -19,20 +19,23 @@ export function XAxis({
   fontSize,
   showFewerLabels,
   needsDiagonalLabels,
+  xLabelHeight,
+  angledLabelHeight,
 }: {
   xScale: ScaleBand<string>;
   labels: {value: string; xOffset: number}[];
   needsDiagonalLabels: boolean;
   fontSize: number;
   showFewerLabels: boolean;
+  xLabelHeight: number;
+  angledLabelHeight: number;
 }) {
   const [xScaleMin, xScaleMax] = xScale.range();
 
   const transform = needsDiagonalLabels
-    ? `translate(${SPACING_EXTRA_TIGHT} ${SPACING_LOOSE}) rotate(${DIAGONAL_ANGLE})`
-    : `translate(0 ${SPACING_TIGHT + SPACING})`;
-
-  const textAnchor = needsDiagonalLabels ? 'end' : 'middle';
+    ? // make these numbers real
+      `translate(-${xScale.bandwidth() - 20} ${60}) rotate(${DIAGONAL_ANGLE})`
+    : `translate(-${xScale.bandwidth() / 2} 0)`;
 
   return (
     <React.Fragment>
@@ -46,20 +49,29 @@ export function XAxis({
         if (showFewerLabels && index % 2 !== 0) {
           return null;
         }
-
         return (
           <g key={index} transform={`translate(${xOffset}, 0)`}>
             <line y2={TICK_SIZE} stroke={colorSky} />
-            <text
-              className={styles.Text}
-              textAnchor={textAnchor}
+            <foreignObject
+              // different for diagonmal
+              //width is what determines if there is overflow
+              width={
+                needsDiagonalLabels ? angledLabelHeight : xScale.bandwidth()
+              }
+              height={needsDiagonalLabels ? 30 : xLabelHeight}
               transform={transform}
-              style={{
-                fontSize,
-              }}
             >
-              {value}
-            </text>
+              <p
+                className={
+                  needsDiagonalLabels ? styles.DiagonalText : styles.Text
+                }
+                style={{
+                  fontSize,
+                }}
+              >
+                {value}
+              </p>
+            </foreignObject>
           </g>
         );
       })}

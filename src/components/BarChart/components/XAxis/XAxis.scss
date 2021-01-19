@@ -1,6 +1,12 @@
 @import '../../../../styles/common';
 
 .Text {
-  @include axis-label;
-  // text-anchor: middle;
+  text-align: center;
+}
+
+.DiagonalText {
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

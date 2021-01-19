@@ -17,3 +17,29 @@ export function getTextWidth({
 
   return width;
 }
+
+export function getTextContainerHeight({
+  text,
+  fontSize,
+  containerWidth,
+}: {
+  text: string;
+  fontSize: number;
+  containerWidth: number;
+}) {
+  const paragraph = document.createElement('p');
+  const container = document.createElement('div');
+  paragraph.style.fontSize = `${fontSize}px`;
+  paragraph.style.display = 'inline-block';
+  paragraph.style.visibility = 'hidden';
+  // paragraph.style.marginBottom = '0px';
+  container.style.width = `${containerWidth}px`;
+  document.body.appendChild(container);
+  container.appendChild(paragraph);
+  paragraph.innerText = text;
+  const height = container.clientHeight;
+
+  document.body.removeChild(container);
+
+  return height;
+}

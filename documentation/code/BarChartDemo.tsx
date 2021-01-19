@@ -7,14 +7,15 @@ import {OUTER_CONTAINER_STYLE} from './constants';
 
 export function BarChartDemo() {
   const innerContainerStyle = {
-    width: '900px',
+    // width: '900px',
     height: '400px',
+    maxWidth: '100%',
     background: 'white',
     // padding: '2rem',
     borderRadius: '6px',
     border: '2px solid #EAECEF',
-    display: 'grid',
-    placeItems: 'center',
+    // display: 'grid',
+    // placeItems: 'center',
   };
 
   document.body.style.fontFamily =
@@ -37,7 +38,7 @@ export function BarChartDemo() {
     //   day: 'numeric',
     //   month: 'short',
     // });
-    return `${value}${value}!!!!!!`;
+    return `${value}`;
   }
 
   function formatYAxisLabel(value: number) {
