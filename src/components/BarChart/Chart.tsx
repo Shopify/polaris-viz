@@ -17,6 +17,7 @@ import {
   FONT_SIZE,
   SMALL_SCREEN,
   DIAGONAL_ANGLE,
+  SPACING_TIGHT,
 } from './constants';
 import styles from './Chart.scss';
 
@@ -49,39 +50,46 @@ export function Chart({
     y: number;
   } | null>(null);
 
-  const yAxisLabelWidth = data
-    .map(({rawValue}) =>
-      getTextWidth({
-        text: formatYAxisLabel(rawValue),
-        fontSize: FONT_SIZE,
-      }),
-    )
-    .reduce((acc, currentValue) => Math.max(acc, currentValue));
+  //calculate this the way it was before
+  const fontSize = 12;
 
-  const axisMargin = SPACING + yAxisLabelWidth;
-  const drawableWidth = chartDimensions.width - MARGIN.Right - axisMargin;
-
-  const fontSize =
-    chartDimensions.width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
-
-  const {xScale, xAxisLabels} = useXScale({
-    drawableWidth,
-    data,
-    barMargin,
-    formatXAxisLabel,
-  });
-
-  const longestLabel = Math.max(
-    ...xAxisLabels.map(({value}) => getTextWidth({text: value, fontSize})),
+  const longestXLabel = Math.max(
+    ...data.map(({label}) =>
+      getTextWidth({text: formatXAxisLabel(label), fontSize}),
+    ),
   );
 
-  const overflowingLabel = longestLabel > xScale.bandwidth();
+  const roughYAxisWidth =
+    SPACING +
+    Math.max(
+      ...data.map(({rawValue}) =>
+        getTextWidth({text: formatYAxisLabel(rawValue), fontSize}),
+      ),
+    );
+
+  const overflowingLabel =
+    longestXLabel > (chartDimensions.width - roughYAxisWidth) / data.length;
 
   const labelAngle = 90 + DIAGONAL_ANGLE;
   const radians = (labelAngle * Math.PI) / 180;
-  const angledLabelHeight = Math.cos(radians) * longestLabel;
+  const angledLabelHeight = Math.cos(radians) * longestXLabel;
 
-  const maxXLabelHeight = overflowingLabel ? angledLabelHeight : LINE_HEIGHT;
+  const maxXLabelHeight = overflowingLabel
+    ? angledLabelHeight
+    : // to account for spacing in the xaxis
+      LINE_HEIGHT + SPACING_TIGHT;
+
+  // max diagonal length = distance between first tick and left side = ~105 in this case
+  // CALCULATE THAT
+  // const firstTickPosition =
+  //   (chartDimensions.width + roughYAxisWidth) / data.length / 2;
+  // console.log({firstTickPosition});
+  const chartWidth = chartDimensions.width - roughYAxisWidth;
+  const barSpace = chartWidth / data.length - barMargin;
+  const firstTickPosition = barSpace / 2 + roughYAxisWidth;
+  console.log({firstTickPosition});
+
+  ////
 
   const drawableHeight =
     chartDimensions.height - MARGIN.Top - MARGIN.Bottom - maxXLabelHeight;
@@ -90,6 +98,22 @@ export function Chart({
     drawableHeight,
     data,
     formatYAxisLabel,
+  });
+
+  const yAxisLabelWidth = Math.max(
+    ...ticks.map(({formattedValue}) =>
+      getTextWidth({text: formattedValue, fontSize}),
+    ),
+  );
+
+  const axisMargin = SPACING + yAxisLabelWidth;
+  const drawableWidth = chartDimensions.width - MARGIN.Right - axisMargin;
+
+  const {xScale, xAxisLabels} = useXScale({
+    drawableWidth,
+    data,
+    barMargin,
+    formatXAxisLabel,
   });
 
   const tooltipMarkup = useMemo(() => {
