@@ -87,7 +87,7 @@ export function Chart({
   console.log(xLabelHeight);
 
   //actually determine this in a smart way
-  const overflowingLabel = false;
+  const overflowingLabel = true;
 
   // this will be different if labels are diagonal
 
@@ -96,13 +96,14 @@ export function Chart({
   const radians = (labelAngle * Math.PI) / 180;
   const angledLabelHeight = Math.cos(radians) * longestLabelLength;
 
-  // const maxXLabelHeight = overflowingLabel ? angledLabelHeight : xLabelHeight;
-
   //2. find out what the max label allowance is for the first tick
 
-  //3. take the smaller of the two
-  // const angledLabelHeight = 100;
-  const maxXLabelHeight = overflowingLabel ? angledLabelHeight : xLabelHeight;
+  const spaceToFirstTick = roughYAxisWidth + labelSpace / 2;
+  const maxAngledLabel = spaceToFirstTick / Math.cos((40 * Math.PI) / 180);
+  const maxXLabelHeight = overflowingLabel
+    ? //3. take the smaller of the two
+      Math.min(angledLabelHeight, maxAngledLabel)
+    : xLabelHeight;
 
   const drawableHeight =
     chartDimensions.height - MARGIN.Top - MARGIN.Bottom - maxXLabelHeight;
@@ -168,6 +169,7 @@ export function Chart({
             showFewerLabels={timeSeries && overflowingLabel}
             needsDiagonalLabels={overflowingLabel}
             xLabelHeight={maxXLabelHeight}
+            // need to change both of these when we truncate
             angledLabelHeight={angledLabelHeight}
             longestLabelLength={longestLabelLength}
           />

@@ -36,10 +36,10 @@ export function BarChartDemo() {
   ];
 
   function formatXAxisLabel(value: string) {
-    return new Date(value).toLocaleDateString('en-CA', {
-      day: 'numeric',
-      month: 'short',
-    });
+    // return new Date(value).toLocaleDateString('en-CA', {
+    //   day: 'numeric',
+    //   month: 'short',
+    // });
     return `${value}${value}!!!`;
   }
 
