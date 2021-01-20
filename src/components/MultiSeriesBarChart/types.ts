@@ -2,7 +2,6 @@ import {Series as ShapeSeries} from 'd3-shape';
 import {Color, DataSeries} from 'types';
 
 export interface Series extends DataSeries {
-  color: Color;
   highlightColor?: Color;
 }
 

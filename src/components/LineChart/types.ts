@@ -3,7 +3,6 @@ import {Color, DataSeries} from 'types';
 export type LineStyle = 'dashed' | 'solid';
 
 export interface Series extends DataSeries {
-  color?: Color;
   lineStyle?: LineStyle;
 }
 
@@ -13,8 +12,8 @@ interface TooltipData {
     label: string;
     value: number;
   };
-  color?: Color;
-  lineStyle?: LineStyle;
+  color: Color;
+  lineStyle: LineStyle;
 }
 
 export interface RenderTooltipContentData {

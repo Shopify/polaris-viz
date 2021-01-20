@@ -6,6 +6,7 @@ export interface Data {
 export interface DataSeries {
   name: string;
   data: Data[];
+  color?: Color;
 }
 
 export type Color = TokensColor | VizPaletteColor;

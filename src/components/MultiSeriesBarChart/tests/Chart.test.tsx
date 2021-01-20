@@ -47,6 +47,7 @@ describe('Chart />', () => {
           {label: 'stuff 3', rawValue: 30},
         ],
         color: 'colorBlack' as Color,
+        highlightColor: 'colorBlack' as Color,
         name: 'LABEL1',
       },
       {
@@ -56,6 +57,7 @@ describe('Chart />', () => {
           {label: 'stuff 3', rawValue: 30},
         ],
         color: 'colorRed' as Color,
+        highlightColor: 'colorRed' as Color,
         name: 'LABEL2',
       },
     ],

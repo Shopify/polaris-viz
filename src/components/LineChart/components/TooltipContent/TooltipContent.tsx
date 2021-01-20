@@ -12,8 +12,8 @@ interface TooltipData {
     label: string;
     value: string;
   };
-  color?: Color;
-  lineStyle?: LineStyle;
+  color: Color;
+  lineStyle: LineStyle;
 }
 
 export interface TooltipContentProps {
@@ -23,22 +23,15 @@ export interface TooltipContentProps {
 export function TooltipContent({data}: TooltipContentProps) {
   return (
     <div className={styles.Container}>
-      {data.map(
-        ({
-          name,
-          point: {label, value},
-          color = 'colorPurple',
-          lineStyle = 'solid',
-        }) => {
-          return (
-            <React.Fragment key={name}>
-              <LinePreview color={color} lineStyle={lineStyle} />
-              <p className={styles.Name}>{label}</p>
-              <p className={styles.Value}>{value}</p>
-            </React.Fragment>
-          );
-        },
-      )}
+      {data.map(({name, point: {label, value}, color, lineStyle}) => {
+        return (
+          <React.Fragment key={name}>
+            <LinePreview color={color} lineStyle={lineStyle} />
+            <p className={styles.Name}>{label}</p>
+            <p className={styles.Value}>{value}</p>
+          </React.Fragment>
+        );
+      })}
     </div>
   );
 }

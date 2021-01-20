@@ -15,7 +15,7 @@ import {Line} from './components';
 import styles from './Chart.scss';
 
 interface Props {
-  series: Series[];
+  series: Required<Series>[];
   xAxisLabels?: string[];
   formatXAxisLabel: StringLabelFormatter;
   formatYAxisLabel: NumberLabelFormatter;

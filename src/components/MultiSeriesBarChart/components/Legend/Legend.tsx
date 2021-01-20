@@ -5,8 +5,10 @@ import {SquareColorPreview} from '../../../SquareColorPreview';
 
 import styles from './Legend.scss';
 
+type LegendSeries = Required<Omit<Series, 'highlightColor'>>;
+
 interface Props {
-  series: Series[];
+  series: LegendSeries[];
 }
 
 export function Legend({series}: Props) {

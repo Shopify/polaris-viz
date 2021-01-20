@@ -163,9 +163,9 @@ The array of objects that the chart uses to plot the line.
 
 #### color
 
-| type    | default       |
-| ------- | ------------- |
-| `Color` | `colorPurple` |
+| type    | default   |
+| ------- | --------- |
+| `Color` | `primary` |
 
 This accepts any [Polaris Viz color](/documentation/Polaris-Viz-colors.md) value.
 

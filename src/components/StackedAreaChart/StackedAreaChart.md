@@ -109,7 +109,7 @@ The `Series` type allows the user to define the color of each series. Its interf
 interface Series {
   name: string;
   data: {label: string; rawValue: number | null}[];
-  color: Color;
+  color?: Color;
 }
 ```
 
@@ -131,9 +131,9 @@ The array that the chart uses to plot the area. Null values are not displayed.
 
 #### color
 
-| type    |
-| ------- |
-| `Color` |
+| type    | default     |
+| ------- | ----------- |
+| `Color` | `'primary'` |
 
 It allows you to pass any [Polaris Viz accepted color](/documentation/Polaris-Viz-colors.md) for the `color` value.
 

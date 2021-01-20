@@ -25,7 +25,7 @@ interface Props {
   chartDimensions: DOMRect;
   barMargin: number;
   color: Color;
-  highlightColor?: Color;
+  highlightColor: Color;
   formatXAxisLabel: StringLabelFormatter;
   formatYAxisLabel: NumberLabelFormatter;
   timeSeries: boolean;

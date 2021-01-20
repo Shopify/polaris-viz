@@ -21,7 +21,7 @@ import {
 import styles from './Chart.scss';
 
 interface Props {
-  series: Series[];
+  series: Required<Series>[];
   labels: string[];
   chartDimensions: DOMRect;
   formatXAxisLabel: StringLabelFormatter;
@@ -97,9 +97,7 @@ export function Chart({
   });
 
   const barColors = series.map(({color}) => color);
-  const barHighlightColors = series.map(({highlightColor}, index) =>
-    highlightColor != null ? highlightColor : barColors[index],
-  );
+  const barHighlightColors = series.map(({highlightColor}) => highlightColor);
 
   const tooltipContentMarkup = useMemo(() => {
     if (activeBarGroup == null) {

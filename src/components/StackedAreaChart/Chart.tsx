@@ -17,7 +17,7 @@ import {Series, RenderTooltipContentData} from './types';
 
 interface Props {
   xAxisLabels: string[];
-  series: Series[];
+  series: Required<Series>[];
   formatXAxisLabel: StringLabelFormatter;
   formatYAxisLabel: NumberLabelFormatter;
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;

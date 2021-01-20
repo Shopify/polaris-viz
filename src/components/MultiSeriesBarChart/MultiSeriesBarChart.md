@@ -143,7 +143,7 @@ The `Series` type gives the user a lot of flexibility to define exactly what eac
     label: string;
     rawValue: number;
   }[];
-  color: Color;
+  color?: Color;
   highlightColor?: Color;
 }
 ```
@@ -166,19 +166,19 @@ The array of objects that the chart uses to draw the groups.
 
 #### color
 
-| type    |
-| ------- |
-| `Color` |
+| type    | default     |
+| ------- | ----------- |
+| `Color` | `'primary'` |
 
 This accepts any [Polaris Viz color](/documentation/Polaris-Viz-colors.md) value, and corresponds to the color of the bar for that series.
 
 #### highlightColor
 
-| type    | default                      |
-| ------- | ---------------------------- |
-| `Color` | the current value of `color` |
+| type    | default     |
+| ------- | ----------- |
+| `Color` | `'primary'` |
 
-This accepts any [Polaris Viz color](/documentation/Polaris-Viz-colors.md) value, and corresponds to the color of the bar for that series when you hover over a bar group. It defaults to the current color of the bar (remains unchanged on hover). The four 'promiment' Polaris Viz colors (`primaryProminent`, `secondaryProminent`, `tertiaryProminent`, `quaternaryProminent`) exist as a good option for a complimentary hover color.
+This accepts any [Polaris Viz color](/documentation/Polaris-Viz-colors.md) value, and corresponds to the color of the bar for that series when you hover over a bar group. It defaults to `primary`. The four 'promiment' Polaris Viz colors (`primaryProminent`, `secondaryProminent`, `tertiaryProminent`, `quaternaryProminent`) exist as a good option for a complimentary hover color.
 
 ### The `RenderTooltipContentData` type
 

@@ -3,6 +3,7 @@ import {useDebouncedCallback} from 'use-debounce';
 import {Color, Data} from 'types';
 
 import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
+import {getDefaultColor} from '../../utilities';
 
 import {TooltipContent} from './components';
 import {Chart} from './Chart';
@@ -22,10 +23,10 @@ export interface BarChartProps {
 
 export function BarChart({
   data,
-  highlightColor,
   accessibilityLabel,
+  color = getDefaultColor(),
+  highlightColor = getDefaultColor(),
   barMargin = 'Medium',
-  color = 'colorPurple',
   timeSeries = false,
   formatXAxisLabel = (value) => value.toString(),
   formatYAxisLabel = (value) => value.toString(),

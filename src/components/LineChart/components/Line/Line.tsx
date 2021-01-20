@@ -7,14 +7,14 @@ import {Series} from '../../types';
 
 interface Props {
   path: string;
-  series: Series;
+  series: Required<Series>;
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
   activePointIndex: number | null;
 }
 
 export function Line({path, series, xScale, yScale, activePointIndex}: Props) {
-  const {color = 'colorPurple', lineStyle = 'solid', data} = series;
+  const {color, lineStyle, data} = series;
 
   return (
     <React.Fragment>

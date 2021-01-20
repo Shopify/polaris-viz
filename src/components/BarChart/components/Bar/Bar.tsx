@@ -9,7 +9,7 @@ import {MIN_BAR_HEIGHT} from '../../constants';
 
 interface Props {
   color: Color;
-  highlightColor?: Color;
+  highlightColor: Color;
   isSelected: boolean;
   x: number;
   yScale: ScaleLinear<number, number>;
@@ -26,14 +26,13 @@ export function Bar({
   yScale,
   width,
 }: Props) {
-  const currentColor =
-    isSelected && highlightColor != null
-      ? getColorValue(highlightColor)
-      : getColorValue(color);
+  const currentColor = isSelected
+    ? getColorValue(highlightColor)
+    : getColorValue(color);
 
   const animation = useSpring({
     config: {duration: tokens.durationFast},
-    immediate: highlightColor == null,
+    immediate: color === highlightColor,
     color: currentColor,
     from: {color: getColorValue(color)},
   });

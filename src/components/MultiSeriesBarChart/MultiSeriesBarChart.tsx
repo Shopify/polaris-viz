@@ -3,6 +3,7 @@ import {useDebouncedCallback} from 'use-debounce';
 
 import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 import {TooltipContent} from '../TooltipContent';
+import {getDefaultColor} from '../../utilities';
 
 import {Chart} from './Chart';
 import {Series, RenderTooltipContentData} from './types';
@@ -63,12 +64,18 @@ export function MultiSeriesBarChart({
     return <TooltipContent data={formattedData} />;
   }
 
+  const seriesWithDefaults = series.map((series, index) => ({
+    color: getDefaultColor(index),
+    highlightColor: getDefaultColor(index),
+    ...series,
+  }));
+
   return (
     <div aria-label={accessibilityLabel} role="img">
       <div style={{height: chartHeight}} ref={containerRef}>
         {chartDimensions == null ? null : (
           <Chart
-            series={series}
+            series={seriesWithDefaults}
             labels={labels}
             chartDimensions={chartDimensions}
             formatXAxisLabel={formatXAxisLabel}
@@ -84,7 +91,7 @@ export function MultiSeriesBarChart({
         )}
       </div>
 
-      <Legend series={series} />
+      <Legend series={seriesWithDefaults} />
     </div>
   );
 }

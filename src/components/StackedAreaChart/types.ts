@@ -8,7 +8,7 @@ export interface Data {
 export interface Series {
   name: string;
   data: Data[];
-  color: Color;
+  color?: Color;
 }
 
 export interface RenderTooltipContentData {

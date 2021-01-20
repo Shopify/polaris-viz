@@ -6,7 +6,7 @@ import {Series} from '../../types';
 import styles from './Legend.scss';
 
 interface Props {
-  series: Series[];
+  series: Required<Series>[];
 }
 
 export function Legend({series}: Props) {

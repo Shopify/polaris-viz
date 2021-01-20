@@ -1,10 +1,11 @@
 import React, {useLayoutEffect, useRef, useState} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 
+import {getDefaultColor} from '../../utilities';
 import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
 import {Chart} from './Chart';
-import {Series, RenderTooltipContentData} from './types';
+import {Series, LineStyle, RenderTooltipContentData} from './types';
 import {Legend, TooltipContent} from './components';
 
 export interface LineChartProps {
@@ -66,12 +67,18 @@ export function LineChart({
     return <TooltipContent data={formattedData} />;
   }
 
+  const seriesWithDefaults = series.map((series, index) => ({
+    color: getDefaultColor(index),
+    lineStyle: 'solid' as LineStyle,
+    ...series,
+  }));
+
   return (
     <div aria-label={accessibilityLabel} role="img">
       <div style={{height: chartHeight}} ref={containerRef}>
         {chartDimensions == null ? null : (
           <Chart
-            series={series}
+            series={seriesWithDefaults}
             xAxisLabels={xAxisLabels}
             formatXAxisLabel={formatXAxisLabel}
             formatYAxisLabel={formatYAxisLabel}
@@ -85,7 +92,7 @@ export function LineChart({
         )}
       </div>
 
-      <Legend series={series} />
+      <Legend series={seriesWithDefaults} />
     </div>
   );
 }

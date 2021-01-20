@@ -13,6 +13,7 @@ const mockProps = {
         value: 'CA$1,240.55',
       },
       color: 'primary' as 'primary',
+      lineStyle: 'solid' as 'solid',
     },
     {
       name: 'March',
