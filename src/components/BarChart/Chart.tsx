@@ -69,7 +69,6 @@ export function Chart({
   //see if we can actually use the real yAxisWidth
   const labelSpace =
     (chartDimensions.width - roughYAxisWidth - MARGIN.Right) / data.length;
-  console.log({labelSpace});
   //make this more smart, actually use the longest one
   const longestLabel = formatXAxisLabel(data[0].label);
   const longestLabelLength =
@@ -119,7 +118,7 @@ export function Chart({
     ),
   );
 
-  const axisMargin = SPACING + yAxisLabelWidth;
+  const axisMargin = SPACING_LOOSE + yAxisLabelWidth;
   const drawableWidth = chartDimensions.width - MARGIN.Right - axisMargin;
 
   const {xScale, xAxisLabels} = useXScale({
@@ -128,8 +127,6 @@ export function Chart({
     barMargin,
     formatXAxisLabel,
   });
-
-  console.log('bandwidth', xScale.bandwidth());
 
   const tooltipMarkup = useMemo(() => {
     if (activeBar == null) {
