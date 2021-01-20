@@ -40,9 +40,9 @@ export function XAxis({
   );
 
   const transform = needsDiagonalLabels
-    ? `translate(${-diagonalShift} ${angledLabelHeight -
-        SPACING_EXTRA_TIGHT}) rotate(${DIAGONAL_ANGLE})`
-    : `translate(-${xScale.bandwidth() / 2} 0)`;
+    ? `translate(${-diagonalShift} ${angledLabelHeight +
+        SPACING_TIGHT}) rotate(${DIAGONAL_ANGLE})`
+    : `translate(-${xScale.bandwidth() / 2} ${SPACING_TIGHT})`;
 
   return (
     <React.Fragment>

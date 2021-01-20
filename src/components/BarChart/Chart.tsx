@@ -57,12 +57,6 @@ export function Chart({
   //calculate this the way it was before
   const fontSize = 12;
 
-  // const longestXLabel = Math.max(
-  //   ...data.map(({label}) =>
-  //     getTextWidth({text: formatXAxisLabel(label), fontSize}),
-  //   ),
-  // );
-
   const roughYAxisWidth =
     SPACING +
     Math.max(
@@ -74,9 +68,7 @@ export function Chart({
   const labelSpace = (chartDimensions.width - roughYAxisWidth) / data.length;
   //make this more smart, actually use the longest one
   const longestLabel = formatXAxisLabel(data[0].label);
-  console.log({longestLabel});
   const longestLabelLength = getTextWidth({text: longestLabel, fontSize}) + 20;
-  console.log({longestLabelLength});
 
   const xLabelHeight = getTextContainerHeight({
     text: longestLabel,
@@ -84,12 +76,8 @@ export function Chart({
     containerWidth: labelSpace,
   });
 
-  console.log(xLabelHeight);
-
   //actually determine this in a smart way
   const overflowingLabel = true;
-
-  // this will be different if labels are diagonal
 
   //1. find out what the longest label will be on an angle
   const labelAngle = 90 + DIAGONAL_ANGLE;
@@ -99,10 +87,19 @@ export function Chart({
   //2. find out what the max label allowance is for the first tick
 
   const spaceToFirstTick = roughYAxisWidth + labelSpace / 2;
-  const maxAngledLabel = spaceToFirstTick / Math.cos((40 * Math.PI) / 180);
+
+  // this will be the max length for the label, passed down to the xaxis
+  const angledLabelCutOff = spaceToFirstTick / Math.cos((40 * Math.PI) / 180);
+
+  //get the actual height of that label
+  const cutOffLabelHeight = Math.sqrt(
+    Math.pow(angledLabelCutOff, 2) - Math.pow(spaceToFirstTick, 2),
+  );
+
+  console.log({cutOffLabelHeight});
+
   const maxXLabelHeight = overflowingLabel
-    ? //3. take the smaller of the two
-      Math.min(angledLabelHeight, maxAngledLabel)
+    ? Math.min(angledLabelHeight, cutOffLabelHeight)
     : xLabelHeight;
 
   const drawableHeight =
@@ -168,10 +165,14 @@ export function Chart({
             fontSize={fontSize}
             showFewerLabels={timeSeries && overflowingLabel}
             needsDiagonalLabels={overflowingLabel}
-            xLabelHeight={maxXLabelHeight}
-            // need to change both of these when we truncate
-            angledLabelHeight={angledLabelHeight}
-            longestLabelLength={longestLabelLength}
+            // xLabelHeight not used when diagonal
+            xLabelHeight={xLabelHeight}
+            // ***angledLabelHeight*** is the height between the start of the label
+            // and the bottom of the chart
+            angledLabelHeight={Math.min(angledLabelHeight, cutOffLabelHeight)}
+            // ***longestLabelLength*** is the width of the longest string,
+            // after this amount truncate
+            longestLabelLength={Math.min(longestLabelLength, angledLabelCutOff)}
           />
         </g>
 
