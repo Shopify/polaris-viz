@@ -2,6 +2,8 @@
 
 .Text {
   text-align: center;
+  color: #637381;
+  word-break: break-all;
 }
 
 .DiagonalText {
@@ -9,4 +11,5 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: #637381;
 }

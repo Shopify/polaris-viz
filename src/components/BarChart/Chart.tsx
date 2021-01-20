@@ -22,6 +22,7 @@ import {
   SMALL_SCREEN,
   DIAGONAL_ANGLE,
   SPACING_TIGHT,
+  SPACING_LOOSE,
 } from './constants';
 import styles from './Chart.scss';
 
@@ -54,8 +55,8 @@ export function Chart({
     y: number;
   } | null>(null);
 
-  //calculate this the way it was before
-  const fontSize = 12;
+  const fontSize =
+    chartDimensions.width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
 
   const roughYAxisWidth =
     SPACING +
@@ -65,19 +66,23 @@ export function Chart({
       ),
     );
 
-  const labelSpace = (chartDimensions.width - roughYAxisWidth) / data.length;
+  //see if we can actually use the real yAxisWidth
+  const labelSpace =
+    (chartDimensions.width - roughYAxisWidth - MARGIN.Right) / data.length;
+  console.log({labelSpace});
   //make this more smart, actually use the longest one
   const longestLabel = formatXAxisLabel(data[0].label);
-  const longestLabelLength = getTextWidth({text: longestLabel, fontSize}) + 20;
+  const longestLabelLength =
+    getTextWidth({text: longestLabel, fontSize}) + SPACING_LOOSE;
 
   const xLabelHeight = getTextContainerHeight({
     text: longestLabel,
     fontSize,
-    containerWidth: labelSpace,
+    //to account for smaller spaces due to calculations possibly being off
+    containerWidth: labelSpace - 20,
   });
 
-  //actually determine this in a smart way
-  const overflowingLabel = true;
+  const useDiagonalLabels = xLabelHeight > 45;
 
   //1. find out what the longest label will be on an angle
   const labelAngle = 90 + DIAGONAL_ANGLE;
@@ -85,7 +90,6 @@ export function Chart({
   const angledLabelHeight = Math.cos(radians) * longestLabelLength;
 
   //2. find out what the max label allowance is for the first tick
-
   const spaceToFirstTick = roughYAxisWidth + labelSpace / 2;
 
   // this will be the max length for the label, passed down to the xaxis
@@ -96,9 +100,7 @@ export function Chart({
     Math.pow(angledLabelCutOff, 2) - Math.pow(spaceToFirstTick, 2),
   );
 
-  console.log({cutOffLabelHeight});
-
-  const maxXLabelHeight = overflowingLabel
+  const maxXLabelHeight = useDiagonalLabels
     ? Math.min(angledLabelHeight, cutOffLabelHeight)
     : xLabelHeight;
 
@@ -126,6 +128,8 @@ export function Chart({
     barMargin,
     formatXAxisLabel,
   });
+
+  console.log('bandwidth', xScale.bandwidth());
 
   const tooltipMarkup = useMemo(() => {
     if (activeBar == null) {
@@ -163,8 +167,8 @@ export function Chart({
             labels={xAxisLabels}
             xScale={xScale}
             fontSize={fontSize}
-            showFewerLabels={timeSeries && overflowingLabel}
-            needsDiagonalLabels={overflowingLabel}
+            showFewerLabels={timeSeries && useDiagonalLabels}
+            needsDiagonalLabels={useDiagonalLabels}
             // xLabelHeight not used when diagonal
             xLabelHeight={xLabelHeight}
             // ***angledLabelHeight*** is the height between the start of the label

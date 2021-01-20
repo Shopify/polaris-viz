@@ -40,7 +40,7 @@ export function BarChartDemo() {
     //   day: 'numeric',
     //   month: 'short',
     // });
-    return `${value}${value}!!!`;
+    return `${value}${value}!!!!!!!!~`;
   }
 
   function formatYAxisLabel(value: number) {
