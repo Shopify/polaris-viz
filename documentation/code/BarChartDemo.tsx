@@ -22,23 +22,25 @@ export function BarChartDemo() {
     "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif";
 
   const data = [
-    {rawValue: 0, label: '2020-01-01T12:00:00Z'},
+    {rawValue: 1, label: '2020-01-01T12:00:00Z'},
     {rawValue: 1, label: '2020-01-02T12:00:00Z'},
-    {rawValue: 0, label: '2020-01-03T12:00:00Z'},
+    {rawValue: 1, label: '2020-01-03T12:00:00Z'},
     {
       rawValue: 1,
       label: '2020-01-04T12:00:00Z',
     },
-    {rawValue: 0, label: '2020-01-05T12:00:00Z'},
+    {rawValue: 1, label: '2020-01-05T12:00:00Z'},
+    {rawValue: 1, label: '2020-01-06T12:00:00Z'},
+    {rawValue: 1, label: '2020-01-06T12:00:00Z'},
     {rawValue: 1, label: '2020-01-06T12:00:00Z'},
   ];
 
   function formatXAxisLabel(value: string) {
-    // return new Date(value).toLocaleDateString('en-CA', {
-    //   day: 'numeric',
-    //   month: 'short',
-    // });
-    return `${value}`;
+    return new Date(value).toLocaleDateString('en-CA', {
+      day: 'numeric',
+      month: 'short',
+    });
+    return `${value}${value}!!!`;
   }
 
   function formatYAxisLabel(value: number) {

@@ -8,7 +8,7 @@ export function getTextWidth({
   const paragraph = document.createElement('p');
   paragraph.style.fontSize = `${fontSize}px`;
   paragraph.style.display = 'inline-block';
-  paragraph.style.visibility = 'hidden';
+  // paragraph.style.visibility = 'hidden';
   document.body.appendChild(paragraph);
   paragraph.innerText = text;
   const width = paragraph.clientWidth;
@@ -27,16 +27,13 @@ export function getTextContainerHeight({
   fontSize: number;
   containerWidth: number;
 }) {
-  const paragraph = document.createElement('p');
   const container = document.createElement('div');
-  paragraph.style.fontSize = `${fontSize}px`;
-  paragraph.style.display = 'inline-block';
-  paragraph.style.visibility = 'hidden';
-  // paragraph.style.marginBottom = '0px';
+  container.style.fontSize = `${fontSize}px`;
+  container.style.display = 'inline-block';
+  container.style.visibility = 'hidden';
   container.style.width = `${containerWidth}px`;
   document.body.appendChild(container);
-  container.appendChild(paragraph);
-  paragraph.innerText = text;
+  container.innerText = text;
   const height = container.clientHeight;
 
   document.body.removeChild(container);

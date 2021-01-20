@@ -74,7 +74,9 @@ export function Chart({
   const labelSpace = (chartDimensions.width - roughYAxisWidth) / data.length;
   //make this more smart, actually use the longest one
   const longestLabel = formatXAxisLabel(data[0].label);
-  const longestLabelLength = getTextWidth({text: longestLabel, fontSize});
+  console.log({longestLabel});
+  const longestLabelLength = getTextWidth({text: longestLabel, fontSize}) + 20;
+  console.log({longestLabelLength});
 
   const xLabelHeight = getTextContainerHeight({
     text: longestLabel,
@@ -82,23 +84,24 @@ export function Chart({
     containerWidth: labelSpace,
   });
 
+  console.log(xLabelHeight);
+
   //actually determine this in a smart way
-  const overflowingLabel = true;
+  const overflowingLabel = false;
 
   // this will be different if labels are diagonal
 
   //1. find out what the longest label will be on an angle
-  // const labelAngle = 90 + DIAGONAL_ANGLE;
-  // const radians = (labelAngle * Math.PI) / 180;
-  // const angledLabelHeight = Math.cos(radians) * longestLabelLength;
-  // console.log({angledLabelHeight});
+  const labelAngle = 90 + DIAGONAL_ANGLE;
+  const radians = (labelAngle * Math.PI) / 180;
+  const angledLabelHeight = Math.cos(radians) * longestLabelLength;
 
   // const maxXLabelHeight = overflowingLabel ? angledLabelHeight : xLabelHeight;
 
   //2. find out what the max label allowance is for the first tick
 
   //3. take the smaller of the two
-  const angledLabelHeight = 100;
+  // const angledLabelHeight = 100;
   const maxXLabelHeight = overflowingLabel ? angledLabelHeight : xLabelHeight;
 
   const drawableHeight =
@@ -166,6 +169,7 @@ export function Chart({
             needsDiagonalLabels={overflowingLabel}
             xLabelHeight={maxXLabelHeight}
             angledLabelHeight={angledLabelHeight}
+            longestLabelLength={longestLabelLength}
           />
         </g>
 

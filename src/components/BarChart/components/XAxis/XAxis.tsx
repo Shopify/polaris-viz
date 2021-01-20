@@ -9,6 +9,7 @@ import {
   SPACING_EXTRA_TIGHT,
   SPACING_LOOSE,
   DIAGONAL_ANGLE,
+  LINE_HEIGHT,
 } from '../../constants';
 
 import styles from './XAxis.scss';
@@ -21,6 +22,7 @@ export function XAxis({
   needsDiagonalLabels,
   xLabelHeight,
   angledLabelHeight,
+  longestLabelLength,
 }: {
   xScale: ScaleBand<string>;
   labels: {value: string; xOffset: number}[];
@@ -29,12 +31,17 @@ export function XAxis({
   showFewerLabels: boolean;
   xLabelHeight: number;
   angledLabelHeight: number;
+  longestLabelLength: number;
 }) {
   const [xScaleMin, xScaleMax] = xScale.range();
 
+  const diagonalShift = Math.sqrt(
+    Math.pow(longestLabelLength, 2) - Math.pow(angledLabelHeight, 2),
+  );
+
   const transform = needsDiagonalLabels
-    ? // make these numbers real
-      `translate(-${xScale.bandwidth() - 20} ${60}) rotate(${DIAGONAL_ANGLE})`
+    ? `translate(${-diagonalShift} ${angledLabelHeight -
+        SPACING_EXTRA_TIGHT}) rotate(${DIAGONAL_ANGLE})`
     : `translate(-${xScale.bandwidth() / 2} 0)`;
 
   return (
@@ -53,15 +60,15 @@ export function XAxis({
           <g key={index} transform={`translate(${xOffset}, 0)`}>
             <line y2={TICK_SIZE} stroke={colorSky} />
             <foreignObject
-              // different for diagonmal
+              // style={{background: 'red'}}
               //width is what determines if there is overflow
               width={
-                needsDiagonalLabels ? angledLabelHeight : xScale.bandwidth()
+                needsDiagonalLabels ? longestLabelLength : xScale.bandwidth()
               }
-              height={needsDiagonalLabels ? 30 : xLabelHeight}
+              height={needsDiagonalLabels ? LINE_HEIGHT : xLabelHeight}
               transform={transform}
             >
-              <p
+              <div
                 className={
                   needsDiagonalLabels ? styles.DiagonalText : styles.Text
                 }
@@ -70,7 +77,7 @@ export function XAxis({
                 }}
               >
                 {value}
-              </p>
+              </div>
             </foreignObject>
           </g>
         );
