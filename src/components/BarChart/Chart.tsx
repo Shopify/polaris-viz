@@ -5,6 +5,8 @@ import {
   eventPoint,
   getTextWidth,
   getTextContainerHeight,
+  getMissingSideOfTriangle,
+  degreesToRadians,
 } from '../../utilities';
 import {YAxis} from '../YAxis';
 import {TooltipContainer} from '../TooltipContainer';
@@ -38,10 +40,6 @@ interface Props {
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
 }
 
-function degreesToRadians(degrees: number) {
-  return (degrees * Math.PI) / 180;
-}
-
 export function Chart({
   data,
   chartDimensions,
@@ -62,7 +60,6 @@ export function Chart({
   const fontSize =
     chartDimensions.width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
 
-  // see if we can rearrange and use the real yAxisWidth
   const estimatedYAxisWidth =
     SPACING +
     Math.max(
@@ -88,35 +85,31 @@ export function Chart({
   const xLabelHeight = getTextContainerHeight({
     text: longestXLabel.label,
     fontSize,
-    // spacing is to give yAxis estimate some buffer room
+    // spacing gives yAxis estimate buffer room
     containerWidth: Math.abs(datumLabelSpace - SPACING_LOOSE),
   });
-
-  console.log({xLabelHeight});
 
   const useDiagonalLabels =
     xLabelHeight > MAX_TEXT_BOX_HEIGHT ||
     datumLabelSpace < MIN_HORIZONTAL_LABEL_SPACE;
 
-  //use cosine to calculate the height of the longest label when angled
+  // height of the longest label when angled
   const longestAngledLabelHeight =
     Math.cos(degreesToRadians(DIAGONAL_ANGLE)) * longestXLabel.width;
-  // determine what the shortest space available is for a label
-  // the smallest space will be from the first tick
+  // shortest label space available is from the first tick
   const firstBarMidpoint = datumLabelSpace / 2;
   const distanceToFirstTick = estimatedYAxisWidth + firstBarMidpoint;
-  // use cosine to get the hypotenuse of the triangle created by the label
+  // find the label length by treating it as a hypotenuse
   const angledLabelMaxLength =
     distanceToFirstTick / Math.cos(degreesToRadians(DIAGONAL_ANGLE));
-  // use Pythagorean Theorem to get the missing side of the triangle,
-  // corresponding to the height between the label start and bottom of the chart space
-  const angledLabelMaxHeight = Math.sqrt(
-    Math.pow(angledLabelMaxLength, 2) - Math.pow(distanceToFirstTick, 2),
-  );
+  //  height between label start and bottom of the chart space, needed for positioning
+  const angledLabelCutOff = getMissingSideOfTriangle({
+    side1: angledLabelMaxLength,
+    side2: distanceToFirstTick,
+  });
 
   const maxXLabelHeight = useDiagonalLabels
-    ? //use the cut off label if it is smaller than the longer one
-      Math.min(longestAngledLabelHeight, angledLabelMaxHeight)
+    ? Math.min(longestAngledLabelHeight, angledLabelCutOff)
     : xLabelHeight;
 
   const drawableHeight =
@@ -143,6 +136,11 @@ export function Chart({
     barMargin,
     formatXAxisLabel,
   });
+
+  const maxDiagonalLabelLength = Math.min(
+    longestXLabel.width,
+    angledLabelMaxLength,
+  );
 
   const tooltipMarkup = useMemo(() => {
     if (activeBar == null) {
@@ -183,16 +181,8 @@ export function Chart({
             showFewerLabels={timeSeries && useDiagonalLabels}
             needsDiagonalLabels={useDiagonalLabels}
             labelHeight={xLabelHeight}
-            // height between the start of the label and the bottom of the chart
-            angledLabelHeight={Math.min(
-              longestAngledLabelHeight,
-              angledLabelMaxHeight,
-            )}
-            // width of the longest string, beyond this will be truncated
-            maxDiagonalLabelLength={Math.min(
-              longestXLabel.width,
-              angledLabelMaxLength,
-            )}
+            angledLabelHeight={angledLabelCutOff}
+            maxDiagonalLabelLength={maxDiagonalLabelLength}
           />
         </g>
 

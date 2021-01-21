@@ -8,7 +8,9 @@ import {
   SPACING_EXTRA_TIGHT,
   DIAGONAL_ANGLE,
   LINE_HEIGHT,
+  DEFAULT_LABEL_RATIO,
 } from '../../constants';
+import {getMissingSideOfTriangle} from '../../../../utilities';
 
 import styles from './XAxis.scss';
 
@@ -33,22 +35,32 @@ export function XAxis({
 }) {
   const [xScaleMin, xScaleMax] = xScale.range();
 
-  // use use Pythagorean Theorem to determine how much label needs to be moved
-  // for the end to line up with the tick mark
-  // we find the side of the triangle that represents the distance between the start of the bar
-  // and the start of the label ?
-  const diagonalShift = Math.sqrt(
-    Math.pow(maxDiagonalLabelLength, 2) - Math.pow(angledLabelHeight, 2),
-  );
+  // the side of a triangle that represents the distance between the start of the bar
+  // and the start of the label, to detmine how much labels needs to be moved?
+  const diagonalShift = getMissingSideOfTriangle({
+    side1: maxDiagonalLabelLength,
+    side2: angledLabelHeight,
+  });
 
-  const labelRatio = needsDiagonalLabels
-    ? Math.max(Math.floor((LINE_HEIGHT * 2) / xScale.bandwidth()), 1)
-    : 2;
+  const diagonalLabelSpacePerBar = Math.floor(
+    (LINE_HEIGHT * 2) / xScale.bandwidth(),
+  );
+  const visibleLabelRatio = needsDiagonalLabels
+    ? Math.max(diagonalLabelSpacePerBar, 1)
+    : DEFAULT_LABEL_RATIO;
 
   const transform = needsDiagonalLabels
     ? `translate(${-diagonalShift - SPACING_EXTRA_TIGHT} ${angledLabelHeight +
         SPACING_EXTRA_TIGHT}) rotate(${DIAGONAL_ANGLE})`
     : `translate(-${xScale.bandwidth() / 2} ${SPACING_TIGHT})`;
+
+  const textHeight = needsDiagonalLabels ? LINE_HEIGHT : labelHeight;
+  const textWidth = needsDiagonalLabels
+    ? maxDiagonalLabelLength
+    : xScale.bandwidth();
+  const textContainerClassName = needsDiagonalLabels
+    ? styles.DiagonalText
+    : styles.Text;
 
   return (
     <React.Fragment>
@@ -59,25 +71,19 @@ export function XAxis({
       />
 
       {labels.map(({value, xOffset}, index) => {
-        if (showFewerLabels && index % labelRatio !== 0) {
+        if (showFewerLabels && index % visibleLabelRatio !== 0) {
           return null;
         }
         return (
           <g key={index} transform={`translate(${xOffset}, 0)`}>
             <line y2={TICK_SIZE} stroke={colorSky} />
             <foreignObject
-              width={
-                needsDiagonalLabels
-                  ? maxDiagonalLabelLength
-                  : xScale.bandwidth()
-              }
-              height={needsDiagonalLabels ? LINE_HEIGHT : labelHeight}
+              width={textWidth}
+              height={textHeight}
               transform={transform}
             >
               <div
-                className={
-                  needsDiagonalLabels ? styles.DiagonalText : styles.Text
-                }
+                className={textContainerClassName}
                 style={{
                   fontSize,
                 }}
