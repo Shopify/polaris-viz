@@ -10,7 +10,7 @@ import {
   LINE_HEIGHT,
   DEFAULT_LABEL_RATIO,
 } from '../../constants';
-import {getMissingSideOfTriangle} from '../../../../utilities';
+import {getOppositeSideOfTriangle} from '../../../../utilities';
 
 import styles from './XAxis.scss';
 
@@ -36,10 +36,10 @@ export function XAxis({
   const [xScaleMin, xScaleMax] = xScale.range();
 
   // the side of a triangle that represents the distance between the start of the bar
-  // and the start of the label, to detmine how much labels needs to be moved?
-  const diagonalShift = getMissingSideOfTriangle({
-    side1: maxDiagonalLabelLength,
-    side2: angledLabelHeight,
+  // and the start of the label, to detmine how much labels needs to be moved
+  const diagonalShift = getOppositeSideOfTriangle({
+    sideC: maxDiagonalLabelLength,
+    sideA: angledLabelHeight,
   });
 
   const diagonalLabelSpacePerBar = Math.floor(

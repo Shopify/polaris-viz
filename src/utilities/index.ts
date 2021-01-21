@@ -4,5 +4,5 @@ export {clamp} from './clamp';
 export {getColorValue} from './get-color-value';
 export {uniqueId} from './unique-id';
 export {getTextContainerHeight} from './get-text-container-height';
-export {getMissingSideOfTriangle} from './get-missing-side-triangle';
+export {getOppositeSideOfTriangle} from './get-opposite-side-triangle';
 export {degreesToRadians} from './degrees-to-radians';

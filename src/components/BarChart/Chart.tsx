@@ -5,7 +5,7 @@ import {
   eventPoint,
   getTextWidth,
   getTextContainerHeight,
-  getMissingSideOfTriangle,
+  getOppositeSideOfTriangle,
   degreesToRadians,
 } from '../../utilities';
 import {YAxis} from '../YAxis';
@@ -103,9 +103,9 @@ export function Chart({
   const angledLabelMaxLength =
     distanceToFirstTick / Math.cos(degreesToRadians(DIAGONAL_ANGLE));
   //  height between label start and bottom of the chart space, needed for positioning
-  const angledLabelCutOff = getMissingSideOfTriangle({
-    side1: angledLabelMaxLength,
-    side2: distanceToFirstTick,
+  const angledLabelCutOff = getOppositeSideOfTriangle({
+    sideC: angledLabelMaxLength,
+    sideA: distanceToFirstTick,
   });
 
   const maxXLabelHeight = useDiagonalLabels
