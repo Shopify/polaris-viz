@@ -15,14 +15,14 @@ import {XAxis, Bar} from './components';
 import {useYScale, useXScale} from './hooks';
 import {
   MARGIN,
-  LINE_HEIGHT,
   SPACING,
   SMALL_FONT_SIZE,
   FONT_SIZE,
   SMALL_SCREEN,
   DIAGONAL_ANGLE,
-  SPACING_TIGHT,
   SPACING_LOOSE,
+  MAX_TEXT_BOX_HEIGHT,
+  MIN_HORIZONTAL_LABEL_SPACE,
 } from './constants';
 import styles from './Chart.scss';
 
@@ -36,6 +36,10 @@ interface Props {
   formatYAxisLabel: NumberLabelFormatter;
   timeSeries: boolean;
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
+}
+
+function degreesToRadians(degrees: number) {
+  return (degrees * Math.PI) / 180;
 }
 
 export function Chart({
@@ -58,7 +62,8 @@ export function Chart({
   const fontSize =
     chartDimensions.width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
 
-  const roughYAxisWidth =
+  // see if we can rearrange and use the real yAxisWidth
+  const estimatedYAxisWidth =
     SPACING +
     Math.max(
       ...data.map(({rawValue}) =>
@@ -66,41 +71,52 @@ export function Chart({
       ),
     );
 
-  //see if we can actually use the real yAxisWidth
-  const labelSpace =
-    (chartDimensions.width - roughYAxisWidth - MARGIN.Right) / data.length;
-  //make this more smart, actually use the longest one
-  const longestLabel = formatXAxisLabel(data[0].label);
-  const longestLabelLength =
-    getTextWidth({text: longestLabel, fontSize}) + SPACING_LOOSE;
+  const datumLabelSpace =
+    (chartDimensions.width - estimatedYAxisWidth - MARGIN.Right) / data.length;
+
+  const longestXLabel = data
+    .map(({label}) => {
+      return {
+        label: formatXAxisLabel(label),
+        width:
+          getTextWidth({text: formatXAxisLabel(label), fontSize}) +
+          SPACING_LOOSE,
+      };
+    })
+    .reduce((prev, current) => (prev.width > current.width ? prev : current));
 
   const xLabelHeight = getTextContainerHeight({
-    text: longestLabel,
+    text: longestXLabel.label,
     fontSize,
-    //to account for smaller spaces due to calculations possibly being off
-    containerWidth: labelSpace - 20,
+    // spacing is to give yAxis estimate some buffer room
+    containerWidth: Math.abs(datumLabelSpace - SPACING_LOOSE),
   });
 
-  const useDiagonalLabels = xLabelHeight > 45;
+  console.log({xLabelHeight});
 
-  //1. find out what the longest label will be on an angle
-  const labelAngle = 90 + DIAGONAL_ANGLE;
-  const radians = (labelAngle * Math.PI) / 180;
-  const angledLabelHeight = Math.cos(radians) * longestLabelLength;
+  const useDiagonalLabels =
+    xLabelHeight > MAX_TEXT_BOX_HEIGHT ||
+    datumLabelSpace < MIN_HORIZONTAL_LABEL_SPACE;
 
-  //2. find out what the max label allowance is for the first tick
-  const spaceToFirstTick = roughYAxisWidth + labelSpace / 2;
-
-  // this will be the max length for the label, passed down to the xaxis
-  const angledLabelCutOff = spaceToFirstTick / Math.cos((40 * Math.PI) / 180);
-
-  //get the actual height of that label
-  const cutOffLabelHeight = Math.sqrt(
-    Math.pow(angledLabelCutOff, 2) - Math.pow(spaceToFirstTick, 2),
+  //use cosine to calculate the height of the longest label when angled
+  const longestAngledLabelHeight =
+    Math.cos(degreesToRadians(DIAGONAL_ANGLE)) * longestXLabel.width;
+  // determine what the shortest space available is for a label
+  // the smallest space will be from the first tick
+  const firstBarMidpoint = datumLabelSpace / 2;
+  const distanceToFirstTick = estimatedYAxisWidth + firstBarMidpoint;
+  // use cosine to get the hypotenuse of the triangle created by the label
+  const angledLabelMaxLength =
+    distanceToFirstTick / Math.cos(degreesToRadians(DIAGONAL_ANGLE));
+  // use Pythagorean Theorem to get the missing side of the triangle,
+  // corresponding to the height between the label start and bottom of the chart space
+  const angledLabelMaxHeight = Math.sqrt(
+    Math.pow(angledLabelMaxLength, 2) - Math.pow(distanceToFirstTick, 2),
   );
 
   const maxXLabelHeight = useDiagonalLabels
-    ? Math.min(angledLabelHeight, cutOffLabelHeight)
+    ? //use the cut off label if it is smaller than the longer one
+      Math.min(longestAngledLabelHeight, angledLabelMaxHeight)
     : xLabelHeight;
 
   const drawableHeight =
@@ -166,14 +182,17 @@ export function Chart({
             fontSize={fontSize}
             showFewerLabels={timeSeries && useDiagonalLabels}
             needsDiagonalLabels={useDiagonalLabels}
-            // xLabelHeight not used when diagonal
-            xLabelHeight={xLabelHeight}
-            // ***angledLabelHeight*** is the height between the start of the label
-            // and the bottom of the chart
-            angledLabelHeight={Math.min(angledLabelHeight, cutOffLabelHeight)}
-            // ***longestLabelLength*** is the width of the longest string,
-            // after this amount truncate
-            longestLabelLength={Math.min(longestLabelLength, angledLabelCutOff)}
+            labelHeight={xLabelHeight}
+            // height between the start of the label and the bottom of the chart
+            angledLabelHeight={Math.min(
+              longestAngledLabelHeight,
+              angledLabelMaxHeight,
+            )}
+            // width of the longest string, beyond this will be truncated
+            maxDiagonalLabelLength={Math.min(
+              longestXLabel.width,
+              angledLabelMaxLength,
+            )}
           />
         </g>
 

@@ -4,10 +4,8 @@ import {ScaleBand} from 'd3-scale';
 
 import {
   TICK_SIZE,
-  SPACING,
   SPACING_TIGHT,
   SPACING_EXTRA_TIGHT,
-  SPACING_LOOSE,
   DIAGONAL_ANGLE,
   LINE_HEIGHT,
 } from '../../constants';
@@ -20,28 +18,36 @@ export function XAxis({
   fontSize,
   showFewerLabels,
   needsDiagonalLabels,
-  xLabelHeight,
+  labelHeight,
   angledLabelHeight,
-  longestLabelLength,
+  maxDiagonalLabelLength,
 }: {
   xScale: ScaleBand<string>;
   labels: {value: string; xOffset: number}[];
   needsDiagonalLabels: boolean;
   fontSize: number;
   showFewerLabels: boolean;
-  xLabelHeight: number;
+  labelHeight: number;
   angledLabelHeight: number;
-  longestLabelLength: number;
+  maxDiagonalLabelLength: number;
 }) {
   const [xScaleMin, xScaleMax] = xScale.range();
 
+  // use use Pythagorean Theorem to determine how much label needs to be moved
+  // for the end to line up with the tick mark
+  // we find the side of the triangle that represents the distance between the start of the bar
+  // and the start of the label ?
   const diagonalShift = Math.sqrt(
-    Math.pow(longestLabelLength, 2) - Math.pow(angledLabelHeight, 2),
+    Math.pow(maxDiagonalLabelLength, 2) - Math.pow(angledLabelHeight, 2),
   );
 
+  const labelRatio = needsDiagonalLabels
+    ? Math.max(Math.floor((LINE_HEIGHT * 2) / xScale.bandwidth()), 1)
+    : 2;
+
   const transform = needsDiagonalLabels
-    ? `translate(${-diagonalShift} ${angledLabelHeight +
-        SPACING_TIGHT}) rotate(${DIAGONAL_ANGLE})`
+    ? `translate(${-diagonalShift - SPACING_EXTRA_TIGHT} ${angledLabelHeight +
+        SPACING_EXTRA_TIGHT}) rotate(${DIAGONAL_ANGLE})`
     : `translate(-${xScale.bandwidth() / 2} ${SPACING_TIGHT})`;
 
   return (
@@ -53,19 +59,19 @@ export function XAxis({
       />
 
       {labels.map(({value, xOffset}, index) => {
-        if (showFewerLabels && index % 2 !== 0) {
+        if (showFewerLabels && index % labelRatio !== 0) {
           return null;
         }
         return (
           <g key={index} transform={`translate(${xOffset}, 0)`}>
             <line y2={TICK_SIZE} stroke={colorSky} />
             <foreignObject
-              // style={{background: 'red'}}
-              //width is what determines if there is overflow
               width={
-                needsDiagonalLabels ? longestLabelLength : xScale.bandwidth()
+                needsDiagonalLabels
+                  ? maxDiagonalLabelLength
+                  : xScale.bandwidth()
               }
-              height={needsDiagonalLabels ? LINE_HEIGHT : xLabelHeight}
+              height={needsDiagonalLabels ? LINE_HEIGHT : labelHeight}
               transform={transform}
             >
               <div

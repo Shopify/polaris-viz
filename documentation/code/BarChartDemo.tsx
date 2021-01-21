@@ -5,6 +5,10 @@ import {BarChart, BarChartTooltipContent} from '../../src/components';
 
 import {OUTER_CONTAINER_STYLE} from './constants';
 
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+
 export function BarChartDemo() {
   const innerContainerStyle = {
     // width: '900px',
@@ -22,6 +26,32 @@ export function BarChartDemo() {
     "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif";
 
   const data = [
+    {rawValue: 1, label: '2020'},
+    {rawValue: 1, label: '2020-01-02T12:00:00Z2020-01-02T12:00:00Z'},
+    {rawValue: 1, label: '2020'},
+    {
+      rawValue: 1,
+      label: '2020-01-04T12:00:00Z2020-01-02T12:00:00Z',
+    },
+    {rawValue: 1, label: '2020'},
+    {rawValue: 1, label: '2020-01-06T12:00:00Z2020-01-02T12:00:00Z'},
+    {rawValue: 1, label: '2020'},
+    {rawValue: 1, label: '2020-01-06T12:00:00Z2020-01-02T12:00:00Z'},
+    {rawValue: 1, label: '2020'},
+    {rawValue: 1, label: '2020-01-06T12:00:00Z2020-01-02T12:00:00Z'},
+    {rawValue: 1, label: '2020'},
+    {rawValue: 1, label: '2020-01-02T12:00:00Z2020-01-02T12:00:00Z'},
+    {rawValue: 1, label: '2020-01-03T12:00:00Z'},
+    {
+      rawValue: 1,
+      label: '2020-01-04T12:00:00Z',
+    },
+    {rawValue: 1, label: '2020-01-05T12:00:00Z'},
+    {rawValue: 1, label: '2020-01-06T12:00:00Z'},
+    {rawValue: 0, label: '2020-01-06T12:00:00Z'},
+    {rawValue: 1, label: '2020-01-06T12:00:00Z'},
+    {rawValue: 0, label: '2020-01-05T12:00:00Z'},
+    {rawValue: 1, label: '2020-01-06T12:00:00Z'},
     {rawValue: 1, label: '2020-01-01T12:00:00Z'},
     {rawValue: 1, label: '2020-01-02T12:00:00Z'},
     {rawValue: 1, label: '2020-01-03T12:00:00Z'},
@@ -33,13 +63,15 @@ export function BarChartDemo() {
     {rawValue: 1, label: '2020-01-06T12:00:00Z'},
     {rawValue: 1, label: '2020-01-06T12:00:00Z'},
     {rawValue: 1, label: '2020-01-06T12:00:00Z'},
+    {rawValue: 1, label: '2020-01-05T12:00:00Z'},
+    {rawValue: 1, label: '2020-01-06T12:00:00Z'},
   ];
 
   function formatXAxisLabel(value: string) {
-    // return new Date(value).toLocaleDateString('en-CA', {
-    //   day: 'numeric',
-    //   month: 'short',
-    // });
+    return new Date(value).toLocaleDateString('en-CA', {
+      day: 'numeric',
+      month: 'short',
+    });
     return `${value}${value}!!!!!!!!~`;
   }
 
@@ -90,6 +122,7 @@ export function BarChartDemo() {
           formatXAxisLabel={formatXAxisLabel}
           formatYAxisLabel={formatYAxisLabel}
           renderTooltipContent={renderTooltipContent}
+          timeSeries
         />
       </div>
     </div>

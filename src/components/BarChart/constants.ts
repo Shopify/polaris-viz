@@ -1,5 +1,5 @@
 export const MIN_BAR_HEIGHT = 5;
-export const MARGIN = {Top: 5, Right: 20, Bottom: 14, Left: 0};
+export const MARGIN = {Top: 5, Right: 20, Bottom: 10, Left: 0};
 export const LINE_HEIGHT = 14;
 export const TICK_SIZE = 6;
 export const MIN_Y_LABEL_SPACE = 80;
@@ -11,3 +11,5 @@ export const SMALL_SCREEN = 500;
 export const FONT_SIZE = 12;
 export const SMALL_FONT_SIZE = 10;
 export const DIAGONAL_ANGLE = -40;
+export const MAX_TEXT_BOX_HEIGHT = 45;
+export const MIN_HORIZONTAL_LABEL_SPACE = 20;
