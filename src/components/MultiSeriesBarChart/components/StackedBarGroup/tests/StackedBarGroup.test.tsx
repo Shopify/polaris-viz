@@ -1,8 +1,8 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleBand, scaleLinear} from 'd3-scale';
-import {Color} from 'types';
-import {StackSeries} from 'components/MultiSeriesBarChart/types';
+import type {Color} from 'types';
+import type {StackSeries} from 'components/MultiSeriesBarChart/types';
 
 import {StackedBarGroup} from '../StackedBarGroup';
 

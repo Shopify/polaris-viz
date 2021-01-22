@@ -9,7 +9,7 @@ const MOCK_PATH_LENGTH = 10;
 
 jest.mock('./utilities.ts', () => {
   return {
-    ...jest.requireActual('./utilities.ts'),
+    ...(jest.requireActual('./utilities.ts') as any),
     getPathLength: () => {
       return MOCK_PATH_LENGTH;
     },

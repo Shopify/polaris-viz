@@ -1,12 +1,12 @@
 import React, {useState, useMemo} from 'react';
-import {Color} from 'types';
+import type {Color} from 'types';
 
 import {eventPoint, getTextWidth} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {TooltipContainer} from '../TooltipContainer';
-import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
+import type {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
-import {BarData, RenderTooltipContentData} from './types';
+import type {BarData, RenderTooltipContentData} from './types';
 import {XAxis, Bar} from './components';
 import {useYScale, useXScale} from './hooks';
 import {
@@ -120,9 +120,9 @@ export function Chart({
         onTouchEnd={() => setActiveBar(null)}
       >
         <g
-          transform={`translate(${axisMargin},${chartDimensions.height -
-            MARGIN.Bottom -
-            maxXLabelHeight})`}
+          transform={`translate(${axisMargin},${
+            chartDimensions.height - MARGIN.Bottom - maxXLabelHeight
+          })`}
         >
           <XAxis
             labels={xAxisLabels}

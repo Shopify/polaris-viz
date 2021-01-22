@@ -1,6 +1,6 @@
 import React from 'react';
 import tokens from '@shopify/polaris-tokens';
-import {Color} from 'types';
+import type {Color} from 'types';
 
 import {getColorValue} from '../../utilities';
 

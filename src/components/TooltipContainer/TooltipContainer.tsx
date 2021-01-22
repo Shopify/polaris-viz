@@ -83,7 +83,7 @@ export function TooltipContainer({
       firstRender.current = false;
 
       // react-spring docs do not return the `next` callback
-      // eslint-disable-next-line callback-return
+      // eslint-disable-next-line node/callback-return
       await next({
         translate: [
           xTranslation,

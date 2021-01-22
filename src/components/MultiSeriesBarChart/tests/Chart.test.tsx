@@ -1,6 +1,6 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
-import {Color} from 'types';
+import type {Color} from 'types';
 import {YAxis, TooltipContainer} from 'components';
 
 import {Chart} from '../Chart';

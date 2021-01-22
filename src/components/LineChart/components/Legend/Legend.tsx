@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Series} from '../../types';
+import type {Series} from '../../types';
 import {LinePreview} from '../LinePreview';
 
 import styles from './Legend.scss';

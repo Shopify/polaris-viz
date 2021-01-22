@@ -1,6 +1,6 @@
 import React from 'react';
 
-// eslint-disable-next-line shopify/strict-component-boundaries
+// eslint-disable-next-line @shopify/strict-component-boundaries
 import {NormalizedStackedBarChart} from '../../src/components';
 
 import {OUTER_CONTAINER_STYLE} from './constants';

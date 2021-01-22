@@ -1,4 +1,4 @@
-import {MouseEvent, TouchEvent} from 'react';
+import type {MouseEvent, TouchEvent} from 'react';
 
 import {isMouseEvent} from './is-mouse-event';
 import {isTouchEvent} from './is-touch-event';

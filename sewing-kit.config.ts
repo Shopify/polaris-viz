@@ -2,10 +2,6 @@ import {join} from 'path';
 
 import {ConfigurationCallback, Env, Plugins} from '@shopify/sewing-kit';
 
-interface InitialOptions extends jest.InitialOptions {
-  setupFilesAfterEnv: string[];
-}
-
 // eslint-disable-next-line import/no-default-export
 export default function sewingKitConfig(
   plugins: Plugins,
@@ -14,7 +10,7 @@ export default function sewingKitConfig(
     name: 'polaris-viz',
     library: true,
     plugins: [
-      plugins.jest((config: InitialOptions) => {
+      plugins.jest((config) => {
         config.roots = [join(__dirname, 'src'), join(__dirname, 'tests')];
 
         // Code coverage

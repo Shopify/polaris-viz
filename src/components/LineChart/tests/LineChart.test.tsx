@@ -3,7 +3,7 @@ import {mount} from '@shopify/react-testing';
 
 import {LineChart} from '../LineChart';
 import {Chart} from '../Chart';
-import {Series} from '../types';
+import type {Series} from '../types';
 import {Legend} from '../components';
 
 (global as any).DOMRect = class DOMRect {

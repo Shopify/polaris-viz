@@ -1,4 +1,4 @@
-import {Color} from 'types';
+import type {Color} from 'types';
 
 export type LineStyle = 'dashed' | 'solid';
 

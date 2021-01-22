@@ -3,8 +3,8 @@ import {scaleLinear} from 'd3-scale';
 
 import {yAxisMinMax} from '../utilities';
 import {MIN_Y_LABEL_SPACE, SPACING_LOOSE} from '../constants';
-import {Series} from '../types';
-import {NumberLabelFormatter} from '../../../types';
+import type {Series} from '../types';
+import type {NumberLabelFormatter} from '../../../types';
 
 export function useYScale({
   drawableHeight,

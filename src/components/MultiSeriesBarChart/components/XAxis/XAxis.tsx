@@ -1,6 +1,6 @@
 import React from 'react';
 import {colorSky} from '@shopify/polaris-tokens';
-import {ScaleBand} from 'd3-scale';
+import type {ScaleBand} from 'd3-scale';
 
 import {
   TICK_SIZE,

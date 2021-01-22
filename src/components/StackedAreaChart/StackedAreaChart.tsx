@@ -1,12 +1,12 @@
 import React, {useLayoutEffect, useRef, useState} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 
-import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
+import type {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 import {TooltipContent} from '../TooltipContent';
 
 import {Chart} from './Chart';
 import {Legend} from './components';
-import {Series, RenderTooltipContentData} from './types';
+import type {Series, RenderTooltipContentData} from './types';
 
 export interface StackedAreaChartProps {
   chartHeight?: number;

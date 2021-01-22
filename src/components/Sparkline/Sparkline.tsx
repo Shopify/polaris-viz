@@ -8,7 +8,7 @@ import React, {
 import {useDebouncedCallback} from 'use-debounce';
 import {scaleLinear} from 'd3-scale';
 import {area} from 'd3-shape';
-import {Color} from 'types';
+import type {Color} from 'types';
 import {animated, useSpring} from 'react-spring';
 
 import {usePrefersReducedMotion} from '../../hooks';

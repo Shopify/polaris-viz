@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import {ScaleLinear} from 'd3-scale';
+import type {ScaleLinear} from 'd3-scale';
 import {colorSky, spacingLoose} from '@shopify/polaris-tokens';
 
 import {getTextWidth} from '../../utilities';

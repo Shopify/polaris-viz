@@ -1,11 +1,11 @@
 import React, {useState, useLayoutEffect, useRef} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 
-import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
+import type {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 import {TooltipContent} from '../TooltipContent';
 
 import {Chart} from './Chart';
-import {Data, RenderTooltipContentData} from './types';
+import type {Data, RenderTooltipContentData} from './types';
 import {Legend} from './components';
 import {DEFAULT_HEIGHT} from './constants';
 

@@ -1,5 +1,5 @@
 import tokens from '@shopify/polaris-tokens';
-import {Color, TokensColor, VizPaletteColor} from 'types';
+import type {Color, TokensColor, VizPaletteColor} from 'types';
 
 const vizColors = {
   primary: 'rgb(0,161,159)',

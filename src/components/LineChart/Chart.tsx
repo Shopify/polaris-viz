@@ -5,10 +5,10 @@ import {LinearXAxis} from '../LinearXAxis';
 import {YAxis} from '../YAxis';
 import {eventPoint} from '../../utilities';
 import {Crosshair} from '../Crosshair';
-import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
+import type {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 import {TooltipContainer} from '../TooltipContainer';
 
-import {Series, RenderTooltipContentData} from './types';
+import type {Series, RenderTooltipContentData} from './types';
 import {Margin, SPACING_TIGHT} from './constants';
 import {useXScale, useYScale} from './hooks';
 import {Line} from './components';
@@ -123,8 +123,9 @@ export function Chart({
         onMouseLeave={() => setActivePointIndex(null)}
       >
         <g
-          transform={`translate(${axisMargin},${dimensions.height -
-            marginBottom})`}
+          transform={`translate(${axisMargin},${
+            dimensions.height - marginBottom
+          })`}
         >
           <LinearXAxis
             xScale={xScale}

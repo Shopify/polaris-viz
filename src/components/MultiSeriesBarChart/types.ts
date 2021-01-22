@@ -1,5 +1,5 @@
-import {Series} from 'd3-shape';
-import {Color} from 'types';
+import type {Series} from 'd3-shape';
+import type {Color} from 'types';
 
 export interface Data {
   data: number[];

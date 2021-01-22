@@ -1,12 +1,13 @@
 import React, {useState, useLayoutEffect, useRef} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
-import {Color} from 'types';
+import type {Color} from 'types';
 
-import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
+import type {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
 import {TooltipContent} from './components';
 import {Chart} from './Chart';
-import {BarData, BarMargin, RenderTooltipContentData} from './types';
+import type {BarData, RenderTooltipContentData} from './types';
+import {BarMargin} from './types';
 
 export interface BarChartProps {
   data: BarData[];

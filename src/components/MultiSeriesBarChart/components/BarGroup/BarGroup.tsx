@@ -1,6 +1,6 @@
 import React from 'react';
-import {ScaleLinear} from 'd3-scale';
-import {Color} from 'types';
+import type {ScaleLinear} from 'd3-scale';
+import type {Color} from 'types';
 
 import {getColorValue} from '../../../../utilities';
 import {MIN_BAR_HEIGHT, BAR_SPACING} from '../../constants';

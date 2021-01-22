@@ -1,8 +1,8 @@
 import {useMemo} from 'react';
 import {scaleBand} from 'd3-scale';
 
-import {BarData} from '../types';
-import {StringLabelFormatter} from '../../../types';
+import type {BarData} from '../types';
+import type {StringLabelFormatter} from '../../../types';
 
 export function useXScale({
   drawableWidth,

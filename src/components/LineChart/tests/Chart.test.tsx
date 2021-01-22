@@ -3,7 +3,7 @@ import {mount} from '@shopify/react-testing';
 import {Crosshair, LinearXAxis, TooltipContainer} from 'components';
 
 import {Chart} from '../Chart';
-import {Series} from '../types';
+import type {Series} from '../types';
 import {Line} from '../components';
 import {YAxis} from '../../YAxis';
 

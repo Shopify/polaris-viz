@@ -1,4 +1,4 @@
-import {Series} from '../types';
+import type {Series} from '../types';
 
 export function yAxisMinMax(series: Series[]) {
   let minY = Infinity;

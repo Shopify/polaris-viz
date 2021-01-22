@@ -1,8 +1,8 @@
 import React from 'react';
 import {animated, useSpring} from 'react-spring';
 import tokens from '@shopify/polaris-tokens';
-import {Color} from 'types';
-import {ScaleLinear} from 'd3-scale';
+import type {Color} from 'types';
+import type {ScaleLinear} from 'd3-scale';
 
 import {getColorValue} from '../../../../utilities';
 import {MIN_BAR_HEIGHT} from '../../constants';

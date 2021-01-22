@@ -7,13 +7,13 @@ import {YAxis} from '../YAxis';
 import {Crosshair} from '../Crosshair';
 import {Point} from '../Point';
 import {LinearXAxis} from '../LinearXAxis';
-import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
+import type {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
 import {Margin, Spacing} from './constants';
 import {useXScale, useYScale} from './hooks';
 import {StackedAreas} from './components';
 import styles from './Chart.scss';
-import {Series, RenderTooltipContentData} from './types';
+import type {Series, RenderTooltipContentData} from './types';
 
 interface Props {
   xAxisLabels: string[];
@@ -131,8 +131,9 @@ export function Chart({
         onMouseLeave={() => setActivePointIndex(null)}
       >
         <g
-          transform={`translate(${axisMargin},${dimensions.height -
-            marginBottom})`}
+          transform={`translate(${axisMargin},${
+            dimensions.height - marginBottom
+          })`}
         >
           <LinearXAxis
             xScale={xScale}

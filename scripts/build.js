@@ -32,7 +32,7 @@ const mainEntry = resolvePath(intermediateBuild, './index.js');
 
 const scripts = resolvePath(root, 'scripts');
 const types = resolvePath(root, 'types');
-const tsBuild = resolvePath(scripts, 'tsconfig.json');
+const tsBuild = resolvePath(scripts, 'tsconfig.build.json');
 
 execSync(
   `${resolvePath(

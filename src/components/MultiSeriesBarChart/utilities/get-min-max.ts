@@ -1,4 +1,4 @@
-import {Data, StackSeries} from '../types';
+import type {Data, StackSeries} from '../types';
 
 export function getMinMax(stackedValues: StackSeries[] | null, data: Data[]) {
   if (stackedValues != null) {

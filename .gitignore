@@ -14,3 +14,4 @@ node_modules
 /playground
 .DS_Store
 *.scss.d.ts
+*.tsbuildinfo

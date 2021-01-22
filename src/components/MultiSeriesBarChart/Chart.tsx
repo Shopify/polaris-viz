@@ -3,10 +3,10 @@ import React, {useState, useMemo} from 'react';
 import {TooltipContainer} from '../TooltipContainer';
 import {eventPoint, getTextWidth} from '../../utilities';
 import {YAxis} from '../YAxis';
-import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
+import type {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
 import {getStackedValues} from './utilities';
-import {Data, RenderTooltipContentData} from './types';
+import type {Data, RenderTooltipContentData} from './types';
 import {XAxis, BarGroup, StackedBarGroup} from './components';
 import {useYScale, useXScale} from './hooks';
 import {
@@ -137,9 +137,9 @@ export function Chart({
         onTouchEnd={() => setActiveBarGroup(null)}
       >
         <g
-          transform={`translate(${axisMargin},${chartDimensions.height -
-            MARGIN.Bottom -
-            maxXLabelHeight})`}
+          transform={`translate(${axisMargin},${
+            chartDimensions.height - MARGIN.Bottom - maxXLabelHeight
+          })`}
         >
           <XAxis
             labels={xAxisLabels}

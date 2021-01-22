@@ -9,7 +9,12 @@
     "jsx": "react-native",
     "strict": true,
     "importHelpers": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "incremental": true,
+    "noEmit": true,
+    "isolatedModules": true,
+    "importsNotUsedAsValues": "error",
+    "strictFunctionTypes": false
   },
-  "include": ["./config/typescript/**/*", "./src/**/*", "./tests/**/*"]
+  "include": ["./config/typescript", "./src", "./tests", "./playground"]
 }

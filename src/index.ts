@@ -1,20 +1,23 @@
 export {
   Sparkline,
-  SparklineProps,
   NormalizedStackedBarChart,
-  NormalizedStackedBarChartProps,
   BarChart,
-  BarChartProps,
   BarChartTooltipContent,
-  BarChartTooltipContentProps,
   LineChart,
-  LineChartProps,
   LineChartTooltipContent,
-  LineChartTooltipContentProps,
   StackedAreaChart,
-  StackedAreaChartProps,
   MultiSeriesBarChart,
-  MultiSeriesBarChartProps,
   TooltipContent,
+} from './components';
+
+export type {
+  SparklineProps,
+  NormalizedStackedBarChartProps,
+  BarChartProps,
+  BarChartTooltipContentProps,
+  LineChartProps,
+  LineChartTooltipContentProps,
+  StackedAreaChartProps,
+  MultiSeriesBarChartProps,
   TooltipContentProps,
 } from './components';

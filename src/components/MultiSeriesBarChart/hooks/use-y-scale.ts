@@ -1,10 +1,10 @@
 import {useMemo} from 'react';
 import {scaleLinear} from 'd3-scale';
 
-import {Data, StackSeries} from '../types';
+import type {Data, StackSeries} from '../types';
 import {MIN_Y_LABEL_SPACE} from '../constants';
 import {getMinMax} from '../utilities';
-import {NumberLabelFormatter} from '../../../types';
+import type {NumberLabelFormatter} from '../../../types';
 
 export function useYScale({
   drawableHeight,

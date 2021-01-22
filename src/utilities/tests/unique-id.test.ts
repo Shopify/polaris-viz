@@ -23,3 +23,7 @@ describe('uniqueId', () => {
     expect(id).toBe('test-2');
   });
 });
+
+// We export an empty module here so this file plays nice with our isolatedModules configuration
+// eslint-disable-next-line jest/no-export
+export {};

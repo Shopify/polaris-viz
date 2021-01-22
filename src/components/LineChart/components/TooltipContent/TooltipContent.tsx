@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {LineChartStyle} from '../../types';
+import type {LineChartStyle} from '../../types';
 import {LinePreview} from '../LinePreview';
 
 import styles from './TooltipContent.scss';

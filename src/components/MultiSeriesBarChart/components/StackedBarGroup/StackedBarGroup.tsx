@@ -1,8 +1,8 @@
 import React from 'react';
-import {ScaleLinear, ScaleBand} from 'd3-scale';
-import {Color} from 'types';
+import type {ScaleLinear, ScaleBand} from 'd3-scale';
+import type {Color} from 'types';
 
-import {StackSeries} from '../../types';
+import type {StackSeries} from '../../types';
 import {BAR_SPACING} from '../../constants';
 import {getColorValue} from '../../../../utilities';
 import styles from '../../shared.scss';

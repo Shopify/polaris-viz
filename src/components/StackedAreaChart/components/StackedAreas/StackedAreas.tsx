@@ -2,8 +2,8 @@ import React, {useMemo} from 'react';
 import isEqual from 'lodash.isequal';
 import {animated, useSpring} from 'react-spring';
 import {area, Series} from 'd3-shape';
-import {Color} from 'types';
-import {ScaleLinear} from 'd3-scale';
+import type {Color} from 'types';
+import type {ScaleLinear} from 'd3-scale';
 
 import {getColorValue, uniqueId} from '../../../../utilities';
 import {usePrefersReducedMotion} from '../../../../hooks';

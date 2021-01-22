@@ -1,9 +1,9 @@
 import React from 'react';
-import {ScaleLinear} from 'd3-scale';
+import type {ScaleLinear} from 'd3-scale';
 
 import {Point} from '../../../Point';
 import {getColorValue} from '../../../../utilities';
-import {Series} from '../../types';
+import type {Series} from '../../types';
 
 interface Props {
   path: string;

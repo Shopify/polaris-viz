@@ -1,7 +1,7 @@
 import React from 'react';
 import {classNames} from '@shopify/css-utilities';
 
-import {Orientation, Size} from '../../types';
+import type {Orientation, Size} from '../../types';
 
 import styles from './BarSegment.scss';
 

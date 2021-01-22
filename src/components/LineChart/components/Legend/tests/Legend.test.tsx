@@ -1,6 +1,6 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
-import {Series} from 'components/LineChart/types';
+import type {Series} from 'components/LineChart/types';
 
 import {LinePreview} from '../../LinePreview';
 import {Legend} from '../Legend';

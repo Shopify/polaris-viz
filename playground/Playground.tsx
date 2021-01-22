@@ -1,7 +1,6 @@
 import React from 'react';
 
 import {NormalizedStackedBarChart} from '../src/components';
-import {Orientation, Size} from '../src/components/NormalizedStackedBarChart';
 
 const mockProps = {
   // size: Size.Small,

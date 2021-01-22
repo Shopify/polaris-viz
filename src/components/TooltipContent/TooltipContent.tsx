@@ -1,5 +1,5 @@
 import React from 'react';
-import {Color} from 'types';
+import type {Color} from 'types';
 
 import {SquareColorPreview} from '../SquareColorPreview';
 
