@@ -178,7 +178,7 @@ This accepts any [Polaris Viz color](/documentation/Polaris-Viz-colors.md) value
 | ------- | ----------- |
 | `Color` | `'primary'` |
 
-This accepts any [Polaris Viz color](/documentation/Polaris-Viz-colors.md) value, and corresponds to the color of the bar for that series when you hover over a bar group. It defaults to `primary`. The four 'promiment' Polaris Viz colors (`primaryProminent`, `secondaryProminent`, `tertiaryProminent`, `quaternaryProminent`) exist as a good option for a complimentary hover color.
+This accepts any [Polaris Viz color](/documentation/Polaris-Viz-colors.md) value, and corresponds to the color of the bar for that series when you hover over a bar group. It defaults to `primary`. The four 'prominent' Polaris Viz colors (`primaryProminent`, `secondaryProminent`, `tertiaryProminent`, `quaternaryProminent`) exist as a good option for a complimentary hover color.
 
 ### The `RenderTooltipContentData` type
 

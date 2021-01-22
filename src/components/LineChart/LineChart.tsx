@@ -5,7 +5,7 @@ import {getDefaultColor} from '../../utilities';
 import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
 import {Chart} from './Chart';
-import {Series, LineStyle, RenderTooltipContentData} from './types';
+import {Series, RenderTooltipContentData} from './types';
 import {Legend, TooltipContent} from './components';
 
 export interface LineChartProps {
@@ -67,9 +67,9 @@ export function LineChart({
     return <TooltipContent data={formattedData} />;
   }
 
-  const seriesWithDefaults = series.map((series, index) => ({
+  const seriesWithDefaults = series.map<Required<Series>>((series, index) => ({
     color: getDefaultColor(index),
-    lineStyle: 'solid' as LineStyle,
+    lineStyle: 'solid',
     ...series,
   }));
 
