@@ -12,6 +12,7 @@ jest.mock('d3-scale', () => ({
 
     scale.ticks = () => [0, 1, 2];
     scale.range = () => [0, 2];
+    scale.bandwidth = () => 10;
 
     return scale;
   },
@@ -26,8 +27,12 @@ describe('<XAxis/>', () => {
       {value: 'Label', xOffset: 20},
     ],
     xScale: scaleBand(),
-    needsDiagonalLabels: false,
     showFewerLabels: false,
+    xAxisDetails: {
+      needsDiagonalLabels: false,
+      maxXLabelHeight: 40,
+      maxDiagonalLabelLength: 100,
+    },
   };
 
   it('renders a path', () => {
@@ -53,24 +58,24 @@ describe('<XAxis/>', () => {
     expect(axis).toContainReactComponentTimes('line', 2);
   });
 
-  it('renders a text element for each label value', () => {
+  it('renders a foreignObject for each label value', () => {
     const axis = mount(
       <svg>
         <XAxis {...mockProps} />,
       </svg>,
     );
 
-    expect(axis).toContainReactComponentTimes('text', 2);
+    expect(axis).toContainReactComponentTimes('foreignObject', 2);
   });
 
-  it('hides alternating elements if showFewerLabels is true', () => {
+  it('hides elements if showFewerLabels is true and there is not enough room', () => {
     const axis = mount(
       <svg>
         <XAxis {...mockProps} showFewerLabels />,
       </svg>,
     );
 
-    expect(axis).toContainReactComponentTimes('text', 1);
+    expect(axis).toContainReactComponentTimes('foreignObject', 1);
   });
 
   it('displays text horizontally by default', () => {
@@ -80,20 +85,22 @@ describe('<XAxis/>', () => {
       </svg>,
     );
 
-    const text = axis.find('text');
-    expect(text!.props.textAnchor).toBe('middle');
-    expect(text!.props.transform).toBe('translate(0 24)');
+    const foreignObjectTransform = axis.find('foreignObject')!.props.transform;
+    expect(foreignObjectTransform).not.toContain('rotate');
   });
 
   it('displays text diagonally if needsDiagonalLabels is true', () => {
     const axis = mount(
       <svg>
-        <XAxis {...mockProps} needsDiagonalLabels />,
+        <XAxis
+          {...mockProps}
+          xAxisDetails={{...mockProps.xAxisDetails, needsDiagonalLabels: true}}
+        />
+        ,
       </svg>,
     );
 
-    const text = axis.find('text');
-    expect(text!.props.textAnchor).toBe('end');
-    expect(text!.props.transform).toBe('translate(4 20) rotate(-40)');
+    const foreignObjectTransform = axis.find('foreignObject')!.props.transform;
+    expect(foreignObjectTransform).toContain('rotate');
   });
 });

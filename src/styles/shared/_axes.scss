@@ -1,6 +1,16 @@
 $label-color: rgb(99, 115, 129);
 $axis-color: rgb(223, 227, 232);
 
+@mixin ellipsis-overflow {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin axis-text {
+  color: $label-color;
+}
+
 @mixin axis-label {
   fill: $label-color;
 }
