@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Fixed
+
+- Separate READMEs for NPM and Github
+
 ## [0.1.0] - 2021-01-11
 
 ### Added
