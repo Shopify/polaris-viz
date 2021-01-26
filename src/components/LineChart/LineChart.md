@@ -26,9 +26,7 @@ const series = [
       {rawValue: 5500, label: '2020-04-13T12:00:00'},
       {rawValue: 7000, label: '2020-04-14T12:00:00'},
     ],
-    style: {
-      color: 'primary',
-    },
+    color: 'primary',
   },
   {
     name: 'Mar 01–Mar 14, 2020',
@@ -48,10 +46,8 @@ const series = [
       {rawValue: 2000, label: '2020-03-13T12:00:00'},
       {rawValue: 3000, label: '2020-03-14T12:00:00'},
     ],
-    style: {
-      color: 'pastComparison',
-      lineStyle: 'dashed' as 'dashed',
-    },
+    color: 'pastComparison',
+    lineStyle: 'dashed' as 'dashed',
   },
 ];
 
@@ -144,10 +140,8 @@ The `Series` type gives the user a lot of flexibility to define exactly what eac
     label: string;
     rawValue: number;
   }[];
-  style?: {
-    color?: Color;
-    lineStyle?: LineStyle;
-  };
+  color?: Color;
+  lineStyle?: LineStyle;
 }
 ```
 
@@ -167,13 +161,21 @@ The name of the series. This appears in the chart legend.
 
 The array of objects that the chart uses to plot the line.
 
-#### style
+#### color
 
-| type                                               | default                                      |
-| -------------------------------------------------- | -------------------------------------------- |
-| `{color?: Color, lineStyle?: 'dashed' \| 'solid'}` | `{color: 'colorPurple', lineStyle: 'solid'}` |
+| type    | default   |
+| ------- | --------- |
+| `Color` | `primary` |
 
-The `style` prop accepts an object to configure the given series' style. It allows you to pass any [Polaris Viz accepted color](/documentation/Polaris-Viz-colors.md) for the `color` value.
+This accepts any [Polaris Viz color](/documentation/Polaris-Viz-colors.md) value.
+
+#### lineStyle
+
+| type                  | default   |
+| --------------------- | --------- |
+| `'solid' \| 'dashed'` | `'solid'` |
+
+The lineStype determines if the drawn line for the series is a solid or dashed line.
 
 ### The `RenderTooltipContentData` type
 

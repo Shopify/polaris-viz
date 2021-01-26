@@ -9,13 +9,29 @@ Used to compare multiple series of data and display the total value. This chart 
 ```tsx
 const series = [
   {
-    label: 'First-time',
-    data: [4237, 5024, 5730, 5587, 5303, 5634, 3238],
+    name: 'First-time',
+    data: [
+      {label: 'January', rawValue: 4237},
+      {label: 'February', rawValue: 5024},
+      {label: 'March', rawValue: 5730},
+      {label: 'April', rawValue: 5587},
+      {label: 'May', rawValue: 5303},
+      {label: 'June', rawValue: 5634},
+      {label: 'July', rawValue: 3238},
+    ],
     color: 'primary',
   },
   {
-    label: 'Returning',
-    data: [5663, 7349, 9795, 7396, 7028, 12484, 4878],
+    name: 'Returning',
+    data: [
+      {label: 'January', rawValue: 5663},
+      {label: 'February', rawValue: 7349},
+      {label: 'March', rawValue: 9795},
+      {label: 'April', rawValue: 7396},
+      {label: 'May', rawValue: 7028},
+      {label: 'June', rawValue: 12484},
+      {label: 'July', rawValue: 4878},
+    ],
     color: 'secondary',
   },
 ];
@@ -90,30 +106,34 @@ This component derives its size from its parent container and fills the width of
 The `Series` type allows the user to define the color of each series. Its interface looks like this:
 
 ```typescript
-{
-  label: string;
-  data: Data[];
-  color: Color;
+interface Series {
+  name: string;
+  data: {label: string; rawValue: number | null}[];
+  color?: Color;
 }
 ```
 
-#### data
-
-| type               |
-| ------------------ |
-| `number \| null[]` |
-
-The array that the chart uses to plot the area. Null values are not displayed.
-
-#### label
+#### name
 
 | type     |
 | -------- |
 | `string` |
 
-The label for the series. This appears in the chart legend and tooltip.
+The name for the series. This appears in the chart legend and tooltip.
+
+#### data
+
+| type                                          |
+| --------------------------------------------- |
+| `{label: string, rawValue: number \| null}[]` |
+
+The array that the chart uses to plot the area. Null values are not displayed.
 
 #### color
+
+| type    | default     |
+| ------- | ----------- |
+| `Color` | `'primary'` |
 
 It allows you to pass any [Polaris Viz accepted color](/documentation/Polaris-Viz-colors.md) for the `color` value.
 
@@ -142,7 +162,7 @@ The distinction between the `RenderTooltipContentData` and series `Data` types i
 | ---------- |
 | `Series[]` |
 
-The prop to determine the chart's drawn area. Each `Series` object corresponds to an area drawn on the chart, and is explained in greater detail above.
+The prop to determine the chart's drawn area. Each `Series` object corresponds to an area drawn on the chart, and is explained in greater detail [above](#series).
 
 ### Optional Props
 

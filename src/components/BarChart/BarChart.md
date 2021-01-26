@@ -64,7 +64,7 @@ return (
     color="primary"
     formatXAxisLabel={formatXAxisLabel}
     formatYAxisLabel={formatYAxisLabel}
-    renderTooltipContent={renderTooltip}
+    renderTooltipContent={renderTooltipContent}
   />
 );
 ```
@@ -123,9 +123,9 @@ This sets the margin between each of the bars. A value of `None` will make the b
 
 #### color
 
-| type    | default       |
-| ------- | ------------- |
-| `Color` | `colorPurple` |
+| type    | default   |
+| ------- | --------- |
+| `Color` | `primary` |
 
 The bar fill color. This accepts any [Polaris Viz accepted color](/documentation/Polaris-Viz-colors.md).
 
@@ -155,9 +155,9 @@ This accepts a function that is called to render the tooltip content. By default
 
 #### highlightColor
 
-| type    | default       |
-| ------- | ------------- |
-| `Color` | `colorPurple` |
+| type    | default   |
+| ------- | --------- |
+| `Color` | `primary` |
 
 The bar fill color when you hover over a bar in the chart. This accepts any [Polaris Viz accepted color](/documentation/Polaris-Viz-colors.md).
 

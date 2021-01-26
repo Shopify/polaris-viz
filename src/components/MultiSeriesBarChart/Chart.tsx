@@ -6,7 +6,7 @@ import {YAxis} from '../YAxis';
 import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
 import {getStackedValues} from './utilities';
-import {Data, RenderTooltipContentData} from './types';
+import {Series, RenderTooltipContentData} from './types';
 import {XAxis, BarGroup, StackedBarGroup} from './components';
 import {useYScale, useXScale} from './hooks';
 import {
@@ -21,7 +21,7 @@ import {
 import styles from './Chart.scss';
 
 interface Props {
-  series: Data[];
+  series: Required<Series>[];
   labels: string[];
   chartDimensions: DOMRect;
   formatXAxisLabel: StringLabelFormatter;
@@ -49,8 +49,8 @@ export function Chart({
 
   const yAxisLabelWidth = series
     .map(({data}) =>
-      data.map((value) =>
-        getTextWidth({text: formatYAxisLabel(value), fontSize: FONT_SIZE}),
+      data.map(({rawValue}) =>
+        getTextWidth({text: formatYAxisLabel(rawValue), fontSize: FONT_SIZE}),
       ),
     )
     .reduce((acc, currentValue) => acc.concat(currentValue), [])
@@ -62,7 +62,7 @@ export function Chart({
   const drawableWidth = chartDimensions.width - MARGIN.Right - axisMargin;
 
   const sortedData = labels.map((_, index) => {
-    return series.map((type) => type.data[index]);
+    return series.map((type) => type.data[index].rawValue);
   });
 
   const formattedXAxisLabels = labels.map(formatXAxisLabel);
@@ -97,20 +97,18 @@ export function Chart({
   });
 
   const barColors = series.map(({color}) => color);
-  const barHighlightColors = series.map(({highlightColor}, index) =>
-    highlightColor != null ? highlightColor : barColors[index],
-  );
+  const barHighlightColors = series.map(({highlightColor}) => highlightColor);
 
   const tooltipContentMarkup = useMemo(() => {
     if (activeBarGroup == null) {
       return null;
     }
 
-    const data = series.map(({data, color, label}) => {
+    const data = series.map(({data, color, name}) => {
       return {
-        label,
+        label: name,
         color,
-        value: data[activeBarGroup],
+        value: data[activeBarGroup].rawValue,
       };
     });
 

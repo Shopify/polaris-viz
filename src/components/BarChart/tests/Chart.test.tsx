@@ -35,6 +35,7 @@ describe('Chart />', () => {
     chartDimensions: new DOMRect(),
     histogram: false,
     color: 'colorPurple' as Color,
+    highlightColor: 'colorPurple' as Color,
     formatXAxisLabel: (value: string) => value.toString(),
     formatYAxisLabel: (value: number) => value.toString(),
     barMargin: 0,

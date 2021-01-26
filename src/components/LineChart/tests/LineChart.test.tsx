@@ -13,8 +13,10 @@ import {Legend} from '../components';
   left = 100;
 };
 
-const primarySeries: Series = {
+const primarySeries: Required<Series> = {
   name: 'Primary',
+  color: 'primary',
+  lineStyle: 'solid',
   data: [
     {label: 'Jan 1', rawValue: 1500},
     {label: 'Jan 2', rawValue: 1000},
