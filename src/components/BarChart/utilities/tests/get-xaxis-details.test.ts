@@ -4,6 +4,12 @@ jest.mock('../../../../utilities', () => ({
   ...jest.requireActual('../../../../utilities'),
   getTextWidth: jest.fn(() => 20),
   getTextContainerHeight: jest.fn(() => 30),
+  getLongestLabelDetails: jest.fn(() => {
+    return {label: '', length: 20};
+  }),
+  getMaxDiagonalDetails: jest.fn(() => {
+    return {angledLabelMaxLength: 20, maxDiagonalLabelHeight: 25.6};
+  }),
 }));
 
 describe('getXAxisDetails', () => {
@@ -33,8 +39,8 @@ describe('getXAxisDetails', () => {
     });
 
     expect(actual).toStrictEqual({
-      maxDiagonalLabelLength: 39.94546305356773,
-      maxXLabelHeight: 25.676448714024772,
+      maxDiagonalLabelLength: 20,
+      maxXLabelHeight: 25.6,
       needsDiagonalLabels: true,
     });
   });
@@ -57,7 +63,7 @@ describe('getXAxisDetails', () => {
     });
 
     expect(actual).toStrictEqual({
-      maxDiagonalLabelLength: 40,
+      maxDiagonalLabelLength: 20,
       maxXLabelHeight: 30,
       needsDiagonalLabels: false,
     });

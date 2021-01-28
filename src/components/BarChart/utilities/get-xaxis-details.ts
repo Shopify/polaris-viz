@@ -1,19 +1,16 @@
 import {Data} from 'types';
 
 import {
-  degreesToRadians,
   getTextWidth,
   getTextContainerHeight,
-  RightAngleTriangle,
+  getLongestLabelDetails,
+  getMaxDiagonalDetails,
 } from '../../../utilities';
+import {MARGIN, SPACING_LOOSE, SPACING_TIGHT} from '../constants';
 import {
-  MARGIN,
-  DIAGONAL_ANGLE,
-  SPACING_LOOSE,
-  SPACING_TIGHT,
-  MAX_TEXT_BOX_HEIGHT,
   MIN_HORIZONTAL_LABEL_SPACE,
-} from '../constants';
+  MAX_TEXT_BOX_HEIGHT,
+} from '../../../constants';
 
 export function getXAxisDetails({
   data,
@@ -42,15 +39,8 @@ export function getXAxisDetails({
     (chartDimensions.width - estimatedYAxisWidth - MARGIN.Right) / data.length;
 
   // calculations are be based on the longest label
-  const longestXLabelDetails = data
-    .map(({label}) => {
-      const formattedLabel = formatXAxisLabel(label);
-      return {
-        label: formattedLabel,
-        length: getTextWidth({text: formattedLabel, fontSize}) + SPACING_LOOSE,
-      };
-    })
-    .reduce((prev, current) => (prev.length > current.length ? prev : current));
+  const xLabels = data.map(({label}) => formatXAxisLabel(label));
+  const longestXLabelDetails = getLongestLabelDetails(xLabels, fontSize);
 
   // how tall the xaxis would be if we use horizontal labels
   const horizontalLabelHeight = getTextContainerHeight({
@@ -64,27 +54,11 @@ export function getXAxisDetails({
     horizontalLabelHeight > MAX_TEXT_BOX_HEIGHT ||
     datumXLabelSpace < MIN_HORIZONTAL_LABEL_SPACE;
 
-  // treat angled labels as if they create a right angle triangle with the xaxis
-  // use COS to get the height of that triangle
-  const longestAngledLabelHeight =
-    Math.cos(degreesToRadians(DIAGONAL_ANGLE)) * longestXLabelDetails.length;
-
-  // use COS and pythagorean theorem to determine
-  // height that a diagonal label would be cut off at
   const firstBarMidpoint = datumXLabelSpace / 2;
   const distanceToFirstTick = estimatedYAxisWidth + firstBarMidpoint;
-  const angledLabelMaxLength =
-    distanceToFirstTick / Math.cos(degreesToRadians(DIAGONAL_ANGLE));
-
-  const cutOffLabelHeight = new RightAngleTriangle({
-    sideA: distanceToFirstTick,
-    sideC: angledLabelMaxLength,
-  }).getOppositeLength();
-
-  // max diagonal height is the smaller of the longest label's height, or the cut off
-  const maxDiagonalLabelHeight = Math.min(
-    longestAngledLabelHeight,
-    cutOffLabelHeight,
+  const {angledLabelMaxLength, maxDiagonalLabelHeight} = getMaxDiagonalDetails(
+    longestXLabelDetails.length,
+    distanceToFirstTick,
   );
 
   // max diagonal length is the length of the longest label, or the length of the cut off
