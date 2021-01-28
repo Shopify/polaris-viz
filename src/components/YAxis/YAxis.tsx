@@ -12,9 +12,10 @@ interface Props {
     yOffset: number;
   }[];
   drawableWidth: number;
+  fontSize?: number;
 }
 
-function Axis({ticks, drawableWidth}: Props) {
+function Axis({ticks, drawableWidth, fontSize}: Props) {
   return (
     <g>
       {ticks.map(({value, formattedValue, yOffset}) => {
@@ -24,7 +25,7 @@ function Axis({ticks, drawableWidth}: Props) {
             <text
               className={styles.Text}
               style={{
-                fontSize: `${FONT_SIZE}px`,
+                fontSize: `${fontSize ? fontSize : FONT_SIZE}px`,
                 textAnchor: 'end',
                 transform: `translateX(-${spacingBase}) translateY(${spacingExtraTight})`,
               }}

@@ -1,6 +1,13 @@
 import React, {useState, useMemo} from 'react';
 import {stack, stackOffsetNone, stackOrderReverse} from 'd3-shape';
 
+import {useLinearXAxisDetails, useLinearXScale} from '../../hooks';
+import {
+  SMALL_SCREEN,
+  SMALL_FONT_SIZE,
+  SPACING_TIGHT,
+  FONT_SIZE,
+} from '../../constants';
 import {TooltipContainer} from '../TooltipContainer';
 import {eventPoint} from '../../utilities';
 import {YAxis} from '../YAxis';
@@ -9,8 +16,8 @@ import {Point} from '../Point';
 import {LinearXAxis} from '../LinearXAxis';
 import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
-import {Margin, Spacing} from './constants';
-import {useXScale, useYScale} from './hooks';
+import {Margin} from './constants';
+import {useYScale} from './hooks';
 import {StackedAreas} from './components';
 import styles from './Chart.scss';
 import {Series, RenderTooltipContentData} from './types';
@@ -64,6 +71,18 @@ export function Chart({
     [xAxisLabels, series],
   );
 
+  const fontSize =
+    dimensions.width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
+
+  const xAxisDetails = useLinearXAxisDetails({
+    series,
+    fontSize,
+    chartDimensions: dimensions,
+    formatXAxisLabel,
+    formatYAxisLabel,
+    xAxisLabels: xAxisLabels == null ? [] : xAxisLabels,
+  });
+
   const formattedXAxisLabels = xAxisLabels.map(formatXAxisLabel);
 
   const stackedValues = useMemo(() => areaStack(formattedData), [
@@ -73,7 +92,11 @@ export function Chart({
 
   const colors = useMemo(() => series.map(({color}) => color), [series]);
 
-  const marginBottom = xAxisLabels == null ? Spacing.Tight : Margin.Bottom;
+  const marginBottom =
+    xAxisLabels == null
+      ? SPACING_TIGHT
+      : xAxisDetails.maxXLabelHeight + Margin.Bottom;
+
   const drawableHeight = dimensions.height - Margin.Top - marginBottom;
 
   const {axisMargin, ticks, yScale} = useYScale({
@@ -88,7 +111,7 @@ export function Chart({
   const longestSeriesLength =
     Math.max(...stackedValues.map((stack) => stack.length)) - 1;
 
-  const {xScale} = useXScale({drawableWidth, longestSeriesLength});
+  const {xScale} = useLinearXScale({drawableWidth, longestSeriesLength});
 
   const tooltipMarkup = useMemo(() => {
     if (activePointIndex == null) {
@@ -137,9 +160,10 @@ export function Chart({
           <LinearXAxis
             xScale={xScale}
             labels={formattedXAxisLabels}
-            dimensions={dimensions}
+            xAxisDetails={xAxisDetails}
             drawableHeight={drawableHeight}
-            axisMargin={axisMargin}
+            fontSize={fontSize}
+            drawableWidth={drawableWidth}
           />
         </g>
 

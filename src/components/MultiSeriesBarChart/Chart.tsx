@@ -79,17 +79,10 @@ export function Chart({
         yAxisLabelWidth,
         xLabels: formattedXAxisLabels,
         fontSize,
-        formatYAxisLabel,
         chartDimensions,
         padding: INNER_PADDING,
       }),
-    [
-      yAxisLabelWidth,
-      formattedXAxisLabels,
-      fontSize,
-      formatYAxisLabel,
-      chartDimensions,
-    ],
+    [yAxisLabelWidth, formattedXAxisLabels, fontSize, chartDimensions],
   );
 
   const drawableWidth = chartDimensions.width - MARGIN.Right - axisMargin;

@@ -6,6 +6,12 @@ jest.mock('../../utilities/get-text-width', () => ({
 
 jest.mock('../../utilities/get-text-container-height', () => ({
   getTextContainerHeight: jest.fn(() => 30),
+  getLongestLabelDetails: jest.fn(() => {
+    return {label: '', length: 20};
+  }),
+  getMaxDiagonalDetails: jest.fn(() => {
+    return {angledLabelMaxLength: 20, maxDiagonalLabelHeight: 25.6};
+  }),
 }));
 
 describe('getBarXAxisDetails', () => {
@@ -27,7 +33,6 @@ describe('getBarXAxisDetails', () => {
       yAxisLabelWidth: 100,
       xLabels: manyDataPoints.map(({label}) => label),
       fontSize: 10,
-      formatYAxisLabel: (val) => val.toString(),
       chartDimensions: {
         height: 100,
         width: 100,
@@ -47,7 +52,6 @@ describe('getBarXAxisDetails', () => {
       yAxisLabelWidth: 10,
       xLabels: fewDataPoints.map(({label}) => label),
       fontSize: 10,
-      formatYAxisLabel: (val) => val.toString(),
       chartDimensions: {
         height: 100,
         width: 100,

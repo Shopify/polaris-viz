@@ -10,6 +10,10 @@
 
 - Added a default color utility which unifies the default colors provided in the `<BarChart />`, `<LineChart />`, `<MultiSeriesBarChart />`, and `<StackedAreaChart />`
 
+### Fixed
+
+- Long label handling for the `<BarChart />`, `<LineChart />`, `<MultiSeriesBarChart />`, and `<StackedAreaChart />`
+
 ## [0.1.1] - 2021-01-11
 
 ### Fixed
