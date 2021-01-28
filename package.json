@@ -115,8 +115,7 @@
     "index.js",
     "index.es.js",
     "styles.css",
-    "styles.min.css",
-    "!*.tsbuildinfo"
+    "styles.min.css"
   ],
   "dependencies": {
     "@shopify/css-utilities": "^1.0.0",

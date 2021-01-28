@@ -1,4 +1,8 @@
 {
   "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false
+  },
+  "include": ["../config/typescript", "../src"],
   "exclude": ["../src/**/*.test.ts", "../src/**/*.test.tsx"]
 }
