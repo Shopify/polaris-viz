@@ -28,6 +28,7 @@ interface Props {
   fontSize: number;
   xAxisDetails: XAxisDetails;
   drawableHeight: number;
+  ariaHidden?: boolean;
 }
 
 function getTextAlign({
@@ -55,6 +56,7 @@ function Axis({
   fontSize,
   drawableWidth,
   drawableHeight,
+  ariaHidden = false,
 }: Props) {
   const {
     maxDiagonalLabelLength,
@@ -144,6 +146,7 @@ function Axis({
               transform={tickContainerTransform}
             >
               <div
+                aria-hidden={ariaHidden}
                 className={textContainerClassName}
                 style={{
                   fontSize,

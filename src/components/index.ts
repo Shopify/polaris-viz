@@ -28,3 +28,4 @@ export {
 } from './MultiSeriesBarChart';
 export {TooltipContent, TooltipContentProps} from './TooltipContent';
 export {BarChartXAxis} from './BarChartXAxis';
+export {SkipLink} from './SkipLink';

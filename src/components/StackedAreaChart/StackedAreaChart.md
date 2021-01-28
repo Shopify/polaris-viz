@@ -77,6 +77,7 @@ return (
     xAxisLabels={labels}
     formatYAxisLabel={formatYAxisLabel}
     renderTooltipContent={renderTooltipContent}
+    skipLinkText="Skip chart content"
   />
 );
 ```
@@ -96,6 +97,7 @@ interface StackedAreaChartProps {
   formatXAxisLabel?(value: string, index?: number, data?: string[]): string;
   formatYAxisLabel?(value: number): string;
   renderTooltipContent?: (data: RenderTooltipContentData): React.ReactNode;
+  skipLinkText?: string;
 }
 ```
 
@@ -166,14 +168,6 @@ The prop to determine the chart's drawn area. Each `Series` object corresponds t
 
 ### Optional Props
 
-#### accessibilityLabel
-
-| type     | default      |
-| -------- | ------------ |
-| `string` | empty string |
-
-Visually hidden text for screen readers.
-
 #### formatXAxisLabel
 
 | type                                                        | default                       |
@@ -229,3 +223,11 @@ Whether to animate the chart when it is initially rendered and its data is updat
 | `(data: RenderTooltipContentData): React.ReactNode;` |
 
 This accepts a function that is called to render the tooltip content. By default it calls `formatYAxisLabel` to format the the tooltip value and passes it to `<TooltipContent />`. For more information about tooltip content, read the [tooltip content documentation](/src/components/TooltipContent/TooltipContent.md).
+
+#### skipLinkText
+
+| type     |
+| -------- |
+| `string` |
+
+If provided, renders a `<SkipLink/>` button with the string. Use this for charts with large data sets, so keyboard users can skip all the tabbable data points in the chart.
