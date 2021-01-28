@@ -1,7 +1,7 @@
 import {useMemo} from 'react';
 import {scaleBand} from 'd3-scale';
+import type {Data} from 'types';
 
-import type {BarData} from '../types';
 import type {StringLabelFormatter} from '../../../types';
 
 export function useXScale({
@@ -12,7 +12,7 @@ export function useXScale({
 }: {
   drawableWidth: number;
   barMargin: number;
-  data: BarData[];
+  data: Data[];
   formatXAxisLabel: StringLabelFormatter;
 }) {
   const xScale = scaleBand()

@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+### Changed
+
+- Unified the data/series interfaces for [`<BarChart />`](src/components/BarChart/BarChart.md#data), [`<LineChart />`](src/components/LineChart/LineChart.md#the-series-type)), [`<MultiSeriesBarChart />`](src/components/MultiSeriesBarChart/MultiSeriesBarChart.md#the-series-type), and [`<StackedAreaChart />`](src/components/StackedAreaChart/StackedAreaChart.md#the-series-type)
+
+### Added
+
+- Added a default color utility which unifies the default colors provided in the `<BarChart />`, `<LineChart />`, `<MultiSeriesBarChart />`, and `<StackedAreaChart />`
+
+## [0.1.1] - 2021-01-11
+
+### Fixed
+
+- Separate READMEs for NPM and Github
+
 ## [0.1.0] - 2021-01-11
 
 ### Added

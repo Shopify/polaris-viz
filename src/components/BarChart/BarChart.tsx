@@ -1,16 +1,17 @@
 import React, {useState, useLayoutEffect, useRef} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
-import type {Color} from 'types';
+import type {Color, Data} from 'types';
 
 import type {StringLabelFormatter, NumberLabelFormatter} from '../../types';
+import {getDefaultColor} from '../../utilities';
 
 import {TooltipContent} from './components';
 import {Chart} from './Chart';
-import type {BarData, RenderTooltipContentData} from './types';
+import type {RenderTooltipContentData} from './types';
 import {BarMargin} from './types';
 
 export interface BarChartProps {
-  data: BarData[];
+  data: Data[];
   barMargin?: keyof typeof BarMargin;
   accessibilityLabel?: string;
   color?: Color;
@@ -23,10 +24,10 @@ export interface BarChartProps {
 
 export function BarChart({
   data,
-  highlightColor,
   accessibilityLabel,
+  color = getDefaultColor(),
+  highlightColor = getDefaultColor(),
   barMargin = 'Medium',
-  color = 'colorPurple',
   timeSeries = false,
   formatXAxisLabel = (value) => value.toString(),
   formatYAxisLabel = (value) => value.toString(),

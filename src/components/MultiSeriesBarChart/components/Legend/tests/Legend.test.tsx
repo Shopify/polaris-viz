@@ -9,14 +9,22 @@ describe('<Legend />', () => {
   const mockProps = {
     series: [
       {
-        data: [10, 20, 30],
+        data: [
+          {label: 'label', rawValue: 10},
+          {label: 'label', rawValue: 20},
+          {label: 'label', rawValue: 30},
+        ],
         color: 'colorRed' as Color,
-        label: 'My label 1',
+        name: 'My label 1',
       },
       {
-        data: [10, 20, 30],
+        data: [
+          {label: 'label', rawValue: 10},
+          {label: 'label', rawValue: 20},
+          {label: 'label', rawValue: 30},
+        ],
         color: 'colorPurple' as Color,
-        label: 'My label 2',
+        name: 'My label 2',
       },
     ],
   };

@@ -1,31 +1,31 @@
 import React, {useState, useMemo} from 'react';
-import type {Color} from 'types';
+import type {Color, Data} from 'types';
 
 import {eventPoint, getTextWidth} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {TooltipContainer} from '../TooltipContainer';
 import type {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
-import type {BarData, RenderTooltipContentData} from './types';
+import type {RenderTooltipContentData} from './types';
 import {XAxis, Bar} from './components';
 import {useYScale, useXScale} from './hooks';
 import {
   MARGIN,
-  LINE_HEIGHT,
-  SPACING,
   SMALL_FONT_SIZE,
   FONT_SIZE,
   SMALL_SCREEN,
-  DIAGONAL_ANGLE,
+  SPACING_LOOSE,
+  SPACING_EXTRA_TIGHT,
 } from './constants';
+import {getXAxisDetails} from './utilities';
 import styles from './Chart.scss';
 
 interface Props {
-  data: BarData[];
+  data: Data[];
   chartDimensions: DOMRect;
   barMargin: number;
   color: Color;
-  highlightColor?: Color;
+  highlightColor: Color;
   formatXAxisLabel: StringLabelFormatter;
   formatYAxisLabel: NumberLabelFormatter;
   timeSeries: boolean;
@@ -49,47 +49,51 @@ export function Chart({
     y: number;
   } | null>(null);
 
-  const yAxisLabelWidth = data
-    .map(({rawValue}) =>
-      getTextWidth({
-        text: formatYAxisLabel(rawValue),
-        fontSize: FONT_SIZE,
-      }),
-    )
-    .reduce((acc, currentValue) => Math.max(acc, currentValue));
-
-  const axisMargin = SPACING + yAxisLabelWidth;
-  const drawableWidth = chartDimensions.width - MARGIN.Right - axisMargin;
-
   const fontSize =
     chartDimensions.width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
+
+  const xAxisDetails = useMemo(
+    () =>
+      getXAxisDetails({
+        data,
+        fontSize,
+        formatYAxisLabel,
+        formatXAxisLabel,
+        chartDimensions,
+      }),
+    [data, fontSize, formatYAxisLabel, formatXAxisLabel, chartDimensions],
+  );
+
+  const drawableHeight =
+    chartDimensions.height -
+    MARGIN.Top -
+    MARGIN.Bottom -
+    xAxisDetails.maxXLabelHeight;
+
+  const {yScale, ticks} = useYScale({
+    drawableHeight,
+    data,
+    formatYAxisLabel,
+  });
+
+  const yAxisLabelWidth = useMemo(
+    () =>
+      Math.max(
+        ...ticks.map(({formattedValue}) =>
+          getTextWidth({text: formattedValue, fontSize}),
+        ),
+      ),
+    [fontSize, ticks],
+  );
+
+  const axisMargin = SPACING_LOOSE + yAxisLabelWidth;
+  const drawableWidth = chartDimensions.width - MARGIN.Right - axisMargin;
 
   const {xScale, xAxisLabels} = useXScale({
     drawableWidth,
     data,
     barMargin,
     formatXAxisLabel,
-  });
-
-  const longestLabel = Math.max(
-    ...xAxisLabels.map(({value}) => getTextWidth({text: value, fontSize})),
-  );
-
-  const overflowingLabel = longestLabel > xScale.bandwidth();
-
-  const labelAngle = 90 + DIAGONAL_ANGLE;
-  const radians = (labelAngle * Math.PI) / 180;
-  const angledLabelHeight = Math.cos(radians) * longestLabel;
-
-  const maxXLabelHeight = overflowingLabel ? angledLabelHeight : LINE_HEIGHT;
-
-  const drawableHeight =
-    chartDimensions.height - MARGIN.Top - MARGIN.Bottom - maxXLabelHeight;
-
-  const {yScale, ticks} = useYScale({
-    drawableHeight,
-    data,
-    formatYAxisLabel,
   });
 
   const tooltipMarkup = useMemo(() => {
@@ -121,19 +125,25 @@ export function Chart({
       >
         <g
           transform={`translate(${axisMargin},${
-            chartDimensions.height - MARGIN.Bottom - maxXLabelHeight
+            chartDimensions.height -
+            MARGIN.Bottom -
+            xAxisDetails.maxXLabelHeight
           })`}
         >
           <XAxis
             labels={xAxisLabels}
             xScale={xScale}
             fontSize={fontSize}
-            showFewerLabels={timeSeries && overflowingLabel}
-            needsDiagonalLabels={overflowingLabel}
+            showFewerLabels={timeSeries && xAxisDetails.needsDiagonalLabels}
+            xAxisDetails={xAxisDetails}
           />
         </g>
 
-        <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
+        <g
+          transform={`translate(${axisMargin + SPACING_EXTRA_TIGHT},${
+            MARGIN.Top
+          })`}
+        >
           <YAxis ticks={ticks} drawableWidth={drawableWidth} />
         </g>
 
@@ -189,7 +199,7 @@ export function Chart({
       currentIndex < 0 ||
       currentIndex > data.length - 1 ||
       svgY <= MARGIN.Top ||
-      svgY > drawableHeight + MARGIN.Bottom + maxXLabelHeight
+      svgY > drawableHeight + MARGIN.Bottom + xAxisDetails.maxXLabelHeight
     ) {
       setActiveBar(null);
       return;

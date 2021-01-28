@@ -1,12 +1,36 @@
-import type {Data} from 'components/MultiSeriesBarChart/types';
+import type {Series} from 'components/MultiSeriesBarChart/types';
 import {stack} from 'd3-shape';
 
 import {getStackedValues} from '../get-stacked-values';
 
-const mockData: Data[] = [
-  {data: [10, 20, 30], color: 'colorBlack', label: 'LABEL1'},
-  {data: [1, 2, 3], color: 'colorBlack', label: 'LABEL2'},
-  {data: [5, 7, 10], color: 'colorBlack', label: 'LABEL3'},
+const mockData: Series[] = [
+  {
+    data: [
+      {label: 'one', rawValue: 10},
+      {label: 'two', rawValue: 20},
+      {label: 'three', rawValue: 30},
+    ],
+    color: 'colorBlack',
+    name: 'LABEL1',
+  },
+  {
+    data: [
+      {label: 'one', rawValue: 1},
+      {label: 'two', rawValue: 2},
+      {label: 'three', rawValue: 3},
+    ],
+    color: 'colorBlack',
+    name: 'LABEL2',
+  },
+  {
+    data: [
+      {label: 'one', rawValue: 5},
+      {label: 'two', rawValue: 7},
+      {label: 'three', rawValue: 10},
+    ],
+    color: 'colorBlack',
+    name: 'LABEL3',
+  },
 ];
 const labels: string[] = ['one', 'two', 'three'];
 

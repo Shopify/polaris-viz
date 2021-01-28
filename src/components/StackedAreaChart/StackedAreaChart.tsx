@@ -3,6 +3,7 @@ import {useDebouncedCallback} from 'use-debounce';
 
 import type {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 import {TooltipContent} from '../TooltipContent';
+import {getDefaultColor} from '../../utilities';
 
 import {Chart} from './Chart';
 import {Legend} from './components';
@@ -69,13 +70,18 @@ export function StackedAreaChart({
     return <TooltipContent title={title} data={formattedData} />;
   }
 
+  const seriesWithDefaults = series.map((series, index) => ({
+    color: getDefaultColor(index),
+    ...series,
+  }));
+
   return (
     <div aria-label={accessibilityLabel} role="img">
       <div style={{height: chartHeight}} ref={containerRef}>
         {chartDimensions == null ? null : (
           <Chart
             xAxisLabels={xAxisLabels}
-            series={series}
+            series={seriesWithDefaults}
             formatXAxisLabel={formatXAxisLabel}
             formatYAxisLabel={formatYAxisLabel}
             dimensions={chartDimensions}
@@ -90,7 +96,7 @@ export function StackedAreaChart({
         )}
       </div>
 
-      <Legend series={series} />
+      <Legend series={seriesWithDefaults} />
     </div>
   );
 }

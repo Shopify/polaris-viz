@@ -1,7 +1,7 @@
 import {useMemo} from 'react';
 import {scaleLinear} from 'd3-scale';
+import type {Data} from 'types';
 
-import type {BarData} from '../types';
 import {MIN_Y_LABEL_SPACE} from '../constants';
 import type {NumberLabelFormatter} from '../../../types';
 
@@ -11,7 +11,7 @@ export function useYScale({
   formatYAxisLabel,
 }: {
   drawableHeight: number;
-  data: BarData[];
+  data: Data[];
   formatYAxisLabel: NumberLabelFormatter;
 }) {
   const {yScale, ticks} = useMemo(() => {

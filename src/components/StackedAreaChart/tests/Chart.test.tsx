@@ -48,13 +48,29 @@ describe('<Chart />', () => {
   const mockProps = {
     series: [
       {
-        label: 'Asia',
-        data: [502, 1000, 2000, 1000, 100, 1000, 5000],
+        name: 'Asia',
+        data: [
+          {label: '1', rawValue: 502},
+          {label: '2', rawValue: 1000},
+          {label: '3', rawValue: 2000},
+          {label: '4', rawValue: 1000},
+          {label: '5', rawValue: 100},
+          {label: '6', rawValue: 1000},
+          {label: '7', rawValue: 5000},
+        ],
         color: 'colorPurple' as Color,
       },
       {
-        label: 'Africa',
-        data: [106, 107, 111, 133, 100, 767, 1766],
+        name: 'Africa',
+        data: [
+          {label: '1', rawValue: 106},
+          {label: '2', rawValue: 107},
+          {label: '3', rawValue: 111},
+          {label: '4', rawValue: 133},
+          {label: '5', rawValue: 100},
+          {label: '6', rawValue: 767},
+          {label: '7', rawValue: 1766},
+        ],
         color: 'colorTeal' as Color,
       },
     ],

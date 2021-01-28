@@ -17,7 +17,7 @@ import type {Series, RenderTooltipContentData} from './types';
 
 interface Props {
   xAxisLabels: string[];
-  series: Series[];
+  series: Required<Series>[];
   formatXAxisLabel: StringLabelFormatter;
   formatYAxisLabel: NumberLabelFormatter;
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
@@ -45,7 +45,7 @@ export function Chart({
   const areaStack = useMemo(
     () =>
       stack()
-        .keys(series.map(({label}) => label))
+        .keys(series.map(({name}) => name))
         .order(stackOrderReverse)
         .offset(stackOffsetNone),
     [series],
@@ -54,10 +54,10 @@ export function Chart({
   const formattedData = useMemo(
     () =>
       xAxisLabels.map((_, labelIndex) =>
-        series.reduce((acc, {label, data}) => {
-          const value = data[labelIndex];
+        series.reduce((acc, {name, data}) => {
+          const {rawValue} = data[labelIndex];
 
-          const dataPoint = {[label]: value};
+          const dataPoint = {[name]: rawValue};
           return Object.assign(acc, dataPoint);
         }, {}),
       ),
@@ -96,13 +96,13 @@ export function Chart({
     }
 
     const data = series.reduce<RenderTooltipContentData['data']>(
-      function removeNullsAndFormatData(tooltipData, {color, label, data}) {
-        const value = data[activePointIndex];
-        if (value == null) {
+      function removeNullsAndFormatData(tooltipData, {color, name, data}) {
+        const {rawValue} = data[activePointIndex];
+        if (rawValue == null) {
           return tooltipData;
         }
 
-        tooltipData.push({color, label, value});
+        tooltipData.push({color, label: name, value: rawValue});
         return tooltipData;
       },
       [],

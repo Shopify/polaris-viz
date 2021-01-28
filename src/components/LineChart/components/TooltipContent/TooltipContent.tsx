@@ -1,6 +1,7 @@
 import React from 'react';
+import type {Color} from 'types';
 
-import type {LineChartStyle} from '../../types';
+import type {LineStyle} from '../../types';
 import {LinePreview} from '../LinePreview';
 
 import styles from './TooltipContent.scss';
@@ -11,7 +12,8 @@ interface TooltipData {
     label: string;
     value: string;
   };
-  style?: Partial<LineChartStyle>;
+  color: Color;
+  lineStyle: LineStyle;
 }
 
 export interface TooltipContentProps {
@@ -21,9 +23,7 @@ export interface TooltipContentProps {
 export function TooltipContent({data}: TooltipContentProps) {
   return (
     <div className={styles.Container}>
-      {data.map(({name, point: {label, value}, style = {}}) => {
-        const {color = 'colorPurple', lineStyle = 'solid'} = style;
-
+      {data.map(({name, point: {label, value}, color, lineStyle}) => {
         return (
           <React.Fragment key={name}>
             <LinePreview color={color} lineStyle={lineStyle} />

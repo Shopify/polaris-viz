@@ -9,7 +9,15 @@ import {Legend} from '../components';
 describe('<MultiSeriesBarChart />', () => {
   const mockProps = {
     series: [
-      {data: [10, 20, 30], color: 'colorBlack' as Color, label: 'LABEL1'},
+      {
+        data: [
+          {label: 'Something', rawValue: 10},
+          {label: 'Another', rawValue: 20},
+          {label: 'Thing', rawValue: 30},
+        ],
+        color: 'colorBlack' as Color,
+        name: 'LABEL1',
+      },
     ],
     labels: ['Something', 'Another', 'Thing'],
   };

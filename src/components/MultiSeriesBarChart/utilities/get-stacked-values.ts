@@ -1,18 +1,20 @@
 import {stack, stackOffsetDiverging} from 'd3-shape';
 
-import type {Data} from '../types';
+import type {Series} from '../types';
 
-export function getStackedValues(series: Data[], labels: string[]) {
+export function getStackedValues(series: Series[], labels: string[]) {
   const barStack = stack()
     .offset(stackOffsetDiverging)
-    .keys(series.map(({label}) => label));
+    .keys(series.map(({name}) => name));
 
   const formattedData = labels.map((_, labelIndex) =>
-    series.reduce((acc, {label, data}) => {
+    series.reduce((acc, {name, data}) => {
       const indexData = data[labelIndex];
-      const newObject = {[label]: indexData == null ? 0 : indexData};
+      const namedData = {
+        [name]: indexData.rawValue == null ? 0 : indexData.rawValue,
+      };
 
-      return Object.assign(acc, newObject);
+      return Object.assign(acc, namedData);
     }, {}),
   );
 

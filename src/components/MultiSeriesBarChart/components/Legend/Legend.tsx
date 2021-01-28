@@ -1,21 +1,23 @@
 import React from 'react';
-import type {Data} from 'components/MultiSeriesBarChart/types';
+import type {Series} from 'components/MultiSeriesBarChart/types';
 
 import {SquareColorPreview} from '../../../SquareColorPreview';
 
 import styles from './Legend.scss';
 
+type LegendSeries = Required<Omit<Series, 'highlightColor'>>;
+
 interface Props {
-  series: Data[];
+  series: LegendSeries[];
 }
 
 export function Legend({series}: Props) {
   return (
     <div className={styles.Container}>
-      {series.map(({label, color}) => (
-        <div key={label} className={styles.InnerContainer}>
+      {series.map(({name, color}) => (
+        <div key={name} className={styles.InnerContainer}>
           <SquareColorPreview color={color} />
-          <div className={styles.Label}>{label}</div>
+          <div className={styles.Name}>{name}</div>
         </div>
       ))}
     </div>

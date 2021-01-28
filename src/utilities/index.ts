@@ -3,3 +3,7 @@ export {getTextWidth} from './get-text-width';
 export {clamp} from './clamp';
 export {getColorValue} from './get-color-value';
 export {uniqueId} from './unique-id';
+export {getDefaultColor} from './get-default-color';
+export {getTextContainerHeight} from './get-text-container-height';
+export {RightAngleTriangle} from './RightAngleTriangle';
+export {degreesToRadians} from './degrees-to-radians';
