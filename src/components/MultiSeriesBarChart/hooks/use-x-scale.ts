@@ -1,6 +1,8 @@
 import {useMemo} from 'react';
 import {scaleBand} from 'd3-scale';
 
+import {INNER_PADDING} from '../constants';
+
 export function useXScale({
   drawableWidth,
   data,
@@ -12,7 +14,7 @@ export function useXScale({
 }) {
   const xScale = scaleBand()
     .rangeRound([0, drawableWidth])
-    .paddingInner(0.3)
+    .paddingInner(INNER_PADDING)
     .domain(data.map((_, index) => index.toString()));
 
   const barWidthOffset = xScale.bandwidth() / 2;

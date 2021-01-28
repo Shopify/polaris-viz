@@ -27,3 +27,4 @@ export {
   MultiSeriesBarChartProps,
 } from './MultiSeriesBarChart';
 export {TooltipContent, TooltipContentProps} from './TooltipContent';
+export {BarChartXAxis} from './BarChartXAxis';

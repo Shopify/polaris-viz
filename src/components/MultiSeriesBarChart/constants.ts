@@ -1,5 +1,5 @@
 export const MIN_BAR_HEIGHT = 5;
-export const MARGIN = {Top: 5, Right: 20, Bottom: 25, Left: 0};
+export const MARGIN = {Top: 5, Right: 20, Bottom: 12, Left: 0};
 export const LINE_HEIGHT = 12;
 export const TICK_SIZE = 6;
 export const MIN_Y_LABEL_SPACE = 80;
@@ -13,3 +13,4 @@ export const SMALL_FONT_SIZE = 10;
 export const DEFAULT_HEIGHT = 250;
 export const BAR_SPACING = 0.5;
 export const DIAGONAL_ANGLE = -40;
+export const INNER_PADDING = 0.3;
