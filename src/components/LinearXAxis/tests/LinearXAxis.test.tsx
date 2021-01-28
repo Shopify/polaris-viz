@@ -17,29 +17,26 @@ jest.mock('d3-scale', () => ({
   },
 }));
 
-(global as any).DOMRect = class DOMRect {
-  width = 300;
-  height = 200;
+const mockProps = {
+  xScale: scaleLinear(),
+  labels: ['Test label 1', 'Test label 2', 'Test label 3'],
+  drawableWidth: 150,
+  fontSize: 12,
+  drawableHeight: 55,
+  xAxisDetails: {
+    maxXLabelHeight: 200,
+    maxDiagonalLabelLength: 10,
+    needsDiagonalLabels: true,
+    ticks: [0, 1, 2],
+    horizontalLabelWidth: 30,
+  },
 };
 
 describe('<LinearXAxis />', () => {
   it('renders an axis line with a tick at the start and end of the axis', () => {
     const axis = mount(
       <svg>
-        <LinearXAxis
-          xScale={scaleLinear()}
-          labels={['Test label 1', 'Test label 2', 'Test label 3']}
-          drawableWidth={150}
-          fontSize={12}
-          drawableHeight={55}
-          xAxisDetails={{
-            maxXLabelHeight: 200,
-            maxDiagonalLabelLength: 10,
-            needsDiagonalLabels: true,
-            ticks: [10, 20],
-            horizontalLabelWidth: 30,
-          }}
-        />
+        <LinearXAxis {...mockProps} />
       </svg>,
     );
 
@@ -52,20 +49,7 @@ describe('<LinearXAxis />', () => {
   it('renders a small, outer tick for each tick', () => {
     const axis = mount(
       <svg>
-        <LinearXAxis
-          xScale={scaleLinear()}
-          labels={['Test label 1', 'Test label 2', 'Test label 3']}
-          drawableWidth={150}
-          fontSize={12}
-          drawableHeight={55}
-          xAxisDetails={{
-            maxXLabelHeight: 200,
-            maxDiagonalLabelLength: 10,
-            needsDiagonalLabels: true,
-            ticks: [0, 1, 2],
-            horizontalLabelWidth: 30,
-          }}
-        />
+        <LinearXAxis {...mockProps} />
       </svg>,
     );
 
@@ -75,20 +59,7 @@ describe('<LinearXAxis />', () => {
   it('renders a vertical gridline for each tick using drawableHeight', () => {
     const axis = mount(
       <svg>
-        <LinearXAxis
-          xScale={scaleLinear()}
-          labels={['Test label 1', 'Test label 2', 'Test label 3']}
-          drawableWidth={150}
-          fontSize={12}
-          drawableHeight={55}
-          xAxisDetails={{
-            maxXLabelHeight: 200,
-            maxDiagonalLabelLength: 10,
-            needsDiagonalLabels: true,
-            ticks: [0, 1, 2],
-            horizontalLabelWidth: 30,
-          }}
-        />
+        <LinearXAxis {...mockProps} />
       </svg>,
     );
 
@@ -96,49 +67,22 @@ describe('<LinearXAxis />', () => {
   });
 
   it('renders a label for each tick', () => {
-    const labels = ['Test label 1', 'Test label 2', 'Test label 3'];
     const axis = mount(
       <svg>
-        <LinearXAxis
-          xScale={scaleLinear()}
-          drawableWidth={150}
-          fontSize={12}
-          labels={labels}
-          drawableHeight={55}
-          xAxisDetails={{
-            maxXLabelHeight: 200,
-            maxDiagonalLabelLength: 10,
-            needsDiagonalLabels: true,
-            ticks: [0, 1, 2],
-            horizontalLabelWidth: 30,
-          }}
-        />
+        <LinearXAxis {...mockProps} />
       </svg>,
     );
 
     const text = axis.findAll('div')!;
     const textContent = text.map((node) => node.prop('children'));
 
-    expect(textContent).toStrictEqual(labels);
+    expect(textContent).toStrictEqual(mockProps.labels);
   });
 
   it('does not render any labels if the labels prop is empty', () => {
     const axis = mount(
       <svg>
-        <LinearXAxis
-          xScale={scaleLinear()}
-          drawableWidth={150}
-          fontSize={12}
-          labels={[]}
-          drawableHeight={55}
-          xAxisDetails={{
-            maxXLabelHeight: 200,
-            maxDiagonalLabelLength: 10,
-            needsDiagonalLabels: true,
-            ticks: [10, 20],
-            horizontalLabelWidth: 30,
-          }}
-        />
+        <LinearXAxis {...mockProps} labels={[]} />
       </svg>,
     );
 

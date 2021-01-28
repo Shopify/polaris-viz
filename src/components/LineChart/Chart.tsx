@@ -56,11 +56,6 @@ export function Chart({
     xAxisLabels: xAxisLabels == null ? [] : xAxisLabels,
   });
 
-  const longestSeriesLength = series.reduce<number>(
-    (max, currentSeries) => Math.max(max, currentSeries.data.length - 1),
-    0,
-  );
-
   const marginBottom =
     xAxisLabels == null
       ? SPACING_TIGHT
@@ -79,6 +74,10 @@ export function Chart({
 
   const drawableWidth =
     axisMargin == null ? null : dimensions.width - Margin.Right - axisMargin;
+  const longestSeriesLength = series.reduce<number>(
+    (max, currentSeries) => Math.max(max, currentSeries.data.length - 1),
+    0,
+  );
 
   const {xScale} = useLinearXScale({drawableWidth, longestSeriesLength});
 
