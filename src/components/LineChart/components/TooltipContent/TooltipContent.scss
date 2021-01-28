@@ -21,3 +21,9 @@
   column-gap: $spacing-tight;
   row-gap: $spacing-tight;
 }
+
+.Title {
+  @include tooltip-emphasis;
+  grid-column: 1 / span 3;
+  margin-bottom: $spacing-extra-tight;
+}

@@ -18,11 +18,13 @@ interface TooltipData {
 
 export interface TooltipContentProps {
   data: TooltipData[];
+  title?: string;
 }
 
-export function TooltipContent({data}: TooltipContentProps) {
+export function TooltipContent({data, title}: TooltipContentProps) {
   return (
     <div className={styles.Container}>
+      {title == null ? null : <div className={styles.Title}>{title}</div>}
       {data.map(({name, point: {label, value}, color, lineStyle}) => {
         return (
           <React.Fragment key={name}>

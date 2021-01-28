@@ -143,6 +143,7 @@ interface LineChartTooltipContentProps {
       lineStyle?: LineStyle;
     };
   }[];
+  title?: string;
 }
 ```
 
@@ -175,6 +176,14 @@ The values to display for the given data point.
 | `{color?: Color; lineStyle?: LineStyle}` | `undefined` |
 
 This sets the style for the line drawn next to the point label. `color` accepts any [Polaris Viz accepted color](/documentation/Polaris-Viz-colors.md) and defaults to `colorPurple`. `lineStyle` accepts `solid` and `dashed`, and defaults to `solid`.
+
+##### title
+
+| type     |
+| -------- |
+| `string` |
+
+The title to display at the top of the tooltip.
 
 ### BarChartTooltipContent
 
