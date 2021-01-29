@@ -20,6 +20,7 @@ export const MIN_HORIZONTAL_TICKS = 3;
 export const LINE_HEIGHT = 15;
 export const MAX_TEXT_BOX_HEIGHT = LINE_HEIGHT * 3;
 export const SMALL_LABEL_WIDTH = 50;
+export const LABEL_SPACE_MINUS_FIRST_AND_LAST = 0.6;
 
 export enum Margin {
   Top = SPACING_TIGHT,

@@ -15,13 +15,17 @@ import {
   Margin,
   SPACING_EXTRA_TIGHT,
   SMALL_LABEL_WIDTH,
+  LABEL_SPACE_MINUS_FIRST_AND_LAST,
 } from '../constants';
 import {DataSeries, StringLabelFormatter, NumberLabelFormatter} from '../types';
 
 import {useLinearXScale} from './useLinearXScale';
 
 function getDatumSpace(width: number, numberOfTicks: number) {
-  return (width / numberOfTicks) * 0.6 + SPACING_EXTRA_TIGHT;
+  return (
+    (width / numberOfTicks) * LABEL_SPACE_MINUS_FIRST_AND_LAST +
+    SPACING_EXTRA_TIGHT
+  );
 }
 
 export function useLinearXAxisDetails({
@@ -43,6 +47,7 @@ export function useLinearXAxisDetails({
   // initially tries to use all d3's ticks, then tries reducing them if neccessary
   // then finally makes them diagonal
 
+  // determine how much space will be taken up by the yaxis, in order to know width of xaxis
   const longestYLabel = useMemo(() => {
     const flattenedYLabels = Array.prototype.concat.apply(
       [],
@@ -72,6 +77,7 @@ export function useLinearXAxisDetails({
     [series],
   );
 
+  // use the xscale method on the estimated width, to use the ticks method
   const initialXScale = useLinearXScale({
     drawableWidth,
     longestSeriesLength,
@@ -80,13 +86,16 @@ export function useLinearXAxisDetails({
   const ticks =
     initialXScale.xScale == null ? [] : initialXScale.xScale.ticks();
 
+  // xAxis label spacing will be based on the longest label
   const longestXLabelDetails = useMemo(() => {
     const xLabels = xAxisLabels.map((label) => formatXAxisLabel(label));
     return getLongestLabelDetails(xLabels, fontSize);
   }, [fontSize, formatXAxisLabel, xAxisLabels]);
 
+  // the actual space available will each label
   const datumXLabelSpace = getDatumSpace(drawableWidth, ticks.length);
 
+  // layout option 1: use full label horizontally, allow it to wrap up to three lines
   const initialHorizontalLabelHeight = useMemo(
     () =>
       getTextContainerHeight({
@@ -101,6 +110,7 @@ export function useLinearXAxisDetails({
     longestXLabelDetails.length < SMALL_LABEL_WIDTH &&
     initialHorizontalLabelHeight > LINE_HEIGHT;
 
+  // determine if we need to reduce the ticks
   const needToReduceTicks =
     smallLabelGoingMultiline ||
     initialHorizontalLabelHeight > MAX_TEXT_BOX_HEIGHT ||
@@ -113,6 +123,7 @@ export function useLinearXAxisDetails({
     reducedTicks.length,
   );
 
+  // layout option 2: see if layout is acceptable with fewer ticks
   const reducedHorizontalLabelHeight = useMemo(
     () =>
       getTextContainerHeight({
@@ -125,12 +136,14 @@ export function useLinearXAxisDetails({
 
   const horizontalTicks = needToReduceTicks ? reducedTicks : ticks;
 
+  // determine if we need to go to our last option: making the ticks go diagonal
   const needsDiagonalLabels =
     needToReduceTicks &&
     (reducedTicksDatumXLabelSpace < MIN_HORIZONTAL_LABEL_SPACE ||
       reducedTicks.length < MIN_HORIZONTAL_TICKS ||
       reducedHorizontalLabelHeight > MAX_TEXT_BOX_HEIGHT);
 
+  // use a trig utility to determine how long the diagonal labels can be
   const {angledLabelMaxLength, maxDiagonalLabelHeight} = getMaxDiagonalDetails(
     longestXLabelDetails.length,
     estimatedYAxisWidth,
@@ -141,19 +154,23 @@ export function useLinearXAxisDetails({
     2,
   );
 
+  // reduce the ticks if they start runing into each other
   const diagonalTicks = ticks.filter(
     (_, index) => index % Math.abs(diagonalLabelSpacePerDatum) === 0,
   );
 
+  // the max diagonal length is whatever is smaller: longest label or where it gets cut off
   const maxDiagonalLabelLength = Math.min(
     longestXLabelDetails.length,
     angledLabelMaxLength,
   );
 
+  // the max horizontal height is determined by whether the ticks are reduced
   const horizontalLabelHeight = needToReduceTicks
     ? reducedHorizontalLabelHeight
     : initialHorizontalLabelHeight;
 
+  // max height is determined by whether the labels are diagonal or not
   const maxXLabelHeight = needsDiagonalLabels
     ? maxDiagonalLabelHeight
     : horizontalLabelHeight;

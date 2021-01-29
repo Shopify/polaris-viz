@@ -30,11 +30,15 @@ interface Props {
   drawableHeight: number;
 }
 
-function getTextAlign(
-  needsDiagonalLabels: boolean,
-  firstLabel: boolean,
-  adjustedLastLabel: boolean,
-) {
+function getTextAlign({
+  needsDiagonalLabels,
+  firstLabel,
+  adjustedLastLabel,
+}: {
+  needsDiagonalLabels: boolean;
+  firstLabel: boolean;
+  adjustedLastLabel: boolean;
+}) {
   if (needsDiagonalLabels || adjustedLastLabel) {
     return 'right';
   } else if (firstLabel) {
@@ -73,7 +77,9 @@ function Axis({
           firstLabel: value === 0,
         };
       })
-      .filter(({value}) => value != null);
+      .filter(function removeMismatchedTicks({value}) {
+        return value != null;
+      });
   }, [labels, ticks, xScale]);
 
   const [xScaleMin, xScaleMax] = xScale.range();
@@ -103,18 +109,18 @@ function Axis({
           : horizontalLabelWidth;
 
         const firstLabelAdjustment = firstLabel ? textWidth / 2 : 0;
-        const lastTickNeedsAdjustment =
+        const adjustedLastLabel =
           Math.floor(xOffset + horizontalLabelWidth / 2) > drawableWidth;
 
-        const horizontalXPosition = lastTickNeedsAdjustment
+        const horizontalXPosition = adjustedLastLabel
           ? -horizontalLabelWidth
           : -horizontalLabelWidth / 2;
 
-        const textAlign = getTextAlign(
+        const textAlign = getTextAlign({
           needsDiagonalLabels,
           firstLabel,
-          lastTickNeedsAdjustment,
-        );
+          adjustedLastLabel,
+        });
 
         const tickContainerTransform = needsDiagonalLabels
           ? `translate(${-diagonalLabelOffset -
