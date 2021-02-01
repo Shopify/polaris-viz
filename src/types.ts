@@ -3,9 +3,14 @@ export interface Data {
   rawValue: number;
 }
 
-export interface DataSeries {
+export interface NullableData {
+  label: string;
+  rawValue: number | null;
+}
+
+export interface DataSeries<T> {
   name: string;
-  data: Data[];
+  data: T[];
   color?: Color;
 }
 
