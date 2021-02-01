@@ -1,7 +1,7 @@
 import {useMemo} from 'react';
 import {scaleLinear} from 'd3-scale';
 
-export function useXScale({
+export function useLinearXScale({
   drawableWidth,
   longestSeriesLength,
 }: {

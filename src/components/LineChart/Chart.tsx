@@ -1,6 +1,14 @@
 import React, {useState, useMemo} from 'react';
 import {line} from 'd3-shape';
 
+import {useLinearXAxisDetails, useLinearXScale} from '../../hooks';
+import {
+  SMALL_SCREEN,
+  SMALL_FONT_SIZE,
+  FONT_SIZE,
+  SPACING_TIGHT,
+  Margin,
+} from '../../constants';
 import {LinearXAxis} from '../LinearXAxis';
 import {YAxis} from '../YAxis';
 import {eventPoint} from '../../utilities';
@@ -9,8 +17,7 @@ import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 import {TooltipContainer} from '../TooltipContainer';
 
 import {Series, RenderTooltipContentData} from './types';
-import {Margin, SPACING_TIGHT} from './constants';
-import {useXScale, useYScale} from './hooks';
+import {useYScale} from './hooks';
 import {Line} from './components';
 import styles from './Chart.scss';
 
@@ -37,7 +44,23 @@ export function Chart({
     y: number;
   } | null>(null);
 
-  const marginBottom = xAxisLabels == null ? SPACING_TIGHT : Margin.Bottom;
+  const fontSize =
+    dimensions.width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
+
+  const xAxisDetails = useLinearXAxisDetails({
+    series,
+    fontSize,
+    chartDimensions: dimensions,
+    formatXAxisLabel,
+    formatYAxisLabel,
+    xAxisLabels: xAxisLabels == null ? [] : xAxisLabels,
+  });
+
+  const marginBottom =
+    xAxisLabels == null
+      ? SPACING_TIGHT
+      : Number(Margin.Bottom) + xAxisDetails.maxXLabelHeight;
+
   const drawableHeight = dimensions.height - Margin.Top - marginBottom;
 
   const formattedLabels =
@@ -56,7 +79,7 @@ export function Chart({
     0,
   );
 
-  const {xScale} = useXScale({drawableWidth, longestSeriesLength});
+  const {xScale} = useLinearXScale({drawableWidth, longestSeriesLength});
 
   const tooltipMarkup = useMemo(() => {
     if (activePointIndex == null) {
@@ -128,16 +151,21 @@ export function Chart({
             marginBottom})`}
         >
           <LinearXAxis
+            xAxisDetails={xAxisDetails}
             xScale={xScale}
             labels={formattedLabels}
-            dimensions={dimensions}
+            drawableWidth={drawableWidth}
+            fontSize={fontSize}
             drawableHeight={drawableHeight}
-            axisMargin={axisMargin}
           />
         </g>
 
         <g transform={`translate(${axisMargin},${Margin.Top})`}>
-          <YAxis ticks={ticks} drawableWidth={drawableWidth} />
+          <YAxis
+            ticks={ticks}
+            drawableWidth={drawableWidth}
+            fontSize={fontSize}
+          />
         </g>
 
         {activePointIndex == null ? null : (

@@ -1,86 +1,99 @@
 import React, {useMemo} from 'react';
 import {ScaleLinear} from 'd3-scale';
-import {colorSky, spacingLoose} from '@shopify/polaris-tokens';
+import {colorSky} from '@shopify/polaris-tokens';
 
-import {getTextWidth} from '../../utilities';
+import {RightAngleTriangle} from '../../utilities';
 import {
-  SPACING_TIGHT,
-  SMALL_WIDTH,
-  MIN_LABEL_SPACE,
   TICK_SIZE,
-  FONT_SIZE,
+  SPACING_EXTRA_TIGHT,
+  DIAGONAL_ANGLE,
+  LINE_HEIGHT,
+  SPACING_TIGHT,
 } from '../../constants';
 
 import styles from './LinearXAxis.scss';
 
-interface Props {
-  xScale: ScaleLinear<number, number>;
-  labels?: string[] | null;
-  dimensions: DOMRect;
-  drawableHeight: number;
-  axisMargin: number;
+interface XAxisDetails {
+  maxXLabelHeight: number;
+  maxDiagonalLabelLength: number;
+  needsDiagonalLabels: boolean;
+  ticks: number[];
+  horizontalLabelWidth: number;
 }
 
-function getTextXTransform({
-  index,
-  value,
-  xOffset,
-  axisMargin,
-  xScaleMax,
-}: {
-  index: number;
-  value: string;
-  xOffset: number;
-  axisMargin: number;
-  xScaleMax: number;
-}) {
-  const textHalfWidth = getTextWidth({text: value, fontSize: FONT_SIZE}) / 2;
-  const firstLabel = index === 0;
+interface Props {
+  xScale: ScaleLinear<number, number>;
+  labels: string[] | null;
+  drawableWidth: number;
+  fontSize: number;
+  xAxisDetails: XAxisDetails;
+  drawableHeight: number;
+}
 
-  if (firstLabel) {
-    const overflowingFirstLabel = textHalfWidth + SPACING_TIGHT > axisMargin;
-    return overflowingFirstLabel
-      ? textHalfWidth - axisMargin + SPACING_TIGHT
-      : 0;
+function getTextAlign({
+  needsDiagonalLabels,
+  firstLabel,
+  adjustedLastLabel,
+}: {
+  needsDiagonalLabels: boolean;
+  firstLabel: boolean;
+  adjustedLastLabel: boolean;
+}) {
+  if (needsDiagonalLabels || adjustedLastLabel) {
+    return 'right';
+  } else if (firstLabel) {
+    return 'left';
   } else {
-    const textEndPoint = xOffset + textHalfWidth;
-    const overflowingLabel = textEndPoint > xScaleMax;
-    return overflowingLabel
-      ? (textEndPoint - xScaleMax + SPACING_TIGHT) * -1
-      : 0;
+    return 'center';
   }
 }
 
-function Axis({xScale, drawableHeight, dimensions, labels, axisMargin}: Props) {
-  const ticks = useMemo(() => {
+function Axis({
+  xScale,
+  labels,
+  xAxisDetails,
+  fontSize,
+  drawableWidth,
+  drawableHeight,
+}: Props) {
+  const {
+    maxDiagonalLabelLength,
+    maxXLabelHeight,
+    needsDiagonalLabels,
+    ticks,
+    horizontalLabelWidth,
+  } = xAxisDetails;
+
+  const tickDetails = useMemo(() => {
     if (labels == null) {
       return [];
     }
-    const labelsWidths = labels.map((label) =>
-      getTextWidth({fontSize: FONT_SIZE, text: label}),
-    );
-    const longestLabelWidth = Math.max(...labelsWidths);
-    const maxLabelSpace = Math.max(longestLabelWidth * 2.5, MIN_LABEL_SPACE);
-    const maxTicks = Math.max(1, Math.floor(dimensions.width / maxLabelSpace));
-    const idealNumberOfTicks = Math.min(labels.length - 1, maxTicks);
-    const generatedTicks = xScale.ticks(idealNumberOfTicks);
 
-    if (
-      generatedTicks.length > idealNumberOfTicks &&
-      dimensions.width < SMALL_WIDTH
-    ) {
-      generatedTicks.pop();
-    }
-
-    return generatedTicks.map((value) => {
-      return {
-        value: labels[value],
-        xOffset: xScale(value),
-      };
-    });
-  }, [labels, dimensions, xScale]);
+    return ticks
+      .map((value) => {
+        return {
+          value: labels[value],
+          xOffset: xScale(value),
+          firstLabel: value === 0,
+        };
+      })
+      .filter(function removeMismatchedTicks({value}) {
+        return value != null;
+      });
+  }, [labels, ticks, xScale]);
 
   const [xScaleMin, xScaleMax] = xScale.range();
+
+  const diagonalLabelOffset = new RightAngleTriangle({
+    sideC: maxDiagonalLabelLength,
+    sideA: maxXLabelHeight,
+  }).getOppositeLength();
+
+  const textHeight = needsDiagonalLabels ? LINE_HEIGHT : maxXLabelHeight;
+
+  const textContainerClassName = needsDiagonalLabels
+    ? styles.DiagonalText
+    : styles.Text;
 
   return (
     <React.Fragment>
@@ -90,21 +103,34 @@ function Axis({xScale, drawableHeight, dimensions, labels, axisMargin}: Props) {
         stroke={colorSky}
       />
 
-      {ticks.map(({value, xOffset}, index) => {
-        if (value == null) {
-          return null;
-        }
+      {tickDetails.map(({value, xOffset, firstLabel}, index) => {
+        const textWidth = needsDiagonalLabels
+          ? maxDiagonalLabelLength
+          : horizontalLabelWidth;
 
-        const textXTransform = getTextXTransform({
-          index,
-          value,
-          xOffset,
-          axisMargin,
-          xScaleMax,
+        const firstLabelAdjustment = firstLabel ? textWidth / 2 : 0;
+        const adjustedLastLabel =
+          Math.floor(xOffset + horizontalLabelWidth / 2) > drawableWidth;
+
+        const horizontalXPosition = adjustedLastLabel
+          ? -horizontalLabelWidth
+          : -horizontalLabelWidth / 2;
+
+        const textAlign = getTextAlign({
+          needsDiagonalLabels,
+          firstLabel,
+          adjustedLastLabel,
         });
 
+        const tickContainerTransform = needsDiagonalLabels
+          ? `translate(${-diagonalLabelOffset -
+              SPACING_EXTRA_TIGHT} ${maxXLabelHeight +
+              SPACING_EXTRA_TIGHT}) rotate(${DIAGONAL_ANGLE})`
+          : `translate(${horizontalXPosition +
+              firstLabelAdjustment} ${SPACING_TIGHT})`;
+
         return (
-          <g key={`${value}-${index}`} transform={`translate(${xOffset}, 0)`}>
+          <g key={index} transform={`translate(${xOffset}, 0)`}>
             <line y2={TICK_SIZE} stroke={colorSky} />
             <line
               y1="0"
@@ -112,16 +138,21 @@ function Axis({xScale, drawableHeight, dimensions, labels, axisMargin}: Props) {
               stroke={colorSky}
               strokeDasharray="3 2"
             />
-            <text
-              className={styles.Text}
-              style={{
-                fontSize: `${FONT_SIZE}px`,
-                textAnchor: 'middle',
-                transform: `translate(${textXTransform}px, ${spacingLoose})`,
-              }}
+            <foreignObject
+              width={textWidth}
+              height={textHeight}
+              transform={tickContainerTransform}
             >
-              {value}
-            </text>
+              <div
+                className={textContainerClassName}
+                style={{
+                  fontSize,
+                  textAlign,
+                }}
+              >
+                {value}
+              </div>
+            </foreignObject>
           </g>
         );
       })}

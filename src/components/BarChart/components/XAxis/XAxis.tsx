@@ -10,7 +10,7 @@ import {
   LINE_HEIGHT,
   DEFAULT_LABEL_RATIO,
   SPACING_BASE_TIGHT,
-} from '../../constants';
+} from '../../../../constants';
 import {RightAngleTriangle} from '../../../../utilities';
 
 import styles from './XAxis.scss';

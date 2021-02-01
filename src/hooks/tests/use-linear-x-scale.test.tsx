@@ -2,7 +2,7 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
 
-import {useXScale} from '../use-x-scale';
+import {useLinearXScale} from '../useLinearXScale';
 
 jest.mock('d3-scale', () => ({
   scaleLinear: jest.fn(() => {
@@ -33,7 +33,7 @@ describe('useXScale', () => {
     });
 
     function TestComponent() {
-      useXScale({
+      useLinearXScale({
         drawableWidth: 200,
         longestSeriesLength: 50,
       });
@@ -59,7 +59,7 @@ describe('useXScale', () => {
     });
 
     function TestComponent() {
-      useXScale({
+      useLinearXScale({
         drawableWidth: 200,
         longestSeriesLength: 50,
       });
