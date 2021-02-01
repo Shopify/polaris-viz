@@ -17,7 +17,13 @@ import {
   SMALL_LABEL_WIDTH,
   LABEL_SPACE_MINUS_FIRST_AND_LAST,
 } from '../constants';
-import {DataSeries, StringLabelFormatter, NumberLabelFormatter} from '../types';
+import {
+  StringLabelFormatter,
+  NumberLabelFormatter,
+  NullableData,
+  Data,
+  DataSeries,
+} from '../types';
 
 import {useLinearXScale} from './useLinearXScale';
 
@@ -28,6 +34,15 @@ function getDatumSpace(width: number, numberOfTicks: number) {
   );
 }
 
+export interface ChartDetails {
+  series: DataSeries<Data | NullableData>[];
+  fontSize: number;
+  chartDimensions: DOMRect;
+  formatXAxisLabel: StringLabelFormatter;
+  formatYAxisLabel: NumberLabelFormatter;
+  xAxisLabels: string[];
+}
+
 export function useLinearXAxisDetails({
   series,
   fontSize,
@@ -35,27 +50,20 @@ export function useLinearXAxisDetails({
   formatXAxisLabel,
   formatYAxisLabel,
   xAxisLabels,
-}: {
-  series: DataSeries[];
-  fontSize: number;
-  chartDimensions: DOMRect;
-  formatXAxisLabel: StringLabelFormatter;
-  formatYAxisLabel: NumberLabelFormatter;
-  xAxisLabels: string[];
-}) {
-  // determine how much space will be taken up by the yaxis, in order to know width of xaxis
+}: ChartDetails) {
+  // determine how much space will be taken up by the yaxis and its labels, in order to know width of xaxis
   const longestYLabel = useMemo(() => {
     const flattenedYLabels = Array.prototype.concat.apply(
       [],
       series.map(({data}) =>
-        data.map(({rawValue}) => formatYAxisLabel(rawValue)),
+        data.map(({rawValue}) =>
+          rawValue == null ? '' : formatYAxisLabel(rawValue),
+        ),
       ),
     );
 
     return Math.max(
-      ...flattenedYLabels.map((label) =>
-        getTextWidth({text: formatYAxisLabel(label), fontSize}),
-      ),
+      ...flattenedYLabels.map((label) => getTextWidth({text: label, fontSize})),
     );
   }, [fontSize, formatYAxisLabel, series]);
 
@@ -73,7 +81,7 @@ export function useLinearXAxisDetails({
     [series],
   );
 
-  // use the xscale method on the estimated width, to use the ticks method
+  // using the estimated width, use the xscale hook so we can then get the d3's estimated ticks
   const initialXScale = useLinearXScale({
     drawableWidth,
     longestSeriesLength,

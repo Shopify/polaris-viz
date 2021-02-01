@@ -92,9 +92,16 @@ describe('<Chart />', () => {
     const chart = mount(<Chart {...mockProps} />);
     expect(chart).toContainReactComponent(LinearXAxis, {
       labels: ['Day 1', 'Day 2'],
-      dimensions: new DOMRect(),
-      drawableHeight: 212,
-      axisMargin: 24,
+      drawableHeight: 230,
+      xAxisDetails: {
+        maxXLabelHeight: 0,
+        maxDiagonalLabelLength: 0,
+        needsDiagonalLabels: false,
+        ticks: [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6],
+        horizontalLabelWidth: 26.523076923076925,
+      },
+      fontSize: 12,
+      drawableWidth: 472,
     });
   });
 
@@ -107,15 +114,14 @@ describe('<Chart />', () => {
     expect(chart).toContainReactComponent(LinearXAxis, {
       labels: ['Formatted: Day 1', 'Formatted: Day 2'],
     });
-    expect(formatXAxisLabelSpy).toHaveBeenCalledTimes(2);
   });
 
   it('renders a YAxis', () => {
     const chart = mount(<Chart {...mockProps} />);
     expect(chart).toContainReactComponent(YAxis, {
       ticks: [
-        {value: 0, formattedValue: '0', yOffset: 212},
-        {value: 1000, formattedValue: '1000', yOffset: 106},
+        {value: 0, formattedValue: '0', yOffset: 230},
+        {value: 1000, formattedValue: '1000', yOffset: 115},
         {value: 2000, formattedValue: '2000', yOffset: 0},
       ],
       drawableWidth: 472,
@@ -126,7 +132,7 @@ describe('<Chart />', () => {
     const chart = mount(<Chart {...mockProps} />);
     expect(chart).toContainReactComponent(StackedAreas, {
       width: 472,
-      height: 212,
+      height: 230,
       transform: 'translate(24,8)',
       colors: ['colorPurple', 'colorTeal'],
       opacity: 1,
