@@ -1,8 +1,8 @@
 import {Series as ShapeSeries} from 'd3-shape';
 
-import {Color, DataSeries} from '../../types';
+import {Color, DataSeries, Data} from '../../types';
 
-export interface Series extends DataSeries {
+export interface Series extends DataSeries<Data> {
   highlightColor?: Color;
 }
 
