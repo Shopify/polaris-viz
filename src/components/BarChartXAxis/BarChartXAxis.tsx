@@ -11,11 +11,17 @@ import {
   DEFAULT_LABEL_RATIO,
   SPACING_BASE_TIGHT,
 } from '../../constants';
-import {RightAngleTriangle} from '../../../../utilities';
+import {RightAngleTriangle} from '../../utilities';
 
-import styles from './XAxis.scss';
+import styles from './BarChartXAxis.scss';
 
-export function XAxis({
+interface XAxisDetails {
+  maxXLabelHeight: number;
+  maxDiagonalLabelLength: number;
+  needsDiagonalLabels: boolean;
+}
+
+export function BarChartXAxis({
   labels,
   xScale,
   fontSize,
@@ -26,11 +32,7 @@ export function XAxis({
   labels: {value: string; xOffset: number}[];
   fontSize: number;
   showFewerLabels: boolean;
-  xAxisDetails: {
-    maxXLabelHeight: number;
-    maxDiagonalLabelLength: number;
-    needsDiagonalLabels: boolean;
-  };
+  xAxisDetails: XAxisDetails;
 }) {
   const [xScaleMin, xScaleMax] = xScale.range();
   const {

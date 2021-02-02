@@ -1,53 +1,44 @@
-import {Data} from 'types';
-
-import {
-  degreesToRadians,
-  getTextWidth,
-  getTextContainerHeight,
-  RightAngleTriangle,
-} from '../../../utilities';
 import {
   MARGIN,
   DIAGONAL_ANGLE,
   SPACING_LOOSE,
-  SPACING_TIGHT,
   MAX_TEXT_BOX_HEIGHT,
   MIN_HORIZONTAL_LABEL_SPACE,
 } from '../constants';
 
-export function getXAxisDetails({
-  data,
-  fontSize,
-  formatYAxisLabel,
-  formatXAxisLabel,
-  chartDimensions,
-}: {
-  data: Data[];
+import {degreesToRadians} from './degrees-to-radians';
+import {getTextWidth} from './get-text-width';
+import {getTextContainerHeight} from './get-text-container-height';
+import {RightAngleTriangle} from './RightAngleTriangle';
+
+interface LayoutDetails {
+  yAxisLabelWidth: number;
   fontSize: number;
   formatYAxisLabel: (val: number) => string;
-  formatXAxisLabel: (val: string) => string;
+  xLabels: string[];
   chartDimensions: DOMRect;
-}) {
-  // for the purposes of the xaxis, estimate amount of space yaxis will take up
-  // at this point we do not have yscale info to use
-  const approxLongestYLabel = Math.max(
-    ...data.map(({rawValue}) =>
-      getTextWidth({text: formatYAxisLabel(rawValue), fontSize}),
-    ),
-  );
-  const estimatedYAxisWidth = SPACING_TIGHT + approxLongestYLabel;
+  padding?: number;
+}
 
+export function getBarXAxisDetails({
+  yAxisLabelWidth,
+  fontSize,
+  xLabels,
+  chartDimensions,
+  padding = 0,
+}: LayoutDetails) {
   // amount of space for label within individual column of data
   const datumXLabelSpace =
-    (chartDimensions.width - estimatedYAxisWidth - MARGIN.Right) / data.length;
+    ((chartDimensions.width - yAxisLabelWidth - MARGIN.Right) *
+      (1 - padding / 2)) /
+    xLabels.length;
 
   // calculations are be based on the longest label
-  const longestXLabelDetails = data
-    .map(({label}) => {
-      const formattedLabel = formatXAxisLabel(label);
+  const longestXLabelDetails = xLabels
+    .map((label) => {
       return {
-        label: formattedLabel,
-        length: getTextWidth({text: formattedLabel, fontSize}) + SPACING_LOOSE,
+        label,
+        length: getTextWidth({text: label, fontSize}) + SPACING_LOOSE,
       };
     })
     .reduce((prev, current) => (prev.length > current.length ? prev : current));
@@ -72,7 +63,7 @@ export function getXAxisDetails({
   // use COS and pythagorean theorem to determine
   // height that a diagonal label would be cut off at
   const firstBarMidpoint = datumXLabelSpace / 2;
-  const distanceToFirstTick = estimatedYAxisWidth + firstBarMidpoint;
+  const distanceToFirstTick = yAxisLabelWidth + firstBarMidpoint;
   const angledLabelMaxLength =
     distanceToFirstTick / Math.cos(degreesToRadians(DIAGONAL_ANGLE));
 

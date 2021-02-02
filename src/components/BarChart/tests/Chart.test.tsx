@@ -1,10 +1,10 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {Color} from 'types';
-import {YAxis, TooltipContainer} from 'components';
+import {YAxis, TooltipContainer, BarChartXAxis} from 'components';
 
 import {Chart} from '../Chart';
-import {XAxis, Bar} from '../components';
+import {Bar} from '../components';
 
 (global as any).DOMRect = class DOMRect {
   width = 500;
@@ -50,7 +50,7 @@ describe('Chart />', () => {
 
   it('renders an xAxis', () => {
     const barChart = mount(<Chart {...mockProps} />);
-    expect(barChart).toContainReactComponent(XAxis);
+    expect(barChart).toContainReactComponent(BarChartXAxis);
   });
 
   it('renders an yAxis', () => {

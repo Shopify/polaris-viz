@@ -2,7 +2,7 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleBand} from 'd3-scale';
 
-import {XAxis} from '../XAxis';
+import {BarChartXAxis} from '../BarChartXAxis';
 
 jest.mock('d3-scale', () => ({
   scaleBand: () => {
@@ -12,28 +12,33 @@ jest.mock('d3-scale', () => ({
 
     scale.ticks = () => [0, 1, 2];
     scale.range = () => [0, 2];
+    scale.bandwidth = () => 10;
 
     return scale;
   },
 }));
 
-describe('<XAxis/>', () => {
+describe('<BarChartXAxis/>', () => {
   const mockProps = {
     range: [0, 100],
-    xScale: scaleBand(),
-    showFewerLabels: false,
-    needsDiagonalLabels: false,
-    fontSize: 12,
+    fontSize: 10,
     labels: [
       {value: 'A label that is long', xOffset: 10},
       {value: 'Label', xOffset: 20},
     ],
+    xScale: scaleBand(),
+    showFewerLabels: false,
+    xAxisDetails: {
+      needsDiagonalLabels: false,
+      maxXLabelHeight: 40,
+      maxDiagonalLabelLength: 100,
+    },
   };
 
   it('renders a path', () => {
     const axis = mount(
       <svg>
-        <XAxis {...mockProps} />,
+        <BarChartXAxis {...mockProps} />,
       </svg>,
     );
 
@@ -46,54 +51,56 @@ describe('<XAxis/>', () => {
   it('renders a line for each label value', () => {
     const axis = mount(
       <svg>
-        <XAxis {...mockProps} />,
+        <BarChartXAxis {...mockProps} />,
       </svg>,
     );
 
     expect(axis).toContainReactComponentTimes('line', 2);
   });
 
-  it('renders a text element for each label value', () => {
+  it('renders a foreignObject for each label value', () => {
     const axis = mount(
       <svg>
-        <XAxis {...mockProps} />,
+        <BarChartXAxis {...mockProps} />,
       </svg>,
     );
 
-    expect(axis).toContainReactComponentTimes('text', 2);
+    expect(axis).toContainReactComponentTimes('foreignObject', 2);
   });
 
-  it('hides alternating elements if showFewerLabels is true', () => {
+  it('hides elements if showFewerLabels is true and there is not enough room', () => {
     const axis = mount(
       <svg>
-        <XAxis {...mockProps} showFewerLabels />,
+        <BarChartXAxis {...mockProps} showFewerLabels />,
       </svg>,
     );
 
-    expect(axis).toContainReactComponentTimes('text', 1);
+    expect(axis).toContainReactComponentTimes('foreignObject', 1);
   });
 
   it('displays text horizontally by default', () => {
     const axis = mount(
       <svg>
-        <XAxis {...mockProps} />,
+        <BarChartXAxis {...mockProps} />,
       </svg>,
     );
 
-    const text = axis.find('text');
-    expect(text!.props.textAnchor).toBe('middle');
-    expect(text!.props.transform).toBe('translate(0 24)');
+    const foreignObjectTransform = axis.find('foreignObject')!.props.transform;
+    expect(foreignObjectTransform).not.toContain('rotate');
   });
 
   it('displays text diagonally if needsDiagonalLabels is true', () => {
     const axis = mount(
       <svg>
-        <XAxis {...mockProps} needsDiagonalLabels />,
+        <BarChartXAxis
+          {...mockProps}
+          xAxisDetails={{...mockProps.xAxisDetails, needsDiagonalLabels: true}}
+        />
+        ,
       </svg>,
     );
 
-    const text = axis.find('text');
-    expect(text!.props.textAnchor).toBe('end');
-    expect(text!.props.transform).toBe('translate(4 20) rotate(-40)');
+    const foreignObjectTransform = axis.find('foreignObject')!.props.transform;
+    expect(foreignObjectTransform).toContain('rotate');
   });
 });

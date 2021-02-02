@@ -1,13 +1,14 @@
 import React, {useState, useMemo} from 'react';
 import {Color, Data} from 'types';
 
-import {eventPoint, getTextWidth} from '../../utilities';
+import {eventPoint, getTextWidth, getBarXAxisDetails} from '../../utilities';
 import {YAxis} from '../YAxis';
+import {BarChartXAxis} from '../BarChartXAxis';
 import {TooltipContainer} from '../TooltipContainer';
 import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
 import {RenderTooltipContentData} from './types';
-import {XAxis, Bar} from './components';
+import {Bar} from './components';
 import {useYScale, useXScale} from './hooks';
 import {
   MARGIN,
@@ -17,7 +18,6 @@ import {
   SPACING_LOOSE,
   SPACING_EXTRA_TIGHT,
 } from './constants';
-import {getXAxisDetails} from './utilities';
 import styles from './Chart.scss';
 
 interface Props {
@@ -52,16 +52,33 @@ export function Chart({
   const fontSize =
     chartDimensions.width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
 
+  const approxYAxisLabelWidth = useMemo(
+    () =>
+      Math.max(
+        ...data.map(({rawValue}) =>
+          getTextWidth({text: formatYAxisLabel(rawValue), fontSize}),
+        ),
+      ),
+    [data, fontSize, formatYAxisLabel],
+  );
+
   const xAxisDetails = useMemo(
     () =>
-      getXAxisDetails({
-        data,
+      getBarXAxisDetails({
+        yAxisLabelWidth: approxYAxisLabelWidth + SPACING_LOOSE,
         fontSize,
         formatYAxisLabel,
-        formatXAxisLabel,
+        xLabels: data.map(({label}) => formatXAxisLabel(label)),
         chartDimensions,
       }),
-    [data, fontSize, formatYAxisLabel, formatXAxisLabel, chartDimensions],
+    [
+      approxYAxisLabelWidth,
+      fontSize,
+      formatYAxisLabel,
+      data,
+      chartDimensions,
+      formatXAxisLabel,
+    ],
   );
 
   const drawableHeight =
@@ -128,7 +145,7 @@ export function Chart({
             MARGIN.Bottom -
             xAxisDetails.maxXLabelHeight})`}
         >
-          <XAxis
+          <BarChartXAxis
             labels={xAxisLabels}
             xScale={xScale}
             fontSize={fontSize}

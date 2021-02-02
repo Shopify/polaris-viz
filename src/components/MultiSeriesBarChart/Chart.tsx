@@ -1,22 +1,22 @@
 import React, {useState, useMemo} from 'react';
 
 import {TooltipContainer} from '../TooltipContainer';
-import {eventPoint, getTextWidth} from '../../utilities';
+import {eventPoint, getTextWidth, getBarXAxisDetails} from '../../utilities';
 import {YAxis} from '../YAxis';
+import {BarChartXAxis} from '../BarChartXAxis';
 import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
 import {getStackedValues} from './utilities';
 import {Series, RenderTooltipContentData} from './types';
-import {XAxis, BarGroup, StackedBarGroup} from './components';
+import {BarGroup, StackedBarGroup} from './components';
 import {useYScale, useXScale} from './hooks';
 import {
   MARGIN,
-  LINE_HEIGHT,
-  SPACING,
   FONT_SIZE,
   SMALL_WIDTH,
   SMALL_FONT_SIZE,
-  DIAGONAL_ANGLE,
+  SPACING_LOOSE,
+  INNER_PADDING,
 } from './constants';
 import styles from './Chart.scss';
 
@@ -47,17 +47,50 @@ export function Chart({
     y: number;
   } | null>(null);
 
-  const yAxisLabelWidth = series
-    .map(({data}) =>
-      data.map(({rawValue}) =>
-        getTextWidth({text: formatYAxisLabel(rawValue), fontSize: FONT_SIZE}),
-      ),
-    )
-    .reduce((acc, currentValue) => acc.concat(currentValue), [])
-    .reduce((acc, currentValue) => Math.max(acc, currentValue));
+  const yAxisLabelWidth = useMemo(
+    () =>
+      series
+        .map(({data}) =>
+          data.map(({rawValue}) =>
+            getTextWidth({
+              text: formatYAxisLabel(rawValue),
+              fontSize: FONT_SIZE,
+            }),
+          ),
+        )
+        .reduce((acc, currentValue) => acc.concat(currentValue), [])
+        .reduce((acc, currentValue) => Math.max(acc, currentValue)),
+    [formatYAxisLabel, series],
+  );
 
-  const axisStartBuffer = SPACING;
-  const axisMargin = axisStartBuffer + yAxisLabelWidth;
+  const axisMargin = SPACING_LOOSE + yAxisLabelWidth;
+
+  const fontSize =
+    chartDimensions.width < SMALL_WIDTH ? SMALL_FONT_SIZE : FONT_SIZE;
+
+  const formattedXAxisLabels = useMemo(() => labels.map(formatXAxisLabel), [
+    formatXAxisLabel,
+    labels,
+  ]);
+
+  const xAxisDetails = useMemo(
+    () =>
+      getBarXAxisDetails({
+        yAxisLabelWidth,
+        xLabels: formattedXAxisLabels,
+        fontSize,
+        formatYAxisLabel,
+        chartDimensions,
+        padding: INNER_PADDING,
+      }),
+    [
+      yAxisLabelWidth,
+      formattedXAxisLabels,
+      fontSize,
+      formatYAxisLabel,
+      chartDimensions,
+    ],
+  );
 
   const drawableWidth = chartDimensions.width - MARGIN.Right - axisMargin;
 
@@ -65,27 +98,19 @@ export function Chart({
     return series.map((type) => type.data[index].rawValue);
   });
 
-  const formattedXAxisLabels = labels.map(formatXAxisLabel);
   const {xScale, xAxisLabels} = useXScale({
     drawableWidth,
     data: sortedData,
     labels: formattedXAxisLabels,
   });
 
-  const fontSize = drawableWidth < SMALL_WIDTH ? SMALL_FONT_SIZE : FONT_SIZE;
-  const longestLabel = Math.max(
-    ...xAxisLabels.map(({value}) => getTextWidth({text: value, fontSize})),
-  );
-  const overflowingLabel = longestLabel > xScale.bandwidth();
-
-  const labelAngle = 90 + DIAGONAL_ANGLE;
-  const radians = (labelAngle * Math.PI) / 180;
-  const angledLabelHeight = Math.cos(radians) * longestLabel;
-
-  const maxXLabelHeight = overflowingLabel ? angledLabelHeight : LINE_HEIGHT;
+  const {maxXLabelHeight} = xAxisDetails;
 
   const drawableHeight =
-    chartDimensions.height - MARGIN.Top - MARGIN.Bottom - maxXLabelHeight;
+    chartDimensions.height -
+    MARGIN.Top -
+    MARGIN.Bottom -
+    xAxisDetails.maxXLabelHeight;
 
   const stackedValues = isStacked ? getStackedValues(series, labels) : null;
 
@@ -139,11 +164,11 @@ export function Chart({
             MARGIN.Bottom -
             maxXLabelHeight})`}
         >
-          <XAxis
+          <BarChartXAxis
             labels={xAxisLabels}
             xScale={xScale}
-            needsDiagonalLabels={overflowingLabel}
-            showFewerLabels={timeSeries && overflowingLabel}
+            xAxisDetails={xAxisDetails}
+            showFewerLabels={timeSeries && xAxisDetails.needsDiagonalLabels}
             fontSize={fontSize}
           />
         </g>
