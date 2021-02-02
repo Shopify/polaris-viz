@@ -42,8 +42,6 @@ const mockData = [
   },
 ];
 
-const xAxisLabels = ['1', '2', '3', '4', '5', '6', '7'];
-
 describe('<AreaChart />', () => {
   beforeAll(() => {
     Object.defineProperty(window, 'matchMedia', {
@@ -55,11 +53,7 @@ describe('<AreaChart />', () => {
 
   it('renders the provided accessibility label on an "img" role container', () => {
     const areaChart = mount(
-      <StackedAreaChart
-        series={mockData}
-        xAxisLabels={xAxisLabels}
-        accessibilityLabel="Test label"
-      />,
+      <StackedAreaChart series={mockData} accessibilityLabel="Test label" />,
     );
 
     expect(areaChart).toContainReactComponent('div', {
@@ -69,17 +63,13 @@ describe('<AreaChart />', () => {
   });
 
   it('renders a <Chart />', () => {
-    const areaChart = mount(
-      <StackedAreaChart series={mockData} xAxisLabels={xAxisLabels} />,
-    );
+    const areaChart = mount(<StackedAreaChart series={mockData} />);
 
     expect(areaChart).toContainReactComponent(Chart);
   });
 
   it('renders a Legend', () => {
-    const areaChart = mount(
-      <StackedAreaChart series={mockData} xAxisLabels={xAxisLabels} />,
-    );
+    const areaChart = mount(<StackedAreaChart series={mockData} />);
 
     expect(areaChart).toContainReactComponent(Legend, {
       series: mockData,

@@ -19,7 +19,6 @@ describe('<MultiSeriesBarChart />', () => {
         name: 'LABEL1',
       },
     ],
-    labels: ['Something', 'Another', 'Thing'],
   };
 
   it('renders accessibility props', () => {

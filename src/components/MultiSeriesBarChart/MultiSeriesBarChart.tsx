@@ -12,7 +12,7 @@ import {DEFAULT_HEIGHT} from './constants';
 
 export interface MultiSeriesBarChartProps {
   series: Series[];
-  labels: string[];
+  xAxisLabels?: string[];
   timeSeries?: boolean;
   accessibilityLabel?: string;
   formatXAxisLabel?: StringLabelFormatter;
@@ -23,7 +23,7 @@ export interface MultiSeriesBarChartProps {
 }
 
 export function MultiSeriesBarChart({
-  labels,
+  xAxisLabels,
   series,
   isStacked = false,
   timeSeries = false,
@@ -70,13 +70,16 @@ export function MultiSeriesBarChart({
     ...series,
   }));
 
+  const preparedXAxisLabels =
+    xAxisLabels != null ? xAxisLabels : series[0].data.map(({label}) => label);
+
   return (
     <div aria-label={accessibilityLabel} role="img">
       <div style={{height: chartHeight}} ref={containerRef}>
         {chartDimensions == null ? null : (
           <Chart
             series={seriesWithDefaults}
-            labels={labels}
+            labels={preparedXAxisLabels}
             chartDimensions={chartDimensions}
             formatXAxisLabel={formatXAxisLabel}
             formatYAxisLabel={formatYAxisLabel}

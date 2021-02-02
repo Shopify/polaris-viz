@@ -15,7 +15,7 @@ export interface StackedAreaChartProps {
   formatXAxisLabel?: StringLabelFormatter;
   formatYAxisLabel?: NumberLabelFormatter;
   renderTooltipContent?(data: RenderTooltipContentData): React.ReactNode;
-  xAxisLabels: string[];
+  xAxisLabels?: string[];
   series: Series[];
   opacity?: number;
   isAnimated?: boolean;
@@ -75,12 +75,15 @@ export function StackedAreaChart({
     ...series,
   }));
 
+  const preparedXAxisLabels =
+    xAxisLabels != null ? xAxisLabels : series[0].data.map(({label}) => label);
+
   return (
     <div aria-label={accessibilityLabel} role="img">
       <div style={{height: chartHeight}} ref={containerRef}>
         {chartDimensions == null ? null : (
           <Chart
-            xAxisLabels={xAxisLabels}
+            xAxisLabels={preparedXAxisLabels}
             series={seriesWithDefaults}
             formatXAxisLabel={formatXAxisLabel}
             formatYAxisLabel={formatYAxisLabel}
