@@ -1,5 +1,11 @@
 @import '../../styles/common';
 
 .Text {
-  @include axis-label;
+  @include axis-text;
+  word-break: break-all;
+}
+
+.DiagonalText {
+  @include ellipsis-overflow;
+  @include axis-text;
 }

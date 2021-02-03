@@ -5,11 +5,12 @@ export enum Spacing {
   Tight = 8,
   Loose = 20,
   ExtraTight = 4,
+  BaseTight = 12,
 }
 
 export enum Margin {
-  Top = Spacing.Tight,
+  Top = 8,
   Left = 0,
-  Bottom = 30,
-  Right = Spacing.ExtraTight,
+  Bottom = 12,
+  Right = 4,
 }

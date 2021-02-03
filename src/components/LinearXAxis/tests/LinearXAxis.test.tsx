@@ -17,41 +17,26 @@ jest.mock('d3-scale', () => ({
   },
 }));
 
-(global as any).DOMRect = class DOMRect {
-  width = 300;
-  height = 200;
+const mockProps = {
+  xScale: scaleLinear(),
+  labels: ['Test label 1', 'Test label 2', 'Test label 3'],
+  drawableWidth: 150,
+  fontSize: 12,
+  drawableHeight: 55,
+  xAxisDetails: {
+    maxXLabelHeight: 200,
+    maxDiagonalLabelLength: 10,
+    needsDiagonalLabels: true,
+    ticks: [0, 1, 2],
+    horizontalLabelWidth: 30,
+  },
 };
 
 describe('<LinearXAxis />', () => {
-  it("provides a best estimate number of ticks to d3's ticks utility to choose the ideal number of ticks", () => {
-    const xScale = scaleLinear();
-    const ticksSpy = jest.spyOn(xScale, 'ticks');
-
-    mount(
-      <svg>
-        <LinearXAxis
-          xScale={xScale}
-          labels={['Test label 1', 'Test label 2', 'Test label 3']}
-          dimensions={new DOMRect()}
-          drawableHeight={150}
-          axisMargin={0}
-        />
-      </svg>,
-    );
-
-    expect(ticksSpy).toHaveBeenCalledWith(2);
-  });
-
   it('renders an axis line with a tick at the start and end of the axis', () => {
     const axis = mount(
       <svg>
-        <LinearXAxis
-          xScale={scaleLinear()}
-          labels={['Test label 1', 'Test label 2', 'Test label 3']}
-          dimensions={new DOMRect()}
-          drawableHeight={150}
-          axisMargin={0}
-        />
+        <LinearXAxis {...mockProps} />
       </svg>,
     );
 
@@ -61,101 +46,46 @@ describe('<LinearXAxis />', () => {
     });
   });
 
-  it('renders a small, outer tick for each tick that there is space for', () => {
+  it('renders a small, outer tick for each tick', () => {
     const axis = mount(
       <svg>
-        <LinearXAxis
-          xScale={scaleLinear()}
-          labels={['Test label 1', 'Test label 2', 'Test label 3']}
-          dimensions={new DOMRect()}
-          drawableHeight={150}
-          axisMargin={0}
-        />
+        <LinearXAxis {...mockProps} />
       </svg>,
     );
 
     expect(axis).toContainReactComponentTimes('line', 3, {y2: 6});
   });
 
-  it('renders a vertical gridline for each tick that there is space for using drawableHeight', () => {
+  it('renders a vertical gridline for each tick using drawableHeight', () => {
     const axis = mount(
       <svg>
-        <LinearXAxis
-          xScale={scaleLinear()}
-          labels={['Test label 1', 'Test label 2', 'Test label 3']}
-          dimensions={new DOMRect()}
-          drawableHeight={150}
-          axisMargin={0}
-        />
+        <LinearXAxis {...mockProps} />
       </svg>,
     );
 
-    // -55 is the height mocked above minus the top and bottom margin
-    expect(axis).toContainReactComponentTimes('line', 3, {y1: '0', y2: -150});
+    expect(axis).toContainReactComponentTimes('line', 3, {y1: '0', y2: -55});
   });
 
   it('renders a label for each tick', () => {
-    const labels = ['Test label 1', 'Test label 2', 'Test label 3'];
     const axis = mount(
       <svg>
-        <LinearXAxis
-          xScale={scaleLinear()}
-          labels={labels}
-          dimensions={new DOMRect()}
-          drawableHeight={150}
-          axisMargin={0}
-        />
+        <LinearXAxis {...mockProps} />
       </svg>,
     );
 
-    // toContainReactText can't get the text from svg <text> elements,
-    // so we have to retrieve it manually as children
-    const text = axis.findAll('text')!;
+    const text = axis.findAll('div')!;
     const textContent = text.map((node) => node.prop('children'));
 
-    expect(textContent).toStrictEqual(labels);
+    expect(textContent).toStrictEqual(mockProps.labels);
   });
 
-  it('renders a label for each tick that there is space for', () => {
-    (global as any).DOMRect = class DOMRect {
-      width = 100;
-      height = 200;
-    };
-
-    const labels = ['Test label 1', 'Test label 2', 'Test label 3'];
+  it('does not render any labels if the labels prop is empty', () => {
     const axis = mount(
       <svg>
-        <LinearXAxis
-          xScale={scaleLinear()}
-          labels={labels}
-          dimensions={new DOMRect()}
-          drawableHeight={150}
-          axisMargin={0}
-        />
+        <LinearXAxis {...mockProps} labels={[]} />
       </svg>,
     );
 
-    expect(axis).toContainReactComponent('text', {children: 'Test label 1'});
-    expect(axis).toContainReactComponent('text', {children: 'Test label 2'});
-    expect(axis).not.toContainReactComponent('text', {
-      children: 'Test label 3',
-    });
-  });
-
-  it('does not render any labels if the labels prop is not provided', () => {
-    const axis = mount(
-      <svg>
-        <LinearXAxis
-          xScale={scaleLinear()}
-          dimensions={new DOMRect()}
-          drawableHeight={150}
-          axisMargin={0}
-        />
-      </svg>,
-    );
-
-    const text = axis.findAll('text')!;
-
-    expect(text).toHaveLength(0);
+    expect(axis.text()).toBe('');
   });
 });

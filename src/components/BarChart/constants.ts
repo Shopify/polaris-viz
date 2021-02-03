@@ -11,7 +11,3 @@ export const SPACING_LOOSE = 20;
 export const SMALL_SCREEN = 500;
 export const FONT_SIZE = 12;
 export const SMALL_FONT_SIZE = 10;
-export const DIAGONAL_ANGLE = -40;
-export const MAX_TEXT_BOX_HEIGHT = 45;
-export const MIN_HORIZONTAL_LABEL_SPACE = 20;
-export const DEFAULT_LABEL_RATIO = 2;
