@@ -1,3 +1,4 @@
+import {DEFAULT_MAX_Y} from '../../../constants';
 import {Series} from '../types';
 
 export function yAxisMinMax(series: Series[]) {
@@ -10,6 +11,8 @@ export function yAxisMinMax(series: Series[]) {
       maxY = Math.max(maxY, rawValue);
     });
   });
+
+  maxY = maxY === 0 ? DEFAULT_MAX_Y : maxY;
 
   return [minY, maxY];
 }
