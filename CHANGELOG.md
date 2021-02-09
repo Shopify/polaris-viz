@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased] - 2021-02-08
+
+### Fixed
+
+- Added default max y-axis value for charts with all zero data
+
 ## [0.2.0] - 2021-02-03
 
 ### Changed

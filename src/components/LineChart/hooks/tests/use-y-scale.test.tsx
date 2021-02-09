@@ -4,6 +4,7 @@ import {scaleLinear} from 'd3-scale';
 
 import {Series} from '../../types';
 import {useYScale} from '../use-y-scale';
+import {DEFAULT_MAX_Y} from '../../../../constants';
 
 jest.mock('d3-scale', () => ({
   scaleLinear: jest.fn(() => {
@@ -81,6 +82,41 @@ describe('useYScale', () => {
     mount(<TestComponent />);
 
     expect(domainSpy).toHaveBeenCalledWith([-10000, 10000]);
+  });
+
+  it('creates a y scale with the domain maiximum set to the default max y for a data set with all zero values', () => {
+    let domainSpy = jest.fn();
+    (scaleLinear as jest.Mock).mockImplementation(() => {
+      const scale = (value: any) => value;
+      scale.ticks = (numTicks: number) => Array.from(Array(numTicks));
+      scale.range = (range: any) => (range ? scale : range);
+      domainSpy = jest.fn((domain: any) => (domain ? scale : domain));
+      scale.domain = domainSpy;
+      scale.nice = () => scale;
+      return scale;
+    });
+
+    function TestComponent() {
+      useYScale({
+        drawableHeight: 250,
+        formatYAxisLabel: jest.fn(),
+        series: [
+          {
+            name: 'Test Data 1',
+            data: [{label: '1', rawValue: 0}],
+          },
+          {
+            name: 'Test Data 2',
+            data: [{label: '1', rawValue: 0}],
+          },
+        ],
+      });
+      return null;
+    }
+
+    mount(<TestComponent />);
+
+    expect(domainSpy).toHaveBeenCalledWith([0, DEFAULT_MAX_Y]);
   });
 
   it('creates a y scale with range equal to the drawable height', () => {

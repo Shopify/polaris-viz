@@ -4,7 +4,7 @@ import {Series} from 'd3-shape';
 
 import {getTextWidth} from '../../../utilities';
 import {MIN_Y_LABEL_SPACE, Spacing} from '../constants';
-import {FONT_SIZE} from '../../../constants';
+import {DEFAULT_MAX_Y, FONT_SIZE} from '../../../constants';
 import {NumberLabelFormatter} from '../../../types';
 
 export function useYScale({
@@ -28,11 +28,13 @@ export function useYScale({
       ),
     );
 
-    const maxY = Math.max(
+    const calculatedMax = Math.max(
       ...stackedValues.map((value) =>
         Math.max(...value.map(([, endingValue]) => endingValue)),
       ),
     );
+
+    const maxY = calculatedMax === 0 ? DEFAULT_MAX_Y : calculatedMax;
 
     const maxTicks = Math.max(
       1,

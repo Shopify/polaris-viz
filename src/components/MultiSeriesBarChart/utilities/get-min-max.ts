@@ -1,3 +1,4 @@
+import {DEFAULT_MAX_Y} from '../../../constants';
 import {Series, StackSeries} from '../types';
 
 export function getMinMax(stackedValues: StackSeries[] | null, data: Series[]) {
@@ -9,9 +10,12 @@ export function getMinMax(stackedValues: StackSeries[] | null, data: Series[]) {
       Math.max(...value.map(([, endingValue]) => endingValue)),
     );
 
+    const calculatedMax = Math.max(...maxStackedValues);
+    const max = calculatedMax === 0 ? DEFAULT_MAX_Y : calculatedMax;
+
     return {
       min: Math.min(...minStackedValues),
-      max: Math.max(...maxStackedValues),
+      max,
     };
   } else {
     const groupedDataPoints = data.reduce<number[]>(
@@ -22,9 +26,12 @@ export function getMinMax(stackedValues: StackSeries[] | null, data: Series[]) {
       [],
     );
 
+    const calculatedMax = Math.max(...groupedDataPoints);
+    const max = calculatedMax === 0 ? DEFAULT_MAX_Y : calculatedMax;
+
     return {
       min: Math.min(...groupedDataPoints, 0),
-      max: Math.max(...groupedDataPoints),
+      max,
     };
   }
 }

@@ -3,6 +3,7 @@ import {scaleLinear} from 'd3-scale';
 import {Data} from 'types';
 
 import {MIN_Y_LABEL_SPACE} from '../constants';
+import {DEFAULT_MAX_Y} from '../../../constants';
 import {NumberLabelFormatter} from '../../../types';
 
 export function useYScale({
@@ -16,7 +17,8 @@ export function useYScale({
 }) {
   const {yScale, ticks} = useMemo(() => {
     const min = Math.min(...data.map(({rawValue}) => rawValue), 0);
-    const max = Math.max(...data.map(({rawValue}) => rawValue));
+    const calculatedMax = Math.max(...data.map(({rawValue}) => rawValue));
+    const max = calculatedMax === 0 ? DEFAULT_MAX_Y : calculatedMax;
 
     const maxTicks = Math.max(
       1,
