@@ -4,6 +4,7 @@ import {Color} from 'types';
 
 import {StackedAreaChart} from '../StackedAreaChart';
 import {Chart} from '../Chart';
+import {SkipLink} from '../../SkipLink';
 import {Legend} from '../components';
 
 (global as any).DOMRect = class DOMRect {
@@ -53,21 +54,6 @@ describe('<AreaChart />', () => {
     });
   });
 
-  it('renders the provided accessibility label on an "img" role container', () => {
-    const areaChart = mount(
-      <StackedAreaChart
-        series={mockData}
-        xAxisLabels={xAxisLabels}
-        accessibilityLabel="Test label"
-      />,
-    );
-
-    expect(areaChart).toContainReactComponent('div', {
-      role: 'img',
-      'aria-label': 'Test label',
-    });
-  });
-
   it('renders a <Chart />', () => {
     const areaChart = mount(
       <StackedAreaChart series={mockData} xAxisLabels={xAxisLabels} />,
@@ -83,6 +69,34 @@ describe('<AreaChart />', () => {
 
     expect(areaChart).toContainReactComponent(Legend, {
       series: mockData,
+    });
+  });
+
+  describe('skipLinkText', () => {
+    it('renders an anchor tag that allows skipping the chart content', () => {
+      const areaChart = mount(
+        <StackedAreaChart
+          series={mockData}
+          xAxisLabels={xAxisLabels}
+          skipLinkText="Skip chart content"
+        />,
+      );
+
+      expect(areaChart).toContainReactComponent(SkipLink, {
+        children: 'Skip chart content',
+      });
+    });
+
+    it('does not render an anchor tag if empty', () => {
+      const areaChart = mount(
+        <StackedAreaChart
+          series={mockData}
+          xAxisLabels={xAxisLabels}
+          skipLinkText=""
+        />,
+      );
+
+      expect(areaChart).not.toContainReactComponent('a');
     });
   });
 });

@@ -1,4 +1,4 @@
-import React, {useState, useMemo} from 'react';
+import React, {useState, useMemo, useRef} from 'react';
 import {stack, stackOffsetNone, stackOrderReverse} from 'd3-shape';
 
 import {useLinearXAxisDetails, useLinearXScale} from '../../hooks';
@@ -9,7 +9,7 @@ import {
   FONT_SIZE,
 } from '../../constants';
 import {TooltipContainer} from '../TooltipContainer';
-import {eventPoint} from '../../utilities';
+import {eventPoint, uniqueId} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {Crosshair} from '../Crosshair';
 import {Point} from '../Point';
@@ -18,7 +18,7 @@ import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
 import {Margin} from './constants';
 import {useYScale} from './hooks';
-import {StackedAreas} from './components';
+import {StackedAreas, VisuallyHiddenRows} from './components';
 import styles from './Chart.scss';
 import {Series, RenderTooltipContentData} from './types';
 
@@ -48,6 +48,8 @@ export function Chart({
     x: number;
     y: number;
   } | null>(null);
+
+  const tooltipId = useRef(uniqueId('stackedAreaChart'));
 
   const areaStack = useMemo(
     () =>
@@ -152,6 +154,7 @@ export function Chart({
         onTouchMove={handleInteraction}
         onTouchEnd={() => setActivePointIndex(null)}
         onMouseLeave={() => setActivePointIndex(null)}
+        role="table"
       >
         <g
           transform={`translate(${axisMargin},${dimensions.height -
@@ -164,12 +167,19 @@ export function Chart({
             drawableHeight={drawableHeight}
             fontSize={fontSize}
             drawableWidth={drawableWidth}
+            ariaHidden
           />
         </g>
 
         <g transform={`translate(${axisMargin},${Margin.Top})`}>
           <YAxis ticks={ticks} drawableWidth={drawableWidth} />
         </g>
+
+        <VisuallyHiddenRows
+          formatYAxisLabel={formatYAxisLabel}
+          xAxisLabels={formattedXAxisLabels}
+          series={series}
+        />
 
         <StackedAreas
           width={drawableWidth}
@@ -202,6 +212,10 @@ export function Chart({
                 cx={xScale(index)}
                 cy={yScale(startingDataPoint)}
                 active={index === activePointIndex}
+                onFocus={handleFocus}
+                index={index}
+                tabIndex={stackIndex === 0 ? 0 : -1}
+                ariaLabelledby={tooltipId.current}
               />
             )),
           )}
@@ -209,6 +223,7 @@ export function Chart({
       </svg>
       {tooltipPosition == null || activePointIndex == null ? null : (
         <TooltipContainer
+          id={tooltipId.current}
           activePointIndex={activePointIndex}
           currentX={tooltipPosition.x}
           currentY={tooltipPosition.y}
@@ -220,6 +235,23 @@ export function Chart({
       )}
     </div>
   );
+
+  function handleFocus({
+    index,
+    cx,
+    cy,
+  }: {
+    index?: number;
+    cx: number;
+    cy: number;
+  }) {
+    if (index == null) return;
+    setActivePointIndex(index);
+    setTooltipPosition({
+      x: cx + axisMargin,
+      y: cy,
+    });
+  }
 
   function handleInteraction(
     event: React.MouseEvent<SVGSVGElement> | React.TouchEvent<SVGSVGElement>,

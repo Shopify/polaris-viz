@@ -5,7 +5,7 @@ import {LinearXAxis} from 'components/LinearXAxis';
 import {YAxis} from 'components/YAxis';
 import {Point, Crosshair, TooltipContainer} from 'components';
 
-import {StackedAreas} from '../components';
+import {StackedAreas, VisuallyHiddenRows} from '../components';
 import {Chart} from '../Chart';
 
 (global as any).DOMRect = class DOMRect {
@@ -213,5 +213,15 @@ describe('<Chart />', () => {
 
     const tooltipContainer = chart.find(TooltipContainer)!;
     expect(tooltipContainer).toContainReactText('Mock Tooltip Content');
+  });
+
+  it('renders <VisuallyHiddenRows />', () => {
+    const chart = mount(<Chart {...mockProps} />);
+
+    expect(chart).toContainReactComponent(VisuallyHiddenRows, {
+      series: mockProps.series,
+      xAxisLabels: mockProps.xAxisLabels,
+      formatYAxisLabel: mockProps.formatYAxisLabel,
+    });
   });
 });

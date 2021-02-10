@@ -1,6 +1,12 @@
+@import '../../styles/common';
+
 .Container {
   position: relative;
   overflow: hidden;
   height: 100%;
   width: 100%;
+}
+
+.VisuallyHidden {
+  @include visually-hidden;
 }

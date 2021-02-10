@@ -1,6 +1,14 @@
 # Changelog
 
-## [Unreleased] - 2021-02-08
+## [0.3.0] - 2021-02-10
+
+### Changed
+
+- Removed the accessibilityLabel from [`<StackedAreaChart/>`](https://github.com/Shopify/polaris-viz/blob/master/src/)
+
+### Added
+
+- `skipLinkText` prop to [`<StackedAreaChart/>`](https://github.com/Shopify/polaris-viz/blob/master/src/)
 
 ### Fixed
 

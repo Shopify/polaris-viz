@@ -99,6 +99,7 @@ export function StackedAreaChartDemo() {
       <div style={innerContainerStyle}>
         <StackedAreaChart
           series={series}
+          skipLinkText="Skip chart content"
           xAxisLabels={labels}
           formatYAxisLabel={formatYAxisLabel}
           renderTooltipContent={renderTooltipContent}

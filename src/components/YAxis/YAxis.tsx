@@ -23,6 +23,7 @@ function Axis({ticks, drawableWidth, fontSize}: Props) {
           <g key={value} transform={`translate(0,${yOffset})`}>
             <line x2={drawableWidth} className={styles.Line} />
             <text
+              aria-hidden
               className={styles.Text}
               style={{
                 fontSize: `${fontSize ? fontSize : FONT_SIZE}px`,

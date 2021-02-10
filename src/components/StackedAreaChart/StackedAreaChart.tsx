@@ -1,9 +1,10 @@
 import React, {useLayoutEffect, useRef, useState} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 
+import {SkipLink} from '../SkipLink';
 import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 import {TooltipContent} from '../TooltipContent';
-import {getDefaultColor} from '../../utilities';
+import {getDefaultColor, uniqueId} from '../../utilities';
 
 import {Chart} from './Chart';
 import {Legend} from './components';
@@ -11,7 +12,6 @@ import {Series, RenderTooltipContentData} from './types';
 
 export interface StackedAreaChartProps {
   chartHeight?: number;
-  accessibilityLabel?: string;
   formatXAxisLabel?: StringLabelFormatter;
   formatYAxisLabel?: NumberLabelFormatter;
   renderTooltipContent?(data: RenderTooltipContentData): React.ReactNode;
@@ -19,6 +19,7 @@ export interface StackedAreaChartProps {
   series: Series[];
   opacity?: number;
   isAnimated?: boolean;
+  skipLinkText?: string;
 }
 
 export function StackedAreaChart({
@@ -27,13 +28,15 @@ export function StackedAreaChart({
   chartHeight = 250,
   formatXAxisLabel = (value) => value.toString(),
   formatYAxisLabel = (value) => value.toString(),
-  accessibilityLabel,
   renderTooltipContent,
   opacity = 1,
   isAnimated = false,
+  skipLinkText,
 }: StackedAreaChartProps) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
+
+  const skipLinkAnchorId = useRef(uniqueId('stackedAreaChart'));
 
   const [updateDimensions] = useDebouncedCallback(() => {
     if (containerRef.current != null) {
@@ -76,7 +79,10 @@ export function StackedAreaChart({
   }));
 
   return (
-    <div aria-label={accessibilityLabel} role="img">
+    <React.Fragment>
+      {skipLinkText == null || skipLinkText.length === 0 ? null : (
+        <SkipLink anchorId={skipLinkAnchorId.current}>{skipLinkText}</SkipLink>
+      )}
       <div style={{height: chartHeight}} ref={containerRef}>
         {chartDimensions == null ? null : (
           <Chart
@@ -96,7 +102,10 @@ export function StackedAreaChart({
         )}
       </div>
 
-      <Legend series={seriesWithDefaults} />
-    </div>
+      <Legend series={seriesWithDefaults} ariaHidden />
+      {skipLinkText == null || skipLinkText.length === 0 ? null : (
+        <SkipLink.Anchor id={skipLinkAnchorId.current} />
+      )}
+    </React.Fragment>
   );
 }

@@ -7,11 +7,12 @@ import styles from './Legend.scss';
 
 interface Props {
   series: Required<Series>[];
+  ariaHidden?: boolean;
 }
 
-export function Legend({series}: Props) {
+export function Legend({series, ariaHidden = false}: Props) {
   return (
-    <div className={styles.Container}>
+    <div className={styles.Container} aria-hidden={ariaHidden}>
       {series.map(({name, color}) => {
         return (
           <div className={styles.Series} key={name}>

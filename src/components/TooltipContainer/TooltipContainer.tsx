@@ -13,6 +13,7 @@ interface Props {
   currentY: number;
   chartDimensions: DOMRect;
   position?: 'center' | 'auto';
+  id?: string;
 }
 
 // The space between the cursor and the tooltip
@@ -26,6 +27,7 @@ export function TooltipContainer({
   children,
   margin,
   position = 'auto',
+  id = '',
 }: Props) {
   const tooltipRef = useRef<HTMLDivElement | null>(null);
   const [tooltipDimensions, setTooltipDimensions] = useState<DOMRect | null>(
@@ -109,6 +111,7 @@ export function TooltipContainer({
 
   return (
     <animated.div
+      id={id}
       className={styles.Container}
       style={{
         top: 0,
