@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- Removed the `accessibilityLabel` prop from `<LineChart/>` in favour of a more complete accessibility approach
+- `<LineChart/>` now requires `xAxisLabels`
+
+### Added
+
+- `skipLinkText` and `hideXAxisLabels` prop to `<LineChart/>`
+
 ## [0.3.0] - 2021-02-10
 
 ### Changed

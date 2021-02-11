@@ -2,6 +2,7 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 
 import {LineChart} from '../LineChart';
+import {SkipLink} from '../../SkipLink';
 import {Chart} from '../Chart';
 import {Series} from '../types';
 import {Legend} from '../components';
@@ -26,21 +27,6 @@ const primarySeries: Required<Series> = {
 };
 
 describe('<LineChart />', () => {
-  it('renders the provided accessibility label on an "img" role container', () => {
-    const lineChart = mount(
-      <LineChart
-        accessibilityLabel="Test label"
-        series={[primarySeries]}
-        xAxisLabels={['Jan 1']}
-      />,
-    );
-
-    expect(lineChart).toContainReactComponent('div', {
-      role: 'img',
-      'aria-label': 'Test label',
-    });
-  });
-
   it('renders a <Chart />', () => {
     const lineChart = mount(
       <LineChart series={[primarySeries]} xAxisLabels={['Jan 1']} />,
@@ -56,6 +42,31 @@ describe('<LineChart />', () => {
 
     expect(lineChart).toContainReactComponent(Legend, {
       series: [primarySeries],
+    });
+  });
+
+  describe('skipLinkText', () => {
+    it('renders a SkipLink if skipLinkText is provided', () => {
+      const mockContent = 'Skip line chart content';
+      const lineChart = mount(
+        <LineChart
+          series={[primarySeries]}
+          xAxisLabels={['Jan 1']}
+          skipLinkText={mockContent}
+        />,
+      );
+
+      expect(lineChart).toContainReactComponent(SkipLink, {
+        children: mockContent,
+      });
+    });
+
+    it('does not render a SkipLink if skipLinkText is undefined', () => {
+      const lineChart = mount(
+        <LineChart xAxisLabels={['Jan 1']} series={[primarySeries]} />,
+      );
+
+      expect(lineChart).not.toContainReactComponent(SkipLink);
     });
   });
 });

@@ -1,6 +1,11 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
-import {Crosshair, LinearXAxis, TooltipContainer} from 'components';
+import {
+  Crosshair,
+  LinearXAxis,
+  TooltipContainer,
+  VisuallyHiddenRows,
+} from 'components';
 
 import {Chart} from '../Chart';
 import {Series} from '../types';
@@ -46,6 +51,7 @@ const mockProps = {
   formatXAxisLabel: jest.fn((value) => value),
   formatYAxisLabel: jest.fn((value) => value),
   renderTooltipContent: jest.fn(() => <p>Mock Tooltip</p>),
+  hideXAxisLabels: false,
 };
 
 describe('<Chart />', () => {
@@ -142,5 +148,15 @@ describe('<Chart />', () => {
     const tooltipContainer = chart.find(TooltipContainer)!;
 
     expect(tooltipContainer).toContainReactText('Mock Tooltip');
+  });
+
+  it('renders <VisuallyHiddenRows />', () => {
+    const chart = mount(<Chart {...mockProps} />);
+
+    expect(chart).toContainReactComponent(VisuallyHiddenRows, {
+      series: mockProps.series,
+      xAxisLabels: mockProps.xAxisLabels,
+      formatYAxisLabel: mockProps.formatYAxisLabel,
+    });
   });
 });

@@ -11,9 +11,29 @@ interface Props {
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
   activePointIndex: number | null;
+  labelledBy: string;
+  tabIndex: number;
+  handleFocus: ({
+    index,
+    cx,
+    cy,
+  }: {
+    index?: number;
+    cx: number;
+    cy: number;
+  }) => void;
 }
 
-export function Line({path, series, xScale, yScale, activePointIndex}: Props) {
+export function Line({
+  path,
+  series,
+  xScale,
+  yScale,
+  activePointIndex,
+  labelledBy,
+  handleFocus,
+  tabIndex,
+}: Props) {
   const {color, lineStyle, data} = series;
 
   return (
@@ -37,6 +57,10 @@ export function Line({path, series, xScale, yScale, activePointIndex}: Props) {
             cx={xScale(index)}
             cy={yScale(rawValue)}
             active={index === activePointIndex}
+            onFocus={handleFocus}
+            index={index}
+            tabIndex={tabIndex}
+            ariaLabelledby={labelledBy}
           />
         );
       })}

@@ -11,7 +11,7 @@ interface Props {
 
 export function Legend({series}: Props) {
   return (
-    <div className={styles.Container}>
+    <div className={styles.Container} aria-hidden>
       {series.map(({name, color, lineStyle}) => {
         return (
           <div className={styles.Series} key={name}>

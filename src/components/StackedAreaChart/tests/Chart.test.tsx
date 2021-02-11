@@ -3,9 +3,14 @@ import {mount} from '@shopify/react-testing';
 import {Color} from 'types';
 import {LinearXAxis} from 'components/LinearXAxis';
 import {YAxis} from 'components/YAxis';
-import {Point, Crosshair, TooltipContainer} from 'components';
+import {
+  Point,
+  Crosshair,
+  TooltipContainer,
+  VisuallyHiddenRows,
+} from 'components';
 
-import {StackedAreas, VisuallyHiddenRows} from '../components';
+import {StackedAreas} from '../components';
 import {Chart} from '../Chart';
 
 (global as any).DOMRect = class DOMRect {
