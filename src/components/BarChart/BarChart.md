@@ -65,6 +65,7 @@ return (
     formatXAxisLabel={formatXAxisLabel}
     formatYAxisLabel={formatYAxisLabel}
     renderTooltipContent={renderTooltipContent}
+    skipLinkText="Skip chart content"
   />
 );
 ```
@@ -90,6 +91,7 @@ interface BarChartProps {
   }): React.ReactNode;
   highlightColor?: Color;
   timeSeries?: boolean;
+  skipLinkText?: string;
 }
 ```
 

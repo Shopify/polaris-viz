@@ -105,6 +105,8 @@ export function Chart({
     formatXAxisLabel,
   });
 
+  const barWidth = xScale.bandwidth();
+
   const tooltipMarkup = useMemo(() => {
     if (activeBar == null) {
       return null;
@@ -136,6 +138,7 @@ export function Chart({
           transform={`translate(${axisMargin},${chartDimensions.height -
             MARGIN.Bottom -
             xAxisDetails.maxXLabelHeight})`}
+          aria-hidden="true"
         >
           <BarChartXAxis
             labels={xAxisLabels}
@@ -150,25 +153,34 @@ export function Chart({
           transform={`translate(${axisMargin + SPACING_EXTRA_TIGHT},${
             MARGIN.Top
           })`}
+          aria-hidden="true"
         >
           <YAxis ticks={ticks} drawableWidth={drawableWidth} />
         </g>
 
-        <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
+        <g transform={`translate(${axisMargin},${MARGIN.Top})`} role="list">
           {data.map(({rawValue}, index) => {
             const xPosition = xScale(index.toString());
+            const ariaLabel = `${formatXAxisLabel(
+              data[index].label,
+            )}: ${formatYAxisLabel(data[index].rawValue)}`;
 
             return (
-              <Bar
-                key={index}
-                x={xPosition == null ? 0 : xPosition}
-                yScale={yScale}
-                rawValue={rawValue}
-                width={xScale.bandwidth()}
-                isSelected={index === activeBar}
-                color={color}
-                highlightColor={highlightColor}
-              />
+              <g role="listitem" key={index}>
+                <Bar
+                  key={index}
+                  x={xPosition == null ? 0 : xPosition}
+                  yScale={yScale}
+                  rawValue={rawValue}
+                  width={barWidth}
+                  isSelected={index === activeBar}
+                  color={color}
+                  highlightColor={highlightColor}
+                  onFocus={handleFocus}
+                  index={index}
+                  ariaLabel={ariaLabel}
+                />
+              </g>
             );
           })}
         </g>
@@ -188,6 +200,23 @@ export function Chart({
       ) : null}
     </div>
   );
+
+  function handleFocus({
+    index,
+    cx,
+    cy,
+  }: {
+    index: number;
+    cx: number;
+    cy: number;
+  }) {
+    if (index == null) return;
+    setActiveBar(index);
+    setTooltipPosition({
+      x: cx + axisMargin + xScale.bandwidth() / 2,
+      y: cy,
+    });
+  }
 
   function handleInteraction(
     event: React.MouseEvent<SVGSVGElement> | React.TouchEvent<SVGSVGElement>,
