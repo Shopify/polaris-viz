@@ -9,22 +9,44 @@ Used in small sizes to give an overview of how a metric has performed over time.
 ```tsx
 <div style={{width: '200px', height: '50px'}}>
   <Sparkline
-    data={[
-      {x: 0, y: 100},
-      {x: 1, y: 200},
-      {x: 2, y: 300},
-      {x: 3, y: 400},
-      {x: 4, y: 400},
-      {x: 5, y: 1000},
-      {x: 6, y: 200},
-      {x: 7, y: 800},
-      {x: 8, y: 900},
-      {x: 9, y: 200},
-      {x: 10, y: 400},
+    series={[
+      {
+        color: 'colorPurple',
+        areaStyle: 'gradient',
+        data: [
+          {x: 0, y: 100},
+          {x: 1, y: 200},
+          {x: 2, y: 300},
+          {x: 3, y: 400},
+          {x: 4, y: 400},
+          {x: 5, y: 1000},
+          {x: 6, y: 200},
+          {x: 7, y: 800},
+          {x: 8, y: 900},
+          {x: 9, y: 200},
+          {x: 10, y: 400},
+        ],
+      },
+      {
+        color: 'pastComparison',
+        areaStyle: 'none',
+        lineStyle: 'dashed',
+        data: [
+          {x: 0, y: 10},
+          {x: 1, y: 20},
+          {x: 2, y: 30},
+          {x: 3, y: 40},
+          {x: 4, y: 40},
+          {x: 5, y: 400},
+          {x: 6, y: 20},
+          {x: 7, y: 80},
+          {x: 8, y: 90},
+          {x: 9, y: 20},
+          {x: 10, y: 40},
+        ],
+      },
     ]}
     accessibilityLabel="Customer growth over time"
-    color="primary"
-    areaFillStyle="solid"
     isAnimated
   />
 </div>
@@ -36,10 +58,8 @@ The sparkline interface looks like this:
 
 ```typescript
 {
-  data: Coordinates[];
+  series: {color: Color, areaStyle: AreaStyle, lineStyle: LineStyle, data: Coordinates[]}[];
   accessibilityLabel?: string;
-  color?: Color;
-  areaFillStyle?: 'none' | 'solid' | 'gradient';
   isAnimated?: boolean;
 }
 ```
@@ -54,6 +74,14 @@ This component determines its width and height based off its parent element. The
 
 ### Required props
 
+#### The series type
+
+| type                                                                                   |
+| -------------------------------------------------------------------------------------- |
+| `{data: Coordinates[], color?: Color, areaStyle?: AreaStyle, lineStyle?: LineStyle}[]` |
+
+The sparkline can show one data series or a set of comparison data series.
+
 #### data
 
 | type                       |
@@ -61,18 +89,6 @@ This component determines its width and height based off its parent element. The
 | `{x: number, y: number}[]` |
 
 The prop to determine the chart's drawn area.
-
----
-
-### Optional props
-
-#### accessibilityLabel
-
-| type     | default     |
-| -------- | ----------- |
-| `string` | `undefined` |
-
-Visually hidden text for screen readers.
 
 #### color
 
@@ -89,6 +105,26 @@ The sparkline stroke and fill color. This accepts any [Polaris Viz accepted colo
 | `none | solid | gradient` | `none`  |
 
 Determines whether to fill in the area beneath the line and what kind of shading to use.
+
+#### lineStyle
+
+| type             | default |
+| ---------------- | ------- |
+| `solid | dashed` | `solid` |
+
+Determines the style of line used for the series.
+
+---
+
+### Optional props
+
+#### accessibilityLabel
+
+| type     | default     |
+| -------- | ----------- |
+| `string` | `undefined` |
+
+Visually hidden text for screen readers.
 
 #### isAnimated
 
