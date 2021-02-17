@@ -24,6 +24,9 @@ const mockProps = {
   xScale: scaleLinear(),
   yScale: scaleLinear(),
   activePointIndex: null,
+  labelledBy: 'someId',
+  tabIndex: 0,
+  handleFocus: jest.fn(),
 };
 
 describe('<Line />', () => {

@@ -126,6 +126,7 @@ export function LineChartDemo() {
           formatXAxisLabel={formatXAxisLabel}
           formatYAxisLabel={formatYAxisLabel}
           renderTooltipContent={renderTooltipContent}
+          skipLinkText="Skip line chart content"
         />
       </div>
     </div>

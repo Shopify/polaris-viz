@@ -14,11 +14,12 @@ import {YAxis} from '../YAxis';
 import {Crosshair} from '../Crosshair';
 import {Point} from '../Point';
 import {LinearXAxis} from '../LinearXAxis';
+import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
 import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
 import {Margin} from './constants';
 import {useYScale} from './hooks';
-import {StackedAreas, VisuallyHiddenRows} from './components';
+import {StackedAreas} from './components';
 import styles from './Chart.scss';
 import {Series, RenderTooltipContentData} from './types';
 

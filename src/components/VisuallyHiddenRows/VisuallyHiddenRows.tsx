@@ -1,12 +1,16 @@
 import React from 'react';
 
-import {Series} from '../../types';
-import {NumberLabelFormatter} from '../../../../types';
+import {
+  NumberLabelFormatter,
+  DataSeries,
+  NullableData,
+  Data,
+} from '../../types';
 
 import styles from './VisuallyHiddenRows.scss';
 
 interface Props {
-  series: Required<Series>[];
+  series: DataSeries<Data | NullableData>[];
   xAxisLabels: string[];
   formatYAxisLabel: NumberLabelFormatter;
 }

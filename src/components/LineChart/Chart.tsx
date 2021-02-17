@@ -1,4 +1,4 @@
-import React, {useState, useMemo} from 'react';
+import React, {useState, useMemo, useRef} from 'react';
 import {line} from 'd3-shape';
 
 import {useLinearXAxisDetails, useLinearXScale} from '../../hooks';
@@ -9,9 +9,10 @@ import {
   SPACING_TIGHT,
   Margin,
 } from '../../constants';
+import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
 import {LinearXAxis} from '../LinearXAxis';
 import {YAxis} from '../YAxis';
-import {eventPoint} from '../../utilities';
+import {eventPoint, uniqueId} from '../../utilities';
 import {Crosshair} from '../Crosshair';
 import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 import {TooltipContainer} from '../TooltipContainer';
@@ -23,11 +24,12 @@ import styles from './Chart.scss';
 
 interface Props {
   series: Required<Series>[];
-  xAxisLabels?: string[];
+  xAxisLabels: string[];
   formatXAxisLabel: StringLabelFormatter;
   formatYAxisLabel: NumberLabelFormatter;
   dimensions: DOMRect;
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
+  hideXAxisLabels: boolean;
 }
 
 export function Chart({
@@ -37,12 +39,15 @@ export function Chart({
   formatXAxisLabel,
   formatYAxisLabel,
   renderTooltipContent,
+  hideXAxisLabels,
 }: Props) {
   const [activePointIndex, setActivePointIndex] = useState<number | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState<{
     x: number;
     y: number;
   } | null>(null);
+
+  const tooltipId = useRef(uniqueId('lineChart'));
 
   const fontSize =
     dimensions.width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
@@ -63,8 +68,7 @@ export function Chart({
 
   const drawableHeight = dimensions.height - Margin.Top - marginBottom;
 
-  const formattedLabels =
-    xAxisLabels == null ? null : xAxisLabels.map(formatXAxisLabel);
+  const formattedLabels = xAxisLabels.map(formatXAxisLabel);
 
   const {axisMargin, ticks, yScale} = useYScale({
     drawableHeight,
@@ -136,9 +140,30 @@ export function Chart({
     });
   }
 
+  function handleFocus({
+    index,
+    cx,
+    cy,
+  }: {
+    index?: number;
+    cx: number;
+    cy: number;
+  }) {
+    if (index == null) {
+      return;
+    }
+    const margin = axisMargin == null ? 0 : axisMargin;
+    setActivePointIndex(index);
+    setTooltipPosition({
+      x: cx + margin,
+      y: cy,
+    });
+  }
+
   return (
     <div className={styles.Container}>
       <svg
+        role="table"
         width="100%"
         height="100%"
         onMouseMove={handleInteraction}
@@ -153,10 +178,11 @@ export function Chart({
           <LinearXAxis
             xAxisDetails={xAxisDetails}
             xScale={xScale}
-            labels={formattedLabels}
+            labels={hideXAxisLabels ? null : formattedLabels}
             drawableWidth={drawableWidth}
             fontSize={fontSize}
             drawableHeight={drawableHeight}
+            ariaHidden
           />
         </g>
 
@@ -174,11 +200,17 @@ export function Chart({
           </g>
         )}
 
+        <VisuallyHiddenRows
+          formatYAxisLabel={formatYAxisLabel}
+          xAxisLabels={formattedLabels}
+          series={series}
+        />
+
         <g transform={`translate(${axisMargin},${Margin.Top})`}>
           {series
             .slice()
             .reverse()
-            .map((singleSeries) => {
+            .map((singleSeries, index) => {
               const {data, name} = singleSeries;
               const path = lineGenerator(data);
 
@@ -188,6 +220,8 @@ export function Chart({
                 );
               }
 
+              const isFirstLine = index === series.length - 1;
+
               return (
                 <Line
                   key={name}
@@ -196,6 +230,9 @@ export function Chart({
                   series={singleSeries}
                   path={path}
                   activePointIndex={activePointIndex}
+                  labelledBy={tooltipId.current}
+                  handleFocus={handleFocus}
+                  tabIndex={isFirstLine ? 0 : -1}
                 />
               );
             })}
@@ -209,6 +246,7 @@ export function Chart({
           currentY={tooltipPosition.y}
           chartDimensions={dimensions}
           margin={Margin}
+          id={tooltipId.current}
         >
           {tooltipMarkup}
         </TooltipContainer>

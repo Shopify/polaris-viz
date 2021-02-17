@@ -107,6 +107,7 @@ return (
     formatXAxisLabel={formatXAxisLabel}
     formatYAxisLabel={formatYAxisLabel}
     renderTooltipContent={renderTooltipContent}
+    skipLinkText="Skip chart content"
   />
 );
 ```
@@ -118,12 +119,13 @@ The line chart interface looks like this:
 ```typescript
 interface LineChartProps {
   series: Series[];
-  accessibilityLabel?: string;
   chartHeight?: number;
-  xAxisLabels?: string[];
+  xAxisLabels: string[];
   formatXAxisLabel?(value: string, index?: number, data?: string[]): string;
   formatYAxisLabel?(value: number): string;
   renderTooltipContent?: (data: RenderTooltipContentData): React.ReactNode;
+  skipLinkText?: string;
+  hideXAxisLabels?: boolean;
 }
 ```
 
@@ -209,15 +211,15 @@ The distinction between the `RenderTooltipContentData` and `Series` types is tha
 
 The prop to determine the chart's drawn area. Each `Series` object corresponds to a line drawn on the chart, and is explained in greater detail above.
 
+#### xAxisLabels
+
+| type       | default |
+| ---------- | ------- |
+| `string[]` | `[]`    |
+
+The labels to display on the x axis of the chart and in a data table used for screenreaders.
+
 ### Optional props
-
-#### accessibilityLabel
-
-| type     | default     |
-| -------- | ----------- |
-| `string` | `undefined` |
-
-Visually hidden text for screen readers.
 
 #### chartHeight
 
@@ -227,13 +229,13 @@ Visually hidden text for screen readers.
 
 Determines the height of the chart.
 
-#### xAxisLabels
+#### hideXAxisLabels
 
-| type       | default |
-| ---------- | ------- |
-| `string[]` | `[]`    |
+| type      | default |
+| --------- | ------- |
+| `boolean` | false   |
 
-The labels to display on the x axis of the chart. If no labels are passed, there are no labels rendered on the x axis of the chart.
+Whether to visually hide the x axis labels on the chart. The labels will still be displayed to screenreaders.
 
 #### formatXAxisLabel
 
@@ -241,7 +243,7 @@ The labels to display on the x axis of the chart. If no labels are passed, there
 | ----------------------------------------------------------- | ----------------------------- |
 | `(value: string, index?: number, data?: string[]): string;` | `(value) => value.toString()` |
 
-This accepts a function that is called to format the labels when the chart draws its X axis. This is only called if there is a value passed in for `xAxisLabels`.
+This accepts a function that is called to format the labels when the chart draws its X axis.
 
 #### formatYAxisLabel
 
@@ -258,3 +260,11 @@ This utilty function is called to format the labels for every y axis value when 
 | `(data: RenderTooltipContentData): React.ReactNode;` |
 
 This accepts a function that is called to render the tooltip content. By default it calls `formatXAxisLabel` and `formatYAxisLabel` to format the the tooltip values and passes them to `<LineChartTooltipContent />`. For more information about tooltip content, read the [tooltip content documentation](/src/components/TooltipContent/TooltipContent.md).
+
+#### skipLinkText
+
+| type     |
+| -------- |
+| `string` |
+
+If provided, renders a `<SkipLink/>` button with the string. Use this for charts with large data sets, so keyboard users can skip all the tabbable data points in the chart.
