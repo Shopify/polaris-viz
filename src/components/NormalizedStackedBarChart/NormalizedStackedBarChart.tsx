@@ -12,7 +12,6 @@ import styles from './NormalizedStackedBarChart.scss';
 
 export interface NormalizedStackedBarChartProps {
   data: Data[];
-  accessibilityLabel?: string;
   size?: Size;
   orientation?: Orientation;
   colors?: Color[];
@@ -20,7 +19,6 @@ export interface NormalizedStackedBarChartProps {
 
 export function NormalizedStackedBarChart({
   data,
-  accessibilityLabel,
   size = 'small',
   orientation = 'horizontal',
   colors = ['colorPurpleDark', 'colorBlue', 'colorTeal', 'colorSkyDark'],
@@ -57,10 +55,8 @@ export function NormalizedStackedBarChart({
         styles.Container,
         isVertical ? styles.VerticalContainer : styles.HorizontalContainer,
       )}
-      aria-label={accessibilityLabel}
-      role="img"
     >
-      <div
+      <ul
         className={
           isVertical
             ? styles.VerticalLabelContainer
@@ -75,7 +71,7 @@ export function NormalizedStackedBarChart({
             color={colorPalette[index]}
           />
         ))}
-      </div>
+      </ul>
 
       <div
         className={classNames(

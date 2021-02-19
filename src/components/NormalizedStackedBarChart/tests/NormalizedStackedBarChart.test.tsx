@@ -164,21 +164,4 @@ describe('<NormalizedBarChart />', () => {
       expect(barChart.find(BarSegment)!.props.orientation).toBe('vertical');
     });
   });
-
-  describe('Accessibility', () => {
-    it('sets an img role on the parent div', () => {
-      const barChart = mount(<NormalizedStackedBarChart {...mockProps} />);
-
-      expect(barChart.find('div')!.props.role).toBe('img');
-    });
-
-    it('adds an aria label when one is passed in', () => {
-      const label = 'A stacked bar chart showing sales by channel.';
-      const barChart = mount(
-        <NormalizedStackedBarChart {...mockProps} accessibilityLabel={label} />,
-      );
-
-      expect(barChart.find('div')!.props['aria-label']).toBe(label);
-    });
-  });
 });

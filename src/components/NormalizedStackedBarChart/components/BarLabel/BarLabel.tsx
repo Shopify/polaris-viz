@@ -10,12 +10,12 @@ export interface Props {
 
 export function BarLabel({label, value, color}: Props) {
   return (
-    <div className={styles.Container}>
+    <li className={styles.Container}>
       <div style={{background: color}} className={styles.LabelColor} />
       <div className={styles.Label}>
         <strong>{label}</strong>
         <div className={styles.Value}>{value}</div>
       </div>
-    </div>
+    </li>
   );
 }
