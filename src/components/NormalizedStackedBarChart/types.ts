@@ -6,4 +6,5 @@ export interface Data {
   formattedValue: string;
   value: number;
   label: string;
+  comparisonMetric?: number;
 }
