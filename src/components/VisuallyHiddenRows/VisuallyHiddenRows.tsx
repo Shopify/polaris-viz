@@ -42,10 +42,10 @@ export function VisuallyHiddenRows({
             <text role="rowheader" className={styles.VisuallyHidden}>
               {name}
             </text>
-            {data.map(({rawValue, label}) => {
+            {data.map(({rawValue, label}, index) => {
               return (
                 <text
-                  key={`cell-${name}-${rawValue}-${label}`}
+                  key={`cell-${name}-${rawValue}-${label}-${index}`}
                   role="cell"
                   className={styles.VisuallyHidden}
                 >
