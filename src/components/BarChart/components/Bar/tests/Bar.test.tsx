@@ -21,6 +21,8 @@ describe('<Bar/>', () => {
           rawValue={1000}
           width={100}
           yScale={scaleBand() as any}
+          index={1}
+          onFocus={jest.fn()}
         />
         ,
       </svg>,
@@ -46,6 +48,8 @@ describe('<Bar/>', () => {
           rawValue={1}
           width={100}
           yScale={scaleBand() as any}
+          index={1}
+          onFocus={jest.fn()}
         />
         ,
       </svg>,
@@ -67,6 +71,8 @@ describe('<Bar/>', () => {
           rawValue={0}
           width={100}
           yScale={scaleBand() as any}
+          index={1}
+          onFocus={jest.fn()}
         />
         ,
       </svg>,
@@ -88,6 +94,8 @@ describe('<Bar/>', () => {
           rawValue={1}
           width={100}
           yScale={scaleBand() as any}
+          index={1}
+          onFocus={jest.fn()}
         />
         ,
       </svg>,

@@ -2,8 +2,9 @@ import React, {useState, useLayoutEffect, useRef} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 import {Color, Data} from 'types';
 
+import {SkipLink} from '../SkipLink';
 import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
-import {getDefaultColor} from '../../utilities';
+import {getDefaultColor, uniqueId} from '../../utilities';
 
 import {TooltipContent} from './components';
 import {Chart} from './Chart';
@@ -12,18 +13,17 @@ import {BarMargin, RenderTooltipContentData} from './types';
 export interface BarChartProps {
   data: Data[];
   barMargin?: keyof typeof BarMargin;
-  accessibilityLabel?: string;
   color?: Color;
   highlightColor?: Color;
   formatXAxisLabel?: StringLabelFormatter;
   formatYAxisLabel?: NumberLabelFormatter;
   timeSeries?: boolean;
+  skipLinkText?: string;
   renderTooltipContent?: (data: RenderTooltipContentData) => React.ReactNode;
 }
 
 export function BarChart({
   data,
-  accessibilityLabel,
   color = getDefaultColor(),
   highlightColor = getDefaultColor(),
   barMargin = 'Medium',
@@ -31,9 +31,12 @@ export function BarChart({
   formatXAxisLabel = (value) => value.toString(),
   formatYAxisLabel = (value) => value.toString(),
   renderTooltipContent,
+  skipLinkText,
 }: BarChartProps) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
+
+  const skipLinkAnchorId = useRef(uniqueId('barChart'));
 
   const [updateDimensions] = useDebouncedCallback(() => {
     if (containerRef.current != null) {
@@ -64,28 +67,33 @@ export function BarChart({
   }
 
   return (
-    <div
-      aria-label={accessibilityLabel}
-      role="img"
-      style={{width: '100%', height: '100%'}}
-      ref={containerRef}
-    >
+    <div style={{width: '100%', height: '100%'}} ref={containerRef}>
       {chartDimensions == null ? null : (
-        <Chart
-          data={data}
-          chartDimensions={chartDimensions}
-          barMargin={BarMargin[barMargin]}
-          color={color}
-          highlightColor={highlightColor}
-          formatXAxisLabel={formatXAxisLabel}
-          formatYAxisLabel={formatYAxisLabel}
-          timeSeries={timeSeries}
-          renderTooltipContent={
-            renderTooltipContent != null
-              ? renderTooltipContent
-              : renderDefaultTooltipContent
-          }
-        />
+        <React.Fragment>
+          {skipLinkText == null || skipLinkText.length === 0 ? null : (
+            <SkipLink anchorId={skipLinkAnchorId.current}>
+              {skipLinkText}
+            </SkipLink>
+          )}
+          <Chart
+            data={data}
+            chartDimensions={chartDimensions}
+            barMargin={BarMargin[barMargin]}
+            color={color}
+            highlightColor={highlightColor}
+            formatXAxisLabel={formatXAxisLabel}
+            formatYAxisLabel={formatYAxisLabel}
+            timeSeries={timeSeries}
+            renderTooltipContent={
+              renderTooltipContent != null
+                ? renderTooltipContent
+                : renderDefaultTooltipContent
+            }
+          />
+          {skipLinkText == null || skipLinkText.length === 0 ? null : (
+            <SkipLink.Anchor id={skipLinkAnchorId.current} />
+          )}
+        </React.Fragment>
       )}
     </div>
   );

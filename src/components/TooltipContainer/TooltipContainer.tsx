@@ -124,6 +124,7 @@ export function TooltipContainer({
         ),
       }}
       ref={tooltipRef}
+      aria-hidden="true"
     >
       {children}
     </animated.div>

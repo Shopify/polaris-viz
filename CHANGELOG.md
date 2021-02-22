@@ -6,10 +6,12 @@
 
 - Removed the `accessibilityLabel` prop from `<LineChart/>` in favour of a more complete accessibility approach
 - `<LineChart/>` now requires `xAxisLabels`
+- Removed the accessibilityLabel from [`<BarChart/>`](https://github.com/Shopify/polaris-viz/blob/master/src/components/BarChart/BarChart.md)
 
 ### Added
 
 - `skipLinkText` and `hideXAxisLabels` prop to `<LineChart/>`
+- `skipLinkText` prop to [`<BarChart/>`](https://github.com/Shopify/polaris-viz/blob/master/src/components/BarChart/BarChart.md)
 
 ## [0.3.0] - 2021-02-10
 

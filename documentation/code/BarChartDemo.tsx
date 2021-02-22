@@ -86,6 +86,7 @@ export function BarChartDemo() {
           formatXAxisLabel={formatXAxisLabel}
           formatYAxisLabel={formatYAxisLabel}
           renderTooltipContent={renderTooltipContent}
+          skipLinkText="Skip chart content"
         />
       </div>
     </div>

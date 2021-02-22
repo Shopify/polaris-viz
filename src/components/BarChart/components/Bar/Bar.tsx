@@ -15,6 +15,9 @@ interface Props {
   yScale: ScaleLinear<number, number>;
   rawValue: number;
   width: number;
+  index: number;
+  onFocus: ({index, cx, cy}: {index: number; cx: number; cy: number}) => any;
+  ariaLabel?: string;
 }
 
 export function Bar({
@@ -25,6 +28,9 @@ export function Bar({
   rawValue,
   yScale,
   width,
+  onFocus,
+  index,
+  ariaLabel,
 }: Props) {
   const currentColor = isSelected
     ? getColorValue(highlightColor)
@@ -47,6 +53,10 @@ export function Bar({
     ? modifiedYPosition
     : yScale(Math.max(0, rawValue));
 
+  const handleFocus = () => {
+    onFocus({index, cx: x, cy: yPosition});
+  };
+
   return (
     <animated.rect
       x={x}
@@ -54,6 +64,10 @@ export function Bar({
       fill={animation.color}
       width={width}
       height={height}
+      aria-label={ariaLabel}
+      onFocus={handleFocus}
+      tabIndex={0}
+      role="img"
     />
   );
 }
