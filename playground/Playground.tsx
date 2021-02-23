@@ -1,7 +1,34 @@
-import React from 'react';
+import React, {useState} from 'react';
+
+import {
+  BarChartDemo,
+  LineChartDemo,
+  MultiSeriesBarChartDemo,
+  NormalizedStackedBarChartDemo,
+  SparklineDemo,
+  StackedAreaChartDemo,
+} from '../documentation/code';
 
 import {NormalizedStackedBarChart} from '../src/components';
-import {Orientation, Size} from '../src/components/NormalizedStackedBarChart';
+
+const Demos = () => {
+  return (
+    <>
+      <h3>Bar Chart Demo</h3>
+      <BarChartDemo />
+      <h3>Line Chart Demo</h3>
+      <LineChartDemo />
+      <h3>Multi Series Bar Chart Demo</h3>
+      <MultiSeriesBarChartDemo />
+      <h3>Normalized Stacked Bar Chart Demo</h3>
+      <NormalizedStackedBarChartDemo />
+      <h3>Sparkline Demo</h3>
+      <SparklineDemo />
+      <h3>Stacked Area Chart Demo</h3>
+      <StackedAreaChartDemo />
+    </>
+  );
+};
 
 const mockProps = {
   // size: Size.Small,
@@ -24,13 +51,20 @@ const mockProps = {
 };
 
 export default function Playground() {
+  const [showDemos, setShowDemos] = useState(false);
+  const toggleDemos = () => setShowDemos((showingDemos) => !showingDemos);
+
   return (
-    <div style={{height: '501px', margin: '40px'}}>
+    <div>
+      <h3>Playground area</h3>
       <NormalizedStackedBarChart
         size="large"
         // orientation="vertical"
         {...mockProps}
       />
+      <br />
+      <button onClick={toggleDemos}>Toggle Demos</button>
+      {showDemos && <Demos />}
     </div>
   );
 }
