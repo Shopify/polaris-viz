@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 
-import * as DemosTest from '../documentation/code';
+import * as PlaygroundDemos from '../documentation/code';
 
 import {NormalizedStackedBarChart} from '../src/components';
 
 const Demos = () => {
   return (
     <>
-      {Object.entries(DemosTest).map(([title, Component]) => {
+      {Object.entries(PlaygroundDemos).map(([title, Component]) => {
         return (
           <span key={title}>
             <h3>{title}</h3>
