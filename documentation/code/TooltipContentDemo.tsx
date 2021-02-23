@@ -89,21 +89,17 @@ export function TooltipContentDemo() {
         label: 'January 1st, 2021',
         value: '10',
       },
-      style: {
-        color: 'primary',
-        lineStyle: 'solid',
-      },
+      color: 'primary',
+      lineStyle: 'solid',
     },
     {
-      name: 'Hot Dogs',
+      name: 'Hot Dogs2',
       point: {
         label: 'December 1st, 2020',
         value: '12',
       },
-      style: {
-        color: 'pastComparison',
-        lineStyle: 'dashed',
-      },
+      color: 'pastComparison',
+      lineStyle: 'dashed',
     },
   ];
 

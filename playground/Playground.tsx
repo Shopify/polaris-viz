@@ -1,7 +1,23 @@
-import React from 'react';
+import React, {useState} from 'react';
+
+import * as PlaygroundDemos from '../documentation/code';
 
 import {NormalizedStackedBarChart} from '../src/components';
-import {Orientation, Size} from '../src/components/NormalizedStackedBarChart';
+
+const Demos = () => {
+  return (
+    <>
+      {Object.entries(PlaygroundDemos).map(([title, Component]) => {
+        return (
+          <span key={title}>
+            <h3>{title}</h3>
+            <Component />
+          </span>
+        );
+      })}
+    </>
+  );
+};
 
 const mockProps = {
   // size: Size.Small,
@@ -24,13 +40,20 @@ const mockProps = {
 };
 
 export default function Playground() {
+  const [showDemos, setShowDemos] = useState(false);
+  const toggleDemos = () => setShowDemos((showingDemos) => !showingDemos);
+
   return (
-    <div style={{height: '501px', margin: '40px'}}>
+    <div>
+      <h3>Playground area</h3>
       <NormalizedStackedBarChart
         size="large"
         // orientation="vertical"
         {...mockProps}
       />
+      <br />
+      <button onClick={toggleDemos}>Toggle Demos</button>
+      {showDemos && <Demos />}
     </div>
   );
 }
