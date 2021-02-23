@@ -1,31 +1,20 @@
 import React, {useState} from 'react';
 
-import {
-  BarChartDemo,
-  LineChartDemo,
-  MultiSeriesBarChartDemo,
-  NormalizedStackedBarChartDemo,
-  SparklineDemo,
-  StackedAreaChartDemo,
-} from '../documentation/code';
+import * as DemosTest from '../documentation/code';
 
 import {NormalizedStackedBarChart} from '../src/components';
 
 const Demos = () => {
   return (
     <>
-      <h3>Bar Chart Demo</h3>
-      <BarChartDemo />
-      <h3>Line Chart Demo</h3>
-      <LineChartDemo />
-      <h3>Multi Series Bar Chart Demo</h3>
-      <MultiSeriesBarChartDemo />
-      <h3>Normalized Stacked Bar Chart Demo</h3>
-      <NormalizedStackedBarChartDemo />
-      <h3>Sparkline Demo</h3>
-      <SparklineDemo />
-      <h3>Stacked Area Chart Demo</h3>
-      <StackedAreaChartDemo />
+      {Object.entries(DemosTest).map(([title, Component]) => {
+        return (
+          <span key={title}>
+            <h3>{title}</h3>
+            <Component />
+          </span>
+        );
+      })}
     </>
   );
 };
