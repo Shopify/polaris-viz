@@ -30,6 +30,7 @@ const mockProps = {
     ticks: [0, 1, 2],
     horizontalLabelWidth: 30,
   },
+  ariaHidden: false,
 };
 
 describe('<LinearXAxis />', () => {
