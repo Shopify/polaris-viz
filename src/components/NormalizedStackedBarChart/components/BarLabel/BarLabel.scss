@@ -23,29 +23,3 @@
   margin-top: $spacing-extra-tight;
   display: flex;
 }
-
-.PositiveComparison,
-.NegativeComparison {
-  display: flex;
-  align-items: center;
-  margin-left: $spacing-tight;
-}
-
-.PositiveComparison {
-  color: $color-green;
-}
-
-.PositiveComparison svg {
-  fill: $color-green;
-  margin-right: $spacing-extra-tight;
-}
-
-.NegativeComparison {
-  color: $color-red;
-  fill: $color-red;
-}
-
-.NegativeComparison svg {
-  fill: $color-red;
-  margin-right: $spacing-extra-tight;
-}

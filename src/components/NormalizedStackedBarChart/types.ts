@@ -6,5 +6,5 @@ export interface Data {
   formattedValue: string;
   value: number;
   label: string;
-  comparisonMetric?: number;
+  comparisonMetric?: {metric: string; trend: 'positive' | 'negative'};
 }
