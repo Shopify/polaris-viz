@@ -1,6 +1,9 @@
 import React from 'react';
 
-import {ComparisonMetric} from '../../../ComparisonMetric';
+import {
+  ComparisonMetric,
+  ComparisonMetricProps,
+} from '../../../ComparisonMetric';
 
 import styles from './BarLabel.scss';
 
@@ -8,7 +11,7 @@ export interface Props {
   label: string;
   value: string;
   color: string;
-  comparisonMetric?: {metric: string; trend: 'positive' | 'negative'};
+  comparisonMetric?: ComparisonMetricProps['metric'];
 }
 
 export function BarLabel({label, value, color, comparisonMetric}: Props) {

@@ -3,24 +3,31 @@ import React from 'react';
 import styles from './ComparisonMetric.scss';
 import {UpChevron, DownChevron} from './components';
 
-interface ComparisonMetricProps {
-  metric: {metric: string; trend: 'positive' | 'negative'};
+export interface ComparisonMetricProps {
+  metric: {
+    metric: string;
+    trend: 'positive' | 'negative';
+    accessibilityLabel: string;
+  };
 }
 
 export function ComparisonMetric({metric}: ComparisonMetricProps) {
-  let comparisonIndicator = (
+  const positiveIndicator = (
     <span className={styles.PositiveComparison}>
-      <UpChevron /> {metric.metric}
+      <UpChevron />
+      <span aria-label={metric.accessibilityLabel}>{metric.metric}</span>
     </span>
   );
 
-  if (metric.trend === 'negative') {
-    comparisonIndicator = (
-      <span className={styles.NegativeComparison}>
-        <DownChevron /> {metric.metric}
-      </span>
-    );
-  }
+  const negativeIndicator = (
+    <span className={styles.NegativeComparison}>
+      <DownChevron />
+      <span aria-label={metric.accessibilityLabel}>{metric.metric}</span>
+    </span>
+  );
 
-  return comparisonIndicator;
+  const indicator =
+    metric.trend === 'negative' ? negativeIndicator : positiveIndicator;
+
+  return indicator;
 }

@@ -1,1 +1,1 @@
-export {ComparisonMetric} from './ComparisonMetric';
+export {ComparisonMetric, ComparisonMetricProps} from './ComparisonMetric';
