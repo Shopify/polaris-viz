@@ -1,4 +1,4 @@
-import {rgbToRgba} from './utilities';
+import {rgbToRgba} from '../rgb-to-rgba';
 
 describe('rgbToRgba', () => {
   it('returns an rgba value', () => {

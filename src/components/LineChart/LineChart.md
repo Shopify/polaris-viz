@@ -144,6 +144,7 @@ The `Series` type gives the user a lot of flexibility to define exactly what eac
   }[];
   color?: Color;
   lineStyle?: LineStyle;
+  showArea?: boolean;
 }
 ```
 
@@ -177,7 +178,15 @@ This accepts any [Polaris Viz color](/documentation/Polaris-Viz-colors.md) value
 | --------------------- | --------- |
 | `'solid' \| 'dashed'` | `'solid'` |
 
-The lineStype determines if the drawn line for the series is a solid or dashed line.
+The lineStyle type determines if the drawn line for the series is a solid or dashed line.
+
+#### showArea
+
+| type      | default |
+| --------- | ------- |
+| `boolean` | `false` |
+
+The showArea type determines if a gradient area style is used for the series.
 
 ### The `RenderTooltipContentData` type
 

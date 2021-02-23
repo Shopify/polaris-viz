@@ -19,7 +19,7 @@ import {TooltipContainer} from '../TooltipContainer';
 
 import {Series, RenderTooltipContentData} from './types';
 import {useYScale} from './hooks';
-import {Line} from './components';
+import {Line, GradientArea} from './components';
 import styles from './Chart.scss';
 
 interface Props {
@@ -211,7 +211,7 @@ export function Chart({
             .slice()
             .reverse()
             .map((singleSeries, index) => {
-              const {data, name} = singleSeries;
+              const {data, name, showArea} = singleSeries;
               const path = lineGenerator(data);
 
               if (path == null) {
@@ -223,17 +223,26 @@ export function Chart({
               const isFirstLine = index === series.length - 1;
 
               return (
-                <Line
-                  key={name}
-                  xScale={xScale}
-                  yScale={yScale}
-                  series={singleSeries}
-                  path={path}
-                  activePointIndex={activePointIndex}
-                  labelledBy={tooltipId.current}
-                  handleFocus={handleFocus}
-                  tabIndex={isFirstLine ? 0 : -1}
-                />
+                <React.Fragment key={name}>
+                  <Line
+                    xScale={xScale}
+                    yScale={yScale}
+                    series={singleSeries}
+                    path={path}
+                    activePointIndex={activePointIndex}
+                    labelledBy={tooltipId.current}
+                    handleFocus={handleFocus}
+                    tabIndex={isFirstLine ? 0 : -1}
+                  />
+
+                  {showArea ? (
+                    <GradientArea
+                      series={singleSeries}
+                      yScale={yScale}
+                      xScale={xScale}
+                    />
+                  ) : null}
+                </React.Fragment>
               );
             })}
         </g>

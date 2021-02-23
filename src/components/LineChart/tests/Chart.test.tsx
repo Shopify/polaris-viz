@@ -9,7 +9,7 @@ import {
 
 import {Chart} from '../Chart';
 import {Series} from '../types';
-import {Line} from '../components';
+import {Line, GradientArea} from '../components';
 import {YAxis} from '../../YAxis';
 
 (global as any).DOMRect = class DOMRect {
@@ -36,6 +36,7 @@ const primarySeries: Required<Series> = {
   name: 'Primary',
   color: 'primary',
   lineStyle: 'solid',
+  showArea: false,
   data: [
     {label: 'Jan 1', rawValue: 1500},
     {label: 'Jan 2', rawValue: 1000},
@@ -132,6 +133,14 @@ describe('<Chart />', () => {
     );
 
     expect(chart).toContainReactComponentTimes(Line, 2);
+  });
+
+  it('renders a <GradientArea /> for a series when showArea is true', () => {
+    const chart = mount(
+      <Chart {...mockProps} series={[{...primarySeries, showArea: true}]} />,
+    );
+
+    expect(chart).toContainReactComponentTimes(GradientArea, 1);
   });
 
   it('renders tooltip content inside a <TooltipContainer /> if there is an active point', () => {

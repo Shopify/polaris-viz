@@ -20,6 +20,7 @@ const mockProps = {
     ],
     color: 'primary' as 'primary',
     lineStyle: 'solid' as 'solid',
+    showArea: false,
   },
   xScale: scaleLinear(),
   yScale: scaleLinear(),

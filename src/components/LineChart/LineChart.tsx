@@ -76,6 +76,7 @@ export function LineChart({
   const seriesWithDefaults = series.map<Required<Series>>((series, index) => ({
     color: getDefaultColor(index),
     lineStyle: 'solid',
+    showArea: false,
     ...series,
   }));
 

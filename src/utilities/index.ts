@@ -10,3 +10,4 @@ export {degreesToRadians} from './degrees-to-radians';
 export {getBarXAxisDetails} from './get-bar-xaxis-details';
 export {getLongestLabelDetails} from './get-longest-label-details';
 export {getMaxDiagonalDetails} from './get-max-diagonal-details';
+export {rgbToRgba} from './rgb-to-rgba';
