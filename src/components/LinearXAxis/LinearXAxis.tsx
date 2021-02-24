@@ -28,7 +28,7 @@ interface Props {
   fontSize: number;
   xAxisDetails: XAxisDetails;
   drawableHeight: number;
-  ariaHidden?: boolean;
+  ariaHidden: boolean;
 }
 
 function getTextAlign({
@@ -56,7 +56,7 @@ function Axis({
   fontSize,
   drawableWidth,
   drawableHeight,
-  ariaHidden = false,
+  ariaHidden,
 }: Props) {
   const {
     maxDiagonalLabelLength,
