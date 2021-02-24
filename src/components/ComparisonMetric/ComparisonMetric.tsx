@@ -6,12 +6,20 @@ import {UpChevron, DownChevron} from './components';
 export interface ComparisonMetricProps {
   metric: {
     metric: string;
-    trend: 'positive' | 'negative';
+    trend: 'positive' | 'negative' | 'neutral';
     accessibilityLabel: string;
   };
 }
 
 export function ComparisonMetric({metric}: ComparisonMetricProps) {
+  if (metric.trend === 'neutral') {
+    return (
+      <span className={styles.NeutralComparison}>
+        <span aria-label={metric.accessibilityLabel}>{metric.metric}</span>
+      </span>
+    );
+  }
+
   const positiveIndicator = (
     <span className={styles.PositiveComparison}>
       <UpChevron />

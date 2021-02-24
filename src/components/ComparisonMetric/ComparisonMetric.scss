@@ -1,7 +1,8 @@
 @import 'node_modules/@shopify/polaris-tokens/dist/index';
 
 .PositiveComparison,
-.NegativeComparison {
+.NegativeComparison,
+.NeutralComparison {
   display: flex;
   align-items: center;
   margin-left: $spacing-tight;
@@ -21,4 +22,8 @@
 
 .NegativeComparison svg {
   margin-right: $spacing-extra-tight;
+}
+
+.NeutralComparison {
+  color: $color-ink-lightest;
 }

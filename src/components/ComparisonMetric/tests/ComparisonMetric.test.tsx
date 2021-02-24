@@ -22,4 +22,13 @@ describe('<Crosshair />', () => {
     );
     expect(comparisonMetric).toContainReactComponent(DownChevron);
   });
+
+  it('renders no chevron if neutral', () => {
+    const comparisonMetric = mount(
+      <ComparisonMetric
+        metric={{metric: '0', trend: 'neutral', accessibilityLabel: 'label'}}
+      />,
+    );
+    expect(comparisonMetric).toContainReactComponentTimes('svg', 0);
+  });
 });
