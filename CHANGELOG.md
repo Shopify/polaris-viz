@@ -1,18 +1,17 @@
 # Changelog
 
-## Unreleased
+## [0.4.0] - 2021-02-24
 
 ### Changed
 
-- Removed the `accessibilityLabel` prop from `<LineChart/>` in favour of a more complete accessibility approach
+- Removed the `accessibilityLabel` prop from `<LineChart/>` and `<BarChart/>` in favour of a more complete accessibility approach
 - `<LineChart/>` now requires `xAxisLabels`
-- Removed the accessibilityLabel from [`<BarChart/>`](https://github.com/Shopify/polaris-viz/blob/master/src/components/BarChart/BarChart.md)
 - `<Sparkline />` now accepts a `series` prop instead of `data` and universal styling props, so that multiple data series can be displayed and individually configured
 
 ### Added
 
-- `skipLinkText` and `hideXAxisLabels` prop to `<LineChart/>`
-- `skipLinkText` prop to [`<BarChart/>`](https://github.com/Shopify/polaris-viz/blob/master/src/components/BarChart/BarChart.md)
+- `skipLinkText` to `<LineChart/>` and `<BarChart/>`
+- `hideXAxisLabels` prop to `<LineChart/>`
 
 ## [0.3.0] - 2021-02-10
 
