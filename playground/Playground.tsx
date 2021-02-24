@@ -27,6 +27,11 @@ const mockProps = {
       label: 'Google',
       value: 0,
       formattedValue: '$0',
+      comparisonMetric: {
+        trend: 'neutral' as any,
+        metric: '5',
+        accessibilityLabel: 'label',
+      },
     },
     {
       label: 'Direct',

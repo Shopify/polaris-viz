@@ -1,29 +1,29 @@
 @import 'node_modules/@shopify/polaris-tokens/dist/index';
 
-.PositiveComparison,
-.NegativeComparison,
-.NeutralComparison {
+.PositiveIcon,
+.NegativeIcon,
+.NeutralIcon {
   display: flex;
   align-items: center;
   margin-left: $spacing-tight;
 }
 
-.PositiveComparison {
+.PositiveIcon {
   color: $color-green;
 }
 
-.PositiveComparison svg {
+.PositiveIcon svg {
   margin-right: $spacing-extra-tight;
 }
 
-.NegativeComparison {
+.NegativeIcon {
   color: $color-red;
 }
 
-.NegativeComparison svg {
+.NegativeIcon svg {
   margin-right: $spacing-extra-tight;
 }
 
-.NeutralComparison {
+.NeutralIcon {
   color: $color-ink-lightest;
 }

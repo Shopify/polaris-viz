@@ -12,31 +12,28 @@ export interface ComparisonMetricProps {
 }
 
 export function ComparisonMetric({metric}: ComparisonMetricProps) {
-  if (metric.trend === 'neutral') {
-    const label = `${metric.accessibilityLabel} ${metric.metric}`;
-    return (
-      <span className={styles.NeutralComparison}>
-        <span aria-label={label}>{metric.metric}</span>
-      </span>
-    );
+  switch (metric.trend) {
+    case 'neutral':
+      return (
+        <span className={styles.NeutralIcon}>
+          <span aria-label={metric.accessibilityLabel}>{metric.metric}</span>
+        </span>
+      );
+      break;
+    case 'positive':
+      return (
+        <span className={styles.PositiveIcon}>
+          <UpChevron accessibilityLabel={metric.accessibilityLabel} />
+          <span>{metric.metric}</span>
+        </span>
+      );
+      break;
+    case 'negative':
+      return (
+        <span className={styles.NegativeIcon}>
+          <DownChevron accessibilityLabel={metric.accessibilityLabel} />
+          <span>{metric.metric}</span>
+        </span>
+      );
   }
-
-  const positiveIndicator = (
-    <span className={styles.PositiveComparison}>
-      <UpChevron accessibilityLabel={metric.accessibilityLabel} />
-      <span>{metric.metric}</span>
-    </span>
-  );
-
-  const negativeIndicator = (
-    <span className={styles.NegativeComparison}>
-      <DownChevron accessibilityLabel={metric.accessibilityLabel} />
-      <span>{metric.metric}</span>
-    </span>
-  );
-
-  const indicator =
-    metric.trend === 'negative' ? negativeIndicator : positiveIndicator;
-
-  return indicator;
 }
