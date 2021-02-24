@@ -1,0 +1,28 @@
+$animation-duration: 500ms;
+
+.Path {
+  animation: reveal $animation-duration ease-in-out 1;
+}
+
+.Area {
+  opacity: 0;
+  animation: fadeIn $animation-duration ease-in-out 1 forwards;
+}
+
+@keyframes reveal {
+  0% {
+    clip-path: inset(0 100% 0 0);
+  }
+  99% {
+    clip-path: inset(0);
+  }
+  100% {
+    clip-path: unset;
+  }
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}

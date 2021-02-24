@@ -7,6 +7,7 @@
 - Removed the `accessibilityLabel` prop from `<LineChart/>` in favour of a more complete accessibility approach
 - `<LineChart/>` now requires `xAxisLabels`
 - Removed the accessibilityLabel from [`<BarChart/>`](https://github.com/Shopify/polaris-viz/blob/master/src/components/BarChart/BarChart.md)
+- `<Sparkline />` now accepts a `series` prop instead of `data` and universal styling props, so that multiple data series can be displayed and individually configured
 
 ### Added
 

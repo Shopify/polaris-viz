@@ -1,20 +1,8 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
-import tokens from '@shopify/polaris-tokens';
 
 import {Sparkline} from './Sparkline';
-import {LinearGradient} from './components';
-
-const MOCK_PATH_LENGTH = 10;
-
-jest.mock('./utilities.ts', () => {
-  return {
-    ...jest.requireActual('./utilities.ts'),
-    getPathLength: () => {
-      return MOCK_PATH_LENGTH;
-    },
-  };
-});
+import {Series} from './components';
 
 jest.mock('utilities/unique-id', () => ({
   uniqueId: jest.fn(() => 'stackedAreas-1'),
@@ -29,14 +17,55 @@ describe('<Sparkline />', () => {
     });
   });
 
-  const mockData = [
-    {x: 0, y: 10},
-    {x: 1, y: 10},
+  const mockSeries = [
+    {
+      color: 'colorRed' as any,
+      areaStyle: 'gradient' as any,
+      data: [
+        {x: 0, y: 100},
+        {x: 1, y: 200},
+        {x: 2, y: 300},
+        {x: 3, y: 400},
+        {x: 4, y: 400},
+        {x: 5, y: 1000},
+        {x: 6, y: 200},
+        {x: 7, y: 800},
+        {x: 8, y: 900},
+        {x: 9, y: 200},
+        {x: 10, y: 400},
+      ],
+    },
+    {
+      color: 'colorPurple' as any,
+      areaStyle: 'none' as any,
+      lineStyle: 'dashed' as any,
+      data: [
+        {x: 0, y: 10},
+        {x: 1, y: 20},
+        {x: 2, y: 30},
+        {x: 3, y: 40},
+        {x: 4, y: 40},
+        {x: 5, y: 400},
+        {x: 6, y: 20},
+        {x: 7, y: 80},
+        {x: 8, y: 90},
+        {x: 9, y: 20},
+        {x: 10, y: 40},
+      ],
+    },
   ];
+
+  describe('SVG', () => {
+    it('renders', () => {
+      const sparkline = mount(<Sparkline series={mockSeries} />);
+
+      expect(sparkline).toContainReactComponentTimes('svg', 1);
+    });
+  });
 
   describe('Accessibility', () => {
     it('gives the SVG an aria-hidden attribute', () => {
-      const sparkline = mount(<Sparkline data={mockData} />);
+      const sparkline = mount(<Sparkline series={mockSeries} />);
 
       expect(sparkline).toContainReactComponent('svg', {
         'aria-hidden': true,
@@ -46,110 +75,18 @@ describe('<Sparkline />', () => {
     it('has a hidden label when an accessibility label is passed to the component', () => {
       const label = 'Showing sales over the last 30 days';
       const sparkline = mount(
-        <Sparkline data={mockData} accessibilityLabel={label} />,
+        <Sparkline series={mockSeries} accessibilityLabel={label} />,
       );
 
       expect(sparkline.find('span')!.text()).toBe(label);
     });
   });
 
-  describe('SVG elements', () => {
-    it('renders a path', () => {
-      const sparkline = mount(<Sparkline data={mockData} />);
+  describe('Series', () => {
+    it('renders a Series for each series provided', () => {
+      const sparkline = mount(<Sparkline series={mockSeries} />);
 
-      expect(sparkline.findAll('path')).toHaveLength(1);
-    });
-
-    it('renders two paths if areaFillStyle is not `none`', () => {
-      const sparkline = mount(
-        <Sparkline data={mockData} areaFillStyle="gradient" />,
-      );
-
-      expect(sparkline.findAll('path')).toHaveLength(2);
-    });
-
-    it('renders a <LinearGradient /> if the areaFillStyle is `gradient`', () => {
-      const sparkline = mount(
-        <Sparkline data={mockData} areaFillStyle="gradient" />,
-      );
-
-      expect(sparkline).toContainReactComponent(LinearGradient, {
-        id: 'stackedAreas-1',
-        startColor: 'rgba(71, 193, 191, 0)',
-        endColor: 'rgba(71, 193, 191, 0.8)',
-      });
-    });
-  });
-
-  describe('Animations', () => {
-    it('starts with a strokeDashoffset for the line path when animations are used', () => {
-      const sparkline = mount(
-        <Sparkline isAnimated data={mockData} areaFillStyle="gradient" />,
-      );
-
-      expect(sparkline).toContainReactComponent('path', {
-        strokeDashoffset: MOCK_PATH_LENGTH,
-      });
-    });
-
-    it('starts with zero strokeDashoffset for the line path when animations are used', () => {
-      const sparkline = mount(
-        <Sparkline data={mockData} areaFillStyle="gradient" />,
-      );
-
-      expect(sparkline).toContainReactComponent('path', {
-        strokeDashoffset: 0,
-      });
-    });
-
-    it('starts with 0 opacity for the area path when animations are used', () => {
-      const sparkline = mount(
-        <Sparkline isAnimated data={mockData} areaFillStyle="gradient" />,
-      );
-
-      expect(sparkline).toContainReactComponent('path', {
-        opacity: 0,
-      });
-    });
-
-    it('starts with 0.4 for the area path opacity when animations are not used', () => {
-      const sparkline = mount(
-        <Sparkline data={mockData} areaFillStyle="solid" />,
-      );
-
-      expect(sparkline).toContainReactComponent('path', {
-        opacity: 0.4,
-      });
-    });
-  });
-
-  describe('Strokes', () => {
-    it('has a 1.5 stroke width', () => {
-      const sparkline = mount(<Sparkline data={mockData} />);
-
-      expect(sparkline).toContainReactComponent('path', {
-        strokeWidth: 1.5,
-      });
-    });
-  });
-
-  describe('Colors', () => {
-    it('is teal by default', () => {
-      const sparkline = mount(<Sparkline data={mockData} />);
-
-      expect(sparkline).toContainReactComponent('svg', {
-        color: tokens.colorTeal,
-      });
-    });
-
-    it('applies a color when given one', () => {
-      const sparkline = mount(
-        <Sparkline data={mockData} color="colorOrange" />,
-      );
-
-      expect(sparkline).toContainReactComponent('svg', {
-        color: tokens.colorOrange,
-      });
+      expect(sparkline.findAll(Series)).toHaveLength(mockSeries.length);
     });
   });
 });
