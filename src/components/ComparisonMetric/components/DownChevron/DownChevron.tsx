@@ -2,8 +2,13 @@ import React from 'react';
 
 import styles from './DownChevron.scss';
 
-export const DownChevron = () => (
+interface Props {
+  accessibilityLabel: string;
+}
+
+export const DownChevron = ({accessibilityLabel}: Props) => (
   <svg
+    aria-label={accessibilityLabel}
     className={styles.NegativeColouring}
     width="10"
     height="7"

@@ -13,24 +13,25 @@ export interface ComparisonMetricProps {
 
 export function ComparisonMetric({metric}: ComparisonMetricProps) {
   if (metric.trend === 'neutral') {
+    const label = `${metric.accessibilityLabel} ${metric.metric}`;
     return (
       <span className={styles.NeutralComparison}>
-        <span aria-label={metric.accessibilityLabel}>{metric.metric}</span>
+        <span aria-label={label}>{metric.metric}</span>
       </span>
     );
   }
 
   const positiveIndicator = (
     <span className={styles.PositiveComparison}>
-      <UpChevron />
-      <span aria-label={metric.accessibilityLabel}>{metric.metric}</span>
+      <UpChevron accessibilityLabel={metric.accessibilityLabel} />
+      <span>{metric.metric}</span>
     </span>
   );
 
   const negativeIndicator = (
     <span className={styles.NegativeComparison}>
-      <DownChevron />
-      <span aria-label={metric.accessibilityLabel}>{metric.metric}</span>
+      <DownChevron accessibilityLabel={metric.accessibilityLabel} />
+      <span>{metric.metric}</span>
     </span>
   );
 

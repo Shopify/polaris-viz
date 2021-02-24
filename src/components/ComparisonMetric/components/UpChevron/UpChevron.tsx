@@ -2,8 +2,13 @@ import React from 'react';
 
 import styles from './UpChevron.scss';
 
-export const UpChevron = () => (
+interface Props {
+  accessibilityLabel: string;
+}
+
+export const UpChevron = ({accessibilityLabel}: Props) => (
   <svg
+    aria-label={accessibilityLabel}
     className={styles.PositiveColouring}
     width="9"
     height="7"
