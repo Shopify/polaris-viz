@@ -15,8 +15,8 @@ import {
   SMALL_FONT_SIZE,
   FONT_SIZE,
   SMALL_SCREEN,
+  SPACING,
   SPACING_LOOSE,
-  SPACING_EXTRA_TIGHT,
 } from './constants';
 import styles from './Chart.scss';
 
@@ -95,7 +95,7 @@ export function Chart({
     [fontSize, ticks],
   );
 
-  const axisMargin = SPACING_LOOSE + yAxisLabelWidth;
+  const axisMargin = SPACING + yAxisLabelWidth;
   const drawableWidth = chartDimensions.width - MARGIN.Right - axisMargin;
 
   const {xScale, xAxisLabels} = useXScale({
@@ -150,12 +150,14 @@ export function Chart({
         </g>
 
         <g
-          transform={`translate(${axisMargin + SPACING_EXTRA_TIGHT},${
-            MARGIN.Top
-          })`}
+          transform={`translate(${axisMargin},${MARGIN.Top})`}
           aria-hidden="true"
         >
-          <YAxis ticks={ticks} drawableWidth={drawableWidth} />
+          <YAxis
+            ticks={ticks}
+            drawableWidth={drawableWidth}
+            fontSize={fontSize}
+          />
         </g>
 
         <g transform={`translate(${axisMargin},${MARGIN.Top})`} role="list">

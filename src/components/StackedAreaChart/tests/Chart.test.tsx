@@ -106,7 +106,7 @@ describe('<Chart />', () => {
         horizontalLabelWidth: 26.523076923076925,
       },
       fontSize: 12,
-      drawableWidth: 472,
+      drawableWidth: 480,
     });
   });
 
@@ -129,16 +129,16 @@ describe('<Chart />', () => {
         {value: 1000, formattedValue: '1000', yOffset: 115},
         {value: 2000, formattedValue: '2000', yOffset: 0},
       ],
-      drawableWidth: 472,
+      drawableWidth: 480,
     });
   });
 
   it('renders a StackedAreas', () => {
     const chart = mount(<Chart {...mockProps} />);
     expect(chart).toContainReactComponent(StackedAreas, {
-      width: 472,
+      width: 480,
       height: 230,
-      transform: 'translate(24,8)',
+      transform: 'translate(16,8)',
       colors: ['colorPurple', 'colorTeal'],
       opacity: 1,
       isAnimated: true,

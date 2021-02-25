@@ -103,6 +103,7 @@ export function Chart({
   const drawableHeight = dimensions.height - Margin.Top - marginBottom;
 
   const {axisMargin, ticks, yScale} = useYScale({
+    fontSize,
     drawableHeight,
     stackedValues,
     formatYAxisLabel,
@@ -173,7 +174,11 @@ export function Chart({
         </g>
 
         <g transform={`translate(${axisMargin},${Margin.Top})`}>
-          <YAxis ticks={ticks} drawableWidth={drawableWidth} />
+          <YAxis
+            ticks={ticks}
+            drawableWidth={drawableWidth}
+            fontSize={fontSize}
+          />
         </g>
 
         <VisuallyHiddenRows
