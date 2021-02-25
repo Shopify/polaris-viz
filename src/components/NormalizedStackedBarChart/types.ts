@@ -8,9 +8,5 @@ export interface Data {
   formattedValue: string;
   value: number;
   label: string;
-  comparisonMetric?: {
-    metric: string;
-    trend: ComparisonMetricProps['trend'];
-    accessibilityLabel: string;
-  };
+  comparisonMetric?: ComparisonMetricProps;
 }
