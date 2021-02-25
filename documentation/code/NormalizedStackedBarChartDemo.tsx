@@ -47,7 +47,6 @@ export function NormalizedStackedBarChartDemo() {
               formattedValue: '$20',
             },
           ]}
-          accessibilityLabel="A chart showing the breakdown of ad revenue"
           colors={['primary', 'secondary', 'tertiary', 'quaternary']}
           orientation="horizontal"
           size="large"
