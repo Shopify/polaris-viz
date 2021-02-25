@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## [0.5.0] - 2021-02-25
 
 ### Added
 
@@ -10,6 +10,10 @@
 
 - `<LineChart/>`, `<BarChart/>`, `<StackedAreaChart/>` and `<MultiSeriesBarChart />` spacing of the axis labels and legends
 
+### Changed
+
+- Removed the accessibilityLabel from `<NormalizedStackedBarChart/>`, component is accessible by default
+
 ## [0.4.0] - 2021-02-24
 
 ### Changed
@@ -17,7 +21,6 @@
 - Removed the `accessibilityLabel` prop from `<LineChart/>` and `<BarChart/>` in favour of a more complete accessibility approach
 - `<LineChart/>` now requires `xAxisLabels`
 - `<Sparkline />` now accepts a `series` prop instead of `data` and universal styling props, so that multiple data series can be displayed and individually configured
-- Removed the accessibilityLabel from `<NormalizedStackedBarChart/>`, component is accessible by default.
 
 ### Added
 
