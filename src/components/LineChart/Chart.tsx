@@ -58,7 +58,7 @@ export function Chart({
     chartDimensions: dimensions,
     formatXAxisLabel,
     formatYAxisLabel,
-    xAxisLabels: xAxisLabels == null ? [] : xAxisLabels,
+    xAxisLabels: xAxisLabels == null || hideXAxisLabels ? [] : xAxisLabels,
   });
 
   const marginBottom =
@@ -71,6 +71,7 @@ export function Chart({
   const formattedLabels = xAxisLabels.map(formatXAxisLabel);
 
   const {axisMargin, ticks, yScale} = useYScale({
+    fontSize,
     drawableHeight,
     series,
     formatYAxisLabel,

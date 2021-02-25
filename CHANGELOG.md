@@ -6,6 +6,10 @@
 
 - `<LineChart/>` gradient fill style
 
+### Fixed
+
+- `<LineChart/>` spacing of the axis labels and legend
+
 ## [0.4.0] - 2021-02-24
 
 ### Changed
