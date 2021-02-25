@@ -4,6 +4,7 @@ export type LineStyle = 'dashed' | 'solid';
 
 export interface Series extends DataSeries<Data> {
   lineStyle?: LineStyle;
+  showArea?: boolean;
 }
 
 interface TooltipData {

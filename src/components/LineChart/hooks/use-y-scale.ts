@@ -27,7 +27,7 @@ export function useYScale({
 
     const yScale = scaleLinear()
       .range([drawableHeight, 0])
-      .domain([Math.min(0, minY), maxY])
+      .domain([Math.min(0, minY), Math.max(0, maxY)])
       .nice(maxTicks);
 
     const ticks = yScale.ticks(maxTicks).map((value) => ({

@@ -11,6 +11,7 @@ const mockSeries: Required<Series>[] = [
     name: 'Test series 1',
     color: 'colorGreen',
     lineStyle: 'dashed',
+    showArea: false,
   },
 ];
 

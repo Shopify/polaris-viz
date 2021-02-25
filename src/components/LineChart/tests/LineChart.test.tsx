@@ -18,6 +18,7 @@ const primarySeries: Required<Series> = {
   name: 'Primary',
   color: 'primary',
   lineStyle: 'solid',
+  showArea: false,
   data: [
     {label: 'Jan 1', rawValue: 1500},
     {label: 'Jan 2', rawValue: 1000},

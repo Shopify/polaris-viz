@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- `<LineChart/>` gradient fill style
+
 ## [0.4.0] - 2021-02-24
 
 ### Changed
