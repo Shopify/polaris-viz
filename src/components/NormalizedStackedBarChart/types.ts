@@ -1,4 +1,4 @@
-import {ComparisonMetricProps} from '../ComparisonMetric';
+import {ComparisonMetricShape} from '../ComparisonMetric';
 
 export type Orientation = 'horizontal' | 'vertical';
 
@@ -8,5 +8,5 @@ export interface Data {
   formattedValue: string;
   value: number;
   label: string;
-  comparisonMetric?: ComparisonMetricProps;
+  comparisonMetric?: ComparisonMetricShape;
 }

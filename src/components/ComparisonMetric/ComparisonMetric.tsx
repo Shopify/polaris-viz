@@ -4,18 +4,13 @@ import {getColorValue} from '../../utilities';
 
 import styles from './ComparisonMetric.scss';
 import {UpChevron, DownChevron} from './components';
-
-export interface ComparisonMetricProps {
-  metric: string;
-  trend: 'positive' | 'negative' | 'neutral';
-  accessibilityLabel: string;
-}
+import {ComparisonMetricShape} from './types';
 
 export function ComparisonMetric({
   metric,
   trend,
   accessibilityLabel,
-}: ComparisonMetricProps) {
+}: ComparisonMetricShape) {
   const colorKey = trend === 'neutral' ? 'pastComparison' : trend;
   const color = getColorValue(colorKey);
 
