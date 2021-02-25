@@ -33,9 +33,11 @@
   display: flex;
   flex-flow: column wrap;
   margin: $spacing-loose;
+  padding: 0;
 }
 
 .HorizontailLabelContainer {
+  padding: 0;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, max-content));
 }
