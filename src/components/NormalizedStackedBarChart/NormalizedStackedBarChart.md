@@ -13,9 +13,32 @@ Used for positive datasets with two to four items. If your dataset has more than
       label: 'Direct',
       value: 200,
       formattedValue: '$200',
+      comparisonMetric: {
+        metric: '5%',
+        trend: 'positive',
+        accessibilityLabel: 'Increase of',
+      },
     },
-    {label: 'Facebook', value: 100, formattedValue: '$100'},
-    {label: 'Twitter', value: 100, formattedValue: '$100'},
+    {
+      label: 'Facebook',
+      value: 100,
+      formattedValue: '$100',
+      comparisonMetric: {
+        metric: '5%',
+        trend: 'negative',
+        accessibilityLabel: 'Decrease of',
+      },
+    },
+    {
+      label: 'Twitter',
+      value: 100,
+      formattedValue: '$100',
+      comparisonMetric: {
+        metric: '0%',
+        trend: 'neutral',
+        accessibilityLabel: 'Neutral',
+      },
+    },
     {
       label: 'Google',
       value: 20,
@@ -49,11 +72,11 @@ This component derives its size from its parent container. When the Normalized s
 
 #### data
 
-| type                                                       |
-| ---------------------------------------------------------- |
-| `{formattedValue: string, value: number, label: string}[]` |
+| type                                                                                                 |
+| ---------------------------------------------------------------------------------------------------- |
+| `{formattedValue: string, value: number, label: string, comparisonMetric?: ComparisonMetricShape}[]` |
 
-The prop to determine the chart's drawn area. The chart uses the value to compute the width of each bar, and the label and formatted value are used in the chart legend.
+The prop to determine the chart's drawn area. The chart uses the value to compute the width of each bar, and the label, comparisonMetric, and formatted value are used in the chart legend. Within the comparisonMetric, the accessibility label will provide data for screenreaders when hovering over the SVG only.
 
 ### Optional props
 
