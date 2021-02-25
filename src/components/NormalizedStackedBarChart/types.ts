@@ -1,8 +1,8 @@
+import {ComparisonMetricProps} from '../ComparisonMetric';
+
 export type Orientation = 'horizontal' | 'vertical';
 
 export type Size = 'small' | 'medium' | 'large';
-
-export type Direction = 'positive' | 'negative';
 
 export interface Data {
   formattedValue: string;
@@ -10,7 +10,7 @@ export interface Data {
   label: string;
   comparisonMetric?: {
     metric: string;
-    trend: Direction;
+    trend: ComparisonMetricProps['trend'];
     accessibilityLabel: string;
   };
 }

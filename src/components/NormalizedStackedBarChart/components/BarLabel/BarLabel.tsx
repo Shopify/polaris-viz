@@ -11,12 +11,12 @@ export interface Props {
   label: string;
   value: string;
   color: string;
-  comparisonMetric?: ComparisonMetricProps['metric'];
+  comparisonMetric?: ComparisonMetricProps;
 }
 
 export function BarLabel({label, value, color, comparisonMetric}: Props) {
   const comparisonIndicator = comparisonMetric ? (
-    <ComparisonMetric metric={comparisonMetric} />
+    <ComparisonMetric {...comparisonMetric} />
   ) : null;
 
   return (
