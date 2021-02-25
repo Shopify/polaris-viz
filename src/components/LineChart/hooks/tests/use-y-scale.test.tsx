@@ -38,6 +38,7 @@ describe('useYScale', () => {
         drawableHeight: 250,
         formatYAxisLabel: jest.fn(),
         series: [],
+        fontSize: 12,
       });
 
       return null;
@@ -74,6 +75,7 @@ describe('useYScale', () => {
         drawableHeight: 250,
         formatYAxisLabel: jest.fn(),
         series: [deeplyNegative, highlyPositive],
+        fontSize: 12,
       });
 
       return null;
@@ -98,6 +100,7 @@ describe('useYScale', () => {
 
     function TestComponent() {
       useYScale({
+        fontSize: 12,
         drawableHeight: 250,
         formatYAxisLabel: jest.fn(),
         series: [
@@ -133,6 +136,7 @@ describe('useYScale', () => {
 
     function TestComponent() {
       useYScale({
+        fontSize: 12,
         drawableHeight: 250,
         formatYAxisLabel: jest.fn(),
         series: [],
@@ -158,6 +162,7 @@ describe('useYScale', () => {
 
     function TestComponent() {
       const {ticks} = useYScale({
+        fontSize: 12,
         drawableHeight: 250,
         formatYAxisLabel: jest.fn((value) => `Formatted value: ${value}`),
         series: [],

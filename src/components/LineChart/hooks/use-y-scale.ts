@@ -2,7 +2,7 @@ import {useMemo, useEffect, useState} from 'react';
 import {scaleLinear} from 'd3-scale';
 
 import {yAxisMinMax} from '../utilities';
-import {MIN_Y_LABEL_SPACE, SPACING_LOOSE} from '../constants';
+import {MIN_Y_LABEL_SPACE, SPACING} from '../constants';
 import {Series} from '../types';
 import {NumberLabelFormatter} from '../../../types';
 
@@ -10,7 +10,9 @@ export function useYScale({
   drawableHeight,
   series,
   formatYAxisLabel,
+  fontSize,
 }: {
+  fontSize: number;
   drawableHeight: number;
   series: Series[];
   formatYAxisLabel: NumberLabelFormatter;
@@ -43,7 +45,7 @@ export function useYScale({
     let currentMaxTickLength = 0;
 
     const tick = document.createElement('p');
-    tick.style.fontSize = '12px';
+    tick.style.fontSize = `${fontSize}px`;
     tick.style.display = 'inline-block';
     tick.style.visibility = 'hidden';
     document.body.appendChild(tick);
@@ -57,10 +59,9 @@ export function useYScale({
     document.body.removeChild(tick);
 
     setMaxTickLength(currentMaxTickLength);
-  }, [ticks, maxTickLength]);
+  }, [ticks, maxTickLength, fontSize]);
 
-  const axisMargin =
-    maxTickLength == null ? null : maxTickLength + SPACING_LOOSE;
+  const axisMargin = maxTickLength == null ? null : maxTickLength + SPACING;
 
   return {yScale, ticks, axisMargin};
 }
