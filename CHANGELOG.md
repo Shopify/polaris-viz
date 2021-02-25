@@ -8,7 +8,7 @@
 
 ### Fixed
 
-- `<LineChart/>` spacing of the axis labels and legend
+- `<LineChart/>`, `<BarChart/>`, `<StackedAreaChart/>` and `<MultiSeriesBarChart />` spacing of the axis labels and legends
 
 ## [0.4.0] - 2021-02-24
 

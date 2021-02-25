@@ -4,14 +4,16 @@ import {Series} from 'd3-shape';
 
 import {getTextWidth} from '../../../utilities';
 import {MIN_Y_LABEL_SPACE, Spacing} from '../constants';
-import {DEFAULT_MAX_Y, FONT_SIZE} from '../../../constants';
+import {DEFAULT_MAX_Y} from '../../../constants';
 import {NumberLabelFormatter} from '../../../types';
 
 export function useYScale({
+  fontSize,
   drawableHeight,
   stackedValues,
   formatYAxisLabel,
 }: {
+  fontSize: number;
   drawableHeight: number;
   stackedValues: Series<
     {
@@ -54,14 +56,14 @@ export function useYScale({
 
     const maxTickWidth = Math.max(
       ...ticks.map(({formattedValue}) =>
-        getTextWidth({fontSize: FONT_SIZE, text: formattedValue}),
+        getTextWidth({fontSize, text: formattedValue}),
       ),
     );
 
-    const axisMargin = maxTickWidth + Spacing.Loose + Spacing.ExtraTight;
+    const axisMargin = maxTickWidth + Spacing.Base;
 
     return {yScale, ticks, axisMargin};
-  }, [formatYAxisLabel, drawableHeight, stackedValues]);
+  }, [stackedValues, drawableHeight, formatYAxisLabel, fontSize]);
 
   return {yScale, ticks, axisMargin};
 }

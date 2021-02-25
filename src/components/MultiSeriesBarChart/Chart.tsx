@@ -15,7 +15,7 @@ import {
   FONT_SIZE,
   SMALL_WIDTH,
   SMALL_FONT_SIZE,
-  SPACING_LOOSE,
+  SPACING,
   INNER_PADDING,
 } from './constants';
 import styles from './Chart.scss';
@@ -47,6 +47,9 @@ export function Chart({
     y: number;
   } | null>(null);
 
+  const fontSize =
+    chartDimensions.width < SMALL_WIDTH ? SMALL_FONT_SIZE : FONT_SIZE;
+
   const yAxisLabelWidth = useMemo(
     () =>
       series
@@ -54,19 +57,16 @@ export function Chart({
           data.map(({rawValue}) =>
             getTextWidth({
               text: formatYAxisLabel(rawValue),
-              fontSize: FONT_SIZE,
+              fontSize,
             }),
           ),
         )
         .reduce((acc, currentValue) => acc.concat(currentValue), [])
         .reduce((acc, currentValue) => Math.max(acc, currentValue)),
-    [formatYAxisLabel, series],
+    [fontSize, formatYAxisLabel, series],
   );
 
-  const axisMargin = SPACING_LOOSE + yAxisLabelWidth;
-
-  const fontSize =
-    chartDimensions.width < SMALL_WIDTH ? SMALL_FONT_SIZE : FONT_SIZE;
+  const axisMargin = SPACING + yAxisLabelWidth;
 
   const formattedXAxisLabels = useMemo(() => labels.map(formatXAxisLabel), [
     formatXAxisLabel,
@@ -167,7 +167,11 @@ export function Chart({
         </g>
 
         <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
-          <YAxis ticks={ticks} drawableWidth={drawableWidth} />
+          <YAxis
+            ticks={ticks}
+            drawableWidth={drawableWidth}
+            fontSize={fontSize}
+          />
         </g>
         <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
           {stackedValues != null

@@ -67,6 +67,7 @@ describe('useYScale', () => {
         drawableHeight: 250,
         formatYAxisLabel: jest.fn(),
         stackedValues: mockData as any,
+        fontSize: 12,
       });
 
       return null;
@@ -94,6 +95,7 @@ describe('useYScale', () => {
         drawableHeight: 250,
         formatYAxisLabel: jest.fn(),
         stackedValues: mockData as any,
+        fontSize: 12,
       });
 
       return null;
@@ -121,6 +123,7 @@ describe('useYScale', () => {
         drawableHeight: 250,
         formatYAxisLabel: jest.fn(),
         stackedValues: mockZeroData as any,
+        fontSize: 12,
       });
 
       return null;
@@ -148,6 +151,7 @@ describe('useYScale', () => {
         drawableHeight: 250,
         formatYAxisLabel: jest.fn(),
         stackedValues: mockData as any,
+        fontSize: 12,
       });
 
       return null;
@@ -173,6 +177,7 @@ describe('useYScale', () => {
         drawableHeight: 250,
         formatYAxisLabel: (value) => `Formatted: ${value}`,
         stackedValues: mockData as any,
+        fontSize: 12,
       });
 
       const {formattedValue} = ticks[0];
