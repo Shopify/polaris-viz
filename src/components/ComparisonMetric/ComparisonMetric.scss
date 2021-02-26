@@ -1,4 +1,5 @@
 @import 'node_modules/@shopify/polaris-tokens/dist/index';
+@import '../../styles/common';
 
 .PositiveIcon,
 .NegativeIcon,
@@ -14,4 +15,8 @@
 
 .NegativeIcon svg {
   margin-right: $spacing-extra-tight;
+}
+
+.VisuallyHidden {
+  @include visually-hidden;
 }

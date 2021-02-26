@@ -18,7 +18,8 @@ export function ComparisonMetric({
     case 'neutral':
       return (
         <span className={styles.NeutralIcon} style={{color}}>
-          <span aria-label={accessibilityLabel}>{metric}</span>
+          <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
+          <span>{metric}</span>
         </span>
       );
       break;

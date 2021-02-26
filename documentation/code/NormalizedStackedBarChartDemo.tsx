@@ -33,7 +33,7 @@ export function NormalizedStackedBarChartDemo() {
               comparisonMetric: {
                 metric: '5',
                 trend: 'positive',
-                accessibilityLabel: 'test',
+                accessibilityLabel: 'Increase of',
               },
             },
             {
@@ -42,8 +42,8 @@ export function NormalizedStackedBarChartDemo() {
               formattedValue: '$100',
               comparisonMetric: {
                 metric: '5',
-                trend: 'neutral',
-                accessibilityLabel: 'test',
+                trend: 'negative',
+                accessibilityLabel: 'Decrease of',
               },
             },
             {
