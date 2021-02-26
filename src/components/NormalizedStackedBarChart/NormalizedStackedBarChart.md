@@ -77,7 +77,7 @@ The `Data` type gives the user the ability to define how the bars should look li
   label: string;
   value: number;
   formattedValue: string;
-  comparisonMetric?: ComparisonMetricShape
+  comparisonMetric?: ComparisonMetricShape;
 }
 ```
 
@@ -117,9 +117,9 @@ An optional object that adds a comparison metric on the end of the label. Trend 
 
 #### data
 
-| type                                                                                                 |
-| ---------------------------------------------------------------------------------------------------- |
-| `{formattedValue: string, value: number, label: string, comparisonMetric?: ComparisonMetricShape}[]` |
+| type     |
+| -------- |
+| `Data[]` |
 
 The prop to determine the chart's drawn area. Each `Data` object corresponds to a bar drawn on the chart, and is explained in greater detail above.
 
