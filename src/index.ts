@@ -22,4 +22,5 @@ export {
   TooltipContentProps,
   LinePreview,
   SquareColorPreview,
+  PieChart,
 } from './components';

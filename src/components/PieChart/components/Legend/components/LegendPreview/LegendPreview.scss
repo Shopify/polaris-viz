@@ -1,0 +1,28 @@
+@import '../../../../../../../node_modules/@shopify/polaris-tokens/dist/index';
+@import '../../../../../../styles/common';
+
+.Container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.Series {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: end;
+}
+
+.SeriesName {
+  @include legend-label;
+  width: 120px;
+  margin: 5px;
+  font-family: $font-stack-base;
+}
+
+.SeriesValue {
+  @include legend-label;
+  font-weight: 700;
+  font-family: $font-stack-base;
+}

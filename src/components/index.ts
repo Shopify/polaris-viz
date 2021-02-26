@@ -35,3 +35,4 @@ export {VisuallyHiddenRows} from './VisuallyHiddenRows';
 export {LinePreview} from './LinePreview';
 export {Legend} from './Legend';
 export {LinearGradient} from './LinearGradient';
+export {PieChart} from './PieChart';

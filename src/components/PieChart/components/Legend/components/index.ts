@@ -1,0 +1,1 @@
+export {LegendPreview} from './LegendPreview';

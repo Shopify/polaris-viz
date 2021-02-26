@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Added a PieChart component. [#244](https://github.com/Shopify/polaris-viz/pull/244)
+
 ### Added
 
 - Check window is defined before accessing window methods
