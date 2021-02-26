@@ -107,9 +107,9 @@ A readable version of the value (e.g "\$5"). This appears in the chart legend.
 
 #### comparisonMetric
 
-| type                                                                                       |
-| ------------------------------------------------------------------------------------------ |
-| `{trend: 'netural' | 'positive' | 'negative', metric: string, accessibilityLabel: string}` |
+| type
+| -------------------------------------------------------------------------------------------- |
+| `{trend: 'netural' \| 'positive' \| 'negative', metric: string, accessibilityLabel: string}` |
 
 An optional object that adds a comparison metric on the end of the label. Trend determines the direction and color of the arrow, metric is the actual label displayed, and the accessibilityLabel covers the SVG only.
 
