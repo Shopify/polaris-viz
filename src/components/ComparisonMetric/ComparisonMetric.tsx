@@ -1,7 +1,5 @@
 import React from 'react';
 
-import {getColorValue} from '../../utilities';
-
 import styles from './ComparisonMetric.scss';
 import {UpChevron, DownChevron} from './components';
 import {ComparisonMetricShape} from './types';
@@ -11,12 +9,10 @@ export function ComparisonMetric({
   trend,
   accessibilityLabel,
 }: ComparisonMetricShape) {
-  const neutralColor = getColorValue('colorInkLightest');
-
   switch (trend) {
     case 'neutral':
       return (
-        <span className={styles.NeutralIcon} style={{color: neutralColor}}>
+        <span className={styles.NeutralIcon}>
           <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
           <span>{metric}</span>
         </span>
