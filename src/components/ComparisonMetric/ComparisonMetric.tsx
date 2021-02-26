@@ -11,13 +11,12 @@ export function ComparisonMetric({
   trend,
   accessibilityLabel,
 }: ComparisonMetricShape) {
-  const colorKey = trend === 'neutral' ? 'pastComparison' : trend;
-  const color = getColorValue(colorKey);
+  const neutralColor = getColorValue('colorInkLightest');
 
   switch (trend) {
     case 'neutral':
       return (
-        <span className={styles.NeutralIcon} style={{color}}>
+        <span className={styles.NeutralIcon} style={{color: neutralColor}}>
           <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
           <span>{metric}</span>
         </span>
@@ -25,7 +24,7 @@ export function ComparisonMetric({
       break;
     case 'positive':
       return (
-        <span className={styles.PositiveIcon} style={{color}}>
+        <span className={styles.PositiveIcon}>
           <UpChevron accessibilityLabel={accessibilityLabel} />
           <span>{metric}</span>
         </span>
@@ -33,7 +32,7 @@ export function ComparisonMetric({
       break;
     case 'negative':
       return (
-        <span className={styles.NegativeIcon} style={{color}}>
+        <span className={styles.NegativeIcon}>
           <DownChevron accessibilityLabel={accessibilityLabel} />
           <span>{metric}</span>
         </span>

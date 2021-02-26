@@ -5,7 +5,7 @@ import {ComparisonMetric} from '../ComparisonMetric';
 import {UpChevron, DownChevron} from '../components';
 
 describe('<ComparisonMetric />', () => {
-  it('renders an up chevron if positive', () => {
+  it('renders a <UpChevron /> if positive', () => {
     const comparisonMetric = mount(
       <ComparisonMetric
         metric="5"
@@ -16,7 +16,7 @@ describe('<ComparisonMetric />', () => {
     expect(comparisonMetric).toContainReactComponent(UpChevron);
   });
 
-  it('renders a down chevron if negative', () => {
+  it('renders a <DownChevron /> if negative', () => {
     const comparisonMetric = mount(
       <ComparisonMetric
         metric="5"
