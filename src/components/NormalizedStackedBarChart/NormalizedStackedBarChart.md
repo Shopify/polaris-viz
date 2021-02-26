@@ -68,6 +68,51 @@ The normalized stacked bar chart interface looks like this:
 
 This component derives its size from its parent container. When the Normalized stacked bar chart is oriented horizontally, it is constrained by the parent's width; in vertical orientation, it's constrained by the parent's height.
 
+### The `Data` type
+
+The `Data` type gives the user the ability to define how the bars should look like. Its interface looks like this:
+
+```typescript
+{
+  label: string;
+  value: number;
+  formattedValue: string;
+  comparisonMetric?: ComparisonMetricShape
+}
+```
+
+#### label
+
+| type     |
+| -------- |
+| `string` |
+
+The name of the bar. This appears in the chart legend.
+
+#### value
+
+| type     |
+| -------- |
+| `number` |
+
+The value to compute the width of each bar,
+
+#### formattedValue
+
+| type     |
+| -------- |
+| `string` |
+
+A readable version of the value (e.g "\$5"). This appears in the chart legend.
+
+#### comparisonMetric
+
+| type                                                                                       |
+| ------------------------------------------------------------------------------------------ |
+| `{trend: 'netural' | 'positive' | 'negative', metric: string, accessibilityLabel: string}` |
+
+An optional object that adds a comparison metric on the end of the label. Trend determines the direction and color of the arrow, metric is the actual label displayed, and the accessibilityLabel covers the SVG only.
+
 ### Required props
 
 #### data
@@ -76,7 +121,7 @@ This component derives its size from its parent container. When the Normalized s
 | ---------------------------------------------------------------------------------------------------- |
 | `{formattedValue: string, value: number, label: string, comparisonMetric?: ComparisonMetricShape}[]` |
 
-The prop to determine the chart's drawn area. The chart uses the value to compute the width of each bar, and the label, comparisonMetric, and formatted value are used in the chart legend. Within the comparisonMetric, the accessibility label will provide data for screenreaders when hovering over the SVG only.
+The prop to determine the chart's drawn area. Each `Data` object corresponds to a bar drawn on the chart, and is explained in greater detail above.
 
 ### Optional props
 
