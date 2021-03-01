@@ -50,6 +50,11 @@ export function NormalizedStackedBarChartDemo() {
               label: 'Twitter',
               value: 100,
               formattedValue: '$100',
+              comparisonMetric: {
+                metric: '5',
+                trend: 'neutral',
+                accessibilityLabel: 'Decrease of',
+              },
             },
             {
               label: 'Google',

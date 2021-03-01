@@ -14,7 +14,7 @@ export function ComparisonMetric({
       return (
         <span className={styles.NeutralIcon}>
           <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
-          <span>{metric}</span>
+          <span>-</span>
         </span>
       );
       break;
