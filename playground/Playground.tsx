@@ -27,13 +27,32 @@ const mockProps = {
       label: 'Google',
       value: 0,
       formattedValue: '$0',
+      comparisonMetric: {
+        trend: 'neutral' as 'neutral',
+        metric: '5',
+        accessibilityLabel: 'Neutral',
+      },
     },
     {
       label: 'Direct',
       value: 500,
       formattedValue: '$500',
+      comparisonMetric: {
+        trend: 'positive' as 'positive',
+        metric: '5',
+        accessibilityLabel: 'Increase of',
+      },
     },
-    {label: 'Facebook', value: 100, formattedValue: '$100'},
+    {
+      label: 'Facebook',
+      value: 100,
+      formattedValue: '$100',
+      comparisonMetric: {
+        trend: 'negative' as 'positive',
+        metric: '5',
+        accessibilityLabel: 'Decrease of',
+      },
+    },
     {label: 'Twitter', value: 100, formattedValue: '$100'},
     // {label: 'a fith data item', value: 1090000, formattedValue: '$1090000'},
   ],

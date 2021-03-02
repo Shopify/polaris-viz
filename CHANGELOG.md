@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- `comparisonMetric` to `NormalizedStackedBarChart` labels
+
 ## [0.5.0] - 2021-02-25
 
 ### Added

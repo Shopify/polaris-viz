@@ -63,12 +63,13 @@ export function NormalizedStackedBarChart({
             : styles.HorizontailLabelContainer
         }
       >
-        {slicedData.map(({label, formattedValue}, index) => (
+        {slicedData.map(({label, formattedValue, comparisonMetric}, index) => (
           <BarLabel
             key={`${label}-${formattedValue}`}
             label={label}
             value={formattedValue}
             color={colorPalette[index]}
+            comparisonMetric={comparisonMetric}
           />
         ))}
       </ul>

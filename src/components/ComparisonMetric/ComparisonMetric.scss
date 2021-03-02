@@ -1,0 +1,22 @@
+@import 'node_modules/@shopify/polaris-tokens/dist/index';
+@import '../../styles/common';
+
+.PositiveIcon,
+.NegativeIcon,
+.NeutralIcon {
+  display: flex;
+  align-items: center;
+  margin-left: $spacing-tight;
+}
+
+.PositiveIcon svg {
+  margin-right: $spacing-extra-tight;
+}
+
+.NegativeIcon svg {
+  margin-right: $spacing-extra-tight;
+}
+
+.VisuallyHidden {
+  @include visually-hidden;
+}
