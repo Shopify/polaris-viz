@@ -71,17 +71,13 @@ function Axis({
       return [];
     }
 
-    return ticks
-      .map((value) => {
-        return {
-          value: labels[value],
-          xOffset: xScale(value),
-          firstLabel: value === 0,
-        };
-      })
-      .filter(function removeMismatchedTicks({value}) {
-        return value != null;
-      });
+    return ticks.map((value) => {
+      return {
+        value: labels[value],
+        xOffset: xScale(value),
+        firstLabel: value === 0,
+      };
+    });
   }, [labels, ticks, xScale]);
 
   const [xScaleMin, xScaleMax] = xScale.range();
