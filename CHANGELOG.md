@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.5.2] - 2021-03-05
+
+### Fixed
+
+- Fixed a bug causing labels to take up less space than available on the line chart and area chart
+
 ## [0.5.1] - 2021-03-02
 
 ### Added
