@@ -95,7 +95,13 @@ export function useLinearXAxisDetails({
     horizontalLabelWidth,
   } = useMemo(() => {
     const ticks =
-      initialXScale.xScale == null ? [] : initialXScale.xScale.ticks();
+      initialXScale.xScale == null
+        ? []
+        : initialXScale.xScale
+            .ticks()
+            .filter(function removeNonIntegerTicks(value) {
+              return Number.isInteger(value);
+            });
 
     // xAxis label spacing will be based on the longest label
     const xLabels = xAxisLabels.map((label) => formatXAxisLabel(label));

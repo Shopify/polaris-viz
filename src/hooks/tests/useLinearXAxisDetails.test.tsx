@@ -9,7 +9,7 @@ const MOCK_ANGLED_LABEL_MAX_LENGTH = 100;
 jest.mock('../../utilities', () => {
   return {
     ...jest.requireActual('../../utilities'),
-    getTextWidth: () => 10,
+    getTextWidth: () => 50,
     getTextContainerHeight: () => 45,
     getMaxDiagonalDetails: () => {
       return {
@@ -33,6 +33,8 @@ describe('useLinearXAxisDetails', () => {
         data: [
           {rawValue: 10000, label: 'Some label'},
           {rawValue: 10, label: 'Some label'},
+          {rawValue: 10, label: 'Some label'},
+          {rawValue: 10, label: 'Some label'},
         ],
         name: 'Test series 1',
         color: 'colorGreen',
@@ -40,7 +42,7 @@ describe('useLinearXAxisDetails', () => {
       },
     ] as any,
     fontSize: 14,
-    chartDimensions: {width: 100} as any,
+    chartDimensions: {width: 200} as any,
     formatXAxisLabel: (label: string) => label,
     formatYAxisLabel: (label: number) => label.toString(),
     xAxisLabels: [
@@ -129,7 +131,7 @@ describe('useLinearXAxisDetails', () => {
           }}
         />,
       );
-      expect(actual).toContainReactText('15.7');
+      expect(actual).toContainReactText('45.4');
     });
   });
 
@@ -140,7 +142,7 @@ describe('useLinearXAxisDetails', () => {
       return <p>{ticks.map((tick) => `${tick.toString()}/`)}</p>;
     }
 
-    it('is returned', () => {
+    it('returns integers', () => {
       const actual = mount(
         <TicksTestComponent
           props={{
@@ -148,7 +150,7 @@ describe('useLinearXAxisDetails', () => {
           }}
         />,
       );
-      expect(actual).toContainReactText('0/0.3/0.6/0.9');
+      expect(actual).toContainReactText('0/2');
     });
   });
 });
