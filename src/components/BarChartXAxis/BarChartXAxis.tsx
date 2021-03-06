@@ -19,6 +19,7 @@ interface XAxisDetails {
   maxXLabelHeight: number;
   maxDiagonalLabelLength: number;
   needsDiagonalLabels: boolean;
+  maxWidth: number;
 }
 
 export function BarChartXAxis({
@@ -39,6 +40,7 @@ export function BarChartXAxis({
     maxXLabelHeight,
     maxDiagonalLabelLength,
     needsDiagonalLabels,
+    maxWidth,
   } = xAxisDetails;
 
   const diagonalLabelOffset = new RightAngleTriangle({
@@ -50,19 +52,15 @@ export function BarChartXAxis({
     ? `translate(${-diagonalLabelOffset -
         SPACING_BASE_TIGHT} ${maxXLabelHeight +
         SPACING_EXTRA_TIGHT}) rotate(${DIAGONAL_ANGLE})`
-    : `translate(-${xScale.bandwidth() / 2} ${SPACING_TIGHT})`;
+    : `translate(-${maxWidth / 2} ${SPACING_TIGHT})`;
 
   const textHeight = needsDiagonalLabels ? LINE_HEIGHT : maxXLabelHeight;
-  const textWidth = needsDiagonalLabels
-    ? maxDiagonalLabelLength
-    : xScale.bandwidth();
+  const textWidth = needsDiagonalLabels ? maxDiagonalLabelLength : maxWidth;
   const textContainerClassName = needsDiagonalLabels
     ? styles.DiagonalText
     : styles.Text;
 
-  const diagonalLabelSpacePerBar = Math.floor(
-    (LINE_HEIGHT * 2) / xScale.bandwidth(),
-  );
+  const diagonalLabelSpacePerBar = Math.floor((LINE_HEIGHT * 2) / maxWidth);
   const visibleLabelRatio = needsDiagonalLabels
     ? Math.max(diagonalLabelSpacePerBar, 1)
     : DEFAULT_LABEL_RATIO;

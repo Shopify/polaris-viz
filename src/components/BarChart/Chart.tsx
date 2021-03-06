@@ -69,8 +69,16 @@ export function Chart({
         fontSize,
         xLabels: data.map(({label}) => formatXAxisLabel(label)),
         chartDimensions,
+        padding: barMargin,
       }),
-    [approxYAxisLabelWidth, fontSize, data, chartDimensions, formatXAxisLabel],
+    [
+      approxYAxisLabelWidth,
+      fontSize,
+      data,
+      chartDimensions,
+      barMargin,
+      formatXAxisLabel,
+    ],
   );
 
   const drawableHeight =

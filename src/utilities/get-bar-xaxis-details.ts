@@ -1,6 +1,5 @@
 import {
   MARGIN,
-  SPACING_LOOSE,
   MAX_TEXT_BOX_HEIGHT,
   MIN_HORIZONTAL_LABEL_SPACE,
 } from '../constants';
@@ -37,7 +36,7 @@ export function getBarXAxisDetails({
   const horizontalLabelHeight = getTextContainerHeight({
     text: longestXLabelDetails.label,
     fontSize,
-    containerWidth: Math.abs(datumXLabelSpace - SPACING_LOOSE),
+    containerWidth: Math.abs(datumXLabelSpace),
   });
 
   // use horizontal labels if horixontal labels are too tall, or the column space is too narrow
@@ -69,5 +68,6 @@ export function getBarXAxisDetails({
     maxXLabelHeight,
     maxDiagonalLabelLength,
     needsDiagonalLabels,
+    maxWidth: datumXLabelSpace,
   };
 }
