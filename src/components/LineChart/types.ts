@@ -1,10 +1,8 @@
-import {Color, DataSeries, Data} from '../../types';
-
-export type LineStyle = 'dashed' | 'solid';
+import {Color, DataSeries, Data, LineStyle} from '../../types';
 
 export interface Series extends DataSeries<Data> {
-  lineStyle?: LineStyle;
   showArea?: boolean;
+  lineStyle?: LineStyle;
 }
 
 interface TooltipData {

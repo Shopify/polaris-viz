@@ -13,7 +13,6 @@
   display: flex;
   justify-content: flex-end;
   flex-wrap: wrap;
-  padding: $spacing-base-tight 0 $spacing-base-tight $spacing-base-tight;
 }
 
 @mixin legend-series {
@@ -22,5 +21,5 @@
   display: grid;
   grid-auto-flow: column;
   justify-content: end;
-  padding: $spacing-extra-tight $spacing-base-tight;
+  padding-left: $spacing-base-tight;
 }

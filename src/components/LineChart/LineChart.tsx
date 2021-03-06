@@ -7,13 +7,12 @@ import {SkipLink} from '../SkipLink';
 
 import {Chart} from './Chart';
 import {Series, RenderTooltipContentData} from './types';
-import {Legend, TooltipContent} from './components';
+import {TooltipContent} from './components';
 
 export interface LineChartProps {
   series: Series[];
   xAxisLabels: string[];
   hideXAxisLabels?: boolean;
-  chartHeight?: number;
   accessibilityLabel?: string;
   formatXAxisLabel?: StringLabelFormatter;
   formatYAxisLabel?: NumberLabelFormatter;
@@ -24,7 +23,6 @@ export interface LineChartProps {
 export function LineChart({
   series,
   xAxisLabels,
-  chartHeight = 250,
   formatXAxisLabel = (value) => value.toString(),
   formatYAxisLabel = (value) => Math.round(value).toString(),
   hideXAxisLabels = false,
@@ -85,7 +83,7 @@ export function LineChart({
       {skipLinkText == null || skipLinkText.length === 0 ? null : (
         <SkipLink anchorId={skipLinkAnchorId.current}>{skipLinkText}</SkipLink>
       )}
-      <div style={{height: chartHeight}} ref={containerRef}>
+      <div style={{width: '100%', height: '100%'}} ref={containerRef}>
         {chartDimensions == null ? null : (
           <Chart
             series={seriesWithDefaults}
@@ -102,8 +100,6 @@ export function LineChart({
           />
         )}
       </div>
-
-      <Legend series={seriesWithDefaults} />
 
       {skipLinkText == null || skipLinkText.length === 0 ? null : (
         <SkipLink.Anchor id={skipLinkAnchorId.current} />

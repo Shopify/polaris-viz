@@ -7,12 +7,8 @@ import {OUTER_CONTAINER_STYLE} from './constants';
 
 export function NormalizedStackedBarChartDemo() {
   const innerContainerStyle = {
-    width: '900px',
     height: '300px',
-    background: 'white',
     padding: '2rem',
-    borderRadius: '6px',
-    border: '2px solid #EAECEF',
     display: 'flex',
     flexDirection: 'column' as 'column',
     justifyContent: 'center',

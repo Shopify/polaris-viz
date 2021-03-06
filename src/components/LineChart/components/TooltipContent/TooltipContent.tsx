@@ -1,8 +1,7 @@
 import React from 'react';
-import {Color} from 'types';
+import {Color, LineStyle} from 'types';
 
-import {LineStyle} from '../../types';
-import {LinePreview} from '../LinePreview';
+import {LinePreview} from '../../../LinePreview';
 
 import styles from './TooltipContent.scss';
 

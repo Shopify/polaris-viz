@@ -1,12 +1,19 @@
 import React from 'react';
 
-import {Series} from '../../types';
+import {DataSeries, Data, NullableData, LineStyle} from '../../types';
 import {LinePreview} from '../LinePreview';
+import {SquareColorPreview} from '../SquareColorPreview';
 
 import styles from './Legend.scss';
 
+interface LegendData
+  extends Omit<Required<DataSeries<Data | NullableData>>, 'data'> {
+  lineStyle?: LineStyle;
+  data?: (Data | NullableData)[];
+}
+
 interface Props {
-  series: Required<Series>[];
+  series: LegendData[];
 }
 
 export function Legend({series}: Props) {
@@ -15,7 +22,11 @@ export function Legend({series}: Props) {
       {series.map(({name, color, lineStyle}, index) => {
         return (
           <div className={styles.Series} key={`${name}-${index}`}>
-            <LinePreview color={color} lineStyle={lineStyle} />
+            {lineStyle ? (
+              <LinePreview color={color} lineStyle={lineStyle} />
+            ) : (
+              <SquareColorPreview color={color} />
+            )}
             <p className={styles.SeriesName}>{name}</p>
           </div>
         );

@@ -7,14 +7,8 @@ import {OUTER_CONTAINER_STYLE} from './constants';
 
 export function BarChartDemo() {
   const innerContainerStyle = {
-    width: '900px',
+    width: '100%',
     height: '300px',
-    background: 'white',
-    padding: '2rem',
-    borderRadius: '6px',
-    border: '2px solid #EAECEF',
-    display: 'grid',
-    placeItems: 'center',
   };
 
   document.body.style.fontFamily =

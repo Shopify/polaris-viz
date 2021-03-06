@@ -151,6 +151,21 @@ Used to format content in tooltips. [View documentation&nbsp;→](../src/compone
 
   </td>    
   </tr>  
+
+<tr>
+  <td>
+<a href="../src/components/Legend/Legend.md">
+  <img width="100%" src="../src/components/Legend/legend.png"/>
+</a>
+
+#### Legend
+
+Used on multiseries charts to indicate which color is associated with a certain series. [View documentation&nbsp;→](../src/components/Legend/Legend.md)
+
+  </td> 
+  <td></td>    
+  </tr>  
+  
 </table>
 
 <br/>

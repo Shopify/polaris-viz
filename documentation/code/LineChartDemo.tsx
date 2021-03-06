@@ -5,17 +5,16 @@ import {
   LineChart,
   LineChartProps,
   LineChartTooltipContent,
+  Legend,
 } from '../../src/components';
 
 import {OUTER_CONTAINER_STYLE} from './constants';
 
 export function LineChartDemo() {
   const innerContainerStyle = {
-    width: '900px',
-    background: 'white',
-    padding: '2rem',
-    borderRadius: '6px',
-    border: '2px solid #EAECEF',
+    width: '100%',
+    height: '300px',
+    marginBottom: '20px',
   };
 
   document.body.style.fontFamily =
@@ -40,7 +39,8 @@ export function LineChartDemo() {
         {rawValue: 5500, label: '2020-04-13T12:00:00'},
         {rawValue: 7000, label: '2020-04-14T12:00:00'},
       ],
-      color: 'primary',
+      color: 'primary' as 'primary',
+      lineStyle: 'solid' as 'solid',
     },
     {
       name: 'Mar 01–Mar 14, 2020',
@@ -60,7 +60,7 @@ export function LineChartDemo() {
         {rawValue: 2000, label: '2020-03-13T12:00:00'},
         {rawValue: 3000, label: '2020-03-14T12:00:00'},
       ],
-      color: 'pastComparison',
+      color: 'pastComparison' as 'pastComparison',
       lineStyle: 'dashed' as 'dashed',
     },
   ];
@@ -121,7 +121,6 @@ export function LineChartDemo() {
       <div style={innerContainerStyle}>
         <LineChart
           series={series}
-          chartHeight={229}
           xAxisLabels={xAxisLabels}
           formatXAxisLabel={formatXAxisLabel}
           formatYAxisLabel={formatYAxisLabel}
@@ -129,6 +128,7 @@ export function LineChartDemo() {
           skipLinkText="Skip line chart content"
         />
       </div>
+      <Legend series={series} />
     </div>
   );
 }

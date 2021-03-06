@@ -4,7 +4,6 @@ import {Color} from 'types';
 
 import {MultiSeriesBarChart} from '../MultiSeriesBarChart';
 import {Chart} from '../Chart';
-import {Legend} from '../components';
 
 describe('<MultiSeriesBarChart />', () => {
   const mockProps = {
@@ -32,12 +31,6 @@ describe('<MultiSeriesBarChart />', () => {
       'aria-label': label,
       role: 'img',
     });
-  });
-
-  it('renders a <Legend />', () => {
-    const multiSeriesBarChart = mount(<MultiSeriesBarChart {...mockProps} />);
-
-    expect(multiSeriesBarChart).toContainReactComponent(Legend);
   });
 
   it('renders a <Chart />', () => {

@@ -5,7 +5,6 @@ import {Color} from 'types';
 import {StackedAreaChart} from '../StackedAreaChart';
 import {Chart} from '../Chart';
 import {SkipLink} from '../../SkipLink';
-import {Legend} from '../components';
 
 (global as any).DOMRect = class DOMRect {
   width = 500;
@@ -60,16 +59,6 @@ describe('<AreaChart />', () => {
     );
 
     expect(areaChart).toContainReactComponent(Chart);
-  });
-
-  it('renders a Legend', () => {
-    const areaChart = mount(
-      <StackedAreaChart series={mockData} xAxisLabels={xAxisLabels} />,
-    );
-
-    expect(areaChart).toContainReactComponent(Legend, {
-      series: mockData,
-    });
   });
 
   describe('skipLinkText', () => {

@@ -5,7 +5,6 @@ import {LineChart} from '../LineChart';
 import {SkipLink} from '../../SkipLink';
 import {Chart} from '../Chart';
 import {Series} from '../types';
-import {Legend} from '../components';
 
 (global as any).DOMRect = class DOMRect {
   width = 500;
@@ -34,16 +33,6 @@ describe('<LineChart />', () => {
     );
 
     expect(lineChart).toContainReactComponent(Chart);
-  });
-
-  it('renders a Legend', () => {
-    const lineChart = mount(
-      <LineChart series={[primarySeries]} xAxisLabels={['Jan 1']} />,
-    );
-
-    expect(lineChart).toContainReactComponent(Legend, {
-      series: [primarySeries],
-    });
   });
 
   describe('skipLinkText', () => {

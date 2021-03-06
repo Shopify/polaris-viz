@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- The `Legend` component is now separate from the `LineChart`, `MultiSeriesBarChart` and `StackedAreaChart` components and must be added manually
+
+### Removed
+
+- The `chartHeight`prop on the `LineChart`, `MultiSeriesBarChart` and `StackedAreaChart` components. These components will now inherit the chart's height from their parent element.
+
 ## [0.5.4] - 2021-03-11
 
 ### Fixed

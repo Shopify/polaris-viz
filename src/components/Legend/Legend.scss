@@ -1,14 +1,14 @@
 @import 'node_modules/@shopify/polaris-tokens/dist/index';
-@import '../../../../styles/common';
+@import '../../styles/common';
 
 .Container {
   @include legend-container;
 }
 
-.InnerContainer {
+.Series {
   @include legend-series;
 }
 
-.Name {
+.SeriesName {
   @include legend-label;
 }

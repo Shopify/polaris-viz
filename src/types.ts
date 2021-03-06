@@ -8,6 +8,8 @@ export interface NullableData {
   rawValue: number | null;
 }
 
+export type LineStyle = 'dashed' | 'solid';
+
 export interface DataSeries<T> {
   name: string;
   data: T[];

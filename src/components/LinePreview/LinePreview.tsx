@@ -1,7 +1,7 @@
 import React from 'react';
 import {Color} from 'types';
 
-import {getColorValue} from '../../../../utilities';
+import {getColorValue} from '../../utilities';
 import {LineStyle} from '../../types';
 
 interface Props {

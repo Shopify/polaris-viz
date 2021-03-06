@@ -2,6 +2,8 @@
 
 Used to show change over time, comparisons, and trends.
 
+It's reccomended that you use a legend whenever displaying multiseries data. To display one, use the <a href="../Legend/Legend.md">`<Legend />` component</a>.
+
 ## Example
 
 <img src="line-chart.png" alt="Line chart example image" />
@@ -102,7 +104,6 @@ const renderTooltipContent: LineChartProps['renderTooltipContent'] = ({
 return (
   <LineChart
     series={series}
-    chartHeight={229}
     xAxisLabels={xAxisLabels}
     formatXAxisLabel={formatXAxisLabel}
     formatYAxisLabel={formatYAxisLabel}
@@ -119,7 +120,6 @@ The line chart interface looks like this:
 ```typescript
 interface LineChartProps {
   series: Series[];
-  chartHeight?: number;
   xAxisLabels: string[];
   formatXAxisLabel?(value: string, index?: number, data?: string[]): string;
   formatYAxisLabel?(value: number): string;
@@ -129,7 +129,7 @@ interface LineChartProps {
 }
 ```
 
-This component derives its size from its parent container and fills the width of its parent's container. It has a default height of `250`, which is configurable via the `chartHeight` prop. The `chartHeight` specifically affects the height of chart, and does not include or affect the height of the legend.
+This component derives its size from its parent container and fills the width of its parent's container.
 
 ### The `Series` type
 
@@ -154,7 +154,7 @@ The `Series` type gives the user a lot of flexibility to define exactly what eac
 | -------- |
 | `string` |
 
-The name of the series. This appears in the chart legend.
+The name of the series.
 
 #### data
 
@@ -229,12 +229,6 @@ The prop to determine the chart's drawn area. Each `Series` object corresponds t
 The labels to display on the x axis of the chart and in a data table used for screenreaders.
 
 ### Optional props
-
-#### chartHeight
-
-| type     | default |
-| -------- | ------- |
-| `number` | `250`   |
 
 Determines the height of the chart.
 

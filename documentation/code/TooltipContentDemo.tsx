@@ -52,15 +52,13 @@ export function TooltipContentDemo() {
     "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif";
 
   const innerContainerStyle = {
-    width: '900px',
+    width: '100%',
     height: '300px',
     background: 'white',
-    padding: '2rem',
-    borderRadius: '6px',
-    border: '2px solid #EAECEF',
     display: 'flex',
     justifyContent: 'space-evenly',
     alignItems: 'center',
+    flexWrap: 'wrap' as 'wrap',
   };
 
   const tooltipContentData: TooltipContentProps['data'] = [
