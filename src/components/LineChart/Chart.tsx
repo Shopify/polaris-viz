@@ -224,7 +224,7 @@ export function Chart({
               const isFirstLine = index === series.length - 1;
 
               return (
-                <React.Fragment key={name}>
+                <React.Fragment key={`${name}-${index}`}>
                   <Line
                     xScale={xScale}
                     yScale={yScale}

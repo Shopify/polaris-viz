@@ -12,9 +12,9 @@ interface Props {
 export function Legend({series}: Props) {
   return (
     <div className={styles.Container} aria-hidden>
-      {series.map(({name, color, lineStyle}) => {
+      {series.map(({name, color, lineStyle}, index) => {
         return (
-          <div className={styles.Series} key={name}>
+          <div className={styles.Series} key={`${name}-${index}`}>
             <LinePreview color={color} lineStyle={lineStyle} />
             <p className={styles.SeriesName}>{name}</p>
           </div>

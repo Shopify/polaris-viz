@@ -23,9 +23,9 @@ export interface TooltipContentProps {
 export function TooltipContent({data}: TooltipContentProps) {
   return (
     <div className={styles.Container}>
-      {data.map(({name, point: {label, value}, color, lineStyle}) => {
+      {data.map(({name, point: {label, value}, color, lineStyle}, index) => {
         return (
-          <React.Fragment key={name}>
+          <React.Fragment key={`${name}-${index}`}>
             <LinePreview color={color} lineStyle={lineStyle} />
             <p className={styles.Name}>{label}</p>
             <p className={styles.Value}>{value}</p>

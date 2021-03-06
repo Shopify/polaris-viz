@@ -24,11 +24,11 @@ export function VisuallyHiddenRows({
     <React.Fragment>
       <g role="row">
         <text role="rowheader" />
-        {xAxisLabels.map((xAxisLabel) => {
+        {xAxisLabels.map((xAxisLabel, index) => {
           return (
             <text
               className={styles.VisuallyHidden}
-              key={`a11y-${xAxisLabel}`}
+              key={`a11y-${xAxisLabel}-${index}`}
               role="columnheader"
             >
               {xAxisLabel}
