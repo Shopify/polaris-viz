@@ -32,6 +32,7 @@ describe('<BarChartXAxis/>', () => {
       needsDiagonalLabels: false,
       maxXLabelHeight: 40,
       maxDiagonalLabelLength: 100,
+      maxWidth: 100,
     },
   };
 
