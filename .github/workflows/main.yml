@@ -8,7 +8,7 @@ jobs:
     - name: Setup Node
       uses: actions/setup-node@v1.4.4
       with:
-        version: 10.13.0
+        version: 12.20.1
     - name: Get yarn cache
       id: yarn-cache
       run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -24,9 +24,9 @@ jobs:
       run: yarn lint
     - name: Run tests 👩🏻‍🔬
       run: yarn test
-      env: 
+      env:
         CI: true
     - name: Type check ⌨️
       run: yarn type-check
-      env: 
+      env:
         CI: true
