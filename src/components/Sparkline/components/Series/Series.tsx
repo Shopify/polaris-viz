@@ -5,7 +5,7 @@ import {area} from 'd3-shape';
 import {getColorValue, uniqueId, rgbToRgba} from '../../../../utilities';
 import {usePrefersReducedMotion} from '../../../../hooks';
 import {SingleSeries, Coordinates} from '../../Sparkline';
-import {LinearGradient} from '../../components';
+import {LinearGradient} from '../LinearGradient';
 
 import styles from './Series.scss';
 
