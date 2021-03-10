@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.5.3] - 2021-03-10
+
+### Changed
+
+- Updates Node version to 12.20.1
+
+### Fixed
+
+- Label calculation and spacing improvements
+- Allow non-unique line chart series
+
 ## [0.5.2] - 2021-03-05
 
 ### Fixed
