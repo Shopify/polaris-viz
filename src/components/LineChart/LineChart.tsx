@@ -26,7 +26,7 @@ export function LineChart({
   xAxisLabels,
   chartHeight = 250,
   formatXAxisLabel = (value) => value.toString(),
-  formatYAxisLabel = (value) => value.toString(),
+  formatYAxisLabel = (value) => Math.round(value).toString(),
   hideXAxisLabels = false,
   renderTooltipContent,
   skipLinkText,

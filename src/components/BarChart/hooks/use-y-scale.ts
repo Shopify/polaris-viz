@@ -18,7 +18,8 @@ export function useYScale({
   const {yScale, ticks} = useMemo(() => {
     const min = Math.min(...data.map(({rawValue}) => rawValue), 0);
     const calculatedMax = Math.max(...data.map(({rawValue}) => rawValue));
-    const max = calculatedMax === 0 ? DEFAULT_MAX_Y : calculatedMax;
+    const max =
+      calculatedMax === 0 && min === 0 ? DEFAULT_MAX_Y : calculatedMax;
 
     const maxTicks = Math.max(
       1,

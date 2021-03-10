@@ -30,7 +30,7 @@ export function MultiSeriesBarChart({
   accessibilityLabel,
   chartHeight = DEFAULT_HEIGHT,
   formatXAxisLabel = (value) => value.toString(),
-  formatYAxisLabel = (value) => value.toString(),
+  formatYAxisLabel = (value) => Math.round(value).toString(),
   renderTooltipContent,
 }: MultiSeriesBarChartProps) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);

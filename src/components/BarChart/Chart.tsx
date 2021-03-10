@@ -16,7 +16,6 @@ import {
   FONT_SIZE,
   SMALL_SCREEN,
   SPACING,
-  SPACING_LOOSE,
 } from './constants';
 import styles from './Chart.scss';
 
@@ -65,7 +64,7 @@ export function Chart({
   const xAxisDetails = useMemo(
     () =>
       getBarXAxisDetails({
-        yAxisLabelWidth: approxYAxisLabelWidth + SPACING_LOOSE,
+        yAxisLabelWidth: approxYAxisLabelWidth,
         fontSize,
         xLabels: data.map(({label}) => formatXAxisLabel(label)),
         chartDimensions,

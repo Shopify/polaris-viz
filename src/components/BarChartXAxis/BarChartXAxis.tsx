@@ -50,11 +50,13 @@ export function BarChartXAxis({
 
   const transform = needsDiagonalLabels
     ? `translate(${-diagonalLabelOffset -
-        SPACING_BASE_TIGHT} ${maxXLabelHeight +
-        SPACING_EXTRA_TIGHT}) rotate(${DIAGONAL_ANGLE})`
+        SPACING_BASE_TIGHT / 2} ${maxXLabelHeight +
+        SPACING_EXTRA_TIGHT / 2}) rotate(${DIAGONAL_ANGLE})`
     : `translate(-${maxWidth / 2} ${SPACING_TIGHT})`;
 
-  const textHeight = needsDiagonalLabels ? LINE_HEIGHT : maxXLabelHeight;
+  const textHeight = needsDiagonalLabels
+    ? LINE_HEIGHT
+    : maxXLabelHeight + SPACING_EXTRA_TIGHT;
   const textWidth = needsDiagonalLabels ? maxDiagonalLabelLength : maxWidth;
   const textContainerClassName = needsDiagonalLabels
     ? styles.DiagonalText

@@ -12,7 +12,7 @@ export function yAxisMinMax(series: Series[]) {
     });
   });
 
-  maxY = maxY === 0 ? DEFAULT_MAX_Y : maxY;
+  maxY = maxY === 0 && minY === 0 ? DEFAULT_MAX_Y : maxY;
 
   return [minY, maxY];
 }
