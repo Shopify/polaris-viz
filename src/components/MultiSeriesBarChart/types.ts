@@ -21,3 +21,11 @@ export interface RenderTooltipContentData {
   }[];
   title: string;
 }
+
+export interface AccessibilitySeries {
+  title: string;
+  data: {
+    label: string;
+    value: string;
+  }[];
+}

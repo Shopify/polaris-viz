@@ -14,6 +14,9 @@ interface Props {
   colors: Color[];
   highlightColors: Color[];
   isActive: boolean;
+  barGroupIndex: number;
+  ariaLabel: string;
+  onFocus: (index: number) => void;
 }
 
 export function BarGroup({
@@ -24,6 +27,9 @@ export function BarGroup({
   colors,
   isActive,
   highlightColors,
+  onFocus,
+  barGroupIndex,
+  ariaLabel,
 }: Props) {
   const barWidth = width / data.length - BAR_SPACING;
 
@@ -45,16 +51,32 @@ export function BarGroup({
           ? getColorValue(highlightColors[index])
           : getColorValue(colors[index]);
 
+        const handleFocus = () => {
+          onFocus(barGroupIndex);
+        };
+
+        const ariaEnabledBar = index === 0;
+
         return (
-          <rect
-            className={styles.Bar}
+          <g
+            role={index === 0 ? 'listitem' : undefined}
+            aria-hidden={!ariaEnabledBar}
             key={index}
-            x={xPosition}
-            y={yPosition}
-            fill={fillColor}
-            width={barWidth}
-            height={height}
-          />
+          >
+            <rect
+              className={styles.Bar}
+              key={index}
+              x={xPosition}
+              y={yPosition}
+              fill={fillColor}
+              width={barWidth}
+              height={height}
+              tabIndex={ariaEnabledBar ? 0 : -1}
+              onFocus={handleFocus}
+              role={ariaEnabledBar ? 'img' : undefined}
+              aria-label={ariaEnabledBar ? ariaLabel : undefined}
+            />
+          </g>
         );
       })}
     </React.Fragment>

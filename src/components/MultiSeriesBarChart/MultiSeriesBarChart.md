@@ -105,6 +105,7 @@ return (
     series={series}
     isStacked={isStacked}
     renderTooltipContent={renderTooltipContent}
+    skipLinkText="Skip chart content"
   />
 );
 ```
@@ -117,12 +118,12 @@ The mult-series bar chart interface looks like this:
 interface MultiSeriesBarChartProps {
   series: Series[];
   labels: string[];
-  accessibilityLabel?: string;
   timeSeries?: boolean;
   isStacked?: boolean;
   formatXAxisLabel?(value: string, index?: number, data?: string[]): string;
   formatYAxisLabel?(value: number): string;
   renderTooltipContent?: (data: RenderTooltipContentData): React.ReactNode;
+  skipLinkText?: string;
 }
 ```
 

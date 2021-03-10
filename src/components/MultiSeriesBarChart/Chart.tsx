@@ -1,4 +1,4 @@
-import React, {useState, useMemo} from 'react';
+import React, {useState, useMemo, useCallback} from 'react';
 
 import {TooltipContainer} from '../TooltipContainer';
 import {eventPoint, getTextWidth, getBarXAxisDetails} from '../../utilities';
@@ -6,7 +6,7 @@ import {YAxis} from '../YAxis';
 import {BarChartXAxis} from '../BarChartXAxis';
 import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
-import {getStackedValues} from './utilities';
+import {getStackedValues, formatAriaLabel} from './utilities';
 import {Series, RenderTooltipContentData} from './types';
 import {BarGroup, StackedBarGroup} from './components';
 import {useYScale, useXScale} from './hooks';
@@ -140,6 +140,40 @@ export function Chart({
     });
   }, [activeBarGroup, labels, renderTooltipContent, series]);
 
+  const accessibilityData = useMemo(
+    () =>
+      labels.map((title, index) => {
+        const data = series.map(({data, name}) => {
+          return {
+            label: name,
+            value: formatYAxisLabel(data[index].rawValue),
+          };
+        });
+        return {title, data};
+      }),
+    [formatYAxisLabel, labels, series],
+  );
+
+  const handleFocus = useCallback(
+    (index: number) => {
+      const xScaleBandwidth = xScale.bandwidth();
+      const xPosition = xScale(index.toString());
+
+      if (index == null || xPosition == null) return;
+      const highestValue = isStacked
+        ? sortedData[index].reduce(sumPositiveData, 0)
+        : Math.max(...sortedData[index]);
+      setActiveBarGroup(index);
+
+      const xOffsetAmount = xPosition + axisMargin + xScaleBandwidth / 2;
+      setTooltipPosition({
+        x: xOffsetAmount,
+        y: yScale(highestValue),
+      });
+    },
+    [axisMargin, isStacked, sortedData, xScale, yScale],
+  );
+
   return (
     <div
       className={styles.ChartContainer}
@@ -155,11 +189,13 @@ export function Chart({
         onTouchMove={handleInteraction}
         onMouseLeave={() => setActiveBarGroup(null)}
         onTouchEnd={() => setActiveBarGroup(null)}
+        role="list"
       >
         <g
           transform={`translate(${axisMargin},${chartDimensions.height -
             MARGIN.Bottom -
             maxXLabelHeight})`}
+          aria-hidden="true"
         >
           <BarChartXAxis
             labels={xAxisLabels}
@@ -170,13 +206,17 @@ export function Chart({
           />
         </g>
 
-        <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
+        <g
+          transform={`translate(${axisMargin},${MARGIN.Top})`}
+          aria-hidden="true"
+        >
           <YAxis
             ticks={ticks}
             drawableWidth={drawableWidth}
             fontSize={fontSize}
           />
         </g>
+
         <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
           {stackedValues != null
             ? stackedValues.map((stackData, stackIndex) => {
@@ -190,12 +230,14 @@ export function Chart({
                     yScale={yScale}
                     colors={barColors}
                     highlightColors={barHighlightColors}
+                    onFocus={handleFocus}
+                    accessibilityData={accessibilityData}
                   />
                 );
               })
             : sortedData.map((item, index) => {
                 const xPosition = xScale(index.toString());
-
+                const ariaLabel = formatAriaLabel(accessibilityData[index]);
                 return (
                   <BarGroup
                     key={index}
@@ -206,6 +248,9 @@ export function Chart({
                     width={xScale.bandwidth()}
                     colors={barColors}
                     highlightColors={barHighlightColors}
+                    onFocus={handleFocus}
+                    barGroupIndex={index}
+                    ariaLabel={ariaLabel}
                   />
                 );
               })}

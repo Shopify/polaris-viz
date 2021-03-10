@@ -122,6 +122,7 @@ export function MultiSeriesBarChartDemo({isStacked = false}: Props) {
           series={series}
           isStacked={isStacked}
           renderTooltipContent={renderTooltipContent}
+          skipLinkText="Skip chart content"
         />
       </div>
 
