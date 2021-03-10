@@ -36,7 +36,8 @@ export function useYScale({
       ),
     );
 
-    const maxY = calculatedMax === 0 ? DEFAULT_MAX_Y : calculatedMax;
+    const maxY =
+      calculatedMax === 0 && minY === 0 ? DEFAULT_MAX_Y : calculatedMax;
 
     const maxTicks = Math.max(
       1,

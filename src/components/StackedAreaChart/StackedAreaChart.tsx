@@ -27,7 +27,7 @@ export function StackedAreaChart({
   series,
   chartHeight = 250,
   formatXAxisLabel = (value) => value.toString(),
-  formatYAxisLabel = (value) => value.toString(),
+  formatYAxisLabel = (value) => Math.round(value).toString(),
   renderTooltipContent,
   opacity = 1,
   isAnimated = false,
