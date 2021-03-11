@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.5.4] - 2021-03-11
+
+### Fixed
+
+- Barcharts with many bars use a better range and no longer have a tooltip bug.
+
 ## [0.5.3] - 2021-03-10
 
 ### Changed
