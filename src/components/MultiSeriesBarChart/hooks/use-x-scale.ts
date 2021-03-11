@@ -13,7 +13,7 @@ export function useXScale({
   labels: string[];
 }) {
   const xScale = scaleBand()
-    .rangeRound([0, drawableWidth])
+    .range([0, drawableWidth])
     .paddingInner(INNER_PADDING)
     .domain(data.map((_, index) => index.toString()));
 

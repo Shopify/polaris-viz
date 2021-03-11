@@ -21,7 +21,7 @@ describe('useXScale', () => {
       const scale = (value: any) => value;
       scale.domain = () => scale;
       rangeSpy = jest.fn(() => scale);
-      scale.rangeRound = rangeSpy;
+      scale.range = rangeSpy;
       scale.bandwidth = () => 10;
       scale.paddingInner = () => scale;
       return scale;
@@ -50,7 +50,7 @@ describe('useXScale', () => {
     (scaleBand as jest.Mock).mockImplementation(() => {
       const scale = (value: any) => value;
       scale.range = (range: any) => range;
-      scale.rangeRound = () => scale;
+      scale.range = () => scale;
       scale.bandwidth = () => 10;
       scale.paddingInner = () => scale;
       domainSpy = jest.fn(() => scale);
@@ -79,7 +79,7 @@ describe('useXScale', () => {
     (scaleBand as jest.Mock).mockImplementation(() => {
       const scale = (value: any) => value;
       scale.range = () => scale;
-      scale.rangeRound = () => scale;
+      scale.range = () => scale;
       scale.bandwidth = () => 10;
       scale.paddingInner = () => scale;
       scale.domain = () => scale;
