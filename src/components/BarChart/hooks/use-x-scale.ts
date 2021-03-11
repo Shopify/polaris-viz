@@ -16,7 +16,7 @@ export function useXScale({
   formatXAxisLabel: StringLabelFormatter;
 }) {
   const xScale = scaleBand()
-    .rangeRound([0, drawableWidth])
+    .range([0, drawableWidth])
     .paddingInner(barMargin)
     .domain(data.map((_, index) => index.toString()));
 
