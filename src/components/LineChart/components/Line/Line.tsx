@@ -1,69 +1,37 @@
 import React from 'react';
+import {line} from 'd3-shape';
 import {ScaleLinear} from 'd3-scale';
 
-import {Point} from '../../../Point';
 import {getColorValue} from '../../../../utilities';
 import {Series} from '../../types';
 
 interface Props {
-  path: string;
   series: Required<Series>;
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
-  activePointIndex: number | null;
-  labelledBy: string;
-  tabIndex: number;
-  handleFocus: ({
-    index,
-    cx,
-    cy,
-  }: {
-    index?: number;
-    cx: number;
-    cy: number;
-  }) => void;
 }
 
-export function Line({
-  path,
-  series,
-  xScale,
-  yScale,
-  activePointIndex,
-  labelledBy,
-  handleFocus,
-  tabIndex,
-}: Props) {
-  const {color, lineStyle, data} = series;
+export const Line = React.memo(function Shape({series, xScale, yScale}: Props) {
+  const lineGenerator = line<{rawValue: number}>()
+    .x((_, index) => xScale(index))
+    .y(({rawValue}) => yScale(rawValue));
+
+  const path = lineGenerator(series.data);
+
+  if (path == null) {
+    return null;
+  }
 
   return (
-    <React.Fragment>
-      <path
-        d={path}
-        fill="none"
-        strokeWidth="2px"
-        paintOrder="stroke"
-        stroke={getColorValue(color)}
-        strokeLinejoin="round"
-        strokeLinecap="round"
-        strokeDasharray={lineStyle === 'dashed' ? '2 4' : 'unset'}
-      />
-
-      {data.map(({rawValue}, index) => {
-        return (
-          <Point
-            key={index}
-            color={color}
-            cx={xScale(index)}
-            cy={yScale(rawValue)}
-            active={index === activePointIndex}
-            onFocus={handleFocus}
-            index={index}
-            tabIndex={tabIndex}
-            ariaLabelledby={labelledBy}
-          />
-        );
-      })}
-    </React.Fragment>
+    <path
+      d={path}
+      fill="none"
+      strokeWidth="2px"
+      paintOrder="stroke"
+      stroke={getColorValue(series.color)}
+      strokeLinejoin="round"
+      strokeLinecap="round"
+      strokeDasharray={series.lineStyle === 'dashed' ? '2 4' : 'unset'}
+    />
   );
-}
+});
