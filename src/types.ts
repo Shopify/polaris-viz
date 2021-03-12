@@ -95,3 +95,9 @@ export type StringLabelFormatter = (
 ) => string;
 
 export type NumberLabelFormatter = (value: number) => string;
+
+export interface ActiveTooltip {
+  x: number;
+  y: number;
+  index: number;
+}

@@ -7,7 +7,7 @@ export interface Series extends DataSeries<Data> {
   showArea?: boolean;
 }
 
-interface TooltipData {
+export interface TooltipData {
   name: string;
   point: {
     label: string;

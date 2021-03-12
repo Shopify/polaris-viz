@@ -9,6 +9,7 @@ const mockProps = {
   cy: 100,
   active: false,
   color: 'colorPurple' as Color,
+  index: 0,
 };
 
 describe('<Point />', () => {

@@ -8,6 +8,10 @@ export function eventPoint(
 ) {
   const svgNode = event.currentTarget;
 
+  if (svgNode == null) {
+    return;
+  }
+
   const screenCTM = svgNode.getScreenCTM();
 
   if (screenCTM == null) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import tokens from '@shopify/polaris-tokens';
-import {Color} from 'types';
+import {Color, ActiveTooltip} from 'types';
 
 import {getColorValue} from '../../utilities';
 
@@ -9,13 +9,13 @@ interface Props {
   cx: number;
   cy: number;
   color: Color;
-  index?: number;
-  onFocus?: ({index, cx, cy}: {index?: number; cx: number; cy: number}) => any;
+  index: number;
+  onFocus?: ({index, x, y}: ActiveTooltip) => void;
   tabIndex?: number;
   ariaLabelledby?: string;
 }
 
-export function Point({
+export const Point = React.memo(function Point({
   cx,
   cy,
   active,
@@ -27,7 +27,7 @@ export function Point({
 }: Props) {
   const handleFocus = () => {
     if (onFocus != null) {
-      onFocus({index, cx, cy});
+      onFocus({index, x: cx, y: cy});
     }
   };
 
@@ -45,4 +45,4 @@ export function Point({
       onFocus={handleFocus}
     />
   );
-}
+});
