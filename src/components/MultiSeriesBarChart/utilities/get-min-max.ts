@@ -13,7 +13,9 @@ export function getMinMax(stackedValues: StackSeries[] | null, data: Series[]) {
     const calculatedMax = Math.max(...maxStackedValues);
     const min = Math.min(...minStackedValues);
     const max =
-      calculatedMax === 0 && min === 0 ? DEFAULT_MAX_Y : calculatedMax;
+      calculatedMax === 0 && min === 0
+        ? DEFAULT_MAX_Y
+        : Math.max(0, calculatedMax);
 
     return {
       min,
@@ -31,7 +33,9 @@ export function getMinMax(stackedValues: StackSeries[] | null, data: Series[]) {
     const calculatedMax = Math.max(...groupedDataPoints);
     const min = Math.min(...groupedDataPoints, 0);
     const max =
-      calculatedMax === 0 && min === 0 ? DEFAULT_MAX_Y : calculatedMax;
+      calculatedMax === 0 && min === 0
+        ? DEFAULT_MAX_Y
+        : Math.max(0, calculatedMax);
 
     return {
       min,

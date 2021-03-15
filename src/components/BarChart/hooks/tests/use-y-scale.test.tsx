@@ -82,6 +82,37 @@ describe('useYScale', () => {
     expect(domainSpy).toHaveBeenCalledWith([-89, 1000]);
   });
 
+  it('creates a y scale with 0 as the max value if all input values are negative', () => {
+    let domainSpy = jest.fn();
+    (scaleLinear as jest.Mock).mockImplementation(() => {
+      const scale = (value: any) => value;
+      scale.ticks = (numTicks: number) => Array.from(Array(numTicks));
+      scale.range = (range: any) => (range ? scale : range);
+      domainSpy = jest.fn((domain: any) => (domain ? scale : domain));
+      scale.domain = domainSpy;
+      scale.nice = () => scale;
+      return scale;
+    });
+
+    function TestComponent() {
+      useYScale({
+        drawableHeight: 400,
+        formatYAxisLabel: jest.fn(),
+        data: [
+          {rawValue: -1000, label: 'test'},
+          {rawValue: -89, label: 'test'},
+          {rawValue: -300, label: 'test'},
+        ],
+      });
+
+      return null;
+    }
+
+    mount(<TestComponent />);
+
+    expect(domainSpy).toHaveBeenCalledWith([-1000, 0]);
+  });
+
   it('creates a y scale with the domain maximum set to the default max y for a data set with all zero values', () => {
     let domainSpy = jest.fn();
     (scaleLinear as jest.Mock).mockImplementation(() => {
