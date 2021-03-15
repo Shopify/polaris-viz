@@ -17,13 +17,7 @@ import {
   SMALL_LABEL_WIDTH,
   LABEL_SPACE_MINUS_FIRST_AND_LAST,
 } from '../constants';
-import {
-  StringLabelFormatter,
-  NumberLabelFormatter,
-  NullableData,
-  Data,
-  DataSeries,
-} from '../types';
+import {StringLabelFormatter, NullableData, Data, DataSeries} from '../types';
 
 import {useLinearXScale} from './useLinearXScale';
 
@@ -34,12 +28,18 @@ function getDatumSpace(width: number, numberOfTicks: number) {
   );
 }
 
+interface Ticks {
+  value: number;
+  formattedValue: string;
+  yOffset: number;
+}
+
 export interface ChartDetails {
   series: DataSeries<Data | NullableData>[];
   fontSize: number;
   chartDimensions: DOMRect;
   formatXAxisLabel: StringLabelFormatter;
-  formatYAxisLabel: NumberLabelFormatter;
+  initialTicks: Ticks[];
   xAxisLabels: string[];
 }
 
@@ -48,26 +48,21 @@ export function useLinearXAxisDetails({
   fontSize,
   chartDimensions,
   formatXAxisLabel,
-  formatYAxisLabel,
+  initialTicks,
   xAxisLabels,
 }: ChartDetails) {
   // determine how much space will be taken up by the yaxis and its labels, in order to know width of xaxis
-  const longestYLabel = useMemo(() => {
-    const flattenedYLabels = Array.prototype.concat.apply(
-      [],
-      series.map(({data}) =>
-        data.map(({rawValue}) =>
-          rawValue == null ? '' : formatYAxisLabel(rawValue),
+  const approxYAxisLabelWidth = useMemo(
+    () =>
+      Math.max(
+        ...initialTicks.map(({formattedValue}) =>
+          getTextWidth({text: formattedValue, fontSize}),
         ),
       ),
-    );
+    [fontSize, initialTicks],
+  );
 
-    return Math.max(
-      ...flattenedYLabels.map((label) => getTextWidth({text: label, fontSize})),
-    );
-  }, [fontSize, formatYAxisLabel, series]);
-
-  const estimatedYAxisWidth = SPACING_TIGHT + longestYLabel;
+  const estimatedYAxisWidth = SPACING_TIGHT + approxYAxisLabelWidth;
 
   const drawableWidth =
     chartDimensions.width - estimatedYAxisWidth - Margin.Right;

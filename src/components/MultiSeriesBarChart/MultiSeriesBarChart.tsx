@@ -26,7 +26,7 @@ export function MultiSeriesBarChart({
   timeSeries = false,
   accessibilityLabel,
   formatXAxisLabel = (value) => value.toString(),
-  formatYAxisLabel = (value) => Math.round(value).toString(),
+  formatYAxisLabel = (value) => value.toString(),
   renderTooltipContent,
 }: MultiSeriesBarChartProps) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);

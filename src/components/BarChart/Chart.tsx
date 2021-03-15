@@ -1,6 +1,7 @@
 import React, {useState, useMemo} from 'react';
 import {Color, Data} from 'types';
 
+import {LINE_HEIGHT} from '../../constants';
 import {eventPoint, getTextWidth, getBarXAxisDetails} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {BarChartXAxis} from '../BarChartXAxis';
@@ -51,14 +52,21 @@ export function Chart({
   const fontSize =
     chartDimensions.width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
 
+  const {ticks: initialTicks} = useYScale({
+    drawableHeight:
+      chartDimensions.height - MARGIN.Top - MARGIN.Bottom - LINE_HEIGHT,
+    data,
+    formatYAxisLabel,
+  });
+
   const approxYAxisLabelWidth = useMemo(
     () =>
       Math.max(
-        ...data.map(({rawValue}) =>
-          getTextWidth({text: formatYAxisLabel(rawValue), fontSize}),
+        ...initialTicks.map(({formattedValue}) =>
+          getTextWidth({text: formattedValue, fontSize}),
         ),
       ),
-    [data, fontSize, formatYAxisLabel],
+    [fontSize, initialTicks],
   );
 
   const xAxisDetails = useMemo(

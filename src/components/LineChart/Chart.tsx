@@ -52,12 +52,19 @@ export function Chart({
   const fontSize =
     dimensions.width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
 
+  const {ticks: initialTicks} = useYScale({
+    fontSize,
+    drawableHeight: dimensions.height - Margin.Top,
+    series,
+    formatYAxisLabel,
+  });
+
   const xAxisDetails = useLinearXAxisDetails({
     series,
     fontSize,
     chartDimensions: dimensions,
     formatXAxisLabel,
-    formatYAxisLabel,
+    initialTicks,
     xAxisLabels: xAxisLabels == null || hideXAxisLabels ? [] : xAxisLabels,
   });
 

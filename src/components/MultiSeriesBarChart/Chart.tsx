@@ -50,20 +50,26 @@ export function Chart({
   const fontSize =
     chartDimensions.width < SMALL_WIDTH ? SMALL_FONT_SIZE : FONT_SIZE;
 
+  const stackedValues = isStacked ? getStackedValues(series, labels) : null;
+
+  const {ticks: initialTicks} = useYScale({
+    drawableHeight: chartDimensions.height - MARGIN.Top - MARGIN.Bottom,
+    data: series,
+    formatYAxisLabel,
+    stackedValues,
+  });
+
   const yAxisLabelWidth = useMemo(
     () =>
-      series
-        .map(({data}) =>
-          data.map(({rawValue}) =>
-            getTextWidth({
-              text: formatYAxisLabel(rawValue),
-              fontSize,
-            }),
-          ),
-        )
-        .reduce((acc, currentValue) => acc.concat(currentValue), [])
-        .reduce((acc, currentValue) => Math.max(acc, currentValue)),
-    [fontSize, formatYAxisLabel, series],
+      Math.max(
+        ...initialTicks.map(({formattedValue}) =>
+          getTextWidth({
+            text: formattedValue,
+            fontSize,
+          }),
+        ),
+      ),
+    [fontSize, initialTicks],
   );
 
   const axisMargin = SPACING + yAxisLabelWidth;
@@ -104,8 +110,6 @@ export function Chart({
     MARGIN.Top -
     MARGIN.Bottom -
     xAxisDetails.maxXLabelHeight;
-
-  const stackedValues = isStacked ? getStackedValues(series, labels) : null;
 
   const {yScale, ticks} = useYScale({
     drawableHeight,
