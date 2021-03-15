@@ -7,12 +7,6 @@ import {OUTER_CONTAINER_STYLE} from './constants';
 
 export function SparklineDemo() {
   const innerContainerStyle = {
-    width: '900px',
-    height: '300px',
-    background: 'white',
-    padding: '2rem',
-    borderRadius: '6px',
-    border: '2px solid #EAECEF',
     display: 'grid',
     placeItems: 'center',
   };

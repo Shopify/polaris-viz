@@ -5,18 +5,16 @@ import {
   StackedAreaChart,
   StackedAreaChartProps,
   TooltipContent,
+  Legend,
 } from '../../src/components';
 
 import {OUTER_CONTAINER_STYLE} from './constants';
 
 export function StackedAreaChartDemo() {
   const innerContainerStyle = {
-    width: '900px',
+    width: '100%',
     height: '300px',
-    background: 'white',
-    padding: '2rem',
-    borderRadius: '6px',
-    border: '2px solid #EAECEF',
+    marginBottom: '20px',
   };
 
   document.body.style.fontFamily =
@@ -34,7 +32,7 @@ export function StackedAreaChartDemo() {
         {label: 'June', rawValue: 5634},
         {label: 'July', rawValue: 3238},
       ],
-      color: 'primary',
+      color: 'primary' as 'primary',
     },
     {
       name: 'Returning',
@@ -47,7 +45,7 @@ export function StackedAreaChartDemo() {
         {label: 'June', rawValue: 12484},
         {label: 'July', rawValue: 4878},
       ],
-      color: 'secondary',
+      color: 'secondary' as 'secondary',
     },
   ];
 
@@ -105,6 +103,7 @@ export function StackedAreaChartDemo() {
           renderTooltipContent={renderTooltipContent}
         />
       </div>
+      <Legend series={series} />
     </div>
   );
 }

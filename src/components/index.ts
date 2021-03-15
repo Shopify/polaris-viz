@@ -30,3 +30,5 @@ export {TooltipContent, TooltipContentProps} from './TooltipContent';
 export {BarChartXAxis} from './BarChartXAxis';
 export {SkipLink} from './SkipLink';
 export {VisuallyHiddenRows} from './VisuallyHiddenRows';
+export {LinePreview} from './LinePreview';
+export {Legend} from './Legend';

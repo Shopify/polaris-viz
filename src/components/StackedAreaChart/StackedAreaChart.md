@@ -2,6 +2,8 @@
 
 Used to compare multiple series of data and display the total value. This chart is not ideal for displaying datasets with negatives.
 
+It's reccomended that you use a legend whenever displaying multiseries data. To display one, use the <a href="../Legend/Legend.md">`<Legend />` component</a>.
+
 ## Example
 
 <img src="stacked-area-chart.png" alt="Stacked area chart example image" />
@@ -90,7 +92,6 @@ The stacked area chart interface looks like this:
 interface StackedAreaChartProps {
   xAxisLabels: string[];
   series: Series[];
-  chartHeight?: number;
   accessibilityLabel?: string;
   opacity?: number;
   isAnimated?: boolean;
@@ -101,7 +102,7 @@ interface StackedAreaChartProps {
 }
 ```
 
-This component derives its size from its parent container and fills the width of its parent's container. It has a default height of `250`, which is configurable via the `chartHeight` prop. The `chartHeight` specifically affects the height of chart, and does not include or affect the height of the legend.
+This component derives its size from its parent container and fills the width of its parent's container.
 
 ### The `Series` type
 
@@ -121,7 +122,7 @@ interface Series {
 | -------- |
 | `string` |
 
-The name for the series. This appears in the chart legend and tooltip.
+The name for the series. This appears in the tooltip.
 
 #### data
 
@@ -183,12 +184,6 @@ This accepts a function that is called to format the labels when the chart draws
 | `(value: number): string;` | `(value) => value.toString()` |
 
 The `formatYAxisLabel` function formats the values displayed on the yAxis and in the tooltip.
-
-#### chartHeight
-
-| type     | default |
-| -------- | ------- |
-| `number` | `250`   |
 
 Determines the height of the chart.
 

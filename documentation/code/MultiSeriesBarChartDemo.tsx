@@ -5,6 +5,7 @@ import {
   MultiSeriesBarChart,
   MultiSeriesBarChartProps,
   TooltipContent,
+  Legend,
 } from '../../src/components';
 
 import {OUTER_CONTAINER_STYLE} from './constants';
@@ -15,11 +16,9 @@ interface Props {
 
 export function MultiSeriesBarChartDemo({isStacked = false}: Props) {
   const innerContainerStyle = {
-    width: '900px',
-    background: 'white',
-    padding: '2rem',
-    borderRadius: '6px',
-    border: '2px solid #EAECEF',
+    width: '100%',
+    height: '400px',
+    marginBottom: '20px',
   };
 
   document.body.style.fontFamily =
@@ -27,8 +26,8 @@ export function MultiSeriesBarChartDemo({isStacked = false}: Props) {
 
   const series = [
     {
-      color: 'primary',
-      highlightColor: 'primaryProminent',
+      color: 'primary' as 'primary',
+      highlightColor: 'primaryProminent' as 'primaryProminent',
       name: 'Breakfast',
       data: [
         {label: 'Monday', rawValue: 3},
@@ -41,8 +40,8 @@ export function MultiSeriesBarChartDemo({isStacked = false}: Props) {
       ],
     },
     {
-      color: 'secondary',
-      highlightColor: 'secondaryProminent',
+      color: 'secondary' as 'secondary',
+      highlightColor: 'secondaryProminent' as 'secondaryProminent',
       name: 'Lunch',
       data: [
         {label: 'Monday', rawValue: 4},
@@ -55,8 +54,8 @@ export function MultiSeriesBarChartDemo({isStacked = false}: Props) {
       ],
     },
     {
-      color: 'tertiary',
-      highlightColor: 'tertiaryProminent',
+      color: 'tertiary' as 'tertiary',
+      highlightColor: 'tertiaryProminent' as 'tertiaryProminent',
       name: 'Dinner',
       data: [
         {label: 'Monday', rawValue: 7},
@@ -121,11 +120,12 @@ export function MultiSeriesBarChartDemo({isStacked = false}: Props) {
           formatYAxisLabel={formatYAxisLabel}
           labels={labels}
           series={series}
-          chartHeight={253}
           isStacked={isStacked}
           renderTooltipContent={renderTooltipContent}
         />
       </div>
+
+      <Legend series={series} />
     </div>
   );
 }

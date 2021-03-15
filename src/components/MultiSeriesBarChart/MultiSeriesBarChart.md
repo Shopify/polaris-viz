@@ -103,7 +103,6 @@ return (
     formatYAxisLabel={formatYAxisLabel}
     labels={labels}
     series={series}
-    chartHeight={250}
     isStacked={isStacked}
     renderTooltipContent={renderTooltipContent}
   />
@@ -119,7 +118,6 @@ interface MultiSeriesBarChartProps {
   series: Series[];
   labels: string[];
   accessibilityLabel?: string;
-  chartHeight?: number;
   timeSeries?: boolean;
   isStacked?: boolean;
   formatXAxisLabel?(value: string, index?: number, data?: string[]): string;
@@ -128,7 +126,7 @@ interface MultiSeriesBarChartProps {
 }
 ```
 
-This component derives its size from its parent container and fills the width of its parent's container. It has a default height of `250`, which is configurable via the `chartHeight` prop. The `chartHeight` specifically affects the height of chart, and does not include or affect the height of the legend.
+This component derives its size from its parent container and fills the width of its parent's container.
 
 ### The `Series` type
 
@@ -225,12 +223,6 @@ The labels for the x-axis of the chart. This array should be equal in length to 
 
 Visually hidden text for screen readers.
 
-#### chartHeight
-
-| type     | default |
-| -------- | ------- |
-| `number` | `250`   |
-
 Determines the height of the chart.
 
 #### formatXAxisLabel
@@ -240,6 +232,8 @@ Determines the height of the chart.
 | `(value: string, index?: number, data?: string[]): string;` | `(value) => value.toString()` |
 
 This accepts a function that is called to format the labels when the chart draws its X axis.
+
+It's reccomended that you use a legend whenever displaying multiseries data. To display one, use the <a href="../Legend/Legend.md">`<Legend />` component</a>.
 
 #### formatYAxisLabel
 

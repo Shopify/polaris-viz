@@ -13,6 +13,7 @@ export {
   LineChartTooltipContentProps,
   StackedAreaChart,
   StackedAreaChartProps,
+  Legend,
   MultiSeriesBarChart,
   MultiSeriesBarChartProps,
   TooltipContent,

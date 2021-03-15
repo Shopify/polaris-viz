@@ -7,8 +7,6 @@ import {getDefaultColor} from '../../utilities';
 
 import {Chart} from './Chart';
 import {Series, RenderTooltipContentData} from './types';
-import {Legend} from './components';
-import {DEFAULT_HEIGHT} from './constants';
 
 export interface MultiSeriesBarChartProps {
   series: Series[];
@@ -18,7 +16,6 @@ export interface MultiSeriesBarChartProps {
   formatXAxisLabel?: StringLabelFormatter;
   formatYAxisLabel?: NumberLabelFormatter;
   renderTooltipContent?(data: RenderTooltipContentData): React.ReactNode;
-  chartHeight?: number;
   isStacked?: boolean;
 }
 
@@ -28,7 +25,6 @@ export function MultiSeriesBarChart({
   isStacked = false,
   timeSeries = false,
   accessibilityLabel,
-  chartHeight = DEFAULT_HEIGHT,
   formatXAxisLabel = (value) => value.toString(),
   formatYAxisLabel = (value) => Math.round(value).toString(),
   renderTooltipContent,
@@ -71,27 +67,28 @@ export function MultiSeriesBarChart({
   }));
 
   return (
-    <div aria-label={accessibilityLabel} role="img">
-      <div style={{height: chartHeight}} ref={containerRef}>
-        {chartDimensions == null ? null : (
-          <Chart
-            series={seriesWithDefaults}
-            labels={labels}
-            chartDimensions={chartDimensions}
-            formatXAxisLabel={formatXAxisLabel}
-            formatYAxisLabel={formatYAxisLabel}
-            renderTooltipContent={
-              renderTooltipContent != null
-                ? renderTooltipContent
-                : renderDefaultTooltipContent
-            }
-            timeSeries={timeSeries}
-            isStacked={isStacked}
-          />
-        )}
-      </div>
-
-      <Legend series={seriesWithDefaults} />
+    <div
+      aria-label={accessibilityLabel}
+      role="img"
+      style={{height: '100%', width: '100%'}}
+      ref={containerRef}
+    >
+      {chartDimensions == null ? null : (
+        <Chart
+          series={seriesWithDefaults}
+          labels={labels}
+          chartDimensions={chartDimensions}
+          formatXAxisLabel={formatXAxisLabel}
+          formatYAxisLabel={formatYAxisLabel}
+          renderTooltipContent={
+            renderTooltipContent != null
+              ? renderTooltipContent
+              : renderDefaultTooltipContent
+          }
+          timeSeries={timeSeries}
+          isStacked={isStacked}
+        />
+      )}
     </div>
   );
 }

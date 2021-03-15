@@ -7,11 +7,9 @@ import {TooltipContent} from '../TooltipContent';
 import {getDefaultColor, uniqueId} from '../../utilities';
 
 import {Chart} from './Chart';
-import {Legend} from './components';
 import {Series, RenderTooltipContentData} from './types';
 
 export interface StackedAreaChartProps {
-  chartHeight?: number;
   formatXAxisLabel?: StringLabelFormatter;
   formatYAxisLabel?: NumberLabelFormatter;
   renderTooltipContent?(data: RenderTooltipContentData): React.ReactNode;
@@ -25,7 +23,6 @@ export interface StackedAreaChartProps {
 export function StackedAreaChart({
   xAxisLabels,
   series,
-  chartHeight = 250,
   formatXAxisLabel = (value) => value.toString(),
   formatYAxisLabel = (value) => Math.round(value).toString(),
   renderTooltipContent,
@@ -83,7 +80,7 @@ export function StackedAreaChart({
       {skipLinkText == null || skipLinkText.length === 0 ? null : (
         <SkipLink anchorId={skipLinkAnchorId.current}>{skipLinkText}</SkipLink>
       )}
-      <div style={{height: chartHeight}} ref={containerRef}>
+      <div style={{height: '100%', width: '100%'}} ref={containerRef}>
         {chartDimensions == null ? null : (
           <Chart
             xAxisLabels={xAxisLabels}
@@ -102,7 +99,6 @@ export function StackedAreaChart({
         )}
       </div>
 
-      <Legend series={seriesWithDefaults} ariaHidden />
       {skipLinkText == null || skipLinkText.length === 0 ? null : (
         <SkipLink.Anchor id={skipLinkAnchorId.current} />
       )}
