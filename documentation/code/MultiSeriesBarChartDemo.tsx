@@ -30,13 +30,13 @@ export function MultiSeriesBarChartDemo({isStacked = false}: Props) {
       highlightColor: 'primaryProminent' as 'primaryProminent',
       name: 'Breakfast',
       data: [
-        {label: 'Monday', rawValue: 3},
-        {label: 'Tuesday', rawValue: 7},
-        {label: 'Wednesday', rawValue: 4},
-        {label: 'Thursday', rawValue: 8},
-        {label: 'Friday', rawValue: 10},
-        {label: 'Saturday', rawValue: 0},
-        {label: 'Sunday', rawValue: 1},
+        {label: 'Monday', rawValue: 0.3},
+        {label: 'Tuesday', rawValue: 0.99997},
+        {label: 'Wednesday', rawValue: 0.4},
+        {label: 'Thursday', rawValue: 0.8},
+        {label: 'Friday', rawValue: 0.234234234},
+        {label: 'Saturday', rawValue: 0.0},
+        {label: 'Sunday', rawValue: 0.1},
       ],
     },
     {
@@ -44,13 +44,13 @@ export function MultiSeriesBarChartDemo({isStacked = false}: Props) {
       highlightColor: 'secondaryProminent' as 'secondaryProminent',
       name: 'Lunch',
       data: [
-        {label: 'Monday', rawValue: 4},
-        {label: 'Tuesday', rawValue: 3},
-        {label: 'Wednesday', rawValue: 5},
-        {label: 'Thursday', rawValue: 15},
-        {label: 'Friday', rawValue: 8},
-        {label: 'Saturday', rawValue: 10},
-        {label: 'Sunday', rawValue: 2},
+        {label: 'Monday', rawValue: 0.4},
+        {label: 'Tuesday', rawValue: 0.3},
+        {label: 'Wednesday', rawValue: 0.5},
+        {label: 'Thursday', rawValue: 0.15},
+        {label: 'Friday', rawValue: 0.8},
+        {label: 'Saturday', rawValue: 0.1},
+        {label: 'Sunday', rawValue: 0.2},
       ],
     },
     {
@@ -58,13 +58,13 @@ export function MultiSeriesBarChartDemo({isStacked = false}: Props) {
       highlightColor: 'tertiaryProminent' as 'tertiaryProminent',
       name: 'Dinner',
       data: [
-        {label: 'Monday', rawValue: 7},
-        {label: 'Tuesday', rawValue: 2},
-        {label: 'Wednesday', rawValue: 6},
-        {label: 'Thursday', rawValue: 12},
-        {label: 'Friday', rawValue: 10},
-        {label: 'Saturday', rawValue: 5},
-        {label: 'Sunday', rawValue: 3},
+        {label: 'Monday', rawValue: 0.7},
+        {label: 'Tuesday', rawValue: 0.2},
+        {label: 'Wednesday', rawValue: 0.6},
+        {label: 'Thursday', rawValue: 0.12},
+        {label: 'Friday', rawValue: 0.1},
+        {label: 'Saturday', rawValue: 0.5},
+        {label: 'Sunday', rawValue: 0.3},
       ],
     },
   ];
@@ -117,7 +117,7 @@ export function MultiSeriesBarChartDemo({isStacked = false}: Props) {
     <div style={OUTER_CONTAINER_STYLE}>
       <div style={innerContainerStyle}>
         <MultiSeriesBarChart
-          formatYAxisLabel={formatYAxisLabel}
+          // formatYAxisLabel={formatYAxisLabel}
           labels={labels}
           series={series}
           isStacked={isStacked}

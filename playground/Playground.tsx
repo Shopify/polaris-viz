@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 
 import * as PlaygroundDemos from '../documentation/code';
 
-import {NormalizedStackedBarChart} from '../src/components';
+import {NormalizedStackedBarChart, BarChart} from '../src/components';
 
 const Demos = () => {
   return (
@@ -73,6 +73,7 @@ export default function Playground() {
       <br />
       <button onClick={toggleDemos}>Toggle Demos</button>
       {showDemos && <Demos />}
+      {/* <PlaygroundDemos.BarChartDemo /> */}
     </div>
   );
 }

@@ -15,15 +15,15 @@ export function BarChartDemo() {
     "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif";
 
   const data = [
-    {rawValue: 324.19, label: '2020-01-01T12:00:00Z'},
-    {rawValue: 613.29, label: '2020-01-02T12:00:00Z'},
-    {rawValue: 422.79, label: '2020-01-03T12:00:00Z'},
+    {rawValue: 0.198888, label: '2020-01-01T12:00:00Z'},
+    {rawValue: 0.2988888, label: '2020-01-02T12:00:00Z'},
+    {rawValue: 0.798888, label: '2020-01-03T12:00:00Z'},
     {
-      rawValue: 25.6,
+      rawValue: 0.688888,
       label: '2020-01-04T12:00:00Z',
     },
-    {rawValue: 277.69, label: '2020-01-05T12:00:00Z'},
-    {rawValue: 421.19, label: '2020-01-06T12:00:00Z'},
+    {rawValue: 0.6988888, label: '2020-01-05T12:00:00Z'},
+    {rawValue: 0.1988888, label: '2020-01-06T12:00:00Z'},
   ];
 
   function formatXAxisLabel(value: string) {

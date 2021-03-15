@@ -24,26 +24,26 @@ export function StackedAreaChartDemo() {
     {
       name: 'First-time',
       data: [
-        {label: 'January', rawValue: 4237},
-        {label: 'February', rawValue: 5024},
-        {label: 'March', rawValue: 5730},
-        {label: 'April', rawValue: 5587},
-        {label: 'May', rawValue: 5303},
-        {label: 'June', rawValue: 5634},
-        {label: 'July', rawValue: 3238},
+        {label: 'January', rawValue: 0.4237},
+        {label: 'February', rawValue: 0.5024},
+        {label: 'March', rawValue: 0.573},
+        {label: 'April', rawValue: 0.5587},
+        {label: 'May', rawValue: 0.5303},
+        {label: 'June', rawValue: 0.5634},
+        {label: 'July', rawValue: 0.3238},
       ],
       color: 'primary' as 'primary',
     },
     {
       name: 'Returning',
       data: [
-        {label: 'January', rawValue: 5663},
-        {label: 'February', rawValue: 7349},
-        {label: 'March', rawValue: 9795},
-        {label: 'April', rawValue: 7396},
-        {label: 'May', rawValue: 7028},
-        {label: 'June', rawValue: 12484},
-        {label: 'July', rawValue: 4878},
+        {label: 'January', rawValue: 0.5663},
+        {label: 'February', rawValue: 0.7349},
+        {label: 'March', rawValue: 0.9795},
+        {label: 'April', rawValue: 0.7396},
+        {label: 'May', rawValue: 0.7028},
+        {label: 'June', rawValue: 0.12484},
+        {label: 'July', rawValue: 0.4878},
       ],
       color: 'secondary' as 'secondary',
     },
@@ -99,7 +99,7 @@ export function StackedAreaChartDemo() {
           series={series}
           skipLinkText="Skip chart content"
           xAxisLabels={labels}
-          formatYAxisLabel={formatYAxisLabel}
+          // formatYAxisLabel={formatYAxisLabel}
           renderTooltipContent={renderTooltipContent}
         />
       </div>
