@@ -44,7 +44,7 @@ describe('useLinearXAxisDetails', () => {
     fontSize: 14,
     chartDimensions: {width: 200} as any,
     formatXAxisLabel: (label: string) => label,
-    formatYAxisLabel: (label: number) => label.toString(),
+    initialTicks: [{value: 10, formattedValue: '$10', yOffset: 100}],
     xAxisLabels: [
       'A really really long label A really really long label',
       'Another really really long label',

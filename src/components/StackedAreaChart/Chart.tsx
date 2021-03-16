@@ -77,21 +77,28 @@ export function Chart({
   const fontSize =
     dimensions.width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
 
+  const stackedValues = useMemo(() => areaStack(formattedData), [
+    areaStack,
+    formattedData,
+  ]);
+
+  const {ticks: initialTicks} = useYScale({
+    fontSize,
+    drawableHeight: dimensions.height - Margin.Top,
+    stackedValues,
+    formatYAxisLabel,
+  });
+
   const xAxisDetails = useLinearXAxisDetails({
     series,
     fontSize,
     chartDimensions: dimensions,
     formatXAxisLabel,
-    formatYAxisLabel,
+    initialTicks,
     xAxisLabels: xAxisLabels == null ? [] : xAxisLabels,
   });
 
   const formattedXAxisLabels = xAxisLabels.map(formatXAxisLabel);
-
-  const stackedValues = useMemo(() => areaStack(formattedData), [
-    areaStack,
-    formattedData,
-  ]);
 
   const colors = useMemo(() => series.map(({color}) => color), [series]);
 

@@ -29,7 +29,7 @@ export function BarChart({
   barMargin = 'Medium',
   timeSeries = false,
   formatXAxisLabel = (value) => value.toString(),
-  formatYAxisLabel = (value) => Math.round(value).toString(),
+  formatYAxisLabel = (value) => value.toString(),
   renderTooltipContent,
   skipLinkText,
 }: BarChartProps) {
