@@ -1,5 +1,5 @@
-import React, {useState, useMemo, useRef} from 'react';
-import {line} from 'd3-shape';
+import React, {useState, useMemo, useRef, useCallback} from 'react';
+import throttle from 'lodash.throttle';
 
 import {useLinearXAxisDetails, useLinearXScale} from '../../hooks';
 import {
@@ -12,12 +12,17 @@ import {
 import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
 import {LinearXAxis} from '../LinearXAxis';
 import {YAxis} from '../YAxis';
+import {Point} from '../Point';
 import {eventPoint, uniqueId} from '../../utilities';
 import {Crosshair} from '../Crosshair';
-import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
+import {
+  StringLabelFormatter,
+  NumberLabelFormatter,
+  ActiveTooltip,
+} from '../../types';
 import {TooltipContainer} from '../TooltipContainer';
 
-import {Series, RenderTooltipContentData} from './types';
+import {Series, RenderTooltipContentData, TooltipData} from './types';
 import {useYScale} from './hooks';
 import {Line, GradientArea} from './components';
 import styles from './Chart.scss';
@@ -41,11 +46,9 @@ export function Chart({
   renderTooltipContent,
   hideXAxisLabels,
 }: Props) {
-  const [activePointIndex, setActivePointIndex] = useState<number | null>(null);
-  const [tooltipPosition, setTooltipPosition] = useState<{
-    x: number;
-    y: number;
-  } | null>(null);
+  const [tooltipDetails, setTooltipDetails] = useState<ActiveTooltip | null>(
+    null,
+  );
 
   const tooltipId = useRef(uniqueId('lineChart'));
 
@@ -75,7 +78,10 @@ export function Chart({
 
   const drawableHeight = dimensions.height - Margin.Top - marginBottom;
 
-  const formattedLabels = xAxisLabels.map(formatXAxisLabel);
+  const formattedLabels = useMemo(() => xAxisLabels.map(formatXAxisLabel), [
+    formatXAxisLabel,
+    xAxisLabels,
+  ]);
 
   const {axisMargin, ticks, yScale} = useYScale({
     fontSize,
@@ -84,89 +90,107 @@ export function Chart({
     formatYAxisLabel,
   });
 
+  const handleFocus = useCallback(
+    (details: ActiveTooltip | null) => {
+      if (details == null) {
+        setTooltipDetails(null);
+      } else {
+        const {x, y, index} = details;
+        setTooltipDetails({index, y, x: x + axisMargin});
+      }
+    },
+    [axisMargin],
+  );
+
   const drawableWidth =
     axisMargin == null ? null : dimensions.width - Margin.Right - axisMargin;
-  const longestSeriesLength = series.reduce<number>(
-    (max, currentSeries) => Math.max(max, currentSeries.data.length - 1),
-    0,
+
+  const longestSeriesLength = useMemo(
+    () =>
+      series.reduce<number>(
+        (max, currentSeries) => Math.max(max, currentSeries.data.length - 1),
+        0,
+      ),
+    [series],
   );
 
   const {xScale} = useLinearXScale({drawableWidth, longestSeriesLength});
 
   const tooltipMarkup = useMemo(() => {
-    if (activePointIndex == null) {
+    if (tooltipDetails == null) {
       return null;
     }
 
-    const data = series
-      .filter(function removeEmptyDataPoints({data}) {
-        return data[activePointIndex] != null;
-      })
-      .map(({name, data, color, lineStyle}) => ({
-        point: {
-          label: data[activePointIndex].label,
-          value: data[activePointIndex].rawValue,
-        },
-        name,
-        color,
-        lineStyle,
-      }));
+    const data = series.reduce<TooltipData[]>(
+      (accumulator, {data, name, color, lineStyle}) => {
+        const currentDataPoint = data[tooltipDetails.index];
+        if (currentDataPoint != null) {
+          accumulator.push({
+            point: {
+              label: currentDataPoint.label,
+              value: currentDataPoint.rawValue,
+            },
+            name,
+            color,
+            lineStyle,
+          });
+        }
+        return accumulator;
+      },
+      [],
+    );
+
+    if (data == null) {
+      return null;
+    }
 
     return renderTooltipContent({data});
-  }, [activePointIndex, renderTooltipContent, series]);
+  }, [renderTooltipContent, series, tooltipDetails]);
+
+  const reversedSeries = useMemo(() => series.slice().reverse(), [series]);
 
   if (xScale == null || drawableWidth == null || axisMargin == null) {
     return null;
   }
 
-  const lineGenerator = line<{rawValue: number}>()
-    .x((_, index) => xScale(index))
-    .y(({rawValue}) => yScale(rawValue));
+  const handleInteraction = throttle(
+    (
+      event:
+        | React.MouseEvent<SVGSVGElement>
+        | React.TouchEvent<SVGSVGElement>
+        | null,
+    ) => {
+      if (axisMargin == null || xScale == null) {
+        return;
+      }
 
-  function handleInteraction(
-    event: React.MouseEvent<SVGSVGElement> | React.TouchEvent<SVGSVGElement>,
-  ) {
-    if (axisMargin == null || xScale == null) {
-      return;
-    }
+      if (event === null) {
+        setTooltipDetails(null);
+        return;
+      }
 
-    const point = eventPoint(event);
-    if (point == null) {
-      return;
-    }
+      const point = eventPoint(event);
 
-    const {svgX, svgY} = point;
-    if (svgX < axisMargin) {
-      return;
-    }
+      if (point == null) {
+        return;
+      }
 
-    const closestIndex = Math.round(xScale.invert(svgX - axisMargin));
-    setActivePointIndex(Math.min(longestSeriesLength, closestIndex));
-    setTooltipPosition({
-      x: svgX,
-      y: svgY,
-    });
-  }
+      const {svgX, svgY} = point;
+      if (svgX < axisMargin) {
+        return;
+      }
 
-  function handleFocus({
-    index,
-    cx,
-    cy,
-  }: {
-    index?: number;
-    cx: number;
-    cy: number;
-  }) {
-    if (index == null) {
-      return;
-    }
-    const margin = axisMargin == null ? 0 : axisMargin;
-    setActivePointIndex(index);
-    setTooltipPosition({
-      x: cx + margin,
-      y: cy,
-    });
-  }
+      const closestIndex = Math.round(xScale.invert(svgX - axisMargin));
+
+      setTooltipDetails({
+        x: svgX,
+        y: svgY,
+        index: Math.min(longestSeriesLength, closestIndex),
+      });
+    },
+    50,
+    {leading: true},
+  );
 
   return (
     <div className={styles.Container}>
@@ -174,10 +198,16 @@ export function Chart({
         role="table"
         width="100%"
         height="100%"
-        onMouseMove={handleInteraction}
-        onTouchMove={handleInteraction}
-        onTouchEnd={() => setActivePointIndex(null)}
-        onMouseLeave={() => setActivePointIndex(null)}
+        onMouseMove={(event) => {
+          event.persist();
+          handleInteraction(event);
+        }}
+        onTouchMove={(event) => {
+          event.persist();
+          handleInteraction(event);
+        }}
+        onTouchEnd={() => handleInteraction(null)}
+        onMouseLeave={() => handleInteraction(null)}
       >
         <g
           transform={`translate(${axisMargin},${dimensions.height -
@@ -202,9 +232,12 @@ export function Chart({
           />
         </g>
 
-        {activePointIndex == null ? null : (
+        {tooltipDetails == null ? null : (
           <g transform={`translate(${axisMargin},${Margin.Top})`}>
-            <Crosshair x={xScale(activePointIndex)} height={drawableHeight} />
+            <Crosshair
+              x={xScale(tooltipDetails.index)}
+              height={drawableHeight}
+            />
           </g>
         )}
 
@@ -215,52 +248,51 @@ export function Chart({
         />
 
         <g transform={`translate(${axisMargin},${Margin.Top})`}>
-          {series
-            .slice()
-            .reverse()
-            .map((singleSeries, index) => {
-              const {data, name, showArea} = singleSeries;
-              const path = lineGenerator(data);
+          {reversedSeries.map((singleSeries, index) => {
+            const {data, name, showArea, color} = singleSeries;
+            const isFirstLine = index === series.length - 1;
 
-              if (path == null) {
-                throw new Error(
-                  `Could not generate line path for series ${name}`,
-                );
-              }
+            return (
+              <React.Fragment key={`${name}-${index}`}>
+                <Line series={singleSeries} xScale={xScale} yScale={yScale} />
 
-              const isFirstLine = index === series.length - 1;
+                {data.map(({rawValue}, dataIndex) => {
+                  const activeIndex =
+                    tooltipDetails == null ? null : tooltipDetails.index;
 
-              return (
-                <React.Fragment key={`${name}-${index}`}>
-                  <Line
-                    xScale={xScale}
-                    yScale={yScale}
-                    series={singleSeries}
-                    path={path}
-                    activePointIndex={activePointIndex}
-                    labelledBy={tooltipId.current}
-                    handleFocus={handleFocus}
-                    tabIndex={isFirstLine ? 0 : -1}
-                  />
-
-                  {showArea ? (
-                    <GradientArea
-                      series={singleSeries}
-                      yScale={yScale}
-                      xScale={xScale}
+                  return (
+                    <Point
+                      key={`${name}-${index}-${dataIndex}`}
+                      color={color}
+                      cx={xScale(dataIndex)}
+                      cy={yScale(rawValue)}
+                      active={activeIndex === dataIndex}
+                      onFocus={handleFocus}
+                      index={dataIndex}
+                      tabIndex={isFirstLine ? 0 : -1}
+                      ariaLabelledby={tooltipId.current}
                     />
-                  ) : null}
-                </React.Fragment>
-              );
-            })}
+                  );
+                })}
+
+                {showArea ? (
+                  <GradientArea
+                    series={singleSeries}
+                    yScale={yScale}
+                    xScale={xScale}
+                  />
+                ) : null}
+              </React.Fragment>
+            );
+          })}
         </g>
       </svg>
 
-      {tooltipPosition == null || activePointIndex == null ? null : (
+      {tooltipDetails == null ? null : (
         <TooltipContainer
-          activePointIndex={activePointIndex}
-          currentX={tooltipPosition.x}
-          currentY={tooltipPosition.y}
+          activePointIndex={tooltipDetails.index}
+          currentX={tooltipDetails.x}
+          currentY={tooltipDetails.y}
           chartDimensions={dimensions}
           margin={Margin}
           id={tooltipId.current}

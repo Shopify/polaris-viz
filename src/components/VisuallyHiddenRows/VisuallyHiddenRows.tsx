@@ -15,7 +15,7 @@ interface Props {
   formatYAxisLabel: NumberLabelFormatter;
 }
 
-export function VisuallyHiddenRows({
+export const VisuallyHiddenRows = React.memo(function Rows({
   series,
   xAxisLabels,
   formatYAxisLabel,
@@ -58,4 +58,4 @@ export function VisuallyHiddenRows({
       })}
     </React.Fragment>
   );
-}
+});

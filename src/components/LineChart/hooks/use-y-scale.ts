@@ -1,6 +1,7 @@
-import {useMemo, useEffect, useState} from 'react';
+import {useMemo} from 'react';
 import {scaleLinear} from 'd3-scale';
 
+import {getTextWidth} from '../../../utilities';
 import {yAxisMinMax} from '../utilities';
 import {MIN_Y_LABEL_SPACE, SPACING} from '../constants';
 import {Series} from '../types';
@@ -17,9 +18,7 @@ export function useYScale({
   series: Series[];
   formatYAxisLabel: NumberLabelFormatter;
 }) {
-  const [maxTickLength, setMaxTickLength] = useState<number>();
-
-  const {yScale, ticks} = useMemo(() => {
+  const {yScale, ticks, axisMargin} = useMemo(() => {
     const [minY, maxY] = yAxisMinMax(series);
 
     const maxTicks = Math.max(
@@ -38,30 +37,16 @@ export function useYScale({
       yOffset: yScale(value),
     }));
 
-    return {yScale, ticks};
-  }, [drawableHeight, series, formatYAxisLabel]);
+    const maxTickWidth = Math.max(
+      ...ticks.map(({formattedValue}) =>
+        getTextWidth({fontSize, text: formattedValue}),
+      ),
+    );
 
-  useEffect(() => {
-    let currentMaxTickLength = 0;
+    const axisMargin = maxTickWidth + SPACING;
 
-    const tick = document.createElement('p');
-    tick.style.fontSize = `${fontSize}px`;
-    tick.style.display = 'inline-block';
-    tick.style.visibility = 'hidden';
-    document.body.appendChild(tick);
-
-    ticks.forEach(({formattedValue}) => {
-      tick.innerText = formattedValue;
-
-      currentMaxTickLength = Math.max(currentMaxTickLength, tick.clientWidth);
-    });
-
-    document.body.removeChild(tick);
-
-    setMaxTickLength(currentMaxTickLength);
-  }, [ticks, maxTickLength, fontSize]);
-
-  const axisMargin = maxTickLength == null ? null : maxTickLength + SPACING;
+    return {yScale, ticks, axisMargin};
+  }, [series, drawableHeight, formatYAxisLabel, fontSize]);
 
   return {yScale, ticks, axisMargin};
 }

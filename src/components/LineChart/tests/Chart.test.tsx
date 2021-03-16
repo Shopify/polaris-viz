@@ -5,6 +5,7 @@ import {
   LinearXAxis,
   TooltipContainer,
   VisuallyHiddenRows,
+  Point,
 } from 'components';
 
 import {Chart} from '../Chart';
@@ -20,6 +21,7 @@ import {YAxis} from '../../YAxis';
 };
 
 const fakeSVGEvent = {
+  persist: jest.fn(),
   currentTarget: {
     getScreenCTM: () => ({
       inverse: () => ({x: 100, y: 100}),
@@ -79,7 +81,7 @@ describe('<Chart />', () => {
       svg.trigger('onMouseMove', fakeSVGEvent);
     });
 
-    expect(chart).toContainReactComponent(Line, {activePointIndex: 1});
+    expect(chart).toContainReactComponent(Point, {active: true});
   });
 
   describe('<LinearAxis />', () => {
@@ -133,6 +135,35 @@ describe('<Chart />', () => {
     );
 
     expect(chart).toContainReactComponentTimes(Line, 2);
+  });
+
+  it('renders a <Point /> for each data item in each series', () => {
+    const chart = mount(
+      <Chart
+        {...mockProps}
+        series={[primarySeries, {...primarySeries, name: 'A second series'}]}
+      />,
+    );
+
+    expect(chart).toContainReactComponentTimes(Point, 8);
+  });
+
+  it('passes props to <Point />', () => {
+    const chart = mount(
+      <Chart
+        {...mockProps}
+        series={[primarySeries, {...primarySeries, name: 'A second series'}]}
+      />,
+    );
+
+    expect(chart).toContainReactComponent(Point, {
+      color: 'primary',
+      cx: 0,
+      cy: 0,
+      active: false,
+      index: 0,
+      tabIndex: -1,
+    });
   });
 
   it('renders a <GradientArea /> for a series when showArea is true', () => {

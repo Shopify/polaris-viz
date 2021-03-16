@@ -15,7 +15,11 @@ import {Crosshair} from '../Crosshair';
 import {Point} from '../Point';
 import {LinearXAxis} from '../LinearXAxis';
 import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
-import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
+import {
+  StringLabelFormatter,
+  NumberLabelFormatter,
+  ActiveTooltip,
+} from '../../types';
 
 import {Margin} from './constants';
 import {useYScale} from './hooks';
@@ -249,20 +253,12 @@ export function Chart({
     </div>
   );
 
-  function handleFocus({
-    index,
-    cx,
-    cy,
-  }: {
-    index?: number;
-    cx: number;
-    cy: number;
-  }) {
+  function handleFocus({index, x, y}: ActiveTooltip) {
     if (index == null) return;
     setActivePointIndex(index);
     setTooltipPosition({
-      x: cx + axisMargin,
-      y: cy,
+      x: x + axisMargin,
+      y,
     });
   }
 

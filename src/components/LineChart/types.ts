@@ -5,7 +5,7 @@ export interface Series extends DataSeries<Data> {
   lineStyle?: LineStyle;
 }
 
-interface TooltipData {
+export interface TooltipData {
   name: string;
   point: {
     label: string;
