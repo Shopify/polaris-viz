@@ -1,6 +1,14 @@
 # Changelog
 
-## [0.6.0] - 2021-03-16
+## [0.6.1] - 2021-03-16
+
+### Fixed
+
+- Line chart performance
+- Handling for all negative datasets
+- Use initial ticks to calculate yAxis width
+
+## [0.6.0] - 2021-03-15
 
 ### Changed
 
