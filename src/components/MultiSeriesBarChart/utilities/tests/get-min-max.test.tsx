@@ -69,6 +69,52 @@ const mockZeroStackedData = [
   ],
 ] as StackSeries[];
 
+const mockNegativeStackedData = [
+  [
+    [-3, 0],
+    [-7, 0],
+  ],
+  [
+    [-7, -3],
+    [-10, -7],
+  ],
+  [
+    [-14, -7],
+    [-12, -10],
+  ],
+] as StackSeries[];
+
+const mockNegativeSeries: Series[] = [
+  {
+    color: 'colorPurple',
+    name: 'Breakfast',
+    data: [
+      {
+        label: 'Monday',
+        rawValue: -3,
+      },
+      {
+        label: 'Tuesday',
+        rawValue: -7,
+      },
+    ],
+  },
+  {
+    color: 'colorRed',
+    name: 'Lunch',
+    data: [
+      {
+        label: 'Monday',
+        rawValue: -4,
+      },
+      {
+        label: 'Tuesday',
+        rawValue: -3,
+      },
+    ],
+  },
+];
+
 describe('get-min-max', () => {
   it('returns min and max of non stacked data when stackedValues is null', () => {
     const {min, max} = getMinMax(null, mockData);
@@ -92,5 +138,15 @@ describe('get-min-max', () => {
   it('returns the default max y value for stacked values of all zeros', () => {
     const {max} = getMinMax(mockZeroStackedData, mockZeroData);
     expect(max).toStrictEqual(DEFAULT_MAX_Y);
+  });
+
+  it('returns 0 as the max when all stacked values are negative', () => {
+    const {max} = getMinMax(mockNegativeStackedData, mockNegativeSeries);
+    expect(max).toStrictEqual(0);
+  });
+
+  it('returns 0 as the max when all non-stacked values are negative', () => {
+    const {max} = getMinMax(null, mockNegativeSeries);
+    expect(max).toStrictEqual(0);
   });
 });

@@ -25,14 +25,22 @@ export function useYScale({
 }) {
   const {yScale, ticks, axisMargin} = useMemo(() => {
     const minY = Math.min(
-      ...stackedValues.map((value) =>
-        Math.min(...value.map(([startingValue]) => startingValue)),
-      ),
+      ...stackedValues.map((value) => {
+        return Math.min(
+          ...value.map(([startingValue, endingValue]) =>
+            Math.min(startingValue, endingValue),
+          ),
+        );
+      }),
     );
 
     const calculatedMax = Math.max(
       ...stackedValues.map((value) =>
-        Math.max(...value.map(([, endingValue]) => endingValue)),
+        Math.max(
+          ...value.map(([startingValue, endingValue]) =>
+            Math.max(startingValue, endingValue),
+          ),
+        ),
       ),
     );
 
@@ -46,7 +54,7 @@ export function useYScale({
 
     const yScale = scaleLinear()
       .range([drawableHeight, 0])
-      .domain([Math.min(0, minY), maxY])
+      .domain([Math.min(0, minY), Math.max(0, maxY)])
       .nice(maxTicks);
 
     const ticks = yScale.ticks(maxTicks).map((value) => ({
