@@ -29,6 +29,7 @@ const mockProps = {
   series: mockSeries,
   isAnimated: false,
   height: 250,
+  spline: false,
 };
 
 jest.mock('utilities/unique-id', () => ({

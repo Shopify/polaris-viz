@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import {ScaleLinear} from 'd3-scale';
-import {area} from 'd3-shape';
+import {area, curveMonotoneX} from 'd3-shape';
 
 import {uniqueId, getColorValue, rgbToRgba} from '../../../../utilities';
 import {Data} from '../../../../types';
@@ -12,16 +12,23 @@ interface Props {
   series: Series;
   yScale: ScaleLinear<number, number>;
   xScale: ScaleLinear<number, number>;
+  spline: boolean;
 }
 
-export function GradientArea({series, yScale, xScale}: Props) {
+export function GradientArea({series, yScale, xScale, spline}: Props) {
   const id = useMemo(() => uniqueId('gradient'), []);
   const {data, color} = series;
 
-  const areaShape = area<Data>()
+  const areaGenerator = area<Data>()
     .x((_: Data, index: number) => xScale(index))
     .y0(yScale(0))
-    .y1(({rawValue}: {rawValue: number}) => yScale(rawValue))(data);
+    .y1(({rawValue}: {rawValue: number}) => yScale(rawValue));
+
+  if (spline) {
+    areaGenerator.curve(curveMonotoneX);
+  }
+
+  const areaShape = areaGenerator(data);
 
   if (areaShape == null || color == null) {
     return null;

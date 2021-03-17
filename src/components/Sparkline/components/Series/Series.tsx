@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import {ScaleLinear} from 'd3-scale';
-import {area} from 'd3-shape';
+import {area, curveMonotoneX} from 'd3-shape';
 
 import {getColorValue, uniqueId, rgbToRgba} from '../../../../utilities';
 import {usePrefersReducedMotion} from '../../../../hooks';
@@ -17,12 +17,14 @@ export function Series({
   series,
   isAnimated = false,
   height,
+  spline,
 }: {
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
   series: SingleSeries;
-  isAnimated?: boolean;
+  isAnimated: boolean;
   height: number;
+  spline: boolean;
 }) {
   const {prefersReducedMotion} = usePrefersReducedMotion();
   const {
@@ -32,14 +34,23 @@ export function Series({
     data,
   } = series;
 
-  const lineShape = area<Coordinates>()
+  const lineGenerator = area<Coordinates>()
     .x(({x}) => xScale(x))
-    .y(({y}) => yScale(y))(data);
+    .y(({y}) => yScale(y));
 
-  const areaShape = area<Coordinates>()
+  const areaGenerator = area<Coordinates>()
     .x(({x}) => xScale(x))
     .y0(height)
-    .y1(({y}) => yScale(y))(data);
+    .y1(({y}) => yScale(y));
+
+  if (spline) {
+    lineGenerator.curve(curveMonotoneX);
+    areaGenerator.curve(curveMonotoneX);
+  }
+
+  const lineShape = lineGenerator(data);
+
+  const areaShape = areaGenerator(data);
 
   const id = useMemo(() => uniqueId('sparkline'), []);
   const immediate = !isAnimated || prefersReducedMotion;

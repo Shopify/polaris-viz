@@ -20,6 +20,7 @@ describe('<GradientArea />', () => {
     },
     xScale: scaleLinear(),
     yScale: scaleLinear(),
+    spline: false,
   };
 
   it('renders a linear gradient', () => {

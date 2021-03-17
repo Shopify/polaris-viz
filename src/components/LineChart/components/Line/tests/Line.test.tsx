@@ -22,6 +22,7 @@ const mockProps = {
   },
   xScale: scaleLinear(),
   yScale: scaleLinear(),
+  spline: false,
 };
 
 describe('<Line />', () => {
