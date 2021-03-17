@@ -1,8 +1,19 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
+import {area} from 'd3-shape';
 
 import {GradientArea} from '../GradientArea';
+
+jest.mock('d3-shape', () => ({
+  area: jest.fn(() => {
+    const shape = (value: any) => value;
+    shape.x = () => shape;
+    shape.y0 = () => shape;
+    shape.y1 = () => shape;
+    return shape;
+  }),
+}));
 
 describe('<GradientArea />', () => {
   const mockProps = {
@@ -20,6 +31,7 @@ describe('<GradientArea />', () => {
     },
     xScale: scaleLinear(),
     yScale: scaleLinear(),
+    hasSpline: false,
   };
 
   it('renders a linear gradient', () => {
@@ -47,5 +59,25 @@ describe('<GradientArea />', () => {
       </svg>,
     );
     expect(actual).toContainReactComponent('path');
+  });
+
+  it('calls the d3 curve method when hasSpline is true', () => {
+    const curveSpy = jest.fn();
+    (area as jest.Mock).mockImplementationOnce(() => {
+      const shape = (value: any) => value;
+      shape.x = () => shape;
+      shape.y0 = () => shape;
+      shape.y1 = () => shape;
+      shape.curve = curveSpy;
+      return shape;
+    });
+
+    mount(
+      <svg>
+        <GradientArea {...mockProps} hasSpline />
+      </svg>,
+    );
+
+    expect(curveSpy).toHaveBeenCalled();
   });
 });

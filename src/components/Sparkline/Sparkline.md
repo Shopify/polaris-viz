@@ -133,3 +133,11 @@ Visually hidden text for screen readers.
 | `boolean` | `false` |
 
 Determines whether to animate the chart on state changes.
+
+#### hasSpline
+
+| type      | default |
+| --------- | ------- |
+| `boolean` | `false` |
+
+Whether to curve the line between points.

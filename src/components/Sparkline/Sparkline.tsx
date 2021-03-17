@@ -25,14 +25,16 @@ export interface SingleSeries {
 
 export interface SparklineProps {
   series: SingleSeries[];
-  isAnimated?: boolean;
   accessibilityLabel?: string;
+  isAnimated?: boolean;
+  hasSpline?: boolean;
 }
 
 export function Sparkline({
   series,
   accessibilityLabel,
-  isAnimated,
+  isAnimated = false,
+  hasSpline = false,
 }: SparklineProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [svgDimensions, setSvgDimensions] = useState({width: 0, height: 0});
@@ -95,6 +97,7 @@ export function Sparkline({
                 series={singleSeries}
                 isAnimated={isAnimated}
                 height={height}
+                hasSpline={hasSpline}
               />
             </g>
           );
