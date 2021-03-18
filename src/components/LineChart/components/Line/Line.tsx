@@ -9,11 +9,11 @@ interface Props {
   series: Required<Series>;
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
-  spline: boolean;
+  hasSpline: boolean;
 }
 
 export const Line = React.memo(function Shape({
-  spline,
+  hasSpline,
   series,
   xScale,
   yScale,
@@ -22,7 +22,7 @@ export const Line = React.memo(function Shape({
     .x((_, index) => xScale(index))
     .y(({rawValue}) => yScale(rawValue));
 
-  if (spline) {
+  if (hasSpline) {
     lineGenerator.curve(curveMonotoneX);
   }
 

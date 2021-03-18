@@ -15,16 +15,16 @@ export function Series({
   xScale,
   yScale,
   series,
-  isAnimated = false,
+  isAnimated,
   height,
-  spline,
+  hasSpline,
 }: {
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
   series: SingleSeries;
   isAnimated: boolean;
   height: number;
-  spline: boolean;
+  hasSpline: boolean;
 }) {
   const {prefersReducedMotion} = usePrefersReducedMotion();
   const {
@@ -43,7 +43,7 @@ export function Series({
     .y0(height)
     .y1(({y}) => yScale(y));
 
-  if (spline) {
+  if (hasSpline) {
     lineGenerator.curve(curveMonotoneX);
     areaGenerator.curve(curveMonotoneX);
   }

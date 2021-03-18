@@ -272,7 +272,7 @@ This accepts a function that is called to render the tooltip content. By default
 
 If provided, renders a `<SkipLink/>` button with the string. Use this for charts with large data sets, so keyboard users can skip all the tabbable data points in the chart.
 
-#### spline
+#### hasSpline
 
 | type      | default |
 | --------- | ------- |

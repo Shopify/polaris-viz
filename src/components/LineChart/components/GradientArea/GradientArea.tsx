@@ -12,10 +12,10 @@ interface Props {
   series: Series;
   yScale: ScaleLinear<number, number>;
   xScale: ScaleLinear<number, number>;
-  spline: boolean;
+  hasSpline: boolean;
 }
 
-export function GradientArea({series, yScale, xScale, spline}: Props) {
+export function GradientArea({series, yScale, xScale, hasSpline}: Props) {
   const id = useMemo(() => uniqueId('gradient'), []);
   const {data, color} = series;
 
@@ -24,7 +24,7 @@ export function GradientArea({series, yScale, xScale, spline}: Props) {
     .y0(yScale(0))
     .y1(({rawValue}: {rawValue: number}) => yScale(rawValue));
 
-  if (spline) {
+  if (hasSpline) {
     areaGenerator.curve(curveMonotoneX);
   }
 

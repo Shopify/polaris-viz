@@ -134,7 +134,7 @@ Visually hidden text for screen readers.
 
 Determines whether to animate the chart on state changes.
 
-#### spline
+#### hasSpline
 
 | type      | default |
 | --------- | ------- |

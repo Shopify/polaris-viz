@@ -18,7 +18,7 @@ export interface LineChartProps {
   formatYAxisLabel?: NumberLabelFormatter;
   renderTooltipContent?: (data: RenderTooltipContentData) => React.ReactNode;
   skipLinkText?: string;
-  spline?: boolean;
+  hasSpline?: boolean;
 }
 
 export function LineChart({
@@ -29,7 +29,7 @@ export function LineChart({
   hideXAxisLabels = false,
   renderTooltipContent,
   skipLinkText,
-  spline = false,
+  hasSpline = false,
 }: LineChartProps) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -94,7 +94,7 @@ export function LineChart({
             formatYAxisLabel={formatYAxisLabel}
             dimensions={chartDimensions}
             hideXAxisLabels={hideXAxisLabels}
-            spline={spline}
+            hasSpline={hasSpline}
             renderTooltipContent={
               renderTooltipContent != null
                 ? renderTooltipContent
