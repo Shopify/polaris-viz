@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.6.2] - 2021-03-19
+
+### Changed
+
+- Updated Polaris Tokens dependency
+
 ## [0.6.1] - 2021-03-16
 
 ### Fixed
