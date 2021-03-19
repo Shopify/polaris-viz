@@ -30,6 +30,48 @@ describe('<StackedBarGroup/>', () => {
     colors: ['primary', 'secondary'] as Color[],
     highlightColors: ['primaryProminent', 'secondaryProminent'] as Color[],
     activeBarGroup: null,
+    onFocus: jest.fn(),
+    accessibilityData: [
+      {
+        title: 'title1',
+        data: [
+          {
+            label: 'label',
+            value: 'value',
+          },
+          {
+            label: 'label2',
+            value: 'value2',
+          },
+        ],
+      },
+      {
+        title: 'title2',
+        data: [
+          {
+            label: 'label',
+            value: 'value',
+          },
+          {
+            label: 'label2',
+            value: 'value2',
+          },
+        ],
+      },
+      {
+        title: 'title3',
+        data: [
+          {
+            label: 'label',
+            value: 'value',
+          },
+          {
+            label: 'label2',
+            value: 'value2',
+          },
+        ],
+      },
+    ],
   };
 
   it('renders a rect for each data item', () => {

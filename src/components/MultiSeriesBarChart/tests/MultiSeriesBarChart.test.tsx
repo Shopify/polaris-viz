@@ -21,18 +21,6 @@ describe('<MultiSeriesBarChart />', () => {
     labels: ['Something', 'Another', 'Thing'],
   };
 
-  it('renders accessibility props', () => {
-    const label = 'A bar chart showing sales data';
-    const multiSeriesBarChart = mount(
-      <MultiSeriesBarChart {...mockProps} accessibilityLabel={label} />,
-    );
-
-    expect(multiSeriesBarChart).toContainReactComponent('div', {
-      'aria-label': label,
-      role: 'img',
-    });
-  });
-
   it('renders a <Chart />', () => {
     const multiSeriesBarChart = mount(<MultiSeriesBarChart {...mockProps} />);
 

@@ -1,9 +1,10 @@
 import React, {useState, useLayoutEffect, useRef} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 
+import {SkipLink} from '../SkipLink';
 import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 import {TooltipContent} from '../TooltipContent';
-import {getDefaultColor} from '../../utilities';
+import {getDefaultColor, uniqueId} from '../../utilities';
 
 import {Chart} from './Chart';
 import {Series, RenderTooltipContentData} from './types';
@@ -12,11 +13,11 @@ export interface MultiSeriesBarChartProps {
   series: Series[];
   labels: string[];
   timeSeries?: boolean;
-  accessibilityLabel?: string;
   formatXAxisLabel?: StringLabelFormatter;
   formatYAxisLabel?: NumberLabelFormatter;
   renderTooltipContent?(data: RenderTooltipContentData): React.ReactNode;
   isStacked?: boolean;
+  skipLinkText?: string;
 }
 
 export function MultiSeriesBarChart({
@@ -24,13 +25,14 @@ export function MultiSeriesBarChart({
   series,
   isStacked = false,
   timeSeries = false,
-  accessibilityLabel,
   formatXAxisLabel = (value) => value.toString(),
   formatYAxisLabel = (value) => value.toString(),
   renderTooltipContent,
+  skipLinkText,
 }: MultiSeriesBarChartProps) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const skipLinkAnchorId = useRef(uniqueId('multiSeriesBarChart'));
 
   const [updateDimensions] = useDebouncedCallback(() => {
     if (containerRef.current != null) {
@@ -67,27 +69,32 @@ export function MultiSeriesBarChart({
   }));
 
   return (
-    <div
-      aria-label={accessibilityLabel}
-      role="img"
-      style={{height: '100%', width: '100%'}}
-      ref={containerRef}
-    >
+    <div style={{height: '100%', width: '100%'}} ref={containerRef}>
       {chartDimensions == null ? null : (
-        <Chart
-          series={seriesWithDefaults}
-          labels={labels}
-          chartDimensions={chartDimensions}
-          formatXAxisLabel={formatXAxisLabel}
-          formatYAxisLabel={formatYAxisLabel}
-          renderTooltipContent={
-            renderTooltipContent != null
-              ? renderTooltipContent
-              : renderDefaultTooltipContent
-          }
-          timeSeries={timeSeries}
-          isStacked={isStacked}
-        />
+        <React.Fragment>
+          {skipLinkText == null || skipLinkText.length === 0 ? null : (
+            <SkipLink anchorId={skipLinkAnchorId.current}>
+              {skipLinkText}
+            </SkipLink>
+          )}
+          <Chart
+            series={seriesWithDefaults}
+            labels={labels}
+            chartDimensions={chartDimensions}
+            formatXAxisLabel={formatXAxisLabel}
+            formatYAxisLabel={formatYAxisLabel}
+            renderTooltipContent={
+              renderTooltipContent != null
+                ? renderTooltipContent
+                : renderDefaultTooltipContent
+            }
+            timeSeries={timeSeries}
+            isStacked={isStacked}
+          />
+          {skipLinkText == null || skipLinkText.length === 0 ? null : (
+            <SkipLink.Anchor id={skipLinkAnchorId.current} />
+          )}
+        </React.Fragment>
       )}
     </div>
   );

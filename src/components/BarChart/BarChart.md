@@ -77,7 +77,6 @@ The bar chart interface looks like this:
 ```typescript
 interface BarChartProps {
   data: {rawValue: number; label: string}[];
-  accessibilityLabel?: string;
   barMargin?: 'Small' | 'Medium' | 'Large' | 'None';
   color?: Color;
   formatXAxisLabel?(value: string, index?: number, data?: string[]): string;

@@ -25,6 +25,9 @@ describe('<Bar/>', () => {
     ] as Color[],
     isActive: false,
     hasActiveGroup: false,
+    onFocus: jest.fn(),
+    barGroupIndex: 0,
+    ariaLabel: 'Aria Label',
   };
 
   it('renders a rect for each data item', () => {

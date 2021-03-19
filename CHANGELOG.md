@@ -29,6 +29,11 @@
 ### Fixed
 
 - Barcharts with many bars use a better range and no longer have a tooltip bug.
+- Removed the `accessibilityLabel` prop from `<MultiSeriesBarChart/>` in favour of a more complete accessibility approach
+
+### Added
+
+- `skipLinkText` to `<MultiSeriesBarChart/>`
 
 ## [0.5.3] - 2021-03-10
 
