@@ -1,8 +1,13 @@
 import React, {useMemo} from 'react';
 import {ScaleLinear} from 'd3-scale';
-import {area, curveMonotoneX} from 'd3-shape';
+import {area} from 'd3-shape';
 
-import {uniqueId, getColorValue, rgbToRgba} from '../../../../utilities';
+import {
+  uniqueId,
+  getColorValue,
+  rgbToRgba,
+  CustomCurve,
+} from '../../../../utilities';
 import {Data} from '../../../../types';
 import {Series} from '../../types';
 
@@ -25,7 +30,7 @@ export function GradientArea({series, yScale, xScale, hasSpline}: Props) {
     .y1(({rawValue}: {rawValue: number}) => yScale(rawValue));
 
   if (hasSpline) {
-    areaGenerator.curve(curveMonotoneX);
+    areaGenerator.curve((context) => new CustomCurve(context));
   }
 
   const areaShape = areaGenerator(data);

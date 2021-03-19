@@ -1,6 +1,7 @@
 export {eventPoint} from './event-point';
 export {getTextWidth} from './get-text-width';
 export {clamp} from './clamp';
+export {CustomCurve} from './CustomCurve';
 export {getColorValue} from './get-color-value';
 export {uniqueId} from './unique-id';
 export {getDefaultColor} from './get-default-color';

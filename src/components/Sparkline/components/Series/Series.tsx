@@ -1,8 +1,13 @@
 import React, {useMemo} from 'react';
 import {ScaleLinear} from 'd3-scale';
-import {area, curveMonotoneX} from 'd3-shape';
+import {area} from 'd3-shape';
 
-import {getColorValue, uniqueId, rgbToRgba} from '../../../../utilities';
+import {
+  getColorValue,
+  uniqueId,
+  rgbToRgba,
+  CustomCurve,
+} from '../../../../utilities';
 import {usePrefersReducedMotion} from '../../../../hooks';
 import {SingleSeries, Coordinates} from '../../Sparkline';
 import {LinearGradient} from '../LinearGradient';
@@ -44,8 +49,8 @@ export function Series({
     .y1(({y}) => yScale(y));
 
   if (hasSpline) {
-    lineGenerator.curve(curveMonotoneX);
-    areaGenerator.curve(curveMonotoneX);
+    lineGenerator.curve((context) => new CustomCurve(context));
+    areaGenerator.curve((context) => new CustomCurve(context));
   }
 
   const lineShape = lineGenerator(data);

@@ -1,8 +1,8 @@
 import React from 'react';
-import {line, curveMonotoneX} from 'd3-shape';
+import {line} from 'd3-shape';
 import {ScaleLinear} from 'd3-scale';
 
-import {getColorValue} from '../../../../utilities';
+import {getColorValue, CustomCurve} from '../../../../utilities';
 import {Series} from '../../types';
 
 interface Props {
@@ -23,7 +23,7 @@ export const Line = React.memo(function Shape({
     .y(({rawValue}) => yScale(rawValue));
 
   if (hasSpline) {
-    lineGenerator.curve(curveMonotoneX);
+    lineGenerator.curve((context) => new CustomCurve(context));
   }
 
   const path = lineGenerator(series.data);
