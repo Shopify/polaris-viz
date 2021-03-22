@@ -35,6 +35,7 @@ interface Props {
   dimensions: DOMRect;
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
   hideXAxisLabels: boolean;
+  hasSpline: boolean;
 }
 
 export function Chart({
@@ -45,6 +46,7 @@ export function Chart({
   formatYAxisLabel,
   renderTooltipContent,
   hideXAxisLabels,
+  hasSpline,
 }: Props) {
   const [tooltipDetails, setTooltipDetails] = useState<ActiveTooltip | null>(
     null,
@@ -254,7 +256,12 @@ export function Chart({
 
             return (
               <React.Fragment key={`${name}-${index}`}>
-                <Line series={singleSeries} xScale={xScale} yScale={yScale} />
+                <Line
+                  series={singleSeries}
+                  xScale={xScale}
+                  yScale={yScale}
+                  hasSpline={hasSpline}
+                />
 
                 {data.map(({rawValue}, dataIndex) => {
                   const activeIndex =
@@ -280,6 +287,7 @@ export function Chart({
                     series={singleSeries}
                     yScale={yScale}
                     xScale={xScale}
+                    hasSpline={hasSpline}
                   />
                 ) : null}
               </React.Fragment>

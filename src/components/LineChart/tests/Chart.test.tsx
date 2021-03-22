@@ -55,6 +55,7 @@ const mockProps = {
   formatYAxisLabel: jest.fn((value) => value),
   renderTooltipContent: jest.fn(() => <p>Mock Tooltip</p>),
   hideXAxisLabels: false,
+  hasSpline: false,
 };
 
 describe('<Chart />', () => {

@@ -1,9 +1,22 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
+import {area} from 'd3-shape';
 
 import {Series} from '../Series';
 import {LinearGradient} from '../../LinearGradient';
+
+jest.mock('d3-shape', () => ({
+  area: jest.fn(() => {
+    const shape = (value: any) => value;
+    shape.x = () => shape;
+    shape.y = () => shape;
+    shape.y0 = () => shape;
+    shape.y1 = () => shape;
+    shape.curve = () => shape;
+    return shape;
+  }),
+}));
 
 const mockSeries = {
   color: 'colorRed' as any,
@@ -29,6 +42,7 @@ const mockProps = {
   series: mockSeries,
   isAnimated: false,
   height: 250,
+  hasSpline: false,
 };
 
 jest.mock('utilities/unique-id', () => ({
@@ -111,5 +125,26 @@ describe('Series', () => {
     );
 
     expect(actual).toContainReactComponent(LinearGradient);
+  });
+
+  it('calls the d3 curve method when hasSpline is true', () => {
+    const curveSpy = jest.fn();
+    (area as jest.Mock).mockImplementationOnce(() => {
+      const shape = (value: any) => value;
+      shape.x = () => shape;
+      shape.y = () => shape;
+      shape.y0 = () => shape;
+      shape.y1 = () => shape;
+      shape.curve = curveSpy;
+      return shape;
+    });
+
+    mount(
+      <svg>
+        <Series {...mockProps} hasSpline />
+      </svg>,
+    );
+
+    expect(curveSpy).toHaveBeenCalled();
   });
 });
