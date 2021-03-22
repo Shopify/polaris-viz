@@ -169,3 +169,11 @@ The bar fill color when you hover over a bar in the chart. This accepts any [Pol
 | `boolean` | `false` |
 
 This indicates to the chart if the data provide is time series data. If `true`, the x-axis will display fewer labels as needed according to the data.
+
+#### hasRoundedCorners
+
+| type      | default |
+| --------- | ------- |
+| `boolean` | `false` |
+
+Rounds the top corners of each bar, in the case of positive numbers. Rounds the bottom corners for negatives.

@@ -6,10 +6,10 @@ import {eventPoint, getTextWidth, getBarXAxisDetails} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {BarChartXAxis} from '../BarChartXAxis';
 import {TooltipContainer} from '../TooltipContainer';
+import {Bar} from '../Bar';
 import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
 import {RenderTooltipContentData} from './types';
-import {Bar} from './components';
 import {useYScale, useXScale} from './hooks';
 import {
   MARGIN,
@@ -30,6 +30,7 @@ interface Props {
   formatYAxisLabel: NumberLabelFormatter;
   timeSeries: boolean;
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
+  hasRoundedCorners: boolean;
 }
 
 export function Chart({
@@ -42,6 +43,7 @@ export function Chart({
   formatYAxisLabel,
   timeSeries,
   renderTooltipContent,
+  hasRoundedCorners,
 }: Props) {
   const [activeBar, setActiveBar] = useState<number | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState<{
@@ -196,6 +198,9 @@ export function Chart({
                   onFocus={handleFocus}
                   index={index}
                   ariaLabel={ariaLabel}
+                  tabIndex={0}
+                  role="img"
+                  hasRoundedCorners={hasRoundedCorners}
                 />
               </g>
             );

@@ -29,6 +29,7 @@ interface Props {
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
   timeSeries: boolean;
   isStacked: boolean;
+  hasRoundedCorners: boolean;
 }
 
 export function Chart({
@@ -40,6 +41,7 @@ export function Chart({
   renderTooltipContent,
   timeSeries,
   isStacked,
+  hasRoundedCorners,
 }: Props) {
   const [activeBarGroup, setActiveBarGroup] = useState<number | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState<{
@@ -251,6 +253,7 @@ export function Chart({
                     onFocus={handleFocus}
                     barGroupIndex={index}
                     ariaLabel={ariaLabel}
+                    hasRoundedCorners={hasRoundedCorners}
                   />
                 );
               })}

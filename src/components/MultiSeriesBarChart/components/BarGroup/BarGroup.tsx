@@ -2,9 +2,8 @@ import React from 'react';
 import {ScaleLinear} from 'd3-scale';
 import {Color} from 'types';
 
-import {getColorValue} from '../../../../utilities';
-import {MIN_BAR_HEIGHT, BAR_SPACING} from '../../constants';
-import styles from '../../shared.scss';
+import {Bar} from '../../../Bar';
+import {BAR_SPACING} from '../../constants';
 
 interface Props {
   x: number;
@@ -17,6 +16,7 @@ interface Props {
   barGroupIndex: number;
   ariaLabel: string;
   onFocus: (index: number) => void;
+  hasRoundedCorners: boolean;
 }
 
 export function BarGroup({
@@ -30,27 +30,13 @@ export function BarGroup({
   onFocus,
   barGroupIndex,
   ariaLabel,
+  hasRoundedCorners,
 }: Props) {
   const barWidth = width / data.length - BAR_SPACING;
 
   return (
     <React.Fragment>
       {data.map((value, index) => {
-        const rawHeight = Math.abs(yScale(value) - yScale(0));
-        const needsMinHeight = rawHeight < MIN_BAR_HEIGHT && rawHeight !== 0;
-        const height = needsMinHeight ? MIN_BAR_HEIGHT : rawHeight;
-        const modifiedYPosition =
-          value > 0 ? yScale(0) - MIN_BAR_HEIGHT : yScale(0);
-        const yPosition = needsMinHeight
-          ? modifiedYPosition
-          : yScale(Math.max(0, value));
-
-        const xPosition = x + (barWidth + BAR_SPACING) * index;
-
-        const fillColor = isActive
-          ? getColorValue(highlightColors[index])
-          : getColorValue(colors[index]);
-
         const handleFocus = () => {
           onFocus(barGroupIndex);
         };
@@ -63,18 +49,20 @@ export function BarGroup({
             aria-hidden={!ariaEnabledBar}
             key={index}
           >
-            <rect
-              className={styles.Bar}
-              key={index}
-              x={xPosition}
-              y={yPosition}
-              fill={fillColor}
+            <Bar
+              color={colors[index]}
+              highlightColor={highlightColors[index]}
+              isSelected={isActive}
+              x={x + (barWidth + BAR_SPACING) * index}
+              yScale={yScale}
+              rawValue={value}
               width={barWidth}
-              height={height}
-              tabIndex={ariaEnabledBar ? 0 : -1}
+              index={index}
               onFocus={handleFocus}
+              tabIndex={ariaEnabledBar ? 0 : -1}
               role={ariaEnabledBar ? 'img' : undefined}
-              aria-label={ariaEnabledBar ? ariaLabel : undefined}
+              ariaLabel={ariaEnabledBar ? ariaLabel : undefined}
+              hasRoundedCorners={hasRoundedCorners}
             />
           </g>
         );

@@ -22,6 +22,8 @@ export const MAX_TEXT_BOX_HEIGHT = LINE_HEIGHT * 3;
 export const SMALL_LABEL_WIDTH = 50;
 export const LABEL_SPACE_MINUS_FIRST_AND_LAST = 0.6;
 export const DEFAULT_MAX_Y = 10;
+export const ROUNDED_BAR_RADIUS = 3;
+export const MIN_BAR_HEIGHT = 5;
 
 export enum Margin {
   Top = SPACING_TIGHT,

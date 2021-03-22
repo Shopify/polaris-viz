@@ -3,8 +3,9 @@ import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
 import {Color} from 'types';
 
-import {MIN_BAR_HEIGHT, BAR_SPACING} from '../../../constants';
+import {BAR_SPACING} from '../../../constants';
 import {BarGroup} from '../BarGroup';
+import {Bar} from '../../../../../components/Bar';
 
 jest.mock('d3-scale', () => ({
   scaleLinear: jest.fn(() => jest.fn((value) => value)),
@@ -28,19 +29,20 @@ describe('<Bar/>', () => {
     onFocus: jest.fn(),
     barGroupIndex: 0,
     ariaLabel: 'Aria Label',
+    hasRoundedCorners: false,
   };
 
-  it('renders a rect for each data item', () => {
+  it('renders a <Bar /> for each data item', () => {
     const barGroup = mount(
       <svg>
         <BarGroup {...mockProps} />,
       </svg>,
     );
 
-    expect(barGroup).toContainReactComponentTimes('rect', 4);
+    expect(barGroup).toContainReactComponentTimes(Bar, 4);
   });
 
-  it("gives each bar a width that together totals the group's full width, minus spacing", () => {
+  it("gives each <Bar /> a width that together totals the group's full width, minus spacing", () => {
     const barGroup = mount(
       <svg>
         <BarGroup {...mockProps} />,
@@ -48,7 +50,7 @@ describe('<Bar/>', () => {
     );
 
     const bars = barGroup
-      .findAll('rect')
+      .findAll(Bar)
       .filter(
         ({props}) =>
           props.width === mockProps.width / mockProps.data.length - BAR_SPACING,
@@ -57,78 +59,58 @@ describe('<Bar/>', () => {
     expect(bars).toHaveLength(4);
   });
 
-  it('gives bars a min height if required', () => {
-    const barGroup = mount(
-      <svg>
-        <BarGroup {...mockProps} data={[1]} />,
-      </svg>,
-    );
-
-    expect(barGroup).toContainReactComponent('rect', {height: MIN_BAR_HEIGHT});
-  });
-
-  it('does not give 0 values a min height', () => {
-    const barGroup = mount(
-      <svg>
-        <BarGroup {...mockProps} data={[0]} />,
-      </svg>,
-    );
-
-    expect(barGroup).toContainReactComponent('rect', {height: 0});
-  });
-
-  it('gives each bar a spaced out X position', () => {
+  it('gives each <Bar /> a spaced out X position', () => {
     const barGroup = mount(
       <svg>
         <BarGroup {...mockProps} />,
       </svg>,
     );
 
-    expect(barGroup).toContainReactComponent('rect', {x: 10});
-    expect(barGroup).toContainReactComponent('rect', {x: 35});
-    expect(barGroup).toContainReactComponent('rect', {x: 60});
-    expect(barGroup).toContainReactComponent('rect', {x: 85});
+    expect(barGroup).toContainReactComponent(Bar, {x: 10});
+    expect(barGroup).toContainReactComponent(Bar, {x: 35});
+    expect(barGroup).toContainReactComponent(Bar, {x: 60});
+    expect(barGroup).toContainReactComponent(Bar, {x: 85});
   });
 
-  it('gives each bar a fill color', () => {
+  it('gives each <Bar /> a fill color', () => {
     const barGroup = mount(
       <svg>
         <BarGroup {...mockProps} />,
       </svg>,
     );
 
-    expect(barGroup).toContainReactComponent('rect', {
-      fill: 'rgb(156, 106, 222)',
+    expect(barGroup).toContainReactComponent(Bar, {
+      color: 'colorPurple',
     });
-    expect(barGroup).toContainReactComponent('rect', {
-      fill: 'rgb(71, 193, 191)',
+    expect(barGroup).toContainReactComponent(Bar, {
+      color: 'colorTeal',
     });
-    expect(barGroup).toContainReactComponent('rect', {
-      fill: 'rgb(222, 54, 24)',
+    expect(barGroup).toContainReactComponent(Bar, {
+      color: 'colorRed',
     });
-    expect(barGroup).toContainReactComponent('rect', {
-      fill: 'rgb(244, 147, 66)',
+    expect(barGroup).toContainReactComponent(Bar, {
+      color: 'colorOrange',
     });
   });
 
-  it('renders bar with highlightColor value when isActive prop is true', () => {
+  it('passes down highlightColor', () => {
     const barGroup = mount(
       <svg>
         <BarGroup {...mockProps} isActive />,
       </svg>,
     );
 
-    expect(barGroup).toContainReactComponent('rect', {
-      fill: 'rgb(0,161,159)',
+    expect(barGroup).toContainReactComponent(Bar, {
+      highlightColor: 'primary',
     });
-    expect(barGroup).toContainReactComponent('rect', {
-      fill: 'rgb(41,35,112)',
+    expect(barGroup).toContainReactComponent(Bar, {
+      highlightColor: 'secondary',
     });
-    expect(barGroup).toContainReactComponent('rect', {
-      fill: 'rgb(13,140,237)',
+    expect(barGroup).toContainReactComponent(Bar, {
+      highlightColor: 'tertiary',
     });
-    expect(barGroup).toContainReactComponent('rect', {
-      fill: 'rgb(157,53,193)',
+    expect(barGroup).toContainReactComponent(Bar, {
+      highlightColor: 'quaternary',
     });
   });
 });

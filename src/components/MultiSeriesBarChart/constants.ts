@@ -1,4 +1,3 @@
-export const MIN_BAR_HEIGHT = 5;
 export const MARGIN = {Top: 5, Right: 20, Bottom: 12, Left: 0};
 export const LINE_HEIGHT = 12;
 export const TICK_SIZE = 6;
