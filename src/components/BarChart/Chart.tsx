@@ -148,6 +148,7 @@ export function Chart({
         onTouchMove={handleInteraction}
         onMouseLeave={() => setActiveBar(null)}
         onTouchEnd={() => setActiveBar(null)}
+        role="list"
       >
         <g
           transform={`translate(${axisMargin},${chartDimensions.height -
@@ -175,7 +176,7 @@ export function Chart({
           />
         </g>
 
-        <g transform={`translate(${axisMargin},${MARGIN.Top})`} role="list">
+        <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
           {data.map(({rawValue}, index) => {
             const xPosition = xScale(index.toString());
             const ariaLabel = `${formatXAxisLabel(
