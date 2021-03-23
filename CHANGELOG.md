@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.7.0] - 2021-03-23
+
+### Added
+
+- `hasSpline` option to the <LineChart /> and <Sparkline />
+- `skipLinkText` to `<MultiSeriesBarChart/>`
+
+### Removed
+
+- The `accessibilityLabel` prop from `<MultiSeriesBarChart/>` in favour of a more complete accessibility approach
+
 ## [0.6.2] - 2021-03-19
 
 ### Changed
@@ -29,11 +40,6 @@
 ### Fixed
 
 - Barcharts with many bars use a better range and no longer have a tooltip bug.
-- Removed the `accessibilityLabel` prop from `<MultiSeriesBarChart/>` in favour of a more complete accessibility approach
-
-### Added
-
-- `skipLinkText` to `<MultiSeriesBarChart/>`
 
 ## [0.5.3] - 2021-03-10
 
