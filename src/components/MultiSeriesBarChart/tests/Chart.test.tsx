@@ -68,6 +68,7 @@ describe('Chart />', () => {
     formatYAxisLabel: (value: number) => value.toString(),
     timeSeries: false,
     renderTooltipContent,
+    hasRoundedCorners: false,
   };
 
   it('renders an SVG element', () => {

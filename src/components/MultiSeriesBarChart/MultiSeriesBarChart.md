@@ -267,3 +267,11 @@ This changes the grouping of the bars. If `true` the bar groups will stack verti
 | `(data: RenderTooltipContentData): React.ReactNode;` |
 
 This accepts a function that is called to render the tooltip content. By default it calls `formatYAxisLabel` to format the the tooltip value and passes it to `<TooltipContent />`. For more information about tooltip content, read the [tooltip content documentation](/src/components/TooltipContent/TooltipContent.md).
+
+#### hasRoundedCorners
+
+| type      | default |
+| --------- | ------- |
+| `boolean` | `false` |
+
+Rounds the top corners of each bar, in the case of positive numbers. Rounds the bottom corners for negatives. Note: this prop only has an impact on grouped bars, not stacked ones.

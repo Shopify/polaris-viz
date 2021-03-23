@@ -18,6 +18,7 @@ export interface MultiSeriesBarChartProps {
   renderTooltipContent?(data: RenderTooltipContentData): React.ReactNode;
   isStacked?: boolean;
   skipLinkText?: string;
+  hasRoundedCorners?: boolean;
 }
 
 export function MultiSeriesBarChart({
@@ -25,6 +26,7 @@ export function MultiSeriesBarChart({
   series,
   isStacked = false,
   timeSeries = false,
+  hasRoundedCorners = false,
   formatXAxisLabel = (value) => value.toString(),
   formatYAxisLabel = (value) => value.toString(),
   renderTooltipContent,
@@ -90,6 +92,7 @@ export function MultiSeriesBarChart({
             }
             timeSeries={timeSeries}
             isStacked={isStacked}
+            hasRoundedCorners={hasRoundedCorners}
           />
           {skipLinkText == null || skipLinkText.length === 0 ? null : (
             <SkipLink.Anchor id={skipLinkAnchorId.current} />

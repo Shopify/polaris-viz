@@ -1,10 +1,9 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {Color} from 'types';
-import {YAxis, TooltipContainer, BarChartXAxis} from 'components';
+import {YAxis, TooltipContainer, BarChartXAxis, Bar} from 'components';
 
 import {Chart} from '../Chart';
-import {Bar} from '../components';
 
 (global as any).DOMRect = class DOMRect {
   width = 500;
@@ -41,6 +40,7 @@ describe('Chart />', () => {
     barMargin: 0,
     timeSeries: false,
     renderTooltipContent: jest.fn(() => <p>Mock Tooltip</p>),
+    hasRoundedCorners: false,
   };
 
   it('renders an SVG element', () => {
