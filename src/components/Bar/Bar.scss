@@ -1,0 +1,5 @@
+@import '../../styles/common';
+
+.BarNoOutline {
+  @include no-outline;
+}

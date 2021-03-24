@@ -1,6 +1,7 @@
 import React from 'react';
 import {ScaleLinear, ScaleBand} from 'd3-scale';
 import {Color} from 'types';
+import {classNames} from '@shopify/css-utilities';
 
 import {formatAriaLabel} from '../../utilities';
 import {StackSeries} from '../../types';
@@ -58,6 +59,9 @@ export function StackedBarGroup({
 
         const ariaEnabledBar = groupIndex === 0;
 
+        const nonUniqueHighlightColor =
+          colors[groupIndex] === highlightColors[groupIndex];
+
         return (
           <g
             role={groupIndex === 0 ? 'listitem' : undefined}
@@ -65,7 +69,10 @@ export function StackedBarGroup({
             key={barIndex}
           >
             <rect
-              className={styles.Bar}
+              className={classNames(
+                styles.Bar,
+                nonUniqueHighlightColor && styles.StackNoOutline,
+              )}
               key={barIndex}
               x={xPosition}
               y={yScale(end)}
