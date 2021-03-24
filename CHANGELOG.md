@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.7.1] - 2021-03-24
+
+## Added
+
+- Rounded corners option to bar chart components
+
+### Fixed
+
+- Improved responsiveness of <LineChart /> on touch devices
+- Stopped <BarChart /> being announced as unlabelled image on screenreaders
+
 ## [0.7.0] - 2021-03-23
 
 ### Added
