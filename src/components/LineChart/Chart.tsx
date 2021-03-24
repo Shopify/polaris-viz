@@ -155,44 +155,53 @@ export function Chart({
     return null;
   }
 
-  const handleInteraction = throttle(
+  const handleMouseInteraction = throttle(
     (
       event:
         | React.MouseEvent<SVGSVGElement>
         | React.TouchEvent<SVGSVGElement>
         | null,
     ) => {
-      if (axisMargin == null || xScale == null) {
-        return;
-      }
-
-      if (event === null) {
-        setTooltipDetails(null);
-        return;
-      }
-
-      const point = eventPoint(event);
-
-      if (point == null) {
-        return;
-      }
-
-      const {svgX, svgY} = point;
-      if (svgX < axisMargin) {
-        return;
-      }
-
-      const closestIndex = Math.round(xScale.invert(svgX - axisMargin));
-
-      setTooltipDetails({
-        x: svgX,
-        y: svgY,
-        index: Math.min(longestSeriesLength, closestIndex),
-      });
+      handleInteraction(event);
     },
     50,
     {leading: true},
   );
+
+  function handleInteraction(
+    event:
+      | React.MouseEvent<SVGSVGElement>
+      | React.TouchEvent<SVGSVGElement>
+      | null,
+  ) {
+    if (axisMargin == null || xScale == null) {
+      return;
+    }
+
+    if (event === null) {
+      setTooltipDetails(null);
+      return;
+    }
+
+    const point = eventPoint(event);
+
+    if (point == null) {
+      return;
+    }
+
+    const {svgX, svgY} = point;
+    if (svgX < axisMargin) {
+      return;
+    }
+
+    const closestIndex = Math.round(xScale.invert(svgX - axisMargin));
+
+    setTooltipDetails({
+      x: svgX,
+      y: svgY,
+      index: Math.min(longestSeriesLength, closestIndex),
+    });
+  }
 
   return (
     <div className={styles.Container}>
@@ -202,14 +211,14 @@ export function Chart({
         height="100%"
         onMouseMove={(event) => {
           event.persist();
-          handleInteraction(event);
+          handleMouseInteraction(event);
         }}
         onTouchMove={(event) => {
           event.persist();
           handleInteraction(event);
         }}
         onTouchEnd={() => handleInteraction(null)}
-        onMouseLeave={() => handleInteraction(null)}
+        onMouseLeave={() => handleMouseInteraction(null)}
       >
         <g
           transform={`translate(${axisMargin},${dimensions.height -
