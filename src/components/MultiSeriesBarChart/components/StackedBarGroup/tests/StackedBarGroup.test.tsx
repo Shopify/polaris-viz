@@ -3,6 +3,7 @@ import {mount} from '@shopify/react-testing';
 import {scaleBand, scaleLinear} from 'd3-scale';
 import {Color} from 'types';
 import {StackSeries} from 'components/MultiSeriesBarChart/types';
+import {Bar} from 'components';
 
 import {StackedBarGroup} from '../StackedBarGroup';
 
@@ -74,14 +75,14 @@ describe('<StackedBarGroup/>', () => {
     ],
   };
 
-  it('renders a rect for each data item', () => {
+  it('renders a <Bar /> for each data item', () => {
     const wrapper = mount(
       <svg>
         <StackedBarGroup {...mockProps} />
       </svg>,
     );
 
-    expect(wrapper).toContainReactComponentTimes('rect', mockProps.data.length);
+    expect(wrapper).toContainReactComponentTimes(Bar, mockProps.data.length);
   });
 
   it('renders bar stack with colors from series props', () => {
@@ -91,35 +92,20 @@ describe('<StackedBarGroup/>', () => {
       </svg>,
     );
 
-    expect(wrapper).toContainReactComponent('rect', {
-      fill: 'rgb(41,35,112)',
+    expect(wrapper).toContainReactComponent(Bar, {
+      color: 'secondary',
     });
   });
 
-  it('renders bar stack with highlightColors from series prop when it is the activeBarGroup', () => {
+  it('renders bar stack with highlightColors', () => {
     const wrapper = mount(
       <svg>
         <StackedBarGroup {...mockProps} activeBarGroup={1} />
       </svg>,
     );
 
-    expect(wrapper).toContainReactComponent('rect', {
-      fill: 'rgb(9, 6, 37)',
-    });
-  });
-
-  it('renders a bar with height', () => {
-    const wrapper = mount(
-      <svg>
-        <StackedBarGroup {...mockProps} />
-      </svg>,
-    );
-
-    const rects = wrapper.findAll('rect');
-    const firstRect = rects[0];
-
-    expect(firstRect).toHaveReactProps({
-      height: 1,
+    expect(wrapper).toContainReactComponent(Bar, {
+      highlightColor: 'secondaryProminent',
     });
   });
 });

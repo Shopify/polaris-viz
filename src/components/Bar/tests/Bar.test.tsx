@@ -1,12 +1,17 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleBand} from 'd3-scale';
+import {LinearGradient} from 'components';
 
 import {MIN_BAR_HEIGHT} from '../../../constants';
 import {Bar} from '../Bar';
 
 jest.mock('d3-scale', () => ({
   scaleBand: jest.fn(() => jest.fn((value) => value)),
+}));
+
+jest.mock('utilities/unique-id', () => ({
+  uniqueId: jest.fn(() => 'lineargradient-1'),
 }));
 
 describe('<Bar/>', () => {
@@ -39,7 +44,7 @@ describe('<Bar/>', () => {
     V0
     a0 0 0 010-0
     Z`,
-      fill: 'rgba(156, 106, 222, 1)',
+      fill: 'rgb(156, 106, 222)',
       style: {transform: 'translate(0px, -1000px) rotate(0deg)'},
     });
   });
@@ -74,7 +79,7 @@ describe('<Bar/>', () => {
     V3
     a3 3 0 013-3
     Z`,
-      fill: 'rgba(156, 106, 222, 1)',
+      fill: 'rgb(156, 106, 222)',
       style: {transform: 'translate(0px, -1000px) rotate(0deg)'},
     });
   });
@@ -108,7 +113,7 @@ describe('<Bar/>', () => {
     V0
     a0 0 0 010-0
     Z`,
-      fill: 'rgba(156, 106, 222, 1)',
+      fill: 'rgb(156, 106, 222)',
       style: {transform: `translate(0px, -${MIN_BAR_HEIGHT}px) rotate(0deg)`},
     });
   });
@@ -135,7 +140,7 @@ describe('<Bar/>', () => {
     expect(bar).toContainReactComponent('path', {
       // eslint-disable-next-line id-length
       d: ``,
-      fill: 'rgba(156, 106, 222, 1)',
+      fill: 'rgb(156, 106, 222)',
       style: {transform: `translate(0px, 0px) rotate(0deg)`},
     });
   });
@@ -160,7 +165,34 @@ describe('<Bar/>', () => {
     );
 
     expect(bar).toContainReactComponent('path', {
-      fill: 'rgba(156, 106, 222, 1)',
+      fill: 'rgb(156, 106, 222)',
+    });
+  });
+
+  it('renders a <LinearGradient /> if a gradient value is used', () => {
+    const bar = mount(
+      <svg>
+        <Bar
+          color="primaryGradient"
+          highlightColor="colorRed"
+          isSelected={false}
+          x={0}
+          rawValue={1}
+          width={100}
+          yScale={scaleBand() as any}
+          index={1}
+          onFocus={jest.fn()}
+          tabIndex={0}
+        />
+        ,
+      </svg>,
+    );
+
+    expect(bar).toContainReactComponent(LinearGradient, {
+      endColor: 'rgb(0,161,159)',
+      id: 'lineargradient-1',
+      startColor: '#44C0BE',
+      transition: 'ease 0.3s',
     });
   });
 });

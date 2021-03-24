@@ -1,6 +1,6 @@
 import React, {useState, useLayoutEffect, useRef} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
-import {Color, Data} from 'types';
+import {Color, Data, GradientColor} from 'types';
 
 import {SkipLink} from '../SkipLink';
 import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
@@ -13,8 +13,8 @@ import {BarMargin, RenderTooltipContentData} from './types';
 export interface BarChartProps {
   data: Data[];
   barMargin?: keyof typeof BarMargin;
-  color?: Color;
-  highlightColor?: Color;
+  color?: Color | GradientColor;
+  highlightColor?: Color | GradientColor;
   formatXAxisLabel?: StringLabelFormatter;
   formatYAxisLabel?: NumberLabelFormatter;
   timeSeries?: boolean;
@@ -26,7 +26,7 @@ export interface BarChartProps {
 export function BarChart({
   data,
   color = getDefaultColor(),
-  highlightColor = getDefaultColor(),
+  highlightColor = color,
   barMargin = 'Medium',
   timeSeries = false,
   hasRoundedCorners = false,

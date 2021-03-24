@@ -11,6 +11,13 @@ describe('getColorValue', () => {
     expect(actual).toBe('rgb(0,161,159)');
   });
 
+  it('returns gradient colors', () => {
+    const actual = getColorValue('primaryGradient');
+    expect(actual).toBe(
+      'linear-gradient(180deg, rgb(0,161,159) 0%, rgb(0,161,159) 100%), rgb(0,161,159)',
+    );
+  });
+
   it('throws an error for other colors', () => {
     expect(() => {
       getColorValue('red' as any);

@@ -1,5 +1,5 @@
 import React, {useState, useMemo} from 'react';
-import {Color, Data} from 'types';
+import {Color, Data, GradientColor} from 'types';
 
 import {LINE_HEIGHT} from '../../constants';
 import {eventPoint, getTextWidth, getBarXAxisDetails} from '../../utilities';
@@ -24,8 +24,8 @@ interface Props {
   data: Data[];
   chartDimensions: DOMRect;
   barMargin: number;
-  color: Color;
-  highlightColor: Color;
+  color: Color | GradientColor;
+  highlightColor: Color | GradientColor;
   formatXAxisLabel: StringLabelFormatter;
   formatYAxisLabel: NumberLabelFormatter;
   timeSeries: boolean;

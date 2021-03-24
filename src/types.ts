@@ -90,6 +90,14 @@ export type VizPaletteColor =
   | 'positive'
   | 'negative';
 
+export type GradientColor =
+  | 'primaryGradient'
+  | 'secondaryGradient'
+  | 'tertiaryGradient'
+  | 'primaryProminentGradient'
+  | 'secondaryProminentGradient'
+  | 'tertiaryProminentGradient';
+
 export type StringLabelFormatter = (
   value: string,
   index?: number,

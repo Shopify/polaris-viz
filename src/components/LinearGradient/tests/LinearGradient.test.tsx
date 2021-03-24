@@ -56,4 +56,25 @@ describe('<LinearGradient />', () => {
       style: {stopColor: 'rgba(71, 193, 191, 0.8)'},
     });
   });
+
+  it('renders a stop with a transition if one is provided', () => {
+    const actual = mount(
+      <svg>
+        <LinearGradient
+          id="myGradient"
+          startColor="rgba(71, 193, 191, 0)"
+          endColor="rgba(71, 193, 191, 0.8)"
+          transition="a sweet transition"
+        />
+        ,
+      </svg>,
+    );
+
+    expect(actual).toContainReactComponent('stop', {
+      style: {
+        stopColor: 'rgba(71, 193, 191, 0.8)',
+        transition: 'a sweet transition',
+      },
+    });
+  });
 });
