@@ -4,7 +4,7 @@
 
 ### Added
 
-- `hasSpline` option to the <LineChart /> and <Sparkline />
+- `hasSpline` option to the `<LineChart />` and `<Sparkline />`
 - `skipLinkText` to `<MultiSeriesBarChart/>`
 
 ### Removed
