@@ -1,5 +1,7 @@
 $label-color: rgb(99, 115, 129);
 $axis-color: rgb(223, 227, 232);
+// $label-color: #8c9196;
+// $axis-color: #194685;
 
 @mixin ellipsis-overflow {
   white-space: nowrap;

@@ -76,11 +76,14 @@ export function BarChartDemo() {
       <div style={innerContainerStyle}>
         <BarChart
           data={data}
-          color="primary"
+          color="quaternaryGradient"
           formatXAxisLabel={formatXAxisLabel}
           formatYAxisLabel={formatYAxisLabel}
           renderTooltipContent={renderTooltipContent}
           skipLinkText="Skip chart content"
+          hasRoundedCorners
+          textColor="red"
+          axisColor="red"
         />
       </div>
     </div>

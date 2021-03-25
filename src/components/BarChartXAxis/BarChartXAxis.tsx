@@ -1,5 +1,4 @@
 import React from 'react';
-import {colorSky} from '@shopify/polaris-tokens';
 import {ScaleBand} from 'd3-scale';
 
 import {
@@ -28,12 +27,16 @@ export function BarChartXAxis({
   fontSize,
   showFewerLabels,
   xAxisDetails,
+  textColor,
+  axisColor,
 }: {
   xScale: ScaleBand<string>;
   labels: {value: string; xOffset: number}[];
   fontSize: number;
   showFewerLabels: boolean;
   xAxisDetails: XAxisDetails;
+  textColor?: string;
+  axisColor?: string;
 }) {
   const [xScaleMin, xScaleMax] = xScale.range();
   const {
@@ -72,7 +75,7 @@ export function BarChartXAxis({
       <path
         d={`M ${xScaleMin} ${TICK_SIZE} v ${-TICK_SIZE} H ${xScaleMax} v ${TICK_SIZE}`}
         fill="none"
-        stroke={colorSky}
+        stroke={axisColor ? axisColor : '#194685'}
       />
 
       {labels.map(({value, xOffset}, index) => {
@@ -81,7 +84,7 @@ export function BarChartXAxis({
         }
         return (
           <g key={index} transform={`translate(${xOffset}, 0)`}>
-            <line y2={TICK_SIZE} stroke={colorSky} />
+            <line y2={TICK_SIZE} stroke={axisColor ? axisColor : '#194685'} />
             <foreignObject
               width={textWidth}
               height={textHeight}
@@ -91,6 +94,7 @@ export function BarChartXAxis({
                 className={textContainerClassName}
                 style={{
                   fontSize,
+                  color: textColor,
                 }}
               >
                 {value}

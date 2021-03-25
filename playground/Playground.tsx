@@ -63,8 +63,8 @@ export default function Playground() {
   const toggleDemos = () => setShowDemos((showingDemos) => !showingDemos);
 
   return (
-    <div>
-      <h3>Playground area</h3>
+    <div style={{background: '#0E305E'}}>
+      {/* <h3>Playground area</h3>
       <NormalizedStackedBarChart
         size="large"
         // orientation="vertical"
@@ -72,7 +72,12 @@ export default function Playground() {
       />
       <br />
       <button onClick={toggleDemos}>Toggle Demos</button>
-      {showDemos && <Demos />}
+      {showDemos && <Demos />} */}
+
+      <PlaygroundDemos.LineChartDemo />
+
+      <PlaygroundDemos.BarChartDemo />
+      <PlaygroundDemos.MultiSeriesBarChartDemo />
     </div>
   );
 }

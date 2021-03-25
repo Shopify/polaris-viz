@@ -21,6 +21,8 @@ export interface BarChartProps {
   skipLinkText?: string;
   renderTooltipContent?: (data: RenderTooltipContentData) => React.ReactNode;
   hasRoundedCorners?: boolean;
+  textColor?: string;
+  axisColor?: string;
 }
 
 export function BarChart({
@@ -34,6 +36,8 @@ export function BarChart({
   formatYAxisLabel = (value) => value.toString(),
   renderTooltipContent,
   skipLinkText,
+  textColor = 'rgb(99, 115, 129)',
+  axisColor = 'rgb(223, 227, 232)',
 }: BarChartProps) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -87,6 +91,8 @@ export function BarChart({
             formatYAxisLabel={formatYAxisLabel}
             timeSeries={timeSeries}
             hasRoundedCorners={hasRoundedCorners}
+            textColor={textColor}
+            axisColor={axisColor}
             renderTooltipContent={
               renderTooltipContent != null
                 ? renderTooltipContent

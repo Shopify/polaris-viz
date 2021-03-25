@@ -19,6 +19,9 @@ export interface LineChartProps {
   renderTooltipContent?: (data: RenderTooltipContentData) => React.ReactNode;
   skipLinkText?: string;
   hasSpline?: boolean;
+  axisColor?: string;
+  textColor?: string;
+  lineWidth?: number;
 }
 
 export function LineChart({
@@ -30,6 +33,9 @@ export function LineChart({
   renderTooltipContent,
   skipLinkText,
   hasSpline = false,
+  textColor = 'rgb(99, 115, 129)',
+  axisColor = 'rgb(223, 227, 232)',
+  lineWidth = 2,
 }: LineChartProps) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -95,6 +101,9 @@ export function LineChart({
             dimensions={chartDimensions}
             hideXAxisLabels={hideXAxisLabels}
             hasSpline={hasSpline}
+            axisColor={axisColor}
+            textColor={textColor}
+            lineWidth={lineWidth}
             renderTooltipContent={
               renderTooltipContent != null
                 ? renderTooltipContent

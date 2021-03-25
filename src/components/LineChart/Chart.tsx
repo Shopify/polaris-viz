@@ -36,6 +36,9 @@ interface Props {
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
   hideXAxisLabels: boolean;
   hasSpline: boolean;
+  axisColor: string;
+  textColor: string;
+  lineWidth: number;
 }
 
 export function Chart({
@@ -47,6 +50,9 @@ export function Chart({
   renderTooltipContent,
   hideXAxisLabels,
   hasSpline,
+  axisColor,
+  textColor,
+  lineWidth,
 }: Props) {
   const [tooltipDetails, setTooltipDetails] = useState<ActiveTooltip | null>(
     null,
@@ -232,6 +238,8 @@ export function Chart({
             fontSize={fontSize}
             drawableHeight={drawableHeight}
             ariaHidden
+            axisColor={axisColor}
+            textColor={textColor}
           />
         </g>
 
@@ -240,6 +248,8 @@ export function Chart({
             ticks={ticks}
             drawableWidth={drawableWidth}
             fontSize={fontSize}
+            axisColor={axisColor}
+            textColor={textColor}
           />
         </g>
 
@@ -270,6 +280,7 @@ export function Chart({
                   xScale={xScale}
                   yScale={yScale}
                   hasSpline={hasSpline}
+                  lineWidth={lineWidth}
                 />
 
                 {data.map(({rawValue}, dataIndex) => {

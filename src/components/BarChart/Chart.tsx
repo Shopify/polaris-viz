@@ -31,6 +31,8 @@ interface Props {
   timeSeries: boolean;
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
   hasRoundedCorners: boolean;
+  textColor: string;
+  axisColor: string;
 }
 
 export function Chart({
@@ -44,6 +46,8 @@ export function Chart({
   timeSeries,
   renderTooltipContent,
   hasRoundedCorners,
+  textColor,
+  axisColor,
 }: Props) {
   const [activeBar, setActiveBar] = useState<number | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState<{
@@ -164,6 +168,8 @@ export function Chart({
             fontSize={fontSize}
             showFewerLabels={timeSeries && xAxisDetails.needsDiagonalLabels}
             xAxisDetails={xAxisDetails}
+            textColor={textColor}
+            axisColor={axisColor}
           />
         </g>
 
@@ -175,6 +181,8 @@ export function Chart({
             ticks={ticks}
             drawableWidth={drawableWidth}
             fontSize={fontSize}
+            textColor={textColor}
+            axisColor={axisColor}
           />
         </g>
 

@@ -19,6 +19,8 @@ export interface MultiSeriesBarChartProps {
   isStacked?: boolean;
   skipLinkText?: string;
   hasRoundedCorners?: boolean;
+  axisColor?: string;
+  textColor?: string;
 }
 
 export function MultiSeriesBarChart({
@@ -31,6 +33,8 @@ export function MultiSeriesBarChart({
   formatYAxisLabel = (value) => value.toString(),
   renderTooltipContent,
   skipLinkText,
+  axisColor = '',
+  textColor = '',
 }: MultiSeriesBarChartProps) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -93,6 +97,8 @@ export function MultiSeriesBarChart({
             timeSeries={timeSeries}
             isStacked={isStacked}
             hasRoundedCorners={hasRoundedCorners}
+            axisColor={axisColor}
+            textColor={textColor}
           />
           {skipLinkText == null || skipLinkText.length === 0 ? null : (
             <SkipLink.Anchor id={skipLinkAnchorId.current} />

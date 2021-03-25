@@ -16,6 +16,7 @@ export function SparklineDemo() {
       <div style={innerContainerStyle}>
         <div style={{width: 200, height: 150}}>
           <Sparkline
+            hasSpline
             isAnimated
             series={[
               {

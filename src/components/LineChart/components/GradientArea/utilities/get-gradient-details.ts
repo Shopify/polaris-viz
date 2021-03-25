@@ -1,6 +1,6 @@
 import {Data} from '../../../../../types';
 
-const HIGHEST_ALPHA = 0.25;
+const HIGHEST_ALPHA = 0.4;
 
 export function getGradientDetails(data: Data[]) {
   const max = Math.max(...data.map(({rawValue}) => rawValue), 0);

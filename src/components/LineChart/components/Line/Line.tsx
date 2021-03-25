@@ -10,6 +10,7 @@ interface Props {
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
   hasSpline: boolean;
+  lineWidth: number;
 }
 
 export const Line = React.memo(function Shape({
@@ -17,6 +18,7 @@ export const Line = React.memo(function Shape({
   series,
   xScale,
   yScale,
+  lineWidth,
 }: Props) {
   const lineGenerator = line<{rawValue: number}>()
     .x((_, index) => xScale(index))
@@ -36,12 +38,20 @@ export const Line = React.memo(function Shape({
     <path
       d={path}
       fill="none"
-      strokeWidth="2px"
+      strokeWidth={`${lineWidth}px`}
       paintOrder="stroke"
       stroke={getColorValue(series.color)}
       strokeLinejoin="round"
-      strokeLinecap="round"
       strokeDasharray={series.lineStyle === 'dashed' ? '2 4' : 'unset'}
+      {...(series.lineStyle === 'dashed'
+        ? {
+            ...{
+              strokeWidth: lineWidth,
+              strokeLinecap: 'round',
+              strokeDasharray: '0.1, 8',
+            },
+          }
+        : undefined)}
     />
   );
 });

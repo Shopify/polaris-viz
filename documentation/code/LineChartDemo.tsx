@@ -39,8 +39,9 @@ export function LineChartDemo() {
         {rawValue: 5500, label: '2020-04-13T12:00:00'},
         {rawValue: 7000, label: '2020-04-14T12:00:00'},
       ],
-      color: 'primary' as 'primary',
+      color: 'quaternary',
       lineStyle: 'solid' as 'solid',
+      showArea: true,
     },
     {
       name: 'Mar 01–Mar 14, 2020',
@@ -126,6 +127,10 @@ export function LineChartDemo() {
           formatYAxisLabel={formatYAxisLabel}
           renderTooltipContent={renderTooltipContent}
           skipLinkText="Skip line chart content"
+          hasSpline
+          axisColor="#194685"
+          textColor="#8C9196"
+          lineWidth={2}
         />
       </div>
       <Legend series={series} />

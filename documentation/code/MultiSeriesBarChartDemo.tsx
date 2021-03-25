@@ -26,7 +26,7 @@ export function MultiSeriesBarChartDemo({isStacked = false}: Props) {
 
   const series = [
     {
-      color: 'primary' as 'primary',
+      color: 'primaryGradient' as 'primary',
       highlightColor: 'primaryProminent' as 'primaryProminent',
       name: 'Breakfast',
       data: [
@@ -40,7 +40,7 @@ export function MultiSeriesBarChartDemo({isStacked = false}: Props) {
       ],
     },
     {
-      color: 'secondary' as 'secondary',
+      color: 'tertiaryGradient' as 'secondary',
       highlightColor: 'secondaryProminent' as 'secondaryProminent',
       name: 'Lunch',
       data: [
@@ -54,7 +54,7 @@ export function MultiSeriesBarChartDemo({isStacked = false}: Props) {
       ],
     },
     {
-      color: 'tertiary' as 'tertiary',
+      color: 'quaternaryGradient' as 'tertiary',
       highlightColor: 'tertiaryProminent' as 'tertiaryProminent',
       name: 'Dinner',
       data: [
@@ -120,9 +120,12 @@ export function MultiSeriesBarChartDemo({isStacked = false}: Props) {
           formatYAxisLabel={formatYAxisLabel}
           labels={labels}
           series={series}
-          isStacked={isStacked}
+          isStacked={false}
           renderTooltipContent={renderTooltipContent}
           skipLinkText="Skip chart content"
+          hasRoundedCorners
+          axisColor="purple"
+          textColor="purple"
         />
       </div>
 
