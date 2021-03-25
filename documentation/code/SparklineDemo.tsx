@@ -17,6 +17,7 @@ export function SparklineDemo() {
         <div style={{width: 200, height: 150}}>
           <Sparkline
             isAnimated
+            hasSpline
             series={[
               {
                 color: 'colorTeal',

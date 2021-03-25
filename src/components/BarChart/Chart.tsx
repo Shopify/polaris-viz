@@ -1,5 +1,6 @@
 import React, {useState, useMemo} from 'react';
 import {Color, Data, GradientColor} from 'types';
+import {useSpring} from 'react-spring';
 
 import {LINE_HEIGHT} from '../../constants';
 import {eventPoint, getTextWidth, getBarXAxisDetails} from '../../utilities';

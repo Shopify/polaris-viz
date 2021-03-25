@@ -15,6 +15,7 @@ export interface BarChartProps {
   barMargin?: keyof typeof BarMargin;
   color?: Color | GradientColor;
   highlightColor?: Color | GradientColor;
+  isAnimated?: boolean;
   formatXAxisLabel?: StringLabelFormatter;
   formatYAxisLabel?: NumberLabelFormatter;
   timeSeries?: boolean;

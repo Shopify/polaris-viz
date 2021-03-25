@@ -15,22 +15,46 @@ export function BarChartDemo() {
     "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif";
 
   const data = [
-    {rawValue: 324.19, label: '2020-01-01T12:00:00Z'},
-    {rawValue: 613.29, label: '2020-01-02T12:00:00Z'},
-    {rawValue: 422.79, label: '2020-01-03T12:00:00Z'},
+    {rawValue: 324.19, label: ''},
+    {rawValue: 613.29, label: ''},
+    {rawValue: 422.79, label: ''},
     {
       rawValue: 25.6,
-      label: '2020-01-04T12:00:00Z',
+      label: '',
     },
-    {rawValue: 277.69, label: '2020-01-05T12:00:00Z'},
-    {rawValue: 421.19, label: '2020-01-06T12:00:00Z'},
+    {rawValue: 277.69, label: ''},
+    {rawValue: 421.19, label: ''},
+    {rawValue: 324.19, label: ''},
+    {rawValue: 613.29, label: ''},
+    {rawValue: 422.79, label: ''},
+    {
+      rawValue: 25.6,
+      label: '',
+    },
+    {rawValue: 277.69, label: ''},
+    {rawValue: 421.19, label: ''},
+    {rawValue: 324.19, label: ''},
+    {rawValue: 613.29, label: ''},
+    {rawValue: 422.79, label: ''},
+    {
+      rawValue: 25.6,
+      label: '',
+    },
+    {rawValue: 277.69, label: ''},
+    {rawValue: 421.19, label: ''},
+    {rawValue: 324.19, label: ''},
+    {rawValue: 613.29, label: ''},
+    {rawValue: 422.79, label: ''},
+    {
+      rawValue: 25.6,
+      label: '',
+    },
+    {rawValue: 277.69, label: ''},
+    {rawValue: 421.19, label: ''},
   ];
 
-  function formatXAxisLabel(value: string) {
-    return new Date(value).toLocaleDateString('en-CA', {
-      day: 'numeric',
-      month: 'short',
-    });
+  function formatXAxisLabel(value: string, index: number) {
+    return index;
   }
 
   function formatYAxisLabel(value: number) {
@@ -76,7 +100,8 @@ export function BarChartDemo() {
       <div style={innerContainerStyle}>
         <BarChart
           data={data}
-          color="primary"
+          color="primaryGradient"
+          hasRoundedCorners
           formatXAxisLabel={formatXAxisLabel}
           formatYAxisLabel={formatYAxisLabel}
           renderTooltipContent={renderTooltipContent}

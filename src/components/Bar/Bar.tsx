@@ -1,5 +1,6 @@
 import React, {useRef} from 'react';
 import {ScaleLinear} from 'd3-scale';
+import {useSpring, animated} from 'react-spring';
 
 import {GradientColor, Color} from '../../types';
 import {LinearGradient} from '../LinearGradient';
@@ -53,12 +54,11 @@ export function Bar({
   const startingScale = yScale(startingValue);
   const needsMinHeight = rawHeight < MIN_BAR_HEIGHT && rawHeight !== 0;
   const height = needsMinHeight ? MIN_BAR_HEIGHT : rawHeight;
+  const radius = hasRoundedCorners ? ROUNDED_BAR_RADIUS : 0;
 
   const handleFocus = () => {
     onFocus({index, cx: x, cy: yPosition});
   };
-
-  const radius = hasRoundedCorners ? ROUNDED_BAR_RADIUS : 0;
 
   const isNegative = rawValue < 0;
   const yPosition = isNegative
@@ -67,17 +67,12 @@ export function Bar({
   const rotation = isNegative ? 'rotate(180deg)' : 'rotate(0deg)';
   const xPosition = isNegative ? x + width : x;
 
-  const barPath =
-    rawValue === 0
-      ? ''
-      : `M${radius} 0
-    h${width - radius * 2}
-    a${radius} ${radius} 0 01${radius} ${radius}
-    v${height - radius}
-    H0
-    V${radius}
-    a${radius} ${radius} 0 01${radius}-${radius}
-    Z`;
+  const {height: animatedHeight, yPosition: animatedYPosition} = useSpring({
+    height,
+    yPosition,
+    from: {height: 0, yPosition: startingScale},
+    delay: 25 * index,
+  });
 
   const isGradientBar = isGradientType(color) || isGradientType(highlightColor);
 
@@ -112,17 +107,22 @@ export function Bar({
   return (
     <React.Fragment>
       {gradientMarkup}
-
-      <path
+      <animated.path
         className={styles.Bar}
-        d={barPath}
+        d={animatedHeight.interpolate((h) => {
+          return `M${radius} 0h${width -
+            radius * 2} a${radius} ${radius} 0 01${radius} ${radius} v${h -
+            radius} H0 V${radius} a${radius} ${radius} 0 01${radius}-${radius} z`;
+        })}
         fill={fill}
         aria-label={ariaLabel}
         onFocus={handleFocus}
         tabIndex={tabIndex}
         role={role}
         style={{
-          transform: `translate(${xPosition}px, ${yPosition}px) ${rotation}`,
+          transform: animatedYPosition.interpolate(
+            (y) => `translate(${xPosition}px, ${y}px) ${rotation}`,
+          ),
         }}
       />
     </React.Fragment>
