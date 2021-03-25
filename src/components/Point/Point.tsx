@@ -4,6 +4,8 @@ import {Color, ActiveTooltip} from 'types';
 
 import {getColorValue} from '../../utilities';
 
+import styles from './Point.scss';
+
 interface Props {
   active: boolean;
   cx: number;
@@ -43,6 +45,7 @@ export const Point = React.memo(function Point({
       stroke={tokens.colorWhite}
       strokeWidth={1.5}
       onFocus={handleFocus}
+      className={styles.Point}
     />
   );
 });
