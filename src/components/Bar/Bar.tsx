@@ -7,6 +7,8 @@ import {ScaleLinear} from 'd3-scale';
 import {getColorValue} from '../../utilities';
 import {ROUNDED_BAR_RADIUS, MIN_BAR_HEIGHT} from '../../constants';
 
+import styles from './Bar.scss';
+
 interface Props {
   color: Color;
   highlightColor: Color;
@@ -89,6 +91,7 @@ export function Bar({
       style={{
         transform: `translate(${xPosition}px, ${yPosition}px) ${rotation}`,
       }}
+      className={color === highlightColor ? undefined : styles.BarNoOutline}
     />
   );
 }

@@ -1,5 +1,10 @@
 @import 'node_modules/@shopify/polaris-tokens/dist/index';
+@import '../../styles/common';
 
 .Bar {
   transition: fill $duration-slow;
+}
+
+.StackNoOutline {
+  @include no-outline;
 }

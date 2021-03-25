@@ -179,6 +179,8 @@ This accepts any [Polaris Viz color](/documentation/Polaris-Viz-colors.md) value
 
 This accepts any [Polaris Viz color](/documentation/Polaris-Viz-colors.md) value, and corresponds to the color of the bar for that series when you hover over a bar group. It defaults to `primary`. The four 'prominent' Polaris Viz colors (`primaryProminent`, `secondaryProminent`, `tertiaryProminent`, `quaternaryProminent`) exist as a good option for a complimentary hover color.
 
+In order for the user to have visual feedback that a bar has been selected, it is recommended that a `highlightColor`, which is different to the `color`, is passed in in the `series` for this component. If a `highlightColor` is not provided, the browser's default outline treatment will be used when the bar is focused.
+
 ### The `RenderTooltipContentData` type
 
 The `RenderTooltipContentData` type looks very similar to the `Series` type. Its interface looks like this:

@@ -94,6 +94,8 @@ interface BarChartProps {
 }
 ```
 
+In order for the user to have visual feedback that a bar has been selected, it is recommended that a `highlightColor`, which is different to the `color`, is passed in for this component. If a `highlightColor` is not provided, the browser's default outline treatment will be used when the bar is focused.
+
 ### Required props
 
 #### data

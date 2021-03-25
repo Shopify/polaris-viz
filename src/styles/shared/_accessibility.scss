@@ -12,3 +12,7 @@
   opacity: 0;
   // stylelint-enable declaration-no-important
 }
+
+@mixin no-outline {
+  outline: none;
+}
