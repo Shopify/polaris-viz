@@ -18,6 +18,8 @@ export interface StackedAreaChartProps {
   opacity?: number;
   isAnimated?: boolean;
   skipLinkText?: string;
+  textColor?: string;
+  axisColor?: string;
 }
 
 export function StackedAreaChart({
@@ -29,6 +31,8 @@ export function StackedAreaChart({
   opacity = 1,
   isAnimated = false,
   skipLinkText,
+  textColor = 'rgb(99, 115, 129)',
+  axisColor = 'rgb(223, 227, 232)',
 }: StackedAreaChartProps) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -88,6 +92,8 @@ export function StackedAreaChart({
             formatXAxisLabel={formatXAxisLabel}
             formatYAxisLabel={formatYAxisLabel}
             dimensions={chartDimensions}
+            textColor={textColor}
+            axisColor={axisColor}
             renderTooltipContent={
               renderTooltipContent != null
                 ? renderTooltipContent
