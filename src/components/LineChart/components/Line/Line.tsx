@@ -35,23 +35,31 @@ export const Line = React.memo(function Shape({
   }
 
   return (
-    <path
-      d={path}
-      fill="none"
-      strokeWidth={`${lineWidth}px`}
-      paintOrder="stroke"
-      stroke={getColorValue(series.color)}
-      strokeLinejoin="round"
-      strokeDasharray={series.lineStyle === 'dashed' ? '2 4' : 'unset'}
-      {...(series.lineStyle === 'dashed'
-        ? {
-            ...{
-              strokeWidth: lineWidth,
-              strokeLinecap: 'round',
-              strokeDasharray: '0.1, 8',
-            },
-          }
-        : undefined)}
-    />
+    <React.Fragment>
+      <defs>
+        <linearGradient id="carysgradient1" x1="0%" x2="0%" y1="0%" y2="100%">
+          <stop offset="0%" stop-color="lightseagreen" />
+          <stop offset="100%" stop-color="violet" />
+        </linearGradient>
+      </defs>
+      <path
+        d={path}
+        fill="none"
+        strokeWidth={`${lineWidth}px`}
+        paintOrder="stroke"
+        // stroke={getColorValue(series.color)}
+        stroke="url(#carysgradient1)"
+        strokeLinejoin="round"
+        strokeDasharray={series.lineStyle === 'dashed' ? '2 4' : 'unset'}
+        {...(series.lineStyle === 'dashed'
+          ? {
+              ...{
+                strokeLinecap: 'round',
+                strokeDasharray: '0.1, 8',
+              },
+            }
+          : undefined)}
+      />
+    </React.Fragment>
   );
 });

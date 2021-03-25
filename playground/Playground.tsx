@@ -63,7 +63,8 @@ export default function Playground() {
   const toggleDemos = () => setShowDemos((showingDemos) => !showingDemos);
 
   return (
-    <div style={{background: '#0E305E'}}>
+    // <div style={{background: '#0E305E'}}>
+    <div>
       {/* <h3>Playground area</h3>
       <NormalizedStackedBarChart
         size="large"
@@ -75,9 +76,9 @@ export default function Playground() {
       {showDemos && <Demos />} */}
 
       <PlaygroundDemos.LineChartDemo />
-
+      {/*
       <PlaygroundDemos.BarChartDemo />
-      <PlaygroundDemos.MultiSeriesBarChartDemo />
+      <PlaygroundDemos.MultiSeriesBarChartDemo /> */}
     </div>
   );
 }

@@ -275,6 +275,15 @@ export function Chart({
 
             return (
               <React.Fragment key={`${name}-${index}`}>
+                {showArea ? (
+                  <GradientArea
+                    series={singleSeries}
+                    yScale={yScale}
+                    xScale={xScale}
+                    hasSpline={hasSpline}
+                  />
+                ) : null}
+
                 <Line
                   series={singleSeries}
                   xScale={xScale}
@@ -301,15 +310,6 @@ export function Chart({
                     />
                   );
                 })}
-
-                {showArea ? (
-                  <GradientArea
-                    series={singleSeries}
-                    yScale={yScale}
-                    xScale={xScale}
-                    hasSpline={hasSpline}
-                  />
-                ) : null}
               </React.Fragment>
             );
           })}
