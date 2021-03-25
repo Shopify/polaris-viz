@@ -8,8 +8,8 @@
 
 ### Fixed
 
-- Improved responsiveness of <LineChart /> on touch devices
-- Stopped <BarChart /> being announced as unlabelled image on screenreaders
+- Improved responsiveness of `<LineChart />` on touch devices
+- Stopped `<BarChart />` being announced as unlabelled image on screenreaders
 
 ## [0.7.0] - 2021-03-23
 
