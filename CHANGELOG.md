@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.7.2] - 2021-03-25
+
+### Fixed
+
+- Remove unneccessary focus outline on elements
+
 ## [0.7.1] - 2021-03-24
 
 ## Added
