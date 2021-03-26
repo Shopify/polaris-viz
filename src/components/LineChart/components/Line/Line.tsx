@@ -38,8 +38,8 @@ export const Line = React.memo(function Shape({
     <React.Fragment>
       <defs>
         <linearGradient id="carysgradient1" x1="0%" x2="0%" y1="0%" y2="100%">
-          <stop offset="0%" stop-color="lightseagreen" />
-          <stop offset="100%" stop-color="violet" />
+          <stop offset="0%" stopColor="lightseagreen" />
+          <stop offset="100%" stopColor="violet" />
         </linearGradient>
       </defs>
       <path
@@ -47,8 +47,11 @@ export const Line = React.memo(function Shape({
         fill="none"
         strokeWidth={`${lineWidth}px`}
         paintOrder="stroke"
-        // stroke={getColorValue(series.color)}
-        stroke="url(#carysgradient1)"
+        stroke={
+          series.lineStyle === 'dashed'
+            ? getColorValue(series.color)
+            : 'url(#carysgradient1)'
+        }
         strokeLinejoin="round"
         strokeDasharray={series.lineStyle === 'dashed' ? '2 4' : 'unset'}
         {...(series.lineStyle === 'dashed'

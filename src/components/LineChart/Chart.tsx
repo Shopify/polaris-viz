@@ -53,6 +53,7 @@ export function Chart({
   axisColor,
   textColor,
   lineWidth,
+  crossHairColor,
 }: Props) {
   const [tooltipDetails, setTooltipDetails] = useState<ActiveTooltip | null>(
     null,
@@ -258,6 +259,7 @@ export function Chart({
             <Crosshair
               x={xScale(tooltipDetails.index)}
               height={drawableHeight}
+              crossHairColor={crossHairColor}
             />
           </g>
         )}

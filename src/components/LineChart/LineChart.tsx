@@ -36,6 +36,7 @@ export function LineChart({
   textColor = 'rgb(99, 115, 129)',
   axisColor = 'rgb(223, 227, 232)',
   lineWidth = 2,
+  crossHairColor,
 }: LineChartProps) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -104,6 +105,7 @@ export function LineChart({
             axisColor={axisColor}
             textColor={textColor}
             lineWidth={lineWidth}
+            crossHairColor={crossHairColor}
             renderTooltipContent={
               renderTooltipContent != null
                 ? renderTooltipContent

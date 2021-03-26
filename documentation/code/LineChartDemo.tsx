@@ -1,4 +1,5 @@
 import React from 'react';
+import {condenseNumber} from '@shopify/condense-number';
 
 // eslint-disable-next-line shopify/strict-component-boundaries
 import {
@@ -76,12 +77,7 @@ export function LineChartDemo() {
   }
 
   function formatYAxisLabel(value: number) {
-    return new Intl.NumberFormat('en', {
-      style: 'currency',
-      currency: 'CAD',
-      currencyDisplay: 'symbol',
-      maximumSignificantDigits: 1,
-    }).format(value);
+    return condenseNumber(value, 'en');
   }
 
   const renderTooltipContent: LineChartProps['renderTooltipContent'] = ({
@@ -130,10 +126,9 @@ export function LineChartDemo() {
           hasSpline
           // axisColor="#194685"
           // textColor="#8C9196"
-          lineWidth={4}
+          lineWidth={3}
         />
       </div>
-      <Legend series={series} />
     </div>
   );
 }
