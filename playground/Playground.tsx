@@ -3,7 +3,11 @@ import {condenseNumber} from '@shopify/condense-number';
 
 import * as PlaygroundDemos from '../documentation/code';
 
-import {NormalizedStackedBarChart, LineChart} from '../src/components';
+import {
+  NormalizedStackedBarChart,
+  LineChart,
+  BarChart,
+} from '../src/components';
 
 const Demos = () => {
   return (
@@ -58,6 +62,10 @@ const mockProps = {
     // {label: 'a fith data item', value: 1090000, formattedValue: '$1090000'},
   ],
 };
+
+const barChartData = Array.from({length: 20}, (_, i) => {
+  return {rawValue: Math.random() * 100, label: i.toString()};
+});
 
 const series = [
   {
@@ -122,12 +130,46 @@ export default function Playground() {
       <button onClick={toggleDemos}>Toggle Demos</button>
       {showDemos && <Demos />} */}
 
+      <div
+        style={{
+          width: '40%',
+          height: '200px',
+          background: '#0E305E',
+          padding: '20px',
+          marginTop: '5px',
+        }}
+      >
+        <BarChart
+          data={barChartData}
+          color="blueWhiteGradient"
+          // formatXAxisLabel={formatXAxisLabel}
+          // formatYAxisLabel={formatYAxisLabel}
+          // renderTooltipContent={renderTooltipContent}
+          skipLinkText="Skip chart content"
+          // hasRoundedCorners
+          // barMargin="Small"
+          timeSeries
+          axisColor="#194685"
+          textColor="#8C9196"
+          crossHairColor="dark"
+          hasRoundedCorners
+        />
+      </div>
+
       <PlaygroundDemos.LineChartDemo />
+
+      <div
+        style={{
+          marginTop: '5px',
+        }}
+      >
+        <PlaygroundDemos.BarChartDemo />
+      </div>
       {/*
       <PlaygroundDemos.BarChartDemo />
       <PlaygroundDemos.MultiSeriesBarChartDemo /> */}
 
-      <div
+      {/* <div
         style={{
           width: '90%',
           height: '300px',
@@ -145,7 +187,7 @@ export default function Playground() {
           crossHairColor="dark"
           formatYAxisLabel={(e) => condenseNumber(e, 'en')}
         />
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -16,6 +16,11 @@ const vizColors = {
 };
 
 export const gradientColors = {
+  blueGreenGradient: {end: '#4EB0FC', start: '#4BFDE0'},
+  inverse: {start: '#4BFDE0', end: '#4BFDE0'},
+
+  blueWhiteGradient: {end: '#4EB0FC', start: '#fff'},
+
   primaryGradient: {start: '#44C0BE', end: vizColors.primary},
   secondaryGradient: {start: '#4C43BB', end: vizColors.secondary},
   tertiaryGradient: {start: '#5EAFED', end: vizColors.tertiary},

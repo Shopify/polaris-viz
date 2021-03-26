@@ -37,9 +37,11 @@ export const Line = React.memo(function Shape({
   return (
     <React.Fragment>
       <defs>
+        {/* linear-gradient(180deg, #FDCE20 0%, #FE960F 49.36%, #FE0FD8 100%); */}
         <linearGradient id="carysgradient1" x1="0%" x2="0%" y1="0%" y2="100%">
-          <stop offset="0%" stopColor="lightseagreen" />
-          <stop offset="100%" stopColor="violet" />
+          <stop offset="0%" stopColor="#FDCE20" />
+          <stop offset="49.36%" stopColor="#FE960F" />
+          <stop offset="100%" stopColor="#FE0FD8" />
         </linearGradient>
       </defs>
       <path

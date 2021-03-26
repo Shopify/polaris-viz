@@ -8,6 +8,10 @@
 
 .DiagonalText {
   text-align: right;
-  @include ellipsis-overflow;
   @include axis-text;
+  word-break: normal;
+}
+
+.Truncated {
+  @include ellipsis-overflow;
 }

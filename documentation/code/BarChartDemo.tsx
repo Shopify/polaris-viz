@@ -7,24 +7,18 @@ import {OUTER_CONTAINER_STYLE} from './constants';
 
 export function BarChartDemo() {
   const innerContainerStyle = {
-    width: '100%',
-    height: '300px',
+    width: '40%',
+    height: '200px',
+    // background: '#0E305E',
+    padding: '20px',
   };
 
   document.body.style.fontFamily =
     "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif";
 
-  const data = [
-    {rawValue: 324.19, label: '2020-01-01T12:00:00Z'},
-    {rawValue: 613.29, label: '2020-01-02T12:00:00Z'},
-    {rawValue: 422.79, label: '2020-01-03T12:00:00Z'},
-    {
-      rawValue: 25.6,
-      label: '2020-01-04T12:00:00Z',
-    },
-    {rawValue: 277.69, label: '2020-01-05T12:00:00Z'},
-    {rawValue: 421.19, label: '2020-01-06T12:00:00Z'},
-  ];
+  const data = Array.from({length: 12}, (_, i) => {
+    return {rawValue: Math.random() * 100, label: (i + 1).toString()};
+  });
 
   function formatXAxisLabel(value: string) {
     return new Date(value).toLocaleDateString('en-CA', {
@@ -76,14 +70,19 @@ export function BarChartDemo() {
       <div style={innerContainerStyle}>
         <BarChart
           data={data}
-          color="quaternaryGradient"
+          color="blueGreenGradient"
+          highlightColor="inverse"
           formatXAxisLabel={formatXAxisLabel}
           formatYAxisLabel={formatYAxisLabel}
           renderTooltipContent={renderTooltipContent}
           skipLinkText="Skip chart content"
+          // hasRoundedCorners
+          // barMargin="Small"
+          timeSeries
+          // axisColor="#194685"
+          // textColor="#8C9196"
+          // crossHairColor="dark"
           hasRoundedCorners
-          textColor="red"
-          axisColor="red"
         />
       </div>
     </div>

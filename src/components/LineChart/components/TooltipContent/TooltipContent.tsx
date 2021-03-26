@@ -25,7 +25,7 @@ export function TooltipContent({data}: TooltipContentProps) {
       {data.map(({name, point: {label, value}, color, lineStyle}, index) => {
         return (
           <React.Fragment key={`${name}-${index}`}>
-            <LinePreview color={color} lineStyle={lineStyle} />
+            {/* <LinePreview color={color} lineStyle={lineStyle} /> */}
             <p className={styles.Name}>{label}</p>
             <p className={styles.Value}>{value}</p>
           </React.Fragment>

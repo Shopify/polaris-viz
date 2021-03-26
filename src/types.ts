@@ -96,7 +96,8 @@ export type GradientColor =
   | 'tertiaryGradient'
   | 'primaryProminentGradient'
   | 'secondaryProminentGradient'
-  | 'tertiaryProminentGradient';
+  | 'tertiaryProminentGradient'
+  | 'blueGreenGradient';
 
 export type StringLabelFormatter = (
   value: string,

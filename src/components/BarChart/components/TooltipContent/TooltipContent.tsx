@@ -10,7 +10,7 @@ export interface TooltipContentProps {
 export function TooltipContent({label, value}: TooltipContentProps) {
   return (
     <div className={styles.Container}>
-      <strong>{label}</strong>
+      <span>{label}</span>
       {value}
     </div>
   );

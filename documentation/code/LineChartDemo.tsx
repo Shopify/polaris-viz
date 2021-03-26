@@ -13,7 +13,7 @@ import {OUTER_CONTAINER_STYLE} from './constants';
 
 export function LineChartDemo() {
   const innerContainerStyle = {
-    width: '100%',
+    width: '42.5%',
     height: '300px',
     marginBottom: '20px',
   };
@@ -42,7 +42,7 @@ export function LineChartDemo() {
       ],
       color: 'quaternary',
       lineStyle: 'solid' as 'solid',
-      showArea: true,
+      // showArea: true,
     },
     // {
     //   name: 'Mar 01–Mar 14, 2020',
