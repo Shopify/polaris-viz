@@ -1,6 +1,7 @@
 import React from 'react';
 import {colorSky} from '@shopify/polaris-tokens';
 import {ScaleBand} from 'd3-scale';
+import {classNames} from '@shopify/css-utilities';
 
 import {
   TICK_SIZE,
@@ -43,6 +44,9 @@ export function BarChartXAxis({
     maxWidth,
   } = xAxisDetails;
 
+  // only include overflow treatment if max label is over a certain length
+  const truncateLabels = maxDiagonalLabelLength > 18;
+
   const diagonalLabelOffset = new RightAngleTriangle({
     sideC: maxDiagonalLabelLength,
     sideA: maxXLabelHeight,
@@ -58,9 +62,11 @@ export function BarChartXAxis({
     ? LINE_HEIGHT
     : maxXLabelHeight + SPACING_EXTRA_TIGHT;
   const textWidth = needsDiagonalLabels ? maxDiagonalLabelLength : maxWidth;
-  const textContainerClassName = needsDiagonalLabels
-    ? styles.DiagonalText
-    : styles.Text;
+  const textContainerClassName = classNames(
+    styles.Text,
+    needsDiagonalLabels && styles.DiagonalText,
+    truncateLabels && styles.Truncated,
+  );
 
   const diagonalLabelSpacePerBar = Math.floor((LINE_HEIGHT * 2) / maxWidth);
   const visibleLabelRatio = needsDiagonalLabels
