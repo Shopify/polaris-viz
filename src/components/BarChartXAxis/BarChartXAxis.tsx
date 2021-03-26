@@ -44,8 +44,7 @@ export function BarChartXAxis({
     maxWidth,
   } = xAxisDetails;
 
-  // only include overflow treatment if max label is over a certain length
-  const truncateLabels = maxDiagonalLabelLength > 18;
+  const truncateLabels = needsDiagonalLabels && maxDiagonalLabelLength > 18;
 
   const diagonalLabelOffset = new RightAngleTriangle({
     sideC: maxDiagonalLabelLength,
