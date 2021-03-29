@@ -156,6 +156,36 @@ export function Chart({
         onTouchEnd={() => setActiveBar(null)}
         role="list"
       >
+        <defs>
+          <linearGradient
+            id="bar-gradient"
+            x1="0"
+            y1="0"
+            x2="0"
+            y2={drawableHeight}
+            gradientUnits="userSpaceOnUse"
+            // gradientTransform="rotate(30)"
+          >
+            <stop stopColor="#FE0FD8" offset="24.76%" />
+            <stop stopColor="#FE8627" offset="72.1%" />
+            <stop stopColor="#FDCD20" offset="100%" />
+          </linearGradient>
+
+          {/* ALMOST WORKING BUT NOT QUITE RIGHT COLOR BETWEEN FIRST BARS AND LAST */}
+          <linearGradient
+            id="bar-gradient2"
+            x1="0"
+            y1="0"
+            x2="0"
+            y2={drawableHeight}
+            gradientUnits="userSpaceOnUse"
+            // gradientTransform="rotate(30)"
+          >
+            <stop stopColor="#4BFCE0" offset="21%" />
+            <stop stopColor="#4EADFB" offset="62%" />
+            <stop stopColor="#801AFD" offset="109%" />
+          </linearGradient>
+        </defs>
         <g
           transform={`translate(${axisMargin},${chartDimensions.height -
             MARGIN.Bottom -
@@ -210,6 +240,7 @@ export function Chart({
                   tabIndex={0}
                   role="img"
                   hasRoundedCorners={hasRoundedCorners}
+                  chartDimensions={chartDimensions}
                 />
               </g>
             );

@@ -132,9 +132,9 @@ export default function Playground() {
 
       <div
         style={{
-          width: '40%',
+          width: '100%',
           height: '200px',
-          background: '#0E305E',
+          // background: '#0E305E',
           padding: '20px',
           marginTop: '5px',
         }}
@@ -149,22 +149,22 @@ export default function Playground() {
           // hasRoundedCorners
           // barMargin="Small"
           timeSeries
-          axisColor="#194685"
-          textColor="#8C9196"
-          crossHairColor="dark"
+          // axisColor="#194685"
+          // textColor="#8C9196"
+          // crossHairColor="dark"
           hasRoundedCorners
         />
       </div>
 
       <PlaygroundDemos.LineChartDemo />
 
-      <div
+      {/* <div
         style={{
           marginTop: '5px',
         }}
       >
         <PlaygroundDemos.BarChartDemo />
-      </div>
+      </div> */}
       {/*
       <PlaygroundDemos.BarChartDemo />
       <PlaygroundDemos.MultiSeriesBarChartDemo /> */}

@@ -70,12 +70,12 @@ export function Bar({
   const barPath =
     rawValue === 0
       ? ''
-      : `M${radius} 0
+      : `M${radius + xPosition} ${yPosition}
     h${width - radius * 2}
     a${radius} ${radius} 0 01${radius} ${radius}
     v${height - radius}
-    H0
-    V${radius}
+    H${xPosition}
+    V${radius + yPosition}
     a${radius} ${radius} 0 01${radius}-${radius}
     Z`;
 
@@ -116,13 +116,13 @@ export function Bar({
       <path
         className={styles.Bar}
         d={barPath}
-        fill={fill}
+        fill="url(#bar-gradient2)"
         aria-label={ariaLabel}
         onFocus={handleFocus}
         tabIndex={tabIndex}
         role={role}
         style={{
-          transform: `translate(${xPosition}px, ${yPosition}px) ${rotation}`,
+          transform: `${rotation}`,
         }}
       />
     </React.Fragment>
