@@ -13,3 +13,4 @@ node_modules
 /config
 /scripts
 /playground
+*.stories.*
