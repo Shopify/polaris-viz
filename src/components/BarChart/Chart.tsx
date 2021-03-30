@@ -1,5 +1,6 @@
 import React, {useState, useMemo} from 'react';
 import {Color, Data, GradientColor} from 'types';
+import {LinearAnnotation} from 'components/LinearAnnotation';
 
 import {LINE_HEIGHT} from '../../constants';
 import {eventPoint, getTextWidth, getBarXAxisDetails} from '../../utilities';
@@ -33,6 +34,7 @@ interface Props {
   hasRoundedCorners: boolean;
   textColor: string;
   axisColor: string;
+  linearAnnotation: any;
 }
 
 export function Chart({
@@ -48,6 +50,7 @@ export function Chart({
   hasRoundedCorners,
   textColor,
   axisColor,
+  linearAnnotation,
 }: Props) {
   const [activeBar, setActiveBar] = useState<number | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState<{
@@ -164,14 +167,12 @@ export function Chart({
             x2="0"
             y2={drawableHeight}
             gradientUnits="userSpaceOnUse"
-            // gradientTransform="rotate(30)"
           >
             <stop stopColor="#FE0FD8" offset="24.76%" />
             <stop stopColor="#FE8627" offset="72.1%" />
             <stop stopColor="#FDCD20" offset="100%" />
           </linearGradient>
 
-          {/* ALMOST WORKING BUT NOT QUITE RIGHT COLOR BETWEEN FIRST BARS AND LAST */}
           <linearGradient
             id="bar-gradient2"
             x1="0"
@@ -179,13 +180,13 @@ export function Chart({
             x2="0"
             y2={drawableHeight}
             gradientUnits="userSpaceOnUse"
-            // gradientTransform="rotate(30)"
           >
             <stop stopColor="#4BFCE0" offset="21%" />
             <stop stopColor="#4EADFB" offset="62%" />
             <stop stopColor="#801AFD" offset="109%" />
           </linearGradient>
         </defs>
+
         <g
           transform={`translate(${axisMargin},${chartDimensions.height -
             MARGIN.Bottom -
@@ -246,6 +247,15 @@ export function Chart({
             );
           })}
         </g>
+
+        {linearAnnotation ? (
+          <LinearAnnotation
+            linearAnnotation={linearAnnotation}
+            axisMargin={axisMargin}
+            drawableWidth={drawableWidth}
+            drawableHeight={drawableHeight}
+          />
+        ) : null}
       </svg>
 
       {tooltipPosition != null && activeBar != null ? (

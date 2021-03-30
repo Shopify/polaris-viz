@@ -1,7 +1,7 @@
 @import '../../styles/common';
 
 .Text {
-  text-align: center;
+  text-align: left;
   @include axis-text;
   word-break: break-word;
 }

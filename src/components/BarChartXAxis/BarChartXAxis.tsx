@@ -90,7 +90,11 @@ export function BarChartXAxis({
         }
         return (
           <g key={index} transform={`translate(${xOffset}, 0)`}>
-            <line y2={TICK_SIZE} stroke={axisColor ? axisColor : '#194685'} />
+            <line
+              y2={TICK_SIZE}
+              stroke={axisColor ? axisColor : '#194685'}
+              transform={`translate(-${maxWidth / 2 - 2} 0)`}
+            />
             <foreignObject
               width={textWidth}
               height={textHeight}

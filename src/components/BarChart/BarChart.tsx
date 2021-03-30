@@ -23,6 +23,7 @@ export interface BarChartProps {
   hasRoundedCorners?: boolean;
   textColor?: string;
   axisColor?: string;
+  linearAnnotation: any;
 }
 
 export function BarChart({
@@ -38,6 +39,7 @@ export function BarChart({
   skipLinkText,
   textColor = 'rgb(99, 115, 129)',
   axisColor = 'rgb(223, 227, 232)',
+  linearAnnotation,
 }: BarChartProps) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -93,6 +95,7 @@ export function BarChart({
             hasRoundedCorners={hasRoundedCorners}
             textColor={textColor}
             axisColor={axisColor}
+            linearAnnotation={linearAnnotation}
             renderTooltipContent={
               renderTooltipContent != null
                 ? renderTooltipContent
