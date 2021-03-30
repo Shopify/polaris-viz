@@ -19,6 +19,7 @@ export interface LineChartProps {
   renderTooltipContent?: (data: RenderTooltipContentData) => React.ReactNode;
   skipLinkText?: string;
   hasSpline?: boolean;
+  isAnimated?: boolean;
 }
 
 export function LineChart({
@@ -30,6 +31,7 @@ export function LineChart({
   renderTooltipContent,
   skipLinkText,
   hasSpline = false,
+  isAnimated = false,
 }: LineChartProps) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -95,6 +97,7 @@ export function LineChart({
             dimensions={chartDimensions}
             hideXAxisLabels={hideXAxisLabels}
             hasSpline={hasSpline}
+            isAnimated={isAnimated}
             renderTooltipContent={
               renderTooltipContent != null
                 ? renderTooltipContent
