@@ -8,6 +8,7 @@
 - `emptyStateText` and empty state handling to `<MultiSeriesBarChart />`
 - `<LinePreview />` and `<SquareColorPreview />` components are now exported
 - `useMinimalLabels` option added to the `<BarChart />` and `<LineChart />` `xAxisOptions` prop
+- Animated points on the line chart is `isAnimated` is true
 
 ### Changed
 

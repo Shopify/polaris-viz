@@ -1,4 +1,5 @@
 import React from 'react';
+import {animated} from 'react-spring';
 
 import {CROSSHAIR_WIDTH, DEFAULT_CROSSHAIR_COLOR} from '../../constants';
 
@@ -18,8 +19,8 @@ export function Crosshair({
   fill = DEFAULT_CROSSHAIR_COLOR,
 }: Props) {
   return (
-    <rect
-      x={x - width / 2}
+    <animated.rect
+      x={x}
       width={width}
       height={height}
       stroke="none"

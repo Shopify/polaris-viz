@@ -6,8 +6,7 @@ import {Color} from 'types';
 import {ScaleLinear} from 'd3-scale';
 
 import {getColorValue, uniqueId} from '../../../../utilities';
-
-import {usePrevious} from './hooks';
+import {usePrevious} from '../../../../hooks';
 
 type StackedSeries = Series<
   {

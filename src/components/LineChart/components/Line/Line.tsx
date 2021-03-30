@@ -1,6 +1,5 @@
 import React from 'react';
-import {line, curveMonotoneX} from 'd3-shape';
-import {ScaleLinear} from 'd3-scale';
+import {Line as D3Line} from 'd3-shape';
 
 import {getColorValue} from '../../../../utilities';
 import {Series} from '../../types';
@@ -11,10 +10,9 @@ import {StrokeDasharray} from './constants';
 
 interface Props {
   series: Required<Series>;
-  xScale: ScaleLinear<number, number>;
-  yScale: ScaleLinear<number, number>;
   isAnimated: boolean;
   index: number;
+  lineGenerator: D3Line<{rawValue: number}>;
   lineOptions: {
     hasSpline: boolean;
     width: number;
@@ -24,19 +22,10 @@ interface Props {
 export const Line = React.memo(function Shape({
   lineOptions,
   series,
-  xScale,
-  yScale,
   isAnimated,
   index,
+  lineGenerator,
 }: Props) {
-  const lineGenerator = line<{rawValue: number}>()
-    .x((_, index) => xScale(index))
-    .y(({rawValue}) => yScale(rawValue));
-
-  if (lineOptions.hasSpline) {
-    lineGenerator.curve(curveMonotoneX);
-  }
-
   const path = lineGenerator(series.data);
 
   const animationDelay = index * ANIMATION_DELAY;

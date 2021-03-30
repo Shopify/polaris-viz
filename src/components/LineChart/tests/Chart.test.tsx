@@ -7,6 +7,7 @@ import {
   VisuallyHiddenRows,
   Point,
 } from 'components';
+import {line} from 'd3-shape';
 
 import {Chart} from '../Chart';
 import {Series} from '../types';
@@ -94,6 +95,23 @@ const mockEmptyStateProps = {
   renderTooltipContent: jest.fn(() => <p>Mock Tooltip</p>),
   isAnimated: false,
 };
+jest.mock('../../../utilities', () => {
+  return {
+    ...jest.requireActual('../../../utilities'),
+    getPathLength: () => 0,
+    getPointAtLength: () => ({x: 0, y: 0}),
+  };
+});
+
+jest.mock('d3-shape', () => ({
+  ...jest.requireActual('d3-shape'),
+  line: jest.fn(() => {
+    const shape = (value: any) => value;
+    shape.x = () => shape;
+    shape.y = () => shape;
+    return shape;
+  }),
+}));
 
 describe('<Chart />', () => {
   beforeEach(() => {
@@ -162,17 +180,20 @@ describe('<Chart />', () => {
     expect(chart).toContainReactComponent(YAxis);
   });
 
-  it('renders a <Crosshair /> if there is an active point', () => {
+  it('renders a <Crosshair /> at full opacity if there is an active point', () => {
     const chart = mount(<Chart {...mockProps} />);
-
-    // No crosshair if there is no active point
-    expect(chart).not.toContainReactComponent(Crosshair);
 
     // create an active point
     const svg = chart.find('svg')!;
     svg.trigger('onMouseMove', fakeSVGEvent);
 
-    expect(chart).toContainReactComponent(Crosshair);
+    expect(chart.find(Crosshair)).toHaveReactProps({opacity: 1});
+  });
+
+  it('renders a <Crosshair /> at 0 opacity if there is no active point', () => {
+    const chart = mount(<Chart {...mockProps} />);
+
+    expect(chart.find(Crosshair)).toHaveReactProps({opacity: 0});
   });
 
   it('renders a <Line /> for each series', () => {
@@ -186,15 +207,39 @@ describe('<Chart />', () => {
     expect(chart).toContainReactComponentTimes(Line, 2);
   });
 
-  it('renders a <Point /> for each data item in each series', () => {
-    const chart = mount(
+  it('calls the d3 curve method when hasSpline is true', () => {
+    const curveSpy = jest.fn();
+    (line as jest.Mock).mockImplementationOnce(() => {
+      const shape = (value: any) => value;
+      shape.x = () => shape;
+      shape.y = () => shape;
+      shape.curve = curveSpy;
+      return shape;
+    });
+
+    mount(
       <Chart
         {...mockProps}
+        lineOptions={{hasSpline: true, width: 2}}
         series={[primarySeries, {...primarySeries, name: 'A second series'}]}
       />,
     );
 
+    expect(curveSpy).toHaveBeenCalled();
+  });
+
+  it('renders a <Point /> for each data item in each series', () => {
+    const series = [primarySeries, {...primarySeries, name: 'A second series'}];
+    const chart = mount(<Chart {...mockProps} series={series} />);
+
     expect(chart).toContainReactComponentTimes(Point, 8);
+  });
+
+  it('renders an additional <Point /> for each series if isAnimated is true', () => {
+    const series = [primarySeries, {...primarySeries, name: 'A second series'}];
+    const chart = mount(<Chart {...mockProps} series={series} isAnimated />);
+
+    expect(chart).toContainReactComponentTimes(Point, 8 + series.length);
   });
 
   it('passes props to <Point />', () => {

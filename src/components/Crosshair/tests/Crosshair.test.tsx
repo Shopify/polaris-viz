@@ -11,7 +11,7 @@ describe('<Crosshair />', () => {
       </svg>,
     );
 
-    expect(crosshair).toContainReactComponent('rect', {x: 47.5});
+    expect(crosshair).toContainReactComponent('rect', {x: 50});
   });
 
   it('renders a rect with the given height', () => {
