@@ -1,13 +1,19 @@
 import React, {useState, useMemo, useRef, useCallback} from 'react';
 import throttle from 'lodash.throttle';
+import {line, curveMonotoneX} from 'd3-shape';
 
-import {useLinearXAxisDetails, useLinearXScale} from '../../hooks';
+import {
+  useLinearXAxisDetails,
+  useLinearXScale,
+  usePrefersReducedMotion,
+} from '../../hooks';
 import {
   SMALL_SCREEN,
   SMALL_FONT_SIZE,
   FONT_SIZE,
   SPACING_TIGHT,
   Margin,
+  CROSSHAIR_WIDTH,
 } from '../../constants';
 import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
 import {LinearXAxis} from '../LinearXAxis';
@@ -23,7 +29,7 @@ import {
 import {TooltipContainer} from '../TooltipContainer';
 
 import {Series, RenderTooltipContentData, TooltipData} from './types';
-import {useYScale} from './hooks';
+import {useYScale, useLineChartAnimations} from './hooks';
 import {Line, GradientArea} from './components';
 import styles from './Chart.scss';
 
@@ -52,6 +58,7 @@ export function Chart({
   emptyStateText,
   isAnimated,
 }: Props) {
+  const {prefersReducedMotion} = usePrefersReducedMotion();
   const [tooltipDetails, setTooltipDetails] = useState<ActiveTooltip | null>(
     null,
   );
@@ -124,6 +131,19 @@ export function Chart({
 
   const {xScale} = useLinearXScale({drawableWidth, longestSeriesLength});
 
+  const lineGenerator = line<{rawValue: number}>()
+    .x((_, index) => (xScale === null ? 0 : xScale(index)))
+    .y(({rawValue}) => yScale(rawValue));
+
+  if (hasSpline) {
+    lineGenerator.curve(curveMonotoneX);
+  }
+
+  const activeIndex =
+    tooltipDetails === null || tooltipDetails.index == null
+      ? null
+      : tooltipDetails.index;
+
   const tooltipMarkup = useMemo(() => {
     if (tooltipDetails == null) {
       return null;
@@ -156,6 +176,14 @@ export function Chart({
   }, [renderTooltipContent, series, tooltipDetails]);
 
   const reversedSeries = useMemo(() => series.slice().reverse(), [series]);
+
+  const {animatedXPosition, animatedYPositions} = useLineChartAnimations({
+    series: reversedSeries,
+    lineGenerator,
+    activeIndex,
+    xScale,
+    isAnimated: isAnimated && !prefersReducedMotion,
+  });
 
   if (xScale == null || drawableWidth == null || axisMargin == null) {
     return null;
@@ -201,11 +229,12 @@ export function Chart({
     }
 
     const closestIndex = Math.round(xScale.invert(svgX - axisMargin));
+    const activeIndex = Math.min(longestSeriesLength, closestIndex);
 
     setTooltipDetails({
       x: svgX,
       y: svgY,
-      index: Math.min(longestSeriesLength, closestIndex),
+      index: activeIndex,
     });
   }
 
@@ -250,11 +279,19 @@ export function Chart({
           />
         </g>
 
-        {tooltipDetails == null || emptyState ? null : (
+        {emptyState ? null : (
           <g transform={`translate(${axisMargin},${Margin.Top})`}>
             <Crosshair
-              x={xScale(tooltipDetails.index)}
+              x={
+                isAnimated
+                  ? animatedXPosition.interpolate((xPos) =>
+                      xPos === null ? null : xPos - CROSSHAIR_WIDTH / 2,
+                    )
+                  : xScale(activeIndex === null ? 0 : activeIndex) -
+                    CROSSHAIR_WIDTH / 2
+              }
               height={drawableHeight}
+              opacity={tooltipDetails === null ? 0 : 1}
             />
           </g>
         )}
@@ -281,12 +318,31 @@ export function Chart({
                   hasSpline={hasSpline}
                   isAnimated={isAnimated}
                   index={index}
+                  lineGenerator={lineGenerator}
+                />
+                <Point
+                  color={singleSeries.color}
+                  cx={animatedXPosition.interpolate((xPos) => {
+                    return xPos === null ? null : xPos;
+                  })}
+                  cy={
+                    animatedYPositions === null ? 0 : animatedYPositions[index]
+                  }
+                  active={tooltipDetails !== null}
+                  index={index}
+                  tabIndex={-1}
+                  isAnimated={isAnimated && !prefersReducedMotion}
+                  ariaHidden
+                  visuallyHidden={
+                    tooltipDetails === null ||
+                    !isAnimated ||
+                    prefersReducedMotion ||
+                    animatedYPositions === null ||
+                    animatedYPositions[index] === null
+                  }
                 />
 
                 {data.map(({rawValue}, dataIndex) => {
-                  const activeIndex =
-                    tooltipDetails == null ? null : tooltipDetails.index;
-
                   return (
                     <Point
                       key={`${name}-${index}-${dataIndex}`}
@@ -298,6 +354,12 @@ export function Chart({
                       index={dataIndex}
                       tabIndex={isFirstLine ? 0 : -1}
                       ariaLabelledby={tooltipId.current}
+                      isAnimated={false}
+                      ariaHidden={false}
+                      visuallyHidden={
+                        (isAnimated && !prefersReducedMotion) ||
+                        tooltipDetails === null
+                      }
                     />
                   );
                 })}

@@ -1,4 +1,5 @@
 import React from 'react';
+import {animated} from 'react-spring';
 
 import {CROSSHAIR_WIDTH} from '../../constants';
 
@@ -12,8 +13,8 @@ interface Props {
 
 export function Crosshair({x, height, opacity = 1}: Props) {
   return (
-    <rect
-      x={x - CROSSHAIR_WIDTH / 2}
+    <animated.rect
+      x={x}
       width={CROSSHAIR_WIDTH}
       height={height}
       stroke="none"

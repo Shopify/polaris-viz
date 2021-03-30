@@ -7,6 +7,7 @@ import {
   VisuallyHiddenRows,
   Point,
 } from 'components';
+import {line} from 'd3-shape';
 
 import {Chart} from '../Chart';
 import {Series} from '../types';
@@ -70,6 +71,22 @@ const mockEmptyStateProps = {
   hasSpline: false,
   isAnimated: false,
 };
+jest.mock('../../../utilities', () => {
+  return {
+    ...jest.requireActual('../../../utilities'),
+    getPathLength: () => 0,
+  };
+});
+
+jest.mock('d3-shape', () => ({
+  ...jest.requireActual('d3-shape'),
+  line: jest.fn(() => {
+    const shape = (value: any) => value;
+    shape.x = () => shape;
+    shape.y = () => shape;
+    return shape;
+  }),
+}));
 
 describe('<Chart />', () => {
   beforeEach(() => {
@@ -139,13 +156,13 @@ describe('<Chart />', () => {
     const chart = mount(<Chart {...mockProps} />);
 
     // No crosshair if there is no active point
-    expect(chart).not.toContainReactComponent(Crosshair);
+    expect(chart.find(Crosshair)).toHaveReactProps({opacity: 0});
 
     // create an active point
     const svg = chart.find('svg')!;
     svg.trigger('onMouseMove', fakeSVGEvent);
 
-    expect(chart).toContainReactComponent(Crosshair);
+    expect(chart.find(Crosshair)).toHaveReactProps({opacity: 1});
   });
 
   it('renders a <Line /> for each series', () => {
@@ -159,15 +176,32 @@ describe('<Chart />', () => {
     expect(chart).toContainReactComponentTimes(Line, 2);
   });
 
-  it('renders a <Point /> for each data item in each series', () => {
-    const chart = mount(
+  it('calls the d3 curve method when hasSpline is true', () => {
+    const curveSpy = jest.fn();
+    (line as jest.Mock).mockImplementationOnce(() => {
+      const shape = (value: any) => value;
+      shape.x = () => shape;
+      shape.y = () => shape;
+      shape.curve = curveSpy;
+      return shape;
+    });
+
+    mount(
       <Chart
         {...mockProps}
+        hasSpline
         series={[primarySeries, {...primarySeries, name: 'A second series'}]}
       />,
     );
 
-    expect(chart).toContainReactComponentTimes(Point, 8);
+    expect(curveSpy).toHaveBeenCalled();
+  });
+
+  it('renders a <Point /> for each data item in each series', () => {
+    const series = [primarySeries, {...primarySeries, name: 'A second series'}];
+    const chart = mount(<Chart {...mockProps} series={series} />);
+
+    expect(chart).toContainReactComponentTimes(Point, 8 + series.length);
   });
 
   it('passes props to <Point />', () => {

@@ -239,6 +239,7 @@ export function Chart({
                 index={index}
                 tabIndex={stackIndex === 0 ? 0 : -1}
                 ariaLabelledby={tooltipId.current}
+                isAnimated={isAnimated && !prefersReducedMotion}
               />
             )),
           )}

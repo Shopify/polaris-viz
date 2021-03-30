@@ -10,6 +10,7 @@ const mockProps = {
   active: false,
   color: 'colorPurple' as Color,
   index: 0,
+  isAnimated: false,
 };
 
 describe('<Point />', () => {
