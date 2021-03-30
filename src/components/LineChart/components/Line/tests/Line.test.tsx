@@ -33,9 +33,19 @@ const mockProps = {
   xScale: scaleLinear(),
   yScale: scaleLinear(),
   hasSpline: false,
+  isAnimated: false,
+  index: 0,
 };
 
 describe('<Line />', () => {
+  beforeAll(() => {
+    Object.defineProperty(window, 'matchMedia', {
+      value: jest.fn(() => {
+        return {matches: false};
+      }),
+    });
+  });
+
   describe('Line', () => {
     it('renders a line with the series styles', () => {
       const actual = mount(

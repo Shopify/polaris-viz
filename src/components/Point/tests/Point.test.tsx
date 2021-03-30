@@ -13,6 +13,14 @@ const mockProps = {
 };
 
 describe('<Point />', () => {
+  beforeAll(() => {
+    Object.defineProperty(window, 'matchMedia', {
+      value: jest.fn(() => {
+        return {matches: false};
+      }),
+    });
+  });
+
   it('renders a circle at the given coordinates', () => {
     const point = mount(
       <svg>

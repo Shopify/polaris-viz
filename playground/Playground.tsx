@@ -73,6 +73,7 @@ export default function Playground() {
       <br />
       <button onClick={toggleDemos}>Toggle Demos</button>
       {showDemos && <Demos />}
+      <Demos />
     </div>
   );
 }

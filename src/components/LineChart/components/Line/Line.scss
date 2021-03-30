@@ -1,0 +1,15 @@
+.Path {
+  animation: reveal 500ms ease-in-out 1;
+}
+
+@keyframes reveal {
+  0% {
+    clip-path: inset(0 100% 0 0);
+  }
+  99% {
+    clip-path: inset(0);
+  }
+  100% {
+    clip-path: unset;
+  }
+}
