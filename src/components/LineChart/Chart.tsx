@@ -1,7 +1,11 @@
 import React, {useState, useMemo, useRef, useCallback} from 'react';
 import throttle from 'lodash.throttle';
 
-import {useLinearXAxisDetails, useLinearXScale} from '../../hooks';
+import {
+  useLinearXAxisDetails,
+  useLinearXScale,
+  usePrefersReducedMotion,
+} from '../../hooks';
 import {
   SMALL_SCREEN,
   SMALL_FONT_SIZE,
@@ -36,6 +40,7 @@ interface Props {
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
   hideXAxisLabels: boolean;
   hasSpline: boolean;
+  isAnimated: boolean;
 }
 
 export function Chart({
@@ -47,7 +52,10 @@ export function Chart({
   renderTooltipContent,
   hideXAxisLabels,
   hasSpline,
+  isAnimated,
 }: Props) {
+  const {prefersReducedMotion} = usePrefersReducedMotion();
+
   const [tooltipDetails, setTooltipDetails] = useState<ActiveTooltip | null>(
     null,
   );
@@ -270,6 +278,8 @@ export function Chart({
                   xScale={xScale}
                   yScale={yScale}
                   hasSpline={hasSpline}
+                  isAnimated={isAnimated && !prefersReducedMotion}
+                  index={index}
                 />
 
                 {data.map(({rawValue}, dataIndex) => {
@@ -287,6 +297,7 @@ export function Chart({
                       index={dataIndex}
                       tabIndex={isFirstLine ? 0 : -1}
                       ariaLabelledby={tooltipId.current}
+                      isAnimated={isAnimated && !prefersReducedMotion}
                     />
                   );
                 })}
@@ -297,6 +308,8 @@ export function Chart({
                     yScale={yScale}
                     xScale={xScale}
                     hasSpline={hasSpline}
+                    isAnimated={isAnimated && !prefersReducedMotion}
+                    index={index}
                   />
                 ) : null}
               </React.Fragment>

@@ -279,3 +279,11 @@ If provided, renders a `<SkipLink/>` button with the string. Use this for charts
 | `boolean` | `false` |
 
 Whether to curve the line between points.
+
+#### isAnimated
+
+| type      | default |
+| --------- | ------- |
+| `boolean` | `false` |
+
+Whether to animate the lines, gradient, and points when the chart is initially rendered and its data is updated. Even if `isAnimated` is set to true, animations will not be displayed for users with reduced motion preferences.

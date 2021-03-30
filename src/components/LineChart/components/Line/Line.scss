@@ -1,0 +1,16 @@
+.Path {
+  animation: reveal 500ms ease-in-out 1 both;
+}
+
+@keyframes reveal {
+  // 5px leeway is to prevent the top and bottom of the path from being cut off
+  0% {
+    clip-path: inset(-5px 100% -5px 0);
+  }
+  99% {
+    clip-path: inset(-5px 0% -5px 0);
+  }
+  100% {
+    clip-path: unset;
+  }
+}

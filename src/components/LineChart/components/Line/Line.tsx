@@ -4,12 +4,17 @@ import {ScaleLinear} from 'd3-scale';
 
 import {getColorValue} from '../../../../utilities';
 import {Series} from '../../types';
+import {ANIMATION_DELAY} from '../../constants';
+
+import styles from './Line.scss';
 
 interface Props {
   series: Required<Series>;
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
   hasSpline: boolean;
+  isAnimated: boolean;
+  index: number;
 }
 
 export const Line = React.memo(function Shape({
@@ -17,6 +22,8 @@ export const Line = React.memo(function Shape({
   series,
   xScale,
   yScale,
+  isAnimated,
+  index,
 }: Props) {
   const lineGenerator = line<{rawValue: number}>()
     .x((_, index) => xScale(index))
@@ -35,6 +42,10 @@ export const Line = React.memo(function Shape({
   return (
     <path
       d={path}
+      style={{
+        /* stylelint-disable-next-line value-keyword-case */
+        animationDelay: `${index * ANIMATION_DELAY}ms`,
+      }}
       fill="none"
       strokeWidth="2px"
       paintOrder="stroke"
@@ -42,6 +53,7 @@ export const Line = React.memo(function Shape({
       strokeLinejoin="round"
       strokeLinecap="round"
       strokeDasharray={series.lineStyle === 'dashed' ? '2 4' : 'unset'}
+      className={isAnimated ? styles.Path : null}
     />
   );
 });

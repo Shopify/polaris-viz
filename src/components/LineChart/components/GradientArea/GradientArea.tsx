@@ -3,19 +3,30 @@ import {ScaleLinear} from 'd3-scale';
 import {area, curveMonotoneX} from 'd3-shape';
 
 import {uniqueId, getColorValue, rgbToRgba} from '../../../../utilities';
+import {ANIMATION_DELAY} from '../../constants';
 import {Data} from '../../../../types';
 import {Series} from '../../types';
 
 import {getGradientDetails} from './utilities/get-gradient-details';
+import styles from './GradientArea.scss';
 
 interface Props {
   series: Series;
   yScale: ScaleLinear<number, number>;
   xScale: ScaleLinear<number, number>;
   hasSpline: boolean;
+  isAnimated: boolean;
+  index: number;
 }
 
-export function GradientArea({series, yScale, xScale, hasSpline}: Props) {
+export function GradientArea({
+  series,
+  yScale,
+  xScale,
+  hasSpline,
+  isAnimated,
+  index,
+}: Props) {
   const id = useMemo(() => uniqueId('gradient'), []);
   const {data, color} = series;
 
@@ -53,9 +64,14 @@ export function GradientArea({series, yScale, xScale, hasSpline}: Props) {
 
       <path
         d={areaShape}
+        style={{
+          /* stylelint-disable-next-line value-keyword-case */
+          animationDelay: `${index * ANIMATION_DELAY}ms`,
+        }}
         fill={`url(#${id})`}
         strokeWidth="0"
         stroke={series.color}
+        className={isAnimated ? styles.Area : null}
       />
     </React.Fragment>
   );

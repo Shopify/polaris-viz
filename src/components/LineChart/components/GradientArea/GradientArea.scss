@@ -1,0 +1,10 @@
+.Area {
+  opacity: 0;
+  animation: fadeIn 500ms ease-in-out 250ms forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}

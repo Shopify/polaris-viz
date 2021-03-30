@@ -1,6 +1,7 @@
 import React from 'react';
 import tokens from '@shopify/polaris-tokens';
 import {Color, ActiveTooltip} from 'types';
+import {useSpring, animated} from 'react-spring';
 
 import {getColorValue} from '../../utilities';
 
@@ -12,6 +13,7 @@ interface Props {
   cy: number;
   color: Color;
   index: number;
+  isAnimated: boolean;
   onFocus?: ({index, x, y}: ActiveTooltip) => void;
   tabIndex?: number;
   ariaLabelledby?: string;
@@ -26,6 +28,7 @@ export const Point = React.memo(function Point({
   index,
   ariaLabelledby,
   tabIndex = -1,
+  isAnimated,
 }: Props) {
   const handleFocus = () => {
     if (onFocus != null) {
@@ -33,14 +36,23 @@ export const Point = React.memo(function Point({
     }
   };
 
+  const {radius} = useSpring({
+    radius: active ? 5 : 0,
+    from: {
+      radius: 0,
+    },
+    config: {duration: tokens.durationBase},
+    immediate: !isAnimated,
+  });
+
   return (
-    <circle
+    <animated.circle
       role={ariaLabelledby == null ? '' : 'image'}
       aria-labelledby={ariaLabelledby}
       tabIndex={tabIndex}
       cx={cx}
       cy={cy}
-      r={active ? 5 : 0}
+      r={radius as any}
       fill={getColorValue(color)}
       stroke={tokens.colorWhite}
       strokeWidth={1.5}

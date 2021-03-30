@@ -27,6 +27,14 @@ const primarySeries: Required<Series> = {
 };
 
 describe('<LineChart />', () => {
+  beforeAll(() => {
+    Object.defineProperty(window, 'matchMedia', {
+      value: jest.fn(() => {
+        return {matches: false};
+      }),
+    });
+  });
+
   it('renders a <Chart />', () => {
     const lineChart = mount(
       <LineChart series={[primarySeries]} xAxisLabels={['Jan 1']} />,
