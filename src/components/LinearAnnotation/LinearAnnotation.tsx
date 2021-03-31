@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {scaleLinear} from 'd3-scale';
 
 interface Props {
@@ -10,6 +10,7 @@ interface Props {
   axisMargin: number;
   drawableWidth: number;
   chartHeight: number;
+  barMargin: number;
 }
 
 const WIDTH = 80;
@@ -20,50 +21,51 @@ export function LinearAnnotation({
   axisMargin,
   drawableWidth,
   drawableHeight,
+  barMargin,
 }: Props) {
+  const [showAnnotation, updateAnnotation] = useState(false);
+
   const scale = scaleLinear()
     .range([0, drawableWidth])
     .domain(linearAnnotation.range);
 
-  const annotationPosition = scale(linearAnnotation.annotation);
+  const annotationPosition =
+    scale(linearAnnotation.annotation) -
+    (1 - barMargin / 2) * linearAnnotation.annotation;
 
   return (
     <React.Fragment>
-      <line
-        stroke="#E4E5E7"
-        y2={drawableHeight + HEIGHT}
-        transform={`translate(${axisMargin + annotationPosition}, 0)`}
-        stroke-width="3"
-        stroke-linecap="round"
-        strokeDasharray="0.1, 8"
+      <circle
+        cx={annotationPosition + 2.5}
+        cy={drawableHeight + 40}
+        r="6"
+        stroke="#fff"
+        strokeWidth="2"
+        fill="#3A32B8"
+        style={{cursor: 'pointer'}}
+        onClick={() => updateAnnotation(!showAnnotation)}
       />
-      <g
-        transform={`translate(${axisMargin +
-          annotationPosition -
-          WIDTH / 2}, 0)`}
+
+      <foreignObject
+        width="80"
+        height="60"
+        x={annotationPosition + 4}
+        y={drawableHeight - 15}
       >
-        <foreignObject width={WIDTH} height={HEIGHT}>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-            }}
-          >
-            <div
-              style={{
-                textAlign: 'center',
-                background: '#E4E5E7',
-                borderRadius: '3px',
-                padding: '5px',
-                fontSize: '10px',
-                // width: 'min-content',
-              }}
-            >
-              {linearAnnotation.description}
-            </div>
-          </div>
-        </foreignObject>
-      </g>
+        <div
+          style={{
+            background: '#fff',
+            padding: '8px',
+            borderRadius: '3px',
+            // width: 'min-content',
+            opacity: showAnnotation ? '1' : '0',
+            fontSize: 12,
+            transition: 'opacity 0.3s',
+          }}
+        >
+          Median: 8.1
+        </div>
+      </foreignObject>
     </React.Fragment>
   );
 }

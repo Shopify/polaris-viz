@@ -29,6 +29,7 @@ interface Props {
   role?: string;
   hasRoundedCorners?: boolean;
   startingValue?: number;
+  isLastBar?: boolean;
 }
 
 export function Bar({
@@ -46,6 +47,7 @@ export function Bar({
   role,
   hasRoundedCorners,
   startingValue = 0,
+  isLastBar,
 }: Props) {
   const gradientColorId = useRef(uniqueId('gradient'));
   const rawHeight = Math.abs(yScale(rawValue) - yScale(0));
@@ -116,7 +118,7 @@ export function Bar({
       <path
         className={styles.Bar}
         d={barPath}
-        fill="url(#bar-gradient2)"
+        fill={isLastBar ? 'url(#bar-gradient)' : 'url(#bar-gradient2)'}
         aria-label={ariaLabel}
         onFocus={handleFocus}
         tabIndex={tabIndex}

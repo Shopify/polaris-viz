@@ -168,9 +168,8 @@ export function Chart({
             y2={drawableHeight}
             gradientUnits="userSpaceOnUse"
           >
-            <stop stopColor="#FE0FD8" offset="24.76%" />
-            <stop stopColor="#FE8627" offset="72.1%" />
-            <stop stopColor="#FDCD20" offset="100%" />
+            <stop stopColor="#757F9A" offset="50%" />
+            <stop stopColor="#D7DDE8" offset="100%" />
           </linearGradient>
 
           <linearGradient
@@ -242,6 +241,7 @@ export function Chart({
                   role="img"
                   hasRoundedCorners={hasRoundedCorners}
                   chartDimensions={chartDimensions}
+                  isLastBar={index + 1 === data.length}
                 />
               </g>
             );
@@ -254,6 +254,7 @@ export function Chart({
             axisMargin={axisMargin}
             drawableWidth={drawableWidth}
             drawableHeight={drawableHeight}
+            barMargin={barMargin}
           />
         ) : null}
       </svg>
