@@ -60,12 +60,36 @@ const mockProps = {
 
 export default function Playground() {
   const [showDemos, setShowDemos] = useState(false);
+  const [currentChart, setCurrentChart] = useState('line');
   const toggleDemos = () => setShowDemos((showingDemos) => !showingDemos);
 
   return (
     <div>
-      <h3>Playground area</h3>
-      <NormalizedStackedBarChart
+      <button onClick={() => setCurrentChart('line')}>Line Chart</button>
+      <button onClick={() => setCurrentChart('bar')}>Bar Chart</button>
+      <button onClick={() => setCurrentChart('multi')}>Comparison Chart</button>
+
+      {currentChart === 'line' && (
+        <>
+          <h3>Line Chart</h3>
+          <PlaygroundDemos.LineChartDemo />
+        </>
+      )}
+
+      {currentChart === 'bar' && (
+        <>
+          <h3>Bar Chart</h3>
+          <PlaygroundDemos.BarChartDemo />
+        </>
+      )}
+
+      {currentChart === 'multi' && (
+        <>
+          <h3>Multi Series Bar Chart Chart</h3>
+          <PlaygroundDemos.MultiSeriesBarChartDemo />
+        </>
+      )}
+      {/* <NormalizedStackedBarChart
         size="large"
         // orientation="vertical"
         {...mockProps}
@@ -73,7 +97,7 @@ export default function Playground() {
       <br />
       <button onClick={toggleDemos}>Toggle Demos</button>
       {showDemos && <Demos />}
-      <Demos />
+      <Demos /> */}
     </div>
   );
 }

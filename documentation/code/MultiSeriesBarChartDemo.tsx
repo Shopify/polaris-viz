@@ -35,7 +35,7 @@ export function MultiSeriesBarChartDemo({isStacked = false}: Props) {
         {label: 'Wednesday', rawValue: 4},
         {label: 'Thursday', rawValue: 8},
         {label: 'Friday', rawValue: 10},
-        {label: 'Saturday', rawValue: 0},
+        {label: 'Saturday', rawValue: 2},
         {label: 'Sunday', rawValue: 1},
       ],
     },

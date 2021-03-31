@@ -218,6 +218,7 @@ export function LineChartDemo() {
           formatYAxisLabel={formatYAxisLabel}
           renderTooltipContent={renderTooltipContent}
           skipLinkText="Skip line chart content"
+          hasSpline
           isAnimated
         />
       </div>
