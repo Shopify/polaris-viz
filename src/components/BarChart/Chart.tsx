@@ -198,6 +198,7 @@ export function Chart({
                   highlightColor={highlightColor}
                   onFocus={handleFocus}
                   index={index}
+                  numberOfBars={data.length}
                   ariaLabel={ariaLabel}
                   tabIndex={0}
                   role="img"
