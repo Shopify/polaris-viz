@@ -22,6 +22,7 @@ export {YAxis} from './YAxis';
 export {TooltipContainer} from './TooltipContainer';
 export {SquareColorPreview} from './SquareColorPreview';
 export {StackedAreaChart, StackedAreaChartProps} from './StackedAreaChart';
+export {LinearGradient} from './LinearGradient';
 export {LinearXAxis} from './LinearXAxis';
 export {
   MultiSeriesBarChart,

@@ -1,6 +1,6 @@
 import React from 'react';
 import {ScaleLinear} from 'd3-scale';
-import {Color} from 'types';
+import {Color, GradientColor} from 'types';
 
 import {Bar} from '../../../Bar';
 import {BAR_SPACING} from '../../constants';
@@ -10,8 +10,8 @@ interface Props {
   yScale: ScaleLinear<number, number>;
   width: number;
   data: number[];
-  colors: Color[];
-  highlightColors: Color[];
+  colors: (Color | GradientColor)[];
+  highlightColors: (Color | GradientColor)[];
   isActive: boolean;
   barGroupIndex: number;
   ariaLabel: string;

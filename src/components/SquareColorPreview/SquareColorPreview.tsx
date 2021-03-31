@@ -1,11 +1,11 @@
 import React from 'react';
-import {Color} from 'types';
+import {Color, GradientColor} from 'types';
 
 import {getColorValue} from '../../utilities';
 
 import styles from './SquareColorPreview.scss';
 
-export function SquareColorPreview({color}: {color: Color}) {
+export function SquareColorPreview({color}: {color: Color | GradientColor}) {
   return (
     <div
       className={styles.ColorPreview}

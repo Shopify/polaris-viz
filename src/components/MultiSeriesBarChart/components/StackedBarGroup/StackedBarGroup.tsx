@@ -1,20 +1,19 @@
 import React from 'react';
 import {ScaleLinear, ScaleBand} from 'd3-scale';
-import {Color} from 'types';
+import {Color, GradientColor} from 'types';
 
+import {Bar} from '../../../Bar';
 import {formatAriaLabel} from '../../utilities';
 import {StackSeries} from '../../types';
 import {BAR_SPACING} from '../../constants';
-import {getColorValue} from '../../../../utilities';
-import styles from '../../shared.scss';
 
 interface Props {
   groupIndex: number;
   data: StackSeries;
   yScale: ScaleLinear<number, number>;
   xScale: ScaleBand<string>;
-  colors: Color[];
-  highlightColors: Color[];
+  colors: (Color | GradientColor)[];
+  highlightColors: (Color | GradientColor)[];
   activeBarGroup: number | null;
   accessibilityData: {
     title: string;
@@ -44,19 +43,21 @@ export function StackedBarGroup({
       {data.map(([start, end], barIndex) => {
         const xPosition = xScale(barIndex.toString());
 
-        const fillColor =
-          activeBarGroup === barIndex
-            ? getColorValue(highlightColors[groupIndex])
-            : getColorValue(colors[groupIndex]);
+        const fillColor = colors[groupIndex];
+
+        const highlightColor = highlightColors[groupIndex];
 
         const handleFocus = () => {
           onFocus(barIndex);
         };
 
         const ariaLabel = formatAriaLabel(accessibilityData[barIndex]);
-        const height = Math.abs(yScale(end) - yScale(start));
 
         const ariaEnabledBar = groupIndex === 0;
+
+        if (xPosition == null) {
+          return null;
+        }
 
         return (
           <g
@@ -64,18 +65,20 @@ export function StackedBarGroup({
             aria-hidden={!ariaEnabledBar}
             key={barIndex}
           >
-            <rect
-              className={styles.Bar}
-              key={barIndex}
-              x={xPosition}
-              y={yScale(end)}
-              height={height}
+            <Bar
+              color={fillColor}
+              highlightColor={highlightColor}
+              yScale={yScale}
+              rawValue={end - start}
               width={barWidth}
-              fill={fillColor}
+              ariaLabel={ariaEnabledBar ? ariaLabel : undefined}
               tabIndex={ariaEnabledBar ? 0 : -1}
-              onFocus={handleFocus}
               role={ariaEnabledBar ? 'img' : undefined}
-              aria-label={ariaEnabledBar ? ariaLabel : undefined}
+              x={xPosition}
+              startingValue={start}
+              onFocus={handleFocus}
+              isSelected={activeBarGroup === barIndex}
+              index={groupIndex}
             />
           </g>
         );

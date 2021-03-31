@@ -36,6 +36,10 @@ interface Props {
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
   hideXAxisLabels: boolean;
   hasSpline: boolean;
+  axisColor: string;
+  textColor: string;
+  lineWidth: number;
+  useGradientLine: boolean;
 }
 
 export function Chart({
@@ -47,6 +51,11 @@ export function Chart({
   renderTooltipContent,
   hideXAxisLabels,
   hasSpline,
+  axisColor,
+  textColor,
+  lineWidth,
+  crossHairColor,
+  useGradientLine,
 }: Props) {
   const [tooltipDetails, setTooltipDetails] = useState<ActiveTooltip | null>(
     null,
@@ -232,6 +241,8 @@ export function Chart({
             fontSize={fontSize}
             drawableHeight={drawableHeight}
             ariaHidden
+            axisColor={axisColor}
+            textColor={textColor}
           />
         </g>
 
@@ -240,6 +251,8 @@ export function Chart({
             ticks={ticks}
             drawableWidth={drawableWidth}
             fontSize={fontSize}
+            axisColor={axisColor}
+            textColor={textColor}
           />
         </g>
 
@@ -248,6 +261,7 @@ export function Chart({
             <Crosshair
               x={xScale(tooltipDetails.index)}
               height={drawableHeight}
+              crossHairColor={crossHairColor}
             />
           </g>
         )}
@@ -265,11 +279,22 @@ export function Chart({
 
             return (
               <React.Fragment key={`${name}-${index}`}>
+                {showArea ? (
+                  <GradientArea
+                    series={singleSeries}
+                    yScale={yScale}
+                    xScale={xScale}
+                    hasSpline={hasSpline}
+                  />
+                ) : null}
+
                 <Line
                   series={singleSeries}
                   xScale={xScale}
                   yScale={yScale}
                   hasSpline={hasSpline}
+                  lineWidth={lineWidth}
+                  useGradientLine={useGradientLine}
                 />
 
                 {data.map(({rawValue}, dataIndex) => {
@@ -290,15 +315,6 @@ export function Chart({
                     />
                   );
                 })}
-
-                {showArea ? (
-                  <GradientArea
-                    series={singleSeries}
-                    yScale={yScale}
-                    xScale={xScale}
-                    hasSpline={hasSpline}
-                  />
-                ) : null}
               </React.Fragment>
             );
           })}

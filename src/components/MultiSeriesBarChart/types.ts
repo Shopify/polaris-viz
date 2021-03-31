@@ -1,9 +1,10 @@
 import {Series as ShapeSeries} from 'd3-shape';
 
-import {Color, DataSeries, Data} from '../../types';
+import {Color, DataSeries, Data, GradientColor} from '../../types';
 
-export interface Series extends DataSeries<Data> {
-  highlightColor?: Color;
+export interface Series extends Omit<DataSeries<Data>, 'color'> {
+  highlightColor?: Color | GradientColor;
+  color?: Color | GradientColor;
 }
 
 export type StackSeries = ShapeSeries<
@@ -15,7 +16,7 @@ export type StackSeries = ShapeSeries<
 
 export interface RenderTooltipContentData {
   data: {
-    color: Color;
+    color: Color | GradientColor;
     label: string;
     value: number;
   }[];

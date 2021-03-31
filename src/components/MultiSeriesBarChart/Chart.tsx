@@ -30,6 +30,8 @@ interface Props {
   timeSeries: boolean;
   isStacked: boolean;
   hasRoundedCorners: boolean;
+  axisColor: string;
+  textColor: string;
 }
 
 export function Chart({
@@ -42,6 +44,8 @@ export function Chart({
   timeSeries,
   isStacked,
   hasRoundedCorners,
+  textColor = 'rgb(99, 115, 129)',
+  axisColor = 'rgb(223, 227, 232)',
 }: Props) {
   const [activeBarGroup, setActiveBarGroup] = useState<number | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState<{
@@ -205,6 +209,8 @@ export function Chart({
             xAxisDetails={xAxisDetails}
             showFewerLabels={timeSeries && xAxisDetails.needsDiagonalLabels}
             fontSize={fontSize}
+            axisColor={axisColor}
+            textColor={textColor}
           />
         </g>
 
@@ -216,6 +222,8 @@ export function Chart({
             ticks={ticks}
             drawableWidth={drawableWidth}
             fontSize={fontSize}
+            axisColor={axisColor}
+            textColor={textColor}
           />
         </g>
 
