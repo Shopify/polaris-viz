@@ -63,6 +63,8 @@ export function BarGroup({
               role={ariaEnabledBar ? 'img' : undefined}
               ariaLabel={ariaEnabledBar ? ariaLabel : undefined}
               hasRoundedCorners={hasRoundedCorners}
+              numberOfBars={data.length}
+              isAnimated={false}
             />
           </g>
         );

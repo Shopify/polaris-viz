@@ -21,10 +21,11 @@ interface Props {
   width: number;
   index: number;
   onFocus: ({index, cx, cy}: {index: number; cx: number; cy: number}) => void;
+  numberOfBars: number;
+  isAnimated: boolean;
   ariaLabel?: string;
   tabIndex: number;
   role?: string;
-  numberOfBars: number;
   hasRoundedCorners?: boolean;
 }
 
@@ -43,6 +44,7 @@ export function Bar({
   role,
   hasRoundedCorners,
   numberOfBars,
+  isAnimated,
 }: Props) {
   const currentColor = isSelected
     ? getColorValue(highlightColor)
@@ -70,23 +72,30 @@ export function Bar({
   const yPosition = isNegative ? zeroScale + height : zeroScale - height;
   const rotation = isNegative ? 'rotate(180deg)' : 'rotate(0deg)';
   const xPosition = isNegative ? x + width : x;
+  const immediate = !isAnimated;
 
   const {height: animatedHeight, yPosition: animatedYPosition} = useSpring({
     height,
     yPosition,
     from: {height: 0, yPosition: zeroScale},
-    delay: (MAX_DELAY / numberOfBars) * index,
+    delay: immediate ? 0 : (MAX_DELAY / numberOfBars) * index,
     config: config.gentle,
+    immediate,
   });
+
+  const barPath =
+    rawValue === 0
+      ? ''
+      : animatedHeight.interpolate((height) => {
+          return `M${radius} 0h${width -
+            radius *
+              2} a${radius} ${radius} 0 01${radius} ${radius} v${(height as number) -
+            radius} H0 V${radius} a${radius} ${radius} 0 01${radius}-${radius} z`;
+        });
 
   return (
     <animated.path
-      d={animatedHeight.interpolate((height) => {
-        return `M${radius} 0h${width -
-          radius *
-            2} a${radius} ${radius} 0 01${radius} ${radius} v${(height as number) -
-          radius} H0 V${radius} a${radius} ${radius} 0 01${radius}-${radius} z`;
-      })}
+      d={barPath}
       fill={animation.color}
       aria-label={ariaLabel}
       onFocus={handleFocus}
