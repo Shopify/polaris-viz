@@ -30,6 +30,7 @@ describe('<Bar/>', () => {
     barGroupIndex: 0,
     ariaLabel: 'Aria Label',
     hasRoundedCorners: false,
+    isAnimated: false,
   };
 
   it('renders a <Bar /> for each data item', () => {

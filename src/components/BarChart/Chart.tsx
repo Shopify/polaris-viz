@@ -31,6 +31,7 @@ interface Props {
   timeSeries: boolean;
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
   hasRoundedCorners: boolean;
+  isAnimated: boolean;
 }
 
 export function Chart({
@@ -44,6 +45,7 @@ export function Chart({
   timeSeries,
   renderTooltipContent,
   hasRoundedCorners,
+  isAnimated,
 }: Props) {
   const [activeBar, setActiveBar] = useState<number | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState<{
@@ -198,10 +200,12 @@ export function Chart({
                   highlightColor={highlightColor}
                   onFocus={handleFocus}
                   index={index}
+                  numberOfBars={data.length}
                   ariaLabel={ariaLabel}
                   tabIndex={0}
                   role="img"
                   hasRoundedCorners={hasRoundedCorners}
+                  isAnimated={isAnimated}
                 />
               </g>
             );
