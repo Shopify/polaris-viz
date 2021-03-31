@@ -101,6 +101,7 @@ export function BarChartDemo() {
           renderTooltipContent={renderTooltipContent}
           skipLinkText="Skip chart content"
           hasRoundedCorners
+          isAnimated
         />
       </div>
     </div>
