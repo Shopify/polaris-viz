@@ -182,8 +182,8 @@ export function Chart({
               id="bar-gradient2"
               x1="0"
               y1="0"
-              x2="0"
-              y2={drawableHeight}
+              x2="600px"
+              y2="0"
               gradientUnits="userSpaceOnUse"
             >
               <stop stopColor="#4BFCE0" offset="21%" />
@@ -251,6 +251,7 @@ export function Chart({
                   isAnimated={isAnimated}
                   hasRoundedCorners={hasRoundedCorners}
                   chartDimensions={chartDimensions}
+                  drawableHeight={drawableHeight}
                   lastBarTreatment={
                     index + 1 === data.length && lastBarTreatment
                   }

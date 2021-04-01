@@ -92,10 +92,15 @@ export function Bar({
     rawValue === 0
       ? ''
       : animatedHeight.interpolate((height) => {
-          return `M${radius} 0h${width -
-            radius *
-              2} a${radius} ${radius} 0 01${radius} ${radius} v${(height as number) -
-            radius} H0 V${radius} a${radius} ${radius} 0 01${radius}-${radius} z`;
+          return `
+            M${radius + xPosition} 0
+            h${width - radius * 2}
+            a${radius} ${radius} 0 01${radius} ${radius}
+            v${(height as number) - radius}
+            H${xPosition}
+            V${radius}
+            a${radius} ${radius} 0 01${radius}-${radius}
+            z`;
         });
 
   const isGradientBar = isGradientType(color) || isGradientType(highlightColor);
@@ -149,7 +154,7 @@ export function Bar({
         style={{
           /* stylelint-disable */
           transform: animatedYPosition.interpolate(
-            (y) => `translate(${xPosition}px, ${y}px) ${rotation}`,
+            (y) => `translateY(${y}px) ${rotation}`,
           ),
           /* stylelint-enable */
         }}

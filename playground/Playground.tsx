@@ -119,6 +119,7 @@ export default function Playground() {
           hasRoundedCorners
           leftAlignLabels
           lastBarTreatment
+          useHardCodedGradient
         />
       </div>
 
@@ -221,6 +222,7 @@ export default function Playground() {
         }}
       >
         <BarChart
+          useHardCodedGradient
           axisColor="#194685"
           textColor="#8C9196"
           crossHairColor="dark"
@@ -229,7 +231,7 @@ export default function Playground() {
             return {rawValue: Math.random() * 100, label: (i + 1).toString()};
           })}
           color="blueGreenGradient"
-          highlightColor="inverse"
+          // highlightColor="inverse"
           formatXAxisLabel={(val) =>
             new Date(val).toLocaleDateString('en-CA', {
               day: 'numeric',
