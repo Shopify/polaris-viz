@@ -89,6 +89,10 @@ const barChartData = [
   },
 ];
 
+const backgroundColor = '#1f1f25';
+const axisColor = '#414247';
+const textColor = '#dcdcdc';
+
 export default function Playground() {
   const [showDemos, setShowDemos] = useState(false);
   const toggleDemos = () => setShowDemos((showingDemos) => !showingDemos);
@@ -102,7 +106,7 @@ export default function Playground() {
         style={{
           width: '600px',
           height: '250px',
-          background: '#0E305E',
+          background: backgroundColor,
           padding: '20px',
           marginTop: '5px',
         }}
@@ -113,8 +117,8 @@ export default function Playground() {
           color="blueWhiteGradient"
           skipLinkText="Skip chart content"
           timeSeries
-          axisColor="#194685"
-          textColor="#8C9196"
+          axisColor={axisColor}
+          textColor={textColor}
           crossHairColor="dark"
           hasRoundedCorners
           leftAlignLabels
@@ -127,15 +131,15 @@ export default function Playground() {
         style={{
           width: '600px',
           height: '250px',
-          background: '#0E305E',
+          background: backgroundColor,
           padding: '20px',
           marginTop: '5px',
         }}
       >
         <LineChart
           isAnimated
-          axisColor="#194685"
-          textColor="#8C9196"
+          axisColor={axisColor}
+          textColor={textColor}
           crossHairColor="dark"
           series={[
             {
@@ -216,15 +220,15 @@ export default function Playground() {
         style={{
           width: '600px',
           height: '250px',
-          background: '#0E305E',
+          background: backgroundColor,
           padding: '20px',
           marginTop: '5px',
         }}
       >
         <BarChart
           useHardCodedGradient
-          axisColor="#194685"
-          textColor="#8C9196"
+          axisColor={axisColor}
+          textColor={textColor}
           crossHairColor="dark"
           isAnimated
           data={Array.from({length: 12}, (_, i) => {
