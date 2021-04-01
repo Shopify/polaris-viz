@@ -25,7 +25,9 @@ export interface BarChartProps {
   axisColor?: string;
   leftAlignLabels?: boolean;
   useHardCodedGradient?: boolean;
+  lastBarTreatment?: boolean;
   isAnimated?: boolean;
+  background?: string;
 }
 
 export function BarChart({
@@ -45,6 +47,7 @@ export function BarChart({
   useHardCodedGradient = false,
   lastBarTreatment = false,
   isAnimated = false,
+  background = '#fff',
 }: BarChartProps) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -109,6 +112,7 @@ export function BarChart({
                 ? renderTooltipContent
                 : renderDefaultTooltipContent
             }
+            background={background}
           />
           {skipLinkText == null || skipLinkText.length === 0 ? null : (
             <SkipLink.Anchor id={skipLinkAnchorId.current} />

@@ -53,8 +53,8 @@ const Template: Story<BarChartProps> = (args: BarChartProps) => {
       crossHairColor="dark"
       hasRoundedCorners
       leftAlignLabels
-      lastBarTreatment
       useHardCodedGradient
+      background={darkBackground}
     />
   );
 };
@@ -73,7 +73,7 @@ const chartData = [
     label: '2',
   },
   {
-    rawValue: 0.6549163769236532,
+    rawValue: 9.6549163769236532,
     label: '3',
     annotation: 'Median: 3.5',
   },

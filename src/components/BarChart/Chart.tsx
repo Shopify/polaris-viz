@@ -34,8 +34,10 @@ interface Props {
   textColor: string;
   axisColor: string;
   leftAlignLabels: boolean;
+  lastBarTreatment: boolean;
   useHardCodedGradient: boolean;
   isAnimated: boolean;
+  background: string;
 }
 
 export function Chart({
@@ -54,6 +56,7 @@ export function Chart({
   leftAlignLabels,
   useHardCodedGradient,
   lastBarTreatment,
+  background,
   isAnimated,
 }: Props) {
   const [activeBar, setActiveBar] = useState<number | null>(null);
@@ -182,13 +185,12 @@ export function Chart({
               id="bar-gradient2"
               x1="0"
               y1="0"
-              x2="600px"
+              x2={`${chartDimensions.width}px`}
               y2="0"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stopColor="#4BFCE0" offset="21%" />
-              <stop stopColor="#4EADFB" offset="62%" />
-              <stop stopColor="#801AFD" offset="109%" />
+              <stop stopColor="#8F68FF" offset="15%" />
+              <stop stopColor="#00B4C2" offset="93%" />
             </linearGradient>
           </defs>
         ) : null}
@@ -273,11 +275,11 @@ export function Chart({
               <g role="listitem" key={index}>
                 <circle
                   cx={xPosition + barWidth / 2}
-                  cy={yScale(rawValue) - 13}
+                  cy={drawableHeight}
                   r="6"
-                  stroke="#fff"
+                  stroke={background}
                   strokeWidth="2"
-                  fill="#3A32B8"
+                  fill="#8F68FF"
                   style={{cursor: 'pointer'}}
                   onClick={() => updateAnnotation((state) => !state)}
                   onMouseMove={(e) => {

@@ -124,6 +124,7 @@ export default function Playground() {
           leftAlignLabels
           lastBarTreatment
           useHardCodedGradient
+          background={backgroundColor}
         />
       </div>
 
