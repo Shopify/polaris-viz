@@ -31,6 +31,9 @@ describe('<StackedBarGroup/>', () => {
     highlightColors: ['primaryProminent', 'secondaryProminent'] as Color[],
     activeBarGroup: null,
     onFocus: jest.fn(),
+    hasRoundedCorners: false,
+    isAnimated: false,
+    seriesLength: 2,
     accessibilityData: [
       {
         title: 'title1',

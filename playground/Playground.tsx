@@ -65,11 +65,8 @@ export default function Playground() {
   return (
     <div>
       <h3>Playground area</h3>
-      <NormalizedStackedBarChart
-        size="large"
-        // orientation="vertical"
-        {...mockProps}
-      />
+      <PlaygroundDemos.MultiSeriesBarChartDemo isStacked />
+      <PlaygroundDemos.BarChartDemo />
       <br />
       <button onClick={toggleDemos}>Toggle Demos</button>
       {showDemos && <Demos />}

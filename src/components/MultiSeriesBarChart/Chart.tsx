@@ -236,6 +236,7 @@ export function Chart({
                     highlightColors={barHighlightColors}
                     onFocus={handleFocus}
                     accessibilityData={accessibilityData}
+                    seriesLength={series.length}
                   />
                 );
               })

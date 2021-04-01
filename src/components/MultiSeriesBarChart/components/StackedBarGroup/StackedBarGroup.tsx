@@ -1,13 +1,13 @@
 import React from 'react';
 import {ScaleLinear, ScaleBand} from 'd3-scale';
 import {Color} from 'types';
-import {classNames} from '@shopify/css-utilities';
 
 import {formatAriaLabel} from '../../utilities';
 import {StackSeries} from '../../types';
 import {BAR_SPACING} from '../../constants';
 import {getColorValue} from '../../../../utilities';
-import styles from '../../shared.scss';
+
+import {StackedBar} from './components/StackedBar';
 
 interface Props {
   groupIndex: number;
@@ -25,6 +25,9 @@ interface Props {
     }[];
   }[];
   onFocus: (index: number) => void;
+  isAnimated: boolean;
+  seriesLength: number;
+  hasRoundedCorners: boolean;
 }
 
 export function StackedBarGroup({
@@ -37,6 +40,9 @@ export function StackedBarGroup({
   activeBarGroup,
   onFocus,
   accessibilityData,
+  isAnimated,
+  seriesLength,
+  hasRoundedCorners,
 }: Props) {
   const barWidth = xScale.bandwidth() - BAR_SPACING;
 
@@ -54,6 +60,8 @@ export function StackedBarGroup({
           onFocus(barIndex);
         };
 
+        const yPosition = yScale(end);
+
         const ariaLabel = formatAriaLabel(accessibilityData[barIndex]);
         const height = Math.abs(yScale(end) - yScale(start));
 
@@ -63,28 +71,25 @@ export function StackedBarGroup({
           colors[groupIndex] === highlightColors[groupIndex];
 
         return (
-          <g
-            role={groupIndex === 0 ? 'listitem' : undefined}
-            aria-hidden={!ariaEnabledBar}
+          <StackedBar
             key={barIndex}
-          >
-            <rect
-              className={classNames(
-                styles.Bar,
-                nonUniqueHighlightColor && styles.StackNoOutline,
-              )}
-              key={barIndex}
-              x={xPosition}
-              y={yScale(end)}
-              height={height}
-              width={barWidth}
-              fill={fillColor}
-              tabIndex={ariaEnabledBar ? 0 : -1}
-              onFocus={handleFocus}
-              role={ariaEnabledBar ? 'img' : undefined}
-              aria-label={ariaEnabledBar ? ariaLabel : undefined}
-            />
-          </g>
+            x={xPosition}
+            y={yPosition}
+            height={height}
+            fillColor={fillColor}
+            ariaLabel={ariaLabel}
+            ariaEnabledBar={ariaEnabledBar}
+            nonUniqueHighlightColor={nonUniqueHighlightColor}
+            barWidth={barWidth}
+            groupIndex={groupIndex}
+            isAnimated={isAnimated}
+            barIndex={barIndex}
+            start={start}
+            end={end}
+            handleFocus={handleFocus}
+            seriesLength={seriesLength}
+            hasRoundedCorners={hasRoundedCorners}
+          />
         );
       })}
     </g>

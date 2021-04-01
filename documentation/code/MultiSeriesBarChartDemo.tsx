@@ -34,7 +34,7 @@ export function MultiSeriesBarChartDemo({isStacked = false}: Props) {
         {label: 'Tuesday', rawValue: 7},
         {label: 'Wednesday', rawValue: 4},
         {label: 'Thursday', rawValue: 8},
-        {label: 'Friday', rawValue: 10},
+        {label: 'Friday', rawValue: -10},
         {label: 'Saturday', rawValue: 0},
         {label: 'Sunday', rawValue: 1},
       ],
@@ -44,7 +44,7 @@ export function MultiSeriesBarChartDemo({isStacked = false}: Props) {
       highlightColor: 'secondaryProminent' as 'secondaryProminent',
       name: 'Lunch',
       data: [
-        {label: 'Monday', rawValue: 4},
+        {label: 'Monday', rawValue: -4},
         {label: 'Tuesday', rawValue: 3},
         {label: 'Wednesday', rawValue: 5},
         {label: 'Thursday', rawValue: 15},
@@ -53,20 +53,34 @@ export function MultiSeriesBarChartDemo({isStacked = false}: Props) {
         {label: 'Sunday', rawValue: 2},
       ],
     },
-    // {
-    //   color: 'tertiary' as 'tertiary',
-    //   highlightColor: 'tertiaryProminent' as 'tertiaryProminent',
-    //   name: 'Dinner',
-    //   data: [
-    //     {label: 'Monday', rawValue: 7},
-    //     {label: 'Tuesday', rawValue: 2},
-    //     {label: 'Wednesday', rawValue: 6},
-    //     {label: 'Thursday', rawValue: 12},
-    //     {label: 'Friday', rawValue: 10},
-    //     {label: 'Saturday', rawValue: 5},
-    //     {label: 'Sunday', rawValue: 3},
-    //   ],
-    // },
+    {
+      color: 'tertiary' as 'tertiary',
+      highlightColor: 'tertiaryProminent' as 'tertiaryProminent',
+      name: 'Dinner',
+      data: [
+        {label: 'Monday', rawValue: -7},
+        {label: 'Tuesday', rawValue: 2},
+        {label: 'Wednesday', rawValue: 6},
+        {label: 'Thursday', rawValue: 12},
+        {label: 'Friday', rawValue: 10},
+        {label: 'Saturday', rawValue: 5},
+        {label: 'Sunday', rawValue: 3},
+      ],
+    },
+    {
+      color: 'quaternary' as 'quaternary',
+      highlightColor: 'quaternaryProminent' as 'quaternaryProminent',
+      name: 'Dessert',
+      data: [
+        {label: 'Monday', rawValue: -4},
+        {label: 'Tuesday', rawValue: 3},
+        {label: 'Wednesday', rawValue: 4},
+        {label: 'Thursday', rawValue: 2},
+        {label: 'Friday', rawValue: -8},
+        {label: 'Saturday', rawValue: 15},
+        {label: 'Sunday', rawValue: 7},
+      ],
+    },
   ];
 
   const labels = [
