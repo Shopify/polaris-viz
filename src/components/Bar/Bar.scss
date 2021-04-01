@@ -1,3 +1,8 @@
 .Bar {
-  transition: fill 0.3s;
+  transition: opacity 0.3s ease;
+  opacity: 1;
+
+  // &:hover {
+  //   opacity: 0.3;
+  // }
 }

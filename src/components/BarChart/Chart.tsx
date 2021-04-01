@@ -223,8 +223,24 @@ export function Chart({
               data[index].label,
             )}: ${formatYAxisLabel(data[index].rawValue)}`;
 
+            let opacity;
+            if (activeBar === null) {
+              opacity = 1.0;
+            } else if (index === activeBar) {
+              opacity = 1.0;
+            } else {
+              opacity = 0.3;
+            }
+
             return (
-              <g role="listitem" key={index}>
+              <g
+                role="listitem"
+                key={index}
+                style={{
+                  opacity,
+                  transition: 'opacity 0.3s ease',
+                }}
+              >
                 <Bar
                   key={index}
                   x={xPosition == null ? 0 : xPosition}
