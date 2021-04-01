@@ -2,14 +2,19 @@ import React from 'react';
 import {Story, Meta} from '@storybook/react';
 
 import {BarChart, BarChartProps} from '../../src/components';
-
-const darkBackground = '#1f1f25';
+import {
+  chartColors,
+  backgroundColor,
+  axisColor,
+  textColor,
+  crossHairColor,
+} from './constants';
 
 document.body.style.fontFamily =
   "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif";
 
 export default {
-  title: 'Histogram',
+  title: 'Playground/Histogram',
   component: BarChart,
   parameters: {
     options: {
@@ -18,7 +23,7 @@ export default {
     backgrounds: {
       default: 'dark',
       values: [
-        {name: 'dark', value: darkBackground},
+        {name: 'dark', value: backgroundColor},
         // {name: 'light', value: 'white'},
       ],
     },
@@ -29,7 +34,7 @@ export default {
         style={{
           width: '600px',
           height: '250px',
-          background: darkBackground,
+          background: backgroundColor,
           padding: '20px',
           marginTop: '5px',
         }}
@@ -45,16 +50,16 @@ const Template: Story<BarChartProps> = (args: BarChartProps) => {
     <BarChart
       isAnimated
       data={args.data}
-      color="blueWhiteGradient"
+      color={chartColors.blueWhiteGradient}
       skipLinkText="Skip chart content"
       timeSeries
-      axisColor="#414247"
-      textColor="#dcdcdc"
-      crossHairColor="dark"
+      axisColor={axisColor}
+      textColor={textColor}
+      crossHairColor={crossHairColor}
       hasRoundedCorners
       leftAlignLabels
       useHardCodedGradient
-      background={darkBackground}
+      background={backgroundColor}
     />
   );
 };

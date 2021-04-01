@@ -3,43 +3,40 @@ import {Story, Meta} from '@storybook/react';
 import {condenseNumber} from '@shopify/condense-number';
 
 import {LineChart, LineChartProps} from '../../src/components';
-
-const backgroundColor = '#1f1f25';
-const axisColor = '#414247';
-const textColor = '#dcdcdc';
+import {
+  backgroundColor,
+  axisColor,
+  textColor,
+  crossHairColor,
+} from './constants';
 
 document.body.style.fontFamily =
   "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif";
 
 export default {
-  title: 'LineChart',
+  title: 'Playground/LineChart',
   component: LineChart,
   parameters: {
     options: {
       showPanel: false,
     },
-    backgrounds: {
-      default: 'dark',
-      values: [
-        {name: 'dark', value: backgroundColor},
-        // {name: 'light', value: 'white'},
-      ],
-    },
   },
   decorators: [
-    (Story: any) => (
-      <div
-        style={{
-          width: '600px',
-          height: '250px',
-          background: backgroundColor,
-          padding: '20px',
-          marginTop: '5px',
-        }}
-      >
-        {Story()}
-      </div>
-    ),
+    (Story: any, context) => {
+      return (
+        <div
+          style={{
+            width: '600px',
+            height: '250px',
+            background: backgroundColor,
+            padding: '20px',
+            marginTop: '5px',
+          }}
+        >
+          {Story()}
+        </div>
+      );
+    },
   ],
 } as Meta;
 
@@ -49,7 +46,7 @@ const Template: Story<LineChartProps> = (args: LineChartProps) => {
       isAnimated
       axisColor={axisColor}
       textColor={textColor}
-      crossHairColor="dark"
+      crossHairColor={crossHairColor}
       series={args.data}
       xAxisLabels={[
         '2020-04-01T12:00:00',

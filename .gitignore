@@ -12,5 +12,6 @@ node_modules
 /styles
 /sandbox
 /playground
+!/playground/stories/**
 .DS_Store
 *.scss.d.ts

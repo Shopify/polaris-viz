@@ -2,28 +2,23 @@ import React from 'react';
 import {Story, Meta} from '@storybook/react';
 
 import {BarChart, BarChartProps} from '../../src/components';
-import styles from './Playground.stories.scss';
-
-const backgroundColor = '#1f1f25';
-const axisColor = '#414247';
-const textColor = '#dcdcdc';
+import {
+  chartColors,
+  backgroundColor,
+  axisColor,
+  textColor,
+  crossHairColor,
+} from './constants';
 
 document.body.style.fontFamily =
   "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif";
 
 export default {
-  title: 'BarChart',
+  title: 'Playground/BarChart',
   component: BarChart,
   parameters: {
     options: {
       showPanel: false,
-    },
-    backgrounds: {
-      default: 'dark',
-      values: [
-        {name: 'dark', value: backgroundColor},
-        // {name: 'light', value: 'white'},
-      ],
     },
   },
   decorators: [
@@ -49,12 +44,12 @@ const Template: Story<BarChartProps> = (args: BarChartProps) => {
       useHardCodedGradient
       axisColor={axisColor}
       textColor={textColor}
-      crossHairColor="dark"
+      crossHairColor={crossHairColor}
       isAnimated
       data={Array.from({length: 12}, (_, i) => {
         return {rawValue: Math.random() * 100, label: (i + 1).toString()};
       })}
-      color="blueGreenGradient"
+      color={chartColors.blueGreenGradient}
       // highlightColor="inverse"
       formatXAxisLabel={(val) =>
         new Date(val).toLocaleDateString('en-CA', {
