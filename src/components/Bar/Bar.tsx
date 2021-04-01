@@ -93,19 +93,26 @@ export function Bar({
   const barPath =
     rawValue === 0
       ? ''
-      : `M${radius + xPosition} ${yPosition}
-  h${width - radius * 2}
-  a${radius} ${radius} 0 01${radius} ${radius}
-  v${height - radius}
-  H${xPosition}
-  V${radius + yPosition}
-  a${radius} ${radius} 0 01${radius}-${radius}
-  Z`;
+      : animatedHeight.interpolate((height) => {
+          return `
+            M${radius} 0
+            h${width - radius * 2}
+            a${radius} ${radius} 0 01${radius} ${radius}
+            v${(height as number) - radius}
+            H0 V${radius} a${radius} ${radius} 0 01${radius}-${radius}
+            z
+          `;
+        });
 
   const isGradientBar = isGradientType(color) || isGradientType(highlightColor);
 
   let fill = `url(#${gradientColorId.current})`;
   let gradientMarkup = null;
+
+  const getGradientOffset = (originalOffset: number) =>
+    originalOffset - (yPosition / startingScale) * 100;
+
+  const chartId = Math.floor(Math.random() * 10000);
 
   if (isGradientBar) {
     const gradientStartColor = isSelected
@@ -116,7 +123,20 @@ export function Bar({
       ? getGradientStops(highlightColor, GradientPosition.End)
       : getGradientStops(color, GradientPosition.End);
 
-    gradientMarkup = (
+    gradientMarkup = useHardCodedGradient ? (
+      <linearGradient
+        id={`bar-gradient-${chartId}-${index}`}
+        x1="0"
+        y1="0"
+        x2="0"
+        y2="221"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stopColor="#4BFCE0" offset={`${getGradientOffset(21)}%`} />
+        <stop stopColor="#4EADFB" offset={`${getGradientOffset(62)}%`} />
+        <stop stopColor="#801AFD" offset={`${getGradientOffset(109)}%`} />
+      </linearGradient>
+    ) : (
       <LinearGradient
         id={gradientColorId.current}
         startColor={gradientStartColor}
@@ -132,26 +152,11 @@ export function Bar({
     fill = currentColor;
   }
 
-  if (useHardCodedGradient) {
-    gradientMarkup = (
-      <defs>
-        <linearGradient
-          id={`${gradientColorId.current}`}
-          x1="0"
-          y1="0"
-          x2="0"
-          y2={300}
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="#4BFCE0" offset="21%" />
-          <stop stopColor="#4EADFB" offset="62%" />
-          <stop stopColor="#801AFD" offset="109%" />
-        </linearGradient>
-      </defs>
-    );
-  }
-
-  const barColor = lastBarTreatment ? 'url(#bar-gradient)' : fill;
+  const barColor = lastBarTreatment
+    ? 'url(#bar-gradient)'
+    : useHardCodedGradient
+    ? `url(#bar-gradient-${chartId}-${index})`
+    : fill;
 
   return (
     <React.Fragment>
@@ -179,9 +184,13 @@ export function Bar({
         onFocus={handleFocus}
         tabIndex={tabIndex}
         role={role}
-        // style={{
-        //   transform: `${rotation}`,
-        // }}
+        style={{
+          /* stylelint-disable */
+          transform: animatedYPosition.interpolate(
+            (y) => `translate(${xPosition}px, ${y}px) ${rotation}`,
+          ),
+          /* stylelint-enable */
+        }}
       />
     </React.Fragment>
   );

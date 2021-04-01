@@ -119,6 +119,7 @@ export default function Playground() {
           hasRoundedCorners
           leftAlignLabels
           lastBarTreatment
+          useHardCodedGradient
         />
       </div>
 
@@ -230,7 +231,7 @@ export default function Playground() {
             return {rawValue: Math.random() * 100, label: (i + 1).toString()};
           })}
           color="blueGreenGradient"
-          highlightColor="inverse"
+          // highlightColor="inverse"
           formatXAxisLabel={(val) =>
             new Date(val).toLocaleDateString('en-CA', {
               day: 'numeric',
@@ -246,6 +247,7 @@ export default function Playground() {
           }
           timeSeries
           hasRoundedCorners
+          useHardCodedGradient
         />
       </div>
     </div>
