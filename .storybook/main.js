@@ -6,7 +6,10 @@ const path = require('path');
 const postcssShopify = require('@shopify/postcss-plugin');
 
 module.exports = {
-  stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(ts|tsx)'],
+  stories: [
+    '../src/**/*.stories.@(mdx|tsx)',
+    '../playground/**/*.stories.@(mdx|tsx)',
+  ],
   addons: [
     '@storybook/addon-links',
     {name: '@storybook/addon-essentials', options: {docs: true}},
