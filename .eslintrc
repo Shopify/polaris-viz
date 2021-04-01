@@ -114,6 +114,12 @@
         "shopify/jsx-no-hardcoded-content": "off",
         "shopify/react-initialize-state": "off"
       }
+    },
+    {
+      "files": ["**/*.stories.{ts,tsx}"],
+      "rules": {
+        "import/no-default-export": "off"
+      }
     }
   ]
 }

@@ -11,5 +11,6 @@
     "importHelpers": true,
     "skipLibCheck": true
   },
-  "include": ["./config/typescript/**/*", "./src/**/*", "./tests/**/*"]
+  "include": ["./config/typescript/**/*", "./src/**/*", "./tests/**/*"],
+  "exclude": ["./src/**/stories", "./src/**/stories/*"]
 }

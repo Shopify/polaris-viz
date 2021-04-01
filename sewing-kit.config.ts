@@ -24,6 +24,7 @@ export default function sewingKitConfig(
           '!src/**/index.{ts,tsx}',
           '!src/**/*.d.ts',
           '!src/**/*.test.{ts,tsx}',
+          '!src/**/*.stories.{ts,tsx}',
         ];
 
         return config;

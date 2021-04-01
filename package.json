@@ -29,7 +29,9 @@
     "prebuild-consumer": "yarn run build",
     "build-consumer": "node ./scripts/build-consumer",
     "prepublish": "in-publish && yarn run build || :",
-    "dev": "sewing-kit playground"
+    "dev": "sewing-kit playground",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "stylelint": {
     "extends": [
@@ -59,8 +61,14 @@
   "devDependencies": {
     "@babel/core": "^7.6.0",
     "@babel/node": "^7.6.1",
+    "@shopify/postcss-plugin": "^3.1.1",
     "@shopify/react-testing": "^1.8.0",
     "@shopify/sewing-kit": "^0.120.0",
+    "@storybook/addon-actions": "^6.2.1",
+    "@storybook/addon-essentials": "^6.2.1",
+    "@storybook/addon-links": "^6.2.1",
+    "@storybook/react": "^6.2.1",
+    "@storybook/theming": "^6.2.1",
     "@types/d3-array": "^2.0.0",
     "@types/d3-scale": "^2.1.1",
     "@types/d3-shape": "^1.3.2",
@@ -100,6 +108,7 @@
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-resolve": "^4.2.3",
     "rollup-pluginutils": "^2.8.2",
+    "sass-loader": "^8.0.0",
     "semver": "^6.3.0",
     "shelljs": "^0.8.3",
     "shx": "^0.3.2",
@@ -118,7 +127,8 @@
     "index.js",
     "index.es.js",
     "styles.css",
-    "styles.min.css"
+    "styles.min.css",
+    "!*.stories.*"
   ],
   "dependencies": {
     "@shopify/css-utilities": "^1.0.0",
