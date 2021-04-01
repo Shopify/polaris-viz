@@ -164,35 +164,6 @@ export function Chart({
         onTouchEnd={() => setActiveBar(null)}
         role="list"
       >
-        {useHardCodedGradient || lastBarTreatment ? (
-          <defs>
-            <linearGradient
-              id="bar-gradient"
-              x1="0"
-              y1="0"
-              x2="0"
-              y2={drawableHeight}
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop stopColor="#757F9A" offset="50%" />
-              <stop stopColor="#D7DDE8" offset="100%" />
-            </linearGradient>
-
-            <linearGradient
-              id="bar-gradient2"
-              x1="0"
-              y1="0"
-              x2="0"
-              y2={drawableHeight}
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop stopColor="#4BFCE0" offset="21%" />
-              <stop stopColor="#4EADFB" offset="62%" />
-              <stop stopColor="#801AFD" offset="109%" />
-            </linearGradient>
-          </defs>
-        ) : null}
-
         <g
           transform={`translate(${axisMargin},${chartDimensions.height -
             MARGIN.Bottom -
@@ -251,6 +222,7 @@ export function Chart({
                   isAnimated={isAnimated}
                   hasRoundedCorners={hasRoundedCorners}
                   chartDimensions={chartDimensions}
+                  drawableHeight={drawableHeight}
                   lastBarTreatment={
                     index + 1 === data.length && lastBarTreatment
                   }

@@ -7,4 +7,13 @@
 .Bar {
   transition: fill 0.3s;
   outline: none;
+  transform: scaleY(0);
+  transform-origin: center bottom;
+  animation: draw 0.3s linear forwards;
+}
+
+@keyframes draw {
+  to {
+    transform: scaleY(1);
+  }
 }

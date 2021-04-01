@@ -221,6 +221,7 @@ export default function Playground() {
         }}
       >
         <BarChart
+          useHardCodedGradient
           axisColor="#194685"
           textColor="#8C9196"
           crossHairColor="dark"

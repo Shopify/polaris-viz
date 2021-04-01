@@ -37,6 +37,7 @@ interface Props {
   startingValue?: number;
   lastBarTreatment?: boolean;
   useHardCodedGradient?: boolean;
+  drawableHeight?: number;
 }
 
 export function Bar({
@@ -58,6 +59,7 @@ export function Bar({
   useHardCodedGradient,
   numberOfBars,
   isAnimated,
+  drawableHeight,
 }: Props) {
   const gradientColorId = useRef(uniqueId('gradient'));
   const rawHeight = Math.abs(yScale(rawValue) - yScale(0));
@@ -91,12 +93,14 @@ export function Bar({
   const barPath =
     rawValue === 0
       ? ''
-      : animatedHeight.interpolate((height) => {
-          return `M${radius} 0h${width -
-            radius *
-              2} a${radius} ${radius} 0 01${radius} ${radius} v${(height as number) -
-            radius} H0 V${radius} a${radius} ${radius} 0 01${radius}-${radius} z`;
-        });
+      : `M${radius + xPosition} ${yPosition}
+  h${width - radius * 2}
+  a${radius} ${radius} 0 01${radius} ${radius}
+  v${height - radius}
+  H${xPosition}
+  V${radius + yPosition}
+  a${radius} ${radius} 0 01${radius}-${radius}
+  Z`;
 
   const isGradientBar = isGradientType(color) || isGradientType(highlightColor);
 
@@ -128,15 +132,44 @@ export function Bar({
     fill = currentColor;
   }
 
-  const barColor = lastBarTreatment
-    ? 'url(#bar-gradient)'
-    : useHardCodedGradient
-    ? 'url(#bar-gradient2)'
-    : fill;
+  if (useHardCodedGradient) {
+    gradientMarkup = (
+      <defs>
+        <linearGradient
+          id={`${gradientColorId.current}`}
+          x1="0"
+          y1="0"
+          x2="0"
+          y2={300}
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#4BFCE0" offset="21%" />
+          <stop stopColor="#4EADFB" offset="62%" />
+          <stop stopColor="#801AFD" offset="109%" />
+        </linearGradient>
+      </defs>
+    );
+  }
+
+  const barColor = lastBarTreatment ? 'url(#bar-gradient)' : fill;
 
   return (
     <React.Fragment>
       {gradientMarkup}
+
+      <defs>
+        <linearGradient
+          id="bar-gradient"
+          x1="0"
+          y1="0"
+          x2="0"
+          y2={drawableHeight}
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#757F9A" offset="50%" />
+          <stop stopColor="#D7DDE8" offset="100%" />
+        </linearGradient>
+      </defs>
 
       <animated.path
         className={styles.Bar}
@@ -146,13 +179,9 @@ export function Bar({
         onFocus={handleFocus}
         tabIndex={tabIndex}
         role={role}
-        style={{
-          /* stylelint-disable */
-          transform: animatedYPosition.interpolate(
-            (y) => `translate(${xPosition}px, ${y}px) ${rotation}`,
-          ),
-          /* stylelint-enable */
-        }}
+        // style={{
+        //   transform: `${rotation}`,
+        // }}
       />
     </React.Fragment>
   );
