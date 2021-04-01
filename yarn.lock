@@ -3229,6 +3229,11 @@
   dependencies:
     browserslist "^4.6.3"
 
+"@shopify/condense-number@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@shopify/condense-number/-/condense-number-0.7.0.tgz#857bbd741b8924509e4b7b4dac22f754ee3e562f"
+  integrity sha512-uAg4W87rUyZeWagdpBQA9nshcFLnpYHkWZaz7Vlj8AJK5Ik+oNB1SQWXJtUYNgj9oxWzEVOQIdHx/J7k18WG7Q==
+
 "@shopify/css-utilities@^1.0.0":
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/@shopify/css-utilities/-/css-utilities-1.0.5.tgz#998b5e5082f846c5e6851b51a727b5c6872a82ba"
