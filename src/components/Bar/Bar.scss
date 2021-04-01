@@ -3,3 +3,8 @@
 .BarNoOutline {
   @include no-outline;
 }
+
+.Bar {
+  transition: fill 0.3s;
+  outline: none;
+}

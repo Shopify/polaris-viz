@@ -1,6 +1,6 @@
 import React, {useState, useLayoutEffect, useRef} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
-import {Color, Data} from 'types';
+import {Color, Data, GradientColor} from 'types';
 
 import {SkipLink} from '../SkipLink';
 import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
@@ -13,20 +13,25 @@ import {BarMargin, RenderTooltipContentData} from './types';
 export interface BarChartProps {
   data: Data[];
   barMargin?: keyof typeof BarMargin;
-  color?: Color;
-  highlightColor?: Color;
+  color?: Color | GradientColor;
+  highlightColor?: Color | GradientColor;
   formatXAxisLabel?: StringLabelFormatter;
   formatYAxisLabel?: NumberLabelFormatter;
   timeSeries?: boolean;
   skipLinkText?: string;
   renderTooltipContent?: (data: RenderTooltipContentData) => React.ReactNode;
   hasRoundedCorners?: boolean;
+  textColor?: string;
+  axisColor?: string;
+  leftAlignLabels?: boolean;
+  useHardCodedGradient?: boolean;
+  isAnimated?: boolean;
 }
 
 export function BarChart({
   data,
   color = getDefaultColor(),
-  highlightColor = getDefaultColor(),
+  highlightColor = color,
   barMargin = 'Medium',
   timeSeries = false,
   hasRoundedCorners = false,
@@ -34,6 +39,12 @@ export function BarChart({
   formatYAxisLabel = (value) => value.toString(),
   renderTooltipContent,
   skipLinkText,
+  textColor = 'rgb(99, 115, 129)',
+  axisColor = 'rgb(223, 227, 232)',
+  leftAlignLabels = false,
+  useHardCodedGradient = false,
+  lastBarTreatment = false,
+  isAnimated = false,
 }: BarChartProps) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -78,6 +89,7 @@ export function BarChart({
             </SkipLink>
           )}
           <Chart
+            leftAlignLabels={leftAlignLabels}
             data={data}
             chartDimensions={chartDimensions}
             barMargin={BarMargin[barMargin]}
@@ -87,6 +99,11 @@ export function BarChart({
             formatYAxisLabel={formatYAxisLabel}
             timeSeries={timeSeries}
             hasRoundedCorners={hasRoundedCorners}
+            textColor={textColor}
+            axisColor={axisColor}
+            useHardCodedGradient={useHardCodedGradient}
+            isAnimated={isAnimated}
+            lastBarTreatment={lastBarTreatment}
             renderTooltipContent={
               renderTooltipContent != null
                 ? renderTooltipContent

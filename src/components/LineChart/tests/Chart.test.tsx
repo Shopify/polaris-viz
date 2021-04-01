@@ -56,11 +56,20 @@ const mockProps = {
   renderTooltipContent: jest.fn(() => <p>Mock Tooltip</p>),
   hideXAxisLabels: false,
   hasSpline: false,
+  isAnimated: false,
 };
 
 describe('<Chart />', () => {
   beforeEach(() => {
     jest.useFakeTimers();
+  });
+
+  beforeAll(() => {
+    Object.defineProperty(window, 'matchMedia', {
+      value: jest.fn(() => {
+        return {matches: false};
+      }),
+    });
   });
 
   afterEach(() => {

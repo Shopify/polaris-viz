@@ -1,5 +1,5 @@
 import React, {useState, useMemo} from 'react';
-import {Color, Data} from 'types';
+import {Color, Data, GradientColor} from 'types';
 
 import {LINE_HEIGHT} from '../../constants';
 import {eventPoint, getTextWidth, getBarXAxisDetails} from '../../utilities';
@@ -24,13 +24,18 @@ interface Props {
   data: Data[];
   chartDimensions: DOMRect;
   barMargin: number;
-  color: Color;
-  highlightColor: Color;
+  color: Color | GradientColor;
+  highlightColor: Color | GradientColor;
   formatXAxisLabel: StringLabelFormatter;
   formatYAxisLabel: NumberLabelFormatter;
   timeSeries: boolean;
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
   hasRoundedCorners: boolean;
+  textColor: string;
+  axisColor: string;
+  leftAlignLabels: boolean;
+  useHardCodedGradient: boolean;
+  isAnimated: boolean;
 }
 
 export function Chart({
@@ -44,8 +49,15 @@ export function Chart({
   timeSeries,
   renderTooltipContent,
   hasRoundedCorners,
+  textColor,
+  axisColor,
+  leftAlignLabels,
+  useHardCodedGradient,
+  lastBarTreatment,
+  isAnimated,
 }: Props) {
   const [activeBar, setActiveBar] = useState<number | null>(null);
+  const [showAnnotation, updateAnnotation] = useState(false);
   const [tooltipPosition, setTooltipPosition] = useState<{
     x: number;
     y: number;
@@ -152,6 +164,35 @@ export function Chart({
         onTouchEnd={() => setActiveBar(null)}
         role="list"
       >
+        {useHardCodedGradient || lastBarTreatment ? (
+          <defs>
+            <linearGradient
+              id="bar-gradient"
+              x1="0"
+              y1="0"
+              x2="0"
+              y2={drawableHeight}
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stopColor="#757F9A" offset="50%" />
+              <stop stopColor="#D7DDE8" offset="100%" />
+            </linearGradient>
+
+            <linearGradient
+              id="bar-gradient2"
+              x1="0"
+              y1="0"
+              x2="0"
+              y2={drawableHeight}
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stopColor="#4BFCE0" offset="21%" />
+              <stop stopColor="#4EADFB" offset="62%" />
+              <stop stopColor="#801AFD" offset="109%" />
+            </linearGradient>
+          </defs>
+        ) : null}
+
         <g
           transform={`translate(${axisMargin},${chartDimensions.height -
             MARGIN.Bottom -
@@ -164,6 +205,9 @@ export function Chart({
             fontSize={fontSize}
             showFewerLabels={timeSeries && xAxisDetails.needsDiagonalLabels}
             xAxisDetails={xAxisDetails}
+            textColor={textColor}
+            axisColor={axisColor}
+            leftAlignLabels={leftAlignLabels}
           />
         </g>
 
@@ -175,6 +219,8 @@ export function Chart({
             ticks={ticks}
             drawableWidth={drawableWidth}
             fontSize={fontSize}
+            textColor={textColor}
+            axisColor={axisColor}
           />
         </g>
 
@@ -201,8 +247,64 @@ export function Chart({
                   ariaLabel={ariaLabel}
                   tabIndex={0}
                   role="img"
+                  numberOfBars={data.length}
+                  isAnimated={isAnimated}
                   hasRoundedCorners={hasRoundedCorners}
+                  chartDimensions={chartDimensions}
+                  lastBarTreatment={
+                    index + 1 === data.length && lastBarTreatment
+                  }
+                  useHardCodedGradient={useHardCodedGradient}
                 />
+              </g>
+            );
+          })}
+        </g>
+
+        <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
+          {data.map(({annotation, rawValue}, index) => {
+            if (annotation == null) {
+              return null;
+            }
+            const xPosition = xScale(index.toString());
+
+            return (
+              <g role="listitem" key={index}>
+                <circle
+                  cx={xPosition + barWidth / 2}
+                  cy={yScale(rawValue) - 13}
+                  r="6"
+                  stroke="#fff"
+                  strokeWidth="2"
+                  fill="#3A32B8"
+                  style={{cursor: 'pointer'}}
+                  onClick={() => updateAnnotation((state) => !state)}
+                  onMouseMove={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setActiveBar(null);
+                  }}
+                />
+
+                <foreignObject
+                  width="80"
+                  height="60"
+                  x={xPosition - 25}
+                  y={yScale(rawValue) - 80}
+                >
+                  <div
+                    style={{
+                      background: '#fff',
+                      padding: '8px',
+                      borderRadius: '3px',
+                      opacity: showAnnotation ? '1' : '0',
+                      fontSize: 12,
+                      transition: 'opacity 0.3s',
+                    }}
+                  >
+                    {annotation}
+                  </div>
+                </foreignObject>
               </g>
             );
           })}

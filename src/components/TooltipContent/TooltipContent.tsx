@@ -1,12 +1,12 @@
 import React from 'react';
-import {Color} from 'types';
+import {Color, GradientColor} from 'types';
 
 import {SquareColorPreview} from '../SquareColorPreview';
 
 import styles from './TooltipContent.scss';
 
 interface TooltipData {
-  color: Color;
+  color: Color | GradientColor;
   label: string;
   value: string;
 }

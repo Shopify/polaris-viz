@@ -2,7 +2,6 @@
 @import '../../../../styles/common';
 
 .Name {
-  @include tooltip-emphasis;
   margin: 0;
 }
 
@@ -20,4 +19,5 @@
   align-items: center;
   column-gap: $spacing-tight;
   row-gap: $spacing-tight;
+  font-size: 12px;
 }

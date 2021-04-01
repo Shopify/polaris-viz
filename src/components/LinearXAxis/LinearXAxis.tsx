@@ -29,6 +29,8 @@ interface Props {
   xAxisDetails: XAxisDetails;
   drawableHeight: number;
   ariaHidden: boolean;
+  textColor: string;
+  axisColor: string;
 }
 
 function getTextAlign({
@@ -57,6 +59,8 @@ function Axis({
   drawableWidth,
   drawableHeight,
   ariaHidden,
+  textColor,
+  axisColor,
 }: Props) {
   const {
     maxDiagonalLabelLength,
@@ -98,7 +102,7 @@ function Axis({
       <path
         d={`M ${xScaleMin} ${TICK_SIZE} v ${-TICK_SIZE} H ${xScaleMax} v ${TICK_SIZE}`}
         fill="none"
-        stroke={colorSky}
+        stroke={axisColor ? axisColor : colorSky}
       />
 
       {tickDetails.map(({value, xOffset, firstLabel}, index) => {
@@ -129,11 +133,10 @@ function Axis({
 
         return (
           <g key={index} transform={`translate(${xOffset}, 0)`}>
-            <line y2={TICK_SIZE} stroke={colorSky} />
             <line
               y1="0"
               y2={-drawableHeight}
-              stroke={colorSky}
+              stroke={axisColor ? axisColor : colorSky}
               strokeDasharray="3 2"
             />
             <foreignObject
@@ -147,6 +150,7 @@ function Axis({
                 style={{
                   fontSize,
                   textAlign,
+                  color: textColor,
                 }}
               >
                 {value}

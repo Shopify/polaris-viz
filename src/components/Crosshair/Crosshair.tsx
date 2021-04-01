@@ -8,9 +8,13 @@ interface Props {
   x: number;
   height: number;
   opacity?: number;
+  crossHairColor?: string;
 }
 
-export function Crosshair({x, height, opacity = 1}: Props) {
+export function Crosshair({x, height, opacity = 1, crossHairColor}: Props) {
+  if (crossHairColor) {
+    return null;
+  }
   return (
     <rect
       x={x - CROSSHAIR_WIDTH / 2}
@@ -20,6 +24,7 @@ export function Crosshair({x, height, opacity = 1}: Props) {
       className={styles.Crosshair}
       style={{
         opacity,
+        fill: crossHairColor ? 'rgb(14, 48, 94)' : undefined,
       }}
     />
   );

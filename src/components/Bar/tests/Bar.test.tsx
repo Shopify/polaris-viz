@@ -24,6 +24,8 @@ describe('<Bar/>', () => {
           index={1}
           onFocus={jest.fn()}
           tabIndex={0}
+          numberOfBars={1}
+          isAnimated={false}
         />
         ,
       </svg>,
@@ -31,14 +33,7 @@ describe('<Bar/>', () => {
 
     expect(bar).toContainReactComponent('path', {
       // eslint-disable-next-line id-length
-      d: `M0 0
-    h100
-    a0 0 0 010 0
-    v1000
-    H0
-    V0
-    a0 0 0 010-0
-    Z`,
+      d: `M0 0h100 a0 0 0 010 0 v1000 H0 V0 a0 0 0 010-0 z`,
       fill: 'rgba(156, 106, 222, 1)',
       style: {transform: 'translate(0px, -1000px) rotate(0deg)'},
     });
@@ -59,6 +54,8 @@ describe('<Bar/>', () => {
           onFocus={jest.fn()}
           tabIndex={0}
           hasRoundedCorners
+          numberOfBars={1}
+          isAnimated={false}
         />
         ,
       </svg>,
@@ -66,14 +63,7 @@ describe('<Bar/>', () => {
 
     expect(bar).toContainReactComponent('path', {
       // eslint-disable-next-line id-length
-      d: `M3 0
-    h94
-    a3 3 0 013 3
-    v997
-    H0
-    V3
-    a3 3 0 013-3
-    Z`,
+      d: `M3 0h94 a3 3 0 013 3 v997 H0 V3 a3 3 0 013-3 z`,
       fill: 'rgba(156, 106, 222, 1)',
       style: {transform: 'translate(0px, -1000px) rotate(0deg)'},
     });
@@ -93,6 +83,8 @@ describe('<Bar/>', () => {
           index={1}
           onFocus={jest.fn()}
           tabIndex={0}
+          numberOfBars={1}
+          isAnimated={false}
         />
         ,
       </svg>,
@@ -100,14 +92,7 @@ describe('<Bar/>', () => {
 
     expect(bar).toContainReactComponent('path', {
       // eslint-disable-next-line id-length
-      d: `M0 0
-    h100
-    a0 0 0 010 0
-    v${MIN_BAR_HEIGHT}
-    H0
-    V0
-    a0 0 0 010-0
-    Z`,
+      d: `M0 0h100 a0 0 0 010 0 v${MIN_BAR_HEIGHT} H0 V0 a0 0 0 010-0 z`,
       fill: 'rgba(156, 106, 222, 1)',
       style: {transform: `translate(0px, -${MIN_BAR_HEIGHT}px) rotate(0deg)`},
     });
@@ -127,6 +112,8 @@ describe('<Bar/>', () => {
           index={1}
           onFocus={jest.fn()}
           tabIndex={0}
+          numberOfBars={1}
+          isAnimated={false}
         />
         ,
       </svg>,
@@ -154,6 +141,8 @@ describe('<Bar/>', () => {
           index={1}
           onFocus={jest.fn()}
           tabIndex={0}
+          numberOfBars={1}
+          isAnimated={false}
         />
         ,
       </svg>,
