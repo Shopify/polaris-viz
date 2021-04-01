@@ -233,8 +233,20 @@ export function Chart({
               data[index].label,
             )}: ${formatYAxisLabel(data[index].rawValue)}`;
 
+            const opacity =
+              activeBar === null || index === activeBar ? 1.0 : 0.3;
+
             return (
-              <g role="listitem" key={index}>
+              <g
+                role="listitem"
+                key={index}
+                style={{
+                  opacity,
+                  // Use polaris react ease function
+                  // https://github.com/Shopify/polaris-react/blob/master/src/utilities/theme/tokens.ts#L43-L46
+                  transition: 'opacity 0.3s cubic-bezier(0.4, 0.22, 0.28, 1)',
+                }}
+              >
                 <Bar
                   key={index}
                   x={xPosition == null ? 0 : xPosition}
