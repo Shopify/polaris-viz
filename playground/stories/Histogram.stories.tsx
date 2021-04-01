@@ -1,17 +1,18 @@
 import React from 'react';
 import {Story, Meta} from '@storybook/react';
 
-import {BarChart, BarChartProps} from '../../src/components';
+import {BarChart} from '../../src/components';
 import {
   chartColors,
-  backgroundColor,
-  axisColor,
-  textColor,
-  crossHairColor,
+  backgroundColors,
+  axisColors,
+  textColors,
+  crossHairColors,
+  fontFamily,
+  containerStyles,
 } from './constants';
 
-document.body.style.fontFamily =
-  "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif";
+document.body.style.fontFamily = fontFamily;
 
 export default {
   title: 'Playground/Histogram',
@@ -21,45 +22,31 @@ export default {
       showPanel: false,
     },
     backgrounds: {
-      default: 'dark',
+      default: 'light',
       values: [
-        {name: 'dark', value: backgroundColor},
-        // {name: 'light', value: 'white'},
+        {name: 'light', value: backgroundColors.light},
+        {name: 'dark', value: backgroundColors.dark},
       ],
     },
   },
-  decorators: [
-    (Story: any) => (
-      <div
-        style={{
-          width: '600px',
-          height: '250px',
-          background: backgroundColor,
-          padding: '20px',
-          marginTop: '5px',
-        }}
-      >
-        {Story()}
-      </div>
-    ),
-  ],
+  decorators: [(Story: any) => <div style={containerStyles}>{Story()}</div>],
 } as Meta;
 
-const Template: Story<BarChartProps> = (args: BarChartProps) => {
+const Template: Story<{}> = (args) => {
   return (
     <BarChart
       isAnimated
-      data={args.data}
-      color={chartColors.blueWhiteGradient}
       skipLinkText="Skip chart content"
       timeSeries
-      axisColor={axisColor}
-      textColor={textColor}
-      crossHairColor={crossHairColor}
+      data={args.data}
+      color={args.chartColors}
+      background={args.backgroundColor}
+      axisColor={args.axisColor}
+      textColor={args.textColor}
+      crossHairColor={args.crossHairColor}
       hasRoundedCorners
       leftAlignLabels
       useHardCodedGradient
-      background={backgroundColor}
     />
   );
 };
@@ -148,7 +135,34 @@ const chartData = [
   },
 ];
 
-export const Default = Template.bind({});
-Default.args = {
+export const Light = Template.bind({});
+Light.args = {
   data: chartData,
+  chartColor: chartColors.blueWhiteGradient,
+  background: backgroundColors.light,
+  axisColor: axisColors.light,
+  textColor: textColors.light,
+  crossHairColor: crossHairColors.light,
+};
+
+Light.parameters = {
+  backgrounds: {
+    default: 'light',
+  },
+};
+
+export const Dark = Template.bind({});
+Dark.args = {
+  data: chartData,
+  chartColor: chartColors.blueWhiteGradient,
+  background: backgroundColors.dark,
+  axisColor: axisColors.dark,
+  textColor: textColors.dark,
+  crossHairColor: crossHairColors.dark,
+};
+
+Dark.parameters = {
+  backgrounds: {
+    default: 'dark',
+  },
 };

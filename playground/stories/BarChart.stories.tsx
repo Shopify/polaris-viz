@@ -4,14 +4,15 @@ import {Story, Meta} from '@storybook/react';
 import {BarChart, BarChartProps} from '../../src/components';
 import {
   chartColors,
-  backgroundColor,
-  axisColor,
-  textColor,
-  crossHairColor,
+  backgroundColors,
+  axisColors,
+  textColors,
+  crossHairColors,
+  fontFamily,
+  containerStyles,
 } from './constants';
 
-document.body.style.fontFamily =
-  "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif";
+document.body.style.fontFamily = fontFamily;
 
 export default {
   title: 'Playground/BarChart',
@@ -20,36 +21,30 @@ export default {
     options: {
       showPanel: false,
     },
+    backgrounds: {
+      default: 'light',
+      values: [
+        {name: 'light', value: backgroundColors.light},
+        {name: 'dark', value: backgroundColors.dark},
+      ],
+    },
   },
-  decorators: [
-    (Story: any) => (
-      <div
-        style={{
-          width: '600px',
-          height: '250px',
-          background: backgroundColor,
-          padding: '20px',
-          marginTop: '5px',
-        }}
-      >
-        {Story()}
-      </div>
-    ),
-  ],
+  decorators: [(Story: any) => <div style={containerStyles}>{Story()}</div>],
 } as Meta;
 
-const Template: Story<BarChartProps> = (args: BarChartProps) => {
+const Template: Story<{}> = (args) => {
   return (
     <BarChart
       useHardCodedGradient
-      axisColor={axisColor}
-      textColor={textColor}
-      crossHairColor={crossHairColor}
+      background={args.backgroundColor}
+      axisColor={args.axisColor}
+      textColor={args.textColor}
+      crossHairColor={args.crossHairColor}
       isAnimated
       data={Array.from({length: 12}, (_, i) => {
         return {rawValue: Math.random() * 100, label: (i + 1).toString()};
       })}
-      color={chartColors.blueGreenGradient}
+      color={args.chartColor}
       // highlightColor="inverse"
       formatXAxisLabel={(val) =>
         new Date(val).toLocaleDateString('en-CA', {
@@ -71,4 +66,32 @@ const Template: Story<BarChartProps> = (args: BarChartProps) => {
   );
 };
 
-export const Default = Template.bind({});
+export const Light = Template.bind({});
+Light.args = {
+  chartColor: chartColors.blueGreenGradient,
+  background: backgroundColors.light,
+  axisColor: axisColors.light,
+  textColor: textColors.light,
+  crossHairColor: crossHairColors.light,
+};
+
+Light.parameters = {
+  backgrounds: {
+    default: 'light',
+  },
+};
+
+export const Dark = Template.bind({});
+Dark.args = {
+  chartColor: chartColors.blueGreenGradient,
+  background: backgroundColors.dark,
+  axisColor: axisColors.dark,
+  textColor: textColors.dark,
+  crossHairColor: crossHairColors.dark,
+};
+
+Dark.parameters = {
+  backgrounds: {
+    default: 'dark',
+  },
+};

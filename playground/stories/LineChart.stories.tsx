@@ -4,15 +4,15 @@ import {condenseNumber} from '@shopify/condense-number';
 
 import {LineChart, LineChartProps} from '../../src/components';
 import {
-  backgroundColor,
-  axisColor,
-  textColor,
-  crossHairColor,
+  backgroundColors,
+  axisColors,
+  textColors,
+  crossHairColors,
+  fontFamily,
+  containerStyles,
 } from './constants';
 
-document.body.style.fontFamily =
-  "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif";
-
+document.body.style.fontFamily = fontFamily;
 export default {
   title: 'Playground/LineChart',
   component: LineChart,
@@ -20,22 +20,17 @@ export default {
     options: {
       showPanel: false,
     },
+    backgrounds: {
+      default: 'light',
+      values: [
+        {name: 'light', value: backgroundColors.light},
+        {name: 'dark', value: backgroundColors.dark},
+      ],
+    },
   },
   decorators: [
     (Story: any, context) => {
-      return (
-        <div
-          style={{
-            width: '600px',
-            height: '250px',
-            background: backgroundColor,
-            padding: '20px',
-            marginTop: '5px',
-          }}
-        >
-          {Story()}
-        </div>
-      );
+      return <div style={containerStyles}>{Story()}</div>;
     },
   ],
 } as Meta;
@@ -44,9 +39,9 @@ const Template: Story<LineChartProps> = (args: LineChartProps) => {
   return (
     <LineChart
       isAnimated
-      axisColor={axisColor}
-      textColor={textColor}
-      crossHairColor={crossHairColor}
+      axisColor={args.axisColor}
+      textColor={args.textColor}
+      crossHairColor={args.crossHairColor}
       series={args.data}
       xAxisLabels={[
         '2020-04-01T12:00:00',
@@ -125,7 +120,30 @@ const chartData = [
   },
 ];
 
-export const Default = Template.bind({});
-Default.args = {
+export const Light = Template.bind({});
+Light.args = {
   data: chartData,
+  axisColor: axisColors.light,
+  textColor: textColors.light,
+  crossHairColor: crossHairColors.light,
+};
+
+Light.parameters = {
+  backgrounds: {
+    default: 'light',
+  },
+};
+
+export const Dark = Template.bind({});
+Dark.args = {
+  data: chartData,
+  axisColor: axisColors.dark,
+  textColor: textColors.dark,
+  crossHairColor: crossHairColors.dark,
+};
+
+Dark.parameters = {
+  backgrounds: {
+    default: 'dark',
+  },
 };
