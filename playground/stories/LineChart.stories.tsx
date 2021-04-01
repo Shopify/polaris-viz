@@ -15,11 +15,8 @@ export default {
   title: 'LineChart',
   component: LineChart,
   parameters: {
-    controls: {
-      disabled: true,
-    },
-    actions: {
-      disabled: true,
+    options: {
+      showPanel: false,
     },
     backgrounds: {
       default: 'dark',

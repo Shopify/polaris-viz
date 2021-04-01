@@ -12,11 +12,8 @@ export default {
   title: 'Histogram',
   component: BarChart,
   parameters: {
-    controls: {
-      disabled: true,
-    },
-    actions: {
-      disabled: true,
+    options: {
+      showPanel: false,
     },
     backgrounds: {
       default: 'dark',
