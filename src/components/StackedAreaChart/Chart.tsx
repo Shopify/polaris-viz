@@ -36,6 +36,8 @@ interface Props {
   dimensions: DOMRect;
   opacity: number;
   isAnimated: boolean;
+  textColor: string;
+  axisColor: string;
 }
 
 export function Chart({
@@ -47,6 +49,8 @@ export function Chart({
   renderTooltipContent,
   opacity,
   isAnimated,
+  textColor,
+  axisColor,
 }: Props) {
   const [activePointIndex, setActivePointIndex] = useState<number | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState<{
@@ -181,6 +185,8 @@ export function Chart({
             fontSize={fontSize}
             drawableWidth={drawableWidth}
             ariaHidden
+            textColor={textColor}
+            axisColor={axisColor}
           />
         </g>
 
@@ -189,6 +195,8 @@ export function Chart({
             ticks={ticks}
             drawableWidth={drawableWidth}
             fontSize={fontSize}
+            textColor={textColor}
+            axisColor={axisColor}
           />
         </g>
 

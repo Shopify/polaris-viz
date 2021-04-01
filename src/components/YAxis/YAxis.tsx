@@ -13,15 +13,27 @@ interface Props {
   }[];
   drawableWidth: number;
   fontSize?: number;
+  textColor?: string;
+  axisColor?: string;
 }
 
-function Axis({ticks, drawableWidth, fontSize}: Props) {
+function Axis({
+  ticks,
+  drawableWidth,
+  fontSize,
+  textColor,
+  axisColor = 'rgb(223, 227, 232)',
+}: Props) {
   return (
     <g>
       {ticks.map(({value, formattedValue, yOffset}) => {
         return (
           <g key={value} transform={`translate(0,${yOffset})`}>
-            <line x2={drawableWidth} className={styles.Line} />
+            <line
+              x2={drawableWidth}
+              className={styles.Line}
+              style={{stroke: axisColor ? axisColor : ''}}
+            />
             <text
               aria-hidden
               className={styles.Text}
@@ -29,6 +41,7 @@ function Axis({ticks, drawableWidth, fontSize}: Props) {
                 fontSize: `${fontSize ? fontSize : FONT_SIZE}px`,
                 textAnchor: 'end',
                 transform: `translateX(-${spacingBase}) translateY(${spacingExtraTight})`,
+                fill: textColor,
               }}
             >
               {formattedValue}

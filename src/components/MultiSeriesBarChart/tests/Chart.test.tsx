@@ -69,6 +69,7 @@ describe('Chart />', () => {
     timeSeries: false,
     renderTooltipContent,
     hasRoundedCorners: false,
+    isAnimated: false,
   };
 
   it('renders an SVG element', () => {

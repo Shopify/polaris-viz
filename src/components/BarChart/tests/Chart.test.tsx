@@ -41,6 +41,7 @@ describe('Chart />', () => {
     timeSeries: false,
     renderTooltipContent: jest.fn(() => <p>Mock Tooltip</p>),
     hasRoundedCorners: false,
+    isAnimated: false,
   };
 
   it('renders an SVG element', () => {

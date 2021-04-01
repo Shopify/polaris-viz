@@ -1,8 +1,9 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, useState, useEffect} from 'react';
 import {ScaleLinear} from 'd3-scale';
 import {area, curveMonotoneX} from 'd3-shape';
 
 import {uniqueId, getColorValue, rgbToRgba} from '../../../../utilities';
+import {usePrefersReducedMotion} from '../../../../hooks';
 import {Data} from '../../../../types';
 import {Series} from '../../types';
 
@@ -13,10 +14,22 @@ interface Props {
   yScale: ScaleLinear<number, number>;
   xScale: ScaleLinear<number, number>;
   hasSpline: boolean;
+  isAnimated: boolean;
+  index: number;
 }
 
-export function GradientArea({series, yScale, xScale, hasSpline}: Props) {
+export function GradientArea({
+  series,
+  yScale,
+  xScale,
+  hasSpline,
+  isAnimated,
+  index,
+}: Props) {
   const id = useMemo(() => uniqueId('gradient'), []);
+  const {prefersReducedMotion} = usePrefersReducedMotion();
+  const [display, setDisplay] = useState<'none' | 'block'>('none');
+
   const {data, color} = series;
 
   const areaGenerator = area<Data>()
@@ -30,12 +43,21 @@ export function GradientArea({series, yScale, xScale, hasSpline}: Props) {
 
   const areaShape = areaGenerator(data);
 
+  useEffect(() => {
+    const timer = setTimeout(() => setDisplay('block'), index * 250);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [index]);
+
   if (areaShape == null || color == null) {
     return null;
   }
 
   const rgb = getColorValue(color);
   const gradientStops = getGradientDetails(data);
+  const immediate = !isAnimated || prefersReducedMotion;
 
   return (
     <React.Fragment>
@@ -56,6 +78,8 @@ export function GradientArea({series, yScale, xScale, hasSpline}: Props) {
         fill={`url(#${id})`}
         strokeWidth="0"
         stroke={series.color}
+        style={{display: immediate ? 'block' : display}}
+        className={immediate ? null : styles.Area}
       />
     </React.Fragment>
   );

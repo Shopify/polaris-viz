@@ -1,6 +1,6 @@
 import React from 'react';
 import {ScaleLinear} from 'd3-scale';
-import {Color} from 'types';
+import {Color, GradientColor} from 'types';
 
 import {Bar} from '../../../Bar';
 import {BAR_SPACING} from '../../constants';
@@ -10,13 +10,14 @@ interface Props {
   yScale: ScaleLinear<number, number>;
   width: number;
   data: number[];
-  colors: Color[];
-  highlightColors: Color[];
+  colors: (Color | GradientColor)[];
+  highlightColors: (Color | GradientColor)[];
   isActive: boolean;
   barGroupIndex: number;
   ariaLabel: string;
   onFocus: (index: number) => void;
   hasRoundedCorners: boolean;
+  isAnimated: boolean;
 }
 
 export function BarGroup({
@@ -31,6 +32,8 @@ export function BarGroup({
   barGroupIndex,
   ariaLabel,
   hasRoundedCorners,
+
+  isAnimated,
 }: Props) {
   const barWidth = width / data.length - BAR_SPACING;
 
@@ -63,6 +66,8 @@ export function BarGroup({
               role={ariaEnabledBar ? 'img' : undefined}
               ariaLabel={ariaEnabledBar ? ariaLabel : undefined}
               hasRoundedCorners={hasRoundedCorners}
+              numberOfBars={data.length}
+              isAnimated={isAnimated}
             />
           </g>
         );

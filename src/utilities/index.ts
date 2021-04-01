@@ -1,7 +1,8 @@
 export {eventPoint} from './event-point';
+export {getGradientStops, GradientPosition} from './get-gradient-stops';
 export {getTextWidth} from './get-text-width';
 export {clamp} from './clamp';
-export {getColorValue} from './get-color-value';
+export {getColorValue, isGradientType} from './get-color-value';
 export {uniqueId} from './unique-id';
 export {getDefaultColor} from './get-default-color';
 export {getTextContainerHeight} from './get-text-container-height';
