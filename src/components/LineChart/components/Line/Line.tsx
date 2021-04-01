@@ -58,10 +58,9 @@ export const Line = React.memo(function Shape({
     <React.Fragment>
       {useGradientLine ? (
         <defs>
-          <linearGradient id="carysgradient1" x1="0%" x2="0%" y1="0%" y2="100%">
-            <stop offset="0%" stopColor="#FDCE20" />
-            <stop offset="49.36%" stopColor="#FE960F" />
-            <stop offset="100%" stopColor="#FE0FD8" />
+          <linearGradient id="carysgradient1" x1="0%" x2="100%" y1="0%" y2="0%">
+            <stop offset="6.88%" stopColor="rgba(143, 104, 255, 0.85)" />
+            <stop offset="64.16%" stopColor="rgba(75, 181, 145, 0.85)" />
           </linearGradient>
         </defs>
       ) : null}

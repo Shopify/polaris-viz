@@ -157,7 +157,7 @@ export default function Playground() {
               ],
               color: 'quaternary',
               lineStyle: 'solid' as 'solid',
-              // showArea: true,
+              showArea: true,
             },
             {
               name: 'Mar 01–Mar 14, 2020',
@@ -245,6 +245,7 @@ export default function Playground() {
           }
           timeSeries
           hasRoundedCorners
+          useHardCodedGradient
         />
       </div>
     </div>
