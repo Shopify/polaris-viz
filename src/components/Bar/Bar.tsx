@@ -138,7 +138,7 @@ export function Bar({
     <React.Fragment>
       {gradientMarkup}
 
-      <path
+      <animated.path
         className={styles.Bar}
         d={barPath}
         fill={barColor}

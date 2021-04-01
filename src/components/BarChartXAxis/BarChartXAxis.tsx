@@ -83,7 +83,7 @@ export function BarChartXAxis({
       <path
         d={`M ${xScaleMin} ${TICK_SIZE} v ${-TICK_SIZE} H ${xScaleMax} v ${TICK_SIZE}`}
         fill="none"
-        stroke={axisColor ? axisColor : '#194685'}
+        stroke={axisColor ? axisColor : 'rgb(223, 227, 232)'}
       />
 
       {labels.map(({value, xOffset}, index) => {
@@ -94,7 +94,7 @@ export function BarChartXAxis({
           <g key={index} transform={`translate(${xOffset}, 0)`}>
             <line
               y2={TICK_SIZE}
-              stroke={axisColor ? axisColor : '#194685'}
+              stroke={axisColor ? axisColor : 'rgb(223, 227, 232)'}
               transform={
                 leftAlignLabels ? `translate(-${maxWidth / 2 - 1} 0)` : ''
               }
