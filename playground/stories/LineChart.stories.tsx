@@ -8,6 +8,9 @@ const backgroundColor = '#1f1f25';
 const axisColor = '#414247';
 const textColor = '#dcdcdc';
 
+document.body.style.fontFamily =
+  "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif";
+
 export default {
   title: 'LineChart',
   component: LineChart,
