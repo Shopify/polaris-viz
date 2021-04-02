@@ -10,7 +10,7 @@ import {
   crossHairColors,
   fontFamily,
   containerStyles,
-} from './constants';
+} from './constants.stories';
 
 document.body.style.fontFamily = fontFamily;
 
