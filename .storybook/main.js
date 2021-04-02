@@ -8,7 +8,7 @@ const postcssShopify = require('@shopify/postcss-plugin');
 module.exports = {
   stories: [
     // '../src/**/*.stories.@(mdx|tsx)',
-    '../playground/**/*.stories.@(mdx|tsx)',
+    '../playground/**/*.stories.@(mdx|tsx|ts)',
   ],
   addons: [
     '@storybook/addon-links',
