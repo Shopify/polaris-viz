@@ -63,16 +63,14 @@ export function GradientArea({
   return (
     <React.Fragment>
       <defs>
-        <linearGradient id={`${id}`} x1="0%" x2="100%" y1="0%" y2="0%">
-          {/* {gradientStops.map(({percent, alpha}) => (
+        <linearGradient id={`${id}`} x1="0%" x2="0%" y1="0%" y2="100%">
+          {gradientStops.map(({percent, alpha}) => (
             <stop
               key={percent}
               offset={`${percent}%`}
               stopColor={rgbToRgba({rgb, alpha})}
             />
-          ))} */}
-          <stop stopColor="#8F68FF" offset="21%" stopOpacity="0.05" />
-          <stop stopColor="#4BB591" offset="62%" stopOpacity="0.05" />
+          ))}
         </linearGradient>
       </defs>
 
