@@ -35,7 +35,6 @@ export default {
 const Template: Story<{}> = (args) => {
   return (
     <BarChart
-      useHardCodedGradient
       background={args.backgroundColor}
       axisColor={args.axisColor}
       textColor={args.textColor}

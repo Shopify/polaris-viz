@@ -167,34 +167,6 @@ export function Chart({
         onTouchEnd={() => setActiveBar(null)}
         role="list"
       >
-        {useHardCodedGradient || lastBarTreatment ? (
-          <defs>
-            <linearGradient
-              id="bar-gradient"
-              x1="0"
-              y1="0"
-              x2="0"
-              y2={drawableHeight}
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop stopColor="#757F9A" offset="50%" />
-              <stop stopColor="#D7DDE8" offset="100%" />
-            </linearGradient>
-
-            <linearGradient
-              id="bar-gradient2"
-              x1="0"
-              y1="0"
-              x2={`${chartDimensions.width}px`}
-              y2="0"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop stopColor="#8F68FF" offset="15%" />
-              <stop stopColor="#00B4C2" offset="93%" />
-            </linearGradient>
-          </defs>
-        ) : null}
-
         <g
           transform={`translate(${axisMargin},${chartDimensions.height -
             MARGIN.Bottom -
@@ -302,10 +274,10 @@ export function Chart({
                 />
 
                 <foreignObject
-                  width="80"
-                  height="60"
+                  width="95"
+                  height="50"
                   x={xPosition - 25}
-                  y={yScale(rawValue) - 80}
+                  y={yScale(0) - 80}
                 >
                   <div
                     style={{
@@ -315,10 +287,10 @@ export function Chart({
                       opacity: showAnnotation ? '1' : '0',
                       fontSize: 12,
                       transition: 'opacity 0.3s',
+                      border: '1px solid rgba(153,153,153,0.4)',
                     }}
-                  >
-                    {annotation}
-                  </div>
+                    dangerouslySetInnerHTML={{__html: annotation}}
+                  />
                 </foreignObject>
               </g>
             );

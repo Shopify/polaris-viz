@@ -47,6 +47,7 @@ const Template: Story<{}> = (args) => {
       hasRoundedCorners
       leftAlignLabels
       useHardCodedGradient
+      lastBarTreatment
     />
   );
 };
@@ -67,7 +68,7 @@ const chartData = [
   {
     rawValue: 9.6549163769236532,
     label: '3',
-    annotation: 'Median: 3.5',
+    annotation: '<strong style="margin-right: 5px">Median</strong> 3.5',
   },
   {
     rawValue: 32.83315300207698,
@@ -130,7 +131,7 @@ const chartData = [
     label: '18',
   },
   {
-    rawValue: 12.476274510608242,
+    rawValue: 52.476274510608242,
     label: '19 +',
   },
 ];

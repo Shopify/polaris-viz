@@ -120,15 +120,33 @@ export function Bar({
       ? getGradientStops(highlightColor, GradientPosition.End)
       : getGradientStops(color, GradientPosition.End);
 
-    gradientMarkup = useHardCodedGradient ? (
+    // eslint-disable-next-line no-nested-ternary
+    gradientMarkup = lastBarTreatment ? (
+      <linearGradient
+        id="bar-gradient"
+        x1="0"
+        y1="0"
+        x2="0"
+        y2="100%"
+        gradientUnits="userSpaceOnUse"
+        gradientTransform={`translate(0,${yPosition * -1})`}
+      >
+        <stop stopColor="#D7DDE8" offset="0%" />
+        <stop stopColor="#757F9A" offset="100%" />
+      </linearGradient>
+    ) : useHardCodedGradient ? (
       <linearGradient
         id={`bar-gradient-${chartId}-${index}`}
         x1="0"
         y1="0"
         x2="0"
-        y2="221"
+        y2="100%"
         gradientUnits="userSpaceOnUse"
-        gradientTransform={`translate(0,-${yPosition})`}
+        gradientTransform={
+          isNegative
+            ? `translate(0,${yPosition}) rotate(180)`
+            : `translate(0,${yPosition * -1})`
+        }
       >
         <stop stopColor="#4BFCE0" offset="21%" />
         <stop stopColor="#4EADFB" offset="62%" />
