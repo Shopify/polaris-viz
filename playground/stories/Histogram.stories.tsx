@@ -39,8 +39,8 @@ const Template: Story<{}> = (args) => {
       skipLinkText="Skip chart content"
       timeSeries
       data={args.data}
-      color={args.chartColors}
-      background={args.backgroundColor}
+      color={args.chartColor}
+      background={args.background}
       axisColor={args.axisColor}
       textColor={args.textColor}
       crossHairColor={args.crossHairColor}
@@ -138,7 +138,7 @@ const chartData = [
 export const Light = Template.bind({});
 Light.args = {
   data: chartData,
-  chartColor: chartColors.blueWhiteGradient,
+  chartColor: chartColors.blueGreenGradient,
   background: backgroundColors.light,
   axisColor: axisColors.light,
   textColor: textColors.light,
@@ -154,7 +154,7 @@ Light.parameters = {
 export const Dark = Template.bind({});
 Dark.args = {
   data: chartData,
-  chartColor: chartColors.blueWhiteGradient,
+  chartColor: chartColors.blueGreenGradient,
   background: backgroundColors.dark,
   axisColor: axisColors.dark,
   textColor: textColors.dark,

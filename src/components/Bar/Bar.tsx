@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef} from 'react';
 import {ScaleLinear} from 'd3-scale';
 import {animated, useSpring, config} from 'react-spring';
 import tokens from '@shopify/polaris-tokens';
@@ -93,20 +93,26 @@ export function Bar({
       ? ''
       : animatedHeight.interpolate((height) => {
           return `
-            M${radius + xPosition} 0
+            M${radius} 0
             h${width - radius * 2}
             a${radius} ${radius} 0 01${radius} ${radius}
             v${(height as number) - radius}
-            H${xPosition}
+            H0
             V${radius}
             a${radius} ${radius} 0 01${radius}-${radius}
-            z`;
+            z
+          `;
         });
 
   const isGradientBar = isGradientType(color) || isGradientType(highlightColor);
 
   let fill = `url(#${gradientColorId.current})`;
   let gradientMarkup = null;
+
+  const getGradientOffset = (originalOffset: number) =>
+    originalOffset - (yPosition / startingScale) * 100;
+
+  const chartId = Math.floor(Math.random() * 10000);
 
   if (isGradientBar) {
     const gradientStartColor = isSelected
@@ -117,7 +123,20 @@ export function Bar({
       ? getGradientStops(highlightColor, GradientPosition.End)
       : getGradientStops(color, GradientPosition.End);
 
-    gradientMarkup = (
+    gradientMarkup = useHardCodedGradient ? (
+      <linearGradient
+        id={`bar-gradient-${chartId}-${index}`}
+        x1="0"
+        y1="0"
+        x2="0"
+        y2="221"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stopColor="#4BFCE0" offset={`${getGradientOffset(21)}%`} />
+        <stop stopColor="#4EADFB" offset={`${getGradientOffset(62)}%`} />
+        <stop stopColor="#801AFD" offset={`${getGradientOffset(109)}%`} />
+      </linearGradient>
+    ) : (
       <LinearGradient
         id={gradientColorId.current}
         startColor={gradientStartColor}
@@ -133,10 +152,11 @@ export function Bar({
     fill = currentColor;
   }
 
+  // eslint-disable-next-line no-nested-ternary
   const barColor = lastBarTreatment
     ? 'url(#bar-gradient)'
     : useHardCodedGradient
-    ? 'url(#bar-gradient2)'
+    ? `url(#bar-gradient-${chartId}-${index})`
     : fill;
 
   return (
@@ -154,7 +174,7 @@ export function Bar({
         style={{
           /* stylelint-disable */
           transform: animatedYPosition.interpolate(
-            (y) => `translateY(${y}px) ${rotation}`,
+            (y) => `translate(${xPosition}px, ${y}px) ${rotation}`,
           ),
           /* stylelint-enable */
         }}
