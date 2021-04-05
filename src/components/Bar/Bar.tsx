@@ -109,9 +109,6 @@ export function Bar({
   let fill = `url(#${gradientColorId.current})`;
   let gradientMarkup = null;
 
-  const getGradientOffset = (originalOffset: number) =>
-    originalOffset - (yPosition / startingScale) * 100;
-
   const chartId = Math.floor(Math.random() * 10000);
 
   if (isGradientBar) {
@@ -131,10 +128,11 @@ export function Bar({
         x2="0"
         y2="221"
         gradientUnits="userSpaceOnUse"
+        gradientTransform={`translate(0,-${yPosition})`}
       >
-        <stop stopColor="#4BFCE0" offset={`${getGradientOffset(21)}%`} />
-        <stop stopColor="#4EADFB" offset={`${getGradientOffset(62)}%`} />
-        <stop stopColor="#801AFD" offset={`${getGradientOffset(109)}%`} />
+        <stop stopColor="#4BFCE0" offset="21%" />
+        <stop stopColor="#4EADFB" offset="62%" />
+        <stop stopColor="#801AFD" offset="109%" />
       </linearGradient>
     ) : (
       <LinearGradient
