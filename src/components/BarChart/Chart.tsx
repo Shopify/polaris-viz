@@ -167,6 +167,22 @@ export function Chart({
         onTouchEnd={() => setActiveBar(null)}
         role="list"
       >
+        {useHardCodedGradient ? (
+          <defs>
+            <linearGradient
+              id="bar-gradient"
+              x1="0"
+              y1="0"
+              x2="0"
+              y2={drawableHeight}
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stopColor="#4BFCE0" offset="21%" />
+              <stop stopColor="#4EADFB" offset="62%" />
+              <stop stopColor="#801AFD" offset="109%" />
+            </linearGradient>
+          </defs>
+        ) : null}
         <g
           transform={`translate(${axisMargin},${chartDimensions.height -
             MARGIN.Bottom -

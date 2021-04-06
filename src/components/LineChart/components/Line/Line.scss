@@ -4,10 +4,10 @@
 
 @keyframes reveal {
   0% {
-    clip-path: inset(0 100% 0 0);
+    clip-path: inset(-5px 100% -5px 0);
   }
   99% {
-    clip-path: inset(0);
+    clip-path: inset(-5px 0% -5px 0);
   }
   100% {
     clip-path: unset;

@@ -69,4 +69,5 @@ Default.args = {
   formatXAxisLabel,
   formatYAxisLabel,
   renderTooltipContent,
+  isAnimated: true,
 };
