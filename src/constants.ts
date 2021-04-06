@@ -1,4 +1,4 @@
-export const CROSSHAIR_WIDTH = 5;
+export const CROSSHAIR_WIDTH = 1;
 export const SPACING_TIGHT = 8;
 export const SMALL_WIDTH = 300;
 export const MIN_LABEL_SPACE = 100;

@@ -12,9 +12,6 @@ interface Props {
 }
 
 export function Crosshair({x, height, opacity = 1, crossHairColor}: Props) {
-  if (crossHairColor) {
-    return null;
-  }
   return (
     <rect
       x={x - CROSSHAIR_WIDTH / 2}
