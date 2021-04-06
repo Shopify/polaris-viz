@@ -54,84 +54,84 @@ const Template: Story<{}> = (args) => {
 
 const chartData = [
   {
-    rawValue: 10.154471869354719,
+    rawValue: 10,
     label: '0',
   },
   {
-    rawValue: 45.996319948781284,
+    rawValue: 45,
     label: '1',
   },
   {
-    rawValue: 16.587832862892647,
+    rawValue: 16,
     label: '2',
   },
   {
-    rawValue: 9.6549163769236532,
+    rawValue: 9,
     label: '3',
     annotation: '<strong style="margin-right: 5px">Median</strong> 3.5',
   },
   {
-    rawValue: 32.83315300207698,
+    rawValue: 32,
     label: '4',
   },
   {
-    rawValue: 85.59694953733555,
+    rawValue: 85,
     label: '5',
   },
   {
-    rawValue: 74.31675425853265,
+    rawValue: 74,
     label: '6',
   },
   {
-    rawValue: 91.56764219680792,
+    rawValue: 91,
     label: '7',
   },
   {
-    rawValue: 58.01201763880841,
+    rawValue: 58,
     label: '8',
   },
   {
-    rawValue: 40.92917545574713,
+    rawValue: 40,
     label: '9',
   },
   {
-    rawValue: 58.544724136704396,
+    rawValue: 58,
     label: '10',
   },
   {
-    rawValue: 64.58976679740891,
+    rawValue: 64,
     label: '11',
   },
   {
-    rawValue: 9.322668954699687,
+    rawValue: 9,
     label: '12',
   },
   {
-    rawValue: 26.57654241435403,
+    rawValue: 26,
     label: '13',
   },
   {
-    rawValue: 34.2578055525538,
+    rawValue: 34,
     label: '14',
   },
   {
-    rawValue: 50.169629782092095,
+    rawValue: 50,
     label: '15',
   },
   {
-    rawValue: 56.51483868457661,
+    rawValue: 56,
     label: '16',
   },
   {
-    rawValue: 85.85622063984066,
+    rawValue: 85,
     label: '17',
   },
   {
-    rawValue: 2.6429450901744644,
+    rawValue: 2,
     label: '18',
   },
   {
-    rawValue: 52.476274510608242,
+    rawValue: 52,
     label: '19 +',
   },
 ];

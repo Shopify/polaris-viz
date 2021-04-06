@@ -293,7 +293,7 @@ export function Chart({
                   width="95"
                   height="50"
                   x={xPosition - 25}
-                  y={yScale(0) - 80}
+                  y={yScale(0) - 60}
                 >
                   <div
                     style={{
