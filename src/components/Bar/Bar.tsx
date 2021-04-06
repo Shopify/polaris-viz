@@ -87,10 +87,16 @@ export function Bar({
     rawValue === 0
       ? ''
       : animatedHeight.interpolate((height) => {
-          return `M${radius} 0h${width -
-            radius *
-              2} a${radius} ${radius} 0 01${radius} ${radius} v${(height as number) -
-            radius} H0 V${radius} a${radius} ${radius} 0 01${radius}-${radius} z`;
+          return `
+            M${radius} 0
+            h${width - radius * 2}
+            a${radius} ${radius} 0 01${radius} ${radius}
+            v${(height as number) - radius}
+            H0
+            V${radius}
+            a${radius} ${radius} 0 01${radius}-${radius}
+            z
+          `;
         });
 
   return (

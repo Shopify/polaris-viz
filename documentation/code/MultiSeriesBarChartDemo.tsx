@@ -53,20 +53,20 @@ export function MultiSeriesBarChartDemo({isStacked = false}: Props) {
         {label: 'Sunday', rawValue: 2},
       ],
     },
-    // {
-    //   color: 'tertiary' as 'tertiary',
-    //   highlightColor: 'tertiaryProminent' as 'tertiaryProminent',
-    //   name: 'Dinner',
-    //   data: [
-    //     {label: 'Monday', rawValue: 7},
-    //     {label: 'Tuesday', rawValue: 2},
-    //     {label: 'Wednesday', rawValue: 6},
-    //     {label: 'Thursday', rawValue: 12},
-    //     {label: 'Friday', rawValue: 10},
-    //     {label: 'Saturday', rawValue: 5},
-    //     {label: 'Sunday', rawValue: 3},
-    //   ],
-    // },
+    {
+      color: 'tertiary' as 'tertiary',
+      highlightColor: 'tertiaryProminent' as 'tertiaryProminent',
+      name: 'Dinner',
+      data: [
+        {label: 'Monday', rawValue: 7},
+        {label: 'Tuesday', rawValue: 2},
+        {label: 'Wednesday', rawValue: 6},
+        {label: 'Thursday', rawValue: 12},
+        {label: 'Friday', rawValue: 10},
+        {label: 'Saturday', rawValue: 5},
+        {label: 'Sunday', rawValue: 3},
+      ],
+    },
   ];
 
   const labels = [
