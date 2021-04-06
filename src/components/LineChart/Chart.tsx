@@ -319,6 +319,7 @@ export function Chart({
                       tabIndex={isFirstLine ? 0 : -1}
                       ariaLabelledby={tooltipId.current}
                       isAnimated={isAnimated}
+                      useGradientLine={showArea}
                     />
                   );
                 })}

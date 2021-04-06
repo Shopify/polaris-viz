@@ -69,7 +69,11 @@ export const Line = React.memo(function Shape({
         style={{display: immediate ? 'block' : display}}
         className={immediate ? null : styles.Path}
         fill="none"
-        strokeWidth={`${lineWidth}px`}
+        strokeWidth={
+          series.lineStyle === 'dashed'
+            ? `${lineWidth / 2}px`
+            : `${lineWidth}px`
+        }
         paintOrder="stroke"
         stroke={
           series.lineStyle === 'dashed'
@@ -79,12 +83,11 @@ export const Line = React.memo(function Shape({
             : getColorValue(series.color)
         }
         strokeLinejoin="round"
-        strokeDasharray={series.lineStyle === 'dashed' ? '2 4' : 'unset'}
         {...(series.lineStyle === 'dashed'
           ? {
               ...{
                 strokeLinecap: 'round',
-                strokeDasharray: '0.1, 8',
+                strokeDasharray: '0.1, 5',
               },
             }
           : undefined)}

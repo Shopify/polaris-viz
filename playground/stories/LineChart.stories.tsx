@@ -59,11 +59,13 @@ const Template: Story<LineChartProps> = (args: LineChartProps) => {
         '2020-04-13T12:00:00',
         '2020-04-14T12:00:00',
       ]}
-      formatXAxisLabel={(value) =>
-        new Date(value).toLocaleDateString('en-CA', {
-          day: 'numeric',
-          month: 'numeric',
-        })
+      formatXAxisLabel={(val) =>
+        new Date(val)
+          .toLocaleDateString('en-CA', {
+            day: 'numeric',
+            month: 'short',
+          })
+          .replace('.', '')
       }
       formatYAxisLabel={(value) => condenseNumber(value, 'en')}
       skipLinkText="Skip line chart content"
@@ -95,7 +97,7 @@ const chartData = [
     ],
     color: 'quaternary',
     lineStyle: 'solid' as 'solid',
-    // showArea: true,
+    showArea: true,
   },
   {
     name: 'Mar 01–Mar 14, 2020',

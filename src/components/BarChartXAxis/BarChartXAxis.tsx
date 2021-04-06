@@ -92,13 +92,13 @@ export function BarChartXAxis({
         }
         return (
           <g key={index} transform={`translate(${xOffset}, 0)`}>
-            <line
+            {/* <line
               y2={TICK_SIZE}
               stroke={axisColor ? axisColor : 'rgb(223, 227, 232)'}
               transform={
                 leftAlignLabels ? `translate(-${maxWidth / 2 - 1} 0)` : ''
               }
-            />
+            /> */}
             <foreignObject
               width={textWidth}
               height={textHeight}

@@ -7,11 +7,11 @@ export const chartColors = {blueGreenGradient: 'blueGreenGradient'};
 
 export const axisColors = {
   dark: 'rgb(65, 66, 71)',
-  light: 'rgb(223, 227, 232)',
+  light: 'rgba(223, 227, 232, 0.5)',
 };
 
 export const textColors = {
-  light: 'rgb(99, 115, 129)',
+  light: '#637381',
   dark: 'rgb(220, 220, 220)',
 };
 

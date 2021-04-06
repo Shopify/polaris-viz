@@ -148,7 +148,7 @@ export function Bar({
             : `translate(0,${yPosition * -1})`
         }
       >
-        <stop stopColor="#4BFCE0" offset="21%" />
+        <stop stopColor="#4BFCE0" offset="5%" />
         <stop stopColor="#4EADFB" offset="62%" />
         <stop stopColor="#801AFD" offset="109%" />
       </linearGradient>

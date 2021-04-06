@@ -46,15 +46,15 @@ const Template: Story<{}> = (args) => {
       color={args.chartColor}
       // highlightColor="inverse"
       formatXAxisLabel={(val) =>
-        new Date(val).toLocaleDateString('en-CA', {
-          day: 'numeric',
-          month: 'short',
-        })
+        new Date(val)
+          .toLocaleDateString('en-CA', {
+            day: 'numeric',
+            month: 'short',
+          })
+          .replace('.', '')
       }
       formatYAxisLabel={(val) =>
         new Intl.NumberFormat('en-CA', {
-          style: 'currency',
-          currency: 'CAD',
           maximumSignificantDigits: 2,
         }).format(val)
       }

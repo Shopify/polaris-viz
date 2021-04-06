@@ -99,11 +99,11 @@ function Axis({
 
   return (
     <React.Fragment>
-      <path
+      {/* <path
         d={`M ${xScaleMin} ${TICK_SIZE} v ${-TICK_SIZE} H ${xScaleMax} v ${TICK_SIZE}`}
         fill="none"
         stroke={axisColor ? axisColor : colorSky}
-      />
+      /> */}
 
       {tickDetails.map(({value, xOffset, firstLabel}, index) => {
         const textWidth = needsDiagonalLabels
@@ -133,12 +133,12 @@ function Axis({
 
         return (
           <g key={index} transform={`translate(${xOffset}, 0)`}>
-            <line
+            {/* <line
               y1="0"
               y2={-drawableHeight}
               stroke={axisColor ? axisColor : colorSky}
               strokeDasharray="3 2"
-            />
+            /> */}
             <foreignObject
               width={textWidth}
               height={textHeight}

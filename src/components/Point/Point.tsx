@@ -18,6 +18,7 @@ interface Props {
   onFocus?: ({index, x, y}: ActiveTooltip) => void;
   tabIndex?: number;
   ariaLabelledby?: string;
+  useGradientLine?: boolean;
 }
 
 export const Point = React.memo(function Point({
@@ -30,6 +31,7 @@ export const Point = React.memo(function Point({
   ariaLabelledby,
   tabIndex = -1,
   isAnimated = false,
+  useGradientLine = false,
 }: Props) {
   const {prefersReducedMotion} = usePrefersReducedMotion();
 
@@ -49,18 +51,35 @@ export const Point = React.memo(function Point({
   });
 
   return (
-    <animated.circle
-      role={ariaLabelledby == null ? '' : 'image'}
-      aria-labelledby={ariaLabelledby}
-      tabIndex={tabIndex}
-      cx={cx}
-      cy={cy}
-      r={radius}
-      fill={getColorValue(color)}
-      stroke={tokens.colorWhite}
-      strokeWidth={1.5}
-      onFocus={handleFocus}
-      className={styles.Point}
-    />
+    <React.Fragment>
+      <defs>
+        <linearGradient
+          id="gradient"
+          x1="0"
+          y1="0"
+          x2="0"
+          // to be replaced with actual height
+          y2={250}
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop offset="0%" stopColor="rgb(75, 181, 145)" />
+          <stop offset="100%" stopColor="rgb(143, 104, 255)" />
+        </linearGradient>
+      </defs>
+
+      <animated.circle
+        role={ariaLabelledby == null ? '' : 'image'}
+        aria-labelledby={ariaLabelledby}
+        tabIndex={tabIndex}
+        cx={cx}
+        cy={cy}
+        r={radius}
+        stroke={tokens.colorWhite}
+        strokeWidth={1.5}
+        fill={useGradientLine ? "url('#gradient')" : getColorValue(color)}
+        onFocus={handleFocus}
+        className={styles.Point}
+      />
+    </React.Fragment>
   );
 });
