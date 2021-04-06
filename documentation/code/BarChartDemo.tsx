@@ -15,22 +15,50 @@ export function BarChartDemo() {
     "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif";
 
   const data = [
-    {rawValue: 324.19, label: '2020-01-01T12:00:00Z'},
-    {rawValue: 613.29, label: '2020-01-02T12:00:00Z'},
-    {rawValue: 422.79, label: '2020-01-03T12:00:00Z'},
+    {rawValue: 324.19, label: '0'},
+    {rawValue: 613.29, label: '1'},
+    {rawValue: 422.79, label: '2'},
     {
       rawValue: 25.6,
-      label: '2020-01-04T12:00:00Z',
+      label: '3',
     },
-    {rawValue: 277.69, label: '2020-01-05T12:00:00Z'},
-    {rawValue: 421.19, label: '2020-01-06T12:00:00Z'},
+    {rawValue: 277.69, label: '4'},
+    {rawValue: 421.19, label: '5'},
+    {rawValue: 324.19, label: '6'},
+    {rawValue: 613.29, label: '7'},
+    {rawValue: 422.79, label: '8'},
+    {
+      rawValue: 25.6,
+      label: '9',
+    },
+    {rawValue: 277.69, label: '10'},
+    {rawValue: 421.19, label: '11'},
+    {rawValue: 324.19, label: '12'},
+    {rawValue: 613.29, label: '13'},
+    {rawValue: 422.79, label: '14'},
+    {
+      rawValue: 25.6,
+      label: '15',
+    },
+    {rawValue: 277.69, label: '16'},
+    {rawValue: 421.19, label: '17'},
+    {rawValue: 324.19, label: '18'},
+    {rawValue: 613.29, label: '19'},
+    {rawValue: 422.79, label: '20'},
+    {
+      rawValue: 25.6,
+      label: '21',
+    },
+    {rawValue: 277.69, label: '22'},
+    {rawValue: 421.19, label: '23'},
   ];
 
   function formatXAxisLabel(value: string) {
-    return new Date(value).toLocaleDateString('en-CA', {
-      day: 'numeric',
-      month: 'short',
-    });
+    return value;
+    // return new Date(value).toLocaleDateString('en-CA', {
+    //   day: 'numeric',
+    //   month: 'short',
+    // });
   }
 
   function formatYAxisLabel(value: number) {
@@ -81,6 +109,9 @@ export function BarChartDemo() {
           formatYAxisLabel={formatYAxisLabel}
           renderTooltipContent={renderTooltipContent}
           skipLinkText="Skip chart content"
+          timeSeries
+          leftAlignedAxis
+          barMargin="Small"
         />
       </div>
     </div>

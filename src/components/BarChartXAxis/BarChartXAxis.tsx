@@ -22,18 +22,27 @@ interface XAxisDetails {
   maxWidth: number;
 }
 
+function getTextAlign(leftAlignedAxis: boolean, needsDiagonalLabels: boolean) {
+  if (needsDiagonalLabels) {
+    return 'right';
+  }
+  return leftAlignedAxis ? 'left' : 'center';
+}
+
 export function BarChartXAxis({
   labels,
   xScale,
   fontSize,
   showFewerLabels,
   xAxisDetails,
+  leftAlignedAxis = false,
 }: {
   xScale: ScaleBand<string>;
   labels: {value: string; xOffset: number}[];
   fontSize: number;
   showFewerLabels: boolean;
   xAxisDetails: XAxisDetails;
+  leftAlignedAxis?: boolean;
 }) {
   const [xScaleMin, xScaleMax] = xScale.range();
   const {
@@ -67,6 +76,9 @@ export function BarChartXAxis({
     ? Math.max(diagonalLabelSpacePerBar, 1)
     : DEFAULT_LABEL_RATIO;
 
+  const textAlign = getTextAlign(leftAlignedAxis, needsDiagonalLabels);
+  const tickOffset = leftAlignedAxis ? (xScale.bandwidth() / 2) * -1 : 0;
+
   return (
     <React.Fragment>
       <path
@@ -81,7 +93,12 @@ export function BarChartXAxis({
         }
         return (
           <g key={index} transform={`translate(${xOffset}, 0)`}>
-            <line y2={TICK_SIZE} stroke={colorSky} />
+            {/* <line
+              y2={TICK_SIZE}
+              stroke={colorSky}
+              x1={tickOffset}
+              x2={tickOffset}
+            /> */}
             <foreignObject
               width={textWidth}
               height={textHeight}
@@ -91,6 +108,7 @@ export function BarChartXAxis({
                 className={textContainerClassName}
                 style={{
                   fontSize,
+                  textAlign,
                 }}
               >
                 {value}

@@ -63,16 +63,17 @@ export default function Playground() {
   const toggleDemos = () => setShowDemos((showingDemos) => !showingDemos);
 
   return (
-    <div>
-      <h3>Playground area</h3>
-      <NormalizedStackedBarChart
-        size="large"
-        // orientation="vertical"
-        {...mockProps}
-      />
-      <br />
-      <button onClick={toggleDemos}>Toggle Demos</button>
-      {showDemos && <Demos />}
-    </div>
+    // <div>
+    //   <h3>Playground area</h3>
+    //   <NormalizedStackedBarChart
+    //     size="large"
+    //     // orientation="vertical"
+    //     {...mockProps}
+    //   />
+    //   <br />
+    //   <button onClick={toggleDemos}>Toggle Demos</button>
+    //   {showDemos && <Demos />}
+    // </div>
+    <PlaygroundDemos.BarChartDemo />
   );
 }

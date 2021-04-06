@@ -1,13 +1,11 @@
 @import '../../styles/common';
 
 .Text {
-  text-align: center;
   @include axis-text;
   word-break: break-word;
 }
 
 .DiagonalText {
-  text-align: right;
   @include ellipsis-overflow;
   @include axis-text;
 }

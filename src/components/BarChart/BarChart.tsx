@@ -21,6 +21,7 @@ export interface BarChartProps {
   skipLinkText?: string;
   renderTooltipContent?: (data: RenderTooltipContentData) => React.ReactNode;
   hasRoundedCorners?: boolean;
+  leftAlignedAxis?: boolean;
 }
 
 export function BarChart({
@@ -29,6 +30,7 @@ export function BarChart({
   highlightColor = getDefaultColor(),
   barMargin = 'Medium',
   timeSeries = false,
+  leftAlignedAxis = false,
   hasRoundedCorners = false,
   formatXAxisLabel = (value) => value.toString(),
   formatYAxisLabel = (value) => value.toString(),
@@ -87,6 +89,7 @@ export function BarChart({
             formatYAxisLabel={formatYAxisLabel}
             timeSeries={timeSeries}
             hasRoundedCorners={hasRoundedCorners}
+            leftAlignedAxis={leftAlignedAxis}
             renderTooltipContent={
               renderTooltipContent != null
                 ? renderTooltipContent
