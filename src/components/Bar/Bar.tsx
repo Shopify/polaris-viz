@@ -30,6 +30,7 @@ interface Props {
   onFocus: ({index, cx, cy}: {index: number; cx: number; cy: number}) => void;
   numberOfBars: number;
   isAnimated: boolean;
+  drawableHeight: number;
   ariaLabel?: string;
   tabIndex: number;
   role?: string;
@@ -58,6 +59,7 @@ export function Bar({
   useHardCodedGradient,
   numberOfBars,
   isAnimated,
+  drawableHeight,
 }: Props) {
   const gradientColorId = useRef(uniqueId('gradient'));
   const rawHeight = Math.abs(yScale(rawValue) - yScale(0));
@@ -79,10 +81,9 @@ export function Bar({
   const xPosition = isNegative ? x + width : x;
   const immediate = !isAnimated;
 
-  const {height: animatedHeight, yPosition: animatedYPosition} = useSpring({
-    height,
-    yPosition,
-    from: {height: 0, yPosition: startingScale},
+  const {scale} = useSpring({
+    scale: 1,
+    from: {scale: 0},
     delay: immediate ? 0 : (MAX_DELAY / numberOfBars) * index,
     config: config.gentle,
     immediate,
@@ -91,25 +92,21 @@ export function Bar({
   const barPath =
     rawValue === 0
       ? ''
-      : animatedHeight.interpolate((height) => {
-          return `
-            M${radius} 0
-            h${width - radius * 2}
-            a${radius} ${radius} 0 01${radius} ${radius}
-            v${(height as number) - radius}
-            H0
-            V${radius}
-            a${radius} ${radius} 0 01${radius}-${radius}
-            z
-          `;
-        });
+      : `
+        M${radius + xPosition} ${yPosition}
+        h${width - radius * 2}
+        a${radius} ${radius} 0 01${radius} ${radius}
+        v${height - radius}
+        H${xPosition}
+        V${radius + yPosition}
+        a${radius} ${radius} 0 01${radius}-${radius}
+        Z
+      `;
 
   const isGradientBar = isGradientType(color) || isGradientType(highlightColor);
 
   let fill = `url(#${gradientColorId.current})`;
   let gradientMarkup = null;
-
-  const chartId = Math.floor(Math.random() * 10000);
 
   if (isGradientBar) {
     const gradientStartColor = isSelected
@@ -120,37 +117,17 @@ export function Bar({
       ? getGradientStops(highlightColor, GradientPosition.End)
       : getGradientStops(color, GradientPosition.End);
 
-    // eslint-disable-next-line no-nested-ternary
     gradientMarkup = lastBarTreatment ? (
       <linearGradient
-        id="bar-gradient"
+        id="last-bar-gradient"
         x1="0"
         y1="0"
         x2="0"
         y2="100%"
         gradientUnits="userSpaceOnUse"
-        gradientTransform={`translate(0,${yPosition * -1})`}
       >
         <stop stopColor="#D7DDE8" offset="0%" />
         <stop stopColor="#757F9A" offset="100%" />
-      </linearGradient>
-    ) : useHardCodedGradient ? (
-      <linearGradient
-        id={`bar-gradient-${chartId}-${index}`}
-        x1="0"
-        y1="0"
-        x2="0"
-        y2="100%"
-        gradientUnits="userSpaceOnUse"
-        gradientTransform={
-          isNegative
-            ? `translate(0,${yPosition}) rotate(180)`
-            : `translate(0,${yPosition * -1})`
-        }
-      >
-        <stop stopColor="#4BFCE0" offset="5%" />
-        <stop stopColor="#4EADFB" offset="62%" />
-        <stop stopColor="#801AFD" offset="109%" />
       </linearGradient>
     ) : (
       <LinearGradient
@@ -170,9 +147,9 @@ export function Bar({
 
   // eslint-disable-next-line no-nested-ternary
   const barColor = lastBarTreatment
-    ? 'url(#bar-gradient)'
+    ? 'url(#last-bar-gradient)'
     : useHardCodedGradient
-    ? `url(#bar-gradient-${chartId}-${index})`
+    ? `url(#bar-gradient)`
     : fill;
 
   return (
@@ -189,9 +166,10 @@ export function Bar({
         role={role}
         style={{
           /* stylelint-disable */
-          transform: animatedYPosition.interpolate(
-            (y) => `translate(${xPosition}px, ${y}px) ${rotation}`,
+          transform: scale.interpolate(
+            (scaleY) => `scaleY(${scaleY}) ${rotation}`,
           ),
+          transformOrigin: `center ${drawableHeight}px`,
           /* stylelint-enable */
         }}
       />
