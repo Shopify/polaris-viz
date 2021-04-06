@@ -23,8 +23,9 @@ interface Props {
   onFocus: ({index, cx, cy}: {index: number; cx: number; cy: number}) => void;
   numberOfBars: number;
   isAnimated: boolean;
-  ariaLabel?: string;
   tabIndex: number;
+  drawableHeight: number;
+  ariaLabel?: string;
   role?: string;
   hasRoundedCorners?: boolean;
 }
@@ -45,6 +46,7 @@ export function Bar({
   hasRoundedCorners,
   numberOfBars,
   isAnimated,
+  drawableHeight,
 }: Props) {
   const currentColor = isSelected
     ? getColorValue(highlightColor)
@@ -74,10 +76,9 @@ export function Bar({
   const xPosition = isNegative ? x + width : x;
   const immediate = !isAnimated;
 
-  const {height: animatedHeight, yPosition: animatedYPosition} = useSpring({
-    height,
-    yPosition,
-    from: {height: 0, yPosition: zeroScale},
+  const {scale} = useSpring({
+    scale: 1,
+    from: {scale: 0},
     delay: immediate ? 0 : (MAX_DELAY / numberOfBars) * index,
     config: config.gentle,
     immediate,
@@ -86,18 +87,16 @@ export function Bar({
   const barPath =
     rawValue === 0
       ? ''
-      : animatedHeight.interpolate((height) => {
-          return `
-            M${radius} 0
-            h${width - radius * 2}
-            a${radius} ${radius} 0 01${radius} ${radius}
-            v${(height as number) - radius}
-            H0
-            V${radius}
-            a${radius} ${radius} 0 01${radius}-${radius}
-            z
-          `;
-        });
+      : `
+        M${radius + xPosition} ${yPosition}
+        h${width - radius * 2}
+        a${radius} ${radius} 0 01${radius} ${radius}
+        v${height - radius}
+        H${xPosition}
+        V${radius + yPosition}
+        a${radius} ${radius} 0 01${radius}-${radius}
+        Z
+      `;
 
   return (
     <animated.path
@@ -109,9 +108,10 @@ export function Bar({
       role={role}
       style={{
         /* stylelint-disable */
-        transform: animatedYPosition.interpolate(
-          (y) => `translate(${xPosition}px, ${y}px) ${rotation}`,
+        transform: scale.interpolate(
+          (scaleY) => `scaleY(${scaleY}) ${rotation}`,
         ),
+        transformOrigin: `center ${drawableHeight}px`,
         /* stylelint-enable */
       }}
       className={color === highlightColor ? undefined : styles.BarNoOutline}

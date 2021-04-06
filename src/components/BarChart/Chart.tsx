@@ -206,6 +206,7 @@ export function Chart({
                   role="img"
                   hasRoundedCorners={hasRoundedCorners}
                   isAnimated={isAnimated}
+                  drawableHeight={drawableHeight}
                 />
               </g>
             );

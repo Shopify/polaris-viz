@@ -18,6 +18,7 @@ interface Props {
   onFocus: (index: number) => void;
   hasRoundedCorners: boolean;
   isAnimated: boolean;
+  drawableHeight: number;
 }
 
 export function BarGroup({
@@ -33,6 +34,7 @@ export function BarGroup({
   ariaLabel,
   hasRoundedCorners,
   isAnimated,
+  drawableHeight,
 }: Props) {
   const barWidth = width / data.length - BAR_SPACING;
 
@@ -67,6 +69,7 @@ export function BarGroup({
               hasRoundedCorners={hasRoundedCorners}
               numberOfBars={data.length}
               isAnimated={isAnimated}
+              drawableHeight={drawableHeight}
             />
           </g>
         );

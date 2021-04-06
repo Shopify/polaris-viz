@@ -257,6 +257,7 @@ export function Chart({
                     ariaLabel={ariaLabel}
                     hasRoundedCorners={hasRoundedCorners}
                     isAnimated={isAnimated}
+                    drawableHeight={drawableHeight}
                   />
                 );
               })}
