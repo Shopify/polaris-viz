@@ -36,6 +36,7 @@ interface Props {
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
   hideXAxisLabels: boolean;
   hasSpline: boolean;
+  emptyStateText?: string;
 }
 
 export function Chart({
@@ -47,6 +48,7 @@ export function Chart({
   renderTooltipContent,
   hideXAxisLabels,
   hasSpline,
+  emptyStateText,
 }: Props) {
   const [tooltipDetails, setTooltipDetails] = useState<ActiveTooltip | null>(
     null,
@@ -56,6 +58,8 @@ export function Chart({
 
   const fontSize =
     dimensions.width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
+
+  const emptyState = series.length === 0;
 
   const {ticks: initialTicks} = useYScale({
     fontSize,
@@ -206,7 +210,7 @@ export function Chart({
   return (
     <div className={styles.Container}>
       <svg
-        role="table"
+        role={emptyState ? 'img' : 'table'}
         width="100%"
         height="100%"
         onMouseMove={(event) => {
@@ -219,6 +223,7 @@ export function Chart({
         }}
         onTouchEnd={() => handleInteraction(null)}
         onMouseLeave={() => handleMouseInteraction(null)}
+        aria-label={emptyState ? emptyStateText : undefined}
       >
         <g
           transform={`translate(${axisMargin},${dimensions.height -
@@ -243,7 +248,7 @@ export function Chart({
           />
         </g>
 
-        {tooltipDetails == null ? null : (
+        {tooltipDetails == null || emptyState ? null : (
           <g transform={`translate(${axisMargin},${Margin.Top})`}>
             <Crosshair
               x={xScale(tooltipDetails.index)}
@@ -252,11 +257,13 @@ export function Chart({
           </g>
         )}
 
-        <VisuallyHiddenRows
-          formatYAxisLabel={formatYAxisLabel}
-          xAxisLabels={formattedLabels}
-          series={series}
-        />
+        {emptyState ? null : (
+          <VisuallyHiddenRows
+            formatYAxisLabel={formatYAxisLabel}
+            xAxisLabels={formattedLabels}
+            series={series}
+          />
+        )}
 
         <g transform={`translate(${axisMargin},${Margin.Top})`}>
           {reversedSeries.map((singleSeries, index) => {
@@ -305,7 +312,7 @@ export function Chart({
         </g>
       </svg>
 
-      {tooltipDetails == null ? null : (
+      {tooltipDetails == null || emptyState ? null : (
         <TooltipContainer
           activePointIndex={tooltipDetails.index}
           currentX={tooltipDetails.x}

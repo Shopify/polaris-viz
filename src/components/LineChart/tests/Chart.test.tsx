@@ -58,6 +58,17 @@ const mockProps = {
   hasSpline: false,
 };
 
+const mockEmptyStateProps = {
+  series: [],
+  xAxisLabels: [],
+  dimensions: new DOMRect(),
+  formatXAxisLabel: jest.fn((value) => value),
+  formatYAxisLabel: jest.fn((value) => value),
+  renderTooltipContent: jest.fn(() => <p>Mock Tooltip</p>),
+  hideXAxisLabels: false,
+  hasSpline: false,
+};
+
 describe('<Chart />', () => {
   beforeEach(() => {
     jest.useFakeTimers();
@@ -198,6 +209,27 @@ describe('<Chart />', () => {
       series: mockProps.series,
       xAxisLabels: mockProps.xAxisLabels,
       formatYAxisLabel: mockProps.formatYAxisLabel,
+    });
+  });
+
+  describe('empty state', () => {
+    it('does not render tooltip for empty state', () => {
+      const chart = mount(<Chart {...mockEmptyStateProps} />);
+
+      expect(chart).not.toContainReactText('Mock Tooltip');
+      expect(chart).not.toContainReactComponent(TooltipContainer);
+    });
+
+    it('does not render crosshair for empty state', () => {
+      const chart = mount(<Chart {...mockEmptyStateProps} />);
+
+      expect(chart).not.toContainReactComponent(Crosshair);
+    });
+
+    it('does not render Visually Hidden Rows for empty state', () => {
+      const chart = mount(<Chart {...mockEmptyStateProps} />);
+
+      expect(chart).not.toContainReactComponent(VisuallyHiddenRows);
     });
   });
 });

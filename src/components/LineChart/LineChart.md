@@ -125,6 +125,7 @@ interface LineChartProps {
   formatYAxisLabel?(value: number): string;
   renderTooltipContent?: (data: RenderTooltipContentData): React.ReactNode;
   skipLinkText?: string;
+  emptyStateText?: string;
   hideXAxisLabels?: boolean;
 }
 ```
@@ -187,6 +188,8 @@ The lineStyle type determines if the drawn line for the series is a solid or das
 | `boolean` | `false` |
 
 The showArea type determines if a gradient area style is used for the series.
+
+If `series` may be an empty array, provide <a href="#emptyStateText">`emptyStateText`</a> to communicate the empty state to screenreaders.
 
 ### The `RenderTooltipContentData` type
 
@@ -266,11 +269,19 @@ This accepts a function that is called to render the tooltip content. By default
 
 #### skipLinkText
 
-| type     |
-| -------- |
-| `string` |
+| type     | default     |
+| -------- | ----------- |
+| `string` | `undefined` |
 
 If provided, renders a `<SkipLink/>` button with the string. Use this for charts with large data sets, so keyboard users can skip all the tabbable data points in the chart.
+
+#### emptyStateText
+
+| type     | default     |
+| -------- | ----------- |
+| `string` | `undefined` |
+
+Used to indicate to screenreaders that a chart with no data has been rendered, in the case that an empty array is passed as the series data. It is strongly recommended that this is included if the series prop could be an empty array.
 
 #### hasSpline
 

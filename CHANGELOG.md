@@ -5,6 +5,7 @@
 ### Added
 
 - `background`, `border`, `border-radius`, and `padding` to each `TooltipContent` styles
+- Added `emptyStateText` and empty state handling to `<LineChart />`
 
 ### Removed
 
