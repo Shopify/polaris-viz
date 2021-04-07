@@ -11,7 +11,7 @@ export const axisColors = {
 };
 
 export const textColors = {
-  light: '#637381',
+  light: '#607175',
   dark: 'rgb(220, 220, 220)',
 };
 

@@ -10,7 +10,7 @@ export const vizColors = {
   secondaryProminent: 'rgb(9, 6, 37)',
   tertiaryProminent: 'rgb(6, 96, 166)',
   quaternaryProminent: 'rgb(93, 28, 116)',
-  pastComparison: 'rgb(145,158,171)',
+  pastComparison: 'rgb(200,206,213)',
   positive: 'rgb(0,128,96)',
   negative: 'rgb(215,44,13)',
 };

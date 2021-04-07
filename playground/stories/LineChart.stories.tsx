@@ -50,32 +50,61 @@ function renderTooltipContent(stuff) {
   );
   return (
     <div style={{fontSize: 12}}>
-      {data.map(({name, point}, index) => (
-        <div key={index}>
-          <p style={{color: '#6D7175'}}>{name}</p>
-          <div style={{display: 'flex'}}>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr',
+        }}
+      >
+        {data.map(({point}, index) => (
+          <div key={index}>
+            <p
+              style={{color: '#607175', fontSize: '14px', margin: '0 0 8px 0'}}
+            >
+              {new Date(point.label)
+                .toLocaleDateString('en-CA', {
+                  day: 'numeric',
+                  month: 'short',
+                })
+                .replace('.', '')}
+            </p>
             <div
               style={{
-                marginRight: '5px',
-                background:
-                  index === 1
-                    ? '#C8CED5'
-                    : 'linear-gradient(146.97deg, #4BB591 21.77%, #6737FA 80.3%)',
-                width: '10px',
-                height: '10px',
-                borderRadius: '10px',
+                display: 'flex',
+                alignItems: 'center',
+                marginBottom: '18px',
               }}
-            />
-            <strong>{formatNumber(point.value)}</strong>
+            >
+              <div
+                style={{
+                  marginRight: '5px',
+                  background:
+                    index === 1
+                      ? '#C8CED5'
+                      : 'linear-gradient(146.97deg, #4BB591 21.77%, #6737FA 80.3%)',
+                  width: '8px',
+                  height: '8px',
+                  borderRadius: '8px',
+                }}
+              />
+              <span style={{fontSize: '20px', fontWeight: '400'}}>
+                {formatNumber(point.value)}
+              </span>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
 
-      <p style={{color: percentageDifference > 0 ? '#00A47C' : 'red'}}>
+      <p
+        style={{
+          margin: '0 0 0 0',
+          color: percentageDifference > 0 ? '#00A47C' : 'red',
+        }}
+      >
         <span style={{marginRight: '8px'}}>
           {percentageDifference > 0 ? '▲' : '▼'}
         </span>
-        {percentageDifference}
+        {`${Math.abs(percentageDifference)}%`}
       </p>
     </div>
   );

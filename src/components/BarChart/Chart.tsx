@@ -177,9 +177,9 @@ export function Chart({
               y2={drawableHeight}
               gradientUnits="userSpaceOnUse"
             >
-              <stop stopColor="#4BFCE0" offset="21%" />
-              <stop stopColor="#4EADFB" offset="62%" />
-              <stop stopColor="#801AFD" offset="109%" />
+              <stop stopColor="#4BFCE0" offset="10%" stopOpacity="75%" />
+              <stop stopColor="#4EADFB" offset="62%" stopOpacity="75%" />
+              <stop stopColor="#801AFD" offset="109%" stopOpacity="75%" />
             </linearGradient>
           </defs>
         ) : null}

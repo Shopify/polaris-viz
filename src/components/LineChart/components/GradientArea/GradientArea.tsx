@@ -74,8 +74,8 @@ export function GradientArea({
         </linearGradient> */}
 
         <linearGradient id={`${id}`} x1="0%" x2="0%" y1="0%" y2="100%">
-          <stop offset="0%" stopColor="rgba(75, 181, 145, 0.2)" />
-          <stop offset="100%" stopColor="rgba(143, 104, 255, 0.01)" />
+          <stop offset="0%" stopColor="rgba(85, 167, 255, 0.15)" />
+          <stop offset="100%" stopColor="rgba(85, 167, 255, 0.01)" />
         </linearGradient>
       </defs>
 

@@ -9,9 +9,16 @@ export interface TooltipContentProps {
 
 export function TooltipContent({label, value}: TooltipContentProps) {
   return (
-    <div className={styles.Container}>
-      <strong>{label}</strong>
-      {value}
+    <div
+      className={styles.Container}
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        fontSize: '14px',
+      }}
+    >
+      <span style={{color: '#607175'}}>{label}</span>
+      <strong style={{fontSize: '20px', fontWeight: '400'}}>{value}</strong>
     </div>
   );
 }
