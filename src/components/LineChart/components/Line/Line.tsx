@@ -126,7 +126,7 @@ export const Line = React.memo(function Shape({
         d={path}
         style={{
           /* stylelint-disable-next-line value-keyword-case */
-          animationDelay: `${index * 500}ms`,
+          animationDelay: `${index * 250}ms`,
         }}
         className={immediate ? null : styles.Path}
         fill="none"
