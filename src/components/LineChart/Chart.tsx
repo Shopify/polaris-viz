@@ -206,11 +206,12 @@ export function Chart({
     }
 
     const closestIndex = Math.round(xScale.invert(svgX - axisMargin));
+    const activeIndex = Math.min(longestSeriesLength, closestIndex);
 
     setTooltipDetails({
       x: svgX,
       y: svgY,
-      index: Math.min(longestSeriesLength, closestIndex),
+      index: activeIndex,
     });
   }
 
@@ -298,12 +299,13 @@ export function Chart({
                   yScale={yScale}
                   hasSpline={hasSpline}
                   lineWidth={lineWidth}
-                  useGradientLine={useGradientLine}
+                  useGradientLine={showArea}
                   isAnimated={isAnimated}
                   index={index}
+                  activeIndex={tooltipDetails?.index ?? null}
                 />
 
-                {data.map(({rawValue}, dataIndex) => {
+                {/* {data.map(({rawValue}, dataIndex) => {
                   const activeIndex =
                     tooltipDetails == null ? null : tooltipDetails.index;
 
@@ -318,11 +320,11 @@ export function Chart({
                       index={dataIndex}
                       tabIndex={isFirstLine ? 0 : -1}
                       ariaLabelledby={tooltipId.current}
-                      isAnimated={isAnimated}
-                      useGradientLine={showArea}
+                      isAnimated={isAnimated && !prefersReducedMotion}
+                      ariaHidden
                     />
                   );
-                })}
+                })} */}
               </React.Fragment>
             );
           })}

@@ -1,10 +1,12 @@
-import React, {useState, useEffect} from 'react';
+import React, {useRef, useState, useEffect, useCallback} from 'react';
 import {line, curveMonotoneX} from 'd3-shape';
 import {ScaleLinear} from 'd3-scale';
+import {useSpring, animated} from 'react-spring';
 
 import {getColorValue} from '../../../../utilities';
 import {usePrefersReducedMotion} from '../../../../hooks';
 import {Series} from '../../types';
+import {Point} from '../../../Point';
 
 import styles from './Line.scss';
 
@@ -17,6 +19,7 @@ interface Props {
   useGradientLine: boolean;
   isAnimated: boolean;
   index: number;
+  activeIndex?: number | null;
 }
 
 export const Line = React.memo(function Shape({
@@ -28,9 +31,31 @@ export const Line = React.memo(function Shape({
   useGradientLine,
   isAnimated,
   index,
+  activeIndex,
 }: Props) {
   const {prefersReducedMotion} = usePrefersReducedMotion();
-  const [display, setDisplay] = useState<string>('none');
+  const pathRef = useRef(null);
+  const [percentage, setPercentage] = useState(0);
+
+  const getCoordinateFromPercentage = (p: number) => {
+    if (
+      !pathRef.current ||
+      pathRef.current === null ||
+      path == null ||
+      totalLength == null
+    ) {
+      return {x: 0, y: 0};
+    }
+
+    const percentage = (p * totalLength) / 100;
+    const pt = pathRef.current.getPointAtLength(percentage);
+
+    return {
+      x: pt.x,
+      y: pt.y,
+    };
+  };
+
   const lineGenerator = line<{rawValue: number}>()
     .x((_, index) => xScale(index))
     .y(({rawValue}) => yScale(rawValue));
@@ -42,13 +67,45 @@ export const Line = React.memo(function Shape({
 
   const path = lineGenerator(series.data);
 
-  useEffect(() => {
-    const timer = setTimeout(() => setDisplay('block'), index * 250);
+  const getLengthAtPoint = useCallback(
+    (pointIndex: number) => {
+      if (pointIndex === null) return 0;
 
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [index]);
+      const offscreenPath = document.createElementNS(
+        'http://www.w3.org/2000/svg',
+        'path',
+      );
+      const filteredPath = series.data.slice(0, pointIndex + 1);
+
+      offscreenPath.setAttribute('d', lineGenerator(filteredPath) || '');
+      return offscreenPath.getTotalLength();
+    },
+    [lineGenerator, series.data],
+  );
+
+  const totalLength = getLengthAtPoint(13);
+
+  const percentageFromSubLength = useCallback(
+    (partialLength: number) => {
+      const percentage = (partialLength / totalLength) * 100;
+      return percentage;
+    },
+    [totalLength],
+  );
+
+  useEffect(() => {
+    if (activeIndex === null) {
+      return;
+    }
+
+    const subPathLength = getLengthAtPoint(activeIndex);
+    const percentage = percentageFromSubLength(subPathLength);
+    setPercentage(percentage);
+  }, [activeIndex, getLengthAtPoint, percentageFromSubLength, setPercentage]);
+
+  const {animatedPercentage} = useSpring({
+    animatedPercentage: percentage,
+  });
 
   if (path == null) {
     return null;
@@ -65,8 +122,12 @@ export const Line = React.memo(function Shape({
         </defs>
       ) : null}
       <path
+        ref={pathRef}
         d={path}
-        style={{display: immediate ? 'block' : display}}
+        style={{
+          /* stylelint-disable-next-line value-keyword-case */
+          animationDelay: `${index * 500}ms`,
+        }}
         className={immediate ? null : styles.Path}
         fill="none"
         strokeWidth={
@@ -90,6 +151,24 @@ export const Line = React.memo(function Shape({
             }
           : undefined)}
       />
+      {activeIndex !== null && (
+        <Point
+          useGradientLine={useGradientLine}
+          color={series.color}
+          cx={animatedPercentage.interpolate((p) => {
+            return getCoordinateFromPercentage(p).x;
+          })}
+          cy={animatedPercentage.interpolate(
+            (p) => getCoordinateFromPercentage(p).y,
+          )}
+          active
+          // onFocus={handleFocus}
+          index={index}
+          tabIndex={-1}
+          // ariaLabelledby={tooltipId.current}
+          isAnimated={isAnimated}
+        />
+      )}
     </React.Fragment>
   );
 });
