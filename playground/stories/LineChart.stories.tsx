@@ -2,7 +2,12 @@ import React from 'react';
 import {Story, Meta} from '@storybook/react';
 import {condenseNumber} from '@shopify/condense-number';
 
-import {LineChart, LineChartProps, Legend} from '../../src/components';
+import {
+  LineChart,
+  LineChartProps,
+  Legend,
+  LinePreview,
+} from '../../src/components';
 import {
   backgroundColors,
   axisColors,
@@ -45,67 +50,52 @@ const formatNumber = (number: number) =>
 function renderTooltipContent(stuff) {
   const {data} = stuff;
   const percentageDifference = getPercentageDiffernce(
-    data[0].point.value,
     data[1].point.value,
+    data[0].point.value,
   );
-  return (
-    <div style={{fontSize: 12}}>
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr',
-        }}
-      >
-        {data.map(({point}, index) => (
-          <div key={index}>
-            <p
-              style={{color: '#607175', fontSize: '14px', margin: '0 0 8px 0'}}
-            >
-              {new Date(point.label)
-                .toLocaleDateString('en-CA', {
-                  day: 'numeric',
-                  month: 'short',
-                })
-                .replace('.', '')}
-            </p>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                marginBottom: '18px',
-              }}
-            >
-              <div
-                style={{
-                  marginRight: '5px',
-                  background:
-                    index === 1
-                      ? '#C8CED5'
-                      : 'linear-gradient(146.97deg, #4BB591 21.77%, #6737FA 80.3%)',
-                  width: '8px',
-                  height: '8px',
-                  borderRadius: '8px',
-                }}
-              />
-              <span style={{fontSize: '20px', fontWeight: '400'}}>
-                {formatNumber(point.value)}
-              </span>
-            </div>
-          </div>
-        ))}
-      </div>
 
-      <p
-        style={{
-          margin: '0 0 0 0',
-          color: percentageDifference > 0 ? '#00A47C' : 'red',
-        }}
-      >
-        <span style={{marginRight: '8px'}}>
-          {percentageDifference > 0 ? '▲' : '▼'}
-        </span>
-        {`${Math.abs(percentageDifference)}%`}
+  const percentMarkup = (
+    <p
+      style={{
+        margin: '0 0 0 0',
+        color: percentageDifference > 0 ? '#00A47C' : 'red',
+      }}
+    >
+      <span style={{marginRight: '3px'}}>
+        {percentageDifference > 0 ? '▲' : '▼'}
+      </span>
+      {`${Math.abs(percentageDifference)}%`}
+    </p>
+  );
+
+  const innerContent = data.map(({point, color, lineStyle}, index) => (
+    <React.Fragment key={`${name}-${index}`}>
+      <div style={{marginRight: '13.5px'}}>
+        <LinePreview color={color} lineStyle={lineStyle} />
+      </div>
+      <p style={{margin: 0, marginRight: '25px', color: '#6D7175'}}>
+        {new Date(point.label)
+          .toLocaleDateString('en-CA', {
+            day: 'numeric',
+            month: 'short',
+          })
+          .replace('.', '')}
       </p>
+      <p style={{margin: 0, marginRight: '8px'}}>{formatNumber(point.value)}</p>
+      {index === 1 ? percentMarkup : <div />}
+    </React.Fragment>
+  ));
+  return (
+    <div
+      style={{
+        display: 'grid',
+        gridTemplateColumns: '1fr auto auto auto',
+        alignItems: 'center',
+        rowGap: '16px',
+        fontSize: '12px',
+      }}
+    >
+      {innerContent}
     </div>
   );
 }
@@ -169,6 +159,27 @@ const Template: Story<LineChartProps> = (args: LineChartProps) => {
 
 const chartData = [
   {
+    name: 'Mar 01–Mar 14, 2020',
+    data: [
+      {rawValue: 5200, label: '2020-03-01T12:00:00'},
+      {rawValue: 7000, label: '2020-03-02T12:00:00'},
+      {rawValue: 1000, label: '2020-03-03T12:00:00'},
+      {rawValue: 2000, label: '2020-03-04T12:00:00'},
+      {rawValue: 5000, label: '2020-03-05T12:00:00'},
+      {rawValue: 1000, label: '2020-03-06T12:00:00'},
+      {rawValue: 2000, label: '2020-03-07T12:00:00'},
+      {rawValue: 5000, label: '2020-03-08T12:00:00'},
+      {rawValue: 4000, label: '2020-03-09T12:00:00'},
+      {rawValue: 11200, label: '2020-03-10T12:00:00'},
+      {rawValue: 2000, label: '2020-03-11T12:00:00'},
+      {rawValue: 3000, label: '2020-03-12T12:00:00'},
+      {rawValue: 2000, label: '2020-03-13T12:00:00'},
+      {rawValue: 3000, label: '2020-03-14T12:00:00'},
+    ],
+    color: 'pastComparison' as 'pastComparison',
+    lineStyle: 'dashed' as 'dashed',
+  },
+  {
     name: 'Apr 01–Apr 14, 2020',
     data: [
       {rawValue: 2251, label: '2020-04-01T12:00:00'},
@@ -189,27 +200,6 @@ const chartData = [
     color: 'quaternary',
     lineStyle: 'solid' as 'solid',
     showArea: true,
-  },
-  {
-    name: 'Mar 01–Mar 14, 2020',
-    data: [
-      {rawValue: 5200, label: '2020-03-01T12:00:00'},
-      {rawValue: 7000, label: '2020-03-02T12:00:00'},
-      {rawValue: 1000, label: '2020-03-03T12:00:00'},
-      {rawValue: 2000, label: '2020-03-04T12:00:00'},
-      {rawValue: 5000, label: '2020-03-05T12:00:00'},
-      {rawValue: 1000, label: '2020-03-06T12:00:00'},
-      {rawValue: 2000, label: '2020-03-07T12:00:00'},
-      {rawValue: 5000, label: '2020-03-08T12:00:00'},
-      {rawValue: 4000, label: '2020-03-09T12:00:00'},
-      {rawValue: 11200, label: '2020-03-10T12:00:00'},
-      {rawValue: 2000, label: '2020-03-11T12:00:00'},
-      {rawValue: 3000, label: '2020-03-12T12:00:00'},
-      {rawValue: 2000, label: '2020-03-13T12:00:00'},
-      {rawValue: 3000, label: '2020-03-14T12:00:00'},
-    ],
-    color: 'pastComparison' as 'pastComparison',
-    lineStyle: 'dashed' as 'dashed',
   },
 ];
 

@@ -19,6 +19,14 @@ export interface TooltipContentProps {
   data: TooltipData[];
 }
 
+// const formatNumber = (number: number) =>
+//   new Intl.NumberFormat('en-ca').format(number);
+
+function formatNumber(val) {
+  console.log(val);
+  return '';
+}
+
 export function TooltipContent({data}: TooltipContentProps) {
   return (
     <div className={styles.Container}>
@@ -26,8 +34,15 @@ export function TooltipContent({data}: TooltipContentProps) {
         return (
           <React.Fragment key={`${name}-${index}`}>
             <LinePreview color={color} lineStyle={lineStyle} />
-            <p className={styles.Name}>{label}</p>
-            <p className={styles.Value}>{value}</p>
+            <p className={styles.Name}>
+              {new Date(label)
+                .toLocaleDateString('en-CA', {
+                  day: 'numeric',
+                  month: 'short',
+                })
+                .replace('.', '')}
+            </p>
+            <p className={styles.Value}>{formatNumber(parseInt(value, 1))}</p>
           </React.Fragment>
         );
       })}

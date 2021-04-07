@@ -290,10 +290,10 @@ export function Chart({
                 />
 
                 <foreignObject
-                  width="95"
-                  height="50"
+                  width="105"
+                  height="60"
                   x={xPosition - 25}
-                  y={yScale(0) - 60}
+                  y={yScale(0) - 68}
                 >
                   <div
                     style={{
@@ -301,9 +301,11 @@ export function Chart({
                       padding: '8px',
                       borderRadius: '3px',
                       opacity: showAnnotation ? '1' : '0',
-                      fontSize: 12,
+                      fontSize: 14,
                       transition: 'opacity 0.3s',
-                      border: '1px solid rgba(153,153,153,0.4)',
+                      margin: '5px',
+                      boxShadow:
+                        '0px 0px 3px rgba(0, 0, 0, 0.1), 0px 4px 4px rgba(0, 0, 0, 0.1)',
                     }}
                     dangerouslySetInnerHTML={{__html: annotation}}
                   />

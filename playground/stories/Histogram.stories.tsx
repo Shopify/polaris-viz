@@ -68,7 +68,8 @@ const chartData = [
   {
     rawValue: 9,
     label: '3',
-    annotation: '<strong style="margin-right: 5px">Median</strong> 3.5',
+    annotation:
+      '<span style="color: #607175">Median</span> <br /><span style="margin-right: 5px; margin-top: 18px; font-size: 16px; font-weight: 400">3.5</span>',
   },
   {
     rawValue: 32,

@@ -24,7 +24,7 @@ export const fontFamily =
   "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif";
 
 export const containerStyles = {
-  width: '600px',
+  width: '700px',
   height: '250px',
   padding: '20px',
   marginTop: '5px',
