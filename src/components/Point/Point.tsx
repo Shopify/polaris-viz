@@ -19,6 +19,7 @@ interface Props {
   tabIndex?: number;
   ariaLabelledby?: string;
   useGradientLine?: boolean;
+  ariaHidden?: boolean;
 }
 
 export const Point = React.memo(function Point({
