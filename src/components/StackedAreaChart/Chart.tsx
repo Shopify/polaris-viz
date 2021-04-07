@@ -1,7 +1,11 @@
 import React, {useState, useMemo, useRef} from 'react';
 import {stack, stackOffsetNone, stackOrderReverse} from 'd3-shape';
 
-import {useLinearXAxisDetails, useLinearXScale} from '../../hooks';
+import {
+  useLinearXAxisDetails,
+  useLinearXScale,
+  usePrefersReducedMotion,
+} from '../../hooks';
 import {
   SMALL_SCREEN,
   SMALL_FONT_SIZE,
@@ -48,6 +52,8 @@ export function Chart({
   opacity,
   isAnimated,
 }: Props) {
+  const {prefersReducedMotion} = usePrefersReducedMotion();
+
   const [activePointIndex, setActivePointIndex] = useState<number | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState<{
     x: number;
@@ -207,7 +213,7 @@ export function Chart({
           yScale={yScale}
           colors={colors}
           opacity={opacity}
-          isAnimated={isAnimated}
+          isAnimated={isAnimated && !prefersReducedMotion}
         />
 
         {activePointIndex == null ? null : (
@@ -233,7 +239,7 @@ export function Chart({
                 index={index}
                 tabIndex={stackIndex === 0 ? 0 : -1}
                 ariaLabelledby={tooltipId.current}
-                isAnimated={isAnimated}
+                isAnimated={isAnimated && !prefersReducedMotion}
               />
             )),
           )}
