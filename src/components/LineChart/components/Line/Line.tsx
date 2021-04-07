@@ -1,10 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {line, curveMonotoneX} from 'd3-shape';
 import {ScaleLinear} from 'd3-scale';
 
 import {getColorValue} from '../../../../utilities';
-import {usePrefersReducedMotion} from '../../../../hooks';
 import {Series} from '../../types';
+import {ANIMATION_DELAY} from '../../constants';
 
 import styles from './Line.scss';
 
@@ -25,26 +25,15 @@ export const Line = React.memo(function Shape({
   isAnimated,
   index,
 }: Props) {
-  const {prefersReducedMotion} = usePrefersReducedMotion();
-  const [display, setDisplay] = useState<string>('none');
   const lineGenerator = line<{rawValue: number}>()
     .x((_, index) => xScale(index))
     .y(({rawValue}) => yScale(rawValue));
-  const immediate = !isAnimated || prefersReducedMotion;
 
   if (hasSpline) {
     lineGenerator.curve(curveMonotoneX);
   }
 
   const path = lineGenerator(series.data);
-
-  useEffect(() => {
-    const delayTimer = setTimeout(() => setDisplay('block'), index * 250);
-
-    return () => {
-      clearTimeout(delayTimer);
-    };
-  }, [index]);
 
   if (path == null) {
     return null;
@@ -53,7 +42,10 @@ export const Line = React.memo(function Shape({
   return (
     <path
       d={path}
-      style={{display: immediate ? 'block' : display}}
+      style={{
+        /* stylelint-disable-next-line value-keyword-case */
+        animationDelay: `${index * ANIMATION_DELAY}ms`,
+      }}
       fill="none"
       strokeWidth="2px"
       paintOrder="stroke"
@@ -61,7 +53,7 @@ export const Line = React.memo(function Shape({
       strokeLinejoin="round"
       strokeLinecap="round"
       strokeDasharray={series.lineStyle === 'dashed' ? '2 4' : 'unset'}
-      className={immediate ? null : styles.Path}
+      className={isAnimated ? styles.Path : null}
     />
   );
 });

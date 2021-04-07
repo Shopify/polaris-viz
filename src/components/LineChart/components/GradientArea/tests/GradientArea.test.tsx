@@ -36,14 +36,6 @@ describe('<GradientArea />', () => {
     index: 0,
   };
 
-  beforeAll(() => {
-    Object.defineProperty(window, 'matchMedia', {
-      value: jest.fn(() => {
-        return {matches: false};
-      }),
-    });
-  });
-
   it('renders a linear gradient', () => {
     const actual = mount(
       <svg>

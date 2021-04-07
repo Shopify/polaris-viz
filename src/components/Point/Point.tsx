@@ -4,7 +4,6 @@ import {Color, ActiveTooltip} from 'types';
 import {useSpring, animated} from 'react-spring';
 
 import {getColorValue} from '../../utilities';
-import {usePrefersReducedMotion} from '../../hooks';
 
 import styles from './Point.scss';
 
@@ -14,7 +13,7 @@ interface Props {
   cy: number;
   color: Color;
   index: number;
-  isAnimated?: boolean;
+  isAnimated: boolean;
   onFocus?: ({index, x, y}: ActiveTooltip) => void;
   tabIndex?: number;
   ariaLabelledby?: string;
@@ -29,10 +28,8 @@ export const Point = React.memo(function Point({
   index,
   ariaLabelledby,
   tabIndex = -1,
-  isAnimated = false,
+  isAnimated,
 }: Props) {
-  const {prefersReducedMotion} = usePrefersReducedMotion();
-
   const handleFocus = () => {
     if (onFocus != null) {
       onFocus({index, x: cx, y: cy});
@@ -45,7 +42,7 @@ export const Point = React.memo(function Point({
       radius: 0,
     },
     config: {duration: tokens.durationBase},
-    immediate: !isAnimated || prefersReducedMotion,
+    immediate: !isAnimated,
   });
 
   return (

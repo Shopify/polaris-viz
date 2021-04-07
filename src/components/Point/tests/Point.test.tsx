@@ -10,17 +10,10 @@ const mockProps = {
   active: false,
   color: 'colorPurple' as Color,
   index: 0,
+  isAnimated: false,
 };
 
 describe('<Point />', () => {
-  beforeAll(() => {
-    Object.defineProperty(window, 'matchMedia', {
-      value: jest.fn(() => {
-        return {matches: false};
-      }),
-    });
-  });
-
   it('renders a circle at the given coordinates', () => {
     const point = mount(
       <svg>

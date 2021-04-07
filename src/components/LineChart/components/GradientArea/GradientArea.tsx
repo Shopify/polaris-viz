@@ -1,9 +1,9 @@
-import React, {useMemo, useState, useEffect} from 'react';
+import React, {useMemo} from 'react';
 import {ScaleLinear} from 'd3-scale';
 import {area, curveMonotoneX} from 'd3-shape';
 
 import {uniqueId, getColorValue, rgbToRgba} from '../../../../utilities';
-import {usePrefersReducedMotion} from '../../../../hooks';
+import {ANIMATION_DELAY} from '../../constants';
 import {Data} from '../../../../types';
 import {Series} from '../../types';
 
@@ -28,9 +28,6 @@ export function GradientArea({
   index,
 }: Props) {
   const id = useMemo(() => uniqueId('gradient'), []);
-  const {prefersReducedMotion} = usePrefersReducedMotion();
-  const [display, setDisplay] = useState<'none' | 'block'>('none');
-
   const {data, color} = series;
 
   const areaGenerator = area<Data>()
@@ -44,21 +41,12 @@ export function GradientArea({
 
   const areaShape = areaGenerator(data);
 
-  useEffect(() => {
-    const delayTimer = setTimeout(() => setDisplay('block'), index * 250);
-
-    return () => {
-      clearTimeout(delayTimer);
-    };
-  }, [index]);
-
   if (areaShape == null || color == null) {
     return null;
   }
 
   const rgb = getColorValue(color);
   const gradientStops = getGradientDetails(data);
-  const immediate = !isAnimated || prefersReducedMotion;
 
   return (
     <React.Fragment>
@@ -76,11 +64,14 @@ export function GradientArea({
 
       <path
         d={areaShape}
-        style={{display: immediate ? 'block' : display}}
+        style={{
+          /* stylelint-disable-next-line value-keyword-case */
+          animationDelay: `${index * ANIMATION_DELAY}ms`,
+        }}
         fill={`url(#${id})`}
         strokeWidth="0"
         stroke={series.color}
-        className={immediate ? null : styles.Area}
+        className={isAnimated ? styles.Area : null}
       />
     </React.Fragment>
   );
