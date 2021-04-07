@@ -222,6 +222,7 @@ export function Chart({
               x={xScale(activePointIndex)}
               height={drawableHeight}
               opacity={0.5}
+              isAnimated={isAnimated && !prefersReducedMotion}
             />
           </g>
         )}

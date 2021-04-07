@@ -2,6 +2,7 @@ import React from 'react';
 import tokens from '@shopify/polaris-tokens';
 import {Color, ActiveTooltip} from 'types';
 import {useSpring, animated} from 'react-spring';
+import {classNames} from '@shopify/css-utilities';
 
 import {getColorValue} from '../../utilities';
 
@@ -17,6 +18,8 @@ interface Props {
   onFocus?: ({index, x, y}: ActiveTooltip) => void;
   tabIndex?: number;
   ariaLabelledby?: string;
+  ariaHidden?: boolean;
+  visuallyHidden?: boolean;
 }
 
 export const Point = React.memo(function Point({
@@ -29,6 +32,8 @@ export const Point = React.memo(function Point({
   ariaLabelledby,
   tabIndex = -1,
   isAnimated,
+  ariaHidden = false,
+  visuallyHidden = false,
 }: Props) {
   const handleFocus = () => {
     if (onFocus != null) {
@@ -57,7 +62,11 @@ export const Point = React.memo(function Point({
       stroke={tokens.colorWhite}
       strokeWidth={1.5}
       onFocus={handleFocus}
-      className={styles.Point}
+      className={classNames(
+        styles.Point,
+        visuallyHidden ? styles.VisuallyHidden : null,
+      )}
+      aria-hidden={ariaHidden}
     />
   );
 });
