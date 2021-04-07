@@ -203,11 +203,12 @@ export function Chart({
     }
 
     const closestIndex = Math.round(xScale.invert(svgX - axisMargin));
+    const activeIndex = Math.min(longestSeriesLength, closestIndex);
 
     setTooltipDetails({
       x: svgX,
       y: svgY,
-      index: Math.min(longestSeriesLength, closestIndex),
+      index: activeIndex,
     });
   }
 
@@ -280,6 +281,7 @@ export function Chart({
                   hasSpline={hasSpline}
                   isAnimated={isAnimated && !prefersReducedMotion}
                   index={index}
+                  activeIndex={tooltipDetails?.index ?? null}
                 />
 
                 {data.map(({rawValue}, dataIndex) => {
@@ -298,6 +300,7 @@ export function Chart({
                       tabIndex={isFirstLine ? 0 : -1}
                       ariaLabelledby={tooltipId.current}
                       isAnimated={isAnimated && !prefersReducedMotion}
+                      ariaHidden={false}
                     />
                   );
                 })}
