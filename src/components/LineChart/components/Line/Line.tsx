@@ -152,7 +152,7 @@ export const Line = React.memo(function Shape({
           ? {
               ...{
                 strokeLinecap: 'round',
-                strokeDasharray: '0.1, 8',
+                strokeDasharray: '0.1, 6',
               },
             }
           : undefined)}

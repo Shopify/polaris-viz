@@ -20,9 +20,9 @@ export function LinePreview({color, lineStyle}: Props) {
             y1="3"
             y2="3"
             stroke={getColorValue(color)}
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-dasharray="0.1, 8"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeDasharray="0.1, 6"
           />
         </svg>
       </div>
@@ -31,7 +31,7 @@ export function LinePreview({color, lineStyle}: Props) {
     return (
       <div
         style={{
-          width: '23px',
+          width: '21px',
           height: '2px',
           borderRadius: '5px',
           background:
