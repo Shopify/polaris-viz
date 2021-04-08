@@ -15,6 +15,12 @@ interface Props {
 export function Crosshair({x, height, opacity = 1, crossHairColor}: Props) {
   const {animatedXPosition} = useSpring({
     animatedXPosition: x,
+    config: {
+      friction: 5,
+      clamp: true,
+      mass: 1,
+      tension: 190,
+    },
   });
 
   return (
