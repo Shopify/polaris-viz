@@ -18,7 +18,7 @@ export function TooltipContent({label, value}: TooltipContentProps) {
       }}
     >
       <span style={{color: '#607175'}}>{label}</span>
-      <strong style={{fontSize: '20px', fontWeight: '400'}}>{value}</strong>
+      <strong style={{fontSize: '14px', fontWeight: '400'}}>{value}</strong>
     </div>
   );
 }
