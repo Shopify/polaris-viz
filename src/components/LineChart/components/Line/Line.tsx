@@ -1,7 +1,7 @@
 import React, {useRef, useState, useEffect, useCallback} from 'react';
 import {line, curveMonotoneX} from 'd3-shape';
 import {ScaleLinear} from 'd3-scale';
-import {useSpring, animated} from 'react-spring';
+import {useSpring} from 'react-spring';
 
 import {getColorValue} from '../../../../utilities';
 import {usePrefersReducedMotion} from '../../../../hooks';
@@ -105,6 +105,12 @@ export const Line = React.memo(function Shape({
 
   const {animatedPercentage} = useSpring({
     animatedPercentage: percentage,
+    config: {
+      friction: 5,
+      clamp: true,
+      mass: 1,
+      tension: 190,
+    },
   });
 
   if (path == null) {
