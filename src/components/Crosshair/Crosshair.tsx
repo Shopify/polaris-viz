@@ -1,4 +1,5 @@
 import React from 'react';
+import {useSpring, animated} from 'react-spring';
 
 import {CROSSHAIR_WIDTH} from '../../constants';
 
@@ -12,9 +13,15 @@ interface Props {
 }
 
 export function Crosshair({x, height, opacity = 1, crossHairColor}: Props) {
+  const {animatedXPosition} = useSpring({
+    animatedXPosition: x,
+  });
+
   return (
-    <rect
-      x={x - CROSSHAIR_WIDTH / 2}
+    <animated.rect
+      x={animatedXPosition.interpolate(
+        (xPos) => (xPos as number) - CROSSHAIR_WIDTH / 2,
+      )}
       width={CROSSHAIR_WIDTH}
       height={height}
       stroke="none"
