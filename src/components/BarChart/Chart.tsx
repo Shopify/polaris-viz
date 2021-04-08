@@ -147,6 +147,7 @@ export function Chart({
     return renderTooltipContent({
       label: data[activeBar].label,
       value: data[activeBar].rawValue,
+      isMedian: data[activeBar].annotation,
     });
   }, [activeBar, data, renderTooltipContent]);
 
@@ -280,13 +281,13 @@ export function Chart({
                   stroke={background}
                   strokeWidth="2"
                   fill="#8F68FF"
-                  style={{cursor: 'pointer'}}
-                  onClick={() => updateAnnotation((state) => !state)}
-                  onMouseMove={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    setActiveBar(null);
-                  }}
+                  // style={{cursor: 'pointer'}}
+                  // onClick={() => updateAnnotation((state) => !state)}
+                  // onMouseMove={(e) => {
+                  //   e.preventDefault();
+                  //   e.stopPropagation();
+                  //   setActiveBar(null);
+                  // }}
                 />
 
                 <foreignObject
