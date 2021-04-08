@@ -108,6 +108,8 @@ export const Line = React.memo(function Shape({
     config: {
       friction: 5,
       clamp: true,
+      mass: 1,
+      tension: 190,
     },
   });
 
