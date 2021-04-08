@@ -1,12 +1,18 @@
-import React, {useRef, useState, useEffect, useCallback} from 'react';
+import React, {
+  useRef,
+  useState,
+  useEffect,
+  useCallback,
+  MutableRefObject,
+} from 'react';
 import {line, curveMonotoneX} from 'd3-shape';
 import {ScaleLinear} from 'd3-scale';
-import {useSpring} from 'react-spring';
+import {useSpring, SpringConfig} from 'react-spring';
 
-import {getColorValue} from '../../../../utilities';
+import {getColorValue, getPathLength} from '../../../../utilities';
 import {Series} from '../../types';
-import {ANIMATION_DELAY} from '../../constants';
-import {Point} from '../../../Point';
+import {ANIMATION_DELAY, SPRING_CONFIG} from '../../constants';
+import {AnimationValues} from '../../Chart';
 
 import styles from './Line.scss';
 
@@ -18,6 +24,7 @@ interface Props {
   isAnimated: boolean;
   index: number;
   activeIndex?: number | null;
+  animationValues?: MutableRefObject<AnimationValues>;
 }
 
 export const Line = React.memo(function Shape({
@@ -28,6 +35,7 @@ export const Line = React.memo(function Shape({
   isAnimated,
   index,
   activeIndex,
+  animationValues,
 }: Props) {
   const pathRef = useRef<SVGPathElement>(null);
   const [pointPercentage, setPointPercentage] = useState<number>(0);
@@ -45,28 +53,32 @@ export const Line = React.memo(function Shape({
 
   useEffect(() => {
     if (pathRef && pathRef.current) {
-      setTotalLength(pathRef.current.getTotalLength());
+      const length = getPathLength(pathRef.current);
+      setTotalLength(length);
     }
   }, [setTotalLength, pathRef]);
 
-  const getCoordinateFromPercentage = (percent: number) => {
-    if (
-      !pathRef.current ||
-      pathRef.current === null ||
-      path == null ||
-      totalLength == null
-    ) {
-      return {x: 0, y: 0};
-    }
+  const getCoordinateFromPercentage = useCallback(
+    (percent: number) => {
+      if (
+        !pathRef.current ||
+        pathRef.current === null ||
+        path == null ||
+        totalLength == null
+      ) {
+        return {x: 0, y: 0};
+      }
 
-    const percentage = (percent * totalLength) / 100;
-    const coordinates = pathRef.current.getPointAtLength(percentage);
+      const percentage = (percent * totalLength) / 100;
+      const coordinates = pathRef.current.getPointAtLength(percentage);
 
-    return {
-      x: coordinates.x,
-      y: coordinates.y,
-    };
-  };
+      return {
+        x: coordinates.x,
+        y: coordinates.y,
+      };
+    },
+    [path, totalLength],
+  );
 
   const getLengthAtPoint = useCallback(
     (pointIndex: number) => {
@@ -79,7 +91,7 @@ export const Line = React.memo(function Shape({
       const subpath = series.data.slice(0, pointIndex + 1);
 
       offscreenPath.setAttribute('d', lineGenerator(subpath) || '');
-      return offscreenPath.getTotalLength();
+      return getPathLength(offscreenPath);
     },
     [lineGenerator, series.data],
   );
@@ -92,25 +104,57 @@ export const Line = React.memo(function Shape({
   );
 
   useEffect(() => {
-    if (activeIndex === null) {
+    if (activeIndex === null || !isAnimated) {
       return;
     }
 
     const subPathLength = getLengthAtPoint(
       activeIndex === null || activeIndex === undefined ? 0 : activeIndex,
     );
+
     const percentage = percentageFromSubpath(subPathLength);
     setPointPercentage(percentage);
   }, [
     activeIndex,
     getLengthAtPoint,
+    isAnimated,
     percentageFromSubpath,
     setPointPercentage,
   ]);
 
-  const {animatedPercentage} = useSpring({
+  const {animatedPercentage} = useSpring<{
+    config: SpringConfig;
+    animatedPercentage: number;
+  }>({
+    config: SPRING_CONFIG,
     animatedPercentage: pointPercentage,
   });
+
+  useEffect(() => {
+    if (
+      !isAnimated ||
+      animatedPercentage === null ||
+      animationValues === undefined ||
+      animationValues.current === null
+    ) {
+      return;
+    }
+
+    animationValues.current.points[index] = {
+      cx: animatedPercentage.interpolate(
+        (percent: number) => getCoordinateFromPercentage(percent).x,
+      ),
+      cy: animatedPercentage.interpolate(
+        (percent: number) => getCoordinateFromPercentage(percent).y,
+      ),
+    };
+  }, [
+    isAnimated,
+    animatedPercentage,
+    animationValues,
+    getCoordinateFromPercentage,
+    index,
+  ]);
 
   if (path == null) {
     return null;
@@ -133,25 +177,6 @@ export const Line = React.memo(function Shape({
         strokeLinecap="round"
         strokeDasharray={series.lineStyle === 'dashed' ? '2 4' : 'unset'}
         className={isAnimated ? styles.Path : null}
-      />
-      <Point
-        color={series.color}
-        cx={
-          isAnimated
-            ? animatedPercentage.interpolate((percent) => {
-                return getCoordinateFromPercentage(percent as number).x;
-              })
-            : 0
-        }
-        cy={animatedPercentage.interpolate(
-          (percent) => getCoordinateFromPercentage(percent as number).y,
-        )}
-        active
-        index={index}
-        tabIndex={-1}
-        isAnimated={isAnimated}
-        ariaHidden
-        visuallyHidden={activeIndex === null || !isAnimated}
       />
     </React.Fragment>
   );

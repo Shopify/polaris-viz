@@ -59,6 +59,13 @@ const mockProps = {
   isAnimated: false,
 };
 
+jest.mock('../../../utilities', () => {
+  return {
+    ...jest.requireActual('../../../utilities'),
+    getPathLength: () => 0,
+  };
+});
+
 describe('<Chart />', () => {
   beforeEach(() => {
     jest.useFakeTimers();
@@ -127,13 +134,13 @@ describe('<Chart />', () => {
     const chart = mount(<Chart {...mockProps} />);
 
     // No crosshair if there is no active point
-    expect(chart).not.toContainReactComponent(Crosshair);
+    expect(chart.find(Crosshair)).toHaveReactProps({opacity: 0});
 
     // create an active point
     const svg = chart.find('svg')!;
     svg.trigger('onMouseMove', fakeSVGEvent);
 
-    expect(chart).toContainReactComponent(Crosshair);
+    expect(chart.find(Crosshair)).toHaveReactProps({opacity: 1});
   });
 
   it('renders a <Line /> for each series', () => {
@@ -148,14 +155,10 @@ describe('<Chart />', () => {
   });
 
   it('renders a <Point /> for each data item in each series', () => {
-    const chart = mount(
-      <Chart
-        {...mockProps}
-        series={[primarySeries, {...primarySeries, name: 'A second series'}]}
-      />,
-    );
+    const series = [primarySeries, {...primarySeries, name: 'A second series'}];
+    const chart = mount(<Chart {...mockProps} series={series} />);
 
-    expect(chart).toContainReactComponentTimes(Point, 8);
+    expect(chart).toContainReactComponentTimes(Point, 8 + series.length);
   });
 
   it('passes props to <Point />', () => {

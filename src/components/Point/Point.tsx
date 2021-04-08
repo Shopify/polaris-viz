@@ -1,7 +1,7 @@
 import React from 'react';
 import tokens from '@shopify/polaris-tokens';
 import {Color, ActiveTooltip} from 'types';
-import {useSpring, animated} from 'react-spring';
+import {useSpring, animated, OpaqueInterpolation} from 'react-spring';
 import {classNames} from '@shopify/css-utilities';
 
 import {getColorValue} from '../../utilities';
@@ -10,7 +10,7 @@ import styles from './Point.scss';
 
 interface Props {
   active: boolean;
-  cx: number;
+  cx: number | OpaqueInterpolation<number>;
   cy: number;
   color: Color;
   index: number;
@@ -57,7 +57,7 @@ export const Point = React.memo(function Point({
       tabIndex={tabIndex}
       cx={cx}
       cy={cy}
-      r={radius as any}
+      r={radius}
       fill={getColorValue(color)}
       stroke={tokens.colorWhite}
       strokeWidth={1.5}

@@ -6,6 +6,13 @@ import {scaleLinear} from 'd3-scale';
 import {getColorValue} from '../../../../../utilities';
 import {Line} from '../Line';
 
+jest.mock('../../../../../utilities', () => {
+  return {
+    ...jest.requireActual('../../../../../utilities'),
+    getPathLength: () => 0,
+  };
+});
+
 jest.mock('d3-scale', () => ({
   scaleLinear: jest.fn(() => jest.fn(() => 250)),
 }));
