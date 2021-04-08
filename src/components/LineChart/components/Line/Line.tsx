@@ -18,6 +18,7 @@ interface Props {
   isAnimated: boolean;
   index: number;
   activeIndex?: number | null;
+  animationValues: any;
 }
 
 export const Line = React.memo(function Shape({
@@ -28,6 +29,7 @@ export const Line = React.memo(function Shape({
   isAnimated,
   index,
   activeIndex,
+  animationValues,
 }: Props) {
   const pathRef = useRef<SVGPathElement>(null);
   const [pointPercentage, setPointPercentage] = useState<number>(0);
@@ -49,24 +51,27 @@ export const Line = React.memo(function Shape({
     }
   }, [setTotalLength, pathRef]);
 
-  const getCoordinateFromPercentage = (percent: number) => {
-    if (
-      !pathRef.current ||
-      pathRef.current === null ||
-      path == null ||
-      totalLength == null
-    ) {
-      return {x: 0, y: 0};
-    }
+  const getCoordinateFromPercentage = useCallback(
+    (percent: number) => {
+      if (
+        !pathRef.current ||
+        pathRef.current === null ||
+        path == null ||
+        totalLength == null
+      ) {
+        return {x: 0, y: 0};
+      }
 
-    const percentage = (percent * totalLength) / 100;
-    const coordinates = pathRef.current.getPointAtLength(percentage);
+      const percentage = (percent * totalLength) / 100;
+      const coordinates = pathRef.current.getPointAtLength(percentage);
 
-    return {
-      x: coordinates.x,
-      y: coordinates.y,
-    };
-  };
+      return {
+        x: coordinates.x,
+        y: coordinates.y,
+      };
+    },
+    [path, totalLength],
+  );
 
   const getLengthAtPoint = useCallback(
     (pointIndex: number) => {
@@ -110,6 +115,18 @@ export const Line = React.memo(function Shape({
     animatedPercentage: pointPercentage,
   });
 
+  useEffect(() => {
+    if (animatedPercentage == null || animationValues.current == null) return;
+    animationValues.current.dots[index] = {
+      cx: animatedPercentage.interpolate(
+        (percent) => getCoordinateFromPercentage(percent as number).x,
+      ),
+      cy: animatedPercentage.interpolate(
+        (percent) => getCoordinateFromPercentage(percent as number).y,
+      ),
+    };
+  }, [animatedPercentage, animationValues, getCoordinateFromPercentage, index]);
+
   if (path == null) {
     return null;
   }
@@ -132,7 +149,7 @@ export const Line = React.memo(function Shape({
         strokeDasharray={series.lineStyle === 'dashed' ? '2 4' : 'unset'}
         className={isAnimated ? styles.Path : null}
       />
-      {activeIndex !== null && (
+      {/* {activeIndex !== null && (
         <Point
           color={series.color}
           cx={animatedPercentage.interpolate((percent) => {
@@ -147,7 +164,7 @@ export const Line = React.memo(function Shape({
           isAnimated={isAnimated}
           ariaHidden
         />
-      )}
+      )} */}
     </React.Fragment>
   );
 });

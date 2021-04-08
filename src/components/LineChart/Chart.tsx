@@ -1,5 +1,6 @@
-import React, {useState, useMemo, useRef, useCallback} from 'react';
+import React, {useState, useMemo, useRef, useCallback, useEffect} from 'react';
 import throttle from 'lodash.throttle';
+import {useSpring, animated} from 'react-spring';
 
 import {
   useLinearXAxisDetails,
@@ -55,6 +56,15 @@ export function Chart({
   isAnimated,
 }: Props) {
   const {prefersReducedMotion} = usePrefersReducedMotion();
+  const animationValues = useRef<{
+    activeIndex: null | number;
+    animatedXPosition: any;
+    dots: any[];
+  }>({
+    activeIndex: null,
+    dots: [],
+    animatedXPosition: null,
+  });
 
   const [tooltipDetails, setTooltipDetails] = useState<ActiveTooltip | null>(
     null,
@@ -107,6 +117,7 @@ export function Chart({
       } else {
         const {x, y, index} = details;
         setTooltipDetails({index, y, x: x + axisMargin});
+        animationValues.current.activeIndex = index;
       }
     },
     [axisMargin],
@@ -125,6 +136,15 @@ export function Chart({
   );
 
   const {xScale} = useLinearXScale({drawableWidth, longestSeriesLength});
+
+  const {animatedXPosition} = useSpring({
+    animatedXPosition: xScale(animationValues.current.activeIndex || 0),
+  });
+
+  useEffect(() => {
+    animationValues.current.activeIndex = tooltipDetails?.index ?? null;
+    animationValues.current.animatedXPosition = animatedXPosition;
+  }, [tooltipDetails, animatedXPosition]);
 
   const tooltipMarkup = useMemo(() => {
     if (tooltipDetails == null) {
@@ -204,6 +224,7 @@ export function Chart({
 
     const closestIndex = Math.round(xScale.invert(svgX - axisMargin));
     const activeIndex = Math.min(longestSeriesLength, closestIndex);
+    animationValues.current.activeIndex = activeIndex;
 
     setTooltipDetails({
       x: svgX,
@@ -254,10 +275,7 @@ export function Chart({
 
         {tooltipDetails == null ? null : (
           <g transform={`translate(${axisMargin},${Margin.Top})`}>
-            <Crosshair
-              x={xScale(tooltipDetails.index)}
-              height={drawableHeight}
-            />
+            <Crosshair x={animatedXPosition} height={drawableHeight} />
           </g>
         )}
 
@@ -275,26 +293,34 @@ export function Chart({
             return (
               <React.Fragment key={`${name}-${index}`}>
                 <Line
+                  animationValues={animationValues}
                   series={singleSeries}
                   xScale={xScale}
                   yScale={yScale}
                   hasSpline={hasSpline}
                   isAnimated={isAnimated && !prefersReducedMotion}
                   index={index}
-                  activeIndex={tooltipDetails?.index ?? null}
+                  activeIndex={animationValues.current.activeIndex}
+                />
+                <Point
+                  color={singleSeries.color}
+                  cx={animatedXPosition}
+                  cy={animationValues.current.dots[index]?.cy}
+                  active
+                  index={index}
+                  tabIndex={-1}
+                  isAnimated={isAnimated}
+                  ariaHidden
                 />
 
                 {data.map(({rawValue}, dataIndex) => {
-                  const activeIndex =
-                    tooltipDetails == null ? null : tooltipDetails.index;
-
                   return (
                     <Point
                       key={`${name}-${index}-${dataIndex}`}
                       color={color}
                       cx={xScale(dataIndex)}
                       cy={yScale(rawValue)}
-                      active={activeIndex === dataIndex}
+                      active={animationValues.current.activeIndex === dataIndex}
                       onFocus={handleFocus}
                       index={dataIndex}
                       tabIndex={isFirstLine ? 0 : -1}
