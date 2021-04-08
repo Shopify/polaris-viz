@@ -50,8 +50,8 @@ const formatNumber = (number: number) =>
 function renderTooltipContent(stuff) {
   const {data} = stuff;
   const percentageDifference = getPercentageDiffernce(
-    data[1].point.value,
     data[0].point.value,
+    data[1].point.value,
   );
 
   const percentMarkup = (
@@ -82,7 +82,7 @@ function renderTooltipContent(stuff) {
           .replace('.', '')}
       </p>
       <p style={{margin: 0, marginRight: '8px'}}>{formatNumber(point.value)}</p>
-      {index === 1 ? percentMarkup : <div />}
+      {index === 0 ? percentMarkup : <div />}
     </React.Fragment>
   ));
   return (
@@ -91,11 +91,11 @@ function renderTooltipContent(stuff) {
         display: 'grid',
         gridTemplateColumns: '1fr auto auto auto',
         alignItems: 'center',
-        rowGap: '16px',
-        fontSize: '12px',
+        rowGap: '8px',
+        fontSize: '10px',
       }}
     >
-      {innerContent}
+      {innerContent.reverse()}
     </div>
   );
 }
@@ -137,7 +137,7 @@ const Template: Story<LineChartProps> = (args: LineChartProps) => {
         formatYAxisLabel={(value) => condenseNumber(value, 'en')}
         skipLinkText="Skip line chart content"
         hasSpline
-        lineWidth={3}
+        lineWidth={2}
         useGradientLine
       />
 
@@ -159,27 +159,6 @@ const Template: Story<LineChartProps> = (args: LineChartProps) => {
 
 const chartData = [
   {
-    name: 'Mar 01–Mar 14, 2020',
-    data: [
-      {rawValue: 5200, label: '2020-03-01T12:00:00'},
-      {rawValue: 7000, label: '2020-03-02T12:00:00'},
-      {rawValue: 1000, label: '2020-03-03T12:00:00'},
-      {rawValue: 2000, label: '2020-03-04T12:00:00'},
-      {rawValue: 5000, label: '2020-03-05T12:00:00'},
-      {rawValue: 1000, label: '2020-03-06T12:00:00'},
-      {rawValue: 2000, label: '2020-03-07T12:00:00'},
-      {rawValue: 5000, label: '2020-03-08T12:00:00'},
-      {rawValue: 4000, label: '2020-03-09T12:00:00'},
-      {rawValue: 11200, label: '2020-03-10T12:00:00'},
-      {rawValue: 2000, label: '2020-03-11T12:00:00'},
-      {rawValue: 3000, label: '2020-03-12T12:00:00'},
-      {rawValue: 2000, label: '2020-03-13T12:00:00'},
-      {rawValue: 3000, label: '2020-03-14T12:00:00'},
-    ],
-    color: 'pastComparison' as 'pastComparison',
-    lineStyle: 'dashed' as 'dashed',
-  },
-  {
     name: 'Apr 01–Apr 14, 2020',
     data: [
       {rawValue: 2251, label: '2020-04-01T12:00:00'},
@@ -200,6 +179,27 @@ const chartData = [
     color: 'quaternary',
     lineStyle: 'solid' as 'solid',
     showArea: true,
+  },
+  {
+    name: 'Mar 01–Mar 14, 2020',
+    data: [
+      {rawValue: 5200, label: '2020-03-01T12:00:00'},
+      {rawValue: 7000, label: '2020-03-02T12:00:00'},
+      {rawValue: 1000, label: '2020-03-03T12:00:00'},
+      {rawValue: 2000, label: '2020-03-04T12:00:00'},
+      {rawValue: 5000, label: '2020-03-05T12:00:00'},
+      {rawValue: 1000, label: '2020-03-06T12:00:00'},
+      {rawValue: 2000, label: '2020-03-07T12:00:00'},
+      {rawValue: 5000, label: '2020-03-08T12:00:00'},
+      {rawValue: 4000, label: '2020-03-09T12:00:00'},
+      {rawValue: 11200, label: '2020-03-10T12:00:00'},
+      {rawValue: 2000, label: '2020-03-11T12:00:00'},
+      {rawValue: 3000, label: '2020-03-12T12:00:00'},
+      {rawValue: 2000, label: '2020-03-13T12:00:00'},
+      {rawValue: 3000, label: '2020-03-14T12:00:00'},
+    ],
+    color: 'pastComparison' as 'pastComparison',
+    lineStyle: 'dashed' as 'dashed',
   },
 ];
 

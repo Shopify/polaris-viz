@@ -5,20 +5,29 @@ import styles from './TooltipContent.scss';
 export interface TooltipContentProps {
   label: string;
   value: string;
+  isMedian?: boolean;
 }
 
-export function TooltipContent({label, value}: TooltipContentProps) {
+export function TooltipContent({label, value, isMedian}: TooltipContentProps) {
+  console.log({isMedian});
   return (
     <div
-      className={styles.Container}
       style={{
-        display: 'flex',
-        flexDirection: 'column',
-        fontSize: '14px',
+        display: 'grid',
+        gridTemplateColumns: '1fr max-content',
+        columnGap: '10px',
+        fontSize: '10px',
+        rowGap: '8px',
       }}
     >
-      <span style={{color: '#607175'}}>{label}</span>
-      <strong style={{fontSize: '14px', fontWeight: '400'}}>{value}</strong>
+      {isMedian && (
+        <React.Fragment>
+          <span style={{color: '#8F68FF'}}>Median</span>
+          <strong style={{fontWeight: '400'}}>3.5 hours</strong>
+        </React.Fragment>
+      )}
+      <span style={{color: '#6D7175'}}>Orders fulfilled</span>
+      <strong style={{fontWeight: '400'}}>{value}</strong>
     </div>
   );
 }

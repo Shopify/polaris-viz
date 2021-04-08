@@ -75,11 +75,18 @@ export function BarChart({
   function renderDefaultTooltipContent({
     label,
     value,
+    isMedian,
   }: RenderTooltipContentData) {
     const formattedLabel = formatXAxisLabel(label);
     const formattedValue = formatYAxisLabel(value);
 
-    return <TooltipContent label={formattedLabel} value={formattedValue} />;
+    return (
+      <TooltipContent
+        label={formattedLabel}
+        value={formattedValue}
+        isMedian={isMedian}
+      />
+    );
   }
 
   return (
