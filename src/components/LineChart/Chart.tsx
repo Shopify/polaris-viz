@@ -41,6 +41,7 @@ interface Props {
   textColor: string;
   lineWidth: number;
   useGradientLine: boolean;
+  tooltipBackground: any;
 }
 
 export function Chart({
@@ -58,6 +59,7 @@ export function Chart({
   crossHairColor,
   useGradientLine,
   isAnimated,
+  tooltipBackground,
 }: Props) {
   const [tooltipDetails, setTooltipDetails] = useState<ActiveTooltip | null>(
     null,
@@ -339,6 +341,7 @@ export function Chart({
           chartDimensions={dimensions}
           margin={Margin}
           id={tooltipId.current}
+          tooltipBackground={tooltipBackground}
         >
           {tooltipMarkup}
         </TooltipContainer>

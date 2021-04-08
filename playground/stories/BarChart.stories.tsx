@@ -38,6 +38,7 @@ const Template: Story<{}> = (args) => {
       background={args.backgroundColor}
       axisColor={args.axisColor}
       textColor={args.textColor}
+      tooltipBackground={args.tooltipBackground}
       crossHairColor={args.crossHairColor}
       isAnimated
       data={Array.from({length: 12}, (_, i) => {
@@ -72,6 +73,7 @@ Light.args = {
   axisColor: axisColors.light,
   textColor: textColors.light,
   crossHairColor: crossHairColors.light,
+  tooltipBackground: 'white',
 };
 
 Light.parameters = {
@@ -87,6 +89,7 @@ Dark.args = {
   axisColor: axisColors.dark,
   textColor: textColors.dark,
   crossHairColor: crossHairColors.dark,
+  tooltipBackground: `rgb(46,48,51)`,
 };
 
 Dark.parameters = {

@@ -35,6 +35,8 @@ export default {
   },
   decorators: [
     (Story: any, context) => {
+      console.log(Story);
+      console.log(context);
       return <div style={containerStyles}>{Story()}</div>;
     },
   ],
@@ -93,6 +95,7 @@ function renderTooltipContent(stuff) {
         alignItems: 'center',
         rowGap: '8px',
         fontSize: '10px',
+        background: 'none',
       }}
     >
       {innerContent.reverse()}
@@ -107,6 +110,7 @@ const Template: Story<LineChartProps> = (args: LineChartProps) => {
         isAnimated
         axisColor={args.axisColor}
         textColor={args.textColor}
+        tooltipBackground={args.tooltipBackground}
         renderTooltipContent={renderTooltipContent}
         crossHairColor={args.crossHairColor}
         series={args.data}
@@ -147,7 +151,7 @@ const Template: Story<LineChartProps> = (args: LineChartProps) => {
             {
               name: 'compared to daily average for last 7 days',
 
-              color: 'pastComparison' as 'pastComparison',
+              color: '#637381',
               lineStyle: 'dashed' as 'dashed',
             },
           ]}
@@ -203,12 +207,59 @@ const chartData = [
   },
 ];
 
+const darkData = [
+  {
+    name: 'Apr 01–Apr 14, 2020',
+    data: [
+      {rawValue: 2251, label: '2020-04-01T12:00:00'},
+      {rawValue: 12132.2, label: '2020-04-02T12:00:00'},
+      {rawValue: 5000, label: '2020-04-03T12:00:00'},
+      {rawValue: 7200, label: '2020-04-04T12:00:00'},
+      {rawValue: 1500, label: '2020-04-05T12:00:00'},
+      {rawValue: 6132, label: '2020-04-06T12:00:00'},
+      {rawValue: 3100, label: '2020-04-07T12:00:00'},
+      {rawValue: 2200, label: '2020-04-08T12:00:00'},
+      {rawValue: 5103, label: '2020-04-09T12:00:00'},
+      {rawValue: 2112.5, label: '2020-04-10T12:00:00'},
+      {rawValue: 4004, label: '2020-04-11T12:00:00'},
+      {rawValue: 6000, label: '2020-04-12T12:00:00'},
+      {rawValue: 5500, label: '2020-04-13T12:00:00'},
+      {rawValue: 7000, label: '2020-04-14T12:00:00'},
+    ],
+    color: 'quaternary',
+    lineStyle: 'solid' as 'solid',
+    showArea: true,
+  },
+  {
+    name: 'Mar 01–Mar 14, 2020',
+    data: [
+      {rawValue: 5200, label: '2020-03-01T12:00:00'},
+      {rawValue: 7000, label: '2020-03-02T12:00:00'},
+      {rawValue: 1000, label: '2020-03-03T12:00:00'},
+      {rawValue: 2000, label: '2020-03-04T12:00:00'},
+      {rawValue: 5000, label: '2020-03-05T12:00:00'},
+      {rawValue: 1000, label: '2020-03-06T12:00:00'},
+      {rawValue: 2000, label: '2020-03-07T12:00:00'},
+      {rawValue: 5000, label: '2020-03-08T12:00:00'},
+      {rawValue: 4000, label: '2020-03-09T12:00:00'},
+      {rawValue: 11200, label: '2020-03-10T12:00:00'},
+      {rawValue: 2000, label: '2020-03-11T12:00:00'},
+      {rawValue: 3000, label: '2020-03-12T12:00:00'},
+      {rawValue: 2000, label: '2020-03-13T12:00:00'},
+      {rawValue: 3000, label: '2020-03-14T12:00:00'},
+    ],
+    color: '#637381',
+    lineStyle: 'dashed' as 'dashed',
+  },
+];
+
 export const Light = Template.bind({});
 Light.args = {
   data: chartData,
   axisColor: axisColors.light,
   textColor: textColors.light,
   crossHairColor: crossHairColors.light,
+  tooltipBackground: 'white',
 };
 
 Light.parameters = {
@@ -219,10 +270,11 @@ Light.parameters = {
 
 export const Dark = Template.bind({});
 Dark.args = {
-  data: chartData,
+  data: darkData,
   axisColor: axisColors.dark,
   textColor: textColors.dark,
   crossHairColor: crossHairColors.dark,
+  tooltipBackground: `rgb(46,48,51)`,
 };
 
 Dark.parameters = {

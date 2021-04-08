@@ -44,6 +44,7 @@ const Template: Story<{}> = (args) => {
       axisColor={args.axisColor}
       textColor={args.textColor}
       crossHairColor={args.crossHairColor}
+      tooltipBackground={args.tooltipBackground}
       hasRoundedCorners
       leftAlignLabels
       useHardCodedGradient
@@ -145,6 +146,7 @@ Light.args = {
   axisColor: axisColors.light,
   textColor: textColors.light,
   crossHairColor: crossHairColors.light,
+  tooltipBackground: 'white',
 };
 
 Light.parameters = {
@@ -161,6 +163,7 @@ Dark.args = {
   axisColor: axisColors.dark,
   textColor: textColors.dark,
   crossHairColor: crossHairColors.dark,
+  tooltipBackground: `rgb(46,48,51)`,
 };
 
 Dark.parameters = {

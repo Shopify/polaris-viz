@@ -24,6 +24,8 @@ export interface LineChartProps {
   lineWidth?: number;
   useGradientLine?: boolean;
   isAnimated?: boolean;
+  tooltipBackground?: string;
+  crossHairColor: any;
 }
 
 export function LineChart({
@@ -41,6 +43,7 @@ export function LineChart({
   crossHairColor,
   useGradientLine = false,
   isAnimated = false,
+  tooltipBackground = 'white',
 }: LineChartProps) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -112,6 +115,7 @@ export function LineChart({
             useGradientLine={useGradientLine}
             crossHairColor={crossHairColor}
             isAnimated={isAnimated}
+            tooltipBackground={tooltipBackground}
             renderTooltipContent={
               renderTooltipContent != null
                 ? renderTooltipContent

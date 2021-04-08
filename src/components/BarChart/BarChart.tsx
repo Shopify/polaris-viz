@@ -48,6 +48,7 @@ export function BarChart({
   lastBarTreatment = false,
   isAnimated = false,
   background = '#fff',
+  tooltipBackground = '#fff',
 }: BarChartProps) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -99,6 +100,7 @@ export function BarChart({
             </SkipLink>
           )}
           <Chart
+            tooltipBackground={tooltipBackground}
             leftAlignLabels={leftAlignLabels}
             data={data}
             chartDimensions={chartDimensions}

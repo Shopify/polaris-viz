@@ -10,6 +10,7 @@ interface Props {
 }
 
 export function LinePreview({color, lineStyle}: Props) {
+  console.log(color);
   if (lineStyle === 'dashed') {
     return (
       <div>

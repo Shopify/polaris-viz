@@ -14,6 +14,7 @@ interface Props {
   chartDimensions: DOMRect;
   position?: 'center' | 'auto';
   id?: string;
+  tooltipBackground: any;
 }
 
 // The space between the cursor and the tooltip
@@ -28,6 +29,7 @@ export function TooltipContainer({
   margin,
   position = 'auto',
   id = '',
+  tooltipBackground,
 }: Props) {
   const tooltipRef = useRef<HTMLDivElement | null>(null);
   const [tooltipDimensions, setTooltipDimensions] = useState<DOMRect | null>(
@@ -114,6 +116,8 @@ export function TooltipContainer({
       id={id}
       className={styles.Container}
       style={{
+        background: tooltipBackground,
+        color: tooltipBackground === 'rgb(46,48,51)' ? '#fff' : null,
         top: 0,
         left: 0,
         opacity: spring.opacity,

@@ -64,6 +64,6 @@ export function getColorValue(color: Color | GradientColor) {
     const gradient = gradientColors[color];
     return `linear-gradient(180deg, ${gradient.end} 0%, ${gradient.end} 100%), ${gradient.end}`;
   } else {
-    throw new Error('Color value is not valid.');
+    return color;
   }
 }

@@ -38,6 +38,7 @@ interface Props {
   useHardCodedGradient: boolean;
   isAnimated: boolean;
   background: string;
+  tooltipBackground: any;
 }
 
 export function Chart({
@@ -58,6 +59,7 @@ export function Chart({
   lastBarTreatment,
   background,
   isAnimated,
+  tooltipBackground,
 }: Props) {
   const [activeBar, setActiveBar] = useState<number | null>(null);
   const [showAnnotation, updateAnnotation] = useState(false);
@@ -325,6 +327,7 @@ export function Chart({
           chartDimensions={chartDimensions}
           margin={MARGIN}
           position="center"
+          tooltipBackground={tooltipBackground}
         >
           {tooltipMarkup}
         </TooltipContainer>
