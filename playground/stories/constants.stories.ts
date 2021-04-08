@@ -16,8 +16,8 @@ export const textColors = {
 };
 
 export const crossHairColors = {
-  light: '',
-  dark: '',
+  light: 'rgba(223, 227, 232, 0.5)',
+  dark: 'rgb(65, 66, 71)',
 };
 
 export const fontFamily =

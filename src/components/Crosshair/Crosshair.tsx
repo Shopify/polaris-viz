@@ -34,7 +34,7 @@ export function Crosshair({x, height, opacity = 1, crossHairColor}: Props) {
       className={styles.Crosshair}
       style={{
         opacity,
-        fill: crossHairColor ? 'rgb(14, 48, 94)' : undefined,
+        fill: crossHairColor,
       }}
     />
   );
