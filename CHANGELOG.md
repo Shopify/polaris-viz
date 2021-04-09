@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased - 2021-04-09
+
+### Added
+
+- `background`, `border`, `border-radius`, and `padding` to each `TooltipContent` styles
+
+### Removed
+
+- `background`, `border`, `border-radius`, and `padding` from `TooltipContainer` styles
+
 ## [0.7.3] - 2021-04-07
 
 ## Added
