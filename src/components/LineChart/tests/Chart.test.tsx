@@ -7,6 +7,7 @@ import {
   VisuallyHiddenRows,
   Point,
 } from 'components';
+import {line} from 'd3-shape';
 
 import {Chart} from '../Chart';
 import {Series} from '../types';
@@ -65,6 +66,16 @@ jest.mock('../../../utilities', () => {
     getPathLength: () => 0,
   };
 });
+
+jest.mock('d3-shape', () => ({
+  ...jest.requireActual('d3-shape'),
+  line: jest.fn(() => {
+    const shape = (value: any) => value;
+    shape.x = () => shape;
+    shape.y = () => shape;
+    return shape;
+  }),
+}));
 
 describe('<Chart />', () => {
   beforeEach(() => {
@@ -152,6 +163,27 @@ describe('<Chart />', () => {
     );
 
     expect(chart).toContainReactComponentTimes(Line, 2);
+  });
+
+  it('calls the d3 curve method when hasSpline is true', () => {
+    const curveSpy = jest.fn();
+    (line as jest.Mock).mockImplementationOnce(() => {
+      const shape = (value: any) => value;
+      shape.x = () => shape;
+      shape.y = () => shape;
+      shape.curve = curveSpy;
+      return shape;
+    });
+
+    mount(
+      <Chart
+        {...mockProps}
+        hasSpline
+        series={[primarySeries, {...primarySeries, name: 'A second series'}]}
+      />,
+    );
+
+    expect(curveSpy).toHaveBeenCalled();
   });
 
   it('renders a <Point /> for each data item in each series', () => {

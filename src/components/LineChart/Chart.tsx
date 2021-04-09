@@ -1,6 +1,6 @@
-import React, {useState, useMemo, useRef, useCallback, useEffect} from 'react';
+import React, {useState, useMemo, useRef, useCallback} from 'react';
 import throttle from 'lodash.throttle';
-import {OpaqueInterpolation, useSpring, SpringConfig} from 'react-spring';
+import {line, curveMonotoneX} from 'd3-shape';
 
 import {
   useLinearXAxisDetails,
@@ -29,10 +29,9 @@ import {
 import {TooltipContainer} from '../TooltipContainer';
 
 import {Series, RenderTooltipContentData, TooltipData} from './types';
-import {useYScale} from './hooks';
+import {useYScale, useLineChartAnimations} from './hooks';
 import {Line, GradientArea} from './components';
 import styles from './Chart.scss';
-import {SPRING_CONFIG} from './constants';
 
 interface Props {
   series: Required<Series>[];
@@ -44,11 +43,6 @@ interface Props {
   hideXAxisLabels: boolean;
   hasSpline: boolean;
   isAnimated: boolean;
-}
-export interface AnimationValues {
-  activeIndex: null | number;
-  animatedXPosition: null | OpaqueInterpolation<number | null>;
-  points: {cx: number; cy: number}[];
 }
 
 export function Chart({
@@ -63,12 +57,6 @@ export function Chart({
   isAnimated,
 }: Props) {
   const {prefersReducedMotion} = usePrefersReducedMotion();
-  const animationValues = useRef<AnimationValues>({
-    activeIndex: null,
-    points: [],
-    animatedXPosition: null,
-  });
-
   const [tooltipDetails, setTooltipDetails] = useState<ActiveTooltip | null>(
     null,
   );
@@ -120,13 +108,9 @@ export function Chart({
       } else {
         const {x, y, index} = details;
         setTooltipDetails({index, y, x: x + axisMargin});
-
-        if (isAnimated) {
-          animationValues.current.activeIndex = index;
-        }
       }
     },
-    [axisMargin, isAnimated],
+    [axisMargin],
   );
 
   const drawableWidth =
@@ -143,29 +127,18 @@ export function Chart({
 
   const {xScale} = useLinearXScale({drawableWidth, longestSeriesLength});
 
-  const animatedIndex =
-    animationValues.current.activeIndex == null
-      ? 0
-      : animationValues.current.activeIndex;
+  const lineGenerator = line<{rawValue: number}>()
+    .x((_, index) => (xScale === null ? 0 : xScale(index)))
+    .y(({rawValue}) => yScale(rawValue));
 
-  const {animatedXPosition} = useSpring<{
-    config: SpringConfig;
-    animatedXPosition: number | null;
-  }>({
-    config: SPRING_CONFIG,
-    animatedXPosition: xScale === null ? null : xScale(animatedIndex),
-  });
+  if (hasSpline) {
+    lineGenerator.curve(curveMonotoneX);
+  }
 
   const activeIndex =
     tooltipDetails === null || tooltipDetails.index == null
       ? null
       : tooltipDetails.index;
-
-  useEffect(() => {
-    animationValues.current.activeIndex = activeIndex;
-
-    animationValues.current.animatedXPosition = animatedXPosition;
-  }, [tooltipDetails, animatedXPosition, activeIndex]);
 
   const tooltipMarkup = useMemo(() => {
     if (tooltipDetails == null) {
@@ -199,6 +172,14 @@ export function Chart({
   }, [renderTooltipContent, series, tooltipDetails]);
 
   const reversedSeries = useMemo(() => series.slice().reverse(), [series]);
+
+  const {animatedXPosition, yPositions} = useLineChartAnimations({
+    series: reversedSeries,
+    lineGenerator,
+    activeIndex,
+    xScale,
+    isAnimated,
+  });
 
   if (xScale == null || drawableWidth == null || axisMargin == null) {
     return null;
@@ -245,7 +226,6 @@ export function Chart({
 
     const closestIndex = Math.round(xScale.invert(svgX - axisMargin));
     const activeIndex = Math.min(longestSeriesLength, closestIndex);
-    animationValues.current.activeIndex = activeIndex;
 
     setTooltipDetails({
       x: svgX,
@@ -323,24 +303,17 @@ export function Chart({
             return (
               <React.Fragment key={`${name}-${index}`}>
                 <Line
-                  animationValues={animationValues}
                   series={singleSeries}
-                  xScale={xScale}
-                  yScale={yScale}
-                  hasSpline={hasSpline}
                   isAnimated={isAnimated && !prefersReducedMotion}
                   index={index}
-                  activeIndex={animationValues.current.activeIndex}
+                  lineGenerator={lineGenerator}
                 />
                 <Point
                   color={singleSeries.color}
                   cx={animatedXPosition.interpolate((xPos) => {
                     return xPos === null ? null : xPos;
                   })}
-                  cy={
-                    animationValues.current.points[index] &&
-                    animationValues.current.points[index].cy
-                  }
+                  cy={yPositions[index]}
                   active={tooltipDetails !== null}
                   index={index}
                   tabIndex={-1}
@@ -356,7 +329,7 @@ export function Chart({
                       color={color}
                       cx={xScale(dataIndex)}
                       cy={yScale(rawValue)}
-                      active={animationValues.current.activeIndex === dataIndex}
+                      active={activeIndex === dataIndex}
                       onFocus={handleFocus}
                       index={dataIndex}
                       tabIndex={isFirstLine ? 0 : -1}
