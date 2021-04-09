@@ -20,6 +20,7 @@ interface Props {
   isAnimated: boolean;
   index: number;
   activeIndex?: number | null;
+  animatedXPosition?: any;
 }
 
 export const Line = React.memo(function Shape({
@@ -32,29 +33,33 @@ export const Line = React.memo(function Shape({
   isAnimated,
   index,
   activeIndex,
+  animatedXPosition,
 }: Props) {
   const {prefersReducedMotion} = usePrefersReducedMotion();
   const pathRef = useRef(null);
   const [percentage, setPercentage] = useState(0);
 
-  const getCoordinateFromPercentage = (p: number) => {
-    if (
-      !pathRef.current ||
-      pathRef.current === null ||
-      path == null ||
-      totalLength == null
-    ) {
-      return {x: 0, y: 0};
-    }
+  const getCoordinateFromPercentage = useCallback(
+    (p: number) => {
+      if (
+        !pathRef.current ||
+        pathRef.current === null ||
+        path == null ||
+        totalLength == null
+      ) {
+        return {x: 0, y: 0};
+      }
 
-    const percentage = (p * totalLength) / 100;
-    const pt = pathRef.current.getPointAtLength(percentage);
+      const percentage = (p * totalLength) / 100;
+      const pt = pathRef.current.getPointAtLength(percentage);
 
-    return {
-      x: pt.x,
-      y: pt.y,
-    };
-  };
+      return {
+        x: pt.x,
+        y: pt.y,
+      };
+    },
+    [path, totalLength],
+  );
 
   const lineGenerator = line<{rawValue: number}>()
     .x((_, index) => xScale(index))
@@ -101,7 +106,24 @@ export const Line = React.memo(function Shape({
     const subPathLength = getLengthAtPoint(activeIndex);
     const percentage = percentageFromSubLength(subPathLength);
     setPercentage(percentage);
-  }, [activeIndex, getLengthAtPoint, percentageFromSubLength, setPercentage]);
+
+    if (index === 0) {
+      const xPos = animatedPercentage.interpolate((p) => {
+        return getCoordinateFromPercentage(p).x;
+      });
+
+      animatedXPosition.current = xPos;
+    }
+  }, [
+    activeIndex,
+    animatedPercentage,
+    animatedXPosition,
+    getCoordinateFromPercentage,
+    getLengthAtPoint,
+    index,
+    percentageFromSubLength,
+    setPercentage,
+  ]);
 
   const {animatedPercentage} = useSpring({
     animatedPercentage: percentage,
@@ -162,9 +184,7 @@ export const Line = React.memo(function Shape({
         <Point
           useGradientLine={useGradientLine}
           color={series.color}
-          cx={animatedPercentage.interpolate((p) => {
-            return getCoordinateFromPercentage(p).x;
-          })}
+          cx={animatedXPosition.current}
           cy={animatedPercentage.interpolate(
             (p) => getCoordinateFromPercentage(p).y,
           )}

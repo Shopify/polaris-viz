@@ -64,6 +64,7 @@ export function Chart({
   const [tooltipDetails, setTooltipDetails] = useState<ActiveTooltip | null>(
     null,
   );
+  const animatedXPosition = useRef<number | null>(null);
 
   const tooltipId = useRef(uniqueId('lineChart'));
 
@@ -305,6 +306,7 @@ export function Chart({
                   isAnimated={isAnimated}
                   index={index}
                   activeIndex={tooltipDetails?.index ?? null}
+                  animatedXPosition={animatedXPosition}
                 />
 
                 {/* {data.map(({rawValue}, dataIndex) => {
