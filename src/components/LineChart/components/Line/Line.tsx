@@ -98,6 +98,16 @@ export const Line = React.memo(function Shape({
     [totalLength],
   );
 
+  const {animatedPercentage} = useSpring({
+    animatedPercentage: percentage,
+    config: {
+      friction: 5,
+      clamp: true,
+      mass: 1,
+      tension: 190,
+    },
+  });
+
   useEffect(() => {
     if (activeIndex === null) {
       return;
@@ -124,16 +134,6 @@ export const Line = React.memo(function Shape({
     percentageFromSubLength,
     setPercentage,
   ]);
-
-  const {animatedPercentage} = useSpring({
-    animatedPercentage: percentage,
-    config: {
-      friction: 5,
-      clamp: true,
-      mass: 1,
-      tension: 190,
-    },
-  });
 
   if (path == null) {
     return null;

@@ -265,7 +265,7 @@ export function Chart({
         {tooltipDetails == null ? null : (
           <g transform={`translate(${axisMargin},${Margin.Top})`}>
             <Crosshair
-              x={xScale(tooltipDetails.index)}
+              x={animatedXPosition.current}
               height={drawableHeight}
               crossHairColor={crossHairColor}
             />
