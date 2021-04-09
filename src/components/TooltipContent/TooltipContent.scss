@@ -8,6 +8,10 @@
   align-items: center;
   column-gap: $spacing-tight;
   row-gap: $spacing-tight;
+  background: $color-white;
+  border: 1px solid $color-sky-dark;
+  border-radius: 4px;
+  padding: $spacing-tight;
 }
 
 .Title {

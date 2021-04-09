@@ -6,4 +6,8 @@
   display: grid;
   grid-template-columns: 1fr auto;
   grid-gap: $spacing-tight;
+  background: $color-white;
+  border: 1px solid $color-sky-dark;
+  border-radius: 4px;
+  padding: $spacing-tight;
 }
