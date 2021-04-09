@@ -144,9 +144,13 @@ export const Line = React.memo(function Shape({
       {useGradientLine ? (
         <defs>
           <linearGradient id="carysgradient1" x1="0%" x2="0%" y1="0%" y2="100%">
-            <stop offset="0%" stopColor="rgba(75, 181, 145, 0.85)" />
-            <stop offset="85%" stopColor="rgba(92, 105, 208, 0.85)" />
-            <stop offset="100%" stopColor="rgba(92, 105, 208, 0.85)" />
+            <stop offset="0%" stopColor="#08CA9B" stopOpacity="0.85" />
+            <stop offset="85%" stopColor="rgb(92,105,208)" stopOpacity="0.85" />
+            <stop
+              offset="100%"
+              stopColor="rgb(92,105,208)"
+              stopOpacity="0.85"
+            />
           </linearGradient>
         </defs>
       ) : null}

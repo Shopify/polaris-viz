@@ -1,3 +1,21 @@
 .ChartContainer {
   position: relative;
 }
+
+.Line {
+  animation: fadeIn linear 1s;
+  stroke: lightgrey;
+  stroke-width: 5;
+  stroke-opacity: 0.5;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    stroke-opacity: 0;
+  }
+  100% {
+    opacity: 0.75;
+    stroke-opacity: 0.5;
+  }
+}

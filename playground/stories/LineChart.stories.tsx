@@ -148,6 +148,10 @@ const Template: Story<LineChartProps> = (args: LineChartProps) => {
           textColor={args.textColor}
           series={[
             {
+              name: 'current period',
+              lineStyle: 'solid',
+            },
+            {
               name: 'previous period',
 
               color: '#637381',

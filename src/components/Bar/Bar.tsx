@@ -38,6 +38,7 @@ interface Props {
   startingValue?: number;
   lastBarTreatment?: boolean;
   useHardCodedGradient?: boolean;
+  highestValue?: boolean;
 }
 
 export function Bar({
@@ -60,6 +61,7 @@ export function Bar({
   numberOfBars,
   isAnimated,
   drawableHeight,
+  highestValue,
 }: Props) {
   const gradientColorId = useRef(uniqueId('gradient'));
   const rawHeight = Math.abs(yScale(rawValue) - yScale(0));
@@ -159,7 +161,7 @@ export function Bar({
       <animated.path
         className={styles.Bar}
         d={barPath}
-        fill={barColor}
+        fill={highestValue ? `url(#bar-gradient-top)` : barColor}
         aria-label={ariaLabel}
         onFocus={handleFocus}
         tabIndex={tabIndex}

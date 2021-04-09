@@ -21,7 +21,7 @@ export function TooltipContent({label, value, isMedian}: TooltipContentProps) {
     >
       {isMedian && (
         <React.Fragment>
-          <span style={{color: '#8F68FF'}}>Median</span>
+          <span style={{color: '#6D7175'}}>Median</span>
           <strong style={{fontWeight: '400'}}>3.5 hours</strong>
         </React.Fragment>
       )}

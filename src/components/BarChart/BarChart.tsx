@@ -28,6 +28,7 @@ export interface BarChartProps {
   lastBarTreatment?: boolean;
   isAnimated?: boolean;
   background?: string;
+  useFullGradientOpacity: any;
 }
 
 export function BarChart({
@@ -49,6 +50,7 @@ export function BarChart({
   isAnimated = false,
   background = '#fff',
   tooltipBackground = '#fff',
+  useFullGradientOpacity,
 }: BarChartProps) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -100,6 +102,7 @@ export function BarChart({
             </SkipLink>
           )}
           <Chart
+            useFullGradientOpacity={useFullGradientOpacity}
             tooltipBackground={tooltipBackground}
             leftAlignLabels={leftAlignLabels}
             data={data}

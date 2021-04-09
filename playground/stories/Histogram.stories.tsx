@@ -35,6 +35,7 @@ export default {
 const Template: Story<{}> = (args) => {
   return (
     <BarChart
+      useFullGradientOpacity={args.useFullGradientOpacity}
       isAnimated
       skipLinkText="Skip chart content"
       timeSeries
@@ -147,6 +148,7 @@ Light.args = {
   textColor: textColors.light,
   crossHairColor: crossHairColors.light,
   tooltipBackground: 'white',
+  useFullGradientOpacity: true,
 };
 
 Light.parameters = {
@@ -164,6 +166,7 @@ Dark.args = {
   textColor: textColors.dark,
   crossHairColor: crossHairColors.dark,
   tooltipBackground: `rgb(46,48,51)`,
+  useFullGradientOpacity: false,
 };
 
 Dark.parameters = {

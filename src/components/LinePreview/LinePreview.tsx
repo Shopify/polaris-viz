@@ -34,8 +34,9 @@ export function LinePreview({color, lineStyle}: Props) {
           width: '21px',
           height: '2px',
           borderRadius: '5px',
+          marginTop: '2.5px',
           background:
-            'linear-gradient(146.97deg, #4BB591 21.77%, #5C69D0 80.3%)',
+            'linear-gradient(146.97deg, #08CA9B 21.77%, #5C69D0 80.3%)',
         }}
       />
     );

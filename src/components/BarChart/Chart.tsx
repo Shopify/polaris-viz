@@ -39,6 +39,7 @@ interface Props {
   isAnimated: boolean;
   background: string;
   tooltipBackground: any;
+  useFullGradientOpacity: any;
 }
 
 export function Chart({
@@ -60,6 +61,7 @@ export function Chart({
   background,
   isAnimated,
   tooltipBackground,
+  useFullGradientOpacity,
 }: Props) {
   const [activeBar, setActiveBar] = useState<number | null>(null);
   const [showAnnotation, updateAnnotation] = useState(false);
@@ -67,6 +69,8 @@ export function Chart({
     x: number;
     y: number;
   } | null>(null);
+
+  const highestValue = Math.max(...data.map((value) => value.rawValue));
 
   const fontSize =
     chartDimensions.width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
@@ -180,15 +184,47 @@ export function Chart({
               y2={drawableHeight}
               gradientUnits="userSpaceOnUse"
             >
-              {/* <stop stopColor="#4BFCE0" offset="10%" stopOpacity="75%" />
-              <stop stopColor="#4EADFB" offset="62%" stopOpacity="75%" />
-              <stop stopColor="#801AFD" offset="109%" stopOpacity="75%" /> */}
-
-              {/* green */}
-              <stop offset="0%" stopColor="rgba(75, 181, 145, 0.85)" />
+              {/* light blue */}
+              <stop
+                offset="0%"
+                stopColor={useFullGradientOpacity ? '#319CFF' : '#8DC8FF'}
+                stopOpacity="0.85"
+              />
               {/* purple */}
-              <stop offset="25%" stopColor="rgba(92, 105, 208, 0.85)" />
-              <stop offset="100%" stopColor="rgba(92, 105, 208, 0.85)" />
+              <stop
+                offset="100%"
+                stopColor="#5F51FF"
+                stopOpacity={useFullGradientOpacity ? '0.85' : '0.35'}
+              />
+            </linearGradient>
+
+            <linearGradient
+              id="bar-gradient-top"
+              x1="0"
+              y1="0"
+              x2="0"
+              y2={drawableHeight}
+              gradientUnits="userSpaceOnUse"
+            >
+              {/* green shown only if highest bar */}
+              <stop
+                offset="0%"
+                stopColor={useFullGradientOpacity ? '#08CA9B' : '#08CA9B'}
+                stopOpacity={useFullGradientOpacity ? '0.85' : '0.85'}
+              />
+              {/* light blue */}
+              <stop
+                offset={useFullGradientOpacity ? '30%' : '30%'}
+                stopColor={useFullGradientOpacity ? '#319CFF' : '#8DC8FF'}
+                stopOpacity={useFullGradientOpacity ? '0.85' : '0.65'}
+              />
+
+              {/* purple */}
+              <stop
+                offset="100%"
+                stopColor="#5F51FF"
+                stopOpacity={useFullGradientOpacity ? '0.85' : '0.35'}
+              />
             </linearGradient>
           </defs>
         ) : null}
@@ -267,6 +303,7 @@ export function Chart({
                     index + 1 === data.length && lastBarTreatment
                   }
                   useHardCodedGradient={useHardCodedGradient}
+                  highestValue={rawValue === highestValue}
                 />
               </g>
             );
@@ -282,7 +319,7 @@ export function Chart({
 
             return (
               <g role="listitem" key={index}>
-                <circle
+                {/* <circle
                   cx={xPosition + barWidth / 2}
                   cy={drawableHeight}
                   r="6"
@@ -296,29 +333,15 @@ export function Chart({
                   //   e.stopPropagation();
                   //   setActiveBar(null);
                   // }}
-                />
+                /> */}
 
-                <foreignObject
-                  width="105"
-                  height="60"
-                  x={xPosition - 25}
-                  y={yScale(0) - 68}
-                >
-                  <div
-                    style={{
-                      background: '#fff',
-                      padding: '8px',
-                      borderRadius: '3px',
-                      opacity: showAnnotation ? '1' : '0',
-                      fontSize: 14,
-                      transition: 'opacity 0.3s',
-                      margin: '5px',
-                      boxShadow:
-                        '0px 0px 3px rgba(0, 0, 0, 0.1), 0px 4px 4px rgba(0, 0, 0, 0.1)',
-                    }}
-                    dangerouslySetInnerHTML={{__html: annotation}}
-                  />
-                </foreignObject>
+                <line
+                  x1={xPosition + barWidth / 2}
+                  x2={xPosition + barWidth / 2}
+                  y1={drawableHeight}
+                  y2={0}
+                  className={styles.Line}
+                />
               </g>
             );
           })}
