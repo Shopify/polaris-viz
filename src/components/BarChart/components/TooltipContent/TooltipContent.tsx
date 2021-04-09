@@ -9,7 +9,6 @@ export interface TooltipContentProps {
 }
 
 export function TooltipContent({label, value, isMedian}: TooltipContentProps) {
-  console.log({isMedian});
   return (
     <div
       style={{

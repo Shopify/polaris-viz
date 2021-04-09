@@ -12,7 +12,7 @@ export const axisColors = {
 
 export const textColors = {
   light: '#607175',
-  dark: 'rgb(220, 220, 220)',
+  dark: '#8D8D8E',
 };
 
 export const crossHairColors = {

@@ -41,9 +41,56 @@ const Template: Story<{}> = (args) => {
       tooltipBackground={args.tooltipBackground}
       crossHairColor={args.crossHairColor}
       isAnimated
-      data={Array.from({length: 12}, (_, i) => {
-        return {rawValue: Math.random() * 100, label: (i + 1).toString()};
-      })}
+      data={[
+        {
+          rawValue: 63.65351884511108,
+          label: '1',
+        },
+        {
+          rawValue: 33.23985370430875,
+          label: '2',
+        },
+        {
+          rawValue: 7.474480792354021,
+          label: '3',
+        },
+        {
+          rawValue: 100,
+          label: '4',
+        },
+        {
+          rawValue: 30.947848374881893,
+          label: '5',
+        },
+        {
+          rawValue: 81.71644719873312,
+          label: '6',
+        },
+        {
+          rawValue: 86.07020687177011,
+          label: '7',
+        },
+        {
+          rawValue: 76.19454629777155,
+          label: '8',
+        },
+        {
+          rawValue: 78.50608637701495,
+          label: '9',
+        },
+        {
+          rawValue: 47.30862914208209,
+          label: '10',
+        },
+        {
+          rawValue: 31.432686819323674,
+          label: '11',
+        },
+        {
+          rawValue: 18.130362360245677,
+          label: '12',
+        },
+      ]}
       color={args.chartColor}
       // highlightColor="inverse"
       formatXAxisLabel={(val) =>

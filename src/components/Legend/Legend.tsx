@@ -16,9 +16,10 @@ interface LegendData {
 
 interface Props {
   series: LegendData[];
+  textColor: any;
 }
 
-export function Legend({series}: Props) {
+export function Legend({series, textColor}: Props) {
   return (
     <div className={styles.Container} aria-hidden>
       {series.map(({name, color, lineStyle}, index) => {
@@ -38,7 +39,9 @@ export function Legend({series}: Props) {
         return (
           <div className={styles.Series} key={`${name}-${index}`}>
             {colorPreview}
-            <p className={styles.SeriesName}>{name}</p>
+            <p className={styles.SeriesName} style={{color: textColor}}>
+              {name}
+            </p>
           </div>
         );
       })}

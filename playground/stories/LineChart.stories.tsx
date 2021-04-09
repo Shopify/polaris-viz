@@ -35,8 +35,6 @@ export default {
   },
   decorators: [
     (Story: any, context) => {
-      console.log(Story);
-      console.log(context);
       return <div style={containerStyles}>{Story()}</div>;
     },
   ],
@@ -60,7 +58,7 @@ function renderTooltipContent(stuff) {
     <p
       style={{
         margin: '0 0 0 0',
-        color: percentageDifference > 0 ? '#00A47C' : 'red',
+        color: percentageDifference > 0 ? '#00A47C' : '#FF5546',
       }}
     >
       <span style={{marginRight: '3px'}}>
@@ -147,9 +145,10 @@ const Template: Story<LineChartProps> = (args: LineChartProps) => {
 
       <div style={{marginTop: '8px'}}>
         <Legend
+          textColor={args.textColor}
           series={[
             {
-              name: 'compared to daily average for last 7 days',
+              name: 'previous period',
 
               color: '#637381',
               lineStyle: 'dashed' as 'dashed',

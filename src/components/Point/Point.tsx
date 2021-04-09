@@ -43,7 +43,7 @@ export const Point = React.memo(function Point({
   };
 
   const {radius} = useSpring({
-    radius: active ? 5 : 0,
+    radius: active ? 4 : 0,
     from: {
       radius: 0,
     },
@@ -76,7 +76,7 @@ export const Point = React.memo(function Point({
         cy={cy}
         r={radius}
         stroke={tokens.colorWhite}
-        strokeWidth={1.5}
+        strokeWidth={1.25}
         fill={useGradientLine ? "url('#gradient')" : getColorValue(color)}
         onFocus={handleFocus}
         className={styles.Point}

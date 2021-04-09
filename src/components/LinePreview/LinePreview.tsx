@@ -10,7 +10,6 @@ interface Props {
 }
 
 export function LinePreview({color, lineStyle}: Props) {
-  console.log(color);
   if (lineStyle === 'dashed') {
     return (
       <div>
@@ -36,7 +35,7 @@ export function LinePreview({color, lineStyle}: Props) {
           height: '2px',
           borderRadius: '5px',
           background:
-            'linear-gradient(146.97deg, #4BB591 21.77%, #6737FA 80.3%)',
+            'linear-gradient(146.97deg, #4BB591 21.77%, #5C69D0 80.3%)',
         }}
       />
     );

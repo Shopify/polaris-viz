@@ -23,7 +23,6 @@ export interface TooltipContentProps {
 //   new Intl.NumberFormat('en-ca').format(number);
 
 function formatNumber(val) {
-  console.log(val);
   return '';
 }
 

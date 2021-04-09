@@ -85,7 +85,7 @@ const chartData = [
     label: '6',
   },
   {
-    rawValue: 91,
+    rawValue: 100,
     label: '7',
   },
   {

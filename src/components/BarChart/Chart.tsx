@@ -180,9 +180,15 @@ export function Chart({
               y2={drawableHeight}
               gradientUnits="userSpaceOnUse"
             >
-              <stop stopColor="#4BFCE0" offset="10%" stopOpacity="75%" />
+              {/* <stop stopColor="#4BFCE0" offset="10%" stopOpacity="75%" />
               <stop stopColor="#4EADFB" offset="62%" stopOpacity="75%" />
-              <stop stopColor="#801AFD" offset="109%" stopOpacity="75%" />
+              <stop stopColor="#801AFD" offset="109%" stopOpacity="75%" /> */}
+
+              {/* green */}
+              <stop offset="0%" stopColor="rgba(75, 181, 145, 0.85)" />
+              {/* purple */}
+              <stop offset="25%" stopColor="rgba(92, 105, 208, 0.85)" />
+              <stop offset="100%" stopColor="rgba(92, 105, 208, 0.85)" />
             </linearGradient>
           </defs>
         ) : null}
