@@ -20,7 +20,7 @@ export function useLineChartAnimations({
   isAnimated: boolean;
   xScale: ScaleLinear<number, number> | null;
 }) {
-  const [yPositions, setYPositions] = useState<number[]>([]);
+  const [yPositions, setYPositions] = useState<(number | null)[]>([]);
   const [percentages, setPercentages] = useState<number[]>([0, 0]);
 
   const animatedIndex = activeIndex == null ? 0 : activeIndex;
@@ -33,7 +33,7 @@ export function useLineChartAnimations({
     animatedXPosition: xScale === null ? null : xScale(animatedIndex),
   });
 
-  const springs = useSprings<
+  const animatedPercentages = useSprings<
     {
       config: SpringConfig;
       animatedPercentage: number;
@@ -99,11 +99,17 @@ export function useLineChartAnimations({
     series.forEach(({data}: any, index: any) => {
       if (data.length >= 1000) return;
 
-      const totalLength = getLengthAtPoint(data.length - 1, data);
-      const path = createOffScreenPath(data);
-
       const currentIndex =
         activeIndex === null || activeIndex === undefined ? 0 : activeIndex;
+
+      if (currentIndex >= data.length) {
+        yPositions[index] = null;
+        setYPositions(yPositions);
+        return;
+      }
+
+      const totalLength = getLengthAtPoint(data.length - 1, data);
+      const path = createOffScreenPath(data);
 
       const subPathLength = getLengthAtPoint(currentIndex, data);
 
@@ -111,12 +117,12 @@ export function useLineChartAnimations({
       percentages[index] = percentage;
       setPercentages(percentages);
 
-      yPositions[index] = springs[index].animatedPercentage.interpolate(
-        (percent: number) => {
-          const y = getYPositionFromPercentage(percent, path, totalLength);
-          return y;
-        },
-      );
+      yPositions[index] = animatedPercentages[
+        index
+      ].animatedPercentage.interpolate((percent: number) => {
+        const y = getYPositionFromPercentage(percent, path, totalLength);
+        return y;
+      });
 
       setYPositions(yPositions);
     });
@@ -129,7 +135,7 @@ export function useLineChartAnimations({
     getYPositionFromPercentage,
     series,
     percentages,
-    springs,
+    animatedPercentages,
     yPositions,
   ]);
 

@@ -319,7 +319,11 @@ export function Chart({
                   tabIndex={-1}
                   isAnimated={isAnimated}
                   ariaHidden
-                  visuallyHidden={tooltipDetails === null || !isAnimated}
+                  visuallyHidden={
+                    tooltipDetails === null ||
+                    !isAnimated ||
+                    yPositions[index] === null
+                  }
                 />
 
                 {data.map(({rawValue}, dataIndex) => {
