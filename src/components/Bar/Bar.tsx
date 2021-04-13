@@ -161,7 +161,7 @@ export function Bar({
       <animated.path
         className={styles.Bar}
         d={barPath}
-        fill={highestValue ? `url(#bar-gradient-top)` : barColor}
+        fill="url(#bar-gradient-top)"
         aria-label={ariaLabel}
         onFocus={handleFocus}
         tabIndex={tabIndex}
