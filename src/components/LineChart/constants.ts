@@ -9,8 +9,8 @@ export const TICK_SIZE = 6;
 export const FONT_SIZE = 12;
 export const ANIMATION_DELAY = 250;
 export const SPRING_CONFIG = {
-  friction: 5,
+  friction: 10,
   clamp: true,
-  mass: 1,
+  mass: 10,
   tension: 190,
 };

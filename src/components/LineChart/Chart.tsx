@@ -1,6 +1,7 @@
 import React, {useState, useMemo, useRef, useCallback} from 'react';
 import throttle from 'lodash.throttle';
 import {line, curveMonotoneX} from 'd3-shape';
+import {animated} from 'react-spring';
 
 import {
   useLinearXAxisDetails,
@@ -173,7 +174,7 @@ export function Chart({
 
   const reversedSeries = useMemo(() => series.slice().reverse(), [series]);
 
-  const {animatedXPosition, yPositions} = useLineChartAnimations({
+  const {animatedXPosition, animatedYPositions} = useLineChartAnimations({
     series: reversedSeries,
     lineGenerator,
     activeIndex,
@@ -313,7 +314,7 @@ export function Chart({
                   cx={animatedXPosition.interpolate((xPos) => {
                     return xPos === null ? null : xPos;
                   })}
-                  cy={yPositions[index]}
+                  cy={animatedYPositions[index]}
                   active={tooltipDetails !== null}
                   index={index}
                   tabIndex={-1}
@@ -322,7 +323,7 @@ export function Chart({
                   visuallyHidden={
                     tooltipDetails === null ||
                     !isAnimated ||
-                    yPositions[index] === null
+                    animatedYPositions[index] === null
                   }
                 />
 

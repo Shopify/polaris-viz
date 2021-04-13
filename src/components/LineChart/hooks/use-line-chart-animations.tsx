@@ -1,9 +1,8 @@
+import {useCallback, useState, useEffect, useMemo} from 'react';
 import {ScaleLinear} from 'd3-scale';
 import {Line} from 'd3-shape';
-import {useCallback, useState, useEffect} from 'react';
 import {useSpring, useSprings, SpringConfig} from 'react-spring';
 
-import {getPathLength} from '../../../utilities';
 import {SPRING_CONFIG} from '../constants';
 import {Series} from '../types';
 
@@ -20,32 +19,15 @@ export function useLineChartAnimations({
   isAnimated: boolean;
   xScale: ScaleLinear<number, number> | null;
 }) {
-  const [yPositions, setYPositions] = useState<(number | null)[]>([]);
-  const [percentages, setPercentages] = useState<number[]>([0, 0]);
-
-  const animatedIndex = activeIndex == null ? 0 : activeIndex;
+  const currentIndex = activeIndex == null ? 0 : activeIndex;
 
   const {animatedXPosition} = useSpring<{
     config: SpringConfig;
     animatedXPosition: null | number;
   }>({
     config: SPRING_CONFIG,
-    animatedXPosition: xScale === null ? null : xScale(animatedIndex),
+    animatedXPosition: xScale === null ? null : xScale(currentIndex),
   });
-
-  const animatedPercentages = useSprings<
-    {
-      config: SpringConfig;
-      animatedPercentage: number;
-    },
-    any
-  >(
-    percentages.length,
-    percentages.map((percent) => ({
-      animatedPercentage: percent,
-      config: SPRING_CONFIG,
-    })),
-  );
 
   const getYPositionFromPercentage = useCallback(
     (percent: number, path: any, totalLength: number) => {
@@ -75,72 +57,65 @@ export function useLineChartAnimations({
     [lineGenerator],
   );
 
-  const getLengthAtPoint = useCallback(
-    (pointIndex: number, data: any) => {
-      if (pointIndex === null) return 0;
-      const subpath = data.slice(0, pointIndex + 1);
-      const offscreenPath = createOffScreenPath(subpath);
-
-      return getPathLength(offscreenPath);
-    },
-    [createOffScreenPath],
-  );
-
-  const percentageFromSubpath = useCallback(
+  const getPercentage = useCallback(
     (subpathLength: number, totalLength: number) => {
       return (subpathLength / totalLength) * 100;
     },
     [],
   );
 
-  useEffect(() => {
-    if (!isAnimated || series.length === 0 || activeIndex === null) return;
-
-    series.forEach(({data}: any, index: any) => {
-      if (data.length >= 1000) return;
-
-      const currentIndex =
-        activeIndex === null || activeIndex === undefined ? 0 : activeIndex;
-
-      if (currentIndex >= data.length) {
-        yPositions[index] = null;
-        setYPositions(yPositions);
-        return;
-      }
-
-      const totalLength = getLengthAtPoint(data.length - 1, data);
-      const path = createOffScreenPath(data);
-
-      const subPathLength = getLengthAtPoint(currentIndex, data);
-
-      const percentage = percentageFromSubpath(subPathLength, totalLength);
-      percentages[index] = percentage;
-      setPercentages(percentages);
-
-      yPositions[index] = animatedPercentages[
-        index
-      ].animatedPercentage.interpolate((percent: number) => {
-        const y = getYPositionFromPercentage(percent, path, totalLength);
-        return y;
-      });
-
-      setYPositions(yPositions);
+  const totalPaths = useMemo(() => {
+    return series.map(({data}) => {
+      const offscreenPath = createOffScreenPath(data);
+      return {
+        element: offscreenPath,
+        length: offscreenPath.getTotalLength(),
+      };
     });
-  }, [
-    isAnimated,
-    getLengthAtPoint,
-    createOffScreenPath,
-    activeIndex,
-    percentageFromSubpath,
-    getYPositionFromPercentage,
-    series,
-    percentages,
-    animatedPercentages,
-    yPositions,
-  ]);
+  }, [createOffScreenPath, series]);
 
+  const subPaths = useMemo(() => {
+    return series.map(({data}: any) => {
+      const path = createOffScreenPath(data.slice(0, currentIndex + 1));
+
+      return {
+        element: path,
+        length: path.getTotalLength(),
+      };
+    });
+  }, [createOffScreenPath, currentIndex, series]);
+
+  const percentages = useMemo(() => {
+    return series.map((_, index: any) => {
+      const totalLength = totalPaths[index].length;
+      const subPath = subPaths[index];
+
+      return getPercentage(subPath.length, totalLength);
+    });
+  }, [getPercentage, series, subPaths, totalPaths]);
+
+  const animatedPercentages = useSprings<
+    {
+      config: SpringConfig;
+      percentage: number;
+    },
+    any
+  >(
+    percentages.length,
+    percentages.map((percentage) => ({
+      percentage,
+      config: SPRING_CONFIG,
+    })),
+  );
   return {
-    yPositions,
+    animatedYPositions: animatedPercentages.map(({percentage}, index) => {
+      return percentage.interpolate((percent: number) => {
+        const totalLength = totalPaths[index].length;
+        const path = totalPaths[index].element;
+        return getYPositionFromPercentage(percent, path, totalLength);
+      });
+    }),
     animatedXPosition,
+    animatedPercentages,
   };
 }
