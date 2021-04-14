@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- `dotted` lineStyle to `LineChart`
+
 ## [0.8.0] — 2021-04-14
 
 ### Added

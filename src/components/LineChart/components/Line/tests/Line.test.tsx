@@ -37,7 +37,26 @@ const mockProps = {
 
 describe('<Line />', () => {
   describe('Line', () => {
-    it('renders a line with the series styles', () => {
+    it('renders a line with the series style solid', () => {
+      const actual = mount(
+        <svg>
+          <Line
+            {...mockProps}
+            series={{
+              ...mockProps.series,
+              lineStyle: 'solid',
+            }}
+          />
+        </svg>,
+      );
+
+      expect(actual).toContainReactComponent('path', {
+        strokeDasharray: 'unset',
+        stroke: getColorValue('primary'),
+      });
+    });
+
+    it('renders a line with the series style dashed', () => {
       const actual = mount(
         <svg>
           <Line
@@ -52,6 +71,25 @@ describe('<Line />', () => {
 
       expect(actual).toContainReactComponent('path', {
         strokeDasharray: '2 4',
+        stroke: getColorValue('primary'),
+      });
+    });
+
+    it('renders a line with the series style dotted', () => {
+      const actual = mount(
+        <svg>
+          <Line
+            {...mockProps}
+            series={{
+              ...mockProps.series,
+              lineStyle: 'dotted',
+            }}
+          />
+        </svg>,
+      );
+
+      expect(actual).toContainReactComponent('path', {
+        strokeDasharray: '0.1 8',
         stroke: getColorValue('primary'),
       });
     });

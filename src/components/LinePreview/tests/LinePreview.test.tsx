@@ -28,8 +28,14 @@ describe('<LinePreview />', () => {
       <LinePreview color="colorBlue" lineStyle="solid" />,
     );
 
-    expect(linePreview).toContainReactComponent('path', {
-      strokeDasharray: 'unset',
-    });
+    expect(linePreview).toContainReactComponent('path');
+  });
+
+  it('renders a dotted path if lineStyle is dotted', () => {
+    const linePreview = mount(
+      <LinePreview color="colorBlue" lineStyle="dotted" />,
+    );
+
+    expect(linePreview).toContainReactComponentTimes('circle', 3);
   });
 });

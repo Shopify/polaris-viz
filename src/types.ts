@@ -8,7 +8,7 @@ export interface NullableData {
   rawValue: number | null;
 }
 
-export type LineStyle = 'dashed' | 'solid';
+export type LineStyle = 'dashed' | 'solid' | 'dotted';
 
 export interface DataSeries<T> {
   name: string;
