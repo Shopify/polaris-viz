@@ -100,4 +100,13 @@ describe('Chart />', () => {
 
     expect(chart).toContainReactComponent(Bar, {isSelected: true});
   });
+
+  describe('empty state', () => {
+    it('does not render tooltip for empty state', () => {
+      const chart = mount(<Chart {...mockProps} data={[]} />);
+
+      expect(chart).not.toContainReactText('Mock Tooltip');
+      expect(chart).not.toContainReactComponent(TooltipContainer);
+    });
+  });
 });

@@ -21,6 +21,7 @@ export interface BarChartProps {
   skipLinkText?: string;
   renderTooltipContent?: (data: RenderTooltipContentData) => React.ReactNode;
   hasRoundedCorners?: boolean;
+  emptyStateText?: string;
 }
 
 export function BarChart({
@@ -34,11 +35,14 @@ export function BarChart({
   formatYAxisLabel = (value) => value.toString(),
   renderTooltipContent,
   skipLinkText,
+  emptyStateText,
 }: BarChartProps) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   const skipLinkAnchorId = useRef(uniqueId('barChart'));
+
+  const emptyState = data.length === 0;
 
   const [updateDimensions] = useDebouncedCallback(() => {
     if (containerRef.current != null) {
@@ -72,7 +76,9 @@ export function BarChart({
     <div style={{width: '100%', height: '100%'}} ref={containerRef}>
       {chartDimensions == null ? null : (
         <React.Fragment>
-          {skipLinkText == null || skipLinkText.length === 0 ? null : (
+          {skipLinkText == null ||
+          skipLinkText.length === 0 ||
+          emptyState ? null : (
             <SkipLink anchorId={skipLinkAnchorId.current}>
               {skipLinkText}
             </SkipLink>
@@ -92,8 +98,11 @@ export function BarChart({
                 ? renderTooltipContent
                 : renderDefaultTooltipContent
             }
+            emptyStateText={emptyStateText}
           />
-          {skipLinkText == null || skipLinkText.length === 0 ? null : (
+          {skipLinkText == null ||
+          skipLinkText.length === 0 ||
+          emptyState ? null : (
             <SkipLink.Anchor id={skipLinkAnchorId.current} />
           )}
         </React.Fragment>

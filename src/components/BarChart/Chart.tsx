@@ -31,6 +31,7 @@ interface Props {
   timeSeries: boolean;
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
   hasRoundedCorners: boolean;
+  emptyStateText?: string;
 }
 
 export function Chart({
@@ -44,6 +45,7 @@ export function Chart({
   timeSeries,
   renderTooltipContent,
   hasRoundedCorners,
+  emptyStateText,
 }: Props) {
   const [activeBar, setActiveBar] = useState<number | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState<{
@@ -53,6 +55,8 @@ export function Chart({
 
   const fontSize =
     chartDimensions.width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
+
+  const emptyState = data.length === 0;
 
   const {ticks: initialTicks} = useYScale({
     drawableHeight:
@@ -150,7 +154,8 @@ export function Chart({
         onTouchMove={handleInteraction}
         onMouseLeave={() => setActiveBar(null)}
         onTouchEnd={() => setActiveBar(null)}
-        role="list"
+        role={emptyState ? 'img' : 'list'}
+        aria-label={emptyState ? emptyStateText : undefined}
       >
         <g
           transform={`translate(${axisMargin},${chartDimensions.height -
@@ -209,7 +214,7 @@ export function Chart({
         </g>
       </svg>
 
-      {tooltipPosition != null && activeBar != null ? (
+      {tooltipPosition != null && activeBar != null && !emptyState ? (
         <TooltipContainer
           activePointIndex={activeBar}
           currentX={tooltipPosition.x}
