@@ -18,6 +18,7 @@ export interface LineChartProps {
   formatYAxisLabel?: NumberLabelFormatter;
   renderTooltipContent?: (data: RenderTooltipContentData) => React.ReactNode;
   skipLinkText?: string;
+  emptyStateText?: string;
   hasSpline?: boolean;
 }
 
@@ -29,6 +30,7 @@ export function LineChart({
   hideXAxisLabels = false,
   renderTooltipContent,
   skipLinkText,
+  emptyStateText,
   hasSpline = false,
 }: LineChartProps) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
@@ -54,10 +56,6 @@ export function LineChart({
     };
   }, [containerRef, updateDimensions]);
 
-  if (series.length === 0) {
-    return null;
-  }
-
   function renderDefaultTooltipContent({data}: RenderTooltipContentData) {
     const formattedData = data.map(
       ({name, point: {label, value}, color, lineStyle}) => ({
@@ -82,7 +80,9 @@ export function LineChart({
 
   return (
     <React.Fragment>
-      {skipLinkText == null || skipLinkText.length === 0 ? null : (
+      {skipLinkText == null ||
+      skipLinkText.length === 0 ||
+      series.length === 0 ? null : (
         <SkipLink anchorId={skipLinkAnchorId.current}>{skipLinkText}</SkipLink>
       )}
       <div style={{width: '100%', height: '100%'}} ref={containerRef}>
@@ -100,6 +100,7 @@ export function LineChart({
                 ? renderTooltipContent
                 : renderDefaultTooltipContent
             }
+            emptyStateText={emptyStateText}
           />
         )}
       </div>
