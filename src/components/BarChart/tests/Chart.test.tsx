@@ -5,6 +5,12 @@ import {YAxis, TooltipContainer, BarChartXAxis, Bar} from 'components';
 
 import {Chart} from '../Chart';
 
+jest.mock('../../../hooks/', () => ({
+  usePrefersReducedMotion: jest.fn(() => ({
+    prefersReducedMotion: false,
+  })),
+}));
+
 (global as any).DOMRect = class DOMRect {
   width = 500;
   height = 250;

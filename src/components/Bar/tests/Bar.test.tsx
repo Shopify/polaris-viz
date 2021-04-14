@@ -2,9 +2,13 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleBand} from 'd3-scale';
 
-import {MIN_BAR_HEIGHT} from '../../../constants';
 import {Bar} from '../Bar';
 
+jest.mock('../../../hooks/', () => ({
+  usePrefersReducedMotion: jest.fn(() => ({
+    prefersReducedMotion: false,
+  })),
+}));
 jest.mock('d3-scale', () => ({
   scaleBand: jest.fn(() => jest.fn((value) => value)),
 }));
@@ -14,6 +18,7 @@ describe('<Bar/>', () => {
     const bar = mount(
       <svg>
         <Bar
+          height={1000}
           color="colorPurple"
           highlightColor="colorPurple"
           isSelected={false}
@@ -32,14 +37,14 @@ describe('<Bar/>', () => {
     expect(bar).toContainReactComponent('path', {
       // eslint-disable-next-line id-length
       d: `M0 0
-    h100
-    a0 0 0 010 0
-    v1000
-    H0
-    V0
-    a0 0 0 010-0
-    Z`,
-      fill: 'rgba(156, 106, 222, 1)',
+        h100
+        a0 0 0 010 0
+        v1000
+        H0
+        V0
+        a0 0 0 010-0
+        Z`,
+      fill: 'rgb(156, 106, 222)',
       style: {transform: 'translate(0px, -1000px) rotate(0deg)'},
     });
   });
@@ -48,6 +53,7 @@ describe('<Bar/>', () => {
     const bar = mount(
       <svg>
         <Bar
+          height={1000}
           color="colorPurple"
           highlightColor="colorPurple"
           isSelected={false}
@@ -67,49 +73,15 @@ describe('<Bar/>', () => {
     expect(bar).toContainReactComponent('path', {
       // eslint-disable-next-line id-length
       d: `M3 0
-    h94
-    a3 3 0 013 3
-    v997
-    H0
-    V3
-    a3 3 0 013-3
-    Z`,
-      fill: 'rgba(156, 106, 222, 1)',
+        h94
+        a3 3 0 013 3
+        v997
+        H0
+        V3
+        a3 3 0 013-3
+        Z`,
+      fill: 'rgb(156, 106, 222)',
       style: {transform: 'translate(0px, -1000px) rotate(0deg)'},
-    });
-  });
-
-  it('gives the bar a min height if needed', () => {
-    const bar = mount(
-      <svg>
-        <Bar
-          color="colorPurple"
-          highlightColor="colorPurple"
-          isSelected={false}
-          x={0}
-          rawValue={1}
-          width={100}
-          yScale={scaleBand() as any}
-          index={1}
-          onFocus={jest.fn()}
-          tabIndex={0}
-        />
-        ,
-      </svg>,
-    );
-
-    expect(bar).toContainReactComponent('path', {
-      // eslint-disable-next-line id-length
-      d: `M0 0
-    h100
-    a0 0 0 010 0
-    v${MIN_BAR_HEIGHT}
-    H0
-    V0
-    a0 0 0 010-0
-    Z`,
-      fill: 'rgba(156, 106, 222, 1)',
-      style: {transform: `translate(0px, -${MIN_BAR_HEIGHT}px) rotate(0deg)`},
     });
   });
 
@@ -117,6 +89,7 @@ describe('<Bar/>', () => {
     const bar = mount(
       <svg>
         <Bar
+          height={0}
           color="colorPurple"
           highlightColor="colorPurple"
           isSelected={false}
@@ -135,7 +108,7 @@ describe('<Bar/>', () => {
     expect(bar).toContainReactComponent('path', {
       // eslint-disable-next-line id-length
       d: ``,
-      fill: 'rgba(156, 106, 222, 1)',
+      fill: 'rgb(156, 106, 222)',
       style: {transform: `translate(0px, 0px) rotate(0deg)`},
     });
   });
@@ -144,6 +117,7 @@ describe('<Bar/>', () => {
     const bar = mount(
       <svg>
         <Bar
+          height={1000}
           color="colorPurple"
           highlightColor="colorRed"
           isSelected={false}
@@ -160,7 +134,7 @@ describe('<Bar/>', () => {
     );
 
     expect(bar).toContainReactComponent('path', {
-      fill: 'rgba(156, 106, 222, 1)',
+      fill: 'rgb(156, 106, 222)',
     });
   });
 });

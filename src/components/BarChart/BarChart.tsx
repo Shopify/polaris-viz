@@ -22,6 +22,7 @@ export interface BarChartProps {
   renderTooltipContent?: (data: RenderTooltipContentData) => React.ReactNode;
   hasRoundedCorners?: boolean;
   emptyStateText?: string;
+  isAnimated?: boolean;
 }
 
 export function BarChart({
@@ -36,6 +37,7 @@ export function BarChart({
   renderTooltipContent,
   skipLinkText,
   emptyStateText,
+  isAnimated = true,
 }: BarChartProps) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -84,6 +86,7 @@ export function BarChart({
             </SkipLink>
           )}
           <Chart
+            isAnimated={isAnimated}
             data={data}
             chartDimensions={chartDimensions}
             barMargin={BarMargin[barMargin]}

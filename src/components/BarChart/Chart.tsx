@@ -1,14 +1,15 @@
-import React, {useState, useMemo} from 'react';
+import React, {useState, useMemo, useCallback} from 'react';
 import {Color, Data} from 'types';
-import {useTransition, animated} from 'react-spring';
+import {useTransition} from 'react-spring';
 
-import {LINE_HEIGHT, ROUNDED_BAR_RADIUS, MIN_BAR_HEIGHT} from '../../constants';
+import {LINE_HEIGHT, MIN_BAR_HEIGHT} from '../../constants';
 import {eventPoint, getTextWidth, getBarXAxisDetails} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {BarChartXAxis} from '../BarChartXAxis';
 import {TooltipContainer} from '../TooltipContainer';
 import {Bar} from '../Bar';
 import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
+import {usePrefersReducedMotion} from '../../hooks';
 
 import {RenderTooltipContentData} from './types';
 import {useYScale, useXScale} from './hooks';
@@ -33,6 +34,7 @@ interface Props {
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
   hasRoundedCorners: boolean;
   emptyStateText?: string;
+  isAnimated: boolean;
 }
 
 export function Chart({
@@ -47,7 +49,9 @@ export function Chart({
   renderTooltipContent,
   hasRoundedCorners,
   emptyStateText,
+  isAnimated,
 }: Props) {
+  const {prefersReducedMotion} = usePrefersReducedMotion();
   const [activeBar, setActiveBar] = useState<number | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState<{
     x: number;
@@ -127,7 +131,7 @@ export function Chart({
     formatXAxisLabel,
   });
 
-  const barWidth = xScale.bandwidth();
+  const barWidth = useMemo(() => xScale.bandwidth(), [xScale]);
 
   const tooltipMarkup = useMemo(() => {
     if (activeBar == null) {
@@ -140,17 +144,21 @@ export function Chart({
     });
   }, [activeBar, data, renderTooltipContent]);
 
-  const getBarHeight = (rawValue: number) => {
-    const rawHeight = Math.abs(yScale(rawValue) - yScale(0));
-    const needsMinHeight = rawHeight < MIN_BAR_HEIGHT && rawHeight !== 0;
-    return needsMinHeight ? MIN_BAR_HEIGHT : rawHeight;
-  };
+  const getBarHeight = useCallback(
+    (rawValue: number) => {
+      const rawHeight = Math.abs(yScale(rawValue) - yScale(0));
+      const needsMinHeight = rawHeight < MIN_BAR_HEIGHT && rawHeight !== 0;
+      return needsMinHeight ? MIN_BAR_HEIGHT : rawHeight;
+    },
+    [yScale],
+  );
 
   const transitions = useTransition(data, (dataPoint) => dataPoint.label, {
     from: {height: 0},
     leave: {height: 0},
     enter: ({rawValue}) => ({height: getBarHeight(rawValue)}),
     update: ({rawValue}) => ({height: getBarHeight(rawValue)}),
+    immediate: prefersReducedMotion || !isAnimated,
     trail: 50,
     config: {mass: 1, tension: 180, friction: 15},
   });
