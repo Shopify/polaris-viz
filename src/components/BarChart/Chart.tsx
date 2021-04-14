@@ -1,7 +1,8 @@
 import React, {useState, useMemo} from 'react';
 import {Color, Data} from 'types';
+import {useTransition, animated} from 'react-spring';
 
-import {LINE_HEIGHT} from '../../constants';
+import {LINE_HEIGHT, ROUNDED_BAR_RADIUS, MIN_BAR_HEIGHT} from '../../constants';
 import {eventPoint, getTextWidth, getBarXAxisDetails} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {BarChartXAxis} from '../BarChartXAxis';
@@ -139,12 +140,29 @@ export function Chart({
     });
   }, [activeBar, data, renderTooltipContent]);
 
+  const getBarHeight = (rawValue: number) => {
+    const rawHeight = Math.abs(yScale(rawValue) - yScale(0));
+    const needsMinHeight = rawHeight < MIN_BAR_HEIGHT && rawHeight !== 0;
+    return needsMinHeight ? MIN_BAR_HEIGHT : rawHeight;
+  };
+
+  const transitions = useTransition(data, (dataPoint) => dataPoint.label, {
+    from: {height: 0},
+    leave: {height: 0},
+    enter: ({rawValue}) => ({height: getBarHeight(rawValue)}),
+    update: ({rawValue}) => ({height: getBarHeight(rawValue)}),
+    trail: 50,
+    config: {mass: 1, tension: 180, friction: 15},
+  });
+
+  const {width, height} = chartDimensions;
+
   return (
     <div
       className={styles.ChartContainer}
       style={{
-        height: chartDimensions.height,
-        width: chartDimensions.width,
+        height,
+        width,
       }}
     >
       <svg
@@ -184,7 +202,7 @@ export function Chart({
         </g>
 
         <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
-          {data.map(({rawValue}, index) => {
+          {transitions.map(({item, props: {height}}, index) => {
             const xPosition = xScale(index.toString());
             const ariaLabel = `${formatXAxisLabel(
               data[index].label,
@@ -193,10 +211,11 @@ export function Chart({
             return (
               <g role="listitem" key={index}>
                 <Bar
+                  height={height}
                   key={index}
                   x={xPosition == null ? 0 : xPosition}
                   yScale={yScale}
-                  rawValue={rawValue}
+                  rawValue={item.rawValue}
                   width={barWidth}
                   isSelected={index === activeBar}
                   color={color}

@@ -1,5 +1,5 @@
 import React from 'react';
-import {animated, useSpring} from 'react-spring';
+import {animated, useSpring, OpaqueInterpolation} from 'react-spring';
 import tokens from '@shopify/polaris-tokens';
 import {Color} from 'types';
 import {ScaleLinear} from 'd3-scale';
@@ -23,6 +23,7 @@ interface Props {
   tabIndex: number;
   role?: string;
   hasRoundedCorners?: boolean;
+  height: OpaqueInterpolation<number>;
 }
 
 export function Bar({
@@ -38,6 +39,7 @@ export function Bar({
   ariaLabel,
   tabIndex,
   role,
+  height,
   hasRoundedCorners,
 }: Props) {
   const currentColor = isSelected
@@ -51,24 +53,18 @@ export function Bar({
     from: {color: getColorValue(color)},
   });
 
-  const rawHeight = Math.abs(yScale(rawValue) - yScale(0));
-
   const zeroScale = yScale(0);
-  const needsMinHeight = rawHeight < MIN_BAR_HEIGHT && rawHeight !== 0;
-  const height = needsMinHeight ? MIN_BAR_HEIGHT : rawHeight;
-
-  const handleFocus = () => {
-    onFocus({index, cx: x, cy: yPosition});
-  };
 
   const radius = hasRoundedCorners ? ROUNDED_BAR_RADIUS : 0;
 
   const isNegative = rawValue < 0;
-  const yPosition = isNegative ? zeroScale + height : zeroScale - height;
+  const yPosition = height.interpolate((value) =>
+    isNegative ? zeroScale + value : zeroScale - value,
+  );
   const rotation = isNegative ? 'rotate(180deg)' : 'rotate(0deg)';
   const xPosition = isNegative ? x + width : x;
 
-  const barPath =
+  const getPath = (height: number) =>
     rawValue === 0
       ? ''
       : `M${radius} 0
@@ -80,16 +76,22 @@ export function Bar({
     a${radius} ${radius} 0 01${radius}-${radius}
     Z`;
 
+  const handleFocus = () => {
+    onFocus({index, cx: x, cy: yPosition.getValue()});
+  };
+
   return (
     <animated.path
-      d={barPath}
+      d={height.interpolate((heightValue) => getPath(heightValue))}
       fill={animation.color}
       aria-label={ariaLabel}
       onFocus={handleFocus}
       tabIndex={tabIndex}
       role={role}
       style={{
-        transform: `translate(${xPosition}px, ${yPosition}px) ${rotation}`,
+        transform: yPosition.interpolate(
+          (y) => `translate(${xPosition}px, ${y}px) ${rotation}`,
+        ),
       }}
       className={color === highlightColor ? undefined : styles.BarNoOutline}
     />
