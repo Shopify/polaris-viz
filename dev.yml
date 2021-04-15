@@ -20,3 +20,5 @@ commands:
   test: yarn run test
   test:coverage: yarn run test:coverage
   type-check: yarn run type-check
+  storybook: yarn storybook
+  add-story: yarn add:story
