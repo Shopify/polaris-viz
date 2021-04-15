@@ -2,8 +2,17 @@ import React, {useState, useMemo, useCallback} from 'react';
 import {Color, Data} from 'types';
 import {useTransition} from 'react-spring';
 
-import {LINE_HEIGHT, MIN_BAR_HEIGHT} from '../../constants';
-import {eventPoint, getTextWidth, getBarXAxisDetails} from '../../utilities';
+import {
+  LINE_HEIGHT,
+  MIN_BAR_HEIGHT,
+  BARS_TRANSITION_CONFIG,
+} from '../../constants';
+import {
+  eventPoint,
+  getTextWidth,
+  getBarXAxisDetails,
+  getAnimationTrail,
+} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {BarChartXAxis} from '../BarChartXAxis';
 import {TooltipContainer} from '../TooltipContainer';
@@ -34,7 +43,7 @@ interface Props {
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
   hasRoundedCorners: boolean;
   emptyStateText?: string;
-  isAnimated: boolean;
+  isAnimated?: boolean;
 }
 
 export function Chart({
@@ -49,7 +58,7 @@ export function Chart({
   renderTooltipContent,
   hasRoundedCorners,
   emptyStateText,
-  isAnimated,
+  isAnimated = false,
 }: Props) {
   const {prefersReducedMotion} = usePrefersReducedMotion();
   const [activeBar, setActiveBar] = useState<number | null>(null);
@@ -153,14 +162,16 @@ export function Chart({
     [yScale],
   );
 
+  const shouldAnimate = !prefersReducedMotion && isAnimated;
+
   const transitions = useTransition(data, (dataPoint) => dataPoint.label, {
     from: {height: 0},
     leave: {height: 0},
     enter: ({rawValue}) => ({height: getBarHeight(rawValue)}),
     update: ({rawValue}) => ({height: getBarHeight(rawValue)}),
-    immediate: prefersReducedMotion || !isAnimated,
-    trail: 50,
-    config: {mass: 1, tension: 180, friction: 15},
+    immediate: !shouldAnimate,
+    trail: shouldAnimate ? getAnimationTrail(data.length) : 0,
+    config: BARS_TRANSITION_CONFIG,
   });
 
   const {width, height} = chartDimensions;

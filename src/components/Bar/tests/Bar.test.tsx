@@ -4,11 +4,6 @@ import {scaleBand} from 'd3-scale';
 
 import {Bar} from '../Bar';
 
-jest.mock('../../../hooks/', () => ({
-  usePrefersReducedMotion: jest.fn(() => ({
-    prefersReducedMotion: false,
-  })),
-}));
 jest.mock('d3-scale', () => ({
   scaleBand: jest.fn(() => jest.fn((value) => value)),
 }));

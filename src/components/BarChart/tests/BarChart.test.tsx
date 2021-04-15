@@ -5,12 +5,6 @@ import {BarChart} from '../BarChart';
 import {Chart} from '../Chart';
 import {SkipLink} from '../../SkipLink';
 
-jest.mock('../../../hooks/', () => ({
-  usePrefersReducedMotion: jest.fn(() => ({
-    prefersReducedMotion: false,
-  })),
-}));
-
 describe('BarChart />', () => {
   const mockProps = {data: [{rawValue: 10, label: 'data'}]};
 

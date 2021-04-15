@@ -30,6 +30,7 @@ interface Props {
   timeSeries: boolean;
   isStacked: boolean;
   hasRoundedCorners: boolean;
+  isAnimated?: boolean;
 }
 
 export function Chart({
@@ -42,6 +43,7 @@ export function Chart({
   timeSeries,
   isStacked,
   hasRoundedCorners,
+  isAnimated = false,
 }: Props) {
   const [activeBarGroup, setActiveBarGroup] = useState<number | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState<{
@@ -242,6 +244,7 @@ export function Chart({
                 const ariaLabel = formatAriaLabel(accessibilityData[index]);
                 return (
                   <BarGroup
+                    isAnimated={isAnimated}
                     key={index}
                     x={xPosition == null ? 0 : xPosition}
                     isActive={activeBarGroup === index}

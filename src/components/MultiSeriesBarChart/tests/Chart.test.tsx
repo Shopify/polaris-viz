@@ -32,7 +32,7 @@ describe('Chart />', () => {
   });
 
   afterEach(() => {
-    jest.resetAllMocks();
+    jest.clearAllMocks();
     jest.useRealTimers();
   });
 

@@ -37,7 +37,7 @@ export function BarChart({
   renderTooltipContent,
   skipLinkText,
   emptyStateText,
-  isAnimated = true,
+  isAnimated = false,
 }: BarChartProps) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
