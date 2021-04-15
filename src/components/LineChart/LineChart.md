@@ -290,3 +290,11 @@ Used to indicate to screenreaders that a chart with no data has been rendered, i
 | `boolean` | `false` |
 
 Whether to curve the line between points.
+
+#### isAnimated
+
+| type      | default |
+| --------- | ------- |
+| `boolean` | `false` |
+
+Whether to animate the lines and gradient when the chart is initially rendered and its data is updated. Even if `isAnimated` is set to true, animations will not be displayed for users with reduced motion preferences.

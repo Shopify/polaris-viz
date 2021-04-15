@@ -4,7 +4,9 @@ import {ScaleLinear} from 'd3-scale';
 
 import {getColorValue} from '../../../../utilities';
 import {Series} from '../../types';
+import {ANIMATION_DELAY, FAST_DURATION, SLOW_DURATION} from '../../constants';
 
+import styles from './Line.scss';
 import {StrokeDasharray} from './constants';
 
 interface Props {
@@ -12,6 +14,8 @@ interface Props {
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
   hasSpline: boolean;
+  isAnimated: boolean;
+  index: number;
 }
 
 export const Line = React.memo(function Shape({
@@ -19,6 +23,8 @@ export const Line = React.memo(function Shape({
   series,
   xScale,
   yScale,
+  isAnimated,
+  index,
 }: Props) {
   const lineGenerator = line<{rawValue: number}>()
     .x((_, index) => xScale(index))
@@ -30,6 +36,10 @@ export const Line = React.memo(function Shape({
 
   const path = lineGenerator(series.data);
 
+  const animationDelay = index * ANIMATION_DELAY;
+  const animationDuration =
+    series.data.length > 1000 ? SLOW_DURATION : FAST_DURATION;
+
   if (path == null) {
     return null;
   }
@@ -37,6 +47,10 @@ export const Line = React.memo(function Shape({
   return (
     <path
       d={path}
+      style={{
+        animationDelay: `${animationDelay}s`,
+        animationDuration: `${animationDuration}s`,
+      }}
       fill="none"
       strokeWidth="2px"
       paintOrder="stroke"
@@ -44,6 +58,7 @@ export const Line = React.memo(function Shape({
       strokeLinejoin="round"
       strokeLinecap="round"
       strokeDasharray={StrokeDasharray[series.lineStyle]}
+      className={isAnimated ? styles.AnimatedPath : null}
     />
   );
 });

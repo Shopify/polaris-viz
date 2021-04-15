@@ -37,6 +37,7 @@ interface Props {
   hideXAxisLabels: boolean;
   hasSpline: boolean;
   emptyStateText?: string;
+  isAnimated: boolean;
 }
 
 export function Chart({
@@ -49,6 +50,7 @@ export function Chart({
   hideXAxisLabels,
   hasSpline,
   emptyStateText,
+  isAnimated,
 }: Props) {
   const [tooltipDetails, setTooltipDetails] = useState<ActiveTooltip | null>(
     null,
@@ -277,6 +279,8 @@ export function Chart({
                   xScale={xScale}
                   yScale={yScale}
                   hasSpline={hasSpline}
+                  isAnimated={isAnimated}
+                  index={index}
                 />
 
                 {data.map(({rawValue}, dataIndex) => {
@@ -304,6 +308,8 @@ export function Chart({
                     yScale={yScale}
                     xScale={xScale}
                     hasSpline={hasSpline}
+                    isAnimated={isAnimated}
+                    index={index}
                   />
                 ) : null}
               </React.Fragment>

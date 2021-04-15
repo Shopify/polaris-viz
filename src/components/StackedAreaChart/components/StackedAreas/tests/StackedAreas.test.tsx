@@ -14,14 +14,6 @@ jest.mock('utilities/unique-id', () => ({
 }));
 
 describe('<StackedAreas />', () => {
-  beforeAll(() => {
-    Object.defineProperty(window, 'matchMedia', {
-      value: jest.fn(() => {
-        return {matches: false};
-      }),
-    });
-  });
-
   const mockProps = {
     width: 100,
     height: 50,
