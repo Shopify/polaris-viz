@@ -144,6 +144,9 @@ export function Chart({
       ? null
       : tooltipDetails.index;
 
+  const immediate =
+    !isAnimated || prefersReducedMotion || longestSeriesLength > 10;
+
   const tooltipMarkup = useMemo(() => {
     if (tooltipDetails == null) {
       return null;
@@ -182,7 +185,7 @@ export function Chart({
     lineGenerator,
     activeIndex,
     xScale,
-    isAnimated: isAnimated && !prefersReducedMotion,
+    isAnimated: !immediate,
   });
 
   if (xScale == null || drawableWidth == null || axisMargin == null) {
@@ -283,12 +286,12 @@ export function Chart({
           <g transform={`translate(${axisMargin},${Margin.Top})`}>
             <Crosshair
               x={
-                isAnimated
-                  ? animatedXPosition.interpolate((xPos) =>
+                immediate
+                  ? xScale(activeIndex === null ? 0 : activeIndex) -
+                    CROSSHAIR_WIDTH / 2
+                  : animatedXPosition.interpolate((xPos) =>
                       xPos === null ? null : xPos - CROSSHAIR_WIDTH / 2,
                     )
-                  : xScale(activeIndex === null ? 0 : activeIndex) -
-                    CROSSHAIR_WIDTH / 2
               }
               height={drawableHeight}
               opacity={tooltipDetails === null ? 0 : 1}
@@ -313,10 +316,7 @@ export function Chart({
               <React.Fragment key={`${name}-${index}`}>
                 <Line
                   series={singleSeries}
-                  xScale={xScale}
-                  yScale={yScale}
-                  hasSpline={hasSpline}
-                  isAnimated={isAnimated}
+                  isAnimated={!immediate}
                   index={index}
                   lineGenerator={lineGenerator}
                 />
@@ -331,12 +331,11 @@ export function Chart({
                   active={tooltipDetails !== null}
                   index={index}
                   tabIndex={-1}
-                  isAnimated={isAnimated && !prefersReducedMotion}
+                  isAnimated={!immediate}
                   ariaHidden
                   visuallyHidden={
                     tooltipDetails === null ||
-                    !isAnimated ||
-                    prefersReducedMotion ||
+                    immediate ||
                     animatedYPositions === null ||
                     animatedYPositions[index] === null
                   }
@@ -356,10 +355,7 @@ export function Chart({
                       ariaLabelledby={tooltipId.current}
                       isAnimated={false}
                       ariaHidden={false}
-                      visuallyHidden={
-                        (isAnimated && !prefersReducedMotion) ||
-                        tooltipDetails === null
-                      }
+                      visuallyHidden={!immediate || tooltipDetails === null}
                     />
                   );
                 })}
@@ -370,7 +366,7 @@ export function Chart({
                     yScale={yScale}
                     xScale={xScale}
                     hasSpline={hasSpline}
-                    isAnimated={isAnimated}
+                    isAnimated={!immediate}
                     index={index}
                   />
                 ) : null}
