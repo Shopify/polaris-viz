@@ -35,21 +35,6 @@ export function useLineChartAnimations({
     immediate,
   });
 
-  const getYPositionFromPercentage = useCallback(
-    (percent: number, path: any, totalLength: number) => {
-      if (path === null || totalLength == null) {
-        return {x: 0, y: 0};
-      }
-
-      const length = (percent * totalLength) / 100;
-
-      const coordinates = path.getPointAtLength(length);
-
-      return coordinates.y;
-    },
-    [],
-  );
-
   const createOffScreenPath = useCallback(
     (data) => {
       const offscreenPath = document.createElementNS(
@@ -61,13 +46,6 @@ export function useLineChartAnimations({
       return offscreenPath;
     },
     [lineGenerator],
-  );
-
-  const getPercentage = useCallback(
-    (subpathLength: number, totalLength: number) => {
-      return (subpathLength / totalLength) * 100;
-    },
-    [],
   );
 
   const totalPaths = useMemo(() => {
@@ -99,6 +77,13 @@ export function useLineChartAnimations({
     });
   }, [immediate, createOffScreenPath, currentIndex, series]);
 
+  const getPercentage = useCallback(
+    (subpathLength: number, totalLength: number) => {
+      return (subpathLength / totalLength) * 100;
+    },
+    [],
+  );
+
   const percentages = useMemo(() => {
     if (immediate || !totalPaths || !subPaths) return null;
 
@@ -113,6 +98,21 @@ export function useLineChartAnimations({
       return getPercentage(subPath.length, totalLength);
     });
   }, [immediate, getPercentage, series, subPaths, totalPaths]);
+
+  const getYPositionFromPercentage = useCallback(
+    (percent: number, path: any, totalLength: number) => {
+      if (path === null || totalLength == null) {
+        return {x: 0, y: 0};
+      }
+
+      const length = (percent * totalLength) / 100;
+
+      const coordinates = path.getPointAtLength(length);
+
+      return coordinates.y;
+    },
+    [],
+  );
 
   const animatedPercentages = useSprings<
     {

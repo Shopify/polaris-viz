@@ -131,13 +131,16 @@ export function Chart({
 
   const {xScale} = useLinearXScale({drawableWidth, longestSeriesLength});
 
-  const lineGenerator = line<{rawValue: number}>()
-    .x((_, index) => (xScale === null ? 0 : xScale(index)))
-    .y(({rawValue}) => yScale(rawValue));
+  const lineGenerator = useMemo(() => {
+    const generator = line<{rawValue: number}>()
+      .x((_, index) => (xScale === null ? 0 : xScale(index)))
+      .y(({rawValue}) => yScale(rawValue));
 
-  if (hasSpline) {
-    lineGenerator.curve(curveMonotoneX);
-  }
+    if (hasSpline) {
+      generator.curve(curveMonotoneX);
+    }
+    return generator;
+  }, [hasSpline, xScale, yScale]);
 
   const activeIndex =
     tooltipDetails === null || tooltipDetails.index == null
@@ -145,7 +148,7 @@ export function Chart({
       : tooltipDetails.index;
 
   const immediate =
-    !isAnimated || prefersReducedMotion || longestSeriesLength > 10;
+    !isAnimated || prefersReducedMotion || longestSeriesLength > 1000;
 
   const tooltipMarkup = useMemo(() => {
     if (tooltipDetails == null) {
