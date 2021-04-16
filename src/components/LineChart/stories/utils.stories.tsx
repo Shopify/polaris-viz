@@ -1,7 +1,7 @@
 import React from 'react';
 import tokens from '@shopify/polaris-tokens';
 
-import {BarChartTooltipContent} from '../../../components';
+import {LineChartTooltipContent, LineChartProps} from '../../../components';
 import {vizColors} from '../../../utilities';
 
 const polarisTokensColors = Object.keys(tokens).filter((key) =>
@@ -19,27 +19,30 @@ export const getDataPoint = (limit = 1000) => {
 export function formatXAxisLabel(value: string) {
   return new Date(value).toLocaleDateString('en-CA', {
     day: 'numeric',
-    month: 'short',
+    month: 'numeric',
   });
 }
 
 export function formatYAxisLabel(value: number) {
-  return new Intl.NumberFormat('en-CA', {
+  return new Intl.NumberFormat('en', {
     style: 'currency',
     currency: 'CAD',
-    maximumSignificantDigits: 2,
+    currencyDisplay: 'symbol',
+    maximumSignificantDigits: 1,
   }).format(value);
 }
 
-export function renderTooltipContent({
-  label,
-  value,
-}: {
-  label: string;
-  value: number;
-}) {
+export const renderTooltipContent: LineChartProps['renderTooltipContent'] = ({
+  data,
+}) => {
+  function formatTooltipValue(value: number) {
+    return new Intl.NumberFormat('en', {
+      style: 'currency',
+      currency: 'CAD',
+    }).format(value);
+  }
+
   function formatTooltipLabel(value: string) {
-    debugger;
     return new Date(value).toLocaleDateString('en-CA', {
       day: 'numeric',
       month: 'long',
@@ -47,17 +50,14 @@ export function renderTooltipContent({
     });
   }
 
-  function formatTooltipValue(value: number) {
-    return new Intl.NumberFormat('en-CA', {
-      style: 'currency',
-      currency: 'CAD',
-    }).format(value);
-  }
+  const formattedData = data.map(({name, point: {label, value}, style}) => ({
+    name,
+    style,
+    point: {
+      value: formatTooltipValue(value),
+      label: formatTooltipLabel(label),
+    },
+  }));
 
-  const formattedLabel = formatTooltipLabel(label);
-  const formattedValue = formatTooltipValue(value);
-
-  return (
-    <BarChartTooltipContent label={formattedLabel} value={formattedValue} />
-  );
-}
+  return <LineChartTooltipContent data={formattedData} />;
+};

@@ -35,7 +35,7 @@ const series = [
       {rawValue: 5500, label: '2020-04-13T12:00:00'},
       {rawValue: 7000, label: '2020-04-14T12:00:00'},
     ],
-    color: 'primary',
+    color: primaryColor,
   },
   {
     name: 'Mar 01–Mar 14, 2020',
@@ -55,10 +55,12 @@ const series = [
       {rawValue: 2000, label: '2020-03-13T12:00:00'},
       {rawValue: 3000, label: '2020-03-14T12:00:00'},
     ],
-    color: 'pastComparison',
+    color: secondaryColor,
     lineStyle: 'dashed' as 'dashed',
   },
 ];
+
+console.log(secondaryColor);
 
 const xAxisLabels = series[0].data.map(({label}) => label);
 
@@ -69,20 +71,6 @@ export default {
     (Story: any) => <div className={styles.Container}>{Story()}</div>,
   ],
   argTypes: {
-    color: {
-      control: {
-        type: 'select',
-        options: colorOptions,
-        defaultValue: primaryColor,
-      },
-    },
-    highlightColor: {
-      control: {
-        type: 'select',
-        options: colorOptions,
-        defaultValue: secondaryColor,
-      },
-    },
     // Render the prop documentation but without a control.
     formatXAxisLabel: {
       control: false,
