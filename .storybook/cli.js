@@ -22,15 +22,7 @@ const replaceComponentName = (path) => {
 const createStoryFiles = () => {
   fs.mkdirSync(`${componentPath}/stories`);
   fs.copyFileSync('./.storybook/boilerplate/Template.stories.tsx', storyPath);
-  fs.copyFileSync(
-    './.storybook/boilerplate/Template.stories.scss',
-    `${componentPath}/stories/${componentName}.stories.scss`,
-  );
-
   replaceComponentName(storyPath);
-  replaceComponentName(
-    `${componentPath}/stories/${componentName}.stories.scss`,
-  );
 };
 
 if (!fs.existsSync(`${componentPath}`)) {
@@ -60,6 +52,6 @@ if (!fs.existsSync(`${componentPath}`)) {
     colors.textGreen,
     storyPath,
     colors.reset,
-    `and configure Default.args. \n\nMore information in: https://storybook.js.org/docs/react/api/argtypes\n\n`,
+    `and configure Default.args \n\nMore information in: https://storybook.js.org/docs/react/api/argtypes\n\n`,
   );
 }
