@@ -60,3 +60,12 @@ export function renderTooltipContent({
     <BarChartTooltipContent label={formattedLabel} value={formattedValue} />
   );
 }
+
+export function chartData = [
+  {rawValue: 324.19, label: '2020-01-01T12:00:00Z'},
+  {rawValue: 613.29, label: '2020-01-02T12:00:00Z'},
+  {rawValue: 422.79, label: '2020-01-03T12:00:00Z'},
+  {rawValue: 25.6, label: '2020-01-04T12:00:00Z'},
+  {rawValue: 277.69, label: '2020-01-05T12:00:00Z'},
+  {rawValue: 421.19, label: '2020-01-06T12:00:00Z'},
+];

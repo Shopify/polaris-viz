@@ -45,6 +45,7 @@ export function Chart({
   timeSeries,
   renderTooltipContent,
   hasRoundedCorners,
+  annotations = [],
 }: Props) {
   const [activeBar, setActiveBar] = useState<number | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState<{
@@ -204,6 +205,20 @@ export function Chart({
                   role="img"
                   hasRoundedCorners={hasRoundedCorners}
                 />
+              </g>
+            );
+          })}
+        </g>
+
+        <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
+          {annotations.map((annotation, index) => {
+            console.log(annotation);
+            if (annotation == null) {
+              return null;
+            }
+            return (
+              <g role="listitem" key={index}>
+                <line />
               </g>
             );
           })}
