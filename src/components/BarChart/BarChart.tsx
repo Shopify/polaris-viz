@@ -8,20 +8,7 @@ import {getDefaultColor, uniqueId} from '../../utilities';
 
 import {TooltipContent} from './components';
 import {Chart} from './Chart';
-import {BarMargin, RenderTooltipContentData} from './types';
-
-// starting out with one annotation type for now
-// with the abiliity to expand to others
-enum AnnotationType {
-  Line = 'line',
-}
-interface Annotation {
-  type: AnnotationType;
-  color: Color;
-  width: number;
-  x?: number;
-  y?: number;
-}
+import {BarMargin, RenderTooltipContentData, Annotation} from './types';
 
 export interface BarChartProps {
   data: Data[];
@@ -44,6 +31,7 @@ export function BarChart({
   barMargin = 'Medium',
   timeSeries = false,
   hasRoundedCorners = false,
+  annotations = [],
   formatXAxisLabel = (value) => value.toString(),
   formatYAxisLabel = (value) => value.toString(),
   renderTooltipContent,
@@ -79,6 +67,7 @@ export function BarChart({
     const formattedLabel = formatXAxisLabel(label);
     const formattedValue = formatYAxisLabel(value);
 
+    // TODO, figure out how to render annotation label here
     return <TooltipContent label={formattedLabel} value={formattedValue} />;
   }
 
@@ -101,6 +90,7 @@ export function BarChart({
             formatYAxisLabel={formatYAxisLabel}
             timeSeries={timeSeries}
             hasRoundedCorners={hasRoundedCorners}
+            annotations={annotations}
             renderTooltipContent={
               renderTooltipContent != null
                 ? renderTooltipContent

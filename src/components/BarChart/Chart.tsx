@@ -9,7 +9,7 @@ import {TooltipContainer} from '../TooltipContainer';
 import {Bar} from '../Bar';
 import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
-import {RenderTooltipContentData} from './types';
+import {RenderTooltipContentData, Annotation} from './types';
 import {useYScale, useXScale} from './hooks';
 import {
   MARGIN,
@@ -31,6 +31,7 @@ interface Props {
   timeSeries: boolean;
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
   hasRoundedCorners: boolean;
+  annotations?: Annotation[];
 }
 
 export function Chart({
