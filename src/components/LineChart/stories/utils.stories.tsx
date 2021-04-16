@@ -49,14 +49,15 @@ export const renderTooltipContent: LineChartProps['renderTooltipContent'] = ({
       year: 'numeric',
     });
   }
-
+  debugger;
   const formattedData = data.map(({name, point: {label, value}, style}) => ({
     name,
-    style,
     point: {
       value: formatTooltipValue(value),
       label: formatTooltipLabel(label),
     },
+    color: colorOptions[0],
+    lineStyle: 'solid',
   }));
 
   return <LineChartTooltipContent data={formattedData} />;
