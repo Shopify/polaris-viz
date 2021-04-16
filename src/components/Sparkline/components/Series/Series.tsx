@@ -93,9 +93,6 @@ export function Series({
 
       {showPoint ? (
         <circle
-          // role={ariaLabelledby == null ? '' : 'image'}
-          // aria-labelledby={ariaLabelledby}
-          // tabIndex={tabIndex}
           cx={lastLinePoint.x}
           cy={lastLinePoint.y}
           r={POINT_RADIUS}
