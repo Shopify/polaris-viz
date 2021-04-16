@@ -21,6 +21,7 @@ export interface SingleSeries {
   color?: Color;
   areaStyle?: AreaStyle;
   lineStyle?: LineStyle;
+  showPoint?: boolean;
 }
 
 export interface SparklineProps {
