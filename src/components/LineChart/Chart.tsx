@@ -148,7 +148,7 @@ export function Chart({
       : tooltipDetails.index;
 
   const immediate =
-    !isAnimated || prefersReducedMotion || longestSeriesLength > 1000;
+    !isAnimated || prefersReducedMotion || longestSeriesLength > 999;
 
   const tooltipMarkup = useMemo(() => {
     if (tooltipDetails == null) {

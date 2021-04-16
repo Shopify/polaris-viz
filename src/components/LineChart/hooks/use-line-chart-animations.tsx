@@ -21,10 +21,7 @@ export function useLineChartAnimations({
 }) {
   const previousIndex = useRef<number | null>(activeIndex);
   const currentIndex = activeIndex == null ? 0 : activeIndex;
-  const immediate =
-    !isAnimated ||
-    previousIndex.current === null ||
-    series.some(({data}) => data.length >= 1000);
+  const immediate = !isAnimated || previousIndex.current === null;
 
   const {animatedXPosition} = useSpring<{
     config: SpringConfig;
