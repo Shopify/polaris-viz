@@ -10,6 +10,19 @@ import {TooltipContent} from './components';
 import {Chart} from './Chart';
 import {BarMargin, RenderTooltipContentData} from './types';
 
+// starting out with one annotation type for now
+// with the abiliity to expand to others
+enum AnnotationType {
+  Line = 'line',
+}
+interface Annotation {
+  type: AnnotationType;
+  color: Color;
+  width: number;
+  x?: number;
+  y?: number;
+}
+
 export interface BarChartProps {
   data: Data[];
   barMargin?: keyof typeof BarMargin;
@@ -21,6 +34,7 @@ export interface BarChartProps {
   skipLinkText?: string;
   renderTooltipContent?: (data: RenderTooltipContentData) => React.ReactNode;
   hasRoundedCorners?: boolean;
+  annotations?: Annotation[];
 }
 
 export function BarChart({
