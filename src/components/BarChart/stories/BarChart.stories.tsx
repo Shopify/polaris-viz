@@ -5,12 +5,11 @@ import {BarChart, BarChartProps} from '../../../components';
 import {Color} from '../../../types';
 
 import {
-  colorOptions,
-  getDataPoint,
   formatXAxisLabel,
   formatYAxisLabel,
   renderTooltipContent,
 } from './utils.stories';
+import {colorOptions} from '../../../utilities';
 
 const primaryColor = colorOptions[0] as Color;
 const secondaryColor = colorOptions[1] as Color;

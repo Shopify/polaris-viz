@@ -2,6 +2,7 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
 import {area} from 'd3-shape';
+import {getColorValue} from 'utilities';
 
 import {Series} from '../Series';
 import {LinearGradient} from '../../LinearGradient';
@@ -36,9 +37,12 @@ const mockSeries = {
   ],
 };
 
+const xScale = scaleLinear();
+const yScale = scaleLinear();
+
 const mockProps = {
-  xScale: scaleLinear(),
-  yScale: scaleLinear(),
+  xScale,
+  yScale,
   series: mockSeries,
   isAnimated: false,
   height: 250,
@@ -146,5 +150,21 @@ describe('Series', () => {
     );
 
     expect(curveSpy).toHaveBeenCalled();
+  });
+
+  it('renders a point on the last data point of the line if hasPoint is true', () => {
+    const actual = mount(
+      <svg>
+        <Series {...mockProps} series={{...mockSeries, hasPoint: true}} />
+      </svg>,
+    );
+
+    const [lastDataPoint] = mockSeries.data.slice(-1);
+
+    expect(actual).toContainReactComponent('circle', {
+      cx: xScale(lastDataPoint.x),
+      cy: yScale(lastDataPoint.y),
+      fill: getColorValue(mockSeries.color),
+    });
   });
 });

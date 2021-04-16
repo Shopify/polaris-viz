@@ -58,7 +58,7 @@ The sparkline interface looks like this:
 
 ```typescript
 {
-  series: {color: Color, areaStyle: AreaStyle, lineStyle: LineStyle, data: Coordinates[]}[];
+  series: {color: Color, areaStyle: AreaStyle, lineStyle: LineStyle, hasPoint: boolean, data: Coordinates[]}[];
   accessibilityLabel?: string;
   isAnimated?: boolean;
 }
@@ -76,13 +76,13 @@ This component determines its width and height based off its parent element. The
 
 #### The series type
 
-| type                                                                                   |
-| -------------------------------------------------------------------------------------- |
-| `{data: Coordinates[], color?: Color, areaStyle?: AreaStyle, lineStyle?: LineStyle}[]` |
+| type                                                                                                       |
+| ---------------------------------------------------------------------------------------------------------- |
+| `{data: Coordinates[], color?: Color, areaStyle?: AreaStyle, lineStyle?: LineStyle, hasPoint?: boolean}[]` |
 
 The sparkline can show one data series or a set of comparison data series.
 
-#### data
+##### data
 
 | type                       |
 | -------------------------- |
@@ -90,7 +90,7 @@ The sparkline can show one data series or a set of comparison data series.
 
 The prop to determine the chart's drawn area.
 
-#### color
+##### color
 
 | type    | default     |
 | ------- | ----------- |
@@ -98,7 +98,7 @@ The prop to determine the chart's drawn area.
 
 The sparkline stroke and fill color. This accepts any [Polaris Viz accepted color](/documentation/Polaris-Viz-colors.md).
 
-#### areaFillStyle
+##### areaFillStyle
 
 | type                      | default |
 | ------------------------- | ------- |
@@ -106,13 +106,23 @@ The sparkline stroke and fill color. This accepts any [Polaris Viz accepted colo
 
 Determines whether to fill in the area beneath the line and what kind of shading to use.
 
-#### lineStyle
+##### lineStyle
 
 | type             | default |
 | ---------------- | ------- |
 | `solid | dashed` | `solid` |
 
 Determines the style of line used for the series.
+
+---
+
+##### hasPoint
+
+| type      | default |
+| --------- | ------- |
+| `boolean` | `false` |
+
+Whether to highlight the last data point of the series with a circle.
 
 ---
 
