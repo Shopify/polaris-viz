@@ -156,13 +156,13 @@ describe('<Chart />', () => {
     const chart = mount(<Chart {...mockProps} />);
 
     // No crosshair if there is no active point
-    expect(chart.find(Crosshair)).toHaveReactProps({opacity: 0});
+    expect(chart).not.toContainReactComponent(Crosshair);
 
     // create an active point
     const svg = chart.find('svg')!;
     svg.trigger('onMouseMove', fakeSVGEvent);
 
-    expect(chart.find(Crosshair)).toHaveReactProps({opacity: 1});
+    expect(chart).toContainReactComponent(Crosshair);
   });
 
   it('renders a <Line /> for each series', () => {
@@ -201,7 +201,7 @@ describe('<Chart />', () => {
     const series = [primarySeries, {...primarySeries, name: 'A second series'}];
     const chart = mount(<Chart {...mockProps} series={series} />);
 
-    expect(chart).toContainReactComponentTimes(Point, 8 + series.length);
+    expect(chart).toContainReactComponentTimes(Point, 8);
   });
 
   it('passes props to <Point />', () => {

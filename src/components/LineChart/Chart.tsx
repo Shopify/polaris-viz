@@ -285,7 +285,7 @@ export function Chart({
           />
         </g>
 
-        {emptyState ? null : (
+        {emptyState || tooltipDetails == null ? null : (
           <g transform={`translate(${axisMargin},${Margin.Top})`}>
             <Crosshair
               x={
@@ -297,7 +297,7 @@ export function Chart({
                     )
               }
               height={drawableHeight}
-              opacity={tooltipDetails === null ? 0 : 1}
+              opacity={1}
             />
           </g>
         )}
@@ -323,26 +323,24 @@ export function Chart({
                   index={index}
                   lineGenerator={lineGenerator}
                 />
-                <Point
-                  color={singleSeries.color}
-                  cx={animatedXPosition.interpolate((xPos) => {
-                    return xPos === null ? null : xPos;
-                  })}
-                  cy={
-                    animatedYPositions === null ? 0 : animatedYPositions[index]
-                  }
-                  active={tooltipDetails !== null}
-                  index={index}
-                  tabIndex={-1}
-                  isAnimated={!immediate}
-                  ariaHidden
-                  visuallyHidden={
-                    tooltipDetails === null ||
-                    immediate ||
-                    animatedYPositions === null ||
-                    animatedYPositions[index] === null
-                  }
-                />
+
+                {!immediate &&
+                  animatedYPositions !== null &&
+                  tooltipDetails !== null &&
+                  Number(activeIndex) <= singleSeries.data.length - 1 && (
+                    <Point
+                      color={singleSeries.color}
+                      cx={animatedXPosition.interpolate((xPos) => {
+                        return xPos === null ? null : xPos;
+                      })}
+                      cy={animatedYPositions[index]}
+                      active={tooltipDetails !== null}
+                      index={index}
+                      tabIndex={-1}
+                      isAnimated={!immediate}
+                      ariaHidden
+                    />
+                  )}
 
                 {data.map(({rawValue}, dataIndex) => {
                   return (
@@ -379,7 +377,7 @@ export function Chart({
         </g>
       </svg>
 
-      {tooltipDetails == null || emptyState ? null : (
+      {tooltipDetails === null || emptyState ? null : (
         <TooltipContainer
           activePointIndex={tooltipDetails.index}
           currentX={tooltipDetails.x}

@@ -61,10 +61,6 @@ export function useLineChartAnimations({
     if (immediate) return null;
 
     return series.map(({data}) => {
-      if (currentIndex >= data.length) {
-        return null;
-      }
-
       const path = createOffScreenPath(data.slice(0, currentIndex + 1));
 
       return {
@@ -87,10 +83,6 @@ export function useLineChartAnimations({
     return series.map((_, index: any) => {
       const totalLength = totalPaths[index].length;
       const subPath = subPaths[index];
-
-      if (subPath === null) {
-        return 101;
-      }
 
       return getPercentage(subPath.length, totalLength);
     });
@@ -135,8 +127,6 @@ export function useLineChartAnimations({
       immediate || totalPaths === null
         ? null
         : animatedPercentages.map(({percentage}, index) => {
-            if (percentage.getValue() > 100) return null;
-
             return percentage.interpolate((percent: number) => {
               const totalLength = totalPaths[index].length;
               const path = totalPaths[index].element;
