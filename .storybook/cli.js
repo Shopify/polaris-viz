@@ -1,4 +1,5 @@
 const fs = require('fs');
+const {exec} = require('child_process');
 
 const colors = {
   textRed: '\x1b[31m',
@@ -8,21 +9,39 @@ const colors = {
 };
 
 const params = JSON.parse(process.env.npm_config_argv);
-let [command, componentName] = params.original;
+
+const [command, componentName] = params.original;
+const shouldRemoveComments = params.original.includes('--no-comments');
 
 const componentPath = `./src/components/${componentName}`;
 const storyPath = `${componentPath}/stories/${componentName}.stories.tsx`;
 
 const replaceComponentName = (path) => {
   const data = fs.readFileSync(path, 'utf8');
-  const result = data.replace(/ComponentName/g, componentName);
+  const result = data.replace(/ComponentName/g, componentName).trim();
   fs.writeFileSync(path, result, 'utf8');
 };
 
-const createStoryFiles = () => {
+const removeComments = (path) => {
+  const commentRegex = new RegExp(/[\s\n]*\/\//gm);
+  const data = fs.readFileSync(path, 'utf8');
+
+  const result = data
+    .split('\n')
+    .filter((line) => !line.match(commentRegex))
+    .join('\n');
+
+  fs.writeFileSync(path, result, 'utf8');
+};
+
+const createStoryFiles = (shouldRemoveComments) => {
   fs.mkdirSync(`${componentPath}/stories`);
   fs.copyFileSync('./.storybook/boilerplate/Template.stories.tsx', storyPath);
   replaceComponentName(storyPath);
+
+  if (shouldRemoveComments) {
+    removeComments(storyPath);
+  }
 };
 
 if (!fs.existsSync(`${componentPath}`)) {
@@ -45,7 +64,7 @@ if (!fs.existsSync(`${componentPath}`)) {
     colors.textGreen,
     `📝 Writing story for ${componentName} in '${componentPath}'`,
   );
-  createStoryFiles();
+  createStoryFiles(shouldRemoveComments);
   console.log(
     colors.reset,
     `\n🎉 Success! Now open`,
