@@ -121,9 +121,12 @@ export function LineChartDemo() {
       <div style={innerContainerStyle}>
         <LineChart
           series={series}
-          xAxisLabels={xAxisLabels}
-          formatXAxisLabel={formatXAxisLabel}
-          formatYAxisLabel={formatYAxisLabel}
+          xAxisOptions={{
+            xAxisLabels,
+            labelFormatter: formatXAxisLabel,
+            showTicks: true,
+          }}
+          yAxisOptions={{labelFormatter: formatYAxisLabel}}
           renderTooltipContent={renderTooltipContent}
           skipLinkText="Skip line chart content"
         />

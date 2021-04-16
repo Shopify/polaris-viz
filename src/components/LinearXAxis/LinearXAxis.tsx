@@ -9,6 +9,7 @@ import {
   DIAGONAL_ANGLE,
   LINE_HEIGHT,
   SPACING_TIGHT,
+  DEFAULT_GREY_LABEL,
 } from '../../constants';
 
 import styles from './LinearXAxis.scss';
@@ -29,6 +30,10 @@ interface Props {
   xAxisDetails: XAxisDetails;
   drawableHeight: number;
   ariaHidden: boolean;
+  showGridLines?: boolean;
+  gridColor?: string;
+  showTicks?: boolean;
+  labelColor?: string;
 }
 
 function getTextAlign({
@@ -57,6 +62,10 @@ function Axis({
   drawableWidth,
   drawableHeight,
   ariaHidden,
+  showGridLines = true,
+  showTicks = true,
+  gridColor = colorSky,
+  labelColor = DEFAULT_GREY_LABEL,
 }: Props) {
   const {
     maxDiagonalLabelLength,
@@ -98,7 +107,7 @@ function Axis({
       <path
         d={`M ${xScaleMin} ${TICK_SIZE} v ${-TICK_SIZE} H ${xScaleMax} v ${TICK_SIZE}`}
         fill="none"
-        stroke={colorSky}
+        stroke={gridColor}
       />
 
       {tickDetails.map(({value, xOffset, firstLabel}, index) => {
@@ -129,13 +138,15 @@ function Axis({
 
         return (
           <g key={index} transform={`translate(${xOffset}, 0)`}>
-            <line y2={TICK_SIZE} stroke={colorSky} />
-            <line
-              y1="0"
-              y2={-drawableHeight}
-              stroke={colorSky}
-              strokeDasharray="3 2"
-            />
+            {showTicks ? <line y2={TICK_SIZE} stroke={gridColor} /> : null}
+            {showGridLines ? (
+              <line
+                y1="0"
+                y2={-drawableHeight}
+                stroke={gridColor}
+                strokeDasharray="3 2"
+              />
+            ) : null}
             <foreignObject
               width={textWidth}
               height={textHeight}
@@ -147,6 +158,7 @@ function Axis({
                 style={{
                   fontSize,
                   textAlign,
+                  color: labelColor,
                 }}
               >
                 {value}

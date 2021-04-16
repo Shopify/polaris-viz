@@ -37,7 +37,10 @@ describe('<LineChart />', () => {
 
   it('renders a <Chart />', () => {
     const lineChart = mount(
-      <LineChart series={[primarySeries]} xAxisLabels={['Jan 1']} />,
+      <LineChart
+        series={[primarySeries]}
+        xAxisOptions={{xAxisLabels: ['Jan 1']}}
+      />,
     );
 
     expect(lineChart).toContainReactComponent(Chart);
@@ -49,7 +52,7 @@ describe('<LineChart />', () => {
       const lineChart = mount(
         <LineChart
           series={[primarySeries]}
-          xAxisLabels={['Jan 1']}
+          xAxisOptions={{xAxisLabels: ['Jan 1']}}
           skipLinkText={mockContent}
         />,
       );
@@ -61,7 +64,10 @@ describe('<LineChart />', () => {
 
     it('does not render a SkipLink if skipLinkText is undefined', () => {
       const lineChart = mount(
-        <LineChart xAxisLabels={['Jan 1']} series={[primarySeries]} />,
+        <LineChart
+          xAxisOptions={{xAxisLabels: ['Jan 1']}}
+          series={[primarySeries]}
+        />,
       );
 
       expect(lineChart).not.toContainReactComponent(SkipLink);

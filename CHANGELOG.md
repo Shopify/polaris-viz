@@ -8,6 +8,10 @@
 - `emptyStateText` and empty state handling to `<BarChart />`
 - `isAnimated` prop to `LineChart`, `BarChart` and `MultiSeriesBarChart`
 
+### Changed
+
+- The line chart API now allows for custom configuration of chart element colors and widths. Some top-level props are now nested within more specific object props to configure the appearance of the chart.
+
 ## [0.8.0] — 2021-04-14
 
 ### Added

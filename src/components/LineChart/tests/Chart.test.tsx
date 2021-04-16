@@ -47,27 +47,50 @@ const primarySeries: Required<Series> = {
   ],
 };
 
+const xAxisOptions = {
+  xAxisLabels: ['Jan 1'],
+  labelFormatter: jest.fn((value) => value),
+  hideXAxisLabels: false,
+  showTicks: true,
+  labelColor: 'red',
+};
+
+const lineOptions = {hasSpline: false, width: 2};
+
+const yAxisOptions = {
+  labelFormatter: jest.fn((value) => value),
+  labelColor: 'red',
+};
+
+const gridOptions = {
+  showVerticalLines: true,
+  showHorizontalLines: true,
+  color: 'orange',
+};
+
+const crossHairOptions = {width: 10, color: 'red', opacity: 1};
+
 const mockProps = {
   series: [primarySeries],
-  xAxisLabels: ['Jan 1'],
   dimensions: new DOMRect(),
-  formatXAxisLabel: jest.fn((value) => value),
-  formatYAxisLabel: jest.fn((value) => value),
+  lineOptions,
+  xAxisOptions,
+  yAxisOptions,
+  gridOptions,
+  crossHairOptions,
   renderTooltipContent: jest.fn(() => <p>Mock Tooltip</p>),
-  hideXAxisLabels: false,
-  hasSpline: false,
   isAnimated: false,
 };
 
 const mockEmptyStateProps = {
   series: [],
-  xAxisLabels: [],
   dimensions: new DOMRect(),
-  formatXAxisLabel: jest.fn((value) => value),
-  formatYAxisLabel: jest.fn((value) => value),
+  lineOptions,
+  xAxisOptions,
+  yAxisOptions,
+  gridOptions,
+  crossHairOptions,
   renderTooltipContent: jest.fn(() => <p>Mock Tooltip</p>),
-  hideXAxisLabels: false,
-  hasSpline: false,
   isAnimated: false,
 };
 
@@ -119,7 +142,10 @@ describe('<Chart />', () => {
       const chart = mount(
         <Chart
           {...mockProps}
-          formatXAxisLabel={(value) => `Formatted: ${value}`}
+          xAxisOptions={{
+            ...mockProps.xAxisOptions,
+            labelFormatter: (value) => `Formatted: ${value}`,
+          }}
         />,
       );
 
@@ -217,8 +243,8 @@ describe('<Chart />', () => {
 
     expect(chart).toContainReactComponent(VisuallyHiddenRows, {
       series: mockProps.series,
-      xAxisLabels: mockProps.xAxisLabels,
-      formatYAxisLabel: mockProps.formatYAxisLabel,
+      xAxisLabels: mockProps.xAxisOptions.xAxisLabels,
+      formatYAxisLabel: mockProps.yAxisOptions.labelFormatter,
     });
   });
 

@@ -32,9 +32,9 @@ const mockProps = {
   },
   xScale: scaleLinear(),
   yScale: scaleLinear(),
-  hasSpline: false,
   isAnimated: false,
   index: 0,
+  lineOptions: {hasSpline: false, width: 10},
 };
 
 describe('<Line />', () => {
@@ -108,11 +108,32 @@ describe('<Line />', () => {
 
       mount(
         <svg>
-          <Line {...mockProps} hasSpline />
+          <Line
+            {...mockProps}
+            lineOptions={{...mockProps.lineOptions, hasSpline: true}}
+          />
         </svg>,
       );
 
       expect(curveSpy).toHaveBeenCalled();
+    });
+  });
+
+  it('uses the width prop', () => {
+    const actual = mount(
+      <svg>
+        <Line
+          {...mockProps}
+          series={{
+            ...mockProps.series,
+            lineStyle: 'dashed',
+          }}
+        />
+      </svg>,
+    );
+
+    expect(actual).toContainReactComponent('path', {
+      strokeWidth: '10px',
     });
   });
 });

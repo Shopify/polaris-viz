@@ -13,13 +13,16 @@ interface Props {
   series: Required<Series>;
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
-  hasSpline: boolean;
   isAnimated: boolean;
   index: number;
+  lineOptions: {
+    hasSpline: boolean;
+    width: number;
+  };
 }
 
 export const Line = React.memo(function Shape({
-  hasSpline,
+  lineOptions,
   series,
   xScale,
   yScale,
@@ -30,7 +33,7 @@ export const Line = React.memo(function Shape({
     .x((_, index) => xScale(index))
     .y(({rawValue}) => yScale(rawValue));
 
-  if (hasSpline) {
+  if (lineOptions.hasSpline) {
     lineGenerator.curve(curveMonotoneX);
   }
 
@@ -52,7 +55,7 @@ export const Line = React.memo(function Shape({
         animationDuration: `${animationDuration}s`,
       }}
       fill="none"
-      strokeWidth="2px"
+      strokeWidth={`${lineOptions.width}px`}
       paintOrder="stroke"
       stroke={getColorValue(series.color)}
       strokeLinejoin="round"
