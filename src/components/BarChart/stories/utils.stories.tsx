@@ -12,10 +12,6 @@ export const colorOptions: string[] = Object.keys(vizColors).concat(
   polarisTokensColors,
 );
 
-export const getDataPoint = (limit = 1000) => {
-  return Math.random() * limit;
-};
-
 export function formatXAxisLabel(value: string) {
   return new Date(value).toLocaleDateString('en-CA', {
     day: 'numeric',
@@ -61,7 +57,11 @@ export function renderTooltipContent({
   );
 }
 
-export function chartData = [
+export function getDataPoint(limit = 1000) {
+  return Math.random() * limit;
+}
+
+export const chartData = [
   {rawValue: 324.19, label: '2020-01-01T12:00:00Z'},
   {rawValue: 613.29, label: '2020-01-02T12:00:00Z'},
   {rawValue: 422.79, label: '2020-01-03T12:00:00Z'},

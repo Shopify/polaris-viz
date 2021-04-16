@@ -6,11 +6,12 @@ import {Color} from '../../../types';
 
 import {
   colorOptions,
-  getDataPoint,
   formatXAxisLabel,
   formatYAxisLabel,
   renderTooltipContent,
+  chartData,
 } from './utils.stories';
+
 import styles from './BarChart.stories.scss';
 
 const primaryColor = colorOptions[0] as Color;
@@ -56,17 +57,28 @@ const Template: Story<BarChartProps> = (args: BarChartProps) => {
 
 export const Default = Template.bind({});
 Default.args = {
-  data: [
-    {rawValue: 324.19, label: '2020-01-01T12:00:00Z'},
-    {rawValue: 613.29, label: '2020-01-02T12:00:00Z'},
-    {rawValue: 422.79, label: '2020-01-03T12:00:00Z'},
-    {rawValue: 25.6, label: '2020-01-04T12:00:00Z'},
-    {rawValue: 277.69, label: '2020-01-05T12:00:00Z'},
-    {rawValue: 421.19, label: '2020-01-06T12:00:00Z'},
-  ],
+  data: chartData,
   color: primaryColor,
   highlightColor: secondaryColor,
   formatXAxisLabel,
   formatYAxisLabel,
   renderTooltipContent,
+};
+
+export const Annotations = Template.bind({});
+Annotations.args = {
+  data: chartData,
+  color: primaryColor,
+  highlightColor: secondaryColor,
+  formatXAxisLabel,
+  formatYAxisLabel,
+  renderTooltipContent,
+  annotations: [
+    {
+      type: 'line',
+      color: 'colorBlack',
+      width: 5,
+      x: 0,
+    },
+  ],
 };

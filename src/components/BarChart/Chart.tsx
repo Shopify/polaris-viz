@@ -212,13 +212,24 @@ export function Chart({
 
         <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
           {annotations.map((annotation, index) => {
-            console.log(annotation);
+            const {type, color, width, x, y} = annotation;
+            // console.log(annotation);
             if (annotation == null) {
               return null;
             }
+            // const xPosition = (index.toString());
+            // console.log(typeof xPosition, xPosition);
+            const xPosition = xScale(x.toString());
+
             return (
               <g role="listitem" key={index}>
-                <line />
+                <line
+                  x1={xPosition + barWidth / 2}
+                  x2={xPosition + barWidth / 2}
+                  y1={drawableHeight}
+                  y2={0}
+                  className={styles.Line}
+                />
               </g>
             );
           })}
