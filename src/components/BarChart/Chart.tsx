@@ -2,7 +2,12 @@ import React, {useState, useMemo} from 'react';
 import {Color, Data} from 'types';
 
 import {LINE_HEIGHT} from '../../constants';
-import {eventPoint, getTextWidth, getBarXAxisDetails} from '../../utilities';
+import {
+  eventPoint,
+  getTextWidth,
+  getBarXAxisDetails,
+  getColorValue,
+} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {BarChartXAxis} from '../BarChartXAxis';
 import {TooltipContainer} from '../TooltipContainer';
@@ -224,6 +229,8 @@ export function Chart({
             return (
               <g role="listitem" key={index}>
                 <line
+                  stroke={getColorValue(color)}
+                  strokeWidth={width}
                   x1={xPosition + barWidth / 2}
                   x2={xPosition + barWidth / 2}
                   y1={drawableHeight}
