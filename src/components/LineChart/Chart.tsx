@@ -147,8 +147,8 @@ export function Chart({
       ? null
       : tooltipDetails.index;
 
-  const immediate =
-    !isAnimated || prefersReducedMotion || longestSeriesLength > 999;
+  const animatePoints =
+    isAnimated && !prefersReducedMotion && longestSeriesLength < 1000;
 
   const tooltipMarkup = useMemo(() => {
     if (tooltipDetails == null) {
@@ -188,7 +188,7 @@ export function Chart({
     lineGenerator,
     activeIndex,
     xScale,
-    isAnimated: !immediate,
+    isAnimated: animatePoints,
   });
 
   if (xScale == null || drawableWidth == null || axisMargin == null) {
@@ -289,12 +289,12 @@ export function Chart({
           <g transform={`translate(${axisMargin},${Margin.Top})`}>
             <Crosshair
               x={
-                immediate
-                  ? xScale(activeIndex === null ? 0 : activeIndex) -
-                    CROSSHAIR_WIDTH / 2
-                  : animatedXPosition.interpolate((xPos) =>
+                animatePoints
+                  ? animatedXPosition.interpolate((xPos) =>
                       xPos === null ? null : xPos - CROSSHAIR_WIDTH / 2,
                     )
+                  : xScale(activeIndex === null ? 0 : activeIndex) -
+                    CROSSHAIR_WIDTH / 2
               }
               height={drawableHeight}
               opacity={1}
@@ -319,17 +319,17 @@ export function Chart({
               <React.Fragment key={`${name}-${index}`}>
                 <Line
                   series={singleSeries}
-                  isAnimated={!immediate}
+                  isAnimated={isAnimated && !prefersReducedMotion}
                   index={index}
                   lineGenerator={lineGenerator}
                 />
 
-                {!immediate &&
+                {animatePoints &&
                   animatedYPositions !== null &&
                   tooltipDetails !== null &&
-                  Number(activeIndex) <= singleSeries.data.length - 1 && (
+                  Number(activeIndex) <= data.length - 1 && (
                     <Point
-                      color={singleSeries.color}
+                      color={color}
                       cx={animatedXPosition.interpolate((xPos) => {
                         return xPos === null ? null : xPos;
                       })}
@@ -337,7 +337,7 @@ export function Chart({
                       active={tooltipDetails !== null}
                       index={index}
                       tabIndex={-1}
-                      isAnimated={!immediate}
+                      isAnimated={animatePoints}
                       ariaHidden
                     />
                   )}
@@ -356,7 +356,7 @@ export function Chart({
                       ariaLabelledby={tooltipId.current}
                       isAnimated={false}
                       ariaHidden={false}
-                      visuallyHidden={!immediate || tooltipDetails === null}
+                      visuallyHidden={animatePoints || tooltipDetails === null}
                     />
                   );
                 })}
@@ -367,7 +367,7 @@ export function Chart({
                     yScale={yScale}
                     xScale={xScale}
                     hasSpline={hasSpline}
-                    isAnimated={!immediate}
+                    isAnimated={isAnimated && !prefersReducedMotion}
                     index={index}
                   />
                 ) : null}
