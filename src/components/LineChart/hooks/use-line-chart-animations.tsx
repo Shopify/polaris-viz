@@ -1,7 +1,7 @@
 import {useCallback, useMemo, useRef} from 'react';
 import {ScaleLinear} from 'd3-scale';
 import {Line} from 'd3-shape';
-import {useSpring, useSprings, SpringConfig} from 'react-spring';
+import {useSprings, SpringConfig} from 'react-spring';
 
 import {SPRING_CONFIG} from '../constants';
 import {Series} from '../types';
@@ -11,7 +11,6 @@ export function useLineChartAnimations({
   lineGenerator,
   series,
   isAnimated,
-  xScale,
 }: {
   activeIndex: number | null;
   lineGenerator: Line<{rawValue: number}>;
@@ -22,15 +21,6 @@ export function useLineChartAnimations({
   const previousIndex = useRef<number | null>(activeIndex);
   const currentIndex = activeIndex == null ? 0 : activeIndex;
   const immediate = !isAnimated || previousIndex.current === null;
-
-  const {animatedXPosition} = useSpring<{
-    config: SpringConfig;
-    animatedXPosition: null | number;
-  }>({
-    config: SPRING_CONFIG,
-    animatedXPosition: xScale === null ? null : xScale(currentIndex),
-    immediate,
-  });
 
   const createOffScreenPath = useCallback(
     (data) => {
@@ -88,7 +78,7 @@ export function useLineChartAnimations({
     });
   }, [immediate, getPercentage, series, subPaths, totalPaths]);
 
-  const getYPositionFromPercentage = useCallback(
+  const getCoordinatesFromPercentage = useCallback(
     (percent: number, path: any, totalLength: number) => {
       if (path === null || totalLength == null) {
         return {x: 0, y: 0};
@@ -96,9 +86,7 @@ export function useLineChartAnimations({
 
       const length = (percent * totalLength) / 100;
 
-      const coordinates = path.getPointAtLength(length);
-
-      return coordinates.y;
+      return path.getPointAtLength(length);
     },
     [],
   );
@@ -123,17 +111,16 @@ export function useLineChartAnimations({
   previousIndex.current = activeIndex;
 
   return {
-    animatedYPositions:
+    animatedCoordinates:
       immediate || totalPaths === null
         ? null
         : animatedPercentages.map(({percentage}, index) => {
             return percentage.interpolate((percent: number) => {
               const totalLength = totalPaths[index].length;
               const path = totalPaths[index].element;
-              return getYPositionFromPercentage(percent, path, totalLength);
+              return getCoordinatesFromPercentage(percent, path, totalLength);
             });
           }),
-    animatedXPosition,
     animatedPercentages,
   };
 }

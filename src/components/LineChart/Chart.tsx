@@ -2,11 +2,7 @@ import React, {useState, useMemo, useRef, useCallback} from 'react';
 import throttle from 'lodash.throttle';
 import {line, curveMonotoneX} from 'd3-shape';
 
-import {
-  useLinearXAxisDetails,
-  useLinearXScale,
-  usePrefersReducedMotion,
-} from '../../hooks';
+import {useLinearXAxisDetails, useLinearXScale} from '../../hooks';
 import {
   SMALL_SCREEN,
   SMALL_FONT_SIZE,
@@ -58,7 +54,6 @@ export function Chart({
   emptyStateText,
   isAnimated,
 }: Props) {
-  const {prefersReducedMotion} = usePrefersReducedMotion();
   const [tooltipDetails, setTooltipDetails] = useState<ActiveTooltip | null>(
     null,
   );
@@ -117,39 +112,6 @@ export function Chart({
     [axisMargin],
   );
 
-  const drawableWidth =
-    axisMargin == null ? null : dimensions.width - Margin.Right - axisMargin;
-
-  const longestSeriesLength = useMemo(
-    () =>
-      series.reduce<number>(
-        (max, currentSeries) => Math.max(max, currentSeries.data.length - 1),
-        0,
-      ),
-    [series],
-  );
-
-  const {xScale} = useLinearXScale({drawableWidth, longestSeriesLength});
-
-  const lineGenerator = useMemo(() => {
-    const generator = line<{rawValue: number}>()
-      .x((_, index) => (xScale === null ? 0 : xScale(index)))
-      .y(({rawValue}) => yScale(rawValue));
-
-    if (hasSpline) {
-      generator.curve(curveMonotoneX);
-    }
-    return generator;
-  }, [hasSpline, xScale, yScale]);
-
-  const activeIndex =
-    tooltipDetails === null || tooltipDetails.index == null
-      ? null
-      : tooltipDetails.index;
-
-  const animatePoints =
-    isAnimated && !prefersReducedMotion && longestSeriesLength < 1000;
-
   const tooltipMarkup = useMemo(() => {
     if (tooltipDetails == null) {
       return null;
@@ -183,7 +145,47 @@ export function Chart({
 
   const reversedSeries = useMemo(() => series.slice().reverse(), [series]);
 
-  const {animatedXPosition, animatedYPositions} = useLineChartAnimations({
+  const drawableWidth =
+    axisMargin == null ? null : dimensions.width - Margin.Right - axisMargin;
+
+  const longestSeriesIndex = useMemo(
+    () =>
+      reversedSeries.reduce((maxIndex, currentSeries, currentIndex) => {
+        return reversedSeries[maxIndex].data.length < currentSeries.data.length
+          ? currentIndex
+          : maxIndex;
+      }, 0),
+    [reversedSeries],
+  );
+
+  const longestSeriesLength = reversedSeries[longestSeriesIndex]
+    ? reversedSeries[longestSeriesIndex].data.length - 1
+    : 0;
+
+  const {xScale} = useLinearXScale({
+    drawableWidth,
+    longestSeriesLength,
+  });
+
+  const lineGenerator = useMemo(() => {
+    const generator = line<{rawValue: number}>()
+      .x((_, index) => (xScale === null ? 0 : xScale(index)))
+      .y(({rawValue}) => yScale(rawValue));
+
+    if (hasSpline) {
+      generator.curve(curveMonotoneX);
+    }
+    return generator;
+  }, [hasSpline, xScale, yScale]);
+
+  const activeIndex =
+    tooltipDetails === null || tooltipDetails.index == null
+      ? null
+      : tooltipDetails.index;
+
+  const animatePoints = isAnimated && longestSeriesLength < 1000;
+
+  const {animatedCoordinates} = useLineChartAnimations({
     series: reversedSeries,
     lineGenerator,
     activeIndex,
@@ -235,7 +237,10 @@ export function Chart({
     }
 
     const closestIndex = Math.round(xScale.invert(svgX - axisMargin));
-    const activeIndex = Math.min(longestSeriesLength, closestIndex);
+    const activeIndex = Math.min(
+      reversedSeries[longestSeriesIndex].data.length - 1,
+      closestIndex,
+    );
 
     setTooltipDetails({
       x: svgX,
@@ -289,9 +294,11 @@ export function Chart({
           <g transform={`translate(${axisMargin},${Margin.Top})`}>
             <Crosshair
               x={
-                animatePoints
-                  ? animatedXPosition.interpolate((xPos) =>
-                      xPos === null ? null : xPos - CROSSHAIR_WIDTH / 2,
+                animatePoints &&
+                animatedCoordinates !== null &&
+                animatedCoordinates[longestSeriesIndex] !== null
+                  ? animatedCoordinates[longestSeriesIndex].interpolate(
+                      (coord: SVGPoint) => coord.x - CROSSHAIR_WIDTH / 2,
                     )
                   : xScale(activeIndex === null ? 0 : activeIndex) -
                     CROSSHAIR_WIDTH / 2
@@ -319,28 +326,38 @@ export function Chart({
               <React.Fragment key={`${name}-${index}`}>
                 <Line
                   series={singleSeries}
-                  isAnimated={isAnimated && !prefersReducedMotion}
+                  isAnimated={isAnimated}
                   index={index}
                   lineGenerator={lineGenerator}
                 />
-
-                {animatePoints &&
-                  animatedYPositions !== null &&
-                  tooltipDetails !== null &&
-                  Number(activeIndex) <= data.length - 1 && (
-                    <Point
-                      color={color}
-                      cx={animatedXPosition.interpolate((xPos) => {
-                        return xPos === null ? null : xPos;
-                      })}
-                      cy={animatedYPositions[index]}
-                      active={tooltipDetails !== null}
-                      index={index}
-                      tabIndex={-1}
-                      isAnimated={animatePoints}
-                      ariaHidden
-                    />
-                  )}
+                <Point
+                  color={color}
+                  cx={
+                    animatedCoordinates === null
+                      ? 0
+                      : animatedCoordinates[longestSeriesIndex].interpolate(
+                          (coord: SVGPoint) => coord.x,
+                        )
+                  }
+                  cy={
+                    animatedCoordinates === null
+                      ? 0
+                      : animatedCoordinates[index].interpolate(
+                          (coord: SVGPoint) => coord.y,
+                        )
+                  }
+                  active={tooltipDetails !== null}
+                  index={index}
+                  tabIndex={-1}
+                  isAnimated={animatePoints}
+                  visuallyHidden={
+                    !animatePoints ||
+                    animatedCoordinates === null ||
+                    tooltipDetails === null ||
+                    Number(activeIndex) >= data.length
+                  }
+                  ariaHidden
+                />
 
                 {data.map(({rawValue}, dataIndex) => {
                   return (
@@ -367,7 +384,7 @@ export function Chart({
                     yScale={yScale}
                     xScale={xScale}
                     hasSpline={hasSpline}
-                    isAnimated={isAnimated && !prefersReducedMotion}
+                    isAnimated={isAnimated}
                     index={index}
                   />
                 ) : null}

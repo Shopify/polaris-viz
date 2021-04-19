@@ -201,7 +201,7 @@ describe('<Chart />', () => {
     const series = [primarySeries, {...primarySeries, name: 'A second series'}];
     const chart = mount(<Chart {...mockProps} series={series} />);
 
-    expect(chart).toContainReactComponentTimes(Point, 8);
+    expect(chart).toContainReactComponentTimes(Point, 10);
   });
 
   it('passes props to <Point />', () => {
