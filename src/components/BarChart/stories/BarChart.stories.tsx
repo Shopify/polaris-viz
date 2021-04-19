@@ -82,7 +82,7 @@ Annotations.args = {
       width: 5,
       dataIndex: 1,
       xOffset: 0.5,
-      ariaLabel: '...',
+      ariaLabel: 'Median: 1.5',
     },
   ],
 };
