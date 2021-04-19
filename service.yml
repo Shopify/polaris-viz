@@ -1,7 +1,7 @@
 classification: library
 slack_channels:
-- polaris-data-viz
-- polaris
+  - polaris-data-viz
+  - polaris
 security:
   data_management:
     contains_pii: false
