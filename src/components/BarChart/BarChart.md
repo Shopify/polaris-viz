@@ -91,6 +91,7 @@ interface BarChartProps {
   highlightColor?: Color;
   timeSeries?: boolean;
   skipLinkText?: string;
+  emptyStateText?: string;
 }
 ```
 
@@ -105,6 +106,7 @@ In order for the user to have visual feedback that a bar has been selected, it i
 | `{rawValue: number, label: string}[]` |
 
 The array of objects that the chart uses to draw the chart.
+If `data` may be an empty array, provide <a href="#emptyStateText">`emptyStateText`</a> to communicate the empty state to screenreaders.
 
 ### Optional props
 
@@ -179,3 +181,11 @@ This indicates to the chart if the data provide is time series data. If `true`, 
 | `boolean` | `false` |
 
 Rounds the top corners of each bar, in the case of positive numbers. Rounds the bottom corners for negatives.
+
+#### emptyStateText
+
+| type     | default     |
+| -------- | ----------- |
+| `string` | `undefined` |
+
+Used to indicate to screenreaders that a chart with no data has been rendered, in the case that an empty array is passed as the data. It is strongly recommended that this is included if the data prop could be an empty array.

@@ -5,6 +5,7 @@
 ### Added
 
 - `dotted` lineStyle to `LineChart`
+- Added `emptyStateText` and empty state handling to `<BarChart />`
 
 ## [0.8.0] — 2021-04-14
 
