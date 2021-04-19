@@ -5,6 +5,8 @@ import {ScaleLinear} from 'd3-scale';
 import {getColorValue} from '../../../../utilities';
 import {Series} from '../../types';
 
+import {StrokeDasharray} from './constants';
+
 interface Props {
   series: Required<Series>;
   xScale: ScaleLinear<number, number>;
@@ -41,7 +43,7 @@ export const Line = React.memo(function Shape({
       stroke={getColorValue(series.color)}
       strokeLinejoin="round"
       strokeLinecap="round"
-      strokeDasharray={series.lineStyle === 'dashed' ? '2 4' : 'unset'}
+      strokeDasharray={StrokeDasharray[series.lineStyle]}
     />
   );
 });

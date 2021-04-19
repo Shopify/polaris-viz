@@ -175,9 +175,9 @@ This accepts any [Polaris Viz color](/documentation/Polaris-Viz-colors.md) value
 
 #### lineStyle
 
-| type                  | default   |
-| --------------------- | --------- |
-| `'solid' \| 'dashed'` | `'solid'` |
+| type                              | default   |
+| --------------------------------- | --------- |
+| `'solid' \| 'dashed' \| 'dotted'` | `'solid'` |
 
 The lineStyle type determines if the drawn line for the series is a solid or dashed line.
 
