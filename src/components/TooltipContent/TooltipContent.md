@@ -33,10 +33,8 @@ const lineChartTooltipContentData: LineChartTooltipContentProps['data'] = [
       label: 'January 1st, 2021',
       value: '10',
     },
-    style: {
-      color: 'primary',
-      lineStyle: 'solid',
-    },
+    color: 'primary',
+    lineStyle: 'solid',
   },
   {
     name: 'Hot Dogs',
@@ -44,10 +42,8 @@ const lineChartTooltipContentData: LineChartTooltipContentProps['data'] = [
       label: 'December 1st, 2020',
       value: '12',
     },
-    style: {
-      color: 'pastComparison',
-      lineStyle: 'dashed',
-    },
+    color: 'pastComparison',
+    lineStyle: 'dashed',
   },
 ];
 
@@ -138,10 +134,8 @@ interface LineChartTooltipContentProps {
       label: string;
       value: string;
     };
-    style?: {
-      color?: Color;
-      lineStyle?: LineStyle;
-    };
+    color?: Color;
+    lineStyle?: LineStyle;
   }[];
 }
 ```
@@ -168,13 +162,21 @@ The values to display for the given data point.
 
 #### Optional props
 
-##### style
+##### color
 
-| type                                     | default     |
-| ---------------------------------------- | ----------- |
-| `{color?: Color; lineStyle?: LineStyle}` | `undefined` |
+| type    | default       |
+| ------- | ------------- |
+| `Color` | `colorPurple` |
 
-This sets the style for the line drawn next to the point label. `color` accepts any [Polaris Viz accepted color](/documentation/Polaris-Viz-colors.md) and defaults to `colorPurple`. `lineStyle` accepts `solid` and `dashed`, and defaults to `solid`.
+Accepts any [Polaris Viz accepted color](/documentation/Polaris-Viz-colors.md) and defaults to `colorPurple`.
+
+##### lineStyle
+
+| type        | default |
+| ----------- | ------- |
+| `LineStyle` | `solid` |
+
+This sets the style for the line drawn next to the point label. Accepts `solid` and `dashed`, and defaults to `solid`.
 
 ### BarChartTooltipContent
 
