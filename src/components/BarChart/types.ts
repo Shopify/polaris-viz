@@ -14,13 +14,15 @@ export interface RenderTooltipContentData {
 
 // starting out with one annotation type for now
 // with the abiliity to expand to others
-enum AnnotationType {
+export enum AnnotationType {
   Line = 'line',
 }
 export interface Annotation {
   type: AnnotationType;
   color: Color;
   width: number;
-  x?: number;
-  y?: number;
+  ariaLabel?: string;
+  dataIndex?: number;
+  // offset ranging from 0 to 1.0
+  xOffset?: number;
 }

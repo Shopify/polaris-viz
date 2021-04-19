@@ -14,7 +14,7 @@ import {TooltipContainer} from '../TooltipContainer';
 import {Bar} from '../Bar';
 import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
-import {RenderTooltipContentData, Annotation} from './types';
+import {RenderTooltipContentData, Annotation, AnnotationType} from './types';
 import {useYScale, useXScale} from './hooks';
 import {
   MARGIN,
@@ -215,27 +215,46 @@ export function Chart({
           })}
         </g>
 
-        <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
+        <g
+          transform={`translate(${axisMargin},${MARGIN.Top})`}
+          aria-hidden="true"
+        >
           {annotations.map((annotation, index) => {
-            const {type, color, width, x, y} = annotation;
-            // console.log(annotation);
-            if (annotation == null) {
+            const {
+              type,
+              color,
+              width = 1,
+              dataIndex,
+              xOffset = 0,
+              ariaLabel,
+            } = annotation;
+
+            if (
+              annotation == null ||
+              dataIndex == null ||
+              type !== AnnotationType.Line
+            ) {
               return null;
             }
-            // const xPosition = (index.toString());
-            // console.log(typeof xPosition, xPosition);
-            const xPosition = xScale(x.toString());
+
+            const barWidth = xScale.bandwidth();
+            const padding = barWidth * barMargin;
+            const offset = (barWidth + padding) * xOffset;
+
+            const xPosition = xScale(dataIndex.toString());
+            const xValue = xPosition + barWidth / 2 + offset;
 
             return (
               <g role="listitem" key={index}>
                 <line
                   stroke={getColorValue(color)}
                   strokeWidth={width}
-                  x1={xPosition + barWidth / 2}
-                  x2={xPosition + barWidth / 2}
+                  x1={xValue}
+                  x2={xValue}
                   y1={drawableHeight}
                   y2={0}
                   className={styles.Line}
+                  aria-label={ariaLabel}
                 />
               </g>
             );

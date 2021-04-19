@@ -12,6 +12,10 @@ export const colorOptions: string[] = Object.keys(vizColors).concat(
   polarisTokensColors,
 );
 
+export function formatNoOperation(value: string | number) {
+  return value;
+}
+
 export function formatXAxisLabel(value: string) {
   return new Date(value).toLocaleDateString('en-CA', {
     day: 'numeric',
@@ -68,4 +72,27 @@ export const chartData = [
   {rawValue: 25.6, label: '2020-01-04T12:00:00Z'},
   {rawValue: 277.69, label: '2020-01-05T12:00:00Z'},
   {rawValue: 421.19, label: '2020-01-06T12:00:00Z'},
+];
+
+export const histogramChartData = [
+  {rawValue: 10, label: '0'},
+  {rawValue: 45, label: '1'},
+  {rawValue: 16, label: '2'},
+  {rawValue: 9, label: '3'},
+  {rawValue: 32, label: '4'},
+  {rawValue: 85, label: '5'},
+  {rawValue: 74, label: '6'},
+  // {rawValue: 100, label: '7'},
+  // {rawValue: 58, label: '8'},
+  // {rawValue: 40, label: '9'},
+  // {rawValue: 58, label: '10'},
+  // {rawValue: 64, label: '11'},
+  // {rawValue: 9, label: '12'},
+  // {rawValue: 26, label: '13'},
+  // {rawValue: 34, label: '14'},
+  // {rawValue: 50, label: '15'},
+  // {rawValue: 56, label: '16'},
+  // {rawValue: 85, label: '17'},
+  // {rawValue: 2, label: '18'},
+  // {rawValue: 52, label: '19'},
 ];

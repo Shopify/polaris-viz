@@ -8,8 +8,10 @@ import {
   colorOptions,
   formatXAxisLabel,
   formatYAxisLabel,
+  formatNoOperation,
   renderTooltipContent,
   chartData,
+  histogramChartData,
 } from './utils.stories';
 
 import styles from './BarChart.stories.scss';
@@ -67,18 +69,20 @@ Default.args = {
 
 export const Annotations = Template.bind({});
 Annotations.args = {
-  data: chartData,
+  data: histogramChartData,
   color: primaryColor,
   highlightColor: secondaryColor,
-  formatXAxisLabel,
-  formatYAxisLabel,
+  formatXAxisLabel: formatNoOperation,
+  formatYAxisLabel: formatNoOperation,
   renderTooltipContent,
   annotations: [
     {
       type: 'line',
-      color: 'colorBlack',
-      width: 5,
-      x: 0, // position
+      color: 'colorTealText',
+      width: 2,
+      dataIndex: 1,
+      xOffset: 0.5,
+      ariaLabel: '...',
     },
   ],
 };
