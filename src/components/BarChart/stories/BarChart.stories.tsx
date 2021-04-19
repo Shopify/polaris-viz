@@ -78,8 +78,8 @@ Annotations.args = {
   annotations: [
     {
       type: 'line',
-      color: 'colorTealText',
-      width: 2,
+      color: 'secondary',
+      width: 5,
       dataIndex: 1,
       xOffset: 0.5,
       ariaLabel: '...',
