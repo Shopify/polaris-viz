@@ -6,7 +6,6 @@ import {Color} from 'types';
 import {ScaleLinear} from 'd3-scale';
 
 import {getColorValue, uniqueId} from '../../../../utilities';
-import {usePrefersReducedMotion} from '../../../../hooks';
 
 import {usePrevious} from './hooks';
 
@@ -40,7 +39,6 @@ export function Areas({
   opacity,
   isAnimated,
 }: Props) {
-  const {prefersReducedMotion} = usePrefersReducedMotion();
   const prevstackedValues = usePrevious(stackedValues);
   const valuesHaveNotUpdated = isEqual(prevstackedValues, stackedValues);
 
@@ -50,7 +48,7 @@ export function Areas({
     from: {
       width: 0,
     },
-    immediate: prefersReducedMotion || !isAnimated || valuesHaveNotUpdated,
+    immediate: !isAnimated || valuesHaveNotUpdated,
     reset: true,
   });
 

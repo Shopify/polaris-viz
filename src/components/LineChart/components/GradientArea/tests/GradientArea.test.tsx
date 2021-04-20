@@ -32,6 +32,8 @@ describe('<GradientArea />', () => {
     xScale: scaleLinear(),
     yScale: scaleLinear(),
     hasSpline: false,
+    isAnimated: false,
+    index: 0,
   };
 
   it('renders a linear gradient', () => {

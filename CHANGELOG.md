@@ -6,6 +6,7 @@
 
 - `dotted` lineStyle to `LineChart`
 - Added `emptyStateText` and empty state handling to `<BarChart />`
+- `isAnimated` prop to `LineChart` for line onload animation
 
 ## [0.8.0] — 2021-04-14
 

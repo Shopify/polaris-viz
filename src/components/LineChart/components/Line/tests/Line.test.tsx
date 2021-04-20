@@ -33,6 +33,8 @@ const mockProps = {
   xScale: scaleLinear(),
   yScale: scaleLinear(),
   hasSpline: false,
+  isAnimated: false,
+  index: 0,
 };
 
 describe('<Line />', () => {

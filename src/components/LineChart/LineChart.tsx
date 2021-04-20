@@ -4,6 +4,7 @@ import {useDebouncedCallback} from 'use-debounce';
 import {getDefaultColor, uniqueId} from '../../utilities';
 import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 import {SkipLink} from '../SkipLink';
+import {usePrefersReducedMotion} from '../../hooks';
 
 import {Chart} from './Chart';
 import {Series, RenderTooltipContentData} from './types';
@@ -20,6 +21,7 @@ export interface LineChartProps {
   skipLinkText?: string;
   emptyStateText?: string;
   hasSpline?: boolean;
+  isAnimated?: boolean;
 }
 
 export function LineChart({
@@ -32,9 +34,11 @@ export function LineChart({
   skipLinkText,
   emptyStateText,
   hasSpline = false,
+  isAnimated = false,
 }: LineChartProps) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const {prefersReducedMotion} = usePrefersReducedMotion();
 
   const skipLinkAnchorId = useRef(uniqueId('lineChart'));
 
@@ -95,6 +99,7 @@ export function LineChart({
             dimensions={chartDimensions}
             hideXAxisLabels={hideXAxisLabels}
             hasSpline={hasSpline}
+            isAnimated={isAnimated && !prefersReducedMotion}
             renderTooltipContent={
               renderTooltipContent != null
                 ? renderTooltipContent
