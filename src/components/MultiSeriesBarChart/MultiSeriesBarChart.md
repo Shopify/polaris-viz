@@ -100,10 +100,10 @@ const renderTooltipContent: MultiSeriesBarChartProps['renderTooltipContent'] = (
 
 return (
   <MultiSeriesBarChart
-    formatYAxisLabel={formatYAxisLabel}
-    labels={labels}
+    yAxisOptions={{labelFormatter: formatYAxisLabel}}
+    xAxisOptions={{labels}}
+    barOptions={{isStacked}}
     series={series}
-    isStacked={isStacked}
     renderTooltipContent={renderTooltipContent}
     skipLinkText="Skip chart content"
   />
@@ -112,18 +112,30 @@ return (
 
 ## Usage
 
-The mult-series bar chart interface looks like this:
+The multi-series bar chart interface looks like this:
 
 ```typescript
 interface MultiSeriesBarChartProps {
   series: Series[];
-  labels: string[];
-  timeSeries?: boolean;
-  isStacked?: boolean;
-  formatXAxisLabel?(value: string, index?: number, data?: string[]): string;
-  formatYAxisLabel?(value: number): string;
   renderTooltipContent?: (data: RenderTooltipContentData): React.ReactNode;
   skipLinkText?: string;
+  barOptions?: {
+    isStacked?: boolean;
+    hasRoundedCorners?: boolean;
+  };
+  gridOptions?: {
+    showHorizontalLines?: boolean;
+    color?: string;
+  };
+  xAxisOptions: {
+    labelFormatter?(value: string, index?: number, data?: string[]): string;
+    showTicks?: boolean;
+    labels: string[];
+    labelColor: string;
+  };
+  yAxisOptions: {
+    labelFormatter?(value: number): string;
+  };
 }
 ```
 
@@ -208,7 +220,7 @@ The distinction between the `RenderTooltipContentData` and series `Data` types i
 
 The prop to determine the chart's drawn area. Each `Series` object corresponds to a group drawn on the chart, and is explained in greater detail [above](#the-series-type).
 
-#### labels
+#### xAxisOptions: labels
 
 | type       |
 | ---------- |
@@ -218,49 +230,21 @@ The labels for the x-axis of the chart. This array should be equal in length to 
 
 ### Optional props
 
-#### accessibilityLabel
-
-| type     | default      |
-| -------- | ------------ |
-| `string` | empty string |
-
-Visually hidden text for screen readers.
-
-Determines the height of the chart.
-
-#### formatXAxisLabel
-
-| type                                                        | default                       |
-| ----------------------------------------------------------- | ----------------------------- |
-| `(value: string, index?: number, data?: string[]): string;` | `(value) => value.toString()` |
-
-This accepts a function that is called to format the labels when the chart draws its X axis.
-
-It's reccomended that you use a legend whenever displaying multiseries data. To display one, use the <a href="../Legend/Legend.md">`<Legend />` component</a>.
-
-#### formatYAxisLabel
-
-| type                       | default                       |
-| -------------------------- | ----------------------------- |
-| `(value: number): string;` | `(value) => value.toString()` |
-
-This utility function is called for every y axis value when the chart is drawn.
-
-#### timeSeries
+#### isAnimated
 
 | type      | default |
 | --------- | ------- |
 | `boolean` | `false` |
 
-This indicates to the chart if the data provide is time series data. If `true`, the x-axis will display fewer labels as needed according to the data.
+Whether to animate the bars when the chart is initially rendered and its data is updated. Even if `isAnimated` is set to true, animations will not be displayed for users with reduced motion preferences. Note: animations are currently only available for the non-stacked bar chart.
 
-#### isStacked
+#### skipLinkText
 
-| type      | default |
-| --------- | ------- |
-| `boolean` | `false` |
+| type     |
+| -------- |
+| `string` |
 
-This changes the grouping of the bars. If `true` the bar groups will stack vertically, otherwise they will render individual bars for each data point in each group. To see an example of stacked vs. grouped orientations, refer to the images above.
+If provided, renders a `<SkipLink/>` button with the string. Use this for charts with large data sets, so keyboard users can skip all the tabbable data points in the chart.
 
 #### renderTooltipContent
 
@@ -270,10 +254,88 @@ This changes the grouping of the bars. If `true` the bar groups will stack verti
 
 This accepts a function that is called to render the tooltip content. By default it calls `formatYAxisLabel` to format the the tooltip value and passes it to `<TooltipContent />`. For more information about tooltip content, read the [tooltip content documentation](/src/components/TooltipContent/TooltipContent.md).
 
-#### hasRoundedCorners
+#### xAxisOptions
+
+An object including the following proprties that define the appearance of the xAxis. Only labels is mandatory.
+
+##### labelFormatter
+
+| type                                                        | default                       |
+| ----------------------------------------------------------- | ----------------------------- |
+| `(value: string, index?: number, data?: string[]): string;` | `(value) => value.toString()` |
+
+This accepts a function that is called to format the labels when the chart draws its X axis.
+
+It's reccomended that you use a legend whenever displaying multiseries data. To display one, use the <a href="../Legend/Legend.md">`<Legend />` component</a>.
+
+##### showTicks
+
+| type      | default |
+| --------- | ------- |
+| `boolean` | true    |
+
+Whether to show ticks connecting the xAxis labels to their corresponding grid line.
+
+##### labelColor
+
+| type     | default                |
+| -------- | ---------------------- |
+| `string` | `'rgb(223, 227, 232)'` |
+
+The color used for axis labels.
+
+#### yAxisOptions
+
+##### labelFormatter
+
+| type                       | default                       |
+| -------------------------- | ----------------------------- |
+| `(value: number): string;` | `(value) => value.toString()` |
+
+This utility function is called for every y axis value when the chart is drawn.
+
+##### labelColor
+
+| type     | default                |
+| -------- | ---------------------- |
+| `string` | `'rgb(223, 227, 232)'` |
+
+The color used for axis labels.
+
+#### barOptions
+
+##### isStacked
+
+| type      | default |
+| --------- | ------- |
+| `boolean` | `false` |
+
+This changes the grouping of the bars. If `true` the bar groups will stack vertically, otherwise they will render individual bars for each data point in each group. To see an example of stacked vs. grouped orientations, refer to the images above.
+
+##### hasRoundedCorners
 
 | type      | default |
 | --------- | ------- |
 | `boolean` | `false` |
 
 Rounds the top corners of each bar, in the case of positive numbers. Rounds the bottom corners for negatives. Note: this prop only has an impact on grouped bars, not stacked ones.
+
+#### gridOptions
+
+An object including the following optional proprties that define the grid.
+
+##### showVHorizontalLines
+
+| type      | default |
+| --------- | ------- |
+| `boolean` | `true`  |
+
+Whether to show lines extending from the yAxis labels through the chart.
+
+##### color
+
+| type     | default                |
+| -------- | ---------------------- |
+| `string` | `"rgb(223, 227, 232)"` |
+
+The color of the grid lines.

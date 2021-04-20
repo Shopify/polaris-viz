@@ -1,43 +1,45 @@
 import React, {useState, useLayoutEffect, useRef} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
-import {Color, Data} from 'types';
+import {Data} from 'types';
+import {colorSky} from '@shopify/polaris-tokens';
 
+import {DEFAULT_GREY_LABEL} from '../../constants';
 import {SkipLink} from '../SkipLink';
-import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 import {getDefaultColor, uniqueId} from '../../utilities';
 
 import {TooltipContent} from './components';
 import {Chart} from './Chart';
-import {BarMargin, RenderTooltipContentData} from './types';
+import {
+  RenderTooltipContentData,
+  BarOptions,
+  GridOptions,
+  XAxisOptions,
+  YAxisOptions,
+  BarMargin,
+} from './types';
 
 export interface BarChartProps {
   data: Data[];
-  barMargin?: keyof typeof BarMargin;
-  color?: Color;
-  highlightColor?: Color;
-  formatXAxisLabel?: StringLabelFormatter;
-  formatYAxisLabel?: NumberLabelFormatter;
-  timeSeries?: boolean;
   skipLinkText?: string;
-  renderTooltipContent?: (data: RenderTooltipContentData) => React.ReactNode;
-  hasRoundedCorners?: boolean;
   emptyStateText?: string;
   isAnimated?: boolean;
+  renderTooltipContent?: (data: RenderTooltipContentData) => React.ReactNode;
+  barOptions?: Partial<BarOptions>;
+  gridOptions?: Partial<GridOptions>;
+  xAxisOptions?: Partial<XAxisOptions>;
+  yAxisOptions?: Partial<YAxisOptions>;
 }
 
 export function BarChart({
   data,
-  color = getDefaultColor(),
-  highlightColor = getDefaultColor(),
-  barMargin = 'Medium',
-  timeSeries = false,
-  hasRoundedCorners = false,
-  formatXAxisLabel = (value) => value.toString(),
-  formatYAxisLabel = (value) => value.toString(),
   renderTooltipContent,
-  skipLinkText,
   emptyStateText,
   isAnimated = false,
+  skipLinkText,
+  barOptions,
+  gridOptions,
+  xAxisOptions,
+  yAxisOptions,
 }: BarChartProps) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -64,12 +66,44 @@ export function BarChart({
     };
   }, [containerRef, updateDimensions]);
 
+  const margin =
+    barOptions != null && barOptions.margin != null
+      ? BarMargin[barOptions.margin]
+      : BarMargin.Medium;
+
+  const barOptionsWithDefaults = {
+    color: getDefaultColor(),
+    highlightColor: getDefaultColor(),
+    hasRoundedCorners: false,
+    ...barOptions,
+    margin,
+  };
+
+  const gridOptionsWithDefaults = {
+    showHorizontalLines: true,
+    color: colorSky,
+    ...gridOptions,
+  };
+
+  const xAxisOptionsWithDefaults = {
+    labelFormatter: (value: string) => value,
+    showTicks: true,
+    labelColor: DEFAULT_GREY_LABEL,
+    ...xAxisOptions,
+  };
+
+  const yAxisOptionsWithDefaults = {
+    labelFormatter: (value: number) => value.toString(),
+    labelColor: DEFAULT_GREY_LABEL,
+    ...yAxisOptions,
+  };
+
   function renderDefaultTooltipContent({
     label,
     value,
   }: RenderTooltipContentData) {
-    const formattedLabel = formatXAxisLabel(label);
-    const formattedValue = formatYAxisLabel(value);
+    const formattedLabel = xAxisOptionsWithDefaults.labelFormatter(label);
+    const formattedValue = yAxisOptionsWithDefaults.labelFormatter(value);
 
     return <TooltipContent label={formattedLabel} value={formattedValue} />;
   }
@@ -89,13 +123,10 @@ export function BarChart({
             isAnimated={isAnimated}
             data={data}
             chartDimensions={chartDimensions}
-            barMargin={BarMargin[barMargin]}
-            color={color}
-            highlightColor={highlightColor}
-            formatXAxisLabel={formatXAxisLabel}
-            formatYAxisLabel={formatYAxisLabel}
-            timeSeries={timeSeries}
-            hasRoundedCorners={hasRoundedCorners}
+            barOptions={barOptionsWithDefaults}
+            gridOptions={gridOptionsWithDefaults}
+            xAxisOptions={xAxisOptionsWithDefaults}
+            yAxisOptions={yAxisOptionsWithDefaults}
             renderTooltipContent={
               renderTooltipContent != null
                 ? renderTooltipContent

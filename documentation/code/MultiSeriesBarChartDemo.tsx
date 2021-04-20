@@ -117,10 +117,10 @@ export function MultiSeriesBarChartDemo({isStacked = false}: Props) {
     <div style={OUTER_CONTAINER_STYLE}>
       <div style={innerContainerStyle}>
         <MultiSeriesBarChart
-          formatYAxisLabel={formatYAxisLabel}
-          labels={labels}
+          yAxisOptions={{labelFormatter: formatYAxisLabel}}
+          xAxisOptions={{labels}}
           series={series}
-          isStacked={isStacked}
+          barOptions={{isStacked}}
           renderTooltipContent={renderTooltipContent}
           skipLinkText="Skip chart content"
         />

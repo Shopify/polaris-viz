@@ -34,6 +34,9 @@ describe('<BarChartXAxis/>', () => {
       maxDiagonalLabelLength: 100,
       maxWidth: 100,
     },
+    textColor: 'red',
+    gridColor: 'orange',
+    showTicks: true,
   };
 
   it('renders a path', () => {
@@ -45,7 +48,7 @@ describe('<BarChartXAxis/>', () => {
 
     expect(axis).toContainReactComponent('path', {
       fill: 'none',
-      stroke: 'rgb(223, 227, 232)',
+      stroke: 'orange',
     });
   });
 
@@ -72,7 +75,16 @@ describe('<BarChartXAxis/>', () => {
   it('hides elements if showFewerLabels is true and there is not enough room', () => {
     const axis = mount(
       <svg>
-        <BarChartXAxis {...mockProps} showFewerLabels />,
+        <BarChartXAxis
+          {...mockProps}
+          showFewerLabels
+          xAxisDetails={{
+            ...mockProps.xAxisDetails,
+            needsDiagonalLabels: true,
+            maxWidth: 10,
+          }}
+        />
+        ,
       </svg>,
     );
 

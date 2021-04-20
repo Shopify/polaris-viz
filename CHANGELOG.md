@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- The line chart and bar chart APIs now allow for custom configuration of chart element appearances. Some top-level props are now nested within more specific object props to configure the appearance of the chart.
+
+### Removed
+
+- The timeseries prop has been removed from bar charts, in favour of using that label handling by default (when there is not enough room for all diagonal labels, some will be dropped).
+
 ## [0.8.1] — 2021-04-20
 
 ### Added
@@ -7,10 +17,6 @@
 - `dotted` lineStyle to `LineChart`
 - `emptyStateText` and empty state handling to `<BarChart />`
 - `isAnimated` prop to `LineChart`, `BarChart` and `MultiSeriesBarChart`
-
-### Changed
-
-- The line chart API now allows for custom configuration of chart element colors and widths. Some top-level props are now nested within more specific object props to configure the appearance of the chart.
 
 ## [0.8.0] — 2021-04-14
 

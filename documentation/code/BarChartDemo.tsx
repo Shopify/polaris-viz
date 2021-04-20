@@ -72,13 +72,25 @@ export function BarChartDemo() {
   }
 
   return (
-    <div style={OUTER_CONTAINER_STYLE}>
+    <div style={{...OUTER_CONTAINER_STYLE, background: '#1f1f25'}}>
       <div style={innerContainerStyle}>
         <BarChart
           data={data}
-          color="primary"
-          formatXAxisLabel={formatXAxisLabel}
-          formatYAxisLabel={formatYAxisLabel}
+          barOptions={{
+            color: 'quaternary',
+            hasRoundedCorners: true,
+            highlightColor: 'quaternaryProminent',
+          }}
+          xAxisOptions={{
+            labelFormatter: formatXAxisLabel,
+            showTicks: false,
+            labelColor: '#8D8D8E',
+          }}
+          gridOptions={{color: 'rgb(65, 66, 71)'}}
+          yAxisOptions={{
+            labelFormatter: formatYAxisLabel,
+            labelColor: '#8D8D8E',
+          }}
           renderTooltipContent={renderTooltipContent}
           skipLinkText="Skip chart content"
         />

@@ -4,10 +4,16 @@ import {TooltipContainer} from '../TooltipContainer';
 import {eventPoint, getTextWidth, getBarXAxisDetails} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {BarChartXAxis} from '../BarChartXAxis';
-import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
 import {getStackedValues, formatAriaLabel} from './utilities';
-import {Series, RenderTooltipContentData} from './types';
+import {
+  Series,
+  RenderTooltipContentData,
+  BarOptions,
+  GridOptions,
+  XAxisOptions,
+  YAxisOptions,
+} from './types';
 import {BarGroup, StackedBarGroup} from './components';
 import {useYScale, useXScale} from './hooks';
 import {
@@ -22,27 +28,23 @@ import styles from './Chart.scss';
 
 interface Props {
   series: Required<Series>[];
-  labels: string[];
   chartDimensions: DOMRect;
-  formatXAxisLabel: StringLabelFormatter;
-  formatYAxisLabel: NumberLabelFormatter;
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
-  timeSeries: boolean;
-  isStacked: boolean;
-  hasRoundedCorners: boolean;
+  barOptions: BarOptions;
+  gridOptions: GridOptions;
+  xAxisOptions: XAxisOptions;
+  yAxisOptions: YAxisOptions;
   isAnimated?: boolean;
 }
 
 export function Chart({
   series,
   chartDimensions,
-  labels,
-  formatXAxisLabel,
-  formatYAxisLabel,
   renderTooltipContent,
-  timeSeries,
-  isStacked,
-  hasRoundedCorners,
+  gridOptions,
+  xAxisOptions,
+  yAxisOptions,
+  barOptions,
   isAnimated = false,
 }: Props) {
   const [activeBarGroup, setActiveBarGroup] = useState<number | null>(null);
@@ -54,12 +56,14 @@ export function Chart({
   const fontSize =
     chartDimensions.width < SMALL_WIDTH ? SMALL_FONT_SIZE : FONT_SIZE;
 
-  const stackedValues = isStacked ? getStackedValues(series, labels) : null;
+  const stackedValues = barOptions.isStacked
+    ? getStackedValues(series, xAxisOptions.labels)
+    : null;
 
   const {ticks: initialTicks} = useYScale({
     drawableHeight: chartDimensions.height - MARGIN.Top - MARGIN.Bottom,
     data: series,
-    formatYAxisLabel,
+    formatYAxisLabel: yAxisOptions.labelFormatter,
     stackedValues,
   });
 
@@ -78,10 +82,10 @@ export function Chart({
 
   const axisMargin = SPACING + yAxisLabelWidth;
 
-  const formattedXAxisLabels = useMemo(() => labels.map(formatXAxisLabel), [
-    formatXAxisLabel,
-    labels,
-  ]);
+  const formattedXAxisLabels = useMemo(
+    () => xAxisOptions.labels.map(xAxisOptions.labelFormatter),
+    [xAxisOptions.labelFormatter, xAxisOptions.labels],
+  );
 
   const xAxisDetails = useMemo(
     () =>
@@ -97,7 +101,7 @@ export function Chart({
 
   const drawableWidth = chartDimensions.width - MARGIN.Right - axisMargin;
 
-  const sortedData = labels.map((_, index) => {
+  const sortedData = xAxisOptions.labels.map((_, index) => {
     return series.map((type) => type.data[index].rawValue);
   });
 
@@ -118,7 +122,7 @@ export function Chart({
   const {yScale, ticks} = useYScale({
     drawableHeight,
     data: series,
-    formatYAxisLabel,
+    formatYAxisLabel: yAxisOptions.labelFormatter,
     stackedValues,
   });
 
@@ -140,22 +144,22 @@ export function Chart({
 
     return renderTooltipContent({
       data,
-      title: labels[activeBarGroup],
+      title: xAxisOptions.labels[activeBarGroup],
     });
-  }, [activeBarGroup, labels, renderTooltipContent, series]);
+  }, [activeBarGroup, renderTooltipContent, series, xAxisOptions.labels]);
 
   const accessibilityData = useMemo(
     () =>
-      labels.map((title, index) => {
+      xAxisOptions.labels.map((title, index) => {
         const data = series.map(({data, name}) => {
           return {
             label: name,
-            value: formatYAxisLabel(data[index].rawValue),
+            value: yAxisOptions.labelFormatter(data[index].rawValue),
           };
         });
         return {title, data};
       }),
-    [formatYAxisLabel, labels, series],
+    [series, xAxisOptions.labels, yAxisOptions],
   );
 
   const handleFocus = useCallback(
@@ -164,7 +168,7 @@ export function Chart({
       const xPosition = xScale(index.toString());
 
       if (index == null || xPosition == null) return;
-      const highestValue = isStacked
+      const highestValue = barOptions.isStacked
         ? sortedData[index].reduce(sumPositiveData, 0)
         : Math.max(...sortedData[index]);
       setActiveBarGroup(index);
@@ -175,7 +179,7 @@ export function Chart({
         y: yScale(highestValue),
       });
     },
-    [axisMargin, isStacked, sortedData, xScale, yScale],
+    [axisMargin, barOptions.isStacked, sortedData, xScale, yScale],
   );
 
   return (
@@ -205,8 +209,11 @@ export function Chart({
             labels={xAxisLabels}
             xScale={xScale}
             xAxisDetails={xAxisDetails}
-            showFewerLabels={timeSeries && xAxisDetails.needsDiagonalLabels}
+            showFewerLabels={xAxisDetails.needsDiagonalLabels}
             fontSize={fontSize}
+            textColor={xAxisOptions.labelColor}
+            gridColor={gridOptions.color}
+            showTicks={xAxisOptions.showTicks}
           />
         </g>
 
@@ -218,6 +225,9 @@ export function Chart({
             ticks={ticks}
             drawableWidth={drawableWidth}
             fontSize={fontSize}
+            labelColor={yAxisOptions.labelColor}
+            showGridLines={gridOptions.showHorizontalLines}
+            gridColor={gridOptions.color}
           />
         </g>
 
@@ -256,7 +266,7 @@ export function Chart({
                     onFocus={handleFocus}
                     barGroupIndex={index}
                     ariaLabel={ariaLabel}
-                    hasRoundedCorners={hasRoundedCorners}
+                    hasRoundedCorners={barOptions.hasRoundedCorners}
                   />
                 );
               })}
@@ -302,7 +312,7 @@ export function Chart({
     }
 
     const xPosition = xScale(currentIndex.toString());
-    const highestValue = isStacked
+    const highestValue = barOptions.isStacked
       ? sortedData[currentIndex].reduce(sumPositiveData, 0)
       : Math.max(...sortedData[currentIndex]);
     const tooltipXPositon =

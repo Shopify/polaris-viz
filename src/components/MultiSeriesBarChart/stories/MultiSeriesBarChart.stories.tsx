@@ -69,6 +69,23 @@ export default {
   decorators: [
     (Story: any) => <div className={styles.Container}>{Story()}</div>,
   ],
+  argTypes: {
+    barOptions: {
+      control: false,
+    },
+    xAxisOptions: {
+      control: false,
+    },
+    yAxisOptions: {
+      control: false,
+    },
+    renderTooltipContent: {
+      control: false,
+    },
+    gridOptions: {
+      control: false,
+    },
+  },
 } as Meta;
 
 const Template: Story<MultiSeriesBarChartProps> = (
@@ -80,5 +97,5 @@ const Template: Story<MultiSeriesBarChartProps> = (
 export const Default = Template.bind({});
 Default.args = {
   series,
-  labels,
+  xAxisOptions: {labels},
 };
