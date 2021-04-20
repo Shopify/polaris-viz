@@ -1,13 +1,12 @@
 # Changelog
 
-## Unreleased
+## [0.8.1] — 2021-04-20
 
 ### Added
 
 - `dotted` lineStyle to `LineChart`
-- Added `emptyStateText` and empty state handling to `<BarChart />`
-- `isAnimated` prop to `LineChart` for line onload animation
-- `isAnimated` prop to `BarChart` and `MultiSeriesBarChart`
+- `emptyStateText` and empty state handling to `<BarChart />`
+- `isAnimated` prop to `LineChart`, `BarChart` and `MultiSeriesBarChart`
 
 ## [0.8.0] — 2021-04-14
 
