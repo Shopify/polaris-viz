@@ -30,6 +30,18 @@ If you prefer [Yarn](https://yarnpkg.com/en/), use the following command instead
 yarn add @shopify/polaris-viz
 ```
 
+
+
+#### Available commands
+
+| Command                         | What's used for                                                  |
+| ------------------------------- | ---------------------------------------------------------------- |
+| `dev up`                        | Project set up                                                   |
+| `dev s`                         | Start a server running `Playground.tsx`                          |
+| `dev storybook`                 | Start a server running [Storybook](https://storybook.js.org/)    |
+| `dev add-story [ComponentName]` | Create boilerplate files to include a new component in Storybook |
+| `dev add-story [ComponentName] --no-comments` | Create boilerplate files to include a new component in Storybook without comments |
+
 <br/>
 <br/>
 <br/>
@@ -187,3 +199,5 @@ Pull requests are welcome. See the <a href="/CONTRIBUTING.md">contribution guide
 </a>
 
 - Source code is under a [custom license](https://github.com/Shopify/polaris-viz/blob/master/LICENSE.md) based on MIT. The license restricts Polaris Viz usage to applications that integrate or interoperate with Shopify software or services, with additional restrictions for external, stand-alone applications.
+
+
