@@ -25,8 +25,10 @@ import {
 import {TooltipContainer} from '../TooltipContainer';
 
 import {Series, RenderTooltipContentData, TooltipData} from './types';
-import {useYScale, useLineChartAnimations} from './hooks';
+import {useYScale} from './hooks';
 import {Line, GradientArea} from './components';
+// eslint-disable-next-line shopify/strict-component-boundaries
+import {AnimatedPoints} from './components/AnimatedPoints/AnimatedPoints';
 import styles from './Chart.scss';
 
 interface Props {
@@ -185,14 +187,6 @@ export function Chart({
 
   const animatePoints = isAnimated && longestSeriesLength < 1000;
 
-  const {animatedCoordinates} = useLineChartAnimations({
-    series: reversedSeries,
-    lineGenerator,
-    activeIndex,
-    xScale,
-    isAnimated: animatePoints,
-  });
-
   if (xScale == null || drawableWidth == null || axisMargin == null) {
     return null;
   }
@@ -294,14 +288,8 @@ export function Chart({
           <g transform={`translate(${axisMargin},${Margin.Top})`}>
             <Crosshair
               x={
-                animatePoints &&
-                animatedCoordinates !== null &&
-                animatedCoordinates[longestSeriesIndex] !== null
-                  ? animatedCoordinates[longestSeriesIndex].interpolate(
-                      (coord: SVGPoint) => coord.x - CROSSHAIR_WIDTH / 2,
-                    )
-                  : xScale(activeIndex === null ? 0 : activeIndex) -
-                    CROSSHAIR_WIDTH / 2
+                xScale(activeIndex === null ? 0 : activeIndex) -
+                CROSSHAIR_WIDTH / 2
               }
               height={drawableHeight}
               opacity={1}
@@ -317,6 +305,18 @@ export function Chart({
           />
         )}
 
+        {animatePoints && (
+          <g transform={`translate(${axisMargin},${Margin.Top})`}>
+            <AnimatedPoints
+              series={reversedSeries}
+              lineGenerator={lineGenerator}
+              activeIndex={activeIndex}
+              xScale={xScale}
+              isAnimated={animatePoints}
+            />
+          </g>
+        )}
+
         <g transform={`translate(${axisMargin},${Margin.Top})`}>
           {reversedSeries.map((singleSeries, index) => {
             const {data, name, showArea, color} = singleSeries;
@@ -329,34 +329,6 @@ export function Chart({
                   isAnimated={isAnimated}
                   index={index}
                   lineGenerator={lineGenerator}
-                />
-                <Point
-                  color={color}
-                  cx={
-                    animatedCoordinates === null
-                      ? 0
-                      : animatedCoordinates[longestSeriesIndex].interpolate(
-                          (coord: SVGPoint) => coord.x,
-                        )
-                  }
-                  cy={
-                    animatedCoordinates === null
-                      ? 0
-                      : animatedCoordinates[index].interpolate(
-                          (coord: SVGPoint) => coord.y,
-                        )
-                  }
-                  active={tooltipDetails !== null}
-                  index={index}
-                  tabIndex={-1}
-                  isAnimated={animatePoints}
-                  visuallyHidden={
-                    !animatePoints ||
-                    animatedCoordinates === null ||
-                    tooltipDetails === null ||
-                    Number(activeIndex) >= data.length
-                  }
-                  ariaHidden
                 />
 
                 {data.map(({rawValue}, dataIndex) => {
