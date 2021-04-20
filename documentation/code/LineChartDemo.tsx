@@ -25,7 +25,7 @@ export function LineChartDemo() {
   document.body.style.fontFamily =
     "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif";
 
-  const data = weatherData.slice(0, 12000);
+  const data = weatherData.slice(0, 3000);
 
   const series = [
     {

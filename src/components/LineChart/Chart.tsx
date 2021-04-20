@@ -305,7 +305,7 @@ export function Chart({
           />
         )}
 
-        {animatePoints && (
+        {/* {animatePoints && (
           <g transform={`translate(${axisMargin},${Margin.Top})`}>
             <AnimatedPoints
               series={reversedSeries}
@@ -315,7 +315,7 @@ export function Chart({
               isAnimated={animatePoints}
             />
           </g>
-        )}
+        )} */}
 
         <g transform={`translate(${axisMargin},${Margin.Top})`}>
           {reversedSeries.map((singleSeries, index) => {
