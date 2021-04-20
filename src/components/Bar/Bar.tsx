@@ -1,11 +1,10 @@
-import React from 'react';
-import {animated, useSpring} from 'react-spring';
-import tokens from '@shopify/polaris-tokens';
+import React, {useMemo} from 'react';
+import {animated, OpaqueInterpolation} from 'react-spring';
 import {Color} from 'types';
 import {ScaleLinear} from 'd3-scale';
 
 import {getColorValue} from '../../utilities';
-import {ROUNDED_BAR_RADIUS, MIN_BAR_HEIGHT} from '../../constants';
+import {ROUNDED_BAR_RADIUS} from '../../constants';
 
 import styles from './Bar.scss';
 
@@ -23,6 +22,7 @@ interface Props {
   tabIndex: number;
   role?: string;
   hasRoundedCorners?: boolean;
+  height?: OpaqueInterpolation<any> | number;
 }
 
 export function Bar({
@@ -38,59 +38,84 @@ export function Bar({
   ariaLabel,
   tabIndex,
   role,
+  height,
   hasRoundedCorners,
 }: Props) {
+  const radius = hasRoundedCorners ? ROUNDED_BAR_RADIUS : 0;
+  const zeroScale = yScale(0);
+  const isNegative = rawValue < 0;
+  const rotation = isNegative ? 'rotate(180deg)' : 'rotate(0deg)';
+  const xPosition = isNegative ? x + width : x;
   const currentColor = isSelected
     ? getColorValue(highlightColor)
     : getColorValue(color);
 
-  const animation = useSpring({
-    config: {duration: tokens.durationFast},
-    immediate: color === highlightColor,
-    color: currentColor,
-    from: {color: getColorValue(color)},
-  });
+  const heightIsNumber = typeof height === 'number';
 
-  const rawHeight = Math.abs(yScale(rawValue) - yScale(0));
+  const yPosition = useMemo(() => {
+    if (height == null) return;
 
-  const zeroScale = yScale(0);
-  const needsMinHeight = rawHeight < MIN_BAR_HEIGHT && rawHeight !== 0;
-  const height = needsMinHeight ? MIN_BAR_HEIGHT : rawHeight;
+    const getYPosition = (value: number) =>
+      isNegative ? zeroScale + value : zeroScale - value;
+
+    if (heightIsNumber) {
+      return getYPosition(height);
+    }
+    return height.interpolate(getYPosition);
+  }, [height, heightIsNumber, isNegative, zeroScale]);
+
+  const yPositionIsNumber = typeof yPosition === 'number';
 
   const handleFocus = () => {
-    onFocus({index, cx: x, cy: yPosition});
+    if (yPosition == null) return;
+
+    const cy = yPositionIsNumber ? yPosition : yPosition.getValue();
+    onFocus({index, cx: x, cy});
   };
 
-  const radius = hasRoundedCorners ? ROUNDED_BAR_RADIUS : 0;
+  const style = useMemo(() => {
+    if (yPosition == null) return;
 
-  const isNegative = rawValue < 0;
-  const yPosition = isNegative ? zeroScale + height : zeroScale - height;
-  const rotation = isNegative ? 'rotate(180deg)' : 'rotate(0deg)';
-  const xPosition = isNegative ? x + width : x;
+    const getStyle = (y: number) =>
+      `translate(${xPosition}px, ${y}px) ${rotation}`;
 
-  const barPath =
-    rawValue === 0
-      ? ''
-      : `M${radius} 0
-    h${width - radius * 2}
-    a${radius} ${radius} 0 01${radius} ${radius}
-    v${height - radius}
-    H0
-    V${radius}
-    a${radius} ${radius} 0 01${radius}-${radius}
-    Z`;
+    if (yPositionIsNumber) return {transform: getStyle(yPosition)};
+
+    return {
+      transform: yPosition.interpolate(getStyle),
+    };
+  }, [yPosition, yPositionIsNumber, xPosition, rotation]);
+
+  const path = useMemo(() => {
+    if (height == null) return;
+
+    const calculatePath = (heightValue: number) =>
+      rawValue === 0
+        ? ''
+        : `M${radius} 0
+        h${width - radius * 2}
+        a${radius} ${radius} 0 01${radius} ${radius}
+        v${heightValue - radius}
+        H0
+        V${radius}
+        a${radius} ${radius} 0 01${radius}-${radius}
+        Z`;
+
+    if (heightIsNumber) {
+      return calculatePath(height);
+    }
+    return height.interpolate(calculatePath);
+  }, [height, heightIsNumber, radius, rawValue, width]);
 
   return (
     <animated.path
-      d={barPath}
-      fill={animation.color}
+      d={path}
+      fill={currentColor}
       aria-label={ariaLabel}
       onFocus={handleFocus}
       tabIndex={tabIndex}
       role={role}
-      style={{
-        transform: `translate(${xPosition}px, ${yPosition}px) ${rotation}`,
-      }}
+      style={style}
       className={color === highlightColor ? undefined : styles.BarNoOutline}
     />
   );

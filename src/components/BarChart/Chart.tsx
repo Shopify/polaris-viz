@@ -1,13 +1,24 @@
-import React, {useState, useMemo} from 'react';
+import React, {useState, useMemo, useCallback} from 'react';
 import {Color, Data} from 'types';
+import {useTransition} from 'react-spring';
 
-import {LINE_HEIGHT} from '../../constants';
-import {eventPoint, getTextWidth, getBarXAxisDetails} from '../../utilities';
+import {
+  LINE_HEIGHT,
+  MIN_BAR_HEIGHT,
+  BARS_TRANSITION_CONFIG,
+} from '../../constants';
+import {
+  eventPoint,
+  getTextWidth,
+  getBarXAxisDetails,
+  getAnimationTrail,
+} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {BarChartXAxis} from '../BarChartXAxis';
 import {TooltipContainer} from '../TooltipContainer';
 import {Bar} from '../Bar';
 import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
+import {usePrefersReducedMotion} from '../../hooks';
 
 import {RenderTooltipContentData} from './types';
 import {useYScale, useXScale} from './hooks';
@@ -32,6 +43,7 @@ interface Props {
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
   hasRoundedCorners: boolean;
   emptyStateText?: string;
+  isAnimated?: boolean;
 }
 
 export function Chart({
@@ -46,7 +58,9 @@ export function Chart({
   renderTooltipContent,
   hasRoundedCorners,
   emptyStateText,
+  isAnimated = false,
 }: Props) {
+  const {prefersReducedMotion} = usePrefersReducedMotion();
   const [activeBar, setActiveBar] = useState<number | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState<{
     x: number;
@@ -126,7 +140,7 @@ export function Chart({
     formatXAxisLabel,
   });
 
-  const barWidth = xScale.bandwidth();
+  const barWidth = useMemo(() => xScale.bandwidth(), [xScale]);
 
   const tooltipMarkup = useMemo(() => {
     if (activeBar == null) {
@@ -139,12 +153,35 @@ export function Chart({
     });
   }, [activeBar, data, renderTooltipContent]);
 
+  const getBarHeight = useCallback(
+    (rawValue: number) => {
+      const rawHeight = Math.abs(yScale(rawValue) - yScale(0));
+      const needsMinHeight = rawHeight < MIN_BAR_HEIGHT && rawHeight !== 0;
+      return needsMinHeight ? MIN_BAR_HEIGHT : rawHeight;
+    },
+    [yScale],
+  );
+
+  const shouldAnimate = !prefersReducedMotion && isAnimated;
+
+  const transitions = useTransition(data, (dataPoint) => dataPoint.label, {
+    from: {height: 0},
+    leave: {height: 0},
+    enter: ({rawValue}) => ({height: getBarHeight(rawValue)}),
+    update: ({rawValue}) => ({height: getBarHeight(rawValue)}),
+    immediate: !shouldAnimate,
+    trail: shouldAnimate ? getAnimationTrail(data.length) : 0,
+    config: BARS_TRANSITION_CONFIG,
+  });
+
+  const {width, height} = chartDimensions;
+
   return (
     <div
       className={styles.ChartContainer}
       style={{
-        height: chartDimensions.height,
-        width: chartDimensions.width,
+        height,
+        width,
       }}
     >
       <svg
@@ -184,7 +221,7 @@ export function Chart({
         </g>
 
         <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
-          {data.map(({rawValue}, index) => {
+          {transitions.map(({item, props: {height}}, index) => {
             const xPosition = xScale(index.toString());
             const ariaLabel = `${formatXAxisLabel(
               data[index].label,
@@ -193,10 +230,11 @@ export function Chart({
             return (
               <g role="listitem" key={index}>
                 <Bar
+                  height={height}
                   key={index}
                   x={xPosition == null ? 0 : xPosition}
                   yScale={yScale}
-                  rawValue={rawValue}
+                  rawValue={item.rawValue}
                   width={barWidth}
                   isSelected={index === activeBar}
                   color={color}

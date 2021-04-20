@@ -33,3 +33,6 @@ export enum Margin {
   Bottom = SPACING_BASE_TIGHT,
   Right = SPACING_EXTRA_TIGHT,
 }
+
+export const BARS_TRANSITION_CONFIG = {mass: 1, tension: 150, friction: 16};
+export const MAX_TRAIL_DURATION = 500;

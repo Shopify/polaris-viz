@@ -12,7 +12,8 @@ export const colorOptions: string[] = Object.keys(vizColors).concat(
   polarisTokensColors,
 );
 
-export const getDataPoint = (limit = 1000) => {
+export const getDataPoint = (limit = 1000, allowNegative = false) => {
+  if (allowNegative) return Math.ceil(Math.random() * limit) * (Math.round(Math.random()) ? 1 : -1)
   return Math.random() * limit;
 };
 
