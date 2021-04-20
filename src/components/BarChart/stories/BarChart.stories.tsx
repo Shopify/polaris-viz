@@ -11,7 +11,6 @@ import {
   formatYAxisLabel,
   renderTooltipContent,
 } from './utils.stories';
-import styles from './BarChart.stories.scss';
 
 const primaryColor = colorOptions[0] as Color;
 const secondaryColor = colorOptions[1] as Color;
@@ -19,9 +18,6 @@ const secondaryColor = colorOptions[1] as Color;
 export default {
   title: 'BarChart',
   component: BarChart,
-  decorators: [
-    (Story: any) => <div className={styles.Container}>{Story()}</div>,
-  ],
   argTypes: {
     color: {
       control: {
