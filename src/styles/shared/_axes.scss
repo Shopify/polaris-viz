@@ -19,7 +19,3 @@ $axis-color: rgb(223, 227, 232);
 @mixin axis-line {
   stroke: $axis-color;
 }
-
-@mixin axis-crosshair {
-  fill: $axis-color;
-}

@@ -1,40 +1,52 @@
 import React, {useLayoutEffect, useRef, useState} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
+import {colorSky} from '@shopify/polaris-tokens';
 
 import {getDefaultColor, uniqueId} from '../../utilities';
-import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 import {SkipLink} from '../SkipLink';
 import {usePrefersReducedMotion} from '../../hooks';
+import {
+  DEFAULT_GREY_LABEL,
+  CROSSHAIR_WIDTH,
+  DEFAULT_CROSSHAIR_COLOR,
+} from '../../constants';
 
 import {Chart} from './Chart';
-import {Series, RenderTooltipContentData} from './types';
+import {
+  Series,
+  RenderTooltipContentData,
+  LineOptions,
+  XAxisOptions,
+  YAxisOptions,
+  GridOptions,
+  CrossHairOptions,
+} from './types';
 import {TooltipContent} from './components';
 
 export interface LineChartProps {
   series: Series[];
-  xAxisLabels: string[];
-  hideXAxisLabels?: boolean;
-  accessibilityLabel?: string;
-  formatXAxisLabel?: StringLabelFormatter;
-  formatYAxisLabel?: NumberLabelFormatter;
   renderTooltipContent?: (data: RenderTooltipContentData) => React.ReactNode;
   skipLinkText?: string;
   emptyStateText?: string;
-  hasSpline?: boolean;
   isAnimated?: boolean;
+  lineOptions?: Partial<LineOptions>;
+  xAxisOptions: Partial<XAxisOptions> & Pick<XAxisOptions, 'xAxisLabels'>;
+  yAxisOptions?: Partial<YAxisOptions>;
+  gridOptions?: Partial<GridOptions>;
+  crossHairOptions?: Partial<CrossHairOptions>;
 }
 
 export function LineChart({
   series,
-  xAxisLabels,
-  formatXAxisLabel = (value) => value.toString(),
-  formatYAxisLabel = (value) => value.toString(),
-  hideXAxisLabels = false,
   renderTooltipContent,
   skipLinkText,
   emptyStateText,
-  hasSpline = false,
   isAnimated = false,
+  lineOptions,
+  xAxisOptions,
+  yAxisOptions,
+  gridOptions,
+  crossHairOptions,
 }: LineChartProps) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -60,6 +72,36 @@ export function LineChart({
     };
   }, [containerRef, updateDimensions]);
 
+  const lineOptionsWithDefaults = {hasSpline: false, width: 2, ...lineOptions};
+
+  const xAxisOptionsWithDefaults = {
+    labelFormatter: (value: string) => value,
+    hideXAxisLabels: false,
+    showTicks: true,
+    labelColor: DEFAULT_GREY_LABEL,
+    ...xAxisOptions,
+  };
+
+  const yAxisOptionsWithDefaults = {
+    labelFormatter: (value: number) => value.toString(),
+    labelColor: DEFAULT_GREY_LABEL,
+    ...yAxisOptions,
+  };
+
+  const gridOptionsWithDefaults = {
+    showVerticalLines: true,
+    showHorizontalLines: true,
+    color: colorSky,
+    ...gridOptions,
+  };
+
+  const crossHairOptionsWithDefaults = {
+    color: DEFAULT_CROSSHAIR_COLOR,
+    opacity: 1,
+    width: CROSSHAIR_WIDTH,
+    ...crossHairOptions,
+  };
+
   function renderDefaultTooltipContent({data}: RenderTooltipContentData) {
     const formattedData = data.map(
       ({name, point: {label, value}, color, lineStyle}) => ({
@@ -67,7 +109,7 @@ export function LineChart({
         color,
         lineStyle,
         point: {
-          value: formatYAxisLabel(value),
+          value: yAxisOptionsWithDefaults.labelFormatter(value),
           label,
         },
       }),
@@ -93,12 +135,12 @@ export function LineChart({
         {chartDimensions == null ? null : (
           <Chart
             series={seriesWithDefaults}
-            xAxisLabels={xAxisLabels}
-            formatXAxisLabel={formatXAxisLabel}
-            formatYAxisLabel={formatYAxisLabel}
+            lineOptions={lineOptionsWithDefaults}
+            xAxisOptions={xAxisOptionsWithDefaults}
+            yAxisOptions={yAxisOptionsWithDefaults}
+            gridOptions={gridOptionsWithDefaults}
+            crossHairOptions={crossHairOptionsWithDefaults}
             dimensions={chartDimensions}
-            hideXAxisLabels={hideXAxisLabels}
-            hasSpline={hasSpline}
             isAnimated={isAnimated && !prefersReducedMotion}
             renderTooltipContent={
               renderTooltipContent != null

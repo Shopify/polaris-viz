@@ -104,9 +104,11 @@ const renderTooltipContent: LineChartProps['renderTooltipContent'] = ({
 return (
   <LineChart
     series={series}
-    xAxisLabels={xAxisLabels}
-    formatXAxisLabel={formatXAxisLabel}
-    formatYAxisLabel={formatYAxisLabel}
+    xAxisOptions={{
+      xAxisLabels,
+      labelFormatter: formatXAxisLabel,
+    }}
+    yAxisOptions={{labelFormatter: formatYAxisLabel}}
     renderTooltipContent={renderTooltipContent}
     skipLinkText="Skip chart content"
   />
@@ -120,13 +122,35 @@ The line chart interface looks like this:
 ```typescript
 interface LineChartProps {
   series: Series[];
-  xAxisLabels: string[];
-  formatXAxisLabel?(value: string, index?: number, data?: string[]): string;
-  formatYAxisLabel?(value: number): string;
+  isAnimated?: boolean;
+  lineOptions?: {
+    hasSpline?: boolean;
+    width?: number;
+  };
+  xAxisOptions: {
+    xAxisLabels: string[];
+    labelFormatter?(value: string, index?: number, data?: string[]): string;
+    hideXAxisLabels?: boolean;
+    showTicks?: boolean;
+    labelColor: string;
+  };
+  yAxisOptions?: {
+    labelFormatter?(value: number): string;
+    labelColor: string;
+  }
+  gridOptions?: {
+    showVerticalLines?: boolean;
+    showHorizontalLines?: boolean;
+    color?: string;
+  }
+  crossHairOptions?: {
+    width?: number;
+    color?: string;
+    opacity?: number;
+  }
   renderTooltipContent?: (data: RenderTooltipContentData): React.ReactNode;
   skipLinkText?: string;
   emptyStateText?: string;
-  hideXAxisLabels?: boolean;
 }
 ```
 
@@ -223,7 +247,7 @@ The distinction between the `RenderTooltipContentData` and `Series` types is tha
 
 The prop to determine the chart's drawn area. Each `Series` object corresponds to a line drawn on the chart, and is explained in greater detail above.
 
-#### xAxisLabels
+#### xAxisOptions: xAxisLabels
 
 | type       | default |
 | ---------- | ------- |
@@ -233,31 +257,13 @@ The labels to display on the x axis of the chart and in a data table used for sc
 
 ### Optional props
 
-Determines the height of the chart.
-
-#### hideXAxisLabels
+#### isAnimated
 
 | type      | default |
 | --------- | ------- |
-| `boolean` | false   |
+| `boolean` | `false` |
 
-Whether to visually hide the x axis labels on the chart. The labels will still be displayed to screenreaders.
-
-#### formatXAxisLabel
-
-| type                                                        | default                       |
-| ----------------------------------------------------------- | ----------------------------- |
-| `(value: string, index?: number, data?: string[]): string;` | `(value) => value.toString()` |
-
-This accepts a function that is called to format the labels when the chart draws its X axis.
-
-#### formatYAxisLabel
-
-| type                       | default                       |
-| -------------------------- | ----------------------------- |
-| `(value: number): string;` | `(value) => value.toString()` |
-
-This utilty function is called to format the labels for every y axis value when the chart is laid out.
+Whether to animate the lines and gradient when the chart is initially rendered and its data is updated. Even if `isAnimated` is set to true, animations will not be displayed for users with reduced motion preferences.
 
 #### renderTooltipContent
 
@@ -283,18 +289,136 @@ If provided, renders a `<SkipLink/>` button with the string. Use this for charts
 
 Used to indicate to screenreaders that a chart with no data has been rendered, in the case that an empty array is passed as the series data. It is strongly recommended that this is included if the series prop could be an empty array.
 
-#### hasSpline
+#### xAxisOptions
+
+An object including the following proprties that define the appearance of the xAxis. Only xAxisLabels is mandatory.
+
+##### hideXAxisLabels
+
+| type      | default |
+| --------- | ------- |
+| `boolean` | false   |
+
+Whether to visually hide the x axis labels on the chart. The labels will still be displayed to screenreaders.
+
+##### showTicks
+
+| type      | default |
+| --------- | ------- |
+| `boolean` | true    |
+
+Whether to show ticks connecting the xAxis labels to their corresponding grid line.
+
+##### labelFormatter
+
+| type                                                        | default                       |
+| ----------------------------------------------------------- | ----------------------------- |
+| `(value: string, index?: number, data?: string[]): string;` | `(value) => value.toString()` |
+
+This accepts a function that is called to format the labels when the chart draws its X axis.
+
+##### labelColor
+
+| type     | default                |
+| -------- | ---------------------- |
+| `string` | `'rgb(223, 227, 232)'` |
+
+The color used for axis labels.
+
+#### yAxisOptions
+
+An object including the following optional proprties that define the appearance of the yAxis.
+
+##### labelFormatter
+
+| type                       | default                       |
+| -------------------------- | ----------------------------- |
+| `(value: number): string;` | `(value) => value.toString()` |
+
+This utilty function is called to format the labels for every y axis value when the chart is laid out.
+
+##### labelColor
+
+| type     | default                |
+| -------- | ---------------------- |
+| `string` | `'rgb(223, 227, 232)'` |
+
+The color used for axis labels.
+
+#### lineOptions
+
+An object including the following optional proprties that define the appearance of the line.
+
+##### hasSpline
 
 | type      | default |
 | --------- | ------- |
 | `boolean` | `false` |
+
+Whether to curve the lines between points.
+
+##### width
+
+| type     | default |
+| -------- | ------- |
+| `number` | `2`     |
+
+The width of the lines drawn between points.
+
+#### gridOptions
+
+An object including the following optional proprties that define the grid.
+
+##### showVerticalLines
+
+| type      | default |
+| --------- | ------- |
+| `boolean` | `true`  |
+
+Whether to show lines extending from the xAxis labels through the chart.
+
+##### showHorizontalLines
+
+| type      | default |
+| --------- | ------- |
+| `boolean` | `true`  |
+
+Whether to show lines extending from the yAxis labels through the chart.
+
+##### color
+
+| type     | default                |
+| -------- | ---------------------- |
+| `string` | `"rgb(223, 227, 232)"` |
+
+The color of the grid lines.
+
+#### CrossHairOptions
+
+An object including the following optional proprties that define the crosshair.
+
+##### width
+
+| type     | default |
+| -------- | ------- |
+| `number` | `5`     |
+
+The width of the crosshair.
+
+##### color
+
+| type     | default                |
+| -------- | ---------------------- |
+| `string` | `'rgb(223, 227, 232)'` |
+
+The color of the crosshair.
+
+##### opacity
+
+| type     | default |
+| -------- | ------- |
+| `number` | `1`     |
 
 Whether to curve the line between points.
 
-#### isAnimated
-
-| type      | default |
-| --------- | ------- |
-| `boolean` | `false` |
-
-Whether to animate the lines and gradient when the chart is initially rendered and its data is updated. Even if `isAnimated` is set to true, animations will not be displayed for users with reduced motion preferences.
+The opacity of the crosshair.

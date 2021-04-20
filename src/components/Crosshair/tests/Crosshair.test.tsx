@@ -31,7 +31,9 @@ describe('<Crosshair />', () => {
       </svg>,
     );
 
-    expect(crosshair).toContainReactComponent('rect', {style: {opacity: 1}});
+    expect(crosshair).toContainReactComponent('rect', {
+      style: {opacity: 1, fill: 'rgb(223, 227, 232)'},
+    });
   });
 
   it('applies opacity from props to the rect', () => {
@@ -41,6 +43,32 @@ describe('<Crosshair />', () => {
       </svg>,
     );
 
-    expect(crosshair).toContainReactComponent('rect', {style: {opacity: 0.8}});
+    expect(crosshair).toContainReactComponent('rect', {
+      style: {opacity: 0.8, fill: 'rgb(223, 227, 232)'},
+    });
+  });
+
+  it('applies color from props to the rect', () => {
+    const crosshair = mount(
+      <svg>
+        <Crosshair x={50} height={500} fill="red" />
+      </svg>,
+    );
+
+    expect(crosshair).toContainReactComponent('rect', {
+      style: {opacity: 1, fill: 'red'},
+    });
+  });
+
+  it('applies width from props to the rect', () => {
+    const crosshair = mount(
+      <svg>
+        <Crosshair x={50} height={500} width={100} />
+      </svg>,
+    );
+
+    expect(crosshair).toContainReactComponent('rect', {
+      width: 100,
+    });
   });
 });

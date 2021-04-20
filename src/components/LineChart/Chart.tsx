@@ -15,42 +15,47 @@ import {YAxis} from '../YAxis';
 import {Point} from '../Point';
 import {eventPoint, uniqueId} from '../../utilities';
 import {Crosshair} from '../Crosshair';
-import {
-  StringLabelFormatter,
-  NumberLabelFormatter,
-  ActiveTooltip,
-} from '../../types';
+import {ActiveTooltip} from '../../types';
 import {TooltipContainer} from '../TooltipContainer';
 
-import {Series, RenderTooltipContentData, TooltipData} from './types';
+import {
+  Series,
+  RenderTooltipContentData,
+  TooltipData,
+  LineOptions,
+  XAxisOptions,
+  YAxisOptions,
+  GridOptions,
+  CrossHairOptions,
+} from './types';
 import {useYScale} from './hooks';
 import {Line, GradientArea} from './components';
 import styles from './Chart.scss';
 
 interface Props {
   series: Required<Series>[];
-  xAxisLabels: string[];
-  formatXAxisLabel: StringLabelFormatter;
-  formatYAxisLabel: NumberLabelFormatter;
   dimensions: DOMRect;
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
-  hideXAxisLabels: boolean;
-  hasSpline: boolean;
   emptyStateText?: string;
   isAnimated: boolean;
+  lineOptions: LineOptions;
+  xAxisOptions: XAxisOptions;
+  yAxisOptions: YAxisOptions;
+  gridOptions: GridOptions;
+  crossHairOptions: CrossHairOptions;
 }
 
 export function Chart({
   series,
   dimensions,
-  xAxisLabels,
-  formatXAxisLabel,
-  formatYAxisLabel,
   renderTooltipContent,
-  hideXAxisLabels,
-  hasSpline,
   emptyStateText,
   isAnimated,
+  lineOptions,
+  xAxisOptions,
+  yAxisOptions,
+  gridOptions,
+  crossHairOptions,
 }: Props) {
   const [tooltipDetails, setTooltipDetails] = useState<ActiveTooltip | null>(
     null,
@@ -67,35 +72,34 @@ export function Chart({
     fontSize,
     drawableHeight: dimensions.height - Margin.Top,
     series,
-    formatYAxisLabel,
+    formatYAxisLabel: yAxisOptions.labelFormatter,
   });
 
   const xAxisDetails = useLinearXAxisDetails({
     series,
     fontSize,
     chartDimensions: dimensions,
-    formatXAxisLabel,
+    formatXAxisLabel: xAxisOptions.labelFormatter,
     initialTicks,
-    xAxisLabels: xAxisLabels == null || hideXAxisLabels ? [] : xAxisLabels,
+    xAxisLabels: xAxisOptions.hideXAxisLabels ? [] : xAxisOptions.xAxisLabels,
   });
 
-  const marginBottom =
-    xAxisLabels == null
-      ? SPACING_TIGHT
-      : Number(Margin.Bottom) + xAxisDetails.maxXLabelHeight;
+  const marginBottom = xAxisOptions.hideXAxisLabels
+    ? SPACING_TIGHT
+    : Number(Margin.Bottom) + xAxisDetails.maxXLabelHeight;
 
   const drawableHeight = dimensions.height - Margin.Top - marginBottom;
 
-  const formattedLabels = useMemo(() => xAxisLabels.map(formatXAxisLabel), [
-    formatXAxisLabel,
-    xAxisLabels,
-  ]);
+  const formattedLabels = useMemo(
+    () => xAxisOptions.xAxisLabels.map(xAxisOptions.labelFormatter),
+    [xAxisOptions.labelFormatter, xAxisOptions.xAxisLabels],
+  );
 
   const {axisMargin, ticks, yScale} = useYScale({
     fontSize,
     drawableHeight,
     series,
-    formatYAxisLabel,
+    formatYAxisLabel: yAxisOptions.labelFormatter,
   });
 
   const handleFocus = useCallback(
@@ -234,11 +238,15 @@ export function Chart({
           <LinearXAxis
             xAxisDetails={xAxisDetails}
             xScale={xScale}
-            labels={hideXAxisLabels ? null : formattedLabels}
+            labels={xAxisOptions.hideXAxisLabels ? null : formattedLabels}
             drawableWidth={drawableWidth}
             fontSize={fontSize}
             drawableHeight={drawableHeight}
             ariaHidden
+            showGridLines={gridOptions.showVerticalLines}
+            gridColor={gridOptions.color}
+            showTicks={xAxisOptions.showTicks}
+            labelColor={xAxisOptions.labelColor}
           />
         </g>
 
@@ -247,6 +255,9 @@ export function Chart({
             ticks={ticks}
             drawableWidth={drawableWidth}
             fontSize={fontSize}
+            showGridLines={gridOptions.showHorizontalLines}
+            gridColor={gridOptions.color}
+            labelColor={yAxisOptions.labelColor}
           />
         </g>
 
@@ -255,13 +266,16 @@ export function Chart({
             <Crosshair
               x={xScale(tooltipDetails.index)}
               height={drawableHeight}
+              opacity={crossHairOptions.opacity}
+              fill={crossHairOptions.color}
+              width={crossHairOptions.width}
             />
           </g>
         )}
 
         {emptyState ? null : (
           <VisuallyHiddenRows
-            formatYAxisLabel={formatYAxisLabel}
+            formatYAxisLabel={yAxisOptions.labelFormatter}
             xAxisLabels={formattedLabels}
             series={series}
           />
@@ -278,9 +292,9 @@ export function Chart({
                   series={singleSeries}
                   xScale={xScale}
                   yScale={yScale}
-                  hasSpline={hasSpline}
                   isAnimated={isAnimated}
                   index={index}
+                  lineOptions={lineOptions}
                 />
 
                 {data.map(({rawValue}, dataIndex) => {
@@ -307,9 +321,9 @@ export function Chart({
                     series={singleSeries}
                     yScale={yScale}
                     xScale={xScale}
-                    hasSpline={hasSpline}
                     isAnimated={isAnimated}
                     index={index}
+                    hasSpline={lineOptions.hasSpline}
                   />
                 ) : null}
               </React.Fragment>

@@ -10,6 +10,7 @@ import {
   formatYAxisLabel,
   renderTooltipContent,
 } from './utils.stories';
+import {yAxisMinMax} from '../utilities';
 
 export default {
   title: 'LineChart',
@@ -38,8 +39,10 @@ const Template: Story<LineChartProps> = (args: LineChartProps) => {
 export const Default = Template.bind({});
 Default.args = {
   series,
-  xAxisLabels,
-  formatXAxisLabel,
-  formatYAxisLabel,
+  xAxisOptions: {
+    xAxisLabels,
+    labelFormatter: formatXAxisLabel,
+  },
+  yAxisOptions: {labelFormatter: formatYAxisLabel},
   renderTooltipContent,
 };
