@@ -1,7 +1,8 @@
 import React, {useState, useMemo, useCallback} from 'react';
-import {Color, Data} from 'types';
 import {useTransition} from 'react-spring';
 
+import {Data} from '../../types';
+import {usePrefersReducedMotion} from '../../hooks';
 import {
   LINE_HEIGHT,
   MIN_BAR_HEIGHT,
@@ -17,10 +18,14 @@ import {YAxis} from '../YAxis';
 import {BarChartXAxis} from '../BarChartXAxis';
 import {TooltipContainer} from '../TooltipContainer';
 import {Bar} from '../Bar';
-import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
-import {usePrefersReducedMotion} from '../../hooks';
 
-import {RenderTooltipContentData} from './types';
+import {
+  RenderTooltipContentData,
+  BarOptions,
+  GridOptions,
+  XAxisOptions,
+  YAxisOptions,
+} from './types';
 import {useYScale, useXScale} from './hooks';
 import {
   MARGIN,
@@ -34,31 +39,25 @@ import styles from './Chart.scss';
 interface Props {
   data: Data[];
   chartDimensions: DOMRect;
-  barMargin: number;
-  color: Color;
-  highlightColor: Color;
-  formatXAxisLabel: StringLabelFormatter;
-  formatYAxisLabel: NumberLabelFormatter;
-  timeSeries: boolean;
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
-  hasRoundedCorners: boolean;
   emptyStateText?: string;
   isAnimated?: boolean;
+  barOptions: Omit<BarOptions, 'margin'> & {margin: number};
+  gridOptions: GridOptions;
+  xAxisOptions: XAxisOptions;
+  yAxisOptions: YAxisOptions;
 }
 
 export function Chart({
   data,
   chartDimensions,
-  barMargin,
-  color,
-  highlightColor,
-  formatXAxisLabel,
-  formatYAxisLabel,
-  timeSeries,
   renderTooltipContent,
-  hasRoundedCorners,
   emptyStateText,
   isAnimated = false,
+  barOptions,
+  gridOptions,
+  xAxisOptions,
+  yAxisOptions,
 }: Props) {
   const {prefersReducedMotion} = usePrefersReducedMotion();
   const [activeBar, setActiveBar] = useState<number | null>(null);
@@ -76,7 +75,7 @@ export function Chart({
     drawableHeight:
       chartDimensions.height - MARGIN.Top - MARGIN.Bottom - LINE_HEIGHT,
     data,
-    formatYAxisLabel,
+    formatYAxisLabel: yAxisOptions.labelFormatter,
   });
 
   const approxYAxisLabelWidth = useMemo(
@@ -94,17 +93,17 @@ export function Chart({
       getBarXAxisDetails({
         yAxisLabelWidth: approxYAxisLabelWidth,
         fontSize,
-        xLabels: data.map(({label}) => formatXAxisLabel(label)),
+        xLabels: data.map(({label}) => xAxisOptions.labelFormatter(label)),
         chartDimensions,
-        padding: barMargin,
+        padding: barOptions.margin,
       }),
     [
       approxYAxisLabelWidth,
       fontSize,
       data,
       chartDimensions,
-      barMargin,
-      formatXAxisLabel,
+      barOptions.margin,
+      xAxisOptions,
     ],
   );
 
@@ -117,7 +116,7 @@ export function Chart({
   const {yScale, ticks} = useYScale({
     drawableHeight,
     data,
-    formatYAxisLabel,
+    formatYAxisLabel: yAxisOptions.labelFormatter,
   });
 
   const yAxisLabelWidth = useMemo(
@@ -136,8 +135,8 @@ export function Chart({
   const {xScale, xAxisLabels} = useXScale({
     drawableWidth,
     data,
-    barMargin,
-    formatXAxisLabel,
+    barMargin: barOptions.margin,
+    formatXAxisLabel: xAxisOptions.labelFormatter,
   });
 
   const barWidth = useMemo(() => xScale.bandwidth(), [xScale]);
@@ -204,8 +203,11 @@ export function Chart({
             labels={xAxisLabels}
             xScale={xScale}
             fontSize={fontSize}
-            showFewerLabels={timeSeries && xAxisDetails.needsDiagonalLabels}
+            showFewerLabels={xAxisDetails.needsDiagonalLabels}
             xAxisDetails={xAxisDetails}
+            textColor={xAxisOptions.labelColor}
+            gridColor={gridOptions.color}
+            showTicks={xAxisOptions.showTicks}
           />
         </g>
 
@@ -217,15 +219,18 @@ export function Chart({
             ticks={ticks}
             drawableWidth={drawableWidth}
             fontSize={fontSize}
+            labelColor={yAxisOptions.labelColor}
+            showGridLines={gridOptions.showHorizontalLines}
+            gridColor={gridOptions.color}
           />
         </g>
 
         <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
           {transitions.map(({item, props: {height}}, index) => {
             const xPosition = xScale(index.toString());
-            const ariaLabel = `${formatXAxisLabel(
+            const ariaLabel = `${xAxisOptions.labelFormatter(
               data[index].label,
-            )}: ${formatYAxisLabel(data[index].rawValue)}`;
+            )}: ${yAxisOptions.labelFormatter(data[index].rawValue)}`;
 
             return (
               <g role="listitem" key={index}>
@@ -237,14 +242,14 @@ export function Chart({
                   rawValue={item.rawValue}
                   width={barWidth}
                   isSelected={index === activeBar}
-                  color={color}
-                  highlightColor={highlightColor}
+                  color={barOptions.color}
+                  highlightColor={barOptions.highlightColor}
                   onFocus={handleFocus}
                   index={index}
                   ariaLabel={ariaLabel}
                   tabIndex={0}
                   role="img"
-                  hasRoundedCorners={hasRoundedCorners}
+                  hasRoundedCorners={barOptions.hasRoundedCorners}
                 />
               </g>
             );

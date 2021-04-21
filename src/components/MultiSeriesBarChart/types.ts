@@ -1,6 +1,12 @@
 import {Series as ShapeSeries} from 'd3-shape';
 
-import {Color, DataSeries, Data} from '../../types';
+import {
+  Color,
+  DataSeries,
+  Data,
+  StringLabelFormatter,
+  NumberLabelFormatter,
+} from '../../types';
 
 export interface Series extends DataSeries<Data> {
   highlightColor?: Color;
@@ -28,4 +34,26 @@ export interface AccessibilitySeries {
     label: string;
     value: string;
   }[];
+}
+
+export interface BarOptions {
+  hasRoundedCorners: boolean;
+  isStacked: boolean;
+}
+
+export interface GridOptions {
+  showHorizontalLines: boolean;
+  color: string;
+}
+
+export interface XAxisOptions {
+  labelFormatter: StringLabelFormatter;
+  showTicks: boolean;
+  labels: string[];
+  labelColor: string;
+}
+
+export interface YAxisOptions {
+  labelFormatter: NumberLabelFormatter;
+  labelColor: string;
 }

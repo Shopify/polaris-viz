@@ -32,15 +32,23 @@ describe('Chart />', () => {
       {rawValue: 20, label: 'data 2'},
     ],
     chartDimensions: new DOMRect(),
-    histogram: false,
-    color: 'colorPurple' as Color,
-    highlightColor: 'colorPurple' as Color,
-    formatXAxisLabel: (value: string) => value.toString(),
-    formatYAxisLabel: (value: number) => value.toString(),
-    barMargin: 0,
-    timeSeries: false,
+    barOptions: {
+      color: 'colorPurple' as Color,
+      highlightColor: 'colorPurple' as Color,
+      margin: 0,
+      hasRoundedCorners: false,
+    },
+    xAxisOptions: {
+      labelFormatter: (value: string) => value.toString(),
+      showTicks: true,
+      labelColor: 'red',
+    },
+    yAxisOptions: {
+      labelFormatter: (value: number) => value.toString(),
+      labelColor: 'red',
+    },
+    gridOptions: {showHorizontalLines: true, color: 'red'},
     renderTooltipContent: jest.fn(() => <p>Mock Tooltip</p>),
-    hasRoundedCorners: false,
   };
 
   it('renders an SVG element', () => {

@@ -1,38 +1,42 @@
 import React, {useState, useLayoutEffect, useRef} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
+import {colorSky} from '@shopify/polaris-tokens';
 
+import {DEFAULT_GREY_LABEL} from '../../constants';
 import {SkipLink} from '../SkipLink';
-import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 import {TooltipContent} from '../TooltipContent';
 import {getDefaultColor, uniqueId} from '../../utilities';
 
 import {Chart} from './Chart';
-import {Series, RenderTooltipContentData} from './types';
+import {
+  Series,
+  RenderTooltipContentData,
+  BarOptions,
+  GridOptions,
+  XAxisOptions,
+  YAxisOptions,
+} from './types';
 
 export interface MultiSeriesBarChartProps {
   series: Series[];
-  labels: string[];
-  timeSeries?: boolean;
-  formatXAxisLabel?: StringLabelFormatter;
-  formatYAxisLabel?: NumberLabelFormatter;
   renderTooltipContent?(data: RenderTooltipContentData): React.ReactNode;
-  isStacked?: boolean;
   skipLinkText?: string;
-  hasRoundedCorners?: boolean;
+  barOptions?: Partial<BarOptions>;
+  gridOptions?: Partial<GridOptions>;
+  xAxisOptions: Partial<XAxisOptions> & Pick<XAxisOptions, 'labels'>;
+  yAxisOptions?: Partial<YAxisOptions>;
   isAnimated?: boolean;
 }
 
 export function MultiSeriesBarChart({
-  labels,
   series,
-  isStacked = false,
-  timeSeries = false,
-  hasRoundedCorners = false,
-  formatXAxisLabel = (value) => value.toString(),
-  formatYAxisLabel = (value) => value.toString(),
   renderTooltipContent,
   skipLinkText,
   isAnimated = false,
+  barOptions,
+  gridOptions,
+  xAxisOptions,
+  yAxisOptions,
 }: MultiSeriesBarChartProps) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -56,11 +60,36 @@ export function MultiSeriesBarChart({
     };
   }, [containerRef, updateDimensions]);
 
+  const barOptionsWithDefaults = {
+    hasRoundedCorners: false,
+    isStacked: false,
+    ...barOptions,
+  };
+
+  const gridOptionsWithDefaults = {
+    showHorizontalLines: true,
+    color: colorSky,
+    ...gridOptions,
+  };
+
+  const xAxisOptionsWithDefaults = {
+    labelFormatter: (value: string) => value,
+    showTicks: true,
+    labelColor: DEFAULT_GREY_LABEL,
+    ...xAxisOptions,
+  };
+
+  const yAxisOptionsWithDefaults = {
+    labelFormatter: (value: number) => value.toString(),
+    labelColor: DEFAULT_GREY_LABEL,
+    ...yAxisOptions,
+  };
+
   function renderDefaultTooltipContent({data}: RenderTooltipContentData) {
     const formattedData = data.map(({label, value, color}) => ({
       color,
       label,
-      value: formatYAxisLabel(value),
+      value: yAxisOptionsWithDefaults.labelFormatter(value),
     }));
 
     return <TooltipContent data={formattedData} />;
@@ -83,19 +112,17 @@ export function MultiSeriesBarChart({
           )}
           <Chart
             series={seriesWithDefaults}
-            labels={labels}
             chartDimensions={chartDimensions}
-            formatXAxisLabel={formatXAxisLabel}
-            formatYAxisLabel={formatYAxisLabel}
+            barOptions={barOptionsWithDefaults}
+            gridOptions={gridOptionsWithDefaults}
+            xAxisOptions={xAxisOptionsWithDefaults}
+            yAxisOptions={yAxisOptionsWithDefaults}
+            isAnimated={isAnimated}
             renderTooltipContent={
               renderTooltipContent != null
                 ? renderTooltipContent
                 : renderDefaultTooltipContent
             }
-            timeSeries={timeSeries}
-            isStacked={isStacked}
-            hasRoundedCorners={hasRoundedCorners}
-            isAnimated={isAnimated}
           />
           {skipLinkText == null || skipLinkText.length === 0 ? null : (
             <SkipLink.Anchor id={skipLinkAnchorId.current} />

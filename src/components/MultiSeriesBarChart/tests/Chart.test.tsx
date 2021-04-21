@@ -61,14 +61,24 @@ describe('Chart />', () => {
         name: 'LABEL2',
       },
     ],
-    isStacked: false,
-    labels: ['stuff 1', 'stuff 2', 'stuff 3'],
     chartDimensions: new DOMRect(),
-    formatXAxisLabel: jest.fn((value: string) => value),
-    formatYAxisLabel: (value: number) => value.toString(),
-    timeSeries: false,
     renderTooltipContent,
-    hasRoundedCorners: false,
+    barOptions: {
+      margin: 0,
+      hasRoundedCorners: false,
+      isStacked: false,
+    },
+    xAxisOptions: {
+      labelFormatter: jest.fn((value: string) => value.toString()),
+      showTicks: true,
+      labels: ['stuff 1', 'stuff 2', 'stuff 3'],
+      labelColor: 'red',
+    },
+    yAxisOptions: {
+      labelFormatter: (value: number) => value.toString(),
+      labelColor: 'red',
+    },
+    gridOptions: {showHorizontalLines: true, color: 'red'},
   };
 
   it('renders an SVG element', () => {
@@ -89,7 +99,7 @@ describe('Chart />', () => {
 
   it('formats the x axis labels', () => {
     mount(<Chart {...mockProps} />);
-    expect(mockProps.formatXAxisLabel).toHaveBeenCalledTimes(3);
+    expect(mockProps.xAxisOptions.labelFormatter).toHaveBeenCalledTimes(3);
   });
 
   it('does not render <TooltipContainer /> if there is no active point', () => {
@@ -170,7 +180,12 @@ describe('Chart />', () => {
     });
 
     it('does not render BarGroup if isStacked is true', () => {
-      const chart = mount(<Chart {...mockProps} isStacked />);
+      const chart = mount(
+        <Chart
+          {...mockProps}
+          barOptions={{...mockProps.barOptions, isStacked: true}}
+        />,
+      );
 
       expect(chart).not.toContainReactComponent(BarGroup);
     });
@@ -178,13 +193,23 @@ describe('Chart />', () => {
 
   describe('<StackedBarGroup />', () => {
     it('renders StackedBarGroup if isStacked is true', () => {
-      const chart = mount(<Chart {...mockProps} isStacked />);
+      const chart = mount(
+        <Chart
+          {...mockProps}
+          barOptions={{...mockProps.barOptions, isStacked: true}}
+        />,
+      );
 
       expect(chart).toContainReactComponent(StackedBarGroup);
     });
 
     it('renders a StackedBarGroup for each stacked data item', () => {
-      const chart = mount(<Chart {...mockProps} isStacked />);
+      const chart = mount(
+        <Chart
+          {...mockProps}
+          barOptions={{...mockProps.barOptions, isStacked: true}}
+        />,
+      );
 
       expect(chart).toContainReactComponentTimes(StackedBarGroup, 2);
     });
@@ -215,7 +240,7 @@ describe('Chart />', () => {
               name: 'LABEL2',
             },
           ]}
-          isStacked
+          barOptions={{...mockProps.barOptions, isStacked: true}}
         />,
       );
 
@@ -225,7 +250,12 @@ describe('Chart />', () => {
     });
 
     it('passes highlightColors with default colors to StackedBarGroup when no highlightColors are provided', () => {
-      const chart = mount(<Chart {...mockProps} isStacked />);
+      const chart = mount(
+        <Chart
+          {...mockProps}
+          barOptions={{...mockProps.barOptions, isStacked: true}}
+        />,
+      );
 
       expect(chart).toContainReactComponent(StackedBarGroup, {
         highlightColors: ['colorBlack', 'colorRed'],
@@ -233,7 +263,12 @@ describe('Chart />', () => {
     });
 
     it('passes active props to the BarGroup that is being hovered', () => {
-      const chart = mount(<Chart {...mockProps} isStacked />);
+      const chart = mount(
+        <Chart
+          {...mockProps}
+          barOptions={{...mockProps.barOptions, isStacked: true}}
+        />,
+      );
 
       const svg = chart.find('svg')!;
       svg.trigger('onMouseMove', fakeSVGEvent);

@@ -18,7 +18,7 @@ describe('<MultiSeriesBarChart />', () => {
         name: 'LABEL1',
       },
     ],
-    labels: ['Something', 'Another', 'Thing'],
+    xAxisOptions: {labels: ['Something', 'Another', 'Thing']},
   };
 
   it('renders a <Chart />', () => {

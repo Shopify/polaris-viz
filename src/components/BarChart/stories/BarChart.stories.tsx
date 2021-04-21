@@ -19,28 +19,19 @@ export default {
   title: 'BarChart',
   component: BarChart,
   argTypes: {
-    color: {
-      control: {
-        type: 'select',
-        options: colorOptions,
-        defaultValue: primaryColor,
-      },
-    },
-    highlightColor: {
-      control: {
-        type: 'select',
-        options: colorOptions,
-        defaultValue: secondaryColor,
-      },
-    },
-    // Render the prop documentation but without a control.
-    formatXAxisLabel: {
+    barOptions: {
       control: false,
     },
-    formatYAxisLabel: {
+    xAxisOptions: {
+      control: false,
+    },
+    yAxisOptions: {
       control: false,
     },
     renderTooltipContent: {
+      control: false,
+    },
+    gridOptions: {
       control: false,
     },
   },
@@ -60,9 +51,8 @@ Default.args = {
     {rawValue: 277.69, label: '2020-01-05T12:00:00Z'},
     {rawValue: 421.19, label: '2020-01-06T12:00:00Z'},
   ],
-  color: primaryColor,
-  highlightColor: secondaryColor,
-  formatXAxisLabel,
-  formatYAxisLabel,
+  barOptions: {color: primaryColor, highlightColor: secondaryColor},
+  xAxisOptions: {labelFormatter: formatXAxisLabel},
+  yAxisOptions: {labelFormatter: formatYAxisLabel},
   renderTooltipContent,
 };

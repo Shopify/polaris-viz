@@ -61,9 +61,9 @@ function renderTooltipContent({label, value}: {label: string; value: number}) {
 return (
   <BarChart
     data={data}
-    color="primary"
-    formatXAxisLabel={formatXAxisLabel}
-    formatYAxisLabel={formatYAxisLabel}
+    barOptions={{color: 'primary'}}
+    xAxisOptions={{labelFormatter: formatXAxisLabel}}
+    yAxisOptions={{labelFormatter: formatYAxisLabel}}
     renderTooltipContent={renderTooltipContent}
     skipLinkText="Skip chart content"
   />
@@ -77,10 +77,6 @@ The bar chart interface looks like this:
 ```typescript
 interface BarChartProps {
   data: {rawValue: number; label: string}[];
-  barMargin?: 'Small' | 'Medium' | 'Large' | 'None';
-  color?: Color;
-  formatXAxisLabel?(value: string, index?: number, data?: string[]): string;
-  formatYAxisLabel?(value: number): string;
   renderTooltipContent?({
     label,
     value,
@@ -88,10 +84,26 @@ interface BarChartProps {
     lable: string;
     value: string;
   }): React.ReactNode;
-  highlightColor?: Color;
-  timeSeries?: boolean;
   skipLinkText?: string;
   emptyStateText?: string;
+  barOptions?: {
+    margin?: 'Small' | 'Medium' | 'Large' | 'None';
+    color?: Color;
+    highlightColor?: Color;
+    hasRoundedCorners?: boolean;
+  };
+  gridOptions?: {
+    showHorizontalLines?: boolean;
+    color?: string;
+  };
+  xAxisOptions?: {
+    labelFormatter?(value: string, index?: number, data?: string[]): string;
+    showTicks?: boolean;
+    labelColor?: string;
+  };
+  yAxisOptions?: {
+    labelFormatter?(value: number): string;
+  };
 }
 ```
 
@@ -110,45 +122,13 @@ If `data` may be an empty array, provide <a href="#emptyStateText">`emptyStateTe
 
 ### Optional props
 
-#### accessibilityLabel
+#### isAnimated
 
-| type     | default     |
-| -------- | ----------- |
-| `string` | `undefined` |
+| type      | default |
+| --------- | ------- |
+| `boolean` | `false` |
 
-Visually hidden text for screen readers.
-
-#### barMargin
-
-| type                                       | default  |
-| ------------------------------------------ | -------- |
-| `'Small' \| 'Medium' \| 'Large' \| 'None'` | `Medium` |
-
-This sets the margin between each of the bars. A value of `None` will make the bars look as if they are one continuous element.
-
-#### color
-
-| type    | default   |
-| ------- | --------- |
-| `Color` | `primary` |
-
-The bar fill color. This accepts any [Polaris Viz accepted color](/documentation/Polaris-Viz-colors.md).
-
-#### formatXAxisLabel
-
-| type                                                        | default                       |
-| ----------------------------------------------------------- | ----------------------------- |
-| `(value: string, index?: number, data?: string[]): string;` | `(value) => value.toString()` |
-
-This accepts a function that is called to format the labels when the chart draws its X axis.
-
-#### formatYAxisLabel
-
-| type                      | default                       |
-| ------------------------- | ----------------------------- |
-| `(value: number): string` | `(value) => value.toString()` |
-
-This accepts a function that is called when the Y value (`rawValue`) is formatted for the tooltip and for the Y Axis.
+Whether to animate the bars when the chart is initially rendered and its data is updated. Even if `isAnimated` is set to true, animations will not be displayed for users with reduced motion preferences.
 
 #### renderTooltipContent
 
@@ -158,29 +138,13 @@ This accepts a function that is called when the Y value (`rawValue`) is formatte
 
 This accepts a function that is called to render the tooltip content. By default it calls `formatXAxisLabel` and `formatYAxisLabel` to format the the tooltip values and passes them to `<BarChartTooltipContent />`. For more information about tooltip content, read the [tooltip content documentation](/src/components/TooltipContent/TooltipContent.md).
 
-#### highlightColor
+#### skipLinkText
 
-| type    | default   |
-| ------- | --------- |
-| `Color` | `primary` |
+| type     |
+| -------- |
+| `string` |
 
-The bar fill color when you hover over a bar in the chart. This accepts any [Polaris Viz accepted color](/documentation/Polaris-Viz-colors.md).
-
-#### timeSeries
-
-| type      | default |
-| --------- | ------- |
-| `boolean` | `false` |
-
-This indicates to the chart if the data provide is time series data. If `true`, the x-axis will display fewer labels as needed according to the data.
-
-#### hasRoundedCorners
-
-| type      | default |
-| --------- | ------- |
-| `boolean` | `false` |
-
-Rounds the top corners of each bar, in the case of positive numbers. Rounds the bottom corners for negatives.
+If provided, renders a `<SkipLink/>` button with the string. Use this for charts with large data sets, so keyboard users can skip all the tabbable data points in the chart.
 
 #### emptyStateText
 
@@ -189,3 +153,105 @@ Rounds the top corners of each bar, in the case of positive numbers. Rounds the 
 | `string` | `undefined` |
 
 Used to indicate to screenreaders that a chart with no data has been rendered, in the case that an empty array is passed as the data. It is strongly recommended that this is included if the data prop could be an empty array.
+
+#### barOptions
+
+An optional object including the following proprties that define the appearance of the bar.
+
+##### margin
+
+| type                                       | default  |
+| ------------------------------------------ | -------- |
+| `'Small' \| 'Medium' \| 'Large' \| 'None'` | `Medium` |
+
+This sets the margin between each of the bars. A value of `None` will make the bars look as if they are one continuous element.
+
+##### color
+
+| type    | default   |
+| ------- | --------- |
+| `Color` | `primary` |
+
+The bar fill color. This accepts any [Polaris Viz accepted color](/documentation/Polaris-Viz-colors.md).
+
+##### highlightColor
+
+| type    | default   |
+| ------- | --------- |
+| `Color` | `primary` |
+
+The bar fill color when you hover over a bar in the chart. This accepts any [Polaris Viz accepted color](/documentation/Polaris-Viz-colors.md).
+
+##### hasRoundedCorners
+
+| type      | default |
+| --------- | ------- |
+| `boolean` | `false` |
+
+Rounds the top corners of each bar, in the case of positive numbers. Rounds the bottom corners for negatives.
+
+The color used for axis labels.
+
+#### gridOptions
+
+An object including the following optional proprties that define the grid.
+
+##### showHorizontalLines
+
+| type      | default |
+| --------- | ------- |
+| `boolean` | `true`  |
+
+Whether to show lines extending from the yAxis labels through the chart.
+
+##### color
+
+| type     | default                |
+| -------- | ---------------------- |
+| `string` | `"rgb(223, 227, 232)"` |
+
+The color of the grid lines.
+
+#### xAxisOptions
+
+##### labelFormatter
+
+| type                                                        | default                       |
+| ----------------------------------------------------------- | ----------------------------- |
+| `(value: string, index?: number, data?: string[]): string;` | `(value) => value.toString()` |
+
+This accepts a function that is called to format the labels when the chart draws its X axis.
+
+##### labelColor
+
+| type     | default                |
+| -------- | ---------------------- |
+| `string` | `'rgb(223, 227, 232)'` |
+
+The color used for axis labels.
+
+##### showTicks
+
+| type      | default |
+| --------- | ------- |
+| `boolean` | `true`  |
+
+Whether to show ticks connecting the xAxis labels to their corresponding grid line.
+
+#### yAxisOptions
+
+##### labelFormatter
+
+| type                      | default                       |
+| ------------------------- | ----------------------------- |
+| `(value: number): string` | `(value) => value.toString()` |
+
+This accepts a function that is called when the Y value (`rawValue`) is formatted for the tooltip and for the Y Axis.
+
+##### labelColor
+
+| type     | default                |
+| -------- | ---------------------- |
+| `string` | `'rgb(223, 227, 232)'` |
+
+The color used for axis labels.
