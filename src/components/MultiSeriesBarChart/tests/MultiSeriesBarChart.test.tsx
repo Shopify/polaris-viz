@@ -1,6 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {Color} from 'types';
+import {SkipLink} from 'components/SkipLink';
 
 import {MultiSeriesBarChart} from '../MultiSeriesBarChart';
 import {Chart} from '../Chart';
@@ -19,11 +20,26 @@ describe('<MultiSeriesBarChart />', () => {
       },
     ],
     xAxisOptions: {labels: ['Something', 'Another', 'Thing']},
+    skipLinkText: 'Skip Chart Content',
   };
 
   it('renders a <Chart />', () => {
     const multiSeriesBarChart = mount(<MultiSeriesBarChart {...mockProps} />);
 
     expect(multiSeriesBarChart).toContainReactComponent(Chart);
+  });
+
+  it('renders a <SkipLink />', () => {
+    const multiSeriesBarChart = mount(<MultiSeriesBarChart {...mockProps} />);
+
+    expect(multiSeriesBarChart).toContainReactComponent(SkipLink);
+  });
+
+  it('does not render a <SkipLink /> when series is empty', () => {
+    const multiSeriesBarChart = mount(
+      <MultiSeriesBarChart {...mockProps} series={[]} />,
+    );
+
+    expect(multiSeriesBarChart).not.toContainReactComponent(SkipLink);
   });
 });

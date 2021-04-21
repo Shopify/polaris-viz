@@ -26,6 +26,7 @@ export interface MultiSeriesBarChartProps {
   xAxisOptions: Partial<XAxisOptions> & Pick<XAxisOptions, 'labels'>;
   yAxisOptions?: Partial<YAxisOptions>;
   isAnimated?: boolean;
+  emptyStateText?: string;
 }
 
 export function MultiSeriesBarChart({
@@ -37,10 +38,12 @@ export function MultiSeriesBarChart({
   gridOptions,
   xAxisOptions,
   yAxisOptions,
+  emptyStateText,
 }: MultiSeriesBarChartProps) {
   const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const skipLinkAnchorId = useRef(uniqueId('multiSeriesBarChart'));
+  const emptyState = series.length === 0;
 
   const [updateDimensions] = useDebouncedCallback(() => {
     if (containerRef.current != null) {
@@ -105,7 +108,9 @@ export function MultiSeriesBarChart({
     <div style={{height: '100%', width: '100%'}} ref={containerRef}>
       {chartDimensions == null ? null : (
         <React.Fragment>
-          {skipLinkText == null || skipLinkText.length === 0 ? null : (
+          {skipLinkText == null ||
+          skipLinkText.length === 0 ||
+          emptyState ? null : (
             <SkipLink anchorId={skipLinkAnchorId.current}>
               {skipLinkText}
             </SkipLink>
@@ -123,8 +128,11 @@ export function MultiSeriesBarChart({
                 ? renderTooltipContent
                 : renderDefaultTooltipContent
             }
+            emptyStateText={emptyStateText}
           />
-          {skipLinkText == null || skipLinkText.length === 0 ? null : (
+          {skipLinkText == null ||
+          skipLinkText.length === 0 ||
+          emptyState ? null : (
             <SkipLink.Anchor id={skipLinkAnchorId.current} />
           )}
         </React.Fragment>
