@@ -15,20 +15,20 @@ jest.mock('../../utilities/get-text-container-height', () => ({
 }));
 
 describe('getBarXAxisDetails', () => {
-  it('returns xAxis details when diagonal labels are needed', () => {
-    const manyDataPoints = [
-      {rawValue: 10, label: 'Value 1'},
-      {rawValue: 0, label: 'Value 2'},
-      {rawValue: 10, label: 'Value 1'},
-      {rawValue: 0, label: 'Value 2'},
-      {rawValue: 10, label: 'Value 1'},
-      {rawValue: 0, label: 'Value 2'},
-      {rawValue: 10, label: 'Value 1'},
-      {rawValue: 0, label: 'Value 2'},
-      {rawValue: 10, label: 'Value 1'},
-      {rawValue: 0, label: 'Value 2'},
-    ];
+  const manyDataPoints = [
+    {rawValue: 10, label: 'Value 1'},
+    {rawValue: 0, label: 'Value 2'},
+    {rawValue: 10, label: 'Value 1'},
+    {rawValue: 0, label: 'Value 2'},
+    {rawValue: 10, label: 'Value 1'},
+    {rawValue: 0, label: 'Value 2'},
+    {rawValue: 10, label: 'Value 1'},
+    {rawValue: 0, label: 'Value 2'},
+    {rawValue: 10, label: 'Value 1'},
+    {rawValue: 0, label: 'Value 2'},
+  ];
 
+  it('returns xAxis details when diagonal labels are needed', () => {
     const actual = getBarXAxisDetails({
       yAxisLabelWidth: 100,
       xLabels: manyDataPoints.map(({label}) => label),
@@ -59,5 +59,25 @@ describe('getBarXAxisDetails', () => {
     });
 
     expect(actual).toMatchObject({needsDiagonalLabels: false});
+  });
+
+  it('returns xAxis details when minimalLabelIndexes are provided', () => {
+    const actual = getBarXAxisDetails({
+      yAxisLabelWidth: 10,
+      xLabels: manyDataPoints.map(({label}) => label),
+      fontSize: 10,
+      minimalLabelIndexes: [0, 4, 9],
+      chartDimensions: {
+        height: 100,
+        width: 100,
+      } as any,
+    });
+
+    expect(actual).toMatchObject({
+      maxXLabelHeight: 10.656565315951458,
+      maxDiagonalLabelLength: 16.57867257451994,
+      needsDiagonalLabels: true,
+      maxWidth: 18,
+    });
   });
 });

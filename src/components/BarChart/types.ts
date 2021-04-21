@@ -28,6 +28,7 @@ export interface XAxisOptions {
   labelFormatter: StringLabelFormatter;
   showTicks: boolean;
   labelColor: string;
+  useMinimalLabels: boolean;
 }
 
 export interface YAxisOptions {
