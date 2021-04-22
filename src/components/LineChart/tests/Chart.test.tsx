@@ -9,6 +9,7 @@ import {
 } from 'components';
 import {line} from 'd3-shape';
 
+import {LinearGradient} from '../../LinearGradient';
 import {Chart} from '../Chart';
 import {Series} from '../types';
 import {Line, GradientArea} from '../components';
@@ -39,7 +40,7 @@ const primarySeries: Required<Series> = {
   name: 'Primary',
   color: 'primary',
   lineStyle: 'solid',
-  showArea: false,
+  areaColor: 'primary',
   data: [
     {label: 'Jan 1', rawValue: 1500},
     {label: 'Jan 2', rawValue: 1000},
@@ -100,6 +101,7 @@ jest.mock('../../../utilities', () => {
     ...jest.requireActual('../../../utilities'),
     getPathLength: () => 0,
     getPointAtLength: () => ({x: 0, y: 0}),
+    uniqueId: (prefix: string) => `${prefix}-1`,
   };
 });
 
@@ -251,21 +253,13 @@ describe('<Chart />', () => {
     );
 
     expect(chart).toContainReactComponent(Point, {
-      color: 'primary',
+      color: 'rgb(0,161,159)',
       cx: 0,
       cy: 0,
       active: false,
       index: 0,
       tabIndex: -1,
     });
-  });
-
-  it('renders a <GradientArea /> for a series when showArea is true', () => {
-    const chart = mount(
-      <Chart {...mockProps} series={[{...primarySeries, showArea: true}]} />,
-    );
-
-    expect(chart).toContainReactComponentTimes(GradientArea, 1);
   });
 
   it('renders tooltip content inside a <TooltipContainer /> if there is an active point', () => {
@@ -312,6 +306,90 @@ describe('<Chart />', () => {
       const chart = mount(<Chart {...mockEmptyStateProps} />);
 
       expect(chart).not.toContainReactComponent(VisuallyHiddenRows);
+    });
+  });
+
+  describe('series.color', () => {
+    describe('is of type GradientStop[]', () => {
+      it('renders a LinearGradient if series color is a gradient', () => {
+        const chart = mount(
+          <Chart
+            {...mockProps}
+            series={[
+              {
+                ...primarySeries,
+                color: [
+                  {
+                    offset: 1,
+                    color: 'red',
+                  },
+                ],
+              },
+            ]}
+          />,
+        );
+
+        expect(chart).toContainReactComponent(LinearGradient);
+      });
+
+      it('passes gradient url as color prop to <Line />', () => {
+        const chart = mount(
+          <Chart
+            {...mockProps}
+            series={[
+              {
+                ...primarySeries,
+                color: [
+                  {
+                    offset: 1,
+                    color: 'red',
+                  },
+                ],
+              },
+            ]}
+          />,
+        );
+
+        expect(chart.find(Line)).toHaveReactProps({
+          color: 'url(#lineChartGradient-1-0)',
+        });
+      });
+
+      it('passes gradient url as color prop to <Point />', () => {
+        const chart = mount(
+          <Chart
+            {...mockProps}
+            series={[
+              {
+                ...primarySeries,
+                color: [
+                  {
+                    offset: 1,
+                    color: 'red',
+                  },
+                ],
+              },
+            ]}
+          />,
+        );
+
+        expect(chart.find(Point)).toHaveReactProps({
+          color: 'url(#lineChartGradient-1-0)',
+        });
+      });
+    });
+  });
+
+  describe('areaColor', () => {
+    it('renders a <GradientArea /> for a series if areaColor is specified', () => {
+      const chart = mount(
+        <Chart
+          {...mockProps}
+          series={[{...primarySeries, areaColor: 'red'}]}
+        />,
+      );
+
+      expect(chart).toContainReactComponentTimes(GradientArea, 1);
     });
   });
 });

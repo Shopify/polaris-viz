@@ -3,6 +3,7 @@ import {mount} from '@shopify/react-testing';
 import {colorBlue} from '@shopify/polaris-tokens';
 
 import {LinePreview} from '../LinePreview';
+import {DASHED_STROKE_DASHARRAY} from '../constants';
 
 describe('<LinePreview />', () => {
   it('renders a path with the given color', () => {
@@ -19,7 +20,7 @@ describe('<LinePreview />', () => {
     );
 
     expect(linePreview).toContainReactComponent('path', {
-      strokeDasharray: '3 2',
+      strokeDasharray: DASHED_STROKE_DASHARRAY,
     });
   });
 

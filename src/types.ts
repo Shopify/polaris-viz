@@ -10,11 +10,18 @@ export interface NullableData {
 
 export type LineStyle = 'dashed' | 'solid' | 'dotted';
 
-export interface DataSeries<T> {
+export interface DataSeries<T, C> {
   name: string;
   data: T[];
-  color?: Color;
+  color?: C;
 }
+
+export interface GradientStop {
+  offset: number;
+  color: string;
+}
+
+export type SeriesColor = Color | GradientStop[];
 
 export type Color = TokensColor | VizPaletteColor;
 

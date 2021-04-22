@@ -170,7 +170,7 @@ The `Series` type gives the user a lot of flexibility to define exactly what eac
   }[];
   color?: Color;
   lineStyle?: LineStyle;
-  showArea?: boolean;
+  areaColor?: string;
 }
 ```
 
@@ -206,13 +206,13 @@ This accepts any [Polaris Viz color](/documentation/Polaris-Viz-colors.md) value
 
 The lineStyle type determines if the drawn line for the series is a solid or dashed line.
 
-#### showArea
+#### areaColor
 
-| type      | default |
-| --------- | ------- |
-| `boolean` | `false` |
+| type                 | default     |
+| -------------------- | ----------- |
+| `string | undefined` | `undefined` |
 
-The showArea type determines if a gradient area style is used for the series.
+The areaColor property determines the color for the gradient area to be used for that series. If none is specified, a gradient area will not be rendered.
 
 If `series` may be an empty array, provide <a href="#emptyStateText">`emptyStateText`</a> to communicate the empty state to screenreaders.
 

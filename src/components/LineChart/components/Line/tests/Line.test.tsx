@@ -15,6 +15,8 @@ jest.mock('d3-scale', () => ({
   scaleLinear: jest.fn(() => jest.fn(() => 250)),
 }));
 
+const color = getColorValue('primary');
+
 const mockProps = {
   series: {
     name: 'Test series',
@@ -24,12 +26,13 @@ const mockProps = {
     ],
     color: 'primary' as 'primary',
     lineStyle: 'solid' as 'solid',
-    showArea: false,
+    areaColor: 'primary' as 'primary',
   },
   index: 0,
   isAnimated: false,
   lineGenerator: (() => '') as any,
   lineOptions: {hasSpline: false, width: 10},
+  color,
 };
 
 describe('<Line />', () => {
@@ -49,7 +52,7 @@ describe('<Line />', () => {
 
       expect(actual).toContainReactComponent('path', {
         strokeDasharray: 'unset',
-        stroke: getColorValue('primary'),
+        stroke: color,
       });
     });
 
@@ -68,7 +71,7 @@ describe('<Line />', () => {
 
       expect(actual).toContainReactComponent('path', {
         strokeDasharray: '2 4',
-        stroke: getColorValue('primary'),
+        stroke: color,
       });
     });
 
@@ -87,7 +90,7 @@ describe('<Line />', () => {
 
       expect(actual).toContainReactComponent('path', {
         strokeDasharray: '0.1 8',
-        stroke: getColorValue('primary'),
+        stroke: color,
       });
     });
   });

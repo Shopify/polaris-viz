@@ -3,7 +3,7 @@ import {mount} from '@shopify/react-testing';
 import {line} from 'd3-shape';
 
 import {useLineChartAnimations} from '../use-line-chart-animations';
-import {Series} from '../../types';
+import {SeriesWithDefaults} from '../../types';
 
 jest.mock('../../../../utilities', () => {
   return {
@@ -19,12 +19,11 @@ const lineGeneratorMock = jest.fn(
     .y(({rawValue}) => rawValue),
 ) as any;
 
-const series: Required<Series>[] = [
+const series: SeriesWithDefaults[] = [
   {
     name: 'Primary',
     color: 'primary',
     lineStyle: 'solid',
-    showArea: false,
     data: [
       {label: 'Jan 1', rawValue: 1500},
       {label: 'Jan 2', rawValue: 1000},

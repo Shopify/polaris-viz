@@ -1,10 +1,8 @@
 import React from 'react';
 import tokens from '@shopify/polaris-tokens';
-import {Color, ActiveTooltip} from 'types';
+import {ActiveTooltip} from 'types';
 import {useSpring, animated, OpaqueInterpolation} from 'react-spring';
 import {classNames} from '@shopify/css-utilities';
-
-import {getColorValue} from '../../utilities';
 
 import styles from './Point.scss';
 
@@ -12,7 +10,7 @@ interface Props {
   active: boolean;
   cx: number | OpaqueInterpolation<number>;
   cy: number;
-  color: Color;
+  color: string;
   index: number;
   isAnimated: boolean;
   onFocus?: ({index, x, y}: ActiveTooltip) => void;
@@ -58,7 +56,7 @@ export const Point = React.memo(function Point({
       cx={cx}
       cy={cy}
       r={radius}
-      fill={getColorValue(color)}
+      fill={color}
       stroke={tokens.colorWhite}
       strokeWidth={1.5}
       onFocus={handleFocus}

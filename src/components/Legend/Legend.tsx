@@ -1,19 +1,27 @@
 import React from 'react';
 
-import {DataSeries, Data, NullableData, LineStyle} from '../../types';
+import {isGradientType} from '../../utilities';
+import {
+  DataSeries,
+  Data,
+  NullableData,
+  LineStyle,
+  SeriesColor,
+} from '../../types';
 import {LinePreview} from '../LinePreview';
 import {SquareColorPreview} from '../SquareColorPreview';
 
 import styles from './Legend.scss';
 
-interface LegendData
-  extends Omit<Required<DataSeries<Data | NullableData>>, 'data'> {
+type LegendData = Required<DataSeries<Data | NullableData, SeriesColor>>;
+
+interface LegendProps extends Omit<LegendData, 'data'> {
   lineStyle?: LineStyle;
   data?: (Data | NullableData)[];
 }
 
 interface Props {
-  series: LegendData[];
+  series: LegendProps[];
 }
 
 export function Legend({series}: Props) {
@@ -24,9 +32,11 @@ export function Legend({series}: Props) {
           <div className={styles.Series} key={`${name}-${index}`}>
             {lineStyle ? (
               <LinePreview color={color} lineStyle={lineStyle} />
-            ) : (
+            ) : null}
+            {/* the gradient check should be removed once SquareColorPreview works for gradients */}
+            {lineStyle == null && !isGradientType(color) ? (
               <SquareColorPreview color={color} />
-            )}
+            ) : null}
             <p className={styles.SeriesName}>{name}</p>
           </div>
         );

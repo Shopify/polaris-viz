@@ -80,13 +80,21 @@ export function Series({
       {areaStyle === 'gradient' ? (
         <LinearGradient
           id={id}
-          startColor={rgbToRgba({rgb: colorValue, alpha: 0})}
-          endColor={rgbToRgba({rgb: colorValue, alpha: 0.8})}
+          gradient={[
+            {
+              color: rgbToRgba({rgb: colorValue, alpha: 0}),
+              offset: 0,
+            },
+            {
+              color: rgbToRgba({rgb: colorValue, alpha: 0.8}),
+              offset: 100,
+            },
+          ]}
         />
       ) : null}
       {areaStyle === 'none' ? null : (
         <path
-          fill={areaStyle === 'gradient' ? `url(#${id})` : color}
+          fill={areaStyle === 'gradient' ? `url(#${id})` : colorValue}
           d={areaShape}
           className={immediate ? null : styles.Area}
         />

@@ -4,10 +4,14 @@ import {Color, TokensColor, VizPaletteColor} from 'types';
 import {vizColors} from './viz-colors';
 
 function isTokenType(color: Color): color is TokensColor {
+  if (typeof color !== 'string') return false;
+
   return color in tokens;
 }
 
 function isVizType(color: Color): color is VizPaletteColor {
+  if (typeof color !== 'string') return false;
+
   return Object.keys(vizColors).includes(color);
 }
 

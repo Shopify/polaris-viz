@@ -17,7 +17,13 @@ import {
   SMALL_LABEL_WIDTH,
   LABEL_SPACE_MINUS_FIRST_AND_LAST,
 } from '../constants';
-import {StringLabelFormatter, NullableData, Data, DataSeries} from '../types';
+import {
+  StringLabelFormatter,
+  NullableData,
+  Data,
+  DataSeries,
+  SeriesColor,
+} from '../types';
 
 import {useLinearXScale} from './useLinearXScale';
 
@@ -35,7 +41,7 @@ interface Ticks {
 }
 
 export interface ChartDetails {
-  series: DataSeries<Data | NullableData>[];
+  series: DataSeries<Data | NullableData, SeriesColor>[];
   fontSize: number;
   chartDimensions: DOMRect;
   formatXAxisLabel: StringLabelFormatter;

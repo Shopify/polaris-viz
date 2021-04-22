@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### Added
+
+- Allow gradients to be use for `<LineChart/>` and subcomponents
+- `showArea` for line series property replaced with `areaColor`
+
 ## [0.9.1] — 2021-04-27
 
 ### Added

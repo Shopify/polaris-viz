@@ -14,14 +14,20 @@ import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
 import {LinearXAxis} from '../LinearXAxis';
 import {YAxis} from '../YAxis';
 import {Point} from '../Point';
-import {eventPoint, uniqueId, clamp} from '../../utilities';
+import {
+  eventPoint,
+  uniqueId,
+  clamp,
+  getColorValue,
+  isGradientType,
+} from '../../utilities';
 import {Crosshair} from '../Crosshair';
+import {LinearGradient} from '../LinearGradient';
 import {ActiveTooltip} from '../../types';
 import {TooltipContainer} from '../TooltipContainer';
 
 import {MAX_ANIMATED_SERIES_LENGTH} from './constants';
 import {
-  Series,
   RenderTooltipContentData,
   TooltipData,
   LineOptions,
@@ -29,13 +35,14 @@ import {
   YAxisOptions,
   GridOptions,
   CrossHairOptions,
+  SeriesWithDefaults,
 } from './types';
 import {useYScale, useLineChartAnimations} from './hooks';
 import {Line, GradientArea} from './components';
 import styles from './Chart.scss';
 
 interface Props {
-  series: Required<Series>[];
+  series: SeriesWithDefaults[];
   dimensions: DOMRect;
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
   emptyStateText?: string;
@@ -64,6 +71,7 @@ export function Chart({
   );
 
   const tooltipId = useRef(uniqueId('lineChart'));
+  const gradientId = useRef(uniqueId('lineChartGradient'));
 
   const fontSize =
     dimensions.width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
@@ -337,7 +345,8 @@ export function Chart({
 
         <g transform={`translate(${axisMargin},${Margin.Top})`}>
           {reversedSeries.map((singleSeries, index) => {
-            const {data, name, showArea, color} = singleSeries;
+            const {data, name, color, areaColor} = singleSeries;
+            const seriesGradientId = `${gradientId.current}-${index}`;
             const isLongestLine = index === longestSeriesIndex;
 
             const animatedYPostion =
@@ -352,10 +361,26 @@ export function Chart({
               tooltipDetails == null ||
               (activeIndex != null && activeIndex >= data.length);
 
+            const lineColor = isGradientType(color)
+              ? `url(#${seriesGradientId})`
+              : getColorValue(color);
+
             return (
               <React.Fragment key={`${name}-${index}`}>
+                {isGradientType(color) ? (
+                  <defs>
+                    <LinearGradient
+                      id={seriesGradientId}
+                      gradient={color}
+                      gradientUnits="userSpaceOnUse"
+                      y1="100%"
+                      y2="0%"
+                    />
+                  </defs>
+                ) : null}
                 <Line
                   series={singleSeries}
+                  color={lineColor}
                   isAnimated={isAnimated}
                   index={index}
                   lineGenerator={lineGenerator}
@@ -363,7 +388,7 @@ export function Chart({
                 />
                 {animatePoints ? (
                   <Point
-                    color={color}
+                    color={lineColor}
                     cx={getXPosition()}
                     cy={animatedYPostion}
                     active={tooltipDetails != null}
@@ -379,7 +404,7 @@ export function Chart({
                   return (
                     <Point
                       key={`${name}-${index}-${dataIndex}`}
-                      color={color}
+                      color={lineColor}
                       cx={xScale(dataIndex)}
                       cy={yScale(rawValue)}
                       active={activeIndex === dataIndex}
@@ -394,7 +419,7 @@ export function Chart({
                   );
                 })}
 
-                {showArea ? (
+                {areaColor != null ? (
                   <GradientArea
                     series={singleSeries}
                     yScale={yScale}
