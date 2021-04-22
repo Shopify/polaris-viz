@@ -2,20 +2,11 @@ import React from 'react';
 import {Story, Meta} from '@storybook/react';
 
 import {Sparkline, SparklineProps} from '../..';
-import {Color} from '../../../types';
-
-import styles from './Sparkline.stories.scss';
-import {colorOptions} from '../../../utilities';
-
-const primaryColor = colorOptions[0] as Color;
-const secondaryColor = colorOptions[1] as Color;
+import {primaryColor, secondaryColor} from '../../../utilities';
 
 export default {
   title: 'Sparkline',
   component: Sparkline,
-  decorators: [
-    (Story: any) => <div className={styles.Container}>{Story()}</div>,
-  ],
   argTypes: {},
 } as Meta;
 

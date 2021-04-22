@@ -2,17 +2,13 @@ import React from 'react';
 import {Story, Meta} from '@storybook/react';
 
 import {BarChart, BarChartProps} from '../../../components';
-import {Color} from '../../../types';
 
 import {
   formatXAxisLabel,
   formatYAxisLabel,
   renderTooltipContent,
 } from './utils.stories';
-import {colorOptions} from '../../../utilities';
-
-const primaryColor = colorOptions[0] as Color;
-const secondaryColor = colorOptions[1] as Color;
+import {primaryColor, secondaryColor} from '../../../utilities';
 
 export default {
   title: 'BarChart',
