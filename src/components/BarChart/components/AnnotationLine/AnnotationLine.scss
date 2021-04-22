@@ -1,0 +1,16 @@
+.Line {
+  animation: fadeIn ease-in-out 500ms;
+  stroke-opacity: 0.5;
+  outline: none;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    stroke-opacity: 0;
+  }
+  100% {
+    opacity: 0.75;
+    stroke-opacity: 0.5;
+  }
+}

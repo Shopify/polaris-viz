@@ -2,18 +2,19 @@ import React from 'react';
 import {Story, Meta} from '@storybook/react';
 
 import {BarChart, BarChartProps} from '../../../components';
-import {Color} from '../../../types';
 
 import {
   colorOptions,
-  getDataPoint,
+  primaryColor,
+  secondaryColor,
   formatXAxisLabel,
   formatYAxisLabel,
+  formatNoOperation,
   renderTooltipContent,
+  renderTooltipContentWithAnnotations,
+  chartData,
+  histogramChartData,
 } from './utils.stories';
-
-const primaryColor = colorOptions[0] as Color;
-const secondaryColor = colorOptions[1] as Color;
 
 export default {
   title: 'BarChart',
@@ -43,16 +44,24 @@ const Template: Story<BarChartProps> = (args: BarChartProps) => {
 
 export const Default = Template.bind({});
 Default.args = {
-  data: [
-    {rawValue: 324.19, label: '2020-01-01T12:00:00Z'},
-    {rawValue: 613.29, label: '2020-01-02T12:00:00Z'},
-    {rawValue: 422.79, label: '2020-01-03T12:00:00Z'},
-    {rawValue: 25.6, label: '2020-01-04T12:00:00Z'},
-    {rawValue: 277.69, label: '2020-01-05T12:00:00Z'},
-    {rawValue: 421.19, label: '2020-01-06T12:00:00Z'},
-  ],
-  barOptions: {color: primaryColor, highlightColor: secondaryColor},
+  data: chartData,
+  barOptions: {
+    color: primaryColor,
+    highlightColor: secondaryColor,
+  },
   xAxisOptions: {labelFormatter: formatXAxisLabel},
   yAxisOptions: {labelFormatter: formatYAxisLabel},
   renderTooltipContent,
+};
+
+export const Annotated = Template.bind({});
+Annotated.args = {
+  data: histogramChartData,
+  barOptions: {
+    color: primaryColor,
+    highlightColor: secondaryColor,
+  },
+  xAxisOptions: {labelFormatter: formatNoOperation},
+  yAxisOptions: {labelFormatter: formatNoOperation},
+  renderTooltipContent: renderTooltipContentWithAnnotations,
 };

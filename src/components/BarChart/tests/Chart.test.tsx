@@ -3,6 +3,7 @@ import {mount} from '@shopify/react-testing';
 import {Color} from 'types';
 import {YAxis, TooltipContainer, BarChartXAxis, Bar} from 'components';
 
+import {AnnotationLine} from '../components';
 import {Chart} from '../Chart';
 
 (global as any).DOMRect = class DOMRect {
@@ -115,6 +116,34 @@ describe('Chart />', () => {
 
       expect(chart).not.toContainReactText('Mock Tooltip');
       expect(chart).not.toContainReactComponent(TooltipContainer);
+    });
+  });
+  describe('<AnnotationLine/>', () => {
+    it('does not render when annotated data does not exist', () => {
+      const chart = mount(<Chart {...mockProps} />);
+
+      expect(chart).not.toContainReactComponent(AnnotationLine);
+    });
+
+    it('renders when annotatated data exists', () => {
+      const mockAnnotatedData = {
+        rawValue: 10,
+        label: 'data 3',
+        annotation: {
+          width: 5,
+          color: 'colorTealLight' as Color,
+          tooltipData: {
+            label: 'Median',
+            value: '1.5 hours',
+          },
+          ariaLabel: 'Median 1.5 hours',
+          xOffset: 0.5,
+        },
+      };
+      mockProps.data.push(mockAnnotatedData);
+      const chart = mount(<Chart {...mockProps} />);
+
+      expect(chart).toContainReactComponent(AnnotationLine);
     });
   });
 });

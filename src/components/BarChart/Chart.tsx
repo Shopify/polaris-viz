@@ -1,7 +1,6 @@
 import React, {useState, useMemo, useCallback} from 'react';
 import {useTransition} from 'react-spring';
 
-import {Data} from '../../types';
 import {usePrefersReducedMotion} from '../../hooks';
 import {
   LINE_HEIGHT,
@@ -19,7 +18,9 @@ import {BarChartXAxis} from '../BarChartXAxis';
 import {TooltipContainer} from '../TooltipContainer';
 import {Bar} from '../Bar';
 
+import {AnnotationLine} from './components';
 import {
+  BarChartData,
   RenderTooltipContentData,
   BarOptions,
   GridOptions,
@@ -37,7 +38,7 @@ import {
 import styles from './Chart.scss';
 
 interface Props {
-  data: Data[];
+  data: BarChartData[];
   chartDimensions: DOMRect;
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
   emptyStateText?: string;
@@ -149,6 +150,7 @@ export function Chart({
     return renderTooltipContent({
       label: data[activeBar].label,
       value: data[activeBar].rawValue,
+      annotation: data[activeBar].annotation,
     });
   }, [activeBar, data, renderTooltipContent]);
 
@@ -227,6 +229,7 @@ export function Chart({
 
         <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
           {transitions.map(({item, props: {height}}, index) => {
+            const {rawValue, annotation} = item;
             const xPosition = xScale(index.toString());
             const ariaLabel = `${xAxisOptions.labelFormatter(
               data[index].label,
@@ -239,7 +242,7 @@ export function Chart({
                   key={index}
                   x={xPosition == null ? 0 : xPosition}
                   yScale={yScale}
-                  rawValue={item.rawValue}
+                  rawValue={rawValue}
                   width={barWidth}
                   isSelected={index === activeBar}
                   color={barOptions.color}
@@ -251,6 +254,17 @@ export function Chart({
                   role="img"
                   hasRoundedCorners={barOptions.hasRoundedCorners}
                 />
+                {annotation != null ? (
+                  <AnnotationLine
+                    xPosition={xPosition == null ? 0 : xPosition}
+                    barWidth={barWidth}
+                    drawableHeight={drawableHeight}
+                    width={annotation.width}
+                    color={annotation.color}
+                    xOffset={annotation.xOffset}
+                    ariaLabel={annotation.ariaLabel}
+                  />
+                ) : null}
               </g>
             );
           })}
