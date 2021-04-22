@@ -5,6 +5,8 @@
 ### Added
 
 - Ability to show point at the end of a `<Sparkline />` series
+- `emptyStateText` and empty state handling to `<MultiSeriesBarChart />`
+- `useMinimalLabels` option added to the `<BarChart />` `xAxisOptions` prop
 
 ### Changed
 
@@ -13,10 +15,6 @@
 ### Removed
 
 - The timeseries prop has been removed from bar charts, in favour of using that label handling by default (when there is not enough room for all diagonal labels, some will be dropped).
-
-### Added
-
-- `emptyStateText` and empty state handling to `<MultiSeriesBarChart />`
 
 ## [0.8.1] — 2021-04-20
 

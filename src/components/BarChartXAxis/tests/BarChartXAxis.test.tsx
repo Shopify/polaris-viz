@@ -27,7 +27,6 @@ describe('<BarChartXAxis/>', () => {
       {value: 'Label', xOffset: 20},
     ],
     xScale: scaleBand(),
-    showFewerLabels: false,
     xAxisDetails: {
       needsDiagonalLabels: false,
       maxXLabelHeight: 40,
@@ -72,12 +71,11 @@ describe('<BarChartXAxis/>', () => {
     expect(axis).toContainReactComponentTimes('foreignObject', 2);
   });
 
-  it('hides elements if showFewerLabels is true and there is not enough room', () => {
+  it('hides elements if needsDiagonalLabels is true and there is not enough room', () => {
     const axis = mount(
       <svg>
         <BarChartXAxis
           {...mockProps}
-          showFewerLabels
           xAxisDetails={{
             ...mockProps.xAxisDetails,
             needsDiagonalLabels: true,
@@ -115,5 +113,68 @@ describe('<BarChartXAxis/>', () => {
 
     const foreignObjectTransform = axis.find('foreignObject')!.props.transform;
     expect(foreignObjectTransform).toContain('rotate');
+  });
+
+  it('displays minimal labels if minimalLabelIndexes is true', () => {
+    const axis = mount(
+      <svg>
+        <BarChartXAxis
+          {...mockProps}
+          minimalLabelIndexes={[0, 3, 6]}
+          labels={[
+            {value: '0', xOffset: 10},
+            {value: '1', xOffset: 10},
+            {value: '2', xOffset: 20},
+            {value: '3', xOffset: 20},
+            {value: '4', xOffset: 20},
+            {value: '5', xOffset: 20},
+            {value: '6', xOffset: 20},
+          ]}
+        />
+        ,
+      </svg>,
+    );
+
+    const styleProps = {fontSize: 10, color: 'red'};
+
+    expect(axis).toContainReactComponent('div', {
+      children: '0',
+      style: {...styleProps, textAlign: 'left'},
+    });
+
+    expect(axis).toContainReactComponent('div', {
+      children: '3',
+      style: {...styleProps, textAlign: 'center'},
+    });
+
+    expect(axis).toContainReactComponent('div', {
+      children: '6',
+      style: {...styleProps, textAlign: 'right'},
+    });
+  });
+
+  it('uses modified positions for minimal xAxis labels', () => {
+    const axis = mount(
+      <svg>
+        <BarChartXAxis
+          {...mockProps}
+          minimalLabelIndexes={[0, 3, 6]}
+          labels={[
+            {value: '0', xOffset: 10},
+            {value: '1', xOffset: 10},
+            {value: '2', xOffset: 20},
+            {value: '3', xOffset: 20},
+            {value: '4', xOffset: 20},
+            {value: '5', xOffset: 20},
+            {value: '6', xOffset: 20},
+          ]}
+        />
+        ,
+      </svg>,
+    );
+
+    expect(axis).toContainReactComponent('g', {
+      transform: 'translate(5, 8)',
+    });
   });
 });

@@ -214,7 +214,6 @@ export function Chart({
             labels={xAxisLabels}
             xScale={xScale}
             xAxisDetails={xAxisDetails}
-            showFewerLabels={xAxisDetails.needsDiagonalLabels}
             fontSize={fontSize}
             textColor={xAxisOptions.labelColor}
             gridColor={gridOptions.color}

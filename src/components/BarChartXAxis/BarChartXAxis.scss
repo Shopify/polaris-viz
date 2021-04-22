@@ -7,7 +7,6 @@
 }
 
 .DiagonalText {
-  text-align: right;
   @include ellipsis-overflow;
   line-height: 1;
 }

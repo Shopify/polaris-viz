@@ -100,6 +100,7 @@ interface BarChartProps {
     labelFormatter?(value: string, index?: number, data?: string[]): string;
     showTicks?: boolean;
     labelColor?: string;
+    useMinimalLabels?: boolean;
   };
   yAxisOptions?: {
     labelFormatter?(value: number): string;
@@ -229,6 +230,14 @@ This accepts a function that is called to format the labels when the chart draws
 | `string` | `'rgb(223, 227, 232)'` |
 
 The color used for axis labels.
+
+##### useMinimalLabels
+
+| type      | default |
+| --------- | ------- |
+| `boolean` | `false` |
+
+If set to true, a chart with more than three xAxis labels will show a maximum of three labels. This option is useful when timeseries data is displayed.
 
 ##### showTicks
 

@@ -89,6 +89,7 @@ export function BarChart({
     labelFormatter: (value: string) => value,
     showTicks: true,
     labelColor: DEFAULT_GREY_LABEL,
+    useMinimalLabels: false,
     ...xAxisOptions,
   };
 

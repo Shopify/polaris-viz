@@ -2,6 +2,7 @@ import {
   MARGIN,
   MAX_TEXT_BOX_HEIGHT,
   MIN_HORIZONTAL_LABEL_SPACE,
+  SPACING,
 } from '../constants';
 
 import {getTextContainerHeight} from './get-text-container-height';
@@ -14,6 +15,7 @@ interface LayoutDetails {
   xLabels: string[];
   chartDimensions: DOMRect;
   padding?: number;
+  minimalLabelIndexes?: number[] | null;
 }
 
 export function getBarXAxisDetails({
@@ -22,15 +24,28 @@ export function getBarXAxisDetails({
   fontSize,
   chartDimensions,
   padding = 0,
+  minimalLabelIndexes,
 }: LayoutDetails) {
   // amount of space for label within individual column of data
+  const labelsToUse =
+    minimalLabelIndexes == null
+      ? xLabels
+      : xLabels.filter((_, index) => minimalLabelIndexes.includes(index));
+
+  const drawableWidth =
+    chartDimensions.width - yAxisLabelWidth - MARGIN.Right - SPACING;
+
+  const spacePerBar = (drawableWidth * (1 - padding / 2)) / xLabels.length;
+
+  const spaceForMinimalLabels = minimalLabelIndexes
+    ? drawableWidth / minimalLabelIndexes.length
+    : null;
+
   const datumXLabelSpace =
-    ((chartDimensions.width - yAxisLabelWidth - MARGIN.Right) *
-      (1 - padding / 2)) /
-    xLabels.length;
+    spaceForMinimalLabels == null ? spacePerBar : spaceForMinimalLabels;
 
   // calculations are be based on the longest label
-  const longestXLabelDetails = getLongestLabelDetails(xLabels, fontSize);
+  const longestXLabelDetails = getLongestLabelDetails(labelsToUse, fontSize);
 
   // how tall the xaxis would be if we use horizontal labels
   const horizontalLabelHeight = getTextContainerHeight({
@@ -46,7 +61,7 @@ export function getBarXAxisDetails({
 
   // use COS and pythagorean theorem to determine
   // height that a diagonal label would be cut off at
-  const firstBarMidpoint = datumXLabelSpace / 2;
+  const firstBarMidpoint = spacePerBar / 2;
   const distanceToFirstTick = yAxisLabelWidth + firstBarMidpoint;
   const {angledLabelMaxLength, maxDiagonalLabelHeight} = getMaxDiagonalDetails(
     longestXLabelDetails.length,

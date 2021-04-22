@@ -88,6 +88,11 @@ export function Chart({
     [fontSize, initialTicks],
   );
 
+  const minimalLabelIndexes =
+    xAxisOptions.useMinimalLabels && data.length > 3
+      ? [0, Math.floor(data.length / 2), data.length - 1]
+      : null;
+
   const xAxisDetails = useMemo(
     () =>
       getBarXAxisDetails({
@@ -96,6 +101,7 @@ export function Chart({
         xLabels: data.map(({label}) => xAxisOptions.labelFormatter(label)),
         chartDimensions,
         padding: barOptions.margin,
+        minimalLabelIndexes,
       }),
     [
       approxYAxisLabelWidth,
@@ -103,6 +109,7 @@ export function Chart({
       data,
       chartDimensions,
       barOptions.margin,
+      minimalLabelIndexes,
       xAxisOptions,
     ],
   );
@@ -203,11 +210,11 @@ export function Chart({
             labels={xAxisLabels}
             xScale={xScale}
             fontSize={fontSize}
-            showFewerLabels={xAxisDetails.needsDiagonalLabels}
             xAxisDetails={xAxisDetails}
             textColor={xAxisOptions.labelColor}
             gridColor={gridOptions.color}
             showTicks={xAxisOptions.showTicks}
+            minimalLabelIndexes={minimalLabelIndexes}
           />
         </g>
 
