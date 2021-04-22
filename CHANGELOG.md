@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Added
+
+- Ability to show point at the end of a `<Sparkline />` series
+
 ### Changed
 
 - The line chart and bar chart APIs now allow for custom configuration of chart element appearances. Some top-level props are now nested within more specific object props to configure the appearance of the chart.

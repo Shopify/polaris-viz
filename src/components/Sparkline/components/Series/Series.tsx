@@ -10,6 +10,7 @@ import {LinearGradient} from '../LinearGradient';
 import styles from './Series.scss';
 
 const STROKE_WIDTH = 1.5;
+const POINT_RADIUS = 2;
 
 export function Series({
   xScale,
@@ -31,6 +32,7 @@ export function Series({
     areaStyle = 'none',
     lineStyle = 'solid',
     color = 'colorTeal',
+    hasPoint = false,
     data,
   } = series;
 
@@ -49,7 +51,11 @@ export function Series({
   }
 
   const lineShape = lineGenerator(data);
-
+  const [lastLinePoint] = data.slice(-1);
+  const lastLinePointCoordinates = {
+    x: xScale(lastLinePoint.x),
+    y: yScale(lastLinePoint.y),
+  };
   const areaShape = areaGenerator(data);
 
   const id = useMemo(() => uniqueId('sparkline'), []);
@@ -71,7 +77,6 @@ export function Series({
         strokeDasharray={dashedLine ? '2 4' : ''}
         className={immediate ? null : styles.Path}
       />
-
       {areaStyle === 'gradient' ? (
         <LinearGradient
           id={id}
@@ -79,7 +84,6 @@ export function Series({
           endColor={rgbToRgba({rgb: colorValue, alpha: 0.8})}
         />
       ) : null}
-
       {areaStyle === 'none' ? null : (
         <path
           fill={areaStyle === 'gradient' ? `url(#${id})` : color}
@@ -87,6 +91,16 @@ export function Series({
           className={immediate ? null : styles.Area}
         />
       )}
+
+      {hasPoint ? (
+        <circle
+          cx={lastLinePointCoordinates.x}
+          cy={lastLinePointCoordinates.y}
+          r={POINT_RADIUS}
+          fill={colorValue}
+          className={styles.Point}
+        />
+      ) : null}
     </React.Fragment>
   );
 }
