@@ -119,6 +119,15 @@ describe('Chart />', () => {
     expect(tooltipContainer).toContainReactText('Mock Tooltip');
   });
 
+  describe('empty state', () => {
+    it('does not render tooltip for empty state', () => {
+      const chart = mount(<Chart {...mockProps} series={[]} />);
+
+      expect(chart).not.toContainReactText('Mock Tooltip');
+      expect(chart).not.toContainReactComponent(TooltipContainer);
+    });
+  });
+
   describe('<BarGroup />', () => {
     it('renders a BarGroup for each data item', () => {
       const chart = mount(<Chart {...mockProps} />);

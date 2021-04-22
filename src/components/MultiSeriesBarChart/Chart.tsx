@@ -35,6 +35,7 @@ interface Props {
   xAxisOptions: XAxisOptions;
   yAxisOptions: YAxisOptions;
   isAnimated?: boolean;
+  emptyStateText?: string;
 }
 
 export function Chart({
@@ -46,6 +47,7 @@ export function Chart({
   yAxisOptions,
   barOptions,
   isAnimated = false,
+  emptyStateText,
 }: Props) {
   const [activeBarGroup, setActiveBarGroup] = useState<number | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState<{
@@ -55,6 +57,8 @@ export function Chart({
 
   const fontSize =
     chartDimensions.width < SMALL_WIDTH ? SMALL_FONT_SIZE : FONT_SIZE;
+
+  const emptyState = series.length === 0;
 
   const stackedValues = barOptions.isStacked
     ? getStackedValues(series, xAxisOptions.labels)
@@ -197,7 +201,8 @@ export function Chart({
         onTouchMove={handleInteraction}
         onMouseLeave={() => setActiveBarGroup(null)}
         onTouchEnd={() => setActiveBarGroup(null)}
-        role="list"
+        role={emptyState ? 'img' : 'list'}
+        aria-label={emptyState ? emptyStateText : undefined}
       >
         <g
           transform={`translate(${axisMargin},${chartDimensions.height -
@@ -273,7 +278,7 @@ export function Chart({
         </g>
       </svg>
 
-      {tooltipPosition != null && activeBarGroup != null ? (
+      {tooltipPosition != null && activeBarGroup != null && !emptyState ? (
         <TooltipContainer
           activePointIndex={activeBarGroup}
           currentX={tooltipPosition.x}

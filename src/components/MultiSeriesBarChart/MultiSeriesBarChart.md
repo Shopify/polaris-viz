@@ -119,6 +119,7 @@ interface MultiSeriesBarChartProps {
   series: Series[];
   renderTooltipContent?: (data: RenderTooltipContentData): React.ReactNode;
   skipLinkText?: string;
+  emptyStateText?: string;
   barOptions?: {
     isStacked?: boolean;
     hasRoundedCorners?: boolean;
@@ -158,6 +159,8 @@ The `Series` type gives the user a lot of flexibility to define exactly what eac
   highlightColor?: Color;
 }
 ```
+
+If `series` may be an empty array, provide <a href="#emptyStateText">`emptyStateText`</a> to communicate the empty state to screenreaders.
 
 #### name
 
@@ -339,3 +342,11 @@ Whether to show lines extending from the yAxis labels through the chart.
 | `string` | `"rgb(223, 227, 232)"` |
 
 The color of the grid lines.
+
+#### emptyStateText
+
+| type     | default     |
+| -------- | ----------- |
+| `string` | `undefined` |
+
+Used to indicate to screenreaders that a chart with no series data has been rendered, in the case that an empty array is passed as the data. It is strongly recommended that this is included if the series prop could be an empty array.
