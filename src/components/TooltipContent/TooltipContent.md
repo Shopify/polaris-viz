@@ -4,7 +4,7 @@ Used to format content within a chart's tooltip.
 
 ## Example
 
-<img src="tooltip-content.png" alt="Tooltip Content example image. It shows an example of TooltipContent, LineChartTooltipContent, and BarChartTooltipContent" />
+<img src="tooltip-content.jpg" alt="Tooltip Content example image. It shows an example of TooltipContent, LineChartTooltipContent, and BarChartTooltipContent" />
 
 ```tsx
 const tooltipContentData: TooltipContentProps['data'] = [
@@ -47,6 +47,16 @@ const lineChartTooltipContentData: LineChartTooltipContentProps['data'] = [
   },
 ];
 
+const barChartAnnotation = {
+  dataIndex: 1,
+  width: 5,
+  color: '#ccc',
+  tooltipData: {
+    label: 'Median: ',
+    value: '1.5',
+  },
+};
+
 return (
   <div>
     <TooltipContent
@@ -60,7 +70,11 @@ return (
 
     <LineChartTooltipContent data={lineChartTooltipContentData} />
 
-    <BarChartTooltipContent label="January 1st, 2021" value="10" />
+    <BarChartTooltipContent
+      label="January 1st, 2021"
+      value="10"
+      annotation={barChartAnnotation}
+    />
   </div>
 );
 ```
@@ -186,6 +200,7 @@ The props interface for `<BarChartTooltipContent />` looks like this:
 interface BarChartTooltipContentProps {
   label: string;
   value: string;
+  annotation?: Annotation;
 }
 ```
 
@@ -208,3 +223,13 @@ The label to display on the tooltip.
 | `string` |
 
 The value to display on the tooltip.
+
+#### Optional props
+
+##### annotation.tooltipData
+
+| type                             |
+| -------------------------------- |
+| `{label: string, value: string}` |
+
+The annotation `label` and `value` will be shown in the tooltip content above the other tooltip values.

@@ -3,6 +3,7 @@ import {mount} from '@shopify/react-testing';
 import {Color} from 'types';
 import {YAxis, TooltipContainer, BarChartXAxis, Bar} from 'components';
 
+import {AnnotationLine} from '../components';
 import {Chart} from '../Chart';
 
 (global as any).DOMRect = class DOMRect {
@@ -50,6 +51,19 @@ describe('Chart />', () => {
     },
     gridOptions: {showHorizontalLines: true, color: 'red'},
     renderTooltipContent: jest.fn(() => <p>Mock Tooltip</p>),
+    annotationsLookupTable: {
+      1: {
+        dataIndex: 1,
+        xOffset: 0.5,
+        width: 5,
+        color: '#ccc',
+        ariaLabel: 'Median: 1.5',
+        tooltipData: {
+          label: 'Median',
+          value: '1.5 hours',
+        },
+      },
+    },
   };
 
   it('renders an SVG element', () => {
@@ -158,6 +172,24 @@ describe('Chart />', () => {
 
       expect(chart).not.toContainReactText('Mock Tooltip');
       expect(chart).not.toContainReactComponent(TooltipContainer);
+    });
+  });
+
+  describe('<AnnotationLine/>', () => {
+    it('does not render when annotated data does not exist', () => {
+      const updatedProps = {
+        ...mockProps,
+        annotationsLookupTable: {},
+      };
+      const chart = mount(<Chart {...updatedProps} />);
+
+      expect(chart).not.toContainReactComponent(AnnotationLine);
+    });
+
+    it('renders when annotatated data exists', () => {
+      const chart = mount(<Chart {...mockProps} />);
+
+      expect(chart).toContainReactComponent(AnnotationLine);
     });
   });
 });

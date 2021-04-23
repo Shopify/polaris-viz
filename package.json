@@ -16,6 +16,7 @@
     "type-check": "sewing-kit type-check",
     "test": "sewing-kit test",
     "test:coverage": "CI=true yarn test --coverage",
+    "test:debug:chrome": "osascript -e 'tell app \"Google Chrome\" to open location \"chrome://inspect\"' && sewing-kit-debug test --debug",
     "posttest:coverage": "yarn open:coverage",
     "open:coverage": "open build/coverage/index.html",
     "test:ci": "yarn test --coverage",

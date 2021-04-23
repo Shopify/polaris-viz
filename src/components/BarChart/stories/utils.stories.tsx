@@ -4,6 +4,9 @@ import tokens from '@shopify/polaris-tokens';
 import {BarChartTooltipContent} from '../../../components';
 import {vizColors} from '../../../utilities';
 
+import {Color} from '../../../types';
+import {Annotation} from '../types';
+
 const polarisTokensColors = Object.keys(tokens).filter((key) =>
   key.startsWith('color'),
 );
@@ -11,6 +14,9 @@ const polarisTokensColors = Object.keys(tokens).filter((key) =>
 export const colorOptions: string[] = Object.keys(vizColors).concat(
   polarisTokensColors,
 );
+
+export const primaryColor = colorOptions[0] as Color;
+export const secondaryColor = colorOptions[1] as Color;
 
 export const getDataPoint = (limit = 1000, allowNegative = false) => {
   if (allowNegative)
@@ -63,4 +69,29 @@ export function renderTooltipContent({
   return (
     <BarChartTooltipContent label={formattedLabel} value={formattedValue} />
   );
+}
+
+export function renderTooltipContentWithAnnotation({
+  value,
+  annotation,
+}: {
+  value: number;
+  annotation?: Annotation;
+}) {
+  function formatTooltipLabel() {
+    return 'Orders fulfilled';
+  }
+  const formattedLabel = formatTooltipLabel();
+  const formattedValue = `${value}`;
+  return (
+    <BarChartTooltipContent
+      label={formattedLabel}
+      value={formattedValue}
+      annotation={annotation}
+    />
+  );
+}
+
+export function formatLabelNoop(value: string | number) {
+  return value;
 }
