@@ -10,3 +10,10 @@ export const FONT_SIZE = 12;
 export const ANIMATION_DELAY = 0.25;
 export const SLOW_DURATION = 1;
 export const FAST_DURATION = 0.5;
+export const MAX_ANIMATED_SERIES_LENGTH = 1000;
+export const SPRING_CONFIG = {
+  friction: 5,
+  clamp: true,
+  mass: 1,
+  tension: 190,
+};

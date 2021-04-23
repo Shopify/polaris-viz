@@ -26,6 +26,14 @@ const primarySeries: Required<Series> = {
   ],
 };
 
+jest.mock('../../../utilities', () => {
+  return {
+    ...jest.requireActual('../../../utilities'),
+    getPathLength: () => 0,
+    getPointAtLength: () => ({x: 0, y: 0}),
+  };
+});
+
 describe('<LineChart />', () => {
   beforeAll(() => {
     Object.defineProperty(window, 'matchMedia', {

@@ -1,5 +1,6 @@
 import React, {useState, useMemo, useRef, useCallback} from 'react';
 import throttle from 'lodash.throttle';
+import {line, curveMonotoneX} from 'd3-shape';
 
 import {useLinearXAxisDetails, useLinearXScale} from '../../hooks';
 import {
@@ -13,11 +14,12 @@ import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
 import {LinearXAxis} from '../LinearXAxis';
 import {YAxis} from '../YAxis';
 import {Point} from '../Point';
-import {eventPoint, uniqueId} from '../../utilities';
+import {eventPoint, uniqueId, clamp} from '../../utilities';
 import {Crosshair} from '../Crosshair';
 import {ActiveTooltip} from '../../types';
 import {TooltipContainer} from '../TooltipContainer';
 
+import {MAX_ANIMATED_SERIES_LENGTH} from './constants';
 import {
   Series,
   RenderTooltipContentData,
@@ -28,7 +30,7 @@ import {
   GridOptions,
   CrossHairOptions,
 } from './types';
-import {useYScale} from './hooks';
+import {useYScale, useLineChartAnimations} from './hooks';
 import {Line, GradientArea} from './components';
 import styles from './Chart.scss';
 
@@ -115,20 +117,6 @@ export function Chart({
     [axisMargin],
   );
 
-  const drawableWidth =
-    axisMargin == null ? null : dimensions.width - Margin.Right - axisMargin;
-
-  const longestSeriesLength = useMemo(
-    () =>
-      series.reduce<number>(
-        (max, currentSeries) => Math.max(max, currentSeries.data.length - 1),
-        0,
-      ),
-    [series],
-  );
-
-  const {xScale} = useLinearXScale({drawableWidth, longestSeriesLength});
-
   const tooltipMarkup = useMemo(() => {
     if (tooltipDetails == null) {
       return null;
@@ -162,9 +150,69 @@ export function Chart({
 
   const reversedSeries = useMemo(() => series.slice().reverse(), [series]);
 
+  const drawableWidth =
+    axisMargin == null ? null : dimensions.width - Margin.Right - axisMargin;
+
+  const longestSeriesIndex = useMemo(
+    () =>
+      reversedSeries.reduce((maxIndex, currentSeries, currentIndex) => {
+        return reversedSeries[maxIndex].data.length < currentSeries.data.length
+          ? currentIndex
+          : maxIndex;
+      }, 0),
+    [reversedSeries],
+  );
+
+  const longestSeriesLength = reversedSeries[longestSeriesIndex]
+    ? reversedSeries[longestSeriesIndex].data.length - 1
+    : 0;
+
+  const {xScale} = useLinearXScale({
+    drawableWidth,
+    longestSeriesLength,
+  });
+
+  const lineGenerator = useMemo(() => {
+    const generator = line<{rawValue: number}>()
+      .x((_, index) => (xScale == null ? 0 : xScale(index)))
+      .y(({rawValue}) => yScale(rawValue));
+
+    if (lineOptions.hasSpline) {
+      generator.curve(curveMonotoneX);
+    }
+    return generator;
+  }, [lineOptions.hasSpline, xScale, yScale]);
+
+  const activeIndex =
+    tooltipDetails == null || tooltipDetails.index == null
+      ? null
+      : tooltipDetails.index;
+
+  const animatePoints =
+    isAnimated && longestSeriesLength <= MAX_ANIMATED_SERIES_LENGTH;
+
+  const {animatedCoordinates} = useLineChartAnimations({
+    series: reversedSeries,
+    lineGenerator,
+    activeIndex,
+    isAnimated: animatePoints,
+  });
+
   if (xScale == null || drawableWidth == null || axisMargin == null) {
     return null;
   }
+
+  const getXPosition = ({isCrosshair} = {isCrosshair: false}) => {
+    const offset = isCrosshair ? crossHairOptions.width / 2 : 0;
+
+    return animatedCoordinates != null &&
+      animatedCoordinates[longestSeriesIndex] != null &&
+      animatePoints
+      ? animatedCoordinates[longestSeriesIndex].interpolate(
+          (coord: SVGPoint) => coord.x - offset,
+        )
+      : xScale(activeIndex == null ? 0 : activeIndex) - offset;
+  };
 
   const handleMouseInteraction = throttle(
     (
@@ -185,11 +233,11 @@ export function Chart({
       | React.TouchEvent<SVGSVGElement>
       | null,
   ) {
-    if (axisMargin == null || xScale == null) {
+    if (axisMargin == null || xScale == null || emptyState) {
       return;
     }
 
-    if (event === null) {
+    if (event == null) {
       setTooltipDetails(null);
       return;
     }
@@ -206,11 +254,16 @@ export function Chart({
     }
 
     const closestIndex = Math.round(xScale.invert(svgX - axisMargin));
+    const clampedClosestIndex = clamp({
+      amount: closestIndex,
+      min: 0,
+      max: reversedSeries[longestSeriesIndex].data.length - 1,
+    });
 
     setTooltipDetails({
       x: svgX,
       y: svgY,
-      index: Math.min(longestSeriesLength, closestIndex),
+      index: clampedClosestIndex,
     });
   }
 
@@ -262,12 +315,12 @@ export function Chart({
           />
         </g>
 
-        {tooltipDetails == null || emptyState ? null : (
+        {emptyState ? null : (
           <g transform={`translate(${axisMargin},${Margin.Top})`}>
             <Crosshair
-              x={xScale(tooltipDetails.index)}
+              x={getXPosition({isCrosshair: true})}
               height={drawableHeight}
-              opacity={crossHairOptions.opacity}
+              opacity={tooltipDetails == null ? 0 : crossHairOptions.opacity}
               fill={crossHairOptions.color}
               width={crossHairOptions.width}
             />
@@ -285,23 +338,44 @@ export function Chart({
         <g transform={`translate(${axisMargin},${Margin.Top})`}>
           {reversedSeries.map((singleSeries, index) => {
             const {data, name, showArea, color} = singleSeries;
-            const isFirstLine = index === series.length - 1;
+            const isLongestLine = index === longestSeriesIndex;
+
+            const animatedYPostion =
+              animatedCoordinates == null || animatedCoordinates[index] == null
+                ? 0
+                : animatedCoordinates[index].interpolate(
+                    (coord: SVGPoint) => coord.y,
+                  );
+
+            const hidePoint =
+              animatedCoordinates == null ||
+              tooltipDetails == null ||
+              (activeIndex != null && activeIndex >= data.length);
 
             return (
               <React.Fragment key={`${name}-${index}`}>
                 <Line
                   series={singleSeries}
-                  xScale={xScale}
-                  yScale={yScale}
                   isAnimated={isAnimated}
                   index={index}
+                  lineGenerator={lineGenerator}
                   lineOptions={lineOptions}
                 />
+                {animatePoints ? (
+                  <Point
+                    color={color}
+                    cx={getXPosition()}
+                    cy={animatedYPostion}
+                    active={tooltipDetails != null}
+                    index={index}
+                    tabIndex={-1}
+                    isAnimated={animatePoints}
+                    visuallyHidden={hidePoint}
+                    ariaHidden
+                  />
+                ) : null}
 
                 {data.map(({rawValue}, dataIndex) => {
-                  const activeIndex =
-                    tooltipDetails == null ? null : tooltipDetails.index;
-
                   return (
                     <Point
                       key={`${name}-${index}-${dataIndex}`}
@@ -311,8 +385,11 @@ export function Chart({
                       active={activeIndex === dataIndex}
                       onFocus={handleFocus}
                       index={dataIndex}
-                      tabIndex={isFirstLine ? 0 : -1}
+                      tabIndex={isLongestLine ? 0 : -1}
                       ariaLabelledby={tooltipId.current}
+                      isAnimated={false}
+                      ariaHidden={false}
+                      visuallyHidden={animatePoints}
                     />
                   );
                 })}

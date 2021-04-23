@@ -10,7 +10,6 @@ import {
   formatYAxisLabel,
   renderTooltipContent,
 } from './utils.stories';
-import {yAxisMinMax} from '../utilities';
 
 export default {
   title: 'LineChart',

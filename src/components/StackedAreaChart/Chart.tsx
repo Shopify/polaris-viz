@@ -11,6 +11,7 @@ import {
   SMALL_FONT_SIZE,
   SPACING_TIGHT,
   FONT_SIZE,
+  CROSSHAIR_WIDTH,
 } from '../../constants';
 import {TooltipContainer} from '../TooltipContainer';
 import {eventPoint, uniqueId} from '../../utilities';
@@ -219,7 +220,7 @@ export function Chart({
         {activePointIndex == null ? null : (
           <g transform={`translate(${axisMargin},${Margin.Top})`}>
             <Crosshair
-              x={xScale(activePointIndex)}
+              x={xScale(activePointIndex) - CROSSHAIR_WIDTH / 2}
               height={drawableHeight}
               opacity={0.5}
             />
@@ -239,6 +240,7 @@ export function Chart({
                 index={index}
                 tabIndex={stackIndex === 0 ? 0 : -1}
                 ariaLabelledby={tooltipId.current}
+                isAnimated={isAnimated && !prefersReducedMotion}
               />
             )),
           )}

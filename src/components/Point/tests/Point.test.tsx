@@ -10,6 +10,7 @@ const mockProps = {
   active: false,
   color: 'colorPurple' as Color,
   index: 0,
+  isAnimated: false,
 };
 
 describe('<Point />', () => {
@@ -43,6 +44,76 @@ describe('<Point />', () => {
     const point = mount(
       <svg>
         <Point {...mockProps} active={false} />
+      </svg>,
+    );
+
+    expect(point).toContainReactComponent('circle', {
+      // eslint-disable-next-line id-length
+      r: 0,
+    });
+  });
+
+  it('is not aria hidden if the prop is set', () => {
+    const point = mount(
+      <svg>
+        <Point {...mockProps} />
+      </svg>,
+    );
+
+    expect(point).toContainReactComponent('circle', {'aria-hidden': false});
+  });
+
+  it('is aria hidden if the prop is set to true', () => {
+    const point = mount(
+      <svg>
+        <Point {...mockProps} ariaHidden />
+      </svg>,
+    );
+
+    expect(point).toContainReactComponent('circle', {'aria-hidden': true});
+  });
+
+  it('does not adds the visually hidden class if the prop is not set', () => {
+    const point = mount(
+      <svg>
+        <Point {...mockProps} />
+      </svg>,
+    );
+
+    expect(point).toContainReactComponent('circle', {
+      className: 'Point',
+    });
+  });
+
+  it('adds the visually hidden class if the prop is set to true', () => {
+    const point = mount(
+      <svg>
+        <Point {...mockProps} visuallyHidden />
+      </svg>,
+    );
+
+    expect(point).toContainReactComponent('circle', {
+      className: 'Point VisuallyHidden',
+    });
+  });
+
+  it("has an initial radius of 5 if it's active and not animated", () => {
+    const point = mount(
+      <svg>
+        <Point {...mockProps} active />
+      </svg>,
+    );
+
+    expect(point).toContainReactComponent('circle', {
+      // eslint-disable-next-line id-length
+      r: 5,
+    });
+  });
+
+  it("has an initial radius of 0 if it's active and animated", () => {
+    const point = mount(
+      <svg>
+        <Point {...mockProps} active isAnimated />
       </svg>,
     );
 
