@@ -6,8 +6,8 @@
 
 - Ability to show point at the end of a `<Sparkline />` series
 - `emptyStateText` and empty state handling to `<MultiSeriesBarChart />`
-- `useMinimalLabels` option added to the `<BarChart />` `xAxisOptions` prop
-- Exported `<LinePreview />` and `<SquareColorPreview />` components
+- `<LinePreview />` and `<SquareColorPreview />` components are now exported
+- `useMinimalLabels` option added to the `<BarChart />` and `<LineChart />` `xAxisOptions` prop
 
 ### Changed
 

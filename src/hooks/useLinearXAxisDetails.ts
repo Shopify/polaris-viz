@@ -41,6 +41,7 @@ export interface ChartDetails {
   formatXAxisLabel: StringLabelFormatter;
   initialTicks: Ticks[];
   xAxisLabels: string[];
+  useMinimalLabels?: boolean;
 }
 
 export function useLinearXAxisDetails({
@@ -50,6 +51,7 @@ export function useLinearXAxisDetails({
   formatXAxisLabel,
   initialTicks,
   xAxisLabels,
+  useMinimalLabels,
 }: ChartDetails) {
   // determine how much space will be taken up by the yaxis and its labels, in order to know width of xaxis
   const approxYAxisLabelWidth = useMemo(
@@ -67,7 +69,7 @@ export function useLinearXAxisDetails({
   const drawableWidth =
     chartDimensions.width - estimatedYAxisWidth - Margin.Right;
 
-  const longestSeriesLength = useMemo(
+  const longestSeriesLastIndex = useMemo(
     () =>
       series.reduce<number>(
         (max, currentSeries) => Math.max(max, currentSeries.data.length - 1),
@@ -79,8 +81,14 @@ export function useLinearXAxisDetails({
   // using the estimated width, use the xscale hook so we can then get the d3's estimated ticks
   const initialXScale = useLinearXScale({
     drawableWidth,
-    longestSeriesLength,
+    longestSeriesLength: longestSeriesLastIndex,
   });
+
+  const minimalLabelIndexes = [
+    0,
+    Math.floor(longestSeriesLastIndex / 2),
+    longestSeriesLastIndex,
+  ];
 
   const {
     maxXLabelHeight,
@@ -89,7 +97,7 @@ export function useLinearXAxisDetails({
     ticks,
     horizontalLabelWidth,
   } = useMemo(() => {
-    const ticks =
+    const xScaleTicks =
       initialXScale.xScale == null
         ? []
         : initialXScale.xScale
@@ -97,6 +105,11 @@ export function useLinearXAxisDetails({
             .filter(function removeNonIntegerTicks(value) {
               return Number.isInteger(value);
             });
+
+    const ticks =
+      useMinimalLabels && longestSeriesLastIndex > minimalLabelIndexes.length
+        ? minimalLabelIndexes
+        : xScaleTicks;
 
     // xAxis label spacing will be based on the longest label
     const xLabels = xAxisLabels.map((label) => formatXAxisLabel(label));
@@ -192,6 +205,9 @@ export function useLinearXAxisDetails({
     fontSize,
     formatXAxisLabel,
     initialXScale.xScale,
+    longestSeriesLastIndex,
+    minimalLabelIndexes,
+    useMinimalLabels,
     xAxisLabels,
   ]);
 

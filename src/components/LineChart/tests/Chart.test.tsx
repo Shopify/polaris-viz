@@ -53,6 +53,7 @@ const xAxisOptions = {
   hideXAxisLabels: false,
   showTicks: true,
   labelColor: 'red',
+  useMinimalLabels: false,
 };
 
 const lineOptions = {hasSpline: false, width: 2};

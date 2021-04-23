@@ -152,5 +152,34 @@ describe('useLinearXAxisDetails', () => {
       );
       expect(actual).toContainReactText('0/2');
     });
+
+    it('provides three labels if useMinimalLabels is true and the longest series has at least three points', () => {
+      const actual = mount(
+        <TicksTestComponent
+          props={{
+            ...mockProps,
+            useMinimalLabels: true,
+            xAxisLabels: ['Label 1', 'Label 2', 'Label 3', 'Label 4'],
+            series: [
+              {
+                data: [
+                  {rawValue: 10000, label: 'Some label'},
+                  {rawValue: 10, label: 'Some label'},
+                  {rawValue: 10, label: 'Some label'},
+                  {rawValue: 10, label: 'Some label'},
+                  {rawValue: 10, label: 'Some label'},
+                ],
+                name: 'Test series 1',
+                color: 'colorGreen',
+                lineStyle: 'dashed',
+              },
+            ] as any,
+            chartDimensions: {width: 800} as any,
+          }}
+        />,
+      );
+
+      expect(actual).toContainReactText('0/2/4');
+    });
   });
 });

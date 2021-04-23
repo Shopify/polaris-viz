@@ -82,6 +82,7 @@ export function Chart({
     formatXAxisLabel: xAxisOptions.labelFormatter,
     initialTicks,
     xAxisLabels: xAxisOptions.hideXAxisLabels ? [] : xAxisOptions.xAxisLabels,
+    useMinimalLabels: xAxisOptions.useMinimalLabels,
   });
 
   const marginBottom = xAxisOptions.hideXAxisLabels
