@@ -18,4 +18,6 @@ export {
   MultiSeriesBarChartProps,
   TooltipContent,
   TooltipContentProps,
+  LinePreview,
+  SquareColorPreview,
 } from './components';
