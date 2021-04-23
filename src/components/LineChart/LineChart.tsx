@@ -79,6 +79,7 @@ export function LineChart({
     hideXAxisLabels: false,
     showTicks: true,
     labelColor: DEFAULT_GREY_LABEL,
+    useMinimalLabels: false,
     ...xAxisOptions,
   };
 

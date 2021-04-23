@@ -131,6 +131,7 @@ interface LineChartProps {
     xAxisLabels: string[];
     labelFormatter?(value: string, index?: number, data?: string[]): string;
     hideXAxisLabels?: boolean;
+    useMinimalLabels?: boolean;
     showTicks?: boolean;
     labelColor: string;
   };
@@ -292,6 +293,14 @@ Used to indicate to screenreaders that a chart with no data has been rendered, i
 #### xAxisOptions
 
 An object including the following proprties that define the appearance of the xAxis. Only xAxisLabels is mandatory.
+
+##### useMinimalLabels
+
+| type      | default |
+| --------- | ------- |
+| `boolean` | `false` |
+
+If set to true, a chart that would typically show more than three xAxis labels will instead show a maximum of three labels.
 
 ##### hideXAxisLabels
 

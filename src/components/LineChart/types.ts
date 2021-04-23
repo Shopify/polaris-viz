@@ -37,6 +37,7 @@ export interface XAxisOptions {
   hideXAxisLabels: boolean;
   showTicks: boolean;
   labelColor: string;
+  useMinimalLabels: boolean;
 }
 
 export interface YAxisOptions {
