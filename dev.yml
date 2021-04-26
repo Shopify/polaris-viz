@@ -5,7 +5,7 @@ up:
       version: v12.20.1 # to be kept in sync with .nvmrc and .circleci/config.yml
 
 open:
-  app: http://localhost:6006/
+  app: http://localhost:8080/
   shipit: https://shipit.shopify.io/shopify/polaris-viz/production
   coverage: build/coverage/index.html
 
