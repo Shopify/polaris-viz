@@ -2,6 +2,7 @@ export {Point} from './Point';
 export {Bar} from './Bar';
 export {Crosshair} from './Crosshair';
 export {Sparkline, SparklineProps} from './Sparkline';
+export {Sparkbar, SparkbarProps} from './Sparkbar';
 export {
   BarChart,
   BarChartProps,

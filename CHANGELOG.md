@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- Sparkbar component
+
 ## [0.9.0] — 2021-04-26
 
 ### Added

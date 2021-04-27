@@ -2,10 +2,10 @@ import React, {useMemo} from 'react';
 import {ScaleLinear} from 'd3-scale';
 import {area, curveMonotoneX} from 'd3-shape';
 
+import {LinearGradient} from '../../../LinearGradient';
 import {getColorValue, uniqueId, rgbToRgba} from '../../../../utilities';
 import {usePrefersReducedMotion} from '../../../../hooks';
 import {SingleSeries, Coordinates} from '../../Sparkline';
-import {LinearGradient} from '../LinearGradient';
 
 import styles from './Series.scss';
 

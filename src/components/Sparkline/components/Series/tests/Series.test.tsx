@@ -4,8 +4,8 @@ import {scaleLinear} from 'd3-scale';
 import {area} from 'd3-shape';
 import {getColorValue} from 'utilities';
 
+import {LinearGradient} from '../../../../LinearGradient';
 import {Series} from '../Series';
-import {LinearGradient} from '../../LinearGradient';
 
 jest.mock('d3-shape', () => ({
   area: jest.fn(() => {
