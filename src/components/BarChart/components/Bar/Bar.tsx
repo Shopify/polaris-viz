@@ -107,7 +107,7 @@ export function Bar({
       tabIndex={tabIndex}
       role={role}
       style={style}
-      className={styles.BarNoOutline}
+      className={styles.Bar}
     />
   );
 }

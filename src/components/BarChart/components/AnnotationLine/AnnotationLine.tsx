@@ -22,7 +22,6 @@ export function AnnotationLine({
   width: annotationWidth,
   shouldAnimate = false,
   color,
-  ariaLabel,
   xOffset = MEDIAN_OFFSET,
 }: AnnotationLineProps) {
   const halfAnnotationWidth = annotationWidth / 2;
@@ -42,9 +41,6 @@ export function AnnotationLine({
       x2={xValueClamped}
       y1={drawableHeight}
       y2={0}
-      aria-label={ariaLabel}
-      tabIndex={0}
-      role="img"
     />
   );
 }

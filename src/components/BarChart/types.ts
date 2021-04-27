@@ -2,7 +2,7 @@ import {
   Color,
   StringLabelFormatter,
   NumberLabelFormatter,
-  Gradient,
+  GradientStop,
 } from 'types';
 
 export enum BarMargin {
@@ -20,8 +20,7 @@ export interface RenderTooltipContentData {
 
 export interface BarOptions {
   margin: keyof typeof BarMargin;
-  color: Color | Gradient;
-  highlightColor?: Color;
+  color: Color | GradientStop[];
   hasRoundedCorners: boolean;
 }
 

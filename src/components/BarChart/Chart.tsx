@@ -17,6 +17,7 @@ import {
   getAnimationTrail,
   uniqueId,
   getColorValue,
+  isGradientType,
 } from '../../utilities';
 import {YAxis} from '../YAxis';
 import {BarChartXAxis} from '../BarChartXAxis';
@@ -194,15 +195,14 @@ export function Chart({
   const gradientId = useMemo(() => uniqueId('gradient'), []);
   const clipId = useMemo(() => uniqueId('clip'), []);
 
-  const gradient =
-    typeof barOptions.color === 'string'
-      ? [
-          {
-            color: getColorValue(barOptions.color),
-            offset: 0,
-          },
-        ]
-      : barOptions.color;
+  const gradient = isGradientType(barOptions.color)
+    ? barOptions.color
+    : [
+        {
+          color: getColorValue(barOptions.color),
+          offset: 0,
+        },
+      ];
 
   return (
     <div
@@ -239,6 +239,7 @@ export function Chart({
                   data[index].label,
                 )}: ${yAxisOptions.labelFormatter(data[index].rawValue)}`;
                 const isSubdued = activeBar != null && index !== activeBar;
+                const annotation = annotationsLookupTable[index];
 
                 return (
                   <g role="listitem" key={index}>
@@ -254,7 +255,9 @@ export function Chart({
                       }
                       onFocus={handleFocus}
                       index={index}
-                      ariaLabel={ariaLabel}
+                      ariaLabel={`${ariaLabel} ${
+                        annotation ? annotation.ariaLabel : ''
+                      }`}
                       tabIndex={0}
                       role="img"
                       hasRoundedCorners={barOptions.hasRoundedCorners}
@@ -297,24 +300,6 @@ export function Chart({
           />
         </g>
 
-        {transitions.map(({item, props: {height}}, index) => {
-          const xPosition = xScale(index.toString());
-          const annotation = annotationsLookupTable[index];
-
-          return annotation != null ? (
-            <AnnotationLine
-              xPosition={xPosition}
-              barWidth={barWidth}
-              drawableHeight={drawableHeight}
-              shouldAnimate={shouldAnimate}
-              width={annotation.width}
-              color={annotation.color}
-              xOffset={annotation.xOffset}
-              ariaLabel={annotation.ariaLabel}
-            />
-          ) : null;
-        })}
-
         <rect
           mask={`url(#${clipId})`}
           x="0"
@@ -323,6 +308,27 @@ export function Chart({
           height={height}
           fill={`url(#${gradientId})`}
         />
+
+        <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
+          {transitions.map((_, index) => {
+            const xPosition = xScale(index.toString());
+            const xPositionValue = xPosition == null ? 0 : xPosition;
+            const annotation = annotationsLookupTable[index];
+
+            return annotation != null ? (
+              <AnnotationLine
+                key={`annotation${index}`}
+                xPosition={xPositionValue}
+                barWidth={barWidth}
+                drawableHeight={drawableHeight}
+                shouldAnimate={shouldAnimate}
+                width={annotation.width}
+                color={annotation.color}
+                xOffset={annotation.xOffset}
+              />
+            ) : null;
+          })}
+        </g>
       </svg>
 
       {tooltipPosition != null && activeBar != null && !emptyState ? (

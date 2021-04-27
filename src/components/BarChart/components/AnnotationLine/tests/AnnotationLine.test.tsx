@@ -31,7 +31,6 @@ describe('<AnnotationLine />', () => {
       y2: 0,
       stroke: '#ccc',
       strokeWidth: lineWidth,
-      'aria-label': 'Median: 1.5 hours',
     });
   });
 

@@ -69,7 +69,6 @@ Default.args = {
   ],
   barOptions: {
     color: barGradient,
-    highlightColor: secondaryColor,
     hasRoundedCorners: true,
   },
   xAxisOptions: {labelFormatter: formatXAxisLabel},
