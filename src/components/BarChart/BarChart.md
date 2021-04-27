@@ -105,6 +105,17 @@ interface BarChartProps {
   yAxisOptions?: {
     labelFormatter?(value: number): string;
   };
+  annotations?: {
+    dataIndex: number;
+    width: number;
+    color: string;
+    ariaLabel?: string;
+    xOffset?: number;
+    tooltipData?: {
+      label: string;
+      value: string;
+    };
+  }[];
 }
 ```
 
@@ -264,3 +275,47 @@ This accepts a function that is called when the Y value (`rawValue`) is formatte
 | `string` | `'rgb(223, 227, 232)'` |
 
 The color used for axis labels.
+
+#### annotations
+
+| type                                                  |
+| ----------------------------------------------------- |
+| `{dataIndex: number, width: number, color: string}[]` |
+
+An optional array of objects that the chart uses to draw annotations on the bars.
+
+- The `dataIndex` should be a unique value. If two are more of the same values are provided. The last provided one is used.
+
+- `width` is used to determine the annotation line `strokeWidth`.
+
+- `color` can be [any valid CSS color](https://developer.mozilla.org/en-US/docs/Web/CSS/color) such as a named color, hex, rgb, or rgba value.
+
+##### Optional annotation props
+
+##### xOffset
+
+| type     | default |
+| -------- | ------- |
+| `number` | `0.5`   |
+
+Used to move the annotation line between the start and end of the bar that it is annotating. Use a value ranging from 0 to 1.
+
+- 0 is the start of the bar.
+- 0.5 is the center of the bar.
+- 1 is the end of the bar.
+
+##### ariaLabel
+
+| type     | default     |
+| -------- | ----------- |
+| `string` | `undefined` |
+
+Used to indicate to screenreaders that an annotation line has been rendered. It is strongly recommended that this is included.
+
+##### tooltipData
+
+| type                             |
+| -------------------------------- |
+| `{label: string, value: string}` |
+
+The annotation `label` and `value` will be shown in the tooltip content above the other tooltip values.

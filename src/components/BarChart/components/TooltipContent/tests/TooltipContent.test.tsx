@@ -15,4 +15,21 @@ describe('<TooltipContent/>', () => {
 
     expect(content).toContainReactText('10');
   });
+
+  it('renders an annotation', () => {
+    const annotation = {
+      dataIndex: 1,
+      width: 5,
+      color: '#000',
+      tooltipData: {
+        label: 'Median',
+        value: '1.5 hours',
+      },
+    };
+    const content = mount(
+      <TooltipContent label="I'm a label" value="10" annotation={annotation} />,
+    );
+
+    expect(content).toContainReactText(`Median1.5 hoursI'm a label10`);
+  });
 });

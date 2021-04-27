@@ -5,7 +5,7 @@ import {colorSky} from '@shopify/polaris-tokens';
 
 import {DEFAULT_GREY_LABEL} from '../../constants';
 import {SkipLink} from '../SkipLink';
-import {getDefaultColor, uniqueId} from '../../utilities';
+import {getDefaultColor, uniqueId, normalizeData} from '../../utilities';
 
 import {TooltipContent} from './components';
 import {Chart} from './Chart';
@@ -16,10 +16,13 @@ import {
   XAxisOptions,
   YAxisOptions,
   BarMargin,
+  Annotation,
+  AnnotationLookupTable,
 } from './types';
 
 export interface BarChartProps {
   data: Data[];
+  annotations?: Annotation[];
   skipLinkText?: string;
   emptyStateText?: string;
   isAnimated?: boolean;
@@ -32,6 +35,7 @@ export interface BarChartProps {
 
 export function BarChart({
   data,
+  annotations,
   renderTooltipContent,
   emptyStateText,
   isAnimated = false,
@@ -102,11 +106,22 @@ export function BarChart({
   function renderDefaultTooltipContent({
     label,
     value,
+    annotation,
   }: RenderTooltipContentData) {
     const formattedLabel = xAxisOptionsWithDefaults.labelFormatter(label);
     const formattedValue = yAxisOptionsWithDefaults.labelFormatter(value);
+    return (
+      <TooltipContent
+        label={formattedLabel}
+        value={formattedValue}
+        annotation={annotation}
+      />
+    );
+  }
 
-    return <TooltipContent label={formattedLabel} value={formattedValue} />;
+  let annotationsLookupTable: AnnotationLookupTable = {};
+  if (annotations != null && annotations.length > 0) {
+    annotationsLookupTable = normalizeData(annotations, 'dataIndex');
   }
 
   return (
@@ -123,6 +138,7 @@ export function BarChart({
           <Chart
             isAnimated={isAnimated}
             data={data}
+            annotationsLookupTable={annotationsLookupTable}
             chartDimensions={chartDimensions}
             barOptions={barOptionsWithDefaults}
             gridOptions={gridOptionsWithDefaults}

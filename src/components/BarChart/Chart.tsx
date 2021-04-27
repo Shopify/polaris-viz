@@ -19,12 +19,14 @@ import {BarChartXAxis} from '../BarChartXAxis';
 import {TooltipContainer} from '../TooltipContainer';
 import {Bar} from '../Bar';
 
+import {AnnotationLine} from './components';
 import {
   RenderTooltipContentData,
   BarOptions,
   GridOptions,
   XAxisOptions,
   YAxisOptions,
+  AnnotationLookupTable,
 } from './types';
 import {useYScale, useXScale} from './hooks';
 import {
@@ -38,6 +40,7 @@ import styles from './Chart.scss';
 
 interface Props {
   data: Data[];
+  annotationsLookupTable: AnnotationLookupTable;
   chartDimensions: DOMRect;
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
   emptyStateText?: string;
@@ -50,6 +53,7 @@ interface Props {
 
 export function Chart({
   data,
+  annotationsLookupTable,
   chartDimensions,
   renderTooltipContent,
   emptyStateText,
@@ -156,8 +160,9 @@ export function Chart({
     return renderTooltipContent({
       label: data[activeBar].label,
       value: data[activeBar].rawValue,
+      annotation: annotationsLookupTable[activeBar],
     });
-  }, [activeBar, data, renderTooltipContent]);
+  }, [activeBar, data, annotationsLookupTable, renderTooltipContent]);
 
   const getBarHeight = useCallback(
     (rawValue: number) => {
@@ -235,16 +240,19 @@ export function Chart({
         <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
           {transitions.map(({item, props: {height}}, index) => {
             const xPosition = xScale(index.toString());
+            const xPositionValue = xPosition == null ? 0 : xPosition;
             const ariaLabel = `${xAxisOptions.labelFormatter(
               data[index].label,
             )}: ${yAxisOptions.labelFormatter(data[index].rawValue)}`;
+
+            const annotation = annotationsLookupTable[index];
 
             return (
               <g role="listitem" key={index}>
                 <Bar
                   height={height}
                   key={index}
-                  x={xPosition == null ? 0 : xPosition}
+                  x={xPositionValue}
                   yScale={yScale}
                   rawValue={item.rawValue}
                   width={barWidth}
@@ -258,6 +266,18 @@ export function Chart({
                   role="img"
                   hasRoundedCorners={barOptions.hasRoundedCorners}
                 />
+                {annotation != null ? (
+                  <AnnotationLine
+                    xPosition={xPositionValue}
+                    barWidth={barWidth}
+                    drawableHeight={drawableHeight}
+                    shouldAnimate={shouldAnimate}
+                    width={annotation.width}
+                    color={annotation.color}
+                    xOffset={annotation.xOffset}
+                    ariaLabel={annotation.ariaLabel}
+                  />
+                ) : null}
               </g>
             );
           })}

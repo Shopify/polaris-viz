@@ -35,7 +35,6 @@ function TooltipContainer({
         style={{
           display: 'inline-block',
           background: 'white',
-          border: '1px solid #c4cdd5',
           borderRadius: '4px',
           padding: '8px',
           pointerEvents: 'none',
@@ -101,6 +100,16 @@ export function TooltipContentDemo() {
     },
   ];
 
+  const barChartAnnotation = {
+    dataIndex: 1,
+    width: 5,
+    color: '#ccc',
+    tooltipData: {
+      label: 'Median ',
+      value: '10',
+    },
+  };
+
   return (
     <div style={OUTER_CONTAINER_STYLE}>
       <div style={innerContainerStyle}>
@@ -120,7 +129,11 @@ export function TooltipContentDemo() {
         </TooltipContainer>
 
         <TooltipContainer title="BarChartTooltipContent" width="180px">
-          <BarChartTooltipContent label="January 1st, 2021" value="10" />
+          <BarChartTooltipContent
+            label="January 1st, 2021"
+            value="10"
+            annotation={barChartAnnotation}
+          />
         </TooltipContainer>
       </div>
     </div>

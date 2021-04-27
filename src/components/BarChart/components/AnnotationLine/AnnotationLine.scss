@@ -1,0 +1,25 @@
+@import 'node_modules/@shopify/polaris-tokens/dist/index';
+
+.Line {
+  stroke-opacity: 0.5;
+  &:focus {
+    outline: none;
+    stroke-opacity: 0.75;
+  }
+}
+
+.AnimatedLine {
+  animation: fadeIn ease $duration-slow;
+  transition: stroke-opacity ease $duration-fast;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    stroke-opacity: 0;
+  }
+  100% {
+    opacity: 0.75;
+    stroke-opacity: 0.5;
+  }
+}
