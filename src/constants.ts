@@ -39,3 +39,6 @@ export enum Margin {
 
 export const BARS_TRANSITION_CONFIG = {mass: 1, tension: 150, friction: 16};
 export const MAX_TRAIL_DURATION = 500;
+
+export const MASK_HIGHLIGHT_COLOR = '#FFF';
+export const MASK_SUBDUE_COLOR = '#434343';

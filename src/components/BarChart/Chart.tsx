@@ -7,19 +7,23 @@ import {
   LINE_HEIGHT,
   MIN_BAR_HEIGHT,
   BARS_TRANSITION_CONFIG,
+  MASK_HIGHLIGHT_COLOR,
+  MASK_SUBDUE_COLOR,
 } from '../../constants';
 import {
   eventPoint,
   getTextWidth,
   getBarXAxisDetails,
   getAnimationTrail,
+  uniqueId,
+  getColorValue,
 } from '../../utilities';
 import {YAxis} from '../YAxis';
 import {BarChartXAxis} from '../BarChartXAxis';
 import {TooltipContainer} from '../TooltipContainer';
-import {Bar} from '../Bar';
+import {LinearGradient} from '../LinearGradient';
 
-import {AnnotationLine} from './components';
+import {AnnotationLine, Bar} from './components';
 import {
   RenderTooltipContentData,
   BarOptions,
@@ -187,6 +191,19 @@ export function Chart({
 
   const {width, height} = chartDimensions;
 
+  const gradientId = useMemo(() => uniqueId('gradient'), []);
+  const clipId = useMemo(() => uniqueId('clip'), []);
+
+  const gradient =
+    typeof barOptions.color === 'string'
+      ? [
+          {
+            color: getColorValue(barOptions.color),
+            offset: 0,
+          },
+        ]
+      : barOptions.color;
+
   return (
     <div
       className={styles.ChartContainer}
@@ -205,6 +222,49 @@ export function Chart({
         role={emptyState ? 'img' : 'list'}
         aria-label={emptyState ? emptyStateText : undefined}
       >
+        <defs>
+          <LinearGradient
+            id={gradientId}
+            gradient={gradient}
+            gradientUnits="userSpaceOnUse"
+            y1="100%"
+            y2="0%"
+          />
+
+          <mask id={clipId}>
+            <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
+              {transitions.map(({item, props: {height}}, index) => {
+                const xPosition = xScale(index.toString());
+                const ariaLabel = `${xAxisOptions.labelFormatter(
+                  data[index].label,
+                )}: ${yAxisOptions.labelFormatter(data[index].rawValue)}`;
+                const isSubdued = activeBar != null && index !== activeBar;
+
+                return (
+                  <g role="listitem" key={index}>
+                    <Bar
+                      height={height}
+                      key={index}
+                      x={xPosition == null ? 0 : xPosition}
+                      yScale={yScale}
+                      rawValue={item.rawValue}
+                      width={barWidth}
+                      color={
+                        isSubdued ? MASK_SUBDUE_COLOR : MASK_HIGHLIGHT_COLOR
+                      }
+                      onFocus={handleFocus}
+                      index={index}
+                      ariaLabel={ariaLabel}
+                      tabIndex={0}
+                      role="img"
+                      hasRoundedCorners={barOptions.hasRoundedCorners}
+                    />
+                  </g>
+                );
+              })}
+            </g>
+          </mask>
+        </defs>
         <g
           transform={`translate(${axisMargin},${chartDimensions.height -
             MARGIN.Bottom -
@@ -237,51 +297,32 @@ export function Chart({
           />
         </g>
 
-        <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
-          {transitions.map(({item, props: {height}}, index) => {
-            const xPosition = xScale(index.toString());
-            const xPositionValue = xPosition == null ? 0 : xPosition;
-            const ariaLabel = `${xAxisOptions.labelFormatter(
-              data[index].label,
-            )}: ${yAxisOptions.labelFormatter(data[index].rawValue)}`;
+        {transitions.map(({item, props: {height}}, index) => {
+          const xPosition = xScale(index.toString());
+          const annotation = annotationsLookupTable[index];
 
-            const annotation = annotationsLookupTable[index];
+          return annotation != null ? (
+            <AnnotationLine
+              xPosition={xPosition}
+              barWidth={barWidth}
+              drawableHeight={drawableHeight}
+              shouldAnimate={shouldAnimate}
+              width={annotation.width}
+              color={annotation.color}
+              xOffset={annotation.xOffset}
+              ariaLabel={annotation.ariaLabel}
+            />
+          ) : null;
+        })}
 
-            return (
-              <g role="listitem" key={index}>
-                <Bar
-                  height={height}
-                  key={index}
-                  x={xPositionValue}
-                  yScale={yScale}
-                  rawValue={item.rawValue}
-                  width={barWidth}
-                  isSelected={index === activeBar}
-                  color={barOptions.color}
-                  highlightColor={barOptions.highlightColor}
-                  onFocus={handleFocus}
-                  index={index}
-                  ariaLabel={ariaLabel}
-                  tabIndex={0}
-                  role="img"
-                  hasRoundedCorners={barOptions.hasRoundedCorners}
-                />
-                {annotation != null ? (
-                  <AnnotationLine
-                    xPosition={xPositionValue}
-                    barWidth={barWidth}
-                    drawableHeight={drawableHeight}
-                    shouldAnimate={shouldAnimate}
-                    width={annotation.width}
-                    color={annotation.color}
-                    xOffset={annotation.xOffset}
-                    ariaLabel={annotation.ariaLabel}
-                  />
-                ) : null}
-              </g>
-            );
-          })}
-        </g>
+        <rect
+          mask={`url(#${clipId})`}
+          x="0"
+          y="0"
+          width={width}
+          height={height}
+          fill={`url(#${gradientId})`}
+        />
       </svg>
 
       {tooltipPosition != null && activeBar != null && !emptyState ? (

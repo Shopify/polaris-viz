@@ -34,3 +34,4 @@ export {SkipLink} from './SkipLink';
 export {VisuallyHiddenRows} from './VisuallyHiddenRows';
 export {LinePreview} from './LinePreview';
 export {Legend} from './Legend';
+export {LinearGradient} from './LinearGradient';

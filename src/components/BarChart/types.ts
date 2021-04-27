@@ -1,4 +1,9 @@
-import {Color, StringLabelFormatter, NumberLabelFormatter} from 'types';
+import {
+  Color,
+  StringLabelFormatter,
+  NumberLabelFormatter,
+  Gradient,
+} from 'types';
 
 export enum BarMargin {
   Small = 0.05,
@@ -15,8 +20,8 @@ export interface RenderTooltipContentData {
 
 export interface BarOptions {
   margin: keyof typeof BarMargin;
-  color: Color;
-  highlightColor: Color;
+  color: Color | Gradient;
+  highlightColor?: Color;
   hasRoundedCorners: boolean;
 }
 
