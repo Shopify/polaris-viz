@@ -154,7 +154,7 @@ Used to compare multiple series of data and display the total value. [View docum
   </td> 
   <td>
 <a href="../src/components/TooltipContent/TooltipContent.md">
-  <img src="../src/components/TooltipContent/tooltip-content.png"/>
+  <img src="../src/components/TooltipContent/tooltip-content.jpg"/>
 </a>
 
 #### Tooltip content
