@@ -78,6 +78,10 @@ export function Chart({
 
   const emptyState = series.length === 0;
 
+  const marginTop = yAxisOptions.labelBackgroundColor
+    ? Number(Margin.Top) + fontSize / 2
+    : Margin.Top;
+
   const {ticks: initialTicks} = useYScale({
     fontSize,
     drawableHeight: dimensions.height - Margin.Top,
@@ -99,7 +103,7 @@ export function Chart({
     ? SPACING_TIGHT
     : Number(Margin.Bottom) + xAxisDetails.maxXLabelHeight;
 
-  const drawableHeight = dimensions.height - Margin.Top - marginBottom;
+  const drawableHeight = dimensions.height - marginTop - marginBottom;
 
   const formattedLabels = useMemo(
     () => xAxisOptions.xAxisLabels.map(xAxisOptions.labelFormatter),
@@ -312,7 +316,7 @@ export function Chart({
           />
         </g>
 
-        <g transform={`translate(${axisMargin},${Margin.Top})`}>
+        <g transform={`translate(${axisMargin},${marginTop})`}>
           <YAxis
             ticks={ticks}
             drawableWidth={drawableWidth}
@@ -320,11 +324,13 @@ export function Chart({
             showGridLines={gridOptions.showHorizontalLines}
             gridColor={gridOptions.color}
             labelColor={yAxisOptions.labelColor}
+            labelBackgroundColor={yAxisOptions.labelBackgroundColor}
+            axisMargin={axisMargin}
           />
         </g>
 
         {emptyState ? null : (
-          <g transform={`translate(${axisMargin},${Margin.Top})`}>
+          <g transform={`translate(${axisMargin},${marginTop})`}>
             <Crosshair
               x={getXPosition({isCrosshair: true})}
               height={drawableHeight}
@@ -343,7 +349,7 @@ export function Chart({
           />
         )}
 
-        <g transform={`translate(${axisMargin},${Margin.Top})`}>
+        <g transform={`translate(${axisMargin},${marginTop})`}>
           {reversedSeries.map((singleSeries, index) => {
             const {data, name, color, areaColor} = singleSeries;
             const seriesGradientId = `${gradientId.current}-${index}`;

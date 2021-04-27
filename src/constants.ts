@@ -23,6 +23,7 @@ export const SMALL_LABEL_WIDTH = 50;
 export const LABEL_SPACE_MINUS_FIRST_AND_LAST = 0.6;
 export const DEFAULT_MAX_Y = 10;
 export const ROUNDED_BAR_RADIUS = 3;
+export const LABEL_RADIUS = 3;
 export const MIN_BAR_HEIGHT = 5;
 export const EMPTY_STATE_CHART_MIN = 0;
 export const EMPTY_STATE_CHART_MAX = 10;

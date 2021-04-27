@@ -1,20 +1,25 @@
 # Changelog
 
 ## Unreleased
+<<<<<<< HEAD
 
 ### Added
 
 - Check window is defined before accessing window methods
 
 ## [0.9.2] — 2021-04-29
+=======
+>>>>>>> a6d080d (Add labelBackgroundColor option for line, bar, and multi series bar charts)
+
+### Added
+
+- `labelBackgroundColor` prop to `yAxisOptions`
+
+## [0.9.2] — 2021-04-29
 
 ### Added
 
 - Allow gradients to be use for `<LineChart/>` and `<BarChart />`
-
-### Changed
-
-- `showArea` for `<LineChart/>` series prop replaced by `areaColor`
 
 ## [0.9.1] — 2021-04-27
 

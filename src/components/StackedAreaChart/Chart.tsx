@@ -196,6 +196,7 @@ export function Chart({
             ticks={ticks}
             drawableWidth={drawableWidth}
             fontSize={fontSize}
+            axisMargin={axisMargin}
           />
         </g>
 

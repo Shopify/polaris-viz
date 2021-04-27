@@ -104,6 +104,8 @@ interface BarChartProps {
   };
   yAxisOptions?: {
     labelFormatter?(value: number): string;
+    labelColor?: string;
+    labelBackgroundColor?: string;
   };
   annotations?: {
     dataIndex: number;
@@ -275,6 +277,14 @@ This accepts a function that is called when the Y value (`rawValue`) is formatte
 | `string` | `'rgb(223, 227, 232)'` |
 
 The color used for axis labels.
+
+##### labelBackgroundColor
+
+| type                 | default     |
+| -------------------- | ----------- |
+| `string | undefined` | `undefined` |
+
+The color used for label backgrounds. If none is specified, the labels will not have a background.
 
 #### annotations
 

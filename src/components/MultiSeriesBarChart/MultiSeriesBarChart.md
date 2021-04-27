@@ -136,6 +136,8 @@ interface MultiSeriesBarChartProps {
   };
   yAxisOptions: {
     labelFormatter?(value: number): string;
+    labelColor?: string;
+    labelBackgroundColor?: string;
   };
 }
 ```
@@ -304,6 +306,14 @@ This utility function is called for every y axis value when the chart is drawn.
 | `string` | `'rgb(223, 227, 232)'` |
 
 The color used for axis labels.
+
+##### labelBackgroundColor
+
+| type                 | default     |
+| -------------------- | ----------- |
+| `string | undefined` | `undefined` |
+
+The color used for label backgrounds. If none is specified, the labels will not have a background.
 
 #### barOptions
 

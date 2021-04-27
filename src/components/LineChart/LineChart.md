@@ -138,6 +138,7 @@ interface LineChartProps {
   yAxisOptions?: {
     labelFormatter?(value: number): string;
     labelColor: string;
+    labelBackgroundColor?: string;
   }
   gridOptions?: {
     showVerticalLines?: boolean;
@@ -353,6 +354,14 @@ This utilty function is called to format the labels for every y axis value when 
 | `string` | `'rgb(223, 227, 232)'` |
 
 The color used for axis labels.
+
+##### labelBackgroundColor
+
+| type                 | default     |
+| -------------------- | ----------- |
+| `string | undefined` | `undefined` |
+
+The color used for label backgrounds. If none is specified, the labels will not have a background.
 
 #### lineOptions
 

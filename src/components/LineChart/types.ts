@@ -48,6 +48,7 @@ export interface XAxisOptions {
 export interface YAxisOptions {
   labelFormatter: NumberLabelFormatter;
   labelColor: string;
+  labelBackgroundColor?: string;
 }
 
 export interface GridOptions {
