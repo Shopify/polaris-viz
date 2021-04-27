@@ -56,4 +56,5 @@ export interface XAxisOptions {
 export interface YAxisOptions {
   labelFormatter: NumberLabelFormatter;
   labelColor: string;
+  labelBackgroundColor?: string;
 }

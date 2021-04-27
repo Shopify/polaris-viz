@@ -58,6 +58,10 @@ export function Chart({
   const fontSize =
     chartDimensions.width < SMALL_WIDTH ? SMALL_FONT_SIZE : FONT_SIZE;
 
+  const marginTop = yAxisOptions.labelBackgroundColor
+    ? MARGIN.Top + fontSize / 2
+    : MARGIN.Top;
+
   const emptyState = series.length === 0;
 
   const stackedValues = barOptions.isStacked
@@ -65,7 +69,7 @@ export function Chart({
     : null;
 
   const {ticks: initialTicks} = useYScale({
-    drawableHeight: chartDimensions.height - MARGIN.Top - MARGIN.Bottom,
+    drawableHeight: chartDimensions.height - marginTop - MARGIN.Bottom,
     data: series,
     formatYAxisLabel: yAxisOptions.labelFormatter,
     stackedValues,
@@ -119,7 +123,7 @@ export function Chart({
 
   const drawableHeight =
     chartDimensions.height -
-    MARGIN.Top -
+    marginTop -
     MARGIN.Bottom -
     xAxisDetails.maxXLabelHeight;
 
@@ -222,7 +226,7 @@ export function Chart({
         </g>
 
         <g
-          transform={`translate(${axisMargin},${MARGIN.Top})`}
+          transform={`translate(${axisMargin},${marginTop})`}
           aria-hidden="true"
         >
           <YAxis
@@ -230,12 +234,14 @@ export function Chart({
             drawableWidth={drawableWidth}
             fontSize={fontSize}
             labelColor={yAxisOptions.labelColor}
+            labelBackgroundColor={yAxisOptions.labelBackgroundColor}
             showGridLines={gridOptions.showHorizontalLines}
             gridColor={gridOptions.color}
+            axisMargin={axisMargin}
           />
         </g>
 
-        <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
+        <g transform={`translate(${axisMargin},${marginTop})`}>
           {stackedValues != null
             ? stackedValues.map((stackData, stackIndex) => {
                 return (
@@ -308,7 +314,7 @@ export function Chart({
     if (
       currentIndex < 0 ||
       currentIndex > sortedData.length - 1 ||
-      svgY <= MARGIN.Top ||
+      svgY <= marginTop ||
       svgY > drawableHeight + MARGIN.Bottom + maxXLabelHeight
     ) {
       setActiveBarGroup(null);

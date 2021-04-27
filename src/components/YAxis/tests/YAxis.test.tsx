@@ -13,7 +13,7 @@ describe('<YAxis />', () => {
   it('draws a horizontal grid line for each tick', () => {
     const yAxis = mount(
       <svg>
-        <YAxis ticks={testTicks} drawableWidth={500} />
+        <YAxis ticks={testTicks} drawableWidth={500} axisMargin={1} />
       </svg>,
     );
 
@@ -30,7 +30,7 @@ describe('<YAxis />', () => {
   it('displays a formatted value with each tick', () => {
     const yAxis = mount(
       <svg>
-        <YAxis ticks={testTicks} drawableWidth={500} />
+        <YAxis ticks={testTicks} drawableWidth={500} axisMargin={1} />
       </svg>,
     );
 

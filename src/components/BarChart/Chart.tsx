@@ -73,11 +73,15 @@ export function Chart({
   const fontSize =
     chartDimensions.width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
 
+  const marginTop = yAxisOptions.labelBackgroundColor
+    ? MARGIN.Top + fontSize / 2
+    : MARGIN.Top;
+
   const emptyState = data.length === 0;
 
   const {ticks: initialTicks} = useYScale({
     drawableHeight:
-      chartDimensions.height - MARGIN.Top - MARGIN.Bottom - LINE_HEIGHT,
+      chartDimensions.height - marginTop - MARGIN.Bottom - LINE_HEIGHT,
     data,
     formatYAxisLabel: yAxisOptions.labelFormatter,
   });
@@ -120,7 +124,7 @@ export function Chart({
 
   const drawableHeight =
     chartDimensions.height -
-    MARGIN.Top -
+    marginTop -
     MARGIN.Bottom -
     xAxisDetails.maxXLabelHeight;
 
@@ -224,7 +228,7 @@ export function Chart({
         </g>
 
         <g
-          transform={`translate(${axisMargin},${MARGIN.Top})`}
+          transform={`translate(${axisMargin},${marginTop})`}
           aria-hidden="true"
         >
           <YAxis
@@ -232,12 +236,14 @@ export function Chart({
             drawableWidth={drawableWidth}
             fontSize={fontSize}
             labelColor={yAxisOptions.labelColor}
+            labelBackgroundColor={yAxisOptions.labelBackgroundColor}
             showGridLines={gridOptions.showHorizontalLines}
             gridColor={gridOptions.color}
+            axisMargin={axisMargin}
           />
         </g>
 
-        <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
+        <g transform={`translate(${axisMargin},${marginTop})`}>
           {transitions.map(({item, props: {height}}, index) => {
             const xPosition = xScale(index.toString());
             const xPositionValue = xPosition == null ? 0 : xPosition;
@@ -332,7 +338,7 @@ export function Chart({
     if (
       currentIndex < 0 ||
       currentIndex > data.length - 1 ||
-      svgY <= MARGIN.Top ||
+      svgY <= marginTop ||
       svgY > drawableHeight + MARGIN.Bottom + xAxisDetails.maxXLabelHeight
     ) {
       setActiveBar(null);
