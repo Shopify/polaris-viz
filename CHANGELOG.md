@@ -2,9 +2,12 @@
 
 ## Unreleased
 
+## [0.9.1] — 2021-04-27
+
 ### Added
 
-- Sparkbar component
+- `<Sparkbar />` component
+- Annotations prop to `<BarChart />`
 
 ## [0.9.0] — 2021-04-26
 
