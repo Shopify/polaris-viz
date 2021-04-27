@@ -1,6 +1,6 @@
 import {join} from 'path';
 
-import {ConfigurationCallback, Env, Plugins} from '@shopify/sewing-kit';
+import {ConfigurationCallback, Plugins} from '@shopify/sewing-kit';
 
 interface InitialOptions extends jest.InitialOptions {
   setupFilesAfterEnv: string[];
