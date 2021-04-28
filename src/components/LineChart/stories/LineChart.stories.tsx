@@ -46,7 +46,10 @@ OverflowStyle.args = {
     showAxisLine: false,
     showTicks: false,
   },
-  yAxisOptions: {labelFormatter: formatYAxisLabel},
+  yAxisOptions: {
+    labelFormatter: formatYAxisLabel,
+    labelBackgroundColor: '#e4e4e4',
+  },
   gridOptions: {showVerticalLines: false},
   lineOptions: {overflow: true, hasSpline: true},
 };
