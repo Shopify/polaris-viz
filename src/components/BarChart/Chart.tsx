@@ -73,15 +73,11 @@ export function Chart({
   const fontSize =
     chartDimensions.width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
 
-  const marginTop = yAxisOptions.labelBackgroundColor
-    ? MARGIN.Top + fontSize / 2
-    : MARGIN.Top;
-
   const emptyState = data.length === 0;
 
   const {ticks: initialTicks} = useYScale({
     drawableHeight:
-      chartDimensions.height - marginTop - MARGIN.Bottom - LINE_HEIGHT,
+      chartDimensions.height - MARGIN.Top - MARGIN.Bottom - LINE_HEIGHT,
     data,
     formatYAxisLabel: yAxisOptions.labelFormatter,
   });
@@ -124,7 +120,7 @@ export function Chart({
 
   const drawableHeight =
     chartDimensions.height -
-    marginTop -
+    MARGIN.Top -
     MARGIN.Bottom -
     xAxisDetails.maxXLabelHeight;
 
@@ -228,7 +224,7 @@ export function Chart({
         </g>
 
         <g
-          transform={`translate(${axisMargin},${marginTop})`}
+          transform={`translate(${axisMargin},${MARGIN.Top})`}
           aria-hidden="true"
         >
           <YAxis
@@ -243,7 +239,7 @@ export function Chart({
           />
         </g>
 
-        <g transform={`translate(${axisMargin},${marginTop})`}>
+        <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
           {transitions.map(({item, props: {height}}, index) => {
             const xPosition = xScale(index.toString());
             const xPositionValue = xPosition == null ? 0 : xPosition;
@@ -338,7 +334,7 @@ export function Chart({
     if (
       currentIndex < 0 ||
       currentIndex > data.length - 1 ||
-      svgY <= marginTop ||
+      svgY <= MARGIN.Top ||
       svgY > drawableHeight + MARGIN.Bottom + xAxisDetails.maxXLabelHeight
     ) {
       setActiveBar(null);

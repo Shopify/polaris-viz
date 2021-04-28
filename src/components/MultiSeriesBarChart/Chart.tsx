@@ -58,10 +58,6 @@ export function Chart({
   const fontSize =
     chartDimensions.width < SMALL_WIDTH ? SMALL_FONT_SIZE : FONT_SIZE;
 
-  const marginTop = yAxisOptions.labelBackgroundColor
-    ? MARGIN.Top + fontSize / 2
-    : MARGIN.Top;
-
   const emptyState = series.length === 0;
 
   const stackedValues = barOptions.isStacked
@@ -69,7 +65,7 @@ export function Chart({
     : null;
 
   const {ticks: initialTicks} = useYScale({
-    drawableHeight: chartDimensions.height - marginTop - MARGIN.Bottom,
+    drawableHeight: chartDimensions.height - MARGIN.Top - MARGIN.Bottom,
     data: series,
     formatYAxisLabel: yAxisOptions.labelFormatter,
     stackedValues,
@@ -123,7 +119,7 @@ export function Chart({
 
   const drawableHeight =
     chartDimensions.height -
-    marginTop -
+    MARGIN.Top -
     MARGIN.Bottom -
     xAxisDetails.maxXLabelHeight;
 
@@ -226,7 +222,7 @@ export function Chart({
         </g>
 
         <g
-          transform={`translate(${axisMargin},${marginTop})`}
+          transform={`translate(${axisMargin},${MARGIN.Top})`}
           aria-hidden="true"
         >
           <YAxis
@@ -241,7 +237,7 @@ export function Chart({
           />
         </g>
 
-        <g transform={`translate(${axisMargin},${marginTop})`}>
+        <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
           {stackedValues != null
             ? stackedValues.map((stackData, stackIndex) => {
                 return (
@@ -314,7 +310,7 @@ export function Chart({
     if (
       currentIndex < 0 ||
       currentIndex > sortedData.length - 1 ||
-      svgY <= marginTop ||
+      svgY <= MARGIN.Top ||
       svgY > drawableHeight + MARGIN.Bottom + maxXLabelHeight
     ) {
       setActiveBarGroup(null);

@@ -39,7 +39,6 @@ function Axis({
   overflowStyle = false,
   labelBackgroundColor,
 }: Props) {
-  console.log(labelBackgroundColor);
   const labelWidth = axisMargin - SPACING / 2;
   const labelHeight = fontSize + SPACING / 2;
 
