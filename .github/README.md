@@ -93,10 +93,23 @@ Used for positive datasets with two to four items. [View documentation&nbsp;→]
 
 Used in small sizes to give an overview of how a metric has performed over time. [View documentation&nbsp;→](../src/components/Sparkline/Sparkline.md)
 
-  </td>  
+  </td>
   </tr>
-  
+
   <tr>
+
+  <td>
+
+<a href="../src/components/Sparkbar/Sparkbar.md">
+  <img src="../src/components/Sparkbar/sparkbar.png"/>
+</a>
+
+#### Sparkbar
+
+Used in small sizes to give an overview of how a metric has performed over time with bars. [View documentation&nbsp;→](../src/components/Sparkbar/Sparkbar.md)
+
+  </td>
+
   <td>
 <a href="../src/components/LineChart/LineChart.md">
   <img src="../src/components/LineChart/line-chart.png"/>
@@ -107,6 +120,10 @@ Used in small sizes to give an overview of how a metric has performed over time.
 Used to show change over time, comparisons, and trends. [View documentation&nbsp;→](../src/components/LineChart/LineChart.md)
 
   </td>
+
+  </tr>
+  <tr>
+
   <td>
 
 <a href="../src/components/BarChart/BarChart.md">
@@ -117,9 +134,8 @@ Used to show change over time, comparisons, and trends. [View documentation&nbsp
 
 Used to show comparison across categories. [View documentation&nbsp;→](../src/components/BarChart/BarChart.md)
 
-  </td>  
-  </tr>
-  <tr>
+  </td>
+
   <td>
 <a href="../src/components/MultiSeriesBarChart/MultiSeriesBarChart.md">
   <img src="../src/components/MultiSeriesBarChart/grouped-bar-example.png"/>
@@ -131,6 +147,8 @@ Used to show a grouped comparison of different types, across categories. [View d
 
   </td>
 
+  <tr>
+
   <td>
 <a href="../src/components/MultiSeriesBarChart/MultiSeriesBarChart.md">
   <img src="../src/components/MultiSeriesBarChart/stacked-bar-example.png"/>
@@ -141,7 +159,7 @@ Used to show a grouped comparison of different types, across categories. [View d
 Used to show a stacked comparison of different types, across categories. [View documentation&nbsp;→](../src/components/MultiSeriesBarChart/MultiSeriesBarChart.md)
 
   </td>
-  <tr>
+
   <td>
 <a href="../src/components/StackedAreaChart/StackedAreaChart.md">
   <img src="../src/components/StackedAreaChart/stacked-area-chart.png"/>
@@ -151,7 +169,11 @@ Used to show a stacked comparison of different types, across categories. [View d
 
 Used to compare multiple series of data and display the total value. [View documentation&nbsp;→](../src/components/StackedAreaChart/StackedAreaChart.md)
 
-  </td> 
+  </td>
+
+  </tr>
+
+<tr>
   <td>
 <a href="../src/components/TooltipContent/TooltipContent.md">
   <img src="../src/components/TooltipContent/tooltip-content.jpg"/>
@@ -161,10 +183,8 @@ Used to compare multiple series of data and display the total value. [View docum
 
 Used to format content in tooltips. [View documentation&nbsp;→](../src/components/TooltipContent/TooltipContent.md)
 
-  </td>    
-  </tr>  
+  </td>
 
-<tr>
   <td>
 <a href="../src/components/Legend/Legend.md">
   <img width="100%" src="../src/components/Legend/legend.png"/>
@@ -174,10 +194,10 @@ Used to format content in tooltips. [View documentation&nbsp;→](../src/compone
 
 Used on multiseries charts to indicate which color is associated with a certain series. [View documentation&nbsp;→](../src/components/Legend/Legend.md)
 
-  </td> 
-  <td></td>    
-  </tr>  
-  
+  </td>
+  <td></td>
+  </tr>
+
 </table>
 
 <br/>
@@ -199,5 +219,3 @@ Pull requests are welcome. See the <a href="/CONTRIBUTING.md">contribution guide
 </a>
 
 - Source code is under a [custom license](https://github.com/Shopify/polaris-viz/blob/master/LICENSE.md) based on MIT. The license restricts Polaris Viz usage to applications that integrate or interoperate with Shopify software or services, with additional restrictions for external, stand-alone applications.
-
-
