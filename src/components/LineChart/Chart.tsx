@@ -71,6 +71,10 @@ export function Chart({
 
   const emptyState = series.length === 0;
 
+  const marginTop = yAxisOptions.labelBackgroundColor
+    ? Margin.Top + fontSize / 2
+    : Margin.Top;
+
   const {ticks: initialTicks} = useYScale({
     fontSize,
     drawableHeight: dimensions.height - Margin.Top,
@@ -94,7 +98,7 @@ export function Chart({
     : Number(Margin.Bottom) + xAxisDetails.maxXLabelHeight;
 
   const drawableHeight =
-    dimensions.height - Margin.Top - marginBottom - xAxisOptions.marginTop;
+    dimensions.height - marginTop - marginBottom - xAxisOptions.marginTop;
 
   const formattedLabels = useMemo(
     () => xAxisOptions.xAxisLabels.map(xAxisOptions.labelFormatter),
@@ -311,7 +315,7 @@ export function Chart({
           />
         </g>
 
-        <g transform={`translate(0,${Margin.Top})`}>
+        <g transform={`translate(0,${marginTop})`}>
           <YAxis
             ticks={ticks}
             drawableWidth={drawableWidth}
@@ -321,11 +325,12 @@ export function Chart({
             labelColor={yAxisOptions.labelColor}
             axisMargin={axisMargin}
             overflowStyle={lineOptions.overflow}
+            labelBackgroundColor={yAxisOptions.labelBackgroundColor}
           />
         </g>
 
         {emptyState ? null : (
-          <g transform={`translate(${dataMargin},${Margin.Top})`}>
+          <g transform={`translate(${axisMargin},${marginTop})`}>
             <Crosshair
               x={getXPosition({isCrosshair: true})}
               height={drawableHeight}
@@ -344,7 +349,7 @@ export function Chart({
           />
         )}
 
-        <g transform={`translate(${dataMargin},${Margin.Top})`}>
+        <g transform={`translate(${dataMargin},${marginTop})`}>
           {reversedSeries.map((singleSeries, index) => {
             const {data, name, showArea, color} = singleSeries;
             const isLongestLine = index === longestSeriesIndex;
