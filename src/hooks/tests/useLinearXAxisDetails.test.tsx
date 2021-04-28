@@ -63,6 +63,13 @@ describe('useLinearXAxisDetails', () => {
       expect(actual).toContainReactText('true');
     });
 
+    it('returns diagonal labels false when overflowStyle is true', () => {
+      const actual = mount(
+        <DiagonalTestComponent props={{...mockProps, overflowStyle: true}} />,
+      );
+      expect(actual).toContainReactText('false');
+    });
+
     it('returns diagonal labels false when the longest label will not overflow', () => {
       const actual = mount(
         <DiagonalTestComponent

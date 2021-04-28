@@ -12,11 +12,13 @@ export function useYScale({
   series,
   formatYAxisLabel,
   fontSize,
+  overFlowStyle = false,
 }: {
   fontSize: number;
   drawableHeight: number;
   series: Series[];
   formatYAxisLabel: NumberLabelFormatter;
+  overFlowStyle?: boolean;
 }) {
   const {yScale, ticks, axisMargin} = useMemo(() => {
     const [minY, maxY] = yAxisMinMax(series);
@@ -29,13 +31,16 @@ export function useYScale({
     const yScale = scaleLinear()
       .range([drawableHeight, 0])
       .domain([Math.min(0, minY), Math.max(0, maxY)])
-      .nice(maxTicks);
+      .nice(overFlowStyle ? undefined : maxTicks);
 
-    const ticks = yScale.ticks(maxTicks).map((value) => ({
-      value,
-      formattedValue: formatYAxisLabel(value),
-      yOffset: yScale(value),
-    }));
+    const ticks = yScale
+      .ticks(maxTicks)
+      .map((value) => ({
+        value,
+        formattedValue: formatYAxisLabel(value),
+        yOffset: yScale(value),
+      }))
+      .slice(0, overFlowStyle ? -1 : undefined);
 
     const maxTickWidth = Math.max(
       ...ticks.map(({formattedValue}) =>
@@ -46,7 +51,7 @@ export function useYScale({
     const axisMargin = maxTickWidth + SPACING;
 
     return {yScale, ticks, axisMargin};
-  }, [series, drawableHeight, formatYAxisLabel, fontSize]);
+  }, [series, drawableHeight, overFlowStyle, formatYAxisLabel, fontSize]);
 
   return {yScale, ticks, axisMargin};
 }

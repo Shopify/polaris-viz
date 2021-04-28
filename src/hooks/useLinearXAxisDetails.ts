@@ -42,6 +42,7 @@ export interface ChartDetails {
   initialTicks: Ticks[];
   xAxisLabels: string[];
   useMinimalLabels?: boolean;
+  overflowStyle?: boolean;
 }
 
 export function useLinearXAxisDetails({
@@ -52,6 +53,7 @@ export function useLinearXAxisDetails({
   initialTicks,
   xAxisLabels,
   useMinimalLabels,
+  overflowStyle,
 }: ChartDetails) {
   // determine how much space will be taken up by the yaxis and its labels, in order to know width of xaxis
   const approxYAxisLabelWidth = useMemo(
@@ -64,7 +66,9 @@ export function useLinearXAxisDetails({
     [fontSize, initialTicks],
   );
 
-  const estimatedYAxisWidth = SPACING_TIGHT + approxYAxisLabelWidth;
+  const estimatedYAxisWidth = overflowStyle
+    ? 0
+    : SPACING_TIGHT + approxYAxisLabelWidth;
 
   const drawableWidth =
     chartDimensions.width - estimatedYAxisWidth - Margin.Right;
@@ -154,6 +158,7 @@ export function useLinearXAxisDetails({
     // determine if we need to go to our last option: making the ticks go diagonal
     const needsDiagonalLabels =
       needToReduceTicks &&
+      !overflowStyle &&
       (reducedTicksDatumXLabelSpace < MIN_HORIZONTAL_LABEL_SPACE ||
         reducedTicks.length < MIN_HORIZONTAL_TICKS ||
         reducedHorizontalLabelHeight > MAX_TEXT_BOX_HEIGHT);
@@ -207,6 +212,7 @@ export function useLinearXAxisDetails({
     initialXScale.xScale,
     longestSeriesLastIndex,
     minimalLabelIndexes,
+    overflowStyle,
     useMinimalLabels,
     xAxisLabels,
   ]);

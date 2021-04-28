@@ -35,6 +35,22 @@ const Template: Story<LineChartProps> = (args: LineChartProps) => {
   return <LineChart {...args} />;
 };
 
+export const OverflowStyle = Template.bind({});
+OverflowStyle.args = {
+  series,
+  xAxisOptions: {
+    xAxisLabels,
+    labelFormatter: formatXAxisLabel,
+    useMinimalLabels: true,
+    marginTop: 10,
+    showAxisLine: false,
+    showTicks: false,
+  },
+  yAxisOptions: {labelFormatter: formatYAxisLabel},
+  gridOptions: {showVerticalLines: false},
+  lineOptions: {overflow: true, hasSpline: true},
+};
+
 export const Default = Template.bind({});
 Default.args = {
   series,

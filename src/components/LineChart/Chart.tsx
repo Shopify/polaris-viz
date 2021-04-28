@@ -9,6 +9,7 @@ import {
   FONT_SIZE,
   SPACING_TIGHT,
   Margin,
+  SPACING_EXTRA_TIGHT,
 } from '../../constants';
 import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
 import {LinearXAxis} from '../LinearXAxis';
@@ -85,13 +86,15 @@ export function Chart({
     initialTicks,
     xAxisLabels: xAxisOptions.hideXAxisLabels ? [] : xAxisOptions.xAxisLabels,
     useMinimalLabels: xAxisOptions.useMinimalLabels,
+    overflowStyle: lineOptions.overflow,
   });
 
   const marginBottom = xAxisOptions.hideXAxisLabels
     ? SPACING_TIGHT
     : Number(Margin.Bottom) + xAxisDetails.maxXLabelHeight;
 
-  const drawableHeight = dimensions.height - Margin.Top - marginBottom;
+  const drawableHeight =
+    dimensions.height - Margin.Top - marginBottom - xAxisOptions.marginTop;
 
   const formattedLabels = useMemo(
     () => xAxisOptions.xAxisLabels.map(xAxisOptions.labelFormatter),
@@ -103,7 +106,10 @@ export function Chart({
     drawableHeight,
     series,
     formatYAxisLabel: yAxisOptions.labelFormatter,
+    overFlowStyle: lineOptions.overflow,
   });
+
+  const dataMargin = lineOptions.overflow ? SPACING_EXTRA_TIGHT : axisMargin;
 
   const handleFocus = useCallback(
     (details: ActiveTooltip | null) => {
@@ -111,10 +117,10 @@ export function Chart({
         setTooltipDetails(null);
       } else {
         const {x, y, index} = details;
-        setTooltipDetails({index, y, x: x + axisMargin});
+        setTooltipDetails({index, y, x: x + dataMargin});
       }
     },
-    [axisMargin],
+    [dataMargin],
   );
 
   const tooltipMarkup = useMemo(() => {
@@ -151,7 +157,7 @@ export function Chart({
   const reversedSeries = useMemo(() => series.slice().reverse(), [series]);
 
   const drawableWidth =
-    axisMargin == null ? null : dimensions.width - Margin.Right - axisMargin;
+    axisMargin == null ? null : dimensions.width - Margin.Right - dataMargin;
 
   const longestSeriesIndex = useMemo(
     () =>
@@ -249,11 +255,11 @@ export function Chart({
     }
 
     const {svgX, svgY} = point;
-    if (svgX < axisMargin) {
+    if (svgX < dataMargin) {
       return;
     }
 
-    const closestIndex = Math.round(xScale.invert(svgX - axisMargin));
+    const closestIndex = Math.round(xScale.invert(svgX - dataMargin));
     const clampedClosestIndex = clamp({
       amount: closestIndex,
       min: 0,
@@ -286,7 +292,7 @@ export function Chart({
         aria-label={emptyState ? emptyStateText : undefined}
       >
         <g
-          transform={`translate(${axisMargin},${dimensions.height -
+          transform={`translate(${dataMargin},${dimensions.height -
             marginBottom})`}
         >
           <LinearXAxis
@@ -301,10 +307,11 @@ export function Chart({
             gridColor={gridOptions.color}
             showTicks={xAxisOptions.showTicks}
             labelColor={xAxisOptions.labelColor}
+            showAxisLine={xAxisOptions.showAxisLine}
           />
         </g>
 
-        <g transform={`translate(${axisMargin},${Margin.Top})`}>
+        <g transform={`translate(0,${Margin.Top})`}>
           <YAxis
             ticks={ticks}
             drawableWidth={drawableWidth}
@@ -312,11 +319,13 @@ export function Chart({
             showGridLines={gridOptions.showHorizontalLines}
             gridColor={gridOptions.color}
             labelColor={yAxisOptions.labelColor}
+            axisMargin={axisMargin}
+            overflowStyle={lineOptions.overflow}
           />
         </g>
 
         {emptyState ? null : (
-          <g transform={`translate(${axisMargin},${Margin.Top})`}>
+          <g transform={`translate(${dataMargin},${Margin.Top})`}>
             <Crosshair
               x={getXPosition({isCrosshair: true})}
               height={drawableHeight}
@@ -335,7 +344,7 @@ export function Chart({
           />
         )}
 
-        <g transform={`translate(${axisMargin},${Margin.Top})`}>
+        <g transform={`translate(${dataMargin},${Margin.Top})`}>
           {reversedSeries.map((singleSeries, index) => {
             const {data, name, showArea, color} = singleSeries;
             const isLongestLine = index === longestSeriesIndex;

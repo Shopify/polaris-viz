@@ -29,6 +29,7 @@ export interface RenderTooltipContentData {
 export interface LineOptions {
   hasSpline: boolean;
   width: number;
+  overflow: boolean;
 }
 
 export interface XAxisOptions {
@@ -38,6 +39,8 @@ export interface XAxisOptions {
   showTicks: boolean;
   labelColor: string;
   useMinimalLabels: boolean;
+  marginTop: number;
+  showAxisLine: boolean;
 }
 
 export interface YAxisOptions {

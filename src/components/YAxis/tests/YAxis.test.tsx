@@ -40,4 +40,38 @@ describe('<YAxis />', () => {
     const values = text.map((node) => node.prop('children'));
     expect(values).toStrictEqual(['0', '1,000', '2,000']);
   });
+
+  it('offsets the gridlines by 0 if overflowStyle is true', () => {
+    const yAxis = mount(
+      <svg>
+        <YAxis
+          ticks={testTicks}
+          drawableWidth={500}
+          axisMargin={50}
+          overflowStyle
+        />
+      </svg>,
+    );
+
+    expect(yAxis).toContainReactComponent('g', {
+      transform: 'translate(0,100)',
+    });
+  });
+
+  it('offsets the gridlines by the axis margin if overflowStyle is false', () => {
+    const yAxis = mount(
+      <svg>
+        <YAxis
+          ticks={testTicks}
+          drawableWidth={500}
+          axisMargin={50}
+          overflowStyle={false}
+        />
+      </svg>,
+    );
+
+    expect(yAxis).toContainReactComponent('g', {
+      transform: 'translate(50,100)',
+    });
+  });
 });
