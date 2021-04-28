@@ -1,7 +1,12 @@
 import React from 'react';
 import {spacingExtraTight, colorSky} from '@shopify/polaris-tokens';
 
-import {FONT_SIZE, DEFAULT_GREY_LABEL, SPACING} from '../../constants';
+import {
+  FONT_SIZE,
+  DEFAULT_GREY_LABEL,
+  SPACING,
+  LABEL_RADIUS,
+} from '../../constants';
 
 interface Props {
   ticks: {
@@ -30,18 +35,17 @@ function Axis({
 }: Props) {
   const labelWidth = axisMargin - SPACING / 2;
   const labelHeight = fontSize + SPACING / 2;
-  const radius = 5;
 
   const path = `
-    m ${radius} 0
-    h ${labelWidth - radius * 2}
-    a ${radius} ${radius} 0 0 1 ${radius} ${radius}
-    v ${labelHeight - radius * 2}
-    a ${radius} ${radius} 0 0 1 ${radius * -1} ${radius}
-    H${radius}
-    a ${radius} ${radius} 0 0 1 ${radius * -1} ${radius * -1}
-    V${radius}
-    a ${radius} ${radius} 0 0 1 ${radius} ${radius * -1}
+    m ${LABEL_RADIUS} 0
+    h ${labelWidth - LABEL_RADIUS * 2}
+    a ${LABEL_RADIUS} ${LABEL_RADIUS} 0 0 1 ${LABEL_RADIUS} ${LABEL_RADIUS}
+    v ${labelHeight - LABEL_RADIUS * 2}
+    a ${LABEL_RADIUS} ${LABEL_RADIUS} 0 0 1 -${LABEL_RADIUS} ${LABEL_RADIUS}
+    H${LABEL_RADIUS}
+    a ${LABEL_RADIUS} ${LABEL_RADIUS} 0 0 1 -${LABEL_RADIUS} -${LABEL_RADIUS}
+    V${LABEL_RADIUS}
+    a ${LABEL_RADIUS} ${LABEL_RADIUS} 0 0 1 ${LABEL_RADIUS} -${LABEL_RADIUS}
     z
   `;
 
