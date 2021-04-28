@@ -47,6 +47,19 @@ describe('<LinearXAxis />', () => {
     });
   });
 
+  it('does not render an axis line if showAxisLine is false', () => {
+    const axis = mount(
+      <svg>
+        <LinearXAxis {...mockProps} showAxisLine={false} />
+      </svg>,
+    );
+
+    expect(axis).not.toContainReactComponent('path', {
+      // eslint-disable-next-line id-length
+      d: 'M 0 6 v -6 H 2 v 6',
+    });
+  });
+
   it('renders a small, outer tick for each tick', () => {
     const axis = mount(
       <svg>

@@ -177,4 +177,39 @@ describe('useYScale', () => {
 
     expect(wrapper).toContainReactText('Formatted value: 25');
   });
+
+  it('does not return the highest value tick if overFlowStyle is true', () => {
+    const mockTicks = [0, 25, 50];
+    (scaleLinear as jest.Mock).mockImplementation(() => {
+      const scale = (value: any) => value;
+      scale.ticks = () => mockTicks;
+      scale.range = (range: any) => (range ? scale : range);
+      scale.domain = (domain: any) => (domain ? scale : domain);
+      scale.nice = () => scale;
+      return scale;
+    });
+
+    function TestComponent() {
+      const {ticks} = useYScale({
+        fontSize: 12,
+        drawableHeight: 500,
+        formatYAxisLabel: jest.fn((value) => value.toString()),
+        series: [],
+        overFlowStyle: true,
+      });
+
+      return (
+        <ul>
+          {ticks.map(({formattedValue}) => (
+            <li key={formattedValue}>{formattedValue}</li>
+          ))}
+        </ul>
+      );
+    }
+
+    const wrapper = mount(<TestComponent />);
+
+    expect(wrapper).toContainReactComponentTimes('li', mockTicks.length - 1);
+    expect(wrapper).not.toContainReactComponent('li', {children: '50'});
+  });
 });

@@ -56,18 +56,19 @@ export function useLinearXAxisDetails({
   overflowStyle,
 }: ChartDetails) {
   // determine how much space will be taken up by the yaxis and its labels, in order to know width of xaxis
-  const approxYAxisLabelWidth = useMemo(() => {
-    if (overflowStyle) {
-      return 0;
-    }
-    return Math.max(
-      ...initialTicks.map(({formattedValue}) =>
-        getTextWidth({text: formattedValue, fontSize}),
+  const approxYAxisLabelWidth = useMemo(
+    () =>
+      Math.max(
+        ...initialTicks.map(({formattedValue}) =>
+          getTextWidth({text: formattedValue, fontSize}),
+        ),
       ),
-    );
-  }, [fontSize, initialTicks, overflowStyle]);
+    [fontSize, initialTicks],
+  );
 
-  const estimatedYAxisWidth = SPACING_TIGHT + approxYAxisLabelWidth;
+  const estimatedYAxisWidth = overflowStyle
+    ? 0
+    : SPACING_TIGHT + approxYAxisLabelWidth;
 
   const drawableWidth =
     chartDimensions.width - estimatedYAxisWidth - Margin.Right;
