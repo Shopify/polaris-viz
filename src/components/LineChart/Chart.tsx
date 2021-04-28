@@ -315,6 +315,20 @@ export function Chart({
           />
         </g>
 
+        <g transform={`translate(0,${marginTop})`}>
+          <YAxis
+            ticks={ticks}
+            drawableWidth={drawableWidth}
+            fontSize={fontSize}
+            showGridLines={gridOptions.showHorizontalLines}
+            gridColor={gridOptions.color}
+            labelColor={yAxisOptions.labelColor}
+            axisMargin={axisMargin}
+            overflowStyle={lineOptions.overflow}
+            labelBackgroundColor={yAxisOptions.labelBackgroundColor}
+          />
+        </g>
+
         {emptyState ? null : (
           <g transform={`translate(${axisMargin},${marginTop})`}>
             <Crosshair
@@ -407,20 +421,6 @@ export function Chart({
               </React.Fragment>
             );
           })}
-        </g>
-
-        <g transform={`translate(0,${marginTop})`}>
-          <YAxis
-            ticks={ticks}
-            drawableWidth={drawableWidth}
-            fontSize={fontSize}
-            showGridLines={gridOptions.showHorizontalLines}
-            gridColor={gridOptions.color}
-            labelColor={yAxisOptions.labelColor}
-            axisMargin={axisMargin}
-            overflowStyle={lineOptions.overflow}
-            labelBackgroundColor={yAxisOptions.labelBackgroundColor}
-          />
         </g>
       </svg>
 
