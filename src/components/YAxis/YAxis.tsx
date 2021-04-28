@@ -1,5 +1,9 @@
 import React from 'react';
-import {spacingExtraTight, colorSky} from '@shopify/polaris-tokens';
+import {
+  spacingBase,
+  spacingExtraTight,
+  colorSky,
+} from '@shopify/polaris-tokens';
 
 import {
   FONT_SIZE,
@@ -15,7 +19,7 @@ interface Props {
     yOffset: number;
   }[];
   drawableWidth: number;
-  axisMargin: number;
+  axisMargin?: number;
   fontSize?: number;
   showGridLines?: boolean;
   gridColor?: string;
@@ -31,10 +35,18 @@ function Axis({
   showGridLines = true,
   labelColor = DEFAULT_GREY_LABEL,
   labelBackgroundColor,
-  axisMargin,
+  axisMargin = 0,
 }: Props) {
   const labelWidth = axisMargin - SPACING / 2;
   const labelHeight = fontSize + SPACING / 2;
+  console.log({labelBackgroundColor});
+
+  const textTransform =
+    labelBackgroundColor == null
+      ? `translateX(-${spacingBase}) translateY(${spacingExtraTight})`
+      : `translateX(-${axisMargin / 2}px) translateY(${spacingExtraTight})`;
+
+  console.log(textTransform);
 
   const path = `m ${LABEL_RADIUS} 0
     h ${labelWidth - LABEL_RADIUS * 2}
@@ -70,9 +82,8 @@ function Axis({
               aria-hidden
               style={{
                 fontSize: `${fontSize}px`,
-                textAnchor: 'middle',
-                transform: `translateX(-${axisMargin /
-                  2}px) translateY(${spacingExtraTight})`,
+                textAnchor: labelBackgroundColor == null ? 'end' : 'middle',
+                transform: textTransform,
                 fill: labelColor,
               }}
             >
