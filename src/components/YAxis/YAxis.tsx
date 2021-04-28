@@ -36,8 +36,7 @@ function Axis({
   const labelWidth = axisMargin - SPACING / 2;
   const labelHeight = fontSize + SPACING / 2;
 
-  const path = `
-    m ${LABEL_RADIUS} 0
+  const path = `m ${LABEL_RADIUS} 0
     h ${labelWidth - LABEL_RADIUS * 2}
     a ${LABEL_RADIUS} ${LABEL_RADIUS} 0 0 1 ${LABEL_RADIUS} ${LABEL_RADIUS}
     v ${labelHeight - LABEL_RADIUS * 2}
@@ -46,8 +45,7 @@ function Axis({
     a ${LABEL_RADIUS} ${LABEL_RADIUS} 0 0 1 -${LABEL_RADIUS} -${LABEL_RADIUS}
     V${LABEL_RADIUS}
     a ${LABEL_RADIUS} ${LABEL_RADIUS} 0 0 1 ${LABEL_RADIUS} -${LABEL_RADIUS}
-    z
-  `;
+    z`;
 
   return (
     <g>
