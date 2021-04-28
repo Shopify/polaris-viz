@@ -1,17 +1,13 @@
 import React, {useMemo} from 'react';
 import {animated, OpaqueInterpolation} from 'react-spring';
-import {Color} from 'types';
 import {ScaleLinear} from 'd3-scale';
 
-import {getColorValue} from '../../utilities';
 import {ROUNDED_BAR_RADIUS} from '../../constants';
 
 import styles from './Bar.scss';
 
 interface Props {
-  color: Color;
-  highlightColor: Color;
-  isSelected: boolean;
+  color: string;
   x: number;
   yScale: ScaleLinear<number, number>;
   rawValue: number;
@@ -27,8 +23,6 @@ interface Props {
 
 export function Bar({
   color,
-  highlightColor,
-  isSelected,
   x,
   rawValue,
   yScale,
@@ -46,9 +40,6 @@ export function Bar({
   const isNegative = rawValue < 0;
   const rotation = isNegative ? 'rotate(180deg)' : 'rotate(0deg)';
   const xPosition = isNegative ? x + width : x;
-  const currentColor = isSelected
-    ? getColorValue(highlightColor)
-    : getColorValue(color);
 
   const heightIsNumber = typeof height === 'number';
 
@@ -110,13 +101,13 @@ export function Bar({
   return (
     <animated.path
       d={path}
-      fill={currentColor}
+      fill={color}
       aria-label={ariaLabel}
       onFocus={handleFocus}
       tabIndex={tabIndex}
       role={role}
       style={style}
-      className={color === highlightColor ? undefined : styles.BarNoOutline}
+      className={styles.Bar}
     />
   );
 }

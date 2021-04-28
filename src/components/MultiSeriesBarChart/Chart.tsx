@@ -266,7 +266,6 @@ export function Chart({
                     data={item}
                     width={xScale.bandwidth()}
                     colors={barColors}
-                    highlightColors={barHighlightColors}
                     onFocus={handleFocus}
                     barGroupIndex={index}
                     ariaLabel={ariaLabel}

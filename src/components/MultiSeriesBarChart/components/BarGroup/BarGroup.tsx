@@ -76,10 +76,10 @@ export function BarGroup({
             aria-hidden={!ariaEnabledBar}
             key={index}
           >
-            <Bar
+            {/* <Bar
               height={height}
               color={colors[index]}
-              highlightColor={highlightColors[index]}
+              // highlightColor={highlightColors[index]}
               isSelected={isActive}
               x={x + (barWidth + BAR_SPACING) * index}
               yScale={yScale}
@@ -91,7 +91,7 @@ export function BarGroup({
               role={ariaEnabledBar ? 'img' : undefined}
               ariaLabel={ariaEnabledBar ? ariaLabel : undefined}
               hasRoundedCorners={hasRoundedCorners}
-            />
+            /> */}
           </g>
         );
       })}

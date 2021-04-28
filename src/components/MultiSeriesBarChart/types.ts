@@ -1,16 +1,6 @@
 import {Series as ShapeSeries} from 'd3-shape';
 
-import {
-  Color,
-  DataSeries,
-  Data,
-  StringLabelFormatter,
-  NumberLabelFormatter,
-} from '../../types';
-
-export interface Series extends DataSeries<Data, Color> {
-  highlightColor?: Color;
-}
+import {Color, StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
 export type StackSeries = ShapeSeries<
   {

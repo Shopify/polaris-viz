@@ -19,12 +19,13 @@ import {
   getColorValue,
   isGradientType,
 } from '../../utilities';
+import {Bar} from '../../components';
 import {YAxis} from '../YAxis';
 import {BarChartXAxis} from '../BarChartXAxis';
 import {TooltipContainer} from '../TooltipContainer';
 import {LinearGradient} from '../LinearGradient';
 
-import {AnnotationLine, Bar} from './components';
+import {AnnotationLine} from './components';
 import {
   RenderTooltipContentData,
   BarOptions,

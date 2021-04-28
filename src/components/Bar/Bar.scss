@@ -1,7 +1,7 @@
 @import 'node_modules/@shopify/polaris-tokens/dist/index';
 @import '../../styles/common';
 
-.BarNoOutline {
+.Bar {
   @include no-outline;
-  transition: fill $duration-fast ease;
+  transition: fill $duration-slow ease;
 }
