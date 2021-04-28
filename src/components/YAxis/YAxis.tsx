@@ -39,14 +39,11 @@ function Axis({
 }: Props) {
   const labelWidth = axisMargin - SPACING / 2;
   const labelHeight = fontSize + SPACING / 2;
-  console.log({labelBackgroundColor});
 
   const textTransform =
     labelBackgroundColor == null
       ? `translateX(-${spacingBase}) translateY(${spacingExtraTight})`
       : `translateX(-${axisMargin / 2}px) translateY(${spacingExtraTight})`;
-
-  console.log(textTransform);
 
   const path = `m ${LABEL_RADIUS} 0
     h ${labelWidth - LABEL_RADIUS * 2}
