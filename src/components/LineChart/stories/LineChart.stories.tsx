@@ -61,6 +61,8 @@ Default.args = {
     xAxisLabels,
     labelFormatter: formatXAxisLabel,
   },
-  yAxisOptions: {labelFormatter: formatYAxisLabel},
+  yAxisOptions: {
+    labelFormatter: formatYAxisLabel,
+  },
   renderTooltipContent,
 };

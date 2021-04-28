@@ -1,8 +1,8 @@
 import React from 'react';
 import {
+  spacingBase,
   spacingExtraTight,
   colorSky,
-  spacingBase,
 } from '@shopify/polaris-tokens';
 
 import {
@@ -43,6 +43,11 @@ function Axis({
   const labelWidth = axisMargin - SPACING / 2;
   const labelHeight = fontSize + SPACING / 2;
 
+  const textTransform =
+    labelBackgroundColor == null
+      ? `translateX(-${spacingBase}) translateY(${spacingExtraTight})`
+      : `translateX(-${axisMargin / 2}px) translateY(${spacingExtraTight})`;
+
   const path = `m ${LABEL_RADIUS} 0
     h ${labelWidth - LABEL_RADIUS * 2}
     a ${LABEL_RADIUS} ${LABEL_RADIUS} 0 0 1 ${LABEL_RADIUS} ${LABEL_RADIUS}
@@ -75,7 +80,7 @@ function Axis({
                   fill={labelBackgroundColor}
                   style={{
                     transform: `translateX(-${labelWidth / 2 +
-                      16}px) translateY(-${labelHeight / 2}px)`,
+                      axisMargin / 2}px) translateY(-${labelHeight / 2}px)`,
                   }}
                 />
               ) : null}
@@ -83,8 +88,8 @@ function Axis({
                 aria-hidden
                 style={{
                   fontSize: `${fontSize ? fontSize : FONT_SIZE}px`,
-                  textAnchor: 'middle',
-                  transform: `translateX(-${spacingBase}) translateY(${spacingExtraTight})`,
+                  textAnchor: labelBackgroundColor == null ? 'end' : 'middle',
+                  transform: textTransform,
                   fill: labelColor,
                 }}
               >
