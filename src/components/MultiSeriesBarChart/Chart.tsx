@@ -261,10 +261,13 @@ export function Chart({
                     isAnimated={isAnimated}
                     key={index}
                     x={xPosition == null ? 0 : xPosition}
-                    isActive={activeBarGroup === index}
+                    isSubdued={
+                      activeBarGroup != null && index !== activeBarGroup
+                    }
                     yScale={yScale}
                     data={item}
                     width={xScale.bandwidth()}
+                    height={drawableHeight}
                     colors={barColors}
                     onFocus={handleFocus}
                     barGroupIndex={index}

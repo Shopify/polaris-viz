@@ -1,15 +1,26 @@
 import React from 'react';
-import {Color} from 'types';
+import {SeriesColor, GradientStop} from 'types';
 
-import {getColorValue} from '../../utilities';
+import {getColorValue, isGradientType} from '../../utilities';
 
 import styles from './SquareColorPreview.scss';
 
-export function SquareColorPreview({color}: {color: Color}) {
-  return (
-    <div
-      className={styles.ColorPreview}
-      style={{background: getColorValue(color)}}
-    />
+export interface SquareColorPreviewProps {
+  color: SeriesColor;
+}
+
+const createCSSGradient = (gradient: GradientStop[]) => {
+  const gradientStops = gradient.map(
+    ({color, offset}) => `${color} ${offset}%`,
   );
+
+  return `linear-gradient(0deg, ${gradientStops.join(',')})`;
+};
+
+export function SquareColorPreview({color}: SquareColorPreviewProps) {
+  const background = isGradientType(color)
+    ? createCSSGradient(color)
+    : getColorValue(color);
+
+  return <div className={styles.ColorPreview} style={{background}} />;
 }
