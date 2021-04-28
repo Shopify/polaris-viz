@@ -34,6 +34,7 @@ interface Props {
   gridColor?: string;
   showTicks?: boolean;
   labelColor?: string;
+  showAxisLine?: boolean;
 }
 
 function getTextAlign({
@@ -64,6 +65,7 @@ function Axis({
   ariaHidden,
   showGridLines = true,
   showTicks = true,
+  showAxisLine = true,
   gridColor = colorSky,
   labelColor = DEFAULT_GREY_LABEL,
 }: Props) {
@@ -104,11 +106,13 @@ function Axis({
 
   return (
     <React.Fragment>
-      <path
-        d={`M ${xScaleMin} ${TICK_SIZE} v ${-TICK_SIZE} H ${xScaleMax} v ${TICK_SIZE}`}
-        fill="none"
-        stroke={gridColor}
-      />
+      {showAxisLine ? (
+        <path
+          d={`M ${xScaleMin} ${TICK_SIZE} v ${-TICK_SIZE} H ${xScaleMax} v ${TICK_SIZE}`}
+          fill="none"
+          stroke={gridColor}
+        />
+      ) : null}
 
       {tickDetails.map(({value, xOffset, firstLabel}, index) => {
         const textWidth = needsDiagonalLabels

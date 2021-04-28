@@ -72,7 +72,12 @@ export function LineChart({
     };
   }, [containerRef, updateDimensions]);
 
-  const lineOptionsWithDefaults = {hasSpline: false, width: 2, ...lineOptions};
+  const lineOptionsWithDefaults = {
+    hasSpline: false,
+    width: 2,
+    overflow: false,
+    ...lineOptions,
+  };
 
   const xAxisOptionsWithDefaults = {
     labelFormatter: (value: string) => value,
@@ -80,6 +85,8 @@ export function LineChart({
     showTicks: true,
     labelColor: DEFAULT_GREY_LABEL,
     useMinimalLabels: false,
+    marginTop: 0,
+    showAxisLine: true,
     ...xAxisOptions,
   };
 

@@ -55,9 +55,11 @@ const xAxisOptions = {
   showTicks: true,
   labelColor: 'red',
   useMinimalLabels: false,
+  marginTop: 0,
+  showAxisLine: true,
 };
 
-const lineOptions = {hasSpline: false, width: 2};
+const lineOptions = {hasSpline: false, width: 2, overflow: false};
 
 const yAxisOptions = {
   labelFormatter: jest.fn((value) => value),
@@ -220,7 +222,7 @@ describe('<Chart />', () => {
     mount(
       <Chart
         {...mockProps}
-        lineOptions={{hasSpline: true, width: 2}}
+        lineOptions={{...mockProps.lineOptions, hasSpline: true}}
         series={[primarySeries, {...primarySeries, name: 'A second series'}]}
       />,
     );
