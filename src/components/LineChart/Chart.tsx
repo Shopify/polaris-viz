@@ -117,10 +117,10 @@ export function Chart({
         setTooltipDetails(null);
       } else {
         const {x, y, index} = details;
-        setTooltipDetails({index, y, x: x + axisMargin});
+        setTooltipDetails({index, y, x: x + dataMargin});
       }
     },
-    [axisMargin],
+    [dataMargin],
   );
 
   const tooltipMarkup = useMemo(() => {
