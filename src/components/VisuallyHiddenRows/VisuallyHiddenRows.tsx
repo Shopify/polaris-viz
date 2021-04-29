@@ -5,12 +5,13 @@ import {
   DataSeries,
   NullableData,
   Data,
+  SeriesColor,
 } from '../../types';
 
 import styles from './VisuallyHiddenRows.scss';
 
 interface Props {
-  series: DataSeries<Data | NullableData>[];
+  series: DataSeries<Data | NullableData, SeriesColor>[];
   xAxisLabels: string[];
   formatYAxisLabel: NumberLabelFormatter;
 }

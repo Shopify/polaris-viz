@@ -20,6 +20,7 @@ import {
   YAxisOptions,
   GridOptions,
   CrossHairOptions,
+  SeriesWithDefaults,
 } from './types';
 import {TooltipContent} from './components';
 
@@ -118,12 +119,15 @@ export function LineChart({
     return <TooltipContent data={formattedData} />;
   }
 
-  const seriesWithDefaults = series.map<Required<Series>>((series, index) => ({
-    color: getDefaultColor(index),
-    lineStyle: 'solid',
-    showArea: false,
-    ...series,
-  }));
+  const seriesWithDefaults = series.map<SeriesWithDefaults>((series, index) => {
+    const defaultColor = getDefaultColor(index);
+
+    return {
+      color: defaultColor,
+      lineStyle: 'solid',
+      ...series,
+    };
+  });
 
   return (
     <React.Fragment>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Color, LineStyle} from 'types';
+import {LineStyle, SeriesColor} from 'types';
 
 import {LinePreview} from '../../../LinePreview';
 
@@ -11,7 +11,7 @@ interface TooltipData {
     label: string;
     value: string;
   };
-  color: Color;
+  color: SeriesColor;
   lineStyle: LineStyle;
 }
 

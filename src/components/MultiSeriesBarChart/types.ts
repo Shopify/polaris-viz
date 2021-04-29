@@ -8,7 +8,7 @@ import {
   NumberLabelFormatter,
 } from '../../types';
 
-export interface Series extends DataSeries<Data> {
+export interface Series extends DataSeries<Data, Color> {
   highlightColor?: Color;
 }
 

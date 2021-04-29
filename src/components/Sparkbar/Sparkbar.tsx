@@ -136,8 +136,16 @@ export function Sparkbar({
         {barFillStyle === 'gradient' ? (
           <LinearGradient
             id={id}
-            startColor={rgbToRgba({rgb: currentColor, alpha: 0.5})}
-            endColor={rgbToRgba({rgb: currentColor, alpha: 1})}
+            gradient={[
+              {
+                color: rgbToRgba({rgb: currentColor, alpha: 0.5}),
+                offset: 0,
+              },
+              {
+                color: rgbToRgba({rgb: currentColor, alpha: 1}),
+                offset: 100,
+              },
+            ]}
           />
         ) : null}
 

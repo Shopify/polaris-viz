@@ -1,45 +1,73 @@
-import React from 'react';
-import {Color} from 'types';
+import React, {useRef} from 'react';
+import {SeriesColor} from 'types';
 
-import {getColorValue} from '../../utilities';
+import {getColorValue, isGradientType, uniqueId} from '../../utilities';
 import {LineStyle} from '../../types';
+import {LinearGradient} from '../LinearGradient';
 
 import {
+  DASHED_STROKE_DASHARRAY,
   DOTTED_LINE_PREVIEW_CY,
   DOTTED_LINE_PREVIEW_RADIUS,
   DOT_SPACING,
 } from './constants';
 
 interface Props {
-  color: Color;
+  color: SeriesColor;
   lineStyle: LineStyle;
 }
 
 export function LinePreview({color, lineStyle}: Props) {
+  const gradientId = useRef(uniqueId('linePreviewGradient'));
+
+  const linePreviewColor = isGradientType(color)
+    ? `url(#${gradientId.current})`
+    : getColorValue(color);
+
   return (
     <div>
       <svg width="15px" height="5px">
-        {getLinePreview(color, lineStyle)}
+        {isGradientType(color) ? (
+          <defs>
+            <LinearGradient
+              id={gradientId.current}
+              gradient={color}
+              x1="0%"
+              x2="100%"
+              y1="0%"
+              y2="0%"
+              gradientUnits="userSpaceOnUse"
+            />
+          </defs>
+        ) : null}
+        {getLinePreview(linePreviewColor, lineStyle)}
       </svg>
     </div>
   );
 }
 
-function getLinePreview(color: Color, lineStyle: LineStyle) {
-  const linePreviewColor = getColorValue(color);
+function getLinePreview(color: string, lineStyle: LineStyle) {
   const solidLine = (
-    <path d="M0,0L100,0" stroke={linePreviewColor} strokeWidth="4" />
-  );
-  const dashedLine = (
     <path
-      d="M0,0L100,0"
-      stroke={linePreviewColor}
-      strokeWidth="4"
-      strokeDasharray="3 2"
+      d="M1,1L13.5,1"
+      stroke={color}
+      strokeLinejoin="round"
+      strokeLinecap="round"
+      strokeWidth="2"
     />
   );
+
+  const dashedLine = (
+    <path
+      d="M0,1L15,1"
+      stroke={color}
+      strokeWidth="2"
+      strokeDasharray={DASHED_STROKE_DASHARRAY}
+    />
+  );
+
   const dottedLine = (
-    <g fill={linePreviewColor}>
+    <g fill={color}>
       {[...Array(3)].map((_, index) => {
         return (
           <circle

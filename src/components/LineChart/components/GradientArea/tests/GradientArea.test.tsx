@@ -21,7 +21,7 @@ describe('<GradientArea />', () => {
       name: 'Primary',
       color: 'primary' as any,
       lineStyle: 'solid' as any,
-      showArea: false,
+      areaColor: '#ff0000',
       data: [
         {label: 'Jan 1', rawValue: 1500},
         {label: 'Jan 2', rawValue: 1000},
@@ -81,5 +81,16 @@ describe('<GradientArea />', () => {
     );
 
     expect(curveSpy).toHaveBeenCalled();
+  });
+
+  describe('areaColor', () => {
+    it('gets passed to <stop/>', () => {
+      const actual = mount(
+        <svg>
+          <GradientArea {...mockProps} />
+        </svg>,
+      );
+      expect(actual).toContainReactComponent('stop', {stopColor: '#ff0000'});
+    });
   });
 });

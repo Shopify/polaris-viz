@@ -3,7 +3,7 @@ import {Line} from 'd3-shape';
 import {useSprings, SpringConfig, OpaqueInterpolation} from 'react-spring';
 
 import {SPRING_CONFIG} from '../constants';
-import {Series} from '../types';
+import {SeriesWithDefaults} from '../types';
 import {getPathLength, getPointAtLength} from '../../../utilities';
 
 export function useLineChartAnimations({
@@ -14,7 +14,7 @@ export function useLineChartAnimations({
 }: {
   activeIndex: number | null;
   lineGenerator: Line<{rawValue: number}>;
-  series: Required<Series>[];
+  series: SeriesWithDefaults[];
   isAnimated: boolean;
 }) {
   const currentIndex = activeIndex == null ? 0 : activeIndex;

@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import {ScaleLinear} from 'd3-scale';
 import {area, curveMonotoneX} from 'd3-shape';
 
-import {uniqueId, getColorValue, rgbToRgba} from '../../../../utilities';
+import {uniqueId} from '../../../../utilities';
 import {ANIMATION_DELAY, SLOW_DURATION, FAST_DURATION} from '../../constants';
 import {Data} from '../../../../types';
 import {Series} from '../../types';
@@ -28,7 +28,7 @@ export function GradientArea({
   index,
 }: Props) {
   const id = useMemo(() => uniqueId('gradient'), []);
-  const {data, color} = series;
+  const {data, areaColor} = series;
 
   const areaGenerator = area<Data>()
     .x((_: Data, index: number) => xScale(index))
@@ -41,11 +41,10 @@ export function GradientArea({
 
   const areaShape = areaGenerator(data);
 
-  if (areaShape == null || color == null) {
+  if (areaShape == null) {
     return null;
   }
 
-  const rgb = getColorValue(color);
   const gradientStops = getGradientDetails(data);
   const animationDelay =
     data.length > 1000
@@ -60,7 +59,8 @@ export function GradientArea({
             <stop
               key={percent}
               offset={`${percent}%`}
-              stopColor={rgbToRgba({rgb, alpha})}
+              stopColor={areaColor}
+              stopOpacity={alpha}
             />
           ))}
         </linearGradient>
@@ -73,7 +73,7 @@ export function GradientArea({
         }}
         fill={`url(#${id})`}
         strokeWidth="0"
-        stroke={series.color}
+        stroke={areaColor}
         className={isAnimated ? styles.FadeInArea : null}
       />
     </React.Fragment>

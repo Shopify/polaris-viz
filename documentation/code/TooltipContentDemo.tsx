@@ -98,6 +98,15 @@ export function TooltipContentDemo() {
       color: 'pastComparison',
       lineStyle: 'dashed',
     },
+    {
+      name: 'Hot Dogs3',
+      point: {
+        label: 'November 1st, 2020',
+        value: '12',
+      },
+      color: 'secondary',
+      lineStyle: 'dotted',
+    },
   ];
 
   const barChartAnnotation = {

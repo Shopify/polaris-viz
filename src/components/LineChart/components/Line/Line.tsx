@@ -1,18 +1,18 @@
 import React from 'react';
 import {Line as D3Line} from 'd3-shape';
 
-import {getColorValue} from '../../../../utilities';
-import {Series} from '../../types';
+import {SeriesWithDefaults} from '../../types';
 import {ANIMATION_DELAY, FAST_DURATION, SLOW_DURATION} from '../../constants';
 
 import styles from './Line.scss';
 import {StrokeDasharray} from './constants';
 
 interface Props {
-  series: Required<Series>;
+  series: SeriesWithDefaults;
   isAnimated: boolean;
   index: number;
   lineGenerator: D3Line<{rawValue: number}>;
+  color: string;
   lineOptions: {
     hasSpline: boolean;
     width: number;
@@ -25,6 +25,7 @@ export const Line = React.memo(function Shape({
   isAnimated,
   index,
   lineGenerator,
+  color,
 }: Props) {
   const path = lineGenerator(series.data);
 
@@ -46,7 +47,7 @@ export const Line = React.memo(function Shape({
       fill="none"
       strokeWidth={`${lineOptions.width}px`}
       paintOrder="stroke"
-      stroke={getColorValue(series.color)}
+      stroke={color}
       strokeLinejoin="round"
       strokeLinecap="round"
       strokeDasharray={StrokeDasharray[series.lineStyle]}

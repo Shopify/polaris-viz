@@ -22,9 +22,22 @@ export const series = [
       {rawValue: 809, label: '2020-04-13T12:00:00'},
       {rawValue: 129, label: '2020-04-14T12:00:00'},
     ],
-    color: 'primary' as 'primary',
+    color: [
+      {
+        offset: 0,
+        color: '#08CA9B',
+      },
+      {
+        offset: 85,
+        color: 'rgb(92,105,208)',
+      },
+      {
+        offset: 100,
+        color: 'rgb(92,105,208)',
+      },
+    ],
     lineStyle: 'solid' as 'solid',
-    showArea: true,
+    areaColor: 'rgb(92,105,208)',
   },
   {
     name: 'Mar 01–Mar 14, 2020',

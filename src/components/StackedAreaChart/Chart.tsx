@@ -14,7 +14,7 @@ import {
   CROSSHAIR_WIDTH,
 } from '../../constants';
 import {TooltipContainer} from '../TooltipContainer';
-import {eventPoint, uniqueId} from '../../utilities';
+import {eventPoint, uniqueId, getColorValue} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {Crosshair} from '../Crosshair';
 import {Point} from '../Point';
@@ -232,7 +232,7 @@ export function Chart({
             value.map(([, startingDataPoint], index) => (
               <Point
                 key={index}
-                color={colors[stackIndex]}
+                color={getColorValue(colors[stackIndex])}
                 cx={xScale(index)}
                 cy={yScale(startingDataPoint)}
                 active={index === activePointIndex}
