@@ -1,10 +1,11 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {Color} from 'types';
-import {YAxis, TooltipContainer, BarChartXAxis, Bar} from 'components';
+import {YAxis, TooltipContainer, BarChartXAxis} from 'components';
 
-import {AnnotationLine} from '../components';
+import {AnnotationLine, Bar} from '../components';
 import {Chart} from '../Chart';
+import {MASK_SUBDUE_COLOR, MASK_HIGHLIGHT_COLOR} from '../../../constants';
 
 (global as any).DOMRect = class DOMRect {
   width = 500;
@@ -35,7 +36,6 @@ describe('Chart />', () => {
     chartDimensions: new DOMRect(),
     barOptions: {
       color: 'colorPurple' as Color,
-      highlightColor: 'colorPurple' as Color,
       margin: 0,
       hasRoundedCorners: false,
     },
@@ -157,13 +157,15 @@ describe('Chart />', () => {
     expect(chart).toContainReactComponentTimes(Bar, 2);
   });
 
-  it('passes an active prop to the Bar that is being hovered on or nearby', () => {
+  it('passes a subdued color to the Bar that is not being hovered on or nearby', () => {
     const chart = mount(<Chart {...mockProps} />);
 
     const svg = chart.find('svg')!;
+    expect(chart).toContainReactComponent(Bar, {color: MASK_HIGHLIGHT_COLOR});
+
     svg.trigger('onMouseMove', fakeSVGEvent);
 
-    expect(chart).toContainReactComponent(Bar, {isSelected: true});
+    expect(chart).toContainReactComponent(Bar, {color: MASK_SUBDUE_COLOR});
   });
 
   describe('empty state', () => {

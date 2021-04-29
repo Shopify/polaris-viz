@@ -77,7 +77,6 @@ export function BarChart({
 
   const barOptionsWithDefaults = {
     color: getDefaultColor(),
-    highlightColor: getDefaultColor(),
     hasRoundedCorners: false,
     ...barOptions,
     margin,

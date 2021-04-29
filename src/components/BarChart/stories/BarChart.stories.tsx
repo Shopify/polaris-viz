@@ -38,17 +38,39 @@ const Template: Story<BarChartProps> = (args: BarChartProps) => {
   return <BarChart {...args} />;
 };
 
+const purple = '#5052b3';
+const negativePurple = '#39337f';
+const green = '#1bbe9e';
+
+const barGradient = [
+  {
+    color: negativePurple,
+    offset: 0,
+  },
+  {
+    color: purple,
+    offset: 50,
+  },
+  {
+    color: green,
+    offset: 100,
+  },
+];
+
 export const Default = Template.bind({});
 Default.args = {
   data: [
-    {rawValue: 324.19, label: '2020-01-01T12:00:00Z'},
+    {rawValue: 1324.19, label: '2020-01-01T12:00:00Z'},
     {rawValue: 613.29, label: '2020-01-02T12:00:00Z'},
     {rawValue: 422.79, label: '2020-01-03T12:00:00Z'},
     {rawValue: 25.6, label: '2020-01-04T12:00:00Z'},
     {rawValue: 277.69, label: '2020-01-05T12:00:00Z'},
     {rawValue: 421.19, label: '2020-01-06T12:00:00Z'},
   ],
-  barOptions: {color: primaryColor, highlightColor: secondaryColor},
+  barOptions: {
+    color: barGradient,
+    hasRoundedCorners: true,
+  },
   xAxisOptions: {labelFormatter: formatXAxisLabel},
   yAxisOptions: {labelFormatter: formatYAxisLabel},
   renderTooltipContent,
