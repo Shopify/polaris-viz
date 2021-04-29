@@ -110,7 +110,7 @@ export function Chart({
     overFlowStyle: lineOptions.overflow,
   });
 
-  const dataMargin = lineOptions.overflow ? SPACING_EXTRA_TIGHT : axisMargin;
+  const dataMargin = axisMargin;
 
   const handleFocus = useCallback(
     (details: ActiveTooltip | null) => {
@@ -321,7 +321,11 @@ export function Chart({
                     lineOptions.overflow ? 0 : axisMargin
                   },${yOffset})`}
                 >
-                  <line x2={drawableWidth} stroke={colorSky} />)
+                  <line
+                    x2={dimensions.width - Margin.Right}
+                    stroke={colorSky}
+                  />
+                  )
                 </g>
               </React.Fragment>
             );
