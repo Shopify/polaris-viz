@@ -1,6 +1,7 @@
 import React, {useState, useMemo, useRef, useCallback} from 'react';
 import throttle from 'lodash.throttle';
 import {line, curveMonotoneX} from 'd3-shape';
+import {colorSky} from '@shopify/polaris-tokens';
 
 import {useLinearXAxisDetails, useLinearXScale} from '../../hooks';
 import {
@@ -312,11 +313,64 @@ export function Chart({
         </g>
 
         <g transform={`translate(0,${Margin.Top})`}>
+          {ticks.map(({value, yOffset}) => {
+            return (
+              <React.Fragment key={value}>
+                <g
+                  transform={`translate(${
+                    lineOptions.overflow ? 0 : axisMargin
+                  },${yOffset})`}
+                >
+                  <line x2={drawableWidth} stroke={colorSky} />)
+                </g>
+              </React.Fragment>
+            );
+          })}
+        </g>
+
+        {emptyState ? null : (
+          <VisuallyHiddenRows
+            formatYAxisLabel={yAxisOptions.labelFormatter}
+            xAxisLabels={formattedLabels}
+            series={series}
+          />
+        )}
+
+        <g transform={`translate(${dataMargin},${Margin.Top})`}>
+          {reversedSeries.map((singleSeries, index) => {
+            const {name, showArea} = singleSeries;
+
+            return (
+              <React.Fragment key={`${name}-${index}`}>
+                <Line
+                  series={singleSeries}
+                  isAnimated={isAnimated}
+                  index={index}
+                  lineGenerator={lineGenerator}
+                  lineOptions={lineOptions}
+                />
+
+                {showArea ? (
+                  <GradientArea
+                    series={singleSeries}
+                    yScale={yScale}
+                    xScale={xScale}
+                    isAnimated={isAnimated}
+                    index={index}
+                    hasSpline={lineOptions.hasSpline}
+                  />
+                ) : null}
+              </React.Fragment>
+            );
+          })}
+        </g>
+
+        <g transform={`translate(0,${Margin.Top})`}>
           <YAxis
             ticks={ticks}
             drawableWidth={drawableWidth}
             fontSize={fontSize}
-            showGridLines={gridOptions.showHorizontalLines}
+            showGridLines={false}
             gridColor={gridOptions.color}
             labelColor={yAxisOptions.labelColor}
             axisMargin={axisMargin}
@@ -337,17 +391,9 @@ export function Chart({
           </g>
         )}
 
-        {emptyState ? null : (
-          <VisuallyHiddenRows
-            formatYAxisLabel={yAxisOptions.labelFormatter}
-            xAxisLabels={formattedLabels}
-            series={series}
-          />
-        )}
-
         <g transform={`translate(${dataMargin},${Margin.Top})`}>
           {reversedSeries.map((singleSeries, index) => {
-            const {data, name, showArea, color} = singleSeries;
+            const {data, name, color} = singleSeries;
             const isLongestLine = index === longestSeriesIndex;
 
             const animatedYPostion =
@@ -364,13 +410,6 @@ export function Chart({
 
             return (
               <React.Fragment key={`${name}-${index}`}>
-                <Line
-                  series={singleSeries}
-                  isAnimated={isAnimated}
-                  index={index}
-                  lineGenerator={lineGenerator}
-                  lineOptions={lineOptions}
-                />
                 {animatePoints ? (
                   <Point
                     color={color}
@@ -403,17 +442,6 @@ export function Chart({
                     />
                   );
                 })}
-
-                {showArea ? (
-                  <GradientArea
-                    series={singleSeries}
-                    yScale={yScale}
-                    xScale={xScale}
-                    isAnimated={isAnimated}
-                    index={index}
-                    hasSpline={lineOptions.hasSpline}
-                  />
-                ) : null}
               </React.Fragment>
             );
           })}

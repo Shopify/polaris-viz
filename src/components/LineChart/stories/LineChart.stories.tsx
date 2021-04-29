@@ -52,6 +52,7 @@ OverflowStyle.args = {
   },
   gridOptions: {showVerticalLines: false},
   lineOptions: {overflow: true, hasSpline: true},
+  isAnimated: true,
 };
 
 export const Default = Template.bind({});
