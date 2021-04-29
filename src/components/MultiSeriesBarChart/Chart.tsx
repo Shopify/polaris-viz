@@ -247,7 +247,6 @@ export function Chart({
                     xScale={xScale}
                     yScale={yScale}
                     colors={barColors}
-                    highlightColors={barHighlightColors}
                     onFocus={handleFocus}
                     accessibilityData={accessibilityData}
                   />

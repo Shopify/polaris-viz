@@ -1,21 +1,22 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {ScaleLinear, ScaleBand} from 'd3-scale';
-import {Color} from 'types';
-import {classNames} from '@shopify/css-utilities';
+import {SeriesColor, Color, GradientStop} from 'types';
 
 import {formatAriaLabel} from '../../utilities';
 import {StackSeries} from '../../types';
 import {BAR_SPACING} from '../../constants';
-import {getColorValue} from '../../../../utilities';
-import styles from '../../shared.scss';
+import {getColorValue, isGradientType, uniqueId} from '../../../../utilities';
+import {MASK_SUBDUE_COLOR, MASK_HIGHLIGHT_COLOR} from '../../../../constants';
+import {LinearGradient} from '../../../../components';
+
+import styles from './StackedBarGroup.scss';
 
 interface Props {
   groupIndex: number;
   data: StackSeries;
   yScale: ScaleLinear<number, number>;
   xScale: ScaleBand<string>;
-  colors: Color[];
-  highlightColors: Color[];
+  colors: SeriesColor[];
   activeBarGroup: number | null;
   accessibilityData: {
     title: string;
@@ -33,60 +34,100 @@ export function StackedBarGroup({
   yScale,
   xScale,
   colors,
-  highlightColors,
-  activeBarGroup,
   onFocus,
   accessibilityData,
+  activeBarGroup,
 }: Props) {
   const barWidth = xScale.bandwidth() - BAR_SPACING;
 
+  const maskId = useMemo(() => uniqueId('mask'), []);
+  const stackId = useMemo(() => uniqueId('stack'), []);
+  const gradientId = useMemo(() => uniqueId('gradient'), []);
+  const activeBarId = `${stackId}active`;
+
+  const hasActiveBar = activeBarGroup != null;
+
+  const shouldUseGradient = isGradientType(colors[groupIndex]);
+
+  const fillColor = useMemo(
+    () =>
+      shouldUseGradient
+        ? colors[groupIndex]
+        : getColorValue(colors[groupIndex] as Color),
+    [colors, groupIndex, shouldUseGradient],
+  );
+
   return (
-    <g>
-      {data.map(([start, end], barIndex) => {
-        const xPosition = xScale(barIndex.toString());
+    <React.Fragment>
+      <defs aria-hidden role="none">
+        {shouldUseGradient ? (
+          <LinearGradient
+            id={gradientId}
+            gradient={fillColor as GradientStop[]}
+          />
+        ) : null}
 
-        const fillColor =
-          activeBarGroup === barIndex
-            ? getColorValue(highlightColors[groupIndex])
-            : getColorValue(colors[groupIndex]);
+        <mask id={maskId}>
+          <use
+            className={styles.TransitionColor}
+            style={{
+              fill: hasActiveBar ? MASK_SUBDUE_COLOR : MASK_HIGHLIGHT_COLOR,
+            }}
+            href={`#${stackId}`}
+          />
+          <use
+            className={styles.TransitionColor}
+            style={{
+              fill: MASK_HIGHLIGHT_COLOR,
+            }}
+            href={`#${activeBarId}`}
+          />
+        </mask>
+      </defs>
+      <g
+        mask={`url(#${maskId})`}
+        style={{
+          fill: shouldUseGradient ? `url(#${gradientId})` : fillColor,
+        }}
+      >
+        <g id={stackId}>
+          {data.map(([start, end], barIndex) => {
+            const xPosition = xScale(barIndex.toString());
 
-        const handleFocus = () => {
-          onFocus(barIndex);
-        };
+            const handleFocus = () => {
+              onFocus(barIndex);
+            };
 
-        const ariaLabel = formatAriaLabel(accessibilityData[barIndex]);
-        const height = Math.abs(yScale(end) - yScale(start));
+            const ariaLabel = formatAriaLabel(accessibilityData[barIndex]);
+            const height = Math.abs(yScale(end) - yScale(start));
+            const ariaEnabledBar = groupIndex === 0;
+            const isActive =
+              activeBarGroup != null && barIndex === activeBarGroup;
 
-        const ariaEnabledBar = groupIndex === 0;
-
-        const nonUniqueHighlightColor =
-          colors[groupIndex] === highlightColors[groupIndex];
-
-        return (
-          <g
-            role={groupIndex === 0 ? 'listitem' : undefined}
-            aria-hidden={!ariaEnabledBar}
-            key={barIndex}
-          >
-            <rect
-              className={classNames(
-                styles.Bar,
-                nonUniqueHighlightColor && styles.StackNoOutline,
-              )}
-              key={barIndex}
-              x={xPosition}
-              y={yScale(end)}
-              height={height}
-              width={barWidth}
-              fill={fillColor}
-              tabIndex={ariaEnabledBar ? 0 : -1}
-              onFocus={handleFocus}
-              role={ariaEnabledBar ? 'img' : undefined}
-              aria-label={ariaEnabledBar ? ariaLabel : undefined}
-            />
-          </g>
-        );
-      })}
-    </g>
+            return (
+              <g
+                role={ariaEnabledBar ? 'listitem' : undefined}
+                aria-hidden={!ariaEnabledBar}
+                key={barIndex}
+              >
+                <rect
+                  id={isActive ? activeBarId : ''}
+                  key={barIndex}
+                  x={xPosition}
+                  y={yScale(end)}
+                  height={height}
+                  width={barWidth}
+                  tabIndex={ariaEnabledBar ? 0 : -1}
+                  onFocus={handleFocus}
+                  role={ariaEnabledBar ? 'img' : undefined}
+                  aria-label={ariaEnabledBar ? ariaLabel : undefined}
+                  aria-hidden={!ariaEnabledBar}
+                />
+              </g>
+            );
+          })}
+        </g>
+      </g>
+    </React.Fragment>
   );
 }

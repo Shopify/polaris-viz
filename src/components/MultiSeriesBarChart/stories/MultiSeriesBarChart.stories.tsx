@@ -141,3 +141,23 @@ Gradient.args = {
     hasRoundedCorners: true,
   },
 };
+
+export const Stacked = Template.bind({});
+Stacked.args = {
+  series: series,
+  xAxisOptions: {labels},
+  barOptions: {
+    hasRoundedCorners: true,
+    isStacked: true,
+  },
+};
+
+export const StackedGradient = Template.bind({});
+StackedGradient.args = {
+  series: gradientSeries,
+  xAxisOptions: {labels},
+  barOptions: {
+    hasRoundedCorners: true,
+    isStacked: true,
+  },
+};
