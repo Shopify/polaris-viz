@@ -1,6 +1,5 @@
 import React, {useState, useLayoutEffect, useRef} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
-import {Data} from 'types';
 import {colorSky} from '@shopify/polaris-tokens';
 
 import {DEFAULT_GREY_LABEL} from '../../constants';
@@ -10,6 +9,7 @@ import {getDefaultColor, uniqueId, normalizeData} from '../../utilities';
 import {TooltipContent} from './components';
 import {Chart} from './Chart';
 import {
+  BarChartData,
   RenderTooltipContentData,
   BarOptions,
   GridOptions,
@@ -21,7 +21,7 @@ import {
 } from './types';
 
 export interface BarChartProps {
-  data: Data[];
+  data: BarChartData[];
   annotations?: Annotation[];
   skipLinkText?: string;
   emptyStateText?: string;

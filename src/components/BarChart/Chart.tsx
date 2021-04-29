@@ -1,7 +1,6 @@
 import React, {useState, useMemo, useCallback} from 'react';
 import {useTransition} from 'react-spring';
 
-import {Data} from '../../types';
 import {usePrefersReducedMotion} from '../../hooks';
 import {
   LINE_HEIGHT,
@@ -27,6 +26,7 @@ import {LinearGradient} from '../LinearGradient';
 
 import {AnnotationLine} from './components';
 import {
+  BarChartData,
   RenderTooltipContentData,
   BarOptions,
   GridOptions,
@@ -45,7 +45,7 @@ import {
 import styles from './Chart.scss';
 
 interface Props {
-  data: Data[];
+  data: BarChartData[];
   annotationsLookupTable: AnnotationLookupTable;
   chartDimensions: DOMRect;
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
@@ -301,14 +301,36 @@ export function Chart({
           />
         </g>
 
-        <rect
-          mask={`url(#${clipId})`}
-          x="0"
-          y="0"
-          width={width}
-          height={height}
-          fill={`url(#${gradientId})`}
-        />
+        <g mask={`url(#${clipId})`}>
+          <rect
+            x="0"
+            y="0"
+            width={width}
+            height={height}
+            fill={`url(#${gradientId})`}
+          />
+          {transitions.map(({item}, index) => {
+            const xPosition = xScale(index.toString());
+            const xPositionValue = xPosition == null ? 0 : xPosition;
+            const translateXValue = xPositionValue + axisMargin;
+            const barColor =
+              item.barOptions != null && item.barOptions.color != null
+                ? item.barOptions.color
+                : null;
+            return barColor != null ? (
+              <rect
+                key={index}
+                transform={`translate(${translateXValue},${MARGIN.Top})`}
+                x="0"
+                y="0"
+                width={barWidth}
+                height={height}
+                fill={getColorValue(barColor)}
+              />
+            ) : null;
+          })}
+          ;
+        </g>
 
         <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
           {transitions.map((_, index) => {
