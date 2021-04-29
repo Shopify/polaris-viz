@@ -38,12 +38,9 @@ export function StackedBarGroup({
   accessibilityData,
   activeBarGroup,
 }: Props) {
-  const barWidth = xScale.bandwidth() - BAR_SPACING;
-
   const maskId = useMemo(() => uniqueId('mask'), []);
-  const stackId = useMemo(() => uniqueId('stack'), []);
   const gradientId = useMemo(() => uniqueId('gradient'), []);
-  const activeBarId = `${stackId}active`;
+  const activeBarId = useMemo(() => uniqueId('activeBar'), []);
 
   const hasActiveBar = activeBarGroup != null;
 
@@ -68,13 +65,24 @@ export function StackedBarGroup({
         ) : null}
 
         <mask id={maskId}>
-          <use
+          <g
             className={styles.TransitionColor}
             style={{
               fill: hasActiveBar ? MASK_SUBDUE_COLOR : MASK_HIGHLIGHT_COLOR,
             }}
-            href={`#${stackId}`}
-          />
+          >
+            <StackMarkup
+              data={data}
+              xScale={xScale}
+              onFocus={onFocus}
+              ariaHidden
+              activeBarId={activeBarId}
+              accessibilityData={accessibilityData}
+              activeBarGroup={activeBarGroup}
+              yScale={yScale}
+              groupIndex={groupIndex}
+            />
+          </g>
           <use
             className={styles.TransitionColor}
             style={{
@@ -90,44 +98,70 @@ export function StackedBarGroup({
           fill: shouldUseGradient ? `url(#${gradientId})` : fillColor,
         }}
       >
-        <g id={stackId}>
-          {data.map(([start, end], barIndex) => {
-            const xPosition = xScale(barIndex.toString());
-
-            const handleFocus = () => {
-              onFocus(barIndex);
-            };
-
-            const ariaLabel = formatAriaLabel(accessibilityData[barIndex]);
-            const height = Math.abs(yScale(end) - yScale(start));
-            const ariaEnabledBar = groupIndex === 0;
-            const isActive =
-              activeBarGroup != null && barIndex === activeBarGroup;
-
-            return (
-              <g
-                role={ariaEnabledBar ? 'listitem' : undefined}
-                aria-hidden={!ariaEnabledBar}
-                key={barIndex}
-              >
-                <rect
-                  id={isActive ? activeBarId : ''}
-                  key={barIndex}
-                  x={xPosition}
-                  y={yScale(end)}
-                  height={height}
-                  width={barWidth}
-                  tabIndex={ariaEnabledBar ? 0 : -1}
-                  onFocus={handleFocus}
-                  role={ariaEnabledBar ? 'img' : undefined}
-                  aria-label={ariaEnabledBar ? ariaLabel : undefined}
-                  aria-hidden={!ariaEnabledBar}
-                />
-              </g>
-            );
-          })}
-        </g>
+        <StackMarkup
+          data={data}
+          xScale={xScale}
+          onFocus={onFocus}
+          ariaHidden={false}
+          activeBarId={activeBarId}
+          accessibilityData={accessibilityData}
+          activeBarGroup={activeBarGroup}
+          yScale={yScale}
+          groupIndex={groupIndex}
+        />
       </g>
     </React.Fragment>
   );
+}
+
+function StackMarkup({
+  data,
+  xScale,
+  onFocus,
+  ariaHidden,
+  activeBarId,
+  accessibilityData,
+  activeBarGroup,
+  yScale,
+  groupIndex,
+}: Partial<Props> & {
+  ariaHidden: boolean;
+  activeBarId: string;
+  barWidth: number;
+}) {
+  const barWidth = xScale.bandwidth() - BAR_SPACING;
+  return data.map(([start, end], barIndex) => {
+    const xPosition = xScale(barIndex.toString());
+
+    const handleFocus = () => {
+      onFocus(barIndex);
+    };
+
+    const ariaLabel = formatAriaLabel(accessibilityData[barIndex]);
+    const height = Math.abs(yScale(end) - yScale(start));
+    const ariaEnabledBar = groupIndex === 0 && !ariaHidden;
+    const isActive = activeBarGroup != null && barIndex === activeBarGroup;
+
+    return (
+      <g
+        role={ariaEnabledBar ? 'listitem' : undefined}
+        aria-hidden={!ariaEnabledBar}
+        key={barIndex}
+      >
+        <rect
+          id={isActive ? activeBarId : ''}
+          key={barIndex}
+          x={xPosition}
+          y={yScale(end)}
+          height={height}
+          width={barWidth}
+          tabIndex={ariaEnabledBar ? 0 : -1}
+          onFocus={handleFocus}
+          role={ariaEnabledBar ? 'img' : undefined}
+          aria-label={ariaEnabledBar ? ariaLabel : undefined}
+          aria-hidden={!ariaEnabledBar}
+        />
+      </g>
+    );
+  });
 }
