@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- Check window is defined before accessing window methods
+
 ## [0.9.2] — 2021-04-29
 
 ### Added
