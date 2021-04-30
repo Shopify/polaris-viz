@@ -131,7 +131,6 @@ export function Chart({
   });
 
   const barColors = series.map(({color}) => color);
-  const barHighlightColors = series.map(({highlightColor}) => highlightColor);
 
   const tooltipContentMarkup = useMemo(() => {
     if (activeBarGroup == null) {

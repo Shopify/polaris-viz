@@ -6,10 +6,10 @@ import {DEFAULT_GREY_LABEL} from '../../constants';
 import {SkipLink} from '../SkipLink';
 import {TooltipContent} from '../TooltipContent';
 import {getDefaultColor, uniqueId} from '../../utilities';
-import {DataSeries, Data, NullableData, SeriesColor} from '../../types';
 
 import {Chart} from './Chart';
 import {
+  Series,
   RenderTooltipContentData,
   BarOptions,
   GridOptions,
@@ -18,7 +18,7 @@ import {
 } from './types';
 
 export interface MultiSeriesBarChartProps {
-  series: DataSeries<Data | NullableData, SeriesColor>[];
+  series: Series[];
   renderTooltipContent?(data: RenderTooltipContentData): React.ReactNode;
   skipLinkText?: string;
   barOptions?: Partial<BarOptions>;

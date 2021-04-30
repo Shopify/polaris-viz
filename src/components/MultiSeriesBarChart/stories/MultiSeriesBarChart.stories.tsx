@@ -147,7 +147,6 @@ Stacked.args = {
   series: series,
   xAxisOptions: {labels},
   barOptions: {
-    hasRoundedCorners: true,
     isStacked: true,
   },
 };
@@ -157,7 +156,6 @@ StackedGradient.args = {
   series: gradientSeries,
   xAxisOptions: {labels},
   barOptions: {
-    hasRoundedCorners: true,
     isStacked: true,
   },
 };

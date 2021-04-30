@@ -1,6 +1,6 @@
 import React, {useCallback, useMemo} from 'react';
 import {ScaleLinear} from 'd3-scale';
-import {Color} from 'types';
+import {SeriesColor} from 'types';
 import {useTransition} from 'react-spring';
 
 import {usePrefersReducedMotion} from '../../../../hooks';
@@ -25,7 +25,7 @@ interface Props {
   width: number;
   height: number;
   data: number[];
-  colors: Color[];
+  colors: SeriesColor[];
   isSubdued: boolean;
   barGroupIndex: number;
   ariaLabel: string;
@@ -97,7 +97,7 @@ export function BarGroup({
           const ariaEnabledBar = index === 0;
           return (
             <g
-              role={index === 0 ? 'listitem' : undefined}
+              role={ariaEnabledBar ? 'listitem' : undefined}
               aria-hidden={!ariaEnabledBar}
               key={index}
             >

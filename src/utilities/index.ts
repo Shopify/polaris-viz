@@ -18,3 +18,4 @@ export {getAnimationTrail} from './get-animation-trail';
 export {getPathLength} from './get-path-length';
 export {getPointAtLength} from './get-point-at-length';
 export {normalizeData} from './normalize-data';
+export {createCSSGradient} from './create-css-gradient';

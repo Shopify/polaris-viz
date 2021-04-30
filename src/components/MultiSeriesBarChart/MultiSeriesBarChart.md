@@ -13,7 +13,6 @@ const series = [
   {
     name: 'Breakfast',
     color: 'primary',
-    highlightColor: 'primaryProminent',
     data: [
       {label: 'Monday', rawValue: 3},
       {label: 'Tuesday', rawValue: 7},
@@ -27,7 +26,6 @@ const series = [
   {
     name: 'Lunch',
     color: 'secondary',
-    highlightColor: 'secondaryProminent',
     data: [
       {label: 'Monday', rawValue: 4},
       {label: 'Tuesday', rawValue: 3},
@@ -41,7 +39,6 @@ const series = [
   {
     name: 'Dinner',
     color: 'tertiary',
-    highlightColor: 'tertiaryProminent',
     data: [
       {label: 'Monday', rawValue: 7},
       {label: 'Tuesday', rawValue: 2},
@@ -155,8 +152,7 @@ The `Series` type gives the user a lot of flexibility to define exactly what eac
     label: string;
     rawValue: number;
   }[];
-  color?: Color;
-  highlightColor?: Color;
+  color?: Color | GradientStop[];
 }
 ```
 

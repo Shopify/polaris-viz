@@ -1,17 +1,16 @@
 import React, {useMemo} from 'react';
 import {ScaleLinear, ScaleBand} from 'd3-scale';
-import {SeriesColor, Color, GradientStop} from 'types';
+import {SeriesColor, GradientStop} from 'types';
 
-import {formatAriaLabel} from '../../utilities';
 import {StackSeries} from '../../types';
-import {BAR_SPACING} from '../../constants';
 import {getColorValue, isGradientType, uniqueId} from '../../../../utilities';
 import {MASK_SUBDUE_COLOR, MASK_HIGHLIGHT_COLOR} from '../../../../constants';
 import {LinearGradient} from '../../../../components';
 
+import {Stack} from './components';
 import styles from './StackedBarGroup.scss';
 
-interface Props {
+export interface StackedBarGroupProps {
   groupIndex: number;
   data: StackSeries;
   yScale: ScaleLinear<number, number>;
@@ -37,31 +36,32 @@ export function StackedBarGroup({
   onFocus,
   accessibilityData,
   activeBarGroup,
-}: Props) {
+}: StackedBarGroupProps) {
   const maskId = useMemo(() => uniqueId('mask'), []);
   const gradientId = useMemo(() => uniqueId('gradient'), []);
   const activeBarId = useMemo(() => uniqueId('activeBar'), []);
 
   const hasActiveBar = activeBarGroup != null;
+  const lookedUpColor = colors[groupIndex];
+  const shouldUseGradient = isGradientType(lookedUpColor);
 
-  const shouldUseGradient = isGradientType(colors[groupIndex]);
-
-  const fillColor = useMemo(
+  const color = useMemo(
     () =>
-      shouldUseGradient
-        ? colors[groupIndex]
-        : getColorValue(colors[groupIndex] as Color),
-    [colors, groupIndex, shouldUseGradient],
+      isGradientType(lookedUpColor)
+        ? lookedUpColor
+        : getColorValue(lookedUpColor),
+    [lookedUpColor],
   );
+
+  const fillColor = shouldUseGradient
+    ? `url(#${gradientId})`
+    : (color as string);
 
   return (
     <React.Fragment>
       <defs aria-hidden role="none">
         {shouldUseGradient ? (
-          <LinearGradient
-            id={gradientId}
-            gradient={fillColor as GradientStop[]}
-          />
+          <LinearGradient id={gradientId} gradient={color as GradientStop[]} />
         ) : null}
 
         <mask id={maskId}>
@@ -71,7 +71,7 @@ export function StackedBarGroup({
               fill: hasActiveBar ? MASK_SUBDUE_COLOR : MASK_HIGHLIGHT_COLOR,
             }}
           >
-            <StackMarkup
+            <Stack
               data={data}
               xScale={xScale}
               onFocus={onFocus}
@@ -95,10 +95,10 @@ export function StackedBarGroup({
       <g
         mask={`url(#${maskId})`}
         style={{
-          fill: shouldUseGradient ? `url(#${gradientId})` : fillColor,
+          fill: fillColor,
         }}
       >
-        <StackMarkup
+        <Stack
           data={data}
           xScale={xScale}
           onFocus={onFocus}
@@ -112,56 +112,4 @@ export function StackedBarGroup({
       </g>
     </React.Fragment>
   );
-}
-
-function StackMarkup({
-  data,
-  xScale,
-  onFocus,
-  ariaHidden,
-  activeBarId,
-  accessibilityData,
-  activeBarGroup,
-  yScale,
-  groupIndex,
-}: Partial<Props> & {
-  ariaHidden: boolean;
-  activeBarId: string;
-  barWidth: number;
-}) {
-  const barWidth = xScale.bandwidth() - BAR_SPACING;
-  return data.map(([start, end], barIndex) => {
-    const xPosition = xScale(barIndex.toString());
-
-    const handleFocus = () => {
-      onFocus(barIndex);
-    };
-
-    const ariaLabel = formatAriaLabel(accessibilityData[barIndex]);
-    const height = Math.abs(yScale(end) - yScale(start));
-    const ariaEnabledBar = groupIndex === 0 && !ariaHidden;
-    const isActive = activeBarGroup != null && barIndex === activeBarGroup;
-
-    return (
-      <g
-        role={ariaEnabledBar ? 'listitem' : undefined}
-        aria-hidden={!ariaEnabledBar}
-        key={barIndex}
-      >
-        <rect
-          id={isActive ? activeBarId : ''}
-          key={barIndex}
-          x={xPosition}
-          y={yScale(end)}
-          height={height}
-          width={barWidth}
-          tabIndex={ariaEnabledBar ? 0 : -1}
-          onFocus={handleFocus}
-          role={ariaEnabledBar ? 'img' : undefined}
-          aria-label={ariaEnabledBar ? ariaLabel : undefined}
-          aria-hidden={!ariaEnabledBar}
-        />
-      </g>
-    );
-  });
 }

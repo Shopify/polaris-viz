@@ -1,6 +1,14 @@
 import {Series as ShapeSeries} from 'd3-shape';
 
-import {Color, StringLabelFormatter, NumberLabelFormatter} from '../../types';
+import {
+  StringLabelFormatter,
+  NumberLabelFormatter,
+  DataSeries,
+  Data,
+  SeriesColor,
+} from '../../types';
+
+export type Series = DataSeries<Data, SeriesColor>;
 
 export type StackSeries = ShapeSeries<
   {
@@ -11,7 +19,7 @@ export type StackSeries = ShapeSeries<
 
 export interface RenderTooltipContentData {
   data: {
-    color: Color;
+    color: SeriesColor;
     label: string;
     value: number;
   }[];
