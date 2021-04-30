@@ -46,10 +46,16 @@ export function StackedAreaChart({
       setChartDimensions(containerRef.current.getBoundingClientRect());
     }
 
-    window.addEventListener('resize', updateDimensions);
+    const isServer = typeof window === 'undefined';
+
+    if (!isServer) {
+      window.addEventListener('resize', updateDimensions);
+    }
 
     return () => {
-      window.removeEventListener('resize', updateDimensions);
+      if (!isServer) {
+        window.removeEventListener('resize', updateDimensions);
+      }
     };
   }, [containerRef, updateDimensions]);
 

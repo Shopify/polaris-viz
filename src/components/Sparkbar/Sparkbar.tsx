@@ -72,10 +72,17 @@ export function Sparkbar({
 
     updateMeasurements();
 
-    window.addEventListener('resize', () => updateMeasurements());
+    const isServer = typeof window === 'undefined';
 
-    return () =>
-      window.removeEventListener('resize', () => updateMeasurements());
+    if (!isServer) {
+      window.addEventListener('resize', () => updateMeasurements());
+    }
+
+    return () => {
+      if (!isServer) {
+        window.removeEventListener('resize', () => updateMeasurements());
+      }
+    };
   }, [updateMeasurements]);
 
   const {width, height} = svgDimensions;
