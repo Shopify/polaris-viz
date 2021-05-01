@@ -401,22 +401,29 @@ export function Chart({
                 ) : null}
 
                 {data.map(({rawValue}, dataIndex) => {
-                  return (
-                    <Point
-                      key={`${name}-${index}-${dataIndex}`}
-                      color={lineColor}
-                      cx={xScale(dataIndex)}
-                      cy={yScale(rawValue)}
-                      active={activeIndex === dataIndex}
-                      onFocus={handleFocus}
-                      index={dataIndex}
-                      tabIndex={isLongestLine ? 0 : -1}
-                      ariaLabelledby={tooltipId.current}
-                      isAnimated={false}
-                      ariaHidden={false}
-                      visuallyHidden={animatePoints}
-                    />
-                  );
+                  if (
+                    (tooltipDetails == null && dataIndex === 0) ||
+                    (tooltipDetails != null &&
+                      (tooltipDetails.index === dataIndex ||
+                        tooltipDetails.index === Number(dataIndex) + 1))
+                  ) {
+                    return (
+                      <Point
+                        key={`${name}-${index}-${dataIndex}`}
+                        color={lineColor}
+                        cx={xScale(dataIndex)}
+                        cy={yScale(rawValue)}
+                        active={activeIndex === dataIndex}
+                        onFocus={handleFocus}
+                        index={dataIndex}
+                        tabIndex={isLongestLine ? 0 : -1}
+                        ariaLabelledby={tooltipId.current}
+                        isAnimated={false}
+                        ariaHidden={false}
+                        visuallyHidden={animatePoints}
+                      />
+                    );
+                  }
                 })}
 
                 {areaColor != null ? (
