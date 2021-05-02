@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Fixed
+
+- Performance regression in `<LineChart/>`
+
 ### Added
 
 - Check window is defined before accessing window methods
