@@ -365,7 +365,13 @@ export function Chart({
           })}
         </g>
 
-        <g transform={`translate(0,${Margin.Top})`}>
+        <g
+          transform={`translate(0,${Margin.Top})`}
+          opacity={
+            tooltipDetails != null && tooltipDetails.x < axisMargin ? 0.5 : 1
+          }
+          style={{transition: 'all 0.5s'}}
+        >
           <YAxis
             ticks={ticks}
             drawableWidth={drawableWidth}

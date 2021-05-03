@@ -42,7 +42,7 @@ OverflowStyle.args = {
     xAxisLabels,
     labelFormatter: formatXAxisLabel,
     useMinimalLabels: true,
-    marginTop: 10,
+    marginTop: 20,
     showAxisLine: false,
     showTicks: false,
   },

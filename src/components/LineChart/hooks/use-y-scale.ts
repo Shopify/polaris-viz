@@ -33,14 +33,12 @@ export function useYScale({
       .domain([Math.min(0, minY), Math.max(0, maxY)])
       .nice(overFlowStyle ? undefined : maxTicks);
 
-    const ticks = yScale
-      .ticks(maxTicks)
-      .map((value) => ({
-        value,
-        formattedValue: formatYAxisLabel(value),
-        yOffset: yScale(value),
-      }))
-      .slice(0, overFlowStyle ? -1 : undefined);
+    const ticks = yScale.ticks(maxTicks).map((value) => ({
+      value,
+      formattedValue: formatYAxisLabel(value),
+      yOffset: yScale(value),
+    }));
+    // .slice(0, overFlowStyle ? -1 : undefined);
 
     const maxTickWidth = Math.max(
       ...ticks.map(({formattedValue}) =>

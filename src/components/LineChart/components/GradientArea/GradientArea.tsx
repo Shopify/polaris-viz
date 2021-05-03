@@ -64,6 +64,16 @@ export function GradientArea({
             />
           ))}
         </linearGradient>
+
+        <linearGradient id="fadeGrad" x1="0%" x2="100%" y1="0%" y2="0%">
+          <stop offset="0%" stop-color="white" stop-opacity="0" />
+          <stop offset="1%" stop-color="white" stop-opacity="0.5" />
+          <stop offset="100%" stop-color="white" stop-opacity="1" />
+        </linearGradient>
+
+        <mask id="fade">
+          <path d={areaShape} fill="url(#fadeGrad)" />
+        </mask>
       </defs>
 
       <path
@@ -75,6 +85,7 @@ export function GradientArea({
         strokeWidth="0"
         stroke={series.color}
         className={isAnimated ? styles.FadeInArea : null}
+        mask="url(#fade)"
       />
     </React.Fragment>
   );
