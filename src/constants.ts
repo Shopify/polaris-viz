@@ -32,7 +32,7 @@ export const DEFAULT_GREY_LABEL = 'rgb(99, 115, 129)';
 export const DEFAULT_CROSSHAIR_COLOR = 'rgb(223, 227, 232)';
 
 export enum Margin {
-  Top = SPACING_TIGHT,
+  Top = SPACING_BASE_TIGHT,
   Left = 0,
   Bottom = SPACING_BASE_TIGHT,
   Right = SPACING_EXTRA_TIGHT,
