@@ -10,4 +10,6 @@ export const vizColors = {
   pastComparison: 'rgb(145,158,171)',
   positive: 'rgb(0,128,96)',
   negative: 'rgb(215,44,13)',
+  darkModePositive: 'rgb(0, 164, 124)',
+  darkModeNegative: 'rgb(255, 85, 70)',
 };
