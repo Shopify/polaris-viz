@@ -90,12 +90,6 @@ export function useLinearXAxisDetails({
     longestSeriesLength: longestSeriesLastIndex,
   });
 
-  const minimalLabelIndexes = [
-    0,
-    Math.floor(longestSeriesLastIndex / 2),
-    longestSeriesLastIndex,
-  ];
-
   const {
     maxXLabelHeight,
     maxDiagonalLabelLength,
@@ -111,6 +105,12 @@ export function useLinearXAxisDetails({
             .filter(function removeNonIntegerTicks(value) {
               return Number.isInteger(value);
             });
+
+    const minimalLabelIndexes = [
+      0,
+      Math.floor(longestSeriesLastIndex / 2),
+      longestSeriesLastIndex,
+    ];
 
     const ticks =
       useMinimalLabels && longestSeriesLastIndex > minimalLabelIndexes.length
@@ -212,7 +212,6 @@ export function useLinearXAxisDetails({
     formatXAxisLabel,
     initialXScale.xScale,
     longestSeriesLastIndex,
-    minimalLabelIndexes,
     useMinimalLabels,
     xAxisLabels,
   ]);
