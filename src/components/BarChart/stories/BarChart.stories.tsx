@@ -115,7 +115,10 @@ Annotations.args = {
   ],
   barOptions: {color: primaryColor, highlightColor: secondaryColor},
   xAxisOptions: {labelFormatter: formatLabelNoop},
-  yAxisOptions: {labelFormatter: formatLabelNoop},
+  yAxisOptions: {
+    labelFormatter: formatLabelNoop,
+    labelBackgroundColor: 'orange',
+  },
   renderTooltipContent: renderTooltipContentWithAnnotation,
   isAnimated: false,
 };

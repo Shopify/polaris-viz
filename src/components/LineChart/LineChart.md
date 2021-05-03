@@ -361,7 +361,7 @@ The color used for axis labels.
 | -------------------- | ----------- |
 | `string | undefined` | `undefined` |
 
-The color used for label backgrounds. If none is specified, the labels will not have a background.
+The color used for label backgrounds. This accepts any [valid CSS color](https://developer.mozilla.org/en-US/docs/Web/CSS/color). If none is specified, the labels will not have a background.
 
 #### lineOptions
 

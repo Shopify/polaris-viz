@@ -1,19 +1,12 @@
 # Changelog
 
 ## Unreleased
-<<<<<<< HEAD
 
 ### Added
 
 - Check window is defined before accessing window methods
 
-## [0.9.2] — 2021-04-29
-=======
->>>>>>> a6d080d (Add labelBackgroundColor option for line, bar, and multi series bar charts)
-
-### Added
-
-- `labelBackgroundColor` prop to `yAxisOptions`
+- `labelBackgroundColor` prop to `yAxisOptions` for `<LineChart />`, `<BarChart/>`, and `<MultiSeriesBarChart/>`
 
 ## [0.9.2] — 2021-04-29
 

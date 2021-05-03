@@ -56,7 +56,7 @@ describe('<YAxis />', () => {
         </svg>,
       );
 
-      expect(yAxis).not.toContainReactComponent('path');
+      expect(yAxis).not.toContainReactComponent('rect');
     });
 
     it('renders a background for the labels if labelBackgroundColor is defined', () => {

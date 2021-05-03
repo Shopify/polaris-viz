@@ -236,7 +236,7 @@ export function Chart({
           />
 
           <mask id={clipId}>
-            <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
+            <g transform={`translate(${axisMargin},${marginTop})`}>
               {transitions.map(({item, props: {height}}, index) => {
                 const xPosition = xScale(index.toString());
                 const ariaLabel = `${xAxisOptions.labelFormatter(
@@ -315,7 +315,7 @@ export function Chart({
           fill={`url(#${gradientId})`}
         />
 
-        <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
+        <g transform={`translate(${axisMargin},${marginTop})`}>
           {transitions.map((_, index) => {
             const xPosition = xScale(index.toString());
             const xPositionValue = xPosition == null ? 0 : xPosition;
