@@ -120,6 +120,7 @@ interface MultiSeriesBarChartProps {
   barOptions?: {
     isStacked?: boolean;
     hasRoundedCorners?: boolean;
+    margin?: 'Small' | 'Medium' | 'Large' | 'None';
   };
   gridOptions?: {
     showHorizontalLines?: boolean;
@@ -302,6 +303,14 @@ This utility function is called for every y axis value when the chart is drawn.
 The color used for axis labels.
 
 #### barOptions
+
+##### margin
+
+| type                                       | default  |
+| ------------------------------------------ | -------- |
+| `'Small' \| 'Medium' \| 'Large' \| 'None'` | `Medium` |
+
+This sets the margin between bar groups. A value of `None` will remove spacing between bar groups.
 
 ##### isStacked
 

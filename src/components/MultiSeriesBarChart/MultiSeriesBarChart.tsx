@@ -15,6 +15,7 @@ import {
   GridOptions,
   XAxisOptions,
   YAxisOptions,
+  BarMargin,
 } from './types';
 
 export interface MultiSeriesBarChartProps {
@@ -69,10 +70,16 @@ export function MultiSeriesBarChart({
     };
   }, [containerRef, updateDimensions]);
 
+  const margin =
+    barOptions != null && barOptions.margin != null
+      ? BarMargin[barOptions.margin]
+      : BarMargin.Medium;
+
   const barOptionsWithDefaults = {
     hasRoundedCorners: false,
     isStacked: false,
     ...barOptions,
+    margin,
   };
 
   const gridOptionsWithDefaults = {

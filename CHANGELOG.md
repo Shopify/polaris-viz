@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Added
+
+- `margin` prop to `barOptions` for `<MultiSeriesBarChart/>`
+
 ### Removed
 
 - `highLightColor` from `MultiSeriesBarChart` `barOptions` prop
