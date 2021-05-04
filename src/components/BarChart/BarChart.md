@@ -76,7 +76,13 @@ The bar chart interface looks like this:
 
 ```typescript
 interface BarChartProps {
-  data: {rawValue: number; label: string}[];
+  data: {
+    rawValue: number;
+    label: string;
+    barOptions?: {
+      color: Color;
+    };
+  }[];
   renderTooltipContent?({
     label,
     value,
@@ -125,12 +131,26 @@ In order for the user to have visual feedback that a bar has been selected, it i
 
 #### data
 
-| type                                  |
-| ------------------------------------- |
-| `{rawValue: number, label: string}[]` |
+| type                                                               |
+| ------------------------------------------------------------------ |
+| `{rawValue: number, label: string, barOptions?: {color: Color}}[]` |
 
 The array of objects that the chart uses to draw the chart.
 If `data` may be an empty array, provide <a href="#emptyStateText">`emptyStateText`</a> to communicate the empty state to screenreaders.
+
+#### Optional data props
+
+##### barOptions
+
+An optional object including the following proprties that define the appearance of an individual bar.
+
+###### color
+
+| type    | default   |
+| ------- | --------- |
+| `Color` | `primary` |
+
+The individual bar fill color. This accepts any [Polaris Viz accepted color](/documentation/Polaris-Viz-colors.md).
 
 ### Optional props
 

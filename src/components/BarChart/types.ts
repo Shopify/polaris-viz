@@ -1,9 +1,16 @@
 import {
+  Data,
   Color,
   StringLabelFormatter,
   NumberLabelFormatter,
   GradientStop,
 } from 'types';
+
+export interface BarChartData extends Data {
+  barOptions?: {
+    color: Color;
+  };
+}
 
 export enum BarMargin {
   Small = 0.05,
