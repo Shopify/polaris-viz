@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## [0.9.3] — 2021-05-03
 
 ### Fixed
 
@@ -9,7 +9,7 @@
 ### Added
 
 - Check window is defined before accessing window methods
-- Added new Dark Mode colors
+- Added new dark mode colors
 
 ## [0.9.2] — 2021-04-29
 

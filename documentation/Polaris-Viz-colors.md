@@ -19,6 +19,8 @@ The nominal colors are named colors according a hierarchy. The following values 
 | `pastComparison`      | <img src="images/colors/nominal-pastComparison.png" />      |
 | `positive`            | <img src="images/colors/nominal-positive.png" />            |
 | `negative`            | <img src="images/colors/nominal-negative.png" />            |
+| `darkModePositive`    | <img src="images/colors/dark-mode-positive.png" />          |
+| `darkModeNegative`    | <img src="images/colors/dark-mode-negative.png" />          |
 
 ## Polaris tokens
 
