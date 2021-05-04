@@ -1,5 +1,6 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
+import {SpringValue} from '@react-spring/web';
 import {Color} from 'types';
 import {vizColors} from 'utilities';
 import {
@@ -277,11 +278,9 @@ describe('Chart />', () => {
         />,
       );
 
-      expect(chart).toContainReactComponent(Bar, {
-        height: expect.objectContaining({
-          value: MIN_BAR_HEIGHT,
-        }),
-      });
+      const barHeight = chart.find(Bar)!.props.height as SpringValue;
+
+      expect(barHeight.get()).toBe(MIN_BAR_HEIGHT);
     });
 
     it('does not pass the min bar height to 0 bars if false', () => {
@@ -296,11 +295,9 @@ describe('Chart />', () => {
         />,
       );
 
-      expect(chart).toContainReactComponent(Bar, {
-        height: expect.objectContaining({
-          value: 0,
-        }),
-      });
+      const barHeight = chart.find(Bar)!.props.height as SpringValue;
+
+      expect(barHeight.get()).toBe(0);
     });
 
     it('sets rotateZeroBars to false if false', () => {
@@ -338,11 +335,9 @@ describe('Chart />', () => {
         />,
       );
 
-      expect(chart).toContainReactComponent(Bar, {
-        height: expect.objectContaining({
-          value: MIN_BAR_HEIGHT,
-        }),
-      });
+      const barHeight = chart.find(Bar)!.props.height as SpringValue;
+
+      expect(barHeight.get()).toBe(MIN_BAR_HEIGHT);
     });
   });
 

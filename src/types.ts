@@ -1,3 +1,5 @@
+import {InterpolatorFn} from '@react-spring/web';
+
 export interface Data {
   label: string;
   rawValue: number;
@@ -134,3 +136,5 @@ export interface Dimensions {
 }
 
 export type SparkChartData = number | null;
+export type PathInterpolator = InterpolatorFn<ReadonlyArray<number>, string>;
+export type NumberInterpolator = InterpolatorFn<ReadonlyArray<number>, number>;

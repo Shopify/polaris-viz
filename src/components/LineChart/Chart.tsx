@@ -233,13 +233,16 @@ export function Chart({
   const getXPosition = ({isCrosshair} = {isCrosshair: false}) => {
     const offset = isCrosshair ? crossHairOptions.width / 2 : 0;
 
-    return animatedCoordinates != null &&
+    if (
+      animatedCoordinates != null &&
       animatedCoordinates[longestSeriesIndex] != null &&
       animatePoints
-      ? animatedCoordinates[longestSeriesIndex].interpolate(
-          (coord: SVGPoint) => coord.x - offset,
-        )
-      : xScale(activeIndex == null ? 0 : activeIndex) - offset;
+    ) {
+      return animatedCoordinates[longestSeriesIndex].to(
+        (coord) => coord.x - offset,
+      );
+    }
+    return xScale(activeIndex == null ? 0 : activeIndex) - offset;
   };
 
   const handleMouseInteraction = throttle(
@@ -431,9 +434,7 @@ export function Chart({
             const animatedYPostion =
               animatedCoordinates == null || animatedCoordinates[index] == null
                 ? 0
-                : animatedCoordinates[index].interpolate(
-                    (coord: SVGPoint) => coord.y,
-                  );
+                : animatedCoordinates[index].to((coord) => coord.y);
 
             const hidePoint =
               animatedCoordinates == null ||

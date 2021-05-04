@@ -1,6 +1,6 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
-import {animated, OpaqueInterpolation} from 'react-spring';
+import {animated} from '@react-spring/web';
 
 import {TooltipContainer} from '../TooltipContainer';
 
@@ -31,9 +31,7 @@ describe('<TooltipContainer />', () => {
     expect(styles.left).toStrictEqual(0);
     expect(styles.top).toStrictEqual(0);
     // Checking that the styles are being controlled by react spring
-    expect(
-      ((styles.transform as unknown) as OpaqueInterpolation<number>).getValue,
-    ).toBeDefined();
+    expect(styles.transform).toBeDefined();
   });
 
   it('reners its children', () => {
