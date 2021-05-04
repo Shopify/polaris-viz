@@ -1,14 +1,16 @@
 # Changelog
 
-## Unreleased
+## [0.10.0] — 2021-05-04
 
 ### Added
 
 - `margin` prop to `barOptions` for `<MultiSeriesBarChart/>`
+- Allow individual bar colors for `<BarChart />`
+- Add gradient color options for `<MultiSeriesBarChart />`
 
 ### Removed
 
-- `highLightColor` from `MultiSeriesBarChart` `barOptions` prop
+- `highLightColor` from `<MultiSeriesBarChart />` `barOptions` prop
 
 ## [0.9.4] — 2021-05-04
 

@@ -1,7 +1,7 @@
 {
   "name": "@shopify/polaris-viz",
   "description": "Shopify’s viz component library",
-  "version": "0.9.4",
+  "version": "0.10.0",
   "private": false,
   "license": "SEE LICENSE IN LICENSE.md",
   "author": "Shopify <dev@shopify.com>",
