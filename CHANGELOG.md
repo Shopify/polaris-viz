@@ -9,6 +9,7 @@
 ### Added
 
 - Check window is defined before accessing window methods
+- Added new Dark Mode colors
 
 ## [0.9.2] — 2021-04-29
 
