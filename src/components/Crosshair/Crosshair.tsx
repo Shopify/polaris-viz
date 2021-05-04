@@ -1,10 +1,10 @@
 import React from 'react';
-import {animated} from 'react-spring';
+import {animated, Interpolation} from 'react-spring';
 
 import {CROSSHAIR_WIDTH, DEFAULT_CROSSHAIR_COLOR} from '../../constants';
 
 interface Props {
-  x: number;
+  x: number | Interpolation;
   height: number;
   opacity?: number;
   fill?: string;

@@ -49,7 +49,7 @@ describe('<Point />', () => {
 
       expect(point).toContainReactComponent('circle', {
         // eslint-disable-next-line id-length
-        r: 0,
+        r: 5,
       });
     });
   });

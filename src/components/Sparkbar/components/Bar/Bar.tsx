@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import {ScaleLinear} from 'd3-scale';
-import {animated, OpaqueInterpolation} from 'react-spring';
+import {animated, SpringValue} from 'react-spring';
 
 const BORDER_RADIUS = 8;
 const MIN_RADIUS = 3;
@@ -10,7 +10,7 @@ interface Props {
   yScale: ScaleLinear<number, number>;
   rawValue: number;
   width: number;
-  height?: OpaqueInterpolation<any> | number;
+  height?: SpringValue<number> | number;
 }
 
 export function Bar({x, rawValue, yScale, width, height}: Props) {
@@ -19,21 +19,17 @@ export function Bar({x, rawValue, yScale, width, height}: Props) {
   const rotation = isNegative ? 'rotate(180deg)' : 'rotate(0deg)';
   const xPosition = isNegative ? x + width : x;
 
-  const heightIsNumber = typeof height === 'number';
-
   const yPosition = useMemo(() => {
     if (height == null) return;
 
     const getYPosition = (value: number) =>
       isNegative ? zeroScale + value : zeroScale - value;
 
-    if (heightIsNumber) {
+    if (typeof height === 'number') {
       return getYPosition(height);
     }
     return height.to(getYPosition);
-  }, [height, heightIsNumber, isNegative, zeroScale]);
-
-  const yPositionIsNumber = typeof yPosition === 'number';
+  }, [height, isNegative, zeroScale]);
 
   const style = useMemo(() => {
     if (yPosition == null) return;
@@ -41,12 +37,12 @@ export function Bar({x, rawValue, yScale, width, height}: Props) {
     const getStyle = (y: number) =>
       `translate(${xPosition}px, ${y}px) ${rotation}`;
 
-    if (yPositionIsNumber) return {transform: getStyle(yPosition)};
+    if (typeof yPosition === 'number') return {transform: getStyle(yPosition)};
 
     return {
       transform: yPosition.to(getStyle),
     };
-  }, [yPosition, yPositionIsNumber, xPosition, rotation]);
+  }, [yPosition, xPosition, rotation]);
 
   const radius = BORDER_RADIUS;
 
@@ -62,11 +58,11 @@ export function Bar({x, rawValue, yScale, width, height}: Props) {
       return `M 0 0 C 0 -${modifiedRadius} ${width} -${modifiedRadius} ${width} 0 L ${width} ${heightValue} L 0 ${heightValue} Z`;
     };
 
-    if (heightIsNumber) {
+    if (typeof height === 'number') {
       return calculatePath(height);
     }
     return height.to(calculatePath);
-  }, [height, heightIsNumber, radius, width]);
+  }, [height, radius, width]);
 
   return <animated.path d={path} style={style} />;
 }

@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import {animated, SpringValue} from 'react-spring';
+import {animated, SpringValue, InterpolatorFn} from 'react-spring';
 import {ScaleLinear} from 'd3-scale';
 
 import {ROUNDED_BAR_RADIUS} from '../../constants';
@@ -18,7 +18,7 @@ interface Props {
   tabIndex: number;
   role?: string;
   hasRoundedCorners?: boolean;
-  height?: SpringValue<any> | number;
+  height?: SpringValue | number;
 }
 
 export function Bar({
@@ -41,26 +41,22 @@ export function Bar({
   const rotation = isNegative ? 'rotate(180deg)' : 'rotate(0deg)';
   const xPosition = isNegative ? x + width : x;
 
-  const heightIsNumber = typeof height === 'number';
-
   const yPosition = useMemo(() => {
     if (height == null) return;
 
     const getYPosition = (value: number) =>
       isNegative ? zeroScale + value : zeroScale - value;
 
-    if (heightIsNumber) {
-      return getYPosition(height);
+    if (typeof height === 'number') {
+      return getYPosition(height as number);
     }
-    return height.to(getYPosition);
-  }, [height, heightIsNumber, isNegative, zeroScale]);
-
-  const yPositionIsNumber = typeof yPosition === 'number';
+    return height.to(getYPosition as InterpolatorFn<any, any>);
+  }, [height, isNegative, zeroScale]);
 
   const handleFocus = () => {
     if (yPosition == null) return;
 
-    const cy = yPositionIsNumber ? yPosition : yPosition.get();
+    const cy = typeof yPosition === 'number' ? yPosition : yPosition.get();
     onFocus({index, cx: x, cy});
   };
 
@@ -70,12 +66,12 @@ export function Bar({
     const getStyle = (y: number) =>
       `translate(${xPosition}px, ${y}px) ${rotation}`;
 
-    if (yPositionIsNumber) return {transform: getStyle(yPosition)};
+    if (typeof yPosition === 'number') return {transform: getStyle(yPosition)};
 
     return {
-      transform: yPosition.to(getStyle),
+      transform: yPosition.to(getStyle as InterpolatorFn<any, any>),
     };
-  }, [yPosition, yPositionIsNumber, xPosition, rotation]);
+  }, [yPosition, xPosition, rotation]);
 
   const path = useMemo(() => {
     if (height == null) return;
@@ -92,11 +88,11 @@ export function Bar({
         a${radius} ${radius} 0 01${radius}-${radius}
         Z`;
 
-    if (heightIsNumber) {
+    if (typeof height === 'number') {
       return calculatePath(height);
     }
-    return height.to(calculatePath);
-  }, [height, heightIsNumber, radius, rawValue, width]);
+    return height.to(calculatePath as InterpolatorFn<any, any>);
+  }, [height, radius, rawValue, width]);
 
   return (
     <animated.path
