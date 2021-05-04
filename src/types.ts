@@ -23,7 +23,7 @@ export interface GradientStop {
 
 export type SeriesColor = Color | GradientStop[];
 
-export type Color = TokensColor | VizPaletteColor | DarkModeColor;
+export type Color = TokensColor | VizPaletteColor;
 
 export type TokensColor =
   | 'colorBlack'
