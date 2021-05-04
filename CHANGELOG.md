@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.9.4] — 2021-05-04
+
+### Added
+
+- Dark mode colors to Color type
+
 ## [0.9.3] — 2021-05-03
 
 ### Fixed
