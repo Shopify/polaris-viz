@@ -181,12 +181,13 @@ export function Chart({
 
   const shouldAnimate = !prefersReducedMotion && isAnimated;
 
-  const transitions = useTransition(data, (dataPoint) => dataPoint.label, {
+  const transitions = useTransition(data, {
+    default: {immediate: !shouldAnimate},
+    keys: (dataPoint) => dataPoint.label,
     from: {height: 0},
     leave: {height: 0},
     enter: ({rawValue}) => ({height: getBarHeight(rawValue)}),
     update: ({rawValue}) => ({height: getBarHeight(rawValue)}),
-    immediate: !shouldAnimate,
     trail: shouldAnimate ? getAnimationTrail(data.length) : 0,
     config: BARS_TRANSITION_CONFIG,
   });
@@ -234,7 +235,7 @@ export function Chart({
 
           <mask id={clipId}>
             <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
-              {transitions.map(({item, props: {height}}, index) => {
+              {transitions(({height}, item, _, index) => {
                 const xPosition = xScale(index.toString());
                 const ariaLabel = `${xAxisOptions.labelFormatter(
                   data[index].label,
@@ -309,7 +310,7 @@ export function Chart({
             height={height}
             fill={`url(#${gradientId})`}
           />
-          {transitions.map(({item}, index) => {
+          {transitions((_props, item, _transition, index) => {
             const xPosition = xScale(index.toString());
             const xPositionValue = xPosition == null ? 0 : xPosition;
             const translateXValue = xPositionValue + axisMargin;
@@ -333,7 +334,7 @@ export function Chart({
         </g>
 
         <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
-          {transitions.map((_, index) => {
+          {transitions((_props, _item, _transition, index) => {
             const xPosition = xScale(index.toString());
             const xPositionValue = xPosition == null ? 0 : xPosition;
             const annotation = annotationsLookupTable[index];

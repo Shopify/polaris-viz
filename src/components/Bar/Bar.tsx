@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import {animated, OpaqueInterpolation} from 'react-spring';
+import {animated, SpringValue} from 'react-spring';
 import {ScaleLinear} from 'd3-scale';
 
 import {ROUNDED_BAR_RADIUS} from '../../constants';
@@ -18,7 +18,7 @@ interface Props {
   tabIndex: number;
   role?: string;
   hasRoundedCorners?: boolean;
-  height?: OpaqueInterpolation<any> | number;
+  height?: SpringValue<any> | number;
 }
 
 export function Bar({
@@ -52,7 +52,7 @@ export function Bar({
     if (heightIsNumber) {
       return getYPosition(height);
     }
-    return height.interpolate(getYPosition);
+    return height.to(getYPosition);
   }, [height, heightIsNumber, isNegative, zeroScale]);
 
   const yPositionIsNumber = typeof yPosition === 'number';
@@ -60,7 +60,7 @@ export function Bar({
   const handleFocus = () => {
     if (yPosition == null) return;
 
-    const cy = yPositionIsNumber ? yPosition : yPosition.getValue();
+    const cy = yPositionIsNumber ? yPosition : yPosition.get();
     onFocus({index, cx: x, cy});
   };
 
@@ -73,7 +73,7 @@ export function Bar({
     if (yPositionIsNumber) return {transform: getStyle(yPosition)};
 
     return {
-      transform: yPosition.interpolate(getStyle),
+      transform: yPosition.to(getStyle),
     };
   }, [yPosition, yPositionIsNumber, xPosition, rotation]);
 
@@ -95,7 +95,7 @@ export function Bar({
     if (heightIsNumber) {
       return calculatePath(height);
     }
-    return height.interpolate(calculatePath);
+    return height.to(calculatePath);
   }, [height, heightIsNumber, radius, rawValue, width]);
 
   return (
