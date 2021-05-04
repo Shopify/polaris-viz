@@ -117,7 +117,7 @@ export function TooltipContainer({
         top: 0,
         left: 0,
         opacity: spring.opacity,
-        transform: spring.translate.interpolate(
+        transform: spring.translate.to(
           // eslint-disable-next-line id-length
           (x: number, y: number, z: number) =>
             `translate3d(${x}px, ${y}px, ${z}px)`,

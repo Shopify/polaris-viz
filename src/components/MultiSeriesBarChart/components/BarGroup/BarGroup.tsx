@@ -62,12 +62,14 @@ export function BarGroup({
 
   const shouldAnimate = !prefersReducedMotion && isAnimated;
 
-  const transitions = useTransition(data, (dataPoint) => dataPoint, {
+  const transitions = useTransition(data, {
+    key: (dataPoint: number, index: number) =>
+      `${index}-${barGroupIndex}${dataPoint}`,
     from: {height: 0},
     leave: {height: 0},
     enter: (rawValue) => ({height: getBarHeight(rawValue)}),
     update: (rawValue) => ({height: getBarHeight(rawValue)}),
-    immediate: !shouldAnimate,
+    default: {immediate: !shouldAnimate},
     trail: shouldAnimate ? getAnimationTrail(data.length) : 0,
     config: BARS_TRANSITION_CONFIG,
   });
@@ -89,7 +91,7 @@ export function BarGroup({
   return (
     <React.Fragment>
       <mask id={maskId}>
-        {transitions.map(({item: value, props: {height}}, index) => {
+        {transitions(({height}, value, _transition, index) => {
           const handleFocus = () => {
             onFocus(barGroupIndex);
           };
@@ -99,7 +101,7 @@ export function BarGroup({
             <g
               role={ariaEnabledBar ? 'listitem' : undefined}
               aria-hidden={!ariaEnabledBar}
-              key={index}
+              key={`${barGroupIndex}${index}`}
             >
               <Bar
                 height={height}
@@ -122,7 +124,7 @@ export function BarGroup({
       <g mask={`url(#${maskId})`}>
         {gradients.map((gradient, index) => {
           return (
-            <g key={index}>
+            <g key={`${maskId}${index}`}>
               <LinearGradient
                 gradient={gradient}
                 id={`${gradientId}${index}`}

@@ -30,7 +30,7 @@ export function Bar({x, rawValue, yScale, width, height}: Props) {
     if (heightIsNumber) {
       return getYPosition(height);
     }
-    return height.interpolate(getYPosition);
+    return height.to(getYPosition);
   }, [height, heightIsNumber, isNegative, zeroScale]);
 
   const yPositionIsNumber = typeof yPosition === 'number';
@@ -44,7 +44,7 @@ export function Bar({x, rawValue, yScale, width, height}: Props) {
     if (yPositionIsNumber) return {transform: getStyle(yPosition)};
 
     return {
-      transform: yPosition.interpolate(getStyle),
+      transform: yPosition.to(getStyle),
     };
   }, [yPosition, yPositionIsNumber, xPosition, rotation]);
 
@@ -65,7 +65,7 @@ export function Bar({x, rawValue, yScale, width, height}: Props) {
     if (heightIsNumber) {
       return calculatePath(height);
     }
-    return height.interpolate(calculatePath);
+    return height.to(calculatePath);
   }, [height, heightIsNumber, radius, width]);
 
   return <animated.path d={path} style={style} />;

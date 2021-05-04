@@ -216,7 +216,7 @@ export function Chart({
     return animatedCoordinates != null &&
       animatedCoordinates[longestSeriesIndex] != null &&
       animatePoints
-      ? animatedCoordinates[longestSeriesIndex].interpolate(
+      ? animatedCoordinates[longestSeriesIndex].to(
           (coord: SVGPoint) => coord.x - offset,
         )
       : xScale(activeIndex == null ? 0 : activeIndex) - offset;
@@ -352,9 +352,7 @@ export function Chart({
             const animatedYPostion =
               animatedCoordinates == null || animatedCoordinates[index] == null
                 ? 0
-                : animatedCoordinates[index].interpolate(
-                    (coord: SVGPoint) => coord.y,
-                  );
+                : animatedCoordinates[index].to((coord: SVGPoint) => coord.y);
 
             const hidePoint =
               animatedCoordinates == null ||
