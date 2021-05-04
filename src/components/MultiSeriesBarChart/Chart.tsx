@@ -22,7 +22,6 @@ import {
   SMALL_WIDTH,
   SMALL_FONT_SIZE,
   SPACING,
-  INNER_PADDING,
 } from './constants';
 import styles from './Chart.scss';
 
@@ -30,7 +29,7 @@ interface Props {
   series: Required<Series>[];
   chartDimensions: DOMRect;
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
-  barOptions: BarOptions;
+  barOptions: Omit<BarOptions, 'margin'> & {margin: number};
   gridOptions: GridOptions;
   xAxisOptions: XAxisOptions;
   yAxisOptions: YAxisOptions;
@@ -98,9 +97,15 @@ export function Chart({
         xLabels: formattedXAxisLabels,
         fontSize,
         chartDimensions,
-        padding: INNER_PADDING,
+        padding: barOptions.margin,
       }),
-    [yAxisLabelWidth, formattedXAxisLabels, fontSize, chartDimensions],
+    [
+      yAxisLabelWidth,
+      formattedXAxisLabels,
+      fontSize,
+      chartDimensions,
+      barOptions.margin,
+    ],
   );
 
   const drawableWidth = chartDimensions.width - MARGIN.Right - axisMargin;
@@ -112,6 +117,7 @@ export function Chart({
   const {xScale, xAxisLabels} = useXScale({
     drawableWidth,
     data: sortedData,
+    barMargin: barOptions.margin,
     labels: formattedXAxisLabels,
   });
 

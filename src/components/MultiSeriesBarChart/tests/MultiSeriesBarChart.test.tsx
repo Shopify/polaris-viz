@@ -29,17 +29,19 @@ describe('<MultiSeriesBarChart />', () => {
     expect(multiSeriesBarChart).toContainReactComponent(Chart);
   });
 
-  it('renders a <SkipLink />', () => {
-    const multiSeriesBarChart = mount(<MultiSeriesBarChart {...mockProps} />);
+  describe('skipLinkText', () => {
+    it('renders a <SkipLink />', () => {
+      const multiSeriesBarChart = mount(<MultiSeriesBarChart {...mockProps} />);
 
-    expect(multiSeriesBarChart).toContainReactComponent(SkipLink);
-  });
+      expect(multiSeriesBarChart).toContainReactComponent(SkipLink);
+    });
 
-  it('does not render a <SkipLink /> when series is empty', () => {
-    const multiSeriesBarChart = mount(
-      <MultiSeriesBarChart {...mockProps} series={[]} />,
-    );
+    it('does not render a <SkipLink /> when series is empty', () => {
+      const multiSeriesBarChart = mount(
+        <MultiSeriesBarChart {...mockProps} series={[]} />,
+      );
 
-    expect(multiSeriesBarChart).not.toContainReactComponent(SkipLink);
+      expect(multiSeriesBarChart).not.toContainReactComponent(SkipLink);
+    });
   });
 });
