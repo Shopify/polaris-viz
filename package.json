@@ -65,7 +65,7 @@
     "@babel/node": "^7.6.1",
     "@shopify/postcss-plugin": "^3.1.1",
     "@shopify/react-testing": "^1.8.0",
-    "@shopify/sewing-kit": "^0.120.0",
+    "@shopify/sewing-kit": "0.120.0",
     "@storybook/addon-actions": "^6.2.1",
     "@storybook/addon-essentials": "^6.2.1",
     "@storybook/addon-links": "^6.2.1",
