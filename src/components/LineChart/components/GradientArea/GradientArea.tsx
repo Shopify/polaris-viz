@@ -27,7 +27,9 @@ export function GradientArea({
   isAnimated,
   index,
 }: Props) {
-  const id = useMemo(() => uniqueId('gradient'), []);
+  const gradientId = useMemo(() => uniqueId('gradient'), []);
+  const fadeGradientId = useMemo(() => uniqueId('fade'), []);
+  const maskId = useMemo(() => uniqueId('mask'), []);
   const {data, color} = series;
 
   const areaGenerator = area<Data>()
@@ -55,7 +57,7 @@ export function GradientArea({
   return (
     <React.Fragment>
       <defs>
-        <linearGradient id={`${id}`} x1="0%" x2="0%" y1="0%" y2="100%">
+        <linearGradient id={`${gradientId}`} x1="0%" x2="0%" y1="0%" y2="100%">
           {gradientStops.map(({percent, alpha}) => (
             <stop
               key={percent}
@@ -64,6 +66,16 @@ export function GradientArea({
             />
           ))}
         </linearGradient>
+
+        <linearGradient id={fadeGradientId} x1="0%" x2="100%" y1="0%" y2="0%">
+          <stop offset="0%" stop-color="white" stopOpacity="0" />
+          <stop offset="5%" stop-color="white" stopOpacity="0.5" />
+          <stop offset="100%" stop-color="white" stopOpacity="1" />
+        </linearGradient>
+
+        <mask id={maskId}>
+          <path d={areaShape} fill={`url(#${fadeGradientId})`} />
+        </mask>
       </defs>
 
       <path
@@ -71,10 +83,11 @@ export function GradientArea({
         style={{
           animationDelay: `${animationDelay}s`,
         }}
-        fill={`url(#${id})`}
+        fill={`url(#${gradientId})`}
         strokeWidth="0"
         stroke={series.color}
         className={isAnimated ? styles.FadeInArea : null}
+        mask={`url(#${maskId})`}
       />
     </React.Fragment>
   );

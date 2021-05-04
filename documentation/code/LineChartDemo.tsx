@@ -41,6 +41,7 @@ export function LineChartDemo() {
       ],
       color: 'primary' as 'primary',
       lineStyle: 'solid' as 'solid',
+      showArea: true,
     },
     {
       name: 'Mar 01–Mar 14, 2020',

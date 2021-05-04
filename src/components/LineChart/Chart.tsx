@@ -1,6 +1,7 @@
 import React, {useState, useMemo, useRef, useCallback} from 'react';
 import throttle from 'lodash.throttle';
 import {line, curveMonotoneX} from 'd3-shape';
+import {colorSky} from '@shopify/polaris-tokens';
 
 import {useLinearXAxisDetails, useLinearXScale} from '../../hooks';
 import {
@@ -9,7 +10,6 @@ import {
   FONT_SIZE,
   SPACING_TIGHT,
   Margin,
-  SPACING_EXTRA_TIGHT,
 } from '../../constants';
 import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
 import {LinearXAxis} from '../LinearXAxis';
@@ -106,10 +106,9 @@ export function Chart({
     drawableHeight,
     series,
     formatYAxisLabel: yAxisOptions.labelFormatter,
-    overFlowStyle: lineOptions.overflow,
   });
 
-  const dataMargin = lineOptions.overflow ? SPACING_EXTRA_TIGHT : axisMargin;
+  const dataMargin = lineOptions.overflow ? 10 : axisMargin;
 
   const handleFocus = useCallback(
     (details: ActiveTooltip | null) => {
@@ -311,19 +310,6 @@ export function Chart({
           />
         </g>
 
-        <g transform={`translate(0,${Margin.Top})`}>
-          <YAxis
-            ticks={ticks}
-            drawableWidth={drawableWidth}
-            fontSize={fontSize}
-            showGridLines={gridOptions.showHorizontalLines}
-            gridColor={gridOptions.color}
-            labelColor={yAxisOptions.labelColor}
-            axisMargin={axisMargin}
-            overflowStyle={lineOptions.overflow}
-          />
-        </g>
-
         {emptyState ? null : (
           <g transform={`translate(${dataMargin},${Margin.Top})`}>
             <Crosshair
@@ -343,6 +329,22 @@ export function Chart({
             series={series}
           />
         )}
+
+        <g transform={`translate(0,${Margin.Top})`}>
+          {ticks.map(({value, yOffset}) => {
+            return (
+              <React.Fragment key={value}>
+                <g
+                  transform={`translate(${
+                    lineOptions.overflow ? 0 : axisMargin
+                  },${yOffset})`}
+                >
+                  <line x2={drawableWidth} stroke={colorSky} />)
+                </g>
+              </React.Fragment>
+            );
+          })}
+        </g>
 
         <g transform={`translate(${dataMargin},${Margin.Top})`}>
           {reversedSeries.map((singleSeries, index) => {
@@ -416,6 +418,27 @@ export function Chart({
               </React.Fragment>
             );
           })}
+        </g>
+
+        <g
+          transform={`translate(${lineOptions.overflow ? dataMargin : 0},${
+            Margin.Top
+          })`}
+          opacity={
+            tooltipDetails != null && tooltipDetails.x < axisMargin ? 0.5 : 1
+          }
+          style={{transition: 'all 0.5s'}}
+        >
+          <YAxis
+            ticks={ticks}
+            drawableWidth={drawableWidth}
+            fontSize={fontSize}
+            showGridLines={gridOptions.showHorizontalLines}
+            gridColor={gridOptions.color}
+            labelColor={yAxisOptions.labelColor}
+            axisMargin={axisMargin}
+            overflowStyle={lineOptions.overflow}
+          />
         </g>
       </svg>
 
