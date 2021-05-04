@@ -1,6 +1,6 @@
-import {CSSProperties, useCallback, useMemo} from 'react';
+import {useCallback, useMemo} from 'react';
 import {Line} from 'd3-shape';
-import {useSprings, SpringConfig, OpaqueInterpolation} from 'react-spring';
+import {useSprings} from 'react-spring';
 
 import {SPRING_CONFIG} from '../constants';
 import {SeriesWithDefaults} from '../types';
@@ -96,22 +96,14 @@ export function useLineChartAnimations({
   );
 
   // Create a spring with the same config for each series
-  const animatedPercentages = useSprings<
-    {
-      config: SpringConfig;
-      percentage: number;
-    },
-    CSSProperties & {
-      percentage: {interpolate: OpaqueInterpolation<any>};
-    }
-  >(
+  const animatedPercentages = useSprings(
     percentages == null ? 0 : percentages.length,
     percentages == null
       ? []
       : percentages.map((percentage) => ({
           percentage,
           config: SPRING_CONFIG,
-          immediate,
+          default: {immediate},
         })),
   );
 
@@ -121,7 +113,7 @@ export function useLineChartAnimations({
       immediate || totalPaths == null
         ? null
         : animatedPercentages.map(({percentage}, index) => {
-            return percentage.interpolate((percent: number) => {
+            return percentage.to((percent: number) => {
               const totalLength = totalPaths[index].length;
               const path = totalPaths[index].element;
               return getCoordinatesFromPercentage(percent, path, totalLength);
