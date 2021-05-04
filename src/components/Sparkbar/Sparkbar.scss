@@ -1,5 +1,16 @@
 @import '../../styles/common';
 
+.Wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.Svg {
+  position: absolute;
+}
+
 .VisuallyHidden {
   @include visually-hidden;
 }
