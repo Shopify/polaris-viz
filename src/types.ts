@@ -95,7 +95,9 @@ export type VizPaletteColor =
   | 'quaternaryProminent'
   | 'pastComparison'
   | 'positive'
-  | 'negative';
+  | 'negative'
+  | 'darkModePositive'
+  | 'darkModeNegative';
 
 export type StringLabelFormatter = (
   value: string,
