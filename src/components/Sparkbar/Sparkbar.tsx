@@ -145,12 +145,13 @@ export function Sparkbar({
 
   const shouldAnimate = !prefersReducedMotion && isAnimated;
 
-  const transitions = useTransition(dataWithIndex, ({index}) => index, {
+  const transitions = useTransition(dataWithIndex, {
+    key: ({index}: {index: number}) => index,
     from: {height: 0},
     leave: {height: 0},
     enter: ({value}) => ({height: getBarHeight(value)}),
     update: ({value}) => ({height: getBarHeight(value)}),
-    immediate: !shouldAnimate,
+    default: {immediate: !shouldAnimate},
     trail: shouldAnimate ? getAnimationTrail(dataWithIndex.length) : 0,
     config: BARS_TRANSITION_CONFIG,
   });
@@ -187,7 +188,7 @@ export function Sparkbar({
         ) : null}
 
         <g fill={barFillStyle === 'gradient' ? `url(#${id})` : currentColor}>
-          {transitions.map(({item, props: {height: barHeight}}, index) => {
+          {transitions(({height: barHeight}, item, _transition, index) => {
             const xPosition = xScale(index.toString());
             return (
               <g key={index} opacity={comparison ? '0.9' : '1'}>
