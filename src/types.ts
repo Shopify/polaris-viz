@@ -99,8 +99,6 @@ export type VizPaletteColor =
   | 'darkModePositive'
   | 'darkModeNegative';
 
-export type DarkModeColor = 'darkModePositive' | 'darkModeNegative';
-
 export type StringLabelFormatter = (
   value: string,
   index?: number,
