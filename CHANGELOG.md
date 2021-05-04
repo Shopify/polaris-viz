@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Removed
+
+- `highLightColor` from `MultiSeriesBarChart` `barOptions` prop
+
 ## [0.9.4] — 2021-05-04
 
 ### Added

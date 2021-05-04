@@ -1,15 +1,22 @@
 import React from 'react';
-import {Color} from 'types';
+import {SeriesColor} from 'types';
 
-import {getColorValue} from '../../utilities';
+import {
+  getColorValue,
+  isGradientType,
+  createCSSGradient,
+} from '../../utilities';
 
 import styles from './SquareColorPreview.scss';
 
-export function SquareColorPreview({color}: {color: Color}) {
-  return (
-    <div
-      className={styles.ColorPreview}
-      style={{background: getColorValue(color)}}
-    />
-  );
+export interface SquareColorPreviewProps {
+  color: SeriesColor;
+}
+
+export function SquareColorPreview({color}: SquareColorPreviewProps) {
+  const background = isGradientType(color)
+    ? createCSSGradient(color)
+    : getColorValue(color);
+
+  return <div className={styles.ColorPreview} style={{background}} />;
 }

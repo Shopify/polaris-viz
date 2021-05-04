@@ -6,30 +6,26 @@ import {Color} from 'types';
 import {BAR_SPACING} from '../../../constants';
 import {BarGroup} from '../BarGroup';
 import {Bar} from '../../../../../components/Bar';
+import {LinearGradient} from '../../../../../components/LinearGradient';
 
 jest.mock('d3-scale', () => ({
   scaleLinear: jest.fn(() => jest.fn((value) => value)),
 }));
 
-describe('<Bar/>', () => {
+describe('<BarGroup/>', () => {
   const mockProps = {
     x: 10,
     yScale: scaleLinear() as any,
     width: 100,
+    height: 100,
     data: [10, 20, 0, 1],
     colors: ['colorPurple', 'colorTeal', 'colorRed', 'colorOrange'] as Color[],
-    highlightColors: [
-      'primary',
-      'secondary',
-      'tertiary',
-      'quaternary',
-    ] as Color[],
-    isActive: false,
     hasActiveGroup: false,
     onFocus: jest.fn(),
     barGroupIndex: 0,
     ariaLabel: 'Aria Label',
     hasRoundedCorners: false,
+    isSubdued: false,
   };
 
   it('renders a <Bar /> for each data item', () => {
@@ -72,45 +68,48 @@ describe('<Bar/>', () => {
     expect(barGroup).toContainReactComponent(Bar, {x: 85});
   });
 
-  it('gives each <Bar /> a fill color', () => {
-    const barGroup = mount(
-      <svg>
-        <BarGroup {...mockProps} />,
-      </svg>,
-    );
+  describe('colors', () => {
+    describe('if uses solid colors', () => {
+      it('gives <LinearGradient /> a single stop', () => {
+        const barGroup = mount(
+          <svg>
+            <BarGroup {...mockProps} />,
+          </svg>,
+        );
 
-    expect(barGroup).toContainReactComponent(Bar, {
-      color: 'colorPurple',
+        expect(barGroup).toContainReactComponent(LinearGradient, {
+          gradient: [
+            {
+              color: 'rgb(156, 106, 222)',
+              offset: 0,
+            },
+          ],
+        });
+      });
     });
-    expect(barGroup).toContainReactComponent(Bar, {
-      color: 'colorTeal',
-    });
-    expect(barGroup).toContainReactComponent(Bar, {
-      color: 'colorRed',
-    });
-    expect(barGroup).toContainReactComponent(Bar, {
-      color: 'colorOrange',
-    });
-  });
 
-  it('passes down highlightColor', () => {
-    const barGroup = mount(
-      <svg>
-        <BarGroup {...mockProps} isActive />,
-      </svg>,
-    );
+    describe('if uses gradient colors', () => {
+      it('passes gradient to <LinearGradient />', () => {
+        const mockGradient = [
+          {
+            color: '#374352',
+            offset: 0,
+          },
+          {
+            color: '#4d5e73',
+            offset: 50,
+          },
+        ];
+        const barGroup = mount(
+          <svg>
+            <BarGroup {...mockProps} colors={[mockGradient]} />
+          </svg>,
+        );
 
-    expect(barGroup).toContainReactComponent(Bar, {
-      highlightColor: 'primary',
-    });
-    expect(barGroup).toContainReactComponent(Bar, {
-      highlightColor: 'secondary',
-    });
-    expect(barGroup).toContainReactComponent(Bar, {
-      highlightColor: 'tertiary',
-    });
-    expect(barGroup).toContainReactComponent(Bar, {
-      highlightColor: 'quaternary',
+        expect(barGroup).toContainReactComponent(LinearGradient, {
+          gradient: mockGradient,
+        });
+      });
     });
   });
 });

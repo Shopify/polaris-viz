@@ -1,7 +1,6 @@
 @import 'node_modules/@shopify/polaris-tokens/dist/index';
 @import '../../../../styles/common';
 
-.Bar {
-  @include no-outline;
+.TransitionColor {
   transition: fill $duration-slow ease;
 }

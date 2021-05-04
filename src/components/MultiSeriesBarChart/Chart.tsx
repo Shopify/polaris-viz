@@ -131,7 +131,6 @@ export function Chart({
   });
 
   const barColors = series.map(({color}) => color);
-  const barHighlightColors = series.map(({highlightColor}) => highlightColor);
 
   const tooltipContentMarkup = useMemo(() => {
     if (activeBarGroup == null) {
@@ -247,7 +246,6 @@ export function Chart({
                     xScale={xScale}
                     yScale={yScale}
                     colors={barColors}
-                    highlightColors={barHighlightColors}
                     onFocus={handleFocus}
                     accessibilityData={accessibilityData}
                   />
@@ -261,12 +259,14 @@ export function Chart({
                     isAnimated={isAnimated}
                     key={index}
                     x={xPosition == null ? 0 : xPosition}
-                    isActive={activeBarGroup === index}
+                    isSubdued={
+                      activeBarGroup != null && index !== activeBarGroup
+                    }
                     yScale={yScale}
                     data={item}
                     width={xScale.bandwidth()}
+                    height={drawableHeight}
                     colors={barColors}
-                    highlightColors={barHighlightColors}
                     onFocus={handleFocus}
                     barGroupIndex={index}
                     ariaLabel={ariaLabel}

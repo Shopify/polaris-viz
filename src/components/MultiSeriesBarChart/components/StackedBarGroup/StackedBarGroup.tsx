@@ -1,21 +1,21 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {ScaleLinear, ScaleBand} from 'd3-scale';
-import {Color} from 'types';
-import {classNames} from '@shopify/css-utilities';
+import {SeriesColor, GradientStop} from 'types';
 
-import {formatAriaLabel} from '../../utilities';
 import {StackSeries} from '../../types';
-import {BAR_SPACING} from '../../constants';
-import {getColorValue} from '../../../../utilities';
-import styles from '../../shared.scss';
+import {getColorValue, isGradientType, uniqueId} from '../../../../utilities';
+import {MASK_SUBDUE_COLOR, MASK_HIGHLIGHT_COLOR} from '../../../../constants';
+import {LinearGradient} from '../../../../components';
 
-interface Props {
+import {Stack} from './components';
+import styles from './StackedBarGroup.scss';
+
+export interface StackedBarGroupProps {
   groupIndex: number;
   data: StackSeries;
   yScale: ScaleLinear<number, number>;
   xScale: ScaleBand<string>;
-  colors: Color[];
-  highlightColors: Color[];
+  colors: SeriesColor[];
   activeBarGroup: number | null;
   accessibilityData: {
     title: string;
@@ -33,60 +33,83 @@ export function StackedBarGroup({
   yScale,
   xScale,
   colors,
-  highlightColors,
-  activeBarGroup,
   onFocus,
   accessibilityData,
-}: Props) {
-  const barWidth = xScale.bandwidth() - BAR_SPACING;
+  activeBarGroup,
+}: StackedBarGroupProps) {
+  const maskId = useMemo(() => uniqueId('mask'), []);
+  const gradientId = useMemo(() => uniqueId('gradient'), []);
+  const activeBarId = useMemo(() => uniqueId('activeBar'), []);
+
+  const hasActiveBar = activeBarGroup != null;
+  const lookedUpColor = colors[groupIndex];
+  const shouldUseGradient = isGradientType(lookedUpColor);
+
+  const color = useMemo(
+    () =>
+      isGradientType(lookedUpColor)
+        ? lookedUpColor
+        : getColorValue(lookedUpColor),
+    [lookedUpColor],
+  );
+
+  const fillColor = shouldUseGradient
+    ? `url(#${gradientId})`
+    : (color as string);
 
   return (
-    <g>
-      {data.map(([start, end], barIndex) => {
-        const xPosition = xScale(barIndex.toString());
+    <React.Fragment>
+      <defs aria-hidden role="none">
+        {shouldUseGradient ? (
+          <LinearGradient id={gradientId} gradient={color as GradientStop[]} />
+        ) : null}
 
-        const fillColor =
-          activeBarGroup === barIndex
-            ? getColorValue(highlightColors[groupIndex])
-            : getColorValue(colors[groupIndex]);
-
-        const handleFocus = () => {
-          onFocus(barIndex);
-        };
-
-        const ariaLabel = formatAriaLabel(accessibilityData[barIndex]);
-        const height = Math.abs(yScale(end) - yScale(start));
-
-        const ariaEnabledBar = groupIndex === 0;
-
-        const nonUniqueHighlightColor =
-          colors[groupIndex] === highlightColors[groupIndex];
-
-        return (
+        <mask id={maskId}>
           <g
-            role={groupIndex === 0 ? 'listitem' : undefined}
-            aria-hidden={!ariaEnabledBar}
-            key={barIndex}
+            className={styles.TransitionColor}
+            style={{
+              fill: hasActiveBar ? MASK_SUBDUE_COLOR : MASK_HIGHLIGHT_COLOR,
+            }}
           >
-            <rect
-              className={classNames(
-                styles.Bar,
-                nonUniqueHighlightColor && styles.StackNoOutline,
-              )}
-              key={barIndex}
-              x={xPosition}
-              y={yScale(end)}
-              height={height}
-              width={barWidth}
-              fill={fillColor}
-              tabIndex={ariaEnabledBar ? 0 : -1}
-              onFocus={handleFocus}
-              role={ariaEnabledBar ? 'img' : undefined}
-              aria-label={ariaEnabledBar ? ariaLabel : undefined}
+            <Stack
+              data={data}
+              xScale={xScale}
+              onFocus={onFocus}
+              ariaHidden
+              activeBarId={activeBarId}
+              accessibilityData={accessibilityData}
+              activeBarGroup={activeBarGroup}
+              yScale={yScale}
+              groupIndex={groupIndex}
             />
           </g>
-        );
-      })}
-    </g>
+          <use
+            className={styles.TransitionColor}
+            style={{
+              fill: MASK_HIGHLIGHT_COLOR,
+            }}
+            href={`#${activeBarId}`}
+          />
+        </mask>
+      </defs>
+      <g
+        mask={`url(#${maskId})`}
+        style={{
+          fill: fillColor,
+        }}
+      >
+        <Stack
+          data={data}
+          xScale={xScale}
+          onFocus={onFocus}
+          ariaHidden={false}
+          activeBarId={activeBarId}
+          accessibilityData={accessibilityData}
+          activeBarGroup={activeBarGroup}
+          yScale={yScale}
+          groupIndex={groupIndex}
+        />
+      </g>
+    </React.Fragment>
   );
 }

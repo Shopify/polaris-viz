@@ -106,7 +106,6 @@ export function MultiSeriesBarChart({
 
   const seriesWithDefaults = series.map((series, index) => ({
     color: getDefaultColor(index),
-    highlightColor: getDefaultColor(index),
     ...series,
   }));
 

@@ -1,6 +1,5 @@
 import React from 'react';
 
-import {isGradientType} from '../../utilities';
 import {
   DataSeries,
   Data,
@@ -33,10 +32,9 @@ export function Legend({series}: Props) {
             {lineStyle ? (
               <LinePreview color={color} lineStyle={lineStyle} />
             ) : null}
-            {/* the gradient check should be removed once SquareColorPreview works for gradients */}
-            {lineStyle == null && !isGradientType(color) ? (
-              <SquareColorPreview color={color} />
-            ) : null}
+
+            <SquareColorPreview color={color} />
+
             <p className={styles.SeriesName}>{name}</p>
           </div>
         );

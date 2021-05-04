@@ -21,7 +21,10 @@ export {
 } from './NormalizedStackedBarChart';
 export {YAxis} from './YAxis';
 export {TooltipContainer} from './TooltipContainer';
-export {SquareColorPreview} from './SquareColorPreview';
+export {
+  SquareColorPreview,
+  SquareColorPreviewProps,
+} from './SquareColorPreview';
 export {StackedAreaChart, StackedAreaChartProps} from './StackedAreaChart';
 export {LinearXAxis} from './LinearXAxis';
 export {
