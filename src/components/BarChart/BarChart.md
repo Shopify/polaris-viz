@@ -93,7 +93,8 @@ interface BarChartProps {
   skipLinkText?: string;
   emptyStateText?: string;
   barOptions?: {
-    margin?: 'Small' | 'Medium' | 'Large' | 'None';
+    innerMargin?: 'Small' | 'Medium' | 'Large' | 'None';
+    outerMargin?: 'Small' | 'Medium' | 'Large' | 'None';
     color?: Color;
     highlightColor?: Color;
     hasRoundedCorners?: boolean;
@@ -190,13 +191,21 @@ Used to indicate to screenreaders that a chart with no data has been rendered, i
 
 An optional object including the following proprties that define the appearance of the bar.
 
-##### margin
+##### innerMargin
 
 | type                                       | default  |
 | ------------------------------------------ | -------- |
 | `'Small' \| 'Medium' \| 'Large' \| 'None'` | `Medium` |
 
-This sets the margin between each of the bars. A value of `None` will make the bars look as if they are one continuous element.
+This sets the margin between each of the bars. A value of `None` will make the bars look as if they are one continuous element. See [documentation](https://github.com/d3/d3-scale/blob/master/README.md#band_paddingInner) for more info.
+
+##### outerMargin
+
+| type                                       | default |
+| ------------------------------------------ | ------- |
+| `'Small' \| 'Medium' \| 'Large' \| 'None'` | `None`  |
+
+This sets the margin before and after all bars. A value of `None` will have bars start at the Y axis and end at the edge of the chart. See [documentation](https://github.com/d3/d3-scale/blob/master/README.md#band_paddingOuter) for more info.
 
 ##### color
 

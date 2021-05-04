@@ -36,7 +36,8 @@ describe('Chart />', () => {
     chartDimensions: new DOMRect(),
     barOptions: {
       color: 'colorPurple' as Color,
-      margin: 0,
+      innerMargin: 0,
+      outerMargin: 0,
       hasRoundedCorners: false,
     },
     xAxisOptions: {

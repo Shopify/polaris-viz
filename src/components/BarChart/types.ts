@@ -27,7 +27,8 @@ export interface RenderTooltipContentData {
 }
 
 export interface BarOptions {
-  margin: keyof typeof BarMargin;
+  innerMargin: keyof typeof BarMargin;
+  outerMargin: keyof typeof BarMargin;
   color: Color | GradientStop[];
   hasRoundedCorners: boolean;
 }

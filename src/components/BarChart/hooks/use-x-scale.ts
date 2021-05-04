@@ -6,18 +6,21 @@ import {StringLabelFormatter} from '../../../types';
 
 export function useXScale({
   drawableWidth,
-  barMargin,
+  innerMargin,
+  outerMargin,
   data,
   formatXAxisLabel,
 }: {
   drawableWidth: number;
-  barMargin: number;
+  innerMargin: number;
+  outerMargin: number;
   data: Data[];
   formatXAxisLabel: StringLabelFormatter;
 }) {
   const xScale = scaleBand()
     .range([0, drawableWidth])
-    .paddingInner(barMargin)
+    .paddingInner(innerMargin)
+    .paddingOuter(outerMargin)
     .domain(data.map((_, index) => index.toString()));
 
   const barWidthOffset = xScale.bandwidth() / 2;

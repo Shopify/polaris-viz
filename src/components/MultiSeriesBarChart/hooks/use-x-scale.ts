@@ -5,16 +5,19 @@ export function useXScale({
   drawableWidth,
   data,
   labels,
-  barMargin,
+  innerMargin,
+  outerMargin,
 }: {
   drawableWidth: number;
   data: number[][];
   labels: string[];
-  barMargin: number;
+  innerMargin: number;
+  outerMargin: number;
 }) {
   const xScale = scaleBand()
     .range([0, drawableWidth])
-    .paddingInner(barMargin)
+    .paddingInner(innerMargin)
+    .paddingOuter(outerMargin)
     .domain(data.map((_, index) => index.toString()));
 
   const barWidthOffset = xScale.bandwidth() / 2;

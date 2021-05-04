@@ -10,6 +10,18 @@ jest.mock('d3-scale', () => ({
   }),
 }));
 
+const mockProps = {
+  drawableWidth: 200,
+  innerMargin: 0,
+  outerMargin: 0,
+  data: [
+    {rawValue: 0, label: ''},
+    {rawValue: 1000, label: ''},
+    {rawValue: -1000, label: ''},
+  ],
+  formatXAxisLabel: (val: string) => val,
+};
+
 describe('useXScale', () => {
   afterEach(() => {
     (scaleBand as jest.Mock).mockReset();
@@ -24,16 +36,12 @@ describe('useXScale', () => {
       scale.range = rangeSpy;
       scale.bandwidth = () => 10;
       scale.paddingInner = () => scale;
+      scale.paddingOuter = () => scale;
       return scale;
     });
 
     function TestComponent() {
-      useXScale({
-        drawableWidth: 200,
-        barMargin: 0,
-        data: [{rawValue: 10, label: ''}],
-        formatXAxisLabel: () => '',
-      });
+      useXScale(mockProps);
 
       return null;
     }
@@ -51,22 +59,14 @@ describe('useXScale', () => {
       scale.range = () => scale;
       scale.bandwidth = () => 10;
       scale.paddingInner = () => scale;
+      scale.paddingOuter = () => scale;
       domainSpy = jest.fn(() => scale);
       scale.domain = domainSpy;
       return scale;
     });
 
     function TestComponent() {
-      useXScale({
-        drawableWidth: 200,
-        barMargin: 0,
-        data: [
-          {rawValue: 0, label: ''},
-          {rawValue: 1000, label: ''},
-          {rawValue: -1000, label: ''},
-        ],
-        formatXAxisLabel: (val: string) => val,
-      });
+      useXScale(mockProps);
       return null;
     }
 
@@ -82,14 +82,14 @@ describe('useXScale', () => {
       scale.range = () => scale;
       scale.bandwidth = () => 10;
       scale.paddingInner = () => scale;
+      scale.paddingOuter = () => scale;
       scale.domain = () => scale;
       return scale;
     });
 
     function TestComponent() {
       const {xAxisLabels} = useXScale({
-        drawableWidth: 200,
-        barMargin: 0,
+        ...mockProps,
         data: [{rawValue: 0, label: 'Test 1'}],
         formatXAxisLabel: (val: string) => `${val}!`,
       });
@@ -105,5 +105,63 @@ describe('useXScale', () => {
 
     const testComponent = mount(<TestComponent />);
     expect(testComponent).toContainReactText('Test 1!-50');
+  });
+
+  describe('innerMargin', () => {
+    it('calls paddingInner with the innerMargin', () => {
+      let paddingInnerSpy = jest.fn();
+
+      (scaleBand as jest.Mock).mockImplementation(() => {
+        const scale = (value: any) => value;
+        scale.domain = () => scale;
+        scale.range = () => scale;
+        scale.bandwidth = () => 10;
+        scale.paddingOuter = () => scale;
+
+        paddingInnerSpy = jest.fn(() => scale);
+        scale.paddingInner = paddingInnerSpy;
+
+        return scale;
+      });
+
+      function TestComponent() {
+        useXScale({...mockProps, innerMargin: 0.5});
+
+        return null;
+      }
+
+      mount(<TestComponent />);
+
+      expect(paddingInnerSpy).toHaveBeenCalledWith(0.5);
+    });
+  });
+
+  describe('outerMargin', () => {
+    it('calls paddingOuter with the outerMargin', () => {
+      let paddingOuterSpy = jest.fn();
+
+      (scaleBand as jest.Mock).mockImplementation(() => {
+        const scale = (value: any) => value;
+        scale.domain = () => scale;
+        scale.range = () => scale;
+        scale.bandwidth = () => 10;
+        scale.paddingInner = () => scale;
+
+        paddingOuterSpy = jest.fn(() => scale);
+        scale.paddingOuter = paddingOuterSpy;
+
+        return scale;
+      });
+
+      function TestComponent() {
+        useXScale({...mockProps, outerMargin: 0.5});
+
+        return null;
+      }
+
+      mount(<TestComponent />);
+
+      expect(paddingOuterSpy).toHaveBeenCalledWith(0.5);
+    });
   });
 });

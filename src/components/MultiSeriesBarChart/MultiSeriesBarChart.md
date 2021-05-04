@@ -120,7 +120,8 @@ interface MultiSeriesBarChartProps {
   barOptions?: {
     isStacked?: boolean;
     hasRoundedCorners?: boolean;
-    margin?: 'Small' | 'Medium' | 'Large' | 'None';
+    innerMargin?: 'Small' | 'Medium' | 'Large' | 'None';
+    outerMargin?: 'Small' | 'Medium' | 'Large' | 'None';
   };
   gridOptions?: {
     showHorizontalLines?: boolean;
@@ -304,13 +305,21 @@ The color used for axis labels.
 
 #### barOptions
 
-##### margin
+##### innerMargin
 
 | type                                       | default  |
 | ------------------------------------------ | -------- |
 | `'Small' \| 'Medium' \| 'Large' \| 'None'` | `Medium` |
 
-This sets the margin between bar groups. A value of `None` will remove spacing between bar groups.
+This sets the margin between each of the bars. A value of `None` will make the bars look as if they are one continuous element. See [documentation](https://github.com/d3/d3-scale/blob/master/README.md#band_paddingInner) for more info.
+
+##### outerMargin
+
+| type                                       | default |
+| ------------------------------------------ | ------- |
+| `'Small' \| 'Medium' \| 'Large' \| 'None'` | `None`  |
+
+This sets the margin before and after all bars. A value of `None` will have bars start at the Y axis and end at the edge of the chart. See [documentation](https://github.com/d3/d3-scale/blob/master/README.md#band_paddingOuter) for more info.
 
 ##### isStacked
 
