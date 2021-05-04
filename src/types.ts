@@ -23,7 +23,7 @@ export interface GradientStop {
 
 export type SeriesColor = Color | GradientStop[];
 
-export type Color = TokensColor | VizPaletteColor;
+export type Color = TokensColor | VizPaletteColor | DarkModeColor;
 
 export type TokensColor =
   | 'colorBlack'
@@ -95,7 +95,11 @@ export type VizPaletteColor =
   | 'quaternaryProminent'
   | 'pastComparison'
   | 'positive'
-  | 'negative';
+  | 'negative'
+  | 'darkModePositive'
+  | 'darkModeNegative';
+
+export type DarkModeColor = 'darkModePositive' | 'darkModeNegative';
 
 export type StringLabelFormatter = (
   value: string,
