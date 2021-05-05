@@ -83,7 +83,7 @@ describe('getBarXAxisDetails', () => {
       maxXLabelHeight: 10.656565315951458,
       maxDiagonalLabelLength: 16.57867257451994,
       needsDiagonalLabels: true,
-      maxWidth: 18,
+      maxWidth: 10.799999999999999,
     });
   });
 });

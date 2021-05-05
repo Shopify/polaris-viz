@@ -6,6 +6,10 @@
 
 - `horizontalOverflow` to `gridOptions` for `<MultiSeriesBarChart/>`, `<BarChart />` and `<LineChart/>`
 
+### Fixed
+
+- Bar chart xAxis label overlap when useMinimalLabels is set
+
 ## [0.11.0] — 2021-05-06
 
 ### Added

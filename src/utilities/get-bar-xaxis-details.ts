@@ -3,6 +3,7 @@ import {
   MAX_TEXT_BOX_HEIGHT,
   MIN_HORIZONTAL_LABEL_SPACE,
   SPACING,
+  LABEL_SPACE_MINUS_FIRST_AND_LAST,
   SPACING_EXTRA_TIGHT,
 } from '../constants';
 
@@ -42,7 +43,8 @@ export function getBarXAxisDetails({
   const step = drawableWidth / (xLabels.length + outerMargin * 2 - innerMargin);
 
   const spaceForMinimalLabels = minimalLabelIndexes
-    ? drawableWidth / minimalLabelIndexes.length
+    ? (drawableWidth / minimalLabelIndexes.length) *
+      LABEL_SPACE_MINUS_FIRST_AND_LAST
     : null;
 
   // width each label is allowed to take up
