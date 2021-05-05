@@ -7,26 +7,26 @@ Used in small sizes to give an overview of how a metric has performed over time.
 <img src="sparkbar.png" alt="Sparkbar example image" />
 
 ```tsx
-// <div style={{width: '200px', height: '50px'}}>
-<Sparkbar
-  data={[100, 200, 300, 400, 400, 1000, 200, 800, 900, 200, 400]}
-  accessibilityLabel="A bar chart showing orders over time for the past 11 weeks. The minimum is 100 orders and the maximum is 1,000 orders, compared to an average of 500 orders during previous 11-week period."
-  isAnimated
-  comparison={[
-    {x: 0, y: 500},
-    {x: 1, y: 500},
-    {x: 2, y: 500},
-    {x: 3, y: 500},
-    {x: 4, y: 500},
-    {x: 5, y: 500},
-    {x: 6, y: 500},
-    {x: 7, y: 500},
-    {x: 8, y: 500},
-    {x: 9, y: 500},
-    {x: 10, y: 500},
-  ]}
-/>
-// </div>
+<div style={{width: '200px', height: '50px'}}>
+  <Sparkbar
+    data={[100, 200, 300, 400, 400, 1000, 200, 800, 900, 200, 400]}
+    accessibilityLabel="A bar chart showing orders over time for the past 11 weeks. The minimum is 100 orders and the maximum is 1,000 orders, compared to an average of 500 orders during previous 11-week period."
+    isAnimated
+    comparison={[
+      {x: 0, y: 500},
+      {x: 1, y: 500},
+      {x: 2, y: 500},
+      {x: 3, y: 500},
+      {x: 4, y: 500},
+      {x: 5, y: 500},
+      {x: 6, y: 500},
+      {x: 7, y: 500},
+      {x: 8, y: 500},
+      {x: 9, y: 500},
+      {x: 10, y: 500},
+    ]}
+  />
+</div>
 ```
 
 ## Usage
