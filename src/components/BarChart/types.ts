@@ -1,15 +1,16 @@
 import {
-  Data,
   Color,
   StringLabelFormatter,
   NumberLabelFormatter,
   GradientStop,
 } from 'types';
 
-export interface BarChartData extends Data {
+export interface BarChartData {
   barOptions?: {
     color: Color;
   };
+  label: string;
+  rawValue: number;
 }
 
 export enum BarMargin {
