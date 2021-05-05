@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- Export `Color` and `GradientStop` types
+
 ## [0.10.0] — 2021-05-04
 
 ### Added

@@ -23,3 +23,5 @@ export {
   LinePreview,
   SquareColorPreview,
 } from './components';
+
+export {Color, GradientStop} from './types';
