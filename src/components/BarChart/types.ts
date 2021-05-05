@@ -52,7 +52,7 @@ export interface YAxisOptions {
 export interface Annotation {
   dataIndex: number;
   width: number;
-  color: string;
+  color: Color;
   tooltipData?: {
     label: string;
     value: string;

@@ -1,7 +1,7 @@
 import React from 'react';
 import {classNames} from '@shopify/css-utilities';
 
-import {clamp} from '../../../../utilities';
+import {clamp, getColorValue} from '../../../../utilities';
 import {Annotation} from '../../types';
 
 import styles from './AnnotationLine.scss';
@@ -35,7 +35,7 @@ export function AnnotationLine({
   return (
     <line
       className={classNames(styles.Line, shouldAnimate && styles.AnimatedLine)}
-      stroke={color}
+      stroke={getColorValue(color)}
       strokeWidth={annotationWidth}
       x1={xValueClamped}
       x2={xValueClamped}
