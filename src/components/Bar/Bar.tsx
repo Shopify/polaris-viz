@@ -1,8 +1,10 @@
 import React, {useMemo} from 'react';
-import {animated, SpringValue, InterpolatorFn} from 'react-spring';
+import {animated, SpringValue} from '@react-spring/web';
 import {ScaleLinear} from 'd3-scale';
 
 import {ROUNDED_BAR_RADIUS} from '../../constants';
+import {isNumber} from '../../utilities';
+import {PathInterpolator, NumberInterpolator} from '../../types';
 
 import styles from './Bar.scss';
 
@@ -44,19 +46,19 @@ export function Bar({
   const yPosition = useMemo(() => {
     if (height == null) return;
 
-    const getYPosition = (value: number) =>
+    const getYPosition: NumberInterpolator = (value: number) =>
       isNegative ? zeroScale + value : zeroScale - value;
 
-    if (typeof height === 'number') {
-      return getYPosition(height as number);
+    if (isNumber(height)) {
+      return getYPosition(height);
     }
-    return height.to(getYPosition as InterpolatorFn<any, any>);
+    return height.to(getYPosition);
   }, [height, isNegative, zeroScale]);
 
   const handleFocus = () => {
     if (yPosition == null) return;
 
-    const cy = typeof yPosition === 'number' ? yPosition : yPosition.get();
+    const cy = isNumber(yPosition) ? yPosition : yPosition.get();
     onFocus({index, cx: x, cy});
   };
 
@@ -66,17 +68,17 @@ export function Bar({
     const getStyle = (y: number) =>
       `translate(${xPosition}px, ${y}px) ${rotation}`;
 
-    if (typeof yPosition === 'number') return {transform: getStyle(yPosition)};
+    if (isNumber(yPosition)) return {transform: getStyle(yPosition)};
 
     return {
-      transform: yPosition.to(getStyle as InterpolatorFn<any, any>),
+      transform: yPosition.to(getStyle),
     };
   }, [yPosition, xPosition, rotation]);
 
   const path = useMemo(() => {
     if (height == null) return;
 
-    const calculatePath = (heightValue: number) =>
+    const calculatePath: PathInterpolator = (heightValue: number) =>
       rawValue === 0
         ? ''
         : `M${radius} 0
@@ -88,10 +90,10 @@ export function Bar({
         a${radius} ${radius} 0 01${radius}-${radius}
         Z`;
 
-    if (typeof height === 'number') {
+    if (isNumber(height)) {
       return calculatePath(height);
     }
-    return height.to(calculatePath as InterpolatorFn<any, any>);
+    return height.to(calculatePath);
   }, [height, radius, rawValue, width]);
 
   return (

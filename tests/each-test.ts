@@ -1,6 +1,6 @@
 import {destroyAll} from '@shopify/react-testing';
 import '@shopify/react-testing/matchers';
-import {Globals} from 'react-spring';
+import {Globals} from '@react-spring/web';
 
 Object.defineProperty(window, 'matchMedia', {
   writable: true,

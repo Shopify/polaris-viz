@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import {ScaleLinear} from 'd3-scale';
-import {animated, SpringValue} from 'react-spring';
+import {animated, SpringValue} from '@react-spring/web';
 
 const BORDER_RADIUS = 8;
 const MIN_RADIUS = 3;

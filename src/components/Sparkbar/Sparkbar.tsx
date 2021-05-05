@@ -8,7 +8,7 @@ import React, {
 import {useDebouncedCallback} from 'use-debounce';
 import {scaleBand, scaleLinear} from 'd3-scale';
 import {area} from 'd3-shape';
-import {useTransition} from 'react-spring';
+import {useTransition} from '@react-spring/web';
 
 import {usePrefersReducedMotion} from '../../hooks';
 import {BARS_TRANSITION_CONFIG} from '../../constants';

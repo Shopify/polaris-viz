@@ -1,3 +1,5 @@
+import {InterpolatorFn} from '@react-spring/web';
+
 export interface Data {
   label: string;
   rawValue: number;
@@ -118,3 +120,6 @@ export interface GradientStop {
   offset: number;
   color: string;
 }
+
+export type PathInterpolator = InterpolatorFn<ReadonlyArray<number>, string>;
+export type NumberInterpolator = InterpolatorFn<ReadonlyArray<number>, number>;

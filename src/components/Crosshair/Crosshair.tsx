@@ -1,5 +1,5 @@
 import React from 'react';
-import {animated, Interpolation} from 'react-spring';
+import {animated, Interpolation} from '@react-spring/web';
 
 import {CROSSHAIR_WIDTH, DEFAULT_CROSSHAIR_COLOR} from '../../constants';
 

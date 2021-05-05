@@ -1,6 +1,6 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
-import {animated} from 'react-spring';
+import {animated} from '@react-spring/web';
 
 import {TooltipContainer} from '../TooltipContainer';
 

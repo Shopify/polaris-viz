@@ -1,5 +1,5 @@
 import React, {useState, useMemo, useCallback} from 'react';
-import {useTransition} from 'react-spring';
+import {useTransition} from '@react-spring/web';
 
 import {usePrefersReducedMotion} from '../../hooks';
 import {
@@ -235,7 +235,7 @@ export function Chart({
 
           <mask id={clipId}>
             <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
-              {transitions(({height}, item, _, index) => {
+              {transitions(({height}, item, _transition, index) => {
                 const xPosition = xScale(index.toString());
                 const ariaLabel = `${xAxisOptions.labelFormatter(
                   data[index].label,

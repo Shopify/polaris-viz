@@ -1,6 +1,6 @@
 import {useCallback, useMemo} from 'react';
 import {Line} from 'd3-shape';
-import {useSprings} from 'react-spring';
+import {useSprings} from '@react-spring/web';
 
 import {SPRING_CONFIG} from '../constants';
 import {SeriesWithDefaults} from '../types';

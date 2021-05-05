@@ -40,7 +40,7 @@ describe('<Point />', () => {
       });
     });
 
-    it('renders with a radius of 5 when not active', () => {
+    it('renders with a radius of 0 when not active', () => {
       const point = mount(
         <svg>
           <Point {...mockProps} active={false} />
@@ -49,7 +49,7 @@ describe('<Point />', () => {
 
       expect(point).toContainReactComponent('circle', {
         // eslint-disable-next-line id-length
-        r: 5,
+        r: 0,
       });
     });
   });
