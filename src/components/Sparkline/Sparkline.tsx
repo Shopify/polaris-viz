@@ -1,4 +1,4 @@
-import React, {useState, useLayoutEffect, useRef} from 'react';
+import React, {useState, useLayoutEffect} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 import {scaleLinear} from 'd3-scale';
 import {Color} from 'types';
