@@ -6,6 +6,7 @@ import {
   TooltipContainer,
   VisuallyHiddenRows,
   Point,
+  HorizontalGridLines,
 } from 'components';
 import {line} from 'd3-shape';
 
@@ -69,6 +70,7 @@ const gridOptions = {
   showVerticalLines: true,
   showHorizontalLines: true,
   color: 'orange',
+  horizontalOverflow: false,
 };
 
 const crossHairOptions = {width: 10, color: 'red', opacity: 1};
@@ -390,6 +392,24 @@ describe('<Chart />', () => {
       );
 
       expect(chart).toContainReactComponentTimes(GradientArea, 1);
+    });
+  });
+
+  describe('gridOptions.showHorizontalLines', () => {
+    it('does not render HorizontalGridLines when false', () => {
+      const updatedProps = {
+        ...mockProps,
+        gridOptions: {...mockProps.gridOptions, showHorizontalLines: false},
+      };
+      const chart = mount(<Chart {...updatedProps} />);
+
+      expect(chart).not.toContainReactComponent(HorizontalGridLines);
+    });
+
+    it('renders HorizontalGridLines when true', () => {
+      const chart = mount(<Chart {...mockProps} />);
+
+      expect(chart).toContainReactComponent(HorizontalGridLines);
     });
   });
 });

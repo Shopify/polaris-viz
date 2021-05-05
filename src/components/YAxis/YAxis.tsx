@@ -1,41 +1,21 @@
 import React from 'react';
-import {
-  spacingBase,
-  spacingExtraTight,
-  colorSky,
-} from '@shopify/polaris-tokens';
+import {spacingBase, spacingExtraTight} from '@shopify/polaris-tokens';
 
+import {YAxisTick} from '../../types';
 import {FONT_SIZE, DEFAULT_GREY_LABEL} from '../../constants';
 
 interface Props {
-  ticks: {
-    value: number;
-    formattedValue: string;
-    yOffset: number;
-  }[];
-  drawableWidth: number;
+  ticks: YAxisTick[];
   fontSize?: number;
-  showGridLines?: boolean;
-  gridColor?: string;
   labelColor?: string;
 }
 
-function Axis({
-  ticks,
-  drawableWidth,
-  fontSize,
-  gridColor = colorSky,
-  showGridLines = true,
-  labelColor = DEFAULT_GREY_LABEL,
-}: Props) {
+function Axis({ticks, fontSize, labelColor = DEFAULT_GREY_LABEL}: Props) {
   return (
     <g>
       {ticks.map(({value, formattedValue, yOffset}) => {
         return (
           <g key={value} transform={`translate(0,${yOffset})`}>
-            {showGridLines ? (
-              <line x2={drawableWidth} stroke={gridColor} />
-            ) : null}
             <text
               aria-hidden
               style={{

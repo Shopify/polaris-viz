@@ -1,5 +1,6 @@
 import React, {useState, useMemo, useRef} from 'react';
 import {stack, stackOffsetNone, stackOrderReverse} from 'd3-shape';
+import {colorSky} from '@shopify/polaris-tokens';
 
 import {
   useLinearXAxisDetails,
@@ -20,6 +21,7 @@ import {Crosshair} from '../Crosshair';
 import {Point} from '../Point';
 import {LinearXAxis} from '../LinearXAxis';
 import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
+import {HorizontalGridLines} from '../HorizontalGridLines';
 import {
   StringLabelFormatter,
   NumberLabelFormatter,
@@ -192,12 +194,18 @@ export function Chart({
         </g>
 
         <g transform={`translate(${axisMargin},${Margin.Top})`}>
-          <YAxis
-            ticks={ticks}
-            drawableWidth={drawableWidth}
-            fontSize={fontSize}
-          />
+          <YAxis ticks={ticks} fontSize={fontSize} />
         </g>
+
+        <HorizontalGridLines
+          ticks={ticks}
+          color={colorSky}
+          transform={{
+            x: axisMargin,
+            y: Margin.Top,
+          }}
+          width={drawableWidth}
+        />
 
         <VisuallyHiddenRows
           formatYAxisLabel={formatYAxisLabel}

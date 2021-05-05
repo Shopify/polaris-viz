@@ -125,6 +125,7 @@ interface MultiSeriesBarChartProps {
   };
   gridOptions?: {
     showHorizontalLines?: boolean;
+    horizontalOverflow?: boolean;
     color?: string;
   };
   xAxisOptions: {
@@ -341,13 +342,21 @@ Rounds the top corners of each bar, in the case of positive numbers. Rounds the 
 
 An object including the following optional proprties that define the grid.
 
-##### showVHorizontalLines
+##### showHorizontalLines
 
 | type      | default |
 | --------- | ------- |
 | `boolean` | `true`  |
 
 Whether to show lines extending from the yAxis labels through the chart.
+
+##### horizontalOverflow
+
+| type      | default |
+| --------- | ------- |
+| `boolean` | `false` |
+
+Whether the lines should extend through the width of the entire chart.
 
 ##### color
 

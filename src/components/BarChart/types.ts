@@ -35,6 +35,7 @@ export interface BarOptions {
 
 export interface GridOptions {
   showHorizontalLines: boolean;
+  horizontalOverflow: boolean;
   color: string;
 }
 

@@ -1,13 +1,14 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {Color} from 'types';
-import {LinearXAxis} from 'components/LinearXAxis';
-import {YAxis} from 'components/YAxis';
 import {
   Point,
   Crosshair,
   TooltipContainer,
   VisuallyHiddenRows,
+  HorizontalGridLines,
+  YAxis,
+  LinearXAxis,
 } from 'components';
 
 import {StackedAreas} from '../components';
@@ -129,7 +130,6 @@ describe('<Chart />', () => {
         {value: 1000, formattedValue: '1000', yOffset: 115},
         {value: 2000, formattedValue: '2000', yOffset: 0},
       ],
-      drawableWidth: 480,
     });
   });
 
@@ -228,5 +228,15 @@ describe('<Chart />', () => {
       xAxisLabels: mockProps.xAxisLabels,
       formatYAxisLabel: mockProps.formatYAxisLabel,
     });
+  });
+
+  it('renders <HorizontalGridLines />', () => {
+    const updatedProps = {
+      ...mockProps,
+      gridOtions: {horizontalOverflow: true},
+    };
+    const chart = mount(<Chart {...updatedProps} />);
+
+    expect(chart).toContainReactComponent(HorizontalGridLines);
   });
 });

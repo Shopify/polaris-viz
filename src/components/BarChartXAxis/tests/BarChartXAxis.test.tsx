@@ -38,19 +38,6 @@ describe('<BarChartXAxis/>', () => {
     showTicks: true,
   };
 
-  it('renders a path', () => {
-    const axis = mount(
-      <svg>
-        <BarChartXAxis {...mockProps} />,
-      </svg>,
-    );
-
-    expect(axis).toContainReactComponent('path', {
-      fill: 'none',
-      stroke: 'orange',
-    });
-  });
-
   it('renders a line for each label value', () => {
     const axis = mount(
       <svg>

@@ -74,6 +74,7 @@ Default.args = {
   xAxisOptions: {labelFormatter: formatXAxisLabel},
   yAxisOptions: {labelFormatter: formatYAxisLabel},
   renderTooltipContent,
+  gridOptions: {horizontalOverflow: true},
 };
 
 export const Annotations = Template.bind({});
