@@ -1,16 +1,10 @@
-import React, {
-  useCallback,
-  useState,
-  useLayoutEffect,
-  useRef,
-  useMemo,
-} from 'react';
+import React, {useCallback, useState, useLayoutEffect, useMemo} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 import {scaleBand, scaleLinear} from 'd3-scale';
 import {area} from 'd3-shape';
 import {useTransition} from 'react-spring';
 
-import {usePrefersReducedMotion} from '../../hooks';
+import {usePrefersReducedMotion, useResizeObserver} from '../../hooks';
 import {BARS_TRANSITION_CONFIG} from '../../constants';
 import {Color} from '../../types';
 import {
@@ -72,23 +66,29 @@ export function Sparkbar({
   isAnimated = false,
   barFillStyle = 'solid',
 }: SparkbarProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const {
+    ref: containerRef,
+    setRef: setContainerRef,
+    entry,
+  } = useResizeObserver();
   const [svgDimensions, setSvgDimensions] = useState({width: 0, height: 0});
   const {prefersReducedMotion} = usePrefersReducedMotion();
 
   const [updateMeasurements] = useDebouncedCallback(() => {
-    if (containerRef.current == null) {
+    if (containerRef == null) {
       throw new Error('No SVG rendered');
     }
 
     setSvgDimensions({
-      height: containerRef.current.clientHeight,
-      width: containerRef.current.clientWidth,
+      height: containerRef.clientHeight,
+      width: containerRef.clientWidth,
     });
   }, 10);
 
   useLayoutEffect(() => {
-    if (containerRef.current == null) {
+    if (!entry) return;
+
+    if (containerRef == null) {
       throw new Error('No SVG rendered');
     }
 
@@ -105,7 +105,7 @@ export function Sparkbar({
         window.removeEventListener('resize', () => updateMeasurements());
       }
     };
-  }, [updateMeasurements]);
+  }, [entry, containerRef, updateMeasurements]);
 
   const {width, height} = svgDimensions;
 
@@ -156,7 +156,7 @@ export function Sparkbar({
   });
 
   return (
-    <div className={styles.Wrapper} ref={containerRef}>
+    <div className={styles.Wrapper} ref={setContainerRef}>
       {accessibilityLabel ? (
         <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
       ) : null}

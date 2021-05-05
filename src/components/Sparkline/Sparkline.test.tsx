@@ -15,6 +15,14 @@ describe('<Sparkline />', () => {
         return {matches: false};
       }),
     });
+
+    Object.defineProperty(window, 'ResizeObserver', {
+      value: jest.fn(() => ({
+        observe: jest.fn(),
+        unobserve: jest.fn(),
+        disconnect: jest.fn(),
+      })),
+    });
   });
 
   const mockSeries = [

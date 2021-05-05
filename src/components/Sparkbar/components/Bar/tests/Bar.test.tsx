@@ -10,13 +10,16 @@ jest.mock('d3-scale', () => ({
 
 describe('<Bar/>', () => {
   it('renders a path', () => {
+    const width = 100;
+    const radius = 75;
+
     const bar = mount(
       <svg>
         <Bar
           height={100}
           x={0}
           rawValue={1000}
-          width={100}
+          width={width}
           yScale={scaleBand() as any}
         />
         ,
@@ -25,19 +28,22 @@ describe('<Bar/>', () => {
 
     expect(bar).toContainReactComponent('path', {
       // eslint-disable-next-line id-length
-      d: 'M 0 0 C 0 -8 100 -8 100 0 L 100 100 L 0 100 Z',
+      d: `M 0 0 C 0 -${radius} ${width} -${radius} ${width} 0 L 100 100 L 0 100 Z`,
       style: {transform: 'translate(0px, -100px) rotate(0deg)'},
     });
   });
 
   it('gives the bar a min height if needed', () => {
+    const width = 100;
+    const radius = 75;
+
     const bar = mount(
       <svg>
         <Bar
           height={1}
           x={0}
           rawValue={1}
-          width={100}
+          width={width}
           yScale={scaleBand() as any}
         />
         ,
@@ -46,7 +52,7 @@ describe('<Bar/>', () => {
 
     expect(bar).toContainReactComponent('path', {
       // eslint-disable-next-line id-length
-      d: 'M 0 0 C 0 -3 100 -3 100 0 L 100 1 L 0 1 Z',
+      d: `M 0 0 C 0 -${radius} ${width} -${radius} ${width} 0 L 100 1 L 0 1 Z`,
       style: {transform: `translate(0px, -1px) rotate(0deg)`},
     });
   });

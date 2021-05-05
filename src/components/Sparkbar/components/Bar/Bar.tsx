@@ -2,9 +2,6 @@ import React, {useMemo} from 'react';
 import {ScaleLinear} from 'd3-scale';
 import {animated, OpaqueInterpolation} from 'react-spring';
 
-const BORDER_RADIUS = 8;
-const MIN_RADIUS = 3;
-
 interface Props {
   x: number;
   yScale: ScaleLinear<number, number>;
@@ -48,7 +45,7 @@ export function Bar({x, rawValue, yScale, width, height}: Props) {
     };
   }, [yPosition, yPositionIsNumber, xPosition, rotation]);
 
-  const radius = BORDER_RADIUS;
+  const radius = width * 0.75;
 
   const path = useMemo(() => {
     if (height == null) return;
@@ -57,9 +54,8 @@ export function Bar({x, rawValue, yScale, width, height}: Props) {
       if (heightValue === 0) {
         return '';
       }
-      const modifiedRadius =
-        heightValue < radius ? Math.max(heightValue, MIN_RADIUS) : radius;
-      return `M 0 0 C 0 -${modifiedRadius} ${width} -${modifiedRadius} ${width} 0 L ${width} ${heightValue} L 0 ${heightValue} Z`;
+
+      return `M 0 0 C 0 -${radius} ${width} -${radius} ${width} 0 L ${width} ${heightValue} L 0 ${heightValue} Z`;
     };
 
     if (heightIsNumber) {
