@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.10.2] — 2021-05-05
+
+### Fixed
+
+- Reverts dev dependency changes that broke deploy
+
 ## [0.10.1] — 2021-05-05
 
 ### Added
