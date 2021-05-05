@@ -8,7 +8,7 @@ import {
   SPACING_EXTRA_TIGHT,
   DIAGONAL_ANGLE,
   LINE_HEIGHT,
-  SPACING_TIGHT,
+  BELOW_X_AXIS_MARGIN,
   DEFAULT_GREY_LABEL,
 } from '../../constants';
 
@@ -124,9 +124,9 @@ function Axis({
         const tickContainerTransform = needsDiagonalLabels
           ? `translate(${-diagonalLabelOffset -
               SPACING_EXTRA_TIGHT} ${maxXLabelHeight +
-              SPACING_EXTRA_TIGHT}) rotate(${DIAGONAL_ANGLE})`
+              BELOW_X_AXIS_MARGIN / 2}) rotate(${DIAGONAL_ANGLE})`
           : `translate(${horizontalXPosition +
-              firstLabelAdjustment} ${SPACING_TIGHT})`;
+              firstLabelAdjustment} ${BELOW_X_AXIS_MARGIN})`;
 
         return (
           <g key={index} transform={`translate(${xOffset}, 0)`}>

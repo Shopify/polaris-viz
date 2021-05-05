@@ -1,5 +1,5 @@
 import {
-  MARGIN,
+  BarChartMargin as Margin,
   MAX_TEXT_BOX_HEIGHT,
   MIN_HORIZONTAL_LABEL_SPACE,
   SPACING,
@@ -35,7 +35,7 @@ export function getBarXAxisDetails({
       : xLabels.filter((_, index) => minimalLabelIndexes.includes(index));
 
   const drawableWidth =
-    chartDimensions.width - yAxisLabelWidth - MARGIN.Right - SPACING;
+    chartDimensions.width - yAxisLabelWidth - Margin.Right - SPACING;
 
   // distance from the start of one bar to the start of the next, same as scaleBand.step();
   // you can see this visualized here: https://observablehq.com/@d3/d3-scaleband

@@ -8,7 +8,7 @@ import {
   SMALL_FONT_SIZE,
   FONT_SIZE,
   SPACING_TIGHT,
-  Margin,
+  LineChartMargin as Margin,
   SPACING_BASE_TIGHT,
 } from '../../constants';
 import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
@@ -163,7 +163,9 @@ export function Chart({
   const marginBetweenLabelsAndData = SPACING_BASE_TIGHT;
 
   const dataStartPosition =
-    axisMargin + gridOptions.horizontalMargin + marginBetweenLabelsAndData;
+    axisMargin +
+    Number(gridOptions.horizontalMargin) +
+    marginBetweenLabelsAndData;
 
   const drawableWidth =
     axisMargin == null
