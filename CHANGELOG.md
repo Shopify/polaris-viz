@@ -1,5 +1,10 @@
 # Changelog
 
+### Added
+
+- `<SparkLine/>` and `<Sparkbar/>` now rerender with the correct size when the container change its width or height
+- `<Sparkbar />` Bar radius is now proportional to the bar width
+
 ## [0.10.2] — 2021-05-05
 
 ### Fixed
