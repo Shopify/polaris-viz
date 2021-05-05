@@ -1,10 +1,14 @@
 # Changelog
 
-## Unreleased
+## [0.10.1] — 2021-05-05
 
 ### Added
 
 - Export `Color` and `GradientStop` types
+
+### Fixed
+
+- `<BarChart />` data type
 
 ## [0.10.0] — 2021-05-04
 
