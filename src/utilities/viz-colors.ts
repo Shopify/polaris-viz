@@ -13,4 +13,6 @@ export const vizColors = {
   darkModePositive: 'rgb(0, 164, 124)',
   darkModeNegative: 'rgb(255, 85, 70)',
   colorGrayDark: 'rgb(55, 66, 80)',
+  colorGrayLight: 'rgb(235, 235, 235)',
+  colorWhiteTransparent: 'rgba(255, 255, 255, 0.4)',
 };
