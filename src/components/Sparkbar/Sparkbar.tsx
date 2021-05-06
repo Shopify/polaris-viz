@@ -86,7 +86,7 @@ export function Sparkbar({
   }, 10);
 
   useLayoutEffect(() => {
-    if (!entry) return;
+    if (entry == null) return;
 
     if (containerRef == null) {
       throw new Error('No SVG rendered');

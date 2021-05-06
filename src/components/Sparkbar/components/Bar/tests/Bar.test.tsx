@@ -8,11 +8,11 @@ jest.mock('d3-scale', () => ({
   scaleBand: jest.fn(() => jest.fn((value) => value)),
 }));
 
+const width = 100;
+const radius = 75;
+
 describe('<Bar/>', () => {
   it('renders a path', () => {
-    const width = 100;
-    const radius = 75;
-
     const bar = mount(
       <svg>
         <Bar
@@ -34,9 +34,6 @@ describe('<Bar/>', () => {
   });
 
   it('gives the bar a min height if needed', () => {
-    const width = 100;
-    const radius = 75;
-
     const bar = mount(
       <svg>
         <Bar

@@ -17,10 +17,10 @@ function resizeObserver(
 export const useResizeObserver = <T extends HTMLElement>(): {
   ref: T | null;
   setRef: (node: T | null) => void;
-  entry: ResizeObserverEntry | undefined;
+  entry: ResizeObserverEntry | null;
 } => {
   const [ref, setRef] = useState<T | null>(null);
-  const [entry, setEntry] = useState<ResizeObserverEntry | undefined>();
+  const [entry, setEntry] = useState<ResizeObserverEntry | null>(null);
 
   useLayoutEffect(() => {
     if (!ref) {
