@@ -10,6 +10,10 @@
 
 - renamed `barOptions.margin` to `innerMargin` for `<BarChart/>` and `<MultiSeriesBarChart/>`
 
+### Fixed
+
+- Line chart legend no longer shows square preview
+
 ## [0.10.2] — 2021-05-05
 
 ### Fixed
