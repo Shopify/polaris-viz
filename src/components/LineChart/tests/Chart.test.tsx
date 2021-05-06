@@ -64,6 +64,7 @@ const lineOptions = {hasSpline: false, width: 2};
 const yAxisOptions = {
   labelFormatter: jest.fn((value) => value),
   labelColor: 'red',
+  backgroundColor: 'transparent',
 };
 
 const gridOptions = {
@@ -71,6 +72,7 @@ const gridOptions = {
   showHorizontalLines: true,
   color: 'orange',
   horizontalOverflow: false,
+  horizontalMargin: 0,
 };
 
 const crossHairOptions = {width: 10, color: 'red', opacity: 1};

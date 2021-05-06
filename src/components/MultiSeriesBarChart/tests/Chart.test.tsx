@@ -83,11 +83,13 @@ describe('Chart />', () => {
     yAxisOptions: {
       labelFormatter: (value: number) => value.toString(),
       labelColor: 'red',
+      backgroundColor: 'transparent',
     },
     gridOptions: {
       showHorizontalLines: true,
       color: 'red',
       horizontalOverflow: false,
+      horizontalMargin: 0,
     },
   };
 

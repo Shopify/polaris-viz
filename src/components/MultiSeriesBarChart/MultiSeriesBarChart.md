@@ -127,6 +127,7 @@ interface MultiSeriesBarChartProps {
     showHorizontalLines?: boolean;
     horizontalOverflow?: boolean;
     color?: string;
+    horizontalMargin?: number;
   };
   xAxisOptions: {
     labelFormatter?(value: string, index?: number, data?: string[]): string;
@@ -136,6 +137,7 @@ interface MultiSeriesBarChartProps {
   };
   yAxisOptions: {
     labelFormatter?(value: number): string;
+    backgroundColor?: string;
   };
 }
 ```
@@ -304,6 +306,14 @@ This utility function is called for every y axis value when the chart is drawn.
 
 The color used for axis labels.
 
+##### backgroundColor
+
+| type     | default       |
+| -------- | ------------- |
+| `string` | `transparant` |
+
+The color used behind axis labels.
+
 #### barOptions
 
 ##### innerMargin
@@ -357,6 +367,14 @@ Whether to show lines extending from the yAxis labels through the chart.
 | `boolean` | `false` |
 
 Whether the lines should extend through the width of the entire chart.
+
+##### horizontalMargin
+
+| type     | default |
+| -------- | ------- |
+| `number` | `0`     |
+
+Margin to display on the left and right of the chart.
 
 ##### color
 

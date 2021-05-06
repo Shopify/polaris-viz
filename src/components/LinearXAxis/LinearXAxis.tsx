@@ -89,8 +89,6 @@ function Axis({
     });
   }, [labels, ticks, xScale]);
 
-  const [xScaleMin, xScaleMax] = xScale.range();
-
   const diagonalLabelOffset = new RightAngleTriangle({
     sideC: maxDiagonalLabelLength,
     sideA: maxXLabelHeight,
@@ -104,12 +102,6 @@ function Axis({
 
   return (
     <React.Fragment>
-      <path
-        d={`M ${xScaleMin} ${TICK_SIZE} v ${-TICK_SIZE} H ${xScaleMax} v ${TICK_SIZE}`}
-        fill="none"
-        stroke={gridColor}
-      />
-
       {tickDetails.map(({value, xOffset, firstLabel}, index) => {
         const textWidth = needsDiagonalLabels
           ? maxDiagonalLabelLength

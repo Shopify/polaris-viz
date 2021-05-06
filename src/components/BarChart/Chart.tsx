@@ -155,7 +155,12 @@ export function Chart({
   );
 
   const axisMargin = SPACING + yAxisLabelWidth;
-  const drawableWidth = chartDimensions.width - MARGIN.Right - axisMargin;
+  const chartStartPosition = axisMargin + gridOptions.horizontalMargin;
+  const drawableWidth =
+    chartDimensions.width -
+    MARGIN.Right -
+    axisMargin -
+    gridOptions.horizontalMargin * 2;
 
   const {xScale, xAxisLabels} = useXScale({
     drawableWidth,
@@ -242,7 +247,7 @@ export function Chart({
           />
 
           <mask id={clipId}>
-            <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
+            <g transform={`translate(${chartStartPosition},${MARGIN.Top})`}>
               {transitions.map(({item, props: {height}}, index) => {
                 const xPosition = xScale(index.toString());
                 const ariaLabel = `${xAxisOptions.labelFormatter(
@@ -279,7 +284,7 @@ export function Chart({
           </mask>
         </defs>
         <g
-          transform={`translate(${axisMargin},${chartDimensions.height -
+          transform={`translate(${chartStartPosition},${chartDimensions.height -
             MARGIN.Bottom -
             xAxisDetails.maxXLabelHeight})`}
           aria-hidden="true"
@@ -301,7 +306,7 @@ export function Chart({
             ticks={ticks}
             color={gridOptions.color}
             transform={{
-              x: gridOptions.horizontalOverflow ? 0 : axisMargin,
+              x: gridOptions.horizontalOverflow ? 0 : chartStartPosition,
               y: MARGIN.Top,
             }}
             width={
@@ -312,14 +317,15 @@ export function Chart({
           />
         ) : null}
 
-        <g
-          transform={`translate(${axisMargin},${MARGIN.Top})`}
-          aria-hidden="true"
-        >
+        <g transform={`translate(0,${MARGIN.Top})`} aria-hidden="true">
           <YAxis
             ticks={ticks}
             fontSize={fontSize}
             labelColor={yAxisOptions.labelColor}
+            textAlign={gridOptions.horizontalOverflow ? 'left' : 'right'}
+            width={yAxisLabelWidth}
+            backgroundColor={yAxisOptions.backgroundColor}
+            outerMargin={gridOptions.horizontalMargin}
           />
         </g>
 
@@ -334,7 +340,7 @@ export function Chart({
           {transitions.map(({item}, index) => {
             const xPosition = xScale(index.toString());
             const xPositionValue = xPosition == null ? 0 : xPosition;
-            const translateXValue = xPositionValue + axisMargin;
+            const translateXValue = xPositionValue + chartStartPosition;
             const barColor =
               item.barOptions != null && item.barOptions.color != null
                 ? item.barOptions.color
@@ -354,7 +360,7 @@ export function Chart({
           ;
         </g>
 
-        <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
+        <g transform={`translate(${chartStartPosition},${MARGIN.Top})`}>
           {transitions.map((_, index) => {
             const xPosition = xScale(index.toString());
             const xPositionValue = xPosition == null ? 0 : xPosition;
@@ -403,7 +409,7 @@ export function Chart({
     if (index == null) return;
     setActiveBar(index);
     setTooltipPosition({
-      x: cx + axisMargin + xScale.bandwidth() / 2,
+      x: cx + chartStartPosition + xScale.bandwidth() / 2,
       y: cy,
     });
   }
@@ -418,7 +424,7 @@ export function Chart({
     }
 
     const {svgX, svgY} = point;
-    const currentPoint = svgX - axisMargin;
+    const currentPoint = svgX - chartStartPosition;
     const currentIndex = Math.floor(currentPoint / xScale.step());
 
     if (
@@ -434,7 +440,9 @@ export function Chart({
     const xPosition = xScale(currentIndex.toString());
     const value = data[currentIndex].rawValue;
     const tooltipXPositon =
-      xPosition == null ? 0 : xPosition + axisMargin + xScale.bandwidth() / 2;
+      xPosition == null
+        ? 0
+        : xPosition + chartStartPosition + xScale.bandwidth() / 2;
 
     setActiveBar(currentIndex);
     setTooltipPosition({

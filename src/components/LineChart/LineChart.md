@@ -138,12 +138,14 @@ interface LineChartProps {
   yAxisOptions?: {
     labelFormatter?(value: number): string;
     labelColor: string;
+    backgroundColor?: string;
   }
   gridOptions?: {
     showVerticalLines?: boolean;
     showHorizontalLines?: boolean;
     horizontalOverflow?: boolean;
     color?: string;
+    horizontalMargin?: number;
   }
   crossHairOptions?: {
     width?: number;
@@ -355,6 +357,14 @@ This utilty function is called to format the labels for every y axis value when 
 
 The color used for axis labels.
 
+##### backgroundColor
+
+| type     | default       |
+| -------- | ------------- |
+| `string` | `transparant` |
+
+The color used behind axis labels.
+
 #### lineOptions
 
 An object including the following optional proprties that define the appearance of the line.
@@ -402,6 +412,14 @@ Whether to show lines extending from the yAxis labels through the chart.
 | `boolean` | `false` |
 
 Whether the lines should extend through the width of the entire chart.
+
+##### horizontalMargin
+
+| type     | default |
+| -------- | ------- |
+| `number` | `0`     |
+
+Margin to display on the left and right of the chart.
 
 ##### color
 

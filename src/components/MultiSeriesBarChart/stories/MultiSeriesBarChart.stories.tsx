@@ -142,6 +142,21 @@ Gradient.args = {
   },
 };
 
+export const OverflowStyles = Template.bind({});
+OverflowStyles.args = {
+  series: gradientSeries,
+  xAxisOptions: {labels},
+  barOptions: {
+    hasRoundedCorners: true,
+  },
+  yAxisOptions: {backgroundColor: 'white'},
+  gridOptions: {
+    horizontalOverflow: true,
+    horizontalMargin: 20,
+    showVerticalLines: false,
+  },
+};
+
 export const Stacked = Template.bind({});
 Stacked.args = {
   series: series,

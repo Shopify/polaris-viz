@@ -28,7 +28,7 @@ import {
   ActiveTooltip,
 } from '../../types';
 
-import {Margin} from './constants';
+import {Margin, Spacing} from './constants';
 import {useYScale} from './hooks';
 import {StackedAreas} from './components';
 import styles from './Chart.scss';
@@ -129,8 +129,9 @@ export function Chart({
     formatYAxisLabel,
   });
 
-  const drawableWidth =
-    axisMargin == null ? null : dimensions.width - Margin.Right - axisMargin;
+  const dataStartPosition = axisMargin + Spacing.Base;
+
+  const drawableWidth = dimensions.width - Margin.Right - dataStartPosition;
 
   const longestSeriesLength =
     Math.max(...stackedValues.map((stack) => stack.length)) - 1;
@@ -179,7 +180,7 @@ export function Chart({
         role="table"
       >
         <g
-          transform={`translate(${axisMargin},${dimensions.height -
+          transform={`translate(${dataStartPosition},${dimensions.height -
             marginBottom})`}
         >
           <LinearXAxis
@@ -193,15 +194,20 @@ export function Chart({
           />
         </g>
 
-        <g transform={`translate(${axisMargin},${Margin.Top})`}>
-          <YAxis ticks={ticks} fontSize={fontSize} />
+        <g transform={`translate(0,${Margin.Top})`}>
+          <YAxis
+            ticks={ticks}
+            fontSize={fontSize}
+            width={axisMargin}
+            textAlign="right"
+          />
         </g>
 
         <HorizontalGridLines
           ticks={ticks}
           color={colorSky}
           transform={{
-            x: axisMargin,
+            x: dataStartPosition,
             y: Margin.Top,
           }}
           width={drawableWidth}
@@ -216,7 +222,7 @@ export function Chart({
         <StackedAreas
           width={drawableWidth}
           height={drawableHeight}
-          transform={`translate(${axisMargin},${Margin.Top})`}
+          transform={`translate(${dataStartPosition},${Margin.Top})`}
           stackedValues={stackedValues}
           xScale={xScale}
           yScale={yScale}
@@ -226,7 +232,7 @@ export function Chart({
         />
 
         {activePointIndex == null ? null : (
-          <g transform={`translate(${axisMargin},${Margin.Top})`}>
+          <g transform={`translate(${dataStartPosition},${Margin.Top})`}>
             <Crosshair
               x={xScale(activePointIndex) - CROSSHAIR_WIDTH / 2}
               height={drawableHeight}
@@ -235,7 +241,7 @@ export function Chart({
           </g>
         )}
 
-        <g transform={`translate(${axisMargin},${Margin.Top})`}>
+        <g transform={`translate(${dataStartPosition},${Margin.Top})`}>
           {stackedValues.map((value, stackIndex) =>
             value.map(([, startingDataPoint], index) => (
               <Point
@@ -273,7 +279,7 @@ export function Chart({
     if (index == null) return;
     setActivePointIndex(index);
     setTooltipPosition({
-      x: x + axisMargin,
+      x: x + dataStartPosition,
       y,
     });
   }
@@ -291,11 +297,11 @@ export function Chart({
     }
 
     const {svgX, svgY} = point;
-    if (svgX < axisMargin) {
+    if (svgX < dataStartPosition) {
       return;
     }
 
-    const closestIndex = Math.round(xScale.invert(svgX - axisMargin));
+    const closestIndex = Math.round(xScale.invert(svgX - dataStartPosition));
     setActivePointIndex(Math.min(longestSeriesLength, closestIndex));
     setTooltipPosition({
       x: svgX,

@@ -9,7 +9,7 @@ import {
   FONT_SIZE,
   SPACING_TIGHT,
   Margin,
-  OVERFLOW_GRID_RIGHT_MARGIN,
+  SPACING_BASE_TIGHT,
 } from '../../constants';
 import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
 import {LinearXAxis} from '../LinearXAxis';
@@ -160,12 +160,19 @@ export function Chart({
 
   const reversedSeries = useMemo(() => series.slice().reverse(), [series]);
 
-  const rightMargin = gridOptions.horizontalOverflow
-    ? OVERFLOW_GRID_RIGHT_MARGIN
-    : Margin.Right;
+  const marginBetweenLabelsAndData = SPACING_BASE_TIGHT;
+
+  const dataStartPosition =
+    axisMargin + gridOptions.horizontalMargin + marginBetweenLabelsAndData;
 
   const drawableWidth =
-    axisMargin == null ? null : dimensions.width - rightMargin - axisMargin;
+    axisMargin == null
+      ? null
+      : dimensions.width -
+        Margin.Right -
+        axisMargin -
+        gridOptions.horizontalMargin * 2 -
+        marginBetweenLabelsAndData;
 
   const longestSeriesIndex = useMemo(
     () =>
@@ -267,7 +274,7 @@ export function Chart({
       return;
     }
 
-    const closestIndex = Math.round(xScale.invert(svgX - axisMargin));
+    const closestIndex = Math.round(xScale.invert(svgX - dataStartPosition));
     const clampedClosestIndex = clamp({
       amount: closestIndex,
       min: 0,
@@ -300,7 +307,7 @@ export function Chart({
         aria-label={emptyState ? emptyStateText : undefined}
       >
         <g
-          transform={`translate(${axisMargin},${dimensions.height -
+          transform={`translate(${dataStartPosition},${dimensions.height -
             marginBottom})`}
         >
           <LinearXAxis
@@ -318,20 +325,12 @@ export function Chart({
           />
         </g>
 
-        <g transform={`translate(${axisMargin},${Margin.Top})`}>
-          <YAxis
-            ticks={ticks}
-            fontSize={fontSize}
-            labelColor={yAxisOptions.labelColor}
-          />
-        </g>
-
         {gridOptions.showHorizontalLines ? (
           <HorizontalGridLines
             ticks={ticks}
             color={gridOptions.color}
             transform={{
-              x: gridOptions.horizontalOverflow ? 0 : axisMargin,
+              x: gridOptions.horizontalOverflow ? 0 : dataStartPosition,
               y: Margin.Top,
             }}
             width={
@@ -340,8 +339,20 @@ export function Chart({
           />
         ) : null}
 
+        <g transform={`translate(0,${Margin.Top})`}>
+          <YAxis
+            ticks={ticks}
+            fontSize={fontSize}
+            width={axisMargin}
+            labelColor={yAxisOptions.labelColor}
+            textAlign={gridOptions.horizontalOverflow ? 'left' : 'right'}
+            backgroundColor={yAxisOptions.backgroundColor}
+            outerMargin={gridOptions.horizontalMargin}
+          />
+        </g>
+
         {emptyState ? null : (
-          <g transform={`translate(${axisMargin},${Margin.Top})`}>
+          <g transform={`translate(${dataStartPosition},${Margin.Top})`}>
             <Crosshair
               x={getXPosition({isCrosshair: true})}
               height={drawableHeight}
@@ -360,7 +371,7 @@ export function Chart({
           />
         )}
 
-        <g transform={`translate(${axisMargin},${Margin.Top})`}>
+        <g transform={`translate(${dataStartPosition},${Margin.Top})`}>
           {reversedSeries.map((singleSeries, index) => {
             const {data, name, color, areaColor} = singleSeries;
             const seriesGradientId = `${gradientId.current}-${index}`;
