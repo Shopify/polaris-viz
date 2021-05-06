@@ -12,7 +12,8 @@ jest.mock('d3-scale', () => ({
 
 const mockProps = {
   drawableWidth: 200,
-  barMargin: 0,
+  innerMargin: 0,
+  outerMargin: 0,
   data: [
     [10, 20, 30],
     [0, 1, 2],
@@ -34,6 +35,7 @@ describe('useXScale', () => {
       scale.range = rangeSpy;
       scale.bandwidth = () => 10;
       scale.paddingInner = () => scale;
+      scale.paddingOuter = () => scale;
       return scale;
     });
 
@@ -56,6 +58,7 @@ describe('useXScale', () => {
       scale.range = () => scale;
       scale.bandwidth = () => 10;
       scale.paddingInner = () => scale;
+      scale.paddingOuter = () => scale;
       domainSpy = jest.fn(() => scale);
       scale.domain = domainSpy;
       return scale;
@@ -78,6 +81,7 @@ describe('useXScale', () => {
       scale.range = () => scale;
       scale.bandwidth = () => 10;
       scale.paddingInner = () => scale;
+      scale.paddingOuter = () => scale;
       scale.domain = () => scale;
       return scale;
     });
@@ -97,24 +101,27 @@ describe('useXScale', () => {
     expect(testComponent).toContainReactText('label 1-50');
   });
 
-  describe('barMargin', () => {
-    it('adds inner padding using the bar margin', () => {
-      let paddingSpy = jest.fn();
+  describe('innerMargin', () => {
+    it('calls the paddingInner method using the innerMargin', () => {
+      let paddingInnerSpy = jest.fn();
 
       (scaleBand as jest.Mock).mockImplementation(() => {
         const scale = (value: any) => value;
         scale.domain = () => scale;
         scale.range = () => scale;
         scale.bandwidth = () => 10;
-        paddingSpy = jest.fn(() => scale);
-        scale.paddingInner = paddingSpy;
+        scale.paddingOuter = () => scale;
+
+        paddingInnerSpy = jest.fn(() => scale);
+        scale.paddingInner = paddingInnerSpy;
+
         return scale;
       });
 
       function TestComponent() {
         useXScale({
           ...mockProps,
-          barMargin: 0.5,
+          innerMargin: 0.5,
         });
 
         return null;
@@ -122,7 +129,39 @@ describe('useXScale', () => {
 
       mount(<TestComponent />);
 
-      expect(paddingSpy).toHaveBeenCalledWith(0.5);
+      expect(paddingInnerSpy).toHaveBeenCalledWith(0.5);
+    });
+  });
+
+  describe('outerMargin', () => {
+    it('calls the paddingOuter method using the outerMargin', () => {
+      let paddingOuterSpy = jest.fn();
+
+      (scaleBand as jest.Mock).mockImplementation(() => {
+        const scale = (value: any) => value;
+        scale.domain = () => scale;
+        scale.range = () => scale;
+        scale.bandwidth = () => 10;
+        scale.paddingInner = () => scale;
+
+        paddingOuterSpy = jest.fn(() => scale);
+        scale.paddingOuter = paddingOuterSpy;
+
+        return scale;
+      });
+
+      function TestComponent() {
+        useXScale({
+          ...mockProps,
+          outerMargin: 0.5,
+        });
+
+        return null;
+      }
+
+      mount(<TestComponent />);
+
+      expect(paddingOuterSpy).toHaveBeenCalledWith(0.5);
     });
   });
 });

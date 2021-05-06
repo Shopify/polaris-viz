@@ -1,7 +1,18 @@
 # Changelog
 
+## [0.11.0] — 2021-05-06
+
+### Added
+
+- `outerMargin` prop to `<BarChart/>` and `<MultiSeriesBarChart/>`
+
+### Changed
+
+- renamed `barOptions.margin` to `innerMargin` for `<BarChart/>` and `<MultiSeriesBarChart/>`
+
 ### Fixed
 
+- Line chart legend no longer shows square preview
 - `<SparkLine/>` and `<Sparkbar/>` now rerender with the correct size when the container change its width or height
 - `<Sparkbar />` Bar radius is now proportional to the bar width
 

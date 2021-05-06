@@ -33,6 +33,8 @@ describe('getBarXAxisDetails', () => {
       yAxisLabelWidth: 100,
       xLabels: manyDataPoints.map(({label}) => label),
       fontSize: 10,
+      innerMargin: 0,
+      outerMargin: 0,
       chartDimensions: {
         height: 100,
         width: 100,
@@ -49,9 +51,11 @@ describe('getBarXAxisDetails', () => {
     ];
 
     const actual = getBarXAxisDetails({
-      yAxisLabelWidth: 10,
+      yAxisLabelWidth: 5,
       xLabels: fewDataPoints.map(({label}) => label),
       fontSize: 10,
+      innerMargin: 0,
+      outerMargin: 0,
       chartDimensions: {
         height: 100,
         width: 100,
@@ -66,6 +70,8 @@ describe('getBarXAxisDetails', () => {
       yAxisLabelWidth: 10,
       xLabels: manyDataPoints.map(({label}) => label),
       fontSize: 10,
+      innerMargin: 0,
+      outerMargin: 0,
       minimalLabelIndexes: [0, 4, 9],
       chartDimensions: {
         height: 100,

@@ -1,5 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
+import {Color} from 'types';
+import {vizColors} from 'utilities';
 
 import {AnnotationLine} from '../AnnotationLine';
 
@@ -10,7 +12,7 @@ describe('<AnnotationLine />', () => {
     barWidth: 20,
     drawableHeight: 300,
     width: lineWidth,
-    color: '#ccc',
+    color: 'colorGrayLight' as Color,
     ariaLabel: 'Median: 1.5 hours',
     xOffset: 0.5,
   };
@@ -29,7 +31,7 @@ describe('<AnnotationLine />', () => {
       // the drawable height
       y1: 300,
       y2: 0,
-      stroke: '#ccc',
+      stroke: vizColors.colorGrayLight,
       strokeWidth: lineWidth,
     });
   });

@@ -3,6 +3,7 @@ import {
   MAX_TEXT_BOX_HEIGHT,
   MIN_HORIZONTAL_LABEL_SPACE,
   SPACING,
+  SPACING_EXTRA_TIGHT,
 } from '../constants';
 
 import {getTextContainerHeight} from './get-text-container-height';
@@ -14,7 +15,8 @@ interface LayoutDetails {
   fontSize: number;
   xLabels: string[];
   chartDimensions: DOMRect;
-  padding?: number;
+  innerMargin: number;
+  outerMargin: number;
   minimalLabelIndexes?: number[] | null;
 }
 
@@ -23,10 +25,10 @@ export function getBarXAxisDetails({
   yAxisLabelWidth,
   fontSize,
   chartDimensions,
-  padding = 0,
+  innerMargin,
+  outerMargin,
   minimalLabelIndexes,
 }: LayoutDetails) {
-  // amount of space for label within individual column of data
   const labelsToUse =
     minimalLabelIndexes == null
       ? xLabels
@@ -35,16 +37,21 @@ export function getBarXAxisDetails({
   const drawableWidth =
     chartDimensions.width - yAxisLabelWidth - MARGIN.Right - SPACING;
 
-  const spacePerBar = (drawableWidth * (1 - padding / 2)) / xLabels.length;
+  // distance from the start of one bar to the start of the next, same as scaleBand.step();
+  // you can see this visualized here: https://observablehq.com/@d3/d3-scaleband
+  const step = drawableWidth / (xLabels.length + outerMargin * 2 - innerMargin);
 
   const spaceForMinimalLabels = minimalLabelIndexes
     ? drawableWidth / minimalLabelIndexes.length
     : null;
 
+  // width each label is allowed to take up
   const datumXLabelSpace =
-    spaceForMinimalLabels == null ? spacePerBar : spaceForMinimalLabels;
+    spaceForMinimalLabels == null
+      ? step - SPACING_EXTRA_TIGHT
+      : spaceForMinimalLabels;
 
-  // calculations are be based on the longest label
+  // calculations are based on the longest label
   const longestXLabelDetails = getLongestLabelDetails(labelsToUse, fontSize);
 
   // how tall the xaxis would be if we use horizontal labels
@@ -54,14 +61,24 @@ export function getBarXAxisDetails({
     containerWidth: Math.abs(datumXLabelSpace),
   });
 
-  // use horizontal labels if horixontal labels are too tall, or the column space is too narrow
+  // use horizontal labels if horizontal labels are too tall, or the column space is too narrow
   const needsDiagonalLabels =
     horizontalLabelHeight > MAX_TEXT_BOX_HEIGHT ||
     datumXLabelSpace < MIN_HORIZONTAL_LABEL_SPACE;
 
+  // width of all outer padding
+  const outerPadding = step * outerMargin * 2;
+
+  // width of all inner padding
+  const innerPadding = (xLabels.length - 1) * step * innerMargin;
+
+  // width of single bar
+  const barWidth =
+    (drawableWidth - outerPadding - innerPadding) / xLabels.length;
+
   // use COS and pythagorean theorem to determine
   // height that a diagonal label would be cut off at
-  const firstBarMidpoint = spacePerBar / 2;
+  const firstBarMidpoint = (outerPadding + barWidth) / 2;
   const distanceToFirstTick = yAxisLabelWidth + firstBarMidpoint;
   const {angledLabelMaxLength, maxDiagonalLabelHeight} = getMaxDiagonalDetails(
     longestXLabelDetails.length,
