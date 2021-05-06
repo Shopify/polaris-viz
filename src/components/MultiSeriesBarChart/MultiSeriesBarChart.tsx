@@ -70,16 +70,22 @@ export function MultiSeriesBarChart({
     };
   }, [containerRef, updateDimensions]);
 
-  const margin =
-    barOptions != null && barOptions.margin != null
-      ? BarMargin[barOptions.margin]
+  const innerMargin =
+    barOptions != null && barOptions.innerMargin != null
+      ? BarMargin[barOptions.innerMargin]
       : BarMargin.Medium;
+
+  const outerMargin =
+    barOptions != null && barOptions.outerMargin != null
+      ? BarMargin[barOptions.outerMargin]
+      : BarMargin.None;
 
   const barOptionsWithDefaults = {
     hasRoundedCorners: false,
     isStacked: false,
     ...barOptions,
-    margin,
+    innerMargin,
+    outerMargin,
   };
 
   const gridOptionsWithDefaults = {
