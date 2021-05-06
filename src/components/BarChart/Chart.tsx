@@ -23,6 +23,7 @@ import {YAxis} from '../YAxis';
 import {BarChartXAxis} from '../BarChartXAxis';
 import {TooltipContainer} from '../TooltipContainer';
 import {LinearGradient} from '../LinearGradient';
+import {HorizontalGridLines} from '../HorizontalGridLines';
 
 import {AnnotationLine} from './components';
 import {
@@ -295,17 +296,30 @@ export function Chart({
           />
         </g>
 
+        {gridOptions.showHorizontalLines ? (
+          <HorizontalGridLines
+            ticks={ticks}
+            color={gridOptions.color}
+            transform={{
+              x: gridOptions.horizontalOverflow ? 0 : axisMargin,
+              y: MARGIN.Top,
+            }}
+            width={
+              gridOptions.horizontalOverflow
+                ? chartDimensions.width
+                : drawableWidth
+            }
+          />
+        ) : null}
+
         <g
           transform={`translate(${axisMargin},${MARGIN.Top})`}
           aria-hidden="true"
         >
           <YAxis
             ticks={ticks}
-            drawableWidth={drawableWidth}
             fontSize={fontSize}
             labelColor={yAxisOptions.labelColor}
-            showGridLines={gridOptions.showHorizontalLines}
-            gridColor={gridOptions.color}
           />
         </g>
 

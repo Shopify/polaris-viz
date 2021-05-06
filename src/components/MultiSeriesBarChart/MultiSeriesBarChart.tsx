@@ -91,6 +91,7 @@ export function MultiSeriesBarChart({
   const gridOptionsWithDefaults = {
     showHorizontalLines: true,
     color: colorSky,
+    horizontalOverflow: false,
     ...gridOptions,
   };
 

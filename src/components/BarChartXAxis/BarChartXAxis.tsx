@@ -125,12 +125,6 @@ export function BarChartXAxis({
 
   return (
     <React.Fragment>
-      <path
-        d={`M ${xScaleMin} ${TICK_SIZE} v ${-TICK_SIZE} H ${xScaleMax} v ${TICK_SIZE}`}
-        fill="none"
-        stroke={gridColor}
-      />
-
       {labels.map(({value, xOffset}, index) => {
         if (
           (needsDiagonalLabels && index % visibleLabelRatio !== 0) ||

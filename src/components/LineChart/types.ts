@@ -54,6 +54,7 @@ export interface GridOptions {
   showVerticalLines: boolean;
   showHorizontalLines: boolean;
   color: string;
+  horizontalOverflow: boolean;
 }
 
 export interface CrossHairOptions {

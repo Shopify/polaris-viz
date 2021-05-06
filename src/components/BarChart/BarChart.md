@@ -102,6 +102,7 @@ interface BarChartProps {
   gridOptions?: {
     showHorizontalLines?: boolean;
     color?: string;
+    horizontalOverflow?: boolean;
   };
   xAxisOptions?: {
     labelFormatter?(value: string, index?: number, data?: string[]): string;
@@ -244,6 +245,14 @@ An object including the following optional proprties that define the grid.
 | `boolean` | `true`  |
 
 Whether to show lines extending from the yAxis labels through the chart.
+
+##### horizontalOverflow
+
+| type      | default |
+| --------- | ------- |
+| `boolean` | `false` |
+
+Whether the lines should extend through the width of the entire chart.
 
 ##### color
 

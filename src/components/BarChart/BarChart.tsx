@@ -97,6 +97,7 @@ export function BarChart({
   const gridOptionsWithDefaults = {
     showHorizontalLines: true,
     color: colorSky,
+    horizontalOverflow: false,
     ...gridOptions,
   };
 

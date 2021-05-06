@@ -100,6 +100,7 @@ export function LineChart({
     showVerticalLines: true,
     showHorizontalLines: true,
     color: colorSky,
+    horizontalOverflow: false,
     ...gridOptions,
   };
 

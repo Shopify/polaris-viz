@@ -120,3 +120,9 @@ export interface GradientStop {
   offset: number;
   color: string;
 }
+
+export interface YAxisTick {
+  value: number;
+  formattedValue: string;
+  yOffset: number;
+}

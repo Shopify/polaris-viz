@@ -142,6 +142,7 @@ interface LineChartProps {
   gridOptions?: {
     showVerticalLines?: boolean;
     showHorizontalLines?: boolean;
+    horizontalOverflow?: boolean;
     color?: string;
   }
   crossHairOptions?: {
@@ -393,6 +394,14 @@ Whether to show lines extending from the xAxis labels through the chart.
 | `boolean` | `true`  |
 
 Whether to show lines extending from the yAxis labels through the chart.
+
+##### horizontalOverflow
+
+| type      | default |
+| --------- | ------- |
+| `boolean` | `false` |
+
+Whether the lines should extend through the width of the entire chart.
 
 ##### color
 

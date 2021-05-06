@@ -51,6 +51,7 @@ export interface BarOptions {
 export interface GridOptions {
   showHorizontalLines: boolean;
   color: string;
+  horizontalOverflow: boolean;
 }
 
 export interface XAxisOptions {
