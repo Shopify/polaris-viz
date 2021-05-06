@@ -16,6 +16,7 @@ function PieChartVisualization() {
 ```
 
 ## Props
+
 ```typescript
 interface Props {
   data: DataProps[];
