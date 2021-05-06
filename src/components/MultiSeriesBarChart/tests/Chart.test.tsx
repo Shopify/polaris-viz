@@ -64,7 +64,8 @@ describe('Chart />', () => {
     chartDimensions: new DOMRect(),
     renderTooltipContent,
     barOptions: {
-      margin: 0,
+      innerMargin: 0,
+      outerMargin: 0,
       hasRoundedCorners: false,
       isStacked: false,
     },

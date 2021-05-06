@@ -2,6 +2,7 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {Color} from 'types';
 import {YAxis, TooltipContainer, BarChartXAxis, Bar} from 'components';
+import {vizColors} from 'utilities';
 
 import {AnnotationLine} from '../components';
 import {Chart} from '../Chart';
@@ -36,7 +37,8 @@ describe('Chart />', () => {
     chartDimensions: new DOMRect(),
     barOptions: {
       color: 'colorPurple' as Color,
-      margin: 0,
+      innerMargin: 0,
+      outerMargin: 0,
       hasRoundedCorners: false,
     },
     xAxisOptions: {
@@ -56,7 +58,7 @@ describe('Chart />', () => {
         dataIndex: 1,
         xOffset: 0.5,
         width: 5,
-        color: '#ccc',
+        color: 'colorGrayLight' as Color,
         ariaLabel: 'Median: 1.5',
         tooltipData: {
           label: 'Median',
@@ -212,13 +214,15 @@ describe('Chart />', () => {
       };
       const chart = mount(<Chart {...updatedProps} />);
 
-      expect(chart.find('rect', {fill: 'rgb(55, 66, 80)'})).not.toBeNull();
+      expect(
+        chart.find('rect', {fill: vizColors.colorGrayDark}),
+      ).not.toBeNull();
     });
 
     it('does not render when the barOptions.color does not exist', () => {
       const chart = mount(<Chart {...mockProps} />);
 
-      expect(chart.find('rect', {fill: 'rgb(55, 66, 80)'})).toBeNull();
+      expect(chart.find('rect', {fill: vizColors.colorGrayDark})).toBeNull();
     });
   });
 });

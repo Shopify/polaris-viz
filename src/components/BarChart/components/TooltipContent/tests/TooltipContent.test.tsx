@@ -1,5 +1,6 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
+import {Color} from 'types';
 
 import {TooltipContent} from '../TooltipContent';
 
@@ -20,7 +21,7 @@ describe('<TooltipContent/>', () => {
     const annotation = {
       dataIndex: 1,
       width: 5,
-      color: '#000',
+      color: 'colorGrayLight' as Color,
       tooltipData: {
         label: 'Median',
         value: '1.5 hours',

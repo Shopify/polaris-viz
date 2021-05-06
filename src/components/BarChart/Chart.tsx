@@ -28,7 +28,7 @@ import {AnnotationLine} from './components';
 import {
   BarChartData,
   RenderTooltipContentData,
-  BarOptions,
+  BarOptions as BarChartBarOptions,
   GridOptions,
   XAxisOptions,
   YAxisOptions,
@@ -44,6 +44,11 @@ import {
 } from './constants';
 import styles from './Chart.scss';
 
+type BarOptions = Omit<BarChartBarOptions, 'innerMargin' | 'outerMargin'> & {
+  innerMargin: number;
+  outerMargin: number;
+};
+
 interface Props {
   data: BarChartData[];
   annotationsLookupTable: AnnotationLookupTable;
@@ -51,7 +56,7 @@ interface Props {
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
   emptyStateText?: string;
   isAnimated?: boolean;
-  barOptions: Omit<BarOptions, 'margin'> & {margin: number};
+  barOptions: BarOptions;
   gridOptions: GridOptions;
   xAxisOptions: XAxisOptions;
   yAxisOptions: YAxisOptions;
@@ -110,7 +115,8 @@ export function Chart({
         fontSize,
         xLabels: data.map(({label}) => xAxisOptions.labelFormatter(label)),
         chartDimensions,
-        padding: barOptions.margin,
+        innerMargin: barOptions.innerMargin,
+        outerMargin: barOptions.outerMargin,
         minimalLabelIndexes,
       }),
     [
@@ -118,7 +124,8 @@ export function Chart({
       fontSize,
       data,
       chartDimensions,
-      barOptions.margin,
+      barOptions.innerMargin,
+      barOptions.outerMargin,
       minimalLabelIndexes,
       xAxisOptions,
     ],
@@ -152,7 +159,8 @@ export function Chart({
   const {xScale, xAxisLabels} = useXScale({
     drawableWidth,
     data,
-    barMargin: barOptions.margin,
+    innerMargin: barOptions.innerMargin,
+    outerMargin: barOptions.outerMargin,
     formatXAxisLabel: xAxisOptions.labelFormatter,
   });
 

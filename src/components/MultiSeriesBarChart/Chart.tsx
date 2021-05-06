@@ -9,7 +9,7 @@ import {getStackedValues, formatAriaLabel} from './utilities';
 import {
   Series,
   RenderTooltipContentData,
-  BarOptions,
+  BarOptions as MultiSeriesBarOptions,
   GridOptions,
   XAxisOptions,
   YAxisOptions,
@@ -25,11 +25,16 @@ import {
 } from './constants';
 import styles from './Chart.scss';
 
+type BarOptions = Omit<MultiSeriesBarOptions, 'innerMargin' | 'outerMargin'> & {
+  innerMargin: number;
+  outerMargin: number;
+};
+
 interface Props {
   series: Required<Series>[];
   chartDimensions: DOMRect;
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
-  barOptions: Omit<BarOptions, 'margin'> & {margin: number};
+  barOptions: BarOptions;
   gridOptions: GridOptions;
   xAxisOptions: XAxisOptions;
   yAxisOptions: YAxisOptions;
@@ -97,14 +102,16 @@ export function Chart({
         xLabels: formattedXAxisLabels,
         fontSize,
         chartDimensions,
-        padding: barOptions.margin,
+        innerMargin: barOptions.innerMargin,
+        outerMargin: barOptions.outerMargin,
       }),
     [
       yAxisLabelWidth,
       formattedXAxisLabels,
       fontSize,
       chartDimensions,
-      barOptions.margin,
+      barOptions.innerMargin,
+      barOptions.outerMargin,
     ],
   );
 
@@ -117,7 +124,8 @@ export function Chart({
   const {xScale, xAxisLabels} = useXScale({
     drawableWidth,
     data: sortedData,
-    barMargin: barOptions.margin,
+    innerMargin: barOptions.innerMargin,
+    outerMargin: barOptions.outerMargin,
     labels: formattedXAxisLabels,
   });
 

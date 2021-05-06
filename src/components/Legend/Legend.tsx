@@ -33,7 +33,7 @@ export function Legend({series}: Props) {
               <LinePreview color={color} lineStyle={lineStyle} />
             ) : null}
 
-            <SquareColorPreview color={color} />
+            {lineStyle == null ? <SquareColorPreview color={color} /> : null}
 
             <p className={styles.SeriesName}>{name}</p>
           </div>
