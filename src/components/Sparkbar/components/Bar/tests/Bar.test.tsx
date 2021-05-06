@@ -9,7 +9,8 @@ jest.mock('d3-scale', () => ({
 }));
 
 const width = 100;
-const radius = 75;
+const controlPointY = width * 0.2;
+const curveHeight = controlPointY * 3;
 
 describe('<Bar/>', () => {
   it('renders a path', () => {
@@ -28,12 +29,33 @@ describe('<Bar/>', () => {
 
     expect(bar).toContainReactComponent('path', {
       // eslint-disable-next-line id-length
-      d: `M 0 0 C 0 -${radius} ${width} -${radius} ${width} 0 L 100 100 L 0 100 Z`,
+      d: `M 0 ${curveHeight} C 0 -${controlPointY} ${width} -${controlPointY} ${width} ${curveHeight} L 100 100 L 0 100 Z`,
       style: {transform: 'translate(0px, -100px) rotate(0deg)'},
     });
   });
 
-  it('gives the bar a min height if needed', () => {
+  it('d attibute is presewnt if the height is at least the curve height', () => {
+    const bar = mount(
+      <svg>
+        <Bar
+          height={curveHeight}
+          x={0}
+          rawValue={1}
+          width={width}
+          yScale={scaleBand() as any}
+        />
+        ,
+      </svg>,
+    );
+
+    expect(bar).toContainReactComponent('path', {
+      // eslint-disable-next-line id-length
+      d: `M 0 ${curveHeight} C 0 -${controlPointY} ${width} -${controlPointY} ${width} ${curveHeight} L 100 60 L 0 60 Z`,
+      style: {transform: `translate(0px, -60px) rotate(0deg)`},
+    });
+  });
+
+  it('d attribute is empty if the height is lower than the curve height', () => {
     const bar = mount(
       <svg>
         <Bar
@@ -49,7 +71,7 @@ describe('<Bar/>', () => {
 
     expect(bar).toContainReactComponent('path', {
       // eslint-disable-next-line id-length
-      d: `M 0 0 C 0 -${radius} ${width} -${radius} ${width} 0 L 100 1 L 0 1 Z`,
+      d: '',
       style: {transform: `translate(0px, -1px) rotate(0deg)`},
     });
   });

@@ -15,6 +15,8 @@ export function Bar({x, rawValue, yScale, width, height}: Props) {
   const isNegative = rawValue < 0;
   const rotation = isNegative ? 'rotate(180deg)' : 'rotate(0deg)';
   const xPosition = isNegative ? x + width : x;
+  const controlPointY = width * 0.2;
+  const curveHeight = controlPointY * 3;
 
   const heightIsNumber = typeof height === 'number';
 
@@ -45,24 +47,27 @@ export function Bar({x, rawValue, yScale, width, height}: Props) {
     };
   }, [yPosition, yPositionIsNumber, xPosition, rotation]);
 
-  const radius = width * 0.75;
-
   const path = useMemo(() => {
     if (height == null) return;
 
     const calculatePath = (heightValue: number) => {
-      if (heightValue === 0) {
+      if (heightValue < curveHeight) {
         return '';
       }
 
-      return `M 0 0 C 0 -${radius} ${width} -${radius} ${width} 0 L ${width} ${heightValue} L 0 ${heightValue} Z`;
+      const curveStatingPoint = `0 ${curveHeight}`;
+      const curveStartControlPoint = `0 -${controlPointY}`;
+      const curveEndControlPoint = `${width} -${controlPointY}`;
+      const curveEndingPoint = `${width} ${curveHeight}`;
+
+      return `M ${curveStatingPoint} C ${curveStartControlPoint} ${curveEndControlPoint} ${curveEndingPoint} L ${width} ${heightValue} L 0 ${heightValue} Z`;
     };
 
     if (heightIsNumber) {
       return calculatePath(height);
     }
     return height.interpolate(calculatePath);
-  }, [height, heightIsNumber, radius, width]);
+  }, [controlPointY, curveHeight, height, heightIsNumber, width]);
 
   return <animated.path d={path} style={style} />;
 }
