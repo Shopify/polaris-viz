@@ -91,7 +91,11 @@ OverflowStyle.args = {
     color: barGradient,
     hasRoundedCorners: true,
   },
-  xAxisOptions: {labelFormatter: formatXAxisLabel, showTicks: false},
+  xAxisOptions: {
+    labelFormatter: formatXAxisLabel,
+    showTicks: false,
+    useMinimalLabels: true,
+  },
   yAxisOptions: {labelFormatter: formatYAxisLabel, backgroundColor: 'white'},
   gridOptions: {
     horizontalOverflow: true,
