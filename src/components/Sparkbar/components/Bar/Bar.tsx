@@ -15,8 +15,6 @@ export function Bar({x, rawValue, yScale, width, height}: Props) {
   const isNegative = rawValue < 0;
   const rotation = isNegative ? 'rotate(180deg)' : 'rotate(0deg)';
   const xPosition = isNegative ? x + width : x;
-  const controlPointY = width * 0.2;
-  const curveHeight = controlPointY * 3;
 
   const heightIsNumber = typeof height === 'number';
 
@@ -51,23 +49,35 @@ export function Bar({x, rawValue, yScale, width, height}: Props) {
     if (height == null) return;
 
     const calculatePath = (heightValue: number) => {
-      if (heightValue < curveHeight) {
+      if (heightValue === 0) {
         return '';
       }
 
-      const curveStatingPoint = `0 ${curveHeight}`;
-      const curveStartControlPoint = `0 -${controlPointY}`;
-      const curveEndControlPoint = `${width} -${controlPointY}`;
-      const curveEndingPoint = `${width} ${curveHeight}`;
+      const arcRadius = width / 2;
+      const isArcHeightHigher = heightValue < arcRadius;
 
-      return `M ${curveStatingPoint} C ${curveStartControlPoint} ${curveEndControlPoint} ${curveEndingPoint} L ${width} ${heightValue} L 0 ${heightValue} Z`;
+      const arcWidth = isArcHeightHigher
+        ? (heightValue / arcRadius) * width
+        : width;
+
+      const move = `M ${(width - arcWidth) / 2} ${arcRadius}`;
+
+      const arcX = (width - arcWidth) / 2 + arcWidth;
+      const arc = `A ${arcRadius} ${arcRadius} 0 0 1 ${arcX} ${arcRadius}`;
+
+      const line =
+        heightValue > arcRadius
+          ? `L ${width} ${heightValue} L 0 ${heightValue}`
+          : '';
+
+      return `${move} ${arc} M ${width} ${arcRadius} ${line} L 0 ${arcRadius} Z`;
     };
 
     if (heightIsNumber) {
       return calculatePath(height);
     }
     return height.interpolate(calculatePath);
-  }, [controlPointY, curveHeight, height, heightIsNumber, width]);
+  }, [height, heightIsNumber, width]);
 
   return <animated.path d={path} style={style} />;
 }
