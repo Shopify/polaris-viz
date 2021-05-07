@@ -37,13 +37,13 @@ function Axis({
               color: labelColor,
               textAlign,
               fontSize,
+              lineHeight: `${LINE_HEIGHT}px`,
             }}
           >
             <span
               style={{
                 background: backgroundColor,
                 padding: PADDING_SIZE,
-                lineHeight: `${LINE_HEIGHT}px`,
               }}
             >
               {formattedValue}
