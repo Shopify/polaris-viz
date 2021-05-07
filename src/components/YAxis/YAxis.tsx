@@ -39,7 +39,13 @@ function Axis({
               fontSize,
             }}
           >
-            <span style={{background: backgroundColor, padding: PADDING_SIZE}}>
+            <span
+              style={{
+                background: backgroundColor,
+                padding: PADDING_SIZE,
+                lineHeight: `${LINE_HEIGHT}px`,
+              }}
+            >
               {formattedValue}
             </span>
           </foreignObject>

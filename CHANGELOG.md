@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+
+## [0.11.2] — 2021-05-07
+
+### Fixed
+
+- yAxis line height is no longer inherited
+- xAxis bar chart ticks are not shown when minimal labels are selected, or when they are disabled
+
 ## [0.11.1] — 2021-05-07
 
 ### Added
