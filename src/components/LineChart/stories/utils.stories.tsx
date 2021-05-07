@@ -76,7 +76,6 @@ export function formatYAxisLabel(value: number) {
     style: 'currency',
     currency: 'CAD',
     currencyDisplay: 'symbol',
-    maximumSignificantDigits: 1,
   }).format(value);
 }
 

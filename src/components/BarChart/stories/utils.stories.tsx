@@ -37,7 +37,6 @@ export function formatYAxisLabel(value: number) {
   return new Intl.NumberFormat('en-CA', {
     style: 'currency',
     currency: 'CAD',
-    maximumSignificantDigits: 2,
   }).format(value);
 }
 
