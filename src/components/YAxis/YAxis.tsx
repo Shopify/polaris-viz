@@ -1,36 +1,51 @@
 import React from 'react';
-import {spacingBase, spacingExtraTight} from '@shopify/polaris-tokens';
 
+import {DEFAULT_GREY_LABEL, LINE_HEIGHT, FONT_SIZE} from '../../constants';
 import {YAxisTick} from '../../types';
-import {FONT_SIZE, DEFAULT_GREY_LABEL} from '../../constants';
 
 interface Props {
   ticks: YAxisTick[];
   fontSize?: number;
   labelColor?: string;
+  textAlign: 'left' | 'right';
+  width: number;
+  backgroundColor?: string;
+  outerMargin?: number;
 }
 
-function Axis({ticks, fontSize, labelColor = DEFAULT_GREY_LABEL}: Props) {
+const PADDING_SIZE = 1;
+
+function Axis({
+  ticks,
+  fontSize = FONT_SIZE,
+  width,
+  textAlign,
+  outerMargin = 0,
+  labelColor = DEFAULT_GREY_LABEL,
+  backgroundColor = 'transparent',
+}: Props) {
   return (
-    <g>
+    <React.Fragment>
       {ticks.map(({value, formattedValue, yOffset}) => {
         return (
-          <g key={value} transform={`translate(0,${yOffset})`}>
-            <text
-              aria-hidden
-              style={{
-                fontSize: `${fontSize ? fontSize : FONT_SIZE}px`,
-                textAnchor: 'end',
-                transform: `translateX(-${spacingBase}) translateY(${spacingExtraTight})`,
-                fill: labelColor,
-              }}
-            >
+          <foreignObject
+            key={value}
+            transform={`translate(${outerMargin},${yOffset - LINE_HEIGHT / 2})`}
+            width={width + PADDING_SIZE * 2}
+            height={LINE_HEIGHT}
+            style={{
+              color: labelColor,
+              textAlign,
+              fontSize,
+            }}
+          >
+            <span style={{background: backgroundColor, padding: PADDING_SIZE}}>
               {formattedValue}
-            </text>
-          </g>
+            </span>
+          </foreignObject>
         );
       })}
-    </g>
+    </React.Fragment>
   );
 }
 

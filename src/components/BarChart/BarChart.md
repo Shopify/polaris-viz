@@ -103,6 +103,7 @@ interface BarChartProps {
     showHorizontalLines?: boolean;
     color?: string;
     horizontalOverflow?: boolean;
+    horizontalMargin?: number;
   };
   xAxisOptions?: {
     labelFormatter?(value: string, index?: number, data?: string[]): string;
@@ -112,6 +113,7 @@ interface BarChartProps {
   };
   yAxisOptions?: {
     labelFormatter?(value: number): string;
+    backgroundColor?: string;
   };
   annotations?: {
     dataIndex: number;
@@ -254,6 +256,14 @@ Whether to show lines extending from the yAxis labels through the chart.
 
 Whether the lines should extend through the width of the entire chart.
 
+##### horizontalMargin
+
+| type     | default |
+| -------- | ------- |
+| `number` | `0`     |
+
+Margin to display on the left and right of the chart.
+
 ##### color
 
 | type     | default                |
@@ -313,6 +323,14 @@ This accepts a function that is called when the Y value (`rawValue`) is formatte
 | `string` | `'rgb(223, 227, 232)'` |
 
 The color used for axis labels.
+
+##### backgroundColor
+
+| type     | default       |
+| -------- | ------------- |
+| `string` | `transparant` |
+
+The color used behind axis labels.
 
 #### annotations
 

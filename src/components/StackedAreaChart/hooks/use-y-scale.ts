@@ -3,7 +3,7 @@ import {scaleLinear} from 'd3-scale';
 import {Series} from 'd3-shape';
 
 import {getTextWidth} from '../../../utilities';
-import {MIN_Y_LABEL_SPACE, Spacing} from '../constants';
+import {MIN_Y_LABEL_SPACE} from '../constants';
 import {DEFAULT_MAX_Y} from '../../../constants';
 import {NumberLabelFormatter} from '../../../types';
 
@@ -69,7 +69,7 @@ export function useYScale({
       ),
     );
 
-    const axisMargin = maxTickWidth + Spacing.Base;
+    const axisMargin = maxTickWidth;
 
     return {yScale, ticks, axisMargin};
   }, [stackedValues, drawableHeight, formatYAxisLabel, fontSize]);

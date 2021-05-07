@@ -4,7 +4,7 @@
 
 ### Added
 
-- `horizontalOverflow` to `gridOptions` for `<MultiSeriesBarChart/>`, `<BarChart />` and `<LineChart/>`
+- `horizontalOverflow` and `horizontalMargin` to `gridOptions` for `<MultiSeriesBarChart/>`, `<BarChart />` and `<LineChart/>`, as well as `backgroundColor` to the `yAxisOptions`
 
 ## [0.11.0] — 2021-05-06
 

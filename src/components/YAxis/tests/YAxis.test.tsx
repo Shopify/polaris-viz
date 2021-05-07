@@ -13,13 +13,11 @@ describe('<YAxis />', () => {
   it('displays a formatted value with each tick', () => {
     const yAxis = mount(
       <svg>
-        <YAxis ticks={testTicks} />
+        <YAxis ticks={testTicks} width={100} textAlign="right" />
       </svg>,
     );
 
-    // jsdom does not properly render SVG elements,
-    // so we have to do these assertions manually
-    const text = yAxis.findAll('text')!;
+    const text = yAxis.findAll('span');
     const values = text.map((node) => node.prop('children'));
     expect(values).toStrictEqual(['0', '1,000', '2,000']);
   });

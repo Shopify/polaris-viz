@@ -158,7 +158,7 @@ export function BarChartXAxis({
 
         return (
           <g key={index} transform={groupTransform}>
-            {minimalLabelIndexes == null || showTicks ? (
+            {minimalLabelIndexes != null || showTicks ? (
               <line y2={TICK_SIZE} stroke={gridColor} />
             ) : null}
             <foreignObject

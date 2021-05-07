@@ -45,3 +45,21 @@ Default.args = {
   yAxisOptions: {labelFormatter: formatYAxisLabel},
   renderTooltipContent,
 };
+
+export const OverflowStyle = Template.bind({});
+OverflowStyle.args = {
+  series,
+  xAxisOptions: {
+    xAxisLabels,
+    labelFormatter: formatXAxisLabel,
+    showTicks: false,
+  },
+  yAxisOptions: {labelFormatter: formatYAxisLabel, backgroundColor: 'white'},
+  gridOptions: {
+    horizontalOverflow: true,
+    horizontalMargin: 20,
+    showVerticalLines: false,
+  },
+  lineOptions: {hasSpline: true},
+  renderTooltipContent,
+};

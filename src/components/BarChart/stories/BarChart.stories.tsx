@@ -74,7 +74,31 @@ Default.args = {
   xAxisOptions: {labelFormatter: formatXAxisLabel},
   yAxisOptions: {labelFormatter: formatYAxisLabel},
   renderTooltipContent,
-  gridOptions: {horizontalOverflow: true},
+  gridOptions: {horizontalOverflow: false},
+};
+
+export const OverflowStyle = Template.bind({});
+OverflowStyle.args = {
+  data: [
+    {rawValue: 1324.19, label: '2020-01-01T12:00:00Z'},
+    {rawValue: 613.29, label: '2020-01-02T12:00:00Z'},
+    {rawValue: 422.79, label: '2020-01-03T12:00:00Z'},
+    {rawValue: 25.6, label: '2020-01-04T12:00:00Z'},
+    {rawValue: 277.69, label: '2020-01-05T12:00:00Z'},
+    {rawValue: 421.19, label: '2020-01-06T12:00:00Z'},
+  ],
+  barOptions: {
+    color: barGradient,
+    hasRoundedCorners: true,
+  },
+  xAxisOptions: {labelFormatter: formatXAxisLabel, showTicks: false},
+  yAxisOptions: {labelFormatter: formatYAxisLabel, backgroundColor: 'white'},
+  gridOptions: {
+    horizontalOverflow: true,
+    horizontalMargin: 20,
+    showVerticalLines: false,
+  },
+  renderTooltipContent,
 };
 
 export const Annotations = Template.bind({});

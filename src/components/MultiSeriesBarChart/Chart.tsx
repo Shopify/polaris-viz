@@ -90,6 +90,12 @@ export function Chart({
   );
 
   const axisMargin = SPACING + yAxisLabelWidth;
+  const chartStartPosition = axisMargin + gridOptions.horizontalMargin;
+  const drawableWidth =
+    chartDimensions.width -
+    MARGIN.Right -
+    axisMargin -
+    gridOptions.horizontalMargin * 2;
 
   const formattedXAxisLabels = useMemo(
     () => xAxisOptions.labels.map(xAxisOptions.labelFormatter),
@@ -115,8 +121,6 @@ export function Chart({
       barOptions.outerMargin,
     ],
   );
-
-  const drawableWidth = chartDimensions.width - MARGIN.Right - axisMargin;
 
   const sortedData = xAxisOptions.labels.map((_, index) => {
     return series.map((type) => type.data[index].rawValue);
@@ -191,13 +195,14 @@ export function Chart({
         : Math.max(...sortedData[index]);
       setActiveBarGroup(index);
 
-      const xOffsetAmount = xPosition + axisMargin + xScaleBandwidth / 2;
+      const xOffsetAmount =
+        xPosition + chartStartPosition + xScaleBandwidth / 2;
       setTooltipPosition({
         x: xOffsetAmount,
         y: yScale(highestValue),
       });
     },
-    [axisMargin, barOptions.isStacked, sortedData, xScale, yScale],
+    [chartStartPosition, barOptions.isStacked, sortedData, xScale, yScale],
   );
 
   return (
@@ -219,7 +224,7 @@ export function Chart({
         aria-label={emptyState ? emptyStateText : undefined}
       >
         <g
-          transform={`translate(${axisMargin},${chartDimensions.height -
+          transform={`translate(${chartStartPosition},${chartDimensions.height -
             MARGIN.Bottom -
             maxXLabelHeight})`}
           aria-hidden="true"
@@ -240,7 +245,7 @@ export function Chart({
             ticks={ticks}
             color={gridOptions.color}
             transform={{
-              x: gridOptions.horizontalOverflow ? 0 : axisMargin,
+              x: gridOptions.horizontalOverflow ? 0 : chartStartPosition,
               y: MARGIN.Top,
             }}
             width={
@@ -251,18 +256,19 @@ export function Chart({
           />
         ) : null}
 
-        <g
-          transform={`translate(${axisMargin},${MARGIN.Top})`}
-          aria-hidden="true"
-        >
+        <g transform={`translate(0,${MARGIN.Top})`} aria-hidden="true">
           <YAxis
             ticks={ticks}
             fontSize={fontSize}
             labelColor={yAxisOptions.labelColor}
+            textAlign={gridOptions.horizontalOverflow ? 'right' : 'left'}
+            width={yAxisLabelWidth}
+            backgroundColor={yAxisOptions.backgroundColor}
+            outerMargin={gridOptions.horizontalMargin}
           />
         </g>
 
-        <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
+        <g transform={`translate(${chartStartPosition},${MARGIN.Top})`}>
           {stackedValues != null
             ? stackedValues.map((stackData, stackIndex) => {
                 return (
@@ -330,7 +336,7 @@ export function Chart({
     }
 
     const {svgX, svgY} = point;
-    const currentPoint = svgX - axisMargin;
+    const currentPoint = svgX - chartStartPosition;
     const currentIndex = Math.floor(currentPoint / xScale.step());
 
     if (
@@ -348,7 +354,9 @@ export function Chart({
       ? sortedData[currentIndex].reduce(sumPositiveData, 0)
       : Math.max(...sortedData[currentIndex]);
     const tooltipXPositon =
-      xPosition == null ? 0 : xPosition + axisMargin + xScale.bandwidth() / 2;
+      xPosition == null
+        ? 0
+        : xPosition + chartStartPosition + xScale.bandwidth() / 2;
 
     setActiveBarGroup(currentIndex);
     setTooltipPosition({
