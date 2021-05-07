@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## [0.11.1] — 2021-05-07
 
 ### Added
 
@@ -9,6 +9,10 @@
 ### Fixed
 
 - Bar chart xAxis label overlap when useMinimalLabels is set
+
+### Changed
+
+- Increased margin between x axis and labels from 8px to 24px
 
 ## [0.11.0] — 2021-05-06
 
@@ -19,7 +23,6 @@
 ### Changed
 
 - renamed `barOptions.margin` to `innerMargin` for `<BarChart/>` and `<MultiSeriesBarChart/>`
-- Increased margin between x axis and labels from 8px to 24px
 
 ### Fixed
 
