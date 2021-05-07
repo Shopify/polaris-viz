@@ -79,7 +79,6 @@ export function LineChartDemo() {
       style: 'currency',
       currency: 'CAD',
       currencyDisplay: 'symbol',
-      maximumSignificantDigits: 1,
     }).format(value);
   }
 
