@@ -98,7 +98,7 @@ describe('<Chart />', () => {
     const chart = mount(<Chart {...mockProps} />);
     expect(chart).toContainReactComponent(LinearXAxis, {
       labels: ['Day 1', 'Day 2'],
-      drawableHeight: 230,
+      drawableHeight: 218,
       xAxisDetails: {
         maxXLabelHeight: 0,
         maxDiagonalLabelLength: 0,
@@ -126,8 +126,8 @@ describe('<Chart />', () => {
     const chart = mount(<Chart {...mockProps} />);
     expect(chart).toContainReactComponent(YAxis, {
       ticks: [
-        {value: 0, formattedValue: '0', yOffset: 230},
-        {value: 1000, formattedValue: '1000', yOffset: 115},
+        {value: 0, formattedValue: '0', yOffset: 218},
+        {value: 1000, formattedValue: '1000', yOffset: 109},
         {value: 2000, formattedValue: '2000', yOffset: 0},
       ],
     });
@@ -137,7 +137,7 @@ describe('<Chart />', () => {
     const chart = mount(<Chart {...mockProps} />);
     expect(chart).toContainReactComponent(StackedAreas, {
       width: 480,
-      height: 230,
+      height: 218,
       transform: 'translate(16,8)',
       colors: ['colorPurple', 'colorTeal'],
       opacity: 1,

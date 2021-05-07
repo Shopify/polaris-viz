@@ -3,6 +3,7 @@ import {useTransition} from 'react-spring';
 
 import {usePrefersReducedMotion} from '../../hooks';
 import {
+  BarChartMargin as Margin,
   LINE_HEIGHT,
   MIN_BAR_HEIGHT,
   BARS_TRANSITION_CONFIG,
@@ -36,13 +37,7 @@ import {
   AnnotationLookupTable,
 } from './types';
 import {useYScale, useXScale} from './hooks';
-import {
-  MARGIN,
-  SMALL_FONT_SIZE,
-  FONT_SIZE,
-  SMALL_SCREEN,
-  SPACING,
-} from './constants';
+import {SMALL_FONT_SIZE, FONT_SIZE, SMALL_SCREEN, SPACING} from './constants';
 import styles from './Chart.scss';
 
 type BarOptions = Omit<BarChartBarOptions, 'innerMargin' | 'outerMargin'> & {
@@ -89,7 +84,7 @@ export function Chart({
 
   const {ticks: initialTicks} = useYScale({
     drawableHeight:
-      chartDimensions.height - MARGIN.Top - MARGIN.Bottom - LINE_HEIGHT,
+      chartDimensions.height - Margin.Top - Margin.Bottom - LINE_HEIGHT,
     data,
     formatYAxisLabel: yAxisOptions.labelFormatter,
   });
@@ -134,8 +129,8 @@ export function Chart({
 
   const drawableHeight =
     chartDimensions.height -
-    MARGIN.Top -
-    MARGIN.Bottom -
+    Margin.Top -
+    Margin.Bottom -
     xAxisDetails.maxXLabelHeight;
 
   const {yScale, ticks} = useYScale({
@@ -158,7 +153,7 @@ export function Chart({
   const chartStartPosition = axisMargin + gridOptions.horizontalMargin;
   const drawableWidth =
     chartDimensions.width -
-    MARGIN.Right -
+    Margin.Right -
     axisMargin -
     gridOptions.horizontalMargin * 2;
 
@@ -247,7 +242,7 @@ export function Chart({
           />
 
           <mask id={clipId}>
-            <g transform={`translate(${chartStartPosition},${MARGIN.Top})`}>
+            <g transform={`translate(${chartStartPosition},${Margin.Top})`}>
               {transitions.map(({item, props: {height}}, index) => {
                 const xPosition = xScale(index.toString());
                 const ariaLabel = `${xAxisOptions.labelFormatter(
@@ -285,7 +280,7 @@ export function Chart({
         </defs>
         <g
           transform={`translate(${chartStartPosition},${chartDimensions.height -
-            MARGIN.Bottom -
+            Margin.Bottom -
             xAxisDetails.maxXLabelHeight})`}
           aria-hidden="true"
         >
@@ -307,7 +302,7 @@ export function Chart({
             color={gridOptions.color}
             transform={{
               x: gridOptions.horizontalOverflow ? 0 : chartStartPosition,
-              y: MARGIN.Top,
+              y: Margin.Top,
             }}
             width={
               gridOptions.horizontalOverflow
@@ -317,7 +312,7 @@ export function Chart({
           />
         ) : null}
 
-        <g transform={`translate(0,${MARGIN.Top})`} aria-hidden="true">
+        <g transform={`translate(0,${Margin.Top})`} aria-hidden="true">
           <YAxis
             ticks={ticks}
             fontSize={fontSize}
@@ -348,7 +343,7 @@ export function Chart({
             return barColor != null ? (
               <rect
                 key={index}
-                transform={`translate(${translateXValue},${MARGIN.Top})`}
+                transform={`translate(${translateXValue},${Margin.Top})`}
                 x="0"
                 y="0"
                 width={barWidth}
@@ -360,7 +355,7 @@ export function Chart({
           ;
         </g>
 
-        <g transform={`translate(${chartStartPosition},${MARGIN.Top})`}>
+        <g transform={`translate(${chartStartPosition},${Margin.Top})`}>
           {transitions.map((_, index) => {
             const xPosition = xScale(index.toString());
             const xPositionValue = xPosition == null ? 0 : xPosition;
@@ -388,7 +383,7 @@ export function Chart({
           currentX={tooltipPosition.x}
           currentY={tooltipPosition.y}
           chartDimensions={chartDimensions}
-          margin={MARGIN}
+          margin={Margin}
           position="center"
         >
           {tooltipMarkup}
@@ -430,8 +425,9 @@ export function Chart({
     if (
       currentIndex < 0 ||
       currentIndex > data.length - 1 ||
-      svgY <= MARGIN.Top ||
-      svgY > drawableHeight + MARGIN.Bottom + xAxisDetails.maxXLabelHeight
+      svgY <= Margin.Top ||
+      svgY >
+        drawableHeight + Number(Margin.Bottom) + xAxisDetails.maxXLabelHeight
     ) {
       setActiveBar(null);
       return;

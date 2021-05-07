@@ -3,7 +3,7 @@ import {ScaleBand} from 'd3-scale';
 
 import {
   TICK_SIZE,
-  SPACING_TIGHT,
+  BELOW_X_AXIS_MARGIN,
   SPACING_EXTRA_TIGHT,
   DIAGONAL_ANGLE,
   LINE_HEIGHT,
@@ -99,8 +99,8 @@ export function BarChartXAxis({
   const textTransform = needsDiagonalLabels
     ? `translate(${-diagonalLabelOffset -
         SPACING_BASE_TIGHT / 2} ${maxXLabelHeight +
-        SPACING_EXTRA_TIGHT / 2}) rotate(${DIAGONAL_ANGLE})`
-    : `translate(-${maxWidth / 2} ${SPACING_TIGHT})`;
+        BELOW_X_AXIS_MARGIN / 2}) rotate(${DIAGONAL_ANGLE})`
+    : `translate(-${maxWidth / 2} ${BELOW_X_AXIS_MARGIN})`;
 
   const textHeight = needsDiagonalLabels
     ? LINE_HEIGHT
@@ -142,7 +142,7 @@ export function BarChartXAxis({
         const groupTransform =
           needsDiagonalLabels || minimalLabelIndexes == null
             ? `translate(${xOffset}, 0)`
-            : `translate(${minimumLabelsPosition}, ${SPACING_TIGHT})`;
+            : `translate(${minimumLabelsPosition}, ${BELOW_X_AXIS_MARGIN})`;
 
         const textAlign = getTextAlign({
           isFirstLabel,

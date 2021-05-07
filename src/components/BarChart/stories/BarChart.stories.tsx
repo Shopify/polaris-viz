@@ -130,7 +130,7 @@ Annotations.args = {
       dataIndex: 1,
       xOffset: 0.5,
       width: 5,
-      color: 'colorWhiteTransparent',
+      color: 'colorGrayLight',
       ariaLabel: 'Median: 1.5',
       tooltipData: {
         label: 'Median',

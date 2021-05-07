@@ -19,6 +19,7 @@
 ### Changed
 
 - renamed `barOptions.margin` to `innerMargin` for `<BarChart/>` and `<MultiSeriesBarChart/>`
+- Increased margin between x axis and labels from 8px to 24px
 
 ### Fixed
 

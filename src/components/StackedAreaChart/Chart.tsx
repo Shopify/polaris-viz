@@ -13,6 +13,7 @@ import {
   SPACING_TIGHT,
   FONT_SIZE,
   CROSSHAIR_WIDTH,
+  LineChartMargin as Margin,
 } from '../../constants';
 import {TooltipContainer} from '../TooltipContainer';
 import {eventPoint, uniqueId, getColorValue} from '../../utilities';
@@ -28,7 +29,7 @@ import {
   ActiveTooltip,
 } from '../../types';
 
-import {Margin, Spacing} from './constants';
+import {Spacing} from './constants';
 import {useYScale} from './hooks';
 import {StackedAreas} from './components';
 import styles from './Chart.scss';
@@ -118,7 +119,7 @@ export function Chart({
   const marginBottom =
     xAxisLabels == null
       ? SPACING_TIGHT
-      : xAxisDetails.maxXLabelHeight + Margin.Bottom;
+      : xAxisDetails.maxXLabelHeight + Number(Margin.Bottom);
 
   const drawableHeight = dimensions.height - Margin.Top - marginBottom;
 

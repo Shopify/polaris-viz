@@ -4,12 +4,13 @@ export const SMALL_WIDTH = 300;
 export const MIN_LABEL_SPACE = 100;
 export const TICK_SIZE = 6;
 export const FONT_SIZE = 12;
-export const MARGIN = {Top: 5, Right: 20, Bottom: 12, Left: 0};
 export const MIN_Y_LABEL_SPACE = 80;
 export const SPACING_EXTRA_TIGHT = 4;
 export const SPACING = 16;
 export const SPACING_BASE_TIGHT = 12;
 export const SPACING_LOOSE = 20;
+export const BELOW_X_AXIS_MARGIN = 24;
+
 export const SMALL_SCREEN = 500;
 export const SMALL_FONT_SIZE = 10;
 export const DIAGONAL_ANGLE = -40;
@@ -30,10 +31,17 @@ export const EMPTY_STATE_CHART_MAX = 10;
 export const DEFAULT_GREY_LABEL = 'rgb(99, 115, 129)';
 export const DEFAULT_CROSSHAIR_COLOR = 'rgb(223, 227, 232)';
 
-export enum Margin {
+export enum BarChartMargin {
+  Top = 5,
+  Left = 0,
+  Bottom = BELOW_X_AXIS_MARGIN,
+  Right = 20,
+}
+
+export enum LineChartMargin {
   Top = SPACING_TIGHT,
   Left = 0,
-  Bottom = SPACING_BASE_TIGHT,
+  Bottom = BELOW_X_AXIS_MARGIN,
   Right = SPACING_EXTRA_TIGHT,
 }
 
