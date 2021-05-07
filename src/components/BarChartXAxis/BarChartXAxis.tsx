@@ -84,8 +84,6 @@ export function BarChartXAxis({
   showTicks: boolean;
   minimalLabelIndexes?: number[] | null;
 }) {
-  const [xScaleMin, xScaleMax] = xScale.range();
-
   const {
     maxXLabelHeight,
     maxDiagonalLabelLength,
@@ -116,12 +114,9 @@ export function BarChartXAxis({
     ? Math.max(diagonalLabelSpacePerBar, 1)
     : DEFAULT_LABEL_RATIO;
 
-  const width =
-    minimalLabelIndexes == null
-      ? maxWidth
-      : (xScaleMax - xScaleMin) / minimalLabelIndexes.length;
-
-  const angleAwareWidth = needsDiagonalLabels ? maxDiagonalLabelLength : width;
+  const angleAwareWidth = needsDiagonalLabels
+    ? maxDiagonalLabelLength
+    : maxWidth;
 
   return (
     <React.Fragment>
@@ -140,7 +135,7 @@ export function BarChartXAxis({
           isLastLabel,
           isFirstLabel,
           xOffset,
-          width,
+          width: maxWidth,
           bandWidth: xScale.bandwidth(),
         });
 

@@ -6,6 +6,10 @@
 
 - `horizontalOverflow` and `horizontalMargin` to `gridOptions` for `<MultiSeriesBarChart/>`, `<BarChart />` and `<LineChart/>`, as well as `backgroundColor` to the `yAxisOptions`
 
+### Fixed
+
+- Bar chart xAxis label overlap when useMinimalLabels is set
+
 ## [0.11.0] — 2021-05-06
 
 ### Added
