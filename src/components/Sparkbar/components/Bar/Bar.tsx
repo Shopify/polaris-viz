@@ -60,17 +60,19 @@ export function Bar({x, rawValue, yScale, width, height}: Props) {
         ? (heightValue / arcRadius) * width
         : width;
 
-      const move = `M ${(width - arcWidth) / 2} ${arcRadius}`;
+      const barStartY = isArcHeightHigher ? arcWidth / 2 : arcRadius;
+
+      const move = `M ${(width - arcWidth) / 2} ${barStartY}`;
 
       const arcX = (width - arcWidth) / 2 + arcWidth;
-      const arc = `A ${arcRadius} ${arcRadius} 0 0 1 ${arcX} ${arcRadius}`;
+      const arc = `A ${arcRadius} ${arcRadius} 0 0 1 ${arcX} ${barStartY}`;
 
       const line =
         heightValue > arcRadius
           ? `L ${width} ${heightValue} L 0 ${heightValue}`
           : '';
 
-      return `${move} ${arc} M ${width} ${arcRadius} ${line} L 0 ${arcRadius} Z`;
+      return `${move} ${arc} M ${width} ${barStartY} ${line} L 0 ${barStartY} Z`;
     };
 
     if (heightIsNumber) {
