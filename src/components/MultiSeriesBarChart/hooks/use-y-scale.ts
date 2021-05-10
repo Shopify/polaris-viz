@@ -1,6 +1,7 @@
 import {useMemo} from 'react';
 import {scaleLinear} from 'd3-scale';
 
+import {shouldRoundScaleUp} from '../../../utilities';
 import {Series, StackSeries} from '../types';
 import {MIN_Y_LABEL_SPACE} from '../constants';
 import {getMinMax} from '../utilities';
@@ -27,8 +28,11 @@ export function useYScale({
 
     const yScale = scaleLinear()
       .range([drawableHeight, 0])
-      .domain([min, max])
-      .nice(maxTicks);
+      .domain([min, max]);
+
+    if (shouldRoundScaleUp({yScale, maxValue: max, maxTicks})) {
+      yScale.nice(maxTicks);
+    }
 
     const ticks = yScale.ticks(maxTicks).map((value) => ({
       value,

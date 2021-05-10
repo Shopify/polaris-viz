@@ -12,6 +12,7 @@ jest.mock('d3-scale', () => ({
     scale.range = (range: any) => (range ? scale : range);
     scale.domain = (domain: any) => (domain ? scale : domain);
     scale.nice = () => scale;
+    scale.copy = () => scale;
     return scale;
   }),
 }));
@@ -76,6 +77,7 @@ describe('useYScale', () => {
       scale.range = (range: any) => (range ? scale : range);
       scale.domain = (domain: any) => (domain ? scale : domain);
       scale.nice = () => scale;
+      scale.copy = () => scale;
       return scale;
     });
 
@@ -92,6 +94,7 @@ describe('useYScale', () => {
       domainSpy = jest.fn((domain: any) => (domain ? scale : domain));
       scale.domain = domainSpy;
       scale.nice = () => scale;
+      scale.copy = () => scale;
       return scale;
     });
 
@@ -108,6 +111,7 @@ describe('useYScale', () => {
       domainSpy = jest.fn((domain: any) => (domain ? scale : domain));
       scale.domain = domainSpy;
       scale.nice = () => scale;
+      scale.copy = () => scale;
       return scale;
     });
 
@@ -136,6 +140,7 @@ describe('useYScale', () => {
       domainSpy = jest.fn((domain: any) => (domain ? scale : domain));
       scale.domain = domainSpy;
       scale.nice = () => scale;
+      scale.copy = () => scale;
       return scale;
     });
 
@@ -164,6 +169,7 @@ describe('useYScale', () => {
       domainSpy = jest.fn((domain: any) => (domain ? scale : domain));
       scale.domain = domainSpy;
       scale.nice = () => scale;
+      scale.copy = () => scale;
       return scale;
     });
 
@@ -214,6 +220,7 @@ describe('useYScale', () => {
       scale.range = rangeSpy;
       scale.domain = (domain: any) => (domain ? scale : domain);
       scale.nice = () => scale;
+      scale.copy = () => scale;
       return scale;
     });
 
@@ -229,6 +236,7 @@ describe('useYScale', () => {
       scale.range = (range: any) => (range ? scale : range);
       scale.domain = (domain: any) => (domain ? scale : domain);
       scale.nice = () => scale;
+      scale.copy = () => scale;
       return scale;
     });
 

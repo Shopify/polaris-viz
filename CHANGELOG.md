@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## Changed
+
+- `<MultiSeriesBarChart/>`, `<BarChart />` and `<LineChart/>` yScale will allow data to overflow the highest tick if the highest value is less than half way to the next tick
+
 ## [0.11.2] — 2021-05-07
 
 ### Fixed
