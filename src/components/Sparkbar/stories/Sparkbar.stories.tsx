@@ -34,7 +34,7 @@ const Template: Story<SparkbarProps> = (args: SparkbarProps) => {
 export const Default = Template.bind({});
 const comparisonValue = 500;
 Default.args = {
-  data: [100, 200, 300, 400, 400, 500, 600, 400, 700, 900, 800],
+  data: [25, 200, -300, 400, 400, 500, 600, 400, 700, 900, 800],
   comparison: [
     {x: 0, y: comparisonValue},
     {x: 1, y: comparisonValue},

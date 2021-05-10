@@ -19,35 +19,33 @@ describe('<Bar/>', () => {
           width={100}
           yScale={scaleBand() as any}
         />
-        ,
       </svg>,
     );
 
     expect(bar).toContainReactComponent('path', {
       // eslint-disable-next-line id-length
-      d: 'M 0 0 C 0 -8 100 -8 100 0 L 100 100 L 0 100 Z',
+      d: 'M 0 50 A 50 50 0 0 1 100 50 M 100 50 L 100 100 L 0 100 L 0 50',
       style: {transform: 'translate(0px, -100px) rotate(0deg)'},
     });
   });
 
-  it('gives the bar a min height if needed', () => {
+  it('d attibute is present if the height is shorter than the arc height', () => {
     const bar = mount(
       <svg>
         <Bar
-          height={1}
+          height={49}
           x={0}
           rawValue={1}
           width={100}
           yScale={scaleBand() as any}
         />
-        ,
       </svg>,
     );
 
     expect(bar).toContainReactComponent('path', {
       // eslint-disable-next-line id-length
-      d: 'M 0 0 C 0 -3 100 -3 100 0 L 100 1 L 0 1 Z',
-      style: {transform: `translate(0px, -1px) rotate(0deg)`},
+      d: `M 1 49 A 50 50 0 0 1 99 49 M 100 49 L 0 49`,
+      style: {transform: `translate(0px, -49px) rotate(0deg)`},
     });
   });
 
@@ -61,7 +59,6 @@ describe('<Bar/>', () => {
           width={100}
           yScale={scaleBand() as any}
         />
-        ,
       </svg>,
     );
 

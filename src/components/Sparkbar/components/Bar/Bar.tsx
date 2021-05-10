@@ -2,9 +2,6 @@ import React, {useMemo} from 'react';
 import {ScaleLinear} from 'd3-scale';
 import {animated, OpaqueInterpolation} from 'react-spring';
 
-const BORDER_RADIUS = 8;
-const MIN_RADIUS = 3;
-
 interface Props {
   x: number;
   yScale: ScaleLinear<number, number>;
@@ -48,8 +45,6 @@ export function Bar({x, rawValue, yScale, width, height}: Props) {
     };
   }, [yPosition, yPositionIsNumber, xPosition, rotation]);
 
-  const radius = BORDER_RADIUS;
-
   const path = useMemo(() => {
     if (height == null) return;
 
@@ -57,16 +52,39 @@ export function Bar({x, rawValue, yScale, width, height}: Props) {
       if (heightValue === 0) {
         return '';
       }
-      const modifiedRadius =
-        heightValue < radius ? Math.max(heightValue, MIN_RADIUS) : radius;
-      return `M 0 0 C 0 -${modifiedRadius} ${width} -${modifiedRadius} ${width} 0 L ${width} ${heightValue} L 0 ${heightValue} Z`;
+
+      const arcRadius = width / 2;
+      const arcHigherThanHeight = heightValue < arcRadius;
+      const arcWidth = arcHigherThanHeight
+        ? (heightValue / arcRadius) * width
+        : width;
+      const barStartY = arcHigherThanHeight ? arcWidth / 2 : arcRadius;
+      const arcX = (width - arcWidth) / 2 + arcWidth;
+
+      const moveToStart = `M ${(width - arcWidth) / 2} ${barStartY} `;
+
+      const arc = `A ${arcRadius} ${arcRadius} 0 0 1 ${arcX} ${barStartY} `;
+
+      const moveToEndOfArc = `M ${width} ${barStartY} `;
+
+      const lineRightTopToBottom = !arcHigherThanHeight
+        ? `L ${width} ${heightValue} `
+        : '';
+
+      const lineBottomRightToLeft = !arcHigherThanHeight
+        ? `L 0 ${heightValue} `
+        : '';
+
+      const lineLeftFromBottomToStart = `L 0 ${barStartY}`;
+
+      return `${moveToStart}${arc}${moveToEndOfArc}${lineRightTopToBottom}${lineBottomRightToLeft}${lineLeftFromBottomToStart}`;
     };
 
     if (heightIsNumber) {
       return calculatePath(height);
     }
     return height.interpolate(calculatePath);
-  }, [height, heightIsNumber, radius, width]);
+  }, [height, heightIsNumber, width]);
 
   return <animated.path d={path} style={style} />;
 }

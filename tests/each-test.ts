@@ -15,6 +15,14 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
+Object.defineProperty(window, 'ResizeObserver', {
+  value: jest.fn(() => ({
+    observe: jest.fn(),
+    unobserve: jest.fn(),
+    disconnect: jest.fn(),
+  })),
+});
+
 describe('setup', () => {
   afterEach(() => {
     destroyAll();

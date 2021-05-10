@@ -1,7 +1,9 @@
-import React, {useState, useLayoutEffect, useRef} from 'react';
+import React, {useState, useLayoutEffect} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 import {scaleLinear} from 'd3-scale';
 import {Color} from 'types';
+
+import {useResizeObserver} from '../../hooks';
 
 import styles from './Sparkline.scss';
 import {Series} from './components';
@@ -37,22 +39,28 @@ export function Sparkline({
   isAnimated = false,
   hasSpline = false,
 }: SparklineProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const {
+    ref: containerRef,
+    setRef: setContainerRef,
+    entry,
+  } = useResizeObserver();
   const [svgDimensions, setSvgDimensions] = useState({width: 0, height: 0});
 
   const [updateMeasurements] = useDebouncedCallback(() => {
-    if (containerRef.current == null) {
+    if (containerRef == null) {
       throw new Error('No SVG rendered');
     }
 
     setSvgDimensions({
-      height: containerRef.current.clientHeight,
-      width: containerRef.current.clientWidth,
+      height: containerRef.clientHeight,
+      width: containerRef.clientWidth,
     });
   }, 10);
 
   useLayoutEffect(() => {
-    if (containerRef.current == null) {
+    if (entry == null) return;
+
+    if (containerRef == null) {
       throw new Error('No SVG rendered');
     }
 
@@ -69,7 +77,7 @@ export function Sparkline({
         window.removeEventListener('resize', () => updateMeasurements());
       }
     };
-  }, [updateMeasurements]);
+  }, [entry, containerRef, updateMeasurements]);
 
   const {width, height} = svgDimensions;
 
@@ -90,7 +98,7 @@ export function Sparkline({
     .domain([Math.min(...yValues), Math.max(...yValues)]);
 
   return (
-    <div style={{width: '100%', height: '100%'}} ref={containerRef}>
+    <div style={{width: '100%', height: '100%'}} ref={setContainerRef}>
       {accessibilityLabel ? (
         <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
       ) : null}
