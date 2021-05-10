@@ -1,7 +1,15 @@
 import React, {useState, useMemo, useRef, useCallback} from 'react';
 import throttle from 'lodash.throttle';
-import {line, curveMonotoneX} from 'd3-shape';
+import {line} from 'd3-shape';
 
+import {
+  curveStepRounded,
+  eventPoint,
+  uniqueId,
+  clamp,
+  getColorValue,
+  isGradientType,
+} from '../../utilities';
 import {useLinearXAxisDetails, useLinearXScale} from '../../hooks';
 import {
   SMALL_SCREEN,
@@ -15,13 +23,6 @@ import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
 import {LinearXAxis} from '../LinearXAxis';
 import {YAxis} from '../YAxis';
 import {Point} from '../Point';
-import {
-  eventPoint,
-  uniqueId,
-  clamp,
-  getColorValue,
-  isGradientType,
-} from '../../utilities';
 import {Crosshair} from '../Crosshair';
 import {LinearGradient} from '../LinearGradient';
 import {ActiveTooltip, Dimensions} from '../../types';
@@ -201,7 +202,7 @@ export function Chart({
       .y(({rawValue}) => yScale(rawValue));
 
     if (lineOptions.hasSpline) {
-      generator.curve(curveMonotoneX);
+      generator.curve(curveStepRounded);
     }
     return generator;
   }, [lineOptions.hasSpline, xScale, yScale]);
