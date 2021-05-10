@@ -95,7 +95,7 @@
     "isomorphic-fetch": "^2.2.1",
     "js-yaml": "^3.13.1",
     "npm-run-all": "^4.1.5",
-    "postcss": "^7.0.18",
+    "postcss": "^8.2.10",
     "postcss-modules-extract-imports": "^2.0.0",
     "postcss-modules-local-by-default": "^2.0.6",
     "postcss-modules-parser": "^1.1.1",
