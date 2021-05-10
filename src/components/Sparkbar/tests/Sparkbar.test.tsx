@@ -14,16 +14,6 @@ const sampleComparison = [
 ];
 
 describe('<Sparkbar/>', () => {
-  beforeAll(() => {
-    Object.defineProperty(window, 'ResizeObserver', {
-      value: jest.fn(() => ({
-        observe: jest.fn(),
-        unobserve: jest.fn(),
-        disconnect: jest.fn(),
-      })),
-    });
-  });
-
   it('renders a <LinearGradient /> when barFillStyle is gradient', () => {
     const wrapper = mount(
       <Sparkbar barFillStyle="gradient" data={sampleData} />,

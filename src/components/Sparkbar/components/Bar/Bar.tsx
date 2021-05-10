@@ -54,25 +54,30 @@ export function Bar({x, rawValue, yScale, width, height}: Props) {
       }
 
       const arcRadius = width / 2;
-      const isArcHeightHigher = heightValue < arcRadius;
-
-      const arcWidth = isArcHeightHigher
+      const arcHigherThanHeight = heightValue < arcRadius;
+      const arcWidth = arcHigherThanHeight
         ? (heightValue / arcRadius) * width
         : width;
-
-      const barStartY = isArcHeightHigher ? arcWidth / 2 : arcRadius;
-
-      const move = `M ${(width - arcWidth) / 2} ${barStartY}`;
-
+      const barStartY = arcHigherThanHeight ? arcWidth / 2 : arcRadius;
       const arcX = (width - arcWidth) / 2 + arcWidth;
-      const arc = `A ${arcRadius} ${arcRadius} 0 0 1 ${arcX} ${barStartY}`;
 
-      const line =
-        heightValue > arcRadius
-          ? `L ${width} ${heightValue} L 0 ${heightValue}`
-          : '';
+      const moveToStart = `M ${(width - arcWidth) / 2} ${barStartY} `;
 
-      return `${move} ${arc} M ${width} ${barStartY} ${line} L 0 ${barStartY} Z`;
+      const arc = `A ${arcRadius} ${arcRadius} 0 0 1 ${arcX} ${barStartY} `;
+
+      const moveToEndOfArc = `M ${width} ${barStartY} `;
+
+      const lineRightTopToBottom = !arcHigherThanHeight
+        ? `L ${width} ${heightValue} `
+        : '';
+
+      const lineBottomRightToLeft = !arcHigherThanHeight
+        ? `L 0 ${heightValue} `
+        : '';
+
+      const lineLeftFromBottomToStart = `L 0 ${barStartY}`;
+
+      return `${moveToStart}${arc}${moveToEndOfArc}${lineRightTopToBottom}${lineBottomRightToLeft}${lineLeftFromBottomToStart}`;
     };
 
     if (heightIsNumber) {

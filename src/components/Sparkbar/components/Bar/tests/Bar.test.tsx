@@ -8,10 +8,6 @@ jest.mock('d3-scale', () => ({
   scaleBand: jest.fn(() => jest.fn((value) => value)),
 }));
 
-const width = 100;
-const controlPointY = width * 0.2;
-const curveHeight = controlPointY * 3;
-
 describe('<Bar/>', () => {
   it('renders a path', () => {
     const bar = mount(
@@ -20,59 +16,36 @@ describe('<Bar/>', () => {
           height={100}
           x={0}
           rawValue={1000}
-          width={width}
+          width={100}
           yScale={scaleBand() as any}
         />
-        ,
       </svg>,
     );
 
     expect(bar).toContainReactComponent('path', {
       // eslint-disable-next-line id-length
-      d: `M 0 ${curveHeight} C 0 -${controlPointY} ${width} -${controlPointY} ${width} ${curveHeight} L 100 100 L 0 100 Z`,
+      d: 'M 0 50 A 50 50 0 0 1 100 50 M 100 50 L 100 100 L 0 100 L 0 50',
       style: {transform: 'translate(0px, -100px) rotate(0deg)'},
     });
   });
 
-  it('d attibute is presewnt if the height is at least the curve height', () => {
+  it('d attibute is present if the height is shorter than the arc height', () => {
     const bar = mount(
       <svg>
         <Bar
-          height={curveHeight}
+          height={49}
           x={0}
           rawValue={1}
-          width={width}
+          width={100}
           yScale={scaleBand() as any}
         />
-        ,
       </svg>,
     );
 
     expect(bar).toContainReactComponent('path', {
       // eslint-disable-next-line id-length
-      d: `M 0 ${curveHeight} C 0 -${controlPointY} ${width} -${controlPointY} ${width} ${curveHeight} L 100 60 L 0 60 Z`,
-      style: {transform: `translate(0px, -60px) rotate(0deg)`},
-    });
-  });
-
-  it('d attribute is empty if the height is lower than the curve height', () => {
-    const bar = mount(
-      <svg>
-        <Bar
-          height={1}
-          x={0}
-          rawValue={1}
-          width={width}
-          yScale={scaleBand() as any}
-        />
-        ,
-      </svg>,
-    );
-
-    expect(bar).toContainReactComponent('path', {
-      // eslint-disable-next-line id-length
-      d: '',
-      style: {transform: `translate(0px, -1px) rotate(0deg)`},
+      d: `M 1 49 A 50 50 0 0 1 99 49 M 100 49 L 0 49`,
+      style: {transform: `translate(0px, -49px) rotate(0deg)`},
     });
   });
 
@@ -86,7 +59,6 @@ describe('<Bar/>', () => {
           width={100}
           yScale={scaleBand() as any}
         />
-        ,
       </svg>,
     );
 

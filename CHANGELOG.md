@@ -1,5 +1,10 @@
 # Changelog
 
+### Fixed
+
+- `<SparkLine/>` and `<Sparkbar/>` now rerender with the correct size when the container change its width or height
+- `<Sparkbar />` Bar radius is now proportional to the bar width
+
 ## [0.11.0] — 2021-05-06
 
 ### Added
@@ -13,8 +18,6 @@
 ### Fixed
 
 - Line chart legend no longer shows square preview
-- `<SparkLine/>` and `<Sparkbar/>` now rerender with the correct size when the container change its width or height
-- `<Sparkbar />` Bar radius is now proportional to the bar width
 
 ## [0.10.2] — 2021-05-05
 
