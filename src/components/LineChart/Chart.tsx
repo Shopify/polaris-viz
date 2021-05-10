@@ -24,7 +24,7 @@ import {
 } from '../../utilities';
 import {Crosshair} from '../Crosshair';
 import {LinearGradient} from '../LinearGradient';
-import {ActiveTooltip} from '../../types';
+import {ActiveTooltip, Dimensions} from '../../types';
 import {TooltipContainer} from '../TooltipContainer';
 import {HorizontalGridLines} from '../HorizontalGridLines';
 
@@ -45,7 +45,7 @@ import styles from './Chart.scss';
 
 interface Props {
   series: SeriesWithDefaults[];
-  dimensions: DOMRect;
+  dimensions: Dimensions;
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
   emptyStateText?: string;
   isAnimated: boolean;

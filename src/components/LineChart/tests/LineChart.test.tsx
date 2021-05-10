@@ -6,13 +6,6 @@ import {SkipLink} from '../../SkipLink';
 import {Chart} from '../Chart';
 import {Series} from '../types';
 
-(global as any).DOMRect = class DOMRect {
-  width = 500;
-  height = 250;
-  top = 100;
-  left = 100;
-};
-
 const primarySeries: Series = {
   name: 'Primary',
   color: 'primary',
@@ -32,6 +25,17 @@ jest.mock('../../../utilities', () => {
     getPointAtLength: () => ({x: 0, y: 0}),
   };
 });
+
+jest.mock('../../../hooks/useResizeObserver.ts', () => ({
+  useResizeObserver: () => {
+    return {
+      setRef: jest.fn(),
+      entry: {
+        contentRect: {width: 500, height: 250},
+      },
+    };
+  },
+}));
 
 describe('<LineChart />', () => {
   beforeAll(() => {

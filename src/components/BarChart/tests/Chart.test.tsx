@@ -14,13 +14,6 @@ import {AnnotationLine} from '../components';
 import {Chart} from '../Chart';
 import {MASK_SUBDUE_COLOR, MASK_HIGHLIGHT_COLOR} from '../../../constants';
 
-(global as any).DOMRect = class DOMRect {
-  width = 500;
-  height = 250;
-  top = 100;
-  left = 100;
-};
-
 const fakeSVGEvent = {
   currentTarget: {
     getScreenCTM: () => ({
@@ -40,7 +33,7 @@ describe('Chart />', () => {
       {rawValue: 10, label: 'data'},
       {rawValue: 20, label: 'data 2'},
     ],
-    chartDimensions: new DOMRect(),
+    chartDimensions: {width: 500, height: 250},
     barOptions: {
       color: 'colorPurple' as Color,
       innerMargin: 0,

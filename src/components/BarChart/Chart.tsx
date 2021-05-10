@@ -25,6 +25,7 @@ import {BarChartXAxis} from '../BarChartXAxis';
 import {TooltipContainer} from '../TooltipContainer';
 import {LinearGradient} from '../LinearGradient';
 import {HorizontalGridLines} from '../HorizontalGridLines';
+import {Dimensions} from '../../types';
 
 import {AnnotationLine} from './components';
 import {
@@ -48,7 +49,7 @@ type BarOptions = Omit<BarChartBarOptions, 'innerMargin' | 'outerMargin'> & {
 interface Props {
   data: BarChartData[];
   annotationsLookupTable: AnnotationLookupTable;
-  chartDimensions: DOMRect;
+  chartDimensions: Dimensions;
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
   emptyStateText?: string;
   isAnimated?: boolean;

@@ -27,6 +27,7 @@ import {
   StringLabelFormatter,
   NumberLabelFormatter,
   ActiveTooltip,
+  Dimensions,
 } from '../../types';
 
 import {Spacing} from './constants';
@@ -41,7 +42,7 @@ interface Props {
   formatXAxisLabel: StringLabelFormatter;
   formatYAxisLabel: NumberLabelFormatter;
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
-  dimensions: DOMRect;
+  dimensions: Dimensions;
   opacity: number;
   isAnimated: boolean;
 }

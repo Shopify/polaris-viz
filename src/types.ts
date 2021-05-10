@@ -126,3 +126,8 @@ export interface YAxisTick {
   formattedValue: string;
   yOffset: number;
 }
+
+export interface Dimensions {
+  width: number;
+  height: number;
+}

@@ -14,13 +14,6 @@ import {
 import {StackedAreas} from '../components';
 import {Chart} from '../Chart';
 
-(global as any).DOMRect = class DOMRect {
-  width = 500;
-  height = 250;
-  top = 100;
-  left = 100;
-};
-
 describe('<Chart />', () => {
   beforeAll(() => {
     Object.defineProperty(window, 'matchMedia', {
@@ -81,7 +74,7 @@ describe('<Chart />', () => {
       },
     ],
     xAxisLabels: ['Day 1', 'Day 2'],
-    dimensions: new DOMRect(),
+    dimensions: {width: 500, height: 250},
     opacity: 1,
     isAnimated: true,
     formatXAxisLabel: (val: string) => val,

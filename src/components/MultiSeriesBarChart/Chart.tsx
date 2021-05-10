@@ -6,6 +6,7 @@ import {eventPoint, getTextWidth, getBarXAxisDetails} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {BarChartXAxis} from '../BarChartXAxis';
 import {HorizontalGridLines} from '../HorizontalGridLines';
+import {Dimensions} from '../../types';
 
 import {getStackedValues, formatAriaLabel} from './utilities';
 import {
@@ -28,7 +29,7 @@ type BarOptions = Omit<MultiSeriesBarOptions, 'innerMargin' | 'outerMargin'> & {
 
 interface Props {
   series: Required<Series>[];
-  chartDimensions: DOMRect;
+  chartDimensions: Dimensions;
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
   barOptions: BarOptions;
   gridOptions: GridOptions;

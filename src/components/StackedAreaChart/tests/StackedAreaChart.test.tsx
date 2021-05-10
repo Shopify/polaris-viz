@@ -6,13 +6,6 @@ import {StackedAreaChart} from '../StackedAreaChart';
 import {Chart} from '../Chart';
 import {SkipLink} from '../../SkipLink';
 
-(global as any).DOMRect = class DOMRect {
-  width = 500;
-  height = 250;
-  top = 100;
-  left = 100;
-};
-
 const mockData = [
   {
     name: 'Asia',
@@ -44,15 +37,18 @@ const mockData = [
 
 const xAxisLabels = ['1', '2', '3', '4', '5', '6', '7'];
 
-describe('<AreaChart />', () => {
-  beforeAll(() => {
-    Object.defineProperty(window, 'matchMedia', {
-      value: jest.fn(() => {
-        return {matches: false};
-      }),
-    });
-  });
+jest.mock('../../../hooks/useResizeObserver.ts', () => ({
+  useResizeObserver: () => {
+    return {
+      setRef: jest.fn(),
+      entry: {
+        contentRect: {width: 500, height: 250},
+      },
+    };
+  },
+}));
 
+describe('<AreaChart />', () => {
   it('renders a <Chart />', () => {
     const areaChart = mount(
       <StackedAreaChart series={mockData} xAxisLabels={xAxisLabels} />,

@@ -11,13 +11,6 @@ import {
 import {Chart} from '../Chart';
 import {BarGroup, StackedBarGroup} from '../components';
 
-(global as any).DOMRect = class DOMRect {
-  width = 500;
-  height = 250;
-  top = 100;
-  left = 100;
-};
-
 const fakeSVGEvent = {
   currentTarget: {
     getScreenCTM: () => ({
@@ -66,7 +59,7 @@ describe('Chart />', () => {
         name: 'LABEL2',
       },
     ],
-    chartDimensions: new DOMRect(),
+    chartDimensions: {width: 500, height: 250},
     renderTooltipContent,
     barOptions: {
       innerMargin: 0,

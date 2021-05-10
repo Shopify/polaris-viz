@@ -24,6 +24,7 @@ import {
   DataSeries,
   SeriesColor,
   YAxisTick,
+  Dimensions,
 } from '../types';
 
 import {useLinearXScale} from './useLinearXScale';
@@ -38,7 +39,7 @@ function getDatumSpace(width: number, numberOfTicks: number) {
 export interface ChartDetails {
   series: DataSeries<Data | NullableData, SeriesColor>[];
   fontSize: number;
-  chartDimensions: DOMRect;
+  chartDimensions: Dimensions;
   formatXAxisLabel: StringLabelFormatter;
   initialTicks: YAxisTick[];
   xAxisLabels: string[];
