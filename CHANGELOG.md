@@ -1,12 +1,12 @@
 # Changelog
 
-## Unreleased
+## [0.12.0] — 2021-05-10
 
 ### Fixed
 
 - `<SparkLine/>` and `<Sparkbar/>` now rerender with the correct size when the container change its width or height
 - `<Sparkbar />` Bar radius is now proportional to the bar width
-- Added `@juggle/resize-observer` library
+- Added `@juggle/resize-observer` library as a peer and dev dependency
 
 ## [0.11.3] — 2021-05-10
 
