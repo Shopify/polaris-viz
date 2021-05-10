@@ -3,7 +3,7 @@ import {ScaleBand} from 'd3-scale';
 
 import {
   TICK_SIZE,
-  SPACING_TIGHT,
+  BELOW_X_AXIS_MARGIN,
   SPACING_EXTRA_TIGHT,
   DIAGONAL_ANGLE,
   LINE_HEIGHT,
@@ -84,8 +84,6 @@ export function BarChartXAxis({
   showTicks: boolean;
   minimalLabelIndexes?: number[] | null;
 }) {
-  const [xScaleMin, xScaleMax] = xScale.range();
-
   const {
     maxXLabelHeight,
     maxDiagonalLabelLength,
@@ -101,8 +99,8 @@ export function BarChartXAxis({
   const textTransform = needsDiagonalLabels
     ? `translate(${-diagonalLabelOffset -
         SPACING_BASE_TIGHT / 2} ${maxXLabelHeight +
-        SPACING_EXTRA_TIGHT / 2}) rotate(${DIAGONAL_ANGLE})`
-    : `translate(-${maxWidth / 2} ${SPACING_TIGHT})`;
+        BELOW_X_AXIS_MARGIN / 2}) rotate(${DIAGONAL_ANGLE})`
+    : `translate(-${maxWidth / 2} ${BELOW_X_AXIS_MARGIN})`;
 
   const textHeight = needsDiagonalLabels
     ? LINE_HEIGHT
@@ -116,21 +114,12 @@ export function BarChartXAxis({
     ? Math.max(diagonalLabelSpacePerBar, 1)
     : DEFAULT_LABEL_RATIO;
 
-  const width =
-    minimalLabelIndexes == null
-      ? maxWidth
-      : (xScaleMax - xScaleMin) / minimalLabelIndexes.length;
-
-  const angleAwareWidth = needsDiagonalLabels ? maxDiagonalLabelLength : width;
+  const angleAwareWidth = needsDiagonalLabels
+    ? maxDiagonalLabelLength
+    : maxWidth;
 
   return (
     <React.Fragment>
-      <path
-        d={`M ${xScaleMin} ${TICK_SIZE} v ${-TICK_SIZE} H ${xScaleMax} v ${TICK_SIZE}`}
-        fill="none"
-        stroke={gridColor}
-      />
-
       {labels.map(({value, xOffset}, index) => {
         if (
           (needsDiagonalLabels && index % visibleLabelRatio !== 0) ||
@@ -146,14 +135,14 @@ export function BarChartXAxis({
           isLastLabel,
           isFirstLabel,
           xOffset,
-          width,
+          width: maxWidth,
           bandWidth: xScale.bandwidth(),
         });
 
         const groupTransform =
           needsDiagonalLabels || minimalLabelIndexes == null
             ? `translate(${xOffset}, 0)`
-            : `translate(${minimumLabelsPosition}, ${SPACING_TIGHT})`;
+            : `translate(${minimumLabelsPosition}, ${BELOW_X_AXIS_MARGIN})`;
 
         const textAlign = getTextAlign({
           isFirstLabel,
@@ -164,7 +153,7 @@ export function BarChartXAxis({
 
         return (
           <g key={index} transform={groupTransform}>
-            {minimalLabelIndexes == null || showTicks ? (
+            {minimalLabelIndexes == null && showTicks ? (
               <line y2={TICK_SIZE} stroke={gridColor} />
             ) : null}
             <foreignObject

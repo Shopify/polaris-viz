@@ -1,56 +1,57 @@
 import React from 'react';
-import {
-  spacingBase,
-  spacingExtraTight,
-  colorSky,
-} from '@shopify/polaris-tokens';
 
-import {FONT_SIZE, DEFAULT_GREY_LABEL} from '../../constants';
+import {DEFAULT_GREY_LABEL, LINE_HEIGHT, FONT_SIZE} from '../../constants';
+import {YAxisTick} from '../../types';
 
 interface Props {
-  ticks: {
-    value: number;
-    formattedValue: string;
-    yOffset: number;
-  }[];
-  drawableWidth: number;
+  ticks: YAxisTick[];
   fontSize?: number;
-  showGridLines?: boolean;
-  gridColor?: string;
   labelColor?: string;
+  textAlign: 'left' | 'right';
+  width: number;
+  backgroundColor?: string;
+  outerMargin?: number;
 }
+
+const PADDING_SIZE = 1;
 
 function Axis({
   ticks,
-  drawableWidth,
-  fontSize,
-  gridColor = colorSky,
-  showGridLines = true,
+  fontSize = FONT_SIZE,
+  width,
+  textAlign,
+  outerMargin = 0,
   labelColor = DEFAULT_GREY_LABEL,
+  backgroundColor = 'transparent',
 }: Props) {
   return (
-    <g>
+    <React.Fragment>
       {ticks.map(({value, formattedValue, yOffset}) => {
         return (
-          <g key={value} transform={`translate(0,${yOffset})`}>
-            {showGridLines ? (
-              <line x2={drawableWidth} stroke={gridColor} />
-            ) : null}
-            <text
-              aria-hidden
+          <foreignObject
+            key={value}
+            transform={`translate(${outerMargin},${yOffset - LINE_HEIGHT / 2})`}
+            width={width + PADDING_SIZE * 2}
+            height={LINE_HEIGHT}
+            style={{
+              color: labelColor,
+              textAlign,
+              fontSize,
+              lineHeight: `${LINE_HEIGHT}px`,
+            }}
+          >
+            <span
               style={{
-                fontSize: `${fontSize ? fontSize : FONT_SIZE}px`,
-                textAnchor: 'end',
-                transform: `translateX(-${spacingBase}) translateY(${spacingExtraTight})`,
-                fill: labelColor,
+                background: backgroundColor,
+                padding: PADDING_SIZE,
               }}
             >
               {formattedValue}
-            </text>
-          </g>
+            </span>
+          </foreignObject>
         );
       })}
-    </g>
+    </React.Fragment>
   );
 }
 

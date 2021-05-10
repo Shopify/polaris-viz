@@ -5,6 +5,33 @@
 - `<SparkLine/>` and `<Sparkbar/>` now rerender with the correct size when the container change its width or height
 - `<Sparkbar />` Bar radius is now proportional to the bar width
 
+## [0.11.3] — 2021-05-10
+
+## Changed
+
+- `<MultiSeriesBarChart/>`, `<BarChart />` and `<LineChart/>` yScale will allow data to overflow the highest tick if the highest value is less than half way to the next tick
+
+## [0.11.2] — 2021-05-07
+
+### Fixed
+
+- yAxis line height is no longer inherited
+- xAxis bar chart ticks are not shown when minimal labels are selected, or when they are disabled
+
+## [0.11.1] — 2021-05-07
+
+### Added
+
+- `horizontalOverflow` and `horizontalMargin` to `gridOptions` for `<MultiSeriesBarChart/>`, `<BarChart />` and `<LineChart/>`, as well as `backgroundColor` to the `yAxisOptions`
+
+### Fixed
+
+- Bar chart xAxis label overlap when useMinimalLabels is set
+
+### Changed
+
+- Increased margin between x axis and labels from 8px to 24px
+
 ## [0.11.0] — 2021-05-06
 
 ### Added

@@ -48,12 +48,15 @@ export interface XAxisOptions {
 export interface YAxisOptions {
   labelFormatter: NumberLabelFormatter;
   labelColor: string;
+  backgroundColor: string;
 }
 
 export interface GridOptions {
   showVerticalLines: boolean;
   showHorizontalLines: boolean;
   color: string;
+  horizontalOverflow: boolean;
+  horizontalMargin: number;
 }
 
 export interface CrossHairOptions {

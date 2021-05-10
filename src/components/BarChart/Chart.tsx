@@ -3,6 +3,7 @@ import {useTransition} from 'react-spring';
 
 import {usePrefersReducedMotion} from '../../hooks';
 import {
+  BarChartMargin as Margin,
   LINE_HEIGHT,
   MIN_BAR_HEIGHT,
   BARS_TRANSITION_CONFIG,
@@ -23,6 +24,7 @@ import {YAxis} from '../YAxis';
 import {BarChartXAxis} from '../BarChartXAxis';
 import {TooltipContainer} from '../TooltipContainer';
 import {LinearGradient} from '../LinearGradient';
+import {HorizontalGridLines} from '../HorizontalGridLines';
 
 import {AnnotationLine} from './components';
 import {
@@ -35,13 +37,7 @@ import {
   AnnotationLookupTable,
 } from './types';
 import {useYScale, useXScale} from './hooks';
-import {
-  MARGIN,
-  SMALL_FONT_SIZE,
-  FONT_SIZE,
-  SMALL_SCREEN,
-  SPACING,
-} from './constants';
+import {SMALL_FONT_SIZE, FONT_SIZE, SMALL_SCREEN, SPACING} from './constants';
 import styles from './Chart.scss';
 
 type BarOptions = Omit<BarChartBarOptions, 'innerMargin' | 'outerMargin'> & {
@@ -88,7 +84,7 @@ export function Chart({
 
   const {ticks: initialTicks} = useYScale({
     drawableHeight:
-      chartDimensions.height - MARGIN.Top - MARGIN.Bottom - LINE_HEIGHT,
+      chartDimensions.height - Margin.Top - Margin.Bottom - LINE_HEIGHT,
     data,
     formatYAxisLabel: yAxisOptions.labelFormatter,
   });
@@ -133,8 +129,8 @@ export function Chart({
 
   const drawableHeight =
     chartDimensions.height -
-    MARGIN.Top -
-    MARGIN.Bottom -
+    Margin.Top -
+    Margin.Bottom -
     xAxisDetails.maxXLabelHeight;
 
   const {yScale, ticks} = useYScale({
@@ -154,7 +150,12 @@ export function Chart({
   );
 
   const axisMargin = SPACING + yAxisLabelWidth;
-  const drawableWidth = chartDimensions.width - MARGIN.Right - axisMargin;
+  const chartStartPosition = axisMargin + gridOptions.horizontalMargin;
+  const drawableWidth =
+    chartDimensions.width -
+    Margin.Right -
+    axisMargin -
+    gridOptions.horizontalMargin * 2;
 
   const {xScale, xAxisLabels} = useXScale({
     drawableWidth,
@@ -241,7 +242,7 @@ export function Chart({
           />
 
           <mask id={clipId}>
-            <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
+            <g transform={`translate(${chartStartPosition},${Margin.Top})`}>
               {transitions.map(({item, props: {height}}, index) => {
                 const xPosition = xScale(index.toString());
                 const ariaLabel = `${xAxisOptions.labelFormatter(
@@ -278,8 +279,8 @@ export function Chart({
           </mask>
         </defs>
         <g
-          transform={`translate(${axisMargin},${chartDimensions.height -
-            MARGIN.Bottom -
+          transform={`translate(${chartStartPosition},${chartDimensions.height -
+            Margin.Bottom -
             xAxisDetails.maxXLabelHeight})`}
           aria-hidden="true"
         >
@@ -295,17 +296,31 @@ export function Chart({
           />
         </g>
 
-        <g
-          transform={`translate(${axisMargin},${MARGIN.Top})`}
-          aria-hidden="true"
-        >
+        {gridOptions.showHorizontalLines ? (
+          <HorizontalGridLines
+            ticks={ticks}
+            color={gridOptions.color}
+            transform={{
+              x: gridOptions.horizontalOverflow ? 0 : chartStartPosition,
+              y: Margin.Top,
+            }}
+            width={
+              gridOptions.horizontalOverflow
+                ? chartDimensions.width
+                : drawableWidth
+            }
+          />
+        ) : null}
+
+        <g transform={`translate(0,${Margin.Top})`} aria-hidden="true">
           <YAxis
             ticks={ticks}
-            drawableWidth={drawableWidth}
             fontSize={fontSize}
             labelColor={yAxisOptions.labelColor}
-            showGridLines={gridOptions.showHorizontalLines}
-            gridColor={gridOptions.color}
+            textAlign={gridOptions.horizontalOverflow ? 'left' : 'right'}
+            width={yAxisLabelWidth}
+            backgroundColor={yAxisOptions.backgroundColor}
+            outerMargin={gridOptions.horizontalMargin}
           />
         </g>
 
@@ -320,7 +335,7 @@ export function Chart({
           {transitions.map(({item}, index) => {
             const xPosition = xScale(index.toString());
             const xPositionValue = xPosition == null ? 0 : xPosition;
-            const translateXValue = xPositionValue + axisMargin;
+            const translateXValue = xPositionValue + chartStartPosition;
             const barColor =
               item.barOptions != null && item.barOptions.color != null
                 ? item.barOptions.color
@@ -328,7 +343,7 @@ export function Chart({
             return barColor != null ? (
               <rect
                 key={index}
-                transform={`translate(${translateXValue},${MARGIN.Top})`}
+                transform={`translate(${translateXValue},${Margin.Top})`}
                 x="0"
                 y="0"
                 width={barWidth}
@@ -340,7 +355,7 @@ export function Chart({
           ;
         </g>
 
-        <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
+        <g transform={`translate(${chartStartPosition},${Margin.Top})`}>
           {transitions.map((_, index) => {
             const xPosition = xScale(index.toString());
             const xPositionValue = xPosition == null ? 0 : xPosition;
@@ -368,7 +383,7 @@ export function Chart({
           currentX={tooltipPosition.x}
           currentY={tooltipPosition.y}
           chartDimensions={chartDimensions}
-          margin={MARGIN}
+          margin={Margin}
           position="center"
         >
           {tooltipMarkup}
@@ -389,7 +404,7 @@ export function Chart({
     if (index == null) return;
     setActiveBar(index);
     setTooltipPosition({
-      x: cx + axisMargin + xScale.bandwidth() / 2,
+      x: cx + chartStartPosition + xScale.bandwidth() / 2,
       y: cy,
     });
   }
@@ -404,14 +419,15 @@ export function Chart({
     }
 
     const {svgX, svgY} = point;
-    const currentPoint = svgX - axisMargin;
+    const currentPoint = svgX - chartStartPosition;
     const currentIndex = Math.floor(currentPoint / xScale.step());
 
     if (
       currentIndex < 0 ||
       currentIndex > data.length - 1 ||
-      svgY <= MARGIN.Top ||
-      svgY > drawableHeight + MARGIN.Bottom + xAxisDetails.maxXLabelHeight
+      svgY <= Margin.Top ||
+      svgY >
+        drawableHeight + Number(Margin.Bottom) + xAxisDetails.maxXLabelHeight
     ) {
       setActiveBar(null);
       return;
@@ -420,7 +436,9 @@ export function Chart({
     const xPosition = xScale(currentIndex.toString());
     const value = data[currentIndex].rawValue;
     const tooltipXPositon =
-      xPosition == null ? 0 : xPosition + axisMargin + xScale.bandwidth() / 2;
+      xPosition == null
+        ? 0
+        : xPosition + chartStartPosition + xScale.bandwidth() / 2;
 
     setActiveBar(currentIndex);
     setTooltipPosition({

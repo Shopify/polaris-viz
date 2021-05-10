@@ -74,6 +74,35 @@ Default.args = {
   xAxisOptions: {labelFormatter: formatXAxisLabel},
   yAxisOptions: {labelFormatter: formatYAxisLabel},
   renderTooltipContent,
+  gridOptions: {horizontalOverflow: false},
+};
+
+export const OverflowStyle = Template.bind({});
+OverflowStyle.args = {
+  data: [
+    {rawValue: 1324.19, label: '2020-01-01T12:00:00Z'},
+    {rawValue: 613.29, label: '2020-01-02T12:00:00Z'},
+    {rawValue: 422.79, label: '2020-01-03T12:00:00Z'},
+    {rawValue: 25.6, label: '2020-01-04T12:00:00Z'},
+    {rawValue: 277.69, label: '2020-01-05T12:00:00Z'},
+    {rawValue: 421.19, label: '2020-01-06T12:00:00Z'},
+  ],
+  barOptions: {
+    color: barGradient,
+    hasRoundedCorners: true,
+  },
+  xAxisOptions: {
+    labelFormatter: formatXAxisLabel,
+    showTicks: false,
+    useMinimalLabels: true,
+  },
+  yAxisOptions: {labelFormatter: formatYAxisLabel, backgroundColor: 'white'},
+  gridOptions: {
+    horizontalOverflow: true,
+    horizontalMargin: 20,
+    showVerticalLines: false,
+  },
+  renderTooltipContent,
 };
 
 export const Annotations = Template.bind({});
@@ -105,7 +134,7 @@ Annotations.args = {
       dataIndex: 1,
       xOffset: 0.5,
       width: 5,
-      color: 'colorWhiteTransparent',
+      color: 'colorGrayLight',
       ariaLabel: 'Median: 1.5',
       tooltipData: {
         label: 'Median',
@@ -144,6 +173,34 @@ LastBarTreatment.args = {
     hasRoundedCorners: true,
   },
   xAxisOptions: {labelFormatter: formatXAxisLabel},
+  yAxisOptions: {labelFormatter: formatYAxisLabel},
+  renderTooltipContent,
+};
+
+export const MinimalLabels = Template.bind({});
+MinimalLabels.args = {
+  data: [
+    {rawValue: 1324.19, label: '1 day some really long long text'},
+    {rawValue: 1022.79, label: '2020-01-02T12:00:00Z'},
+    {rawValue: 713.29, label: '2020-01-03T12:00:00Z'},
+    {rawValue: 413.29, label: '2020-01-04T12:00:00Z'},
+    {
+      rawValue: 100.79,
+      label:
+        'Middle day also has very long text / Middle day also has very long text',
+    },
+    {rawValue: 350.6, label: '2020-01-06T12:00:00Z'},
+    {rawValue: 277.69, label: '2020-01-07T12:00:00Z'},
+    {
+      rawValue: 50.6,
+      label: 'Last day has especially longgggggggggggg textttttttttt',
+    },
+  ],
+  barOptions: {
+    color: barGradient,
+    hasRoundedCorners: true,
+  },
+  xAxisOptions: {useMinimalLabels: true},
   yAxisOptions: {labelFormatter: formatYAxisLabel},
   renderTooltipContent,
 };

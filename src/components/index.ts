@@ -1,6 +1,7 @@
 export {Point} from './Point';
 export {Bar} from './Bar';
 export {Crosshair} from './Crosshair';
+export {HorizontalGridLines} from './HorizontalGridLines';
 export {Sparkline, SparklineProps} from './Sparkline';
 export {Sparkbar, SparkbarProps} from './Sparkbar';
 export {

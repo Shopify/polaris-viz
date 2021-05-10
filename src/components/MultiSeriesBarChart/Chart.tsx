@@ -1,9 +1,11 @@
 import React, {useState, useMemo, useCallback} from 'react';
 
+import {BarChartMargin as Margin} from '../../constants';
 import {TooltipContainer} from '../TooltipContainer';
 import {eventPoint, getTextWidth, getBarXAxisDetails} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {BarChartXAxis} from '../BarChartXAxis';
+import {HorizontalGridLines} from '../HorizontalGridLines';
 
 import {getStackedValues, formatAriaLabel} from './utilities';
 import {
@@ -16,13 +18,7 @@ import {
 } from './types';
 import {BarGroup, StackedBarGroup} from './components';
 import {useYScale, useXScale} from './hooks';
-import {
-  MARGIN,
-  FONT_SIZE,
-  SMALL_WIDTH,
-  SMALL_FONT_SIZE,
-  SPACING,
-} from './constants';
+import {FONT_SIZE, SMALL_WIDTH, SMALL_FONT_SIZE, SPACING} from './constants';
 import styles from './Chart.scss';
 
 type BarOptions = Omit<MultiSeriesBarOptions, 'innerMargin' | 'outerMargin'> & {
@@ -69,7 +65,7 @@ export function Chart({
     : null;
 
   const {ticks: initialTicks} = useYScale({
-    drawableHeight: chartDimensions.height - MARGIN.Top - MARGIN.Bottom,
+    drawableHeight: chartDimensions.height - Margin.Top - Margin.Bottom,
     data: series,
     formatYAxisLabel: yAxisOptions.labelFormatter,
     stackedValues,
@@ -89,6 +85,12 @@ export function Chart({
   );
 
   const axisMargin = SPACING + yAxisLabelWidth;
+  const chartStartPosition = axisMargin + gridOptions.horizontalMargin;
+  const drawableWidth =
+    chartDimensions.width -
+    Margin.Right -
+    axisMargin -
+    gridOptions.horizontalMargin * 2;
 
   const formattedXAxisLabels = useMemo(
     () => xAxisOptions.labels.map(xAxisOptions.labelFormatter),
@@ -115,8 +117,6 @@ export function Chart({
     ],
   );
 
-  const drawableWidth = chartDimensions.width - MARGIN.Right - axisMargin;
-
   const sortedData = xAxisOptions.labels.map((_, index) => {
     return series.map((type) => type.data[index].rawValue);
   });
@@ -133,8 +133,8 @@ export function Chart({
 
   const drawableHeight =
     chartDimensions.height -
-    MARGIN.Top -
-    MARGIN.Bottom -
+    Margin.Top -
+    Margin.Bottom -
     xAxisDetails.maxXLabelHeight;
 
   const {yScale, ticks} = useYScale({
@@ -190,13 +190,14 @@ export function Chart({
         : Math.max(...sortedData[index]);
       setActiveBarGroup(index);
 
-      const xOffsetAmount = xPosition + axisMargin + xScaleBandwidth / 2;
+      const xOffsetAmount =
+        xPosition + chartStartPosition + xScaleBandwidth / 2;
       setTooltipPosition({
         x: xOffsetAmount,
         y: yScale(highestValue),
       });
     },
-    [axisMargin, barOptions.isStacked, sortedData, xScale, yScale],
+    [chartStartPosition, barOptions.isStacked, sortedData, xScale, yScale],
   );
 
   return (
@@ -218,8 +219,8 @@ export function Chart({
         aria-label={emptyState ? emptyStateText : undefined}
       >
         <g
-          transform={`translate(${axisMargin},${chartDimensions.height -
-            MARGIN.Bottom -
+          transform={`translate(${chartStartPosition},${chartDimensions.height -
+            Margin.Bottom -
             maxXLabelHeight})`}
           aria-hidden="true"
         >
@@ -234,21 +235,35 @@ export function Chart({
           />
         </g>
 
-        <g
-          transform={`translate(${axisMargin},${MARGIN.Top})`}
-          aria-hidden="true"
-        >
+        {gridOptions.showHorizontalLines ? (
+          <HorizontalGridLines
+            ticks={ticks}
+            color={gridOptions.color}
+            transform={{
+              x: gridOptions.horizontalOverflow ? 0 : chartStartPosition,
+              y: Margin.Top,
+            }}
+            width={
+              gridOptions.horizontalOverflow
+                ? chartDimensions.width
+                : drawableWidth
+            }
+          />
+        ) : null}
+
+        <g transform={`translate(0,${Margin.Top})`} aria-hidden="true">
           <YAxis
             ticks={ticks}
-            drawableWidth={drawableWidth}
             fontSize={fontSize}
             labelColor={yAxisOptions.labelColor}
-            showGridLines={gridOptions.showHorizontalLines}
-            gridColor={gridOptions.color}
+            textAlign={gridOptions.horizontalOverflow ? 'right' : 'left'}
+            width={yAxisLabelWidth}
+            backgroundColor={yAxisOptions.backgroundColor}
+            outerMargin={gridOptions.horizontalMargin}
           />
         </g>
 
-        <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
+        <g transform={`translate(${chartStartPosition},${Margin.Top})`}>
           {stackedValues != null
             ? stackedValues.map((stackData, stackIndex) => {
                 return (
@@ -297,7 +312,7 @@ export function Chart({
           currentX={tooltipPosition.x}
           currentY={tooltipPosition.y}
           chartDimensions={chartDimensions}
-          margin={MARGIN}
+          margin={Margin}
           position="center"
         >
           {tooltipContentMarkup}
@@ -316,14 +331,14 @@ export function Chart({
     }
 
     const {svgX, svgY} = point;
-    const currentPoint = svgX - axisMargin;
+    const currentPoint = svgX - chartStartPosition;
     const currentIndex = Math.floor(currentPoint / xScale.step());
 
     if (
       currentIndex < 0 ||
       currentIndex > sortedData.length - 1 ||
-      svgY <= MARGIN.Top ||
-      svgY > drawableHeight + MARGIN.Bottom + maxXLabelHeight
+      svgY <= Margin.Top ||
+      svgY > drawableHeight + Number(Margin.Bottom) + maxXLabelHeight
     ) {
       setActiveBarGroup(null);
       return;
@@ -334,7 +349,9 @@ export function Chart({
       ? sortedData[currentIndex].reduce(sumPositiveData, 0)
       : Math.max(...sortedData[currentIndex]);
     const tooltipXPositon =
-      xPosition == null ? 0 : xPosition + axisMargin + xScale.bandwidth() / 2;
+      xPosition == null
+        ? 0
+        : xPosition + chartStartPosition + xScale.bandwidth() / 2;
 
     setActiveBarGroup(currentIndex);
     setTooltipPosition({

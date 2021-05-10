@@ -12,7 +12,7 @@ import {
   LINE_HEIGHT,
   MIN_HORIZONTAL_TICKS,
   MAX_TEXT_BOX_HEIGHT,
-  Margin,
+  LineChartMargin as Margin,
   SPACING_EXTRA_TIGHT,
   SMALL_LABEL_WIDTH,
   LABEL_SPACE_MINUS_FIRST_AND_LAST,
@@ -23,6 +23,7 @@ import {
   Data,
   DataSeries,
   SeriesColor,
+  YAxisTick,
 } from '../types';
 
 import {useLinearXScale} from './useLinearXScale';
@@ -34,18 +35,12 @@ function getDatumSpace(width: number, numberOfTicks: number) {
   );
 }
 
-interface Ticks {
-  value: number;
-  formattedValue: string;
-  yOffset: number;
-}
-
 export interface ChartDetails {
   series: DataSeries<Data | NullableData, SeriesColor>[];
   fontSize: number;
   chartDimensions: DOMRect;
   formatXAxisLabel: StringLabelFormatter;
-  initialTicks: Ticks[];
+  initialTicks: YAxisTick[];
   xAxisLabels: string[];
   useMinimalLabels?: boolean;
 }

@@ -8,10 +8,3 @@ export enum Spacing {
   ExtraTight = 4,
   BaseTight = 12,
 }
-
-export enum Margin {
-  Top = 8,
-  Left = 0,
-  Bottom = 12,
-  Right = 4,
-}

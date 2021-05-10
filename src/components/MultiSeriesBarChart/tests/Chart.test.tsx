@@ -1,7 +1,12 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {Color} from 'types';
-import {YAxis, TooltipContainer, BarChartXAxis} from 'components';
+import {
+  YAxis,
+  TooltipContainer,
+  BarChartXAxis,
+  HorizontalGridLines,
+} from 'components';
 
 import {Chart} from '../Chart';
 import {BarGroup, StackedBarGroup} from '../components';
@@ -78,8 +83,14 @@ describe('Chart />', () => {
     yAxisOptions: {
       labelFormatter: (value: number) => value.toString(),
       labelColor: 'red',
+      backgroundColor: 'transparent',
     },
-    gridOptions: {showHorizontalLines: true, color: 'red'},
+    gridOptions: {
+      showHorizontalLines: true,
+      color: 'red',
+      horizontalOverflow: false,
+      horizontalMargin: 0,
+    },
   };
 
   it('renders an SVG element', () => {
@@ -196,6 +207,24 @@ describe('Chart />', () => {
       expect(chart).toContainReactComponent(StackedBarGroup, {
         activeBarGroup: 0,
       });
+    });
+  });
+
+  describe('gridOptions.showHorizontalLines', () => {
+    it('does not render HorizontalGridLines when false', () => {
+      const updatedProps = {
+        ...mockProps,
+        gridOptions: {...mockProps.gridOptions, showHorizontalLines: false},
+      };
+      const chart = mount(<Chart {...updatedProps} />);
+
+      expect(chart).not.toContainReactComponent(HorizontalGridLines);
+    });
+
+    it('renders HorizontalGridLines when true', () => {
+      const chart = mount(<Chart {...mockProps} />);
+
+      expect(chart).toContainReactComponent(HorizontalGridLines);
     });
   });
 });

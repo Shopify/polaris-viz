@@ -93,6 +93,7 @@ export function LineChart({
   const yAxisOptionsWithDefaults = {
     labelFormatter: (value: number) => value.toString(),
     labelColor: DEFAULT_GREY_LABEL,
+    backgroundColor: 'transparent',
     ...yAxisOptions,
   };
 
@@ -100,6 +101,8 @@ export function LineChart({
     showVerticalLines: true,
     showHorizontalLines: true,
     color: colorSky,
+    horizontalOverflow: false,
+    horizontalMargin: 0,
     ...gridOptions,
   };
 

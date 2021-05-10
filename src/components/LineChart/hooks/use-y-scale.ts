@@ -1,9 +1,9 @@
 import {useMemo} from 'react';
 import {scaleLinear} from 'd3-scale';
 
-import {getTextWidth} from '../../../utilities';
+import {getTextWidth, shouldRoundScaleUp} from '../../../utilities';
 import {yAxisMinMax} from '../utilities';
-import {MIN_Y_LABEL_SPACE, SPACING} from '../constants';
+import {MIN_Y_LABEL_SPACE} from '../constants';
 import {Series} from '../types';
 import {NumberLabelFormatter} from '../../../types';
 
@@ -28,8 +28,11 @@ export function useYScale({
 
     const yScale = scaleLinear()
       .range([drawableHeight, 0])
-      .domain([Math.min(0, minY), Math.max(0, maxY)])
-      .nice(maxTicks);
+      .domain([Math.min(0, minY), Math.max(0, maxY)]);
+
+    if (shouldRoundScaleUp({yScale, maxValue: maxY, maxTicks})) {
+      yScale.nice(maxTicks);
+    }
 
     const ticks = yScale.ticks(maxTicks).map((value) => ({
       value,
@@ -37,13 +40,11 @@ export function useYScale({
       yOffset: yScale(value),
     }));
 
-    const maxTickWidth = Math.max(
+    const axisMargin = Math.max(
       ...ticks.map(({formattedValue}) =>
         getTextWidth({fontSize, text: formattedValue}),
       ),
     );
-
-    const axisMargin = maxTickWidth + SPACING;
 
     return {yScale, ticks, axisMargin};
   }, [series, drawableHeight, formatYAxisLabel, fontSize]);

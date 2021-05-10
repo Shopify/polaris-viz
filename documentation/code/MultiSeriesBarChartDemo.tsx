@@ -83,7 +83,6 @@ export function MultiSeriesBarChartDemo({isStacked = false}: Props) {
     new Intl.NumberFormat('en-CA', {
       style: 'currency',
       currency: 'CAD',
-      maximumSignificantDigits: 3,
     }).format(val);
 
   const renderTooltipContent: MultiSeriesBarChartProps['renderTooltipContent'] = ({

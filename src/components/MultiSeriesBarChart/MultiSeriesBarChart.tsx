@@ -91,6 +91,8 @@ export function MultiSeriesBarChart({
   const gridOptionsWithDefaults = {
     showHorizontalLines: true,
     color: colorSky,
+    horizontalOverflow: false,
+    horizontalMargin: 0,
     ...gridOptions,
   };
 
@@ -104,6 +106,7 @@ export function MultiSeriesBarChart({
   const yAxisOptionsWithDefaults = {
     labelFormatter: (value: number) => value.toString(),
     labelColor: DEFAULT_GREY_LABEL,
+    backgroundColor: 'transparent',
     ...yAxisOptions,
   };
 

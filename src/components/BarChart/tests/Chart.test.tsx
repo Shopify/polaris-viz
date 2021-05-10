@@ -1,8 +1,14 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {Color} from 'types';
-import {YAxis, TooltipContainer, BarChartXAxis, Bar} from 'components';
 import {vizColors} from 'utilities';
+import {
+  YAxis,
+  TooltipContainer,
+  BarChartXAxis,
+  Bar,
+  HorizontalGridLines,
+} from 'components';
 
 import {AnnotationLine} from '../components';
 import {Chart} from '../Chart';
@@ -50,8 +56,14 @@ describe('Chart />', () => {
     yAxisOptions: {
       labelFormatter: (value: number) => value.toString(),
       labelColor: 'red',
+      backgroundColor: 'transparent',
     },
-    gridOptions: {showHorizontalLines: true, color: 'red'},
+    gridOptions: {
+      showHorizontalLines: true,
+      color: 'red',
+      horizontalOverflow: false,
+      horizontalMargin: 0,
+    },
     renderTooltipContent: jest.fn(() => <p>Mock Tooltip</p>),
     annotationsLookupTable: {
       1: {
@@ -223,6 +235,25 @@ describe('Chart />', () => {
       const chart = mount(<Chart {...mockProps} />);
 
       expect(chart.find('rect', {fill: vizColors.colorGrayDark})).toBeNull();
+    });
+  });
+
+  describe('gridOptions.showHorizontalLines', () => {
+    it('does not render HorizontalGridLines when false', () => {
+      const chart = mount(
+        <Chart
+          {...mockProps}
+          gridOptions={{...mockProps.gridOptions, showHorizontalLines: false}}
+        />,
+      );
+
+      expect(chart).not.toContainReactComponent(HorizontalGridLines);
+    });
+
+    it('renders HorizontalGridLines when true', () => {
+      const chart = mount(<Chart {...mockProps} />);
+
+      expect(chart).toContainReactComponent(HorizontalGridLines);
     });
   });
 });
