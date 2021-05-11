@@ -17,6 +17,13 @@ jest.mock('d3-shape', () => ({
     shape.curve = () => shape;
     return shape;
   }),
+  line: jest.fn(() => {
+    const shape = (value: any) => value;
+    shape.x = () => shape;
+    shape.y = () => shape;
+    shape.curve = () => shape;
+    return shape;
+  }),
 }));
 
 const mockSeries = {
@@ -80,7 +87,7 @@ describe('Series', () => {
     );
 
     expect(actual).toContainReactComponent('path', {
-      strokeDasharray: '',
+      className: 'Line',
     });
   });
 
@@ -91,7 +98,7 @@ describe('Series', () => {
       </svg>,
     );
     expect(actual).toContainReactComponent('path', {
-      strokeDasharray: '2 4',
+      className: 'Line DashedLine',
     });
   });
 

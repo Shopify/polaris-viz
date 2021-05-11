@@ -14,3 +14,8 @@
 .VisuallyHidden {
   @include visually-hidden;
 }
+
+.ComparisonLine {
+  fill: none;
+  stroke-dasharray: 3 2;
+}

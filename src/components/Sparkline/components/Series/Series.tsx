@@ -1,6 +1,7 @@
 import React, {useMemo} from 'react';
 import {ScaleLinear} from 'd3-scale';
-import {area, curveMonotoneX} from 'd3-shape';
+import {area, curveMonotoneX, line} from 'd3-shape';
+import {classNames} from '@shopify/css-utilities';
 
 import {LinearGradient} from '../../../LinearGradient';
 import {getColorValue, uniqueId, rgbToRgba} from '../../../../utilities';
@@ -9,7 +10,6 @@ import {SingleSeries, Coordinates} from '../../Sparkline';
 
 import styles from './Series.scss';
 
-const STROKE_WIDTH = 1.5;
 const POINT_RADIUS = 2;
 
 export function Series({
@@ -36,7 +36,7 @@ export function Series({
     data,
   } = series;
 
-  const lineGenerator = area<Coordinates>()
+  const lineGenerator = line<Coordinates>()
     .x(({x}) => xScale(x))
     .y(({y}) => yScale(y));
 
@@ -72,10 +72,13 @@ export function Series({
     <React.Fragment>
       <path
         stroke={colorValue}
-        strokeWidth={STROKE_WIDTH}
         d={lineShape}
-        strokeDasharray={dashedLine ? '2 4' : ''}
-        className={immediate ? null : styles.Path}
+        fill="none"
+        className={classNames(
+          styles.Line,
+          !immediate && styles.AnimatedLine,
+          dashedLine && styles.DashedLine,
+        )}
       />
       {areaStyle === 'gradient' ? (
         <LinearGradient
