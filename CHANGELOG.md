@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.12.2] - 2021-05-11
+
+### Fixed
+
+- Removes text selection from visualizations so they work better on mobile/touch devices
+
 ## [0.12.1] — 2021-05-10
 
 ### Fixed
