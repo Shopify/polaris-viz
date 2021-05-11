@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## [0.12.1] — 2021-05-10
 
 ### Fixed
 
