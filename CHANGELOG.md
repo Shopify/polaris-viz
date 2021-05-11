@@ -5,6 +5,7 @@
 ### Fixed
 
 - yAxis ticks sometimes getting cut off
+- `<SparkLine/>` and `<Sparkbar/>` stroke dasharray treatment is consistent at all sizes
 
 ## [0.12.0] — 2021-05-10
 

@@ -66,16 +66,12 @@ describe('<Sparkbar/>', () => {
       <Sparkbar data={sampleData} comparison={sampleComparison} />,
     );
 
-    expect(wrapper).toContainReactComponent('path', {
-      strokeDasharray: '2 3',
-    });
+    expect(wrapper).toContainReactComponentTimes('path', 5);
   });
 
   it('does not render a comparison line when the prop is not passed', () => {
     const wrapper = mount(<Sparkbar data={sampleData} />);
 
-    expect(wrapper).not.toContainReactComponent('path', {
-      strokeDasharray: '2 3',
-    });
+    expect(wrapper).toContainReactComponentTimes('path', 4);
   });
 });

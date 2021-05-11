@@ -1,7 +1,7 @@
 import React, {useCallback, useState, useLayoutEffect, useMemo} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 import {scaleBand, scaleLinear} from 'd3-scale';
-import {area} from 'd3-shape';
+import {line} from 'd3-shape';
 import {useTransition} from 'react-spring';
 
 import {usePrefersReducedMotion, useResizeObserver} from '../../hooks';
@@ -122,7 +122,7 @@ export function Sparkbar({
     .range([0, width])
     .domain([0, data.length - 1]);
 
-  const lineGenerator = area<Coordinates>()
+  const lineGenerator = line<Coordinates>()
     .x(({x}) => xScaleLinear(x))
     .y(({y}) => yScale(y));
 
@@ -209,7 +209,7 @@ export function Sparkbar({
               stroke={currentColor}
               strokeWidth={STROKE_WIDTH}
               d={lineShape!}
-              strokeDasharray="2 3"
+              className={styles.ComparisonLine}
             />
           </g>
         )}

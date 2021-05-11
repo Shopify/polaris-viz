@@ -1,7 +1,16 @@
 $animation-duration: 500ms;
 
-.Path {
+.AnimatedLine {
   animation: reveal $animation-duration ease-in-out 1;
+}
+
+.Line {
+  fill: none;
+  stroke: 1.5;
+}
+
+.DashedLine {
+  stroke-dasharray: 3 2;
 }
 
 .Area {
