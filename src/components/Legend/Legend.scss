@@ -3,6 +3,7 @@
 
 .Container {
   @include legend-container;
+  user-select: none;
 }
 
 .Series {
