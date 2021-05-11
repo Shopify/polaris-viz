@@ -6,6 +6,17 @@ import {SkipLink} from 'components/SkipLink';
 import {MultiSeriesBarChart} from '../MultiSeriesBarChart';
 import {Chart} from '../Chart';
 
+jest.mock('../../../hooks/useResizeObserver.ts', () => ({
+  useResizeObserver: () => {
+    return {
+      setRef: jest.fn(),
+      entry: {
+        contentRect: {width: 100, height: 100},
+      },
+    };
+  },
+}));
+
 describe('<MultiSeriesBarChart />', () => {
   const mockProps = {
     series: [

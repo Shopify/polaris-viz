@@ -1,10 +1,12 @@
-import React, {useState, useLayoutEffect, useRef} from 'react';
+import React, {useState, useLayoutEffect, useRef, useCallback} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 import {colorSky} from '@shopify/polaris-tokens';
 
+import {Dimensions} from '../../types';
 import {DEFAULT_GREY_LABEL} from '../../constants';
 import {SkipLink} from '../SkipLink';
 import {getDefaultColor, uniqueId, normalizeData} from '../../utilities';
+import {useResizeObserver} from '../../hooks';
 
 import {TooltipContent} from './components';
 import {Chart} from './Chart';
@@ -45,36 +47,51 @@ export function BarChart({
   xAxisOptions,
   yAxisOptions,
 }: BarChartProps) {
-  const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [chartDimensions, setChartDimensions] = useState<Dimensions | null>(
+    null,
+  );
+  const {setRef, entry} = useResizeObserver();
 
   const skipLinkAnchorId = useRef(uniqueId('barChart'));
 
   const emptyState = data.length === 0;
 
-  const [updateDimensions] = useDebouncedCallback(() => {
-    if (containerRef.current != null) {
-      setChartDimensions(containerRef.current.getBoundingClientRect());
+  const updateDimensions = useCallback(() => {
+    if (entry != null) {
+      const {width, height} = entry.contentRect;
+      setChartDimensions((prevDimensions) => {
+        if (
+          prevDimensions != null &&
+          width === prevDimensions.width &&
+          height === prevDimensions.height
+        ) {
+          return prevDimensions;
+        } else {
+          return {width, height};
+        }
+      });
     }
+  }, [entry]);
+
+  const [debouncedUpdateDimensions] = useDebouncedCallback(() => {
+    updateDimensions();
   }, 100);
 
   useLayoutEffect(() => {
-    if (containerRef.current != null) {
-      setChartDimensions(containerRef.current.getBoundingClientRect());
-    }
+    updateDimensions();
 
     const isServer = typeof window === 'undefined';
 
     if (!isServer) {
-      window.addEventListener('resize', updateDimensions);
+      window.addEventListener('resize', debouncedUpdateDimensions);
     }
 
     return () => {
       if (!isServer) {
-        window.removeEventListener('resize', updateDimensions);
+        window.removeEventListener('resize', debouncedUpdateDimensions);
       }
     };
-  }, [containerRef, updateDimensions]);
+  }, [entry, debouncedUpdateDimensions, updateDimensions]);
 
   const innerMargin =
     barOptions != null && barOptions.innerMargin != null
@@ -139,7 +156,7 @@ export function BarChart({
   }
 
   return (
-    <div style={{width: '100%', height: '100%'}} ref={containerRef}>
+    <div style={{width: '100%', height: '100%'}} ref={setRef}>
       {chartDimensions == null ? null : (
         <React.Fragment>
           {skipLinkText == null ||

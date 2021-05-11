@@ -16,13 +16,6 @@ import {Series} from '../types';
 import {Line, GradientArea} from '../components';
 import {YAxis} from '../../YAxis';
 
-(global as any).DOMRect = class DOMRect {
-  width = 500;
-  height = 250;
-  top = 100;
-  left = 100;
-};
-
 const fakeSVGEvent = {
   persist: jest.fn(),
   currentTarget: {
@@ -79,7 +72,7 @@ const crossHairOptions = {width: 10, color: 'red', opacity: 1};
 
 const mockProps = {
   series: [primarySeries],
-  dimensions: new DOMRect(),
+  dimensions: {width: 500, height: 250},
   lineOptions,
   xAxisOptions,
   yAxisOptions,
@@ -91,7 +84,7 @@ const mockProps = {
 
 const mockEmptyStateProps = {
   series: [],
-  dimensions: new DOMRect(),
+  dimensions: {width: 100, height: 100},
   lineOptions,
   xAxisOptions,
   yAxisOptions,

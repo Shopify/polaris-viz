@@ -1,10 +1,15 @@
-import React, {useLayoutEffect, useRef, useState} from 'react';
+import React, {useLayoutEffect, useRef, useState, useCallback} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 
 import {SkipLink} from '../SkipLink';
-import {StringLabelFormatter, NumberLabelFormatter} from '../../types';
+import {
+  StringLabelFormatter,
+  NumberLabelFormatter,
+  Dimensions,
+} from '../../types';
 import {TooltipContent} from '../TooltipContent';
 import {getDefaultColor, uniqueId} from '../../utilities';
+import {useResizeObserver} from '../../hooks';
 
 import {Chart} from './Chart';
 import {Series, RenderTooltipContentData} from './types';
@@ -30,34 +35,49 @@ export function StackedAreaChart({
   isAnimated = false,
   skipLinkText,
 }: StackedAreaChartProps) {
-  const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [chartDimensions, setChartDimensions] = useState<Dimensions | null>(
+    null,
+  );
 
   const skipLinkAnchorId = useRef(uniqueId('stackedAreaChart'));
 
-  const [updateDimensions] = useDebouncedCallback(() => {
-    if (containerRef.current != null) {
-      setChartDimensions(containerRef.current.getBoundingClientRect());
+  const {setRef, entry} = useResizeObserver();
+
+  const updateDimensions = useCallback(() => {
+    if (entry != null) {
+      const {width, height} = entry.contentRect;
+      setChartDimensions((prevDimensions) => {
+        if (
+          prevDimensions != null &&
+          width === prevDimensions.width &&
+          height === prevDimensions.height
+        ) {
+          return prevDimensions;
+        } else {
+          return {width, height};
+        }
+      });
     }
+  }, [entry]);
+
+  const [debouncedUpdateDimensions] = useDebouncedCallback(() => {
+    updateDimensions();
   }, 100);
 
   useLayoutEffect(() => {
-    if (containerRef.current != null) {
-      setChartDimensions(containerRef.current.getBoundingClientRect());
-    }
-
+    updateDimensions();
     const isServer = typeof window === 'undefined';
 
     if (!isServer) {
-      window.addEventListener('resize', updateDimensions);
+      window.addEventListener('resize', debouncedUpdateDimensions);
     }
 
     return () => {
       if (!isServer) {
-        window.removeEventListener('resize', updateDimensions);
+        window.removeEventListener('resize', debouncedUpdateDimensions);
       }
     };
-  }, [containerRef, updateDimensions]);
+  }, [entry, debouncedUpdateDimensions, updateDimensions]);
 
   if (series.length === 0) {
     return null;
@@ -86,7 +106,7 @@ export function StackedAreaChart({
       {skipLinkText == null || skipLinkText.length === 0 ? null : (
         <SkipLink anchorId={skipLinkAnchorId.current}>{skipLinkText}</SkipLink>
       )}
-      <div style={{height: '100%', width: '100%'}} ref={containerRef}>
+      <div style={{height: '100%', width: '100%'}} ref={setRef}>
         {chartDimensions == null ? null : (
           <Chart
             xAxisLabels={xAxisLabels}

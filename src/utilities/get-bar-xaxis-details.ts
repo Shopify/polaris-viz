@@ -6,6 +6,7 @@ import {
   LABEL_SPACE_MINUS_FIRST_AND_LAST,
   SPACING_EXTRA_TIGHT,
 } from '../constants';
+import {Dimensions} from '../types';
 
 import {getTextContainerHeight} from './get-text-container-height';
 import {getLongestLabelDetails} from './get-longest-label-details';
@@ -15,7 +16,7 @@ interface LayoutDetails {
   yAxisLabelWidth: number;
   fontSize: number;
   xLabels: string[];
-  chartDimensions: DOMRect;
+  chartDimensions: Dimensions;
   innerMargin: number;
   outerMargin: number;
   minimalLabelIndexes?: number[] | null;

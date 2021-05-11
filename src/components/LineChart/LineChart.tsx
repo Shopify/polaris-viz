@@ -1,10 +1,11 @@
-import React, {useLayoutEffect, useRef, useState} from 'react';
+import React, {useLayoutEffect, useRef, useState, useCallback} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 import {colorSky} from '@shopify/polaris-tokens';
 
+import {Dimensions} from '../../types';
 import {getDefaultColor, uniqueId} from '../../utilities';
 import {SkipLink} from '../SkipLink';
-import {usePrefersReducedMotion} from '../../hooks';
+import {usePrefersReducedMotion, useResizeObserver} from '../../hooks';
 import {
   DEFAULT_GREY_LABEL,
   CROSSHAIR_WIDTH,
@@ -49,35 +50,50 @@ export function LineChart({
   gridOptions,
   crossHairOptions,
 }: LineChartProps) {
-  const [chartDimensions, setChartDimensions] = useState<DOMRect | null>(null);
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [chartDimensions, setChartDimensions] = useState<Dimensions | null>(
+    null,
+  );
+  const {setRef, entry} = useResizeObserver();
   const {prefersReducedMotion} = usePrefersReducedMotion();
 
   const skipLinkAnchorId = useRef(uniqueId('lineChart'));
 
-  const [updateDimensions] = useDebouncedCallback(() => {
-    if (containerRef.current != null) {
-      setChartDimensions(containerRef.current.getBoundingClientRect());
+  const updateDimensions = useCallback(() => {
+    if (entry != null) {
+      const {width, height} = entry.contentRect;
+      setChartDimensions((prevDimensions) => {
+        if (
+          prevDimensions != null &&
+          width === prevDimensions.width &&
+          height === prevDimensions.height
+        ) {
+          return prevDimensions;
+        } else {
+          return {width, height};
+        }
+      });
     }
+  }, [entry]);
+
+  const [debouncedUpdateDimensions] = useDebouncedCallback(() => {
+    updateDimensions();
   }, 100);
 
   useLayoutEffect(() => {
-    if (containerRef.current != null) {
-      setChartDimensions(containerRef.current.getBoundingClientRect());
-    }
+    updateDimensions();
 
     const isServer = typeof window === 'undefined';
 
     if (!isServer) {
-      window.addEventListener('resize', updateDimensions);
+      window.addEventListener('resize', debouncedUpdateDimensions);
     }
 
     return () => {
       if (!isServer) {
-        window.removeEventListener('resize', updateDimensions);
+        window.removeEventListener('resize', debouncedUpdateDimensions);
       }
     };
-  }, [containerRef, updateDimensions]);
+  }, [entry, debouncedUpdateDimensions, updateDimensions]);
 
   const lineOptionsWithDefaults = {hasSpline: false, width: 2, ...lineOptions};
 
@@ -145,7 +161,7 @@ export function LineChart({
       series.length === 0 ? null : (
         <SkipLink anchorId={skipLinkAnchorId.current}>{skipLinkText}</SkipLink>
       )}
-      <div style={{width: '100%', height: '100%'}} ref={containerRef}>
+      <div style={{width: '100%', height: '100%'}} ref={setRef}>
         {chartDimensions == null ? null : (
           <Chart
             series={seriesWithDefaults}

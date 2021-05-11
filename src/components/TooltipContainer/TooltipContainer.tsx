@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState, ReactNode} from 'react';
 import {useSpring, animated} from 'react-spring';
 
 import {clamp} from '../../utilities';
+import {Dimensions} from '../../types';
 
 import styles from './TooltipContainer.scss';
 
@@ -11,7 +12,7 @@ interface Props {
   activePointIndex: number;
   currentX: number;
   currentY: number;
-  chartDimensions: DOMRect;
+  chartDimensions: Dimensions;
   position?: 'center' | 'auto';
   id?: string;
 }
@@ -30,7 +31,7 @@ export function TooltipContainer({
   id = '',
 }: Props) {
   const tooltipRef = useRef<HTMLDivElement | null>(null);
-  const [tooltipDimensions, setTooltipDimensions] = useState<DOMRect | null>(
+  const [tooltipDimensions, setTooltipDimensions] = useState<Dimensions | null>(
     null,
   );
   const firstRender = useRef(true);
