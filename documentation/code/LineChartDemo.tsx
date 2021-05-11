@@ -30,7 +30,7 @@ export function LineChartDemo() {
         {rawValue: 7200, label: '2020-04-04T12:00:00'},
         {rawValue: 1500, label: '2020-04-05T12:00:00'},
         {rawValue: 6132, label: '2020-04-06T12:00:00'},
-        {rawValue: 3100, label: '2020-04-07T12:00:00'},
+        {rawValue: -3100, label: '2020-04-07T12:00:00'},
         {rawValue: 2200, label: '2020-04-08T12:00:00'},
         {rawValue: 5103, label: '2020-04-09T12:00:00'},
         {rawValue: 2112.5, label: '2020-04-10T12:00:00'},

@@ -44,6 +44,7 @@ function Axis({
               style={{
                 background: backgroundColor,
                 padding: PADDING_SIZE,
+                whiteSpace: 'nowrap',
               }}
             >
               {formattedValue}

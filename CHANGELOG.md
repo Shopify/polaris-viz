@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Fixed
+
+- yAxis ticks sometimes getting cut off
+
 ## [0.12.0] — 2021-05-10
 
 ### Fixed
@@ -10,7 +16,7 @@
 
 ## [0.11.3] — 2021-05-10
 
-## Changed
+### Changed
 
 - `<MultiSeriesBarChart/>`, `<BarChart />` and `<LineChart/>` yScale will allow data to overflow the highest tick if the highest value is less than half way to the next tick
 
