@@ -64,6 +64,10 @@ export function useLineChartAnimations({
   // Get percentage of subpath compared to total length
   const getPercentage = useCallback(
     (subpathLength: number, totalLength: number) => {
+      if (totalLength === 0) {
+        return 0;
+      }
+
       return (subpathLength / totalLength) * 100;
     },
     [],
