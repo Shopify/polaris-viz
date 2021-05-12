@@ -12,7 +12,11 @@ import {
 
 import {AnnotationLine} from '../components';
 import {Chart} from '../Chart';
-import {MASK_SUBDUE_COLOR, MASK_HIGHLIGHT_COLOR} from '../../../constants';
+import {
+  MASK_SUBDUE_COLOR,
+  MASK_HIGHLIGHT_COLOR,
+  MIN_BAR_HEIGHT,
+} from '../../../constants';
 
 const fakeSVGEvent = {
   currentTarget: {
@@ -173,6 +177,18 @@ describe('Chart />', () => {
     svg.trigger('onMouseMove', fakeSVGEvent);
 
     expect(chart).toContainReactComponent(Bar, {color: MASK_SUBDUE_COLOR});
+  });
+
+  it('passes the min bar height to the bar if its value is 0', () => {
+    const chart = mount(
+      <Chart {...mockProps} data={[{rawValue: 0, label: 'data'}]} />,
+    );
+
+    expect(chart).toContainReactComponent(Bar, {
+      height: expect.objectContaining({
+        value: MIN_BAR_HEIGHT,
+      }),
+    });
   });
 
   describe('empty state', () => {

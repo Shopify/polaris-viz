@@ -4,6 +4,7 @@ import {scaleLinear} from 'd3-scale';
 import {Color} from 'types';
 
 import {BAR_SPACING} from '../../../constants';
+import {MIN_BAR_HEIGHT} from '../../../../../constants';
 import {BarGroup} from '../BarGroup';
 import {Bar} from '../../../../../components/Bar';
 import {LinearGradient} from '../../../../../components/LinearGradient';
@@ -66,6 +67,20 @@ describe('<BarGroup/>', () => {
     expect(barGroup).toContainReactComponent(Bar, {x: 35});
     expect(barGroup).toContainReactComponent(Bar, {x: 60});
     expect(barGroup).toContainReactComponent(Bar, {x: 85});
+  });
+
+  it('passes the min bar height to the bar if its value is 0', () => {
+    const barGroup = mount(
+      <svg>
+        <BarGroup {...mockProps} data={[0]} />,
+      </svg>,
+    );
+
+    expect(barGroup).toContainReactComponent(Bar, {
+      height: expect.objectContaining({
+        value: MIN_BAR_HEIGHT,
+      }),
+    });
   });
 
   describe('colors', () => {
