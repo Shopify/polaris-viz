@@ -75,9 +75,7 @@ export function Sparkbar({
   const {prefersReducedMotion} = usePrefersReducedMotion();
 
   const [updateMeasurements] = useDebouncedCallback(() => {
-    if (containerRef == null) {
-      throw new Error('No SVG rendered');
-    }
+    if (containerRef == null) return;
 
     setSvgDimensions({
       height: containerRef.clientHeight,
@@ -88,9 +86,7 @@ export function Sparkbar({
   useLayoutEffect(() => {
     if (entry == null) return;
 
-    if (containerRef == null) {
-      throw new Error('No SVG rendered');
-    }
+    if (containerRef == null) return;
 
     updateMeasurements();
 

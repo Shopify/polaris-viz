@@ -4,6 +4,12 @@ import {
   ResizeObserverEntry,
 } from '@juggle/resize-observer';
 
+// This default value is used in our tests so that consumers of Polaris Viz don't need to mock or fire a ResizeObserver event
+const defaultEntry =
+  process.env.NODE_ENV === 'test'
+    ? ({contentRect: {width: 500, height: 500}} as ResizeObserverEntry)
+    : null;
+
 function resizeObserver(
   callback: (entries: ResizeObserverEntry[], observer: Polyfill) => void,
 ) {
@@ -20,7 +26,7 @@ export const useResizeObserver = <T extends HTMLElement>(): {
   entry: ResizeObserverEntry | null;
 } => {
   const [ref, setRef] = useState<T | null>(null);
-  const [entry, setEntry] = useState<ResizeObserverEntry | null>(null);
+  const [entry, setEntry] = useState<ResizeObserverEntry | null>(defaultEntry);
 
   useLayoutEffect(() => {
     if (!ref) {
