@@ -2,6 +2,10 @@
 
 ## [UNRELEASED] — 2021-05-12
 
+### Fixed
+
+- When there was only one data point for an animated line chart, an error was being thrown
+
 ### Changed
 
 - Replaced `curveMonotoneX` by `curveStepRounded` in `LineChart` and `SparkBar`
