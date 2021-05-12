@@ -86,3 +86,26 @@ OverflowStyle.args = {
   lineOptions: {hasSpline: true},
   renderTooltipContent,
 };
+
+export const curvedLines = Template.bind({});
+curvedLines.args = {
+  series,
+  xAxisOptions: {
+    xAxisLabels,
+    labelFormatter: formatXAxisLabel,
+    showTicks: false,
+    hideXAxisLabels: true,
+  },
+  yAxisOptions: {
+    labelFormatter: formatYAxisLabel,
+    backgroundColor: 'white',
+  },
+  gridOptions: {
+    horizontalOverflow: true,
+    horizontalMargin: 20,
+    showVerticalLines: false,
+  },
+  isAnimated: true,
+  lineOptions: {hasSpline: true},
+  renderTooltipContent,
+};

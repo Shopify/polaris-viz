@@ -1,5 +1,11 @@
 # Changelog
 
+## [UNRELEASED] — 2021-05-12
+
+### Changed
+
+- Replaced `curveMonotoneX` by `curveStepRounded` in `LineChart` and `SparkBar`
+
 ## [0.12.3] - 2021-05-12
 
 ### Fixed

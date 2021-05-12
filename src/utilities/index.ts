@@ -20,3 +20,4 @@ export {getPointAtLength} from './get-point-at-length';
 export {normalizeData} from './normalize-data';
 export {createCSSGradient} from './create-css-gradient';
 export {shouldRoundScaleUp} from './should-round-scale-up';
+export {curveStepRounded} from './curve-step-rounded';
