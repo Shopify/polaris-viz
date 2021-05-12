@@ -47,9 +47,7 @@ export function Sparkline({
   const [svgDimensions, setSvgDimensions] = useState({width: 0, height: 0});
 
   const [updateMeasurements] = useDebouncedCallback(() => {
-    if (containerRef == null) {
-      throw new Error('No SVG rendered');
-    }
+    if (containerRef == null) return;
 
     setSvgDimensions({
       height: containerRef.clientHeight,
@@ -60,9 +58,7 @@ export function Sparkline({
   useLayoutEffect(() => {
     if (entry == null) return;
 
-    if (containerRef == null) {
-      throw new Error('No SVG rendered');
-    }
+    if (containerRef == null) return;
 
     updateMeasurements();
 

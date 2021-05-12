@@ -5,17 +5,6 @@ import {BarChart} from '../BarChart';
 import {Chart} from '../Chart';
 import {SkipLink} from '../../SkipLink';
 
-jest.mock('../../../hooks/useResizeObserver.ts', () => ({
-  useResizeObserver: () => {
-    return {
-      setRef: jest.fn(),
-      entry: {
-        contentRect: {width: 100, height: 100},
-      },
-    };
-  },
-}));
-
 describe('BarChart />', () => {
   const mockProps = {data: [{rawValue: 10, label: 'data'}]};
 

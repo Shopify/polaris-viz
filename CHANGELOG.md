@@ -6,6 +6,18 @@
 
 - Replaced `curveMonotoneX` by `curveStepRounded` in `LineChart` and `SparkBar`
 
+## [0.12.3] - 2021-05-12
+
+### Fixed
+
+- When `process.env.NODE_ENV === 'test'` a default width and height of 500px is provided so consumers of Polaris Viz don't need to set up any mocks for ResizeObserver (or container widths/heights).
+
+## [0.12.2] - 2021-05-11
+
+### Fixed
+
+- Removes text selection from visualizations so they work better on mobile/touch devices
+
 ## [0.12.1] — 2021-05-10
 
 ### Fixed
