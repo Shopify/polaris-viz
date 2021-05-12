@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.12.3] - 2021-05-12
+
+### Fixed
+
+- When `process.env.NODE_ENV === 'test'` a default width and height of 500px is provided so consumers of Polaris Viz don't need to set up any mocks for ResizeObserver (or container widths/heights).
+
 ## [0.12.2] - 2021-05-11
 
 ### Fixed

@@ -26,17 +26,6 @@ jest.mock('../../../utilities', () => {
   };
 });
 
-jest.mock('../../../hooks/useResizeObserver.ts', () => ({
-  useResizeObserver: () => {
-    return {
-      setRef: jest.fn(),
-      entry: {
-        contentRect: {width: 500, height: 250},
-      },
-    };
-  },
-}));
-
 describe('<LineChart />', () => {
   beforeAll(() => {
     Object.defineProperty(window, 'matchMedia', {

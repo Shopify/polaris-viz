@@ -37,17 +37,6 @@ const mockData = [
 
 const xAxisLabels = ['1', '2', '3', '4', '5', '6', '7'];
 
-jest.mock('../../../hooks/useResizeObserver.ts', () => ({
-  useResizeObserver: () => {
-    return {
-      setRef: jest.fn(),
-      entry: {
-        contentRect: {width: 500, height: 250},
-      },
-    };
-  },
-}));
-
 describe('<AreaChart />', () => {
   it('renders a <Chart />', () => {
     const areaChart = mount(
