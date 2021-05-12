@@ -2,6 +2,10 @@
 
 ## [UNRELEASED] — 2021-05-12
 
+### Fixed
+
+- Charts now resize correctly when being printed out
+
 ### Changed
 
 - Replaced `curveMonotoneX` by `curveStepRounded` in `LineChart` and `SparkBar`

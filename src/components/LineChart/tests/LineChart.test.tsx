@@ -26,15 +26,35 @@ jest.mock('../../../utilities', () => {
   };
 });
 
-describe('<LineChart />', () => {
-  beforeAll(() => {
-    Object.defineProperty(window, 'matchMedia', {
-      value: jest.fn(() => {
-        return {matches: false};
-      }),
-    });
-  });
+jest.mock('../../../hooks/useResizeObserver.ts', () => ({
+  useResizeObserver: () => {
+    return {
+      setRef: jest.fn(),
+      entry: {
+        contentRect: {width: 500, height: 250},
+      },
+    };
+  },
+}));
 
+// https://jestjs.io/docs/manual-mocks#mocking-methods-which-are-not-implemented-in-jsdom
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: jest.fn().mockImplementation((query) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    // deprecated
+    addListener: jest.fn(),
+    // deprecated
+    removeListener: jest.fn(),
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+  })),
+});
+
+describe('<LineChart />', () => {
   it('renders a <Chart />', () => {
     const lineChart = mount(
       <LineChart
