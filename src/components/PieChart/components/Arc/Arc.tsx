@@ -31,6 +31,8 @@ export function Arc({
   formattedValue,
   label,
 }: Props) {
+  endAngle?.start();
+
   const arcGenerator = arc()
     .innerRadius(innerRadius)
     .outerRadius(outerRadius);
@@ -42,7 +44,7 @@ export function Arc({
     : arcGenerator({...slice, innerRadius, outerRadius});
 
   const isInterpolation = (path: any): path is Interpolation => {
-    return 'get' in path;
+    return Object.prototype.hasOwnProperty.call(path, 'get');
   };
 
   return path ? (
