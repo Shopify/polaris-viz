@@ -10,7 +10,7 @@
 
 ### Changed
 
-- Replaced `curveMonotoneX` by `curveStepRounded` in `LineChart` and `SparkBar`.
+- Replaced `curveMonotoneX` by `curveStepRounded` in `LineChart` and `Sparkline`.
 - Updated min bar height to be 1px for 0 values in `<BarChart />` and grouped `<MultiSeriesBarChart />`.
 
 ### Fixed
