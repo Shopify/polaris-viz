@@ -13,7 +13,7 @@ export default {
   component: Sparkbar,
   decorators: [
     (Story: any) => (
-      <div style={{width: '200px', height: '100px'}}>{Story()}</div>
+      <div style={{width: '100px', height: '50px'}}>{Story()}</div>
     ),
   ],
   argTypes: {
