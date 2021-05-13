@@ -115,38 +115,89 @@ const mockNegativeSeries: Series[] = [
   },
 ];
 
+const mockProps = {
+  stackedValues: mockStackedData,
+  data: mockData,
+  integersOnly: false,
+};
+
 describe('get-min-max', () => {
   it('returns min and max of non stacked data when stackedValues is null', () => {
-    const {min, max} = getMinMax(null, mockData);
+    const {min, max} = getMinMax({...mockProps, stackedValues: null});
 
     expect(min).toStrictEqual(0);
     expect(max).toStrictEqual(30);
   });
 
   it('returns min and max of stacked values when stackedValues is not null', () => {
-    const {min, max} = getMinMax(mockStackedData, mockData);
+    const {min, max} = getMinMax(mockProps);
 
     expect(min).toStrictEqual(0);
     expect(max).toStrictEqual(33);
   });
 
   it('returns the default max y value for non stacked values of all zeros', () => {
-    const {max} = getMinMax(null, mockZeroData);
+    const {max} = getMinMax({
+      ...mockProps,
+      stackedValues: null,
+      data: mockZeroData,
+    });
     expect(max).toStrictEqual(DEFAULT_MAX_Y);
   });
 
   it('returns the default max y value for stacked values of all zeros', () => {
-    const {max} = getMinMax(mockZeroStackedData, mockZeroData);
+    const {max} = getMinMax({
+      ...mockProps,
+      stackedValues: mockZeroStackedData,
+      data: mockZeroData,
+    });
     expect(max).toStrictEqual(DEFAULT_MAX_Y);
   });
 
   it('returns 0 as the max when all stacked values are negative', () => {
-    const {max} = getMinMax(mockNegativeStackedData, mockNegativeSeries);
+    const {max} = getMinMax({
+      ...mockProps,
+      stackedValues: mockNegativeStackedData,
+      data: mockNegativeSeries,
+    });
     expect(max).toStrictEqual(0);
   });
 
   it('returns 0 as the max when all non-stacked values are negative', () => {
-    const {max} = getMinMax(null, mockNegativeSeries);
+    const {max} = getMinMax({
+      ...mockProps,
+      stackedValues: null,
+      data: mockNegativeSeries,
+    });
     expect(max).toStrictEqual(0);
+  });
+
+  describe('integersOnly', () => {
+    it('returns a rounded down min and rounded up max if true', () => {
+      const minMax = getMinMax({
+        stackedValues: null,
+        data: [
+          {
+            data: [
+              {label: 'label', rawValue: 0.2},
+              {label: 'label', rawValue: 0.8},
+            ],
+            color: 'colorBlack',
+            name: 'LABEL1',
+          },
+          {
+            data: [
+              {label: 'label', rawValue: 0.3},
+              {label: 'label', rawValue: 0.9},
+            ],
+            color: 'colorBlack',
+            name: 'LABEL2',
+          },
+        ],
+        integersOnly: true,
+      });
+
+      expect(minMax).toStrictEqual({min: 0, max: 1});
+    });
   });
 });

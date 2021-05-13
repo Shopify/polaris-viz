@@ -11,6 +11,10 @@
 
 - 0 values not showing a min height bar in grouped `<MultiSeriesBarChart />`
 
+### Added
+
+- `integersOnly` prop to `yAxisOptions` for `<LineChart />`, `<BarChart />`, and `<MultiSeriesBarChart />`
+
 ## [0.13.2] - 2021-05-17
 
 ### Changed

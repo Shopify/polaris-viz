@@ -58,6 +58,7 @@ const yAxisOptions = {
   labelFormatter: jest.fn((value) => value),
   labelColor: 'red',
   backgroundColor: 'transparent',
+  integersOnly: false,
 };
 
 const gridOptions = {
@@ -82,17 +83,6 @@ const mockProps = {
   isAnimated: false,
 };
 
-const mockEmptyStateProps = {
-  series: [],
-  dimensions: {width: 100, height: 100},
-  lineOptions,
-  xAxisOptions,
-  yAxisOptions,
-  gridOptions,
-  crossHairOptions,
-  renderTooltipContent: jest.fn(() => <p>Mock Tooltip</p>),
-  isAnimated: false,
-};
 jest.mock('../../../utilities', () => {
   return {
     ...jest.requireActual('../../../utilities'),
@@ -279,20 +269,20 @@ describe('<Chart />', () => {
 
   describe('empty state', () => {
     it('does not render tooltip for empty state', () => {
-      const chart = mount(<Chart {...mockEmptyStateProps} />);
+      const chart = mount(<Chart {...mockProps} series={[]} />);
 
       expect(chart).not.toContainReactText('Mock Tooltip');
       expect(chart).not.toContainReactComponent(TooltipContainer);
     });
 
     it('does not render crosshair for empty state', () => {
-      const chart = mount(<Chart {...mockEmptyStateProps} />);
+      const chart = mount(<Chart {...mockProps} series={[]} />);
 
       expect(chart).not.toContainReactComponent(Crosshair);
     });
 
     it('does not render Visually Hidden Rows for empty state', () => {
-      const chart = mount(<Chart {...mockEmptyStateProps} />);
+      const chart = mount(<Chart {...mockProps} series={[]} />);
 
       expect(chart).not.toContainReactComponent(VisuallyHiddenRows);
     });

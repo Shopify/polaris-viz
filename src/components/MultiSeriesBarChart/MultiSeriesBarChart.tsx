@@ -145,6 +145,7 @@ export function MultiSeriesBarChart({
     labelFormatter: (value: number) => value.toString(),
     labelColor: DEFAULT_GREY_LABEL,
     backgroundColor: 'transparent',
+    integersOnly: false,
     ...yAxisOptions,
   };
 

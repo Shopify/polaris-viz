@@ -59,6 +59,7 @@ function TestComponent({stackedValues, data}: Props) {
     formatYAxisLabel: jest.fn(),
     data,
     stackedValues,
+    integersOnly: false,
   });
 
   return null;
@@ -246,6 +247,7 @@ describe('useYScale', () => {
         formatYAxisLabel: (value) => `Formatted: ${value}`,
         data: [mockData[0]],
         stackedValues: null,
+        integersOnly: false,
       });
 
       const {formattedValue} = ticks[0];
@@ -256,5 +258,74 @@ describe('useYScale', () => {
     const wrapper = mount(<TestFormattersComponent />);
 
     expect(wrapper).toContainReactText('Formatted: 25');
+  });
+
+  describe('integersOnly', () => {
+    it('filters out non-integer numbers if true', () => {
+      (scaleLinear as jest.Mock).mockImplementation(() => {
+        const scale = (value: any) => value;
+        scale.ticks = () => [0, 25.6, 50];
+        scale.range = (range: any) => (range ? scale : range);
+        scale.domain = (domain: any) => (domain ? scale : domain);
+        scale.nice = () => scale;
+        scale.copy = () => scale;
+        return scale;
+      });
+
+      function TestFormattersComponent() {
+        const {ticks} = useYScale({
+          drawableHeight: 300,
+          formatYAxisLabel: jest.fn(),
+          data: [mockData[0]],
+          stackedValues: null,
+          integersOnly: true,
+        });
+
+        return <p>{ticks.map(({value}) => `${value.toString()}-`)}</p>;
+      }
+
+      const wrapper = mount(<TestFormattersComponent />);
+
+      expect(wrapper).toContainReactText('0-50-');
+    });
+
+    it('rounds min domain down and max domain up to the nearest integer if true', () => {
+      let domainSpy = jest.fn();
+      (scaleLinear as jest.Mock).mockImplementation(() => {
+        const scale = (value: any) => value;
+        scale.ticks = (numTicks: number) => Array.from(Array(numTicks));
+        scale.range = (range: any) => (range ? scale : range);
+        domainSpy = jest.fn((domain: any) => (domain ? scale : domain));
+        scale.domain = domainSpy;
+        scale.nice = () => scale;
+        scale.copy = () => scale;
+        return scale;
+      });
+
+      function TestComponent() {
+        useYScale({
+          drawableHeight: 300,
+          formatYAxisLabel: jest.fn(),
+          data: [
+            {
+              data: [
+                {label: 'label', rawValue: 0.1},
+                {label: 'label', rawValue: 0.9},
+              ],
+              color: 'colorBlack',
+              name: 'LABEL1',
+            },
+          ],
+          stackedValues: null,
+          integersOnly: true,
+        });
+
+        return null;
+      }
+
+      mount(<TestComponent />);
+
+      expect(domainSpy).toHaveBeenCalledWith([0, 1]);
+    });
   });
 });

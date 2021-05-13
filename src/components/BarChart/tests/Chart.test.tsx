@@ -54,6 +54,7 @@ describe('Chart />', () => {
       labelFormatter: (value: number) => value.toString(),
       labelColor: 'red',
       backgroundColor: 'transparent',
+      integersOnly: false,
     },
     gridOptions: {
       showHorizontalLines: true,

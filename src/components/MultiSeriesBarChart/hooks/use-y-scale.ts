@@ -12,14 +12,16 @@ export function useYScale({
   data,
   formatYAxisLabel,
   stackedValues,
+  integersOnly,
 }: {
   drawableHeight: number;
   data: Series[];
   formatYAxisLabel: NumberLabelFormatter;
   stackedValues: StackSeries[] | null;
+  integersOnly: boolean;
 }) {
   const {yScale, ticks} = useMemo(() => {
-    const {min, max} = getMinMax(stackedValues, data);
+    const {min, max} = getMinMax({stackedValues, data, integersOnly});
 
     const maxTicks = Math.max(
       1,
@@ -34,14 +36,18 @@ export function useYScale({
       yScale.nice(maxTicks);
     }
 
-    const ticks = yScale.ticks(maxTicks).map((value) => ({
+    const filteredTicks = integersOnly
+      ? yScale.ticks(maxTicks).filter((tick) => Number.isInteger(tick))
+      : yScale.ticks(maxTicks);
+
+    const ticks = filteredTicks.map((value) => ({
       value,
       formattedValue: formatYAxisLabel(value),
       yOffset: yScale(value),
     }));
 
     return {yScale, ticks};
-  }, [data, drawableHeight, formatYAxisLabel, stackedValues]);
+  }, [data, drawableHeight, formatYAxisLabel, integersOnly, stackedValues]);
 
   return {yScale, ticks};
 }

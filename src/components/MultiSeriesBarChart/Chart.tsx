@@ -70,6 +70,7 @@ export function Chart({
     data: series,
     formatYAxisLabel: yAxisOptions.labelFormatter,
     stackedValues,
+    integersOnly: yAxisOptions.integersOnly,
   });
 
   const yAxisLabelWidth = useMemo(
@@ -148,6 +149,7 @@ export function Chart({
     data: series,
     formatYAxisLabel: yAxisOptions.labelFormatter,
     stackedValues,
+    integersOnly: yAxisOptions.integersOnly,
   });
 
   const barColors = series.map(({color}) => color);

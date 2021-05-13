@@ -114,6 +114,7 @@ interface BarChartProps {
   yAxisOptions?: {
     labelFormatter?(value: number): string;
     backgroundColor?: string;
+    integersOnly?: boolean;
   };
   annotations?: {
     dataIndex: number;
@@ -331,6 +332,14 @@ The color used for axis labels.
 | `string` | `transparant` |
 
 The color used behind axis labels.
+
+##### integersOnly
+
+| type      | default |
+| --------- | ------- |
+| `boolean` | `false` |
+
+Only use whole numbers for y axis ticks
 
 #### annotations
 

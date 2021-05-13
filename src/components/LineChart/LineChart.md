@@ -140,6 +140,7 @@ interface LineChartProps {
     labelFormatter?(value: number): string;
     labelColor: string;
     backgroundColor?: string;
+    integersOnly?: boolean;
   }
   gridOptions?: {
     showVerticalLines?: boolean;
@@ -365,6 +366,14 @@ The color used for axis labels.
 | `string` | `transparant` |
 
 The color used behind axis labels.
+
+##### integersOnly
+
+| type      | default |
+| --------- | ------- |
+| `boolean` | `false` |
+
+Only use whole numbers for y axis ticks.
 
 #### lineOptions
 

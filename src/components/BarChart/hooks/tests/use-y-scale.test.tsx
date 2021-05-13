@@ -17,6 +17,17 @@ jest.mock('d3-scale', () => ({
   }),
 }));
 
+const mockProps = {
+  drawableHeight: 500,
+  formatYAxisLabel: jest.fn(),
+  integersOnly: false,
+  data: [
+    {rawValue: 1000, label: ''},
+    {rawValue: -89, label: ''},
+    {rawValue: 300, label: ''},
+  ],
+};
+
 describe('useYScale', () => {
   afterEach(() => {
     (scaleLinear as jest.Mock).mockReset();
@@ -35,15 +46,7 @@ describe('useYScale', () => {
     });
 
     function TestComponent() {
-      useYScale({
-        drawableHeight: 500,
-        formatYAxisLabel: jest.fn(),
-        data: [
-          {rawValue: 1000, label: ''},
-          {rawValue: -89, label: ''},
-          {rawValue: 300, label: ''},
-        ],
-      });
+      useYScale(mockProps);
 
       return null;
     }
@@ -67,15 +70,7 @@ describe('useYScale', () => {
     });
 
     function TestComponent() {
-      useYScale({
-        drawableHeight: 400,
-        formatYAxisLabel: jest.fn(),
-        data: [
-          {rawValue: 1000, label: 'test'},
-          {rawValue: -89, label: 'test'},
-          {rawValue: 300, label: 'test'},
-        ],
-      });
+      useYScale(mockProps);
 
       return null;
     }
@@ -100,8 +95,7 @@ describe('useYScale', () => {
 
     function TestComponent() {
       useYScale({
-        drawableHeight: 400,
-        formatYAxisLabel: jest.fn(),
+        ...mockProps,
         data: [
           {rawValue: -1000, label: 'test'},
           {rawValue: -89, label: 'test'},
@@ -132,8 +126,7 @@ describe('useYScale', () => {
 
     function TestComponent() {
       useYScale({
-        drawableHeight: 400,
-        formatYAxisLabel: jest.fn(),
+        ...mockProps,
         data: [
           {rawValue: 0, label: 'test'},
           {rawValue: 0, label: 'test'},
@@ -164,9 +157,8 @@ describe('useYScale', () => {
 
     function TestComponent() {
       useYScale({
+        ...mockProps,
         drawableHeight: 250,
-        formatYAxisLabel: jest.fn(),
-        data: [{rawValue: 10, label: ''}],
       });
 
       return null;
@@ -190,9 +182,8 @@ describe('useYScale', () => {
 
     function TestComponent() {
       const {ticks} = useYScale({
-        drawableHeight: 250,
+        ...mockProps,
         formatYAxisLabel: jest.fn((value) => `Formatted value: ${value}`),
-        data: [{rawValue: 10, label: ''}],
       });
 
       const {formattedValue} = ticks[0];
@@ -203,5 +194,63 @@ describe('useYScale', () => {
     const wrapper = mount(<TestComponent />);
 
     expect(wrapper).toContainReactText('Formatted value: 50');
+  });
+
+  describe('integersOnly', () => {
+    it('only returns ticks for integers if true', () => {
+      (scaleLinear as jest.Mock).mockImplementation(() => {
+        const scale = (value: any) => value;
+        scale.ticks = () => [0, 0.5, 1];
+        scale.range = (range: any) => (range ? scale : range);
+        scale.domain = (domain: any) => (domain ? scale : domain);
+        scale.nice = () => scale;
+        scale.copy = () => scale;
+        return scale;
+      });
+
+      function TestComponent() {
+        const {ticks} = useYScale({
+          ...mockProps,
+          integersOnly: true,
+        });
+
+        return <p>{ticks.map(({value}) => `${value.toString()}-`)}</p>;
+      }
+
+      const wrapper = mount(<TestComponent />);
+
+      expect(wrapper).toContainReactText('0-1-');
+    });
+
+    it('rounds min domain down and max domain up to the nearest integer if true', () => {
+      let domainSpy = jest.fn();
+      (scaleLinear as jest.Mock).mockImplementation(() => {
+        const scale = (value: any) => value;
+        scale.ticks = (numTicks: number) => Array.from(Array(numTicks));
+        scale.range = (range: any) => (range ? scale : range);
+        domainSpy = jest.fn((domain: any) => (domain ? scale : domain));
+        scale.domain = domainSpy;
+        scale.nice = () => scale;
+        scale.copy = () => scale;
+        return scale;
+      });
+
+      function TestComponent() {
+        useYScale({
+          ...mockProps,
+          integersOnly: true,
+          data: [
+            {rawValue: 0.1, label: 'test'},
+            {rawValue: 0.9, label: 'test'},
+          ],
+        });
+
+        return null;
+      }
+
+      mount(<TestComponent />);
+
+      expect(domainSpy).toHaveBeenCalledWith([0, 1]);
+    });
   });
 });
