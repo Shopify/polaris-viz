@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+## [0.13.1] - 2021-05-13
+
+### Fixed
+
+- Check for `window.matchMedia` before calling it.
+
 ## [0.13.0] - 2021-05-13
 
 ### Addded

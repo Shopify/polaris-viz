@@ -93,17 +93,21 @@ export function BarChart({
 
     if (!isServer) {
       window.addEventListener('resize', debouncedUpdateDimensions);
-      window
-        .matchMedia('print')
-        .addEventListener('change', handlePrintMediaQueryChange);
+      if (window.matchMedia) {
+        window
+          .matchMedia('print')
+          .addEventListener('change', handlePrintMediaQueryChange);
+      }
     }
 
     return () => {
       if (!isServer) {
         window.removeEventListener('resize', debouncedUpdateDimensions);
-        window
-          .matchMedia('print')
-          .removeEventListener('change', handlePrintMediaQueryChange);
+        if (window.matchMedia) {
+          window
+            .matchMedia('print')
+            .removeEventListener('change', handlePrintMediaQueryChange);
+        }
       }
     };
   }, [
