@@ -25,6 +25,8 @@ Used in small sizes to give an overview of how a metric has performed over time.
       {x: 9, y: 500},
       {x: 10, y: 500},
     ]}
+    dataOffsetRight={50}
+    dataOffsetLeft={12}
   />
 </div>
 ```
@@ -35,12 +37,14 @@ The sparkbar interface looks like this:
 
 ```typescript
 {
-  data: number[];
+  data: (number | null)[];
   comparison?: number;
   color?: Color;
   accessibilityLabel?: string;
   isAnimated?: boolean;
   barFillStyle?: 'solid' | 'gradient'
+  dataOffsetRight?: number;
+  dataOffsetLeft?: number;
 }
 ```
 
@@ -56,11 +60,11 @@ This component determines its width and height based off its parent element. The
 
 #### data
 
-| type       |
-| ---------- |
-| `number[]` |
+| type                |
+| ------------------- |
+| `(number | null)[]` |
 
-The prop to determine the chart's drawn area.
+The prop to determine the chart's bars. Null bars will not be plotted.
 
 ### Optional props
 
@@ -103,3 +107,19 @@ Determines whether to animate the chart on state changes.
 | `solid | gradient` | `solid` |
 
 Determines whether what kind of shading to use to fill the bars.
+
+##### dataOffsetLeft
+
+| type     | default |
+| -------- | ------- |
+| `number` | `0`     |
+
+The amount of pixels to add as a left margin to the bar data.
+
+##### dataOffsetRight
+
+| type     | default |
+| -------- | ------- |
+| `number` | `0`     |
+
+The amount of pixels to add as a right margin to the bar data.
