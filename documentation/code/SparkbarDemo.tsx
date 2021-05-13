@@ -3,7 +3,6 @@ import React from 'react';
 // eslint-disable-next-line shopify/strict-component-boundaries
 import {Sparkbar} from '../../src/components';
 
-import {SparklineDemo} from './SparklineDemo';
 import {OUTER_CONTAINER_STYLE} from './constants';
 
 export function SparkbarDemo() {
@@ -18,7 +17,7 @@ export function SparkbarDemo() {
         <div style={{width: 200, height: 150}}>
           <Sparkbar
             isAnimated
-            data={[100, 200, 300, -400, 400, 1000, 200, 800, 900, 200, 400]}
+            data={[100, 200, 300, 400, 400, 1000, 200, 800, 900, 200, 400]}
             comparison={[
               {x: 0, y: 500},
               {x: 1, y: 500},

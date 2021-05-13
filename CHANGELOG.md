@@ -1,12 +1,51 @@
 # Changelog
 
-## Unreleased
+## [0.10.2] — 2021-05-05
+
+### Fixed
+
+- Reverts dev dependency changes that broke deploy
+
+## [0.10.1] — 2021-05-05
+
+### Added
+
+- Export `Color` and `GradientStop` types
+
+### Fixed
+
+- `<BarChart />` data type
+
+## [0.10.0] — 2021-05-04
+
+### Added
+
+- `margin` prop to `barOptions` for `<MultiSeriesBarChart/>`
+- Allow individual bar colors for `<BarChart />`
+- Add gradient color options for `<MultiSeriesBarChart />`
+
+### Removed
+
+- `highLightColor` from `<MultiSeriesBarChart />` `barOptions` prop
+
+## [0.9.4] — 2021-05-04
+
+### Added
+
+- Dark mode colors to Color type
+
+## [0.9.3] — 2021-05-03
+
+### Fixed
+
+- Performance regression in `<LineChart/>`
 
 - Added a PieChart component. [#244](https://github.com/Shopify/polaris-viz/pull/244)
 
 ### Added
 
 - Check window is defined before accessing window methods
+- Added new dark mode colors
 
 ## [0.9.2] — 2021-04-29
 

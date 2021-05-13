@@ -5,6 +5,14 @@ import {
   GradientStop,
 } from 'types';
 
+export interface BarChartData {
+  barOptions?: {
+    color: Color;
+  };
+  label: string;
+  rawValue: number;
+}
+
 export enum BarMargin {
   Small = 0.05,
   Medium = 0.1,

@@ -22,7 +22,6 @@ import {
   SMALL_WIDTH,
   SMALL_FONT_SIZE,
   SPACING,
-  INNER_PADDING,
 } from './constants';
 import styles from './Chart.scss';
 
@@ -30,7 +29,7 @@ interface Props {
   series: Required<Series>[];
   chartDimensions: DOMRect;
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
-  barOptions: BarOptions;
+  barOptions: Omit<BarOptions, 'margin'> & {margin: number};
   gridOptions: GridOptions;
   xAxisOptions: XAxisOptions;
   yAxisOptions: YAxisOptions;
@@ -98,9 +97,15 @@ export function Chart({
         xLabels: formattedXAxisLabels,
         fontSize,
         chartDimensions,
-        padding: INNER_PADDING,
+        padding: barOptions.margin,
       }),
-    [yAxisLabelWidth, formattedXAxisLabels, fontSize, chartDimensions],
+    [
+      yAxisLabelWidth,
+      formattedXAxisLabels,
+      fontSize,
+      chartDimensions,
+      barOptions.margin,
+    ],
   );
 
   const drawableWidth = chartDimensions.width - MARGIN.Right - axisMargin;
@@ -112,6 +117,7 @@ export function Chart({
   const {xScale, xAxisLabels} = useXScale({
     drawableWidth,
     data: sortedData,
+    barMargin: barOptions.margin,
     labels: formattedXAxisLabels,
   });
 
@@ -131,7 +137,6 @@ export function Chart({
   });
 
   const barColors = series.map(({color}) => color);
-  const barHighlightColors = series.map(({highlightColor}) => highlightColor);
 
   const tooltipContentMarkup = useMemo(() => {
     if (activeBarGroup == null) {
@@ -247,7 +252,6 @@ export function Chart({
                     xScale={xScale}
                     yScale={yScale}
                     colors={barColors}
-                    highlightColors={barHighlightColors}
                     onFocus={handleFocus}
                     accessibilityData={accessibilityData}
                   />
@@ -261,12 +265,14 @@ export function Chart({
                     isAnimated={isAnimated}
                     key={index}
                     x={xPosition == null ? 0 : xPosition}
-                    isActive={activeBarGroup === index}
+                    isSubdued={
+                      activeBarGroup != null && index !== activeBarGroup
+                    }
                     yScale={yScale}
                     data={item}
                     width={xScale.bandwidth()}
+                    height={drawableHeight}
                     colors={barColors}
-                    highlightColors={barHighlightColors}
                     onFocus={handleFocus}
                     barGroupIndex={index}
                     ariaLabel={ariaLabel}

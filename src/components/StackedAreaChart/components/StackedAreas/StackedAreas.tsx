@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import isEqual from 'lodash.isequal';
-import {animated, useSpring} from 'react-spring';
+import {animated, useSpring} from '@react-spring/web';
 import {area, Series} from 'd3-shape';
 import {Color} from 'types';
 import {ScaleLinear} from 'd3-scale';

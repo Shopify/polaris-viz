@@ -12,7 +12,6 @@ const series = [
   {
     name: 'Breakfast',
     color: 'primary',
-    highlightColor: 'primaryProminent',
     data: [
       {label: 'Monday', rawValue: 3},
       {label: 'Tuesday', rawValue: 7},
@@ -26,7 +25,6 @@ const series = [
   {
     name: 'Lunch',
     color: 'secondary',
-    highlightColor: 'secondaryProminent',
     data: [
       {label: 'Monday', rawValue: 4},
       {label: 'Tuesday', rawValue: 3},
@@ -40,7 +38,6 @@ const series = [
   {
     name: 'Dinner',
     color: 'tertiary',
-    highlightColor: 'tertiaryProminent',
     data: [
       {label: 'Monday', rawValue: 7},
       {label: 'Tuesday', rawValue: 2},
@@ -98,4 +95,67 @@ export const Default = Template.bind({});
 Default.args = {
   series,
   xAxisOptions: {labels},
+};
+
+const purple = '#5052b3';
+const negativePurple = '#39337f';
+const green = '#1bbe9e';
+
+const barGradient1 = [
+  {
+    color: negativePurple,
+    offset: 0,
+  },
+  {
+    color: purple,
+    offset: 50,
+  },
+  {
+    color: green,
+    offset: 100,
+  },
+];
+const barGradient2 = [
+  {
+    color: '#374352',
+    offset: 0,
+  },
+  {
+    color: '#4d5e73',
+    offset: 50,
+  },
+];
+
+const gradientSeries = series
+  .map((serie, index) => ({
+    ...serie,
+    color: index % 2 === 0 ? barGradient1 : barGradient2,
+  }))
+  .filter((_, index) => index < 2);
+
+export const Gradient = Template.bind({});
+Gradient.args = {
+  series: gradientSeries,
+  xAxisOptions: {labels},
+  barOptions: {
+    hasRoundedCorners: true,
+  },
+};
+
+export const Stacked = Template.bind({});
+Stacked.args = {
+  series: series,
+  xAxisOptions: {labels},
+  barOptions: {
+    isStacked: true,
+  },
+};
+
+export const StackedGradient = Template.bind({});
+StackedGradient.args = {
+  series: gradientSeries,
+  xAxisOptions: {labels},
+  barOptions: {
+    isStacked: true,
+  },
 };

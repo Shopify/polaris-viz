@@ -12,4 +12,3 @@ export const SMALL_FONT_SIZE = 10;
 export const DEFAULT_HEIGHT = 250;
 export const BAR_SPACING = 0.5;
 export const DIAGONAL_ANGLE = -40;
-export const INNER_PADDING = 0.3;

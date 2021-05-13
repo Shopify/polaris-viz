@@ -10,6 +10,16 @@ jest.mock('d3-scale', () => ({
   }),
 }));
 
+const mockProps = {
+  drawableWidth: 200,
+  barMargin: 0,
+  data: [
+    [10, 20, 30],
+    [0, 1, 2],
+  ],
+  labels: ['label 1', 'label 2'],
+};
+
 describe('useXScale', () => {
   afterEach(() => {
     (scaleBand as jest.Mock).mockReset();
@@ -28,14 +38,7 @@ describe('useXScale', () => {
     });
 
     function TestComponent() {
-      useXScale({
-        drawableWidth: 200,
-        data: [
-          [10, 20, 30],
-          [0, 1, 2],
-        ],
-        labels: ['label 1', 'label 2'],
-      });
+      useXScale(mockProps);
 
       return null;
     }
@@ -59,14 +62,7 @@ describe('useXScale', () => {
     });
 
     function TestComponent() {
-      useXScale({
-        drawableWidth: 200,
-        data: [
-          [10, 20, 30],
-          [0, 1, 2],
-        ],
-        labels: ['label 1', 'label 2'],
-      });
+      useXScale(mockProps);
       return null;
     }
 
@@ -87,14 +83,7 @@ describe('useXScale', () => {
     });
 
     function TestComponent() {
-      const {xAxisLabels} = useXScale({
-        drawableWidth: 200,
-        data: [
-          [10, 20, 30],
-          [0, 1, 2],
-        ],
-        labels: ['label 1', 'label 2'],
-      });
+      const {xAxisLabels} = useXScale(mockProps);
       return (
         <React.Fragment>
           {xAxisLabels.map(({value, xOffset}, index) => (
@@ -106,5 +95,34 @@ describe('useXScale', () => {
 
     const testComponent = mount(<TestComponent />);
     expect(testComponent).toContainReactText('label 1-50');
+  });
+
+  describe('barMargin', () => {
+    it('adds inner padding using the bar margin', () => {
+      let paddingSpy = jest.fn();
+
+      (scaleBand as jest.Mock).mockImplementation(() => {
+        const scale = (value: any) => value;
+        scale.domain = () => scale;
+        scale.range = () => scale;
+        scale.bandwidth = () => 10;
+        paddingSpy = jest.fn(() => scale);
+        scale.paddingInner = paddingSpy;
+        return scale;
+      });
+
+      function TestComponent() {
+        useXScale({
+          ...mockProps,
+          barMargin: 0.5,
+        });
+
+        return null;
+      }
+
+      mount(<TestComponent />);
+
+      expect(paddingSpy).toHaveBeenCalledWith(0.5);
+    });
   });
 });

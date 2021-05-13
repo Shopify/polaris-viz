@@ -24,3 +24,5 @@ export {
   SquareColorPreview,
   PieChart,
 } from './components';
+
+export {Color, GradientStop} from './types';

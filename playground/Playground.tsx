@@ -65,11 +65,8 @@ export default function Playground() {
   return (
     <div>
       <h3>Playground area</h3>
-      <NormalizedStackedBarChart
-        size="large"
-        // orientation="vertical"
-        {...mockProps}
-      />
+
+      <PlaygroundDemos.SparkbarDemo />
       <br />
       <button onClick={toggleDemos}>Toggle Demos</button>
       {showDemos && <Demos />}

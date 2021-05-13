@@ -105,7 +105,7 @@ Annotations.args = {
       dataIndex: 1,
       xOffset: 0.5,
       width: 5,
-      color: 'green',
+      color: '#737376',
       ariaLabel: 'Median: 1.5',
       tooltipData: {
         label: 'Median',
@@ -118,4 +118,32 @@ Annotations.args = {
   yAxisOptions: {labelFormatter: formatLabelNoop},
   renderTooltipContent: renderTooltipContentWithAnnotation,
   isAnimated: false,
+};
+
+export const LastBarTreatment = Template.bind({});
+LastBarTreatment.args = {
+  data: [
+    {rawValue: 1324.19, label: '2020-01-01T12:00:00Z'},
+    {rawValue: 1022.79, label: '2020-01-02T12:00:00Z'},
+    {rawValue: 713.29, label: '2020-01-03T12:00:00Z'},
+    {rawValue: 413.29, label: '2020-01-04T12:00:00Z'},
+    {rawValue: 100.79, label: '2020-01-05T12:00:00Z'},
+    {rawValue: 350.6, label: '2020-01-06T12:00:00Z'},
+    {rawValue: 277.69, label: '2020-01-07T12:00:00Z'},
+    {rawValue: 50.6, label: '2020-01-08T12:00:00Z'},
+    {
+      rawValue: 950.19,
+      label: '2020-01-09T12:00:00Z',
+      barOptions: {
+        color: 'colorGrayDark',
+      },
+    },
+  ],
+  barOptions: {
+    color: barGradient,
+    hasRoundedCorners: true,
+  },
+  xAxisOptions: {labelFormatter: formatXAxisLabel},
+  yAxisOptions: {labelFormatter: formatYAxisLabel},
+  renderTooltipContent,
 };

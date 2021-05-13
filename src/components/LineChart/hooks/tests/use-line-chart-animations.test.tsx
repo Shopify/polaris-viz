@@ -63,7 +63,7 @@ describe('useLineChartAnimations', () => {
 
     mount(<TestComponent />);
 
-    expect(animatedCoordinates![0].getValue()).toMatchObject({x: 0, y: 0});
+    expect(animatedCoordinates![0].get()).toMatchObject({x: 0, y: 0});
   });
 
   it('returns null if isAnimated is false', () => {

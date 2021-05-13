@@ -79,7 +79,6 @@ export function BarChartDemo() {
           barOptions={{
             color: 'quaternary',
             hasRoundedCorners: true,
-            highlightColor: 'quaternaryProminent',
           }}
           xAxisOptions={{
             labelFormatter: formatXAxisLabel,

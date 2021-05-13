@@ -4,6 +4,11 @@ import {scaleBand, scaleLinear} from 'd3-scale';
 import {Color} from 'types';
 import {StackSeries} from 'components/MultiSeriesBarChart/types';
 
+import {
+  MASK_HIGHLIGHT_COLOR,
+  MASK_SUBDUE_COLOR,
+} from '../../../../../constants';
+import {Stack} from '../components';
 import {StackedBarGroup} from '../StackedBarGroup';
 
 jest.mock('d3-scale', () => ({
@@ -28,7 +33,6 @@ describe('<StackedBarGroup/>', () => {
     yScale: scaleLinear() as any,
     xScale: scaleBand() as any,
     colors: ['primary', 'secondary'] as Color[],
-    highlightColors: ['primaryProminent', 'secondaryProminent'] as Color[],
     activeBarGroup: null,
     onFocus: jest.fn(),
     accessibilityData: [
@@ -74,52 +78,107 @@ describe('<StackedBarGroup/>', () => {
     ],
   };
 
-  it('renders a rect for each data item', () => {
-    const wrapper = mount(
-      <svg>
-        <StackedBarGroup {...mockProps} />
-      </svg>,
-    );
+  describe('colors', () => {
+    describe('if is a solid color', () => {
+      it('gets passed to <g> wrapping <Stack>', () => {
+        const wrapper = mount(
+          <svg>
+            <StackedBarGroup
+              {...mockProps}
+              colors={['primary', 'secondary'] as Color[]}
+            />
+          </svg>,
+        );
 
-    expect(wrapper).toContainReactComponentTimes('rect', mockProps.data.length);
-  });
+        expect(wrapper).toContainReactComponent('g', {
+          style: {
+            fill: 'rgb(41,35,112)',
+          },
+        });
+      });
+    });
+    describe('if is a gradient', () => {
+      it('passes a gradient url <g> wrapping <Stack>', () => {
+        const wrapper = mount(
+          <svg>
+            <StackedBarGroup
+              {...mockProps}
+              colors={[
+                [
+                  {color: '#39337f', offset: 0},
+                  {color: '#5052b3', offset: 50},
+                  {color: '#1bbe9e', offset: 100},
+                ],
+                [
+                  {color: '#374352', offset: 0},
+                  {color: '#4d5e73', offset: 50},
+                ],
+              ]}
+            />
+          </svg>,
+        );
 
-  it('renders bar stack with colors from series props', () => {
-    const wrapper = mount(
-      <svg>
-        <StackedBarGroup {...mockProps} />
-      </svg>,
-    );
-
-    expect(wrapper).toContainReactComponent('rect', {
-      fill: 'rgb(41,35,112)',
+        expect(wrapper).toContainReactComponent('g', {
+          style: {
+            fill: expect.stringContaining('#gradient'),
+          },
+        });
+      });
     });
   });
 
-  it('renders bar stack with highlightColors from series prop when it is the activeBarGroup', () => {
-    const wrapper = mount(
-      <svg>
-        <StackedBarGroup {...mockProps} activeBarGroup={1} />
-      </svg>,
-    );
+  describe('activeBarGroup', () => {
+    it('passes MASK_HIGHLIGHT_COLOR to <g> if is not set', () => {
+      const wrapper = mount(
+        <svg>
+          <StackedBarGroup {...mockProps} activeBarGroup={null} />
+        </svg>,
+      );
 
-    expect(wrapper).toContainReactComponent('rect', {
-      fill: 'rgb(9, 6, 37)',
+      expect(wrapper.find('mask')).toContainReactComponent('g', {
+        style: {fill: MASK_HIGHLIGHT_COLOR},
+      });
+      expect(wrapper.find('mask')).not.toContainReactComponent('g', {
+        style: {fill: MASK_SUBDUE_COLOR},
+      });
+    });
+    it('passes MASK_SUBDUE_COLOR to <g> if is set', () => {
+      const wrapper = mount(
+        <svg>
+          <StackedBarGroup {...mockProps} activeBarGroup={1} />
+        </svg>,
+      );
+
+      expect(wrapper.find('mask')).toContainReactComponent('g', {
+        style: {fill: MASK_SUBDUE_COLOR},
+      });
     });
   });
 
-  it('renders a bar with height', () => {
-    const wrapper = mount(
-      <svg>
-        <StackedBarGroup {...mockProps} />
-      </svg>,
-    );
+  describe('<Stack/>', () => {
+    it('gets rendered with aria-hidden inside <mask>', () => {
+      const wrapper = mount(
+        <svg>
+          <StackedBarGroup {...mockProps} />
+        </svg>,
+      );
 
-    const rects = wrapper.findAll('rect');
-    const firstRect = rects[0];
+      expect(wrapper.find('mask')).toContainReactComponent(Stack, {
+        ariaHidden: true,
+      });
+    });
+    it('gets rendered with aria-hidden false outside <mask>', () => {
+      const wrapper = mount(
+        <svg>
+          <StackedBarGroup {...mockProps} />
+        </svg>,
+      );
 
-    expect(firstRect).toHaveReactProps({
-      height: 1,
+      const stacks = wrapper.findAll(Stack);
+
+      expect(stacks[1]).toHaveReactProps({
+        ariaHidden: false,
+      });
     });
   });
 });

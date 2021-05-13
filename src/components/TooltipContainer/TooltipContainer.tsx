@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState, ReactNode} from 'react';
-import {useSpring, animated} from 'react-spring';
+import {useSpring, animated} from '@react-spring/web';
 
 import {clamp} from '../../utilities';
 
@@ -84,7 +84,7 @@ export function TooltipContainer({
       const shouldRenderImmediate = firstRender.current;
       firstRender.current = false;
 
-      // react-spring docs do not return the `next` callback
+      // @react-spring/web docs do not return the `next` callback
       // eslint-disable-next-line callback-return
       await next({
         translate: [
@@ -117,7 +117,7 @@ export function TooltipContainer({
         top: 0,
         left: 0,
         opacity: spring.opacity,
-        transform: spring.translate.interpolate(
+        transform: spring.translate.to(
           // eslint-disable-next-line id-length
           (x: number, y: number, z: number) =>
             `translate3d(${x}px, ${y}px, ${z}px)`,

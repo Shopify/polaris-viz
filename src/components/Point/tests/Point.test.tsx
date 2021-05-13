@@ -40,7 +40,7 @@ describe('<Point />', () => {
       });
     });
 
-    it('renders with a radius of 5 when not active', () => {
+    it('renders with a radius of 0 when not active', () => {
       const point = mount(
         <svg>
           <Point {...mockProps} active={false} />

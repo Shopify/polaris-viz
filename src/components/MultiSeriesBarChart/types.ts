@@ -1,16 +1,14 @@
 import {Series as ShapeSeries} from 'd3-shape';
 
 import {
-  Color,
-  DataSeries,
-  Data,
   StringLabelFormatter,
   NumberLabelFormatter,
+  DataSeries,
+  Data,
+  SeriesColor,
 } from '../../types';
 
-export interface Series extends DataSeries<Data, Color> {
-  highlightColor?: Color;
-}
+export type Series = DataSeries<Data, SeriesColor>;
 
 export type StackSeries = ShapeSeries<
   {
@@ -21,7 +19,7 @@ export type StackSeries = ShapeSeries<
 
 export interface RenderTooltipContentData {
   data: {
-    color: Color;
+    color: SeriesColor;
     label: string;
     value: number;
   }[];
@@ -36,7 +34,15 @@ export interface AccessibilitySeries {
   }[];
 }
 
+export enum BarMargin {
+  Small = 0.1,
+  Medium = 0.3,
+  Large = 0.5,
+  None = 0,
+}
+
 export interface BarOptions {
+  margin: keyof typeof BarMargin;
   hasRoundedCorners: boolean;
   isStacked: boolean;
 }

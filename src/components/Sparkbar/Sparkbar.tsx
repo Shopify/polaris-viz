@@ -8,7 +8,7 @@ import React, {
 import {useDebouncedCallback} from 'use-debounce';
 import {scaleBand, scaleLinear} from 'd3-scale';
 import {area} from 'd3-shape';
-import {useTransition} from 'react-spring';
+import {useTransition} from '@react-spring/web';
 
 import {usePrefersReducedMotion} from '../../hooks';
 import {BARS_TRANSITION_CONFIG} from '../../constants';
@@ -26,7 +26,8 @@ import styles from './Sparkbar.scss';
 
 const STROKE_WIDTH = 1.5;
 const BAR_PADDING = 0.15;
-const MARGIN = 17;
+const MARGIN = 8;
+const ANIMATION_MARGIN = 17;
 
 interface Coordinates {
   x: number;
@@ -40,6 +41,27 @@ export interface SparkbarProps {
   accessibilityLabel?: string;
   isAnimated?: boolean;
   barFillStyle?: 'solid' | 'gradient';
+}
+
+function calculateRange(data: number[], height: number) {
+  let hasNegatives;
+  let hasPositives;
+  for (const val of data) {
+    if (val < 0) hasNegatives = true;
+    else if (val > 0) hasPositives = true;
+
+    if (hasNegatives && hasPositives) break;
+  }
+
+  let range = [height, MARGIN];
+
+  if (hasNegatives && hasPositives) {
+    range = [height - MARGIN, MARGIN];
+  } else if (hasNegatives) {
+    range = [height - MARGIN, 0];
+  }
+
+  return range;
 }
 
 export function Sparkbar({
@@ -88,7 +110,7 @@ export function Sparkbar({
   const {width, height} = svgDimensions;
 
   const yScale = scaleLinear()
-    .range([height - MARGIN, MARGIN])
+    .range(calculateRange(data, height))
     .domain([Math.min(...data, 0), Math.max(...data, 0)]);
 
   const xScale = scaleBand()
@@ -123,23 +145,32 @@ export function Sparkbar({
 
   const shouldAnimate = !prefersReducedMotion && isAnimated;
 
-  const transitions = useTransition(dataWithIndex, ({index}) => index, {
+  const transitions = useTransition(dataWithIndex, {
+    key: ({index}: {index: number}) => index,
     from: {height: 0},
     leave: {height: 0},
     enter: ({value}) => ({height: getBarHeight(value)}),
     update: ({value}) => ({height: getBarHeight(value)}),
-    immediate: !shouldAnimate,
+    default: {immediate: !shouldAnimate},
     trail: shouldAnimate ? getAnimationTrail(dataWithIndex.length) : 0,
     config: BARS_TRANSITION_CONFIG,
   });
 
   return (
-    <div style={{width: '100%', height: '100%'}} ref={containerRef}>
+    <div className={styles.Wrapper} ref={containerRef}>
       {accessibilityLabel ? (
         <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
       ) : null}
 
-      <svg aria-hidden width={width} height={height}>
+      <svg
+        aria-hidden
+        viewBox={`0 ${ANIMATION_MARGIN * -1} ${width} ${height +
+          ANIMATION_MARGIN * 2}`}
+        style={{
+          transform: `translateY(${ANIMATION_MARGIN * -1}px)`,
+        }}
+        className={styles.Svg}
+      >
         {barFillStyle === 'gradient' ? (
           <LinearGradient
             id={id}
@@ -157,7 +188,7 @@ export function Sparkbar({
         ) : null}
 
         <g fill={barFillStyle === 'gradient' ? `url(#${id})` : currentColor}>
-          {transitions.map(({item, props: {height: barHeight}}, index) => {
+          {transitions(({height: barHeight}, item, _transition, index) => {
             const xPosition = xScale(index.toString());
             return (
               <g key={index} opacity={comparison ? '0.9' : '1'}>

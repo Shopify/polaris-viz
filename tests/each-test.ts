@@ -1,5 +1,6 @@
 import {destroyAll} from '@shopify/react-testing';
 import '@shopify/react-testing/matchers';
+import {Globals} from '@react-spring/web';
 
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
@@ -13,6 +14,10 @@ Object.defineProperty(window, 'matchMedia', {
     removeEventListener: jest.fn(),
     dispatchEvent: jest.fn(),
   })),
+});
+
+Globals.assign({
+  skipAnimation: true,
 });
 
 describe('setup', () => {

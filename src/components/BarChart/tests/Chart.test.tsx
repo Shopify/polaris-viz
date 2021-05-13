@@ -1,9 +1,9 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {Color} from 'types';
-import {YAxis, TooltipContainer, BarChartXAxis} from 'components';
+import {YAxis, TooltipContainer, BarChartXAxis, Bar} from 'components';
 
-import {AnnotationLine, Bar} from '../components';
+import {AnnotationLine} from '../components';
 import {Chart} from '../Chart';
 import {MASK_SUBDUE_COLOR, MASK_HIGHLIGHT_COLOR} from '../../../constants';
 
@@ -192,6 +192,33 @@ describe('Chart />', () => {
       const chart = mount(<Chart {...mockProps} />);
 
       expect(chart).toContainReactComponent(AnnotationLine);
+    });
+  });
+
+  describe('data.barOptions.color', () => {
+    it('renders when the barOptions.color exists', () => {
+      const updatedProps = {
+        ...mockProps,
+        data: [
+          {rawValue: 10, label: 'data'},
+          {
+            rawValue: 20,
+            label: 'data 2',
+            barOptions: {
+              color: 'colorGrayDark' as Color,
+            },
+          },
+        ],
+      };
+      const chart = mount(<Chart {...updatedProps} />);
+
+      expect(chart.find('rect', {fill: 'rgb(55, 66, 80)'})).not.toBeNull();
+    });
+
+    it('does not render when the barOptions.color does not exist', () => {
+      const chart = mount(<Chart {...mockProps} />);
+
+      expect(chart.find('rect', {fill: 'rgb(55, 66, 80)'})).toBeNull();
     });
   });
 });

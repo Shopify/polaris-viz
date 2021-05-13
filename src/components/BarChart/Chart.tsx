@@ -1,7 +1,6 @@
 import React, {useState, useMemo, useCallback} from 'react';
-import {useTransition} from 'react-spring';
+import {useTransition} from '@react-spring/web';
 
-import {Data} from '../../types';
 import {usePrefersReducedMotion} from '../../hooks';
 import {
   LINE_HEIGHT,
@@ -19,13 +18,15 @@ import {
   getColorValue,
   isGradientType,
 } from '../../utilities';
+import {Bar} from '../../components';
 import {YAxis} from '../YAxis';
 import {BarChartXAxis} from '../BarChartXAxis';
 import {TooltipContainer} from '../TooltipContainer';
 import {LinearGradient} from '../LinearGradient';
 
-import {AnnotationLine, Bar} from './components';
+import {AnnotationLine} from './components';
 import {
+  BarChartData,
   RenderTooltipContentData,
   BarOptions,
   GridOptions,
@@ -44,7 +45,7 @@ import {
 import styles from './Chart.scss';
 
 interface Props {
-  data: Data[];
+  data: BarChartData[];
   annotationsLookupTable: AnnotationLookupTable;
   chartDimensions: DOMRect;
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
@@ -180,12 +181,13 @@ export function Chart({
 
   const shouldAnimate = !prefersReducedMotion && isAnimated;
 
-  const transitions = useTransition(data, (dataPoint) => dataPoint.label, {
+  const transitions = useTransition(data, {
+    default: {immediate: !shouldAnimate},
+    keys: (dataPoint) => dataPoint.label,
     from: {height: 0},
     leave: {height: 0},
     enter: ({rawValue}) => ({height: getBarHeight(rawValue)}),
     update: ({rawValue}) => ({height: getBarHeight(rawValue)}),
-    immediate: !shouldAnimate,
     trail: shouldAnimate ? getAnimationTrail(data.length) : 0,
     config: BARS_TRANSITION_CONFIG,
   });
@@ -233,7 +235,7 @@ export function Chart({
 
           <mask id={clipId}>
             <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
-              {transitions.map(({item, props: {height}}, index) => {
+              {transitions(({height}, item, _transition, index) => {
                 const xPosition = xScale(index.toString());
                 const ariaLabel = `${xAxisOptions.labelFormatter(
                   data[index].label,
@@ -300,17 +302,39 @@ export function Chart({
           />
         </g>
 
-        <rect
-          mask={`url(#${clipId})`}
-          x="0"
-          y="0"
-          width={width}
-          height={height}
-          fill={`url(#${gradientId})`}
-        />
+        <g mask={`url(#${clipId})`}>
+          <rect
+            x="0"
+            y="0"
+            width={width}
+            height={height}
+            fill={`url(#${gradientId})`}
+          />
+          {transitions((_props, item, _transition, index) => {
+            const xPosition = xScale(index.toString());
+            const xPositionValue = xPosition == null ? 0 : xPosition;
+            const translateXValue = xPositionValue + axisMargin;
+            const barColor =
+              item.barOptions != null && item.barOptions.color != null
+                ? item.barOptions.color
+                : null;
+            return barColor != null ? (
+              <rect
+                key={index}
+                transform={`translate(${translateXValue},${MARGIN.Top})`}
+                x="0"
+                y="0"
+                width={barWidth}
+                height={height}
+                fill={getColorValue(barColor)}
+              />
+            ) : null;
+          })}
+          ;
+        </g>
 
         <g transform={`translate(${axisMargin},${MARGIN.Top})`}>
-          {transitions.map((_, index) => {
+          {transitions((_props, _item, _transition, index) => {
             const xPosition = xScale(index.toString());
             const xPositionValue = xPosition == null ? 0 : xPosition;
             const annotation = annotationsLookupTable[index];

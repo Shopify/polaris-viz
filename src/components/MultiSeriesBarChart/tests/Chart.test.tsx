@@ -135,56 +135,14 @@ describe('Chart />', () => {
       expect(chart).toContainReactComponentTimes(BarGroup, 3);
     });
 
-    it('passes active props to the BarGroup that is being hovered', () => {
+    it('passes isSubdued props to the BarGroup around what is being hovered', () => {
       const chart = mount(<Chart {...mockProps} />);
 
       const svg = chart.find('svg')!;
       svg.trigger('onMouseMove', fakeSVGEvent);
 
       expect(chart).toContainReactComponent(BarGroup, {
-        isActive: true,
-      });
-    });
-
-    it('passes highlightColors with default colors to barGroup when no highlightColors are provided', () => {
-      const chart = mount(<Chart {...mockProps} />);
-
-      expect(chart).toContainReactComponent(BarGroup, {
-        highlightColors: ['colorBlack', 'colorRed'],
-      });
-    });
-
-    it('passes highlightColors barGroup', () => {
-      const chart = mount(
-        <Chart
-          {...mockProps}
-          series={[
-            {
-              data: [
-                {label: 'stuff 1', rawValue: 10},
-                {label: 'stuff 2', rawValue: 20},
-                {label: 'stuff 3', rawValue: 30},
-              ],
-              color: 'colorBlack' as Color,
-              highlightColor: 'primary' as Color,
-              name: 'LABEL1',
-            },
-            {
-              data: [
-                {label: 'stuff 1', rawValue: 10},
-                {label: 'stuff 2', rawValue: 20},
-                {label: 'stuff 3', rawValue: 30},
-              ],
-              color: 'colorRed' as Color,
-              highlightColor: 'secondary' as Color,
-              name: 'LABEL2',
-            },
-          ]}
-        />,
-      );
-
-      expect(chart).toContainReactComponent(BarGroup, {
-        highlightColors: ['primary', 'secondary'],
+        isSubdued: true,
       });
     });
 
@@ -221,54 +179,6 @@ describe('Chart />', () => {
       );
 
       expect(chart).toContainReactComponentTimes(StackedBarGroup, 2);
-    });
-
-    it('passes highlightColors StackedBarGroup', () => {
-      const chart = mount(
-        <Chart
-          {...mockProps}
-          series={[
-            {
-              data: [
-                {label: 'stuff 1', rawValue: 10},
-                {label: 'stuff 2', rawValue: 20},
-                {label: 'stuff 3', rawValue: 30},
-              ],
-              color: 'colorBlack' as Color,
-              highlightColor: 'primary' as Color,
-              name: 'LABEL1',
-            },
-            {
-              data: [
-                {label: 'stuff 1', rawValue: 10},
-                {label: 'stuff 2', rawValue: 20},
-                {label: 'stuff 3', rawValue: 30},
-              ],
-              color: 'colorRed' as Color,
-              highlightColor: 'secondary' as Color,
-              name: 'LABEL2',
-            },
-          ]}
-          barOptions={{...mockProps.barOptions, isStacked: true}}
-        />,
-      );
-
-      expect(chart).toContainReactComponent(StackedBarGroup, {
-        highlightColors: ['primary', 'secondary'],
-      });
-    });
-
-    it('passes highlightColors with default colors to StackedBarGroup when no highlightColors are provided', () => {
-      const chart = mount(
-        <Chart
-          {...mockProps}
-          barOptions={{...mockProps.barOptions, isStacked: true}}
-        />,
-      );
-
-      expect(chart).toContainReactComponent(StackedBarGroup, {
-        highlightColors: ['colorBlack', 'colorRed'],
-      });
     });
 
     it('passes active props to the BarGroup that is being hovered', () => {

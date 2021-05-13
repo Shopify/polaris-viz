@@ -13,7 +13,6 @@ const series = [
   {
     name: 'Breakfast',
     color: 'primary',
-    highlightColor: 'primaryProminent',
     data: [
       {label: 'Monday', rawValue: 3},
       {label: 'Tuesday', rawValue: 7},
@@ -27,7 +26,6 @@ const series = [
   {
     name: 'Lunch',
     color: 'secondary',
-    highlightColor: 'secondaryProminent',
     data: [
       {label: 'Monday', rawValue: 4},
       {label: 'Tuesday', rawValue: 3},
@@ -41,7 +39,6 @@ const series = [
   {
     name: 'Dinner',
     color: 'tertiary',
-    highlightColor: 'tertiaryProminent',
     data: [
       {label: 'Monday', rawValue: 7},
       {label: 'Tuesday', rawValue: 2},
@@ -123,6 +120,7 @@ interface MultiSeriesBarChartProps {
   barOptions?: {
     isStacked?: boolean;
     hasRoundedCorners?: boolean;
+    margin?: 'Small' | 'Medium' | 'Large' | 'None';
   };
   gridOptions?: {
     showHorizontalLines?: boolean;
@@ -155,8 +153,7 @@ The `Series` type gives the user a lot of flexibility to define exactly what eac
     label: string;
     rawValue: number;
   }[];
-  color?: Color;
-  highlightColor?: Color;
+  color?: Color | GradientStop[];
 }
 ```
 
@@ -306,6 +303,14 @@ This utility function is called for every y axis value when the chart is drawn.
 The color used for axis labels.
 
 #### barOptions
+
+##### margin
+
+| type                                       | default  |
+| ------------------------------------------ | -------- |
+| `'Small' \| 'Medium' \| 'Large' \| 'None'` | `Medium` |
+
+This sets the margin between bar groups. A value of `None` will remove spacing between bar groups.
 
 ##### isStacked
 
