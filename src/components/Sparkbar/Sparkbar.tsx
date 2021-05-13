@@ -19,9 +19,10 @@ import {Bar} from './components';
 import styles from './Sparkbar.scss';
 
 const STROKE_WIDTH = 1.5;
-const BAR_PADDING = 0.15;
+const BAR_PADDING = 0.3;
 const MARGIN = 8;
 const ANIMATION_MARGIN = 17;
+const BAR_MIN_HEIGHT_RATIO = 0.5;
 
 interface Coordinates {
   x: number;
@@ -140,9 +141,10 @@ export function Sparkbar({
 
   const getBarHeight = useCallback(
     (rawValue: number) => {
-      return Math.abs(yScale(rawValue) - yScale(0));
+      const height = Math.abs(yScale(rawValue) - yScale(0));
+      return Math.max(height, BAR_MIN_HEIGHT_RATIO * barWidth);
     },
-    [yScale],
+    [barWidth, yScale],
   );
 
   const dataWithIndex = data.map((value, index) => ({value, index}));
