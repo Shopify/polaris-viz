@@ -1,8 +1,11 @@
 import React from 'react';
 import {arc, PieArcDatum} from 'd3-shape';
-import {animated, SpringValue, SpringConfig} from '@react-spring/web';
-
-import {PathInterpolator} from '../../../../types';
+import {
+  animated,
+  SpringValue,
+  SpringConfig,
+  Interpolation,
+} from '@react-spring/web';
 
 export interface Spring {
   endAngle: number;
@@ -38,11 +41,13 @@ export function Arc({
       )
     : arcGenerator({...slice, innerRadius, outerRadius});
 
-  console.log({path});
+  const isInterpolation = (path: any): path is Interpolation => {
+    return 'get' in path;
+  };
 
-  return typeof path === 'string' ? (
+  return path ? (
     <animated.path
-      d={path}
+      d={isInterpolation(path) ? path.get() : path}
       fill={color}
       role="listitem"
       aria-label={formattedValue}

@@ -39,14 +39,13 @@ export function PieChart({
   const shouldAnimate = !prefersReducedMotion && isAnimated;
 
   const [springs, api] = useSprings(generatedSlices.length, (index) => ({
-    endAngle: generatedSlices[index].startAngle,
-    immediate: !shouldAnimate,
-  }));
-
-  api.start((index: number) => ({
-    endAngle: generatedSlices[index].endAngle,
+    default: {immediate: !shouldAnimate},
+    from: {endAngle: generatedSlices[index].startAngle},
+    to: {endAngle: generatedSlices[index].endAngle},
     config: config.slow,
   }));
+
+  api.start();
 
   const seriesForLegend = data.map((data, index) => {
     return {
@@ -55,7 +54,6 @@ export function PieChart({
       value: data.value,
     };
   });
-  console.log({springs});
 
   return (
     <div className={styles.Container}>
