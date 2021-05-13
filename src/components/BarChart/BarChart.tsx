@@ -5,7 +5,13 @@ import {colorSky} from '@shopify/polaris-tokens';
 import {Dimensions} from '../../types';
 import {DEFAULT_GREY_LABEL} from '../../constants';
 import {SkipLink} from '../SkipLink';
-import {getDefaultColor, uniqueId, normalizeData} from '../../utilities';
+import {
+  getDefaultColor,
+  uniqueId,
+  normalizeData,
+  addPrintMediaChangeEventListener,
+  removePrintMediaChangeEventListener,
+} from '../../utilities';
 import {useResizeObserver} from '../../hooks';
 
 import {TooltipContent} from './components';
@@ -93,17 +99,13 @@ export function BarChart({
 
     if (!isServer) {
       window.addEventListener('resize', debouncedUpdateDimensions);
-      window
-        .matchMedia('print')
-        .addEventListener('change', handlePrintMediaQueryChange);
+      addPrintMediaChangeEventListener(handlePrintMediaQueryChange);
     }
 
     return () => {
       if (!isServer) {
         window.removeEventListener('resize', debouncedUpdateDimensions);
-        window
-          .matchMedia('print')
-          .removeEventListener('change', handlePrintMediaQueryChange);
+        removePrintMediaChangeEventListener(handlePrintMediaQueryChange);
       }
     };
   }, [

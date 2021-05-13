@@ -3,7 +3,12 @@ import {useDebouncedCallback} from 'use-debounce';
 import {colorSky} from '@shopify/polaris-tokens';
 
 import {Dimensions} from '../../types';
-import {getDefaultColor, uniqueId} from '../../utilities';
+import {
+  getDefaultColor,
+  uniqueId,
+  addPrintMediaChangeEventListener,
+  removePrintMediaChangeEventListener,
+} from '../../utilities';
 import {SkipLink} from '../SkipLink';
 import {usePrefersReducedMotion, useResizeObserver} from '../../hooks';
 import {
@@ -95,17 +100,13 @@ export function LineChart({
 
     if (!isServer) {
       window.addEventListener('resize', debouncedUpdateDimensions);
-      window
-        .matchMedia('print')
-        .addEventListener('change', handlePrintMediaQueryChange);
+      addPrintMediaChangeEventListener(handlePrintMediaQueryChange);
     }
 
     return () => {
       if (!isServer) {
         window.removeEventListener('resize', debouncedUpdateDimensions);
-        window
-          .matchMedia('print')
-          .removeEventListener('change', handlePrintMediaQueryChange);
+        removePrintMediaChangeEventListener(handlePrintMediaQueryChange);
       }
     };
   }, [

@@ -4,6 +4,10 @@ import {scaleLinear} from 'd3-scale';
 import {Color, SparkChartData} from 'types';
 
 import {useResizeObserver} from '../../hooks';
+import {
+  addPrintMediaChangeEventListener,
+  removePrintMediaChangeEventListener,
+} from '../../utilities';
 
 import styles from './Sparkline.scss';
 import {Series} from './components';
@@ -80,17 +84,13 @@ export function Sparkline({
 
     if (!isServer) {
       window.addEventListener('resize', () => updateMeasurements());
-      window
-        .matchMedia('print')
-        .addEventListener('change', handlePrintMediaQueryChange);
+      addPrintMediaChangeEventListener(handlePrintMediaQueryChange);
     }
 
     return () => {
       if (!isServer) {
         window.removeEventListener('resize', () => updateMeasurements());
-        window
-          .matchMedia('print')
-          .removeEventListener('change', handlePrintMediaQueryChange);
+        removePrintMediaChangeEventListener(handlePrintMediaQueryChange);
       }
     };
   }, [entry, containerRef, updateMeasurements, handlePrintMediaQueryChange]);

@@ -6,7 +6,12 @@ import {Dimensions} from '../../types';
 import {DEFAULT_GREY_LABEL} from '../../constants';
 import {SkipLink} from '../SkipLink';
 import {TooltipContent} from '../TooltipContent';
-import {getDefaultColor, uniqueId} from '../../utilities';
+import {
+  getDefaultColor,
+  uniqueId,
+  addPrintMediaChangeEventListener,
+  removePrintMediaChangeEventListener,
+} from '../../utilities';
 import {useResizeObserver} from '../../hooks';
 
 import {Chart} from './Chart';
@@ -88,17 +93,13 @@ export function MultiSeriesBarChart({
 
     if (!isServer) {
       window.addEventListener('resize', debouncedUpdateDimensions);
-      window
-        .matchMedia('print')
-        .addEventListener('change', handlePrintMediaQueryChange);
+      addPrintMediaChangeEventListener(handlePrintMediaQueryChange);
     }
 
     return () => {
       if (!isServer) {
         window.removeEventListener('resize', debouncedUpdateDimensions);
-        window
-          .matchMedia('print')
-          .removeEventListener('change', handlePrintMediaQueryChange);
+        removePrintMediaChangeEventListener(handlePrintMediaQueryChange);
       }
     };
   }, [
