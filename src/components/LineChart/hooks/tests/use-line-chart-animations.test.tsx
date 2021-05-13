@@ -4,12 +4,13 @@ import {line} from 'd3-shape';
 
 import {useLineChartAnimations} from '../use-line-chart-animations';
 import {SeriesWithDefaults} from '../../types';
+import {getPointAtLength} from '../../../../utilities';
 
 jest.mock('../../../../utilities', () => {
   return {
     ...jest.requireActual('../../../../utilities'),
     getPathLength: () => 0,
-    getPointAtLength: () => ({x: 0, y: 0}),
+    getPointAtLength: jest.fn(() => ({x: 0, y: 0})),
   };
 });
 
@@ -104,7 +105,7 @@ describe('useLineChartAnimations', () => {
     function TestComponent() {
       useLineChartAnimations({
         ...mockProps,
-      }).animatedCoordinates;
+      });
 
       return null;
     }
@@ -119,7 +120,7 @@ describe('useLineChartAnimations', () => {
       useLineChartAnimations({
         ...mockProps,
         isAnimated: false,
-      }).animatedCoordinates;
+      });
 
       return null;
     }
@@ -134,7 +135,7 @@ describe('useLineChartAnimations', () => {
       useLineChartAnimations({
         ...mockProps,
         series: [],
-      }).animatedCoordinates;
+      });
 
       return null;
     }
@@ -149,7 +150,7 @@ describe('useLineChartAnimations', () => {
       useLineChartAnimations({
         ...mockProps,
         activeIndex: null,
-      }).animatedCoordinates;
+      });
 
       return null;
     }
@@ -157,5 +158,30 @@ describe('useLineChartAnimations', () => {
     mount(<TestComponent />);
 
     expect(lineGeneratorMock).not.toHaveBeenCalled();
+  });
+
+  it('calls getPointAtLength with a length of 0 if there is only one point in the series', () => {
+    let animatedCoordinates: any[] | null;
+
+    function TestComponent() {
+      animatedCoordinates = useLineChartAnimations({
+        ...mockProps,
+        series: [
+          {
+            ...series[0],
+            data: [{label: 'Jan 1', rawValue: 1500}],
+          },
+        ],
+        isAnimated: true,
+      }).animatedCoordinates;
+
+      return null;
+    }
+
+    mount(<TestComponent />);
+
+    animatedCoordinates![0].getValue();
+
+    expect(getPointAtLength).toHaveBeenCalledWith(expect.any(SVGElement), 0);
   });
 });

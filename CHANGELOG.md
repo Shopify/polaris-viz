@@ -6,6 +6,10 @@
 
 - Options for the `<Sparkline />` and `<Sparkbar />` to accept `null` data and left and right offsets for their data series
 
+### Fixed
+
+- When there was only one data point for an animated line chart, an error was being thrown
+
 ### Changed
 
 - Replaced `curveMonotoneX` by `curveStepRounded` in `LineChart` and `SparkBar`
