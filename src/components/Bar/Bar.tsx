@@ -35,7 +35,8 @@ export function Bar({
   height,
   hasRoundedCorners,
 }: Props) {
-  const radius = hasRoundedCorners ? ROUNDED_BAR_RADIUS : 0;
+  const radius =
+    hasRoundedCorners && height >= ROUNDED_BAR_RADIUS ? ROUNDED_BAR_RADIUS : 0;
   const zeroScale = yScale(0);
   const isNegative = rawValue < 0;
   const rotation = isNegative ? 'rotate(180deg)' : 'rotate(0deg)';
@@ -81,9 +82,7 @@ export function Bar({
     if (height == null) return;
 
     const calculatePath = (heightValue: number) =>
-      rawValue === 0
-        ? ''
-        : `M${radius} 0
+      `M${radius} 0
         h${width - radius * 2}
         a${radius} ${radius} 0 01${radius} ${radius}
         v${heightValue - radius}
@@ -96,7 +95,7 @@ export function Bar({
       return calculatePath(height);
     }
     return height.interpolate(calculatePath);
-  }, [height, heightIsNumber, radius, rawValue, width]);
+  }, [height, heightIsNumber, radius, width]);
 
   return (
     <animated.path

@@ -183,7 +183,7 @@ export function Chart({
   const getBarHeight = useCallback(
     (rawValue: number) => {
       const rawHeight = Math.abs(yScale(rawValue) - yScale(0));
-      const needsMinHeight = rawHeight < MIN_BAR_HEIGHT && rawHeight !== 0;
+      const needsMinHeight = rawHeight < MIN_BAR_HEIGHT;
       return needsMinHeight ? MIN_BAR_HEIGHT : rawHeight;
     },
     [yScale],

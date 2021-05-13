@@ -3,7 +3,7 @@ import {mount} from '@shopify/react-testing';
 import {scaleBand} from 'd3-scale';
 
 import {Bar} from '../Bar';
-import {MASK_HIGHLIGHT_COLOR} from '../../../constants';
+import {MASK_HIGHLIGHT_COLOR, ROUNDED_BAR_RADIUS} from '../../../constants';
 
 jest.mock('d3-scale', () => ({
   scaleBand: jest.fn(() => jest.fn((value) => value)),
@@ -62,19 +62,27 @@ describe('<Bar/>', () => {
         Z`,
       });
     });
-  });
-
-  describe('rawValue', () => {
-    it('gives a 0 value an empty path d attribute and 0 height', () => {
+    it('renders sharp corners if true and height is less than the radius', () => {
       const bar = mount(
         <svg>
-          <Bar {...defaultProps} rawValue={0} />,
+          <Bar
+            {...defaultProps}
+            height={ROUNDED_BAR_RADIUS - 1}
+            hasRoundedCorners
+          />
         </svg>,
       );
 
       expect(bar).toContainReactComponent('path', {
         // eslint-disable-next-line id-length
-        d: ``,
+        d: `M0 0
+        h100
+        a0 0 0 010 0
+        v${ROUNDED_BAR_RADIUS - 1}
+        H0
+        V0
+        a0 0 0 010-0
+        Z`,
       });
     });
   });
