@@ -2,17 +2,19 @@ import React, {useMemo} from 'react';
 import {ScaleLinear} from 'd3-scale';
 import {animated, OpaqueInterpolation} from 'react-spring';
 
+import {SparkChartData} from '../../../../types';
+
 interface Props {
   x: number;
   yScale: ScaleLinear<number, number>;
-  rawValue: number;
+  rawValue: SparkChartData;
   width: number;
   height?: OpaqueInterpolation<any> | number;
 }
 
 export function Bar({x, rawValue, yScale, width, height}: Props) {
   const zeroScale = yScale(0);
-  const isNegative = rawValue < 0;
+  const isNegative = rawValue != null && rawValue < 0;
   const rotation = isNegative ? 'rotate(180deg)' : 'rotate(0deg)';
   const xPosition = isNegative ? x + width : x;
 
@@ -85,6 +87,10 @@ export function Bar({x, rawValue, yScale, width, height}: Props) {
     }
     return height.interpolate(calculatePath);
   }, [height, heightIsNumber, width]);
+
+  if (rawValue == null || width < 0) {
+    return null;
+  }
 
   return <animated.path d={path} style={style} />;
 }

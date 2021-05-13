@@ -1,7 +1,7 @@
 import React, {useState, useLayoutEffect} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 import {scaleLinear} from 'd3-scale';
-import {Color} from 'types';
+import {Color, SparkChartData} from 'types';
 
 import {useResizeObserver} from '../../hooks';
 
@@ -12,7 +12,7 @@ const SVG_MARGIN = 2;
 
 export interface Coordinates {
   x: number;
-  y: number;
+  y: SparkChartData;
 }
 
 type AreaStyle = 'none' | 'solid' | 'gradient';
@@ -24,6 +24,8 @@ export interface SingleSeries {
   areaStyle?: AreaStyle;
   lineStyle?: LineStyle;
   hasPoint?: boolean;
+  offsetRight?: number;
+  offsetLeft?: number;
 }
 
 export interface SparklineProps {
@@ -81,14 +83,15 @@ export function Sparkline({
     [],
     series.map(({data}) => data.map(({x}) => x)),
   );
-  const xScale = scaleLinear()
-    .range([SVG_MARGIN, width - SVG_MARGIN])
-    .domain([Math.min(...xValues), Math.max(...xValues)]);
+
+  const minXValues = Math.min(...xValues);
+  const maxXValues = Math.max(...xValues);
 
   const yValues = Array.prototype.concat.apply(
     [],
     series.map(({data}) => data.map(({y}) => y)),
   );
+
   const yScale = scaleLinear()
     .range([height - SVG_MARGIN, SVG_MARGIN])
     .domain([Math.min(...yValues), Math.max(...yValues)]);
@@ -101,6 +104,12 @@ export function Sparkline({
 
       <svg aria-hidden width={width} height={height}>
         {series.map((singleSeries, index) => {
+          const {offsetRight = 0, offsetLeft = 0} = singleSeries;
+
+          const xScale = scaleLinear()
+            .range([offsetLeft + SVG_MARGIN, width - offsetRight - SVG_MARGIN])
+            .domain([minXValues, maxXValues]);
+
           return (
             <g key={index}>
               <Series

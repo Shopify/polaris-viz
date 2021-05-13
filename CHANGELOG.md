@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Addded
+
+- Options for the <Sparkline /> and <Sparkbar /> to accept `null` data and left and right offsets for their data series
+
 ## [0.12.3] - 2021-05-12
 
 ### Fixed

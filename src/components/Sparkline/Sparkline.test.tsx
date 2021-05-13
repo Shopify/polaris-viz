@@ -1,11 +1,21 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
+import {scaleLinear} from 'd3-scale';
 
 import {Sparkline} from './Sparkline';
 import {Series} from './components';
 
 jest.mock('utilities/unique-id', () => ({
   uniqueId: jest.fn(() => 'stackedAreas-1'),
+}));
+
+jest.mock('d3-scale', () => ({
+  scaleLinear: jest.fn(() => {
+    const scale = (value: any) => value;
+    scale.range = (range: any) => (range ? scale : range);
+    scale.domain = (domain: any) => (domain ? scale : domain);
+    return scale;
+  }),
 }));
 
 describe('<Sparkline />', () => {
@@ -87,6 +97,39 @@ describe('<Sparkline />', () => {
       const sparkline = mount(<Sparkline series={mockSeries} />);
 
       expect(sparkline.findAll(Series)).toHaveLength(mockSeries.length);
+    });
+
+    it('reduces the series width according to the offset and margin', () => {
+      let rangeSpy = jest.fn();
+      (scaleLinear as jest.Mock).mockImplementation(() => {
+        const scale = (value: any) => value;
+        rangeSpy = jest.fn((range: any) => (range ? scale : range));
+        scale.range = rangeSpy;
+        scale.domain = (domain: any) => (domain ? scale : domain);
+        return scale;
+      });
+
+      const offsetLeft = 100;
+      const offsetRight = 50;
+      const margin = 2;
+      const mockWidth = 0;
+
+      mount(
+        <Sparkline
+          series={[
+            {
+              offsetLeft,
+              offsetRight,
+              data: [{x: 0, y: 100}],
+            },
+          ]}
+        />,
+      );
+
+      expect(rangeSpy).toHaveBeenCalledWith([
+        offsetLeft + margin,
+        mockWidth - offsetRight - margin,
+      ]);
     });
   });
 });
