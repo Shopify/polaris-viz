@@ -61,14 +61,6 @@ jest.mock('utilities/unique-id', () => ({
 }));
 
 describe('Series', () => {
-  beforeAll(() => {
-    Object.defineProperty(window, 'matchMedia', {
-      value: jest.fn(() => {
-        return {matches: false};
-      }),
-    });
-  });
-
   it('renders one path by default', () => {
     const actual = mount(
       <svg>

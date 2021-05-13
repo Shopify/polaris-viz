@@ -37,23 +37,6 @@ jest.mock('../../../hooks/useResizeObserver.ts', () => ({
   },
 }));
 
-// https://jestjs.io/docs/manual-mocks#mocking-methods-which-are-not-implemented-in-jsdom
-Object.defineProperty(window, 'matchMedia', {
-  writable: true,
-  value: jest.fn().mockImplementation((query) => ({
-    matches: false,
-    media: query,
-    onchange: null,
-    // deprecated
-    addListener: jest.fn(),
-    // deprecated
-    removeListener: jest.fn(),
-    addEventListener: jest.fn(),
-    removeEventListener: jest.fn(),
-    dispatchEvent: jest.fn(),
-  })),
-});
-
 describe('<LineChart />', () => {
   it('renders a <Chart />', () => {
     const lineChart = mount(
