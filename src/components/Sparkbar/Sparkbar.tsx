@@ -6,7 +6,7 @@ import {useTransition} from 'react-spring';
 
 import {usePrefersReducedMotion, useResizeObserver} from '../../hooks';
 import {BARS_TRANSITION_CONFIG} from '../../constants';
-import {Color} from '../../types';
+import {Color, SparkChartData} from '../../types';
 import {
   getColorValue,
   rgbToRgba,
@@ -29,7 +29,9 @@ interface Coordinates {
 }
 
 export interface SparkbarProps {
-  data: number[];
+  data: SparkChartData[];
+  dataOffsetRight?: number;
+  dataOffsetLeft?: number;
   comparison?: Coordinates[];
   color?: Color;
   accessibilityLabel?: string;
@@ -37,12 +39,12 @@ export interface SparkbarProps {
   barFillStyle?: 'solid' | 'gradient';
 }
 
-function calculateRange(data: number[], height: number) {
+function calculateRange(data: SparkChartData[], height: number) {
   let hasNegatives;
   let hasPositives;
   for (const val of data) {
-    if (val < 0) hasNegatives = true;
-    else if (val > 0) hasPositives = true;
+    if (val != null && val < 0) hasNegatives = true;
+    else if (val != null && val > 0) hasPositives = true;
 
     if (hasNegatives && hasPositives) break;
   }
@@ -65,6 +67,8 @@ export function Sparkbar({
   accessibilityLabel,
   isAnimated = false,
   barFillStyle = 'solid',
+  dataOffsetRight = 0,
+  dataOffsetLeft = 0,
 }: SparkbarProps) {
   const {
     ref: containerRef,
@@ -105,12 +109,16 @@ export function Sparkbar({
 
   const {width, height} = svgDimensions;
 
+  const filteredData = data.filter(
+    (value) => typeof value === 'number',
+  ) as number[];
+
   const yScale = scaleLinear()
     .range(calculateRange(data, height))
-    .domain([Math.min(...data, 0), Math.max(...data, 0)]);
+    .domain([Math.min(...filteredData, 0), Math.max(...filteredData, 0)]);
 
   const xScale = scaleBand()
-    .range([0, width])
+    .range([dataOffsetLeft, width - dataOffsetRight])
     .paddingInner(BAR_PADDING)
     .domain(data.map((_, index) => index.toString()));
 
@@ -144,8 +152,8 @@ export function Sparkbar({
   const transitions = useTransition(dataWithIndex, ({index}) => index, {
     from: {height: 0},
     leave: {height: 0},
-    enter: ({value}) => ({height: getBarHeight(value)}),
-    update: ({value}) => ({height: getBarHeight(value)}),
+    enter: ({value}) => ({height: getBarHeight(value == null ? 0 : value)}),
+    update: ({value}) => ({height: getBarHeight(value == null ? 0 : value)}),
     immediate: !shouldAnimate,
     trail: shouldAnimate ? getAnimationTrail(dataWithIndex.length) : 0,
     config: BARS_TRANSITION_CONFIG,

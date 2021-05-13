@@ -43,12 +43,14 @@ export function Series({
 
   const lineGenerator = line<Coordinates>()
     .x(({x}) => xScale(x))
-    .y(({y}) => yScale(y));
+    .y(({y}) => (y == null ? yScale(0) : yScale(y)))
+    .defined(({y}) => y != null);
 
   const areaGenerator = area<Coordinates>()
     .x(({x}) => xScale(x))
     .y0(height)
-    .y1(({y}) => yScale(y));
+    .y1(({y}) => (y == null ? yScale(0) : yScale(y)))
+    .defined(({y}) => y != null);
 
   if (hasSpline) {
     lineGenerator.curve(curveStepRounded);
@@ -56,11 +58,16 @@ export function Series({
   }
 
   const lineShape = lineGenerator(data);
-  const [lastLinePoint] = data.slice(-1);
-  const lastLinePointCoordinates = {
-    x: xScale(lastLinePoint.x),
-    y: yScale(lastLinePoint.y),
-  };
+  const [lastLinePoint] = data.filter(({y}) => y != null).slice(-1);
+
+  const lastLinePointCoordinates =
+    lastLinePoint.y != null
+      ? {
+          x: xScale(lastLinePoint.x),
+          y: yScale(lastLinePoint.y),
+        }
+      : null;
+
   const areaShape = areaGenerator(data);
 
   const id = useMemo(() => uniqueId('sparkline'), []);
@@ -108,7 +115,7 @@ export function Series({
         />
       )}
 
-      {hasPoint ? (
+      {hasPoint && lastLinePointCoordinates != null ? (
         <circle
           cx={lastLinePointCoordinates.x}
           cy={lastLinePointCoordinates.y}

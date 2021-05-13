@@ -1,5 +1,6 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
+import {scaleBand} from 'd3-scale';
 
 import {getColorValue} from '../../../utilities';
 import {Sparkbar} from '../Sparkbar';
@@ -12,6 +13,24 @@ const sampleComparison = [
   {x: 2, y: 300},
   {x: 3, y: 300},
 ];
+
+jest.mock('d3-scale', () => ({
+  scaleBand: jest.fn(() => {
+    const scale = (value: any) => value;
+    scale.range = (range: any) => (range ? scale : range);
+    scale.paddingInner = (paddingInner: any) =>
+      paddingInner ? scale : paddingInner;
+    scale.domain = (domain: any) => (domain ? scale : domain);
+    scale.bandwidth = (width: any) => (width ? scale : width);
+    return scale;
+  }),
+  scaleLinear: jest.fn(() => {
+    const scale = (value: any) => value;
+    scale.range = (range: any) => (range ? scale : range);
+    scale.domain = (domain: any) => (domain ? scale : domain);
+    return scale;
+  }),
+}));
 
 describe('<Sparkbar/>', () => {
   it('renders a <LinearGradient /> when barFillStyle is gradient', () => {
@@ -73,5 +92,36 @@ describe('<Sparkbar/>', () => {
     const wrapper = mount(<Sparkbar data={sampleData} />);
 
     expect(wrapper).toContainReactComponentTimes('path', 4);
+  });
+
+  it('reduces the chart width according to the offset and margin', () => {
+    let rangeSpy = jest.fn();
+    (scaleBand as jest.Mock).mockImplementation(() => {
+      const scale = (value: any) => value;
+      rangeSpy = jest.fn((range: any) => (range ? scale : range));
+      scale.range = rangeSpy;
+      scale.paddingInner = (paddingInner: any) =>
+        paddingInner ? scale : paddingInner;
+      scale.domain = (domain: any) => (domain ? scale : domain);
+      scale.bandwidth = (width: any) => (width ? scale : width);
+      return scale;
+    });
+
+    const offsetLeft = 100;
+    const offsetRight = 50;
+    const mockWidth = 0;
+
+    mount(
+      <Sparkbar
+        data={sampleData}
+        dataOffsetLeft={offsetLeft}
+        dataOffsetRight={offsetRight}
+      />,
+    );
+
+    expect(rangeSpy).toHaveBeenCalledWith([
+      offsetLeft,
+      mockWidth - offsetRight,
+    ]);
   });
 });

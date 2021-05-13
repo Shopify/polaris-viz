@@ -13,6 +13,8 @@ Used in small sizes to give an overview of how a metric has performed over time.
       {
         color: 'colorPurple',
         areaStyle: 'gradient',
+        offsetRight: 50,
+        offsetLeft: 12,
         data: [
           {x: 0, y: 100},
           {x: 1, y: 200},
@@ -76,19 +78,19 @@ This component determines its width and height based off its parent element. The
 
 #### The series type
 
-| type                                                                                                       |
-| ---------------------------------------------------------------------------------------------------------- |
-| `{data: Coordinates[], color?: Color, areaStyle?: AreaStyle, lineStyle?: LineStyle, hasPoint?: boolean}[]` |
+| type                                                                                                                                                  |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `{data: Coordinates[], color?: Color, areaStyle?: AreaStyle, lineStyle?: LineStyle, hasPoint?: boolean, offsetLeft?: number; offsetRight?: number}[]` |
 
 The sparkline can show one data series or a set of comparison data series.
 
 ##### data
 
-| type                       |
-| -------------------------- |
-| `{x: number, y: number}[]` |
+| type                                       |
+| ------------------------------------------ |
+| `{x: number \| null, y: number \| null}[]` |
 
-The prop to determine the chart's drawn area.
+The prop to determine the chart's drawn area. If null is provided, the line will not be drawn for that area.
 
 ##### color
 
@@ -114,8 +116,6 @@ Determines whether to fill in the area beneath the line and what kind of shading
 
 Determines the style of line used for the series.
 
----
-
 ##### hasPoint
 
 | type      | default |
@@ -123,6 +123,22 @@ Determines the style of line used for the series.
 | `boolean` | `false` |
 
 Whether to highlight the last data point of the series with a circle.
+
+##### offsetLeft
+
+| type     | default |
+| -------- | ------- |
+| `number` | `0`     |
+
+The amount of pixels to add as a left margin to the series.
+
+##### offsetRight
+
+| type     | default |
+| -------- | ------- |
+| `number` | `0`     |
+
+The amount of pixels to add as a right margin to the series.
 
 ---
 

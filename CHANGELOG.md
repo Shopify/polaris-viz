@@ -2,9 +2,9 @@
 
 ## Unreleased
 
-### Fixed
+### Addded
 
-- Charts now resize correctly when being printed out
+- Options for the `<Sparkline />` and `<Sparkbar />` to accept `null` data and left and right offsets for their data series
 
 ### Changed
 
@@ -13,6 +13,7 @@
 ### Fixed
 
 - Fixed a bug in <MultiSeriesBarChart /> that was causing the chart to crash when no labels were passed to the chart (in the case of an empty state)
+- Charts now resize correctly when being printed out
 
 ## [0.12.3] - 2021-05-12
 

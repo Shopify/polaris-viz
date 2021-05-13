@@ -15,6 +15,7 @@ jest.mock('d3-shape', () => ({
     shape.y0 = () => shape;
     shape.y1 = () => shape;
     shape.curve = () => shape;
+    shape.defined = () => shape;
     return shape;
   }),
   line: jest.fn(() => {
@@ -22,6 +23,7 @@ jest.mock('d3-shape', () => ({
     shape.x = () => shape;
     shape.y = () => shape;
     shape.curve = () => shape;
+    shape.defined = () => shape;
     return shape;
   }),
 }));
@@ -138,6 +140,7 @@ describe('Series', () => {
       shape.y = () => shape;
       shape.y0 = () => shape;
       shape.y1 = () => shape;
+      shape.defined = () => shape;
       shape.curve = curveSpy;
       return shape;
     });
@@ -151,14 +154,36 @@ describe('Series', () => {
     expect(curveSpy).toHaveBeenCalled();
   });
 
-  it('renders a point on the last data point of the line if hasPoint is true', () => {
+  it('renders a point on the last data point of the line that is not null if hasPoint is true', () => {
     const actual = mount(
       <svg>
-        <Series {...mockProps} series={{...mockSeries, hasPoint: true}} />
+        <Series
+          {...mockProps}
+          series={{
+            color: 'colorRed' as any,
+            areaStyle: 'none' as any,
+            hasPoint: true,
+            data: [
+              {x: 0, y: 100},
+              {x: 1, y: 200},
+              {x: 2, y: 300},
+              {x: 3, y: 400},
+              {x: 4, y: 400},
+              {x: 5, y: 1000},
+              {x: 6, y: 200},
+              {x: 7, y: 800},
+              {x: 8, y: null},
+              {x: 9, y: null},
+              {x: 10, y: 400},
+            ],
+          }}
+        />
       </svg>,
     );
 
-    const [lastDataPoint] = mockSeries.data.slice(-1);
+    const [lastDataPoint] = mockSeries.data
+      .filter(({y}) => y != null)
+      .slice(-1);
 
     expect(actual).toContainReactComponent('circle', {
       cx: xScale(lastDataPoint.x),
