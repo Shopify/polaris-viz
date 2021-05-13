@@ -1,7 +1,7 @@
 import React from 'react';
 import * as d3 from 'd3-shape';
 import {mount} from '@shopify/react-testing';
-import {animated, AnimatedValue, useSpring} from 'react-spring';
+import {animated, AnimatedValue, useSpring} from '@react-spring/web';
 
 import {Arc, Spring} from '../Arc';
 import {DataProps} from '../../../PieChart';

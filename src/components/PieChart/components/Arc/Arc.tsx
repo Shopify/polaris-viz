@@ -1,6 +1,8 @@
 import React from 'react';
 import {arc, PieArcDatum} from 'd3-shape';
-import {animated, AnimatedValue, SpringConfig} from 'react-spring';
+import {animated, SpringValue, SpringConfig} from '@react-spring/web';
+
+import {PathInterpolator} from '../../../../types';
 
 export interface Spring {
   endAngle: number;
@@ -11,7 +13,7 @@ interface Props {
   innerRadius: number;
   outerRadius: number;
   slice: PieArcDatum<number | {valueOf(): number}>;
-  spring?: AnimatedValue<Pick<Spring, 'endAngle'>>;
+  endAngle?: SpringValue<number>;
   color: string;
   formattedValue: string;
   label: string;
@@ -22,7 +24,7 @@ export function Arc({
   outerRadius,
   slice,
   color,
-  spring,
+  endAngle,
   formattedValue,
   label,
 }: Props) {
@@ -30,13 +32,15 @@ export function Arc({
     .innerRadius(innerRadius)
     .outerRadius(outerRadius);
 
-  const path = spring
-    ? spring.endAngle.interpolate((value) =>
+  const path = endAngle
+    ? endAngle.to((value) =>
         arcGenerator({...slice, endAngle: value, innerRadius, outerRadius}),
       )
     : arcGenerator({...slice, innerRadius, outerRadius});
 
-  return path != null ? (
+  console.log({path});
+
+  return typeof path === 'string' ? (
     <animated.path
       d={path}
       fill={color}

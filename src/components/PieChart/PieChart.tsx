@@ -1,8 +1,9 @@
 import React from 'react';
 import {pie} from 'd3-shape';
-import {useSprings, config} from 'react-spring';
+import {useSprings, config} from '@react-spring/web';
 
 import {getColorValue, getDefaultColor, uniqueId} from '../../utilities';
+import {usePrefersReducedMotion} from '../../hooks';
 
 import {Arc, Legend} from './components';
 import styles from './PieChart.scss';
@@ -17,14 +18,14 @@ interface Props {
   data: DataProps[];
   outerRadius: number;
   innerRadius?: number;
-  animation?: boolean;
+  isAnimated?: boolean;
 }
 
 export function PieChart({
   data,
   outerRadius,
   innerRadius = outerRadius / 2,
-  animation = true,
+  isAnimated = true,
 }: Props) {
   const generatedSlices = pie()(data.map((data: DataProps) => data.value));
 
@@ -33,13 +34,16 @@ export function PieChart({
     endAngle: slice.startAngle + 0.1,
   }));
 
-  const [springs, set] = useSprings(generatedSlices.length, (index) => ({
+  const {prefersReducedMotion} = usePrefersReducedMotion();
+
+  const shouldAnimate = !prefersReducedMotion && isAnimated;
+
+  const [springs, api] = useSprings(generatedSlices.length, (index) => ({
     endAngle: generatedSlices[index].startAngle,
+    immediate: !shouldAnimate,
   }));
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
-  set((index: number) => ({
+  api.start((index: number) => ({
     endAngle: generatedSlices[index].endAngle,
     config: config.slow,
   }));
@@ -51,6 +55,7 @@ export function PieChart({
       value: data.value,
     };
   });
+  console.log({springs});
 
   return (
     <div className={styles.Container}>
@@ -61,34 +66,20 @@ export function PieChart({
           2} ${outerRadius * 2}`}
         role="list"
       >
-        {animation
-          ? springs.map((spring, index) => {
-              return (
-                <Arc
-                  innerRadius={innerRadius}
-                  outerRadius={outerRadius}
-                  slice={initialSlices[index]}
-                  spring={animation ? spring : undefined}
-                  color={getColorValue(seriesForLegend[index].color)}
-                  formattedValue={data[index].formattedValue}
-                  label={data[index].label}
-                  key={uniqueId(data[index].value.toString())}
-                />
-              );
-            })
-          : generatedSlices.map((slice, index) => {
-              return (
-                <Arc
-                  innerRadius={innerRadius}
-                  outerRadius={outerRadius}
-                  slice={slice}
-                  color={getColorValue(seriesForLegend[index].color)}
-                  formattedValue={data[index].formattedValue}
-                  label={data[index].label}
-                  key={uniqueId(data[index].value.toString())}
-                />
-              );
-            })}
+        {springs.map((spring, index) => {
+          return (
+            <Arc
+              innerRadius={innerRadius}
+              outerRadius={outerRadius}
+              slice={initialSlices[index]}
+              endAngle={spring.endAngle}
+              color={getColorValue(seriesForLegend[index].color)}
+              formattedValue={data[index].formattedValue}
+              label={data[index].label}
+              key={uniqueId(data[index].value.toString())}
+            />
+          );
+        })}
       </svg>
       <Legend series={seriesForLegend} />
     </div>
