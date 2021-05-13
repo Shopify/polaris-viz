@@ -6,6 +6,15 @@
 
 - Options for the `<Sparkline />` and `<Sparkbar />` to accept `null` data and left and right offsets for their data series
 
+### Changed
+
+- Replaced `curveMonotoneX` by `curveStepRounded` in `LineChart` and `SparkBar`
+
+### Fixed
+
+- Fixed a bug in <MultiSeriesBarChart /> that was causing the chart to crash when no labels were passed to the chart (in the case of an empty state)
+- Charts now resize correctly when being printed out
+
 ## [0.12.3] - 2021-05-12
 
 ### Fixed

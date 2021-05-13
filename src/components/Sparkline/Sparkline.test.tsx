@@ -19,14 +19,6 @@ jest.mock('d3-scale', () => ({
 }));
 
 describe('<Sparkline />', () => {
-  beforeAll(() => {
-    Object.defineProperty(window, 'matchMedia', {
-      value: jest.fn(() => {
-        return {matches: false};
-      }),
-    });
-  });
-
   const mockSeries = [
     {
       color: 'colorRed' as any,

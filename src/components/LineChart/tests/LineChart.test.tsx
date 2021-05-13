@@ -27,14 +27,6 @@ jest.mock('../../../utilities', () => {
 });
 
 describe('<LineChart />', () => {
-  beforeAll(() => {
-    Object.defineProperty(window, 'matchMedia', {
-      value: jest.fn(() => {
-        return {matches: false};
-      }),
-    });
-  });
-
   it('renders a <Chart />', () => {
     const lineChart = mount(
       <LineChart

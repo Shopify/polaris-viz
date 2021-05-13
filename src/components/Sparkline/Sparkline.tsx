@@ -1,4 +1,4 @@
-import React, {useState, useLayoutEffect} from 'react';
+import React, {useState, useLayoutEffect, useCallback} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 import {scaleLinear} from 'd3-scale';
 import {Color, SparkChartData} from 'types';
@@ -57,6 +57,18 @@ export function Sparkline({
     });
   }, 10);
 
+  const handlePrintMediaQueryChange = useCallback(
+    (event: MediaQueryListEvent) => {
+      if (event.matches && containerRef != null) {
+        setSvgDimensions({
+          height: containerRef.clientHeight,
+          width: containerRef.clientWidth,
+        });
+      }
+    },
+    [containerRef],
+  );
+
   useLayoutEffect(() => {
     if (entry == null) return;
 
@@ -68,14 +80,20 @@ export function Sparkline({
 
     if (!isServer) {
       window.addEventListener('resize', () => updateMeasurements());
+      window
+        .matchMedia('print')
+        .addEventListener('change', handlePrintMediaQueryChange);
     }
 
     return () => {
       if (!isServer) {
         window.removeEventListener('resize', () => updateMeasurements());
+        window
+          .matchMedia('print')
+          .removeEventListener('change', handlePrintMediaQueryChange);
       }
     };
-  }, [entry, containerRef, updateMeasurements]);
+  }, [entry, containerRef, updateMeasurements, handlePrintMediaQueryChange]);
 
   const {width, height} = svgDimensions;
 

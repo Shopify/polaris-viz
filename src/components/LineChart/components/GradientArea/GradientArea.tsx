@@ -1,8 +1,8 @@
 import React, {useMemo} from 'react';
 import {ScaleLinear} from 'd3-scale';
-import {area, curveMonotoneX} from 'd3-shape';
+import {area} from 'd3-shape';
 
-import {uniqueId} from '../../../../utilities';
+import {uniqueId, curveStepRounded} from '../../../../utilities';
 import {ANIMATION_DELAY, SLOW_DURATION, FAST_DURATION} from '../../constants';
 import {Data} from '../../../../types';
 import {Series} from '../../types';
@@ -36,7 +36,7 @@ export function GradientArea({
     .y1(({rawValue}: {rawValue: number}) => yScale(rawValue));
 
   if (hasSpline) {
-    areaGenerator.curve(curveMonotoneX);
+    areaGenerator.curve(curveStepRounded);
   }
 
   const areaShape = areaGenerator(data);

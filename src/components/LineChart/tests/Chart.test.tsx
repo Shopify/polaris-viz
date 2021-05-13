@@ -117,14 +117,6 @@ describe('<Chart />', () => {
     jest.useFakeTimers();
   });
 
-  beforeAll(() => {
-    Object.defineProperty(window, 'matchMedia', {
-      value: jest.fn(() => {
-        return {matches: false};
-      }),
-    });
-  });
-
   afterEach(() => {
     jest.useRealTimers();
   });

@@ -47,7 +47,7 @@ export function MultiSeriesBarChart({
     null,
   );
   const skipLinkAnchorId = useRef(uniqueId('multiSeriesBarChart'));
-  const {setRef, entry} = useResizeObserver();
+  const {ref, setRef, entry} = useResizeObserver();
 
   const emptyState = series.length === 0;
 
@@ -72,6 +72,15 @@ export function MultiSeriesBarChart({
     updateDimensions();
   }, 100);
 
+  const handlePrintMediaQueryChange = useCallback(
+    (event: MediaQueryListEvent) => {
+      if (event.matches && ref != null) {
+        setChartDimensions(ref.getBoundingClientRect());
+      }
+    },
+    [ref],
+  );
+
   useLayoutEffect(() => {
     updateDimensions();
 
@@ -79,14 +88,25 @@ export function MultiSeriesBarChart({
 
     if (!isServer) {
       window.addEventListener('resize', debouncedUpdateDimensions);
+      window
+        .matchMedia('print')
+        .addEventListener('change', handlePrintMediaQueryChange);
     }
 
     return () => {
       if (!isServer) {
         window.removeEventListener('resize', debouncedUpdateDimensions);
+        window
+          .matchMedia('print')
+          .removeEventListener('change', handlePrintMediaQueryChange);
       }
     };
-  }, [entry, debouncedUpdateDimensions, updateDimensions]);
+  }, [
+    entry,
+    debouncedUpdateDimensions,
+    updateDimensions,
+    handlePrintMediaQueryChange,
+  ]);
 
   const innerMargin =
     barOptions != null && barOptions.innerMargin != null
