@@ -53,7 +53,7 @@ export function LineChart({
   const [chartDimensions, setChartDimensions] = useState<Dimensions | null>(
     null,
   );
-  const {setRef, entry} = useResizeObserver();
+  const {ref, setRef, entry} = useResizeObserver();
   const {prefersReducedMotion} = usePrefersReducedMotion();
 
   const skipLinkAnchorId = useRef(uniqueId('lineChart'));
@@ -79,6 +79,15 @@ export function LineChart({
     updateDimensions();
   }, 100);
 
+  const handlePrintMediaQueryChange = useCallback(
+    (event: MediaQueryListEvent) => {
+      if (event.matches && ref != null) {
+        setChartDimensions(ref.getBoundingClientRect());
+      }
+    },
+    [ref],
+  );
+
   useLayoutEffect(() => {
     updateDimensions();
 
@@ -86,14 +95,25 @@ export function LineChart({
 
     if (!isServer) {
       window.addEventListener('resize', debouncedUpdateDimensions);
+      window
+        .matchMedia('print')
+        .addEventListener('change', handlePrintMediaQueryChange);
     }
 
     return () => {
       if (!isServer) {
         window.removeEventListener('resize', debouncedUpdateDimensions);
+        window
+          .matchMedia('print')
+          .removeEventListener('change', handlePrintMediaQueryChange);
       }
     };
-  }, [entry, debouncedUpdateDimensions, updateDimensions]);
+  }, [
+    entry,
+    updateDimensions,
+    debouncedUpdateDimensions,
+    handlePrintMediaQueryChange,
+  ]);
 
   const lineOptionsWithDefaults = {hasSpline: false, width: 2, ...lineOptions};
 

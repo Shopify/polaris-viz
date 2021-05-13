@@ -41,7 +41,7 @@ export function StackedAreaChart({
 
   const skipLinkAnchorId = useRef(uniqueId('stackedAreaChart'));
 
-  const {setRef, entry} = useResizeObserver();
+  const {ref, setRef, entry} = useResizeObserver();
 
   const updateDimensions = useCallback(() => {
     if (entry != null) {
@@ -64,20 +64,40 @@ export function StackedAreaChart({
     updateDimensions();
   }, 100);
 
+  const handlePrintMediaQueryChange = useCallback(
+    (event: MediaQueryListEvent) => {
+      if (event.matches && ref != null) {
+        setChartDimensions(ref.getBoundingClientRect());
+      }
+    },
+    [ref],
+  );
+
   useLayoutEffect(() => {
     updateDimensions();
     const isServer = typeof window === 'undefined';
 
     if (!isServer) {
       window.addEventListener('resize', debouncedUpdateDimensions);
+      window
+        .matchMedia('print')
+        .addEventListener('change', handlePrintMediaQueryChange);
     }
 
     return () => {
       if (!isServer) {
         window.removeEventListener('resize', debouncedUpdateDimensions);
+        window
+          .matchMedia('print')
+          .removeEventListener('change', handlePrintMediaQueryChange);
       }
     };
-  }, [entry, debouncedUpdateDimensions, updateDimensions]);
+  }, [
+    entry,
+    debouncedUpdateDimensions,
+    updateDimensions,
+    handlePrintMediaQueryChange,
+  ]);
 
   if (series.length === 0) {
     return null;

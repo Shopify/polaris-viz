@@ -9,14 +9,6 @@ jest.mock('utilities/unique-id', () => ({
 }));
 
 describe('<Sparkline />', () => {
-  beforeAll(() => {
-    Object.defineProperty(window, 'matchMedia', {
-      value: jest.fn(() => {
-        return {matches: false};
-      }),
-    });
-  });
-
   const mockSeries = [
     {
       color: 'colorRed' as any,

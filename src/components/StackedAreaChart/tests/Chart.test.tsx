@@ -15,14 +15,6 @@ import {StackedAreas} from '../components';
 import {Chart} from '../Chart';
 
 describe('<Chart />', () => {
-  beforeAll(() => {
-    Object.defineProperty(window, 'matchMedia', {
-      value: jest.fn(() => {
-        return {matches: false};
-      }),
-    });
-  });
-
   beforeEach(() => {
     jest.useFakeTimers();
   });
