@@ -2,24 +2,23 @@
 
 ## Unreleased
 
+## [0.13.0] - 2021-05-13
+
 ### Addded
 
-- Options for the `<Sparkline />` and `<Sparkbar />` to accept `null` data and left and right offsets for their data series
-
-### Fixed
-
-- When there was only one data point for an animated line chart, an error was being thrown
+- Options for the `<Sparkline />` and `<Sparkbar />` to accept `null` data and left and right offsets for their data series.
 
 ### Changed
 
-- Replaced `curveMonotoneX` by `curveStepRounded` in `LineChart` and `SparkBar`
-- Updated min bar height to be 1px for 0 values in `<BarChart />` and grouped `<MultiSeriesBarChart />`
+- Replaced `curveMonotoneX` by `curveStepRounded` in `LineChart` and `SparkBar`.
+- Updated min bar height to be 1px for 0 values in `<BarChart />` and grouped `<MultiSeriesBarChart />`.
 
 ### Fixed
 
-- Fixed a bug in <MultiSeriesBarChart /> that was causing the chart to crash when no labels were passed to the chart (in the case of an empty state)
-- Charts now resize correctly when being printed out
+- Fixed a bug in <MultiSeriesBarChart /> that was causing the chart to crash when no labels were passed to the chart (in the case of an empty state).
+- Charts now resize correctly when being printed out.
 - Added a minimum bar height for the bars in the `<Sparkbar />` component.
+- When there was only one data point for an animated line chart, an error was being thrown.
 
 ## [0.12.3] - 2021-05-12
 
