@@ -86,4 +86,26 @@ describe('getBarXAxisDetails', () => {
       maxWidth: 10.799999999999999,
     });
   });
+
+  it('returns zeros when no xLabels are provided', () => {
+    const actual = getBarXAxisDetails({
+      yAxisLabelWidth: 10,
+      xLabels: [],
+      fontSize: 10,
+      innerMargin: 0,
+      outerMargin: 0,
+      minimalLabelIndexes: null,
+      chartDimensions: {
+        height: 100,
+        width: 100,
+      } as any,
+    });
+
+    expect(actual).toMatchObject({
+      maxXLabelHeight: 0,
+      maxDiagonalLabelLength: 0,
+      needsDiagonalLabels: false,
+      maxWidth: 0,
+    });
+  });
 });

@@ -36,6 +36,15 @@ export function getBarXAxisDetails({
       ? xLabels
       : xLabels.filter((_, index) => minimalLabelIndexes.includes(index));
 
+  if (labelsToUse.length === 0) {
+    return {
+      maxXLabelHeight: 0,
+      maxDiagonalLabelLength: 0,
+      needsDiagonalLabels: false,
+      maxWidth: 0,
+    };
+  }
+
   const drawableWidth =
     chartDimensions.width - yAxisLabelWidth - Margin.Right - SPACING;
 
