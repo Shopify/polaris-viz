@@ -86,8 +86,8 @@ The sparkline can show one data series or a set of comparison data series.
 
 ##### data
 
-| type                                     |
-| ---------------------------------------- |
+| type                                       |
+| ------------------------------------------ |
 | `{x: number \| null, y: number \| null}[]` |
 
 The prop to determine the chart's drawn area. If null is provided, the line will not be drawn for that area.
