@@ -46,6 +46,11 @@ const series = [
 export default {
   title: 'Sparkline',
   component: Sparkline,
+  decorators: [
+    (Story: any) => (
+      <div style={{width: '100px', height: '50px'}}>{Story()}</div>
+    ),
+  ],
   argTypes: {},
 } as Meta;
 

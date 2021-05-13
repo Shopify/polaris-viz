@@ -64,7 +64,7 @@ This component determines its width and height based off its parent element. The
 | ------------------- |
 | `(number | null)[]` |
 
-The prop to determine the chart's bars. Null bars will not be plotted.
+The prop to determine the chart's bars. Null bars will not be plotted. Bars with the value of `0` will render a very small bar to indicate the presence of the value.
 
 ### Optional props
 

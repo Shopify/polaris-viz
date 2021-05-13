@@ -19,6 +19,7 @@
 
 - Fixed a bug in <MultiSeriesBarChart /> that was causing the chart to crash when no labels were passed to the chart (in the case of an empty state)
 - Charts now resize correctly when being printed out
+- Added a minimum bar height for the bars in the `<Sparkbar />` component.
 
 ## [0.12.3] - 2021-05-12
 
