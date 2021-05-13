@@ -15,7 +15,7 @@
 
 ### Fixed
 
-- Fixed a bug in <MultiSeriesBarChart /> that was causing the chart to crash when no labels were passed to the chart (in the case of an empty state).
+- Fixed a bug in `<MultiSeriesBarChart />` that was causing the chart to crash when no labels were passed to the chart (in the case of an empty state).
 - Charts now resize correctly when being printed out.
 - Added a minimum bar height for the bars in the `<Sparkbar />` component.
 - When there was only one data point for an animated line chart, an error was being thrown.
