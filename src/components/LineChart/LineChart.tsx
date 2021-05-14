@@ -103,9 +103,9 @@ export function LineChart({
     return () => {
       if (!isServer) {
         window.removeEventListener('resize', debouncedUpdateDimensions);
-        window
-          .matchMedia('print')
-          .removeEventListener('change', handlePrintMediaQueryChange);
+        // window
+        //   .matchMedia('print')
+        //   .removeEventListener('change', handlePrintMediaQueryChange);
       }
     };
   }, [
