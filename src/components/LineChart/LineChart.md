@@ -126,6 +126,7 @@ interface LineChartProps {
   lineOptions?: {
     hasSpline?: boolean;
     width?: number;
+    pointStroke?: string;
   };
   xAxisOptions: {
     xAxisLabels: string[];
@@ -384,6 +385,14 @@ Whether to curve the lines between points.
 | `number` | `2`     |
 
 The width of the lines drawn between points.
+
+##### pointStroke
+
+| type     | default |
+| -------- | ------- |
+| `string` | `#fff`  |
+
+The color around the circle depicting the active point.
 
 #### gridOptions
 

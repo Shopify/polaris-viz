@@ -10,6 +10,7 @@ const mockProps = {
   color: '#00ff00',
   index: 0,
   isAnimated: false,
+  stroke: 'white',
 };
 
 describe('<Point />', () => {
@@ -140,6 +141,20 @@ describe('<Point />', () => {
 
       expect(point).toContainReactComponent('circle', {
         fill: '#00ff00',
+      });
+    });
+  });
+
+  describe('stroke', () => {
+    it('renders a circle with the given color', () => {
+      const point = mount(
+        <svg>
+          <Point {...mockProps} />
+        </svg>,
+      );
+
+      expect(point).toContainReactComponent('circle', {
+        stroke: 'white',
       });
     });
   });

@@ -18,6 +18,7 @@ interface Props {
   ariaLabelledby?: string;
   ariaHidden?: boolean;
   visuallyHidden?: boolean;
+  stroke: string;
 }
 
 export const Point = React.memo(function Point({
@@ -32,6 +33,7 @@ export const Point = React.memo(function Point({
   isAnimated,
   ariaHidden = false,
   visuallyHidden = false,
+  stroke,
 }: Props) {
   const handleFocus = () => {
     if (onFocus != null) {
@@ -57,8 +59,8 @@ export const Point = React.memo(function Point({
       cy={cy}
       r={radius}
       fill={color}
-      stroke={tokens.colorWhite}
-      strokeWidth={1.5}
+      stroke={stroke}
+      strokeWidth={2}
       onFocus={handleFocus}
       className={classNames(
         styles.Point,

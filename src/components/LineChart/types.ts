@@ -34,6 +34,7 @@ export interface RenderTooltipContentData {
 export interface LineOptions {
   hasSpline: boolean;
   width: number;
+  pointStroke: string;
 }
 
 export interface XAxisOptions {
