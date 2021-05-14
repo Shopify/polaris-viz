@@ -35,14 +35,16 @@ export function Bar({
   height,
   hasRoundedCorners,
 }: Props) {
-  const radius =
-    hasRoundedCorners && height >= ROUNDED_BAR_RADIUS ? ROUNDED_BAR_RADIUS : 0;
   const zeroScale = yScale(0);
   const isNegative = rawValue < 0;
   const rotation = isNegative ? 'rotate(180deg)' : 'rotate(0deg)';
   const xPosition = isNegative ? x + width : x;
 
   const heightIsNumber = typeof height === 'number';
+  const heightAmount = heightIsNumber ? height : height.value;
+  const shouldRoundCorners =
+    hasRoundedCorners && heightAmount >= ROUNDED_BAR_RADIUS;
+  const radius = shouldRoundCorners ? ROUNDED_BAR_RADIUS : 0;
 
   const yPosition = useMemo(() => {
     if (height == null) return;
