@@ -6,6 +6,10 @@
 
 - Fixes border radius not being applied to animated bars
 
+### Added
+
+- `<LineChart/>` `lineOptions` now include `pointStroke` which changes the stroke of the active point
+
 ## [0.13.0] - 2021-05-13
 
 ### Addded

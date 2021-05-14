@@ -398,6 +398,17 @@ export function Chart({
 
             return (
               <React.Fragment key={`${name}-${index}`}>
+                {areaColor != null ? (
+                  <GradientArea
+                    series={singleSeries}
+                    yScale={yScale}
+                    xScale={xScale}
+                    isAnimated={isAnimated}
+                    index={index}
+                    hasSpline={lineOptions.hasSpline}
+                  />
+                ) : null}
+
                 {isGradientType(color) ? (
                   <defs>
                     <LinearGradient
@@ -420,6 +431,7 @@ export function Chart({
                 {animatePoints ? (
                   <Point
                     color={lineColor}
+                    stroke={lineOptions.pointStroke}
                     cx={getXPosition()}
                     cy={animatedYPostion}
                     active={tooltipDetails != null}
@@ -435,6 +447,7 @@ export function Chart({
                   return (
                     <Point
                       key={`${name}-${index}-${dataIndex}`}
+                      stroke={lineOptions.pointStroke}
                       color={lineColor}
                       cx={xScale(dataIndex)}
                       cy={yScale(rawValue)}
@@ -449,17 +462,6 @@ export function Chart({
                     />
                   );
                 })}
-
-                {areaColor != null ? (
-                  <GradientArea
-                    series={singleSeries}
-                    yScale={yScale}
-                    xScale={xScale}
-                    isAnimated={isAnimated}
-                    index={index}
-                    hasSpline={lineOptions.hasSpline}
-                  />
-                ) : null}
               </React.Fragment>
             );
           })}

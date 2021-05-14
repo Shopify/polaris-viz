@@ -1,6 +1,6 @@
 import React, {useState, useMemo, useRef} from 'react';
 import {stack, stackOffsetNone, stackOrderReverse} from 'd3-shape';
-import {colorSky} from '@shopify/polaris-tokens';
+import {colorSky, colorWhite} from '@shopify/polaris-tokens';
 
 import {
   useLinearXAxisDetails,
@@ -247,6 +247,7 @@ export function Chart({
           {stackedValues.map((value, stackIndex) =>
             value.map(([, startingDataPoint], index) => (
               <Point
+                stroke={colorWhite}
                 key={index}
                 color={getColorValue(colors[stackIndex])}
                 cx={xScale(index)}

@@ -109,3 +109,35 @@ curvedLines.args = {
   lineOptions: {hasSpline: true},
   renderTooltipContent,
 };
+
+export const DarkMode = Template.bind({});
+DarkMode.parameters = {
+  backgrounds: {
+    default: 'dark',
+  },
+};
+DarkMode.args = {
+  series,
+  isAnimated: true,
+  xAxisOptions: {
+    xAxisLabels,
+    labelFormatter: formatXAxisLabel,
+    useMinimalLabels: true,
+    showTicks: false,
+  },
+  lineOptions: {
+    hasSpline: true,
+    pointStroke: '#333333',
+  },
+  gridOptions: {
+    showVerticalLines: false,
+    color: 'rgb(99, 115, 129)',
+    horizontalOverflow: true,
+    horizontalMargin: 20,
+  },
+  crossHairOptions: {
+    width: 1,
+  },
+  yAxisOptions: {labelFormatter: formatYAxisLabel, backgroundColor: '#333333'},
+  renderTooltipContent,
+};

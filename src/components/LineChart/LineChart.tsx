@@ -1,6 +1,6 @@
 import React, {useLayoutEffect, useRef, useState, useCallback} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
-import {colorSky} from '@shopify/polaris-tokens';
+import {colorSky, colorWhite} from '@shopify/polaris-tokens';
 
 import {Dimensions} from '../../types';
 import {getDefaultColor, uniqueId} from '../../utilities';
@@ -115,7 +115,12 @@ export function LineChart({
     handlePrintMediaQueryChange,
   ]);
 
-  const lineOptionsWithDefaults = {hasSpline: false, width: 2, ...lineOptions};
+  const lineOptionsWithDefaults = {
+    hasSpline: false,
+    width: 2,
+    pointStroke: colorWhite,
+    ...lineOptions,
+  };
 
   const xAxisOptionsWithDefaults = {
     labelFormatter: (value: string) => value,
