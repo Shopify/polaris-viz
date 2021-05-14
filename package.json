@@ -145,5 +145,8 @@
     "lodash.throttle": "^4.1.1",
     "react-spring": "^8.0.27",
     "use-debounce": "^3.3.0"
+  },
+  "resolutions": {
+    "is-svg": "4.3.1"
   }
 }
