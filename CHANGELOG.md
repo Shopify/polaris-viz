@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Fixed
+
+- Fixes border radius not being applied to animated bars
+
 ## [0.13.0] - 2021-05-13
 
 ### Addded
