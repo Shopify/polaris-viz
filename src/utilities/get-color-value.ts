@@ -15,7 +15,7 @@ function isVizType(color: Color): color is VizPaletteColor {
   return Object.keys(vizColors).includes(color);
 }
 
-export function isValidColorToken(color: Color) {
+export function isValidColorToken(color: any): color is Color {
   if (isVizType(color) || isTokenType(color)) {
     return true;
   } else {

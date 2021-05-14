@@ -118,7 +118,7 @@ interface BarChartProps {
   annotations?: {
     dataIndex: number;
     width: number;
-    color: string;
+    color: Color | string;
     ariaLabel?: string;
     xOffset?: number;
     tooltipData?: {
@@ -334,9 +334,9 @@ The color used behind axis labels.
 
 #### annotations
 
-| type                                                  |
-| ----------------------------------------------------- |
-| `{dataIndex: number, width: number, color: string}[]` |
+| type                                                           |
+| -------------------------------------------------------------- |
+| `{dataIndex: number, width: number, color: Color \| string}[]` |
 
 An optional array of objects that the chart uses to draw annotations on the bars.
 
@@ -344,7 +344,7 @@ An optional array of objects that the chart uses to draw annotations on the bars
 
 - `width` is used to determine the annotation line `strokeWidth`.
 
-- `color` can be [any valid CSS color](https://developer.mozilla.org/en-US/docs/Web/CSS/color) such as a named color, hex, rgb, or rgba value.
+- `color` can be a Color token or [any valid CSS color](https://developer.mozilla.org/en-US/docs/Web/CSS/color) such as a named color, hex, rgb, or rgba value.
 
 ##### Optional annotation props
 

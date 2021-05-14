@@ -10,6 +10,10 @@
 
 - `<LineChart/>` `lineOptions` now include `pointStroke` which changes the stroke of the active point
 
+### Changed
+
+- The `<BarChart/>` annotation prop now accepts a string as a color and does not apply opacity by default
+
 ## [0.13.0] - 2021-05-13
 
 ### Addded
