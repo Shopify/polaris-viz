@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### Changed
+
+- Increased the minimum bar height for 0 values to 2px from 1px in `<BarChart />` and `<MultiSeriesBarChart />`
+- Increased the border radius of rounded bars to 4px from 3px in `<BarChart />` and `<MultiSeriesBarChart />`
+
+### Fixed
+
+- 0 values not showing a min height bar in grouped `<MultiSeriesBarChart />`
+
 ## [0.13.2] - 2021-05-17
 
 ### Changed

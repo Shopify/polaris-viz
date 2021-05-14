@@ -98,6 +98,11 @@ export function Chart({
     [xAxisOptions.labelFormatter, xAxisOptions.labels],
   );
 
+  const allValuesNegative = useMemo(
+    () => series.every(({data}) => data.every(({rawValue}) => rawValue <= 0)),
+    [series],
+  );
+
   const xAxisDetails = useMemo(
     () =>
       getBarXAxisDetails({
@@ -301,6 +306,7 @@ export function Chart({
                     barGroupIndex={index}
                     ariaLabel={ariaLabel}
                     hasRoundedCorners={barOptions.hasRoundedCorners}
+                    allValuesNegative={allValuesNegative}
                   />
                 );
               })}

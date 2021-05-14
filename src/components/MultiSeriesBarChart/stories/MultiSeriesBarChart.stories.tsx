@@ -27,7 +27,7 @@ const series = [
     color: 'secondary',
     data: [
       {label: 'Monday', rawValue: 4},
-      {label: 'Tuesday', rawValue: 3},
+      {label: 'Tuesday', rawValue: 0},
       {label: 'Wednesday', rawValue: 5},
       {label: 'Thursday', rawValue: 15},
       {label: 'Friday', rawValue: 8},
@@ -40,7 +40,7 @@ const series = [
     color: 'tertiary',
     data: [
       {label: 'Monday', rawValue: 7},
-      {label: 'Tuesday', rawValue: 2},
+      {label: 'Tuesday', rawValue: 0},
       {label: 'Wednesday', rawValue: 6},
       {label: 'Thursday', rawValue: 12},
       {label: 'Friday', rawValue: 10},

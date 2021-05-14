@@ -20,6 +20,7 @@ const defaultProps = {
   index: 1,
   onFocus: jest.fn(),
   tabIndex: 0,
+  allValuesNegative: false,
 };
 
 describe('<Bar/>', () => {
@@ -35,14 +36,15 @@ describe('<Bar/>', () => {
         // eslint-disable-next-line id-length
         d: `M0 0
         h100
-        a0 0 0 010 0
+        a0 0 0 0 1 0 0
         v1000
         H0
         V0
-        a0 0 0 010-0
+        a0 0 0 0 1 0 -0
         Z`,
       });
     });
+
     it('rounds the corners if true', () => {
       const bar = mount(
         <svg>
@@ -52,17 +54,18 @@ describe('<Bar/>', () => {
 
       expect(bar).toContainReactComponent('path', {
         // eslint-disable-next-line id-length
-        d: `M3 0
-        h94
-        a3 3 0 013 3
-        v997
+        d: `M4 0
+        h92
+        a4 4 0 0 1 4 4
+        v996
         H0
-        V3
-        a3 3 0 013-3
+        V4
+        a4 4 0 0 1 4 -4
         Z`,
       });
     });
-    it('renders sharp corners if true and height is less than the radius', () => {
+
+    it('rounds the corner if true and height is less than the radius', () => {
       const bar = mount(
         <svg>
           <Bar
@@ -75,13 +78,13 @@ describe('<Bar/>', () => {
 
       expect(bar).toContainReactComponent('path', {
         // eslint-disable-next-line id-length
-        d: `M0 0
-        h100
-        a0 0 0 010 0
-        v${ROUNDED_BAR_RADIUS - 1}
+        d: `M4 0
+        h92
+        a4 4 0 0 1 4 3
+        v0
         H0
-        V0
-        a0 0 0 010-0
+        V3
+        a4 4 0 0 1 4 -3
         Z`,
       });
     });

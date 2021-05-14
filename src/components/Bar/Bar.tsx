@@ -19,6 +19,7 @@ interface Props {
   role?: string;
   hasRoundedCorners?: boolean;
   height?: OpaqueInterpolation<any> | number;
+  allValuesNegative: boolean;
 }
 
 export function Bar({
@@ -34,17 +35,14 @@ export function Bar({
   role,
   height,
   hasRoundedCorners,
+  allValuesNegative,
 }: Props) {
   const zeroScale = yScale(0);
-  const isNegative = rawValue < 0;
+  const isNegative = rawValue < 0 || (rawValue === 0 && allValuesNegative);
   const rotation = isNegative ? 'rotate(180deg)' : 'rotate(0deg)';
   const xPosition = isNegative ? x + width : x;
-
   const heightIsNumber = typeof height === 'number';
-  const heightAmount = heightIsNumber ? height : height.value;
-  const shouldRoundCorners =
-    hasRoundedCorners && heightAmount >= ROUNDED_BAR_RADIUS;
-  const radius = shouldRoundCorners ? ROUNDED_BAR_RADIUS : 0;
+  const radius = hasRoundedCorners ? ROUNDED_BAR_RADIUS : 0;
 
   const yPosition = useMemo(() => {
     if (height == null) return;
@@ -83,15 +81,18 @@ export function Bar({
   const path = useMemo(() => {
     if (height == null) return;
 
-    const calculatePath = (heightValue: number) =>
-      `M${radius} 0
+    const calculatePath = (heightValue: number) => {
+      const radiusOffset = Math.max(0, radius - heightValue);
+
+      return `M${radius} 0
         h${width - radius * 2}
-        a${radius} ${radius} 0 01${radius} ${radius}
-        v${heightValue - radius}
+        a${radius} ${radius} 0 0 1 ${radius} ${radius - radiusOffset}
+        v${radiusOffset > 0 ? 0 : heightValue - radius}
         H0
-        V${radius}
-        a${radius} ${radius} 0 01${radius}-${radius}
+        V${radius - radiusOffset}
+        a${radius} ${radius} 0 0 1 ${radius} -${radius - radiusOffset}
         Z`;
+    };
 
     if (heightIsNumber) {
       return calculatePath(height);

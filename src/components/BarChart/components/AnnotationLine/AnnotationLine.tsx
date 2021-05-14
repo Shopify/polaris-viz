@@ -1,4 +1,5 @@
 import React from 'react';
+import {classNames} from '@shopify/css-utilities';
 
 import {clamp, getColorValue, isValidColorToken} from '../../../../utilities';
 import {Annotation} from '../../types';
@@ -35,7 +36,7 @@ export function AnnotationLine({
 
   return (
     <line
-      className={shouldAnimate && styles.AnimatedLine}
+      className={classNames(shouldAnimate && styles.AnimatedLine)}
       stroke={lookedUpColor}
       strokeWidth={annotationWidth}
       x1={xValueClamped}

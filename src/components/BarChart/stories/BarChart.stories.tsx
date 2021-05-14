@@ -63,7 +63,7 @@ Default.args = {
     {rawValue: 1324.19, label: '2020-01-01T12:00:00Z'},
     {rawValue: 613.29, label: '2020-01-02T12:00:00Z'},
     {rawValue: 422.79, label: '2020-01-03T12:00:00Z'},
-    {rawValue: 25.6, label: '2020-01-04T12:00:00Z'},
+    {rawValue: 0, label: '2020-01-04T12:00:00Z'},
     {rawValue: 277.69, label: '2020-01-05T12:00:00Z'},
     {rawValue: 421.19, label: '2020-01-06T12:00:00Z'},
   ],
@@ -83,7 +83,7 @@ OverflowStyle.args = {
     {rawValue: 1324.19, label: '2020-01-01T12:00:00Z'},
     {rawValue: 613.29, label: '2020-01-02T12:00:00Z'},
     {rawValue: 422.79, label: '2020-01-03T12:00:00Z'},
-    {rawValue: 25.6, label: '2020-01-04T12:00:00Z'},
+    {rawValue: 0, label: '2020-01-04T12:00:00Z'},
     {rawValue: 277.69, label: '2020-01-05T12:00:00Z'},
     {rawValue: 421.19, label: '2020-01-06T12:00:00Z'},
   ],
@@ -126,7 +126,7 @@ Annotations.args = {
     {rawValue: 50, label: '15'},
     {rawValue: 56, label: '16'},
     {rawValue: 85, label: '17'},
-    {rawValue: 2, label: '18'},
+    {rawValue: 0, label: '18'},
     {rawValue: 52, label: '19'},
   ],
   annotations: [
@@ -146,7 +146,7 @@ Annotations.args = {
   xAxisOptions: {labelFormatter: formatLabelNoop},
   yAxisOptions: {labelFormatter: formatLabelNoop},
   renderTooltipContent: renderTooltipContentWithAnnotation,
-  isAnimated: false,
+  isAnimated: true,
 };
 
 export const MedianWithColorString = Template.bind({});
@@ -203,7 +203,7 @@ LastBarTreatment.args = {
     {rawValue: 100.79, label: '2020-01-05T12:00:00Z'},
     {rawValue: 350.6, label: '2020-01-06T12:00:00Z'},
     {rawValue: 277.69, label: '2020-01-07T12:00:00Z'},
-    {rawValue: 50.6, label: '2020-01-08T12:00:00Z'},
+    {rawValue: 0, label: '2020-01-08T12:00:00Z'},
     {
       rawValue: 950.19,
       label: '2020-01-09T12:00:00Z',
@@ -236,7 +236,7 @@ MinimalLabels.args = {
     {rawValue: 350.6, label: '2020-01-06T12:00:00Z'},
     {rawValue: 277.69, label: '2020-01-07T12:00:00Z'},
     {
-      rawValue: 50.6,
+      rawValue: 0,
       label: 'Last day has especially longgggggggggggg textttttttttt',
     },
   ],
