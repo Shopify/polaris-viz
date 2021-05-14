@@ -129,7 +129,33 @@ describe('<AnnotationLine />', () => {
       );
 
       expect(content).toContainReactComponent('line', {
-        className: 'Line AnimatedLine',
+        className: 'AnimatedLine',
+      });
+    });
+  });
+
+  describe('color', () => {
+    it('renders a line with a color string', () => {
+      const content = mount(
+        <svg>
+          <AnnotationLine {...mockProps} color="white" />
+        </svg>,
+      );
+
+      expect(content).toContainReactComponent('line', {
+        stroke: 'white',
+      });
+    });
+
+    it('renders a line with a color token', () => {
+      const content = mount(
+        <svg>
+          <AnnotationLine {...mockProps} color="colorRed" />
+        </svg>,
+      );
+
+      expect(content).toContainReactComponent('line', {
+        stroke: 'rgb(222, 54, 24)',
       });
     });
   });

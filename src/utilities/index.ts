@@ -1,7 +1,7 @@
 export {eventPoint} from './event-point';
 export {getTextWidth} from './get-text-width';
 export {clamp} from './clamp';
-export {getColorValue} from './get-color-value';
+export {getColorValue, isValidColorToken} from './get-color-value';
 export {isGradientType} from './is-gradient-type';
 export {vizColors} from './viz-colors';
 export {colorOptions, primaryColor, secondaryColor} from './color-options';

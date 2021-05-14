@@ -149,6 +149,50 @@ Annotations.args = {
   isAnimated: false,
 };
 
+export const MedianWithColorString = Template.bind({});
+MedianWithColorString.args = {
+  data: [
+    {rawValue: 10, label: '0'},
+    {rawValue: 45, label: '1'},
+    {rawValue: 16, label: '2'},
+    {rawValue: 9, label: '3'},
+    {rawValue: 32, label: '4'},
+    {rawValue: 85, label: '5'},
+    {rawValue: 74, label: '6'},
+    {rawValue: 100, label: '7'},
+    {rawValue: 58, label: '8'},
+    {rawValue: 40, label: '9'},
+    {rawValue: 58, label: '10'},
+    {rawValue: 64, label: '11'},
+    {rawValue: 9, label: '12'},
+    {rawValue: 26, label: '13'},
+    {rawValue: 34, label: '14'},
+    {rawValue: 50, label: '15'},
+    {rawValue: 56, label: '16'},
+    {rawValue: 85, label: '17'},
+    {rawValue: 2, label: '18'},
+    {rawValue: 52, label: '19'},
+  ],
+  annotations: [
+    {
+      dataIndex: 1,
+      xOffset: 0.5,
+      width: 5,
+      color: '#d3d3d3',
+      ariaLabel: 'Median: 1.5',
+      tooltipData: {
+        label: 'Median',
+        value: '1.5 hours',
+      },
+    },
+  ],
+  barOptions: {color: primaryColor, highlightColor: secondaryColor},
+  xAxisOptions: {labelFormatter: formatLabelNoop},
+  yAxisOptions: {labelFormatter: formatLabelNoop},
+  renderTooltipContent: renderTooltipContentWithAnnotation,
+  isAnimated: false,
+};
+
 export const LastBarTreatment = Template.bind({});
 LastBarTreatment.args = {
   data: [
