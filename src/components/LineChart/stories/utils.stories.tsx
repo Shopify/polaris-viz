@@ -3,39 +3,55 @@ import React from 'react';
 import {TooltipContent} from '../components/TooltipContent/TooltipContent';
 import {LineChartProps} from '../LineChart';
 
+const positive = '#2eeda1';
+const neutral = '#8456e1';
+const negative = '#EC6E6E';
+
+const data = [
+  {rawValue: 333, label: '2020-04-01T12:00:00'},
+  {rawValue: 897, label: '2020-04-02T12:00:00'},
+  {rawValue: 234, label: '2020-04-03T12:00:00'},
+  {rawValue: 534, label: '2020-04-04T12:00:00'},
+  {rawValue: 132, label: '2020-04-05T12:00:00'},
+  {rawValue: 159, label: '2020-04-06T12:00:00'},
+  {rawValue: 239, label: '2020-04-07T12:00:00'},
+  {rawValue: 908, label: '2020-04-08T12:00:00'},
+  {rawValue: 0, label: '2020-04-09T12:00:00'},
+  {rawValue: 0, label: '2020-04-10T12:00:00'},
+  {rawValue: 543, label: '2020-04-11T12:00:00'},
+  {rawValue: 89, label: '2020-04-12T12:00:00'},
+  {rawValue: -809, label: '2020-04-13T12:00:00'},
+  {rawValue: 129, label: '2020-04-14T12:00:00'},
+];
+
+const dataVals = data.map(({rawValue}) => rawValue);
+const minVal = Math.min(...dataVals, 0);
+const maxVal = Math.max(...dataVals, 0);
+
+const range = maxVal - minVal;
+const negativeStartPercent = ((0 - minVal) * 100) / range;
+const zeroPercentLine = 100 - negativeStartPercent;
+
+const gradient = [
+  {
+    offset: 0,
+    color: negative,
+  },
+  {
+    offset: zeroPercentLine,
+    color: neutral,
+  },
+  {
+    offset: 100,
+    color: positive,
+  },
+];
+
 export const series = [
   {
     name: 'Apr 01–Apr 14, 2020',
-    data: [
-      {rawValue: 333, label: '2020-04-01T12:00:00'},
-      {rawValue: 897, label: '2020-04-02T12:00:00'},
-      {rawValue: 234, label: '2020-04-03T12:00:00'},
-      {rawValue: 534, label: '2020-04-04T12:00:00'},
-      {rawValue: 132, label: '2020-04-05T12:00:00'},
-      {rawValue: 159, label: '2020-04-06T12:00:00'},
-      {rawValue: 239, label: '2020-04-07T12:00:00'},
-      {rawValue: 908, label: '2020-04-08T12:00:00'},
-      {rawValue: 234, label: '2020-04-09T12:00:00'},
-      {rawValue: 645, label: '2020-04-10T12:00:00'},
-      {rawValue: 543, label: '2020-04-11T12:00:00'},
-      {rawValue: 89, label: '2020-04-12T12:00:00'},
-      {rawValue: 809, label: '2020-04-13T12:00:00'},
-      {rawValue: 129, label: '2020-04-14T12:00:00'},
-    ],
-    color: [
-      {
-        offset: 0,
-        color: '#08CA9B',
-      },
-      {
-        offset: 85,
-        color: 'rgb(92,105,208)',
-      },
-      {
-        offset: 100,
-        color: 'rgb(92,105,208)',
-      },
-    ],
+    data,
+    color: gradient,
     lineStyle: 'solid' as 'solid',
     areaColor: 'rgb(92,105,208)',
   },
@@ -74,7 +90,7 @@ export function formatXAxisLabel(value: string) {
 export function formatYAxisLabel(value: number) {
   return new Intl.NumberFormat('en', {
     style: 'currency',
-    currency: 'CAD',
+    currency: 'USD',
     currencyDisplay: 'symbol',
   }).format(value);
 }

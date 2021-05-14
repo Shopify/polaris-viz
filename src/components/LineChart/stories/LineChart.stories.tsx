@@ -37,7 +37,7 @@ const Template: Story<LineChartProps> = (args: LineChartProps) => {
 
 export const Default = Template.bind({});
 Default.args = {
-  series: [{...series[0], color: 'primary', areaColor: null}, series[1]],
+  series: [{...series[0], color: 'primary', areaColor: null}, series[0]],
   xAxisOptions: {
     xAxisLabels,
     labelFormatter: formatXAxisLabel,
@@ -49,11 +49,26 @@ Default.args = {
 export const Gradient = Template.bind({});
 Gradient.args = {
   series,
+  isAnimated: true,
   xAxisOptions: {
     xAxisLabels,
     labelFormatter: formatXAxisLabel,
+    useMinimalLabels: true,
+    showTicks: false,
   },
-  yAxisOptions: {labelFormatter: formatYAxisLabel},
+  lineOptions: {
+    hasSpline: true,
+  },
+  gridOptions: {
+    showVerticalLines: false,
+    color: 'rgb(99, 115, 129)',
+    horizontalOverflow: true,
+    horizontalMargin: 20,
+  },
+  crossHairOptions: {
+    width: 1,
+  },
+  yAxisOptions: {labelFormatter: formatYAxisLabel, backgroundColor: '#333333'},
   renderTooltipContent,
 };
 
