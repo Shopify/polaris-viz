@@ -1,31 +1,13 @@
 import React, {useMemo} from 'react';
-import {ScaleLinear, ScaleBand} from 'd3-scale';
-import {SeriesColor, GradientStop} from 'types';
 
-import {StackSeries} from '../../types';
+import {GradientStop} from '../../../../types';
 import {getColorValue, isGradientType, uniqueId} from '../../../../utilities';
 import {MASK_SUBDUE_COLOR, MASK_HIGHLIGHT_COLOR} from '../../../../constants';
-import {LinearGradient} from '../../../../components';
+import {LinearGradient} from '../../../LinearGradient';
 
 import {Stack} from './components';
 import styles from './StackedBarGroup.scss';
-
-export interface StackedBarGroupProps {
-  groupIndex: number;
-  data: StackSeries;
-  yScale: ScaleLinear<number, number>;
-  xScale: ScaleBand<string>;
-  colors: SeriesColor[];
-  activeBarGroup: number | null;
-  accessibilityData: {
-    title: string;
-    data: {
-      label: string;
-      value: string;
-    }[];
-  }[];
-  onFocus: (index: number) => void;
-}
+import {StackedBarGroupProps} from './types';
 
 export function StackedBarGroup({
   groupIndex,
