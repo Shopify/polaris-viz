@@ -1,1 +1,1 @@
-export {StackedBarGroup, StackedBarGroupProps} from './StackedBarGroup';
+export {StackedBarGroup} from './StackedBarGroup';

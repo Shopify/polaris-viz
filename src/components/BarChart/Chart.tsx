@@ -19,7 +19,7 @@ import {
   getColorValue,
   isGradientType,
 } from '../../utilities';
-import {Bar} from '../../components';
+import {Bar} from '../Bar';
 import {YAxis} from '../YAxis';
 import {BarChartXAxis} from '../BarChartXAxis';
 import {TooltipContainer} from '../TooltipContainer';

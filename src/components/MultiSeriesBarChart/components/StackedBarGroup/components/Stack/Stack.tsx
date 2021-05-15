@@ -2,7 +2,7 @@ import React from 'react';
 
 import {formatAriaLabel} from '../../../../utilities';
 import {BAR_SPACING} from '../../../../constants';
-import {StackedBarGroupProps} from '../../../../components/StackedBarGroup';
+import {StackedBarGroupProps} from '../../types';
 
 export function Stack({
   data,
