@@ -7,6 +7,7 @@
 - Increased the minimum bar height for 0 values to 2px from 1px in `<BarChart />` and `<MultiSeriesBarChart />`
 - Increased the border radius of rounded bars to 4px from 3px in `<BarChart />` and `<MultiSeriesBarChart />`
 - Increased size of ColorPreview on Legend and Tooltip, as well as modifying its border-radius
+- `<LineChart />` will now render `<Point />` at full opacity if the color value has transparency
 
 ### Fixed
 

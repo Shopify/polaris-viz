@@ -232,7 +232,7 @@ describe('<Chart />', () => {
     );
 
     expect(chart).toContainReactComponent(Point, {
-      color: 'rgb(0,161,159)',
+      color: 'rgb(0, 161, 159)',
       cx: 0,
       cy: 0,
       active: false,
@@ -289,6 +289,44 @@ describe('<Chart />', () => {
   });
 
   describe('series.color', () => {
+    describe('is of type Color', () => {
+      it('removes transparency for <Point />', () => {
+        const chart = mount(
+          <Chart
+            {...mockProps}
+            series={[
+              {
+                ...primarySeries,
+                color: 'colorWhiteTransparent',
+              },
+            ]}
+          />,
+        );
+
+        expect(chart.find(Point)).toHaveReactProps({
+          color: 'rgb(255, 255, 255)',
+        });
+      });
+
+      it('does not remove transparency for <Line />', () => {
+        const chart = mount(
+          <Chart
+            {...mockProps}
+            series={[
+              {
+                ...primarySeries,
+                color: 'colorWhiteTransparent',
+              },
+            ]}
+          />,
+        );
+
+        expect(chart.find(Line)).toHaveReactProps({
+          color: 'rgba(255, 255, 255, 0.4)',
+        });
+      });
+    });
+
     describe('is of type GradientStop[]', () => {
       it('renders a LinearGradient if series color is a gradient', () => {
         const chart = mount(
@@ -334,7 +372,7 @@ describe('<Chart />', () => {
         });
       });
 
-      it('passes gradient url as color prop to <Point />', () => {
+      it('passes point gradient url as color prop to <Point />', () => {
         const chart = mount(
           <Chart
             {...mockProps}
@@ -353,7 +391,35 @@ describe('<Chart />', () => {
         );
 
         expect(chart.find(Point)).toHaveReactProps({
-          color: 'url(#lineChartGradient-1-0)',
+          color: 'url(#lineChartGradient-1-point-0)',
+        });
+      });
+
+      it('removes transparency from the gradient', () => {
+        const chart = mount(
+          <Chart
+            {...mockProps}
+            series={[
+              {
+                ...primarySeries,
+                color: [
+                  {
+                    offset: 1,
+                    color: 'rgba(255, 0, 0, 0.1)',
+                  },
+                ],
+              },
+            ]}
+          />,
+        );
+
+        expect(chart).toContainReactComponent(LinearGradient, {
+          gradient: [
+            {
+              offset: 1,
+              color: 'rgb(255, 0, 0)',
+            },
+          ],
         });
       });
     });

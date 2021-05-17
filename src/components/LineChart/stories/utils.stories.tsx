@@ -29,15 +29,15 @@ export const series = [
       },
       {
         offset: 85,
-        color: 'rgb(92,105,208)',
+        color: 'rgba(92,105,208,0.3)',
       },
       {
         offset: 100,
-        color: 'rgb(92,105,208)',
+        color: 'rgba(92,105,208,0.3)',
       },
     ],
     lineStyle: 'solid' as 'solid',
-    areaColor: 'rgb(92,105,208)',
+    areaColor: 'rgba(92,105,208,0.3)',
   },
   {
     name: 'Mar 01–Mar 14, 2020',
@@ -57,7 +57,7 @@ export const series = [
       {rawValue: 623, label: '2020-03-13T12:00:00'},
       {rawValue: 21, label: '2020-03-14T12:00:00'},
     ],
-    color: 'pastComparison' as 'pastComparison',
+    color: 'colorGrayDark' as 'colorGrayDark',
     lineStyle: 'dashed' as 'dashed',
   },
 ];

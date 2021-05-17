@@ -9,6 +9,8 @@ import {
   clamp,
   getColorValue,
   isGradientType,
+  makeColorOpaque,
+  makeGradientOpaque,
 } from '../../utilities';
 import {useLinearXAxisDetails, useLinearXScale} from '../../hooks';
 import {
@@ -378,21 +380,8 @@ export function Chart({
 
         <g transform={`translate(${dataStartPosition},${Margin.Top})`}>
           {reversedSeries.map((singleSeries, index) => {
-            const {data, name, color, areaColor} = singleSeries;
+            const {name, color, areaColor} = singleSeries;
             const seriesGradientId = `${gradientId.current}-${index}`;
-            const isLongestLine = index === longestSeriesIndex;
-
-            const animatedYPostion =
-              animatedCoordinates == null || animatedCoordinates[index] == null
-                ? 0
-                : animatedCoordinates[index].interpolate(
-                    (coord: SVGPoint) => coord.y,
-                  );
-
-            const hidePoint =
-              animatedCoordinates == null ||
-              tooltipDetails == null ||
-              (activeIndex != null && activeIndex >= data.length);
 
             const lineColor = isGradientType(color)
               ? `url(#${seriesGradientId})`
@@ -430,9 +419,48 @@ export function Chart({
                   lineGenerator={lineGenerator}
                   lineOptions={lineOptions}
                 />
+              </React.Fragment>
+            );
+          })}
+
+          {reversedSeries.map((singleSeries, index) => {
+            const {data, name, color} = singleSeries;
+            const isLongestLine = index === longestSeriesIndex;
+            const pointGradientId = `${gradientId.current}-point-${index}`;
+
+            const animatedYPostion =
+              animatedCoordinates == null || animatedCoordinates[index] == null
+                ? 0
+                : animatedCoordinates[index].interpolate(
+                    (coord: SVGPoint) => coord.y,
+                  );
+
+            const hidePoint =
+              animatedCoordinates == null ||
+              tooltipDetails == null ||
+              (activeIndex != null && activeIndex >= data.length);
+
+            const pointColor = isGradientType(color)
+              ? `url(#${pointGradientId})`
+              : makeColorOpaque(getColorValue(color));
+
+            return (
+              <React.Fragment key={`${name}-${index}`}>
+                {isGradientType(color) ? (
+                  <defs>
+                    <LinearGradient
+                      id={pointGradientId}
+                      gradient={makeGradientOpaque(color)}
+                      gradientUnits="userSpaceOnUse"
+                      y1="100%"
+                      y2="0%"
+                    />
+                  </defs>
+                ) : null}
+
                 {animatePoints ? (
                   <Point
-                    color={lineColor}
+                    color={pointColor}
                     stroke={lineOptions.pointStroke}
                     cx={getXPosition()}
                     cy={animatedYPostion}
@@ -450,7 +478,7 @@ export function Chart({
                     <Point
                       key={`${name}-${index}-${dataIndex}`}
                       stroke={lineOptions.pointStroke}
-                      color={lineColor}
+                      color={pointColor}
                       cx={xScale(dataIndex)}
                       cy={yScale(rawValue)}
                       active={activeIndex === dataIndex}
