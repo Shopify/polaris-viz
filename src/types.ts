@@ -19,6 +19,7 @@ export interface DataSeries<T, C> {
 export interface GradientStop {
   offset: number;
   color: string;
+  stopOpacity?: number;
 }
 
 export type SeriesColor = Color | GradientStop[];
