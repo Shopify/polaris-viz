@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- `<LineChart/>` gradient area now has soft faded left/right edges instead of hard edges
+
 ## [0.13.1] - 2021-05-14
 
 ### Fixed
