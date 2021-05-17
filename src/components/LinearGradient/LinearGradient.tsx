@@ -30,11 +30,12 @@ export function LinearGradient({
       y2={y2}
       gradientUnits={gradientUnits}
     >
-      {gradient.map(({color, offset}) => (
+      {gradient.map(({color, offset, stopOpacity = 1}) => (
         <stop
           key={`${id}-${color}-${offset}`}
           offset={`${offset}%`}
           stopColor={color}
+          stopOpacity={stopOpacity}
         />
       ))}
     </linearGradient>

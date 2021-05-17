@@ -16,8 +16,8 @@ describe('getGradientDetails', () => {
     ]);
 
     expect(actual).toStrictEqual([
-      {alpha: 0.25, percent: 0},
-      {alpha: 0, percent: 100},
+      {stopOpacity: 0.25, offset: 0},
+      {stopOpacity: 0, offset: 100},
     ]);
   });
 
@@ -36,8 +36,8 @@ describe('getGradientDetails', () => {
     ]);
 
     expect(actual).toStrictEqual([
-      {alpha: 0, percent: 0},
-      {alpha: 0.25, percent: 100},
+      {stopOpacity: 0, offset: 0},
+      {stopOpacity: 0.25, offset: 100},
     ]);
   });
 
@@ -56,9 +56,9 @@ describe('getGradientDetails', () => {
     ]);
 
     expect(actual).toStrictEqual([
-      {alpha: 0.25, percent: 0},
-      {alpha: 0, percent: 66.66666666666666},
-      {alpha: 0.25, percent: 100},
+      {stopOpacity: 0.25, offset: 0},
+      {stopOpacity: 0, offset: 66.66666666666666},
+      {stopOpacity: 0.25, offset: 100},
     ]);
   });
 });

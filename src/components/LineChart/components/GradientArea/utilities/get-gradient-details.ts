@@ -10,13 +10,13 @@ export function getGradientDetails(data: Data[]) {
 
   if (allPositives) {
     return [
-      {percent: 0, alpha: HIGHEST_ALPHA},
-      {percent: 100, alpha: 0},
+      {offset: 0, stopOpacity: HIGHEST_ALPHA},
+      {offset: 100, stopOpacity: 0},
     ];
   } else if (allNegatives) {
     return [
-      {percent: 0, alpha: 0},
-      {percent: 100, alpha: HIGHEST_ALPHA},
+      {offset: 0, stopOpacity: 0},
+      {offset: 100, stopOpacity: HIGHEST_ALPHA},
     ];
   } else {
     const range = max - min;
@@ -24,9 +24,9 @@ export function getGradientDetails(data: Data[]) {
     const zeroPercentLine = 100 - negativeStartPercent;
 
     return [
-      {percent: 0, alpha: HIGHEST_ALPHA},
-      {percent: zeroPercentLine, alpha: 0},
-      {percent: 100, alpha: HIGHEST_ALPHA},
+      {offset: 0, stopOpacity: HIGHEST_ALPHA},
+      {offset: zeroPercentLine, stopOpacity: 0},
+      {offset: 100, stopOpacity: HIGHEST_ALPHA},
     ];
   }
 }
