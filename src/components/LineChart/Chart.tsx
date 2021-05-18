@@ -92,7 +92,7 @@ export function Chart({
   const xAxisDetails = useLinearXAxisDetails({
     series,
     fontSize,
-    chartDimensions: dimensions,
+    width: dimensions.width - gridOptions.horizontalMargin * 2,
     formatXAxisLabel: xAxisOptions.labelFormatter,
     initialTicks,
     xAxisLabels: xAxisOptions.hideXAxisLabels ? [] : xAxisOptions.xAxisLabels,

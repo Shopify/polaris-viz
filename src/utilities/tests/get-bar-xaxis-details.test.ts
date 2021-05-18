@@ -35,10 +35,7 @@ describe('getBarXAxisDetails', () => {
       fontSize: 10,
       innerMargin: 0,
       outerMargin: 0,
-      chartDimensions: {
-        height: 100,
-        width: 100,
-      } as any,
+      width: 100,
     });
 
     expect(actual).toMatchObject({needsDiagonalLabels: true});
@@ -56,10 +53,7 @@ describe('getBarXAxisDetails', () => {
       fontSize: 10,
       innerMargin: 0,
       outerMargin: 0,
-      chartDimensions: {
-        height: 100,
-        width: 100,
-      } as any,
+      width: 100,
     });
 
     expect(actual).toMatchObject({needsDiagonalLabels: false});
@@ -73,10 +67,7 @@ describe('getBarXAxisDetails', () => {
       innerMargin: 0,
       outerMargin: 0,
       minimalLabelIndexes: [0, 4, 9],
-      chartDimensions: {
-        height: 100,
-        width: 100,
-      } as any,
+      width: 100,
     });
 
     expect(actual).toMatchObject({
@@ -95,10 +86,7 @@ describe('getBarXAxisDetails', () => {
       innerMargin: 0,
       outerMargin: 0,
       minimalLabelIndexes: null,
-      chartDimensions: {
-        height: 100,
-        width: 100,
-      } as any,
+      width: 100,
     });
 
     expect(actual).toMatchObject({

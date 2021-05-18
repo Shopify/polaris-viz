@@ -107,7 +107,7 @@ export function Chart({
   const xAxisDetails = useLinearXAxisDetails({
     series,
     fontSize,
-    chartDimensions: dimensions,
+    width: dimensions.width,
     formatXAxisLabel,
     initialTicks,
     xAxisLabels: xAxisLabels == null ? [] : xAxisLabels,

@@ -42,7 +42,7 @@ describe('useLinearXAxisDetails', () => {
       },
     ] as any,
     fontSize: 14,
-    chartDimensions: {width: 200} as any,
+    width: 200,
     formatXAxisLabel: (label: string) => label,
     initialTicks: [{value: 10, formattedValue: '$10', yOffset: 100}],
     xAxisLabels: [
@@ -68,7 +68,7 @@ describe('useLinearXAxisDetails', () => {
         <DiagonalTestComponent
           props={{
             ...mockProps,
-            chartDimensions: {...mockProps.chartDimensions, width: 300},
+            width: 300,
           }}
         />,
       );
@@ -174,7 +174,7 @@ describe('useLinearXAxisDetails', () => {
                 lineStyle: 'dashed',
               },
             ] as any,
-            chartDimensions: {width: 800} as any,
+            width: 800,
           }}
         />,
       );
