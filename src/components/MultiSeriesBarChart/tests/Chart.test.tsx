@@ -161,6 +161,66 @@ describe('Chart />', () => {
 
       expect(chart).not.toContainReactComponent(BarGroup);
     });
+
+    describe('allValuesNegative', () => {
+      it('receives true if all values are 0 or negative', () => {
+        const chart = mount(
+          <Chart
+            {...mockProps}
+            series={[
+              {
+                ...mockProps.series[0],
+                data: [
+                  {label: '', rawValue: -1},
+                  {label: '', rawValue: 0},
+                  {label: '', rawValue: -2},
+                ],
+              },
+              {
+                ...mockProps.series[1],
+                data: [
+                  {label: '', rawValue: -3},
+                  {label: '', rawValue: -4},
+                  {label: '', rawValue: -1},
+                ],
+              },
+            ]}
+          />,
+        );
+        expect(chart).toContainReactComponent(BarGroup, {
+          allValuesNegative: true,
+        });
+      });
+
+      it('receives false if all values are 0 or negative', () => {
+        const chart = mount(
+          <Chart
+            {...mockProps}
+            series={[
+              {
+                ...mockProps.series[0],
+                data: [
+                  {label: '', rawValue: 3},
+                  {label: '', rawValue: 0},
+                  {label: '', rawValue: 3},
+                ],
+              },
+              {
+                ...mockProps.series[1],
+                data: [
+                  {label: '', rawValue: 4},
+                  {label: '', rawValue: 5},
+                  {label: '', rawValue: -1},
+                ],
+              },
+            ]}
+          />,
+        );
+        expect(chart).toContainReactComponent(BarGroup, {
+          allValuesNegative: false,
+        });
+      });
+    });
   });
 
   describe('<StackedBarGroup />', () => {

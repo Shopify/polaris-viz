@@ -168,6 +168,11 @@ export function Chart({
 
   const barWidth = useMemo(() => xScale.bandwidth(), [xScale]);
 
+  const allValuesNegative = useMemo(
+    () => data.every(({rawValue}) => rawValue <= 0),
+    [data],
+  );
+
   const tooltipMarkup = useMemo(() => {
     if (activeBar == null) {
       return null;
@@ -272,6 +277,7 @@ export function Chart({
                       tabIndex={0}
                       role="img"
                       hasRoundedCorners={barOptions.hasRoundedCorners}
+                      allValuesNegative={allValuesNegative}
                     />
                   </g>
                 );

@@ -162,41 +162,79 @@ describe('Chart />', () => {
     });
   });
 
-  it('renders a Bar for each data item', () => {
-    const chart = mount(<Chart {...mockProps} />);
-
-    expect(chart).toContainReactComponentTimes(Bar, 2);
-  });
-
-  it('passes a subdued color to the Bar that is not being hovered on or nearby', () => {
-    const chart = mount(<Chart {...mockProps} />);
-
-    const svg = chart.find('svg')!;
-    expect(chart).toContainReactComponent(Bar, {color: MASK_HIGHLIGHT_COLOR});
-
-    svg.trigger('onMouseMove', fakeSVGEvent);
-
-    expect(chart).toContainReactComponent(Bar, {color: MASK_SUBDUE_COLOR});
-  });
-
-  it('passes the min bar height to the bar if its value is 0', () => {
-    const chart = mount(
-      <Chart {...mockProps} data={[{rawValue: 0, label: 'data'}]} />,
-    );
-
-    expect(chart).toContainReactComponent(Bar, {
-      height: expect.objectContaining({
-        value: MIN_BAR_HEIGHT,
-      }),
-    });
-  });
-
   describe('empty state', () => {
     it('does not render tooltip for empty state', () => {
       const chart = mount(<Chart {...mockProps} data={[]} />);
 
       expect(chart).not.toContainReactText('Mock Tooltip');
       expect(chart).not.toContainReactComponent(TooltipContainer);
+    });
+  });
+
+  describe('<Bar />', () => {
+    it('renders a Bar for each data item', () => {
+      const chart = mount(<Chart {...mockProps} />);
+
+      expect(chart).toContainReactComponentTimes(Bar, 2);
+    });
+
+    it('passes a subdued color to the Bar that is not being hovered on or nearby', () => {
+      const chart = mount(<Chart {...mockProps} />);
+
+      const svg = chart.find('svg')!;
+      expect(chart).toContainReactComponent(Bar, {color: MASK_HIGHLIGHT_COLOR});
+
+      svg.trigger('onMouseMove', fakeSVGEvent);
+
+      expect(chart).toContainReactComponent(Bar, {color: MASK_SUBDUE_COLOR});
+    });
+
+    it('passes the min bar height to the bar if its value is 0', () => {
+      const chart = mount(
+        <Chart {...mockProps} data={[{rawValue: 0, label: 'data'}]} />,
+      );
+
+      expect(chart).toContainReactComponent(Bar, {
+        height: expect.objectContaining({
+          value: MIN_BAR_HEIGHT,
+        }),
+      });
+    });
+
+    describe('allValuesNegative', () => {
+      it('receives true if all values are 0 or negative', () => {
+        const chart = mount(
+          <Chart
+            {...mockProps}
+            data={[
+              {rawValue: 0, label: 'data'},
+              {rawValue: -2, label: 'data'},
+              {rawValue: -1, label: 'data'},
+            ]}
+          />,
+        );
+
+        expect(chart).toContainReactComponent(Bar, {
+          allValuesNegative: true,
+        });
+      });
+
+      it('receives false if not all values are 0 or negative', () => {
+        const chart = mount(
+          <Chart
+            {...mockProps}
+            data={[
+              {rawValue: 0, label: 'data'},
+              {rawValue: -2, label: 'data'},
+              {rawValue: 1, label: 'data'},
+            ]}
+          />,
+        );
+
+        expect(chart).toContainReactComponent(Bar, {
+          allValuesNegative: false,
+        });
+      });
     });
   });
 
