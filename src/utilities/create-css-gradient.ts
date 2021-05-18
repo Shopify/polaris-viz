@@ -5,5 +5,5 @@ export const createCSSGradient = (gradient: GradientStop[]) => {
     ({color, offset}) => `${color} ${offset}%`,
   );
 
-  return `linear-gradient(0deg, ${gradientStops.join(',')})`;
+  return `linear-gradient(305deg, ${gradientStops.join(',')})`;
 };
