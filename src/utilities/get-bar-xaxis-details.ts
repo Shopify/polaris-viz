@@ -6,7 +6,6 @@ import {
   LABEL_SPACE_MINUS_FIRST_AND_LAST,
   SPACING_EXTRA_TIGHT,
 } from '../constants';
-import {Dimensions} from '../types';
 
 import {getTextContainerHeight} from './get-text-container-height';
 import {getLongestLabelDetails} from './get-longest-label-details';
@@ -16,7 +15,7 @@ interface LayoutDetails {
   yAxisLabelWidth: number;
   fontSize: number;
   xLabels: string[];
-  chartDimensions: Dimensions;
+  width: number;
   innerMargin: number;
   outerMargin: number;
   minimalLabelIndexes?: number[] | null;
@@ -26,7 +25,7 @@ export function getBarXAxisDetails({
   xLabels,
   yAxisLabelWidth,
   fontSize,
-  chartDimensions,
+  width,
   innerMargin,
   outerMargin,
   minimalLabelIndexes,
@@ -45,8 +44,7 @@ export function getBarXAxisDetails({
     };
   }
 
-  const drawableWidth =
-    chartDimensions.width - yAxisLabelWidth - Margin.Right - SPACING;
+  const drawableWidth = width - yAxisLabelWidth - Margin.Right - SPACING;
 
   // distance from the start of one bar to the start of the next, same as scaleBand.step();
   // you can see this visualized here: https://observablehq.com/@d3/d3-scaleband

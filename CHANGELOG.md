@@ -11,6 +11,7 @@
 ### Fixed
 
 - 0 values not showing a min height bar in grouped `<MultiSeriesBarChart />`
+- Chart xAxis label space now factors in `horizontalMargin`
 
 ### Added
 

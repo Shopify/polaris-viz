@@ -51,15 +51,14 @@ const series = [
 ];
 
 const labels = [
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday',
-  'Sunday',
+  'Mon. Mon. Mon. Mon. Mon. Mon.',
+  'Tues. Tues. Tues. Tues. Tues. Tues. Tues.',
+  'Weds. Weds. Weds. Weds. Weds. Weds.',
+  'Thurs. Thurs. Thurs. Thurs. Thurs. Thurs. Thurs.',
+  'Fri. Fri. Fri. Fri. Fri. Fri. Fri. Fri.',
+  'Sat. Sat. Sat. Sat. Sat. Sat.',
+  'Sun. Sun. Sun. Sun. Sun. Sun. Sun. Sun.',
 ];
-
 export default {
   title: 'MultiSeriesBarChart',
   component: MultiSeriesBarChart,
@@ -152,7 +151,7 @@ OverflowStyles.args = {
   yAxisOptions: {backgroundColor: 'white'},
   gridOptions: {
     horizontalOverflow: true,
-    horizontalMargin: 20,
+    horizontalMargin: 30,
     showVerticalLines: false,
   },
 };

@@ -24,7 +24,6 @@ import {
   DataSeries,
   SeriesColor,
   YAxisTick,
-  Dimensions,
 } from '../types';
 
 import {useLinearXScale} from './useLinearXScale';
@@ -39,7 +38,7 @@ function getDatumSpace(width: number, numberOfTicks: number) {
 export interface ChartDetails {
   series: DataSeries<Data | NullableData, SeriesColor>[];
   fontSize: number;
-  chartDimensions: Dimensions;
+  width: number;
   formatXAxisLabel: StringLabelFormatter;
   initialTicks: YAxisTick[];
   xAxisLabels: string[];
@@ -49,7 +48,7 @@ export interface ChartDetails {
 export function useLinearXAxisDetails({
   series,
   fontSize,
-  chartDimensions,
+  width,
   formatXAxisLabel,
   initialTicks,
   xAxisLabels,
@@ -68,8 +67,7 @@ export function useLinearXAxisDetails({
 
   const estimatedYAxisWidth = SPACING_TIGHT + approxYAxisLabelWidth;
 
-  const drawableWidth =
-    chartDimensions.width - estimatedYAxisWidth - Margin.Right;
+  const drawableWidth = width - estimatedYAxisWidth - Margin.Right;
 
   const longestSeriesLastIndex = useMemo(
     () =>
