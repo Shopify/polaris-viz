@@ -86,6 +86,7 @@ export function Chart({
     drawableHeight: dimensions.height - Margin.Top,
     series,
     formatYAxisLabel: yAxisOptions.labelFormatter,
+    integersOnly: yAxisOptions.integersOnly,
   });
 
   const xAxisDetails = useLinearXAxisDetails({
@@ -114,6 +115,7 @@ export function Chart({
     drawableHeight,
     series,
     formatYAxisLabel: yAxisOptions.labelFormatter,
+    integersOnly: yAxisOptions.integersOnly,
   });
 
   const handleFocus = useCallback(

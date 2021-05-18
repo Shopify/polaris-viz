@@ -174,3 +174,50 @@ StackedGradient.args = {
     isStacked: true,
   },
 };
+
+export const IntegersOnly = Template.bind({});
+IntegersOnly.args = {
+  series: [
+    {
+      name: 'Breakfast',
+      color: 'primary',
+      data: [
+        {label: 'Monday', rawValue: 0.3},
+        {label: 'Tuesday', rawValue: 0.1},
+        {label: 'Wednesday', rawValue: 0.78},
+        {label: 'Thursday', rawValue: 0.12},
+        {label: 'Friday', rawValue: 0.7},
+        {label: 'Saturday', rawValue: 0.3},
+        {label: 'Sunday', rawValue: 0.6},
+      ],
+    },
+    {
+      name: 'Lunch',
+      color: 'secondary',
+      data: [
+        {label: 'Monday', rawValue: 0},
+        {label: 'Tuesday', rawValue: 0.1},
+        {label: 'Wednesday', rawValue: 0.12},
+        {label: 'Thursday', rawValue: 0.34},
+        {label: 'Friday', rawValue: 0.54},
+        {label: 'Saturday', rawValue: 0.21},
+        {label: 'Sunday', rawValue: 0.1},
+      ],
+    },
+    {
+      name: 'Dinner',
+      color: 'tertiary',
+      data: [
+        {label: 'Monday', rawValue: 1.23},
+        {label: 'Tuesday', rawValue: 1.42},
+        {label: 'Wednesday', rawValue: 2},
+        {label: 'Thursday', rawValue: 1.2},
+        {label: 'Friday', rawValue: 0.5},
+        {label: 'Saturday', rawValue: 0.12},
+        {label: 'Sunday', rawValue: 0.6},
+      ],
+    },
+  ],
+  xAxisOptions: {labels},
+  yAxisOptions: {integersOnly: true},
+};

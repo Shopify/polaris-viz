@@ -138,6 +138,7 @@ interface MultiSeriesBarChartProps {
   yAxisOptions: {
     labelFormatter?(value: number): string;
     backgroundColor?: string;
+    integersOnly?: boolean;
   };
 }
 ```
@@ -313,6 +314,14 @@ The color used for axis labels.
 | `string` | `transparant` |
 
 The color used behind axis labels.
+
+##### integersOnly
+
+| type      | default |
+| --------- | ------- |
+| `boolean` | `false` |
+
+Only use whole numbers for y axis ticks.
 
 #### barOptions
 

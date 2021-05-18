@@ -50,6 +50,7 @@ export interface YAxisOptions {
   labelFormatter: NumberLabelFormatter;
   labelColor: string;
   backgroundColor: string;
+  integersOnly: boolean;
 }
 
 export interface GridOptions {

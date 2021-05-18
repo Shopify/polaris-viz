@@ -5,7 +5,13 @@ import {
 } from '../../../constants';
 import {Series} from '../types';
 
-export function yAxisMinMax(series: Series[]) {
+export function yAxisMinMax({
+  series,
+  integersOnly,
+}: {
+  series: Series[];
+  integersOnly: boolean;
+}) {
   if (series.length === 0) {
     return [EMPTY_STATE_CHART_MIN, EMPTY_STATE_CHART_MAX];
   }
@@ -21,5 +27,10 @@ export function yAxisMinMax(series: Series[]) {
   });
 
   maxY = maxY === 0 && minY === 0 ? DEFAULT_MAX_Y : maxY;
+
+  if (integersOnly) {
+    return [Math.floor(minY), Math.ceil(maxY)];
+  }
+
   return [minY, maxY];
 }

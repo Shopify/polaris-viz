@@ -248,3 +248,18 @@ MinimalLabels.args = {
   yAxisOptions: {labelFormatter: formatYAxisLabel},
   renderTooltipContent,
 };
+
+export const IntegersOnly = Template.bind({});
+IntegersOnly.args = {
+  data: [
+    {rawValue: 0.19, label: '2020-01-01T12:00:00Z'},
+    {rawValue: 1.29, label: '2020-01-02T12:00:00Z'},
+    {rawValue: 1.79, label: '2020-01-03T12:00:00Z'},
+    {rawValue: 0.6, label: '2020-01-04T12:00:00Z'},
+    {rawValue: 1.69, label: '2020-01-05T12:00:00Z'},
+    {rawValue: 0.19, label: '2020-01-06T12:00:00Z'},
+  ],
+  xAxisOptions: {labelFormatter: formatXAxisLabel},
+  yAxisOptions: {integersOnly: true},
+  renderTooltipContent,
+};

@@ -151,6 +151,7 @@ export function BarChart({
     labelFormatter: (value: number) => value.toString(),
     labelColor: DEFAULT_GREY_LABEL,
     backgroundColor: 'transparent',
+    integersOnly: false,
     ...yAxisOptions,
   };
 

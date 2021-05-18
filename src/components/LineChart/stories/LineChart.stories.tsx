@@ -141,3 +141,27 @@ DarkMode.args = {
   yAxisOptions: {labelFormatter: formatYAxisLabel, backgroundColor: '#333333'},
   renderTooltipContent,
 };
+
+export const IntegersOnly = Template.bind({});
+IntegersOnly.args = {
+  series: [
+    {
+      name: 'Integers Only',
+      data: [
+        {rawValue: 0.1, label: '2020-04-01T12:00:00'},
+        {rawValue: 0.4, label: '2020-04-02T12:00:00'},
+        {rawValue: 0.6, label: '2020-04-03T12:00:00'},
+        {rawValue: 0.2, label: '2020-04-04T12:00:00'},
+        {rawValue: 0.5, label: '2020-04-05T12:00:00'},
+        {rawValue: 0.9, label: '2020-04-06T12:00:00'},
+        {rawValue: 0.5, label: '2020-04-07T12:00:00'},
+      ],
+    },
+  ],
+  xAxisOptions: {
+    xAxisLabels,
+    labelFormatter: formatXAxisLabel,
+  },
+  yAxisOptions: {integersOnly: true},
+  renderTooltipContent,
+};

@@ -12,14 +12,16 @@ export function useYScale({
   series,
   formatYAxisLabel,
   fontSize,
+  integersOnly,
 }: {
   fontSize: number;
   drawableHeight: number;
   series: Series[];
   formatYAxisLabel: NumberLabelFormatter;
+  integersOnly: boolean;
 }) {
   const {yScale, ticks, axisMargin} = useMemo(() => {
-    const [minY, maxY] = yAxisMinMax(series);
+    const [minY, maxY] = yAxisMinMax({series, integersOnly});
 
     const maxTicks = Math.max(
       1,
@@ -28,13 +30,17 @@ export function useYScale({
 
     const yScale = scaleLinear()
       .range([drawableHeight, 0])
-      .domain([Math.min(0, minY), Math.max(0, maxY)]);
+      .domain([minY, maxY]);
 
     if (shouldRoundScaleUp({yScale, maxValue: maxY, maxTicks})) {
       yScale.nice(maxTicks);
     }
 
-    const ticks = yScale.ticks(maxTicks).map((value) => ({
+    const filteredTicks = integersOnly
+      ? yScale.ticks(maxTicks).filter((tick) => Number.isInteger(tick))
+      : yScale.ticks(maxTicks);
+
+    const ticks = filteredTicks.map((value) => ({
       value,
       formattedValue: formatYAxisLabel(value),
       yOffset: yScale(value),
@@ -47,7 +53,7 @@ export function useYScale({
     );
 
     return {yScale, ticks, axisMargin};
-  }, [series, drawableHeight, formatYAxisLabel, fontSize]);
+  }, [series, integersOnly, drawableHeight, formatYAxisLabel, fontSize]);
 
   return {yScale, ticks, axisMargin};
 }

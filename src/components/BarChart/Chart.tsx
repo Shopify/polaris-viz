@@ -88,6 +88,7 @@ export function Chart({
       chartDimensions.height - Margin.Top - Margin.Bottom - LINE_HEIGHT,
     data,
     formatYAxisLabel: yAxisOptions.labelFormatter,
+    integersOnly: yAxisOptions.integersOnly,
   });
 
   const approxYAxisLabelWidth = useMemo(
@@ -138,6 +139,7 @@ export function Chart({
     drawableHeight,
     data,
     formatYAxisLabel: yAxisOptions.labelFormatter,
+    integersOnly: yAxisOptions.integersOnly,
   });
 
   const yAxisLabelWidth = useMemo(
