@@ -173,7 +173,7 @@ The `Series` type gives the user a lot of flexibility to define exactly what eac
     label: string;
     rawValue: number;
   }[];
-  color?: Color;
+  color?: SeriesColor;
   lineStyle?: LineStyle;
   areaColor?: string;
 }
@@ -197,11 +197,11 @@ The array of objects that the chart uses to plot the line.
 
 #### color
 
-| type    | default   |
-| ------- | --------- |
-| `Color` | `primary` |
+| type                                           | default   |
+| ---------------------------------------------- | --------- |
+| `Color \| { color: string, offset: number }[]` | `primary` |
 
-This accepts any [Polaris Viz color](/documentation/Polaris-Viz-colors.md) value.
+This accepts any [Polaris Viz color](/documentation/Polaris-Viz-colors.md) value or gradient. If these values have transparency, the points will be rendered at full opacity while the line will use the original opacity.
 
 #### lineStyle
 
