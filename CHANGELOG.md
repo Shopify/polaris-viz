@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Changed
+
+- Zero value min-height bars are not enabled by default in `<BarChart />` and `<MultiSeriesBarChart />`
+
 ### Fixed
 
 - Min height bars not being shown when all bars are negative in `<BarChart />` and `<MultiSeriesBarChart />`

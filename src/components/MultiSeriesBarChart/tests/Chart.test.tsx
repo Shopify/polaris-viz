@@ -66,6 +66,7 @@ describe('Chart />', () => {
       outerMargin: 0,
       hasRoundedCorners: false,
       isStacked: false,
+      zeroAsMinHeight: false,
     },
     xAxisOptions: {
       labelFormatter: jest.fn((value: string) => value.toString()),
@@ -168,6 +169,10 @@ describe('Chart />', () => {
         const chart = mount(
           <Chart
             {...mockProps}
+            barOptions={{
+              ...mockProps.barOptions,
+              zeroAsMinHeight: true,
+            }}
             series={[
               {
                 ...mockProps.series[0],
@@ -197,6 +202,10 @@ describe('Chart />', () => {
         const chart = mount(
           <Chart
             {...mockProps}
+            barOptions={{
+              ...mockProps.barOptions,
+              zeroAsMinHeight: true,
+            }}
             series={[
               {
                 ...mockProps.series[0],
@@ -226,6 +235,10 @@ describe('Chart />', () => {
         const chart = mount(
           <Chart
             {...mockProps}
+            barOptions={{
+              ...mockProps.barOptions,
+              zeroAsMinHeight: true,
+            }}
             series={[
               {
                 ...mockProps.series[0],
@@ -241,6 +254,39 @@ describe('Chart />', () => {
                   {label: '', rawValue: 0},
                   {label: '', rawValue: 0},
                   {label: '', rawValue: 0},
+                ],
+              },
+            ]}
+          />,
+        );
+        expect(chart).toContainReactComponent(BarGroup, {
+          rotateZeroBars: false,
+        });
+      });
+
+      it('receives false if zeroAsMinHeight is false', () => {
+        const chart = mount(
+          <Chart
+            {...mockProps}
+            barOptions={{
+              ...mockProps.barOptions,
+              zeroAsMinHeight: false,
+            }}
+            series={[
+              {
+                ...mockProps.series[0],
+                data: [
+                  {label: '', rawValue: 0},
+                  {label: '', rawValue: -5},
+                  {label: '', rawValue: 0},
+                ],
+              },
+              {
+                ...mockProps.series[1],
+                data: [
+                  {label: '', rawValue: 0},
+                  {label: '', rawValue: 0},
+                  {label: '', rawValue: -3},
                 ],
               },
             ]}

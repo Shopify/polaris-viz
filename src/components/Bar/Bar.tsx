@@ -84,7 +84,9 @@ export function Bar({
     const calculatePath = (heightValue: number) => {
       const radiusOffset = Math.max(0, radius - heightValue);
 
-      return `M${radius} 0
+      return heightValue === 0
+        ? ''
+        : `M${radius} 0
         h${width - radius * 2}
         a${radius} ${radius} 0 0 1 ${radius} ${radius - radiusOffset}
         v${radiusOffset > 0 ? 0 : heightValue - radius}

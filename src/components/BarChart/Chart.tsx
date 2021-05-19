@@ -172,7 +172,10 @@ export function Chart({
 
   const barWidth = useMemo(() => xScale.bandwidth(), [xScale]);
 
-  const rotateZeroBars = useMemo(() => shouldRotateZeroBars(data), [data]);
+  const rotateZeroBars = useMemo(
+    () => barOptions.zeroAsMinHeight && shouldRotateZeroBars(data),
+    [barOptions.zeroAsMinHeight, data],
+  );
 
   const tooltipMarkup = useMemo(() => {
     if (activeBar == null) {
@@ -189,10 +192,14 @@ export function Chart({
   const getBarHeight = useCallback(
     (rawValue: number) => {
       const rawHeight = Math.abs(yScale(rawValue) - yScale(0));
-      const needsMinHeight = rawHeight < MIN_BAR_HEIGHT;
+
+      const needsMinHeight = barOptions.zeroAsMinHeight
+        ? rawHeight < MIN_BAR_HEIGHT
+        : rawHeight < MIN_BAR_HEIGHT && rawHeight !== 0;
+
       return needsMinHeight ? MIN_BAR_HEIGHT : rawHeight;
     },
-    [yScale],
+    [barOptions, yScale],
   );
 
   const shouldAnimate = !prefersReducedMotion && isAnimated;

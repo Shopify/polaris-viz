@@ -46,6 +46,10 @@ export interface BarOptions {
   outerMargin: keyof typeof BarMargin;
   hasRoundedCorners: boolean;
   isStacked: boolean;
+  /**
+   * @deprecated This prop is experimental and not ready for general use. If you want to use this, come talk to us in #polaris-data-viz
+   */
+  zeroAsMinHeight: boolean;
 }
 
 export interface GridOptions {

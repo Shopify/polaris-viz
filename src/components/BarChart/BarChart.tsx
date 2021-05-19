@@ -126,6 +126,7 @@ export function BarChart({
   const barOptionsWithDefaults = {
     color: getDefaultColor(),
     hasRoundedCorners: false,
+    zeroAsMinHeight: false,
     ...barOptions,
     innerMargin,
     outerMargin,

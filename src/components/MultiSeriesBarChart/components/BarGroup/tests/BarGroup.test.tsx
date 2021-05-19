@@ -27,6 +27,7 @@ describe('<BarGroup/>', () => {
     ariaLabel: 'Aria Label',
     hasRoundedCorners: false,
     isSubdued: false,
+    zeroAsMinHeight: false,
   };
 
   it('renders a <Bar /> for each data item', () => {
@@ -69,17 +70,47 @@ describe('<BarGroup/>', () => {
     expect(barGroup).toContainReactComponent(Bar, {x: 85});
   });
 
-  it('passes the min bar height to the bar if its value is 0', () => {
-    const barGroup = mount(
-      <svg>
-        <BarGroup {...mockProps} data={[0]} />,
-      </svg>,
-    );
+  describe('zeroAsMinHeight', () => {
+    it('passes the min bar height to 0 bars if true', () => {
+      const barGroup = mount(
+        <svg>
+          <BarGroup {...mockProps} zeroAsMinHeight data={[0]} />,
+        </svg>,
+      );
 
-    expect(barGroup).toContainReactComponent(Bar, {
-      height: expect.objectContaining({
-        value: MIN_BAR_HEIGHT,
-      }),
+      expect(barGroup).toContainReactComponent(Bar, {
+        height: expect.objectContaining({
+          value: MIN_BAR_HEIGHT,
+        }),
+      });
+    });
+
+    it('does not pass the min bar height to 0 bars if false', () => {
+      const barGroup = mount(
+        <svg>
+          <BarGroup {...mockProps} zeroAsMinHeight={false} />,
+        </svg>,
+      );
+
+      expect(barGroup).toContainReactComponent(Bar, {
+        height: expect.objectContaining({
+          value: 0,
+        }),
+      });
+    });
+
+    it('passes the min bar height to non-zero bar if false', () => {
+      const barGroup = mount(
+        <svg>
+          <BarGroup {...mockProps} data={[1, 500]} zeroAsMinHeight={false} />,
+        </svg>,
+      );
+
+      expect(barGroup).toContainReactComponent(Bar, {
+        height: expect.objectContaining({
+          value: MIN_BAR_HEIGHT,
+        }),
+      });
     });
   });
 
