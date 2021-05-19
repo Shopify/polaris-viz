@@ -163,7 +163,7 @@ describe('Chart />', () => {
       expect(chart).not.toContainReactComponent(BarGroup);
     });
 
-    describe('allValuesNegative', () => {
+    describe('rotateZeroBars', () => {
       it('receives true if all values are 0 or negative', () => {
         const chart = mount(
           <Chart
@@ -189,11 +189,11 @@ describe('Chart />', () => {
           />,
         );
         expect(chart).toContainReactComponent(BarGroup, {
-          allValuesNegative: true,
+          rotateZeroBars: true,
         });
       });
 
-      it('receives false if all values are 0 or negative', () => {
+      it('receives false if not all values are 0 or negative', () => {
         const chart = mount(
           <Chart
             {...mockProps}
@@ -203,22 +203,51 @@ describe('Chart />', () => {
                 data: [
                   {label: '', rawValue: 3},
                   {label: '', rawValue: 0},
-                  {label: '', rawValue: 3},
+                  {label: '', rawValue: -3},
                 ],
               },
               {
                 ...mockProps.series[1],
                 data: [
-                  {label: '', rawValue: 4},
+                  {label: '', rawValue: -4},
                   {label: '', rawValue: 5},
-                  {label: '', rawValue: -1},
+                  {label: '', rawValue: -4},
                 ],
               },
             ]}
           />,
         );
         expect(chart).toContainReactComponent(BarGroup, {
-          allValuesNegative: false,
+          rotateZeroBars: false,
+        });
+      });
+
+      it('receives false if all values are 0', () => {
+        const chart = mount(
+          <Chart
+            {...mockProps}
+            series={[
+              {
+                ...mockProps.series[0],
+                data: [
+                  {label: '', rawValue: 0},
+                  {label: '', rawValue: 0},
+                  {label: '', rawValue: 0},
+                ],
+              },
+              {
+                ...mockProps.series[1],
+                data: [
+                  {label: '', rawValue: 0},
+                  {label: '', rawValue: 0},
+                  {label: '', rawValue: 0},
+                ],
+              },
+            ]}
+          />,
+        );
+        expect(chart).toContainReactComponent(BarGroup, {
+          rotateZeroBars: false,
         });
       });
     });

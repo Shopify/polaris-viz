@@ -32,7 +32,7 @@ interface Props {
   onFocus: (index: number) => void;
   hasRoundedCorners: boolean;
   isAnimated?: boolean;
-  allValuesNegative?: boolean;
+  rotateZeroBars?: boolean;
 }
 
 export function BarGroup({
@@ -48,7 +48,7 @@ export function BarGroup({
   hasRoundedCorners,
   isSubdued,
   isAnimated = false,
-  allValuesNegative = false,
+  rotateZeroBars = false,
 }: Props) {
   const {prefersReducedMotion} = usePrefersReducedMotion();
   const barWidth = width / data.length - BAR_SPACING;
@@ -116,7 +116,7 @@ export function BarGroup({
                 role={ariaEnabledBar ? 'img' : undefined}
                 ariaLabel={ariaEnabledBar ? ariaLabel : undefined}
                 hasRoundedCorners={hasRoundedCorners}
-                allValuesNegative={allValuesNegative}
+                rotateZeroBars={rotateZeroBars}
               />
             </g>
           );

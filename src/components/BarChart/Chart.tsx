@@ -18,6 +18,7 @@ import {
   uniqueId,
   getColorValue,
   isGradientType,
+  shouldRotateZeroBars,
 } from '../../utilities';
 import {Bar} from '../Bar';
 import {YAxis} from '../YAxis';
@@ -171,10 +172,7 @@ export function Chart({
 
   const barWidth = useMemo(() => xScale.bandwidth(), [xScale]);
 
-  const allValuesNegative = useMemo(
-    () => data.every(({rawValue}) => rawValue <= 0),
-    [data],
-  );
+  const rotateZeroBars = useMemo(() => shouldRotateZeroBars(data), [data]);
 
   const tooltipMarkup = useMemo(() => {
     if (activeBar == null) {
@@ -280,7 +278,7 @@ export function Chart({
                       tabIndex={0}
                       role="img"
                       hasRoundedCorners={barOptions.hasRoundedCorners}
-                      allValuesNegative={allValuesNegative}
+                      rotateZeroBars={rotateZeroBars}
                     />
                   </g>
                 );

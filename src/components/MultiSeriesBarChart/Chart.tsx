@@ -2,7 +2,12 @@ import React, {useState, useMemo, useCallback} from 'react';
 
 import {BarChartMargin as Margin} from '../../constants';
 import {TooltipContainer} from '../TooltipContainer';
-import {eventPoint, getTextWidth, getBarXAxisDetails} from '../../utilities';
+import {
+  eventPoint,
+  getTextWidth,
+  getBarXAxisDetails,
+  shouldRotateZeroBars,
+} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {BarChartXAxis} from '../BarChartXAxis';
 import {HorizontalGridLines} from '../HorizontalGridLines';
@@ -99,8 +104,8 @@ export function Chart({
     [xAxisOptions.labelFormatter, xAxisOptions.labels],
   );
 
-  const allValuesNegative = useMemo(
-    () => series.every(({data}) => data.every(({rawValue}) => rawValue <= 0)),
+  const rotateZeroBars = useMemo(
+    () => series.every(({data}) => shouldRotateZeroBars(data)),
     [series],
   );
 
@@ -309,7 +314,7 @@ export function Chart({
                     barGroupIndex={index}
                     ariaLabel={ariaLabel}
                     hasRoundedCorners={barOptions.hasRoundedCorners}
-                    allValuesNegative={allValuesNegative}
+                    rotateZeroBars={rotateZeroBars}
                   />
                 );
               })}

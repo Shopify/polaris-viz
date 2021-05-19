@@ -19,7 +19,7 @@ interface Props {
   role?: string;
   hasRoundedCorners?: boolean;
   height?: OpaqueInterpolation<any> | number;
-  allValuesNegative: boolean;
+  rotateZeroBars: boolean;
 }
 
 export function Bar({
@@ -35,12 +35,12 @@ export function Bar({
   role,
   height,
   hasRoundedCorners,
-  allValuesNegative,
+  rotateZeroBars,
 }: Props) {
   const zeroScale = yScale(0);
-  const isNegative = rawValue < 0 || (rawValue === 0 && allValuesNegative);
-  const rotation = isNegative ? 'rotate(180deg)' : 'rotate(0deg)';
-  const xPosition = isNegative ? x + width : x;
+  const treatAsNegative = rawValue < 0 || (rawValue === 0 && rotateZeroBars);
+  const rotation = treatAsNegative ? 'rotate(180deg)' : 'rotate(0deg)';
+  const xPosition = treatAsNegative ? x + width : x;
   const heightIsNumber = typeof height === 'number';
   const radius = hasRoundedCorners ? ROUNDED_BAR_RADIUS : 0;
 
@@ -48,13 +48,13 @@ export function Bar({
     if (height == null) return;
 
     const getYPosition = (value: number) =>
-      isNegative ? zeroScale + value : zeroScale - value;
+      treatAsNegative ? zeroScale + value : zeroScale - value;
 
     if (heightIsNumber) {
       return getYPosition(height);
     }
     return height.interpolate(getYPosition);
-  }, [height, heightIsNumber, isNegative, zeroScale]);
+  }, [height, heightIsNumber, treatAsNegative, zeroScale]);
 
   const yPositionIsNumber = typeof yPosition === 'number';
 
