@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.14.1] - 2021-05-18
+
+### Fixed
+
+- 0 value not always being included for `<LineChart />` yScale
+
 ## [0.14.0] - 2021-05-18
 
 ### Changed

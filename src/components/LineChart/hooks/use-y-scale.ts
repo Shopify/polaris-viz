@@ -30,7 +30,7 @@ export function useYScale({
 
     const yScale = scaleLinear()
       .range([drawableHeight, 0])
-      .domain([minY, maxY]);
+      .domain([Math.min(0, minY), Math.max(0, maxY)]);
 
     if (shouldRoundScaleUp({yScale, maxValue: maxY, maxTicks})) {
       yScale.nice(maxTicks);
