@@ -54,6 +54,7 @@ export function Chart({
   const [tooltipPosition, setTooltipPosition] = useState<{
     x: number;
     y: number;
+    currentValue: number;
   } | null>(null);
 
   const fontSize =
@@ -192,21 +193,29 @@ export function Chart({
     (index: number) => {
       const xScaleBandwidth = xScale.bandwidth();
       const xPosition = xScale(index.toString());
+      const isGroupNegative = sortedData[index].every((value) => value <= 0);
 
       if (index == null || xPosition == null) return;
-      const highestValue = barOptions.isStacked
-        ? sortedData[index].reduce(sumPositiveData, 0)
+
+      const groupedValue = isGroupNegative
+        ? Math.min(...sortedData[index])
         : Math.max(...sortedData[index]);
+
+      const yValue = barOptions.isStacked
+        ? sortedData[index].reduce(sumPositiveData, 0)
+        : groupedValue;
       setActiveBarGroup(index);
 
       const xOffsetAmount =
         xPosition + chartStartPosition + xScaleBandwidth / 2;
+
       setTooltipPosition({
         x: xOffsetAmount,
-        y: yScale(highestValue),
+        y: yScale(yValue),
+        currentValue: yValue,
       });
     },
-    [chartStartPosition, barOptions.isStacked, sortedData, xScale, yScale],
+    [xScale, sortedData, barOptions.isStacked, chartStartPosition, yScale],
   );
 
   return (
@@ -321,7 +330,8 @@ export function Chart({
           activePointIndex={activeBarGroup}
           currentX={tooltipPosition.x}
           currentY={tooltipPosition.y}
-          chartDimensions={chartDimensions}
+          currentValue={tooltipPosition.currentValue}
+          chartDimensions={{...chartDimensions, height: drawableHeight}}
           margin={Margin}
           position="center"
         >
@@ -355,9 +365,18 @@ export function Chart({
     }
 
     const xPosition = xScale(currentIndex.toString());
-    const highestValue = barOptions.isStacked
-      ? sortedData[currentIndex].reduce(sumPositiveData, 0)
+    const isGroupNegative = sortedData[currentIndex].every(
+      (value) => value <= 0,
+    );
+
+    const groupedValue = isGroupNegative
+      ? Math.min(...sortedData[currentIndex])
       : Math.max(...sortedData[currentIndex]);
+
+    const yValue = barOptions.isStacked
+      ? sortedData[currentIndex].reduce(sumPositiveData, 0)
+      : groupedValue;
+
     const tooltipXPositon =
       xPosition == null
         ? 0
@@ -366,7 +385,8 @@ export function Chart({
     setActiveBarGroup(currentIndex);
     setTooltipPosition({
       x: tooltipXPositon,
-      y: yScale(highestValue),
+      y: yScale(yValue),
+      currentValue: yValue,
     });
   }
 }

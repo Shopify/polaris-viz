@@ -13,6 +13,7 @@ const mockProps = {
   activePointIndex: 0,
   currentX: 0,
   currentY: 0,
+  currentValue: 0,
   chartDimensions: new DOMRect(),
   margin: {Top: 0, Left: 0, Right: 0, Bottom: 0},
 };

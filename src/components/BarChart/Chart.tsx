@@ -392,7 +392,11 @@ export function Chart({
           activePointIndex={activeBar}
           currentX={tooltipPosition.x}
           currentY={tooltipPosition.y}
-          chartDimensions={chartDimensions}
+          currentValue={data[activeBar].rawValue}
+          chartDimensions={{
+            ...chartDimensions,
+            height: drawableHeight,
+          }}
           margin={Margin}
           position="center"
         >

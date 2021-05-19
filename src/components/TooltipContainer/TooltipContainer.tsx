@@ -12,6 +12,7 @@ interface Props {
   activePointIndex: number;
   currentX: number;
   currentY: number;
+  currentValue?: number;
   chartDimensions: Dimensions;
   position?: 'center' | 'auto';
   id?: string;
@@ -24,6 +25,7 @@ export function TooltipContainer({
   activePointIndex,
   currentX,
   currentY,
+  currentValue = 0,
   chartDimensions,
   children,
   margin,
@@ -85,15 +87,25 @@ export function TooltipContainer({
       const shouldRenderImmediate = firstRender.current;
       firstRender.current = false;
 
+      const yTranslation =
+        currentValue >= 0
+          ? Math.max(
+              margin.Top,
+              currentY + margin.Top - tooltipDimensions.height - TOOLTIP_MARGIN,
+            )
+          : Math.min(
+              chartDimensions.height + margin.Top - tooltipDimensions.height,
+              currentY + margin.Top + TOOLTIP_MARGIN,
+            );
+
+      const zeroYPosition = TOOLTIP_MARGIN + margin.Top;
+
       // react-spring docs do not return the `next` callback
       // eslint-disable-next-line callback-return
       await next({
         translate: [
           xTranslation,
-          Math.max(
-            margin.Top,
-            currentY - tooltipDimensions.height - TOOLTIP_MARGIN,
-          ),
+          currentY === 0 ? zeroYPosition : yTranslation,
           0,
         ],
         opacity: 1,
