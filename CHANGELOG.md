@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Fixed
+
+- Min height bars not being shown when all bars are negative in `<BarChart />` and `<MultiSeriesBarChart />`
+
 ## [0.14.1] - 2021-05-18
 
 ### Fixed

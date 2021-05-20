@@ -202,7 +202,7 @@ describe('Chart />', () => {
       });
     });
 
-    describe('allValuesNegative', () => {
+    describe('rotateZeroBars', () => {
       it('receives true if all values are 0 or negative', () => {
         const chart = mount(
           <Chart
@@ -216,7 +216,7 @@ describe('Chart />', () => {
         );
 
         expect(chart).toContainReactComponent(Bar, {
-          allValuesNegative: true,
+          rotateZeroBars: true,
         });
       });
 
@@ -233,7 +233,24 @@ describe('Chart />', () => {
         );
 
         expect(chart).toContainReactComponent(Bar, {
-          allValuesNegative: false,
+          rotateZeroBars: false,
+        });
+      });
+
+      it('receives false if all values are 0', () => {
+        const chart = mount(
+          <Chart
+            {...mockProps}
+            data={[
+              {rawValue: 0, label: 'data'},
+              {rawValue: 0, label: 'data'},
+              {rawValue: 0, label: 'data'},
+            ]}
+          />,
+        );
+
+        expect(chart).toContainReactComponent(Bar, {
+          rotateZeroBars: false,
         });
       });
     });

@@ -22,3 +22,4 @@ export {createCSSGradient} from './create-css-gradient';
 export {shouldRoundScaleUp} from './should-round-scale-up';
 export {curveStepRounded} from './curve-step-rounded';
 export {makeColorOpaque, makeGradientOpaque} from './make-color-opaque';
+export {shouldRotateZeroBars} from './should-rotate-zero-bars';

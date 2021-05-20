@@ -20,7 +20,7 @@ const defaultProps = {
   index: 1,
   onFocus: jest.fn(),
   tabIndex: 0,
-  allValuesNegative: false,
+  rotateZeroBars: false,
 };
 
 describe('<Bar/>', () => {
