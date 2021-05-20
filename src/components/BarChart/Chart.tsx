@@ -38,7 +38,7 @@ import {
   YAxisOptions,
   AnnotationLookupTable,
 } from './types';
-import {useYScale, useXScale} from './hooks';
+import {useYScale, useXScale, useMinimalLabelIndexes} from './hooks';
 import {SMALL_FONT_SIZE, FONT_SIZE, SMALL_SCREEN, SPACING} from './constants';
 import styles from './Chart.scss';
 
@@ -78,6 +78,10 @@ export function Chart({
     x: number;
     y: number;
   } | null>(null);
+  const {minimalLabelIndexes} = useMinimalLabelIndexes({
+    useMinimalLabels: xAxisOptions.useMinimalLabels,
+    dataLength: data.length,
+  });
 
   const fontSize =
     chartDimensions.width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
@@ -101,11 +105,6 @@ export function Chart({
       ),
     [fontSize, initialTicks],
   );
-
-  const minimalLabelIndexes =
-    xAxisOptions.useMinimalLabels && data.length > 3
-      ? [0, Math.floor(data.length / 2), data.length - 1]
-      : null;
 
   const xAxisDetails = useMemo(
     () =>
