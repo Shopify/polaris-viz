@@ -161,7 +161,7 @@ describe('<BarChartXAxis/>', () => {
     );
 
     expect(axis).toContainReactComponent('g', {
-      transform: 'translate(5, 24)',
+      transform: 'translate(5, 20)',
     });
   });
 });

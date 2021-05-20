@@ -9,7 +9,7 @@ export const SPACING_EXTRA_TIGHT = 4;
 export const SPACING = 16;
 export const SPACING_BASE_TIGHT = 12;
 export const SPACING_LOOSE = 20;
-export const BELOW_X_AXIS_MARGIN = 24;
+export const BELOW_X_AXIS_MARGIN = 20;
 
 export const SMALL_SCREEN = 500;
 export const SMALL_FONT_SIZE = 10;

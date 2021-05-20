@@ -16,7 +16,6 @@ import {useLinearXAxisDetails, useLinearXScale} from '../../hooks';
 import {
   SMALL_SCREEN,
   SMALL_FONT_SIZE,
-  FONT_SIZE,
   SPACING_TIGHT,
   LineChartMargin as Margin,
   SPACING_BASE_TIGHT,
@@ -31,7 +30,7 @@ import {ActiveTooltip, Dimensions} from '../../types';
 import {TooltipContainer} from '../TooltipContainer';
 import {HorizontalGridLines} from '../HorizontalGridLines';
 
-import {MAX_ANIMATED_SERIES_LENGTH} from './constants';
+import {FONT_SIZE, MAX_ANIMATED_SERIES_LENGTH} from './constants';
 import {
   RenderTooltipContentData,
   TooltipData,

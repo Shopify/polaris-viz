@@ -13,7 +13,7 @@ export function getTextContainerHeight({
   container.style.visibility = 'hidden';
   container.style.width = `${containerWidth}px`;
   container.style.wordBreak = 'break-word';
-  container.style.lineHeight = '1';
+  container.style.lineHeight = '1.5';
   document.body.appendChild(container);
   container.innerText = text;
   const height = container.clientHeight;
