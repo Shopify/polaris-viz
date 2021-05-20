@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## [0.15.0] - 2021-05-20
+
 ### Changed
 
 - Zero value min-height bars are not enabled by default in `<BarChart />` and `<MultiSeriesBarChart />`
