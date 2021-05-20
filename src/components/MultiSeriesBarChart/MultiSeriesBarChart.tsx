@@ -121,6 +121,7 @@ export function MultiSeriesBarChart({
   const barOptionsWithDefaults = {
     hasRoundedCorners: false,
     isStacked: false,
+    zeroAsMinHeight: false,
     ...barOptions,
     innerMargin,
     outerMargin,

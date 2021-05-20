@@ -98,6 +98,7 @@ interface BarChartProps {
     color?: Color;
     highlightColor?: Color;
     hasRoundedCorners?: boolean;
+    zeroAsMinHeight?: boolean;
   };
   gridOptions?: {
     showHorizontalLines?: boolean;
@@ -235,7 +236,13 @@ The bar fill color when you hover over a bar in the chart. This accepts any [Pol
 
 Rounds the top corners of each bar, in the case of positive numbers. Rounds the bottom corners for negatives.
 
-The color used for axis labels.
+##### zeroAsMinHeight (deprecated)
+
+| type      | default |
+| --------- | ------- |
+| `boolean` | `false` |
+
+Shows a min height bar for zero values. This prop is experimental and not ready for general use. If you want to use this, come talk to us in [#polaris-data-viz](https://shopify.slack.com/archives/CNB58FZ34).
 
 #### gridOptions
 

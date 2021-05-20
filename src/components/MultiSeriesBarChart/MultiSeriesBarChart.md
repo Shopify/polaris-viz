@@ -122,6 +122,7 @@ interface MultiSeriesBarChartProps {
     hasRoundedCorners?: boolean;
     innerMargin?: 'Small' | 'Medium' | 'Large' | 'None';
     outerMargin?: 'Small' | 'Medium' | 'Large' | 'None';
+    zeroAsMinHeight?: boolean;
   };
   gridOptions?: {
     showHorizontalLines?: boolean;
@@ -356,6 +357,14 @@ This changes the grouping of the bars. If `true` the bar groups will stack verti
 | `boolean` | `false` |
 
 Rounds the top corners of each bar, in the case of positive numbers. Rounds the bottom corners for negatives. Note: this prop only has an impact on grouped bars, not stacked ones.
+
+##### zeroAsMinHeight (deprecated)
+
+| type      | default |
+| --------- | ------- |
+| `boolean` | `false` |
+
+Shows a min height bar for zero values. This prop is experimental and not ready for general use. If you want to use this, come talk to us in [#polaris-data-viz](https://shopify.slack.com/archives/CNB58FZ34).
 
 #### gridOptions
 

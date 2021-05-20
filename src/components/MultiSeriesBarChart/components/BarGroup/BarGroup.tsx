@@ -31,6 +31,7 @@ interface Props {
   ariaLabel: string;
   onFocus: (index: number) => void;
   hasRoundedCorners: boolean;
+  zeroAsMinHeight: boolean;
   isAnimated?: boolean;
   rotateZeroBars?: boolean;
 }
@@ -47,6 +48,7 @@ export function BarGroup({
   ariaLabel,
   hasRoundedCorners,
   isSubdued,
+  zeroAsMinHeight,
   isAnimated = false,
   rotateZeroBars = false,
 }: Props) {
@@ -56,10 +58,13 @@ export function BarGroup({
   const getBarHeight = useCallback(
     (rawValue: number) => {
       const rawHeight = Math.abs(yScale(rawValue) - yScale(0));
-      const needsMinHeight = rawHeight < MIN_BAR_HEIGHT;
+      const needsMinHeight = zeroAsMinHeight
+        ? rawHeight < MIN_BAR_HEIGHT
+        : rawHeight < MIN_BAR_HEIGHT && rawHeight !== 0;
+
       return needsMinHeight ? MIN_BAR_HEIGHT : rawHeight;
     },
-    [yScale],
+    [yScale, zeroAsMinHeight],
   );
 
   const shouldAnimate = !prefersReducedMotion && isAnimated;

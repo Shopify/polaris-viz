@@ -105,8 +105,10 @@ export function Chart({
   );
 
   const rotateZeroBars = useMemo(
-    () => series.every(({data}) => shouldRotateZeroBars(data)),
-    [series],
+    () =>
+      barOptions.zeroAsMinHeight &&
+      series.every(({data}) => shouldRotateZeroBars(data)),
+    [barOptions.zeroAsMinHeight, series],
   );
 
   const xAxisDetails = useMemo(
@@ -315,6 +317,7 @@ export function Chart({
                     ariaLabel={ariaLabel}
                     hasRoundedCorners={barOptions.hasRoundedCorners}
                     rotateZeroBars={rotateZeroBars}
+                    zeroAsMinHeight={barOptions.zeroAsMinHeight}
                   />
                 );
               })}

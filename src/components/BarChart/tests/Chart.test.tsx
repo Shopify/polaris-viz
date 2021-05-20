@@ -43,6 +43,7 @@ describe('Chart />', () => {
       innerMargin: 0,
       outerMargin: 0,
       hasRoundedCorners: false,
+      zeroAsMinHeight: false,
     },
     xAxisOptions: {
       labelFormatter: (value: string) => value.toString(),
@@ -190,23 +191,15 @@ describe('Chart />', () => {
       expect(chart).toContainReactComponent(Bar, {color: MASK_SUBDUE_COLOR});
     });
 
-    it('passes the min bar height to the bar if its value is 0', () => {
-      const chart = mount(
-        <Chart {...mockProps} data={[{rawValue: 0, label: 'data'}]} />,
-      );
-
-      expect(chart).toContainReactComponent(Bar, {
-        height: expect.objectContaining({
-          value: MIN_BAR_HEIGHT,
-        }),
-      });
-    });
-
     describe('rotateZeroBars', () => {
       it('receives true if all values are 0 or negative', () => {
         const chart = mount(
           <Chart
             {...mockProps}
+            barOptions={{
+              ...mockProps.barOptions,
+              zeroAsMinHeight: true,
+            }}
             data={[
               {rawValue: 0, label: 'data'},
               {rawValue: -2, label: 'data'},
@@ -224,6 +217,10 @@ describe('Chart />', () => {
         const chart = mount(
           <Chart
             {...mockProps}
+            barOptions={{
+              ...mockProps.barOptions,
+              zeroAsMinHeight: true,
+            }}
             data={[
               {rawValue: 0, label: 'data'},
               {rawValue: -2, label: 'data'},
@@ -241,6 +238,10 @@ describe('Chart />', () => {
         const chart = mount(
           <Chart
             {...mockProps}
+            barOptions={{
+              ...mockProps.barOptions,
+              zeroAsMinHeight: true,
+            }}
             data={[
               {rawValue: 0, label: 'data'},
               {rawValue: 0, label: 'data'},
@@ -300,6 +301,88 @@ describe('Chart />', () => {
       const chart = mount(<Chart {...mockProps} />);
 
       expect(chart.find('rect', {fill: vizColors.colorGrayDark})).toBeNull();
+    });
+  });
+
+  describe('barOptions.zeroAsMinHeight', () => {
+    it('passes the min bar height to 0 bars if true', () => {
+      const chart = mount(
+        <Chart
+          {...mockProps}
+          barOptions={{
+            ...mockProps.barOptions,
+            zeroAsMinHeight: true,
+          }}
+          data={[{rawValue: 0, label: 'data'}]}
+        />,
+      );
+
+      expect(chart).toContainReactComponent(Bar, {
+        height: expect.objectContaining({
+          value: MIN_BAR_HEIGHT,
+        }),
+      });
+    });
+
+    it('does not pass the min bar height to 0 bars if false', () => {
+      const chart = mount(
+        <Chart
+          {...mockProps}
+          barOptions={{
+            ...mockProps.barOptions,
+            zeroAsMinHeight: false,
+          }}
+          data={[{rawValue: 0, label: 'data'}]}
+        />,
+      );
+
+      expect(chart).toContainReactComponent(Bar, {
+        height: expect.objectContaining({
+          value: 0,
+        }),
+      });
+    });
+
+    it('sets rotateZeroBars to false if false', () => {
+      const chart = mount(
+        <Chart
+          {...mockProps}
+          barOptions={{
+            ...mockProps.barOptions,
+            zeroAsMinHeight: false,
+          }}
+          data={[
+            {rawValue: 0, label: 'data'},
+            {rawValue: -5, label: 'data'},
+          ]}
+        />,
+      );
+
+      expect(chart).toContainReactComponent(Bar, {
+        rotateZeroBars: false,
+      });
+    });
+
+    it('passes the min bar height to non-zero bar if false', () => {
+      const chart = mount(
+        <Chart
+          {...mockProps}
+          barOptions={{
+            ...mockProps.barOptions,
+            zeroAsMinHeight: false,
+          }}
+          data={[
+            {rawValue: 1, label: 'data'},
+            {rawValue: 500, label: 'data'},
+          ]}
+        />,
+      );
+
+      expect(chart).toContainReactComponent(Bar, {
+        height: expect.objectContaining({
+          value: MIN_BAR_HEIGHT,
+        }),
+      });
     });
   });
 
