@@ -89,46 +89,6 @@ describe('Chart />', () => {
       const barChart = mount(<Chart {...mockProps} />);
       expect(barChart).toContainReactComponent(BarChartXAxis);
     });
-
-    it('is passed three minimalLabelIndexes if useMinimalLabels is true and there are more than three data items', () => {
-      const barChart = mount(
-        <Chart
-          {...mockProps}
-          data={[
-            {rawValue: 10, label: 'data'},
-            {rawValue: 20, label: 'data 2'},
-            {rawValue: 20, label: 'data 3'},
-            {rawValue: 20, label: 'data 4'},
-          ]}
-          xAxisOptions={{
-            labelFormatter: (value: string) => value.toString(),
-            showTicks: true,
-            labelColor: 'red',
-            useMinimalLabels: true,
-          }}
-        />,
-      );
-      expect(barChart).toContainReactComponent(BarChartXAxis, {
-        minimalLabelIndexes: [0, 2, 3],
-      });
-    });
-
-    it('is passed null minimalLabelIndexes if useMinimalLabels is true but there are less than three bars', () => {
-      const barChart = mount(
-        <Chart
-          {...mockProps}
-          xAxisOptions={{
-            labelFormatter: (value: string) => value.toString(),
-            showTicks: true,
-            labelColor: 'red',
-            useMinimalLabels: true,
-          }}
-        />,
-      );
-      expect(barChart).toContainReactComponent(BarChartXAxis, {
-        minimalLabelIndexes: null,
-      });
-    });
   });
 
   it('renders an yAxis', () => {

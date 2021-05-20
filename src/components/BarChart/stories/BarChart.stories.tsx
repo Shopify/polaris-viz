@@ -224,20 +224,35 @@ LastBarTreatment.args = {
 export const MinimalLabels = Template.bind({});
 MinimalLabels.args = {
   data: [
-    {rawValue: 1324.19, label: '1 day some really long long text'},
-    {rawValue: 1022.79, label: '2020-01-02T12:00:00Z'},
-    {rawValue: 713.29, label: '2020-01-03T12:00:00Z'},
-    {rawValue: 413.29, label: '2020-01-04T12:00:00Z'},
+    {rawValue: 1324.19, label: '1 day'},
+    {rawValue: 1022.79, label: '2 days'},
+    {rawValue: 713.29, label: '3 days'},
+    {rawValue: 413.29, label: '4 days'},
     {
       rawValue: 100.79,
-      label:
-        'Middle day also has very long text / Middle day also has very long text',
+      label: '5 days',
     },
-    {rawValue: 350.6, label: '2020-01-06T12:00:00Z'},
-    {rawValue: 277.69, label: '2020-01-07T12:00:00Z'},
+    {rawValue: 350.6, label: '6 days'},
+    {rawValue: 277.69, label: '7 days'},
     {
-      rawValue: 0,
-      label: 'Last day has especially longgggggggggggg textttttttttt',
+      rawValue: 10,
+      label: '8 days',
+    },
+    {
+      rawValue: 10,
+      label: '9 days',
+    },
+    {
+      rawValue: 10,
+      label: '10 days',
+    },
+    {
+      rawValue: 10,
+      label: '11 days',
+    },
+    {
+      rawValue: 10,
+      label: '12 days',
     },
   ],
   barOptions: {

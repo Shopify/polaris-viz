@@ -5,6 +5,7 @@
 ### Changed
 
 - Zero value min-height bars are not enabled by default in `<BarChart />` and `<MultiSeriesBarChart />`
+- The `useMinimalLabels` prop for `<BarChart />` will not use a middle label when there are an even number of bars below 12
 
 ### Fixed
 
