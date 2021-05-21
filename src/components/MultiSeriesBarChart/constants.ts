@@ -1,4 +1,3 @@
-export const LINE_HEIGHT = 12;
 export const TICK_SIZE = 6;
 export const MIN_Y_LABEL_SPACE = 80;
 export const SPACING_EXTRA_TIGHT = 4;

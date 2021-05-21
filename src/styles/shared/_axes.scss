@@ -9,7 +9,7 @@ $axis-color: rgb(223, 227, 232);
 
 @mixin axis-text {
   color: $label-color;
-  line-height: 1;
+  line-height: 1.5;
 }
 
 @mixin axis-label {
