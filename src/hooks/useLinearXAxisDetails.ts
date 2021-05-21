@@ -11,7 +11,7 @@ import {
   MIN_HORIZONTAL_LABEL_SPACE,
   LINE_HEIGHT,
   MIN_HORIZONTAL_TICKS,
-  MAX_TEXT_BOX_HEIGHT,
+  MAX_TEXT_LINE_HEIGHT,
   LineChartMargin as Margin,
   SPACING_EXTRA_TIGHT,
   SMALL_LABEL_WIDTH,
@@ -125,14 +125,17 @@ export function useLinearXAxisDetails({
       containerWidth: datumXLabelSpace,
     });
 
+    const lineHeightInPx = LINE_HEIGHT * fontSize;
+
     const smallLabelGoingMultiline =
       longestXLabelDetails.length < SMALL_LABEL_WIDTH &&
-      initialHorizontalLabelHeight > LINE_HEIGHT;
+      initialHorizontalLabelHeight > lineHeightInPx;
 
+    const maxTextBoxHeight = MAX_TEXT_LINE_HEIGHT * fontSize;
     // determine if we need to reduce the ticks
     const needToReduceTicks =
       smallLabelGoingMultiline ||
-      initialHorizontalLabelHeight > MAX_TEXT_BOX_HEIGHT ||
+      initialHorizontalLabelHeight > maxTextBoxHeight ||
       datumXLabelSpace < MIN_HORIZONTAL_LABEL_SPACE;
 
     const reducedTicks = ticks.filter((_, index) => index % 3 === 0);
@@ -156,7 +159,7 @@ export function useLinearXAxisDetails({
       needToReduceTicks &&
       (reducedTicksDatumXLabelSpace < MIN_HORIZONTAL_LABEL_SPACE ||
         reducedTicks.length < MIN_HORIZONTAL_TICKS ||
-        reducedHorizontalLabelHeight > MAX_TEXT_BOX_HEIGHT);
+        reducedHorizontalLabelHeight > maxTextBoxHeight);
 
     // use a trig utility to determine how long the diagonal labels can be
     const {
@@ -165,7 +168,7 @@ export function useLinearXAxisDetails({
     } = getMaxDiagonalDetails(longestXLabelDetails.length, estimatedYAxisWidth);
 
     const diagonalLabelSpacePerDatum = Math.max(
-      Math.floor((LINE_HEIGHT * 2) / datumXLabelSpace),
+      Math.floor((lineHeightInPx * 2) / datumXLabelSpace),
       2,
     );
 

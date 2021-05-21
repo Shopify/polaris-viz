@@ -94,7 +94,9 @@ function Axis({
     sideA: maxXLabelHeight,
   }).getOppositeLength();
 
-  const textHeight = needsDiagonalLabels ? LINE_HEIGHT : maxXLabelHeight;
+  const textHeight = needsDiagonalLabels
+    ? LINE_HEIGHT * fontSize
+    : maxXLabelHeight;
 
   const textContainerClassName = needsDiagonalLabels
     ? styles.DiagonalText

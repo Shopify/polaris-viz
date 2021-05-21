@@ -24,20 +24,23 @@ function Axis({
   labelColor = DEFAULT_GREY_LABEL,
   backgroundColor = 'transparent',
 }: Props) {
+  const lineHeightInPx = LINE_HEIGHT * fontSize;
+
   return (
     <React.Fragment>
       {ticks.map(({value, formattedValue, yOffset}) => {
         return (
           <foreignObject
             key={value}
-            transform={`translate(${outerMargin},${yOffset - LINE_HEIGHT / 2})`}
+            transform={`translate(${outerMargin},${yOffset -
+              lineHeightInPx / 2})`}
             width={width + PADDING_SIZE * 2}
-            height={LINE_HEIGHT}
+            height={lineHeightInPx}
             style={{
               color: labelColor,
               textAlign,
               fontSize,
-              lineHeight: `${LINE_HEIGHT}px`,
+              lineHeight: `${lineHeightInPx}px`,
             }}
           >
             <span

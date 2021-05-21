@@ -1,6 +1,6 @@
 import {
   BarChartMargin as Margin,
-  MAX_TEXT_BOX_HEIGHT,
+  MAX_TEXT_LINE_HEIGHT,
   MIN_HORIZONTAL_LABEL_SPACE,
   SPACING,
   LABEL_SPACE_MINUS_FIRST_AND_LAST,
@@ -73,7 +73,7 @@ export function getBarXAxisDetails({
 
   // use horizontal labels if horizontal labels are too tall, or the column space is too narrow
   const needsDiagonalLabels =
-    horizontalLabelHeight > MAX_TEXT_BOX_HEIGHT ||
+    horizontalLabelHeight > MAX_TEXT_LINE_HEIGHT * fontSize ||
     datumXLabelSpace < MIN_HORIZONTAL_LABEL_SPACE;
 
   // width of all outer padding

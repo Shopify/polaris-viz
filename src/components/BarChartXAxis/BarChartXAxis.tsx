@@ -102,14 +102,15 @@ export function BarChartXAxis({
         BELOW_X_AXIS_MARGIN / 2}) rotate(${DIAGONAL_ANGLE})`
     : `translate(-${maxWidth / 2} ${BELOW_X_AXIS_MARGIN})`;
 
+  const lineHeightInPx = LINE_HEIGHT * fontSize;
   const textHeight = needsDiagonalLabels
-    ? LINE_HEIGHT
+    ? lineHeightInPx
     : maxXLabelHeight + SPACING_EXTRA_TIGHT;
   const textContainerClassName = needsDiagonalLabels
     ? styles.DiagonalText
     : styles.Text;
 
-  const diagonalLabelSpacePerBar = Math.floor((LINE_HEIGHT * 2) / maxWidth);
+  const diagonalLabelSpacePerBar = Math.floor((lineHeightInPx * 2) / maxWidth);
   const visibleLabelRatio = needsDiagonalLabels
     ? Math.max(diagonalLabelSpacePerBar, 1)
     : DEFAULT_LABEL_RATIO;

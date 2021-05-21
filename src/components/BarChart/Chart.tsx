@@ -90,7 +90,10 @@ export function Chart({
 
   const {ticks: initialTicks} = useYScale({
     drawableHeight:
-      chartDimensions.height - Margin.Top - Margin.Bottom - LINE_HEIGHT,
+      chartDimensions.height -
+      Margin.Top -
+      Margin.Bottom -
+      LINE_HEIGHT * fontSize,
     data,
     formatYAxisLabel: yAxisOptions.labelFormatter,
     integersOnly: yAxisOptions.integersOnly,
