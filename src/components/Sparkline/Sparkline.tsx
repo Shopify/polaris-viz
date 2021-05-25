@@ -79,18 +79,32 @@ export function Sparkline({
     const isServer = typeof window === 'undefined';
 
     if (!isServer) {
-      window.addEventListener('resize', () => updateMeasurements());
-      window
-        .matchMedia('print')
-        .addEventListener('change', handlePrintMediaQueryChange);
+      window.addEventListener('resize', updateMeasurements);
+
+      if (typeof window.matchMedia('print').addEventListener === 'function') {
+        window
+          .matchMedia('print')
+          .addEventListener('change', handlePrintMediaQueryChange);
+      } else if (typeof window.matchMedia('print').addListener === 'function') {
+        window.matchMedia('print').addListener(handlePrintMediaQueryChange);
+      }
     }
 
     return () => {
       if (!isServer) {
-        window.removeEventListener('resize', () => updateMeasurements());
-        window
-          .matchMedia('print')
-          .removeEventListener('change', handlePrintMediaQueryChange);
+        window.removeEventListener('resize', updateMeasurements);
+
+        if (typeof window.matchMedia('print').addEventListener === 'function') {
+          window
+            .matchMedia('print')
+            .removeEventListener('change', handlePrintMediaQueryChange);
+        } else if (
+          typeof window.matchMedia('print').addListener === 'function'
+        ) {
+          window
+            .matchMedia('print')
+            .removeListener(handlePrintMediaQueryChange);
+        }
       }
     };
   }, [entry, containerRef, updateMeasurements, handlePrintMediaQueryChange]);
