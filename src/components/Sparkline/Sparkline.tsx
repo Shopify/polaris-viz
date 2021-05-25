@@ -79,7 +79,7 @@ export function Sparkline({
     const isServer = typeof window === 'undefined';
 
     if (!isServer) {
-      window.addEventListener('resize', updateMeasurements);
+      window.addEventListener('resize', () => updateMeasurements());
 
       if (typeof window.matchMedia('print').addEventListener === 'function') {
         window
@@ -92,7 +92,7 @@ export function Sparkline({
 
     return () => {
       if (!isServer) {
-        window.removeEventListener('resize', updateMeasurements);
+        window.removeEventListener('resize', () => updateMeasurements());
 
         if (typeof window.matchMedia('print').addEventListener === 'function') {
           window
