@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+## [0.15.1] - 2021-05-25
+
+### Fixed
+
+- Fixed an issue in Safari version `<14` where `window.matchMedia('print').addEventListener` is not supported.
+
 ## [0.15.0] - 2021-05-20
 
 ### Changed
