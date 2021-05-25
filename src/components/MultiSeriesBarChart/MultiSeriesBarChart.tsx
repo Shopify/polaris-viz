@@ -88,17 +88,31 @@ export function MultiSeriesBarChart({
 
     if (!isServer) {
       window.addEventListener('resize', debouncedUpdateDimensions);
-      window
-        .matchMedia('print')
-        .addEventListener('change', handlePrintMediaQueryChange);
+
+      if (typeof window.matchMedia('print').addEventListener === 'function') {
+        window
+          .matchMedia('print')
+          .addEventListener('change', handlePrintMediaQueryChange);
+      } else if (typeof window.matchMedia('print').addListener === 'function') {
+        window.matchMedia('print').addListener(handlePrintMediaQueryChange);
+      }
     }
 
     return () => {
       if (!isServer) {
         window.removeEventListener('resize', debouncedUpdateDimensions);
-        window
-          .matchMedia('print')
-          .removeEventListener('change', handlePrintMediaQueryChange);
+
+        if (typeof window.matchMedia('print').addEventListener === 'function') {
+          window
+            .matchMedia('print')
+            .removeEventListener('change', handlePrintMediaQueryChange);
+        } else if (
+          typeof window.matchMedia('print').addListener === 'function'
+        ) {
+          window
+            .matchMedia('print')
+            .removeListener(handlePrintMediaQueryChange);
+        }
       }
     };
   }, [
