@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+## [0.16.0] - 2021-05-26
+
+### Changed
+
+- Upgrades `react-spring` to version `9.1.2`, which offers improved types, new features, and fixes memory leaks. We don't expect this upgrade to change the functionality of any of our components.
+
 ## [0.15.1] - 2021-05-25
 
 ### Fixed
