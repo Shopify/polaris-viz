@@ -64,7 +64,7 @@ describe('useLineChartAnimations', () => {
 
     mount(<TestComponent />);
 
-    expect(animatedCoordinates![0].getValue()).toMatchObject({x: 0, y: 0});
+    expect(animatedCoordinates![0].get()).toMatchObject({x: 0, y: 0});
   });
 
   it('returns null if isAnimated is false', () => {
@@ -180,7 +180,7 @@ describe('useLineChartAnimations', () => {
 
     mount(<TestComponent />);
 
-    animatedCoordinates![0].getValue();
+    animatedCoordinates![0].get();
 
     expect(getPointAtLength).toHaveBeenCalledWith(expect.any(SVGElement), 0);
   });

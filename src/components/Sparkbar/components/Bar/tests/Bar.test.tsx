@@ -25,7 +25,7 @@ describe('<Bar/>', () => {
     expect(bar).toContainReactComponent('path', {
       // eslint-disable-next-line id-length
       d: 'M 0 50 A 50 50 0 0 1 100 50 M 100 50 L 100 100 L 0 100 L 0 50',
-      style: {transform: 'translate(0px, -100px) rotate(0deg)'},
+      style: {transform: ' translate(0px, -100px) rotate(0deg)'},
     });
   });
 
@@ -45,7 +45,7 @@ describe('<Bar/>', () => {
     expect(bar).toContainReactComponent('path', {
       // eslint-disable-next-line id-length
       d: `M 1 49 A 50 50 0 0 1 99 49 M 100 49 L 0 49`,
-      style: {transform: `translate(0px, -49px) rotate(0deg)`},
+      style: {transform: ` translate(0px, -49px) rotate(0deg)`},
     });
   });
 
@@ -65,7 +65,7 @@ describe('<Bar/>', () => {
     expect(bar).toContainReactComponent('path', {
       // eslint-disable-next-line id-length
       d: ``,
-      style: {transform: `translate(0px, 0px) rotate(0deg)`},
+      style: {transform: ` translate(0px, 0px) rotate(0deg)`},
     });
   });
 });

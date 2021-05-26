@@ -2,6 +2,7 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
 import {Color} from 'types';
+import {SpringValue} from '@react-spring/web';
 
 import {BAR_SPACING} from '../../../constants';
 import {MIN_BAR_HEIGHT} from '../../../../../constants';
@@ -28,6 +29,7 @@ describe('<BarGroup/>', () => {
     hasRoundedCorners: false,
     isSubdued: false,
     zeroAsMinHeight: false,
+    isAnimated: false,
   };
 
   it('renders a <Bar /> for each data item', () => {
@@ -78,25 +80,21 @@ describe('<BarGroup/>', () => {
         </svg>,
       );
 
-      expect(barGroup).toContainReactComponent(Bar, {
-        height: expect.objectContaining({
-          value: MIN_BAR_HEIGHT,
-        }),
-      });
+      const barHeight = barGroup.find(Bar)!.props.height as SpringValue;
+
+      expect(barHeight.get()).toBe(MIN_BAR_HEIGHT);
     });
 
     it('does not pass the min bar height to 0 bars if false', () => {
       const barGroup = mount(
         <svg>
-          <BarGroup {...mockProps} zeroAsMinHeight={false} />,
+          <BarGroup {...mockProps} zeroAsMinHeight={false} data={[0]} />,
         </svg>,
       );
 
-      expect(barGroup).toContainReactComponent(Bar, {
-        height: expect.objectContaining({
-          value: 0,
-        }),
-      });
+      const barHeight = barGroup.find(Bar)!.props.height as SpringValue;
+
+      expect(barHeight.get()).toBe(0);
     });
 
     it('passes the min bar height to non-zero bar if false', () => {
@@ -106,11 +104,9 @@ describe('<BarGroup/>', () => {
         </svg>,
       );
 
-      expect(barGroup).toContainReactComponent(Bar, {
-        height: expect.objectContaining({
-          value: MIN_BAR_HEIGHT,
-        }),
-      });
+      const barHeight = barGroup.find(Bar)!.props.height as SpringValue;
+
+      expect(barHeight.get()).toBe(MIN_BAR_HEIGHT);
     });
   });
 

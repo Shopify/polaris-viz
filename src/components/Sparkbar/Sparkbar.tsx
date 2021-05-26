@@ -2,7 +2,7 @@ import React, {useCallback, useState, useLayoutEffect, useMemo} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 import {scaleBand, scaleLinear} from 'd3-scale';
 import {line} from 'd3-shape';
-import {useTransition} from 'react-spring';
+import {useTransition} from '@react-spring/web';
 
 import {usePrefersReducedMotion, useResizeObserver} from '../../hooks';
 import {BARS_TRANSITION_CONFIG} from '../../constants';
@@ -151,12 +151,13 @@ export function Sparkbar({
 
   const shouldAnimate = !prefersReducedMotion && isAnimated;
 
-  const transitions = useTransition(dataWithIndex, ({index}) => index, {
+  const transitions = useTransition(dataWithIndex, {
+    key: ({index}: {index: number}) => index,
     from: {height: 0},
     leave: {height: 0},
     enter: ({value}) => ({height: getBarHeight(value == null ? 0 : value)}),
     update: ({value}) => ({height: getBarHeight(value == null ? 0 : value)}),
-    immediate: !shouldAnimate,
+    default: {immediate: !shouldAnimate},
     trail: shouldAnimate ? getAnimationTrail(dataWithIndex.length) : 0,
     config: BARS_TRANSITION_CONFIG,
   });
@@ -193,7 +194,7 @@ export function Sparkbar({
         ) : null}
 
         <g fill={barFillStyle === 'gradient' ? `url(#${id})` : currentColor}>
-          {transitions.map(({item, props: {height: barHeight}}, index) => {
+          {transitions(({height: barHeight}, item, _transition, index) => {
             const xPosition = xScale(index.toString());
             return (
               <g key={index} opacity={comparison ? '0.9' : '1'}>

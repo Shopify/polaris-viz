@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import {ScaleLinear} from 'd3-scale';
-import {animated, OpaqueInterpolation} from 'react-spring';
+import {animated, SpringValue} from '@react-spring/web';
 
 import {SparkChartData} from '../../../../types';
 
@@ -9,7 +9,7 @@ interface Props {
   yScale: ScaleLinear<number, number>;
   rawValue: SparkChartData;
   width: number;
-  height?: OpaqueInterpolation<any> | number;
+  height?: SpringValue<number> | number;
 }
 
 export function Bar({x, rawValue, yScale, width, height}: Props) {
@@ -18,21 +18,17 @@ export function Bar({x, rawValue, yScale, width, height}: Props) {
   const rotation = isNegative ? 'rotate(180deg)' : 'rotate(0deg)';
   const xPosition = isNegative ? x + width : x;
 
-  const heightIsNumber = typeof height === 'number';
-
   const yPosition = useMemo(() => {
     if (height == null) return;
 
     const getYPosition = (value: number) =>
       isNegative ? zeroScale + value : zeroScale - value;
 
-    if (heightIsNumber) {
+    if (typeof height === 'number') {
       return getYPosition(height);
     }
-    return height.interpolate(getYPosition);
-  }, [height, heightIsNumber, isNegative, zeroScale]);
-
-  const yPositionIsNumber = typeof yPosition === 'number';
+    return height.to(getYPosition);
+  }, [height, isNegative, zeroScale]);
 
   const style = useMemo(() => {
     if (yPosition == null) return;
@@ -40,12 +36,12 @@ export function Bar({x, rawValue, yScale, width, height}: Props) {
     const getStyle = (y: number) =>
       `translate(${xPosition}px, ${y}px) ${rotation}`;
 
-    if (yPositionIsNumber) return {transform: getStyle(yPosition)};
+    if (typeof yPosition === 'number') return {transform: getStyle(yPosition)};
 
     return {
-      transform: yPosition.interpolate(getStyle),
+      transform: yPosition.to(getStyle),
     };
-  }, [yPosition, yPositionIsNumber, xPosition, rotation]);
+  }, [yPosition, xPosition, rotation]);
 
   const path = useMemo(() => {
     if (height == null) return;
@@ -82,11 +78,11 @@ export function Bar({x, rawValue, yScale, width, height}: Props) {
       return `${moveToStart}${arc}${moveToEndOfArc}${lineRightTopToBottom}${lineBottomRightToLeft}${lineLeftFromBottomToStart}`;
     };
 
-    if (heightIsNumber) {
+    if (typeof height === 'number') {
       return calculatePath(height);
     }
-    return height.interpolate(calculatePath);
-  }, [height, heightIsNumber, width]);
+    return height.to(calculatePath);
+  }, [height, width]);
 
   if (rawValue == null || width < 0) {
     return null;

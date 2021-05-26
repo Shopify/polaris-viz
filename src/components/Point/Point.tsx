@@ -1,15 +1,15 @@
 import React from 'react';
 import tokens from '@shopify/polaris-tokens';
 import {ActiveTooltip} from 'types';
-import {useSpring, animated, OpaqueInterpolation} from 'react-spring';
+import {useSpring, animated, Interpolation} from '@react-spring/web';
 import {classNames} from '@shopify/css-utilities';
 
 import styles from './Point.scss';
 
 interface Props {
   active: boolean;
-  cx: number | OpaqueInterpolation<number>;
-  cy: number;
+  cx: number | Interpolation;
+  cy: number | Interpolation;
   color: string;
   index: number;
   isAnimated: boolean;
@@ -20,6 +20,8 @@ interface Props {
   visuallyHidden?: boolean;
   stroke: string;
 }
+
+const DEFAULT_RADIUS = 5;
 
 export const Point = React.memo(function Point({
   cx,
@@ -37,17 +39,23 @@ export const Point = React.memo(function Point({
 }: Props) {
   const handleFocus = () => {
     if (onFocus != null) {
-      onFocus({index, x: cx, y: cy});
+      return onFocus({
+        index,
+        x: typeof cx === 'number' ? cx : cx.get(),
+        y: typeof cy === 'number' ? cy : cy.get(),
+      });
     }
   };
 
-  const {radius} = useSpring({
-    radius: active ? 5 : 0,
+  const radius = active ? DEFAULT_RADIUS : 0;
+
+  const {animatedRadius} = useSpring({
+    animatedRadius: radius,
     from: {
-      radius: 0,
+      animatedRadius: 0,
     },
     config: {duration: tokens.durationBase},
-    immediate: !isAnimated,
+    default: {immediate: !isAnimated},
   });
 
   return (
@@ -57,7 +65,7 @@ export const Point = React.memo(function Point({
       tabIndex={tabIndex}
       cx={cx}
       cy={cy}
-      r={radius}
+      r={isAnimated ? animatedRadius : radius}
       fill={color}
       stroke={stroke}
       strokeWidth={2}
