@@ -50,6 +50,48 @@ const series = [
   },
 ];
 
+const seriesWithNegatives = [
+  {
+    name: 'Breakfast',
+    color: 'primary',
+    data: [
+      {label: 'Monday', rawValue: -3},
+      {label: 'Tuesday', rawValue: 7},
+      {label: 'Wednesday', rawValue: 4},
+      {label: 'Thursday', rawValue: 8},
+      {label: 'Friday', rawValue: 50},
+      {label: 'Saturday', rawValue: 0},
+      {label: 'Sunday', rawValue: 0.1},
+    ],
+  },
+  {
+    name: 'Lunch',
+    color: 'secondary',
+    data: [
+      {label: 'Monday', rawValue: -4},
+      {label: 'Tuesday', rawValue: 0},
+      {label: 'Wednesday', rawValue: 5},
+      {label: 'Thursday', rawValue: 15},
+      {label: 'Friday', rawValue: 8},
+      {label: 'Saturday', rawValue: 50},
+      {label: 'Sunday', rawValue: 0.1},
+    ],
+  },
+  {
+    name: 'Dinner',
+    color: 'tertiary',
+    data: [
+      {label: 'Monday', rawValue: -7},
+      {label: 'Tuesday', rawValue: 0},
+      {label: 'Wednesday', rawValue: 6},
+      {label: 'Thursday', rawValue: 12},
+      {label: 'Friday', rawValue: 50},
+      {label: 'Saturday', rawValue: 5},
+      {label: 'Sunday', rawValue: 0.1},
+    ],
+  },
+];
+
 const labels = [
   'Mon. Mon. Mon. Mon. Mon. Mon.',
   'Tues. Tues. Tues. Tues. Tues. Tues. Tues.',
@@ -59,6 +101,7 @@ const labels = [
   'Sat. Sat. Sat. Sat. Sat. Sat.',
   'Sun. Sun. Sun. Sun. Sun. Sun. Sun. Sun.',
 ];
+
 export default {
   title: 'MultiSeriesBarChart',
   component: MultiSeriesBarChart,
@@ -93,6 +136,12 @@ const Template: Story<MultiSeriesBarChartProps> = (
 export const Default = Template.bind({});
 Default.args = {
   series,
+  xAxisOptions: {labels},
+};
+
+export const NegativeValues = Template.bind({});
+NegativeValues.args = {
+  series: seriesWithNegatives,
   xAxisOptions: {labels},
 };
 

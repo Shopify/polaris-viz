@@ -34,6 +34,13 @@ export function useYScale({
 
     if (shouldRoundScaleUp({yScale, maxValue: max, maxTicks})) {
       yScale.nice(maxTicks);
+    } else {
+      const roundedDownMin = yScale
+        .copy()
+        .nice(maxTicks)
+        .ticks(maxTicks)[0];
+
+      yScale.domain([roundedDownMin, max]);
     }
 
     const filteredTicks = integersOnly

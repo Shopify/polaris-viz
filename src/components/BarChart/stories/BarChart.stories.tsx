@@ -60,12 +60,32 @@ const barGradient = [
 export const Default = Template.bind({});
 Default.args = {
   data: [
-    {rawValue: 1324.19, label: '2020-01-01T12:00:00Z'},
+    {rawValue: 324.19, label: '2020-01-01T12:00:00Z'},
     {rawValue: 613.29, label: '2020-01-02T12:00:00Z'},
     {rawValue: 422.79, label: '2020-01-03T12:00:00Z'},
     {rawValue: 0, label: '2020-01-04T12:00:00Z'},
     {rawValue: 1, label: '2020-01-05T12:00:00Z'},
     {rawValue: 421.19, label: '2020-01-06T12:00:00Z'},
+  ],
+  barOptions: {
+    color: barGradient,
+    hasRoundedCorners: true,
+  },
+  xAxisOptions: {labelFormatter: formatXAxisLabel},
+  yAxisOptions: {labelFormatter: formatYAxisLabel},
+  renderTooltipContent,
+  gridOptions: {horizontalOverflow: false},
+};
+
+export const NegativeValues = Template.bind({});
+NegativeValues.args = {
+  data: [
+    {rawValue: -324.19, label: '2020-01-01T12:00:00Z'},
+    {rawValue: 613.29, label: '2020-01-02T12:00:00Z'},
+    {rawValue: -422.79, label: '2020-01-03T12:00:00Z'},
+    {rawValue: 0, label: '2020-01-04T12:00:00Z'},
+    {rawValue: 1, label: '2020-01-05T12:00:00Z'},
+    {rawValue: -421.19, label: '2020-01-06T12:00:00Z'},
   ],
   barOptions: {
     color: barGradient,
@@ -115,7 +135,7 @@ Annotations.args = {
     {rawValue: 32, label: '4'},
     {rawValue: 85, label: '5'},
     {rawValue: 74, label: '6'},
-    {rawValue: 100, label: '7'},
+    {rawValue: 110, label: '7'},
     {rawValue: 58, label: '8'},
     {rawValue: 40, label: '9'},
     {rawValue: 58, label: '10'},

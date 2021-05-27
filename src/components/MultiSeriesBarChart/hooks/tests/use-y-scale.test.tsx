@@ -4,6 +4,7 @@ import {scaleLinear} from 'd3-scale';
 import {Series, StackSeries} from 'components/MultiSeriesBarChart/types';
 
 import {useYScale} from '../use-y-scale';
+import {shouldRoundScaleUp} from '../../../../utilities';
 
 jest.mock('d3-scale', () => ({
   scaleLinear: jest.fn(() => {
@@ -16,6 +17,12 @@ jest.mock('d3-scale', () => ({
     return scale;
   }),
 }));
+
+jest.mock('../../../../utilities', () => ({
+  ...jest.requireActual('../../../../utilities'),
+  shouldRoundScaleUp: jest.fn(() => true),
+}));
+
 let domainSpy = jest.fn();
 
 const mockData: Series[] = [
@@ -258,6 +265,54 @@ describe('useYScale', () => {
     const wrapper = mount(<TestFormattersComponent />);
 
     expect(wrapper).toContainReactText('Formatted: 25');
+  });
+
+  it('does not update the domain if shouldRoundScaleUp is true', () => {
+    (scaleLinear as jest.Mock).mockImplementation(() => {
+      const scale = (value: any) => value;
+      scale.ticks = (numTicks: number) => Array.from(Array(numTicks));
+      scale.range = (range: any) => (range ? scale : range);
+      domainSpy = jest.fn((domain: any) => (domain ? scale : domain));
+      scale.domain = domainSpy;
+      scale.nice = () => scale;
+      scale.copy = () => scale;
+      return scale;
+    });
+
+    (shouldRoundScaleUp as jest.Mock).mockImplementation(jest.fn(() => true));
+
+    mount(<TestComponent stackedValues={null} data={mockData} />);
+
+    // Check it's only called once
+    expect(domainSpy).toHaveBeenCalledTimes(1);
+
+    // Check it's called with the min and max data
+    expect(domainSpy).toHaveBeenNthCalledWith(1, [0, 30]);
+  });
+
+  it('updates the domain is shouldRoundScaleUp is false', () => {
+    const firstTick = 50;
+
+    (scaleLinear as jest.Mock).mockImplementation(() => {
+      const scale = (value: any) => value;
+      scale.ticks = () => [firstTick];
+      scale.range = (range: any) => (range ? scale : range);
+      domainSpy = jest.fn((domain: any) => (domain ? scale : domain));
+      scale.domain = domainSpy;
+      scale.nice = () => scale;
+      scale.copy = () => scale;
+      return scale;
+    });
+
+    (shouldRoundScaleUp as jest.Mock).mockImplementation(jest.fn(() => false));
+
+    mount(<TestComponent stackedValues={null} data={mockData} />);
+
+    // Check that it's called with the min and max data the first time
+    expect(domainSpy).toHaveBeenNthCalledWith(1, [0, 30]);
+
+    // Check that it's called with the first tick and max data the second time
+    expect(domainSpy).toHaveBeenNthCalledWith(2, [firstTick, 30]);
   });
 
   describe('integersOnly', () => {
