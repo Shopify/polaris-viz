@@ -9,6 +9,7 @@ import {
   formatXAxisLabel,
   formatYAxisLabel,
   renderTooltipContent,
+  seriesWithNegatives,
 } from './utils.stories';
 
 export default {
@@ -38,6 +39,17 @@ const Template: Story<LineChartProps> = (args: LineChartProps) => {
 export const Default = Template.bind({});
 Default.args = {
   series: [{...series[0], color: 'primary', areaColor: null}, series[1]],
+  xAxisOptions: {
+    xAxisLabels,
+    labelFormatter: formatXAxisLabel,
+  },
+  yAxisOptions: {labelFormatter: formatYAxisLabel},
+  renderTooltipContent,
+};
+
+export const NegativeValues = Template.bind({});
+NegativeValues.args = {
+  series: seriesWithNegatives,
   xAxisOptions: {
     xAxisLabels,
     labelFormatter: formatXAxisLabel,
