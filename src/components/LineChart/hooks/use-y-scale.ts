@@ -1,5 +1,6 @@
 import {useMemo} from 'react';
 import {scaleLinear} from 'd3-scale';
+import {maxIndex} from 'd3-array';
 
 import {getTextWidth, shouldRoundScaleUp} from '../../../utilities';
 import {yAxisMinMax} from '../utilities';
@@ -53,11 +54,20 @@ export function useYScale({
       yOffset: yScale(value),
     }));
 
-    const axisMargin = Math.max(
-      ...ticks.map(({formattedValue}) =>
-        getTextWidth({fontSize, text: formattedValue}),
-      ),
+    const longestYAxisLabel = maxIndex(
+      ticks,
+      ({formattedValue}: {formattedValue: string}) =>
+        formattedValue == null ? 0 : formattedValue.length,
     );
+
+    const text = ticks[longestYAxisLabel]
+      ? ticks[longestYAxisLabel].formattedValue
+      : '';
+
+    const axisMargin = getTextWidth({
+      fontSize,
+      text,
+    });
 
     return {yScale, ticks, axisMargin};
   }, [series, integersOnly, drawableHeight, formatYAxisLabel, fontSize]);

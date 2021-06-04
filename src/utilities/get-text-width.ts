@@ -14,6 +14,5 @@ export function getTextWidth({
   const width = paragraph.clientWidth;
 
   document.body.removeChild(paragraph);
-
   return width;
 }
