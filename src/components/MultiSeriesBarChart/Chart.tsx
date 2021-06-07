@@ -235,9 +235,9 @@ export function Chart({
         aria-label={emptyState ? emptyStateText : undefined}
       >
         <g
-          transform={`translate(${chartStartPosition},${chartDimensions.height -
-            Margin.Bottom -
-            maxXLabelHeight})`}
+          transform={`translate(${chartStartPosition},${
+            chartDimensions.height - Margin.Bottom - maxXLabelHeight
+          })`}
           aria-hidden="true"
         >
           <BarChartXAxis

@@ -1,6 +1,5 @@
 import React from 'react';
 
-// eslint-disable-next-line shopify/strict-component-boundaries
 import {
   TooltipContent,
   TooltipContentProps,

@@ -102,16 +102,16 @@ The sparkline stroke and fill color. This accepts any [Polaris Viz accepted colo
 
 ##### areaFillStyle
 
-| type                      | default |
-| ------------------------- | ------- |
-| `none | solid | gradient` | `none`  |
+| type  | default |
+| ----- | ------- | --------- | ------ |
+| `none | solid   | gradient` | `none` |
 
 Determines whether to fill in the area beneath the line and what kind of shading to use.
 
 ##### lineStyle
 
-| type             | default |
-| ---------------- | ------- |
+| type   | default |
+| ------ | ------- | ------- |
 | `solid | dashed` | `solid` |
 
 Determines the style of line used for the series.

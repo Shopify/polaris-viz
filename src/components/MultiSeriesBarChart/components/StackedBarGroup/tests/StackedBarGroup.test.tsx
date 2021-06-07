@@ -97,6 +97,7 @@ describe('<StackedBarGroup/>', () => {
         });
       });
     });
+
     describe('if is a gradient', () => {
       it('passes a gradient url <g> wrapping <Stack>', () => {
         const wrapper = mount(
@@ -142,6 +143,7 @@ describe('<StackedBarGroup/>', () => {
         style: {fill: MASK_SUBDUE_COLOR},
       });
     });
+
     it('passes MASK_SUBDUE_COLOR to <g> if is set', () => {
       const wrapper = mount(
         <svg>
@@ -167,6 +169,7 @@ describe('<StackedBarGroup/>', () => {
         ariaHidden: true,
       });
     });
+
     it('gets rendered with aria-hidden false outside <mask>', () => {
       const wrapper = mount(
         <svg>

@@ -323,8 +323,9 @@ export function Chart({
         aria-label={emptyState ? emptyStateText : undefined}
       >
         <g
-          transform={`translate(${dataStartPosition},${dimensions.height -
-            marginBottom})`}
+          transform={`translate(${dataStartPosition},${
+            dimensions.height - marginBottom
+          })`}
         >
           <LinearXAxis
             xAxisDetails={xAxisDetails}

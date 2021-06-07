@@ -42,9 +42,7 @@ export function NormalizedStackedBarChart({
   const slicedData = data.slice(0, 4);
   const totalValue = sum(slicedData, ({value}) => value);
 
-  const xScale = scaleLinear()
-    .range([0, 100])
-    .domain([0, totalValue]);
+  const xScale = scaleLinear().range([0, 100]).domain([0, totalValue]);
 
   const isVertical = orientation === 'vertical';
   const colorPalette = colors.map((color) => getColorValue(color));

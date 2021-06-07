@@ -37,7 +37,7 @@
   },
   "stylelint": {
     "extends": [
-      "stylelint-config-shopify/prettier"
+      "@shopify/stylelint-plugin/prettier"
     ],
     "rules": {
       "selector-class-pattern": "^[a-zA-Z][a-zA-Z0-9-]+$",
@@ -61,12 +61,13 @@
     "ios >= 9"
   ],
   "devDependencies": {
-    "@babel/core": "^7.6.0",
-    "@babel/node": "^7.6.1",
+    "@babel/core": "^7.14.3",
+    "@babel/node": "^7.14.2",
     "@juggle/resize-observer": "^3.3.1",
+    "@shopify/babel-preset": "^24.0.1",
     "@shopify/postcss-plugin": "^3.1.1",
-    "@shopify/react-testing": "^1.8.0",
-    "@shopify/sewing-kit": "^0.120.0",
+    "@shopify/react-testing": "^3.0.1",
+    "@shopify/sewing-kit": "^2.0.0",
     "@storybook/addon-actions": "^6.2.1",
     "@storybook/addon-essentials": "^6.2.1",
     "@storybook/addon-links": "^6.2.1",
@@ -75,15 +76,13 @@
     "@types/d3-color": "1",
     "@types/d3-scale": "^2.1.1",
     "@types/d3-shape": "^1.3.2",
-    "@types/jest": "24.0.19",
+    "@types/jest": "26.0.23",
     "@types/lodash.isequal": "^4.5.5",
     "@types/lodash.throttle": "^4.1.6",
     "@types/node": "^12.7.5",
     "@types/react": "^16.8.15",
     "@types/react-dom": "^16.8.4",
-    "babel-core": "7.0.0-bridge.0",
-    "babel-loader": "^8.0.6",
-    "babel-preset-shopify": "^20.1.0",
+    "babel-loader": "^8.2.2",
     "change-case": "^3.1.0",
     "copyfiles": "^2.1.1",
     "cssnano": "^4.1.10",
@@ -115,7 +114,7 @@
     "semver": "^6.3.0",
     "shelljs": "^0.8.3",
     "shx": "^0.3.2",
-    "typescript": "~3.7.2"
+    "typescript": "~4.3.2"
   },
   "peerDependencies": {
     "@juggle/resize-observer": "^3.3.1",
@@ -147,11 +146,5 @@
     "lodash.isequal": "^4.5.0",
     "lodash.throttle": "^4.1.1",
     "use-debounce": "^3.3.0"
-  },
-  "resolutions": {
-    "is-svg": "4.3.1",
-    "merge": "2.1.1",
-    "trim": "0.0.3",
-    "y18n": "4.0.1"
   }
 }

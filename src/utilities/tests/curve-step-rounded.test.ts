@@ -1,7 +1,7 @@
 import {extent} from 'd3-array';
 import {scaleLinear} from 'd3-scale';
 import {line} from 'd3-shape';
-import {Path} from 'd3-path';
+import type {Path} from 'd3-path';
 
 import {curveStepRounded, CurveStepRounded} from '../curve-step-rounded';
 
@@ -16,9 +16,7 @@ const xScale = scaleLinear()
   .domain([0, dataset.length - 1])
   .range([0, WIDTH]);
 
-const yScale = scaleLinear()
-  .domain([min, max])
-  .range([HEIGHT, 0]);
+const yScale = scaleLinear().domain([min, max]).range([HEIGHT, 0]);
 
 describe('curveStepRounded', () => {
   it('generates a line with the default roundness and distance', () => {

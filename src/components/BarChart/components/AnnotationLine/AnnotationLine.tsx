@@ -2,7 +2,7 @@ import React from 'react';
 import {classNames} from '@shopify/css-utilities';
 
 import {clamp, getColorValue, isValidColorToken} from '../../../../utilities';
-import {Annotation} from '../../types';
+import type {Annotation} from '../../types';
 
 import styles from './AnnotationLine.scss';
 

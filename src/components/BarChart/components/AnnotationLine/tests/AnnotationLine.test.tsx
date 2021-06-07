@@ -1,6 +1,6 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
-import {Color} from 'types';
+import type {Color} from 'types';
 import {vizColors} from 'utilities';
 
 import {AnnotationLine} from '../AnnotationLine';
@@ -87,6 +87,7 @@ describe('<AnnotationLine />', () => {
         x2: 8,
       });
     });
+
     it('right aligns when xOffset is 1', () => {
       const props = {
         ...mockProps,
@@ -117,6 +118,7 @@ describe('<AnnotationLine />', () => {
         className: 'AnimatedLine',
       });
     });
+
     it('animates when true', () => {
       const props = {
         ...mockProps,

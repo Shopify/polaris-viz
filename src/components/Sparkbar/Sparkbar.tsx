@@ -170,8 +170,9 @@ export function Sparkbar({
 
       <svg
         aria-hidden
-        viewBox={`0 ${ANIMATION_MARGIN * -1} ${width} ${height +
-          ANIMATION_MARGIN * 2}`}
+        viewBox={`0 ${ANIMATION_MARGIN * -1} ${width} ${
+          height + ANIMATION_MARGIN * 2
+        }`}
         style={{
           transform: `translateY(${ANIMATION_MARGIN * -1}px)`,
         }}

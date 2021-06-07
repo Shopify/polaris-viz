@@ -9,10 +9,7 @@ export function shouldRoundScaleUp({
   maxTicks: number;
   maxValue: number;
 }) {
-  const roundedUpTicks = yScale
-    .copy()
-    .nice(maxTicks)
-    .ticks(maxTicks);
+  const roundedUpTicks = yScale.copy().nice(maxTicks).ticks(maxTicks);
 
   const lastTick = roundedUpTicks[roundedUpTicks.length - 1];
   const secondLastTick = roundedUpTicks[roundedUpTicks.length - 2];

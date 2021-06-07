@@ -1,6 +1,5 @@
 import React from 'react';
 
-// eslint-disable-next-line shopify/strict-component-boundaries
 import {
   MultiSeriesBarChart,
   MultiSeriesBarChartProps,
@@ -85,32 +84,30 @@ export function MultiSeriesBarChartDemo({isStacked = false}: Props) {
       currency: 'CAD',
     }).format(val);
 
-  const renderTooltipContent: MultiSeriesBarChartProps['renderTooltipContent'] = ({
-    data,
-    title,
-  }) => {
-    const formatTooltipValue = (val: number) =>
-      new Intl.NumberFormat('en-CA', {
-        style: 'currency',
-        currency: 'CAD',
-      }).format(val);
+  const renderTooltipContent: MultiSeriesBarChartProps['renderTooltipContent'] =
+    ({data, title}) => {
+      const formatTooltipValue = (val: number) =>
+        new Intl.NumberFormat('en-CA', {
+          style: 'currency',
+          currency: 'CAD',
+        }).format(val);
 
-    const formattedData = data.map(({label, value, color}) => ({
-      color,
-      label,
-      value: formatTooltipValue(value),
-    }));
+      const formattedData = data.map(({label, value, color}) => ({
+        color,
+        label,
+        value: formatTooltipValue(value),
+      }));
 
-    const total = data.reduce((totalValue, {value}) => totalValue + value, 0);
+      const total = data.reduce((totalValue, {value}) => totalValue + value, 0);
 
-    return (
-      <TooltipContent
-        title={title}
-        data={formattedData}
-        total={{label: 'Total', value: formatTooltipValue(total)}}
-      />
-    );
-  };
+      return (
+        <TooltipContent
+          title={title}
+          data={formattedData}
+          total={{label: 'Total', value: formatTooltipValue(total)}}
+        />
+      );
+    };
 
   return (
     <div style={OUTER_CONTAINER_STYLE}>

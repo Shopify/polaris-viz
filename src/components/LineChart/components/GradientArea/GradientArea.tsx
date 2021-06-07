@@ -1,12 +1,12 @@
 import React, {useMemo} from 'react';
-import {ScaleLinear} from 'd3-scale';
+import type {ScaleLinear} from 'd3-scale';
 import {area} from 'd3-shape';
 
 import {LinearGradient} from '../../../../components';
 import {uniqueId, curveStepRounded} from '../../../../utilities';
 import {ANIMATION_DELAY, SLOW_DURATION, FAST_DURATION} from '../../constants';
-import {Data} from '../../../../types';
-import {Series} from '../../types';
+import type {Data} from '../../../../types';
+import type {Series} from '../../types';
 
 import {getGradientDetails} from './utilities/get-gradient-details';
 import styles from './GradientArea.scss';
@@ -99,7 +99,7 @@ export function GradientArea({
       </defs>
 
       <g
-        className={isAnimated ? styles.FadeInArea : null}
+        className={isAnimated ? styles.FadeInArea : undefined}
         style={{
           animationDelay: `${animationDelay}s`,
         }}

@@ -26,10 +26,10 @@ import {BarChartXAxis} from '../BarChartXAxis';
 import {TooltipContainer} from '../TooltipContainer';
 import {LinearGradient} from '../LinearGradient';
 import {HorizontalGridLines} from '../HorizontalGridLines';
-import {Dimensions} from '../../types';
+import type {Dimensions} from '../../types';
 
 import {AnnotationLine} from './components';
-import {
+import type {
   BarChartData,
   RenderTooltipContentData,
   BarOptions as BarChartBarOptions,
@@ -294,9 +294,11 @@ export function Chart({
           </mask>
         </defs>
         <g
-          transform={`translate(${chartStartPosition},${chartDimensions.height -
+          transform={`translate(${chartStartPosition},${
+            chartDimensions.height -
             Margin.Bottom -
-            xAxisDetails.maxXLabelHeight})`}
+            xAxisDetails.maxXLabelHeight
+          })`}
           aria-hidden="true"
         >
           <BarChartXAxis

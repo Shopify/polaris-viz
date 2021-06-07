@@ -28,17 +28,12 @@ export function useYScale({
       Math.floor(drawableHeight / MIN_Y_LABEL_SPACE),
     );
 
-    const yScale = scaleLinear()
-      .range([drawableHeight, 0])
-      .domain([min, max]);
+    const yScale = scaleLinear().range([drawableHeight, 0]).domain([min, max]);
 
     if (shouldRoundScaleUp({yScale, maxValue: max, maxTicks})) {
       yScale.nice(maxTicks);
     } else {
-      const roundedDownMin = yScale
-        .copy()
-        .nice(maxTicks)
-        .ticks(maxTicks)[0];
+      const roundedDownMin = yScale.copy().nice(maxTicks).ticks(maxTicks)[0];
 
       yScale.domain([roundedDownMin, max]);
     }

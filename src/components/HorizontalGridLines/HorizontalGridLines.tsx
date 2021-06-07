@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {YAxisTick} from '../../types';
+import type {YAxisTick} from '../../types';
 
 interface Props {
   ticks: YAxisTick[];

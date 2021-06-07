@@ -18,7 +18,7 @@ import {
   SMALL_LABEL_WIDTH,
   LABEL_SPACE_MINUS_FIRST_AND_LAST,
 } from '../constants';
-import {
+import type {
   StringLabelFormatter,
   NullableData,
   Data,
@@ -169,10 +169,8 @@ export function useLinearXAxisDetails({
     );
 
     // use a trig utility to determine how long the diagonal labels can be
-    const {
-      angledLabelMaxLength,
-      maxDiagonalLabelHeight,
-    } = getMaxDiagonalDetails(longestXLabelDetails.length, estimatedYAxisWidth);
+    const {angledLabelMaxLength, maxDiagonalLabelHeight} =
+      getMaxDiagonalDetails(longestXLabelDetails.length, estimatedYAxisWidth);
     // determine if we need to go to our last option: making the ticks go diagonal
     const needsDiagonalLabels =
       needToReduceTicks &&
