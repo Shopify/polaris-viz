@@ -3,7 +3,7 @@ import {mount} from '@shopify/react-testing';
 import {line} from 'd3-shape';
 
 import {useLineChartAnimations} from '../use-line-chart-animations';
-import {SeriesWithDefaults} from '../../types';
+import type {SeriesWithDefaults} from '../../types';
 import {getPointAtLength} from '../../../../utilities';
 
 jest.mock('../../../../utilities', () => {

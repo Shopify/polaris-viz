@@ -1,4 +1,4 @@
-import {ScaleLinear} from 'd3-scale';
+import type {ScaleLinear} from 'd3-scale';
 
 export function shouldRoundScaleUp({
   yScale,

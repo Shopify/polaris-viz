@@ -1,4 +1,4 @@
-import {InterpolatorFn} from '@react-spring/web';
+import type {InterpolatorFn} from '@react-spring/web';
 
 export interface Data {
   label: string;

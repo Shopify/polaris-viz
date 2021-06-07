@@ -27,12 +27,12 @@ import {YAxis} from '../YAxis';
 import {Point} from '../Point';
 import {Crosshair} from '../Crosshair';
 import {LinearGradient} from '../LinearGradient';
-import {ActiveTooltip, Dimensions} from '../../types';
+import type {ActiveTooltip, Dimensions} from '../../types';
 import {TooltipContainer} from '../TooltipContainer';
 import {HorizontalGridLines} from '../HorizontalGridLines';
 
 import {MAX_ANIMATED_SERIES_LENGTH} from './constants';
-import {
+import type {
   RenderTooltipContentData,
   TooltipData,
   LineOptions,

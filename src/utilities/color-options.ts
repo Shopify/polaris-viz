@@ -1,6 +1,6 @@
 import tokens from '@shopify/polaris-tokens';
 
-import {Color} from '../types';
+import type {Color} from '../types';
 
 import {vizColors} from './viz-colors';
 

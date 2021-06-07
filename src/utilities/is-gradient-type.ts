@@ -1,4 +1,4 @@
-import {GradientStop, SeriesColor} from '../types';
+import type {GradientStop, SeriesColor} from '../types';
 
 function isGradientStopType(item: any): item is GradientStop {
   return (

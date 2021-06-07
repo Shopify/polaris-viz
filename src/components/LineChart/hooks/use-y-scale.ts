@@ -5,8 +5,8 @@ import {maxIndex} from 'd3-array';
 import {getTextWidth, shouldRoundScaleUp} from '../../../utilities';
 import {yAxisMinMax} from '../utilities';
 import {MIN_Y_LABEL_SPACE} from '../constants';
-import {Series} from '../types';
-import {NumberLabelFormatter} from '../../../types';
+import type {Series} from '../types';
+import type {NumberLabelFormatter} from '../../../types';
 
 export function useYScale({
   drawableHeight,

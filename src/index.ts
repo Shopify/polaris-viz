@@ -1,27 +1,30 @@
 export {
   Sparkline,
-  SparklineProps,
   Sparkbar,
-  SparkbarProps,
   NormalizedStackedBarChart,
-  NormalizedStackedBarChartProps,
   BarChart,
-  BarChartProps,
   BarChartTooltipContent,
-  BarChartTooltipContentProps,
   LineChart,
-  LineChartProps,
   LineChartTooltipContent,
-  LineChartTooltipContentProps,
   StackedAreaChart,
-  StackedAreaChartProps,
   Legend,
   MultiSeriesBarChart,
-  MultiSeriesBarChartProps,
   TooltipContent,
-  TooltipContentProps,
   LinePreview,
   SquareColorPreview,
 } from './components';
 
-export {Color, GradientStop} from './types';
+export type {
+  SparklineProps,
+  SparkbarProps,
+  NormalizedStackedBarChartProps,
+  BarChartProps,
+  BarChartTooltipContentProps,
+  LineChartProps,
+  LineChartTooltipContentProps,
+  StackedAreaChartProps,
+  MultiSeriesBarChartProps,
+  TooltipContentProps,
+} from './components';
+
+export type {Color, GradientStop} from './types';

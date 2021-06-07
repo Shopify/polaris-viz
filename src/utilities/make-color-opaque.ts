@@ -1,6 +1,6 @@
 import {color as d3Color} from 'd3-color';
 
-import {GradientStop} from '../types';
+import type {GradientStop} from '../types';
 
 export function makeColorOpaque(color: string): string {
   const rgbColor = d3Color(color);

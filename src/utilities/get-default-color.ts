@@ -1,4 +1,4 @@
-import {Color} from 'types';
+import type {Color} from 'types';
 
 export function getDefaultColor(index = 0): Color {
   const colors: Color[] = ['primary', 'secondary', 'tertiary', 'quaternary'];

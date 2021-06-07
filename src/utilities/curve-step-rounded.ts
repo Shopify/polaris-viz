@@ -1,5 +1,5 @@
-import {Path} from 'd3-path';
-import {CurveGenerator} from 'd3-shape';
+import type {Path} from 'd3-path';
+import type {CurveGenerator} from 'd3-shape';
 
 const DEFAULT_DISTANCE = 0.99;
 const DEFAULT_ROUNDNESS = 0.59;

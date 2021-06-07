@@ -1,9 +1,9 @@
 import {useCallback, useMemo} from 'react';
-import {Line} from 'd3-shape';
+import type {Line} from 'd3-shape';
 import {useSprings} from '@react-spring/web';
 
 import {SPRING_CONFIG} from '../constants';
-import {SeriesWithDefaults} from '../types';
+import type {SeriesWithDefaults} from '../types';
 import {getPathLength, getPointAtLength} from '../../../utilities';
 
 export function useLineChartAnimations({

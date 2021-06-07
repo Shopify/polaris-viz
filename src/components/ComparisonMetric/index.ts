@@ -1,2 +1,2 @@
 export {ComparisonMetric} from './ComparisonMetric';
-export {ComparisonMetricShape} from './types';
+export type {ComparisonMetricShape} from './types';
