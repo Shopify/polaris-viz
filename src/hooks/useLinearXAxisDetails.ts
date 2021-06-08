@@ -1,4 +1,5 @@
 import {useMemo} from 'react';
+import {maxIndex} from 'd3-array';
 
 import {
   getTextWidth,
@@ -54,20 +55,33 @@ export function useLinearXAxisDetails({
   xAxisLabels,
   useMinimalLabels,
 }: ChartDetails) {
-  // determine how much space will be taken up by the yaxis and its labels, in order to know width of xaxis
-  const approxYAxisLabelWidth = useMemo(
-    () =>
-      Math.max(
-        ...initialTicks.map(({formattedValue}) =>
-          getTextWidth({text: formattedValue, fontSize}),
-        ),
-      ),
-    [fontSize, initialTicks],
-  );
+  const {estimatedYAxisWidth, drawableWidth} = useMemo(() => {
+    // determine how much space will be taken up by the yaxis
+    // and its labels, in order to know width of xaxis
+    const longestYAxisLabel = maxIndex(
+      initialTicks,
+      ({formattedValue}: {formattedValue: string}) => formattedValue.length,
+    );
 
-  const estimatedYAxisWidth = SPACING_TIGHT + approxYAxisLabelWidth;
+    const text =
+      longestYAxisLabel < 0
+        ? ''
+        : initialTicks[longestYAxisLabel].formattedValue;
 
-  const drawableWidth = width - estimatedYAxisWidth - Margin.Right;
+    const approxYAxisLabelWidth = getTextWidth({
+      text,
+      fontSize,
+    });
+
+    const estimatedYAxisWidth = SPACING_TIGHT + approxYAxisLabelWidth;
+
+    const drawableWidth = width - estimatedYAxisWidth - Margin.Right;
+
+    return {
+      estimatedYAxisWidth,
+      drawableWidth,
+    };
+  }, [fontSize, initialTicks, width]);
 
   const longestSeriesLastIndex = useMemo(
     () =>
@@ -84,13 +98,12 @@ export function useLinearXAxisDetails({
     longestSeriesLength: longestSeriesLastIndex,
   });
 
-  const {
-    maxXLabelHeight,
-    maxDiagonalLabelLength,
-    needsDiagonalLabels,
-    ticks,
-    horizontalLabelWidth,
-  } = useMemo(() => {
+  const ticks = useMemo(() => {
+    const minimalLabelIndexes = [
+      0,
+      Math.floor(longestSeriesLastIndex / 2),
+      longestSeriesLastIndex,
+    ];
     const xScaleTicks =
       initialXScale.xScale == null
         ? []
@@ -100,21 +113,23 @@ export function useLinearXAxisDetails({
               return Number.isInteger(value);
             });
 
-    const minimalLabelIndexes = [
-      0,
-      Math.floor(longestSeriesLastIndex / 2),
-      longestSeriesLastIndex,
-    ];
+    return useMinimalLabels &&
+      longestSeriesLastIndex > minimalLabelIndexes.length
+      ? minimalLabelIndexes
+      : xScaleTicks;
+  }, [initialXScale.xScale, longestSeriesLastIndex, useMinimalLabels]);
 
-    const ticks =
-      useMinimalLabels && longestSeriesLastIndex > minimalLabelIndexes.length
-        ? minimalLabelIndexes
-        : xScaleTicks;
-
-    // xAxis label spacing will be based on the longest label
+  const {
+    horizontalLabelWidth,
+    maxXLabelHeight,
+    maxDiagonalLabelLength,
+    needsDiagonalLabels,
+    diagonalTicks,
+    horizontalTicks,
+  } = useMemo(() => {
     const xLabels = xAxisLabels.map((label) => formatXAxisLabel(label));
+    // xAxis label spacing will be based on the longest label
     const longestXLabelDetails = getLongestLabelDetails(xLabels, fontSize);
-
     // the actual space available will each label
     const datumXLabelSpace = getDatumSpace(drawableWidth, ticks.length);
 
@@ -148,37 +163,22 @@ export function useLinearXAxisDetails({
       fontSize,
       containerWidth: reducedTicksDatumXLabelSpace,
     });
-
-    const horizontalTicks = needToReduceTicks ? reducedTicks : ticks;
-
-    // determine if we need to go to our last option: making the ticks go diagonal
-    const needsDiagonalLabels =
-      needToReduceTicks &&
-      (reducedTicksDatumXLabelSpace < MIN_HORIZONTAL_LABEL_SPACE ||
-        reducedTicks.length < MIN_HORIZONTAL_TICKS ||
-        reducedHorizontalLabelHeight > MAX_TEXT_BOX_HEIGHT);
+    const diagonalLabelSpacePerDatum = Math.max(
+      Math.floor((LINE_HEIGHT * 2) / datumXLabelSpace),
+      2,
+    );
 
     // use a trig utility to determine how long the diagonal labels can be
     const {
       angledLabelMaxLength,
       maxDiagonalLabelHeight,
     } = getMaxDiagonalDetails(longestXLabelDetails.length, estimatedYAxisWidth);
-
-    const diagonalLabelSpacePerDatum = Math.max(
-      Math.floor((LINE_HEIGHT * 2) / datumXLabelSpace),
-      2,
-    );
-
-    // reduce the ticks if they start runing into each other
-    const diagonalTicks = ticks.filter(
-      (_, index) => index % Math.abs(diagonalLabelSpacePerDatum) === 0,
-    );
-
-    // the max diagonal length is whatever is smaller: longest label or where it gets cut off
-    const maxDiagonalLabelLength = Math.min(
-      longestXLabelDetails.length,
-      angledLabelMaxLength,
-    );
+    // determine if we need to go to our last option: making the ticks go diagonal
+    const needsDiagonalLabels =
+      needToReduceTicks &&
+      (reducedTicksDatumXLabelSpace < MIN_HORIZONTAL_LABEL_SPACE ||
+        reducedTicks.length < MIN_HORIZONTAL_TICKS ||
+        reducedHorizontalLabelHeight > MAX_TEXT_BOX_HEIGHT);
 
     // the max horizontal height is determined by whether the ticks are reduced
     const horizontalLabelHeight = needToReduceTicks
@@ -190,23 +190,38 @@ export function useLinearXAxisDetails({
       ? maxDiagonalLabelHeight
       : horizontalLabelHeight;
 
+    const horizontalLabelWidth = needToReduceTicks
+      ? reducedTicksDatumXLabelSpace
+      : datumXLabelSpace;
+
+    // the max diagonal length is whatever is smaller: longest label or where it gets cut off
+    const maxDiagonalLabelLength = Math.min(
+      longestXLabelDetails.length,
+      angledLabelMaxLength,
+    );
+
+    // reduce the ticks if they start runing into each other
+    const diagonalTicks = ticks.filter(
+      (_, index) => index % Math.abs(diagonalLabelSpacePerDatum) === 0,
+    );
+
+    const horizontalTicks = needToReduceTicks ? reducedTicks : ticks;
+
     return {
+      horizontalLabelWidth,
+      horizontalLabelHeight,
       maxXLabelHeight,
       maxDiagonalLabelLength,
       needsDiagonalLabels,
-      ticks: needsDiagonalLabels ? diagonalTicks : horizontalTicks,
-      horizontalLabelWidth: needToReduceTicks
-        ? reducedTicksDatumXLabelSpace
-        : datumXLabelSpace,
+      diagonalTicks,
+      horizontalTicks,
     };
   }, [
     drawableWidth,
     estimatedYAxisWidth,
     fontSize,
     formatXAxisLabel,
-    initialXScale.xScale,
-    longestSeriesLastIndex,
-    useMinimalLabels,
+    ticks,
     xAxisLabels,
   ]);
 
@@ -214,7 +229,7 @@ export function useLinearXAxisDetails({
     maxXLabelHeight,
     maxDiagonalLabelLength,
     needsDiagonalLabels,
-    ticks,
+    ticks: needsDiagonalLabels ? diagonalTicks : horizontalTicks,
     horizontalLabelWidth,
   };
 }

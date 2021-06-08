@@ -1,4 +1,4 @@
-import React, {useState, useMemo, useRef, useCallback} from 'react';
+import React, {useState, useRef, useMemo, useCallback} from 'react';
 import throttle from 'lodash.throttle';
 import {line} from 'd3-shape';
 
@@ -226,11 +226,10 @@ export function Chart({
     isAnimated: animatePoints,
   });
 
-  if (xScale == null || drawableWidth == null || axisMargin == null) {
-    return null;
-  }
-
   const getXPosition = ({isCrosshair} = {isCrosshair: false}) => {
+    if (xScale == null) {
+      return 0;
+    }
     const offset = isCrosshair ? crossHairOptions.width / 2 : 0;
 
     if (
@@ -245,18 +244,25 @@ export function Chart({
     return xScale(activeIndex == null ? 0 : activeIndex) - offset;
   };
 
-  const handleMouseInteraction = throttle(
-    (
-      event:
-        | React.MouseEvent<SVGSVGElement>
-        | React.TouchEvent<SVGSVGElement>
-        | null,
-    ) => {
-      handleInteraction(event);
-    },
-    50,
-    {leading: true},
+  const handleMouseInteraction = useCallback(
+    throttle(
+      (
+        event:
+          | React.MouseEvent<SVGSVGElement>
+          | React.TouchEvent<SVGSVGElement>
+          | null,
+      ) => {
+        handleInteraction(event);
+      },
+      50,
+      {leading: true},
+    ),
+    [dimensions],
   );
+
+  if (xScale == null || drawableWidth == null || axisMargin == null) {
+    return null;
+  }
 
   function handleInteraction(
     event:
