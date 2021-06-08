@@ -1,4 +1,4 @@
-import {Color, DataSeries, NullableData} from '../../types';
+import type {Color, DataSeries, NullableData} from '../../types';
 
 export interface Series extends DataSeries<NullableData, Color> {}
 

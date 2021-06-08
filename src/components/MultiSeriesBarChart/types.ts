@@ -1,6 +1,6 @@
-import {Series as ShapeSeries} from 'd3-shape';
+import type {Series as ShapeSeries} from 'd3-shape';
 
-import {
+import type {
   StringLabelFormatter,
   NumberLabelFormatter,
   DataSeries,

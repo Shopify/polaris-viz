@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import {ScaleLinear} from 'd3-scale';
+import type {ScaleLinear} from 'd3-scale';
 import {area, line} from 'd3-shape';
 import {classNames} from '@shopify/css-utilities';
 
@@ -11,7 +11,7 @@ import {
   rgbToRgba,
 } from '../../../../utilities';
 import {usePrefersReducedMotion} from '../../../../hooks';
-import {SingleSeries, Coordinates} from '../../Sparkline';
+import type {SingleSeries, Coordinates} from '../../Sparkline';
 
 import styles from './Series.scss';
 
@@ -111,7 +111,7 @@ export function Series({
         <path
           fill={areaStyle === 'gradient' ? `url(#${id})` : colorValue}
           d={areaShape}
-          className={immediate ? null : styles.Area}
+          className={immediate ? undefined : styles.Area}
         />
       )}
 

@@ -11,10 +11,10 @@ import {
 import {YAxis} from '../YAxis';
 import {BarChartXAxis} from '../BarChartXAxis';
 import {HorizontalGridLines} from '../HorizontalGridLines';
-import {Dimensions} from '../../types';
+import type {Dimensions} from '../../types';
 
 import {getStackedValues, formatAriaLabel} from './utilities';
-import {
+import type {
   Series,
   RenderTooltipContentData,
   BarOptions as MultiSeriesBarOptions,

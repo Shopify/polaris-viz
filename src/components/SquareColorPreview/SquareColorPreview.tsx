@@ -1,5 +1,5 @@
 import React from 'react';
-import {SeriesColor} from 'types';
+import type {SeriesColor} from 'types';
 
 import {
   getColorValue,

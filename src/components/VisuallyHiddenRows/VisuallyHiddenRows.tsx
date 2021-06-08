@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {
+import type {
   NumberLabelFormatter,
   DataSeries,
   NullableData,

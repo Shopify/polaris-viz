@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState, ReactNode} from 'react';
 import {useSpring, animated} from '@react-spring/web';
 
 import {clamp} from '../../utilities';
-import {Dimensions} from '../../types';
+import type {Dimensions} from '../../types';
 
 import styles from './TooltipContainer.scss';
 

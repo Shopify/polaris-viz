@@ -1,5 +1,5 @@
 import {DEFAULT_MAX_Y} from '../../../constants';
-import {Series, StackSeries} from '../types';
+import type {Series, StackSeries} from '../types';
 
 export function getMinMax({
   stackedValues,

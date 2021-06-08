@@ -1,8 +1,8 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
-import {Color} from 'types';
-import {SpringValue} from '@react-spring/web';
+import type {Color} from 'types';
+import type {SpringValue} from '@react-spring/web';
 
 import {BAR_SPACING} from '../../../constants';
 import {MIN_BAR_HEIGHT} from '../../../../../constants';

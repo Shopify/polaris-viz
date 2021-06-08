@@ -1,4 +1,2 @@
-export {
-  SquareColorPreview,
-  SquareColorPreviewProps,
-} from './SquareColorPreview';
+export {SquareColorPreview} from './SquareColorPreview';
+export type {SquareColorPreviewProps} from './SquareColorPreview';

@@ -1,4 +1,2 @@
-export {
-  MultiSeriesBarChart,
-  MultiSeriesBarChartProps,
-} from './MultiSeriesBarChart';
+export {MultiSeriesBarChart} from './MultiSeriesBarChart';
+export type {MultiSeriesBarChartProps} from './MultiSeriesBarChart';

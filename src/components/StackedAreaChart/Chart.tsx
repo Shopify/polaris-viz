@@ -23,7 +23,7 @@ import {Point} from '../Point';
 import {LinearXAxis} from '../LinearXAxis';
 import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
 import {HorizontalGridLines} from '../HorizontalGridLines';
-import {
+import type {
   StringLabelFormatter,
   NumberLabelFormatter,
   ActiveTooltip,
@@ -34,7 +34,7 @@ import {Spacing} from './constants';
 import {useYScale} from './hooks';
 import {StackedAreas} from './components';
 import styles from './Chart.scss';
-import {Series, RenderTooltipContentData} from './types';
+import type {Series, RenderTooltipContentData} from './types';
 
 interface Props {
   xAxisLabels: string[];
