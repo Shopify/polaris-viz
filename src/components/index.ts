@@ -39,3 +39,4 @@ export {VisuallyHiddenRows} from './VisuallyHiddenRows';
 export {LinePreview} from './LinePreview';
 export {Legend} from './Legend';
 export {LinearGradient} from './LinearGradient';
+export {PolarisVizProvider} from './PolarisVizProvider';

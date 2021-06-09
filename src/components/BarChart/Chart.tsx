@@ -26,13 +26,12 @@ import {BarChartXAxis} from '../BarChartXAxis';
 import {TooltipContainer} from '../TooltipContainer';
 import {LinearGradient} from '../LinearGradient';
 import {HorizontalGridLines} from '../HorizontalGridLines';
-import {Dimensions} from '../../types';
+import {Dimensions, BarOptions as BarChartBarOptions} from '../../types';
 
 import {AnnotationLine} from './components';
 import {
   BarChartData,
   RenderTooltipContentData,
-  BarOptions as BarChartBarOptions,
   GridOptions,
   XAxisOptions,
   YAxisOptions,

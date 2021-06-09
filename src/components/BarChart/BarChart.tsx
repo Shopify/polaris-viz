@@ -2,7 +2,7 @@ import React, {useState, useLayoutEffect, useRef, useCallback} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 import {colorSky} from '@shopify/polaris-tokens';
 
-import {Dimensions} from '../../types';
+import {Dimensions, BarOptions, BarMargin} from '../../types';
 import {DEFAULT_GREY_LABEL} from '../../constants';
 import {SkipLink} from '../SkipLink';
 import {getDefaultColor, uniqueId, normalizeData} from '../../utilities';
@@ -13,11 +13,9 @@ import {Chart} from './Chart';
 import {
   BarChartData,
   RenderTooltipContentData,
-  BarOptions,
   GridOptions,
   XAxisOptions,
   YAxisOptions,
-  BarMargin,
   Annotation,
   AnnotationLookupTable,
 } from './types';
