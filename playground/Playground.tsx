@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 
+import '@shopify/polyfills/base';
+
 import * as PlaygroundDemos from '../documentation/code';
 
 const Demos = () => {

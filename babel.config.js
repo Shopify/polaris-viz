@@ -9,10 +9,14 @@ module.exports = function (api) {
     ? ['@shopify/babel-preset', {modules: false, typescript: true, react: true}]
     : [
         '@shopify/babel-preset',
-        {modules: 'commonjs', typescript: true, react: true},
+        {
+          modules: 'commonjs',
+          typescript: true,
+          react: true,
+        },
       ];
 
   return {
-    presets: [runtimePreset],
+    presets: [runtimePreset, ['@babel/preset-react']],
   };
 };
