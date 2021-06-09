@@ -244,6 +244,7 @@ export function Chart({
     return xScale(activeIndex == null ? 0 : activeIndex) - offset;
   };
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   const handleMouseInteraction = useCallback(
     throttle(
       (
@@ -259,6 +260,7 @@ export function Chart({
     ),
     [dimensions],
   );
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   if (xScale == null || drawableWidth == null || axisMargin == null) {
     return null;
