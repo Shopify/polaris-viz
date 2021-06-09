@@ -136,5 +136,28 @@ export interface Dimensions {
 }
 
 export type SparkChartData = number | null;
-export type PathInterpolator = InterpolatorFn<readonly number[], string>;
-export type NumberInterpolator = InterpolatorFn<readonly number[], number>;
+
+export type PathInterpolator = InterpolatorFn<ReadonlyArray<number>, string>;
+export type NumberInterpolator = InterpolatorFn<ReadonlyArray<number>, number>;
+
+// === Theme types === //
+export enum BarMargin {
+  Small = 0.05,
+  Medium = 0.1,
+  Large = 0.3,
+  None = 0,
+}
+
+export interface BarOptions {
+  innerMargin: keyof typeof BarMargin;
+  outerMargin: keyof typeof BarMargin;
+  color: Color | GradientStop[];
+  hasRoundedCorners: boolean;
+  /**
+   * @deprecated This prop is experimental and not ready for general use. If you want to use this, come talk to us in #polaris-data-viz
+   */
+  zeroAsMinHeight: boolean;
+}
+export interface Theme {
+  barOptions: Partial<BarOptions>;
+}
