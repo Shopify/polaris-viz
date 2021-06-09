@@ -11,6 +11,7 @@ import {
   renderTooltipContent,
   gradient,
 } from './utils.stories';
+import {colorTeal} from '../../../constants';
 
 const tooltipContent = {
   empty: undefined,
@@ -49,33 +50,24 @@ export default {
     },
   },
   argTypes: {
+    theme: {
+      description: 'The theme that the chart will inherit its styles from',
+    },
     series: {
       description:
-        'The `Series` type gives the user the flexibility to define exactly what each series/line should look like, as well as providing the data to be plotted. [Series type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/LineChart/types.ts#L10)',
+        'The `Series` type gives the user the flexibility to define exactly what each series/line should look like, as well as providing the data to be plotted.',
     },
     xAxisOptions: {
       description:
-        'Configures the appearance of the xAxis and provides the labels that should be used. [XAxisOptions type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/LineChart/types.ts#L40)',
-    },
-    crossHairOptions: {
-      description:
-        'An object including the following optional proprties that define the crosshair. [CrossHairOptions type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/LineChart/types.ts#L64)',
+        'Configures the xAxis and provides the labels that should be used.',
     },
     emptyStateText: {
       description:
         'Used to indicate to screenreaders that a chart with no data has been rendered, in the case that an empty array is passed as the series data. It is strongly recommended that this is included if the series prop could be an empty array.',
     },
-    gridOptions: {
-      description:
-        'An object including the following optional proprties that define the grid. [GridOptions type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/LineChart/types.ts#L56)',
-    },
     isAnimated: {
       description:
         'Whether to animate the lines and gradient when the chart is initially rendered and its data is updated. Even if `isAnimated` is set to true, animations will not be displayed for users with reduced motion preferences.',
-    },
-    lineOptions: {
-      description:
-        'An object including the following optional proprties that define the appearance of the line. [LineOptions type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/LineChart/types.ts#L34)',
     },
     renderTooltipContent: {
       options: Object.keys(tooltipContent),
@@ -96,7 +88,7 @@ export default {
     },
     yAxisOptions: {
       description:
-        'An object of optional proprties that define the appearance of the yAxis. [YAxisOptions type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/LineChart/types.ts#L49)',
+        'An object of optional proprties that define the appearance of the yAxis.',
     },
   },
 } as Meta;
@@ -106,37 +98,15 @@ const Template: Story<LineChartProps> = (args: LineChartProps) => {
 };
 
 export const InsightsStyle = Template.bind({});
-InsightsStyle.parameters = {
-  backgrounds: {
-    default: 'dark',
-  },
-};
 InsightsStyle.args = {
   series,
+  theme: 'Default',
   xAxisOptions: {
     xAxisLabels,
     labelFormatter: formatXAxisLabel,
-    useMinimalLabels: true,
-    showTicks: false,
-    labelColor: 'rgb(220, 220, 220)',
-  },
-  lineOptions: {
-    hasSpline: true,
-    pointStroke: '#333333',
-  },
-  gridOptions: {
-    showVerticalLines: false,
-    color: 'rgb(99, 115, 129)',
-    horizontalOverflow: true,
-    horizontalMargin: 20,
-  },
-  crossHairOptions: {
-    width: 1,
   },
   yAxisOptions: {
     labelFormatter: formatYAxisLabel,
-    backgroundColor: '#333333',
-    labelColor: 'rgb(220, 220, 220)',
   },
   renderTooltipContent,
   isAnimated: true,
@@ -144,59 +114,31 @@ InsightsStyle.args = {
 
 export const HideXAxisLabels = Template.bind({});
 HideXAxisLabels.args = {
+  theme: 'NoxAxisLabels',
   series,
   xAxisOptions: {
     xAxisLabels,
     labelFormatter: formatXAxisLabel,
-    hideXAxisLabels: true,
   },
   yAxisOptions: {labelFormatter: formatYAxisLabel},
   renderTooltipContent,
 };
 
-export const OverflowStyle = Template.bind({});
-OverflowStyle.args = {
+export const NoOverflowStyle = Template.bind({});
+NoOverflowStyle.args = {
+  theme: 'NoOverflow',
   series,
   xAxisOptions: {
     xAxisLabels,
     labelFormatter: formatXAxisLabel,
-    showTicks: false,
   },
-  yAxisOptions: {labelFormatter: formatYAxisLabel, backgroundColor: 'white'},
-  gridOptions: {
-    horizontalOverflow: true,
-    horizontalMargin: 20,
-    showVerticalLines: false,
-  },
-  lineOptions: {hasSpline: true},
-  renderTooltipContent,
-};
-
-export const curvedLines = Template.bind({});
-curvedLines.args = {
-  series,
-  xAxisOptions: {
-    xAxisLabels,
-    labelFormatter: formatXAxisLabel,
-    showTicks: false,
-    hideXAxisLabels: true,
-  },
-  yAxisOptions: {
-    labelFormatter: formatYAxisLabel,
-    backgroundColor: 'white',
-  },
-  gridOptions: {
-    horizontalOverflow: true,
-    horizontalMargin: 20,
-    showVerticalLines: false,
-  },
-  isAnimated: true,
-  lineOptions: {hasSpline: true},
+  yAxisOptions: {labelFormatter: formatYAxisLabel},
   renderTooltipContent,
 };
 
 export const IntegersOnly = Template.bind({});
 IntegersOnly.args = {
+  theme: 'Default',
   series: [
     {
       name: 'Integers Only',
@@ -221,6 +163,7 @@ IntegersOnly.args = {
 
 export const NoArea = Template.bind({});
 NoArea.args = {
+  theme: 'Default',
   series: [
     {
       name: 'Sales',
@@ -234,6 +177,7 @@ NoArea.args = {
         {rawValue: 5, label: '2020-04-07T12:00:00'},
       ],
       color: gradient,
+      area: null,
     },
   ],
   xAxisOptions: {
@@ -245,6 +189,7 @@ NoArea.args = {
 
 export const SolidColor = Template.bind({});
 SolidColor.args = {
+  theme: 'Default',
   series: [
     {
       name: 'Sales',
@@ -257,7 +202,7 @@ SolidColor.args = {
         {rawValue: 6, label: '2020-04-06T12:00:00'},
         {rawValue: 5, label: '2020-04-07T12:00:00'},
       ],
-      color: 'colorTeal',
+      color: colorTeal,
     },
   ],
   xAxisOptions: {
@@ -268,7 +213,9 @@ SolidColor.args = {
 };
 
 export const LargeDataSet = Template.bind({});
+
 LargeDataSet.args = {
+  theme: 'Default',
   series: [
     {
       name: 'series 1',

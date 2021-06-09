@@ -1,9 +1,14 @@
 // Inspired by: https://github.com/Shopify/web/blob/master/.storybook/theme.ts
 import {create} from '@storybook/theming';
-import {fontStackBase, fontStackMonospace} from '@shopify/polaris-tokens';
-import colors from '@shopify/polaris-tokens/dist-modern/palette/base.light.json';
-import darkColors from '@shopify/polaris-tokens/dist-modern/palette/base.dark.json';
 import logo from './polaris-viz-logo.svg';
+
+const mainColor = 'rgb(0, 128, 96)';
+const background = 'rgb(246, 246, 247)';
+const border = 'rgb(201, 204, 207)';
+const textColor = 'rgb(32, 34, 35)';
+const inverseText = 'rgb(227, 229, 231)';
+const mutedText = 'rgb(109, 113, 117)';
+const inputBorder = 'rgb(140, 145, 150)';
 
 export default create({
   base: 'light',
@@ -12,32 +17,33 @@ export default create({
   brandUrl: 'https://github.com/Shopify/polaris-viz',
   brandImage: logo,
 
-  colorPrimary: colors.actionPrimary,
-  colorSecondary: colors.actionPrimary,
+  colorPrimary: mainColor,
+  colorSecondary: mainColor,
 
   // UI
-  appBg: colors.background,
-  appContentBg: colors.surface,
-  appBorderColor: colors.borderSubdued,
+  appBg: background,
+  appContentBg: 'white',
+  appBorderColor: border,
   appBorderRadius: 4,
 
   // Typography
-  fontBase: fontStackBase,
-  fontCode: fontStackMonospace,
+  fontBase:
+    "-apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
+  fontCode: "Monaco, Consolas, 'Lucida Console', monospace",
 
   // Text colors
-  textColor: colors.text,
-  textInverseColor: darkColors.text,
-  textMutedColor: colors.textSubdued,
+  textColor,
+  textInverseColor: inverseText,
+  textMutedColor: mutedText,
 
   // Toolbar default and active colors
-  barTextColor: colors.text,
-  barSelectedColor: colors.actionPrimary,
-  barBg: colors.surface,
+  barTextColor: textColor,
+  barSelectedColor: mainColor,
+  barBg: 'white',
 
   // Form colors
-  inputBg: colors.surface,
-  inputBorder: colors.border,
-  inputTextColor: colors.text,
+  inputBg: 'white',
+  inputBorder: inputBorder,
+  inputTextColor: textColor,
   inputBorderRadius: 4,
 });

@@ -9,6 +9,7 @@ Used in small sizes to give an overview of how a metric has performed over time.
 ```tsx
 
   const props = {
+    theme: 'Default',
     data: [
       3, 7, 7, 5, 33, 2, 3, 0, 3, 5, 6, 6, 23, 5, 8, 1, 3, 12,
     ],
@@ -32,7 +33,7 @@ Used in small sizes to give an overview of how a metric has performed over time.
       {x: 16, y: 4.2},
       {x: 17, y: 4.2},
     ],
-    color: 'darkModePositive',
+    color: 'green',
     dataOffsetRight: 12,
     dataOffsetLeft: 12,
     isAnimated: true,
@@ -50,12 +51,11 @@ The sparkbar interface looks like this:
 
 ```typescript
 {
+  theme?: string;
   data: (number | null)[];
   comparison?: number;
-  color?: Color;
   accessibilityLabel?: string;
   isAnimated?: boolean;
-  barFillStyle?: 'solid' | 'gradient'
   dataOffsetRight?: number;
   dataOffsetLeft?: number;
 }
@@ -81,6 +81,14 @@ The prop to determine the chart's bars. Null bars will not be plotted. Bars with
 
 ### Optional props
 
+#### theme
+
+| type     | default |
+| -------- | ------- |
+| `string` | `Default`|
+
+The theme that the chart will inherit its color and container styles from.
+
 #### comparison
 
 | type                      | default     |
@@ -89,13 +97,6 @@ The prop to determine the chart's bars. Null bars will not be plotted. Bars with
 
 The prop to determine the comparison line for the chart.
 
-#### color
-
-| type    | default     |
-| ------- | ----------- |
-| `Color` | `colorTeal` |
-
-The sparkbar stroke and fill color. This accepts any [Polaris Viz accepted color](/documentation/Polaris-Viz-colors.md).
 
 #### accessibilityLabel
 
@@ -112,14 +113,6 @@ Visually hidden text for screen readers.
 | `boolean` | `false` |
 
 Determines whether to animate the chart on state changes.
-
-### barFillStyle
-
-| type               | default |
-| ------------------ | ------- |
-| `solid | gradient` | `solid` |
-
-Determines whether what kind of shading to use to fill the bars.
 
 ##### dataOffsetLeft
 

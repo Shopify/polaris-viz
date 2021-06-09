@@ -23,12 +23,12 @@ export default {
       description:
         'Gives the user the ability to define how the bars should look like. [Data type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/NormalizedStackedBarChart/types.ts#L7)',
     },
-    colors: {
-      description:
-        'An array of colors that determines the fill colors of each bar. The colors are applied sequentially to the chart. [Colors type definition.] (https://github.com/Shopify/polaris-viz/blob/master/src/types.ts#L29)',
-    },
     orientation: {description: 'Determines the orientation of the chart.'},
     size: {description: 'Determines the width of the chart.'},
+    theme: {
+      description:
+        'The theme prop determines the colors of the bars, the background of the chart and the appearance of the legend.',
+    },
   },
 } as Meta;
 
@@ -76,9 +76,9 @@ const defaultProps = {
       formattedValue: '$20',
     },
   ],
-  colors: ['primary', 'secondary', 'tertiary', 'quaternary'],
   orientation: 'horizontal',
   size: 'large',
+  theme: 'Default',
 };
 
 export const Default = Template.bind({});

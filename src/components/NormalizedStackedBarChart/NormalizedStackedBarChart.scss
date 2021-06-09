@@ -1,10 +1,11 @@
-@import 'node_modules/@shopify/polaris-tokens/dist/index';
+@import '../../styles/common';
 
 .Container {
   font-family: $font-stack-base;
   font-size: 14px;
   display: flex;
   color-adjust: exact;
+  box-sizing: border-box;
 }
 
 .VerticalContainer {

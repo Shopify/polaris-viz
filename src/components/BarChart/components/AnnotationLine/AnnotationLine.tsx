@@ -3,8 +3,6 @@ import React from 'react';
 import {
   classNames,
   clamp,
-  getColorValue,
-  isValidColorToken,
 } from '../../../../utilities';
 import type {Annotation} from '../../types';
 
@@ -36,12 +34,10 @@ export function AnnotationLine({
     max: xPosition + barWidth - halfAnnotationWidth,
   });
 
-  const lookedUpColor = isValidColorToken(color) ? getColorValue(color) : color;
-
   return (
     <line
       className={classNames(shouldAnimate && styles.AnimatedLine)}
-      stroke={lookedUpColor}
+      stroke={color}
       strokeWidth={annotationWidth}
       x1={xValueClamped}
       x2={xValueClamped}

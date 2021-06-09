@@ -10,7 +10,7 @@ const mockData: Series[] = [
       {label: 'two', rawValue: 20},
       {label: 'three', rawValue: 30},
     ],
-    color: 'colorBlack',
+    color: 'black',
     name: 'LABEL1',
   },
   {
@@ -19,7 +19,7 @@ const mockData: Series[] = [
       {label: 'two', rawValue: 2},
       {label: 'three', rawValue: 3},
     ],
-    color: 'colorBlack',
+    color: 'black',
     name: 'LABEL2',
   },
   {
@@ -28,7 +28,7 @@ const mockData: Series[] = [
       {label: 'two', rawValue: 7},
       {label: 'three', rawValue: 10},
     ],
-    color: 'colorBlack',
+    color: 'black',
     name: 'LABEL3',
   },
 ];

@@ -1,41 +1,35 @@
 import React, {useLayoutEffect, useRef, useState, useCallback} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
-import {colorSky, colorWhite} from '@shopify/polaris-tokens';
 
 import type {Dimensions} from '../../types';
-import {getDefaultColor, uniqueId} from '../../utilities';
+import {uniqueId} from '../../utilities';
 import {SkipLink} from '../SkipLink';
-import {usePrefersReducedMotion, useResizeObserver} from '../../hooks';
 import {
-  DEFAULT_GREY_LABEL,
-  CROSSHAIR_WIDTH,
-  DEFAULT_CROSSHAIR_COLOR,
-} from '../../constants';
+  usePrefersReducedMotion,
+  useResizeObserver,
+  useTheme,
+} from '../../hooks';
 
 import {Chart} from './Chart';
 import type {
   Series,
   RenderTooltipContentData,
-  LineOptions,
   XAxisOptions,
   YAxisOptions,
-  GridOptions,
-  CrossHairOptions,
   SeriesWithDefaults,
 } from './types';
 import {TooltipContent} from './components';
+import styles from './LineChart.scss';
 
 export interface LineChartProps {
   series: Series[];
-  renderTooltipContent?: (data: RenderTooltipContentData) => React.ReactNode;
+  xAxisOptions: Partial<XAxisOptions> & Pick<XAxisOptions, 'xAxisLabels'>;
+  yAxisOptions?: Partial<YAxisOptions>;
   skipLinkText?: string;
   emptyStateText?: string;
   isAnimated?: boolean;
-  lineOptions?: Partial<LineOptions>;
-  xAxisOptions: Partial<XAxisOptions> & Pick<XAxisOptions, 'xAxisLabels'>;
-  yAxisOptions?: Partial<YAxisOptions>;
-  gridOptions?: Partial<GridOptions>;
-  crossHairOptions?: Partial<CrossHairOptions>;
+  renderTooltipContent?: (data: RenderTooltipContentData) => React.ReactNode;
+  theme?: string;
 }
 
 export function LineChart({
@@ -44,12 +38,12 @@ export function LineChart({
   skipLinkText,
   emptyStateText,
   isAnimated = false,
-  lineOptions,
   xAxisOptions,
   yAxisOptions,
-  gridOptions,
-  crossHairOptions,
+  theme,
 }: LineChartProps) {
+  const selectedTheme = useTheme(theme);
+
   const [chartDimensions, setChartDimensions] = useState<Dimensions | null>(
     null,
   );
@@ -129,44 +123,25 @@ export function LineChart({
     handlePrintMediaQueryChange,
   ]);
 
-  const lineOptionsWithDefaults = {
-    hasSpline: false,
-    width: 2,
-    pointStroke: colorWhite,
-    ...lineOptions,
-  };
-
   const xAxisOptionsWithDefaults = {
-    labelFormatter: (value: string) => value,
-    hideXAxisLabels: false,
-    showTicks: true,
-    labelColor: DEFAULT_GREY_LABEL,
-    useMinimalLabels: false,
-    ...xAxisOptions,
+    labelFormatter:
+      xAxisOptions.labelFormatter == null
+        ? (value: string) => value
+        : xAxisOptions.labelFormatter,
+    xAxisLabels: xAxisOptions.xAxisLabels,
+    useMinimalLabels: xAxisOptions.useMinimalLabels ?? false,
+    ...selectedTheme.xAxis,
   };
 
   const yAxisOptionsWithDefaults = {
-    labelFormatter: (value: number) => value.toString(),
-    labelColor: DEFAULT_GREY_LABEL,
-    backgroundColor: 'transparent',
-    integersOnly: false,
-    ...yAxisOptions,
-  };
-
-  const gridOptionsWithDefaults = {
-    showVerticalLines: true,
-    showHorizontalLines: true,
-    color: colorSky,
-    horizontalOverflow: false,
-    horizontalMargin: 0,
-    ...gridOptions,
-  };
-
-  const crossHairOptionsWithDefaults = {
-    color: DEFAULT_CROSSHAIR_COLOR,
-    opacity: 1,
-    width: CROSSHAIR_WIDTH,
-    ...crossHairOptions,
+    labelFormatter:
+      yAxisOptions?.labelFormatter == null
+        ? (value: number) => value.toString()
+        : yAxisOptions.labelFormatter,
+    labelColor: selectedTheme.yAxis.labelColor,
+    backgroundColor: selectedTheme.yAxis.backgroundColor,
+    integersOnly:
+      yAxisOptions?.integersOnly == null ? false : yAxisOptions.integersOnly,
   };
 
   function renderDefaultTooltipContent({data}: RenderTooltipContentData) {
@@ -184,12 +159,11 @@ export function LineChart({
     return <TooltipContent data={formattedData} />;
   }
 
-  const seriesWithDefaults = series.map<SeriesWithDefaults>((series, index) => {
-    const defaultColor = getDefaultColor(index);
-
+  const seriesWithDefaults = series.map<SeriesWithDefaults>((series) => {
     return {
-      color: defaultColor,
-      lineStyle: 'solid',
+      color: selectedTheme.line.color,
+      lineStyle: selectedTheme.line.style,
+      areaColor: selectedTheme.line.area,
       ...series,
     };
   });
@@ -201,15 +175,23 @@ export function LineChart({
       series.length === 0 ? null : (
         <SkipLink anchorId={skipLinkAnchorId.current}>{skipLinkText}</SkipLink>
       )}
-      <div style={{width: '100%', height: '100%'}} ref={setRef}>
+      <div
+        ref={setRef}
+        className={styles.Container}
+        style={{
+          background: selectedTheme.chartContainer.backgroundColor,
+          padding: selectedTheme.chartContainer.padding,
+          borderRadius: selectedTheme.chartContainer.borderRadius,
+        }}
+      >
         {chartDimensions == null ? null : (
           <Chart
             series={seriesWithDefaults}
-            lineOptions={lineOptionsWithDefaults}
+            lineOptions={selectedTheme.line}
             xAxisOptions={xAxisOptionsWithDefaults}
             yAxisOptions={yAxisOptionsWithDefaults}
-            gridOptions={gridOptionsWithDefaults}
-            crossHairOptions={crossHairOptionsWithDefaults}
+            gridOptions={selectedTheme.grid}
+            crossHairOptions={selectedTheme.crossHair}
             dimensions={chartDimensions}
             isAnimated={isAnimated && !prefersReducedMotion}
             renderTooltipContent={

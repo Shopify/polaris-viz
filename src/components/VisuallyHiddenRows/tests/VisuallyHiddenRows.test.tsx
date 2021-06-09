@@ -1,6 +1,5 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
-import type {Color} from 'types';
 
 import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
 
@@ -17,7 +16,7 @@ const mockProps = {
         {label: '6', rawValue: 1000},
         {label: '7', rawValue: 5000},
       ],
-      color: 'colorPurple' as Color,
+      color: 'purple',
     },
     {
       name: 'Africa',
@@ -30,7 +29,7 @@ const mockProps = {
         {label: '6', rawValue: 767},
         {label: '7', rawValue: 1766},
       ],
-      color: 'colorTeal' as Color,
+      color: 'teal',
     },
   ],
   xAxisLabels: ['Day 1', 'Day 2'],

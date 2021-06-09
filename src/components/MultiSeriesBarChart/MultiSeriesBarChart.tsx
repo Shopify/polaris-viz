@@ -1,20 +1,18 @@
 import React, {useState, useLayoutEffect, useRef, useCallback} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
-import {colorSky} from '@shopify/polaris-tokens';
 
 import type {Dimensions} from '../../types';
-import {DEFAULT_GREY_LABEL} from '../../constants';
 import {SkipLink} from '../SkipLink';
 import {TooltipContent} from '../TooltipContent';
-import {getDefaultColor, uniqueId} from '../../utilities';
-import {useResizeObserver} from '../../hooks';
+import {uniqueId} from '../../utilities';
+import {useResizeObserver, useTheme, useThemeSeriesColors} from '../../hooks';
 
+import styles from './MultiSeriesBarChart.scss';
 import {Chart} from './Chart';
 import {
   Series,
   RenderTooltipContentData,
   BarOptions,
-  GridOptions,
   XAxisOptions,
   YAxisOptions,
   BarMargin,
@@ -25,11 +23,11 @@ export interface MultiSeriesBarChartProps {
   renderTooltipContent?(data: RenderTooltipContentData): React.ReactNode;
   skipLinkText?: string;
   barOptions?: Partial<BarOptions>;
-  gridOptions?: Partial<GridOptions>;
   xAxisOptions: Partial<XAxisOptions> & Pick<XAxisOptions, 'labels'>;
   yAxisOptions?: Partial<YAxisOptions>;
   isAnimated?: boolean;
   emptyStateText?: string;
+  theme?: string;
 }
 
 export function MultiSeriesBarChart({
@@ -38,14 +36,17 @@ export function MultiSeriesBarChart({
   skipLinkText,
   isAnimated = false,
   barOptions,
-  gridOptions,
   xAxisOptions,
   yAxisOptions,
   emptyStateText,
+  theme,
 }: MultiSeriesBarChartProps) {
+  const selectedTheme = useTheme(theme);
+  const seriesColors = useThemeSeriesColors(series, selectedTheme);
   const [chartDimensions, setChartDimensions] = useState<Dimensions | null>(
     null,
   );
+
   const skipLinkAnchorId = useRef(uniqueId('multiSeriesBarChart'));
   const {ref, setRef, entry} = useResizeObserver();
 
@@ -122,46 +123,25 @@ export function MultiSeriesBarChart({
     handlePrintMediaQueryChange,
   ]);
 
-  const innerMargin =
-    barOptions != null && barOptions.innerMargin != null
-      ? BarMargin[barOptions.innerMargin]
-      : BarMargin.Medium;
-
-  const outerMargin =
-    barOptions != null && barOptions.outerMargin != null
-      ? BarMargin[barOptions.outerMargin]
-      : BarMargin.None;
-
   const barOptionsWithDefaults = {
-    hasRoundedCorners: false,
     isStacked: false,
-    zeroAsMinHeight: false,
     ...barOptions,
-    innerMargin,
-    outerMargin,
-  };
-
-  const gridOptionsWithDefaults = {
-    showHorizontalLines: true,
-    color: colorSky,
-    horizontalOverflow: false,
-    horizontalMargin: 0,
-    ...gridOptions,
+    ...selectedTheme.bar,
+    innerMargin: BarMargin[selectedTheme.bar.innerMargin],
+    outerMargin: BarMargin[selectedTheme.bar.outerMargin],
   };
 
   const xAxisOptionsWithDefaults = {
     labelFormatter: (value: string) => value,
-    showTicks: true,
-    labelColor: DEFAULT_GREY_LABEL,
     ...xAxisOptions,
+    ...selectedTheme.xAxis,
   };
 
   const yAxisOptionsWithDefaults = {
     labelFormatter: (value: number) => value.toString(),
-    labelColor: DEFAULT_GREY_LABEL,
-    backgroundColor: 'transparent',
     integersOnly: false,
     ...yAxisOptions,
+    ...selectedTheme.yAxis,
   };
 
   function renderDefaultTooltipContent({data}: RenderTooltipContentData) {
@@ -175,12 +155,20 @@ export function MultiSeriesBarChart({
   }
 
   const seriesWithDefaults = series.map((series, index) => ({
-    color: getDefaultColor(index),
+    color: seriesColors[index],
     ...series,
   }));
 
   return (
-    <div style={{height: '100%', width: '100%'}} ref={setRef}>
+    <div
+      className={styles.ChartContainer}
+      style={{
+        background: selectedTheme.chartContainer.backgroundColor,
+        padding: selectedTheme.chartContainer.padding,
+        borderRadius: selectedTheme.chartContainer.borderRadius,
+      }}
+      ref={setRef}
+    >
       {chartDimensions == null ? null : (
         <React.Fragment>
           {skipLinkText == null ||
@@ -194,7 +182,7 @@ export function MultiSeriesBarChart({
             series={seriesWithDefaults}
             chartDimensions={chartDimensions}
             barOptions={barOptionsWithDefaults}
-            gridOptions={gridOptionsWithDefaults}
+            gridOptions={selectedTheme.grid}
             xAxisOptions={xAxisOptionsWithDefaults}
             yAxisOptions={yAxisOptionsWithDefaults}
             isAnimated={isAnimated}

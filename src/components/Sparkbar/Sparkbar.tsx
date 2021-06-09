@@ -4,15 +4,14 @@ import {scaleBand, scaleLinear} from 'd3-scale';
 import {line} from 'd3-shape';
 import {useTransition} from '@react-spring/web';
 
-import {usePrefersReducedMotion, useResizeObserver} from '../../hooks';
-import {BARS_TRANSITION_CONFIG, XMLNS} from '../../constants';
-import type {Color, SparkChartData} from '../../types';
 import {
-  getColorValue,
-  rgbToRgba,
-  uniqueId,
-  getAnimationTrail,
-} from '../../utilities';
+  usePrefersReducedMotion,
+  useResizeObserver,
+  useTheme,
+} from '../../hooks';
+import {BARS_TRANSITION_CONFIG, colorWhite, XMLNS} from '../../constants';
+import type {SparkChartData} from '../../types';
+import {uniqueId, getAnimationTrail, isGradientType} from '../../utilities';
 import {LinearGradient} from '../LinearGradient';
 
 import {Bar} from './components';
@@ -34,10 +33,9 @@ export interface SparkbarProps {
   dataOffsetRight?: number;
   dataOffsetLeft?: number;
   comparison?: Coordinates[];
-  color?: Color;
   accessibilityLabel?: string;
   isAnimated?: boolean;
-  barFillStyle?: 'solid' | 'gradient';
+  theme?: string;
 }
 
 function calculateRange(data: SparkChartData[], height: number) {
@@ -64,12 +62,11 @@ function calculateRange(data: SparkChartData[], height: number) {
 export function Sparkbar({
   data,
   comparison,
-  color = 'colorTeal',
   accessibilityLabel,
   isAnimated = false,
-  barFillStyle = 'solid',
   dataOffsetRight = 0,
   dataOffsetLeft = 0,
+  theme,
 }: SparkbarProps) {
   const {
     ref: containerRef,
@@ -78,21 +75,18 @@ export function Sparkbar({
   } = useResizeObserver();
   const [svgDimensions, setSvgDimensions] = useState({width: 0, height: 0});
   const {prefersReducedMotion} = usePrefersReducedMotion();
+  const selectedTheme = useTheme(theme);
 
   const [updateMeasurements] = useDebouncedCallback(() => {
-    if (containerRef == null) return;
+    if (entry == null) return;
 
     setSvgDimensions({
-      height: containerRef.clientHeight,
-      width: containerRef.clientWidth,
+      height: entry.contentRect.height,
+      width: entry.contentRect.width,
     });
   }, 10);
 
   useLayoutEffect(() => {
-    if (entry == null) return;
-
-    if (containerRef == null) return;
-
     updateMeasurements();
 
     const isServer = typeof window === 'undefined';
@@ -141,8 +135,7 @@ export function Sparkbar({
   const barWidth = useMemo(() => xScale.bandwidth(), [xScale]);
 
   const id = useMemo(() => uniqueId('sparkbar'), []);
-
-  const currentColor = getColorValue(color);
+  const clipId = useMemo(() => uniqueId('clip'), []);
 
   const getBarHeight = useCallback(
     (rawValue: number) => {
@@ -155,6 +148,17 @@ export function Sparkbar({
   const dataWithIndex = data.map((value, index) => ({value, index}));
 
   const shouldAnimate = !prefersReducedMotion && isAnimated;
+
+  const color = selectedTheme.bar.color;
+
+  const barColor = isGradientType(color)
+    ? color
+    : [
+        {
+          color,
+          offset: 0,
+        },
+      ];
 
   const transitions = useTransition(dataWithIndex, {
     key: ({index}: {index: number}) => index,
@@ -170,7 +174,15 @@ export function Sparkbar({
   const viewboxHeight = height + ANIMATION_MARGIN * 2;
 
   return (
-    <div className={styles.Wrapper} ref={setContainerRef}>
+    <div
+      className={styles.Wrapper}
+      ref={setContainerRef}
+      style={{
+        background: selectedTheme.chartContainer.backgroundColor,
+        padding: selectedTheme.chartContainer.padding,
+        borderRadius: selectedTheme.chartContainer.borderRadius,
+      }}
+    >
       {accessibilityLabel ? (
         <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
       ) : null}
@@ -186,49 +198,58 @@ export function Sparkbar({
         height={viewboxHeight}
         width={width}
       >
-        {barFillStyle === 'gradient' ? (
+        <defs>
           <LinearGradient
             id={id}
-            gradient={[
-              {
-                color: rgbToRgba({rgb: currentColor, alpha: 0.5}),
-                offset: 0,
-              },
-              {
-                color: rgbToRgba({rgb: currentColor, alpha: 1}),
-                offset: 100,
-              },
-            ]}
+            gradient={barColor}
+            gradientUnits="userSpaceOnUse"
+            y1="100%"
+            y2="0%"
           />
-        ) : null}
 
-        <g fill={barFillStyle === 'gradient' ? `url(#${id})` : currentColor}>
-          {transitions(({height: barHeight}, item, _transition, index) => {
-            const xPosition = xScale(index.toString());
-            return (
-              <g key={index} opacity={comparison ? '0.9' : '1'}>
-                <Bar
+          <mask id={clipId}>
+            {transitions(({height: barHeight}, item, _transition, index) => {
+              const xPosition = xScale(index.toString());
+              return (
+                <g
+                  fill={colorWhite}
                   key={index}
-                  x={xPosition == null ? 0 : xPosition}
-                  yScale={yScale}
-                  rawValue={item.value}
-                  width={barWidth}
-                  height={barHeight}
+                  opacity={comparison ? '0.9' : '1'}
+                >
+                  <Bar
+                    key={index}
+                    x={xPosition == null ? 0 : xPosition}
+                    yScale={yScale}
+                    rawValue={item.value}
+                    width={barWidth}
+                    height={barHeight}
+                  />
+                </g>
+              );
+            })}
+
+            {comparison == null ? null : (
+              <g>
+                <path
+                  stroke={colorWhite}
+                  strokeWidth={STROKE_WIDTH}
+                  d={lineShape!}
+                  className={styles.ComparisonLine}
                 />
               </g>
-            );
-          })}
+            )}
+          </mask>
+        </defs>
+
+        <g mask={`url(#${clipId})`}>
+          <rect
+            x="0"
+            y="0"
+            width={width}
+            height={height}
+            fill={`url(#${id})`}
+          />
         </g>
-        {comparison == null ? null : (
-          <g>
-            <path
-              stroke={currentColor}
-              strokeWidth={STROKE_WIDTH}
-              d={lineShape!}
-              className={styles.ComparisonLine}
-            />
-          </g>
-        )}
       </svg>
     </div>
   );

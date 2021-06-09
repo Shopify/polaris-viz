@@ -2,12 +2,7 @@ import React from 'react';
 
 import {TooltipContent} from '../components/TooltipContent/TooltipContent';
 import {LineChartProps} from '../LineChart';
-import {
-  DEFAULT_CROSSHAIR_COLOR,
-  CROSSHAIR_WIDTH,
-  DEFAULT_GREY_LABEL,
-} from '../../../constants';
-import {colorWhite, colorSky} from '@shopify/polaris-tokens';
+import {colorSkyDark} from '../../../constants';
 
 export const gradient = [
   {
@@ -65,7 +60,7 @@ export const series = [
       {rawValue: 623, label: '2020-03-13T12:00:00'},
       {rawValue: 21, label: '2020-03-14T12:00:00'},
     ],
-    color: 'colorSkyDark' as 'colorSkyDark',
+    color: colorSkyDark,
     lineStyle: 'dotted' as 'dotted',
   },
 ];
@@ -118,37 +113,4 @@ export const renderTooltipContent: LineChartProps['renderTooltipContent'] = ({
   );
 
   return <TooltipContent data={formattedData} />;
-};
-
-export const defaultProps = {
-  series,
-  isAnimated: true,
-  renderTooltipContent,
-  crossHairOptions: {
-    width: CROSSHAIR_WIDTH,
-    color: DEFAULT_CROSSHAIR_COLOR,
-    opacity: 1,
-  },
-  gridOptions: {
-    showVerticalLines: true,
-    showHorizontalLines: true,
-    color: colorSky,
-    horizontalOverflow: false,
-    horizontalMargin: 0,
-  },
-  lineOptions: {hasSpline: false, width: 2, pointStroke: colorWhite},
-  xAxisOptions: {
-    xAxisLabels,
-    hideXAxisLabels: false,
-    showTicks: true,
-    labelColor: DEFAULT_GREY_LABEL,
-    useMinimalLabels: false,
-    labelFormatter: (value: string) => formatXAxisLabel(value),
-  },
-  yAxisOptions: {
-    labelFormatter: (value: number) => value.toString(),
-    labelColor: DEFAULT_GREY_LABEL,
-    backgroundColor: 'transparent',
-    integersOnly: false,
-  },
 };

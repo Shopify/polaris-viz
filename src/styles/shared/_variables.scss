@@ -2,3 +2,62 @@ $button-drop-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
 $border-radius-base: 0.4rem;
 $border-subdued: rgba(186, 191, 195, 1);
 $clip-path-margin: -5px;
+
+$duration-fast: 100;
+$duration-base: 200;
+$duration-slow: 300;
+$duration-slower: 400;
+$duration-slowest: 500;
+
+$color-white: rgb(255, 255, 255);
+$color-sky-dark: rgb(196, 205, 213);
+$color-sky: rgb(223, 227, 232);
+$color-ink: rgb(33, 43, 54);
+$color-ink-light: rgb(69, 79, 91);
+$color-purple-dark: rgb(80, 36, 143);
+$color-blue: rgb(0, 111, 187);
+$color-teal: rgb(71, 193, 191);
+$positive-color: rgb(0, 128, 96);
+$negative-color: rgb(215, 44, 13);
+
+$spacing-extra-tight: 4px;
+$spacing-tight: 8px;
+$spacing-base-tight: 12px;
+$spacing-base: 16px;
+$spacing: 16px;
+$spacing-loose: 20px;
+$spacing-extra-loose: 32px;
+
+$font-stack-base: -apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI',
+  Roboto, 'Helvetica Neue', sans-serif;
+
+@function strip-unit($number) {
+  @if type-of($number) == 'number' and not unitless($number) {
+    @return $number / ($number * 0 + 1);
+  }
+
+  @return $number;
+}
+
+// stylelint-disable selector-pseudo-class-no-unknown
+// stylelint-disable property-no-unknown
+
+:export {
+  spacingExtraTight: strip-unit($spacing-extra-tight);
+  spacingTight: strip-unit($spacing-tight);
+  spacingBaseTight: strip-unit($spacing-base-tight);
+  spacing: strip-unit($spacing);
+  spacingBase: strip-unit($spacing-base);
+  spacingLoose: strip-unit($spacing-loose);
+  spacingExtraLoose: strip-unit($spacing-extra-loose);
+  colorWhite: $color-white;
+  colorSky: $color-sky;
+  colorSkyDark: $color-sky-dark;
+  colorInkLight: $color-ink-light;
+  colorInk: $color-ink;
+  colorPurpleDark: $color-purple-dark;
+  colorBlue: $color-blue;
+  colorTeal: $color-teal;
+  positiveColor: $positive-color;
+  negativeColor: $negative-color;
+}

@@ -18,8 +18,7 @@ export function SparklineDemo() {
             isAnimated
             series={[
               {
-                color: 'colorTeal',
-                areaStyle: 'gradient',
+                color: 'rgb(0,161,159)',
                 data: [
                   {x: 0, y: 100},
                   {x: 1, y: 200},
@@ -35,8 +34,7 @@ export function SparklineDemo() {
                 ],
               },
               {
-                color: 'pastComparison',
-                areaStyle: 'none',
+                color: 'rgb(145,158,171)',
                 lineStyle: 'dashed',
                 data: [
                   {x: 0, y: 10},

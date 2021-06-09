@@ -1,10 +1,10 @@
 import React, {useState, useLayoutEffect, useCallback} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 import {scaleLinear} from 'd3-scale';
-import type {Color, SparkChartData} from 'types';
+import type {Color, LineStyle, SparkChartData} from 'types';
 
-import {useResizeObserver} from '../../hooks';
 import {XMLNS} from '../../constants';
+import {useResizeObserver, useTheme} from '../../hooks';
 
 import styles from './Sparkline.scss';
 import {Series} from './components';
@@ -16,13 +16,10 @@ export interface Coordinates {
   y: SparkChartData;
 }
 
-type AreaStyle = 'none' | 'solid' | 'gradient';
-type LineStyle = 'solid' | 'dashed';
-
 export interface SingleSeries {
   data: Coordinates[];
   color?: Color;
-  areaStyle?: AreaStyle;
+  area?: Color;
   lineStyle?: LineStyle;
   hasPoint?: boolean;
   offsetRight?: number;
@@ -33,14 +30,14 @@ export interface SparklineProps {
   series: SingleSeries[];
   accessibilityLabel?: string;
   isAnimated?: boolean;
-  hasSpline?: boolean;
+  theme?: string;
 }
 
 export function Sparkline({
   series,
   accessibilityLabel,
   isAnimated = false,
-  hasSpline = false,
+  theme,
 }: SparklineProps) {
   const {
     ref: containerRef,
@@ -48,26 +45,27 @@ export function Sparkline({
     entry,
   } = useResizeObserver();
   const [svgDimensions, setSvgDimensions] = useState({width: 0, height: 0});
+  const selectedTheme = useTheme(theme);
 
   const [updateMeasurements] = useDebouncedCallback(() => {
-    if (containerRef == null) return;
+    if (entry == null) return;
 
     setSvgDimensions({
-      height: containerRef.clientHeight,
-      width: containerRef.clientWidth,
+      height: entry.contentRect.height,
+      width: entry.contentRect.width,
     });
   }, 10);
 
   const handlePrintMediaQueryChange = useCallback(
     (event: MediaQueryListEvent) => {
-      if (event.matches && containerRef != null) {
+      if (event.matches && entry != null) {
         setSvgDimensions({
-          height: containerRef.clientHeight,
-          width: containerRef.clientWidth,
+          height: entry.contentRect.width,
+          width: entry.contentRect.height,
         });
       }
     },
-    [containerRef],
+    [entry],
   );
 
   useLayoutEffect(() => {
@@ -130,7 +128,15 @@ export function Sparkline({
     .domain([Math.min(...yValues), Math.max(...yValues)]);
 
   return (
-    <div style={{width: '100%', height: '100%'}} ref={setContainerRef}>
+    <div
+      ref={setContainerRef}
+      className={styles.Container}
+      style={{
+        background: selectedTheme.chartContainer.backgroundColor,
+        padding: selectedTheme.chartContainer.padding,
+        borderRadius: selectedTheme.chartContainer.borderRadius,
+      }}
+    >
       {accessibilityLabel ? (
         <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
       ) : null}
@@ -151,7 +157,7 @@ export function Sparkline({
                 series={singleSeries}
                 isAnimated={isAnimated}
                 height={height}
-                hasSpline={hasSpline}
+                theme={selectedTheme}
               />
             </g>
           );

@@ -2,7 +2,6 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleBand} from 'd3-scale';
 
-import {getColorValue} from '../../../utilities';
 import {Sparkbar} from '../Sparkbar';
 import {LinearGradient} from '../../LinearGradient';
 
@@ -33,25 +32,16 @@ jest.mock('d3-scale', () => ({
 }));
 
 describe('<Sparkbar/>', () => {
-  it('renders a <LinearGradient /> when barFillStyle is gradient', () => {
-    const wrapper = mount(
-      <Sparkbar barFillStyle="gradient" data={sampleData} />,
-    );
+  it('renders a <LinearGradient />', () => {
+    const wrapper = mount(<Sparkbar data={sampleData} />);
 
     expect(wrapper).toContainReactComponent(LinearGradient);
   });
 
-  it('uses a solid colour for fill when barFillStyle is solid', () => {
-    const color = 'colorBlue';
-    const wrapper = mount(
-      <Sparkbar barFillStyle="solid" data={sampleData} color={color} />,
-    );
+  it('renders a mask', () => {
+    const wrapper = mount(<Sparkbar data={sampleData} />);
 
-    const colorValue = getColorValue(color);
-
-    expect(wrapper).toContainReactComponent('g', {
-      fill: colorValue,
-    });
+    expect(wrapper).toContainReactComponent('mask');
   });
 
   it('renders an accessibility label', () => {

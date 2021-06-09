@@ -1,7 +1,6 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {getColorValue} from '../../../../../utilities';
 import {Line} from '../Line';
 
 jest.mock('../../../../../utilities', () => {
@@ -15,7 +14,7 @@ jest.mock('d3-scale', () => ({
   scaleLinear: jest.fn(() => jest.fn(() => 250)),
 }));
 
-const color = getColorValue('primary');
+const color = 'red';
 
 const mockProps = {
   series: {
@@ -31,7 +30,16 @@ const mockProps = {
   index: 0,
   isAnimated: false,
   lineGenerator: (() => '') as any,
-  lineOptions: {hasSpline: false, width: 10},
+  lineOptions: {
+    color: 'red',
+    area: null,
+    sparkArea: null,
+    style: 'dotted' as 'dotted',
+    hasSpline: false,
+    hasPoint: false,
+    width: 10,
+    pointStroke: 'red',
+  },
   color,
 };
 
