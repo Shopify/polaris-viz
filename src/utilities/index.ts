@@ -24,4 +24,5 @@ export {curveStepRounded} from './curve-step-rounded';
 export {makeColorOpaque, makeGradientOpaque} from './make-color-opaque';
 export {shouldRotateZeroBars} from './should-rotate-zero-bars';
 export {isNumber} from './is-number';
-export {classNames} from './classnames';
+export {createTheme, createThemes} from './create-themes';
+export {PolarisVizContext} from './polaris-viz-context';
