@@ -6,13 +6,24 @@ module.exports = function (api) {
   });
 
   const runtimePreset = isWeb
-    ? ['@shopify/babel-preset', {modules: false, typescript: true, react: true}]
+    ? [
+        '@shopify/babel-preset',
+        {
+          // https://babeljs.io/docs/en/babel-preset-env#modules
+          modules: 'auto',
+          typescript: true,
+          react: true,
+          transformReactConstantElements: false,
+        },
+      ]
     : [
         '@shopify/babel-preset',
         {
+          // https://babeljs.io/docs/en/babel-preset-env#modules
           modules: 'commonjs',
           typescript: true,
           react: true,
+          transformReactConstantElements: false,
         },
       ];
 
