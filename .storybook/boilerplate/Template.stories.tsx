@@ -3,13 +3,21 @@ import {Story, Meta} from '@storybook/react';
 
 import {ComponentName, ComponentNameProps} from '../../../components';
 
-
 // Learn how to write stories:
 //  https://master--6054e7fc826ed700218e4b3b.chromatic.com/?path=/story/documentation-how-to-write-stories--page
 export default {
   title: 'ComponentName',
   component: ComponentName,
   parameters: {
+    controls: {
+      sort: 'requiredFirst',
+      expanded: true,
+    },
+    docs: {
+      description: {
+        component: 'Add a description of your component here.',
+      },
+    },
     // Embedding Figma designs
     // The embed appears in the "Design" tab of the story
     // Learn more: https://pocka.github.io/storybook-addon-designs/?path=/docs/docs-figma-readme--page

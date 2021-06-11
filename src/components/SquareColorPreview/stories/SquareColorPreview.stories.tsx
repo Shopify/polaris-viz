@@ -4,9 +4,26 @@ import {Story, Meta} from '@storybook/react';
 import {SquareColorPreview, SquareColorPreviewProps} from '../../../components';
 
 export default {
-  title: 'SquareColorPreview',
+  title: 'Subcomponents/SquareColorPreview',
   component: SquareColorPreview,
-  argTypes: {},
+  argTypes: {
+    color: {
+      description:
+        'The color to be displayed in the square. [SeriesColor type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/types.ts#L2)',
+    },
+  },
+  parameters: {
+    controls: {
+      sort: 'requiredFirst',
+      expanded: true,
+    },
+    docs: {
+      description: {
+        component:
+          'Used to connect chart colors and gradients to information in tooltips and legends.',
+      },
+    },
+  },
 } as Meta;
 
 const Template: Story<SquareColorPreviewProps> = (
@@ -15,9 +32,9 @@ const Template: Story<SquareColorPreviewProps> = (
   return <SquareColorPreview {...args} />;
 };
 
-export const Basic = Template.bind({});
+export const Solid = Template.bind({});
 
-Basic.args = {
+Solid.args = {
   color: 'primary',
 };
 

@@ -9,25 +9,94 @@ import {
   formatXAxisLabel,
   formatYAxisLabel,
   renderTooltipContent,
-  seriesWithNegatives,
+  defaultProps,
 } from './utils.stories';
 
+const tooltipContent = {
+  empty: undefined,
+  Custom: ({data}) => (
+    <div
+      style={{
+        background: 'black',
+        color: 'white',
+        padding: '10px',
+        borderRadius: '10px',
+        display: 'flex',
+        flexDirection: 'column',
+        fontSize: 12,
+      }}
+    >
+      {data.map((x) => (
+        <div>{`${formatXAxisLabel(x.point.label)}: ${x.point.value}`}</div>
+      ))}
+    </div>
+  ),
+};
+
 export default {
-  title: 'LineChart',
+  title: 'Charts/LineChart',
   component: LineChart,
   decorators: [
     (Story: any) => <div className={styles.Container}>{Story()}</div>,
   ],
-  argTypes: {
-    // Render the prop documentation but without a control.
-    formatXAxisLabel: {
-      control: false,
+  parameters: {
+    controls: {sort: 'requiredFirst', expanded: true},
+    docs: {
+      description: {
+        component:
+          'Used to show change over time, comparisons, and trends. <br /> This component inherits its height and width from its container.',
+      },
     },
-    formatYAxisLabel: {
-      control: false,
+  },
+  argTypes: {
+    series: {
+      description:
+        'The `Series` type gives the user the flexibility to define exactly what each series/line should look like, as well as providing the data to be plotted. [Series type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/LineChart/types.ts#L10)',
+    },
+    xAxisOptions: {
+      description:
+        'Configures the appearance of the xAxis and provides the labels that should be used. [XAxisOptions type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/LineChart/types.ts#L40)',
+    },
+    crossHairOptions: {
+      description:
+        'An object including the following optional proprties that define the crosshair. [CrossHairOptions type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/LineChart/types.ts#L64)',
+    },
+    emptyStateText: {
+      description:
+        'Used to indicate to screenreaders that a chart with no data has been rendered, in the case that an empty array is passed as the series data. It is strongly recommended that this is included if the series prop could be an empty array.',
+    },
+    gridOptions: {
+      description:
+        'An object including the following optional proprties that define the grid. [GridOptions type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/LineChart/types.ts#L56)',
+    },
+    isAnimated: {
+      description:
+        'Whether to animate the lines and gradient when the chart is initially rendered and its data is updated. Even if `isAnimated` is set to true, animations will not be displayed for users with reduced motion preferences.',
+    },
+    lineOptions: {
+      description:
+        'An object including the following optional proprties that define the appearance of the line. [LineOptions type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/LineChart/types.ts#L34)',
     },
     renderTooltipContent: {
-      control: false,
+      options: Object.keys(tooltipContent),
+      mapping: tooltipContent,
+      control: {
+        type: 'select',
+        labels: {
+          empty: 'Default',
+          Annotation: 'Custom',
+        },
+      },
+      description:
+        'This accepts a function that is called to render the tooltip content. By default it calls `formatXAxisLabel` and `formatYAxisLabel` to format the the tooltip values and passes them to `<LineChartTooltipContent />`. [TooltipData type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/LineChart/types.ts#L20)',
+    },
+    skipLinkText: {
+      description:
+        'If provided, renders a `<SkipLink/>` button with the string. Use this for charts with large data sets, so keyboard users can skip all the tabbable data points in the chart.',
+    },
+    yAxisOptions: {
+      description:
+        'An object of optional proprties that define the appearance of the yAxis. [YAxisOptions type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/LineChart/types.ts#L49)',
     },
   },
 } as Meta;
@@ -36,38 +105,8 @@ const Template: Story<LineChartProps> = (args: LineChartProps) => {
   return <LineChart {...args} />;
 };
 
-export const Default = Template.bind({});
-Default.args = {
-  series: [{...series[0], color: 'primary', areaColor: null}, series[1]],
-  xAxisOptions: {
-    xAxisLabels,
-    labelFormatter: formatXAxisLabel,
-  },
-  yAxisOptions: {labelFormatter: formatYAxisLabel},
-  renderTooltipContent,
-};
-
-export const NegativeValues = Template.bind({});
-NegativeValues.args = {
-  series: seriesWithNegatives,
-  xAxisOptions: {
-    xAxisLabels,
-    labelFormatter: formatXAxisLabel,
-  },
-  yAxisOptions: {labelFormatter: formatYAxisLabel},
-  renderTooltipContent,
-};
-
-export const Gradient = Template.bind({});
-Gradient.args = {
-  series,
-  xAxisOptions: {
-    xAxisLabels,
-    labelFormatter: formatXAxisLabel,
-  },
-  yAxisOptions: {labelFormatter: formatYAxisLabel},
-  renderTooltipContent,
-};
+export const InsightsStyle = Template.bind({});
+InsightsStyle.args = defaultProps;
 
 export const HideXAxisLabels = Template.bind({});
 HideXAxisLabels.args = {
@@ -130,7 +169,6 @@ DarkMode.parameters = {
 };
 DarkMode.args = {
   series,
-  isAnimated: true,
   xAxisOptions: {
     xAxisLabels,
     labelFormatter: formatXAxisLabel,

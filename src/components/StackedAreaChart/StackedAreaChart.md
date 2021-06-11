@@ -92,7 +92,6 @@ The stacked area chart interface looks like this:
 interface StackedAreaChartProps {
   xAxisLabels: string[];
   series: Series[];
-  accessibilityLabel?: string;
   opacity?: number;
   isAnimated?: boolean;
   formatXAxisLabel?(value: string, index?: number, data?: string[]): string;
@@ -184,8 +183,6 @@ This accepts a function that is called to format the labels when the chart draws
 | `(value: number): string;` | `(value) => value.toString()` |
 
 The `formatYAxisLabel` function formats the values displayed on the yAxis and in the tooltip.
-
-Determines the height of the chart.
 
 ### xAxisLabels
 
