@@ -213,8 +213,8 @@ The lineStyle type determines if the drawn line for the series is a solid or das
 
 #### areaColor
 
-| type    | default    |
-| ------- | ---------- | ----------- |
+| type                 | default     |
+| -------------------- | ----------- |
 | `string | undefined` | `undefined` |
 
 The areaColor property determines the color for the gradient area to be used for that series. If none is specified, a gradient area will not be rendered.

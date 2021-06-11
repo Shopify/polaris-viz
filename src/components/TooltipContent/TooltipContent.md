@@ -130,9 +130,9 @@ The title to display at the top of the tooltip.
 
 ##### total
 
-| type                            | default |
-| ------------------------------- | ------- | ----------- |
-| `{label: string; value: string} | null`   | `undefined` |
+| type                                    | default     |
+| --------------------------------------- | ----------- |
+| `{label: string; value: string} | null` | `undefined` |
 
 This allows you to add a total row at the bottom of all the data rows.
 

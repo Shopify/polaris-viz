@@ -60,8 +60,8 @@ This component determines its width and height based off its parent element. The
 
 #### data
 
-| type     |
-| -------- | -------- |
+| type                |
+| ------------------- |
 | `(number | null)[]` |
 
 The prop to determine the chart's bars. Null bars will not be plotted. Bars with the value of `0` will render a very small bar to indicate the presence of the value.
@@ -102,8 +102,8 @@ Determines whether to animate the chart on state changes.
 
 ### barFillStyle
 
-| type   | default   |
-| ------ | --------- | ------- |
+| type               | default |
+| ------------------ | ------- |
 | `solid | gradient` | `solid` |
 
 Determines whether what kind of shading to use to fill the bars.
