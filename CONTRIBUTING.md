@@ -8,6 +8,14 @@ We expect all participants to read our [code of conduct](/CODE_OF_CONDUCT.md) to
 
 For local development, clone this repo. Run `yarn run dev` to start the server. Import the components you'd like to work with into `Playground.tsx` and see your changes reflected on your localhost.
 
+## Storybook
+
+We use [Storybook](https://storybook.js.org/) to document our components. If you create a new chart component, new subcomponent used throughout the repo or add a new prop to an existing component, ensure any new states are covered by stories. Run `yarn storybook` to see our stories.
+
+To get started creating a new story, you can use the command `dev add-story NameOfYourComponent --no-comments` for components in the top-level components directory. To ensure proper documentation is displayed, provide all your stories with a complete set of default props, and add a description of the prop in the `argTypes` object.
+
+For complex props, like callback functions, consider adding a select to stories with a few different predefined options.
+
 ## Semantic versioning
 
 Polaris Viz follows [semantic versioning](https://semver.org/).

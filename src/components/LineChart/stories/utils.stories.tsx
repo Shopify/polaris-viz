@@ -2,6 +2,12 @@ import React from 'react';
 
 import {TooltipContent} from '../components/TooltipContent/TooltipContent';
 import {LineChartProps} from '../LineChart';
+import {
+  DEFAULT_CROSSHAIR_COLOR,
+  CROSSHAIR_WIDTH,
+  DEFAULT_GREY_LABEL,
+} from '../../../constants';
+import {colorWhite, colorSky} from '@shopify/polaris-tokens';
 
 export const series = [
   {
@@ -11,7 +17,7 @@ export const series = [
       {rawValue: 797, label: '2020-04-02T12:00:00'},
       {rawValue: 234, label: '2020-04-03T12:00:00'},
       {rawValue: 534, label: '2020-04-04T12:00:00'},
-      {rawValue: 132, label: '2020-04-05T12:00:00'},
+      {rawValue: -132, label: '2020-04-05T12:00:00'},
       {rawValue: 159, label: '2020-04-06T12:00:00'},
       {rawValue: 239, label: '2020-04-07T12:00:00'},
       {rawValue: 708, label: '2020-04-08T12:00:00'},
@@ -29,15 +35,15 @@ export const series = [
       },
       {
         offset: 85,
-        color: 'rgba(92,105,208,0.3)',
+        color: 'rgba(92,105,208,0.8)',
       },
       {
         offset: 100,
-        color: 'rgba(92,105,208,0.3)',
+        color: 'rgba(92,105,208,0.8)',
       },
     ],
     lineStyle: 'solid' as 'solid',
-    areaColor: 'rgba(92,105,208,0.3)',
+    areaColor: 'rgba(92,105,208,0.5)',
   },
   {
     name: 'Mar 01–Mar 14, 2020',
@@ -57,67 +63,8 @@ export const series = [
       {rawValue: 623, label: '2020-03-13T12:00:00'},
       {rawValue: 21, label: '2020-03-14T12:00:00'},
     ],
-    color: 'colorGrayDark' as 'colorGrayDark',
-    lineStyle: 'dashed' as 'dashed',
-  },
-];
-
-export const seriesWithNegatives = [
-  {
-    name: 'Apr 01–Apr 14, 2020',
-    data: [
-      {rawValue: 333, label: '2020-04-01T12:00:00'},
-      {rawValue: 797, label: '2020-04-02T12:00:00'},
-      {rawValue: -75, label: '2020-04-03T12:00:00'},
-      {rawValue: 534, label: '2020-04-04T12:00:00'},
-      {rawValue: 132, label: '2020-04-05T12:00:00'},
-      {rawValue: 159, label: '2020-04-06T12:00:00'},
-      {rawValue: 239, label: '2020-04-07T12:00:00'},
-      {rawValue: 708, label: '2020-04-08T12:00:00'},
-      {rawValue: 234, label: '2020-04-09T12:00:00'},
-      {rawValue: 645, label: '2020-04-10T12:00:00'},
-      {rawValue: 543, label: '2020-04-11T12:00:00'},
-      {rawValue: -89, label: '2020-04-12T12:00:00'},
-      {rawValue: 849, label: '2020-04-13T12:00:00'},
-      {rawValue: 129, label: '2020-04-14T12:00:00'},
-    ],
-    color: [
-      {
-        offset: 0,
-        color: '#08CA9B',
-      },
-      {
-        offset: 85,
-        color: 'rgba(92,105,208,0.3)',
-      },
-      {
-        offset: 100,
-        color: 'rgba(92,105,208,0.3)',
-      },
-    ],
-    lineStyle: 'solid' as 'solid',
-    areaColor: 'rgba(92,105,208,0.3)',
-  },
-  {
-    name: 'Mar 01–Mar 14, 2020',
-    data: [
-      {rawValue: 709, label: '2020-03-02T12:00:00'},
-      {rawValue: 238, label: '2020-03-01T12:00:00'},
-      {rawValue: 190, label: '2020-03-03T12:00:00'},
-      {rawValue: -90, label: '2020-03-04T12:00:00'},
-      {rawValue: 237, label: '2020-03-05T12:00:00'},
-      {rawValue: 580, label: '2020-03-07T12:00:00'},
-      {rawValue: 172, label: '2020-03-06T12:00:00'},
-      {rawValue: 12, label: '2020-03-08T12:00:00'},
-      {rawValue: 390, label: '2020-03-09T12:00:00'},
-      {rawValue: -43, label: '2020-03-10T12:00:00'},
-      {rawValue: 710, label: '2020-03-11T12:00:00'},
-      {rawValue: 791, label: '2020-03-12T12:00:00'},
-      {rawValue: 623, label: '2020-03-13T12:00:00'},
-      {rawValue: 21, label: '2020-03-14T12:00:00'},
-    ],
-    color: 'colorGrayDark' as 'colorGrayDark',
-    lineStyle: 'dashed' as 'dashed',
+    color: 'colorSkyDark' as 'colorSkyDark',
+    lineStyle: 'dotted' as 'dotted',
   },
 ];
 
@@ -169,4 +116,37 @@ export const renderTooltipContent: LineChartProps['renderTooltipContent'] = ({
   );
 
   return <TooltipContent data={formattedData} />;
+};
+
+export const defaultProps = {
+  series,
+  isAnimated: true,
+  renderTooltipContent,
+  crossHairOptions: {
+    width: CROSSHAIR_WIDTH,
+    color: DEFAULT_CROSSHAIR_COLOR,
+    opacity: 1,
+  },
+  gridOptions: {
+    showVerticalLines: true,
+    showHorizontalLines: true,
+    color: colorSky,
+    horizontalOverflow: false,
+    horizontalMargin: 0,
+  },
+  lineOptions: {hasSpline: false, width: 2, pointStroke: colorWhite},
+  xAxisOptions: {
+    xAxisLabels,
+    hideXAxisLabels: false,
+    showTicks: true,
+    labelColor: DEFAULT_GREY_LABEL,
+    useMinimalLabels: false,
+    labelFormatter: (value: string) => formatXAxisLabel(value),
+  },
+  yAxisOptions: {
+    labelFormatter: (value: number) => value.toString(),
+    labelColor: DEFAULT_GREY_LABEL,
+    backgroundColor: 'transparent',
+    integersOnly: false,
+  },
 };

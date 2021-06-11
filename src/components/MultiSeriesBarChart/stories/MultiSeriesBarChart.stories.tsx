@@ -4,9 +4,47 @@ import {Story, Meta} from '@storybook/react';
 import {
   MultiSeriesBarChart,
   MultiSeriesBarChartProps,
+  TooltipContent,
 } from '../../../components';
 
 import styles from './MultiSeriesBarChart.stories.scss';
+import {DEFAULT_GREY_LABEL} from '../../../constants';
+import {BarMargin} from '../types';
+import {colorSky} from '@shopify/polaris-tokens';
+import {SquareColorPreview} from '../../SquareColorPreview';
+
+const tooltipContent = {
+  empty: undefined,
+  Custom: ({data, title}) => (
+    <div
+      style={{
+        background: 'black',
+        padding: '8px',
+        borderRadius: '4px',
+        color: 'white',
+      }}
+    >
+      {title}
+      <div>
+        {data.map(({label, value, color}) => (
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '12px 1fr 1fr',
+              gridGap: '5px',
+              fontSize: '12px',
+              marginTop: '4px',
+            }}
+          >
+            <SquareColorPreview color={color} />
+            <div>{label}</div>
+            <div style={{textAlign: 'right'}}>{value}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  ),
+};
 
 const series = [
   {
@@ -14,7 +52,7 @@ const series = [
     color: 'primary',
     data: [
       {label: 'Monday', rawValue: 3},
-      {label: 'Tuesday', rawValue: 7},
+      {label: 'Tuesday', rawValue: -7},
       {label: 'Wednesday', rawValue: 4},
       {label: 'Thursday', rawValue: 8},
       {label: 'Friday', rawValue: 50},
@@ -50,79 +88,79 @@ const series = [
   },
 ];
 
-const seriesWithNegatives = [
-  {
-    name: 'Breakfast',
-    color: 'primary',
-    data: [
-      {label: 'Monday', rawValue: -3},
-      {label: 'Tuesday', rawValue: 7},
-      {label: 'Wednesday', rawValue: 4},
-      {label: 'Thursday', rawValue: 8},
-      {label: 'Friday', rawValue: 50},
-      {label: 'Saturday', rawValue: 0},
-      {label: 'Sunday', rawValue: 0.1},
-    ],
-  },
-  {
-    name: 'Lunch',
-    color: 'secondary',
-    data: [
-      {label: 'Monday', rawValue: -4},
-      {label: 'Tuesday', rawValue: 0},
-      {label: 'Wednesday', rawValue: 5},
-      {label: 'Thursday', rawValue: 15},
-      {label: 'Friday', rawValue: 8},
-      {label: 'Saturday', rawValue: 50},
-      {label: 'Sunday', rawValue: 0.1},
-    ],
-  },
-  {
-    name: 'Dinner',
-    color: 'tertiary',
-    data: [
-      {label: 'Monday', rawValue: -7},
-      {label: 'Tuesday', rawValue: 0},
-      {label: 'Wednesday', rawValue: 6},
-      {label: 'Thursday', rawValue: 12},
-      {label: 'Friday', rawValue: 50},
-      {label: 'Saturday', rawValue: 5},
-      {label: 'Sunday', rawValue: 0.1},
-    ],
-  },
-];
-
 const labels = [
-  'Mon. Mon. Mon. Mon. Mon. Mon.',
-  'Tues. Tues. Tues. Tues. Tues. Tues. Tues.',
-  'Weds. Weds. Weds. Weds. Weds. Weds.',
-  'Thurs. Thurs. Thurs. Thurs. Thurs. Thurs. Thurs.',
-  'Fri. Fri. Fri. Fri. Fri. Fri. Fri. Fri.',
-  'Sat. Sat. Sat. Sat. Sat. Sat.',
-  'Sun. Sun. Sun. Sun. Sun. Sun. Sun. Sun.',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+  'Sunday',
 ];
 
 export default {
-  title: 'MultiSeriesBarChart',
+  title: 'Charts/MultiSeriesBarChart',
   component: MultiSeriesBarChart,
   decorators: [
     (Story: any) => <div className={styles.Container}>{Story()}</div>,
   ],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'Used to show comparison of different types, across categories or time. Bars can be stacked or side by side. <br /> This component inherits its height and width from its container.',
+      },
+    },
+    controls: {
+      sort: 'requiredFirst',
+      expanded: true,
+    },
+  },
   argTypes: {
+    series: {
+      description:
+        'The `Series` type gives the user a lot of flexibility to define exactly what each bar group should look like. [Series type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/MultiSeriesBarChart/types.ts#L11)',
+    },
+    emptyStateText: {
+      description:
+        'Used to indicate to screenreaders that a chart with no series data has been rendered, in the case that an empty array is passed as the data. It is strongly recommended that this is included if the series prop could be an empty array.',
+    },
+    isAnimated: {
+      description:
+        'Whether to animate the bars when the chart is initially rendered and its data is updated. Even if `isAnimated` is set to true, animations will not be displayed for users with reduced motion preferences. Note: animations are currently only available for the non-stacked bar chart.',
+    },
+    skipLinkText: {
+      description:
+        'If provided, renders a `<SkipLink/>` button with the string. Use this for charts with large data sets, so keyboard users can skip all the tabbable data points in the chart.',
+    },
     barOptions: {
-      control: false,
+      description:
+        'An object that defines the appearance of the bars. [BarOptions type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/MultiSeriesBarChart/types.ts#L44)',
     },
     xAxisOptions: {
-      control: false,
+      description:
+        'An object that defines the appearance of the xAxis and its labels. [XAxisOptions type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/MultiSeriesBarChart/types.ts#L62)',
     },
     yAxisOptions: {
-      control: false,
+      description:
+        'An object that defines the appearance of the yAxis and its labels. [YAxisOptions type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/MultiSeriesBarChart/types.ts#L69)',
     },
     renderTooltipContent: {
-      control: false,
+      options: Object.keys(tooltipContent),
+      mapping: tooltipContent,
+      control: {
+        type: 'select',
+        labels: {
+          empty: 'Default',
+          Annotation: 'Custom',
+        },
+      },
+      description:
+        'This accepts a function that is called to render the tooltip content. By default it calls `formatYAxisLabel` to format the the tooltip value and passes it to `<TooltipContent />`. [RenderTooltipContentData type definition.]()',
     },
     gridOptions: {
-      control: false,
+      description:
+        'An object that defines the appearance of the grid. [GridOptions type definition.]()',
     },
   },
 } as Meta;
@@ -133,17 +171,38 @@ const Template: Story<MultiSeriesBarChartProps> = (
   return <MultiSeriesBarChart {...args} />;
 };
 
-export const Default = Template.bind({});
-Default.args = {
+const defaultProps = {
   series,
-  xAxisOptions: {labels},
+  xAxisOptions: {
+    labels,
+    labelFormatter: (value: string) => value,
+    showTicks: true,
+    labelColor: DEFAULT_GREY_LABEL,
+  },
+  barOptions: {
+    hasRoundedCorners: false,
+    isStacked: false,
+    zeroAsMinHeight: false,
+    innerMargin: 'Medium',
+    outerMargin: 'None',
+  },
+  gridOptions: {
+    showHorizontalLines: true,
+    color: colorSky,
+    horizontalOverflow: false,
+    horizontalMargin: 0,
+  },
+  isAnimated: true,
+  yAxisOptions: {
+    labelFormatter: (value: number) => value.toString(),
+    labelColor: DEFAULT_GREY_LABEL,
+    backgroundColor: 'transparent',
+    integersOnly: false,
+  },
 };
 
-export const NegativeValues = Template.bind({});
-NegativeValues.args = {
-  series: seriesWithNegatives,
-  xAxisOptions: {labels},
-};
+export const Default = Template.bind({});
+Default.args = defaultProps;
 
 const purple = '#5052b3';
 const negativePurple = '#39337f';

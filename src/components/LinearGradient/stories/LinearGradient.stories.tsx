@@ -4,11 +4,46 @@ import {Meta, Story} from '@storybook/react/types-6-0';
 import {LinearGradient, LinearGradientProps} from '../LinearGradient';
 
 export default {
-  title: 'LinearGradient',
+  title: 'Subcomponents/LinearGradient',
   component: LinearGradient,
+  parameters: {
+    controls: {sort: 'requiredFirst', expanded: true},
+    docs: {
+      description: {
+        component:
+          'Used to create gradients on charts and their subcomponents. SVG elements reference the `<LinearGradient />` by ID.',
+      },
+    },
+  },
   argTypes: {
     id: {
       control: false,
+      description:
+        'A unique ID to be used by the SVG element referencing the gradient.',
+    },
+    gradient: {
+      description:
+        'An array of stops that describe the gradient. [GradientStop type definition.]()',
+    },
+    gradientUnits: {
+      description:
+        'The [coordinate system](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/gradientUnits) used for the gradient. Can be a length or percent.',
+    },
+    x1: {
+      description:
+        'The [x starting point](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/x1) used for the gradient. Can be a length or percent.',
+    },
+    x2: {
+      description:
+        'The [x ending point](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/x2) used for the gradient. Can be a length or percent.',
+    },
+    y1: {
+      description:
+        'The [y starting point](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/y1) used for the gradient. Can be a length or percent.',
+    },
+    y2: {
+      description:
+        'The [y ending point](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/y2) used for the gradient. Can be a length or percent.',
     },
   },
 } as Meta;

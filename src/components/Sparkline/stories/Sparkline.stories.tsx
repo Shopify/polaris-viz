@@ -44,14 +44,36 @@ const series = [
 ];
 
 export default {
-  title: 'Sparkline',
+  title: 'Charts/Sparkline',
   component: Sparkline,
+  parameters: {
+    controls: {sort: 'requiredFirst', expanded: true},
+    docs: {
+      description: {
+        component:
+          'Used in small sizes to give an overview of how a metric has performed over time. <br /> This component inherits its height and width from its container.',
+      },
+    },
+  },
   decorators: [
     (Story: any) => (
       <div style={{width: '100px', height: '50px'}}>{Story()}</div>
     ),
   ],
-  argTypes: {},
+  argTypes: {
+    series: {
+      description:
+        'The sparkline can show one data series or a set of comparison data series. Each series is configured by the series item in the array. [Series type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/Sparkline/Sparkline.tsx#L21)',
+    },
+    accessibilityLabel: {
+      description:
+        'Visually hidden text for screen readers. Make sure to write [informative alt text.](https://medium.com/nightingale/writing-alt-text-for-data-visualization-2a218ef43f81)',
+    },
+    hasSpline: {description: 'Whether to curve the line between points.'},
+    isAnimated: {
+      description: 'Determines whether to animate the chart on state changes.',
+    },
+  },
 } as Meta;
 
 const Template: Story<SparklineProps> = (args: SparklineProps) => {
@@ -62,20 +84,24 @@ const Template: Story<SparklineProps> = (args: SparklineProps) => {
   );
 };
 
-export const Default = Template.bind({});
-Default.args = {
+const defaultProps = {
   series,
   isAnimated: true,
+  accessibilityLabel: 'Customer growth over time',
 };
+
+export const Default = Template.bind({});
+Default.args = defaultProps;
+
 export const hasSpline = Template.bind({});
 hasSpline.args = {
-  series,
-  isAnimated: true,
+  ...defaultProps,
   hasSpline: true,
 };
 
 export const OffsetAndNulls = Template.bind({});
 OffsetAndNulls.args = {
+  ...defaultProps,
   series: [
     {
       color: 'darkModePositive',
@@ -116,5 +142,4 @@ OffsetAndNulls.args = {
       ],
     },
   ],
-  isAnimated: true,
 };
