@@ -7,51 +7,82 @@ Used in small sizes to give an overview of how a metric has performed over time.
 <img src="sparkline.png" alt="Sparkline example image" />
 
 ```tsx
-<div style={{width: '200px', height: '50px'}}>
-  <Sparkline
-    series={[
-      {
-        color: 'colorPurple',
-        areaStyle: 'gradient',
-        offsetRight: 50,
-        offsetLeft: 12,
-        data: [
-          {x: 0, y: 100},
-          {x: 1, y: 200},
-          {x: 2, y: 300},
-          {x: 3, y: 400},
-          {x: 4, y: 400},
-          {x: 5, y: 1000},
-          {x: 6, y: 200},
-          {x: 7, y: 800},
-          {x: 8, y: 900},
-          {x: 9, y: 200},
-          {x: 10, y: 400},
-        ],
-      },
-      {
-        color: 'pastComparison',
-        areaStyle: 'none',
-        lineStyle: 'dashed',
-        data: [
-          {x: 0, y: 10},
-          {x: 1, y: 20},
-          {x: 2, y: 30},
-          {x: 3, y: 40},
-          {x: 4, y: 40},
-          {x: 5, y: 400},
-          {x: 6, y: 20},
-          {x: 7, y: 80},
-          {x: 8, y: 90},
-          {x: 9, y: 20},
-          {x: 10, y: 40},
-        ],
-      },
-    ]}
-    accessibilityLabel="Customer growth over time"
-    isAnimated
-  />
-</div>
+const props = {
+  accessibilityLabel: 'Customer growth over time',
+  isAnimated: true,
+  series: [
+    {
+      data: [
+        {y: null, x: 0},
+        {y: null, x: 1},
+        {y: null, x: 2},
+        {y: null, x: 3},
+        {y: null, x: 4},
+        {y: null, x: 5},
+        {y: null, x: 6},
+        {y: 9, x: 7},
+        {y: 7, x: 8},
+        {y: 3, x: 9},
+        {y: 0, x: 10},
+        {y: 1, x: 11},
+        {y: 1, x: 12},
+        {y: 1, x: 13},
+        {y: 1, x: 14},
+        {y: 1, x: 15},
+        {y: 8, x: 16},
+        {y: 17, x: 17},
+        {y: 15, x: 18},
+        {y: 8, x: 19},
+        {y: 1, x: 20},
+        {y: 2, x: 21},
+        {y: 2, x: 22},
+        {y: 2, x: 23},
+      ],
+      areaStyle: 'gradient',
+      hasPoint: true,
+      color: 'darkModeNegative',
+      offsetRight: 12,
+    },
+    {
+      data: [
+        {x: 0, y: 7},
+        {x: 1, y: 7},
+        {x: 2, y: 7},
+        {x: 3, y: 7},
+        {x: 4, y: 7},
+        {x: 5, y: 7},
+        {x: 6, y: 7},
+        {x: 7, y: 7},
+        {x: 8, y: 7},
+        {x: 9, y: 7},
+        {x: 10, y: 7},
+        {x: 11, y: 7},
+        {x: 12, y: 7},
+        {x: 13, y: 7},
+        {x: 14, y: 7},
+        {x: 15, y: 7},
+        {x: 16, y: 7},
+        {x: 17, y: 7},
+        {x: 18, y: 7},
+        {x: 19, y: 7},
+        {x: 20, y: 7},
+        {x: 21, y: 7},
+        {x: 22, y: 7},
+        {x: 23, y: 7},
+      ],
+      lineStyle: 'dashed',
+      color: 'darkModeNegative',
+    },
+  ],
+  hasSpline: true,
+  isAnimated: true,
+};
+
+return (
+  <div style={{width: '200px', height: '50px'}}>
+    <Sparkline {...props} />
+  </div>
+);
 ```
 
 ## Usage

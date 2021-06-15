@@ -7,28 +7,41 @@ Used in small sizes to give an overview of how a metric has performed over time.
 <img src="sparkbar.png" alt="Sparkbar example image" />
 
 ```tsx
-<div style={{width: '200px', height: '50px'}}>
-  <Sparkbar
-    data={[100, 200, 300, 400, 400, 1000, 200, 800, 900, 200, 400]}
-    accessibilityLabel="A bar chart showing orders over time for the past 11 weeks. The minimum is 100 orders and the maximum is 1,000 orders, compared to an average of 500 orders during previous 11-week period."
-    isAnimated
-    comparison={[
-      {x: 0, y: 500},
-      {x: 1, y: 500},
-      {x: 2, y: 500},
-      {x: 3, y: 500},
-      {x: 4, y: 500},
-      {x: 5, y: 500},
-      {x: 6, y: 500},
-      {x: 7, y: 500},
-      {x: 8, y: 500},
-      {x: 9, y: 500},
-      {x: 10, y: 500},
-    ]}
-    dataOffsetRight={50}
-    dataOffsetLeft={12}
-  />
-</div>
+
+  const props = {
+    data: [
+      3, 7, 7, 5, 33, 2, 3, 0, 3, 5, 6, 6, 23, 5, 8, 1, 3, 12,
+    ],
+    comparison: [
+      {x: 0, y: 4.2,
+      {x: 1, y: 4.2},
+      {x: 2, y: 4.2},
+      {x: 3, y: 4.2},
+      {x: 4, y: 4.2},
+      {x: 5, y: 4.2},
+      {x: 6, y: 4.2},
+      {x: 7, y: 4.2},
+      {x: 8, y: 4.2},
+      {x: 9, y: 4.2},
+      {x: 10, y: 4.2},
+      {x: 11, y: 4.2},
+      {x: 12, y: 4.2},
+      {x: 13, y: 4.2},
+      {x: 14, y: 4.2},
+      {x: 15, y: 4.2},
+      {x: 16, y: 4.2},
+      {x: 17, y: 4.2},
+    ],
+    color: 'darkModePositive',
+    dataOffsetRight: 12,
+    dataOffsetLeft: 12,
+    isAnimated: true,
+    accessibilityLabel="A bar chart showing orders over time for the past 18 weeks. The minimum is 0 orders and the maximum is 33 orders, compared to an average of 4.2 orders during previous 18-week period."
+  };
+
+return (<div style={{width: '200px', height: '50px'}}>
+          <Sparkbar {...props} />
+        </div>);
 ```
 
 ## Usage

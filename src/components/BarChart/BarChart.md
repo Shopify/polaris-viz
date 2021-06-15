@@ -7,67 +7,63 @@ Used to show comparison across categories.
 <img src="bar-chart.png" alt="Bar chart example image" />
 
 ```tsx
-const data = [
-  {rawValue: 324.19, label: '2020-01-01T12:00:00Z'},
-  {rawValue: 613.29, label: '2020-01-02T12:00:00Z'},
-  {rawValue: 422.79, label: '2020-01-03T12:00:00Z'},
-  {
-    rawValue: 25.6,
-    label: '2020-01-04T12:00:00Z',
-  },
-  {rawValue: 277.69, label: '2020-01-05T12:00:00Z'},
-  {rawValue: 421.19, label: '2020-01-06T12:00:00Z'},
-];
-
-function formatXAxisLabel(value: string) {
-  return new Date(value).toLocaleDateString('en-CA', {
-    day: 'numeric',
-    month: 'short',
-  });
-}
-
 function formatYAxisLabel(value: number) {
   return new Intl.NumberFormat('en-CA', {
-    style: 'currency',
-    currency: 'CAD',
     maximumSignificantDigits: 2,
   }).format(value);
 }
 
 function renderTooltipContent({label, value}: {label: string; value: number}) {
-  function formatTooltipLabel(value: string) {
-    return new Date(value).toLocaleDateString('en-CA', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-    });
-  }
-
   function formatTooltipValue(value: number) {
-    return new Intl.NumberFormat('en-CA', {
-      style: 'currency',
-      currency: 'CAD',
-    }).format(value);
+    return new Intl.NumberFormat('en-CA').format(value);
   }
 
-  const formattedLabel = formatTooltipLabel(label);
   const formattedValue = formatTooltipValue(value);
 
-  return (
-    <BarChartTooltipContent label={formattedLabel} value={formattedValue} />
-  );
+  return <BarChartTooltipContent label={label} value={formattedValue} />;
 }
 
-return (
-  <BarChart
-    data={data}
-    barOptions={{color: 'primary'}}
-    xAxisOptions={{labelFormatter: formatXAxisLabel}}
-    yAxisOptions={{labelFormatter: formatYAxisLabel}}
-    renderTooltipContent={renderTooltipContent}
-    skipLinkText="Skip chart content"
-  />
-);
+const props = {
+  data: [
+    {label: 'Monday', rawValue: 174},
+    {label: 'Tuesday', rawValue: 8},
+    {label: 'Wednesday', rawValue: 22},
+    {label: 'Thursday', rawValue: 50},
+    {label: 'Friday', rawValue: 89},
+    {label: 'Saturday', rawValue: 30},
+    {label: 'Sunday', rawValue: 10},
+  ],
+  barOptions: {
+    color: [
+      {offset: 0, color: 'rgba(152, 107, 255, 0.8)'},
+      {offset: 100, color: 'rgba(58, 164, 246, 0.8)'},
+    ],
+    hasRoundedCorners: true,
+    outerMargin: 'Medium',
+  },
+  skipLinkText: 'Skip chart content',
+  xAxisOptions: {
+    useMinimalLabels: true,
+    labelColor: 'rgb(220, 220, 220)',
+    showTicks: false,
+  },
+  yAxisOptions: {
+    backgroundColor: 'rgb(31, 31, 37)',
+    labelColor: 'rgb(220, 220, 220)',
+    integersOnly: true,
+    labelFormatter: formatYAxisLabel,
+  },
+  gridOptions: {
+    color: 'rgb(65, 66, 71)',
+    horizontalOverflow: true,
+    horizontalMargin: 20,
+  },
+  isAnimated: true,
+  renderTooltipContent: {renderTooltipContent},
+  skipLinkText: 'Skip chart content',
+};
+
+return <BarChart {...props} />;
 ```
 
 ## Usage
