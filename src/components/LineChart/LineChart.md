@@ -13,43 +13,58 @@ const series = [
   {
     name: 'Apr 01–Apr 14, 2020',
     data: [
-      {rawValue: 2251, label: '2020-04-01T12:00:00'},
-      {rawValue: 12132.2, label: '2020-04-02T12:00:00'},
-      {rawValue: 5000, label: '2020-04-03T12:00:00'},
-      {rawValue: 7200, label: '2020-04-04T12:00:00'},
-      {rawValue: 1500, label: '2020-04-05T12:00:00'},
-      {rawValue: 6132, label: '2020-04-06T12:00:00'},
-      {rawValue: 3100, label: '2020-04-07T12:00:00'},
-      {rawValue: 2200, label: '2020-04-08T12:00:00'},
-      {rawValue: 5103, label: '2020-04-09T12:00:00'},
-      {rawValue: 2112.5, label: '2020-04-10T12:00:00'},
-      {rawValue: 4004, label: '2020-04-11T12:00:00'},
-      {rawValue: 6000, label: '2020-04-12T12:00:00'},
-      {rawValue: 5500, label: '2020-04-13T12:00:00'},
-      {rawValue: 7000, label: '2020-04-14T12:00:00'},
+      {rawValue: 333, label: '2020-04-01T12:00:00'},
+      {rawValue: 797, label: '2020-04-02T12:00:00'},
+      {rawValue: 234, label: '2020-04-03T12:00:00'},
+      {rawValue: 534, label: '2020-04-04T12:00:00'},
+      {rawValue: -132, label: '2020-04-05T12:00:00'},
+      {rawValue: 159, label: '2020-04-06T12:00:00'},
+      {rawValue: 239, label: '2020-04-07T12:00:00'},
+      {rawValue: 708, label: '2020-04-08T12:00:00'},
+      {rawValue: 234, label: '2020-04-09T12:00:00'},
+      {rawValue: 645, label: '2020-04-10T12:00:00'},
+      {rawValue: 543, label: '2020-04-11T12:00:00'},
+      {rawValue: 89, label: '2020-04-12T12:00:00'},
+      {rawValue: 849, label: '2020-04-13T12:00:00'},
+      {rawValue: 129, label: '2020-04-14T12:00:00'},
     ],
-    color: 'primary',
+    color: [
+      {
+        offset: 0,
+        color: '#08CA9B',
+      },
+      {
+        offset: 85,
+        color: 'rgba(92,105,208,0.8)',
+      },
+      {
+        offset: 100,
+        color: 'rgba(92,105,208,0.8)',
+      },
+    ],
+    lineStyle: 'solid' as 'solid',
+    areaColor: 'rgba(92,105,208,0.5)',
   },
   {
     name: 'Mar 01–Mar 14, 2020',
     data: [
-      {rawValue: 5200, label: '2020-03-01T12:00:00'},
-      {rawValue: 7000, label: '2020-03-02T12:00:00'},
-      {rawValue: 1000, label: '2020-03-03T12:00:00'},
-      {rawValue: 2000, label: '2020-03-04T12:00:00'},
-      {rawValue: 5000, label: '2020-03-05T12:00:00'},
-      {rawValue: 1000, label: '2020-03-06T12:00:00'},
-      {rawValue: 2000, label: '2020-03-07T12:00:00'},
-      {rawValue: 5000, label: '2020-03-08T12:00:00'},
-      {rawValue: 4000, label: '2020-03-09T12:00:00'},
-      {rawValue: 11200, label: '2020-03-10T12:00:00'},
-      {rawValue: 2000, label: '2020-03-11T12:00:00'},
-      {rawValue: 3000, label: '2020-03-12T12:00:00'},
-      {rawValue: 2000, label: '2020-03-13T12:00:00'},
-      {rawValue: 3000, label: '2020-03-14T12:00:00'},
+      {rawValue: 709, label: '2020-03-02T12:00:00'},
+      {rawValue: 238, label: '2020-03-01T12:00:00'},
+      {rawValue: 190, label: '2020-03-03T12:00:00'},
+      {rawValue: 90, label: '2020-03-04T12:00:00'},
+      {rawValue: 237, label: '2020-03-05T12:00:00'},
+      {rawValue: 580, label: '2020-03-07T12:00:00'},
+      {rawValue: 172, label: '2020-03-06T12:00:00'},
+      {rawValue: 12, label: '2020-03-08T12:00:00'},
+      {rawValue: 390, label: '2020-03-09T12:00:00'},
+      {rawValue: 43, label: '2020-03-10T12:00:00'},
+      {rawValue: 710, label: '2020-03-11T12:00:00'},
+      {rawValue: 791, label: '2020-03-12T12:00:00'},
+      {rawValue: 623, label: '2020-03-13T12:00:00'},
+      {rawValue: 21, label: '2020-03-14T12:00:00'},
     ],
-    color: 'pastComparison',
-    lineStyle: 'dashed' as 'dashed',
+    color: 'colorSkyDark' as 'colorSkyDark',
+    lineStyle: 'dotted' as 'dotted',
   },
 ];
 
@@ -65,9 +80,9 @@ function formatXAxisLabel(value: string) {
 function formatYAxisLabel(value: number) {
   return new Intl.NumberFormat('en', {
     style: 'currency',
-    currency: 'CAD',
+    currency: 'USD',
     currencyDisplay: 'symbol',
-    maximumSignificantDigits: 1,
+    maximumFractionDigits: 0,
   }).format(value);
 }
 
@@ -77,7 +92,7 @@ const renderTooltipContent: LineChartProps['renderTooltipContent'] = ({
   function formatTooltipValue(value: number) {
     return new Intl.NumberFormat('en', {
       style: 'currency',
-      currency: 'CAD',
+      currency: 'USD',
     }).format(value);
   }
 
@@ -89,30 +104,57 @@ const renderTooltipContent: LineChartProps['renderTooltipContent'] = ({
     });
   }
 
-  const formattedData = data.map(({name, point: {label, value}, style}) => ({
-    name,
-    style,
-    point: {
-      value: formatTooltipValue(value),
-      label: formatTooltipLabel(label),
-    },
-  }));
+  const formattedData = data.map(
+    ({name, point: {label, value}, color, lineStyle}) => ({
+      name,
+      color,
+      lineStyle,
+      point: {
+        value: formatTooltipValue(value),
+        label: formatTooltipLabel(label),
+      },
+    }),
+  );
 
   return <LineChartTooltipContent data={formattedData} />;
 };
 
-return (
-  <LineChart
-    series={series}
-    xAxisOptions={{
-      xAxisLabels,
-      labelFormatter: formatXAxisLabel,
-    }}
-    yAxisOptions={{labelFormatter: formatYAxisLabel}}
-    renderTooltipContent={renderTooltipContent}
-    skipLinkText="Skip chart content"
-  />
-);
+const props = {
+  series,
+  isAnimated: true,
+  renderTooltipContent,
+  xAxisOptions: {
+    xAxisLabels: xAxisLabels,
+    labelFormatter: formatXAxisLabel,
+    useMinimalLabels: true,
+    showTicks: false,
+    labelColor: 'rgb(220, 220, 220)',
+  },
+  yAxisOptions: {
+    labelFormatter: formatYAxisLabel,
+    backgroundColor: 'rgb(31, 31, 37)',
+    labelColor: 'rgb(220, 220, 220)',
+    integersOnly: true,
+  },
+  gridOptions: {
+    showVerticalLines: false,
+    color: 'rgb(65, 66, 71)',
+    horizontalOverflow: true,
+    horizontalMargin: 20,
+  },
+  lineOptions: {
+    hasSpline: true,
+    width: 3,
+    pointStroke: 'rgb(31, 31, 37)',
+  },
+  crossHairOptions: {
+    width: 1,
+    color: 'rgb(139, 159, 176)',
+  },
+  skipLinkText = 'Skip chart content',
+};
+
+return <LineChart {...props} />;
 ```
 
 ## Usage
