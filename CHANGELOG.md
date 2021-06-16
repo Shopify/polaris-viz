@@ -4,6 +4,10 @@
 
 ## [0.17.0] - 2021-06-16
 
+POTENTIALLY BROKEN -- This release implicitly depends on `tslib>=2.1.0` but other projects may not explicitly be using `tslib>=2.1.0`. For example, this version sporadically breaks in `web` since the version of `tslib` in `web` resolves to `^1`.
+
+It is not advised to use this version -- stick to `0.16.1` or wait for `0.17.1` which will fix this issue.
+
 ### Changed
 
 - Upgrades our build tools to the latest major versions. We **do not** expect any change in behavior for consumers of Polaris Viz.
