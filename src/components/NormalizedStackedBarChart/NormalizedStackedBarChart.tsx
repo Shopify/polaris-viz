@@ -2,12 +2,12 @@ import React from 'react';
 import {sum} from 'd3-array';
 import {scaleLinear} from 'd3-scale';
 import {classNames} from '@shopify/css-utilities';
-import {Color} from 'types';
+import type {Color} from 'types';
 
 import {getColorValue} from '../../utilities';
 
 import {BarSegment, BarLabel} from './components';
-import {Size, Data, Orientation} from './types';
+import type {Size, Data, Orientation} from './types';
 import styles from './NormalizedStackedBarChart.scss';
 
 export interface NormalizedStackedBarChartProps {
@@ -42,9 +42,7 @@ export function NormalizedStackedBarChart({
   const slicedData = data.slice(0, 4);
   const totalValue = sum(slicedData, ({value}) => value);
 
-  const xScale = scaleLinear()
-    .range([0, 100])
-    .domain([0, totalValue]);
+  const xScale = scaleLinear().range([0, 100]).domain([0, totalValue]);
 
   const isVertical = orientation === 'vertical';
   const colorPalette = colors.map((color) => getColorValue(color));

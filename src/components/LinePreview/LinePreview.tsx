@@ -1,8 +1,8 @@
 import React, {useRef} from 'react';
-import {SeriesColor} from 'types';
+import type {SeriesColor} from 'types';
 
 import {getColorValue, isGradientType, uniqueId} from '../../utilities';
-import {LineStyle} from '../../types';
+import type {LineStyle} from '../../types';
 import {LinearGradient} from '../LinearGradient';
 
 import {

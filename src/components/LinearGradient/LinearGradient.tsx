@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {GradientStop} from '../../types';
+import type {GradientStop} from '../../types';
 
 export interface LinearGradientProps {
   gradient: GradientStop[];

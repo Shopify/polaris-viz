@@ -1,7 +1,7 @@
 import React, {useState, useLayoutEffect, useCallback} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 import {scaleLinear} from 'd3-scale';
-import {Color, SparkChartData} from 'types';
+import type {Color, SparkChartData} from 'types';
 
 import {useResizeObserver} from '../../hooks';
 

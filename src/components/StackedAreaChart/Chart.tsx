@@ -23,7 +23,7 @@ import {Point} from '../Point';
 import {LinearXAxis} from '../LinearXAxis';
 import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
 import {HorizontalGridLines} from '../HorizontalGridLines';
-import {
+import type {
   StringLabelFormatter,
   NumberLabelFormatter,
   ActiveTooltip,
@@ -34,7 +34,7 @@ import {Spacing} from './constants';
 import {useYScale} from './hooks';
 import {StackedAreas} from './components';
 import styles from './Chart.scss';
-import {Series, RenderTooltipContentData} from './types';
+import type {Series, RenderTooltipContentData} from './types';
 
 interface Props {
   xAxisLabels: string[];
@@ -92,10 +92,10 @@ export function Chart({
   const fontSize =
     dimensions.width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
 
-  const stackedValues = useMemo(() => areaStack(formattedData), [
-    areaStack,
-    formattedData,
-  ]);
+  const stackedValues = useMemo(
+    () => areaStack(formattedData),
+    [areaStack, formattedData],
+  );
 
   const {ticks: initialTicks} = useYScale({
     fontSize,
@@ -182,8 +182,9 @@ export function Chart({
         role="table"
       >
         <g
-          transform={`translate(${dataStartPosition},${dimensions.height -
-            marginBottom})`}
+          transform={`translate(${dataStartPosition},${
+            dimensions.height - marginBottom
+          })`}
         >
           <LinearXAxis
             xScale={xScale}

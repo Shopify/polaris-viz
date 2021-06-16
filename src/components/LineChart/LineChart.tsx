@@ -2,7 +2,7 @@ import React, {useLayoutEffect, useRef, useState, useCallback} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 import {colorSky, colorWhite} from '@shopify/polaris-tokens';
 
-import {Dimensions} from '../../types';
+import type {Dimensions} from '../../types';
 import {getDefaultColor, uniqueId} from '../../utilities';
 import {SkipLink} from '../SkipLink';
 import {usePrefersReducedMotion, useResizeObserver} from '../../hooks';
@@ -13,7 +13,7 @@ import {
 } from '../../constants';
 
 import {Chart} from './Chart';
-import {
+import type {
   Series,
   RenderTooltipContentData,
   LineOptions,

@@ -1,11 +1,11 @@
 import {useMemo} from 'react';
 import {scaleLinear} from 'd3-scale';
-import {Series} from 'd3-shape';
+import type {Series} from 'd3-shape';
 
 import {getTextWidth} from '../../../utilities';
 import {MIN_Y_LABEL_SPACE} from '../constants';
 import {DEFAULT_MAX_Y} from '../../../constants';
-import {NumberLabelFormatter} from '../../../types';
+import type {NumberLabelFormatter} from '../../../types';
 
 export function useYScale({
   fontSize,

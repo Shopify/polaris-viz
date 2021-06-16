@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState, ReactNode} from 'react';
 import {useSpring, animated} from '@react-spring/web';
 
 import {clamp} from '../../utilities';
-import {Dimensions} from '../../types';
+import type {Dimensions} from '../../types';
 
 import styles from './TooltipContainer.scss';
 
@@ -86,7 +86,7 @@ export function TooltipContainer({
       firstRender.current = false;
 
       // @react-spring/web docs do not return the `next` callback
-      // eslint-disable-next-line callback-return
+      // eslint-disable-next-line node/callback-return
       await next({
         translate: [
           xTranslation,

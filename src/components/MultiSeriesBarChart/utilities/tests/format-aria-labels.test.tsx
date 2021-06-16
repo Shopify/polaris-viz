@@ -1,5 +1,5 @@
 import {formatAriaLabel} from '../format-aria-label';
-import {AccessibilitySeries} from '../../types';
+import type {AccessibilitySeries} from '../../types';
 
 const mockData: AccessibilitySeries = {
   title: 'title1',

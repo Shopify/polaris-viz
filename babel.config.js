@@ -1,4 +1,4 @@
-module.exports = function(api) {
+module.exports = function (api) {
   // When building (using rollup) or running storybook (using babel-loader) we
   // want to compile for the web otherwise compile for node usage (within jest)
   const isWeb = api.caller((caller = {}) => {
@@ -6,12 +6,28 @@ module.exports = function(api) {
   });
 
   const runtimePreset = isWeb
-    ? ['babel-preset-shopify/web', {modules: false, typescript: true}]
-    : ['babel-preset-shopify/node', {modules: 'commonjs', typescript: true}];
+    ? [
+        '@shopify/babel-preset',
+        {
+          // https://babeljs.io/docs/en/babel-preset-env#modules
+          modules: 'auto',
+          typescript: true,
+          react: true,
+          transformReactConstantElements: false,
+        },
+      ]
+    : [
+        '@shopify/babel-preset',
+        {
+          // https://babeljs.io/docs/en/babel-preset-env#modules
+          modules: 'commonjs',
+          typescript: true,
+          react: true,
+          transformReactConstantElements: false,
+        },
+      ];
 
-  // babel-preset-shopify/react only uses HMR if hot is true and the env is
-  // development or test
   return {
-    presets: [runtimePreset, ['babel-preset-shopify/react', {hot: isWeb}]],
+    presets: [runtimePreset, ['@babel/preset-react']],
   };
 };

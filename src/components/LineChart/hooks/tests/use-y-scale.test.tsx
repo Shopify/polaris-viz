@@ -2,7 +2,7 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
 
-import {Series} from '../../types';
+import type {Series} from '../../types';
 import {useYScale} from '../use-y-scale';
 import {DEFAULT_MAX_Y} from '../../../../constants';
 import {shouldRoundScaleUp} from '../../../../utilities';

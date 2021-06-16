@@ -2,7 +2,7 @@ import React, {useLayoutEffect, useRef, useState, useCallback} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 
 import {SkipLink} from '../SkipLink';
-import {
+import type {
   StringLabelFormatter,
   NumberLabelFormatter,
   Dimensions,
@@ -12,7 +12,7 @@ import {getDefaultColor, uniqueId} from '../../utilities';
 import {useResizeObserver} from '../../hooks';
 
 import {Chart} from './Chart';
-import {Series, RenderTooltipContentData} from './types';
+import type {Series, RenderTooltipContentData} from './types';
 
 export interface StackedAreaChartProps {
   formatXAxisLabel?: StringLabelFormatter;

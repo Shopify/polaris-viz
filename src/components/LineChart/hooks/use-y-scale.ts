@@ -5,8 +5,8 @@ import {maxIndex} from 'd3-array';
 import {getTextWidth, shouldRoundScaleUp} from '../../../utilities';
 import {yAxisMinMax} from '../utilities';
 import {MIN_Y_LABEL_SPACE} from '../constants';
-import {Series} from '../types';
-import {NumberLabelFormatter} from '../../../types';
+import type {Series} from '../types';
+import type {NumberLabelFormatter} from '../../../types';
 
 export function useYScale({
   drawableHeight,
@@ -36,10 +36,7 @@ export function useYScale({
     if (shouldRoundScaleUp({yScale, maxValue: maxY, maxTicks})) {
       yScale.nice(maxTicks);
     } else {
-      const roundedDownMin = yScale
-        .copy()
-        .nice(maxTicks)
-        .ticks(maxTicks)[0];
+      const roundedDownMin = yScale.copy().nice(maxTicks).ticks(maxTicks)[0];
 
       yScale.domain([roundedDownMin, Math.max(0, maxY)]);
     }

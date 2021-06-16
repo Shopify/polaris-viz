@@ -6,7 +6,7 @@ import {useTransition} from '@react-spring/web';
 
 import {usePrefersReducedMotion, useResizeObserver} from '../../hooks';
 import {BARS_TRANSITION_CONFIG} from '../../constants';
-import {Color, SparkChartData} from '../../types';
+import type {Color, SparkChartData} from '../../types';
 import {
   getColorValue,
   rgbToRgba,
@@ -170,8 +170,9 @@ export function Sparkbar({
 
       <svg
         aria-hidden
-        viewBox={`0 ${ANIMATION_MARGIN * -1} ${width} ${height +
-          ANIMATION_MARGIN * 2}`}
+        viewBox={`0 ${ANIMATION_MARGIN * -1} ${width} ${
+          height + ANIMATION_MARGIN * 2
+        }`}
         style={{
           transform: `translateY(${ANIMATION_MARGIN * -1}px)`,
         }}

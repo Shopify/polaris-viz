@@ -3,7 +3,7 @@ import {
   EMPTY_STATE_CHART_MIN,
   EMPTY_STATE_CHART_MAX,
 } from '../../../constants';
-import {Series} from '../types';
+import type {Series} from '../types';
 
 export function yAxisMinMax({
   series,

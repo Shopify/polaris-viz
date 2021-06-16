@@ -1,7 +1,7 @@
 import React from 'react';
-import {Line as D3Line} from 'd3-shape';
+import type {Line as D3Line} from 'd3-shape';
 
-import {SeriesWithDefaults} from '../../types';
+import type {SeriesWithDefaults} from '../../types';
 import {ANIMATION_DELAY, FAST_DURATION, SLOW_DURATION} from '../../constants';
 
 import styles from './Line.scss';
@@ -51,7 +51,7 @@ export const Line = React.memo(function Shape({
       strokeLinejoin="round"
       strokeLinecap="round"
       strokeDasharray={StrokeDasharray[series.lineStyle]}
-      className={isAnimated ? styles.AnimatedPath : null}
+      className={isAnimated ? styles.AnimatedPath : undefined}
     />
   );
 });

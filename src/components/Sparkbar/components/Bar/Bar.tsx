@@ -1,8 +1,8 @@
 import React, {useMemo} from 'react';
-import {ScaleLinear} from 'd3-scale';
+import type {ScaleLinear} from 'd3-scale';
 import {animated, SpringValue} from '@react-spring/web';
 
-import {SparkChartData} from '../../../../types';
+import type {SparkChartData} from '../../../../types';
 
 interface Props {
   x: number;

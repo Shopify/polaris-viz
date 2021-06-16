@@ -1,5 +1,5 @@
 import React from 'react';
-import {LineStyle, SeriesColor} from 'types';
+import type {LineStyle, SeriesColor} from 'types';
 
 import {LinePreview} from '../../../LinePreview';
 

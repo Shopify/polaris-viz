@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import {ScaleLinear} from 'd3-scale';
+import type {ScaleLinear} from 'd3-scale';
 import {colorSky} from '@shopify/polaris-tokens';
 
 import {RightAngleTriangle} from '../../utilities';
@@ -122,11 +122,12 @@ function Axis({
         });
 
         const tickContainerTransform = needsDiagonalLabels
-          ? `translate(${-diagonalLabelOffset -
-              SPACING_EXTRA_TIGHT} ${maxXLabelHeight +
-              BELOW_X_AXIS_MARGIN / 2}) rotate(${DIAGONAL_ANGLE})`
-          : `translate(${horizontalXPosition +
-              firstLabelAdjustment} ${BELOW_X_AXIS_MARGIN})`;
+          ? `translate(${-diagonalLabelOffset - SPACING_EXTRA_TIGHT} ${
+              maxXLabelHeight + BELOW_X_AXIS_MARGIN / 2
+            }) rotate(${DIAGONAL_ANGLE})`
+          : `translate(${
+              horizontalXPosition + firstLabelAdjustment
+            } ${BELOW_X_AXIS_MARGIN})`;
 
         return (
           <g key={index} transform={`translate(${xOffset}, 0)`}>

@@ -12,7 +12,7 @@ import {line} from 'd3-shape';
 
 import {LinearGradient} from '../../LinearGradient';
 import {Chart} from '../Chart';
-import {Series} from '../types';
+import type {Series} from '../types';
 import {Line, GradientArea} from '../components';
 import {YAxis} from '../../YAxis';
 

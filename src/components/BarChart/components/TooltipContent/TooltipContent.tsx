@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Annotation} from '../../types';
+import type {Annotation} from '../../types';
 
 import styles from './TooltipContent.scss';
 

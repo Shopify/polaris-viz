@@ -1,6 +1,6 @@
 import React from 'react';
 import tokens from '@shopify/polaris-tokens';
-import {ActiveTooltip} from 'types';
+import type {ActiveTooltip} from 'types';
 import {useSpring, animated, Interpolation} from '@react-spring/web';
 import {classNames} from '@shopify/css-utilities';
 

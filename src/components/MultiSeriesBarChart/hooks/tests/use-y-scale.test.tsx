@@ -1,7 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
-import {Series, StackSeries} from 'components/MultiSeriesBarChart/types';
+import type {Series, StackSeries} from 'components/MultiSeriesBarChart/types';
 
 import {useYScale} from '../use-y-scale';
 import {shouldRoundScaleUp} from '../../../../utilities';

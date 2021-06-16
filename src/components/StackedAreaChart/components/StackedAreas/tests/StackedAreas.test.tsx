@@ -1,7 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
-import {Color} from 'types';
+import type {Color} from 'types';
 
 import {StackedAreas} from '../StackedAreas';
 

@@ -1,10 +1,10 @@
 import React, {useMemo} from 'react';
 import {animated, SpringValue} from '@react-spring/web';
-import {ScaleLinear} from 'd3-scale';
+import type {ScaleLinear} from 'd3-scale';
 
 import {ROUNDED_BAR_RADIUS} from '../../constants';
 import {isNumber} from '../../utilities';
-import {PathInterpolator, NumberInterpolator} from '../../types';
+import type {PathInterpolator, NumberInterpolator} from '../../types';
 
 import styles from './Bar.scss';
 

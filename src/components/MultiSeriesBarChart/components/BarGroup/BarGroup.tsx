@@ -1,6 +1,6 @@
 import React, {useCallback, useMemo} from 'react';
-import {ScaleLinear} from 'd3-scale';
-import {SeriesColor} from 'types';
+import type {ScaleLinear} from 'd3-scale';
+import type {SeriesColor} from 'types';
 import {useTransition} from '@react-spring/web';
 
 import {usePrefersReducedMotion} from '../../../../hooks';

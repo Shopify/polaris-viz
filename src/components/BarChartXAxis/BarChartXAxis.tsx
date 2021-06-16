@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScaleBand} from 'd3-scale';
+import type {ScaleBand} from 'd3-scale';
 
 import {
   TICK_SIZE,
@@ -97,9 +97,9 @@ export function BarChartXAxis({
   }).getOppositeLength();
 
   const textTransform = needsDiagonalLabels
-    ? `translate(${-diagonalLabelOffset -
-        SPACING_BASE_TIGHT / 2} ${maxXLabelHeight +
-        BELOW_X_AXIS_MARGIN / 2}) rotate(${DIAGONAL_ANGLE})`
+    ? `translate(${-diagonalLabelOffset - SPACING_BASE_TIGHT / 2} ${
+        maxXLabelHeight + BELOW_X_AXIS_MARGIN / 2
+      }) rotate(${DIAGONAL_ANGLE})`
     : `translate(-${maxWidth / 2} ${BELOW_X_AXIS_MARGIN})`;
 
   const textHeight = needsDiagonalLabels

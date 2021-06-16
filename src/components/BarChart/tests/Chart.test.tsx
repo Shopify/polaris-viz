@@ -1,7 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
-import {SpringValue} from '@react-spring/web';
-import {Color} from 'types';
+import type {SpringValue} from '@react-spring/web';
+import type {Color} from 'types';
 import {vizColors} from 'utilities';
 import {
   YAxis,

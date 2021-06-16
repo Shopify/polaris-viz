@@ -1,4 +1,4 @@
-import {AccessibilitySeries} from '../types';
+import type {AccessibilitySeries} from '../types';
 
 export function formatAriaLabel(series: AccessibilitySeries) {
   return `${series.title}: ${series.data.map(

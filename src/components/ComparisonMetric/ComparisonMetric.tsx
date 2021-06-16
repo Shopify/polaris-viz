@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './ComparisonMetric.scss';
 import {UpChevron, DownChevron} from './components';
-import {ComparisonMetricShape} from './types';
+import type {ComparisonMetricShape} from './types';
 
 export function ComparisonMetric({
   metric,

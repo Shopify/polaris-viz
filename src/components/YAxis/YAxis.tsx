@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {DEFAULT_GREY_LABEL, LINE_HEIGHT, FONT_SIZE} from '../../constants';
-import {YAxisTick} from '../../types';
+import type {YAxisTick} from '../../types';
 
 interface Props {
   ticks: YAxisTick[];

@@ -27,12 +27,12 @@ import {YAxis} from '../YAxis';
 import {Point} from '../Point';
 import {Crosshair} from '../Crosshair';
 import {LinearGradient} from '../LinearGradient';
-import {ActiveTooltip, Dimensions} from '../../types';
+import type {ActiveTooltip, Dimensions} from '../../types';
 import {TooltipContainer} from '../TooltipContainer';
 import {HorizontalGridLines} from '../HorizontalGridLines';
 
 import {MAX_ANIMATED_SERIES_LENGTH} from './constants';
-import {
+import type {
   RenderTooltipContentData,
   TooltipData,
   LineOptions,
@@ -244,6 +244,7 @@ export function Chart({
     return xScale(activeIndex == null ? 0 : activeIndex) - offset;
   };
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   const handleMouseInteraction = useCallback(
     throttle(
       (
@@ -259,6 +260,7 @@ export function Chart({
     ),
     [dimensions],
   );
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   if (xScale == null || drawableWidth == null || axisMargin == null) {
     return null;
@@ -323,8 +325,9 @@ export function Chart({
         aria-label={emptyState ? emptyStateText : undefined}
       >
         <g
-          transform={`translate(${dataStartPosition},${dimensions.height -
-            marginBottom})`}
+          transform={`translate(${dataStartPosition},${
+            dimensions.height - marginBottom
+          })`}
         >
           <LinearXAxis
             xAxisDetails={xAxisDetails}

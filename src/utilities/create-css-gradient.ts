@@ -1,4 +1,4 @@
-import {GradientStop} from 'types';
+import type {GradientStop} from 'types';
 
 export const createCSSGradient = (gradient: GradientStop[]) => {
   const gradientStops = gradient.map(
