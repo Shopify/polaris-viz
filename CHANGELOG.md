@@ -1,13 +1,19 @@
 # Changelog
 
+## Unreleased
+
+## [0.17.0] - 2021-06-16
+
+### Changed
+
+- Upgrades our build tools to the latest major versions. We **do not** expect any change in behavior for consumers of Polaris Viz.
+
 ## [0.16.1] - 2021-06-09
 
 ### Fixed
 
 - Improves the performance of the `<LineChart />` by reducing label measurements
 - Ensures the xAxis is always shown for bar charts and `<LineChart />`
-
-## Unreleased
 
 ## [0.16.0] - 2021-05-26
 
