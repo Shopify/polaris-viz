@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+## [0.17.1] - 2021-06-17
+
+### Changed
+
+- Adds `tslib@^2.1` to our package `dependencies` to avoid different versions of `tslib` resolving and breaking our code.
+
 ## [0.17.0] - 2021-06-16
 
 POTENTIALLY BROKEN -- This release implicitly depends on `tslib>=2.1.0` but other projects may not explicitly be using `tslib>=2.1.0`. For example, this version sporadically breaks in `web` since the version of `tslib` in `web` resolves to `^1`.
