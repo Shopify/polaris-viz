@@ -9,7 +9,12 @@ interface Props {
   width: number;
 }
 
-export function HorizontalGridLines({ticks, color, transform, width}: Props) {
+export const HorizontalGridLines = React.memo(function HorizontalGridLines({
+  ticks,
+  color,
+  transform,
+  width,
+}: Props) {
   return (
     <React.Fragment>
       {ticks.map(({yOffset}, index) => (
@@ -22,4 +27,4 @@ export function HorizontalGridLines({ticks, color, transform, width}: Props) {
       ))}
     </React.Fragment>
   );
-}
+});

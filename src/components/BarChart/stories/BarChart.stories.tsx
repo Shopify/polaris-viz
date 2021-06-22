@@ -294,7 +294,7 @@ NonRoundCorners.args = {
 export const LargeVolume = Template.bind({});
 LargeVolume.args = {
   ...defaultProps,
-  data: Array(200)
+  data: Array(1000)
     .fill(null)
     .map((x) => {
       return {

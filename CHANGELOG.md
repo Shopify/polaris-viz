@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Fixed
+
+- Fixes `<BarChart />` when very large datasets are displayed
+
 ## [0.17.2] - 2021-06-23
 
 ### Changed
