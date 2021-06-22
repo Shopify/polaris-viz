@@ -4,12 +4,10 @@ import {Story, Meta} from '@storybook/react';
 import {
   MultiSeriesBarChart,
   MultiSeriesBarChartProps,
-  TooltipContent,
 } from '../../../components';
 
 import styles from './MultiSeriesBarChart.stories.scss';
 import {DEFAULT_GREY_LABEL} from '../../../constants';
-import {BarMargin} from '../types';
 import {colorSky} from '@shopify/polaris-tokens';
 import {SquareColorPreview} from '../../SquareColorPreview';
 
@@ -201,9 +199,6 @@ const defaultProps = {
   },
 };
 
-export const Default = Template.bind({});
-Default.args = defaultProps;
-
 const purple = '#5052b3';
 const negativePurple = '#39337f';
 const green = '#1bbe9e';
@@ -240,13 +235,33 @@ const gradientSeries = series
   }))
   .filter((_, index) => index < 2);
 
-export const Gradient = Template.bind({});
-Gradient.args = {
+export const InsightsStyle = Template.bind({});
+InsightsStyle.parameters = {
+  backgrounds: {
+    default: 'dark',
+  },
+};
+InsightsStyle.args = {
   series: gradientSeries,
-  xAxisOptions: {labels},
+  xAxisOptions: {labels, showTicks: false, labelColor: 'rgb(220, 220, 220)'},
   barOptions: {
     hasRoundedCorners: true,
   },
+  yAxisOptions: {
+    backgroundColor: '#333333',
+    labelColor: 'rgb(220, 220, 220)',
+  },
+  gridOptions: {
+    showVerticalLines: false,
+    color: 'rgb(99, 115, 129)',
+    horizontalOverflow: true,
+    horizontalMargin: 20,
+  },
+  crossHairOptions: {
+    width: 1,
+    color: 'rgb(139, 159, 176)',
+  },
+  isAnimated: true,
 };
 
 export const OverflowStyles = Template.bind({});
@@ -255,6 +270,21 @@ OverflowStyles.args = {
   xAxisOptions: {labels},
   barOptions: {
     hasRoundedCorners: true,
+  },
+  yAxisOptions: {backgroundColor: 'white'},
+  gridOptions: {
+    horizontalOverflow: true,
+    horizontalMargin: 30,
+    showVerticalLines: false,
+  },
+};
+
+export const WithoutRoundedCorners = Template.bind({});
+WithoutRoundedCorners.args = {
+  series: gradientSeries,
+  xAxisOptions: {labels},
+  barOptions: {
+    hasRoundedCorners: false,
   },
   yAxisOptions: {backgroundColor: 'white'},
   gridOptions: {
@@ -327,4 +357,39 @@ IntegersOnly.args = {
   ],
   xAxisOptions: {labels},
   yAxisOptions: {integersOnly: true},
+};
+
+export const LargeVolume = Template.bind({});
+LargeVolume.args = {
+  series: [
+    {
+      name: 'Breakfast',
+      color: 'primary',
+      data: Array(200)
+        .fill(null)
+        .map((x) => {
+          return {
+            rawValue: Math.random() * Math.random() * 100,
+            label: Math.random().toString(),
+          };
+        }),
+    },
+    {
+      name: 'Lunch',
+      color: 'secondary',
+      data: Array(200)
+        .fill(null)
+        .map((x) => {
+          return {
+            rawValue: Math.random() * Math.random() * 100,
+            label: Math.random().toString(),
+          };
+        }),
+    },
+  ],
+  xAxisOptions: {
+    labels: Array(200)
+      .fill(null)
+      .map((x) => 'some label'),
+  },
 };

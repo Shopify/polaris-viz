@@ -91,6 +91,14 @@ DottedLineLegend.args = {
   ],
 };
 
+export const DashedLineLegend = Template.bind({});
+DashedLineLegend.args = {
+  series: [
+    {lineStyle: 'dashed', name: 'Sales', color: 'colorRed'},
+    {lineStyle: 'dashed', name: 'Visits', color: 'colorPurple'},
+  ],
+};
+
 export const LineLegend = Template.bind({});
 LineLegend.args = {
   series: [

@@ -6,7 +6,7 @@ import {primaryColor, secondaryColor} from '../../../utilities';
 
 const series = [
   {
-    color: primaryColor,
+    color: 'darkModePositive',
     areaStyle: 'gradient',
     hasPoint: true,
     data: [
@@ -24,21 +24,21 @@ const series = [
     ],
   },
   {
-    color: secondaryColor,
+    color: 'darkModePositive',
     areaStyle: 'none',
     lineStyle: 'dashed',
     data: [
-      {x: 0, y: 10},
-      {x: 1, y: 20},
-      {x: 2, y: 30},
-      {x: 3, y: 40},
-      {x: 4, y: 40},
-      {x: 5, y: 400},
-      {x: 6, y: 20},
-      {x: 7, y: 80},
-      {x: 8, y: 90},
-      {x: 9, y: 20},
-      {x: 10, y: 40},
+      {x: 0, y: 200},
+      {x: 1, y: 200},
+      {x: 2, y: 200},
+      {x: 3, y: 200},
+      {x: 4, y: 200},
+      {x: 5, y: 200},
+      {x: 6, y: 200},
+      {x: 7, y: 200},
+      {x: 8, y: 200},
+      {x: 9, y: 200},
+      {x: 10, y: 200},
     ],
   },
 ];
@@ -90,8 +90,13 @@ const defaultProps = {
   accessibilityLabel: 'Customer growth over time',
 };
 
-export const Default = Template.bind({});
-Default.args = defaultProps;
+export const InsightsStyle = Template.bind({});
+InsightsStyle.args = defaultProps;
+InsightsStyle.parameters = {
+  backgrounds: {
+    default: 'dark',
+  },
+};
 
 export const hasSpline = Template.bind({});
 hasSpline.args = {
