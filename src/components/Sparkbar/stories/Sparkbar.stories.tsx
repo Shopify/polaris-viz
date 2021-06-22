@@ -84,15 +84,19 @@ const defaultProps = {
     {x: 9, y: comparisonValue},
     {x: 10, y: comparisonValue},
   ],
-  color: primaryColor,
+  color: 'darkModePositive',
   barFillStyle: 'solid',
   accessibilityLabel:
     'A bar chart showing orders over time for the past 11 weeks. The minimum is 100 orders and the maximum is 1,000 orders, compared to an average of 500 orders during previous 11-week period.',
 };
 
-export const Default = Template.bind({});
-Default.args = defaultProps;
-
+export const DarkMode = Template.bind({});
+DarkMode.args = defaultProps;
+DarkMode.parameters = {
+  backgrounds: {
+    default: 'dark',
+  },
+};
 export const OffsetAndNulls = Template.bind({});
 OffsetAndNulls.args = {
   ...defaultProps,

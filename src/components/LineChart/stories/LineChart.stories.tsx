@@ -9,7 +9,7 @@ import {
   formatXAxisLabel,
   formatYAxisLabel,
   renderTooltipContent,
-  defaultProps,
+  gradient,
 } from './utils.stories';
 
 const tooltipContent = {
@@ -106,7 +106,41 @@ const Template: Story<LineChartProps> = (args: LineChartProps) => {
 };
 
 export const InsightsStyle = Template.bind({});
-InsightsStyle.args = defaultProps;
+InsightsStyle.parameters = {
+  backgrounds: {
+    default: 'dark',
+  },
+};
+InsightsStyle.args = {
+  series,
+  xAxisOptions: {
+    xAxisLabels,
+    labelFormatter: formatXAxisLabel,
+    useMinimalLabels: true,
+    showTicks: false,
+    labelColor: 'rgb(220, 220, 220)',
+  },
+  lineOptions: {
+    hasSpline: true,
+    pointStroke: '#333333',
+  },
+  gridOptions: {
+    showVerticalLines: false,
+    color: 'rgb(99, 115, 129)',
+    horizontalOverflow: true,
+    horizontalMargin: 20,
+  },
+  crossHairOptions: {
+    width: 1,
+  },
+  yAxisOptions: {
+    labelFormatter: formatYAxisLabel,
+    backgroundColor: '#333333',
+    labelColor: 'rgb(220, 220, 220)',
+  },
+  renderTooltipContent,
+  isAnimated: true,
+};
 
 export const HideXAxisLabels = Template.bind({});
 HideXAxisLabels.args = {
@@ -161,37 +195,6 @@ curvedLines.args = {
   renderTooltipContent,
 };
 
-export const DarkMode = Template.bind({});
-DarkMode.parameters = {
-  backgrounds: {
-    default: 'dark',
-  },
-};
-DarkMode.args = {
-  series,
-  xAxisOptions: {
-    xAxisLabels,
-    labelFormatter: formatXAxisLabel,
-    useMinimalLabels: true,
-    showTicks: false,
-  },
-  lineOptions: {
-    hasSpline: true,
-    pointStroke: '#333333',
-  },
-  gridOptions: {
-    showVerticalLines: false,
-    color: 'rgb(99, 115, 129)',
-    horizontalOverflow: true,
-    horizontalMargin: 20,
-  },
-  crossHairOptions: {
-    width: 1,
-  },
-  yAxisOptions: {labelFormatter: formatYAxisLabel, backgroundColor: '#333333'},
-  renderTooltipContent,
-};
-
 export const IntegersOnly = Template.bind({});
 IntegersOnly.args = {
   series: [
@@ -213,5 +216,89 @@ IntegersOnly.args = {
     labelFormatter: formatXAxisLabel,
   },
   yAxisOptions: {integersOnly: true},
+  renderTooltipContent,
+};
+
+export const NoArea = Template.bind({});
+NoArea.args = {
+  series: [
+    {
+      name: 'Sales',
+      data: [
+        {rawValue: 100, label: '2020-04-01T12:00:00'},
+        {rawValue: 99, label: '2020-04-02T12:00:00'},
+        {rawValue: 1000, label: '2020-04-03T12:00:00'},
+        {rawValue: 2, label: '2020-04-04T12:00:00'},
+        {rawValue: 22, label: '2020-04-05T12:00:00'},
+        {rawValue: 6, label: '2020-04-06T12:00:00'},
+        {rawValue: 5, label: '2020-04-07T12:00:00'},
+      ],
+      color: gradient,
+    },
+  ],
+  xAxisOptions: {
+    xAxisLabels,
+    labelFormatter: formatXAxisLabel,
+  },
+  renderTooltipContent,
+};
+
+export const SolidColor = Template.bind({});
+SolidColor.args = {
+  series: [
+    {
+      name: 'Sales',
+      data: [
+        {rawValue: 100, label: '2020-04-01T12:00:00'},
+        {rawValue: 99, label: '2020-04-02T12:00:00'},
+        {rawValue: 1000, label: '2020-04-03T12:00:00'},
+        {rawValue: 2, label: '2020-04-04T12:00:00'},
+        {rawValue: 22, label: '2020-04-05T12:00:00'},
+        {rawValue: 6, label: '2020-04-06T12:00:00'},
+        {rawValue: 5, label: '2020-04-07T12:00:00'},
+      ],
+      color: 'colorTeal',
+    },
+  ],
+  xAxisOptions: {
+    xAxisLabels,
+    labelFormatter: formatXAxisLabel,
+  },
+  renderTooltipContent,
+};
+
+export const LargeDataSet = Template.bind({});
+LargeDataSet.args = {
+  series: [
+    {
+      name: 'series 1',
+      data: Array(3000)
+        .fill(null)
+        .map((x) => {
+          return {
+            rawValue: Math.random() * Math.random() * 100,
+            label: 'Some value',
+          };
+        }),
+    },
+    {
+      name: 'series 2',
+      data: Array(3000)
+        .fill(null)
+        .map((x) => {
+          return {
+            rawValue: Math.random() * Math.random() * 100,
+            label: 'Some value',
+          };
+        }),
+    },
+  ],
+  xAxisOptions: {
+    xAxisLabels: Array(3000)
+      .fill(null)
+      .map((x) => {
+        return 'Some value';
+      }),
+  },
   renderTooltipContent,
 };

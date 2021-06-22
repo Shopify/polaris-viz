@@ -97,3 +97,37 @@ const Template: Story<StackedAreaChartProps> = (
 };
 export const Default = Template.bind({});
 Default.args = defaultProps;
+
+export const LargeVolume = Template.bind({});
+LargeVolume.args = {
+  ...defaultProps,
+  xAxisLabels: Array(2000)
+    .fill(null)
+    .map((x) => 'label'),
+  series: [
+    {
+      name: 'First-time',
+      data: Array(2000)
+        .fill(null)
+        .map((x) => {
+          return {
+            rawValue: Math.random() * Math.random() * 100,
+            label: Math.random().toString(),
+          };
+        }),
+      color: 'primary' as 'primary',
+    },
+    {
+      name: 'Returning',
+      data: Array(2000)
+        .fill(null)
+        .map((x) => {
+          return {
+            rawValue: Math.random() * Math.random() * 100,
+            label: Math.random().toString(),
+          };
+        }),
+      color: 'secondary' as 'secondary',
+    },
+  ],
+};

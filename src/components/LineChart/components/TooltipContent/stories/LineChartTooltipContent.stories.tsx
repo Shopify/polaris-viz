@@ -45,6 +45,32 @@ Default.args = {
       name: 'Primary',
       point: {label: 'Sept. 10, 1989', value: 28},
       color: 'colorRed',
+      lineStyle: 'solid',
+    },
+  ],
+};
+
+export const DashedLine = Template.bind({});
+
+DashedLine.args = {
+  data: [
+    {
+      name: 'Primary',
+      point: {label: 'Sept. 10, 1989', value: 28},
+      color: 'colorRed',
+      lineStyle: 'dashed',
+    },
+  ],
+};
+
+export const DottedLine = Template.bind({});
+
+DottedLine.args = {
+  data: [
+    {
+      name: 'Primary',
+      point: {label: 'Sept. 10, 1989', value: 28},
+      color: 'colorRed',
       lineStyle: 'dotted',
     },
   ],

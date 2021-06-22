@@ -9,6 +9,21 @@ import {
 } from '../../../constants';
 import {colorWhite, colorSky} from '@shopify/polaris-tokens';
 
+export const gradient = [
+  {
+    offset: 0,
+    color: '#08CA9B',
+  },
+  {
+    offset: 85,
+    color: 'rgba(92,105,208,0.8)',
+  },
+  {
+    offset: 100,
+    color: 'rgba(92,105,208,0.8)',
+  },
+];
+
 export const series = [
   {
     name: 'Apr 01–Apr 14, 2020',
@@ -28,20 +43,7 @@ export const series = [
       {rawValue: 849, label: '2020-04-13T12:00:00'},
       {rawValue: 129, label: '2020-04-14T12:00:00'},
     ],
-    color: [
-      {
-        offset: 0,
-        color: '#08CA9B',
-      },
-      {
-        offset: 85,
-        color: 'rgba(92,105,208,0.8)',
-      },
-      {
-        offset: 100,
-        color: 'rgba(92,105,208,0.8)',
-      },
-    ],
+    color: gradient,
     lineStyle: 'solid' as 'solid',
     areaColor: 'rgba(92,105,208,0.5)',
   },

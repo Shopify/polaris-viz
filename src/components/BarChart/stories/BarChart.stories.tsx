@@ -111,7 +111,29 @@ const Template: Story<BarChartProps> = (args: BarChartProps) => {
 };
 
 export const InsightsStyle = Template.bind({});
-InsightsStyle.args = defaultProps;
+InsightsStyle.args = {
+  ...defaultProps,
+  xAxisOptions: {
+    labelFormatter: defaultProps.xAxisOptions.labelFormatter,
+    showTicks: false,
+    labelColor: 'rgb(220, 220, 220)',
+  },
+  gridOptions: {
+    showVerticalLines: false,
+    color: 'rgb(99, 115, 129)',
+    horizontalOverflow: true,
+    horizontalMargin: 20,
+  },
+  yAxisOptions: {
+    backgroundColor: '#333333',
+    labelColor: 'rgb(220, 220, 220)',
+  },
+};
+InsightsStyle.parameters = {
+  backgrounds: {
+    default: 'dark',
+  },
+};
 
 export const OverflowStyle = Template.bind({});
 OverflowStyle.args = {
@@ -249,4 +271,35 @@ IntegersOnly.args = {
     ...defaultProps.yAxisOptions,
     integersOnly: true,
   },
+};
+
+export const SolidColor = Template.bind({});
+SolidColor.args = {
+  ...defaultProps,
+  barOptions: {
+    ...defaultProps.barOptions,
+    color: 'colorTeal',
+  },
+};
+
+export const NonRoundCorners = Template.bind({});
+NonRoundCorners.args = {
+  ...defaultProps,
+  barOptions: {
+    ...defaultProps.barOptions,
+    hasRoundedCorners: false,
+  },
+};
+
+export const LargeVolume = Template.bind({});
+LargeVolume.args = {
+  ...defaultProps,
+  data: Array(200)
+    .fill(null)
+    .map((x) => {
+      return {
+        rawValue: Math.random() * Math.random() * 100,
+        label: Math.random().toString(),
+      };
+    }),
 };
