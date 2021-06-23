@@ -135,6 +135,16 @@ export function Sparkbar({
   const lineShape = comparison ? lineGenerator(comparison) : null;
 
   const barWidth = useMemo(() => xScale.bandwidth(), [xScale]);
+  const barGap = useMemo(
+    () => xScale.step() * xScale.paddingInner() + STROKE_WIDTH,
+    [xScale],
+  );
+
+  const strokeDashoffset =
+    dataOffsetLeft == null
+      ? -(STROKE_WIDTH / 2)
+      : -(STROKE_WIDTH / 2) - dataOffsetLeft;
+  const strokeDasharray = `${barWidth - STROKE_WIDTH} ${barGap}`;
 
   const id = useMemo(() => uniqueId('sparkbar'), []);
 
@@ -269,6 +279,8 @@ export function Sparkbar({
             d={lineShape!}
             className={styles.ComparisonLine}
             opacity="0.9"
+            strokeDashoffset={strokeDashoffset}
+            strokeDasharray={strokeDasharray}
           />
         )}
       </svg>
