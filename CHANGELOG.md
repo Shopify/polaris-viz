@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+## [0.17.2] - 2021-06-23
+
+### Changed
+
+- Explicitly specifies `tslib@^2.1.0` instead of `tslib@^2.1` in an attempt to fix duplicated packages in `web`
+
 ## [0.17.1] - 2021-06-17
 
 ### Changed
