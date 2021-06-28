@@ -2,7 +2,8 @@ import React from 'react';
 import tokens from '@shopify/polaris-tokens';
 import type {ActiveTooltip} from 'types';
 import {useSpring, animated, Interpolation} from '@react-spring/web';
-import {classNames} from '@shopify/css-utilities';
+
+import {classNames} from '../../utilities';
 
 import styles from './Point.scss';
 
