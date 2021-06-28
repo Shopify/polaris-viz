@@ -65,7 +65,7 @@ function getMiniminalLabelPosition({
   return xOffset - width / 2;
 }
 
-export function BarChartXAxis({
+export const BarChartXAxis = React.memo(function BarChartXAxis({
   labels,
   xScale,
   fontSize,
@@ -181,4 +181,4 @@ export function BarChartXAxis({
       })}
     </React.Fragment>
   );
-}
+});

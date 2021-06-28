@@ -55,10 +55,12 @@ export function getBarXAxisDetails({
       LABEL_SPACE_MINUS_FIRST_AND_LAST
     : null;
 
+  const spaceBetweenLabels = Math.min(SPACING_EXTRA_TIGHT, step / 2);
+
   // width each label is allowed to take up
   const datumXLabelSpace =
     spaceForMinimalLabels == null
-      ? step - SPACING_EXTRA_TIGHT
+      ? step - spaceBetweenLabels
       : spaceForMinimalLabels;
 
   // calculations are based on the longest label

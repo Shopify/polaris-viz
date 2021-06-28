@@ -24,7 +24,7 @@ interface Props {
   rotateZeroBars: boolean;
 }
 
-export function Bar({
+export const Bar = React.memo(function Bar({
   color,
   x,
   rawValue,
@@ -43,7 +43,9 @@ export function Bar({
   const treatAsNegative = rawValue < 0 || (rawValue === 0 && rotateZeroBars);
   const rotation = treatAsNegative ? 'rotate(180deg)' : 'rotate(0deg)';
   const xPosition = treatAsNegative ? x + width : x;
-  const radius = hasRoundedCorners ? ROUNDED_BAR_RADIUS : 0;
+  const radius = hasRoundedCorners
+    ? Math.min(ROUNDED_BAR_RADIUS, width / 2)
+    : 0;
 
   const yPosition = useMemo(() => {
     if (height == null) return;
@@ -113,4 +115,4 @@ export function Bar({
       className={styles.Bar}
     />
   );
-}
+});

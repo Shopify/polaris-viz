@@ -201,6 +201,18 @@ export function Chart({
     [barOptions, yScale],
   );
 
+  const handleFocus = useCallback(
+    ({index, cx, cy}: {index: number; cx: number; cy: number}) => {
+      if (index == null) return;
+      setActiveBar(index);
+      setTooltipPosition({
+        x: cx + chartStartPosition + xScale.bandwidth() / 2,
+        y: cy,
+      });
+    },
+    [chartStartPosition, xScale],
+  );
+
   const shouldAnimate = !prefersReducedMotion && isAnimated;
 
   const transitions = useTransition(data, {
@@ -408,23 +420,6 @@ export function Chart({
       ) : null}
     </div>
   );
-
-  function handleFocus({
-    index,
-    cx,
-    cy,
-  }: {
-    index: number;
-    cx: number;
-    cy: number;
-  }) {
-    if (index == null) return;
-    setActiveBar(index);
-    setTooltipPosition({
-      x: cx + chartStartPosition + xScale.bandwidth() / 2,
-      y: cy,
-    });
-  }
 
   function handleInteraction(
     event: React.MouseEvent<SVGSVGElement> | React.TouchEvent<SVGSVGElement>,

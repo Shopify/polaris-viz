@@ -17,15 +17,17 @@ export function useXScale({
   data: Data[];
   formatXAxisLabel: StringLabelFormatter;
 }) {
-  const xScale = scaleBand()
-    .range([0, drawableWidth])
-    .paddingInner(innerMargin)
-    .paddingOuter(outerMargin)
-    .domain(data.map((_, index) => index.toString()));
-
-  const barWidthOffset = xScale.bandwidth() / 2;
+  const xScale = useMemo(() => {
+    return scaleBand()
+      .range([0, drawableWidth])
+      .paddingInner(innerMargin)
+      .paddingOuter(outerMargin)
+      .domain(data.map((_, index) => index.toString()));
+  }, [drawableWidth, innerMargin, outerMargin, data]);
 
   const xAxisLabels = useMemo(() => {
+    const barWidthOffset = xScale.bandwidth() / 2;
+
     const labels = data.map(({label}) => label);
 
     return data.map(({label}, index) => {
@@ -38,7 +40,7 @@ export function useXScale({
         xOffset,
       };
     });
-  }, [data, xScale, barWidthOffset, formatXAxisLabel]);
+  }, [data, xScale, formatXAxisLabel]);
 
   return {xScale, xAxisLabels};
 }
