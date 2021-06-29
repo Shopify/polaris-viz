@@ -12,6 +12,7 @@ export {
   TooltipContent,
   LinePreview,
   SquareColorPreview,
+  PolarisVizProvider,
 } from './components';
 
 export type {
@@ -25,6 +26,11 @@ export type {
   StackedAreaChartProps,
   MultiSeriesBarChartProps,
   TooltipContentProps,
+  PolarisVizProviderProps,
 } from './components';
+
+export {DEFAULT_THEME as PolarisVizTheme} from './constants';
+
+export {createTheme} from './utilities/create-themes';
 
 export type {Color, GradientStop} from './types';

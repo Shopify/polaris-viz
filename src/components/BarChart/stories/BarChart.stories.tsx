@@ -1,7 +1,7 @@
 import React from 'react';
 import {Story, Meta} from '@storybook/react';
 
-import {BarChart, BarChartProps} from '../../../components';
+import {BarChart, BarChartProps, PolarisVizProvider} from '../../../components';
 
 import {formatXAxisLabel, defaultProps} from './utils.stories';
 
@@ -38,6 +38,9 @@ export default {
   },
   argTypes: {
     annotations: {
+      control: {
+        type: 'select',
+      },
       description:
         'An array of annotations to show on the chart. [Annotation type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/BarChart/types.ts#L61)',
       options: ['No annotation', 'Annotation on second bar'],
@@ -72,20 +75,11 @@ export default {
       },
     },
     data: {
-      description:
-        'Data represented as bars. Required. [BarChartData type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/BarChart/types.ts#L8-L14)',
-    },
-    barOptions: {
-      description:
-        'Control the appearance of bars and the spacing between them. [BarOptions type definition](https://github.com/Shopify/polaris-viz/blob/master/src/components/BarChart/types.ts#L29).',
+      description: 'Data represented as bars. Required.',
     },
     emptyStateText: {
       description:
         'Used to indicate to screenreaders that a chart with no data has been rendered, in the case that an empty array is passed as the data. It is strongly recommended that this is included if the data prop could be an empty array.',
-    },
-    gridOptions: {
-      description:
-        'An object including the following optional proprties that define the grid. [GridOptions type defintion.](https://github.com/Shopify/polaris-viz/blob/master/src/components/BarChart/types.ts#L40)',
     },
     isAnimated: {
       description:
@@ -96,12 +90,10 @@ export default {
         'If provided, renders a `<SkipLink/>` button with the string. Use this for charts with large data sets, so keyboard users can skip all the tabbable data points in the chart.',
     },
     xAxisOptions: {
-      description:
-        'An object used to configure the appearance of the xAxis and its labels. [XAxisOptions type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/BarChart/types.ts#L47)',
+      description: 'An object used to configure the xAxis and its labels.',
     },
     yAxisOptions: {
-      description:
-        'An object used to configure the appearance of the yAxis and its labels. [YAxisOptions type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/BarChart/types.ts#L54)',
+      description: 'An object used to configure the yAxis and its labels.',
     },
   },
 } as Meta;
@@ -110,45 +102,19 @@ const Template: Story<BarChartProps> = (args: BarChartProps) => {
   return <BarChart {...args} />;
 };
 
-export const InsightsStyle = Template.bind({});
-InsightsStyle.args = {
+export const Default = Template.bind({});
+Default.args = {
   ...defaultProps,
   xAxisOptions: {
     labelFormatter: defaultProps.xAxisOptions.labelFormatter,
-    showTicks: false,
-    labelColor: 'rgb(220, 220, 220)',
-  },
-  gridOptions: {
-    showVerticalLines: false,
-    color: 'rgb(99, 115, 129)',
-    horizontalOverflow: true,
-    horizontalMargin: 20,
   },
   yAxisOptions: {
-    backgroundColor: '#333333',
-    labelColor: 'rgb(220, 220, 220)',
+    labelFormatter: defaultProps.yAxisOptions.labelFormatter,
   },
 };
-InsightsStyle.parameters = {
+Default.parameters = {
   backgrounds: {
     default: 'dark',
-  },
-};
-
-export const OverflowStyle = Template.bind({});
-OverflowStyle.args = {
-  ...defaultProps,
-  yAxisOptions: {...defaultProps.yAxisOptions, backgroundColor: 'white'},
-  xAxisOptions: {
-    ...defaultProps.xAxisOptions,
-    showTicks: false,
-    useMinimalLabels: true,
-  },
-  gridOptions: {
-    ...defaultProps.gridOptions,
-    horizontalOverflow: true,
-    horizontalMargin: 20,
-    showVerticalLines: false,
   },
 };
 
@@ -191,7 +157,11 @@ Annotations.args = {
     },
   ],
 };
-
+Annotations.parameters = {
+  backgrounds: {
+    default: 'dark',
+  },
+};
 export const LastBarTreatment = Template.bind({});
 LastBarTreatment.args = {
   ...defaultProps,
@@ -203,15 +173,18 @@ LastBarTreatment.args = {
     {rawValue: 100.79, label: '2020-01-05T12:00:00Z'},
     {rawValue: 350.6, label: '2020-01-06T12:00:00Z'},
     {rawValue: 277.69, label: '2020-01-07T12:00:00Z'},
-    {rawValue: 0, label: '2020-01-08T12:00:00Z'},
+    {rawValue: 10, label: '2020-01-08T12:00:00Z'},
     {
       rawValue: 950.19,
       label: '2020-01-09T12:00:00Z',
-      barOptions: {
-        color: 'colorPurple',
-      },
+      barColor: 'yellow',
     },
   ],
+};
+LastBarTreatment.parameters = {
+  backgrounds: {
+    default: 'dark',
+  },
 };
 
 export const MinimalLabels = Template.bind({});
@@ -255,6 +228,11 @@ MinimalLabels.args = {
     useMinimalLabels: true,
   },
 };
+MinimalLabels.parameters = {
+  backgrounds: {
+    default: 'dark',
+  },
+};
 
 export const IntegersOnly = Template.bind({});
 IntegersOnly.args = {
@@ -272,22 +250,9 @@ IntegersOnly.args = {
     integersOnly: true,
   },
 };
-
-export const SolidColor = Template.bind({});
-SolidColor.args = {
-  ...defaultProps,
-  barOptions: {
-    ...defaultProps.barOptions,
-    color: 'colorTeal',
-  },
-};
-
-export const NonRoundCorners = Template.bind({});
-NonRoundCorners.args = {
-  ...defaultProps,
-  barOptions: {
-    ...defaultProps.barOptions,
-    hasRoundedCorners: false,
+IntegersOnly.parameters = {
+  backgrounds: {
+    default: 'dark',
   },
 };
 
@@ -303,3 +268,81 @@ LargeVolume.args = {
       };
     }),
 };
+LargeVolume.parameters = {
+  backgrounds: {
+    default: 'dark',
+  },
+};
+
+const SolidColorsTemplate: Story<BarChartProps> = (args: BarChartProps) => {
+  return (
+    <PolarisVizProvider
+      themes={{
+        Default: {
+          bar: {
+            color: 'yellow',
+          },
+        },
+      }}
+    >
+      <BarChart {...args} />
+    </PolarisVizProvider>
+  );
+};
+
+export const SolidColors = SolidColorsTemplate.bind({});
+SolidColors.parameters = {
+  backgrounds: {
+    default: 'dark',
+  },
+};
+SolidColors.args = defaultProps;
+
+const NonRoundCornersTemplate: Story<BarChartProps> = (args: BarChartProps) => {
+  return (
+    <PolarisVizProvider
+      themes={{
+        Default: {
+          bar: {
+            hasRoundedCorners: false,
+          },
+        },
+      }}
+    >
+      <BarChart {...args} />
+    </PolarisVizProvider>
+  );
+};
+
+export const NonRoundCorners = NonRoundCornersTemplate.bind({});
+NonRoundCorners.parameters = {
+  backgrounds: {
+    default: 'dark',
+  },
+};
+NonRoundCorners.args = defaultProps;
+
+const NoOverflowStyleTemplate: Story<BarChartProps> = (args: BarChartProps) => {
+  return (
+    <PolarisVizProvider
+      themes={{
+        Default: {
+          grid: {
+            horizontalOverflow: false,
+            horizontalMargin: 0,
+          },
+        },
+      }}
+    >
+      <BarChart {...args} />
+    </PolarisVizProvider>
+  );
+};
+
+export const NoOverflowStyle = NoOverflowStyleTemplate.bind({});
+NoOverflowStyle.parameters = {
+  backgrounds: {
+    default: 'dark',
+  },
+};
+NoOverflowStyle.args = defaultProps;

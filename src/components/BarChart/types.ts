@@ -1,9 +1,7 @@
-import type {Color, StringLabelFormatter, NumberLabelFormatter} from 'types';
+import type {Color} from 'types';
 
 export interface BarChartData {
-  barOptions?: {
-    color: Color;
-  };
+  barColor?: Color | string;
   label: string;
   rawValue: number;
 }
@@ -13,28 +11,6 @@ export interface RenderTooltipContentData {
   value: number;
   annotation?: Annotation;
 }
-
-export interface GridOptions {
-  showHorizontalLines: boolean;
-  horizontalOverflow: boolean;
-  color: string;
-  horizontalMargin: number;
-}
-
-export interface XAxisOptions {
-  labelFormatter: StringLabelFormatter;
-  showTicks: boolean;
-  labelColor: string;
-  useMinimalLabels: boolean;
-}
-
-export interface YAxisOptions {
-  labelFormatter: NumberLabelFormatter;
-  labelColor: string;
-  backgroundColor: string;
-  integersOnly: boolean;
-}
-
 export interface Annotation {
   dataIndex: number;
   width: number;

@@ -95,12 +95,32 @@ export const VIZ_GRADIENT_COLOR = {
   },
 };
 
-export const DefaultTheme: Theme = {
-  barOptions: {
+export const DEFAULT_THEME: Theme = {
+  chartContainer: {
+    borderRadius: '0px',
+    padding: '0px',
+    backgroundColor: '#1f1f25',
+  },
+  bar: {
     color: VIZ_GRADIENT_COLOR.neutral.up,
     hasRoundedCorners: true,
     innerMargin: 'Medium',
     outerMargin: 'Medium',
     zeroAsMinHeight: false,
+  },
+  grid: {
+    showVerticalLines: false,
+    showHorizontalLines: true,
+    color: 'rgb(99, 115, 129)',
+    horizontalOverflow: true,
+    horizontalMargin: 20,
+  },
+  xAxis: {
+    showTicks: false,
+    labelColor: 'rgb(220, 220, 220)',
+  },
+  yAxis: {
+    backgroundColor: '#1f1f25',
+    labelColor: 'rgb(220, 220, 220)',
   },
 };

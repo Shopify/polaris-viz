@@ -1,19 +1,29 @@
-import type {Theme} from '../types';
-import {DefaultTheme} from '../constants';
+import type {Theme, PartialTheme} from '../types';
+import {DEFAULT_THEME} from '../constants';
 
-export const createTheme = (theme: Partial<Theme>): Theme => {
-  const themeKeys = Object.keys(DefaultTheme) as [keyof Theme];
+export const createTheme = (
+  theme: PartialTheme,
+  baseTheme = DEFAULT_THEME,
+): Theme => {
+  const themeKeys = Object.keys(baseTheme);
 
-  return themeKeys.reduce((accumulator, key: keyof Theme) => {
-    accumulator[key] = {
-      ...DefaultTheme[key],
-      ...theme[key],
-    };
+  return themeKeys.reduce((accumulator: any, key: keyof Theme) => {
+    const defaultValue = DEFAULT_THEME[key];
+    const value = theme[key];
+
+    if (typeof defaultValue === 'string' || typeof value === 'string') {
+      accumulator[key] = value;
+    } else {
+      accumulator[key] = {
+        ...DEFAULT_THEME[key],
+        ...theme[key],
+      };
+    }
     return accumulator;
-  }, {} as Theme);
+  }, {});
 };
 
-export const createThemes = (themeRecord: {[key: string]: Theme}) => {
+export const createThemes = (themeRecord: {[key: string]: PartialTheme}) => {
   return Object.keys(themeRecord).reduce((accumulator, themeName) => {
     accumulator[themeName] = createTheme(themeRecord[themeName]);
     return accumulator;

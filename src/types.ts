@@ -140,6 +140,15 @@ export type SparkChartData = number | null;
 export type PathInterpolator = InterpolatorFn<readonly number[], string>;
 export type NumberInterpolator = InterpolatorFn<readonly number[], number>;
 
+export interface XAxisOptions {
+  labelFormatter?: StringLabelFormatter;
+  useMinimalLabels?: boolean;
+}
+export interface YAxisOptions {
+  labelFormatter?: NumberLabelFormatter;
+  integersOnly?: boolean;
+}
+
 // === Theme types === //
 export enum BarMargin {
   Small = 0.05,
@@ -148,16 +157,51 @@ export enum BarMargin {
   None = 0,
 }
 
-export interface BarOptions {
+export interface GridTheme {
+  showHorizontalLines: boolean;
+  showVerticalLines?: boolean;
+  horizontalOverflow: boolean;
+  color: string;
+  horizontalMargin: number;
+}
+
+export interface BarTheme {
   innerMargin: keyof typeof BarMargin;
   outerMargin: keyof typeof BarMargin;
-  color: Color | GradientStop[];
+  color: string | GradientStop[];
   hasRoundedCorners: boolean;
   /**
    * @deprecated This prop is experimental and not ready for general use. If you want to use this, come talk to us in #polaris-data-viz
    */
   zeroAsMinHeight: boolean;
 }
+
+export interface XAxisTheme {
+  showTicks: boolean;
+  labelColor: string;
+}
+
+export interface YAxisTheme {
+  labelColor: string;
+  backgroundColor: string;
+}
+export interface ChartContainerTheme {
+  borderRadius: string;
+  padding: string;
+  backgroundColor: string;
+}
+
+export interface PartialTheme {
+  chartContainer?: Partial<ChartContainerTheme>;
+  bar?: Partial<BarTheme>;
+  grid?: Partial<GridTheme>;
+  xAxis?: Partial<XAxisTheme>;
+  yAxis?: Partial<YAxisTheme>;
+}
 export interface Theme {
-  barOptions: Partial<BarOptions>;
+  chartContainer: ChartContainerTheme;
+  bar: BarTheme;
+  grid: GridTheme;
+  xAxis: XAxisTheme;
+  yAxis: YAxisTheme;
 }
