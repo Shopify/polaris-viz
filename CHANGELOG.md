@@ -19,15 +19,14 @@
 ### Fixed
 
 - Fixes `<BarChart />` when very large datasets are displayed
-- Fixes background color not showing when printing `<NormalizedStackedBarChart />`.
+### Added
+- `PolarisVizProvider` to support theming charts
+- `theme` to `BarChartProps`
+### Removed 
+- `barOptions`, `gridOptions`, `xAxisOptions.showTicks`, `xAxisOptions.labelColor` and `yAxisOptions.labelColor` from `BarChartProps`.
 
 ### Changed
-
-- removes @shopify/css-utilities in favour of adding our own utility
-- lowers d3-path dependency to a version matching d3-shape's dependency
-- replaces lodash.isequal with smaller option fast-deep-equal
-- adds a resolution for d3-array so we only have one version of the package in our library
-- Add xmlns and specific height & width values to svgs tags
+- BarChart styles now are defined through themes in `PolarisVizProvider` instead of props. For more details check the [migration guide](https://docs.google.com/document/d/1VxfcgBbTNwjmYix1jGuDMgqDgIdehTgQbVZpER7djeU/edit?usp=sharing)
 
 ## [0.17.2] - 2021-06-23
 

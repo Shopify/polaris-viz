@@ -4,7 +4,7 @@ import {mount} from '@shopify/react-testing';
 import {usePolarisVizContext} from '../../../hooks';
 import {PolarisVizProvider} from '../PolarisVizProvider';
 import {PolarisVizContext} from '../../../utilities/';
-import {DefaultTheme} from '../../../constants';
+import {DEFAULT_THEME} from '../../../constants';
 
 const MockChild = ({theme = 'Default'}) => {
   const {themes} = usePolarisVizContext();
@@ -29,7 +29,7 @@ describe('<PolarisVizProvider />', () => {
       </PolarisVizProvider>,
     );
 
-    expect(vizProvider).toContainReactText(JSON.stringify(DefaultTheme));
+    expect(vizProvider).toContainReactText(JSON.stringify(DEFAULT_THEME));
   });
 
   it('passes custom themes to children', () => {
@@ -37,7 +37,7 @@ describe('<PolarisVizProvider />', () => {
       <PolarisVizProvider
         themes={{
           Dark: {
-            barOptions: {
+            bar: {
               hasRoundedCorners: false,
             },
           },
@@ -49,9 +49,9 @@ describe('<PolarisVizProvider />', () => {
 
     expect(vizProvider).toContainReactText(
       JSON.stringify({
-        ...DefaultTheme,
-        barOptions: {
-          ...DefaultTheme.barOptions,
+        ...DEFAULT_THEME,
+        bar: {
+          ...DEFAULT_THEME.bar,
           hasRoundedCorners: false,
         },
       }),
