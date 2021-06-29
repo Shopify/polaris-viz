@@ -28,6 +28,17 @@
 ### Changed
 - BarChart styles now are defined through themes in `PolarisVizProvider` instead of props. For more details check the [migration guide](https://docs.google.com/document/d/1VxfcgBbTNwjmYix1jGuDMgqDgIdehTgQbVZpER7djeU/edit?usp=sharing)
 
+### Added
+- `PolarisVizProvider` to support theming charts
+- `theme` to `BarChartProps`
+
+### Removed 
+- Polaris Tokens strings are no longer accepted as colors. Any valid CSS color can now be provided as a color to charts.
+- `barOptions`, `gridOptions`, `xAxisOptions.showTicks`, `xAxisOptions.labelColor` and `yAxisOptions.labelColor` from `BarChartProps`.
+
+### Changed
+- BarChart styles now are defined through themes in `PolarisVizProvider` instead of props. For more details check the [migration guide](https://docs.google.com/document/d/1VxfcgBbTNwjmYix1jGuDMgqDgIdehTgQbVZpER7djeU/edit?usp=sharing)
+
 ## [0.17.2] - 2021-06-23
 
 ### Changed

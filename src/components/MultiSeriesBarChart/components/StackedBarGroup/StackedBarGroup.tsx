@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react';
 
 import type {GradientStop} from '../../../../types';
-import {getColorValue, isGradientType, uniqueId} from '../../../../utilities';
+import {isGradientType, uniqueId} from '../../../../utilities';
 import {MASK_SUBDUE_COLOR, MASK_HIGHLIGHT_COLOR} from '../../../../constants';
 import {LinearGradient} from '../../../LinearGradient';
 
@@ -27,23 +27,18 @@ export function StackedBarGroup({
   const lookedUpColor = colors[groupIndex];
   const shouldUseGradient = isGradientType(lookedUpColor);
 
-  const color = useMemo(
-    () =>
-      isGradientType(lookedUpColor)
-        ? lookedUpColor
-        : getColorValue(lookedUpColor),
-    [lookedUpColor],
-  );
-
   const fillColor = shouldUseGradient
     ? `url(#${gradientId})`
-    : (color as string);
+    : (lookedUpColor as string);
 
   return (
     <React.Fragment>
       <defs aria-hidden role="none">
         {shouldUseGradient ? (
-          <LinearGradient id={gradientId} gradient={color as GradientStop[]} />
+          <LinearGradient
+            id={gradientId}
+            gradient={lookedUpColor as GradientStop[]}
+          />
         ) : null}
 
         <mask id={maskId}>

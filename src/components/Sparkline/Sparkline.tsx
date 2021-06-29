@@ -1,7 +1,7 @@
 import React, {useState, useLayoutEffect, useCallback} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 import {scaleLinear} from 'd3-scale';
-import type {Color, SparkChartData} from 'types';
+import type {SparkChartData} from 'types';
 
 import {useResizeObserver} from '../../hooks';
 import {XMLNS} from '../../constants';
@@ -21,7 +21,7 @@ type LineStyle = 'solid' | 'dashed';
 
 export interface SingleSeries {
   data: Coordinates[];
-  color?: Color;
+  color?: string;
   areaStyle?: AreaStyle;
   lineStyle?: LineStyle;
   hasPoint?: boolean;

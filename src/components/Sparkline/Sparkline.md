@@ -40,7 +40,7 @@ const props = {
       ],
       areaStyle: 'gradient',
       hasPoint: true,
-      color: 'darkModeNegative',
+      color: 'red',
       offsetRight: 12,
     },
     {
@@ -71,7 +71,7 @@ const props = {
         {x: 23, y: 7},
       ],
       lineStyle: 'dashed',
-      color: 'darkModeNegative',
+      color: 'red',
     },
   ],
   hasSpline: true,
@@ -91,7 +91,7 @@ The sparkline interface looks like this:
 
 ```typescript
 {
-  series: {color: Color, areaStyle: AreaStyle, lineStyle: LineStyle, hasPoint: boolean, data: Coordinates[]}[];
+  series: {color: string, areaStyle: AreaStyle, lineStyle: LineStyle, hasPoint: boolean, data: Coordinates[]}[];
   accessibilityLabel?: string;
   isAnimated?: boolean;
 }
@@ -111,7 +111,7 @@ This component determines its width and height based off its parent element. The
 
 | type                                                                                                                                                  |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `{data: Coordinates[], color?: Color, areaStyle?: AreaStyle, lineStyle?: LineStyle, hasPoint?: boolean, offsetLeft?: number; offsetRight?: number}[]` |
+| `{data: Coordinates[], color?: string, areaStyle?: AreaStyle, lineStyle?: LineStyle, hasPoint?: boolean, offsetLeft?: number; offsetRight?: number}[]` |
 
 The sparkline can show one data series or a set of comparison data series.
 
@@ -127,9 +127,9 @@ The prop to determine the chart's drawn area. If null is provided, the line will
 
 | type    | default     |
 | ------- | ----------- |
-| `Color` | `colorTeal` |
+| `string` | `"rgb(71, 193, 191)"` |
 
-The sparkline stroke and fill color. This accepts any [Polaris Viz accepted color](/documentation/Polaris-Viz-colors.md).
+The sparkline stroke and fill color. This accepts any CSS color.
 
 ##### areaFillStyle
 

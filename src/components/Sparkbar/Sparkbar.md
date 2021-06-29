@@ -32,7 +32,7 @@ Used in small sizes to give an overview of how a metric has performed over time.
       {x: 16, y: 4.2},
       {x: 17, y: 4.2},
     ],
-    color: 'darkModePositive',
+    color: 'green',
     dataOffsetRight: 12,
     dataOffsetLeft: 12,
     isAnimated: true,
@@ -52,7 +52,7 @@ The sparkbar interface looks like this:
 {
   data: (number | null)[];
   comparison?: number;
-  color?: Color;
+  color?: string;
   accessibilityLabel?: string;
   isAnimated?: boolean;
   barFillStyle?: 'solid' | 'gradient'
@@ -93,9 +93,9 @@ The prop to determine the comparison line for the chart.
 
 | type    | default     |
 | ------- | ----------- |
-| `Color` | `colorTeal` |
+| `string` | `"rgb(71, 193, 191)"` |
 
-The sparkbar stroke and fill color. This accepts any [Polaris Viz accepted color](/documentation/Polaris-Viz-colors.md).
+The sparkbar stroke and fill color. This accepts any CSS color.
 
 #### accessibilityLabel
 

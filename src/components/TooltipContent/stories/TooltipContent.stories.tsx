@@ -42,8 +42,8 @@ const defaultProps = {
   title: 'Monday',
   total: {label: 'Total', value: '$10'},
   data: [
-    {color: 'colorRed', label: 'Product 1', value: '$0'},
-    {color: 'colorPurple', label: 'Product 2', value: '$10'},
+    {color: 'red', label: 'Product 1', value: '$0'},
+    {color: 'purple', label: 'Product 2', value: '$10'},
   ],
 };
 

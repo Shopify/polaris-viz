@@ -2,10 +2,9 @@ import React, {useMemo} from 'react';
 import isEqual from 'fast-deep-equal';
 import {animated, useSpring} from '@react-spring/web';
 import {area, Series} from 'd3-shape';
-import type {Color} from 'types';
 import type {ScaleLinear} from 'd3-scale';
 
-import {getColorValue, uniqueId} from '../../../../utilities';
+import {uniqueId} from '../../../../utilities';
 import {usePrevious} from '../../../../hooks';
 
 type StackedSeries = Series<
@@ -19,7 +18,7 @@ interface Props {
   width: number;
   height: number;
   transform: string;
-  colors: Color[];
+  colors: string[];
   stackedValues: StackedSeries[];
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
@@ -75,14 +74,12 @@ export function Areas({
             return null;
           }
 
-          const color = getColorValue(colors[index]);
-
           return (
             <path
               key={index}
               d={shape}
-              fill={color}
-              stroke={color}
+              fill={colors[index]}
+              stroke={colors[index]}
               strokeWidth="0.1"
               opacity={opacity}
             />

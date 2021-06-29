@@ -76,7 +76,12 @@ const defaultProps = {
       formattedValue: '$20',
     },
   ],
-  colors: ['primary', 'secondary', 'tertiary', 'quaternary'],
+  colors: [
+    'rgb(80, 36, 143)',
+    'rgb(0, 111, 187)',
+    'rgb(71, 193, 191)',
+    'rgb(196, 205, 213)',
+  ],
   orientation: 'horizontal',
   size: 'large',
 };

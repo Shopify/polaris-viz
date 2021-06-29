@@ -2,11 +2,8 @@ import React from 'react';
 import {Story, Meta} from '@storybook/react';
 
 import {Sparkbar, SparkbarProps} from '../Sparkbar';
-import {Color} from '../../../types';
 
-import {colorOptions} from '../../../storybook';
-
-const primaryColor = colorOptions[0] as Color;
+const primaryColor = 'rgb(71, 193, 191)';
 
 export default {
   title: 'Charts/Sparkbar',
@@ -53,13 +50,7 @@ export default {
     isAnimated: {
       description: 'Determines whether to animate the chart on state changes.',
     },
-    color: {
-      control: {
-        type: 'select',
-        options: colorOptions,
-        defaultValue: primaryColor,
-      },
-    },
+    color: {description: 'String color value.'},
   },
 } as Meta;
 
@@ -84,7 +75,7 @@ const defaultProps = {
     {x: 9, y: comparisonValue},
     {x: 10, y: comparisonValue},
   ],
-  color: 'darkModePositive',
+  color: 'rgb(0, 164, 124)',
   barFillStyle: 'solid',
   accessibilityLabel:
     'A bar chart showing orders over time for the past 11 weeks. The minimum is 100 orders and the maximum is 1,000 orders, compared to an average of 500 orders during previous 11-week period.',

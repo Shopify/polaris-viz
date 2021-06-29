@@ -2,14 +2,9 @@ import React, {useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {area, line} from 'd3-shape';
 
+import {colorTeal} from '../../../../constants';
 import {LinearGradient} from '../../../LinearGradient';
-import {
-  curveStepRounded,
-  getColorValue,
-  uniqueId,
-  rgbToRgba,
-  classNames,
-} from '../../../../utilities';
+import {curveStepRounded, uniqueId, rgbToRgba} from '../../../../utilities';
 import {usePrefersReducedMotion} from '../../../../hooks';
 import type {SingleSeries, Coordinates} from '../../Sparkline';
 
@@ -36,7 +31,7 @@ export function Series({
   const {
     areaStyle = 'none',
     lineStyle = 'solid',
-    color = 'colorTeal',
+    color = colorTeal,
     hasPoint = false,
     data,
   } = series;
@@ -73,7 +68,6 @@ export function Series({
   const id = useMemo(() => uniqueId('sparkline'), []);
   const immediate = !isAnimated || prefersReducedMotion;
 
-  const colorValue = getColorValue(color);
   const dashedLine = lineStyle === 'dashed';
 
   if (lineShape == null || areaShape == null) {
@@ -83,7 +77,7 @@ export function Series({
   return (
     <React.Fragment>
       <path
-        stroke={colorValue}
+        stroke={color}
         d={lineShape}
         fill="none"
         className={classNames(
@@ -97,11 +91,11 @@ export function Series({
           id={id}
           gradient={[
             {
-              color: rgbToRgba({rgb: colorValue, alpha: 0}),
+              color: rgbToRgba({rgb: color, alpha: 0}),
               offset: 0,
             },
             {
-              color: rgbToRgba({rgb: colorValue, alpha: 0.8}),
+              color: rgbToRgba({rgb: color, alpha: 0.8}),
               offset: 100,
             },
           ]}
@@ -109,7 +103,7 @@ export function Series({
       ) : null}
       {areaStyle === 'none' ? null : (
         <path
-          fill={areaStyle === 'gradient' ? `url(#${id})` : colorValue}
+          fill={areaStyle === 'gradient' ? `url(#${id})` : color}
           d={areaShape}
           className={immediate ? undefined : styles.Area}
         />
@@ -120,7 +114,7 @@ export function Series({
           cx={lastLinePointCoordinates.x}
           cy={lastLinePointCoordinates.y}
           r={POINT_RADIUS}
-          fill={colorValue}
+          fill={color}
           className={styles.Point}
         />
       ) : null}

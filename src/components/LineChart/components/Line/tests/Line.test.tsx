@@ -1,7 +1,6 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {getColorValue} from '../../../../../utilities';
 import {Line} from '../Line';
 
 jest.mock('../../../../../utilities', () => {
@@ -15,7 +14,7 @@ jest.mock('d3-scale', () => ({
   scaleLinear: jest.fn(() => jest.fn(() => 250)),
 }));
 
-const color = getColorValue('primary');
+const color = 'red';
 
 const mockProps = {
   series: {

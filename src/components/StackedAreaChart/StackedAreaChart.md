@@ -21,7 +21,7 @@ const series = [
       {label: 'June', rawValue: 5634},
       {label: 'July', rawValue: 3238},
     ],
-    color: 'primary',
+    color: 'teal',
   },
   {
     name: 'Returning',
@@ -34,7 +34,7 @@ const series = [
       {label: 'June', rawValue: 12484},
       {label: 'July', rawValue: 4878},
     ],
-    color: 'secondary',
+    color: 'purple',
   },
 ];
 
@@ -111,7 +111,7 @@ The `Series` type allows the user to define the color of each series. Its interf
 interface Series {
   name: string;
   data: {label: string; rawValue: number | null}[];
-  color?: Color;
+  color?: string;
 }
 ```
 
@@ -135,9 +135,9 @@ The array that the chart uses to plot the area. Null values are not displayed.
 
 | type    | default     |
 | ------- | ----------- |
-| `Color` | `'primary'` |
+| `string` | `'rgb(71, 193, 191)'` |
 
-It allows you to pass any [Polaris Viz accepted color](/documentation/Polaris-Viz-colors.md) for the `color` value.
+It allows you to pass any CSS color.
 
 ### The `RenderTooltipContentData` type
 

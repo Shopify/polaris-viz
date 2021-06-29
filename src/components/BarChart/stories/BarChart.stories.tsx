@@ -51,7 +51,7 @@ export default {
             dataIndex: 1,
             xOffset: 0.5,
             width: 5,
-            color: 'colorGrayLight',
+            color: 'gray',
             ariaLabel: 'Median: 1.5',
             tooltipData: {
               label: 'Median',
@@ -148,7 +148,7 @@ Annotations.args = {
       dataIndex: 1,
       xOffset: 0.5,
       width: 5,
-      color: 'colorGrayLight',
+      color: 'gray',
       ariaLabel: 'Median: 1.5',
       tooltipData: {
         label: 'Median',

@@ -44,7 +44,7 @@ Default.args = {
     {
       name: 'Primary',
       point: {label: 'Sept. 10, 1989', value: 28},
-      color: 'colorRed',
+      color: 'red',
       lineStyle: 'solid',
     },
   ],
@@ -57,7 +57,7 @@ DashedLine.args = {
     {
       name: 'Primary',
       point: {label: 'Sept. 10, 1989', value: 28},
-      color: 'colorRed',
+      color: 'red',
       lineStyle: 'dashed',
     },
   ],
@@ -70,7 +70,7 @@ DottedLine.args = {
     {
       name: 'Primary',
       point: {label: 'Sept. 10, 1989', value: 28},
-      color: 'colorRed',
+      color: 'red',
       lineStyle: 'dotted',
     },
   ],

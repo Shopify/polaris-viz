@@ -1,9 +1,8 @@
 import React, {useState, useLayoutEffect, useRef, useCallback} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
-import {colorSky} from '@shopify/polaris-tokens';
 
 import type {Dimensions} from '../../types';
-import {DEFAULT_GREY_LABEL} from '../../constants';
+import {DEFAULT_GREY_LABEL, colorSky} from '../../constants';
 import {SkipLink} from '../SkipLink';
 import {TooltipContent} from '../TooltipContent';
 import {getDefaultColor, uniqueId} from '../../utilities';

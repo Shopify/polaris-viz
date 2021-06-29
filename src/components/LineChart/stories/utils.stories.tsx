@@ -6,8 +6,10 @@ import {
   DEFAULT_CROSSHAIR_COLOR,
   CROSSHAIR_WIDTH,
   DEFAULT_GREY_LABEL,
+  colorWhite,
+  colorSky,
+  colorSkyDark,
 } from '../../../constants';
-import {colorWhite, colorSky} from '@shopify/polaris-tokens';
 
 export const gradient = [
   {
@@ -65,7 +67,7 @@ export const series = [
       {rawValue: 623, label: '2020-03-13T12:00:00'},
       {rawValue: 21, label: '2020-03-14T12:00:00'},
     ],
-    color: 'colorSkyDark' as 'colorSkyDark',
+    color: colorSkyDark,
     lineStyle: 'dotted' as 'dotted',
   },
 ];

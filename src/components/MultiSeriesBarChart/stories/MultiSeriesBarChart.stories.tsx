@@ -7,8 +7,12 @@ import {
 } from '../../../components';
 
 import styles from './MultiSeriesBarChart.stories.scss';
-import {DEFAULT_GREY_LABEL} from '../../../constants';
-import {colorSky} from '@shopify/polaris-tokens';
+import {
+  DEFAULT_GREY_LABEL,
+  colorSky,
+  colorTeal,
+  colorSkyDark,
+} from '../../../constants';
 import {SquareColorPreview} from '../../SquareColorPreview';
 
 const tooltipContent = {
@@ -47,7 +51,7 @@ const tooltipContent = {
 const series = [
   {
     name: 'Breakfast',
-    color: 'primary',
+    color: colorTeal,
     data: [
       {label: 'Monday', rawValue: 3},
       {label: 'Tuesday', rawValue: -7},
@@ -60,7 +64,7 @@ const series = [
   },
   {
     name: 'Lunch',
-    color: 'secondary',
+    color: 'darkGray',
     data: [
       {label: 'Monday', rawValue: 4},
       {label: 'Tuesday', rawValue: 0},
@@ -73,7 +77,7 @@ const series = [
   },
   {
     name: 'Dinner',
-    color: 'tertiary',
+    color: 'purple',
     data: [
       {label: 'Monday', rawValue: 7},
       {label: 'Tuesday', rawValue: 0},
@@ -296,7 +300,7 @@ WithoutRoundedCorners.args = {
 
 export const Stacked = Template.bind({});
 Stacked.args = {
-  series: series,
+  series: gradientSeries,
   xAxisOptions: {labels},
   barOptions: {
     isStacked: true,
@@ -317,7 +321,7 @@ IntegersOnly.args = {
   series: [
     {
       name: 'Breakfast',
-      color: 'primary',
+      color: 'rebeccaPurple',
       data: [
         {label: 'Monday', rawValue: 0.3},
         {label: 'Tuesday', rawValue: 0.1},
@@ -330,7 +334,7 @@ IntegersOnly.args = {
     },
     {
       name: 'Lunch',
-      color: 'secondary',
+      color: 'forestGreen',
       data: [
         {label: 'Monday', rawValue: 0},
         {label: 'Tuesday', rawValue: 0.1},
@@ -343,7 +347,7 @@ IntegersOnly.args = {
     },
     {
       name: 'Dinner',
-      color: 'tertiary',
+      color: 'darkGray',
       data: [
         {label: 'Monday', rawValue: 1.23},
         {label: 'Tuesday', rawValue: 1.42},
@@ -364,7 +368,7 @@ LargeVolume.args = {
   series: [
     {
       name: 'Breakfast',
-      color: 'primary',
+      color: 'purple',
       data: Array(200)
         .fill(null)
         .map((x) => {
@@ -376,7 +380,7 @@ LargeVolume.args = {
     },
     {
       name: 'Lunch',
-      color: 'secondary',
+      color: 'green',
       data: Array(200)
         .fill(null)
         .map((x) => {

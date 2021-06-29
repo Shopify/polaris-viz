@@ -11,6 +11,7 @@ import {
   renderTooltipContent,
   gradient,
 } from './utils.stories';
+import {colorTeal} from '../../../constants';
 
 const tooltipContent = {
   empty: undefined,
@@ -257,7 +258,7 @@ SolidColor.args = {
         {rawValue: 6, label: '2020-04-06T12:00:00'},
         {rawValue: 5, label: '2020-04-07T12:00:00'},
       ],
-      color: 'colorTeal',
+      color: colorTeal,
     },
   ],
   xAxisOptions: {

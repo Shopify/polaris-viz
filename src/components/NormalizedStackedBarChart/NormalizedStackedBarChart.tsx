@@ -1,9 +1,14 @@
 import React from 'react';
 import {sum} from 'd3-array';
 import {scaleLinear} from 'd3-scale';
-import type {Color} from 'types';
+import {classNames} from '@shopify/css-utilities';
 
-import {getColorValue, classNames} from '../../utilities';
+import {
+  colorPurpleDark,
+  colorBlue,
+  colorTeal,
+  colorSkyDark,
+} from '../../constants';
 
 import {BarSegment, BarLabel} from './components';
 import type {Size, Data, Orientation} from './types';
@@ -13,14 +18,14 @@ export interface NormalizedStackedBarChartProps {
   data: Data[];
   size?: Size;
   orientation?: Orientation;
-  colors?: Color[];
+  colors?: string[];
 }
 
 export function NormalizedStackedBarChart({
   data,
   size = 'small',
   orientation = 'horizontal',
-  colors = ['colorPurpleDark', 'colorBlue', 'colorTeal', 'colorSkyDark'],
+  colors = [colorPurpleDark, colorBlue, colorTeal, colorSkyDark],
 }: NormalizedStackedBarChartProps) {
   const containsNegatives = data.some(({value}) => value < 0);
   const isDevelopment = process.env.NODE_ENV === 'development';
@@ -44,7 +49,6 @@ export function NormalizedStackedBarChart({
   const xScale = scaleLinear().range([0, 100]).domain([0, totalValue]);
 
   const isVertical = orientation === 'vertical';
-  const colorPalette = colors.map((color) => getColorValue(color));
 
   return (
     <div
@@ -65,7 +69,7 @@ export function NormalizedStackedBarChart({
             key={`${label}-${formattedValue}`}
             label={label}
             value={formattedValue}
-            color={colorPalette[index]}
+            color={colors[index]}
             comparisonMetric={comparisonMetric}
           />
         ))}
@@ -86,7 +90,7 @@ export function NormalizedStackedBarChart({
               size={size}
               scale={xScale(value)}
               key={`${label}-${value}`}
-              color={colorPalette[index]}
+              color={colors[index]}
             />
           ),
         )}

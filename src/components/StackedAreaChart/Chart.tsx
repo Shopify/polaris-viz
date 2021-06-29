@@ -1,6 +1,5 @@
 import React, {useState, useMemo, useRef} from 'react';
 import {stack, stackOffsetNone, stackOrderReverse} from 'd3-shape';
-import {colorSky, colorWhite} from '@shopify/polaris-tokens';
 
 import {
   useLinearXAxisDetails,
@@ -14,10 +13,11 @@ import {
   FONT_SIZE,
   CROSSHAIR_WIDTH,
   LineChartMargin as Margin,
-  XMLNS,
+  colorSky,
+  colorWhite,
 } from '../../constants';
 import {TooltipContainer} from '../TooltipContainer';
-import {eventPoint, uniqueId, getColorValue} from '../../utilities';
+import {eventPoint, uniqueId} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {Crosshair} from '../Crosshair';
 import {Point} from '../Point';
@@ -252,7 +252,7 @@ export function Chart({
               <Point
                 stroke={colorWhite}
                 key={index}
-                color={getColorValue(colors[stackIndex])}
+                color={colors[stackIndex]}
                 cx={xScale(index)}
                 cy={yScale(startingDataPoint)}
                 active={index === activePointIndex}

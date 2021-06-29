@@ -7,7 +7,6 @@ import {
   eventPoint,
   uniqueId,
   clamp,
-  getColorValue,
   isGradientType,
   makeColorOpaque,
   makeGradientOpaque,
@@ -399,7 +398,7 @@ export function Chart({
 
             const lineColor = isGradientType(color)
               ? `url(#${seriesGradientId})`
-              : getColorValue(color);
+              : color;
 
             return (
               <React.Fragment key={`${name}-${index}`}>
@@ -454,7 +453,7 @@ export function Chart({
 
             const pointColor = isGradientType(color)
               ? `url(#${pointGradientId})`
-              : makeColorOpaque(getColorValue(color));
+              : makeColorOpaque(color);
 
             return (
               <React.Fragment key={`${name}-${index}`}>

@@ -12,7 +12,7 @@ Used to show comparison of different types, across categories.
 const series = [
   {
     name: 'Breakfast',
-    color: 'primary',
+    color: 'green',
     data: [
       {label: 'Monday', rawValue: 3},
       {label: 'Tuesday', rawValue: 7},
@@ -25,7 +25,7 @@ const series = [
   },
   {
     name: 'Lunch',
-    color: 'secondary',
+    color: 'purple',
     data: [
       {label: 'Monday', rawValue: 4},
       {label: 'Tuesday', rawValue: 3},
@@ -38,7 +38,7 @@ const series = [
   },
   {
     name: 'Dinner',
-    color: 'tertiary',
+    color: 'gray',
     data: [
       {label: 'Monday', rawValue: 7},
       {label: 'Tuesday', rawValue: 2},
@@ -157,7 +157,7 @@ The `Series` type gives the user a lot of flexibility to define exactly what eac
     label: string;
     rawValue: number;
   }[];
-  color?: Color | GradientStop[];
+  color?: string | GradientStop[];
 }
 ```
 
@@ -183,19 +183,9 @@ The array of objects that the chart uses to draw the groups.
 
 | type    | default     |
 | ------- | ----------- |
-| `Color` | `'primary'` |
+| `string | GradientStop[]` | `rgb(0,161,159)` |
 
-This accepts any [Polaris Viz color](/documentation/Polaris-Viz-colors.md) value, and corresponds to the color of the bar for that series.
-
-#### highlightColor
-
-| type    | default     |
-| ------- | ----------- |
-| `Color` | `'primary'` |
-
-This accepts any [Polaris Viz color](/documentation/Polaris-Viz-colors.md) value, and corresponds to the color of the bar for that series when you hover over a bar group. It defaults to `primary`. The four 'prominent' Polaris Viz colors (`primaryProminent`, `secondaryProminent`, `tertiaryProminent`, `quaternaryProminent`) exist as a good option for a complimentary hover color.
-
-In order for the user to have visual feedback that a bar has been selected, it is recommended that a `highlightColor`, which is different to the `color`, is passed in in the `series` for this component. If a `highlightColor` is not provided, the browser's default outline treatment will be used when the bar is focused.
+This accepts any CSS color or gradient stop array, and corresponds to the color of the bar for that series.
 
 ### The `RenderTooltipContentData` type
 

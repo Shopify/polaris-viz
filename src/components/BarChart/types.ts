@@ -1,7 +1,7 @@
-import type {Color} from 'types';
+import type {GradientStop} from 'types';
 
 export interface BarChartData {
-  barColor?: Color | string;
+  barColor?: string | GradientStop;
   label: string;
   rawValue: number;
 }
@@ -14,7 +14,7 @@ export interface RenderTooltipContentData {
 export interface Annotation {
   dataIndex: number;
   width: number;
-  color: Color | string;
+  color: string;
   tooltipData?: {
     label: string;
     value: string;

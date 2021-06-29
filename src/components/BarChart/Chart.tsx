@@ -34,8 +34,6 @@ import type {
   YAxisTheme,
   XAxisOptions,
   YAxisOptions,
-  SeriesColor,
-  GradientStop,
 } from '../../types';
 
 import {AnnotationLine} from './components';
@@ -244,7 +242,7 @@ export function Chart({
   const gradientId = useMemo(() => uniqueId('gradient'), []);
   const clipId = useMemo(() => uniqueId('clip'), []);
 
-  const gradient = isGradientType(barTheme.color as SeriesColor)
+  const gradient = isGradientType(barTheme.color)
     ? barTheme.color
     : [
         {
@@ -275,7 +273,7 @@ export function Chart({
         <defs>
           <LinearGradient
             id={gradientId}
-            gradient={gradient as GradientStop[]}
+            gradient={gradient}
             gradientUnits="userSpaceOnUse"
             y1="100%"
             y2="0%"
@@ -381,9 +379,8 @@ export function Chart({
             const translateXValue = xPositionValue + chartStartPosition;
 
             const barColor =
-              item.barColor != null && item.barColor != null
-                ? item.barColor
-                : null;
+              typeof item.barColor === 'string' ? item.barColor : null;
+
             return barColor != null ? (
               <rect
                 key={index}

@@ -61,18 +61,18 @@ export function TooltipContentDemo() {
 
   const tooltipContentData: TooltipContentProps['data'] = [
     {
-      color: 'primary',
+      color: 'rgb(0,161,159)',
       label: 'Hot dogs',
       value: '10',
     },
     {
-      color: 'secondary',
+      color: 'rgb(41,35,112)',
       label: 'Hamburgers',
       value: '14',
     },
 
     {
-      color: 'tertiary',
+      color: 'rgb(13,140,237)',
       label: 'Fries',
       value: '21',
     },
@@ -85,7 +85,7 @@ export function TooltipContentDemo() {
         label: 'January 1st, 2021',
         value: '10',
       },
-      color: 'primary',
+      color: 'rgb(0,161,159)',
       lineStyle: 'solid',
     },
     {
@@ -94,7 +94,7 @@ export function TooltipContentDemo() {
         label: 'December 1st, 2020',
         value: '12',
       },
-      color: 'pastComparison',
+      color: 'rgb(145,158,171)',
       lineStyle: 'dashed',
     },
     {
@@ -103,7 +103,7 @@ export function TooltipContentDemo() {
         label: 'November 1st, 2020',
         value: '12',
       },
-      color: 'secondary',
+      color: 'rgb(41,35,112)',
       lineStyle: 'dotted',
     },
   ];

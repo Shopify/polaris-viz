@@ -5,14 +5,9 @@ import {line} from 'd3-shape';
 import {useTransition} from '@react-spring/web';
 
 import {usePrefersReducedMotion, useResizeObserver} from '../../hooks';
-import {BARS_TRANSITION_CONFIG, XMLNS} from '../../constants';
-import type {Color, SparkChartData} from '../../types';
-import {
-  getColorValue,
-  rgbToRgba,
-  uniqueId,
-  getAnimationTrail,
-} from '../../utilities';
+import {BARS_TRANSITION_CONFIG, colorTeal} from '../../constants';
+import type {SparkChartData} from '../../types';
+import {rgbToRgba, uniqueId, getAnimationTrail} from '../../utilities';
 import {LinearGradient} from '../LinearGradient';
 
 import {Bar} from './components';
@@ -34,7 +29,7 @@ export interface SparkbarProps {
   dataOffsetRight?: number;
   dataOffsetLeft?: number;
   comparison?: Coordinates[];
-  color?: Color;
+  color?: string;
   accessibilityLabel?: string;
   isAnimated?: boolean;
   barFillStyle?: 'solid' | 'gradient';
@@ -64,7 +59,7 @@ function calculateRange(data: SparkChartData[], height: number) {
 export function Sparkbar({
   data,
   comparison,
-  color = 'colorTeal',
+  color = colorTeal,
   accessibilityLabel,
   isAnimated = false,
   barFillStyle = 'solid',
@@ -142,8 +137,6 @@ export function Sparkbar({
 
   const id = useMemo(() => uniqueId('sparkbar'), []);
 
-  const currentColor = getColorValue(color);
-
   const getBarHeight = useCallback(
     (rawValue: number) => {
       const height = Math.abs(yScale(rawValue) - yScale(0));
@@ -191,18 +184,18 @@ export function Sparkbar({
             id={id}
             gradient={[
               {
-                color: rgbToRgba({rgb: currentColor, alpha: 0.5}),
+                color: rgbToRgba({rgb: color, alpha: 0.5}),
                 offset: 0,
               },
               {
-                color: rgbToRgba({rgb: currentColor, alpha: 1}),
+                color: rgbToRgba({rgb: color, alpha: 1}),
                 offset: 100,
               },
             ]}
           />
         ) : null}
 
-        <g fill={barFillStyle === 'gradient' ? `url(#${id})` : currentColor}>
+        <g fill={barFillStyle === 'gradient' ? `url(#${id})` : color}>
           {transitions(({height: barHeight}, item, _transition, index) => {
             const xPosition = xScale(index.toString());
             return (
@@ -222,7 +215,7 @@ export function Sparkbar({
         {comparison == null ? null : (
           <g>
             <path
-              stroke={currentColor}
+              stroke={color}
               strokeWidth={STROKE_WIDTH}
               d={lineShape!}
               className={styles.ComparisonLine}

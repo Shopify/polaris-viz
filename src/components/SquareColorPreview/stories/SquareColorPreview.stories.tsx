@@ -2,6 +2,7 @@ import React from 'react';
 import {Story, Meta} from '@storybook/react';
 
 import {SquareColorPreview, SquareColorPreviewProps} from '../../../components';
+import {colorTeal} from '../../../constants';
 
 export default {
   title: 'Subcomponents/SquareColorPreview',
@@ -35,7 +36,7 @@ const Template: Story<SquareColorPreviewProps> = (
 export const Solid = Template.bind({});
 
 Solid.args = {
-  color: 'primary',
+  color: colorTeal,
 };
 
 const purple = '#5052b3';
