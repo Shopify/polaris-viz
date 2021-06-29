@@ -13,11 +13,7 @@ import {
   MASK_SUBDUE_COLOR,
   MASK_HIGHLIGHT_COLOR,
 } from '../../../../constants';
-import {
-  getAnimationTrail,
-  uniqueId,
-  getColorValue,
-} from '../../../../utilities';
+import {getAnimationTrail, uniqueId} from '../../../../utilities';
 
 interface Props {
   x: number;
@@ -88,7 +84,7 @@ export function BarGroup({
     return typeof color === 'string'
       ? [
           {
-            color: getColorValue(color),
+            color,
             offset: 0,
           },
         ]

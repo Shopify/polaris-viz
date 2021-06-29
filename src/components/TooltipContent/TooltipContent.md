@@ -9,18 +9,18 @@ Used to format content within a chart's tooltip.
 ```tsx
 const tooltipContentData: TooltipContentProps['data'] = [
   {
-    color: 'primary',
+    color: 'purple',
     label: 'Hot dogs',
     value: '10',
   },
   {
-    color: 'secondary',
+    color: 'green',
     label: 'Hamburgers',
     value: '14',
   },
 
   {
-    color: 'tertiary',
+    color: 'grey',
     label: 'Fries',
     value: '21',
   },
@@ -33,7 +33,7 @@ const lineChartTooltipContentData: LineChartTooltipContentProps['data'] = [
       label: 'January 1st, 2021',
       value: '10',
     },
-    color: 'primary',
+    color: 'purple',
     lineStyle: 'solid',
   },
   {
@@ -42,7 +42,7 @@ const lineChartTooltipContentData: LineChartTooltipContentProps['data'] = [
       label: 'December 1st, 2020',
       value: '12',
     },
-    color: 'pastComparison',
+    color: 'grey',
     lineStyle: 'dashed',
   },
 ];
@@ -97,7 +97,7 @@ The props interface for `<TooltipContent />` looks like this:
 interface TooltipContentProps {
   title?: string;
   data: {
-    color: Color;
+    color: string | GradientStop[];
     label: string;
     value: string;
   }[];
@@ -114,9 +114,9 @@ interface TooltipContentProps {
 
 | type                                            |
 | ----------------------------------------------- |
-| `{color:Color; label: string; value: number}[]` |
+| `{color:string | GradientStop[]; label: string; value: number}[]` |
 
-Each member of the `data` array corresponds to a row in the `<TooltipContent />` object. The value for `color` corresponds to the fill color for the square preview, and accepts any [Polaris Viz accepted color](/documentation/Polaris-Viz-colors.md).
+Each member of the `data` array corresponds to a row in the `<TooltipContent />` object. The value for `color` corresponds to the fill color for the square preview, and accepts any CSS color or GradientStop[].
 
 #### Optional props
 
@@ -148,7 +148,7 @@ interface LineChartTooltipContentProps {
       label: string;
       value: string;
     };
-    color?: Color;
+    color?: string | GradientStop[];
     lineStyle?: LineStyle;
   }[];
 }
@@ -180,9 +180,9 @@ The values to display for the given data point.
 
 | type    | default       |
 | ------- | ------------- |
-| `Color` | `colorPurple` |
+| `string | GradientStop[]` | None |
 
-Accepts any [Polaris Viz accepted color](/documentation/Polaris-Viz-colors.md) and defaults to `colorPurple`.
+Accepts any CSS color or GradientStop[].
 
 ##### lineStyle
 

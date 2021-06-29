@@ -1,6 +1,5 @@
 import React, {useLayoutEffect, useRef, useState, useCallback} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
-import {colorSky, colorWhite} from '@shopify/polaris-tokens';
 
 import type {Dimensions} from '../../types';
 import {getDefaultColor, uniqueId} from '../../utilities';
@@ -10,6 +9,8 @@ import {
   DEFAULT_GREY_LABEL,
   CROSSHAIR_WIDTH,
   DEFAULT_CROSSHAIR_COLOR,
+  colorSky,
+  colorWhite,
 } from '../../constants';
 
 import {Chart} from './Chart';

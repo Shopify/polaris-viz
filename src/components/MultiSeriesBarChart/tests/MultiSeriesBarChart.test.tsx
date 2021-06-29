@@ -1,6 +1,5 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
-import type {Color} from 'types';
 import {SkipLink} from 'components/SkipLink';
 
 import {MultiSeriesBarChart} from '../MultiSeriesBarChart';
@@ -15,7 +14,7 @@ describe('<MultiSeriesBarChart />', () => {
           {label: 'Another', rawValue: 20},
           {label: 'Thing', rawValue: 30},
         ],
-        color: 'colorBlack' as Color,
+        color: 'black',
         name: 'LABEL1',
       },
     ],

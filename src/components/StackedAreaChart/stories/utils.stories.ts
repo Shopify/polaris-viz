@@ -1,3 +1,5 @@
+import {colorPurpleDark, colorTeal} from '../../../constants';
+
 export const data = [
   {
     name: 'First-time',
@@ -10,7 +12,7 @@ export const data = [
       {label: 'June', rawValue: 5634},
       {label: 'July', rawValue: 3238},
     ],
-    color: 'primary' as 'primary',
+    color: colorTeal,
   },
   {
     name: 'Returning',
@@ -23,7 +25,7 @@ export const data = [
       {label: 'June', rawValue: 12484},
       {label: 'July', rawValue: 4878},
     ],
-    color: 'secondary' as 'secondary',
+    color: colorPurpleDark,
   },
 ];
 

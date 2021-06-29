@@ -1,6 +1,5 @@
 import React, {useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
-import {colorSky} from '@shopify/polaris-tokens';
 
 import {RightAngleTriangle} from '../../utilities';
 import {
@@ -10,6 +9,7 @@ import {
   LINE_HEIGHT,
   BELOW_X_AXIS_MARGIN,
   DEFAULT_GREY_LABEL,
+  colorSky,
 } from '../../constants';
 
 import styles from './LinearXAxis.scss';

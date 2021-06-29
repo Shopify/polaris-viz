@@ -76,14 +76,14 @@ interface BarChartProps {
     rawValue: number;
     label: string;
     barOptions?: {
-      color: Color;
+      color: string | GradientStop[];
     };
   }[];
   renderTooltipContent?({
     label,
     value,
   }: {
-    lable: string;
+    label: string;
     value: string;
   }): React.ReactNode;
   skipLinkText?: string;
@@ -91,8 +91,7 @@ interface BarChartProps {
   barOptions?: {
     innerMargin?: 'Small' | 'Medium' | 'Large' | 'None';
     outerMargin?: 'Small' | 'Medium' | 'Large' | 'None';
-    color?: Color;
-    highlightColor?: Color;
+    color?: string | GradientStop[];
     hasRoundedCorners?: boolean;
     zeroAsMinHeight?: boolean;
   };
@@ -116,7 +115,7 @@ interface BarChartProps {
   annotations?: {
     dataIndex: number;
     width: number;
-    color: Color | string;
+    color: string;
     ariaLabel?: string;
     xOffset?: number;
     tooltipData?: {
@@ -127,15 +126,13 @@ interface BarChartProps {
 }
 ```
 
-In order for the user to have visual feedback that a bar has been selected, it is recommended that a `highlightColor`, which is different to the `color`, is passed in for this component. If a `highlightColor` is not provided, the browser's default outline treatment will be used when the bar is focused.
-
 ### Required props
 
 #### data
 
 | type                                                               |
 | ------------------------------------------------------------------ |
-| `{rawValue: number, label: string, barOptions?: {color: Color}}[]` |
+| `{rawValue: number, label: string, barOptions?: {color: string}}[]` |
 
 The array of objects that the chart uses to draw the chart.
 If `data` may be an empty array, provide <a href="#emptyStateText">`emptyStateText`</a> to communicate the empty state to screenreaders.
@@ -150,9 +147,9 @@ An optional object including the following proprties that define the appearance 
 
 | type    | default   |
 | ------- | --------- |
-| `Color` | `primary` |
+| `string` | The color of the series. |
 
-The individual bar fill color. This accepts any [Polaris Viz accepted color](/documentation/Polaris-Viz-colors.md).
+The individual bar fill color.
 
 ### Optional props
 
@@ -212,17 +209,9 @@ This sets the margin before and after all bars. A value of `None` will have bars
 
 | type    | default   |
 | ------- | --------- |
-| `Color` | `primary` |
+| `string | GradientStop[]` | |
 
-The bar fill color. This accepts any [Polaris Viz accepted color](/documentation/Polaris-Viz-colors.md).
-
-##### highlightColor
-
-| type    | default   |
-| ------- | --------- |
-| `Color` | `primary` |
-
-The bar fill color when you hover over a bar in the chart. This accepts any [Polaris Viz accepted color](/documentation/Polaris-Viz-colors.md).
+The bar fill color. This accepts any CSS color.
 
 ##### hasRoundedCorners
 

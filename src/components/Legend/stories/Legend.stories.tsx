@@ -36,8 +36,8 @@ const Template: Story<LegendProps> = (args: LegendProps) => {
 export const SquareLegend = Template.bind({});
 SquareLegend.args = {
   series: [
-    {name: 'Sales', color: 'colorRed'},
-    {name: 'Visits', color: 'colorPurple'},
+    {name: 'Sales', color: 'red'},
+    {name: 'Visits', color: 'purple'},
   ],
 };
 
@@ -86,23 +86,23 @@ GradientLineLegend.args = {
 export const DottedLineLegend = Template.bind({});
 DottedLineLegend.args = {
   series: [
-    {lineStyle: 'dotted', name: 'Sales', color: 'colorRed'},
-    {lineStyle: 'dotted', name: 'Visits', color: 'colorPurple'},
+    {lineStyle: 'dotted', name: 'Sales', color: 'red'},
+    {lineStyle: 'dotted', name: 'Visits', color: 'purple'},
   ],
 };
 
 export const DashedLineLegend = Template.bind({});
 DashedLineLegend.args = {
   series: [
-    {lineStyle: 'dashed', name: 'Sales', color: 'colorRed'},
-    {lineStyle: 'dashed', name: 'Visits', color: 'colorPurple'},
+    {lineStyle: 'dashed', name: 'Sales', color: 'red'},
+    {lineStyle: 'dashed', name: 'Visits', color: 'purple'},
   ],
 };
 
 export const LineLegend = Template.bind({});
 LineLegend.args = {
   series: [
-    {lineStyle: 'solid', name: 'Sales', color: 'colorRed'},
-    {lineStyle: 'solid', name: 'Visits', color: 'colorPurple'},
+    {lineStyle: 'solid', name: 'Sales', color: 'red'},
+    {lineStyle: 'solid', name: 'Visits', color: 'purple'},
   ],
 };

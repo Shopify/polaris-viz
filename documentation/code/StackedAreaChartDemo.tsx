@@ -31,7 +31,7 @@ export function StackedAreaChartDemo() {
         {label: 'June', rawValue: 5634},
         {label: 'July', rawValue: 3238},
       ],
-      color: 'primary' as 'primary',
+      color: 'rgb(0,161,159)',
     },
     {
       name: 'Returning',
@@ -44,7 +44,7 @@ export function StackedAreaChartDemo() {
         {label: 'June', rawValue: 12484},
         {label: 'July', rawValue: 4878},
       ],
-      color: 'secondary' as 'secondary',
+      color: 'rgb(41,35,112)',
     },
   ];
 

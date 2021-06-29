@@ -1,8 +1,9 @@
 import React from 'react';
-import tokens from '@shopify/polaris-tokens';
 import type {ActiveTooltip} from 'types';
 import {useSpring, animated, Interpolation} from '@react-spring/web';
 import {classNames} from '@shopify/css-utilities';
+
+import {animationDurationBase} from '../../constants';
 
 import styles from './Point.scss';
 
@@ -54,7 +55,7 @@ export const Point = React.memo(function Point({
     from: {
       animatedRadius: 0,
     },
-    config: {duration: tokens.durationBase},
+    config: {duration: animationDurationBase},
     default: {immediate: !isAnimated},
   });
 

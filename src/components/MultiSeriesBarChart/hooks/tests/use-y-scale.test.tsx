@@ -32,7 +32,7 @@ const mockData: Series[] = [
       {label: 'label', rawValue: 20},
       {label: 'label', rawValue: 30},
     ],
-    color: 'colorBlack',
+    color: 'black',
     name: 'LABEL1',
   },
   {
@@ -41,7 +41,7 @@ const mockData: Series[] = [
       {label: 'label', rawValue: 2},
       {label: 'label', rawValue: 3},
     ],
-    color: 'colorBlack',
+    color: 'black',
     name: 'LABEL2',
   },
   {
@@ -50,7 +50,7 @@ const mockData: Series[] = [
       {label: 'label', rawValue: 7},
       {label: 'label', rawValue: 10},
     ],
-    color: 'colorBlack',
+    color: 'black',
     name: 'LABEL3',
   },
 ];
@@ -191,7 +191,7 @@ describe('useYScale', () => {
               {label: 'label', rawValue: 20},
               {label: 'label', rawValue: 30},
             ],
-            color: 'colorBlack',
+            color: 'black',
             name: 'LABEL1',
           },
           {
@@ -200,7 +200,7 @@ describe('useYScale', () => {
               {label: 'label', rawValue: 2},
               {label: 'label', rawValue: 3},
             ],
-            color: 'colorBlack',
+            color: 'black',
             name: 'LABEL2',
           },
           {
@@ -209,7 +209,7 @@ describe('useYScale', () => {
               {label: 'label', rawValue: 7},
               {label: 'label', rawValue: 10},
             ],
-            color: 'colorBlack',
+            color: 'black',
             name: 'LABEL3',
           },
         ]}
@@ -367,7 +367,7 @@ describe('useYScale', () => {
                 {label: 'label', rawValue: 0.1},
                 {label: 'label', rawValue: 0.9},
               ],
-              color: 'colorBlack',
+              color: 'black',
               name: 'LABEL1',
             },
           ],

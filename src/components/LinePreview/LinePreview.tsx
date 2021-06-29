@@ -1,7 +1,7 @@
 import React, {useRef} from 'react';
 import type {SeriesColor} from 'types';
 
-import {getColorValue, isGradientType, uniqueId} from '../../utilities';
+import {isGradientType, uniqueId} from '../../utilities';
 import type {LineStyle} from '../../types';
 import {LinearGradient} from '../LinearGradient';
 
@@ -22,7 +22,7 @@ export function LinePreview({color, lineStyle}: Props) {
 
   const linePreviewColor = isGradientType(color)
     ? `url(#${gradientId.current})`
-    : getColorValue(color);
+    : color;
 
   return (
     <div>

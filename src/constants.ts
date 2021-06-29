@@ -1,18 +1,20 @@
 import type {Theme} from './types';
+import variables from './styles/shared/_variables.scss';
 
 export const CROSSHAIR_WIDTH = 5;
-export const SPACING_TIGHT = 8;
 export const SMALL_WIDTH = 300;
 export const MIN_LABEL_SPACE = 100;
 export const TICK_SIZE = 6;
 export const FONT_SIZE = 12;
 export const MIN_Y_LABEL_SPACE = 80;
-export const SPACING_EXTRA_TIGHT = 4;
-export const SPACING = 16;
-export const SPACING_BASE_TIGHT = 12;
-export const SPACING_LOOSE = 20;
-export const BELOW_X_AXIS_MARGIN = 24;
 
+export const SPACING_TIGHT = Number(variables.spacingTight);
+export const SPACING_EXTRA_TIGHT = Number(variables.spacingExtraTight);
+export const SPACING = Number(variables.spacing);
+export const SPACING_BASE_TIGHT = Number(variables.spacingBaseTight);
+export const SPACING_LOOSE = Number(variables.spacingLoose);
+
+export const BELOW_X_AXIS_MARGIN = 24;
 export const SMALL_SCREEN = 500;
 export const SMALL_FONT_SIZE = 10;
 export const DIAGONAL_ANGLE = -40;
@@ -31,13 +33,13 @@ export const EMPTY_STATE_CHART_MIN = 0;
 export const EMPTY_STATE_CHART_MAX = 10;
 
 export const DEFAULT_GREY_LABEL = 'rgb(99, 115, 129)';
-export const DEFAULT_CROSSHAIR_COLOR = 'rgb(223, 227, 232)';
+export const DEFAULT_CROSSHAIR_COLOR = variables.colorSky;
 
 export enum BarChartMargin {
   Top = 5,
   Left = 0,
   Bottom = BELOW_X_AXIS_MARGIN,
-  Right = 20,
+  Right = SPACING_LOOSE,
 }
 
 export enum LineChartMargin {
@@ -50,7 +52,7 @@ export enum LineChartMargin {
 export const BARS_TRANSITION_CONFIG = {mass: 1, tension: 150, friction: 16};
 export const MAX_TRAIL_DURATION = 500;
 
-export const MASK_HIGHLIGHT_COLOR = '#FFF';
+export const MASK_HIGHLIGHT_COLOR = variables.colorWhite;
 export const MASK_SUBDUE_COLOR = '#434343';
 
 const POSITIVE_COLOR = `rgba(46, 237, 145, 0.8)`;
@@ -58,6 +60,20 @@ const PRIMARY_NEUTRAL_COLOR = `rgba(152, 107, 255, 0.8)`;
 const SECONDARY_NEUTRAL_COLOR = `rgba(58, 164, 246, 0.8)`;
 const NEGATIVE_COLOR = `rgba(236, 110, 110, 0.8)`;
 const COMPARISON_COLOR = `rgba(144, 176, 223, 0.6)`;
+
+export const PRIMARY_COLOR = 'rgb(0,161,159)';
+export const SECONDARY_COLOR = 'rgb(41,35,112)';
+export const TERTIARY_COLOR = 'rgb(13,140,237)';
+export const QUARTERNARY_COLOR = 'rgb(157,53,193)';
+
+export const colorSky = variables.colorSky;
+export const colorWhite = variables.colorWhite;
+export const colorPurpleDark = variables.colorPurpleDark;
+export const colorBlue = variables.colorBlue;
+export const colorTeal = variables.colorTeal;
+export const colorSkyDark = variables.colorSkyDark;
+export const positiveColor = variables.positiveColor;
+export const negativeColor = variables.negativeColor;
 
 const VIZ_COMPARISON_GRADIENT = [
   {offset: 0, color: COMPARISON_COLOR},
@@ -124,3 +140,5 @@ export const DEFAULT_THEME: Theme = {
     labelColor: 'rgb(220, 220, 220)',
   },
 };
+
+export const animationDurationBase = 200;

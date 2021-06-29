@@ -1,7 +1,6 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleBand, scaleLinear} from 'd3-scale';
-import type {Color} from 'types';
 import type {StackSeries} from 'components/MultiSeriesBarChart/types';
 
 import {
@@ -32,7 +31,7 @@ describe('<StackedBarGroup/>', () => {
     data: stackedValues,
     yScale: scaleLinear() as any,
     xScale: scaleBand() as any,
-    colors: ['primary', 'secondary'] as Color[],
+    colors: ['green', 'purple'],
     activeBarGroup: null,
     onFocus: jest.fn(),
     accessibilityData: [
@@ -83,16 +82,13 @@ describe('<StackedBarGroup/>', () => {
       it('gets passed to <g> wrapping <Stack>', () => {
         const wrapper = mount(
           <svg>
-            <StackedBarGroup
-              {...mockProps}
-              colors={['primary', 'secondary'] as Color[]}
-            />
+            <StackedBarGroup {...mockProps} colors={['green', 'purple']} />
           </svg>,
         );
 
         expect(wrapper).toContainReactComponent('g', {
           style: {
-            fill: 'rgb(41,35,112)',
+            fill: 'purple',
           },
         });
       });

@@ -63,7 +63,7 @@ const series = [
       {rawValue: 623, label: '2020-03-13T12:00:00'},
       {rawValue: 21, label: '2020-03-14T12:00:00'},
     ],
-    color: 'colorSkyDark' as 'colorSkyDark',
+    color: '#D3D3D3',
     lineStyle: 'dotted' as 'dotted',
   },
 ];
@@ -241,9 +241,9 @@ The array of objects that the chart uses to plot the line.
 
 | type                                           | default   |
 | ---------------------------------------------- | --------- |
-| `Color \| { color: string, offset: number }[]` | `primary` |
+| `string \| { color: string, offset: number }[]` | `primary` |
 
-This accepts any [Polaris Viz color](/documentation/Polaris-Viz-colors.md) value or gradient. If these values have transparency, the points will be rendered at full opacity while the line will use the original opacity.
+This accepts any CSS color or gradient. If these values have transparency, the points will be rendered at full opacity while the line will use the original opacity.
 
 #### lineStyle
 
