@@ -1,1 +1,0 @@
-export {GradientArea} from './GradientArea';

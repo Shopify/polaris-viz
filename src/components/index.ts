@@ -8,8 +8,6 @@ export {Sparkbar} from './Sparkbar';
 export type {SparkbarProps} from './Sparkbar';
 export {BarChart, BarChartTooltipContent} from './BarChart';
 export type {BarChartProps, BarChartTooltipContentProps} from './BarChart';
-export {LineChart, LineChartTooltipContent} from './LineChart';
-export type {LineChartProps, LineChartTooltipContentProps} from './LineChart';
 export {NormalizedStackedBarChart} from './NormalizedStackedBarChart';
 export type {NormalizedStackedBarChartProps} from './NormalizedStackedBarChart';
 export {YAxis} from './YAxis';
