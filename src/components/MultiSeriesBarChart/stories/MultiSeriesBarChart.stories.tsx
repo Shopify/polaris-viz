@@ -7,13 +7,9 @@ import {
 } from '../../../components';
 
 import styles from './MultiSeriesBarChart.stories.scss';
-import {
-  DEFAULT_GREY_LABEL,
-  colorSky,
-  colorTeal,
-  colorSkyDark,
-} from '../../../constants';
+import {colorTeal} from '../../../constants';
 import {SquareColorPreview} from '../../SquareColorPreview';
+import {PolarisVizProvider} from '../../PolarisVizProvider';
 
 const tooltipContent = {
   empty: undefined,
@@ -51,7 +47,6 @@ const tooltipContent = {
 const series = [
   {
     name: 'Breakfast',
-    color: colorTeal,
     data: [
       {label: 'Monday', rawValue: 3},
       {label: 'Tuesday', rawValue: -7},
@@ -64,7 +59,6 @@ const series = [
   },
   {
     name: 'Lunch',
-    color: 'darkGray',
     data: [
       {label: 'Monday', rawValue: 4},
       {label: 'Tuesday', rawValue: 0},
@@ -77,7 +71,6 @@ const series = [
   },
   {
     name: 'Dinner',
-    color: 'purple',
     data: [
       {label: 'Monday', rawValue: 7},
       {label: 'Tuesday', rawValue: 0},
@@ -121,7 +114,7 @@ export default {
   argTypes: {
     series: {
       description:
-        'The `Series` type gives the user a lot of flexibility to define exactly what each bar group should look like. [Series type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/MultiSeriesBarChart/types.ts#L11)',
+        'A collection of named data sets to be rendered in the chart. An optional `color` can be provided for each series, to overwrite the theme `seriesColors`  defined in `PolarisVizProvider`',
     },
     emptyStateText: {
       description:
@@ -136,16 +129,13 @@ export default {
         'If provided, renders a `<SkipLink/>` button with the string. Use this for charts with large data sets, so keyboard users can skip all the tabbable data points in the chart.',
     },
     barOptions: {
-      description:
-        'An object that defines the appearance of the bars. [BarOptions type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/MultiSeriesBarChart/types.ts#L44)',
+      description: 'An object that defines the bars.',
     },
     xAxisOptions: {
-      description:
-        'An object that defines the appearance of the xAxis and its labels. [XAxisOptions type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/MultiSeriesBarChart/types.ts#L62)',
+      description: 'An object that defines the xAxis and its labels.',
     },
     yAxisOptions: {
-      description:
-        'An object that defines the appearance of the yAxis and its labels. [YAxisOptions type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/MultiSeriesBarChart/types.ts#L69)',
+      description: 'An object that defines the yAxis and its labels.',
     },
     renderTooltipContent: {
       options: Object.keys(tooltipContent),
@@ -171,36 +161,6 @@ const Template: Story<MultiSeriesBarChartProps> = (
   args: MultiSeriesBarChartProps,
 ) => {
   return <MultiSeriesBarChart {...args} />;
-};
-
-const defaultProps = {
-  series,
-  xAxisOptions: {
-    labels,
-    labelFormatter: (value: string) => value,
-    showTicks: true,
-    labelColor: DEFAULT_GREY_LABEL,
-  },
-  barOptions: {
-    hasRoundedCorners: false,
-    isStacked: false,
-    zeroAsMinHeight: false,
-    innerMargin: 'Medium',
-    outerMargin: 'None',
-  },
-  gridOptions: {
-    showHorizontalLines: true,
-    color: colorSky,
-    horizontalOverflow: false,
-    horizontalMargin: 0,
-  },
-  isAnimated: true,
-  yAxisOptions: {
-    labelFormatter: (value: number) => value.toString(),
-    labelColor: DEFAULT_GREY_LABEL,
-    backgroundColor: 'transparent',
-    integersOnly: false,
-  },
 };
 
 const purple = '#5052b3';
@@ -239,80 +199,102 @@ const gradientSeries = series
   }))
   .filter((_, index) => index < 2);
 
-export const InsightsStyle = Template.bind({});
-InsightsStyle.parameters = {
+export const Default = Template.bind({});
+Default.parameters = {
   backgrounds: {
     default: 'dark',
   },
 };
-InsightsStyle.args = {
-  series: gradientSeries,
-  xAxisOptions: {labels, showTicks: false, labelColor: 'rgb(220, 220, 220)'},
-  barOptions: {
-    hasRoundedCorners: true,
-  },
-  yAxisOptions: {
-    backgroundColor: '#333333',
-    labelColor: 'rgb(220, 220, 220)',
-  },
-  gridOptions: {
-    showVerticalLines: false,
-    color: 'rgb(99, 115, 129)',
-    horizontalOverflow: true,
-    horizontalMargin: 20,
-  },
-  crossHairOptions: {
-    width: 1,
-    color: 'rgb(139, 159, 176)',
-  },
+Default.args = {
+  series: series,
+  xAxisOptions: {labels},
   isAnimated: true,
 };
 
-export const OverflowStyles = Template.bind({});
-OverflowStyles.args = {
-  series: gradientSeries,
+const NoOverflowStyleTemplate: Story<MultiSeriesBarChartProps> = (
+  args: MultiSeriesBarChartProps,
+) => {
+  return (
+    <PolarisVizProvider
+      themes={{
+        Default: {
+          grid: {
+            horizontalOverflow: false,
+            horizontalMargin: 0,
+          },
+        },
+      }}
+    >
+      <MultiSeriesBarChart {...args} />
+    </PolarisVizProvider>
+  );
+};
+
+export const NoOverflowStyle = NoOverflowStyleTemplate.bind({});
+NoOverflowStyle.args = {
+  series: series,
   xAxisOptions: {labels},
-  barOptions: {
-    hasRoundedCorners: true,
-  },
-  yAxisOptions: {backgroundColor: 'white'},
-  gridOptions: {
-    horizontalOverflow: true,
-    horizontalMargin: 30,
-    showVerticalLines: false,
+};
+NoOverflowStyle.parameters = {
+  backgrounds: {
+    default: 'dark',
   },
 };
 
-export const WithoutRoundedCorners = Template.bind({});
+const WithoutRoundedCornersTemplate: Story<MultiSeriesBarChartProps> = (
+  args: MultiSeriesBarChartProps,
+) => {
+  return (
+    <PolarisVizProvider
+      themes={{
+        Default: {
+          bar: {
+            hasRoundedCorners: false,
+          },
+        },
+      }}
+    >
+      <MultiSeriesBarChart {...args} />
+    </PolarisVizProvider>
+  );
+};
+
+export const WithoutRoundedCorners = WithoutRoundedCornersTemplate.bind({});
 WithoutRoundedCorners.args = {
-  series: gradientSeries,
+  series: series,
   xAxisOptions: {labels},
-  barOptions: {
-    hasRoundedCorners: false,
-  },
-  yAxisOptions: {backgroundColor: 'white'},
-  gridOptions: {
-    horizontalOverflow: true,
-    horizontalMargin: 30,
-    showVerticalLines: false,
+};
+WithoutRoundedCorners.parameters = {
+  backgrounds: {
+    default: 'dark',
   },
 };
 
 export const Stacked = Template.bind({});
 Stacked.args = {
+  series: series,
+  xAxisOptions: {labels},
+  barOptions: {
+    isStacked: true,
+  },
+};
+Stacked.parameters = {
+  backgrounds: {
+    default: 'dark',
+  },
+};
+
+export const OverwrittenSeriesColors = Template.bind({});
+OverwrittenSeriesColors.args = {
   series: gradientSeries,
   xAxisOptions: {labels},
   barOptions: {
     isStacked: true,
   },
 };
-
-export const StackedGradient = Template.bind({});
-StackedGradient.args = {
-  series: gradientSeries,
-  xAxisOptions: {labels},
-  barOptions: {
-    isStacked: true,
+OverwrittenSeriesColors.parameters = {
+  backgrounds: {
+    default: 'dark',
   },
 };
 
@@ -321,7 +303,6 @@ IntegersOnly.args = {
   series: [
     {
       name: 'Breakfast',
-      color: 'rebeccaPurple',
       data: [
         {label: 'Monday', rawValue: 0.3},
         {label: 'Tuesday', rawValue: 0.1},
@@ -334,7 +315,6 @@ IntegersOnly.args = {
     },
     {
       name: 'Lunch',
-      color: 'forestGreen',
       data: [
         {label: 'Monday', rawValue: 0},
         {label: 'Tuesday', rawValue: 0.1},
@@ -347,7 +327,6 @@ IntegersOnly.args = {
     },
     {
       name: 'Dinner',
-      color: 'darkGray',
       data: [
         {label: 'Monday', rawValue: 1.23},
         {label: 'Tuesday', rawValue: 1.42},
@@ -362,13 +341,17 @@ IntegersOnly.args = {
   xAxisOptions: {labels},
   yAxisOptions: {integersOnly: true},
 };
+IntegersOnly.parameters = {
+  backgrounds: {
+    default: 'dark',
+  },
+};
 
 export const LargeVolume = Template.bind({});
 LargeVolume.args = {
   series: [
     {
       name: 'Breakfast',
-      color: 'purple',
       data: Array(200)
         .fill(null)
         .map((x) => {
@@ -380,7 +363,6 @@ LargeVolume.args = {
     },
     {
       name: 'Lunch',
-      color: 'green',
       data: Array(200)
         .fill(null)
         .map((x) => {
@@ -395,5 +377,11 @@ LargeVolume.args = {
     labels: Array(200)
       .fill(null)
       .map((x) => 'some label'),
+  },
+};
+
+LargeVolume.parameters = {
+  backgrounds: {
+    default: 'dark',
   },
 };

@@ -139,6 +139,12 @@ export const DEFAULT_THEME: Theme = {
     backgroundColor: '#1f1f25',
     labelColor: 'rgb(220, 220, 220)',
   },
+  seriesColors: [
+    PRIMARY_COLOR,
+    SECONDARY_COLOR,
+    TERTIARY_COLOR,
+    QUARTERNARY_COLOR,
+  ],
 };
 
 export const animationDurationBase = 200;

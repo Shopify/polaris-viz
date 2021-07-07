@@ -118,6 +118,7 @@ export interface PartialTheme {
   grid?: Partial<GridTheme>;
   xAxis?: Partial<XAxisTheme>;
   yAxis?: Partial<YAxisTheme>;
+  seriesColors?: SeriesColor[];
 }
 export interface Theme {
   chartContainer: ChartContainerTheme;
@@ -125,4 +126,5 @@ export interface Theme {
   grid: GridTheme;
   xAxis: XAxisTheme;
   yAxis: YAxisTheme;
+  seriesColors: SeriesColor[];
 }
