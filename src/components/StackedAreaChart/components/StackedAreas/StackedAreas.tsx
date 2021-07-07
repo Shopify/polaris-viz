@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import isEqual from 'lodash.isequal';
+import isEqual from 'fast-deep-equal';
 import {animated, useSpring} from '@react-spring/web';
 import {area, Series} from 'd3-shape';
 import type {Color} from 'types';

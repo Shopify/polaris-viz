@@ -1,7 +1,6 @@
 import React, {useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {area, line} from 'd3-shape';
-import {classNames} from '@shopify/css-utilities';
 
 import {LinearGradient} from '../../../LinearGradient';
 import {
@@ -9,6 +8,7 @@ import {
   getColorValue,
   uniqueId,
   rgbToRgba,
+  classNames,
 } from '../../../../utilities';
 import {usePrefersReducedMotion} from '../../../../hooks';
 import type {SingleSeries, Coordinates} from '../../Sparkline';

@@ -1,7 +1,11 @@
 import React from 'react';
-import {classNames} from '@shopify/css-utilities';
 
-import {clamp, getColorValue, isValidColorToken} from '../../../../utilities';
+import {
+  classNames,
+  clamp,
+  getColorValue,
+  isValidColorToken,
+} from '../../../../utilities';
 import type {Annotation} from '../../types';
 
 import styles from './AnnotationLine.scss';
