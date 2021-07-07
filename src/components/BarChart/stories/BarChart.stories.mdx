@@ -2,13 +2,22 @@ import {Meta} from '@storybook/addon-docs/blocks';
 import imageFile from './polaris-viz.svg';
 import logo from './logo.png';
 import example from './example.png';
+import linechart from '../../../../src/components/LineChart/line-chart.png';
+import barChart from '../../../../src/components/BarChart/bar-chart.png';
+import sparkbar from '../../../../src/components/Sparkbar/sparkbar.png';
+import sparkline from '../../../../src/components/Sparkline/sparkline.png';
 
-<Meta title="Docs/Intro" />
+<Meta
+  title="Docs/Intro"
+  parameters={{
+    viewMode: 'docs',
+  }}
+/>
 
-<div style={{ margin: '0 auto', maxWidth: '600px', color: 'white', textAlign: 'center' }}>
+<div style={{ margin: '0 auto', maxWidth: '800px', color: 'white', textAlign: 'center' }}>
   <img
-    style={{ width: '75%', margin: '0 auto 1em auto' }}
-    src={logo}
+    style={{ width: '90%', margin: '0 auto 1em auto' }}
+    src={imageFile}
   />
 
 ---
@@ -25,9 +34,14 @@ import example from './example.png';
 
 ---
 
-<img
-  style={{width: '600px', height: '800px', marginTop: '50px'}}
-  src={example}
-/>
+<div style={{display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', marginTop: '80px'
+}}>
+
+<img src={linechart} />
+<img src={barChart} />
+<img src={sparkbar} />
+<img src={sparkline} />
+
+</div>
 
 </div>
