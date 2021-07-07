@@ -10,7 +10,7 @@ import {useResizeObserver} from '../../hooks';
 
 import {TooltipContent} from './components';
 import {Chart} from './Chart';
-import {
+import type {
   BarChartData,
   RenderTooltipContentData,
   GridOptions,

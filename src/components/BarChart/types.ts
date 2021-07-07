@@ -1,4 +1,4 @@
-import {Color, StringLabelFormatter, NumberLabelFormatter} from 'types';
+import type {Color, StringLabelFormatter, NumberLabelFormatter} from 'types';
 
 export interface BarChartData {
   barOptions?: {

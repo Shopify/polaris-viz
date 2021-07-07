@@ -27,7 +27,7 @@ import {BarChartXAxis} from '../BarChartXAxis';
 import {TooltipContainer} from '../TooltipContainer';
 import {LinearGradient} from '../LinearGradient';
 import {HorizontalGridLines} from '../HorizontalGridLines';
-import {Dimensions, BarOptions as BarChartBarOptions} from '../../types';
+import type {Dimensions, BarOptions as BarChartBarOptions} from '../../types';
 
 import {AnnotationLine} from './components';
 import type {

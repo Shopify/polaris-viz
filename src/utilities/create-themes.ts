@@ -1,4 +1,4 @@
-import {Theme} from '../types';
+import type {Theme} from '../types';
 import {DefaultTheme} from '../constants';
 
 export const createTheme = (theme: Partial<Theme>): Theme => {
@@ -13,9 +13,9 @@ export const createTheme = (theme: Partial<Theme>): Theme => {
   }, {} as Theme);
 };
 
-export const createThemes = (themeRecord: Record<string, Theme>) => {
+export const createThemes = (themeRecord: {[key: string]: Theme}) => {
   return Object.keys(themeRecord).reduce((accumulator, themeName) => {
     accumulator[themeName] = createTheme(themeRecord[themeName]);
     return accumulator;
-  }, {} as Record<string, Theme>);
+  }, {} as {[key: string]: Theme});
 };
