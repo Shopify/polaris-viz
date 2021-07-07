@@ -42,9 +42,6 @@ export enum BarMargin {
 }
 
 export interface BarOptions {
-  innerMargin: keyof typeof BarMargin;
-  outerMargin: keyof typeof BarMargin;
-  hasRoundedCorners: boolean;
   isStacked: boolean;
   /**
    * @deprecated This prop is experimental and not ready for general use. If you want to use this, come talk to us in #polaris-data-viz
@@ -61,14 +58,10 @@ export interface GridOptions {
 
 export interface XAxisOptions {
   labelFormatter: StringLabelFormatter;
-  showTicks: boolean;
   labels: string[];
-  labelColor: string;
 }
 
 export interface YAxisOptions {
   labelFormatter: NumberLabelFormatter;
-  labelColor: string;
-  backgroundColor: string;
   integersOnly: boolean;
 }
