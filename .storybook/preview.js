@@ -3,7 +3,7 @@ import React from 'react';
 export const parameters = {
   options: {
     storySort: {
-      order: ['Charts', 'Subcomponents'],
+      order: ['Docs', 'Charts', 'Subcomponents'],
     },
   },
 };
