@@ -137,8 +137,8 @@ export interface Dimensions {
 
 export type SparkChartData = number | null;
 
-export type PathInterpolator = InterpolatorFn<ReadonlyArray<number>, string>;
-export type NumberInterpolator = InterpolatorFn<ReadonlyArray<number>, number>;
+export type PathInterpolator = InterpolatorFn<readonly number[], string>;
+export type NumberInterpolator = InterpolatorFn<readonly number[], number>;
 
 // === Theme types === //
 export enum BarMargin {

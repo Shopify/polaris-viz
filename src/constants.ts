@@ -1,4 +1,4 @@
-import {Theme} from './types';
+import type {Theme} from './types';
 
 export const CROSSHAIR_WIDTH = 5;
 export const SPACING_TIGHT = 8;
