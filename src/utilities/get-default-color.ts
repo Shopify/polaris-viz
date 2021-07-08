@@ -1,7 +1,17 @@
-import type {Color} from 'types';
+import {
+  QUARTERNARY_COLOR,
+  TERTIARY_COLOR,
+  SECONDARY_COLOR,
+  PRIMARY_COLOR,
+} from '../constants';
 
-export function getDefaultColor(index = 0): Color {
-  const colors: Color[] = ['primary', 'secondary', 'tertiary', 'quaternary'];
+export function getDefaultColor(index = 0): string {
+  const colors = [
+    PRIMARY_COLOR,
+    SECONDARY_COLOR,
+    TERTIARY_COLOR,
+    QUARTERNARY_COLOR,
+  ];
   const colorIndex = index % colors.length;
 
   const isDevelopment = process.env.NODE_ENV === 'development';

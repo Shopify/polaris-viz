@@ -2,7 +2,6 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleBand} from 'd3-scale';
 
-import {getColorValue} from '../../../utilities';
 import {Sparkbar} from '../Sparkbar';
 import {LinearGradient} from '../../LinearGradient';
 
@@ -42,15 +41,13 @@ describe('<Sparkbar/>', () => {
   });
 
   it('uses a solid colour for fill when barFillStyle is solid', () => {
-    const color = 'colorBlue';
+    const color = 'blue';
     const wrapper = mount(
       <Sparkbar barFillStyle="solid" data={sampleData} color={color} />,
     );
 
-    const colorValue = getColorValue(color);
-
     expect(wrapper).toContainReactComponent('g', {
-      fill: colorValue,
+      fill: color,
     });
   });
 

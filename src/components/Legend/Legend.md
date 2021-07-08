@@ -11,11 +11,11 @@ const series: LegendData = [
   {
     name: 'First-time',
     data: [],
-    color: 'primary',
+    color: 'teal',
   },
   {
     name: 'Returning',
-    color: 'secondary',
+    color: 'purple',
   },
 ];
 
@@ -33,7 +33,7 @@ The props interface for `<Legend />` accepts a series type, which is the same ty
 ```typescript
 interface Series {
   name: string;
-  color: Color;
+  color: string | GradientStop[];
   lineStyle?: LineStyle;
   data?: Data[];
 }
@@ -46,7 +46,7 @@ The string used as the name of the series.
 
 ### color
 
-The color that will be used in a square or line preview of the series. `color` accepts any [Polaris Viz accepted color](/documentation/Polaris-Viz-colors.md).
+The color that will be used in a square or line preview of the series. `color` accepts any valid CSS color or GradientStop array.
 
 ### lineStyle
 

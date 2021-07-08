@@ -16,17 +16,17 @@ describe('<TooltipContent/>', () => {
     data: [
       {
         label: 'Apple',
-        color: 'primary' as 'primary',
+        color: 'green',
         value: '$5',
       },
       {
         label: 'Orange',
-        color: 'secondary' as 'secondary',
+        color: 'orange',
         value: '$2',
       },
       {
         label: 'Banana',
-        color: 'tertiary' as 'tertiary',
+        color: 'yellow',
         value: '$3',
       },
     ],
@@ -36,13 +36,13 @@ describe('<TooltipContent/>', () => {
     const tooltip = mount(<TooltipContent {...mockProps} />);
 
     expect(tooltip).toContainReactComponent(SquareColorPreview, {
-      color: 'primary',
+      color: 'green',
     });
     expect(tooltip).toContainReactComponent(SquareColorPreview, {
-      color: 'secondary',
+      color: 'orange',
     });
     expect(tooltip).toContainReactComponent(SquareColorPreview, {
-      color: 'tertiary',
+      color: 'yellow',
     });
   });
 

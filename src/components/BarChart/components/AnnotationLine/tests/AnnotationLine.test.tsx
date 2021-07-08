@@ -1,7 +1,5 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
-import type {Color} from 'types';
-import {vizColors} from 'utilities';
 
 import {AnnotationLine} from '../AnnotationLine';
 
@@ -12,7 +10,7 @@ describe('<AnnotationLine />', () => {
     barWidth: 20,
     drawableHeight: 300,
     width: lineWidth,
-    color: 'colorGrayLight' as Color,
+    color: 'gray',
     ariaLabel: 'Median: 1.5 hours',
     xOffset: 0.5,
   };
@@ -31,7 +29,7 @@ describe('<AnnotationLine />', () => {
       // the drawable height
       y1: 300,
       y2: 0,
-      stroke: vizColors.colorGrayLight,
+      stroke: 'gray',
       strokeWidth: lineWidth,
     });
   });
@@ -146,18 +144,6 @@ describe('<AnnotationLine />', () => {
 
       expect(content).toContainReactComponent('line', {
         stroke: 'white',
-      });
-    });
-
-    it('renders a line with a color token', () => {
-      const content = mount(
-        <svg>
-          <AnnotationLine {...mockProps} color="colorRed" />
-        </svg>,
-      );
-
-      expect(content).toContainReactComponent('line', {
-        stroke: 'rgb(222, 54, 24)',
       });
     });
   });

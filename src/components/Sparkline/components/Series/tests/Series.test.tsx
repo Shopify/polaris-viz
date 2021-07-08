@@ -2,7 +2,6 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
 import {area} from 'd3-shape';
-import {getColorValue} from 'utilities';
 
 import {LinearGradient} from '../../../../LinearGradient';
 import {Series} from '../Series';
@@ -29,7 +28,7 @@ jest.mock('d3-shape', () => ({
 }));
 
 const mockSeries = {
-  color: 'colorRed' as any,
+  color: 'red',
   areaStyle: 'none' as any,
   data: [
     {x: 0, y: 100},
@@ -160,7 +159,7 @@ describe('Series', () => {
         <Series
           {...mockProps}
           series={{
-            color: 'colorRed' as any,
+            color: 'red',
             areaStyle: 'none' as any,
             hasPoint: true,
             data: [
@@ -188,7 +187,7 @@ describe('Series', () => {
     expect(actual).toContainReactComponent('circle', {
       cx: xScale(lastDataPoint.x),
       cy: yScale(lastDataPoint.y),
-      fill: getColorValue(mockSeries.color),
+      fill: mockSeries.color,
     });
   });
 });

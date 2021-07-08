@@ -2,11 +2,10 @@ import React from 'react';
 import {Story, Meta} from '@storybook/react';
 
 import {Sparkline, SparklineProps} from '../..';
-import {primaryColor, secondaryColor} from '../../../utilities';
 
 const series = [
   {
-    color: 'darkModePositive',
+    color: 'rgb(0, 164, 124)',
     areaStyle: 'gradient',
     hasPoint: true,
     data: [
@@ -24,7 +23,7 @@ const series = [
     ],
   },
   {
-    color: 'darkModePositive',
+    color: 'rgb(0, 164, 124)',
     areaStyle: 'none',
     lineStyle: 'dashed',
     data: [
@@ -109,7 +108,7 @@ OffsetAndNulls.args = {
   ...defaultProps,
   series: [
     {
-      color: 'darkModePositive',
+      color: 'rgb(255, 85, 70)',
       areaStyle: 'gradient',
       hasPoint: true,
       offsetRight: 12,
@@ -129,7 +128,7 @@ OffsetAndNulls.args = {
       ],
     },
     {
-      color: 'darkModePositive',
+      color: 'rgb(255, 85, 70)',
       areaStyle: 'none',
       lineStyle: 'dashed',
       data: [

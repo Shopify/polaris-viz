@@ -1,7 +1,6 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
-import type {Color} from 'types';
 import type {SpringValue} from '@react-spring/web';
 
 import {BAR_SPACING} from '../../../constants';
@@ -21,7 +20,7 @@ describe('<BarGroup/>', () => {
     width: 100,
     height: 100,
     data: [10, 20, 0, 1],
-    colors: ['colorPurple', 'colorTeal', 'colorRed', 'colorOrange'] as Color[],
+    colors: ['purple', 'teal', 'red', 'orange'],
     hasActiveGroup: false,
     onFocus: jest.fn(),
     barGroupIndex: 0,
@@ -122,7 +121,7 @@ describe('<BarGroup/>', () => {
         expect(barGroup).toContainReactComponent(LinearGradient, {
           gradient: [
             {
-              color: 'rgb(156, 106, 222)',
+              color: 'red',
               offset: 0,
             },
           ],

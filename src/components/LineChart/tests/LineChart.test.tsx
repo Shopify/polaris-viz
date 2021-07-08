@@ -8,7 +8,7 @@ import type {Series} from '../types';
 
 const primarySeries: Series = {
   name: 'Primary',
-  color: 'primary',
+  color: 'red',
   lineStyle: 'solid',
   data: [
     {label: 'Jan 1', rawValue: 1500},

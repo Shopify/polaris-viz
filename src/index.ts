@@ -33,4 +33,4 @@ export {DEFAULT_THEME as PolarisVizTheme} from './constants';
 
 export {createTheme} from './utilities/create-themes';
 
-export type {Color, GradientStop} from './types';
+export type {GradientStop} from './types';

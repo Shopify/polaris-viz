@@ -4,6 +4,7 @@ import {Story, Meta} from '@storybook/react';
 import {StackedAreaChart, StackedAreaChartProps} from '../StackedAreaChart';
 
 import {data, labels, formatYAxisLabel} from './utils.stories';
+import {colorPurpleDark, colorTeal} from '../../../constants';
 
 const tooltipContent = {
   empty: undefined,
@@ -115,7 +116,7 @@ LargeVolume.args = {
             label: Math.random().toString(),
           };
         }),
-      color: 'primary' as 'primary',
+      color: colorTeal,
     },
     {
       name: 'Returning',
@@ -127,7 +128,7 @@ LargeVolume.args = {
             label: Math.random().toString(),
           };
         }),
-      color: 'secondary' as 'secondary',
+      color: colorPurpleDark,
     },
   ],
 };

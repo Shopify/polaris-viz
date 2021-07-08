@@ -2,6 +2,7 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {NormalizedStackedBarChart} from 'components';
 
+import {colorPurpleDark} from '../../../constants';
 import {BarSegment, BarLabel} from '../components';
 
 describe('<NormalizedBarChart />', () => {
@@ -140,12 +141,12 @@ describe('<NormalizedBarChart />', () => {
   });
 
   describe('Colors', () => {
-    it('handles arrays of color tokens', () => {
+    it('passes down colors', () => {
       const barChart = mount(
-        <NormalizedStackedBarChart {...mockProps} colors={['colorPurple']} />,
+        <NormalizedStackedBarChart {...mockProps} colors={[colorPurpleDark]} />,
       );
 
-      expect(barChart.find(BarSegment)!.props.color).toBe('rgb(156, 106, 222)');
+      expect(barChart.find(BarSegment)!.props.color).toBe('rgb(80, 36, 143)');
     });
   });
 

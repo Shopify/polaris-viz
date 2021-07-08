@@ -1,7 +1,6 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
-import type {Color} from 'types';
 
 import {StackedAreas} from '../StackedAreas';
 
@@ -18,7 +17,7 @@ describe('<StackedAreas />', () => {
     width: 100,
     height: 50,
     transform: '',
-    colors: ['colorRed', 'colorPurple'] as Color[],
+    colors: ['red', 'purple'],
     opacity: 1,
     xScale: scaleLinear(),
     yScale: scaleLinear(),
@@ -92,8 +91,8 @@ describe('<StackedAreas />', () => {
     expect(stackedArea).toContainReactComponent('path', {
       // eslint-disable-next-line id-length
       d: 'M250,250L250,250L250,250L250,250Z',
-      fill: 'rgb(222, 54, 24)',
-      stroke: 'rgb(222, 54, 24)',
+      fill: 'red',
+      stroke: 'red',
       strokeWidth: '0.1',
       opacity: 1,
     });

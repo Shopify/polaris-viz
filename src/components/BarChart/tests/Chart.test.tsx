@@ -1,7 +1,5 @@
 import React from 'react';
 import type {SpringValue} from '@react-spring/web';
-import type {Color} from 'types';
-import {vizColors} from 'utilities';
 import {
   YAxis,
   TooltipContainer,
@@ -44,7 +42,7 @@ describe('Chart />', () => {
         dataIndex: 1,
         xOffset: 0.5,
         width: 5,
-        color: 'colorGrayLight' as Color,
+        color: 'gray',
         ariaLabel: 'Median: 1.5',
         tooltipData: {
           label: 'Median',
@@ -249,7 +247,7 @@ describe('Chart />', () => {
       const updatedProps = {
         ...mockProps,
         data: [
-          {rawValue: 10, label: 'data'},
+          {rawValue: 10, label: 'data', barColor: 'purple'},
           {
             rawValue: 20,
             label: 'data 2',
@@ -265,7 +263,7 @@ describe('Chart />', () => {
     it('does not render when the barTheme.color does not exist', () => {
       const chart = mountWithProvider(<Chart {...mockProps} />);
 
-      expect(chart.find('rect', {fill: vizColors.colorGrayDark})).toBeNull();
+      expect(chart.find('rect', {fill: 'purple'})).toBeNull();
     });
   });
 

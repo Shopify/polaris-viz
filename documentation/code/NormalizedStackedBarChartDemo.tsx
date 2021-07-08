@@ -57,7 +57,6 @@ export function NormalizedStackedBarChartDemo() {
               formattedValue: '$20',
             },
           ]}
-          colors={['primary', 'secondary', 'tertiary', 'quaternary']}
           orientation="horizontal"
           size="large"
         />

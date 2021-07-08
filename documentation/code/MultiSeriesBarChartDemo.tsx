@@ -25,8 +25,8 @@ export function MultiSeriesBarChartDemo({isStacked = false}: Props) {
 
   const series = [
     {
-      color: 'primary' as 'primary',
-      highlightColor: 'primaryProminent' as 'primaryProminent',
+      color: 'rgb(0,161,159)',
+      highlightColor: 'rgb(0, 106, 104)',
       name: 'Breakfast',
       data: [
         {label: 'Monday', rawValue: 3},
@@ -39,8 +39,8 @@ export function MultiSeriesBarChartDemo({isStacked = false}: Props) {
       ],
     },
     {
-      color: 'secondary' as 'secondary',
-      highlightColor: 'secondaryProminent' as 'secondaryProminent',
+      color: 'rgb(41,35,112)',
+      highlightColor: 'rgb(9, 6, 37)',
       name: 'Lunch',
       data: [
         {label: 'Monday', rawValue: 4},
@@ -53,8 +53,8 @@ export function MultiSeriesBarChartDemo({isStacked = false}: Props) {
       ],
     },
     {
-      color: 'tertiary' as 'tertiary',
-      highlightColor: 'tertiaryProminent' as 'tertiaryProminent',
+      color: 'rgb(13,140,237)',
+      highlightColor: 'rgb(6, 96, 166)',
       name: 'Dinner',
       data: [
         {label: 'Monday', rawValue: 7},

@@ -32,9 +32,9 @@ const fakeSVGEvent = {
 
 const primarySeries: Required<Series> = {
   name: 'Primary',
-  color: 'primary',
+  color: 'red',
   lineStyle: 'solid',
-  areaColor: 'primary',
+  areaColor: 'red',
   data: [
     {label: 'Jan 1', rawValue: 1500},
     {label: 'Jan 2', rawValue: 1000},
@@ -232,7 +232,7 @@ describe('<Chart />', () => {
     );
 
     expect(chart).toContainReactComponent(Point, {
-      color: 'rgb(0, 161, 159)',
+      color: 'rgb(255, 0, 0)',
       cx: 0,
       cy: 0,
       active: false,
@@ -289,7 +289,7 @@ describe('<Chart />', () => {
   });
 
   describe('series.color', () => {
-    describe('is of type Color', () => {
+    describe('is a CSS color color', () => {
       it('removes transparency for <Point />', () => {
         const chart = mount(
           <Chart
@@ -297,7 +297,7 @@ describe('<Chart />', () => {
             series={[
               {
                 ...primarySeries,
-                color: 'colorWhiteTransparent',
+                color: 'rgba(255, 255, 255, 0.5)',
               },
             ]}
           />,
@@ -315,14 +315,14 @@ describe('<Chart />', () => {
             series={[
               {
                 ...primarySeries,
-                color: 'colorWhiteTransparent',
+                color: 'rgb(255, 255, 255)',
               },
             ]}
           />,
         );
 
         expect(chart.find(Line)).toHaveReactProps({
-          color: 'rgba(255, 255, 255, 0.4)',
+          color: 'rgb(255, 255, 255)',
         });
       });
     });

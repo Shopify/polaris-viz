@@ -1,6 +1,5 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
-import type {Color} from 'types';
 import {
   Point,
   Crosshair,
@@ -49,7 +48,7 @@ describe('<Chart />', () => {
           {label: '6', rawValue: 1000},
           {label: '7', rawValue: 5000},
         ],
-        color: 'colorPurple' as Color,
+        color: 'purple',
       },
       {
         name: 'Africa',
@@ -62,7 +61,7 @@ describe('<Chart />', () => {
           {label: '6', rawValue: 767},
           {label: '7', rawValue: 1766},
         ],
-        color: 'colorTeal' as Color,
+        color: 'teal',
       },
     ],
     xAxisLabels: ['Day 1', 'Day 2'],
@@ -124,7 +123,7 @@ describe('<Chart />', () => {
       width: 480,
       height: 218,
       transform: 'translate(16,8)',
-      colors: ['colorPurple', 'colorTeal'],
+      colors: ['purple', 'teal'],
       opacity: 1,
       isAnimated: true,
       stackedValues: expect.any(Object),

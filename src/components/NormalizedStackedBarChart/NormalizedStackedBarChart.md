@@ -46,7 +46,7 @@ Used for positive datasets with two to four items. If your dataset has more than
     },
   ]}
   accessibilityLabel="A chart showing the breakdown of ad revenue"
-  colors={['primary', 'secondary', 'tertiary', 'quaternary']}
+  colors={['green', 'blue', 'purple', 'grey']}
   orientation="horizontal"
   size="large"
 />
@@ -60,7 +60,7 @@ The normalized stacked bar chart interface looks like this:
 {
   data: Data[];
   accessibilityLabel?: string;
-  colors?: Color[];
+  colors?: string[];
   orientation?: Orientation;
   size?: Size;
 }
@@ -137,9 +137,9 @@ Visually hidden text for screen readers.
 
 | type      | default                                                         |
 | --------- | --------------------------------------------------------------- |
-| `Color[]` | `['colorPurpleDark', 'colorBlue', 'colorTeal', 'colorSkyDark']` |
+| `Color[]` | `['rgb(80, 36, 143)', 'rgb(0, 111, 187)', 'rgb(71, 193, 191)', 'rgb(196, 205, 213)']` |
 
-An array of colors that determines the fill colors of each bar. The colors are applied sequentially to the chart. This accepts any [Polaris Viz accepted color](/documentation/Polaris-Viz-colors.md).
+An array of colors that determines the fill colors of each bar. The colors are applied sequentially to the chart. This accepts any CSS color.
 
 #### orientation
 

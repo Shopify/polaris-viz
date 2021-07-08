@@ -1,6 +1,3 @@
-// stylelint-disable scss/partial-no-import
-@import 'node_modules/@shopify/polaris-tokens/dist/index';
-
 @mixin legend-label {
   color: $color-ink-light;
   font-size: 12px;
