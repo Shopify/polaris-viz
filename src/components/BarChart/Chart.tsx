@@ -16,7 +16,6 @@ import {
   getBarXAxisDetails,
   getAnimationTrail,
   uniqueId,
-  getColorValue,
   isGradientType,
   shouldRotateZeroBars,
 } from '../../utilities';
@@ -26,22 +25,32 @@ import {BarChartXAxis} from '../BarChartXAxis';
 import {TooltipContainer} from '../TooltipContainer';
 import {LinearGradient} from '../LinearGradient';
 import {HorizontalGridLines} from '../HorizontalGridLines';
-import type {Dimensions, BarOptions as BarChartBarOptions} from '../../types';
+import type {
+  Dimensions,
+  BarTheme,
+  GridTheme,
+  XAxisTheme,
+  YAxisTheme,
+  XAxisOptions,
+  YAxisOptions,
+  SeriesColor,
+  GradientStop,
+} from '../../types';
 
 import {AnnotationLine} from './components';
 import type {
   BarChartData,
   RenderTooltipContentData,
-  GridOptions,
-  XAxisOptions,
-  YAxisOptions,
   AnnotationLookupTable,
 } from './types';
 import {useYScale, useXScale, useMinimalLabelIndexes} from './hooks';
 import {SMALL_FONT_SIZE, FONT_SIZE, SMALL_SCREEN, SPACING} from './constants';
 import styles from './Chart.scss';
 
-type BarOptions = Omit<BarChartBarOptions, 'innerMargin' | 'outerMargin'> & {
+type BarThemeWithNumericMargins = Omit<
+  BarTheme,
+  'innerMargin' | 'outerMargin'
+> & {
   innerMargin: number;
   outerMargin: number;
 };
@@ -53,10 +62,12 @@ interface Props {
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
   emptyStateText?: string;
   isAnimated?: boolean;
-  barOptions: BarOptions;
-  gridOptions: GridOptions;
-  xAxisOptions: XAxisOptions;
-  yAxisOptions: YAxisOptions;
+  xAxisOptions: Required<XAxisOptions>;
+  yAxisOptions: Required<YAxisOptions>;
+  barTheme: BarThemeWithNumericMargins;
+  gridTheme: GridTheme;
+  xAxisTheme: XAxisTheme;
+  yAxisTheme: YAxisTheme;
 }
 
 export function Chart({
@@ -66,10 +77,12 @@ export function Chart({
   renderTooltipContent,
   emptyStateText,
   isAnimated = false,
-  barOptions,
-  gridOptions,
+  barTheme,
+  gridTheme,
   xAxisOptions,
   yAxisOptions,
+  xAxisTheme,
+  yAxisTheme,
 }: Props) {
   const {prefersReducedMotion} = usePrefersReducedMotion();
   const [activeBar, setActiveBar] = useState<number | null>(null);
@@ -111,9 +124,9 @@ export function Chart({
         yAxisLabelWidth: approxYAxisLabelWidth,
         fontSize,
         xLabels: data.map(({label}) => xAxisOptions.labelFormatter(label)),
-        width: chartDimensions.width - gridOptions.horizontalMargin * 2,
-        innerMargin: barOptions.innerMargin,
-        outerMargin: barOptions.outerMargin,
+        width: chartDimensions.width - gridTheme.horizontalMargin * 2,
+        innerMargin: barTheme.innerMargin,
+        outerMargin: barTheme.outerMargin,
         minimalLabelIndexes,
       }),
     [
@@ -121,9 +134,9 @@ export function Chart({
       fontSize,
       data,
       chartDimensions.width,
-      gridOptions.horizontalMargin,
-      barOptions.innerMargin,
-      barOptions.outerMargin,
+      gridTheme.horizontalMargin,
+      barTheme.innerMargin,
+      barTheme.outerMargin,
       minimalLabelIndexes,
       xAxisOptions,
     ],
@@ -153,26 +166,26 @@ export function Chart({
   );
 
   const axisMargin = SPACING + yAxisLabelWidth;
-  const chartStartPosition = axisMargin + gridOptions.horizontalMargin;
+  const chartStartPosition = axisMargin + gridTheme.horizontalMargin;
   const drawableWidth =
     chartDimensions.width -
     Margin.Right -
     axisMargin -
-    gridOptions.horizontalMargin * 2;
+    gridTheme.horizontalMargin * 2;
 
   const {xScale, xAxisLabels} = useXScale({
     drawableWidth,
     data,
-    innerMargin: barOptions.innerMargin,
-    outerMargin: barOptions.outerMargin,
+    innerMargin: barTheme.innerMargin,
+    outerMargin: barTheme.outerMargin,
     formatXAxisLabel: xAxisOptions.labelFormatter,
   });
 
   const barWidth = useMemo(() => xScale.bandwidth(), [xScale]);
 
   const rotateZeroBars = useMemo(
-    () => barOptions.zeroAsMinHeight && shouldRotateZeroBars(data),
-    [barOptions.zeroAsMinHeight, data],
+    () => barTheme.zeroAsMinHeight && shouldRotateZeroBars(data),
+    [barTheme.zeroAsMinHeight, data],
   );
 
   const tooltipMarkup = useMemo(() => {
@@ -191,13 +204,13 @@ export function Chart({
     (rawValue: number) => {
       const rawHeight = Math.abs(yScale(rawValue) - yScale(0));
 
-      const needsMinHeight = barOptions.zeroAsMinHeight
+      const needsMinHeight = barTheme.zeroAsMinHeight
         ? rawHeight < MIN_BAR_HEIGHT
         : rawHeight < MIN_BAR_HEIGHT && rawHeight !== 0;
 
       return needsMinHeight ? MIN_BAR_HEIGHT : rawHeight;
     },
-    [barOptions, yScale],
+    [barTheme, yScale],
   );
 
   const handleFocus = useCallback(
@@ -230,11 +243,11 @@ export function Chart({
   const gradientId = useMemo(() => uniqueId('gradient'), []);
   const clipId = useMemo(() => uniqueId('clip'), []);
 
-  const gradient = isGradientType(barOptions.color)
-    ? barOptions.color
+  const gradient = isGradientType(barTheme.color as SeriesColor)
+    ? barTheme.color
     : [
         {
-          color: getColorValue(barOptions.color),
+          color: barTheme.color,
           offset: 0,
         },
       ];
@@ -260,7 +273,7 @@ export function Chart({
         <defs>
           <LinearGradient
             id={gradientId}
-            gradient={gradient}
+            gradient={gradient as GradientStop[]}
             gradientUnits="userSpaceOnUse"
             y1="100%"
             y2="0%"
@@ -295,7 +308,7 @@ export function Chart({
                       }`}
                       tabIndex={0}
                       role="img"
-                      hasRoundedCorners={barOptions.hasRoundedCorners}
+                      hasRoundedCorners={barTheme.hasRoundedCorners}
                       rotateZeroBars={rotateZeroBars}
                     />
                   </g>
@@ -317,23 +330,23 @@ export function Chart({
             xScale={xScale}
             fontSize={fontSize}
             xAxisDetails={xAxisDetails}
-            textColor={xAxisOptions.labelColor}
-            gridColor={gridOptions.color}
-            showTicks={xAxisOptions.showTicks}
+            textColor={xAxisTheme.labelColor}
+            gridColor={gridTheme.color}
+            showTicks={xAxisTheme.showTicks}
             minimalLabelIndexes={minimalLabelIndexes}
           />
         </g>
 
-        {gridOptions.showHorizontalLines ? (
+        {gridTheme.showHorizontalLines ? (
           <HorizontalGridLines
             ticks={ticks}
-            color={gridOptions.color}
+            color={gridTheme.color}
             transform={{
-              x: gridOptions.horizontalOverflow ? 0 : chartStartPosition,
+              x: gridTheme.horizontalOverflow ? 0 : chartStartPosition,
               y: Margin.Top,
             }}
             width={
-              gridOptions.horizontalOverflow
+              gridTheme.horizontalOverflow
                 ? chartDimensions.width
                 : drawableWidth
             }
@@ -344,11 +357,11 @@ export function Chart({
           <YAxis
             ticks={ticks}
             fontSize={fontSize}
-            labelColor={yAxisOptions.labelColor}
-            textAlign={gridOptions.horizontalOverflow ? 'left' : 'right'}
+            labelColor={yAxisTheme.labelColor}
+            textAlign={gridTheme.horizontalOverflow ? 'left' : 'right'}
             width={yAxisLabelWidth}
-            backgroundColor={yAxisOptions.backgroundColor}
-            outerMargin={gridOptions.horizontalMargin}
+            backgroundColor={yAxisTheme.backgroundColor}
+            outerMargin={gridTheme.horizontalMargin}
           />
         </g>
 
@@ -364,9 +377,10 @@ export function Chart({
             const xPosition = xScale(index.toString());
             const xPositionValue = xPosition == null ? 0 : xPosition;
             const translateXValue = xPositionValue + chartStartPosition;
+
             const barColor =
-              item.barOptions != null && item.barOptions.color != null
-                ? item.barOptions.color
+              item.barColor != null && item.barColor != null
+                ? item.barColor
                 : null;
             return barColor != null ? (
               <rect
@@ -376,7 +390,7 @@ export function Chart({
                 y="0"
                 width={barWidth}
                 height={height}
-                fill={getColorValue(barColor)}
+                fill={barColor}
               />
             ) : null;
           })}
