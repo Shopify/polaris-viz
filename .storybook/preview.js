@@ -27,7 +27,7 @@ export const decorators = [
       style={{
         padding: '20px',
         boxSizing: 'border-box',
-        height: '400px',
+        height: '500px',
         overflow: 'hidden',
       }}
     >
