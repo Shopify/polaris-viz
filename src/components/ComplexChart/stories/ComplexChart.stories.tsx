@@ -16,7 +16,7 @@ const Template: Story = (args) => {
 export const InsightsStyle = Template.bind({});
 InsightsStyle.parameters = {
   backgrounds: {
-    // default: 'dark',
+    default: 'dark',
   },
 };
 InsightsStyle.args = {};
