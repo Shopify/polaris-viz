@@ -5,7 +5,12 @@ import {
   useYScale as useBarChartYScale,
   useXScale as useBarChartXScale,
 } from '../../components/BarChart/hooks';
-import {curveStepRounded, getBarXAxisDetails} from '../../utilities';
+import {
+  clamp,
+  curveStepRounded,
+  eventPoint,
+  getBarXAxisDetails,
+} from '../../utilities';
 import {useYScale as useLineChartYScale} from '../../components/LineChart/hooks';
 import {useLinearXScale} from '../../hooks';
 import {Line} from '../LineChart/components';
@@ -15,25 +20,40 @@ import {Bar, YAxis, TooltipContainer, BarChartXAxis} from '../../components';
 // needs to handle both linear and bar scale if both components are used
 
 // QS
+// how do we determine what to show on both axis
 // how should tooltips work?
-// accessibility
-// how do we determine what to show on the axis
+// accessibility approach
 // -- would we be showing things that have different datasets/min/max?
-// would we want duual yAxis?
-
 // API: does it make sense to have a generic complex chart,
 // would composable be better or just direct options or the combinations we want
 
+// to do
+// add points
+// fix hacks
+// work on API
+// fix tooltip bug
+// polish
+// document tech and UX questions
+// accessibility
+
 export function ComplexChart() {
   const [activeBar, setActiveBar] = useState<number | null>(null);
+  const [activePoint, setActivePoint] = useState<number | null>(null);
+
   const [tooltipPosition, setTooltipPosition] = useState<{
     x: number;
     y: number;
   } | null>(null);
 
-  const bottomAxis = 100;
-  const drawableHeight = 500 - bottomAxis; // bottom axis allowance
-  const drawableWidth = 800;
+  const Margin = {Top: 30, Left: 0, Bottom: 50, Right: 0};
+
+  const width = 800;
+  const height = 500;
+  const yAxisWidth = 30;
+  const xAxisHeight = 20;
+
+  const drawableHeight = height - Margin.Bottom - Margin.Top;
+  const drawableWidth = 800 - Margin.Left - Margin.Right - yAxisWidth;
 
   const series = [
     {
@@ -63,7 +83,7 @@ export function ComplexChart() {
   ];
 
   const barChartData = [
-    {rawValue: 1324.19, label: '2020-04-01T12:00:00Z'},
+    {rawValue: 1124.19, label: '2020-04-01T12:00:00Z'},
     {rawValue: 1022.79, label: '2020-04-02T12:00:00Z'},
     {rawValue: 713.29, label: '2020-04-03T12:00:00Z'},
     {rawValue: 413.29, label: '2020-04-04T12:00:00Z'},
@@ -76,7 +96,7 @@ export function ComplexChart() {
   // need to account for possubility of more series?
   const longestSeriesLength = series[0].data.length - 1;
 
-  const {yScale, ticks, axisMargin} = useLineChartYScale({
+  const {yScale} = useLineChartYScale({
     fontSize: 10,
     drawableHeight,
     formatYAxisLabel: (label) => label.toString(),
@@ -100,7 +120,7 @@ export function ComplexChart() {
   }, [linearXScale, yScale]);
 
   const {yScale: barChartYScale, ticks: barChartTicks} = useBarChartYScale({
-    drawableHeight,
+    drawableHeight: drawableHeight - xAxisHeight,
     data: barChartData,
     integersOnly: false,
     formatYAxisLabel: (label) => label.toString(),
@@ -114,8 +134,6 @@ export function ComplexChart() {
     formatXAxisLabel: (label) => label,
   });
 
-  const yAxisWidth = 30;
-
   const barXAxisDetails = getBarXAxisDetails({
     xLabels: xAxisLabels.map((x) => x.value),
     yAxisLabelWidth: yAxisWidth,
@@ -126,64 +144,153 @@ export function ComplexChart() {
   });
 
   return (
-    <svg
-      width={drawableWidth + yAxisWidth}
-      height={drawableHeight + bottomAxis}
-    >
-      <g transform={`translate(0,${5})`} aria-hidden="true">
-        <YAxis
-          ticks={barChartTicks}
-          fontSize={10}
-          width={yAxisWidth}
-          textAlign="left"
-          labelColor="#d3d3d3"
-        />
-      </g>
-
-      <g
-        transform={`translate(${yAxisWidth},${drawableHeight})`}
-        aria-hidden="true"
+    <div>
+      <svg
+        width={width}
+        height={height}
+        onMouseMove={handleInteraction}
+        onTouchMove={handleInteraction}
+        onMouseLeave={() => setActiveBar(null)}
+        onTouchEnd={() => setActiveBar(null)}
       >
-        <BarChartXAxis
-          xScale={barChartXScale}
-          labels={xAxisLabels}
-          fontSize={10}
-          xAxisDetails={barXAxisDetails}
-          textColor="#D3D3D3"
-          gridColor="black"
-          showTicks={false}
-        />
-      </g>
+        <g
+          transform={`translate(${Margin.Left},${Margin.Top + xAxisHeight})`}
+          aria-hidden="true"
+        >
+          <YAxis
+            ticks={barChartTicks}
+            fontSize={10}
+            width={yAxisWidth}
+            textAlign="left"
+            labelColor="#d3d3d3"
+          />
+        </g>
 
-      <g transform={`translate(${yAxisWidth}, 0)`}>
-        {barChartData.map(({rawValue, label}, index) => {
-          return (
-            <Bar
-              color="rgba(132, 86, 225, 0.9)"
-              x={barChartXScale(index.toString())}
-              key={label}
-              yScale={barChartYScale}
-              width={barChartXScale.bandwidth()}
-              rawValue={rawValue}
-              onFocus={() => null}
-              index={index}
-              tabIndex={0}
-              rotateZeroBars={false}
-              height={barChartYScale(rawValue)}
-              hasRoundedCorners
-            />
-          );
-        })}
+        <g
+          transform={`translate(${yAxisWidth},${
+            height - Margin.Bottom - barXAxisDetails.maxXLabelHeight
+          })`}
+          aria-hidden="true"
+        >
+          <BarChartXAxis
+            xScale={barChartXScale}
+            labels={xAxisLabels}
+            fontSize={10}
+            xAxisDetails={barXAxisDetails}
+            textColor="#D3D3D3"
+            gridColor="black"
+            showTicks={false}
+          />
+        </g>
 
-        <Line
-          lineGenerator={lineGenerator}
-          series={series[0]}
-          isAnimated
-          index={0}
-          color="#00A19F"
-          lineOptions={{width: 2.5, hasSpline: true}}
-        />
-      </g>
-    </svg>
+        <g transform={`translate(${yAxisWidth}, ${Margin.Top + xAxisHeight})`}>
+          {barChartData.map(({rawValue, label}, index) => {
+            return (
+              <Bar
+                color="rgba(132, 86, 225, 0.9)"
+                x={barChartXScale(index.toString())}
+                key={label}
+                yScale={barChartYScale}
+                width={barChartXScale.bandwidth()}
+                rawValue={rawValue}
+                onFocus={() => null}
+                index={index}
+                tabIndex={0}
+                rotateZeroBars={false}
+                height={Math.abs(yScale(rawValue) - yScale(0))}
+                hasRoundedCorners
+              />
+            );
+          })}
+
+          <Line
+            lineGenerator={lineGenerator}
+            series={series[0]}
+            isAnimated
+            index={0}
+            color="#00A19F"
+            lineOptions={{width: 2.5, hasSpline: true}}
+          />
+        </g>
+      </svg>
+
+      {tooltipPosition != null && activeBar != null && activePoint != null ? (
+        <TooltipContainer
+          activePointIndex={activeBar}
+          currentX={tooltipPosition.x}
+          currentY={tooltipPosition.y}
+          chartDimensions={{width: 800, height: 500}}
+          margin={Margin}
+          position="center"
+        >
+          <div
+            style={{
+              background: 'white',
+              minWidth: '100px',
+              minHeight: '50px',
+              textAlign: 'center',
+              padding: '4px',
+              borderRadius: '4px',
+              fontSize: 10,
+            }}
+          >
+            <p>{`${barChartData[activeBar].label}: ${barChartData[activeBar].rawValue}`}</p>
+            <br />
+            <br />
+            <p>
+              {series[0].data[activePoint].label}:
+              {series[0].data[activePoint].rawValue}
+            </p>
+          </div>
+        </TooltipContainer>
+      ) : null}
+    </div>
   );
+
+  function handleInteraction(
+    event: React.MouseEvent<SVGSVGElement> | React.TouchEvent<SVGSVGElement>,
+  ) {
+    const point = eventPoint(event);
+
+    if (point == null || linearXScale == null) {
+      return;
+    }
+
+    const {svgX, svgY} = point;
+    const currentPoint = svgX;
+    const currentIndex = Math.floor(currentPoint / barChartXScale.step());
+    const dataStartPosition = yAxisWidth;
+
+    const closestIndex = Math.round(
+      linearXScale.invert(svgX - dataStartPosition),
+    );
+    const clampedClosestIndex = clamp({
+      amount: closestIndex,
+      min: 0,
+      max: series[0].data.length - 1,
+    });
+
+    console.log(clampedClosestIndex);
+    setActivePoint(clampedClosestIndex);
+
+    if (
+      currentIndex < 0 ||
+      currentIndex > barChartData.length - 1 ||
+      svgY > drawableHeight + barXAxisDetails.maxXLabelHeight
+    ) {
+      setActiveBar(null);
+      return;
+    }
+
+    const xPosition = barChartXScale(currentIndex.toString());
+    const value = barChartData[currentIndex].rawValue;
+    const tooltipXPositon =
+      xPosition == null ? 0 : xPosition + barChartXScale.bandwidth() / 2;
+
+    setActiveBar(currentIndex);
+    setTooltipPosition({
+      x: tooltipXPositon,
+      y: yScale(value),
+    });
+  }
 }
