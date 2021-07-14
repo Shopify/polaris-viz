@@ -7,8 +7,15 @@ import CodeMajor from './images/CodeMajor.svg';
 import SaveMinor from './images/SaveMinor.svg';
 import styles from './Widget.scss';
 
+const windowWidth = window.innerWidth;
+const constrainedWidth = Math.min(windowWidth, 500);
+
 export function Widget() {
   const [flipped, set] = useState(true);
+  const [textVal, setTextVal] = useState(
+    'SHOW total_sales \nFROM SALES\nSINCE -2w\nUNTIL today',
+  );
+
   const {transform, opacity} = useSpring({
     opacity: flipped ? 1 : 0,
     transform: `perspective(600px) rotateX(${flipped ? 180 : 0}deg)`,
@@ -18,30 +25,12 @@ export function Widget() {
   return (
     <div
       style={{
-        width: 'min-content',
         willChange: 'transform opacity',
         position: 'absolute',
         height: '200px',
+        width: '100%',
       }}
     >
-      <a.div
-        className={styles.Card}
-        style={{opacity: opacity.to((opacity) => 1 - opacity), transform}}
-      >
-        <textarea
-          className={styles.TextArea}
-          value="SHOW total_sales FROM SALES SINCE -2w UNTIL today"
-        />
-
-        <div className={styles.ButtonContainer}>
-          <button
-            className={styles.Button}
-            onClick={() => set((state) => !state)}
-          >
-            <img width={18} height={18} src={SaveMinor} alt="save" />
-          </button>
-        </div>
-      </a.div>
       <a.div
         className={styles.Card}
         style={{
@@ -64,7 +53,7 @@ export function Widget() {
           <p className={styles.Number}>$1,234.50</p>
         </div>
 
-        <div style={{width: 250, height: 100}}>
+        <div style={{width: constrainedWidth, height: 100}}>
           <Sparkbar
             isAnimated
             data={[100, 200, 300, 400, 400, 1000, 200, 800, 900, 200, 400]}
@@ -84,6 +73,32 @@ export function Widget() {
             barFillStyle="gradient"
           />
         </div>
+      </a.div>
+
+      <a.div
+        className={styles.Card}
+        style={{
+          opacity: opacity.to((opacity) => 1 - opacity),
+          transform,
+          width: `${constrainedWidth}px`,
+        }}
+      >
+        <div className={styles.ButtonContainer}>
+          <button
+            className={styles.Button}
+            onClick={() => set((state) => !state)}
+          >
+            <img width={18} height={18} src={SaveMinor} alt="save" />
+          </button>
+        </div>
+        <textarea
+          className={styles.TextArea}
+          onChange={(val) => {
+            setTextVal(val.target.value);
+          }}
+        >
+          {textVal}
+        </textarea>
       </a.div>
     </div>
   );
