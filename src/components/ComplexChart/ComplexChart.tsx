@@ -16,24 +16,12 @@ import {useLinearXScale} from '../../hooks';
 import {Line} from '../LineChart/components';
 import {Bar, YAxis, TooltipContainer, BarChartXAxis} from '../../components';
 
-// NOTES
-// needs to handle both linear and bar scale if both components are used
-
-// QS
-// how do we determine what to show on both axis
-// how should tooltips work?
-// accessibility approach
-// -- would we be showing things that have different datasets/min/max?
-// API: does it make sense to have a generic complex chart,
-// would composable be better or just direct options or the combinations we want
-
 // to do
 // add points
 // fix hacks
 // work on API
 // fix tooltip bug
 // polish
-// document tech and UX questions
 // accessibility
 
 export function ComplexChart() {
