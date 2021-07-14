@@ -1,6 +1,7 @@
 import {a, useTransition, config} from '@react-spring/web';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
+import {usePrevious} from '../../hooks';
 import {Sparkbar} from '../../components';
 
 import CodeMajor from './images/CodeMajor.svg';
@@ -9,26 +10,27 @@ import styles from './Widget.scss';
 
 export function Widget() {
   const [frontVisible, setFrontVisible] = useState(true);
+  const [initialRender, setInitialRender] = useState(true);
+  const prevInitialRender = usePrevious(initialRender);
   const transitions = useTransition(frontVisible, {
-    from: {
-      position: 'absolute',
-      opacity: 1,
-      transform: [180, 0],
-    },
-    enter: {opacity: 1, transform: [180, 0]},
-    leave: {opacity: 0, transform: [0, 180]},
-    // update: {opacity: 0, transform: [0, 180]},
-    // delay: 200,
-    config: config.molasses,
+    from: {opacity: 0},
+    enter: {opacity: 1},
+    leave: {opacity: 0},
+    reverse: frontVisible,
   });
+  const [textVal, setTextVal] = useState(
+    'SHOW total_sales \nFROM SALES\nSINCE -2w\nUNTIL today',
+  );
+
+  useEffect(() => {
+    setInitialRender(false);
+  }, []);
 
   function Front() {
     return (
       <div
         style={{
-          width: '250px',
           willChange: 'transform opacity',
-          height: '200px',
         }}
       >
         <div className={styles.ButtonContainer}>
@@ -73,15 +75,8 @@ export function Widget() {
       <div
         style={{
           willChange: 'transform opacity',
-          height: '200px',
-          width: '250px',
         }}
       >
-        <textarea
-          className={styles.TextArea}
-          value="SHOW total_sales FROM SALES SINCE -2w UNTIL today"
-        />
-
         <div className={styles.ButtonContainer}>
           <button
             className={styles.Button}
@@ -90,18 +85,32 @@ export function Widget() {
             <img width={18} height={18} src={SaveMinor} alt="save" />
           </button>
         </div>
+        <textarea
+          value={textVal}
+          className={styles.TextArea}
+          onChange={(val) => {
+            setTextVal(val.target.value);
+          }}
+        />
       </div>
     );
   }
 
-  return transitions(({opacity, transform}, frontState) =>
+  return transitions(({opacity}, frontState) =>
     frontState ? (
       <a.div
+        className={styles.Card}
         style={{
           position: 'absolute',
-          opacity: opacity.to({range: [0.0, 1.0], output: [0, 1]}),
-          background: 'red',
-          transform: transform.to((x, y) => `rotateX(${y}deg)`),
+          opacity: prevInitialRender
+            ? 1
+            : opacity.to({range: [0.0, 1.0], output: [0, 1]}),
+          transform: prevInitialRender
+            ? ''
+            : opacity.to({
+                range: [0.0, 1.0],
+                output: [`rotateX(180deg)`, `rotateX(0deg)`],
+              }),
         }}
       >
         <Front />
@@ -111,8 +120,10 @@ export function Widget() {
         style={{
           position: 'absolute',
           opacity: opacity.to({range: [1.0, 0.0], output: [1, 0]}),
-          background: 'purple',
-          transform: transform.to((x, y) => `rotateX(${y}deg)`),
+          transform: opacity.to({
+            range: [1.0, 0.0],
+            output: [`rotateX(0deg)`, `rotateX(180deg)`],
+          }),
         }}
       >
         <Back />
