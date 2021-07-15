@@ -12,4 +12,8 @@ const Template: Story = (args: any) => {
   return <Widget {...args} />;
 };
 export const Default = Template.bind({});
-// Default.args = defaultProps;
+
+export const SparkBar = Template.bind({});
+SparkBar.args = {
+  type: 'sparkbar',
+};

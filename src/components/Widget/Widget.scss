@@ -1,6 +1,7 @@
 .Card {
   background: #1f1f25;
   color: #fff;
+  position: absolute;
 }
 
 .ButtonContainer {
@@ -19,8 +20,7 @@
 }
 
 .TextContainer {
-  // margin-left: 20px;
-  // margin-top: 20px;
+  margin: 20px;
 
   p {
     margin: 0;
@@ -29,17 +29,15 @@
 
   .Number {
     font-size: 28px;
-    margin: 10px 0;
+    margin-top: 3px;
     font-weight: 500;
   }
 }
 
 .TextArea {
-  width: 250px;
-  height: 180px;
-  // padding: 0;
   border: none;
   background: #1f1f25;
+  border-left: 10px solid #1f1f25;
   color: white;
   resize: none;
 
