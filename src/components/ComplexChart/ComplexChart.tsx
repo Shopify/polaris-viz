@@ -14,7 +14,15 @@ import {
 import {useYScale as useLineChartYScale} from '../../components/LineChart/hooks';
 import {useLinearXScale} from '../../hooks';
 import {Line} from '../LineChart/components';
-import {Bar, YAxis, TooltipContainer, BarChartXAxis} from '../../components';
+import {
+  Bar,
+  YAxis,
+  TooltipContainer,
+  BarChartXAxis,
+  SquareColorPreview,
+  LinePreview,
+  Point,
+} from '../../components';
 
 // to do
 // add points
@@ -119,7 +127,9 @@ export function ComplexChart() {
     innerMargin: 0.1,
     outerMargin: 0,
     data: barChartData,
-    formatXAxisLabel: (label) => label,
+    formatXAxisLabel: (label) => {
+      return new Intl.DateTimeFormat('en-US').format(new Date(label));
+    },
   });
 
   const barXAxisDetails = getBarXAxisDetails({
@@ -138,7 +148,10 @@ export function ComplexChart() {
         height={height}
         onMouseMove={handleInteraction}
         onTouchMove={handleInteraction}
-        onMouseLeave={() => setActiveBar(null)}
+        onMouseLeave={() => {
+          setActivePoint(null);
+          setActiveBar(null);
+        }}
         onTouchEnd={() => setActiveBar(null)}
       >
         <g
@@ -175,7 +188,11 @@ export function ComplexChart() {
           {barChartData.map(({rawValue, label}, index) => {
             return (
               <Bar
-                color="rgba(132, 86, 225, 0.9)"
+                color={
+                  activeBar != null && activeBar !== index
+                    ? '#434343'
+                    : 'rgba(132, 86, 225, 0.9)'
+                }
                 x={barChartXScale(index.toString())}
                 key={label}
                 yScale={barChartYScale}
@@ -190,7 +207,6 @@ export function ComplexChart() {
               />
             );
           })}
-
           <Line
             lineGenerator={lineGenerator}
             series={series[0]}
@@ -199,6 +215,22 @@ export function ComplexChart() {
             color="#00A19F"
             lineOptions={{width: 2.5, hasSpline: true}}
           />
+          {series[0].data.map(({rawValue}, dataIndex) => {
+            return (
+              <Point
+                key={dataIndex}
+                stroke="white"
+                color="#00A19F"
+                cx={linearXScale(dataIndex)}
+                cy={yScale(rawValue)}
+                active={activePoint === dataIndex}
+                index={dataIndex}
+                tabIndex={0}
+                isAnimated={false}
+                ariaHidden={false}
+              />
+            );
+          })}{' '}
         </g>
       </svg>
 
@@ -214,21 +246,27 @@ export function ComplexChart() {
           <div
             style={{
               background: 'white',
-              minWidth: '100px',
-              minHeight: '50px',
-              textAlign: 'center',
-              padding: '4px',
+              minWidth: '150px',
+              padding: '8px',
               borderRadius: '4px',
               fontSize: 10,
             }}
           >
-            <p>{`${barChartData[activeBar].label}: ${barChartData[activeBar].rawValue}`}</p>
-            <br />
-            <br />
-            <p>
-              {series[0].data[activePoint].label}:
-              {series[0].data[activePoint].rawValue}
-            </p>
+            <div style={{display: 'flex'}}>
+              <SquareColorPreview color="rgba(132, 86, 225, 0.9)" />
+              <strong style={{marginLeft: '8px'}}>
+                {`${new Date(barChartData[activeBar].label).toDateString()}: `}
+              </strong>
+              {`${barChartData[activeBar].rawValue}`}
+            </div>
+
+            <div style={{display: 'flex', marginTop: '6px'}}>
+              <LinePreview color="#00A19F" />
+              <strong style={{marginLeft: '8px'}}>
+                {new Date(series[0].data[activePoint].label).toDateString()}
+              </strong>
+              : {series[0].data[activePoint].rawValue}
+            </div>
           </div>
         </TooltipContainer>
       ) : null}
@@ -244,7 +282,7 @@ export function ComplexChart() {
       return;
     }
 
-    const {svgX, svgY} = point;
+    const {svgX} = point;
     const currentPoint = svgX;
     const currentIndex = Math.floor(currentPoint / barChartXScale.step());
     const dataStartPosition = yAxisWidth;
@@ -258,14 +296,9 @@ export function ComplexChart() {
       max: series[0].data.length - 1,
     });
 
-    console.log(clampedClosestIndex);
     setActivePoint(clampedClosestIndex);
 
-    if (
-      currentIndex < 0 ||
-      currentIndex > barChartData.length - 1 ||
-      svgY > drawableHeight + barXAxisDetails.maxXLabelHeight
-    ) {
+    if (currentIndex < 0 || currentIndex > barChartData.length - 1) {
       setActiveBar(null);
       return;
     }
