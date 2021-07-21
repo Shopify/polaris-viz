@@ -165,8 +165,16 @@ export const DEFAULT_THEME: Theme = {
     labelColor: 'rgb(220, 220, 220)',
   },
   seriesColors: [
-    // ...DIVERGING_SPLIT_COMPLEMENTARY,
-    ...DIVERGING_QUINARY,
+    '#3AA4F6',
+    '#a743f0',
+    '#46853e',
+    '#857822',
+    '#d3415c',
+    '#a3cafa',
+    '#c697f7',
+    '#67bf5c',
+    '#bfac35',
+    '#ea929d',
   ],
 };
 

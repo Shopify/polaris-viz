@@ -113,7 +113,7 @@ Default.parameters = {
   },
 };
 Default.args = {
-  series: series.slice(0, 4),
+  series: series.slice(0, 5),
   xAxisOptions: {
     xAxisLabels,
     labelFormatter: formatXAxisLabel,

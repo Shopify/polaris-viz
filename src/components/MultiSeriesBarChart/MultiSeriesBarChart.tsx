@@ -4,7 +4,7 @@ import {useDebouncedCallback} from 'use-debounce';
 import type {Dimensions} from '../../types';
 import {SkipLink} from '../SkipLink';
 import {TooltipContent} from '../TooltipContent';
-import {uniqueId} from '../../utilities';
+import {uniqueId, getSeriesColorsByLength} from '../../utilities';
 import {useResizeObserver, useTheme} from '../../hooks';
 
 import styles from './MultiSeriesBarChart.scss';
@@ -42,6 +42,11 @@ export function MultiSeriesBarChart({
   theme = 'Default',
 }: MultiSeriesBarChartProps) {
   const selectedTheme = useTheme(theme);
+
+  const seriesColors = getSeriesColorsByLength(
+    series.length,
+    selectedTheme.seriesColors,
+  );
   const [chartDimensions, setChartDimensions] = useState<Dimensions | null>(
     null,
   );
@@ -154,7 +159,7 @@ export function MultiSeriesBarChart({
   }
 
   const seriesWithDefaults = series.map((series, index) => ({
-    color: selectedTheme.seriesColors[index],
+    color: seriesColors[index],
     ...series,
   }));
 

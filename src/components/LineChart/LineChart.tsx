@@ -2,7 +2,7 @@ import React, {useLayoutEffect, useRef, useState, useCallback} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 
 import type {Dimensions, XAxisOptions, YAxisOptions} from '../../types';
-import {uniqueId} from '../../utilities';
+import {getSeriesColorsByLength, uniqueId} from '../../utilities';
 import {SkipLink} from '../SkipLink';
 import {
   usePrefersReducedMotion,
@@ -58,6 +58,11 @@ export function LineChart({
   theme = 'Default',
 }: LineChartProps) {
   const selectedTheme = useTheme(theme);
+
+  const seriesColors = getSeriesColorsByLength(
+    series.length,
+    selectedTheme.seriesColors,
+  );
 
   const [chartDimensions, setChartDimensions] = useState<Dimensions | null>(
     null,
@@ -195,7 +200,7 @@ export function LineChart({
 
   const seriesWithDefaults = series.map<SeriesWithDefaults>((series, index) => {
     return {
-      color: selectedTheme.seriesColors[index],
+      color: seriesColors[index],
       lineStyle: 'solid',
       ...series,
     };
