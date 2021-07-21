@@ -88,6 +88,11 @@ export function BarChart({
   );
 
   const xAxisOptionsWithDefaults = {
+    xAxisLabels: xAxisOptions.xAxisLabels || [],
+    labelColor: selectedTheme.xAxis.labelColor,
+    showTicks: xAxisOptions.showTicks == null ? true : xAxisOptions.showTicks,
+    hideLabels:
+      xAxisOptions.hideLabels == null ? false : xAxisOptions.hideLabels,
     labelFormatter:
       xAxisOptions.labelFormatter == null
         ? (value: string) => value

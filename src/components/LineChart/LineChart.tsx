@@ -10,7 +10,6 @@ import {
   useTheme,
 } from '../../hooks';
 import {
-  DEFAULT_GREY_LABEL,
   CROSSHAIR_WIDTH,
   DEFAULT_CROSSHAIR_COLOR,
   colorSky,

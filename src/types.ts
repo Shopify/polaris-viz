@@ -67,6 +67,7 @@ export interface XAxisOptions {
   xAxisLabels?: string[];
   showTicks?: boolean;
   hideLabels?: boolean;
+  labelColor?: string;
 }
 export interface YAxisOptions {
   labelFormatter?: NumberLabelFormatter;
