@@ -64,6 +64,9 @@ export type NumberInterpolator = InterpolatorFn<readonly number[], number>;
 export interface XAxisOptions {
   labelFormatter?: StringLabelFormatter;
   useMinimalLabels?: boolean;
+  xAxisLabels?: string[];
+  showTicks?: boolean;
+  hideLabels?: boolean;
 }
 export interface YAxisOptions {
   labelFormatter?: NumberLabelFormatter;

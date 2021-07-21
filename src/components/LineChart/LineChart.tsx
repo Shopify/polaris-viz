@@ -1,10 +1,14 @@
 import React, {useLayoutEffect, useRef, useState, useCallback} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 
-import type {Dimensions} from '../../types';
-import {getDefaultColor, uniqueId} from '../../utilities';
+import type {Dimensions, XAxisOptions, YAxisOptions} from '../../types';
+import {uniqueId} from '../../utilities';
 import {SkipLink} from '../SkipLink';
-import {usePrefersReducedMotion, useResizeObserver} from '../../hooks';
+import {
+  usePrefersReducedMotion,
+  useResizeObserver,
+  useTheme,
+} from '../../hooks';
 import {
   DEFAULT_GREY_LABEL,
   CROSSHAIR_WIDTH,
@@ -18,8 +22,8 @@ import type {
   Series,
   RenderTooltipContentData,
   LineOptions,
-  XAxisOptions,
-  YAxisOptions,
+  // XAxisOptions,
+  // YAxisOptions,
   GridOptions,
   CrossHairOptions,
   SeriesWithDefaults,
@@ -33,10 +37,12 @@ export interface LineChartProps {
   emptyStateText?: string;
   isAnimated?: boolean;
   lineOptions?: Partial<LineOptions>;
-  xAxisOptions: Partial<XAxisOptions> & Pick<XAxisOptions, 'xAxisLabels'>;
+  xAxisOptions: Partial<XAxisOptions> &
+    Required<Pick<XAxisOptions, 'xAxisLabels'>>;
   yAxisOptions?: Partial<YAxisOptions>;
   gridOptions?: Partial<GridOptions>;
   crossHairOptions?: Partial<CrossHairOptions>;
+  theme?: string;
 }
 
 export function LineChart({
@@ -50,7 +56,10 @@ export function LineChart({
   yAxisOptions,
   gridOptions,
   crossHairOptions,
+  theme = 'Default',
 }: LineChartProps) {
+  const selectedTheme = useTheme(theme);
+
   const [chartDimensions, setChartDimensions] = useState<Dimensions | null>(
     null,
   );
@@ -139,17 +148,17 @@ export function LineChart({
 
   const xAxisOptionsWithDefaults = {
     labelFormatter: (value: string) => value,
-    hideXAxisLabels: false,
-    showTicks: true,
-    labelColor: DEFAULT_GREY_LABEL,
+    hideLabels: false,
+    showTicks: selectedTheme.xAxis.showTicks,
+    labelColor: selectedTheme.xAxis.labelColor,
     useMinimalLabels: false,
     ...xAxisOptions,
   };
 
   const yAxisOptionsWithDefaults = {
     labelFormatter: (value: number) => value.toString(),
-    labelColor: DEFAULT_GREY_LABEL,
-    backgroundColor: 'transparent',
+    labelColor: selectedTheme.yAxis.labelColor,
+    backgroundColor: selectedTheme.yAxis.backgroundColor,
     integersOnly: false,
     ...yAxisOptions,
   };
@@ -186,10 +195,8 @@ export function LineChart({
   }
 
   const seriesWithDefaults = series.map<SeriesWithDefaults>((series, index) => {
-    const defaultColor = getDefaultColor(index);
-
     return {
-      color: defaultColor,
+      color: selectedTheme.seriesColors[index],
       lineStyle: 'solid',
       ...series,
     };

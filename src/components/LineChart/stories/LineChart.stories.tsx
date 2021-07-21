@@ -106,20 +106,19 @@ const Template: Story<LineChartProps> = (args: LineChartProps) => {
   return <LineChart {...args} />;
 };
 
-export const InsightsStyle = Template.bind({});
-InsightsStyle.parameters = {
+export const Default = Template.bind({});
+Default.parameters = {
   backgrounds: {
     default: 'dark',
   },
 };
-InsightsStyle.args = {
-  series,
+Default.args = {
+  series: series.slice(0, 4),
   xAxisOptions: {
     xAxisLabels,
     labelFormatter: formatXAxisLabel,
     useMinimalLabels: true,
     showTicks: false,
-    labelColor: 'rgb(220, 220, 220)',
   },
   lineOptions: {
     hasSpline: true,
@@ -136,13 +135,44 @@ InsightsStyle.args = {
   },
   yAxisOptions: {
     labelFormatter: formatYAxisLabel,
-    backgroundColor: '#333333',
-    labelColor: 'rgb(220, 220, 220)',
   },
   renderTooltipContent,
   isAnimated: true,
 };
 
+export const ManySeries = Template.bind({});
+ManySeries.parameters = {
+  backgrounds: {
+    default: 'dark',
+  },
+};
+ManySeries.args = {
+  series,
+  xAxisOptions: {
+    xAxisLabels,
+    labelFormatter: formatXAxisLabel,
+    useMinimalLabels: true,
+    showTicks: false,
+  },
+  lineOptions: {
+    hasSpline: true,
+    pointStroke: '#333333',
+  },
+  gridOptions: {
+    showVerticalLines: false,
+    color: 'rgb(99, 115, 129)',
+    horizontalOverflow: true,
+    horizontalMargin: 20,
+  },
+  crossHairOptions: {
+    width: 1,
+  },
+  yAxisOptions: {
+    labelFormatter: formatYAxisLabel,
+  },
+  renderTooltipContent,
+  isAnimated: true,
+};
 export const HideXAxisLabels = Template.bind({});
 HideXAxisLabels.args = {
   series,

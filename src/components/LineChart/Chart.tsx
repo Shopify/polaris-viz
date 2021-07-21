@@ -26,7 +26,7 @@ import {YAxis} from '../YAxis';
 import {Point} from '../Point';
 import {Crosshair} from '../Crosshair';
 import {LinearGradient} from '../LinearGradient';
-import type {ActiveTooltip, Dimensions} from '../../types';
+import type {ActiveTooltip, Dimensions, XAxisOptions} from '../../types';
 import {TooltipContainer} from '../TooltipContainer';
 import {HorizontalGridLines} from '../HorizontalGridLines';
 
@@ -35,7 +35,7 @@ import type {
   RenderTooltipContentData,
   TooltipData,
   LineOptions,
-  XAxisOptions,
+  // XAxisOptions,
   YAxisOptions,
   GridOptions,
   CrossHairOptions,
@@ -52,7 +52,7 @@ interface Props {
   emptyStateText?: string;
   isAnimated: boolean;
   lineOptions: LineOptions;
-  xAxisOptions: XAxisOptions;
+  xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: YAxisOptions;
   gridOptions: GridOptions;
   crossHairOptions: CrossHairOptions;
@@ -96,11 +96,11 @@ export function Chart({
     width: dimensions.width - gridOptions.horizontalMargin * 2,
     formatXAxisLabel: xAxisOptions.labelFormatter,
     initialTicks,
-    xAxisLabels: xAxisOptions.hideXAxisLabels ? [] : xAxisOptions.xAxisLabels,
+    xAxisLabels: xAxisOptions.hideLabels ? [] : xAxisOptions.xAxisLabels,
     useMinimalLabels: xAxisOptions.useMinimalLabels,
   });
 
-  const marginBottom = xAxisOptions.hideXAxisLabels
+  const marginBottom = xAxisOptions.hideLabels
     ? SPACING_TIGHT
     : Number(Margin.Bottom) + xAxisDetails.maxXLabelHeight;
 
@@ -331,7 +331,7 @@ export function Chart({
           <LinearXAxis
             xAxisDetails={xAxisDetails}
             xScale={xScale}
-            labels={xAxisOptions.hideXAxisLabels ? null : formattedLabels}
+            labels={xAxisOptions.hideLabels ? null : formattedLabels}
             drawableWidth={drawableWidth}
             fontSize={fontSize}
             drawableHeight={drawableHeight}

@@ -111,6 +111,31 @@ export const VIZ_GRADIENT_COLOR = {
   },
 };
 
+const DIVERGING_SPLIT_COMPLEMENTARY = [
+  '#986BFF',
+  '#c3b3f9',
+  '#27819c',
+  '#3cb9de',
+  '#248667',
+  '#37c095',
+  '#a36b22',
+  '#e89a35',
+  '#d8289b',
+  '#f886c5',
+];
+const DIVERGING_QUINARY = [
+  '#986BFF',
+  '#c4b2ff',
+  '#2d76d7',
+  '#87aaf7',
+  '#418369',
+  '#60bc98',
+  '#668022',
+  '#94b835',
+  '#a7683f',
+  '#ec9761',
+];
+
 export const DEFAULT_THEME: Theme = {
   chartContainer: {
     borderRadius: '0px',
@@ -140,10 +165,8 @@ export const DEFAULT_THEME: Theme = {
     labelColor: 'rgb(220, 220, 220)',
   },
   seriesColors: [
-    PRIMARY_COLOR,
-    SECONDARY_COLOR,
-    TERTIARY_COLOR,
-    QUARTERNARY_COLOR,
+    // ...DIVERGING_SPLIT_COMPLEMENTARY,
+    ...DIVERGING_QUINARY,
   ],
 };
 
