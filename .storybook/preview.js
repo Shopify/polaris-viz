@@ -1,5 +1,7 @@
 import React from 'react';
 import {PolarisVizProvider} from '../src/components';
+import {LIGHT_THEME as Light} from '../src/constants';
+
 export const parameters = {
   backgrounds: {
     default: 'twitter',
@@ -38,6 +40,7 @@ export const decorators = [
               padding: '20px',
             },
           },
+          Light,
         }}
       >
         <Story />

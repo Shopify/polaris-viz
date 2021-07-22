@@ -1,15 +1,17 @@
+import chunk from 'lodash.chunk';
+
 export const getSeriesColorsByLength = (length: number, colors: any[]) => {
-  if (length <= 5) return colors;
+  return colors;
+  if (length >= 6) return colors;
+  const chunkedColors = chunk(colors, 2);
 
-  const defaultHues = colors.slice(0, 5);
-  const secondaryVariations = colors.slice(5, 10);
+  // ALTERNATE LIGHTNESS AND HUE
+  // const result = chunkedColors.map(
+  //   (chunked, index) => chunked[index % 2 === 0 ? 0 : 1],
+  // );
 
-  const result: string[] = [];
-
-  defaultHues.forEach((color, index) => {
-    result.push(color);
-    result.push(secondaryVariations[index]);
-  });
+  // RETURNS SAME LIGHTNESS BUT DIFFERENT HUE
+  const result = chunkedColors.map((chunked) => chunked[0]);
 
   return result;
 };

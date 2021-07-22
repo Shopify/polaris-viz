@@ -1,5 +1,6 @@
 import type {Theme} from './types';
 import variables from './styles/shared/_variables.scss';
+import {createTheme} from './utilities';
 
 export const CROSSHAIR_WIDTH = 5;
 export const SMALL_WIDTH = 300;
@@ -111,18 +112,18 @@ export const VIZ_GRADIENT_COLOR = {
   },
 };
 
-// const DIVERGING_SPLIT_COMPLEMENTARY = [
-//   '#986BFF',
-//   '#c3b3f9',
-//   '#27819c',
-//   '#3cb9de',
-//   '#248667',
-//   '#37c095',
-//   '#a36b22',
-//   '#e89a35',
-//   '#d8289b',
-//   '#f886c5',
-// ];
+const DIVERGING_SPLIT_COMPLEMENTARY = [
+  '#986BFF',
+  '#c3b3f9',
+  '#27819c',
+  '#3cb9de',
+  '#248667',
+  '#37c095',
+  '#a36b22',
+  '#e89a35',
+  '#d8289b',
+  '#f886c5',
+];
 const DIVERGING_QUINARY = [
   '#986BFF',
   '#c4b2ff',
@@ -134,6 +135,32 @@ const DIVERGING_QUINARY = [
   '#94b835',
   '#a7683f',
   '#ec9761',
+];
+
+const BLUE_BASED_QUINARY = [
+  '#3AA4F6',
+  '#A3CAFA',
+  '#A743F0',
+  '#C697F7',
+  '#46853E',
+  '#67BF5C',
+  '#A26B22',
+  '#E79B35',
+  '#D3415C',
+  '#EA929D',
+];
+
+const BLUE_BASED_ANALOGOUS = [
+  '#3AA4F6',
+  '#a3cafa',
+  '#9e54d4',
+  '#c29be7',
+  '#4a7f6a',
+  '#6db79a',
+  '#d15999',
+  '#e5a7c4',
+  '#9b6e3f',
+  '#dd9f5d',
 ];
 
 export const DEFAULT_THEME: Theme = {
@@ -165,17 +192,122 @@ export const DEFAULT_THEME: Theme = {
     labelColor: 'rgb(220, 220, 220)',
   },
   seriesColors: [
-    '#3AA4F6',
-    '#a743f0',
-    '#46853e',
-    '#857822',
-    '#d3415c',
-    '#a3cafa',
-    '#c697f7',
-    '#67bf5c',
-    '#bfac35',
-    '#ea929d',
+    [
+      {offset: 0, color: '#6A5FCE'},
+      {offset: 80, color: '#8981de'},
+    ],
+    [
+      {offset: 0, color: '#74aee8'},
+      {offset: 80, color: '#269ce8'},
+    ],
+    [
+      {offset: 0, color: '#34cd98'},
+      {offset: 80, color: '#a3d0a5'},
+    ],
+    [
+      {offset: 0, color: '#d85f8c'},
+      {offset: 80, color: '#e095af'},
+    ],
+    [
+      {offset: 0, color: '#e772ff'},
+      {offset: 80, color: '#eea9ff'},
+    ],
+    [
+      {offset: 0, color: '#e3dcff'},
+      {offset: 80, color: '#d0c3ff'},
+    ],
+    [
+      {offset: 0, color: '#9cfff5'},
+      {offset: 80, color: '#beead9'},
+    ],
+    [
+      {offset: 0, color: '#ffa796'},
+      {offset: 80, color: '#ffd9d5'},
+    ],
+    // [
+    //   {offset: 0, color: '#a149e9'},
+    //   {offset: 80, color: '#b877ee'},
+    // ],
+    // [
+    //   {offset: 0, color: '#7070ff'},
+    //   {offset: 80, color: '#a3a3ff'},
+    // ],
+    // [
+    //   {offset: 0, color: '#64e8ba'},
+    //   {offset: 80, color: '#90efce'},
+    // ],
+    // [
+    //   {offset: 0, color: '#a4ee11'},
+    //   {offset: 80, color: '#c9f570'},
+    // ],
   ],
 };
+
+export const LIGHT_THEME = createTheme({
+  chartContainer: {
+    backgroundColor: '#FFF',
+  },
+  grid: {
+    color: 'rgba(99, 115, 129, .4)',
+  },
+  xAxis: {
+    showTicks: false,
+    labelColor: 'rgba(99, 115, 129, .9)',
+  },
+  yAxis: {
+    backgroundColor: '#FFF',
+    labelColor: 'rgba(99, 115, 129, .9)',
+  },
+  seriesColors: [
+    [
+      {offset: 0, color: '#4439cc'},
+      {offset: 80, color: '#705cec'},
+    ],
+    [
+      {offset: 0, color: '#2487c3'},
+      {offset: 80, color: '#2698DF'},
+    ],
+    [
+      {offset: 0, color: '#007d68'},
+      {offset: 80, color: '#008777'},
+    ],
+    [
+      {offset: 0, color: '#ce4383'},
+      {offset: 80, color: '#f0549a'},
+    ],
+    [
+      {offset: 0, color: '#21247f'},
+      {offset: 80, color: '#1e18ca'},
+    ],
+    [
+      {offset: 0, color: '#14546d'},
+      {offset: 80, color: '#14698b'},
+    ],
+    [
+      {offset: 0, color: '#001711'},
+      {offset: 80, color: '#00211a'},
+    ],
+    [
+      {offset: 0, color: '#87235c'},
+      {offset: 80, color: '#cc1278'},
+    ],
+    // [
+    //   {offset: 0, color: '#00858e'},
+    //   {offset: 80, color: '#008ca8'},
+    // ],
+    // [
+    //   {offset: 0, color: '#5768ff'},
+    //   {offset: 80, color: '#7070ff'},
+    // ],
+    // [
+    //   {offset: 0, color: '#8f32e6'},
+    //   {offset: 80, color: '#a149e9'},
+    // ],
+    // [
+    //   {offset: 0, color: '#a111a1'},
+    //   {offset: 80, color: '#b8149c'},
+    // ],
+  ],
+});
 
 export const animationDurationBase = 200;

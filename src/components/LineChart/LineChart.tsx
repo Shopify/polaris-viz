@@ -28,6 +28,7 @@ import type {
   SeriesWithDefaults,
 } from './types';
 import {TooltipContent} from './components';
+import styles from './LineChart.scss';
 
 export interface LineChartProps {
   series: Series[];
@@ -169,11 +170,12 @@ export function LineChart({
 
   const gridOptionsWithDefaults = {
     showVerticalLines: true,
-    showHorizontalLines: true,
-    color: colorSky,
-    horizontalOverflow: false,
-    horizontalMargin: 0,
+    // showHorizontalLines: true,
+    // color: colorSky,
+    // horizontalOverflow: false,
+    // horizontalMargin: 0,
     ...gridOptions,
+    ...selectedTheme.grid,
   };
 
   const crossHairOptionsWithDefaults = {
@@ -207,7 +209,14 @@ export function LineChart({
   });
 
   return (
-    <React.Fragment>
+    <div
+      className={styles.ChartContainer}
+      style={{
+        background: selectedTheme.chartContainer.backgroundColor,
+        padding: selectedTheme.chartContainer.padding,
+        borderRadius: selectedTheme.chartContainer.borderRadius,
+      }}
+    >
       {skipLinkText == null ||
       skipLinkText.length === 0 ||
       series.length === 0 ? null : (
@@ -237,6 +246,6 @@ export function LineChart({
       {skipLinkText == null || skipLinkText.length === 0 ? null : (
         <SkipLink.Anchor id={skipLinkAnchorId.current} />
       )}
-    </React.Fragment>
+    </div>
   );
 }

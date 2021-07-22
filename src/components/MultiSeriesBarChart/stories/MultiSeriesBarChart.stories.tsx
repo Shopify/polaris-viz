@@ -141,30 +141,6 @@ const series = [
       {label: 'Sunday', rawValue: 0.1},
     ],
   },
-  {
-    name: 'Dinner',
-    data: [
-      {label: 'Monday', rawValue: 7},
-      {label: 'Tuesday', rawValue: 0},
-      {label: 'Wednesday', rawValue: 6},
-      {label: 'Thursday', rawValue: 12},
-      {label: 'Friday', rawValue: 50},
-      {label: 'Saturday', rawValue: 5},
-      {label: 'Sunday', rawValue: 0.1},
-    ],
-  },
-  {
-    name: 'Dinner',
-    data: [
-      {label: 'Monday', rawValue: 7},
-      {label: 'Tuesday', rawValue: 0},
-      {label: 'Wednesday', rawValue: 6},
-      {label: 'Thursday', rawValue: 12},
-      {label: 'Friday', rawValue: 50},
-      {label: 'Saturday', rawValue: 5},
-      {label: 'Sunday', rawValue: 0.1},
-    ],
-  },
 ];
 
 const labels = [
@@ -290,6 +266,34 @@ Default.parameters = {
   },
 };
 Default.args = {
+  series: series.slice(0, 4),
+  xAxisOptions: {labels},
+  isAnimated: true,
+};
+
+export const Light = Template.bind({});
+Light.args = {
+  theme: 'Light',
+  series: series.slice(0, 4),
+  xAxisOptions: {labels},
+  isAnimated: true,
+};
+
+export const ManySeries = Template.bind({});
+ManySeries.parameters = {
+  backgrounds: {
+    default: 'dark',
+  },
+};
+ManySeries.args = {
+  series: series,
+  xAxisOptions: {labels},
+  isAnimated: true,
+};
+
+export const ManySeriesLight = Template.bind({});
+ManySeriesLight.args = {
+  theme: 'Light',
   series: series,
   xAxisOptions: {labels},
   isAnimated: true,
@@ -356,7 +360,7 @@ WithoutRoundedCorners.parameters = {
 
 export const Stacked = Template.bind({});
 Stacked.args = {
-  series: series,
+  series: series.slice(0, 4),
   xAxisOptions: {labels},
   barOptions: {
     isStacked: true,
@@ -365,6 +369,39 @@ Stacked.args = {
 Stacked.parameters = {
   backgrounds: {
     default: 'dark',
+  },
+};
+
+export const StackedLight = Template.bind({});
+StackedLight.args = {
+  theme: 'Light',
+  series: series.slice(0, 4),
+  xAxisOptions: {labels},
+  barOptions: {
+    isStacked: true,
+  },
+};
+
+export const StackedManySeries = Template.bind({});
+StackedManySeries.args = {
+  series: series,
+  xAxisOptions: {labels},
+  barOptions: {
+    isStacked: true,
+  },
+};
+StackedManySeries.parameters = {
+  backgrounds: {
+    default: 'dark',
+  },
+};
+export const StackedManySeriesLight = Template.bind({});
+StackedManySeriesLight.args = {
+  theme: 'Light',
+  series: series,
+  xAxisOptions: {labels},
+  barOptions: {
+    isStacked: true,
   },
 };
 

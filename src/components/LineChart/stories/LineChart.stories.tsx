@@ -113,7 +113,38 @@ Default.parameters = {
   },
 };
 Default.args = {
-  series: series.slice(0, 5),
+  theme: 'Default',
+  series: series.slice(0, 4),
+  xAxisOptions: {
+    xAxisLabels,
+    labelFormatter: formatXAxisLabel,
+    useMinimalLabels: true,
+    showTicks: false,
+  },
+  lineOptions: {
+    hasSpline: true,
+    pointStroke: '#333333',
+  },
+  gridOptions: {
+    showVerticalLines: false,
+    color: 'rgb(99, 115, 129)',
+    horizontalOverflow: true,
+    horizontalMargin: 20,
+  },
+  crossHairOptions: {
+    width: 1,
+  },
+  yAxisOptions: {
+    labelFormatter: formatYAxisLabel,
+  },
+  renderTooltipContent,
+  isAnimated: true,
+};
+
+export const Light = Template.bind({});
+Light.args = {
+  theme: 'Light',
+  series: series.slice(0, 4),
   xAxisOptions: {
     xAxisLabels,
     labelFormatter: formatXAxisLabel,
@@ -173,6 +204,37 @@ ManySeries.args = {
   renderTooltipContent,
   isAnimated: true,
 };
+
+export const ManySeriesLight = Template.bind({});
+ManySeriesLight.args = {
+  theme: 'Light',
+  series,
+  xAxisOptions: {
+    xAxisLabels,
+    labelFormatter: formatXAxisLabel,
+    useMinimalLabels: true,
+    showTicks: false,
+  },
+  lineOptions: {
+    hasSpline: true,
+    pointStroke: '#333333',
+  },
+  gridOptions: {
+    showVerticalLines: false,
+    color: 'rgb(99, 115, 129)',
+    horizontalOverflow: true,
+    horizontalMargin: 20,
+  },
+  crossHairOptions: {
+    width: 1,
+  },
+  yAxisOptions: {
+    labelFormatter: formatYAxisLabel,
+  },
+  renderTooltipContent,
+  isAnimated: true,
+};
+
 export const HideXAxisLabels = Template.bind({});
 HideXAxisLabels.args = {
   series,
