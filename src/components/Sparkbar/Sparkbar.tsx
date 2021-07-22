@@ -76,8 +76,8 @@ export function Sparkbar({
     setRef: setContainerRef,
     entry,
   } = useResizeObserver();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const [svgDimensions, setSvgDimensions] = useState({width: 0, height: 0});
-  const {prefersReducedMotion} = usePrefersReducedMotion();
 
   const [updateMeasurements] = useDebouncedCallback(() => {
     if (containerRef == null) return;
@@ -87,6 +87,18 @@ export function Sparkbar({
       width: containerRef.clientWidth,
     });
   }, 10);
+
+  const handlePrintMediaQueryChange = useCallback(
+    (event: MediaQueryListEvent) => {
+      if (event.matches && containerRef != null) {
+        setSvgDimensions({
+          height: containerRef.clientHeight,
+          width: containerRef.clientWidth,
+        });
+      }
+    },
+    [containerRef],
+  );
 
   useLayoutEffect(() => {
     if (entry == null) return;
@@ -99,14 +111,34 @@ export function Sparkbar({
 
     if (!isServer) {
       window.addEventListener('resize', () => updateMeasurements());
+
+      if (typeof window.matchMedia('print').addEventListener === 'function') {
+        window
+          .matchMedia('print')
+          .addEventListener('change', handlePrintMediaQueryChange);
+      } else if (typeof window.matchMedia('print').addListener === 'function') {
+        window.matchMedia('print').addListener(handlePrintMediaQueryChange);
+      }
     }
 
     return () => {
       if (!isServer) {
         window.removeEventListener('resize', () => updateMeasurements());
+
+        if (typeof window.matchMedia('print').addEventListener === 'function') {
+          window
+            .matchMedia('print')
+            .removeEventListener('change', handlePrintMediaQueryChange);
+        } else if (
+          typeof window.matchMedia('print').addListener === 'function'
+        ) {
+          window
+            .matchMedia('print')
+            .removeListener(handlePrintMediaQueryChange);
+        }
       }
     };
-  }, [entry, containerRef, updateMeasurements]);
+  }, [entry, containerRef, updateMeasurements, handlePrintMediaQueryChange]);
 
   const {width, height} = svgDimensions;
 

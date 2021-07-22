@@ -13,7 +13,7 @@ export function SparkbarDemo() {
   return (
     <div style={OUTER_CONTAINER_STYLE}>
       <div style={innerContainerStyle}>
-        <div style={{width: 200, height: 150}}>
+        <div style={{width: '100%', height: 150}}>
           <Sparkbar
             isAnimated
             data={[100, 200, 300, 400, 400, 1000, 200, 800, 900, 200, 400]}
