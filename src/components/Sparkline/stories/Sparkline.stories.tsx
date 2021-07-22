@@ -4,9 +4,24 @@ import {Story, Meta} from '@storybook/react';
 import {Sparkline, SparklineProps} from '../..';
 import {primaryColor, secondaryColor} from '../../../utilities';
 
+const gradient = [
+  {
+    offset: 0,
+    color: '#08CA9B',
+  },
+  {
+    offset: 85,
+    color: 'rgba(92,105,208,0.8)',
+  },
+  {
+    offset: 100,
+    color: 'rgba(92,105,208,0.8)',
+  },
+];
+
 const series = [
   {
-    color: 'darkModePositive',
+    color: gradient,
     areaStyle: 'gradient',
     hasPoint: true,
     data: [
@@ -86,6 +101,7 @@ const Template: Story<SparklineProps> = (args: SparklineProps) => {
 
 const defaultProps = {
   series,
+  strokeWidth: 1.5,
   isAnimated: true,
   accessibilityLabel: 'Customer growth over time',
 };

@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, useRef} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {area, line} from 'd3-shape';
 
@@ -9,6 +9,8 @@ import {
   uniqueId,
   rgbToRgba,
   classNames,
+  isGradientType,
+  makeColorOpaque,
 } from '../../../../utilities';
 import {usePrefersReducedMotion} from '../../../../hooks';
 import type {SingleSeries, Coordinates} from '../../Sparkline';
@@ -24,6 +26,7 @@ export function Series({
   isAnimated,
   height,
   hasSpline,
+  strokeWidth,
 }: {
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
@@ -31,8 +34,11 @@ export function Series({
   isAnimated: boolean;
   height: number;
   hasSpline: boolean;
+  strokeWidth: number;
 }) {
   const {prefersReducedMotion} = usePrefersReducedMotion();
+  const gradientId = useRef(uniqueId('lineChartGradient'));
+
   const {
     areaStyle = 'none',
     lineStyle = 'solid',
@@ -73,7 +79,16 @@ export function Series({
   const id = useMemo(() => uniqueId('sparkline'), []);
   const immediate = !isAnimated || prefersReducedMotion;
 
-  const colorValue = getColorValue(color);
+  const seriesGradientId = `${gradientId.current}`;
+
+  const lineColor = isGradientType(color)
+    ? `url(#${seriesGradientId})`
+    : getColorValue(color);
+
+  const singleColor = isGradientType(color)
+    ? makeColorOpaque(color[1].color)
+    : getColorValue(color);
+
   const dashedLine = lineStyle === 'dashed';
 
   if (lineShape == null || areaShape == null) {
@@ -82,8 +97,35 @@ export function Series({
 
   return (
     <React.Fragment>
+      {isGradientType(color) ? (
+        <LinearGradient
+          id={seriesGradientId}
+          gradient={color}
+          gradientUnits="userSpaceOnUse"
+          y1="100%"
+          y2="0%"
+        />
+      ) : null}
+
+      {areaStyle === 'gradient' ? (
+        <LinearGradient
+          id={id}
+          gradient={[
+            {
+              color: rgbToRgba({rgb: singleColor, alpha: 0}),
+              offset: 0,
+            },
+            {
+              color: rgbToRgba({rgb: singleColor, alpha: 0.8}),
+              offset: 100,
+            },
+          ]}
+        />
+      ) : null}
+
       <path
-        stroke={colorValue}
+        stroke={lineColor}
+        strokeWidth={strokeWidth}
         d={lineShape}
         fill="none"
         className={classNames(
@@ -92,24 +134,10 @@ export function Series({
           dashedLine && styles.DashedLine,
         )}
       />
-      {areaStyle === 'gradient' ? (
-        <LinearGradient
-          id={id}
-          gradient={[
-            {
-              color: rgbToRgba({rgb: colorValue, alpha: 0}),
-              offset: 0,
-            },
-            {
-              color: rgbToRgba({rgb: colorValue, alpha: 0.8}),
-              offset: 100,
-            },
-          ]}
-        />
-      ) : null}
+
       {areaStyle === 'none' ? null : (
         <path
-          fill={areaStyle === 'gradient' ? `url(#${id})` : colorValue}
+          fill={areaStyle === 'gradient' ? `url(#${id})` : lineColor}
           d={areaShape}
           className={immediate ? undefined : styles.Area}
         />
@@ -120,7 +148,7 @@ export function Series({
           cx={lastLinePointCoordinates.x}
           cy={lastLinePointCoordinates.y}
           r={POINT_RADIUS}
-          fill={colorValue}
+          fill={lineColor}
           className={styles.Point}
         />
       ) : null}
