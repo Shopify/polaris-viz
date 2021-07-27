@@ -5,7 +5,6 @@ import {Sparkline, SparklineProps} from '../..';
 
 const series = [
   {
-    color: 'rgb(0, 164, 124)',
     areaStyle: 'gradient',
     hasPoint: true,
     data: [
@@ -23,9 +22,9 @@ const series = [
     ],
   },
   {
-    color: 'rgb(0, 164, 124)',
     areaStyle: 'none',
     lineStyle: 'dashed',
+    hasPoint: false,
     data: [
       {x: 0, y: 200},
       {x: 1, y: 200},
@@ -109,7 +108,7 @@ OffsetAndNulls.args = {
   series: [
     {
       color: 'rgb(255, 85, 70)',
-      areaStyle: 'gradient',
+      area: 'rgba(255, 85, 70, 0.1)',
       hasPoint: true,
       offsetRight: 12,
       offsetLeft: 50,
@@ -129,8 +128,8 @@ OffsetAndNulls.args = {
     },
     {
       color: 'rgb(255, 85, 70)',
-      areaStyle: 'none',
       lineStyle: 'dashed',
+      hasPoint: false,
       data: [
         {x: 0, y: 20},
         {x: 1, y: 20},
