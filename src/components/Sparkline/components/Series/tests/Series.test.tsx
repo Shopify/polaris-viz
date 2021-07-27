@@ -2,6 +2,7 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
 import {area} from 'd3-shape';
+import type {Theme} from 'types';
 
 import {LinearGradient} from '../../../../LinearGradient';
 import {Series} from '../Series';
@@ -29,7 +30,6 @@ jest.mock('d3-shape', () => ({
 
 const mockSeries = {
   color: 'red',
-  areaStyle: 'none' as any,
   data: [
     {x: 0, y: 100},
     {x: 1, y: 200},
@@ -55,6 +55,9 @@ const mockProps = {
   isAnimated: false,
   height: 250,
   hasSpline: false,
+  theme: {
+    line: {area: null, style: 'solid', color: 'red', hasPoint: true},
+  } as Theme,
 };
 
 jest.mock('utilities/unique-id', () => ({
@@ -98,37 +101,21 @@ describe('Series', () => {
   it('renders an additional path if an area style is set', () => {
     const actual = mount(
       <svg>
-        <Series {...mockProps} series={{...mockSeries, areaStyle: 'solid'}} />
+        <Series {...mockProps} series={{...mockSeries, area: 'red'}} />
       </svg>,
     );
 
     expect(actual).toContainReactComponentTimes('path', 2);
   });
 
-  it('uses a URL as the fill if the area style is set to gradient', () => {
+  it('renders an additional LinearGradient if the area style is not null', () => {
     const actual = mount(
       <svg>
-        <Series
-          {...mockProps}
-          series={{...mockSeries, areaStyle: 'gradient'}}
-        />
+        <Series {...mockProps} series={{...mockSeries, area: 'red'}} />
       </svg>,
     );
 
-    expect(actual).toContainReactComponent('path', {fill: 'url(#sparkline-1)'});
-  });
-
-  it('renders a LinearGradient if the area style is set to gradient', () => {
-    const actual = mount(
-      <svg>
-        <Series
-          {...mockProps}
-          series={{...mockSeries, areaStyle: 'gradient'}}
-        />
-      </svg>,
-    );
-
-    expect(actual).toContainReactComponent(LinearGradient);
+    expect(actual).toContainReactComponentTimes(LinearGradient, 2);
   });
 
   it('calls the d3 curve method when hasSpline is true', () => {
@@ -159,8 +146,6 @@ describe('Series', () => {
         <Series
           {...mockProps}
           series={{
-            color: 'red',
-            areaStyle: 'none' as any,
             hasPoint: true,
             data: [
               {x: 0, y: 100},
@@ -187,7 +172,6 @@ describe('Series', () => {
     expect(actual).toContainReactComponent('circle', {
       cx: xScale(lastDataPoint.x),
       cy: yScale(lastDataPoint.y),
-      fill: mockSeries.color,
     });
   });
 });

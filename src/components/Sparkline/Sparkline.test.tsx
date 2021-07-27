@@ -22,7 +22,6 @@ describe('<Sparkline />', () => {
   const mockSeries = [
     {
       color: 'red',
-      areaStyle: 'gradient' as any,
       data: [
         {x: 0, y: 100},
         {x: 1, y: 200},
@@ -39,7 +38,6 @@ describe('<Sparkline />', () => {
     },
     {
       color: 'purple',
-      areaStyle: 'none' as any,
       lineStyle: 'dashed' as any,
       data: [
         {x: 0, y: 10},

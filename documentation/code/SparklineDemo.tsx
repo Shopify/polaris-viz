@@ -19,7 +19,6 @@ export function SparklineDemo() {
             series={[
               {
                 color: 'rgb(0,161,159)',
-                areaStyle: 'gradient',
                 data: [
                   {x: 0, y: 100},
                   {x: 1, y: 200},
@@ -36,7 +35,6 @@ export function SparklineDemo() {
               },
               {
                 color: 'rgb(145,158,171)',
-                areaStyle: 'none',
                 lineStyle: 'dashed',
                 data: [
                   {x: 0, y: 10},
