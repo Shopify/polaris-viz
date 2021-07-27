@@ -1,0 +1,36 @@
+@import 'node_modules/@shopify/polaris-tokens/dist/index';
+@import '../../../../styles/common';
+
+.Container {
+  @include tooltip-text;
+  background: $color-white;
+  border: 1px solid $color-sky-dark;
+  border-radius: 4px;
+  padding: $spacing-tight;
+  overflow: hidden;
+}
+
+.Content {
+  display: flex;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: -1 * $spacing-extra-tight;
+  margin-left: -1 * $spacing-tight;
+}
+
+.Label {
+  flex: 1;
+  margin: 0;
+  margin-top: $spacing-extra-tight;
+  margin-left: $spacing-tight;
+  white-space: nowrap;
+  @include tooltip-emphasis;
+}
+
+.Value {
+  font-feature-settings: 'tnum';
+  margin: 0;
+  margin-top: $spacing-extra-tight;
+  margin-left: $spacing-tight;
+}

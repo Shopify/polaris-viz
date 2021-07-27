@@ -45,6 +45,16 @@ export enum LineChartMargin {
   Right = SPACING_EXTRA_TIGHT,
 }
 
+export const ARC_CORNER_RADIUS = 5;
+export const DONUT_CHART_STROKE_WIDTH = 5;
+export const DONUT_CHART_THICKNESS = 22;
+export enum DonutChartMargin {
+  Top = SPACING_EXTRA_TIGHT,
+  Left = SPACING_EXTRA_TIGHT,
+  Bottom = SPACING_EXTRA_TIGHT,
+  Right = SPACING_EXTRA_TIGHT,
+}
+
 export const BARS_TRANSITION_CONFIG = {mass: 1, tension: 150, friction: 16};
 export const MAX_TRAIL_DURATION = 500;
 

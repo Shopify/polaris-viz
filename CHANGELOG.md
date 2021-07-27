@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Added
+
+- `<DonutChart />` component
+
 ### Fixed
 
 - Fixes `<BarChart />` when very large datasets are displayed
