@@ -3,8 +3,6 @@ import {Story, Meta} from '@storybook/react';
 
 import {Sparkbar, SparkbarProps} from '../Sparkbar';
 
-const primaryColor = 'rgb(71, 193, 191)';
-
 export default {
   title: 'Charts/Sparkbar',
   parameters: {
@@ -19,10 +17,14 @@ export default {
   component: Sparkbar,
   decorators: [
     (Story: any) => (
-      <div style={{width: '100px', height: '50px'}}>{Story()}</div>
+      <div style={{width: '200px', height: '100px'}}>{Story()}</div>
     ),
   ],
   argTypes: {
+    theme: {
+      description:
+        'The theme that the chart will inherit its color and container styles from',
+    },
     data: {
       description:
         "The prop to determine the chart's bars. Null bars will not be plotted. Bars with the value of `0` will render a very small bar to indicate the presence of the value. [SparkChartData type definition.]()",
@@ -30,10 +32,6 @@ export default {
     accessibilityLabel: {
       description:
         'Visually hidden text for screen readers.  Make sure to write [informative alt text.](https://medium.com/nightingale/writing-alt-text-for-data-visualization-2a218ef43f81)',
-    },
-    barFillStyle: {
-      description:
-        'Determines whether what kind of shading to use to fill the bars.',
     },
     comparison: {
       description:
@@ -50,7 +48,6 @@ export default {
     isAnimated: {
       description: 'Determines whether to animate the chart on state changes.',
     },
-    color: {description: 'String color value.'},
   },
 } as Meta;
 
@@ -75,27 +72,30 @@ const defaultProps = {
     {x: 9, y: comparisonValue},
     {x: 10, y: comparisonValue},
   ],
-  color: 'rgb(0, 164, 124)',
-  barFillStyle: 'solid',
   accessibilityLabel:
     'A bar chart showing orders over time for the past 11 weeks. The minimum is 100 orders and the maximum is 1,000 orders, compared to an average of 500 orders during previous 11-week period.',
 };
 
-export const DarkMode = Template.bind({});
-DarkMode.args = defaultProps;
-DarkMode.parameters = {
+export const Default = Template.bind({});
+Default.args = defaultProps;
+Default.parameters = {
   backgrounds: {
     default: 'dark',
   },
 };
+
+export const Positive = Template.bind({});
+Positive.args = {...defaultProps, theme: 'Positive'};
+Positive.parameters = {
+  backgrounds: {
+    default: 'dark',
+  },
+};
+
 export const OffsetAndNulls = Template.bind({});
 OffsetAndNulls.args = {
   ...defaultProps,
+  dataOffsetLeft: 10,
+  dataOffsetRight: 20,
   data: [100, 200, -300, null, 400, 0, 0, 400, 700, 900, 500],
-};
-
-export const Gradient = Template.bind({});
-Gradient.args = {
-  ...defaultProps,
-  barFillStyle: 'gradient',
 };
