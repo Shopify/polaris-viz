@@ -2,13 +2,8 @@
 
 .Wrapper {
   position: relative;
-  width: 100%;
-  height: 100%;
   overflow: visible;
-}
-
-.Svg {
-  position: absolute;
+  @include chart-container;
 }
 
 .VisuallyHidden {

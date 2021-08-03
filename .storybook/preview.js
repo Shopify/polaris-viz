@@ -38,6 +38,11 @@ export const decorators = [
               padding: '20px',
             },
           },
+          Positive: {
+            bar: {
+              color: 'rgb(0, 164, 124)',
+            },
+          },
         }}
       >
         <Story />
