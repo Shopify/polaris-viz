@@ -20,6 +20,7 @@ import {
   SPACING_TIGHT,
   LineChartMargin as Margin,
   SPACING_BASE_TIGHT,
+  XMLNS,
 } from '../../constants';
 import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
 import {LinearXAxis} from '../LinearXAxis';
@@ -309,9 +310,10 @@ export function Chart({
   return (
     <div className={styles.Container}>
       <svg
+        xmlns={XMLNS}
         role={emptyState ? 'img' : 'table'}
-        width="100%"
-        height="100%"
+        width={dimensions.width}
+        height={dimensions.height}
         onMouseMove={(event) => {
           event.persist();
           handleMouseInteraction(event);

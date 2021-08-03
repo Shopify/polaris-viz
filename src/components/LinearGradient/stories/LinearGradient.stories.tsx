@@ -2,6 +2,7 @@ import React from 'react';
 import {Meta, Story} from '@storybook/react/types-6-0';
 
 import {LinearGradient, LinearGradientProps} from '../LinearGradient';
+import {XMLNS} from '../../../constants';
 
 export default {
   title: 'Subcomponents/LinearGradient',
@@ -49,7 +50,7 @@ export default {
 } as Meta;
 
 const Template: Story<LinearGradientProps> = (args) => (
-  <svg viewBox="0 0 500 500">
+  <svg viewBox="0 0 500 500" xmlns={XMLNS} height={500} width={500}>
     <LinearGradient {...args} />
     <rect x="0" y="0" width="500" height="500" fill="url(#sampleGradient)" />
   </svg>

@@ -9,6 +9,7 @@ import {
   BARS_TRANSITION_CONFIG,
   MASK_HIGHLIGHT_COLOR,
   MASK_SUBDUE_COLOR,
+  XMLNS,
 } from '../../constants';
 import {
   eventPoint,
@@ -249,8 +250,9 @@ export function Chart({
       }}
     >
       <svg
-        width="100%"
-        height="100%"
+        xmlns={XMLNS}
+        width={width}
+        height={height}
         onMouseMove={handleInteraction}
         onTouchMove={handleInteraction}
         onMouseLeave={() => setActiveBar(null)}

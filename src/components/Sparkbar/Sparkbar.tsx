@@ -5,7 +5,7 @@ import {line} from 'd3-shape';
 import {useTransition} from '@react-spring/web';
 
 import {usePrefersReducedMotion, useResizeObserver} from '../../hooks';
-import {BARS_TRANSITION_CONFIG} from '../../constants';
+import {BARS_TRANSITION_CONFIG, XMLNS} from '../../constants';
 import type {Color, SparkChartData} from '../../types';
 import {
   getColorValue,
@@ -162,6 +162,8 @@ export function Sparkbar({
     config: BARS_TRANSITION_CONFIG,
   });
 
+  const viewboxHeight = height + ANIMATION_MARGIN * 2;
+
   return (
     <div className={styles.Wrapper} ref={setContainerRef}>
       {accessibilityLabel ? (
@@ -169,14 +171,15 @@ export function Sparkbar({
       ) : null}
 
       <svg
+        xmlns={XMLNS}
         aria-hidden
-        viewBox={`0 ${ANIMATION_MARGIN * -1} ${width} ${
-          height + ANIMATION_MARGIN * 2
-        }`}
+        viewBox={`0 -${ANIMATION_MARGIN} ${width} ${viewboxHeight}`}
         style={{
-          transform: `translateY(${ANIMATION_MARGIN * -1}px)`,
+          transform: `translateY(-${ANIMATION_MARGIN}px)`,
         }}
         className={styles.Svg}
+        height={viewboxHeight}
+        width={width}
       >
         {barFillStyle === 'gradient' ? (
           <LinearGradient

@@ -12,6 +12,7 @@
 - lowers d3-path dependency to a version matching d3-shape's dependency
 - replaces lodash.isequal with smaller option fast-deep-equal
 - adds a resolution for d3-array so we only have one version of the package in our library
+- Add xmlns and specific height & width values to svgs tags
 
 ## [0.17.2] - 2021-06-23
 
