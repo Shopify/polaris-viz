@@ -1,3 +1,5 @@
+@import '../../styles/common';
+
 .VisuallyHidden {
   // Importants are required to ensure component is available to screenreaders as expected
   // stylelint-disable declaration-no-important
@@ -10,4 +12,8 @@
   padding: 0 !important;
   border: 0 !important;
   // stylelint-enable declaration-no-important
+}
+
+.Container {
+  @include chart-container;
 }

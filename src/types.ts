@@ -112,9 +112,18 @@ export interface ChartContainerTheme {
   backgroundColor: string;
 }
 
+export interface LineTheme {
+  color: string | GradientStop[];
+  area: string | GradientStop[] | null;
+  spline: boolean;
+  style: 'solid' | 'dashed';
+  hasPoint: boolean;
+}
+
 export interface PartialTheme {
   chartContainer?: Partial<ChartContainerTheme>;
   bar?: Partial<BarTheme>;
+  line?: Partial<LineTheme>;
   grid?: Partial<GridTheme>;
   xAxis?: Partial<XAxisTheme>;
   yAxis?: Partial<YAxisTheme>;
@@ -125,4 +134,5 @@ export interface Theme {
   grid: GridTheme;
   xAxis: XAxisTheme;
   yAxis: YAxisTheme;
+  line: LineTheme;
 }

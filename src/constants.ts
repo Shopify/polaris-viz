@@ -117,6 +117,13 @@ export const DEFAULT_THEME: Theme = {
     padding: '0px',
     backgroundColor: '#1f1f25',
   },
+  line: {
+    color: VIZ_GRADIENT_COLOR.neutral.up,
+    area: null,
+    spline: true,
+    style: 'solid',
+    hasPoint: true,
+  },
   bar: {
     color: VIZ_GRADIENT_COLOR.neutral.up,
     hasRoundedCorners: true,

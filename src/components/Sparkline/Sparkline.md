@@ -38,7 +38,6 @@ const props = {
         {y: 2, x: 22},
         {y: 2, x: 23},
       ],
-      areaStyle: 'gradient',
       hasPoint: true,
       color: 'red',
       offsetRight: 12,
@@ -91,7 +90,7 @@ The sparkline interface looks like this:
 
 ```typescript
 {
-  series: {color: string, areaStyle: AreaStyle, lineStyle: LineStyle, hasPoint: boolean, data: Coordinates[]}[];
+  series: {color: string | GradientStop[], area: string | GradientStop[] | null, lineStyle: LineStyle, hasPoint: boolean, data: Coordinates[]}[];
   accessibilityLabel?: string;
   isAnimated?: boolean;
 }
@@ -111,7 +110,7 @@ This component determines its width and height based off its parent element. The
 
 | type                                                                                                                                                  |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `{data: Coordinates[], color?: string, areaStyle?: AreaStyle, lineStyle?: LineStyle, hasPoint?: boolean, offsetLeft?: number; offsetRight?: number}[]` |
+| `{data: Coordinates[], color?: string, area?: string \| GradientStop[] \| null, lineStyle?: LineStyle, hasPoint?: boolean, offsetLeft?: number; offsetRight?: number}[]` |
 
 The sparkline can show one data series or a set of comparison data series.
 
@@ -135,7 +134,7 @@ The sparkline stroke and fill color. This accepts any CSS color.
 
 | type                      | default |
 | ------------------------- | ------- |
-| `none | solid | gradient` | `none`  |
+| `none \| solid \| gradient` | `none`  |
 
 Determines whether to fill in the area beneath the line and what kind of shading to use.
 
@@ -143,7 +142,7 @@ Determines whether to fill in the area beneath the line and what kind of shading
 
 | type             | default |
 | ---------------- | ------- |
-| `solid | dashed` | `solid` |
+| `solid \| dashed` | `solid` |
 
 Determines the style of line used for the series.
 
