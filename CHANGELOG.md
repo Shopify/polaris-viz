@@ -5,9 +5,10 @@
 ### Fixed
 
 - Fixes `<BarChart />` when very large datasets are displayed
+- Fixes background color not showing when printing `<NormalizedStackedBarChart />`.
 
 ### Changed
-- removes @shopify/css-utilities in favour of adding our own utility 
+- removes @shopify/css-utilities in favour of adding our own utility
 - lowers d3-path dependency to a version matching d3-shape's dependency
 - replaces lodash.isequal with smaller option fast-deep-equal
 - adds a resolution for d3-array so we only have one version of the package in our library
