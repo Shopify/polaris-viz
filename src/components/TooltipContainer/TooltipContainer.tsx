@@ -1,24 +1,27 @@
 import React, {useEffect, useRef, useState, ReactNode} from 'react';
 import {useSpring, animated} from '@react-spring/web';
 
-import {clamp} from '../../utilities';
-import type {Dimensions} from '../../types';
+import type {Dimensions, Margin} from '../../types';
 
+import {getAlteredPosition} from './utils';
 import styles from './TooltipContainer.scss';
 
-interface Props {
+export interface TooltipPosition {
+  horizontal: 'left' | 'right' | 'center';
+  vertical: 'above' | 'below' | 'inline' | 'center';
+}
+
+export interface TooltipContainerProps {
   children: ReactNode;
-  margin: {Top: number; Left: number; Right: number; Bottom: number};
+  margin: Margin;
   activePointIndex: number;
   currentX: number;
   currentY: number;
   chartDimensions: Dimensions;
-  position?: 'center' | 'auto';
+  position?: TooltipPosition;
   id?: string;
+  bandwidth?: number;
 }
-
-// The space between the cursor and the tooltip
-const TOOLTIP_MARGIN = 10;
 
 export function TooltipContainer({
   activePointIndex,
@@ -27,9 +30,10 @@ export function TooltipContainer({
   chartDimensions,
   children,
   margin,
-  position = 'auto',
+  position = {horizontal: 'center', vertical: 'above'},
   id = '',
-}: Props) {
+  bandwidth = 0,
+}: TooltipContainerProps) {
   const tooltipRef = useRef<HTMLDivElement | null>(null);
   const [tooltipDimensions, setTooltipDimensions] = useState<Dimensions | null>(
     null,
@@ -46,41 +50,15 @@ export function TooltipContainer({
         return;
       }
 
-      const chartLeftBound = margin.Left;
-      const chartRightBound = chartDimensions.width - margin.Right;
-
-      const naturalLeftBound =
-        currentX - tooltipDimensions.width - TOOLTIP_MARGIN;
-      const hasSpaceToLeft = naturalLeftBound > chartLeftBound;
-
-      const naturalRightBound =
-        currentX + tooltipDimensions.width + TOOLTIP_MARGIN;
-      const hasSpaceToRight = naturalRightBound < chartRightBound;
-
-      let xTranslation = 0;
-
-      if (position === 'center') {
-        xTranslation = clamp({
-          amount: currentX - tooltipDimensions.width / 2,
-          max: chartRightBound - tooltipDimensions.width,
-          min: chartLeftBound,
-        });
-      } else if (hasSpaceToLeft) {
-        xTranslation = naturalLeftBound;
-      } else if (hasSpaceToRight) {
-        xTranslation = currentX + TOOLTIP_MARGIN;
-      } else {
-        const centeredLeftBound = currentX - tooltipDimensions.width / 2;
-        const centeredRightBound = currentX + tooltipDimensions.width / 2;
-
-        if (centeredRightBound > chartRightBound) {
-          xTranslation = chartRightBound - tooltipDimensions.width;
-        } else if (centeredLeftBound < chartLeftBound) {
-          xTranslation = chartLeftBound;
-        } else {
-          xTranslation = centeredLeftBound;
-        }
-      }
+      const {x, y} = getAlteredPosition({
+        currentX,
+        currentY,
+        position,
+        tooltipDimensions,
+        chartDimensions,
+        margin,
+        bandwidth,
+      });
 
       const shouldRenderImmediate = firstRender.current;
       firstRender.current = false;
@@ -88,14 +66,7 @@ export function TooltipContainer({
       // @react-spring/web docs do not return the `next` callback
       // eslint-disable-next-line node/callback-return
       await next({
-        translate: [
-          xTranslation,
-          Math.max(
-            margin.Top,
-            currentY - tooltipDimensions.height - TOOLTIP_MARGIN,
-          ),
-          0,
-        ],
+        translate: [x, y, 0],
         opacity: 1,
         immediate: shouldRenderImmediate,
       });

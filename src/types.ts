@@ -171,3 +171,9 @@ export interface Theme {
   seriesColors: SeriesColors;
   tooltip: TooltipTheme;
 }
+export interface Margin {
+  Top: number;
+  Left: number;
+  Right: number;
+  Bottom: number;
+}

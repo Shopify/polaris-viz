@@ -517,6 +517,10 @@ export function Chart({
           chartDimensions={dimensions}
           margin={Margin}
           id={tooltipId.current}
+          position={{
+            horizontal: 'left',
+            vertical: 'inline',
+          }}
         >
           {tooltipMarkup}
         </TooltipContainer>

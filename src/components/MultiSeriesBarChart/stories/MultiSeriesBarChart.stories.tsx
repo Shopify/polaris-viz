@@ -281,7 +281,7 @@ IntegersOnly.args = {
     {
       name: 'Breakfast',
       data: [
-        {label: 'Monday', rawValue: 0.3},
+        {label: 'Monday', rawValue: 2},
         {label: 'Tuesday', rawValue: 0.1},
         {label: 'Wednesday', rawValue: 0.78},
         {label: 'Thursday', rawValue: 0.12},
@@ -297,7 +297,7 @@ IntegersOnly.args = {
         {label: 'Tuesday', rawValue: 0.1},
         {label: 'Wednesday', rawValue: 0.12},
         {label: 'Thursday', rawValue: 0.34},
-        {label: 'Friday', rawValue: 0.54},
+        {label: 'Friday', rawValue: 1.6},
         {label: 'Saturday', rawValue: 0.21},
         {label: 'Sunday', rawValue: 0.1},
       ],
@@ -311,7 +311,7 @@ IntegersOnly.args = {
         {label: 'Thursday', rawValue: 1.2},
         {label: 'Friday', rawValue: 0.5},
         {label: 'Saturday', rawValue: 0.12},
-        {label: 'Sunday', rawValue: 0.6},
+        {label: 'Sunday', rawValue: 2},
       ],
     },
   ],
@@ -350,4 +350,30 @@ LargeVolume.args = {
       .fill(null)
       .map((x) => 'some label'),
   },
+};
+
+export const NegativeOnly = Template.bind({});
+NegativeOnly.args = {
+  series: [
+    {
+      name: 'Breakfast',
+      data: IntegersOnly.args.series[0].data.map(({label, rawValue}) => {
+        return {label, rawValue: rawValue * -1};
+      }),
+    },
+    {
+      name: 'Lunch',
+      data: IntegersOnly.args.series[1].data.map(({label, rawValue}) => {
+        return {label, rawValue: rawValue * -1};
+      }),
+    },
+    {
+      name: 'Dinner',
+      data: IntegersOnly.args.series[2].data.map(({label, rawValue}) => {
+        return {label, rawValue: rawValue * -1};
+      }),
+    },
+  ],
+  xAxisOptions: {labels},
+  yAxisOptions: {integersOnly: true},
 };

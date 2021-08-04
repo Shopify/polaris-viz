@@ -396,6 +396,10 @@ export function Chart({
           currentY={tooltipPosition.y}
           chartDimensions={dimensions}
           margin={Margin}
+          position={{
+            horizontal: 'left',
+            vertical: 'center',
+          }}
         >
           {tooltipMarkup}
         </TooltipContainer>
