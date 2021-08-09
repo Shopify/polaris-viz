@@ -26,7 +26,15 @@ import {YAxis} from '../YAxis';
 import {Point} from '../Point';
 import {Crosshair} from '../Crosshair';
 import {LinearGradient} from '../LinearGradient';
-import type {ActiveTooltip, Dimensions} from '../../types';
+import type {
+  ActiveTooltip,
+  CrossHairTheme,
+  Dimensions,
+  GridTheme,
+  LineTheme,
+  XAxisTheme,
+  YAxisTheme,
+} from '../../types';
 import {TooltipContainer} from '../TooltipContainer';
 import {HorizontalGridLines} from '../HorizontalGridLines';
 
@@ -34,11 +42,8 @@ import {MAX_ANIMATED_SERIES_LENGTH} from './constants';
 import type {
   RenderTooltipContentData,
   TooltipData,
-  LineOptions,
   XAxisOptions,
   YAxisOptions,
-  GridOptions,
-  CrossHairOptions,
   SeriesWithDefaults,
 } from './types';
 import {useYScale, useLineChartAnimations} from './hooks';
@@ -51,11 +56,11 @@ interface Props {
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
   emptyStateText?: string;
   isAnimated: boolean;
-  lineOptions: LineOptions;
-  xAxisOptions: XAxisOptions;
-  yAxisOptions: YAxisOptions;
-  gridOptions: GridOptions;
-  crossHairOptions: CrossHairOptions;
+  lineOptions: LineTheme;
+  xAxisOptions: XAxisOptions & XAxisTheme;
+  yAxisOptions: YAxisOptions & YAxisTheme;
+  gridOptions: GridTheme;
+  crossHairOptions: CrossHairTheme;
 }
 
 export function Chart({
@@ -96,11 +101,11 @@ export function Chart({
     width: dimensions.width - gridOptions.horizontalMargin * 2,
     formatXAxisLabel: xAxisOptions.labelFormatter,
     initialTicks,
-    xAxisLabels: xAxisOptions.hideXAxisLabels ? [] : xAxisOptions.xAxisLabels,
+    xAxisLabels: xAxisOptions.hide ? [] : xAxisOptions.xAxisLabels,
     useMinimalLabels: xAxisOptions.useMinimalLabels,
   });
 
-  const marginBottom = xAxisOptions.hideXAxisLabels
+  const marginBottom = xAxisOptions.hide
     ? SPACING_TIGHT
     : Number(Margin.Bottom) + xAxisDetails.maxXLabelHeight;
 
@@ -331,7 +336,7 @@ export function Chart({
           <LinearXAxis
             xAxisDetails={xAxisDetails}
             xScale={xScale}
-            labels={xAxisOptions.hideXAxisLabels ? null : formattedLabels}
+            labels={xAxisOptions.hide ? null : formattedLabels}
             drawableWidth={drawableWidth}
             fontSize={fontSize}
             drawableHeight={drawableHeight}
@@ -374,7 +379,7 @@ export function Chart({
             <Crosshair
               x={getXPosition({isCrosshair: true})}
               height={drawableHeight}
-              opacity={tooltipDetails == null ? 0 : crossHairOptions.opacity}
+              opacity={tooltipDetails == null ? 0 : 1}
               fill={crossHairOptions.color}
               width={crossHairOptions.width}
             />

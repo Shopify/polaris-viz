@@ -80,7 +80,7 @@ export enum BarMargin {
 
 export interface GridTheme {
   showHorizontalLines: boolean;
-  showVerticalLines?: boolean;
+  showVerticalLines: boolean;
   horizontalOverflow: boolean;
   color: string;
   horizontalMargin: number;
@@ -100,12 +100,19 @@ export interface BarTheme {
 export interface XAxisTheme {
   showTicks: boolean;
   labelColor: string;
+  hide: boolean;
+}
+
+export interface CrossHairTheme {
+  color: string;
+  width: number;
 }
 
 export interface YAxisTheme {
   labelColor: string;
   backgroundColor: string;
 }
+
 export interface ChartContainerTheme {
   borderRadius: string;
   padding: string;
@@ -114,10 +121,13 @@ export interface ChartContainerTheme {
 
 export interface LineTheme {
   color: string | GradientStop[];
-  area: string | GradientStop[] | null;
-  spline: boolean;
-  style: 'solid' | 'dashed';
+  area: string | null;
+  sparkArea: string | GradientStop[] | null;
+  hasSpline: boolean;
+  style: LineStyle;
   hasPoint: boolean;
+  width: number;
+  pointStroke: string;
 }
 
 export interface PartialTheme {
@@ -127,7 +137,9 @@ export interface PartialTheme {
   grid?: Partial<GridTheme>;
   xAxis?: Partial<XAxisTheme>;
   yAxis?: Partial<YAxisTheme>;
+  crossHair?: Partial<CrossHairTheme>;
 }
+
 export interface Theme {
   chartContainer: ChartContainerTheme;
   bar: BarTheme;
@@ -135,4 +147,5 @@ export interface Theme {
   xAxis: XAxisTheme;
   yAxis: YAxisTheme;
   line: LineTheme;
+  crossHair: CrossHairTheme;
 }
