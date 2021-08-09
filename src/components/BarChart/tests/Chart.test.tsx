@@ -65,6 +65,7 @@ describe('Chart />', () => {
       color: 'red',
       horizontalOverflow: false,
       horizontalMargin: 0,
+      showVerticalLines: true,
     },
     xAxisOptions: {
       labelFormatter: (value: string) => value.toString(),
@@ -74,6 +75,7 @@ describe('Chart />', () => {
       showTicks: true,
       labelColor: 'red',
       useMinimalLabels: false,
+      hide: false,
     },
     yAxisOptions: {
       labelFormatter: (value: number) => value.toString(),

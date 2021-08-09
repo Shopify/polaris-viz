@@ -50,9 +50,19 @@ const xAxisOptions = {
   showTicks: true,
   labelColor: 'red',
   useMinimalLabels: false,
+  hide: false,
 };
 
-const lineOptions = {hasSpline: false, width: 2, pointStroke: '#fff'};
+const lineOptions = {
+  color: 'red',
+  area: null,
+  sparkArea: null,
+  hasSpline: false,
+  style: 'dotted' as 'dotted',
+  hasPoint: false,
+  width: 2,
+  pointStroke: '#fff',
+};
 
 const yAxisOptions = {
   labelFormatter: jest.fn((value) => value),

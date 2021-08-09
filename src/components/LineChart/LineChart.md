@@ -127,31 +127,13 @@ const props = {
     xAxisLabels: xAxisLabels,
     labelFormatter: formatXAxisLabel,
     useMinimalLabels: true,
-    showTicks: false,
-    labelColor: 'rgb(220, 220, 220)',
   },
   yAxisOptions: {
     labelFormatter: formatYAxisLabel,
-    backgroundColor: 'rgb(31, 31, 37)',
-    labelColor: 'rgb(220, 220, 220)',
     integersOnly: true,
   },
-  gridOptions: {
-    showVerticalLines: false,
-    color: 'rgb(65, 66, 71)',
-    horizontalOverflow: true,
-    horizontalMargin: 20,
-  },
-  lineOptions: {
-    hasSpline: true,
-    width: 3,
-    pointStroke: 'rgb(31, 31, 37)',
-  },
-  crossHairOptions: {
-    width: 1,
-    color: 'rgb(139, 159, 176)',
-  },
   skipLinkText = 'Skip chart content',
+  theme: "Default"
 };
 
 return <LineChart {...props} />;
@@ -165,37 +147,15 @@ The line chart interface looks like this:
 interface LineChartProps {
   series: Series[];
   isAnimated?: boolean;
-  lineOptions?: {
-    hasSpline?: boolean;
-    width?: number;
-    pointStroke?: string;
-  };
   xAxisOptions: {
     xAxisLabels: string[];
     labelFormatter?(value: string, index?: number, data?: string[]): string;
-    hideXAxisLabels?: boolean;
     useMinimalLabels?: boolean;
-    showTicks?: boolean;
-    labelColor: string;
   };
   yAxisOptions?: {
     labelFormatter?(value: number): string;
-    labelColor: string;
-    backgroundColor?: string;
     integersOnly?: boolean;
-  }
-  gridOptions?: {
-    showVerticalLines?: boolean;
-    showHorizontalLines?: boolean;
-    horizontalOverflow?: boolean;
-    color?: string;
-    horizontalMargin?: number;
-  }
-  crossHairOptions?: {
-    width?: number;
-    color?: string;
-    opacity?: number;
-  }
+  };
   renderTooltipContent?: (data: RenderTooltipContentData): React.ReactNode;
   skipLinkText?: string;
   emptyStateText?: string;
@@ -220,6 +180,8 @@ The `Series` type gives the user a lot of flexibility to define exactly what eac
   areaColor?: string;
 }
 ```
+
+Note: the configuration of color, line style and area color on the series type overrides the defaults set by the theme provider.
 
 #### name
 
@@ -349,14 +311,6 @@ An object including the following proprties that define the appearance of the xA
 
 If set to true, a chart that would typically show more than three xAxis labels will instead show a maximum of three labels.
 
-##### hideXAxisLabels
-
-| type      | default |
-| --------- | ------- |
-| `boolean` | false   |
-
-Whether to visually hide the x axis labels on the chart. The labels will still be displayed to screenreaders.
-
 ##### showTicks
 
 | type      | default |
@@ -373,14 +327,6 @@ Whether to show ticks connecting the xAxis labels to their corresponding grid li
 
 This accepts a function that is called to format the labels when the chart draws its X axis.
 
-##### labelColor
-
-| type     | default                |
-| -------- | ---------------------- |
-| `string` | `'rgb(223, 227, 232)'` |
-
-The color used for axis labels.
-
 #### yAxisOptions
 
 An object including the following optional proprties that define the appearance of the yAxis.
@@ -393,22 +339,6 @@ An object including the following optional proprties that define the appearance 
 
 This utilty function is called to format the labels for every y axis value when the chart is laid out.
 
-##### labelColor
-
-| type     | default                |
-| -------- | ---------------------- |
-| `string` | `'rgb(223, 227, 232)'` |
-
-The color used for axis labels.
-
-##### backgroundColor
-
-| type     | default       |
-| -------- | ------------- |
-| `string` | `transparant` |
-
-The color used behind axis labels.
-
 ##### integersOnly
 
 | type      | default |
@@ -417,104 +347,10 @@ The color used behind axis labels.
 
 Only use whole numbers for y axis ticks.
 
-#### lineOptions
-
-An object including the following optional proprties that define the appearance of the line.
-
-##### hasSpline
+### theme
 
 | type      | default |
 | --------- | ------- |
-| `boolean` | `false` |
+| `string` | `default` |
 
-Whether to curve the lines between points.
-
-##### width
-
-| type     | default |
-| -------- | ------- |
-| `number` | `2`     |
-
-The width of the lines drawn between points.
-
-##### pointStroke
-
-| type     | default |
-| -------- | ------- |
-| `string` | `#fff`  |
-
-The color around the circle depicting the active point.
-
-#### gridOptions
-
-An object including the following optional proprties that define the grid.
-
-##### showVerticalLines
-
-| type      | default |
-| --------- | ------- |
-| `boolean` | `true`  |
-
-Whether to show lines extending from the xAxis labels through the chart.
-
-##### showHorizontalLines
-
-| type      | default |
-| --------- | ------- |
-| `boolean` | `true`  |
-
-Whether to show lines extending from the yAxis labels through the chart.
-
-##### horizontalOverflow
-
-| type      | default |
-| --------- | ------- |
-| `boolean` | `false` |
-
-Whether the lines should extend through the width of the entire chart.
-
-##### horizontalMargin
-
-| type     | default |
-| -------- | ------- |
-| `number` | `0`     |
-
-Margin to display on the left and right of the chart.
-
-##### color
-
-| type     | default                |
-| -------- | ---------------------- |
-| `string` | `"rgb(223, 227, 232)"` |
-
-The color of the grid lines.
-
-#### CrossHairOptions
-
-An object including the following optional proprties that define the crosshair.
-
-##### width
-
-| type     | default |
-| -------- | ------- |
-| `number` | `5`     |
-
-The width of the crosshair.
-
-##### color
-
-| type     | default                |
-| -------- | ---------------------- |
-| `string` | `'rgb(223, 227, 232)'` |
-
-The color of the crosshair.
-
-##### opacity
-
-| type     | default |
-| -------- | ------- |
-| `number` | `1`     |
-
-Whether to curve the line between points.
-
-The opacity of the crosshair.
+The theme that the chart will inherit its styles from. Additional themes must be provided to the theme provider. Individual line styles can be overwritten as part of the series prop.

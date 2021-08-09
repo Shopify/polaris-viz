@@ -59,6 +59,10 @@ export default {
     ),
   ],
   argTypes: {
+    theme: {
+      description:
+        'The theme that the chart will inherit its color, container and line styles from',
+    },
     series: {
       description:
         'The sparkline can show one data series or a set of comparison data series. Each series is configured by the series item in the array. [Series type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/Sparkline/Sparkline.tsx#L21)',
@@ -67,7 +71,6 @@ export default {
       description:
         'Visually hidden text for screen readers. Make sure to write [informative alt text.](https://medium.com/nightingale/writing-alt-text-for-data-visualization-2a218ef43f81)',
     },
-    hasSpline: {description: 'Whether to curve the line between points.'},
     isAnimated: {
       description: 'Determines whether to animate the chart on state changes.',
     },
@@ -96,10 +99,10 @@ InsightsStyle.parameters = {
   },
 };
 
-export const hasSpline = Template.bind({});
-hasSpline.args = {
+export const withoutSpline = Template.bind({});
+withoutSpline.args = {
   ...defaultProps,
-  hasSpline: true,
+  theme: 'NoSpline',
 };
 
 export const OffsetAndNulls = Template.bind({});

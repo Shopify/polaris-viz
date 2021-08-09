@@ -38,6 +38,13 @@ export const decorators = [
               padding: '20px',
             },
           },
+          NoSpline: {
+            line: {hasSpline: false},
+          },
+          NoxAxisLabels: {
+            xAxis: {hide: true},
+          },
+          NoOverflow: {grid: {horizontalOverflow: false}},
           Positive: {
             bar: {
               color: 'rgb(0, 164, 124)',

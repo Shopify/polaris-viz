@@ -122,7 +122,6 @@ export function LineChartDemo() {
           xAxisOptions={{
             xAxisLabels,
             labelFormatter: formatXAxisLabel,
-            showTicks: true,
           }}
           yAxisOptions={{labelFormatter: formatYAxisLabel}}
           renderTooltipContent={renderTooltipContent}

@@ -9,10 +9,6 @@ $animation-duration: 500ms;
   stroke: 1.5;
 }
 
-.DashedLine {
-  stroke-dasharray: 3 2;
-}
-
 .Area {
   opacity: 0;
   animation: fadeIn $animation-duration ease-in-out 1 forwards;
