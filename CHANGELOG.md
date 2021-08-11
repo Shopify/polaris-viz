@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## [0.18.1] - 2021-08-11
 
 ### Fixed
 - Comparison data is used in the `<Sparkbar />` scale
