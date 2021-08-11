@@ -114,9 +114,14 @@ export function Sparkbar({
     (value) => typeof value === 'number',
   ) as number[];
 
+  const comparisonData = comparison == null ? [] : comparison.map(({y}) => y);
+
   const yScale = scaleLinear()
     .range(calculateRange(data, height))
-    .domain([Math.min(...filteredData, 0), Math.max(...filteredData, 0)]);
+    .domain([
+      Math.min(...filteredData, ...comparisonData, 0),
+      Math.max(...filteredData, ...comparisonData, 0),
+    ]);
 
   const xScale = scaleBand()
     .range([dataOffsetLeft, width - dataOffsetRight])
