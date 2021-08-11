@@ -67,7 +67,7 @@ const Template: Story<SparkbarProps> = (args: SparkbarProps) => {
   return <Sparkbar {...args} />;
 };
 
-const comparisonValue = 500;
+const comparisonValue = 2000;
 const defaultProps = {
   isAnimated: true,
   data: [100, 200, 300, 400, 400, 1000, 200, 800, 900, 200, 400],
