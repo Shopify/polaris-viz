@@ -56,7 +56,7 @@ const mockProps = {
   height: 250,
   hasSpline: false,
   theme: {
-    line: {area: null, style: 'solid', color: 'red', hasPoint: true},
+    line: {sparkArea: null, style: 'solid', color: 'red', hasPoint: true},
   } as Theme,
 };
 
@@ -83,7 +83,7 @@ describe('Series', () => {
     );
 
     expect(actual).toContainReactComponent('path', {
-      className: 'Line',
+      style: {strokeDasharray: 'unset'},
     });
   });
 
@@ -94,7 +94,7 @@ describe('Series', () => {
       </svg>,
     );
     expect(actual).toContainReactComponent('path', {
-      className: 'Line DashedLine',
+      style: {strokeDasharray: '2 4'},
     });
   });
 
@@ -133,7 +133,13 @@ describe('Series', () => {
 
     mount(
       <svg>
-        <Series {...mockProps} hasSpline />
+        <Series
+          {...mockProps}
+          theme={{
+            ...mockProps.theme,
+            line: {...mockProps.theme.line, hasSpline: true},
+          }}
+        />
       </svg>,
     );
 

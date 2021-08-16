@@ -142,7 +142,7 @@ Determines whether to fill in the area beneath the line and what kind of shading
 
 | type             | default |
 | ---------------- | ------- |
-| `solid \| dashed` | `solid` |
+| `solid \| dashed\| dotted` | `solid` |
 
 Determines the style of line used for the series.
 
@@ -190,10 +190,10 @@ Visually hidden text for screen readers.
 
 Determines whether to animate the chart on state changes.
 
-#### hasSpline
+### theme
 
 | type      | default |
 | --------- | ------- |
-| `boolean` | `false` |
+| `string` | `default` |
 
-Whether to curve the line between points.
+The theme that the chart will inherit its styles from. Additional themes must be provided to the theme provider. Individual line styles can be overwritten as part of the series prop.

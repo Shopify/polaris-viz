@@ -120,9 +120,12 @@ export const DEFAULT_THEME: Theme = {
   line: {
     color: VIZ_GRADIENT_COLOR.neutral.up,
     area: null,
-    spline: true,
+    sparkArea: null,
+    hasSpline: true,
     style: 'solid',
     hasPoint: true,
+    width: 2,
+    pointStroke: 'white',
   },
   bar: {
     color: VIZ_GRADIENT_COLOR.neutral.up,
@@ -141,10 +144,15 @@ export const DEFAULT_THEME: Theme = {
   xAxis: {
     showTicks: false,
     labelColor: 'rgb(220, 220, 220)',
+    hide: false,
   },
   yAxis: {
     backgroundColor: '#1f1f25',
     labelColor: 'rgb(220, 220, 220)',
+  },
+  crossHair: {
+    color: 'rgb(139, 159, 176)',
+    width: 1,
   },
 };
 

@@ -17,6 +17,12 @@ import styles from './Series.scss';
 
 const POINT_RADIUS = 2;
 
+const StrokeDasharray = {
+  dotted: '0.1 4',
+  dashed: '2 4',
+  solid: 'unset',
+};
+
 function getGradientFill(area: string | GradientStop[] | null) {
   if (area == null) {
     return null;
@@ -37,7 +43,6 @@ export function Series({
   series,
   isAnimated,
   height,
-  hasSpline,
   theme,
 }: {
   xScale: ScaleLinear<number, number>;
@@ -45,12 +50,11 @@ export function Series({
   series: SingleSeries;
   isAnimated: boolean;
   height: number;
-  hasSpline: boolean;
   theme: Theme;
 }) {
   const {prefersReducedMotion} = usePrefersReducedMotion();
   const {
-    area = theme.line.area,
+    area = theme.line.sparkArea,
     lineStyle = theme.line.style,
     color = theme.line.color,
     hasPoint = theme.line.hasPoint,
@@ -68,7 +72,7 @@ export function Series({
     .y1(({y}) => (y == null ? yScale(0) : yScale(y)))
     .defined(({y}) => y != null);
 
-  if (hasSpline) {
+  if (theme.line.hasSpline) {
     lineGenerator.curve(curveStepRounded);
     areaGenerator.curve(curveStepRounded);
   }
@@ -88,8 +92,6 @@ export function Series({
 
   const id = useMemo(() => uniqueId('sparkline'), []);
   const immediate = !isAnimated || prefersReducedMotion;
-
-  const dashedLine = lineStyle === 'dashed';
 
   const lineGradientColor = isGradientType(color)
     ? color
@@ -129,11 +131,10 @@ export function Series({
         stroke={`url(#line-${id})`}
         d={lineShape}
         fill="none"
-        className={classNames(
-          styles.Line,
-          !immediate && styles.AnimatedLine,
-          dashedLine && styles.DashedLine,
-        )}
+        strokeLinejoin="round"
+        strokeLinecap="round"
+        className={classNames(styles.Line, !immediate && styles.AnimatedLine)}
+        style={{strokeDasharray: StrokeDasharray[lineStyle]}}
       />
 
       {area === null ? null : (

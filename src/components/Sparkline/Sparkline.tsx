@@ -1,7 +1,7 @@
 import React, {useState, useLayoutEffect, useCallback} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 import {scaleLinear} from 'd3-scale';
-import type {GradientStop, SparkChartData} from 'types';
+import type {GradientStop, LineStyle, SparkChartData} from 'types';
 
 import {useResizeObserver, useTheme} from '../../hooks';
 
@@ -14,8 +14,6 @@ export interface Coordinates {
   x: number;
   y: SparkChartData;
 }
-
-type LineStyle = 'solid' | 'dashed';
 
 export interface SingleSeries {
   data: Coordinates[];
@@ -31,7 +29,6 @@ export interface SparklineProps {
   series: SingleSeries[];
   accessibilityLabel?: string;
   isAnimated?: boolean;
-  hasSpline?: boolean;
   theme?: string;
 }
 
@@ -39,7 +36,6 @@ export function Sparkline({
   series,
   accessibilityLabel,
   isAnimated = false,
-  hasSpline = false,
   theme,
 }: SparklineProps) {
   const {
@@ -160,7 +156,6 @@ export function Sparkline({
                 series={singleSeries}
                 isAnimated={isAnimated}
                 height={height}
-                hasSpline={hasSpline}
                 theme={selectedTheme}
               />
             </g>
