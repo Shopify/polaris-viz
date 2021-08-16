@@ -7,7 +7,21 @@ describe('<BarLabel />', () => {
   describe('renders props', () => {
     it('renders BarLabel with props', () => {
       const barLabel = mount(
-        <BarLabel label="Google" value="200" color="rgb(255, 255, 255)" />,
+        <BarLabel
+          label="Google"
+          value="200"
+          color="rgb(255, 255, 255)"
+          legendColors={{
+            labelColor: 'red',
+            valueColor: 'orange',
+            trendIndicator: {
+              positive: 'green',
+              negative: 'red',
+              neutral: 'grey',
+            },
+          }}
+          orientation="horizontal"
+        />,
       );
 
       expect(barLabel).toContainReactText('Google');

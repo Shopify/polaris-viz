@@ -44,9 +44,9 @@ describe('<BarSegment />', () => {
       />,
     );
 
-    const barSegmentFlex = barSegment.find('div')!.props!.style!.flex;
+    const barSegmentFlex = barSegment.find('div')!.props!.style!.flexBasis;
 
-    expect(barSegmentFlex).toBe('0 0 0%');
+    expect(barSegmentFlex).toBe('0%');
   });
 
   it('rounds up a scale above 0 and below 1.5', () => {
@@ -59,9 +59,9 @@ describe('<BarSegment />', () => {
       />,
     );
 
-    const barSegmentFlex = barSegment.find('div')!.props!.style!.flex;
+    const barSegmentFlex = barSegment.find('div')!.props!.style!.flexBasis;
 
-    expect(barSegmentFlex).toBe('0 0 1.5%');
+    expect(barSegmentFlex).toBe('1.5%');
   });
 
   it('does not round up a scale above 1.5', () => {
@@ -74,8 +74,8 @@ describe('<BarSegment />', () => {
       />,
     );
 
-    const barSegmentFlex = barSegment.find('div')!.props!.style!.flex;
+    const barSegmentFlex = barSegment.find('div')!.props!.style!.flexBasis;
 
-    expect(barSegmentFlex).toBe('0 0 1.51%');
+    expect(barSegmentFlex).toBe('1.51%');
   });
 });

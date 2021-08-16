@@ -2,7 +2,6 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {NormalizedStackedBarChart} from 'components';
 
-import {colorPurpleDark} from '../../../constants';
 import {BarSegment, BarLabel} from '../components';
 
 describe('<NormalizedBarChart />', () => {
@@ -141,12 +140,13 @@ describe('<NormalizedBarChart />', () => {
   });
 
   describe('Colors', () => {
-    it('passes down colors', () => {
-      const barChart = mount(
-        <NormalizedStackedBarChart {...mockProps} colors={[colorPurpleDark]} />,
-      );
+    it('inherits colors from the theme', () => {
+      const barChart = mount(<NormalizedStackedBarChart {...mockProps} />);
 
-      expect(barChart.find(BarSegment)!.props.color).toBe('rgb(80, 36, 143)');
+      expect(barChart.find(BarSegment)!.props.color).toStrictEqual([
+        {color: '#936DFF', offset: 0},
+        {color: '#7C44F8', offset: 100},
+      ]);
     });
   });
 
