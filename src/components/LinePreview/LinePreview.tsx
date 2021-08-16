@@ -4,6 +4,7 @@ import type {SeriesColor} from 'types';
 import {getColorValue, isGradientType, uniqueId} from '../../utilities';
 import type {LineStyle} from '../../types';
 import {LinearGradient} from '../LinearGradient';
+import {XMLNS} from '../../constants';
 
 import {
   DASHED_STROKE_DASHARRAY,
@@ -26,7 +27,7 @@ export function LinePreview({color, lineStyle}: Props) {
 
   return (
     <div>
-      <svg width="15px" height="5px">
+      <svg xmlns={XMLNS} width="15px" height="5px">
         {isGradientType(color) ? (
           <defs>
             <LinearGradient

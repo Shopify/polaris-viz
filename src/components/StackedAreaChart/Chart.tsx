@@ -14,6 +14,7 @@ import {
   FONT_SIZE,
   CROSSHAIR_WIDTH,
   LineChartMargin as Margin,
+  XMLNS,
 } from '../../constants';
 import {TooltipContainer} from '../TooltipContainer';
 import {eventPoint, uniqueId, getColorValue} from '../../utilities';
@@ -173,8 +174,9 @@ export function Chart({
   return (
     <div className={styles.Container}>
       <svg
-        width="100%"
-        height="100%"
+        xmlns={XMLNS}
+        width={dimensions.width}
+        height={dimensions.height}
         onMouseMove={handleInteraction}
         onTouchMove={handleInteraction}
         onTouchEnd={() => setActivePointIndex(null)}

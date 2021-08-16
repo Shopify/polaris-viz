@@ -1,6 +1,6 @@
 import React, {useState, useMemo, useCallback} from 'react';
 
-import {BarChartMargin as Margin} from '../../constants';
+import {BarChartMargin as Margin, XMLNS} from '../../constants';
 import {TooltipContainer} from '../TooltipContainer';
 import {
   eventPoint,
@@ -225,8 +225,9 @@ export function Chart({
       }}
     >
       <svg
-        width="100%"
-        height="100%"
+        xmlns={XMLNS}
+        width={chartDimensions.width}
+        height={chartDimensions.height}
         onMouseMove={handleInteraction}
         onTouchMove={handleInteraction}
         onMouseLeave={() => setActiveBarGroup(null)}

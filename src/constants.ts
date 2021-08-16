@@ -50,3 +50,4 @@ export const MAX_TRAIL_DURATION = 500;
 
 export const MASK_HIGHLIGHT_COLOR = '#FFF';
 export const MASK_SUBDUE_COLOR = '#434343';
+export const XMLNS = 'http://www.w3.org/2000/svg';

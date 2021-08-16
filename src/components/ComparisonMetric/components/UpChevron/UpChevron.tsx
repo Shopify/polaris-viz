@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {getColorValue} from '../../../../utilities';
+import {XMLNS} from '../../../../constants';
 
 import styles from './UpChevron.scss';
 
@@ -14,6 +15,7 @@ export function UpChevron({accessibilityLabel}: Props) {
     <React.Fragment>
       <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
       <svg
+        xmlns={XMLNS}
         aria-hidden="true"
         style={{fill}}
         width="8"

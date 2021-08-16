@@ -4,6 +4,7 @@ import {scaleLinear} from 'd3-scale';
 import type {Color, SparkChartData} from 'types';
 
 import {useResizeObserver} from '../../hooks';
+import {XMLNS} from '../../constants';
 
 import styles from './Sparkline.scss';
 import {Series} from './components';
@@ -134,7 +135,7 @@ export function Sparkline({
         <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
       ) : null}
 
-      <svg aria-hidden width={width} height={height}>
+      <svg xmlns={XMLNS} aria-hidden width={width} height={height}>
         {series.map((singleSeries, index) => {
           const {offsetRight = 0, offsetLeft = 0} = singleSeries;
 
