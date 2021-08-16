@@ -154,6 +154,35 @@ export const DEFAULT_THEME: Theme = {
     color: 'rgb(139, 159, 176)',
     width: 1,
   },
+  colorPalette: {
+    colors: [
+      [
+        {offset: 0, color: '#936DFF'},
+        {offset: 100, color: '#7C44F8'},
+      ],
+      [
+        {offset: 0, color: '#6285FF'},
+        {offset: 100, color: '#3B66FF'},
+      ],
+      [
+        {offset: 0, color: '#34A9BF'},
+        {offset: 100, color: '#0194AF'},
+      ],
+      [
+        {offset: 0, color: '#E564D3'},
+        {offset: 100, color: '#DC42C3'},
+      ],
+    ],
+  },
+  legend: {
+    labelColor: '#DADADD',
+    valueColor: '#fff',
+    trendIndicator: {
+      positive: '#00A47C',
+      negative: '#EC6E6E',
+      neutral: '#8C9196',
+    },
+  },
 };
 
 export const animationDurationBase = 200;

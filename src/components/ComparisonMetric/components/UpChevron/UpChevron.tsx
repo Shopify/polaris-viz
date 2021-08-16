@@ -1,15 +1,13 @@
 import React from 'react';
 
-import {positiveColor} from '../../../../constants';
-
 import styles from './UpChevron.scss';
 
 interface Props {
   accessibilityLabel: string;
+  fill: string;
 }
 
-export function UpChevron({accessibilityLabel}: Props) {
-  const fill = positiveColor;
+export function UpChevron({accessibilityLabel, fill}: Props) {
   return (
     <React.Fragment>
       <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>

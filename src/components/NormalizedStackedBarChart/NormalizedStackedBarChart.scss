@@ -4,7 +4,7 @@
   font-family: $font-stack-base;
   font-size: 14px;
   display: flex;
-  color-adjust: exact;
+  box-sizing: border-box;
 }
 
 .VerticalContainer {

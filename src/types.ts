@@ -130,6 +130,16 @@ export interface LineTheme {
   pointStroke: string;
 }
 
+export interface ColorPalette {
+  colors: (string | GradientStop[])[];
+}
+
+export interface Legend {
+  labelColor: string;
+  valueColor: string;
+  trendIndicator: {positive: string; negative: string; neutral: string};
+}
+
 export interface PartialTheme {
   chartContainer?: Partial<ChartContainerTheme>;
   bar?: Partial<BarTheme>;
@@ -138,6 +148,8 @@ export interface PartialTheme {
   xAxis?: Partial<XAxisTheme>;
   yAxis?: Partial<YAxisTheme>;
   crossHair?: Partial<CrossHairTheme>;
+  colorPalette?: Partial<ColorPalette>;
+  legend?: Partial<Legend>;
 }
 
 export interface Theme {
@@ -148,4 +160,6 @@ export interface Theme {
   yAxis: YAxisTheme;
   line: LineTheme;
   crossHair: CrossHairTheme;
+  legend: Legend;
+  colorPalette: ColorPalette;
 }
