@@ -5,25 +5,25 @@
 ### Fixed
 
 - Fixes `<BarChart />` when very large datasets are displayed
-### Added
-- `PolarisVizProvider` to support theming charts
-- `theme` to `BarChartProps`
-### Removed 
-- `barOptions`, `gridOptions`, `xAxisOptions.showTicks`, `xAxisOptions.labelColor` and `yAxisOptions.labelColor` from `BarChartProps`.
-
-### Changed
-- BarChart styles now are defined through themes in `PolarisVizProvider` instead of props. For more details check the [migration guide](https://docs.google.com/document/d/1VxfcgBbTNwjmYix1jGuDMgqDgIdehTgQbVZpER7djeU/edit?usp=sharing)
 
 ### Added
 - `PolarisVizProvider` to support theming charts
 - `theme` to `BarChartProps`
+### Removed 
+
+### Added
+- `PolarisVizProvider` to support theming charts
+- The`theme` to prop to `<BarChart />`, `<LineChart />`, `<Sparkline />` and `<Sparkbar />`
+- `<Sparkline />` now supports the dotted line style
+- `<Sparkline />` and `<Sparkbar />` support gradient fills
 
 ### Removed 
-- Polaris Tokens strings are no longer accepted as colors. Any valid CSS color can now be provided as a color to charts.
-- `barOptions`, `gridOptions`, `xAxisOptions.showTicks`, `xAxisOptions.labelColor` and `yAxisOptions.labelColor` from `BarChartProps`.
+- Polaris Tokens strings are no longer accepted as colors. Any valid CSS color can now be provided as a color to charts, and in some cases gradients can be specified by supplying an array of gradient stops.
+- `barOptions`, `gridOptions`, `xAxisOptions.showTicks`, `xAxisOptions.labelColor` and `yAxisOptions.labelColor` from `BarChartProps` and `LineChartProps`.
+- `barFillStyle` and `color` props are removed from the `<Sparkbar />` component and are inherited from the chart's theme
 
 ### Changed
-- BarChart styles now are defined through themes in `PolarisVizProvider` instead of props. For more details check the [migration guide](https://docs.google.com/document/d/1VxfcgBbTNwjmYix1jGuDMgqDgIdehTgQbVZpER7djeU/edit?usp=sharing)
+- `<BarChart />`, `<LineChart />`, `<Sparkline />` and `<Sparkbar />` styles now are defined through themes in `PolarisVizProvider` instead of props. For more details check the [migration guide](https://docs.google.com/document/d/1VxfcgBbTNwjmYix1jGuDMgqDgIdehTgQbVZpER7djeU/edit?usp=sharing)
 
 ## [0.17.2] - 2021-06-23
 
