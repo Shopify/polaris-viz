@@ -1,8 +1,13 @@
 # Changelog
 
+## [0.18.2] - 2021-08-17
+
+- [Updates dev dependencies](https://github.com/Shopify/polaris-viz/pull/474). No consumer-facing changes are expected.
+
 ## [0.18.1] - 2021-08-11
 
 ### Fixed
+
 - Comparison data is used in the `<Sparkbar />` scale
 
 ## [0.18.0] - 2021-08-10
@@ -13,6 +18,7 @@
 - Fixes background color not showing when printing `<NormalizedStackedBarChart />`.
 
 ### Changed
+
 - removes @shopify/css-utilities in favour of adding our own utility
 - lowers d3-path dependency to a version matching d3-shape's dependency
 - replaces lodash.isequal with smaller option fast-deep-equal
