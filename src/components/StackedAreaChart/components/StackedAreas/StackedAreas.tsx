@@ -3,8 +3,10 @@ import isEqual from 'fast-deep-equal';
 import {animated, useSpring} from '@react-spring/web';
 import {area, Series} from 'd3-shape';
 import type {ScaleLinear} from 'd3-scale';
+import type {Color, GradientStop} from 'types';
 
-import {uniqueId} from '../../../../utilities';
+import {LinearGradient} from '../../../LinearGradient';
+import {isGradientType, uniqueId} from '../../../../utilities';
 import {usePrevious} from '../../../../hooks';
 
 type StackedSeries = Series<
@@ -18,7 +20,7 @@ interface Props {
   width: number;
   height: number;
   transform: string;
-  colors: string[];
+  colors: Color[];
   stackedValues: StackedSeries[];
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
@@ -74,15 +76,33 @@ export function Areas({
             return null;
           }
 
+          const currentColor = colors[index];
+          const isGradient = isGradientType(currentColor);
+
+          const gradient = isGradient
+            ? currentColor
+            : [{offset: 0, color: currentColor}];
+
           return (
-            <path
-              key={index}
-              d={shape}
-              fill={colors[index]}
-              stroke={colors[index]}
-              strokeWidth="0.1"
-              opacity={opacity}
-            />
+            <React.Fragment key={index}>
+              <defs>
+                <LinearGradient
+                  id={`area-${id}-${index}`}
+                  gradient={gradient as GradientStop[]}
+                  gradientUnits="userSpaceOnUse"
+                  y1="100%"
+                  y2="0%"
+                />
+              </defs>
+              <path
+                key={index}
+                d={shape}
+                fill={`url(#area-${id}-${index})`}
+                stroke={`url(#area-${id}-${index})`}
+                strokeWidth="0.1"
+                opacity={opacity}
+              />
+            </React.Fragment>
           );
         })}
       </g>

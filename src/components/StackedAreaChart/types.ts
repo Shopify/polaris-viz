@@ -1,11 +1,11 @@
-import type {DataSeries, NullableData} from '../../types';
+import type {Color, DataSeries, NullableData} from '../../types';
 
 export interface Series extends DataSeries<NullableData, string> {}
 
 export interface RenderTooltipContentData {
   title: string;
   data: {
-    color: string;
+    color: Color;
     label: string;
     value: number;
   }[];

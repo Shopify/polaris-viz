@@ -157,7 +157,7 @@ The `Series` type gives the user a lot of flexibility to define exactly what eac
     label: string;
     rawValue: number;
   }[];
-  color?: string | GradientStop[];
+  color?: Color;
 }
 ```
 
@@ -183,7 +183,7 @@ The array of objects that the chart uses to draw the groups.
 
 | type    | default     |
 | ------- | ----------- |
-| `string | GradientStop[]` | `rgb(0,161,159)` |
+| `Color` | `rgb(0,161,159)` |
 
 This accepts any CSS color or gradient stop array, and corresponds to the color of the bar for that series.
 

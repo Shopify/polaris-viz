@@ -97,7 +97,7 @@ The props interface for `<TooltipContent />` looks like this:
 interface TooltipContentProps {
   title?: string;
   data: {
-    color: string | GradientStop[];
+    color: Color;
     label: string;
     value: string;
   }[];
@@ -114,7 +114,7 @@ interface TooltipContentProps {
 
 | type                                            |
 | ----------------------------------------------- |
-| `{color:string | GradientStop[]; label: string; value: number}[]` |
+| `{color:Color; label: string; value: number}[]` |
 
 Each member of the `data` array corresponds to a row in the `<TooltipContent />` object. The value for `color` corresponds to the fill color for the square preview, and accepts any CSS color or GradientStop[].
 
@@ -148,7 +148,7 @@ interface LineChartTooltipContentProps {
       label: string;
       value: string;
     };
-    color?: string | GradientStop[];
+    color?: Color;
     lineStyle?: LineStyle;
   }[];
 }
@@ -180,7 +180,7 @@ The values to display for the given data point.
 
 | type    | default       |
 | ------- | ------------- |
-| `string | GradientStop[]` | None |
+| `Color` | None |
 
 Accepts any CSS color or GradientStop[].
 

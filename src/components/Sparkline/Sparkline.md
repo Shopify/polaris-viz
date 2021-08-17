@@ -90,7 +90,7 @@ The sparkline interface looks like this:
 
 ```typescript
 {
-  series: {color: string | GradientStop[], area: string | GradientStop[] | null, lineStyle: LineStyle, hasPoint: boolean, data: Coordinates[]}[];
+  series: {color: Color, area: Color | null, lineStyle: LineStyle, hasPoint: boolean, data: Coordinates[]}[];
   accessibilityLabel?: string;
   isAnimated?: boolean;
 }

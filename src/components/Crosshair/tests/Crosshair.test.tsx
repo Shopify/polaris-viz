@@ -7,7 +7,7 @@ describe('<Crosshair />', () => {
   it('renders a rect centered on the given x', () => {
     const crosshair = mount(
       <svg>
-        <Crosshair x={50} height={500} />
+        <Crosshair width={1} x={50} height={500} />
       </svg>,
     );
 
@@ -17,7 +17,7 @@ describe('<Crosshair />', () => {
   it('renders a rect with the given height', () => {
     const crosshair = mount(
       <svg>
-        <Crosshair x={50} height={500} />
+        <Crosshair width={1} x={50} height={500} />
       </svg>,
     );
 
@@ -27,7 +27,7 @@ describe('<Crosshair />', () => {
   it('gives the rect full opacity by default', () => {
     const crosshair = mount(
       <svg>
-        <Crosshair x={50} height={500} />
+        <Crosshair width={1} x={50} height={500} />
       </svg>,
     );
 
@@ -39,7 +39,7 @@ describe('<Crosshair />', () => {
   it('applies opacity from props to the rect', () => {
     const crosshair = mount(
       <svg>
-        <Crosshair x={50} height={500} opacity={0.8} />
+        <Crosshair width={1} x={50} height={500} opacity={0.8} />
       </svg>,
     );
 
@@ -51,7 +51,7 @@ describe('<Crosshair />', () => {
   it('applies color from props to the rect', () => {
     const crosshair = mount(
       <svg>
-        <Crosshair x={50} height={500} fill="red" />
+        <Crosshair width={1} x={50} height={500} fill="red" />
       </svg>,
     );
 

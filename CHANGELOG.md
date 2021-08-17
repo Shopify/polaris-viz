@@ -21,21 +21,19 @@
 - Fixes `<BarChart />` when very large datasets are displayed
 
 ### Added
-- `PolarisVizProvider` to support theming charts
-- `theme` to `BarChartProps`
-### Removed 
 
-### Added
 - `PolarisVizProvider` to support theming charts
 - The`theme` to prop to `<BarChart />`, `<LineChart />`, `<Sparkline />` and `<Sparkbar />`
 - `<Sparkline />` now supports the dotted line style
 - `<Sparkline />` and `<Sparkbar />` support gradient fills
+- `theme` to `BarChartProps` & `StackedAreaChartProps`
 
-### Removed 
+### Removed
+
 - Polaris Tokens strings are no longer accepted as colors. Any valid CSS color can now be provided as a color to charts, and in some cases gradients can be specified by supplying an array of gradient stops.
 - `barOptions`, `gridOptions`, `xAxisOptions.showTicks`, `xAxisOptions.labelColor` and `yAxisOptions.labelColor` from `BarChartProps` and `LineChartProps`.
 - `barFillStyle` and `color` props are removed from the `<Sparkbar />` component and are inherited from the chart's theme
-- `colors` prop from  `<NormalizedStackedBarChart />` 
+- `colors` prop from  `<NormalizedStackedBarChart />`
 
 ### Changed
 - `<BarChart />`, `<LineChart />`, `<Sparkline />`, `<NormalizedStackedBarChart />` and `<Sparkbar />` styles now are defined through themes in `PolarisVizProvider` instead of props. For more details check the [migration guide](https://docs.google.com/document/d/1VxfcgBbTNwjmYix1jGuDMgqDgIdehTgQbVZpER7djeU/edit?usp=sharing)
