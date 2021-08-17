@@ -165,6 +165,7 @@
     "use-debounce": "^3.3.0"
   },
   "resolutions": {
-    "d3-array": "2.4.0"
+    "d3-array": "2.4.0",
+    "glob-parent": "^6.0.1"
   }
 }
