@@ -166,6 +166,7 @@
   },
   "resolutions": {
     "d3-array": "2.4.0",
-    "glob-parent": "^6.0.1"
+    "glob-parent": "^6.0.1",
+    "trim": "^1.0.1"
   }
 }
