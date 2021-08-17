@@ -1,7 +1,6 @@
 import type {Theme} from './types';
 import variables from './styles/shared/_variables.scss';
 
-export const CROSSHAIR_WIDTH = 5;
 export const SMALL_WIDTH = 300;
 export const MIN_LABEL_SPACE = 100;
 export const TICK_SIZE = 6;
@@ -112,6 +111,34 @@ export const VIZ_GRADIENT_COLOR = {
 };
 
 export const DEFAULT_THEME: Theme = {
+  seriesColors: {
+    upToFour: ['#9479F7', '#578FE1', '#CF68C1', '#5B97AD'],
+    fromFiveToSeven: [
+      '#5B97AD',
+      '#578FE1',
+      '#9479F7',
+      '#C29FED',
+      '#CF68C1',
+      '#D7905B',
+      '#F4CE74',
+    ],
+    all: [
+      '#41778B',
+      '#8DAEEF',
+      '#7847F4',
+      '#AA77DE',
+      '#A74E9B',
+      '#E4A175',
+      '#BE9D44',
+      '#87C9E3',
+      '#4D7FC9',
+      '#C3B6FB',
+      '#9643D7',
+      '#CF68C1',
+      '#AD7349',
+      '#F4CE74',
+    ],
+  },
   chartContainer: {
     borderRadius: '0px',
     padding: '0px',
@@ -139,7 +166,7 @@ export const DEFAULT_THEME: Theme = {
     showHorizontalLines: true,
     color: 'rgb(99, 115, 129)',
     horizontalOverflow: true,
-    horizontalMargin: 20,
+    horizontalMargin: 0,
   },
   xAxis: {
     showTicks: false,

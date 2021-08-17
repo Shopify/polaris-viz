@@ -1,21 +1,21 @@
 import React from 'react';
 import {animated, Interpolation} from '@react-spring/web';
 
-import {CROSSHAIR_WIDTH, DEFAULT_CROSSHAIR_COLOR} from '../../constants';
+import {DEFAULT_CROSSHAIR_COLOR} from '../../constants';
 
 interface Props {
   x: number | Interpolation;
   height: number;
+  width: number;
   opacity?: number;
   fill?: string;
-  width?: number;
 }
 
 export function Crosshair({
   x,
   height,
   opacity = 1,
-  width = CROSSHAIR_WIDTH,
+  width,
   fill = DEFAULT_CROSSHAIR_COLOR,
 }: Props) {
   return (

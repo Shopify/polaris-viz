@@ -1,13 +1,13 @@
 @import '../../styles/common';
 
 .Container {
+  @include chart-container;
   position: relative;
-  overflow: hidden;
-  height: 100%;
-  width: 100%;
   user-select: none;
 }
 
-.VisuallyHidden {
-  @include visually-hidden;
+.Chart {
+  height: 100%;
+  width: 100%;
+  overflow: visible;
 }

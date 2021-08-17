@@ -33,7 +33,7 @@ The props interface for `<Legend />` accepts a series type, which is the same ty
 ```typescript
 interface Series {
   name: string;
-  color: string | GradientStop[];
+  color: Color;
   lineStyle?: LineStyle;
   data?: Data[];
 }

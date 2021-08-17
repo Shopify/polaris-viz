@@ -8,11 +8,12 @@ import type {
   Dimensions,
 } from '../../types';
 import {TooltipContent} from '../TooltipContent';
-import {getDefaultColor, uniqueId} from '../../utilities';
-import {useResizeObserver} from '../../hooks';
+import {uniqueId} from '../../utilities';
+import {useResizeObserver, useTheme} from '../../hooks';
 
 import {Chart} from './Chart';
 import type {Series, RenderTooltipContentData} from './types';
+import styles from './Chart.scss';
 
 export interface StackedAreaChartProps {
   formatXAxisLabel?: StringLabelFormatter;
@@ -23,6 +24,7 @@ export interface StackedAreaChartProps {
   opacity?: number;
   isAnimated?: boolean;
   skipLinkText?: string;
+  theme?: string;
 }
 
 export function StackedAreaChart({
@@ -34,7 +36,10 @@ export function StackedAreaChart({
   opacity = 1,
   isAnimated = false,
   skipLinkText,
+  theme,
 }: StackedAreaChartProps) {
+  const selectedTheme = useTheme(theme);
+
   const [chartDimensions, setChartDimensions] = useState<Dimensions | null>(
     null,
   );
@@ -119,7 +124,7 @@ export function StackedAreaChart({
     title,
     data,
   }: RenderTooltipContentData) {
-    const formattedData = data.map(({label, value, color}) => ({
+    const formattedData = data.map(({color, label, value}) => ({
       color,
       label,
       value: formatYAxisLabel(value),
@@ -128,21 +133,23 @@ export function StackedAreaChart({
     return <TooltipContent title={title} data={formattedData} />;
   }
 
-  const seriesWithDefaults = series.map((series, index) => ({
-    color: getDefaultColor(index),
-    ...series,
-  }));
-
   return (
     <React.Fragment>
       {skipLinkText == null || skipLinkText.length === 0 ? null : (
         <SkipLink anchorId={skipLinkAnchorId.current}>{skipLinkText}</SkipLink>
       )}
-      <div style={{height: '100%', width: '100%'}} ref={setRef}>
+      <div
+        className={styles.Container}
+        style={{
+          background: selectedTheme.chartContainer.backgroundColor,
+          padding: selectedTheme.chartContainer.padding,
+        }}
+        ref={setRef}
+      >
         {chartDimensions == null ? null : (
           <Chart
             xAxisLabels={xAxisLabels}
-            series={seriesWithDefaults}
+            series={series}
             formatXAxisLabel={formatXAxisLabel}
             formatYAxisLabel={formatYAxisLabel}
             dimensions={chartDimensions}
@@ -153,6 +160,7 @@ export function StackedAreaChart({
             }
             opacity={opacity}
             isAnimated={isAnimated}
+            theme={theme}
           />
         )}
       </div>

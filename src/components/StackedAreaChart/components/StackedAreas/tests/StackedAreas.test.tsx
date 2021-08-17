@@ -91,8 +91,8 @@ describe('<StackedAreas />', () => {
     expect(stackedArea).toContainReactComponent('path', {
       // eslint-disable-next-line id-length
       d: 'M250,250L250,250L250,250L250,250Z',
-      fill: 'red',
-      stroke: 'red',
+      fill: 'url(#area-stackedAreas-1-0)',
+      stroke: 'url(#area-stackedAreas-1-0)',
       strokeWidth: '0.1',
       opacity: 1,
     });

@@ -4,7 +4,11 @@ import {Story, Meta} from '@storybook/react';
 import {StackedAreaChart, StackedAreaChartProps} from '../StackedAreaChart';
 
 import {data, labels, formatYAxisLabel} from './utils.stories';
-import {colorPurpleDark, colorTeal} from '../../../constants';
+import {
+  colorPurpleDark,
+  colorTeal,
+  VIZ_GRADIENT_COLOR,
+} from '../../../constants';
 
 const tooltipContent = {
   empty: undefined,
@@ -20,7 +24,7 @@ const tooltipContent = {
         fontSize: 12,
       }}
     >
-      {data.map((x) => (
+      {data.map(() => (
         <div>{`${x.label}: ${x.value}`}</div>
       ))}
     </div>
@@ -80,6 +84,9 @@ export default {
       description:
         'If provided, renders a `<SkipLink/>` button with the string. Use this for charts with large data sets, so keyboard users can skip all the tabbable data points in the chart.',
     },
+    theme: {
+      description: 'The theme that the chart will inherit its styles from',
+    },
   },
 } as Meta;
 
@@ -89,6 +96,8 @@ const defaultProps = {
   xAxisLabels: labels,
   formatYAxisLabel: formatYAxisLabel,
   isAnimated: true,
+  theme: 'Default',
+  opacity: 1,
 };
 
 const Template: Story<StackedAreaChartProps> = (
@@ -99,18 +108,51 @@ const Template: Story<StackedAreaChartProps> = (
 export const Default = Template.bind({});
 Default.args = defaultProps;
 
+export const Gradients = Template.bind({});
+Gradients.args = {
+  ...defaultProps,
+  xAxisLabels: Array(5)
+    .fill(null)
+    .map(() => 'label'),
+  series: [
+    {
+      name: 'One',
+      data: Array(5)
+        .fill(null)
+        .map(() => {
+          return {
+            rawValue: Math.random() * Math.random() * 100,
+            label: Math.random().toString(),
+          };
+        }),
+      color: VIZ_GRADIENT_COLOR.negative.down,
+    },
+    {
+      name: 'Two',
+      data: Array(5)
+        .fill(null)
+        .map(() => {
+          return {
+            rawValue: Math.random() * Math.random() * 100,
+            label: Math.random().toString(),
+          };
+        }),
+    },
+  ],
+};
+
 export const LargeVolume = Template.bind({});
 LargeVolume.args = {
   ...defaultProps,
   xAxisLabels: Array(2000)
     .fill(null)
-    .map((x) => 'label'),
+    .map(() => 'label'),
   series: [
     {
       name: 'First-time',
       data: Array(2000)
         .fill(null)
-        .map((x) => {
+        .map(() => {
           return {
             rawValue: Math.random() * Math.random() * 100,
             label: Math.random().toString(),
@@ -122,13 +164,112 @@ LargeVolume.args = {
       name: 'Returning',
       data: Array(2000)
         .fill(null)
-        .map((x) => {
+        .map(() => {
           return {
             rawValue: Math.random() * Math.random() * 100,
             label: Math.random().toString(),
           };
         }),
       color: colorPurpleDark,
+    },
+  ],
+};
+
+export const MediumVolume = Template.bind({});
+MediumVolume.args = {
+  ...defaultProps,
+  xAxisLabels: Array(10)
+    .fill(null)
+    .map(() => 'label'),
+  series: [
+    {
+      name: 'One',
+      data: Array(10)
+        .fill(null)
+        .map(() => {
+          return {
+            rawValue: Math.random() * Math.random() * 100,
+            label: Math.random().toString(),
+          };
+        }),
+    },
+    {
+      name: 'Two',
+      data: Array(10)
+        .fill(null)
+        .map(() => {
+          return {
+            rawValue: Math.random() * Math.random() * 100,
+            label: Math.random().toString(),
+          };
+        }),
+    },
+    {
+      name: 'Three',
+      data: Array(10)
+        .fill(null)
+        .map(() => {
+          return {
+            rawValue: Math.random() * Math.random() * 100,
+            label: Math.random().toString(),
+          };
+        }),
+    },
+    {
+      name: 'Four (Custom Color)',
+      data: Array(10)
+        .fill(null)
+        .map(() => {
+          return {
+            rawValue: Math.random() * Math.random() * 100,
+            label: Math.random().toString(),
+          };
+        }),
+      color: '#ff1111',
+    },
+    {
+      name: 'Five',
+      data: Array(10)
+        .fill(null)
+        .map(() => {
+          return {
+            rawValue: Math.random() * Math.random() * 100,
+            label: Math.random().toString(),
+          };
+        }),
+    },
+    {
+      name: 'Six',
+      data: Array(10)
+        .fill(null)
+        .map(() => {
+          return {
+            rawValue: Math.random() * Math.random() * 100,
+            label: Math.random().toString(),
+          };
+        }),
+    },
+    {
+      name: 'Seven',
+      data: Array(10)
+        .fill(null)
+        .map(() => {
+          return {
+            rawValue: Math.random() * Math.random() * 100,
+            label: Math.random().toString(),
+          };
+        }),
+    },
+    {
+      name: 'Eight',
+      data: Array(10)
+        .fill(null)
+        .map(() => {
+          return {
+            rawValue: Math.random() * Math.random() * 100,
+            label: Math.random().toString(),
+          };
+        }),
     },
   ],
 };
