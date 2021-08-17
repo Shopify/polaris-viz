@@ -164,8 +164,10 @@
     "use-debounce": "^3.3.0"
   },
   "resolutions": {
+    "browserslist": "^4.16.7",
     "d3-array": "2.4.0",
     "glob-parent": "^6.0.1",
-    "trim": "^1.0.1"
+    "trim": "^1.0.1",
+    "trim-newlines": "^3.0.1"
   }
 }
