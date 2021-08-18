@@ -1,5 +1,4 @@
 import React, {useLayoutEffect, useRef, useState, useCallback} from 'react';
-import {useDebouncedCallback} from 'use-debounce';
 
 import {SkipLink} from '../SkipLink';
 import type {
@@ -9,7 +8,7 @@ import type {
 } from '../../types';
 import {TooltipContent} from '../TooltipContent';
 import {uniqueId} from '../../utilities';
-import {useResizeObserver, useTheme} from '../../hooks';
+import {useResizeChartForPrint, useResizeObserver, useTheme} from '../../hooks';
 
 import {Chart} from './Chart';
 import type {Series, RenderTooltipContentData} from './types';
@@ -67,56 +66,11 @@ export function StackedAreaChart({
     }
   }, [entry]);
 
-  const [debouncedUpdateDimensions] = useDebouncedCallback(() => {
-    updateDimensions();
-  }, 100);
-
-  const handlePrintMediaQueryChange = useCallback(
-    (event: MediaQueryListEvent) => {
-      if (event.matches && ref != null) {
-        setChartDimensions(ref.getBoundingClientRect());
-      }
-    },
-    [ref],
-  );
+  useResizeChartForPrint(ref, chartDimensions, setChartDimensions);
 
   useLayoutEffect(() => {
     updateDimensions();
-    const isServer = typeof window === 'undefined';
-
-    if (!isServer) {
-      window.addEventListener('resize', debouncedUpdateDimensions);
-      if (typeof window.matchMedia('print').addEventListener === 'function') {
-        window
-          .matchMedia('print')
-          .addEventListener('change', handlePrintMediaQueryChange);
-      } else if (typeof window.matchMedia('print').addListener === 'function') {
-        window.matchMedia('print').addListener(handlePrintMediaQueryChange);
-      }
-    }
-
-    return () => {
-      if (!isServer) {
-        window.removeEventListener('resize', debouncedUpdateDimensions);
-        if (typeof window.matchMedia('print').addEventListener === 'function') {
-          window
-            .matchMedia('print')
-            .removeEventListener('change', handlePrintMediaQueryChange);
-        } else if (
-          typeof window.matchMedia('print').addListener === 'function'
-        ) {
-          window
-            .matchMedia('print')
-            .removeListener(handlePrintMediaQueryChange);
-        }
-      }
-    };
-  }, [
-    entry,
-    debouncedUpdateDimensions,
-    updateDimensions,
-    handlePrintMediaQueryChange,
-  ]);
+  }, [entry, updateDimensions]);
 
   if (series.length === 0) {
     return null;

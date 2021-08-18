@@ -1,5 +1,4 @@
 import React, {useLayoutEffect, useRef, useState, useCallback} from 'react';
-import {useDebouncedCallback} from 'use-debounce';
 
 import {ChartContainer} from '../../components/ChartContainer';
 import {useThemeSeriesColors} from '../../hooks/use-theme-series-colors';
@@ -8,6 +7,7 @@ import {isGradientType, changeColorOpacity, uniqueId} from '../../utilities';
 import {SkipLink} from '../SkipLink';
 import {
   usePrefersReducedMotion,
+  useResizeChartForPrint,
   useResizeObserver,
   useTheme,
 } from '../../hooks';
@@ -72,59 +72,11 @@ export function LineChart({
     }
   }, [entry]);
 
-  const [debouncedUpdateDimensions] = useDebouncedCallback(() => {
-    updateDimensions();
-  }, 100);
-
-  const handlePrintMediaQueryChange = useCallback(
-    (event: MediaQueryListEvent) => {
-      if (event.matches && ref != null) {
-        setChartDimensions(ref.getBoundingClientRect());
-      }
-    },
-    [ref],
-  );
+  useResizeChartForPrint(ref, chartDimensions, setChartDimensions);
 
   useLayoutEffect(() => {
     updateDimensions();
-
-    const isServer = typeof window === 'undefined';
-
-    if (!isServer) {
-      window.addEventListener('resize', debouncedUpdateDimensions);
-
-      if (typeof window.matchMedia('print').addEventListener === 'function') {
-        window
-          .matchMedia('print')
-          .addEventListener('change', handlePrintMediaQueryChange);
-      } else if (typeof window.matchMedia('print').addListener === 'function') {
-        window.matchMedia('print').addListener(handlePrintMediaQueryChange);
-      }
-    }
-
-    return () => {
-      if (!isServer) {
-        window.removeEventListener('resize', debouncedUpdateDimensions);
-
-        if (typeof window.matchMedia('print').addEventListener === 'function') {
-          window
-            .matchMedia('print')
-            .removeEventListener('change', handlePrintMediaQueryChange);
-        } else if (
-          typeof window.matchMedia('print').addListener === 'function'
-        ) {
-          window
-            .matchMedia('print')
-            .removeListener(handlePrintMediaQueryChange);
-        }
-      }
-    };
-  }, [
-    entry,
-    updateDimensions,
-    debouncedUpdateDimensions,
-    handlePrintMediaQueryChange,
-  ]);
+  }, [updateDimensions]);
 
   const xAxisOptionsWithDefaults: XAxisOptions = {
     labelFormatter: (value: string) => value,

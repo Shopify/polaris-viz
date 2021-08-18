@@ -1,10 +1,11 @@
-import React, {useState, useLayoutEffect, useCallback} from 'react';
+import React, {useState, useLayoutEffect, useRef} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 import {scaleLinear} from 'd3-scale';
-import type {Color, LineStyle} from 'types';
+import type {Color, Dimensions, LineStyle} from 'types';
 
 import {useThemeSeriesColors} from '../../hooks/use-theme-series-colors';
-import {useResizeObserver, useTheme} from '../../hooks';
+import {useResizeObserver, useWatchPrintMedia, useTheme} from '../../hooks';
+import {IS_SAFARI} from '../../hooks/useWatchPrintMedia';
 import {XMLNS} from '../../constants';
 
 import styles from './Sparkline.scss';
@@ -48,6 +49,7 @@ export function Sparkline({
   const [svgDimensions, setSvgDimensions] = useState({width: 0, height: 0});
   const selectedTheme = useTheme(theme);
   const seriesColors = useThemeSeriesColors(series, selectedTheme);
+  const previousSizeRef = useRef(svgDimensions);
 
   const [updateMeasurements] = useDebouncedCallback(() => {
     if (entry == null) return;
@@ -58,17 +60,28 @@ export function Sparkline({
     });
   }, 10);
 
-  const handlePrintMediaQueryChange = useCallback(
-    (event: MediaQueryListEvent) => {
-      if (event.matches && entry != null) {
-        setSvgDimensions({
-          height: entry.contentRect.width,
-          width: entry.contentRect.height,
-        });
+  useWatchPrintMedia((event: MediaQueryListEvent) => {
+    if (!containerRef) {
+      return;
+    }
+
+    const dimensions: Dimensions = {
+      height: containerRef.clientHeight,
+      width: containerRef.clientWidth,
+    };
+
+    if (event.matches) {
+      previousSizeRef.current = dimensions;
+
+      if (IS_SAFARI) {
+        setTimeout(() => setSvgDimensions(dimensions));
+      } else {
+        setSvgDimensions(dimensions);
       }
-    },
-    [entry],
-  );
+    } else {
+      setSvgDimensions(previousSizeRef.current);
+    }
+  });
 
   useLayoutEffect(() => {
     if (entry == null) return;
@@ -76,39 +89,7 @@ export function Sparkline({
     if (containerRef == null) return;
 
     updateMeasurements();
-
-    const isServer = typeof window === 'undefined';
-
-    if (!isServer) {
-      window.addEventListener('resize', () => updateMeasurements());
-
-      if (typeof window.matchMedia('print').addEventListener === 'function') {
-        window
-          .matchMedia('print')
-          .addEventListener('change', handlePrintMediaQueryChange);
-      } else if (typeof window.matchMedia('print').addListener === 'function') {
-        window.matchMedia('print').addListener(handlePrintMediaQueryChange);
-      }
-    }
-
-    return () => {
-      if (!isServer) {
-        window.removeEventListener('resize', () => updateMeasurements());
-
-        if (typeof window.matchMedia('print').addEventListener === 'function') {
-          window
-            .matchMedia('print')
-            .removeEventListener('change', handlePrintMediaQueryChange);
-        } else if (
-          typeof window.matchMedia('print').addListener === 'function'
-        ) {
-          window
-            .matchMedia('print')
-            .removeListener(handlePrintMediaQueryChange);
-        }
-      }
-    };
-  }, [entry, containerRef, updateMeasurements, handlePrintMediaQueryChange]);
+  }, [entry, containerRef, updateMeasurements]);
 
   const {width, height} = svgDimensions;
 
