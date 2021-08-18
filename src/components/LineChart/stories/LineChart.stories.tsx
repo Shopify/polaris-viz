@@ -98,11 +98,6 @@ const Template: Story<LineChartProps> = (args: LineChartProps) => {
 };
 
 export const InsightsStyle = Template.bind({});
-InsightsStyle.parameters = {
-  backgrounds: {
-    default: 'dark',
-  },
-};
 InsightsStyle.args = {
   series,
   theme: 'Default',
@@ -118,11 +113,6 @@ InsightsStyle.args = {
 };
 
 export const HideXAxisLabels = Template.bind({});
-HideXAxisLabels.parameters = {
-  backgrounds: {
-    default: 'dark',
-  },
-};
 HideXAxisLabels.args = {
   theme: 'NoxAxisLabels',
   series,
@@ -135,11 +125,6 @@ HideXAxisLabels.args = {
 };
 
 export const NoOverflowStyle = Template.bind({});
-NoOverflowStyle.parameters = {
-  backgrounds: {
-    default: 'dark',
-  },
-};
 NoOverflowStyle.args = {
   theme: 'NoOverflow',
   series,
@@ -152,11 +137,6 @@ NoOverflowStyle.args = {
 };
 
 export const IntegersOnly = Template.bind({});
-IntegersOnly.parameters = {
-  backgrounds: {
-    default: 'dark',
-  },
-};
 IntegersOnly.args = {
   theme: 'Default',
   series: [
@@ -182,11 +162,6 @@ IntegersOnly.args = {
 };
 
 export const NoArea = Template.bind({});
-NoArea.parameters = {
-  backgrounds: {
-    default: 'dark',
-  },
-};
 NoArea.args = {
   theme: 'Default',
   series: [
@@ -213,11 +188,6 @@ NoArea.args = {
 };
 
 export const SolidColor = Template.bind({});
-SolidColor.parameters = {
-  backgrounds: {
-    default: 'dark',
-  },
-};
 SolidColor.args = {
   theme: 'Default',
   series: [
@@ -243,11 +213,7 @@ SolidColor.args = {
 };
 
 export const LargeDataSet = Template.bind({});
-LargeDataSet.parameters = {
-  backgrounds: {
-    default: 'dark',
-  },
-};
+
 LargeDataSet.args = {
   theme: 'Default',
   series: [

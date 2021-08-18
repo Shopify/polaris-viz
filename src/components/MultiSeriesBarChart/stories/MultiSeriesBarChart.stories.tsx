@@ -240,11 +240,7 @@ const gradientSeries = series
   .filter((_, index) => index < 2);
 
 export const InsightsStyle = Template.bind({});
-InsightsStyle.parameters = {
-  backgrounds: {
-    default: 'dark',
-  },
-};
+
 InsightsStyle.args = {
   series: gradientSeries,
   xAxisOptions: {labels, showTicks: false, labelColor: 'rgb(220, 220, 220)'},
