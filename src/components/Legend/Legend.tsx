@@ -1,5 +1,6 @@
 import React from 'react';
 
+import {useTheme} from '../../hooks';
 import type {
   DataSeries,
   Data,
@@ -21,9 +22,12 @@ interface LegendProps extends Omit<LegendData, 'data'> {
 
 interface Props {
   series: LegendProps[];
+  theme?: string;
 }
 
-export function Legend({series}: Props) {
+export function Legend({series, theme}: Props) {
+  const selectedTheme = useTheme(theme);
+  const {labelColor} = selectedTheme.legend;
   return (
     <div className={styles.Container} aria-hidden>
       {series.map(({name, color, lineStyle}, index) => {
@@ -35,7 +39,9 @@ export function Legend({series}: Props) {
 
             {lineStyle == null ? <SquareColorPreview color={color} /> : null}
 
-            <p className={styles.SeriesName}>{name}</p>
+            <p style={{color: labelColor}} className={styles.SeriesName}>
+              {name}
+            </p>
           </div>
         );
       })}
