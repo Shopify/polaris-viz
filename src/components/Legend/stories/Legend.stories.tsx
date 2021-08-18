@@ -19,8 +19,8 @@ export default {
   },
   argTypes: {
     series: {
-      description:
-        'The series of data to display in the legend. [LegendProps types definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/Legend/Legend.tsx#L17)',
+      theme: 'The theme optionally controls the color of the text',
+      description: 'The series of data to display in the legend.',
     },
   },
 } as Meta;
@@ -35,6 +35,7 @@ const Template: Story<LegendProps> = (args: LegendProps) => {
 
 export const SquareLegend = Template.bind({});
 SquareLegend.args = {
+  theme: 'Default',
   series: [
     {name: 'Sales', color: 'red'},
     {name: 'Visits', color: 'purple'},
@@ -43,6 +44,7 @@ SquareLegend.args = {
 
 export const GradientSquareLegend = Template.bind({});
 GradientSquareLegend.args = {
+  theme: 'Default',
   series: [
     {
       name: 'Sales',
@@ -63,6 +65,7 @@ GradientSquareLegend.args = {
 
 export const GradientLineLegend = Template.bind({});
 GradientLineLegend.args = {
+  theme: 'Default',
   series: [
     {
       name: 'Sales',
@@ -85,6 +88,7 @@ GradientLineLegend.args = {
 
 export const DottedLineLegend = Template.bind({});
 DottedLineLegend.args = {
+  theme: 'Default',
   series: [
     {lineStyle: 'dotted', name: 'Sales', color: 'red'},
     {lineStyle: 'dotted', name: 'Visits', color: 'purple'},
@@ -93,6 +97,7 @@ DottedLineLegend.args = {
 
 export const DashedLineLegend = Template.bind({});
 DashedLineLegend.args = {
+  theme: 'Default',
   series: [
     {lineStyle: 'dashed', name: 'Sales', color: 'red'},
     {lineStyle: 'dashed', name: 'Visits', color: 'purple'},
@@ -101,6 +106,7 @@ DashedLineLegend.args = {
 
 export const LineLegend = Template.bind({});
 LineLegend.args = {
+  theme: 'Default',
   series: [
     {lineStyle: 'solid', name: 'Sales', color: 'red'},
     {lineStyle: 'solid', name: 'Visits', color: 'purple'},

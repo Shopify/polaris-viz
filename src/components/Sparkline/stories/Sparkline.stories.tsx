@@ -93,11 +93,6 @@ const defaultProps = {
 
 export const InsightsStyle = Template.bind({});
 InsightsStyle.args = defaultProps;
-InsightsStyle.parameters = {
-  backgrounds: {
-    default: 'dark',
-  },
-};
 
 export const withoutSpline = Template.bind({});
 withoutSpline.args = {

@@ -2,7 +2,7 @@ import React from 'react';
 import {PolarisVizProvider} from '../src/components';
 export const parameters = {
   backgrounds: {
-    default: 'twitter',
+    default: 'dark',
     values: [
       {
         name: 'light',

@@ -2,31 +2,13 @@
 
 ## Unreleased
 
-- [Updates `serialize-javascript` package](https://github.com/Shopify/polaris-viz/pull/477). No consumer-facing changes are expected.
-
-## [0.18.2] - 2021-08-17
-
-- [Updates dev dependencies](https://github.com/Shopify/polaris-viz/pull/474). No consumer-facing changes are expected.
-
-## [0.18.1] - 2021-08-11
-
-### Fixed
-
-- Comparison data is used in the `<Sparkbar />` scale
-
-## [0.18.0] - 2021-08-10
-
-### Fixed
-
-- Fixes `<BarChart />` when very large datasets are displayed
-
 ### Added
 
 - `PolarisVizProvider` to support theming charts
 - The`theme` to prop to `<BarChart />`, `<LineChart />`, `<Sparkline />` and `<Sparkbar />`
 - `<Sparkline />` now supports the dotted line style
 - `<Sparkline />` and `<Sparkbar />` support gradient fills
-- `theme` to `BarChartProps` & `StackedAreaChartProps`
+- `<Legend />` text is now configurable via the theme
 
 ### Removed
 
@@ -41,6 +23,21 @@
 
 ### Fixed
 - `<NormalizedStackedBarChart />` no longer overflows its container by a few pixels
+
+## [0.18.0] - 2021-08-10
+
+### Fixed
+
+- Fixes `<BarChart />` when very large datasets are displayed
+- Fixes background color not showing when printing `<NormalizedStackedBarChart />`.
+
+### Changed
+
+- removes @shopify/css-utilities in favour of adding our own utility
+- lowers d3-path dependency to a version matching d3-shape's dependency
+- replaces lodash.isequal with smaller option fast-deep-equal
+- adds a resolution for d3-array so we only have one version of the package in our library
+- Add xmlns and specific height & width values to svgs tags
 
 ## [0.17.2] - 2021-06-23
 
