@@ -21,9 +21,14 @@
 - Polaris Tokens strings are no longer accepted as colors. Any valid CSS color can now be provided as a color to charts, and in some cases gradients can be specified by supplying an array of gradient stops.
 - `barOptions`, `gridOptions`, `xAxisOptions.showTicks`, `xAxisOptions.labelColor` and `yAxisOptions.labelColor` from `BarChartProps` and `LineChartProps`.
 - `barFillStyle` and `color` props are removed from the `<Sparkbar />` component and are inherited from the chart's theme
+- `colors` prop from  `<NormalizedStackedBarChart />` 
 
 ### Changed
-- `<BarChart />`, `<LineChart />`, `<Sparkline />` and `<Sparkbar />` styles now are defined through themes in `PolarisVizProvider` instead of props. For more details check the [migration guide](https://docs.google.com/document/d/1VxfcgBbTNwjmYix1jGuDMgqDgIdehTgQbVZpER7djeU/edit?usp=sharing)
+- `<BarChart />`, `<LineChart />`, `<Sparkline />`, `<NormalizedStackedBarChart />` and `<Sparkbar />` styles now are defined through themes in `PolarisVizProvider` instead of props. For more details check the [migration guide](https://docs.google.com/document/d/1VxfcgBbTNwjmYix1jGuDMgqDgIdehTgQbVZpER7djeU/edit?usp=sharing)
+- change indicators on the  `<NormalizedStackedBarChart />` can now have their colors configured externally, which applies the color to the metric and percentage change
+
+### Fixed
+- `<NormalizedStackedBarChart />` no longer overflows its container by a few pixels
 
 ## [0.17.2] - 2021-06-23
 

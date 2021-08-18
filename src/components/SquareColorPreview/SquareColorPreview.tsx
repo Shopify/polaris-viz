@@ -10,7 +10,9 @@ export interface SquareColorPreviewProps {
 }
 
 export function SquareColorPreview({color}: SquareColorPreviewProps) {
-  const background = isGradientType(color) ? createCSSGradient(color) : color;
+  const background = isGradientType(color)
+    ? createCSSGradient(color, 305)
+    : color;
 
   return <div className={styles.ColorPreview} style={{background}} />;
 }
