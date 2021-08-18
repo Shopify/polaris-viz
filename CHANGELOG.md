@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- [Updates `serialize-javascript` package](https://github.com/Shopify/polaris-viz/pull/477). No consumer-facing changes are expected.
+
 ## [0.18.2] - 2021-08-17
 
 - [Updates dev dependencies](https://github.com/Shopify/polaris-viz/pull/474). No consumer-facing changes are expected.
