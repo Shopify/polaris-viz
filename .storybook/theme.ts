@@ -3,12 +3,14 @@ import {create} from '@storybook/theming';
 import {fontStackBase, fontStackMonospace} from '@shopify/polaris-tokens';
 import colors from '@shopify/polaris-tokens/dist-modern/palette/base.light.json';
 import darkColors from '@shopify/polaris-tokens/dist-modern/palette/base.dark.json';
+import logo from './polaris-viz-logo.svg';
 
 export default create({
   base: 'light',
 
   brandTitle: 'Polaris-Viz',
   brandUrl: 'https://github.com/Shopify/polaris-viz',
+  brandImage: logo,
 
   colorPrimary: colors.actionPrimary,
   colorSecondary: colors.actionPrimary,
