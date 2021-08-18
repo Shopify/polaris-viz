@@ -1,6 +1,7 @@
+import type {TooltipPositionOffset} from '../TooltipWrapper';
 import type {Dimensions, Margin} from '../../types';
 
-import type {TooltipPosition} from './TooltipContainer';
+import {TooltipHorizontalOffset, TooltipVerticalOffset} from './types';
 
 // The space between the cursor and the tooltip
 const TOOLTIP_MARGIN = 10;
@@ -8,7 +9,7 @@ const TOOLTIP_MARGIN = 10;
 interface AlteredPositionProps {
   currentX: number;
   currentY: number;
-  position: TooltipPosition;
+  position: TooltipPositionOffset;
   tooltipDimensions: Dimensions;
   chartDimensions: Dimensions;
   margin: Margin;
@@ -38,33 +39,33 @@ export function getAlteredPosition(
   // Y POSITIONING
   //
 
-  if (newPosition.vertical === 'inline') {
-    newPosition.horizontal = 'left';
+  if (newPosition.vertical === TooltipVerticalOffset.Inline) {
+    newPosition.horizontal = TooltipHorizontalOffset.Left;
 
     const inline = getInlinePosition(y, props);
     y = inline.value;
   }
 
-  if (newPosition.vertical === 'center') {
+  if (newPosition.vertical === TooltipVerticalOffset.Center) {
     const verticalCenter = getVerticalCenterPosition(y, props);
     y = verticalCenter.value;
   }
 
-  if (newPosition.vertical === 'above') {
+  if (newPosition.vertical === TooltipVerticalOffset.Above) {
     const above = getAbovePosition(y, props);
     y = above.value;
 
     if (above.wasOutsideBounds) {
-      newPosition.horizontal = 'left';
+      newPosition.horizontal = TooltipHorizontalOffset.Left;
     }
   }
 
-  if (newPosition.vertical === 'below') {
+  if (newPosition.vertical === TooltipVerticalOffset.Below) {
     const below = getBelowPosition(y, props);
     y = below.value;
 
     if (below.wasOutsideBounds) {
-      newPosition.horizontal = 'left';
+      newPosition.horizontal = TooltipHorizontalOffset.Left;
     }
   }
 
@@ -72,17 +73,17 @@ export function getAlteredPosition(
   // X POSITIONING
   //
 
-  if (newPosition.horizontal === 'left') {
+  if (newPosition.horizontal === TooltipHorizontalOffset.Left) {
     const left = getLeftPosition(x, props);
     x = left.value;
   }
 
-  if (newPosition.horizontal === 'right') {
+  if (newPosition.horizontal === TooltipHorizontalOffset.Right) {
     const right = getRightPosition(x, props);
     x = right.value;
   }
 
-  if (newPosition.horizontal === 'center') {
+  if (newPosition.horizontal === TooltipHorizontalOffset.Center) {
     const center = getCenterPosition(x, props);
     x = center.value;
   }

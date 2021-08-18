@@ -1,5 +1,5 @@
 import React from 'react';
-import type {ActiveTooltip} from 'types';
+import type {ActiveTooltip, DataType} from 'types';
 import {useSpring, animated, Interpolation} from '@react-spring/web';
 
 import {classNames} from '../../utilities';
@@ -20,11 +20,13 @@ interface Props {
   ariaHidden?: boolean;
   visuallyHidden?: boolean;
   stroke: string;
+  dataType?: DataType;
 }
 
 const DEFAULT_RADIUS = 5;
 
 export const Point = React.memo(function Point({
+  dataType,
   cx,
   cy,
   active,
@@ -61,6 +63,8 @@ export const Point = React.memo(function Point({
 
   return (
     <animated.circle
+      data-type={dataType}
+      data-index={index}
       role={ariaLabelledby == null ? '' : 'image'}
       aria-labelledby={ariaLabelledby}
       tabIndex={tabIndex}

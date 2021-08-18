@@ -1,10 +1,17 @@
 import React, {useState, useRef, useMemo, useCallback} from 'react';
-import throttle from 'lodash.throttle';
 import {line} from 'd3-shape';
 
 import {
+  TooltipHorizontalOffset,
+  TooltipVerticalOffset,
+  TooltipPosition,
+  TooltipPositionParams,
+  TooltipWrapper,
+  TOOLTIP_POSITION_DEFAULT_RETURN,
+} from '../../components/TooltipWrapper';
+import {
   curveStepRounded,
-  eventPoint,
+  eventPointNative,
   uniqueId,
   clamp,
   isGradientType,
@@ -32,8 +39,7 @@ import {YAxis} from '../YAxis';
 import {Point} from '../Point';
 import {Crosshair} from '../Crosshair';
 import {LinearGradient} from '../LinearGradient';
-import type {ActiveTooltip, Dimensions} from '../../types';
-import {TooltipContainer} from '../TooltipContainer';
+import {DataType, Dimensions} from '../../types';
 import {HorizontalGridLines} from '../HorizontalGridLines';
 
 import {MAX_ANIMATED_SERIES_LENGTH} from './constants';
@@ -59,6 +65,11 @@ interface Props {
   theme?: string;
 }
 
+const TOOLTIP_POSITION = {
+  horizontal: TooltipHorizontalOffset.Left,
+  vertical: TooltipVerticalOffset.Center,
+};
+
 export function Chart({
   series,
   dimensions,
@@ -71,12 +82,11 @@ export function Chart({
 }: Props) {
   const selectedTheme = useTheme(theme);
 
-  const [tooltipDetails, setTooltipDetails] = useState<ActiveTooltip | null>(
-    null,
-  );
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const tooltipId = useRef(uniqueId('lineChart'));
   const gradientId = useRef(uniqueId('lineChartGradient'));
+  const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
 
   const fontSize =
     dimensions.width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
@@ -122,48 +132,35 @@ export function Chart({
     integersOnly: yAxisOptions.integersOnly,
   });
 
-  const handleFocus = useCallback(
-    (details: ActiveTooltip | null) => {
-      if (details == null) {
-        setTooltipDetails(null);
-      } else {
-        const {x, y, index} = details;
-        setTooltipDetails({index, y, x: x + axisMargin});
+  const getTooltipMarkup = useCallback(
+    (index: number) => {
+      const data = series.reduce<TooltipData[]>(
+        (accumulator, {data, name, color, lineStyle}) => {
+          const currentDataPoint = data[index];
+          if (currentDataPoint != null) {
+            accumulator.push({
+              point: {
+                label: currentDataPoint.label,
+                value: currentDataPoint.rawValue,
+              },
+              name,
+              color,
+              lineStyle,
+            });
+          }
+          return accumulator;
+        },
+        [],
+      );
+
+      if (data == null) {
+        return null;
       }
+
+      return renderTooltipContent({data});
     },
-    [axisMargin],
+    [renderTooltipContent, series],
   );
-
-  const tooltipMarkup = useMemo(() => {
-    if (tooltipDetails == null) {
-      return null;
-    }
-
-    const data = series.reduce<TooltipData[]>(
-      (accumulator, {data, name, color, lineStyle}) => {
-        const currentDataPoint = data[tooltipDetails.index];
-        if (currentDataPoint != null) {
-          accumulator.push({
-            point: {
-              label: currentDataPoint.label,
-              value: currentDataPoint.rawValue,
-            },
-            name,
-            color,
-            lineStyle,
-          });
-        }
-        return accumulator;
-      },
-      [],
-    );
-
-    if (data == null) {
-      return null;
-    }
-
-    return renderTooltipContent({data});
-  }, [renderTooltipContent, series, tooltipDetails]);
 
   const reversedSeries = useMemo(() => series.slice().reverse(), [series]);
 
@@ -213,11 +210,6 @@ export function Chart({
     return generator;
   }, [selectedTheme.line.hasSpline, xScale, yScale]);
 
-  const activeIndex =
-    tooltipDetails == null || tooltipDetails.index == null
-      ? null
-      : tooltipDetails.index;
-
   const animatePoints =
     isAnimated && longestSeriesLength <= MAX_ANIMATED_SERIES_LENGTH;
 
@@ -246,66 +238,48 @@ export function Chart({
     return xScale(activeIndex == null ? 0 : activeIndex) - offset;
   };
 
-  /* eslint-disable react-hooks/exhaustive-deps */
-  const handleMouseInteraction = useCallback(
-    throttle(
-      (
-        event:
-          | React.MouseEvent<SVGSVGElement>
-          | React.TouchEvent<SVGSVGElement>
-          | null,
-      ) => {
-        handleInteraction(event);
-      },
-      50,
-      {leading: true},
-    ),
-    [dimensions],
-  );
-  /* eslint-enable react-hooks/exhaustive-deps */
-
   if (xScale == null || drawableWidth == null || axisMargin == null) {
     return null;
   }
 
-  function handleInteraction(
-    event:
-      | React.MouseEvent<SVGSVGElement>
-      | React.TouchEvent<SVGSVGElement>
-      | null,
-  ) {
-    if (axisMargin == null || xScale == null || emptyState) {
-      return;
+  function getTooltipPosition({
+    event,
+    index,
+    eventType,
+  }: TooltipPositionParams): TooltipPosition {
+    if (eventType === 'mouse') {
+      const point = eventPointNative(event!);
+
+      if (point == null || xScale == null) {
+        return TOOLTIP_POSITION_DEFAULT_RETURN;
+      }
+
+      const {svgX, svgY} = point;
+
+      const closestIndex = Math.round(xScale.invert(svgX - dataStartPosition));
+
+      const activeIndex = clamp({
+        amount: closestIndex,
+        min: 0,
+        max: reversedSeries[longestSeriesIndex].data.length - 1,
+      });
+
+      return {
+        x: svgX,
+        y: svgY,
+        position: TOOLTIP_POSITION,
+        activeIndex,
+      };
+    } else {
+      const activeIndex = index ?? 0;
+
+      return {
+        x: xScale?.(activeIndex) ?? 0,
+        y: 0,
+        position: TOOLTIP_POSITION,
+        activeIndex,
+      };
     }
-
-    if (event == null) {
-      setTooltipDetails(null);
-      return;
-    }
-
-    const point = eventPoint(event);
-
-    if (point == null) {
-      return;
-    }
-
-    const {svgX, svgY} = point;
-    if (svgX < axisMargin) {
-      return;
-    }
-
-    const closestIndex = Math.round(xScale.invert(svgX - dataStartPosition));
-    const clampedClosestIndex = clamp({
-      amount: closestIndex,
-      min: 0,
-      max: reversedSeries[longestSeriesIndex].data.length - 1,
-    });
-
-    setTooltipDetails({
-      x: svgX,
-      y: svgY,
-      index: clampedClosestIndex,
-    });
   }
 
   return (
@@ -316,16 +290,7 @@ export function Chart({
         xmlns={XMLNS}
         width={dimensions.width}
         height={dimensions.height}
-        onMouseMove={(event) => {
-          event.persist();
-          handleMouseInteraction(event);
-        }}
-        onTouchMove={(event) => {
-          event.persist();
-          handleInteraction(event);
-        }}
-        onTouchEnd={() => handleInteraction(null)}
-        onMouseLeave={() => handleMouseInteraction(null)}
+        ref={setSvgRef}
         aria-label={emptyState ? emptyStateText : undefined}
       >
         {xAxisOptions.hide ? null : (
@@ -378,7 +343,7 @@ export function Chart({
             <Crosshair
               x={getXPosition({isCrosshair: true})}
               height={drawableHeight}
-              opacity={tooltipDetails == null ? 0 : 1}
+              opacity={activeIndex == null ? 0 : 1}
               theme={theme}
             />
           </g>
@@ -440,14 +405,13 @@ export function Chart({
             const isLongestLine = index === longestSeriesIndex;
             const pointGradientId = `${gradientId.current}-point-${index}`;
 
-            const animatedYPostion =
+            const animatedYPosition =
               animatedCoordinates == null || animatedCoordinates[index] == null
                 ? 0
                 : animatedCoordinates[index].to((coord) => coord.y);
 
             const hidePoint =
               animatedCoordinates == null ||
-              tooltipDetails == null ||
               (activeIndex != null && activeIndex >= data.length);
 
             const pointColor = isGradientType(color)
@@ -473,8 +437,8 @@ export function Chart({
                     color={pointColor}
                     stroke={selectedTheme.line.pointStroke}
                     cx={getXPosition()}
-                    cy={animatedYPostion}
-                    active={tooltipDetails != null}
+                    cy={animatedYPosition}
+                    active={activeIndex != null}
                     index={index}
                     tabIndex={-1}
                     isAnimated={animatePoints}
@@ -486,13 +450,13 @@ export function Chart({
                 {data.map(({rawValue}, dataIndex) => {
                   return (
                     <Point
+                      dataType={DataType.Point}
                       key={`${name}-${index}-${dataIndex}`}
                       stroke={selectedTheme.line.pointStroke}
                       color={pointColor}
                       cx={xScale(dataIndex)}
                       cy={yScale(rawValue)}
                       active={activeIndex === dataIndex}
-                      onFocus={handleFocus}
                       index={dataIndex}
                       tabIndex={isLongestLine ? 0 : -1}
                       ariaLabelledby={tooltipId.current}
@@ -508,22 +472,16 @@ export function Chart({
         </g>
       </svg>
 
-      {tooltipDetails == null || emptyState ? null : (
-        <TooltipContainer
-          activePointIndex={tooltipDetails.index}
-          currentX={tooltipDetails.x}
-          currentY={tooltipDetails.y}
-          chartDimensions={dimensions}
-          margin={Margin}
-          id={tooltipId.current}
-          position={{
-            horizontal: 'left',
-            vertical: 'inline',
-          }}
-        >
-          {tooltipMarkup}
-        </TooltipContainer>
-      )}
+      <TooltipWrapper
+        chartDimensions={dimensions}
+        focusElementDataType={DataType.Point}
+        getMarkup={getTooltipMarkup}
+        getPosition={getTooltipPosition}
+        id={tooltipId.current}
+        margin={Margin}
+        onIndexChange={(index) => setActiveIndex(index)}
+        parentRef={svgRef}
+      />
     </div>
   );
 }

@@ -1,6 +1,15 @@
-import React, {useState, useMemo, useRef} from 'react';
+import React, {useState, useMemo, useRef, useCallback} from 'react';
 import {line, stack, stackOffsetNone, stackOrderReverse} from 'd3-shape';
 
+import {
+  TooltipHorizontalOffset,
+  TooltipVerticalOffset,
+  TooltipPosition,
+  TooltipPositionOffset,
+  TooltipPositionParams,
+  TooltipWrapper,
+  TOOLTIP_POSITION_DEFAULT_RETURN,
+} from '../TooltipWrapper';
 import {LinearGradient} from '../LinearGradient';
 import {
   useLinearXAxisDetails,
@@ -19,14 +28,13 @@ import {
   colorWhite,
   XMLNS,
 } from '../../constants';
-import {TooltipContainer} from '../TooltipContainer';
 import {
-  eventPoint,
   isGradientType,
   changeColorOpacity,
   changeGradientOpacity,
   uniqueId,
   curveStepRounded,
+  eventPointNative,
 } from '../../utilities';
 import {YAxis} from '../YAxis';
 import {Crosshair} from '../Crosshair';
@@ -34,13 +42,13 @@ import {Point} from '../Point';
 import {LinearXAxis} from '../LinearXAxis';
 import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
 import {HorizontalGridLines} from '../HorizontalGridLines';
-import type {
+import {
   StringLabelFormatter,
   NumberLabelFormatter,
-  ActiveTooltip,
   Dimensions,
   DataSeries,
   Data,
+  DataType,
 } from '../../types';
 
 import {Spacing} from './constants';
@@ -48,6 +56,11 @@ import {useYScale} from './hooks';
 import {StackedAreas} from './components';
 import type {Series, RenderTooltipContentData} from './types';
 import styles from './Chart.scss';
+
+const TOOLTIP_POSITION: TooltipPositionOffset = {
+  horizontal: TooltipHorizontalOffset.Left,
+  vertical: TooltipVerticalOffset.Center,
+};
 
 interface Props {
   hideXAxis: boolean;
@@ -79,10 +92,7 @@ export function Chart({
   const colors = useThemeSeriesColors(series, selectedTheme);
 
   const [activePointIndex, setActivePointIndex] = useState<number | null>(null);
-  const [tooltipPosition, setTooltipPosition] = useState<{
-    x: number;
-    y: number;
-  } | null>(null);
+  const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
 
   const tooltipId = useRef(uniqueId('stackedAreaChart'));
 
@@ -157,31 +167,34 @@ export function Chart({
 
   const {xScale} = useLinearXScale({drawableWidth, longestSeriesLength});
 
-  const tooltipMarkup = useMemo(() => {
-    if (activePointIndex == null) {
-      return null;
-    }
+  const getTooltipMarkup = useCallback(
+    (index: number) => {
+      const data = series.reduce<RenderTooltipContentData['data']>(
+        function removeNullsAndFormatData(tooltipData, {name, data}, index) {
+          const {rawValue} = data[index];
+          if (rawValue == null) {
+            return tooltipData;
+          }
 
-    const data = series.reduce<RenderTooltipContentData['data']>(
-      function removeNullsAndFormatData(tooltipData, {name, data}, index) {
-        const {rawValue} = data[activePointIndex];
-        if (rawValue == null) {
+          tooltipData.push({
+            color: colors[index],
+            label: name,
+            value: rawValue,
+          });
           return tooltipData;
-        }
+        },
+        [],
+      );
 
-        tooltipData.push({color: colors[index], label: name, value: rawValue});
-        return tooltipData;
-      },
-      [],
-    );
+      const title = xAxisLabels[index];
 
-    const title = xAxisLabels[activePointIndex];
-
-    return renderTooltipContent({
-      data,
-      title,
-    });
-  }, [colors, activePointIndex, series, xAxisLabels, renderTooltipContent]);
+      return renderTooltipContent({
+        data,
+        title,
+      });
+    },
+    [colors, series, xAxisLabels, renderTooltipContent],
+  );
 
   const lineGenerator = useMemo(() => {
     const generator = line<{rawValue: number}>()
@@ -248,10 +261,7 @@ export function Chart({
         xmlns={XMLNS}
         width={dimensions.width}
         height={dimensions.height}
-        onMouseMove={handleInteraction}
-        onTouchMove={handleInteraction}
-        onTouchEnd={() => setActivePointIndex(null)}
-        onMouseLeave={() => setActivePointIndex(null)}
+        ref={setSvgRef}
         role="table"
       >
         {hideXAxis ? null : (
@@ -359,7 +369,6 @@ export function Chart({
                   cx={getXPosition({isCrosshair: false, index: stackIndex})}
                   cy={animatedYPostion}
                   active
-                  onFocus={handleFocus}
                   index={stackIndex}
                   tabIndex={stackIndex === 0 ? 0 : -1}
                   isAnimated={isAnimated && !prefersReducedMotion}
@@ -374,13 +383,13 @@ export function Chart({
             // for each series.
             return (
               <Point
+                dataType={DataType.Point}
                 key={`point-${dataIndex}-${x}}`}
                 stroke={colorWhite}
                 color={colorWhite}
                 cx={xScale(dataIndex)}
                 cy={yScale(y)}
                 active
-                onFocus={handleFocus}
                 index={dataIndex}
                 tabIndex={0}
                 ariaLabelledby={tooltipId.current}
@@ -392,56 +401,50 @@ export function Chart({
           })}
         </g>
       </svg>
-      {tooltipPosition == null || activePointIndex == null ? null : (
-        <TooltipContainer
-          id={tooltipId.current}
-          activePointIndex={activePointIndex}
-          currentX={tooltipPosition.x}
-          currentY={tooltipPosition.y}
-          chartDimensions={dimensions}
-          margin={Margin}
-          position={{
-            horizontal: 'left',
-            vertical: 'center',
-          }}
-        >
-          {tooltipMarkup}
-        </TooltipContainer>
-      )}
+      <TooltipWrapper
+        chartDimensions={dimensions}
+        focusElementDataType={DataType.Point}
+        getMarkup={getTooltipMarkup}
+        getPosition={getTooltipPosition}
+        id={tooltipId.current}
+        margin={Margin}
+        onIndexChange={(index) => setActivePointIndex(index)}
+        parentRef={svgRef}
+      />
     </React.Fragment>
   );
 
-  function handleFocus({index, x, y}: ActiveTooltip) {
-    if (index == null) return;
-    setActivePointIndex(index);
-    setTooltipPosition({
-      x: x + dataStartPosition,
-      y,
-    });
-  }
+  function getTooltipPosition({
+    event,
+    index,
+    eventType,
+  }: TooltipPositionParams): TooltipPosition {
+    if (eventType === 'mouse' && event) {
+      const point = eventPointNative(event!);
 
-  function handleInteraction(
-    event: React.MouseEvent<SVGSVGElement> | React.TouchEvent<SVGSVGElement>,
-  ) {
-    if (axisMargin == null || xScale == null) {
-      return;
+      if (point == null || xScale == null) {
+        return TOOLTIP_POSITION_DEFAULT_RETURN;
+      }
+
+      const {svgX, svgY} = point;
+
+      const closestIndex = Math.round(xScale.invert(svgX - dataStartPosition));
+
+      return {
+        x: svgX,
+        y: svgY,
+        position: TOOLTIP_POSITION,
+        activeIndex: Math.min(longestSeriesLength, closestIndex),
+      };
+    } else if (index != null) {
+      return {
+        x: xScale?.(index) ?? 0,
+        y: 0,
+        position: TOOLTIP_POSITION,
+        activeIndex: index,
+      };
     }
 
-    const point = eventPoint(event);
-    if (point == null) {
-      return;
-    }
-
-    const {svgX, svgY} = point;
-    if (svgX < dataStartPosition) {
-      return;
-    }
-
-    const closestIndex = Math.round(xScale.invert(svgX - dataStartPosition));
-    setActivePointIndex(Math.min(longestSeriesLength, closestIndex));
-    setTooltipPosition({
-      x: svgX,
-      y: svgY,
-    });
+    return TOOLTIP_POSITION_DEFAULT_RETURN;
   }
 }

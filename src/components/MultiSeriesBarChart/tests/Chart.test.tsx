@@ -1,25 +1,13 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
-import {YAxis, TooltipContainer, BarChartXAxis} from 'components';
-import {mountWithProvider} from 'test-utilities';
+import {YAxis, BarChartXAxis} from 'components';
+import {mountWithProvider, triggerSVGMouseMove} from 'test-utilities';
 import {HorizontalGridLines} from 'components/HorizontalGridLines';
 import {mockDefaultTheme} from 'test-utilities/mount-with-provider';
+import {TooltipAnimatedContainer} from 'components/TooltipWrapper';
 
 import {Chart} from '../Chart';
 import {BarGroup, StackedBarGroup} from '../components';
-
-const fakeSVGEvent = {
-  currentTarget: {
-    getScreenCTM: () => ({
-      inverse: () => ({x: 100, y: 100}),
-    }),
-    createSVGPoint: () => ({
-      x: 100,
-      y: 100,
-      matrixTransform: () => ({x: 100, y: 100}),
-    }),
-  },
-};
 
 const ZERO_AS_MIN_HEIGHT_THEME = {
   themes: {
@@ -30,6 +18,15 @@ const ZERO_AS_MIN_HEIGHT_THEME = {
     },
   },
 };
+
+jest.mock('../../../utilities', () => {
+  return {
+    ...jest.requireActual('../../../utilities'),
+    eventPointNative: () => {
+      return {clientX: 0, clientY: 0, svgX: 100, svgY: 100};
+    },
+  };
+});
 
 describe('Chart />', () => {
   beforeEach(() => {
@@ -115,19 +112,18 @@ describe('Chart />', () => {
     expect(mockProps.xAxisOptions.labelFormatter).toHaveBeenCalledTimes(3);
   });
 
-  it('does not render <TooltipContainer /> if there is no active point', () => {
+  it('does not render <TooltipAnimatedContainer /> if there is no active point', () => {
     const chart = mount(<Chart {...mockProps} />);
 
-    expect(chart).not.toContainReactComponent(TooltipContainer);
+    expect(chart).not.toContainReactComponent(TooltipAnimatedContainer);
   });
 
-  it('renders tooltip content inside a <TooltipContainer /> if there is an active point', () => {
+  it('renders tooltip content inside a <TooltipAnimatedContainer /> if there is an active point', () => {
     const chart = mount(<Chart {...mockProps} />);
-    const svg = chart.find('svg')!;
 
-    svg.trigger('onMouseMove', fakeSVGEvent);
+    triggerSVGMouseMove(chart);
 
-    const tooltipContainer = chart.find(TooltipContainer)!;
+    const tooltipContainer = chart.find(TooltipAnimatedContainer)!;
 
     expect(tooltipContainer).toContainReactText('Mock Tooltip');
   });
@@ -137,7 +133,7 @@ describe('Chart />', () => {
       const chart = mount(<Chart {...mockProps} series={[]} />);
 
       expect(chart).not.toContainReactText('Mock Tooltip');
-      expect(chart).not.toContainReactComponent(TooltipContainer);
+      expect(chart).not.toContainReactComponent(TooltipAnimatedContainer);
     });
   });
 
@@ -151,8 +147,7 @@ describe('Chart />', () => {
     it('passes isSubdued props to the BarGroup around what is being hovered', () => {
       const chart = mount(<Chart {...mockProps} />);
 
-      const svg = chart.find('svg')!;
-      svg.trigger('onMouseMove', fakeSVGEvent);
+      triggerSVGMouseMove(chart);
 
       expect(chart).toContainReactComponent(BarGroup, {
         isSubdued: true,
@@ -303,8 +298,7 @@ describe('Chart />', () => {
     it('passes active props to the BarGroup that is being hovered', () => {
       const chart = mount(<Chart {...mockProps} isStacked />);
 
-      const svg = chart.find('svg')!;
-      svg.trigger('onMouseMove', fakeSVGEvent);
+      triggerSVGMouseMove(chart);
 
       expect(chart).toContainReactComponent(StackedBarGroup, {
         activeBarGroup: 0,

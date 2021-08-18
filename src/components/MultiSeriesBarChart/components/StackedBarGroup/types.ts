@@ -17,5 +17,4 @@ export interface StackedBarGroupProps {
       value: string;
     }[];
   }[];
-  onFocus: (index: number) => void;
 }

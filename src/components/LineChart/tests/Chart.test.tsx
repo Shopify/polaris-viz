@@ -1,36 +1,17 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
-import {
-  Crosshair,
-  LinearXAxis,
-  TooltipContainer,
-  VisuallyHiddenRows,
-  Point,
-} from 'components';
+import {Crosshair, LinearXAxis, VisuallyHiddenRows, Point} from 'components';
 import {line} from 'd3-shape';
-import {mountWithProvider} from 'test-utilities';
+import {mountWithProvider, triggerSVGMouseMove} from 'test-utilities';
 import {HorizontalGridLines} from 'components/HorizontalGridLines';
 import {mockDefaultTheme} from 'test-utilities/mount-with-provider';
+import {TooltipAnimatedContainer} from 'components/TooltipWrapper';
 
 import {LinearGradient} from '../../LinearGradient';
 import {Chart} from '../Chart';
 import type {Series} from '../types';
 import {Line, GradientArea} from '../components';
 import {YAxis} from '../../YAxis';
-
-const fakeSVGEvent = {
-  persist: jest.fn(),
-  currentTarget: {
-    getScreenCTM: () => ({
-      inverse: () => ({x: 100, y: 100}),
-    }),
-    createSVGPoint: () => ({
-      x: 100,
-      y: 100,
-      matrixTransform: () => ({x: 100, y: 100}),
-    }),
-  },
-};
 
 const primarySeries: Required<Series> = {
   name: 'Primary',
@@ -77,6 +58,9 @@ jest.mock('../../../utilities', () => {
     getPathLength: () => 0,
     getPointAtLength: () => ({x: 0, y: 0}),
     uniqueId: (prefix: string) => `${prefix}-1`,
+    eventPointNative: () => {
+      return {clientX: 0, clientY: 0, svgX: 0, svgY: 0};
+    },
   };
 });
 
@@ -109,11 +93,7 @@ describe('<Chart />', () => {
   it('sets an active point and tooltip position on svg mouse or touch interaction', () => {
     const chart = mount(<Chart {...mockProps} />);
 
-    const svg = chart.find('svg')!;
-
-    chart.act(() => {
-      svg.trigger('onMouseMove', fakeSVGEvent);
-    });
+    triggerSVGMouseMove(chart);
 
     expect(chart).toContainReactComponent(Point, {active: true});
   });
@@ -164,9 +144,7 @@ describe('<Chart />', () => {
   it('renders a <Crosshair /> at full opacity if there is an active point', () => {
     const chart = mount(<Chart {...mockProps} />);
 
-    // create an active point
-    const svg = chart.find('svg')!;
-    svg.trigger('onMouseMove', fakeSVGEvent);
+    triggerSVGMouseMove(chart);
 
     expect(chart.find(Crosshair)).toHaveReactProps({opacity: 1});
   });
@@ -245,13 +223,11 @@ describe('<Chart />', () => {
 
     // No tooltip if there is no active point
     expect(chart).not.toContainReactText('Mock Tooltip');
-    expect(chart).not.toContainReactComponent(TooltipContainer);
+    expect(chart).not.toContainReactComponent(TooltipAnimatedContainer);
 
-    // create an active point
-    const svg = chart.find('svg')!;
-    svg.trigger('onMouseMove', fakeSVGEvent);
+    triggerSVGMouseMove(chart);
 
-    const tooltipContainer = chart.find(TooltipContainer)!;
+    const tooltipContainer = chart.find(TooltipAnimatedContainer)!;
 
     expect(tooltipContainer).toContainReactText('Mock Tooltip');
   });
@@ -271,7 +247,7 @@ describe('<Chart />', () => {
       const chart = mount(<Chart {...mockProps} series={[]} />);
 
       expect(chart).not.toContainReactText('Mock Tooltip');
-      expect(chart).not.toContainReactComponent(TooltipContainer);
+      expect(chart).not.toContainReactComponent(TooltipAnimatedContainer);
     });
 
     it('does not render crosshair for empty state', () => {
