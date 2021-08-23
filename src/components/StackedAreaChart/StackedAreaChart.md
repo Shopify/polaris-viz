@@ -166,6 +166,14 @@ The distinction between the `RenderTooltipContentData` and series `Data` types i
 
 The prop to determine the chart's drawn area. Each `Series` object corresponds to an area drawn on the chart, and is explained in greater detail [above](#series).
 
+#### theme
+
+| type      | default |
+| --------- | ------- |
+| `string` | `Default` |
+
+The theme that the chart will inherit its styles from. Additional themes must be provided to the theme provider.
+
 ### Optional Props
 
 #### formatXAxisLabel

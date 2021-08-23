@@ -3,7 +3,7 @@ import type {ScaleLinear} from 'd3-scale';
 import {area as areaShape, line} from 'd3-shape';
 import {classNames} from '@shopify/css-utilities';
 
-import type {GradientStop, Theme} from '../../../../types';
+import type {Color, GradientStop, Theme} from '../../../../types';
 import {LinearGradient} from '../../../LinearGradient';
 import {
   curveStepRounded,
@@ -23,7 +23,7 @@ const StrokeDasharray = {
   solid: 'unset',
 };
 
-function getGradientFill(area: string | GradientStop[] | null) {
+function getGradientFill(area: Color | null) {
   if (area == null) {
     return null;
   }

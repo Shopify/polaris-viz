@@ -1,23 +1,29 @@
 import React, {useState, useMemo, useRef} from 'react';
 import {stack, stackOffsetNone, stackOrderReverse} from 'd3-shape';
 
+import {LinearGradient} from '../LinearGradient';
 import {
   useLinearXAxisDetails,
   useLinearXScale,
   usePrefersReducedMotion,
+  useTheme,
 } from '../../hooks';
 import {
   SMALL_SCREEN,
   SMALL_FONT_SIZE,
   SPACING_TIGHT,
   FONT_SIZE,
-  CROSSHAIR_WIDTH,
   LineChartMargin as Margin,
-  colorSky,
   colorWhite,
 } from '../../constants';
 import {TooltipContainer} from '../TooltipContainer';
-import {eventPoint, uniqueId} from '../../utilities';
+import {
+  eventPoint,
+  isGradientType,
+  makeColorOpaque,
+  makeGradientOpaque,
+  uniqueId,
+} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {Crosshair} from '../Crosshair';
 import {Point} from '../Point';
@@ -32,20 +38,21 @@ import type {
 } from '../../types';
 
 import {Spacing} from './constants';
-import {useYScale} from './hooks';
+import {useThemeSeriesColors, useYScale} from './hooks';
 import {StackedAreas} from './components';
-import styles from './Chart.scss';
 import type {Series, RenderTooltipContentData} from './types';
+import styles from './Chart.scss';
 
 interface Props {
   xAxisLabels: string[];
-  series: Required<Series>[];
+  series: Series[];
   formatXAxisLabel: StringLabelFormatter;
   formatYAxisLabel: NumberLabelFormatter;
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
   dimensions: Dimensions;
   opacity: number;
   isAnimated: boolean;
+  theme?: string;
 }
 
 export function Chart({
@@ -57,8 +64,11 @@ export function Chart({
   renderTooltipContent,
   opacity,
   isAnimated,
+  theme,
 }: Props) {
   const {prefersReducedMotion} = usePrefersReducedMotion();
+  const selectedTheme = useTheme(theme);
+  const colors = useThemeSeriesColors(series, selectedTheme);
 
   const [activePointIndex, setActivePointIndex] = useState<number | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState<{
@@ -116,8 +126,6 @@ export function Chart({
 
   const formattedXAxisLabels = xAxisLabels.map(formatXAxisLabel);
 
-  const colors = useMemo(() => series.map(({color}) => color), [series]);
-
   const marginBottom =
     xAxisLabels == null
       ? SPACING_TIGHT
@@ -147,13 +155,13 @@ export function Chart({
     }
 
     const data = series.reduce<RenderTooltipContentData['data']>(
-      function removeNullsAndFormatData(tooltipData, {color, name, data}) {
+      function removeNullsAndFormatData(tooltipData, {name, data}, index) {
         const {rawValue} = data[activePointIndex];
         if (rawValue == null) {
           return tooltipData;
         }
 
-        tooltipData.push({color, label: name, value: rawValue});
+        tooltipData.push({color: colors[index], label: name, value: rawValue});
         return tooltipData;
       },
       [],
@@ -165,17 +173,16 @@ export function Chart({
       data,
       title,
     });
-  }, [activePointIndex, series, xAxisLabels, renderTooltipContent]);
+  }, [colors, activePointIndex, series, xAxisLabels, renderTooltipContent]);
 
   if (xScale == null || drawableWidth == null || axisMargin == null) {
     return null;
   }
 
   return (
-    <div className={styles.Container}>
+    <React.Fragment>
       <svg
-        width="100%"
-        height="100%"
+        className={styles.Chart}
         onMouseMove={handleInteraction}
         onTouchMove={handleInteraction}
         onTouchEnd={() => setActivePointIndex(null)}
@@ -195,6 +202,9 @@ export function Chart({
             fontSize={fontSize}
             drawableWidth={drawableWidth}
             ariaHidden
+            labelColor={selectedTheme.xAxis.labelColor}
+            showTicks={selectedTheme.xAxis.showTicks}
+            gridColor={selectedTheme.grid.color}
           />
         </g>
 
@@ -204,12 +214,13 @@ export function Chart({
             fontSize={fontSize}
             width={axisMargin}
             textAlign="right"
+            labelColor={selectedTheme.xAxis.labelColor}
           />
         </g>
 
         <HorizontalGridLines
           ticks={ticks}
-          color={colorSky}
+          color={selectedTheme.grid.color}
           transform={{
             x: dataStartPosition,
             y: Margin.Top,
@@ -238,30 +249,52 @@ export function Chart({
         {activePointIndex == null ? null : (
           <g transform={`translate(${dataStartPosition},${Margin.Top})`}>
             <Crosshair
-              x={xScale(activePointIndex) - CROSSHAIR_WIDTH / 2}
+              x={xScale(activePointIndex) - selectedTheme.crossHair.width / 2}
               height={drawableHeight}
-              opacity={0.5}
+              fill={selectedTheme.crossHair.color}
+              width={selectedTheme.crossHair.width}
             />
           </g>
         )}
 
         <g transform={`translate(${dataStartPosition},${Margin.Top})`}>
           {stackedValues.map((value, stackIndex) =>
-            value.map(([, startingDataPoint], index) => (
-              <Point
-                stroke={colorWhite}
-                key={index}
-                color={colors[stackIndex]}
-                cx={xScale(index)}
-                cy={yScale(startingDataPoint)}
-                active={index === activePointIndex}
-                onFocus={handleFocus}
-                index={index}
-                tabIndex={stackIndex === 0 ? 0 : -1}
-                ariaLabelledby={tooltipId.current}
-                isAnimated={isAnimated && !prefersReducedMotion}
-              />
-            )),
+            value.map(([, startingDataPoint], index) => {
+              const id = `${tooltipId.current}-point-${index}`;
+              const color = colors[stackIndex];
+
+              const pointColor = isGradientType(color)
+                ? `url(#${id})`
+                : makeColorOpaque(color);
+
+              return (
+                <React.Fragment key={index}>
+                  {isGradientType(color) && (
+                    <defs>
+                      <LinearGradient
+                        id={id}
+                        gradient={makeGradientOpaque(color)}
+                        gradientUnits="userSpaceOnUse"
+                        y1="100%"
+                        y2="0%"
+                      />
+                    </defs>
+                  )}
+                  <Point
+                    stroke={colorWhite}
+                    color={pointColor}
+                    cx={xScale(index)}
+                    cy={yScale(startingDataPoint)}
+                    active={index === activePointIndex}
+                    onFocus={handleFocus}
+                    index={index}
+                    tabIndex={stackIndex === 0 ? 0 : -1}
+                    ariaLabelledby={tooltipId.current}
+                    isAnimated={isAnimated && !prefersReducedMotion}
+                  />
+                </React.Fragment>
+              );
+            }),
           )}
         </g>
       </svg>
@@ -277,7 +310,7 @@ export function Chart({
           {tooltipMarkup}
         </TooltipContainer>
       )}
-    </div>
+    </React.Fragment>
   );
 
   function handleFocus({index, x, y}: ActiveTooltip) {

@@ -76,7 +76,7 @@ interface BarChartProps {
     rawValue: number;
     label: string;
     barOptions?: {
-      color: string | GradientStop[];
+      color: Color;
     };
   }[];
   renderTooltipContent?({
@@ -91,7 +91,7 @@ interface BarChartProps {
   barOptions?: {
     innerMargin?: 'Small' | 'Medium' | 'Large' | 'None';
     outerMargin?: 'Small' | 'Medium' | 'Large' | 'None';
-    color?: string | GradientStop[];
+    color?: Color;
     hasRoundedCorners?: boolean;
     zeroAsMinHeight?: boolean;
   };
@@ -209,7 +209,7 @@ This sets the margin before and after all bars. A value of `None` will have bars
 
 | type    | default   |
 | ------- | --------- |
-| `string | GradientStop[]` | |
+| `Color` | |
 
 The bar fill color. This accepts any CSS color.
 

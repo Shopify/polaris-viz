@@ -1,7 +1,7 @@
 import React, {useState, useLayoutEffect, useCallback} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 import {scaleLinear} from 'd3-scale';
-import type {GradientStop, LineStyle, SparkChartData} from 'types';
+import type {Color, LineStyle, SparkChartData} from 'types';
 
 import {useResizeObserver, useTheme} from '../../hooks';
 
@@ -17,8 +17,8 @@ export interface Coordinates {
 
 export interface SingleSeries {
   data: Coordinates[];
-  color?: string | GradientStop[];
-  area?: string | GradientStop[];
+  color?: Color;
+  area?: Color;
   lineStyle?: LineStyle;
   hasPoint?: boolean;
   offsetRight?: number;

@@ -4,7 +4,6 @@ import {TooltipContent} from '../components/TooltipContent/TooltipContent';
 import {LineChartProps} from '../LineChart';
 import {
   DEFAULT_CROSSHAIR_COLOR,
-  CROSSHAIR_WIDTH,
   DEFAULT_GREY_LABEL,
   colorWhite,
   colorSky,
@@ -127,7 +126,6 @@ export const defaultProps = {
   isAnimated: true,
   renderTooltipContent,
   crossHairOptions: {
-    width: CROSSHAIR_WIDTH,
     color: DEFAULT_CROSSHAIR_COLOR,
     opacity: 1,
   },

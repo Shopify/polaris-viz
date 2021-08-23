@@ -24,8 +24,6 @@ export interface GradientStop {
   stopOpacity?: number;
 }
 
-export type SeriesColor = GradientStop[] | string;
-
 export type StringLabelFormatter = (
   value: string,
   index?: number,
@@ -60,6 +58,8 @@ export type SparkChartData = number | null;
 
 export type PathInterpolator = InterpolatorFn<readonly number[], string>;
 export type NumberInterpolator = InterpolatorFn<readonly number[], number>;
+export type Color = string | GradientStop[];
+export type SeriesColor = Color;
 
 export interface XAxisOptions {
   labelFormatter?: StringLabelFormatter;
@@ -89,7 +89,7 @@ export interface GridTheme {
 export interface BarTheme {
   innerMargin: keyof typeof BarMargin;
   outerMargin: keyof typeof BarMargin;
-  color: string | GradientStop[];
+  color: Color;
   hasRoundedCorners: boolean;
   /**
    * @deprecated This prop is experimental and not ready for general use. If you want to use this, come talk to us in #polaris-data-viz
@@ -120,14 +120,19 @@ export interface ChartContainerTheme {
 }
 
 export interface LineTheme {
-  color: string | GradientStop[];
+  color: Color;
   area: string | null;
-  sparkArea: string | GradientStop[] | null;
+  sparkArea: Color | null;
   hasSpline: boolean;
   style: LineStyle;
   hasPoint: boolean;
   width: number;
   pointStroke: string;
+}
+export interface SeriesColors {
+  upToFour: Color[];
+  fromFiveToSeven: Color[];
+  all: Color[];
 }
 
 export interface ColorPalette {
@@ -150,6 +155,7 @@ export interface PartialTheme {
   crossHair?: Partial<CrossHairTheme>;
   colorPalette?: Partial<ColorPalette>;
   legend?: Partial<Legend>;
+  seriesColors?: Partial<SeriesColors>;
 }
 
 export interface Theme {
@@ -162,4 +168,5 @@ export interface Theme {
   crossHair: CrossHairTheme;
   legend: Legend;
   colorPalette: ColorPalette;
+  seriesColors: SeriesColors;
 }
