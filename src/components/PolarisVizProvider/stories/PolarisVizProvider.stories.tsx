@@ -81,9 +81,6 @@ Default.parameters = {
     },
   },
   viewMode: 'docs',
-  backgrounds: {
-    default: 'dark',
-  },
 };
 
 export const OverwrittenDefault = Template.bind({});
@@ -123,6 +120,9 @@ OverwrittenDefault.args = {
 };
 OverwrittenDefault.parameters = {
   viewMode: 'docs',
+  backgrounds: {
+    default: 'light',
+  },
   docs: {
     description: {
       story: `

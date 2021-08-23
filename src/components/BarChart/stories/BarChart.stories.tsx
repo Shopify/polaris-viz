@@ -112,11 +112,6 @@ Default.args = {
     labelFormatter: defaultProps.yAxisOptions.labelFormatter,
   },
 };
-Default.parameters = {
-  backgrounds: {
-    default: 'dark',
-  },
-};
 
 export const Annotations = Template.bind({});
 Annotations.args = {
@@ -157,11 +152,7 @@ Annotations.args = {
     },
   ],
 };
-Annotations.parameters = {
-  backgrounds: {
-    default: 'dark',
-  },
-};
+
 export const LastBarTreatment = Template.bind({});
 LastBarTreatment.args = {
   ...defaultProps,
@@ -180,11 +171,6 @@ LastBarTreatment.args = {
       barColor: 'yellow',
     },
   ],
-};
-LastBarTreatment.parameters = {
-  backgrounds: {
-    default: 'dark',
-  },
 };
 
 export const MinimalLabels = Template.bind({});
@@ -228,11 +214,6 @@ MinimalLabels.args = {
     useMinimalLabels: true,
   },
 };
-MinimalLabels.parameters = {
-  backgrounds: {
-    default: 'dark',
-  },
-};
 
 export const IntegersOnly = Template.bind({});
 IntegersOnly.args = {
@@ -250,11 +231,6 @@ IntegersOnly.args = {
     integersOnly: true,
   },
 };
-IntegersOnly.parameters = {
-  backgrounds: {
-    default: 'dark',
-  },
-};
 
 export const LargeVolume = Template.bind({});
 LargeVolume.args = {
@@ -267,11 +243,6 @@ LargeVolume.args = {
         label: Math.random().toString(),
       };
     }),
-};
-LargeVolume.parameters = {
-  backgrounds: {
-    default: 'dark',
-  },
 };
 
 const SolidColorsTemplate: Story<BarChartProps> = (args: BarChartProps) => {
@@ -291,11 +262,6 @@ const SolidColorsTemplate: Story<BarChartProps> = (args: BarChartProps) => {
 };
 
 export const SolidColors = SolidColorsTemplate.bind({});
-SolidColors.parameters = {
-  backgrounds: {
-    default: 'dark',
-  },
-};
 SolidColors.args = defaultProps;
 
 const NonRoundCornersTemplate: Story<BarChartProps> = (args: BarChartProps) => {
@@ -315,11 +281,6 @@ const NonRoundCornersTemplate: Story<BarChartProps> = (args: BarChartProps) => {
 };
 
 export const NonRoundCorners = NonRoundCornersTemplate.bind({});
-NonRoundCorners.parameters = {
-  backgrounds: {
-    default: 'dark',
-  },
-};
 NonRoundCorners.args = defaultProps;
 
 const NoOverflowStyleTemplate: Story<BarChartProps> = (args: BarChartProps) => {
@@ -340,9 +301,4 @@ const NoOverflowStyleTemplate: Story<BarChartProps> = (args: BarChartProps) => {
 };
 
 export const NoOverflowStyle = NoOverflowStyleTemplate.bind({});
-NoOverflowStyle.parameters = {
-  backgrounds: {
-    default: 'dark',
-  },
-};
 NoOverflowStyle.args = defaultProps;

@@ -78,19 +78,9 @@ const defaultProps = {
 
 export const Default = Template.bind({});
 Default.args = defaultProps;
-Default.parameters = {
-  backgrounds: {
-    default: 'dark',
-  },
-};
 
 export const Positive = Template.bind({});
 Positive.args = {...defaultProps, theme: 'Positive'};
-Positive.parameters = {
-  backgrounds: {
-    default: 'dark',
-  },
-};
 
 export const OffsetAndNulls = Template.bind({});
 OffsetAndNulls.args = {
