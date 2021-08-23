@@ -98,6 +98,7 @@ interface StackedAreaChartProps {
   formatYAxisLabel?(value: number): string;
   renderTooltipContent?: (data: RenderTooltipContentData): React.ReactNode;
   skipLinkText?: string;
+  theme?: string;
 }
 ```
 

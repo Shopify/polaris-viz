@@ -66,7 +66,6 @@ describe('<Chart />', () => {
     ],
     xAxisLabels: ['Day 1', 'Day 2'],
     dimensions: {width: 500, height: 250},
-    opacity: 1,
     isAnimated: true,
     formatXAxisLabel: (val: string) => val,
     formatYAxisLabel: (val: number) => val.toString(),
@@ -126,7 +125,6 @@ describe('<Chart />', () => {
       height: 218,
       transform: 'translate(16,8)',
       colors: ['purple', 'teal'],
-      opacity: 1,
       isAnimated: true,
       stackedValues: expect.any(Object),
     });

@@ -1,4 +1,4 @@
-import type {GradientStop, SeriesColor} from '../types';
+import type {GradientStop, Color} from '../types';
 
 function isGradientStopType(item: any): item is GradientStop {
   return (
@@ -9,7 +9,7 @@ function isGradientStopType(item: any): item is GradientStop {
   );
 }
 
-export function isGradientType(color: SeriesColor): color is GradientStop[] {
+export function isGradientType(color: Color): color is GradientStop[] {
   return (
     Array.isArray(color) && color.every((item) => isGradientStopType(item))
   );

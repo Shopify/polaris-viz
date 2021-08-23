@@ -3,13 +3,13 @@ import {classNames} from '@shopify/css-utilities';
 
 import {createCSSGradient, isGradientType} from '../../../../utilities';
 import type {Orientation, Size} from '../../types';
-import type {GradientStop} from '../../../../types';
+import type {Color} from '../../../../types';
 
 import styles from './BarSegment.scss';
 
 interface Props {
   scale: number;
-  color: string | GradientStop[];
+  color: Color;
   size: Size;
   orientation: Orientation;
 }

@@ -24,7 +24,6 @@ interface Props {
   stackedValues: StackedSeries[];
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
-  opacity: number;
   isAnimated: boolean;
 }
 
@@ -36,7 +35,6 @@ export function Areas({
   xScale,
   yScale,
   colors,
-  opacity,
   isAnimated,
 }: Props) {
   const prevstackedValues = usePrevious(stackedValues);
@@ -100,7 +98,6 @@ export function Areas({
                 fill={`url(#area-${id}-${index})`}
                 stroke={`url(#area-${id}-${index})`}
                 strokeWidth="0.1"
-                opacity={opacity}
               />
             </React.Fragment>
           );

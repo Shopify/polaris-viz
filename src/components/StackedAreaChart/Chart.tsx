@@ -50,7 +50,6 @@ interface Props {
   formatYAxisLabel: NumberLabelFormatter;
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
   dimensions: Dimensions;
-  opacity: number;
   isAnimated: boolean;
   theme?: string;
 }
@@ -62,7 +61,6 @@ export function Chart({
   formatXAxisLabel,
   formatYAxisLabel,
   renderTooltipContent,
-  opacity,
   isAnimated,
   theme,
 }: Props) {
@@ -242,7 +240,6 @@ export function Chart({
           xScale={xScale}
           yScale={yScale}
           colors={colors}
-          opacity={opacity}
           isAnimated={isAnimated && !prefersReducedMotion}
         />
 

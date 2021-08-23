@@ -75,6 +75,7 @@ const props = {
   ],
   hasSpline: true,
   isAnimated: true,
+  theme: 'Default'
 };
 
 return (
@@ -194,6 +195,6 @@ Determines whether to animate the chart on state changes.
 
 | type      | default |
 | --------- | ------- |
-| `string` | `default` |
+| `string` | `Default` |
 
 The theme that the chart will inherit its styles from. Additional themes must be provided to the theme provider. Individual line styles can be overwritten as part of the series prop.

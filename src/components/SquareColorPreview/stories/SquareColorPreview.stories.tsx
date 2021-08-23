@@ -10,7 +10,7 @@ export default {
   argTypes: {
     color: {
       description:
-        'The color to be displayed in the square. [SeriesColor type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/types.ts#L2)',
+        'The CSS color or gradient array color to be displayed in the square.',
     },
   },
   parameters: {

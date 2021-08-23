@@ -51,10 +51,6 @@ export default {
     xAxisLabels: {
       description: 'The labels to display on the x axis of the chart.',
     },
-    opacity: {
-      description:
-        'Determines the opacity of all area shapes. Consider reducing the opacity below 1 if seeing the grid lines behind the areas is important to your use case.',
-    },
     isAnimated: {
       description:
         'Whether to animate the chart when it is initially rendered and its data is updated. Even if `isAnimated` is set to true, animations will not be displayed for users with reduced motion preferences.',
@@ -97,7 +93,6 @@ const defaultProps = {
   formatYAxisLabel: formatYAxisLabel,
   isAnimated: true,
   theme: 'Default',
-  opacity: 1,
 };
 
 const Template: Story<StackedAreaChartProps> = (

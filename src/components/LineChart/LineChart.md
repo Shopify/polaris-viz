@@ -175,7 +175,7 @@ The `Series` type gives the user a lot of flexibility to define exactly what eac
     label: string;
     rawValue: number;
   }[];
-  color?: SeriesColor;
+  color?: Color;
   lineStyle?: LineStyle;
   areaColor?: string;
 }
@@ -351,6 +351,6 @@ Only use whole numbers for y axis ticks.
 
 | type      | default |
 | --------- | ------- |
-| `string` | `default` |
+| `string` | `Default` |
 
 The theme that the chart will inherit its styles from. Additional themes must be provided to the theme provider. Individual line styles can be overwritten as part of the series prop.

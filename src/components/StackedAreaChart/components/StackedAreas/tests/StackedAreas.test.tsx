@@ -18,7 +18,6 @@ describe('<StackedAreas />', () => {
     height: 50,
     transform: '',
     colors: ['red', 'purple'],
-    opacity: 1,
     xScale: scaleLinear(),
     yScale: scaleLinear(),
     isAnimated: true,
@@ -94,7 +93,6 @@ describe('<StackedAreas />', () => {
       fill: 'url(#area-stackedAreas-1-0)',
       stroke: 'url(#area-stackedAreas-1-0)',
       strokeWidth: '0.1',
-      opacity: 1,
     });
   });
 });
