@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {createCSSGradient, isGradientType} from '../../../../utilities';
-import type {GradientStop, Legend} from '../../../../types';
+import type {Color, Legend} from '../../../../types';
 import {
   ComparisonMetric,
   ComparisonMetricShape,
@@ -13,7 +13,7 @@ import styles from './BarLabel.scss';
 export interface Props {
   label: string;
   value: string;
-  color: string | GradientStop[];
+  color: Color;
   comparisonMetric?: ComparisonMetricShape;
   legendColors: Legend;
   orientation: Orientation;

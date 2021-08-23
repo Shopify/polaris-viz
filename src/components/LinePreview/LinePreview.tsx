@@ -1,5 +1,5 @@
 import React, {useRef} from 'react';
-import type {SeriesColor} from 'types';
+import type {Color} from 'types';
 
 import {isGradientType, uniqueId} from '../../utilities';
 import type {LineStyle} from '../../types';
@@ -14,7 +14,7 @@ import {
 } from './constants';
 
 interface Props {
-  color: SeriesColor;
+  color: Color;
   lineStyle: LineStyle;
 }
 

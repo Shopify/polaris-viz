@@ -1,6 +1,6 @@
 import React, {useCallback, useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
-import type {SeriesColor} from 'types';
+import type {Color} from 'types';
 import {useTransition} from '@react-spring/web';
 
 import {usePrefersReducedMotion} from '../../../../hooks';
@@ -21,7 +21,7 @@ interface Props {
   width: number;
   height: number;
   data: number[];
-  colors: SeriesColor[];
+  colors: Color[];
   isSubdued: boolean;
   barGroupIndex: number;
   ariaLabel: string;

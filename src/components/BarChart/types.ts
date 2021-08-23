@@ -1,7 +1,7 @@
-import type {GradientStop} from 'types';
+import type {Color} from 'types';
 
 export interface BarChartData {
-  barColor?: string | GradientStop;
+  barColor?: Color;
   label: string;
   rawValue: number;
 }

@@ -6,14 +6,14 @@ import type {
   Data,
   NullableData,
   LineStyle,
-  SeriesColor,
+  Color,
 } from '../../types';
 import {LinePreview} from '../LinePreview';
 import {SquareColorPreview} from '../SquareColorPreview';
 
 import styles from './Legend.scss';
 
-type LegendData = Required<DataSeries<Data | NullableData, SeriesColor>>;
+type LegendData = Required<DataSeries<Data | NullableData, Color>>;
 
 interface LegendProps extends Omit<LegendData, 'data'> {
   lineStyle?: LineStyle;

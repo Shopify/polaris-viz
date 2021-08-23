@@ -59,7 +59,6 @@ export type SparkChartData = number | null;
 export type PathInterpolator = InterpolatorFn<readonly number[], string>;
 export type NumberInterpolator = InterpolatorFn<readonly number[], number>;
 export type Color = string | GradientStop[];
-export type SeriesColor = Color;
 
 export interface XAxisOptions {
   labelFormatter?: StringLabelFormatter;
@@ -136,7 +135,7 @@ export interface SeriesColors {
 }
 
 export interface ColorPalette {
-  colors: (string | GradientStop[])[];
+  colors: Color[];
 }
 
 export interface Legend {
