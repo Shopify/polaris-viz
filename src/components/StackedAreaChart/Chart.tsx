@@ -7,6 +7,7 @@ import {
   useLinearXScale,
   usePrefersReducedMotion,
   useTheme,
+  useThemeSeriesColors,
 } from '../../hooks';
 import {
   SMALL_SCREEN,
@@ -38,7 +39,7 @@ import type {
 } from '../../types';
 
 import {Spacing} from './constants';
-import {useThemeSeriesColors, useYScale} from './hooks';
+import {useYScale} from './hooks';
 import {StackedAreas} from './components';
 import type {Series, RenderTooltipContentData} from './types';
 import styles from './Chart.scss';

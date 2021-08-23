@@ -3,7 +3,6 @@ export {getTextWidth} from './get-text-width';
 export {clamp} from './clamp';
 export {isGradientType} from './is-gradient-type';
 export {uniqueId} from './unique-id';
-export {getDefaultColor} from './get-default-color';
 export {getTextContainerHeight} from './get-text-container-height';
 export {RightAngleTriangle} from './RightAngleTriangle';
 export {degreesToRadians} from './degrees-to-radians';

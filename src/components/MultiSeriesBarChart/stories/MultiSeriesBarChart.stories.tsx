@@ -7,7 +7,6 @@ import {
 } from '../../../components';
 
 import styles from './MultiSeriesBarChart.stories.scss';
-import {colorTeal} from '../../../constants';
 import {SquareColorPreview} from '../../SquareColorPreview';
 import {PolarisVizProvider} from '../../PolarisVizProvider';
 
