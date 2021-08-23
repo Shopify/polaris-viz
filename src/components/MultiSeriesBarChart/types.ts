@@ -5,10 +5,10 @@ import type {
   NumberLabelFormatter,
   DataSeries,
   Data,
-  SeriesColor,
+  Color,
 } from '../../types';
 
-export type Series = DataSeries<Data, SeriesColor>;
+export type Series = DataSeries<Data, Color>;
 
 export type StackSeries = ShapeSeries<
   {
@@ -19,7 +19,7 @@ export type StackSeries = ShapeSeries<
 
 export interface RenderTooltipContentData {
   data: {
-    color: SeriesColor;
+    color: Color;
     label: string;
     value: number;
   }[];

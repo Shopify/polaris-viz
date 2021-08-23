@@ -1,12 +1,12 @@
 import React from 'react';
-import type {SeriesColor} from 'types';
+import type {Color} from 'types';
 
 import {SquareColorPreview} from '../SquareColorPreview';
 
 import styles from './TooltipContent.scss';
 
 interface TooltipData {
-  color: SeriesColor;
+  color: Color;
   label: string;
   value: string;
 }

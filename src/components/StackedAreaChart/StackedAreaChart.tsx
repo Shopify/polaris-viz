@@ -21,7 +21,6 @@ export interface StackedAreaChartProps {
   renderTooltipContent?(data: RenderTooltipContentData): React.ReactNode;
   xAxisLabels: string[];
   series: Series[];
-  opacity?: number;
   isAnimated?: boolean;
   skipLinkText?: string;
   theme?: string;
@@ -33,7 +32,6 @@ export function StackedAreaChart({
   formatXAxisLabel = (value) => value.toString(),
   formatYAxisLabel = (value) => value.toString(),
   renderTooltipContent,
-  opacity = 1,
   isAnimated = false,
   skipLinkText,
   theme,
@@ -158,7 +156,6 @@ export function StackedAreaChart({
                 ? renderTooltipContent
                 : renderDefaultTooltipContent
             }
-            opacity={opacity}
             isAnimated={isAnimated}
             theme={theme}
           />

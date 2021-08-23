@@ -9,7 +9,7 @@ Used in small sizes to give an overview of how a metric has performed over time.
 ```tsx
 
   const props = {
-    theme: 'default',
+    theme: 'Default',
     data: [
       3, 7, 7, 5, 33, 2, 3, 0, 3, 5, 6, 6, 23, 5, 8, 1, 3, 12,
     ],
@@ -85,7 +85,7 @@ The prop to determine the chart's bars. Null bars will not be plotted. Bars with
 
 | type     | default |
 | -------- | ------- |
-| `string` | `default`|
+| `string` | `Default`|
 
 The theme that the chart will inherit its color and container styles from.
 

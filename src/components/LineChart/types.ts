@@ -4,15 +4,15 @@ import type {
   LineStyle,
   StringLabelFormatter,
   NumberLabelFormatter,
-  SeriesColor,
+  Color,
 } from '../../types';
 
-export interface Series extends DataSeries<Data, SeriesColor> {
+export interface Series extends DataSeries<Data, Color> {
   areaColor?: string | null;
   lineStyle?: LineStyle;
 }
 
-export type SeriesWithDefaults = Required<DataSeries<Data, SeriesColor>> & {
+export type SeriesWithDefaults = Required<DataSeries<Data, Color>> & {
   lineStyle: LineStyle;
   areaColor?: string | null;
 };
@@ -23,7 +23,7 @@ export interface TooltipData {
     label: string;
     value: number;
   };
-  color: SeriesColor;
+  color: Color;
   lineStyle: LineStyle;
 }
 
