@@ -20,7 +20,7 @@
 - `colors` prop from  `<NormalizedStackedBarChart />`
 
 ### Changed
-- `<BarChart />`, `<LineChart />`, `<Sparkline />`, `<NormalizedStackedBarChart />` and `<Sparkbar />` styles now are defined through themes in `PolarisVizProvider` instead of props. For more details check the [migration guide](https://docs.google.com/document/d/1VxfcgBbTNwjmYix1jGuDMgqDgIdehTgQbVZpER7djeU/edit?usp=sharing)
+- `<BarChart />`, `<LineChart />`, `<Sparkline />`, `<NormalizedStackedBarChart />`, `<MultiSeriesBarChart />` and `<Sparkbar />` styles now are defined through themes in `PolarisVizProvider` instead of props. For more details check the [migration guide](https://docs.google.com/document/d/1VxfcgBbTNwjmYix1jGuDMgqDgIdehTgQbVZpER7djeU/edit?usp=sharing)
 - change indicators on the  `<NormalizedStackedBarChart />` can now have their colors configured externally, which applies the color to the metric and percentage change
 
 ### Fixed

@@ -18,7 +18,6 @@ import type {
   Series,
   RenderTooltipContentData,
   BarOptions as MultiSeriesBarOptions,
-  GridOptions,
   XAxisOptions,
   YAxisOptions,
 } from './types';
@@ -37,9 +36,9 @@ interface Props {
   chartDimensions: Dimensions;
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
   barOptions: BarOptions;
-  gridOptions: GridOptions;
-  xAxisOptions: XAxisOptions;
-  yAxisOptions: YAxisOptions;
+  gridOptions: Omit<GridTheme, 'showVerticalLines'>;
+  xAxisOptions: Omit<XAxisOptions & XAxisTheme, 'hide'>;
+  yAxisOptions: YAxisOptions & YAxisTheme;
   isAnimated?: boolean;
   emptyStateText?: string;
 }

@@ -7,12 +7,6 @@ import {
 } from '../../../components';
 
 import styles from './MultiSeriesBarChart.stories.scss';
-import {
-  DEFAULT_GREY_LABEL,
-  colorSky,
-  colorTeal,
-  colorSkyDark,
-} from '../../../constants';
 import {SquareColorPreview} from '../../SquareColorPreview';
 
 const tooltipContent = {

@@ -5,8 +5,8 @@ import type {Dimensions} from '../../types';
 import {DEFAULT_GREY_LABEL, colorSky} from '../../constants';
 import {SkipLink} from '../SkipLink';
 import {TooltipContent} from '../TooltipContent';
-import {getDefaultColor, uniqueId} from '../../utilities';
-import {useResizeObserver} from '../../hooks';
+import {uniqueId} from '../../utilities';
+import {useResizeObserver, useTheme, useThemeSeriesColors} from '../../hooks';
 
 import {Chart} from './Chart';
 import {
@@ -41,7 +41,10 @@ export function MultiSeriesBarChart({
   xAxisOptions,
   yAxisOptions,
   emptyStateText,
+  theme,
 }: MultiSeriesBarChartProps) {
+  const selectedTheme = useTheme(theme);
+  const seriesColors = useThemeSeriesColors(series, selectedTheme);
   const [chartDimensions, setChartDimensions] = useState<Dimensions | null>(
     null,
   );
@@ -174,7 +177,7 @@ export function MultiSeriesBarChart({
   }
 
   const seriesWithDefaults = series.map((series, index) => ({
-    color: getDefaultColor(index),
+    color: seriesColors[index],
     ...series,
   }));
 

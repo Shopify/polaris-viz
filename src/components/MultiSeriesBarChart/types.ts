@@ -52,13 +52,6 @@ export interface BarOptions {
   zeroAsMinHeight: boolean;
 }
 
-export interface GridOptions {
-  showHorizontalLines: boolean;
-  color: string;
-  horizontalOverflow: boolean;
-  horizontalMargin: number;
-}
-
 export interface XAxisOptions {
   labelFormatter: StringLabelFormatter;
   showTicks: boolean;
