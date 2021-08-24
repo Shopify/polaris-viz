@@ -141,6 +141,9 @@ export default {
       description:
         'An object that defines the appearance of the yAxis and its labels. [YAxisOptions type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/MultiSeriesBarChart/types.ts#L69)',
     },
+    theme: {
+      description: 'A string that configures what theme the chart should use.',
+    },
     renderTooltipContent: {
       options: Object.keys(tooltipContent),
       mapping: tooltipContent,
@@ -153,10 +156,6 @@ export default {
       },
       description:
         'This accepts a function that is called to render the tooltip content. By default it calls `formatYAxisLabel` to format the the tooltip value and passes it to `<TooltipContent />`. [RenderTooltipContentData type definition.]()',
-    },
-    gridOptions: {
-      description:
-        'An object that defines the appearance of the grid. [GridOptions type definition.]()',
     },
   },
 } as Meta;
@@ -233,28 +232,11 @@ const gradientSeries = series
   }))
   .filter((_, index) => index < 2);
 
-export const InsightsStyle = Template.bind({});
+export const Default = Template.bind({});
 
-InsightsStyle.args = {
-  series: gradientSeries,
-  xAxisOptions: {labels, showTicks: false, labelColor: 'rgb(220, 220, 220)'},
-  barOptions: {
-    hasRoundedCorners: true,
-  },
-  yAxisOptions: {
-    backgroundColor: '#333333',
-    labelColor: 'rgb(220, 220, 220)',
-  },
-  gridOptions: {
-    showVerticalLines: false,
-    color: 'rgb(99, 115, 129)',
-    horizontalOverflow: true,
-    horizontalMargin: 20,
-  },
-  crossHairOptions: {
-    width: 1,
-    color: 'rgb(139, 159, 176)',
-  },
+Default.args = {
+  series: series,
+  xAxisOptions: {labels},
   isAnimated: true,
 };
 
@@ -262,30 +244,12 @@ export const OverflowStyles = Template.bind({});
 OverflowStyles.args = {
   series: gradientSeries,
   xAxisOptions: {labels},
-  barOptions: {
-    hasRoundedCorners: true,
-  },
-  yAxisOptions: {backgroundColor: 'white'},
-  gridOptions: {
-    horizontalOverflow: true,
-    horizontalMargin: 30,
-    showVerticalLines: false,
-  },
 };
 
 export const WithoutRoundedCorners = Template.bind({});
 WithoutRoundedCorners.args = {
   series: gradientSeries,
   xAxisOptions: {labels},
-  barOptions: {
-    hasRoundedCorners: false,
-  },
-  yAxisOptions: {backgroundColor: 'white'},
-  gridOptions: {
-    horizontalOverflow: true,
-    horizontalMargin: 30,
-    showVerticalLines: false,
-  },
 };
 
 export const Stacked = Template.bind({});
