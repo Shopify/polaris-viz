@@ -63,9 +63,10 @@ describe('Chart />', () => {
     barOptions: {
       innerMargin: 0,
       outerMargin: 0,
+      color: 'red',
       hasRoundedCorners: false,
-      isStacked: false,
       zeroAsMinHeight: false,
+      isStacked: false,
     },
     xAxisOptions: {
       labelFormatter: jest.fn((value: string) => value.toString()),

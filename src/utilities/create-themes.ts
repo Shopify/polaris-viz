@@ -11,8 +11,12 @@ export const createTheme = (
     const defaultValue = DEFAULT_THEME[key];
     const value = theme[key];
 
-    if (typeof defaultValue === 'string' || typeof value === 'string') {
-      accumulator[key] = value;
+    if (
+      typeof defaultValue === 'string' ||
+      typeof value === 'string' ||
+      Array.isArray(defaultValue)
+    ) {
+      accumulator[key] = value == null ? defaultValue : value;
     } else {
       accumulator[key] = {
         ...DEFAULT_THEME[key],
