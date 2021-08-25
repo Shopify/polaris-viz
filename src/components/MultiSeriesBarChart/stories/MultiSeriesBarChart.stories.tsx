@@ -149,10 +149,6 @@ export default {
       description:
         'This accepts a function that is called to render the tooltip content. By default it calls `formatYAxisLabel` to format the the tooltip value and passes it to `<TooltipContent />`. [RenderTooltipContentData type definition.]()',
     },
-    gridOptions: {
-      description:
-        'An object that defines the appearance of the grid. [GridOptions type definition.]()',
-    },
   },
 } as Meta;
 
@@ -199,11 +195,7 @@ const gradientSeries = series
   .filter((_, index) => index < 2);
 
 export const Default = Template.bind({});
-Default.parameters = {
-  backgrounds: {
-    default: 'dark',
-  },
-};
+
 Default.args = {
   series: series,
   xAxisOptions: {labels},
@@ -234,11 +226,6 @@ NoOverflowStyle.args = {
   series: series,
   xAxisOptions: {labels},
 };
-NoOverflowStyle.parameters = {
-  backgrounds: {
-    default: 'dark',
-  },
-};
 
 const WithoutRoundedCornersTemplate: Story<MultiSeriesBarChartProps> = (
   args: MultiSeriesBarChartProps,
@@ -263,11 +250,6 @@ WithoutRoundedCorners.args = {
   series: series,
   xAxisOptions: {labels},
 };
-WithoutRoundedCorners.parameters = {
-  backgrounds: {
-    default: 'dark',
-  },
-};
 
 export const Stacked = Template.bind({});
 Stacked.args = {
@@ -277,11 +259,6 @@ Stacked.args = {
     isStacked: true,
   },
 };
-Stacked.parameters = {
-  backgrounds: {
-    default: 'dark',
-  },
-};
 
 export const OverwrittenSeriesColors = Template.bind({});
 OverwrittenSeriesColors.args = {
@@ -289,11 +266,6 @@ OverwrittenSeriesColors.args = {
   xAxisOptions: {labels},
   barOptions: {
     isStacked: true,
-  },
-};
-OverwrittenSeriesColors.parameters = {
-  backgrounds: {
-    default: 'dark',
   },
 };
 
@@ -340,11 +312,6 @@ IntegersOnly.args = {
   xAxisOptions: {labels},
   yAxisOptions: {integersOnly: true},
 };
-IntegersOnly.parameters = {
-  backgrounds: {
-    default: 'dark',
-  },
-};
 
 export const LargeVolume = Template.bind({});
 LargeVolume.args = {
@@ -376,11 +343,5 @@ LargeVolume.args = {
     labels: Array(200)
       .fill(null)
       .map((x) => 'some label'),
-  },
-};
-
-LargeVolume.parameters = {
-  backgrounds: {
-    default: 'dark',
   },
 };
