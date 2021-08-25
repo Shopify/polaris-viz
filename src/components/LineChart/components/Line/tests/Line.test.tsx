@@ -39,6 +39,7 @@ const mockProps = {
     hasPoint: false,
     width: 10,
     pointStroke: 'red',
+    dottedStrokeColor: '#ffffff',
   },
   color,
 };

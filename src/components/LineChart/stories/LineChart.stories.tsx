@@ -10,6 +10,7 @@ import {
   formatYAxisLabel,
   renderTooltipContent,
   gradient,
+  seriesUsingSeriesColors,
 } from './utils.stories';
 import {colorTeal} from '../../../constants';
 
@@ -100,6 +101,21 @@ const Template: Story<LineChartProps> = (args: LineChartProps) => {
 export const InsightsStyle = Template.bind({});
 InsightsStyle.args = {
   series,
+  theme: 'Default',
+  xAxisOptions: {
+    xAxisLabels,
+    labelFormatter: formatXAxisLabel,
+  },
+  yAxisOptions: {
+    labelFormatter: formatYAxisLabel,
+  },
+  renderTooltipContent,
+  isAnimated: true,
+};
+
+export const SeriesColors = Template.bind({});
+SeriesColors.args = {
+  series: seriesUsingSeriesColors,
   theme: 'Default',
   xAxisOptions: {
     xAxisLabels,

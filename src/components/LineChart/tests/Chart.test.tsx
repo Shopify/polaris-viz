@@ -62,6 +62,7 @@ const lineOptions = {
   hasPoint: false,
   width: 2,
   pointStroke: '#fff',
+  dottedStrokeColor: '#fff',
 };
 
 const yAxisOptions = {

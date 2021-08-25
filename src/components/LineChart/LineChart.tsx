@@ -1,8 +1,9 @@
 import React, {useLayoutEffect, useRef, useState, useCallback} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 
-import type {Dimensions} from '../../types';
-import {uniqueId} from '../../utilities';
+import {useThemeSeriesColors} from '../../hooks/use-theme-series-colors';
+import type {Dimensions, GradientStop} from '../../types';
+import {isGradientType, changeColorOpacity, uniqueId} from '../../utilities';
 import {SkipLink} from '../SkipLink';
 import {
   usePrefersReducedMotion,
@@ -43,6 +44,7 @@ export function LineChart({
   theme,
 }: LineChartProps) {
   const selectedTheme = useTheme(theme);
+  const seriesColors = useThemeSeriesColors(series, selectedTheme);
 
   const [chartDimensions, setChartDimensions] = useState<Dimensions | null>(
     null,
@@ -159,11 +161,23 @@ export function LineChart({
     return <TooltipContent data={formattedData} />;
   }
 
-  const seriesWithDefaults = series.map<SeriesWithDefaults>((series) => {
+  const seriesWithDefaults = series.map<SeriesWithDefaults>((series, index) => {
+    const seriesColor = seriesColors[index];
+
+    const isSolidLine = series.lineStyle === 'solid';
+
+    const areaColor = isGradientType(seriesColor)
+      ? (seriesColor[seriesColor.length - 1] as GradientStop).color
+      : seriesColor;
+
     return {
-      color: selectedTheme.line.color,
+      color: isSolidLine
+        ? seriesColors[index]
+        : selectedTheme.line.dottedStrokeColor,
       lineStyle: selectedTheme.line.style,
-      areaColor: selectedTheme.line.area,
+      areaColor: isSolidLine
+        ? changeColorOpacity(areaColor as string, 0.5)
+        : undefined,
       ...series,
     };
   });

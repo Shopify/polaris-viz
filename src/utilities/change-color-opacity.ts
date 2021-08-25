@@ -2,21 +2,21 @@ import {color as d3Color} from 'd3-color';
 
 import type {GradientStop} from '../types';
 
-export function makeColorOpaque(color: string): string {
+export function changeColorOpacity(color: string, opacity = 1): string {
   const rgbColor = d3Color(color);
 
   if (rgbColor == null) {
     throw new Error('Color value is not valid.');
   }
 
-  rgbColor.opacity = 1;
+  rgbColor.opacity = opacity;
 
   return rgbColor.toString();
 }
 
-export function makeGradientOpaque(gradient: GradientStop[]) {
+export function changeGradientOpacity(gradient: GradientStop[], opacity = 1) {
   return gradient.map(({offset, color}) => ({
     offset,
-    color: makeColorOpaque(color),
+    color: changeColorOpacity(color, opacity),
   }));
 }
