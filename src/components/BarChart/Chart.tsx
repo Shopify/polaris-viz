@@ -33,6 +33,7 @@ import type {
   YAxisTheme,
   XAxisOptions,
   YAxisOptions,
+  Color,
 } from '../../types';
 
 import {AnnotationLine} from './components';
@@ -49,6 +50,7 @@ type BarThemeWithNumericMargins = Omit<
   BarTheme,
   'innerMargin' | 'outerMargin'
 > & {
+  color: Color;
   innerMargin: number;
   outerMargin: number;
 };

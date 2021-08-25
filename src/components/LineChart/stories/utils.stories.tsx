@@ -65,6 +65,49 @@ export const series = [
   },
 ];
 
+export const seriesUsingSeriesColors = [
+  {
+    name: 'Apr 01–Apr 14, 2020',
+    data: [
+      {rawValue: 333, label: '2020-04-01T12:00:00'},
+      {rawValue: 797, label: '2020-04-02T12:00:00'},
+      {rawValue: 234, label: '2020-04-03T12:00:00'},
+      {rawValue: 534, label: '2020-04-04T12:00:00'},
+      {rawValue: -132, label: '2020-04-05T12:00:00'},
+      {rawValue: 159, label: '2020-04-06T12:00:00'},
+      {rawValue: 239, label: '2020-04-07T12:00:00'},
+      {rawValue: 708, label: '2020-04-08T12:00:00'},
+      {rawValue: 234, label: '2020-04-09T12:00:00'},
+      {rawValue: 645, label: '2020-04-10T12:00:00'},
+      {rawValue: 543, label: '2020-04-11T12:00:00'},
+      {rawValue: 89, label: '2020-04-12T12:00:00'},
+      {rawValue: 849, label: '2020-04-13T12:00:00'},
+      {rawValue: 129, label: '2020-04-14T12:00:00'},
+    ],
+    lineStyle: 'solid' as 'solid',
+  },
+  {
+    name: 'Mar 01–Mar 14, 2020',
+    data: [
+      {rawValue: 709, label: '2020-03-02T12:00:00'},
+      {rawValue: 238, label: '2020-03-01T12:00:00'},
+      {rawValue: 190, label: '2020-03-03T12:00:00'},
+      {rawValue: 90, label: '2020-03-04T12:00:00'},
+      {rawValue: 237, label: '2020-03-05T12:00:00'},
+      {rawValue: 580, label: '2020-03-07T12:00:00'},
+      {rawValue: 172, label: '2020-03-06T12:00:00'},
+      {rawValue: 12, label: '2020-03-08T12:00:00'},
+      {rawValue: 390, label: '2020-03-09T12:00:00'},
+      {rawValue: 43, label: '2020-03-10T12:00:00'},
+      {rawValue: 710, label: '2020-03-11T12:00:00'},
+      {rawValue: 791, label: '2020-03-12T12:00:00'},
+      {rawValue: 623, label: '2020-03-13T12:00:00'},
+      {rawValue: 21, label: '2020-03-14T12:00:00'},
+    ],
+    lineStyle: 'dotted' as 'dotted',
+  },
+];
+
 export const xAxisLabels = series[0].data.map(({label}) => label);
 
 export function formatXAxisLabel(value: string) {

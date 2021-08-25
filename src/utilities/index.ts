@@ -17,8 +17,11 @@ export {normalizeData} from './normalize-data';
 export {createCSSGradient} from './create-css-gradient';
 export {shouldRoundScaleUp} from './should-round-scale-up';
 export {curveStepRounded} from './curve-step-rounded';
-export {makeColorOpaque, makeGradientOpaque} from './make-color-opaque';
 export {shouldRotateZeroBars} from './should-rotate-zero-bars';
 export {isNumber} from './is-number';
 export {createTheme, createThemes} from './create-themes';
 export {PolarisVizContext} from './polaris-viz-context';
+export {
+  changeColorOpacity,
+  changeGradientOpacity,
+} from './change-color-opacity';

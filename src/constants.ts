@@ -145,17 +145,15 @@ export const DEFAULT_THEME: Theme = {
     backgroundColor: '#1f1f25',
   },
   line: {
-    color: VIZ_GRADIENT_COLOR.neutral.up,
-    area: null,
     sparkArea: null,
     hasSpline: true,
     style: 'solid',
     hasPoint: true,
     width: 2,
     pointStroke: 'white',
+    dottedStrokeColor: 'rgba(144, 176, 223, 60)',
   },
   bar: {
-    color: VIZ_GRADIENT_COLOR.neutral.up,
     hasRoundedCorners: true,
     innerMargin: 'Medium',
     outerMargin: 'Medium',
@@ -164,18 +162,18 @@ export const DEFAULT_THEME: Theme = {
   grid: {
     showVerticalLines: false,
     showHorizontalLines: true,
-    color: 'rgb(99, 115, 129)',
-    horizontalOverflow: true,
+    color: '#43434E',
+    horizontalOverflow: false,
     horizontalMargin: 0,
   },
   xAxis: {
     showTicks: false,
-    labelColor: 'rgb(220, 220, 220)',
+    labelColor: '#DCDCDC',
     hide: false,
   },
   yAxis: {
     backgroundColor: '#1f1f25',
-    labelColor: 'rgb(220, 220, 220)',
+    labelColor: '#DCDCDC',
   },
   crossHair: {
     color: 'rgb(139, 159, 176)',

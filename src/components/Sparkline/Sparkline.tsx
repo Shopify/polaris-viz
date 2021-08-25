@@ -3,6 +3,7 @@ import {useDebouncedCallback} from 'use-debounce';
 import {scaleLinear} from 'd3-scale';
 import type {Color, LineStyle, SparkChartData} from 'types';
 
+import {getSeriesColorsFromCount} from '../../hooks/use-theme-series-colors';
 import {useResizeObserver, useTheme} from '../../hooks';
 
 import styles from './Sparkline.scss';
@@ -45,6 +46,7 @@ export function Sparkline({
   } = useResizeObserver();
   const [svgDimensions, setSvgDimensions] = useState({width: 0, height: 0});
   const selectedTheme = useTheme(theme);
+  const seriesColors = getSeriesColorsFromCount(series.length, selectedTheme);
 
   const [updateMeasurements] = useDebouncedCallback(() => {
     if (entry == null) return;
@@ -148,12 +150,17 @@ export function Sparkline({
             .range([offsetLeft + SVG_MARGIN, width - offsetRight - SVG_MARGIN])
             .domain([minXValues, maxXValues]);
 
+          const seriesWithColor = {
+            color: seriesColors[index],
+            ...singleSeries,
+          };
+
           return (
             <g key={index}>
               <Series
                 xScale={xScale}
                 yScale={yScale}
-                series={singleSeries}
+                series={seriesWithColor}
                 isAnimated={isAnimated}
                 height={height}
                 theme={selectedTheme}

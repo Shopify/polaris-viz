@@ -8,8 +8,8 @@ import {
   uniqueId,
   clamp,
   isGradientType,
-  makeColorOpaque,
-  makeGradientOpaque,
+  changeColorOpacity,
+  changeGradientOpacity,
 } from '../../utilities';
 import {useLinearXAxisDetails, useLinearXScale} from '../../hooks';
 import {
@@ -455,7 +455,7 @@ export function Chart({
 
             const pointColor = isGradientType(color)
               ? `url(#${pointGradientId})`
-              : makeColorOpaque(color);
+              : changeColorOpacity(color);
 
             return (
               <React.Fragment key={`${name}-${index}`}>
@@ -463,7 +463,7 @@ export function Chart({
                   <defs>
                     <LinearGradient
                       id={pointGradientId}
-                      gradient={makeGradientOpaque(color)}
+                      gradient={changeGradientOpacity(color)}
                       gradientUnits="userSpaceOnUse"
                       y1="100%"
                       y2="0%"

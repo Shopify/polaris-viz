@@ -6,7 +6,11 @@ import type {ScaleLinear} from 'd3-scale';
 import type {Color, GradientStop} from 'types';
 
 import {LinearGradient} from '../../../LinearGradient';
-import {isGradientType, uniqueId} from '../../../../utilities';
+import {
+  curveStepRounded,
+  isGradientType,
+  uniqueId,
+} from '../../../../utilities';
 import {usePrevious} from '../../../../hooks';
 
 type StackedSeries = Series<
@@ -56,7 +60,8 @@ export function Areas({
     )
     .x((_, index) => xScale(index))
     .y0(([firstPoint]) => yScale(firstPoint))
-    .y1(([, lastPoint]) => yScale(lastPoint));
+    .y1(([, lastPoint]) => yScale(lastPoint))
+    .curve(curveStepRounded);
 
   const id = useMemo(() => uniqueId('stackedAreas'), []);
 

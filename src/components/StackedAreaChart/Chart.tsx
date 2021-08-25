@@ -21,8 +21,8 @@ import {TooltipContainer} from '../TooltipContainer';
 import {
   eventPoint,
   isGradientType,
-  makeColorOpaque,
-  makeGradientOpaque,
+  changeColorOpacity,
+  changeGradientOpacity,
   uniqueId,
 } from '../../utilities';
 import {YAxis} from '../YAxis';
@@ -204,6 +204,7 @@ export function Chart({
             labelColor={selectedTheme.xAxis.labelColor}
             showTicks={selectedTheme.xAxis.showTicks}
             gridColor={selectedTheme.grid.color}
+            showGridLines={selectedTheme.grid.showVerticalLines}
           />
         </g>
 
@@ -263,7 +264,7 @@ export function Chart({
 
               const pointColor = isGradientType(color)
                 ? `url(#${id})`
-                : makeColorOpaque(color);
+                : changeColorOpacity(color);
 
               return (
                 <React.Fragment key={index}>
@@ -271,7 +272,7 @@ export function Chart({
                     <defs>
                       <LinearGradient
                         id={id}
-                        gradient={makeGradientOpaque(color)}
+                        gradient={changeGradientOpacity(color)}
                         gradientUnits="userSpaceOnUse"
                         y1="100%"
                         y2="0%"

@@ -56,9 +56,9 @@ export function Series({
   const {
     area = theme.line.sparkArea,
     lineStyle = theme.line.style,
-    color = theme.line.color,
     hasPoint = theme.line.hasPoint,
     data,
+    color,
   } = series;
 
   const lineGenerator = line<Coordinates>()
@@ -93,7 +93,7 @@ export function Series({
   const id = useMemo(() => uniqueId('sparkline'), []);
   const immediate = !isAnimated || prefersReducedMotion;
 
-  const lineGradientColor = isGradientType(color)
+  const lineGradientColor = isGradientType(color!)
     ? color
     : [
         {
@@ -113,7 +113,7 @@ export function Series({
       <defs>
         <LinearGradient
           id={`line-${id}`}
-          gradient={lineGradientColor}
+          gradient={lineGradientColor as GradientStop[]}
           gradientUnits="userSpaceOnUse"
           y1="100%"
           y2="0%"
