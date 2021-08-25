@@ -4,12 +4,12 @@ import {scaleBand, scaleLinear} from 'd3-scale';
 import {line} from 'd3-shape';
 import {useTransition} from '@react-spring/web';
 
+import {BARS_TRANSITION_CONFIG, XMLNS, colorWhite} from '../../constants';
 import {
   usePrefersReducedMotion,
   useResizeObserver,
   useTheme,
 } from '../../hooks';
-import {BARS_TRANSITION_CONFIG, colorWhite} from '../../constants';
 import type {SparkChartData} from '../../types';
 import {uniqueId, getAnimationTrail, isGradientType} from '../../utilities';
 import {LinearGradient} from '../LinearGradient';
@@ -194,6 +194,9 @@ export function Sparkbar({
         style={{
           transform: `translateY(-${ANIMATION_MARGIN}px)`,
         }}
+        className={styles.Svg}
+        height={viewboxHeight}
+        width={width}
       >
         <defs>
           <LinearGradient

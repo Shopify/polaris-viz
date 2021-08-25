@@ -213,3 +213,4 @@ export const DEFAULT_THEME: Theme = {
 };
 
 export const animationDurationBase = 200;
+export const XMLNS = 'http://www.w3.org/2000/svg';

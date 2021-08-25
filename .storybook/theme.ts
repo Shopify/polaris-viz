@@ -8,6 +8,7 @@ const textColor = 'rgb(32, 34, 35)';
 const inverseText = 'rgb(227, 229, 231)';
 const mutedText = 'rgb(109, 113, 117)';
 const inputBorder = 'rgb(140, 145, 150)';
+import logo from './polaris-viz-logo.svg';
 
 export default create({
   base: 'light',

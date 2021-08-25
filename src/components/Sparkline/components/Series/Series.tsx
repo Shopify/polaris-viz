@@ -1,7 +1,6 @@
 import React, {useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {area as areaShape, line} from 'd3-shape';
-import {classNames} from '@shopify/css-utilities';
 
 import type {Color, GradientStop, Theme} from '../../../../types';
 import {LinearGradient} from '../../../LinearGradient';
@@ -9,6 +8,7 @@ import {
   curveStepRounded,
   uniqueId,
   isGradientType,
+  classNames,
 } from '../../../../utilities';
 import {usePrefersReducedMotion} from '../../../../hooks';
 import type {SingleSeries, Coordinates} from '../../Sparkline';

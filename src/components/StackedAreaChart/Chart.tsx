@@ -16,6 +16,7 @@ import {
   FONT_SIZE,
   LineChartMargin as Margin,
   colorWhite,
+  XMLNS,
 } from '../../constants';
 import {TooltipContainer} from '../TooltipContainer';
 import {
@@ -182,6 +183,9 @@ export function Chart({
     <React.Fragment>
       <svg
         className={styles.Chart}
+        xmlns={XMLNS}
+        width={dimensions.width}
+        height={dimensions.height}
         onMouseMove={handleInteraction}
         onTouchMove={handleInteraction}
         onTouchEnd={() => setActivePointIndex(null)}

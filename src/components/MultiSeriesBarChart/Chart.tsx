@@ -11,7 +11,13 @@ import {
 import {YAxis} from '../YAxis';
 import {BarChartXAxis} from '../BarChartXAxis';
 import {HorizontalGridLines} from '../HorizontalGridLines';
-import type {Dimensions} from '../../types';
+import type {
+  Dimensions,
+  XAxisTheme,
+  YAxisTheme,
+  BarTheme,
+  GridTheme,
+} from '../../types';
 
 import {getStackedValues, formatAriaLabel} from './utilities';
 import type {
@@ -26,10 +32,10 @@ import {useYScale, useXScale} from './hooks';
 import {FONT_SIZE, SMALL_WIDTH, SMALL_FONT_SIZE, SPACING} from './constants';
 import styles from './Chart.scss';
 
-type BarOptions = Omit<MultiSeriesBarOptions, 'innerMargin' | 'outerMargin'> & {
+type BarOptions = Omit<BarTheme, 'innerMargin' | 'outerMargin'> & {
   innerMargin: number;
   outerMargin: number;
-};
+} & MultiSeriesBarOptions;
 
 interface Props {
   series: Required<Series>[];

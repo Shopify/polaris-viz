@@ -4,6 +4,7 @@ import {scaleLinear} from 'd3-scale';
 import type {Color, LineStyle, SparkChartData} from 'types';
 
 import {useResizeObserver, useTheme} from '../../hooks';
+import {XMLNS} from '../../constants';
 
 import styles from './Sparkline.scss';
 import {Series} from './components';

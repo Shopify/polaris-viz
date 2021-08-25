@@ -316,6 +316,9 @@ export function Chart({
       <svg
         className={styles.Chart}
         role={emptyState ? 'img' : 'table'}
+        xmlns={XMLNS}
+        width={dimensions.width}
+        height={dimensions.height}
         onMouseMove={(event) => {
           event.persist();
           handleMouseInteraction(event);

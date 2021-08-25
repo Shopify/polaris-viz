@@ -1,9 +1,9 @@
 import React from 'react';
 import {sum} from 'd3-array';
 import {scaleLinear} from 'd3-scale';
-import {classNames} from '@shopify/css-utilities';
 
 import {useTheme} from '../../hooks';
+import {classNames} from '../../utilities';
 
 import {BarSegment, BarLabel} from './components';
 import type {Size, Data, Orientation} from './types';

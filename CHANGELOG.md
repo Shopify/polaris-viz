@@ -22,9 +22,20 @@
 ### Changed
 - `<BarChart />`, `<LineChart />`, `<Sparkline />`, `<NormalizedStackedBarChart />`, `<MultiSeriesBarChart />` and `<Sparkbar />` styles now are defined through themes in `PolarisVizProvider` instead of props. For more details check the [migration guide](https://docs.google.com/document/d/1VxfcgBbTNwjmYix1jGuDMgqDgIdehTgQbVZpER7djeU/edit?usp=sharing)
 - change indicators on the  `<NormalizedStackedBarChart />` can now have their colors configured externally, which applies the color to the metric and percentage change
+- [Updates `serialize-javascript` package](https://github.com/Shopify/polaris-viz/pull/477). No consumer-facing changes are expected.
 
 ### Fixed
 - `<NormalizedStackedBarChart />` no longer overflows its container by a few pixels
+
+## [0.18.2] - 2021-08-17
+
+- [Updates dev dependencies](https://github.com/Shopify/polaris-viz/pull/474). No consumer-facing changes are expected.
+
+## [0.18.1] - 2021-08-11
+
+### Fixed
+
+- Comparison data is used in the `<Sparkbar />` scale
 
 ## [0.18.0] - 2021-08-10
 

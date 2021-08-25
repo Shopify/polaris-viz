@@ -22,3 +22,4 @@ export {shouldRotateZeroBars} from './should-rotate-zero-bars';
 export {isNumber} from './is-number';
 export {createTheme, createThemes} from './create-themes';
 export {PolarisVizContext} from './polaris-viz-context';
+export {classNames} from './classnames';

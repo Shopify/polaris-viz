@@ -1,5 +1,7 @@
 import React from 'react';
 
+import {XMLNS} from '../../../../constants';
+
 import styles from './DownChevron.scss';
 
 interface Props {

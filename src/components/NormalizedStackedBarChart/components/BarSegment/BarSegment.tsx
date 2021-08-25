@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {createCSSGradient, isGradientType} from '../../../../utilities';
+import {createCSSGradient, isGradientType, classNames} from '../../../../utilities';
 import type {Orientation, Size} from '../../types';
 import type {Color} from '../../../../types';
 

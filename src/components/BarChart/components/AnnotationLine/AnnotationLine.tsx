@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {clamp} from '../../../../utilities';
+import {clamp, classNames} from '../../../../utilities';
 import type {Annotation} from '../../types';
 
 import styles from './AnnotationLine.scss';
