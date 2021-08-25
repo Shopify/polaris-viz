@@ -11,7 +11,13 @@ const Demos = () => {
         return (
           <span key={title}>
             <h3>{title}</h3>
-            <Component />
+            <div
+              style={{
+                height: title == 'BarChartDemo' ? '300px' : '100%',
+              }}
+            >
+              <Component />
+            </div>
           </span>
         );
       })}

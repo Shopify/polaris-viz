@@ -2,6 +2,28 @@
 
 ## Unreleased
 
+### Added
+
+- `PolarisVizProvider` to support theming charts
+- The `theme` to prop to `<BarChart />`, `<LineChart />`, `<Sparkline />`, `<StackedAreaChart />` and `<Sparkbar />`
+- `<Sparkline />` supports the dotted line style
+- `<Sparkline />`, `<StackedAreaChart />` and `<Sparkbar />` support gradient fills
+- `<Legend />` text is now configurable via the theme
+
+### Removed
+
+- Polaris Tokens strings are no longer accepted as colors. Any valid CSS color can now be provided as a color to charts, and in some cases gradients can be specified by supplying an array of gradient stops.
+- `barOptions`, `gridOptions`, `xAxisOptions.showTicks`, `xAxisOptions.labelColor` and `yAxisOptions.labelColor` from `BarChartProps` and `LineChartProps`.
+- `barFillStyle` and `color` props are removed from the `<Sparkbar />` component and are inherited from the chart's theme
+- `opacity` prop from `<StackedAreaChart />`. Opaque colors can now be directly specified in the series color prop or theme.
+- `colors` prop from  `<NormalizedStackedBarChart />`
+
+### Changed
+- `<BarChart />`, `<LineChart />`, `<Sparkline />`, `<NormalizedStackedBarChart />`, `<MultiSeriesBarChart />` and `<Sparkbar />` styles now are defined through themes in `PolarisVizProvider` instead of props. For more details check the [migration guide](https://docs.google.com/document/d/1VxfcgBbTNwjmYix1jGuDMgqDgIdehTgQbVZpER7djeU/edit?usp=sharing)
+- change indicators on the  `<NormalizedStackedBarChart />` can now have their colors configured externally, which applies the color to the metric and percentage change
+
+### Fixed
+- `<NormalizedStackedBarChart />` no longer overflows its container by a few pixels
 - [Updates `serialize-javascript` package](https://github.com/Shopify/polaris-viz/pull/477). No consumer-facing changes are expected.
 
 ## [0.18.2] - 2021-08-17

@@ -2,14 +2,7 @@ import React from 'react';
 
 import {BarChart, BarChartTooltipContent} from '../../src/components';
 
-import {OUTER_CONTAINER_STYLE} from './constants';
-
-export function BarChartDemo() {
-  const innerContainerStyle = {
-    width: '100%',
-    height: '300px',
-  };
-
+export function BarChartDemo({theme = 'Default'}) {
   document.body.style.fontFamily =
     "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif";
 
@@ -70,28 +63,17 @@ export function BarChartDemo() {
   }
 
   return (
-    <div style={{...OUTER_CONTAINER_STYLE, background: '#1f1f25'}}>
-      <div style={innerContainerStyle}>
-        <BarChart
-          data={data}
-          barOptions={{
-            color: 'quaternary',
-            hasRoundedCorners: true,
-          }}
-          xAxisOptions={{
-            labelFormatter: formatXAxisLabel,
-            showTicks: false,
-            labelColor: '#8D8D8E',
-          }}
-          gridOptions={{color: 'rgb(65, 66, 71)'}}
-          yAxisOptions={{
-            labelFormatter: formatYAxisLabel,
-            labelColor: '#8D8D8E',
-          }}
-          renderTooltipContent={renderTooltipContent}
-          skipLinkText="Skip chart content"
-        />
-      </div>
-    </div>
+    <BarChart
+      theme={theme}
+      data={data}
+      xAxisOptions={{
+        labelFormatter: formatXAxisLabel,
+      }}
+      yAxisOptions={{
+        labelFormatter: formatYAxisLabel,
+      }}
+      renderTooltipContent={renderTooltipContent}
+      skipLinkText="Skip chart content"
+    />
   );
 }

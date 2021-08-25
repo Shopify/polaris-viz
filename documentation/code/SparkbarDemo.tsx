@@ -30,7 +30,6 @@ export function SparkbarDemo() {
               {x: 9, y: 500},
               {x: 10, y: 500},
             ]}
-            barFillStyle="solid"
           />
         </div>
       </div>

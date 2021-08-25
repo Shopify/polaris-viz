@@ -1,23 +1,18 @@
 import React, {useState, useLayoutEffect, useRef, useCallback} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
-import {colorSky} from '@shopify/polaris-tokens';
 
-import type {Dimensions} from '../../types';
-import {DEFAULT_GREY_LABEL} from '../../constants';
+import {Dimensions, BarMargin} from '../../types';
 import {SkipLink} from '../SkipLink';
-import {getDefaultColor, uniqueId, normalizeData} from '../../utilities';
-import {useResizeObserver} from '../../hooks';
+import {uniqueId, normalizeData} from '../../utilities';
+import {useResizeObserver, useTheme} from '../../hooks';
+import type {XAxisOptions, YAxisOptions} from '../../types';
 
+import styles from './BarChart.scss';
 import {TooltipContent} from './components';
 import {Chart} from './Chart';
-import {
+import type {
   BarChartData,
   RenderTooltipContentData,
-  BarOptions,
-  GridOptions,
-  XAxisOptions,
-  YAxisOptions,
-  BarMargin,
   Annotation,
   AnnotationLookupTable,
 } from './types';
@@ -29,10 +24,9 @@ export interface BarChartProps {
   emptyStateText?: string;
   isAnimated?: boolean;
   renderTooltipContent?: (data: RenderTooltipContentData) => React.ReactNode;
-  barOptions?: Partial<BarOptions>;
-  gridOptions?: Partial<GridOptions>;
-  xAxisOptions?: Partial<XAxisOptions>;
-  yAxisOptions?: Partial<YAxisOptions>;
+  xAxisOptions?: XAxisOptions;
+  yAxisOptions?: YAxisOptions;
+  theme?: string;
 }
 
 export function BarChart({
@@ -42,11 +36,18 @@ export function BarChart({
   emptyStateText,
   isAnimated = false,
   skipLinkText,
-  barOptions,
-  gridOptions,
-  xAxisOptions,
-  yAxisOptions,
+  xAxisOptions = {
+    labelFormatter: (value: string) => value,
+    useMinimalLabels: false,
+  },
+  yAxisOptions = {
+    integersOnly: false,
+    labelFormatter: (value: number) => value.toString(),
+  },
+  theme = 'Default',
 }: BarChartProps) {
+  const selectedTheme = useTheme(theme);
+
   const [chartDimensions, setChartDimensions] = useState<Dimensions | null>(
     null,
   );
@@ -85,6 +86,26 @@ export function BarChart({
     },
     [ref],
   );
+
+  const xAxisOptionsWithDefaults = {
+    labelFormatter:
+      xAxisOptions.labelFormatter == null
+        ? (value: string) => value
+        : xAxisOptions.labelFormatter,
+    useMinimalLabels:
+      xAxisOptions.useMinimalLabels == null
+        ? false
+        : xAxisOptions.useMinimalLabels,
+  };
+
+  const yAxisOptionsWithDefaults = {
+    labelFormatter:
+      yAxisOptions.labelFormatter == null
+        ? (value: number) => value.toString()
+        : yAxisOptions.labelFormatter,
+    integersOnly:
+      yAxisOptions.integersOnly == null ? false : yAxisOptions.integersOnly,
+  };
 
   useLayoutEffect(() => {
     updateDimensions();
@@ -128,47 +149,10 @@ export function BarChart({
     handlePrintMediaQueryChange,
   ]);
 
-  const innerMargin =
-    barOptions != null && barOptions.innerMargin != null
-      ? BarMargin[barOptions.innerMargin]
-      : BarMargin.Medium;
-
-  const outerMargin =
-    barOptions != null && barOptions.outerMargin != null
-      ? BarMargin[barOptions.outerMargin]
-      : BarMargin.None;
-
-  const barOptionsWithDefaults = {
-    color: getDefaultColor(),
-    hasRoundedCorners: false,
-    zeroAsMinHeight: false,
-    ...barOptions,
-    innerMargin,
-    outerMargin,
-  };
-
-  const gridOptionsWithDefaults = {
-    showHorizontalLines: true,
-    color: colorSky,
-    horizontalOverflow: false,
-    horizontalMargin: 0,
-    ...gridOptions,
-  };
-
-  const xAxisOptionsWithDefaults = {
-    labelFormatter: (value: string) => value,
-    showTicks: true,
-    labelColor: DEFAULT_GREY_LABEL,
-    useMinimalLabels: false,
-    ...xAxisOptions,
-  };
-
-  const yAxisOptionsWithDefaults = {
-    labelFormatter: (value: number) => value.toString(),
-    labelColor: DEFAULT_GREY_LABEL,
-    backgroundColor: 'transparent',
-    integersOnly: false,
-    ...yAxisOptions,
+  const barThemeWithMargins = {
+    ...selectedTheme.bar,
+    innerMargin: BarMargin[selectedTheme.bar.innerMargin],
+    outerMargin: BarMargin[selectedTheme.bar.outerMargin],
   };
 
   function renderDefaultTooltipContent({
@@ -193,7 +177,15 @@ export function BarChart({
   }
 
   return (
-    <div style={{width: '100%', height: '100%'}} ref={setRef}>
+    <div
+      className={styles.ChartContainer}
+      style={{
+        background: selectedTheme.chartContainer.backgroundColor,
+        padding: selectedTheme.chartContainer.padding,
+        borderRadius: selectedTheme.chartContainer.borderRadius,
+      }}
+      ref={setRef}
+    >
       {chartDimensions == null ? null : (
         <React.Fragment>
           {skipLinkText == null ||
@@ -208,15 +200,17 @@ export function BarChart({
             data={data}
             annotationsLookupTable={annotationsLookupTable}
             chartDimensions={chartDimensions}
-            barOptions={barOptionsWithDefaults}
-            gridOptions={gridOptionsWithDefaults}
-            xAxisOptions={xAxisOptionsWithDefaults}
-            yAxisOptions={yAxisOptionsWithDefaults}
+            barTheme={barThemeWithMargins}
+            gridTheme={selectedTheme.grid}
+            xAxisTheme={selectedTheme.xAxis}
+            yAxisTheme={selectedTheme.yAxis}
             renderTooltipContent={
               renderTooltipContent != null
                 ? renderTooltipContent
                 : renderDefaultTooltipContent
             }
+            xAxisOptions={xAxisOptionsWithDefaults}
+            yAxisOptions={yAxisOptionsWithDefaults}
             emptyStateText={emptyStateText}
           />
           {skipLinkText == null ||

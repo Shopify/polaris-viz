@@ -38,7 +38,7 @@ export function LineChartDemo() {
         {rawValue: 5500, label: '2020-04-13T12:00:00'},
         {rawValue: 7000, label: '2020-04-14T12:00:00'},
       ],
-      color: 'primary' as 'primary',
+      color: 'rgb(0,161,159)',
       lineStyle: 'solid' as 'solid',
     },
     {
@@ -59,7 +59,7 @@ export function LineChartDemo() {
         {rawValue: 2000, label: '2020-03-13T12:00:00'},
         {rawValue: 3000, label: '2020-03-14T12:00:00'},
       ],
-      color: 'pastComparison' as 'pastComparison',
+      color: 'rgb(145,158,171)',
       lineStyle: 'dashed' as 'dashed',
     },
   ];
@@ -122,7 +122,6 @@ export function LineChartDemo() {
           xAxisOptions={{
             xAxisLabels,
             labelFormatter: formatXAxisLabel,
-            showTicks: true,
           }}
           yAxisOptions={{labelFormatter: formatYAxisLabel}}
           renderTooltipContent={renderTooltipContent}

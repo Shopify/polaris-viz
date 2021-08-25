@@ -2,10 +2,11 @@ import React, {useMemo} from 'react';
 import isEqual from 'fast-deep-equal';
 import {animated, useSpring} from '@react-spring/web';
 import {area, Series} from 'd3-shape';
-import type {Color} from 'types';
 import type {ScaleLinear} from 'd3-scale';
+import type {Color, GradientStop} from 'types';
 
-import {getColorValue, uniqueId} from '../../../../utilities';
+import {LinearGradient} from '../../../LinearGradient';
+import {isGradientType, uniqueId} from '../../../../utilities';
 import {usePrevious} from '../../../../hooks';
 
 type StackedSeries = Series<
@@ -23,7 +24,6 @@ interface Props {
   stackedValues: StackedSeries[];
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
-  opacity: number;
   isAnimated: boolean;
 }
 
@@ -35,7 +35,6 @@ export function Areas({
   xScale,
   yScale,
   colors,
-  opacity,
   isAnimated,
 }: Props) {
   const prevstackedValues = usePrevious(stackedValues);
@@ -75,17 +74,32 @@ export function Areas({
             return null;
           }
 
-          const color = getColorValue(colors[index]);
+          const currentColor = colors[index];
+          const isGradient = isGradientType(currentColor);
+
+          const gradient = isGradient
+            ? currentColor
+            : [{offset: 0, color: currentColor}];
 
           return (
-            <path
-              key={index}
-              d={shape}
-              fill={color}
-              stroke={color}
-              strokeWidth="0.1"
-              opacity={opacity}
-            />
+            <React.Fragment key={index}>
+              <defs>
+                <LinearGradient
+                  id={`area-${id}-${index}`}
+                  gradient={gradient as GradientStop[]}
+                  gradientUnits="userSpaceOnUse"
+                  y1="100%"
+                  y2="0%"
+                />
+              </defs>
+              <path
+                key={index}
+                d={shape}
+                fill={`url(#area-${id}-${index})`}
+                stroke={`url(#area-${id}-${index})`}
+                strokeWidth="0.1"
+              />
+            </React.Fragment>
           );
         })}
       </g>

@@ -5,9 +5,11 @@ import {BarChart} from '../BarChart';
 import {Chart} from '../Chart';
 import {SkipLink} from '../../SkipLink';
 
-describe('BarChart />', () => {
-  const mockProps = {data: [{rawValue: 10, label: 'data'}]};
+const mockProps = {
+  data: [{rawValue: 10, label: 'data'}],
+};
 
+describe('BarChart />', () => {
   it('renders a <Chart />', () => {
     const barChart = mount(<BarChart {...mockProps} />);
 
@@ -16,8 +18,6 @@ describe('BarChart />', () => {
 });
 
 describe('skipLinkText', () => {
-  const mockProps = {data: [{rawValue: 10, label: 'data'}]};
-
   it('renders an anchor tag that allows skipping the chart content', () => {
     const barChart = mount(
       <BarChart {...mockProps} skipLinkText="Skip chart content" />,

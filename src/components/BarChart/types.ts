@@ -1,23 +1,9 @@
-import type {
-  Color,
-  StringLabelFormatter,
-  NumberLabelFormatter,
-  GradientStop,
-} from 'types';
+import type {Color} from 'types';
 
 export interface BarChartData {
-  barOptions?: {
-    color: Color;
-  };
+  barColor?: Color;
   label: string;
   rawValue: number;
-}
-
-export enum BarMargin {
-  Small = 0.05,
-  Medium = 0.1,
-  Large = 0.3,
-  None = 0,
 }
 
 export interface RenderTooltipContentData {
@@ -25,43 +11,10 @@ export interface RenderTooltipContentData {
   value: number;
   annotation?: Annotation;
 }
-
-export interface BarOptions {
-  innerMargin: keyof typeof BarMargin;
-  outerMargin: keyof typeof BarMargin;
-  color: Color | GradientStop[];
-  hasRoundedCorners: boolean;
-  /**
-   * @deprecated This prop is experimental and not ready for general use. If you want to use this, come talk to us in #polaris-data-viz
-   */
-  zeroAsMinHeight: boolean;
-}
-
-export interface GridOptions {
-  showHorizontalLines: boolean;
-  horizontalOverflow: boolean;
-  color: string;
-  horizontalMargin: number;
-}
-
-export interface XAxisOptions {
-  labelFormatter: StringLabelFormatter;
-  showTicks: boolean;
-  labelColor: string;
-  useMinimalLabels: boolean;
-}
-
-export interface YAxisOptions {
-  labelFormatter: NumberLabelFormatter;
-  labelColor: string;
-  backgroundColor: string;
-  integersOnly: boolean;
-}
-
 export interface Annotation {
   dataIndex: number;
   width: number;
-  color: Color | string;
+  color: string;
   tooltipData?: {
     label: string;
     value: string;

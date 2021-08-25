@@ -1,6 +1,7 @@
 import React from 'react';
 import type {Line as D3Line} from 'd3-shape';
 
+import type {LineTheme} from '../../../../types';
 import type {SeriesWithDefaults} from '../../types';
 import {ANIMATION_DELAY, FAST_DURATION, SLOW_DURATION} from '../../constants';
 
@@ -13,10 +14,7 @@ interface Props {
   index: number;
   lineGenerator: D3Line<{rawValue: number}>;
   color: string;
-  lineOptions: {
-    hasSpline: boolean;
-    width: number;
-  };
+  lineOptions: LineTheme;
 }
 
 export const Line = React.memo(function Shape({

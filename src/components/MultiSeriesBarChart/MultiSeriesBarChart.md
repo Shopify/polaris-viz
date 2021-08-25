@@ -12,7 +12,7 @@ Used to show comparison of different types, across categories.
 const series = [
   {
     name: 'Breakfast',
-    color: 'primary',
+    color: 'green',
     data: [
       {label: 'Monday', rawValue: 3},
       {label: 'Tuesday', rawValue: 7},
@@ -25,7 +25,7 @@ const series = [
   },
   {
     name: 'Lunch',
-    color: 'secondary',
+    color: 'purple',
     data: [
       {label: 'Monday', rawValue: 4},
       {label: 'Tuesday', rawValue: 3},
@@ -38,7 +38,7 @@ const series = [
   },
   {
     name: 'Dinner',
-    color: 'tertiary',
+    color: 'gray',
     data: [
       {label: 'Monday', rawValue: 7},
       {label: 'Tuesday', rawValue: 2},
@@ -117,26 +117,14 @@ interface MultiSeriesBarChartProps {
   emptyStateText?: string;
   barOptions?: {
     isStacked?: boolean;
-    hasRoundedCorners?: boolean;
-    innerMargin?: 'Small' | 'Medium' | 'Large' | 'None';
-    outerMargin?: 'Small' | 'Medium' | 'Large' | 'None';
     zeroAsMinHeight?: boolean;
-  };
-  gridOptions?: {
-    showHorizontalLines?: boolean;
-    horizontalOverflow?: boolean;
-    color?: string;
-    horizontalMargin?: number;
   };
   xAxisOptions: {
     labelFormatter?(value: string, index?: number, data?: string[]): string;
-    showTicks?: boolean;
     labels: string[];
-    labelColor: string;
   };
   yAxisOptions: {
     labelFormatter?(value: number): string;
-    backgroundColor?: string;
     integersOnly?: boolean;
   };
 }
@@ -148,7 +136,7 @@ This component derives its size from its parent container and fills the width of
 
 #### series
 
-The `Series` type gives the user a lot of flexibility to define exactly what each bar group should look like. Its interface looks like this:
+The `Series` type interface looks like this:
 
 ```typescript
 {
@@ -157,7 +145,7 @@ The `Series` type gives the user a lot of flexibility to define exactly what eac
     label: string;
     rawValue: number;
   }[];
-  color?: Color | GradientStop[];
+  color?: Color;
 }
 ```
 
@@ -183,19 +171,9 @@ The array of objects that the chart uses to draw the groups.
 
 | type    | default     |
 | ------- | ----------- |
-| `Color` | `'primary'` |
+| `Color` | `rgb(0,161,159)` |
 
-This accepts any [Polaris Viz color](/documentation/Polaris-Viz-colors.md) value, and corresponds to the color of the bar for that series.
-
-#### highlightColor
-
-| type    | default     |
-| ------- | ----------- |
-| `Color` | `'primary'` |
-
-This accepts any [Polaris Viz color](/documentation/Polaris-Viz-colors.md) value, and corresponds to the color of the bar for that series when you hover over a bar group. It defaults to `primary`. The four 'prominent' Polaris Viz colors (`primaryProminent`, `secondaryProminent`, `tertiaryProminent`, `quaternaryProminent`) exist as a good option for a complimentary hover color.
-
-In order for the user to have visual feedback that a bar has been selected, it is recommended that a `highlightColor`, which is different to the `color`, is passed in in the `series` for this component. If a `highlightColor` is not provided, the browser's default outline treatment will be used when the bar is focused.
+This accepts any CSS color or gradient stop array, and corresponds to the color of the bar for that series. It overwrites the color inheritied from the theme.
 
 ### The `RenderTooltipContentData` type
 
@@ -272,22 +250,6 @@ This accepts a function that is called to format the labels when the chart draws
 
 It's reccomended that you use a legend whenever displaying multiseries data. To display one, use the <a href="../Legend/Legend.md">`<Legend />` component</a>.
 
-##### showTicks
-
-| type      | default |
-| --------- | ------- |
-| `boolean` | true    |
-
-Whether to show ticks connecting the xAxis labels to their corresponding grid line.
-
-##### labelColor
-
-| type     | default                |
-| -------- | ---------------------- |
-| `string` | `'rgb(223, 227, 232)'` |
-
-The color used for axis labels.
-
 #### yAxisOptions
 
 ##### labelFormatter
@@ -297,22 +259,6 @@ The color used for axis labels.
 | `(value: number): string;` | `(value) => value.toString()` |
 
 This utility function is called for every y axis value when the chart is drawn.
-
-##### labelColor
-
-| type     | default                |
-| -------- | ---------------------- |
-| `string` | `'rgb(223, 227, 232)'` |
-
-The color used for axis labels.
-
-##### backgroundColor
-
-| type     | default       |
-| -------- | ------------- |
-| `string` | `transparant` |
-
-The color used behind axis labels.
 
 ##### integersOnly
 
@@ -324,22 +270,6 @@ Only use whole numbers for y axis ticks.
 
 #### barOptions
 
-##### innerMargin
-
-| type                                       | default  |
-| ------------------------------------------ | -------- |
-| `'Small' \| 'Medium' \| 'Large' \| 'None'` | `Medium` |
-
-This sets the margin between each of the bars. A value of `None` will make the bars look as if they are one continuous element. See [documentation](https://github.com/d3/d3-scale/blob/master/README.md#band_paddingInner) for more info.
-
-##### outerMargin
-
-| type                                       | default |
-| ------------------------------------------ | ------- |
-| `'Small' \| 'Medium' \| 'Large' \| 'None'` | `None`  |
-
-This sets the margin before and after all bars. A value of `None` will have bars start at the Y axis and end at the edge of the chart. See [documentation](https://github.com/d3/d3-scale/blob/master/README.md#band_paddingOuter) for more info.
-
 ##### isStacked
 
 | type      | default |
@@ -347,14 +277,6 @@ This sets the margin before and after all bars. A value of `None` will have bars
 | `boolean` | `false` |
 
 This changes the grouping of the bars. If `true` the bar groups will stack vertically, otherwise they will render individual bars for each data point in each group. To see an example of stacked vs. grouped orientations, refer to the images above.
-
-##### hasRoundedCorners
-
-| type      | default |
-| --------- | ------- |
-| `boolean` | `false` |
-
-Rounds the top corners of each bar, in the case of positive numbers. Rounds the bottom corners for negatives. Note: this prop only has an impact on grouped bars, not stacked ones.
 
 ##### zeroAsMinHeight (deprecated)
 
@@ -364,42 +286,6 @@ Rounds the top corners of each bar, in the case of positive numbers. Rounds the 
 
 Shows a min height bar for zero values. This prop is experimental and not ready for general use. If you want to use this, come talk to us in [#polaris-data-viz](https://shopify.slack.com/archives/CNB58FZ34).
 
-#### gridOptions
-
-An object including the following optional proprties that define the grid.
-
-##### showHorizontalLines
-
-| type      | default |
-| --------- | ------- |
-| `boolean` | `true`  |
-
-Whether to show lines extending from the yAxis labels through the chart.
-
-##### horizontalOverflow
-
-| type      | default |
-| --------- | ------- |
-| `boolean` | `false` |
-
-Whether the lines should extend through the width of the entire chart.
-
-##### horizontalMargin
-
-| type     | default |
-| -------- | ------- |
-| `number` | `0`     |
-
-Margin to display on the left and right of the chart.
-
-##### color
-
-| type     | default                |
-| -------- | ---------------------- |
-| `string` | `"rgb(223, 227, 232)"` |
-
-The color of the grid lines.
-
 #### emptyStateText
 
 | type     | default     |
@@ -407,3 +293,11 @@ The color of the grid lines.
 | `string` | `undefined` |
 
 Used to indicate to screenreaders that a chart with no series data has been rendered, in the case that an empty array is passed as the data. It is strongly recommended that this is included if the series prop could be an empty array.
+
+#### theme
+
+| type     | default     |
+| -------- | ----------- |
+| `string` | `Default` |
+
+The theme controls the visual appearance of the chart, its axis and grid.
