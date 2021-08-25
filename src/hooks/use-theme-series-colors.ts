@@ -1,18 +1,11 @@
 import {useMemo} from 'react';
 
-import type {
-  DataSeries,
-  NullableData,
-  Theme,
-  Color,
-  Data,
-  SeriesColor,
-} from '../types';
+import type {DataSeries, NullableData, Theme, Color, Data} from '../types';
 
 // Build an array of colors for each item in the series. Colors provided directly
 // to series.color are used in place of the theme color.
 export function useThemeSeriesColors(
-  series: DataSeries<NullableData, string>[] | DataSeries<Data, SeriesColor>[],
+  series: DataSeries<NullableData, string>[] | DataSeries<Data, Color>[],
   selectedTheme: Theme,
 ): Color[] {
   return useMemo(() => {
