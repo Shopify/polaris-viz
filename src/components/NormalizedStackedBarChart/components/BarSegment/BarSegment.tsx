@@ -15,9 +15,16 @@ interface Props {
   color: Color;
   size: Size;
   orientation: Orientation;
+  roundedCorners: boolean;
 }
 
-export function BarSegment({color, scale, size, orientation}: Props) {
+export function BarSegment({
+  color,
+  scale,
+  size,
+  orientation,
+  roundedCorners,
+}: Props) {
   const scaleNeedsRounding = scale > 0 && scale < 1.5;
   const safeScale = scaleNeedsRounding ? 1.5 : scale;
 
@@ -29,7 +36,11 @@ export function BarSegment({color, scale, size, orientation}: Props) {
 
   return (
     <div
-      className={classNames(styles.Segment, styles[`${orientation}-${size}`])}
+      className={classNames(
+        styles.Segment,
+        roundedCorners && styles[`${orientation}-RoundedCorners`],
+        styles[`${orientation}-${size}`],
+      )}
       style={{flexBasis: `${safeScale}%`, background: formattedColor}}
     />
   );

@@ -2,6 +2,7 @@ import React, {useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {area as areaShape, line} from 'd3-shape';
 
+import {colorWhite, colorBlack} from '../../../../constants';
 import type {Color, GradientStop, Theme} from '../../../../types';
 import {LinearGradient} from '../../../LinearGradient';
 import {
@@ -42,14 +43,14 @@ export function Series({
   yScale,
   series,
   isAnimated,
-  height,
+  svgDimensions,
   theme,
 }: {
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
   series: SingleSeries;
   isAnimated: boolean;
-  height: number;
+  svgDimensions: {width: number; height: number};
   theme: Theme;
 }) {
   const {prefersReducedMotion} = usePrefersReducedMotion();
@@ -68,7 +69,7 @@ export function Series({
 
   const areaGenerator = areaShape<Coordinates>()
     .x(({x}) => xScale(x))
-    .y0(height)
+    .y0(svgDimensions.height)
     .y1(({y}) => (y == null ? yScale(0) : yScale(y)))
     .defined(({y}) => y != null);
 
@@ -108,6 +109,9 @@ export function Series({
 
   const areaGradientColor = getGradientFill(area);
 
+  const showPoint = hasPoint && lastLinePointCoordinates != null;
+  const {x: lastX = 0, y: lastY = 0} = lastLinePointCoordinates ?? {};
+
   return (
     <React.Fragment>
       <defs>
@@ -125,6 +129,23 @@ export function Series({
             gradient={areaGradientColor as GradientStop[]}
           />
         )}
+
+        {showPoint ? (
+          <React.Fragment>
+            <circle cx={lastX} cy={lastY} r={POINT_RADIUS} id={`point-${id}`} />
+
+            <mask id={`mask-${id}`}>
+              <rect
+                x="0"
+                y="0"
+                width={svgDimensions.width}
+                height={svgDimensions.height}
+                fill={colorWhite}
+              />
+              <use href={`#point-${id}`} fill={colorBlack} />
+            </mask>
+          </React.Fragment>
+        ) : null}
       </defs>
 
       <path
@@ -135,6 +156,7 @@ export function Series({
         strokeLinecap="round"
         className={classNames(styles.Line, !immediate && styles.AnimatedLine)}
         style={{strokeDasharray: StrokeDasharray[lineStyle]}}
+        mask={`url(#mask-${`${id}`})`}
       />
 
       {area === null ? null : (
@@ -145,11 +167,9 @@ export function Series({
         />
       )}
 
-      {hasPoint && lastLinePointCoordinates != null ? (
-        <circle
-          cx={lastLinePointCoordinates.x}
-          cy={lastLinePointCoordinates.y}
-          r={POINT_RADIUS}
+      {showPoint ? (
+        <use
+          href={`#point-${id}`}
           fill={`url(#line-${id})`}
           className={styles.Point}
         />

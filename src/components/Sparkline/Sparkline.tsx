@@ -163,7 +163,7 @@ export function Sparkline({
                 yScale={yScale}
                 series={seriesWithColor}
                 isAnimated={isAnimated}
-                height={height}
+                svgDimensions={svgDimensions}
                 theme={selectedTheme}
               />
             </g>

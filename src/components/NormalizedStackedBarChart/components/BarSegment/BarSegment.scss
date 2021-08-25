@@ -5,6 +5,24 @@
   }
 }
 
+.horizontal-RoundedCorners {
+  &:first-of-type {
+    border-radius: 2px 0 0 2px;
+  }
+  &:last-of-type {
+    border-radius: 0 2px 2px 0;
+  }
+}
+
+.vertical-RoundedCorners {
+  &:first-of-type {
+    border-radius: 2px 2px 0 0;
+  }
+  &:last-of-type {
+    border-radius: 0 0 2px 2px;
+  }
+}
+
 .horizontal-small {
   height: 16px;
 }

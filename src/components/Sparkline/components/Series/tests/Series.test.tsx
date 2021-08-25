@@ -52,7 +52,7 @@ const mockProps = {
   yScale,
   series: mockSeries,
   isAnimated: false,
-  height: 250,
+  svgDimensions: {height: 250, width: 250},
   hasSpline: false,
   theme: {
     line: {sparkArea: null, style: 'solid', color: 'red', hasPoint: true},

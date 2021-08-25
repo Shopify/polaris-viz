@@ -10,6 +10,7 @@ $duration-slower: 400;
 $duration-slowest: 500;
 
 $color-white: rgb(255, 255, 255);
+$color-black: rgb(0, 0, 0);
 $color-sky-dark: rgb(196, 205, 213);
 $color-sky: rgb(223, 227, 232);
 $color-ink: rgb(33, 43, 54);
@@ -93,6 +94,7 @@ $font-stack-base: -apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI'
   spacingLoose: strip-unit($spacing-loose);
   spacingExtraLoose: strip-unit($spacing-extra-loose);
   colorWhite: $color-white;
+  colorBlack: $color-black;
   colorSky: $color-sky;
   colorSkyDark: $color-sky-dark;
   colorInkLight: $color-ink-light;

@@ -77,7 +77,7 @@ const defaultProps = {
     },
   ],
   orientation: 'horizontal',
-  size: 'large',
+  size: 'small',
   theme: 'Default',
 };
 
