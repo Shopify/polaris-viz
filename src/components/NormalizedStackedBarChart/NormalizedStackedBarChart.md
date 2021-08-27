@@ -46,9 +46,9 @@ Used for positive datasets with two to four items. If your dataset has more than
     },
   ]}
   accessibilityLabel="A chart showing the breakdown of ad revenue"
-  colors={['primary', 'secondary', 'tertiary', 'quaternary']}
   orientation="horizontal"
   size="large"
+  theme="Default"
 />
 ```
 
@@ -60,9 +60,9 @@ The normalized stacked bar chart interface looks like this:
 {
   data: Data[];
   accessibilityLabel?: string;
-  colors?: Color[];
   orientation?: Orientation;
   size?: Size;
+  theme?: string;
 }
 ```
 
@@ -133,14 +133,6 @@ The prop to determine the chart's drawn area. Each `Data` object corresponds to 
 
 Visually hidden text for screen readers.
 
-#### colors
-
-| type      | default                                                         |
-| --------- | --------------------------------------------------------------- |
-| `Color[]` | `['colorPurpleDark', 'colorBlue', 'colorTeal', 'colorSkyDark']` |
-
-An array of colors that determines the fill colors of each bar. The colors are applied sequentially to the chart. This accepts any [Polaris Viz accepted color](/documentation/Polaris-Viz-colors.md).
-
 #### orientation
 
 | type                     | default      |
@@ -156,3 +148,11 @@ Determines the orientation of the chart.
 | `small \| large` | `small` |
 
 Determines the thickness of the chart.
+
+#### theme
+
+| type             | default |
+| ---------------- | ------- |
+| `string` | `Default` |
+
+The theme prop determines the colors of the bars, the background of the chart and the appearance of the legend.

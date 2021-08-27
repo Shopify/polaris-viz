@@ -10,7 +10,7 @@ const mockData: Series[] = [
       {label: 'label', rawValue: 20},
       {label: 'label', rawValue: 30},
     ],
-    color: 'colorBlack',
+    color: 'black',
     name: 'LABEL1',
   },
   {
@@ -19,7 +19,7 @@ const mockData: Series[] = [
       {label: 'label', rawValue: 2},
       {label: 'label', rawValue: 3},
     ],
-    color: 'colorBlack',
+    color: 'black',
     name: 'LABEL2',
   },
 ];
@@ -43,7 +43,7 @@ const mockZeroData: Series[] = [
       {label: 'label', rawValue: 0},
       {label: 'label', rawValue: 0},
     ],
-    color: 'colorBlack',
+    color: 'black',
     name: 'LABEL1',
   },
   {
@@ -52,7 +52,7 @@ const mockZeroData: Series[] = [
       {label: 'label', rawValue: 0},
       {label: 'label', rawValue: 0},
     ],
-    color: 'colorBlack',
+    color: 'black',
     name: 'LABEL2',
   },
 ];
@@ -86,7 +86,7 @@ const mockNegativeStackedData = [
 
 const mockNegativeSeries: Series[] = [
   {
-    color: 'colorPurple',
+    color: 'purple',
     name: 'Breakfast',
     data: [
       {
@@ -100,7 +100,7 @@ const mockNegativeSeries: Series[] = [
     ],
   },
   {
-    color: 'colorRed',
+    color: 'red',
     name: 'Lunch',
     data: [
       {
@@ -182,7 +182,7 @@ describe('get-min-max', () => {
               {label: 'label', rawValue: 0.2},
               {label: 'label', rawValue: 0.8},
             ],
-            color: 'colorBlack',
+            color: 'black',
             name: 'LABEL1',
           },
           {
@@ -190,7 +190,7 @@ describe('get-min-max', () => {
               {label: 'label', rawValue: 0.3},
               {label: 'label', rawValue: 0.9},
             ],
-            color: 'colorBlack',
+            color: 'black',
             name: 'LABEL2',
           },
         ],

@@ -1,19 +1,8 @@
 import React from 'react';
-import tokens, {colorSky} from '@shopify/polaris-tokens';
 
 import {BarChartTooltipContent} from '../../../components';
-import {vizColors} from '../../../utilities';
 
-import {Color} from '../../../types';
-import {Annotation, BarMargin} from '../types';
-import {DEFAULT_GREY_LABEL} from '../../../constants';
-
-const polarisTokensColors = Object.keys(tokens).filter((key) =>
-  key.startsWith('color'),
-);
-
-export const colorOptions: string[] =
-  Object.keys(vizColors).concat(polarisTokensColors);
+import {Annotation} from '../types';
 
 export function formatYAxisLabel(value: number) {
   return new Intl.NumberFormat('en-CA', {
@@ -57,37 +46,15 @@ export const defaultProps = {
     {rawValue: 1, label: '2020-01-05T12:00:00Z'},
     {rawValue: 421.19, label: '2020-01-06T12:00:00Z'},
   ],
-  barOptions: {
-    innerMargin: 'Medium',
-    outerMargin: 'Medium',
-    color: barGradient,
-    hasRoundedCorners: true,
-    zeroAsMinHeight: false,
-  },
   xAxisOptions: {
     labelFormatter: formatXAxisLabel,
-    showTicks: false,
-    labelColor: DEFAULT_GREY_LABEL,
-    useMinimalLabels: false,
   },
   yAxisOptions: {
     labelFormatter: formatYAxisLabel,
-    labelColor: DEFAULT_GREY_LABEL,
-    backgroundColor: 'transparent',
-    integersOnly: false,
   },
   renderTooltipContent,
-  gridOptions: {
-    horizontalOverflow: false,
-    showHorizontalLines: true,
-    horizontalMargin: 0,
-    color: colorSky,
-  },
   isAnimated: true,
 };
-
-export const primaryColor = colorOptions[0] as Color;
-export const secondaryColor = colorOptions[1] as Color;
 
 export const getDataPoint = (limit = 1000, allowNegative = false) => {
   if (allowNegative)

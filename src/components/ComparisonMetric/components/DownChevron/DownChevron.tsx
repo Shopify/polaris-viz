@@ -1,16 +1,15 @@
 import React from 'react';
 
-import {getColorValue} from '../../../../utilities';
 import {XMLNS} from '../../../../constants';
 
 import styles from './DownChevron.scss';
 
 interface Props {
   accessibilityLabel: string;
+  fill: string;
 }
 
-export function DownChevron({accessibilityLabel}: Props) {
-  const fill = getColorValue('negative');
+export function DownChevron({accessibilityLabel, fill}: Props) {
   return (
     <React.Fragment>
       <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>

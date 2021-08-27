@@ -38,9 +38,8 @@ const props = {
         {y: 2, x: 22},
         {y: 2, x: 23},
       ],
-      areaStyle: 'gradient',
       hasPoint: true,
-      color: 'darkModeNegative',
+      color: 'red',
       offsetRight: 12,
     },
     {
@@ -71,11 +70,12 @@ const props = {
         {x: 23, y: 7},
       ],
       lineStyle: 'dashed',
-      color: 'darkModeNegative',
+      color: 'red',
     },
   ],
   hasSpline: true,
   isAnimated: true,
+  theme: 'Default'
 };
 
 return (
@@ -91,7 +91,7 @@ The sparkline interface looks like this:
 
 ```typescript
 {
-  series: {color: Color, areaStyle: AreaStyle, lineStyle: LineStyle, hasPoint: boolean, data: Coordinates[]}[];
+  series: {color: Color, area: Color | null, lineStyle: LineStyle, hasPoint: boolean, data: Coordinates[]}[];
   accessibilityLabel?: string;
   isAnimated?: boolean;
 }
@@ -111,7 +111,7 @@ This component determines its width and height based off its parent element. The
 
 | type                                                                                                                                                  |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `{data: Coordinates[], color?: Color, areaStyle?: AreaStyle, lineStyle?: LineStyle, hasPoint?: boolean, offsetLeft?: number; offsetRight?: number}[]` |
+| `{data: Coordinates[], color?: string, area?: string \| GradientStop[] \| null, lineStyle?: LineStyle, hasPoint?: boolean, offsetLeft?: number; offsetRight?: number}[]` |
 
 The sparkline can show one data series or a set of comparison data series.
 
@@ -127,15 +127,15 @@ The prop to determine the chart's drawn area. If null is provided, the line will
 
 | type    | default     |
 | ------- | ----------- |
-| `Color` | `colorTeal` |
+| `string` | `"rgb(71, 193, 191)"` |
 
-The sparkline stroke and fill color. This accepts any [Polaris Viz accepted color](/documentation/Polaris-Viz-colors.md).
+The sparkline stroke and fill color. This accepts any CSS color.
 
 ##### areaFillStyle
 
 | type                      | default |
 | ------------------------- | ------- |
-| `none | solid | gradient` | `none`  |
+| `none \| solid \| gradient` | `none`  |
 
 Determines whether to fill in the area beneath the line and what kind of shading to use.
 
@@ -143,7 +143,7 @@ Determines whether to fill in the area beneath the line and what kind of shading
 
 | type             | default |
 | ---------------- | ------- |
-| `solid | dashed` | `solid` |
+| `solid \| dashed\| dotted` | `solid` |
 
 Determines the style of line used for the series.
 
@@ -191,10 +191,10 @@ Visually hidden text for screen readers.
 
 Determines whether to animate the chart on state changes.
 
-#### hasSpline
+### theme
 
 | type      | default |
 | --------- | ------- |
-| `boolean` | `false` |
+| `string` | `Default` |
 
-Whether to curve the line between points.
+The theme that the chart will inherit its styles from. Additional themes must be provided to the theme provider. Individual line styles can be overwritten as part of the series prop.

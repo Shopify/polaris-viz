@@ -33,34 +33,19 @@ const props = {
     {label: 'Saturday', rawValue: 30},
     {label: 'Sunday', rawValue: 10},
   ],
-  barOptions: {
-    color: [
-      {offset: 0, color: 'rgba(152, 107, 255, 0.8)'},
-      {offset: 100, color: 'rgba(58, 164, 246, 0.8)'},
-    ],
-    hasRoundedCorners: true,
-    outerMargin: 'Medium',
-  },
   skipLinkText: 'Skip chart content',
   xAxisOptions: {
     useMinimalLabels: true,
     labelColor: 'rgb(220, 220, 220)',
-    showTicks: false,
   },
   yAxisOptions: {
-    backgroundColor: 'rgb(31, 31, 37)',
-    labelColor: 'rgb(220, 220, 220)',
     integersOnly: true,
     labelFormatter: formatYAxisLabel,
-  },
-  gridOptions: {
-    color: 'rgb(65, 66, 71)',
-    horizontalOverflow: true,
-    horizontalMargin: 20,
   },
   isAnimated: true,
   renderTooltipContent: {renderTooltipContent},
   skipLinkText: 'Skip chart content',
+  theme: 'Default'
 };
 
 return <BarChart {...props} />;
@@ -83,40 +68,23 @@ interface BarChartProps {
     label,
     value,
   }: {
-    lable: string;
+    label: string;
     value: string;
   }): React.ReactNode;
   skipLinkText?: string;
   emptyStateText?: string;
-  barOptions?: {
-    innerMargin?: 'Small' | 'Medium' | 'Large' | 'None';
-    outerMargin?: 'Small' | 'Medium' | 'Large' | 'None';
-    color?: Color;
-    highlightColor?: Color;
-    hasRoundedCorners?: boolean;
-    zeroAsMinHeight?: boolean;
-  };
-  gridOptions?: {
-    showHorizontalLines?: boolean;
-    color?: string;
-    horizontalOverflow?: boolean;
-    horizontalMargin?: number;
-  };
   xAxisOptions?: {
     labelFormatter?(value: string, index?: number, data?: string[]): string;
-    showTicks?: boolean;
-    labelColor?: string;
     useMinimalLabels?: boolean;
   };
   yAxisOptions?: {
     labelFormatter?(value: number): string;
-    backgroundColor?: string;
     integersOnly?: boolean;
   };
   annotations?: {
     dataIndex: number;
     width: number;
-    color: Color | string;
+    color: string;
     ariaLabel?: string;
     xOffset?: number;
     tooltipData?: {
@@ -124,10 +92,9 @@ interface BarChartProps {
       value: string;
     };
   }[];
+  theme?: string;
 }
 ```
-
-In order for the user to have visual feedback that a bar has been selected, it is recommended that a `highlightColor`, which is different to the `color`, is passed in for this component. If a `highlightColor` is not provided, the browser's default outline treatment will be used when the bar is focused.
 
 ### Required props
 
@@ -135,7 +102,7 @@ In order for the user to have visual feedback that a bar has been selected, it i
 
 | type                                                               |
 | ------------------------------------------------------------------ |
-| `{rawValue: number, label: string, barOptions?: {color: Color}}[]` |
+| `{rawValue: number, label: string, barOptions?: {color: string}}[]` |
 
 The array of objects that the chart uses to draw the chart.
 If `data` may be an empty array, provide <a href="#emptyStateText">`emptyStateText`</a> to communicate the empty state to screenreaders.
@@ -150,9 +117,9 @@ An optional object including the following proprties that define the appearance 
 
 | type    | default   |
 | ------- | --------- |
-| `Color` | `primary` |
+| `string` | The color of the series. |
 
-The individual bar fill color. This accepts any [Polaris Viz accepted color](/documentation/Polaris-Viz-colors.md).
+The individual bar fill color.
 
 ### Optional props
 
@@ -188,93 +155,13 @@ If provided, renders a `<SkipLink/>` button with the string. Use this for charts
 
 Used to indicate to screenreaders that a chart with no data has been rendered, in the case that an empty array is passed as the data. It is strongly recommended that this is included if the data prop could be an empty array.
 
-#### barOptions
+#### theme
 
-An optional object including the following proprties that define the appearance of the bar.
+| type     | default     |
+| -------- | ----------- |
+| `string` | `Default` |
 
-##### innerMargin
-
-| type                                       | default  |
-| ------------------------------------------ | -------- |
-| `'Small' \| 'Medium' \| 'Large' \| 'None'` | `Medium` |
-
-This sets the margin between each of the bars. A value of `None` will make the bars look as if they are one continuous element. See [documentation](https://github.com/d3/d3-scale/blob/master/README.md#band_paddingInner) for more info.
-
-##### outerMargin
-
-| type                                       | default |
-| ------------------------------------------ | ------- |
-| `'Small' \| 'Medium' \| 'Large' \| 'None'` | `None`  |
-
-This sets the margin before and after all bars. A value of `None` will have bars start at the Y axis and end at the edge of the chart. See [documentation](https://github.com/d3/d3-scale/blob/master/README.md#band_paddingOuter) for more info.
-
-##### color
-
-| type    | default   |
-| ------- | --------- |
-| `Color` | `primary` |
-
-The bar fill color. This accepts any [Polaris Viz accepted color](/documentation/Polaris-Viz-colors.md).
-
-##### highlightColor
-
-| type    | default   |
-| ------- | --------- |
-| `Color` | `primary` |
-
-The bar fill color when you hover over a bar in the chart. This accepts any [Polaris Viz accepted color](/documentation/Polaris-Viz-colors.md).
-
-##### hasRoundedCorners
-
-| type      | default |
-| --------- | ------- |
-| `boolean` | `false` |
-
-Rounds the top corners of each bar, in the case of positive numbers. Rounds the bottom corners for negatives.
-
-##### zeroAsMinHeight (deprecated)
-
-| type      | default |
-| --------- | ------- |
-| `boolean` | `false` |
-
-Shows a min height bar for zero values. This prop is experimental and not ready for general use. If you want to use this, come talk to us in [#polaris-data-viz](https://shopify.slack.com/archives/CNB58FZ34).
-
-#### gridOptions
-
-An object including the following optional proprties that define the grid.
-
-##### showHorizontalLines
-
-| type      | default |
-| --------- | ------- |
-| `boolean` | `true`  |
-
-Whether to show lines extending from the yAxis labels through the chart.
-
-##### horizontalOverflow
-
-| type      | default |
-| --------- | ------- |
-| `boolean` | `false` |
-
-Whether the lines should extend through the width of the entire chart.
-
-##### horizontalMargin
-
-| type     | default |
-| -------- | ------- |
-| `number` | `0`     |
-
-Margin to display on the left and right of the chart.
-
-##### color
-
-| type     | default                |
-| -------- | ---------------------- |
-| `string` | `"rgb(223, 227, 232)"` |
-
-The color of the grid lines.
+The theme controls the visual appearance of the chart, its axis and grid.
 
 #### xAxisOptions
 
@@ -286,14 +173,6 @@ The color of the grid lines.
 
 This accepts a function that is called to format the labels when the chart draws its X axis.
 
-##### labelColor
-
-| type     | default                |
-| -------- | ---------------------- |
-| `string` | `'rgb(223, 227, 232)'` |
-
-The color used for axis labels.
-
 ##### useMinimalLabels
 
 | type      | default |
@@ -301,14 +180,6 @@ The color used for axis labels.
 | `boolean` | `false` |
 
 If set to true, a chart with more than three xAxis labels will show a maximum of three labels. This option is useful when timeseries data is displayed.
-
-##### showTicks
-
-| type      | default |
-| --------- | ------- |
-| `boolean` | `true`  |
-
-Whether to show ticks connecting the xAxis labels to their corresponding grid line.
 
 #### yAxisOptions
 
@@ -319,22 +190,6 @@ Whether to show ticks connecting the xAxis labels to their corresponding grid li
 | `(value: number): string` | `(value) => value.toString()` |
 
 This accepts a function that is called when the Y value (`rawValue`) is formatted for the tooltip and for the Y Axis.
-
-##### labelColor
-
-| type     | default                |
-| -------- | ---------------------- |
-| `string` | `'rgb(223, 227, 232)'` |
-
-The color used for axis labels.
-
-##### backgroundColor
-
-| type     | default       |
-| -------- | ------------- |
-| `string` | `transparant` |
-
-The color used behind axis labels.
 
 ##### integersOnly
 

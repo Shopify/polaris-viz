@@ -2,11 +2,9 @@ import React from 'react';
 import {Story, Meta} from '@storybook/react';
 
 import {Sparkline, SparklineProps} from '../..';
-import {primaryColor, secondaryColor} from '../../../utilities';
 
 const series = [
   {
-    color: 'darkModePositive',
     areaStyle: 'gradient',
     hasPoint: true,
     data: [
@@ -24,9 +22,9 @@ const series = [
     ],
   },
   {
-    color: 'darkModePositive',
     areaStyle: 'none',
     lineStyle: 'dashed',
+    hasPoint: false,
     data: [
       {x: 0, y: 200},
       {x: 1, y: 200},
@@ -61,6 +59,10 @@ export default {
     ),
   ],
   argTypes: {
+    theme: {
+      description:
+        'The theme that the chart will inherit its color, container and line styles from',
+    },
     series: {
       description:
         'The sparkline can show one data series or a set of comparison data series. Each series is configured by the series item in the array. [Series type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/Sparkline/Sparkline.tsx#L21)',
@@ -69,7 +71,6 @@ export default {
       description:
         'Visually hidden text for screen readers. Make sure to write [informative alt text.](https://medium.com/nightingale/writing-alt-text-for-data-visualization-2a218ef43f81)',
     },
-    hasSpline: {description: 'Whether to curve the line between points.'},
     isAnimated: {
       description: 'Determines whether to animate the chart on state changes.',
     },
@@ -92,16 +93,11 @@ const defaultProps = {
 
 export const InsightsStyle = Template.bind({});
 InsightsStyle.args = defaultProps;
-InsightsStyle.parameters = {
-  backgrounds: {
-    default: 'dark',
-  },
-};
 
-export const hasSpline = Template.bind({});
-hasSpline.args = {
+export const withoutSpline = Template.bind({});
+withoutSpline.args = {
   ...defaultProps,
-  hasSpline: true,
+  theme: 'NoSpline',
 };
 
 export const OffsetAndNulls = Template.bind({});
@@ -109,8 +105,8 @@ OffsetAndNulls.args = {
   ...defaultProps,
   series: [
     {
-      color: 'darkModePositive',
-      areaStyle: 'gradient',
+      color: 'rgb(255, 85, 70)',
+      area: 'rgba(255, 85, 70, 0.1)',
       hasPoint: true,
       offsetRight: 12,
       offsetLeft: 50,
@@ -129,9 +125,9 @@ OffsetAndNulls.args = {
       ],
     },
     {
-      color: 'darkModePositive',
-      areaStyle: 'none',
+      color: 'rgb(255, 85, 70)',
       lineStyle: 'dashed',
+      hasPoint: false,
       data: [
         {x: 0, y: 20},
         {x: 1, y: 20},

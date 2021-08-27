@@ -24,87 +24,6 @@ export interface GradientStop {
   stopOpacity?: number;
 }
 
-export type SeriesColor = Color | GradientStop[];
-
-export type Color = TokensColor | VizPaletteColor;
-
-export type TokensColor =
-  | 'colorBlack'
-  | 'colorBlue'
-  | 'colorBlueDark'
-  | 'colorBlueDarker'
-  | 'colorBlueLight'
-  | 'colorBlueLighter'
-  | 'colorBlueText'
-  | 'colorGreen'
-  | 'colorGreenDark'
-  | 'colorGreenDarker'
-  | 'colorGreenLight'
-  | 'colorGreenLighter'
-  | 'colorGreenText'
-  | 'colorIndigo'
-  | 'colorIndigoDark'
-  | 'colorIndigoDarker'
-  | 'colorIndigoLight'
-  | 'colorIndigoLighter'
-  | 'colorIndigoText'
-  | 'colorInk'
-  | 'colorInkLight'
-  | 'colorInkLighter'
-  | 'colorInkLightest'
-  | 'colorOrange'
-  | 'colorOrangeDark'
-  | 'colorOrangeDarker'
-  | 'colorOrangeLight'
-  | 'colorOrangeLighter'
-  | 'colorOrangeText'
-  | 'colorPurple'
-  | 'colorPurpleDark'
-  | 'colorPurpleDarker'
-  | 'colorPurpleLight'
-  | 'colorPurpleLighter'
-  | 'colorPurpleText'
-  | 'colorRed'
-  | 'colorRedDark'
-  | 'colorRedDarker'
-  | 'colorRedLight'
-  | 'colorRedLighter'
-  | 'colorRedText'
-  | 'colorSky'
-  | 'colorSkyDark'
-  | 'colorSkyLight'
-  | 'colorSkyLighter'
-  | 'colorTeal'
-  | 'colorTealDark'
-  | 'colorTealDarker'
-  | 'colorTealLight'
-  | 'colorTealLighter'
-  | 'colorTealText'
-  | 'colorWhite'
-  | 'colorYellow'
-  | 'colorYellowDark'
-  | 'colorYellowDarker'
-  | 'colorYellowLight'
-  | 'colorYellowLighter';
-
-export type VizPaletteColor =
-  | 'primary'
-  | 'secondary'
-  | 'tertiary'
-  | 'quaternary'
-  | 'primaryProminent'
-  | 'secondaryProminent'
-  | 'tertiaryProminent'
-  | 'quaternaryProminent'
-  | 'pastComparison'
-  | 'positive'
-  | 'negative'
-  | 'darkModePositive'
-  | 'darkModeNegative'
-  | 'colorGrayDark'
-  | 'colorGrayLight'
-  | 'colorWhiteTransparent';
-
 export type StringLabelFormatter = (
   value: string,
   index?: number,
@@ -136,5 +55,117 @@ export interface Dimensions {
 }
 
 export type SparkChartData = number | null;
+
 export type PathInterpolator = InterpolatorFn<readonly number[], string>;
 export type NumberInterpolator = InterpolatorFn<readonly number[], number>;
+export type Color = string | GradientStop[];
+
+export interface XAxisOptions {
+  labelFormatter?: StringLabelFormatter;
+  useMinimalLabels?: boolean;
+}
+export interface YAxisOptions {
+  labelFormatter?: NumberLabelFormatter;
+  integersOnly?: boolean;
+}
+
+// === Theme types === //
+export enum BarMargin {
+  Small = 0.05,
+  Medium = 0.1,
+  Large = 0.3,
+  None = 0,
+}
+
+export interface GridTheme {
+  showHorizontalLines: boolean;
+  showVerticalLines: boolean;
+  horizontalOverflow: boolean;
+  color: string;
+  horizontalMargin: number;
+}
+
+export interface BarTheme {
+  innerMargin: keyof typeof BarMargin;
+  outerMargin: keyof typeof BarMargin;
+  color: Color;
+  hasRoundedCorners: boolean;
+  /**
+   * @deprecated This prop is experimental and not ready for general use. If you want to use this, come talk to us in #polaris-data-viz
+   */
+  zeroAsMinHeight: boolean;
+}
+
+export interface XAxisTheme {
+  showTicks: boolean;
+  labelColor: string;
+  hide: boolean;
+}
+
+export interface CrossHairTheme {
+  color: string;
+  width: number;
+}
+
+export interface YAxisTheme {
+  labelColor: string;
+  backgroundColor: string;
+}
+
+export interface ChartContainerTheme {
+  borderRadius: string;
+  padding: string;
+  backgroundColor: string;
+}
+
+export interface LineTheme {
+  color: Color;
+  area: string | null;
+  sparkArea: Color | null;
+  hasSpline: boolean;
+  style: LineStyle;
+  hasPoint: boolean;
+  width: number;
+  pointStroke: string;
+}
+export interface SeriesColors {
+  upToFour: Color[];
+  fromFiveToSeven: Color[];
+  all: Color[];
+}
+
+export interface ColorPalette {
+  colors: Color[];
+}
+
+export interface Legend {
+  labelColor: string;
+  valueColor: string;
+  trendIndicator: {positive: string; negative: string; neutral: string};
+}
+
+export interface PartialTheme {
+  chartContainer?: Partial<ChartContainerTheme>;
+  bar?: Partial<BarTheme>;
+  line?: Partial<LineTheme>;
+  grid?: Partial<GridTheme>;
+  xAxis?: Partial<XAxisTheme>;
+  yAxis?: Partial<YAxisTheme>;
+  crossHair?: Partial<CrossHairTheme>;
+  colorPalette?: Partial<ColorPalette>;
+  legend?: Partial<Legend>;
+  seriesColors?: Partial<SeriesColors>;
+}
+
+export interface Theme {
+  chartContainer: ChartContainerTheme;
+  bar: BarTheme;
+  grid: GridTheme;
+  xAxis: XAxisTheme;
+  yAxis: YAxisTheme;
+  line: LineTheme;
+  crossHair: CrossHairTheme;
+  legend: Legend;
+  colorPalette: ColorPalette;
+  seriesColors: SeriesColors;
+}

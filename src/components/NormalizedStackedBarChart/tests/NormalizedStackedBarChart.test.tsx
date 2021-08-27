@@ -140,12 +140,13 @@ describe('<NormalizedBarChart />', () => {
   });
 
   describe('Colors', () => {
-    it('handles arrays of color tokens', () => {
-      const barChart = mount(
-        <NormalizedStackedBarChart {...mockProps} colors={['colorPurple']} />,
-      );
+    it('inherits colors from the theme', () => {
+      const barChart = mount(<NormalizedStackedBarChart {...mockProps} />);
 
-      expect(barChart.find(BarSegment)!.props.color).toBe('rgb(156, 106, 222)');
+      expect(barChart.find(BarSegment)!.props.color).toStrictEqual([
+        {color: '#936DFF', offset: 0},
+        {color: '#7C44F8', offset: 100},
+      ]);
     });
   });
 

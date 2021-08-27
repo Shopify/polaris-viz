@@ -1,6 +1,6 @@
 import React, {useCallback, useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
-import type {SeriesColor} from 'types';
+import type {Color} from 'types';
 import {useTransition} from '@react-spring/web';
 
 import {usePrefersReducedMotion} from '../../../../hooks';
@@ -13,11 +13,7 @@ import {
   MASK_SUBDUE_COLOR,
   MASK_HIGHLIGHT_COLOR,
 } from '../../../../constants';
-import {
-  getAnimationTrail,
-  uniqueId,
-  getColorValue,
-} from '../../../../utilities';
+import {getAnimationTrail, uniqueId} from '../../../../utilities';
 
 interface Props {
   x: number;
@@ -25,7 +21,7 @@ interface Props {
   width: number;
   height: number;
   data: number[];
-  colors: SeriesColor[];
+  colors: Color[];
   isSubdued: boolean;
   barGroupIndex: number;
   ariaLabel: string;
@@ -88,7 +84,7 @@ export function BarGroup({
     return typeof color === 'string'
       ? [
           {
-            color: getColorValue(color),
+            color,
             offset: 0,
           },
         ]

@@ -21,8 +21,7 @@ jest.mock('d3-scale', () => ({
 describe('<Sparkline />', () => {
   const mockSeries = [
     {
-      color: 'colorRed' as any,
-      areaStyle: 'gradient' as any,
+      color: 'red',
       data: [
         {x: 0, y: 100},
         {x: 1, y: 200},
@@ -38,8 +37,7 @@ describe('<Sparkline />', () => {
       ],
     },
     {
-      color: 'colorPurple' as any,
-      areaStyle: 'none' as any,
+      color: 'purple',
       lineStyle: 'dashed' as any,
       data: [
         {x: 0, y: 10},

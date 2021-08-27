@@ -1,9 +1,9 @@
 import React from 'react';
 import {sum} from 'd3-array';
 import {scaleLinear} from 'd3-scale';
-import type {Color} from 'types';
 
-import {getColorValue, classNames} from '../../utilities';
+import {useTheme} from '../../hooks';
+import {classNames} from '../../utilities';
 
 import {BarSegment, BarLabel} from './components';
 import type {Size, Data, Orientation} from './types';
@@ -13,15 +13,16 @@ export interface NormalizedStackedBarChartProps {
   data: Data[];
   size?: Size;
   orientation?: Orientation;
-  colors?: Color[];
+  theme?: string;
 }
 
 export function NormalizedStackedBarChart({
   data,
   size = 'small',
   orientation = 'horizontal',
-  colors = ['colorPurpleDark', 'colorBlue', 'colorTeal', 'colorSkyDark'],
+  theme,
 }: NormalizedStackedBarChartProps) {
+  const selectedTheme = useTheme(theme);
   const containsNegatives = data.some(({value}) => value < 0);
   const isDevelopment = process.env.NODE_ENV === 'development';
 
@@ -44,7 +45,7 @@ export function NormalizedStackedBarChart({
   const xScale = scaleLinear().range([0, 100]).domain([0, totalValue]);
 
   const isVertical = orientation === 'vertical';
-  const colorPalette = colors.map((color) => getColorValue(color));
+  const {colors} = selectedTheme.colorPalette;
 
   return (
     <div
@@ -52,6 +53,11 @@ export function NormalizedStackedBarChart({
         styles.Container,
         isVertical ? styles.VerticalContainer : styles.HorizontalContainer,
       )}
+      style={{
+        background: selectedTheme.chartContainer.backgroundColor,
+        padding: selectedTheme.chartContainer.padding,
+        borderRadius: selectedTheme.chartContainer.borderRadius,
+      }}
     >
       <ul
         className={
@@ -65,8 +71,10 @@ export function NormalizedStackedBarChart({
             key={`${label}-${formattedValue}`}
             label={label}
             value={formattedValue}
-            color={colorPalette[index]}
+            color={colors[index]}
             comparisonMetric={comparisonMetric}
+            legendColors={selectedTheme.legend}
+            orientation={orientation}
           />
         ))}
       </ul>
@@ -86,7 +94,7 @@ export function NormalizedStackedBarChart({
               size={size}
               scale={xScale(value)}
               key={`${label}-${value}`}
-              color={colorPalette[index]}
+              color={colors[index]}
             />
           ),
         )}

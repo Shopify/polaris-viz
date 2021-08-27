@@ -45,7 +45,7 @@ const defaultProps = {
   annotation: {
     dataIndex: 1,
     width: 100,
-    color: 'colorRed',
+    color: 'red',
     tooltipData: {label: 'Median', value: '$10.50'},
   },
 };

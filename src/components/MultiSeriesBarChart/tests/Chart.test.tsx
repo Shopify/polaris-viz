@@ -1,6 +1,5 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
-import type {Color} from 'types';
 import {
   YAxis,
   TooltipContainer,
@@ -44,8 +43,8 @@ describe('Chart />', () => {
           {label: 'stuff 2', rawValue: 20},
           {label: 'stuff 3', rawValue: 30},
         ],
-        color: 'colorBlack' as Color,
-        highlightColor: 'colorBlack' as Color,
+        color: 'black',
+        highlightColor: 'black',
         name: 'LABEL1',
       },
       {
@@ -54,8 +53,8 @@ describe('Chart />', () => {
           {label: 'stuff 2', rawValue: 20},
           {label: 'stuff 3', rawValue: 30},
         ],
-        color: 'colorRed' as Color,
-        highlightColor: 'colorRed' as Color,
+        color: 'red',
+        highlightColor: 'red',
         name: 'LABEL2',
       },
     ],
@@ -64,9 +63,10 @@ describe('Chart />', () => {
     barOptions: {
       innerMargin: 0,
       outerMargin: 0,
+      color: 'red',
       hasRoundedCorners: false,
-      isStacked: false,
       zeroAsMinHeight: false,
+      isStacked: false,
     },
     xAxisOptions: {
       labelFormatter: jest.fn((value: string) => value.toString()),
