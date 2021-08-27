@@ -1,6 +1,7 @@
 import React, {useState, useLayoutEffect, useRef, useCallback} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 
+import {getSeriesColorsFromCount} from '../../hooks/use-theme-series-colors';
 import {Dimensions, BarMargin} from '../../types';
 import {SkipLink} from '../SkipLink';
 import {uniqueId, normalizeData} from '../../utilities';
@@ -47,6 +48,7 @@ export function BarChart({
   theme = 'Default',
 }: BarChartProps) {
   const selectedTheme = useTheme(theme);
+  const [seriesColor] = getSeriesColorsFromCount(data.length, selectedTheme);
 
   const [chartDimensions, setChartDimensions] = useState<Dimensions | null>(
     null,
@@ -151,6 +153,7 @@ export function BarChart({
 
   const barThemeWithMargins = {
     ...selectedTheme.bar,
+    color: seriesColor,
     innerMargin: BarMargin[selectedTheme.bar.innerMargin],
     outerMargin: BarMargin[selectedTheme.bar.outerMargin],
   };

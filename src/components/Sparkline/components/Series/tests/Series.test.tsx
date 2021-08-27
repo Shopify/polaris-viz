@@ -2,7 +2,6 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
 import {area} from 'd3-shape';
-import type {Theme} from 'types';
 
 import {LinearGradient} from '../../../../LinearGradient';
 import {Series} from '../Series';
@@ -57,7 +56,7 @@ const mockProps = {
   hasSpline: false,
   theme: {
     line: {sparkArea: null, style: 'solid', color: 'red', hasPoint: true},
-  } as Theme,
+  } as any,
 };
 
 jest.mock('utilities/unique-id', () => ({

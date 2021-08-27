@@ -88,7 +88,6 @@ export interface GridTheme {
 export interface BarTheme {
   innerMargin: keyof typeof BarMargin;
   outerMargin: keyof typeof BarMargin;
-  color: Color;
   hasRoundedCorners: boolean;
   /**
    * @deprecated This prop is experimental and not ready for general use. If you want to use this, come talk to us in #polaris-data-viz
@@ -119,14 +118,13 @@ export interface ChartContainerTheme {
 }
 
 export interface LineTheme {
-  color: Color;
-  area: string | null;
   sparkArea: Color | null;
   hasSpline: boolean;
   style: LineStyle;
   hasPoint: boolean;
   width: number;
   pointStroke: string;
+  dottedStrokeColor: string;
 }
 export interface SeriesColors {
   upToFour: Color[];

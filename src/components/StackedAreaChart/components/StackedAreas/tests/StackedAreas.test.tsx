@@ -81,6 +81,10 @@ describe('<StackedAreas />', () => {
   });
 
   it('generates props for the paths', () => {
+    // eslint-disable-next-line id-length
+    const d =
+      'M250,250L250,250C250,250,250,250,250,250L250,250L250,250L250,250C250,250,250,250,250,250L250,250Z';
+
     const stackedArea = mount(
       <svg>
         <StackedAreas {...mockProps} />
@@ -89,7 +93,7 @@ describe('<StackedAreas />', () => {
 
     expect(stackedArea).toContainReactComponent('path', {
       // eslint-disable-next-line id-length
-      d: 'M250,250L250,250L250,250L250,250Z',
+      d,
       fill: 'url(#area-stackedAreas-1-0)',
       stroke: 'url(#area-stackedAreas-1-0)',
       strokeWidth: '0.1',

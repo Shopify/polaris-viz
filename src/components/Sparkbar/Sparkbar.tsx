@@ -4,6 +4,7 @@ import {scaleBand, scaleLinear} from 'd3-scale';
 import {line} from 'd3-shape';
 import {useTransition} from '@react-spring/web';
 
+import {getSeriesColorsFromCount} from '../../hooks/use-theme-series-colors';
 import {
   usePrefersReducedMotion,
   useResizeObserver,
@@ -76,6 +77,7 @@ export function Sparkbar({
   const [svgDimensions, setSvgDimensions] = useState({width: 0, height: 0});
   const {prefersReducedMotion} = usePrefersReducedMotion();
   const selectedTheme = useTheme(theme);
+  const [seriesColor] = getSeriesColorsFromCount(data.length, selectedTheme);
 
   const [updateMeasurements] = useDebouncedCallback(() => {
     if (entry == null) return;
@@ -149,13 +151,11 @@ export function Sparkbar({
 
   const shouldAnimate = !prefersReducedMotion && isAnimated;
 
-  const color = selectedTheme.bar.color;
-
-  const barColor = isGradientType(color)
-    ? color
+  const barColor = isGradientType(seriesColor)
+    ? seriesColor
     : [
         {
-          color,
+          color: seriesColor,
           offset: 0,
         },
       ];
