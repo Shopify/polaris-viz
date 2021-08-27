@@ -8,8 +8,8 @@ import {
   DIAGONAL_ANGLE,
   LINE_HEIGHT,
   BELOW_X_AXIS_MARGIN,
+  DEFAULT_THEME,
   DEFAULT_GREY_LABEL,
-  colorSky,
 } from '../../constants';
 
 import styles from './LinearXAxis.scss';
@@ -64,7 +64,7 @@ function Axis({
   ariaHidden,
   showGridLines = true,
   showTicks = true,
-  gridColor = colorSky,
+  gridColor = DEFAULT_THEME.grid.color,
   labelColor = DEFAULT_GREY_LABEL,
 }: Props) {
   const {
