@@ -2,6 +2,7 @@ import React from 'react';
 import {sum} from 'd3-array';
 import {scaleLinear} from 'd3-scale';
 
+import {getSeriesColorsFromCount} from '../../hooks/use-theme-series-colors';
 import {useTheme} from '../../hooks';
 import {classNames} from '../../utilities';
 
@@ -23,6 +24,7 @@ export function NormalizedStackedBarChart({
   theme,
 }: NormalizedStackedBarChartProps) {
   const selectedTheme = useTheme(theme);
+  const colors = getSeriesColorsFromCount(data.length, selectedTheme);
   const containsNegatives = data.some(({value}) => value < 0);
   const isDevelopment = process.env.NODE_ENV === 'development';
 
@@ -45,7 +47,6 @@ export function NormalizedStackedBarChart({
   const xScale = scaleLinear().range([0, 100]).domain([0, totalValue]);
 
   const isVertical = orientation === 'vertical';
-  const {colors} = selectedTheme.colorPalette;
 
   return (
     <div

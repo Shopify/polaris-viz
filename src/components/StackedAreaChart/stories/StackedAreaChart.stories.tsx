@@ -4,11 +4,7 @@ import {Story, Meta} from '@storybook/react';
 import {StackedAreaChart, StackedAreaChartProps} from '../StackedAreaChart';
 
 import {data, labels, formatYAxisLabel} from './utils.stories';
-import {
-  colorPurpleDark,
-  colorTeal,
-  VIZ_GRADIENT_COLOR,
-} from '../../../constants';
+import {colorPurpleDark, colorTeal} from '../../../constants';
 
 const tooltipContent = {
   empty: undefined,
@@ -120,7 +116,16 @@ Gradients.args = {
             label: Math.random().toString(),
           };
         }),
-      color: VIZ_GRADIENT_COLOR.negative.down,
+      color: [
+        {
+          offset: 0,
+          color: 'red',
+        },
+        {
+          offset: 100,
+          color: 'blue',
+        },
+      ],
     },
     {
       name: 'Two',

@@ -33,7 +33,7 @@ export default {
 
 const Template: Story<TooltipContentProps> = (args: TooltipContentProps) => {
   return (
-    <div style={{width: 125}}>
+    <div style={{width: 165}}>
       <BarChartTooltipContent {...args} />
     </div>
   );

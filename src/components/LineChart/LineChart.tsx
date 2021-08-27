@@ -158,7 +158,7 @@ export function LineChart({
         },
       }),
     );
-    return <TooltipContent data={formattedData} />;
+    return <TooltipContent theme={theme} data={formattedData} />;
   }
 
   const seriesWithDefaults = series.map<SeriesWithDefaults>((series, index) => {

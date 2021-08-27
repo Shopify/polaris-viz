@@ -20,6 +20,48 @@ $color-teal: rgb(71, 193, 191);
 $positive-color: rgb(0, 128, 96);
 $negative-color: rgb(215, 44, 13);
 
+// Colors are named non-sequencial numbers
+// so it matches the UX Color Matrix
+// stylelint-disable color-no-hex
+$color-dark-comparison: #90b0df;
+
+$color-gray-01: #1f1f25;
+$color-gray-03: #2e2e36;
+$color-gray-05: #43434e;
+$color-gray-06: #4b4b57;
+$color-gray-13: #dadadd;
+$color-gray-15: #ffffff;
+
+$color-indigo-40: #c5b7fe;
+$color-indigo-70: #997afc;
+$color-indigo-90: #7f4afa;
+
+$color-blue-50: #88b1f2;
+$color-blue-70: #4b92e5;
+$color-blue-80: #4282cd;
+$color-blue-90: #3672bb;
+
+$color-teal-40: #79cce5;
+$color-teal-70: #4c9aaf;
+$color-teal-90: #33798c;
+
+$color-magenta-70: #da62c4;
+$color-magenta-90: #b1489e;
+
+$color-purple-50: #c89ef1;
+$color-purple-70: #b176e2;
+$color-purple-90: #9f41dc;
+
+$color-orange-50: #ec9d71;
+$color-orange-60: #df8b55;
+$color-orange-80: #b66e3f;
+
+$color-yellow-20: #fae275;
+$color-yellow-40: #d1c256;
+$color-yellow-70: #97933e;
+
+// -----
+
 $spacing-extra-tight: 4px;
 $spacing-tight: 8px;
 $spacing-base-tight: 12px;
@@ -60,4 +102,42 @@ $font-stack-base: -apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI'
   colorTeal: $color-teal;
   positiveColor: $positive-color;
   negativeColor: $negative-color;
+
+  // NEW COLORS
+  colorDarkComparison: $color-dark-comparison;
+
+  colorGray01: $color-gray-01;
+  colorGray03: $color-gray-03;
+  colorGray05: $color-gray-05;
+  colorGray06: $color-gray-06;
+  colorGray13: $color-gray-13;
+  colorGray15: $color-gray-15;
+
+  colorIndigo40: $color-indigo-40;
+  colorIndigo70: $color-indigo-70;
+  colorIndigo90: $color-indigo-90;
+
+  colorBlue50: $color-blue-50;
+  colorBlue70: $color-blue-70;
+  colorBlue80: $color-blue-80;
+  colorBlue90: $color-blue-90;
+
+  colorTeal40: $color-teal-40;
+  colorTeal70: $color-teal-70;
+  colorTeal90: $color-teal-90;
+
+  colorMagenta70: $color-magenta-70;
+  colorMagenta90: $color-magenta-90;
+
+  colorPurple50: $color-purple-50;
+  colorPurple70: $color-purple-70;
+  colorPurple90: $color-purple-90;
+
+  colorOrange50: $color-orange-50;
+  colorOrange60: $color-orange-60;
+  colorOrange80: $color-orange-80;
+
+  colorYellow20: $color-yellow-20;
+  colorYellow40: $color-yellow-40;
+  colorYellow70: $color-yellow-70;
 }

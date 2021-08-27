@@ -54,17 +54,6 @@ export const MAX_TRAIL_DURATION = 500;
 export const MASK_HIGHLIGHT_COLOR = variables.colorWhite;
 export const MASK_SUBDUE_COLOR = '#434343';
 
-const POSITIVE_COLOR = `rgba(46, 237, 145, 0.8)`;
-const PRIMARY_NEUTRAL_COLOR = `rgba(152, 107, 255, 0.8)`;
-const SECONDARY_NEUTRAL_COLOR = `rgba(58, 164, 246, 0.8)`;
-const NEGATIVE_COLOR = `rgba(236, 110, 110, 0.8)`;
-const COMPARISON_COLOR = `rgba(144, 176, 223, 0.6)`;
-
-export const PRIMARY_COLOR = 'rgb(0,161,159)';
-export const SECONDARY_COLOR = 'rgb(41,35,112)';
-export const TERTIARY_COLOR = 'rgb(13,140,237)';
-export const QUARTERNARY_COLOR = 'rgb(157,53,193)';
-
 export const colorSky = variables.colorSky;
 export const colorWhite = variables.colorWhite;
 export const colorPurpleDark = variables.colorPurpleDark;
@@ -74,75 +63,56 @@ export const colorSkyDark = variables.colorSkyDark;
 export const positiveColor = variables.positiveColor;
 export const negativeColor = variables.negativeColor;
 
-const VIZ_COMPARISON_GRADIENT = [
-  {offset: 0, color: COMPARISON_COLOR},
-  {offset: 100, color: COMPARISON_COLOR},
-];
-
-export const VIZ_GRADIENT_COLOR = {
-  positive: {
-    comparison: VIZ_COMPARISON_GRADIENT,
-    up: [
-      {offset: 0, color: PRIMARY_NEUTRAL_COLOR},
-      {offset: 60, color: SECONDARY_NEUTRAL_COLOR},
-      {offset: 100, color: POSITIVE_COLOR},
-    ],
-  },
-  negative: {
-    comparison: VIZ_COMPARISON_GRADIENT,
-    up: [
-      {offset: 0, color: SECONDARY_NEUTRAL_COLOR},
-      {offset: 60, color: PRIMARY_NEUTRAL_COLOR},
-      {offset: 100, color: NEGATIVE_COLOR},
-    ],
-    down: [
-      {offset: 0, color: NEGATIVE_COLOR},
-      {offset: 60, color: PRIMARY_NEUTRAL_COLOR},
-      {offset: 100, color: SECONDARY_NEUTRAL_COLOR},
-    ],
-  },
-  neutral: {
-    up: [
-      {offset: 0, color: PRIMARY_NEUTRAL_COLOR},
-      {offset: 100, color: SECONDARY_NEUTRAL_COLOR},
-    ],
-    comparison: VIZ_COMPARISON_GRADIENT,
-  },
+const createGradient = (color1: string, color2: string) => {
+  return [
+    {offset: 0, color: color2},
+    {offset: 100, color: color1},
+  ];
 };
 
 export const DEFAULT_THEME: Theme = {
   seriesColors: {
-    upToFour: ['#9479F7', '#578FE1', '#CF68C1', '#5B97AD'],
+    upToFour: [
+      createGradient(variables.colorIndigo70, variables.colorIndigo90),
+      createGradient(variables.colorBlue70, variables.colorBlue90),
+      createGradient(variables.colorMagenta70, variables.colorMagenta90),
+      createGradient(variables.colorTeal70, variables.colorTeal90),
+    ],
     fromFiveToSeven: [
-      '#5B97AD',
-      '#578FE1',
-      '#9479F7',
-      '#C29FED',
-      '#CF68C1',
-      '#D7905B',
-      '#F4CE74',
+      createGradient(variables.colorTeal70, variables.colorTeal90),
+      createGradient(variables.colorBlue70, variables.colorBlue90),
+      createGradient(variables.colorIndigo70, variables.colorIndigo90),
+      createGradient(variables.colorPurple50, variables.colorPurple70),
+      createGradient(variables.colorMagenta70, variables.colorMagenta90),
+      createGradient(variables.colorOrange60, variables.colorOrange80),
+      createGradient(variables.colorYellow20, variables.colorYellow40),
     ],
     all: [
-      '#41778B',
-      '#8DAEEF',
-      '#7847F4',
-      '#AA77DE',
-      '#A74E9B',
-      '#E4A175',
-      '#BE9D44',
-      '#87C9E3',
-      '#4D7FC9',
-      '#C3B6FB',
-      '#9643D7',
-      '#CF68C1',
-      '#AD7349',
-      '#F4CE74',
+      variables.colorTeal90,
+      variables.colorBlue50,
+      variables.colorIndigo90,
+      variables.colorPurple70,
+      variables.colorMagenta90,
+      variables.colorOrange50,
+      variables.colorYellow70,
+      variables.colorTeal40,
+      variables.colorBlue80,
+      variables.colorIndigo40,
+      variables.colorPurple90,
+      variables.colorMagenta70,
+      variables.colorOrange80,
+      variables.colorYellow20,
     ],
+  },
+  tooltip: {
+    backgroundColor: variables.colorGray03,
+    valueColor: variables.colorGray15,
+    labelColor: variables.colorGray13,
   },
   chartContainer: {
     borderRadius: '0px',
     padding: '0px',
-    backgroundColor: '#1f1f25',
+    backgroundColor: variables.colorGray01,
   },
   line: {
     sparkArea: null,
@@ -150,8 +120,8 @@ export const DEFAULT_THEME: Theme = {
     style: 'solid',
     hasPoint: true,
     width: 2,
-    pointStroke: 'white',
-    dottedStrokeColor: 'rgba(144, 176, 223, 60)',
+    pointStroke: variables.colorGray15,
+    dottedStrokeColor: variables.colorDarkComparison,
   },
   bar: {
     hasRoundedCorners: true,
@@ -162,42 +132,22 @@ export const DEFAULT_THEME: Theme = {
   grid: {
     showVerticalLines: false,
     showHorizontalLines: true,
-    color: '#43434E',
+    color: variables.colorGray05,
     horizontalOverflow: false,
     horizontalMargin: 0,
   },
   xAxis: {
     showTicks: false,
-    labelColor: '#DCDCDC',
+    labelColor: variables.colorGray13,
     hide: false,
   },
   yAxis: {
-    backgroundColor: '#1f1f25',
-    labelColor: '#DCDCDC',
+    backgroundColor: variables.colorGray01,
+    labelColor: variables.colorGray13,
   },
   crossHair: {
     color: 'rgb(139, 159, 176)',
     width: 1,
-  },
-  colorPalette: {
-    colors: [
-      [
-        {offset: 0, color: '#936DFF'},
-        {offset: 100, color: '#7C44F8'},
-      ],
-      [
-        {offset: 0, color: '#6285FF'},
-        {offset: 100, color: '#3B66FF'},
-      ],
-      [
-        {offset: 0, color: '#34A9BF'},
-        {offset: 100, color: '#0194AF'},
-      ],
-      [
-        {offset: 0, color: '#E564D3'},
-        {offset: 100, color: '#DC42C3'},
-      ],
-    ],
   },
   legend: {
     labelColor: '#DADADD',

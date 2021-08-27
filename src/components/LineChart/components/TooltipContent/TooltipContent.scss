@@ -1,11 +1,11 @@
 @import '../../../../styles/common';
 
 .Name {
-  @include tooltip-emphasis;
   margin: 0;
 }
 
 .Value {
+  @include tooltip-emphasis;
   font-feature-settings: 'tnum';
   margin: 0;
   padding-left: $spacing-extra-tight;
@@ -20,7 +20,6 @@
   column-gap: $spacing-tight;
   row-gap: $spacing-tight;
   background: $color-white;
-  border: 1px solid $color-sky-dark;
   border-radius: 4px;
-  padding: $spacing-tight;
+  padding: $spacing-loose;
 }

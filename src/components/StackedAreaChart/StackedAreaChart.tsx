@@ -128,7 +128,7 @@ export function StackedAreaChart({
       value: formatYAxisLabel(value),
     }));
 
-    return <TooltipContent title={title} data={formattedData} />;
+    return <TooltipContent theme={theme} title={title} data={formattedData} />;
   }
 
   return (

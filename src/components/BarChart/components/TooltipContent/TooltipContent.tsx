@@ -1,5 +1,6 @@
 import React from 'react';
 
+import {useTheme} from '../../../../hooks';
 import type {Annotation} from '../../types';
 
 import styles from './TooltipContent.scss';
@@ -8,23 +9,45 @@ export interface TooltipContentProps {
   label: string;
   value: string;
   annotation?: Annotation;
+  theme?: string;
 }
 
 export function TooltipContent({
   label,
   value,
   annotation,
+  theme,
 }: TooltipContentProps) {
+  const {tooltip} = useTheme(theme);
+
   return (
-    <div className={styles.Container}>
+    <div
+      className={styles.Container}
+      style={{
+        background: tooltip.backgroundColor,
+        color: tooltip.labelColor,
+      }}
+    >
       {annotation != null && annotation.tooltipData != null ? (
         <React.Fragment>
-          <strong>{annotation.tooltipData.label}</strong>
-          {annotation.tooltipData.value}
+          {annotation.tooltipData.label}
+          <strong
+            style={{
+              color: tooltip.valueColor,
+            }}
+          >
+            {annotation.tooltipData.value}
+          </strong>
         </React.Fragment>
       ) : null}
-      <strong>{label}</strong>
-      {value}
+      {label}
+      <strong
+        style={{
+          color: tooltip.valueColor,
+        }}
+      >
+        {value}
+      </strong>
     </div>
   );
 }

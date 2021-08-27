@@ -151,7 +151,7 @@ export function MultiSeriesBarChart({
       value: yAxisOptionsWithDefaults.labelFormatter(value),
     }));
 
-    return <TooltipContent data={formattedData} />;
+    return <TooltipContent theme={theme} data={formattedData} />;
   }
 
   const seriesWithDefaults = series.map((series, index) => ({
