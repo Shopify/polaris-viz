@@ -1,5 +1,7 @@
 import React from 'react';
 import {PolarisVizProvider} from '../src/components';
+import '!style-loader!css-loader!sass-loader!../src/styles/global.scss';
+
 export const parameters = {
   backgrounds: {
     default: 'dark',

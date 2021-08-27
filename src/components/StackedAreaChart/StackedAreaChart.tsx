@@ -13,7 +13,6 @@ import {useResizeObserver, useTheme} from '../../hooks';
 
 import {Chart} from './Chart';
 import type {Series, RenderTooltipContentData} from './types';
-import styles from './Chart.scss';
 
 export interface StackedAreaChartProps {
   formatXAxisLabel?: StringLabelFormatter;
@@ -137,7 +136,7 @@ export function StackedAreaChart({
         <SkipLink anchorId={skipLinkAnchorId.current}>{skipLinkText}</SkipLink>
       )}
       <div
-        className={styles.Container}
+        className="chart-container"
         style={{
           background: selectedTheme.chartContainer.backgroundColor,
           padding: selectedTheme.chartContainer.padding,

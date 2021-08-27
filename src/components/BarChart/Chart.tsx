@@ -255,7 +255,7 @@ export function Chart({
 
   return (
     <div
-      className={styles.ChartContainer}
+      className="chart"
       style={{
         height,
         width,

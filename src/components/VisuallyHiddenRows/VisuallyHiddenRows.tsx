@@ -8,8 +8,6 @@ import type {
   Color,
 } from '../../types';
 
-import styles from './VisuallyHiddenRows.scss';
-
 interface Props {
   series: DataSeries<Data | NullableData, Color>[];
   xAxisLabels: string[];
@@ -28,7 +26,7 @@ export const VisuallyHiddenRows = React.memo(function Rows({
         {xAxisLabels.map((xAxisLabel, index) => {
           return (
             <text
-              className={styles.VisuallyHidden}
+              className="visually-hidden"
               key={`a11y-${xAxisLabel}-${index}`}
               role="columnheader"
             >
@@ -40,7 +38,7 @@ export const VisuallyHiddenRows = React.memo(function Rows({
       {series.map(({name, data}, index) => {
         return (
           <g role="row" key={`row-${name}-${index}`}>
-            <text role="rowheader" className={styles.VisuallyHidden}>
+            <text role="rowheader" className="visually-hidden">
               {name}
             </text>
             {data.map(({rawValue, label}, index) => {
@@ -48,7 +46,7 @@ export const VisuallyHiddenRows = React.memo(function Rows({
                 <text
                   key={`cell-${name}-${rawValue}-${label}-${index}`}
                   role="cell"
-                  className={styles.VisuallyHidden}
+                  className="visually-hidden"
                 >
                   {rawValue == null ? '' : formatYAxisLabel(rawValue)}
                 </text>

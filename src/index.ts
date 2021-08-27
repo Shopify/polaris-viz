@@ -1,3 +1,5 @@
+import './styles/global.scss';
+
 export {
   Sparkline,
   Sparkbar,

@@ -49,7 +49,6 @@ import type {
 } from './types';
 import {useYScale, useLineChartAnimations} from './hooks';
 import {Line, GradientArea} from './components';
-import styles from './Chart.scss';
 
 interface Props {
   series: SeriesWithDefaults[];
@@ -312,9 +311,9 @@ export function Chart({
   }
 
   return (
-    <div className={styles.Container}>
+    <div className="chart-container">
       <svg
-        className={styles.Chart}
+        className="chart"
         role={emptyState ? 'img' : 'table'}
         xmlns={XMLNS}
         width={dimensions.width}

@@ -16,7 +16,7 @@ export function ComparisonMetric({
     case 'neutral':
       return (
         <span className={styles.NeutralIcon}>
-          <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
+          <span className="visually-hidden">{accessibilityLabel}</span>
           <span style={{color: theme.trendIndicator.neutral}}>-</span>
         </span>
       );

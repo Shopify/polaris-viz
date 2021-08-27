@@ -7,7 +7,6 @@ import {TooltipContent} from '../TooltipContent';
 import {uniqueId} from '../../utilities';
 import {useResizeObserver, useTheme, useThemeSeriesColors} from '../../hooks';
 
-import styles from './MultiSeriesBarChart.scss';
 import {Chart} from './Chart';
 import {
   Series,
@@ -161,7 +160,7 @@ export function MultiSeriesBarChart({
 
   return (
     <div
-      className={styles.ChartContainer}
+      className="chart-container"
       style={{
         background: selectedTheme.chartContainer.backgroundColor,
         padding: selectedTheme.chartContainer.padding,

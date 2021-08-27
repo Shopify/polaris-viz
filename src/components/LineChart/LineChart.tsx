@@ -20,7 +20,6 @@ import type {
   SeriesWithDefaults,
 } from './types';
 import {TooltipContent} from './components';
-import styles from './LineChart.scss';
 
 export interface LineChartProps {
   series: Series[];
@@ -191,7 +190,7 @@ export function LineChart({
       )}
       <div
         ref={setRef}
-        className={styles.Container}
+        className="chart-container"
         style={{
           background: selectedTheme.chartContainer.backgroundColor,
           padding: selectedTheme.chartContainer.padding,

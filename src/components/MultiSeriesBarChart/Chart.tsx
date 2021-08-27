@@ -30,7 +30,6 @@ import type {
 import {BarGroup, StackedBarGroup} from './components';
 import {useYScale, useXScale} from './hooks';
 import {FONT_SIZE, SMALL_WIDTH, SMALL_FONT_SIZE, SPACING} from './constants';
-import styles from './Chart.scss';
 
 type BarOptions = Omit<BarTheme, 'innerMargin' | 'outerMargin'> & {
   innerMargin: number;
@@ -223,7 +222,7 @@ export function Chart({
 
   return (
     <div
-      className={styles.ChartContainer}
+      className="chart"
       style={{
         height: chartDimensions.height,
         width: chartDimensions.width,

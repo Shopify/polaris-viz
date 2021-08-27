@@ -7,7 +7,6 @@ import {getSeriesColorsFromCount} from '../../hooks/use-theme-series-colors';
 import {useResizeObserver, useTheme} from '../../hooks';
 import {XMLNS} from '../../constants';
 
-import styles from './Sparkline.scss';
 import {Series} from './components';
 
 const SVG_MARGIN = 2;
@@ -132,7 +131,7 @@ export function Sparkline({
   return (
     <div
       ref={setContainerRef}
-      className={styles.Container}
+      className="chart-container"
       style={{
         background: selectedTheme.chartContainer.backgroundColor,
         padding: selectedTheme.chartContainer.padding,
@@ -140,7 +139,7 @@ export function Sparkline({
       }}
     >
       {accessibilityLabel ? (
-        <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
+        <span className="visually-hidden">{accessibilityLabel}</span>
       ) : null}
 
       <svg xmlns={XMLNS} aria-hidden width={width} height={height}>

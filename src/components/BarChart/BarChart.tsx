@@ -8,7 +8,6 @@ import {uniqueId, normalizeData} from '../../utilities';
 import {useResizeObserver, useTheme} from '../../hooks';
 import type {XAxisOptions, YAxisOptions} from '../../types';
 
-import styles from './BarChart.scss';
 import {TooltipContent} from './components';
 import {Chart} from './Chart';
 import type {
@@ -181,7 +180,7 @@ export function BarChart({
 
   return (
     <div
-      className={styles.ChartContainer}
+      className="chart-container"
       style={{
         background: selectedTheme.chartContainer.backgroundColor,
         padding: selectedTheme.chartContainer.padding,

@@ -43,7 +43,6 @@ import {Spacing} from './constants';
 import {useYScale} from './hooks';
 import {StackedAreas} from './components';
 import type {Series, RenderTooltipContentData} from './types';
-import styles from './Chart.scss';
 
 interface Props {
   xAxisLabels: string[];
@@ -103,10 +102,10 @@ export function Chart({
   const fontSize =
     dimensions.width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
 
-  const stackedValues = useMemo(
-    () => areaStack(formattedData),
-    [areaStack, formattedData],
-  );
+  const stackedValues = useMemo(() => areaStack(formattedData), [
+    areaStack,
+    formattedData,
+  ]);
 
   const {ticks: initialTicks} = useYScale({
     fontSize,
@@ -182,7 +181,7 @@ export function Chart({
   return (
     <React.Fragment>
       <svg
-        className={styles.Chart}
+        className="chart"
         xmlns={XMLNS}
         width={dimensions.width}
         height={dimensions.height}

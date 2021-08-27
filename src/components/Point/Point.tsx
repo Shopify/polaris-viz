@@ -73,7 +73,7 @@ export const Point = React.memo(function Point({
       onFocus={handleFocus}
       className={classNames(
         styles.Point,
-        visuallyHidden ? styles.VisuallyHidden : null,
+        visuallyHidden ? 'visually-hidden' : null,
       )}
       aria-hidden={ariaHidden}
     />

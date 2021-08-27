@@ -12,7 +12,7 @@ interface Props {
 export function UpChevron({accessibilityLabel, fill}: Props) {
   return (
     <React.Fragment>
-      <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
+      <span className="visually-hidden">{accessibilityLabel}</span>
       <svg
         xmlns={XMLNS}
         aria-hidden="true"

@@ -1,14 +1,25 @@
 @import '../../styles/common';
 
 .Container {
-  @include legend-container;
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
   user-select: none;
 }
 
 .Series {
-  @include legend-series;
+  align-items: center;
+  column-gap: $spacing-extra-tight;
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: end;
+  padding-left: $spacing-base-tight;
 }
 
 .SeriesName {
-  @include legend-label;
+  color: $color-ink-light;
+  font-size: 12px;
+  font-weight: 500;
+  margin: 0;
 }

@@ -2,8 +2,6 @@ import React from 'react';
 
 import {XMLNS} from '../../../../constants';
 
-import styles from './DownChevron.scss';
-
 interface Props {
   accessibilityLabel: string;
   fill: string;
@@ -12,7 +10,7 @@ interface Props {
 export function DownChevron({accessibilityLabel, fill}: Props) {
   return (
     <React.Fragment>
-      <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
+      <span className="visually-hidden">{accessibilityLabel}</span>
       <svg
         xmlns={XMLNS}
         aria-hidden="true"

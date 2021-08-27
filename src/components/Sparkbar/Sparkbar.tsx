@@ -175,7 +175,7 @@ export function Sparkbar({
 
   return (
     <div
-      className={styles.Wrapper}
+      className="chart-container"
       ref={setContainerRef}
       style={{
         background: selectedTheme.chartContainer.backgroundColor,
@@ -184,7 +184,7 @@ export function Sparkbar({
       }}
     >
       {accessibilityLabel ? (
-        <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
+        <span className="visually-hidden">{accessibilityLabel}</span>
       ) : null}
 
       <svg
