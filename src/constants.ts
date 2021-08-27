@@ -1,23 +1,17 @@
 import type {Theme} from './types';
 import variables from './styles/shared/_variables.scss';
 
-export const SMALL_WIDTH = 300;
-export const MIN_LABEL_SPACE = 100;
 export const TICK_SIZE = 6;
 export const FONT_SIZE = 12;
-export const MIN_Y_LABEL_SPACE = 80;
-
 export const SPACING_TIGHT = Number(variables.spacingTight);
 export const SPACING_EXTRA_TIGHT = Number(variables.spacingExtraTight);
 export const SPACING = Number(variables.spacing);
 export const SPACING_BASE_TIGHT = Number(variables.spacingBaseTight);
-export const SPACING_LOOSE = Number(variables.spacingLoose);
 
 export const BELOW_X_AXIS_MARGIN = 24;
 export const SMALL_SCREEN = 500;
 export const SMALL_FONT_SIZE = 10;
 export const DIAGONAL_ANGLE = -40;
-export const TEXT_BOX_LINE_HEIGHT = 22.5;
 export const MIN_HORIZONTAL_LABEL_SPACE = 25;
 export const DEFAULT_LABEL_RATIO = 2;
 export const MIN_HORIZONTAL_TICKS = 3;
@@ -38,7 +32,7 @@ export enum BarChartMargin {
   Top = 5,
   Left = 0,
   Bottom = BELOW_X_AXIS_MARGIN,
-  Right = SPACING_LOOSE,
+  Right = Number(variables.spacingLoose),
 }
 
 export enum LineChartMargin {

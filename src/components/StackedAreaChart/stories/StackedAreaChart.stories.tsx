@@ -115,14 +115,9 @@ Gradients.args = {
           };
         }),
       color: [
-        {
-          offset: 0,
-          color: 'red',
-        },
-        {
-          offset: 100,
-          color: 'blue',
-        },
+        {offset: 0, color: 'rgba(58, 164, 246, 0.8)'},
+        {offset: 60, color: 'rgba(152, 107, 255, 0.8)'},
+        {offset: 100, color: 'rgba(236, 110, 110, 0.8)'},
       ],
     },
     {
