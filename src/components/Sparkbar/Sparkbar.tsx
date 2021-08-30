@@ -10,8 +10,8 @@ import {
   useResizeObserver,
   useTheme,
 } from '../../hooks';
-import {BARS_TRANSITION_CONFIG, colorWhite, XMLNS} from '../../constants';
-import type {SparkChartData} from '../../types';
+import {BARS_TRANSITION_CONFIG, XMLNS} from '../../constants';
+import type {Color, SparkChartData} from '../../types';
 import {uniqueId, getAnimationTrail, isGradientType} from '../../utilities';
 import {LinearGradient} from '../LinearGradient';
 
@@ -42,9 +42,9 @@ export interface SparkbarProps {
 function calculateRange(data: SparkChartData[], height: number) {
   let hasNegatives;
   let hasPositives;
-  for (const val of data) {
-    if (val != null && val < 0) hasNegatives = true;
-    else if (val != null && val > 0) hasPositives = true;
+  for (const {value} of data) {
+    if (value != null && value < 0) hasNegatives = true;
+    else if (value != null && value > 0) hasPositives = true;
 
     if (hasNegatives && hasPositives) break;
   }
@@ -106,9 +106,9 @@ export function Sparkbar({
 
   const {width, height} = svgDimensions;
 
-  const filteredData = data.filter(
-    (value) => typeof value === 'number',
-  ) as number[];
+  const filteredData = data
+    .filter(({value}) => typeof value === 'number')
+    .map(({value}) => value) as number[];
 
   const comparisonData = comparison == null ? [] : comparison.map(({y}) => y);
 
@@ -137,17 +137,19 @@ export function Sparkbar({
   const barWidth = useMemo(() => xScale.bandwidth(), [xScale]);
 
   const id = useMemo(() => uniqueId('sparkbar'), []);
-  const clipId = useMemo(() => uniqueId('clip'), []);
 
   const getBarHeight = useCallback(
-    (rawValue: number) => {
-      const height = Math.abs(yScale(rawValue) - yScale(0));
+    ({value}) => {
+      const height = Math.abs(yScale(value) - yScale(0));
       return Math.max(height, BAR_MIN_HEIGHT_RATIO * barWidth);
     },
     [barWidth, yScale],
   );
 
-  const dataWithIndex = data.map((value, index) => ({value, index}));
+  const dataWithIndex = data.map((value, index) => ({
+    value,
+    index,
+  }));
 
   const shouldAnimate = !prefersReducedMotion && isAnimated;
 
@@ -159,6 +161,14 @@ export function Sparkbar({
           offset: 0,
         },
       ];
+
+  const colors: {color: Color; index: number}[] = [];
+
+  data.forEach(({color}, index) => {
+    if (color) {
+      colors.push({color, index});
+    }
+  });
 
   const transitions = useTransition(dataWithIndex, {
     key: ({index}: {index: number}) => index,
@@ -207,49 +217,60 @@ export function Sparkbar({
             y2="0%"
           />
 
-          <mask id={clipId}>
-            {transitions(({height: barHeight}, item, _transition, index) => {
-              const xPosition = xScale(index.toString());
-              return (
-                <g
-                  fill={colorWhite}
-                  key={index}
-                  opacity={comparison ? '0.9' : '1'}
-                >
-                  <Bar
-                    key={index}
-                    x={xPosition == null ? 0 : xPosition}
-                    yScale={yScale}
-                    rawValue={item.value}
-                    width={barWidth}
-                    height={barHeight}
-                  />
-                </g>
-              );
-            })}
+          {colors.map(({color, index}) => {
+            const barColor = isGradientType(color)
+              ? color
+              : [
+                  {
+                    color,
+                    offset: 0,
+                  },
+                ];
 
-            {comparison == null ? null : (
-              <g>
-                <path
-                  stroke={colorWhite}
-                  strokeWidth={STROKE_WIDTH}
-                  d={lineShape!}
-                  className={styles.ComparisonLine}
-                />
-              </g>
-            )}
-          </mask>
+            const key = `${id}-color-${index}`;
+
+            return (
+              <LinearGradient
+                key={key}
+                id={key}
+                gradient={barColor}
+                gradientUnits="userSpaceOnUse"
+                y1="100%"
+                y2="0%"
+              />
+            );
+          })}
         </defs>
 
-        <g mask={`url(#${clipId})`}>
-          <rect
-            x="0"
-            y="0"
-            width={width}
-            height={height}
-            fill={`url(#${id})`}
-          />
+        <g opacity={comparison ? '0.9' : '1'}>
+          {transitions(({height: barHeight}, item, _transition, index) => {
+            const xPosition = xScale(index.toString());
+
+            const colorId = item.value.color ? `${id}-color-${index}` : id;
+
+            return (
+              <Bar
+                key={index}
+                x={xPosition == null ? 0 : xPosition}
+                yScale={yScale}
+                value={item.value.value}
+                width={barWidth}
+                height={barHeight}
+                fill={`url(#${colorId})`}
+              />
+            );
+          })}
         </g>
+
+        {comparison == null ? null : (
+          <path
+            stroke={selectedTheme.line.dottedStrokeColor}
+            strokeWidth={STROKE_WIDTH}
+            d={lineShape!}
+            className={styles.ComparisonLine}
+            opacity="0.9"
+          />
+        )}
       </svg>
     </div>
   );

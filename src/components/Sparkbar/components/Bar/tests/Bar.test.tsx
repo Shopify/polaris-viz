@@ -15,9 +15,10 @@ describe('<Bar/>', () => {
         <Bar
           height={100}
           x={0}
-          rawValue={1000}
+          value={1000}
           width={100}
           yScale={scaleBand() as any}
+          fill="red"
         />
       </svg>,
     );
@@ -35,9 +36,10 @@ describe('<Bar/>', () => {
         <Bar
           height={49}
           x={0}
-          rawValue={1}
+          value={1}
           width={100}
           yScale={scaleBand() as any}
+          fill="red"
         />
       </svg>,
     );
@@ -55,9 +57,10 @@ describe('<Bar/>', () => {
         <Bar
           height={0}
           x={0}
-          rawValue={0}
+          value={0}
           width={100}
           yScale={scaleBand() as any}
+          fill="red"
         />
       </svg>,
     );

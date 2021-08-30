@@ -2,19 +2,18 @@ import React, {useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {animated, SpringValue} from '@react-spring/web';
 
-import type {SparkChartData} from '../../../../types';
-
 interface Props {
   x: number;
   yScale: ScaleLinear<number, number>;
-  rawValue: SparkChartData;
+  value: number | null;
   width: number;
   height?: SpringValue<number> | number;
+  fill: string;
 }
 
-export function Bar({x, rawValue, yScale, width, height}: Props) {
+export function Bar({x, value, yScale, width, height, fill}: Props) {
   const zeroScale = yScale(0);
-  const isNegative = rawValue != null && rawValue < 0;
+  const isNegative = value != null && value < 0;
   const rotation = isNegative ? 'rotate(180deg)' : 'rotate(0deg)';
   const xPosition = isNegative ? x + width : x;
 
@@ -84,9 +83,9 @@ export function Bar({x, rawValue, yScale, width, height}: Props) {
     return height.to(calculatePath);
   }, [height, width]);
 
-  if (rawValue == null || width < 0) {
+  if (value == null || width < 0) {
     return null;
   }
 
-  return <animated.path d={path} style={style} />;
+  return <animated.path d={path} style={style} fill={fill} />;
 }

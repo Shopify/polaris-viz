@@ -5,14 +5,15 @@ import {scaleLinear} from 'd3-scale';
 import {Bar} from '../Bar';
 
 describe('<Bar/>', () => {
-  it('renders null if the rawValue is null', () => {
+  it('renders null if the value is null', () => {
     const wrapper = mount(
       <Bar
-        rawValue={null}
+        value={null}
         x={0}
         yScale={scaleLinear()}
         width={10}
         height={0}
+        fill="red"
       />,
     );
 
