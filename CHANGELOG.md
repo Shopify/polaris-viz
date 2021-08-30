@@ -24,6 +24,7 @@
 - `SparkChartData` now accepts `value` and `color` properties, instead of `number | null`, to allow individual bars to override the `seriesColors`.
 
 ### Fixed
+- in `<Sparkbar />`, align comparison bar and bars.
 - `<NormalizedStackedBarChart />` no longer overflows its container by a few pixels
 - [Updates `serialize-javascript` package](https://github.com/Shopify/polaris-viz/pull/477). No consumer-facing changes are expected.
 
