@@ -21,6 +21,7 @@
 ### Changed
 - `<BarChart />`, `<LineChart />`, `<Sparkline />`, `<NormalizedStackedBarChart />`, `<MultiSeriesBarChart />` and `<Sparkbar />` styles now are defined through themes in `PolarisVizProvider` instead of props. For more details check the [migration guide](https://docs.google.com/document/d/1VxfcgBbTNwjmYix1jGuDMgqDgIdehTgQbVZpER7djeU/edit?usp=sharing)
 - change indicators on the  `<NormalizedStackedBarChart />` can now have their colors configured externally, which applies the color to the metric and percentage change
+- `SparkChartData` now accepts `value` and `color` properties, instead of `number | null`, to allow individual bars to override the `seriesColors`.
 
 ### Fixed
 - `<NormalizedStackedBarChart />` no longer overflows its container by a few pixels

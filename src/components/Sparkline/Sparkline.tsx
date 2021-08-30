@@ -1,7 +1,7 @@
 import React, {useState, useLayoutEffect, useCallback} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 import {scaleLinear} from 'd3-scale';
-import type {Color, LineStyle, SparkChartData} from 'types';
+import type {Color, LineStyle} from 'types';
 
 import {getSeriesColorsFromCount} from '../../hooks/use-theme-series-colors';
 import {useResizeObserver, useTheme} from '../../hooks';
@@ -14,7 +14,7 @@ const SVG_MARGIN = 2;
 
 export interface Coordinates {
   x: number;
-  y: SparkChartData;
+  y: number | null;
 }
 
 export interface SingleSeries {

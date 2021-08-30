@@ -128,7 +128,11 @@ export function Series({
       </defs>
 
       <path
-        stroke={`url(#line-${id})`}
+        stroke={
+          series.lineStyle && series.lineStyle !== 'solid'
+            ? theme.line.dottedStrokeColor
+            : `url(#line-${id})`
+        }
         d={lineShape}
         fill="none"
         strokeLinejoin="round"

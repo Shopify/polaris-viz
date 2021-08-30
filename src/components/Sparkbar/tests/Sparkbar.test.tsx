@@ -5,7 +5,7 @@ import {scaleBand} from 'd3-scale';
 import {Sparkbar} from '../Sparkbar';
 import {LinearGradient} from '../../LinearGradient';
 
-const sampleData = [100, 200, 300, 500];
+const sampleData = [{value: 100}, {value: 200}, {value: 300}, {value: 500}];
 const sampleComparison = [
   {x: 0, y: 300},
   {x: 1, y: 300},
@@ -36,12 +36,6 @@ describe('<Sparkbar/>', () => {
     const wrapper = mount(<Sparkbar data={sampleData} />);
 
     expect(wrapper).toContainReactComponent(LinearGradient);
-  });
-
-  it('renders a mask', () => {
-    const wrapper = mount(<Sparkbar data={sampleData} />);
-
-    expect(wrapper).toContainReactComponent('mask');
   });
 
   it('renders an accessibility label', () => {

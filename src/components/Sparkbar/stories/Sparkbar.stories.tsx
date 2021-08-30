@@ -2,6 +2,7 @@ import React from 'react';
 import {Story, Meta} from '@storybook/react';
 
 import {Sparkbar, SparkbarProps} from '../Sparkbar';
+import {DEFAULT_THEME, VIZ_GRADIENT_COLOR} from '../../../constants';
 
 export default {
   title: 'Charts/Sparkbar',
@@ -58,7 +59,19 @@ const Template: Story<SparkbarProps> = (args: SparkbarProps) => {
 const comparisonValue = 2000;
 const defaultProps = {
   isAnimated: true,
-  data: [100, 200, 300, 400, 400, 1000, 200, 800, 900, 200, 400],
+  data: [
+    {value: 100},
+    {value: 200},
+    {value: 300},
+    {value: 400},
+    {value: 400},
+    {value: 100},
+    {value: 200},
+    {value: 800},
+    {value: 900},
+    {value: 200},
+    {value: 400},
+  ],
   comparison: [
     {x: 0, y: comparisonValue},
     {x: 1, y: comparisonValue},
@@ -87,5 +100,37 @@ OffsetAndNulls.args = {
   ...defaultProps,
   dataOffsetLeft: 10,
   dataOffsetRight: 20,
-  data: [100, 200, -300, null, 400, 0, 0, 400, 700, 900, 500],
+  data: [
+    {value: 100},
+    {value: 200},
+    {value: -300},
+    {value: null},
+    {value: 400},
+    {value: 0},
+    {value: 0},
+    {value: 400},
+    {value: 700},
+    {value: 900},
+    {value: 500},
+  ],
+};
+
+export const OverriddenColors = Template.bind({});
+OverriddenColors.args = {
+  ...defaultProps,
+  dataOffsetLeft: 10,
+  dataOffsetRight: 20,
+  data: [
+    {value: 100},
+    {value: 200, color: 'red'},
+    {value: 300},
+    {value: 400},
+    {value: 400, color: DEFAULT_THEME.seriesColors.upToFour[0]},
+    {value: 100},
+    {value: 200},
+    {value: 800, color: '#99ccbb'},
+    {value: 900},
+    {value: 200},
+    {value: 400},
+  ],
 };

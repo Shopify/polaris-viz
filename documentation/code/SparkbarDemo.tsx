@@ -16,7 +16,19 @@ export function SparkbarDemo() {
         <div style={{width: 200, height: 150}}>
           <Sparkbar
             isAnimated
-            data={[100, 200, 300, 400, 400, 1000, 200, 800, 900, 200, 400]}
+            data={[
+              {value: 100},
+              {value: 200},
+              {value: 300},
+              {value: 400},
+              {value: 400},
+              {value: 1000},
+              {value: 200},
+              {value: 800},
+              {value: 900},
+              {value: 200},
+              {value: 400},
+            ]}
             comparison={[
               {x: 0, y: 500},
               {x: 1, y: 500},
