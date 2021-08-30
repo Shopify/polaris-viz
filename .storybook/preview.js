@@ -1,19 +1,8 @@
 import React from 'react';
 import {PolarisVizProvider} from '../src/components';
+import {DEFAULT_THEME, LIGHT_THEME} from '../src/constants';
+import {useTheme} from '../src/hooks';
 export const parameters = {
-  backgrounds: {
-    default: 'dark',
-    values: [
-      {
-        name: 'light',
-        value: '#FFF',
-      },
-      {
-        name: 'dark',
-        value: '#1f1f25',
-      },
-    ],
-  },
   options: {
     storySort: {
       order: ['Providers', 'Charts', 'Subcomponents'],
@@ -22,18 +11,16 @@ export const parameters = {
 };
 
 export const decorators = [
-  (Story) => (
-    <div
-      style={{
-        padding: '20px',
-        boxSizing: 'border-box',
-        height: '400px',
-        overflow: 'hidden',
-      }}
-    >
+  (Story, context) => {
+    return (
       <PolarisVizProvider
         themes={{
           Default: {
+            chartContainer: {
+              padding: '20px',
+            },
+          },
+          Light: {
             chartContainer: {
               padding: '20px',
             },
@@ -52,8 +39,41 @@ export const decorators = [
           },
         }}
       >
-        <Story />
+        <Container theme={context.args.theme}>
+          <Story />
+        </Container>
       </PolarisVizProvider>
-    </div>
-  ),
+    );
+  },
 ];
+
+interface ContainerProps {
+  theme: string;
+}
+
+const Container = ({children, theme}: ContainerProps) => {
+  const selectedTheme = useTheme(theme);
+
+  return (
+    <div
+      style={{
+        padding: 'calc(1rem + 20px)',
+        boxSizing: 'border-box',
+        overflow: 'hidden',
+        margin: '-1rem',
+        background: selectedTheme.chartContainer.backgroundColor,
+        minHeight: '100vh',
+      }}
+    >
+      <div
+        style={{
+          boxSizing: 'border-box',
+          height: '400px',
+          overflow: 'hidden',
+        }}
+      >
+        {children}
+      </div>
+    </div>
+  );
+};

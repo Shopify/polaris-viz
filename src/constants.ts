@@ -106,14 +106,14 @@ export const DEFAULT_THEME: Theme = {
     ],
   },
   tooltip: {
-    backgroundColor: variables.colorGray03,
-    valueColor: variables.colorGray15,
-    labelColor: variables.colorGray13,
+    backgroundColor: variables.colorGray150,
+    valueColor: variables.colorGray00,
+    labelColor: variables.colorGray30,
   },
   chartContainer: {
     borderRadius: '0px',
     padding: '0px',
-    backgroundColor: variables.colorGray01,
+    backgroundColor: variables.colorGray160,
   },
   line: {
     sparkArea: [
@@ -124,7 +124,7 @@ export const DEFAULT_THEME: Theme = {
     style: 'solid',
     hasPoint: true,
     width: 2,
-    pointStroke: variables.colorGray15,
+    pointStroke: variables.colorGray160,
     dottedStrokeColor: variables.colorDarkComparison,
   },
   bar: {
@@ -136,29 +136,122 @@ export const DEFAULT_THEME: Theme = {
   grid: {
     showVerticalLines: false,
     showHorizontalLines: true,
-    color: variables.colorGray05,
+    color: variables.colorGray140,
     horizontalOverflow: false,
     horizontalMargin: 0,
   },
   xAxis: {
     showTicks: false,
-    labelColor: variables.colorGray13,
+    labelColor: variables.colorGray30,
     hide: false,
   },
   yAxis: {
-    backgroundColor: variables.colorGray01,
-    labelColor: variables.colorGray13,
+    backgroundColor: variables.colorGray160,
+    labelColor: variables.colorGray30,
   },
   crossHair: {
-    color: 'rgb(139, 159, 176)',
+    color: variables.colorGray70,
     width: 1,
   },
   legend: {
-    labelColor: '#DADADD',
-    valueColor: '#fff',
+    labelColor: variables.colorGray30,
+    valueColor: variables.colorGray00,
     trendIndicator: {
-      positive: '#00A47C',
-      negative: '#EC6E6E',
+      positive: '#039c86',
+      negative: '#f24f62',
+      neutral: '#8C9196',
+    },
+  },
+};
+
+export const LIGHT_THEME: Theme = {
+  seriesColors: {
+    upToFour: [
+      createGradient(variables.colorIndigo70, variables.colorIndigo90),
+      createGradient(variables.colorBlue70, variables.colorBlue90),
+      createGradient(variables.colorMagenta70, variables.colorMagenta90),
+      createGradient(variables.colorTeal70, variables.colorTeal90),
+    ],
+    fromFiveToSeven: [
+      createGradient(variables.colorTeal70, variables.colorTeal90),
+      createGradient(variables.colorBlue70, variables.colorBlue90),
+      createGradient(variables.colorIndigo70, variables.colorIndigo90),
+      createGradient(variables.colorPurple70, variables.colorPurple90),
+      createGradient(variables.colorMagenta70, variables.colorMagenta90),
+      createGradient(variables.colorOrange70, variables.colorOrange90),
+      createGradient(variables.colorYellow70, variables.colorYellow90),
+    ],
+    all: [
+      variables.colorTeal90,
+      variables.colorBlue70,
+      variables.colorIndigo90,
+      variables.colorPurple70,
+      variables.colorMagenta90,
+      variables.colorOrange80,
+      variables.colorYellow50,
+      variables.colorTeal70,
+      variables.colorBlue80,
+      variables.colorIndigo70,
+      variables.colorPurple90,
+      variables.colorMagenta70,
+      variables.colorOrange110,
+      variables.colorYellow70,
+    ],
+  },
+  tooltip: {
+    backgroundColor: variables.colorGray00,
+    valueColor: variables.colorGray160,
+    labelColor: variables.colorGray100,
+  },
+  chartContainer: {
+    borderRadius: '0px',
+    padding: '0px',
+    backgroundColor: variables.colorGray00,
+  },
+  line: {
+    sparkArea: [
+      {offset: 0, color: 'rgba(92, 105, 208, 0)'},
+      {offset: 100, color: 'rgba(92, 105, 208, 0.15)'},
+    ],
+    hasSpline: true,
+    style: 'solid',
+    hasPoint: true,
+    width: 2,
+    pointStroke: variables.colorGray00,
+    dottedStrokeColor: variables.colorLightComparison,
+  },
+  bar: {
+    hasRoundedCorners: true,
+    innerMargin: 'Medium',
+    outerMargin: 'Medium',
+    zeroAsMinHeight: false,
+  },
+  grid: {
+    showVerticalLines: false,
+    showHorizontalLines: true,
+    color: variables.colorGray20,
+    horizontalOverflow: false,
+    horizontalMargin: 0,
+  },
+  xAxis: {
+    showTicks: false,
+    labelColor: variables.colorGray80,
+    hide: false,
+  },
+  yAxis: {
+    backgroundColor: variables.colorGray00,
+    labelColor: variables.colorGray80,
+  },
+  crossHair: {
+    color: variables.colorGray40,
+    width: 1,
+  },
+  legend: {
+    valueColor: variables.colorGray160,
+    labelColor: variables.colorGray100,
+    trendIndicator: {
+      positive: '#119d7f',
+      negative: '#eb4c5e',
       neutral: '#8C9196',
     },
   },

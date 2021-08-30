@@ -9,7 +9,10 @@ module.exports = {
   stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(ts|tsx)'],
   addons: [
     '@storybook/addon-links',
-    {name: '@storybook/addon-essentials', options: {docs: true}},
+    {
+      name: '@storybook/addon-essentials',
+      options: {docs: true, backgrounds: false},
+    },
   ],
   typescript: {
     // also valid 'react-docgen-typescript' | false

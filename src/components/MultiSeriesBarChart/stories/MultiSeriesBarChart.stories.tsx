@@ -9,6 +9,7 @@ import {
 import styles from './MultiSeriesBarChart.stories.scss';
 import {SquareColorPreview} from '../../SquareColorPreview';
 import {PolarisVizProvider} from '../../PolarisVizProvider';
+import {THEME_CONTROL_ARGS} from '../../../storybook';
 
 const tooltipContent = {
   empty: undefined,
@@ -149,6 +150,7 @@ export default {
       description:
         'This accepts a function that is called to render the tooltip content. By default it calls `formatYAxisLabel` to format the the tooltip value and passes it to `<TooltipContent />`. [RenderTooltipContentData type definition.]()',
     },
+    theme: THEME_CONTROL_ARGS,
   },
 } as Meta;
 

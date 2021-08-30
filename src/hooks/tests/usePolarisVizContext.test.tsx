@@ -2,7 +2,7 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 
 import {mountWithProvider} from '../../test-utilities';
-import {DEFAULT_THEME} from '../../constants';
+import {DEFAULT_THEME, LIGHT_THEME} from '../../constants';
 import {usePolarisVizContext} from '../usePolarisVizContext';
 
 describe('usePolarisVizContext', () => {
@@ -17,6 +17,7 @@ describe('usePolarisVizContext', () => {
     expect(mockComponent.text()).toBe(
       JSON.stringify({
         Default: DEFAULT_THEME,
+        Light: LIGHT_THEME,
       }),
     );
   });
@@ -41,6 +42,7 @@ describe('usePolarisVizContext', () => {
             backgroundColor: 'purple',
           },
         },
+        Light: LIGHT_THEME,
       }),
     );
   });
@@ -59,6 +61,7 @@ describe('usePolarisVizContext', () => {
     expect(mockComponent.text()).toBe(
       JSON.stringify({
         Default: DEFAULT_THEME,
+        Light: LIGHT_THEME,
         SomeOtherTheme: {
           ...DEFAULT_THEME,
           chartContainer: {

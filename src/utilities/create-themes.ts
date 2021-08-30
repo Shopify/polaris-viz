@@ -1,5 +1,10 @@
 import type {Theme, PartialTheme} from '../types';
-import {DEFAULT_THEME} from '../constants';
+import {DEFAULT_THEME, LIGHT_THEME} from '../constants';
+
+const BASE_THEMES: {[key: string]: Theme} = {
+  Default: DEFAULT_THEME,
+  Light: LIGHT_THEME,
+};
 
 export const createTheme = (
   theme: PartialTheme,
@@ -8,7 +13,7 @@ export const createTheme = (
   const themeKeys = Object.keys(baseTheme);
 
   return themeKeys.reduce((accumulator: any, key: keyof Theme) => {
-    const defaultValue = DEFAULT_THEME[key];
+    const defaultValue = baseTheme[key];
     const value = theme[key];
 
     if (
@@ -19,7 +24,7 @@ export const createTheme = (
       accumulator[key] = value == null ? defaultValue : value;
     } else {
       accumulator[key] = {
-        ...DEFAULT_THEME[key],
+        ...baseTheme[key],
         ...theme[key],
       };
     }
@@ -29,7 +34,10 @@ export const createTheme = (
 
 export const createThemes = (themeRecord: {[key: string]: PartialTheme}) => {
   return Object.keys(themeRecord).reduce((accumulator, themeName) => {
-    accumulator[themeName] = createTheme(themeRecord[themeName]);
+    accumulator[themeName] = createTheme(
+      themeRecord[themeName],
+      BASE_THEMES[themeName],
+    );
     return accumulator;
   }, {} as {[key: string]: Theme});
 };

@@ -18,25 +18,6 @@ export function formatXAxisLabel(value: string) {
   });
 }
 
-const purple = '#5052b3';
-const negativePurple = '#39337f';
-const green = '#1bbe9e';
-
-const barGradient = [
-  {
-    color: negativePurple,
-    offset: 0,
-  },
-  {
-    color: purple,
-    offset: 50,
-  },
-  {
-    color: green,
-    offset: 100,
-  },
-];
-
 export const defaultProps = {
   data: [
     {rawValue: 324.19, label: '2020-01-01T12:00:00Z'},

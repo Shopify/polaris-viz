@@ -24,14 +24,26 @@ $negative-color: rgb(215, 44, 13);
 // Colors are named non-sequencial numbers
 // so it matches the UX Color Matrix
 // stylelint-disable color-no-hex
-$color-dark-comparison: #90b0df;
+$color-dark-comparison: rgba(144, 176, 223, 0.6);
+$color-light-comparison: #6793cc;
 
-$color-gray-01: #1f1f25;
-$color-gray-03: #2e2e36;
-$color-gray-05: #43434e;
-$color-gray-06: #4b4b57;
-$color-gray-13: #dadadd;
-$color-gray-15: #ffffff;
+$color-gray-00: #ffffff;
+$color-gray-10: #f6f6f7;
+$color-gray-20: #eeeeef;
+$color-gray-30: #dadadd;
+$color-gray-40: #cbcbcf;
+$color-gray-50: #bdbdc2;
+$color-gray-60: #b0b0b6;
+$color-gray-70: #9d9da5;
+$color-gray-80: #909099;
+$color-gray-90: #82828c;
+$color-gray-100: #70707b;
+$color-gray-110: #5e5e69;
+$color-gray-120: #545460;
+$color-gray-130: #4b4b57;
+$color-gray-140: #43434e;
+$color-gray-150: #2e2e36;
+$color-gray-160: #1f1f25;
 
 $color-indigo-40: #c5b7fe;
 $color-indigo-70: #997afc;
@@ -55,11 +67,16 @@ $color-purple-90: #9f41dc;
 
 $color-orange-50: #ec9d71;
 $color-orange-60: #df8b55;
+$color-orange-70: #ca7d4a;
 $color-orange-80: #b66e3f;
+$color-orange-90: #a26134;
+$color-orange-110: #7a4621;
 
 $color-yellow-20: #fae275;
 $color-yellow-40: #d1c256;
+$color-yellow-50: #bdb24e;
 $color-yellow-70: #97933e;
+$color-yellow-90: #74742c;
 
 // -----
 
@@ -107,13 +124,25 @@ $font-stack-base: -apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI'
 
   // NEW COLORS
   colorDarkComparison: $color-dark-comparison;
+  colorLightComparison: $color-light-comparison;
 
-  colorGray01: $color-gray-01;
-  colorGray03: $color-gray-03;
-  colorGray05: $color-gray-05;
-  colorGray06: $color-gray-06;
-  colorGray13: $color-gray-13;
-  colorGray15: $color-gray-15;
+  colorGray00: $color-gray-00;
+  colorGray10: $color-gray-10;
+  colorGray20: $color-gray-20;
+  colorGray30: $color-gray-30;
+  colorGray40: $color-gray-40;
+  colorGray50: $color-gray-50;
+  colorGray60: $color-gray-60;
+  colorGray70: $color-gray-70;
+  colorGray80: $color-gray-80;
+  colorGray90: $color-gray-90;
+  colorGray100: $color-gray-100;
+  colorGray110: $color-gray-110;
+  colorGray120: $color-gray-120;
+  colorGray130: $color-gray-130;
+  colorGray140: $color-gray-140;
+  colorGray150: $color-gray-150;
+  colorGray160: $color-gray-160;
 
   colorIndigo40: $color-indigo-40;
   colorIndigo70: $color-indigo-70;
@@ -137,9 +166,13 @@ $font-stack-base: -apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI'
 
   colorOrange50: $color-orange-50;
   colorOrange60: $color-orange-60;
+  colorOrange70: $color-orange-70;
   colorOrange80: $color-orange-80;
+  colorOrange90: $color-orange-90;
+  colorOrange110: $color-orange-110;
 
   colorYellow20: $color-yellow-20;
   colorYellow40: $color-yellow-40;
   colorYellow70: $color-yellow-70;
+  colorYellow90: $color-yellow-90;
 }

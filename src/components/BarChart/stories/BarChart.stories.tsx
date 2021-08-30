@@ -4,6 +4,7 @@ import {Story, Meta} from '@storybook/react';
 import {BarChart, BarChartProps, PolarisVizProvider} from '../../../components';
 
 import {formatXAxisLabel, defaultProps} from './utils.stories';
+import {THEME_CONTROL_ARGS} from '../../../storybook';
 
 const tooltipContent = {
   empty: undefined,
@@ -95,6 +96,7 @@ export default {
     yAxisOptions: {
       description: 'An object used to configure the yAxis and its labels.',
     },
+    theme: THEME_CONTROL_ARGS,
   },
 } as Meta;
 

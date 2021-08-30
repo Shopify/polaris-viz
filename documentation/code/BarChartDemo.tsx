@@ -2,7 +2,7 @@ import React from 'react';
 
 import {BarChart, BarChartTooltipContent} from '../../src/components';
 
-export function BarChartDemo({theme = 'Default'}) {
+export function BarChartDemo() {
   document.body.style.fontFamily =
     "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif";
 
@@ -64,7 +64,6 @@ export function BarChartDemo({theme = 'Default'}) {
 
   return (
     <BarChart
-      theme={theme}
       data={data}
       xAxisOptions={{
         labelFormatter: formatXAxisLabel,

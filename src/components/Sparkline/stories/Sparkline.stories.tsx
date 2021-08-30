@@ -2,6 +2,7 @@ import React from 'react';
 import {Story, Meta} from '@storybook/react';
 
 import {Sparkline, SparklineProps} from '../..';
+import {THEME_CONTROL_ARGS} from '../../../storybook';
 
 const series = [
   {
@@ -58,10 +59,6 @@ export default {
     ),
   ],
   argTypes: {
-    theme: {
-      description:
-        'The theme that the chart will inherit its color, container and line styles from',
-    },
     series: {
       description:
         'The sparkline can show one data series or a set of comparison data series. Each series is configured by the series item in the array. [Series type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/Sparkline/Sparkline.tsx#L21)',
@@ -73,6 +70,7 @@ export default {
     isAnimated: {
       description: 'Determines whether to animate the chart on state changes.',
     },
+    theme: THEME_CONTROL_ARGS,
   },
 } as Meta;
 

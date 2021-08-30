@@ -71,7 +71,6 @@ describe('<Chart />', () => {
     formatYAxisLabel: (val: number) => val.toString(),
     renderTooltipContent: jest.fn(() => <p>Mock Tooltip Content</p>),
     colors: ['purple', 'teal'],
-    theme: 'Default',
   };
 
   it('renders an SVG', () => {
