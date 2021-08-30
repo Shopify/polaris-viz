@@ -56,6 +56,7 @@ export const MASK_SUBDUE_COLOR = '#434343';
 
 export const colorSky = variables.colorSky;
 export const colorWhite = variables.colorWhite;
+export const colorBlack = variables.colorBlack;
 export const colorPurpleDark = variables.colorPurpleDark;
 export const colorBlue = variables.colorBlue;
 export const colorTeal = variables.colorTeal;
@@ -115,7 +116,10 @@ export const DEFAULT_THEME: Theme = {
     backgroundColor: variables.colorGray01,
   },
   line: {
-    sparkArea: null,
+    sparkArea: [
+      {offset: 0, color: 'rgba(92, 105, 208, 0)'},
+      {offset: 100, color: 'rgba(92, 105, 208, 0.15)'},
+    ],
     hasSpline: true,
     style: 'solid',
     hasPoint: true,

@@ -96,6 +96,7 @@ export function NormalizedStackedBarChart({
               scale={xScale(value)}
               key={`${label}-${value}`}
               color={colors[index]}
+              roundedCorners={selectedTheme.bar.hasRoundedCorners}
             />
           ),
         )}
