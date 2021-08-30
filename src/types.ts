@@ -126,16 +126,17 @@ export interface LineTheme {
   pointStroke: string;
   dottedStrokeColor: string;
 }
+
+export interface TooltipTheme {
+  backgroundColor: string;
+  valueColor: string;
+  labelColor: string;
+}
 export interface SeriesColors {
   upToFour: Color[];
   fromFiveToSeven: Color[];
   all: Color[];
 }
-
-export interface ColorPalette {
-  colors: Color[];
-}
-
 export interface Legend {
   labelColor: string;
   valueColor: string;
@@ -150,9 +151,9 @@ export interface PartialTheme {
   xAxis?: Partial<XAxisTheme>;
   yAxis?: Partial<YAxisTheme>;
   crossHair?: Partial<CrossHairTheme>;
-  colorPalette?: Partial<ColorPalette>;
   legend?: Partial<Legend>;
   seriesColors?: Partial<SeriesColors>;
+  tooltip?: Partial<TooltipTheme>;
 }
 
 export interface Theme {
@@ -164,6 +165,6 @@ export interface Theme {
   line: LineTheme;
   crossHair: CrossHairTheme;
   legend: Legend;
-  colorPalette: ColorPalette;
   seriesColors: SeriesColors;
+  tooltip: TooltipTheme;
 }

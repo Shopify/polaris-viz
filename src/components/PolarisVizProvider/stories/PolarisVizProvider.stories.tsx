@@ -87,6 +87,11 @@ export const OverwrittenDefault = Template.bind({});
 OverwrittenDefault.args = {
   themes: {
     Default: {
+      tooltip: {
+        backgroundColor: '#F6F6F7',
+        labelColor: 'black',
+        valueColor: 'black',
+      },
       chartContainer: {
         padding: '10px',
         borderRadius: '5px',
@@ -142,11 +147,13 @@ MultipleThemes.args = {
         padding: '20px',
         borderRadius: '5px',
       },
+      seriesColors: {
+        upToFour: ['#00ff64'],
+      },
       bar: {
         hasRoundedCorners: false,
         innerMargin: 'Large',
         outerMargin: 'Large',
-        color: '#00ff64',
       },
       grid: {
         showVerticalLines: true,
@@ -164,6 +171,9 @@ MultipleThemes.args = {
       },
     },
     AngryRed: {
+      seriesColors: {
+        upToFour: ['#ff0025'],
+      },
       chartContainer: {
         padding: '20px',
         borderRadius: '5px',
@@ -172,7 +182,6 @@ MultipleThemes.args = {
         hasRoundedCorners: false,
         innerMargin: 'Large',
         outerMargin: 'Large',
-        color: '#ff0025',
       },
       grid: {
         showVerticalLines: true,

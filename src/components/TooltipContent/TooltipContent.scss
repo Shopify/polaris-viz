@@ -8,13 +8,11 @@
   column-gap: $spacing-tight;
   row-gap: $spacing-tight;
   background: $color-white;
-  border: 1px solid $color-sky-dark;
   border-radius: 4px;
-  padding: $spacing-tight;
+  padding: $spacing-loose;
 }
 
 .Title {
-  @include tooltip-emphasis;
   text-align: center;
   grid-column: 1 / span 3;
   margin-bottom: $spacing-extra-tight;
@@ -22,10 +20,10 @@
 
 .Label {
   margin: 0;
-  @include tooltip-emphasis;
 }
 
 .Value {
+  @include tooltip-emphasis;
   font-feature-settings: 'tnum';
   margin: 0;
   padding-left: $spacing-extra-tight;

@@ -48,7 +48,7 @@ export function BarChart({
   theme = 'Default',
 }: BarChartProps) {
   const selectedTheme = useTheme(theme);
-  const [seriesColor] = getSeriesColorsFromCount(data.length, selectedTheme);
+  const [seriesColor] = getSeriesColorsFromCount(1, selectedTheme);
 
   const [chartDimensions, setChartDimensions] = useState<Dimensions | null>(
     null,
@@ -170,6 +170,7 @@ export function BarChart({
         label={formattedLabel}
         value={formattedValue}
         annotation={annotation}
+        theme={theme}
       />
     );
   }
