@@ -31,6 +31,8 @@ describe('<StackedAreas />', () => {
         [0, 203],
       ],
     ] as any,
+    strokeWidth: 2,
+    hasSpline: true,
   };
 
   it('renders a clipPath with an ID', () => {
@@ -74,15 +76,12 @@ describe('<StackedAreas />', () => {
       </svg>,
     );
 
-    expect(stackedArea).toContainReactComponentTimes(
-      'path',
-      mockProps.stackedValues.length,
-    );
+    expect(stackedArea).toContainReactComponentTimes('path', 4);
   });
 
   it('generates props for the paths', () => {
-    // eslint-disable-next-line id-length
-    const d =
+    const line = 'M250,250L250,250C250,250,250,250,250,250L250,250';
+    const area =
       'M250,250L250,250C250,250,250,250,250,250L250,250L250,250L250,250C250,250,250,250,250,250L250,250Z';
 
     const stackedArea = mount(
@@ -91,12 +90,20 @@ describe('<StackedAreas />', () => {
       </svg>,
     );
 
+    // Line
     expect(stackedArea).toContainReactComponent('path', {
       // eslint-disable-next-line id-length
-      d,
-      fill: 'url(#area-stackedAreas-1-0)',
+      d: line,
+      fill: 'none',
       stroke: 'url(#area-stackedAreas-1-0)',
-      strokeWidth: '0.1',
+      strokeWidth: 2,
+    });
+    // Area
+    expect(stackedArea).toContainReactComponent('path', {
+      // eslint-disable-next-line id-length
+      d: area,
+      fill: 'url(#area-stackedAreas-1-0)',
+      fillOpacity: '0.25',
     });
   });
 });

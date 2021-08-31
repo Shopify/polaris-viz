@@ -2,11 +2,19 @@ import {useCallback, useMemo} from 'react';
 import type {Line} from 'd3-shape';
 import {useSprings} from '@react-spring/web';
 
-import {SPRING_CONFIG} from '../constants';
-import type {SeriesWithDefaults} from '../types';
-import {getPathLength, getPointAtLength} from '../../../utilities';
+import {getPathLength, getPointAtLength} from '../utilities';
+import type {Data, DataSeries} from '../types';
 
-export function useLineChartAnimations({
+export const SPRING_CONFIG = {
+  friction: 5,
+  clamp: true,
+  mass: 1,
+  tension: 190,
+};
+
+type SeriesWithData = Required<DataSeries<Data, any>>;
+
+export function useLinearChartAnimations<T extends SeriesWithData>({
   activeIndex,
   lineGenerator,
   series,
@@ -14,7 +22,7 @@ export function useLineChartAnimations({
 }: {
   activeIndex: number | null;
   lineGenerator: Line<{rawValue: number}>;
-  series: SeriesWithDefaults[];
+  series: T[];
   isAnimated: boolean;
 }) {
   const currentIndex = activeIndex == null ? 0 : activeIndex;
