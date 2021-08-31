@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+## [0.19.0-0] - 2021-08-31
 ### Added
 
 - `PolarisVizProvider` to support theming charts
