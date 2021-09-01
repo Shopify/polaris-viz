@@ -35,74 +35,37 @@ const Template: Story<LegendProps> = (args: LegendProps) => {
 
 export const SquareLegend = Template.bind({});
 SquareLegend.args = {
-  series: [
-    {name: 'Sales', color: 'red'},
-    {name: 'Visits', color: 'purple'},
-  ],
-};
-
-export const GradientSquareLegend = Template.bind({});
-GradientSquareLegend.args = {
-  series: [
-    {
-      name: 'Sales',
-      color: [
-        {offset: 0, color: 'red'},
-        {offset: 80, color: 'purple'},
-      ],
-    },
-    {
-      name: 'Visits',
-      color: [
-        {offset: 0, color: 'green'},
-        {offset: 80, color: 'yellow'},
-      ],
-    },
-  ],
-};
-
-export const GradientLineLegend = Template.bind({});
-GradientLineLegend.args = {
-  series: [
-    {
-      name: 'Sales',
-      lineStyle: 'normal',
-      color: [
-        {offset: 0, color: 'red'},
-        {offset: 80, color: 'purple'},
-      ],
-    },
-    {
-      name: 'Visits',
-      lineStyle: 'normal',
-      color: [
-        {offset: 0, color: 'green'},
-        {offset: 80, color: 'yellow'},
-      ],
-    },
-  ],
+  series: [{name: 'Sales'}, {name: 'Visits'}],
 };
 
 export const DottedLineLegend = Template.bind({});
 DottedLineLegend.args = {
   series: [
-    {lineStyle: 'dotted', name: 'Sales', color: 'red'},
-    {lineStyle: 'dotted', name: 'Visits', color: 'purple'},
+    {lineStyle: 'dotted', name: 'Sales'},
+    {lineStyle: 'dotted', name: 'Visits'},
   ],
 };
 
 export const DashedLineLegend = Template.bind({});
 DashedLineLegend.args = {
   series: [
-    {lineStyle: 'dashed', name: 'Sales', color: 'red'},
-    {lineStyle: 'dashed', name: 'Visits', color: 'purple'},
+    {lineStyle: 'dashed', name: 'Sales'},
+    {lineStyle: 'dashed', name: 'Visits'},
   ],
 };
 
 export const LineLegend = Template.bind({});
 LineLegend.args = {
   series: [
-    {lineStyle: 'solid', name: 'Sales', color: 'red'},
-    {lineStyle: 'solid', name: 'Visits', color: 'purple'},
+    {lineStyle: 'solid', name: 'Sales'},
+    {lineStyle: 'solid', name: 'Visits'},
+  ],
+};
+
+export const ColorOverrides = Template.bind({});
+ColorOverrides.args = {
+  series: [
+    {name: 'Sales', color: 'red'},
+    {name: 'Visits', color: 'purple'},
   ],
 };

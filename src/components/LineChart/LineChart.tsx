@@ -171,14 +171,16 @@ export function LineChart({
       : seriesColor;
 
     return {
-      color: isSolidLine
-        ? seriesColors[index]
-        : selectedTheme.line.dottedStrokeColor,
       lineStyle: selectedTheme.line.style,
       areaColor: isSolidLine
         ? changeColorOpacity(areaColor as string, 0.5)
         : undefined,
       ...series,
+      // We want to override the color, not set a default
+      // so it has to come last
+      color: isSolidLine
+        ? series.color ?? seriesColors[index]
+        : selectedTheme.line.dottedStrokeColor,
     };
   });
 

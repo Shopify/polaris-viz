@@ -1,5 +1,6 @@
 import React from 'react';
 
+import {getSeriesColorsFromCount} from '../../hooks/use-theme-series-colors';
 import {useTheme} from '../../hooks';
 import type {
   DataSeries,
@@ -27,17 +28,22 @@ interface Props {
 
 export function Legend({series, theme}: Props) {
   const selectedTheme = useTheme(theme);
+  const seriesColors = getSeriesColorsFromCount(series.length, selectedTheme);
   const {labelColor} = selectedTheme.legend;
   return (
     <div className={styles.Container} aria-hidden>
       {series.map(({name, color, lineStyle}, index) => {
+        const itemColor = color ?? seriesColors[index];
+
         return (
           <div className={styles.Series} key={`${name}-${index}`}>
             {lineStyle ? (
-              <LinePreview color={color} lineStyle={lineStyle} />
+              <LinePreview color={itemColor} lineStyle={lineStyle} />
             ) : null}
 
-            {lineStyle == null ? <SquareColorPreview color={color} /> : null}
+            {lineStyle == null ? (
+              <SquareColorPreview color={itemColor} />
+            ) : null}
 
             <p style={{color: labelColor}} className={styles.SeriesName}>
               {name}
