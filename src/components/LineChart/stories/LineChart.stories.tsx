@@ -97,7 +97,7 @@ const Template: Story<LineChartProps> = (args: LineChartProps) => {
   return <LineChart {...args} />;
 };
 
-export const InsightsStyle = Template.bind({});
+export const InsightsStyle: Story<LineChartProps> = Template.bind({});
 InsightsStyle.args = {
   series,
 
@@ -112,7 +112,7 @@ InsightsStyle.args = {
   isAnimated: true,
 };
 
-export const SeriesColors = Template.bind({});
+export const SeriesColors: Story<LineChartProps> = Template.bind({});
 SeriesColors.args = {
   series: seriesUsingSeriesColors,
 
@@ -127,7 +127,7 @@ SeriesColors.args = {
   isAnimated: true,
 };
 
-export const HideXAxisLabels = Template.bind({});
+export const HideXAxisLabels: Story<LineChartProps> = Template.bind({});
 HideXAxisLabels.args = {
   theme: 'NoxAxisLabels',
   series,
@@ -139,7 +139,7 @@ HideXAxisLabels.args = {
   renderTooltipContent,
 };
 
-export const NoOverflowStyle = Template.bind({});
+export const NoOverflowStyle: Story<LineChartProps> = Template.bind({});
 NoOverflowStyle.args = {
   theme: 'NoOverflow',
   series,
@@ -151,7 +151,7 @@ NoOverflowStyle.args = {
   renderTooltipContent,
 };
 
-export const IntegersOnly = Template.bind({});
+export const IntegersOnly: Story<LineChartProps> = Template.bind({});
 IntegersOnly.args = {
   series: [
     {
@@ -175,7 +175,7 @@ IntegersOnly.args = {
   renderTooltipContent,
 };
 
-export const NoArea = Template.bind({});
+export const NoArea: Story<LineChartProps> = Template.bind({});
 NoArea.args = {
   series: [
     {
@@ -190,7 +190,6 @@ NoArea.args = {
         {rawValue: 5, label: '2020-04-07T12:00:00'},
       ],
       color: gradient,
-      area: null,
     },
   ],
   xAxisOptions: {
@@ -200,7 +199,7 @@ NoArea.args = {
   renderTooltipContent,
 };
 
-export const SolidColor = Template.bind({});
+export const SolidColor: Story<LineChartProps> = Template.bind({});
 SolidColor.args = {
   series: [
     {
@@ -224,7 +223,7 @@ SolidColor.args = {
   renderTooltipContent,
 };
 
-export const LargeDataSet = Template.bind({});
+export const LargeDataSet: Story<LineChartProps> = Template.bind({});
 
 LargeDataSet.args = {
   series: [

@@ -56,7 +56,7 @@ const Template: Story<LinearGradientProps> = (args) => (
   </svg>
 );
 
-export const Default = Template.bind({});
+export const Default: Story<LinearGradientProps> = Template.bind({});
 
 const purple = '#5052b3';
 const negativePurple = '#39337f';

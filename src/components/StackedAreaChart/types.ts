@@ -1,6 +1,6 @@
-import type {Color, DataSeries, NullableData} from '../../types';
+import type {Color, Data, DataSeries} from '../../types';
 
-export interface Series extends DataSeries<NullableData, string> {}
+export type Series = DataSeries<Data, Color>;
 
 export interface RenderTooltipContentData {
   title: string;

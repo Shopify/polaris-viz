@@ -87,13 +87,13 @@ const defaultProps = {
     'A bar chart showing orders over time for the past 11 weeks. The minimum is 100 orders and the maximum is 1,000 orders, compared to an average of 500 orders during previous 11-week period.',
 };
 
-export const Default = Template.bind({});
+export const Default: Story<SparkbarProps> = Template.bind({});
 Default.args = defaultProps;
 
-export const Positive = Template.bind({});
+export const Positive: Story<SparkbarProps> = Template.bind({});
 Positive.args = {...defaultProps, theme: 'Positive'};
 
-export const OffsetAndNulls = Template.bind({});
+export const OffsetAndNulls: Story<SparkbarProps> = Template.bind({});
 OffsetAndNulls.args = {
   ...defaultProps,
   dataOffsetLeft: 10,
@@ -113,7 +113,7 @@ OffsetAndNulls.args = {
   ],
 };
 
-export const OverriddenColors = Template.bind({});
+export const OverriddenColors: Story<SparkbarProps> = Template.bind({});
 OverriddenColors.args = {
   ...defaultProps,
   dataOffsetLeft: 10,

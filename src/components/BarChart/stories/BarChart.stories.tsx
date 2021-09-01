@@ -104,7 +104,7 @@ const Template: Story<BarChartProps> = (args: BarChartProps) => {
   return <BarChart {...args} />;
 };
 
-export const Default = Template.bind({});
+export const Default: Story<BarChartProps> = Template.bind({});
 Default.args = {
   ...defaultProps,
   xAxisOptions: {
@@ -115,7 +115,7 @@ Default.args = {
   },
 };
 
-export const Annotations = Template.bind({});
+export const Annotations: Story<BarChartProps> = Template.bind({});
 Annotations.args = {
   ...defaultProps,
   data: [
@@ -155,7 +155,7 @@ Annotations.args = {
   ],
 };
 
-export const LastBarTreatment = Template.bind({});
+export const LastBarTreatment: Story<BarChartProps> = Template.bind({});
 LastBarTreatment.args = {
   ...defaultProps,
   data: [
@@ -175,7 +175,7 @@ LastBarTreatment.args = {
   ],
 };
 
-export const MinimalLabels = Template.bind({});
+export const MinimalLabels: Story<BarChartProps> = Template.bind({});
 MinimalLabels.args = {
   ...defaultProps,
   data: [
@@ -217,7 +217,7 @@ MinimalLabels.args = {
   },
 };
 
-export const IntegersOnly = Template.bind({});
+export const IntegersOnly: Story<BarChartProps> = Template.bind({});
 IntegersOnly.args = {
   ...defaultProps,
   data: [
@@ -234,7 +234,7 @@ IntegersOnly.args = {
   },
 };
 
-export const LargeVolume = Template.bind({});
+export const LargeVolume: Story<BarChartProps> = Template.bind({});
 LargeVolume.args = {
   ...defaultProps,
   data: Array(1000)
@@ -246,25 +246,6 @@ LargeVolume.args = {
       };
     }),
 };
-
-const SolidColorsTemplate: Story<BarChartProps> = (args: BarChartProps) => {
-  return (
-    <PolarisVizProvider
-      themes={{
-        Default: {
-          bar: {
-            color: 'yellow',
-          },
-        },
-      }}
-    >
-      <BarChart {...args} />
-    </PolarisVizProvider>
-  );
-};
-
-export const SolidColors = SolidColorsTemplate.bind({});
-SolidColors.args = defaultProps;
 
 const NonRoundCornersTemplate: Story<BarChartProps> = (args: BarChartProps) => {
   return (
