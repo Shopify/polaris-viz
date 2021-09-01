@@ -14,14 +14,14 @@ import {SquareColorPreview} from '../SquareColorPreview';
 
 import styles from './Legend.scss';
 
-type LegendData = Required<DataSeries<Data | NullableData, Color>>;
+type LegendData = DataSeries<Data | NullableData, Color>;
 
 interface LegendProps extends Omit<LegendData, 'data'> {
   lineStyle?: LineStyle;
   data?: (Data | NullableData)[];
 }
 
-interface Props {
+export interface Props {
   series: LegendProps[];
   theme?: string;
 }

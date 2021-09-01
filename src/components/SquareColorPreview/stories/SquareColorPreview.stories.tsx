@@ -33,7 +33,7 @@ const Template: Story<SquareColorPreviewProps> = (
   return <SquareColorPreview {...args} />;
 };
 
-export const Solid = Template.bind({});
+export const Solid: Story<SquareColorPreviewProps> = Template.bind({});
 
 Solid.args = {
   color: colorTeal,
@@ -43,7 +43,7 @@ const purple = '#5052b3';
 const negativePurple = '#39337f';
 const green = '#1bbe9e';
 
-export const Gradient = Template.bind({});
+export const Gradient: Story<SquareColorPreviewProps> = Template.bind({});
 
 Gradient.args = {
   color: [

@@ -47,7 +47,7 @@ const defaultProps = {
   ],
 };
 
-export const Default = Template.bind({});
+export const Default: Story<TooltipContentProps> = Template.bind({});
 
 Default.args = {
   ...defaultProps,
@@ -55,12 +55,12 @@ Default.args = {
   title: undefined,
 };
 
-export const WithTitle = Template.bind({});
+export const WithTitle: Story<TooltipContentProps> = Template.bind({});
 
 WithTitle.args = {
   ...defaultProps,
   total: undefined,
 };
 
-export const WithTotal = Template.bind({});
+export const WithTotal: Story<TooltipContentProps> = Template.bind({});
 WithTotal.args = defaultProps;

@@ -94,10 +94,10 @@ const Template: Story<StackedAreaChartProps> = (
 ) => {
   return <StackedAreaChart {...args} />;
 };
-export const Default = Template.bind({});
+export const Default: Story<StackedAreaChartProps> = Template.bind({});
 Default.args = defaultProps;
 
-export const Gradients = Template.bind({});
+export const Gradients: Story<StackedAreaChartProps> = Template.bind({});
 Gradients.args = {
   ...defaultProps,
   xAxisLabels: Array(5)
@@ -139,7 +139,7 @@ Gradients.args = {
   ],
 };
 
-export const LargeVolume = Template.bind({});
+export const LargeVolume: Story<StackedAreaChartProps> = Template.bind({});
 LargeVolume.args = {
   ...defaultProps,
   xAxisLabels: Array(2000)
@@ -173,7 +173,7 @@ LargeVolume.args = {
   ],
 };
 
-export const MediumVolume = Template.bind({});
+export const MediumVolume: Story<StackedAreaChartProps> = Template.bind({});
 MediumVolume.args = {
   ...defaultProps,
   xAxisLabels: Array(10)

@@ -33,12 +33,12 @@ const Template: Story<LegendProps> = (args: LegendProps) => {
   );
 };
 
-export const SquareLegend = Template.bind({});
+export const SquareLegend: Story<LegendProps> = Template.bind({});
 SquareLegend.args = {
   series: [{name: 'Sales'}, {name: 'Visits'}],
 };
 
-export const DottedLineLegend = Template.bind({});
+export const DottedLineLegend: Story<LegendProps> = Template.bind({});
 DottedLineLegend.args = {
   series: [
     {lineStyle: 'dotted', name: 'Sales'},
@@ -46,7 +46,7 @@ DottedLineLegend.args = {
   ],
 };
 
-export const DashedLineLegend = Template.bind({});
+export const DashedLineLegend: Story<LegendProps> = Template.bind({});
 DashedLineLegend.args = {
   series: [
     {lineStyle: 'dashed', name: 'Sales'},
@@ -54,7 +54,7 @@ DashedLineLegend.args = {
   ],
 };
 
-export const LineLegend = Template.bind({});
+export const LineLegend: Story<LegendProps> = Template.bind({});
 LineLegend.args = {
   series: [
     {lineStyle: 'solid', name: 'Sales'},
@@ -62,7 +62,7 @@ LineLegend.args = {
   ],
 };
 
-export const ColorOverrides = Template.bind({});
+export const ColorOverrides: Story<LegendProps> = Template.bind({});
 ColorOverrides.args = {
   series: [
     {name: 'Sales', color: 'red'},

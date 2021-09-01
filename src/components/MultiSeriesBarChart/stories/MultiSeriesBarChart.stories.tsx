@@ -196,7 +196,7 @@ const gradientSeries = series
   }))
   .filter((_, index) => index < 2);
 
-export const Default = Template.bind({});
+export const Default: Story<MultiSeriesBarChartProps> = Template.bind({});
 
 Default.args = {
   series: series,
@@ -247,13 +247,15 @@ const WithoutRoundedCornersTemplate: Story<MultiSeriesBarChartProps> = (
   );
 };
 
-export const WithoutRoundedCorners = WithoutRoundedCornersTemplate.bind({});
+export const WithoutRoundedCorners: Story<MultiSeriesBarChartProps> = WithoutRoundedCornersTemplate.bind(
+  {},
+);
 WithoutRoundedCorners.args = {
   series: series,
   xAxisOptions: {labels},
 };
 
-export const Stacked = Template.bind({});
+export const Stacked: Story<MultiSeriesBarChartProps> = Template.bind({});
 Stacked.args = {
   series: series,
   xAxisOptions: {labels},
@@ -262,7 +264,9 @@ Stacked.args = {
   },
 };
 
-export const OverwrittenSeriesColors = Template.bind({});
+export const OverwrittenSeriesColors: Story<MultiSeriesBarChartProps> = Template.bind(
+  {},
+);
 OverwrittenSeriesColors.args = {
   series: gradientSeries,
   xAxisOptions: {labels},
@@ -271,7 +275,7 @@ OverwrittenSeriesColors.args = {
   },
 };
 
-export const IntegersOnly = Template.bind({});
+export const IntegersOnly: Story<MultiSeriesBarChartProps> = Template.bind({});
 IntegersOnly.args = {
   series: [
     {
@@ -315,7 +319,7 @@ IntegersOnly.args = {
   yAxisOptions: {integersOnly: true},
 };
 
-export const LargeVolume = Template.bind({});
+export const LargeVolume: Story<MultiSeriesBarChartProps> = Template.bind({});
 LargeVolume.args = {
   series: [
     {
