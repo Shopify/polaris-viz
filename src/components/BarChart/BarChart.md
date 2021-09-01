@@ -45,7 +45,6 @@ const props = {
   isAnimated: true,
   renderTooltipContent: {renderTooltipContent},
   skipLinkText: 'Skip chart content',
-  theme: 'Default'
 };
 
 return <BarChart {...props} />;

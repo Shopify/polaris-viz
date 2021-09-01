@@ -5,6 +5,7 @@ import {StackedAreaChart, StackedAreaChartProps} from '../StackedAreaChart';
 
 import {data, labels, formatYAxisLabel} from './utils.stories';
 import {colorPurpleDark, colorTeal} from '../../../constants';
+import {THEME_CONTROL_ARGS} from '../../../storybook';
 
 const tooltipContent = {
   empty: undefined,
@@ -76,9 +77,7 @@ export default {
       description:
         'If provided, renders a `<SkipLink/>` button with the string. Use this for charts with large data sets, so keyboard users can skip all the tabbable data points in the chart.',
     },
-    theme: {
-      description: 'The theme that the chart will inherit its styles from',
-    },
+    theme: THEME_CONTROL_ARGS,
   },
 } as Meta;
 
@@ -88,7 +87,6 @@ const defaultProps = {
   xAxisLabels: labels,
   formatYAxisLabel: formatYAxisLabel,
   isAnimated: true,
-  theme: 'Default',
 };
 
 const Template: Story<StackedAreaChartProps> = (

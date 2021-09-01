@@ -75,7 +75,6 @@ const props = {
   ],
   hasSpline: true,
   isAnimated: true,
-  theme: 'Default'
 };
 
 return (

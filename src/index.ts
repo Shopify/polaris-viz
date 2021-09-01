@@ -29,7 +29,10 @@ export type {
   PolarisVizProviderProps,
 } from './components';
 
-export {DEFAULT_THEME as PolarisVizTheme} from './constants';
+export {
+  DEFAULT_THEME as PolarisVizDefaultTheme,
+  LIGHT_THEME as PolarisVizLightheme,
+} from './constants';
 
 export {createTheme} from './utilities/create-themes';
 

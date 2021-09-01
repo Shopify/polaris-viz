@@ -2,7 +2,8 @@ import React from 'react';
 import {Story, Meta} from '@storybook/react';
 
 import {Sparkbar, SparkbarProps} from '../Sparkbar';
-import {DEFAULT_THEME, VIZ_GRADIENT_COLOR} from '../../../constants';
+import {DEFAULT_THEME} from '../../../constants';
+import {THEME_CONTROL_ARGS} from '../../../storybook';
 
 export default {
   title: 'Charts/Sparkbar',
@@ -22,10 +23,6 @@ export default {
     ),
   ],
   argTypes: {
-    theme: {
-      description:
-        'The theme that the chart will inherit its color and container styles from',
-    },
     data: {
       description:
         "The prop to determine the chart's bars. Null bars will not be plotted. Bars with the value of `0` will render a very small bar to indicate the presence of the value. [SparkChartData type definition.]()",
@@ -49,6 +46,7 @@ export default {
     isAnimated: {
       description: 'Determines whether to animate the chart on state changes.',
     },
+    theme: THEME_CONTROL_ARGS,
   },
 } as Meta;
 

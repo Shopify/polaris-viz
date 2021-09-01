@@ -45,7 +45,7 @@ export function BarChart({
     integersOnly: false,
     labelFormatter: (value: number) => value.toString(),
   },
-  theme = 'Default',
+  theme,
 }: BarChartProps) {
   const selectedTheme = useTheme(theme);
   const [seriesColor] = getSeriesColorsFromCount(1, selectedTheme);

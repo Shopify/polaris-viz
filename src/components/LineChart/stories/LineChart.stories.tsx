@@ -13,6 +13,7 @@ import {
   seriesUsingSeriesColors,
 } from './utils.stories';
 import {colorTeal} from '../../../constants';
+import {THEME_CONTROL_ARGS} from '../../../storybook';
 
 const tooltipContent = {
   empty: undefined,
@@ -51,9 +52,6 @@ export default {
     },
   },
   argTypes: {
-    theme: {
-      description: 'The theme that the chart will inherit its styles from',
-    },
     series: {
       description:
         'The `Series` type gives the user the flexibility to define exactly what each series/line should look like, as well as providing the data to be plotted.',
@@ -91,6 +89,7 @@ export default {
       description:
         'An object of optional proprties that define the appearance of the yAxis.',
     },
+    theme: THEME_CONTROL_ARGS,
   },
 } as Meta;
 
@@ -101,7 +100,7 @@ const Template: Story<LineChartProps> = (args: LineChartProps) => {
 export const InsightsStyle = Template.bind({});
 InsightsStyle.args = {
   series,
-  theme: 'Default',
+
   xAxisOptions: {
     xAxisLabels,
     labelFormatter: formatXAxisLabel,
@@ -116,7 +115,7 @@ InsightsStyle.args = {
 export const SeriesColors = Template.bind({});
 SeriesColors.args = {
   series: seriesUsingSeriesColors,
-  theme: 'Default',
+
   xAxisOptions: {
     xAxisLabels,
     labelFormatter: formatXAxisLabel,
@@ -154,7 +153,6 @@ NoOverflowStyle.args = {
 
 export const IntegersOnly = Template.bind({});
 IntegersOnly.args = {
-  theme: 'Default',
   series: [
     {
       name: 'Integers Only',
@@ -179,7 +177,6 @@ IntegersOnly.args = {
 
 export const NoArea = Template.bind({});
 NoArea.args = {
-  theme: 'Default',
   series: [
     {
       name: 'Sales',
@@ -205,7 +202,6 @@ NoArea.args = {
 
 export const SolidColor = Template.bind({});
 SolidColor.args = {
-  theme: 'Default',
   series: [
     {
       name: 'Sales',
@@ -231,7 +227,6 @@ SolidColor.args = {
 export const LargeDataSet = Template.bind({});
 
 LargeDataSet.args = {
-  theme: 'Default',
   series: [
     {
       name: 'series 1',

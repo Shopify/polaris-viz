@@ -5,6 +5,7 @@ import {
   NormalizedStackedBarChart,
   NormalizedStackedBarChartProps,
 } from '../NormalizedStackedBarChart';
+import {THEME_CONTROL_ARGS} from '../../../storybook';
 
 export default {
   title: 'Charts/NormalizedStackedBarChart',
@@ -25,10 +26,7 @@ export default {
     },
     orientation: {description: 'Determines the orientation of the chart.'},
     size: {description: 'Determines the width of the chart.'},
-    theme: {
-      description:
-        'The theme prop determines the colors of the bars, the background of the chart and the appearance of the legend.',
-    },
+    theme: THEME_CONTROL_ARGS,
   },
 } as Meta;
 
@@ -78,7 +76,6 @@ const defaultProps = {
   ],
   orientation: 'horizontal',
   size: 'small',
-  theme: 'Default',
 };
 
 export const Default = Template.bind({});
