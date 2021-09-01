@@ -145,7 +145,12 @@ export function Sparkline({
 
       <svg xmlns={XMLNS} aria-hidden width={width} height={height}>
         {series.map((singleSeries, index) => {
-          const {offsetRight = 0, offsetLeft = 0} = singleSeries;
+          const {
+            lineStyle,
+            hasPoint,
+            offsetRight = 0,
+            offsetLeft = 0,
+          } = singleSeries;
 
           const xScale = scaleLinear()
             .range([offsetLeft + SVG_MARGIN, width - offsetRight - SVG_MARGIN])
@@ -153,6 +158,7 @@ export function Sparkline({
 
           const seriesWithColor = {
             color: seriesColors[index],
+            hasPoint: lineStyle === 'solid' ? hasPoint : false,
             ...singleSeries,
           };
 
