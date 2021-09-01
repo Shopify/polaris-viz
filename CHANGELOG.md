@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## [0.19.0-1] - 2021-09-01
+### Added
+
+- Added `Light` theme.
+
 ### Changed
 
 - `<Legend>` now defaults to using series colors.
@@ -10,12 +15,6 @@
 ### Fixed
 
 - Non-solid lines in `<LineChart />` were not being set to `dottedStrokeColor` correctly.
-
-## [0.19.0-1] - 2021-09-01
-### Added
-
-- Added `Light` theme.
-
 ## [0.19.0-0] - 2021-08-31
 ### Added
 
