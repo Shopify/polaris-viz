@@ -6,6 +6,8 @@
 ### Added
 
 - Added `Light` theme.
+- Export `Color` type.
+- `<LineChartTooltipContent>` now uses series colors.
 
 ### Changed
 
@@ -15,6 +17,8 @@
 ### Fixed
 
 - Non-solid lines in `<LineChart />` were not being set to `dottedStrokeColor` correctly.
+- Fixed wrong color being applied when `lineType` was not provided.
+
 ## [0.19.0-0] - 2021-08-31
 ### Added
 
