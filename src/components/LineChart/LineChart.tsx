@@ -164,7 +164,8 @@ export function LineChart({
   const seriesWithDefaults = series.map<SeriesWithDefaults>((series, index) => {
     const seriesColor = seriesColors[index];
 
-    const isSolidLine = series.lineStyle === 'solid';
+    const isSolidLine =
+      series.lineStyle == null || series.lineStyle === 'solid';
 
     const areaColor = isGradientType(seriesColor)
       ? (seriesColor[seriesColor.length - 1] as GradientStop).color

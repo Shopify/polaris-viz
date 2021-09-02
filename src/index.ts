@@ -36,4 +36,4 @@ export {
 
 export {createTheme} from './utilities/create-themes';
 
-export type {GradientStop} from './types';
+export type {GradientStop, Color} from './types';

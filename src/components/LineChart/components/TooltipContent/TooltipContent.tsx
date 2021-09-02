@@ -1,6 +1,7 @@
 import React from 'react';
 import type {LineStyle, Color} from 'types';
 
+import {getSeriesColorsFromCount} from '../../../../hooks/use-theme-series-colors';
 import {useTheme} from '../../../../hooks';
 import {LinePreview} from '../../../LinePreview';
 
@@ -10,9 +11,9 @@ interface TooltipData {
   name: string;
   point: {
     label: string;
-    value: string;
+    value: string | number;
   };
-  color: Color;
+  color?: Color;
   lineStyle: LineStyle;
 }
 
@@ -22,7 +23,10 @@ export interface TooltipContentProps {
 }
 
 export function TooltipContent({data, theme}: TooltipContentProps) {
-  const {tooltip} = useTheme(theme);
+  const selectedTheme = useTheme(theme);
+  const seriesColor = getSeriesColorsFromCount(data.length, selectedTheme);
+
+  const {tooltip} = selectedTheme;
   return (
     <div
       className={styles.Container}
@@ -34,7 +38,10 @@ export function TooltipContent({data, theme}: TooltipContentProps) {
       {data.map(({name, point: {label, value}, color, lineStyle}, index) => {
         return (
           <React.Fragment key={`${name}-${index}`}>
-            <LinePreview color={color} lineStyle={lineStyle} />
+            <LinePreview
+              color={color ?? seriesColor[index]}
+              lineStyle={lineStyle}
+            />
             <p className={styles.Name}>{label}</p>
             <p
               style={{
