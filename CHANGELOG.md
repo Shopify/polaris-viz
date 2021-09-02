@@ -11,7 +11,7 @@
 
 - `<Legend>` now defaults to using series colors.
 - `<SparkLine>` dashed lines no longer show point.
-
+- Made `color` optional in `LegendData`.
 ### Fixed
 
 - Non-solid lines in `<LineChart />` were not being set to `dottedStrokeColor` correctly.
