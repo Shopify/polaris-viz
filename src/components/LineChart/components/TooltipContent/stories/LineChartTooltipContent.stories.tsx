@@ -37,35 +37,45 @@ const Template: Story<TooltipContentProps> = (args: TooltipContentProps) => {
   );
 };
 
-export const Default = Template.bind({});
+export const Default: Story<TooltipContentProps> = Template.bind({});
 
 Default.args = {
   data: [
     {
       name: 'Primary',
       point: {label: 'Sept. 10, 1989', value: 28},
-      color: 'red',
       lineStyle: 'solid',
     },
   ],
 };
 
-export const DashedLine = Template.bind({});
+export const DashedLine: Story<TooltipContentProps> = Template.bind({});
 
 DashedLine.args = {
   data: [
     {
       name: 'Primary',
       point: {label: 'Sept. 10, 1989', value: 28},
-      color: 'red',
       lineStyle: 'dashed',
     },
   ],
 };
 
-export const DottedLine = Template.bind({});
+export const DottedLine: Story<TooltipContentProps> = Template.bind({});
 
 DottedLine.args = {
+  data: [
+    {
+      name: 'Primary',
+      point: {label: 'Sept. 10, 1989', value: 28},
+      lineStyle: 'dotted',
+    },
+  ],
+};
+
+export const ColorOverride: Story<TooltipContentProps> = Template.bind({});
+
+ColorOverride.args = {
   data: [
     {
       name: 'Primary',

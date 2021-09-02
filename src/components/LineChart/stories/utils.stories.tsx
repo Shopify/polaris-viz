@@ -38,7 +38,6 @@ export const series = [
       {rawValue: 129, label: '2020-04-14T12:00:00'},
     ],
     color: gradient,
-    lineStyle: 'solid' as 'solid',
     areaColor: 'rgba(92,105,208,0.5)',
   },
   {
