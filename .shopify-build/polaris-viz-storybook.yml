@@ -1,11 +1,12 @@
 containers:
-  default:
-    build:
-      from: ubuntu-latest
-      type: ci
+  docs_container:
+    docker: gcr.io/shopify-docker-images/apps/production/apidocs-generator-alpine:production
 
 steps:
-  - label: Tests
-    timeout: 5m
+  - label: Assemble Storybook
+    git:
+      history: shallow
+    timeout: 15m
     run:
-    - echo "Hello World"
+      - cd /projects/api-node && ./assemble --type=storybook --microsite-root=/
+    container: docs_container

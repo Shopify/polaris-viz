@@ -33,7 +33,7 @@
     "prepublish": "in-publish && yarn run build || :",
     "dev": "sewing-kit playground",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
+    "build-storybook": "build-storybook -o ./build",
     "add:story": "node ./.storybook/cli.js"
   },
   "size-limit": [
