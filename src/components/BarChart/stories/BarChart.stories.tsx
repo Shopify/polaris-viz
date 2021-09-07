@@ -26,12 +26,6 @@ export default {
   title: 'Charts/BarChart',
   component: BarChart,
   parameters: {
-    docs: {
-      description: {
-        component:
-          'Used to show comparison across categories or time. <br /> This component inherits its height and width from its container.',
-      },
-    },
     controls: {
       sort: 'requiredFirst',
       expanded: true,
@@ -42,8 +36,6 @@ export default {
       control: {
         type: 'select',
       },
-      description:
-        'An array of annotations to show on the chart. [Annotation type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/BarChart/types.ts#L61)',
       options: ['No annotation', 'Annotation on second bar'],
       mapping: {
         'No annotation': undefined,
@@ -63,8 +55,6 @@ export default {
       },
     },
     renderTooltipContent: {
-      description:
-        'Accepts a function that renders the tooltip content. By default it calls `formatXAxisLabel` and `formatYAxisLabel` to format the the tooltip values and passes them to `<BarChartTooltipContent />`. [RenderTooltipContentData type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/BarChart/types.ts#L23)',
       options: Object.keys(tooltipContent),
       mapping: tooltipContent,
       control: {
@@ -74,27 +64,6 @@ export default {
           Annotation: 'Custom',
         },
       },
-    },
-    data: {
-      description: 'Data represented as bars. Required.',
-    },
-    emptyStateText: {
-      description:
-        'Used to indicate to screenreaders that a chart with no data has been rendered, in the case that an empty array is passed as the data. It is strongly recommended that this is included if the data prop could be an empty array.',
-    },
-    isAnimated: {
-      description:
-        'Whether to animate the bars when the chart is initially rendered and its data is updated. Even if `isAnimated` is set to true, animations will not be displayed for users with reduced motion preferences.',
-    },
-    skipLinkText: {
-      description:
-        'If provided, renders a `<SkipLink/>` button with the string. Use this for charts with large data sets, so keyboard users can skip all the tabbable data points in the chart.',
-    },
-    xAxisOptions: {
-      description: 'An object used to configure the xAxis and its labels.',
-    },
-    yAxisOptions: {
-      description: 'An object used to configure the yAxis and its labels.',
     },
     theme: THEME_CONTROL_ARGS,
   },

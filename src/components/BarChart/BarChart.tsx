@@ -19,17 +19,48 @@ import type {
 } from './types';
 
 export interface BarChartProps {
+  /** Data represented as bars */
   data: BarChartData[];
+  /** An array of annotations to show on the chart. */
   annotations?: Annotation[];
+  /**
+   * If provided, renders a `<SkipLink/>` button with the string.
+   *
+   * Use this for charts with large data sets, so keyboard users
+   * can skip all the tabbable data points in the chart.
+   * */
   skipLinkText?: string;
+  /**
+   * Used to indicate to screenreaders that a chart with no data has been rendered,
+   * in the case that an empty array is passed as the data.
+   *
+   * It is strongly recommended that this is included if the data prop could
+   * be an empty array.
+   * */
   emptyStateText?: string;
+  /**
+   * Whether to animate the bars when the chart is initially rendered and its data is updated.
+   *
+   * Even if `isAnimated` is set to true, animations will not be
+   * displayed for users with reduced motion preferences.
+   * */
   isAnimated?: boolean;
+  /**
+   * Accepts a function that renders the tooltip content.
+   *
+   * By default it calls `formatXAxisLabel` and `formatYAxisLabel` to format
+   * the the tooltip values and passes them to `<BarChartTooltipContent />`
+   */
   renderTooltipContent?: (data: RenderTooltipContentData) => React.ReactNode;
+  /** An object used to configure the xAxis and its labels. */
   xAxisOptions?: XAxisOptions;
+  /** An object used to configure the yAxis and its labels. */
   yAxisOptions?: YAxisOptions;
+  /** The theme that the chart will inherit its styles from */
   theme?: string;
 }
 
+/** Used to show comparison across categories or time. */
 export function BarChart({
   data,
   annotations,

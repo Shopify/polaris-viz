@@ -15,11 +15,7 @@ module.exports = {
     },
   ],
   typescript: {
-    // also valid 'react-docgen-typescript' | false
-    // reactDocgen: 'react-docgen-typescript',
-    // There is an issue with TypeScript 4.3 and React Doc Gen
-    // https://github.com/styleguidist/react-docgen-typescript/issues/356
-    reactDocgen: 'none',
+    reactDocgen: 'react-docgen-typescript',
   },
   webpackFinal: (config) => {
     const isProduction = config.mode === 'production';

@@ -39,7 +39,7 @@ export const decorators = [
           },
         }}
       >
-        <Container theme={context.args.theme}>
+        <Container theme={context.args.theme} viewMode={context.viewMode}>
           <Story />
         </Container>
       </PolarisVizProvider>
@@ -49,9 +49,10 @@ export const decorators = [
 
 interface ContainerProps {
   theme: string;
+  viewMode: String;
 }
 
-const Container = ({children, theme}: ContainerProps) => {
+const Container = ({children, theme, viewMode}: ContainerProps) => {
   const selectedTheme = useTheme(theme);
 
   return (
@@ -62,7 +63,7 @@ const Container = ({children, theme}: ContainerProps) => {
         overflow: 'hidden',
         margin: '-1rem',
         background: selectedTheme.chartContainer.backgroundColor,
-        minHeight: '100vh',
+        minHeight: viewMode !== 'docs' ? '100vh' : undefined,
       }}
     >
       <div
