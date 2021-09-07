@@ -279,7 +279,7 @@ export function Chart({
             ticks={ticks}
             fontSize={fontSize}
             labelColor={yAxisOptions.labelColor}
-            textAlign={gridOptions.horizontalOverflow ? 'right' : 'left'}
+            textAlign={gridOptions.horizontalOverflow ? 'left' : 'right'}
             width={yAxisLabelWidth}
             backgroundColor={yAxisOptions.backgroundColor}
             outerMargin={gridOptions.horizontalMargin}
