@@ -53,6 +53,7 @@ export const MAX_TRAIL_DURATION = 500;
 
 export const MASK_HIGHLIGHT_COLOR = variables.colorWhite;
 export const MASK_SUBDUE_COLOR = '#434343';
+export const SUBDUE_OPACITY = 0.4;
 
 export const colorSky = variables.colorSky;
 export const colorWhite = variables.colorWhite;
