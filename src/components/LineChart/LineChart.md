@@ -132,7 +132,7 @@ const props = {
     labelFormatter: formatYAxisLabel,
     integersOnly: true,
   },
-  skipLinkText = 'Skip chart content',
+  skipLinkText: 'Skip chart content',
   theme: "Default"
 };
 
