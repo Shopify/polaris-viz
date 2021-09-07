@@ -242,6 +242,7 @@ SeriesColorsUpToFour.args = {
     xAxisLabels: generateLabels(10),
   },
   renderTooltipContent,
+  isAnimated: true,
 };
 
 export const SeriesColorsFromFiveToSeven: Story<LineChartProps> = Template.bind(
