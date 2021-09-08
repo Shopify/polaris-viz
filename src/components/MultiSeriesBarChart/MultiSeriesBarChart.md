@@ -122,6 +122,7 @@ interface MultiSeriesBarChartProps {
   xAxisOptions: {
     labelFormatter?(value: string, index?: number, data?: string[]): string;
     labels: string[];
+    hide?: boolean;
   };
   yAxisOptions: {
     labelFormatter?(value: number): string;
@@ -239,6 +240,14 @@ This accepts a function that is called to render the tooltip content. By default
 #### xAxisOptions
 
 An object including the following proprties that define the appearance of the xAxis. Only labels is mandatory.
+
+##### hide
+
+| type      | default |
+| --------- | ------- |
+| `boolean` | `false` |
+
+Whether to hide the xAxis visually, not for screenreaders.
 
 ##### labelFormatter
 

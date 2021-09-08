@@ -73,6 +73,7 @@ describe('<Chart />', () => {
       },
     ],
     xAxisLabels: ['Day 1', 'Day 2'],
+    hideXAxis: false,
     dimensions: {width: 500, height: 250},
     isAnimated: true,
     formatXAxisLabel: (val: string) => val,
@@ -101,6 +102,11 @@ describe('<Chart />', () => {
       fontSize: 12,
       drawableWidth: 480,
     });
+  });
+
+  it('does not render LinearAxis labels if the axis is hidden', () => {
+    const chart = mount(<Chart {...mockProps} hideXAxis />);
+    expect(chart).not.toContainReactComponent(LinearXAxis);
   });
 
   it('formats the x axis labels before passing them to the LinearAxis', () => {

@@ -35,7 +35,7 @@ export interface XAxisOptions {
   labelFormatter: StringLabelFormatter;
   xAxisLabels: string[];
   useMinimalLabels: boolean;
-  hide: boolean;
+  hide?: boolean;
 }
 
 export interface YAxisOptions {

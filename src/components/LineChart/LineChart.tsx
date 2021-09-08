@@ -126,8 +126,7 @@ export function LineChart({
     handlePrintMediaQueryChange,
   ]);
 
-  const xAxisOptionsWithDefaults: Required<XAxisOptions> = {
-    hide: false,
+  const xAxisOptionsWithDefaults: XAxisOptions = {
     labelFormatter: (value: string) => value,
     useMinimalLabels: false,
     xAxisLabels: [],

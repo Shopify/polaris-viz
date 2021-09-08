@@ -53,9 +53,8 @@ interface Props {
   isAnimated: boolean;
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
   series: SeriesWithDefaults[];
-  xAxisOptions: Required<XAxisOptions>;
+  xAxisOptions: XAxisOptions;
   yAxisOptions: Required<YAxisOptions>;
-
   emptyStateText?: string;
   theme?: string;
 }
@@ -329,22 +328,24 @@ export function Chart({
         onMouseLeave={() => handleMouseInteraction(null)}
         aria-label={emptyState ? emptyStateText : undefined}
       >
-        <g
-          transform={`translate(${dataStartPosition},${
-            dimensions.height - marginBottom
-          })`}
-        >
-          <LinearXAxis
-            xAxisDetails={xAxisDetails}
-            xScale={xScale}
-            labels={hideXAxis ? null : formattedLabels}
-            drawableWidth={drawableWidth}
-            fontSize={fontSize}
-            drawableHeight={drawableHeight}
-            ariaHidden
-            theme={theme}
-          />
-        </g>
+        {xAxisOptions.hide ? null : (
+          <g
+            transform={`translate(${dataStartPosition},${
+              dimensions.height - marginBottom
+            })`}
+          >
+            <LinearXAxis
+              xAxisDetails={xAxisDetails}
+              xScale={xScale}
+              labels={hideXAxis ? null : formattedLabels}
+              drawableWidth={drawableWidth}
+              fontSize={fontSize}
+              drawableHeight={drawableHeight}
+              ariaHidden
+              theme={theme}
+            />
+          </g>
+        )}
 
         {selectedTheme.grid.showHorizontalLines ? (
           <HorizontalGridLines

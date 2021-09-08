@@ -50,6 +50,7 @@ import type {Series, RenderTooltipContentData} from './types';
 import styles from './Chart.scss';
 
 interface Props {
+  hideXAxis: boolean;
   xAxisLabels: string[];
   series: Series[];
   formatXAxisLabel: StringLabelFormatter;
@@ -63,6 +64,7 @@ interface Props {
 type SeriesForAnimation = Required<Partial<DataSeries<Data, null>>>;
 
 export function Chart({
+  hideXAxis,
   xAxisLabels,
   series,
   dimensions,
@@ -133,7 +135,7 @@ export function Chart({
   const formattedXAxisLabels = xAxisLabels.map(formatXAxisLabel);
 
   const marginBottom =
-    xAxisLabels == null
+    xAxisLabels == null || hideXAxis
       ? SPACING_TIGHT
       : xAxisDetails.maxXLabelHeight + Number(Margin.Bottom);
 
@@ -252,22 +254,24 @@ export function Chart({
         onMouseLeave={() => setActivePointIndex(null)}
         role="table"
       >
-        <g
-          transform={`translate(${dataStartPosition},${
-            dimensions.height - marginBottom
-          })`}
-        >
-          <LinearXAxis
-            xScale={xScale}
-            labels={formattedXAxisLabels}
-            xAxisDetails={xAxisDetails}
-            drawableHeight={drawableHeight}
-            fontSize={fontSize}
-            drawableWidth={drawableWidth}
-            ariaHidden
-            theme={theme}
-          />
-        </g>
+        {hideXAxis ? null : (
+          <g
+            transform={`translate(${dataStartPosition},${
+              dimensions.height - marginBottom
+            })`}
+          >
+            <LinearXAxis
+              xScale={xScale}
+              labels={hideXAxis ? null : formattedXAxisLabels}
+              xAxisDetails={xAxisDetails}
+              drawableHeight={drawableHeight}
+              fontSize={fontSize}
+              drawableWidth={drawableWidth}
+              ariaHidden
+              theme={theme}
+            />
+          </g>
+        )}
 
         <g transform={`translate(0,${Margin.Top})`}>
           <YAxis

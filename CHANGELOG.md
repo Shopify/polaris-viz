@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Added
+- Hiding the xAxis is now possible on the `<BarChart />`, `<MultiseriesBarChart />` and `<StackedAreaChart />`
+
+
 ## [0.20.3] - 2021-09-14
 - Fixed the direction of the gradient on the horizontal `<NormalizedStackedBarChart />` legend
 - Remove change that made data required in `<Legend />` props

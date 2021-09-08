@@ -115,6 +115,14 @@ Default.args = {
   },
 };
 
+export const NoXAxis: Story<BarChartProps> = Template.bind({});
+NoXAxis.args = {
+  ...defaultProps,
+  xAxisOptions: {
+    hide: true,
+  },
+};
+
 export const Annotations: Story<BarChartProps> = Template.bind({});
 Annotations.args = {
   ...defaultProps,

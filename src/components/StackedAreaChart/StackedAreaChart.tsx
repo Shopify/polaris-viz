@@ -16,10 +16,15 @@ import type {Series, RenderTooltipContentData} from './types';
 import styles from './Chart.scss';
 
 export interface StackedAreaChartProps {
-  formatXAxisLabel?: StringLabelFormatter;
-  formatYAxisLabel?: NumberLabelFormatter;
   renderTooltipContent?(data: RenderTooltipContentData): React.ReactNode;
-  xAxisLabels: string[];
+  xAxisOptions: {
+    labels: string[];
+    formatLabel?: StringLabelFormatter;
+    hide?: boolean;
+  };
+  yAxisOptions?: {
+    formatLabel?: NumberLabelFormatter;
+  };
   series: Series[];
   isAnimated?: boolean;
   skipLinkText?: string;
@@ -27,10 +32,9 @@ export interface StackedAreaChartProps {
 }
 
 export function StackedAreaChart({
-  xAxisLabels,
+  xAxisOptions,
+  yAxisOptions,
   series,
-  formatXAxisLabel = (value) => value.toString(),
-  formatYAxisLabel = (value) => value.toString(),
   renderTooltipContent,
   isAnimated = false,
   skipLinkText,
@@ -118,6 +122,11 @@ export function StackedAreaChart({
     return null;
   }
 
+  const yFormatter =
+    yAxisOptions?.formatLabel ?? ((value: number) => value.toString());
+
+  const xFormatter = xAxisOptions.formatLabel ?? ((value: string) => value);
+
   function renderDefaultTooltipContent({
     title,
     data,
@@ -125,7 +134,7 @@ export function StackedAreaChart({
     const formattedData = data.map(({color, label, value}) => ({
       color,
       label,
-      value: formatYAxisLabel(value),
+      value: yFormatter(value),
     }));
 
     return <TooltipContent theme={theme} title={title} data={formattedData} />;
@@ -146,10 +155,11 @@ export function StackedAreaChart({
       >
         {chartDimensions == null ? null : (
           <Chart
-            xAxisLabels={xAxisLabels}
+            xAxisLabels={xAxisOptions.labels}
+            hideXAxis={xAxisOptions.hide ?? selectedTheme.xAxis.hide}
             series={series}
-            formatXAxisLabel={formatXAxisLabel}
-            formatYAxisLabel={formatYAxisLabel}
+            formatXAxisLabel={xFormatter}
+            formatYAxisLabel={yFormatter}
             dimensions={chartDimensions}
             renderTooltipContent={
               renderTooltipContent != null

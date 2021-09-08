@@ -167,6 +167,16 @@ The distinction between the `RenderTooltipContentData` and series `Data` types i
 
 The prop to determine the chart's drawn area. Each `Series` object corresponds to an area drawn on the chart, and is explained in greater detail [above](#series).
 
+### xAxisOptions: labels
+
+| type       | default |
+| ---------- | ------- |
+| `string[]` | `[]`    |
+
+The labels to display on the x axis of the chart and used for screen readers. If no labels are passed, there are no labels rendered on the x axis of the chart.
+
+### Optional Props
+
 #### theme
 
 | type      | default |
@@ -175,9 +185,7 @@ The prop to determine the chart's drawn area. Each `Series` object corresponds t
 
 The theme that the chart will inherit its styles from. Additional themes must be provided to the theme provider.
 
-### Optional Props
-
-#### formatXAxisLabel
+#### xAxisOptions: formatLabel
 
 | type                                                        | default                       |
 | ----------------------------------------------------------- | ----------------------------- |
@@ -185,29 +193,13 @@ The theme that the chart will inherit its styles from. Additional themes must be
 
 This accepts a function that is called to format the labels when the chart draws its X axis. This is only called if there is a value passed in for `xAxisLabels`.
 
-#### formatYAxisLabel
+#### yAxisOptions: formatLabel
 
 | type                       | default                       |
 | -------------------------- | ----------------------------- |
 | `(value: number): string;` | `(value) => value.toString()` |
 
 The `formatYAxisLabel` function formats the values displayed on the yAxis and in the tooltip.
-
-### xAxisLabels
-
-| type       | default |
-| ---------- | ------- |
-| `string[]` | `[]`    |
-
-The labels to display on the x axis of the chart. If no labels are passed, there are no labels rendered on the x axis of the chart.
-
-### opacity
-
-| type     | default |
-| -------- | ------- |
-| `number` | `1`     |
-
-Determines the opacity of all area shapes. Consider reducing the opacity below 1 if seeing the grid lines behind the areas is important to your use case.
 
 ### isAnimated
 

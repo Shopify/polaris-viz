@@ -52,6 +52,7 @@ export interface BarOptions {
 export interface XAxisOptions {
   labelFormatter: StringLabelFormatter;
   labels: string[];
+  hide?: boolean;
 }
 
 export interface YAxisOptions {

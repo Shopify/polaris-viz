@@ -47,15 +47,19 @@ interface TooltipPosition {
   y: number;
   position: TooltipContainerPosition;
 }
+type RequiredXAxis = Pick<
+  Required<XAxisOptions>,
+  'labelFormatter' | 'useMinimalLabels'
+> &
+  XAxisOptions;
 
 interface Props {
   data: BarChartData[];
   annotationsLookupTable: AnnotationLookupTable;
   chartDimensions: Dimensions;
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
-  xAxisOptions: Required<XAxisOptions>;
+  xAxisOptions: RequiredXAxis;
   yAxisOptions: Required<YAxisOptions>;
-
   emptyStateText?: string;
   isAnimated?: boolean;
   theme?: string;
@@ -107,18 +111,23 @@ export function Chart({
     [fontSize, initialTicks],
   );
 
+  const hideXAxis = xAxisOptions.hide ?? selectedTheme.xAxis.hide;
+
   const xAxisDetails = useMemo(
     () =>
       getBarXAxisDetails({
         yAxisLabelWidth: approxYAxisLabelWidth,
         fontSize,
-        xLabels: data.map(({label}) => xAxisOptions.labelFormatter(label)),
+        xLabels: hideXAxis
+          ? []
+          : data.map(({label}) => xAxisOptions.labelFormatter(label)),
         width: chartDimensions.width - selectedTheme.grid.horizontalMargin * 2,
         innerMargin: BarMargin[selectedTheme.bar.innerMargin],
         outerMargin: BarMargin[selectedTheme.bar.outerMargin],
         minimalLabelIndexes,
       }),
     [
+      hideXAxis,
       approxYAxisLabelWidth,
       fontSize,
       data,
@@ -311,23 +320,25 @@ export function Chart({
             </g>
           </mask>
         </defs>
-        <g
-          transform={`translate(${chartStartPosition},${
-            chartDimensions.height -
-            Margin.Bottom -
-            xAxisDetails.maxXLabelHeight
-          })`}
-          aria-hidden="true"
-        >
-          <BarChartXAxis
-            labels={xAxisLabels}
-            xScale={xScale}
-            fontSize={fontSize}
-            xAxisDetails={xAxisDetails}
-            minimalLabelIndexes={minimalLabelIndexes}
-            theme={theme}
-          />
-        </g>
+        {hideXAxis ? null : (
+          <g
+            transform={`translate(${chartStartPosition},${
+              chartDimensions.height -
+              Margin.Bottom -
+              xAxisDetails.maxXLabelHeight
+            })`}
+            aria-hidden="true"
+          >
+            <BarChartXAxis
+              labels={xAxisLabels}
+              xScale={xScale}
+              fontSize={fontSize}
+              xAxisDetails={xAxisDetails}
+              minimalLabelIndexes={minimalLabelIndexes}
+              theme={theme}
+            />
+          </g>
+        )}
 
         {selectedTheme.grid.showHorizontalLines ? (
           <HorizontalGridLines

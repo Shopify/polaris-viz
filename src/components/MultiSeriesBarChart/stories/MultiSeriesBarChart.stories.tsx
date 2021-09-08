@@ -229,6 +229,12 @@ NoOverflowStyle.args = {
   xAxisOptions: {labels},
 };
 
+export const NoXAxis = Template.bind({});
+NoXAxis.args = {
+  series: series,
+  xAxisOptions: {labels, hide: true},
+};
+
 const WithoutRoundedCornersTemplate: Story<MultiSeriesBarChartProps> = (
   args: MultiSeriesBarChartProps,
 ) => {
