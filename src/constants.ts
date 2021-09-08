@@ -24,6 +24,7 @@ export const ROUNDED_BAR_RADIUS = 4;
 export const MIN_BAR_HEIGHT = 2;
 export const EMPTY_STATE_CHART_MIN = 0;
 export const EMPTY_STATE_CHART_MAX = 10;
+export const BAR_ANIMATION_Y_OFFSET = 15;
 
 export const DEFAULT_GREY_LABEL = 'rgb(99, 115, 129)';
 export const DEFAULT_CROSSHAIR_COLOR = variables.colorSky;
@@ -47,7 +48,6 @@ export const MAX_TRAIL_DURATION = 500;
 
 export const MASK_HIGHLIGHT_COLOR = variables.colorWhite;
 export const MASK_SUBDUE_COLOR = '#434343';
-export const SUBDUE_OPACITY = 0.4;
 
 export const colorSky = variables.colorSky;
 export const colorWhite = variables.colorWhite;

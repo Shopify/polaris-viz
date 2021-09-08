@@ -11,7 +11,11 @@ import {
 import {mountWithProvider} from '../../../test-utilities';
 import {AnnotationLine} from '../components';
 import {Chart} from '../Chart';
-import {MIN_BAR_HEIGHT, SUBDUE_OPACITY} from '../../../constants';
+import {
+  MASK_SUBDUE_COLOR,
+  MASK_HIGHLIGHT_COLOR,
+  MIN_BAR_HEIGHT,
+} from '../../../constants';
 
 const fakeSVGEvent = {
   currentTarget: {
@@ -149,13 +153,11 @@ describe('Chart />', () => {
       const chart = mountWithProvider(<Chart {...mockProps} />);
 
       const svg = chart.find('svg')!;
-      expect(chart).toContainReactComponent('g', {style: {opacity: 1}});
+      expect(chart).toContainReactComponent(Bar, {color: MASK_HIGHLIGHT_COLOR});
 
       svg.trigger('onMouseMove', fakeSVGEvent);
 
-      expect(chart).toContainReactComponent('g', {
-        style: {opacity: SUBDUE_OPACITY},
-      });
+      expect(chart).toContainReactComponent(Bar, {color: MASK_SUBDUE_COLOR});
     });
 
     describe('rotateZeroBars', () => {
@@ -257,7 +259,13 @@ describe('Chart />', () => {
       };
       const chart = mountWithProvider(<Chart {...updatedProps} />);
 
-      expect(chart).toContainReactComponent(Bar, {color: 'purple'});
+      expect(chart.find('rect', {fill: 'purple'})).not.toBeNull();
+    });
+
+    it('does not render when the barTheme.color does not exist', () => {
+      const chart = mountWithProvider(<Chart {...mockProps} />);
+
+      expect(chart.find('rect', {fill: 'purple'})).toBeNull();
     });
   });
 

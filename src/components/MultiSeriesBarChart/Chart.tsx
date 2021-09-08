@@ -230,7 +230,6 @@ export function Chart({
       }}
     >
       <svg
-        className={styles.SVG}
         xmlns={XMLNS}
         width={chartDimensions.width}
         height={chartDimensions.height}
@@ -240,6 +239,7 @@ export function Chart({
         onTouchEnd={() => setActiveBarGroup(null)}
         role={emptyState ? 'img' : 'list'}
         aria-label={emptyState ? emptyStateText : undefined}
+        style={{overflow: 'visible'}}
       >
         <g
           transform={`translate(${chartStartPosition},${
@@ -317,6 +317,7 @@ export function Chart({
                     yScale={yScale}
                     data={item}
                     width={xScale.bandwidth()}
+                    height={drawableHeight}
                     colors={barColors}
                     onFocus={handleFocus}
                     barGroupIndex={index}
