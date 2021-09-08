@@ -77,7 +77,7 @@ export function Sparkbar({
   const [svgDimensions, setSvgDimensions] = useState({width: 0, height: 0});
   const {prefersReducedMotion} = usePrefersReducedMotion();
   const selectedTheme = useTheme(theme);
-  const [seriesColor] = getSeriesColorsFromCount(data.length, selectedTheme);
+  const [seriesColor] = getSeriesColorsFromCount(1, selectedTheme);
 
   const [updateMeasurements] = useDebouncedCallback(() => {
     if (entry == null) return;
