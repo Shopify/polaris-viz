@@ -12,10 +12,6 @@
 
 - yAxis labels now default to right aligned in `<MultiSeriesBarChart>`.
 
-### Fixed
-
-- Fixed overflow issue on tallest bars in `<MultiSeriesBarChart>`.
-
 ## [0.19.0-1] - 2021-09-01
 ### Added
 
