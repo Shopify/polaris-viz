@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+## [0.19.0-9] - 2021-09-08
+
+### Added
+
+- Added `xAxisOption.hide` option in `<LineChart>` to override the theme option.
+
+### Changes
+
+- yAxis labels now default to right aligned in `<MultiSeriesBarChart>`.
+
+### Fixed
+
+- Fixed overflow issue on tallest bars in `<MultiSeriesBarChart>`.
+
 ## [0.19.0-1] - 2021-09-01
 ### Added
 
