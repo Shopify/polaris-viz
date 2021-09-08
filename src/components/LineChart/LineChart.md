@@ -127,6 +127,7 @@ const props = {
     xAxisLabels: xAxisLabels,
     labelFormatter: formatXAxisLabel,
     useMinimalLabels: true,
+    hide: false,
   },
   yAxisOptions: {
     labelFormatter: formatYAxisLabel,
@@ -151,6 +152,7 @@ interface LineChartProps {
     xAxisLabels: string[];
     labelFormatter?(value: string, index?: number, data?: string[]): string;
     useMinimalLabels?: boolean;
+    hide?: false,
   };
   yAxisOptions?: {
     labelFormatter?(value: number): string;
@@ -302,6 +304,14 @@ Used to indicate to screenreaders that a chart with no data has been rendered, i
 #### xAxisOptions
 
 An object including the following proprties that define the appearance of the xAxis. Only xAxisLabels is mandatory.
+
+##### hide
+
+| type      | default |
+| --------- | ------- |
+| `boolean` | `false` |
+
+Whether to hide the xAxis. If this prop is not provided, defaults to the theme option.
 
 ##### useMinimalLabels
 

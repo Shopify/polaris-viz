@@ -129,11 +129,11 @@ SeriesColors.args = {
 
 export const HideXAxisLabels: Story<LineChartProps> = Template.bind({});
 HideXAxisLabels.args = {
-  theme: 'NoxAxisLabels',
   series,
   xAxisOptions: {
     xAxisLabels,
     labelFormatter: formatXAxisLabel,
+    hide: true,
   },
   yAxisOptions: {labelFormatter: formatYAxisLabel},
   renderTooltipContent,
