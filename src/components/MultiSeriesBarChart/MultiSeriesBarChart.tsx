@@ -1,41 +1,40 @@
 import React, {useState, useLayoutEffect, useRef, useCallback} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 
+import {ChartContainer} from '../../components/ChartContainer';
 import type {Dimensions} from '../../types';
 import {SkipLink} from '../SkipLink';
 import {TooltipContent} from '../TooltipContent';
 import {uniqueId} from '../../utilities';
 import {useResizeObserver, useTheme, useThemeSeriesColors} from '../../hooks';
 
-import styles from './MultiSeriesBarChart.scss';
 import {Chart} from './Chart';
-import {
+import type {
   Series,
   RenderTooltipContentData,
-  BarOptions,
   XAxisOptions,
   YAxisOptions,
-  BarMargin,
 } from './types';
 
 export interface MultiSeriesBarChartProps {
   series: Series[];
   renderTooltipContent?(data: RenderTooltipContentData): React.ReactNode;
-  skipLinkText?: string;
-  barOptions?: Partial<BarOptions>;
-  xAxisOptions: Partial<XAxisOptions> & Pick<XAxisOptions, 'labels'>;
-  yAxisOptions?: Partial<YAxisOptions>;
-  isAnimated?: boolean;
+
+  barOptions?: {isStacked: boolean};
   emptyStateText?: string;
+  isAnimated?: boolean;
+  skipLinkText?: string;
   theme?: string;
+  xAxisOptions?: Partial<XAxisOptions>;
+  yAxisOptions?: Partial<YAxisOptions>;
 }
 
 export function MultiSeriesBarChart({
   series,
+  barOptions = {isStacked: false},
   renderTooltipContent,
   skipLinkText,
   isAnimated = false,
-  barOptions,
   xAxisOptions,
   yAxisOptions,
   emptyStateText,
@@ -123,25 +122,16 @@ export function MultiSeriesBarChart({
     handlePrintMediaQueryChange,
   ]);
 
-  const barOptionsWithDefaults = {
-    isStacked: false,
-    ...barOptions,
-    ...selectedTheme.bar,
-    innerMargin: BarMargin[selectedTheme.bar.innerMargin],
-    outerMargin: BarMargin[selectedTheme.bar.outerMargin],
-  };
-
-  const xAxisOptionsWithDefaults = {
+  const xAxisOptionsWithDefaults: Required<XAxisOptions> = {
     labelFormatter: (value: string) => value,
+    labels: [],
     ...xAxisOptions,
-    ...selectedTheme.xAxis,
   };
 
-  const yAxisOptionsWithDefaults = {
+  const yAxisOptionsWithDefaults: Required<YAxisOptions> = {
     labelFormatter: (value: number) => value.toString(),
     integersOnly: false,
     ...yAxisOptions,
-    ...selectedTheme.yAxis,
   };
 
   function renderDefaultTooltipContent({data}: RenderTooltipContentData) {
@@ -160,15 +150,7 @@ export function MultiSeriesBarChart({
   }));
 
   return (
-    <div
-      className={styles.ChartContainer}
-      style={{
-        background: selectedTheme.chartContainer.backgroundColor,
-        padding: selectedTheme.chartContainer.padding,
-        borderRadius: selectedTheme.chartContainer.borderRadius,
-      }}
-      ref={setRef}
-    >
+    <ChartContainer ref={setRef} theme={theme}>
       {chartDimensions == null ? null : (
         <React.Fragment>
           {skipLinkText == null ||
@@ -179,10 +161,9 @@ export function MultiSeriesBarChart({
             </SkipLink>
           )}
           <Chart
+            isStacked={barOptions.isStacked}
             series={seriesWithDefaults}
             chartDimensions={chartDimensions}
-            barOptions={barOptionsWithDefaults}
-            gridOptions={selectedTheme.grid}
             xAxisOptions={xAxisOptionsWithDefaults}
             yAxisOptions={yAxisOptionsWithDefaults}
             isAnimated={isAnimated}
@@ -192,6 +173,7 @@ export function MultiSeriesBarChart({
                 : renderDefaultTooltipContent
             }
             emptyStateText={emptyStateText}
+            theme={theme}
           />
           {skipLinkText == null ||
           skipLinkText.length === 0 ||
@@ -200,6 +182,6 @@ export function MultiSeriesBarChart({
           )}
         </React.Fragment>
       )}
-    </div>
+    </ChartContainer>
   );
 }

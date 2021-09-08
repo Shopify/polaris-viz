@@ -1,40 +1,36 @@
 import React from 'react';
 
-import {DEFAULT_GREY_LABEL, LINE_HEIGHT, FONT_SIZE} from '../../constants';
+import {useTheme} from '../../hooks';
+import {LINE_HEIGHT, FONT_SIZE} from '../../constants';
 import type {YAxisTick} from '../../types';
 
 interface Props {
   ticks: YAxisTick[];
-  fontSize?: number;
-  labelColor?: string;
   textAlign: 'left' | 'right';
   width: number;
-  backgroundColor?: string;
-  outerMargin?: number;
+
+  fontSize?: number;
+  theme?: string;
 }
 
 const PADDING_SIZE = 1;
 
-function Axis({
-  ticks,
-  fontSize = FONT_SIZE,
-  width,
-  textAlign,
-  outerMargin = 0,
-  labelColor = DEFAULT_GREY_LABEL,
-  backgroundColor = 'transparent',
-}: Props) {
+function Axis({ticks, fontSize = FONT_SIZE, width, textAlign, theme}: Props) {
+  const selectedTheme = useTheme(theme);
+
   return (
     <React.Fragment>
       {ticks.map(({value, formattedValue, yOffset}) => {
         return (
           <foreignObject
             key={value}
-            transform={`translate(${outerMargin},${yOffset - LINE_HEIGHT / 2})`}
+            transform={`translate(${selectedTheme.grid.horizontalMargin},${
+              yOffset - LINE_HEIGHT / 2
+            })`}
             width={width + PADDING_SIZE * 2}
             height={LINE_HEIGHT}
             style={{
-              color: labelColor,
+              color: selectedTheme.yAxis.labelColor,
               textAlign,
               fontSize,
               lineHeight: `${LINE_HEIGHT}px`,
@@ -42,7 +38,7 @@ function Axis({
           >
             <span
               style={{
-                background: backgroundColor,
+                background: selectedTheme.yAxis.backgroundColor,
                 padding: PADDING_SIZE,
                 whiteSpace: 'nowrap',
               }}

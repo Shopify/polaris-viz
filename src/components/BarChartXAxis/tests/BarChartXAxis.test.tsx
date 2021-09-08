@@ -1,6 +1,8 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleBand} from 'd3-scale';
+import {mountWithProvider} from 'test-utilities';
+import {mockDefaultTheme} from 'test-utilities/mount-with-provider';
 
 import {BarChartXAxis} from '../BarChartXAxis';
 
@@ -33,16 +35,14 @@ describe('<BarChartXAxis/>', () => {
       maxDiagonalLabelLength: 100,
       maxWidth: 100,
     },
-    textColor: 'red',
-    gridColor: 'orange',
-    showTicks: true,
   };
 
   it('renders a line for each label value', () => {
-    const axis = mount(
+    const axis = mountWithProvider(
       <svg>
         <BarChartXAxis {...mockProps} />,
       </svg>,
+      mockDefaultTheme({xAxis: {showTicks: true}}),
     );
 
     expect(axis).toContainReactComponentTimes('line', 2);
@@ -118,11 +118,10 @@ describe('<BarChartXAxis/>', () => {
             {value: '6', xOffset: 20},
           ]}
         />
-        ,
       </svg>,
     );
 
-    const styleProps = {fontSize: 10, color: 'red'};
+    const styleProps = {fontSize: 10, color: 'colorGray30'};
 
     expect(axis).toContainReactComponent('div', {
       children: '0',

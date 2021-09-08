@@ -1,6 +1,7 @@
 import React, {useLayoutEffect, useRef, useState, useCallback} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 
+import {ChartContainer} from '../../components/ChartContainer';
 import {useThemeSeriesColors} from '../../hooks/use-theme-series-colors';
 import type {Dimensions, GradientStop} from '../../types';
 import {isGradientType, changeColorOpacity, uniqueId} from '../../utilities';
@@ -20,17 +21,17 @@ import type {
   SeriesWithDefaults,
 } from './types';
 import {TooltipContent} from './components';
-import styles from './LineChart.scss';
 
 export interface LineChartProps {
   series: Series[];
-  xAxisOptions: Partial<XAxisOptions> & Pick<XAxisOptions, 'xAxisLabels'>;
-  yAxisOptions?: Partial<YAxisOptions>;
-  skipLinkText?: string;
+
   emptyStateText?: string;
   isAnimated?: boolean;
   renderTooltipContent?: (data: RenderTooltipContentData) => React.ReactNode;
+  skipLinkText?: string;
   theme?: string;
+  xAxisOptions?: Partial<XAxisOptions>;
+  yAxisOptions?: Partial<YAxisOptions>;
 }
 
 export function LineChart({
@@ -125,26 +126,18 @@ export function LineChart({
     handlePrintMediaQueryChange,
   ]);
 
-  const xAxisOptionsWithDefaults = {
-    labelFormatter:
-      xAxisOptions.labelFormatter == null
-        ? (value: string) => value
-        : xAxisOptions.labelFormatter,
-    xAxisLabels: xAxisOptions.xAxisLabels,
-    useMinimalLabels: xAxisOptions.useMinimalLabels ?? false,
-    ...selectedTheme.xAxis,
-    hide: xAxisOptions.hide ?? selectedTheme.xAxis.hide,
+  const xAxisOptionsWithDefaults: Required<XAxisOptions> = {
+    hide: false,
+    labelFormatter: (value: string) => value,
+    useMinimalLabels: false,
+    xAxisLabels: [],
+    ...xAxisOptions,
   };
 
-  const yAxisOptionsWithDefaults = {
-    labelFormatter:
-      yAxisOptions?.labelFormatter == null
-        ? (value: number) => value.toString()
-        : yAxisOptions.labelFormatter,
-    labelColor: selectedTheme.yAxis.labelColor,
-    backgroundColor: selectedTheme.yAxis.backgroundColor,
-    integersOnly:
-      yAxisOptions?.integersOnly == null ? false : yAxisOptions.integersOnly,
+  const yAxisOptionsWithDefaults: Required<YAxisOptions> = {
+    labelFormatter: (value: number) => value.toString(),
+    integersOnly: false,
+    ...yAxisOptions,
   };
 
   function renderDefaultTooltipContent({data}: RenderTooltipContentData) {
@@ -193,23 +186,12 @@ export function LineChart({
       series.length === 0 ? null : (
         <SkipLink anchorId={skipLinkAnchorId.current}>{skipLinkText}</SkipLink>
       )}
-      <div
-        ref={setRef}
-        className={styles.Container}
-        style={{
-          background: selectedTheme.chartContainer.backgroundColor,
-          padding: selectedTheme.chartContainer.padding,
-          borderRadius: selectedTheme.chartContainer.borderRadius,
-        }}
-      >
+      <ChartContainer ref={setRef} theme={theme}>
         {chartDimensions == null ? null : (
           <Chart
             series={seriesWithDefaults}
-            lineOptions={selectedTheme.line}
             xAxisOptions={xAxisOptionsWithDefaults}
             yAxisOptions={yAxisOptionsWithDefaults}
-            gridOptions={selectedTheme.grid}
-            crossHairOptions={selectedTheme.crossHair}
             dimensions={chartDimensions}
             isAnimated={isAnimated && !prefersReducedMotion}
             renderTooltipContent={
@@ -218,9 +200,10 @@ export function LineChart({
                 : renderDefaultTooltipContent
             }
             emptyStateText={emptyStateText}
+            theme={theme}
           />
         )}
-      </div>
+      </ChartContainer>
 
       {skipLinkText == null || skipLinkText.length === 0 ? null : (
         <SkipLink.Anchor id={skipLinkAnchorId.current} />

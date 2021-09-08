@@ -11,7 +11,7 @@ import {
   isGradientType,
   uniqueId,
 } from '../../../../utilities';
-import {usePrevious} from '../../../../hooks';
+import {usePrevious, useTheme} from '../../../../hooks';
 
 type StackedSeries = Series<
   {
@@ -29,8 +29,7 @@ interface Props {
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
   isAnimated: boolean;
-  strokeWidth: number;
-  hasSpline: boolean;
+  theme?: string;
 }
 
 export function Areas({
@@ -42,9 +41,9 @@ export function Areas({
   yScale,
   colors,
   isAnimated,
-  strokeWidth,
-  hasSpline,
+  theme,
 }: Props) {
+  const selectedTheme = useTheme(theme);
   const prevstackedValues = usePrevious(stackedValues);
   const valuesHaveNotUpdated = isEqual(prevstackedValues, stackedValues);
 
@@ -73,7 +72,7 @@ export function Areas({
     .x((_, index) => xScale(index))
     .y(([, lastPoint]) => yScale(lastPoint));
 
-  if (hasSpline) {
+  if (selectedTheme.line.hasSpline) {
     areaShape.curve(curveStepRounded);
     lineShape.curve(curveStepRounded);
   }
@@ -118,7 +117,7 @@ export function Areas({
                 d={line}
                 fill="none"
                 stroke={`url(#area-${id}-${index})`}
-                strokeWidth={strokeWidth}
+                strokeWidth={selectedTheme.line.width}
               />
               <path
                 key={index}

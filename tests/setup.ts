@@ -19,7 +19,6 @@ jest.mock('constants.ts', () => {
       Bottom: 24,
       Right: 20,
     },
-    DEFAULT_CROSSHAIR_COLOR: 'rgb(223, 227, 232)',
     MASK_HIGHLIGHT_COLOR: 'rgb(255, 255, 255)',
     colorPurpleDark: 'rgb(80, 36, 143)',
   };

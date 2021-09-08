@@ -1,14 +1,12 @@
 import React, {useState, useLayoutEffect, useRef, useCallback} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 
-import {getSeriesColorsFromCount} from '../../hooks/use-theme-series-colors';
-import {Dimensions, BarMargin} from '../../types';
+import type {Dimensions, XAxisOptions, YAxisOptions} from '../../types';
 import {SkipLink} from '../SkipLink';
 import {uniqueId, normalizeData} from '../../utilities';
-import {useResizeObserver, useTheme} from '../../hooks';
-import type {XAxisOptions, YAxisOptions} from '../../types';
+import {useResizeObserver} from '../../hooks';
+import {ChartContainer} from '../ChartContainer';
 
-import styles from './BarChart.scss';
 import {TooltipContent} from './components';
 import {Chart} from './Chart';
 import type {
@@ -37,19 +35,10 @@ export function BarChart({
   emptyStateText,
   isAnimated = false,
   skipLinkText,
-  xAxisOptions = {
-    labelFormatter: (value: string) => value,
-    useMinimalLabels: false,
-  },
-  yAxisOptions = {
-    integersOnly: false,
-    labelFormatter: (value: number) => value.toString(),
-  },
+  xAxisOptions,
+  yAxisOptions,
   theme,
 }: BarChartProps) {
-  const selectedTheme = useTheme(theme);
-  const [seriesColor] = getSeriesColorsFromCount(1, selectedTheme);
-
   const [chartDimensions, setChartDimensions] = useState<Dimensions | null>(
     null,
   );
@@ -90,23 +79,15 @@ export function BarChart({
   );
 
   const xAxisOptionsWithDefaults = {
-    labelFormatter:
-      xAxisOptions.labelFormatter == null
-        ? (value: string) => value
-        : xAxisOptions.labelFormatter,
-    useMinimalLabels:
-      xAxisOptions.useMinimalLabels == null
-        ? false
-        : xAxisOptions.useMinimalLabels,
+    labelFormatter: (value: string) => value,
+    useMinimalLabels: false,
+    ...xAxisOptions,
   };
 
   const yAxisOptionsWithDefaults = {
-    labelFormatter:
-      yAxisOptions.labelFormatter == null
-        ? (value: number) => value.toString()
-        : yAxisOptions.labelFormatter,
-    integersOnly:
-      yAxisOptions.integersOnly == null ? false : yAxisOptions.integersOnly,
+    labelFormatter: (value: number) => value.toString(),
+    integersOnly: false,
+    ...yAxisOptions,
   };
 
   useLayoutEffect(() => {
@@ -151,13 +132,6 @@ export function BarChart({
     handlePrintMediaQueryChange,
   ]);
 
-  const barThemeWithMargins = {
-    ...selectedTheme.bar,
-    color: seriesColor,
-    innerMargin: BarMargin[selectedTheme.bar.innerMargin],
-    outerMargin: BarMargin[selectedTheme.bar.outerMargin],
-  };
-
   function renderDefaultTooltipContent({
     label,
     value,
@@ -181,15 +155,7 @@ export function BarChart({
   }
 
   return (
-    <div
-      className={styles.ChartContainer}
-      style={{
-        background: selectedTheme.chartContainer.backgroundColor,
-        padding: selectedTheme.chartContainer.padding,
-        borderRadius: selectedTheme.chartContainer.borderRadius,
-      }}
-      ref={setRef}
-    >
+    <ChartContainer ref={setRef} theme={theme}>
       {chartDimensions == null ? null : (
         <React.Fragment>
           {skipLinkText == null ||
@@ -204,10 +170,6 @@ export function BarChart({
             data={data}
             annotationsLookupTable={annotationsLookupTable}
             chartDimensions={chartDimensions}
-            barTheme={barThemeWithMargins}
-            gridTheme={selectedTheme.grid}
-            xAxisTheme={selectedTheme.xAxis}
-            yAxisTheme={selectedTheme.yAxis}
             renderTooltipContent={
               renderTooltipContent != null
                 ? renderTooltipContent
@@ -216,6 +178,7 @@ export function BarChart({
             xAxisOptions={xAxisOptionsWithDefaults}
             yAxisOptions={yAxisOptionsWithDefaults}
             emptyStateText={emptyStateText}
+            theme={theme}
           />
           {skipLinkText == null ||
           skipLinkText.length === 0 ||
@@ -224,6 +187,6 @@ export function BarChart({
           )}
         </React.Fragment>
       )}
-    </div>
+    </ChartContainer>
   );
 }

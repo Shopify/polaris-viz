@@ -14,6 +14,7 @@ import {
 import {
   useLinearXAxisDetails,
   useLinearXScale,
+  useTheme,
   useLinearChartAnimations,
 } from '../../hooks';
 import {
@@ -31,15 +32,7 @@ import {YAxis} from '../YAxis';
 import {Point} from '../Point';
 import {Crosshair} from '../Crosshair';
 import {LinearGradient} from '../LinearGradient';
-import type {
-  ActiveTooltip,
-  CrossHairTheme,
-  Dimensions,
-  GridTheme,
-  LineTheme,
-  XAxisTheme,
-  YAxisTheme,
-} from '../../types';
+import type {ActiveTooltip, Dimensions} from '../../types';
 import {TooltipContainer} from '../TooltipContainer';
 import {HorizontalGridLines} from '../HorizontalGridLines';
 
@@ -56,16 +49,15 @@ import {Line, GradientArea} from './components';
 import styles from './Chart.scss';
 
 interface Props {
-  series: SeriesWithDefaults[];
   dimensions: Dimensions;
-  renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
-  emptyStateText?: string;
   isAnimated: boolean;
-  lineOptions: LineTheme;
-  xAxisOptions: XAxisOptions & XAxisTheme;
-  yAxisOptions: YAxisOptions & YAxisTheme;
-  gridOptions: GridTheme;
-  crossHairOptions: CrossHairTheme;
+  renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
+  series: SeriesWithDefaults[];
+  xAxisOptions: Required<XAxisOptions>;
+  yAxisOptions: Required<YAxisOptions>;
+
+  emptyStateText?: string;
+  theme?: string;
 }
 
 export function Chart({
@@ -74,12 +66,12 @@ export function Chart({
   renderTooltipContent,
   emptyStateText,
   isAnimated,
-  lineOptions,
   xAxisOptions,
   yAxisOptions,
-  gridOptions,
-  crossHairOptions,
+  theme,
 }: Props) {
+  const selectedTheme = useTheme(theme);
+
   const [tooltipDetails, setTooltipDetails] = useState<ActiveTooltip | null>(
     null,
   );
@@ -100,17 +92,19 @@ export function Chart({
     integersOnly: yAxisOptions.integersOnly,
   });
 
+  const hideXAxis = xAxisOptions.hide ?? selectedTheme.xAxis.hide;
+
   const xAxisDetails = useLinearXAxisDetails({
     series,
     fontSize,
-    width: dimensions.width - gridOptions.horizontalMargin * 2,
+    width: dimensions.width - selectedTheme.grid.horizontalMargin * 2,
     formatXAxisLabel: xAxisOptions.labelFormatter,
     initialTicks,
-    xAxisLabels: xAxisOptions.hide ? [] : xAxisOptions.xAxisLabels,
+    xAxisLabels: hideXAxis ? [] : xAxisOptions.xAxisLabels,
     useMinimalLabels: xAxisOptions.useMinimalLabels,
   });
 
-  const marginBottom = xAxisOptions.hide
+  const marginBottom = hideXAxis
     ? SPACING_TIGHT
     : Number(Margin.Bottom) + xAxisDetails.maxXLabelHeight;
 
@@ -178,7 +172,7 @@ export function Chart({
 
   const dataStartPosition =
     axisMargin +
-    Number(gridOptions.horizontalMargin) +
+    Number(selectedTheme.grid.horizontalMargin) +
     marginBetweenLabelsAndData;
 
   const drawableWidth =
@@ -187,7 +181,7 @@ export function Chart({
       : dimensions.width -
         Margin.Right -
         axisMargin -
-        gridOptions.horizontalMargin * 2 -
+        selectedTheme.grid.horizontalMargin * 2 -
         marginBetweenLabelsAndData;
 
   const longestSeriesIndex = useMemo(
@@ -214,11 +208,11 @@ export function Chart({
       .x((_, index) => (xScale == null ? 0 : xScale(index)))
       .y(({rawValue}) => yScale(rawValue));
 
-    if (lineOptions.hasSpline) {
+    if (selectedTheme.line.hasSpline) {
       generator.curve(curveStepRounded);
     }
     return generator;
-  }, [lineOptions.hasSpline, xScale, yScale]);
+  }, [selectedTheme.line.hasSpline, xScale, yScale]);
 
   const activeIndex =
     tooltipDetails == null || tooltipDetails.index == null
@@ -239,7 +233,7 @@ export function Chart({
     if (xScale == null) {
       return 0;
     }
-    const offset = isCrosshair ? crossHairOptions.width / 2 : 0;
+    const offset = isCrosshair ? selectedTheme.crossHair.width / 2 : 0;
 
     if (
       animatedCoordinates != null &&
@@ -343,28 +337,27 @@ export function Chart({
           <LinearXAxis
             xAxisDetails={xAxisDetails}
             xScale={xScale}
-            labels={xAxisOptions.hide ? null : formattedLabels}
+            labels={hideXAxis ? null : formattedLabels}
             drawableWidth={drawableWidth}
             fontSize={fontSize}
             drawableHeight={drawableHeight}
             ariaHidden
-            showGridLines={gridOptions.showVerticalLines}
-            gridColor={gridOptions.color}
-            showTicks={xAxisOptions.showTicks}
-            labelColor={xAxisOptions.labelColor}
+            theme={theme}
           />
         </g>
 
-        {gridOptions.showHorizontalLines ? (
+        {selectedTheme.grid.showHorizontalLines ? (
           <HorizontalGridLines
             ticks={ticks}
-            color={gridOptions.color}
+            theme={theme}
             transform={{
-              x: gridOptions.horizontalOverflow ? 0 : dataStartPosition,
+              x: selectedTheme.grid.horizontalOverflow ? 0 : dataStartPosition,
               y: Margin.Top,
             }}
             width={
-              gridOptions.horizontalOverflow ? dimensions.width : drawableWidth
+              selectedTheme.grid.horizontalOverflow
+                ? dimensions.width
+                : drawableWidth
             }
           />
         ) : null}
@@ -374,10 +367,8 @@ export function Chart({
             ticks={ticks}
             fontSize={fontSize}
             width={axisMargin}
-            labelColor={yAxisOptions.labelColor}
-            textAlign={gridOptions.horizontalOverflow ? 'left' : 'right'}
-            backgroundColor={yAxisOptions.backgroundColor}
-            outerMargin={gridOptions.horizontalMargin}
+            textAlign={selectedTheme.grid.horizontalOverflow ? 'left' : 'right'}
+            theme={theme}
           />
         </g>
 
@@ -387,8 +378,7 @@ export function Chart({
               x={getXPosition({isCrosshair: true})}
               height={drawableHeight}
               opacity={tooltipDetails == null ? 0 : 1}
-              fill={crossHairOptions.color}
-              width={crossHairOptions.width}
+              theme={theme}
             />
           </g>
         )}
@@ -419,7 +409,7 @@ export function Chart({
                     xScale={xScale}
                     isAnimated={isAnimated}
                     index={index}
-                    hasSpline={lineOptions.hasSpline}
+                    hasSpline={selectedTheme.line.hasSpline}
                   />
                 ) : null}
 
@@ -440,7 +430,7 @@ export function Chart({
                   isAnimated={isAnimated}
                   index={index}
                   lineGenerator={lineGenerator}
-                  lineOptions={lineOptions}
+                  theme={theme}
                 />
               </React.Fragment>
             );
@@ -482,7 +472,7 @@ export function Chart({
                 {animatePoints ? (
                   <Point
                     color={pointColor}
-                    stroke={lineOptions.pointStroke}
+                    stroke={selectedTheme.line.pointStroke}
                     cx={getXPosition()}
                     cy={animatedYPostion}
                     active={tooltipDetails != null}
@@ -498,7 +488,7 @@ export function Chart({
                   return (
                     <Point
                       key={`${name}-${index}-${dataIndex}`}
-                      stroke={lineOptions.pointStroke}
+                      stroke={selectedTheme.line.pointStroke}
                       color={pointColor}
                       cx={xScale(dataIndex)}
                       cy={yScale(rawValue)}

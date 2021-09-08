@@ -1,5 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
+import {mountWithProvider} from 'test-utilities';
+import {mockDefaultTheme} from 'test-utilities/mount-with-provider';
 
 import {Crosshair} from '../Crosshair';
 
@@ -7,7 +9,7 @@ describe('<Crosshair />', () => {
   it('renders a rect centered on the given x', () => {
     const crosshair = mount(
       <svg>
-        <Crosshair width={1} x={50} height={500} />
+        <Crosshair x={50} height={500} />
       </svg>,
     );
 
@@ -17,7 +19,7 @@ describe('<Crosshair />', () => {
   it('renders a rect with the given height', () => {
     const crosshair = mount(
       <svg>
-        <Crosshair width={1} x={50} height={500} />
+        <Crosshair x={50} height={500} />
       </svg>,
     );
 
@@ -27,32 +29,33 @@ describe('<Crosshair />', () => {
   it('gives the rect full opacity by default', () => {
     const crosshair = mount(
       <svg>
-        <Crosshair width={1} x={50} height={500} />
+        <Crosshair x={50} height={500} />
       </svg>,
     );
 
     expect(crosshair).toContainReactComponent('rect', {
-      style: {opacity: 1, fill: 'rgb(223, 227, 232)'},
+      style: {opacity: 1, fill: 'colorGray70'},
     });
   });
 
   it('applies opacity from props to the rect', () => {
     const crosshair = mount(
       <svg>
-        <Crosshair width={1} x={50} height={500} opacity={0.8} />
+        <Crosshair x={50} height={500} opacity={0.8} />
       </svg>,
     );
 
     expect(crosshair).toContainReactComponent('rect', {
-      style: {opacity: 0.8, fill: 'rgb(223, 227, 232)'},
+      style: {opacity: 0.8, fill: 'colorGray70'},
     });
   });
 
   it('applies color from props to the rect', () => {
-    const crosshair = mount(
+    const crosshair = mountWithProvider(
       <svg>
-        <Crosshair width={1} x={50} height={500} fill="red" />
+        <Crosshair x={50} height={500} />
       </svg>,
+      mockDefaultTheme({crossHair: {color: 'red'}}),
     );
 
     expect(crosshair).toContainReactComponent('rect', {
@@ -61,10 +64,11 @@ describe('<Crosshair />', () => {
   });
 
   it('applies width from props to the rect', () => {
-    const crosshair = mount(
+    const crosshair = mountWithProvider(
       <svg>
-        <Crosshair x={50} height={500} width={100} />
+        <Crosshair x={50} height={500} />
       </svg>,
+      mockDefaultTheme({crossHair: {width: 100}}),
     );
 
     expect(crosshair).toContainReactComponent('rect', {

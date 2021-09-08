@@ -265,10 +265,7 @@ export function Chart({
             fontSize={fontSize}
             drawableWidth={drawableWidth}
             ariaHidden
-            labelColor={selectedTheme.xAxis.labelColor}
-            showTicks={selectedTheme.xAxis.showTicks}
-            gridColor={selectedTheme.grid.color}
-            showGridLines={selectedTheme.grid.showVerticalLines}
+            theme={theme}
           />
         </g>
 
@@ -278,18 +275,18 @@ export function Chart({
             fontSize={fontSize}
             width={axisMargin}
             textAlign="right"
-            labelColor={selectedTheme.xAxis.labelColor}
+            theme={theme}
           />
         </g>
 
         <HorizontalGridLines
           ticks={ticks}
-          color={selectedTheme.grid.color}
           transform={{
             x: dataStartPosition,
             y: Margin.Top,
           }}
           width={drawableWidth}
+          theme={theme}
         />
 
         <VisuallyHiddenRows
@@ -307,8 +304,7 @@ export function Chart({
           yScale={yScale}
           colors={colors}
           isAnimated={isAnimated && !prefersReducedMotion}
-          strokeWidth={selectedTheme.line.width}
-          hasSpline={selectedTheme.line.hasSpline}
+          theme={theme}
         />
 
         {activePointIndex == null ? null : (
@@ -316,8 +312,7 @@ export function Chart({
             <Crosshair
               x={getXPosition({isCrosshair: true, index: 0})}
               height={drawableHeight}
-              fill={selectedTheme.crossHair.color}
-              width={selectedTheme.crossHair.width}
+              theme={theme}
             />
           </g>
         )}

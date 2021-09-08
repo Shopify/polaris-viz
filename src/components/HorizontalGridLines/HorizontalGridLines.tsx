@@ -1,27 +1,31 @@
 import React from 'react';
 
+import {useTheme} from '../../hooks';
 import type {YAxisTick} from '../../types';
 
 interface Props {
   ticks: YAxisTick[];
-  color: string;
   transform: {x: number; y: number};
   width: number;
+
+  theme?: string;
 }
 
 export const HorizontalGridLines = React.memo(function HorizontalGridLines({
   ticks,
-  color,
   transform,
   width,
+  theme,
 }: Props) {
+  const selectedTheme = useTheme(theme);
+
   return (
     <React.Fragment>
       {ticks.map(({yOffset}, index) => (
         <line
           key={index}
           x2={width}
-          stroke={color}
+          stroke={selectedTheme.grid.color}
           transform={`translate(${transform.x},${transform.y + yOffset})`}
         />
       ))}
