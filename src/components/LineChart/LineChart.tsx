@@ -133,6 +133,7 @@ export function LineChart({
     xAxisLabels: xAxisOptions.xAxisLabels,
     useMinimalLabels: xAxisOptions.useMinimalLabels ?? false,
     ...selectedTheme.xAxis,
+    hide: xAxisOptions.hide ?? selectedTheme.xAxis.hide,
   };
 
   const yAxisOptionsWithDefaults = {
