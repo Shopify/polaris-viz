@@ -230,7 +230,6 @@ export function Chart({
       }}
     >
       <svg
-        className={styles.SVG}
         xmlns={XMLNS}
         width={chartDimensions.width}
         height={chartDimensions.height}
@@ -317,6 +316,7 @@ export function Chart({
                     yScale={yScale}
                     data={item}
                     width={xScale.bandwidth()}
+                    height={drawableHeight}
                     colors={barColors}
                     onFocus={handleFocus}
                     barGroupIndex={index}
