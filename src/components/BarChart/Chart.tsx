@@ -280,46 +280,6 @@ export function Chart({
             y2="0%"
           />
         </defs>
-        <g transform={`translate(${chartStartPosition},${Margin.Top})`}>
-          {transitions(({height}, item, _transition, index) => {
-            const xPosition = xScale(index.toString());
-            const ariaLabel = `${xAxisOptions.labelFormatter(
-              data[index].label,
-            )}: ${yAxisOptions.labelFormatter(data[index].rawValue)}`;
-            const isSubdued = activeBar != null && index !== activeBar;
-            const annotation = annotationsLookupTable[index];
-
-            const barColor =
-              typeof item.barColor === 'string' ? item.barColor : null;
-
-            return (
-              <g
-                role="listitem"
-                key={index}
-                style={{opacity: isSubdued ? SUBDUE_OPACITY : 1}}
-              >
-                <Bar
-                  height={height}
-                  key={index}
-                  x={xPosition == null ? 0 : xPosition}
-                  yScale={yScale}
-                  rawValue={item.rawValue}
-                  width={barWidth}
-                  color={barColor ?? `url(#${gradientId})`}
-                  onFocus={handleFocus}
-                  index={index}
-                  ariaLabel={`${ariaLabel} ${
-                    annotation ? annotation.ariaLabel : ''
-                  }`}
-                  tabIndex={0}
-                  role="img"
-                  hasRoundedCorners={barTheme.hasRoundedCorners}
-                  rotateZeroBars={rotateZeroBars}
-                />
-              </g>
-            );
-          })}
-        </g>
         <g
           transform={`translate(${chartStartPosition},${
             chartDimensions.height -
@@ -366,6 +326,47 @@ export function Chart({
             backgroundColor={yAxisTheme.backgroundColor}
             outerMargin={gridTheme.horizontalMargin}
           />
+        </g>
+
+        <g transform={`translate(${chartStartPosition},${Margin.Top})`}>
+          {transitions(({height}, item, _transition, index) => {
+            const xPosition = xScale(index.toString());
+            const ariaLabel = `${xAxisOptions.labelFormatter(
+              data[index].label,
+            )}: ${yAxisOptions.labelFormatter(data[index].rawValue)}`;
+            const isSubdued = activeBar != null && index !== activeBar;
+            const annotation = annotationsLookupTable[index];
+
+            const barColor =
+              typeof item.barColor === 'string' ? item.barColor : null;
+
+            return (
+              <g
+                role="listitem"
+                key={index}
+                style={{opacity: isSubdued ? SUBDUE_OPACITY : 1}}
+              >
+                <Bar
+                  height={height}
+                  key={index}
+                  x={xPosition == null ? 0 : xPosition}
+                  yScale={yScale}
+                  rawValue={item.rawValue}
+                  width={barWidth}
+                  color={barColor ?? `url(#${gradientId})`}
+                  onFocus={handleFocus}
+                  index={index}
+                  ariaLabel={`${ariaLabel} ${
+                    annotation ? annotation.ariaLabel : ''
+                  }`}
+                  tabIndex={0}
+                  role="img"
+                  hasRoundedCorners={barTheme.hasRoundedCorners}
+                  rotateZeroBars={rotateZeroBars}
+                />
+              </g>
+            );
+          })}
         </g>
 
         <g transform={`translate(${chartStartPosition},${Margin.Top})`}>
