@@ -236,12 +236,12 @@ export const LIGHT_THEME: Theme = {
   },
   xAxis: {
     showTicks: false,
-    labelColor: variables.colorGray80,
+    labelColor: variables.colorGray100,
     hide: false,
   },
   yAxis: {
     backgroundColor: variables.colorGray00,
-    labelColor: variables.colorGray80,
+    labelColor: variables.colorGray100,
   },
   crossHair: {
     color: variables.colorGray40,
