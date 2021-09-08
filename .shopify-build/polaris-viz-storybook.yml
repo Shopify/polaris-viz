@@ -1,0 +1,12 @@
+containers:
+  docs_container:
+    docker: gcr.io/shopify-docker-images/apps/production/apidocs-generator-alpine:production
+
+steps:
+  - label: Assemble Storybook
+    git:
+      history: shallow
+    timeout: 15m
+    run:
+      - cd /projects/api-node && ./assemble --type=storybook --microsite-root=/
+    container: docs_container
