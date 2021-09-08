@@ -1,0 +1,24 @@
+# Based on https://github.com/Shopify/u2/blob/master/.github/workflows/storybook-link.yml
+name: Documentation Link
+on:
+  pull_request:
+    types: [opened, ready_for_review]
+
+jobs:
+  comment:
+    name: Comment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract branch name
+        shell: bash
+        # Normalize the branch name to match the deploy from https://github.com/Shopify/apidocs-generator-alpine/blob/master/projects/api-node/assemble.ts
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_HEAD_REF#refs/heads/} | sed 's/[^A-Za-z0-9\\-]/-/g')"
+        id: extract_branch
+
+      - name: Comment on PR
+        uses: unsplash/comment-on-pr@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          msg: ':tophat: The Storybook for this PR can been seen at https://polaris-viz--${{ steps.extract_branch.outputs.branch }}.storybook.shopify.io/ once the CI completes.'
+          check_for_duplicate_msg: false
