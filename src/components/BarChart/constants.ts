@@ -1,11 +1,5 @@
-export const LINE_HEIGHT = 14;
-export const TICK_SIZE = 6;
 export const MIN_Y_LABEL_SPACE = 80;
-export const SPACING_EXTRA_TIGHT = 4;
-export const SPACING_TIGHT = 8;
 export const SPACING = 16;
-export const SPACING_BASE_TIGHT = 12;
-export const SPACING_LOOSE = 20;
 export const SMALL_SCREEN = 500;
 export const FONT_SIZE = 12;
 export const SMALL_FONT_SIZE = 10;

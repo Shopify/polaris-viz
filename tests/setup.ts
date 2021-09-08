@@ -7,7 +7,6 @@ jest.mock('constants.ts', () => {
     SPACING_TIGHT: 8,
     SPACING_BASE_TIGHT: 12,
     SPACING: 16,
-    SPACING_LOOSE: 20,
     LineChartMargin: {
       Top: 8,
       Left: 0,
