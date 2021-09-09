@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+### Fixed
+- A bug where the Sparkline's line would not show when displaying all 0s and the Point is present
+
 ## [0.19.1] - 2021-09-09
 ### Added
 
