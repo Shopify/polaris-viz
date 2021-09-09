@@ -111,6 +111,7 @@ export function Series({
 
   const showPoint = hasPoint && lastLinePointCoordinates != null;
   const {x: lastX = 0, y: lastY = 0} = lastLinePointCoordinates ?? {};
+  const seriesIsAllZeros = data.every(({y}) => y === 0);
 
   return (
     <React.Fragment>
@@ -160,7 +161,7 @@ export function Series({
         strokeLinecap="round"
         className={classNames(styles.Line, !immediate && styles.AnimatedLine)}
         style={{strokeDasharray: StrokeDasharray[lineStyle]}}
-        mask={`url(#mask-${`${id}`})`}
+        mask={seriesIsAllZeros ? undefined : `url(#mask-${`${id}`})`}
       />
 
       {area === null ? null : (

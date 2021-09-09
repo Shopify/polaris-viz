@@ -140,3 +140,43 @@ OffsetAndNulls.args = {
     },
   ],
 };
+
+export const ZeroSeries: Story<SparklineProps> = Template.bind({});
+ZeroSeries.args = {
+  ...defaultProps,
+  series: [
+    {
+      hasPoint: true,
+      data: [
+        {x: 0, y: 0},
+        {x: 1, y: 0},
+        {x: 2, y: 0},
+        {x: 3, y: 0},
+        {x: 4, y: 0},
+        {x: 5, y: 0},
+        {x: 6, y: 0},
+        {x: 7, y: 0},
+        {x: 8, y: 0},
+        {x: 9, y: 0},
+        {x: 10, y: 0},
+      ],
+    },
+    {
+      lineStyle: 'dashed',
+      area: null,
+      data: [
+        {x: 0, y: 200},
+        {x: 1, y: 200},
+        {x: 2, y: 200},
+        {x: 3, y: 200},
+        {x: 4, y: 200},
+        {x: 5, y: 200},
+        {x: 6, y: 200},
+        {x: 7, y: 200},
+        {x: 8, y: 200},
+        {x: 9, y: 200},
+        {x: 10, y: 200},
+      ],
+    },
+  ],
+};
