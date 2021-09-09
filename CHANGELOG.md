@@ -1,6 +1,9 @@
 # Changelog
 
-## Unreleased
+## [0.19.1] - 2021-09-09
+### Added
+
+- Added `seriesColors.single`  in theme definition
 
 ## [0.19.0-9] - 2021-09-08
 

@@ -65,8 +65,15 @@ const createGradient = (color1: string, color2: string) => {
   ];
 };
 
+const NEUTRAL_SINGLE_GRADIENT = [
+  {offset: 0, color: variables.colorIndigo90},
+  {offset: 85, color: variables.colorBlue90},
+  {offset: 100, color: variables.colorBlue70},
+];
+
 export const DEFAULT_THEME: Theme = {
   seriesColors: {
+    single: NEUTRAL_SINGLE_GRADIENT,
     upToFour: [
       createGradient(variables.colorIndigo70, variables.colorIndigo90),
       createGradient(variables.colorBlue70, variables.colorBlue90),
@@ -160,6 +167,7 @@ export const DEFAULT_THEME: Theme = {
 
 export const LIGHT_THEME: Theme = {
   seriesColors: {
+    single: NEUTRAL_SINGLE_GRADIENT,
     upToFour: [
       createGradient(variables.colorIndigo70, variables.colorIndigo90),
       createGradient(variables.colorBlue70, variables.colorBlue90),
