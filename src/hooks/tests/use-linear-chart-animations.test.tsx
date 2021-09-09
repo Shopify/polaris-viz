@@ -2,13 +2,15 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {line} from 'd3-shape';
 
-import {useLineChartAnimations} from '../use-line-chart-animations';
-import type {SeriesWithDefaults} from '../../types';
-import {getPointAtLength} from '../../../../utilities';
+import {useLinearChartAnimations} from '../use-linear-chart-animations';
+import type {Color, Data, DataSeries} from '../../types';
+import {getPointAtLength} from '../../utilities';
 
-jest.mock('../../../../utilities', () => {
+type SeriesWithDefaults = Required<DataSeries<Data, Color>>;
+
+jest.mock('../../utilities', () => {
   return {
-    ...jest.requireActual('../../../../utilities'),
+    ...jest.requireActual('../../utilities'),
     getPathLength: () => 0,
     getPointAtLength: jest.fn(() => ({x: 0, y: 0})),
   };
@@ -24,7 +26,6 @@ const series: SeriesWithDefaults[] = [
   {
     name: 'Primary',
     color: 'primary',
-    lineStyle: 'solid',
     data: [
       {label: 'Jan 1', rawValue: 1500},
       {label: 'Jan 2', rawValue: 1000},
@@ -45,7 +46,7 @@ const mockProps = {
   isAnimated: true,
 };
 
-describe('useLineChartAnimations', () => {
+describe('useLinearChartAnimations', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -54,7 +55,7 @@ describe('useLineChartAnimations', () => {
     let animatedCoordinates: any[] | null;
 
     function TestComponent() {
-      animatedCoordinates = useLineChartAnimations({
+      animatedCoordinates = useLinearChartAnimations({
         ...mockProps,
         isAnimated: true,
       }).animatedCoordinates;
@@ -71,7 +72,7 @@ describe('useLineChartAnimations', () => {
     let animatedCoordinates;
 
     function TestComponent() {
-      animatedCoordinates = useLineChartAnimations({
+      animatedCoordinates = useLinearChartAnimations({
         ...mockProps,
         isAnimated: false,
       }).animatedCoordinates;
@@ -88,7 +89,7 @@ describe('useLineChartAnimations', () => {
     let animatedCoordinates;
 
     function TestComponent() {
-      animatedCoordinates = useLineChartAnimations({
+      animatedCoordinates = useLinearChartAnimations({
         ...mockProps,
         activeIndex: null,
       }).animatedCoordinates;
@@ -103,7 +104,7 @@ describe('useLineChartAnimations', () => {
 
   it('calls line generator twice per series', () => {
     function TestComponent() {
-      useLineChartAnimations({
+      useLinearChartAnimations({
         ...mockProps,
       });
 
@@ -117,7 +118,7 @@ describe('useLineChartAnimations', () => {
 
   it('does not call lineGenerator if isAnimated is false', () => {
     function TestComponent() {
-      useLineChartAnimations({
+      useLinearChartAnimations({
         ...mockProps,
         isAnimated: false,
       });
@@ -132,7 +133,7 @@ describe('useLineChartAnimations', () => {
 
   it('does not call lineGenerator is there are no series', () => {
     function TestComponent() {
-      useLineChartAnimations({
+      useLinearChartAnimations({
         ...mockProps,
         series: [],
       });
@@ -147,7 +148,7 @@ describe('useLineChartAnimations', () => {
 
   it('does not call lineGenerator if activeIndex is null', () => {
     function TestComponent() {
-      useLineChartAnimations({
+      useLinearChartAnimations({
         ...mockProps,
         activeIndex: null,
       });
@@ -164,7 +165,7 @@ describe('useLineChartAnimations', () => {
     let animatedCoordinates: any[] | null;
 
     function TestComponent() {
-      animatedCoordinates = useLineChartAnimations({
+      animatedCoordinates = useLinearChartAnimations({
         ...mockProps,
         series: [
           {

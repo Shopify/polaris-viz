@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react';
 import isEqual from 'fast-deep-equal';
 import {animated, useSpring} from '@react-spring/web';
-import {area, Series} from 'd3-shape';
+import {area, line, Series} from 'd3-shape';
 import type {ScaleLinear} from 'd3-scale';
 import type {Color, GradientStop} from 'types';
 
@@ -29,6 +29,8 @@ interface Props {
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
   isAnimated: boolean;
+  strokeWidth: number;
+  hasSpline: boolean;
 }
 
 export function Areas({
@@ -40,6 +42,8 @@ export function Areas({
   yScale,
   colors,
   isAnimated,
+  strokeWidth,
+  hasSpline,
 }: Props) {
   const prevstackedValues = usePrevious(stackedValues);
   const valuesHaveNotUpdated = isEqual(prevstackedValues, stackedValues);
@@ -60,8 +64,19 @@ export function Areas({
     )
     .x((_, index) => xScale(index))
     .y0(([firstPoint]) => yScale(firstPoint))
-    .y1(([, lastPoint]) => yScale(lastPoint))
-    .curve(curveStepRounded);
+    .y1(([, lastPoint]) => yScale(lastPoint));
+
+  const lineShape = line<number[]>()
+    .defined(
+      ([firstPoint, lastPoint]) => !isNaN(firstPoint) && !isNaN(lastPoint),
+    )
+    .x((_, index) => xScale(index))
+    .y(([, lastPoint]) => yScale(lastPoint));
+
+  if (hasSpline) {
+    areaShape.curve(curveStepRounded);
+    lineShape.curve(curveStepRounded);
+  }
 
   const id = useMemo(() => uniqueId('stackedAreas'), []);
 
@@ -74,8 +89,9 @@ export function Areas({
       <g transform={transform} clipPath={`url(#${id})`}>
         {stackedValues.map((value, index) => {
           const shape = areaShape(value);
+          const line = lineShape(value);
 
-          if (shape == null) {
+          if (shape == null || line == null) {
             return null;
           }
 
@@ -98,11 +114,17 @@ export function Areas({
                 />
               </defs>
               <path
+                key={`line-${index}`}
+                d={line}
+                fill="none"
+                stroke={`url(#area-${id}-${index})`}
+                strokeWidth={strokeWidth}
+              />
+              <path
                 key={index}
                 d={shape}
                 fill={`url(#area-${id}-${index})`}
-                stroke={`url(#area-${id}-${index})`}
-                strokeWidth="0.1"
+                fillOpacity="0.25"
               />
             </React.Fragment>
           );

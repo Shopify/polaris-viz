@@ -11,7 +11,11 @@ import {
   changeColorOpacity,
   changeGradientOpacity,
 } from '../../utilities';
-import {useLinearXAxisDetails, useLinearXScale} from '../../hooks';
+import {
+  useLinearXAxisDetails,
+  useLinearXScale,
+  useLinearChartAnimations,
+} from '../../hooks';
 import {
   SMALL_SCREEN,
   SMALL_FONT_SIZE,
@@ -47,7 +51,7 @@ import type {
   YAxisOptions,
   SeriesWithDefaults,
 } from './types';
-import {useYScale, useLineChartAnimations} from './hooks';
+import {useYScale} from './hooks';
 import {Line, GradientArea} from './components';
 import styles from './Chart.scss';
 
@@ -224,7 +228,7 @@ export function Chart({
   const animatePoints =
     isAnimated && longestSeriesLength <= MAX_ANIMATED_SERIES_LENGTH;
 
-  const {animatedCoordinates} = useLineChartAnimations({
+  const {animatedCoordinates} = useLinearChartAnimations<SeriesWithDefaults>({
     series: reversedSeries,
     lineGenerator,
     activeIndex,

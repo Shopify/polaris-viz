@@ -1,17 +1,38 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {
-  Point,
-  Crosshair,
-  TooltipContainer,
   VisuallyHiddenRows,
   HorizontalGridLines,
   YAxis,
   LinearXAxis,
 } from 'components';
+import {Point} from 'components/Point';
+import {Crosshair} from 'components/Crosshair';
+import {TooltipContainer} from 'components/TooltipContainer';
 
 import {StackedAreas} from '../components';
 import {Chart} from '../Chart';
+
+const fakeSVGEvent = {
+  currentTarget: {
+    getScreenCTM: () => ({
+      inverse: () => ({x: 100, y: 100}),
+    }),
+    createSVGPoint: () => ({
+      x: 100,
+      y: 100,
+      matrixTransform: () => ({x: 100, y: 100}),
+    }),
+  },
+};
+
+jest.mock('../../../utilities', () => {
+  return {
+    ...jest.requireActual('../../../utilities'),
+    getPathLength: () => 0,
+    getPointAtLength: jest.fn(() => ({x: 0, y: 0})),
+  };
+});
 
 describe('<Chart />', () => {
   beforeEach(() => {
@@ -21,19 +42,6 @@ describe('<Chart />', () => {
   afterEach(() => {
     jest.useRealTimers();
   });
-
-  const fakeSVGEvent = {
-    currentTarget: {
-      getScreenCTM: () => ({
-        inverse: () => ({x: 100, y: 100}),
-      }),
-      createSVGPoint: () => ({
-        x: 100,
-        y: 100,
-        matrixTransform: () => ({x: 100, y: 100}),
-      }),
-    },
-  };
 
   const mockProps = {
     series: [
@@ -149,7 +157,7 @@ describe('<Chart />', () => {
   it('does not have an active Point if there is not an active point', () => {
     const chart = mount(<Chart {...mockProps} />);
 
-    expect(chart).not.toContainReactComponent(Point, {active: true});
+    expect(chart).not.toContainReactComponent(Point, {visuallyHidden: false});
   });
 
   it('sets an active point and tooltip position on svg mouse or touch interaction', () => {
@@ -161,7 +169,12 @@ describe('<Chart />', () => {
       svg.trigger('onMouseMove', fakeSVGEvent);
     });
 
-    expect(chart).toContainReactComponent(Point, {active: true});
+    expect(chart).toContainReactComponent(Point, {
+      active: true,
+      // ariaLabelledby points will always be rendered
+      // even without active points, so lets ignore them
+      ariaLabelledby: undefined,
+    });
   });
 
   it('does not render a <Crosshair /> if there is no active point', () => {

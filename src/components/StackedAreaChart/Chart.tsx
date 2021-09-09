@@ -1,10 +1,11 @@
 import React, {useState, useMemo, useRef} from 'react';
-import {stack, stackOffsetNone, stackOrderReverse} from 'd3-shape';
+import {line, stack, stackOffsetNone, stackOrderReverse} from 'd3-shape';
 
 import {LinearGradient} from '../LinearGradient';
 import {
   useLinearXAxisDetails,
   useLinearXScale,
+  useLinearChartAnimations,
   usePrefersReducedMotion,
   useTheme,
   useThemeSeriesColors,
@@ -25,6 +26,7 @@ import {
   changeColorOpacity,
   changeGradientOpacity,
   uniqueId,
+  curveStepRounded,
 } from '../../utilities';
 import {YAxis} from '../YAxis';
 import {Crosshair} from '../Crosshair';
@@ -37,6 +39,8 @@ import type {
   NumberLabelFormatter,
   ActiveTooltip,
   Dimensions,
+  DataSeries,
+  Data,
 } from '../../types';
 
 import {Spacing} from './constants';
@@ -55,6 +59,8 @@ interface Props {
   isAnimated: boolean;
   theme?: string;
 }
+
+type SeriesForAnimation = Required<Partial<DataSeries<Data, null>>>;
 
 export function Chart({
   xAxisLabels,
@@ -175,6 +181,60 @@ export function Chart({
     });
   }, [colors, activePointIndex, series, xAxisLabels, renderTooltipContent]);
 
+  const lineGenerator = useMemo(() => {
+    const generator = line<{rawValue: number}>()
+      .x((_, index) => (xScale == null ? 0 : xScale(index)))
+      .y(({rawValue}) => yScale(rawValue));
+
+    if (selectedTheme.line.hasSpline) {
+      generator.curve(curveStepRounded);
+    }
+
+    return generator;
+  }, [xScale, yScale, selectedTheme.line.hasSpline]);
+
+  const seriesForAnimation = useMemo(() => {
+    return stackedValues.map((value) => {
+      return {
+        name: '',
+        color: null,
+        data: value.map((val) => {
+          return {
+            label: '',
+            rawValue: val[1],
+          };
+        }),
+      };
+    });
+  }, [stackedValues]);
+
+  const {animatedCoordinates} = useLinearChartAnimations<SeriesForAnimation>({
+    series: seriesForAnimation,
+    lineGenerator,
+    activeIndex: activePointIndex,
+    isAnimated: true,
+  });
+
+  const getXPosition = (
+    {isCrosshair, index} = {isCrosshair: false, index: activePointIndex},
+  ) => {
+    if (xScale == null) {
+      return 0;
+    }
+    const offset = isCrosshair ? selectedTheme.crossHair.width / 2 : 0;
+
+    if (
+      index !== null &&
+      animatedCoordinates != null &&
+      activePointIndex != null &&
+      animatedCoordinates[index]
+    ) {
+      return animatedCoordinates[index].to((coord) => coord.x - offset);
+    }
+
+    return xScale(index == null ? 0 : index) - offset;
+  };
+
   if (xScale == null || drawableWidth == null || axisMargin == null) {
     return null;
   }
@@ -247,12 +307,14 @@ export function Chart({
           yScale={yScale}
           colors={colors}
           isAnimated={isAnimated && !prefersReducedMotion}
+          strokeWidth={selectedTheme.line.width}
+          hasSpline={selectedTheme.line.hasSpline}
         />
 
         {activePointIndex == null ? null : (
           <g transform={`translate(${dataStartPosition},${Margin.Top})`}>
             <Crosshair
-              x={xScale(activePointIndex) - selectedTheme.crossHair.width / 2}
+              x={getXPosition({isCrosshair: true, index: 0})}
               height={drawableHeight}
               fill={selectedTheme.crossHair.color}
               width={selectedTheme.crossHair.width}
@@ -261,44 +323,74 @@ export function Chart({
         )}
 
         <g transform={`translate(${dataStartPosition},${Margin.Top})`}>
-          {stackedValues.map((value, stackIndex) =>
-            value.map(([, startingDataPoint], index) => {
-              const id = `${tooltipId.current}-point-${index}`;
-              const color = colors[stackIndex];
+          {stackedValues.map((_, stackIndex) => {
+            if (activePointIndex == null) {
+              return null;
+            }
 
-              const pointColor = isGradientType(color)
-                ? `url(#${id})`
-                : changeColorOpacity(color);
+            const id = `${tooltipId.current}-point-${stackIndex}`;
+            const color = colors[stackIndex];
 
-              return (
-                <React.Fragment key={index}>
-                  {isGradientType(color) && (
-                    <defs>
-                      <LinearGradient
-                        id={id}
-                        gradient={changeGradientOpacity(color)}
-                        gradientUnits="userSpaceOnUse"
-                        y1="100%"
-                        y2="0%"
-                      />
-                    </defs>
-                  )}
-                  <Point
-                    stroke={colorWhite}
-                    color={pointColor}
-                    cx={xScale(index)}
-                    cy={yScale(startingDataPoint)}
-                    active={index === activePointIndex}
-                    onFocus={handleFocus}
-                    index={index}
-                    tabIndex={stackIndex === 0 ? 0 : -1}
-                    ariaLabelledby={tooltipId.current}
-                    isAnimated={isAnimated && !prefersReducedMotion}
-                  />
-                </React.Fragment>
-              );
-            }),
-          )}
+            const animatedYPostion =
+              animatedCoordinates == null ||
+              animatedCoordinates[stackIndex] == null
+                ? 0
+                : animatedCoordinates[stackIndex].to((coord) => coord.y);
+
+            const pointColor = isGradientType(color)
+              ? `url(#${id})`
+              : changeColorOpacity(color);
+
+            return (
+              <React.Fragment key={stackIndex}>
+                {isGradientType(color) && (
+                  <defs>
+                    <LinearGradient
+                      id={id}
+                      gradient={changeGradientOpacity(color)}
+                      gradientUnits="userSpaceOnUse"
+                      y1="100%"
+                      y2="0%"
+                    />
+                  </defs>
+                )}
+                <Point
+                  stroke={colorWhite}
+                  color={pointColor}
+                  cx={getXPosition({isCrosshair: false, index: stackIndex})}
+                  cy={animatedYPostion}
+                  active
+                  onFocus={handleFocus}
+                  index={stackIndex}
+                  tabIndex={stackIndex === 0 ? 0 : -1}
+                  isAnimated={isAnimated && !prefersReducedMotion}
+                />
+              </React.Fragment>
+            );
+          })}
+          {stackedValues[0].map(([x, y], dataIndex) => {
+            // These are the points used for tabbing and
+            // a11y. We only render a single series otherwise
+            // the tabbing would loop through each set of points
+            // for each series.
+            return (
+              <Point
+                key={`point-${dataIndex}-${x}}`}
+                stroke={colorWhite}
+                color={colorWhite}
+                cx={xScale(dataIndex)}
+                cy={yScale(y)}
+                active
+                onFocus={handleFocus}
+                index={dataIndex}
+                tabIndex={0}
+                ariaLabelledby={tooltipId.current}
+                isAnimated={false}
+                ariaHidden={false}
+                visuallyHidden
+              />
+            );
+          })}
         </g>
       </svg>
       {tooltipPosition == null || activePointIndex == null ? null : (
