@@ -136,6 +136,7 @@ export interface TooltipTheme {
   labelColor: string;
 }
 export interface SeriesColors {
+  single: Color;
   upToFour: Color[];
   fromFiveToSeven: Color[];
   all: Color[];
