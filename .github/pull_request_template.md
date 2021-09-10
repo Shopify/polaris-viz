@@ -2,16 +2,14 @@
 
 <!-- Briefly describe what you want to achieve here. If this PR solves an issue, then remember to add `fix` or `solve` #issue in order to close it automatically (https://help.github.com/articles/closing-issues-using-keywords/). -->
 
+<!-- Include screenshots of before and after -->
+
 ### Reviewers’ :tophat: instructions
 
-<!-- Tophatting instructions, and/ or what you want reviewers to concentrate on. -->
+<!-- Tophatting instructions -->
 
-<!-- If you have some code in your Sandbox consider sharing it to help others 🎩 -->
+<!-- Include a liink to a relevant Storybook to help others 🎩 -->
 
-<!--
-<details>
-</details>
- -->
 
 ### Before merging
 
@@ -19,4 +17,4 @@
 
 - [ ] Update the Changelog.
 
-- [ ] Update relevant documentation.
+- [ ] Update relevant documentation and Storybook.
