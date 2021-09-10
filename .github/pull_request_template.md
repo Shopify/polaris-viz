@@ -1,20 +1,46 @@
-### What problem is this PR solving?
+What does this implement/fix?
+---------------------------------------------------
+…
 
-<!-- Briefly describe what you want to achieve here. If this PR solves an issue, then remember to add `fix` or `solve` #issue in order to close it automatically (https://help.github.com/articles/closing-issues-using-keywords/). -->
+<!-- 💡 Briefly describe what you want to achieve here.  Explain your approach and any other options you considered. -->
 
-<!-- Include screenshots of before and after -->
+<!-- 🐛 For bugs: How can the original issue be recreated? How is your fix demonstrated? -->
 
-### Reviewers’ :tophat: instructions
+<!-- 🎨 For new features: Have you reviewed your changes with UX? Is there a design that should be referenced? -->
 
-<!-- Tophatting instructions -->
 
-<!-- Include a liink to a relevant Storybook to help others 🎩 -->
+Does this close any currently open issues?
+------------------------------------------
+…
+
+<!-- 🔗 Link to the issue/s that this PR solves, and use fix` or `solve` to close it automatically.  -->
+
+
+What do the changes look like?
+---------------------------------------------------
+…
+
+<!--
+🖼 Include screenshots of before and after, if relevant
+
+| Before  | After  |
+|---|---|
+|   |   |
+
+ -->
+
+ 
+Storybook link
+------------------------------------------
+…
+
+<!-- 🎩 Include links to help tophatting -->
 
 
 ### Before merging
 
 - [ ] Check your changes on a variety of browsers and devices.
 
-- [ ] Update the Changelog.
+- [ ] Update the Changelog's Unreleased section with yoru changes.
 
 - [ ] Update relevant documentation and Storybook.
