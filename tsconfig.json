@@ -8,10 +8,11 @@
     "declarationMap": false,
     "jsx": "react-native",
     "strict": true,
-    "importHelpers": true,
+    "importHelpers": false,
     "skipLibCheck": true,
     "incremental": true,
     "noEmit": true,
+    "noEmitHelpers": false,
     "isolatedModules": true,
     "importsNotUsedAsValues": "error",
     "strictFunctionTypes": false
