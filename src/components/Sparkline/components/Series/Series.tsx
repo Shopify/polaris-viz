@@ -2,7 +2,6 @@ import React, {useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {area as areaShape, line} from 'd3-shape';
 
-import {colorWhite, colorBlack} from '../../../../constants';
 import type {Color, GradientStop, Theme} from '../../../../types';
 import {LinearGradient} from '../../../LinearGradient';
 import {
@@ -111,7 +110,6 @@ export function Series({
 
   const showPoint = hasPoint && lastLinePointCoordinates != null;
   const {x: lastX = 0, y: lastY = 0} = lastLinePointCoordinates ?? {};
-  const seriesIsAllZeros = data.every(({y}) => y === 0);
 
   return (
     <React.Fragment>
@@ -131,38 +129,21 @@ export function Series({
           />
         )}
 
-        {showPoint ? (
-          <React.Fragment>
-            <circle cx={lastX} cy={lastY} r={POINT_RADIUS} id={`point-${id}`} />
-
-            <mask id={`mask-${id}`}>
-              <rect
-                x="0"
-                y="0"
-                width={svgDimensions.width}
-                height={svgDimensions.height}
-                fill={colorWhite}
-              />
-              <use href={`#point-${id}`} fill={colorBlack} />
-            </mask>
-          </React.Fragment>
-        ) : null}
+        <React.Fragment>
+          <mask id={`mask-${id}`}>
+            <path
+              d={lineShape}
+              stroke="white"
+              strokeLinejoin="round"
+              strokeLinecap="round"
+              style={{strokeDasharray: StrokeDasharray[lineStyle]}}
+            />
+            {showPoint && (
+              <circle cx={lastX} cy={lastY} r={POINT_RADIUS} fill="white" />
+            )}
+          </mask>
+        </React.Fragment>
       </defs>
-
-      <path
-        stroke={
-          series.lineStyle && series.lineStyle !== 'solid'
-            ? theme.line.dottedStrokeColor
-            : `url(#line-${id})`
-        }
-        d={lineShape}
-        fill="none"
-        strokeLinejoin="round"
-        strokeLinecap="round"
-        className={classNames(styles.Line, !immediate && styles.AnimatedLine)}
-        style={{strokeDasharray: StrokeDasharray[lineStyle]}}
-        mask={seriesIsAllZeros ? undefined : `url(#mask-${`${id}`})`}
-      />
 
       {area === null ? null : (
         <path
@@ -171,14 +152,19 @@ export function Series({
           className={immediate ? undefined : styles.Area}
         />
       )}
-
-      {showPoint ? (
-        <use
-          href={`#point-${id}`}
-          fill={`url(#line-${id})`}
-          className={styles.Point}
-        />
-      ) : null}
+      <rect
+        x="0"
+        y="0"
+        width={svgDimensions.width}
+        height={svgDimensions.height}
+        fill={
+          series.lineStyle && series.lineStyle !== 'solid'
+            ? theme.line.dottedStrokeColor
+            : `url(#line-${id})`
+        }
+        mask={`url(#mask-${`${id}`})`}
+        className={classNames(styles.Line, !immediate && styles.AnimatedLine)}
+      />
     </React.Fragment>
   );
 }
