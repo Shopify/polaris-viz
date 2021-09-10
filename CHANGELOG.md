@@ -1,11 +1,16 @@
 # Changelog
 
-## Unreleased
+## [0.19.1] - 2021-09-10
 
 ### Fixed
 - A bug where the Sparkline's line would not show when displaying all 0s and the Point is present
 
-## [0.19.1] - 2021-09-09
+### Changed
+
+- `<StackedAreaChart />` UX improvements (animation, added line to top of chart, reduced opacity)
+
+## [0.19.0] - 2021-09-09
+
 ### Added
 
 - Added `seriesColors.single`  in theme definition
