@@ -1,8 +1,13 @@
 # Changelog
 
+## [0.20.0] - 2021-09-10
+
+- Removed `tslib` as a dependency entirely. This change inlines the helpers used by TypeScript. The result is that the bundle is a little smaller (e.g. ~2KB after minification and gzip), and dependency issues become a non-problem.
+
 ## [0.19.1] - 2021-09-10
 
 ### Fixed
+
 - A bug where the Sparkline's line would not show when displaying all 0s and the Point is present
 
 ### Changed
