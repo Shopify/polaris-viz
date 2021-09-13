@@ -16,8 +16,9 @@ import styles from './Legend.scss';
 
 type LegendData = DataSeries<Data | NullableData, Color>;
 
-interface LegendSeries extends LegendData {
+interface LegendSeries extends Omit<LegendData, 'data'> {
   lineStyle?: LineStyle;
+  data?: (Data | NullableData)[];
 }
 
 export interface Props {
