@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## [0.20.2] - 2021-09-13
+
 ### Fixed
 - Fixed the direction of the gradient on the horizontal `<NormalizedStackedBarChart />`
 - Gradient not being applied properly to `<Sparkbar>`
