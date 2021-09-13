@@ -56,7 +56,6 @@ export interface Dimensions {
 
 export interface SparkChartData {
   value: number | null;
-  color?: Color;
 }
 
 export type PathInterpolator = InterpolatorFn<readonly number[], string>;

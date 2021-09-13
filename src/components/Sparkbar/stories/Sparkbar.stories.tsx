@@ -46,6 +46,9 @@ export default {
     isAnimated: {
       description: 'Determines whether to animate the chart on state changes.',
     },
+    barColor: {
+      description: 'If provided, overwrites the theme bar color.',
+    },
     theme: THEME_CONTROL_ARGS,
   },
 } as Meta;
@@ -64,7 +67,7 @@ const defaultProps = {
     {value: 400},
     {value: 400},
     {value: 100},
-    {value: 200},
+    {value: 2000},
     {value: 800},
     {value: 900},
     {value: 200},
@@ -90,9 +93,6 @@ const defaultProps = {
 export const Default: Story<SparkbarProps> = Template.bind({});
 Default.args = defaultProps;
 
-export const Positive: Story<SparkbarProps> = Template.bind({});
-Positive.args = {...defaultProps, theme: 'Positive'};
-
 export const OffsetAndNulls: Story<SparkbarProps> = Template.bind({});
 OffsetAndNulls.args = {
   ...defaultProps,
@@ -113,22 +113,5 @@ OffsetAndNulls.args = {
   ],
 };
 
-export const OverriddenColors: Story<SparkbarProps> = Template.bind({});
-OverriddenColors.args = {
-  ...defaultProps,
-  dataOffsetLeft: 10,
-  dataOffsetRight: 20,
-  data: [
-    {value: 100},
-    {value: 200, color: 'red'},
-    {value: 300},
-    {value: 400},
-    {value: 400, color: DEFAULT_THEME.seriesColors.upToFour[0]},
-    {value: 100},
-    {value: 200},
-    {value: 800, color: '#99ccbb'},
-    {value: 900},
-    {value: 200},
-    {value: 400},
-  ],
-};
+export const OverwrittenBarColor: Story<SparkbarProps> = Template.bind({});
+OverwrittenBarColor.args = {...defaultProps, barColor: 'green'};

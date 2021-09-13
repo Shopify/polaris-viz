@@ -4,6 +4,10 @@
 
 ### Fixed
 - Fixed the direction of the gradient on the horizontal `<NormalizedStackedBarChart />`
+- Gradient not being applied properly to `<Sparkbar>`
+
+### Changed
+- Individual bar colors can no longer be overwritten in  `<Sparkbar>`, but the bar color over all can be overwritten by using the `barColor` prop
 
 
 ## [0.20.0] - 2021-09-10
