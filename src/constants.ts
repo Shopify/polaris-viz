@@ -48,15 +48,10 @@ export const MAX_TRAIL_DURATION = 500;
 export const MASK_HIGHLIGHT_COLOR = variables.colorWhite;
 export const MASK_SUBDUE_COLOR = '#434343';
 
-export const colorSky = variables.colorSky;
 export const colorWhite = variables.colorWhite;
 export const colorBlack = variables.colorBlack;
 export const colorPurpleDark = variables.colorPurpleDark;
-export const colorBlue = variables.colorBlue;
 export const colorTeal = variables.colorTeal;
-export const colorSkyDark = variables.colorSkyDark;
-export const positiveColor = variables.positiveColor;
-export const negativeColor = variables.negativeColor;
 
 const createGradient = (color1: string, color2: string) => {
   return [
