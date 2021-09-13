@@ -33,7 +33,7 @@ export function BarLabel({
     <ComparisonMetric {...comparisonMetric} theme={legendColors} />
   ) : null;
 
-  const angle = orientation === 'horizontal' ? -90 : 180;
+  const angle = orientation === 'horizontal' ? 90 : 180;
 
   const formattedColor = isGradientType(color)
     ? createCSSGradient(color, angle)
