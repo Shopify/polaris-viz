@@ -67,13 +67,7 @@
     }
   },
   "browserslist": [
-    "last 3 chrome versions",
-    "last 3 chromeandroid versions",
-    "last 3 firefox versions",
-    "last 3 opera versions",
-    "last 2 edge versions",
-    "safari >= 10",
-    "ios >= 9"
+    "extends @shopify/browserslist-config"
   ],
   "devDependencies": {
     "@babel/core": "^7.14.3",
@@ -82,7 +76,7 @@
     "@shopify/babel-preset": "^24.0.1",
     "@shopify/postcss-plugin": "^3.1.1",
     "@shopify/react-testing": "^3.0.1",
-    "@shopify/sewing-kit": "^2.1.2",
+    "@shopify/sewing-kit": "^4.0.0",
     "@size-limit/preset-big-lib": "^5.0.1",
     "@storybook/addon-actions": "^6.3.7",
     "@storybook/addon-essentials": "^6.3.7",
@@ -162,7 +156,7 @@
     "use-debounce": "^3.3.0"
   },
   "resolutions": {
-    "browserslist": "^4.16.7",
+    "browserslist": "^4.17.0",
     "d3-array": "2.4.0",
     "glob-parent": "^6.0.1",
     "trim": "^1.0.1",
