@@ -46,7 +46,6 @@ You are responsible for providing these packages in your project. By requiring t
 | Command                         | What it's used for                                                  |
 | ------------------------------- | ---------------------------------------------------------------- |
 | `dev up`                        | Project set up                                                   |
-| `dev s`                         | Start a server running `Playground.tsx`                          |
 | `dev storybook`                 | Start a server running [Storybook](https://storybook.js.org/)    |
 | `dev add-story [ComponentName]` | Create boilerplate files to include a new component in Storybook |
 | `dev add-story [ComponentName] --no-comments` | Create boilerplate files to include a new component in Storybook without comments |
@@ -187,8 +186,8 @@ Used to format content in tooltips. Alternatively, use a custom tooltip. [View d
 Used to show comparison across categories. [View documentation&nbsp;→](../src/components/BarChart/BarChart.md)
 
   </td>
-  
- 
+
+
 <tr>
 
   <td>

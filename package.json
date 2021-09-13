@@ -31,7 +31,6 @@
     "prebuild-consumer": "yarn run build",
     "build-consumer": "node ./scripts/build-consumer",
     "prepublish": "in-publish && yarn run build || :",
-    "dev": "sewing-kit playground",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "add:story": "node ./.storybook/cli.js"
