@@ -1,19 +1,44 @@
 import {useMemo} from 'react';
 
-import type {DataSeries, NullableData, Theme, Color, Data} from '../types';
+import type {Theme, Color, LineStyle, DataSeries} from '../types';
+
+// We don't use the data property anywhere, so it's
+// safe to use "any" here as the type passed to DataSeries.
+// We really only care about color and lineStyle
+interface ValidData extends DataSeries<any, Color> {
+  lineStyle?: LineStyle;
+}
+
+function getFilteredSeriesCount(series: Partial<ValidData>[]): number {
+  // Only include solid lines (or non-lines) in the
+  // count when grabbing the series color.
+  return (
+    series.filter((item) => {
+      if (!item.lineStyle) {
+        return true;
+      }
+      return item.lineStyle === 'solid';
+    }).length ?? 0
+  );
+}
 
 // Build an array of colors for each item in the series. Colors provided directly
 // to series.color are used in place of the theme color.
 export function useThemeSeriesColors(
-  series: DataSeries<NullableData, string>[] | DataSeries<Data, Color>[],
+  series: Partial<ValidData>[],
   selectedTheme: Theme,
 ): Color[] {
   return useMemo(() => {
-    const seriesColors = getSeriesColors(series.length, selectedTheme);
+    const seriesCount = getFilteredSeriesCount(series);
+    const seriesColors = getSeriesColors(seriesCount, selectedTheme);
 
     let lastUsedColorIndex = -1;
 
-    return series.map(({color}) => {
+    return series.map(({color, lineStyle}) => {
+      if (lineStyle && lineStyle !== 'solid') {
+        return selectedTheme.line.dottedStrokeColor;
+      }
+
       // If the series doesn't have a color property
       // explicitly set on itself, we're going to grab
       // the next available color in the array.

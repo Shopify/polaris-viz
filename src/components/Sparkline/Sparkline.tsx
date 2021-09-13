@@ -3,7 +3,7 @@ import {useDebouncedCallback} from 'use-debounce';
 import {scaleLinear} from 'd3-scale';
 import type {Color, LineStyle} from 'types';
 
-import {getSeriesColorsFromCount} from '../../hooks/use-theme-series-colors';
+import {useThemeSeriesColors} from '../../hooks/use-theme-series-colors';
 import {useResizeObserver, useTheme} from '../../hooks';
 import {XMLNS} from '../../constants';
 
@@ -47,7 +47,7 @@ export function Sparkline({
   } = useResizeObserver();
   const [svgDimensions, setSvgDimensions] = useState({width: 0, height: 0});
   const selectedTheme = useTheme(theme);
-  const seriesColors = getSeriesColorsFromCount(series.length, selectedTheme);
+  const seriesColors = useThemeSeriesColors(series, selectedTheme);
 
   const [updateMeasurements] = useDebouncedCallback(() => {
     if (entry == null) return;
