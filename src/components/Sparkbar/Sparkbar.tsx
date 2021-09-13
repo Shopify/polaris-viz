@@ -37,6 +37,7 @@ export interface SparkbarProps {
   accessibilityLabel?: string;
   isAnimated?: boolean;
   theme?: string;
+  barColor?: Color;
 }
 
 function calculateRange(data: SparkChartData[], height: number) {
@@ -68,6 +69,7 @@ export function Sparkbar({
   dataOffsetRight = 0,
   dataOffsetLeft = 0,
   theme,
+  barColor,
 }: SparkbarProps) {
   const {
     ref: containerRef,
@@ -147,6 +149,7 @@ export function Sparkbar({
   const strokeDasharray = `${barWidth - STROKE_WIDTH} ${barGap}`;
 
   const id = useMemo(() => uniqueId('sparkbar'), []);
+  const clipId = useMemo(() => uniqueId('clip'), []);
 
   const getBarHeight = useCallback(
     ({value}) => {
@@ -163,22 +166,16 @@ export function Sparkbar({
 
   const shouldAnimate = !prefersReducedMotion && isAnimated;
 
-  const barColor = isGradientType(seriesColor)
-    ? seriesColor
+  const colorToUse = barColor ?? seriesColor;
+
+  const color = isGradientType(colorToUse)
+    ? colorToUse
     : [
         {
-          color: seriesColor,
+          color: colorToUse,
           offset: 0,
         },
       ];
-
-  const colors: {color: Color; index: number}[] = [];
-
-  data.forEach(({color}, index) => {
-    if (color) {
-      colors.push({color, index});
-    }
-  });
 
   const transitions = useTransition(dataWithIndex, {
     key: ({index}: {index: number}) => index,
@@ -221,56 +218,39 @@ export function Sparkbar({
         <defs>
           <LinearGradient
             id={id}
-            gradient={barColor}
+            gradient={color}
             gradientUnits="userSpaceOnUse"
             y1="100%"
             y2="0%"
           />
-
-          {colors.map(({color, index}) => {
-            const barColor = isGradientType(color)
-              ? color
-              : [
-                  {
-                    color,
-                    offset: 0,
-                  },
-                ];
-
-            const key = `${id}-color-${index}`;
-
-            return (
-              <LinearGradient
-                key={key}
-                id={key}
-                gradient={barColor}
-                gradientUnits="userSpaceOnUse"
-                y1="100%"
-                y2="0%"
-              />
-            );
-          })}
         </defs>
 
-        <g opacity={comparison ? '0.9' : '1'}>
-          {transitions(({height: barHeight}, item, _transition, index) => {
-            const xPosition = xScale(index.toString());
+        <mask id={clipId}>
+          <g opacity={comparison ? '0.9' : '1'}>
+            {transitions(({height: barHeight}, item, _transition, index) => {
+              const xPosition = xScale(index.toString());
 
-            const colorId = item.value.color ? `${id}-color-${index}` : id;
+              return (
+                <Bar
+                  key={index}
+                  x={xPosition == null ? 0 : xPosition}
+                  yScale={yScale}
+                  value={item.value.value}
+                  width={barWidth}
+                  height={barHeight}
+                  fill="white"
+                />
+              );
+            })}
+          </g>
+        </mask>
 
-            return (
-              <Bar
-                key={index}
-                x={xPosition == null ? 0 : xPosition}
-                yScale={yScale}
-                value={item.value.value}
-                width={barWidth}
-                height={barHeight}
-                fill={`url(#${colorId})`}
-              />
-            );
-          })}
-        </g>
+        <rect
+          fill={`url(#${id})`}
+          width={width}
+          height={height}
+          mask={`url(#${clipId})`}
+        />
 
         {comparison == null ? null : (
           <path

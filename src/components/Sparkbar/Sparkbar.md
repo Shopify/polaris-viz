@@ -33,7 +33,7 @@ Used in small sizes to give an overview of how a metric has performed over time.
       {x: 16, y: 4.2},
       {x: 17, y: 4.2},
     ],
-    color: 'green',
+    barColor: 'green',
     dataOffsetRight: 12,
     dataOffsetLeft: 12,
     isAnimated: true,
@@ -88,6 +88,14 @@ The prop to determine the chart's bars. Null bars will not be plotted. Bars with
 | `string` | `Default`|
 
 The theme that the chart will inherit its color and container styles from.
+
+#### barColor
+
+| type     | default |
+| -------- | ------- |
+| `Color` | `undefined`|
+
+If provided, will overwrite the theme's bar color.
 
 #### comparison
 
