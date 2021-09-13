@@ -28,7 +28,7 @@ export function BarSegment({
   const scaleNeedsRounding = scale > 0 && scale < 1.5;
   const safeScale = scaleNeedsRounding ? 1.5 : scale;
 
-  const angle = orientation === 'horizontal' ? -90 : 180;
+  const angle = orientation === 'horizontal' ? 90 : 180;
 
   const formattedColor = isGradientType(color)
     ? createCSSGradient(color, angle)

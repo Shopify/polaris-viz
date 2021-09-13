@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Fixed
+- Fixed the direction of the gradient on the horizontal `<NormalizedStackedBarChart />`
+
+
 ## [0.20.0] - 2021-09-10
 
 - Removed `tslib` as a dependency entirely. This change inlines the helpers used by TypeScript. The result is that the bundle is a little smaller (e.g. ~2KB after minification and gzip), and dependency issues become a non-problem.
