@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {getSeriesColorsFromCount} from '../../hooks/use-theme-series-colors';
+import {useThemeSeriesColors} from '../../hooks/use-theme-series-colors';
 import {useTheme} from '../../hooks';
 import type {
   DataSeries,
@@ -16,24 +16,25 @@ import styles from './Legend.scss';
 
 type LegendData = DataSeries<Data | NullableData, Color>;
 
-interface LegendProps extends Omit<LegendData, 'data'> {
+interface LegendSeries extends LegendData {
   lineStyle?: LineStyle;
-  data?: (Data | NullableData)[];
 }
 
 export interface Props {
-  series: LegendProps[];
+  series: LegendSeries[];
   theme?: string;
 }
 
 export function Legend({series, theme}: Props) {
   const selectedTheme = useTheme(theme);
-  const seriesColors = getSeriesColorsFromCount(series.length, selectedTheme);
+  const seriesColors = useThemeSeriesColors(series, selectedTheme);
   const {labelColor} = selectedTheme.legend;
   return (
     <div className={styles.Container} aria-hidden>
       {series.map(({name, color, lineStyle}, index) => {
-        const itemColor = color ?? seriesColors[index];
+        const isComparisonPeriod = lineStyle && lineStyle !== 'solid';
+        const itemColor =
+          color == null || isComparisonPeriod ? seriesColors[index] : color;
 
         return (
           <div className={styles.Series} key={`${name}-${index}`}>

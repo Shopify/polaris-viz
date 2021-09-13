@@ -182,7 +182,7 @@ export function LineChart({
       // so it has to come last
       color: isSolidLine
         ? series.color ?? seriesColors[index]
-        : selectedTheme.line.dottedStrokeColor,
+        : seriesColors[index],
     };
   });
 

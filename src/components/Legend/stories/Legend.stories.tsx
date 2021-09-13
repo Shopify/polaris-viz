@@ -58,7 +58,7 @@ export const LineLegend: Story<LegendProps> = Template.bind({});
 LineLegend.args = {
   series: [
     {lineStyle: 'solid', name: 'Sales'},
-    {lineStyle: 'solid', name: 'Visits'},
+    {lineStyle: 'dashed', name: 'Visits'},
   ],
 };
 
@@ -67,5 +67,6 @@ ColorOverrides.args = {
   series: [
     {name: 'Sales', color: 'red'},
     {name: 'Visits', color: 'purple'},
+    {name: 'Comparison', color: 'yellow', lineStyle: 'dashed'},
   ],
 };
