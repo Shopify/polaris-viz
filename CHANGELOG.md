@@ -1,6 +1,8 @@
 # Changelog
 
-## Unreleased
+## [0.20.3] - 2021-09-14
+- Fixed the direction of the gradient on the horizontal `<NormalizedStackedBarChart />` legend
+- Remove change that made data required in `<Legend />` props
 
 ## [0.20.2] - 2021-09-13
 
