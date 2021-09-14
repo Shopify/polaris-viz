@@ -24,7 +24,10 @@ import {
 import {Bar} from '../Bar';
 import {YAxis} from '../YAxis';
 import {BarChartXAxis} from '../BarChartXAxis';
-import {TooltipContainer} from '../TooltipContainer';
+import {
+  TooltipContainer,
+  TooltipPosition as TooltipContainerPosition,
+} from '../TooltipContainer';
 import {LinearGradient} from '../LinearGradient';
 import {HorizontalGridLines} from '../HorizontalGridLines';
 import {Dimensions, XAxisOptions, YAxisOptions, BarMargin} from '../../types';
@@ -38,6 +41,12 @@ import type {
 import {useYScale, useXScale, useMinimalLabelIndexes} from './hooks';
 import {SMALL_FONT_SIZE, FONT_SIZE, SMALL_SCREEN, SPACING} from './constants';
 import styles from './Chart.scss';
+
+interface TooltipPosition {
+  x: number;
+  y: number;
+  position: TooltipContainerPosition;
+}
 
 interface Props {
   data: BarChartData[];
@@ -68,10 +77,8 @@ export function Chart({
 
   const {prefersReducedMotion} = usePrefersReducedMotion();
   const [activeBar, setActiveBar] = useState<number | null>(null);
-  const [tooltipPosition, setTooltipPosition] = useState<{
-    x: number;
-    y: number;
-  } | null>(null);
+  const [tooltipPosition, setTooltipPosition] =
+    useState<TooltipPosition | null>(null);
   const {minimalLabelIndexes} = useMinimalLabelIndexes({
     useMinimalLabels: xAxisOptions.useMinimalLabels,
     dataLength: data.length,
@@ -202,6 +209,10 @@ export function Chart({
       setTooltipPosition({
         x: cx + chartStartPosition + xScale.bandwidth() / 2,
         y: cy,
+        position: {
+          horizontal: 'center',
+          vertical: 'above',
+        },
       });
     },
     [chartStartPosition, xScale],
@@ -404,7 +415,8 @@ export function Chart({
           currentY={tooltipPosition.y}
           chartDimensions={chartDimensions}
           margin={Margin}
-          position="center"
+          bandwidth={xScale.bandwidth()}
+          position={tooltipPosition.position}
         >
           {tooltipMarkup}
         </TooltipContainer>
@@ -436,17 +448,15 @@ export function Chart({
       return;
     }
 
-    const xPosition = xScale(currentIndex.toString());
+    const xPosition = xScale(currentIndex.toString()) ?? 0;
     const value = data[currentIndex].rawValue;
-    const tooltipXPositon =
-      xPosition == null
-        ? 0
-        : xPosition + chartStartPosition + xScale.bandwidth() / 2;
+    const tooltipXPositon = xPosition + chartStartPosition;
 
     setActiveBar(currentIndex);
     setTooltipPosition({
       x: tooltipXPositon,
       y: yScale(value),
+      position: {horizontal: 'center', vertical: value < 0 ? 'below' : 'above'},
     });
   }
 }

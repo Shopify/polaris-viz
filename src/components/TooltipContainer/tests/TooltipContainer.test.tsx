@@ -34,7 +34,7 @@ describe('<TooltipContainer />', () => {
     expect(styles.transform).toBeDefined();
   });
 
-  it('reners its children', () => {
+  it('renders its children', () => {
     const children = <p>tooltip content</p>;
     const tooltipContainer = mount(
       <TooltipContainer {...mockProps}>{children}</TooltipContainer>,

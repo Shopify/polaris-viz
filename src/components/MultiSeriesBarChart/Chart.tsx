@@ -1,7 +1,10 @@
 import React, {useState, useMemo, useCallback} from 'react';
 
 import {BarChartMargin as Margin, XMLNS} from '../../constants';
-import {TooltipContainer} from '../TooltipContainer';
+import {
+  TooltipContainer,
+  TooltipPosition as TooltipContainerPosition,
+} from '../TooltipContainer';
 import {
   eventPoint,
   getTextWidth,
@@ -25,6 +28,12 @@ import {BarGroup, StackedBarGroup} from './components';
 import {useYScale, useXScale} from './hooks';
 import {FONT_SIZE, SMALL_WIDTH, SMALL_FONT_SIZE, SPACING} from './constants';
 import styles from './Chart.scss';
+
+interface TooltipPosition {
+  x: number;
+  y: number;
+  position: TooltipContainerPosition;
+}
 
 interface Props {
   series: Required<Series>[];
@@ -53,10 +62,8 @@ export function Chart({
   const selectedTheme = useTheme(theme);
 
   const [activeBarGroup, setActiveBarGroup] = useState<number | null>(null);
-  const [tooltipPosition, setTooltipPosition] = useState<{
-    x: number;
-    y: number;
-  } | null>(null);
+  const [tooltipPosition, setTooltipPosition] =
+    useState<TooltipPosition | null>(null);
 
   const fontSize =
     chartDimensions.width < SMALL_WIDTH ? SMALL_FONT_SIZE : FONT_SIZE;
@@ -133,6 +140,14 @@ export function Chart({
     return series.map((type) => type.data[index].rawValue);
   });
 
+  const areAllAllNegative = useMemo(() => {
+    return ![...sortedData]
+      .reduce((prev, cur) => prev.concat(cur), [])
+      // If one value is greater than zero,
+      // bail out of the loop
+      .some((num) => num > 0);
+  }, [sortedData]);
+
   const {xScale, xAxisLabels} = useXScale({
     drawableWidth,
     data: sortedData,
@@ -208,6 +223,10 @@ export function Chart({
       setTooltipPosition({
         x: xOffsetAmount,
         y: yScale(highestValue),
+        position: {
+          horizontal: 'center',
+          vertical: 'above',
+        },
       });
     },
     [chartStartPosition, isStacked, sortedData, xScale, yScale],
@@ -325,7 +344,8 @@ export function Chart({
           currentY={tooltipPosition.y}
           chartDimensions={chartDimensions}
           margin={Margin}
-          position="center"
+          position={tooltipPosition.position}
+          bandwidth={xScale.bandwidth()}
         >
           {tooltipContentMarkup}
         </TooltipContainer>
@@ -346,6 +366,12 @@ export function Chart({
     const currentPoint = svgX - chartStartPosition;
     const currentIndex = Math.floor(currentPoint / xScale.step());
 
+    if (activeBarGroup === currentIndex) {
+      return;
+    } else {
+      setActiveBarGroup(currentIndex);
+    }
+
     if (
       currentIndex < 0 ||
       currentIndex > sortedData.length - 1 ||
@@ -356,20 +382,27 @@ export function Chart({
       return;
     }
 
-    const xPosition = xScale(currentIndex.toString());
-    const highestValue = isStacked
-      ? sortedData[currentIndex].reduce(sumPositiveData, 0)
-      : Math.max(...sortedData[currentIndex]);
-    const tooltipXPositon =
-      xPosition == null
-        ? 0
-        : xPosition + chartStartPosition + xScale.bandwidth() / 2;
+    const xPosition = xScale(currentIndex.toString()) ?? 0;
 
-    setActiveBarGroup(currentIndex);
-    setTooltipPosition({
-      x: tooltipXPositon,
-      y: yScale(highestValue),
-    });
+    const sortedDataPos = sortedData[currentIndex].map((num) => Math.abs(num));
+
+    const highestValuePos = isStacked
+      ? sortedData[currentIndex].reduce(sumPositiveData, 0)
+      : Math.max(...sortedDataPos);
+
+    const left = xPosition + chartStartPosition;
+    const top = yScale(highestValuePos) + (Margin.Top as number);
+
+    const tooltipPosition: TooltipPosition = {
+      x: left,
+      y: Math.abs(top),
+      position: {
+        horizontal: 'center',
+        vertical: areAllAllNegative ? 'below' : 'above',
+      },
+    };
+
+    setTooltipPosition(tooltipPosition);
   }
 }
 
