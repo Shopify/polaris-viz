@@ -12,5 +12,4 @@ node_modules
 /styles
 /config
 /scripts
-/playground
 *.stories.*

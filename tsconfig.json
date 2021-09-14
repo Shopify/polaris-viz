@@ -17,6 +17,6 @@
     "importsNotUsedAsValues": "error",
     "strictFunctionTypes": false
   },
-  "include": ["./config/typescript", "./src", "./tests", "./playground"],
+  "include": ["./config/typescript", "./src", "./tests"],
   "exclude": ["./src/**/stories", "./src/**/stories/*"]
 }

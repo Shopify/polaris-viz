@@ -6,7 +6,7 @@ We expect all participants to read our [code of conduct](/CODE_OF_CONDUCT.md) to
 
 ## Development
 
-For local development, clone this repo. Run `yarn run dev` to start the server. Import the components you'd like to work with into `Playground.tsx` and see your changes reflected on your localhost.
+For local development, clone this repo. Run `yarn run storybook` to start the storybook server.
 
 ## Storybook
 
@@ -34,7 +34,7 @@ We track all of our issues and bugs in GitHub. If you are planning to work on an
 
 ### Reporting new issues
 
-To reduce duplicates, look through open issues before filing one. The best way to get your bug fixed is to provide a reduced test case with a code example that can be used in the Playground.
+To reduce duplicates, look through open issues before filing one. The best way to get your bug fixed is to provide a reduced test case with a story example.
 
 ## Feature requests
 
