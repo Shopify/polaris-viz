@@ -37,6 +37,7 @@ const props = {
   xAxisOptions: {
     useMinimalLabels: true,
     labelColor: 'rgb(220, 220, 220)',
+    hide: false,
   },
   yAxisOptions: {
     integersOnly: true,
@@ -75,6 +76,7 @@ interface BarChartProps {
   xAxisOptions?: {
     labelFormatter?(value: string, index?: number, data?: string[]): string;
     useMinimalLabels?: boolean;
+    hide?: boolean;
   };
   yAxisOptions?: {
     labelFormatter?(value: number): string;
@@ -163,6 +165,14 @@ Used to indicate to screenreaders that a chart with no data has been rendered, i
 The theme controls the visual appearance of the chart, its axis and grid.
 
 #### xAxisOptions
+
+##### hide
+
+| type      | default |
+| --------- | ------- |
+| `boolean` | `false` |
+
+Whether to hide the xAxis visually, but not for screenreaders.
 
 ##### labelFormatter
 

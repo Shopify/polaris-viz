@@ -41,7 +41,6 @@ interface Props {
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
   xAxisOptions: XAxisOptions;
   yAxisOptions: YAxisOptions;
-
   isStacked?: boolean;
   emptyStateText?: string;
   isAnimated?: boolean;
@@ -115,17 +114,20 @@ export function Chart({
     [selectedTheme.bar.zeroAsMinHeight, series],
   );
 
+  const hideXAxis = xAxisOptions.hide ?? selectedTheme.xAxis.hide;
+
   const xAxisDetails = useMemo(
     () =>
       getBarXAxisDetails({
         yAxisLabelWidth,
-        xLabels: formattedXAxisLabels,
+        xLabels: hideXAxis ? [] : formattedXAxisLabels,
         fontSize,
         width: chartDimensions.width - selectedTheme.grid.horizontalMargin * 2,
         innerMargin: BarMargin[selectedTheme.bar.innerMargin],
         outerMargin: BarMargin[selectedTheme.bar.outerMargin],
       }),
     [
+      hideXAxis,
       yAxisLabelWidth,
       formattedXAxisLabels,
       fontSize,
@@ -251,20 +253,22 @@ export function Chart({
         role={emptyState ? 'img' : 'list'}
         aria-label={emptyState ? emptyStateText : undefined}
       >
-        <g
-          transform={`translate(${chartStartPosition},${
-            chartDimensions.height - Margin.Bottom - maxXLabelHeight
-          })`}
-          aria-hidden="true"
-        >
-          <BarChartXAxis
-            labels={xAxisLabels}
-            xScale={xScale}
-            xAxisDetails={xAxisDetails}
-            fontSize={fontSize}
-            theme={theme}
-          />
-        </g>
+        {hideXAxis ? null : (
+          <g
+            transform={`translate(${chartStartPosition},${
+              chartDimensions.height - Margin.Bottom - maxXLabelHeight
+            })`}
+            aria-hidden="true"
+          >
+            <BarChartXAxis
+              labels={xAxisLabels}
+              xScale={xScale}
+              xAxisDetails={xAxisDetails}
+              fontSize={fontSize}
+              theme={theme}
+            />
+          </g>
+        )}
 
         {selectedTheme.grid.showHorizontalLines ? (
           <HorizontalGridLines

@@ -62,6 +62,7 @@ describe('Chart />', () => {
     xAxisOptions: {
       labelFormatter: (value: string) => value.toString(),
       useMinimalLabels: false,
+      hide: false,
     },
     yAxisOptions: {
       labelFormatter: (value: number) => value.toString(),
@@ -78,6 +79,16 @@ describe('Chart />', () => {
     it('renders', () => {
       const barChart = mountWithProvider(<Chart {...mockProps} />);
       expect(barChart).toContainReactComponent(BarChartXAxis);
+    });
+
+    it('does not render if hidden', () => {
+      const barChart = mountWithProvider(
+        <Chart
+          {...mockProps}
+          xAxisOptions={{...mockProps.xAxisOptions, hide: true}}
+        />,
+      );
+      expect(barChart).not.toContainReactComponent(BarChartXAxis);
     });
   });
 

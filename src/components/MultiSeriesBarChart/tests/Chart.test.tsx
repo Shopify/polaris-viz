@@ -74,6 +74,7 @@ describe('Chart />', () => {
       showTicks: true,
       labels: ['stuff 1', 'stuff 2', 'stuff 3'],
       labelColor: 'red',
+      hide: false,
     },
     yAxisOptions: {
       labelFormatter: (value: number) => value.toString(),
@@ -92,6 +93,16 @@ describe('Chart />', () => {
   it('renders an BarChartXAxis', () => {
     const chart = mount(<Chart {...mockProps} />);
     expect(chart).toContainReactComponent(BarChartXAxis);
+  });
+
+  it('does not render BarChartXAxis if it is hidden', () => {
+    const chart = mount(
+      <Chart
+        {...mockProps}
+        xAxisOptions={{...mockProps.xAxisOptions, hide: true}}
+      />,
+    );
+    expect(chart).not.toContainReactComponent(BarChartXAxis);
   });
 
   it('renders an yAxis', () => {

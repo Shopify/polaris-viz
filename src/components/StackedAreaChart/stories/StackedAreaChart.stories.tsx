@@ -45,20 +45,17 @@ export default {
       description:
         'The `Series` type gives the user flexibility to define what each series/area should look like, as well as providing the data to be plotted. [Series type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/StackedAreaChart/types.ts#L3)',
     },
-    xAxisLabels: {
-      description: 'The labels to display on the x axis of the chart.',
+    xAxisOptions: {
+      description:
+        'The labels to display on the x axis of the chart, label formatter and other configuration of its appearance.',
     },
     isAnimated: {
       description:
         'Whether to animate the chart when it is initially rendered and its data is updated. Even if `isAnimated` is set to true, animations will not be displayed for users with reduced motion preferences.',
     },
-    formatXAxisLabel: {
+    yAxisOptions: {
       description:
-        'This accepts a function that is called to format the labels when the chart draws its X axis. This is only called if there is a value passed in for `xAxisLabels`. [StringLabelFormatter type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/types.ts#L108)',
-    },
-    formatYAxisLabel: {
-      description:
-        'The `formatYAxisLabel` function formats the values displayed on the yAxis and in the tooltip. [NumberLabelFormatter type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/types.ts#L114)',
+        'An object containing the `formatYAxisLabel` function, which formats the values displayed on the yAxis and in the tooltip. [NumberLabelFormatter type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/types.ts#L114)',
     },
     renderTooltipContent: {
       options: Object.keys(tooltipContent),
@@ -84,8 +81,8 @@ export default {
 const defaultProps = {
   series: data,
   skipLinkText: 'Skip chart content',
-  xAxisLabels: labels,
-  formatYAxisLabel: formatYAxisLabel,
+  xAxisOptions: {labels},
+  yAxisOptions: {formatLabel: formatYAxisLabel},
   isAnimated: true,
 };
 
@@ -97,12 +94,20 @@ const Template: Story<StackedAreaChartProps> = (
 export const Default: Story<StackedAreaChartProps> = Template.bind({});
 Default.args = defaultProps;
 
+export const HideXAxis: Story<StackedAreaChartProps> = Template.bind({});
+HideXAxis.args = {
+  ...defaultProps,
+  xAxisOptions: {...defaultProps.xAxisOptions, hide: true},
+};
+
 export const Gradients: Story<StackedAreaChartProps> = Template.bind({});
 Gradients.args = {
   ...defaultProps,
-  xAxisLabels: Array(5)
-    .fill(null)
-    .map(() => 'label'),
+  xAxisOptions: {
+    labels: Array(5)
+      .fill(null)
+      .map(() => 'label'),
+  },
   series: [
     {
       name: 'One',
@@ -137,9 +142,11 @@ Gradients.args = {
 export const LargeVolume: Story<StackedAreaChartProps> = Template.bind({});
 LargeVolume.args = {
   ...defaultProps,
-  xAxisLabels: Array(2000)
-    .fill(null)
-    .map(() => 'label'),
+  xAxisOptions: {
+    labels: Array(2000)
+      .fill(null)
+      .map(() => 'label'),
+  },
   series: [
     {
       name: 'First-time',
@@ -171,9 +178,11 @@ LargeVolume.args = {
 export const MediumVolume: Story<StackedAreaChartProps> = Template.bind({});
 MediumVolume.args = {
   ...defaultProps,
-  xAxisLabels: Array(10)
-    .fill(null)
-    .map(() => 'label'),
+  xAxisOptions: {
+    labels: Array(10)
+      .fill(null)
+      .map(() => 'label'),
+  },
   series: [
     {
       name: 'One',

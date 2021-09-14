@@ -65,6 +65,7 @@ export type Color = string | GradientStop[];
 export interface XAxisOptions {
   labelFormatter?: StringLabelFormatter;
   useMinimalLabels?: boolean;
+  hide?: boolean;
 }
 export interface YAxisOptions {
   labelFormatter?: NumberLabelFormatter;

@@ -122,7 +122,7 @@ export function MultiSeriesBarChart({
     handlePrintMediaQueryChange,
   ]);
 
-  const xAxisOptionsWithDefaults: Required<XAxisOptions> = {
+  const xAxisOptionsWithDefaults: XAxisOptions = {
     labelFormatter: (value: string) => value,
     labels: [],
     ...xAxisOptions,

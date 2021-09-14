@@ -127,6 +127,17 @@ describe('<Chart />', () => {
       });
     });
 
+    it('does not render a <LinearXAxis /> if it is hidden', () => {
+      const chart = mount(
+        <Chart
+          {...mockProps}
+          xAxisOptions={{...mockProps.xAxisOptions, hide: true}}
+        />,
+      );
+
+      expect(chart).not.toContainReactComponent(LinearXAxis);
+    });
+
     it('passes formatted labels to the <LinearXAxis>, formatting them with formatXAxisLabel', () => {
       const chart = mount(
         <Chart
