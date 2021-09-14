@@ -1,5 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
+import {mountWithProvider} from 'test-utilities';
+import {mockDefaultTheme} from 'test-utilities/mount-with-provider';
 
 import {Line} from '../Line';
 
@@ -105,7 +107,7 @@ describe('<Line />', () => {
   });
 
   it('uses the width prop', () => {
-    const actual = mount(
+    const actual = mountWithProvider(
       <svg>
         <Line
           {...mockProps}
@@ -115,6 +117,7 @@ describe('<Line />', () => {
           }}
         />
       </svg>,
+      mockDefaultTheme({line: {width: 10}}),
     );
 
     expect(actual).toContainReactComponent('path', {

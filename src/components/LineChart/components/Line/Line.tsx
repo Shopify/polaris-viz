@@ -1,7 +1,7 @@
 import React from 'react';
 import type {Line as D3Line} from 'd3-shape';
 
-import type {LineTheme} from '../../../../types';
+import {useTheme} from '../../../../hooks';
 import type {SeriesWithDefaults} from '../../types';
 import {ANIMATION_DELAY, FAST_DURATION, SLOW_DURATION} from '../../constants';
 
@@ -14,17 +14,18 @@ interface Props {
   index: number;
   lineGenerator: D3Line<{rawValue: number}>;
   color: string;
-  lineOptions: LineTheme;
+  theme?: string;
 }
 
 export const Line = React.memo(function Shape({
-  lineOptions,
   series,
   isAnimated,
   index,
   lineGenerator,
   color,
+  theme,
 }: Props) {
+  const selectedTheme = useTheme(theme);
   const path = lineGenerator(series.data);
 
   const animationDelay = index * ANIMATION_DELAY;
@@ -43,7 +44,7 @@ export const Line = React.memo(function Shape({
         animationDuration: `${animationDuration}s`,
       }}
       fill="none"
-      strokeWidth={`${lineOptions.width}px`}
+      strokeWidth={`${selectedTheme.line.width}px`}
       paintOrder="stroke"
       stroke={color}
       strokeLinejoin="round"

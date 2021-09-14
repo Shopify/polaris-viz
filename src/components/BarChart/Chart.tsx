@@ -1,7 +1,8 @@
 import React, {useState, useMemo, useCallback} from 'react';
 import {useTransition} from '@react-spring/web';
 
-import {usePrefersReducedMotion} from '../../hooks';
+import {getSeriesColorsFromCount} from '../../hooks/use-theme-series-colors';
+import {usePrefersReducedMotion, useTheme} from '../../hooks';
 import {
   BarChartMargin as Margin,
   LINE_HEIGHT,
@@ -26,16 +27,7 @@ import {BarChartXAxis} from '../BarChartXAxis';
 import {TooltipContainer} from '../TooltipContainer';
 import {LinearGradient} from '../LinearGradient';
 import {HorizontalGridLines} from '../HorizontalGridLines';
-import type {
-  Dimensions,
-  BarTheme,
-  GridTheme,
-  XAxisTheme,
-  YAxisTheme,
-  XAxisOptions,
-  YAxisOptions,
-  Color,
-} from '../../types';
+import {Dimensions, XAxisOptions, YAxisOptions, BarMargin} from '../../types';
 
 import {AnnotationLine} from './components';
 import type {
@@ -47,28 +39,17 @@ import {useYScale, useXScale, useMinimalLabelIndexes} from './hooks';
 import {SMALL_FONT_SIZE, FONT_SIZE, SMALL_SCREEN, SPACING} from './constants';
 import styles from './Chart.scss';
 
-type BarThemeWithNumericMargins = Omit<
-  BarTheme,
-  'innerMargin' | 'outerMargin'
-> & {
-  color: Color;
-  innerMargin: number;
-  outerMargin: number;
-};
-
 interface Props {
   data: BarChartData[];
   annotationsLookupTable: AnnotationLookupTable;
   chartDimensions: Dimensions;
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
-  emptyStateText?: string;
-  isAnimated?: boolean;
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
-  barTheme: BarThemeWithNumericMargins;
-  gridTheme: GridTheme;
-  xAxisTheme: XAxisTheme;
-  yAxisTheme: YAxisTheme;
+
+  emptyStateText?: string;
+  isAnimated?: boolean;
+  theme?: string;
 }
 
 export function Chart({
@@ -78,13 +59,13 @@ export function Chart({
   renderTooltipContent,
   emptyStateText,
   isAnimated = false,
-  barTheme,
-  gridTheme,
   xAxisOptions,
   yAxisOptions,
-  xAxisTheme,
-  yAxisTheme,
+  theme,
 }: Props) {
+  const selectedTheme = useTheme(theme);
+  const [seriesColor] = getSeriesColorsFromCount(1, selectedTheme);
+
   const {prefersReducedMotion} = usePrefersReducedMotion();
   const [activeBar, setActiveBar] = useState<number | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState<{
@@ -125,9 +106,9 @@ export function Chart({
         yAxisLabelWidth: approxYAxisLabelWidth,
         fontSize,
         xLabels: data.map(({label}) => xAxisOptions.labelFormatter(label)),
-        width: chartDimensions.width - gridTheme.horizontalMargin * 2,
-        innerMargin: barTheme.innerMargin,
-        outerMargin: barTheme.outerMargin,
+        width: chartDimensions.width - selectedTheme.grid.horizontalMargin * 2,
+        innerMargin: BarMargin[selectedTheme.bar.innerMargin],
+        outerMargin: BarMargin[selectedTheme.bar.outerMargin],
         minimalLabelIndexes,
       }),
     [
@@ -135,9 +116,9 @@ export function Chart({
       fontSize,
       data,
       chartDimensions.width,
-      gridTheme.horizontalMargin,
-      barTheme.innerMargin,
-      barTheme.outerMargin,
+      selectedTheme.grid.horizontalMargin,
+      selectedTheme.bar.innerMargin,
+      selectedTheme.bar.outerMargin,
       minimalLabelIndexes,
       xAxisOptions,
     ],
@@ -167,26 +148,26 @@ export function Chart({
   );
 
   const axisMargin = SPACING + yAxisLabelWidth;
-  const chartStartPosition = axisMargin + gridTheme.horizontalMargin;
+  const chartStartPosition = axisMargin + selectedTheme.grid.horizontalMargin;
   const drawableWidth =
     chartDimensions.width -
     Margin.Right -
     axisMargin -
-    gridTheme.horizontalMargin * 2;
+    selectedTheme.grid.horizontalMargin * 2;
 
   const {xScale, xAxisLabels} = useXScale({
     drawableWidth,
     data,
-    innerMargin: barTheme.innerMargin,
-    outerMargin: barTheme.outerMargin,
+    innerMargin: BarMargin[selectedTheme.bar.innerMargin],
+    outerMargin: BarMargin[selectedTheme.bar.outerMargin],
     formatXAxisLabel: xAxisOptions.labelFormatter,
   });
 
   const barWidth = useMemo(() => xScale.bandwidth(), [xScale]);
 
   const rotateZeroBars = useMemo(
-    () => barTheme.zeroAsMinHeight && shouldRotateZeroBars(data),
-    [barTheme.zeroAsMinHeight, data],
+    () => selectedTheme.bar.zeroAsMinHeight && shouldRotateZeroBars(data),
+    [selectedTheme.bar.zeroAsMinHeight, data],
   );
 
   const tooltipMarkup = useMemo(() => {
@@ -205,13 +186,13 @@ export function Chart({
     (rawValue: number) => {
       const rawHeight = Math.abs(yScale(rawValue) - yScale(0));
 
-      const needsMinHeight = barTheme.zeroAsMinHeight
+      const needsMinHeight = selectedTheme.bar.zeroAsMinHeight
         ? rawHeight < MIN_BAR_HEIGHT
         : rawHeight < MIN_BAR_HEIGHT && rawHeight !== 0;
 
       return needsMinHeight ? MIN_BAR_HEIGHT : rawHeight;
     },
-    [barTheme, yScale],
+    [selectedTheme.bar, yScale],
   );
 
   const handleFocus = useCallback(
@@ -244,11 +225,11 @@ export function Chart({
   const gradientId = useMemo(() => uniqueId('gradient'), []);
   const clipId = useMemo(() => uniqueId('clip'), []);
 
-  const gradient = isGradientType(barTheme.color)
-    ? barTheme.color
+  const gradient = isGradientType(seriesColor)
+    ? seriesColor
     : [
         {
-          color: barTheme.color,
+          color: seriesColor,
           offset: 0,
         },
       ];
@@ -310,7 +291,7 @@ export function Chart({
                       }`}
                       tabIndex={0}
                       role="img"
-                      hasRoundedCorners={barTheme.hasRoundedCorners}
+                      hasRoundedCorners={selectedTheme.bar.hasRoundedCorners}
                       rotateZeroBars={rotateZeroBars}
                     />
                   </g>
@@ -332,23 +313,21 @@ export function Chart({
             xScale={xScale}
             fontSize={fontSize}
             xAxisDetails={xAxisDetails}
-            textColor={xAxisTheme.labelColor}
-            gridColor={gridTheme.color}
-            showTicks={xAxisTheme.showTicks}
             minimalLabelIndexes={minimalLabelIndexes}
+            theme={theme}
           />
         </g>
 
-        {gridTheme.showHorizontalLines ? (
+        {selectedTheme.grid.showHorizontalLines ? (
           <HorizontalGridLines
             ticks={ticks}
-            color={gridTheme.color}
+            theme={theme}
             transform={{
-              x: gridTheme.horizontalOverflow ? 0 : chartStartPosition,
+              x: selectedTheme.grid.horizontalOverflow ? 0 : chartStartPosition,
               y: Margin.Top,
             }}
             width={
-              gridTheme.horizontalOverflow
+              selectedTheme.grid.horizontalOverflow
                 ? chartDimensions.width
                 : drawableWidth
             }
@@ -359,11 +338,9 @@ export function Chart({
           <YAxis
             ticks={ticks}
             fontSize={fontSize}
-            labelColor={yAxisTheme.labelColor}
-            textAlign={gridTheme.horizontalOverflow ? 'left' : 'right'}
+            textAlign={selectedTheme.grid.horizontalOverflow ? 'left' : 'right'}
             width={yAxisLabelWidth}
-            backgroundColor={yAxisTheme.backgroundColor}
-            outerMargin={gridTheme.horizontalMargin}
+            theme={theme}
           />
         </g>
 

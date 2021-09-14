@@ -1,6 +1,8 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
+import {mountWithProvider} from 'test-utilities';
+import {mockDefaultTheme} from 'test-utilities/mount-with-provider';
 
 import {StackedAreas} from '../StackedAreas';
 
@@ -31,8 +33,6 @@ describe('<StackedAreas />', () => {
         [0, 203],
       ],
     ] as any,
-    strokeWidth: 2,
-    hasSpline: true,
   };
 
   it('renders a clipPath with an ID', () => {
@@ -77,6 +77,34 @@ describe('<StackedAreas />', () => {
     );
 
     expect(stackedArea).toContainReactComponentTimes('path', 4);
+  });
+
+  it('renders proper stroke width based on theme', () => {
+    const stackedArea = mountWithProvider(
+      <svg>
+        <StackedAreas {...mockProps} />
+      </svg>,
+      mockDefaultTheme({line: {width: 10}}),
+    );
+
+    expect(stackedArea).toContainReactComponent('path', {
+      strokeWidth: 10,
+    });
+  });
+
+  it('renders correctly when line.hasSpline is false', () => {
+    const stackedArea = mountWithProvider(
+      <svg>
+        <StackedAreas {...mockProps} />
+      </svg>,
+      mockDefaultTheme({line: {hasSpline: false}}),
+    );
+
+    // Line
+    expect(stackedArea).toContainReactComponent('path', {
+      // eslint-disable-next-line id-length
+      d: 'M250,250L250,250',
+    });
   });
 
   it('generates props for the paths', () => {

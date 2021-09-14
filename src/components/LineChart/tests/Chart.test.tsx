@@ -6,9 +6,11 @@ import {
   TooltipContainer,
   VisuallyHiddenRows,
   Point,
-  HorizontalGridLines,
 } from 'components';
 import {line} from 'd3-shape';
+import {mountWithProvider} from 'test-utilities';
+import {HorizontalGridLines} from 'components/HorizontalGridLines';
+import {mockDefaultTheme} from 'test-utilities/mount-with-provider';
 
 import {LinearGradient} from '../../LinearGradient';
 import {Chart} from '../Chart';
@@ -53,18 +55,6 @@ const xAxisOptions = {
   hide: false,
 };
 
-const lineOptions = {
-  color: 'red',
-  area: null,
-  sparkArea: null,
-  hasSpline: false,
-  style: 'dotted' as 'dotted',
-  hasPoint: false,
-  width: 2,
-  pointStroke: '#fff',
-  dottedStrokeColor: '#fff',
-};
-
 const yAxisOptions = {
   labelFormatter: jest.fn((value) => value),
   labelColor: 'red',
@@ -72,24 +62,11 @@ const yAxisOptions = {
   integersOnly: false,
 };
 
-const gridOptions = {
-  showVerticalLines: true,
-  showHorizontalLines: true,
-  color: 'orange',
-  horizontalOverflow: false,
-  horizontalMargin: 0,
-};
-
-const crossHairOptions = {width: 10, color: 'red', opacity: 1};
-
 const mockProps = {
   series: [primarySeries],
   dimensions: {width: 500, height: 250},
-  lineOptions,
   xAxisOptions,
   yAxisOptions,
-  gridOptions,
-  crossHairOptions,
   renderTooltipContent: jest.fn(() => <p>Mock Tooltip</p>),
   isAnimated: false,
 };
@@ -109,6 +86,7 @@ jest.mock('d3-shape', () => ({
     const shape = (value: any) => value;
     shape.x = () => shape;
     shape.y = () => shape;
+    shape.curve = () => shape;
     return shape;
   }),
 }));
@@ -212,7 +190,6 @@ describe('<Chart />', () => {
     mount(
       <Chart
         {...mockProps}
-        lineOptions={{...mockProps.lineOptions, hasSpline: true}}
         series={[primarySeries, {...primarySeries, name: 'A second series'}]}
       />,
     );
@@ -451,17 +428,16 @@ describe('<Chart />', () => {
 
   describe('gridOptions.showHorizontalLines', () => {
     it('does not render HorizontalGridLines when false', () => {
-      const updatedProps = {
-        ...mockProps,
-        gridOptions: {...mockProps.gridOptions, showHorizontalLines: false},
-      };
-      const chart = mount(<Chart {...updatedProps} />);
+      const chart = mountWithProvider(
+        <Chart {...mockProps} />,
+        mockDefaultTheme({grid: {showHorizontalLines: false}}),
+      );
 
       expect(chart).not.toContainReactComponent(HorizontalGridLines);
     });
 
     it('renders HorizontalGridLines when true', () => {
-      const chart = mount(<Chart {...mockProps} />);
+      const chart = mountWithProvider(<Chart {...mockProps} />);
 
       expect(chart).toContainReactComponent(HorizontalGridLines);
     });

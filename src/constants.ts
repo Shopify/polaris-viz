@@ -25,9 +25,6 @@ export const MIN_BAR_HEIGHT = 2;
 export const EMPTY_STATE_CHART_MIN = 0;
 export const EMPTY_STATE_CHART_MAX = 10;
 
-export const DEFAULT_GREY_LABEL = 'rgb(99, 115, 129)';
-export const DEFAULT_CROSSHAIR_COLOR = variables.colorSky;
-
 export enum BarChartMargin {
   Top = 5,
   Left = 0,

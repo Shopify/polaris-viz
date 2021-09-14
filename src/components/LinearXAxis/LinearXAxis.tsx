@@ -1,6 +1,7 @@
 import React, {useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 
+import {useTheme} from '../../hooks';
 import {RightAngleTriangle} from '../../utilities';
 import {
   TICK_SIZE,
@@ -8,8 +9,6 @@ import {
   DIAGONAL_ANGLE,
   LINE_HEIGHT,
   BELOW_X_AXIS_MARGIN,
-  DEFAULT_THEME,
-  DEFAULT_GREY_LABEL,
 } from '../../constants';
 
 import styles from './LinearXAxis.scss';
@@ -30,10 +29,8 @@ interface Props {
   xAxisDetails: XAxisDetails;
   drawableHeight: number;
   ariaHidden: boolean;
-  showGridLines?: boolean;
-  gridColor?: string;
-  showTicks?: boolean;
-  labelColor?: string;
+
+  theme?: string;
 }
 
 function getTextAlign({
@@ -62,11 +59,10 @@ function Axis({
   drawableWidth,
   drawableHeight,
   ariaHidden,
-  showGridLines = true,
-  showTicks = true,
-  gridColor = DEFAULT_THEME.grid.color,
-  labelColor = DEFAULT_GREY_LABEL,
+  theme,
 }: Props) {
+  const selectedTheme = useTheme(theme);
+
   const {
     maxDiagonalLabelLength,
     maxXLabelHeight,
@@ -131,12 +127,14 @@ function Axis({
 
         return (
           <g key={index} transform={`translate(${xOffset}, 0)`}>
-            {showTicks ? <line y2={TICK_SIZE} stroke={gridColor} /> : null}
-            {showGridLines ? (
+            {selectedTheme.xAxis.showTicks ? (
+              <line y2={TICK_SIZE} stroke={selectedTheme.grid.color} />
+            ) : null}
+            {selectedTheme.grid.showVerticalLines ? (
               <line
                 y1="0"
                 y2={-drawableHeight}
-                stroke={gridColor}
+                stroke={selectedTheme.grid.color}
                 strokeDasharray="3 2"
               />
             ) : null}
@@ -151,7 +149,7 @@ function Axis({
                 style={{
                   fontSize,
                   textAlign,
-                  color: labelColor,
+                  color: selectedTheme.xAxis.labelColor,
                 }}
               >
                 {value}

@@ -11,19 +11,13 @@ import {
 import {YAxis} from '../YAxis';
 import {BarChartXAxis} from '../BarChartXAxis';
 import {HorizontalGridLines} from '../HorizontalGridLines';
-import type {
-  Dimensions,
-  XAxisTheme,
-  YAxisTheme,
-  BarTheme,
-  GridTheme,
-} from '../../types';
+import {Dimensions, BarMargin} from '../../types';
+import {useTheme} from '../../hooks';
 
 import {getStackedValues, formatAriaLabel} from './utilities';
 import type {
   Series,
   RenderTooltipContentData,
-  BarOptions as MultiSeriesBarOptions,
   XAxisOptions,
   YAxisOptions,
 } from './types';
@@ -32,34 +26,32 @@ import {useYScale, useXScale} from './hooks';
 import {FONT_SIZE, SMALL_WIDTH, SMALL_FONT_SIZE, SPACING} from './constants';
 import styles from './Chart.scss';
 
-type BarOptions = Omit<BarTheme, 'innerMargin' | 'outerMargin'> & {
-  innerMargin: number;
-  outerMargin: number;
-} & MultiSeriesBarOptions;
-
 interface Props {
   series: Required<Series>[];
   chartDimensions: Dimensions;
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
-  barOptions: BarOptions;
-  gridOptions: Omit<GridTheme, 'showVerticalLines'>;
-  xAxisOptions: Omit<XAxisOptions & XAxisTheme, 'hide'>;
-  yAxisOptions: YAxisOptions & YAxisTheme;
-  isAnimated?: boolean;
+  xAxisOptions: XAxisOptions;
+  yAxisOptions: YAxisOptions;
+
+  isStacked?: boolean;
   emptyStateText?: string;
+  isAnimated?: boolean;
+  theme?: string;
 }
 
 export function Chart({
   series,
   chartDimensions,
   renderTooltipContent,
-  gridOptions,
   xAxisOptions,
   yAxisOptions,
-  barOptions,
+  isStacked = false,
   isAnimated = false,
   emptyStateText,
+  theme,
 }: Props) {
+  const selectedTheme = useTheme(theme);
+
   const [activeBarGroup, setActiveBarGroup] = useState<number | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState<{
     x: number;
@@ -71,7 +63,7 @@ export function Chart({
 
   const emptyState = series.length === 0;
 
-  const stackedValues = barOptions.isStacked
+  const stackedValues = isStacked
     ? getStackedValues(series, xAxisOptions.labels)
     : null;
 
@@ -97,12 +89,12 @@ export function Chart({
   );
 
   const axisMargin = SPACING + yAxisLabelWidth;
-  const chartStartPosition = axisMargin + gridOptions.horizontalMargin;
+  const chartStartPosition = axisMargin + selectedTheme.grid.horizontalMargin;
   const drawableWidth =
     chartDimensions.width -
     Margin.Right -
     axisMargin -
-    gridOptions.horizontalMargin * 2;
+    selectedTheme.grid.horizontalMargin * 2;
 
   const formattedXAxisLabels = useMemo(
     () => xAxisOptions.labels.map(xAxisOptions.labelFormatter),
@@ -111,9 +103,9 @@ export function Chart({
 
   const rotateZeroBars = useMemo(
     () =>
-      barOptions.zeroAsMinHeight &&
+      selectedTheme.bar.zeroAsMinHeight &&
       series.every(({data}) => shouldRotateZeroBars(data)),
-    [barOptions.zeroAsMinHeight, series],
+    [selectedTheme.bar.zeroAsMinHeight, series],
   );
 
   const xAxisDetails = useMemo(
@@ -122,18 +114,18 @@ export function Chart({
         yAxisLabelWidth,
         xLabels: formattedXAxisLabels,
         fontSize,
-        width: chartDimensions.width - gridOptions.horizontalMargin * 2,
-        innerMargin: barOptions.innerMargin,
-        outerMargin: barOptions.outerMargin,
+        width: chartDimensions.width - selectedTheme.grid.horizontalMargin * 2,
+        innerMargin: BarMargin[selectedTheme.bar.innerMargin],
+        outerMargin: BarMargin[selectedTheme.bar.outerMargin],
       }),
     [
       yAxisLabelWidth,
       formattedXAxisLabels,
       fontSize,
       chartDimensions.width,
-      gridOptions.horizontalMargin,
-      barOptions.innerMargin,
-      barOptions.outerMargin,
+      selectedTheme.grid.horizontalMargin,
+      selectedTheme.bar.innerMargin,
+      selectedTheme.bar.outerMargin,
     ],
   );
 
@@ -144,8 +136,8 @@ export function Chart({
   const {xScale, xAxisLabels} = useXScale({
     drawableWidth,
     data: sortedData,
-    innerMargin: barOptions.innerMargin,
-    outerMargin: barOptions.outerMargin,
+    innerMargin: BarMargin[selectedTheme.bar.innerMargin],
+    outerMargin: BarMargin[selectedTheme.bar.outerMargin],
     labels: formattedXAxisLabels,
   });
 
@@ -206,7 +198,7 @@ export function Chart({
       const xPosition = xScale(index.toString());
 
       if (index == null || xPosition == null) return;
-      const highestValue = barOptions.isStacked
+      const highestValue = isStacked
         ? sortedData[index].reduce(sumPositiveData, 0)
         : Math.max(...sortedData[index]);
       setActiveBarGroup(index);
@@ -218,7 +210,7 @@ export function Chart({
         y: yScale(highestValue),
       });
     },
-    [chartStartPosition, barOptions.isStacked, sortedData, xScale, yScale],
+    [chartStartPosition, isStacked, sortedData, xScale, yScale],
   );
 
   return (
@@ -251,25 +243,23 @@ export function Chart({
             xScale={xScale}
             xAxisDetails={xAxisDetails}
             fontSize={fontSize}
-            textColor={xAxisOptions.labelColor}
-            gridColor={gridOptions.color}
-            showTicks={xAxisOptions.showTicks}
+            theme={theme}
           />
         </g>
 
-        {gridOptions.showHorizontalLines ? (
+        {selectedTheme.grid.showHorizontalLines ? (
           <HorizontalGridLines
             ticks={ticks}
-            color={gridOptions.color}
             transform={{
-              x: gridOptions.horizontalOverflow ? 0 : chartStartPosition,
+              x: selectedTheme.grid.horizontalOverflow ? 0 : chartStartPosition,
               y: Margin.Top,
             }}
             width={
-              gridOptions.horizontalOverflow
+              selectedTheme.grid.horizontalOverflow
                 ? chartDimensions.width
                 : drawableWidth
             }
+            theme={theme}
           />
         ) : null}
 
@@ -277,11 +267,9 @@ export function Chart({
           <YAxis
             ticks={ticks}
             fontSize={fontSize}
-            labelColor={yAxisOptions.labelColor}
-            textAlign={gridOptions.horizontalOverflow ? 'left' : 'right'}
+            textAlign={selectedTheme.grid.horizontalOverflow ? 'left' : 'right'}
             width={yAxisLabelWidth}
-            backgroundColor={yAxisOptions.backgroundColor}
-            outerMargin={gridOptions.horizontalMargin}
+            theme={theme}
           />
         </g>
 
@@ -321,9 +309,9 @@ export function Chart({
                     onFocus={handleFocus}
                     barGroupIndex={index}
                     ariaLabel={ariaLabel}
-                    hasRoundedCorners={barOptions.hasRoundedCorners}
+                    hasRoundedCorners={selectedTheme.bar.hasRoundedCorners}
                     rotateZeroBars={rotateZeroBars}
-                    zeroAsMinHeight={barOptions.zeroAsMinHeight}
+                    zeroAsMinHeight={selectedTheme.bar.zeroAsMinHeight}
                   />
                 );
               })}
@@ -369,7 +357,7 @@ export function Chart({
     }
 
     const xPosition = xScale(currentIndex.toString());
-    const highestValue = barOptions.isStacked
+    const highestValue = isStacked
       ? sortedData[currentIndex].reduce(sumPositiveData, 0)
       : Math.max(...sortedData[currentIndex]);
     const tooltipXPositon =

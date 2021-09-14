@@ -18,3 +18,11 @@ export const mountWithProvider = (
     </PolarisVizProvider>,
   );
 };
+
+export const mockDefaultTheme = (overrides: PartialTheme) => {
+  return {
+    themes: {
+      Default: overrides,
+    },
+  };
+};

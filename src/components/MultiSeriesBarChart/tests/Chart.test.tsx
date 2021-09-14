@@ -1,11 +1,9 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
-import {
-  YAxis,
-  TooltipContainer,
-  BarChartXAxis,
-  HorizontalGridLines,
-} from 'components';
+import {YAxis, TooltipContainer, BarChartXAxis} from 'components';
+import {mountWithProvider} from 'test-utilities';
+import {HorizontalGridLines} from 'components/HorizontalGridLines';
+import {mockDefaultTheme} from 'test-utilities/mount-with-provider';
 
 import {Chart} from '../Chart';
 import {BarGroup, StackedBarGroup} from '../components';
@@ -20,6 +18,16 @@ const fakeSVGEvent = {
       y: 100,
       matrixTransform: () => ({x: 100, y: 100}),
     }),
+  },
+};
+
+const ZERO_AS_MIN_HEIGHT_THEME = {
+  themes: {
+    Default: {
+      bar: {
+        zeroAsMinHeight: true,
+      },
+    },
   },
 };
 
@@ -60,14 +68,7 @@ describe('Chart />', () => {
     ],
     chartDimensions: {width: 500, height: 250},
     renderTooltipContent,
-    barOptions: {
-      innerMargin: 0,
-      outerMargin: 0,
-      color: 'red',
-      hasRoundedCorners: false,
-      zeroAsMinHeight: false,
-      isStacked: false,
-    },
+    isStacked: false,
     xAxisOptions: {
       labelFormatter: jest.fn((value: string) => value.toString()),
       showTicks: true,
@@ -79,12 +80,6 @@ describe('Chart />', () => {
       labelColor: 'red',
       backgroundColor: 'transparent',
       integersOnly: false,
-    },
-    gridOptions: {
-      showHorizontalLines: true,
-      color: 'red',
-      horizontalOverflow: false,
-      horizontalMargin: 0,
     },
   };
 
@@ -154,25 +149,16 @@ describe('Chart />', () => {
     });
 
     it('does not render BarGroup if isStacked is true', () => {
-      const chart = mount(
-        <Chart
-          {...mockProps}
-          barOptions={{...mockProps.barOptions, isStacked: true}}
-        />,
-      );
+      const chart = mount(<Chart {...mockProps} isStacked />);
 
       expect(chart).not.toContainReactComponent(BarGroup);
     });
 
     describe('rotateZeroBars', () => {
       it('receives true if all values are 0 or negative', () => {
-        const chart = mount(
+        const chart = mountWithProvider(
           <Chart
             {...mockProps}
-            barOptions={{
-              ...mockProps.barOptions,
-              zeroAsMinHeight: true,
-            }}
             series={[
               {
                 ...mockProps.series[0],
@@ -192,6 +178,7 @@ describe('Chart />', () => {
               },
             ]}
           />,
+          ZERO_AS_MIN_HEIGHT_THEME,
         );
         expect(chart).toContainReactComponent(BarGroup, {
           rotateZeroBars: true,
@@ -199,13 +186,9 @@ describe('Chart />', () => {
       });
 
       it('receives false if not all values are 0 or negative', () => {
-        const chart = mount(
+        const chart = mountWithProvider(
           <Chart
             {...mockProps}
-            barOptions={{
-              ...mockProps.barOptions,
-              zeroAsMinHeight: true,
-            }}
             series={[
               {
                 ...mockProps.series[0],
@@ -225,6 +208,7 @@ describe('Chart />', () => {
               },
             ]}
           />,
+          ZERO_AS_MIN_HEIGHT_THEME,
         );
         expect(chart).toContainReactComponent(BarGroup, {
           rotateZeroBars: false,
@@ -232,13 +216,9 @@ describe('Chart />', () => {
       });
 
       it('receives false if all values are 0', () => {
-        const chart = mount(
+        const chart = mountWithProvider(
           <Chart
             {...mockProps}
-            barOptions={{
-              ...mockProps.barOptions,
-              zeroAsMinHeight: true,
-            }}
             series={[
               {
                 ...mockProps.series[0],
@@ -258,6 +238,7 @@ describe('Chart />', () => {
               },
             ]}
           />,
+          ZERO_AS_MIN_HEIGHT_THEME,
         );
         expect(chart).toContainReactComponent(BarGroup, {
           rotateZeroBars: false,
@@ -268,10 +249,6 @@ describe('Chart />', () => {
         const chart = mount(
           <Chart
             {...mockProps}
-            barOptions={{
-              ...mockProps.barOptions,
-              zeroAsMinHeight: false,
-            }}
             series={[
               {
                 ...mockProps.series[0],
@@ -301,34 +278,19 @@ describe('Chart />', () => {
 
   describe('<StackedBarGroup />', () => {
     it('renders StackedBarGroup if isStacked is true', () => {
-      const chart = mount(
-        <Chart
-          {...mockProps}
-          barOptions={{...mockProps.barOptions, isStacked: true}}
-        />,
-      );
+      const chart = mount(<Chart {...mockProps} isStacked />);
 
       expect(chart).toContainReactComponent(StackedBarGroup);
     });
 
     it('renders a StackedBarGroup for each stacked data item', () => {
-      const chart = mount(
-        <Chart
-          {...mockProps}
-          barOptions={{...mockProps.barOptions, isStacked: true}}
-        />,
-      );
+      const chart = mount(<Chart {...mockProps} isStacked />);
 
       expect(chart).toContainReactComponentTimes(StackedBarGroup, 2);
     });
 
     it('passes active props to the BarGroup that is being hovered', () => {
-      const chart = mount(
-        <Chart
-          {...mockProps}
-          barOptions={{...mockProps.barOptions, isStacked: true}}
-        />,
-      );
+      const chart = mount(<Chart {...mockProps} isStacked />);
 
       const svg = chart.find('svg')!;
       svg.trigger('onMouseMove', fakeSVGEvent);
@@ -341,11 +303,10 @@ describe('Chart />', () => {
 
   describe('gridOptions.showHorizontalLines', () => {
     it('does not render HorizontalGridLines when false', () => {
-      const updatedProps = {
-        ...mockProps,
-        gridOptions: {...mockProps.gridOptions, showHorizontalLines: false},
-      };
-      const chart = mount(<Chart {...updatedProps} />);
+      const chart = mountWithProvider(
+        <Chart {...mockProps} />,
+        mockDefaultTheme({grid: {showHorizontalLines: false}}),
+      );
 
       expect(chart).not.toContainReactComponent(HorizontalGridLines);
     });

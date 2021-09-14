@@ -1,6 +1,8 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
+import {mountWithProvider} from 'test-utilities';
+import {mockDefaultTheme} from 'test-utilities/mount-with-provider';
 
 import {LinearXAxis} from '../LinearXAxis';
 
@@ -35,20 +37,26 @@ const mockProps = {
 
 describe('<LinearXAxis />', () => {
   it('renders a small, outer tick for each tick', () => {
-    const axis = mount(
+    const axis = mountWithProvider(
       <svg>
         <LinearXAxis {...mockProps} />
       </svg>,
+      mockDefaultTheme({
+        xAxis: {showTicks: true},
+      }),
     );
 
     expect(axis).toContainReactComponentTimes('line', 3, {y2: 6});
   });
 
   it('renders a vertical gridline for each tick using drawableHeight', () => {
-    const axis = mount(
+    const axis = mountWithProvider(
       <svg>
         <LinearXAxis {...mockProps} />
       </svg>,
+      mockDefaultTheme({
+        grid: {showVerticalLines: true},
+      }),
     );
 
     expect(axis).toContainReactComponentTimes('line', 3, {y1: '0', y2: -55});

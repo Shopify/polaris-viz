@@ -1,6 +1,7 @@
 import React from 'react';
 import type {ScaleBand} from 'd3-scale';
 
+import {useTheme} from '../../hooks';
 import {
   TICK_SIZE,
   BELOW_X_AXIS_MARGIN,
@@ -65,25 +66,26 @@ function getMiniminalLabelPosition({
   return xOffset - width / 2;
 }
 
+interface BarChartXAxisProps {
+  xScale: ScaleBand<string>;
+  labels: {value: string; xOffset: number}[];
+  fontSize: number;
+  xAxisDetails: XAxisDetails;
+
+  minimalLabelIndexes?: number[] | null;
+  theme?: string;
+}
+
 export const BarChartXAxis = React.memo(function BarChartXAxis({
   labels,
   xScale,
   fontSize,
   xAxisDetails,
-  textColor,
-  gridColor,
-  showTicks,
   minimalLabelIndexes,
-}: {
-  xScale: ScaleBand<string>;
-  labels: {value: string; xOffset: number}[];
-  fontSize: number;
-  xAxisDetails: XAxisDetails;
-  textColor: string;
-  gridColor: string;
-  showTicks: boolean;
-  minimalLabelIndexes?: number[] | null;
-}) {
+  theme,
+}: BarChartXAxisProps) {
+  const selectedTheme = useTheme(theme);
+
   const {
     maxXLabelHeight,
     maxDiagonalLabelLength,
@@ -153,8 +155,8 @@ export const BarChartXAxis = React.memo(function BarChartXAxis({
 
         return (
           <g key={index} transform={groupTransform}>
-            {minimalLabelIndexes == null && showTicks ? (
-              <line y2={TICK_SIZE} stroke={gridColor} />
+            {minimalLabelIndexes == null && selectedTheme.xAxis.showTicks ? (
+              <line y2={TICK_SIZE} stroke={selectedTheme.grid.color} />
             ) : null}
             <foreignObject
               width={angleAwareWidth}
@@ -169,7 +171,7 @@ export const BarChartXAxis = React.memo(function BarChartXAxis({
                 className={textContainerClassName}
                 style={{
                   fontSize,
-                  color: textColor,
+                  color: selectedTheme.xAxis.labelColor,
                   textAlign,
                 }}
               >

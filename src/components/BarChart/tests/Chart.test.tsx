@@ -1,12 +1,8 @@
 import React from 'react';
 import type {SpringValue} from '@react-spring/web';
-import {
-  YAxis,
-  TooltipContainer,
-  BarChartXAxis,
-  Bar,
-  HorizontalGridLines,
-} from 'components';
+import {YAxis, TooltipContainer, BarChartXAxis, Bar} from 'components';
+import {HorizontalGridLines} from 'components/HorizontalGridLines';
+import {mockDefaultTheme} from 'test-utilities/mount-with-provider';
 
 import {mountWithProvider} from '../../../test-utilities';
 import {AnnotationLine} from '../components';
@@ -27,6 +23,16 @@ const fakeSVGEvent = {
       y: 100,
       matrixTransform: () => ({x: 100, y: 100}),
     }),
+  },
+};
+
+const ZERO_AS_MIN_HEIGHT_THEME = {
+  themes: {
+    Default: {
+      bar: {
+        zeroAsMinHeight: true,
+      },
+    },
   },
 };
 
@@ -53,37 +59,12 @@ describe('Chart />', () => {
     renderTooltipContent: jest.fn(() => <p>Mock Tooltip</p>),
     emptyStateText: 'Empty',
     isAnimated: false,
-    barTheme: {
-      color: 'red',
-      innerMargin: 0,
-      outerMargin: 0,
-      hasRoundedCorners: false,
-      zeroAsMinHeight: false,
-    },
-    gridTheme: {
-      showHorizontalLines: true,
-      color: 'red',
-      horizontalOverflow: false,
-      horizontalMargin: 0,
-      showVerticalLines: true,
-    },
     xAxisOptions: {
       labelFormatter: (value: string) => value.toString(),
       useMinimalLabels: false,
     },
-    xAxisTheme: {
-      showTicks: true,
-      labelColor: 'red',
-      useMinimalLabels: false,
-      hide: false,
-    },
     yAxisOptions: {
       labelFormatter: (value: number) => value.toString(),
-      integersOnly: false,
-    },
-    yAxisTheme: {
-      labelColor: 'red',
-      backgroundColor: 'blue',
       integersOnly: false,
     },
   };
@@ -165,16 +146,13 @@ describe('Chart />', () => {
         const chart = mountWithProvider(
           <Chart
             {...mockProps}
-            barTheme={{
-              ...mockProps.barTheme,
-              zeroAsMinHeight: true,
-            }}
             data={[
               {rawValue: 0, label: 'data'},
               {rawValue: -2, label: 'data'},
               {rawValue: -1, label: 'data'},
             ]}
           />,
+          ZERO_AS_MIN_HEIGHT_THEME,
         );
 
         expect(chart).toContainReactComponent(Bar, {
@@ -186,16 +164,13 @@ describe('Chart />', () => {
         const chart = mountWithProvider(
           <Chart
             {...mockProps}
-            barTheme={{
-              ...mockProps.barTheme,
-              zeroAsMinHeight: true,
-            }}
             data={[
               {rawValue: 0, label: 'data'},
               {rawValue: -2, label: 'data'},
               {rawValue: 1, label: 'data'},
             ]}
           />,
+          ZERO_AS_MIN_HEIGHT_THEME,
         );
 
         expect(chart).toContainReactComponent(Bar, {
@@ -207,16 +182,13 @@ describe('Chart />', () => {
         const chart = mountWithProvider(
           <Chart
             {...mockProps}
-            barTheme={{
-              ...mockProps.barTheme,
-              zeroAsMinHeight: true,
-            }}
             data={[
               {rawValue: 0, label: 'data'},
               {rawValue: 0, label: 'data'},
               {rawValue: 0, label: 'data'},
             ]}
           />,
+          ZERO_AS_MIN_HEIGHT_THEME,
         );
 
         expect(chart).toContainReactComponent(Bar, {
@@ -272,14 +244,8 @@ describe('Chart />', () => {
   describe('barTheme.zeroAsMinHeight', () => {
     it('passes the min bar height to 0 bars if true', () => {
       const chart = mountWithProvider(
-        <Chart
-          {...mockProps}
-          barTheme={{
-            ...mockProps.barTheme,
-            zeroAsMinHeight: true,
-          }}
-          data={[{rawValue: 0, label: 'data'}]}
-        />,
+        <Chart {...mockProps} data={[{rawValue: 0, label: 'data'}]} />,
+        ZERO_AS_MIN_HEIGHT_THEME,
       );
 
       const barHeight = chart.find(Bar)!.props.height as SpringValue;
@@ -289,14 +255,7 @@ describe('Chart />', () => {
 
     it('does not pass the min bar height to 0 bars if false', () => {
       const chart = mountWithProvider(
-        <Chart
-          {...mockProps}
-          barTheme={{
-            ...mockProps.barTheme,
-            zeroAsMinHeight: false,
-          }}
-          data={[{rawValue: 0, label: 'data'}]}
-        />,
+        <Chart {...mockProps} data={[{rawValue: 0, label: 'data'}]} />,
       );
 
       const barHeight = chart.find(Bar)!.props.height as SpringValue;
@@ -308,10 +267,6 @@ describe('Chart />', () => {
       const chart = mountWithProvider(
         <Chart
           {...mockProps}
-          barTheme={{
-            ...mockProps.barTheme,
-            zeroAsMinHeight: false,
-          }}
           data={[
             {rawValue: 0, label: 'data'},
             {rawValue: -5, label: 'data'},
@@ -328,10 +283,6 @@ describe('Chart />', () => {
       const chart = mountWithProvider(
         <Chart
           {...mockProps}
-          barTheme={{
-            ...mockProps.barTheme,
-            zeroAsMinHeight: false,
-          }}
           data={[
             {rawValue: 1, label: 'data'},
             {rawValue: 500, label: 'data'},
@@ -345,13 +296,11 @@ describe('Chart />', () => {
     });
   });
 
-  describe('gridTheme.showHorizontalLines', () => {
+  describe('gridOptions.showHorizontalLines', () => {
     it('does not render HorizontalGridLines when false', () => {
       const chart = mountWithProvider(
-        <Chart
-          {...mockProps}
-          gridTheme={{...mockProps.gridTheme, showHorizontalLines: false}}
-        />,
+        <Chart {...mockProps} />,
+        mockDefaultTheme({grid: {showHorizontalLines: false}}),
       );
 
       expect(chart).not.toContainReactComponent(HorizontalGridLines);
