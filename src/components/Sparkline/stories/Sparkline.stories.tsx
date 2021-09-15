@@ -87,9 +87,6 @@ const defaultProps = {
   accessibilityLabel: 'Customer growth over time',
 };
 
-export const InsightsStyle: Story<SparklineProps> = Template.bind({});
-InsightsStyle.args = defaultProps;
-
 export const withoutSpline: Story<SparklineProps> = Template.bind({});
 withoutSpline.args = {
   ...defaultProps,
