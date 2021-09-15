@@ -127,7 +127,6 @@ export const Annotations: Story<BarChartProps> = Template.bind({});
 Annotations.args = {
   ...defaultProps,
   data: [
-    {rawValue: 10, label: '0'},
     {rawValue: 45, label: '1'},
     {rawValue: 16, label: '2'},
     {rawValue: 9, label: '3'},
@@ -140,13 +139,6 @@ Annotations.args = {
     {rawValue: 58, label: '10'},
     {rawValue: 64, label: '11'},
     {rawValue: 9, label: '12'},
-    {rawValue: 26, label: '13'},
-    {rawValue: 34, label: '14'},
-    {rawValue: 50, label: '15'},
-    {rawValue: 56, label: '16'},
-    {rawValue: 85, label: '17'},
-    {rawValue: 0, label: '18'},
-    {rawValue: 52, label: '19'},
   ],
   annotations: [
     {
