@@ -203,7 +203,7 @@ OverwrittenLight.parameters = {
   },
   docs: {
     description: {
-      story: `The Library also comes with a  \`Light\` theme out of the box. The same you can tweak the \`Default\` theme by overwriting keys, you can do the same with \`Light\` 👇.
+      story: `The Library also comes with a  \`Light\` theme out of the box. You can tweak the  \`Light\` theme the same way you can alter the \`Default\` theme, by overwriting keys 👇.
       `,
     },
   },
