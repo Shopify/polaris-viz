@@ -12,6 +12,9 @@ export function formatYAxisLabel(value: number) {
 }
 
 export function formatXAxisLabel(value: string) {
+  if (new Date(value).toString() === 'Invalid Date') {
+    return value;
+  }
   return new Date(value).toLocaleDateString('en-CA', {
     day: 'numeric',
     month: 'short',
