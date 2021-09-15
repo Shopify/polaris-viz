@@ -4,8 +4,20 @@ import {Story, Meta} from '@storybook/react';
 import {PolarisVizProvider} from '../../../components';
 import type {PolarisVizProviderProps} from '../../../components/PolarisVizProvider';
 import {DEFAULT_THEME} from '../../../constants';
-import {BarChartDemo} from '../../../../documentation/code';
+import {defaultProps as defaultBarChartProps} from '../../BarChart/stories/utils.stories';
+import {BarChart} from '../../BarChart';
 
+const barChartProps = {
+  ...defaultBarChartProps,
+  data: [
+    {rawValue: 324.19, label: '2020-01-01T12:00:00Z'},
+    {rawValue: 213.29, label: '2020-01-02T12:00:00Z'},
+    {rawValue: 422.79, label: '2020-01-03T12:00:00Z'},
+    {rawValue: 500, label: '2020-01-04T12:00:00Z'},
+    {rawValue: 540, label: '2020-01-05T12:00:00Z'},
+    {rawValue: 551.19, label: '2020-01-06T12:00:00Z'},
+  ],
+};
 export default {
   title: 'Providers/PolarisVizProvider',
   component: PolarisVizProvider,
@@ -49,7 +61,17 @@ const Template: Story<PolarisVizProviderProps> = (
 ) => {
   return (
     <PolarisVizProvider {...args}>
-      <BarChartDemo />
+      <BarChart {...barChartProps} />
+    </PolarisVizProvider>
+  );
+};
+
+const LightTemplate: Story<PolarisVizProviderProps> = (
+  args: PolarisVizProviderProps,
+) => {
+  return (
+    <PolarisVizProvider {...args}>
+      <BarChart {...barChartProps} theme="Light" />
     </PolarisVizProvider>
   );
 };
@@ -60,10 +82,10 @@ const MultipleThemesTemplate: Story<PolarisVizProviderProps> = (
   return (
     <PolarisVizProvider {...args}>
       <div style={{height: '180px', marginBottom: '10px'}}>
-        <BarChartDemo theme="AngryRed" />
+        <BarChart {...barChartProps} theme="AngryRed" />
       </div>
       <div style={{height: '180px'}}>
-        <BarChartDemo theme="HappyGreen" />
+        <BarChart {...barChartProps} theme="HappyGreen" />
       </div>
     </PolarisVizProvider>
   );
@@ -92,32 +114,43 @@ OverwrittenDefault.args = {
         labelColor: 'black',
         valueColor: 'black',
       },
+      seriesColors: {
+        single: [
+          {
+            color: '#c0ff00',
+            offset: 0,
+          },
+          {
+            color: '#e2fd01',
+            offset: 100,
+          },
+        ],
+      },
       chartContainer: {
         padding: '10px',
         borderRadius: '5px',
-        backgroundColor: 'white',
+        backgroundColor: '#121216',
       },
       bar: {
         hasRoundedCorners: false,
         innerMargin: 'Large',
         outerMargin: 'Large',
-        color: 'purple',
       },
       grid: {
         showVerticalLines: true,
         showHorizontalLines: true,
-        color: '#ebebeb',
+        color: '#383841',
         horizontalOverflow: false,
         horizontalMargin: 0,
       },
       xAxis: {
         showTicks: true,
-        labelColor: 'gray',
+        labelColor: '#c1c1d3',
         useMinimalLabels: false,
       },
       yAxis: {
-        labelColor: 'gray',
-        backgroundColor: 'white',
+        labelColor: '#c1c1d3',
+        backgroundColor: '#121216',
         integersOnly: false,
       },
     },
@@ -133,7 +166,44 @@ OverwrittenDefault.parameters = {
       story: `
 If you want all charts to have custom styles to be applied to all charts by default, just overwrite the \`Default\` key in the themes object.
 
-In this example that has an **overwritten Default Theme**, all \`BarCharts\` that are children of this \`PolarisVizProvider\` will have purple bars and white background by default, even if no \`theme\` prop is passed to each \`BarChart\`  👇
+In this example that has an **overwritten Default Theme**, all \`BarCharts\` that are children of this \`PolarisVizProvider\` will have yellow bars and black background by default, even if no \`theme\` prop is passed to each \`BarChart\`  👇
+      `,
+    },
+  },
+};
+
+export const OverwrittenLight = LightTemplate.bind({});
+OverwrittenLight.args = {
+  themes: {
+    Light: {
+      seriesColors: {
+        single: [
+          {
+            color: '#c0ff00',
+            offset: 0,
+          },
+          {
+            color: '#a6d803',
+            offset: 100,
+          },
+        ],
+      },
+      chartContainer: {
+        padding: '10px',
+        borderRadius: '5px',
+        backgroundColor: 'white',
+      },
+    },
+  },
+};
+OverwrittenLight.parameters = {
+  viewMode: 'docs',
+  backgrounds: {
+    default: 'light',
+  },
+  docs: {
+    description: {
+      story: `The Library also comes with a  \`Light\` theme out of the box. The same you can tweak the \`Default\` theme by overwriting keys, you can do the same with \`Light\` 👇.
       `,
     },
   },
@@ -148,7 +218,7 @@ MultipleThemes.args = {
         borderRadius: '5px',
       },
       seriesColors: {
-        upToFour: ['#00ff64'],
+        single: ['#00ff64'],
       },
       bar: {
         hasRoundedCorners: false,
@@ -172,7 +242,7 @@ MultipleThemes.args = {
     },
     AngryRed: {
       seriesColors: {
-        upToFour: ['#ff0025'],
+        single: ['#ff0025'],
       },
       chartContainer: {
         padding: '20px',
