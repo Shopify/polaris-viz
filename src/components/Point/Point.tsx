@@ -2,10 +2,10 @@ import React from 'react';
 import type {ActiveTooltip} from 'types';
 import {useSpring, animated, Interpolation} from '@react-spring/web';
 
-import {classNames} from '../../utilities';
-import {animationDurationBase} from '../../constants';
+import {classNames} from 'utilities';
+import {animationDurationBase} from 'consts';
 
-import styles from './Point.scss';
+import styles from 'components/Point/Point.scss';
 
 interface Props {
   active: boolean;

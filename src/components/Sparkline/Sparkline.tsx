@@ -3,12 +3,12 @@ import {useDebouncedCallback} from 'use-debounce';
 import {scaleLinear} from 'd3-scale';
 import type {Color, LineStyle} from 'types';
 
-import {useThemeSeriesColors} from '../../hooks/use-theme-series-colors';
-import {useResizeObserver, useTheme} from '../../hooks';
-import {XMLNS} from '../../constants';
+import {useThemeSeriesColors} from 'hooks/use-theme-series-colors';
+import {useResizeObserver, useTheme} from 'hooks';
+import {XMLNS} from 'consts';
 
-import styles from './Sparkline.scss';
-import {Series} from './components';
+import styles from 'components/Sparkline/Sparkline.scss';
+import {Series} from 'components/Sparkline/components';
 
 const SVG_MARGIN = 2;
 

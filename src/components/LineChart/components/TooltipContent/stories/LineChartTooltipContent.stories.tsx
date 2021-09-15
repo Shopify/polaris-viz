@@ -4,7 +4,7 @@ import {Story, Meta} from '@storybook/react';
 import {
   TooltipContent as LineChartTooltipContent,
   TooltipContentProps,
-} from '../../../components';
+} from 'components/LineChart/components';
 
 export default {
   title: 'Subcomponents/LineChartTooltipContent',

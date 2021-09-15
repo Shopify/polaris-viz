@@ -5,13 +5,13 @@ import {area, line, Series} from 'd3-shape';
 import type {ScaleLinear} from 'd3-scale';
 import type {Color, GradientStop} from 'types';
 
-import {LinearGradient} from '../../../LinearGradient';
+import {LinearGradient} from 'components/LinearGradient';
 import {
   curveStepRounded,
   isGradientType,
   uniqueId,
-} from '../../../../utilities';
-import {usePrevious, useTheme} from '../../../../hooks';
+} from 'utilities';
+import {usePrevious, useTheme} from 'hooks';
 
 type StackedSeries = Series<
   {

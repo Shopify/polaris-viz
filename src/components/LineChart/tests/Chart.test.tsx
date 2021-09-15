@@ -12,11 +12,11 @@ import {mountWithProvider} from 'test-utilities';
 import {HorizontalGridLines} from 'components/HorizontalGridLines';
 import {mockDefaultTheme} from 'test-utilities/mount-with-provider';
 
-import {LinearGradient} from '../../LinearGradient';
-import {Chart} from '../Chart';
-import type {Series} from '../types';
-import {Line, GradientArea} from '../components';
-import {YAxis} from '../../YAxis';
+import {LinearGradient} from 'components/LinearGradient';
+import {Chart} from 'components/LineChart/Chart';
+import type {Series} from 'components/LineChart/types';
+import {Line, GradientArea} from 'components/LineChart/components';
+import {YAxis} from 'components/YAxis';
 
 const fakeSVGEvent = {
   persist: jest.fn(),

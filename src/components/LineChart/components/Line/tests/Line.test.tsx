@@ -3,7 +3,7 @@ import {mount} from '@shopify/react-testing';
 import {mountWithProvider} from 'test-utilities';
 import {mockDefaultTheme} from 'test-utilities/mount-with-provider';
 
-import {Line} from '../Line';
+import {Line} from 'components/LineChart/components/Line/Line';
 
 jest.mock('../../../../../utilities', () => {
   return {

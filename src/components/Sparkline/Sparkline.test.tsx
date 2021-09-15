@@ -2,8 +2,8 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
 
-import {Sparkline} from './Sparkline';
-import {Series} from './components';
+import {Sparkline} from 'components/Sparkline/Sparkline';
+import {Series} from 'components/Sparkline/components';
 
 jest.mock('utilities/unique-id', () => ({
   uniqueId: jest.fn(() => 'stackedAreas-1'),

@@ -1,6 +1,6 @@
 import type {SyntheticEvent} from 'react';
 
-import {isTouchEvent} from '../is-touch-event';
+import {isTouchEvent} from 'utilities/is-touch-event';
 
 describe('isTouchEvent', () => {
   it('returns true for touch events', () => {

@@ -2,13 +2,13 @@ import React from 'react';
 import {sum} from 'd3-array';
 import {scaleLinear} from 'd3-scale';
 
-import {getSeriesColorsFromCount} from '../../hooks/use-theme-series-colors';
-import {useTheme} from '../../hooks';
-import {classNames} from '../../utilities';
+import {getSeriesColorsFromCount} from 'hooks/use-theme-series-colors';
+import {useTheme} from 'hooks';
+import {classNames} from 'utilities';
 
-import {BarSegment, BarLabel} from './components';
-import type {Size, Data, Orientation} from './types';
-import styles from './NormalizedStackedBarChart.scss';
+import {BarSegment, BarLabel} from 'components/NormalizedStackedBarChart/components';
+import type {Size, Data, Orientation} from 'components/NormalizedStackedBarChart/types';
+import styles from 'components/NormalizedStackedBarChart/NormalizedStackedBarChart.scss';
 
 export interface NormalizedStackedBarChartProps {
   data: Data[];

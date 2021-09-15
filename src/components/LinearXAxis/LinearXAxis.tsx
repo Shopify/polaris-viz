@@ -1,17 +1,17 @@
 import React, {useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 
-import {useTheme} from '../../hooks';
-import {RightAngleTriangle} from '../../utilities';
+import {useTheme} from 'hooks';
+import {RightAngleTriangle} from 'utilities';
 import {
   TICK_SIZE,
   SPACING_EXTRA_TIGHT,
   DIAGONAL_ANGLE,
   LINE_HEIGHT,
   BELOW_X_AXIS_MARGIN,
-} from '../../constants';
+} from 'consts';
 
-import styles from './LinearXAxis.scss';
+import styles from 'components/LinearXAxis/LinearXAxis.scss';
 
 interface XAxisDetails {
   maxXLabelHeight: number;

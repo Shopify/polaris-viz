@@ -4,7 +4,7 @@ import {scaleLinear} from 'd3-scale';
 import {mountWithProvider} from 'test-utilities';
 import {mockDefaultTheme} from 'test-utilities/mount-with-provider';
 
-import {LinearXAxis} from '../LinearXAxis';
+import {LinearXAxis} from 'components/LinearXAxis/LinearXAxis';
 
 jest.mock('d3-scale', () => ({
   scaleLinear: () => {

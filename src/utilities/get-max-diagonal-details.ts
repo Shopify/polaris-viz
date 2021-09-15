@@ -1,7 +1,7 @@
-import {DIAGONAL_ANGLE} from '../constants';
+import {DIAGONAL_ANGLE} from 'consts';
 
-import {degreesToRadians} from './degrees-to-radians';
-import {RightAngleTriangle} from './RightAngleTriangle';
+import {degreesToRadians} from 'utilities/degrees-to-radians';
+import {RightAngleTriangle} from 'utilities/RightAngleTriangle';
 
 export function getMaxDiagonalDetails(
   longestXLabelLength: number,

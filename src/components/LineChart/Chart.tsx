@@ -10,13 +10,13 @@ import {
   isGradientType,
   changeColorOpacity,
   changeGradientOpacity,
-} from '../../utilities';
+} from 'utilities';
 import {
   useLinearXAxisDetails,
   useLinearXScale,
   useTheme,
   useLinearChartAnimations,
-} from '../../hooks';
+} from 'hooks';
 import {
   SMALL_SCREEN,
   SMALL_FONT_SIZE,
@@ -25,28 +25,28 @@ import {
   LineChartMargin as Margin,
   SPACING_BASE_TIGHT,
   XMLNS,
-} from '../../constants';
-import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
-import {LinearXAxis} from '../LinearXAxis';
-import {YAxis} from '../YAxis';
-import {Point} from '../Point';
-import {Crosshair} from '../Crosshair';
-import {LinearGradient} from '../LinearGradient';
-import type {ActiveTooltip, Dimensions} from '../../types';
-import {TooltipContainer} from '../TooltipContainer';
-import {HorizontalGridLines} from '../HorizontalGridLines';
+} from 'consts';
+import {VisuallyHiddenRows} from 'components/VisuallyHiddenRows';
+import {LinearXAxis} from 'components/LinearXAxis';
+import {YAxis} from 'components/YAxis';
+import {Point} from 'components/Point';
+import {Crosshair} from 'components/Crosshair';
+import {LinearGradient} from 'components/LinearGradient';
+import type {ActiveTooltip, Dimensions} from 'types';
+import {TooltipContainer} from 'components/TooltipContainer';
+import {HorizontalGridLines} from 'components/HorizontalGridLines';
 
-import {MAX_ANIMATED_SERIES_LENGTH} from './constants';
+import {MAX_ANIMATED_SERIES_LENGTH} from 'components/LineChart/constants';
 import type {
   RenderTooltipContentData,
   TooltipData,
   XAxisOptions,
   YAxisOptions,
   SeriesWithDefaults,
-} from './types';
-import {useYScale} from './hooks';
-import {Line, GradientArea} from './components';
-import styles from './Chart.scss';
+} from 'components/LineChart/types';
+import {useYScale} from 'components/LineChart/hooks';
+import {Line, GradientArea} from 'components/LineChart/components';
+import styles from 'components/LineChart/Chart.scss';
 
 interface Props {
   dimensions: Dimensions;

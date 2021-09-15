@@ -2,10 +2,10 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
 
-import type {Series} from '../../types';
-import {useYScale} from '../use-y-scale';
-import {DEFAULT_MAX_Y} from '../../../../constants';
-import {shouldRoundScaleUp} from '../../../../utilities';
+import type {Series} from 'components/LineChart/types';
+import {useYScale} from 'components/LineChart/hooks/use-y-scale';
+import {DEFAULT_MAX_Y} from 'consts';
+import {shouldRoundScaleUp} from 'utilities';
 
 jest.mock('d3-scale', () => ({
   scaleLinear: jest.fn(() => {

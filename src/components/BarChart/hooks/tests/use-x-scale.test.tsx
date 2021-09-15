@@ -2,7 +2,7 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleBand} from 'd3-scale';
 
-import {useXScale} from '../use-x-scale';
+import {useXScale} from 'components/BarChart/hooks/use-x-scale';
 
 jest.mock('d3-scale', () => ({
   scaleBand: jest.fn(() => {

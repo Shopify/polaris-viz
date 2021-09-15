@@ -1,8 +1,8 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {LinePreview} from '../../../../LinePreview';
-import {TooltipContent} from '../TooltipContent';
+import {LinePreview} from 'components/LinePreview';
+import {TooltipContent} from 'components/LineChart/components/TooltipContent/TooltipContent';
 
 const mockProps = {
   data: [

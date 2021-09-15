@@ -1,7 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {SquareColorPreview} from '../SquareColorPreview';
+import {SquareColorPreview} from 'components/SquareColorPreview/SquareColorPreview';
 
 describe('<SquareColorPreview/>', () => {
   it('renders a div with a background color', () => {

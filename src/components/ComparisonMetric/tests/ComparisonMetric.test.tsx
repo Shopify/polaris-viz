@@ -1,8 +1,8 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {ComparisonMetric} from '../ComparisonMetric';
-import {UpChevron, DownChevron} from '../components';
+import {ComparisonMetric} from 'components/ComparisonMetric/ComparisonMetric';
+import {UpChevron, DownChevron} from 'components/ComparisonMetric/components';
 
 const theme = {
   labelColor: 'black',

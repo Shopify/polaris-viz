@@ -2,8 +2,8 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleBand} from 'd3-scale';
 
-import {Sparkbar} from '../Sparkbar';
-import {LinearGradient} from '../../LinearGradient';
+import {Sparkbar} from 'components/Sparkbar/Sparkbar';
+import {LinearGradient} from 'components/LinearGradient';
 
 const sampleData = [{value: 100}, {value: 200}, {value: 300}, {value: 500}];
 const sampleComparison = [

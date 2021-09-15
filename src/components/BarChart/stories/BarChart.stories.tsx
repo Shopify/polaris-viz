@@ -1,10 +1,10 @@
 import React from 'react';
 import {Story, Meta} from '@storybook/react';
 
-import {BarChart, BarChartProps, PolarisVizProvider} from '../../../components';
+import {BarChart, BarChartProps, PolarisVizProvider} from 'components';
 
-import {formatXAxisLabel, defaultProps} from './utils.stories';
-import {THEME_CONTROL_ARGS} from '../../../storybook';
+import {formatXAxisLabel, defaultProps} from 'components/BarChart/stories/utils.stories';
+import {THEME_CONTROL_ARGS} from 'storybook';
 
 const tooltipContent = {
   empty: undefined,

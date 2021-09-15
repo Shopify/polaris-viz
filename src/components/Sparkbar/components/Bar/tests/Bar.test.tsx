@@ -2,7 +2,7 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleBand} from 'd3-scale';
 
-import {Bar} from '../Bar';
+import {Bar} from 'components/Sparkbar/components/Bar/Bar';
 
 jest.mock('d3-scale', () => ({
   scaleBand: jest.fn(() => jest.fn((value) => value)),

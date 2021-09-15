@@ -1,7 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {YAxis} from '../YAxis';
+import {YAxis} from 'components/YAxis/YAxis';
 
 const testTicks = [
   {value: 0, formattedValue: '0', yOffset: 0},

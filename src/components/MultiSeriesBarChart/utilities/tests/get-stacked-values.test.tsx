@@ -1,7 +1,7 @@
 import type {Series} from 'components/MultiSeriesBarChart/types';
 import {stack} from 'd3-shape';
 
-import {getStackedValues} from '../get-stacked-values';
+import {getStackedValues} from 'components/MultiSeriesBarChart/utilities/get-stacked-values';
 
 const mockData: Series[] = [
   {

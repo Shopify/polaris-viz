@@ -1,4 +1,4 @@
-import {normalizeData} from '../normalize-data';
+import {normalizeData} from 'utilities/normalize-data';
 
 describe('normalizeData', () => {
   it('returns a normalized object', () => {

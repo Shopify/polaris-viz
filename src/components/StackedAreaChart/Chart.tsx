@@ -1,7 +1,7 @@
 import React, {useState, useMemo, useRef} from 'react';
 import {line, stack, stackOffsetNone, stackOrderReverse} from 'd3-shape';
 
-import {LinearGradient} from '../LinearGradient';
+import {LinearGradient} from 'components/LinearGradient';
 import {
   useLinearXAxisDetails,
   useLinearXScale,
@@ -9,7 +9,7 @@ import {
   usePrefersReducedMotion,
   useTheme,
   useThemeSeriesColors,
-} from '../../hooks';
+} from 'hooks';
 import {
   SMALL_SCREEN,
   SMALL_FONT_SIZE,
@@ -18,8 +18,8 @@ import {
   LineChartMargin as Margin,
   colorWhite,
   XMLNS,
-} from '../../constants';
-import {TooltipContainer} from '../TooltipContainer';
+} from 'consts';
+import {TooltipContainer} from 'components/TooltipContainer';
 import {
   eventPoint,
   isGradientType,
@@ -27,13 +27,13 @@ import {
   changeGradientOpacity,
   uniqueId,
   curveStepRounded,
-} from '../../utilities';
-import {YAxis} from '../YAxis';
-import {Crosshair} from '../Crosshair';
-import {Point} from '../Point';
-import {LinearXAxis} from '../LinearXAxis';
-import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
-import {HorizontalGridLines} from '../HorizontalGridLines';
+} from 'utilities';
+import {YAxis} from 'components/YAxis';
+import {Crosshair} from 'components/Crosshair';
+import {Point} from 'components/Point';
+import {LinearXAxis} from 'components/LinearXAxis';
+import {VisuallyHiddenRows} from 'components/VisuallyHiddenRows';
+import {HorizontalGridLines} from 'components/HorizontalGridLines';
 import type {
   StringLabelFormatter,
   NumberLabelFormatter,
@@ -41,13 +41,13 @@ import type {
   Dimensions,
   DataSeries,
   Data,
-} from '../../types';
+} from 'types';
 
-import {Spacing} from './constants';
-import {useYScale} from './hooks';
-import {StackedAreas} from './components';
-import type {Series, RenderTooltipContentData} from './types';
-import styles from './Chart.scss';
+import {Spacing} from 'components/StackedAreaChart/constants';
+import {useYScale} from 'components/StackedAreaChart/hooks';
+import {StackedAreas} from 'components/StackedAreaChart/components';
+import type {Series, RenderTooltipContentData} from 'components/StackedAreaChart/types';
+import styles from 'components/StackedAreaChart/Chart.scss';
 
 interface Props {
   hideXAxis: boolean;
@@ -111,10 +111,10 @@ export function Chart({
   const fontSize =
     dimensions.width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
 
-  const stackedValues = useMemo(
-    () => areaStack(formattedData),
-    [areaStack, formattedData],
-  );
+  const stackedValues = useMemo(() => areaStack(formattedData), [
+    areaStack,
+    formattedData,
+  ]);
 
   const {ticks: initialTicks} = useYScale({
     fontSize,

@@ -1,6 +1,6 @@
 import {scaleLinear} from 'd3-scale';
 
-import {shouldRoundScaleUp} from '../should-round-scale-up';
+import {shouldRoundScaleUp} from 'utilities/should-round-scale-up';
 
 describe('shouldRoundScaleUp', () => {
   it('returns false when the max value is less than half way to the last nice tick', () => {

@@ -1,4 +1,4 @@
-import type {ComparisonMetricShape} from '../ComparisonMetric';
+import type {ComparisonMetricShape} from 'components/ComparisonMetric';
 
 export type Orientation = 'horizontal' | 'vertical';
 

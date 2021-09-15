@@ -1,8 +1,8 @@
 import React from 'react';
 
-import {XMLNS} from '../../../../constants';
+import {XMLNS} from 'consts';
 
-import styles from './DownChevron.scss';
+import styles from 'components/ComparisonMetric/components/DownChevron/DownChevron.scss';
 
 interface Props {
   accessibilityLabel: string;

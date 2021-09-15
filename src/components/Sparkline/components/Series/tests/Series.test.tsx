@@ -3,8 +3,8 @@ import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
 import {area} from 'd3-shape';
 
-import {LinearGradient} from '../../../../LinearGradient';
-import {Series} from '../Series';
+import {LinearGradient} from 'components/LinearGradient';
+import {Series} from 'components/Sparkline/components/Series/Series';
 
 jest.mock('d3-shape', () => ({
   area: jest.fn(() => {

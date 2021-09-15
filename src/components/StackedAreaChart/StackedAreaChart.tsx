@@ -1,19 +1,19 @@
 import React, {useLayoutEffect, useRef, useState, useCallback} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 
-import {SkipLink} from '../SkipLink';
+import {SkipLink} from 'components/SkipLink';
 import type {
   StringLabelFormatter,
   NumberLabelFormatter,
   Dimensions,
-} from '../../types';
-import {TooltipContent} from '../TooltipContent';
-import {uniqueId} from '../../utilities';
-import {useResizeObserver, useTheme} from '../../hooks';
+} from 'types';
+import {TooltipContent} from 'components/TooltipContent';
+import {uniqueId} from 'utilities';
+import {useResizeObserver, useTheme} from 'hooks';
 
-import {Chart} from './Chart';
-import type {Series, RenderTooltipContentData} from './types';
-import styles from './Chart.scss';
+import {Chart} from 'components/StackedAreaChart/Chart';
+import type {Series, RenderTooltipContentData} from 'components/StackedAreaChart/types';
+import styles from 'components/StackedAreaChart/Chart.scss';
 
 export interface StackedAreaChartProps {
   renderTooltipContent?(data: RenderTooltipContentData): React.ReactNode;

@@ -2,11 +2,11 @@ import React, {useMemo} from 'react';
 import {animated, SpringValue} from '@react-spring/web';
 import type {ScaleLinear} from 'd3-scale';
 
-import {ROUNDED_BAR_RADIUS} from '../../constants';
-import {isNumber} from '../../utilities';
-import type {PathInterpolator, NumberInterpolator} from '../../types';
+import {ROUNDED_BAR_RADIUS} from 'consts';
+import {isNumber} from 'utilities';
+import type {PathInterpolator, NumberInterpolator} from 'types';
 
-import styles from './Bar.scss';
+import styles from 'components/Bar/Bar.scss';
 
 interface Props {
   color: string;

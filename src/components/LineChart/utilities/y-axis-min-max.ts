@@ -2,8 +2,8 @@ import {
   DEFAULT_MAX_Y,
   EMPTY_STATE_CHART_MIN,
   EMPTY_STATE_CHART_MAX,
-} from '../../../constants';
-import type {Series} from '../types';
+} from 'consts';
+import type {Series} from 'components/LineChart/types';
 
 export function yAxisMinMax({
   series,

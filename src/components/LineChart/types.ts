@@ -5,7 +5,7 @@ import type {
   StringLabelFormatter,
   NumberLabelFormatter,
   Color,
-} from '../../types';
+} from 'types';
 
 export interface Series extends DataSeries<Data, Color> {
   areaColor?: string | null;

@@ -1,5 +1,5 @@
-import type {Theme} from './types';
-import variables from './styles/shared/_variables.scss';
+import type {Theme} from 'types';
+import variables from 'styles/shared/_variables.scss';
 
 export const TICK_SIZE = 6;
 export const FONT_SIZE = 12;

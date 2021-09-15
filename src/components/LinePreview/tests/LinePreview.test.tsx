@@ -1,8 +1,8 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {LinePreview} from '../LinePreview';
-import {DASHED_STROKE_DASHARRAY} from '../constants';
+import {LinePreview} from 'components/LinePreview/LinePreview';
+import {DASHED_STROKE_DASHARRAY} from 'components/LinePreview/constants';
 
 describe('<LinePreview />', () => {
   it('renders a path with the given color', () => {

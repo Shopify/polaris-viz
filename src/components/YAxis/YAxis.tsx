@@ -1,8 +1,8 @@
 import React from 'react';
 
-import {useTheme} from '../../hooks';
-import {LINE_HEIGHT, FONT_SIZE} from '../../constants';
-import type {YAxisTick} from '../../types';
+import {useTheme} from 'hooks';
+import {LINE_HEIGHT, FONT_SIZE} from 'consts';
+import type {YAxisTick} from 'types';
 
 interface Props {
   ticks: YAxisTick[];

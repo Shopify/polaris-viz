@@ -1,10 +1,10 @@
 import React from 'react';
 
-import type {Legend} from '../../types';
+import type {Legend} from 'types';
 
-import styles from './ComparisonMetric.scss';
-import {UpChevron, DownChevron} from './components';
-import type {ComparisonMetricShape} from './types';
+import styles from 'components/ComparisonMetric/ComparisonMetric.scss';
+import {UpChevron, DownChevron} from 'components/ComparisonMetric/components';
+import type {ComparisonMetricShape} from 'components/ComparisonMetric/types';
 
 export function ComparisonMetric({
   metric,

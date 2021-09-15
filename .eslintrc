@@ -30,6 +30,12 @@
     ],
     "babel/no-unused-expressions": "off",
     "import/named": "off",
+    "import/order": [
+      "error",
+      {
+        "newlines-between": "always-and-inside-groups"
+      }
+    ],
     "import/no-default-export": ["error"],
     "react/button-has-type": "off",
     "react/no-array-index-key": "off",

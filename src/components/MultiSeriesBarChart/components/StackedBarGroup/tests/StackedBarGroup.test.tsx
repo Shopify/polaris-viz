@@ -3,12 +3,9 @@ import {mount} from '@shopify/react-testing';
 import {scaleBand, scaleLinear} from 'd3-scale';
 import type {StackSeries} from 'components/MultiSeriesBarChart/types';
 
-import {
-  MASK_HIGHLIGHT_COLOR,
-  MASK_SUBDUE_COLOR,
-} from '../../../../../constants';
-import {Stack} from '../components';
-import {StackedBarGroup} from '../StackedBarGroup';
+import {MASK_HIGHLIGHT_COLOR, MASK_SUBDUE_COLOR} from 'consts';
+import {Stack} from 'components/MultiSeriesBarChart/components/StackedBarGroup/components';
+import {StackedBarGroup} from 'components/MultiSeriesBarChart/components/StackedBarGroup/StackedBarGroup';
 
 jest.mock('d3-scale', () => ({
   scaleLinear: jest.fn(() => jest.fn((value) => value)),

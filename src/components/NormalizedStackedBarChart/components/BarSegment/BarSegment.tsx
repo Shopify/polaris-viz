@@ -4,11 +4,11 @@ import {
   createCSSGradient,
   isGradientType,
   classNames,
-} from '../../../../utilities';
-import type {Orientation, Size} from '../../types';
-import type {Color} from '../../../../types';
+} from 'utilities';
+import type {Orientation, Size} from 'components/NormalizedStackedBarChart/types';
+import type {Color} from 'types';
 
-import styles from './BarSegment.scss';
+import styles from 'components/NormalizedStackedBarChart/components/BarSegment/BarSegment.scss';
 
 interface Props {
   scale: number;

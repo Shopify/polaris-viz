@@ -1,20 +1,22 @@
 import React, {useState, useLayoutEffect, useRef, useCallback} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 
-import type {Dimensions, XAxisOptions, YAxisOptions} from '../../types';
-import {SkipLink} from '../SkipLink';
-import {uniqueId, normalizeData} from '../../utilities';
-import {useResizeObserver} from '../../hooks';
-import {ChartContainer} from '../ChartContainer';
+import type {Dimensions, XAxisOptions, YAxisOptions} from 'types';
 
-import {TooltipContent} from './components';
-import {Chart} from './Chart';
+import {uniqueId, normalizeData} from 'utilities';
+import {useResizeObserver} from 'hooks';
+
+import {SkipLink} from 'components/SkipLink';
+import {ChartContainer} from 'components/ChartContainer';
+
+import {TooltipContent} from 'components/BarChart/components';
+import {Chart} from 'components/BarChart/Chart';
 import type {
   BarChartData,
   RenderTooltipContentData,
   Annotation,
   AnnotationLookupTable,
-} from './types';
+} from 'components/BarChart/types';
 
 export interface BarChartProps {
   data: BarChartData[];
@@ -42,6 +44,7 @@ export function BarChart({
   const [chartDimensions, setChartDimensions] = useState<Dimensions | null>(
     null,
   );
+
   const {ref, setRef, entry} = useResizeObserver();
 
   const skipLinkAnchorId = useRef(uniqueId('barChart'));

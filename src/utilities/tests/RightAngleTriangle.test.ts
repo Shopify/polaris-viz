@@ -1,4 +1,4 @@
-import {RightAngleTriangle} from '../RightAngleTriangle';
+import {RightAngleTriangle} from 'utilities/RightAngleTriangle';
 
 describe('RightAngleTriangle', () => {
   describe('getAdjacentLength', () => {

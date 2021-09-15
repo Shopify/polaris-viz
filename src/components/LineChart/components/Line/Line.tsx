@@ -1,12 +1,12 @@
 import React from 'react';
 import type {Line as D3Line} from 'd3-shape';
 
-import {useTheme} from '../../../../hooks';
-import type {SeriesWithDefaults} from '../../types';
-import {ANIMATION_DELAY, FAST_DURATION, SLOW_DURATION} from '../../constants';
+import {useTheme} from 'hooks';
+import type {SeriesWithDefaults} from 'components/LineChart/types';
+import {ANIMATION_DELAY, FAST_DURATION, SLOW_DURATION} from 'components/LineChart/constants';
 
-import styles from './Line.scss';
-import {StrokeDasharray} from './constants';
+import styles from 'components/LineChart/components/Line/Line.scss';
+import {StrokeDasharray} from 'components/LineChart/components/Line/constants';
 
 interface Props {
   series: SeriesWithDefaults;

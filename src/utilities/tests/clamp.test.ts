@@ -1,4 +1,4 @@
-import {clamp} from '../clamp';
+import {clamp} from 'utilities/clamp';
 
 describe('clamp', () => {
   it('returns the amount when it is between the min and max', () => {

@@ -4,7 +4,7 @@ import {Story, Meta} from '@storybook/react';
 import {
   TooltipContent as BarChartTooltipContent,
   TooltipContentProps,
-} from '../../../components';
+} from 'components/BarChart/components';
 
 export default {
   title: 'Subcomponents/BarChartTooltipContent',

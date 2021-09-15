@@ -2,7 +2,7 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
 
-import {Bar} from '../Bar';
+import {Bar} from 'components/Sparkbar/components/Bar';
 
 describe('<Bar/>', () => {
   it('renders null if the value is null', () => {

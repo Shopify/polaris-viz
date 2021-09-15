@@ -1,8 +1,8 @@
 import React, {forwardRef, ReactNode} from 'react';
 
-import {useTheme} from '../../hooks';
+import {useTheme} from 'hooks';
 
-import styles from './ChartContainer.scss';
+import styles from 'components/ChartContainer/ChartContainer.scss';
 
 interface Props {
   children: ReactNode;

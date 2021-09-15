@@ -1,8 +1,8 @@
 import React from 'react';
 import {Meta, Story} from '@storybook/react/types-6-0';
 
-import {LinearGradient, LinearGradientProps} from '../LinearGradient';
-import {XMLNS} from '../../../constants';
+import {LinearGradient, LinearGradientProps} from 'components/LinearGradient/LinearGradient';
+import {XMLNS} from 'consts';
 
 export default {
   title: 'Subcomponents/LinearGradient',

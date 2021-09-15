@@ -1,7 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {useLinearXAxisDetails, ChartDetails} from '../useLinearXAxisDetails';
+import {useLinearXAxisDetails, ChartDetails} from 'hooks/useLinearXAxisDetails';
 
 const MOCK_DIAGONAL_HEIGHT = 50;
 const MOCK_ANGLED_LABEL_MAX_LENGTH = 100;

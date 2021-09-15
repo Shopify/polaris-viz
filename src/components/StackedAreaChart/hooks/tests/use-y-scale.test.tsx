@@ -2,8 +2,8 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
 
-import {useYScale} from '../use-y-scale';
-import {DEFAULT_MAX_Y} from '../../../../constants';
+import {useYScale} from 'components/StackedAreaChart/hooks/use-y-scale';
+import {DEFAULT_MAX_Y} from 'consts';
 
 jest.mock('d3-scale', () => ({
   scaleLinear: jest.fn(() => {

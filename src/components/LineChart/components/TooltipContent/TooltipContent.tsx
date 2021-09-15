@@ -1,11 +1,11 @@
 import React from 'react';
 import type {LineStyle, Color} from 'types';
 
-import {getSeriesColorsFromCount} from '../../../../hooks/use-theme-series-colors';
-import {useTheme} from '../../../../hooks';
-import {LinePreview} from '../../../LinePreview';
+import {getSeriesColorsFromCount} from 'hooks/use-theme-series-colors';
+import {useTheme} from 'hooks';
+import {LinePreview} from 'components/LinePreview';
 
-import styles from './TooltipContent.scss';
+import styles from 'components/LineChart/components/TooltipContent/TooltipContent.scss';
 
 interface TooltipData {
   name: string;

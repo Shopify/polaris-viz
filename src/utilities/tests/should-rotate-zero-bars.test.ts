@@ -1,4 +1,4 @@
-import {shouldRotateZeroBars} from '../should-rotate-zero-bars';
+import {shouldRotateZeroBars} from 'utilities/should-rotate-zero-bars';
 
 describe('shouldRotateZeroBars', () => {
   describe('returns true if', () => {

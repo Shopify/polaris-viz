@@ -1,4 +1,4 @@
-import {degreesToRadians} from '../degrees-to-radians';
+import {degreesToRadians} from 'utilities/degrees-to-radians';
 
 describe('degreesToRadians', () => {
   it('returns a radian value', () => {

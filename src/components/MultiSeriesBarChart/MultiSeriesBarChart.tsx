@@ -1,20 +1,20 @@
 import React, {useState, useLayoutEffect, useRef, useCallback} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 
-import {ChartContainer} from '../../components/ChartContainer';
-import type {Dimensions} from '../../types';
-import {SkipLink} from '../SkipLink';
-import {TooltipContent} from '../TooltipContent';
-import {uniqueId} from '../../utilities';
-import {useResizeObserver, useTheme, useThemeSeriesColors} from '../../hooks';
+import {ChartContainer} from 'components/ChartContainer';
+import type {Dimensions} from 'types';
+import {SkipLink} from 'components/SkipLink';
+import {TooltipContent} from 'components/TooltipContent';
+import {uniqueId} from 'utilities';
+import {useResizeObserver, useTheme, useThemeSeriesColors} from 'hooks';
 
-import {Chart} from './Chart';
+import {Chart} from 'components/MultiSeriesBarChart/Chart';
 import type {
   Series,
   RenderTooltipContentData,
   XAxisOptions,
   YAxisOptions,
-} from './types';
+} from 'components/MultiSeriesBarChart/types';
 
 export interface MultiSeriesBarChartProps {
   series: Series[];

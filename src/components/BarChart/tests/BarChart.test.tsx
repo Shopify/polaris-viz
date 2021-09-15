@@ -1,9 +1,9 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {BarChart} from '../BarChart';
-import {Chart} from '../Chart';
-import {SkipLink} from '../../SkipLink';
+import {BarChart} from 'components/BarChart/BarChart';
+import {Chart} from 'components/BarChart/Chart';
+import {SkipLink} from 'components/SkipLink';
 
 const mockProps = {
   data: [{rawValue: 10, label: 'data'}],

@@ -62,6 +62,11 @@ module.exports = {
       },
     ];
 
+    config.resolve.modules = [
+      ...(config.resolve.modules || []),
+      path.resolve(__dirname, '../src'),
+    ];
+
     config.module.rules = [
       // Strip out existing rules that apply to md files
       ...config.module.rules.filter(

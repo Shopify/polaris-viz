@@ -1,7 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {LinearGradient} from '../LinearGradient';
+import {LinearGradient} from 'components/LinearGradient/LinearGradient';
 
 const defaultProps = {
   id: 'someID',

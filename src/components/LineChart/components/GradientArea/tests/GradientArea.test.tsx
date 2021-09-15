@@ -3,7 +3,7 @@ import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
 import {area} from 'd3-shape';
 
-import {GradientArea} from '../GradientArea';
+import {GradientArea} from 'components/LineChart/components/GradientArea/GradientArea';
 
 jest.mock('d3-shape', () => ({
   area: jest.fn(() => {

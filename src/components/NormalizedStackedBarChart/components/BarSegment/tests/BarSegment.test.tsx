@@ -1,7 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {BarSegment} from '../BarSegment';
+import {BarSegment} from 'components/NormalizedStackedBarChart/components/BarSegment/BarSegment';
 
 describe('<BarSegment />', () => {
   const mockProps = {

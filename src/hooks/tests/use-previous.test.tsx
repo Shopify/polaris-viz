@@ -1,7 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {usePrevious} from '../use-previous';
+import {usePrevious} from 'hooks/use-previous';
 
 describe('usePrevious', () => {
   function TestComponent({prop}: {prop: string}) {

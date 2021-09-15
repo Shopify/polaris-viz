@@ -1,4 +1,4 @@
-import {useMinimalLabelIndexes} from '../use-minimal-label-indexes';
+import {useMinimalLabelIndexes} from 'components/BarChart/hooks/use-minimal-label-indexes';
 
 describe('useMinimalLabelIndexes', () => {
   it('returns null when useMinimalLabels is false', () => {

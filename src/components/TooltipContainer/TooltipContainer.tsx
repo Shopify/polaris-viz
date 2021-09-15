@@ -1,10 +1,10 @@
 import React, {useEffect, useRef, useState, ReactNode} from 'react';
 import {useSpring, animated} from '@react-spring/web';
 
-import type {Dimensions, Margin} from '../../types';
+import type {Dimensions, Margin} from 'types';
 
-import {getAlteredPosition} from './utils';
-import styles from './TooltipContainer.scss';
+import {getAlteredPosition} from 'components/TooltipContainer/utils';
+import styles from 'components/TooltipContainer/TooltipContainer.scss';
 
 export interface TooltipPosition {
   horizontal: 'left' | 'right' | 'center';

@@ -5,11 +5,11 @@ import {
   SPACING,
   LABEL_SPACE_MINUS_FIRST_AND_LAST,
   SPACING_EXTRA_TIGHT,
-} from '../constants';
+} from 'consts';
 
-import {getTextContainerHeight} from './get-text-container-height';
-import {getLongestLabelDetails} from './get-longest-label-details';
-import {getMaxDiagonalDetails} from './get-max-diagonal-details';
+import {getTextContainerHeight} from 'utilities/get-text-container-height';
+import {getLongestLabelDetails} from 'utilities/get-longest-label-details';
+import {getMaxDiagonalDetails} from 'utilities/get-max-diagonal-details';
 
 interface LayoutDetails {
   yAxisLabelWidth: number;

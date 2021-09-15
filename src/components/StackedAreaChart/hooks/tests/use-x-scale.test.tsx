@@ -2,7 +2,7 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
 
-import {useXScale} from '../use-x-scale';
+import {useXScale} from 'components/StackedAreaChart/hooks/use-x-scale';
 
 jest.mock('d3-scale', () => ({
   scaleLinear: jest.fn(() => {

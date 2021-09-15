@@ -1,5 +1,5 @@
 import {createTheme, createThemes} from '../';
-import {DEFAULT_THEME} from '../../constants';
+import {DEFAULT_THEME} from 'consts';
 
 describe('createTheme', () => {
   it('generates a theme with default values, from the partial theme provided', () => {

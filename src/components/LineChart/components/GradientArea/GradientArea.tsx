@@ -2,14 +2,14 @@ import React, {useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {area} from 'd3-shape';
 
-import {LinearGradient} from '../../../../components';
-import {uniqueId, curveStepRounded} from '../../../../utilities';
-import {ANIMATION_DELAY, SLOW_DURATION, FAST_DURATION} from '../../constants';
-import type {Data} from '../../../../types';
-import type {Series} from '../../types';
+import {LinearGradient} from 'components';
+import {uniqueId, curveStepRounded} from 'utilities';
+import {ANIMATION_DELAY, SLOW_DURATION, FAST_DURATION} from 'components/LineChart/constants';
+import type {Data} from 'types';
+import type {Series} from 'components/LineChart/types';
 
-import {getGradientDetails} from './utilities/get-gradient-details';
-import styles from './GradientArea.scss';
+import {getGradientDetails} from 'components/LineChart/components/GradientArea/utilities/get-gradient-details';
+import styles from 'components/LineChart/components/GradientArea/GradientArea.scss';
 
 interface Props {
   series: Series;

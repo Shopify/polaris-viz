@@ -1,7 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {TooltipContent} from '../TooltipContent';
+import {TooltipContent} from 'components/BarChart/components/TooltipContent/TooltipContent';
 
 describe('<TooltipContent/>', () => {
   it('renders a label', () => {

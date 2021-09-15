@@ -10,8 +10,8 @@ import {Point} from 'components/Point';
 import {Crosshair} from 'components/Crosshair';
 import {TooltipContainer} from 'components/TooltipContainer';
 
-import {StackedAreas} from '../components';
-import {Chart} from '../Chart';
+import {StackedAreas} from 'components/StackedAreaChart/components';
+import {Chart} from 'components/StackedAreaChart/Chart';
 
 const fakeSVGEvent = {
   currentTarget: {

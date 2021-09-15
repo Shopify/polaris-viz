@@ -1,11 +1,11 @@
 import React from 'react';
 import {Story, Meta} from '@storybook/react';
 
-import {StackedAreaChart, StackedAreaChartProps} from '../StackedAreaChart';
+import {StackedAreaChart, StackedAreaChartProps} from 'components/StackedAreaChart/StackedAreaChart';
 
-import {data, labels, formatYAxisLabel} from './utils.stories';
-import {colorPurpleDark, colorTeal} from '../../../constants';
-import {THEME_CONTROL_ARGS} from '../../../storybook';
+import {data, labels, formatYAxisLabel} from 'components/StackedAreaChart/stories/utils.stories';
+import {colorPurpleDark, colorTeal} from 'consts';
+import {THEME_CONTROL_ARGS} from 'storybook';
 
 const tooltipContent = {
   empty: undefined,

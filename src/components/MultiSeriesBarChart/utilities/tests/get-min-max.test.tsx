@@ -1,7 +1,7 @@
 import type {Series, StackSeries} from 'components/MultiSeriesBarChart/types';
 
-import {DEFAULT_MAX_Y} from '../../../../constants';
-import {getMinMax} from '../get-min-max';
+import {DEFAULT_MAX_Y} from 'consts';
+import {getMinMax} from 'components/MultiSeriesBarChart/utilities/get-min-max';
 
 const mockData: Series[] = [
   {

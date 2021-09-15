@@ -1,4 +1,4 @@
-import {getGradientDetails} from '../get-gradient-details';
+import {getGradientDetails} from 'components/LineChart/components/GradientArea/utilities/get-gradient-details';
 
 describe('getGradientDetails', () => {
   it('returns two stop details for all positive numbers', () => {

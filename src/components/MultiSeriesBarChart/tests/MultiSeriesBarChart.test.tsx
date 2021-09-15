@@ -2,8 +2,8 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {SkipLink} from 'components/SkipLink';
 
-import {MultiSeriesBarChart} from '../MultiSeriesBarChart';
-import {Chart} from '../Chart';
+import {MultiSeriesBarChart} from 'components/MultiSeriesBarChart/MultiSeriesBarChart';
+import {Chart} from 'components/MultiSeriesBarChart/Chart';
 
 describe('<MultiSeriesBarChart />', () => {
   const mockProps = {

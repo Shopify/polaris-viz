@@ -2,7 +2,7 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {animated} from '@react-spring/web';
 
-import {TooltipContainer} from '../TooltipContainer';
+import {TooltipContainer} from 'components/TooltipContainer/TooltipContainer';
 
 (global as any).DOMRect = class DOMRect {
   width = 200;

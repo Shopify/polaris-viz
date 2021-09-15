@@ -6,9 +6,9 @@ import type {
   NullableData,
   Data,
   Color,
-} from '../../types';
+} from 'types';
 
-import styles from './VisuallyHiddenRows.scss';
+import styles from 'components/VisuallyHiddenRows/VisuallyHiddenRows.scss';
 
 interface Props {
   series: DataSeries<Data | NullableData, Color>[];

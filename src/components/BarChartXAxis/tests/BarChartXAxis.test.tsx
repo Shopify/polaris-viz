@@ -4,7 +4,7 @@ import {scaleBand} from 'd3-scale';
 import {mountWithProvider} from 'test-utilities';
 import {mockDefaultTheme} from 'test-utilities/mount-with-provider';
 
-import {BarChartXAxis} from '../BarChartXAxis';
+import {BarChartXAxis} from 'components/BarChartXAxis/BarChartXAxis';
 
 jest.mock('d3-scale', () => ({
   scaleBand: () => {

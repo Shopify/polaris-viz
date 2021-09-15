@@ -1,9 +1,9 @@
 import React from 'react';
 
-import {useTheme} from '../../../../hooks';
-import type {Annotation} from '../../types';
+import {useTheme} from 'hooks';
+import type {Annotation} from 'components/BarChart/types';
 
-import styles from './TooltipContent.scss';
+import styles from 'components/BarChart/components/TooltipContent/TooltipContent.scss';
 
 export interface TooltipContentProps {
   label: string;

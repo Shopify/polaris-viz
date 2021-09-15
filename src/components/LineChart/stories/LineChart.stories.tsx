@@ -1,8 +1,8 @@
 import React from 'react';
 import {Story, Meta} from '@storybook/react';
 
-import {LineChart, LineChartProps} from '../LineChart';
-import styles from './LineChart.stories.scss';
+import {LineChart, LineChartProps} from 'components/LineChart/LineChart';
+import styles from 'components/LineChart/stories/LineChart.stories.scss';
 import {
   series,
   xAxisLabels,
@@ -11,9 +11,9 @@ import {
   renderTooltipContent,
   gradient,
   seriesUsingSeriesColors,
-} from './utils.stories';
-import {colorTeal} from '../../../constants';
-import {THEME_CONTROL_ARGS} from '../../../storybook';
+} from 'components/LineChart/stories/utils.stories';
+import {colorTeal} from 'consts';
+import {THEME_CONTROL_ARGS} from 'storybook';
 
 const tooltipContent = {
   empty: undefined,

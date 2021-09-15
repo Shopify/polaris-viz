@@ -3,7 +3,7 @@ import {scaleLinear} from 'd3-scale';
 import {line} from 'd3-shape';
 import type {Path} from 'd3-path';
 
-import {curveStepRounded, CurveStepRounded} from '../curve-step-rounded';
+import {curveStepRounded, CurveStepRounded} from 'utilities/curve-step-rounded';
 
 const dataset = [0, 20];
 

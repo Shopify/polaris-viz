@@ -1,8 +1,8 @@
 import React from 'react';
 
-import {formatAriaLabel} from '../../../../utilities';
-import {BAR_SPACING} from '../../../../constants';
-import type {StackedBarGroupProps} from '../../types';
+import {formatAriaLabel} from 'components/MultiSeriesBarChart/utilities';
+import {BAR_SPACING} from 'components/MultiSeriesBarChart/constants';
+import type {StackedBarGroupProps} from 'components/MultiSeriesBarChart/components/StackedBarGroup/types';
 
 export function Stack({
   data,

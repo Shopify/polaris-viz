@@ -2,11 +2,11 @@ import {useMemo} from 'react';
 import {scaleLinear} from 'd3-scale';
 import {maxIndex} from 'd3-array';
 
-import {getTextWidth, shouldRoundScaleUp} from '../../../utilities';
-import {yAxisMinMax} from '../utilities';
-import {MIN_Y_LABEL_SPACE} from '../constants';
-import type {Series} from '../types';
-import type {NumberLabelFormatter} from '../../../types';
+import {getTextWidth, shouldRoundScaleUp} from 'utilities';
+import {yAxisMinMax} from 'components/LineChart/utilities';
+import {MIN_Y_LABEL_SPACE} from 'components/LineChart/constants';
+import type {Series} from 'components/LineChart/types';
+import type {NumberLabelFormatter} from 'types';
 
 export function useYScale({
   drawableHeight,

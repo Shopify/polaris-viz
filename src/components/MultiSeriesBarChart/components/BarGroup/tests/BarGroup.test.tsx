@@ -3,11 +3,11 @@ import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
 import type {SpringValue} from '@react-spring/web';
 
-import {BAR_SPACING} from '../../../constants';
-import {MIN_BAR_HEIGHT} from '../../../../../constants';
-import {BarGroup} from '../BarGroup';
-import {Bar} from '../../../../../components/Bar';
-import {LinearGradient} from '../../../../../components/LinearGradient';
+import {BAR_SPACING} from 'components/MultiSeriesBarChart/constants';
+import {MIN_BAR_HEIGHT} from 'consts';
+import {BarGroup} from 'components/MultiSeriesBarChart/components/BarGroup/BarGroup';
+import {Bar} from 'components/Bar';
+import {LinearGradient} from 'components/LinearGradient';
 
 jest.mock('d3-scale', () => ({
   scaleLinear: jest.fn(() => jest.fn((value) => value)),

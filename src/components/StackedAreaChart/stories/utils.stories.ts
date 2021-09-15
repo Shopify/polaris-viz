@@ -1,4 +1,4 @@
-import {colorPurpleDark, colorTeal} from '../../../constants';
+import {colorPurpleDark, colorTeal} from 'consts';
 
 export const data = [
   {

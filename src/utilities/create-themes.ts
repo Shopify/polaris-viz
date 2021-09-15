@@ -1,5 +1,5 @@
-import type {Theme, PartialTheme} from '../types';
-import {DEFAULT_THEME, LIGHT_THEME} from '../constants';
+import type {Theme, PartialTheme} from 'types';
+import {DEFAULT_THEME, LIGHT_THEME} from 'consts';
 
 const BASE_THEMES: {[key: string]: Theme} = {
   Default: DEFAULT_THEME,

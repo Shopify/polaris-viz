@@ -1,7 +1,7 @@
 import React from 'react';
 import type {ScaleBand} from 'd3-scale';
 
-import {useTheme} from '../../hooks';
+import {useTheme} from 'hooks';
 import {
   TICK_SIZE,
   BELOW_X_AXIS_MARGIN,
@@ -10,10 +10,10 @@ import {
   LINE_HEIGHT,
   DEFAULT_LABEL_RATIO,
   SPACING_BASE_TIGHT,
-} from '../../constants';
-import {RightAngleTriangle} from '../../utilities';
+} from 'consts';
+import {RightAngleTriangle} from 'utilities';
 
-import styles from './BarChartXAxis.scss';
+import styles from 'components/BarChartXAxis/BarChartXAxis.scss';
 
 interface XAxisDetails {
   maxXLabelHeight: number;

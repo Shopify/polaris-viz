@@ -2,7 +2,7 @@ import {useMemo} from 'react';
 import {scaleBand} from 'd3-scale';
 import type {Data} from 'types';
 
-import type {StringLabelFormatter} from '../../../types';
+import type {StringLabelFormatter} from 'types';
 
 export function useXScale({
   drawableWidth,

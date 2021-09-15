@@ -1,9 +1,9 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {StackedAreaChart} from '../StackedAreaChart';
-import {Chart} from '../Chart';
-import {SkipLink} from '../../SkipLink';
+import {StackedAreaChart} from 'components/StackedAreaChart/StackedAreaChart';
+import {Chart} from 'components/StackedAreaChart/Chart';
+import {SkipLink} from 'components/SkipLink';
 
 const mockData = [
   {

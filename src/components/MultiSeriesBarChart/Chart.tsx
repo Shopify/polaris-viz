@@ -1,33 +1,33 @@
 import React, {useState, useMemo, useCallback} from 'react';
 
-import {BarChartMargin as Margin, XMLNS} from '../../constants';
+import {BarChartMargin as Margin, XMLNS} from 'consts';
 import {
   TooltipContainer,
   TooltipPosition as TooltipContainerPosition,
-} from '../TooltipContainer';
+} from 'components/TooltipContainer';
 import {
   eventPoint,
   getTextWidth,
   getBarXAxisDetails,
   shouldRotateZeroBars,
-} from '../../utilities';
-import {YAxis} from '../YAxis';
-import {BarChartXAxis} from '../BarChartXAxis';
-import {HorizontalGridLines} from '../HorizontalGridLines';
-import {Dimensions, BarMargin} from '../../types';
-import {useTheme} from '../../hooks';
+} from 'utilities';
+import {YAxis} from 'components/YAxis';
+import {BarChartXAxis} from 'components/BarChartXAxis';
+import {HorizontalGridLines} from 'components/HorizontalGridLines';
+import {Dimensions, BarMargin} from 'types';
+import {useTheme} from 'hooks';
 
-import {getStackedValues, formatAriaLabel} from './utilities';
+import {getStackedValues, formatAriaLabel} from 'components/MultiSeriesBarChart/utilities';
 import type {
   Series,
   RenderTooltipContentData,
   XAxisOptions,
   YAxisOptions,
-} from './types';
-import {BarGroup, StackedBarGroup} from './components';
-import {useYScale, useXScale} from './hooks';
-import {FONT_SIZE, SMALL_WIDTH, SMALL_FONT_SIZE, SPACING} from './constants';
-import styles from './Chart.scss';
+} from 'components/MultiSeriesBarChart/types';
+import {BarGroup, StackedBarGroup} from 'components/MultiSeriesBarChart/components';
+import {useYScale, useXScale} from 'components/MultiSeriesBarChart/hooks';
+import {FONT_SIZE, SMALL_WIDTH, SMALL_FONT_SIZE, SPACING} from 'components/MultiSeriesBarChart/constants';
+import styles from 'components/MultiSeriesBarChart/Chart.scss';
 
 interface TooltipPosition {
   x: number;
@@ -174,7 +174,7 @@ export function Chart({
     integersOnly: yAxisOptions.integersOnly,
   });
 
-  const barColors = series.map(({color}) => color);
+  const barColors = series.map(() => 'red');
 
   const tooltipContentMarkup = useMemo(() => {
     if (activeBarGroup == null) {

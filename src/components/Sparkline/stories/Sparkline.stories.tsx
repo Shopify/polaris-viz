@@ -1,8 +1,8 @@
 import React from 'react';
 import {Story, Meta} from '@storybook/react';
 
-import {Sparkline, SparklineProps} from '../..';
-import {THEME_CONTROL_ARGS} from '../../../storybook';
+import {Sparkline, SparklineProps} from 'components';
+import {THEME_CONTROL_ARGS} from 'storybook';
 
 const series = [
   {

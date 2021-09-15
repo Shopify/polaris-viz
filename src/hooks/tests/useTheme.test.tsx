@@ -1,9 +1,9 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {mountWithProvider} from '../../test-utilities';
-import {DEFAULT_THEME} from '../../constants';
-import {useTheme} from '../useTheme';
+import {mountWithProvider} from 'test-utilities';
+import {DEFAULT_THEME} from 'consts';
+import {useTheme} from 'hooks/useTheme';
 
 describe('useTheme', () => {
   it('returns the default theme if no theme name is provided', () => {

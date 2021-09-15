@@ -1,8 +1,8 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {TooltipContent} from '../TooltipContent';
-import {SquareColorPreview} from '../../SquareColorPreview';
+import {TooltipContent} from 'components/TooltipContent/TooltipContent';
+import {SquareColorPreview} from 'components/SquareColorPreview';
 
 (global as any).DOMRect = class DOMRect {
   width = 500;

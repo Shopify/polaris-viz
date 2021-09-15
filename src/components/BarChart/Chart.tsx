@@ -1,8 +1,8 @@
 import React, {useState, useMemo, useCallback} from 'react';
 import {useTransition} from '@react-spring/web';
 
-import {getSeriesColorsFromCount} from '../../hooks/use-theme-series-colors';
-import {usePrefersReducedMotion, useTheme} from '../../hooks';
+import {getSeriesColorsFromCount} from 'hooks/use-theme-series-colors';
+import {usePrefersReducedMotion, useTheme} from 'hooks';
 import {
   BarChartMargin as Margin,
   LINE_HEIGHT,
@@ -11,7 +11,7 @@ import {
   MASK_HIGHLIGHT_COLOR,
   MASK_SUBDUE_COLOR,
   XMLNS,
-} from '../../constants';
+} from 'consts';
 import {
   eventPoint,
   getTextWidth,
@@ -20,27 +20,38 @@ import {
   uniqueId,
   isGradientType,
   shouldRotateZeroBars,
-} from '../../utilities';
-import {Bar} from '../Bar';
-import {YAxis} from '../YAxis';
-import {BarChartXAxis} from '../BarChartXAxis';
+} from 'utilities';
+
+import {Dimensions, XAxisOptions, YAxisOptions, BarMargin} from 'types';
+
+import {Bar} from 'components/Bar';
+import {YAxis} from 'components/YAxis';
+import {BarChartXAxis} from 'components/BarChartXAxis';
 import {
   TooltipContainer,
   TooltipPosition as TooltipContainerPosition,
-} from '../TooltipContainer';
-import {LinearGradient} from '../LinearGradient';
-import {HorizontalGridLines} from '../HorizontalGridLines';
-import {Dimensions, XAxisOptions, YAxisOptions, BarMargin} from '../../types';
+} from 'components/TooltipContainer';
+import {LinearGradient} from 'components/LinearGradient';
+import {HorizontalGridLines} from 'components/HorizontalGridLines';
 
-import {AnnotationLine} from './components';
+import {AnnotationLine} from 'components/BarChart/components';
 import type {
   BarChartData,
   RenderTooltipContentData,
   AnnotationLookupTable,
-} from './types';
-import {useYScale, useXScale, useMinimalLabelIndexes} from './hooks';
-import {SMALL_FONT_SIZE, FONT_SIZE, SMALL_SCREEN, SPACING} from './constants';
-import styles from './Chart.scss';
+} from 'components/BarChart/types';
+import {
+  useYScale,
+  useXScale,
+  useMinimalLabelIndexes,
+} from 'components/BarChart/hooks';
+import {
+  SMALL_FONT_SIZE,
+  FONT_SIZE,
+  SMALL_SCREEN,
+  SPACING,
+} from 'components/BarChart/constants';
+import styles from 'components/BarChart/Chart.scss';
 
 interface TooltipPosition {
   x: number;
@@ -81,8 +92,10 @@ export function Chart({
 
   const {prefersReducedMotion} = usePrefersReducedMotion();
   const [activeBar, setActiveBar] = useState<number | null>(null);
-  const [tooltipPosition, setTooltipPosition] =
-    useState<TooltipPosition | null>(null);
+  const [
+    tooltipPosition,
+    setTooltipPosition,
+  ] = useState<TooltipPosition | null>(null);
   const {minimalLabelIndexes} = useMinimalLabelIndexes({
     useMinimalLabels: xAxisOptions.useMinimalLabels,
     dataLength: data.length,

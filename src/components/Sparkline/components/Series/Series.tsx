@@ -2,18 +2,18 @@ import React, {useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {area as areaShape, line} from 'd3-shape';
 
-import type {Color, GradientStop, Theme} from '../../../../types';
-import {LinearGradient} from '../../../LinearGradient';
+import type {Color, GradientStop, Theme} from 'types';
+import {LinearGradient} from 'components/LinearGradient';
 import {
   curveStepRounded,
   uniqueId,
   isGradientType,
   classNames,
-} from '../../../../utilities';
-import {usePrefersReducedMotion} from '../../../../hooks';
-import type {SingleSeries, Coordinates} from '../../Sparkline';
+} from 'utilities';
+import {usePrefersReducedMotion} from 'hooks';
+import type {SingleSeries, Coordinates} from 'components/Sparkline/Sparkline';
 
-import styles from './Series.scss';
+import styles from 'components/Sparkline/components/Series/Series.scss';
 
 const POINT_RADIUS = 2;
 

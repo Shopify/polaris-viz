@@ -1,4 +1,4 @@
-import type {Data} from '../../../../../types';
+import type {Data} from 'types';
 
 const HIGHEST_ALPHA = 0.25;
 

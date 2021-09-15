@@ -1,14 +1,14 @@
 import React from 'react';
 
-import {createCSSGradient, isGradientType} from '../../../../utilities';
-import type {Color, Legend} from '../../../../types';
+import {createCSSGradient, isGradientType} from 'utilities';
+import type {Color, Legend} from 'types';
 import {
   ComparisonMetric,
   ComparisonMetricShape,
-} from '../../../ComparisonMetric';
-import type {Orientation} from '../../types';
+} from 'components/ComparisonMetric';
+import type {Orientation} from 'components/NormalizedStackedBarChart/types';
 
-import styles from './BarLabel.scss';
+import styles from 'components/NormalizedStackedBarChart/components/BarLabel/BarLabel.scss';
 
 export interface Props {
   label: string;

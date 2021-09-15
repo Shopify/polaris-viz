@@ -2,8 +2,8 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {NormalizedStackedBarChart} from 'components';
 
-import {mountWithProvider} from '../../../test-utilities';
-import {BarSegment, BarLabel} from '../components';
+import {mountWithProvider} from 'test-utilities';
+import {BarSegment, BarLabel} from 'components/NormalizedStackedBarChart/components';
 
 describe('<NormalizedBarChart />', () => {
   const mockProps = {

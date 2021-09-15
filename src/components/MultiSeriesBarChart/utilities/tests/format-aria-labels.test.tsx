@@ -1,5 +1,5 @@
-import {formatAriaLabel} from '../format-aria-label';
-import type {AccessibilitySeries} from '../../types';
+import {formatAriaLabel} from 'components/MultiSeriesBarChart/utilities/format-aria-label';
+import type {AccessibilitySeries} from 'components/MultiSeriesBarChart/types';
 
 const mockData: AccessibilitySeries = {
   title: 'title1',

@@ -1,9 +1,9 @@
 import React from 'react';
 
-import {classNames, clamp} from '../../../../utilities';
-import type {Annotation} from '../../types';
+import {classNames, clamp} from 'utilities';
+import type {Annotation} from 'components/BarChart/types';
 
-import styles from './AnnotationLine.scss';
+import styles from 'components/BarChart/components/AnnotationLine/AnnotationLine.scss';
 
 const MEDIAN_OFFSET = 0.5;
 

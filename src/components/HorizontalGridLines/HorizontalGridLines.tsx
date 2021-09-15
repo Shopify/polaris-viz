@@ -1,7 +1,7 @@
 import React from 'react';
 
-import {useTheme} from '../../hooks';
-import type {YAxisTick} from '../../types';
+import {useTheme} from 'hooks';
+import type {YAxisTick} from 'types';
 
 interface Props {
   ticks: YAxisTick[];

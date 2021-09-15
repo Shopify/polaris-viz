@@ -1,4 +1,4 @@
-import type {Data} from '../types';
+import type {Data} from 'types';
 
 export function shouldRotateZeroBars(data: Data[]) {
   let allValuesZero = true;

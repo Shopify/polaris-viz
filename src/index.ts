@@ -32,7 +32,7 @@ export type {
 export {
   DEFAULT_THEME as PolarisVizDefaultTheme,
   LIGHT_THEME as PolarisVizLightheme,
-} from './constants';
+} from './consts';
 
 export {createTheme} from './utilities/create-themes';
 

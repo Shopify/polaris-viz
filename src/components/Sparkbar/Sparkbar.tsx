@@ -4,19 +4,19 @@ import {scaleBand, scaleLinear} from 'd3-scale';
 import {line} from 'd3-shape';
 import {useTransition} from '@react-spring/web';
 
-import {getSeriesColorsFromCount} from '../../hooks/use-theme-series-colors';
+import {getSeriesColorsFromCount} from 'hooks/use-theme-series-colors';
 import {
   usePrefersReducedMotion,
   useResizeObserver,
   useTheme,
-} from '../../hooks';
-import {BARS_TRANSITION_CONFIG, XMLNS} from '../../constants';
-import type {Color, SparkChartData} from '../../types';
-import {uniqueId, getAnimationTrail, isGradientType} from '../../utilities';
-import {LinearGradient} from '../LinearGradient';
+} from 'hooks';
+import {BARS_TRANSITION_CONFIG, XMLNS} from 'consts';
+import type {Color, SparkChartData} from 'types';
+import {uniqueId, getAnimationTrail, isGradientType} from 'utilities';
+import {LinearGradient} from 'components/LinearGradient';
 
-import {Bar} from './components';
-import styles from './Sparkbar.scss';
+import {Bar} from 'components/Sparkbar/components';
+import styles from 'components/Sparkbar/Sparkbar.scss';
 
 const STROKE_WIDTH = 1.5;
 const BAR_PADDING = 0.3;

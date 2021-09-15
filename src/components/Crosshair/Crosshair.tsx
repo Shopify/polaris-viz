@@ -1,7 +1,7 @@
 import React from 'react';
 import {animated, Interpolation} from '@react-spring/web';
 
-import {useTheme} from '../../hooks';
+import {useTheme} from 'hooks';
 
 interface Props {
   x: number | Interpolation;

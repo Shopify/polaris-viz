@@ -1,6 +1,6 @@
 import type {SyntheticEvent} from 'react';
 
-import {isMouseEvent} from '../is-mouse-event';
+import {isMouseEvent} from 'utilities/is-mouse-event';
 
 describe('isMouseEvent', () => {
   it('returns true for mouse events', () => {

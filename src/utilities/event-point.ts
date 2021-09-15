@@ -1,7 +1,7 @@
 import type {MouseEvent, TouchEvent} from 'react';
 
-import {isMouseEvent} from './is-mouse-event';
-import {isTouchEvent} from './is-touch-event';
+import {isMouseEvent} from 'utilities/is-mouse-event';
+import {isTouchEvent} from 'utilities/is-touch-event';
 
 export function eventPoint(
   event: MouseEvent<SVGSVGElement> | TouchEvent<SVGSVGElement>,

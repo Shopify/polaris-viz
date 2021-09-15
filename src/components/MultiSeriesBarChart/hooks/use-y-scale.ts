@@ -1,11 +1,11 @@
 import {useMemo} from 'react';
 import {scaleLinear} from 'd3-scale';
 
-import {shouldRoundScaleUp} from '../../../utilities';
-import type {Series, StackSeries} from '../types';
-import {MIN_Y_LABEL_SPACE} from '../constants';
-import {getMinMax} from '../utilities';
-import type {NumberLabelFormatter} from '../../../types';
+import {shouldRoundScaleUp} from 'utilities';
+import type {Series, StackSeries} from 'components/MultiSeriesBarChart/types';
+import {MIN_Y_LABEL_SPACE} from 'components/MultiSeriesBarChart/constants';
+import {getMinMax} from 'components/MultiSeriesBarChart/utilities';
+import type {NumberLabelFormatter} from 'types';
 
 export function useYScale({
   drawableHeight,

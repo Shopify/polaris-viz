@@ -3,8 +3,8 @@ import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
 import type {Series, StackSeries} from 'components/MultiSeriesBarChart/types';
 
-import {useYScale} from '../use-y-scale';
-import {shouldRoundScaleUp} from '../../../../utilities';
+import {useYScale} from 'components/MultiSeriesBarChart/hooks/use-y-scale';
+import {shouldRoundScaleUp} from 'utilities';
 
 jest.mock('d3-scale', () => ({
   scaleLinear: jest.fn(() => {

@@ -1,4 +1,4 @@
-import type {Color, Data, DataSeries} from '../../types';
+import type {Color, Data, DataSeries} from 'types';
 
 export type Series = DataSeries<Data, Color>;
 

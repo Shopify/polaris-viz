@@ -1,9 +1,9 @@
-import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleBand} from 'd3-scale';
+import React from 'react';
 
-import {Bar} from '../Bar';
-import {MASK_HIGHLIGHT_COLOR, ROUNDED_BAR_RADIUS} from '../../../constants';
+import {MASK_HIGHLIGHT_COLOR, ROUNDED_BAR_RADIUS} from 'consts';
+import {Bar} from 'components/Bar/Bar';
 
 jest.mock('d3-scale', () => ({
   scaleBand: jest.fn(() => jest.fn((value) => value)),

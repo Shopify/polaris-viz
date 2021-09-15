@@ -1,17 +1,17 @@
 import React, {useRef} from 'react';
 import type {Color} from 'types';
 
-import {isGradientType, uniqueId} from '../../utilities';
-import type {LineStyle} from '../../types';
-import {LinearGradient} from '../LinearGradient';
-import {XMLNS} from '../../constants';
+import {isGradientType, uniqueId} from 'utilities';
+import type {LineStyle} from 'types';
+import {LinearGradient} from 'components/LinearGradient';
+import {XMLNS} from 'consts';
 
 import {
   DASHED_STROKE_DASHARRAY,
   DOTTED_LINE_PREVIEW_CY,
   DOTTED_LINE_PREVIEW_RADIUS,
   DOT_SPACING,
-} from './constants';
+} from 'components/LinePreview/constants';
 
 interface Props {
   color: Color;

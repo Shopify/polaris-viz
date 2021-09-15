@@ -6,7 +6,7 @@ import type {
   DataSeries,
   Data,
   Color,
-} from '../../types';
+} from 'types';
 
 export type Series = DataSeries<Data, Color>;
 

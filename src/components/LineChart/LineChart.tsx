@@ -1,26 +1,26 @@
 import React, {useLayoutEffect, useRef, useState, useCallback} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 
-import {ChartContainer} from '../../components/ChartContainer';
-import {useThemeSeriesColors} from '../../hooks/use-theme-series-colors';
-import type {Dimensions, GradientStop} from '../../types';
-import {isGradientType, changeColorOpacity, uniqueId} from '../../utilities';
-import {SkipLink} from '../SkipLink';
+import {ChartContainer} from 'components/ChartContainer';
+import {useThemeSeriesColors} from 'hooks/use-theme-series-colors';
+import type {Dimensions, GradientStop} from 'types';
+import {isGradientType, changeColorOpacity, uniqueId} from 'utilities';
+import {SkipLink} from 'components/SkipLink';
 import {
   usePrefersReducedMotion,
   useResizeObserver,
   useTheme,
-} from '../../hooks';
+} from 'hooks';
 
-import {Chart} from './Chart';
+import {Chart} from 'components/LineChart/Chart';
 import type {
   Series,
   RenderTooltipContentData,
   XAxisOptions,
   YAxisOptions,
   SeriesWithDefaults,
-} from './types';
-import {TooltipContent} from './components';
+} from 'components/LineChart/types';
+import {TooltipContent} from 'components/LineChart/components';
 
 export interface LineChartProps {
   series: Series[];

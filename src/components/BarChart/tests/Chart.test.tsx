@@ -4,14 +4,14 @@ import {YAxis, TooltipContainer, BarChartXAxis, Bar} from 'components';
 import {HorizontalGridLines} from 'components/HorizontalGridLines';
 import {mockDefaultTheme} from 'test-utilities/mount-with-provider';
 
-import {mountWithProvider} from '../../../test-utilities';
-import {AnnotationLine} from '../components';
-import {Chart} from '../Chart';
+import {mountWithProvider} from 'test-utilities';
+import {AnnotationLine} from 'components/BarChart/components';
+import {Chart} from 'components/BarChart/Chart';
 import {
   MASK_SUBDUE_COLOR,
   MASK_HIGHLIGHT_COLOR,
   MIN_BAR_HEIGHT,
-} from '../../../constants';
+} from 'consts';
 
 const fakeSVGEvent = {
   currentTarget: {

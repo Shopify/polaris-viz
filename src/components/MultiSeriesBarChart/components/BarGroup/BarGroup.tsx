@@ -3,17 +3,17 @@ import type {ScaleLinear} from 'd3-scale';
 import type {Color} from 'types';
 import {useTransition} from '@react-spring/web';
 
-import {usePrefersReducedMotion} from '../../../../hooks';
-import {Bar} from '../../../Bar';
-import {LinearGradient} from '../../../LinearGradient';
-import {BAR_SPACING} from '../../constants';
+import {usePrefersReducedMotion} from 'hooks';
+import {Bar} from 'components/Bar';
+import {LinearGradient} from 'components/LinearGradient';
+import {BAR_SPACING} from 'components/MultiSeriesBarChart/constants';
 import {
   MIN_BAR_HEIGHT,
   BARS_TRANSITION_CONFIG,
   MASK_SUBDUE_COLOR,
   MASK_HIGHLIGHT_COLOR,
-} from '../../../../constants';
-import {getAnimationTrail, uniqueId} from '../../../../utilities';
+} from 'consts';
+import {getAnimationTrail, uniqueId} from 'utilities';
 
 interface Props {
   x: number;

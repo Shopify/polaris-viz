@@ -1,5 +1,5 @@
-import {DEFAULT_MAX_Y} from '../../../constants';
-import type {Series, StackSeries} from '../types';
+import {DEFAULT_MAX_Y} from 'consts';
+import type {Series, StackSeries} from 'components/MultiSeriesBarChart/types';
 
 export function getMinMax({
   stackedValues,

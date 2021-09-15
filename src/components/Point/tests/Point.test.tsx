@@ -1,7 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {Point} from '../Point';
+import {Point} from 'components/Point/Point';
 
 const mockProps = {
   cx: 100,

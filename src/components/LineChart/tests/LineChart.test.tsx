@@ -1,10 +1,10 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {LineChart} from '../LineChart';
-import {SkipLink} from '../../SkipLink';
-import {Chart} from '../Chart';
-import type {Series} from '../types';
+import {LineChart} from 'components/LineChart/LineChart';
+import {SkipLink} from 'components/SkipLink';
+import {Chart} from 'components/LineChart/Chart';
+import type {Series} from 'components/LineChart/types';
 
 const primarySeries: Series = {
   name: 'Primary',

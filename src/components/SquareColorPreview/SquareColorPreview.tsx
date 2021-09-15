@@ -1,9 +1,9 @@
 import React from 'react';
 import type {Color} from 'types';
 
-import {isGradientType, createCSSGradient} from '../../utilities';
+import {isGradientType, createCSSGradient} from 'utilities';
 
-import styles from './SquareColorPreview.scss';
+import styles from 'components/SquareColorPreview/SquareColorPreview.scss';
 
 export interface SquareColorPreviewProps {
   color: Color;

@@ -1,6 +1,6 @@
 import React from 'react';
 import {PolarisVizProvider} from '../src/components';
-import {DEFAULT_THEME, LIGHT_THEME} from '../src/constants';
+import {DEFAULT_THEME, LIGHT_THEME} from '../src/consts';
 import {useTheme} from '../src/hooks';
 export const parameters = {
   options: {

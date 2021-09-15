@@ -4,7 +4,7 @@ import {scaleLinear} from 'd3-scale';
 import {mountWithProvider} from 'test-utilities';
 import {mockDefaultTheme} from 'test-utilities/mount-with-provider';
 
-import {StackedAreas} from '../StackedAreas';
+import {StackedAreas} from 'components/StackedAreaChart/components/StackedAreas/StackedAreas';
 
 jest.mock('d3-scale', () => ({
   scaleLinear: jest.fn(() => jest.fn(() => 250)),

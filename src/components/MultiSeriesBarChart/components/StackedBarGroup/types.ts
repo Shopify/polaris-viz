@@ -1,7 +1,7 @@
 import type {ScaleLinear, ScaleBand} from 'd3-scale';
 
-import type {StackSeries} from '../../types';
-import type {Color} from '../../../../types';
+import type {StackSeries} from 'components/MultiSeriesBarChart/types';
+import type {Color} from 'types';
 
 export interface StackedBarGroupProps {
   groupIndex: number;

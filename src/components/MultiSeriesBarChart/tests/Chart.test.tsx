@@ -5,8 +5,8 @@ import {mountWithProvider} from 'test-utilities';
 import {HorizontalGridLines} from 'components/HorizontalGridLines';
 import {mockDefaultTheme} from 'test-utilities/mount-with-provider';
 
-import {Chart} from '../Chart';
-import {BarGroup, StackedBarGroup} from '../components';
+import {Chart} from 'components/MultiSeriesBarChart/Chart';
+import {BarGroup, StackedBarGroup} from 'components/MultiSeriesBarChart/components';
 
 const fakeSVGEvent = {
   currentTarget: {

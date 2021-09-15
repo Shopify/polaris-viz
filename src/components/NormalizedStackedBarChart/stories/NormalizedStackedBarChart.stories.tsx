@@ -4,8 +4,8 @@ import {Story, Meta} from '@storybook/react';
 import {
   NormalizedStackedBarChart,
   NormalizedStackedBarChartProps,
-} from '../NormalizedStackedBarChart';
-import {THEME_CONTROL_ARGS} from '../../../storybook';
+} from 'components/NormalizedStackedBarChart/NormalizedStackedBarChart';
+import {THEME_CONTROL_ARGS} from 'storybook';
 
 export default {
   title: 'Charts/NormalizedStackedBarChart',

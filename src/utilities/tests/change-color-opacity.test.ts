@@ -3,7 +3,7 @@ import {color} from 'd3-color';
 import {
   changeColorOpacity,
   changeGradientOpacity,
-} from '../change-color-opacity';
+} from 'utilities/change-color-opacity';
 
 jest.mock('d3-color', () => ({
   color: jest.fn(() => null),

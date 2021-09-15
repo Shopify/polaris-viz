@@ -1,13 +1,13 @@
 import React, {useMemo} from 'react';
 
-import type {GradientStop} from '../../../../types';
-import {isGradientType, uniqueId} from '../../../../utilities';
-import {MASK_SUBDUE_COLOR, MASK_HIGHLIGHT_COLOR} from '../../../../constants';
-import {LinearGradient} from '../../../LinearGradient';
+import type {GradientStop} from 'types';
+import {isGradientType, uniqueId} from 'utilities';
+import {MASK_SUBDUE_COLOR, MASK_HIGHLIGHT_COLOR} from 'consts';
+import {LinearGradient} from 'components/LinearGradient';
 
-import {Stack} from './components';
-import styles from './StackedBarGroup.scss';
-import type {StackedBarGroupProps} from './types';
+import {Stack} from 'components/MultiSeriesBarChart/components/StackedBarGroup/components';
+import styles from 'components/MultiSeriesBarChart/components/StackedBarGroup/StackedBarGroup.scss';
+import type {StackedBarGroupProps} from 'components/MultiSeriesBarChart/components/StackedBarGroup/types';
 
 export function StackedBarGroup({
   groupIndex,

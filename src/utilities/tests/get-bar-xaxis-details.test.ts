@@ -1,4 +1,4 @@
-import {getBarXAxisDetails} from '../get-bar-xaxis-details';
+import {getBarXAxisDetails} from 'utilities/get-bar-xaxis-details';
 
 jest.mock('../../utilities/get-text-width', () => ({
   getTextWidth: jest.fn(() => 20),

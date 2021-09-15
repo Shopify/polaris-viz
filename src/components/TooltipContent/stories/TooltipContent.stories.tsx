@@ -4,7 +4,7 @@ import {Story, Meta} from '@storybook/react';
 import {
   TooltipContent as GeneralTooltip,
   TooltipContentProps,
-} from '../../../components';
+} from 'components';
 
 export default {
   title: 'Subcomponents/TooltipContent',

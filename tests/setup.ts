@@ -1,5 +1,5 @@
-jest.mock('constants.ts', () => {
-  const actual = jest.requireActual('constants.ts');
+jest.mock('consts.ts', () => {
+  const actual = jest.requireActual('consts.ts');
 
   return {
     ...actual,

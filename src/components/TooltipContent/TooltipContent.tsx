@@ -1,10 +1,10 @@
 import React from 'react';
 import type {Color} from 'types';
 
-import {useTheme} from '../../hooks';
-import {SquareColorPreview} from '../SquareColorPreview';
+import {useTheme} from 'hooks';
+import {SquareColorPreview} from 'components/SquareColorPreview';
 
-import styles from './TooltipContent.scss';
+import styles from 'components/TooltipContent/TooltipContent.scss';
 
 interface TooltipData {
   color: Color;

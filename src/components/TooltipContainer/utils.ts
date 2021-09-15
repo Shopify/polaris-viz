@@ -1,6 +1,6 @@
-import type {Dimensions, Margin} from '../../types';
+import type {Dimensions, Margin} from 'types';
 
-import type {TooltipPosition} from './TooltipContainer';
+import type {TooltipPosition} from 'components/TooltipContainer/TooltipContainer';
 
 // The space between the cursor and the tooltip
 const TOOLTIP_MARGIN = 10;

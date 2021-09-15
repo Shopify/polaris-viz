@@ -1,8 +1,8 @@
 import React from 'react';
 import {Story, Meta} from '@storybook/react';
 
-import {SquareColorPreview, SquareColorPreviewProps} from '../../../components';
-import {colorTeal} from '../../../constants';
+import {SquareColorPreview, SquareColorPreviewProps} from 'components';
+import {colorTeal} from 'consts';
 
 export default {
   title: 'Subcomponents/SquareColorPreview',

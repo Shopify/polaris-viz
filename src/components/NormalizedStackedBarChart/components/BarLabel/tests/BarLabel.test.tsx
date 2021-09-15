@@ -1,7 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {BarLabel} from '../BarLabel';
+import {BarLabel} from 'components/NormalizedStackedBarChart/components/BarLabel/BarLabel';
 
 describe('<BarLabel />', () => {
   describe('renders props', () => {

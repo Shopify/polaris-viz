@@ -1,7 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {AnnotationLine} from '../AnnotationLine';
+import {AnnotationLine} from 'components/BarChart/components/AnnotationLine/AnnotationLine';
 
 describe('<AnnotationLine />', () => {
   const lineWidth = 5;

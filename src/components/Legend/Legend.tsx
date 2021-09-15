@@ -1,18 +1,18 @@
 import React from 'react';
 
-import {useThemeSeriesColors} from '../../hooks/use-theme-series-colors';
-import {useTheme} from '../../hooks';
+import {useThemeSeriesColors} from 'hooks/use-theme-series-colors';
+import {useTheme} from 'hooks';
 import type {
   DataSeries,
   Data,
   NullableData,
   LineStyle,
   Color,
-} from '../../types';
-import {LinePreview} from '../LinePreview';
-import {SquareColorPreview} from '../SquareColorPreview';
+} from 'types';
+import {LinePreview} from 'components/LinePreview';
+import {SquareColorPreview} from 'components/SquareColorPreview';
 
-import styles from './Legend.scss';
+import styles from 'components/Legend/Legend.scss';
 
 type LegendData = DataSeries<Data | NullableData, Color>;
 

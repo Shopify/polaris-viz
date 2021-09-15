@@ -4,12 +4,12 @@ import {Story, Meta} from '@storybook/react';
 import {
   MultiSeriesBarChart,
   MultiSeriesBarChartProps,
-} from '../../../components';
+} from 'components';
 
-import styles from './MultiSeriesBarChart.stories.scss';
-import {SquareColorPreview} from '../../SquareColorPreview';
-import {PolarisVizProvider} from '../../PolarisVizProvider';
-import {THEME_CONTROL_ARGS} from '../../../storybook';
+import styles from 'components/MultiSeriesBarChart/stories/MultiSeriesBarChart.stories.scss';
+import {SquareColorPreview} from 'components/SquareColorPreview';
+import {PolarisVizProvider} from 'components/PolarisVizProvider';
+import {THEME_CONTROL_ARGS} from 'storybook';
 
 const tooltipContent = {
   empty: undefined,

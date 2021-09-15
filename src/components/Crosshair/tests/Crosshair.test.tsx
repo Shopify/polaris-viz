@@ -3,7 +3,7 @@ import {mount} from '@shopify/react-testing';
 import {mountWithProvider} from 'test-utilities';
 import {mockDefaultTheme} from 'test-utilities/mount-with-provider';
 
-import {Crosshair} from '../Crosshair';
+import {Crosshair} from 'components/Crosshair/Crosshair';
 
 describe('<Crosshair />', () => {
   it('renders a rect centered on the given x', () => {

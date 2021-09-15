@@ -2,7 +2,7 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
 
-import {useLinearXScale} from '../useLinearXScale';
+import {useLinearXScale} from 'hooks/useLinearXScale';
 
 jest.mock('d3-scale', () => ({
   scaleLinear: jest.fn(() => {

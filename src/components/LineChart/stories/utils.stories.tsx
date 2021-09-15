@@ -1,7 +1,7 @@
 import React from 'react';
 
-import {TooltipContent} from '../components/TooltipContent/TooltipContent';
-import {LineChartProps} from '../LineChart';
+import {TooltipContent} from 'components/LineChart/components/TooltipContent/TooltipContent';
+import {LineChartProps} from 'components/LineChart/LineChart';
 
 export const gradient = [
   {

@@ -6,7 +6,7 @@ import {
   getTextContainerHeight,
   getLongestLabelDetails,
   getMaxDiagonalDetails,
-} from '../utilities';
+} from 'utilities';
 import {
   SPACING_TIGHT,
   MIN_HORIZONTAL_LABEL_SPACE,
@@ -17,7 +17,7 @@ import {
   SPACING_EXTRA_TIGHT,
   SMALL_LABEL_WIDTH,
   LABEL_SPACE_MINUS_FIRST_AND_LAST,
-} from '../constants';
+} from 'consts';
 import type {
   StringLabelFormatter,
   NullableData,
@@ -25,9 +25,9 @@ import type {
   DataSeries,
   Color,
   YAxisTick,
-} from '../types';
+} from 'types';
 
-import {useLinearXScale} from './useLinearXScale';
+import {useLinearXScale} from 'hooks/useLinearXScale';
 
 function getDatumSpace(width: number, numberOfTicks: number) {
   return (
@@ -169,8 +169,10 @@ export function useLinearXAxisDetails({
     );
 
     // use a trig utility to determine how long the diagonal labels can be
-    const {angledLabelMaxLength, maxDiagonalLabelHeight} =
-      getMaxDiagonalDetails(longestXLabelDetails.length, estimatedYAxisWidth);
+    const {
+      angledLabelMaxLength,
+      maxDiagonalLabelHeight,
+    } = getMaxDiagonalDetails(longestXLabelDetails.length, estimatedYAxisWidth);
     // determine if we need to go to our last option: making the ticks go diagonal
     const needsDiagonalLabels =
       needToReduceTicks &&

@@ -1,10 +1,10 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {usePolarisVizContext} from '../../../hooks';
-import {PolarisVizProvider} from '../PolarisVizProvider';
-import {PolarisVizContext} from '../../../utilities/';
-import {DEFAULT_THEME} from '../../../constants';
+import {usePolarisVizContext} from 'hooks';
+import {PolarisVizProvider} from 'components/PolarisVizProvider/PolarisVizProvider';
+import {PolarisVizContext} from 'utilities';
+import {DEFAULT_THEME} from 'consts';
 
 const MockChild = ({theme = 'Default'}) => {
   const {themes} = usePolarisVizContext();

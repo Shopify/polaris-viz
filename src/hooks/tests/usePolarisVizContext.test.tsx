@@ -1,9 +1,9 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {mountWithProvider} from '../../test-utilities';
-import {DEFAULT_THEME, LIGHT_THEME} from '../../constants';
-import {usePolarisVizContext} from '../usePolarisVizContext';
+import {mountWithProvider} from 'test-utilities';
+import {DEFAULT_THEME, LIGHT_THEME} from 'consts';
+import {usePolarisVizContext} from 'hooks/usePolarisVizContext';
 
 describe('usePolarisVizContext', () => {
   function TestComponent() {
