@@ -380,6 +380,7 @@ NegativeOnly.args = {
       }),
     },
   ],
+  isAnimated: true,
   xAxisOptions: {labels},
   yAxisOptions: {integersOnly: true},
 };

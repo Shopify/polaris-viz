@@ -3,7 +3,7 @@ import type {ActiveTooltip} from 'types';
 import {useSpring, animated, Interpolation} from '@react-spring/web';
 
 import {classNames} from '../../utilities';
-import {animationDurationBase} from '../../constants';
+import {BASE_ANIMATION_DURATION} from '../../constants';
 
 import styles from './Point.scss';
 
@@ -55,7 +55,7 @@ export const Point = React.memo(function Point({
     from: {
       animatedRadius: 0,
     },
-    config: {duration: animationDurationBase},
+    config: {duration: BASE_ANIMATION_DURATION},
     default: {immediate: !isAnimated},
   });
 

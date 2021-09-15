@@ -1,5 +1,4 @@
 import React from 'react';
-import type {SpringValue} from '@react-spring/web';
 import {YAxis, TooltipContainer, BarChartXAxis, Bar} from 'components';
 import {HorizontalGridLines} from 'components/HorizontalGridLines';
 import {mockDefaultTheme} from 'test-utilities/mount-with-provider';
@@ -259,9 +258,9 @@ describe('Chart />', () => {
         ZERO_AS_MIN_HEIGHT_THEME,
       );
 
-      const barHeight = chart.find(Bar)!.props.height as SpringValue;
+      const barHeight = chart.find(Bar)!.props.height;
 
-      expect(barHeight.get()).toBe(MIN_BAR_HEIGHT);
+      expect(barHeight).toBe(MIN_BAR_HEIGHT);
     });
 
     it('does not pass the min bar height to 0 bars if false', () => {
@@ -269,9 +268,9 @@ describe('Chart />', () => {
         <Chart {...mockProps} data={[{rawValue: 0, label: 'data'}]} />,
       );
 
-      const barHeight = chart.find(Bar)!.props.height as SpringValue;
+      const barHeight = chart.find(Bar)!.props.height;
 
-      expect(barHeight.get()).toBe(0);
+      expect(barHeight).toBe(0);
     });
 
     it('sets rotateZeroBars to false if false', () => {
@@ -301,9 +300,9 @@ describe('Chart />', () => {
         />,
       );
 
-      const barHeight = chart.find(Bar)!.props.height as SpringValue;
+      const barHeight = chart.find(Bar)!.props.height;
 
-      expect(barHeight.get()).toBe(MIN_BAR_HEIGHT);
+      expect(barHeight).toBe(MIN_BAR_HEIGHT);
     });
   });
 

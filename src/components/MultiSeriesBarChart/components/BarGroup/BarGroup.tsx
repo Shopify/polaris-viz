@@ -1,7 +1,6 @@
 import React, {useCallback, useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import type {Color} from 'types';
-import {useTransition} from '@react-spring/web';
 
 import {usePrefersReducedMotion} from '../../../../hooks';
 import {Bar} from '../../../Bar';
@@ -9,11 +8,12 @@ import {LinearGradient} from '../../../LinearGradient';
 import {BAR_SPACING} from '../../constants';
 import {
   MIN_BAR_HEIGHT,
-  BARS_TRANSITION_CONFIG,
+  LOAD_ANIMATION_DURATION,
   MASK_SUBDUE_COLOR,
   MASK_HIGHLIGHT_COLOR,
+  BAR_ANIMATION_HEIGHT_BUFFER,
 } from '../../../../constants';
-import {getAnimationTrail, uniqueId} from '../../../../utilities';
+import {uniqueId} from '../../../../utilities';
 
 interface Props {
   x: number;
@@ -65,18 +65,6 @@ export function BarGroup({
 
   const shouldAnimate = !prefersReducedMotion && isAnimated;
 
-  const transitions = useTransition(data, {
-    key: (dataPoint: number, index: number) =>
-      `${index}-${barGroupIndex}${dataPoint}`,
-    from: {height: 0},
-    leave: {height: 0},
-    enter: (rawValue) => ({height: getBarHeight(rawValue)}),
-    update: (rawValue) => ({height: getBarHeight(rawValue)}),
-    default: {immediate: !shouldAnimate},
-    trail: shouldAnimate ? getAnimationTrail(data.length) : 0,
-    config: BARS_TRANSITION_CONFIG,
-  });
-
   const gradientId = useMemo(() => uniqueId('gradient'), []);
   const maskId = useMemo(() => uniqueId('mask'), []);
 
@@ -94,7 +82,7 @@ export function BarGroup({
   return (
     <React.Fragment>
       <mask id={maskId}>
-        {transitions(({height}, value, _transition, index) => {
+        {data.map((rawValue, index) => {
           const handleFocus = () => {
             onFocus(barGroupIndex);
           };
@@ -107,11 +95,11 @@ export function BarGroup({
               key={`${barGroupIndex}${index}`}
             >
               <Bar
-                height={height}
+                height={getBarHeight(rawValue)}
                 color={isSubdued ? MASK_SUBDUE_COLOR : MASK_HIGHLIGHT_COLOR}
                 x={x + (barWidth + BAR_SPACING) * index}
-                yScale={yScale}
-                rawValue={value}
+                zeroPosition={yScale(0)}
+                rawValue={rawValue}
                 width={barWidth}
                 index={index}
                 onFocus={handleFocus}
@@ -120,6 +108,10 @@ export function BarGroup({
                 ariaLabel={ariaEnabledBar ? ariaLabel : undefined}
                 hasRoundedCorners={hasRoundedCorners}
                 rotateZeroBars={rotateZeroBars}
+                animationDelay={
+                  barGroupIndex * (LOAD_ANIMATION_DURATION / data.length)
+                }
+                isAnimated={shouldAnimate}
               />
             </g>
           );
@@ -135,9 +127,9 @@ export function BarGroup({
               />
               <rect
                 x={x + (barWidth + BAR_SPACING) * index}
-                y={0}
+                y={BAR_ANIMATION_HEIGHT_BUFFER * -1}
                 width={barWidth}
-                height={height}
+                height={height + BAR_ANIMATION_HEIGHT_BUFFER * 2}
                 fill={`url(#${gradientId}${index})`}
               />
               ;

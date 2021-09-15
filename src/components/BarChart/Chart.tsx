@@ -1,5 +1,4 @@
 import React, {useState, useMemo, useCallback} from 'react';
-import {useTransition} from '@react-spring/web';
 
 import {getSeriesColorsFromCount} from '../../hooks/use-theme-series-colors';
 import {usePrefersReducedMotion, useTheme} from '../../hooks';
@@ -7,16 +6,16 @@ import {
   BarChartMargin as Margin,
   LINE_HEIGHT,
   MIN_BAR_HEIGHT,
-  BARS_TRANSITION_CONFIG,
   MASK_HIGHLIGHT_COLOR,
   MASK_SUBDUE_COLOR,
   XMLNS,
+  BAR_ANIMATION_HEIGHT_BUFFER,
+  LOAD_ANIMATION_DURATION,
 } from '../../constants';
 import {
   eventPoint,
   getTextWidth,
   getBarXAxisDetails,
-  getAnimationTrail,
   uniqueId,
   isGradientType,
   shouldRotateZeroBars,
@@ -76,13 +75,15 @@ export function Chart({
   yAxisOptions,
   theme,
 }: Props) {
+  const [tooltipPosition, setTooltipPosition] =
+    useState<TooltipPosition | null>(null);
+
   const selectedTheme = useTheme(theme);
   const [seriesColor] = getSeriesColorsFromCount(1, selectedTheme);
 
   const {prefersReducedMotion} = usePrefersReducedMotion();
   const [activeBar, setActiveBar] = useState<number | null>(null);
-  const [tooltipPosition, setTooltipPosition] =
-    useState<TooltipPosition | null>(null);
+
   const {minimalLabelIndexes} = useMinimalLabelIndexes({
     useMinimalLabels: xAxisOptions.useMinimalLabels,
     dataLength: data.length,
@@ -153,6 +154,8 @@ export function Chart({
     integersOnly: yAxisOptions.integersOnly,
   });
 
+  const zeroPosition = yScale(0);
+
   const yAxisLabelWidth = useMemo(
     () =>
       Math.max(
@@ -200,7 +203,7 @@ export function Chart({
 
   const getBarHeight = useCallback(
     (rawValue: number) => {
-      const rawHeight = Math.abs(yScale(rawValue) - yScale(0));
+      const rawHeight = Math.abs(yScale(rawValue) - zeroPosition);
 
       const needsMinHeight = selectedTheme.bar.zeroAsMinHeight
         ? rawHeight < MIN_BAR_HEIGHT
@@ -208,7 +211,7 @@ export function Chart({
 
       return needsMinHeight ? MIN_BAR_HEIGHT : rawHeight;
     },
-    [selectedTheme.bar, yScale],
+    [selectedTheme.bar, yScale, zeroPosition],
   );
 
   const handleFocus = useCallback(
@@ -228,17 +231,6 @@ export function Chart({
   );
 
   const shouldAnimate = !prefersReducedMotion && isAnimated;
-
-  const transitions = useTransition(data, {
-    default: {immediate: !shouldAnimate},
-    keys: (dataPoint) => dataPoint.label,
-    from: {height: 0},
-    leave: {height: 0},
-    enter: ({rawValue}) => ({height: getBarHeight(rawValue)}),
-    update: ({rawValue}) => ({height: getBarHeight(rawValue)}),
-    trail: shouldAnimate ? getAnimationTrail(data.length) : 0,
-    config: BARS_TRANSITION_CONFIG,
-  });
 
   const {width, height} = chartDimensions;
 
@@ -264,8 +256,9 @@ export function Chart({
     >
       <svg
         xmlns={XMLNS}
-        width={width}
-        height={height}
+        viewBox={`0 ${BAR_ANIMATION_HEIGHT_BUFFER * -1} ${width} ${
+          height + BAR_ANIMATION_HEIGHT_BUFFER * 2
+        }`}
         onMouseMove={handleInteraction}
         onTouchMove={handleInteraction}
         onMouseLeave={() => setActiveBar(null)}
@@ -284,22 +277,21 @@ export function Chart({
 
           <mask id={clipId}>
             <g transform={`translate(${chartStartPosition},${Margin.Top})`}>
-              {transitions(({height}, item, _transition, index) => {
+              {data.map(({rawValue}, index) => {
                 const xPosition = xScale(index.toString());
                 const ariaLabel = `${xAxisOptions.labelFormatter(
                   data[index].label,
                 )}: ${yAxisOptions.labelFormatter(data[index].rawValue)}`;
                 const isSubdued = activeBar != null && index !== activeBar;
                 const annotation = annotationsLookupTable[index];
+                const height = getBarHeight(rawValue);
 
                 return (
-                  <g role="listitem" key={index}>
+                  <g role="listitem" key={`bar-${index}`}>
                     <Bar
                       height={height}
-                      key={index}
                       x={xPosition == null ? 0 : xPosition}
-                      yScale={yScale}
-                      rawValue={item.rawValue}
+                      rawValue={rawValue}
                       width={barWidth}
                       color={
                         isSubdued ? MASK_SUBDUE_COLOR : MASK_HIGHLIGHT_COLOR
@@ -313,6 +305,10 @@ export function Chart({
                       role="img"
                       hasRoundedCorners={selectedTheme.bar.hasRoundedCorners}
                       rotateZeroBars={rotateZeroBars}
+                      animationDelay={
+                        index * (LOAD_ANIMATION_DURATION / data.length)
+                      }
+                      zeroPosition={zeroPosition}
                     />
                   </g>
                 );
@@ -369,18 +365,17 @@ export function Chart({
         <g mask={`url(#${clipId})`}>
           <rect
             x="0"
-            y="0"
+            y={BAR_ANIMATION_HEIGHT_BUFFER * -1}
             width={width}
-            height={height}
+            height={height + BAR_ANIMATION_HEIGHT_BUFFER * 2}
             fill={`url(#${gradientId})`}
           />
-          {transitions((_props, item, _transition, index) => {
+          {data.map(({barColor}, index) => {
             const xPosition = xScale(index.toString());
             const xPositionValue = xPosition == null ? 0 : xPosition;
             const translateXValue = xPositionValue + chartStartPosition;
 
-            const barColor =
-              typeof item.barColor === 'string' ? item.barColor : null;
+            const fillColor = typeof barColor === 'string' ? barColor : '';
 
             return barColor != null ? (
               <rect
@@ -390,7 +385,7 @@ export function Chart({
                 y="0"
                 width={barWidth}
                 height={height}
-                fill={barColor}
+                fill={fillColor}
               />
             ) : null;
           })}
@@ -398,7 +393,7 @@ export function Chart({
         </g>
 
         <g transform={`translate(${chartStartPosition},${Margin.Top})`}>
-          {transitions((_props, _item, _transition, index) => {
+          {data.map((_, index) => {
             const xPosition = xScale(index.toString());
             const xPositionValue = xPosition == null ? 0 : xPosition;
             const annotation = annotationsLookupTable[index];
