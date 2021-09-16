@@ -1,11 +1,15 @@
 import React from 'react';
+import {themes} from '@storybook/theming';
 import {PolarisVizProvider} from '../src/components';
 import {DEFAULT_THEME, LIGHT_THEME} from '../src/constants';
 import {useTheme} from '../src/hooks';
 export const parameters = {
+  docs: {
+    theme: themes.dark,
+  },
   options: {
     storySort: {
-      order: ['Providers', 'Charts', 'Subcomponents'],
+      order: ['Docs', 'Providers', 'Charts', 'Subcomponents'],
     },
   },
 };
