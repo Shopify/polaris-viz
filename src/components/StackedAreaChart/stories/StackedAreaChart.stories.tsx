@@ -7,6 +7,10 @@ import {data, labels, formatYAxisLabel} from './utils.stories';
 import {colorPurpleDark, colorTeal} from '../../../constants';
 import {THEME_CONTROL_ARGS} from '../../../storybook';
 
+import {
+  generateMultipleSeries,
+  generateLabels,
+} from '../../../../documentation/utilities';
 const tooltipContent = {
   empty: undefined,
   Custom: ({data}) => (
@@ -175,103 +179,23 @@ LargeVolume.args = {
   ],
 };
 
-export const MediumVolume: Story<StackedAreaChartProps> = Template.bind({});
-MediumVolume.args = {
+export const SeriesColorsUpToFour = Template.bind({});
+
+SeriesColorsUpToFour.args = {
   ...defaultProps,
-  xAxisOptions: {
-    labels: Array(10)
-      .fill(null)
-      .map(() => 'label'),
-  },
-  series: [
-    {
-      name: 'One',
-      data: Array(10)
-        .fill(null)
-        .map(() => {
-          return {
-            rawValue: Math.random() * Math.random() * 100,
-            label: Math.random().toString(),
-          };
-        }),
-    },
-    {
-      name: 'Two',
-      data: Array(10)
-        .fill(null)
-        .map(() => {
-          return {
-            rawValue: Math.random() * Math.random() * 100,
-            label: Math.random().toString(),
-          };
-        }),
-    },
-    {
-      name: 'Three',
-      data: Array(10)
-        .fill(null)
-        .map(() => {
-          return {
-            rawValue: Math.random() * Math.random() * 100,
-            label: Math.random().toString(),
-          };
-        }),
-    },
-    {
-      name: 'Four (Custom Color)',
-      data: Array(10)
-        .fill(null)
-        .map(() => {
-          return {
-            rawValue: Math.random() * Math.random() * 100,
-            label: Math.random().toString(),
-          };
-        }),
-      color: '#ff1111',
-    },
-    {
-      name: 'Five',
-      data: Array(10)
-        .fill(null)
-        .map(() => {
-          return {
-            rawValue: Math.random() * Math.random() * 100,
-            label: Math.random().toString(),
-          };
-        }),
-    },
-    {
-      name: 'Six',
-      data: Array(10)
-        .fill(null)
-        .map(() => {
-          return {
-            rawValue: Math.random() * Math.random() * 100,
-            label: Math.random().toString(),
-          };
-        }),
-    },
-    {
-      name: 'Seven',
-      data: Array(10)
-        .fill(null)
-        .map(() => {
-          return {
-            rawValue: Math.random() * Math.random() * 100,
-            label: Math.random().toString(),
-          };
-        }),
-    },
-    {
-      name: 'Eight',
-      data: Array(10)
-        .fill(null)
-        .map(() => {
-          return {
-            rawValue: Math.random() * Math.random() * 100,
-            label: Math.random().toString(),
-          };
-        }),
-    },
-  ],
+  series: generateMultipleSeries(4),
+};
+
+export const SeriesColorsFromFiveToSeven = Template.bind({});
+
+SeriesColorsFromFiveToSeven.args = {
+  ...defaultProps,
+  series: generateMultipleSeries(7),
+};
+
+export const SeriesColorsUpToFourteen = Template.bind({});
+
+SeriesColorsUpToFourteen.args = {
+  ...defaultProps,
+  series: generateMultipleSeries(14),
 };

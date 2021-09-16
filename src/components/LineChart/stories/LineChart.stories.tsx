@@ -14,6 +14,11 @@ import {
 import {colorTeal} from '../../../constants';
 import {THEME_CONTROL_ARGS} from '../../../storybook';
 
+import {
+  generateMultipleSeries,
+  generateLabels,
+} from '../../../../documentation/utilities';
+
 const tooltipContent = {
   empty: undefined,
   Custom: ({data}) => (
@@ -225,6 +230,40 @@ LargeDataSet.args = {
       .map((x) => {
         return 'Some value';
       }),
+  },
+  renderTooltipContent,
+};
+
+export const SeriesColorsUpToFour: Story<LineChartProps> = Template.bind({});
+
+SeriesColorsUpToFour.args = {
+  series: generateMultipleSeries(4),
+  xAxisOptions: {
+    xAxisLabels: generateLabels(10),
+  },
+  renderTooltipContent,
+};
+
+export const SeriesColorsFromFiveToSeven: Story<LineChartProps> = Template.bind(
+  {},
+);
+
+SeriesColorsFromFiveToSeven.args = {
+  series: generateMultipleSeries(7),
+  xAxisOptions: {
+    xAxisLabels: generateLabels(10),
+  },
+  renderTooltipContent,
+};
+
+export const SeriesColorsUpToFourteen: Story<LineChartProps> = Template.bind(
+  {},
+);
+
+SeriesColorsUpToFourteen.args = {
+  series: generateMultipleSeries(14),
+  xAxisOptions: {
+    xAxisLabels: generateLabels(10),
   },
   renderTooltipContent,
 };
