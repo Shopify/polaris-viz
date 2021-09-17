@@ -11,6 +11,12 @@ import {SquareColorPreview} from '../../SquareColorPreview';
 import {PolarisVizProvider} from '../../PolarisVizProvider';
 import {THEME_CONTROL_ARGS} from '../../../storybook';
 
+import {
+  generateMultipleSeries,
+  generateLabels,
+  generateDataSet,
+} from '../../../../documentation/utilities';
+
 const tooltipContent = {
   empty: undefined,
   Custom: ({data, title}) => (
@@ -382,4 +388,31 @@ NegativeOnly.args = {
   ],
   xAxisOptions: {labels},
   yAxisOptions: {integersOnly: true},
+};
+
+export const SeriesColorsUpToFour = Template.bind({});
+
+SeriesColorsUpToFour.args = {
+  series: generateMultipleSeries(4),
+  xAxisOptions: {
+    labels: generateLabels(10),
+  },
+};
+
+export const SeriesColorsFromFiveToSeven = Template.bind({});
+
+SeriesColorsFromFiveToSeven.args = {
+  series: generateMultipleSeries(7),
+  xAxisOptions: {
+    labels: generateLabels(10),
+  },
+};
+
+export const SeriesColorsUpToFourteen = Template.bind({});
+
+SeriesColorsUpToFourteen.args = {
+  series: generateMultipleSeries(7),
+  xAxisOptions: {
+    labels: generateLabels(10),
+  },
 };
