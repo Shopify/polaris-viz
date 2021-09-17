@@ -41,6 +41,6 @@ Storybook link
 
 - [ ] Check your changes on a variety of browsers and devices.
 
-- [ ] Update the Changelog's Unreleased section with yoru changes.
+- [ ] Update the Changelog's Unreleased section with your changes.
 
 - [ ] Update relevant documentation and Storybook.
