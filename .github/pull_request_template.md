@@ -1,5 +1,4 @@
-What does this implement/fix?
----------------------------------------------------
+## What does this implement/fix?
 …
 
 <!-- 💡 Briefly describe what you want to achieve here.  Explain your approach and any other options you considered. -->
@@ -9,15 +8,13 @@ What does this implement/fix?
 <!-- 🎨 For new features: Have you reviewed your changes with UX? Is there a design that should be referenced? -->
 
 
-Does this close any currently open issues?
-------------------------------------------
+## Does this close any currently open issues?
 …
 
 <!-- 🔗 Link to the issue/s that this PR solves, and use fix` or `solve` to close it automatically.  -->
 
 
-What do the changes look like?
----------------------------------------------------
+## What do the changes look like?
 …
 
 <!--
@@ -30,8 +27,7 @@ What do the changes look like?
  -->
 
  
-Storybook link
-------------------------------------------
+## Storybook link
 …
 
 <!-- 🎩 Include links to help tophatting -->
