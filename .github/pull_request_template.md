@@ -43,4 +43,4 @@ Storybook link
 
 - [ ] Update the Changelog's Unreleased section with your changes.
 
-- [ ] Update relevant documentation and Storybook.
+- [ ] Update relevant documentation, tests, and Storybook.
