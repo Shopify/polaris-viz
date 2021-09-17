@@ -9,7 +9,14 @@ export const parameters = {
   },
   options: {
     storySort: {
-      order: ['Docs', 'Providers', 'Charts', 'Subcomponents'],
+      order: [
+        'Docs',
+        'Docs/Intro',
+        'Docs/Getting started',
+        'Providers',
+        'Charts',
+        'Subcomponents',
+      ],
     },
   },
 };

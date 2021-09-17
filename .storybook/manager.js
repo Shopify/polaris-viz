@@ -3,6 +3,6 @@ import theme from './theme';
 import {themes} from '@storybook/theming';
 
 addons.setConfig({
-  // theme: themes.dark,
   theme,
+  // toolbar: {intro: {hidden: true}},
 });

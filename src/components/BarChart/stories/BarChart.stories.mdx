@@ -6,6 +6,10 @@ import linechart from '../../../../src/components/LineChart/line-chart.png';
 import barChart from '../../../../src/components/BarChart/bar-chart.png';
 import sparkbar from '../../../../src/components/Sparkbar/sparkbar.png';
 import sparkline from '../../../../src/components/Sparkline/sparkline.png';
+import msbarchart from '../../../../src/components/MultiSeriesBarChart/grouped-bar-example.png';
+import stackedbarchart from '../../../../src/components/MultiSeriesBarChart/stacked-bar-example.png';
+import areachart from '../../../../src/components/StackedAreaChart/stacked-area-chart.png';
+import nsbar from '../../../../src/components/NormalizedStackedBarChart/normalized-stacked-bar-chart.png';
 
 <Meta
   title="Docs/Intro"
@@ -20,28 +24,96 @@ import sparkline from '../../../../src/components/Sparkline/sparkline.png';
     src={imageFile}
   />
 
----
-
-<p
-  style={{
-    fontFamily:
-      "-apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
-  }}
->
+<h2 style={{fontWeight: 'normal', fontSize: 16, borderBottom: 0}}>
   Polaris Viz is a data visualization React component library. It was built to
   help Shopify merchants better understand their data.
-</p>
+</h2>
 
----
+<table  style={{textAlign: 'left', marginTop: '50px'}}>
 
-<div style={{display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', marginTop: '80px'
-}}>
+<tr>
 
-<img src={linechart} />
-<img src={barChart} />
-<img src={sparkbar} />
-<img src={sparkline} />
+<td>
+  <h3 style={{fontWeight: 500}}>Line chart</h3>
+  <p>Used to show change over time, comparisons, and trends. <a style={{color: 'white'}} href="">View documentation →</a></p>
 
-</div>
+  <img style={{width: '90%', margin: '0 auto 1em auto'}} src={linechart} />
+</td>
+
+<td>
+  <h3 style={{fontWeight: 500}}>Single-series bar chart</h3>
+  <p>
+    Used to show comparison across categories.{' '}
+    <a style={{color: 'white'}} href="">
+      View documentation →
+    </a>
+  </p>
+  <img style={{width: '90%', margin: '0 auto 1em auto'}} src={barChart} />
+</td>
+</tr>
+
+<tr>
+<td>
+  <h3 style={{fontWeight: 500}}>Multi-series bar chart</h3>
+  <p>Used in small sizes to show how a metric has performed over time with bars. <a style={{color: 'white'}} href="">View documentation →</a></p>
+
+  <img style={{width: '90%', margin: '0 auto 1em auto'}} src={msbarchart} />
+</td>
+
+<td>
+  <h3 style={{fontWeight: 500}}>Stacked bar chart</h3>
+  <p>
+    Used in small sizes to show how a metric has performed over time.{' '}
+    <a style={{color: 'white'}} href="">
+      View documentation →
+    </a>
+  </p>
+  <img style={{width: '90%', margin: '0 auto 1em auto'}} src={stackedbarchart} />
+</td>
+</tr>
+
+<tr>
+<td>
+  <h3 style={{fontWeight: 500}}>Area chart</h3>
+  <p>Used in small sizes to show how a metric has performed over time with bars. <a style={{color: 'white'}} href="">View documentation →</a></p>
+
+  <img style={{width: '90%', margin: '0 auto 1em auto'}} src={areachart} />
+</td>
+
+<td>
+  <h3 style={{fontWeight: 500}}>Normalized stacked bar chart</h3>
+  <p>
+    Used in small sizes to show how a metric has performed over time.{' '}
+    <a style={{color: 'white'}} href="">
+      View documentation →
+    </a>
+  </p>
+  <img style={{width: '90%', margin: '0 auto 1em auto'}} src={nsbar} />
+</td>
+</tr>
+
+<tr>
+
+<td>
+  <h3 style={{fontWeight: 500}}>Sparkbar</h3>
+  <p>Used in small sizes to show how a metric has performed over time with bars. <a style={{color: 'white'}} href="">View documentation →</a></p>
+
+  <img style={{width: '90%', margin: '0 auto 1em auto'}} src={sparkbar} />
+</td>
+
+<td>
+  <h3 style={{fontWeight: 500}}>Sparkline</h3>
+  <p>
+    Used in small sizes to show how a metric has performed over time.{' '}
+    <a style={{color: 'white'}} href="">
+      View documentation →
+    </a>
+  </p>
+  <img style={{width: '90%', margin: '0 auto 1em auto'}} src={sparkline} />
+</td>
+
+</tr>
+
+</table>
 
 </div>
