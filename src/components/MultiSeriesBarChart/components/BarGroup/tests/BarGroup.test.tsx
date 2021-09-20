@@ -1,7 +1,6 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
-import type {SpringValue} from '@react-spring/web';
 
 import {BAR_SPACING} from '../../../constants';
 import {MIN_BAR_HEIGHT} from '../../../../../constants';
@@ -79,9 +78,9 @@ describe('<BarGroup/>', () => {
         </svg>,
       );
 
-      const barHeight = barGroup.find(Bar)!.props.height as SpringValue;
+      const barHeight = barGroup.find(Bar)!.props.height;
 
-      expect(barHeight.get()).toBe(MIN_BAR_HEIGHT);
+      expect(barHeight).toBe(MIN_BAR_HEIGHT);
     });
 
     it('does not pass the min bar height to 0 bars if false', () => {
@@ -91,9 +90,9 @@ describe('<BarGroup/>', () => {
         </svg>,
       );
 
-      const barHeight = barGroup.find(Bar)!.props.height as SpringValue;
+      const barHeight = barGroup.find(Bar)!.props.height;
 
-      expect(barHeight.get()).toBe(0);
+      expect(barHeight).toBe(0);
     });
 
     it('passes the min bar height to non-zero bar if false', () => {
@@ -103,9 +102,9 @@ describe('<BarGroup/>', () => {
         </svg>,
       );
 
-      const barHeight = barGroup.find(Bar)!.props.height as SpringValue;
+      const barHeight = barGroup.find(Bar)!.props.height;
 
-      expect(barHeight.get()).toBe(MIN_BAR_HEIGHT);
+      expect(barHeight).toBe(MIN_BAR_HEIGHT);
     });
   });
 

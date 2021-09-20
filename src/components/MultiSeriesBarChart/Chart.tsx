@@ -1,6 +1,10 @@
 import React, {useState, useMemo, useCallback} from 'react';
 
-import {BarChartMargin as Margin, XMLNS} from '../../constants';
+import {
+  BarChartMargin as Margin,
+  XMLNS,
+  BAR_ANIMATION_HEIGHT_BUFFER,
+} from '../../constants';
 import {
   TooltipContainer,
   TooltipPosition as TooltipContainerPosition,
@@ -244,8 +248,9 @@ export function Chart({
     >
       <svg
         xmlns={XMLNS}
-        width={chartDimensions.width}
-        height={chartDimensions.height}
+        viewBox={`0 ${BAR_ANIMATION_HEIGHT_BUFFER * -1} ${
+          chartDimensions.width
+        } ${chartDimensions.height + BAR_ANIMATION_HEIGHT_BUFFER * 2}`}
         onMouseMove={handleInteraction}
         onTouchMove={handleInteraction}
         onMouseLeave={() => setActiveBarGroup(null)}

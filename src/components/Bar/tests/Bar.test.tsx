@@ -21,6 +21,7 @@ const defaultProps = {
   onFocus: jest.fn(),
   tabIndex: 0,
   rotateZeroBars: false,
+  zeroPosition: 0,
 };
 
 describe('<Bar/>', () => {

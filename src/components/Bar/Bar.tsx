@@ -1,17 +1,13 @@
 import React, {useMemo} from 'react';
-import {animated, SpringValue} from '@react-spring/web';
-import type {ScaleLinear} from 'd3-scale';
+import {animated, useSpring} from '@react-spring/web';
 
-import {ROUNDED_BAR_RADIUS} from '../../constants';
-import {isNumber} from '../../utilities';
-import type {PathInterpolator, NumberInterpolator} from '../../types';
+import {ROUNDED_BAR_RADIUS, BARS_TRANSITION_CONFIG} from '../../constants';
 
 import styles from './Bar.scss';
 
 interface Props {
   color: string;
   x: number;
-  yScale: ScaleLinear<number, number>;
   rawValue: number;
   width: number;
   index: number;
@@ -20,15 +16,17 @@ interface Props {
   tabIndex: number;
   role?: string;
   hasRoundedCorners?: boolean;
-  height?: SpringValue | number;
+  height: number;
   rotateZeroBars: boolean;
+  animationDelay?: number;
+  zeroPosition: number;
+  isAnimated?: boolean;
 }
 
 export const Bar = React.memo(function Bar({
   color,
   x,
   rawValue,
-  yScale,
   width,
   onFocus,
   index,
@@ -38,81 +36,79 @@ export const Bar = React.memo(function Bar({
   height,
   hasRoundedCorners,
   rotateZeroBars,
+  animationDelay = 0,
+  zeroPosition,
+  isAnimated = true,
 }: Props) {
-  const zeroScale = yScale(0);
   const treatAsNegative = rawValue < 0 || (rawValue === 0 && rotateZeroBars);
-  const rotation = treatAsNegative ? 'rotate(180deg)' : 'rotate(0deg)';
-  const xPosition = treatAsNegative ? x + width : x;
-  const radius = hasRoundedCorners
-    ? Math.min(ROUNDED_BAR_RADIUS, width / 2)
-    : 0;
 
   const yPosition = useMemo(() => {
-    if (height == null) return;
-
-    const getYPosition: NumberInterpolator = (value: number) =>
-      treatAsNegative ? zeroScale + value : zeroScale - value;
-
-    if (isNumber(height)) {
-      return getYPosition(height);
-    }
-    return height.to(getYPosition);
-  }, [height, treatAsNegative, zeroScale]);
+    return treatAsNegative ? zeroPosition + height : zeroPosition - height;
+  }, [height, treatAsNegative, zeroPosition]);
 
   const handleFocus = () => {
     if (yPosition == null) return;
-
-    const cy = isNumber(yPosition) ? yPosition : yPosition.get();
-    onFocus({index, cx: x, cy});
+    onFocus({index, cx: x, cy: yPosition});
   };
 
   const style = useMemo(() => {
     if (yPosition == null) return;
 
-    const getStyle = (y: number) =>
-      `translate(${xPosition}px, ${y}px) ${rotation}`;
+    const translate = `translate(${
+      treatAsNegative ? x + width : x
+    }px, ${yPosition}px)`;
 
-    if (isNumber(yPosition)) return {transform: getStyle(yPosition)};
+    const rotate = `rotate(${treatAsNegative ? 180 : 0}deg)`;
 
     return {
-      transform: yPosition.to(getStyle),
+      transform: ` ${translate} ${rotate}`,
     };
-  }, [yPosition, xPosition, rotation]);
+  }, [yPosition, treatAsNegative, x, width]);
 
   const path = useMemo(() => {
-    if (height == null) return;
+    const radius = hasRoundedCorners
+      ? Math.min(ROUNDED_BAR_RADIUS, width / 2)
+      : 0;
 
-    const calculatePath: PathInterpolator = (heightValue: number) => {
-      const radiusOffset = Math.max(0, radius - heightValue);
+    const radiusOffset = Math.max(0, radius - height);
 
-      return heightValue === 0
-        ? ''
-        : `M${radius} 0
+    return height === 0
+      ? ''
+      : `M${radius} 0
         h${width - radius * 2}
         a${radius} ${radius} 0 0 1 ${radius} ${radius - radiusOffset}
-        v${radiusOffset > 0 ? 0 : heightValue - radius}
+        v${radiusOffset > 0 ? 0 : height - radius}
         H0
         V${radius - radiusOffset}
         a${radius} ${radius} 0 0 1 ${radius} -${radius - radiusOffset}
         Z`;
-    };
+  }, [height, width, hasRoundedCorners]);
 
-    if (isNumber(height)) {
-      return calculatePath(height);
-    }
-    return height.to(calculatePath);
-  }, [height, radius, width]);
+  const {transform} = useSpring({
+    from: {transform: 'scaleY(0) translateZ(0)'},
+    to: {transform: 'scaleY(1) translateZ(0)'},
+    delay: isAnimated ? animationDelay : 0,
+    config: BARS_TRANSITION_CONFIG,
+    default: {immediate: !isAnimated},
+  });
 
   return (
-    <animated.path
-      d={path}
-      fill={color}
-      aria-label={ariaLabel}
-      onFocus={handleFocus}
-      tabIndex={tabIndex}
-      role={role}
-      style={style}
-      className={styles.Bar}
-    />
+    <animated.g
+      style={{
+        transform,
+        transformOrigin: `0px ${zeroPosition}px`,
+      }}
+    >
+      <path
+        d={path}
+        fill={color}
+        aria-label={ariaLabel}
+        onFocus={handleFocus}
+        tabIndex={tabIndex}
+        role={role}
+        style={style}
+        className={styles.Bar}
+      />
+    </animated.g>
   );
 });

@@ -251,5 +251,8 @@ export const LIGHT_THEME: Theme = {
   },
 };
 
-export const animationDurationBase = 200;
+export const BASE_ANIMATION_DURATION = 200;
 export const XMLNS = 'http://www.w3.org/2000/svg';
+
+export const LOAD_ANIMATION_DURATION = 500;
+export const BAR_ANIMATION_HEIGHT_BUFFER = 20;
