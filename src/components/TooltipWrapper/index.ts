@@ -6,5 +6,13 @@ export type {
   TooltipPositionOffset,
 } from './types';
 export {TooltipHorizontalOffset, TooltipVerticalOffset} from './types';
-export {getAlteredPosition} from './utilities';
-export {TOOLTIP_POSITION_DEFAULT_RETURN} from './constants';
+export {getAlteredVerticalBarPosition, TOOLTIP_MARGIN} from './utilities';
+export type {
+  AlteredPositionProps,
+  AlteredPositionReturn,
+  AlteredPosition,
+} from './utilities';
+export {
+  TOOLTIP_POSITION_DEFAULT_RETURN,
+  DEFAULT_TOOLTIP_POSITION,
+} from './constants';
