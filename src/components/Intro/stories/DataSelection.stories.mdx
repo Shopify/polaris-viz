@@ -6,3 +6,46 @@ import {Meta} from '@storybook/addon-docs/blocks';
     viewMode: 'docs',
   }}
 />
+
+<h1>Data state and shape checklist for visualizations</h1>
+
+Each visualization and dataset has its own challenges. This checklist is a starting point for states that should be considered for a new visualization. Not all states will apply to each dataset, so check off or remove the states that do not apply to your viz. Consider each state for small, medium and large screen sizes.
+
+<h2>Lifecycle states</h2>
+
+<ul>
+  <li>Data loading</li>
+  <li>Data error</li>
+</ul>
+
+<h2>Data shapes</h2>
+
+<ul>
+  <li>All 0s</li>
+  <li>Low numbers</li>
+  <li>Low numbers and 0s</li>
+  <li>High numbers</li>
+  <li>Low and high numbers</li>
+  <li>Positives only</li>
+  <li>Negatives only</li>
+  <li>Median shop data</li>
+  <li>Positives and negatives</li>
+  <li>Some data points missing/null</li>
+</ul>
+
+<h2>Data volume</h2>
+
+<ul>
+  <li>Few data points</li>
+  <li>Many data points</li>
+  <li>Empty data</li>
+</ul>
+
+<h2>Labels</h2>
+
+<ul>
+  <li>Long xAxis labels</li>
+  <li>Short xAxis labels</li>
+  <li>Long yAxis labels</li>
+  <li>Short yAxis labels</li>
+</ul>

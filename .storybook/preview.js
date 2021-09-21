@@ -17,7 +17,7 @@ export const parameters = {
         'Providers',
         'Charts',
         'Subcomponents',
-        'Playground',
+        'Playground/Playground',
       ],
     },
   },
