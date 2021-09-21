@@ -13,6 +13,7 @@ export {
   LinePreview,
   SquareColorPreview,
   PolarisVizProvider,
+  HorizontalBarChart,
 } from './components';
 
 export type {
@@ -27,6 +28,7 @@ export type {
   MultiSeriesBarChartProps,
   TooltipContentProps,
   PolarisVizProviderProps,
+  HorizontalBarChartProps,
 } from './components';
 
 export {

@@ -40,12 +40,21 @@ export enum LineChartMargin {
 }
 
 export const BARS_TRANSITION_CONFIG = {mass: 1, tension: 150, friction: 16};
+
+export const BARS_SORT_TRANSITION_CONFIG = {
+  mass: 1,
+  tension: 150,
+  friction: 20,
+  restVelocity: 200,
+};
+
 export const LINES_LOAD_ANIMATION_CONFIG = {
   mass: 1,
   tension: 140,
   friction: 18,
 };
 export const MAX_TRAIL_DURATION = 500;
+export const HORIZONTAL_BAR_GROUP_DELAY = 200;
 
 export const MASK_HIGHLIGHT_COLOR = variables.colorWhite;
 export const MASK_SUBDUE_COLOR = '#434343';
@@ -261,3 +270,5 @@ export const XMLNS = 'http://www.w3.org/2000/svg';
 
 export const LOAD_ANIMATION_DURATION = 500;
 export const BAR_ANIMATION_HEIGHT_BUFFER = 20;
+export const DEFAULT_BORDER_RADIUS = 3;
+export const MIN_WIDTH_BORDER_RADIUS = 2;
