@@ -1,6 +1,10 @@
 # Changelog
 
-## Unreleased
+## Unreleased]
+
+### Added
+
+- Added `<HorizontalBarChart />`.
 
 ## [0.22.0] - 2021-10-22
 

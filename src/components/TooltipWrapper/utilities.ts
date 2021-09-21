@@ -4,9 +4,9 @@ import type {Dimensions, Margin} from '../../types';
 import {TooltipHorizontalOffset, TooltipVerticalOffset} from './types';
 
 // The space between the cursor and the tooltip
-const TOOLTIP_MARGIN = 10;
+export const TOOLTIP_MARGIN = 10;
 
-interface AlteredPositionProps {
+export interface AlteredPositionProps {
   currentX: number;
   currentY: number;
   position: TooltipPositionOffset;
@@ -16,16 +16,20 @@ interface AlteredPositionProps {
   bandwidth: number;
 }
 
-interface AlteredPositionReturn {
+export interface AlteredPositionReturn {
   x: number;
   y: number;
 }
+
+export type AlteredPosition = (
+  props: AlteredPositionProps,
+) => AlteredPositionReturn;
 
 // Keep the tooltip within the bounds of the chart.
 // Based on "position" the tooltip will be placed
 // around the chart item so the item should never
 // be obscured by the tooltip.
-export function getAlteredPosition(
+export function getAlteredVerticalBarPosition(
   props: AlteredPositionProps,
 ): AlteredPositionReturn {
   const {currentX, currentY, position} = props;
