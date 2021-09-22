@@ -3,6 +3,8 @@ import imageFile from './polaris-viz.svg';
 import logo from './logo.png';
 import linechart from '../../../../src/components/LineChart/line-chart.png';
 import barChart from '../../../../src/components/BarChart/bar-chart.png';
+import {BarChart, LineChart} from '../../../../src/components';
+import {PolarisVizProvider} from '../../PolarisVizProvider';
 import sparkbar from '../../../../src/components/Sparkbar/sparkbar.png';
 import sparkline from '../../../../src/components/Sparkline/sparkline.png';
 import msbarchart from '../../../../src/components/MultiSeriesBarChart/grouped-bar-example.png';
@@ -28,7 +30,18 @@ import nsbar from '../../../../src/components/NormalizedStackedBarChart/normaliz
   help Shopify merchants better understand their data.
 </h2>
 
+  <PolarisVizProvider themes={{
+        Default: {
+          chartContainer: {
+            padding: '20px',
+            borderRadius: '4px'
+          }
+        },
+      }}>
+
 <table  style={{textAlign: 'left', marginTop: '50px'}}>
+
+<tbody>
 
 <tr>
 
@@ -36,7 +49,19 @@ import nsbar from '../../../../src/components/NormalizedStackedBarChart/normaliz
   <h3 style={{fontWeight: 500}}>Line chart</h3>
   <p>Used to show change over time, comparisons, and trends. <a style={{color: 'white'}} href="">View documentation →</a></p>
 
-  <img style={{width: '90%', margin: '0 auto 1em auto'}} src={linechart} />
+  <div style={{width: '400px', height: '300px'}}>
+
+<BarChart
+  data={[
+    {rawValue: 324.19, label: 'Jan. 1'},
+    {rawValue: 613.29, label: 'Jan. 2'},
+    {rawValue: -422.79, label: 'Jan. 3'},
+    {rawValue: 0, label: 'Jan. 4'},
+    {rawValue: 1, label: 'Jan. 5'},
+  ]}
+/>
+
+</div>
 </td>
 
 <td>
@@ -47,7 +72,21 @@ import nsbar from '../../../../src/components/NormalizedStackedBarChart/normaliz
       View documentation →
     </a>
   </p>
-  <img style={{width: '90%', margin: '0 auto 1em auto'}} src={barChart} />
+  <div style={{width: '400px', height: '300px'}}>
+<LineChart series={[
+    {
+      name: 'Sales',
+      data: [
+    {rawValue: 324.19, label: '2020-01-01'},
+    {rawValue: 613.29, label: '2020-01-02'},
+    {rawValue: -422.79, label: '2020-01-03'},
+    {rawValue: 0, label: '2020-01-04'},
+    {rawValue: 1, label: '2020-01-05'},
+      ],
+    },
+  ]}
+  xAxisOptions={{xAxisLabels: ['Jan. 1', 'Jan. 2', 'Jan. 3', 'Jan. 4', 'Jan. 5']}}/>
+</div>
 </td>
 </tr>
 
@@ -113,6 +152,10 @@ import nsbar from '../../../../src/components/NormalizedStackedBarChart/normaliz
 
 </tr>
 
+</tbody>
+
 </table>
+
+</PolarisVizProvider>
 
 </div>
