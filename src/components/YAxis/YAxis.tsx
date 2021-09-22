@@ -41,6 +41,7 @@ function Axis({ticks, fontSize = FONT_SIZE, width, textAlign, theme}: Props) {
                 background: selectedTheme.yAxis.backgroundColor,
                 padding: PADDING_SIZE,
                 whiteSpace: 'nowrap',
+                fontFeatureSettings: 'tnum',
               }}
             >
               {formattedValue}

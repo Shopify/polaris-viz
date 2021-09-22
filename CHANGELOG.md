@@ -5,6 +5,9 @@
 ### Added
 - Hiding the xAxis is now possible on the `<BarChart />`, `<MultiseriesBarChart />` and `<StackedAreaChart />`
 
+### Fixed
+- xAxis labels are no longer cut off on charts at small widths when they contain mostly numbers
+
 
 ## [0.20.3] - 2021-09-14
 - Fixed the direction of the gradient on the horizontal `<NormalizedStackedBarChart />` legend
