@@ -8,17 +8,18 @@ export function getTextContainerHeight({
   containerWidth: number;
 }) {
   const container = document.createElement('div');
-  container.style.fontSize = `${fontSize}px`;
-  container.style.display = 'inline-block';
-  container.style.visibility = 'hidden';
-  container.style.width = `${containerWidth}px`;
-  container.style.wordBreak = 'break-word';
-  container.style.lineHeight = '1';
+
+  container.style.cssText = `font-size: ${fontSize}px;
+  width: ${containerWidth}px;
+  display: 'inline-block';
+  word-break: break-word;
+  line-height: 1;
+  font-feature-settings: 'tnum';
+  visibility: hidden;`;
+
   document.body.appendChild(container);
   container.innerText = text;
   const height = container.clientHeight;
-
   document.body.removeChild(container);
-
   return height;
 }
