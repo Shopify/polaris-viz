@@ -1,0 +1,357 @@
+import {Meta} from '@storybook/addon-docs/blocks';
+import imageFile from './polaris-viz.svg';
+import chartlogo from './chartlogo.svg';
+import linechart from '../../../../src/components/LineChart/line-chart.png';
+import barChart from '../../../../src/components/BarChart/bar-chart.png';
+import {
+  BarChart,
+  LineChart,
+  StackedAreaChart,
+  NormalizedStackedBarChart,
+  MultiSeriesBarChart,
+  Sparkline,
+  Sparkbar,
+} from '../../../../src/components';
+import {PolarisVizProvider} from '../../PolarisVizProvider';
+import {ComponentContainer} from './components/ComponentContainer.tsx';
+
+<Meta
+  title="Docs/Intro"
+  parameters={{
+    viewMode: 'docs',
+  }}
+/>
+
+<div style={{ margin: '0 auto', maxWidth: '800px', color: 'white'}}>
+
+<div style={{display: 'flex', marginBottom: '50px', alignItems: 'center'}}>
+  <img style={{width: '54px', marginRight: '20px'}} src={chartlogo} />
+
+  <img style={{width: '50%'}} src={imageFile} />
+</div>
+
+<h2 style={{fontWeight: 'normal', fontSize: 16, borderBottom: 0}}>
+  Polaris Viz is a data visualization React component library. It was built to
+  help Shopify merchants better understand their data.
+</h2>
+
+<hr style={{margin: '32px 0'}} />
+
+<div style={{display: 'grid', gridGap: '20px', gridTemplateColumns: 'repeat(2, 1fr)'}}>
+
+  <PolarisVizProvider
+    themes={{
+      Default: {
+        chartContainer: {
+          padding: '20px',
+          borderRadius: '0px 0px 8px 8px'
+        }
+      },
+    }}>
+
+<ComponentContainer
+  title="Bar chart"
+  description="Used for some reasons. "
+  link=""
+  chart={
+    <div style={{width: '100%', height: 'calc(100% - 16px)'}}>
+      <BarChart
+        data={[
+          {rawValue: 324.19, label: 'Jan. 1'},
+          {rawValue: 613.29, label: 'Jan. 2'},
+          {rawValue: 422.79, label: 'Jan. 3'},
+          {rawValue: 0, label: 'Jan. 4'},
+          {rawValue: 1, label: 'Jan. 5'},
+        ]}
+      />
+    </div>
+  }
+/>
+
+<ComponentContainer
+  title="Line chart"
+  description="Used for some reasons. "
+  link=""
+  chart={
+    <LineChart
+      series={[
+        {
+          name: 'Sales',
+          data: [
+            {rawValue: 324.19, label: '2020-01-01'},
+            {rawValue: 613.29, label: '2020-01-02'},
+            {rawValue: -422.79, label: '2020-01-03'},
+            {rawValue: 0, label: '2020-01-04'},
+            {rawValue: 1, label: '2020-01-05'},
+          ],
+        },
+      ]}
+      xAxisOptions={{
+        xAxisLabels: ['Jan. 1', 'Jan. 2', 'Jan. 3', 'Jan. 4', 'Jan. 5'],
+      }}
+    />
+  }
+/>
+
+<ComponentContainer
+  title="StackedAreaChart"
+  description="Used for some reasons. "
+  link=""
+  chart={
+    <StackedAreaChart
+      xAxisOptions={{
+        labels: [
+          'January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+        ],
+      }}
+      series={[
+        {
+          name: 'First-time',
+          data: [
+            {label: 'January', rawValue: 4237},
+            {label: 'February', rawValue: 5024},
+            {label: 'March', rawValue: 5730},
+            {label: 'April', rawValue: 5587},
+            {label: 'May', rawValue: 5303},
+            {label: 'June', rawValue: 5634},
+            {label: 'July', rawValue: 3238},
+          ],
+          color: '#47c1bf',
+        },
+        {
+          name: 'Returning',
+          data: [
+            {label: 'January', rawValue: 5663},
+            {label: 'February', rawValue: 7349},
+            {label: 'March', rawValue: 9795},
+            {label: 'April', rawValue: 7396},
+            {label: 'May', rawValue: 7028},
+            {label: 'June', rawValue: 12484},
+            {label: 'July', rawValue: 4878},
+          ],
+          color: '#50248f',
+        },
+      ]}
+    />
+  }
+/>
+
+<ComponentContainer
+  title="Normalized stacked bar chart"
+  description="Used for some reasons. "
+  link=""
+  chart={
+    <NormalizedStackedBarChart
+      data={[
+        {
+          label: 'Direct',
+          value: 200,
+          formattedValue: '$200',
+          comparisonMetric: {
+            metric: '5',
+            trend: 'positive',
+            accessibilityLabel: 'Increase of',
+          },
+        },
+        {
+          label: 'Facebook',
+          value: 100,
+          formattedValue: '$100',
+          comparisonMetric: {
+            metric: '5',
+            trend: 'negative',
+            accessibilityLabel: 'Decrease of',
+          },
+        },
+      ]}
+    />
+  }
+/>
+
+<ComponentContainer
+  title="Multiseries bar chart (grouped)"
+  description="Used for some reasons. "
+  link=""
+  chart={
+    <MultiSeriesBarChart
+      xAxisOptions={{
+        labels: ['Monday', 'Tuesday', 'Wednesday'],
+      }}
+      series={[
+        {
+          name: 'Breakfast',
+          data: [
+            {label: 'Monday', rawValue: 3},
+            {label: 'Tuesday', rawValue: -7},
+            {label: 'Wednesday', rawValue: 4},
+          ],
+        },
+        {
+          name: 'Lunch',
+          data: [
+            {label: 'Monday', rawValue: 4},
+            {label: 'Tuesday', rawValue: 0},
+            {label: 'Wednesday', rawValue: 5},
+          ],
+        },
+        {
+          name: 'Dinner',
+          data: [
+            {label: 'Monday', rawValue: 7},
+            {label: 'Tuesday', rawValue: 0},
+            {label: 'Wednesday', rawValue: 6},
+          ],
+        },
+      ]}
+    />
+  }
+/>
+
+<ComponentContainer
+  title="Multiseries bar chart (stacked)"
+  description="Used for some reasons. "
+  link=""
+  chart={
+    <MultiSeriesBarChart
+      barOptions={{isStacked: true}}
+      xAxisOptions={{
+        labels: ['Monday', 'Tuesday', 'Wednesday'],
+      }}
+      series={[
+        {
+          name: 'Breakfast',
+          data: [
+            {label: 'Monday', rawValue: 3},
+            {label: 'Tuesday', rawValue: -7},
+            {label: 'Wednesday', rawValue: 4},
+          ],
+        },
+        {
+          name: 'Lunch',
+          data: [
+            {label: 'Monday', rawValue: 4},
+            {label: 'Tuesday', rawValue: 0},
+            {label: 'Wednesday', rawValue: 5},
+          ],
+        },
+        {
+          name: 'Dinner',
+          data: [
+            {label: 'Monday', rawValue: 7},
+            {label: 'Tuesday', rawValue: 0},
+            {label: 'Wednesday', rawValue: 6},
+          ],
+        },
+      ]}
+    />
+  }
+/>
+
+<ComponentContainer
+  title="Sparkline"
+  description="Used for some reasons. "
+  link=""
+  chart={
+    <div
+      style={{
+        width: '200px',
+        height: '150px',
+        margin: '20% auto',
+      }}
+    >
+      <Sparkline
+        series={[
+          {
+            hasPoint: true,
+            data: [
+              {x: 0, y: 100},
+              {x: 1, y: 200},
+              {x: 2, y: 300},
+              {x: 3, y: 400},
+              {x: 4, y: 400},
+              {x: 5, y: 1000},
+              {x: 6, y: 200},
+              {x: 7, y: 800},
+              {x: 8, y: 900},
+              {x: 9, y: 200},
+              {x: 10, y: 400},
+            ],
+          },
+          {
+            lineStyle: 'dashed',
+            area: null,
+            data: [
+              {x: 0, y: 200},
+              {x: 1, y: 200},
+              {x: 2, y: 200},
+              {x: 3, y: 200},
+              {x: 4, y: 200},
+              {x: 5, y: 200},
+              {x: 6, y: 200},
+              {x: 7, y: 200},
+              {x: 8, y: 200},
+              {x: 9, y: 200},
+              {x: 10, y: 200},
+            ],
+          },
+        ]}
+      />
+    </div>
+  }
+/>
+
+<ComponentContainer
+  title="Sparkbar"
+  description="Used for some reasons. "
+  link=""
+  chart={
+    <div
+      style={{
+        width: '200px',
+        height: '150px',
+        margin: '20% auto',
+      }}
+    >
+      <Sparkbar
+        comparison={[
+          {x: 0, y: 2000},
+          {x: 1, y: 2000},
+          {x: 2, y: 2000},
+          {x: 3, y: 2000},
+          {x: 4, y: 2000},
+          {x: 5, y: 2000},
+          {x: 6, y: 2000},
+          {x: 7, y: 2000},
+          {x: 8, y: 2000},
+          {x: 9, y: 2000},
+          {x: 10, y: 2000},
+        ]}
+        data={[
+          {value: 100},
+          {value: 200},
+          {value: 300},
+          {value: 400},
+          {value: 400},
+          {value: 100},
+          {value: 2000},
+          {value: 800},
+          {value: 900},
+          {value: 200},
+          {value: 400},
+        ]}
+      />
+    </div>
+  }
+/>
+
+</PolarisVizProvider>
+
+</div>
+
+</div>
