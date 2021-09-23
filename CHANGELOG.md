@@ -2,11 +2,18 @@
 
 ## Unreleased
 
+## [0.21.1] - 2021-09-23
+
 ### Added
 - Hiding the xAxis is now possible on the `<BarChart />`, `<MultiseriesBarChart />` and `<StackedAreaChart />`
+- Added logic to push `<TooltipContainer>` away from `<BarChart />` & `<MultiseriesBarChart />` to not obscure bars.
 
 ### Fixed
 - xAxis labels are no longer cut off on charts at small widths when they contain mostly numbers
+- Fixed measurement logic around labels for small charts.
+
+### Changed
+- Improved performance when mounting data sets in `<BarChart />` & `<MultiseriesBarChart />`.
 
 
 ## [0.20.3] - 2021-09-14
