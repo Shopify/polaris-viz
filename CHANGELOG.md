@@ -1,6 +1,8 @@
 # Changelog
 
 ## Unreleased
+### Fixed
+- Charts at very small sizes no longer get cut off at the bottom
 
 ## [0.21.1] - 2021-09-23
 
