@@ -16,9 +16,6 @@ export function ComponentContainer({
   const centerStyles = {
     width: '100%',
     height: '250px',
-    // display: 'flex',
-    // justifyContent: 'center',
-    // alignItems: 'center',
     display: 'grid',
     alignContent: 'center',
     justifyContent: 'center',
