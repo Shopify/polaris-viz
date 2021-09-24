@@ -44,34 +44,31 @@ import {ComponentContainer} from './components/ComponentContainer.tsx';
       Default: {
         chartContainer: {
           padding: '20px',
-          borderRadius: '0px 0px 8px 8px'
         }
       },
     }}>
 
 <ComponentContainer
   title="Bar chart"
-  description="Used for some reasons. "
-  link=""
+  description="Used to show comparison across categories. "
+  link="/?path=/story/charts-barchart"
   chart={
-    <div style={{width: '100%', height: 'calc(100% - 16px)'}}>
-      <BarChart
-        data={[
-          {rawValue: 324.19, label: 'Jan. 1'},
-          {rawValue: 613.29, label: 'Jan. 2'},
-          {rawValue: 422.79, label: 'Jan. 3'},
-          {rawValue: 0, label: 'Jan. 4'},
-          {rawValue: 1, label: 'Jan. 5'},
-        ]}
-      />
-    </div>
+    <BarChart
+      data={[
+        {rawValue: 324.19, label: 'Jan. 1'},
+        {rawValue: 613.29, label: 'Jan. 2'},
+        {rawValue: 1000, label: 'Jan. 3'},
+        {rawValue: 0, label: 'Jan. 4'},
+        {rawValue: 1, label: 'Jan. 5'},
+      ]}
+    />
   }
 />
 
 <ComponentContainer
   title="Line chart"
-  description="Used for some reasons. "
-  link=""
+  description="Used to show change over time, comparisons, and trends. "
+  link="?path=/story/charts-linechart"
   chart={
     <LineChart
       series={[
@@ -95,8 +92,8 @@ import {ComponentContainer} from './components/ComponentContainer.tsx';
 
 <ComponentContainer
   title="StackedAreaChart"
-  description="Used for some reasons. "
-  link=""
+  description="Used to compare multiple series of data and display the total value. "
+  link="?path=/story/charts-stackedareachart"
   chart={
     <StackedAreaChart
       xAxisOptions={{
@@ -122,7 +119,6 @@ import {ComponentContainer} from './components/ComponentContainer.tsx';
             {label: 'June', rawValue: 5634},
             {label: 'July', rawValue: 3238},
           ],
-          color: '#47c1bf',
         },
         {
           name: 'Returning',
@@ -135,7 +131,6 @@ import {ComponentContainer} from './components/ComponentContainer.tsx';
             {label: 'June', rawValue: 12484},
             {label: 'July', rawValue: 4878},
           ],
-          color: '#50248f',
         },
       ]}
     />
@@ -144,10 +139,12 @@ import {ComponentContainer} from './components/ComponentContainer.tsx';
 
 <ComponentContainer
   title="Normalized stacked bar chart"
-  description="Used for some reasons. "
-  link=""
+  description="Used for positive datasets with two to four items. "
+  link="?path=/story/charts-normalizedstackedbarchart"
+  center
   chart={
     <NormalizedStackedBarChart
+      orientation="vertical"
       data={[
         {
           label: 'Direct',
@@ -176,8 +173,8 @@ import {ComponentContainer} from './components/ComponentContainer.tsx';
 
 <ComponentContainer
   title="Multiseries bar chart (grouped)"
-  description="Used for some reasons. "
-  link=""
+  description="Used to show a grouped comparison of different types, across categories or time. "
+  link="?path=/story/charts-multiseriesbarchart"
   chart={
     <MultiSeriesBarChart
       xAxisOptions={{
@@ -215,8 +212,8 @@ import {ComponentContainer} from './components/ComponentContainer.tsx';
 
 <ComponentContainer
   title="Multiseries bar chart (stacked)"
-  description="Used for some reasons. "
-  link=""
+  description="Used to show a stacked comparison of different types, across categories or time. "
+  link="/?path=/story/charts-multiseriesbarchart--stacked"
   chart={
     <MultiSeriesBarChart
       barOptions={{isStacked: true}}
@@ -255,16 +252,11 @@ import {ComponentContainer} from './components/ComponentContainer.tsx';
 
 <ComponentContainer
   title="Sparkline"
-  description="Used for some reasons. "
-  link=""
+  description="Used in small sizes to show how a metric has performed over time. "
+  link="/?path=/story/charts-sparkline"
+  center
   chart={
-    <div
-      style={{
-        width: '200px',
-        height: '150px',
-        margin: '20% auto',
-      }}
-    >
+    <div style={{width: '250px', height: '180px'}}>
       <Sparkline
         series={[
           {
@@ -308,16 +300,11 @@ import {ComponentContainer} from './components/ComponentContainer.tsx';
 
 <ComponentContainer
   title="Sparkbar"
-  description="Used for some reasons. "
-  link=""
+  description="Used in small sizes to show how a metric has performed over time. "
+  link="/?path=/story/charts-sparkbar"
+  center
   chart={
-    <div
-      style={{
-        width: '200px',
-        height: '150px',
-        margin: '20% auto',
-      }}
-    >
+    <div style={{width: '250px', height: '180px'}}>
       <Sparkbar
         comparison={[
           {x: 0, y: 2000},

@@ -11,9 +11,7 @@ export const parameters = {
     storySort: {
       order: [
         'Docs',
-        'Docs/Intro',
-        'Docs/Getting started',
-        'Docs/Viz selection',
+        ['Intro', 'Getting started', 'Viz selection'],
         'Providers',
         'Charts',
         'Subcomponents',

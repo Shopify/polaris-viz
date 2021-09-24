@@ -26,7 +26,7 @@ export const EMPTY_STATE_CHART_MIN = 0;
 export const EMPTY_STATE_CHART_MAX = 10;
 
 export enum BarChartMargin {
-  Top = 5,
+  Top = SPACING_TIGHT,
   Left = 0,
   Bottom = BELOW_X_AXIS_MARGIN,
   Right = Number(variables.spacingLoose),

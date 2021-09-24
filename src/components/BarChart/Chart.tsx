@@ -256,9 +256,9 @@ export function Chart({
     >
       <svg
         xmlns={XMLNS}
-        viewBox={`0 ${BAR_ANIMATION_HEIGHT_BUFFER * -1} ${width} ${
-          height + BAR_ANIMATION_HEIGHT_BUFFER * 2
-        }`}
+        width={width}
+        height={height}
+        style={{overflow: 'visible'}}
         onMouseMove={handleInteraction}
         onTouchMove={handleInteraction}
         onMouseLeave={() => setActiveBar(null)}

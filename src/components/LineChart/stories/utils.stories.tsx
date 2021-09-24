@@ -26,7 +26,7 @@ export const series = [
       {rawValue: 797, label: '2020-04-02T12:00:00'},
       {rawValue: 234, label: '2020-04-03T12:00:00'},
       {rawValue: 534, label: '2020-04-04T12:00:00'},
-      {rawValue: -132, label: '2020-04-05T12:00:00'},
+      {rawValue: 132, label: '2020-04-05T12:00:00'},
       {rawValue: 159, label: '2020-04-06T12:00:00'},
       {rawValue: 239, label: '2020-04-07T12:00:00'},
       {rawValue: 708, label: '2020-04-08T12:00:00'},

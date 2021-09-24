@@ -5,12 +5,30 @@ export function ComponentContainer({
   title,
   description,
   link,
+  center,
 }: {
   chart: React.Component;
   title: string;
   description: string;
   link: string;
+  center?: boolean;
 }) {
+  const centerStyles = {
+    width: '100%',
+    height: '250px',
+    // display: 'flex',
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    display: 'grid',
+    alignContent: 'center',
+    justifyContent: 'center',
+  };
+
+  const styles = {
+    width: '100%',
+    height: '250px',
+  };
+
   return (
     <div
       style={{
@@ -35,7 +53,7 @@ export function ComponentContainer({
         </p>
       </div>
 
-      <div style={{width: '100%', height: '250px'}}>{chart}</div>
+      <div style={center ? {...centerStyles} : {...styles}}>{chart}</div>
     </div>
   );
 }

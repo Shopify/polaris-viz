@@ -35,7 +35,7 @@ export function useYScale({
     } else {
       const roundedDownMin = yScale.copy().nice(maxTicks).ticks(maxTicks)[0];
 
-      yScale.domain([roundedDownMin, max]);
+      yScale.domain([Math.min(roundedDownMin, min), max]);
     }
 
     const filteredTicks = integersOnly
