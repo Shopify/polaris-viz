@@ -389,7 +389,6 @@ export function Chart({
               />
             ) : null;
           })}
-          ;
         </g>
 
         <g transform={`translate(${chartStartPosition},${Margin.Top})`}>

@@ -11,6 +11,7 @@
 ### Fixed
 - xAxis labels are no longer cut off on charts at small widths when they contain mostly numbers
 - Fixed measurement logic around labels for small charts.
+- Removed stray semi-colons in BarChart component
 
 ### Changed
 - Improved performance when mounting data sets in `<BarChart />` & `<MultiseriesBarChart />`.
