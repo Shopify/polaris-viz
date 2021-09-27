@@ -132,7 +132,6 @@ export function BarGroup({
                 height={height + BAR_ANIMATION_HEIGHT_BUFFER * 2}
                 fill={`url(#${gradientId}${index})`}
               />
-              ;
             </g>
           );
         })}
