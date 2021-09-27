@@ -240,11 +240,11 @@ describe('useYScale', () => {
 
     mount(<TestComponent />);
 
-    // Check that it's called with the min and max data the first time
+    // Check that it's called with the min and max data
     expect(domainSpy).toHaveBeenNthCalledWith(1, [0, 10]);
 
     // Check that it's called with the first tick and max data the second time
-    expect(domainSpy).toHaveBeenNthCalledWith(2, [firstTick, 10]);
+    expect(domainSpy).toHaveBeenNthCalledWith(2, [0, 10]);
   });
 
   describe('integersOnly', () => {
