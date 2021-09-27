@@ -2,6 +2,7 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {mountWithProvider} from 'test-utilities';
 import {mockDefaultTheme} from 'test-utilities/mount-with-provider';
+import {scaleLinear} from 'd3-scale';
 
 import {Line} from '../Line';
 
@@ -44,6 +45,8 @@ const mockProps = {
     dottedStrokeColor: '#ffffff',
   },
   color,
+  xScale: scaleLinear(),
+  yScale: scaleLinear(),
 };
 
 describe('<Line />', () => {

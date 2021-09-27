@@ -1,11 +1,12 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import type {Line as D3Line} from 'd3-shape';
+import {useSpring, animated} from '@react-spring/web';
 
 import {useTheme} from '../../../../hooks';
 import type {SeriesWithDefaults} from '../../types';
-import {ANIMATION_DELAY, FAST_DURATION, SLOW_DURATION} from '../../constants';
+import {ANIMATION_DELAY} from '../../constants';
+import {LINES_LOAD_ANIMATION_CONFIG} from '../../../../constants';
 
-import styles from './Line.scss';
 import {StrokeDasharray} from './constants';
 
 interface Props {
@@ -14,6 +15,8 @@ interface Props {
   index: number;
   lineGenerator: D3Line<{rawValue: number}>;
   color: string;
+
+  children?: ReactNode;
   theme?: string;
 }
 
@@ -24,33 +27,42 @@ export const Line = React.memo(function Shape({
   lineGenerator,
   color,
   theme,
+  children,
 }: Props) {
   const selectedTheme = useTheme(theme);
   const path = lineGenerator(series.data);
 
-  const animationDelay = index * ANIMATION_DELAY;
-  const animationDuration =
-    series.data.length > 1000 ? SLOW_DURATION : FAST_DURATION;
+  const isSolidLine = series.lineStyle == null || series.lineStyle === 'solid';
+
+  const styles = useSpring({
+    from: isSolidLine ? {transform: 'scaleY(0)'} : {opacity: 0},
+    to: isSolidLine ? {transform: 'scaleY(1)'} : {opacity: 1},
+    delay: isSolidLine ? index * ANIMATION_DELAY : 0,
+    duration: 500,
+    config: LINES_LOAD_ANIMATION_CONFIG,
+  });
 
   if (path == null) {
     return null;
   }
 
   return (
-    <path
-      d={path}
-      style={{
-        animationDelay: `${animationDelay}s`,
-        animationDuration: `${animationDuration}s`,
-      }}
-      fill="none"
-      strokeWidth={`${selectedTheme.line.width}px`}
-      paintOrder="stroke"
-      stroke={color}
-      strokeLinejoin="round"
-      strokeLinecap="round"
-      strokeDasharray={StrokeDasharray[series.lineStyle]}
-      className={isAnimated ? styles.AnimatedPath : undefined}
-    />
+    <animated.g
+      style={
+        isAnimated ? {...styles, transformOrigin: 'bottom center'} : undefined
+      }
+    >
+      <path
+        d={path}
+        fill="none"
+        strokeWidth={`${selectedTheme.line.width}px`}
+        paintOrder="stroke"
+        stroke={color}
+        strokeLinejoin="round"
+        strokeLinecap="round"
+        strokeDasharray={StrokeDasharray[series.lineStyle]}
+      />
+      {children}
+    </animated.g>
   );
 });

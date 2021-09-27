@@ -403,17 +403,6 @@ export function Chart({
 
             return (
               <React.Fragment key={`${name}-${index}`}>
-                {areaColor != null ? (
-                  <GradientArea
-                    series={singleSeries}
-                    yScale={yScale}
-                    xScale={xScale}
-                    isAnimated={isAnimated}
-                    index={index}
-                    hasSpline={selectedTheme.line.hasSpline}
-                  />
-                ) : null}
-
                 {isGradientType(color) ? (
                   <defs>
                     <LinearGradient
@@ -432,7 +421,16 @@ export function Chart({
                   index={index}
                   lineGenerator={lineGenerator}
                   theme={theme}
-                />
+                >
+                  {areaColor != null ? (
+                    <GradientArea
+                      series={singleSeries}
+                      yScale={yScale}
+                      xScale={xScale}
+                      hasSpline={selectedTheme.line.hasSpline}
+                    />
+                  ) : null}
+                </Line>
               </React.Fragment>
             );
           })}

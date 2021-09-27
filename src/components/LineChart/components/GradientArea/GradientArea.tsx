@@ -4,30 +4,19 @@ import {area} from 'd3-shape';
 
 import {LinearGradient} from '../../../../components';
 import {uniqueId, curveStepRounded} from '../../../../utilities';
-import {ANIMATION_DELAY, SLOW_DURATION, FAST_DURATION} from '../../constants';
 import type {Data} from '../../../../types';
-import type {Series} from '../../types';
+import type {SeriesWithDefaults} from '../../types';
 
 import {getGradientDetails} from './utilities/get-gradient-details';
-import styles from './GradientArea.scss';
 
 interface Props {
-  series: Series;
+  series: SeriesWithDefaults;
   yScale: ScaleLinear<number, number>;
   xScale: ScaleLinear<number, number>;
   hasSpline: boolean;
-  isAnimated: boolean;
-  index: number;
 }
 
-export function GradientArea({
-  series,
-  yScale,
-  xScale,
-  hasSpline,
-  isAnimated,
-  index,
-}: Props) {
+export function GradientArea({series, yScale, xScale, hasSpline}: Props) {
   const gradientId = useMemo(() => uniqueId('gradient'), []);
   const maskId = useMemo(() => uniqueId('mask'), []);
   const {data, areaColor} = series;
@@ -51,12 +40,6 @@ export function GradientArea({
     ...gradientStop,
     color: areaColor,
   }));
-
-  const animationDelay =
-    data.length > 1000
-      ? index * ANIMATION_DELAY + SLOW_DURATION
-      : index * ANIMATION_DELAY + FAST_DURATION;
-
   return (
     <React.Fragment>
       <defs>
@@ -98,20 +81,13 @@ export function GradientArea({
         />
       </defs>
 
-      <g
-        className={isAnimated ? styles.FadeInArea : undefined}
-        style={{
-          animationDelay: `${animationDelay}s`,
-        }}
-      >
-        <path
-          d={areaShape}
-          fill={`url(#${gradientId})`}
-          mask={`url(#${maskId})`}
-          strokeWidth="0"
-          stroke={areaColor}
-        />
-      </g>
+      <path
+        d={areaShape}
+        fill={`url(#${gradientId})`}
+        mask={`url(#${maskId})`}
+        strokeWidth="0"
+        stroke={areaColor}
+      />
     </React.Fragment>
   );
 }

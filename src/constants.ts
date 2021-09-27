@@ -40,6 +40,11 @@ export enum LineChartMargin {
 }
 
 export const BARS_TRANSITION_CONFIG = {mass: 1, tension: 150, friction: 16};
+export const LINES_LOAD_ANIMATION_CONFIG = {
+  mass: 1,
+  tension: 140,
+  friction: 18,
+};
 export const MAX_TRAIL_DURATION = 500;
 
 export const MASK_HIGHLIGHT_COLOR = variables.colorWhite;

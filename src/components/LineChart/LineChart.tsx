@@ -165,7 +165,7 @@ export function LineChart({
       : seriesColor;
 
     return {
-      lineStyle: selectedTheme.line.style,
+      lineStyle: series.lineStyle ?? selectedTheme.line.style,
       areaColor: isSolidLine
         ? changeColorOpacity(areaColor as string, 0.5)
         : undefined,
