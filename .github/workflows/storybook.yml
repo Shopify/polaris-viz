@@ -17,7 +17,7 @@ jobs:
           node-version: 12.20.1
           cache: 'yarn'
       - name: Install and Build 🔧
-        run:
+        run: |
           yarn
           yarn run build-storybook
       - name: Deploy 🚀
