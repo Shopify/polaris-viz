@@ -1,21 +1,14 @@
 {
-  "extends": "@shopify/typescript-configs/library",
+  "extends": "@shopify/typescript-configs/library.json",
   "compilerOptions": {
     "baseUrl": "./src",
-    "rootDir": "./",
-    "target": "ES5",
-    "declarationDir": "types",
-    "declarationMap": false,
-    "jsx": "react-native",
+    "rootDir": ".",
+    "outDir": "./build/ts",
     "strict": true,
     "importHelpers": false,
-    "skipLibCheck": true,
     "incremental": true,
-    "noEmit": true,
-    "noEmitHelpers": false,
-    "isolatedModules": true,
     "importsNotUsedAsValues": "error",
     "strictFunctionTypes": false
   },
-  "include": ["./config/typescript", "./src", "./tests"]
+  "include": ["./src", "./tests", "loom.config.ts"]
 }
