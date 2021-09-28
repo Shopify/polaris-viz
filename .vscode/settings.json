@@ -13,18 +13,15 @@
     "**/.svn": true,
     "**/node_modules": true,
     ".{dev,shadowenv.d}": true,
-    "build-intermediate/": true,
     "build/": true,
-    "docs/": true,
-    "esnext/": true,
     "index.*": true,
-    "sandbox": true,
     "styles.{css,min.css,scss}": true,
-    "styles/": true,
-    "types/": true
+    "types/": true,
+    ".loom": true
   },
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
   "javascript.validate.enable": false,
-  "jest.autoEnable": false,
   "scss.validate": false,
   "search.exclude": {
     "**/bower_components": true,
@@ -40,5 +37,6 @@
     "styles/": true,
     "types/": true
   },
+  "typescript.tsserver.maxTsServerMemory": 8000,
   "typescript.tsdk": "./node_modules/typescript/lib"
 }

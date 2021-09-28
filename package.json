@@ -8,26 +8,24 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "index",
-  "types": "types/index.d.ts",
+  "main": "build/cjs/index.js",
+  "module": "build/esm/index.mjs",
+  "esnext": "build/esnext/index.esnext",
+  "types": "build/ts/index.d.ts",
   "scripts": {
     "size": "yarn run build && size-limit",
-    "lint": "sewing-kit lint",
-    "format": "sewing-kit format",
-    "type-check": "sewing-kit type-check",
-    "test": "sewing-kit test",
+    "lint": "loom lint",
+    "format": "loom lint --fix",
+    "type-check": "loom type-check",
+    "test": "loom test",
     "test:coverage": "CI=true yarn test --coverage",
-    "test:debug:chrome": "osascript -e 'tell app \"Google Chrome\" to open location \"chrome://inspect\"' && sewing-kit-debug test --debug",
+    "test:debug:chrome": "osascript -e 'tell app \"Google Chrome\" to open location \"chrome://inspect\"' && loom test --debug",
     "posttest:coverage": "yarn open:coverage",
     "open:coverage": "open build/coverage/index.html",
     "test:ci": "yarn test --coverage",
     "check": "npm-run-all lint type-check test",
     "check:ci": "npm-run-all lint type-check test:ci",
-    "clean": "rimraf build esnext types \"build-intermediate\" \"index.*\"",
-    "clean:build": "rimraf \"build/!(cache|coverage)\" esnext types \"build-intermediate\" \"index.*\"",
-    "optimize": "sewing-kit optimize",
-    "prebuild": "npm-run-all clean:build optimize",
-    "build": "node ./scripts/build.js",
+    "build": "loom build",
     "prebuild-consumer": "yarn run build",
     "build-consumer": "node ./scripts/build-consumer",
     "prepublish": "in-publish && yarn run build || :",
@@ -35,20 +33,6 @@
     "build-storybook": "build-storybook -o docs-build  -s public",
     "add:story": "node ./.storybook/cli.js"
   },
-  "size-limit": [
-    {
-      "name": "cjs",
-      "path": "build/polaris-viz.js"
-    },
-    {
-      "name": "esm",
-      "path": "build/polaris-viz.es.js"
-    },
-    {
-      "name": "css",
-      "path": "build/polaris-viz.css"
-    }
-  ],
   "stylelint": {
     "extends": [
       "@shopify/stylelint-plugin/prettier"
@@ -75,13 +59,21 @@
     "ios >= 9"
   ],
   "devDependencies": {
-    "@babel/core": "^7.14.3",
-    "@babel/node": "^7.14.2",
     "@juggle/resize-observer": "^3.3.1",
     "@shopify/babel-preset": "^24.0.1",
+    "@shopify/browserslist-config": "^3.0.0",
+    "@shopify/eslint-plugin": "^40.4.0",
+    "@shopify/loom": "^0.7.0",
+    "@shopify/loom-cli": "^0.7.0",
+    "@shopify/loom-plugin-build-library": "^0.3.2",
+    "@shopify/loom-plugin-eslint": "^0.5.0",
+    "@shopify/loom-plugin-jest": "^0.6.0",
+    "@shopify/loom-plugin-prettier": "^0.2.0",
+    "@shopify/loom-plugin-stylelint": "^0.5.0",
     "@shopify/postcss-plugin": "^3.1.1",
     "@shopify/react-testing": "^3.0.1",
-    "@shopify/sewing-kit": "^2.1.2",
+    "@shopify/stylelint-plugin": "^10.2.0",
+    "@shopify/typescript-configs": "^5.0.0",
     "@size-limit/preset-big-lib": "^5.0.1",
     "@storybook/addon-actions": "^6.3.8",
     "@storybook/addon-essentials": "^6.3.8",
@@ -97,15 +89,11 @@
     "@types/node": "^12.7.5",
     "@types/react": "^16.8.15",
     "@types/react-dom": "^16.8.4",
-    "babel-loader": "^8.2.2",
-    "change-case": "^3.1.0",
     "copyfiles": "^2.1.1",
-    "cssnano": "^4.1.10",
-    "csstype": "^2.6.8",
+    "eslint": "^7.32.0",
     "fs-extra": "^7.0.1",
     "glob": "^7.1.4",
     "in-publish": "^2.0.0",
-    "ink": "^2.3.0",
     "js-yaml": "^3.13.1",
     "npm-run-all": "^4.1.5",
     "postcss": "^7.0.18",
@@ -119,12 +107,6 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "rimraf": "^3.0.0",
-    "rollup": "^1.10.1",
-    "rollup-plugin-babel": "^4.3.3",
-    "rollup-plugin-commonjs": "^9.3.4",
-    "rollup-plugin-json": "^4.0.0",
-    "rollup-plugin-node-resolve": "^4.2.3",
-    "rollup-pluginutils": "^2.8.2",
     "sass-loader": "^10.1.1",
     "semver": "^6.3.0",
     "shelljs": "^0.8.3",
