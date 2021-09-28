@@ -1,5 +1,5 @@
 import React from 'react';
-import {Story, Meta} from '@storybook/react';
+import type {Story, Meta} from '@storybook/react';
 
 import {StackedAreaChart, StackedAreaChartProps} from '../StackedAreaChart';
 
@@ -7,13 +7,12 @@ import {data, labels, formatYAxisLabel} from './utils.stories';
 import {colorPurpleDark, colorTeal} from '../../../constants';
 import {THEME_CONTROL_ARGS} from '../../../storybook';
 
-import {
-  generateMultipleSeries,
-  generateLabels,
-} from '../../../../documentation/utilities';
+import {generateMultipleSeries} from '../../../../documentation/utilities';
+import type {RenderTooltipContentData} from '../types';
+
 const tooltipContent = {
   empty: undefined,
-  Custom: ({data}) => (
+  Custom: ({data}: RenderTooltipContentData) => (
     <div
       style={{
         background: 'black',
@@ -25,7 +24,7 @@ const tooltipContent = {
         fontSize: 12,
       }}
     >
-      {data.map(() => (
+      {data.map((x) => (
         <div>{`${x.label}: ${x.value}`}</div>
       ))}
     </div>

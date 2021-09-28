@@ -1,7 +1,7 @@
+import type {TooltipData} from 'components/LineChart/types';
 import React from 'react';
 
 import {TooltipContent} from '../components/TooltipContent/TooltipContent';
-import {LineChartProps} from '../LineChart';
 
 export const gradient = [
   {
@@ -26,7 +26,7 @@ export const series = [
       {rawValue: 797, label: '2020-04-02T12:00:00'},
       {rawValue: 234, label: '2020-04-03T12:00:00'},
       {rawValue: 534, label: '2020-04-04T12:00:00'},
-      {rawValue: -132, label: '2020-04-05T12:00:00'},
+      {rawValue: 132, label: '2020-04-05T12:00:00'},
       {rawValue: 159, label: '2020-04-06T12:00:00'},
       {rawValue: 239, label: '2020-04-07T12:00:00'},
       {rawValue: 708, label: '2020-04-08T12:00:00'},
@@ -263,9 +263,7 @@ export function formatYAxisLabel(value: number) {
   }).format(value);
 }
 
-export const renderTooltipContent: LineChartProps['renderTooltipContent'] = ({
-  data,
-}) => {
+export const renderTooltipContent: any = ({data}: {data: TooltipData[]}) => {
   function formatTooltipValue(value: number) {
     return new Intl.NumberFormat('en', {
       style: 'currency',

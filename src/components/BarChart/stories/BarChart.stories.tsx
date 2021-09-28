@@ -1,5 +1,5 @@
 import React from 'react';
-import {Story, Meta} from '@storybook/react';
+import type {Story, Meta} from '@storybook/react';
 
 import {BarChart, BarChartProps, PolarisVizProvider} from '../../../components';
 
@@ -8,7 +8,7 @@ import {THEME_CONTROL_ARGS} from '../../../storybook';
 
 const tooltipContent = {
   empty: undefined,
-  Custom: ({label, value}) => (
+  Custom: ({label, value}: {label: string; value: number}) => (
     <div
       style={{
         background: 'black',
@@ -239,7 +239,7 @@ LargeVolume.args = {
   ...defaultProps,
   data: Array(1000)
     .fill(null)
-    .map((x) => {
+    .map(() => {
       return {
         rawValue: Math.random() * Math.random() * 100,
         label: Math.random().toString(),

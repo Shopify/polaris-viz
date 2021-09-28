@@ -1,7 +1,7 @@
 export const generateDataSet = (dataLength: number) => {
   return Array(dataLength)
     .fill(null)
-    .map((x) => {
+    .map(() => {
       return {
         rawValue: Math.random() * Math.random() * 100,
         label: 'Some value',
@@ -31,12 +31,12 @@ export const generateLabels = (dataLength: number) => {
 
   return Array(dataLength)
     .fill(null)
-    .map((x) => {
+    .map(() => {
       return names[Math.floor(Math.random() * names.length)];
     });
 };
 
-export const generateMultipleSeries = (quantity) => {
+export const generateMultipleSeries = (quantity: number) => {
   return Array(quantity)
     .fill(null)
     .map((_, index) => ({

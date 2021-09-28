@@ -2,7 +2,7 @@ import React from 'react';
 
 import {BarChartTooltipContent} from '../../../components';
 
-import {Annotation} from '../types';
+import type {Annotation} from '../types';
 
 export function formatYAxisLabel(value: number) {
   return new Intl.NumberFormat('en-CA', {

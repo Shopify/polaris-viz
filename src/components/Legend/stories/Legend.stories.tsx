@@ -1,7 +1,8 @@
 import React from 'react';
-import {Story, Meta} from '@storybook/react';
+import type {Story, Meta} from '@storybook/react';
 
-import {Legend, LegendProps} from '../../../components';
+import {Legend} from '../../../components';
+import type {LegendProps} from '..';
 
 export default {
   title: 'Subcomponents/Legend',

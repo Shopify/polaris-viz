@@ -1,5 +1,5 @@
 import React from 'react';
-import {Story, Meta} from '@storybook/react';
+import type {Story, Meta} from '@storybook/react';
 
 import {LineChart, LineChartProps} from '../LineChart';
 import styles from './LineChart.stories.scss';
@@ -21,7 +21,7 @@ import {
 
 const tooltipContent = {
   empty: undefined,
-  Custom: ({data}) => (
+  Custom: ({data}: {data: any}) => (
     <div
       style={{
         background: 'black',
@@ -33,7 +33,7 @@ const tooltipContent = {
         fontSize: 12,
       }}
     >
-      {data.map((x) => (
+      {data.map((x: any) => (
         <div>{`${formatXAxisLabel(x.point.label)}: ${x.point.value}`}</div>
       ))}
     </div>
@@ -205,7 +205,7 @@ LargeDataSet.args = {
       name: 'series 1',
       data: Array(3000)
         .fill(null)
-        .map((x) => {
+        .map(() => {
           return {
             rawValue: Math.random() * Math.random() * 100,
             label: 'Some value',
@@ -216,7 +216,7 @@ LargeDataSet.args = {
       name: 'series 2',
       data: Array(3000)
         .fill(null)
-        .map((x) => {
+        .map(() => {
           return {
             rawValue: Math.random() * Math.random() * 100,
             label: 'Some value',
@@ -227,7 +227,7 @@ LargeDataSet.args = {
   xAxisOptions: {
     xAxisLabels: Array(3000)
       .fill(null)
-      .map((x) => {
+      .map(() => {
         return 'Some value';
       }),
   },

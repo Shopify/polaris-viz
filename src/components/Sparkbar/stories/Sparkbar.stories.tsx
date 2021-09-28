@@ -1,8 +1,7 @@
 import React from 'react';
-import {Story, Meta} from '@storybook/react';
+import type {Story, Meta} from '@storybook/react';
 
 import {Sparkbar, SparkbarProps} from '../Sparkbar';
-import {DEFAULT_THEME} from '../../../constants';
 import {THEME_CONTROL_ARGS} from '../../../storybook';
 
 export default {

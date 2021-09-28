@@ -1,5 +1,5 @@
 import React from 'react';
-import {Meta, Story} from '@storybook/react/types-6-0';
+import type {Meta, Story} from '@storybook/react/types-6-0';
 
 import {LinearGradient, LinearGradientProps} from '../LinearGradient';
 import {XMLNS} from '../../../constants';
