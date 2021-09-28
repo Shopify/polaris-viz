@@ -158,7 +158,8 @@
     "d3-shape": "^1.3.7",
     "fast-deep-equal": "^3.1.3",
     "lodash.throttle": "^4.1.1",
-    "use-debounce": "^3.3.0"
+    "use-debounce": "^3.3.0",
+    "vega-lite": "^5.1.1"
   },
   "resolutions": {
     "browserslist": "^4.16.7",

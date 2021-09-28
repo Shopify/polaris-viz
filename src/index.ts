@@ -13,6 +13,7 @@ export {
   LinePreview,
   SquareColorPreview,
   PolarisVizProvider,
+  VegaAdapter,
 } from './components';
 
 export type {
@@ -27,6 +28,7 @@ export type {
   MultiSeriesBarChartProps,
   TooltipContentProps,
   PolarisVizProviderProps,
+  VegaAdapterProps,
 } from './components';
 
 export {

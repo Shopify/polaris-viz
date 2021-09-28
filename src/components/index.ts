@@ -30,4 +30,6 @@ export {LinePreview} from './LinePreview';
 export {Legend} from './Legend';
 export {LinearGradient} from './LinearGradient';
 export {PolarisVizProvider} from './PolarisVizProvider';
+export {VegaAdapter} from './VegaAdapter';
+export type {VegaAdapterProps} from './VegaAdapter';
 export type {PolarisVizProviderProps} from './PolarisVizProvider';
