@@ -121,10 +121,10 @@ export function Chart({
   const fontSize =
     dimensions.width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
 
-  const stackedValues = useMemo(
-    () => areaStack(formattedData),
-    [areaStack, formattedData],
-  );
+  const stackedValues = useMemo(() => areaStack(formattedData), [
+    areaStack,
+    formattedData,
+  ]);
 
   const {ticks: initialTicks} = useYScale({
     fontSize,
