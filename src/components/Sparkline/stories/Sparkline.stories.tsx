@@ -1,5 +1,5 @@
 import React from 'react';
-import {Story, Meta} from '@storybook/react';
+import type {Story, Meta} from '@storybook/react';
 
 import {Sparkline, SparklineProps} from '../..';
 import {THEME_CONTROL_ARGS} from '../../../storybook';
@@ -22,8 +22,8 @@ const series = [
     ],
   },
   {
-    lineStyle: 'dashed',
-    area: null,
+    lineStyle: 'dashed' as 'dashed',
+    area: undefined,
     data: [
       {x: 0, y: 200},
       {x: 1, y: 200},
@@ -120,7 +120,7 @@ OffsetAndNulls.args = {
     {
       color: 'rgb(255, 85, 70)',
       lineStyle: 'dashed',
-      area: null,
+      area: undefined,
       data: [
         {x: 0, y: 20},
         {x: 1, y: 20},
@@ -160,7 +160,7 @@ ZeroSeries.args = {
     },
     {
       lineStyle: 'dashed',
-      area: null,
+      area: undefined,
       data: [
         {x: 0, y: 200},
         {x: 1, y: 200},

@@ -1,6 +1,9 @@
 # Changelog
 
 ## Unreleased
+### Changed
+- Storybook is now used for documentation and is deployed using Github Pages
+
 ### Fixed
 - Charts at very small sizes no longer get cut off at the bottom
 

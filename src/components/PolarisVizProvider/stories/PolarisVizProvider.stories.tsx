@@ -1,5 +1,5 @@
 import React from 'react';
-import {Story, Meta} from '@storybook/react';
+import type {Story, Meta} from '@storybook/react';
 
 import {PolarisVizProvider} from '../../../components';
 import type {PolarisVizProviderProps} from '../../../components/PolarisVizProvider';
@@ -146,12 +146,10 @@ OverwrittenDefault.args = {
       xAxis: {
         showTicks: true,
         labelColor: '#c1c1d3',
-        useMinimalLabels: false,
       },
       yAxis: {
         labelColor: '#c1c1d3',
         backgroundColor: '#121216',
-        integersOnly: false,
       },
     },
   },
@@ -218,7 +216,7 @@ MultipleThemes.args = {
         borderRadius: '5px',
       },
       seriesColors: {
-        single: ['#00ff64'],
+        single: ['#00ff64' as any],
       },
       bar: {
         hasRoundedCorners: false,
@@ -242,7 +240,7 @@ MultipleThemes.args = {
     },
     AngryRed: {
       seriesColors: {
-        single: ['#ff0025'],
+        single: ['#ff0025' as any],
       },
       chartContainer: {
         padding: '20px',
@@ -263,11 +261,9 @@ MultipleThemes.args = {
       xAxis: {
         showTicks: true,
         labelColor: '#FFF',
-        useMinimalLabels: false,
       },
       yAxis: {
         labelColor: '#FFF',
-        integersOnly: false,
       },
     },
   },

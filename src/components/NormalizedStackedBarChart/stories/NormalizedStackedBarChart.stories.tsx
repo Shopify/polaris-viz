@@ -1,5 +1,5 @@
 import React from 'react';
-import {Story, Meta} from '@storybook/react';
+import type {Story, Meta} from '@storybook/react';
 
 import {
   NormalizedStackedBarChart,
@@ -42,31 +42,16 @@ const defaultProps = {
       label: 'Direct',
       value: 200,
       formattedValue: '$200',
-      comparisonMetric: {
-        metric: '5',
-        trend: 'positive',
-        accessibilityLabel: 'Increase of',
-      },
     },
     {
       label: 'Facebook',
       value: 100,
       formattedValue: '$100',
-      comparisonMetric: {
-        metric: '5',
-        trend: 'negative',
-        accessibilityLabel: 'Decrease of',
-      },
     },
     {
       label: 'Twitter',
       value: 100,
       formattedValue: '$100',
-      comparisonMetric: {
-        metric: '5',
-        trend: 'neutral',
-        accessibilityLabel: 'Decrease of',
-      },
     },
     {
       label: 'Google',
@@ -74,12 +59,16 @@ const defaultProps = {
       formattedValue: '$20',
     },
   ],
-  orientation: 'horizontal',
-  size: 'small',
+  orientation: 'horizontal' as 'horizontal',
+  size: 'small' as 'small',
 };
 
 export const Default = Template.bind({});
 Default.args = defaultProps;
 
 export const VerticalSmall = Template.bind({});
-VerticalSmall.args = {...defaultProps, orientation: 'vertical', size: 'small'};
+VerticalSmall.args = {
+  ...defaultProps,
+  orientation: 'vertical' as 'vertical',
+  size: 'small' as 'small',
+};

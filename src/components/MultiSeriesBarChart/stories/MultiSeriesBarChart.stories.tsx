@@ -1,5 +1,5 @@
 import React from 'react';
-import {Story, Meta} from '@storybook/react';
+import type {Story, Meta} from '@storybook/react';
 
 import {
   MultiSeriesBarChart,
@@ -14,12 +14,17 @@ import {THEME_CONTROL_ARGS} from '../../../storybook';
 import {
   generateMultipleSeries,
   generateLabels,
-  generateDataSet,
 } from '../../../../documentation/utilities';
 
 const tooltipContent = {
   empty: undefined,
-  Custom: ({data, title}) => (
+  Custom: ({
+    data,
+    title,
+  }: {
+    data: {label: string; value: number; color: string}[];
+    title: string;
+  }) => (
     <div
       style={{
         background: 'black',
@@ -338,7 +343,7 @@ LargeVolume.args = {
       name: 'Breakfast',
       data: Array(200)
         .fill(null)
-        .map((x) => {
+        .map(() => {
           return {
             rawValue: Math.random() * Math.random() * 100,
             label: Math.random().toString(),
@@ -349,7 +354,7 @@ LargeVolume.args = {
       name: 'Lunch',
       data: Array(200)
         .fill(null)
-        .map((x) => {
+        .map(() => {
           return {
             rawValue: Math.random() * Math.random() * 100,
             label: Math.random().toString(),
@@ -360,7 +365,7 @@ LargeVolume.args = {
   xAxisOptions: {
     labels: Array(200)
       .fill(null)
-      .map((x) => 'some label'),
+      .map(() => 'some label'),
   },
 };
 
@@ -369,19 +374,19 @@ NegativeOnly.args = {
   series: [
     {
       name: 'Breakfast',
-      data: IntegersOnly.args.series[0].data.map(({label, rawValue}) => {
+      data: IntegersOnly.args.series![0].data.map(({label, rawValue}) => {
         return {label, rawValue: rawValue * -1};
       }),
     },
     {
       name: 'Lunch',
-      data: IntegersOnly.args.series[1].data.map(({label, rawValue}) => {
+      data: IntegersOnly.args.series![1].data.map(({label, rawValue}) => {
         return {label, rawValue: rawValue * -1};
       }),
     },
     {
       name: 'Dinner',
-      data: IntegersOnly.args.series[2].data.map(({label, rawValue}) => {
+      data: IntegersOnly.args.series![2].data.map(({label, rawValue}) => {
         return {label, rawValue: rawValue * -1};
       }),
     },
