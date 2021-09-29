@@ -1,8 +1,10 @@
 # Changelog
 
-## Unreleased
+## [0.21.2] - 2021-09-29
+
 ### Changed
 - Storybook is now used for documentation and is deployed using Github Pages
+- Line chart animates from the top up, instead of horizontally
 
 ### Fixed
 - Charts at very small sizes no longer get cut off at the bottom
