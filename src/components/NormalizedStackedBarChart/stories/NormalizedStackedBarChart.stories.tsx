@@ -15,14 +15,14 @@ export default {
     docs: {
       description: {
         component:
-          'Used for positive datasets with two to four items. If your dataset has more than four items, consider grouping the fourth item and the remainder into an “other” category before passing data to the component. <br /> This component inherits its height and width from its container.',
+          "Used for positive datasets with two to four items. If your dataset has more than four items, consider grouping the fourth item and the remainder into an “other” category before passing data to the component. <br /><br />  This component inherits its height and width from its container. When the Normalized stacked bar chart is oriented horizontally, it is constrained by the parent's width; in vertical orientation, it's constrained by the parent's height.",
       },
     },
   },
   argTypes: {
     data: {
       description:
-        'Gives the user the ability to define how the bars should look like. [Data type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/NormalizedStackedBarChart/types.ts#L7)',
+        'Gives the user the ability to define how the bars should look like. The data object also gives the ability to add comparison metric indicators.',
     },
     orientation: {description: 'Determines the orientation of the chart.'},
     size: {description: 'Determines the width of the chart.'},

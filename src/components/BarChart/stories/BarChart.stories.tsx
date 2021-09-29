@@ -11,7 +11,6 @@ const tooltipContent = {
   Custom: ({label, value}: {label: string; value: number}) => (
     <div
       style={{
-        background: 'black',
         color: 'white',
         padding: '10px',
         borderRadius: '10px',
@@ -29,7 +28,7 @@ export default {
     docs: {
       description: {
         component:
-          'Used to show comparison across categories or time. <br /> This component inherits its height and width from its container.',
+          'Used to show comparison across categories or time. <br /> <br /> This component inherits its height and width from its container.',
       },
     },
     controls: {
@@ -42,8 +41,7 @@ export default {
       control: {
         type: 'select',
       },
-      description:
-        'An array of annotations to show on the chart. [Annotation type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/BarChart/types.ts#L61)',
+      description: 'An array of annotations to show on the chart.',
       options: ['No annotation', 'Annotation on second bar'],
       mapping: {
         'No annotation': undefined,
@@ -64,7 +62,7 @@ export default {
     },
     renderTooltipContent: {
       description:
-        'Accepts a function that renders the tooltip content. By default it calls `formatXAxisLabel` and `formatYAxisLabel` to format the the tooltip values and passes them to `<BarChartTooltipContent />`. [RenderTooltipContentData type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/BarChart/types.ts#L23)',
+        'Accepts a function that renders the tooltip content. By default it calls `formatXAxisLabel` and `formatYAxisLabel` to format the the tooltip values and passes them to `<BarChartTooltipContent />`.',
       options: Object.keys(tooltipContent),
       mapping: tooltipContent,
       control: {

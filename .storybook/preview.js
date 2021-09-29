@@ -3,6 +3,7 @@ import {themes} from '@storybook/theming';
 import {PolarisVizProvider} from '../src/components';
 import {DEFAULT_THEME, LIGHT_THEME} from '../src/constants';
 import {useTheme} from '../src/hooks';
+
 export const parameters = {
   docs: {
     theme: themes.dark,
@@ -73,7 +74,6 @@ const Container = ({children, theme}: ContainerProps) => {
         overflow: 'hidden',
         margin: '-1rem',
         background: selectedTheme.chartContainer.backgroundColor,
-        minHeight: '100vh',
       }}
     >
       <div

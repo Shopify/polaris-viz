@@ -114,7 +114,7 @@ export default {
     docs: {
       description: {
         component:
-          'Used to show comparison of different types, across categories or time. Bars can be stacked or side by side. <br /> This component inherits its height and width from its container.',
+          'Used to show comparison of different types, across categories or time. Bars can be stacked or side by side. It is reccomended that you use a legend whenever displaying multiseries data. To display one, use the `<Legend />` component. <br /> <br /> This component inherits its height and width from its container.',
       },
     },
     controls: {
@@ -140,7 +140,8 @@ export default {
         'If provided, renders a `<SkipLink/>` button with the string. Use this for charts with large data sets, so keyboard users can skip all the tabbable data points in the chart.',
     },
     barOptions: {
-      description: 'An object that defines the bars.',
+      description:
+        'An object that defines the bars. Within the object, `isStacked` changes the grouping of the bars. If `true` the bar groups will stack vertically, otherwise they will render individual bars for each data point in each group. To see an example of stacked vs. grouped orientations, refer to the images above.',
     },
     xAxisOptions: {
       description: 'An object that defines the xAxis and its labels.',

@@ -48,7 +48,7 @@ export default {
     docs: {
       description: {
         component:
-          'Used in small sizes to give an overview of how a metric has performed over time. <br /> This component inherits its height and width from its container.',
+          'Used in small sizes to give an overview of how a metric has performed over time. <br /><br />  This component inherits its height and width from its container.',
       },
     },
   },
@@ -85,6 +85,11 @@ const defaultProps = {
   series,
   isAnimated: true,
   accessibilityLabel: 'Customer growth over time',
+};
+
+export const Default: Story<SparklineProps> = Template.bind({});
+Default.args = {
+  ...defaultProps,
 };
 
 export const withoutSpline: Story<SparklineProps> = Template.bind({});

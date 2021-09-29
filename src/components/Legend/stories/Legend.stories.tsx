@@ -10,7 +10,8 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'Should be used with multi-series chart components.',
+        component:
+          'Used on multiseries charts to indicate which color is associated with which series. The color preview will appear as a square unless a `lineStyle` is passed. <br /> <br /> With the exception of the `NormalizedStackedBarChart`, Polaris Viz components do not include a legend by default. This is to keep the component layout and style flexible. Add a `<Legend />` to the `<MultiSeriesBarChart />`, `<LineChart />`, or `<StackedAreaChart />` when they display multiple series.',
       },
     },
     controls: {
@@ -20,8 +21,11 @@ export default {
   },
   argTypes: {
     series: {
-      theme: 'The theme optionally controls the color of the text',
       description: 'The series of data to display in the legend.',
+    },
+    theme: {
+      description:
+        'The theme optionally controls the color of the series and text.',
     },
   },
 } as Meta;

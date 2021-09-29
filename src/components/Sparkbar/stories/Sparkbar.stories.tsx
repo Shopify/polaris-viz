@@ -11,7 +11,7 @@ export default {
     docs: {
       description: {
         component:
-          'Used in small sizes to give an overview of how a metric has performed over time. <br /> This component inherits its height and width from its container.',
+          'Used in small sizes to give an overview of how a metric has performed over time. <br /><br /> This component inherits its height and width from its container.',
       },
     },
   },
@@ -27,12 +27,10 @@ export default {
         "The prop to determine the chart's bars. Null bars will not be plotted. Bars with the value of `0` will render a very small bar to indicate the presence of the value. [SparkChartData type definition.]()",
     },
     accessibilityLabel: {
-      description:
-        'Visually hidden text for screen readers.  Make sure to write [informative alt text.](https://medium.com/nightingale/writing-alt-text-for-data-visualization-2a218ef43f81)',
+      description: 'Visually hidden text for screen readers.',
     },
     comparison: {
-      description:
-        'The prop to determine the comparison line for the chart. [Coordinates type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/Sparkbar/Sparkbar.tsx#L27)',
+      description: 'The prop to determine the comparison line for the chart.',
     },
     dataOffsetLeft: {
       description:

@@ -82,25 +82,25 @@ Chart components inherit their sizes from their containers, so place your chart 
   <tr>
 
   <td>
-<a href="../src/components/LineChart/LineChart.md">
+<a href="https://polaris-viz.shopify.io/?path=/docs/charts-linechart">
   <img src="../src/components/LineChart/line-chart.png"/>
 </a>
 
 #### Line chart
 
-Used to show change over time, comparisons, and trends. [View documentation&nbsp;→](../src/components/LineChart/LineChart.md)
+Used to show change over time, comparisons, and trends. [View documentation&nbsp;→](https://polaris-viz.shopify.io/?path=/docs/charts-linechart)
 
   </td>
 
   <td>
 
-<a href="../src/components/NormalizedStackedBarChart/NormalizedStackedBarChart.md">
+<a href="https://polaris-viz.shopify.io/?path=/docs/charts-normalizedstackedbarchart">
   <img src="../src/components/NormalizedStackedBarChart/normalized-stacked-bar-chart.png"/>
 </a>
 
 #### Normalized stacked bar chart
 
-Used for positive datasets with two to four items. [View documentation&nbsp;→](../src/components/NormalizedStackedBarChart/NormalizedStackedBarChart.md)
+Used for positive datasets with two to four items. [View documentation&nbsp;→](https://polaris-viz.shopify.io/?path=/docs/charts-normalizedstackedbarchart)
 
   </td>
 
@@ -109,26 +109,26 @@ Used for positive datasets with two to four items. [View documentation&nbsp;→]
   <tr>
 
   <td>
-<a href="../src/components/StackedAreaChart/StackedAreaChart.md">
+<a href="https://polaris-viz.shopify.io/?path=/docs/charts-stackedareachart">
   <img src="../src/components/StackedAreaChart/stacked-area-chart.png"/>
 </a>
 
 #### Stacked area chart
 
-Used to compare multiple series of data and display the total value. [View documentation&nbsp;→](../src/components/StackedAreaChart/StackedAreaChart.md)
+Used to compare multiple series of data and display the total value. [View documentation&nbsp;→](https://polaris-viz.shopify.io/?path=/docs/charts-stackedareachart)
 
   </td>
 
 
   <td>
 
-<a href="../src/components/Sparkline/Sparkline.md">
+<a href="https://polaris-viz.shopify.io/?path=/docs/charts-sparkline">
   <img src="../src/components/Sparkline/sparkline.png"/>
 </a>
 
 #### Sparkline
 
-Used in small sizes to show how a metric has performed over time. [View documentation&nbsp;→](../src/components/Sparkline/Sparkline.md)
+Used in small sizes to show how a metric has performed over time. [View documentation&nbsp;→](https://polaris-viz.shopify.io/?path=/docs/charts-sparkline)
 
   </td>
 
@@ -138,24 +138,24 @@ Used in small sizes to show how a metric has performed over time. [View document
    <tr>
 
   <td>
-<a href="../src/components/MultiSeriesBarChart/MultiSeriesBarChart.md">
+<a href="https://polaris-viz.shopify.io/?path=/docs/charts-multiseriesbarchart">
   <img src="../src/components/MultiSeriesBarChart/grouped-bar-example.png"/>
 </a>
 
 #### Multi-series grouped bar chart
 
-Used to show a grouped comparison of different types, across categories or time. [View documentation&nbsp;→](../src/components/MultiSeriesBarChart/MultiSeriesBarChart.md)
+Used to show a grouped comparison of different types, across categories or time. [View documentation&nbsp;→](https://polaris-viz.shopify.io/?path=/docs/charts-multiseriesbarchart)
 
   </td>
 
   <td>
-<a href="../src/components/MultiSeriesBarChart/MultiSeriesBarChart.md">
+<a href="https://polaris-viz.shopify.io/?path=/docs/charts-multiseriesbarchart--stacked">
   <img src="../src/components/MultiSeriesBarChart/stacked-bar-example.png"/>
 </a>
 
 #### Multi-series stacked bar chart
 
-Used to show a stacked comparison of different types, across categories or time. [View documentation&nbsp;→](../src/components/MultiSeriesBarChart/MultiSeriesBarChart.md)
+Used to show a stacked comparison of different types, across categories or time. [View documentation&nbsp;→](https://polaris-viz.shopify.io/?path=/docs/charts-multiseriesbarchart--stacked)
 
   </td>
 
@@ -165,25 +165,25 @@ Used to show a stacked comparison of different types, across categories or time.
   <tr>
 
   <td>
-<a href="../src/components/TooltipContent/TooltipContent.md">
+<a href="https://polaris-viz.shopify.io/?path=/docs/subcomponents-tooltipcontent">
   <img src="../src/components/TooltipContent/tooltip-content.jpg"/>
 </a>
 
 #### Tooltip content
 
-Used to format content in tooltips. Alternatively, use a custom tooltip. [View documentation&nbsp;→](../src/components/TooltipContent/TooltipContent.md)
+Used to format content in tooltips. Alternatively, use a custom tooltip. [View documentation&nbsp;→](https://polaris-viz.shopify.io/?path=/docs/subcomponents-tooltipcontent)
 
   </td>
 
   <td>
 
-<a href="../src/components/BarChart/BarChart.md">
+<a href="https://polaris-viz.shopify.io/?path=/docs/charts-barchart">
   <img src="../src/components/BarChart/bar-chart.png"/>
 </a>
 
 #### Bar chart
 
-Used to show comparison across categories. [View documentation&nbsp;→](../src/components/BarChart/BarChart.md)
+Used to show comparison across categories. [View documentation&nbsp;→](https://polaris-viz.shopify.io/?path=/docs/charts-barchart)
 
   </td>
 
@@ -192,24 +192,24 @@ Used to show comparison across categories. [View documentation&nbsp;→](../src/
 
   <td>
 
-<a href="../src/components/Sparkbar/Sparkbar.md">
+<a href="https://polaris-viz.shopify.io/?path=/docs/charts-sparkbar">
   <img src="../src/components/Sparkbar/sparkbar.png"/>
 </a>
 
 #### Sparkbar
 
-Used in small sizes to show how a metric has performed over time with bars. [View documentation&nbsp;→](../src/components/Sparkbar/Sparkbar.md)
+Used in small sizes to show how a metric has performed over time with bars. [View documentation&nbsp;→](https://polaris-viz.shopify.io/?path=/docs/charts-sparkbar)
 
   </td>
 
   <td>
-<a href="../src/components/Legend/Legend.md">
+<a href="https://polaris-viz.shopify.io/?path=/docs/subcomponents-legend">
   <img width="100%" src="../src/components/Legend/legend.png"/>
 </a>
 
 #### Legend
 
-Used on multiseries charts to indicate which color is associated with a certain series. [View documentation&nbsp;→](../src/components/Legend/Legend.md)
+Used on multiseries charts to indicate which color is associated with a certain series. [View documentation&nbsp;→](https://polaris-viz.shopify.io/?path=/docs/subcomponents-legend)
 
   </td>
   </tr>
