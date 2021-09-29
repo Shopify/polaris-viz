@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Upgrade React to version 17. Updates the `peerDependencies` to allow React 16 or 17. No consumer-facing changes are expected.
+
 ## [0.22.0] - 2021-10-22
 
 ### Changed
