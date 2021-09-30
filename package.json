@@ -8,8 +8,13 @@
   "publishConfig": {
     "access": "public"
   },
+  "sideEffects": [
+    "**/*.css",
+    "**/*.scss",
+    "**/configure.{js,mjs,esnext,ts}"
+  ],
   "main": "build/cjs/index.js",
-  "module": "build/esm/index.mjs",
+  "module": "build/esm/index.js",
   "esnext": "build/esnext/index.esnext",
   "types": "build/ts/index.d.ts",
   "scripts": {
@@ -25,7 +30,9 @@
     "test:ci": "yarn test --coverage",
     "check": "npm-run-all lint type-check test",
     "check:ci": "npm-run-all lint type-check test:ci",
+    "prebuild": "rimraf build",
     "build": "loom build",
+    "postbuild": "node ./scripts/build-validate",
     "prebuild-consumer": "yarn run build",
     "build-consumer": "node ./scripts/build-consumer",
     "prepublish": "in-publish && yarn run build || :",
@@ -51,6 +58,7 @@
       "path": "build/esnext/index.esnext"
     }
   ],
+  "prettier": "@shopify/prettier-config",
   "stylelint": {
     "extends": [
       "@shopify/stylelint-plugin/prettier"
@@ -78,6 +86,7 @@
   ],
   "devDependencies": {
     "@juggle/resize-observer": "^3.3.1",
+    "@rollup/plugin-replace": "^3.0.0",
     "@shopify/babel-preset": "^24.0.1",
     "@shopify/browserslist-config": "^3.0.0",
     "@shopify/eslint-plugin": "^40.4.0",
@@ -89,6 +98,7 @@
     "@shopify/loom-plugin-prettier": "^0.2.0",
     "@shopify/loom-plugin-stylelint": "^0.5.0",
     "@shopify/postcss-plugin": "^3.1.1",
+    "@shopify/prettier-config": "^1.1.2",
     "@shopify/react-testing": "^3.0.1",
     "@shopify/stylelint-plugin": "^10.2.0",
     "@shopify/typescript-configs": "^5.0.0",
@@ -108,6 +118,7 @@
     "@types/node": "^12.7.5",
     "@types/react": "^16.8.15",
     "@types/react-dom": "^16.8.4",
+    "change-case": "^4.1.2",
     "copyfiles": "^2.1.1",
     "eslint": "^7.32.0",
     "fs-extra": "^7.0.1",
@@ -139,15 +150,11 @@
     "react-dom": "^16.8.6"
   },
   "files": [
-    "esnext",
-    "index.esnext",
-    "styles",
-    "types",
+    "build/",
     "locales",
-    "index.js",
-    "index.es.js",
-    "styles.css",
-    "styles.min.css",
+    "!build/ts/**/*.tsbuildinfo",
+    "!build/ts/**/tests/",
+    "!build/ts/**/documentation/",
     "!*.stories.*"
   ],
   "dependencies": {
