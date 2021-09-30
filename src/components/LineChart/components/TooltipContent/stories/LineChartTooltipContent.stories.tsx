@@ -7,7 +7,7 @@ import {
 } from '../../../components';
 
 export default {
-  title: 'Subcomponents/LineChartTooltipContent',
+  title: 'Subcomponents/Tooltips/LineChartTooltipContent',
   component: LineChartTooltipContent,
   parameters: {
     controls: {

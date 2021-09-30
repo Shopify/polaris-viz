@@ -39,7 +39,7 @@ export default {
     docs: {
       description: {
         component:
-          'Used to compare multiple series of data and display the total value. This chart is not ideal for displaying datasets with negatives. <br /> This component inherits its height and width from its container.',
+          'Used to compare multiple series of data and display the total value. This chart is not ideal for displaying datasets with negatives. <br /> This component inherits its height and width from its container. <br /> <br /> This component inherits its height and width from its container.',
       },
     },
   },

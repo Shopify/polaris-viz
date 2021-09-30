@@ -9,7 +9,6 @@ import {
   formatXAxisLabel,
   formatYAxisLabel,
   renderTooltipContent,
-  gradient,
 } from './utils.stories';
 import {colorTeal} from '../../../constants';
 import {THEME_CONTROL_ARGS} from '../../../storybook';
@@ -51,14 +50,14 @@ export default {
     docs: {
       description: {
         component:
-          'Used to show change over time, comparisons, and trends. <br /> This component inherits its height and width from its container.',
+          'Used to show change over time, comparisons, and trends. It is reccomended that you use a legend whenever displaying multiseries data. To display one, use the `<Legend />` component. <br /> <br /> This component inherits its height and width from its container.',
       },
     },
   },
   argTypes: {
     series: {
       description:
-        'The `Series` type gives the user the flexibility to define exactly what each series/line should look like, as well as providing the data to be plotted.',
+        'The `Series` type gives the user the flexibility to define exactly what each series/line should look like, as well as providing the data to be plotted. Note: the configuration of color, line style and area color on the series type overrides the defaults set by the theme provider.',
     },
     xAxisOptions: {
       description:
@@ -83,7 +82,7 @@ export default {
         },
       },
       description:
-        'This accepts a function that is called to render the tooltip content. By default it calls `formatXAxisLabel` and `formatYAxisLabel` to format the the tooltip values and passes them to `<LineChartTooltipContent />`. [TooltipData type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/LineChart/types.ts#L20)',
+        'This accepts a function that is called to render the tooltip content. By default it calls `formatXAxisLabel` and `formatYAxisLabel` to format the the tooltip values and passes them to `<LineChartTooltipContent />`. The distinction between the `RenderTooltipContentData` and `Series` types is that `RenderTooltipContentData` is for a single data point, instead of an entire series of data.',
     },
     skipLinkText: {
       description:
@@ -99,6 +98,16 @@ export default {
 
 const Template: Story<LineChartProps> = (args: LineChartProps) => {
   return <LineChart {...args} />;
+};
+
+export const Default: Story<LineChartProps> = Template.bind({});
+Default.args = {
+  series,
+  xAxisOptions: {
+    xAxisLabels,
+    labelFormatter: formatXAxisLabel,
+  },
+  yAxisOptions: {labelFormatter: formatYAxisLabel},
 };
 
 export const HideXAxisLabels: Story<LineChartProps> = Template.bind({});
@@ -163,7 +172,6 @@ NoArea.args = {
         {rawValue: 6, label: '2020-04-06T12:00:00'},
         {rawValue: 5, label: '2020-04-07T12:00:00'},
       ],
-      color: gradient,
     },
   ],
   xAxisOptions: {

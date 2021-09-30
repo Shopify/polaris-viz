@@ -71,6 +71,7 @@ import {ComponentContainer} from './components/ComponentContainer.tsx';
   link="?path=/story/charts-linechart"
   chart={
     <LineChart
+      isAnimated
       series={[
         {
           name: 'Sales',
@@ -178,6 +179,7 @@ import {ComponentContainer} from './components/ComponentContainer.tsx';
   link="?path=/story/charts-multiseriesbarchart"
   chart={
     <MultiSeriesBarChart
+      isAnimated
       xAxisOptions={{
         labels: ['Monday', 'Tuesday', 'Wednesday'],
       }}
@@ -218,6 +220,7 @@ import {ComponentContainer} from './components/ComponentContainer.tsx';
   chart={
     <MultiSeriesBarChart
       barOptions={{isStacked: true}}
+      isAnimated
       xAxisOptions={{
         labels: ['Monday', 'Tuesday', 'Wednesday'],
       }}
@@ -259,6 +262,7 @@ import {ComponentContainer} from './components/ComponentContainer.tsx';
   chart={
     <div style={{width: '250px', height: '140px'}}>
       <Sparkline
+        isAnimated
         series={[
           {
             hasPoint: true,
@@ -307,6 +311,7 @@ import {ComponentContainer} from './components/ComponentContainer.tsx';
   chart={
     <div style={{width: '250px', height: '140px'}}>
       <Sparkbar
+        isAnimated
         comparison={[
           {x: 0, y: 2000},
           {x: 1, y: 2000},

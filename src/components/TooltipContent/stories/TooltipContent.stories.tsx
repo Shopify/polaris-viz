@@ -7,7 +7,7 @@ import {
 } from '../../../components';
 
 export default {
-  title: 'Subcomponents/TooltipContent',
+  title: 'Subcomponents/Tooltips/TooltipContent',
   component: GeneralTooltip,
   parameters: {
     docs: {
