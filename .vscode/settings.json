@@ -9,14 +9,9 @@
   "files.exclude": {
     "**/.DS_Store": true,
     "**/.git": true,
-    "**/.hg": true,
-    "**/.svn": true,
     "**/node_modules": true,
     ".{dev,shadowenv.d}": true,
     "build/": true,
-    "index.*": true,
-    "styles.{css,min.css,scss}": true,
-    "types/": true,
     ".loom": true
   },
   "files.insertFinalNewline": true,
@@ -24,18 +19,10 @@
   "javascript.validate.enable": false,
   "scss.validate": false,
   "search.exclude": {
-    "**/bower_components": true,
     "**/node_modules": true,
     ".{dev,shadowenv.d}": true,
-    "build-intermediate/": true,
     "build/": true,
-    "docs/": true,
-    "esnext/": true,
-    "index.*": true,
-    "sandbox": true,
-    "styles.{css,min.css,scss}": true,
-    "styles/": true,
-    "types/": true
+    "sandbox": true
   },
   "typescript.tsserver.maxTsServerMemory": 8000,
   "typescript.tsdk": "./node_modules/typescript/lib"
