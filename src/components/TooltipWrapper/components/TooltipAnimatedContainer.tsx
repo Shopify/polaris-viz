@@ -4,7 +4,7 @@ import {useSpring, animated} from '@react-spring/web';
 import type {Dimensions, Margin} from '../../../types';
 import styles from '../TooltipContainer.scss';
 import type {TooltipPositionOffset} from '../types';
-import {getAlteredPosition} from '../utils';
+import {getAlteredPosition} from '../utilities';
 import {DEFAULT_TOOLTIP_POSITION} from '../constants';
 
 export interface TooltipAnimatedContainerProps {

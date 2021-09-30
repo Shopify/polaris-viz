@@ -6,7 +6,7 @@ import {
   getLeftPosition,
   getRightPosition,
   getVerticalCenterPosition,
-} from '../utils';
+} from '../utilities';
 
 const MARGIN = {Top: 0, Left: 0, Right: 0, Bottom: 0};
 const BASE_PROPS = {

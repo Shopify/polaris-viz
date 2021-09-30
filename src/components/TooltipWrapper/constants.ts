@@ -1,11 +1,10 @@
 import {
-  TooltipPositionOffset,
   TooltipPosition,
   TooltipHorizontalOffset,
   TooltipVerticalOffset,
 } from './types';
 
-export const DEFAULT_TOOLTIP_POSITION: TooltipPositionOffset = {
+export const DEFAULT_TOOLTIP_POSITION = {
   horizontal: TooltipHorizontalOffset.Center,
   vertical: TooltipVerticalOffset.Above,
 };
