@@ -1,6 +1,5 @@
 {
   "extends": [
-    "plugin:@shopify/esnext",
     "plugin:@shopify/typescript",
     "plugin:@shopify/react",
     "plugin:@shopify/jest",
