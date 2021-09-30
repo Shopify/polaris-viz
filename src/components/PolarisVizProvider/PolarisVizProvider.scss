@@ -1,0 +1,6 @@
+// These are global styles that must be included by all apps that consume
+// polaris-viz. As the PolarisVizProvider is a required wrapper when using polaris-viz
+// components then this css shall always be present.
+:root {
+  --polaris-viz-version-number: '{{POLARIS_VIZ_VERSION}}';
+}
