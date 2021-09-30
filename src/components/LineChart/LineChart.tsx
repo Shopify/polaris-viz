@@ -6,11 +6,7 @@ import {useThemeSeriesColors} from '../../hooks/use-theme-series-colors';
 import type {Dimensions, GradientStop} from '../../types';
 import {isGradientType, changeColorOpacity, uniqueId} from '../../utilities';
 import {SkipLink} from '../SkipLink';
-import {
-  usePrefersReducedMotion,
-  useResizeObserver,
-  useTheme,
-} from '../../hooks';
+import {useReducedMotion, useResizeObserver, useTheme} from '../../hooks';
 
 import {Chart} from './Chart';
 import type {
@@ -44,6 +40,8 @@ export function LineChart({
   yAxisOptions,
   theme,
 }: LineChartProps) {
+  useReducedMotion(isAnimated);
+
   const selectedTheme = useTheme(theme);
   const seriesColors = useThemeSeriesColors(series, selectedTheme);
 
@@ -51,7 +49,6 @@ export function LineChart({
     null,
   );
   const {ref, setRef, entry} = useResizeObserver();
-  const {prefersReducedMotion} = usePrefersReducedMotion();
 
   const skipLinkAnchorId = useRef(uniqueId('lineChart'));
 
@@ -192,7 +189,6 @@ export function LineChart({
             xAxisOptions={xAxisOptionsWithDefaults}
             yAxisOptions={yAxisOptionsWithDefaults}
             dimensions={chartDimensions}
-            isAnimated={isAnimated && !prefersReducedMotion}
             renderTooltipContent={
               renderTooltipContent != null
                 ? renderTooltipContent

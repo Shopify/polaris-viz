@@ -11,6 +11,7 @@ import {line} from 'd3-shape';
 import {mountWithProvider} from 'test-utilities';
 import {HorizontalGridLines} from 'components/HorizontalGridLines';
 import {mockDefaultTheme} from 'test-utilities/mount-with-provider';
+import {Globals} from '@react-spring/web';
 
 import {LinearGradient} from '../../LinearGradient';
 import {Chart} from '../Chart';
@@ -216,8 +217,12 @@ describe('<Chart />', () => {
   });
 
   it('renders an additional <Point /> for each series if isAnimated is true', () => {
+    Globals.assign({
+      skipAnimation: false,
+    });
+
     const series = [primarySeries, {...primarySeries, name: 'A second series'}];
-    const chart = mount(<Chart {...mockProps} series={series} isAnimated />);
+    const chart = mount(<Chart {...mockProps} series={series} />);
 
     expect(chart).toContainReactComponentTimes(Point, 8 + series.length);
   });

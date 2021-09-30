@@ -1,12 +1,12 @@
 import React, {useState, useMemo, useRef} from 'react';
 import {line, stack, stackOffsetNone, stackOrderReverse} from 'd3-shape';
+import {Globals} from '@react-spring/web';
 
 import {LinearGradient} from '../LinearGradient';
 import {
   useLinearXAxisDetails,
   useLinearXScale,
   useLinearChartAnimations,
-  usePrefersReducedMotion,
   useTheme,
   useThemeSeriesColors,
 } from '../../hooks';
@@ -57,7 +57,6 @@ interface Props {
   formatYAxisLabel: NumberLabelFormatter;
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
   dimensions: Dimensions;
-  isAnimated: boolean;
   theme?: string;
 }
 
@@ -71,10 +70,8 @@ export function Chart({
   formatXAxisLabel,
   formatYAxisLabel,
   renderTooltipContent,
-  isAnimated,
   theme,
 }: Props) {
-  const {prefersReducedMotion} = usePrefersReducedMotion();
   const selectedTheme = useTheme(theme);
   const colors = useThemeSeriesColors(series, selectedTheme);
 
@@ -307,7 +304,6 @@ export function Chart({
           xScale={xScale}
           yScale={yScale}
           colors={colors}
-          isAnimated={isAnimated && !prefersReducedMotion}
           theme={theme}
         />
 
@@ -362,7 +358,7 @@ export function Chart({
                   onFocus={handleFocus}
                   index={stackIndex}
                   tabIndex={stackIndex === 0 ? 0 : -1}
-                  isAnimated={isAnimated && !prefersReducedMotion}
+                  isAnimated={!Globals.skipAnimation}
                 />
               </React.Fragment>
             );

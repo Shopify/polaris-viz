@@ -138,7 +138,6 @@ describe('<Chart />', () => {
       height: 218,
       transform: 'translate(16,8)',
       colors: ['purple', 'teal'],
-      isAnimated: true,
       stackedValues: expect.any(Object),
     });
   });

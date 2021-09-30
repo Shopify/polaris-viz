@@ -1,6 +1,7 @@
 import React, {useState, useRef, useMemo, useCallback} from 'react';
 import throttle from 'lodash.throttle';
 import {line} from 'd3-shape';
+import {Globals} from '@react-spring/web';
 
 import {
   curveStepRounded,
@@ -50,7 +51,6 @@ import styles from './Chart.scss';
 
 interface Props {
   dimensions: Dimensions;
-  isAnimated: boolean;
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
   series: SeriesWithDefaults[];
   xAxisOptions: XAxisOptions;
@@ -64,7 +64,6 @@ export function Chart({
   dimensions,
   renderTooltipContent,
   emptyStateText,
-  isAnimated,
   xAxisOptions,
   yAxisOptions,
   theme,
@@ -219,7 +218,7 @@ export function Chart({
       : tooltipDetails.index;
 
   const animatePoints =
-    isAnimated && longestSeriesLength <= MAX_ANIMATED_SERIES_LENGTH;
+    !Globals.skipAnimation && longestSeriesLength <= MAX_ANIMATED_SERIES_LENGTH;
 
   const {animatedCoordinates} = useLinearChartAnimations<SeriesWithDefaults>({
     series: reversedSeries,
@@ -417,7 +416,7 @@ export function Chart({
                 <Line
                   series={singleSeries}
                   color={lineColor}
-                  isAnimated={isAnimated}
+                  isAnimated={animatePoints}
                   index={index}
                   lineGenerator={lineGenerator}
                   theme={theme}

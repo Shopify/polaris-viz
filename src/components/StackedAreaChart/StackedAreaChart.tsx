@@ -9,7 +9,7 @@ import type {
 } from '../../types';
 import {TooltipContent} from '../TooltipContent';
 import {uniqueId} from '../../utilities';
-import {useResizeObserver, useTheme} from '../../hooks';
+import {useReducedMotion, useResizeObserver, useTheme} from '../../hooks';
 
 import {Chart} from './Chart';
 import type {Series, RenderTooltipContentData} from './types';
@@ -40,6 +40,8 @@ export function StackedAreaChart({
   skipLinkText,
   theme,
 }: StackedAreaChartProps) {
+  useReducedMotion(isAnimated);
+
   const selectedTheme = useTheme(theme);
 
   const [chartDimensions, setChartDimensions] = useState<Dimensions | null>(
@@ -166,7 +168,6 @@ export function StackedAreaChart({
                 ? renderTooltipContent
                 : renderDefaultTooltipContent
             }
-            isAnimated={isAnimated}
             theme={theme}
           />
         )}

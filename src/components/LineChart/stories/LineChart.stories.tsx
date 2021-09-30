@@ -156,6 +156,7 @@ IntegersOnly.args = {
   },
   yAxisOptions: {integersOnly: true},
   renderTooltipContent,
+  isAnimated: true,
 };
 
 export const NoArea: Story<LineChartProps> = Template.bind({});

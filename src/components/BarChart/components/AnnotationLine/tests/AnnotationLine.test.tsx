@@ -1,5 +1,6 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
+import {Globals} from '@react-spring/web';
 
 import {AnnotationLine} from '../AnnotationLine';
 
@@ -118,13 +119,13 @@ describe('<AnnotationLine />', () => {
     });
 
     it('animates when true', () => {
-      const props = {
-        ...mockProps,
-        shouldAnimate: true,
-      };
+      Globals.assign({
+        skipAnimation: false,
+      });
+
       const content = mount(
         <svg>
-          <AnnotationLine {...props} />
+          <AnnotationLine {...mockProps} />
         </svg>,
       );
 

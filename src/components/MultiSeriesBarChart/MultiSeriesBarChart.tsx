@@ -6,7 +6,12 @@ import type {Dimensions} from '../../types';
 import {SkipLink} from '../SkipLink';
 import {TooltipContent} from '../TooltipContent';
 import {uniqueId} from '../../utilities';
-import {useResizeObserver, useTheme, useThemeSeriesColors} from '../../hooks';
+import {
+  useReducedMotion,
+  useResizeObserver,
+  useTheme,
+  useThemeSeriesColors,
+} from '../../hooks';
 
 import {Chart} from './Chart';
 import type {
@@ -40,6 +45,8 @@ export function MultiSeriesBarChart({
   emptyStateText,
   theme,
 }: MultiSeriesBarChartProps) {
+  useReducedMotion(isAnimated);
+
   const selectedTheme = useTheme(theme);
   const seriesColors = useThemeSeriesColors(series, selectedTheme);
   const [chartDimensions, setChartDimensions] = useState<Dimensions | null>(
@@ -166,7 +173,6 @@ export function MultiSeriesBarChart({
             chartDimensions={chartDimensions}
             xAxisOptions={xAxisOptionsWithDefaults}
             yAxisOptions={yAxisOptionsWithDefaults}
-            isAnimated={isAnimated}
             renderTooltipContent={
               renderTooltipContent != null
                 ? renderTooltipContent

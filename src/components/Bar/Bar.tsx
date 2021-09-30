@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import {animated, useSpring} from '@react-spring/web';
+import {animated, Globals, useSpring} from '@react-spring/web';
 
 import {ROUNDED_BAR_RADIUS, BARS_TRANSITION_CONFIG} from '../../constants';
 
@@ -20,7 +20,6 @@ interface Props {
   rotateZeroBars: boolean;
   animationDelay?: number;
   zeroPosition: number;
-  isAnimated?: boolean;
 }
 
 export const Bar = React.memo(function Bar({
@@ -38,7 +37,6 @@ export const Bar = React.memo(function Bar({
   rotateZeroBars,
   animationDelay = 0,
   zeroPosition,
-  isAnimated = true,
 }: Props) {
   const treatAsNegative = rawValue < 0 || (rawValue === 0 && rotateZeroBars);
 
@@ -87,9 +85,8 @@ export const Bar = React.memo(function Bar({
   const {transform} = useSpring({
     from: {transform: 'scaleY(0) translateZ(0)'},
     to: {transform: 'scaleY(1) translateZ(0)'},
-    delay: isAnimated ? animationDelay : 0,
+    delay: Globals.skipAnimation ? 0 : animationDelay,
     config: BARS_TRANSITION_CONFIG,
-    default: {immediate: !isAnimated},
   });
 
   return (

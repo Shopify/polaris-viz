@@ -43,7 +43,6 @@ interface Props {
   yAxisOptions: YAxisOptions;
   isStacked?: boolean;
   emptyStateText?: string;
-  isAnimated?: boolean;
   theme?: string;
 }
 
@@ -54,7 +53,6 @@ export function Chart({
   xAxisOptions,
   yAxisOptions,
   isStacked = false,
-  isAnimated = false,
   emptyStateText,
   theme,
 }: Props) {
@@ -319,7 +317,6 @@ export function Chart({
                 const ariaLabel = formatAriaLabel(accessibilityData[index]);
                 return (
                   <BarGroup
-                    isAnimated={isAnimated}
                     key={index}
                     x={xPosition == null ? 0 : xPosition}
                     isSubdued={

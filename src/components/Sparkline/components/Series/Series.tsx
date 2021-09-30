@@ -1,6 +1,7 @@
 import React, {useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {area as areaShape, line} from 'd3-shape';
+import {Globals} from '@react-spring/web';
 
 import type {Color, GradientStop, Theme} from '../../../../types';
 import {LinearGradient} from '../../../LinearGradient';
@@ -10,7 +11,6 @@ import {
   isGradientType,
   classNames,
 } from '../../../../utilities';
-import {usePrefersReducedMotion} from '../../../../hooks';
 import type {SingleSeries, Coordinates} from '../../Sparkline';
 
 import styles from './Series.scss';
@@ -41,18 +41,15 @@ export function Series({
   xScale,
   yScale,
   series,
-  isAnimated,
   svgDimensions,
   theme,
 }: {
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
   series: SingleSeries;
-  isAnimated: boolean;
   svgDimensions: {width: number; height: number};
   theme: Theme;
 }) {
-  const {prefersReducedMotion} = usePrefersReducedMotion();
   const {
     area = theme.line.sparkArea,
     lineStyle = theme.line.style,
@@ -91,7 +88,6 @@ export function Series({
   const areaPath = areaGenerator(data);
 
   const id = useMemo(() => uniqueId('sparkline'), []);
-  const immediate = !isAnimated || prefersReducedMotion;
 
   const lineGradientColor = isGradientType(color!)
     ? color
@@ -149,7 +145,7 @@ export function Series({
         <path
           fill={`url(#area-${id})`}
           d={areaPath}
-          className={immediate ? undefined : styles.Area}
+          className={Globals.skipAnimation ? undefined : styles.Area}
         />
       )}
       <rect
@@ -163,7 +159,10 @@ export function Series({
             : `url(#line-${id})`
         }
         mask={`url(#mask-${`${id}`})`}
-        className={classNames(styles.Line, !immediate && styles.AnimatedLine)}
+        className={classNames(
+          styles.Line,
+          !Globals.skipAnimation && styles.AnimatedLine,
+        )}
       />
     </React.Fragment>
   );

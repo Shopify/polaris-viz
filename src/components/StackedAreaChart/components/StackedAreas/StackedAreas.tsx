@@ -28,7 +28,6 @@ interface Props {
   stackedValues: StackedSeries[];
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
-  isAnimated: boolean;
   theme?: string;
 }
 
@@ -40,7 +39,6 @@ export function Areas({
   xScale,
   yScale,
   colors,
-  isAnimated,
   theme,
 }: Props) {
   const selectedTheme = useTheme(theme);
@@ -53,7 +51,7 @@ export function Areas({
     from: {
       width: 0,
     },
-    immediate: !isAnimated || valuesHaveNotUpdated,
+    immediate: valuesHaveNotUpdated,
     reset: true,
   });
 

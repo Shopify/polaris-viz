@@ -1,3 +1,4 @@
+import {Globals} from '@react-spring/web';
 import React from 'react';
 
 import {classNames, clamp} from '../../../../utilities';
@@ -11,7 +12,6 @@ export interface AnnotationLineProps extends Omit<Annotation, 'dataIndex'> {
   xPosition: number;
   barWidth: number;
   drawableHeight: number;
-  shouldAnimate?: boolean;
 }
 
 export function AnnotationLine({
@@ -19,7 +19,6 @@ export function AnnotationLine({
   barWidth,
   drawableHeight,
   width: annotationWidth,
-  shouldAnimate = false,
   color,
   xOffset = MEDIAN_OFFSET,
 }: AnnotationLineProps) {
@@ -33,7 +32,7 @@ export function AnnotationLine({
 
   return (
     <line
-      className={classNames(shouldAnimate && styles.AnimatedLine)}
+      className={classNames(!Globals.skipAnimation && styles.AnimatedLine)}
       stroke={color}
       strokeWidth={annotationWidth}
       x1={xValueClamped}

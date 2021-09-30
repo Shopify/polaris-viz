@@ -1,7 +1,7 @@
 import React, {useState, useMemo, useCallback} from 'react';
 
 import {getSeriesColorsFromCount} from '../../hooks/use-theme-series-colors';
-import {usePrefersReducedMotion, useTheme} from '../../hooks';
+import {useTheme} from '../../hooks';
 import {
   BarChartMargin as Margin,
   LINE_HEIGHT,
@@ -60,7 +60,6 @@ interface Props {
   xAxisOptions: RequiredXAxis;
   yAxisOptions: Required<YAxisOptions>;
   emptyStateText?: string;
-  isAnimated?: boolean;
   theme?: string;
 }
 
@@ -70,7 +69,6 @@ export function Chart({
   chartDimensions,
   renderTooltipContent,
   emptyStateText,
-  isAnimated = false,
   xAxisOptions,
   yAxisOptions,
   theme,
@@ -81,7 +79,6 @@ export function Chart({
   const selectedTheme = useTheme(theme);
   const [seriesColor] = getSeriesColorsFromCount(1, selectedTheme);
 
-  const {prefersReducedMotion} = usePrefersReducedMotion();
   const [activeBar, setActiveBar] = useState<number | null>(null);
 
   const {minimalLabelIndexes} = useMinimalLabelIndexes({
@@ -229,8 +226,6 @@ export function Chart({
     },
     [chartStartPosition, xScale],
   );
-
-  const shouldAnimate = !prefersReducedMotion && isAnimated;
 
   const {width, height} = chartDimensions;
 
@@ -403,7 +398,6 @@ export function Chart({
                 xPosition={xPositionValue}
                 barWidth={barWidth}
                 drawableHeight={drawableHeight}
-                shouldAnimate={shouldAnimate}
                 width={annotation.width}
                 color={annotation.color}
                 xOffset={annotation.xOffset}

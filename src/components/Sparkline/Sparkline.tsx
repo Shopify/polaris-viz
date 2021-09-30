@@ -4,7 +4,7 @@ import {scaleLinear} from 'd3-scale';
 import type {Color, LineStyle} from 'types';
 
 import {useThemeSeriesColors} from '../../hooks/use-theme-series-colors';
-import {useResizeObserver, useTheme} from '../../hooks';
+import {useReducedMotion, useResizeObserver, useTheme} from '../../hooks';
 import {XMLNS} from '../../constants';
 
 import styles from './Sparkline.scss';
@@ -40,6 +40,8 @@ export function Sparkline({
   isAnimated = false,
   theme,
 }: SparklineProps) {
+  useReducedMotion(isAnimated);
+
   const {
     ref: containerRef,
     setRef: setContainerRef,
@@ -168,7 +170,6 @@ export function Sparkline({
                 xScale={xScale}
                 yScale={yScale}
                 series={seriesWithColor}
-                isAnimated={isAnimated}
                 svgDimensions={svgDimensions}
                 theme={selectedTheme}
               />

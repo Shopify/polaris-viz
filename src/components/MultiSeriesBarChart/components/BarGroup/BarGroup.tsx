@@ -2,7 +2,6 @@ import React, {useCallback, useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import type {Color} from 'types';
 
-import {usePrefersReducedMotion} from '../../../../hooks';
 import {Bar} from '../../../Bar';
 import {LinearGradient} from '../../../LinearGradient';
 import {BAR_SPACING} from '../../constants';
@@ -28,7 +27,6 @@ interface Props {
   onFocus: (index: number) => void;
   hasRoundedCorners: boolean;
   zeroAsMinHeight: boolean;
-  isAnimated?: boolean;
   rotateZeroBars?: boolean;
 }
 
@@ -45,10 +43,8 @@ export function BarGroup({
   hasRoundedCorners,
   isSubdued,
   zeroAsMinHeight,
-  isAnimated = false,
   rotateZeroBars = false,
 }: Props) {
-  const {prefersReducedMotion} = usePrefersReducedMotion();
   const barWidth = width / data.length - BAR_SPACING;
 
   const getBarHeight = useCallback(
@@ -62,8 +58,6 @@ export function BarGroup({
     },
     [yScale, zeroAsMinHeight],
   );
-
-  const shouldAnimate = !prefersReducedMotion && isAnimated;
 
   const gradientId = useMemo(() => uniqueId('gradient'), []);
   const maskId = useMemo(() => uniqueId('mask'), []);
@@ -111,7 +105,6 @@ export function BarGroup({
                 animationDelay={
                   barGroupIndex * (LOAD_ANIMATION_DURATION / data.length)
                 }
-                isAnimated={shouldAnimate}
               />
             </g>
           );

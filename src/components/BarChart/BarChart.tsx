@@ -4,7 +4,7 @@ import {useDebouncedCallback} from 'use-debounce';
 import type {Dimensions, XAxisOptions, YAxisOptions} from '../../types';
 import {SkipLink} from '../SkipLink';
 import {uniqueId, normalizeData} from '../../utilities';
-import {useResizeObserver} from '../../hooks';
+import {useReducedMotion, useResizeObserver} from '../../hooks';
 import {ChartContainer} from '../ChartContainer';
 
 import {TooltipContent} from './components';
@@ -39,6 +39,8 @@ export function BarChart({
   yAxisOptions,
   theme,
 }: BarChartProps) {
+  useReducedMotion(isAnimated);
+
   const [chartDimensions, setChartDimensions] = useState<Dimensions | null>(
     null,
   );
@@ -166,7 +168,6 @@ export function BarChart({
             </SkipLink>
           )}
           <Chart
-            isAnimated={isAnimated}
             data={data}
             annotationsLookupTable={annotationsLookupTable}
             chartDimensions={chartDimensions}

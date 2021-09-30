@@ -2,14 +2,10 @@ import React, {useCallback, useState, useLayoutEffect, useMemo} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 import {scaleBand, scaleLinear} from 'd3-scale';
 import {line} from 'd3-shape';
-import {useTransition} from '@react-spring/web';
+import {Globals, useTransition} from '@react-spring/web';
 
 import {getSeriesColorsFromCount} from '../../hooks/use-theme-series-colors';
-import {
-  usePrefersReducedMotion,
-  useResizeObserver,
-  useTheme,
-} from '../../hooks';
+import {useReducedMotion, useResizeObserver, useTheme} from '../../hooks';
 import {BARS_TRANSITION_CONFIG, XMLNS} from '../../constants';
 import type {Color, SparkChartData} from '../../types';
 import {uniqueId, getAnimationTrail, isGradientType} from '../../utilities';
@@ -71,13 +67,14 @@ export function Sparkbar({
   theme,
   barColor,
 }: SparkbarProps) {
+  useReducedMotion(isAnimated);
+
   const {
     ref: containerRef,
     setRef: setContainerRef,
     entry,
   } = useResizeObserver();
   const [svgDimensions, setSvgDimensions] = useState({width: 0, height: 0});
-  const {prefersReducedMotion} = usePrefersReducedMotion();
   const selectedTheme = useTheme(theme);
   const [seriesColor] = getSeriesColorsFromCount(1, selectedTheme);
 
@@ -164,8 +161,6 @@ export function Sparkbar({
     index,
   }));
 
-  const shouldAnimate = !prefersReducedMotion && isAnimated;
-
   const colorToUse = barColor ?? seriesColor;
 
   const color = isGradientType(colorToUse)
@@ -183,8 +178,7 @@ export function Sparkbar({
     leave: {height: 0},
     enter: ({value}) => ({height: getBarHeight(value == null ? 0 : value)}),
     update: ({value}) => ({height: getBarHeight(value == null ? 0 : value)}),
-    default: {immediate: !shouldAnimate},
-    trail: shouldAnimate ? getAnimationTrail(dataWithIndex.length) : 0,
+    trail: Globals.skipAnimation ? 0 : getAnimationTrail(dataWithIndex.length),
     config: BARS_TRANSITION_CONFIG,
   });
 
