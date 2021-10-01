@@ -2,10 +2,12 @@ import {join} from 'path';
 
 import {
   createPackage,
+  createProjectBuildPlugin,
   createProjectPlugin,
   createWorkspaceTestPlugin,
   Runtime,
 } from '@shopify/loom';
+import replace from '@rollup/plugin-replace';
 import {eslint} from '@shopify/loom-plugin-eslint';
 import {prettier} from '@shopify/loom-plugin-prettier';
 import {stylelint} from '@shopify/loom-plugin-stylelint';
@@ -13,6 +15,14 @@ import {
   buildLibrary,
   buildLibraryWorkspace,
 } from '@shopify/loom-plugin-build-library';
+// HACK: We should remove this once we have a workaround of some sort for
+// https://github.com/Shopify/loom/issues/278
+// The alternative is vendoring in this into Polaris Viz
+import {styles} from '@shopify/loom-plugin-build-library/build/cjs/rollup/rollup-plugin-styles';
+import postcssShopify from '@shopify/postcss-plugin';
+
+import {generateScopedName} from './config/rollup/namespaced-classname';
+import packageJSON from './package.json';
 
 // eslint-disable-next-line import/no-default-export
 export default createPackage((pkg) => {
@@ -36,6 +46,7 @@ export default createPackage((pkg) => {
     prettier({files: '**/*.{md,json,yaml,yml}'}),
     runWorkspaceTests(),
     rollupAdjustOutputPlugin(),
+    rollupAdjustPluginPlugin(),
   );
 });
 
@@ -50,6 +61,47 @@ function runWorkspaceTests() {
           });
         }
         return config;
+      });
+    });
+  });
+}
+
+export function rollupAdjustPluginPlugin() {
+  return createProjectBuildPlugin('PolarisVizRollupBuildPlugin', ({hooks}) => {
+    hooks.target.hook(({hooks, target}) => {
+      hooks.configure.hook((configuration) => {
+        configuration.rollupPlugins?.hook((rollupPlugins) => {
+          // We're adding our own styles plugin
+          // See: https://github.com/Shopify/loom/issues/278
+          const stylesConfig = target.options.rollupEsnext
+            ? {
+                mode: 'esnext',
+                modules: {
+                  generateScopedName: generateScopedName({includeHash: true}),
+                },
+                plugins: [postcssShopify],
+              }
+            : {
+                mode: 'standalone',
+                output: 'styles.css',
+                modules: {
+                  generateScopedName: generateScopedName({includeHash: false}),
+                },
+                plugins: [postcssShopify],
+              };
+          const plugins = rollupPlugins.filter(
+            (plugin) => plugin && plugin.name !== 'styles',
+          );
+          return [
+            replace({
+              '{{POLARIS_VIZ_VERSION}}': packageJSON.version,
+              delimiters: ['', ''],
+              preventAssignment: true,
+            }),
+            ...plugins,
+            styles(stylesConfig),
+          ];
+        });
       });
     });
   });
