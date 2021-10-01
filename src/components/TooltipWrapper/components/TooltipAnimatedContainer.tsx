@@ -1,39 +1,35 @@
 import React, {useEffect, useRef, useState, ReactNode} from 'react';
 import {useSpring, animated} from '@react-spring/web';
 
-import type {Dimensions, Margin} from '../../types';
+import type {Dimensions, Margin} from '../../../types';
+import styles from '../TooltipContainer.scss';
+import type {TooltipPositionOffset} from '../types';
+import {getAlteredPosition} from '../utilities';
+import {DEFAULT_TOOLTIP_POSITION} from '../constants';
 
-import {getAlteredPosition} from './utils';
-import styles from './TooltipContainer.scss';
-
-export interface TooltipPosition {
-  horizontal: 'left' | 'right' | 'center';
-  vertical: 'above' | 'below' | 'inline' | 'center';
-}
-
-export interface TooltipContainerProps {
+export interface TooltipAnimatedContainerProps {
   children: ReactNode;
   margin: Margin;
   activePointIndex: number;
   currentX: number;
   currentY: number;
   chartDimensions: Dimensions;
-  position?: TooltipPosition;
+  position?: TooltipPositionOffset;
   id?: string;
   bandwidth?: number;
 }
 
-export function TooltipContainer({
+export function TooltipAnimatedContainer({
   activePointIndex,
   currentX,
   currentY,
   chartDimensions,
   children,
   margin,
-  position = {horizontal: 'center', vertical: 'above'},
+  position = DEFAULT_TOOLTIP_POSITION,
   id = '',
   bandwidth = 0,
-}: TooltipContainerProps) {
+}: TooltipAnimatedContainerProps) {
   const tooltipRef = useRef<HTMLDivElement | null>(null);
   const [tooltipDimensions, setTooltipDimensions] = useState<Dimensions | null>(
     null,

@@ -178,3 +178,9 @@ export interface Margin {
   Right: number;
   Bottom: number;
 }
+
+export enum DataType {
+  Point = 'Point',
+  BarGroup = 'BarGroup',
+  Bar = 'Bar',
+}

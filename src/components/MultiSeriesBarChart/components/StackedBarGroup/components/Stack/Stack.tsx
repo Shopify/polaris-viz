@@ -1,5 +1,6 @@
 import React from 'react';
 
+import {DataType} from '../../../../../../types';
 import {formatAriaLabel} from '../../../../utilities';
 import {BAR_SPACING} from '../../../../constants';
 import type {StackedBarGroupProps} from '../../types';
@@ -7,7 +8,6 @@ import type {StackedBarGroupProps} from '../../types';
 export function Stack({
   data,
   xScale,
-  onFocus,
   ariaHidden,
   activeBarId,
   accessibilityData,
@@ -24,10 +24,6 @@ export function Stack({
       {data.map(([start, end], barIndex) => {
         const xPosition = xScale(barIndex.toString());
 
-        const handleFocus = () => {
-          onFocus(barIndex);
-        };
-
         const ariaLabel = formatAriaLabel(accessibilityData[barIndex]);
         const height = Math.abs(yScale(end) - yScale(start));
         const ariaEnabledBar = groupIndex === 0 && !ariaHidden;
@@ -38,6 +34,10 @@ export function Stack({
             role={ariaEnabledBar ? 'listitem' : undefined}
             aria-hidden={!ariaEnabledBar}
             key={barIndex}
+            data-type={DataType.BarGroup}
+            data-index={barIndex}
+            tabIndex={ariaEnabledBar ? 0 : -1}
+            aria-label={ariaEnabledBar ? ariaLabel : undefined}
           >
             <rect
               id={isActive ? activeBarId : ''}
@@ -46,11 +46,6 @@ export function Stack({
               y={yScale(end)}
               height={height}
               width={barWidth}
-              tabIndex={ariaEnabledBar ? 0 : -1}
-              onFocus={handleFocus}
-              role={ariaEnabledBar ? 'img' : undefined}
-              aria-label={ariaEnabledBar ? ariaLabel : undefined}
-              aria-hidden={!ariaEnabledBar}
             />
           </g>
         );

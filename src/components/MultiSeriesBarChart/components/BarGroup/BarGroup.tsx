@@ -1,7 +1,7 @@
 import React, {useCallback, useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
-import type {Color} from 'types';
 
+import {Color, DataType} from '../../../../types';
 import {usePrefersReducedMotion} from '../../../../hooks';
 import {Bar} from '../../../Bar';
 import {LinearGradient} from '../../../LinearGradient';
@@ -14,6 +14,7 @@ import {
   BAR_ANIMATION_HEIGHT_BUFFER,
 } from '../../../../constants';
 import {uniqueId} from '../../../../utilities';
+import styles from '../../Chart.scss';
 
 interface Props {
   x: number;
@@ -25,7 +26,6 @@ interface Props {
   isSubdued: boolean;
   barGroupIndex: number;
   ariaLabel: string;
-  onFocus: (index: number) => void;
   hasRoundedCorners: boolean;
   zeroAsMinHeight: boolean;
   isAnimated?: boolean;
@@ -39,7 +39,6 @@ export function BarGroup({
   width,
   colors,
   height,
-  onFocus,
   barGroupIndex,
   ariaLabel,
   hasRoundedCorners,
@@ -83,15 +82,17 @@ export function BarGroup({
     <React.Fragment>
       <mask id={maskId}>
         {data.map((rawValue, index) => {
-          const handleFocus = () => {
-            onFocus(barGroupIndex);
-          };
-
           const ariaEnabledBar = index === 0;
+
           return (
             <g
+              className={styles.BarGroup}
               role={ariaEnabledBar ? 'listitem' : undefined}
               aria-hidden={!ariaEnabledBar}
+              data-type={DataType.BarGroup}
+              data-index={barGroupIndex}
+              tabIndex={index === 0 ? 0 : -1}
+              aria-label={ariaEnabledBar ? ariaLabel : undefined}
               key={`${barGroupIndex}${index}`}
             >
               <Bar
@@ -102,10 +103,8 @@ export function BarGroup({
                 rawValue={rawValue}
                 width={barWidth}
                 index={index}
-                onFocus={handleFocus}
-                tabIndex={ariaEnabledBar ? 0 : -1}
+                tabIndex={-1}
                 role={ariaEnabledBar ? 'img' : undefined}
-                ariaLabel={ariaEnabledBar ? ariaLabel : undefined}
                 hasRoundedCorners={hasRoundedCorners}
                 rotateZeroBars={rotateZeroBars}
                 animationDelay={

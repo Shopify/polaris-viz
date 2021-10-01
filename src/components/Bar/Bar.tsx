@@ -1,6 +1,7 @@
 import React, {useMemo} from 'react';
 import {animated, useSpring} from '@react-spring/web';
 
+import {DataType} from '../../types';
 import {ROUNDED_BAR_RADIUS, BARS_TRANSITION_CONFIG} from '../../constants';
 
 import styles from './Bar.scss';
@@ -11,15 +12,16 @@ interface Props {
   rawValue: number;
   width: number;
   index: number;
-  onFocus: ({index, cx, cy}: {index: number; cx: number; cy: number}) => void;
-  ariaLabel?: string;
+  rotateZeroBars: boolean;
+  height: number;
   tabIndex: number;
+  zeroPosition: number;
+
+  onFocus?: ({index, cx, cy}: {index: number; cx: number; cy: number}) => void;
+  ariaLabel?: string;
   role?: string;
   hasRoundedCorners?: boolean;
-  height: number;
-  rotateZeroBars: boolean;
   animationDelay?: number;
-  zeroPosition: number;
   isAnimated?: boolean;
 }
 
@@ -48,7 +50,7 @@ export const Bar = React.memo(function Bar({
 
   const handleFocus = () => {
     if (yPosition == null) return;
-    onFocus({index, cx: x, cy: yPosition});
+    onFocus?.({index, cx: x, cy: yPosition});
   };
 
   const style = useMemo(() => {
@@ -100,6 +102,9 @@ export const Bar = React.memo(function Bar({
       }}
     >
       <path
+        data-id={`bar-${index}`}
+        data-index={index}
+        data-type={DataType.Bar}
         d={path}
         fill={color}
         aria-label={ariaLabel}

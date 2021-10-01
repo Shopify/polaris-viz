@@ -15,7 +15,6 @@ export function StackedBarGroup({
   yScale,
   xScale,
   colors,
-  onFocus,
   accessibilityData,
   activeBarGroup,
 }: StackedBarGroupProps) {
@@ -51,7 +50,6 @@ export function StackedBarGroup({
             <Stack
               data={data}
               xScale={xScale}
-              onFocus={onFocus}
               ariaHidden
               activeBarId={activeBarId}
               accessibilityData={accessibilityData}
@@ -74,11 +72,11 @@ export function StackedBarGroup({
         style={{
           fill: fillColor,
         }}
+        role="list"
       >
         <Stack
           data={data}
           xScale={xScale}
-          onFocus={onFocus}
           ariaHidden={false}
           activeBarId={activeBarId}
           accessibilityData={accessibilityData}

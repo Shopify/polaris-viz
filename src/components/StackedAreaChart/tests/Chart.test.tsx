@@ -8,29 +8,23 @@ import {
 } from 'components';
 import {Point} from 'components/Point';
 import {Crosshair} from 'components/Crosshair';
-import {TooltipContainer} from 'components/TooltipContainer';
+import {
+  TooltipWrapper,
+  TooltipAnimatedContainer,
+} from 'components/TooltipWrapper';
+import {triggerSVGMouseMove} from 'test-utilities';
 
 import {StackedAreas} from '../components';
 import {Chart} from '../Chart';
-
-const fakeSVGEvent = {
-  currentTarget: {
-    getScreenCTM: () => ({
-      inverse: () => ({x: 100, y: 100}),
-    }),
-    createSVGPoint: () => ({
-      x: 100,
-      y: 100,
-      matrixTransform: () => ({x: 100, y: 100}),
-    }),
-  },
-};
 
 jest.mock('../../../utilities', () => {
   return {
     ...jest.requireActual('../../../utilities'),
     getPathLength: () => 0,
     getPointAtLength: jest.fn(() => ({x: 0, y: 0})),
+    eventPointNative: () => {
+      return {clientX: 0, clientY: 0, svgX: 0, svgY: 0};
+    },
   };
 });
 
@@ -169,11 +163,7 @@ describe('<Chart />', () => {
   it('sets an active point and tooltip position on svg mouse or touch interaction', () => {
     const chart = mount(<Chart {...mockProps} />);
 
-    const svg = chart.find('svg')!;
-
-    chart.act(() => {
-      svg.trigger('onMouseMove', fakeSVGEvent);
-    });
+    triggerSVGMouseMove(chart);
 
     expect(chart).toContainReactComponent(Point, {
       active: true,
@@ -191,35 +181,32 @@ describe('<Chart />', () => {
   it('renders a <Crosshair /> if there is an active point', () => {
     const chart = mount(<Chart {...mockProps} />);
 
-    const svg = chart.find('svg')!;
-    svg.trigger('onMouseMove', fakeSVGEvent);
+    triggerSVGMouseMove(chart);
 
     expect(chart).toContainReactComponent(Crosshair);
   });
 
-  it('does not render a <TooltipContainer /> if there is no active point', () => {
+  it('does not render a <TooltipAnimatedContainer /> if there is no active point', () => {
     const chart = mount(<Chart {...mockProps} />);
 
-    expect(chart).not.toContainReactComponent(TooltipContainer);
+    expect(chart).not.toContainReactComponent(TooltipAnimatedContainer);
   });
 
-  it('renders a <TooltipContainer /> if there is an active point', () => {
+  it('renders a <TooltipAnimatedContainer /> if there is an active point', () => {
     const chart = mount(<Chart {...mockProps} />);
 
-    const svg = chart.find('svg')!;
-    svg.trigger('onMouseMove', fakeSVGEvent);
+    triggerSVGMouseMove(chart);
 
-    expect(chart).toContainReactComponent(TooltipContainer);
+    expect(chart).toContainReactComponent(TooltipAnimatedContainer);
   });
 
-  it('renders tooltip content inside a <TooltipContainer /> if there is an active point', () => {
+  it('renders tooltip content inside a <TooltipWrapper /> if there is an active point', () => {
     const chart = mount(<Chart {...mockProps} />);
 
-    const svg = chart.find('svg')!;
-    svg.trigger('onMouseMove', fakeSVGEvent);
+    triggerSVGMouseMove(chart);
 
-    const tooltipContainer = chart.find(TooltipContainer)!;
-    expect(tooltipContainer).toContainReactText('Mock Tooltip Content');
+    const tooltipWrapper = chart.find(TooltipWrapper)!;
+    expect(tooltipWrapper).toContainReactText('Mock Tooltip Content');
   });
 
   it('renders <VisuallyHiddenRows />', () => {

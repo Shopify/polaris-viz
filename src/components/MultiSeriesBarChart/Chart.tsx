@@ -2,19 +2,23 @@ import React, {useState, useMemo, useCallback} from 'react';
 
 import {BarChartMargin as Margin, XMLNS} from '../../constants';
 import {
-  TooltipContainer,
-  TooltipPosition as TooltipContainerPosition,
-} from '../TooltipContainer';
+  TooltipHorizontalOffset,
+  TooltipVerticalOffset,
+  TooltipPosition,
+  TooltipPositionParams,
+  TooltipWrapper,
+  TOOLTIP_POSITION_DEFAULT_RETURN,
+} from '../TooltipWrapper';
 import {
-  eventPoint,
   getTextWidth,
   getBarXAxisDetails,
   shouldRotateZeroBars,
+  eventPointNative,
 } from '../../utilities';
 import {YAxis} from '../YAxis';
 import {BarChartXAxis} from '../BarChartXAxis';
 import {HorizontalGridLines} from '../HorizontalGridLines';
-import {Dimensions, BarMargin} from '../../types';
+import {Dimensions, BarMargin, DataType} from '../../types';
 import {useTheme} from '../../hooks';
 
 import {getStackedValues, formatAriaLabel} from './utilities';
@@ -28,12 +32,6 @@ import {BarGroup, StackedBarGroup} from './components';
 import {useYScale, useXScale} from './hooks';
 import {FONT_SIZE, SMALL_WIDTH, SMALL_FONT_SIZE, SPACING} from './constants';
 import styles from './Chart.scss';
-
-interface TooltipPosition {
-  x: number;
-  y: number;
-  position: TooltipContainerPosition;
-}
 
 interface Props {
   series: Required<Series>[];
@@ -59,10 +57,8 @@ export function Chart({
   theme,
 }: Props) {
   const selectedTheme = useTheme(theme);
-
   const [activeBarGroup, setActiveBarGroup] = useState<number | null>(null);
-  const [tooltipPosition, setTooltipPosition] =
-    useState<TooltipPosition | null>(null);
+  const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
 
   const fontSize =
     chartDimensions.width < SMALL_WIDTH ? SMALL_FONT_SIZE : FONT_SIZE;
@@ -142,7 +138,7 @@ export function Chart({
     return series.map((type) => type.data[index].rawValue);
   });
 
-  const areAllAllNegative = useMemo(() => {
+  const areAllNegative = useMemo(() => {
     return ![...sortedData]
       .reduce((prev, cur) => prev.concat(cur), [])
       // If one value is greater than zero,
@@ -176,24 +172,27 @@ export function Chart({
 
   const barColors = series.map(({color}) => color);
 
-  const tooltipContentMarkup = useMemo(() => {
-    if (activeBarGroup == null) {
-      return null;
-    }
+  const getTooltipMarkup = useCallback(
+    (index: number) => {
+      if (index == null) {
+        return null;
+      }
 
-    const data = series.map(({data, color, name}) => {
-      return {
-        label: name,
-        color,
-        value: data[activeBarGroup].rawValue,
-      };
-    });
+      const data = series.map(({data, color, name}) => {
+        return {
+          label: name,
+          color,
+          value: data[index].rawValue,
+        };
+      });
 
-    return renderTooltipContent({
-      data,
-      title: xAxisOptions.labels[activeBarGroup],
-    });
-  }, [activeBarGroup, renderTooltipContent, series, xAxisOptions.labels]);
+      return renderTooltipContent({
+        data,
+        title: xAxisOptions.labels[index],
+      });
+    },
+    [renderTooltipContent, series, xAxisOptions.labels],
+  );
 
   const accessibilityData = useMemo(
     () =>
@@ -209,31 +208,6 @@ export function Chart({
     [series, xAxisOptions.labels, yAxisOptions],
   );
 
-  const handleFocus = useCallback(
-    (index: number) => {
-      const xScaleBandwidth = xScale.bandwidth();
-      const xPosition = xScale(index.toString());
-
-      if (index == null || xPosition == null) return;
-      const highestValue = isStacked
-        ? sortedData[index].reduce(sumPositiveData, 0)
-        : Math.max(...sortedData[index]);
-      setActiveBarGroup(index);
-
-      const xOffsetAmount =
-        xPosition + chartStartPosition + xScaleBandwidth / 2;
-      setTooltipPosition({
-        x: xOffsetAmount,
-        y: yScale(highestValue),
-        position: {
-          horizontal: 'center',
-          vertical: 'above',
-        },
-      });
-    },
-    [chartStartPosition, isStacked, sortedData, xScale, yScale],
-  );
-
   return (
     <div
       className={styles.ChartContainer}
@@ -247,12 +221,9 @@ export function Chart({
         width={chartDimensions.width}
         height={chartDimensions.height}
         className={styles.Svg}
-        onMouseMove={handleInteraction}
-        onTouchMove={handleInteraction}
-        onMouseLeave={() => setActiveBarGroup(null)}
-        onTouchEnd={() => setActiveBarGroup(null)}
         role={emptyState ? 'img' : 'list'}
         aria-label={emptyState ? emptyStateText : undefined}
+        ref={setSvgRef}
       >
         {hideXAxis ? null : (
           <g
@@ -309,7 +280,6 @@ export function Chart({
                     xScale={xScale}
                     yScale={yScale}
                     colors={barColors}
-                    onFocus={handleFocus}
                     accessibilityData={accessibilityData}
                   />
                 );
@@ -330,7 +300,6 @@ export function Chart({
                     width={xScale.bandwidth()}
                     height={drawableHeight}
                     colors={barColors}
-                    onFocus={handleFocus}
                     barGroupIndex={index}
                     ariaLabel={ariaLabel}
                     hasRoundedCorners={selectedTheme.bar.hasRoundedCorners}
@@ -342,72 +311,78 @@ export function Chart({
         </g>
       </svg>
 
-      {tooltipPosition != null && activeBarGroup != null && !emptyState ? (
-        <TooltipContainer
-          activePointIndex={activeBarGroup}
-          currentX={tooltipPosition.x}
-          currentY={tooltipPosition.y}
-          chartDimensions={chartDimensions}
-          margin={Margin}
-          position={tooltipPosition.position}
-          bandwidth={xScale.bandwidth()}
-        >
-          {tooltipContentMarkup}
-        </TooltipContainer>
-      ) : null}
+      <TooltipWrapper
+        bandwidth={xScale.bandwidth()}
+        chartDimensions={chartDimensions}
+        focusElementDataType={DataType.BarGroup}
+        getMarkup={getTooltipMarkup}
+        getPosition={getTooltipPosition}
+        margin={Margin}
+        onIndexChange={(index) => setActiveBarGroup(index)}
+        parentRef={svgRef}
+      />
     </div>
   );
 
-  function handleInteraction(
-    event: React.MouseEvent<SVGSVGElement> | React.TouchEvent<SVGSVGElement>,
-  ) {
-    const point = eventPoint(event);
-
-    if (point == null) {
-      return;
+  function formatPositionForTooltip(index: number | null): TooltipPosition {
+    if (index == null) {
+      return TOOLTIP_POSITION_DEFAULT_RETURN;
     }
 
-    const {svgX, svgY} = point;
-    const currentPoint = svgX - chartStartPosition;
-    const currentIndex = Math.floor(currentPoint / xScale.step());
-
-    if (activeBarGroup === currentIndex) {
-      return;
-    } else {
-      setActiveBarGroup(currentIndex);
-    }
-
-    if (
-      currentIndex < 0 ||
-      currentIndex > sortedData.length - 1 ||
-      svgY <= Margin.Top ||
-      svgY > drawableHeight + Number(Margin.Bottom) + maxXLabelHeight
-    ) {
-      setActiveBarGroup(null);
-      return;
-    }
-
-    const xPosition = xScale(currentIndex.toString()) ?? 0;
-
-    const sortedDataPos = sortedData[currentIndex].map((num) => Math.abs(num));
+    const xPosition = xScale(`${index}`) ?? 0;
+    const sortedDataPos = sortedData[index].map((num) => Math.abs(num));
 
     const highestValuePos = isStacked
-      ? sortedData[currentIndex].reduce(sumPositiveData, 0)
+      ? sortedData[index].reduce(sumPositiveData, 0)
       : Math.max(...sortedDataPos);
 
-    const left = xPosition + chartStartPosition;
-    const top = yScale(highestValuePos) + (Margin.Top as number);
+    const x = xPosition + chartStartPosition;
+    const y = yScale(highestValuePos) + (Margin.Top as number);
 
-    const tooltipPosition: TooltipPosition = {
-      x: left,
-      y: Math.abs(top),
+    return {
+      x,
+      y: Math.abs(y),
       position: {
-        horizontal: 'center',
-        vertical: areAllAllNegative ? 'below' : 'above',
+        horizontal: TooltipHorizontalOffset.Center,
+        vertical: areAllNegative
+          ? TooltipVerticalOffset.Below
+          : TooltipVerticalOffset.Above,
       },
+      activeIndex: index,
     };
+  }
 
-    setTooltipPosition(tooltipPosition);
+  function getTooltipPosition({
+    event,
+    index,
+    eventType,
+  }: TooltipPositionParams): TooltipPosition {
+    if (eventType === 'mouse' && event) {
+      const point = eventPointNative(event);
+
+      if (point == null) {
+        return TOOLTIP_POSITION_DEFAULT_RETURN;
+      }
+
+      const {svgX, svgY} = point;
+      const currentPoint = svgX - chartStartPosition;
+      const activeIndex = Math.floor(currentPoint / xScale.step());
+
+      if (
+        activeIndex < 0 ||
+        activeIndex > sortedData.length - 1 ||
+        svgY <= Margin.Top ||
+        svgY > drawableHeight + Number(Margin.Bottom) + maxXLabelHeight
+      ) {
+        return TOOLTIP_POSITION_DEFAULT_RETURN;
+      }
+
+      return formatPositionForTooltip(activeIndex);
+    } else if (index != null) {
+      return formatPositionForTooltip(index);
+    }
+
+    return TOOLTIP_POSITION_DEFAULT_RETURN;
   }
 }
 

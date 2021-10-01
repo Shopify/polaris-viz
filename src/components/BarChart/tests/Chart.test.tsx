@@ -1,29 +1,13 @@
 import React from 'react';
-import {YAxis, TooltipContainer, BarChartXAxis, Bar} from 'components';
+import {YAxis, BarChartXAxis, Bar} from 'components';
 import {HorizontalGridLines} from 'components/HorizontalGridLines';
 import {mockDefaultTheme} from 'test-utilities/mount-with-provider';
+import {TooltipAnimatedContainer} from 'components/TooltipWrapper';
 
-import {mountWithProvider} from '../../../test-utilities';
+import {mountWithProvider, triggerSVGMouseMove} from '../../../test-utilities';
 import {AnnotationLine} from '../components';
 import {Chart} from '../Chart';
-import {
-  MASK_SUBDUE_COLOR,
-  MASK_HIGHLIGHT_COLOR,
-  MIN_BAR_HEIGHT,
-} from '../../../constants';
-
-const fakeSVGEvent = {
-  currentTarget: {
-    getScreenCTM: () => ({
-      inverse: () => ({x: 100, y: 100}),
-    }),
-    createSVGPoint: () => ({
-      x: 100,
-      y: 100,
-      matrixTransform: () => ({x: 100, y: 100}),
-    }),
-  },
-};
+import {MIN_BAR_HEIGHT} from '../../../constants';
 
 const ZERO_AS_MIN_HEIGHT_THEME = {
   themes: {
@@ -34,6 +18,15 @@ const ZERO_AS_MIN_HEIGHT_THEME = {
     },
   },
 };
+
+jest.mock('../../../utilities/event-point', () => {
+  return {
+    ...jest.requireActual('../../../utilities/event-point'),
+    eventPointNative: () => {
+      return {clientX: 0, clientY: 0, svgX: 80, svgY: 80};
+    },
+  };
+});
 
 describe('Chart />', () => {
   const mockProps = {
@@ -96,28 +89,26 @@ describe('Chart />', () => {
     expect(barChart).toContainReactComponent(YAxis);
   });
 
-  it('does not render a <TooltipContainer /> if there is no active point', () => {
+  it('does not render a <TooltipAnimatedContainer /> if there is no active point', () => {
     const chart = mountWithProvider(<Chart {...mockProps} />);
 
-    expect(chart).not.toContainReactComponent(TooltipContainer);
+    expect(chart).not.toContainReactComponent(TooltipAnimatedContainer);
   });
 
-  it('renders a <TooltipContainer /> if there is an active point', () => {
+  it('renders a <TooltipAnimatedContainer /> if there is an active point', () => {
     const chart = mountWithProvider(<Chart {...mockProps} />);
-    const svg = chart.find('svg')!;
 
-    svg.trigger('onMouseMove', fakeSVGEvent);
+    triggerSVGMouseMove(chart);
 
-    expect(chart).toContainReactComponent(TooltipContainer);
+    expect(chart).toContainReactComponent(TooltipAnimatedContainer);
   });
 
-  it('renders the tooltip content in a <TooltipContainer /> if there is an active point', () => {
+  it('renders the tooltip content in a <TooltipAnimatedContainer /> if there is an active point', () => {
     const chart = mountWithProvider(<Chart {...mockProps} />);
-    const svg = chart.find('svg')!;
 
-    svg.trigger('onMouseMove', fakeSVGEvent);
+    triggerSVGMouseMove(chart);
 
-    const tooltipContainer = chart.find(TooltipContainer)!;
+    const tooltipContainer = chart.find(TooltipAnimatedContainer)!;
 
     expect(tooltipContainer).toContainReactComponent('p', {
       children: 'Mock Tooltip',
@@ -129,7 +120,7 @@ describe('Chart />', () => {
       const chart = mountWithProvider(<Chart {...mockProps} data={[]} />);
 
       expect(chart).not.toContainReactText('Mock Tooltip');
-      expect(chart).not.toContainReactComponent(TooltipContainer);
+      expect(chart).not.toContainReactComponent(TooltipAnimatedContainer);
     });
   });
 
@@ -138,17 +129,6 @@ describe('Chart />', () => {
       const chart = mountWithProvider(<Chart {...mockProps} />);
 
       expect(chart).toContainReactComponentTimes(Bar, 2);
-    });
-
-    it('passes a subdued color to the Bar that is not being hovered on or nearby', () => {
-      const chart = mountWithProvider(<Chart {...mockProps} />);
-
-      const svg = chart.find('svg')!;
-      expect(chart).toContainReactComponent(Bar, {color: MASK_HIGHLIGHT_COLOR});
-
-      svg.trigger('onMouseMove', fakeSVGEvent);
-
-      expect(chart).toContainReactComponent(Bar, {color: MASK_SUBDUE_COLOR});
     });
 
     describe('rotateZeroBars', () => {

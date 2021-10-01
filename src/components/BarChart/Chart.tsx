@@ -1,5 +1,14 @@
 import React, {useState, useMemo, useCallback} from 'react';
 
+import {
+  TooltipHorizontalOffset,
+  TooltipVerticalOffset,
+  TooltipWrapper,
+  TOOLTIP_POSITION_DEFAULT_RETURN,
+  TooltipPosition,
+  TooltipPositionParams,
+} from '../../components/TooltipWrapper';
+import {eventPointNative} from '../../utilities/event-point';
 import {getSeriesColorsFromCount} from '../../hooks/use-theme-series-colors';
 import {usePrefersReducedMotion, useTheme} from '../../hooks';
 import {
@@ -7,13 +16,12 @@ import {
   LINE_HEIGHT,
   MIN_BAR_HEIGHT,
   MASK_HIGHLIGHT_COLOR,
-  MASK_SUBDUE_COLOR,
   XMLNS,
   BAR_ANIMATION_HEIGHT_BUFFER,
   LOAD_ANIMATION_DURATION,
+  MASK_SUBDUE_COLOR,
 } from '../../constants';
 import {
-  eventPoint,
   getTextWidth,
   getBarXAxisDetails,
   uniqueId,
@@ -23,13 +31,15 @@ import {
 import {Bar} from '../Bar';
 import {YAxis} from '../YAxis';
 import {BarChartXAxis} from '../BarChartXAxis';
-import {
-  TooltipContainer,
-  TooltipPosition as TooltipContainerPosition,
-} from '../TooltipContainer';
 import {LinearGradient} from '../LinearGradient';
 import {HorizontalGridLines} from '../HorizontalGridLines';
-import {Dimensions, XAxisOptions, YAxisOptions, BarMargin} from '../../types';
+import {
+  Dimensions,
+  XAxisOptions,
+  YAxisOptions,
+  BarMargin,
+  DataType,
+} from '../../types';
 
 import {AnnotationLine} from './components';
 import type {
@@ -41,11 +51,6 @@ import {useYScale, useXScale, useMinimalLabelIndexes} from './hooks';
 import {SMALL_FONT_SIZE, FONT_SIZE, SMALL_SCREEN, SPACING} from './constants';
 import styles from './Chart.scss';
 
-interface TooltipPosition {
-  x: number;
-  y: number;
-  position: TooltipContainerPosition;
-}
 type RequiredXAxis = Pick<
   Required<XAxisOptions>,
   'labelFormatter' | 'useMinimalLabels'
@@ -75,14 +80,12 @@ export function Chart({
   yAxisOptions,
   theme,
 }: Props) {
-  const [tooltipPosition, setTooltipPosition] =
-    useState<TooltipPosition | null>(null);
-
   const selectedTheme = useTheme(theme);
   const [seriesColor] = getSeriesColorsFromCount(1, selectedTheme);
 
   const {prefersReducedMotion} = usePrefersReducedMotion();
-  const [activeBar, setActiveBar] = useState<number | null>(null);
+
+  const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
 
   const {minimalLabelIndexes} = useMinimalLabelIndexes({
     useMinimalLabels: xAxisOptions.useMinimalLabels,
@@ -189,17 +192,20 @@ export function Chart({
     [selectedTheme.bar.zeroAsMinHeight, data],
   );
 
-  const tooltipMarkup = useMemo(() => {
-    if (activeBar == null) {
-      return null;
-    }
+  const tooltipMarkup = useCallback(
+    (activeIndex: number) => {
+      if (activeIndex == null) {
+        return null;
+      }
 
-    return renderTooltipContent({
-      label: data[activeBar].label,
-      value: data[activeBar].rawValue,
-      annotation: annotationsLookupTable[activeBar],
-    });
-  }, [activeBar, data, annotationsLookupTable, renderTooltipContent]);
+      return renderTooltipContent({
+        label: data[activeIndex].label,
+        value: data[activeIndex].rawValue,
+        annotation: annotationsLookupTable[activeIndex],
+      });
+    },
+    [data, annotationsLookupTable, renderTooltipContent],
+  );
 
   const getBarHeight = useCallback(
     (rawValue: number) => {
@@ -212,22 +218,6 @@ export function Chart({
       return needsMinHeight ? MIN_BAR_HEIGHT : rawHeight;
     },
     [selectedTheme.bar, yScale, zeroPosition],
-  );
-
-  const handleFocus = useCallback(
-    ({index, cx, cy}: {index: number; cx: number; cy: number}) => {
-      if (index == null) return;
-      setActiveBar(index);
-      setTooltipPosition({
-        x: cx + chartStartPosition + xScale.bandwidth() / 2,
-        y: cy,
-        position: {
-          horizontal: 'center',
-          vertical: 'above',
-        },
-      });
-    },
-    [chartStartPosition, xScale],
   );
 
   const shouldAnimate = !prefersReducedMotion && isAnimated;
@@ -259,12 +249,9 @@ export function Chart({
         width={width}
         height={height}
         className={styles.Svg}
-        onMouseMove={handleInteraction}
-        onTouchMove={handleInteraction}
-        onMouseLeave={() => setActiveBar(null)}
-        onTouchEnd={() => setActiveBar(null)}
         role={emptyState ? 'img' : 'list'}
         aria-label={emptyState ? emptyStateText : undefined}
+        ref={setSvgRef}
       >
         <defs>
           <LinearGradient
@@ -282,7 +269,6 @@ export function Chart({
                 const ariaLabel = `${xAxisOptions.labelFormatter(
                   data[index].label,
                 )}: ${yAxisOptions.labelFormatter(data[index].rawValue)}`;
-                const isSubdued = activeBar != null && index !== activeBar;
                 const annotation = annotationsLookupTable[index];
                 const height = getBarHeight(rawValue);
 
@@ -293,10 +279,7 @@ export function Chart({
                       x={xPosition == null ? 0 : xPosition}
                       rawValue={rawValue}
                       width={barWidth}
-                      color={
-                        isSubdued ? MASK_SUBDUE_COLOR : MASK_HIGHLIGHT_COLOR
-                      }
-                      onFocus={handleFocus}
+                      color={MASK_HIGHLIGHT_COLOR}
                       index={index}
                       ariaLabel={`${ariaLabel} ${
                         annotation ? annotation.ariaLabel : ''
@@ -413,55 +396,91 @@ export function Chart({
         </g>
       </svg>
 
-      {tooltipPosition != null && activeBar != null && !emptyState ? (
-        <TooltipContainer
-          activePointIndex={activeBar}
-          currentX={tooltipPosition.x}
-          currentY={tooltipPosition.y}
-          chartDimensions={chartDimensions}
-          margin={Margin}
-          bandwidth={xScale.bandwidth()}
-          position={tooltipPosition.position}
-        >
-          {tooltipMarkup}
-        </TooltipContainer>
-      ) : null}
+      <TooltipWrapper
+        bandwidth={xScale.bandwidth()}
+        chartDimensions={chartDimensions}
+        focusElementDataType={DataType.Bar}
+        getMarkup={tooltipMarkup}
+        getPosition={getTooltipPosition}
+        margin={Margin}
+        onIndexChange={onIndexChange}
+        parentRef={svgRef}
+      />
     </div>
   );
 
-  function handleInteraction(
-    event: React.MouseEvent<SVGSVGElement> | React.TouchEvent<SVGSVGElement>,
-  ) {
-    const point = eventPoint(event);
+  function onIndexChange(index: number) {
+    const barElements = svgRef?.querySelectorAll(`[data-type=${DataType.Bar}]`);
 
-    if (point == null) {
+    if (!barElements) {
       return;
     }
 
-    const {svgX, svgY} = point;
-    const currentPoint = svgX - chartStartPosition;
-    const currentIndex = Math.floor(currentPoint / xScale.step());
-
-    if (
-      currentIndex < 0 ||
-      currentIndex > data.length - 1 ||
-      svgY <= Margin.Top ||
-      svgY >
-        drawableHeight + Number(Margin.Bottom) + xAxisDetails.maxXLabelHeight
-    ) {
-      setActiveBar(null);
-      return;
+    if (index == null) {
+      barElements.forEach((element: SVGPathElement) => {
+        element.style.fill = MASK_HIGHLIGHT_COLOR;
+      });
+    } else {
+      barElements.forEach((el: SVGPathElement) => {
+        if (el.dataset.id === `bar-${index}`) {
+          el.style.fill = MASK_HIGHLIGHT_COLOR;
+        } else {
+          el.style.fill = MASK_SUBDUE_COLOR;
+        }
+      });
     }
+  }
 
-    const xPosition = xScale(currentIndex.toString()) ?? 0;
-    const value = data[currentIndex].rawValue;
-    const tooltipXPositon = xPosition + chartStartPosition;
+  function formatPositionForTooltip(index: number): TooltipPosition {
+    const xPosition = xScale(`${index}`) ?? 0;
+    const value = data[index].rawValue;
+    const tooltipXPosition = xPosition + chartStartPosition;
 
-    setActiveBar(currentIndex);
-    setTooltipPosition({
-      x: tooltipXPositon,
+    return {
+      x: tooltipXPosition,
       y: yScale(value),
-      position: {horizontal: 'center', vertical: value < 0 ? 'below' : 'above'},
-    });
+      position: {
+        horizontal: TooltipHorizontalOffset.Center,
+        vertical:
+          value < 0 ? TooltipVerticalOffset.Below : TooltipVerticalOffset.Above,
+      },
+      activeIndex: index,
+    };
+  }
+
+  function getTooltipPosition({
+    event,
+    index,
+    eventType,
+  }: TooltipPositionParams): TooltipPosition {
+    if (eventType === 'mouse' && event) {
+      const point = eventPointNative(event);
+
+      if (point == null) {
+        return TOOLTIP_POSITION_DEFAULT_RETURN;
+      }
+
+      const {svgX, svgY} = point;
+      const currentPoint = svgX - chartStartPosition;
+      const currentIndex = Math.floor(currentPoint / xScale.step());
+
+      if (
+        svgY <= Margin.Top ||
+        svgY >
+          drawableHeight +
+            Number(Margin.Bottom) +
+            xAxisDetails.maxXLabelHeight ||
+        currentIndex < 0 ||
+        currentIndex > data.length - 1
+      ) {
+        return TOOLTIP_POSITION_DEFAULT_RETURN;
+      }
+
+      return formatPositionForTooltip(currentIndex);
+    } else if (index != null) {
+      return formatPositionForTooltip(index);
+    }
+
+    return TOOLTIP_POSITION_DEFAULT_RETURN;
   }
 }
