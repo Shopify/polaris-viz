@@ -5,9 +5,15 @@
 }
 
 .CardTop {
-  background: rgb(68, 68, 68);
   border-radius: 8px 8px 0 0;
   padding: 20px;
+  background: rgba(68, 68, 68, 0.8);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+  transition: background 0.3s, box-shadow 0.3s;
+  &:hover {
+    background: rgba(68, 68, 68, 1);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1), 0 8px 40px rgba(0, 0, 0, 0.2);
+  }
 }
 
 .Heading {
@@ -19,8 +25,8 @@
 }
 
 .Link {
-  color: white;
   text-decoration: none;
+  color: white;
 }
 
 .CenterChartContainer {

@@ -1,8 +1,4 @@
 import {Meta} from '@storybook/addon-docs/blocks';
-import imageFile from './polaris-viz.svg';
-import chartlogo from './chartlogo.svg';
-import linechart from '../../../../src/components/LineChart/line-chart.png';
-import barChart from '../../../../src/components/BarChart/bar-chart.png';
 import {
   BarChart,
   LineChart,
@@ -13,7 +9,7 @@ import {
   Sparkbar,
 } from '../../../../src/components';
 import {PolarisVizProvider} from '../../PolarisVizProvider';
-import {ComponentContainer} from './components/ComponentContainer.tsx';
+import {ComponentContainer, LogoHeader} from './components';
 
 <Meta
   title="Docs/Intro"
@@ -24,11 +20,7 @@ import {ComponentContainer} from './components/ComponentContainer.tsx';
 
 <div style={{ margin: '0 auto', maxWidth: '800px', color: 'white'}}>
 
-<div style={{display: 'flex', marginBottom: '50px', alignItems: 'center'}}>
-  <img style={{width: '54px', marginRight: '20px'}} src={chartlogo} />
-
-  <img style={{width: '50%'}} src={imageFile} />
-</div>
+<LogoHeader />
 
 <h2 style={{fontWeight: 'normal', fontSize: 16, borderBottom: 0}}>
   Polaris Viz is a data visualization React component library. It was built to
@@ -51,7 +43,7 @@ import {ComponentContainer} from './components/ComponentContainer.tsx';
 <ComponentContainer
   title="Bar chart"
   description="Used to show comparison across categories. "
-  link="/?path=/story/charts-barchart"
+  link="https://polaris-viz.shopify.io/?path=/docs/charts-barchart--default"
   chart={
     <BarChart
       data={[
@@ -67,8 +59,8 @@ import {ComponentContainer} from './components/ComponentContainer.tsx';
 
 <ComponentContainer
   title="Line chart"
-  description="Used to show change over time, comparisons, and trends. "
-  link="?path=/story/charts-linechart"
+  description="Used to show change over time. "
+  link="https://polaris-viz.shopify.io/?path=/docs/charts-linechart--default"
   chart={
     <LineChart
       isAnimated
@@ -94,7 +86,7 @@ import {ComponentContainer} from './components/ComponentContainer.tsx';
 <ComponentContainer
   title="Stacked area chart"
   description="Used to compare multiple series of data and display the total value. "
-  link="?path=/story/charts-stackedareachart"
+  link="https://polaris-viz.shopify.io/?path=/docs/charts-stackedareachart--default"
   chart={
     <StackedAreaChart
       isAnimated
@@ -142,7 +134,7 @@ import {ComponentContainer} from './components/ComponentContainer.tsx';
 <ComponentContainer
   title="Normalized stacked bar chart"
   description="Used for positive datasets with two to four items. "
-  link="?path=/story/charts-normalizedstackedbarchart"
+  link="https://polaris-viz.shopify.io/?path=/docs/charts-normalizedstackedbarchart--default"
   center
   chart={
     <NormalizedStackedBarChart
@@ -176,7 +168,7 @@ import {ComponentContainer} from './components/ComponentContainer.tsx';
 <ComponentContainer
   title="Multiseries bar chart (grouped)"
   description="Used to show a grouped comparison of different types, across categories or time. "
-  link="?path=/story/charts-multiseriesbarchart"
+  link="https://polaris-viz.shopify.io/?path=/docs/charts-multiseriesbarchart--default"
   chart={
     <MultiSeriesBarChart
       isAnimated
@@ -188,7 +180,7 @@ import {ComponentContainer} from './components/ComponentContainer.tsx';
           name: 'Breakfast',
           data: [
             {label: 'Monday', rawValue: 3},
-            {label: 'Tuesday', rawValue: -7},
+            {label: 'Tuesday', rawValue: 10},
             {label: 'Wednesday', rawValue: 4},
           ],
         },
@@ -196,7 +188,7 @@ import {ComponentContainer} from './components/ComponentContainer.tsx';
           name: 'Lunch',
           data: [
             {label: 'Monday', rawValue: 4},
-            {label: 'Tuesday', rawValue: 0},
+            {label: 'Tuesday', rawValue: 9},
             {label: 'Wednesday', rawValue: 5},
           ],
         },
@@ -204,7 +196,7 @@ import {ComponentContainer} from './components/ComponentContainer.tsx';
           name: 'Dinner',
           data: [
             {label: 'Monday', rawValue: 7},
-            {label: 'Tuesday', rawValue: 0},
+            {label: 'Tuesday', rawValue: 10},
             {label: 'Wednesday', rawValue: 6},
           ],
         },
@@ -216,7 +208,7 @@ import {ComponentContainer} from './components/ComponentContainer.tsx';
 <ComponentContainer
   title="Multiseries bar chart (stacked)"
   description="Used to show a stacked comparison of different types, across categories or time. "
-  link="/?path=/story/charts-multiseriesbarchart--stacked"
+  link="https://polaris-viz.shopify.io/?path=/docs/charts-multiseriesbarchart--stacked"
   chart={
     <MultiSeriesBarChart
       barOptions={{isStacked: true}}
@@ -229,7 +221,7 @@ import {ComponentContainer} from './components/ComponentContainer.tsx';
           name: 'Breakfast',
           data: [
             {label: 'Monday', rawValue: 3},
-            {label: 'Tuesday', rawValue: -7},
+            {label: 'Tuesday', rawValue: 7},
             {label: 'Wednesday', rawValue: 4},
           ],
         },
@@ -257,7 +249,7 @@ import {ComponentContainer} from './components/ComponentContainer.tsx';
 <ComponentContainer
   title="Sparkline"
   description="Used in small sizes to show how a metric has performed over time. "
-  link="/?path=/story/charts-sparkline"
+  link="https://polaris-viz.shopify.io/?path=/docs/charts-sparkline--default"
   center
   chart={
     <div style={{width: '250px', height: '140px'}}>
@@ -306,24 +298,43 @@ import {ComponentContainer} from './components/ComponentContainer.tsx';
 <ComponentContainer
   title="Sparkbar"
   description="Used in small sizes to show how a metric has performed over time. "
-  link="/?path=/story/charts-sparkbar"
+  link="https://polaris-viz.shopify.io/?path=/docs/charts-sparkbar--default"
   center
   chart={
     <div style={{width: '250px', height: '140px'}}>
       <Sparkbar
         isAnimated
         comparison={[
-          {x: 0, y: 2000},
-          {x: 1, y: 2000},
-          {x: 2, y: 2000},
-          {x: 3, y: 2000},
-          {x: 4, y: 2000},
-          {x: 5, y: 2000},
-          {x: 6, y: 2000},
-          {x: 7, y: 2000},
-          {x: 8, y: 2000},
-          {x: 9, y: 2000},
-          {x: 10, y: 2000},
+          {x: 0, y: 600},
+          {x: 1, y: 600},
+          {x: 2, y: 600},
+          {x: 3, y: 600},
+          {x: 4, y: 600},
+          {x: 5, y: 600},
+          {x: 6, y: 600},
+          {x: 7, y: 600},
+          {x: 8, y: 600},
+          {x: 9, y: 600},
+          {x: 10, y: 600},
+          {x: 11, y: 600},
+          {x: 12, y: 600},
+          {x: 13, y: 600},
+          {x: 14, y: 600},
+          {x: 15, y: 600},
+          {x: 16, y: 600},
+          {x: 17, y: 600},
+          {x: 18, y: 600},
+          {x: 19, y: 600},
+          {x: 20, y: 600},
+          {x: 21, y: 600},
+          {x: 22, y: 600},
+          {x: 23, y: 600},
+          {x: 24, y: 600},
+          {x: 25, y: 600},
+          {x: 26, y: 600},
+          {x: 27, y: 600},
+          {x: 28, y: 600},
+          {x: 29, y: 600},
         ]}
         data={[
           {value: 100},
@@ -336,7 +347,26 @@ import {ComponentContainer} from './components/ComponentContainer.tsx';
           {value: 800},
           {value: 900},
           {value: 200},
+          {value: 100},
+          {value: 200},
+          {value: 300},
           {value: 400},
+          {value: 400},
+          {value: 100},
+          {value: 1000},
+          {value: 800},
+          {value: 900},
+          {value: 200},
+          {value: 100},
+          {value: 200},
+          {value: 300},
+          {value: 400},
+          {value: 400},
+          {value: 100},
+          {value: 800},
+          {value: 800},
+          {value: 900},
+          {value: 200},
         ]}
       />
     </div>

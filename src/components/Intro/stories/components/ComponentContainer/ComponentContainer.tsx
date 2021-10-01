@@ -17,15 +17,12 @@ export function ComponentContainer({
 }) {
   return (
     <div className={styles.Container}>
-      <div className={styles.CardTop}>
-        <h3 className={styles.Heading}>{title}</h3>
-        <p className={styles.Paragraph}>
-          {description}
-          <a className={styles.Link} href={link}>
-            View documentation →
-          </a>
-        </p>
-      </div>
+      <a className={styles.Link} href={link}>
+        <div className={styles.CardTop}>
+          <h3 className={styles.Heading}>{title}</h3>
+          <p className={styles.Paragraph}>{description}</p>
+        </div>
+      </a>
 
       <div
         className={center ? styles.CenterChartContainer : styles.ChartContainer}

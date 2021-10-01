@@ -4,7 +4,6 @@ import type {Story, Meta} from '@storybook/react';
 import {StackedAreaChart, StackedAreaChartProps} from '../StackedAreaChart';
 
 import {data, labels, formatYAxisLabel} from './utils.stories';
-import {colorPurpleDark, colorTeal} from '../../../constants';
 import {THEME_CONTROL_ARGS} from '../../../storybook';
 
 import {generateMultipleSeries} from '../../../../documentation/utilities';
@@ -161,7 +160,6 @@ LargeVolume.args = {
             label: Math.random().toString(),
           };
         }),
-      color: colorTeal,
     },
     {
       name: 'Returning',
@@ -173,7 +171,6 @@ LargeVolume.args = {
             label: Math.random().toString(),
           };
         }),
-      color: colorPurpleDark,
     },
   ],
 };
