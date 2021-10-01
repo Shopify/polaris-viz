@@ -4,6 +4,7 @@
     "baseUrl": "./src",
     "rootDir": ".",
     "outDir": "./build/ts",
+    "emitDeclarationOnly": true,
     "strict": true,
     "importHelpers": false,
     "incremental": true,

@@ -42,8 +42,8 @@ function validateStandardBuild() {
 
   // Standard build css contains namespaced classes
   const cssContent = fs.readFileSync('./build/esm/styles.css', 'utf-8');
-  // assert.ok(cssContent.includes('.Polaris-Avatar{'));
-  // assert.ok(cssContent.includes('.Polaris-BulkActions__BulkActionButton{'));
+  assert.ok(cssContent.includes('.PolarisViz-Chart{'));
+  assert.ok(cssContent.includes('.PolarisViz-Chart__Svg{'));
 }
 
 function validateEsNextBuild() {
@@ -59,7 +59,7 @@ function validateEsNextBuild() {
     './build/esnext/components/BarChart/Chart.css',
     'utf-8',
   );
-  assert.ok(cssContent.includes('._ChartContainer_1dhlq_1'));
+  assert.ok(cssContent.includes('.PolarisViz-Chart__ChartContainer_x34bv'));
 
   const jsContent = fs.readFileSync(
     './build/esnext/components/BarChart/Chart.scss.esnext',
@@ -67,8 +67,12 @@ function validateEsNextBuild() {
   );
 
   assert.ok(jsContent.includes("import './Chart.css';"));
-  assert.ok(jsContent.includes('"ChartContainer": "_ChartContainer_1dhlq_1"'));
-  assert.ok(jsContent.includes('"Svg": "_Svg_1dhlq_3"'));
+  assert.ok(
+    jsContent.includes(
+      '"ChartContainer": "PolarisViz-Chart__ChartContainer_x34bv"',
+    ),
+  );
+  assert.ok(jsContent.includes('"Svg": "PolarisViz-Chart__Svg_375hu"'));
 }
 
 function validateAncillaryOutput() {
@@ -97,14 +101,14 @@ function validateVersionReplacement() {
     }
   });
 
-  console.log(fileBuckets.includesTemplateString);
   assert.strictEqual(fileBuckets.includesTemplateString.length, 0);
 
-  console.log(fileBuckets.includesVersion);
   assert.deepStrictEqual(fileBuckets.includesVersion, [
     './build/cjs/configure.js',
+    './build/cjs/styles.css',
     './build/esm/configure.js',
     './build/esm/styles.css',
+    './build/esnext/components/PolarisVizProvider/PolarisVizProvider.css',
     './build/esnext/configure.esnext',
   ]);
 }
