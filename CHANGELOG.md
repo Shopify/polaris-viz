@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Fixed
+- Circular dependency in `<LineChart />`
+
+
 ## [0.21.2] - 2021-09-29
 
 ### Changed
