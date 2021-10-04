@@ -32,6 +32,7 @@ export default createPackage((pkg) => {
         commonjs: true,
         esmodules: true,
         esnext: true,
+        rootEntrypoints: false,
       },
     }),
     buildLibraryWorkspace({graphql: false}),
