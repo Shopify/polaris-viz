@@ -39,11 +39,6 @@ function validateStandardBuild() {
   });
 
   assert.deepStrictEqual(filesContainingUnwantedReactUsage, []);
-
-  // Standard build css contains namespaced classes
-  const cssContent = fs.readFileSync('./build/esm/styles.css', 'utf-8');
-  assert.ok(cssContent.includes('.PolarisViz-Chart{'));
-  assert.ok(cssContent.includes('.PolarisViz-Chart__Svg{'));
 }
 
 function validateEsNextBuild() {
@@ -59,7 +54,7 @@ function validateEsNextBuild() {
     './build/esnext/components/BarChart/Chart.css',
     'utf-8',
   );
-  assert.ok(cssContent.includes('.PolarisViz-Chart__ChartContainer_x34bv'));
+  assert.ok(cssContent.includes('._ChartContainer_1dhlq_1'));
 
   const jsContent = fs.readFileSync(
     './build/esnext/components/BarChart/Chart.scss.esnext',
@@ -67,12 +62,8 @@ function validateEsNextBuild() {
   );
 
   assert.ok(jsContent.includes("import './Chart.css';"));
-  assert.ok(
-    jsContent.includes(
-      '"ChartContainer": "PolarisViz-Chart__ChartContainer_x34bv"',
-    ),
-  );
-  assert.ok(jsContent.includes('"Svg": "PolarisViz-Chart__Svg_375hu"'));
+  assert.ok(jsContent.includes('"ChartContainer": "_ChartContainer_1dhlq_1"'));
+  assert.ok(jsContent.includes('"Svg": "_Svg_1dhlq_3"'));
 }
 
 function validateAncillaryOutput() {
