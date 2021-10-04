@@ -10,7 +10,6 @@
   },
   "sideEffects": [
     "**/*.css",
-    "**/*.scss",
     "**/configure.{js,mjs,esnext,ts}"
   ],
   "main": "build/cjs/index.js",
