@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {area} from 'd3-shape';
 
-import {LinearGradient} from '../../../../components';
+import {LinearGradient} from '../../../LinearGradient';
 import {uniqueId, curveStepRounded} from '../../../../utilities';
 import type {Data} from '../../../../types';
 import type {SeriesWithDefaults} from '../../types';
