@@ -5,7 +5,3 @@ node_modules
 .DS_Store
 tsconfig.tsbuildinfo
 .loom
-
-index.esnext
-index.js
-index.mjs
