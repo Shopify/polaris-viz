@@ -1,7 +1,7 @@
 {
   "name": "@shopify/polaris-viz",
   "description": "Shopify’s viz component library",
-  "version": "0.22.0-rc.2",
+  "version": "0.22.0-rc.3",
   "private": false,
   "license": "SEE LICENSE IN LICENSE.md",
   "author": "Shopify <dev@shopify.com>",
@@ -15,7 +15,7 @@
   "main": "build/cjs/index.js",
   "module": "build/esm/index.js",
   "esnext": "build/esnext/index.esnext",
-  "types": "build/ts/index.d.ts",
+  "types": "build/ts/src/index.d.ts",
   "scripts": {
     "size": "yarn run build && size-limit",
     "lint": "loom lint",
