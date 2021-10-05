@@ -1,9 +1,7 @@
 import {Meta} from '@storybook/addon-docs/blocks';
 
-import {Sparkline} from '../../../../src/components';
 import {PolarisVizProvider} from '../../PolarisVizProvider';
-import {ComponentContainer, Title} from './components';
-import {SPARKLINE_SERIES} from '../../../../documentation/utilities';
+import {ComponentContainer, Title, SampleSparkline} from './components';
 
 <Meta
   title="Docs/Themes/Default and Light"
@@ -57,7 +55,7 @@ import {SPARKLINE_SERIES} from '../../../../documentation/utilities';
     center
     chart={
       <div style={{width: '250px', height: '140px'}}>
-        <Sparkline series={SPARKLINE_SERIES} />
+        <SampleSparkline />
       </div>
     }
     codeSample={'<Sparkline />'}
@@ -74,7 +72,7 @@ import {SPARKLINE_SERIES} from '../../../../documentation/utilities';
     center
     chart={
       <div style={{width: '250px', height: '140px'}}>
-        <Sparkline series={SPARKLINE_SERIES} theme="Light" />
+        <SampleSparkline theme="Light" />
       </div>
     }
     codeSample={"<Sparkline theme='Light'/>"}

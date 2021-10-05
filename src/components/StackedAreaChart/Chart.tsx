@@ -368,7 +368,7 @@ export function Chart({
                   </defs>
                 )}
                 <Point
-                  stroke={colorWhite}
+                  stroke={selectedTheme.line.pointStroke}
                   color={pointColor}
                   cx={getXPosition({isCrosshair: false, index: stackIndex})}
                   cy={animatedYPostion}
@@ -389,7 +389,7 @@ export function Chart({
               <Point
                 dataType={DataType.Point}
                 key={`point-${dataIndex}-${x}}`}
-                stroke={colorWhite}
+                stroke={selectedTheme.line.pointStroke}
                 color={colorWhite}
                 cx={xScale(dataIndex)}
                 cy={yScale(y)}

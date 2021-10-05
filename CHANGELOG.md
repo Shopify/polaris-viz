@@ -4,7 +4,8 @@
 
 ### Fixed
 - Circular dependency in `<LineChart />`
-
+- Theme.line.strokeColor now gets applied to StackedAreaChart
+- Theme.line.lineStyle and Theme.line.hasPoint now gets applied to Sparkline
 
 ## [0.21.2] - 2021-09-29
 
