@@ -5,8 +5,6 @@ import {DEFAULT_THEME as Default, LIGHT_THEME as Light} from '../../constants';
 import {PolarisVizContext} from '../../utilities/polaris-viz-context';
 import {createThemes} from '../../utilities';
 
-import './PolarisVizProvider.scss';
-
 export interface PolarisVizProviderProps {
   children: React.ReactNode;
   themes?: {[key: string]: PartialTheme};

@@ -12,7 +12,7 @@
     "**/node_modules": true,
     ".{dev,shadowenv.d}": true,
     "build/": true,
-    ".loom": true
+    ".loom/": true
   },
   "files.insertFinalNewline": true,
   "files.trimTrailingWhitespace": true,
@@ -22,7 +22,7 @@
     "**/node_modules": true,
     ".{dev,shadowenv.d}": true,
     "build/": true,
-    "sandbox": true
+    ".loom/": true
   },
   "typescript.tsserver.maxTsServerMemory": 8000,
   "typescript.tsdk": "./node_modules/typescript/lib"
