@@ -96,10 +96,7 @@ function validateVersionReplacement() {
 
   assert.deepStrictEqual(fileBuckets.includesVersion, [
     './build/cjs/configure.js',
-    './build/cjs/styles.css',
     './build/esm/configure.js',
-    './build/esm/styles.css',
-    './build/esnext/components/PolarisVizProvider/PolarisVizProvider.css',
     './build/esnext/configure.esnext',
   ]);
 }
