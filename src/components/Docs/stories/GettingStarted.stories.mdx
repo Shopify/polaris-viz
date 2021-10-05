@@ -1,15 +1,17 @@
 import {Meta} from '@storybook/addon-docs/blocks';
+import {ComponentContainer, Title} from './components';
 
 <Meta
   title="Docs/Getting started"
   parameters={{
     viewMode: 'docs',
+    docsOnly: true,
   }}
 />
 
-<a name="installation" href="#installation">
-  <h3>Installation</h3>
-</a>
+<Title>🏁 Getting Started</Title>
+
+<Title type="h2">Installation</Title>
 
 Run the following command using [npm](https://www.npmjs.com/):
 
@@ -23,7 +25,7 @@ If you prefer [Yarn](https://yarnpkg.com/en/), use the following command instead
 yarn add @shopify/polaris-viz
 ```
 
-#### Peer dependencies
+<Title type="h2">Peer dependencies</Title>
 
 Polaris Viz has peer dependencies on:
 
@@ -46,9 +48,8 @@ You are responsible for providing these packages in your project. By requiring t
 <br />
 <br />
 <br />
-<a name="usage" href="#usage">
-  <h3>Usage</h3>
-</a>
+
+<Title type="h3">Usage</Title>
 
 If your app is set up to consume `esnext` builds, import components where you want to use them and the styles will automatically be applied.
 
@@ -58,9 +59,7 @@ If your app is not set up for `esnext`, import the styles where you import compo
 import '@shopify/polaris-viz/styles.css';
 ```
 
-<a name="contributing" href="#contributing">
-  <h3>Contributing</h3>
-</a>
+<Title type="h3">Contributing</Title>
 
 Pull requests are welcome. See the <a href="/CONTRIBUTING.md">contribution guidelines</a> for more information.
 
@@ -68,8 +67,6 @@ Pull requests are welcome. See the <a href="/CONTRIBUTING.md">contribution guide
 <br />
 <br />
 <br />
-<a name="licenses" href="#licenses">
-  <h3>Licenses</h3>
-</a>
+<Title type="h3">Licenses</Title>
 
 - Source code is under a [custom license](https://github.com/Shopify/polaris-viz/blob/master/LICENSE.md) based on MIT. The license restricts Polaris Viz usage to applications that integrate or interoperate with Shopify software or services, with additional restrictions for external, stand-alone applications.

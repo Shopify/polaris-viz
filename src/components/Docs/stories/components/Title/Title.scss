@@ -1,0 +1,32 @@
+.TitleAnchor {
+  text-decoration: none;
+}
+
+.TitleAnchor:hover > *::after {
+  content: ' 🔗';
+  font-size: 13px;
+  position: absolute;
+  left: -17px;
+  top: 2px;
+}
+
+.h1,
+.h2,
+.h3 {
+  position: relative;
+  color: white;
+}
+
+.h1,
+.h1 > code {
+  font-size: 32px;
+}
+.h2,
+.h2 > code {
+  font-size: 26px;
+}
+
+.h3,
+.h3 > code {
+  font-size: 22px;
+}

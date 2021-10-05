@@ -1,0 +1,7 @@
+.CodeBlock {
+  // stylelint-disable declaration-no-important
+  > * {
+    margin: 0 !important;
+    background-color: rgb(28, 28, 28) !important;
+  } // stylelint-enable declaration-no-important
+}

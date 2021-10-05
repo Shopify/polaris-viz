@@ -17,5 +17,5 @@
     "importsNotUsedAsValues": "error",
     "strictFunctionTypes": false
   },
-  "include": ["./config/typescript", "./src", "./tests"]
+  "include": ["**/src/**/*.tsx", "./config/typescript", "./src", "./tests"]
 }
