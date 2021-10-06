@@ -119,8 +119,8 @@ describe('<Chart />', () => {
     expect(chart).toContainReactComponent(YAxis, {
       ticks: [
         {value: 0, formattedValue: '0', yOffset: 218},
-        {value: 1000, formattedValue: '1000', yOffset: 109},
-        {value: 2000, formattedValue: '2000', yOffset: 0},
+        {value: 500, formattedValue: '500', yOffset: 119.53568202348691},
+        {value: 1000, formattedValue: '1000', yOffset: 21.071364046973812},
       ],
     });
   });

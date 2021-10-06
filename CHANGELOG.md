@@ -1,6 +1,8 @@
 # Changelog
 
 ## Unreleased
+### Fixed
+- - `<StackedAreaChart />` stroke is cut off if it reaches the top of the chart
 
 ## [0.21.3] - 2021-10-15
 

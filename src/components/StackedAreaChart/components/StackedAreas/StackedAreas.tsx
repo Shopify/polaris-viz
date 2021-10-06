@@ -82,7 +82,12 @@ export function Areas({
   return (
     <React.Fragment>
       <clipPath id={id}>
-        <animated.rect width={spring.width} height={height} fill="none" />
+        <animated.rect
+          width={spring.width}
+          height={height + selectedTheme.line.width}
+          y={-selectedTheme.line.width}
+          fill="none"
+        />
       </clipPath>
 
       <g transform={transform} clipPath={`url(#${id})`}>
