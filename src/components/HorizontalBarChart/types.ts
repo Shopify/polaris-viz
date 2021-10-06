@@ -19,10 +19,3 @@ export interface Series {
   data: Data[];
   color?: Color;
 }
-
-export enum Size {
-  Small,
-  Medium,
-  Large,
-}
-export type Sizes = Size;

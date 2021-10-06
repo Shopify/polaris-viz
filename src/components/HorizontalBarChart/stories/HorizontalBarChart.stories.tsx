@@ -6,9 +6,7 @@ import {
   HorizontalBarChartProps,
 } from '../HorizontalBarChart';
 
-import {ChartContainer} from '../../ChartContainer';
 import type {Series} from '../types';
-import {Size} from '../types';
 
 const LABELS = ['BCFM 2019', 'BCFM 2020', 'BCFM 2021'];
 
@@ -40,13 +38,13 @@ const SERIES = buildSeries([
   [48, 8, 50],
   [1, 5, 5],
 ]);
+const CONTAINER_HEIGHT = 500;
 
 const SINGLE_SERIES = buildSeries([3, 7, 4, 8, 4, 1, 4, 6]);
 
 export default {
   title: 'Charts/HorizontalBarChart',
   component: HorizontalBarChart,
-  decorators: [(Story: any) => <ChartContainer>{Story()}</ChartContainer>],
   parameters: {
     previewHeight: 'auto',
   },
@@ -55,7 +53,21 @@ export default {
 const Template: Story<HorizontalBarChartProps> = (
   args: HorizontalBarChartProps,
 ) => {
-  return <HorizontalBarChart {...args} />;
+  return (
+    <div style={{height: CONTAINER_HEIGHT}}>
+      <HorizontalBarChart {...args} />
+    </div>
+  );
+};
+
+const SimpleTemplate: Story<HorizontalBarChartProps> = (
+  args: HorizontalBarChartProps,
+) => {
+  return (
+    <div style={{height: CONTAINER_HEIGHT}}>
+      <HorizontalBarChart isSimple={true} {...args} />
+    </div>
+  );
 };
 
 export const Default: Story<HorizontalBarChartProps> = Template.bind({});
@@ -97,7 +109,6 @@ export const SingleBarNegative: Story<HorizontalBarChartProps> = Template.bind(
 SingleBarNegative.args = {
   series: buildSeries([13, -10, -30, 8, 47, 1]),
   yAxisOptions: {labels: LABELS},
-  size: Size.Medium,
 };
 
 export const SingleBarAllNegative: Story<HorizontalBarChartProps> = Template.bind(
@@ -126,7 +137,6 @@ ColorOverrides.args = {
     },
   ],
   yAxisOptions: {labels: LABELS},
-  size: Size.Medium,
 };
 
 export const LongLabels: Story<HorizontalBarChartProps> = Template.bind({});
@@ -137,12 +147,6 @@ LongLabels.args = {
     labelFormatter: (value) => `${value} pickled peppers and pickles`,
   },
   yAxisOptions: {labels: LABELS},
-};
-
-const SimpleTemplate: Story<HorizontalBarChartProps> = (
-  args: HorizontalBarChartProps,
-) => {
-  return <HorizontalBarChart isSimple={true} {...args} />;
 };
 
 export const SimpleHorizontalChart: Story<HorizontalBarChartProps> = SimpleTemplate.bind(
@@ -194,7 +198,6 @@ export const SimpleNegative: Story<HorizontalBarChartProps> = SimpleTemplate.bin
 SimpleNegative.args = {
   series: buildSeries([1300, -1000, -3000, 800, 4700, 100]),
   yAxisOptions: {labels: LABELS},
-  size: Size.Medium,
 };
 
 export const SimpleAllNegative: Story<HorizontalBarChartProps> = SimpleTemplate.bind(
@@ -204,7 +207,6 @@ export const SimpleAllNegative: Story<HorizontalBarChartProps> = SimpleTemplate.
 SimpleAllNegative.args = {
   series: buildSeries([-13, -7, -10, -8, -47, -1]),
   yAxisOptions: {labels: LABELS},
-  size: Size.Medium,
 };
 
 export const Stacked: Story<HorizontalBarChartProps> = Template.bind({});
@@ -213,7 +215,6 @@ Stacked.args = {
   series: SERIES,
   yAxisOptions: {labels: LABELS},
   isStacked: true,
-  size: Size.Large,
 };
 
 export const SimpleStacked: Story<HorizontalBarChartProps> = SimpleTemplate.bind(
@@ -224,7 +225,6 @@ SimpleStacked.args = {
   series: SERIES,
   yAxisOptions: {labels: LABELS},
   isStacked: true,
-  size: Size.Large,
 };
 
 export const Sorting = () => {
@@ -252,7 +252,6 @@ export const Sorting = () => {
     <>
       <SimpleHorizontalChart
         series={[...data].splice(0, 5)}
-        size={Size.Large}
         yAxisOptions={{labels: LABELS}}
       />
       <button onClick={onClick} style={{marginRight: 10}}>
