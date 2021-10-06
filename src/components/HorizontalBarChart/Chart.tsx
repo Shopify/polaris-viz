@@ -28,7 +28,6 @@ import {
   VerticalGridLines,
   XAxisLabels,
 } from './components';
-import {Size, Sizes} from './types';
 import type {Series, XAxisOptions, YAxisOptions} from './types';
 import {useBarSizes, useDataForChart, useXScale} from './hooks';
 import styles from './Chart.scss';
@@ -46,7 +45,6 @@ interface ChartProps {
   series: Series[];
   xAxisOptions: XAxisOptions;
   yAxisOptions: YAxisOptions;
-  size?: Sizes;
   theme?: string;
 }
 
@@ -56,7 +54,6 @@ export function Chart({
   isSimple,
   isStacked,
   series,
-  size = Size.Medium,
   theme,
   xAxisOptions,
   yAxisOptions,
@@ -101,15 +98,15 @@ export function Chart({
     return xScale(value);
   }, [xScale, ticks]);
 
-  const {barHeight, groupHeight, chartHeight, bandwidth} = useBarSizes({
-    chartDimensions,
-    isSimple,
-    isStacked,
-    singleBarCount: series[0].data.length,
-    size,
-    seriesLength: series.length,
-    ticksCount: ticks.length,
-  });
+  const {barHeight, groupHeight, groupBarsAreaHeight, chartHeight, bandwidth} =
+    useBarSizes({
+      chartDimensions,
+      isSimple,
+      isStacked,
+      singleBarCount: series[0].data.length,
+      seriesLength: series.length,
+      ticksCount: ticks.length,
+    });
 
   const getAriaLabel = useCallback(
     (label: string, seriesIndex: number) => {
@@ -148,12 +145,12 @@ export function Chart({
       className={styles.ChartContainer}
       style={{
         width: chartDimensions.width,
-        height: chartHeight,
+        height: chartDimensions.height,
       }}
     >
       <svg
         className={styles.SVG}
-        height={chartHeight}
+        height={chartDimensions.height}
         ref={setSvgRef}
         role="list"
         width={chartDimensions.width}
@@ -212,9 +209,9 @@ export function Chart({
                 <StackedBars
                   animationDelay={animationDelay}
                   ariaLabel={ariaLabel}
+                  barHeight={barHeight}
                   groupIndex={index}
                   series={item.data}
-                  size={size}
                   xScale={xScaleStacked}
                 />
               ) : (
@@ -238,7 +235,7 @@ export function Chart({
         })}
       </svg>
       <TooltipWrapper
-        bandwidth={bandwidth}
+        bandwidth={groupBarsAreaHeight}
         chartDimensions={chartDimensions}
         focusElementDataType={DataType.Bar}
         getAlteredPosition={getAlteredHorizontalBarPosition}

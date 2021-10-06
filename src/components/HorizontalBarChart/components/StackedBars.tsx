@@ -4,7 +4,6 @@ import {animated, useSpring} from '@react-spring/web';
 
 import {BARS_TRANSITION_CONFIG} from '../../../constants';
 import type {Data} from '../types';
-import {Size} from '../types';
 import {LABEL_HEIGHT, STACKED_BAR_GAP} from '../constants';
 
 import {StackedBar} from './StackedBar';
@@ -12,18 +11,18 @@ import {StackedBar} from './StackedBar';
 export interface StackedBarsProps {
   animationDelay: number;
   ariaLabel: string;
+  barHeight: number;
   groupIndex: number;
   series: Data[];
-  size: Size;
   xScale: ScaleLinear<number, number>;
 }
 
 export function StackedBars({
   animationDelay,
   ariaLabel,
+  barHeight,
   groupIndex,
   series,
-  size = Size.Small,
   xScale,
 }: StackedBarsProps) {
   const xOffsets = useMemo(() => {
@@ -58,9 +57,9 @@ export function StackedBars({
         return (
           <StackedBar
             groupIndex={groupIndex}
+            height={barHeight}
             key={seriesIndex}
             seriesIndex={seriesIndex}
-            size={size}
             width={xScale(rawValue)}
             x={x}
           />

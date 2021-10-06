@@ -1,29 +1,16 @@
 import {useMemo} from 'react';
 
+import {clamp} from '../../../utilities';
 import type {Dimensions} from '../../../types';
-import {
-  LABEL_HEIGHT,
-  SIZES,
-  SPACE_BETWEEN_SETS,
-  SPACE_BETWEEN_SINGLE,
-} from '../constants';
-import type {Size} from '../types';
+import {LABEL_HEIGHT, MIN_BAR_HEIGHT, SPACE_BETWEEN_SETS} from '../constants';
 
 interface Props {
   chartDimensions: Dimensions;
   isSimple: boolean;
   isStacked: boolean;
   singleBarCount: number;
-  size: Size;
   seriesLength: number;
   ticksCount: number;
-}
-
-interface Return {
-  bandwidth: number;
-  groupHeight: number;
-  barHeight: number;
-  chartHeight: number;
 }
 
 // Returns all the data needed to size and position the
@@ -33,35 +20,42 @@ export function useBarSizes({
   isSimple,
   isStacked,
   singleBarCount,
-  size,
   seriesLength,
   ticksCount,
-}: Props): Return {
+}: Props) {
   return useMemo(() => {
-    const barHeight: number = SIZES[size];
-
     const bottomPadding = isSimple ? 0 : LABEL_HEIGHT;
     const bandwidth = chartDimensions.width / ticksCount;
+    // Push the container taller to line up last bar
+    const simpleHeight = chartDimensions.height + SPACE_BETWEEN_SETS;
 
-    const totalBarsHeight = isStacked ? barHeight : barHeight * singleBarCount;
+    const containerHeight = isSimple ? simpleHeight : chartDimensions.height;
 
-    const totalSpaceBetweenBars = SPACE_BETWEEN_SINGLE * singleBarCount - 1;
+    const groupHeight = (containerHeight - bottomPadding) / seriesLength;
 
-    const groupHeight =
-      LABEL_HEIGHT +
-      totalBarsHeight +
-      totalSpaceBetweenBars +
-      SPACE_BETWEEN_SETS;
+    const groupBarsAreaHeight = groupHeight - LABEL_HEIGHT - SPACE_BETWEEN_SETS;
+
+    const barHeight = clamp({
+      amount: groupBarsAreaHeight / (isStacked ? 1 : singleBarCount),
+      min: MIN_BAR_HEIGHT,
+      max: Infinity,
+    });
+
+    if (groupBarsAreaHeight < 0) {
+      // eslint-disable-next-line no-console
+      console.error(
+        'The height available for drawing the chart is too small and this will cause overlaps between labels and bars. Maybe you should increase the chart height or use fewer data series?',
+      );
+    }
 
     const chartHeight = groupHeight * seriesLength + bottomPadding;
-    const simpleChartHeight =
-      groupHeight * seriesLength + bottomPadding - SPACE_BETWEEN_SETS;
 
     return {
-      barHeight,
-      groupHeight,
-      chartHeight: isSimple ? simpleChartHeight : chartHeight,
       bandwidth,
+      barHeight,
+      chartHeight,
+      groupBarsAreaHeight,
+      groupHeight,
     };
   }, [
     chartDimensions,
@@ -69,7 +63,6 @@ export function useBarSizes({
     isStacked,
     seriesLength,
     singleBarCount,
-    size,
     ticksCount,
   ]);
 }
