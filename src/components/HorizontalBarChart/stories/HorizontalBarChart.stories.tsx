@@ -144,7 +144,8 @@ export const LongLabels: Story<HorizontalBarChartProps> = Template.bind({});
 LongLabels.args = {
   series: SERIES,
   xAxisOptions: {
-    labelFormatter: (value) => `${value} pickled peppers and pickles`,
+    labelFormatter: (value) =>
+      `${value} pickled peppers and pickles and a few more things`,
   },
   yAxisOptions: {labels: LABELS},
 };

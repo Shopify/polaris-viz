@@ -1,17 +1,17 @@
 import React from 'react';
 import type {ScaleLinear} from 'd3-scale';
 
-import {LABEL_HEIGHT} from '../constants';
+import {LABEL_HEIGHT, SPACE_BETWEEN_SERIES_AND_LABELS} from '../constants';
 
 interface VerticalGridLinesProps {
-  chartHeight: number;
+  seriesAreaHeight: number;
   stroke: string;
   ticks: number[];
   xScale: ScaleLinear<number, number>;
 }
 
 export const VerticalGridLines = ({
-  chartHeight,
+  seriesAreaHeight,
   ticks,
   xScale,
   stroke,
@@ -23,7 +23,7 @@ export const VerticalGridLines = ({
           <line
             key={index}
             y1={0}
-            y2={chartHeight - LABEL_HEIGHT * 2}
+            y2={seriesAreaHeight - SPACE_BETWEEN_SERIES_AND_LABELS}
             stroke={stroke}
             transform={`translate(${xScale(value)},0)`}
           />
