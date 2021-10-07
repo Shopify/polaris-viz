@@ -5,11 +5,10 @@ import {useResizeObserver} from '../../hooks';
 import type {Dimensions} from '../../types';
 
 import {Chart} from './Chart';
-import type {Series, XAxisOptions, YAxisOptions} from './types';
+import type {Series, XAxisOptions} from './types';
 
 export interface HorizontalBarChartProps {
   series: Series[];
-  yAxisOptions: YAxisOptions;
   xAxisOptions?: XAxisOptions;
   isAnimated?: boolean;
   isSimple?: boolean;
@@ -24,7 +23,6 @@ export function HorizontalBarChart({
   series,
   theme,
   xAxisOptions,
-  yAxisOptions,
 }: HorizontalBarChartProps) {
   const xAxisOptionsForChart = {
     labelFormatter: (value: string) => value,
@@ -68,7 +66,6 @@ export function HorizontalBarChart({
           series={series}
           theme={theme}
           xAxisOptions={xAxisOptionsForChart}
-          yAxisOptions={yAxisOptions}
         />
       )}
     </ChartContainer>
