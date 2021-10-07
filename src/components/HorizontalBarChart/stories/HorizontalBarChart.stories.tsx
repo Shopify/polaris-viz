@@ -18,13 +18,13 @@ function buildSeries(items: number[] | number[][]): Series[] {
     'Socks',
     'Hats',
     'Ties',
-  ].map((label, index) => {
+  ].map((name, index) => {
     const item = items[index];
     const array = Array.isArray(item) ? item : [item];
     return {
-      label,
-      data: array.map((number) => {
-        return {rawValue: number};
+      name,
+      data: array.map((number, dataIndex) => {
+        return {rawValue: number, label: LABELS[dataIndex]};
       }),
     };
   });
@@ -74,7 +74,6 @@ export const Default: Story<HorizontalBarChartProps> = Template.bind({});
 
 Default.args = {
   series: SERIES,
-  yAxisOptions: {labels: LABELS},
 };
 
 export const MultiSeriesAllNegative: Story<HorizontalBarChartProps> = Template.bind(
@@ -90,7 +89,6 @@ MultiSeriesAllNegative.args = {
     [-48, -8, -50],
     [-1, -5, -5],
   ]),
-  yAxisOptions: {labels: LABELS},
   isAnimated: false,
 };
 
@@ -98,7 +96,6 @@ export const SingleBar: Story<HorizontalBarChartProps> = Template.bind({});
 
 SingleBar.args = {
   series: buildSeries([13, 7, 10, 8, 47, 1]),
-  yAxisOptions: {labels: LABELS},
   isAnimated: false,
 };
 
@@ -108,7 +105,6 @@ export const SingleBarNegative: Story<HorizontalBarChartProps> = Template.bind(
 
 SingleBarNegative.args = {
   series: buildSeries([13, -10, -30, 8, 47, 1]),
-  yAxisOptions: {labels: LABELS},
 };
 
 export const SingleBarAllNegative: Story<HorizontalBarChartProps> = Template.bind(
@@ -117,26 +113,33 @@ export const SingleBarAllNegative: Story<HorizontalBarChartProps> = Template.bin
 
 SingleBarAllNegative.args = {
   series: buildSeries([-13, -7, -10, -8, -47, -1]),
-  yAxisOptions: {labels: LABELS},
 };
 
 export const ColorOverrides: Story<HorizontalBarChartProps> = Template.bind({});
 ColorOverrides.args = {
   series: [
     {
-      label: 'Shirt',
-      data: [{rawValue: 4, color: 'red'}, {rawValue: 7}],
+      name: 'Shirt',
+      data: [
+        {rawValue: 4, color: 'red', label: 'Yesterday'},
+        {rawValue: 7, label: 'Today'},
+      ],
     },
     {
-      label: 'Pants',
-      data: [{rawValue: 5}, {rawValue: 6}],
+      name: 'Pants',
+      data: [
+        {rawValue: 5, label: 'Yesterday'},
+        {rawValue: 6, label: 'Today'},
+      ],
     },
     {
-      label: 'Shoes',
-      data: [{rawValue: 15}, {rawValue: 12}],
+      name: 'Shoes',
+      data: [
+        {rawValue: 15, label: 'Yesterday'},
+        {rawValue: 12, label: 'Today'},
+      ],
     },
   ],
-  yAxisOptions: {labels: LABELS},
 };
 
 export const LongLabels: Story<HorizontalBarChartProps> = Template.bind({});
@@ -147,7 +150,6 @@ LongLabels.args = {
     labelFormatter: (value) =>
       `${value} pickled peppers and pickles and a few more things`,
   },
-  yAxisOptions: {labels: LABELS},
 };
 
 export const SimpleHorizontalChart: Story<HorizontalBarChartProps> = SimpleTemplate.bind(
@@ -156,7 +158,6 @@ export const SimpleHorizontalChart: Story<HorizontalBarChartProps> = SimpleTempl
 
 SimpleHorizontalChart.args = {
   series: SINGLE_SERIES,
-  yAxisOptions: {labels: LABELS},
 };
 
 export const SimpleLongLabels: Story<HorizontalBarChartProps> = SimpleTemplate.bind(
@@ -172,7 +173,6 @@ SimpleLongLabels.args = {
     500000000,
     600000000,
   ]),
-  yAxisOptions: {labels: LABELS},
 };
 
 export const SimpleFormattedLabels: Story<HorizontalBarChartProps> = SimpleTemplate.bind(
@@ -189,7 +189,6 @@ SimpleFormattedLabels.args = {
     600000000,
   ]),
   xAxisOptions: {labelFormatter: (value) => `${value} pickles`},
-  yAxisOptions: {labels: LABELS},
 };
 
 export const SimpleNegative: Story<HorizontalBarChartProps> = SimpleTemplate.bind(
@@ -198,7 +197,6 @@ export const SimpleNegative: Story<HorizontalBarChartProps> = SimpleTemplate.bin
 
 SimpleNegative.args = {
   series: buildSeries([1300, -1000, -3000, 800, 4700, 100]),
-  yAxisOptions: {labels: LABELS},
 };
 
 export const SimpleAllNegative: Story<HorizontalBarChartProps> = SimpleTemplate.bind(
@@ -207,14 +205,12 @@ export const SimpleAllNegative: Story<HorizontalBarChartProps> = SimpleTemplate.
 
 SimpleAllNegative.args = {
   series: buildSeries([-13, -7, -10, -8, -47, -1]),
-  yAxisOptions: {labels: LABELS},
 };
 
 export const Stacked: Story<HorizontalBarChartProps> = Template.bind({});
 
 Stacked.args = {
   series: SERIES,
-  yAxisOptions: {labels: LABELS},
   isStacked: true,
 };
 
@@ -224,7 +220,6 @@ export const SimpleStacked: Story<HorizontalBarChartProps> = SimpleTemplate.bind
 
 SimpleStacked.args = {
   series: SERIES,
-  yAxisOptions: {labels: LABELS},
   isStacked: true,
 };
 
@@ -239,8 +234,9 @@ export const Sorting = () => {
     const newData = data.map((value) => {
       return {
         ...value,
-        data: value.data.map(({rawValue}) => {
+        data: value.data.map(({rawValue, label}) => {
           return {
+            label,
             rawValue: rawValue + Math.floor(Math.random() * 10),
           };
         }),
@@ -251,10 +247,7 @@ export const Sorting = () => {
 
   return (
     <>
-      <SimpleHorizontalChart
-        series={[...data].splice(0, 5)}
-        yAxisOptions={{labels: LABELS}}
-      />
+      <SimpleHorizontalChart series={[...data].splice(0, 5)} />
       <button onClick={onClick} style={{marginRight: 10}}>
         Shuffle Position
       </button>
