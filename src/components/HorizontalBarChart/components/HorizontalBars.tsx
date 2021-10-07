@@ -31,6 +31,7 @@ interface HorizontalBarProps {
   xScale: ScaleLinear<number, number>;
   animationDelay?: number;
   theme?: string;
+  name: string;
 }
 
 export function HorizontalBars({
@@ -46,6 +47,7 @@ export function HorizontalBars({
   theme,
   animationDelay,
   xScale,
+  name,
 }: HorizontalBarProps) {
   const selectedTheme = useTheme(theme);
 
@@ -79,7 +81,7 @@ export function HorizontalBars({
         const barColor = color ? id : `${GRADIENT_ID}${seriesIndex}`;
 
         return (
-          <React.Fragment key={id}>
+          <React.Fragment key={`series-${barColor}-${name}`}>
             <Bar
               animationDelay={animationDelay}
               color={`url(#${isNegative ? NEGATIVE_GRADIENT_ID : barColor})`}
@@ -100,7 +102,7 @@ export function HorizontalBars({
                 barHeight={barHeight}
                 color={selectedTheme.xAxis.labelColor}
                 isAnimated={isAnimated}
-                label={`${label}`}
+                label={label}
                 labelWidth={labelWidth}
                 x={x}
                 y={y}

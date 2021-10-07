@@ -16,6 +16,7 @@ export interface StackedBarsProps {
   groupIndex: number;
   series: Data[];
   xScale: ScaleLinear<number, number>;
+  name: string;
 }
 
 export function StackedBars({
@@ -25,6 +26,7 @@ export function StackedBars({
   groupIndex,
   series,
   xScale,
+  name,
 }: StackedBarsProps) {
   const xOffsets = useMemo(() => {
     const offsets: number[] = [];
@@ -56,12 +58,13 @@ export function StackedBars({
         const x = xOffsets[seriesIndex] + STACKED_BAR_GAP * seriesIndex;
         const id = getBarId(groupIndex, seriesIndex);
 
+        const sliceColor = color ? id : `${GRADIENT_ID}${seriesIndex}`;
         return (
           <StackedBar
-            color={color ? id : `${GRADIENT_ID}${seriesIndex}`}
+            color={sliceColor}
             groupIndex={groupIndex}
             height={barHeight}
-            key={seriesIndex}
+            key={`${name}${sliceColor}`}
             seriesIndex={seriesIndex}
             width={xScale(rawValue)}
             x={x}

@@ -1,7 +1,7 @@
 import React, {useCallback, useLayoutEffect, useState} from 'react';
 
 import {ChartContainer} from '../../components/ChartContainer';
-import {useResizeObserver} from '../../hooks';
+import {useResizeObserver, usePrefersReducedMotion} from '../../hooks';
 import type {Dimensions} from '../../types';
 
 import {Chart} from './Chart';
@@ -56,12 +56,14 @@ export function HorizontalBarChart({
     updateDimensions();
   }, [entry, updateDimensions]);
 
+  const {prefersReducedMotion} = usePrefersReducedMotion();
+
   return (
     <ChartContainer theme={theme} ref={setRef}>
       {chartDimensions !== null && (
         <Chart
           chartDimensions={chartDimensions}
-          isAnimated={isAnimated}
+          isAnimated={isAnimated && !prefersReducedMotion}
           isSimple={isSimple}
           isStacked={isStacked}
           series={series}

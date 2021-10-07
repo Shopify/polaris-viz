@@ -1,4 +1,5 @@
 import React, {useCallback, useMemo, useState} from 'react';
+import {useTransition, animated} from '@react-spring/web';
 
 import {getSeriesColorsFromCount, useTheme} from '../../hooks';
 import {TooltipContent} from '../TooltipContent';
@@ -6,6 +7,7 @@ import {
   XMLNS,
   BarChartMargin as Margin,
   HORIZONTAL_BAR_GROUP_DELAY,
+  BARS_SORT_TRANSITION_CONFIG,
 } from '../../constants';
 import {eventPointNative} from '../../utilities';
 import {DataType, Dimensions} from '../../types';
@@ -174,6 +176,51 @@ export function Chart({
 
     return colors;
   }, [series]);
+  const seriesWithIndex = series.map((series, index) => ({
+    series,
+    index,
+  }));
+
+  const getTransform = (index: number) => {
+    return `translate(${firstNonNegativeValue}px,${groupHeight * index}px)`;
+  };
+
+  const [isFirstRender, setIsFirstRender] = useState(true);
+
+  const handleOnTransitionRest = () => {
+    setIsFirstRender(false);
+  };
+
+  const animationTrail = isFirstRender ? 0 : 50;
+  const outOfChartPosition = getTransform(series.length + 1);
+
+  const transitions = useTransition(seriesWithIndex, {
+    keys: (item) => item.series.name,
+    initial: ({index}) => ({
+      opacity: isFirstRender ? 1 : 0,
+      transform: isFirstRender ? getTransform(index) : outOfChartPosition,
+    }),
+    from: {
+      opacity: 0,
+      transform: outOfChartPosition,
+    },
+    leave: {
+      opacity: 0,
+      transform: outOfChartPosition,
+    },
+    enter: () => ({
+      opacity: 0,
+      transform: outOfChartPosition,
+    }),
+    update: ({index}) => ({opacity: 1, transform: getTransform(index)}),
+    expires: true,
+    config: BARS_SORT_TRANSITION_CONFIG,
+    trail: isAnimated ? animationTrail : 0,
+    default: {
+      immediate: !isAnimated,
+      onRest: handleOnTransitionRest,
+    },
+  });
 
   return (
     <div
@@ -216,26 +263,27 @@ export function Chart({
           seriesColors={seriesColors}
         />
 
-        {series.map((item, index) => {
-          const {name, data} = item;
-          const ariaLabel = getAriaLabel(name, index);
+        {transitions(({opacity, transform}, item, _transition, index) => {
+          const {name} = item.series;
+          const ariaLabel = getAriaLabel(name, item.index);
 
           if (series[index] == null) {
             return null;
           }
 
           const animationDelay =
-            (HORIZONTAL_BAR_GROUP_DELAY * index) / series.length;
+            isFirstRender && isAnimated
+              ? (HORIZONTAL_BAR_GROUP_DELAY * index) / series.length
+              : 0;
 
           return (
-            <g
-              key={name}
+            <animated.g
+              key={`group-${name}`}
               data-type={DataType.BarGroup}
               data-id={`${DataType.BarGroup}-${index}`}
               style={{
-                transform: `translate(${firstNonNegativeValue}px,${
-                  groupHeight * index
-                }px)`,
+                opacity,
+                transform,
               }}
             >
               <GroupLabel
@@ -250,8 +298,9 @@ export function Chart({
                   ariaLabel={ariaLabel}
                   barHeight={barHeight}
                   groupIndex={index}
-                  series={data}
+                  series={item.series.data}
                   xScale={xScaleStacked}
+                  name={name}
                 />
               ) : (
                 <HorizontalBars
@@ -264,12 +313,13 @@ export function Chart({
                   isAnimated={isAnimated}
                   isSimple={isSimple}
                   labelFormatter={labelFormatter}
-                  series={data}
+                  series={item.series.data}
                   theme={theme}
                   xScale={xScale}
+                  name={name}
                 />
               )}
-            </g>
+            </animated.g>
           );
         })}
       </svg>
