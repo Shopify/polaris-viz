@@ -5,7 +5,7 @@ import {useResizeObserver} from '../../hooks';
 import type {Dimensions} from '../../types';
 
 import {Chart} from './Chart';
-import {Series, Size, XAxisOptions, YAxisOptions} from './types';
+import type {Series, XAxisOptions, YAxisOptions} from './types';
 
 export interface HorizontalBarChartProps {
   series: Series[];
@@ -14,7 +14,6 @@ export interface HorizontalBarChartProps {
   isAnimated?: boolean;
   isSimple?: boolean;
   isStacked?: boolean;
-  size?: Size;
   theme?: string;
 }
 
@@ -23,7 +22,6 @@ export function HorizontalBarChart({
   isSimple = false,
   isStacked = false,
   series,
-  size = Size.Small,
   theme,
   xAxisOptions,
   yAxisOptions,
@@ -68,7 +66,6 @@ export function HorizontalBarChart({
           isSimple={isSimple}
           isStacked={isStacked}
           series={series}
-          size={size}
           theme={theme}
           xAxisOptions={xAxisOptionsForChart}
           yAxisOptions={yAxisOptions}

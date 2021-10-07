@@ -3,6 +3,7 @@ import {
   AlteredPositionReturn,
   TOOLTIP_MARGIN,
 } from '../../../components/TooltipWrapper';
+import {LABEL_HEIGHT} from '../constants';
 
 export function getAlteredHorizontalBarPosition(
   props: AlteredPositionProps,
@@ -18,16 +19,22 @@ function getNegativeOffset(props: AlteredPositionProps): AlteredPositionReturn {
   const {currentX, currentY, tooltipDimensions} = props;
 
   const flippedX = currentX * -1;
+  const yOffset = (props.bandwidth - tooltipDimensions.height) / 2;
 
   if (flippedX - tooltipDimensions.width < 0) {
     return {x: flippedX, y: currentY - tooltipDimensions.height};
   }
 
-  return {x: flippedX - tooltipDimensions.width - TOOLTIP_MARGIN, y: currentY};
+  return {
+    x: flippedX - tooltipDimensions.width - TOOLTIP_MARGIN,
+    y: currentY + LABEL_HEIGHT + yOffset,
+  };
 }
 
 function getPositiveOffset(props: AlteredPositionProps): AlteredPositionReturn {
   const {currentX, currentY, tooltipDimensions, chartDimensions} = props;
+
+  const yOffset = (props.bandwidth - tooltipDimensions.height) / 2;
 
   if (
     currentX + TOOLTIP_MARGIN + tooltipDimensions.width >
@@ -48,6 +55,6 @@ function getPositiveOffset(props: AlteredPositionProps): AlteredPositionReturn {
 
   return {
     x: currentX + TOOLTIP_MARGIN,
-    y: currentY,
+    y: currentY + LABEL_HEIGHT + yOffset,
   };
 }

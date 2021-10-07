@@ -2,21 +2,20 @@ import {animated, useSpring} from '@react-spring/web';
 import React from 'react';
 
 import {DataType} from '../../../types';
-import {GRADIENT_ID, SIZES} from '../constants';
-import type {Size} from '../types';
+import {GRADIENT_ID} from '../constants';
 
 interface StackedBarProps {
   groupIndex: number;
+  height: number;
   seriesIndex: number;
-  size: Size;
   width: number;
   x: number;
 }
 
 export function StackedBar({
   groupIndex,
+  height,
   seriesIndex,
-  size,
   width,
   x,
 }: StackedBarProps) {
@@ -30,7 +29,7 @@ export function StackedBar({
       data-index={groupIndex}
       data-type={DataType.Bar}
       fill={`url(#${GRADIENT_ID}${seriesIndex})`}
-      height={SIZES[size]}
+      height={height}
       key={seriesIndex}
       style={{outline: 'none', transformOrigin: `${x}px 0px`}}
       tabIndex={seriesIndex === 0 ? 0 : -1}
