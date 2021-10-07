@@ -15,3 +15,8 @@ export interface Series {
   name: string;
   data: Data[];
 }
+
+export interface ColorOverrides {
+  id: string;
+  color: Color;
+}

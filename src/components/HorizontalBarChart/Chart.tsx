@@ -1,12 +1,12 @@
 import React, {useCallback, useMemo, useState} from 'react';
 
+import {getSeriesColorsFromCount, useTheme} from '../../hooks';
 import {TooltipContent} from '../TooltipContent';
 import {
   XMLNS,
   BarChartMargin as Margin,
   HORIZONTAL_BAR_GROUP_DELAY,
 } from '../../constants';
-import {useTheme, useThemeSeriesColors} from '../../hooks';
 import {eventPointNative} from '../../utilities';
 import {DataType, Dimensions} from '../../types';
 import {
@@ -19,7 +19,7 @@ import {
   TOOLTIP_MARGIN,
 } from '../TooltipWrapper';
 
-import {getAlteredHorizontalBarPosition} from './utilities';
+import {getAlteredHorizontalBarPosition, getBarId} from './utilities';
 import {
   GradientDefs,
   GroupLabel,
@@ -28,7 +28,7 @@ import {
   VerticalGridLines,
   XAxisLabels,
 } from './components';
-import type {Series, XAxisOptions} from './types';
+import type {ColorOverrides, Series, XAxisOptions} from './types';
 import {useBarSizes, useDataForChart, useXScale} from './hooks';
 import styles from './Chart.scss';
 
@@ -61,16 +61,16 @@ export function Chart({
 
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
 
-  const colorsForSeriesColors = useMemo(() => {
-    return series[0].data.map(({color}) => {
-      return {
-        color,
-      };
-    });
+  const longestSeriesCount = useMemo(() => {
+    return series.reduce((prev, cur) => {
+      const count = cur.data.length;
+
+      return count > prev ? count : prev;
+    }, 0);
   }, [series]);
 
-  const seriesColors = useThemeSeriesColors(
-    colorsForSeriesColors,
+  const seriesColors = getSeriesColorsFromCount(
+    longestSeriesCount,
     selectedTheme,
   );
 
@@ -79,6 +79,19 @@ export function Chart({
     isSimple,
     labelFormatter,
   });
+
+  const highestValueForSeries = useMemo(() => {
+    const maxes: number[] = [];
+
+    series.forEach(({data}) => {
+      const values = data.map(({rawValue}) => rawValue);
+      const max = areAllAllNegative ? Math.min(...values) : Math.max(...values);
+
+      maxes.push(max);
+    });
+
+    return maxes;
+  }, [series, areAllAllNegative]);
 
   const {xScale, xScaleStacked, ticks} = useXScale({
     allNumbers,
@@ -110,7 +123,7 @@ export function Chart({
     isStacked,
     labelFormatter,
     seriesLength: series.length,
-    singleBarCount: series[0].data.length,
+    singleBarCount: longestSeriesCount,
     ticks,
   });
 
@@ -133,18 +146,34 @@ export function Chart({
         return null;
       }
 
-      const data = series[activeIndex].data.map(({rawValue, label}, index) => {
-        return {
-          label,
-          value: labelFormatter(rawValue),
-          color: seriesColors[index],
-        };
-      });
+      const data = series[activeIndex].data.map(
+        ({rawValue, label, color}, index) => {
+          return {
+            label,
+            value: labelFormatter(rawValue),
+            color: color ?? seriesColors[index],
+          };
+        },
+      );
 
       return <TooltipContent data={data} theme={theme} />;
     },
     [series, seriesColors, labelFormatter, theme],
   );
+
+  const seriesWithColorOverride = useMemo(() => {
+    const colors: ColorOverrides[] = [];
+
+    series.forEach(({data}, groupIndex) => {
+      data.forEach(({color}, seriesIndex) => {
+        if (color != null) {
+          colors.push({id: getBarId(groupIndex, seriesIndex), color});
+        }
+      });
+    });
+
+    return colors;
+  }, [series]);
 
   return (
     <div
@@ -182,10 +211,13 @@ export function Chart({
           </React.Fragment>
         )}
 
-        <GradientDefs seriesColors={seriesColors} />
+        <GradientDefs
+          colorOverrides={seriesWithColorOverride}
+          seriesColors={seriesColors}
+        />
 
         {series.map((item, index) => {
-          const {name} = item;
+          const {name, data} = item;
           const ariaLabel = getAriaLabel(name, index);
 
           if (series[index] == null) {
@@ -218,7 +250,7 @@ export function Chart({
                   ariaLabel={ariaLabel}
                   barHeight={barHeight}
                   groupIndex={index}
-                  series={item.data}
+                  series={data}
                   xScale={xScaleStacked}
                 />
               ) : (
@@ -232,7 +264,7 @@ export function Chart({
                   isAnimated={isAnimated}
                   isSimple={isSimple}
                   labelFormatter={labelFormatter}
-                  series={item.data}
+                  series={data}
                   theme={theme}
                   xScale={xScale}
                 />
@@ -293,11 +325,7 @@ export function Chart({
       };
     }
 
-    const values = series[index].data.map(({rawValue}) => rawValue);
-    const highestValue = areAllAllNegative
-      ? Math.min(...values)
-      : Math.max(...values);
-
+    const highestValue = highestValueForSeries[index];
     const x = xScale(highestValue);
 
     return {

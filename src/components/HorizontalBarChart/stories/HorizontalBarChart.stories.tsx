@@ -92,6 +92,32 @@ MultiSeriesAllNegative.args = {
   isAnimated: false,
 };
 
+export const RandomSeriesAmounts: Story<HorizontalBarChartProps> = Template.bind(
+  {},
+);
+
+RandomSeriesAmounts.args = {
+  series: [
+    {name: 'One', data: [{rawValue: 5, label: 'Pickles'}]},
+    {
+      name: 'Two',
+      data: [
+        {rawValue: 5, label: 'Pickles'},
+        {rawValue: 3, label: 'Peppers'},
+      ],
+    },
+    {
+      name: 'Three',
+      data: [
+        {rawValue: 3, label: 'Pickles'},
+        {rawValue: 4, label: 'Peppers'},
+        {rawValue: 5, label: 'Bananas'},
+      ],
+    },
+  ],
+  isAnimated: false,
+};
+
 export const SingleBar: Story<HorizontalBarChartProps> = Template.bind({});
 
 SingleBar.args = {
