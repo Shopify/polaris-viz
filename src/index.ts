@@ -4,6 +4,7 @@ export {
   NormalizedStackedBarChart,
   BarChart,
   BarChartTooltipContent,
+  HorizontalBarChart,
   LineChart,
   LineChartTooltipContent,
   StackedAreaChart,
@@ -27,6 +28,7 @@ export type {
   MultiSeriesBarChartProps,
   TooltipContentProps,
   PolarisVizProviderProps,
+  HorizontalBarChartProps,
 } from './components';
 
 export {
