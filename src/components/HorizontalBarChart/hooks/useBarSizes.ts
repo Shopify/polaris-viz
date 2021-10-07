@@ -1,16 +1,26 @@
 import {useMemo} from 'react';
 
-import {clamp} from '../../../utilities';
+import {clamp, getTextHeight} from '../../../utilities';
+import {FONT_SIZE, LINE_HEIGHT} from '../../../constants';
 import type {Dimensions} from '../../../types';
-import {LABEL_HEIGHT, MIN_BAR_HEIGHT, SPACE_BETWEEN_SETS} from '../constants';
+import {
+  LABEL_HEIGHT,
+  MAX_X_AXIS_LINES,
+  MIN_BAR_HEIGHT,
+  PADDING_UNDER_LAST_GROUP,
+  SPACE_BETWEEN_SERIES_AND_LABELS,
+  SPACE_BETWEEN_SETS,
+} from '../constants';
+import type {XAxisOptions} from '../types';
 
 interface Props {
   chartDimensions: Dimensions;
   isSimple: boolean;
   isStacked: boolean;
-  singleBarCount: number;
+  labelFormatter: XAxisOptions['labelFormatter'];
   seriesLength: number;
-  ticksCount: number;
+  singleBarCount: number;
+  ticks: number[];
 }
 
 // Returns all the data needed to size and position the
@@ -19,19 +29,52 @@ export function useBarSizes({
   chartDimensions,
   isSimple,
   isStacked,
-  singleBarCount,
+  labelFormatter,
   seriesLength,
-  ticksCount,
+  singleBarCount,
+  ticks,
 }: Props) {
+  const bandwidth = chartDimensions.width / ticks.length;
+
+  const tallestXAxisLabel = useMemo(() => {
+    const maxHeight = LINE_HEIGHT * MAX_X_AXIS_LINES;
+
+    const longestLabel = ticks.reduce((prev, cur) => {
+      const label = `${labelFormatter(cur)}`;
+
+      if (label.length > prev.length) {
+        return label;
+      }
+
+      return prev;
+    }, '');
+
+    const height = getTextHeight({
+      text: longestLabel,
+      fontSize: FONT_SIZE,
+      containerWidth: bandwidth / 2,
+    });
+
+    return clamp({amount: height, min: 0, max: maxHeight});
+  }, [ticks, labelFormatter, bandwidth]);
+
   return useMemo(() => {
-    const bottomPadding = isSimple ? 0 : LABEL_HEIGHT;
-    const bandwidth = chartDimensions.width / ticksCount;
+    const bottomPadding = isSimple ? 0 : PADDING_UNDER_LAST_GROUP;
+    const bandwidth = chartDimensions.width / ticks.length;
     // Push the container taller to line up last bar
     const simpleHeight = chartDimensions.height + SPACE_BETWEEN_SETS;
 
     const containerHeight = isSimple ? simpleHeight : chartDimensions.height;
 
-    const groupHeight = (containerHeight - bottomPadding) / seriesLength;
+    const groupHeight =
+      (containerHeight - tallestXAxisLabel - bottomPadding) / seriesLength;
+    const chartHeight =
+      groupHeight * seriesLength + tallestXAxisLabel + bottomPadding;
+    const seriesAreaHeight =
+      chartHeight -
+      bottomPadding -
+      SPACE_BETWEEN_SERIES_AND_LABELS -
+      tallestXAxisLabel;
 
     const groupBarsAreaHeight = groupHeight - LABEL_HEIGHT - SPACE_BETWEEN_SETS;
 
@@ -48,14 +91,15 @@ export function useBarSizes({
       );
     }
 
-    const chartHeight = groupHeight * seriesLength + bottomPadding;
-
     return {
       bandwidth,
       barHeight,
       chartHeight,
       groupBarsAreaHeight,
       groupHeight,
+      seriesAreaHeight,
+      tallestXAxisLabel,
+      totalChartHeight: chartHeight,
     };
   }, [
     chartDimensions,
@@ -63,6 +107,7 @@ export function useBarSizes({
     isStacked,
     seriesLength,
     singleBarCount,
-    ticksCount,
+    tallestXAxisLabel,
+    ticks,
   ]);
 }

@@ -98,15 +98,23 @@ export function Chart({
     return xScale(value);
   }, [xScale, ticks]);
 
-  const {barHeight, groupHeight, groupBarsAreaHeight, chartHeight, bandwidth} =
-    useBarSizes({
-      chartDimensions,
-      isSimple,
-      isStacked,
-      singleBarCount: series[0].data.length,
-      seriesLength: series.length,
-      ticksCount: ticks.length,
-    });
+  const {
+    bandwidth,
+    barHeight,
+    chartHeight,
+    groupBarsAreaHeight,
+    groupHeight,
+    seriesAreaHeight,
+    tallestXAxisLabel,
+  } = useBarSizes({
+    chartDimensions,
+    isSimple,
+    isStacked,
+    labelFormatter,
+    seriesLength: series.length,
+    singleBarCount: series[0].data.length,
+    ticks,
+  });
 
   const getAriaLabel = useCallback(
     (label: string, seriesIndex: number) => {
@@ -145,12 +153,12 @@ export function Chart({
       className={styles.ChartContainer}
       style={{
         width: chartDimensions.width,
-        height: chartDimensions.height,
+        height: chartHeight,
       }}
     >
       <svg
         className={styles.SVG}
-        height={chartDimensions.height}
+        height={chartHeight}
         ref={setSvgRef}
         role="list"
         width={chartDimensions.width}
@@ -159,16 +167,17 @@ export function Chart({
         {isSimple ?? xAxisOptions.hide === true ? null : (
           <React.Fragment>
             <VerticalGridLines
-              ticks={ticks}
-              chartHeight={chartHeight}
-              xScale={xScale}
+              seriesAreaHeight={seriesAreaHeight}
               stroke={selectedTheme.grid.color}
+              ticks={ticks}
+              xScale={xScale}
             />
             <XAxisLabels
               bandwidth={bandwidth}
-              chartHeight={chartHeight}
               color={selectedTheme.yAxis.labelColor}
               labelFormatter={labelFormatter}
+              seriesAreaHeight={seriesAreaHeight}
+              tallestXAxisLabel={tallestXAxisLabel}
               ticks={ticks}
               xScale={xScale}
             />
