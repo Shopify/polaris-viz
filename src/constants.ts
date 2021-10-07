@@ -46,6 +46,7 @@ export const LINES_LOAD_ANIMATION_CONFIG = {
   friction: 18,
 };
 export const MAX_TRAIL_DURATION = 500;
+export const HORIZONTAL_BAR_GROUP_DELAY = 200;
 
 export const MASK_HIGHLIGHT_COLOR = variables.colorWhite;
 export const MASK_SUBDUE_COLOR = '#434343';
@@ -66,6 +67,12 @@ const NEUTRAL_SINGLE_GRADIENT = [
   {offset: 0, color: variables.colorIndigo90},
   {offset: 85, color: variables.colorBlue90},
   {offset: 100, color: variables.colorBlue70},
+];
+
+export const NEGATIVE_SINGLE_GRADIENT = [
+  {offset: 0, color: '#3AA4F6'},
+  {offset: 50, color: '#986BFF'},
+  {offset: 100, color: '#EC6E6E'},
 ];
 
 export const DEFAULT_THEME: Theme = {
