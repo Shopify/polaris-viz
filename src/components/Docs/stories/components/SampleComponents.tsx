@@ -115,22 +115,26 @@ export const SampleBarchart = ({theme} = {theme: 'Default'}) => {
   );
 };
 
-export const SampleMultiseriesBarChart = ({theme} = {theme: 'Default'}) => {
+export const SampleMultiseriesBarChart = (
+  {theme, seriesLength = 3} = {theme: 'Default'},
+) => {
   return (
     <MultiSeriesBarChart
-      series={generateMultipleSeries(3)}
+      series={generateMultipleSeries(seriesLength)}
       xAxisOptions={{
-        labels: generateLabels(2),
+        labels: generateLabels(1),
       }}
       theme={theme}
     />
   );
 };
 
-export const SampleStackedAreaChart = ({theme} = {theme: 'Default'}) => {
+export const SampleStackedAreaChart = (
+  {theme, seriesLength = 3} = {theme: 'Default'},
+) => {
   return (
     <StackedAreaChart
-      series={generateMultipleSeries(3, 3)}
+      series={generateMultipleSeries(seriesLength, 3)}
       xAxisOptions={{
         labels: generateLabels(3),
       }}
