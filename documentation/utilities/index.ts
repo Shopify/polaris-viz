@@ -36,12 +36,15 @@ export const generateLabels = (dataLength: number) => {
     });
 };
 
-export const generateMultipleSeries = (quantity: number) => {
+export const generateMultipleSeries = (
+  quantity: number,
+  dataSetLength = 10,
+) => {
   return Array(quantity)
     .fill(null)
     .map((_, index) => ({
       name: `Series ${index}`,
-      data: generateDataSet(10),
+      data: generateDataSet(dataSetLength),
     }));
 };
 

@@ -146,8 +146,8 @@ export function Sparkline({
       <svg xmlns={XMLNS} aria-hidden width={width} height={height}>
         {series.map((singleSeries, index) => {
           const {
-            lineStyle,
-            hasPoint,
+            lineStyle = selectedTheme.line.style,
+            hasPoint = selectedTheme.line.hasPoint,
             offsetRight = 0,
             offsetLeft = 0,
           } = singleSeries;

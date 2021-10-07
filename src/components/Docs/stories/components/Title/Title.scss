@@ -12,9 +12,14 @@
 
 .h1,
 .h2,
-.h3 {
+.h3,
+.h4 {
   position: relative;
   color: white;
+
+  > code {
+    font-weight: 200;
+  }
 }
 
 .h1,
@@ -29,4 +34,9 @@
 .h3,
 .h3 > code {
   font-size: 22px;
+}
+
+.h4,
+.h4 > code {
+  font-size: 18px;
 }

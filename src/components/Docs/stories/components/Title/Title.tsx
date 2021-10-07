@@ -1,5 +1,6 @@
 import React, {useMemo} from 'react';
 
+import {uniqueId} from '../../../../../utilities';
 import {copyTextToClipboard} from '../../../../../../documentation/utilities';
 
 import styles from './Title.scss';
@@ -11,7 +12,7 @@ export function Title({
   type: string;
   children: React.ReactChildren;
 }) {
-  const slug = children.toString().replace(/\s/g, '');
+  const id = useMemo(() => uniqueId('titleAnchor'), []);
 
   const markup = useMemo(() => {
     switch (type) {
@@ -24,6 +25,9 @@ export function Title({
       case 'h3':
         return <h3 className={styles.h3}>{children}</h3>;
         break;
+      case 'h4':
+        return <h4 className={styles.h4}>{children}</h4>;
+        break;
 
       default:
         return children;
@@ -33,7 +37,7 @@ export function Title({
 
   const handleInteraction = (event: any) => {
     event.preventDefault();
-    const url = `${window.location.href}#${slug}`.replace(
+    const url = `${window.location.href}#${id}`.replace(
       'iframe.html?id=',
       '?path=/docs/',
     );
@@ -42,8 +46,8 @@ export function Title({
   return (
     <a
       className={styles.TitleAnchor}
-      id={slug}
-      href={`#${slug}`}
+      id={id}
+      href={`#${id}`}
       onClick={handleInteraction}
     >
       {markup}

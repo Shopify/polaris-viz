@@ -1,7 +1,13 @@
 import {Meta} from '@storybook/addon-docs/blocks';
-import {BarChart, LineChart, Sparkline} from '../../../../src/components';
+
 import {PolarisVizProvider} from '../../PolarisVizProvider';
-import {ComponentContainer, Title} from './components';
+import {
+  ComponentContainer,
+  Title,
+  SampleSparkline,
+  SampleLineChart,
+  SampleBarchart,
+} from './components';
 import {SPARKLINE_SERIES} from '../../../../documentation/utilities';
 
 <Meta
@@ -118,15 +124,7 @@ export const App = () => {
     center
     chart={
       <div style={{width: '350px', height: '140px'}}>
-            <BarChart
-      data={[
-        {rawValue: 324.19, label: 'Jan. 1'},
-        {rawValue: 613.29, label: 'Jan. 2'},
-        {rawValue: 1000, label: 'Jan. 3'},
-        {rawValue: 432, label: 'Jan. 4'},
-        {rawValue: 1, label: 'Jan. 5'},
-      ]}
-    />
+        <SampleBarchart />
       </div>
     }
     codeSample={"<BarChart series={...}/>"}
@@ -135,24 +133,7 @@ export const App = () => {
     center
     chart={
       <div style={{width: '350px', height: '140px'}}>
-      <LineChart
-      isAnimated
-      series={[
-        {
-          name: 'Sales',
-          data: [
-            {rawValue: 324.19, label: '2020-01-01'},
-            {rawValue: 613.29, label: '2020-01-02'},
-            {rawValue: -422.79, label: '2020-01-03'},
-            {rawValue: 0, label: '2020-01-04'},
-            {rawValue: 1, label: '2020-01-05'},
-          ],
-        },
-      ]}
-      xAxisOptions={{
-        xAxisLabels: ['Jan. 1', 'Jan. 2', 'Jan. 3', 'Jan. 4', 'Jan. 5'],
-      }}
-    />
+        <SampleLineChart />
       </div>
     }
     codeSample={"<LineChart series={...}/>"}
@@ -237,7 +218,7 @@ export const App = () => {
     center
     chart={
       <div style={{width: '250px', height: '140px'}}>
-        <Sparkline series={SPARKLINE_SERIES} theme="AngryRed" />
+        <SampleSparkline theme="AngryRed" />
       </div>
     }
     codeSample={"<Sparkline series={...} theme='AngryRed'/>"}
@@ -247,7 +228,7 @@ export const App = () => {
     center
     chart={
       <div style={{width: '250px', height: '140px'}}>
-        <Sparkline series={SPARKLINE_SERIES} theme="HappyGreen" />
+        <SampleSparkline theme="HappyGreen" />
       </div>
     }
     codeSample={"<Sparkline series={...} theme='HappyGreen'/>"}
