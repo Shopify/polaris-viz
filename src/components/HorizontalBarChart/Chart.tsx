@@ -31,6 +31,7 @@ import {
 import type {ColorOverrides, Series, XAxisOptions} from './types';
 import {useBarSizes, useDataForChart, useXScale} from './hooks';
 import styles from './Chart.scss';
+import {cleanNullData} from './utilities/cleanNullData';
 
 const TOOLTIP_POSITION = {
   horizontal: TooltipHorizontalOffset.Right,
@@ -84,7 +85,9 @@ export function Chart({
     const maxes: number[] = [];
 
     series.forEach(({data}) => {
-      const values = data.map(({rawValue}) => rawValue);
+      const values = cleanNullData(data).map(
+        (value) => value && value.rawValue,
+      );
       const max = areAllAllNegative ? Math.min(...values) : Math.max(...values);
 
       maxes.push(max);
@@ -129,7 +132,7 @@ export function Chart({
 
   const getAriaLabel = useCallback(
     (label: string, seriesIndex: number) => {
-      const ariaSeries = series[seriesIndex].data
+      const ariaSeries = cleanNullData(series[seriesIndex].data)
         .map(({rawValue, label}) => {
           return `${label} ${labelFormatter(rawValue)}`;
         })
@@ -146,7 +149,7 @@ export function Chart({
         return null;
       }
 
-      const data = series[activeIndex].data.map(
+      const data = cleanNullData(series[activeIndex].data).map(
         ({rawValue, label, color}, index) => {
           return {
             label,
@@ -165,7 +168,7 @@ export function Chart({
     const colors: ColorOverrides[] = [];
 
     series.forEach(({data}, groupIndex) => {
-      data.forEach(({color}, seriesIndex) => {
+      cleanNullData(data).forEach(({color}, seriesIndex) => {
         if (color != null) {
           colors.push({id: getBarId(groupIndex, seriesIndex), color});
         }
@@ -249,8 +252,8 @@ export function Chart({
                   animationDelay={animationDelay}
                   ariaLabel={ariaLabel}
                   barHeight={barHeight}
+                  data={data}
                   groupIndex={index}
-                  series={data}
                   xScale={xScaleStacked}
                 />
               ) : (
@@ -259,12 +262,12 @@ export function Chart({
                   areAllAllNegative={areAllAllNegative}
                   ariaLabel={ariaLabel}
                   barHeight={barHeight}
+                  data={data}
                   firstNonNegativeValue={firstNonNegativeValue}
                   groupIndex={index}
                   isAnimated={isAnimated}
                   isSimple={isSimple}
                   labelFormatter={labelFormatter}
-                  series={data}
                   theme={theme}
                   xScale={xScale}
                 />
@@ -313,7 +316,7 @@ export function Chart({
 
   function formatPositionForTooltip(index: number): TooltipPosition {
     if (isStacked && xScaleStacked) {
-      const x = series[index].data.reduce((prev, cur) => {
+      const x = cleanNullData(series[index].data).reduce((prev, cur) => {
         return prev + xScaleStacked(cur.rawValue);
       }, 0);
 

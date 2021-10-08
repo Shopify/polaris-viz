@@ -2,7 +2,7 @@ import React from 'react';
 import type {ScaleLinear} from 'd3-scale';
 
 import {FONT_SIZE} from '../../../constants';
-import type {Data, XAxisOptions} from '../types';
+import type {NullableData, XAxisOptions} from '../types';
 import {getTextWidth} from '../../../utilities';
 import {
   BAR_LABEL_OFFSET,
@@ -19,32 +19,32 @@ import {Bar, RoundedBorder} from './Bar';
 import {Label} from './Label';
 
 interface HorizontalBarProps {
+  animationDelay?: number;
   areAllAllNegative: boolean;
   ariaLabel: string;
   barHeight: number;
+  data: NullableData[];
   firstNonNegativeValue: number;
   groupIndex: number;
   isAnimated: boolean;
-  labelFormatter: XAxisOptions['labelFormatter'];
-  series: Data[];
   isSimple: boolean;
-  xScale: ScaleLinear<number, number>;
-  animationDelay?: number;
+  labelFormatter: XAxisOptions['labelFormatter'];
   theme?: string;
+  xScale: ScaleLinear<number, number>;
 }
 
 export function HorizontalBars({
+  animationDelay,
   areAllAllNegative,
   ariaLabel,
   barHeight,
-  groupIndex,
+  data,
   firstNonNegativeValue,
+  groupIndex,
   isAnimated,
-  labelFormatter,
-  series,
   isSimple,
+  labelFormatter,
   theme,
-  animationDelay,
   xScale,
 }: HorizontalBarProps) {
   const selectedTheme = useTheme(theme);
@@ -55,7 +55,12 @@ export function HorizontalBars({
       aria-label={ariaLabel}
       role="listitem"
     >
-      {series.map(({rawValue, color}, seriesIndex) => {
+      {data.map((values, seriesIndex) => {
+        if (values == null) {
+          return null;
+        }
+
+        const {rawValue, color} = values;
         const isNegative = rawValue < 0;
         const label = labelFormatter(rawValue);
         const id = getBarId(groupIndex, seriesIndex);

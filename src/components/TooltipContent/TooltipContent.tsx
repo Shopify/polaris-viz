@@ -6,7 +6,7 @@ import {SquareColorPreview} from '../SquareColorPreview';
 
 import styles from './TooltipContent.scss';
 
-interface TooltipData {
+export interface TooltipData {
   color: Color;
   label: string;
   value: string;

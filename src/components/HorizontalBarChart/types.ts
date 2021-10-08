@@ -11,9 +11,11 @@ export interface Data {
   color?: Color;
 }
 
+export type NullableData = Data | null | undefined;
+
 export interface Series {
   name: string;
-  data: Data[];
+  data: NullableData[];
 }
 
 export interface ColorOverrides {

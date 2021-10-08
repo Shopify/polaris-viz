@@ -4,6 +4,7 @@ import {FONT_SIZE} from '../../../constants';
 import {getTextWidth} from '../../../utilities';
 import {BAR_LABEL_OFFSET, FONT_SIZE_PADDING} from '../constants';
 import type {Series, XAxisOptions} from '../types';
+import {cleanNullData} from '../utilities/cleanNullData';
 
 interface Props {
   series: Series[];
@@ -14,7 +15,7 @@ interface Props {
 export function useDataForChart({labelFormatter, series, isSimple}: Props) {
   const allNumbers = useMemo(() => {
     return series.reduce<number[]>((prev, cur) => {
-      const numbers = cur.data.map(({rawValue}) => rawValue);
+      const numbers = cleanNullData(cur.data).map(({rawValue}) => rawValue);
       return prev.concat(...numbers);
     }, []);
   }, [series]);

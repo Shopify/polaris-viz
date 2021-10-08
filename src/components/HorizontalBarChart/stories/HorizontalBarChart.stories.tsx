@@ -7,6 +7,7 @@ import {
 } from '../HorizontalBarChart';
 
 import type {Series} from '../types';
+import {cleanNullData} from '../utilities/cleanNullData';
 
 const LABELS = ['BCFM 2019', 'BCFM 2020', 'BCFM 2021'];
 
@@ -112,6 +113,26 @@ RandomSeriesAmounts.args = {
         {rawValue: 3, label: 'Pickles'},
         {rawValue: 4, label: 'Peppers'},
         {rawValue: 5, label: 'Bananas'},
+      ],
+    },
+  ],
+  isAnimated: false,
+};
+
+export const MissingData: Story<HorizontalBarChartProps> = Template.bind({});
+
+MissingData.args = {
+  series: [
+    {name: 'Null', data: [null, {rawValue: 15, label: 'Pickles'}]},
+    {
+      name: 'Undefined',
+      data: [undefined, {rawValue: 3, label: 'Peppers'}],
+    },
+    {
+      name: 'Blank String',
+      data: [
+        {rawValue: 4, label: 'Peppers'},
+        {rawValue: 10, label: 'Bananas'},
       ],
     },
   ],
@@ -260,7 +281,7 @@ export const Sorting = () => {
     const newData = data.map((value) => {
       return {
         ...value,
-        data: value.data.map(({rawValue, label}) => {
+        data: cleanNullData(value.data).map(({rawValue, label}) => {
           return {
             label,
             rawValue: rawValue + Math.floor(Math.random() * 10),
