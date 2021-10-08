@@ -5,17 +5,13 @@ export interface XAxisOptions {
   hide?: boolean;
 }
 
-export interface YAxisOptions {
-  labels: string[];
-}
-
 export interface Data {
+  label: string;
   rawValue: number;
   color?: Color;
 }
 
 export interface Series {
-  label: string;
+  name: string;
   data: Data[];
-  color?: Color;
 }

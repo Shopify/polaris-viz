@@ -28,7 +28,7 @@ import {
   VerticalGridLines,
   XAxisLabels,
 } from './components';
-import type {Series, XAxisOptions, YAxisOptions} from './types';
+import type {Series, XAxisOptions} from './types';
 import {useBarSizes, useDataForChart, useXScale} from './hooks';
 import styles from './Chart.scss';
 
@@ -44,7 +44,6 @@ interface ChartProps {
   isStacked: boolean;
   series: Series[];
   xAxisOptions: XAxisOptions;
-  yAxisOptions: YAxisOptions;
   theme?: string;
 }
 
@@ -56,7 +55,6 @@ export function Chart({
   series,
   theme,
   xAxisOptions,
-  yAxisOptions,
 }: ChartProps) {
   const selectedTheme = useTheme(theme);
   const {labelFormatter} = xAxisOptions;
@@ -119,14 +117,14 @@ export function Chart({
   const getAriaLabel = useCallback(
     (label: string, seriesIndex: number) => {
       const ariaSeries = series[seriesIndex].data
-        .map(({rawValue}, index) => {
-          return `${yAxisOptions.labels[index]} ${labelFormatter(rawValue)}`;
+        .map(({rawValue, label}) => {
+          return `${label} ${labelFormatter(rawValue)}`;
         })
         .join(', ');
 
       return `${label}: ${ariaSeries}`;
     },
-    [series, yAxisOptions.labels, labelFormatter],
+    [series, labelFormatter],
   );
 
   const getTooltipMarkup = useCallback(
@@ -135,9 +133,9 @@ export function Chart({
         return null;
       }
 
-      const data = series[activeIndex].data.map(({rawValue}, index) => {
+      const data = series[activeIndex].data.map(({rawValue, label}, index) => {
         return {
-          label: yAxisOptions.labels[index],
+          label,
           value: labelFormatter(rawValue),
           color: seriesColors[index],
         };
@@ -145,7 +143,7 @@ export function Chart({
 
       return <TooltipContent data={data} theme={theme} />;
     },
-    [series, seriesColors, yAxisOptions, labelFormatter, theme],
+    [series, seriesColors, labelFormatter, theme],
   );
 
   return (
@@ -187,8 +185,8 @@ export function Chart({
         <GradientDefs seriesColors={seriesColors} />
 
         {series.map((item, index) => {
-          const {label} = item;
-          const ariaLabel = getAriaLabel(label, index);
+          const {name} = item;
+          const ariaLabel = getAriaLabel(name, index);
 
           if (series[index] == null) {
             return null;
@@ -199,7 +197,7 @@ export function Chart({
 
           return (
             <g
-              key={item.label}
+              key={name}
               data-type={DataType.BarGroup}
               data-id={`${DataType.BarGroup}-${index}`}
               style={{
@@ -211,7 +209,7 @@ export function Chart({
               <GroupLabel
                 areAllAllNegative={areAllAllNegative}
                 color={selectedTheme.xAxis.labelColor}
-                label={label}
+                label={name}
               />
 
               {isStacked && xScaleStacked ? (
