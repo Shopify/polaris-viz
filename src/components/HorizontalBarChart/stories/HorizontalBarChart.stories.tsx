@@ -8,6 +8,7 @@ import {
 
 import type {Series} from '../types';
 import {cleanNullData} from '../utilities/cleanNullData';
+import {formatDataFromMultiseries} from '../utilities';
 
 const LABELS = ['BCFM 2019', 'BCFM 2020', 'BCFM 2021'];
 
@@ -75,6 +76,51 @@ export const Default: Story<HorizontalBarChartProps> = Template.bind({});
 
 Default.args = {
   series: SERIES,
+};
+
+export const Massaged: Story<HorizontalBarChartProps> = Template.bind({});
+
+const MULTI_SERIES_BAR_CHART_DATA = [
+  {
+    name: 'Breakfast',
+    data: [
+      {label: 'Monday', rawValue: 3},
+      {label: 'Tuesday', rawValue: -7},
+      {label: 'Wednesday', rawValue: 4},
+      {label: 'Thursday', rawValue: 8},
+      {label: 'Friday', rawValue: 50},
+      {label: 'Saturday', rawValue: 0},
+      {label: 'Sunday', rawValue: 0.1},
+    ],
+  },
+  {
+    name: 'Lunch',
+    data: [
+      {label: 'Monday', rawValue: 4},
+      {label: 'Tuesday', rawValue: 0},
+      {label: 'Wednesday', rawValue: 5},
+      {label: 'Thursday', rawValue: 15},
+      {label: 'Friday', rawValue: 8},
+      {label: 'Saturday', rawValue: 50},
+      {label: 'Sunday', rawValue: 0.1},
+    ],
+  },
+  {
+    name: 'Dinner',
+    data: [
+      {label: 'Monday', rawValue: 7},
+      {label: 'Tuesday', rawValue: 0},
+      {label: 'Wednesday', rawValue: 6},
+      {label: 'Thursday', rawValue: 12},
+      {label: 'Friday', rawValue: 50},
+      {label: 'Saturday', rawValue: 5},
+      {label: 'Sunday', rawValue: 0.1},
+    ],
+  },
+];
+
+Massaged.args = {
+  series: formatDataFromMultiseries(MULTI_SERIES_BAR_CHART_DATA),
 };
 
 export const MultiSeriesAllNegative: Story<HorizontalBarChartProps> = Template.bind(
