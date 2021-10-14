@@ -1,34 +1,38 @@
+const names = [
+  'Megachasma pelagios',
+  'Chiloscyllium punctatum',
+  'Negaprion brevirostris',
+  'Carcharias taurus',
+  'Carcharhinus melanopterus',
+  'Ginglymostoma cirratum',
+  'Sphyrnidae',
+  'Prionace glauca',
+  'Carcharhinus longimanus',
+  'Carcharodon carcharias',
+  'Galeocerdo cuvier',
+  'Carcharhinus leucas',
+  'Alopias sp.',
+  'Isurus oxyrinchus',
+  'Cetorhinus maximus',
+  'Rhincodon typus',
+];
+
+function randomNumber(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 export const generateDataSet = (dataLength: number) => {
   return Array(dataLength)
     .fill(null)
     .map(() => {
       return {
-        rawValue: Math.random() * Math.random() * 100,
-        label: 'Some value',
+        rawValue: randomNumber(20, 50),
+        label: names[Math.floor(Math.random() * names.length)],
       };
     });
 };
 
 export const generateLabels = (dataLength: number) => {
-  const names = [
-    'Megachasma pelagios',
-    'Chiloscyllium punctatum',
-    'Negaprion brevirostris',
-    'Carcharias taurus',
-    'Carcharhinus melanopterus',
-    'Ginglymostoma cirratum',
-    'Sphyrnidae',
-    'Prionace glauca',
-    'Carcharhinus longimanus',
-    'Carcharodon carcharias',
-    'Galeocerdo cuvier',
-    'Carcharhinus leucas',
-    'Alopias sp.',
-    'Isurus oxyrinchus',
-    'Cetorhinus maximus',
-    'Rhincodon typus',
-  ];
-
   return Array(dataLength)
     .fill(null)
     .map(() => {

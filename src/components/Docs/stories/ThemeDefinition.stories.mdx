@@ -148,6 +148,293 @@ export interface Theme {
   />
 </ExamplesGrid>
 
+<Divider noLine />
+<Title type="h3">
+  <code>seriesColors</code>
+</Title>
+{/* =================== seriesColors ================ */}
+
+`seriesColors` allows you to customize what colors the charts will use depending on how many data series are being displayed.
+
+The `Default` and `Light` theme that come with the library out of the box use gradients for charts with up to 7 data series, but use
+solid colors for charts with more. The `Color` type accepts a gradient definition or any valid CSS string color:
+
+```ts
+export type Color = string | GradientStop[];
+
+export interface GradientStop {
+  offset: number;
+  color: string;
+}
+```
+
+<PropertyTable global>
+  <PropertyTable.Row
+    property={`seriesColors.single`}
+    type={'Color'}
+    description={
+      <>Defines the color used in the series on charts with a single series</>
+    }
+  />
+  <PropertyTable.Row
+    property={`seriesColors.upToFour`}
+    type={'Color[]'}
+    description={
+      <>
+        Defines the colors used in the series on charts that have from 2 to 4
+        series
+      </>
+    }
+  />
+  <PropertyTable.Row
+    property={`seriesColors.fromFiveToSeven`}
+    type={'Color[]'}
+    description={
+      <>
+        Defines the colors used in the series on charts that have from 5 to 7
+        series
+      </>
+    }
+  />
+  <PropertyTable.Row
+    property={`seriesColors.all`}
+    type={'Color[]'}
+    description={
+      <>
+        Defines the colors used in the series on charts that have more than 7
+        series
+      </>
+    }
+  />
+</PropertyTable>
+
+<Title type="h4">Examples:</Title>
+
+<ExamplesGrid>
+
+<ComponentContainer
+  codeSample={`
+    <PolarisVizProvider={{
+      Default: {
+        seriesColors: {
+          single: 'lime',
+        },
+      },
+    }}>
+    <StackedAreaCharts series={data} />
+  </PolarisVizProvider>
+    `}
+  center
+  chart={
+    <div style={{width: '350px', height: '140px'}}>
+      <PolarisVizProvider
+        themes={{
+          Default: {
+            seriesColors: {
+              single: 'lime',
+            },
+          },
+        }}
+      >
+        <SampleStackedAreaChart seriesLength={1} />
+      </PolarisVizProvider>
+    </div>
+  }
+/>
+<ComponentContainer
+  codeSample={`
+    <PolarisVizProvider={{
+      Default: {
+        seriesColors: {
+          upToFour: [
+            'yellow',
+            'lime',
+            'aqua',
+            'teal'
+          ],
+        },
+      },
+    }}>
+    <MultiseriesBarChart series={data} />
+  </PolarisVizProvider>
+    `}
+  center
+  chart={
+    <div style={{width: '350px', height: '140px'}}>
+      <PolarisVizProvider
+        themes={{
+          Default: {
+            seriesColors: {
+              upToFour: ['yellow', 'lime', 'aqua', 'Teal'],
+            },
+          },
+        }}
+      >
+        <SampleMultiseriesBarChart seriesLength={4} />
+      </PolarisVizProvider>
+    </div>
+  }
+/>
+<ComponentContainer
+  codeSample={`
+    <PolarisVizProvider={{
+      Default: {
+        fromFiveToSeven: {
+          fromFiveToSeven: [
+            'magenta',
+            'orange',
+            'DarkOrchid',
+            'yellow',
+            'lime',
+            'aqua',
+            'Teal'
+          ],
+        },
+      },
+    }}>
+    <MultiseriesBarChart series={data} />
+  </PolarisVizProvider>
+    `}
+  center
+  chart={
+    <div style={{width: '350px', height: '140px'}}>
+      <PolarisVizProvider
+        themes={{
+          Default: {
+            seriesColors: {
+              fromFiveToSeven: [
+                'magenta',
+                'orange',
+                'DarkOrchid',
+                'yellow',
+                'lime',
+                'aqua',
+                'Teal',
+              ],
+            },
+          },
+        }}
+      >
+        <SampleMultiseriesBarChart seriesLength={7} />
+      </PolarisVizProvider>
+    </div>
+  }
+/>
+
+<ComponentContainer
+  codeSample={`
+    <PolarisVizProvider={{
+      Default: {
+        fromFiveToSeven: {
+          all: [
+            'GreenYellow',
+            'ForestGreen',
+            'LawnGreen',
+            'Lime',
+            'LimeGreen',
+            'PaleGreen',
+            'YellowGreen',
+            'MediumSpringGreen',
+            'SpringGreen',
+            'MediumSeaGreen',
+            'SeaGreen',
+          ],
+        },
+      },
+    }}>
+    <MultiseriesBarChart series={data} />
+  </PolarisVizProvider>
+    `}
+  center
+  chart={
+    <div style={{width: '350px', height: '140px'}}>
+      <PolarisVizProvider
+        themes={{
+          Default: {
+            seriesColors: {
+              all: [
+                'GreenYellow',
+                'ForestGreen',
+                'LawnGreen',
+                'Lime',
+                'LimeGreen',
+                'PaleGreen',
+                'YellowGreen',
+                'MediumSpringGreen',
+                'SpringGreen',
+                'MediumSeaGreen',
+                'SeaGreen',
+              ],
+            },
+          },
+        }}
+      >
+        <SampleMultiseriesBarChart seriesLength={11}/>
+      </PolarisVizProvider>
+    </div>
+  }
+/>
+</ExamplesGrid>
+<Divider noLine />
+
+<Title type="h3">
+  <code>tooltip</code>
+</Title>
+{/* =================== tooltip ================ */}
+
+<PropertyTable global>
+  <PropertyTable.Row
+    property={`tooltip.backgroundColor`}
+    type={'string'}
+    description={<>A CSS color string that gets applied to the background</>}
+  />
+  <PropertyTable.Row
+    property={`tooltip.valueColor`}
+    type={'string'}
+    description={<>A CSS color string that gets applied to values</>}
+  />
+</PropertyTable>
+
+<Title type="h4">Examples:</Title>
+
+<ExamplesGrid>
+
+<ComponentContainer
+  codeSample={`
+    <PolarisVizProvider={{
+      Default: {
+        tooltip: {
+          backgroundColor: 'MidnightBlue',
+          valueColor: 'yellow',
+          labelColor: 'Fuchsia',
+        },
+      },
+    }}>
+    <StackedAreaCharts series={data} />
+  </PolarisVizProvider>
+    `}
+  center
+  chart={
+    <div style={{width: '350px', height: '140px'}}>
+      <PolarisVizProvider
+        themes={{
+          Default: {
+            tooltip: {
+              backgroundColor: 'MidnightBlue',
+              valueColor: 'yellow',
+              labelColor: 'Fuchsia',
+            },
+          },
+        }}
+      >
+        <SampleBarchart />
+      </PolarisVizProvider>
+    </div>
+  }
+/>
+
+</ExamplesGrid>
+
 <Divider />
 <Title type="h2">📍 Local properties</Title>
 {/* =================== bar ================ */}
