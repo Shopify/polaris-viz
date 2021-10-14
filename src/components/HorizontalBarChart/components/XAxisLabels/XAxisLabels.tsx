@@ -3,14 +3,14 @@ import type {ScaleLinear} from 'd3-scale';
 
 import {MAX_X_AXIS_LINES} from '../../constants';
 import {FONT_SIZE, LINE_HEIGHT} from '../../../../constants';
-import type {XAxisOptions} from '../../types';
+import type {LabelFormatter} from '../../types';
 
 import styles from './XAxisLabels.scss';
 
 interface XAxisLabelsProps {
   bandwidth: number;
   color: string;
-  labelFormatter: XAxisOptions['labelFormatter'];
+  labelFormatter: LabelFormatter;
   seriesAreaHeight: number;
   tallestXAxisLabel: number;
   ticks: number[];

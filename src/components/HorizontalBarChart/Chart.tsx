@@ -43,7 +43,7 @@ interface ChartProps {
   isSimple: boolean;
   isStacked: boolean;
   series: Series[];
-  xAxisOptions: XAxisOptions;
+  xAxisOptions: Required<XAxisOptions>;
   theme?: string;
 }
 
@@ -106,7 +106,7 @@ export function Chart({
     tallestXAxisLabel,
   } = useBarSizes({
     chartDimensions,
-    isSimple,
+    isSimple: isSimple || xAxisOptions.hide,
     isStacked,
     labelFormatter,
     seriesLength: series.length,
@@ -162,7 +162,7 @@ export function Chart({
         width={chartDimensions.width}
         xmlns={XMLNS}
       >
-        {isSimple ?? xAxisOptions.hide === true ? null : (
+        {isSimple || xAxisOptions.hide === true ? null : (
           <React.Fragment>
             <VerticalGridLines
               seriesAreaHeight={seriesAreaHeight}
