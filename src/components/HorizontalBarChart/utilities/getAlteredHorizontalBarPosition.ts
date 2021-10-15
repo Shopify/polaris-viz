@@ -1,3 +1,5 @@
+import type {Dimensions} from 'types';
+
 import {
   AlteredPositionProps,
   AlteredPositionReturn,
@@ -16,10 +18,10 @@ export function getAlteredHorizontalBarPosition(
 }
 
 function getNegativeOffset(props: AlteredPositionProps): AlteredPositionReturn {
-  const {currentX, currentY, tooltipDimensions} = props;
+  const {bandwidth, currentX, currentY, tooltipDimensions} = props;
 
   const flippedX = currentX * -1;
-  const yOffset = (props.bandwidth - tooltipDimensions.height) / 2;
+  const yOffset = (bandwidth - tooltipDimensions.height) / 2;
 
   if (flippedX - tooltipDimensions.width < 0) {
     return {x: flippedX, y: currentY - tooltipDimensions.height};
@@ -32,29 +34,57 @@ function getNegativeOffset(props: AlteredPositionProps): AlteredPositionReturn {
 }
 
 function getPositiveOffset(props: AlteredPositionProps): AlteredPositionReturn {
-  const {currentX, currentY, tooltipDimensions, chartDimensions} = props;
+  const {bandwidth, currentX, currentY, tooltipDimensions, chartDimensions} =
+    props;
 
-  const yOffset = (props.bandwidth - tooltipDimensions.height) / 2;
+  const yOffset = (bandwidth - tooltipDimensions.height) / 2;
 
-  if (
-    currentX + TOOLTIP_MARGIN + tooltipDimensions.width >
-    chartDimensions.width
-  ) {
-    return {
-      x: currentX - tooltipDimensions.width,
-      y: currentY - tooltipDimensions.height,
-    };
+  const isOutside = isOutsideBounds({
+    x: currentX,
+    y: currentY,
+    tooltipDimensions,
+    chartDimensions,
+  });
+
+  let x = currentX;
+  let y = currentY;
+
+  if (isOutside.right) {
+    x = currentX - tooltipDimensions.width;
+    y = currentY - tooltipDimensions.height;
   }
 
-  if (currentY + tooltipDimensions.height > chartDimensions.height) {
-    return {
-      x: currentX,
-      y: chartDimensions.height - tooltipDimensions.height + TOOLTIP_MARGIN,
-    };
+  if (isOutside.bottom) {
+    x = currentX;
+    y = chartDimensions.height - tooltipDimensions.height + TOOLTIP_MARGIN;
+  }
+
+  if (y < 0) {
+    y += bandwidth;
   }
 
   return {
-    x: currentX + TOOLTIP_MARGIN,
-    y: currentY + LABEL_HEIGHT + yOffset,
+    x: x + TOOLTIP_MARGIN,
+    y: y + LABEL_HEIGHT + yOffset,
+  };
+}
+
+function isOutsideBounds({
+  x,
+  y,
+  tooltipDimensions,
+  chartDimensions,
+}: {
+  x: number;
+  y: number;
+  tooltipDimensions: Dimensions;
+  chartDimensions: Dimensions;
+}) {
+  const right = x + TOOLTIP_MARGIN + tooltipDimensions.width;
+  const bottom = y + tooltipDimensions.height;
+
+  return {
+    right: right > chartDimensions.width,
+    bottom: bottom > chartDimensions.height,
   };
 }

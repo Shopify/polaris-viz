@@ -4,7 +4,8 @@ import {animated, useSpring} from '@react-spring/web';
 
 import {BARS_TRANSITION_CONFIG} from '../../../constants';
 import type {Data} from '../types';
-import {LABEL_HEIGHT, STACKED_BAR_GAP} from '../constants';
+import {GRADIENT_ID, LABEL_HEIGHT, STACKED_BAR_GAP} from '../constants';
+import {getBarId} from '../utilities';
 
 import {StackedBar} from './StackedBar';
 
@@ -51,11 +52,13 @@ export function StackedBars({
 
   return (
     <animated.g aria-label={ariaLabel} role="listitem" style={{transform}}>
-      {series.map(({rawValue}, seriesIndex) => {
+      {series.map(({rawValue, color}, seriesIndex) => {
         const x = xOffsets[seriesIndex] + STACKED_BAR_GAP * seriesIndex;
+        const id = getBarId(groupIndex, seriesIndex);
 
         return (
           <StackedBar
+            color={color ? id : `${GRADIENT_ID}${seriesIndex}`}
             groupIndex={groupIndex}
             height={barHeight}
             key={seriesIndex}

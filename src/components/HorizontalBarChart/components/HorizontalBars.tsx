@@ -13,6 +13,7 @@ import {
   SPACE_BETWEEN_SINGLE,
 } from '../constants';
 import {useTheme} from '../../../hooks';
+import {getBarId} from '../utilities';
 
 import {Bar, RoundedBorder} from './Bar';
 import {Label} from './Label';
@@ -54,9 +55,10 @@ export function HorizontalBars({
       aria-label={ariaLabel}
       role="listitem"
     >
-      {series.map(({rawValue}, seriesIndex) => {
+      {series.map(({rawValue, color}, seriesIndex) => {
         const isNegative = rawValue < 0;
         const label = labelFormatter(rawValue);
+        const id = getBarId(groupIndex, seriesIndex);
 
         const labelWidth = getTextWidth({
           text: `${label}`,
@@ -74,16 +76,13 @@ export function HorizontalBars({
           : -(width + leftLabelOffset);
         const x = isNegative ? negativeX : width + BAR_LABEL_OFFSET;
         const ariaHidden = seriesIndex !== 0;
+        const barColor = color ? id : `${GRADIENT_ID}${seriesIndex}`;
 
         return (
-          <React.Fragment key={`series-${groupIndex}-${seriesIndex}`}>
+          <React.Fragment key={id}>
             <Bar
               animationDelay={animationDelay}
-              color={`url(#${
-                isNegative
-                  ? NEGATIVE_GRADIENT_ID
-                  : `${GRADIENT_ID}${seriesIndex}`
-              })`}
+              color={`url(#${isNegative ? NEGATIVE_GRADIENT_ID : barColor})`}
               height={barHeight}
               index={groupIndex}
               isAnimated={isAnimated}
