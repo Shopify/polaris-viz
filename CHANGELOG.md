@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## [0.21.3] - 2021-10-15
+
 ### Fixed
 - Circular dependency in `<LineChart />`
 - Theme.line.strokeColor now gets applied to StackedAreaChart
