@@ -11,13 +11,13 @@ import {
   SPACE_BETWEEN_SERIES_AND_LABELS,
   SPACE_BETWEEN_SETS,
 } from '../constants';
-import type {XAxisOptions} from '../types';
+import type {LabelFormatter} from '../types';
 
 interface Props {
   chartDimensions: Dimensions;
   isSimple: boolean;
   isStacked: boolean;
-  labelFormatter: XAxisOptions['labelFormatter'];
+  labelFormatter: LabelFormatter;
   seriesLength: number;
   singleBarCount: number;
   ticks: number[];

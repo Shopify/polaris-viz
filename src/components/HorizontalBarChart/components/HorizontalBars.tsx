@@ -2,7 +2,7 @@ import React from 'react';
 import type {ScaleLinear} from 'd3-scale';
 
 import {FONT_SIZE} from '../../../constants';
-import type {Data, XAxisOptions} from '../types';
+import type {Data, LabelFormatter} from '../types';
 import {getTextWidth} from '../../../utilities';
 import {
   BAR_LABEL_OFFSET,
@@ -25,7 +25,7 @@ interface HorizontalBarProps {
   firstNonNegativeValue: number;
   groupIndex: number;
   isAnimated: boolean;
-  labelFormatter: XAxisOptions['labelFormatter'];
+  labelFormatter: LabelFormatter;
   series: Data[];
   isSimple: boolean;
   xScale: ScaleLinear<number, number>;

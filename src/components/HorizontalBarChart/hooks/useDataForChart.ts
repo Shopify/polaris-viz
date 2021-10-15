@@ -3,12 +3,12 @@ import {useMemo} from 'react';
 import {FONT_SIZE} from '../../../constants';
 import {getTextWidth} from '../../../utilities';
 import {BAR_LABEL_OFFSET, FONT_SIZE_PADDING} from '../constants';
-import type {Series, XAxisOptions} from '../types';
+import type {LabelFormatter, Series} from '../types';
 
 interface Props {
   series: Series[];
   isSimple: boolean;
-  labelFormatter: XAxisOptions['labelFormatter'];
+  labelFormatter: LabelFormatter;
 }
 
 export function useDataForChart({labelFormatter, series, isSimple}: Props) {

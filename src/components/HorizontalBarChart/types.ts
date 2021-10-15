@@ -1,7 +1,9 @@
 import type {Color} from '../../types';
 
+export type LabelFormatter = (value: string | number) => string;
+
 export interface XAxisOptions {
-  labelFormatter: (value: string | number) => string;
+  labelFormatter?: LabelFormatter;
   hide?: boolean;
 }
 
