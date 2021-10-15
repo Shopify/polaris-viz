@@ -20,6 +20,7 @@ interface TooltipWrapperProps {
   margin: Margin;
   parentRef: SVGSVGElement | null;
   focusElementDataType: DataType;
+  alwaysUpdatePosition?: boolean;
   bandwidth?: number;
   id?: string;
   onIndexChange?: (index: number | null) => void;
@@ -27,6 +28,7 @@ interface TooltipWrapperProps {
 
 export function TooltipWrapper(props: TooltipWrapperProps) {
   const {
+    alwaysUpdatePosition = false,
     bandwidth = 0,
     focusElementDataType,
     getPosition,
@@ -54,14 +56,17 @@ export function TooltipWrapper(props: TooltipWrapperProps) {
     (event: MouseEvent | TouchEvent) => {
       const newPosition = getPosition({event, eventType: 'mouse'});
 
-      if (activeIndexRef.current === newPosition.activeIndex) {
+      if (
+        !alwaysUpdatePosition &&
+        activeIndexRef.current === newPosition.activeIndex
+      ) {
         return;
       }
 
       setPosition(newPosition);
       onIndexChange?.(newPosition.activeIndex);
     },
-    [getPosition, onIndexChange],
+    [alwaysUpdatePosition, getPosition, onIndexChange],
   );
 
   const onMouseLeave = useCallback(() => {

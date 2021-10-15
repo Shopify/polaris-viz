@@ -76,6 +76,10 @@ export function getAlteredPosition(
   if (newPosition.horizontal === TooltipHorizontalOffset.Left) {
     const left = getLeftPosition(x, props);
     x = left.value;
+
+    if (left.wasOutsideBounds) {
+      newPosition.horizontal = TooltipHorizontalOffset.Right;
+    }
   }
 
   if (newPosition.horizontal === TooltipHorizontalOffset.Right) {

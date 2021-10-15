@@ -6,6 +6,7 @@
 - Circular dependency in `<LineChart />`
 - Theme.line.strokeColor now gets applied to StackedAreaChart
 - Theme.line.lineStyle and Theme.line.hasPoint now gets applied to Sparkline
+- Fixed issue with tooltips extended too far right when hovering last point.
 
 ## [0.21.2] - 2021-09-29
 
