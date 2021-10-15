@@ -406,6 +406,7 @@ export function Chart({
         </g>
       </svg>
       <TooltipWrapper
+        alwaysUpdatePosition
         chartDimensions={dimensions}
         focusElementDataType={DataType.Point}
         getMarkup={getTooltipMarkup}
