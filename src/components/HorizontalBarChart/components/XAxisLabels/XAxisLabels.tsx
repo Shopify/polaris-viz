@@ -1,11 +1,10 @@
 import React from 'react';
 import type {ScaleLinear} from 'd3-scale';
 
-import {MAX_X_AXIS_LINES, SPACE_BETWEEN_CHART_AND_AXIS} from '../../constants';
-import {FONT_SIZE, LINE_HEIGHT} from '../../../../constants';
+import {SPACE_BETWEEN_CHART_AND_AXIS} from '../../constants';
+import {TextAlignment} from '../../../../types';
+import {WrappedText} from '../../../WrappedText';
 import type {LabelFormatter} from '../../types';
-
-import styles from './XAxisLabels.scss';
 
 interface XAxisLabelsProps {
   bandwidth: number;
@@ -19,11 +18,11 @@ interface XAxisLabelsProps {
 
 function getTextAlign({isFirst, isLast}: {isFirst: boolean; isLast: boolean}) {
   if (isFirst) {
-    return 'left';
+    return TextAlignment.Left;
   } else if (isLast) {
-    return 'right';
+    return TextAlignment.Right;
   } else {
-    return 'center';
+    return TextAlignment.Center;
   }
 }
 
@@ -43,37 +42,24 @@ export const XAxisLabels = ({
     >
       {ticks.map((value, index) => {
         const label = labelFormatter(value);
-        const isFirstItem = index === 0;
-        const isLastItem = index === ticks.length - 1;
+        const isFirst = index === 0;
+        const isLast = index === ticks.length - 1;
         const textOffset = bandwidth / 2;
 
-        const width = isFirstItem || isLastItem ? bandwidth / 2 : bandwidth;
+        const width = isFirst || isLast ? bandwidth / 2 : bandwidth;
 
         return (
-          <foreignObject
-            transform={`translate(${
-              isFirstItem ? 0 : xScale(value) - textOffset
-            },0)`}
+          <WrappedText
+            color={color}
             height={tallestXAxisLabel}
-            width={width}
             key={index}
-          >
-            <div
-              className={styles.Text}
-              style={{
-                fontSize: `${FONT_SIZE}px`,
-                color,
-                textAlign: getTextAlign({
-                  isFirst: isFirstItem,
-                  isLast: isLastItem,
-                }),
-                maxHeight: LINE_HEIGHT * MAX_X_AXIS_LINES,
-                padding: isFirstItem || isLastItem ? 0 : '0 10px',
-              }}
-            >
-              {label}
-            </div>
-          </foreignObject>
+            text={label}
+            transform={`translate(${
+              isFirst ? 0 : xScale(value) - textOffset
+            },0)`}
+            width={width}
+            align={getTextAlign({isFirst, isLast})}
+          />
         );
       })}
     </g>

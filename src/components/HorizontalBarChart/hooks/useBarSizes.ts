@@ -1,11 +1,10 @@
 import {useMemo} from 'react';
 
 import {clamp, getTextHeight} from '../../../utilities';
-import {FONT_SIZE, LINE_HEIGHT} from '../../../constants';
+import {FONT_SIZE, LINE_HEIGHT, MAX_X_AXIS_LINES} from '../../../constants';
 import type {Dimensions} from '../../../types';
 import {
   LABEL_HEIGHT,
-  MAX_X_AXIS_LINES,
   MIN_BAR_HEIGHT,
   SPACE_BETWEEN_CHART_AND_AXIS,
   SPACE_BETWEEN_SETS,

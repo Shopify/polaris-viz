@@ -1,0 +1,1 @@
+export {WrappedText} from './WrappedText';

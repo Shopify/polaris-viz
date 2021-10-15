@@ -185,3 +185,9 @@ export enum DataType {
   BarGroup = 'BarGroup',
   Bar = 'Bar',
 }
+
+export enum TextAlignment {
+  Left,
+  Center,
+  Right,
+}

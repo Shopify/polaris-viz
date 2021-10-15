@@ -272,3 +272,4 @@ export const LOAD_ANIMATION_DURATION = 500;
 export const BAR_ANIMATION_HEIGHT_BUFFER = 20;
 export const DEFAULT_BORDER_RADIUS = 3;
 export const MIN_WIDTH_BORDER_RADIUS = 2;
+export const MAX_X_AXIS_LINES = 3;

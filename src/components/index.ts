@@ -33,3 +33,4 @@ export type {PolarisVizProviderProps} from './PolarisVizProvider';
 export {TooltipWrapper} from './TooltipWrapper';
 export {HorizontalBarChart} from './HorizontalBarChart';
 export type {HorizontalBarChartProps} from './HorizontalBarChart';
+export {WrappedText} from './WrappedText';
