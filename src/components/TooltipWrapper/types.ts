@@ -19,8 +19,8 @@ export interface TooltipPositionOffset {
 export interface TooltipPosition {
   x: number;
   y: number;
-  position: TooltipPositionOffset;
   activeIndex: number | null;
+  position?: TooltipPositionOffset;
 }
 
 export interface TooltipPositionParams {
