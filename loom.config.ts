@@ -16,7 +16,7 @@ export default createPackage((pkg) => {
     buildLibrary({
       jestEnvironment: 'jsdom',
       browserTargets: 'extends @shopify/browserslist-config',
-      nodeTargets: 'node 12.20.0',
+      nodeTargets: 'node 12.22.0',
       packageBuildOptions: {
         commonjs: true,
         esmodules: true,
