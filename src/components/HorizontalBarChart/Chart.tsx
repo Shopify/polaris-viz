@@ -208,7 +208,7 @@ export function Chart({
             />
             <XAxisLabels
               bandwidth={bandwidth}
-              color={selectedTheme.yAxis.labelColor}
+              color={selectedTheme.xAxis.labelColor}
               labelFormatter={labelFormatter}
               seriesAreaHeight={seriesAreaHeight}
               tallestXAxisLabel={tallestXAxisLabel}
@@ -247,7 +247,7 @@ export function Chart({
             >
               <GroupLabel
                 areAllAllNegative={areAllAllNegative}
-                color={selectedTheme.xAxis.labelColor}
+                color={selectedTheme.yAxis.labelColor}
                 label={name}
               />
 
