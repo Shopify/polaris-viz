@@ -37,8 +37,6 @@ function getPositiveOffset(props: AlteredPositionProps): AlteredPositionReturn {
   const {bandwidth, currentX, currentY, tooltipDimensions, chartDimensions} =
     props;
 
-  const yOffset = (bandwidth - tooltipDimensions.height) / 2;
-
   const isOutside = isOutsideBounds({
     x: currentX,
     y: currentY,
@@ -46,27 +44,40 @@ function getPositiveOffset(props: AlteredPositionProps): AlteredPositionReturn {
     chartDimensions,
   });
 
-  let x = currentX;
-  let y = currentY;
+  if (!isOutside.right && !isOutside.bottom) {
+    const yOffset = (bandwidth - tooltipDimensions.height) / 2;
+    return {
+      x: currentX + TOOLTIP_MARGIN,
+      y: currentY + LABEL_HEIGHT + yOffset,
+    };
+  }
 
   if (isOutside.right) {
-    x = currentX - tooltipDimensions.width;
-    y = currentY - tooltipDimensions.height;
+    const x = currentX - tooltipDimensions.width;
+    const y =
+      currentY - tooltipDimensions.height + LABEL_HEIGHT - TOOLTIP_MARGIN;
+
+    if (y < 0) {
+      return {
+        x,
+        y: bandwidth + LABEL_HEIGHT + TOOLTIP_MARGIN,
+      };
+    }
+
+    return {
+      x,
+      y,
+    };
   }
 
   if (isOutside.bottom) {
-    x = currentX;
-    y = chartDimensions.height - tooltipDimensions.height + TOOLTIP_MARGIN;
+    return {
+      x: currentX + TOOLTIP_MARGIN,
+      y: chartDimensions.height - tooltipDimensions.height - LABEL_HEIGHT,
+    };
   }
 
-  if (y < 0) {
-    y += bandwidth;
-  }
-
-  return {
-    x: x + TOOLTIP_MARGIN,
-    y: y + LABEL_HEIGHT + yOffset,
-  };
+  return {x: currentX, y: currentY};
 }
 
 function isOutsideBounds({

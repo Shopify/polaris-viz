@@ -11,12 +11,9 @@ import {eventPointNative} from '../../utilities';
 import {DataType, Dimensions} from '../../types';
 import {
   TOOLTIP_POSITION_DEFAULT_RETURN,
-  TooltipHorizontalOffset,
   TooltipPosition,
   TooltipPositionParams,
-  TooltipVerticalOffset,
   TooltipWrapper,
-  TOOLTIP_MARGIN,
 } from '../TooltipWrapper';
 
 import {getAlteredHorizontalBarPosition, getBarId} from './utilities';
@@ -31,11 +28,6 @@ import {
 import type {ColorOverrides, Series, XAxisOptions} from './types';
 import {useBarSizes, useDataForChart, useXScale} from './hooks';
 import styles from './Chart.scss';
-
-const TOOLTIP_POSITION = {
-  horizontal: TooltipHorizontalOffset.Right,
-  vertical: TooltipVerticalOffset.Above,
-};
 
 interface ChartProps {
   chartDimensions: Dimensions;
@@ -318,9 +310,8 @@ export function Chart({
       }, 0);
 
       return {
-        x: x + TOOLTIP_MARGIN,
+        x,
         y: groupHeight * index,
-        position: TOOLTIP_POSITION,
         activeIndex: index,
       };
     }
@@ -331,7 +322,6 @@ export function Chart({
     return {
       x: highestValue < 0 ? -x : x,
       y: groupHeight * index,
-      position: TOOLTIP_POSITION,
       activeIndex: index,
     };
   }
