@@ -85,11 +85,26 @@ export function Chart({
     return maxes;
   }, [series, areAllAllNegative]);
 
-  const {xScale, xScaleStacked, ticks} = useXScale({
+  const highestSumForStackedGroup = useMemo(() => {
+    if (!isStacked) {
+      return 0;
+    }
+    const numbers: number[] = [];
+
+    series.forEach(({data}) => {
+      const sum = data.reduce((prev, {rawValue}) => prev + rawValue, 0);
+      numbers.push(sum);
+    });
+
+    return Math.max(...numbers);
+  }, [series, isStacked]);
+
+  const {xScale, xScaleStacked, ticks, ticksStacked} = useXScale({
     allNumbers,
+    highestSumForStackedGroup,
     isStacked,
     maxWidth: chartDimensions.width - longestLabel,
-    seriesLength: series.length,
+    longestSeriesCount,
   });
 
   const firstNonNegativeValue = useMemo(() => {
@@ -116,7 +131,7 @@ export function Chart({
     labelFormatter,
     seriesLength: series.length,
     singleBarCount: longestSeriesCount,
-    ticks,
+    ticks: isStacked ? ticksStacked : ticks,
   });
 
   const getAriaLabel = useCallback(
@@ -188,8 +203,8 @@ export function Chart({
             <VerticalGridLines
               seriesAreaHeight={seriesAreaHeight}
               stroke={selectedTheme.grid.color}
-              ticks={ticks}
-              xScale={xScale}
+              ticks={isStacked ? ticksStacked : ticks}
+              xScale={isStacked ? xScaleStacked! : xScale}
             />
             <XAxisLabels
               bandwidth={bandwidth}
@@ -197,8 +212,8 @@ export function Chart({
               labelFormatter={labelFormatter}
               seriesAreaHeight={seriesAreaHeight}
               tallestXAxisLabel={tallestXAxisLabel}
-              ticks={ticks}
-              xScale={xScale}
+              ticks={isStacked ? ticksStacked : ticks}
+              xScale={isStacked ? xScaleStacked! : xScale}
             />
           </React.Fragment>
         )}

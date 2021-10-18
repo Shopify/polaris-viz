@@ -4,14 +4,16 @@ import {useMemo} from 'react';
 
 export function useXScale({
   allNumbers,
+  highestSumForStackedGroup,
   isStacked,
+  longestSeriesCount,
   maxWidth,
-  seriesLength,
 }: {
   allNumbers: number[];
+  highestSumForStackedGroup: number;
   isStacked: boolean;
+  longestSeriesCount: number;
   maxWidth: number;
-  seriesLength: number;
 }) {
   const xScale = useMemo(() => {
     return scaleLinear()
@@ -31,8 +33,16 @@ export function useXScale({
 
     return scaleLinear()
       .domain([0, ticks[ticks.length - 1]])
-      .range([0, maxWidth / seriesLength]);
-  }, [isStacked, maxWidth, seriesLength, ticks]);
+      .range([0, maxWidth / longestSeriesCount]);
+  }, [isStacked, maxWidth, longestSeriesCount, ticks]);
 
-  return {xScale, xScaleStacked, ticks};
+  const ticksStacked = useMemo(() => {
+    if (!isStacked) {
+      return [];
+    }
+
+    return scaleLinear().domain([0, highestSumForStackedGroup]).nice().ticks();
+  }, [highestSumForStackedGroup, isStacked]);
+
+  return {xScale, xScaleStacked, ticks, ticksStacked};
 }
