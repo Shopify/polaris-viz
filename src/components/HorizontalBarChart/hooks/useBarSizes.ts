@@ -60,7 +60,6 @@ export function useBarSizes({
 
   return useMemo(() => {
     const bottomPadding = isSimple ? 0 : PADDING_UNDER_LAST_GROUP;
-    const bandwidth = chartDimensions.width / ticks.length;
     // Push the container taller to line up last bar
     const simpleHeight = chartDimensions.height + SPACE_BETWEEN_SETS;
 
@@ -102,12 +101,12 @@ export function useBarSizes({
       totalChartHeight: chartHeight,
     };
   }, [
+    bandwidth,
     chartDimensions,
     isSimple,
     isStacked,
     seriesLength,
     singleBarCount,
     tallestXAxisLabel,
-    ticks,
   ]);
 }
