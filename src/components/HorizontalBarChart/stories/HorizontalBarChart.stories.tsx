@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import type {Story, Meta} from '@storybook/react';
 
 import {
@@ -7,6 +7,7 @@ import {
 } from '../HorizontalBarChart';
 
 import type {Series} from '../types';
+import {THEME_CONTROL_ARGS} from '../../../storybook';
 
 const LABELS = ['BCFM 2019', 'BCFM 2020', 'BCFM 2021'];
 
@@ -38,6 +39,7 @@ const SERIES = buildSeries([
   [48, 8, 50],
   [1, 5, 5],
 ]);
+
 const CONTAINER_HEIGHT = 500;
 
 const SINGLE_SERIES = buildSeries([3, 7, 4, 8, 4, 1, 4, 6]);
@@ -47,6 +49,45 @@ export default {
   component: HorizontalBarChart,
   parameters: {
     previewHeight: 'auto',
+    docs: {
+      description: {
+        component:
+          'Used to show comparison of different types, across categories or time. Bars can be horizontally stacked or placed one on top of the other. It is recommended that you use a legend whenever displaying multi-series data. <br /> <br /> This component inherits its height and width from its container.',
+      },
+    },
+    controls: {
+      sort: 'requiredFirst',
+      expanded: true,
+    },
+  },
+  argTypes: {
+    series: {
+      description:
+        'A collection of named data sets to be rendered in the chart. An optional color can be provided for each series, to overwrite the theme `seriesColors` defined in `PolarisVizProvider`. Required.',
+    },
+    isAnimated: {
+      description:
+        'Whether to animate the bars when the chart is initially rendered and its data is updated. Even if `isAnimated` is set to true, animations will not be displayed for users with reduced motion preferences.',
+    },
+    isSimple: {
+      description: `Determines what options the chart is rendered with. When \`true\` the chart is:
+          <br /><br />
+            - Rendered with no xAxis lines or labels.<br />
+            - The values for each series is rendered to the right of the series.<br />
+            - No Tooltips are rendered on mouse/touch-move`,
+    },
+    isStacked: {
+      description:
+        'Changes the grouping of the bars. If `true` the bar groups will stack vertically, otherwise they will render individual bars for each data point in each group.',
+    },
+    theme: THEME_CONTROL_ARGS,
+    xAxisOptions: {
+      description: 'An object used to configure the xAxis and its labels.',
+      defaultValue: {
+        labelFormatter: (value: string) => value,
+        hide: false,
+      },
+    },
   },
 } as Meta;
 
@@ -76,11 +117,9 @@ Default.args = {
   series: SERIES,
 };
 
-export const MultiSeriesAllNegative: Story<HorizontalBarChartProps> = Template.bind(
-  {},
-);
+export const AllNegative: Story<HorizontalBarChartProps> = Template.bind({});
 
-MultiSeriesAllNegative.args = {
+AllNegative.args = {
   series: buildSeries([
     [-3, -4, -7],
     [-7, -1, -1],
@@ -90,55 +129,6 @@ MultiSeriesAllNegative.args = {
     [-1, -5, -5],
   ]),
   isAnimated: false,
-};
-
-export const RandomSeriesAmounts: Story<HorizontalBarChartProps> = Template.bind(
-  {},
-);
-
-RandomSeriesAmounts.args = {
-  series: [
-    {name: 'One', data: [{rawValue: 5, label: 'Pickles'}]},
-    {
-      name: 'Two',
-      data: [
-        {rawValue: 5, label: 'Pickles'},
-        {rawValue: 3, label: 'Peppers'},
-      ],
-    },
-    {
-      name: 'Three',
-      data: [
-        {rawValue: 3, label: 'Pickles'},
-        {rawValue: 4, label: 'Peppers'},
-        {rawValue: 5, label: 'Bananas'},
-      ],
-    },
-  ],
-  isAnimated: false,
-};
-
-export const SingleBar: Story<HorizontalBarChartProps> = Template.bind({});
-
-SingleBar.args = {
-  series: buildSeries([13, 7, 10, 8, 47, 1]),
-  isAnimated: false,
-};
-
-export const SingleBarNegative: Story<HorizontalBarChartProps> = Template.bind(
-  {},
-);
-
-SingleBarNegative.args = {
-  series: buildSeries([13, -10, -30, 8, 47, 1]),
-};
-
-export const SingleBarAllNegative: Story<HorizontalBarChartProps> = Template.bind(
-  {},
-);
-
-SingleBarAllNegative.args = {
-  series: buildSeries([-13, -7, -10, -8, -47, -1]),
 };
 
 export const ColorOverrides: Story<HorizontalBarChartProps> = Template.bind({});
@@ -168,9 +158,11 @@ ColorOverrides.args = {
   ],
 };
 
-export const LongLabels: Story<HorizontalBarChartProps> = Template.bind({});
+export const FormattedLabels: Story<HorizontalBarChartProps> = Template.bind(
+  {},
+);
 
-LongLabels.args = {
+FormattedLabels.args = {
   series: SERIES,
   xAxisOptions: {
     labelFormatter: (value) =>
@@ -178,64 +170,27 @@ LongLabels.args = {
   },
 };
 
-export const SimpleHorizontalChart: Story<HorizontalBarChartProps> = SimpleTemplate.bind(
-  {},
-);
+export const Simple: Story<HorizontalBarChartProps> = SimpleTemplate.bind({});
 
-SimpleHorizontalChart.args = {
+Simple.args = {
   series: SINGLE_SERIES,
 };
 
-export const SimpleLongLabels: Story<HorizontalBarChartProps> = SimpleTemplate.bind(
-  {},
-);
+Simple.parameters = {
+  docs: {
+    description: {
+      story: `
+The Simple component is rendered without xAxis labels, grid lines & Tooltips on mouse/touch-move.
 
-SimpleLongLabels.args = {
-  series: buildSeries([
-    100000000,
-    200000000,
-    300000000,
-    400000000,
-    500000000,
-    600000000,
-  ]),
+To change the color of the values displayed to the right of each bar, you can override the \`xAxis.labelColor\` value in your current theme. For more information on overriding theme values, you can refer to the <a href="https://polaris-viz.shopify.io/?path=/docs/providers-polarisvizprovider--default">PolarisVizProvider documentation</a>.
+      `,
+    },
+  },
 };
 
-export const SimpleFormattedLabels: Story<HorizontalBarChartProps> = SimpleTemplate.bind(
-  {},
-);
+export const DefaultStacked: Story<HorizontalBarChartProps> = Template.bind({});
 
-SimpleFormattedLabels.args = {
-  series: buildSeries([
-    100000000,
-    200000000,
-    300000000,
-    400000000,
-    500000000,
-    600000000,
-  ]),
-  xAxisOptions: {labelFormatter: (value) => `${value} pickles`},
-};
-
-export const SimpleNegative: Story<HorizontalBarChartProps> = SimpleTemplate.bind(
-  {},
-);
-
-SimpleNegative.args = {
-  series: buildSeries([1300, -1000, -3000, 800, 4700, 100]),
-};
-
-export const SimpleAllNegative: Story<HorizontalBarChartProps> = SimpleTemplate.bind(
-  {},
-);
-
-SimpleAllNegative.args = {
-  series: buildSeries([-13, -7, -10, -8, -47, -1]),
-};
-
-export const Stacked: Story<HorizontalBarChartProps> = Template.bind({});
-
-Stacked.args = {
+DefaultStacked.args = {
   series: SERIES,
   isStacked: true,
 };
@@ -247,37 +202,4 @@ export const SimpleStacked: Story<HorizontalBarChartProps> = SimpleTemplate.bind
 SimpleStacked.args = {
   series: SERIES,
   isStacked: true,
-};
-
-export const Sorting = () => {
-  const [data, setData] = useState(SINGLE_SERIES);
-
-  const onClick = () => {
-    setData([...data].sort(() => (Math.random() > 0.5 ? 1 : -1)));
-  };
-
-  const onChangeClick = () => {
-    const newData = data.map((value) => {
-      return {
-        ...value,
-        data: value.data.map(({rawValue, label}) => {
-          return {
-            label,
-            rawValue: rawValue + Math.floor(Math.random() * 10),
-          };
-        }),
-      };
-    });
-    setData(newData);
-  };
-
-  return (
-    <>
-      <SimpleHorizontalChart series={[...data].splice(0, 5)} />
-      <button onClick={onClick} style={{marginRight: 10}}>
-        Shuffle Position
-      </button>
-      <button onClick={onChangeClick}>Change Data</button>
-    </>
-  );
 };
