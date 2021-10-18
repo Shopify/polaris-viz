@@ -1,9 +1,9 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleBand} from 'd3-scale';
-import {mountWithProvider} from 'test-utilities';
-import {mockDefaultTheme} from 'test-utilities/mount-with-provider';
 
+import {mountWithProvider} from '../../../test-utilities';
+import {mockDefaultTheme} from '../../../test-utilities/mount-with-provider';
 import {BarChartXAxis} from '../BarChartXAxis';
 
 jest.mock('d3-scale', () => ({

@@ -5,9 +5,6 @@
     "rootDir": ".",
     "outDir": "./build/ts",
     "emitDeclarationOnly": true,
-    "strict": true,
-    "importHelpers": false,
-    "noEmit": true,
     "incremental": true,
     "importsNotUsedAsValues": "error",
     "strictFunctionTypes": false

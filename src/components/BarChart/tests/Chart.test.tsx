@@ -1,9 +1,9 @@
 import React from 'react';
-import {YAxis, BarChartXAxis, Bar} from 'components';
-import {HorizontalGridLines} from 'components/HorizontalGridLines';
-import {mockDefaultTheme} from 'test-utilities/mount-with-provider';
-import {TooltipAnimatedContainer} from 'components/TooltipWrapper';
 
+import {YAxis, BarChartXAxis, Bar} from '../../../components';
+import {HorizontalGridLines} from '../../../components/HorizontalGridLines';
+import {mockDefaultTheme} from '../../../test-utilities/mount-with-provider';
+import {TooltipAnimatedContainer} from '../../../components/TooltipWrapper';
 import {mountWithProvider, triggerSVGMouseMove} from '../../../test-utilities';
 import {AnnotationLine} from '../components';
 import {Chart} from '../Chart';

@@ -1,16 +1,16 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
-import {mountWithProvider} from 'test-utilities';
-import {mockDefaultTheme} from 'test-utilities/mount-with-provider';
 
+import {mountWithProvider} from '../../../../../test-utilities';
+import {mockDefaultTheme} from '../../../../../test-utilities/mount-with-provider';
 import {StackedAreas} from '../StackedAreas';
 
 jest.mock('d3-scale', () => ({
   scaleLinear: jest.fn(() => jest.fn(() => 250)),
 }));
 
-jest.mock('utilities/unique-id', () => ({
+jest.mock('../../../../../utilities/unique-id', () => ({
   uniqueId: jest.fn(() => 'stackedAreas-1'),
 }));
 

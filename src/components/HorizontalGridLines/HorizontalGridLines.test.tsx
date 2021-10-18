@@ -1,7 +1,8 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
-import {mountWithProvider} from 'test-utilities';
-import {mockDefaultTheme} from 'test-utilities/mount-with-provider';
+
+import {mountWithProvider} from '../../test-utilities';
+import {mockDefaultTheme} from '../../test-utilities/mount-with-provider';
 
 import {HorizontalGridLines} from './HorizontalGridLines';
 

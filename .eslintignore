@@ -3,7 +3,3 @@ node_modules
 /scripts
 *.stories.*
 .loom
-
-index.esnext
-index.js
-index.mjs

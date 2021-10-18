@@ -1,11 +1,11 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
-import {YAxis, BarChartXAxis} from 'components';
-import {mountWithProvider, triggerSVGMouseMove} from 'test-utilities';
-import {HorizontalGridLines} from 'components/HorizontalGridLines';
-import {mockDefaultTheme} from 'test-utilities/mount-with-provider';
-import {TooltipAnimatedContainer} from 'components/TooltipWrapper';
 
+import {YAxis, BarChartXAxis} from '../../../components';
+import {mountWithProvider, triggerSVGMouseMove} from '../../../test-utilities';
+import {HorizontalGridLines} from '../../../components/HorizontalGridLines';
+import {mockDefaultTheme} from '../../../test-utilities/mount-with-provider';
+import {TooltipAnimatedContainer} from '../../../components/TooltipWrapper';
 import {Chart} from '../Chart';
 import {BarGroup, StackedBarGroup} from '../components';
 

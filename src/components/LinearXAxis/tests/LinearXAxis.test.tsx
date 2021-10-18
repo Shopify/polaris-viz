@@ -1,9 +1,9 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
-import {mountWithProvider} from 'test-utilities';
-import {mockDefaultTheme} from 'test-utilities/mount-with-provider';
 
+import {mountWithProvider} from '../../../test-utilities';
+import {mockDefaultTheme} from '../../../test-utilities/mount-with-provider';
 import {LinearXAxis} from '../LinearXAxis';
 
 jest.mock('d3-scale', () => ({

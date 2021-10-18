@@ -4,7 +4,3 @@ node_modules
 /package.json
 /.github
 .loom
-
-index.esnext
-index.js
-index.mjs
