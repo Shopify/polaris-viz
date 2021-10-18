@@ -5,7 +5,7 @@ import {scaleLinear} from 'd3-scale';
 import {Sparkline} from './Sparkline';
 import {Series} from './components';
 
-jest.mock('utilities/unique-id', () => ({
+jest.mock('../../utilities/unique-id', () => ({
   uniqueId: jest.fn(() => 'stackedAreas-1'),
 }));
 

@@ -59,7 +59,7 @@ const mockProps = {
   } as any,
 };
 
-jest.mock('utilities/unique-id', () => ({
+jest.mock('../../../../../utilities/unique-id', () => ({
   uniqueId: jest.fn(() => 'sparkline-1'),
 }));
 

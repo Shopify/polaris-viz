@@ -9,8 +9,7 @@
     "access": "public"
   },
   "sideEffects": [
-    "**/*.css",
-    "**/configure.{js,mjs,esnext,ts}"
+    "**/*.css"
   ],
   "main": "build/cjs/index.js",
   "module": "build/esm/index.js",
@@ -74,15 +73,6 @@
       ]
     }
   },
-  "browserslist": [
-    "last 3 chrome versions",
-    "last 3 chromeandroid versions",
-    "last 3 firefox versions",
-    "last 3 opera versions",
-    "last 2 edge versions",
-    "safari >= 10",
-    "ios >= 9"
-  ],
   "devDependencies": {
     "@juggle/resize-observer": "^3.3.1",
     "@rollup/plugin-replace": "^3.0.0",

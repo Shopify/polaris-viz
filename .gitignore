@@ -3,5 +3,4 @@ node_modules
 /build
 /sandbox
 .DS_Store
-tsconfig.tsbuildinfo
 .loom

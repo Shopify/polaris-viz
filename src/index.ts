@@ -1,5 +1,3 @@
-import './configure';
-
 export {
   Sparkline,
   Sparkbar,

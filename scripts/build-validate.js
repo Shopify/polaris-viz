@@ -11,7 +11,6 @@ const packageJSON = require('../package.json');
 validateStandardBuild();
 validateEsNextBuild();
 validateAncillaryOutput();
-validateVersionReplacement();
 
 function validateStandardBuild() {
   // Standard build
@@ -68,35 +67,4 @@ function validateEsNextBuild() {
 
 function validateAncillaryOutput() {
   assert.ok(fs.existsSync('./build/ts/src/index.d.ts'));
-}
-
-function validateVersionReplacement() {
-  const files = glob.sync('./build/**/*.{js,mjs,esnext,css,scss}');
-
-  assert.notStrictEqual(files.length, 0);
-
-  const fileBuckets = {
-    includesTemplateString: [],
-    includesVersion: [],
-  };
-
-  files.forEach((file) => {
-    const content = fs.readFileSync(file, 'utf-8');
-
-    if (content.includes('POLARIS_VIZ_VERSION')) {
-      fileBuckets.includesTemplateString.push(file);
-    }
-
-    if (content.includes(packageJSON.version)) {
-      fileBuckets.includesVersion.push(file);
-    }
-  });
-
-  assert.strictEqual(fileBuckets.includesTemplateString.length, 0);
-
-  assert.deepStrictEqual(fileBuckets.includesVersion, [
-    './build/cjs/configure.js',
-    './build/esm/configure.js',
-    './build/esnext/configure.esnext',
-  ]);
 }

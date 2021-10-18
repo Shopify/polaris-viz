@@ -1,12 +1,15 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
-import {Crosshair, LinearXAxis, VisuallyHiddenRows, Point} from 'components';
 import {line} from 'd3-shape';
-import {mountWithProvider, triggerSVGMouseMove} from 'test-utilities';
-import {HorizontalGridLines} from 'components/HorizontalGridLines';
-import {mockDefaultTheme} from 'test-utilities/mount-with-provider';
-import {TooltipAnimatedContainer} from 'components/TooltipWrapper';
 
+import {Crosshair} from '../../../components/Crosshair';
+import {LinearXAxis} from '../../../components/LinearXAxis';
+import {VisuallyHiddenRows} from '../../../components/VisuallyHiddenRows';
+import {Point} from '../../../components/Point';
+import {mountWithProvider, triggerSVGMouseMove} from '../../../test-utilities';
+import {HorizontalGridLines} from '../../../components/HorizontalGridLines';
+import {mockDefaultTheme} from '../../../test-utilities/mount-with-provider';
+import {TooltipAnimatedContainer} from '../../../components/TooltipWrapper';
 import {LinearGradient} from '../../LinearGradient';
 import {Chart} from '../Chart';
 import type {Series} from '../types';
