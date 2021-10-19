@@ -40,6 +40,14 @@ export enum LineChartMargin {
 }
 
 export const BARS_TRANSITION_CONFIG = {mass: 1, tension: 150, friction: 16};
+
+export const BARS_SORT_TRANSITION_CONFIG = {
+  mass: 1,
+  tension: 150,
+  friction: 20,
+  restVelocity: 200,
+};
+
 export const LINES_LOAD_ANIMATION_CONFIG = {
   mass: 1,
   tension: 140,
