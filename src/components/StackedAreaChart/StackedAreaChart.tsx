@@ -21,6 +21,7 @@ export interface StackedAreaChartProps {
     labels: string[];
     formatLabel?: StringLabelFormatter;
     hide?: boolean;
+    wrapLabels?: boolean;
   };
   yAxisOptions?: {
     formatLabel?: NumberLabelFormatter;
@@ -155,7 +156,7 @@ export function StackedAreaChart({
       >
         {chartDimensions == null ? null : (
           <Chart
-            xAxisLabels={xAxisOptions.labels}
+            xAxisOptions={xAxisOptions}
             hideXAxis={xAxisOptions.hide ?? selectedTheme.xAxis.hide}
             series={series}
             formatXAxisLabel={xFormatter}

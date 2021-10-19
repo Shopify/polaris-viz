@@ -66,6 +66,7 @@ export interface XAxisOptions {
   labelFormatter?: StringLabelFormatter;
   useMinimalLabels?: boolean;
   hide?: boolean;
+  wrapLabels?: boolean;
 }
 export interface YAxisOptions {
   labelFormatter?: NumberLabelFormatter;

@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### Fixed
+- Various xAxis label bugs that caused labels to truncate too early
+
+### Added 
+- Charts with `xAxisOptions` have the option to disable text wrapping of xAxis labels
+
 ## [0.21.3] - 2021-10-15
 
 ### Fixed

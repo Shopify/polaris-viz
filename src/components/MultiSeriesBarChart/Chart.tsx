@@ -121,6 +121,7 @@ export function Chart({
         width: chartDimensions.width - selectedTheme.grid.horizontalMargin * 2,
         innerMargin: BarMargin[selectedTheme.bar.innerMargin],
         outerMargin: BarMargin[selectedTheme.bar.outerMargin],
+        wrapLabels: xAxisOptions.wrapLabels ?? true,
       }),
     [
       hideXAxis,
@@ -131,6 +132,7 @@ export function Chart({
       selectedTheme.grid.horizontalMargin,
       selectedTheme.bar.innerMargin,
       selectedTheme.bar.outerMargin,
+      xAxisOptions,
     ],
   );
 

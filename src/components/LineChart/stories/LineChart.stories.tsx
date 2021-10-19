@@ -276,3 +276,16 @@ SeriesColorsUpToFourteen.args = {
   },
   renderTooltipContent,
 };
+
+export const NoLabelWrapping: Story<LineChartProps> = Template.bind({});
+
+NoLabelWrapping.args = {
+  series,
+  xAxisOptions: {
+    xAxisLabels,
+    wrapLabels: false,
+    labelFormatter: formatXAxisLabel,
+  },
+  yAxisOptions: {labelFormatter: formatYAxisLabel},
+  renderTooltipContent,
+};

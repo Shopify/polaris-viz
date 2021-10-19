@@ -33,7 +33,7 @@ function getTextAlign({
   needsDiagonalLabels: boolean;
   useMiniminalLabels: boolean;
 }) {
-  if (isFirstLabel && useMiniminalLabels) {
+  if (isFirstLabel && useMiniminalLabels && !needsDiagonalLabels) {
     return 'left';
   } else if ((isLastLabel && useMiniminalLabels) || needsDiagonalLabels) {
     return 'right';

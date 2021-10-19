@@ -125,6 +125,7 @@ export function MultiSeriesBarChart({
   const xAxisOptionsWithDefaults: XAxisOptions = {
     labelFormatter: (value: string) => value,
     labels: [],
+    wrapLabels: true,
     ...xAxisOptions,
   };
 

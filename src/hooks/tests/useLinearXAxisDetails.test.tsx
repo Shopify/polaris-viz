@@ -1,6 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
+import {LABEL_ELLIPSIS_LENGTH} from '../../constants';
 import {useLinearXAxisDetails, ChartDetails} from '../useLinearXAxisDetails';
 
 const MOCK_DIAGONAL_HEIGHT = 50;
@@ -49,6 +50,7 @@ describe('useLinearXAxisDetails', () => {
       'A really really long label A really really long label',
       'Another really really long label',
     ],
+    wrapLabels: true,
   };
 
   describe('needsDiagonalLabels', () => {
@@ -111,7 +113,7 @@ describe('useLinearXAxisDetails', () => {
         />,
       );
       expect(actual).toContainReactText(
-        MOCK_ANGLED_LABEL_MAX_LENGTH.toString(),
+        (MOCK_ANGLED_LABEL_MAX_LENGTH + LABEL_ELLIPSIS_LENGTH).toString(),
       );
     });
   });

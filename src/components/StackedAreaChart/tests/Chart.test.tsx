@@ -66,7 +66,7 @@ describe('<Chart />', () => {
         color: 'teal',
       },
     ],
-    xAxisLabels: ['Day 1', 'Day 2'],
+    xAxisOptions: {labels: ['Day 1', 'Day 2']},
     hideXAxis: false,
     dimensions: {width: 500, height: 250},
     isAnimated: true,
@@ -88,7 +88,7 @@ describe('<Chart />', () => {
       drawableHeight: 218,
       xAxisDetails: {
         maxXLabelHeight: 0,
-        maxDiagonalLabelLength: 0,
+        maxDiagonalLabelLength: 3,
         needsDiagonalLabels: false,
         ticks: [0, 1, 2, 3, 4, 5, 6],
         horizontalLabelWidth: 45.82857142857142,
@@ -214,7 +214,7 @@ describe('<Chart />', () => {
 
     expect(chart).toContainReactComponent(VisuallyHiddenRows, {
       series: mockProps.series,
-      xAxisLabels: mockProps.xAxisLabels,
+      xAxisLabels: mockProps.xAxisOptions.labels,
       formatYAxisLabel: mockProps.formatYAxisLabel,
     });
   });

@@ -34,6 +34,7 @@ const xAxisOptions = {
   labelColor: 'red',
   useMinimalLabels: false,
   hide: false,
+  wrapLabels: true,
 };
 
 const yAxisOptions = {
