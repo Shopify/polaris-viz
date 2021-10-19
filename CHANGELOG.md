@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Fixed
+- Apply yAxis formatter to default tooltip on `<LineChart />`
+
 ## [0.21.3] - 2021-10-15
 
 ### Fixed
