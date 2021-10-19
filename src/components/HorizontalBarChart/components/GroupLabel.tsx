@@ -1,17 +1,19 @@
 import React from 'react';
 
-import {FONT_SIZE, SPACING} from '../../../constants';
+import {useTheme} from '../../../hooks';
+import {FONT_SIZE} from '../../../constants';
 import {getTextWidth} from '../../../utilities';
 import {LABEL_HEIGHT} from '../constants';
 
 interface GroupLabelProps {
   areAllAllNegative: boolean;
-  color: string;
   label: string;
+  theme?: string;
 }
 
-export function GroupLabel({areAllAllNegative, color, label}: GroupLabelProps) {
+export function GroupLabel({areAllAllNegative, label, theme}: GroupLabelProps) {
   const labelWidth = getTextWidth({text: label, fontSize: FONT_SIZE});
+  const selectedTheme = useTheme(theme);
 
   return (
     <foreignObject
@@ -22,9 +24,11 @@ export function GroupLabel({areAllAllNegative, color, label}: GroupLabelProps) {
     >
       <div
         style={{
+          background: selectedTheme.chartContainer.backgroundColor,
           fontSize: `${FONT_SIZE}px`,
-          color,
-          lineHeight: `${SPACING}px`,
+          color: selectedTheme.yAxis.labelColor,
+          height: LABEL_HEIGHT,
+          width: labelWidth + LABEL_HEIGHT,
         }}
       >
         {label}

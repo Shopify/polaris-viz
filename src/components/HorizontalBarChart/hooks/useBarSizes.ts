@@ -7,9 +7,9 @@ import {
   LABEL_HEIGHT,
   MAX_X_AXIS_LINES,
   MIN_BAR_HEIGHT,
-  PADDING_UNDER_LAST_GROUP,
-  SPACE_BETWEEN_SERIES_AND_LABELS,
+  SPACE_BETWEEN_CHART_AND_AXIS,
   SPACE_BETWEEN_SETS,
+  SPACE_BETWEEN_SINGLE,
 } from '../constants';
 import type {LabelFormatter} from '../types';
 
@@ -59,23 +59,21 @@ export function useBarSizes({
   }, [ticks, labelFormatter, bandwidth]);
 
   return useMemo(() => {
-    const bottomPadding = isSimple ? 0 : PADDING_UNDER_LAST_GROUP;
+    const spaceBetweenXAxis = isSimple ? 0 : SPACE_BETWEEN_CHART_AND_AXIS;
     // Push the container taller to line up last bar
     const simpleHeight = chartDimensions.height + SPACE_BETWEEN_SETS;
 
     const containerHeight = isSimple ? simpleHeight : chartDimensions.height;
+    const xAxisHeight = tallestXAxisLabel + spaceBetweenXAxis;
+    const chartHeight = containerHeight - xAxisHeight;
 
-    const groupHeight =
-      (containerHeight - tallestXAxisLabel - bottomPadding) / seriesLength;
-    const chartHeight =
-      groupHeight * seriesLength + tallestXAxisLabel + bottomPadding;
-    const seriesAreaHeight =
-      chartHeight -
-      bottomPadding -
-      SPACE_BETWEEN_SERIES_AND_LABELS -
-      tallestXAxisLabel;
+    const groupHeight = chartHeight / seriesLength;
 
-    const groupBarsAreaHeight = groupHeight - LABEL_HEIGHT - SPACE_BETWEEN_SETS;
+    const groupBarsAreaHeight =
+      groupHeight -
+      LABEL_HEIGHT -
+      (singleBarCount - 1) * SPACE_BETWEEN_SINGLE -
+      SPACE_BETWEEN_SETS;
 
     const barHeight = clamp({
       amount: groupBarsAreaHeight / (isStacked ? 1 : singleBarCount),
@@ -96,9 +94,7 @@ export function useBarSizes({
       chartHeight,
       groupBarsAreaHeight,
       groupHeight,
-      seriesAreaHeight,
       tallestXAxisLabel,
-      totalChartHeight: chartHeight,
     };
   }, [
     bandwidth,

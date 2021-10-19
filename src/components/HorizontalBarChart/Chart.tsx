@@ -122,7 +122,6 @@ export function Chart({
     chartHeight,
     groupBarsAreaHeight,
     groupHeight,
-    seriesAreaHeight,
     tallestXAxisLabel,
   } = useBarSizes({
     chartDimensions,
@@ -187,12 +186,12 @@ export function Chart({
       className={styles.ChartContainer}
       style={{
         width: chartDimensions.width,
-        height: chartHeight,
+        height: chartDimensions.height,
       }}
     >
       <svg
         className={styles.SVG}
-        height={chartHeight}
+        height={chartDimensions.height}
         ref={setSvgRef}
         role="list"
         width={chartDimensions.width}
@@ -201,16 +200,16 @@ export function Chart({
         {isSimple || xAxisOptions.hide === true ? null : (
           <React.Fragment>
             <VerticalGridLines
-              seriesAreaHeight={seriesAreaHeight}
+              chartHeight={chartHeight}
               stroke={selectedTheme.grid.color}
               ticks={isStacked ? ticksStacked : ticks}
               xScale={isStacked ? xScaleStacked! : xScale}
             />
             <XAxisLabels
               bandwidth={bandwidth}
+              chartHeight={chartHeight}
               color={selectedTheme.xAxis.labelColor}
               labelFormatter={labelFormatter}
-              seriesAreaHeight={seriesAreaHeight}
               tallestXAxisLabel={tallestXAxisLabel}
               ticks={isStacked ? ticksStacked : ticks}
               xScale={isStacked ? xScaleStacked! : xScale}
@@ -247,8 +246,8 @@ export function Chart({
             >
               <GroupLabel
                 areAllAllNegative={areAllAllNegative}
-                color={selectedTheme.yAxis.labelColor}
                 label={name}
+                theme={theme}
               />
 
               {isStacked && xScaleStacked ? (
