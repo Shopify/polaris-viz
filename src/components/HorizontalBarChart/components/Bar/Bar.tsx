@@ -7,7 +7,7 @@ import {BARS_TRANSITION_CONFIG} from '../../../../constants';
 
 import styles from './Bar.scss';
 
-interface BarProps {
+export interface BarProps {
   color: string;
   height: number;
   tabIndex: number;

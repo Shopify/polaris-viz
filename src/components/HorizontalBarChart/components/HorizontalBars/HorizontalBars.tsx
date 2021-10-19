@@ -17,7 +17,7 @@ import {Bar} from '../Bar';
 import {Label} from '../Label';
 import {getGradientDefId} from '../GradientDefs';
 
-interface HorizontalBarProps {
+export interface HorizontalBarsProps {
   ariaLabel: string;
   barHeight: number;
   groupIndex: number;
@@ -47,7 +47,7 @@ export function HorizontalBars({
   theme,
   xScale,
   zeroPosition,
-}: HorizontalBarProps) {
+}: HorizontalBarsProps) {
   const selectedTheme = useTheme(theme);
 
   return (
