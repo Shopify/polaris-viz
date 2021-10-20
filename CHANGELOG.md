@@ -1,6 +1,11 @@
 # Changelog
 
 ## Unreleased
+### Added
+- Overflow style to `<StackedAreaChart />`
+
+### Fixed
+-`<StackedAreaChart />` stroke is cut off if it reaches the top of the chart
 
 ## [0.21.3] - 2021-10-15
 

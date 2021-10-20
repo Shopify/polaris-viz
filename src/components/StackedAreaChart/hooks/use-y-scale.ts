@@ -2,7 +2,7 @@ import {useMemo} from 'react';
 import {scaleLinear} from 'd3-scale';
 import type {Series} from 'd3-shape';
 
-import {getTextWidth} from '../../../utilities';
+import {getTextWidth, shouldRoundScaleUp} from '../../../utilities';
 import {MIN_Y_LABEL_SPACE} from '../constants';
 import {DEFAULT_MAX_Y} from '../../../constants';
 import type {NumberLabelFormatter} from '../../../types';
@@ -56,6 +56,14 @@ export function useYScale({
       .range([drawableHeight, 0])
       .domain([Math.min(0, minY), Math.max(0, maxY)])
       .nice(maxTicks);
+
+    if (shouldRoundScaleUp({yScale, maxValue: maxY, maxTicks})) {
+      yScale.nice(maxTicks);
+    } else {
+      const roundedDownMin = yScale.copy().nice(maxTicks).ticks(maxTicks)[0];
+
+      yScale.domain([Math.min(roundedDownMin, minY), Math.max(0, maxY)]);
+    }
 
     const ticks = yScale.ticks(maxTicks).map((value) => ({
       value,
