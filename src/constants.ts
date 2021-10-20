@@ -270,3 +270,4 @@ export const XMLNS = 'http://www.w3.org/2000/svg';
 
 export const LOAD_ANIMATION_DURATION = 500;
 export const BAR_ANIMATION_HEIGHT_BUFFER = 20;
+export const DEFAULT_BORDER_RADIUS = 3;

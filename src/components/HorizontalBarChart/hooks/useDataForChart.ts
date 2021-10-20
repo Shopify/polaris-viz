@@ -42,7 +42,7 @@ export function useDataForChart({labelFormatter, series, isSimple}: Props) {
   }, [allNumbers, labelFormatter, isSimple]);
 
   const areAllAllNegative = useMemo(() => {
-    return !allNumbers.some((num) => num > 0);
+    return !allNumbers.some((num) => num >= 0);
   }, [allNumbers]);
 
   return {allNumbers, longestLabel, areAllAllNegative};

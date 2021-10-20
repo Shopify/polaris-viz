@@ -32,7 +32,7 @@ function buildSeries(items: number[] | number[][]): Series[] {
 
 const SERIES = buildSeries([
   [3, 4, 7],
-  [7, 1, 1],
+  [0, 0, 0],
   [4, 5, 6],
   [8, 15, 12],
   [48, 8, 50],

@@ -2,7 +2,10 @@ import React, {useCallback} from 'react';
 import {animated, to, useSpring} from '@react-spring/web';
 
 import {DataType} from '../../../../types';
-import {BARS_TRANSITION_CONFIG} from '../../../../constants';
+import {
+  BARS_TRANSITION_CONFIG,
+  DEFAULT_BORDER_RADIUS,
+} from '../../../../constants';
 import {clamp} from '../../../../utilities';
 
 import styles from './Bar.scss';
@@ -25,16 +28,6 @@ interface Borders {
   [RoundedBorder.Left]: RoundedCorners;
 }
 
-const DEFAULT_RADIUS = 3;
-
-const BORDERS: Borders = {
-  [RoundedBorder.None]: [0, 0, 0, 0],
-  [RoundedBorder.Top]: [DEFAULT_RADIUS, DEFAULT_RADIUS, 0, 0],
-  [RoundedBorder.Right]: [0, DEFAULT_RADIUS, DEFAULT_RADIUS, 0],
-  [RoundedBorder.Bottom]: [0, 0, DEFAULT_RADIUS, DEFAULT_RADIUS],
-  [RoundedBorder.Left]: [DEFAULT_RADIUS, 0, 0, DEFAULT_RADIUS],
-};
-
 interface BarProps {
   color: string;
   height: number;
@@ -44,6 +37,7 @@ interface BarProps {
   y: number;
   animationDelay?: number;
   ariaLabel?: string;
+  borderRadius?: number;
   index?: number;
   isAnimated?: boolean;
   role?: string;
@@ -55,9 +49,25 @@ function keepValuePositive(amount: number): number {
   return clamp({amount, min: 0, max: Infinity});
 }
 
+function getBorderRadius(
+  roundedCorner: RoundedBorder,
+  radius: number,
+): RoundedCorners {
+  const borders: Borders = {
+    [RoundedBorder.None]: [0, 0, 0, 0],
+    [RoundedBorder.Top]: [radius, radius, 0, 0],
+    [RoundedBorder.Right]: [0, radius, radius, 0],
+    [RoundedBorder.Bottom]: [0, 0, radius, radius],
+    [RoundedBorder.Left]: [radius, 0, 0, radius],
+  };
+
+  return borders[roundedCorner];
+}
+
 export const Bar = React.memo(function Bar({
   animationDelay = 0,
   ariaLabel,
+  borderRadius = DEFAULT_BORDER_RADIUS,
   color,
   height,
   index,
@@ -76,8 +86,10 @@ export const Bar = React.memo(function Bar({
         return '';
       }
 
-      const [topLeft, topRight, bottomRight, bottomLeft] =
-        BORDERS[roundedBorder];
+      const [topLeft, topRight, bottomRight, bottomLeft] = getBorderRadius(
+        roundedBorder,
+        borderRadius,
+      );
 
       const top = topLeft + topRight;
       const right = topRight + bottomRight;
@@ -97,7 +109,7 @@ export const Bar = React.memo(function Bar({
       Z
     `;
     },
-    [roundedBorder],
+    [borderRadius, roundedBorder],
   );
 
   const spring = useSpring<{height: number; width: number}>({

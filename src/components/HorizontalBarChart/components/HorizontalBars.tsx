@@ -1,7 +1,7 @@
 import React from 'react';
 import type {ScaleLinear} from 'd3-scale';
 
-import {FONT_SIZE} from '../../../constants';
+import {FONT_SIZE, MIN_BAR_HEIGHT} from '../../../constants';
 import type {Data, LabelFormatter} from '../types';
 import {getTextWidth} from '../../../utilities';
 import {
@@ -16,6 +16,8 @@ import {getBarId} from '../utilities';
 import {Bar, RoundedBorder} from './Bar';
 import {Label} from './Label';
 import {getGradientDefId} from './GradientDefs';
+
+const MIN_WIDTH_BORDER_RADIUS = 2;
 
 interface HorizontalBarProps {
   areAllAllNegative: boolean;
@@ -57,6 +59,10 @@ export function HorizontalBars({
       role="listitem"
     >
       {series.map(({rawValue, color}, seriesIndex) => {
+        const needsMinWidth = selectedTheme.bar.zeroAsMinHeight
+          ? rawValue < MIN_BAR_HEIGHT
+          : rawValue < MIN_BAR_HEIGHT && rawValue !== 0;
+
         const isNegative = rawValue < 0;
         const label = labelFormatter(rawValue);
         const id = getBarId(groupIndex, seriesIndex);
@@ -83,6 +89,7 @@ export function HorizontalBars({
           <React.Fragment key={`series-${barColor}-${name}`}>
             <Bar
               animationDelay={animationDelay}
+              borderRadius={needsMinWidth ? MIN_WIDTH_BORDER_RADIUS : undefined}
               color={`url(#${barColor})`}
               height={barHeight}
               index={groupIndex}
