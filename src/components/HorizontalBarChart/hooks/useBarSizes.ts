@@ -64,7 +64,7 @@ export function useBarSizes({
     const simpleHeight = chartDimensions.height + SPACE_BETWEEN_SETS;
 
     const containerHeight = isSimple ? simpleHeight : chartDimensions.height;
-    const xAxisHeight = tallestXAxisLabel + spaceBetweenXAxis;
+    const xAxisHeight = isSimple ? 0 : tallestXAxisLabel + spaceBetweenXAxis;
     const chartHeight = containerHeight - xAxisHeight;
 
     const groupHeight = chartHeight / seriesLength;
