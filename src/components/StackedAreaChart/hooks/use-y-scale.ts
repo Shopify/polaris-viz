@@ -3,8 +3,7 @@ import {scaleLinear} from 'd3-scale';
 import type {Series} from 'd3-shape';
 
 import {getTextWidth, shouldRoundScaleUp} from '../../../utilities';
-import {MIN_Y_LABEL_SPACE} from '../constants';
-import {DEFAULT_MAX_Y} from '../../../constants';
+import {MIN_Y_LABEL_SPACE, DEFAULT_MAX_Y} from '../../../constants';
 import type {NumberLabelFormatter} from '../../../types';
 
 export function useYScale({

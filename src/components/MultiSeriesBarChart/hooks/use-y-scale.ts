@@ -3,7 +3,7 @@ import {scaleLinear} from 'd3-scale';
 
 import {shouldRoundScaleUp} from '../../../utilities';
 import type {Series, StackSeries} from '../types';
-import {MIN_Y_LABEL_SPACE} from '../constants';
+import {MIN_Y_LABEL_SPACE} from '../../../constants';
 import {getMinMax} from '../utilities';
 import type {NumberLabelFormatter} from '../../../types';
 

@@ -59,7 +59,7 @@ describe('useYScale', () => {
 
     mount(<TestComponent />);
 
-    expect(ticksSpy).toHaveBeenCalledWith(6);
+    expect(ticksSpy).toHaveBeenCalledWith(7);
   });
 
   it('creates a y scale with a domain corresponding to the minimum and maximum values in the data set', () => {

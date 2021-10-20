@@ -4,7 +4,7 @@ import {maxIndex} from 'd3-array';
 
 import {getTextWidth, shouldRoundScaleUp} from '../../../utilities';
 import {yAxisMinMax} from '../utilities';
-import {MIN_Y_LABEL_SPACE} from '../constants';
+import {MIN_Y_LABEL_SPACE} from '../../../constants';
 import type {Series} from '../types';
 import type {NumberLabelFormatter} from '../../../types';
 
