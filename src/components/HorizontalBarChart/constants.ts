@@ -1,4 +1,4 @@
-export const LABEL_HEIGHT = 24;
+export const LABEL_HEIGHT = 20;
 export const SPACE_BETWEEN_SETS = 16;
 export const SPACE_BETWEEN_SINGLE = 2;
 export const BAR_LABEL_OFFSET = 10;
@@ -9,5 +9,4 @@ export const FONT_SIZE_PADDING = 1;
 export const STACKED_BAR_GAP = 2;
 export const MIN_BAR_HEIGHT = 6;
 export const MAX_X_AXIS_LINES = 3;
-export const PADDING_UNDER_LAST_GROUP = 10;
-export const SPACE_BETWEEN_SERIES_AND_LABELS = 12;
+export const SPACE_BETWEEN_CHART_AND_AXIS = 10;
