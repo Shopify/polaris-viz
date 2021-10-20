@@ -77,12 +77,6 @@ const NEUTRAL_SINGLE_GRADIENT = [
   {offset: 100, color: variables.colorBlue70},
 ];
 
-export const NEGATIVE_SINGLE_GRADIENT = [
-  {offset: 0, color: '#3AA4F6'},
-  {offset: 50, color: '#986BFF'},
-  {offset: 100, color: '#EC6E6E'},
-];
-
 export const DEFAULT_THEME: Theme = {
   seriesColors: {
     single: NEUTRAL_SINGLE_GRADIENT,

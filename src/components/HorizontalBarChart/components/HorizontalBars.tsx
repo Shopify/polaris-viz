@@ -8,7 +8,6 @@ import {
   BAR_LABEL_OFFSET,
   FONT_SIZE_PADDING,
   LABEL_HEIGHT,
-  NEGATIVE_GRADIENT_ID,
   SPACE_BETWEEN_SINGLE,
 } from '../constants';
 import {useTheme} from '../../../hooks';
@@ -84,7 +83,7 @@ export function HorizontalBars({
           <React.Fragment key={`series-${barColor}-${name}`}>
             <Bar
               animationDelay={animationDelay}
-              color={`url(#${isNegative ? NEGATIVE_GRADIENT_ID : barColor})`}
+              color={`url(#${barColor})`}
               height={barHeight}
               index={groupIndex}
               isAnimated={isAnimated}
