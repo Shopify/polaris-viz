@@ -64,5 +64,21 @@ describe('<LineChart />', () => {
 
       expect(lineChart).not.toContainReactComponent(SkipLink);
     });
+
+    it('uses the label formatters for the default tooltip', () => {
+      const xLabelSpy = jest.fn(() => 'Some x label');
+      const yLabelSpy = jest.fn(() => 'Some y label');
+
+      mount(
+        <LineChart
+          xAxisOptions={{xAxisLabels: ['Jan 1'], labelFormatter: xLabelSpy}}
+          yAxisOptions={{labelFormatter: yLabelSpy}}
+          series={[primarySeries]}
+        />,
+      );
+
+      expect(xLabelSpy).toHaveBeenCalled();
+      expect(yLabelSpy).toHaveBeenCalled();
+    });
   });
 });

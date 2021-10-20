@@ -148,7 +148,7 @@ export function LineChart({
         lineStyle,
         point: {
           value: yAxisOptionsWithDefaults.labelFormatter(value),
-          label,
+          label: xAxisOptionsWithDefaults.labelFormatter(label),
         },
       }),
     );

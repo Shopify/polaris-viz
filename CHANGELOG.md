@@ -13,6 +13,9 @@
 ### Added 
 - Charts with `xAxisOptions` have the option to disable text wrapping of xAxis labels
 
+### Fixed
+- Apply yAxis formatter to default tooltip on `<LineChart />`
+
 ## [0.21.3] - 2021-10-15
 
 ### Fixed
