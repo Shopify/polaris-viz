@@ -10,11 +10,13 @@ import type {ColorOverrides} from '../types';
 interface GradientDefsProps {
   colorOverrides: ColorOverrides[];
   seriesColors: Color[];
+  theme?: string;
 }
 
 export function GradientDefs({
   colorOverrides,
   seriesColors,
+  theme = 'Default',
 }: GradientDefsProps) {
   return (
     <defs>
@@ -22,7 +24,7 @@ export function GradientDefs({
         return <Gradient key={id} id={id} color={color} />;
       })}
       {seriesColors.map((color, index) => {
-        const id = `${GRADIENT_ID}${index}`;
+        const id = getGradientDefId(theme, index);
         return <Gradient key={id} id={id} color={color} />;
       })}
       <LinearGradient
@@ -45,4 +47,8 @@ function Gradient({id, color}: {id: string; color: Color}) {
         },
       ];
   return <LinearGradient gradient={gradient} id={id} x2="100%" y1="0%" />;
+}
+
+export function getGradientDefId(theme = 'Default', index: number) {
+  return `${theme}-${GRADIENT_ID}-${index}`;
 }

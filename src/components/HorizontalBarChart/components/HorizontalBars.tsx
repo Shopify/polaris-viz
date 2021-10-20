@@ -7,7 +7,6 @@ import {getTextWidth} from '../../../utilities';
 import {
   BAR_LABEL_OFFSET,
   FONT_SIZE_PADDING,
-  GRADIENT_ID,
   LABEL_HEIGHT,
   NEGATIVE_GRADIENT_ID,
   SPACE_BETWEEN_SINGLE,
@@ -17,6 +16,7 @@ import {getBarId} from '../utilities';
 
 import {Bar, RoundedBorder} from './Bar';
 import {Label} from './Label';
+import {getGradientDefId} from './GradientDefs';
 
 interface HorizontalBarProps {
   areAllAllNegative: boolean;
@@ -78,7 +78,7 @@ export function HorizontalBars({
           : -(width + leftLabelOffset);
         const x = isNegative ? negativeX : width + BAR_LABEL_OFFSET;
         const ariaHidden = seriesIndex !== 0;
-        const barColor = color ? id : `${GRADIENT_ID}${seriesIndex}`;
+        const barColor = color ? id : getGradientDefId(theme, seriesIndex);
 
         return (
           <React.Fragment key={`series-${barColor}-${name}`}>

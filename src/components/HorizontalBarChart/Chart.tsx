@@ -268,6 +268,7 @@ export function Chart({
         <GradientDefs
           colorOverrides={seriesWithColorOverride}
           seriesColors={seriesColors}
+          theme={theme}
         />
 
         {transitions(({opacity, transform}, item, _transition, index) => {
