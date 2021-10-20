@@ -1,10 +1,9 @@
 import React from 'react';
 
-import {NEGATIVE_SINGLE_GRADIENT} from '../../../constants';
 import type {Color, GradientStop} from '../../../types';
 import {isGradientType} from '../../../utilities';
 import {LinearGradient} from '../../LinearGradient';
-import {GRADIENT_ID, NEGATIVE_GRADIENT_ID} from '../constants';
+import {GRADIENT_ID} from '../constants';
 import type {ColorOverrides} from '../types';
 
 interface GradientDefsProps {
@@ -25,12 +24,6 @@ export function GradientDefs({
         const id = `${GRADIENT_ID}${index}`;
         return <Gradient key={id} id={id} color={color} />;
       })}
-      <LinearGradient
-        gradient={NEGATIVE_SINGLE_GRADIENT}
-        id={NEGATIVE_GRADIENT_ID}
-        x2="100%"
-        y1="0%"
-      />
     </defs>
   );
 }
