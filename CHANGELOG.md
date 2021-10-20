@@ -1,19 +1,16 @@
 # Changelog
 
 ## Unreleased
+
+## [0.21.4] - 2021-10-20
+
 ### Added
 - Overflow style to `<StackedAreaChart />`
-
-### Fixed
--`<StackedAreaChart />` stroke is cut off if it reaches the top of the chart
-
-### Fixed
-- Various xAxis label bugs that caused labels to truncate too early
-
-### Added 
 - Charts with `xAxisOptions` have the option to disable text wrapping of xAxis labels
 
 ### Fixed
+-`<StackedAreaChart />` stroke is cut off if it reaches the top of the chart
+- Various xAxis label bugs that caused labels to truncate too early
 - Apply yAxis formatter to default tooltip on `<LineChart />`
 
 ## [0.21.3] - 2021-10-15
