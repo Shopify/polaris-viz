@@ -50,6 +50,7 @@ export function HorizontalBars({
   name,
 }: HorizontalBarProps) {
   const selectedTheme = useTheme(theme);
+  const hasSingleBar = series.length === 1;
 
   return (
     <g
@@ -84,7 +85,11 @@ export function HorizontalBars({
           <React.Fragment key={`series-${barColor}-${name}`}>
             <Bar
               animationDelay={animationDelay}
-              color={`url(#${isNegative ? NEGATIVE_GRADIENT_ID : barColor})`}
+              color={`url(#${getBarColor({
+                hasSingleBar,
+                isNegative,
+                color: barColor,
+              })})`}
               height={barHeight}
               index={groupIndex}
               isAnimated={isAnimated}
@@ -113,4 +118,20 @@ export function HorizontalBars({
       })}
     </g>
   );
+}
+
+function getBarColor({
+  hasSingleBar,
+  isNegative,
+  color,
+}: {
+  hasSingleBar: boolean;
+  isNegative: boolean;
+  color: string;
+}) {
+  if (isNegative && hasSingleBar) {
+    return NEGATIVE_GRADIENT_ID;
+  }
+
+  return color;
 }

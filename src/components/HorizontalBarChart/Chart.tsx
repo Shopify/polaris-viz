@@ -8,6 +8,7 @@ import {
   BarChartMargin as Margin,
   HORIZONTAL_BAR_GROUP_DELAY,
   BARS_SORT_TRANSITION_CONFIG,
+  NEGATIVE_SINGLE_GRADIENT,
 } from '../../constants';
 import {eventPointNative} from '../../utilities';
 import {DataType, Dimensions} from '../../types';
@@ -155,12 +156,18 @@ export function Chart({
         return null;
       }
 
+      const hasSingleBar = series[activeIndex].data.length === 1;
+
       const data = series[activeIndex].data.map(
         ({rawValue, label, color}, index) => {
+          const isNegative = hasSingleBar && rawValue < 0;
+
           return {
             label,
             value: labelFormatter(rawValue),
-            color: color ?? seriesColors[index],
+            color: isNegative
+              ? NEGATIVE_SINGLE_GRADIENT
+              : color ?? seriesColors[index],
           };
         },
       );
