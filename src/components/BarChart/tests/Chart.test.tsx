@@ -55,6 +55,7 @@ describe('Chart />', () => {
       labelFormatter: (value: string) => value.toString(),
       useMinimalLabels: false,
       hide: false,
+      wrapLabels: true,
     },
     yAxisOptions: {
       labelFormatter: (value: number) => value.toString(),

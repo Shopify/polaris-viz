@@ -283,3 +283,12 @@ const NoOverflowStyleTemplate: Story<BarChartProps> = (args: BarChartProps) => {
 
 export const NoOverflowStyle = NoOverflowStyleTemplate.bind({});
 NoOverflowStyle.args = defaultProps;
+
+export const NoLabelWrapping = Template.bind({});
+NoLabelWrapping.args = {
+  ...defaultProps,
+  xAxisOptions: {
+    wrapLabels: false,
+    labelFormatter: defaultProps.xAxisOptions.labelFormatter,
+  },
+};

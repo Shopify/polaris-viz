@@ -36,6 +36,7 @@ export interface XAxisOptions {
   xAxisLabels: string[];
   useMinimalLabels: boolean;
   hide?: boolean;
+  wrapLabels: boolean;
 }
 
 export interface YAxisOptions {

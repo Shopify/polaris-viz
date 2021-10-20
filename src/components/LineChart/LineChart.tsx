@@ -130,6 +130,7 @@ export function LineChart({
     labelFormatter: (value: string) => value,
     useMinimalLabels: false,
     xAxisLabels: [],
+    wrapLabels: true,
     ...xAxisOptions,
   };
 

@@ -81,6 +81,7 @@ export function BarChart({
   const xAxisOptionsWithDefaults = {
     labelFormatter: (value: string) => value,
     useMinimalLabels: false,
+    wrapLabels: true,
     ...xAxisOptions,
   };
 

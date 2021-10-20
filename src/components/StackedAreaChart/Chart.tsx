@@ -64,7 +64,7 @@ const TOOLTIP_POSITION: TooltipPositionOffset = {
 
 interface Props {
   hideXAxis: boolean;
-  xAxisLabels: string[];
+  xAxisOptions: {labels: string[]; wrapLabels?: boolean};
   series: Series[];
   formatXAxisLabel: StringLabelFormatter;
   formatYAxisLabel: NumberLabelFormatter;
@@ -78,7 +78,7 @@ type SeriesForAnimation = Required<Partial<DataSeries<Data, null>>>;
 
 export function Chart({
   hideXAxis,
-  xAxisLabels,
+  xAxisOptions,
   series,
   dimensions,
   formatXAxisLabel,
@@ -104,6 +104,8 @@ export function Chart({
         .offset(stackOffsetNone),
     [series],
   );
+
+  const xAxisLabels = xAxisOptions.labels;
 
   const formattedData = useMemo(
     () =>
@@ -140,6 +142,7 @@ export function Chart({
     formatXAxisLabel,
     initialTicks,
     xAxisLabels: xAxisLabels == null ? [] : xAxisLabels,
+    wrapLabels: xAxisOptions.wrapLabels ?? true,
   });
 
   const formattedXAxisLabels = xAxisLabels.map(formatXAxisLabel);

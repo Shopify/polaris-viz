@@ -1,10 +1,11 @@
 import {
   BarChartMargin as Margin,
-  MAX_TEXT_BOX_HEIGHT,
   MIN_HORIZONTAL_LABEL_SPACE,
   SPACING,
   LABEL_SPACE_MINUS_FIRST_AND_LAST,
   SPACING_EXTRA_TIGHT,
+  LABEL_ELLIPSIS_LENGTH,
+  LINE_HEIGHT,
 } from '../constants';
 
 import {getTextContainerHeight} from './get-text-container-height';
@@ -19,6 +20,7 @@ interface LayoutDetails {
   innerMargin: number;
   outerMargin: number;
   minimalLabelIndexes?: number[] | null;
+  wrapLabels: boolean;
 }
 
 export function getBarXAxisDetails({
@@ -29,6 +31,7 @@ export function getBarXAxisDetails({
   innerMargin,
   outerMargin,
   minimalLabelIndexes,
+  wrapLabels,
 }: LayoutDetails) {
   const labelsToUse =
     minimalLabelIndexes == null
@@ -73,9 +76,11 @@ export function getBarXAxisDetails({
     containerWidth: Math.abs(datumXLabelSpace),
   });
 
+  const maxTextBoxHeight = wrapLabels ? LINE_HEIGHT * 3 : LINE_HEIGHT;
+
   // use horizontal labels if horizontal labels are too tall, or the column space is too narrow
   const needsDiagonalLabels =
-    horizontalLabelHeight > MAX_TEXT_BOX_HEIGHT ||
+    horizontalLabelHeight > maxTextBoxHeight ||
     datumXLabelSpace < MIN_HORIZONTAL_LABEL_SPACE;
 
   // width of all outer padding
@@ -98,10 +103,9 @@ export function getBarXAxisDetails({
   );
 
   // max diagonal length is the length of the longest label, or the length of the cut off
-  const maxDiagonalLabelLength = Math.min(
-    longestXLabelDetails.length,
-    angledLabelMaxLength,
-  );
+  const maxDiagonalLabelLength =
+    Math.min(longestXLabelDetails.length, angledLabelMaxLength) +
+    LABEL_ELLIPSIS_LENGTH;
 
   // max height is determined by whether diagonal labels are used or not
   const maxXLabelHeight = needsDiagonalLabels

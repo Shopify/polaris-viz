@@ -111,6 +111,7 @@ export function Chart({
     initialTicks,
     xAxisLabels: hideXAxis ? [] : xAxisOptions.xAxisLabels,
     useMinimalLabels: xAxisOptions.useMinimalLabels,
+    wrapLabels: xAxisOptions.wrapLabels,
   });
 
   const marginBottom = hideXAxis

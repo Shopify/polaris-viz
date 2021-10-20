@@ -53,7 +53,7 @@ import styles from './Chart.scss';
 
 type RequiredXAxis = Pick<
   Required<XAxisOptions>,
-  'labelFormatter' | 'useMinimalLabels'
+  'labelFormatter' | 'useMinimalLabels' | 'wrapLabels'
 > &
   XAxisOptions;
 
@@ -117,6 +117,8 @@ export function Chart({
 
   const hideXAxis = xAxisOptions.hide ?? selectedTheme.xAxis.hide;
 
+  const xLabels = data.map(({label}) => label);
+
   const xAxisDetails = useMemo(
     () =>
       getBarXAxisDetails({
@@ -124,11 +126,14 @@ export function Chart({
         fontSize,
         xLabels: hideXAxis
           ? []
-          : data.map(({label}) => xAxisOptions.labelFormatter(label)),
+          : data.map(({label}, index) =>
+              xAxisOptions.labelFormatter(label, index, xLabels),
+            ),
         width: chartDimensions.width - selectedTheme.grid.horizontalMargin * 2,
         innerMargin: BarMargin[selectedTheme.bar.innerMargin],
         outerMargin: BarMargin[selectedTheme.bar.outerMargin],
         minimalLabelIndexes,
+        wrapLabels: xAxisOptions.wrapLabels,
       }),
     [
       hideXAxis,
@@ -141,6 +146,7 @@ export function Chart({
       selectedTheme.bar.outerMargin,
       minimalLabelIndexes,
       xAxisOptions,
+      xLabels,
     ],
   );
 

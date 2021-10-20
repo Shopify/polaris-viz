@@ -53,6 +53,7 @@ export interface XAxisOptions {
   labelFormatter: StringLabelFormatter;
   labels: string[];
   hide?: boolean;
+  wrapLabels?: boolean;
 }
 
 export interface YAxisOptions {

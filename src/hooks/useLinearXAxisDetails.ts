@@ -12,11 +12,11 @@ import {
   MIN_HORIZONTAL_LABEL_SPACE,
   LINE_HEIGHT,
   MIN_HORIZONTAL_TICKS,
-  MAX_TEXT_BOX_HEIGHT,
   LineChartMargin as Margin,
   SPACING_EXTRA_TIGHT,
   SMALL_LABEL_WIDTH,
   LABEL_SPACE_MINUS_FIRST_AND_LAST,
+  LABEL_ELLIPSIS_LENGTH,
 } from '../constants';
 import type {
   StringLabelFormatter,
@@ -44,6 +44,7 @@ export interface ChartDetails {
   initialTicks: YAxisTick[];
   xAxisLabels: string[];
   useMinimalLabels?: boolean;
+  wrapLabels: boolean;
 }
 
 export function useLinearXAxisDetails({
@@ -54,6 +55,7 @@ export function useLinearXAxisDetails({
   initialTicks,
   xAxisLabels,
   useMinimalLabels,
+  wrapLabels,
 }: ChartDetails) {
   const {estimatedYAxisWidth, drawableWidth} = useMemo(() => {
     // determine how much space will be taken up by the yaxis
@@ -127,7 +129,9 @@ export function useLinearXAxisDetails({
     diagonalTicks,
     horizontalTicks,
   } = useMemo(() => {
-    const xLabels = xAxisLabels.map((label) => formatXAxisLabel(label));
+    const xLabels = xAxisLabels.map((label, index) =>
+      formatXAxisLabel(label, index, xAxisLabels),
+    );
     // xAxis label spacing will be based on the longest label
     const longestXLabelDetails = getLongestLabelDetails(xLabels, fontSize);
     // the actual space available will each label
@@ -144,10 +148,12 @@ export function useLinearXAxisDetails({
       longestXLabelDetails.length < SMALL_LABEL_WIDTH &&
       initialHorizontalLabelHeight > LINE_HEIGHT;
 
+    const maxTextBoxHeight = wrapLabels ? LINE_HEIGHT * 3 : LINE_HEIGHT;
+
     // determine if we need to reduce the ticks
     const needToReduceTicks =
       smallLabelGoingMultiline ||
-      initialHorizontalLabelHeight > MAX_TEXT_BOX_HEIGHT ||
+      initialHorizontalLabelHeight > maxTextBoxHeight ||
       datumXLabelSpace < MIN_HORIZONTAL_LABEL_SPACE;
 
     const reducedTicks = ticks.filter((_, index) => index % 3 === 0);
@@ -176,7 +182,7 @@ export function useLinearXAxisDetails({
       needToReduceTicks &&
       (reducedTicksDatumXLabelSpace < MIN_HORIZONTAL_LABEL_SPACE ||
         reducedTicks.length < MIN_HORIZONTAL_TICKS ||
-        reducedHorizontalLabelHeight > MAX_TEXT_BOX_HEIGHT);
+        reducedHorizontalLabelHeight > maxTextBoxHeight);
 
     // the max horizontal height is determined by whether the ticks are reduced
     const horizontalLabelHeight = needToReduceTicks
@@ -193,10 +199,9 @@ export function useLinearXAxisDetails({
       : datumXLabelSpace;
 
     // the max diagonal length is whatever is smaller: longest label or where it gets cut off
-    const maxDiagonalLabelLength = Math.min(
-      longestXLabelDetails.length,
-      angledLabelMaxLength,
-    );
+    const maxDiagonalLabelLength =
+      Math.min(longestXLabelDetails.length, angledLabelMaxLength) +
+      LABEL_ELLIPSIS_LENGTH;
 
     // reduce the ticks if they start runing into each other
     const diagonalTicks = ticks.filter(
@@ -221,6 +226,7 @@ export function useLinearXAxisDetails({
     formatXAxisLabel,
     ticks,
     xAxisLabels,
+    wrapLabels,
   ]);
 
   return {

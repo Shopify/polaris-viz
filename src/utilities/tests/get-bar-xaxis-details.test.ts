@@ -36,6 +36,7 @@ describe('getBarXAxisDetails', () => {
       innerMargin: 0,
       outerMargin: 0,
       width: 100,
+      wrapLabels: true,
     });
 
     expect(actual).toMatchObject({needsDiagonalLabels: true});
@@ -54,6 +55,7 @@ describe('getBarXAxisDetails', () => {
       innerMargin: 0,
       outerMargin: 0,
       width: 100,
+      wrapLabels: true,
     });
 
     expect(actual).toMatchObject({needsDiagonalLabels: false});
@@ -68,11 +70,12 @@ describe('getBarXAxisDetails', () => {
       outerMargin: 0,
       minimalLabelIndexes: [0, 4, 9],
       width: 100,
+      wrapLabels: true,
     });
 
     expect(actual).toMatchObject({
       maxXLabelHeight: 10.656565315951458,
-      maxDiagonalLabelLength: 16.57867257451994,
+      maxDiagonalLabelLength: 19.57867257451994,
       needsDiagonalLabels: true,
       maxWidth: 10.799999999999999,
     });
@@ -87,6 +90,7 @@ describe('getBarXAxisDetails', () => {
       outerMargin: 0,
       minimalLabelIndexes: null,
       width: 100,
+      wrapLabels: true,
     });
 
     expect(actual).toMatchObject({
