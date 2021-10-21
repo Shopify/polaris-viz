@@ -104,25 +104,31 @@ export function BarChart({
     if (!isServer) {
       window.addEventListener('resize', debouncedUpdateDimensions);
 
-      window.addEventListener('beforeprint', () => {
-        setChartDimensions({width: 300, height: 300});
-      });
+      // window.addEventListener('beforeprint', () => {
+      //   setChartDimensions({width: 300, height: 300});
+      // });
 
-      window.addEventListener('afterprint', () => {
-        setChartDimensions({width: 900, height: 900});
-      });
+      // window.addEventListener('afterprint', () => {
+      //   setChartDimensions({width: 900, height: 900});
+      // });
 
-      if (typeof window.matchMedia('print').addEventListener === 'function') {
-        window
-          .matchMedia('print')
-          .addEventListener('change', () =>
-            setChartDimensions({width: 100, height: 100}),
-          );
-      } else if (typeof window.matchMedia('print').addListener === 'function') {
-        window
-          .matchMedia('print')
-          .addListener(() => setChartDimensions({width: 100, height: 100}));
+      if (window.matchMedia) {
+        window.matchMedia('print').addListener(function reflow() {
+          setChartDimensions({width: 100, height: 100});
+        });
       }
+
+      // if (typeof window.matchMedia('print').addEventListener === 'function') {
+      //   window
+      //     .matchMedia('print')
+      //     .addEventListener('change', () =>
+      //       setChartDimensions({width: 100, height: 100}),
+      //     );
+      // } else if (typeof window.matchMedia('print').addListener === 'function') {
+      //   window
+      //     .matchMedia('print')
+      //     .addListener(() => setChartDimensions({width: 100, height: 100}));
+      // }
     }
 
     return () => {
