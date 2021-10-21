@@ -88,6 +88,7 @@ export function BarChart({
         console.log('matches');
         console.log({event});
         console.log({ref});
+        console.log(ref.getBoundingClientRect());
         setChartDimensions(ref!.getBoundingClientRect());
       }
     },
