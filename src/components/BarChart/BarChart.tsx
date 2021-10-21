@@ -144,7 +144,6 @@ export function BarChart({
     updateDimensions,
     ref,
     handlePrintMediaQueryChange,
-    isPrinting,
   ]);
 
   function renderDefaultTooltipContent({
