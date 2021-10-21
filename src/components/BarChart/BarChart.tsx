@@ -101,7 +101,7 @@ export function BarChart({
     if (!isServer) {
       window.addEventListener('resize', debouncedUpdateDimensions);
 
-      window.addEventListener('beforeprint', function (event) {
+      window.addEventListener('beforeprint', function () {
         console.log('before print', ref);
       });
 
