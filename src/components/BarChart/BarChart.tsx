@@ -103,7 +103,7 @@ export function BarChart({
     if (!isServer) {
       window.addEventListener('resize', debouncedUpdateDimensions);
 
-      window.addEventListener('after', function () {
+      window.addEventListener('afterprint', function () {
         console.log('after print');
         handlePrintMediaQueryChange({matches: true} as any);
       });
