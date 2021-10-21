@@ -138,7 +138,7 @@ export function Chart({
   const xAxisDetails = useLinearXAxisDetails({
     series,
     fontSize,
-    width: dimensions.width,
+    width: dimensions.width - selectedTheme.grid.horizontalMargin * 2,
     formatXAxisLabel,
     initialTicks,
     xAxisLabels: xAxisLabels == null ? [] : xAxisLabels,
@@ -161,9 +161,15 @@ export function Chart({
     formatYAxisLabel,
   });
 
-  const dataStartPosition = axisMargin + Spacing.Base;
+  const dataStartPosition =
+    axisMargin + Number(selectedTheme.grid.horizontalMargin) + Spacing.Base;
 
-  const drawableWidth = dimensions.width - Margin.Right - dataStartPosition;
+  const drawableWidth =
+    dimensions.width -
+    Margin.Right -
+    axisMargin -
+    selectedTheme.grid.horizontalMargin * 2 -
+    Spacing.Base;
 
   const longestSeriesLength =
     Math.max(...stackedValues.map((stack) => stack.length)) - 1;
@@ -290,25 +296,31 @@ export function Chart({
           </g>
         )}
 
+        {selectedTheme.grid.showHorizontalLines ? (
+          <HorizontalGridLines
+            ticks={ticks}
+            theme={theme}
+            transform={{
+              x: selectedTheme.grid.horizontalOverflow ? 0 : dataStartPosition,
+              y: Margin.Top,
+            }}
+            width={
+              selectedTheme.grid.horizontalOverflow
+                ? dimensions.width
+                : drawableWidth
+            }
+          />
+        ) : null}
+
         <g transform={`translate(0,${Margin.Top})`}>
           <YAxis
             ticks={ticks}
             fontSize={fontSize}
             width={axisMargin}
-            textAlign="right"
+            textAlign={selectedTheme.grid.horizontalOverflow ? 'left' : 'right'}
             theme={theme}
           />
         </g>
-
-        <HorizontalGridLines
-          ticks={ticks}
-          transform={{
-            x: dataStartPosition,
-            y: Margin.Top,
-          }}
-          width={drawableWidth}
-          theme={theme}
-        />
 
         <VisuallyHiddenRows
           formatYAxisLabel={formatYAxisLabel}
