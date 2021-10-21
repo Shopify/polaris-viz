@@ -42,7 +42,6 @@ export function BarChart({
   const [chartDimensions, setChartDimensions] = useState<Dimensions | null>(
     null,
   );
-  const [isPrinting, setPrinting] = useState(false);
   const {ref, setRef, entry} = useResizeObserver();
 
   const skipLinkAnchorId = useRef(uniqueId('barChart'));
