@@ -105,16 +105,16 @@ export function BarChart({
     if (!isServer) {
       window.addEventListener('resize', debouncedUpdateDimensions);
 
-      window.addEventListener('beforeprint', () => setPrinting(true));
-
-      window.addEventListener('afterprint', () => setPrinting(false));
-
       if (typeof window.matchMedia('print').addEventListener === 'function') {
         window
           .matchMedia('print')
-          .addEventListener('change', handlePrintMediaQueryChange);
+          .addEventListener('change', () =>
+            setChartDimensions({width: 100, height: 100}),
+          );
       } else if (typeof window.matchMedia('print').addListener === 'function') {
-        window.matchMedia('print').addListener(handlePrintMediaQueryChange);
+        window
+          .matchMedia('print')
+          .addListener(() => setChartDimensions({width: 100, height: 100}));
       }
     }
 
@@ -125,13 +125,17 @@ export function BarChart({
         if (typeof window.matchMedia('print').addEventListener === 'function') {
           window
             .matchMedia('print')
-            .removeEventListener('change', handlePrintMediaQueryChange);
+            .removeEventListener('change', () =>
+              setChartDimensions({width: 100, height: 100}),
+            );
         } else if (
           typeof window.matchMedia('print').addListener === 'function'
         ) {
           window
             .matchMedia('print')
-            .removeListener(handlePrintMediaQueryChange);
+            .removeListener(() =>
+              setChartDimensions({width: 100, height: 100}),
+            );
         }
       }
     };
