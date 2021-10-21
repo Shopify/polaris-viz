@@ -78,9 +78,14 @@ export function LineChart({
 
   const handlePrintMediaQueryChange = useCallback(
     (event: MediaQueryListEvent) => {
-      if (event.matches && ref != null) {
-        setChartDimensions(ref.getBoundingClientRect());
-      }
+      console.log('print');
+
+      setTimeout(() => {
+        console.log('after timeout');
+        if (event.matches && ref != null) {
+          setChartDimensions(ref.getBoundingClientRect());
+        }
+      }, 0);
     },
     [ref],
   );
