@@ -1,6 +1,10 @@
 # Changelog
 
 ## Unreleased
+## [0.21.5] - 2021-10-21
+
+### Added
+- Horizontal overflow style to `<StackedAreaChart />`
 
 ## [0.21.4] - 2021-10-20
 
