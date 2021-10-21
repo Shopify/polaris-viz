@@ -84,6 +84,8 @@ export function BarChart({
 
   const handlePrintMediaQueryChange = useCallback(
     (event: MediaQueryListEvent) => {
+      console.log({event});
+      console.log({ref});
       if (event.matches && ref != null) {
         setChartDimensions(ref.getBoundingClientRect());
       }
@@ -100,7 +102,7 @@ export function BarChart({
       window.addEventListener('resize', debouncedUpdateDimensions);
 
       window.addEventListener('beforeprint', function (event) {
-        console.log('before print', event);
+        console.log('before print', ref);
       });
 
       if (typeof window.matchMedia('print').addEventListener === 'function') {
@@ -109,7 +111,6 @@ export function BarChart({
           .matchMedia('print')
           .addEventListener('change', handlePrintMediaQueryChange);
       } else if (typeof window.matchMedia('print').addListener === 'function') {
-        console.log('addListener');
         window.matchMedia('print').addListener(handlePrintMediaQueryChange);
       }
     }
