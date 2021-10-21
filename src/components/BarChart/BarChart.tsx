@@ -85,7 +85,9 @@ export function BarChart({
   const handlePrintMediaQueryChange = useCallback(
     (event: MediaQueryListEvent) => {
       if (event.matches && ref != null) {
-        setChartDimensions(ref.getBoundingClientRect());
+        setTimeout(() => {
+          setChartDimensions(ref.getBoundingClientRect());
+        }, 0);
       }
     },
     [ref],
@@ -99,11 +101,17 @@ export function BarChart({
     if (!isServer) {
       window.addEventListener('resize', debouncedUpdateDimensions);
 
+      window.addEventListener('beforeprint', function (event) {
+        console.log('before print', event);
+      });
+
       if (typeof window.matchMedia('print').addEventListener === 'function') {
+        console.log('addEventListener');
         window
           .matchMedia('print')
           .addEventListener('change', handlePrintMediaQueryChange);
       } else if (typeof window.matchMedia('print').addListener === 'function') {
+        console.log('addListener');
         window.matchMedia('print').addListener(handlePrintMediaQueryChange);
       }
     }
