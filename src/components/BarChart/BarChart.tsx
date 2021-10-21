@@ -42,6 +42,7 @@ export function BarChart({
   const [chartDimensions, setChartDimensions] = useState<Dimensions | null>(
     null,
   );
+  const [isPrinting, setPrinting] = useState(false);
   const {ref, setRef, entry} = useResizeObserver();
 
   const skipLinkAnchorId = useRef(uniqueId('barChart'));
@@ -102,6 +103,10 @@ export function BarChart({
     if (!isServer) {
       window.addEventListener('resize', debouncedUpdateDimensions);
 
+      window.addEventListener('beforeprint', () => setPrinting(true));
+
+      window.addEventListener('afterprint', () => setPrinting(false));
+
       if (typeof window.matchMedia('print').addEventListener === 'function') {
         window
           .matchMedia('print')
@@ -134,6 +139,7 @@ export function BarChart({
     updateDimensions,
     ref,
     handlePrintMediaQueryChange,
+    isPrinting,
   ]);
 
   function renderDefaultTooltipContent({
