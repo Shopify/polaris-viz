@@ -48,6 +48,19 @@ export function BarChart({
 
   const emptyState = data.length === 0;
 
+  const xAxisOptionsWithDefaults = {
+    labelFormatter: (value: string) => value,
+    useMinimalLabels: false,
+    wrapLabels: true,
+    ...xAxisOptions,
+  };
+
+  const yAxisOptionsWithDefaults = {
+    labelFormatter: (value: number) => value.toString(),
+    integersOnly: false,
+    ...yAxisOptions,
+  };
+
   const updateDimensions = useCallback(() => {
     if (entry != null) {
       const {width, height} = entry.contentRect;
@@ -77,19 +90,6 @@ export function BarChart({
     },
     [ref],
   );
-
-  const xAxisOptionsWithDefaults = {
-    labelFormatter: (value: string) => value,
-    useMinimalLabels: false,
-    wrapLabels: true,
-    ...xAxisOptions,
-  };
-
-  const yAxisOptionsWithDefaults = {
-    labelFormatter: (value: number) => value.toString(),
-    integersOnly: false,
-    ...yAxisOptions,
-  };
 
   useLayoutEffect(() => {
     updateDimensions();

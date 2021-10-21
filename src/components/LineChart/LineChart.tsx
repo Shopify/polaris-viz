@@ -78,10 +78,7 @@ export function LineChart({
 
   const handlePrintMediaQueryChange = useCallback(
     (event: MediaQueryListEvent) => {
-      console.log('print');
-
       if (event.matches && ref != null) {
-        console.log('event matches');
         setChartDimensions(ref.getBoundingClientRect());
       }
     },
@@ -95,10 +92,6 @@ export function LineChart({
 
     if (!isServer) {
       window.addEventListener('resize', debouncedUpdateDimensions);
-
-      window.addEventListener('beforeprint', () => {
-        console.log('before print', ref);
-      });
 
       if (typeof window.matchMedia('print').addEventListener === 'function') {
         window
@@ -128,10 +121,10 @@ export function LineChart({
     };
   }, [
     entry,
-    updateDimensions,
     debouncedUpdateDimensions,
-    handlePrintMediaQueryChange,
+    updateDimensions,
     ref,
+    handlePrintMediaQueryChange,
   ]);
 
   const xAxisOptionsWithDefaults: XAxisOptions = {
