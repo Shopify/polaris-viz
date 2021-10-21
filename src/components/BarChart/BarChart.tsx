@@ -87,6 +87,7 @@ export function BarChart({
       console.log({event});
       console.log({ref});
       if (event.matches && ref != null) {
+        console.log('matches');
         setChartDimensions(ref.getBoundingClientRect());
       }
     },
@@ -101,12 +102,11 @@ export function BarChart({
     if (!isServer) {
       window.addEventListener('resize', debouncedUpdateDimensions);
 
-      window.addEventListener('beforeprint', function () {
-        console.log('before print', ref);
-      });
+      // window.addEventListener('beforeprint', function () {
+      //   console.log('before print', ref);
+      // });
 
       if (typeof window.matchMedia('print').addEventListener === 'function') {
-        console.log('addEventListener');
         window
           .matchMedia('print')
           .addEventListener('change', handlePrintMediaQueryChange);
