@@ -104,6 +104,14 @@ export function BarChart({
     if (!isServer) {
       window.addEventListener('resize', debouncedUpdateDimensions);
 
+      window.addEventListener('beforeprint', () => {
+        setChartDimensions({width: 300, height: 300});
+      });
+
+      window.addEventListener('afterprint', () => {
+        setChartDimensions({width: 900, height: 900});
+      });
+
       if (typeof window.matchMedia('print').addEventListener === 'function') {
         window
           .matchMedia('print')
