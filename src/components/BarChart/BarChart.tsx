@@ -89,7 +89,9 @@ export function BarChart({
         console.log('matches');
         console.log(ref.getBoundingClientRect());
         console.log(window);
-        setChartDimensions(ref!.getBoundingClientRect());
+
+        // it seems like this doesn't get called in time when using the button, no matter how the dimensions are set
+        setChartDimensions({width: 100, height: 100});
       }
     },
     [ref],
