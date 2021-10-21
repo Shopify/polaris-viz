@@ -85,9 +85,7 @@ export function BarChart({
   const handlePrintMediaQueryChange = useCallback(
     (event: MediaQueryListEvent) => {
       if (event.matches && ref != null) {
-        setTimeout(() => {
-          setChartDimensions(ref.getBoundingClientRect());
-        }, 5000);
+        setChartDimensions(ref.getBoundingClientRect());
       }
     },
     [ref],
