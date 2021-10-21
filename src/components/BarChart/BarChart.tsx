@@ -104,31 +104,29 @@ export function BarChart({
     if (!isServer) {
       window.addEventListener('resize', debouncedUpdateDimensions);
 
-      // window.addEventListener('beforeprint', () => {
-      //   setChartDimensions({width: 300, height: 300});
-      // });
+      const beforePrint = function () {
+        console.log('Functionality to run before printing.');
+        setChartDimensions({width: 100, height: 100});
+      };
 
-      // window.addEventListener('afterprint', () => {
-      //   setChartDimensions({width: 900, height: 900});
-      // });
+      const afterPrint = function () {
+        console.log('Functionality to run after printing');
+        setChartDimensions({width: 1000, height: 1000});
+      };
 
       if (window.matchMedia) {
-        window.matchMedia('print').addListener(function reflow() {
-          setChartDimensions({width: 100, height: 100});
+        const mediaQueryList = window.matchMedia('print');
+        mediaQueryList.addListener(function (mql) {
+          if (mql.matches) {
+            beforePrint();
+          } else {
+            afterPrint();
+          }
         });
       }
 
-      // if (typeof window.matchMedia('print').addEventListener === 'function') {
-      //   window
-      //     .matchMedia('print')
-      //     .addEventListener('change', () =>
-      //       setChartDimensions({width: 100, height: 100}),
-      //     );
-      // } else if (typeof window.matchMedia('print').addListener === 'function') {
-      //   window
-      //     .matchMedia('print')
-      //     .addListener(() => setChartDimensions({width: 100, height: 100}));
-      // }
+      window.onbeforeprint = beforePrint;
+      window.onafterprint = afterPrint;
     }
 
     return () => {
