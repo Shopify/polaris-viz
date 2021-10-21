@@ -103,9 +103,10 @@ export function BarChart({
     if (!isServer) {
       window.addEventListener('resize', debouncedUpdateDimensions);
 
-      // window.addEventListener('beforeprint', function () {
-      //   console.log('before print', ref);
-      // });
+      window.addEventListener('beforeprint', function () {
+        console.log('before print');
+        handlePrintMediaQueryChange({matches: true} as any);
+      });
 
       if (typeof window.matchMedia('print').addEventListener === 'function') {
         window
