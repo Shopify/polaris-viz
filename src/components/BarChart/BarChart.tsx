@@ -87,7 +87,7 @@ export function BarChart({
       if (event.matches && ref != null) {
         setTimeout(() => {
           setChartDimensions(ref.getBoundingClientRect());
-        }, 0);
+        }, 5000);
       }
     },
     [ref],
