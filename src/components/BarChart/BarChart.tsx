@@ -1,4 +1,4 @@
-import React, {useState, useLayoutEffect, useRef, useCallback} from 'react';
+import React, {useState, useEffect, useRef, useCallback} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 
 import type {Dimensions, XAxisOptions, YAxisOptions} from '../../types';
@@ -86,27 +86,21 @@ export function BarChart({
     (event: MediaQueryListEvent) => {
       if (event.matches && ref != null) {
         console.log('matches');
-        console.log({event});
-        console.log({ref});
         console.log(ref.getBoundingClientRect());
+        console.log(window);
         setChartDimensions(ref!.getBoundingClientRect());
       }
     },
     [ref],
   );
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     updateDimensions();
 
     const isServer = typeof window === 'undefined';
 
     if (!isServer) {
       window.addEventListener('resize', debouncedUpdateDimensions);
-
-      window.addEventListener('afterprint', function () {
-        console.log('after print');
-        handlePrintMediaQueryChange({matches: true} as any);
-      });
 
       if (typeof window.matchMedia('print').addEventListener === 'function') {
         window
