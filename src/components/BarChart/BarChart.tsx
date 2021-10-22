@@ -69,12 +69,12 @@ export function BarChart({
     updateDimensions();
   }, 100);
 
-  const handlePrintMediaQueryChange = useCallback(() => {
-    if (ref != null) {
-      console.log('debug v');
-      setChartDimensions(ref.getBoundingClientRect());
-    }
-  }, [ref]);
+  // const handlePrintMediaQueryChange = useCallback(() => {
+  //   if (ref != null) {
+  //     console.log('debug v');
+  //     setChartDimensions(ref.getBoundingClientRect());
+  //   }
+  // }, [ref]);
 
   const xAxisOptionsWithDefaults = {
     labelFormatter: (value: string) => value,
@@ -97,39 +97,34 @@ export function BarChart({
     if (!isServer) {
       window.addEventListener('resize', debouncedUpdateDimensions);
 
-      if (typeof window.matchMedia('print').addEventListener === 'function') {
-        window
-          .matchMedia('print')
-          .addEventListener('change', handlePrintMediaQueryChange);
-      } else if (typeof window.matchMedia('print').addListener === 'function') {
-        window.matchMedia('print').addListener(handlePrintMediaQueryChange);
+      const isSafari = navigator.userAgent.includes('Safari');
+
+      if (isSafari) {
+        window.matchMedia('print').addEventListener('change', function () {
+          console.log('is safari: match media');
+          ref!.getBoundingClientRect();
+        });
+      }
+
+      if (!isSafari) {
+        window.onbeforeprint = function () {
+          console.log('not safari: beforeprint');
+          setChartDimensions(ref!.getBoundingClientRect());
+        };
+
+        window.onafterprint = function () {
+          console.log('not safari: afterprint');
+          setChartDimensions(ref!.getBoundingClientRect());
+        };
       }
     }
 
     return () => {
       if (!isServer) {
         window.removeEventListener('resize', debouncedUpdateDimensions);
-
-        if (typeof window.matchMedia('print').addEventListener === 'function') {
-          window
-            .matchMedia('print')
-            .removeEventListener('change', handlePrintMediaQueryChange);
-        } else if (
-          typeof window.matchMedia('print').addListener === 'function'
-        ) {
-          window
-            .matchMedia('print')
-            .removeListener(handlePrintMediaQueryChange);
-        }
       }
     };
-  }, [
-    entry,
-    debouncedUpdateDimensions,
-    updateDimensions,
-    ref,
-    handlePrintMediaQueryChange,
-  ]);
+  }, [entry, debouncedUpdateDimensions, updateDimensions, ref]);
 
   function renderDefaultTooltipContent({
     label,
