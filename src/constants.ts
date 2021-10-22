@@ -24,7 +24,7 @@ export const ROUNDED_BAR_RADIUS = 4;
 export const MIN_BAR_HEIGHT = 2;
 export const EMPTY_STATE_CHART_MIN = 0;
 export const EMPTY_STATE_CHART_MAX = 10;
-export const MIN_Y_LABEL_SPACE = 68;
+export const MIN_Y_LABEL_SPACE = 60;
 
 export enum BarChartMargin {
   Top = 5,
