@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## [0.22.0] - 2021-10-22
+
 ### Changed
 
 - Switch the build system to use `loom` instead of a mix of `sewing-kit`, `rollup`, `typescript`, and other custom-built functionality. We now provide builds with CommonJS, ESM, and ESNext output.
@@ -18,7 +20,6 @@
 #### Developer Changes
 
 - We no longer support "absolute" import paths in our tests. This allowed us to import components via `import {Thing} from 'components/Thing'`, but now you must use the relative path (e.g. `import {Thing} from '../../components/Thing'`). This allow our build tools to be consistent and not needing to add support in different ways (e.g. `jest`, `rollup`, `storybook`).
-
 
 ## [0.21.5] - 2021-10-21
 
