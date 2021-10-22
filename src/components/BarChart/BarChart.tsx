@@ -101,20 +101,26 @@ export function BarChart({
 
       if (isSafari) {
         window.matchMedia('print').addEventListener('change', function () {
-          console.log('is safari: match media');
-          ref!.getBoundingClientRect();
+          console.log('is safari: match media', ref);
+          if (ref) {
+            setChartDimensions(ref.getBoundingClientRect());
+          }
         });
       }
 
       if (!isSafari) {
         window.onbeforeprint = function () {
-          console.log('not safari: beforeprint');
-          setChartDimensions(ref!.getBoundingClientRect());
+          console.log('not safari: beforeprint', ref);
+          if (ref) {
+            setChartDimensions(ref.getBoundingClientRect());
+          }
         };
 
         window.onafterprint = function () {
-          console.log('not safari: afterprint');
-          setChartDimensions(ref!.getBoundingClientRect());
+          console.log('not safari: afterprint', ref);
+          if (ref) {
+            setChartDimensions(ref.getBoundingClientRect());
+          }
         };
       }
     }
