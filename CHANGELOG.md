@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Changed
+
+- This project uses Node 16 as part of development on this project. There are no expected consumer-facing changes.
+
 ### Added
 
 - Added `labelPosition` prop with default value `top-left` to `<NormalizedStackedBarChart />`.
