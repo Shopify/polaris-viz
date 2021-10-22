@@ -71,6 +71,7 @@ export function BarChart({
 
   const handlePrintMediaQueryChange = useCallback(() => {
     if (ref != null) {
+      console.log('debug v');
       setChartDimensions(ref.getBoundingClientRect());
     }
   }, [ref]);

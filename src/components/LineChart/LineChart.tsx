@@ -124,6 +124,7 @@ export function LineChart({
     updateDimensions,
     debouncedUpdateDimensions,
     handlePrintMediaQueryChange,
+    ref,
   ]);
 
   const xAxisOptionsWithDefaults: XAxisOptions = {
