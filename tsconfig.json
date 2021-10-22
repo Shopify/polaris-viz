@@ -1,21 +1,13 @@
 {
-  "extends": "@shopify/typescript-configs/library",
+  "extends": "@shopify/typescript-configs/library.json",
   "compilerOptions": {
     "baseUrl": "./src",
-    "rootDir": "./",
-    "target": "ES5",
-    "declarationDir": "types",
-    "declarationMap": false,
-    "jsx": "react-native",
-    "strict": true,
-    "importHelpers": false,
-    "skipLibCheck": true,
+    "rootDir": ".",
+    "outDir": "./build/ts",
+    "emitDeclarationOnly": true,
     "incremental": true,
-    "noEmit": true,
-    "noEmitHelpers": false,
-    "isolatedModules": true,
     "importsNotUsedAsValues": "error",
     "strictFunctionTypes": false
   },
-  "include": ["**/src/**/*.tsx", "./config/typescript", "./src", "./tests"]
+  "include": ["./src", "./tests"]
 }

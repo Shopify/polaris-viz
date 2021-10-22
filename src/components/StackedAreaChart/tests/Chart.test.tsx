@@ -1,19 +1,17 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
-import {
-  VisuallyHiddenRows,
-  HorizontalGridLines,
-  YAxis,
-  LinearXAxis,
-} from 'components';
-import {Point} from 'components/Point';
-import {Crosshair} from 'components/Crosshair';
+
+import {LinearXAxis} from '../../../components/LinearXAxis';
+import {YAxis} from '../../../components/YAxis';
+import {HorizontalGridLines} from '../../../components/HorizontalGridLines';
+import {VisuallyHiddenRows} from '../../../components/VisuallyHiddenRows';
+import {Point} from '../../../components/Point';
+import {Crosshair} from '../../../components/Crosshair';
 import {
   TooltipWrapper,
   TooltipAnimatedContainer,
-} from 'components/TooltipWrapper';
-import {triggerSVGMouseMove} from 'test-utilities';
-
+} from '../../../components/TooltipWrapper';
+import {triggerSVGMouseMove} from '../../../test-utilities';
 import {StackedAreas} from '../components';
 import {Chart} from '../Chart';
 

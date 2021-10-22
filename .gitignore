@@ -1,15 +1,6 @@
 *.log
 node_modules
 /build
-/build-intermediate
-/esnext
-/types
-/index.*
-/styles.css
-/styles.min.css
-/styles.scss
-/styles
 /sandbox
 .DS_Store
-*.scss.d.ts
-tsconfig.tsbuildinfo
+.loom

@@ -2,7 +2,7 @@ name: polaris-viz
 up:
   - node:
       yarn: 1.22.5
-      version: v12.20.1 # to be kept in sync with .nvmrc .github/workflows/main.yml
+      version: v12.22.0 # to be kept in sync with .nvmrc .github/workflows/main.yml
 
 open:
   app: http://localhost:8080/

@@ -1,7 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {mountWithProvider} from '../../test-utilities';
+import {mountWithProvider, expectToThrow} from '../../test-utilities';
 import {DEFAULT_THEME} from '../../constants';
 import {useTheme} from '../useTheme';
 
@@ -48,10 +48,8 @@ describe('useTheme', () => {
       return <div>{JSON.stringify(theme)}</div>;
     }
 
-    expect(() => {
+    expectToThrow(() => {
       mount(<TestComponent />);
-    }).toThrow(
-      `SomeOtherTheme theme not found. Did you forget to define it in the PolarisVizProvider?`,
-    );
+    }, `SomeOtherTheme theme not found. Did you forget to define it in the PolarisVizProvider?`);
   });
 });

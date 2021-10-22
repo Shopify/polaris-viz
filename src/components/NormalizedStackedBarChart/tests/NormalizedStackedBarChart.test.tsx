@@ -1,7 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
-import {NormalizedStackedBarChart} from 'components';
 
+import {NormalizedStackedBarChart} from '../../../components/NormalizedStackedBarChart';
 import {mountWithProvider} from '../../../test-utilities';
 import {BarSegment, BarLabel} from '../components';
 

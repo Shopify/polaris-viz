@@ -1,7 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
-import {SkipLink} from 'components/SkipLink';
 
+import {SkipLink} from '../../../components/SkipLink';
 import {MultiSeriesBarChart} from '../MultiSeriesBarChart';
 import {Chart} from '../Chart';
 

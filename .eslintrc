@@ -85,7 +85,7 @@
       "files": ["src/**/*.{ts,tsx}"],
       "extends": ["plugin:@shopify/typescript-type-checking"],
       "parserOptions": {
-        "project": "./tsconfig.json"
+        "project": ["./tsconfig.json"]
       },
       "rules": {
         "@typescript-eslint/prefer-readonly": "off",
@@ -95,23 +95,26 @@
     },
     {
       "files": ["**/*.test.{ts,tsx}"],
+      "parserOptions": {
+        "project": ["./tsconfig.json"]
+      },
       "rules": {
         "jest/no-truthy-falsy": "off",
         "@shopify/no-ancestor-directory-import": "off",
-        "@shopify/jsx-no-hardcoded-content": "off"
-      }
-    },
-    {
-      "files": ["examples/**/*.js"],
-      "rules": {
-        "import/no-extraneous-dependencies": "off",
-        "import/no-unresolved": "off",
-        "react/prop-types": "off",
-        "@shopify/jsx-no-hardcoded-content": "off"
+        "@shopify/jsx-no-hardcoded-content": "off",
+        "jest/expect-expect": [
+          "error",
+          {
+            "assertFunctionNames": ["expect", "expectToThrow"]
+          }
+        ]
       }
     },
     {
       "files": ["**/*.stories.{ts,tsx}"],
+      "parserOptions": {
+        "project": ["./tsconfig.json"]
+      },
       "rules": {
         "import/no-default-export": "off"
       }

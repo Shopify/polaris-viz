@@ -2,6 +2,24 @@
 
 ## Unreleased
 
+### Changed
+
+- Switch the build system to use `loom` instead of a mix of `sewing-kit`, `rollup`, `typescript`, and other custom-built functionality. We now provide builds with CommonJS, ESM, and ESNext output.
+- **Breaking change** The build output has moved. See `build/{cjs,esm,esnext}` for the various formats. Types have also moved to `build/ts/src`. See https://github.com/Shopify/web/pull/50652 for an example of how these changes might impact your project.
+- **Breaking change** CSS class names are no longer prefixed and namedspaced in the same way. If you are targeting Polaris Viz elements, please [create an issue](https://github.com/Shopify/polaris-viz/issues/new) so we can talk about your scenario.
+  - Before: `.PolarisViz-ChartContainer`, `.PolarisViz-Chart__BarGroup`, etc
+  - After: `._ChartContainer_tub85_3`, `._BarGroup_ysryh_7`, etc
+- **Potentially breaking change** We now generate a proper ESNext build that should _not_ require any workarounds when integrating with Webpack and `sewing-kit` (provided [`sewing-kit >= 0.135.0`](https://github.com/Shopify/sewing-kit/blob/main/CHANGELOG.md#01350---2020-08-19)).
+- **Potentially breaking change** We now target [`@shopify/browserslist-config`](https://github.com/Shopify/web-configs/tree/main/packages/browserslist-config) for browser support. See the full list of changes [here](https://www.diffchecker.com/GYbqZwse). Most notably , we've dropped explicit support for the following browsers:
+  - Safari < 13.1
+  - iOS Safari < 12.2
+  - Internet Explorer 11
+
+#### Developer Changes
+
+- We no longer support "absolute" import paths in our tests. This allowed us to import components via `import {Thing} from 'components/Thing'`, but now you must use the relative path (e.g. `import {Thing} from '../../components/Thing'`). This allow our build tools to be consistent and not needing to add support in different ways (e.g. `jest`, `rollup`, `storybook`).
+
+
 ## [0.21.5] - 2021-10-21
 
 ### Added
@@ -11,16 +29,19 @@
 ## [0.21.4] - 2021-10-20
 
 ### Added
+
 - Charts with `xAxisOptions` have the option to disable text wrapping of xAxis labels
 
 ### Fixed
--`<StackedAreaChart />` stroke is cut off if it reaches the top of the chart
+
+- `<StackedAreaChart />` stroke is cut off if it reaches the top of the chart
 - Various xAxis label bugs that caused labels to truncate too early
 - Apply yAxis formatter to default tooltip on `<LineChart />`
 
 ## [0.21.3] - 2021-10-15
 
 ### Fixed
+
 - Circular dependency in `<LineChart />`
 - Theme.line.strokeColor now gets applied to StackedAreaChart
 - Theme.line.lineStyle and Theme.line.hasPoint now gets applied to Sparkline
@@ -29,40 +50,46 @@
 ## [0.21.2] - 2021-09-29
 
 ### Changed
+
 - Storybook is now used for documentation and is deployed using Github Pages
 - Line chart animates from the top up, instead of horizontally
 
 ### Fixed
+
 - Charts at very small sizes no longer get cut off at the bottom
 
 ## [0.21.1] - 2021-09-23
 
 ### Added
+
 - Hiding the xAxis is now possible on the `<BarChart />`, `<MultiseriesBarChart />` and `<StackedAreaChart />`
 - Added logic to push `<TooltipContainer>` away from `<BarChart />` & `<MultiseriesBarChart />` to not obscure bars.
 
 ### Fixed
+
 - xAxis labels are no longer cut off on charts at small widths when they contain mostly numbers
 - Fixed measurement logic around labels for small charts.
 - Removed stray semi-colons in BarChart component
 
 ### Changed
+
 - Improved performance when mounting data sets in `<BarChart />` & `<MultiseriesBarChart />`.
 
-
 ## [0.20.3] - 2021-09-14
+
 - Fixed the direction of the gradient on the horizontal `<NormalizedStackedBarChart />` legend
 - Remove change that made data required in `<Legend />` props
 
 ## [0.20.2] - 2021-09-13
 
 ### Fixed
+
 - Fixed the direction of the gradient on the horizontal `<NormalizedStackedBarChart />`
 - Gradient not being applied properly to `<Sparkbar>`
 
 ### Changed
-- Individual bar colors can no longer be overwritten in  `<Sparkbar>`, but the bar color over all can be overwritten by using the `barColor` prop
 
+- Individual bar colors can no longer be overwritten in  `<Sparkbar>`, but the bar color over all can be overwritten by using the `barColor` prop
 
 ## [0.20.0] - 2021-09-10
 
@@ -95,6 +122,7 @@
 - yAxis labels now default to right aligned in `<MultiSeriesBarChart>`.
 
 ## [0.19.0-1] - 2021-09-01
+
 ### Added
 
 - Added `Light` theme.
@@ -106,12 +134,14 @@
 - `<Legend>` now defaults to using series colors.
 - `<SparkLine>` dashed lines no longer show point.
 - Made `color` optional in `LegendData`.
+
 ### Fixed
 
 - Non-solid lines in `<LineChart />` were not being set to `dottedStrokeColor` correctly.
 - Fixed wrong color being applied when `lineType` was not provided.
 
 ## [0.19.0-0] - 2021-08-31
+
 ### Added
 
 - `PolarisVizProvider` to support theming charts
@@ -129,11 +159,13 @@
 - `colors` prop from  `<NormalizedStackedBarChart />`
 
 ### Changed
+
 - `<BarChart />`, `<LineChart />`, `<Sparkline />`, `<NormalizedStackedBarChart />`, `<MultiSeriesBarChart />` and `<Sparkbar />` styles now are defined through themes in `PolarisVizProvider` instead of props. For more details check the [migration guide](https://docs.google.com/document/d/1VxfcgBbTNwjmYix1jGuDMgqDgIdehTgQbVZpER7djeU/edit?usp=sharing)
 - change indicators on the  `<NormalizedStackedBarChart />` can now have their colors configured externally, which applies the color to the metric and percentage change
 - `SparkChartData` now accepts `value` and `color` properties, instead of `number | null`, to allow individual bars to override the `seriesColors`.
 
 ### Fixed
+
 - in `<Sparkbar />`, align comparison bar and bars.
 - `<NormalizedStackedBarChart />` no longer overflows its container by a few pixels
 - [Updates `serialize-javascript` package](https://github.com/Shopify/polaris-viz/pull/477). No consumer-facing changes are expected.
