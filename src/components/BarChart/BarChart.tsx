@@ -69,14 +69,11 @@ export function BarChart({
     updateDimensions();
   }, 100);
 
-  const handlePrintMediaQueryChange = useCallback(
-    (event: MediaQueryListEvent) => {
-      if (event.matches && ref != null) {
-        setChartDimensions(ref.getBoundingClientRect());
-      }
-    },
-    [ref],
-  );
+  const handlePrintMediaQueryChange = useCallback(() => {
+    if (ref != null) {
+      setChartDimensions(ref.getBoundingClientRect());
+    }
+  }, [ref]);
 
   const xAxisOptionsWithDefaults = {
     labelFormatter: (value: string) => value,
