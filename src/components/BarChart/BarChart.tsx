@@ -69,12 +69,6 @@ export function BarChart({
     updateDimensions();
   }, 100);
 
-  const handlePrintMediaQueryChange = useCallback(() => {
-    if (ref != null) {
-      setChartDimensions(ref.getBoundingClientRect());
-    }
-  }, [ref]);
-
   const xAxisOptionsWithDefaults = {
     labelFormatter: (value: string) => value,
     useMinimalLabels: false,
@@ -96,52 +90,66 @@ export function BarChart({
     if (!isServer) {
       window.addEventListener('resize', debouncedUpdateDimensions);
 
+      const printChrome = () => {
+        if (ref) {
+          setChartDimensions(ref.getBoundingClientRect());
+        }
+      };
+
+      const printSafari = () => {
+        if (ref) {
+          setTimeout(() => {
+            const {padding} = getComputedStyle(ref);
+            const width = ref.clientWidth - parseInt(padding, 10);
+            const height = ref.clientHeight - parseInt(padding, 10);
+            setChartDimensions({width, height});
+          });
+        }
+      };
+
       const isChrome = navigator.userAgent.includes('Chrome');
       const isFirefox = navigator.userAgent.includes('Firefox');
       const isSafari = navigator.userAgent.includes('Safari') && !isChrome;
 
-      console.log({isChrome, isFirefox, isSafari});
-
       if (isChrome) {
-        if (typeof window.matchMedia('print').addEventListener === 'function') {
-          window
-            .matchMedia('print')
-            .addEventListener('change', handlePrintMediaQueryChange);
-        } else if (
-          typeof window.matchMedia('print').addListener === 'function'
-        ) {
-          window.matchMedia('print').addListener(handlePrintMediaQueryChange);
-        }
+        window.matchMedia('print').addEventListener('change', printChrome);
       }
 
       if (isSafari) {
-        window.matchMedia('print').addEventListener('change', function (event) {
-          if (ref) {
-            setTimeout(() => {
-              console.log(
-                'is safari: match media',
-                ref.getBoundingClientRect(),
-              );
-
-              setChartDimensions(ref.getBoundingClientRect());
-            });
-          }
-        });
+        if (typeof window.matchMedia('print').addEventListener === 'function') {
+          window.matchMedia('print').addEventListener('change', printSafari);
+        } else if (
+          typeof window.matchMedia('print').addListener === 'function'
+        ) {
+          window.matchMedia('print').addListener(printSafari);
+        }
       }
 
-      if (!isSafari) {
-        window.onbeforeprint = function () {
-          if (ref) {
-            console.log('not safari: beforeprint', ref.getBoundingClientRect());
-            setChartDimensions(ref.getBoundingClientRect());
-          }
+      if (isFirefox) {
+        window.onbeforeprint = function (e) {
+          console.log(e);
+          setTimeout(() => {
+            if (ref) {
+              console.log(
+                'not safari: beforeprint',
+                ref.getBoundingClientRect(),
+              );
+              setChartDimensions(ref.getBoundingClientRect());
+            }
+          }, 5000);
         };
 
-        window.onafterprint = function () {
-          if (ref) {
-            console.log('not safari: afterprint', ref.getBoundingClientRect());
-            setChartDimensions(ref.getBoundingClientRect());
-          }
+        window.onafterprint = function (e) {
+          console.log(e);
+          setTimeout(() => {
+            if (ref) {
+              console.log(
+                'not safari: afterprint',
+                ref.getBoundingClientRect(),
+              );
+              setChartDimensions(ref.getBoundingClientRect());
+            }
+          }, 5000);
         };
       }
     }

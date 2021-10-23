@@ -2,4 +2,10 @@
 
 .ChartContainer {
   @include chart-container;
+
+  // print does not respect border-box, so padding throws off sizing
+  // this fix works for chrome
+  @media print {
+    padding: 0 !important;
+  }
 }
