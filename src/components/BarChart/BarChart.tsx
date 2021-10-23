@@ -69,12 +69,11 @@ export function BarChart({
     updateDimensions();
   }, 100);
 
-  // const handlePrintMediaQueryChange = useCallback(() => {
-  //   if (ref != null) {
-  //     console.log('debug v');
-  //     setChartDimensions(ref.getBoundingClientRect());
-  //   }
-  // }, [ref]);
+  const handlePrintMediaQueryChange = useCallback(() => {
+    if (ref != null) {
+      setChartDimensions(ref.getBoundingClientRect());
+    }
+  }, [ref]);
 
   const xAxisOptionsWithDefaults = {
     labelFormatter: (value: string) => value,
@@ -97,28 +96,50 @@ export function BarChart({
     if (!isServer) {
       window.addEventListener('resize', debouncedUpdateDimensions);
 
-      const isSafari = navigator.userAgent.includes('Safari');
+      const isChrome = navigator.userAgent.includes('Chrome');
+      const isFirefox = navigator.userAgent.includes('Firefox');
+      const isSafari = navigator.userAgent.includes('Safari') && !isChrome;
+
+      console.log({isChrome, isFirefox, isSafari});
+
+      if (isChrome) {
+        if (typeof window.matchMedia('print').addEventListener === 'function') {
+          window
+            .matchMedia('print')
+            .addEventListener('change', handlePrintMediaQueryChange);
+        } else if (
+          typeof window.matchMedia('print').addListener === 'function'
+        ) {
+          window.matchMedia('print').addListener(handlePrintMediaQueryChange);
+        }
+      }
 
       if (isSafari) {
-        window.matchMedia('print').addEventListener('change', function () {
-          console.log('is safari: match media', ref);
+        window.matchMedia('print').addEventListener('change', function (event) {
           if (ref) {
-            setChartDimensions(ref.getBoundingClientRect());
+            setTimeout(() => {
+              console.log(
+                'is safari: match media',
+                ref.getBoundingClientRect(),
+              );
+
+              setChartDimensions(ref.getBoundingClientRect());
+            });
           }
         });
       }
 
       if (!isSafari) {
         window.onbeforeprint = function () {
-          console.log('not safari: beforeprint', ref);
           if (ref) {
+            console.log('not safari: beforeprint', ref.getBoundingClientRect());
             setChartDimensions(ref.getBoundingClientRect());
           }
         };
 
         window.onafterprint = function () {
-          console.log('not safari: afterprint', ref);
           if (ref) {
+            console.log('not safari: afterprint', ref.getBoundingClientRect());
             setChartDimensions(ref.getBoundingClientRect());
           }
         };
