@@ -243,17 +243,11 @@ export function Chart({
       ];
 
   return (
-    <div
-      className={styles.ChartContainer}
-      style={{
-        height,
-        width,
-      }}
-    >
+    <div className={styles.ChartContainer}>
       <svg
         xmlns={XMLNS}
-        width={width}
-        height={height}
+        viewBox={`0 0 ${width} ${height}`}
+        preserveAspectRatio="xMinYMin meet"
         className={styles.Svg}
         role={emptyState ? 'img' : 'list'}
         aria-label={emptyState ? emptyStateText : undefined}

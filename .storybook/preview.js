@@ -139,7 +139,6 @@ const Container = ({children, theme}: ContainerProps) => {
       style={{
         padding: 'calc(1rem + 20px)',
         boxSizing: 'border-box',
-        overflow: 'hidden',
         margin: '-1rem',
         background: selectedTheme.chartContainer.backgroundColor,
       }}
@@ -148,7 +147,6 @@ const Container = ({children, theme}: ContainerProps) => {
         style={{
           boxSizing: 'border-box',
           height: '400px',
-          overflow: 'hidden',
         }}
       >
         {children}

@@ -108,7 +108,6 @@ export function BarChart({
       };
 
       const isChrome = navigator.userAgent.includes('Chrome');
-      const isFirefox = navigator.userAgent.includes('Firefox');
       const isSafari = navigator.userAgent.includes('Safari') && !isChrome;
 
       if (isChrome) {
@@ -123,34 +122,6 @@ export function BarChart({
         ) {
           window.matchMedia('print').addListener(printSafari);
         }
-      }
-
-      if (isFirefox) {
-        window.onbeforeprint = function (event) {
-          console.log(event);
-          setTimeout(() => {
-            if (ref) {
-              console.log(
-                'not safari: beforeprint',
-                ref.getBoundingClientRect(),
-              );
-              setChartDimensions(ref.getBoundingClientRect());
-            }
-          }, 5000);
-        };
-
-        window.onafterprint = function (event) {
-          console.log(event);
-          setTimeout(() => {
-            if (ref) {
-              console.log(
-                'not safari: afterprint',
-                ref.getBoundingClientRect(),
-              );
-              setChartDimensions(ref.getBoundingClientRect());
-            }
-          }, 5000);
-        };
       }
     }
 
