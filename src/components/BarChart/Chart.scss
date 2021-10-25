@@ -1,15 +1,14 @@
 .ChartContainer {
   position: relative;
-  display: inline-block;
   user-select: none;
   left: 0px;
   top: 0px;
+  overflow: hidden;
+  text-align: left;
+  line-height: normal;
+  z-index: 0;
 }
 
 .Svg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: inline-block;
   max-width: 100%;
 }
