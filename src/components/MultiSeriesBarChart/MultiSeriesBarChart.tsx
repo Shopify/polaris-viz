@@ -6,7 +6,12 @@ import type {Dimensions} from '../../types';
 import {SkipLink} from '../SkipLink';
 import {TooltipContent} from '../TooltipContent';
 import {uniqueId} from '../../utilities';
-import {useResizeObserver, useTheme, useThemeSeriesColors} from '../../hooks';
+import {
+  usePrintResizing,
+  useResizeObserver,
+  useTheme,
+  useThemeSeriesColors,
+} from '../../hooks';
 
 import {Chart} from './Chart';
 import type {
@@ -49,6 +54,8 @@ export function MultiSeriesBarChart({
   const skipLinkAnchorId = useRef(uniqueId('multiSeriesBarChart'));
   const {ref, setRef, entry} = useResizeObserver();
 
+  usePrintResizing({ref, setChartDimensions});
+
   const emptyState = series.length === 0;
 
   const updateDimensions = useCallback(() => {
@@ -72,15 +79,6 @@ export function MultiSeriesBarChart({
     updateDimensions();
   }, 100);
 
-  const handlePrintMediaQueryChange = useCallback(
-    (event: MediaQueryListEvent) => {
-      if (event.matches && ref != null) {
-        setChartDimensions(ref.getBoundingClientRect());
-      }
-    },
-    [ref],
-  );
-
   useLayoutEffect(() => {
     updateDimensions();
 
@@ -88,39 +86,14 @@ export function MultiSeriesBarChart({
 
     if (!isServer) {
       window.addEventListener('resize', debouncedUpdateDimensions);
-
-      if (typeof window.matchMedia('print').addEventListener === 'function') {
-        window
-          .matchMedia('print')
-          .addEventListener('change', handlePrintMediaQueryChange);
-      } else if (typeof window.matchMedia('print').addListener === 'function') {
-        window.matchMedia('print').addListener(handlePrintMediaQueryChange);
-      }
     }
 
     return () => {
       if (!isServer) {
         window.removeEventListener('resize', debouncedUpdateDimensions);
-
-        if (typeof window.matchMedia('print').addEventListener === 'function') {
-          window
-            .matchMedia('print')
-            .removeEventListener('change', handlePrintMediaQueryChange);
-        } else if (
-          typeof window.matchMedia('print').addListener === 'function'
-        ) {
-          window
-            .matchMedia('print')
-            .removeListener(handlePrintMediaQueryChange);
-        }
       }
     };
-  }, [
-    entry,
-    debouncedUpdateDimensions,
-    updateDimensions,
-    handlePrintMediaQueryChange,
-  ]);
+  }, [entry, debouncedUpdateDimensions, updateDimensions]);
 
   const xAxisOptionsWithDefaults: XAxisOptions = {
     labelFormatter: (value: string) => value,

@@ -3,3 +3,9 @@
 .VisuallyHidden {
   @include visually-hidden;
 }
+
+.Group {
+  @media print {
+    clip-path: none;
+  }
+}

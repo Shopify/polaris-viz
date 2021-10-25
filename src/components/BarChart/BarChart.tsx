@@ -4,7 +4,7 @@ import {useDebouncedCallback} from 'use-debounce';
 import type {Dimensions, XAxisOptions, YAxisOptions} from '../../types';
 import {SkipLink} from '../SkipLink';
 import {uniqueId, normalizeData} from '../../utilities';
-import {useResizeObserver} from '../../hooks';
+import {useResizeObserver, usePrintResizing} from '../../hooks';
 import {ChartContainer} from '../ChartContainer';
 
 import {TooltipContent} from './components';
@@ -44,6 +44,8 @@ export function BarChart({
   );
   const {ref, setRef, entry} = useResizeObserver();
 
+  usePrintResizing({ref, setChartDimensions});
+
   const skipLinkAnchorId = useRef(uniqueId('barChart'));
 
   const emptyState = data.length === 0;
@@ -69,15 +71,6 @@ export function BarChart({
     updateDimensions();
   }, 100);
 
-  const handlePrintMediaQueryChange = useCallback(
-    (event: MediaQueryListEvent) => {
-      if (event.matches && ref != null) {
-        setChartDimensions(ref.getBoundingClientRect());
-      }
-    },
-    [ref],
-  );
-
   const xAxisOptionsWithDefaults = {
     labelFormatter: (value: string) => value,
     useMinimalLabels: false,
@@ -98,40 +91,14 @@ export function BarChart({
 
     if (!isServer) {
       window.addEventListener('resize', debouncedUpdateDimensions);
-
-      if (typeof window.matchMedia('print').addEventListener === 'function') {
-        window
-          .matchMedia('print')
-          .addEventListener('change', handlePrintMediaQueryChange);
-      } else if (typeof window.matchMedia('print').addListener === 'function') {
-        window.matchMedia('print').addListener(handlePrintMediaQueryChange);
-      }
     }
 
     return () => {
       if (!isServer) {
         window.removeEventListener('resize', debouncedUpdateDimensions);
-
-        if (typeof window.matchMedia('print').addEventListener === 'function') {
-          window
-            .matchMedia('print')
-            .removeEventListener('change', handlePrintMediaQueryChange);
-        } else if (
-          typeof window.matchMedia('print').addListener === 'function'
-        ) {
-          window
-            .matchMedia('print')
-            .removeListener(handlePrintMediaQueryChange);
-        }
       }
     };
-  }, [
-    entry,
-    debouncedUpdateDimensions,
-    updateDimensions,
-    ref,
-    handlePrintMediaQueryChange,
-  ]);
+  }, [entry, debouncedUpdateDimensions, updateDimensions]);
 
   function renderDefaultTooltipContent({
     label,

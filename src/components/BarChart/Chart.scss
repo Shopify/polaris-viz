@@ -1,8 +1,10 @@
 .ChartContainer {
   position: relative;
   user-select: none;
+  max-width: 100%;
 }
 
 .Svg {
   overflow: visible;
+  max-width: 100%;
 }

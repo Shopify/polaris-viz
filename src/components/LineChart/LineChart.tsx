@@ -8,6 +8,7 @@ import {isGradientType, changeColorOpacity, uniqueId} from '../../utilities';
 import {SkipLink} from '../SkipLink';
 import {
   usePrefersReducedMotion,
+  usePrintResizing,
   useResizeObserver,
   useTheme,
 } from '../../hooks';
@@ -55,6 +56,8 @@ export function LineChart({
 
   const skipLinkAnchorId = useRef(uniqueId('lineChart'));
 
+  usePrintResizing({ref, setChartDimensions});
+
   const updateDimensions = useCallback(() => {
     if (entry != null) {
       const {width, height} = entry.contentRect;
@@ -76,15 +79,6 @@ export function LineChart({
     updateDimensions();
   }, 100);
 
-  const handlePrintMediaQueryChange = useCallback(
-    (event: MediaQueryListEvent) => {
-      if (event.matches && ref != null) {
-        setChartDimensions(ref.getBoundingClientRect());
-      }
-    },
-    [ref],
-  );
-
   useLayoutEffect(() => {
     updateDimensions();
 
@@ -92,39 +86,14 @@ export function LineChart({
 
     if (!isServer) {
       window.addEventListener('resize', debouncedUpdateDimensions);
-
-      if (typeof window.matchMedia('print').addEventListener === 'function') {
-        window
-          .matchMedia('print')
-          .addEventListener('change', handlePrintMediaQueryChange);
-      } else if (typeof window.matchMedia('print').addListener === 'function') {
-        window.matchMedia('print').addListener(handlePrintMediaQueryChange);
-      }
     }
 
     return () => {
       if (!isServer) {
         window.removeEventListener('resize', debouncedUpdateDimensions);
-
-        if (typeof window.matchMedia('print').addEventListener === 'function') {
-          window
-            .matchMedia('print')
-            .removeEventListener('change', handlePrintMediaQueryChange);
-        } else if (
-          typeof window.matchMedia('print').addListener === 'function'
-        ) {
-          window
-            .matchMedia('print')
-            .removeListener(handlePrintMediaQueryChange);
-        }
       }
     };
-  }, [
-    entry,
-    updateDimensions,
-    debouncedUpdateDimensions,
-    handlePrintMediaQueryChange,
-  ]);
+  }, [entry, updateDimensions, debouncedUpdateDimensions, ref]);
 
   const xAxisOptionsWithDefaults: XAxisOptions = {
     labelFormatter: (value: string) => value,

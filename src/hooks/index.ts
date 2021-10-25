@@ -8,3 +8,4 @@ export {useTheme} from './useTheme';
 export {usePolarisVizContext} from './usePolarisVizContext';
 export {useThemeSeriesColors} from './use-theme-series-colors';
 export {useLinearChartAnimations} from './use-linear-chart-animations';
+export {usePrintResizing} from './use-print-resizing';
