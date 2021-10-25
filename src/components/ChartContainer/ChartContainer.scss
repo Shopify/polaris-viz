@@ -5,7 +5,9 @@
 
   // print does not respect border-box, so padding throws off sizing
   // this fix works for chrome
+  /* stylelint-disable declaration-no-important */
   @media print {
     padding: 0 !important;
   }
+  /* stylelint-enable declaration-no-important */
 }
