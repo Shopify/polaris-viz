@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Added
+
+- Added `grid.showHorizontalLines` theme option to `<StackedAreaChart />`.
+
 ## [0.22.0] - 2021-10-22
 
 ### Changed
