@@ -247,7 +247,8 @@ export function Chart({
       <svg
         xmlns={XMLNS}
         viewBox={`0 0 ${width} ${height}`}
-        preserveAspectRatio="xMinYMin meet"
+        width={width}
+        height={height}
         className={styles.Svg}
         role={emptyState ? 'img' : 'list'}
         aria-label={emptyState ? emptyStateText : undefined}
