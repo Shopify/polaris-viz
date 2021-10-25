@@ -1,11 +1,9 @@
 .ChartContainer {
   position: relative;
   display: inline-block;
-  width: 100%;
-  height: 100%;
-  padding-bottom: 100%;
-  vertical-align: middle;
   user-select: none;
+  left: 0px;
+  top: 0px;
 }
 
 .Svg {
@@ -13,4 +11,5 @@
   top: 0;
   left: 0;
   display: inline-block;
+  max-width: 100%;
 }

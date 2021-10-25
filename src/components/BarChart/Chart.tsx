@@ -243,7 +243,7 @@ export function Chart({
       ];
 
   return (
-    <div className={styles.ChartContainer}>
+    <div className={styles.ChartContainer} style={{width, height}}>
       <svg
         xmlns={XMLNS}
         viewBox={`0 0 ${width} ${height}`}
