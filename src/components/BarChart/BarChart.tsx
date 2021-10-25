@@ -126,8 +126,8 @@ export function BarChart({
       }
 
       if (isFirefox) {
-        window.onbeforeprint = function (e) {
-          console.log(e);
+        window.onbeforeprint = function (event) {
+          console.log(event);
           setTimeout(() => {
             if (ref) {
               console.log(
@@ -139,8 +139,8 @@ export function BarChart({
           }, 5000);
         };
 
-        window.onafterprint = function (e) {
-          console.log(e);
+        window.onafterprint = function (event) {
+          console.log(event);
           setTimeout(() => {
             if (ref) {
               console.log(
