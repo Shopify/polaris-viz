@@ -5,6 +5,7 @@ import {DataType} from '../../../../types';
 import {
   BARS_TRANSITION_CONFIG,
   DEFAULT_BORDER_RADIUS,
+  MIN_WIDTH_BORDER_RADIUS,
 } from '../../../../constants';
 import {clamp} from '../../../../utilities';
 
@@ -37,9 +38,9 @@ interface BarProps {
   y: number;
   animationDelay?: number;
   ariaLabel?: string;
-  borderRadius?: number;
   index?: number;
   isAnimated?: boolean;
+  needsMinWidth?: boolean;
   role?: string;
   roundedBorder?: RoundedBorder;
   transform?: string;
@@ -67,11 +68,11 @@ function getBorderRadius(
 export const Bar = React.memo(function Bar({
   animationDelay = 0,
   ariaLabel,
-  borderRadius = DEFAULT_BORDER_RADIUS,
   color,
   height,
   index,
   isAnimated,
+  needsMinWidth = false,
   role,
   roundedBorder = RoundedBorder.None,
   tabIndex,
@@ -88,7 +89,7 @@ export const Bar = React.memo(function Bar({
 
       const [topLeft, topRight, bottomRight, bottomLeft] = getBorderRadius(
         roundedBorder,
-        borderRadius,
+        needsMinWidth ? MIN_WIDTH_BORDER_RADIUS : DEFAULT_BORDER_RADIUS,
       );
 
       const top = topLeft + topRight;
@@ -109,7 +110,7 @@ export const Bar = React.memo(function Bar({
       Z
     `;
     },
-    [borderRadius, roundedBorder],
+    [needsMinWidth, roundedBorder],
   );
 
   const spring = useSpring<{height: number; width: number}>({

@@ -17,8 +17,6 @@ import {Bar, RoundedBorder} from './Bar';
 import {Label} from './Label';
 import {getGradientDefId} from './GradientDefs';
 
-const MIN_WIDTH_BORDER_RADIUS = 2;
-
 interface HorizontalBarProps {
   areAllAllNegative: boolean;
   ariaLabel: string;
@@ -89,11 +87,11 @@ export function HorizontalBars({
           <React.Fragment key={`series-${barColor}-${name}`}>
             <Bar
               animationDelay={animationDelay}
-              borderRadius={needsMinWidth ? MIN_WIDTH_BORDER_RADIUS : undefined}
               color={`url(#${barColor})`}
               height={barHeight}
               index={groupIndex}
               isAnimated={isAnimated}
+              needsMinWidth={needsMinWidth}
               role="img"
               roundedBorder={RoundedBorder.Right}
               tabIndex={ariaHidden ? -1 : 0}
