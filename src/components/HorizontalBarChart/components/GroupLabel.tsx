@@ -6,12 +6,12 @@ import {getTextWidth} from '../../../utilities';
 import {LABEL_HEIGHT} from '../constants';
 
 interface GroupLabelProps {
-  areAllAllNegative: boolean;
+  areAllNegative: boolean;
   label: string;
   theme?: string;
 }
 
-export function GroupLabel({areAllAllNegative, label, theme}: GroupLabelProps) {
+export function GroupLabel({areAllNegative, label, theme}: GroupLabelProps) {
   const labelWidth = getTextWidth({text: label, fontSize: FONT_SIZE});
   const selectedTheme = useTheme(theme);
 
@@ -19,7 +19,7 @@ export function GroupLabel({areAllAllNegative, label, theme}: GroupLabelProps) {
     <foreignObject
       height={LABEL_HEIGHT}
       width="100%"
-      x={areAllAllNegative ? -labelWidth : 0}
+      x={areAllNegative ? labelWidth * -1 : 0}
       aria-hidden="true"
     >
       <div

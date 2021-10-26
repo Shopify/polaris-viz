@@ -18,35 +18,31 @@ import {Label} from './Label';
 import {getGradientDefId} from './GradientDefs';
 
 interface HorizontalBarProps {
-  areAllAllNegative: boolean;
   ariaLabel: string;
   barHeight: number;
-  firstNonNegativeValue: number;
   groupIndex: number;
   isAnimated: boolean;
-  labelFormatter: LabelFormatter;
-  series: Data[];
   isSimple: boolean;
+  labelFormatter: LabelFormatter;
+  name: string;
+  series: Data[];
   xScale: ScaleLinear<number, number>;
   animationDelay?: number;
   theme?: string;
-  name: string;
 }
 
 export function HorizontalBars({
-  areAllAllNegative,
+  animationDelay,
   ariaLabel,
   barHeight,
   groupIndex,
-  firstNonNegativeValue,
   isAnimated,
-  labelFormatter,
-  series,
   isSimple,
-  theme,
-  animationDelay,
-  xScale,
+  labelFormatter,
   name,
+  series,
+  theme,
+  xScale,
 }: HorizontalBarProps) {
   const selectedTheme = useTheme(theme);
 
@@ -71,14 +67,10 @@ export function HorizontalBars({
         });
 
         const leftLabelOffset = isSimple ? labelWidth + BAR_LABEL_OFFSET : 0;
-        const width = isNegative
-          ? Math.abs(xScale(rawValue) - firstNonNegativeValue + leftLabelOffset)
-          : Math.abs(xScale(rawValue) - firstNonNegativeValue);
+        const width = Math.abs(xScale(rawValue) - xScale(0));
 
         const y = barHeight * seriesIndex + SPACE_BETWEEN_SINGLE * seriesIndex;
-        const negativeX = areAllAllNegative
-          ? -(width + leftLabelOffset)
-          : -(width + leftLabelOffset);
+        const negativeX = (width + leftLabelOffset) * -1;
         const x = isNegative ? negativeX : width + BAR_LABEL_OFFSET;
         const ariaHidden = seriesIndex !== 0;
         const barColor = color ? id : getGradientDefId(theme, seriesIndex);

@@ -68,9 +68,10 @@ export function Chart({
     selectedTheme,
   );
 
-  const {allNumbers, longestLabel, areAllAllNegative} = useDataForChart({
+  const {allNumbers, longestLabel, areAllNegative} = useDataForChart({
     series,
     isSimple,
+    isStacked,
     labelFormatter,
   });
 
@@ -79,13 +80,13 @@ export function Chart({
 
     series.forEach(({data}) => {
       const values = data.map(({rawValue}) => rawValue);
-      const max = areAllAllNegative ? Math.min(...values) : Math.max(...values);
+      const max = areAllNegative ? Math.min(...values) : Math.max(...values);
 
       maxes.push(max);
     });
 
     return maxes;
-  }, [series, areAllAllNegative]);
+  }, [series, areAllNegative]);
 
   const highestSumForStackedGroup = useMemo(() => {
     if (!isStacked) {
@@ -105,18 +106,10 @@ export function Chart({
     allNumbers,
     highestSumForStackedGroup,
     isStacked,
-    maxWidth: chartDimensions.width - longestLabel,
+    maxWidth:
+      chartDimensions.width - longestLabel.negative - longestLabel.positive,
     longestSeriesCount,
   });
-
-  const firstNonNegativeValue = useMemo(() => {
-    const value =
-      ticks.find((value) => {
-        return value >= 0;
-      }) ?? 0;
-
-    return xScale(value);
-  }, [xScale, ticks]);
 
   const {
     bandwidth,
@@ -188,7 +181,9 @@ export function Chart({
   }));
 
   const getTransform = (index: number) => {
-    return `translate(${firstNonNegativeValue}px,${groupHeight * index}px)`;
+    return `translate(${longestLabel.negative + xScale(0)}px,${
+      groupHeight * index
+    }px)`;
   };
 
   const [isFirstRender, setIsFirstRender] = useState(true);
@@ -294,7 +289,7 @@ export function Chart({
               }}
             >
               <GroupLabel
-                areAllAllNegative={areAllAllNegative}
+                areAllNegative={areAllNegative}
                 label={name}
                 theme={theme}
               />
@@ -305,17 +300,16 @@ export function Chart({
                   ariaLabel={ariaLabel}
                   barHeight={barHeight}
                   groupIndex={index}
-                  series={item.series.data}
-                  xScale={xScaleStacked}
                   name={name}
+                  series={item.series.data}
+                  theme={theme}
+                  xScale={xScaleStacked}
                 />
               ) : (
                 <HorizontalBars
                   animationDelay={animationDelay}
-                  areAllAllNegative={areAllAllNegative}
                   ariaLabel={ariaLabel}
                   barHeight={barHeight}
-                  firstNonNegativeValue={firstNonNegativeValue}
                   groupIndex={index}
                   isAnimated={isAnimated}
                   isSimple={isSimple}

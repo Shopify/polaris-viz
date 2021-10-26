@@ -8,15 +8,17 @@ import {GRADIENT_ID, LABEL_HEIGHT, STACKED_BAR_GAP} from '../constants';
 import {getBarId} from '../utilities';
 
 import {StackedBar} from './StackedBar';
+import {getGradientDefId} from './GradientDefs';
 
 export interface StackedBarsProps {
   animationDelay: number;
   ariaLabel: string;
   barHeight: number;
   groupIndex: number;
+  name: string;
   series: Data[];
   xScale: ScaleLinear<number, number>;
-  name: string;
+  theme?: string;
 }
 
 export function StackedBars({
@@ -24,9 +26,10 @@ export function StackedBars({
   ariaLabel,
   barHeight,
   groupIndex,
-  series,
-  xScale,
   name,
+  series,
+  theme,
+  xScale,
 }: StackedBarsProps) {
   const xOffsets = useMemo(() => {
     const offsets: number[] = [];
@@ -59,9 +62,10 @@ export function StackedBars({
         const id = getBarId(groupIndex, seriesIndex);
 
         const sliceColor = color ? id : `${GRADIENT_ID}${seriesIndex}`;
+
         return (
           <StackedBar
-            color={sliceColor}
+            color={color ? id : getGradientDefId(theme, seriesIndex)}
             groupIndex={groupIndex}
             height={barHeight}
             key={`${name}${sliceColor}`}
