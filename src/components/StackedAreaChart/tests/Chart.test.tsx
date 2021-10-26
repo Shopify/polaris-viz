@@ -1,6 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
+import {mockDefaultTheme} from '../../../test-utilities/mount-with-provider';
 import {LinearXAxis} from '../../../components/LinearXAxis';
 import {YAxis} from '../../../components/YAxis';
 import {HorizontalGridLines} from '../../../components/HorizontalGridLines';
@@ -11,7 +12,7 @@ import {
   TooltipWrapper,
   TooltipAnimatedContainer,
 } from '../../../components/TooltipWrapper';
-import {triggerSVGMouseMove} from '../../../test-utilities';
+import {mountWithProvider, triggerSVGMouseMove} from '../../../test-utilities';
 import {StackedAreas} from '../components';
 import {Chart} from '../Chart';
 
@@ -225,5 +226,14 @@ describe('<Chart />', () => {
     const chart = mount(<Chart {...updatedProps} />);
 
     expect(chart).toContainReactComponent(HorizontalGridLines);
+  });
+
+  it("doesn't render <HorizontalGridLines /> when theme disables them", () => {
+    const chart = mountWithProvider(
+      <Chart {...mockProps} />,
+      mockDefaultTheme({grid: {showHorizontalLines: false}}),
+    );
+
+    expect(chart).not.toContainReactComponent(HorizontalGridLines);
   });
 });

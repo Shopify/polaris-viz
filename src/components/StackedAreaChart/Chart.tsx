@@ -300,15 +300,17 @@ export function Chart({
           />
         </g>
 
-        <HorizontalGridLines
-          ticks={ticks}
-          transform={{
-            x: dataStartPosition,
-            y: Margin.Top,
-          }}
-          width={drawableWidth}
-          theme={theme}
-        />
+        {selectedTheme.grid.showHorizontalLines && (
+          <HorizontalGridLines
+            ticks={ticks}
+            transform={{
+              x: dataStartPosition,
+              y: Margin.Top,
+            }}
+            width={drawableWidth}
+            theme={theme}
+          />
+        )}
 
         <VisuallyHiddenRows
           formatYAxisLabel={formatYAxisLabel}
