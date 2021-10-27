@@ -13,6 +13,8 @@ import {
 } from '../../../../utilities';
 import {usePrevious, useTheme} from '../../../../hooks';
 
+import styles from './StackedAreas.scss';
+
 type StackedSeries = Series<
   {
     [key: string]: number;
@@ -89,8 +91,11 @@ export function Areas({
           fill="none"
         />
       </clipPath>
-
-      <g transform={transform} clipPath={`url(#${id})`}>
+      <g
+        transform={transform}
+        clipPath={`url(#${id})`}
+        className={styles.Group}
+      >
         {stackedValues.map((value, index) => {
           const shape = areaShape(value);
           const line = lineShape(value);

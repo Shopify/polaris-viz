@@ -119,7 +119,10 @@ export const decorators = [
           },
         }}
       >
-        <Container theme={context.args.theme}>
+        <Container
+          height={context.parameters.previewHeight}
+          theme={context.args.theme}
+        >
           <Story />
         </Container>
       </PolarisVizProvider>
@@ -131,7 +134,7 @@ interface ContainerProps {
   theme: string;
 }
 
-const Container = ({children, theme}: ContainerProps) => {
+const Container = ({children, theme, height = 400}: ContainerProps) => {
   const selectedTheme = useTheme(theme);
 
   return (
@@ -147,7 +150,7 @@ const Container = ({children, theme}: ContainerProps) => {
       <div
         style={{
           boxSizing: 'border-box',
-          height: '400px',
+          height: height,
           overflow: 'hidden',
         }}
       >

@@ -286,6 +286,7 @@ export function Chart({
   return (
     <div className={styles.Container}>
       <svg
+        viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
         className={styles.Chart}
         role={emptyState ? 'img' : 'table'}
         xmlns={XMLNS}

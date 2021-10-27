@@ -1,5 +1,5 @@
 export {eventPoint, eventPointNative} from './event-point';
-export {getTextWidth} from './get-text-width';
+export {getTextWidth, getTextHeight} from './get-text-dimensions';
 export {clamp} from './clamp';
 export {isGradientType} from './is-gradient-type';
 export {uniqueId} from './unique-id';

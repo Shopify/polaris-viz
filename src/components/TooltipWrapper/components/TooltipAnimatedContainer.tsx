@@ -4,7 +4,8 @@ import {useSpring, animated} from '@react-spring/web';
 import type {Dimensions, Margin} from '../../../types';
 import styles from '../TooltipContainer.scss';
 import type {TooltipPositionOffset} from '../types';
-import {getAlteredPosition} from '../utilities';
+import {getAlteredVerticalBarPosition} from '../utilities';
+import type {AlteredPosition} from '../utilities';
 import {DEFAULT_TOOLTIP_POSITION} from '../constants';
 
 export interface TooltipAnimatedContainerProps {
@@ -14,6 +15,7 @@ export interface TooltipAnimatedContainerProps {
   currentX: number;
   currentY: number;
   chartDimensions: Dimensions;
+  getAlteredPosition?: AlteredPosition;
   position?: TooltipPositionOffset;
   id?: string;
   bandwidth?: number;
@@ -21,14 +23,15 @@ export interface TooltipAnimatedContainerProps {
 
 export function TooltipAnimatedContainer({
   activePointIndex,
-  currentX,
-  currentY,
+  bandwidth = 0,
   chartDimensions,
   children,
+  currentX,
+  currentY,
+  id = '',
+  getAlteredPosition = getAlteredVerticalBarPosition,
   margin,
   position = DEFAULT_TOOLTIP_POSITION,
-  id = '',
-  bandwidth = 0,
 }: TooltipAnimatedContainerProps) {
   const tooltipRef = useRef<HTMLDivElement | null>(null);
   const [tooltipDimensions, setTooltipDimensions] = useState<Dimensions | null>(
