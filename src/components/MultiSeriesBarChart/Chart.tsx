@@ -219,6 +219,7 @@ export function Chart({
       }}
     >
       <svg
+        viewBox={`0 0 ${chartDimensions.width} ${chartDimensions.height}`}
         xmlns={XMLNS}
         width={chartDimensions.width}
         height={chartDimensions.height}

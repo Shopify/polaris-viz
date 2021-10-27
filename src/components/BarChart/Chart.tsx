@@ -252,6 +252,7 @@ export function Chart({
     >
       <svg
         xmlns={XMLNS}
+        viewBox={`0 0 ${width} ${height}`}
         width={width}
         height={height}
         className={styles.Svg}

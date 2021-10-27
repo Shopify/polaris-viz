@@ -264,6 +264,7 @@ export function Chart({
   return (
     <React.Fragment>
       <svg
+        viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
         className={styles.Chart}
         xmlns={XMLNS}
         width={dimensions.width}
