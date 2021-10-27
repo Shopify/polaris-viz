@@ -10,6 +10,8 @@ describe('<BarSegment />', () => {
     size: 'small' as 'small',
     orientation: 'horizontal' as 'horizontal',
     roundedCorners: true,
+    index: 1,
+    isAnimated: false,
   };
 
   it('gives the child a horizontal small class name', () => {
@@ -33,7 +35,7 @@ describe('<BarSegment />', () => {
   it('does not round up a 0 scale', () => {
     const barSegment = mount(<BarSegment {...mockProps} scale={0} />);
 
-    const barSegmentFlex = barSegment.find('div')!.props!.style!.flexBasis;
+    const barSegmentFlex = barSegment.find('div')!.props!.style!.width;
 
     expect(barSegmentFlex).toBe('0%');
   });
@@ -41,7 +43,7 @@ describe('<BarSegment />', () => {
   it('rounds up a scale above 0 and below 1.5', () => {
     const barSegment = mount(<BarSegment {...mockProps} scale={0.1} />);
 
-    const barSegmentFlex = barSegment.find('div')!.props!.style!.flexBasis;
+    const barSegmentFlex = barSegment.find('div')!.props!.style!.width;
 
     expect(barSegmentFlex).toBe('1.5%');
   });
@@ -49,7 +51,7 @@ describe('<BarSegment />', () => {
   it('does not round up a scale above 1.5', () => {
     const barSegment = mount(<BarSegment {...mockProps} scale={1.51} />);
 
-    const barSegmentFlex = barSegment.find('div')!.props!.style!.flexBasis;
+    const barSegmentFlex = barSegment.find('div')!.props!.style!.width;
 
     expect(barSegmentFlex).toBe('1.51%');
   });

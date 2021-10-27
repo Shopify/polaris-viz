@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import type {Story, Meta} from '@storybook/react';
 
 import {
@@ -71,4 +71,31 @@ VerticalSmall.args = {
   ...defaultProps,
   orientation: 'vertical' as 'vertical',
   size: 'small' as 'small',
+};
+
+export const DynamicData = () => {
+  const [data, setData] = useState(defaultProps.data);
+
+  const onClick = () => {
+    const newData = data.map((item) => {
+      const newValue = Math.floor(Math.random() * 200);
+      return {
+        ...item,
+        value: newValue,
+        formattedValue: `$${newValue}`,
+      };
+    });
+    setData(newData);
+  };
+
+  return (
+    <>
+      <NormalizedStackedBarChart
+        data={data}
+        orientation="horizontal"
+        size="small"
+      />
+      <button onClick={onClick}>Change Data</button>
+    </>
+  );
 };
