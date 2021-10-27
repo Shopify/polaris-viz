@@ -1,15 +1,15 @@
 # Changelog
 
-## Unreleased]
+## Unreleased
+
+## [0.23.0] - 2021-10-27
 
 ### Added
 
 - Added `<HorizontalBarChart />`.
-
-### Added
-
 - Added `grid.showHorizontalLines` theme option to `<StackedAreaChart />`.
 ### Fixed
+
 - Better print support for line chart, bar charts and area chart. Charts should now be responsive to print on most browsers. On Firefox, the chart from the browser window will not overflow the print page.
 
 ## [0.22.0] - 2021-10-22
