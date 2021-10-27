@@ -34,8 +34,8 @@ yarn add @shopify/polaris-viz
 
 Polaris Viz has peer dependencies on:
 
-- `react@^16.8.6`
-- `react-dom@^16.8.6`
+- `react@^16.8.6 || ^17.0.0`
+- `react-dom@^16.8.6 || ^17.0.0`
 - `@juggle/resize-observer@^3.3.1`
 
 You are responsible for providing these packages in your project. By requiring these packages as `peerDependencies` we can be sure there won't be duplicate packages included due to version mismatches.
