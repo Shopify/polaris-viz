@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Added
+
+- Added `labelPosition` prop with default value `top-left` to `<NormalizedStackedBarChart />`.
+
 ## [0.23.1] - 2021-10-27
 
 ### Changed

@@ -7,13 +7,14 @@ import {usePrefersReducedMotion, useTheme} from '../../hooks';
 import {classNames} from '../../utilities';
 
 import {BarSegment, BarLabel} from './components';
-import type {Size, Data, Orientation} from './types';
+import type {Size, Data, Orientation, LabelPosition} from './types';
 import styles from './NormalizedStackedBarChart.scss';
 
 export interface NormalizedStackedBarChartProps {
   data: Data[];
   size?: Size;
   orientation?: Orientation;
+  labelPosition?: LabelPosition;
   theme?: string;
 }
 
@@ -21,6 +22,7 @@ export function NormalizedStackedBarChart({
   data,
   size = 'small',
   orientation = 'horizontal',
+  labelPosition = 'top-left',
   theme,
 }: NormalizedStackedBarChartProps) {
   const selectedTheme = useTheme(theme);
@@ -55,6 +57,12 @@ export function NormalizedStackedBarChart({
       className={classNames(
         styles.Container,
         isVertical ? styles.VerticalContainer : styles.HorizontalContainer,
+        isVertical && labelPosition.includes('right')
+          ? styles.VerticalContainerRightLabel
+          : '',
+        !isVertical && labelPosition.includes('bottom')
+          ? styles.HorizontalContainerBottomLabel
+          : '',
       )}
       style={{
         background: selectedTheme.chartContainer.backgroundColor,
@@ -63,11 +71,15 @@ export function NormalizedStackedBarChart({
       }}
     >
       <ul
-        className={
+        className={classNames(
           isVertical
             ? styles.VerticalLabelContainer
-            : styles.HorizontailLabelContainer
-        }
+            : styles.HorizontailLabelContainer,
+          (isVertical && labelPosition.includes('bottom')) ||
+            (!isVertical && labelPosition.includes('right'))
+            ? styles.LabelContainerEndJustify
+            : '',
+        )}
       >
         {slicedData.map(({label, formattedValue, comparisonMetric}, index) => (
           <BarLabel
@@ -78,6 +90,7 @@ export function NormalizedStackedBarChart({
             comparisonMetric={comparisonMetric}
             legendColors={selectedTheme.legend}
             orientation={orientation}
+            labelPosition={labelPosition}
           />
         ))}
       </ul>

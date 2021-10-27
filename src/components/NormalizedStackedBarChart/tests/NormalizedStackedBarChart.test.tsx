@@ -174,4 +174,23 @@ describe('<NormalizedBarChart />', () => {
       expect(barChart.find(BarSegment)!.props.orientation).toBe('vertical');
     });
   });
+
+  describe('Label Position', () => {
+    it('defaults to top-left label position and passes it to BarLabel', () => {
+      const barChart = mount(<NormalizedStackedBarChart {...mockProps} />);
+
+      expect(barChart.find(BarLabel)!.props.labelPosition).toBe('top-left');
+    });
+
+    it('accepts bottom-right label position and passes it to BarLabel', () => {
+      const barChart = mount(
+        <NormalizedStackedBarChart
+          {...mockProps}
+          labelPosition="bottom-right"
+        />,
+      );
+
+      expect(barChart.find(BarLabel)!.props.labelPosition).toBe('bottom-right');
+    });
+  });
 });

@@ -1,12 +1,16 @@
 import React from 'react';
 
-import {createCSSGradient, isGradientType} from '../../../../utilities';
+import {
+  createCSSGradient,
+  isGradientType,
+  classNames,
+} from '../../../../utilities';
 import type {Color, Legend} from '../../../../types';
 import {
   ComparisonMetric,
   ComparisonMetricShape,
 } from '../../../ComparisonMetric';
-import type {Orientation} from '../../types';
+import type {LabelPosition, Orientation} from '../../types';
 
 import styles from './BarLabel.scss';
 
@@ -17,6 +21,7 @@ export interface Props {
   comparisonMetric?: ComparisonMetricShape;
   legendColors: Legend;
   orientation: Orientation;
+  labelPosition: LabelPosition;
 }
 
 export function BarLabel({
@@ -26,6 +31,7 @@ export function BarLabel({
   comparisonMetric,
   legendColors,
   orientation,
+  labelPosition,
 }: Props) {
   const {labelColor, valueColor} = legendColors;
 
@@ -40,7 +46,14 @@ export function BarLabel({
     : color;
 
   return (
-    <li className={styles.Container}>
+    <li
+      className={classNames(
+        styles.Container,
+        labelPosition.includes('bottom')
+          ? styles.ContaineBottomLabel
+          : styles.ContainerDefaultLabel,
+      )}
+    >
       <div style={{background: formattedColor}} className={styles.LabelColor} />
       <div className={styles.Label}>
         <strong style={{color: labelColor}}>{label}</strong>

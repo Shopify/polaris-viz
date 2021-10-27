@@ -21,6 +21,7 @@ describe('<BarLabel />', () => {
             },
           }}
           orientation="horizontal"
+          labelPosition="top-left"
         />,
       );
 

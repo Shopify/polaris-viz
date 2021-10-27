@@ -3,7 +3,14 @@
 .Container {
   display: flex;
   align-items: baseline;
+}
+
+.ContainerDefaultLabel {
   margin-bottom: $spacing-extra-loose;
+}
+
+.ContaineBottomLabel {
+  margin-top: $spacing-loose;
 }
 
 .LabelColor {
