@@ -1,4 +1,4 @@
-import {createPackage, createProjectBuildPlugin, Runtime} from '@shopify/loom';
+import {createPackage, createProjectBuildPlugin} from '@shopify/loom';
 import {eslint} from '@shopify/loom-plugin-eslint';
 import {prettier} from '@shopify/loom-plugin-prettier';
 import {stylelint} from '@shopify/loom-plugin-stylelint';
@@ -6,25 +6,27 @@ import {
   buildLibrary,
   buildLibraryWorkspace,
 } from '@shopify/loom-plugin-build-library';
+import {
+  buildLibraryExtended,
+  buildLibraryExtendedWorkspace,
+} from '@shopify/loom-plugin-build-library-extended';
 
 // eslint-disable-next-line import/no-default-export
 export default createPackage((pkg) => {
-  pkg.runtimes(Runtime.Node, Runtime.Browser);
-  pkg.entry({root: './src/index'});
+  pkg.entry({root: './src/index.ts'});
 
   pkg.use(
     buildLibrary({
-      jestEnvironment: 'jsdom',
-      browserTargets: 'extends @shopify/browserslist-config',
-      nodeTargets: 'node 12.22.0',
-      packageBuildOptions: {
-        commonjs: true,
-        esmodules: true,
-        esnext: true,
-        rootEntrypoints: false,
-      },
+      jestTestEnvironment: 'jsdom',
+      targets: 'extends @shopify/browserslist-config, node 12.22.0',
+      commonjs: true,
+      esmodules: true,
+      esnext: true,
+      rootEntrypoints: false,
     }),
-    buildLibraryWorkspace({graphql: false}),
+    buildLibraryExtended({graphql: false}),
+    buildLibraryWorkspace(),
+    buildLibraryExtendedWorkspace({graphql: false}),
     eslint(),
     stylelint({files: '**/*.scss'}),
     prettier({files: '**/*.{md,json,yaml,yml}'}),
