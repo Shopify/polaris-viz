@@ -3,7 +3,7 @@ import {sum} from 'd3-array';
 import {scaleLinear} from 'd3-scale';
 
 import {getSeriesColorsFromCount} from '../../hooks/use-theme-series-colors';
-import {useTheme} from '../../hooks';
+import {usePrefersReducedMotion, useTheme} from '../../hooks';
 import {classNames} from '../../utilities';
 
 import {BarSegment, BarLabel} from './components';
@@ -27,6 +27,7 @@ export function NormalizedStackedBarChart({
   const colors = getSeriesColorsFromCount(data.length, selectedTheme);
   const containsNegatives = data.some(({value}) => value < 0);
   const isDevelopment = process.env.NODE_ENV === 'development';
+  const {prefersReducedMotion} = usePrefersReducedMotion();
 
   if (isDevelopment && containsNegatives) {
     // eslint-disable-next-line no-console
@@ -47,6 +48,7 @@ export function NormalizedStackedBarChart({
   const xScale = scaleLinear().range([0, 100]).domain([0, totalValue]);
 
   const isVertical = orientation === 'vertical';
+  const bars = isVertical ? slicedData.reverse() : slicedData;
 
   return (
     <div
@@ -88,18 +90,26 @@ export function NormalizedStackedBarChart({
             : styles.HorizontalBarContainer,
         )}
       >
-        {slicedData.map(({value, label}, index) =>
-          value === 0 ? null : (
+        {bars.map(({value, label}, index) => {
+          if (value === 0) {
+            return null;
+          }
+
+          const colorIndex = isVertical ? bars.length - 1 - index : index;
+
+          return (
             <BarSegment
+              index={index}
+              isAnimated={!prefersReducedMotion}
               orientation={orientation}
               size={size}
               scale={xScale(value)}
-              key={`${label}-${value}`}
-              color={colors[index]}
+              key={`${label}`}
+              color={colors[colorIndex]}
               roundedCorners={selectedTheme.bar.hasRoundedCorners}
             />
-          ),
-        )}
+          );
+        })}
       </div>
     </div>
   );
