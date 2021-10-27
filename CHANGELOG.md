@@ -1,6 +1,10 @@
 # Changelog
 
-## Unreleased
+## Unreleased]
+
+### Added
+
+- Added `<HorizontalBarChart />`.
 
 ### Added
 

@@ -12,6 +12,7 @@ import type {DataType, Dimensions, Margin} from '../../types';
 import type {TooltipPosition, TooltipPositionParams} from './types';
 import {DEFAULT_TOOLTIP_POSITION} from './constants';
 import {TooltipAnimatedContainer} from './components/TooltipAnimatedContainer';
+import type {AlteredPosition} from './utilities';
 
 interface TooltipWrapperProps {
   chartDimensions: Dimensions;
@@ -22,6 +23,7 @@ interface TooltipWrapperProps {
   focusElementDataType: DataType;
   alwaysUpdatePosition?: boolean;
   bandwidth?: number;
+  getAlteredPosition?: AlteredPosition;
   id?: string;
   onIndexChange?: (index: number | null) => void;
 }
@@ -31,6 +33,7 @@ export function TooltipWrapper(props: TooltipWrapperProps) {
     alwaysUpdatePosition = false,
     bandwidth = 0,
     focusElementDataType,
+    getAlteredPosition,
     getPosition,
     id,
     onIndexChange,
@@ -144,6 +147,7 @@ export function TooltipWrapper(props: TooltipWrapperProps) {
       currentX={position.x}
       currentY={position.y}
       id={id}
+      getAlteredPosition={getAlteredPosition}
       margin={props.margin}
       position={position.position}
     >
