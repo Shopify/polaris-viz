@@ -52,17 +52,20 @@ export function NormalizedStackedBarChart({
   const isVertical = orientation === 'vertical';
   const bars = isVertical ? slicedData.reverse() : slicedData;
 
+  const isRightLabel = labelPosition.includes('right');
+  const isBottomLabel = labelPosition.includes('bottom');
+  const isVerticalAndRightLabel = isVertical && isRightLabel;
+  const isVerticalAndBottomLabel = isVertical && isBottomLabel;
+  const isHorizontalAndRightLabel = !isVertical && isRightLabel;
+  const isHorizontalAndBottomLabel = !isVertical && isBottomLabel;
+
   return (
     <div
       className={classNames(
         styles.Container,
         isVertical ? styles.VerticalContainer : styles.HorizontalContainer,
-        isVertical && labelPosition.includes('right')
-          ? styles.VerticalContainerRightLabel
-          : '',
-        !isVertical && labelPosition.includes('bottom')
-          ? styles.HorizontalContainerBottomLabel
-          : '',
+        isVerticalAndRightLabel && styles.VerticalContainerRightLabel,
+        isHorizontalAndBottomLabel && styles.HorizontalContainerBottomLabel,
       )}
       style={{
         background: selectedTheme.chartContainer.backgroundColor,
@@ -75,10 +78,8 @@ export function NormalizedStackedBarChart({
           isVertical
             ? styles.VerticalLabelContainer
             : styles.HorizontailLabelContainer,
-          (isVertical && labelPosition.includes('bottom')) ||
-            (!isVertical && labelPosition.includes('right'))
-            ? styles.LabelContainerEndJustify
-            : '',
+          (isVerticalAndBottomLabel || isHorizontalAndRightLabel) &&
+            styles.LabelContainerEndJustify,
         )}
       >
         {slicedData.map(({label, formattedValue, comparisonMetric}, index) => (
