@@ -77,6 +77,12 @@ VerticalSmall.args = {
   size: 'small' as 'small',
 };
 
+export const HorizontalBottomRightLabel = Template.bind({});
+HorizontalBottomRightLabel.args = {
+  ...defaultProps,
+  labelPosition: 'bottom-right' as 'bottom-right',
+};
+
 export const DynamicData = () => {
   const [data, setData] = useState(defaultProps.data);
 
