@@ -77,7 +77,7 @@ export function NormalizedStackedBarChart({
         className={classNames(
           isVertical
             ? styles.VerticalLabelContainer
-            : styles.HorizontailLabelContainer,
+            : styles.HorizontalLabelContainer,
           (isVerticalAndBottomLabel || isHorizontalAndRightLabel) &&
             styles.LabelContainerEndJustify,
         )}
