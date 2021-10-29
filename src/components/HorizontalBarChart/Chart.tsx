@@ -263,6 +263,7 @@ export function Chart({
           colorOverrides={seriesWithColorOverride}
           seriesColors={seriesColors}
           theme={theme}
+          width={chartDimensions.width}
         />
 
         {transitions(({opacity, transform}, item, _transition, index) => {

@@ -9,6 +9,7 @@ import type {ColorOverrides} from '../types';
 interface GradientDefsProps {
   colorOverrides: ColorOverrides[];
   seriesColors: Color[];
+  width: number;
   theme?: string;
 }
 
@@ -16,21 +17,30 @@ export function GradientDefs({
   colorOverrides,
   seriesColors,
   theme = 'Default',
+  width,
 }: GradientDefsProps) {
   return (
     <defs>
       {colorOverrides.map(({id, color}) => {
-        return <Gradient key={id} id={id} color={color} />;
+        return <Gradient key={id} id={id} color={color} width={width} />;
       })}
       {seriesColors.map((color, index) => {
         const id = getGradientDefId(theme, index);
-        return <Gradient key={id} id={id} color={color} />;
+        return <Gradient key={id} id={id} color={color} width={width} />;
       })}
     </defs>
   );
 }
 
-function Gradient({id, color}: {id: string; color: Color}) {
+function Gradient({
+  id,
+  color,
+  width,
+}: {
+  id: string;
+  color: Color;
+  width: number;
+}) {
   const gradient: GradientStop[] = isGradientType(color)
     ? color
     : [
@@ -39,7 +49,15 @@ function Gradient({id, color}: {id: string; color: Color}) {
           offset: 0,
         },
       ];
-  return <LinearGradient gradient={gradient} id={id} x2="100%" y1="0%" />;
+  return (
+    <LinearGradient
+      gradient={gradient}
+      gradientUnits="userSpaceOnUse"
+      id={id}
+      x2={`${width}px`}
+      y1="0"
+    />
+  );
 }
 
 export function getGradientDefId(theme = 'Default', index: number) {
