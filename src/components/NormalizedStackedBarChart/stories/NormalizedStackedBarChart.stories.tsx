@@ -26,6 +26,9 @@ export default {
     },
     orientation: {description: 'Determines the orientation of the chart.'},
     size: {description: 'Determines the width of the chart.'},
+    labelPosition: {
+      description: 'Determines the position of the labels.',
+    },
     theme: THEME_CONTROL_ARGS,
   },
 } as Meta;
@@ -61,6 +64,7 @@ const defaultProps = {
   ],
   orientation: 'horizontal' as 'horizontal',
   size: 'small' as 'small',
+  labelPosition: 'top-left' as 'top-left',
 };
 
 export const Default = Template.bind({});
@@ -71,6 +75,12 @@ VerticalSmall.args = {
   ...defaultProps,
   orientation: 'vertical' as 'vertical',
   size: 'small' as 'small',
+};
+
+export const HorizontalBottomRightLabel = Template.bind({});
+HorizontalBottomRightLabel.args = {
+  ...defaultProps,
+  labelPosition: 'bottom-right' as 'bottom-right',
 };
 
 export const DynamicData = () => {

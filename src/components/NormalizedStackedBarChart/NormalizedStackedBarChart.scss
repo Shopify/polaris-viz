@@ -9,14 +9,21 @@
 }
 
 .VerticalContainer {
+  height: 100%;
+}
+
+.VerticalContainerRightLabel {
   flex-direction: row-reverse;
   justify-content: flex-end;
-  height: 100%;
 }
 
 .HorizontalContainer {
   flex-direction: column;
   justify-content: normal;
+}
+
+.HorizontalContainerBottomLabel {
+  flex-direction: column-reverse;
 }
 
 .BarContainer {
@@ -34,12 +41,17 @@
 .VerticalLabelContainer {
   display: flex;
   flex-flow: column wrap;
-  margin: $spacing-loose;
+  margin: 0 $spacing-loose;
   padding: 0;
 }
 
-.HorizontailLabelContainer {
+.HorizontalLabelContainer {
   padding: 0;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, max-content));
+}
+
+.LabelContainerEndJustify {
+  justify-content: end;
+  justify-items: end;
 }

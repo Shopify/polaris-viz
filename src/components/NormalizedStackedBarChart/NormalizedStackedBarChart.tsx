@@ -7,13 +7,14 @@ import {usePrefersReducedMotion, useTheme} from '../../hooks';
 import {classNames} from '../../utilities';
 
 import {BarSegment, BarLabel} from './components';
-import type {Size, Data, Orientation} from './types';
+import type {Size, Data, Orientation, LabelPosition} from './types';
 import styles from './NormalizedStackedBarChart.scss';
 
 export interface NormalizedStackedBarChartProps {
   data: Data[];
   size?: Size;
   orientation?: Orientation;
+  labelPosition?: LabelPosition;
   theme?: string;
 }
 
@@ -21,6 +22,7 @@ export function NormalizedStackedBarChart({
   data,
   size = 'small',
   orientation = 'horizontal',
+  labelPosition = 'top-left',
   theme,
 }: NormalizedStackedBarChartProps) {
   const selectedTheme = useTheme(theme);
@@ -50,11 +52,20 @@ export function NormalizedStackedBarChart({
   const isVertical = orientation === 'vertical';
   const bars = isVertical ? slicedData.reverse() : slicedData;
 
+  const isRightLabel = labelPosition.includes('right');
+  const isBottomLabel = labelPosition.includes('bottom');
+  const isVerticalAndRightLabel = isVertical && isRightLabel;
+  const isVerticalAndBottomLabel = isVertical && isBottomLabel;
+  const isHorizontalAndRightLabel = !isVertical && isRightLabel;
+  const isHorizontalAndBottomLabel = !isVertical && isBottomLabel;
+
   return (
     <div
       className={classNames(
         styles.Container,
         isVertical ? styles.VerticalContainer : styles.HorizontalContainer,
+        isVerticalAndRightLabel && styles.VerticalContainerRightLabel,
+        isHorizontalAndBottomLabel && styles.HorizontalContainerBottomLabel,
       )}
       style={{
         background: selectedTheme.chartContainer.backgroundColor,
@@ -63,11 +74,13 @@ export function NormalizedStackedBarChart({
       }}
     >
       <ul
-        className={
+        className={classNames(
           isVertical
             ? styles.VerticalLabelContainer
-            : styles.HorizontailLabelContainer
-        }
+            : styles.HorizontalLabelContainer,
+          (isVerticalAndBottomLabel || isHorizontalAndRightLabel) &&
+            styles.LabelContainerEndJustify,
+        )}
       >
         {slicedData.map(({label, formattedValue, comparisonMetric}, index) => (
           <BarLabel
@@ -78,6 +91,7 @@ export function NormalizedStackedBarChart({
             comparisonMetric={comparisonMetric}
             legendColors={selectedTheme.legend}
             orientation={orientation}
+            labelPosition={labelPosition}
           />
         ))}
       </ul>
