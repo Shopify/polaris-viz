@@ -1,7 +1,7 @@
 import React from 'react';
 import type {ScaleLinear} from 'd3-scale';
 
-import {LABEL_HEIGHT} from '../constants';
+import {LABEL_HEIGHT} from '../../constants';
 
 interface VerticalGridLinesProps {
   chartHeight: number;
