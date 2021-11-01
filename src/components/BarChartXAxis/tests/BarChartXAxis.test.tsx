@@ -35,6 +35,7 @@ describe('<BarChartXAxis/>', () => {
       maxDiagonalLabelLength: 100,
       maxWidth: 100,
     },
+    drawableHeight: 100,
   };
 
   it('renders a line for each label value', () => {
@@ -162,5 +163,19 @@ describe('<BarChartXAxis/>', () => {
     expect(axis).toContainReactComponent('g', {
       transform: 'translate(5, 24)',
     });
+  });
+
+  it('renders vertical lines when enabled by the theme', () => {
+    const chart = mountWithProvider(
+      <svg>
+        <BarChartXAxis {...mockProps} />,
+      </svg>,
+      mockDefaultTheme({grid: {showVerticalLines: true}}),
+    );
+
+    const lines = chart.findAll('line');
+
+    expect(chart).toContainReactComponentTimes('line', 2);
+    expect(lines[0].props.y2).toStrictEqual(-100);
   });
 });

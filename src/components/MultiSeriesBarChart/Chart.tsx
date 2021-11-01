@@ -236,6 +236,7 @@ export function Chart({
             aria-hidden="true"
           >
             <BarChartXAxis
+              drawableHeight={drawableHeight}
               labels={xAxisLabels}
               xScale={xScale}
               xAxisDetails={xAxisDetails}

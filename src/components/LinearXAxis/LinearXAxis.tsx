@@ -133,7 +133,7 @@ function Axis({
             {selectedTheme.grid.showVerticalLines ? (
               <line
                 y1="0"
-                y2={-drawableHeight}
+                y2={drawableHeight * -1}
                 stroke={selectedTheme.grid.color}
                 strokeDasharray="3 2"
               />

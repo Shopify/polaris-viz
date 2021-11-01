@@ -67,6 +67,7 @@ function getMiniminalLabelPosition({
 }
 
 interface BarChartXAxisProps {
+  drawableHeight: number;
   xScale: ScaleBand<string>;
   labels: {value: string; xOffset: number}[];
   fontSize: number;
@@ -77,6 +78,7 @@ interface BarChartXAxisProps {
 }
 
 export const BarChartXAxis = React.memo(function BarChartXAxis({
+  drawableHeight,
   labels,
   xScale,
   fontSize,
@@ -157,6 +159,14 @@ export const BarChartXAxis = React.memo(function BarChartXAxis({
           <g key={index} transform={groupTransform}>
             {minimalLabelIndexes == null && selectedTheme.xAxis.showTicks ? (
               <line y2={TICK_SIZE} stroke={selectedTheme.grid.color} />
+            ) : null}
+            {selectedTheme.grid.showVerticalLines ? (
+              <line
+                y1="0"
+                y2={drawableHeight * -1}
+                stroke={selectedTheme.grid.color}
+                strokeDasharray="3 2"
+              />
             ) : null}
             <foreignObject
               width={angleAwareWidth}
