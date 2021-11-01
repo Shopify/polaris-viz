@@ -9,11 +9,11 @@ import type {Series, XAxisOptions} from './types';
 
 export interface HorizontalBarChartProps {
   series: Series[];
-  xAxisOptions?: XAxisOptions;
   isAnimated?: boolean;
   isSimple?: boolean;
   isStacked?: boolean;
   theme?: string;
+  xAxisOptions?: XAxisOptions;
 }
 
 export function HorizontalBarChart({

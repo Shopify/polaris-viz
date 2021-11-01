@@ -78,7 +78,7 @@ export default {
     },
     emptyStateText: {
       description:
-        'Used to indicate to screenreaders that a chart with no data has been rendered, in the case that an empty array is passed as the data. It is strongly recommended that this is included if the data prop could be an empty array.',
+        'Used to indicate to screen readers that a chart with no data has been rendered, in the case that an empty array is passed as the data. It is strongly recommended that this is included if the data prop could be an empty array.',
     },
     isAnimated: {
       description:

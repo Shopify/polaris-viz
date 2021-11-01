@@ -114,7 +114,7 @@ export default {
     docs: {
       description: {
         component:
-          'Used to show comparison of different types, across categories or time. Bars can be stacked or side by side. It is reccomended that you use a legend whenever displaying multiseries data. To display one, use the `<Legend />` component. <br /> <br /> This component inherits its height and width from its container.',
+          'Used to show comparison of different types, across categories or time. Bars can be stacked or side by side. It is recommended that you use a legend whenever displaying multi-series data. To display one, use the `<Legend />` component. <br /> <br /> This component inherits its height and width from its container.',
       },
     },
     controls: {
@@ -129,7 +129,7 @@ export default {
     },
     emptyStateText: {
       description:
-        'Used to indicate to screenreaders that a chart with no series data has been rendered, in the case that an empty array is passed as the data. It is strongly recommended that this is included if the series prop could be an empty array.',
+        'Used to indicate to screen readers that a chart with no series data has been rendered, in the case that an empty array is passed as the data. It is strongly recommended that this is included if the series prop could be an empty array.',
     },
     isAnimated: {
       description:

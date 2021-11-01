@@ -7,6 +7,7 @@ import {
   MultiSeriesBarChart,
   Sparkline,
   Sparkbar,
+  HorizontalBarChart,
 } from '../../../../src/components';
 import {PolarisVizProvider} from '../../PolarisVizProvider';
 import {ComponentContainer, LogoHeader, Divider} from './components';
@@ -370,6 +371,42 @@ import {ComponentContainer, LogoHeader, Divider} from './components';
         ]}
       />
     </div>
+  }
+/>
+
+<ComponentContainer
+  title="Horizontal Bar Chart"
+  description="Used to show a grouped comparison of different types, across categories or time. "
+  link="https://polaris-viz.shopify.io/?path=/docs/charts-horizontalbarchart--default"
+  chart={
+    <HorizontalBarChart
+      series={[
+        {
+          name: 'Womens Leggings',
+          data: [
+            {rawValue: 3, label: 'BCFM 2019'},
+            {rawValue: 4, label: 'BCFM 2020'},
+            {rawValue: 7, label: 'BCFM 2021'},
+          ],
+        },
+        {
+          name: 'Mens Bottoms',
+          data: [
+            {rawValue: 7, label: 'BCFM 2019'},
+            {rawValue: 1, label: 'BCFM 2020'},
+            {rawValue: 1, label: 'BCFM 2021'},
+          ],
+        },
+        {
+          name: 'Mens Shorts',
+          data: [
+            {rawValue: 4, label: 'BCFM 2019'},
+            {rawValue: 5, label: 'BCFM 2020'},
+            {rawValue: 6, label: 'BCFM 2021'},
+          ],
+        },
+      ]}
+    />
   }
 />
 
