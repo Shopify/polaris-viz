@@ -1,7 +1,12 @@
 import React, {useCallback, useLayoutEffect, useState} from 'react';
+import {useDebouncedCallback} from 'use-debounce/lib';
 
 import {ChartContainer} from '../../components/ChartContainer';
-import {useResizeObserver, usePrefersReducedMotion} from '../../hooks';
+import {
+  useResizeObserver,
+  usePrefersReducedMotion,
+  usePrintResizing,
+} from '../../hooks';
 import type {Dimensions} from '../../types';
 
 import {Chart} from './Chart';
@@ -33,7 +38,9 @@ export function HorizontalBarChart({
   const [chartDimensions, setChartDimensions] = useState<Dimensions | null>(
     null,
   );
-  const {setRef, entry} = useResizeObserver();
+  const {ref, setRef, entry} = useResizeObserver();
+
+  usePrintResizing({ref, setChartDimensions});
 
   const updateDimensions = useCallback(() => {
     if (entry != null) {
@@ -52,9 +59,25 @@ export function HorizontalBarChart({
     }
   }, [entry]);
 
+  const [debouncedUpdateDimensions] = useDebouncedCallback(() => {
+    updateDimensions();
+  }, 100);
+
   useLayoutEffect(() => {
     updateDimensions();
-  }, [entry, updateDimensions]);
+
+    const isServer = typeof window === 'undefined';
+
+    if (!isServer) {
+      window.addEventListener('resize', debouncedUpdateDimensions);
+    }
+
+    return () => {
+      if (!isServer) {
+        window.removeEventListener('resize', debouncedUpdateDimensions);
+      }
+    };
+  }, [entry, debouncedUpdateDimensions, updateDimensions]);
 
   const {prefersReducedMotion} = usePrefersReducedMotion();
 

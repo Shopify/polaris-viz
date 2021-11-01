@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {animated, to, useSpring} from '@react-spring/web';
+import {animated, useSpring} from '@react-spring/web';
 
 import {DataType} from '../../../../types';
 import {
@@ -113,31 +113,30 @@ export const Bar = React.memo(function Bar({
     [needsMinWidth, roundedBorder],
   );
 
-  const spring = useSpring<{height: number; width: number}>({
-    from: {width: 0},
-    width,
-    height,
+  const spring = useSpring<{transform: string}>({
+    from: {transform: 'scaleX(0) translateZ(0)'},
+    to: {transform: 'scaleX(1) translateZ(0)'},
     delay: isAnimated ? animationDelay : 0,
     config: BARS_TRANSITION_CONFIG,
     default: {immediate: !isAnimated},
   });
 
   return (
-    <animated.path
-      d={to([spring.height, spring.width], (_height, _width) =>
-        getPath(_height, _width),
-      )}
-      data-id={`bar-${index}`}
-      data-index={index}
-      data-type={DataType.Bar}
-      fill={color}
-      aria-label={ariaLabel}
-      tabIndex={tabIndex}
-      role={role}
-      style={{
-        transform: `translate(${x}px, ${y}px) ${transform}`,
-      }}
-      className={styles.Bar}
-    />
+    <animated.g style={{transform: spring.transform}}>
+      <path
+        d={getPath(height, width)}
+        data-id={`bar-${index}`}
+        data-index={index}
+        data-type={DataType.Bar}
+        fill={color}
+        aria-label={ariaLabel}
+        tabIndex={tabIndex}
+        role={role}
+        style={{
+          transform: `translate(${x}px, ${y}px) ${transform}`,
+        }}
+        className={styles.Bar}
+      />
+    </animated.g>
   );
 });

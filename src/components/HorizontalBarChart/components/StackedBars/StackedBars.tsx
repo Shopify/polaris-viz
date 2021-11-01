@@ -14,6 +14,7 @@ export interface StackedBarsProps {
   ariaLabel: string;
   barHeight: number;
   groupIndex: number;
+  isAnimated: boolean;
   name: string;
   series: Data[];
   xScale: ScaleLinear<number, number>;
@@ -25,6 +26,7 @@ export function StackedBars({
   ariaLabel,
   barHeight,
   groupIndex,
+  isAnimated,
   name,
   series,
   theme,
@@ -52,6 +54,7 @@ export function StackedBars({
     to: {transform: `scale(1, 1) translate(0, ${LABEL_HEIGHT}px`},
     config: BARS_TRANSITION_CONFIG,
     delay: animationDelay,
+    default: {immediate: !isAnimated},
   });
 
   return (
@@ -67,6 +70,7 @@ export function StackedBars({
             color={color ? id : getGradientDefId(theme, seriesIndex)}
             groupIndex={groupIndex}
             height={barHeight}
+            isAnimated={isAnimated}
             key={`${name}${sliceColor}`}
             seriesIndex={seriesIndex}
             width={xScale(rawValue)}

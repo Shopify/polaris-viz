@@ -28,32 +28,38 @@ export function Label({
   const labelYOffset = (barHeight - BAR_LABEL_HEIGHT) / 2;
 
   const spring = useSpring({
-    from: {x: 0, opacity: 0},
-    to: {opacity: 1, x},
+    from: {transform: 'scaleX(0) translateZ(0)', opacity: 0},
+    to: {opacity: 1, transform: 'scaleX(1) translateZ(0)'},
     delay: isAnimated ? animationDelay : 0,
     config: BARS_TRANSITION_CONFIG,
     default: {immediate: !isAnimated},
   });
 
   return (
-    <animated.foreignObject
-      height={FONT_SIZE}
-      width={labelWidth}
-      x={spring.x}
-      y={y + labelYOffset}
-      aria-hidden="true"
-      opacity={spring.opacity}
+    <animated.g
+      style={{
+        opacity: spring.opacity,
+        transform: spring.transform,
+      }}
     >
-      <div
-        style={{
-          fontSize: `${FONT_SIZE}px`,
-          color,
-          lineHeight: `${BAR_LABEL_HEIGHT}px`,
-          height: BAR_LABEL_HEIGHT,
-        }}
+      <foreignObject
+        height={FONT_SIZE}
+        width={labelWidth}
+        aria-hidden="true"
+        y={y + labelYOffset}
+        x={x}
       >
-        {label}
-      </div>
-    </animated.foreignObject>
+        <div
+          style={{
+            fontSize: `${FONT_SIZE}px`,
+            color,
+            lineHeight: `${BAR_LABEL_HEIGHT}px`,
+            height: BAR_LABEL_HEIGHT,
+          }}
+        >
+          {label}
+        </div>
+      </foreignObject>
+    </animated.g>
   );
 }
