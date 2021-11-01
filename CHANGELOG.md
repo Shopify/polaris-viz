@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## [0.24.0] - 2021-11-01
+
 ### Changed
 
 - This project uses Node 16 as part of development on this project. There are no expected consumer-facing changes.
