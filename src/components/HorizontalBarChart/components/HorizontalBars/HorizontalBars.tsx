@@ -1,21 +1,20 @@
 import React from 'react';
 import type {ScaleLinear} from 'd3-scale';
 
-import {FONT_SIZE, MIN_BAR_HEIGHT} from '../../../constants';
-import type {Data, LabelFormatter} from '../types';
-import {getTextWidth} from '../../../utilities';
+import {FONT_SIZE, MIN_BAR_HEIGHT} from '../../../../constants';
+import type {Data, LabelFormatter} from '../../types';
+import {getTextWidth} from '../../../../utilities';
 import {
   BAR_LABEL_OFFSET,
   FONT_SIZE_PADDING,
   LABEL_HEIGHT,
   SPACE_BETWEEN_SINGLE,
-} from '../constants';
-import {useTheme} from '../../../hooks';
-import {getBarId} from '../utilities';
-
-import {Bar, RoundedBorder} from './Bar';
-import {Label} from './Label';
-import {getGradientDefId} from './GradientDefs';
+} from '../../constants';
+import {useTheme} from '../../../../hooks';
+import {getBarId} from '../../utilities';
+import {Bar, RoundedBorder} from '../Bar';
+import {Label} from '../Label';
+import {getGradientDefId} from '../GradientDefs';
 
 interface HorizontalBarProps {
   ariaLabel: string;

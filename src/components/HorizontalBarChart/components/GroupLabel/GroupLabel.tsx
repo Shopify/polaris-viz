@@ -1,9 +1,9 @@
 import React from 'react';
 
-import {useTheme} from '../../../hooks';
-import {FONT_SIZE} from '../../../constants';
-import {getTextWidth} from '../../../utilities';
-import {LABEL_HEIGHT} from '../constants';
+import {useTheme} from '../../../../hooks';
+import {FONT_SIZE} from '../../../../constants';
+import {getTextWidth} from '../../../../utilities';
+import {LABEL_HEIGHT} from '../../constants';
 
 interface GroupLabelProps {
   areAllNegative: boolean;

@@ -2,13 +2,12 @@ import React, {useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {animated, useSpring} from '@react-spring/web';
 
-import {BARS_TRANSITION_CONFIG} from '../../../constants';
-import type {Data} from '../types';
-import {GRADIENT_ID, LABEL_HEIGHT, STACKED_BAR_GAP} from '../constants';
-import {getBarId} from '../utilities';
-
-import {StackedBar} from './StackedBar';
-import {getGradientDefId} from './GradientDefs';
+import {BARS_TRANSITION_CONFIG} from '../../../../constants';
+import type {Data} from '../../types';
+import {GRADIENT_ID, LABEL_HEIGHT, STACKED_BAR_GAP} from '../../constants';
+import {getBarId} from '../../utilities';
+import {StackedBar} from '../StackedBar';
+import {getGradientDefId} from '../GradientDefs';
 
 export interface StackedBarsProps {
   animationDelay: number;
