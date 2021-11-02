@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## [0.24.1] - 2021-11-02
+
 ### Fixed
 
 - Fixed issue where the element to measure in `getTextHeight()` was not wrapped.
