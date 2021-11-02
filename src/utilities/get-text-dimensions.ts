@@ -33,7 +33,8 @@ export function getTextHeight({
   display: inline-block;
   font-feature-settings: 'tnum';
   visibility: hidden;
-  width: ${containerWidth}px`;
+  width: ${containerWidth}px;
+  word-wrap: break-word;`;
 
   document.body.appendChild(paragraph);
   paragraph.innerText = text;
