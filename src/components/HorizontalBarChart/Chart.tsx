@@ -181,9 +181,7 @@ export function Chart({
   }));
 
   const getTransform = (index: number) => {
-    return `translate(${longestLabel.negative + xScale(0)}px,${
-      groupHeight * index
-    }px)`;
+    return `translate(0px,${groupHeight * index}px)`;
   };
 
   const [isFirstRender, setIsFirstRender] = useState(true);
@@ -223,6 +221,8 @@ export function Chart({
     },
   });
 
+  const zeroPosition = longestLabel.negative + xScale(0);
+
   return (
     <div
       className={styles.ChartContainer}
@@ -233,10 +233,9 @@ export function Chart({
     >
       <svg
         className={styles.SVG}
-        height={chartDimensions.height}
         ref={setSvgRef}
         role="list"
-        width={chartDimensions.width}
+        viewBox={`0 0 ${chartDimensions.width} ${chartDimensions.height}`}
         xmlns={XMLNS}
       >
         {isSimple || xAxisOptions.hide === true ? null : (
@@ -293,6 +292,7 @@ export function Chart({
                 areAllNegative={areAllNegative}
                 label={name}
                 theme={theme}
+                zeroPosition={zeroPosition}
               />
 
               {isStacked && xScaleStacked ? (
@@ -301,6 +301,7 @@ export function Chart({
                   ariaLabel={ariaLabel}
                   barHeight={barHeight}
                   groupIndex={index}
+                  isAnimated={isAnimated}
                   name={name}
                   series={item.series.data}
                   theme={theme}
@@ -315,10 +316,11 @@ export function Chart({
                   isAnimated={isAnimated}
                   isSimple={isSimple}
                   labelFormatter={labelFormatter}
+                  name={name}
                   series={item.series.data}
                   theme={theme}
                   xScale={xScale}
-                  name={name}
+                  zeroPosition={zeroPosition}
                 />
               )}
             </animated.g>

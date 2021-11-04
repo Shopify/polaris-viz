@@ -26,6 +26,7 @@ interface HorizontalBarProps {
   name: string;
   series: Data[];
   xScale: ScaleLinear<number, number>;
+  zeroPosition: number;
   animationDelay?: number;
   theme?: string;
 }
@@ -42,12 +43,13 @@ export function HorizontalBars({
   series,
   theme,
   xScale,
+  zeroPosition,
 }: HorizontalBarProps) {
   const selectedTheme = useTheme(theme);
 
   return (
     <g
-      transform={`translate(0,${LABEL_HEIGHT})`}
+      transform={`translate(${zeroPosition},${LABEL_HEIGHT})`}
       aria-label={ariaLabel}
       role="listitem"
     >
