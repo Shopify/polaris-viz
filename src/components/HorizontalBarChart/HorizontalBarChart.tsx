@@ -1,5 +1,6 @@
 import React, {useCallback, useLayoutEffect, useState} from 'react';
 import {useDebouncedCallback} from 'use-debounce/lib';
+import {getPrintFriendlyTheme} from 'utilities';
 
 import {ChartContainer} from '../../components/ChartContainer';
 import {
@@ -40,7 +41,8 @@ export function HorizontalBarChart({
   );
   const {ref, setRef, entry} = useResizeObserver();
 
-  usePrintResizing({ref, setChartDimensions});
+  const {isPrinting} = usePrintResizing({ref, setChartDimensions});
+  const printFriendlyTheme = getPrintFriendlyTheme({isPrinting, theme});
 
   const updateDimensions = useCallback(() => {
     if (entry != null) {
@@ -82,7 +84,7 @@ export function HorizontalBarChart({
   const {prefersReducedMotion} = usePrefersReducedMotion();
 
   return (
-    <ChartContainer theme={theme} ref={setRef}>
+    <ChartContainer theme={printFriendlyTheme} ref={setRef}>
       {chartDimensions !== null && (
         <Chart
           chartDimensions={chartDimensions}
@@ -90,7 +92,7 @@ export function HorizontalBarChart({
           isSimple={isSimple}
           isStacked={isStacked}
           series={series}
-          theme={theme}
+          theme={printFriendlyTheme}
           xAxisOptions={xAxisOptionsForChart}
         />
       )}

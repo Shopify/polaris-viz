@@ -5,7 +5,7 @@ import {ChartContainer} from '../../components/ChartContainer';
 import type {Dimensions} from '../../types';
 import {SkipLink} from '../SkipLink';
 import {TooltipContent} from '../TooltipContent';
-import {uniqueId} from '../../utilities';
+import {getPrintFriendlyTheme, uniqueId} from '../../utilities';
 import {
   usePrintResizing,
   useResizeObserver,
@@ -45,8 +45,6 @@ export function MultiSeriesBarChart({
   emptyStateText,
   theme,
 }: MultiSeriesBarChartProps) {
-  const selectedTheme = useTheme(theme);
-  const seriesColors = useThemeSeriesColors(series, selectedTheme);
   const [chartDimensions, setChartDimensions] = useState<Dimensions | null>(
     null,
   );
@@ -54,7 +52,10 @@ export function MultiSeriesBarChart({
   const skipLinkAnchorId = useRef(uniqueId('multiSeriesBarChart'));
   const {ref, setRef, entry} = useResizeObserver();
 
-  usePrintResizing({ref, setChartDimensions});
+  const {isPrinting} = usePrintResizing({ref, setChartDimensions});
+  const printFriendlyTheme = getPrintFriendlyTheme({isPrinting, theme});
+  const selectedTheme = useTheme(printFriendlyTheme);
+  const seriesColors = useThemeSeriesColors(series, selectedTheme);
 
   const emptyState = series.length === 0;
 
@@ -115,7 +116,7 @@ export function MultiSeriesBarChart({
       value: yAxisOptionsWithDefaults.labelFormatter(value),
     }));
 
-    return <TooltipContent theme={theme} data={formattedData} />;
+    return <TooltipContent theme={printFriendlyTheme} data={formattedData} />;
   }
 
   const seriesWithDefaults = series.map((series, index) => ({
@@ -124,7 +125,7 @@ export function MultiSeriesBarChart({
   }));
 
   return (
-    <ChartContainer ref={setRef} theme={theme}>
+    <ChartContainer ref={setRef} theme={printFriendlyTheme}>
       {chartDimensions == null ? null : (
         <React.Fragment>
           {skipLinkText == null ||
@@ -147,7 +148,7 @@ export function MultiSeriesBarChart({
                 : renderDefaultTooltipContent
             }
             emptyStateText={emptyStateText}
-            theme={theme}
+            theme={printFriendlyTheme}
           />
           {skipLinkText == null ||
           skipLinkText.length === 0 ||

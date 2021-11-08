@@ -20,6 +20,7 @@ export {isNumber} from './is-number';
 export {createTheme, createThemes} from './create-themes';
 export {PolarisVizContext} from './polaris-viz-context';
 export {classNames} from './classnames';
+export {getPrintFriendlyTheme} from './get-print-friendly-theme';
 export {
   changeColorOpacity,
   changeGradientOpacity,

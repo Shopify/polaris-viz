@@ -8,7 +8,7 @@ import type {
   Dimensions,
 } from '../../types';
 import {TooltipContent} from '../TooltipContent';
-import {uniqueId} from '../../utilities';
+import {getPrintFriendlyTheme, uniqueId} from '../../utilities';
 import {usePrintResizing, useResizeObserver, useTheme} from '../../hooks';
 
 import {Chart} from './Chart';
@@ -41,8 +41,6 @@ export function StackedAreaChart({
   skipLinkText,
   theme,
 }: StackedAreaChartProps) {
-  const selectedTheme = useTheme(theme);
-
   const [chartDimensions, setChartDimensions] = useState<Dimensions | null>(
     null,
   );
@@ -51,7 +49,9 @@ export function StackedAreaChart({
 
   const {ref, setRef, entry} = useResizeObserver();
 
-  usePrintResizing({ref, setChartDimensions});
+  const {isPrinting} = usePrintResizing({ref, setChartDimensions});
+  const printFriendlyTheme = getPrintFriendlyTheme({isPrinting, theme});
+  const selectedTheme = useTheme(printFriendlyTheme);
 
   const updateDimensions = useCallback(() => {
     if (entry != null) {
@@ -108,7 +108,13 @@ export function StackedAreaChart({
       value: yFormatter(value),
     }));
 
-    return <TooltipContent theme={theme} title={title} data={formattedData} />;
+    return (
+      <TooltipContent
+        theme={printFriendlyTheme}
+        title={title}
+        data={formattedData}
+      />
+    );
   }
 
   return (
@@ -138,7 +144,7 @@ export function StackedAreaChart({
                 : renderDefaultTooltipContent
             }
             isAnimated={isAnimated}
-            theme={theme}
+            theme={printFriendlyTheme}
           />
         )}
       </div>

@@ -3,7 +3,7 @@ import {useDebouncedCallback} from 'use-debounce';
 
 import type {Dimensions, XAxisOptions, YAxisOptions} from '../../types';
 import {SkipLink} from '../SkipLink';
-import {uniqueId, normalizeData} from '../../utilities';
+import {uniqueId, normalizeData, getPrintFriendlyTheme} from '../../utilities';
 import {useResizeObserver, usePrintResizing} from '../../hooks';
 import {ChartContainer} from '../ChartContainer';
 
@@ -44,7 +44,8 @@ export function BarChart({
   );
   const {ref, setRef, entry} = useResizeObserver();
 
-  usePrintResizing({ref, setChartDimensions});
+  const {isPrinting} = usePrintResizing({ref, setChartDimensions});
+  const printFriendlyTheme = getPrintFriendlyTheme({isPrinting, theme});
 
   const skipLinkAnchorId = useRef(uniqueId('barChart'));
 
@@ -112,7 +113,7 @@ export function BarChart({
         label={formattedLabel}
         value={formattedValue}
         annotation={annotation}
-        theme={theme}
+        theme={printFriendlyTheme}
       />
     );
   }
@@ -123,7 +124,7 @@ export function BarChart({
   }
 
   return (
-    <ChartContainer ref={setRef} theme={theme}>
+    <ChartContainer ref={setRef} theme={printFriendlyTheme}>
       {chartDimensions == null ? null : (
         <React.Fragment>
           {skipLinkText == null ||
@@ -146,7 +147,7 @@ export function BarChart({
             xAxisOptions={xAxisOptionsWithDefaults}
             yAxisOptions={yAxisOptionsWithDefaults}
             emptyStateText={emptyStateText}
-            theme={theme}
+            theme={printFriendlyTheme}
           />
           {skipLinkText == null ||
           skipLinkText.length === 0 ||

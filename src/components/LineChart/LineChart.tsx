@@ -4,7 +4,12 @@ import {useDebouncedCallback} from 'use-debounce';
 import {ChartContainer} from '../../components/ChartContainer';
 import {useThemeSeriesColors} from '../../hooks/use-theme-series-colors';
 import type {Dimensions, GradientStop} from '../../types';
-import {isGradientType, changeColorOpacity, uniqueId} from '../../utilities';
+import {
+  isGradientType,
+  changeColorOpacity,
+  uniqueId,
+  getPrintFriendlyTheme,
+} from '../../utilities';
 import {SkipLink} from '../SkipLink';
 import {
   usePrefersReducedMotion,
@@ -45,18 +50,19 @@ export function LineChart({
   yAxisOptions,
   theme,
 }: LineChartProps) {
-  const selectedTheme = useTheme(theme);
-  const seriesColors = useThemeSeriesColors(series, selectedTheme);
-
   const [chartDimensions, setChartDimensions] = useState<Dimensions | null>(
     null,
   );
   const {ref, setRef, entry} = useResizeObserver();
+  const {isPrinting} = usePrintResizing({ref, setChartDimensions});
+  const printFriendlyTheme = getPrintFriendlyTheme({isPrinting, theme});
+
+  const selectedTheme = useTheme(printFriendlyTheme);
+  const seriesColors = useThemeSeriesColors(series, selectedTheme);
+
   const {prefersReducedMotion} = usePrefersReducedMotion();
 
   const skipLinkAnchorId = useRef(uniqueId('lineChart'));
-
-  usePrintResizing({ref, setChartDimensions});
 
   const updateDimensions = useCallback(() => {
     if (entry != null) {
@@ -121,7 +127,7 @@ export function LineChart({
         },
       }),
     );
-    return <TooltipContent theme={theme} data={formattedData} />;
+    return <TooltipContent theme={printFriendlyTheme} data={formattedData} />;
   }
 
   const seriesWithDefaults = series.map<SeriesWithDefaults>((series, index) => {
@@ -155,7 +161,7 @@ export function LineChart({
       series.length === 0 ? null : (
         <SkipLink anchorId={skipLinkAnchorId.current}>{skipLinkText}</SkipLink>
       )}
-      <ChartContainer ref={setRef} theme={theme}>
+      <ChartContainer ref={setRef} theme={printFriendlyTheme}>
         {chartDimensions == null ? null : (
           <Chart
             series={seriesWithDefaults}
@@ -169,7 +175,7 @@ export function LineChart({
                 : renderDefaultTooltipContent
             }
             emptyStateText={emptyStateText}
-            theme={theme}
+            theme={printFriendlyTheme}
           />
         )}
       </ChartContainer>

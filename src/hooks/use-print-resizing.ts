@@ -1,4 +1,4 @@
-import {useLayoutEffect} from 'react';
+import {useLayoutEffect, useState} from 'react';
 
 import type {Dimensions} from '../types';
 
@@ -9,6 +9,8 @@ export function usePrintResizing({
   ref: HTMLElement | null;
   setChartDimensions: (value: React.SetStateAction<Dimensions | null>) => void;
 }) {
+  const [isPrinting, setPrinting] = useState(false);
+
   useLayoutEffect(() => {
     const isServer = typeof window === 'undefined';
 
@@ -28,6 +30,9 @@ export function usePrintResizing({
           ref.clientHeight -
           parseInt(paddingTop, 10) -
           parseInt(paddingBottom, 10);
+
+        setPrinting((printState) => !printState);
+
         setChartDimensions({width, height});
       }
     }
@@ -78,4 +83,6 @@ export function usePrintResizing({
       }
     };
   }, [setChartDimensions, ref]);
+
+  return {isPrinting};
 }
