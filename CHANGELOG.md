@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Fixed
+
+- "Reduce Motion" was not respected in `<BarChart />` and `<Sparkbar />`.
+
 ## [0.24.1] - 2021-11-02
 
 ### Fixed
