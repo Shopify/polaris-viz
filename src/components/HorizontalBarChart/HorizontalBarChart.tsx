@@ -1,7 +1,7 @@
 import React, {useCallback, useLayoutEffect, useState} from 'react';
 import {useDebouncedCallback} from 'use-debounce/lib';
-import {getPrintFriendlyTheme} from 'utilities';
 
+import {getPrintFriendlyTheme} from '../../utilities';
 import {ChartContainer} from '../../components/ChartContainer';
 import {
   useResizeObserver,
