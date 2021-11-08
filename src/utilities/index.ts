@@ -24,3 +24,4 @@ export {
   changeColorOpacity,
   changeGradientOpacity,
 } from './change-color-opacity';
+export {getRoundedRectPath} from './get-rounded-rect-path';

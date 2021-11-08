@@ -8,6 +8,7 @@ import {GRADIENT_ID, LABEL_HEIGHT, STACKED_BAR_GAP} from '../../constants';
 import {getBarId} from '../../utilities';
 import {StackedBar} from '../StackedBar';
 import {getGradientDefId} from '../GradientDefs';
+import {RoundedBorder} from '../../../../types';
 
 export interface StackedBarsProps {
   animationDelay: number;
@@ -62,6 +63,7 @@ export function StackedBars({
       {series.map(({rawValue, color}, seriesIndex) => {
         const x = xOffsets[seriesIndex] + STACKED_BAR_GAP * seriesIndex;
         const id = getBarId(groupIndex, seriesIndex);
+        const isLast = seriesIndex === series.length - 1;
 
         const sliceColor = color ? id : `${GRADIENT_ID}${seriesIndex}`;
 
@@ -75,6 +77,7 @@ export function StackedBars({
             seriesIndex={seriesIndex}
             width={xScale(rawValue)}
             x={x}
+            roundedBorder={isLast ? RoundedBorder.Right : RoundedBorder.None}
           />
         );
       })}

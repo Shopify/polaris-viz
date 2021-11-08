@@ -23,6 +23,10 @@
 
 - "Reduce Motion" was not respected in `<BarChart />` and `<Sparkbar />`.
 
+### Added
+
+- Added rounded corners to `stacked` versions of `<HorizontalBarChart />` & `<MultiSeriesBarChart />`.
+
 ## [0.24.1] - 2021-11-02
 
 ### Fixed

@@ -1,33 +1,11 @@
 import React, {useCallback} from 'react';
 import {animated, useSpring} from '@react-spring/web';
 
-import {DataType} from '../../../../types';
-import {
-  BARS_TRANSITION_CONFIG,
-  DEFAULT_BORDER_RADIUS,
-  MIN_WIDTH_BORDER_RADIUS,
-} from '../../../../constants';
-import {clamp} from '../../../../utilities';
+import {getRoundedRectPath} from '../../../../utilities';
+import {DataType, RoundedBorder} from '../../../../types';
+import {BARS_TRANSITION_CONFIG} from '../../../../constants';
 
 import styles from './Bar.scss';
-
-export enum RoundedBorder {
-  None,
-  Top,
-  Right,
-  Bottom,
-  Left,
-}
-
-type RoundedCorners = [number, number, number, number];
-
-interface Borders {
-  [RoundedBorder.None]: RoundedCorners;
-  [RoundedBorder.Top]: RoundedCorners;
-  [RoundedBorder.Right]: RoundedCorners;
-  [RoundedBorder.Bottom]: RoundedCorners;
-  [RoundedBorder.Left]: RoundedCorners;
-}
 
 interface BarProps {
   color: string;
@@ -44,25 +22,6 @@ interface BarProps {
   role?: string;
   roundedBorder?: RoundedBorder;
   transform?: string;
-}
-
-function keepValuePositive(amount: number): number {
-  return clamp({amount, min: 0, max: Infinity});
-}
-
-function getBorderRadius(
-  roundedCorner: RoundedBorder,
-  radius: number,
-): RoundedCorners {
-  const borders: Borders = {
-    [RoundedBorder.None]: [0, 0, 0, 0],
-    [RoundedBorder.Top]: [radius, radius, 0, 0],
-    [RoundedBorder.Right]: [0, radius, radius, 0],
-    [RoundedBorder.Bottom]: [0, 0, radius, radius],
-    [RoundedBorder.Left]: [radius, 0, 0, radius],
-  };
-
-  return borders[roundedCorner];
 }
 
 export const Bar = React.memo(function Bar({
@@ -83,32 +42,7 @@ export const Bar = React.memo(function Bar({
 }: BarProps) {
   const getPath = useCallback(
     (height: number, width: number) => {
-      if (height == null || width == null) {
-        return '';
-      }
-
-      const [topLeft, topRight, bottomRight, bottomLeft] = getBorderRadius(
-        roundedBorder,
-        needsMinWidth ? MIN_WIDTH_BORDER_RADIUS : DEFAULT_BORDER_RADIUS,
-      );
-
-      const top = topLeft + topRight;
-      const right = topRight + bottomRight;
-      const bottom = bottomRight + bottomLeft;
-      const left = bottomLeft + topLeft;
-
-      return `
-      M${topLeft},0
-      h${keepValuePositive(width - top)}
-      a${topRight},${topRight} 0 0 1 ${topRight},${topRight}
-      v${keepValuePositive(height - right)}
-      a${bottomRight},${bottomRight} 0 0 1 -${bottomRight},${bottomRight}
-      h-${keepValuePositive(width - bottom)}
-      a${bottomLeft},${bottomLeft} 0 0 1 -${bottomLeft},-${bottomLeft}
-      v-${keepValuePositive(height - left)}
-      a${topLeft},${topLeft} 0 0 1 ${topLeft},-${topLeft}
-      Z
-    `;
+      return getRoundedRectPath({height, width, needsMinWidth, roundedBorder});
     },
     [needsMinWidth, roundedBorder],
   );

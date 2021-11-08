@@ -185,3 +185,11 @@ export enum DataType {
   BarGroup = 'BarGroup',
   Bar = 'Bar',
 }
+
+export enum RoundedBorder {
+  None,
+  Top,
+  Right,
+  Bottom,
+  Left,
+}

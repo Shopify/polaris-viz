@@ -1,7 +1,8 @@
 import {animated, useSpring} from '@react-spring/web';
 import React from 'react';
 
-import {DataType} from '../../../../types';
+import {getRoundedRectPath} from '../../../../utilities';
+import {DataType, RoundedBorder} from '../../../../types';
 
 interface StackedBarProps {
   color: string;
@@ -9,6 +10,7 @@ interface StackedBarProps {
   height: number;
   isAnimated: boolean;
   seriesIndex: number;
+  roundedBorder: RoundedBorder;
   width: number;
   x: number;
 }
@@ -18,6 +20,7 @@ export function StackedBar({
   groupIndex,
   height,
   isAnimated,
+  roundedBorder,
   seriesIndex,
   width,
   x,
@@ -28,9 +31,17 @@ export function StackedBar({
     default: {immediate: !isAnimated},
   });
 
+  const pathD = getRoundedRectPath({
+    height,
+    width,
+    needsMinWidth: false,
+    roundedBorder,
+  });
+
   return (
     <animated.g style={{transform}}>
-      <rect
+      <path
+        d={pathD}
         data-index={groupIndex}
         data-type={DataType.Bar}
         fill={`url(#${color})`}
@@ -39,7 +50,7 @@ export function StackedBar({
         style={{outline: 'none', transformOrigin: `${x}px 0px`}}
         tabIndex={seriesIndex === 0 ? 0 : -1}
         width={width}
-        x={x}
+        transform={`translate(${x},0)`}
       />
     </animated.g>
   );
