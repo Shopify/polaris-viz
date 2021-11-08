@@ -1,5 +1,6 @@
-import {useLayoutEffect} from 'react';
+import {useLayoutEffect, useContext} from 'react';
 
+import {PolarisVizContext} from '../utilities';
 import type {Dimensions} from '../types';
 
 export function usePrintResizing({
@@ -9,6 +10,8 @@ export function usePrintResizing({
   ref: HTMLElement | null;
   setChartDimensions: (value: React.SetStateAction<Dimensions | null>) => void;
 }) {
+  const {setPrinting} = useContext(PolarisVizContext);
+
   useLayoutEffect(() => {
     const isServer = typeof window === 'undefined';
 
@@ -28,6 +31,9 @@ export function usePrintResizing({
           ref.clientHeight -
           parseInt(paddingTop, 10) -
           parseInt(paddingBottom, 10);
+
+        setPrinting((isPrinting) => !isPrinting);
+
         setChartDimensions({width, height});
       }
     }
@@ -77,5 +83,5 @@ export function usePrintResizing({
         }
       }
     };
-  }, [setChartDimensions, ref]);
+  }, [setChartDimensions, ref, setPrinting]);
 }

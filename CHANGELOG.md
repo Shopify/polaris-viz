@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Changed
+
+- Charts use the Light theme when printed to ensure enough contrast
+
 ## [0.24.1] - 2021-11-02
 
 ### Fixed

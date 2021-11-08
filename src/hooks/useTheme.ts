@@ -4,7 +4,11 @@ import type {Theme} from '../types';
 import {PolarisVizContext} from '../utilities/';
 
 export function useTheme(themeName = 'Default'): Theme {
-  const {themes} = useContext(PolarisVizContext);
+  const {themes, isPrinting} = useContext(PolarisVizContext);
+
+  if (isPrinting) {
+    return themes.Light;
+  }
 
   if (Object.prototype.hasOwnProperty.call(themes, themeName)) {
     return themes[themeName];
