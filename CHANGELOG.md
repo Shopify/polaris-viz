@@ -6,6 +6,9 @@
 
 - Horizontal overflow style to `<StackedAreaChart />`, which were unintentionally removed
 
+### Changed
+
+- Renamed `<Sparkbar />` to `<SparkBarChart />`.
 ## [0.25.0] - 2021-11-12
 
 ### Added

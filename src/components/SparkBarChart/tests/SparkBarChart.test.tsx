@@ -2,7 +2,7 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleBand} from 'd3-scale';
 
-import {Sparkbar} from '../Sparkbar';
+import {SparkBarChart} from '../SparkBarChart';
 import {LinearGradient} from '../../LinearGradient';
 
 const sampleData = [{value: 100}, {value: 200}, {value: 300}, {value: 500}];
@@ -32,16 +32,16 @@ jest.mock('d3-scale', () => ({
   }),
 }));
 
-describe('<Sparkbar/>', () => {
+describe('<SparkBarChart/>', () => {
   it('renders a <LinearGradient />', () => {
-    const wrapper = mount(<Sparkbar data={sampleData} />);
+    const wrapper = mount(<SparkBarChart data={sampleData} />);
 
     expect(wrapper).toContainReactComponent(LinearGradient);
   });
 
   it('renders an accessibility label', () => {
     const wrapper = mount(
-      <Sparkbar data={sampleData} accessibilityLabel="This is a test" />,
+      <SparkBarChart data={sampleData} accessibilityLabel="This is a test" />,
     );
 
     expect(wrapper).toContainReactText('This is a test');
@@ -49,7 +49,7 @@ describe('<Sparkbar/>', () => {
 
   it('renders bars with 90% opacity when a comparison is present', () => {
     const wrapper = mount(
-      <Sparkbar data={sampleData} comparison={sampleComparison} />,
+      <SparkBarChart data={sampleData} comparison={sampleComparison} />,
     );
 
     expect(wrapper).toContainReactComponent('g', {
@@ -58,7 +58,7 @@ describe('<Sparkbar/>', () => {
   });
 
   it('renders bars with 100% opacity when no comparison is present', () => {
-    const wrapper = mount(<Sparkbar data={sampleData} />);
+    const wrapper = mount(<SparkBarChart data={sampleData} />);
 
     expect(wrapper).toContainReactComponent('g', {
       opacity: '1',
@@ -67,14 +67,14 @@ describe('<Sparkbar/>', () => {
 
   it('renders a comparison line when the comparison prop is passed', () => {
     const wrapper = mount(
-      <Sparkbar data={sampleData} comparison={sampleComparison} />,
+      <SparkBarChart data={sampleData} comparison={sampleComparison} />,
     );
 
     expect(wrapper).toContainReactComponentTimes('path', 5);
   });
 
   it('does not render a comparison line when the prop is not passed', () => {
-    const wrapper = mount(<Sparkbar data={sampleData} />);
+    const wrapper = mount(<SparkBarChart data={sampleData} />);
 
     expect(wrapper).toContainReactComponentTimes('path', 4);
   });
@@ -91,7 +91,7 @@ describe('<Sparkbar/>', () => {
     });
 
     const wrapper = mount(
-      <Sparkbar data={sampleData} comparison={sampleComparison} />,
+      <SparkBarChart data={sampleData} comparison={sampleComparison} />,
     );
 
     expect(wrapper).toContainReactComponent('path', {
@@ -112,7 +112,7 @@ describe('<Sparkbar/>', () => {
     });
 
     const wrapper = mount(
-      <Sparkbar
+      <SparkBarChart
         data={sampleData}
         comparison={sampleComparison}
         dataOffsetLeft={25}
@@ -144,7 +144,7 @@ describe('<Sparkbar/>', () => {
     const mockWidth = 0;
 
     mount(
-      <Sparkbar
+      <SparkBarChart
         data={sampleData}
         dataOffsetLeft={offsetLeft}
         dataOffsetRight={offsetRight}

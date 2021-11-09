@@ -16,7 +16,7 @@ import {uniqueId, getAnimationTrail, isGradientType} from '../../utilities';
 import {LinearGradient} from '../LinearGradient';
 
 import {Bar} from './components';
-import styles from './Sparkbar.scss';
+import styles from './SparkBarChart.scss';
 
 const STROKE_WIDTH = 1.5;
 const BAR_PADDING = 0.3;
@@ -29,7 +29,7 @@ interface Coordinates {
   y: number;
 }
 
-export interface SparkbarProps {
+export interface SparkBarChartProps {
   data: SparkChartData[];
   dataOffsetRight?: number;
   dataOffsetLeft?: number;
@@ -61,7 +61,7 @@ function calculateRange(data: SparkChartData[], height: number) {
   return range;
 }
 
-export function Sparkbar({
+export function SparkBarChart({
   data,
   comparison,
   accessibilityLabel,
@@ -70,7 +70,7 @@ export function Sparkbar({
   dataOffsetLeft = 0,
   theme,
   barColor,
-}: SparkbarProps) {
+}: SparkBarChartProps) {
   const {
     ref: containerRef,
     setRef: setContainerRef,
@@ -148,7 +148,7 @@ export function Sparkbar({
       : -(STROKE_WIDTH / 2) - dataOffsetLeft;
   const strokeDasharray = `${barWidth - STROKE_WIDTH} ${barGap}`;
 
-  const id = useMemo(() => uniqueId('sparkbar'), []);
+  const id = useMemo(() => uniqueId('SparkBarChart'), []);
   const clipId = useMemo(() => uniqueId('clip'), []);
 
   const getBarHeight = useCallback(
