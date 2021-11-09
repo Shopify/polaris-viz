@@ -1,5 +1,5 @@
 import type {
-  DataSeries,
+  LegacyDataSeries,
   Data,
   LineStyle,
   StringLabelFormatter,
@@ -7,12 +7,12 @@ import type {
   Color,
 } from '../../types';
 
-export interface Series extends DataSeries<Data, Color> {
+export interface Series extends LegacyDataSeries<Data, Color> {
   areaColor?: string | null;
   lineStyle?: LineStyle;
 }
 
-export type SeriesWithDefaults = Required<DataSeries<Data, Color>> & {
+export type SeriesWithDefaults = Required<LegacyDataSeries<Data, Color>> & {
   lineStyle: LineStyle;
   areaColor?: string | null;
 };

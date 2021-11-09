@@ -5,6 +5,7 @@
 ### Changed
 
 - Renamed `<Sparkbar />` to `<SparkBarChart />`.
+- Renamed `DataSeries` to `LegacyDataSeries`.
 
 ## [0.24.1] - 2021-11-02
 
