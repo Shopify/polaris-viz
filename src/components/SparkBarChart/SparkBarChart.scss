@@ -1,16 +1,9 @@
 @import '../../styles/common';
 
-.Wrapper {
-  position: relative;
-  overflow: visible;
-  @include chart-container;
-}
-
 .VisuallyHidden {
   @include visually-hidden;
 }
 
 .ComparisonLine {
-  fill: none;
   stroke-linecap: round;
 }
