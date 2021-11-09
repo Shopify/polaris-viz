@@ -3,12 +3,12 @@ import type {Series as ShapeSeries} from 'd3-shape';
 import type {
   StringLabelFormatter,
   NumberLabelFormatter,
-  DataSeries,
+  LegacyDataSeries,
   Data,
   Color,
 } from '../../types';
 
-export type Series = DataSeries<Data, Color>;
+export type Series = LegacyDataSeries<Data, Color>;
 
 export type StackSeries = ShapeSeries<
   {
