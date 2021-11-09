@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {
-  Sparkbar,
+  SparkBarChart,
   Sparkline,
   BarChart,
   LineChart,
@@ -14,9 +14,9 @@ import {
   generateLabels,
 } from '../../../../../documentation/utilities';
 
-export const SampleSparkbar = ({theme} = {theme: 'Default'}) => {
+export const SampleSparkBarChart = ({theme} = {theme: 'Default'}) => {
   return (
-    <Sparkbar
+    <SparkBarChart
       theme={theme}
       data={[
         {value: 100},

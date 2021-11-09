@@ -1,6 +1,6 @@
 export {
   Sparkline,
-  Sparkbar,
+  SparkBarChart,
   NormalizedStackedBarChart,
   BarChart,
   BarChartTooltipContent,
@@ -18,7 +18,7 @@ export {
 
 export type {
   SparklineProps,
-  SparkbarProps,
+  SparkBarChartProps,
   NormalizedStackedBarChartProps,
   BarChartProps,
   BarChartTooltipContentProps,

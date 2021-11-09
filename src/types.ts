@@ -66,10 +66,6 @@ export interface Dimensions {
   height: number;
 }
 
-export interface SparkChartData {
-  value: number | null;
-}
-
 export type PathInterpolator = InterpolatorFn<readonly number[], string>;
 export type NumberInterpolator = InterpolatorFn<readonly number[], number>;
 export type Color = string | GradientStop[];
