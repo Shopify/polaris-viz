@@ -7,7 +7,7 @@ import {useThemeSeriesColors} from '../../hooks/use-theme-series-colors';
 import {useResizeObserver, useTheme} from '../../hooks';
 import {XMLNS} from '../../constants';
 
-import styles from './Sparkline.scss';
+import styles from './SparkLineChart.scss';
 import {Series} from './components';
 
 const SVG_MARGIN = 2;
@@ -27,19 +27,19 @@ export interface SingleSeries {
   offsetLeft?: number;
 }
 
-export interface SparklineProps {
+export interface SparkLineChartProps {
   series: SingleSeries[];
   accessibilityLabel?: string;
   isAnimated?: boolean;
   theme?: string;
 }
 
-export function Sparkline({
+export function SparkLineChart({
   series,
   accessibilityLabel,
   isAnimated = false,
   theme,
-}: SparklineProps) {
+}: SparkLineChartProps) {
   const {
     ref: containerRef,
     setRef: setContainerRef,

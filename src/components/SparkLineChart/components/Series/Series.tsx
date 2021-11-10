@@ -11,7 +11,7 @@ import {
   classNames,
 } from '../../../../utilities';
 import {usePrefersReducedMotion} from '../../../../hooks';
-import type {SingleSeries, Coordinates} from '../../Sparkline';
+import type {SingleSeries, Coordinates} from '../../SparkLineChart';
 
 import styles from './Series.scss';
 

@@ -2,7 +2,7 @@ import React from 'react';
 
 import {
   SparkBarChart,
-  Sparkline,
+  SparkLineChart,
   BarChart,
   LineChart,
   MultiSeriesBarChart,
@@ -37,7 +37,7 @@ export const SampleSparkBarChart = ({theme} = {theme: 'Default'}) => {
 
 export const SampleSparkline = ({theme} = {theme: 'Default'}) => {
   return (
-    <Sparkline
+    <SparkLineChart
       theme={theme}
       series={[
         {
