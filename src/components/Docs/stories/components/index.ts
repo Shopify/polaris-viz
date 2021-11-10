@@ -5,7 +5,7 @@ export {Divider} from './Divider';
 export {ExamplesGrid} from './ExamplesGrid';
 export {PropertyTable} from './PropertyTable';
 export {
-  SampleSparkbar,
+  SampleSparkBarChart,
   SampleSparkline,
   SampleLineChart,
   SampleBarchart,

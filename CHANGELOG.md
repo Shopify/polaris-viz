@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Changed
+
+- Renamed `<Sparkbar />` to `<SparkBarChart />`.
+
 ## [0.24.1] - 2021-11-02
 
 ### Fixed

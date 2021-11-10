@@ -1,11 +1,11 @@
 import React from 'react';
 import type {Story, Meta} from '@storybook/react';
 
-import {Sparkbar, SparkbarProps} from '../Sparkbar';
+import {SparkBarChart, SparkBarChartProps} from '../SparkBarChart';
 import {THEME_CONTROL_ARGS} from '../../../storybook';
 
 export default {
-  title: 'Charts/Sparkbar',
+  title: 'Charts/SparkBarChart',
   parameters: {
     controls: {sort: 'requiredFirst', expanded: true},
     docs: {
@@ -15,7 +15,7 @@ export default {
       },
     },
   },
-  component: Sparkbar,
+  component: SparkBarChart,
   decorators: [
     (Story: any) => (
       <div style={{width: '200px', height: '100px'}}>{Story()}</div>
@@ -50,8 +50,8 @@ export default {
   },
 } as Meta;
 
-const Template: Story<SparkbarProps> = (args: SparkbarProps) => {
-  return <Sparkbar {...args} />;
+const Template: Story<SparkBarChartProps> = (args: SparkBarChartProps) => {
+  return <SparkBarChart {...args} />;
 };
 
 const comparisonValue = 2000;
@@ -87,10 +87,10 @@ const defaultProps = {
     'A bar chart showing orders over time for the past 11 weeks. The minimum is 100 orders and the maximum is 1,000 orders, compared to an average of 500 orders during previous 11-week period.',
 };
 
-export const Default: Story<SparkbarProps> = Template.bind({});
+export const Default: Story<SparkBarChartProps> = Template.bind({});
 Default.args = defaultProps;
 
-export const OffsetAndNulls: Story<SparkbarProps> = Template.bind({});
+export const OffsetAndNulls: Story<SparkBarChartProps> = Template.bind({});
 OffsetAndNulls.args = {
   ...defaultProps,
   dataOffsetLeft: 10,
@@ -110,5 +110,5 @@ OffsetAndNulls.args = {
   ],
 };
 
-export const OverwrittenBarColor: Story<SparkbarProps> = Template.bind({});
+export const OverwrittenBarColor: Story<SparkBarChartProps> = Template.bind({});
 OverwrittenBarColor.args = {...defaultProps, barColor: 'green'};
