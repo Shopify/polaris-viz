@@ -1,3 +1,5 @@
+import type {TooltipData} from 'components/TooltipContent';
+
 import type {Color} from '../../types';
 
 export type LabelFormatter = (value: string | number) => string;
@@ -21,4 +23,8 @@ export interface Series {
 export interface ColorOverrides {
   id: string;
   color: Color;
+}
+
+export interface RenderTooltipContentData {
+  data: TooltipData[];
 }

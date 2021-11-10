@@ -6,8 +6,8 @@ import {
   HorizontalBarChartProps,
 } from '../HorizontalBarChart';
 
-import type {Series} from '../types';
-import {THEME_CONTROL_ARGS} from '../../../storybook';
+import type {RenderTooltipContentData, Series} from '../types';
+import {getSingleColor, THEME_CONTROL_ARGS} from '../../../storybook';
 
 const LABELS = ['BCFM 2019', 'BCFM 2020', 'BCFM 2021'];
 
@@ -44,6 +44,25 @@ const CONTAINER_HEIGHT = 500;
 
 const SINGLE_SERIES = buildSeries([3, 7, 4, 8, 4, 1, 4, 6]);
 
+const TOOLTIP_CONTENT = {
+  empty: undefined,
+  Custom: ({data}: RenderTooltipContentData) => {
+    return data.map(({value, label, color}) => {
+      return (
+        <div
+          style={{
+            color: getSingleColor(color),
+            padding: '10px',
+          }}
+          key={label}
+        >
+          {`${label}: ${value} pickles`}
+        </div>
+      );
+    });
+  },
+};
+
 export default {
   title: 'Charts/HorizontalBarChart',
   component: HorizontalBarChart,
@@ -79,6 +98,19 @@ export default {
     isStacked: {
       description:
         'Changes the grouping of the bars. If `true` the bar groups will stack vertically, otherwise they will render individual bars for each data point in each group.',
+    },
+    renderTooltipContent: {
+      description:
+        'Accepts a function that renders the tooltip content. By default it calls `xAxisOptions.labelFormatter` to format the the tooltip values and passes them to `<TooltipContent />`.',
+      options: Object.keys(TOOLTIP_CONTENT),
+      mapping: TOOLTIP_CONTENT,
+      control: {
+        type: 'select',
+        labels: {
+          empty: 'Default',
+          Annotation: 'Custom',
+        },
+      },
     },
     theme: THEME_CONTROL_ARGS,
     xAxisOptions: {

@@ -1,8 +1,7 @@
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {ReactNode, useCallback, useMemo, useState} from 'react';
 import {useTransition, animated} from '@react-spring/web';
 
 import {getSeriesColorsFromCount, useTheme} from '../../hooks';
-import {TooltipContent} from '../TooltipContent';
 import {
   XMLNS,
   BarChartMargin as Margin,
@@ -17,6 +16,7 @@ import {
   TooltipPositionParams,
   TooltipWrapper,
 } from '../TooltipWrapper';
+import type {TooltipData} from '../TooltipContent';
 
 import {getAlteredHorizontalBarPosition, getBarId} from './utilities';
 import {
@@ -27,7 +27,12 @@ import {
   VerticalGridLines,
   XAxisLabels,
 } from './components';
-import type {ColorOverrides, Series, XAxisOptions} from './types';
+import type {
+  ColorOverrides,
+  RenderTooltipContentData,
+  Series,
+  XAxisOptions,
+} from './types';
 import {useBarSizes, useDataForChart, useXScale} from './hooks';
 import styles from './Chart.scss';
 
@@ -36,6 +41,7 @@ interface ChartProps {
   isAnimated: boolean;
   isSimple: boolean;
   isStacked: boolean;
+  renderTooltipContent: (data: RenderTooltipContentData) => ReactNode;
   series: Series[];
   xAxisOptions: Required<XAxisOptions>;
   theme?: string;
@@ -46,6 +52,7 @@ export function Chart({
   isAnimated,
   isSimple,
   isStacked,
+  renderTooltipContent,
   series,
   theme,
   xAxisOptions,
@@ -148,19 +155,19 @@ export function Chart({
         return null;
       }
 
-      const data = series[activeIndex].data.map(
+      const data: TooltipData[] = series[activeIndex].data.map(
         ({rawValue, label, color}, index) => {
           return {
             label,
-            value: labelFormatter(rawValue),
+            value: `${rawValue}`,
             color: color ?? seriesColors[index],
           };
         },
       );
 
-      return <TooltipContent data={data} theme={theme} />;
+      return renderTooltipContent({data});
     },
-    [series, seriesColors, labelFormatter, theme],
+    [series, seriesColors, renderTooltipContent],
   );
 
   const seriesWithColorOverride = useMemo(() => {
