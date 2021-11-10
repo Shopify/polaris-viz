@@ -2,10 +2,10 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
 
-import {Sparkline} from './Sparkline';
-import {Series} from './components';
+import {SparkLineChart} from '../SparkLineChart';
+import {Series} from '../components';
 
-jest.mock('../../utilities/unique-id', () => ({
+jest.mock('../../../utilities/unique-id', () => ({
   uniqueId: jest.fn(() => 'stackedAreas-1'),
 }));
 
@@ -18,7 +18,7 @@ jest.mock('d3-scale', () => ({
   }),
 }));
 
-describe('<Sparkline />', () => {
+describe('<SparkLineChart />', () => {
   const mockSeries = [
     {
       color: 'red',
@@ -57,36 +57,36 @@ describe('<Sparkline />', () => {
 
   describe('SVG', () => {
     it('renders', () => {
-      const sparkline = mount(<Sparkline series={mockSeries} />);
+      const sparkLineChart = mount(<SparkLineChart series={mockSeries} />);
 
-      expect(sparkline).toContainReactComponentTimes('svg', 1);
+      expect(sparkLineChart).toContainReactComponentTimes('svg', 1);
     });
   });
 
   describe('Accessibility', () => {
     it('gives the SVG an aria-hidden attribute', () => {
-      const sparkline = mount(<Sparkline series={mockSeries} />);
+      const sparkLineChart = mount(<SparkLineChart series={mockSeries} />);
 
-      expect(sparkline).toContainReactComponent('svg', {
+      expect(sparkLineChart).toContainReactComponent('svg', {
         'aria-hidden': true,
       });
     });
 
     it('has a hidden label when an accessibility label is passed to the component', () => {
       const label = 'Showing sales over the last 30 days';
-      const sparkline = mount(
-        <Sparkline series={mockSeries} accessibilityLabel={label} />,
+      const sparkLineChart = mount(
+        <SparkLineChart series={mockSeries} accessibilityLabel={label} />,
       );
 
-      expect(sparkline.find('span')!.text()).toBe(label);
+      expect(sparkLineChart.find('span')!.text()).toBe(label);
     });
   });
 
   describe('Series', () => {
     it('renders a Series for each series provided', () => {
-      const sparkline = mount(<Sparkline series={mockSeries} />);
+      const sparkLineChart = mount(<SparkLineChart series={mockSeries} />);
 
-      expect(sparkline.findAll(Series)).toHaveLength(mockSeries.length);
+      expect(sparkLineChart.findAll(Series)).toHaveLength(mockSeries.length);
     });
 
     it('reduces the series width according to the offset and margin', () => {
@@ -105,7 +105,7 @@ describe('<Sparkline />', () => {
       const mockWidth = 0;
 
       mount(
-        <Sparkline
+        <SparkLineChart
           series={[
             {
               offsetLeft,

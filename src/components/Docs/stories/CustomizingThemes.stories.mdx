@@ -4,7 +4,7 @@ import {PolarisVizProvider} from '../../PolarisVizProvider';
 import {
   ComponentContainer,
   Title,
-  SampleSparkline,
+  SampleSparkLineChart,
   SampleLineChart,
   SampleBarchart,
 } from './components';
@@ -175,8 +175,8 @@ export const App = () => {
     },
   }}
 >
-  <Sparkline series={...} theme='AngryRed'/>
-  <Sparkline series={...} theme='HappyGreen'/>
+  <SparkLineChart series={...} theme='AngryRed'/>
+  <SparkLineChart series={...} theme='HappyGreen'/>
 </PolarisVizProvider>
 ```
 
@@ -218,20 +218,20 @@ export const App = () => {
     center
     chart={
       <div style={{width: '250px', height: '140px'}}>
-        <SampleSparkline theme="AngryRed" />
+        <SampleSparkLineChart theme="AngryRed" />
       </div>
     }
-    codeSample={"<Sparkline series={...} theme='AngryRed'/>"}
+    codeSample={"<SparkLineChart series={...} theme='AngryRed'/>"}
   />
    <ComponentContainer
     theme="HappyGreen"
     center
     chart={
       <div style={{width: '250px', height: '140px'}}>
-        <SampleSparkline theme="HappyGreen" />
+        <SampleSparkLineChart theme="HappyGreen" />
       </div>
     }
-    codeSample={"<Sparkline series={...} theme='HappyGreen'/>"}
+    codeSample={"<SparkLineChart series={...} theme='HappyGreen'/>"}
   />
 
   </PolarisVizProvider>

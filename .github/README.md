@@ -122,13 +122,13 @@ Used to compare multiple series of data and display the total value. [View docum
 
   <td>
 
-<a href="https://polaris-viz.shopify.io/?path=/docs/charts-sparkline">
-  <img src="../src/components/Sparkline/sparkline.png"/>
+<a href="https://polaris-viz.shopify.io/?path=/docs/charts-sparklinechart">
+  <img src="../src/components/SparkLineChart/sparklinechart.png"/>
 </a>
 
-#### Sparkline
+#### SparkLineChart
 
-Used in small sizes to show how a metric has performed over time. [View documentation&nbsp;→](https://polaris-viz.shopify.io/?path=/docs/charts-sparkline)
+Used in small sizes to show how a metric has performed over time. [View documentation&nbsp;→](https://polaris-viz.shopify.io/?path=/docs/charts-sparklinechart)
 
   </td>
 

@@ -6,6 +6,7 @@
 ### Changed
 
 - Renamed `<Sparkbar />` to `<SparkBarChart />`.
+- Renamed `<Sparkline />` to `<SparkLineChart />`.
 
 ## [0.24.1] - 2021-11-02
 
