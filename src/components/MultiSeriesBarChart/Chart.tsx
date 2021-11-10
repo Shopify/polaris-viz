@@ -35,7 +35,7 @@ import styles from './Chart.scss';
 
 interface Props {
   series: Required<Series>[];
-  chartDimensions: Dimensions;
+  dimensions?: Dimensions;
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
   xAxisOptions: XAxisOptions;
   yAxisOptions: YAxisOptions;
@@ -47,7 +47,7 @@ interface Props {
 
 export function Chart({
   series,
-  chartDimensions,
+  dimensions,
   renderTooltipContent,
   xAxisOptions,
   yAxisOptions,
@@ -60,8 +60,9 @@ export function Chart({
   const [activeBarGroup, setActiveBarGroup] = useState<number | null>(null);
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
 
-  const fontSize =
-    chartDimensions.width < SMALL_WIDTH ? SMALL_FONT_SIZE : FONT_SIZE;
+  const {width, height} = dimensions ?? {width: 0, height: 0};
+
+  const fontSize = width < SMALL_WIDTH ? SMALL_FONT_SIZE : FONT_SIZE;
 
   const emptyState = series.length === 0;
 
@@ -70,7 +71,7 @@ export function Chart({
     : null;
 
   const {ticks: initialTicks} = useYScale({
-    drawableHeight: chartDimensions.height - Margin.Top - Margin.Bottom,
+    drawableHeight: height - Margin.Top - Margin.Bottom,
     data: series,
     formatYAxisLabel: yAxisOptions.labelFormatter,
     stackedValues,
@@ -93,10 +94,7 @@ export function Chart({
   const axisMargin = SPACING + yAxisLabelWidth;
   const chartStartPosition = axisMargin + selectedTheme.grid.horizontalMargin;
   const drawableWidth =
-    chartDimensions.width -
-    Margin.Right -
-    axisMargin -
-    selectedTheme.grid.horizontalMargin * 2;
+    width - Margin.Right - axisMargin - selectedTheme.grid.horizontalMargin * 2;
 
   const formattedXAxisLabels = useMemo(
     () => xAxisOptions.labels.map(xAxisOptions.labelFormatter),
@@ -118,7 +116,7 @@ export function Chart({
         yAxisLabelWidth,
         xLabels: hideXAxis ? [] : formattedXAxisLabels,
         fontSize,
-        width: chartDimensions.width - selectedTheme.grid.horizontalMargin * 2,
+        width: width - selectedTheme.grid.horizontalMargin * 2,
         innerMargin: BarMargin[selectedTheme.bar.innerMargin],
         outerMargin: BarMargin[selectedTheme.bar.outerMargin],
         wrapLabels: xAxisOptions.wrapLabels ?? true,
@@ -128,7 +126,7 @@ export function Chart({
       yAxisLabelWidth,
       formattedXAxisLabels,
       fontSize,
-      chartDimensions.width,
+      width,
       selectedTheme.grid.horizontalMargin,
       selectedTheme.bar.innerMargin,
       selectedTheme.bar.outerMargin,
@@ -159,10 +157,7 @@ export function Chart({
   const {maxXLabelHeight} = xAxisDetails;
 
   const drawableHeight =
-    chartDimensions.height -
-    Margin.Top -
-    Margin.Bottom -
-    xAxisDetails.maxXLabelHeight;
+    height - Margin.Top - Margin.Bottom - xAxisDetails.maxXLabelHeight;
 
   const {yScale, ticks} = useYScale({
     drawableHeight,
@@ -214,15 +209,15 @@ export function Chart({
     <div
       className={styles.ChartContainer}
       style={{
-        height: chartDimensions.height,
-        width: chartDimensions.width,
+        height,
+        width,
       }}
     >
       <svg
-        viewBox={`0 0 ${chartDimensions.width} ${chartDimensions.height}`}
+        viewBox={`0 0 ${width} ${height}`}
         xmlns={XMLNS}
-        width={chartDimensions.width}
-        height={chartDimensions.height}
+        width={width}
+        height={height}
         className={styles.Svg}
         role={emptyState ? 'img' : 'list'}
         aria-label={emptyState ? emptyStateText : undefined}
@@ -231,7 +226,7 @@ export function Chart({
         {hideXAxis ? null : (
           <g
             transform={`translate(${chartStartPosition},${
-              chartDimensions.height - Margin.Bottom - maxXLabelHeight
+              height - Margin.Bottom - maxXLabelHeight
             })`}
             aria-hidden="true"
           >
@@ -254,9 +249,7 @@ export function Chart({
               y: Margin.Top,
             }}
             width={
-              selectedTheme.grid.horizontalOverflow
-                ? chartDimensions.width
-                : drawableWidth
+              selectedTheme.grid.horizontalOverflow ? width : drawableWidth
             }
             theme={theme}
           />
@@ -317,7 +310,7 @@ export function Chart({
 
       <TooltipWrapper
         bandwidth={xScale.bandwidth()}
-        chartDimensions={chartDimensions}
+        chartDimensions={{width, height}}
         focusElementDataType={DataType.BarGroup}
         getMarkup={getTooltipMarkup}
         getPosition={getTooltipPosition}

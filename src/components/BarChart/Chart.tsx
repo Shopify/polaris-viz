@@ -60,19 +60,19 @@ type RequiredXAxis = Pick<
 interface Props {
   data: BarChartData[];
   annotationsLookupTable: AnnotationLookupTable;
-  chartDimensions: Dimensions;
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
   xAxisOptions: RequiredXAxis;
   yAxisOptions: Required<YAxisOptions>;
   emptyStateText?: string;
   isAnimated?: boolean;
+  dimensions?: Dimensions;
   theme?: string;
 }
 
 export function Chart({
   data,
   annotationsLookupTable,
-  chartDimensions,
+  dimensions,
   renderTooltipContent,
   emptyStateText,
   isAnimated = false,
@@ -92,14 +92,14 @@ export function Chart({
     dataLength: data.length,
   });
 
-  const fontSize =
-    chartDimensions.width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
+  const {width, height} = dimensions ?? {width: 0, height: 0};
+
+  const fontSize = width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
 
   const emptyState = data.length === 0;
 
   const {ticks: initialTicks} = useYScale({
-    drawableHeight:
-      chartDimensions.height - Margin.Top - Margin.Bottom - LINE_HEIGHT,
+    drawableHeight: height - Margin.Top - Margin.Bottom - LINE_HEIGHT,
     data,
     formatYAxisLabel: yAxisOptions.labelFormatter,
     integersOnly: yAxisOptions.integersOnly,
@@ -129,7 +129,7 @@ export function Chart({
           : data.map(({label}, index) =>
               xAxisOptions.labelFormatter(label, index, xLabels),
             ),
-        width: chartDimensions.width - selectedTheme.grid.horizontalMargin * 2,
+        width: width - selectedTheme.grid.horizontalMargin * 2,
         innerMargin: BarMargin[selectedTheme.bar.innerMargin],
         outerMargin: BarMargin[selectedTheme.bar.outerMargin],
         minimalLabelIndexes,
@@ -140,7 +140,7 @@ export function Chart({
       approxYAxisLabelWidth,
       fontSize,
       data,
-      chartDimensions.width,
+      width,
       selectedTheme.grid.horizontalMargin,
       selectedTheme.bar.innerMargin,
       selectedTheme.bar.outerMargin,
@@ -151,10 +151,7 @@ export function Chart({
   );
 
   const drawableHeight =
-    chartDimensions.height -
-    Margin.Top -
-    Margin.Bottom -
-    xAxisDetails.maxXLabelHeight;
+    height - Margin.Top - Margin.Bottom - xAxisDetails.maxXLabelHeight;
 
   const {yScale, ticks} = useYScale({
     drawableHeight,
@@ -178,10 +175,7 @@ export function Chart({
   const axisMargin = SPACING + yAxisLabelWidth;
   const chartStartPosition = axisMargin + selectedTheme.grid.horizontalMargin;
   const drawableWidth =
-    chartDimensions.width -
-    Margin.Right -
-    axisMargin -
-    selectedTheme.grid.horizontalMargin * 2;
+    width - Margin.Right - axisMargin - selectedTheme.grid.horizontalMargin * 2;
 
   const {xScale, xAxisLabels} = useXScale({
     drawableWidth,
@@ -227,8 +221,6 @@ export function Chart({
   );
 
   const shouldAnimate = !prefersReducedMotion && isAnimated;
-
-  const {width, height} = chartDimensions;
 
   const gradientId = useMemo(() => uniqueId('gradient'), []);
   const clipId = useMemo(() => uniqueId('clip'), []);
@@ -309,9 +301,7 @@ export function Chart({
         {hideXAxis ? null : (
           <g
             transform={`translate(${chartStartPosition},${
-              chartDimensions.height -
-              Margin.Bottom -
-              xAxisDetails.maxXLabelHeight
+              height - Margin.Bottom - xAxisDetails.maxXLabelHeight
             })`}
             aria-hidden="true"
           >
@@ -336,9 +326,7 @@ export function Chart({
               y: Margin.Top,
             }}
             width={
-              selectedTheme.grid.horizontalOverflow
-                ? chartDimensions.width
-                : drawableWidth
+              selectedTheme.grid.horizontalOverflow ? width : drawableWidth
             }
           />
         ) : null}
@@ -406,7 +394,7 @@ export function Chart({
 
       <TooltipWrapper
         bandwidth={xScale.bandwidth()}
-        chartDimensions={chartDimensions}
+        chartDimensions={{width, height}}
         focusElementDataType={DataType.Bar}
         getMarkup={tooltipMarkup}
         getPosition={getTooltipPosition}

@@ -63,7 +63,7 @@ describe('Chart />', () => {
         name: 'LABEL2',
       },
     ],
-    chartDimensions: {width: 500, height: 250},
+    dimensions: {width: 500, height: 250},
     renderTooltipContent,
     isStacked: false,
     xAxisOptions: {

@@ -34,7 +34,7 @@ describe('Chart />', () => {
       {rawValue: 10, label: 'data'},
       {rawValue: 20, label: 'data 2'},
     ],
-    chartDimensions: {width: 500, height: 250},
+    dimensions: {width: 500, height: 250},
     annotationsLookupTable: {
       1: {
         dataIndex: 1,

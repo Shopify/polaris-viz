@@ -1,32 +1,89 @@
-import React, {forwardRef, ReactNode} from 'react';
+import React, {
+  ReactElement,
+  useCallback,
+  useLayoutEffect,
+  useState,
+  cloneElement,
+} from 'react';
+import {useDebouncedCallback} from 'use-debounce/lib';
 
-import {useTheme} from '../../hooks';
+import type {Dimensions} from '../../types';
+import {useResizeObserver, useTheme, usePrintResizing} from '../../hooks';
 
 import styles from './ChartContainer.scss';
 
 interface Props {
-  children: ReactNode;
+  children: ReactElement;
   theme?: string;
-  ref?: (node: HTMLElement | null) => void;
 }
 
-export const ChartContainer = forwardRef<HTMLDivElement, Props>(
-  (props, ref) => {
-    const {chartContainer} = useTheme(props.theme);
-    return (
-      <div
-        className={styles.ChartContainer}
-        style={{
-          background: chartContainer.backgroundColor,
-          padding: chartContainer.padding,
-          borderRadius: chartContainer.borderRadius,
-        }}
-        ref={ref}
-      >
-        {props.children}
-      </div>
-    );
-  },
-);
+export const ChartContainer = (props: Props) => {
+  const {chartContainer} = useTheme(props.theme);
 
-ChartContainer.displayName = 'ChartContainer';
+  const [chartDimensions, setChartDimensions] = useState<Dimensions | null>(
+    null,
+  );
+
+  const {ref, setRef, entry} = useResizeObserver();
+
+  usePrintResizing({ref, setChartDimensions});
+
+  const updateDimensions = useCallback(() => {
+    if (entry != null) {
+      const {width, height} = entry.contentRect;
+      setChartDimensions((prevDimensions) => {
+        if (
+          prevDimensions != null &&
+          width === prevDimensions.width &&
+          height === prevDimensions.height
+        ) {
+          return prevDimensions;
+        } else {
+          return {width, height};
+        }
+      });
+    }
+  }, [entry]);
+
+  const [debouncedUpdateDimensions] = useDebouncedCallback(() => {
+    updateDimensions();
+  }, 100);
+
+  useLayoutEffect(() => {
+    updateDimensions();
+
+    const isServer = typeof window === 'undefined';
+
+    if (!isServer) {
+      window.addEventListener('resize', debouncedUpdateDimensions);
+    }
+
+    return () => {
+      if (!isServer) {
+        window.removeEventListener('resize', debouncedUpdateDimensions);
+      }
+    };
+  }, [entry, updateDimensions, debouncedUpdateDimensions]);
+
+  return (
+    <div
+      className={styles.ChartContainer}
+      style={{
+        background: chartContainer.backgroundColor,
+        padding: chartContainer.padding,
+        borderRadius: chartContainer.borderRadius,
+      }}
+      ref={setRef}
+    >
+      {chartDimensions == null
+        ? null
+        : cloneElement<{theme: string; dimensions: Dimensions}>(
+            props.children,
+            {
+              theme: props.theme,
+              dimensions: chartDimensions,
+            },
+          )}
+    </div>
+  );
+};

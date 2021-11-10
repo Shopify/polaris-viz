@@ -66,7 +66,6 @@ describe('<Chart />', () => {
       },
     ],
     xAxisOptions: {labels: ['Day 1', 'Day 2']},
-    hideXAxis: false,
     dimensions: {width: 500, height: 250},
     isAnimated: true,
     formatXAxisLabel: (val: string) => val,
@@ -98,7 +97,10 @@ describe('<Chart />', () => {
   });
 
   it('does not render LinearAxis labels if the axis is hidden', () => {
-    const chart = mount(<Chart {...mockProps} hideXAxis />);
+    const chart = mountWithProvider(
+      <Chart {...mockProps} />,
+      mockDefaultTheme({xAxis: {hide: true}}),
+    );
     expect(chart).not.toContainReactComponent(LinearXAxis);
   });
 

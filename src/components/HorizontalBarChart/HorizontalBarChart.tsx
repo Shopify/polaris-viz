@@ -1,13 +1,7 @@
-import React, {useCallback, useLayoutEffect, useState} from 'react';
-import {useDebouncedCallback} from 'use-debounce/lib';
+import React from 'react';
 
 import {ChartContainer} from '../../components/ChartContainer';
-import {
-  useResizeObserver,
-  usePrefersReducedMotion,
-  usePrintResizing,
-} from '../../hooks';
-import type {Dimensions} from '../../types';
+import {usePrefersReducedMotion} from '../../hooks';
 
 import {Chart} from './Chart';
 import type {Series, XAxisOptions} from './types';
@@ -35,65 +29,17 @@ export function HorizontalBarChart({
     ...xAxisOptions,
   };
 
-  const [chartDimensions, setChartDimensions] = useState<Dimensions | null>(
-    null,
-  );
-  const {ref, setRef, entry} = useResizeObserver();
-
-  usePrintResizing({ref, setChartDimensions});
-
-  const updateDimensions = useCallback(() => {
-    if (entry != null) {
-      const {width, height} = entry.contentRect;
-      setChartDimensions((prevDimensions) => {
-        if (
-          prevDimensions != null &&
-          width === prevDimensions.width &&
-          height === prevDimensions.height
-        ) {
-          return prevDimensions;
-        } else {
-          return {width, height};
-        }
-      });
-    }
-  }, [entry]);
-
-  const [debouncedUpdateDimensions] = useDebouncedCallback(() => {
-    updateDimensions();
-  }, 100);
-
-  useLayoutEffect(() => {
-    updateDimensions();
-
-    const isServer = typeof window === 'undefined';
-
-    if (!isServer) {
-      window.addEventListener('resize', debouncedUpdateDimensions);
-    }
-
-    return () => {
-      if (!isServer) {
-        window.removeEventListener('resize', debouncedUpdateDimensions);
-      }
-    };
-  }, [entry, debouncedUpdateDimensions, updateDimensions]);
-
   const {prefersReducedMotion} = usePrefersReducedMotion();
 
   return (
-    <ChartContainer theme={theme} ref={setRef}>
-      {chartDimensions !== null && (
-        <Chart
-          chartDimensions={chartDimensions}
-          isAnimated={isAnimated && !prefersReducedMotion}
-          isSimple={isSimple}
-          isStacked={isStacked}
-          series={series}
-          theme={theme}
-          xAxisOptions={xAxisOptionsForChart}
-        />
-      )}
+    <ChartContainer theme={theme}>
+      <Chart
+        isAnimated={isAnimated && !prefersReducedMotion}
+        isSimple={isSimple}
+        isStacked={isStacked}
+        series={series}
+        xAxisOptions={xAxisOptionsForChart}
+      />
     </ChartContainer>
   );
 }

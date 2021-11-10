@@ -32,7 +32,7 @@ import {useBarSizes, useDataForChart, useXScale} from './hooks';
 import styles from './Chart.scss';
 
 interface ChartProps {
-  chartDimensions: Dimensions;
+  dimensions?: Dimensions;
   isAnimated: boolean;
   isSimple: boolean;
   isStacked: boolean;
@@ -42,7 +42,7 @@ interface ChartProps {
 }
 
 export function Chart({
-  chartDimensions,
+  dimensions,
   isAnimated,
   isSimple,
   isStacked,
@@ -54,6 +54,8 @@ export function Chart({
   const {labelFormatter} = xAxisOptions;
 
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
+
+  const {width, height} = dimensions ?? {width: 0, height: 0};
 
   const longestSeriesCount = useMemo(() => {
     return series.reduce((prev, cur) => {
@@ -106,8 +108,7 @@ export function Chart({
     allNumbers,
     highestSumForStackedGroup,
     isStacked,
-    maxWidth:
-      chartDimensions.width - longestLabel.negative - longestLabel.positive,
+    maxWidth: width - longestLabel.negative - longestLabel.positive,
     longestSeriesCount,
   });
 
@@ -119,7 +120,7 @@ export function Chart({
     groupHeight,
     tallestXAxisLabel,
   } = useBarSizes({
-    chartDimensions,
+    chartDimensions: {width, height},
     isSimple: isSimple || xAxisOptions.hide,
     isStacked,
     labelFormatter,
@@ -227,15 +228,15 @@ export function Chart({
     <div
       className={styles.ChartContainer}
       style={{
-        width: chartDimensions.width,
-        height: chartDimensions.height,
+        width,
+        height,
       }}
     >
       <svg
         className={styles.SVG}
         ref={setSvgRef}
         role="list"
-        viewBox={`0 0 ${chartDimensions.width} ${chartDimensions.height}`}
+        viewBox={`0 0 ${width} ${height}`}
         xmlns={XMLNS}
       >
         {isSimple || xAxisOptions.hide === true ? null : (
@@ -262,7 +263,7 @@ export function Chart({
           colorOverrides={seriesWithColorOverride}
           seriesColors={seriesColors}
           theme={theme}
-          width={chartDimensions.width}
+          width={width}
         />
 
         {transitions(({opacity, transform}, item, _transition, index) => {
@@ -329,7 +330,7 @@ export function Chart({
       </svg>
       <TooltipWrapper
         bandwidth={groupBarsAreaHeight}
-        chartDimensions={chartDimensions}
+        chartDimensions={{width, height}}
         focusElementDataType={DataType.Bar}
         getAlteredPosition={getAlteredHorizontalBarPosition}
         getMarkup={getTooltipMarkup}
