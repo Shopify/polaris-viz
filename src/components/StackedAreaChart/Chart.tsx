@@ -63,13 +63,12 @@ const TOOLTIP_POSITION: TooltipPositionOffset = {
 };
 
 interface Props {
-  hideXAxis: boolean;
-  xAxisOptions: {labels: string[]; wrapLabels?: boolean};
+  xAxisOptions: {labels: string[]; wrapLabels?: boolean; hide?: boolean};
   series: Series[];
   formatXAxisLabel: StringLabelFormatter;
   formatYAxisLabel: NumberLabelFormatter;
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
-  dimensions: Dimensions;
+  dimensions?: Dimensions;
   isAnimated: boolean;
   theme?: string;
 }
@@ -77,7 +76,6 @@ interface Props {
 type SeriesForAnimation = Required<Partial<DataSeries<Data, null>>>;
 
 export function Chart({
-  hideXAxis,
   xAxisOptions,
   series,
   dimensions,
@@ -94,7 +92,11 @@ export function Chart({
   const [activePointIndex, setActivePointIndex] = useState<number | null>(null);
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
 
+  const {width, height} = dimensions ?? {width: 0, height: 0};
+
   const tooltipId = useRef(uniqueId('stackedAreaChart'));
+
+  const hideXAxis = xAxisOptions.hide || selectedTheme.xAxis.hide;
 
   const areaStack = useMemo(
     () =>
@@ -120,8 +122,7 @@ export function Chart({
     [xAxisLabels, series],
   );
 
-  const fontSize =
-    dimensions.width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
+  const fontSize = width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
 
   const stackedValues = useMemo(() => areaStack(formattedData), [
     areaStack,
@@ -130,7 +131,7 @@ export function Chart({
 
   const {ticks: initialTicks} = useYScale({
     fontSize,
-    drawableHeight: dimensions.height - Margin.Top,
+    drawableHeight: height - Margin.Top,
     stackedValues,
     formatYAxisLabel,
   });
@@ -138,7 +139,7 @@ export function Chart({
   const xAxisDetails = useLinearXAxisDetails({
     series,
     fontSize,
-    width: dimensions.width,
+    width,
     formatXAxisLabel,
     initialTicks,
     xAxisLabels: xAxisLabels == null ? [] : xAxisLabels,
@@ -152,7 +153,7 @@ export function Chart({
       ? SPACING_TIGHT
       : xAxisDetails.maxXLabelHeight + Number(Margin.Bottom);
 
-  const drawableHeight = dimensions.height - Margin.Top - marginBottom;
+  const drawableHeight = height - Margin.Top - marginBottom;
 
   const {axisMargin, ticks, yScale} = useYScale({
     fontSize,
@@ -163,7 +164,7 @@ export function Chart({
 
   const dataStartPosition = axisMargin + Spacing.Base;
 
-  const drawableWidth = dimensions.width - Margin.Right - dataStartPosition;
+  const drawableWidth = width - Margin.Right - dataStartPosition;
 
   const longestSeriesLength =
     Math.max(...stackedValues.map((stack) => stack.length)) - 1;
@@ -264,18 +265,18 @@ export function Chart({
   return (
     <React.Fragment>
       <svg
-        viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
+        viewBox={`0 0 ${width} ${height}`}
         className={styles.Chart}
         xmlns={XMLNS}
-        width={dimensions.width}
-        height={dimensions.height}
+        width={width}
+        height={height}
         ref={setSvgRef}
         role="table"
       >
         {hideXAxis ? null : (
           <g
             transform={`translate(${dataStartPosition},${
-              dimensions.height - marginBottom
+              height - marginBottom
             })`}
           >
             <LinearXAxis
@@ -413,7 +414,7 @@ export function Chart({
       </svg>
       <TooltipWrapper
         alwaysUpdatePosition
-        chartDimensions={dimensions}
+        chartDimensions={{width, height}}
         focusElementDataType={DataType.Point}
         getMarkup={getTooltipMarkup}
         getPosition={getTooltipPosition}

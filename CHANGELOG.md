@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Changed
+
+- Chart components resizing and printing behaviour is now centralized in ChartContainer.
+
 ## [0.24.1] - 2021-11-02
 
 ### Fixed

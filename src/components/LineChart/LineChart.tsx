@@ -1,17 +1,11 @@
-import React, {useLayoutEffect, useRef, useState, useCallback} from 'react';
-import {useDebouncedCallback} from 'use-debounce';
+import React, {useRef} from 'react';
 
 import {ChartContainer} from '../../components/ChartContainer';
 import {useThemeSeriesColors} from '../../hooks/use-theme-series-colors';
-import type {Dimensions, GradientStop} from '../../types';
+import type {GradientStop} from '../../types';
 import {isGradientType, changeColorOpacity, uniqueId} from '../../utilities';
 import {SkipLink} from '../SkipLink';
-import {
-  usePrefersReducedMotion,
-  usePrintResizing,
-  useResizeObserver,
-  useTheme,
-} from '../../hooks';
+import {usePrefersReducedMotion, useTheme} from '../../hooks';
 
 import {Chart} from './Chart';
 import type {
@@ -47,53 +41,9 @@ export function LineChart({
 }: LineChartProps) {
   const selectedTheme = useTheme(theme);
   const seriesColors = useThemeSeriesColors(series, selectedTheme);
-
-  const [chartDimensions, setChartDimensions] = useState<Dimensions | null>(
-    null,
-  );
-  const {ref, setRef, entry} = useResizeObserver();
   const {prefersReducedMotion} = usePrefersReducedMotion();
 
   const skipLinkAnchorId = useRef(uniqueId('lineChart'));
-
-  usePrintResizing({ref, setChartDimensions});
-
-  const updateDimensions = useCallback(() => {
-    if (entry != null) {
-      const {width, height} = entry.contentRect;
-      setChartDimensions((prevDimensions) => {
-        if (
-          prevDimensions != null &&
-          width === prevDimensions.width &&
-          height === prevDimensions.height
-        ) {
-          return prevDimensions;
-        } else {
-          return {width, height};
-        }
-      });
-    }
-  }, [entry]);
-
-  const [debouncedUpdateDimensions] = useDebouncedCallback(() => {
-    updateDimensions();
-  }, 100);
-
-  useLayoutEffect(() => {
-    updateDimensions();
-
-    const isServer = typeof window === 'undefined';
-
-    if (!isServer) {
-      window.addEventListener('resize', debouncedUpdateDimensions);
-    }
-
-    return () => {
-      if (!isServer) {
-        window.removeEventListener('resize', debouncedUpdateDimensions);
-      }
-    };
-  }, [entry, updateDimensions, debouncedUpdateDimensions, ref]);
 
   const xAxisOptionsWithDefaults: XAxisOptions = {
     labelFormatter: (value: string) => value,
@@ -155,23 +105,19 @@ export function LineChart({
       series.length === 0 ? null : (
         <SkipLink anchorId={skipLinkAnchorId.current}>{skipLinkText}</SkipLink>
       )}
-      <ChartContainer ref={setRef} theme={theme}>
-        {chartDimensions == null ? null : (
-          <Chart
-            series={seriesWithDefaults}
-            xAxisOptions={xAxisOptionsWithDefaults}
-            yAxisOptions={yAxisOptionsWithDefaults}
-            dimensions={chartDimensions}
-            isAnimated={isAnimated && !prefersReducedMotion}
-            renderTooltipContent={
-              renderTooltipContent != null
-                ? renderTooltipContent
-                : renderDefaultTooltipContent
-            }
-            emptyStateText={emptyStateText}
-            theme={theme}
-          />
-        )}
+      <ChartContainer theme={theme}>
+        <Chart
+          series={seriesWithDefaults}
+          xAxisOptions={xAxisOptionsWithDefaults}
+          yAxisOptions={yAxisOptionsWithDefaults}
+          isAnimated={isAnimated && !prefersReducedMotion}
+          renderTooltipContent={
+            renderTooltipContent != null
+              ? renderTooltipContent
+              : renderDefaultTooltipContent
+          }
+          emptyStateText={emptyStateText}
+        />
       </ChartContainer>
 
       {skipLinkText == null || skipLinkText.length === 0 ? null : (

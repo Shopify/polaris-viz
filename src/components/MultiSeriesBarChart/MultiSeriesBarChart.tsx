@@ -1,17 +1,10 @@
-import React, {useState, useLayoutEffect, useRef, useCallback} from 'react';
-import {useDebouncedCallback} from 'use-debounce';
+import React, {useRef} from 'react';
 
 import {ChartContainer} from '../../components/ChartContainer';
-import type {Dimensions} from '../../types';
 import {SkipLink} from '../SkipLink';
 import {TooltipContent} from '../TooltipContent';
 import {uniqueId} from '../../utilities';
-import {
-  usePrintResizing,
-  useResizeObserver,
-  useTheme,
-  useThemeSeriesColors,
-} from '../../hooks';
+import {useTheme, useThemeSeriesColors} from '../../hooks';
 
 import {Chart} from './Chart';
 import type {
@@ -47,53 +40,10 @@ export function MultiSeriesBarChart({
 }: MultiSeriesBarChartProps) {
   const selectedTheme = useTheme(theme);
   const seriesColors = useThemeSeriesColors(series, selectedTheme);
-  const [chartDimensions, setChartDimensions] = useState<Dimensions | null>(
-    null,
-  );
 
   const skipLinkAnchorId = useRef(uniqueId('multiSeriesBarChart'));
-  const {ref, setRef, entry} = useResizeObserver();
-
-  usePrintResizing({ref, setChartDimensions});
 
   const emptyState = series.length === 0;
-
-  const updateDimensions = useCallback(() => {
-    if (entry != null) {
-      const {width, height} = entry.contentRect;
-      setChartDimensions((prevDimensions) => {
-        if (
-          prevDimensions != null &&
-          width === prevDimensions.width &&
-          height === prevDimensions.height
-        ) {
-          return prevDimensions;
-        } else {
-          return {width, height};
-        }
-      });
-    }
-  }, [entry]);
-
-  const [debouncedUpdateDimensions] = useDebouncedCallback(() => {
-    updateDimensions();
-  }, 100);
-
-  useLayoutEffect(() => {
-    updateDimensions();
-
-    const isServer = typeof window === 'undefined';
-
-    if (!isServer) {
-      window.addEventListener('resize', debouncedUpdateDimensions);
-    }
-
-    return () => {
-      if (!isServer) {
-        window.removeEventListener('resize', debouncedUpdateDimensions);
-      }
-    };
-  }, [entry, debouncedUpdateDimensions, updateDimensions]);
 
   const xAxisOptionsWithDefaults: XAxisOptions = {
     labelFormatter: (value: string) => value,
@@ -124,38 +74,33 @@ export function MultiSeriesBarChart({
   }));
 
   return (
-    <ChartContainer ref={setRef} theme={theme}>
-      {chartDimensions == null ? null : (
-        <React.Fragment>
-          {skipLinkText == null ||
-          skipLinkText.length === 0 ||
-          emptyState ? null : (
-            <SkipLink anchorId={skipLinkAnchorId.current}>
-              {skipLinkText}
-            </SkipLink>
-          )}
-          <Chart
-            isStacked={barOptions.isStacked}
-            series={seriesWithDefaults}
-            chartDimensions={chartDimensions}
-            xAxisOptions={xAxisOptionsWithDefaults}
-            yAxisOptions={yAxisOptionsWithDefaults}
-            isAnimated={isAnimated}
-            renderTooltipContent={
-              renderTooltipContent != null
-                ? renderTooltipContent
-                : renderDefaultTooltipContent
-            }
-            emptyStateText={emptyStateText}
-            theme={theme}
-          />
-          {skipLinkText == null ||
-          skipLinkText.length === 0 ||
-          emptyState ? null : (
-            <SkipLink.Anchor id={skipLinkAnchorId.current} />
-          )}
-        </React.Fragment>
+    <React.Fragment>
+      {skipLinkText == null ||
+      skipLinkText.length === 0 ||
+      emptyState ? null : (
+        <SkipLink anchorId={skipLinkAnchorId.current}>{skipLinkText}</SkipLink>
       )}
-    </ChartContainer>
+      <ChartContainer theme={theme}>
+        <Chart
+          isStacked={barOptions.isStacked}
+          series={seriesWithDefaults}
+          xAxisOptions={xAxisOptionsWithDefaults}
+          yAxisOptions={yAxisOptionsWithDefaults}
+          isAnimated={isAnimated}
+          renderTooltipContent={
+            renderTooltipContent != null
+              ? renderTooltipContent
+              : renderDefaultTooltipContent
+          }
+          emptyStateText={emptyStateText}
+        />
+      </ChartContainer>
+
+      {skipLinkText == null ||
+      skipLinkText.length === 0 ||
+      emptyState ? null : (
+        <SkipLink.Anchor id={skipLinkAnchorId.current} />
+      )}
+    </React.Fragment>
   );
 }

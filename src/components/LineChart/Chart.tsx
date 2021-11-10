@@ -55,7 +55,6 @@ import {Line, GradientArea} from './components';
 import styles from './Chart.scss';
 
 interface Props {
-  dimensions: Dimensions;
   isAnimated: boolean;
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
   series: SeriesWithDefaults[];
@@ -63,6 +62,7 @@ interface Props {
   yAxisOptions: Required<YAxisOptions>;
   emptyStateText?: string;
   theme?: string;
+  dimensions?: Dimensions;
 }
 
 const TOOLTIP_POSITION = {
@@ -88,14 +88,15 @@ export function Chart({
   const gradientId = useRef(uniqueId('lineChartGradient'));
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
 
-  const fontSize =
-    dimensions.width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
+  const {width, height} = dimensions ?? {width: 0, height: 0};
+
+  const fontSize = width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
 
   const emptyState = series.length === 0;
 
   const {ticks: initialTicks} = useYScale({
     fontSize,
-    drawableHeight: dimensions.height - Margin.Top,
+    drawableHeight: height - Margin.Top,
     series,
     formatYAxisLabel: yAxisOptions.labelFormatter,
     integersOnly: yAxisOptions.integersOnly,
@@ -106,7 +107,7 @@ export function Chart({
   const xAxisDetails = useLinearXAxisDetails({
     series,
     fontSize,
-    width: dimensions.width - selectedTheme.grid.horizontalMargin * 2,
+    width: width - selectedTheme.grid.horizontalMargin * 2,
     formatXAxisLabel: xAxisOptions.labelFormatter,
     initialTicks,
     xAxisLabels: hideXAxis ? [] : xAxisOptions.xAxisLabels,
@@ -118,7 +119,7 @@ export function Chart({
     ? SPACING_TIGHT
     : Number(Margin.Bottom) + xAxisDetails.maxXLabelHeight;
 
-  const drawableHeight = dimensions.height - Margin.Top - marginBottom;
+  const drawableHeight = height - Margin.Top - marginBottom;
 
   const formattedLabels = useMemo(
     () => xAxisOptions.xAxisLabels.map(xAxisOptions.labelFormatter),
@@ -175,7 +176,7 @@ export function Chart({
   const drawableWidth =
     axisMargin == null
       ? null
-      : dimensions.width -
+      : width -
         Margin.Right -
         axisMargin -
         selectedTheme.grid.horizontalMargin * 2 -
@@ -286,19 +287,19 @@ export function Chart({
   return (
     <div className={styles.Container}>
       <svg
-        viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
+        viewBox={`0 0 ${width} ${height}`}
         className={styles.Chart}
         role={emptyState ? 'img' : 'table'}
         xmlns={XMLNS}
-        width={dimensions.width}
-        height={dimensions.height}
+        width={width}
+        height={height}
         ref={setSvgRef}
         aria-label={emptyState ? emptyStateText : undefined}
       >
         {xAxisOptions.hide ? null : (
           <g
             transform={`translate(${dataStartPosition},${
-              dimensions.height - marginBottom
+              height - marginBottom
             })`}
           >
             <LinearXAxis
@@ -323,9 +324,7 @@ export function Chart({
               y: Margin.Top,
             }}
             width={
-              selectedTheme.grid.horizontalOverflow
-                ? dimensions.width
-                : drawableWidth
+              selectedTheme.grid.horizontalOverflow ? width : drawableWidth
             }
           />
         ) : null}
@@ -476,7 +475,7 @@ export function Chart({
 
       <TooltipWrapper
         alwaysUpdatePosition
-        chartDimensions={dimensions}
+        chartDimensions={{width, height}}
         focusElementDataType={DataType.Point}
         getMarkup={getTooltipMarkup}
         getPosition={getTooltipPosition}

@@ -1,19 +1,13 @@
-import React, {useLayoutEffect, useRef, useState, useCallback} from 'react';
-import {useDebouncedCallback} from 'use-debounce';
+import React, {useRef} from 'react';
 
+import {ChartContainer} from '../ChartContainer';
 import {SkipLink} from '../SkipLink';
-import type {
-  StringLabelFormatter,
-  NumberLabelFormatter,
-  Dimensions,
-} from '../../types';
+import type {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 import {TooltipContent} from '../TooltipContent';
 import {uniqueId} from '../../utilities';
-import {usePrintResizing, useResizeObserver, useTheme} from '../../hooks';
 
 import {Chart} from './Chart';
 import type {Series, RenderTooltipContentData} from './types';
-import styles from './Chart.scss';
 
 export interface StackedAreaChartProps {
   renderTooltipContent?(data: RenderTooltipContentData): React.ReactNode;
@@ -41,53 +35,7 @@ export function StackedAreaChart({
   skipLinkText,
   theme,
 }: StackedAreaChartProps) {
-  const selectedTheme = useTheme(theme);
-
-  const [chartDimensions, setChartDimensions] = useState<Dimensions | null>(
-    null,
-  );
-
   const skipLinkAnchorId = useRef(uniqueId('stackedAreaChart'));
-
-  const {ref, setRef, entry} = useResizeObserver();
-
-  usePrintResizing({ref, setChartDimensions});
-
-  const updateDimensions = useCallback(() => {
-    if (entry != null) {
-      const {width, height} = entry.contentRect;
-      setChartDimensions((prevDimensions) => {
-        if (
-          prevDimensions != null &&
-          width === prevDimensions.width &&
-          height === prevDimensions.height
-        ) {
-          return prevDimensions;
-        } else {
-          return {width, height};
-        }
-      });
-    }
-  }, [entry]);
-
-  const [debouncedUpdateDimensions] = useDebouncedCallback(() => {
-    updateDimensions();
-  }, 100);
-
-  useLayoutEffect(() => {
-    updateDimensions();
-    const isServer = typeof window === 'undefined';
-
-    if (!isServer) {
-      window.addEventListener('resize', debouncedUpdateDimensions);
-    }
-
-    return () => {
-      if (!isServer) {
-        window.removeEventListener('resize', debouncedUpdateDimensions);
-      }
-    };
-  }, [entry, debouncedUpdateDimensions, updateDimensions]);
 
   if (series.length === 0) {
     return null;
@@ -116,32 +64,20 @@ export function StackedAreaChart({
       {skipLinkText == null || skipLinkText.length === 0 ? null : (
         <SkipLink anchorId={skipLinkAnchorId.current}>{skipLinkText}</SkipLink>
       )}
-      <div
-        className={styles.Container}
-        style={{
-          background: selectedTheme.chartContainer.backgroundColor,
-          padding: selectedTheme.chartContainer.padding,
-        }}
-        ref={setRef}
-      >
-        {chartDimensions == null ? null : (
-          <Chart
-            xAxisOptions={xAxisOptions}
-            hideXAxis={xAxisOptions.hide ?? selectedTheme.xAxis.hide}
-            series={series}
-            formatXAxisLabel={xFormatter}
-            formatYAxisLabel={yFormatter}
-            dimensions={chartDimensions}
-            renderTooltipContent={
-              renderTooltipContent != null
-                ? renderTooltipContent
-                : renderDefaultTooltipContent
-            }
-            isAnimated={isAnimated}
-            theme={theme}
-          />
-        )}
-      </div>
+      <ChartContainer theme={theme}>
+        <Chart
+          xAxisOptions={xAxisOptions}
+          series={series}
+          formatXAxisLabel={xFormatter}
+          formatYAxisLabel={yFormatter}
+          renderTooltipContent={
+            renderTooltipContent != null
+              ? renderTooltipContent
+              : renderDefaultTooltipContent
+          }
+          isAnimated={isAnimated}
+        />
+      </ChartContainer>
 
       {skipLinkText == null || skipLinkText.length === 0 ? null : (
         <SkipLink.Anchor id={skipLinkAnchorId.current} />
