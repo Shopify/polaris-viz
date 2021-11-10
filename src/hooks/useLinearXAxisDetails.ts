@@ -22,7 +22,7 @@ import type {
   StringLabelFormatter,
   NullableData,
   Data,
-  DataSeries,
+  LegacyDataSeries,
   Color,
   YAxisTick,
 } from '../types';
@@ -37,7 +37,7 @@ function getDatumSpace(width: number, numberOfTicks: number) {
 }
 
 export interface ChartDetails {
-  series: DataSeries<Data | NullableData, Color>[];
+  series: LegacyDataSeries<Data | NullableData, Color>[];
   fontSize: number;
   width: number;
   formatXAxisLabel: StringLabelFormatter;

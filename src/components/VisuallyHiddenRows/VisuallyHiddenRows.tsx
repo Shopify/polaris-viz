@@ -2,7 +2,7 @@ import React from 'react';
 
 import type {
   NumberLabelFormatter,
-  DataSeries,
+  LegacyDataSeries,
   NullableData,
   Data,
   Color,
@@ -11,7 +11,7 @@ import type {
 import styles from './VisuallyHiddenRows.scss';
 
 interface Props {
-  series: DataSeries<Data | NullableData, Color>[];
+  series: LegacyDataSeries<Data | NullableData, Color>[];
   xAxisLabels: string[];
   formatYAxisLabel: NumberLabelFormatter;
 }
