@@ -122,7 +122,7 @@ export const Bar = React.memo(function Bar({
   });
 
   return (
-    <animated.g style={{transform: spring.transform}}>
+    <animated.g className={styles.Group} style={{transform: spring.transform}}>
       <path
         d={getPath(height, width)}
         data-id={`bar-${index}`}

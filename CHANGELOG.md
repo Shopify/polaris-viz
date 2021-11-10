@@ -5,6 +5,7 @@
 ### Changed
 
 - Chart components resizing and printing behaviour is now centralized in ChartContainer.
+- Most charts are printed using the light theme, however any prop color overrides will still apply when printed. Charts that do not have this treatment yet are `<Sparkline />`, `<Sparkbar />` and `<NormalizedStackedBarChart />`.
 
 ## [0.24.1] - 2021-11-02
 

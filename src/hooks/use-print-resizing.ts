@@ -1,4 +1,4 @@
-import {useLayoutEffect} from 'react';
+import {useLayoutEffect, useState} from 'react';
 
 import type {Dimensions} from '../types';
 
@@ -9,10 +9,12 @@ export function usePrintResizing({
   ref: HTMLElement | null;
   setChartDimensions: (value: React.SetStateAction<Dimensions | null>) => void;
 }) {
+  const [isPrinting, setIsPrinting] = useState(false);
+
   useLayoutEffect(() => {
     const isServer = typeof window === 'undefined';
 
-    function setDimensionsForPrint() {
+    function handlePrint() {
       if (ref != null) {
         const {
           paddingRight,
@@ -29,12 +31,14 @@ export function usePrintResizing({
           parseInt(paddingTop, 10) -
           parseInt(paddingBottom, 10);
         setChartDimensions({width, height});
+
+        setIsPrinting((isPrinting) => !isPrinting);
       }
     }
 
     const printSafari = () => {
       setTimeout(() => {
-        setDimensionsForPrint();
+        handlePrint();
       });
     };
 
@@ -49,9 +53,7 @@ export function usePrintResizing({
     const safariNotServer = isSafari && !isServer;
 
     if (notSafariOrServer) {
-      window
-        .matchMedia('print')
-        .addEventListener('change', setDimensionsForPrint);
+      window.matchMedia('print').addEventListener('change', handlePrint);
     }
 
     if (safariNotServer) {
@@ -64,9 +66,7 @@ export function usePrintResizing({
 
     return () => {
       if (notSafariOrServer) {
-        window
-          .matchMedia('print')
-          .removeEventListener('change', setDimensionsForPrint);
+        window.matchMedia('print').removeEventListener('change', handlePrint);
       }
 
       if (safariNotServer) {
@@ -78,4 +78,6 @@ export function usePrintResizing({
       }
     };
   }, [setChartDimensions, ref]);
+
+  return {isPrinting};
 }
