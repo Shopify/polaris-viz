@@ -18,15 +18,15 @@ interface Props {
 }
 
 export const ChartContainer = (props: Props) => {
-  const {chartContainer} = useTheme(props.theme);
-
   const [chartDimensions, setChartDimensions] = useState<Dimensions | null>(
     null,
   );
 
   const {ref, setRef, entry} = useResizeObserver();
 
-  usePrintResizing({ref, setChartDimensions});
+  const {isPrinting} = usePrintResizing({ref, setChartDimensions});
+  const printFriendlyTheme = isPrinting ? 'Light' : props.theme;
+  const {chartContainer} = useTheme(printFriendlyTheme);
 
   const updateDimensions = useCallback(() => {
     if (entry != null) {
@@ -80,7 +80,7 @@ export const ChartContainer = (props: Props) => {
         : cloneElement<{theme: string; dimensions: Dimensions}>(
             props.children,
             {
-              theme: props.theme,
+              theme: printFriendlyTheme,
               dimensions: chartDimensions,
             },
           )}

@@ -4,3 +4,11 @@
   @include no-outline;
   transition: fill $duration-slow ease;
 }
+
+.Group {
+  @media print {
+    // stylelint-disable declaration-no-important
+    transform: none !important;
+    // stylelint-enable declaration-no-important
+  }
+}
