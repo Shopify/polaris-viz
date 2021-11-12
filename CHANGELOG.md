@@ -1,10 +1,12 @@
 # Changelog
 
-## [0.24.2] - 2021-11-11
+## [0.25.0] - 2021-11-12
 
 ### Added
 
 - Added `renderTooltipContent` prop to `<HorizontalBarChart />`.
+
+## [0.24.2] - 2021-11-11
 
 ### Changed
 
