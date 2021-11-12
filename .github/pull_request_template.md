@@ -1,5 +1,4 @@
 ## What does this implement/fix?
-…
 
 <!-- 💡 Briefly describe what you want to achieve here.  Explain your approach and any other options you considered. -->
 
@@ -9,13 +8,11 @@
 
 
 ## Does this close any currently open issues?
-…
 
 <!-- 🔗 Link to the issue/s that this PR solves, and use fix` or `solve` to close it automatically.  -->
 
 
 ## What do the changes look like?
-…
 
 <!--
 🖼 Include screenshots of before and after, if relevant
@@ -28,7 +25,6 @@
 
  
 ## Storybook link
-…
 
 <!-- 🎩 Include links to help tophatting -->
 
