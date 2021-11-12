@@ -1,8 +1,8 @@
 import React, {useState, useLayoutEffect, useCallback} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
 import {scaleLinear} from 'd3-scale';
-import type {Color, LineStyle} from 'types';
 
+import type {DataSeries} from '../../types';
 import {useThemeSeriesColors} from '../../hooks/use-theme-series-colors';
 import {useResizeObserver, useTheme} from '../../hooks';
 import {XMLNS} from '../../constants';
@@ -17,27 +17,21 @@ export interface Coordinates {
   y: number | null;
 }
 
-export interface SingleSeries {
-  data: Coordinates[];
-  color?: Color;
-  area?: Color;
-  lineStyle?: LineStyle;
-  hasPoint?: boolean;
-  offsetRight?: number;
-  offsetLeft?: number;
-}
-
 export interface SparkLineChartProps {
-  series: SingleSeries[];
+  data: DataSeries[];
   accessibilityLabel?: string;
   isAnimated?: boolean;
+  offsetLeft?: number;
+  offsetRight?: number;
   theme?: string;
 }
 
 export function SparkLineChart({
-  series,
+  data,
   accessibilityLabel,
   isAnimated = false,
+  offsetLeft = 0,
+  offsetRight = 0,
   theme,
 }: SparkLineChartProps) {
   const {
@@ -47,7 +41,7 @@ export function SparkLineChart({
   } = useResizeObserver();
   const [svgDimensions, setSvgDimensions] = useState({width: 0, height: 0});
   const selectedTheme = useTheme(theme);
-  const seriesColors = useThemeSeriesColors(series as any, selectedTheme);
+  const seriesColors = useThemeSeriesColors(data, selectedTheme);
 
   const [updateMeasurements] = useDebouncedCallback(() => {
     if (entry == null) return;
@@ -114,7 +108,7 @@ export function SparkLineChart({
 
   const xValues = Array.prototype.concat.apply(
     [],
-    series.map(({data}) => data.map(({x}) => x)),
+    data.map(({data}) => data.map(({key}) => key)),
   );
 
   const minXValues = Math.min(...xValues);
@@ -122,7 +116,7 @@ export function SparkLineChart({
 
   const yValues = Array.prototype.concat.apply(
     [],
-    series.map(({data}) => data.map(({y}) => y)),
+    data.map(({data}) => data.map(({value}) => value)),
   );
 
   const yScale = scaleLinear()
@@ -144,22 +138,20 @@ export function SparkLineChart({
       ) : null}
 
       <svg xmlns={XMLNS} aria-hidden width={width} height={height}>
-        {series.map((singleSeries, index) => {
-          const {
-            lineStyle = selectedTheme.line.style,
-            hasPoint = selectedTheme.line.hasPoint,
-            offsetRight = 0,
-            offsetLeft = 0,
-          } = singleSeries;
+        {data.map((series, index) => {
+          const singleOffsetLeft = series.isComparison ? 0 : offsetLeft;
+          const singleOffsetRight = series.isComparison ? 0 : offsetRight;
 
           const xScale = scaleLinear()
-            .range([offsetLeft + SVG_MARGIN, width - offsetRight - SVG_MARGIN])
+            .range([
+              singleOffsetLeft + SVG_MARGIN,
+              width - singleOffsetRight - SVG_MARGIN,
+            ])
             .domain([minXValues, maxXValues]);
 
           const seriesWithColor = {
             color: seriesColors[index],
-            hasPoint: lineStyle === 'solid' ? hasPoint : false,
-            ...singleSeries,
+            ...series,
           };
 
           return (
@@ -167,7 +159,7 @@ export function SparkLineChart({
               <Series
                 xScale={xScale}
                 yScale={yScale}
-                series={seriesWithColor}
+                data={seriesWithColor}
                 isAnimated={isAnimated}
                 svgDimensions={svgDimensions}
                 theme={selectedTheme}

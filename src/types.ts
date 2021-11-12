@@ -2,7 +2,7 @@ import type {InterpolatorFn} from '@react-spring/web';
 
 export interface DataPoint {
   key: number | string;
-  value: number;
+  value: number | null;
 }
 
 export interface DataSeries {
