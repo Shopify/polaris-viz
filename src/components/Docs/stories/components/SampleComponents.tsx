@@ -35,40 +35,40 @@ export const SampleSparkBarChart = ({theme} = {theme: 'Default'}) => {
   );
 };
 
-export const SampleSparkline = ({theme} = {theme: 'Default'}) => {
+export const SampleSparkLineChart = ({theme} = {theme: 'Default'}) => {
   return (
     <SparkLineChart
       theme={theme}
-      series={[
+      data={[
         {
           data: [
-            {x: 0, y: 100},
-            {x: 1, y: 200},
-            {x: 2, y: 300},
-            {x: 3, y: 400},
-            {x: 4, y: 400},
-            {x: 5, y: 1000},
-            {x: 6, y: 200},
-            {x: 7, y: 800},
-            {x: 8, y: 900},
-            {x: 9, y: 200},
-            {x: 10, y: 400},
+            {key: 0, value: 100},
+            {key: 1, value: 200},
+            {key: 2, value: 300},
+            {key: 3, value: 400},
+            {key: 4, value: 400},
+            {key: 5, value: 1000},
+            {key: 6, value: 200},
+            {key: 7, value: 800},
+            {key: 8, value: 900},
+            {key: 9, value: 200},
+            {key: 10, value: 400},
           ],
         },
         {
-          lineStyle: 'dashed',
+          isComparison: true,
           data: [
-            {x: 0, y: 200},
-            {x: 1, y: 200},
-            {x: 2, y: 200},
-            {x: 3, y: 200},
-            {x: 4, y: 200},
-            {x: 5, y: 200},
-            {x: 6, y: 200},
-            {x: 7, y: 200},
-            {x: 8, y: 200},
-            {x: 9, y: 200},
-            {x: 10, y: 200},
+            {key: 0, value: 200},
+            {key: 1, value: 200},
+            {key: 2, value: 200},
+            {key: 3, value: 200},
+            {key: 4, value: 200},
+            {key: 5, value: 200},
+            {key: 6, value: 200},
+            {key: 7, value: 200},
+            {key: 8, value: 200},
+            {key: 9, value: 200},
+            {key: 10, value: 200},
           ],
         },
       ]}
