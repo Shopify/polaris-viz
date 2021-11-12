@@ -2,6 +2,10 @@
 
 ## [0.24.2] - 2021-11-11
 
+### Added
+
+- Added `renderTooltipContent` prop to `<HorizontalBarChart />`.
+
 ### Changed
 
 - Chart components resizing and printing behaviour is now centralized in `<ChartContainer />`.
