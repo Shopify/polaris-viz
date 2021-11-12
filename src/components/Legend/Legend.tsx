@@ -28,7 +28,7 @@ export interface Props {
 
 export function Legend({series, theme}: Props) {
   const selectedTheme = useTheme(theme);
-  const seriesColors = useThemeSeriesColors(series, selectedTheme);
+  const seriesColors = useThemeSeriesColors(series as any, selectedTheme);
   const {labelColor} = selectedTheme.legend;
   return (
     <div className={styles.Container} aria-hidden>
