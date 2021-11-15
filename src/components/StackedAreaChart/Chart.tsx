@@ -139,7 +139,7 @@ export function Chart({
   const xAxisDetails = useLinearXAxisDetails({
     series,
     fontSize,
-    width,
+    width: width - selectedTheme.grid.horizontalMargin * 2,
     formatXAxisLabel,
     initialTicks,
     xAxisLabels: xAxisLabels == null ? [] : xAxisLabels,
@@ -162,7 +162,8 @@ export function Chart({
     formatYAxisLabel,
   });
 
-  const dataStartPosition = axisMargin + Spacing.Base;
+  const dataStartPosition =
+    axisMargin + Number(selectedTheme.grid.horizontalMargin) + Spacing.Base;
 
   const drawableWidth = width - Margin.Right - dataStartPosition;
 
@@ -292,27 +293,29 @@ export function Chart({
           </g>
         )}
 
+        {selectedTheme.grid.showHorizontalLines ? (
+          <HorizontalGridLines
+            ticks={ticks}
+            theme={theme}
+            transform={{
+              x: selectedTheme.grid.horizontalOverflow ? 0 : dataStartPosition,
+              y: Margin.Top,
+            }}
+            width={
+              selectedTheme.grid.horizontalOverflow ? width : drawableWidth
+            }
+          />
+        ) : null}
+
         <g transform={`translate(0,${Margin.Top})`}>
           <YAxis
             ticks={ticks}
             fontSize={fontSize}
             width={axisMargin}
-            textAlign="right"
+            textAlign={selectedTheme.grid.horizontalOverflow ? 'left' : 'right'}
             theme={theme}
           />
         </g>
-
-        {selectedTheme.grid.showHorizontalLines && (
-          <HorizontalGridLines
-            ticks={ticks}
-            transform={{
-              x: dataStartPosition,
-              y: Margin.Top,
-            }}
-            width={drawableWidth}
-            theme={theme}
-          />
-        )}
 
         <VisuallyHiddenRows
           formatYAxisLabel={formatYAxisLabel}

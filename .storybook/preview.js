@@ -99,6 +99,10 @@ export const decorators = [
             chartContainer: {
               padding: '20px',
             },
+            grid: {
+              horizontalMargin: 20,
+              horizontalOverflow: true,
+            },
           },
           Light: {
             chartContainer: {
