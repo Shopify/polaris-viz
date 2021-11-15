@@ -39,7 +39,7 @@ const data = [
 ];
 
 export default {
-  title: 'Charts/SparkLineChart',
+  title: 'Spark Charts/SparkLineChart',
   component: SparkLineChart,
   parameters: {
     controls: {sort: 'requiredFirst', expanded: true},
