@@ -29,9 +29,6 @@ export default {
     accessibilityLabel: {
       description: 'Visually hidden text for screen readers.',
     },
-    comparison: {
-      description: 'The prop to determine the comparison line for the chart.',
-    },
     dataOffsetLeft: {
       description:
         'The amount of pixels to add as a left margin to the bar data.',
@@ -43,9 +40,6 @@ export default {
     isAnimated: {
       description: 'Determines whether to animate the chart on state changes.',
     },
-    barColor: {
-      description: 'If provided, overwrites the theme bar color.',
-    },
     theme: THEME_CONTROL_ARGS,
   },
 } as Meta;
@@ -55,33 +49,40 @@ const Template: Story<SparkBarChartProps> = (args: SparkBarChartProps) => {
 };
 
 const comparisonValue = 2000;
-const defaultProps = {
+const defaultProps: SparkBarChartProps = {
   isAnimated: true,
   data: [
-    {value: 100},
-    {value: 200},
-    {value: 300},
-    {value: 400},
-    {value: 400},
-    {value: 100},
-    {value: 2000},
-    {value: 800},
-    {value: 900},
-    {value: 200},
-    {value: 400},
-  ],
-  comparison: [
-    {x: 0, y: comparisonValue},
-    {x: 1, y: comparisonValue},
-    {x: 2, y: comparisonValue},
-    {x: 3, y: comparisonValue},
-    {x: 4, y: comparisonValue},
-    {x: 5, y: comparisonValue},
-    {x: 6, y: comparisonValue},
-    {x: 7, y: comparisonValue},
-    {x: 8, y: comparisonValue},
-    {x: 9, y: comparisonValue},
-    {x: 10, y: comparisonValue},
+    {
+      data: [
+        {key: 0, value: 100},
+        {key: 1, value: 200},
+        {key: 2, value: 300},
+        {key: 3, value: 400},
+        {key: 4, value: 400},
+        {key: 5, value: 100},
+        {key: 6, value: 2000},
+        {key: 7, value: 800},
+        {key: 8, value: 900},
+        {key: 9, value: 200},
+        {key: 10, value: 400},
+      ],
+    },
+    {
+      data: [
+        {key: 0, value: comparisonValue},
+        {key: 1, value: comparisonValue},
+        {key: 2, value: comparisonValue},
+        {key: 3, value: comparisonValue},
+        {key: 4, value: comparisonValue},
+        {key: 5, value: comparisonValue},
+        {key: 6, value: comparisonValue},
+        {key: 7, value: comparisonValue},
+        {key: 8, value: comparisonValue},
+        {key: 9, value: comparisonValue},
+        {key: 10, value: comparisonValue},
+      ],
+      isComparison: true,
+    },
   ],
   accessibilityLabel:
     'A bar chart showing orders over time for the past 11 weeks. The minimum is 100 orders and the maximum is 1,000 orders, compared to an average of 500 orders during previous 11-week period.',
@@ -96,19 +97,75 @@ OffsetAndNulls.args = {
   dataOffsetLeft: 10,
   dataOffsetRight: 20,
   data: [
-    {value: 100},
-    {value: 200},
-    {value: -300},
-    {value: null},
-    {value: 400},
-    {value: 0},
-    {value: 0},
-    {value: 400},
-    {value: 700},
-    {value: 900},
-    {value: 500},
+    {
+      data: [
+        {key: 0, value: 100},
+        {key: 1, value: 200},
+        {key: 2, value: -300},
+        {key: 3, value: null},
+        {key: 4, value: 400},
+        {key: 5, value: 0},
+        {key: 6, value: 0},
+        {key: 7, value: 400},
+        {key: 8, value: 700},
+        {key: 9, value: 900},
+        {key: 10, value: 500},
+      ],
+    },
+    {
+      data: [
+        {key: 0, value: comparisonValue},
+        {key: 1, value: comparisonValue},
+        {key: 2, value: comparisonValue},
+        {key: 3, value: comparisonValue},
+        {key: 4, value: comparisonValue},
+        {key: 5, value: comparisonValue},
+        {key: 6, value: comparisonValue},
+        {key: 7, value: comparisonValue},
+        {key: 8, value: comparisonValue},
+        {key: 9, value: comparisonValue},
+        {key: 10, value: comparisonValue},
+      ],
+      isComparison: true,
+    },
   ],
 };
 
 export const OverwrittenBarColor: Story<SparkBarChartProps> = Template.bind({});
-OverwrittenBarColor.args = {...defaultProps, barColor: 'green'};
+OverwrittenBarColor.args = {
+  ...defaultProps,
+  data: [
+    {
+      data: [
+        {key: 0, value: 100},
+        {key: 1, value: 200},
+        {key: 2, value: -300},
+        {key: 3, value: null},
+        {key: 4, value: 400},
+        {key: 5, value: 0},
+        {key: 6, value: 0},
+        {key: 7, value: 400},
+        {key: 8, value: 700},
+        {key: 9, value: 900},
+        {key: 10, value: 500},
+      ],
+      color: 'green',
+    },
+    {
+      data: [
+        {key: 0, value: comparisonValue},
+        {key: 1, value: comparisonValue},
+        {key: 2, value: comparisonValue},
+        {key: 3, value: comparisonValue},
+        {key: 4, value: comparisonValue},
+        {key: 5, value: comparisonValue},
+        {key: 6, value: comparisonValue},
+        {key: 7, value: comparisonValue},
+        {key: 8, value: comparisonValue},
+        {key: 9, value: comparisonValue},
+        {key: 10, value: comparisonValue},
+      ],
+      isComparison: true,
+    },
+  ],
+};
