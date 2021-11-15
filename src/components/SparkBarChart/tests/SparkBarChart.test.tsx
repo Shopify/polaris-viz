@@ -4,14 +4,25 @@ import {scaleBand} from 'd3-scale';
 
 import {SparkBarChart} from '../SparkBarChart';
 import {LinearGradient} from '../../LinearGradient';
+import type {DataSeries} from '../../../types';
 
-const sampleData = [{value: 100}, {value: 200}, {value: 300}, {value: 500}];
-const sampleComparison = [
-  {x: 0, y: 300},
-  {x: 1, y: 300},
-  {x: 2, y: 300},
-  {x: 3, y: 300},
-];
+const sampleData: DataSeries = {
+  data: [
+    {key: 1, value: 100},
+    {key: 2, value: 200},
+    {key: 3, value: 300},
+    {key: 4, value: 500},
+  ],
+};
+const sampleComparison: DataSeries = {
+  data: [
+    {key: 0, value: 300},
+    {key: 1, value: 300},
+    {key: 2, value: 300},
+    {key: 3, value: 300},
+  ],
+  isComparison: true,
+};
 
 jest.mock('d3-scale', () => ({
   scaleBand: jest.fn(() => {
@@ -34,14 +45,14 @@ jest.mock('d3-scale', () => ({
 
 describe('<SparkBarChart/>', () => {
   it('renders a <LinearGradient />', () => {
-    const wrapper = mount(<SparkBarChart data={sampleData} />);
+    const wrapper = mount(<SparkBarChart data={[sampleData]} />);
 
     expect(wrapper).toContainReactComponent(LinearGradient);
   });
 
   it('renders an accessibility label', () => {
     const wrapper = mount(
-      <SparkBarChart data={sampleData} accessibilityLabel="This is a test" />,
+      <SparkBarChart data={[sampleData]} accessibilityLabel="This is a test" />,
     );
 
     expect(wrapper).toContainReactText('This is a test');
@@ -49,7 +60,7 @@ describe('<SparkBarChart/>', () => {
 
   it('renders bars with 90% opacity when a comparison is present', () => {
     const wrapper = mount(
-      <SparkBarChart data={sampleData} comparison={sampleComparison} />,
+      <SparkBarChart data={[sampleData, sampleComparison]} />,
     );
 
     expect(wrapper).toContainReactComponent('g', {
@@ -58,23 +69,23 @@ describe('<SparkBarChart/>', () => {
   });
 
   it('renders bars with 100% opacity when no comparison is present', () => {
-    const wrapper = mount(<SparkBarChart data={sampleData} />);
+    const wrapper = mount(<SparkBarChart data={[sampleData]} />);
 
     expect(wrapper).toContainReactComponent('g', {
       opacity: '1',
     });
   });
 
-  it('renders a comparison line when the comparison prop is passed', () => {
+  it('renders a comparison line when series has isComparison=true', () => {
     const wrapper = mount(
-      <SparkBarChart data={sampleData} comparison={sampleComparison} />,
+      <SparkBarChart data={[sampleData, sampleComparison]} />,
     );
 
     expect(wrapper).toContainReactComponentTimes('path', 5);
   });
 
-  it('does not render a comparison line when the prop is not passed', () => {
-    const wrapper = mount(<SparkBarChart data={sampleData} />);
+  it('does not render a comparison line when no comparison series is passed', () => {
+    const wrapper = mount(<SparkBarChart data={[sampleData]} />);
 
     expect(wrapper).toContainReactComponentTimes('path', 4);
   });
@@ -91,7 +102,7 @@ describe('<SparkBarChart/>', () => {
     });
 
     const wrapper = mount(
-      <SparkBarChart data={sampleData} comparison={sampleComparison} />,
+      <SparkBarChart data={[sampleData, sampleComparison]} />,
     );
 
     expect(wrapper).toContainReactComponent('path', {
@@ -113,8 +124,7 @@ describe('<SparkBarChart/>', () => {
 
     const wrapper = mount(
       <SparkBarChart
-        data={sampleData}
-        comparison={sampleComparison}
+        data={[sampleData, sampleComparison]}
         dataOffsetLeft={25}
       />,
     );
@@ -145,7 +155,7 @@ describe('<SparkBarChart/>', () => {
 
     mount(
       <SparkBarChart
-        data={sampleData}
+        data={[sampleData]}
         dataOffsetLeft={offsetLeft}
         dataOffsetRight={offsetRight}
       />,
