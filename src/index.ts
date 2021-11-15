@@ -1,5 +1,5 @@
 export {
-  Sparkline,
+  SparkLineChart,
   SparkBarChart,
   NormalizedStackedBarChart,
   BarChart,
@@ -17,7 +17,7 @@ export {
 } from './components';
 
 export type {
-  SparklineProps,
+  SparkLineChartProps,
   SparkBarChartProps,
   NormalizedStackedBarChartProps,
   BarChartProps,

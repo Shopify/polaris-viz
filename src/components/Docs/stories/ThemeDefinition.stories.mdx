@@ -90,7 +90,7 @@ export interface Theme {
         }
       }
     }}>
-      <Sparkline series={data} />
+      <SparkLineChart series={data} />
     </PolarisVizProvider>
     `}
   theme="Light"
@@ -125,7 +125,7 @@ export interface Theme {
         }
       }
     }}>
-      <Sparkline series={data} />
+      <SparkLineChart series={data} />
     </PolarisVizProvider>
     `}
     theme="Light"
@@ -948,25 +948,25 @@ export interface GradientStop {
     property="line.sparkArea"
     type="string"
     description="a CSS color string applied to the area under the line of Sparklines"
-    chartsAffected={['Sparkline']}
+    chartsAffected={['SparkLineChart']}
   />
   <PropertyTable.Row
     property="line.hasSpline"
     type="boolean"
     description="determines wether or not to use curved lines"
-    chartsAffected={['LineChart', 'StackedAreaChart', 'Sparkline']}
+    chartsAffected={['LineChart', 'StackedAreaChart', 'SparkLineChart']}
   />
   <PropertyTable.Row
     property="line.style"
     type={['"solid"', '"dashed"', '"dotted"']}
     description="determines wether or not to use curved lines"
-    chartsAffected={['LineChart', 'Sparkline']}
+    chartsAffected={['LineChart', 'SparkLineChart']}
   />
   <PropertyTable.Row
     property="line.hasPoint"
     type={'boolean'}
     description="determines wether or not to show a circle at the end of the line. Does not get applied on non-solid lines"
-    chartsAffected={['Sparkline']}
+    chartsAffected={['SparkLineChart']}
   />
   <PropertyTable.Row
     property="line.width"
@@ -984,7 +984,7 @@ export interface GradientStop {
     property="line.dottedStrokeColor"
     type={'string'}
     description="CSS color string used on the stroke of dotted comparison lines"
-    chartsAffected={['Sparkline', 'SparkBarChart', 'LineChart']}
+    chartsAffected={['SparkLineChart', 'SparkBarChart', 'LineChart']}
   />
 </PropertyTable>
 
@@ -1004,7 +1004,7 @@ export interface GradientStop {
         }
       }
     }}>
-    <Sparkline series={data} />
+    <SparkLineChart series={data} />
   </PolarisVizProvider>
     `}
   center

@@ -1,7 +1,7 @@
 import React from 'react';
 import type {Story, Meta} from '@storybook/react';
 
-import {Sparkline, SparklineProps} from '../..';
+import {SparkLineChart, SparkLineChartProps} from '../';
 import {THEME_CONTROL_ARGS} from '../../../storybook';
 
 const series = [
@@ -41,8 +41,8 @@ const series = [
 ];
 
 export default {
-  title: 'Charts/Sparkline',
-  component: Sparkline,
+  title: 'Charts/SparkLineChart',
+  component: SparkLineChart,
   parameters: {
     controls: {sort: 'requiredFirst', expanded: true},
     docs: {
@@ -60,7 +60,7 @@ export default {
   argTypes: {
     series: {
       description:
-        'The sparkline can show one data series or a set of comparison data series. Each series is configured by the series item in the array. [Series type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/Sparkline/Sparkline.tsx#L21)',
+        'The SparkLineChart can show one data series or a set of comparison data series. Each series is configured by the series item in the array. [Series type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/SparkLineChart/SparkLineChart.tsx#L21)',
     },
     accessibilityLabel: {
       description:
@@ -73,10 +73,10 @@ export default {
   },
 } as Meta;
 
-const Template: Story<SparklineProps> = (args: SparklineProps) => {
+const Template: Story<SparkLineChartProps> = (args: SparkLineChartProps) => {
   return (
     <div style={{width: '200px', height: '100px'}}>
-      <Sparkline {...args} />
+      <SparkLineChart {...args} />
     </div>
   );
 };
@@ -87,18 +87,18 @@ const defaultProps = {
   accessibilityLabel: 'Customer growth over time',
 };
 
-export const Default: Story<SparklineProps> = Template.bind({});
+export const Default: Story<SparkLineChartProps> = Template.bind({});
 Default.args = {
   ...defaultProps,
 };
 
-export const withoutSpline: Story<SparklineProps> = Template.bind({});
+export const withoutSpline: Story<SparkLineChartProps> = Template.bind({});
 withoutSpline.args = {
   ...defaultProps,
   theme: 'NoSpline',
 };
 
-export const OffsetAndNulls: Story<SparklineProps> = Template.bind({});
+export const OffsetAndNulls: Story<SparkLineChartProps> = Template.bind({});
 OffsetAndNulls.args = {
   ...defaultProps,
   series: [
@@ -143,7 +143,7 @@ OffsetAndNulls.args = {
   ],
 };
 
-export const ZeroSeries: Story<SparklineProps> = Template.bind({});
+export const ZeroSeries: Story<SparkLineChartProps> = Template.bind({});
 ZeroSeries.args = {
   ...defaultProps,
   series: [
