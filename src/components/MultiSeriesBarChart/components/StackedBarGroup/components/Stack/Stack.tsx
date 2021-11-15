@@ -1,7 +1,11 @@
 import React from 'react';
 
+import {getRoundedRectPath} from '../../../../../../utilities';
 import {DataType} from '../../../../../../types';
-import {formatAriaLabel} from '../../../../utilities';
+import {
+  formatAriaLabel,
+  getRoundedBorderForStackedValues,
+} from '../../../../utilities';
 import {BAR_SPACING} from '../../../../constants';
 import type {StackedBarGroupProps} from '../../types';
 
@@ -21,13 +25,23 @@ export function Stack({
   const barWidth = xScale.bandwidth() - BAR_SPACING;
   return (
     <React.Fragment>
-      {data.map(([start, end], barIndex) => {
+      {data.map((data, barIndex) => {
+        const [start, end] = data;
         const xPosition = xScale(barIndex.toString());
 
         const ariaLabel = formatAriaLabel(accessibilityData[barIndex]);
         const height = Math.abs(yScale(end) - yScale(start));
         const ariaEnabledBar = groupIndex === 0 && !ariaHidden;
         const isActive = activeBarGroup != null && barIndex === activeBarGroup;
+
+        const values = data.data ? Object.values(data.data) : [];
+
+        const pathD = getRoundedRectPath({
+          height,
+          width: barWidth,
+          needsMinWidth: false,
+          roundedBorder: getRoundedBorderForStackedValues(values, groupIndex),
+        });
 
         return (
           <g
@@ -39,13 +53,11 @@ export function Stack({
             tabIndex={ariaEnabledBar ? 0 : -1}
             aria-label={ariaEnabledBar ? ariaLabel : undefined}
           >
-            <rect
+            <path
+              d={pathD}
               id={isActive ? activeBarId : ''}
               key={barIndex}
-              x={xPosition}
-              y={yScale(end)}
-              height={height}
-              width={barWidth}
+              transform={`translate(${xPosition},${yScale(end)})`}
             />
           </g>
         );

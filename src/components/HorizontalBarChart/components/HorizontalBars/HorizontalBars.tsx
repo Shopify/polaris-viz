@@ -1,7 +1,8 @@
 import React from 'react';
 import type {ScaleLinear} from 'd3-scale';
 
-import {FONT_SIZE, MIN_BAR_HEIGHT} from '../../../../constants';
+import {RoundedBorder} from '../../../../types';
+import {FONT_SIZE} from '../../../../constants';
 import type {Data, LabelFormatter} from '../../types';
 import {getTextWidth} from '../../../../utilities';
 import {
@@ -12,7 +13,7 @@ import {
 } from '../../constants';
 import {useTheme} from '../../../../hooks';
 import {getBarId} from '../../utilities';
-import {Bar, RoundedBorder} from '../Bar';
+import {Bar} from '../Bar';
 import {Label} from '../Label';
 import {getGradientDefId} from '../GradientDefs';
 
@@ -54,10 +55,6 @@ export function HorizontalBars({
       role="listitem"
     >
       {series.map(({rawValue, color}, seriesIndex) => {
-        const needsMinWidth = selectedTheme.bar.zeroAsMinHeight
-          ? rawValue < MIN_BAR_HEIGHT
-          : rawValue < MIN_BAR_HEIGHT && rawValue !== 0;
-
         const isNegative = rawValue < 0;
         const label = labelFormatter(rawValue);
         const id = getBarId(groupIndex, seriesIndex);
@@ -84,7 +81,7 @@ export function HorizontalBars({
               height={barHeight}
               index={groupIndex}
               isAnimated={isAnimated}
-              needsMinWidth={needsMinWidth}
+              needsMinWidth
               role="img"
               roundedBorder={RoundedBorder.Right}
               tabIndex={ariaHidden ? -1 : 0}

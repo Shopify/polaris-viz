@@ -1,1 +1,1 @@
-export {Bar, RoundedBorder} from './Bar';
+export {Bar} from './Bar';
