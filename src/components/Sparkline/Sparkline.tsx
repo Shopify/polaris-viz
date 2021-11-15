@@ -47,7 +47,7 @@ export function Sparkline({
   } = useResizeObserver();
   const [svgDimensions, setSvgDimensions] = useState({width: 0, height: 0});
   const selectedTheme = useTheme(theme);
-  const seriesColors = useThemeSeriesColors(series, selectedTheme);
+  const seriesColors = useThemeSeriesColors(series as any, selectedTheme);
 
   const [updateMeasurements] = useDebouncedCallback(() => {
     if (entry == null) return;
