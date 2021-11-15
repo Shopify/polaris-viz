@@ -274,6 +274,7 @@ export function Chart({
                 return (
                   <g role="listitem" key={`bar-${index}`}>
                     <Bar
+                      isAnimated={shouldAnimate}
                       height={height}
                       x={xPosition == null ? 0 : xPosition}
                       rawValue={rawValue}

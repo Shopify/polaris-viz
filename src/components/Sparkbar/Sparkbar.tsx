@@ -229,6 +229,9 @@ export function Sparkbar({
           <g opacity={comparison ? '0.9' : '1'}>
             {transitions(({height: barHeight}, item, _transition, index) => {
               const xPosition = xScale(index.toString());
+              const height = shouldAnimate
+                ? barHeight
+                : getBarHeight(item.value ?? 0);
 
               return (
                 <Bar
@@ -237,7 +240,7 @@ export function Sparkbar({
                   yScale={yScale}
                   value={item.value.value}
                   width={barWidth}
-                  height={barHeight}
+                  height={height}
                   fill="white"
                 />
               );
