@@ -2,10 +2,10 @@
 
 ## Unreleased
 
+[0.25.0 Migration Guide](https://docs.google.com/document/d/1iO05cV5POYAjXI6HAiVXBHo7jWdMA7_ad3w08KQ52Dg)
 ### Changed
 
 - Renamed `<Sparkbar />` to `<SparkBarChart />`.
-- Renamed `DataSeries` to `LegacyDataSeries`.
 
 ## [0.24.1] - 2021-11-02
 
