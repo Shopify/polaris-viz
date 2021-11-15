@@ -2,7 +2,12 @@ import React, {useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {area as areaShape, line} from 'd3-shape';
 
-import type {Color, GradientStop, Theme} from '../../../../types';
+import type {
+  DataPoint,
+  DataSeries,
+  GradientStop,
+  Theme,
+} from '../../../../types';
 import {LinearGradient} from '../../../LinearGradient';
 import {
   curveStepRounded,
@@ -11,7 +16,7 @@ import {
   classNames,
 } from '../../../../utilities';
 import {usePrefersReducedMotion} from '../../../../hooks';
-import type {SingleSeries, Coordinates} from '../../SparkLineChart';
+import {Area} from '../Area';
 
 import styles from './Series.scss';
 
@@ -23,81 +28,62 @@ const StrokeDasharray = {
   solid: 'unset',
 };
 
-function getGradientFill(area: Color | null) {
-  if (area == null) {
-    return null;
-  }
-  return isGradientType(area)
-    ? area
-    : [
-        {
-          color: area,
-          offset: 0,
-        },
-      ];
-}
-
 export function Series({
   xScale,
   yScale,
-  series,
+  data,
   isAnimated,
   svgDimensions,
   theme,
 }: {
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
-  series: SingleSeries;
+  data: DataSeries;
   isAnimated: boolean;
   svgDimensions: {width: number; height: number};
   theme: Theme;
 }) {
   const {prefersReducedMotion} = usePrefersReducedMotion();
-  const {
-    area = theme.line.sparkArea,
-    lineStyle = theme.line.style,
-    hasPoint = theme.line.hasPoint,
-    data,
-    color,
-  } = series;
 
-  const lineGenerator = line<Coordinates>()
-    .x(({x}) => xScale(x))
-    .y(({y}) => (y == null ? yScale(0) : yScale(y)))
-    .defined(({y}) => y != null);
+  const lineGenerator = line<DataPoint>()
+    .x(({key}) => xScale(Number(key)))
+    .y(({value}) => (value == null ? yScale(0) : yScale(value)))
+    .defined(({value}) => value != null);
 
-  const areaGenerator = areaShape<Coordinates>()
-    .x(({x}) => xScale(x))
+  const areaGenerator = areaShape<DataPoint>()
+    .x(({key}) => xScale(Number(key)))
     .y0(svgDimensions.height)
-    .y1(({y}) => (y == null ? yScale(0) : yScale(y)))
-    .defined(({y}) => y != null);
+    .y1(({value}) => (value == null ? yScale(0) : yScale(value)))
+    .defined(({value}) => value != null);
 
   if (theme.line.hasSpline) {
     lineGenerator.curve(curveStepRounded);
     areaGenerator.curve(curveStepRounded);
   }
 
-  const lineShape = lineGenerator(data);
-  const [lastLinePoint] = data.filter(({y}) => y != null).slice(-1);
+  const lineShape = lineGenerator(data.data);
+  const [lastLinePoint] = data.data
+    .filter(({value}) => value != null)
+    .slice(-1);
 
   const lastLinePointCoordinates =
-    lastLinePoint.y != null
+    lastLinePoint.value != null
       ? {
-          x: xScale(lastLinePoint.x),
-          y: yScale(lastLinePoint.y),
+          x: xScale(Number(lastLinePoint.key)),
+          y: yScale(lastLinePoint.value),
         }
       : null;
 
-  const areaPath = areaGenerator(data);
+  const areaPath = areaGenerator(data.data);
 
   const id = useMemo(() => uniqueId('sparkline'), []);
   const immediate = !isAnimated || prefersReducedMotion;
 
-  const lineGradientColor = isGradientType(color!)
-    ? color
+  const lineGradientColor = isGradientType(data.color!)
+    ? data.color
     : [
         {
-          color,
+          color: data.color,
           offset: 0,
         },
       ];
@@ -106,10 +92,9 @@ export function Series({
     return null;
   }
 
-  const areaGradientColor = getGradientFill(area);
-
-  const showPoint = hasPoint && lastLinePointCoordinates != null;
+  const showPoint = !data.isComparison && lastLinePointCoordinates != null;
   const {x: lastX = 0, y: lastY = 0} = lastLinePointCoordinates ?? {};
+  const lineStyle = data.isComparison ? 'dashed' : 'solid';
 
   return (
     <React.Fragment>
@@ -122,45 +107,31 @@ export function Series({
           y2="0%"
         />
 
-        {area == null ? null : (
-          <LinearGradient
-            id={`area-${id}`}
-            gradient={areaGradientColor as GradientStop[]}
+        <mask id={`mask-${id}`}>
+          <path
+            d={lineShape}
+            stroke="white"
+            strokeLinejoin="round"
+            strokeLinecap="round"
+            style={{strokeDasharray: StrokeDasharray[lineStyle]}}
           />
-        )}
-
-        <React.Fragment>
-          <mask id={`mask-${id}`}>
-            <path
-              d={lineShape}
-              stroke="white"
-              strokeLinejoin="round"
-              strokeLinecap="round"
-              style={{strokeDasharray: StrokeDasharray[lineStyle]}}
-            />
-            {showPoint && (
-              <circle cx={lastX} cy={lastY} r={POINT_RADIUS} fill="white" />
-            )}
-          </mask>
-        </React.Fragment>
+          {showPoint && (
+            <circle cx={lastX} cy={lastY} r={POINT_RADIUS} fill="white" />
+          )}
+        </mask>
       </defs>
 
-      {area === null ? null : (
-        <path
-          fill={`url(#area-${id})`}
-          d={areaPath}
-          className={immediate ? undefined : styles.Area}
-        />
+      {data.isComparison === true ? null : (
+        <Area color={data.color!} immediate={immediate} areaPath={areaPath} />
       )}
+
       <rect
         x="0"
         y="0"
         width={svgDimensions.width}
         height={svgDimensions.height}
         fill={
-          series.lineStyle && series.lineStyle !== 'solid'
-            ? theme.line.dottedStrokeColor
-            : `url(#line-${id})`
+          data.isComparison ? theme.line.dottedStrokeColor : `url(#line-${id})`
         }
         mask={`url(#mask-${`${id}`})`}
         className={classNames(styles.Line, !immediate && styles.AnimatedLine)}

@@ -6,7 +6,7 @@ export {ExamplesGrid} from './ExamplesGrid';
 export {PropertyTable} from './PropertyTable';
 export {
   SampleSparkBarChart,
-  SampleSparkline,
+  SampleSparkLineChart,
   SampleLineChart,
   SampleBarchart,
   SampleMultiseriesBarChart,

@@ -7,6 +7,9 @@
 
 - Renamed `<Sparkbar />` to `<SparkBarChart />`.
 - Renamed `<Sparkline />` to `<SparkLineChart />`.
+- Removed `area`, `lineStyle`, and `hasPoint` from `SparkLineChartProps.series`.
+- Moved `offsetLeft` & `offsetRight` from `SparkLineChartProps.series` to `SparkLineChartProps`.
+- Renamed `series` to `data` in `SparkLineChartProps`.
 
 ## [0.24.1] - 2021-11-02
 
