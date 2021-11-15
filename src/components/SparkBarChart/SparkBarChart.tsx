@@ -11,7 +11,7 @@ import {
   useTheme,
 } from '../../hooks';
 import {BARS_TRANSITION_CONFIG, XMLNS} from '../../constants';
-import type {Color, SparkChartData} from '../../types';
+import type {DataPoint, DataSeries} from '../../types';
 import {uniqueId, getAnimationTrail, isGradientType} from '../../utilities';
 import {LinearGradient} from '../LinearGradient';
 
@@ -24,23 +24,16 @@ const MARGIN = 8;
 const ANIMATION_MARGIN = 17;
 const BAR_MIN_HEIGHT_RATIO = 0.5;
 
-interface Coordinates {
-  x: number;
-  y: number;
-}
-
 export interface SparkBarChartProps {
-  data: SparkChartData[];
+  data: DataSeries[];
   dataOffsetRight?: number;
   dataOffsetLeft?: number;
-  comparison?: Coordinates[];
   accessibilityLabel?: string;
   isAnimated?: boolean;
   theme?: string;
-  barColor?: Color;
 }
 
-function calculateRange(data: SparkChartData[], height: number) {
+function calculateRange(data: DataPoint[], height: number) {
   let hasNegatives;
   let hasPositives;
   for (const {value} of data) {
@@ -61,15 +54,23 @@ function calculateRange(data: SparkChartData[], height: number) {
   return range;
 }
 
+function removeNullValues(data: DataSeries | undefined) {
+  if (data == null) {
+    return [];
+  }
+
+  return data.data
+    .filter(({value}) => typeof value === 'number')
+    .map(({value}) => value) as number[];
+}
+
 export function SparkBarChart({
   data,
-  comparison,
   accessibilityLabel,
   isAnimated = false,
   dataOffsetRight = 0,
   dataOffsetLeft = 0,
   theme,
-  barColor,
 }: SparkBarChartProps) {
   const {
     ref: containerRef,
@@ -108,33 +109,44 @@ export function SparkBarChart({
 
   const {width, height} = svgDimensions;
 
-  const filteredData = data
-    .filter(({value}) => typeof value === 'number')
-    .map(({value}) => value) as number[];
+  const [defaultData, comparisonData] = useMemo(() => {
+    const newData = [...data];
+    const comparisonIndex = data.findIndex(
+      ({isComparison}) => isComparison === true,
+    );
 
-  const comparisonData = comparison == null ? [] : comparison.map(({y}) => y);
+    if (comparisonIndex !== -1) {
+      const comparisonArray = newData.splice(comparisonIndex, 1);
+      return [newData[0], comparisonArray[0]];
+    }
+
+    return [newData[0]];
+  }, [data]);
+
+  const filteredData = removeNullValues(defaultData);
+  const filteredComparisonData = removeNullValues(comparisonData);
 
   const yScale = scaleLinear()
-    .range(calculateRange(data, height))
+    .range(calculateRange(defaultData.data, height))
     .domain([
-      Math.min(...filteredData, ...comparisonData, 0),
-      Math.max(...filteredData, ...comparisonData, 0),
+      Math.min(...filteredData, ...filteredComparisonData, 0),
+      Math.max(...filteredData, ...filteredComparisonData, 0),
     ]);
 
   const xScale = scaleBand()
     .range([dataOffsetLeft, width - dataOffsetRight])
     .paddingInner(BAR_PADDING)
-    .domain(data.map((_, index) => index.toString()));
+    .domain(defaultData.data.map((_, index) => index.toString()));
 
   const xScaleLinear = scaleLinear()
     .range([0, width])
-    .domain([0, data.length - 1]);
+    .domain([0, defaultData.data.length - 1]);
 
-  const lineGenerator = line<Coordinates>()
-    .x(({x}) => xScaleLinear(x))
-    .y(({y}) => yScale(y));
+  const lineGenerator = line<any>()
+    .x(({key}) => xScaleLinear(key))
+    .y(({value}) => yScale(value));
 
-  const lineShape = comparison ? lineGenerator(comparison) : null;
+  const lineShape = comparisonData ? lineGenerator(comparisonData.data) : null;
 
   const barWidth = useMemo(() => xScale.bandwidth(), [xScale]);
   const barGap = useMemo(
@@ -148,7 +160,7 @@ export function SparkBarChart({
       : -(STROKE_WIDTH / 2) - dataOffsetLeft;
   const strokeDasharray = `${barWidth - STROKE_WIDTH} ${barGap}`;
 
-  const id = useMemo(() => uniqueId('SparkBarChart'), []);
+  const id = useMemo(() => uniqueId('sparkbar'), []);
   const clipId = useMemo(() => uniqueId('clip'), []);
 
   const getBarHeight = useCallback(
@@ -159,14 +171,14 @@ export function SparkBarChart({
     [barWidth, yScale],
   );
 
-  const dataWithIndex = data.map((value, index) => ({
+  const dataWithIndex = defaultData.data.map((value, index) => ({
     value,
     index,
   }));
 
   const shouldAnimate = !prefersReducedMotion && isAnimated;
 
-  const colorToUse = barColor ?? seriesColor;
+  const colorToUse = defaultData.color ?? seriesColor;
 
   const color = isGradientType(colorToUse)
     ? colorToUse
@@ -226,7 +238,7 @@ export function SparkBarChart({
         </defs>
 
         <mask id={clipId}>
-          <g opacity={comparison ? '0.9' : '1'}>
+          <g opacity={comparisonData ? '0.9' : '1'}>
             {transitions(({height: barHeight}, item, _transition, index) => {
               const xPosition = xScale(index.toString());
 
@@ -252,7 +264,7 @@ export function SparkBarChart({
           mask={`url(#${clipId})`}
         />
 
-        {comparison == null ? null : (
+        {comparisonData == null ? null : (
           <path
             stroke={selectedTheme.line.dottedStrokeColor}
             strokeWidth={STROKE_WIDTH}
