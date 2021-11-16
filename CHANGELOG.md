@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## [0.25.1] - 2021-11-16
+
 ### Added
 
 - Horizontal overflow style to `<StackedAreaChart />`, which were unintentionally removed
