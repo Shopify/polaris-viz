@@ -2,27 +2,32 @@ import React, {useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {animated, useSpring} from '@react-spring/web';
 
-import {BARS_TRANSITION_CONFIG} from '../../../../constants';
-import type {Data} from '../../types';
-import {GRADIENT_ID, LABEL_HEIGHT, STACKED_BAR_GAP} from '../../constants';
-import {getBarId} from '../../utilities';
-import {StackedBar} from '../StackedBar';
-import {getGradientDefId} from '../GradientDefs';
-import {RoundedBorder} from '../../../../types';
+import {getBarId} from '../../../utilities';
+import {
+  BARS_TRANSITION_CONFIG,
+  GRADIENT_ID,
+  HORIZONTAL_GROUP_LABEL_HEIGHT,
+} from '../../../constants';
+import {DataSeries, RoundedBorder} from '../../../types';
+import {getGradientDefId} from '..';
 
-export interface StackedBarsProps {
+import {StackedBar} from './components';
+
+const STACKED_BAR_GAP = 2;
+
+export interface HorizontalStackedBarsProps {
   animationDelay: number;
   ariaLabel: string;
   barHeight: number;
   groupIndex: number;
   isAnimated: boolean;
   name: string;
-  series: Data[];
+  series: DataSeries;
   xScale: ScaleLinear<number, number>;
   theme?: string;
 }
 
-export function StackedBars({
+export function HorizontalStackedBars({
   animationDelay,
   ariaLabel,
   barHeight,
@@ -32,18 +37,18 @@ export function StackedBars({
   series,
   theme,
   xScale,
-}: StackedBarsProps) {
+}: HorizontalStackedBarsProps) {
   const xOffsets = useMemo(() => {
     const offsets: number[] = [];
 
-    series.forEach((_, index) => {
+    series.data.forEach((_, index) => {
       const prevIndex = index - 1;
 
-      if (series[prevIndex] == null) {
+      if (series.data[prevIndex] == null) {
         offsets.push(0);
       } else {
         const previousScale = offsets[index - 1];
-        offsets.push(xScale(series[prevIndex].rawValue) + previousScale);
+        offsets.push(xScale(series.data[prevIndex].value) + previousScale);
       }
     });
 
@@ -51,8 +56,12 @@ export function StackedBars({
   }, [series, xScale]);
 
   const {transform} = useSpring({
-    from: {transform: `scale(0, 1) translate(0, ${LABEL_HEIGHT}px`},
-    to: {transform: `scale(1, 1) translate(0, ${LABEL_HEIGHT}px`},
+    from: {
+      transform: `scale(0, 1) translate(0, ${HORIZONTAL_GROUP_LABEL_HEIGHT}px`,
+    },
+    to: {
+      transform: `scale(1, 1) translate(0, ${HORIZONTAL_GROUP_LABEL_HEIGHT}px`,
+    },
     config: BARS_TRANSITION_CONFIG,
     delay: animationDelay,
     default: {immediate: !isAnimated},
@@ -60,22 +69,22 @@ export function StackedBars({
 
   return (
     <animated.g aria-label={ariaLabel} role="listitem" style={{transform}}>
-      {series.map(({rawValue, color}, seriesIndex) => {
+      {series.data.map(({value}, seriesIndex) => {
         const x = xOffsets[seriesIndex] + STACKED_BAR_GAP * seriesIndex;
         const id = getBarId(groupIndex, seriesIndex);
-        const isLast = seriesIndex === series.length - 1;
+        const isLast = seriesIndex === series.data.length - 1;
 
-        const sliceColor = color ? id : `${GRADIENT_ID}${seriesIndex}`;
+        const sliceColor = series.color ? id : `${GRADIENT_ID}${seriesIndex}`;
 
         return (
           <StackedBar
-            color={color ? id : getGradientDefId(theme, seriesIndex)}
+            color={series.color ? id : getGradientDefId(theme, seriesIndex)}
             groupIndex={groupIndex}
             height={barHeight}
             isAnimated={isAnimated}
             key={`${name}${sliceColor}`}
             seriesIndex={seriesIndex}
-            width={xScale(rawValue)}
+            width={xScale(value)}
             x={x}
             roundedBorder={isLast ? RoundedBorder.Right : RoundedBorder.None}
           />

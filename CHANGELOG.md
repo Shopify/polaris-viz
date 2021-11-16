@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+### Added
+
+- Added `<SimpleBarChart />`.
+
+### Removed
+
+- Removed `isSimple` from `HorizontalBarChartProps`.
+
+### Changed
+
+- Renamed `isStacked` to `type` in `HorizontalBarChartProps`.
+- Renamed `series` to `data` in `HorizontalBarChartProps`.
+
 ## [0.25.1] - 2021-11-16
 
 ### Added

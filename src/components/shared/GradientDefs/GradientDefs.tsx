@@ -1,21 +1,20 @@
 import React from 'react';
 
-import type {Color, GradientStop} from '../../../../types';
-import {isGradientType} from '../../../../utilities';
-import {LinearGradient} from '../../../LinearGradient';
-import {GRADIENT_ID} from '../../constants';
-import type {ColorOverrides} from '../../types';
+import {GRADIENT_ID} from '../../../constants';
+import type {Color, GradientStop, ColorOverrides} from '../../../types';
+import {isGradientType} from '../../../utilities';
+import {LinearGradient} from '../../LinearGradient';
 
 interface GradientDefsProps {
-  colorOverrides: ColorOverrides[];
-  seriesColors: Color[];
+  colorOverrides?: ColorOverrides[];
+  seriesColors?: Color[];
   width: number;
   theme?: string;
 }
 
 export function GradientDefs({
-  colorOverrides,
-  seriesColors,
+  colorOverrides = [],
+  seriesColors = [],
   theme = 'Default',
   width,
 }: GradientDefsProps) {
