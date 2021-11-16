@@ -56,9 +56,9 @@ export default {
     ),
   ],
   argTypes: {
-    series: {
+    data: {
       description:
-        'The SparkLineChart can show one data series or a set of comparison data series. Each series is configured by the series item in the array. [Series type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/SparkLineChart/SparkLineChart.tsx#L21)',
+        'The SparkLineChart can show one data series or a set of comparison data series. Each series is configured by the series item in the array.',
     },
     accessibilityLabel: {
       description:
@@ -66,6 +66,14 @@ export default {
     },
     isAnimated: {
       description: 'Determines whether to animate the chart on state changes.',
+    },
+    offsetLeft: {
+      description:
+        'The amount of pixels to add as a left margin to the non-comparison line data.',
+    },
+    offsetRight: {
+      description:
+        'The amount of pixels to add as a right margin to the non-comparison line data.',
     },
     theme: THEME_CONTROL_ARGS,
   },

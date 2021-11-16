@@ -24,7 +24,7 @@ export default {
   argTypes: {
     data: {
       description:
-        "The prop to determine the chart's bars. Null bars will not be plotted. Bars with the value of `0` will render a very small bar to indicate the presence of the value. [SparkChartData type definition.]().<br /><br /><strong>Note:</strong> We currently only support a single series and a comparison series. Any additional series passed to the data array will be ignored.",
+        "The prop to determine the chart's bars. Null bars will not be plotted. Bars with the value of `0` will render a very small bar to indicate the presence of the value.<br /><br /><strong>Note:</strong> We currently only support a single series and a comparison series. Any additional series passed to the data array will be ignored.",
     },
     accessibilityLabel: {
       description: 'Visually hidden text for screen readers.',
