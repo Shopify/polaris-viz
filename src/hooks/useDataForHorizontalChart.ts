@@ -1,29 +1,34 @@
 import {useMemo} from 'react';
 
-import {FONT_SIZE} from '../../../constants';
-import {getTextWidth} from '../../../utilities';
-import {BAR_LABEL_OFFSET, FONT_SIZE_PADDING} from '../constants';
-import type {LabelFormatter, Series} from '../types';
+import {
+  FONT_SIZE,
+  FONT_SIZE_PADDING,
+  HORIZONTAL_BAR_LABEL_OFFSET,
+} from '../constants';
+import {getTextWidth} from '../utilities';
+import type {DataSeries, LabelFormatter} from '../types';
 
 interface Props {
+  data: DataSeries[];
   isSimple: boolean;
   isStacked: boolean;
   labelFormatter: LabelFormatter;
-  series: Series[];
 }
 
-export function useDataForChart({
-  labelFormatter,
-  series,
+export function useDataForHorizontalChart({
+  data,
   isSimple,
   isStacked,
+  labelFormatter,
 }: Props) {
   const allNumbers = useMemo(() => {
-    return series.reduce<number[]>((prev, cur) => {
-      const numbers = cur.data.map(({rawValue}) => rawValue);
+    return data.reduce<number[]>((prev, cur) => {
+      const numbers = cur.data
+        .map(({value}) => value)
+        .filter(Boolean) as number[];
       return prev.concat(...numbers);
     }, []);
-  }, [series]);
+  }, [data]);
 
   const lowestNegative = useMemo(() => Math.min(...allNumbers), [allNumbers]);
   const highestPositive = useMemo(() => Math.max(...allNumbers), [allNumbers]);
@@ -41,7 +46,7 @@ export function useDataForChart({
         : getTextWidth({
             text: `${labelFormatter(lowestNegative)}`,
             fontSize,
-          }) + BAR_LABEL_OFFSET;
+          }) + HORIZONTAL_BAR_LABEL_OFFSET;
 
     const positiveTextSize =
       highestPositive < 0
@@ -49,7 +54,7 @@ export function useDataForChart({
         : getTextWidth({
             text: `${labelFormatter(highestPositive)}`,
             fontSize,
-          }) + BAR_LABEL_OFFSET;
+          }) + HORIZONTAL_BAR_LABEL_OFFSET;
 
     return {
       negative: negativeTextSize,

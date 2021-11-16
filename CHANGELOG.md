@@ -3,6 +3,19 @@
 ## Unreleased
 
 [0.26.0 Migration Guide](https://docs.google.com/document/d/1vRaAnWTvHuqiedZ8FQyCCF0RlMuRjEp_pW7W8c_dEGw/edit#)
+### Added
+
+- Added `<SimpleBarChart />`.
+
+### Removed
+
+- Removed `isSimple` from `HorizontalBarChartProps`.
+
+### Changed
+
+- Renamed `isStacked` to `type` in `HorizontalBarChartProps`.
+- `type` now accepts `default | stacked` to change between stacked or individual bar groups.
+- Renamed `series` to `data` in `HorizontalBarChartProps`.
 
 ## [0.25.1] - 2021-11-16
 

@@ -8,6 +8,7 @@ import {
   SparkLineChart,
   SparkBarChart,
   HorizontalBarChart,
+  SimpleBarChart,
 } from '../../../../src/components';
 import {PolarisVizProvider} from '../../PolarisVizProvider';
 import {ComponentContainer, LogoHeader, Divider} from './components';
@@ -247,6 +248,8 @@ import {ComponentContainer, LogoHeader, Divider} from './components';
   }
 />
 
+<h2 style={{gridColumn: 'span 2'}}>Spark Charts</h2>
+
 <ComponentContainer
   title="SparkLineChart"
   description="Used in small sizes to show how a metric has performed over time. "
@@ -378,35 +381,53 @@ import {ComponentContainer, LogoHeader, Divider} from './components';
   }
 />
 
+<h2 style={{gridColumn: 'span 2'}}>Simple Charts</h2>
+
 <ComponentContainer
   title="Horizontal Bar Chart"
   description="Used to show a grouped comparison of different types, across categories or time. "
   link="https://polaris-viz.shopify.io/?path=/docs/charts-horizontalbarchart--default"
   chart={
     <HorizontalBarChart
-      series={[
+      data={[
         {
-          name: 'Womens Leggings',
+          name: 'BFCM 2020',
           data: [
-            {rawValue: 3, label: 'BCFM 2019'},
-            {rawValue: 4, label: 'BCFM 2020'},
-            {rawValue: 7, label: 'BCFM 2021'},
+            {value: 4, key: 'Shirt'},
+            {value: 7, key: 'Shoes'},
           ],
         },
         {
-          name: 'Mens Bottoms',
+          name: 'BFCM 2021',
           data: [
-            {rawValue: 7, label: 'BCFM 2019'},
-            {rawValue: 1, label: 'BCFM 2020'},
-            {rawValue: 1, label: 'BCFM 2021'},
+            {value: 5, key: 'Shirt'},
+            {value: 6, key: 'Shoes'},
+          ],
+        },
+      ]}
+    />
+  }
+/>
+
+<ComponentContainer
+  title="SimpleBarChart"
+  description="Used to show a grouped comparison of different types, across categories or time. "
+  link="https://polaris-viz.shopify.io/?path=/docs/charts-simplebarchart--default"
+  chart={
+    <SimpleBarChart
+      data={[
+        {
+          name: 'BFCM 2020',
+          data: [
+            {value: 4, key: 'Shirt'},
+            {value: 7, key: 'Shoes'},
           ],
         },
         {
-          name: 'Mens Shorts',
+          name: 'BFCM 2021',
           data: [
-            {rawValue: 4, label: 'BCFM 2019'},
-            {rawValue: 5, label: 'BCFM 2020'},
-            {rawValue: 6, label: 'BCFM 2021'},
+            {value: 5, key: 'Shirt'},
+            {value: 6, key: 'Shoes'},
           ],
         },
       ]}

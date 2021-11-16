@@ -1,8 +1,8 @@
 import {animated, useSpring} from '@react-spring/web';
 import React from 'react';
 
-import {getRoundedRectPath} from '../../../../utilities';
-import {DataType, RoundedBorder} from '../../../../types';
+import {getRoundedRectPath} from '../../../../../utilities';
+import {DataType, RoundedBorder} from '../../../../../types';
 
 interface StackedBarProps {
   color: string;
