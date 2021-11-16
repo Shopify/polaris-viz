@@ -3,10 +3,10 @@ import {mount} from '@shopify/react-testing';
 import {line} from 'd3-shape';
 
 import {useLinearChartAnimations} from '../use-linear-chart-animations';
-import type {Color, Data, DataSeries} from '../../types';
+import type {Color, Data, LegacyDataSeries} from '../../types';
 import {getPointAtLength} from '../../utilities';
 
-type SeriesWithDefaults = Required<DataSeries<Data, Color>>;
+type SeriesWithDefaults = Required<LegacyDataSeries<Data, Color>>;
 
 jest.mock('../../utilities', () => {
   return {

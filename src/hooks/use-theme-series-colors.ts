@@ -1,11 +1,11 @@
 import {useMemo} from 'react';
 
-import type {Theme, Color, LineStyle, DataSeries} from '../types';
+import type {Theme, Color, LineStyle, LegacyDataSeries} from '../types';
 
 // We don't use the data property anywhere, so it's
-// safe to use "any" here as the type passed to DataSeries.
+// safe to use "any" here as the type passed to LegacyDataSeries.
 // We really only care about color and lineStyle
-interface ValidData extends DataSeries<any, Color> {
+interface ValidData extends LegacyDataSeries<any, Color> {
   lineStyle?: LineStyle;
 }
 

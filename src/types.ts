@@ -1,5 +1,17 @@
 import type {InterpolatorFn} from '@react-spring/web';
 
+export interface DataPoint {
+  key: number | string;
+  value: number;
+}
+
+export interface DataSeries {
+  data: DataPoint[];
+  color?: Color;
+  isComparison?: boolean;
+  name?: string;
+}
+
 export interface Data {
   label: string;
   rawValue: number;
@@ -12,7 +24,7 @@ export interface NullableData {
 
 export type LineStyle = 'dashed' | 'solid' | 'dotted';
 
-export interface DataSeries<T, C> {
+export interface LegacyDataSeries<T, C> {
   name: string;
   data: T[];
   color?: C;
@@ -193,3 +205,6 @@ export enum RoundedBorder {
   Bottom,
   Left,
 }
+
+export type Orientation = 'horizontal' | 'vertical';
+export type ChartType = 'default' | 'stacked';

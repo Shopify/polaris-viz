@@ -1,0 +1,1 @@
+export {XAxisLabels} from './XAxisLabels';
