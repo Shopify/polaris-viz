@@ -1,15 +1,27 @@
 import React, {ReactNode, useCallback, useMemo, useState} from 'react';
-import {useTransition, animated} from '@react-spring/web';
 
-import {getSeriesColorsFromCount, useTheme} from '../../hooks';
+import type {HorizontalTransitionStyle} from '../../hooks/useHorizontalTransitions';
+import {GradientDefs, HorizontalGroup} from '../shared';
+import {
+  useDataForHorizontalChart,
+  useHorizontalBarSizes,
+  useHorizontalSeriesColors,
+  useHorizontalTransitions,
+  useHorizontalXScale,
+  useTheme,
+} from '../../hooks';
 import {
   XMLNS,
   BarChartMargin as Margin,
   HORIZONTAL_BAR_GROUP_DELAY,
-  BARS_SORT_TRANSITION_CONFIG,
 } from '../../constants';
-import {eventPointNative, uniqueId} from '../../utilities';
-import {DataType, Dimensions} from '../../types';
+import {
+  eventPointNative,
+  formatDataForHorizontalBarChart,
+  getHighestSumForStacked,
+  uniqueId,
+} from '../../utilities';
+import {ChartType, DataSeries, DataType, Dimensions} from '../../types';
 import {
   TOOLTIP_POSITION_DEFAULT_RETURN,
   TooltipPosition,
@@ -18,69 +30,53 @@ import {
 } from '../TooltipWrapper';
 import type {TooltipData} from '../TooltipContent';
 
-import {getAlteredHorizontalBarPosition, getBarId} from './utilities';
-import {
-  GradientDefs,
-  GroupLabel,
-  HorizontalBars,
-  StackedBars,
-  VerticalGridLines,
-  XAxisLabels,
-} from './components';
-import type {
-  ColorOverrides,
-  RenderTooltipContentData,
-  Series,
-  XAxisOptions,
-} from './types';
-import {useBarSizes, useDataForChart, useXScale} from './hooks';
+import {getAlteredHorizontalBarPosition} from './utilities';
+import {VerticalGridLines, XAxisLabels} from './components';
+import type {RenderTooltipContentData, XAxisOptions} from './types';
 import styles from './Chart.scss';
 
 export interface ChartProps {
-  dimensions?: Dimensions;
   isAnimated: boolean;
-  isSimple: boolean;
-  isStacked: boolean;
+  data: DataSeries[];
   renderTooltipContent: (data: RenderTooltipContentData) => ReactNode;
-  series: Series[];
+  type: ChartType;
   xAxisOptions: Required<XAxisOptions>;
+  dimensions?: Dimensions;
   theme?: string;
 }
 
 export function Chart({
+  data,
   dimensions,
   isAnimated,
-  isSimple,
-  isStacked,
   renderTooltipContent,
-  series,
   theme,
+  type,
   xAxisOptions,
 }: ChartProps) {
+  const formattedData = useMemo(() => {
+    return formatDataForHorizontalBarChart(data);
+  }, [data]);
+
   const selectedTheme = useTheme(theme);
   const {labelFormatter} = xAxisOptions;
   const id = uniqueId('HorizontalBarChart');
+
+  const isStacked = type === 'stacked';
 
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
 
   const {width, height} = dimensions ?? {width: 0, height: 0};
 
-  const longestSeriesCount = useMemo(() => {
-    return series.reduce((prev, cur) => {
-      const count = cur.data.length;
+  const {longestSeriesCount, seriesColors} = useHorizontalSeriesColors({
+    data,
+    formattedData,
+    theme,
+  });
 
-      return count > prev ? count : prev;
-    }, 0);
-  }, [series]);
-
-  const seriesColors = getSeriesColorsFromCount(
-    longestSeriesCount,
-    selectedTheme,
-  );
-
-  const {allNumbers, longestLabel, areAllNegative} = useDataForChart({
-    series,
-    isSimple,
+  const {allNumbers, longestLabel, areAllNegative} = useDataForHorizontalChart({
+    data: formattedData,
+    isSimple: false,
     isStacked,
     labelFormatter,
   });
@@ -88,31 +84,25 @@ export function Chart({
   const highestValueForSeries = useMemo(() => {
     const maxes: number[] = [];
 
-    series.forEach(({data}) => {
-      const values = data.map(({rawValue}) => rawValue);
+    formattedData.forEach(({data}) => {
+      const values = data.map(({value}) => value).filter(Boolean) as number[];
       const max = areAllNegative ? Math.min(...values) : Math.max(...values);
 
       maxes.push(max);
     });
 
     return maxes;
-  }, [series, areAllNegative]);
+  }, [formattedData, areAllNegative]);
 
   const highestSumForStackedGroup = useMemo(() => {
     if (!isStacked) {
       return 0;
     }
-    const numbers: number[] = [];
 
-    series.forEach(({data}) => {
-      const sum = data.reduce((prev, {rawValue}) => prev + rawValue, 0);
-      numbers.push(sum);
-    });
+    return getHighestSumForStacked(formattedData);
+  }, [formattedData, isStacked]);
 
-    return Math.max(...numbers);
-  }, [series, isStacked]);
-
-  const {xScale, xScaleStacked, ticks, ticksStacked} = useXScale({
+  const {xScale, xScaleStacked, ticks, ticksStacked} = useHorizontalXScale({
     allNumbers,
     highestSumForStackedGroup,
     isStacked,
@@ -127,27 +117,27 @@ export function Chart({
     groupBarsAreaHeight,
     groupHeight,
     tallestXAxisLabel,
-  } = useBarSizes({
+  } = useHorizontalBarSizes({
     chartDimensions: {width, height},
-    isSimple: isSimple || xAxisOptions.hide,
+    isSimple: xAxisOptions.hide,
     isStacked,
     labelFormatter,
-    seriesLength: series.length,
+    seriesLength: formattedData.length,
     singleBarCount: longestSeriesCount,
     ticks: isStacked ? ticksStacked : ticks,
   });
 
   const getAriaLabel = useCallback(
     (label: string, seriesIndex: number) => {
-      const ariaSeries = series[seriesIndex].data
-        .map(({rawValue, label}) => {
-          return `${label} ${labelFormatter(rawValue)}`;
+      const ariaSeries = formattedData[seriesIndex].data
+        .map(({value, key}) => {
+          return `${key} ${labelFormatter(value)}`;
         })
         .join(', ');
 
       return `${label}: ${ariaSeries}`;
     },
-    [series, labelFormatter],
+    [formattedData, labelFormatter],
   );
 
   const getTooltipMarkup = useCallback(
@@ -156,79 +146,25 @@ export function Chart({
         return null;
       }
 
-      const data: TooltipData[] = series[activeIndex].data.map(
-        ({rawValue, label, color}, index) => {
+      const data: TooltipData[] = formattedData[activeIndex].data.map(
+        ({value, key}, index) => {
           return {
-            label,
-            value: `${rawValue}`,
-            color: color ?? seriesColors[index],
+            label: `${key}`,
+            value: `${value}`,
+            color: formattedData[activeIndex].color ?? seriesColors[index],
           };
         },
       );
 
       return renderTooltipContent({data});
     },
-    [series, seriesColors, renderTooltipContent],
+    [formattedData, seriesColors, renderTooltipContent],
   );
 
-  const seriesWithColorOverride = useMemo(() => {
-    const colors: ColorOverrides[] = [];
-
-    series.forEach(({data}, groupIndex) => {
-      data.forEach(({color}, seriesIndex) => {
-        if (color != null) {
-          colors.push({id: getBarId(id, groupIndex, seriesIndex), color});
-        }
-      });
-    });
-
-    return colors;
-  }, [series, id]);
-
-  const seriesWithIndex = series.map((series, index) => ({
-    series,
-    index,
-  }));
-
-  const getTransform = (index: number) => {
-    return `translate(0px,${groupHeight * index}px)`;
-  };
-
-  const [isFirstRender, setIsFirstRender] = useState(true);
-
-  const handleOnTransitionRest = () => {
-    setIsFirstRender(false);
-  };
-
-  const animationTrail = isFirstRender ? 0 : 50;
-  const outOfChartPosition = getTransform(series.length + 1);
-
-  const transitions = useTransition(seriesWithIndex, {
-    keys: (item) => item.series.name,
-    initial: ({index}) => ({
-      opacity: isFirstRender ? 1 : 0,
-      transform: isFirstRender ? getTransform(index) : outOfChartPosition,
-    }),
-    from: {
-      opacity: 0,
-      transform: outOfChartPosition,
-    },
-    leave: {
-      opacity: 0,
-      transform: outOfChartPosition,
-    },
-    enter: () => ({
-      opacity: 0,
-      transform: outOfChartPosition,
-    }),
-    update: ({index}) => ({opacity: 1, transform: getTransform(index)}),
-    expires: true,
-    config: BARS_SORT_TRANSITION_CONFIG,
-    trail: isAnimated ? animationTrail : 0,
-    default: {
-      immediate: !isAnimated,
-      onRest: handleOnTransitionRest,
-    },
+  const {transitions} = useHorizontalTransitions({
+    series: formattedData,
+    groupHeight,
+    isAnimated,
   });
 
   const zeroPosition = longestLabel.negative + xScale(0);
@@ -248,7 +184,7 @@ export function Chart({
         viewBox={`0 0 ${width} ${height}`}
         xmlns={XMLNS}
       >
-        {isSimple || xAxisOptions.hide === true ? null : (
+        {xAxisOptions.hide === true ? null : (
           <React.Fragment>
             <VerticalGridLines
               chartHeight={chartHeight}
@@ -268,74 +204,43 @@ export function Chart({
           </React.Fragment>
         )}
 
-        <GradientDefs
-          colorOverrides={seriesWithColorOverride}
-          seriesColors={seriesColors}
-          theme={theme}
-          width={width}
-        />
+        <GradientDefs seriesColors={seriesColors} theme={theme} width={width} />
 
-        {transitions(({opacity, transform}, item, _transition, index) => {
-          if (series[index] == null) {
+        {transitions((style, item, _transition, index) => {
+          const {opacity, transform} = style as HorizontalTransitionStyle;
+          const name = item.series.name ?? '';
+          const ariaLabel = getAriaLabel(name, item.index);
+
+          if (formattedData[index] == null) {
             return null;
           }
 
-          const {name} = item.series;
-          const ariaLabel = getAriaLabel(name, item.index);
-          const animationDelay =
-            isFirstRender && isAnimated
-              ? (HORIZONTAL_BAR_GROUP_DELAY * index) / series.length
-              : 0;
+          const animationDelay = isAnimated
+            ? (HORIZONTAL_BAR_GROUP_DELAY * index) / formattedData.length
+            : 0;
 
           return (
-            <animated.g
-              key={`group-${name}`}
-              data-type={DataType.BarGroup}
-              data-id={`${DataType.BarGroup}-${index}`}
-              style={{
-                opacity,
-                transform,
-              }}
-            >
-              <GroupLabel
-                areAllNegative={areAllNegative}
-                containerWidth={width}
-                label={name}
-                theme={theme}
-                zeroPosition={zeroPosition}
-              />
-
-              {isStacked && xScaleStacked ? (
-                <StackedBars
-                  animationDelay={animationDelay}
-                  ariaLabel={ariaLabel}
-                  barHeight={barHeight}
-                  groupIndex={index}
-                  id={id}
-                  isAnimated={isAnimated}
-                  name={name}
-                  series={item.series.data}
-                  theme={theme}
-                  xScale={xScaleStacked}
-                />
-              ) : (
-                <HorizontalBars
-                  animationDelay={animationDelay}
-                  ariaLabel={ariaLabel}
-                  barHeight={barHeight}
-                  groupIndex={index}
-                  id={id}
-                  isAnimated={isAnimated}
-                  isSimple={isSimple}
-                  labelFormatter={labelFormatter}
-                  name={name}
-                  series={item.series.data}
-                  theme={theme}
-                  xScale={xScale}
-                  zeroPosition={zeroPosition}
-                />
-              )}
-            </animated.g>
+            <HorizontalGroup
+              animationDelay={animationDelay}
+              areAllNegative={areAllNegative}
+              ariaLabel={ariaLabel}
+              barHeight={barHeight}
+              containerWidth={width}
+              id={id}
+              index={index}
+              isAnimated={isAnimated}
+              isSimple={false}
+              isStacked={isStacked}
+              labelFormatter={labelFormatter}
+              name={name}
+              opacity={opacity}
+              series={item.series}
+              theme={theme}
+              transform={transform}
+              xScale={xScale}
+              xScaleStacked={xScaleStacked}
+              zeroPosition={zeroPosition}
+            />
           );
         })}
       </svg>
@@ -379,8 +284,12 @@ export function Chart({
 
   function formatPositionForTooltip(index: number): TooltipPosition {
     if (isStacked && xScaleStacked) {
-      const x = series[index].data.reduce((prev, cur) => {
-        return prev + xScaleStacked(cur.rawValue);
+      const x = formattedData[index].data.reduce((prev, cur) => {
+        if (cur.value == null) {
+          return prev;
+        }
+
+        return prev + xScaleStacked(cur.value);
       }, 0);
 
       return {
@@ -405,10 +314,6 @@ export function Chart({
     index,
     eventType,
   }: TooltipPositionParams): TooltipPosition {
-    if (isSimple === true) {
-      return TOOLTIP_POSITION_DEFAULT_RETURN;
-    }
-
     if (eventType === 'mouse' && event) {
       const point = eventPointNative(event);
 
@@ -421,7 +326,7 @@ export function Chart({
       const currentPoint = svgY - 0;
       const currentIndex = Math.floor(currentPoint / groupHeight);
 
-      if (currentIndex < 0 || currentIndex > series.length - 1) {
+      if (currentIndex < 0 || currentIndex > formattedData.length - 1) {
         return TOOLTIP_POSITION_DEFAULT_RETURN;
       }
 

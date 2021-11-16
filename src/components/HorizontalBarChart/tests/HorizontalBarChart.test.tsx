@@ -2,11 +2,14 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 
 import {ChartContainer} from '../../ChartContainer';
-import {HorizontalBarChart} from '../HorizontalBarChart';
+import {
+  HorizontalBarChart,
+  HorizontalBarChartProps,
+} from '../HorizontalBarChart';
 import {Chart} from '../Chart';
 
-const mockProps = {
-  series: [{name: 'Test', data: [{rawValue: 10, label: 'data'}]}],
+const mockProps: HorizontalBarChartProps = {
+  data: [{name: 'Test', data: [{value: 10, key: 'data'}]}],
 };
 
 describe('<HorizontalBarChart />', () => {

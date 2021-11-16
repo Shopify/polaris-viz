@@ -1,33 +1,31 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
+import type {DataSeries} from 'types';
 
-import {Chart, ChartProps} from '../Chart';
 import {
-  GroupLabel,
-  XAxisLabels,
   GradientDefs,
-  VerticalGridLines,
-  Label,
-  StackedBars,
+  GroupLabel,
   HorizontalBars,
-} from '../components';
-import type {Series} from '../types';
+  HorizontalStackedBars,
+} from '../../shared';
+import {Chart, ChartProps} from '../Chart';
+import {XAxisLabels, VerticalGridLines} from '../components';
 
-const SERIES: Series[] = [
+const DATA: DataSeries[] = [
   {
     name: 'Group 1',
     data: [
-      {rawValue: 5, label: 'Label 01'},
-      {rawValue: 10, label: 'Label 02'},
-      {rawValue: 12, label: 'Label 03'},
+      {value: 5, key: 'Label 01'},
+      {value: 10, key: 'Label 02'},
+      {value: 12, key: 'Label 03'},
     ],
   },
   {
     name: 'Group 2',
     data: [
-      {rawValue: 1, label: 'Label 01'},
-      {rawValue: 2, label: 'Label 02'},
-      {rawValue: 3, label: 'Label 03'},
+      {value: 1, key: 'Label 01'},
+      {value: 2, key: 'Label 02'},
+      {value: 3, key: 'Label 03'},
     ],
   },
 ];
@@ -38,14 +36,13 @@ const MOCK_PROPS: ChartProps = {
     width: 600,
   },
   isAnimated: false,
-  isSimple: false,
-  isStacked: false,
   renderTooltipContent: (value) => `${value}`,
-  series: SERIES,
+  data: DATA,
   xAxisOptions: {
     labelFormatter: (value: string) => value,
     hide: false,
   },
+  type: 'default',
 };
 
 describe('<Chart />', () => {
@@ -77,10 +74,6 @@ describe('<Chart />', () => {
             {color: 'colorBlue90', offset: 0},
             {color: 'colorBlue70', offset: 100},
           ],
-          [
-            {color: 'colorMagenta90', offset: 0},
-            {color: 'colorMagenta70', offset: 100},
-          ],
         ]);
       });
 
@@ -88,19 +81,20 @@ describe('<Chart />', () => {
         const chart = mount(
           <Chart
             {...MOCK_PROPS}
-            series={[
+            data={[
               {
                 name: 'Group 1',
+                color: 'red',
                 data: [
-                  {rawValue: 5, label: 'Label 01', color: 'red'},
-                  {rawValue: 10, label: 'Label 02'},
+                  {value: 5, key: 'Label 01'},
+                  {value: 10, key: 'Label 02'},
                 ],
               },
               {
                 name: 'Group 2',
                 data: [
-                  {rawValue: 1, label: 'Label 01'},
-                  {rawValue: 2, label: 'Label 02'},
+                  {value: 1, key: 'Label 01'},
+                  {value: 2, key: 'Label 02'},
                 ],
               },
             ]}
@@ -108,8 +102,12 @@ describe('<Chart />', () => {
         );
         const defs = chart.find(GradientDefs);
 
-        expect(defs?.props.colorOverrides).toStrictEqual([
-          {color: 'red', id: 'HorizontalBarChart-8-series-0-0'},
+        expect(defs?.props.seriesColors).toStrictEqual([
+          'red',
+          [
+            {color: 'colorIndigo90', offset: 0},
+            {color: 'colorIndigo70', offset: 100},
+          ],
         ]);
       });
     });
@@ -117,16 +115,7 @@ describe('<Chart />', () => {
     it('renders <GroupLabel />', () => {
       const chart = mount(<Chart {...MOCK_PROPS} />);
 
-      expect(chart).toContainReactComponentTimes(GroupLabel, 2);
-    });
-  });
-
-  describe('isSimple', () => {
-    it('renders <VerticalGridLines /> & <XAxisLabels /> when false', () => {
-      const chart = mount(<Chart {...MOCK_PROPS} />);
-
-      expect(chart).toContainReactComponent(VerticalGridLines);
-      expect(chart).toContainReactComponent(XAxisLabels);
+      expect(chart).toContainReactComponentTimes(GroupLabel, 3);
     });
   });
 
@@ -179,34 +168,17 @@ describe('<Chart />', () => {
 
         expect(xAxisLabels[0]).toContainReactText('0 pickles');
       });
-
-      it('renders formatted Labels', () => {
-        const chart = mount(
-          <Chart
-            {...MOCK_PROPS}
-            isSimple
-            xAxisOptions={{
-              labelFormatter: (value) => `${value} pickles`,
-              hide: false,
-            }}
-          />,
-        );
-
-        const labels = chart.findAll(Label);
-
-        expect(labels[0]).toContainReactText('5 pickles');
-      });
     });
   });
 
-  describe('isStacked', () => {
-    it('renders <StackedBars /> when true', () => {
-      const chart = mount(<Chart {...MOCK_PROPS} isStacked />);
+  describe('type', () => {
+    it('renders <HorizontalStackedBars /> when stacked', () => {
+      const chart = mount(<Chart {...MOCK_PROPS} type="stacked" />);
 
-      expect(chart).toContainReactComponent(StackedBars);
+      expect(chart).toContainReactComponent(HorizontalStackedBars);
     });
 
-    it('renders <HorizontalBars /> when false', () => {
+    it('renders <HorizontalBars /> when default', () => {
       const chart = mount(<Chart {...MOCK_PROPS} />);
 
       expect(chart).toContainReactComponent(HorizontalBars);

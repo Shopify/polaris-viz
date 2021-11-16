@@ -17,6 +17,7 @@ const storiesOrder = {
   },
   Providers: null,
   Charts: null,
+  [`Simple Charts`]: null,
   [`Spark Charts`]: null,
   Subcomponents: null,
   Playground: null,
