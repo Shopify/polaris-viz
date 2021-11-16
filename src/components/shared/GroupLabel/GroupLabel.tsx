@@ -1,9 +1,8 @@
 import React from 'react';
 
-import {useTheme} from '../../../../hooks';
-import {FONT_SIZE} from '../../../../constants';
-import {getTextWidth} from '../../../../utilities';
-import {LABEL_HEIGHT} from '../../constants';
+import {useTheme} from '../../../hooks';
+import {FONT_SIZE, HORIZONTAL_GROUP_LABEL_HEIGHT} from '../../../constants';
+import {getTextWidth} from '../../../utilities';
 
 import styles from './GroupLabel.scss';
 
@@ -26,12 +25,12 @@ export function GroupLabel({
   const selectedTheme = useTheme(theme);
 
   const maxWidth = areAllNegative
-    ? labelWidth + LABEL_HEIGHT
+    ? labelWidth + HORIZONTAL_GROUP_LABEL_HEIGHT
     : containerWidth - zeroPosition;
 
   return (
     <foreignObject
-      height={LABEL_HEIGHT}
+      height={HORIZONTAL_GROUP_LABEL_HEIGHT}
       width="100%"
       x={zeroPosition + (areAllNegative ? labelWidth * -1 : 0)}
       aria-hidden="true"
@@ -42,9 +41,9 @@ export function GroupLabel({
           background: selectedTheme.chartContainer.backgroundColor,
           fontSize: `${FONT_SIZE}px`,
           color: selectedTheme.yAxis.labelColor,
-          height: LABEL_HEIGHT,
-          width: labelWidth + LABEL_HEIGHT,
           maxWidth,
+          height: HORIZONTAL_GROUP_LABEL_HEIGHT,
+          width: labelWidth + HORIZONTAL_GROUP_LABEL_HEIGHT,
         }}
       >
         {label}

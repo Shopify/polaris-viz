@@ -2,7 +2,7 @@ import {extent} from 'd3-array';
 import {scaleLinear} from 'd3-scale';
 import {useMemo} from 'react';
 
-export function useXScale({
+export function useHorizontalXScale({
   allNumbers,
   highestSumForStackedGroup,
   isStacked,
