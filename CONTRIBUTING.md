@@ -16,6 +16,22 @@ To get started creating a new story, you can use the command `dev add-story Name
 
 For complex props, like callback functions, consider adding a select to stories with a few different predefined options.
 
+## Tophatting in web with Spin
+
+To test local changes in [Spin](https://development.shopify.io/engineering/keytech/spin/) you can checkout a branch inside the instance and link it to web.
+
+This will allow you to test your branch before creating a release.
+
+> Note: These steps are for legacy Spin, not isospin.
+
+```
+  cd /src/github.com/shopify && git clone git@github.com:Shopify/polaris-viz.git
+  cd /src/github.com/shopify/polaris-viz
+  git checkout YOUR_BRANCH_HERE && yarn install
+  yarn run build-consumer web
+  cd /src/github.com/shopify/web && restart
+```
+
 ## Semantic versioning
 
 Polaris Viz follows [semantic versioning](https://semver.org/).
