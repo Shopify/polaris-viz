@@ -26,3 +26,5 @@ export {
 } from './change-color-opacity';
 export {getRoundedRectPath} from './get-rounded-rect-path';
 export {getBarId} from './get-bar-id';
+export {formatDataForHorizontalBarChart} from './format-data-for-horizontal-bar-chart';
+export {getHighestSumForStacked} from './get-highest-sum-for-stacked';

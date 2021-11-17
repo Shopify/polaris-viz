@@ -1,32 +1,19 @@
-import React, {useCallback, useMemo, useState} from 'react';
-import {useTransition, animated} from '@react-spring/web';
+import React, {useCallback, useMemo} from 'react';
 
-import {getBarId} from '../../utilities';
 import {
-  GradientDefs,
-  GroupLabel,
-  HorizontalBars,
-  HorizontalStackedBars,
-} from '../shared';
+  formatDataForHorizontalBarChart,
+  getHighestSumForStacked,
+} from '../../utilities';
+import {GradientDefs, HorizontalGroup} from '../shared';
 import {
-  getSeriesColorsFromCount,
-  useTheme,
   useHorizontalBarSizes,
   useDataForHorizontalChart,
   useHorizontalXScale,
+  useHorizontalTransitions,
+  useHorizontalSeriesColors,
 } from '../../hooks';
-import {
-  XMLNS,
-  HORIZONTAL_BAR_GROUP_DELAY,
-  BARS_SORT_TRANSITION_CONFIG,
-} from '../../constants';
-import {
-  ChartType,
-  ColorOverrides,
-  DataSeries,
-  DataType,
-  Dimensions,
-} from '../../types';
+import {XMLNS, HORIZONTAL_BAR_GROUP_DELAY} from '../../constants';
+import type {ChartType, DataSeries, Dimensions} from '../../types';
 
 import type {XAxisOptions} from './types';
 import styles from './Chart.scss';
@@ -48,28 +35,23 @@ export function Chart({
   type,
   xAxisOptions,
 }: ChartProps) {
-  const selectedTheme = useTheme(theme);
+  const formattedSeries = useMemo(() => {
+    return formatDataForHorizontalBarChart(series);
+  }, [series]);
 
   const {labelFormatter} = xAxisOptions;
   const isStacked = type === 'stacked';
 
   const {width, height} = dimensions ?? {width: 0, height: 0};
 
-  const longestSeriesCount = useMemo(() => {
-    return series.reduce((prev, cur) => {
-      const count = cur.data.length;
-
-      return count > prev ? count : prev;
-    }, 0);
-  }, [series]);
-
-  const seriesColors = getSeriesColorsFromCount(
-    longestSeriesCount,
-    selectedTheme,
-  );
+  const {longestSeriesCount, seriesColors} = useHorizontalSeriesColors({
+    formattedSeries,
+    series,
+    theme,
+  });
 
   const {allNumbers, longestLabel, areAllNegative} = useDataForHorizontalChart({
-    series,
+    series: formattedSeries,
     isSimple: true,
     isStacked,
     labelFormatter,
@@ -79,15 +61,8 @@ export function Chart({
     if (!isStacked) {
       return 0;
     }
-    const numbers: number[] = [];
-
-    series.forEach(({data}) => {
-      const sum = data.reduce((prev, {value}) => prev + value, 0);
-      numbers.push(sum);
-    });
-
-    return Math.max(...numbers);
-  }, [series, isStacked]);
+    return getHighestSumForStacked(formattedSeries);
+  }, [formattedSeries, isStacked]);
 
   const {xScale, xScaleStacked, ticks, ticksStacked} = useHorizontalXScale({
     allNumbers,
@@ -102,14 +77,14 @@ export function Chart({
     isSimple: true,
     isStacked,
     labelFormatter,
-    seriesLength: series.length,
+    seriesLength: formattedSeries.length,
     singleBarCount: longestSeriesCount,
     ticks: isStacked ? ticksStacked : ticks,
   });
 
   const getAriaLabel = useCallback(
     (label: string, seriesIndex: number) => {
-      const ariaSeries = series[seriesIndex].data
+      const ariaSeries = formattedSeries[seriesIndex].data
         .map(({value, key}) => {
           return `${key} ${labelFormatter(value)}`;
         })
@@ -117,71 +92,13 @@ export function Chart({
 
       return `${label}: ${ariaSeries}`;
     },
-    [series, labelFormatter],
+    [formattedSeries, labelFormatter],
   );
 
-  const seriesWithColorOverride = useMemo(() => {
-    const colors: ColorOverrides[] = [];
-
-    series.forEach(({color, data}, groupIndex) => {
-      data.forEach((_, seriesIndex) => {
-        if (color != null) {
-          colors.push({id: getBarId(groupIndex, seriesIndex), color});
-        }
-      });
-    });
-
-    return colors;
-  }, [series]);
-
-  const seriesWithIndex = useMemo(() => {
-    return series.map((series, index) => ({
-      series,
-      index,
-    }));
-  }, [series]);
-
-  const getTransform = (index: number) => {
-    return `translate(0px,${groupHeight * index}px)`;
-  };
-
-  const [isFirstRender, setIsFirstRender] = useState(true);
-
-  const handleOnTransitionRest = () => {
-    setIsFirstRender(false);
-  };
-
-  const animationTrail = isFirstRender ? 0 : 50;
-  const outOfChartPosition = getTransform(series.length + 1);
-
-  const transitions = useTransition(seriesWithIndex, {
-    keys: (item) => {
-      return item.series.name ?? '';
-    },
-    initial: ({index}) => ({
-      opacity: isFirstRender ? 1 : 0,
-      transform: isFirstRender ? getTransform(index) : outOfChartPosition,
-    }),
-    from: {
-      opacity: 0,
-      transform: outOfChartPosition,
-    },
-    leave: {
-      opacity: 0,
-      transform: outOfChartPosition,
-    },
-    enter: () => ({
-      opacity: 0,
-      transform: outOfChartPosition,
-    }),
-    update: ({index}) => ({opacity: 1, transform: getTransform(index)}),
-    expires: true,
-    config: BARS_SORT_TRANSITION_CONFIG,
-    trail: isAnimated ? animationTrail : 0,
-    default: {
-      immediate: !isAnimated,
-      onRest: handleOnTransitionRest,
-    },
+  const {transitions, isFirstRender} = useHorizontalTransitions({
+    series: formattedSeries,
+    groupHeight,
+    isAnimated,
   });
 
   const zeroPosition = longestLabel.negative + xScale(0);
@@ -200,72 +117,41 @@ export function Chart({
         viewBox={`0 0 ${width} ${height}`}
         xmlns={XMLNS}
       >
-        <GradientDefs
-          colorOverrides={seriesWithColorOverride}
-          seriesColors={seriesColors}
-          theme={theme}
-          width={width}
-        />
+        <GradientDefs seriesColors={seriesColors} theme={theme} width={width} />
 
         {transitions(({opacity, transform}, item, _transition, index) => {
           const {name = ''} = item.series;
           const ariaLabel = getAriaLabel(name, item.index);
 
-          if (series[index] == null) {
+          if (formattedSeries[index] == null) {
             return null;
           }
 
           const animationDelay =
             isFirstRender && isAnimated
-              ? (HORIZONTAL_BAR_GROUP_DELAY * index) / series.length
+              ? (HORIZONTAL_BAR_GROUP_DELAY * index) / formattedSeries.length
               : 0;
 
           return (
-            <animated.g
-              key={`group-${name}`}
-              data-type={DataType.BarGroup}
-              data-id={`${DataType.BarGroup}-${index}`}
-              style={{
-                opacity,
-                transform,
-              }}
-            >
-              <GroupLabel
-                areAllNegative={areAllNegative}
-                label={name}
-                theme={theme}
-                zeroPosition={zeroPosition}
-              />
-
-              {isStacked && xScaleStacked ? (
-                <HorizontalStackedBars
-                  animationDelay={animationDelay}
-                  ariaLabel={ariaLabel}
-                  barHeight={barHeight}
-                  groupIndex={index}
-                  isAnimated={isAnimated}
-                  name={name}
-                  series={item.series}
-                  theme={theme}
-                  xScale={xScaleStacked}
-                />
-              ) : (
-                <HorizontalBars
-                  animationDelay={animationDelay}
-                  ariaLabel={ariaLabel}
-                  barHeight={barHeight}
-                  groupIndex={index}
-                  isAnimated={isAnimated}
-                  isSimple
-                  labelFormatter={labelFormatter}
-                  name={name}
-                  series={item.series}
-                  theme={theme}
-                  xScale={xScale}
-                  zeroPosition={zeroPosition}
-                />
-              )}
-            </animated.g>
+            <HorizontalGroup
+              animationDelay={animationDelay}
+              areAllNegative={areAllNegative}
+              ariaLabel={ariaLabel}
+              barHeight={barHeight}
+              index={index}
+              isAnimated={isAnimated}
+              isSimple
+              isStacked={isStacked}
+              labelFormatter={labelFormatter}
+              name={name}
+              opacity={opacity}
+              series={item.series}
+              theme={theme}
+              transform={transform}
+              xScale={xScale}
+              xScaleStacked={xScaleStacked}
+              zeroPosition={zeroPosition}
+            />
           );
         })}
       </svg>

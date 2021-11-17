@@ -6,15 +6,15 @@ import {isGradientType} from '../../../utilities';
 import {LinearGradient} from '../../LinearGradient';
 
 interface GradientDefsProps {
-  colorOverrides: ColorOverrides[];
-  seriesColors: Color[];
+  colorOverrides?: ColorOverrides[];
+  seriesColors?: Color[];
   width: number;
   theme?: string;
 }
 
 export function GradientDefs({
-  colorOverrides,
-  seriesColors,
+  colorOverrides = [],
+  seriesColors = [],
   theme = 'Default',
   width,
 }: GradientDefsProps) {

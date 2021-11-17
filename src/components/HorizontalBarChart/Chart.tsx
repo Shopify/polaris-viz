@@ -1,16 +1,11 @@
 import React, {ReactNode, useCallback, useMemo, useState} from 'react';
-import {useTransition, animated} from '@react-spring/web';
 
+import {GradientDefs, HorizontalGroup} from '../shared';
 import {
-  GradientDefs,
-  HorizontalBars,
-  HorizontalStackedBars,
-  GroupLabel,
-} from '../shared';
-import {
-  getSeriesColorsFromCount,
   useDataForHorizontalChart,
   useHorizontalBarSizes,
+  useHorizontalSeriesColors,
+  useHorizontalTransitions,
   useHorizontalXScale,
   useTheme,
 } from '../../hooks';
@@ -18,16 +13,13 @@ import {
   XMLNS,
   BarChartMargin as Margin,
   HORIZONTAL_BAR_GROUP_DELAY,
-  BARS_SORT_TRANSITION_CONFIG,
 } from '../../constants';
-import {eventPointNative, getBarId} from '../../utilities';
 import {
-  ChartType,
-  ColorOverrides,
-  DataSeries,
-  DataType,
-  Dimensions,
-} from '../../types';
+  eventPointNative,
+  formatDataForHorizontalBarChart,
+  getHighestSumForStacked,
+} from '../../utilities';
+import {ChartType, DataSeries, DataType, Dimensions} from '../../types';
 import {
   TOOLTIP_POSITION_DEFAULT_RETURN,
   TooltipPosition,
@@ -60,6 +52,10 @@ export function Chart({
   type,
   xAxisOptions,
 }: ChartProps) {
+  const formattedSeries = useMemo(() => {
+    return formatDataForHorizontalBarChart(series);
+  }, [series]);
+
   const selectedTheme = useTheme(theme);
   const {labelFormatter} = xAxisOptions;
 
@@ -69,21 +65,14 @@ export function Chart({
 
   const {width, height} = dimensions ?? {width: 0, height: 0};
 
-  const longestSeriesCount = useMemo(() => {
-    return series.reduce((prev, cur) => {
-      const count = cur.data.length;
-
-      return count > prev ? count : prev;
-    }, 0);
-  }, [series]);
-
-  const seriesColors = getSeriesColorsFromCount(
-    longestSeriesCount,
-    selectedTheme,
-  );
+  const {longestSeriesCount, seriesColors} = useHorizontalSeriesColors({
+    formattedSeries,
+    series,
+    theme,
+  });
 
   const {allNumbers, longestLabel, areAllNegative} = useDataForHorizontalChart({
-    series,
+    series: formattedSeries,
     isSimple: false,
     isStacked,
     labelFormatter,
@@ -92,7 +81,7 @@ export function Chart({
   const highestValueForSeries = useMemo(() => {
     const maxes: number[] = [];
 
-    series.forEach(({data}) => {
+    formattedSeries.forEach(({data}) => {
       const values = data.map(({value}) => value);
       const max = areAllNegative ? Math.min(...values) : Math.max(...values);
 
@@ -100,21 +89,15 @@ export function Chart({
     });
 
     return maxes;
-  }, [series, areAllNegative]);
+  }, [formattedSeries, areAllNegative]);
 
   const highestSumForStackedGroup = useMemo(() => {
     if (!isStacked) {
       return 0;
     }
-    const numbers: number[] = [];
 
-    series.forEach(({data}) => {
-      const sum = data.reduce((prev, {value}) => prev + value, 0);
-      numbers.push(sum);
-    });
-
-    return Math.max(...numbers);
-  }, [series, isStacked]);
+    return getHighestSumForStacked(formattedSeries);
+  }, [formattedSeries, isStacked]);
 
   const {xScale, xScaleStacked, ticks, ticksStacked} = useHorizontalXScale({
     allNumbers,
@@ -136,14 +119,14 @@ export function Chart({
     isSimple: xAxisOptions.hide,
     isStacked,
     labelFormatter,
-    seriesLength: series.length,
+    seriesLength: formattedSeries.length,
     singleBarCount: longestSeriesCount,
     ticks: isStacked ? ticksStacked : ticks,
   });
 
   const getAriaLabel = useCallback(
     (label: string, seriesIndex: number) => {
-      const ariaSeries = series[seriesIndex].data
+      const ariaSeries = formattedSeries[seriesIndex].data
         .map(({value, key}) => {
           return `${key} ${labelFormatter(value)}`;
         })
@@ -151,7 +134,7 @@ export function Chart({
 
       return `${label}: ${ariaSeries}`;
     },
-    [series, labelFormatter],
+    [formattedSeries, labelFormatter],
   );
 
   const getTooltipMarkup = useCallback(
@@ -160,79 +143,25 @@ export function Chart({
         return null;
       }
 
-      const data: TooltipData[] = series[activeIndex].data.map(
+      const data: TooltipData[] = formattedSeries[activeIndex].data.map(
         ({value, key}, index) => {
           return {
             label: `${key}`,
             value: `${value}`,
-            color: series[activeIndex].color ?? seriesColors[index],
+            color: formattedSeries[activeIndex].color ?? seriesColors[index],
           };
         },
       );
 
       return renderTooltipContent({data});
     },
-    [series, seriesColors, renderTooltipContent],
+    [formattedSeries, seriesColors, renderTooltipContent],
   );
 
-  const seriesWithColorOverride = useMemo(() => {
-    const colors: ColorOverrides[] = [];
-
-    series.forEach(({color, data}, groupIndex) => {
-      data.forEach((_, seriesIndex) => {
-        if (color != null) {
-          colors.push({id: getBarId(groupIndex, seriesIndex), color});
-        }
-      });
-    });
-
-    return colors;
-  }, [series]);
-
-  const seriesWithIndex = series.map((series, index) => ({
-    series,
-    index,
-  }));
-
-  const getTransform = (index: number) => {
-    return `translate(0px,${groupHeight * index}px)`;
-  };
-
-  const [isFirstRender, setIsFirstRender] = useState(true);
-
-  const handleOnTransitionRest = () => {
-    setIsFirstRender(false);
-  };
-
-  const animationTrail = isFirstRender ? 0 : 50;
-  const outOfChartPosition = getTransform(series.length + 1);
-
-  const transitions = useTransition(seriesWithIndex, {
-    keys: (item) => item.series.name ?? '',
-    initial: ({index}) => ({
-      opacity: isFirstRender ? 1 : 0,
-      transform: isFirstRender ? getTransform(index) : outOfChartPosition,
-    }),
-    from: {
-      opacity: 0,
-      transform: outOfChartPosition,
-    },
-    leave: {
-      opacity: 0,
-      transform: outOfChartPosition,
-    },
-    enter: () => ({
-      opacity: 0,
-      transform: outOfChartPosition,
-    }),
-    update: ({index}) => ({opacity: 1, transform: getTransform(index)}),
-    expires: true,
-    config: BARS_SORT_TRANSITION_CONFIG,
-    trail: isAnimated ? animationTrail : 0,
-    default: {
-      immediate: !isAnimated,
-      onRest: handleOnTransitionRest,
-    },
+  const {transitions, isFirstRender} = useHorizontalTransitions({
+    series: formattedSeries,
+    groupHeight,
+    isAnimated,
   });
 
   const zeroPosition = longestLabel.negative + xScale(0);
@@ -272,72 +201,41 @@ export function Chart({
           </React.Fragment>
         )}
 
-        <GradientDefs
-          colorOverrides={seriesWithColorOverride}
-          seriesColors={seriesColors}
-          theme={theme}
-          width={width}
-        />
+        <GradientDefs seriesColors={seriesColors} theme={theme} width={width} />
 
         {transitions(({opacity, transform}, item, _transition, index) => {
           const name = item.series.name ?? '';
           const ariaLabel = getAriaLabel(name, item.index);
 
-          if (series[index] == null) {
+          if (formattedSeries[index] == null) {
             return null;
           }
 
           const animationDelay =
             isFirstRender && isAnimated
-              ? (HORIZONTAL_BAR_GROUP_DELAY * index) / series.length
+              ? (HORIZONTAL_BAR_GROUP_DELAY * index) / formattedSeries.length
               : 0;
 
           return (
-            <animated.g
-              key={`group-${name}`}
-              data-type={DataType.BarGroup}
-              data-id={`${DataType.BarGroup}-${index}`}
-              style={{
-                opacity,
-                transform,
-              }}
-            >
-              <GroupLabel
-                areAllNegative={areAllNegative}
-                label={name}
-                theme={theme}
-                zeroPosition={zeroPosition}
-              />
-
-              {isStacked && xScaleStacked ? (
-                <HorizontalStackedBars
-                  animationDelay={animationDelay}
-                  ariaLabel={ariaLabel}
-                  barHeight={barHeight}
-                  groupIndex={index}
-                  isAnimated={isAnimated}
-                  name={name}
-                  series={item.series}
-                  theme={theme}
-                  xScale={xScaleStacked}
-                />
-              ) : (
-                <HorizontalBars
-                  animationDelay={animationDelay}
-                  ariaLabel={ariaLabel}
-                  barHeight={barHeight}
-                  groupIndex={index}
-                  isAnimated={isAnimated}
-                  isSimple={false}
-                  labelFormatter={labelFormatter}
-                  name={name}
-                  series={item.series}
-                  theme={theme}
-                  xScale={xScale}
-                  zeroPosition={zeroPosition}
-                />
-              )}
-            </animated.g>
+            <HorizontalGroup
+              animationDelay={animationDelay}
+              areAllNegative={areAllNegative}
+              ariaLabel={ariaLabel}
+              barHeight={barHeight}
+              index={index}
+              isAnimated={isAnimated}
+              isSimple={false}
+              isStacked={isStacked}
+              labelFormatter={labelFormatter}
+              name={name}
+              opacity={opacity}
+              series={item.series}
+              theme={theme}
+              transform={transform}
+              xScale={xScale}
+              xScaleStacked={xScaleStacked}
+              zeroPosition={zeroPosition}
+            />
           );
         })}
       </svg>
@@ -381,7 +279,7 @@ export function Chart({
 
   function formatPositionForTooltip(index: number): TooltipPosition {
     if (isStacked && xScaleStacked) {
-      const x = series[index].data.reduce((prev, cur) => {
+      const x = formattedSeries[index].data.reduce((prev, cur) => {
         return prev + xScaleStacked(cur.value);
       }, 0);
 
@@ -419,7 +317,7 @@ export function Chart({
       const currentPoint = svgY - 0;
       const currentIndex = Math.floor(currentPoint / groupHeight);
 
-      if (currentIndex < 0 || currentIndex > series.length - 1) {
+      if (currentIndex < 0 || currentIndex > formattedSeries.length - 1) {
         return TOOLTIP_POSITION_DEFAULT_RETURN;
       }
 

@@ -4,26 +4,37 @@ import type {Story, Meta} from '@storybook/react';
 import {SimpleBarChart, SimpleBarChartProps} from '../SimpleBarChart';
 
 import {THEME_CONTROL_ARGS} from '../../../storybook';
-import type {DataSeries} from '../../../types';
+import type {DataPoint, DataSeries} from '../../../types';
 
 const LABELS = ['BCFM 2019', 'BCFM 2020', 'BCFM 2021'];
+const GROUPS = [
+  'Womens Leggings',
+  'Mens Bottoms',
+  'Mens Shorts',
+  'Socks',
+  'Hats',
+  'Ties',
+];
 
 function buildSeries(items: number[] | number[][]): DataSeries[] {
-  return [
-    'Womens Leggings',
-    'Mens Bottoms',
-    'Mens Shorts',
-    'Socks',
-    'Hats',
-    'Ties',
-  ].map((name, index) => {
-    const item = items[index];
-    const array = Array.isArray(item) ? item : [item];
+  return LABELS.map((name, index) => {
+    const data = GROUPS.map((name, groupIndex) => {
+      const item = items[groupIndex];
+      const array = Array.isArray(item) ? item : [item];
+
+      if (array[index] == null) {
+        return false;
+      }
+
+      return {
+        key: name,
+        value: array[index],
+      };
+    });
+
     return {
       name,
-      data: array.map((number, dataIndex) => {
-        return {value: number, key: LABELS[dataIndex]};
-      }),
+      data: data.filter(Boolean) as DataPoint[],
     };
   });
 }
@@ -90,6 +101,41 @@ export const Default: Story<SimpleBarChartProps> = Template.bind({});
 
 Default.args = {
   series: SINGLE_SERIES,
+};
+
+export const MultipleSeries: Story<SimpleBarChartProps> = Template.bind({});
+
+MultipleSeries.args = {
+  series: SERIES,
+};
+
+export const ColorOverrides: Story<SimpleBarChartProps> = Template.bind({});
+
+ColorOverrides.args = {
+  series: [
+    {
+      name: 'Shirt',
+      data: [
+        {value: 4, key: 'Yesterday'},
+        {value: 7, key: 'Today'},
+      ],
+      color: 'red',
+    },
+    {
+      name: 'Pants',
+      data: [
+        {value: 5, key: 'Yesterday'},
+        {value: 6, key: 'Today'},
+      ],
+    },
+    {
+      name: 'Shoes',
+      data: [
+        {value: 15, key: 'Yesterday'},
+        {value: 12, key: 'Today'},
+      ],
+    },
+  ],
 };
 
 export const SimpleStacked: Story<SimpleBarChartProps> = Template.bind({});
