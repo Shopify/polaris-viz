@@ -13,8 +13,9 @@ import type {LabelFormatter} from '../../../types';
 import {getTextWidth, getBarId} from '../../../utilities';
 import {useTheme} from '../../../hooks';
 import {Bar} from '../Bar';
-import {Label} from '../Label';
 import {getGradientDefId} from '../GradientDefs';
+
+import {Label} from './components';
 
 interface HorizontalBarProps {
   ariaLabel: string;

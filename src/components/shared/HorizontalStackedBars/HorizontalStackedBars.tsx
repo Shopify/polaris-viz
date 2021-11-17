@@ -2,18 +2,20 @@ import React, {useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {animated, useSpring} from '@react-spring/web';
 
-import {getBarId} from '../../../../utilities';
+import {getBarId} from '../../../utilities';
 import {
   BARS_TRANSITION_CONFIG,
   GRADIENT_ID,
   HORIZONTAL_GROUP_LABEL_HEIGHT,
-} from '../../../../constants';
-import {STACKED_BAR_GAP} from '../../constants';
-import {StackedBar} from '../StackedBar';
-import {DataSeries, RoundedBorder} from '../../../../types';
-import {getGradientDefId} from '../../../shared';
+} from '../../../constants';
+import {DataSeries, RoundedBorder} from '../../../types';
+import {getGradientDefId} from '..';
 
-export interface StackedBarsProps {
+import {StackedBar} from './components';
+
+const STACKED_BAR_GAP = 2;
+
+export interface HorizontalStackedBarsProps {
   animationDelay: number;
   ariaLabel: string;
   barHeight: number;
@@ -25,7 +27,7 @@ export interface StackedBarsProps {
   theme?: string;
 }
 
-export function StackedBars({
+export function HorizontalStackedBars({
   animationDelay,
   ariaLabel,
   barHeight,
@@ -35,7 +37,7 @@ export function StackedBars({
   series,
   theme,
   xScale,
-}: StackedBarsProps) {
+}: HorizontalStackedBarsProps) {
   const xOffsets = useMemo(() => {
     const offsets: number[] = [];
 

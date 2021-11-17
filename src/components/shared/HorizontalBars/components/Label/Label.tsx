@@ -5,7 +5,7 @@ import {
   HORIZONTAL_BAR_LABEL_HEIGHT,
   BARS_TRANSITION_CONFIG,
   FONT_SIZE,
-} from '../../../constants';
+} from '../../../../../constants';
 
 interface LabelProps {
   barHeight: number;

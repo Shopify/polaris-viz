@@ -2,4 +2,4 @@ export {GradientDefs, getGradientDefId} from './GradientDefs';
 export {GroupLabel} from './GroupLabel';
 export {Bar} from './Bar';
 export {HorizontalBars} from './HorizontalBars';
-export {Label} from './Label';
+export {HorizontalStackedBars} from './HorizontalStackedBars';

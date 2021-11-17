@@ -4,9 +4,9 @@ import {
   FONT_SIZE,
   FONT_SIZE_PADDING,
   HORIZONTAL_BAR_LABEL_OFFSET,
-} from '../../../constants';
-import type {DataSeries, LabelFormatter} from '../../../types';
-import {getTextWidth} from '../../../utilities';
+} from '../constants';
+import {getTextWidth} from '../utilities';
+import type {DataSeries, LabelFormatter} from '../types';
 
 interface Props {
   isSimple: boolean;
@@ -15,7 +15,7 @@ interface Props {
   series: DataSeries[];
 }
 
-export function useDataForChart({
+export function useDataForHorizontalChart({
   labelFormatter,
   series,
   isSimple,

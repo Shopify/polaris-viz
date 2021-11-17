@@ -1,6 +1,6 @@
 import {useMemo} from 'react';
 
-import {clamp, getTextHeight} from '../../../utilities';
+import {clamp, getTextHeight} from '../utilities';
 import {
   FONT_SIZE,
   HORIZONTAL_GROUP_LABEL_HEIGHT,
@@ -9,9 +9,10 @@ import {
   HORIZONTAL_SPACE_BETWEEN_SINGLE,
   LINE_HEIGHT,
   MAX_X_AXIS_LINES,
-} from '../../../constants';
-import type {Dimensions, LabelFormatter} from '../../../types';
-import {MIN_BAR_HEIGHT} from '../constants';
+} from '../constants';
+import type {Dimensions, LabelFormatter} from '../types';
+
+const MIN_BAR_HEIGHT = 6;
 
 interface Props {
   chartDimensions: Dimensions;
@@ -24,8 +25,8 @@ interface Props {
 }
 
 // Returns all the data needed to size and position the
-// HorizontalBarChart groups and individual bars
-export function useBarSizes({
+// horizontal bar groups and individual bars
+export function useHorizontalBarSizes({
   chartDimensions,
   isSimple,
   isStacked,

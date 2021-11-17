@@ -2,8 +2,19 @@ import React, {useCallback, useMemo, useState} from 'react';
 import {useTransition, animated} from '@react-spring/web';
 
 import {getBarId} from '../../utilities';
-import {GradientDefs, GroupLabel, HorizontalBars} from '../shared';
-import {getSeriesColorsFromCount, useTheme} from '../../hooks';
+import {
+  GradientDefs,
+  GroupLabel,
+  HorizontalBars,
+  HorizontalStackedBars,
+} from '../shared';
+import {
+  getSeriesColorsFromCount,
+  useTheme,
+  useHorizontalBarSizes,
+  useDataForHorizontalChart,
+  useHorizontalXScale,
+} from '../../hooks';
 import {
   XMLNS,
   HORIZONTAL_BAR_GROUP_DELAY,
@@ -17,9 +28,7 @@ import {
   Dimensions,
 } from '../../types';
 
-import {StackedBars} from './components';
 import type {XAxisOptions} from './types';
-import {useBarSizes, useDataForChart, useXScale} from './hooks';
 import styles from './Chart.scss';
 
 interface ChartProps {
@@ -59,7 +68,7 @@ export function Chart({
     selectedTheme,
   );
 
-  const {allNumbers, longestLabel, areAllNegative} = useDataForChart({
+  const {allNumbers, longestLabel, areAllNegative} = useDataForHorizontalChart({
     series,
     isSimple: true,
     isStacked,
@@ -80,7 +89,7 @@ export function Chart({
     return Math.max(...numbers);
   }, [series, isStacked]);
 
-  const {xScale, xScaleStacked, ticks, ticksStacked} = useXScale({
+  const {xScale, xScaleStacked, ticks, ticksStacked} = useHorizontalXScale({
     allNumbers,
     highestSumForStackedGroup,
     isStacked,
@@ -88,7 +97,7 @@ export function Chart({
     longestSeriesCount,
   });
 
-  const {barHeight, groupHeight} = useBarSizes({
+  const {barHeight, groupHeight} = useHorizontalBarSizes({
     chartDimensions: {width, height},
     isSimple: true,
     isStacked,
@@ -229,7 +238,7 @@ export function Chart({
               />
 
               {isStacked && xScaleStacked ? (
-                <StackedBars
+                <HorizontalStackedBars
                   animationDelay={animationDelay}
                   ariaLabel={ariaLabel}
                   barHeight={barHeight}

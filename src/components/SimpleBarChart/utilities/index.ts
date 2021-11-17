@@ -1,1 +1,0 @@
-export {getAlteredHorizontalBarPosition} from './getAlteredHorizontalBarPosition';
