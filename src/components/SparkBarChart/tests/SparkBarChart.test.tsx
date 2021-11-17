@@ -134,36 +134,4 @@ describe('<SparkBarChart/>', () => {
       strokeDashoffset: -25.75,
     });
   });
-
-  it('reduces the chart width according to the offset and margin', () => {
-    let rangeSpy = jest.fn();
-    (scaleBand as jest.Mock).mockImplementation(() => {
-      const scale = (value: any) => value;
-      rangeSpy = jest.fn((range: any) => (range ? scale : range));
-      scale.range = rangeSpy;
-      scale.paddingInner = (paddingInner: any) =>
-        paddingInner ? scale : paddingInner;
-      scale.domain = (domain: any) => (domain ? scale : domain);
-      scale.bandwidth = (width: any) => (width ? scale : width);
-      scale.step = (step: any) => (step ? scale : step);
-      return scale;
-    });
-
-    const offsetLeft = 100;
-    const offsetRight = 50;
-    const mockWidth = 0;
-
-    mount(
-      <SparkBarChart
-        data={[sampleData]}
-        dataOffsetLeft={offsetLeft}
-        dataOffsetRight={offsetRight}
-      />,
-    );
-
-    expect(rangeSpy).toHaveBeenCalledWith([
-      offsetLeft,
-      mockWidth - offsetRight,
-    ]);
-  });
 });

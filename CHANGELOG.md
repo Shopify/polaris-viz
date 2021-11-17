@@ -5,6 +5,7 @@
 ### Added
 
 - Horizontal overflow style to `<StackedAreaChart />`, which were unintentionally removed
+- Use `<ChartContainer />` in `<SparkBarChart />`.
 
 ### Changed
 
