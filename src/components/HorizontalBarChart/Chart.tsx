@@ -1,15 +1,33 @@
 import React, {ReactNode, useCallback, useMemo, useState} from 'react';
 import {useTransition, animated} from '@react-spring/web';
 
-import {getSeriesColorsFromCount, useTheme} from '../../hooks';
+import {
+  GradientDefs,
+  HorizontalBars,
+  HorizontalStackedBars,
+  GroupLabel,
+} from '../shared';
+import {
+  getSeriesColorsFromCount,
+  useDataForHorizontalChart,
+  useHorizontalBarSizes,
+  useHorizontalXScale,
+  useTheme,
+} from '../../hooks';
 import {
   XMLNS,
   BarChartMargin as Margin,
   HORIZONTAL_BAR_GROUP_DELAY,
   BARS_SORT_TRANSITION_CONFIG,
 } from '../../constants';
-import {eventPointNative} from '../../utilities';
-import {DataType, Dimensions} from '../../types';
+import {eventPointNative, getBarId} from '../../utilities';
+import {
+  ChartType,
+  ColorOverrides,
+  DataSeries,
+  DataType,
+  Dimensions,
+} from '../../types';
 import {
   TOOLTIP_POSITION_DEFAULT_RETURN,
   TooltipPosition,
@@ -18,47 +36,34 @@ import {
 } from '../TooltipWrapper';
 import type {TooltipData} from '../TooltipContent';
 
-import {getAlteredHorizontalBarPosition, getBarId} from './utilities';
-import {
-  GradientDefs,
-  GroupLabel,
-  HorizontalBars,
-  StackedBars,
-  VerticalGridLines,
-  XAxisLabels,
-} from './components';
-import type {
-  ColorOverrides,
-  RenderTooltipContentData,
-  Series,
-  XAxisOptions,
-} from './types';
-import {useBarSizes, useDataForChart, useXScale} from './hooks';
+import {getAlteredHorizontalBarPosition} from './utilities';
+import {VerticalGridLines, XAxisLabels} from './components';
+import type {RenderTooltipContentData, XAxisOptions} from './types';
 import styles from './Chart.scss';
 
 interface ChartProps {
-  dimensions?: Dimensions;
   isAnimated: boolean;
-  isSimple: boolean;
-  isStacked: boolean;
   renderTooltipContent: (data: RenderTooltipContentData) => ReactNode;
-  series: Series[];
+  series: DataSeries[];
+  type: ChartType;
   xAxisOptions: Required<XAxisOptions>;
+  dimensions?: Dimensions;
   theme?: string;
 }
 
 export function Chart({
   dimensions,
   isAnimated,
-  isSimple,
-  isStacked,
   renderTooltipContent,
   series,
   theme,
+  type,
   xAxisOptions,
 }: ChartProps) {
   const selectedTheme = useTheme(theme);
   const {labelFormatter} = xAxisOptions;
+
+  const isStacked = type === 'stacked';
 
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
 
@@ -77,9 +82,9 @@ export function Chart({
     selectedTheme,
   );
 
-  const {allNumbers, longestLabel, areAllNegative} = useDataForChart({
+  const {allNumbers, longestLabel, areAllNegative} = useDataForHorizontalChart({
     series,
-    isSimple,
+    isSimple: false,
     isStacked,
     labelFormatter,
   });
@@ -88,7 +93,7 @@ export function Chart({
     const maxes: number[] = [];
 
     series.forEach(({data}) => {
-      const values = data.map(({rawValue}) => rawValue);
+      const values = data.map(({value}) => value);
       const max = areAllNegative ? Math.min(...values) : Math.max(...values);
 
       maxes.push(max);
@@ -104,14 +109,14 @@ export function Chart({
     const numbers: number[] = [];
 
     series.forEach(({data}) => {
-      const sum = data.reduce((prev, {rawValue}) => prev + rawValue, 0);
+      const sum = data.reduce((prev, {value}) => prev + value, 0);
       numbers.push(sum);
     });
 
     return Math.max(...numbers);
   }, [series, isStacked]);
 
-  const {xScale, xScaleStacked, ticks, ticksStacked} = useXScale({
+  const {xScale, xScaleStacked, ticks, ticksStacked} = useHorizontalXScale({
     allNumbers,
     highestSumForStackedGroup,
     isStacked,
@@ -126,9 +131,9 @@ export function Chart({
     groupBarsAreaHeight,
     groupHeight,
     tallestXAxisLabel,
-  } = useBarSizes({
+  } = useHorizontalBarSizes({
     chartDimensions: {width, height},
-    isSimple: isSimple || xAxisOptions.hide,
+    isSimple: xAxisOptions.hide,
     isStacked,
     labelFormatter,
     seriesLength: series.length,
@@ -139,8 +144,8 @@ export function Chart({
   const getAriaLabel = useCallback(
     (label: string, seriesIndex: number) => {
       const ariaSeries = series[seriesIndex].data
-        .map(({rawValue, label}) => {
-          return `${label} ${labelFormatter(rawValue)}`;
+        .map(({value, key}) => {
+          return `${key} ${labelFormatter(value)}`;
         })
         .join(', ');
 
@@ -156,11 +161,11 @@ export function Chart({
       }
 
       const data: TooltipData[] = series[activeIndex].data.map(
-        ({rawValue, label, color}, index) => {
+        ({value, key}, index) => {
           return {
-            label,
-            value: `${rawValue}`,
-            color: color ?? seriesColors[index],
+            label: `${key}`,
+            value: `${value}`,
+            color: series[activeIndex].color ?? seriesColors[index],
           };
         },
       );
@@ -173,8 +178,8 @@ export function Chart({
   const seriesWithColorOverride = useMemo(() => {
     const colors: ColorOverrides[] = [];
 
-    series.forEach(({data}, groupIndex) => {
-      data.forEach(({color}, seriesIndex) => {
+    series.forEach(({color, data}, groupIndex) => {
+      data.forEach((_, seriesIndex) => {
         if (color != null) {
           colors.push({id: getBarId(groupIndex, seriesIndex), color});
         }
@@ -183,6 +188,7 @@ export function Chart({
 
     return colors;
   }, [series]);
+
   const seriesWithIndex = series.map((series, index) => ({
     series,
     index,
@@ -202,7 +208,7 @@ export function Chart({
   const outOfChartPosition = getTransform(series.length + 1);
 
   const transitions = useTransition(seriesWithIndex, {
-    keys: (item) => item.series.name,
+    keys: (item) => item.series.name ?? '',
     initial: ({index}) => ({
       opacity: isFirstRender ? 1 : 0,
       transform: isFirstRender ? getTransform(index) : outOfChartPosition,
@@ -246,7 +252,7 @@ export function Chart({
         viewBox={`0 0 ${width} ${height}`}
         xmlns={XMLNS}
       >
-        {isSimple || xAxisOptions.hide === true ? null : (
+        {xAxisOptions.hide === true ? null : (
           <React.Fragment>
             <VerticalGridLines
               chartHeight={chartHeight}
@@ -274,7 +280,7 @@ export function Chart({
         />
 
         {transitions(({opacity, transform}, item, _transition, index) => {
-          const {name} = item.series;
+          const name = item.series.name ?? '';
           const ariaLabel = getAriaLabel(name, item.index);
 
           if (series[index] == null) {
@@ -304,14 +310,14 @@ export function Chart({
               />
 
               {isStacked && xScaleStacked ? (
-                <StackedBars
+                <HorizontalStackedBars
                   animationDelay={animationDelay}
                   ariaLabel={ariaLabel}
                   barHeight={barHeight}
                   groupIndex={index}
                   isAnimated={isAnimated}
                   name={name}
-                  series={item.series.data}
+                  series={item.series}
                   theme={theme}
                   xScale={xScaleStacked}
                 />
@@ -322,10 +328,10 @@ export function Chart({
                   barHeight={barHeight}
                   groupIndex={index}
                   isAnimated={isAnimated}
-                  isSimple={isSimple}
+                  isSimple={false}
                   labelFormatter={labelFormatter}
                   name={name}
-                  series={item.series.data}
+                  series={item.series}
                   theme={theme}
                   xScale={xScale}
                   zeroPosition={zeroPosition}
@@ -376,7 +382,7 @@ export function Chart({
   function formatPositionForTooltip(index: number): TooltipPosition {
     if (isStacked && xScaleStacked) {
       const x = series[index].data.reduce((prev, cur) => {
-        return prev + xScaleStacked(cur.rawValue);
+        return prev + xScaleStacked(cur.value);
       }, 0);
 
       return {
@@ -401,10 +407,6 @@ export function Chart({
     index,
     eventType,
   }: TooltipPositionParams): TooltipPosition {
-    if (isSimple === true) {
-      return TOOLTIP_POSITION_DEFAULT_RETURN;
-    }
-
     if (eventType === 'mouse' && event) {
       const point = eventPointNative(event);
 

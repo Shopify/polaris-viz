@@ -1,30 +1,29 @@
 import React, {ReactNode} from 'react';
 
+import type {ChartType, DataSeries} from '../../types';
 import {TooltipContent} from '../TooltipContent';
 import {ChartContainer} from '../../components/ChartContainer';
 import {usePrefersReducedMotion} from '../../hooks';
 
 import {Chart} from './Chart';
-import type {RenderTooltipContentData, Series, XAxisOptions} from './types';
+import type {RenderTooltipContentData, XAxisOptions} from './types';
 
 export interface HorizontalBarChartProps {
-  series: Series[];
+  series: DataSeries[];
   isAnimated?: boolean;
-  isSimple?: boolean;
-  isStacked?: boolean;
   renderTooltipContent?: (data: RenderTooltipContentData) => ReactNode;
   theme?: string;
   xAxisOptions?: XAxisOptions;
+  type?: ChartType;
 }
 
 export function HorizontalBarChart({
   isAnimated = true,
-  isSimple = false,
-  isStacked = false,
   renderTooltipContent,
   series,
   theme,
   xAxisOptions,
+  type = 'default',
 }: HorizontalBarChartProps) {
   const xAxisOptionsForChart: Required<XAxisOptions> = {
     labelFormatter: (value: string) => value,
@@ -54,11 +53,10 @@ export function HorizontalBarChart({
     <ChartContainer theme={theme}>
       <Chart
         isAnimated={isAnimated && !prefersReducedMotion}
-        isSimple={isSimple}
-        isStacked={isStacked}
         renderTooltipContent={renderTooltip}
         series={series}
         xAxisOptions={xAxisOptionsForChart}
+        type={type}
       />
     </ChartContainer>
   );

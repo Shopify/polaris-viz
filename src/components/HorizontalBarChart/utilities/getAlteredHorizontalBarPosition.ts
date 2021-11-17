@@ -1,11 +1,11 @@
 import type {Dimensions} from 'types';
 
+import {HORIZONTAL_GROUP_LABEL_HEIGHT} from '../../../constants';
 import {
   AlteredPositionProps,
   AlteredPositionReturn,
   TOOLTIP_MARGIN,
 } from '../../../components/TooltipWrapper';
-import {LABEL_HEIGHT} from '../constants';
 
 export function getAlteredHorizontalBarPosition(
   props: AlteredPositionProps,
@@ -29,7 +29,7 @@ function getNegativeOffset(props: AlteredPositionProps): AlteredPositionReturn {
 
   return {
     x: flippedX - tooltipDimensions.width - TOOLTIP_MARGIN,
-    y: currentY + LABEL_HEIGHT + yOffset,
+    y: currentY + HORIZONTAL_GROUP_LABEL_HEIGHT + yOffset,
   };
 }
 
@@ -53,19 +53,22 @@ function getPositiveOffset(props: AlteredPositionProps): AlteredPositionReturn {
     const yOffset = (bandwidth - tooltipDimensions.height) / 2;
     return {
       x: currentX + TOOLTIP_MARGIN,
-      y: currentY + LABEL_HEIGHT + yOffset,
+      y: currentY + HORIZONTAL_GROUP_LABEL_HEIGHT + yOffset,
     };
   }
 
   if (isOutside.right) {
     const x = currentX - tooltipDimensions.width;
     const y =
-      currentY - tooltipDimensions.height + LABEL_HEIGHT - TOOLTIP_MARGIN;
+      currentY -
+      tooltipDimensions.height +
+      HORIZONTAL_GROUP_LABEL_HEIGHT -
+      TOOLTIP_MARGIN;
 
     if (y < 0) {
       return {
         x,
-        y: bandwidth + LABEL_HEIGHT + TOOLTIP_MARGIN,
+        y: bandwidth + HORIZONTAL_GROUP_LABEL_HEIGHT + TOOLTIP_MARGIN,
       };
     }
 
@@ -78,7 +81,10 @@ function getPositiveOffset(props: AlteredPositionProps): AlteredPositionReturn {
   if (isOutside.bottom) {
     return {
       x: currentX + TOOLTIP_MARGIN,
-      y: chartDimensions.height - tooltipDimensions.height - LABEL_HEIGHT,
+      y:
+        chartDimensions.height -
+        tooltipDimensions.height -
+        HORIZONTAL_GROUP_LABEL_HEIGHT,
     };
   }
 

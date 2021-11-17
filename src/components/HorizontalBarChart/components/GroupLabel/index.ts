@@ -1,1 +1,0 @@
-export {GroupLabel} from './GroupLabel';

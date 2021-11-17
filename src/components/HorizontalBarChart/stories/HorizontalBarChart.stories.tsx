@@ -6,12 +6,13 @@ import {
   HorizontalBarChartProps,
 } from '../HorizontalBarChart';
 
-import type {RenderTooltipContentData, Series} from '../types';
+import type {RenderTooltipContentData} from '../types';
 import {getSingleColor, THEME_CONTROL_ARGS} from '../../../storybook';
+import type {DataSeries} from 'types';
 
 const LABELS = ['BCFM 2019', 'BCFM 2020', 'BCFM 2021'];
 
-function buildSeries(items: number[] | number[][]): Series[] {
+function buildSeries(items: number[] | number[][]): DataSeries[] {
   return [
     'Womens Leggings',
     'Mens Bottoms',
@@ -25,7 +26,7 @@ function buildSeries(items: number[] | number[][]): Series[] {
     return {
       name,
       data: array.map((number, dataIndex) => {
-        return {rawValue: number, label: LABELS[dataIndex]};
+        return {value: number, key: LABELS[dataIndex]};
       }),
     };
   });
@@ -41,8 +42,6 @@ const SERIES = buildSeries([
 ]);
 
 const CONTAINER_HEIGHT = 500;
-
-const SINGLE_SERIES = buildSeries([3, 7, 4, 8, 4, 1, 4, 6]);
 
 const TOOLTIP_CONTENT = {
   empty: undefined,
@@ -133,16 +132,6 @@ const Template: Story<HorizontalBarChartProps> = (
   );
 };
 
-const SimpleTemplate: Story<HorizontalBarChartProps> = (
-  args: HorizontalBarChartProps,
-) => {
-  return (
-    <div style={{height: CONTAINER_HEIGHT}}>
-      <HorizontalBarChart isSimple={true} {...args} />
-    </div>
-  );
-};
-
 export const Default: Story<HorizontalBarChartProps> = Template.bind({});
 
 Default.args = {
@@ -169,22 +158,23 @@ ColorOverrides.args = {
     {
       name: 'Shirt',
       data: [
-        {rawValue: 4, color: 'red', label: 'Yesterday'},
-        {rawValue: 7, label: 'Today'},
+        {value: 4, key: 'Yesterday'},
+        {value: 7, key: 'Today'},
       ],
+      color: 'red',
     },
     {
       name: 'Pants',
       data: [
-        {rawValue: 5, label: 'Yesterday'},
-        {rawValue: 6, label: 'Today'},
+        {value: 5, key: 'Yesterday'},
+        {value: 6, key: 'Today'},
       ],
     },
     {
       name: 'Shoes',
       data: [
-        {rawValue: 15, label: 'Yesterday'},
-        {rawValue: 12, label: 'Today'},
+        {value: 15, key: 'Yesterday'},
+        {value: 12, key: 'Today'},
       ],
     },
   ],
@@ -202,36 +192,9 @@ FormattedLabels.args = {
   },
 };
 
-export const Simple: Story<HorizontalBarChartProps> = SimpleTemplate.bind({});
+export const Stacked: Story<HorizontalBarChartProps> = Template.bind({});
 
-Simple.args = {
-  series: SINGLE_SERIES,
-};
-
-Simple.parameters = {
-  docs: {
-    description: {
-      story: `
-The Simple component is rendered without xAxis labels, grid lines & Tooltips on mouse/touch-move.
-
-To change the color of the values displayed to the right of each bar, you can override the \`xAxis.labelColor\` value in your current theme. For more information on overriding theme values, you can refer to the <a href="https://polaris-viz.shopify.io/?path=/docs/providers-polarisvizprovider--default">PolarisVizProvider documentation</a>.
-      `,
-    },
-  },
-};
-
-export const DefaultStacked: Story<HorizontalBarChartProps> = Template.bind({});
-
-DefaultStacked.args = {
+Stacked.args = {
   series: SERIES,
-  isStacked: true,
-};
-
-export const SimpleStacked: Story<HorizontalBarChartProps> = SimpleTemplate.bind(
-  {},
-);
-
-SimpleStacked.args = {
-  series: SERIES,
-  isStacked: true,
+  type: 'stacked',
 };
