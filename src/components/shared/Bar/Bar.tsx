@@ -1,9 +1,9 @@
 import React, {useCallback} from 'react';
 import {animated, useSpring} from '@react-spring/web';
 
-import {getRoundedRectPath} from '../../../../utilities';
-import {DataType, RoundedBorder} from '../../../../types';
-import {BARS_TRANSITION_CONFIG} from '../../../../constants';
+import {getRoundedRectPath} from '../../../utilities';
+import {DataType, RoundedBorder} from '../../../types';
+import {BARS_TRANSITION_CONFIG} from '../../../constants';
 
 import styles from './Bar.scss';
 

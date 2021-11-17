@@ -1,22 +1,24 @@
 import React, {useCallback, useMemo, useState} from 'react';
 import {useTransition, animated} from '@react-spring/web';
 
+import {getBarId} from '../../utilities';
+import {GradientDefs, GroupLabel, HorizontalBars} from '../shared';
 import {getSeriesColorsFromCount, useTheme} from '../../hooks';
 import {
   XMLNS,
   HORIZONTAL_BAR_GROUP_DELAY,
   BARS_SORT_TRANSITION_CONFIG,
 } from '../../constants';
-import {ChartType, DataSeries, DataType, Dimensions} from '../../types';
-
-import {getBarId} from './utilities';
 import {
-  GradientDefs,
-  GroupLabel,
-  HorizontalBars,
-  StackedBars,
-} from './components';
-import type {ColorOverrides, XAxisOptions} from './types';
+  ChartType,
+  ColorOverrides,
+  DataSeries,
+  DataType,
+  Dimensions,
+} from '../../types';
+
+import {StackedBars} from './components';
+import type {XAxisOptions} from './types';
 import {useBarSizes, useDataForChart, useXScale} from './hooks';
 import styles from './Chart.scss';
 

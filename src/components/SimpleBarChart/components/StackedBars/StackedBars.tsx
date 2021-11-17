@@ -2,12 +2,16 @@ import React, {useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {animated, useSpring} from '@react-spring/web';
 
-import {BARS_TRANSITION_CONFIG} from '../../../../constants';
-import {GRADIENT_ID, LABEL_HEIGHT, STACKED_BAR_GAP} from '../../constants';
-import {getBarId} from '../../utilities';
+import {getBarId} from '../../../../utilities';
+import {
+  BARS_TRANSITION_CONFIG,
+  GRADIENT_ID,
+  HORIZONTAL_GROUP_LABEL_HEIGHT,
+} from '../../../../constants';
+import {STACKED_BAR_GAP} from '../../constants';
 import {StackedBar} from '../StackedBar';
-import {getGradientDefId} from '../GradientDefs';
 import {DataSeries, RoundedBorder} from '../../../../types';
+import {getGradientDefId} from '../../../shared';
 
 export interface StackedBarsProps {
   animationDelay: number;
@@ -50,8 +54,12 @@ export function StackedBars({
   }, [series, xScale]);
 
   const {transform} = useSpring({
-    from: {transform: `scale(0, 1) translate(0, ${LABEL_HEIGHT}px`},
-    to: {transform: `scale(1, 1) translate(0, ${LABEL_HEIGHT}px`},
+    from: {
+      transform: `scale(0, 1) translate(0, ${HORIZONTAL_GROUP_LABEL_HEIGHT}px`,
+    },
+    to: {
+      transform: `scale(1, 1) translate(0, ${HORIZONTAL_GROUP_LABEL_HEIGHT}px`,
+    },
     config: BARS_TRANSITION_CONFIG,
     delay: animationDelay,
     default: {immediate: !isAnimated},

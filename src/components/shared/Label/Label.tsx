@@ -1,8 +1,11 @@
 import React from 'react';
 import {animated, useSpring} from '@react-spring/web';
 
-import {BARS_TRANSITION_CONFIG, FONT_SIZE} from '../../../../constants';
-import {BAR_LABEL_HEIGHT} from '../../constants';
+import {
+  HORIZONTAL_BAR_LABEL_HEIGHT,
+  BARS_TRANSITION_CONFIG,
+  FONT_SIZE,
+} from '../../../constants';
 
 interface LabelProps {
   barHeight: number;
@@ -25,7 +28,7 @@ export function Label({
   x,
   y,
 }: LabelProps) {
-  const labelYOffset = (barHeight - BAR_LABEL_HEIGHT) / 2;
+  const labelYOffset = (barHeight - HORIZONTAL_BAR_LABEL_HEIGHT) / 2;
 
   const spring = useSpring({
     from: {transform: 'scaleX(0) translateZ(0)', opacity: 0},
@@ -53,8 +56,8 @@ export function Label({
           style={{
             fontSize: `${FONT_SIZE}px`,
             color,
-            lineHeight: `${BAR_LABEL_HEIGHT}px`,
-            height: BAR_LABEL_HEIGHT,
+            lineHeight: `${HORIZONTAL_BAR_LABEL_HEIGHT}px`,
+            height: HORIZONTAL_BAR_LABEL_HEIGHT,
           }}
         >
           {label}

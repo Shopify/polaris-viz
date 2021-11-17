@@ -1,18 +1,17 @@
 import React from 'react';
 import type {ScaleLinear} from 'd3-scale';
 
-import {DataSeries, RoundedBorder} from '../../../../types';
-import {FONT_SIZE} from '../../../../constants';
-import type {LabelFormatter} from '../../types';
-import {getTextWidth} from '../../../../utilities';
+import {DataSeries, RoundedBorder} from '../../../types';
 import {
-  BAR_LABEL_OFFSET,
+  FONT_SIZE,
   FONT_SIZE_PADDING,
-  LABEL_HEIGHT,
-  SPACE_BETWEEN_SINGLE,
-} from '../../constants';
-import {useTheme} from '../../../../hooks';
-import {getBarId} from '../../utilities';
+  HORIZONTAL_BAR_LABEL_OFFSET,
+  HORIZONTAL_GROUP_LABEL_HEIGHT,
+  HORIZONTAL_SPACE_BETWEEN_SINGLE,
+} from '../../../constants';
+import type {LabelFormatter} from '../../../types';
+import {getTextWidth, getBarId} from '../../../utilities';
+import {useTheme} from '../../../hooks';
 import {Bar} from '../Bar';
 import {Label} from '../Label';
 import {getGradientDefId} from '../GradientDefs';
@@ -50,7 +49,7 @@ export function HorizontalBars({
 
   return (
     <g
-      transform={`translate(${zeroPosition},${LABEL_HEIGHT})`}
+      transform={`translate(${zeroPosition},${HORIZONTAL_GROUP_LABEL_HEIGHT})`}
       aria-label={ariaLabel}
       role="listitem"
     >
@@ -64,12 +63,16 @@ export function HorizontalBars({
           fontSize: FONT_SIZE + FONT_SIZE_PADDING,
         });
 
-        const leftLabelOffset = isSimple ? labelWidth + BAR_LABEL_OFFSET : 0;
+        const leftLabelOffset = isSimple
+          ? labelWidth + HORIZONTAL_BAR_LABEL_OFFSET
+          : 0;
         const width = Math.abs(xScale(value) - xScale(0));
 
-        const y = barHeight * seriesIndex + SPACE_BETWEEN_SINGLE * seriesIndex;
+        const y =
+          barHeight * seriesIndex +
+          HORIZONTAL_SPACE_BETWEEN_SINGLE * seriesIndex;
         const negativeX = (width + leftLabelOffset) * -1;
-        const x = isNegative ? negativeX : width + BAR_LABEL_OFFSET;
+        const x = isNegative ? negativeX : width + HORIZONTAL_BAR_LABEL_OFFSET;
         const ariaHidden = seriesIndex !== 0;
         const barColor = series.color
           ? id

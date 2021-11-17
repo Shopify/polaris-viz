@@ -1,17 +1,17 @@
 import {useMemo} from 'react';
 
 import {clamp, getTextHeight} from '../../../utilities';
-import {FONT_SIZE, LINE_HEIGHT} from '../../../constants';
-import type {Dimensions} from '../../../types';
 import {
-  LABEL_HEIGHT,
+  FONT_SIZE,
+  HORIZONTAL_GROUP_LABEL_HEIGHT,
+  HORIZONTAL_SPACE_BETWEEN_CHART_AND_AXIS,
+  HORIZONTAL_SPACE_BETWEEN_SETS,
+  HORIZONTAL_SPACE_BETWEEN_SINGLE,
+  LINE_HEIGHT,
   MAX_X_AXIS_LINES,
-  MIN_BAR_HEIGHT,
-  SPACE_BETWEEN_CHART_AND_AXIS,
-  SPACE_BETWEEN_SETS,
-  SPACE_BETWEEN_SINGLE,
-} from '../constants';
-import type {LabelFormatter} from '../types';
+} from '../../../constants';
+import type {Dimensions, LabelFormatter} from '../../../types';
+import {MIN_BAR_HEIGHT} from '../constants';
 
 interface Props {
   chartDimensions: Dimensions;
@@ -59,9 +59,11 @@ export function useBarSizes({
   }, [ticks, labelFormatter, bandwidth]);
 
   return useMemo(() => {
-    const spaceBetweenXAxis = isSimple ? 0 : SPACE_BETWEEN_CHART_AND_AXIS;
+    const spaceBetweenXAxis = isSimple
+      ? 0
+      : HORIZONTAL_SPACE_BETWEEN_CHART_AND_AXIS;
     // Push the container taller to line up last bar
-    const simpleHeight = chartDimensions.height + SPACE_BETWEEN_SETS;
+    const simpleHeight = chartDimensions.height + HORIZONTAL_SPACE_BETWEEN_SETS;
 
     const containerHeight = isSimple ? simpleHeight : chartDimensions.height;
     const xAxisHeight = isSimple ? 0 : tallestXAxisLabel + spaceBetweenXAxis;
@@ -71,9 +73,9 @@ export function useBarSizes({
 
     const groupBarsAreaHeight =
       groupHeight -
-      LABEL_HEIGHT -
-      (singleBarCount - 1) * SPACE_BETWEEN_SINGLE -
-      SPACE_BETWEEN_SETS;
+      HORIZONTAL_GROUP_LABEL_HEIGHT -
+      (singleBarCount - 1) * HORIZONTAL_SPACE_BETWEEN_SINGLE -
+      HORIZONTAL_SPACE_BETWEEN_SETS;
 
     const barHeight = clamp({
       amount: groupBarsAreaHeight / (isStacked ? 1 : singleBarCount),

@@ -1,12 +1,5 @@
-import type {Color} from '../../types';
-
-export type LabelFormatter = (value: string | number) => string;
+import type {LabelFormatter} from '../../types';
 
 export interface XAxisOptions {
   labelFormatter?: LabelFormatter;
-}
-
-export interface ColorOverrides {
-  id: string;
-  color: Color;
 }
