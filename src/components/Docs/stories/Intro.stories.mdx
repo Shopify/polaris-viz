@@ -3,7 +3,7 @@ import {
   BarChart,
   LineChart,
   StackedAreaChart,
-  NormalizedStackedBarChart,
+  SimpleNormalizedChart,
   MultiSeriesBarChart,
   SparkLineChart,
   SparkBarChart,
@@ -127,40 +127,6 @@ import {ComponentContainer, LogoHeader, Divider} from './components';
             {label: 'June', rawValue: 12484},
             {label: 'July', rawValue: 4878},
           ],
-        },
-      ]}
-    />
-  }
-/>
-
-<ComponentContainer
-  title="Normalized stacked bar chart"
-  description="Used for positive datasets with two to four items. "
-  link="https://polaris-viz.shopify.io/?path=/docs/charts-normalizedstackedbarchart--default"
-  center
-  chart={
-    <NormalizedStackedBarChart
-      orientation="vertical"
-      data={[
-        {
-          label: 'Direct',
-          value: 200,
-          formattedValue: '$200',
-          comparisonMetric: {
-            metric: '5',
-            trend: 'positive',
-            accessibilityLabel: 'Increase of',
-          },
-        },
-        {
-          label: 'Facebook',
-          value: 100,
-          formattedValue: '$100',
-          comparisonMetric: {
-            metric: '5',
-            trend: 'negative',
-            accessibilityLabel: 'Decrease of',
-          },
         },
       ]}
     />
@@ -431,6 +397,43 @@ import {ComponentContainer, LogoHeader, Divider} from './components';
           ],
         },
       ]}
+    />
+  }
+/>
+
+<ComponentContainer
+  title="SimpleNormalizedChart"
+  description="Used for positive datasets with two to four items. "
+  link="https://polaris-viz.shopify.io/?path=/docs/simple-charts-simplenormalizedchart--default"
+  center
+  chart={
+    <SimpleNormalizedChart
+      orientation="vertical"
+      comparisonMetrics={[
+        {
+          dataIndex: 0,
+          metric: '5',
+          trend: 'positive',
+          accessibilityLabel: 'Increase of',
+        },
+        {
+          dataIndex: 1,
+          metric: '5',
+          trend: 'negative',
+          accessibilityLabel: 'Decrease of',
+        },
+      ]}
+      data={[
+        {
+          key: 'Direct',
+          value: 200,
+        },
+        {
+          key: 'Facebook',
+          value: 100,
+        },
+      ]}
+      labelFormatter={(value) => `$${value}`}
     />
   }
 />

@@ -7,7 +7,7 @@ import {
   LineChart,
   MultiSeriesBarChart,
   StackedAreaChart,
-  NormalizedStackedBarChart,
+  SimpleNormalizedChart,
 } from '../../../../components';
 import {
   generateMultipleSeries,
@@ -147,35 +147,30 @@ export const SampleStackedAreaChart = (
   );
 };
 
-export const SampleNormalizedStackedBarChart = (
-  {theme} = {theme: 'Default'},
-) => {
+export const SampleSimpleNormalizedChart = ({theme} = {theme: 'Default'}) => {
   return (
-    <NormalizedStackedBarChart
-      orientation="vertical"
+    <SimpleNormalizedChart
+      direction="vertical"
       theme={theme}
       data={[
         {
-          label: 'Direct',
+          key: 'Direct',
           value: 200,
-          formattedValue: '$200',
         },
         {
-          label: 'Facebook',
+          key: 'Facebook',
           value: 100,
-          formattedValue: '$100',
         },
         {
-          label: 'Twitter',
+          key: 'Twitter',
           value: 100,
-          formattedValue: '$100',
         },
         {
-          label: 'Google',
+          key: 'Google',
           value: 20,
-          formattedValue: '$20',
         },
       ]}
+      labelFormatter={(value) => `$${value}`}
     />
   );
 };

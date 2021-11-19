@@ -7,8 +7,8 @@ import {
   isGradientType,
   classNames,
 } from '../../../../utilities';
-import type {Orientation, Size} from '../../types';
-import type {Color} from '../../../../types';
+import type {Size} from '../../types';
+import type {Color, Direction} from '../../../../types';
 import {useHasTimeoutFinished} from '../../../../hooks';
 
 import styles from './BarSegment.scss';
@@ -21,7 +21,7 @@ interface Props {
   scale: number;
   color: Color;
   size: Size;
-  orientation: Orientation;
+  direction: Direction;
   roundedCorners: boolean;
 }
 
@@ -31,15 +31,15 @@ export function BarSegment({
   isAnimated,
   scale,
   size,
-  orientation,
+  direction,
   roundedCorners,
 }: Props) {
   const scaleNeedsRounding = scale > 0 && scale < 1.5;
   const safeScale = scaleNeedsRounding ? 1.5 : scale;
 
   const delay = index * DELAY;
-  const angle = orientation === 'horizontal' ? 90 : 180;
-  const dimension = orientation === 'horizontal' ? 'width' : 'height';
+  const angle = direction === 'horizontal' ? 90 : 180;
+  const dimension = direction === 'horizontal' ? 'width' : 'height';
 
   const isMountDone = useHasTimeoutFinished(isAnimated ? delay : 0);
 
@@ -59,8 +59,8 @@ export function BarSegment({
     <animated.div
       className={classNames(
         styles.Segment,
-        roundedCorners && styles[`${orientation}-RoundedCorners`],
-        styles[`${orientation}-${size}`],
+        roundedCorners && styles[`${direction}-RoundedCorners`],
+        styles[`${direction}-${size}`],
       )}
       style={{
         [dimension]: isAnimated ? spring[dimension] : `${safeScale}%`,

@@ -13,7 +13,7 @@ import {
   PropertyTable,
   SampleLineChart,
   SampleStackedAreaChart,
-  SampleNormalizedStackedBarChart,
+  SampleSimpleNormalizedChart,
 } from './components';
 
 <Meta
@@ -450,7 +450,7 @@ export interface GradientStop {
     chartsAffected={[
       'BarChart',
       'MultiSeriesBarChart',
-      'NormalizedStackedBarChart',
+      'SimpleNormalizedChart',
     ]}
   />
   <PropertyTable.Row
@@ -1131,19 +1131,19 @@ export interface GradientStop {
     property="legend.labelColor"
     type="string"
     description="a CSS color string applied to the labels in legends"
-    chartsAffected={['NormalizedStackedBarChart', 'Legend']}
+    chartsAffected={['SimpleNormalizedChart', 'Legend']}
   />
   <PropertyTable.Row
     property="legend.labelColor"
     type="string"
     description="a CSS color string applied to the values in legends"
-    chartsAffected={['NormalizedStackedBarChart', 'Legend']}
+    chartsAffected={['SimpleNormalizedChart', 'Legend']}
   />
   <PropertyTable.Row
     property="legend.trendIndicator"
     type={`{positive: string; negative: string; neutral: string}`}
     description="an object describing the colors to be used in the chevrons that indicate positive, negative and neutral trends "
-    chartsAffected={['NormalizedStackedBarChart', 'Legend']}
+    chartsAffected={['SimpleNormalizedChart', 'Legend']}
   />
 </PropertyTable>
 
@@ -1177,7 +1177,7 @@ export interface GradientStop {
           },
         }}
       >
-        <SampleNormalizedStackedBarChart />
+        <SampleSimpleNormalizedChart />
       </PolarisVizProvider>
     </div>
   }

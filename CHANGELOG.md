@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+[0.27.0 Migration Guide](https://docs.google.com/document/d/1vRaAnWTvHuqiedZ8FQyCCF0RlMuRjEp_pW7W8c_dEGw/edit#)
 ### Added
 
 - Added `<SimpleBarChart />`.
@@ -15,6 +16,10 @@
 - Renamed `isStacked` to `type` in `HorizontalBarChartProps`.
 - `type` now accepts `default | stacked` to change between stacked or individual bar groups.
 - Renamed `series` to `data` in `HorizontalBarChartProps`.
+- Renamed `<NormalizedStackedBarChart />` to `<SimpleNormalizedChart />`.
+  - Removed `data.formattedValue`. The component now accepts a `labelFormatter` root prop for formatting the `data.value` value.
+  - Removed `data.comparisonMetric`. The component now accepts a `comparisonMetric` prop.
+  - Renamed `SparkLineChartProps.orientation` to `SparkLineChartProps.direction`.
 
 ## [0.26.0] - 2021-11-29
 
@@ -32,6 +37,7 @@
 - Renamed `<Sparkline />` to `<SparkLineChart />`.
 - Moved `offsetLeft` & `offsetRight` from `SparkLineChartProps.series` to `SparkLineChartProps`.
 - Renamed `series` to `data` in `SparkLineChartProps`.
+
 ### Removed
 
 - `area`, `lineStyle`, and `hasPoint` from `SparkLineChartProps.series`.
