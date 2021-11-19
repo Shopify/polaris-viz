@@ -25,3 +25,4 @@ export {
   changeGradientOpacity,
 } from './change-color-opacity';
 export {getRoundedRectPath} from './get-rounded-rect-path';
+export {getAverageColor} from './get-average-color';

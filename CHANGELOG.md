@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Changed
+
+- Use average color between gradient stops for `<LineChart />` area color.
+
 ## [0.25.3] - 2021-11-22
 
 - Add unique id to series colors used in `<HorizontalBarChart />`.
