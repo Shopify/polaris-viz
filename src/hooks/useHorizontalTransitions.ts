@@ -26,13 +26,7 @@ export function useHorizontalTransitions({
     return `translate(0px,${groupHeight * index}px)`;
   };
 
-  const [isFirstRender, setIsFirstRender] = useState(true);
-
-  const handleOnTransitionRest = () => {
-    setIsFirstRender(false);
-  };
-
-  const animationTrail = isFirstRender ? 0 : 50;
+  const animationTrail = 50;
   const outOfChartPosition = getTransform(series.length + 1);
 
   const transitions = useTransition(seriesWithIndex, {
@@ -40,30 +34,23 @@ export function useHorizontalTransitions({
       return item.series.name ?? '';
     },
     initial: ({index}) => ({
-      opacity: isFirstRender ? 1 : 0,
-      transform: isFirstRender ? getTransform(index) : outOfChartPosition,
+      opacity: 1,
+      transform: getTransform(index),
     }),
-    from: {
+    from: ({index}) => ({
       opacity: 0,
-      transform: outOfChartPosition,
-    },
+      transform: isAnimated ? outOfChartPosition : getTransform(index),
+    }),
     leave: {
       opacity: 0,
       transform: outOfChartPosition,
     },
-    enter: () => ({
-      opacity: 0,
-      transform: outOfChartPosition,
-    }),
     update: ({index}) => ({opacity: 1, transform: getTransform(index)}),
     expires: true,
     config: BARS_SORT_TRANSITION_CONFIG,
     trail: isAnimated ? animationTrail : 0,
-    default: {
-      immediate: !isAnimated,
-      onRest: handleOnTransitionRest,
-    },
+    immediate: !isAnimated,
   });
 
-  return {transitions, isFirstRender};
+  return {transitions};
 }

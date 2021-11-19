@@ -95,7 +95,7 @@ export function Chart({
     [formattedData, labelFormatter],
   );
 
-  const {transitions, isFirstRender} = useHorizontalTransitions({
+  const {transitions} = useHorizontalTransitions({
     series: formattedData,
     groupHeight,
     isAnimated,
@@ -127,10 +127,9 @@ export function Chart({
             return null;
           }
 
-          const animationDelay =
-            isFirstRender && isAnimated
-              ? (HORIZONTAL_BAR_GROUP_DELAY * index) / formattedData.length
-              : 0;
+          const animationDelay = isAnimated
+            ? (HORIZONTAL_BAR_GROUP_DELAY * index) / formattedData.length
+            : 0;
 
           return (
             <HorizontalGroup
