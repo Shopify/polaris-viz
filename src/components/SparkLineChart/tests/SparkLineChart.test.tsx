@@ -1,6 +1,5 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
-import {scaleLinear} from 'd3-scale';
 
 import {SparkLineChart} from '../SparkLineChart';
 import {Series} from '../components';
@@ -83,44 +82,11 @@ describe('<SparkLineChart />', () => {
     });
   });
 
-  describe('Series', () => {
+  describe('<Series />', () => {
     it('renders a Series for each series provided', () => {
       const sparkLineChart = mount(<SparkLineChart data={mockData} />);
 
       expect(sparkLineChart.findAll(Series)).toHaveLength(mockData.length);
-    });
-
-    it('reduces the series width according to the offset and margin', () => {
-      let rangeSpy = jest.fn();
-      (scaleLinear as jest.Mock).mockImplementation(() => {
-        const scale = (value: any) => value;
-        rangeSpy = jest.fn((range: any) => (range ? scale : range));
-        scale.range = rangeSpy;
-        scale.domain = (domain: any) => (domain ? scale : domain);
-        return scale;
-      });
-
-      const offsetLeft = 100;
-      const offsetRight = 50;
-      const margin = 2;
-      const mockWidth = 0;
-
-      mount(
-        <SparkLineChart
-          data={[
-            {
-              data: [{key: 0, value: 100}],
-            },
-          ]}
-          offsetLeft={offsetLeft}
-          offsetRight={offsetRight}
-        />,
-      );
-
-      expect(rangeSpy).toHaveBeenCalledWith([
-        offsetLeft + margin,
-        mockWidth - offsetRight - margin,
-      ]);
     });
   });
 });
