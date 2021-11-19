@@ -20,7 +20,6 @@ export function ComparisonMetric({
           <span style={{color: theme.trendIndicator.neutral}}>-</span>
         </span>
       );
-      break;
     case 'positive':
       return (
         <span className={styles.PositiveIcon}>
@@ -31,7 +30,6 @@ export function ComparisonMetric({
           <span style={{color: theme.trendIndicator.positive}}>{metric}</span>
         </span>
       );
-      break;
     case 'negative':
       return (
         <span className={styles.NegativeIcon}>

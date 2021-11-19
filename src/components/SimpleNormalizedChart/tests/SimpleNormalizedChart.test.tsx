@@ -1,23 +1,25 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {NormalizedStackedBarChart} from '../../../components/NormalizedStackedBarChart';
+import {SimpleNormalizedChart} from '../../../components/SimpleNormalizedChart';
 import {mountWithProvider} from '../../../test-utilities';
 import {BarSegment, BarLabel} from '../components';
+import type {SimpleNormalizedChartProps} from '../SimpleNormalizedChart';
 
-describe('<NormalizedBarChart />', () => {
-  const mockProps = {
+describe('<SimpleNormalizedChart />', () => {
+  const mockProps: SimpleNormalizedChartProps = {
     data: [
-      {label: 'label0', value: 993.9266809283133, formattedValue: '$993.93'},
-      {label: 'label1', value: 666.4681407384194, formattedValue: '$666.47'},
-      {label: 'label2', value: 500, formattedValue: '$500.00'},
-      {label: 'label3', value: 200, formattedValue: '$200.00'},
+      {key: 'label0', value: 993.9266809283133},
+      {key: 'label1', value: 666.4681407384194},
+      {key: 'label2', value: 500},
+      {key: 'label3', value: 200},
     ],
+    labelFormatter: (value) => `$${Number(value).toFixed(2)}`,
   };
 
   describe('Bars', () => {
     it('renders 4 bars when given 4 data items', () => {
-      const barChart = mount(<NormalizedStackedBarChart {...mockProps} />);
+      const barChart = mount(<SimpleNormalizedChart {...mockProps} />);
 
       expect(barChart.findAll(BarSegment)).toHaveLength(4);
     });
@@ -26,28 +28,25 @@ describe('<NormalizedBarChart />', () => {
       const highEdgeProps = {
         data: [
           {
-            label: 'DuckDuckGo',
+            key: 'DuckDuckGo',
             value: 993.9266809283133,
-            formattedValue: '$993.93',
           },
           {
-            label: 'Google',
+            key: 'Google',
             value: 666.4681407384194,
-            formattedValue: '$666.47',
           },
-          {label: 'Yahoo', value: 500, formattedValue: '$500.00'},
-          {label: 'Bing', value: 200, formattedValue: '$200.00'},
+          {key: 'Yahoo', value: 500},
+          {key: 'Bing', value: 200},
           {
-            label: 'DuckDuck',
+            key: 'DuckDuck',
             value: 993.9266809283133,
-            formattedValue: '$993.93',
           },
-          {label: 'Goog', value: 666.4681407384194, formattedValue: '$666.47'},
-          {label: 'Yah', value: 500, formattedValue: '$500.00'},
-          {label: 'Bin', value: 200, formattedValue: '$200.00'},
+          {key: 'Goog', value: 666.4681407384194},
+          {key: 'Yah', value: 500},
+          {key: 'Bin', value: 200},
         ],
       };
-      const barChart = mount(<NormalizedStackedBarChart {...highEdgeProps} />);
+      const barChart = mount(<SimpleNormalizedChart {...highEdgeProps} />);
 
       expect(barChart.findAll(BarSegment)).toHaveLength(4);
     });
@@ -57,17 +56,17 @@ describe('<NormalizedBarChart />', () => {
         data: [],
       };
 
-      const barChart = mount(<NormalizedStackedBarChart {...lowEdgeProps} />);
+      const barChart = mount(<SimpleNormalizedChart {...lowEdgeProps} />);
 
       expect(barChart.findAll(BarSegment)).toHaveLength(0);
     });
 
     it('does not render a bar for 0 values', () => {
       const barChart = mount(
-        <NormalizedStackedBarChart
+        <SimpleNormalizedChart
           data={[
-            {label: 'Bin', value: 200, formattedValue: '$200.00'},
-            {label: 'Stuff', value: 0, formattedValue: '$0.00'},
+            {key: 'Bin', value: 200},
+            {key: 'Stuff', value: 0},
           ]}
         />,
       );
@@ -81,39 +80,33 @@ describe('<NormalizedBarChart />', () => {
       const highEdgeProps = {
         data: [
           {
-            label: 'DuckDuckGo',
+            key: 'DuckDuckGo',
             value: 993.9266809283133,
-            formattedValue: '$993.93',
           },
           {
-            label: 'DuckDuckGo1',
+            key: 'DuckDuckGo1',
             value: 993.9266809283133,
-            formattedValue: '$993.93',
           },
           {
-            label: 'DuckDuckGo2',
+            key: 'DuckDuckGo2',
             value: 993.9266809283133,
-            formattedValue: '$993.93',
           },
           {
-            label: 'DuckDuckGo3',
+            key: 'DuckDuckGo3',
             value: 993.9266809283133,
-            formattedValue: '$993.93',
           },
           {
-            label: 'DuckDuckGo4',
+            key: 'DuckDuckGo4',
             value: 993.9266809283133,
-            formattedValue: '$993.93',
           },
           {
-            label: 'DuckDuckGo5',
+            key: 'DuckDuckGo5',
             value: 993.9266809283133,
-            formattedValue: '$993.93',
           },
         ],
       };
 
-      const barChart = mount(<NormalizedStackedBarChart {...highEdgeProps} />);
+      const barChart = mount(<SimpleNormalizedChart {...highEdgeProps} />);
 
       expect(barChart.findAll(BarLabel)).toHaveLength(4);
     });
@@ -122,19 +115,17 @@ describe('<NormalizedBarChart />', () => {
       const lowEdgeProps = {
         data: [
           {
-            label: 'DuckDuckGo',
+            key: 'DuckDuckGo',
             value: 993.9266809283133,
-            formattedValue: '$993.93',
           },
           {
-            label: 'DuckDuckGo1',
+            key: 'DuckDuckGo1',
             value: 993.9266809283133,
-            formattedValue: '$993.93',
           },
         ],
       };
 
-      const barChart = mount(<NormalizedStackedBarChart {...lowEdgeProps} />);
+      const barChart = mount(<SimpleNormalizedChart {...lowEdgeProps} />);
 
       expect(barChart.findAll(BarLabel)).toHaveLength(2);
     });
@@ -143,7 +134,7 @@ describe('<NormalizedBarChart />', () => {
   describe('Colors', () => {
     it('inherits colors from the theme', () => {
       const barChart = mountWithProvider(
-        <NormalizedStackedBarChart {...mockProps} />,
+        <SimpleNormalizedChart {...mockProps} />,
         {
           themes: {
             Default: {
@@ -159,35 +150,32 @@ describe('<NormalizedBarChart />', () => {
     });
   });
 
-  describe('Orientation', () => {
-    it('defaults to horizontal orientation and passes it to BarSegment', () => {
-      const barChart = mount(<NormalizedStackedBarChart {...mockProps} />);
+  describe('direction', () => {
+    it('defaults to horizontal direction and passes it to BarSegment', () => {
+      const barChart = mount(<SimpleNormalizedChart {...mockProps} />);
 
-      expect(barChart.find(BarSegment)!.props.orientation).toBe('horizontal');
+      expect(barChart.find(BarSegment)!.props.direction).toBe('horizontal');
     });
 
-    it('accepts vertical orientation and passes it to BarSegment', () => {
+    it('accepts vertical direction and passes it to BarSegment', () => {
       const barChart = mount(
-        <NormalizedStackedBarChart {...mockProps} orientation="vertical" />,
+        <SimpleNormalizedChart {...mockProps} direction="vertical" />,
       );
 
-      expect(barChart.find(BarSegment)!.props.orientation).toBe('vertical');
+      expect(barChart.find(BarSegment)!.props.direction).toBe('vertical');
     });
   });
 
   describe('Label Position', () => {
     it('defaults to top-left label position and passes it to BarLabel', () => {
-      const barChart = mount(<NormalizedStackedBarChart {...mockProps} />);
+      const barChart = mount(<SimpleNormalizedChart {...mockProps} />);
 
       expect(barChart.find(BarLabel)!.props.labelPosition).toBe('top-left');
     });
 
     it('accepts bottom-right label position and passes it to BarLabel', () => {
       const barChart = mount(
-        <NormalizedStackedBarChart
-          {...mockProps}
-          labelPosition="bottom-right"
-        />,
+        <SimpleNormalizedChart {...mockProps} labelPosition="bottom-right" />,
       );
 
       expect(barChart.find(BarLabel)!.props.labelPosition).toBe('bottom-right');

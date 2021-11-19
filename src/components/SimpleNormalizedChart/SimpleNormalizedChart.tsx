@@ -5,29 +5,35 @@ import {scaleLinear} from 'd3-scale';
 import {getSeriesColorsFromCount} from '../../hooks/use-theme-series-colors';
 import {usePrefersReducedMotion, useTheme} from '../../hooks';
 import {classNames} from '../../utilities';
+import type {DataPoint, Direction, LabelFormatter} from '../../types';
+import type {ComparisonMetricShape} from '../ComparisonMetric';
 
 import {BarSegment, BarLabel} from './components';
-import type {Size, Data, Orientation, LabelPosition} from './types';
-import styles from './NormalizedStackedBarChart.scss';
+import type {Size, LabelPosition} from './types';
+import styles from './SimpleNormalizedChart.scss';
 
-export interface NormalizedStackedBarChartProps {
-  data: Data[];
-  size?: Size;
-  orientation?: Orientation;
+export interface SimpleNormalizedChartProps {
+  data: DataPoint[];
+  comparisonMetrics?: ComparisonMetricShape[];
+  labelFormatter?: LabelFormatter;
   labelPosition?: LabelPosition;
+  direction?: Direction;
+  size?: Size;
   theme?: string;
 }
 
-export function NormalizedStackedBarChart({
+export function SimpleNormalizedChart({
+  comparisonMetrics = [],
   data,
-  size = 'small',
-  orientation = 'horizontal',
+  labelFormatter = (value) => `${value}`,
   labelPosition = 'top-left',
+  direction = 'horizontal',
+  size = 'small',
   theme,
-}: NormalizedStackedBarChartProps) {
+}: SimpleNormalizedChartProps) {
   const selectedTheme = useTheme(theme);
   const colors = getSeriesColorsFromCount(data.length, selectedTheme);
-  const containsNegatives = data.some(({value}) => value < 0);
+  const containsNegatives = data.some(({value}) => value !== null && value < 0);
   const isDevelopment = process.env.NODE_ENV === 'development';
   const {prefersReducedMotion} = usePrefersReducedMotion();
 
@@ -49,7 +55,7 @@ export function NormalizedStackedBarChart({
 
   const xScale = scaleLinear().range([0, 100]).domain([0, totalValue]);
 
-  const isVertical = orientation === 'vertical';
+  const isVertical = direction === 'vertical';
   const bars = isVertical ? slicedData.reverse() : slicedData;
 
   const isRightLabel = labelPosition.includes('right');
@@ -82,18 +88,29 @@ export function NormalizedStackedBarChart({
             styles.LabelContainerEndJustify,
         )}
       >
-        {slicedData.map(({label, formattedValue, comparisonMetric}, index) => (
-          <BarLabel
-            key={`${label}-${formattedValue}`}
-            label={label}
-            value={formattedValue}
-            color={colors[index]}
-            comparisonMetric={comparisonMetric}
-            legendColors={selectedTheme.legend}
-            orientation={orientation}
-            labelPosition={labelPosition}
-          />
-        ))}
+        {slicedData.map(({key, value}, index) => {
+          if (value == null) {
+            return null;
+          }
+
+          const comparisonMetric = comparisonMetrics.find(
+            ({dataIndex}) => index === dataIndex,
+          );
+
+          const formattedValue = labelFormatter(value);
+          return (
+            <BarLabel
+              key={`${key}-${formattedValue}`}
+              label={`${key}`}
+              value={formattedValue}
+              color={colors[index]}
+              comparisonMetric={comparisonMetric}
+              legendColors={selectedTheme.legend}
+              direction={direction}
+              labelPosition={labelPosition}
+            />
+          );
+        })}
       </ul>
 
       <div
@@ -104,8 +121,8 @@ export function NormalizedStackedBarChart({
             : styles.HorizontalBarContainer,
         )}
       >
-        {bars.map(({value, label}, index) => {
-          if (value === 0) {
+        {bars.map(({value, key}, index) => {
+          if (value == null || value === 0) {
             return null;
           }
 
@@ -115,10 +132,10 @@ export function NormalizedStackedBarChart({
             <BarSegment
               index={index}
               isAnimated={!prefersReducedMotion}
-              orientation={orientation}
+              direction={direction}
               size={size}
               scale={xScale(value)}
-              key={`${label}`}
+              key={`${key}`}
               color={colors[colorIndex]}
               roundedCorners={selectedTheme.bar.hasRoundedCorners}
             />
