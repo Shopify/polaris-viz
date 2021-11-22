@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Changed
+
+- Correctly truncate long group labels in `<HorizontalBarChart />`.
+
 ## [0.25.1] - 2021-11-16
 
 ### Added

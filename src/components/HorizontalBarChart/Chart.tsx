@@ -298,6 +298,7 @@ export function Chart({
             >
               <GroupLabel
                 areAllNegative={areAllNegative}
+                containerWidth={width}
                 label={name}
                 theme={theme}
                 zeroPosition={zeroPosition}
