@@ -5,21 +5,29 @@ import {FONT_SIZE} from '../../../../constants';
 import {getTextWidth} from '../../../../utilities';
 import {LABEL_HEIGHT} from '../../constants';
 
+import styles from './GroupLabel.scss';
+
 interface GroupLabelProps {
   areAllNegative: boolean;
+  containerWidth: number;
   label: string;
-  theme?: string;
   zeroPosition: number;
+  theme?: string;
 }
 
 export function GroupLabel({
   areAllNegative,
+  containerWidth,
   label,
   theme,
   zeroPosition,
 }: GroupLabelProps) {
   const labelWidth = getTextWidth({text: label, fontSize: FONT_SIZE});
   const selectedTheme = useTheme(theme);
+
+  const maxWidth = areAllNegative
+    ? labelWidth + LABEL_HEIGHT
+    : containerWidth - zeroPosition;
 
   return (
     <foreignObject
@@ -29,12 +37,13 @@ export function GroupLabel({
       aria-hidden="true"
     >
       <div
+        className={styles.Label}
         style={{
           background: selectedTheme.chartContainer.backgroundColor,
           fontSize: `${FONT_SIZE}px`,
           color: selectedTheme.yAxis.labelColor,
           height: LABEL_HEIGHT,
-          width: labelWidth + LABEL_HEIGHT,
+          maxWidth,
         }}
       >
         {label}
