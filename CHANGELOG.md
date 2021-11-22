@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Add unique id to series colors used in `<HorizontalBarChart />`.
+
 ## [0.25.2] - 2021-11-22
 
 ### Changed

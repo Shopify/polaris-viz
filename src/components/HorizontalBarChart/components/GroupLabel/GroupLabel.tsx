@@ -43,6 +43,7 @@ export function GroupLabel({
           fontSize: `${FONT_SIZE}px`,
           color: selectedTheme.yAxis.labelColor,
           height: LABEL_HEIGHT,
+          width: labelWidth + LABEL_HEIGHT,
           maxWidth,
         }}
       >
