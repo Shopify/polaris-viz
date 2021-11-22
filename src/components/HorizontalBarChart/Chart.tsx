@@ -8,7 +8,7 @@ import {
   HORIZONTAL_BAR_GROUP_DELAY,
   BARS_SORT_TRANSITION_CONFIG,
 } from '../../constants';
-import {eventPointNative} from '../../utilities';
+import {eventPointNative, uniqueId} from '../../utilities';
 import {DataType, Dimensions} from '../../types';
 import {
   TOOLTIP_POSITION_DEFAULT_RETURN,
@@ -59,6 +59,7 @@ export function Chart({
 }: ChartProps) {
   const selectedTheme = useTheme(theme);
   const {labelFormatter} = xAxisOptions;
+  const id = uniqueId('HorizontalBarChart');
 
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
 
@@ -176,13 +177,14 @@ export function Chart({
     series.forEach(({data}, groupIndex) => {
       data.forEach(({color}, seriesIndex) => {
         if (color != null) {
-          colors.push({id: getBarId(groupIndex, seriesIndex), color});
+          colors.push({id: getBarId(id, groupIndex, seriesIndex), color});
         }
       });
     });
 
     return colors;
-  }, [series]);
+  }, [series, id]);
+
   const seriesWithIndex = series.map((series, index) => ({
     series,
     index,
@@ -310,6 +312,7 @@ export function Chart({
                   ariaLabel={ariaLabel}
                   barHeight={barHeight}
                   groupIndex={index}
+                  id={id}
                   isAnimated={isAnimated}
                   name={name}
                   series={item.series.data}
@@ -322,6 +325,7 @@ export function Chart({
                   ariaLabel={ariaLabel}
                   barHeight={barHeight}
                   groupIndex={index}
+                  id={id}
                   isAnimated={isAnimated}
                   isSimple={isSimple}
                   labelFormatter={labelFormatter}

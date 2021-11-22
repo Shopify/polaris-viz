@@ -21,6 +21,7 @@ interface HorizontalBarProps {
   ariaLabel: string;
   barHeight: number;
   groupIndex: number;
+  id: string;
   isAnimated: boolean;
   isSimple: boolean;
   labelFormatter: LabelFormatter;
@@ -37,6 +38,7 @@ export function HorizontalBars({
   ariaLabel,
   barHeight,
   groupIndex,
+  id,
   isAnimated,
   isSimple,
   labelFormatter,
@@ -57,7 +59,7 @@ export function HorizontalBars({
       {series.map(({rawValue, color}, seriesIndex) => {
         const isNegative = rawValue < 0;
         const label = labelFormatter(rawValue);
-        const id = getBarId(groupIndex, seriesIndex);
+        const barId = getBarId(id, groupIndex, seriesIndex);
 
         const labelWidth = getTextWidth({
           text: `${label}`,
@@ -71,7 +73,7 @@ export function HorizontalBars({
         const negativeX = (width + leftLabelOffset) * -1;
         const x = isNegative ? negativeX : width + BAR_LABEL_OFFSET;
         const ariaHidden = seriesIndex !== 0;
-        const barColor = color ? id : getGradientDefId(theme, seriesIndex);
+        const barColor = color ? barId : getGradientDefId(theme, seriesIndex);
 
         return (
           <React.Fragment key={`series-${barColor}-${name}`}>

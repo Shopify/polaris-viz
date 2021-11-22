@@ -15,6 +15,7 @@ export interface StackedBarsProps {
   ariaLabel: string;
   barHeight: number;
   groupIndex: number;
+  id: string;
   isAnimated: boolean;
   name: string;
   series: Data[];
@@ -27,6 +28,7 @@ export function StackedBars({
   ariaLabel,
   barHeight,
   groupIndex,
+  id,
   isAnimated,
   name,
   series,
@@ -62,14 +64,14 @@ export function StackedBars({
     <animated.g aria-label={ariaLabel} role="listitem" style={{transform}}>
       {series.map(({rawValue, color}, seriesIndex) => {
         const x = xOffsets[seriesIndex] + STACKED_BAR_GAP * seriesIndex;
-        const id = getBarId(groupIndex, seriesIndex);
+        const barId = getBarId(id, groupIndex, seriesIndex);
         const isLast = seriesIndex === series.length - 1;
 
-        const sliceColor = color ? id : `${GRADIENT_ID}${seriesIndex}`;
+        const sliceColor = color ? barId : `${GRADIENT_ID}${seriesIndex}`;
 
         return (
           <StackedBar
-            color={color ? id : getGradientDefId(theme, seriesIndex)}
+            color={color ? barId : getGradientDefId(theme, seriesIndex)}
             groupIndex={groupIndex}
             height={barHeight}
             isAnimated={isAnimated}
