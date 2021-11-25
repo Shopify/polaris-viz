@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## [0.25.4] - 2021-11-25
+
 ### Changed
 
 - Use average color between gradient stops for `<LineChart />` area color.
