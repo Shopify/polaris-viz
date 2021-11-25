@@ -2,8 +2,12 @@ import React, {useRef} from 'react';
 
 import {ChartContainer} from '../../components/ChartContainer';
 import {useThemeSeriesColors} from '../../hooks/use-theme-series-colors';
-import type {GradientStop} from '../../types';
-import {isGradientType, changeColorOpacity, uniqueId} from '../../utilities';
+import {
+  isGradientType,
+  changeColorOpacity,
+  uniqueId,
+  getAverageColor,
+} from '../../utilities';
 import {SkipLink} from '../SkipLink';
 import {usePrefersReducedMotion, useTheme} from '../../hooks';
 
@@ -74,6 +78,22 @@ export function LineChart({
     return <TooltipContent theme={theme} data={formattedData} />;
   }
 
+  // I noticed that on charts that have several series, the accumulation of semi-transparent areas turns quite solid.
+  // maybe we should define then opacity based on the amount of series on the chart? 🤔
+  const getOpacityByDataLength = (dataLength: number) => {
+    if (dataLength <= 4) {
+      return 0.25;
+    }
+
+    if (dataLength <= 7) {
+      return 0.1;
+    }
+
+    return 0;
+  };
+
+  const areaOpacity = getOpacityByDataLength(series.length);
+
   const seriesWithDefaults = series.map<SeriesWithDefaults>((series, index) => {
     const seriesColor = seriesColors[index];
 
@@ -81,15 +101,18 @@ export function LineChart({
       series.lineStyle == null || series.lineStyle === 'solid';
 
     const areaColor = isGradientType(seriesColor)
-      ? (seriesColor[seriesColor.length - 1] as GradientStop).color
+      ? getAverageColor(
+          seriesColor[0].color,
+          seriesColor[seriesColor.length - 1].color,
+        )
       : seriesColor;
 
     return {
       lineStyle: series.lineStyle ?? selectedTheme.line.style,
-      areaColor: isSolidLine
-        ? changeColorOpacity(areaColor as string, 0.5)
-        : undefined,
       ...series,
+      areaColor: isSolidLine
+        ? changeColorOpacity(areaColor as string, areaOpacity)
+        : undefined,
       // We want to override the color, not set a default
       // so it has to come last
       color: isSolidLine
