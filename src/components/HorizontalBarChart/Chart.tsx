@@ -17,7 +17,7 @@ import {
 } from '../../constants';
 import {
   eventPointNative,
-  formatDataForHorizontalBarChart,
+  formatDataIntoGroups,
   getHighestSumForStacked,
   uniqueId,
 } from '../../utilities';
@@ -54,10 +54,6 @@ export function Chart({
   type,
   xAxisOptions,
 }: ChartProps) {
-  const formattedData = useMemo(() => {
-    return formatDataForHorizontalBarChart(data);
-  }, [data]);
-
   const selectedTheme = useTheme(theme);
   const {labelFormatter} = xAxisOptions;
   const id = uniqueId('HorizontalBarChart');
@@ -70,44 +66,46 @@ export function Chart({
 
   const {longestSeriesCount, seriesColors} = useHorizontalSeriesColors({
     data,
-    formattedData,
     theme,
   });
 
   const {allNumbers, longestLabel, areAllNegative} = useDataForHorizontalChart({
-    data: formattedData,
+    data,
     isSimple: false,
     isStacked,
     labelFormatter,
   });
 
   const highestValueForSeries = useMemo(() => {
-    const maxes: number[] = [];
+    const groups = formatDataIntoGroups(data);
 
-    formattedData.forEach(({data}) => {
-      const values = data.map(({value}) => value).filter(Boolean) as number[];
-      const max = areAllNegative ? Math.min(...values) : Math.max(...values);
+    const maxes = groups.map((numbers) => {
+      const values = numbers.map((value) => value).filter(Boolean) as number[];
 
-      maxes.push(max);
+      if (values.length === 0) {
+        return 0;
+      }
+
+      return areAllNegative ? Math.min(...values) : Math.max(...values);
     });
 
     return maxes;
-  }, [formattedData, areAllNegative]);
+  }, [data, areAllNegative]);
 
   const highestSumForStackedGroup = useMemo(() => {
     if (!isStacked) {
       return 0;
     }
 
-    return getHighestSumForStacked(formattedData);
-  }, [formattedData, isStacked]);
+    return getHighestSumForStacked(data);
+  }, [data, isStacked]);
 
   const {xScale, xScaleStacked, ticks, ticksStacked} = useHorizontalXScale({
     allNumbers,
     highestSumForStackedGroup,
     isStacked,
     maxWidth: width - longestLabel.negative - longestLabel.positive,
-    longestSeriesCount,
+    longestSeriesCount: data.length,
   });
 
   const {
@@ -122,22 +120,22 @@ export function Chart({
     isSimple: xAxisOptions.hide,
     isStacked,
     labelFormatter,
-    seriesLength: formattedData.length,
-    singleBarCount: longestSeriesCount,
+    seriesLength: longestSeriesCount,
+    singleBarCount: data.length,
     ticks: isStacked ? ticksStacked : ticks,
   });
 
   const getAriaLabel = useCallback(
-    (label: string, seriesIndex: number) => {
-      const ariaSeries = formattedData[seriesIndex].data
-        .map(({value, key}) => {
-          return `${key} ${labelFormatter(value)}`;
+    (seriesIndex: number) => {
+      const ariaSeries = data
+        .map(({name, data}) => {
+          return `${name} ${labelFormatter(data[seriesIndex].value)}`;
         })
         .join(', ');
 
-      return `${label}: ${ariaSeries}`;
+      return `${data[0].data[seriesIndex].key}: ${ariaSeries}`;
     },
-    [formattedData, labelFormatter],
+    [data, labelFormatter],
   );
 
   const getTooltipMarkup = useCallback(
@@ -146,23 +144,25 @@ export function Chart({
         return null;
       }
 
-      const data: TooltipData[] = formattedData[activeIndex].data.map(
-        ({value, key}, index) => {
+      const tooltipData: TooltipData[] = data.map(
+        ({name, data, color}, index) => {
+          const {value} = data[activeIndex];
+
           return {
-            label: `${key}`,
+            label: `${name}`,
             value: `${value}`,
-            color: formattedData[activeIndex].color ?? seriesColors[index],
+            color: color ?? seriesColors[index],
           };
         },
       );
 
-      return renderTooltipContent({data});
+      return renderTooltipContent({data: tooltipData});
     },
-    [formattedData, seriesColors, renderTooltipContent],
+    [data, seriesColors, renderTooltipContent],
   );
 
   const {transitions} = useHorizontalTransitions({
-    series: formattedData,
+    series: data,
     groupHeight,
     isAnimated,
   });
@@ -208,15 +208,11 @@ export function Chart({
 
         {transitions((style, item, _transition, index) => {
           const {opacity, transform} = style as HorizontalTransitionStyle;
-          const name = item.series.name ?? '';
-          const ariaLabel = getAriaLabel(name, item.index);
-
-          if (formattedData[index] == null) {
-            return null;
-          }
+          const name = item.key ?? '';
+          const ariaLabel = getAriaLabel(item.index);
 
           const animationDelay = isAnimated
-            ? (HORIZONTAL_BAR_GROUP_DELAY * index) / formattedData.length
+            ? (HORIZONTAL_BAR_GROUP_DELAY * index) / data.length
             : 0;
 
           return (
@@ -226,6 +222,7 @@ export function Chart({
               ariaLabel={ariaLabel}
               barHeight={barHeight}
               containerWidth={width}
+              data={data}
               id={id}
               index={index}
               isAnimated={isAnimated}
@@ -234,7 +231,6 @@ export function Chart({
               labelFormatter={labelFormatter}
               name={name}
               opacity={opacity}
-              series={item.series}
               theme={theme}
               transform={transform}
               xScale={xScale}
@@ -284,14 +280,15 @@ export function Chart({
 
   function formatPositionForTooltip(index: number): TooltipPosition {
     if (isStacked && xScaleStacked) {
-      const x = formattedData[index].data.reduce((prev, cur) => {
-        if (cur.value == null) {
+      const x = data.reduce((prev, cur) => {
+        const value = cur.data[index].value;
+
+        if (value == null) {
           return prev;
         }
 
-        return prev + xScaleStacked(cur.value);
+        return prev + xScaleStacked(value);
       }, 0);
-
       return {
         x,
         y: groupHeight * index,
@@ -326,7 +323,7 @@ export function Chart({
       const currentPoint = svgY - 0;
       const currentIndex = Math.floor(currentPoint / groupHeight);
 
-      if (currentIndex < 0 || currentIndex > formattedData.length - 1) {
+      if (currentIndex < 0 || currentIndex > longestSeriesCount - 1) {
         return TOOLTIP_POSITION_DEFAULT_RETURN;
       }
 

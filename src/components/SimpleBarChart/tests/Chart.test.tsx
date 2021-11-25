@@ -7,9 +7,9 @@ import {
   GradientDefs,
   HorizontalStackedBars,
   HorizontalBars,
+  Label,
 } from '../../shared';
 import type {DataSeries} from '../../../types';
-import {Label} from '../../shared/HorizontalBars/components';
 
 const SERIES: DataSeries[] = [
   {

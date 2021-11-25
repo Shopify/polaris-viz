@@ -19,9 +19,30 @@ jest.mock('d3-scale', () => ({
 }));
 
 const DATA = [
-  {value: 5, key: 'Label 01'},
-  {value: 10, key: 'Label 02'},
-  {value: 12, key: 'Label 03'},
+  {
+    name: 'Group 1',
+    data: [
+      {value: 5, key: 'Label 01'},
+      {value: 10, key: 'Label 02'},
+      {value: 12, key: 'Label 03'},
+    ],
+  },
+  {
+    name: 'Group 2',
+    data: [
+      {value: 5, key: 'Label 01'},
+      {value: 10, key: 'Label 02'},
+      {value: 12, key: 'Label 03'},
+    ],
+  },
+  {
+    name: 'Group 3',
+    data: [
+      {value: 5, key: 'Label 01'},
+      {value: 10, key: 'Label 02'},
+      {value: 12, key: 'Label 03'},
+    ],
+  },
 ];
 
 const MOCK_PROPS: HorizontalGroupProps = {
@@ -38,7 +59,7 @@ const MOCK_PROPS: HorizontalGroupProps = {
   labelFormatter: (value) => `${value}`,
   name: 'name',
   opacity: 0 as any,
-  series: {data: DATA},
+  data: DATA,
   transform: '' as any,
   xScale: scaleLinear(),
   xScaleStacked: scaleLinear(),

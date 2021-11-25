@@ -1,28 +1,23 @@
 import React from 'react';
 
 import {GRADIENT_ID} from '../../../constants';
-import type {Color, GradientStop, ColorOverrides} from '../../../types';
+import type {Color, GradientStop} from '../../../types';
 import {isGradientType} from '../../../utilities';
 import {LinearGradient} from '../../LinearGradient';
 
 interface GradientDefsProps {
   width: number;
-  colorOverrides?: ColorOverrides[];
   seriesColors?: Color[];
   theme?: string;
 }
 
 export function GradientDefs({
-  colorOverrides = [],
   seriesColors = [],
   theme = 'Default',
   width,
 }: GradientDefsProps) {
   return (
     <defs>
-      {colorOverrides.map(({id, color}) => {
-        return <Gradient key={id} id={id} color={color} width={width} />;
-      })}
       {seriesColors.map((color, index) => {
         const id = getGradientDefId(theme, index);
         return <Gradient key={id} id={id} color={color} width={width} />;

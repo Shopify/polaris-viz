@@ -1,10 +1,6 @@
 import React, {useCallback, useMemo} from 'react';
 
-import {
-  formatDataForHorizontalBarChart,
-  getHighestSumForStacked,
-  uniqueId,
-} from '../../utilities';
+import {getHighestSumForStacked, uniqueId} from '../../utilities';
 import {GradientDefs, HorizontalGroup} from '../shared';
 import {
   useHorizontalBarSizes,
@@ -37,10 +33,6 @@ export function Chart({
   type,
   xAxisOptions,
 }: ChartProps) {
-  const formattedData = useMemo(() => {
-    return formatDataForHorizontalBarChart(data);
-  }, [data]);
-
   const id = uniqueId('SimpleBarChart');
 
   const {labelFormatter} = xAxisOptions;
@@ -50,12 +42,11 @@ export function Chart({
 
   const {longestSeriesCount, seriesColors} = useHorizontalSeriesColors({
     data,
-    formattedData,
     theme,
   });
 
   const {allNumbers, longestLabel, areAllNegative} = useDataForHorizontalChart({
-    data: formattedData,
+    data,
     isSimple: true,
     isStacked,
     labelFormatter,
@@ -65,8 +56,8 @@ export function Chart({
     if (!isStacked) {
       return 0;
     }
-    return getHighestSumForStacked(formattedData);
-  }, [formattedData, isStacked]);
+    return getHighestSumForStacked(data);
+  }, [data, isStacked]);
 
   const {xScale, xScaleStacked, ticks, ticksStacked} = useHorizontalXScale({
     allNumbers,
@@ -81,26 +72,26 @@ export function Chart({
     isSimple: true,
     isStacked,
     labelFormatter,
-    seriesLength: formattedData.length,
-    singleBarCount: longestSeriesCount,
+    seriesLength: longestSeriesCount,
+    singleBarCount: data.length,
     ticks: isStacked ? ticksStacked : ticks,
   });
 
   const getAriaLabel = useCallback(
-    (label: string, seriesIndex: number) => {
-      const ariaSeries = formattedData[seriesIndex].data
-        .map(({value, key}) => {
-          return `${key} ${labelFormatter(value)}`;
+    (seriesIndex: number) => {
+      const ariaSeries = data
+        .map(({name, data}) => {
+          return `${name} ${labelFormatter(data[seriesIndex].value)}`;
         })
         .join(', ');
 
-      return `${label}: ${ariaSeries}`;
+      return `${data[0].data[seriesIndex].key}: ${ariaSeries}`;
     },
-    [formattedData, labelFormatter],
+    [data, labelFormatter],
   );
 
   const {transitions} = useHorizontalTransitions({
-    series: formattedData,
+    series: data,
     groupHeight,
     isAnimated,
   });
@@ -125,15 +116,11 @@ export function Chart({
 
         {transitions((style, item, _transition, index) => {
           const {opacity, transform} = style as HorizontalTransitionStyle;
-          const {name = ''} = item.series;
-          const ariaLabel = getAriaLabel(name, item.index);
-
-          if (formattedData[index] == null) {
-            return null;
-          }
+          const name = item.key ?? '';
+          const ariaLabel = getAriaLabel(item.index);
 
           const animationDelay = isAnimated
-            ? (HORIZONTAL_BAR_GROUP_DELAY * index) / formattedData.length
+            ? (HORIZONTAL_BAR_GROUP_DELAY * index) / data.length
             : 0;
 
           return (
@@ -143,6 +130,7 @@ export function Chart({
               ariaLabel={ariaLabel}
               barHeight={barHeight}
               containerWidth={width}
+              data={data}
               id={id}
               index={index}
               isAnimated={isAnimated}
@@ -151,7 +139,6 @@ export function Chart({
               labelFormatter={labelFormatter}
               name={name}
               opacity={opacity}
-              series={item.series}
               theme={theme}
               transform={transform}
               xScale={xScale}

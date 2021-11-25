@@ -20,23 +20,6 @@ describe('<GradientDefs />', () => {
     expect(container).toContainReactComponent('defs');
   });
 
-  describe('colorOverrides', () => {
-    it('renders <LinearGradient /> for color overrides', () => {
-      const container = mount(
-        <svg>
-          <GradientDefs
-            {...MOCK_PROPS}
-            colorOverrides={[{id: 'red', color: 'red'}]}
-          />
-        </svg>,
-      );
-
-      const gradient = container.find(LinearGradient);
-
-      expect(gradient?.props.id).toStrictEqual('red');
-    });
-  });
-
   describe('seriesColors', () => {
     it('renders <LinearGradient /> for series colors', () => {
       const container = mount(

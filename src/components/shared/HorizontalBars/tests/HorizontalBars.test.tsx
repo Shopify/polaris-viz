@@ -23,24 +23,43 @@ jest.mock('../../../../utilities/get-text-dimensions', () => ({
   getTextWidth: jest.fn(() => 100),
 }));
 
-const SERIES: DataSeries = {
-  data: [
-    {value: 5, key: 'Label 01'},
-    {value: 10, key: 'Label 02'},
-    {value: 12, key: 'Label 03'},
-  ],
-};
+const DATA: DataSeries[] = [
+  {
+    name: 'Group 1',
+    data: [
+      {value: 5, key: 'Label 01'},
+      {value: 10, key: 'Label 02'},
+      {value: 12, key: 'Label 03'},
+    ],
+  },
+  {
+    name: 'Group 2',
+    data: [
+      {value: 5, key: 'Label 01'},
+      {value: 10, key: 'Label 02'},
+      {value: 12, key: 'Label 03'},
+    ],
+  },
+  {
+    name: 'Group 3',
+    data: [
+      {value: 5, key: 'Label 01'},
+      {value: 10, key: 'Label 02'},
+      {value: 12, key: 'Label 03'},
+    ],
+  },
+];
 
 const MOCK_PROPS: HorizontalBarsProps = {
   ariaLabel: '',
   barHeight: 20,
-  groupIndex: 1,
+  groupIndex: 0,
   id: 'id',
   isAnimated: false,
   isSimple: false,
   labelFormatter: (value) => `${value}`,
   name: 'Bar',
-  series: SERIES,
+  data: DATA,
   xScale: scaleLinear(),
   zeroPosition: 0,
 };
@@ -90,9 +109,9 @@ describe('<HorizontalBars />', () => {
         </svg>,
       );
 
-      const label = chart.findAll(Label);
+      const labels = chart.findAll(Label);
 
-      expect(label[0].props.label).toStrictEqual('5%');
+      expect(labels[0].props.label).toStrictEqual('5%');
     });
 
     it('renders an unformatted label when not provided', () => {
@@ -154,21 +173,6 @@ describe('<HorizontalBars />', () => {
 
       expect(bars[0].props.color).toStrictEqual('url(#Default-grad--0)');
     });
-
-    it('uses custom color when provided', () => {
-      const chart = mount(
-        <svg>
-          <HorizontalBars
-            {...MOCK_PROPS}
-            series={{data: [{value: 5, key: 'Label 01'}], color: 'red'}}
-          />
-        </svg>,
-      );
-
-      const bars = chart.findAll(Bar);
-
-      expect(bars[0].props.color).toStrictEqual('url(#id-series-1-0)');
-    });
   });
 
   describe('<Label />', () => {
@@ -190,7 +194,7 @@ describe('<HorizontalBars />', () => {
           <HorizontalBars
             {...MOCK_PROPS}
             isSimple
-            series={{data: [{value: -5, key: 'Label 01'}]}}
+            data={[{data: [{value: -5, key: 'Label 01'}]}]}
           />
         </svg>,
       );

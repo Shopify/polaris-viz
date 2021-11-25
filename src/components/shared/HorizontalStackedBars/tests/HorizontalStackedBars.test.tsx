@@ -6,7 +6,7 @@ import {
   HorizontalStackedBars,
   HorizontalStackedBarsProps,
 } from '../HorizontalStackedBars';
-import {StackedBar} from '../components/StackedBar';
+import {StackedBar} from '../components';
 import {RoundedBorder} from '../../../../types';
 
 jest.mock('d3-scale', () => ({
@@ -22,22 +22,41 @@ jest.mock('d3-scale', () => ({
 }));
 
 const DATA = [
-  {value: 5, key: 'Label 01'},
-  {value: 10, key: 'Label 02'},
-  {value: 12, key: 'Label 03'},
+  {
+    name: 'Group 1',
+    data: [
+      {value: 5, key: 'Label 01'},
+      {value: 10, key: 'Label 02'},
+      {value: 12, key: 'Label 03'},
+    ],
+  },
+  {
+    name: 'Group 2',
+    data: [
+      {value: 5, key: 'Label 01'},
+      {value: 10, key: 'Label 02'},
+      {value: 12, key: 'Label 03'},
+    ],
+  },
+  {
+    name: 'Group 3',
+    data: [
+      {value: 5, key: 'Label 01'},
+      {value: 10, key: 'Label 02'},
+      {value: 12, key: 'Label 03'},
+    ],
+  },
 ];
 
 const MOCK_PROPS: HorizontalStackedBarsProps = {
   animationDelay: 0,
   ariaLabel: '',
   barHeight: 20,
-  groupIndex: 1,
+  groupIndex: 0,
   id: 'id',
   isAnimated: false,
   name: 'stacked',
-  series: {
-    data: DATA,
-  },
+  data: DATA,
   xScale: scaleLinear(),
 };
 
@@ -73,7 +92,7 @@ describe('<HorizontalStackedBars />', () => {
 
     expect(bars[0].props.x).toStrictEqual(0);
     expect(bars[1].props.x).toStrictEqual(7);
-    expect(bars[2].props.x).toStrictEqual(19);
+    expect(bars[2].props.x).toStrictEqual(14);
   });
 
   it('applies roundedBorder to last item', () => {
@@ -106,13 +125,13 @@ describe('<HorizontalStackedBars />', () => {
       <svg>
         <HorizontalStackedBars
           {...MOCK_PROPS}
-          series={{data: [{value: 5, key: 'Label 01'}], color: 'red'}}
+          data={[{data: [{value: 5, key: 'Label 01'}], color: 'red'}]}
         />
       </svg>,
     );
 
     const bars = chart.findAll(StackedBar);
 
-    expect(bars[0].props.color).toStrictEqual('id-series-1-0');
+    expect(bars[0].props.color).toStrictEqual('id-series-0-0');
   });
 });

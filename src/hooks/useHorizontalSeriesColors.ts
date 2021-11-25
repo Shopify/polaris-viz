@@ -7,30 +7,34 @@ import {useTheme} from './useTheme';
 
 interface Props {
   data: DataSeries[];
-  formattedData: DataSeries[];
   theme?: string;
 }
 
-export function useHorizontalSeriesColors({data, formattedData, theme}: Props) {
+export function useHorizontalSeriesColors({data, theme}: Props) {
   const selectedTheme = useTheme(theme);
 
   const longestSeriesCount = useMemo(() => {
-    return formattedData.reduce((prev, cur) => {
+    return data.reduce((prev, cur) => {
       const count = cur.data.length;
 
       return count > prev ? count : prev;
     }, 0);
-  }, [formattedData]);
+  }, [data]);
 
   const seriesColors = useMemo(() => {
-    const seriesColors = getSeriesColorsFromCount(
-      longestSeriesCount,
-      selectedTheme,
-    );
+    const seriesColors = getSeriesColorsFromCount(data.length, selectedTheme);
 
-    data.forEach(({color}, index) => {
-      if (color != null) {
-        seriesColors.splice(index, 0, color);
+    data.forEach(({color, isComparison}, index) => {
+      let newColor;
+
+      if (isComparison) {
+        newColor = selectedTheme.line.dottedStrokeColor;
+      } else if (color != null) {
+        newColor = color;
+      }
+
+      if (newColor) {
+        seriesColors.splice(index, 0, newColor);
         // Remove the extra seriesColor from the
         // end of the array so we're not rendering
         // unused defs
@@ -39,7 +43,7 @@ export function useHorizontalSeriesColors({data, formattedData, theme}: Props) {
     });
 
     return seriesColors;
-  }, [longestSeriesCount, data, selectedTheme]);
+  }, [data, selectedTheme]);
 
   return {longestSeriesCount, seriesColors};
 }

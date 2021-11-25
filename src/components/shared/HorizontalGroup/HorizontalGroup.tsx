@@ -13,6 +13,7 @@ export interface HorizontalGroupProps {
   ariaLabel: string;
   barHeight: number;
   containerWidth: number;
+  data: DataSeries[];
   id: string;
   index: number;
   isAnimated: boolean;
@@ -21,7 +22,6 @@ export interface HorizontalGroupProps {
   labelFormatter: LabelFormatter;
   name: string;
   opacity: SpringValue<number>;
-  series: DataSeries;
   transform: SpringValue<string>;
   xScale: ScaleLinear<number, number>;
   xScaleStacked: ScaleLinear<number, number> | null;
@@ -35,6 +35,7 @@ export function HorizontalGroup({
   ariaLabel,
   barHeight,
   containerWidth,
+  data,
   id,
   index,
   isAnimated,
@@ -43,7 +44,6 @@ export function HorizontalGroup({
   labelFormatter,
   name,
   opacity,
-  series,
   theme,
   transform,
   xScale,
@@ -73,11 +73,11 @@ export function HorizontalGroup({
           animationDelay={animationDelay}
           ariaLabel={ariaLabel}
           barHeight={barHeight}
+          data={data}
           groupIndex={index}
           id={id}
           isAnimated={isAnimated}
           name={name}
-          series={series}
           theme={theme}
           xScale={xScaleStacked}
         />
@@ -86,13 +86,13 @@ export function HorizontalGroup({
           animationDelay={animationDelay}
           ariaLabel={ariaLabel}
           barHeight={barHeight}
+          data={data}
           groupIndex={index}
           id={id}
           isAnimated={isAnimated}
           isSimple={isSimple}
           labelFormatter={labelFormatter}
           name={name}
-          series={series}
           theme={theme}
           xScale={xScale}
           zeroPosition={zeroPosition}
