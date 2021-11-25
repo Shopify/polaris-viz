@@ -209,9 +209,4 @@ export enum RoundedBorder {
 }
 
 export type ChartType = 'default' | 'stacked';
-
-export interface ColorOverrides {
-  id: string;
-  color: Color;
-}
 export type Direction = 'horizontal' | 'vertical';

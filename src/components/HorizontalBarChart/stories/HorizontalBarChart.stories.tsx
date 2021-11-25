@@ -8,49 +8,12 @@ import {
 
 import type {RenderTooltipContentData} from '../types';
 import {getSingleColor, THEME_CONTROL_ARGS} from '../../../storybook';
-import type {DataPoint, DataSeries} from 'types';
-
-const LABELS = ['BCFM 2019', 'BCFM 2020', 'BCFM 2021'];
-const GROUPS = [
-  'Womens Leggings',
-  'Mens Bottoms',
-  'Mens Shorts',
-  'Socks',
-  'Hats',
-  'Ties',
-];
-
-function buildSeries(items: number[] | number[][]): DataSeries[] {
-  return LABELS.map((name, index) => {
-    const data = GROUPS.map((name, groupIndex) => {
-      const item = items[groupIndex];
-      const array = Array.isArray(item) ? item : [item];
-
-      if (array[index] == null) {
-        return false;
-      }
-
-      return {
-        key: name,
-        value: array[index],
-      };
-    });
-
-    return {
-      name,
-      data: data.filter(Boolean) as DataPoint[],
-    };
-  });
-}
-
-const SERIES = buildSeries([
-  [3, 4, 7],
-  [0, 0, 0],
-  [4, 5, 6],
-  [8, 15, 12],
-  [48, 8, 50],
-  [1, 5, 5],
-]);
+import {
+  buildSeries,
+  COLOR_OVERRIDE_SERIES,
+  COMPARISON_SERIES,
+  SERIES,
+} from '../../../storybook/horizontal-charts';
 
 const CONTAINER_HEIGHT = 500;
 
@@ -156,32 +119,15 @@ AllNegative.args = {
   isAnimated: false,
 };
 
+export const Comparison: Story<HorizontalBarChartProps> = Template.bind({});
+
+Comparison.args = {
+  data: COMPARISON_SERIES,
+};
+
 export const ColorOverrides: Story<HorizontalBarChartProps> = Template.bind({});
 ColorOverrides.args = {
-  data: [
-    {
-      name: 'Shirt',
-      data: [
-        {value: 4, key: 'Yesterday'},
-        {value: 7, key: 'Today'},
-      ],
-      color: 'red',
-    },
-    {
-      name: 'Pants',
-      data: [
-        {value: 5, key: 'Yesterday'},
-        {value: 6, key: 'Today'},
-      ],
-    },
-    {
-      name: 'Shoes',
-      data: [
-        {value: 15, key: 'Yesterday'},
-        {value: 12, key: 'Today'},
-      ],
-    },
-  ],
+  data: COLOR_OVERRIDE_SERIES,
 };
 
 export const FormattedLabels: Story<HorizontalBarChartProps> = Template.bind(

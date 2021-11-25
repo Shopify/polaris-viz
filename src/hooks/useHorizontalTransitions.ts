@@ -26,8 +26,8 @@ export function useHorizontalTransitions({
   isAnimated,
 }: Props) {
   const seriesWithIndex = useMemo(() => {
-    return series.map((series, index) => ({
-      series,
+    return series[0].data.map(({key}, index) => ({
+      key: `${key}`,
       index,
     }));
   }, [series]);
@@ -41,7 +41,7 @@ export function useHorizontalTransitions({
 
   const transitions = useTransition(seriesWithIndex, {
     keys: (item) => {
-      return item.series.name ?? '';
+      return item.key ?? '';
     },
     initial: ({index}) => ({
       opacity: 1,

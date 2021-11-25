@@ -1,10 +1,13 @@
 import type {DataSeries} from 'types';
 
-export function getHighestSumForStacked(series: DataSeries[]) {
+import {formatDataIntoGroups} from './format-data-into-groups';
+
+export function getHighestSumForStacked(data: DataSeries[]) {
+  const groups = formatDataIntoGroups(data);
   const numbers: number[] = [];
 
-  series.forEach(({data}) => {
-    const sum = data.reduce((prev, {value}) => {
+  groups.forEach((group) => {
+    const sum = group.reduce((prev, value) => {
       if (value == null) {
         return prev;
       }

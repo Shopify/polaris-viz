@@ -19,11 +19,11 @@ export interface HorizontalStackedBarsProps {
   animationDelay: number;
   ariaLabel: string;
   barHeight: number;
+  data: DataSeries[];
   groupIndex: number;
   id: string;
   isAnimated: boolean;
   name: string;
-  series: DataSeries;
   xScale: ScaleLinear<number, number>;
   theme?: string;
 }
@@ -32,30 +32,32 @@ export function HorizontalStackedBars({
   animationDelay,
   ariaLabel,
   barHeight,
+  data,
   groupIndex,
   id,
   isAnimated,
   name,
-  series,
   theme,
   xScale,
 }: HorizontalStackedBarsProps) {
   const xOffsets = useMemo(() => {
     const offsets: number[] = [];
 
-    series.data.forEach((_, index) => {
+    data.forEach((_, index) => {
       const prevIndex = index - 1;
 
-      if (series.data[prevIndex] == null) {
+      if (data[prevIndex] == null) {
         offsets.push(0);
       } else {
         const previousScale = offsets[index - 1];
-        offsets.push(xScale(series.data[prevIndex].value ?? 0) + previousScale);
+        offsets.push(
+          xScale(data[prevIndex].data[groupIndex].value ?? 0) + previousScale,
+        );
       }
     });
 
     return offsets;
-  }, [series, xScale]);
+  }, [data, xScale, groupIndex]);
 
   const {transform} = useSpring({
     from: {
@@ -71,18 +73,22 @@ export function HorizontalStackedBars({
 
   return (
     <animated.g aria-label={ariaLabel} role="listitem" style={{transform}}>
-      {series.data.map(({value}, seriesIndex) => {
+      {data.map((dataPoint, seriesIndex) => {
+        const {value} = data[seriesIndex].data[groupIndex];
+
         const x = xOffsets[seriesIndex] + STACKED_BAR_GAP * seriesIndex;
         const barId = getBarId(id, groupIndex, seriesIndex);
-        const isLast = seriesIndex === series.data.length - 1;
+        const isLast = seriesIndex === data.length - 1;
 
-        const sliceColor = series.color
+        const sliceColor = dataPoint.color
           ? barId
           : `${GRADIENT_ID}${seriesIndex}`;
 
         return (
           <StackedBar
-            color={series.color ? barId : getGradientDefId(theme, seriesIndex)}
+            color={
+              dataPoint.color ? barId : getGradientDefId(theme, seriesIndex)
+            }
             groupIndex={groupIndex}
             height={barHeight}
             isAnimated={isAnimated}

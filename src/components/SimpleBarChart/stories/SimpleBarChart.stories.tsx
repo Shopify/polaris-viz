@@ -4,53 +4,12 @@ import type {Story, Meta} from '@storybook/react';
 import {SimpleBarChart, SimpleBarChartProps} from '../SimpleBarChart';
 
 import {THEME_CONTROL_ARGS} from '../../../storybook';
-import type {DataPoint, DataSeries} from '../../../types';
-
-const LABELS = ['BCFM 2019', 'BCFM 2020', 'BCFM 2021'];
-const GROUPS = [
-  'Womens Leggings',
-  'Mens Bottoms',
-  'Mens Shorts',
-  'Socks',
-  'Hats',
-  'Ties',
-];
-
-function buildSeries(items: number[] | number[][]): DataSeries[] {
-  return LABELS.map((name, index) => {
-    const data = GROUPS.map((name, groupIndex) => {
-      const item = items[groupIndex];
-      const array = Array.isArray(item) ? item : [item];
-
-      if (array[index] == null) {
-        return false;
-      }
-
-      return {
-        key: name,
-        value: array[index],
-      };
-    });
-
-    return {
-      name,
-      data: data.filter(Boolean) as DataPoint[],
-    };
-  });
-}
-
-const SERIES = buildSeries([
-  [3, 4, 7],
-  [0, 0, 0],
-  [4, 5, 6],
-  [8, 15, 12],
-  [48, 8, 50],
-  [1, 5, 5],
-]);
-
-const CONTAINER_HEIGHT = 500;
-
-const SINGLE_SERIES = buildSeries([3, 7, 4, 8, 4, 1, 4, 6]);
+import {
+  COLOR_OVERRIDE_SERIES,
+  COMPARISON_SERIES,
+  SERIES,
+  SINGLE_SERIES,
+} from '../../../storybook/horizontal-charts';
 
 export default {
   title: 'Simple Charts/SimpleBarChart',
@@ -91,6 +50,8 @@ export default {
   },
 } as Meta;
 
+const CONTAINER_HEIGHT = 500;
+
 const Template: Story<SimpleBarChartProps> = (args: SimpleBarChartProps) => {
   return (
     <div style={{height: CONTAINER_HEIGHT}}>
@@ -111,33 +72,16 @@ MultipleSeries.args = {
   data: SERIES,
 };
 
+export const Comparison: Story<SimpleBarChartProps> = Template.bind({});
+
+Comparison.args = {
+  data: COMPARISON_SERIES,
+};
+
 export const ColorOverrides: Story<SimpleBarChartProps> = Template.bind({});
 
 ColorOverrides.args = {
-  data: [
-    {
-      name: 'Shirt',
-      data: [
-        {value: 4, key: 'Yesterday'},
-        {value: 7, key: 'Today'},
-      ],
-      color: 'red',
-    },
-    {
-      name: 'Pants',
-      data: [
-        {value: 5, key: 'Yesterday'},
-        {value: 6, key: 'Today'},
-      ],
-    },
-    {
-      name: 'Shoes',
-      data: [
-        {value: 15, key: 'Yesterday'},
-        {value: 12, key: 'Today'},
-      ],
-    },
-  ],
+  data: COLOR_OVERRIDE_SERIES,
 };
 
 export const SimpleStacked: Story<SimpleBarChartProps> = Template.bind({});
