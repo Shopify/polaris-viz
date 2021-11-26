@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Fixes bug in Safari WebViews pre iOS14 that can cause to throw a type error.
+
 ## [0.25.5] - 2021-11-26
 
 ### Fixed
