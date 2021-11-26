@@ -53,7 +53,11 @@ export function usePrintResizing({
     const safariNotServer = isSafari && !isServer;
 
     if (notSafariOrServer) {
-      window.matchMedia('print').addEventListener('change', handlePrint);
+      if (addEventListener) {
+        window.matchMedia('print').addEventListener('change', handlePrint);
+      } else if (addListener) {
+        window.matchMedia('print').addListener(printSafari);
+      }
     }
 
     if (safariNotServer) {
