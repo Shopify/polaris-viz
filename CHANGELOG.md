@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Resolves issue where removal of series in a `<HorizontalBarChart />` can lead to throwing of a TypeError.
+
 ## [0.25.4] - 2021-11-25
 
 ### Changed
