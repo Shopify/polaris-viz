@@ -276,13 +276,12 @@ export function Chart({
         />
 
         {transitions(({opacity, transform}, item, _transition, index) => {
-          const {name} = item.series;
-          const ariaLabel = getAriaLabel(name, item.index);
-
           if (series[index] == null) {
             return null;
           }
 
+          const {name} = item.series;
+          const ariaLabel = getAriaLabel(name, item.index);
           const animationDelay =
             isFirstRender && isAnimated
               ? (HORIZONTAL_BAR_GROUP_DELAY * index) / series.length
