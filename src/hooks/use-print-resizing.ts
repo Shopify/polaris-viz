@@ -70,7 +70,11 @@ export function usePrintResizing({
 
     return () => {
       if (notSafariOrServer) {
-        window.matchMedia('print').removeEventListener('change', handlePrint);
+        if (addEventListener) {
+          window.matchMedia('print').removeEventListener('change', handlePrint);
+        } else if (addListener) {
+          window.matchMedia('print').removeListener(printSafari);
+        }
       }
 
       if (safariNotServer) {
