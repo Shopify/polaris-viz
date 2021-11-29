@@ -1,7 +1,7 @@
 import {Meta} from '@storybook/addon-docs/blocks';
 
 import {PolarisVizProvider} from '../../PolarisVizProvider';
-import {ComponentContainer, Title, SampleSparkline} from './components';
+import {ComponentContainer, Title, SampleSparkLineChart} from './components';
 
 <Meta
   title="Docs/Themes/Default and Light"
@@ -30,7 +30,7 @@ import {ComponentContainer, Title, SampleSparkline} from './components';
 
 <p>
   All Polaris Viz charts accept a <code>theme</code> prop that can be used to
-  change the chart's appearence.
+  change the chart's appearance.
 </p>
 <p>
   Out of the box, the library comes with a <code>Default</code> and a{' '}
@@ -55,10 +55,10 @@ import {ComponentContainer, Title, SampleSparkline} from './components';
     center
     chart={
       <div style={{width: '250px', height: '140px'}}>
-        <SampleSparkline />
+        <SampleSparkLineChart />
       </div>
     }
-    codeSample={'<Sparkline />'}
+    codeSample={'<SparkLineChart />'}
   />
   <ComponentContainer
     title="Light Theme"
@@ -72,10 +72,10 @@ import {ComponentContainer, Title, SampleSparkline} from './components';
     center
     chart={
       <div style={{width: '250px', height: '140px'}}>
-        <SampleSparkline theme="Light" />
+        <SampleSparkLineChart theme="Light" />
       </div>
     }
-    codeSample={"<Sparkline theme='Light'/>"}
+    codeSample={"<SparkLineChart theme='Light'/>"}
   />
 </div>
 

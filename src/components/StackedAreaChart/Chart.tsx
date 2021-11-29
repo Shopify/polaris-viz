@@ -46,7 +46,7 @@ import {
   StringLabelFormatter,
   NumberLabelFormatter,
   Dimensions,
-  DataSeries,
+  LegacyDataSeries,
   Data,
   DataType,
 } from '../../types';
@@ -73,7 +73,7 @@ interface Props {
   theme?: string;
 }
 
-type SeriesForAnimation = Required<Partial<DataSeries<Data, null>>>;
+type SeriesForAnimation = Required<Partial<LegacyDataSeries<Data, null>>>;
 
 export function Chart({
   xAxisOptions,

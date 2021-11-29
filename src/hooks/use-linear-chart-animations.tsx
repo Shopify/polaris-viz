@@ -3,7 +3,7 @@ import type {Line} from 'd3-shape';
 import {useSprings} from '@react-spring/web';
 
 import {getPathLength, getPointAtLength} from '../utilities';
-import type {Data, DataSeries} from '../types';
+import type {Data, LegacyDataSeries} from '../types';
 
 export const SPRING_CONFIG = {
   friction: 5,
@@ -12,7 +12,7 @@ export const SPRING_CONFIG = {
   tension: 190,
 };
 
-type SeriesWithData = Required<DataSeries<Data, any>>;
+type SeriesWithData = Required<LegacyDataSeries<Data, any>>;
 
 export function useLinearChartAnimations<T extends SeriesWithData>({
   activeIndex,

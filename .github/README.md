@@ -122,13 +122,13 @@ Used to compare multiple series of data and display the total value. [View docum
 
   <td>
 
-<a href="https://polaris-viz.shopify.io/?path=/docs/charts-sparkline">
-  <img src="../src/components/Sparkline/sparkline.png"/>
+<a href="https://polaris-viz.shopify.io/?path=/docs/spark-charts-sparklinechart--default">
+  <img src="../src/components/SparkLineChart/sparklinechart.png"/>
 </a>
 
-#### Sparkline
+#### SparkLineChart
 
-Used in small sizes to show how a metric has performed over time. [View documentation&nbsp;→](https://polaris-viz.shopify.io/?path=/docs/charts-sparkline)
+Used in small sizes to show how a metric has performed over time. [View documentation&nbsp;→](https://polaris-viz.shopify.io/?path=/docs/spark-charts-sparklinechart--default)
 
   </td>
 
@@ -192,13 +192,13 @@ Used to show comparison across categories. [View documentation&nbsp;→](https:/
 
   <td>
 
-<a href="https://polaris-viz.shopify.io/?path=/docs/charts-sparkbar">
-  <img src="../src/components/Sparkbar/sparkbar.png"/>
+<a href="https://polaris-viz.shopify.io/?path=/docs/spark-charts-sparkbarchart--default">
+  <img src="../src/components/SparkBarChart/sparkbarchart.png"/>
 </a>
 
-#### Sparkbar
+#### SparkBarChart
 
-Used in small sizes to show how a metric has performed over time with bars. [View documentation&nbsp;→](https://polaris-viz.shopify.io/?path=/docs/charts-sparkbar)
+Used in small sizes to show how a metric has performed over time with bars. [View documentation&nbsp;→](https://polaris-viz.shopify.io/?path=/docs/spark-charts-sparkbarchart--default)
 
   </td>
 

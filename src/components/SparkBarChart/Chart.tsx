@@ -1,22 +1,18 @@
-import React, {useCallback, useState, useLayoutEffect, useMemo} from 'react';
-import {useDebouncedCallback} from 'use-debounce';
+import React, {useCallback, useMemo} from 'react';
 import {scaleBand, scaleLinear} from 'd3-scale';
 import {line} from 'd3-shape';
 import {useTransition} from '@react-spring/web';
 
 import {getSeriesColorsFromCount} from '../../hooks/use-theme-series-colors';
-import {
-  usePrefersReducedMotion,
-  useResizeObserver,
-  useTheme,
-} from '../../hooks';
+import {usePrefersReducedMotion, useTheme} from '../../hooks';
 import {BARS_TRANSITION_CONFIG, XMLNS} from '../../constants';
-import type {Color, SparkChartData} from '../../types';
+import type {DataPoint, DataSeries, Dimensions} from '../../types';
 import {uniqueId, getAnimationTrail, isGradientType} from '../../utilities';
 import {LinearGradient} from '../LinearGradient';
 
 import {Bar} from './components';
-import styles from './Sparkbar.scss';
+import styles from './SparkBarChart.scss';
+import type {SparkBarChartProps} from './SparkBarChart';
 
 const STROKE_WIDTH = 1.5;
 const BAR_PADDING = 0.3;
@@ -24,23 +20,7 @@ const MARGIN = 8;
 const ANIMATION_MARGIN = 17;
 const BAR_MIN_HEIGHT_RATIO = 0.5;
 
-interface Coordinates {
-  x: number;
-  y: number;
-}
-
-export interface SparkbarProps {
-  data: SparkChartData[];
-  dataOffsetRight?: number;
-  dataOffsetLeft?: number;
-  comparison?: Coordinates[];
-  accessibilityLabel?: string;
-  isAnimated?: boolean;
-  theme?: string;
-  barColor?: Color;
-}
-
-function calculateRange(data: SparkChartData[], height: number) {
+function calculateRange(data: DataPoint[], height: number) {
   let hasNegatives;
   let hasPositives;
   for (const {value} of data) {
@@ -61,80 +41,73 @@ function calculateRange(data: SparkChartData[], height: number) {
   return range;
 }
 
-export function Sparkbar({
+function removeNullValues(data: DataSeries | undefined) {
+  if (data == null) {
+    return [];
+  }
+
+  return data.data
+    .filter(({value}) => typeof value === 'number')
+    .map(({value}) => value) as number[];
+}
+
+interface Props extends SparkBarChartProps {
+  dimensions?: Dimensions;
+}
+
+export function Chart({
   data,
-  comparison,
+  dimensions,
   accessibilityLabel,
   isAnimated = false,
   dataOffsetRight = 0,
   dataOffsetLeft = 0,
   theme,
-  barColor,
-}: SparkbarProps) {
-  const {
-    ref: containerRef,
-    setRef: setContainerRef,
-    entry,
-  } = useResizeObserver();
-  const [svgDimensions, setSvgDimensions] = useState({width: 0, height: 0});
+}: Props) {
   const {prefersReducedMotion} = usePrefersReducedMotion();
   const selectedTheme = useTheme(theme);
   const [seriesColor] = getSeriesColorsFromCount(1, selectedTheme);
 
-  const [updateMeasurements] = useDebouncedCallback(() => {
-    if (entry == null) return;
+  const {width, height} = dimensions ?? {width: 0, height: 0};
 
-    setSvgDimensions({
-      height: entry.contentRect.height,
-      width: entry.contentRect.width,
-    });
-  }, 10);
+  const [defaultData, comparisonData] = useMemo(() => {
+    const newData = [...data];
+    const comparisonIndex = data.findIndex(
+      ({isComparison}) => isComparison === true,
+    );
 
-  useLayoutEffect(() => {
-    updateMeasurements();
-
-    const isServer = typeof window === 'undefined';
-
-    if (!isServer) {
-      window.addEventListener('resize', () => updateMeasurements());
+    if (comparisonIndex !== -1) {
+      const comparisonArray = newData.splice(comparisonIndex, 1);
+      return [newData[0], comparisonArray[0]];
     }
 
-    return () => {
-      if (!isServer) {
-        window.removeEventListener('resize', () => updateMeasurements());
-      }
-    };
-  }, [entry, containerRef, updateMeasurements]);
+    return [newData[0]];
+  }, [data]);
 
-  const {width, height} = svgDimensions;
-
-  const filteredData = data
-    .filter(({value}) => typeof value === 'number')
-    .map(({value}) => value) as number[];
-
-  const comparisonData = comparison == null ? [] : comparison.map(({y}) => y);
+  const filteredData = removeNullValues(defaultData);
+  const filteredComparisonData = removeNullValues(comparisonData);
 
   const yScale = scaleLinear()
-    .range(calculateRange(data, height))
+    .range(calculateRange(defaultData.data, height))
     .domain([
-      Math.min(...filteredData, ...comparisonData, 0),
-      Math.max(...filteredData, ...comparisonData, 0),
+      Math.min(...filteredData, ...filteredComparisonData, 0),
+      Math.max(...filteredData, ...filteredComparisonData, 0),
     ]);
 
   const xScale = scaleBand()
     .range([dataOffsetLeft, width - dataOffsetRight])
     .paddingInner(BAR_PADDING)
-    .domain(data.map((_, index) => index.toString()));
+    .domain(defaultData.data.map((_, index) => index.toString()));
 
   const xScaleLinear = scaleLinear()
     .range([0, width])
-    .domain([0, data.length - 1]);
+    .domain([0, defaultData.data.length - 1]);
 
-  const lineGenerator = line<Coordinates>()
-    .x(({x}) => xScaleLinear(x))
-    .y(({y}) => yScale(y));
+  const lineGenerator = line<any>()
+    .x(({key}) => xScaleLinear(key))
+    .y(({value}) => yScale(value));
 
-  const lineShape = comparison ? lineGenerator(comparison) : null;
+  const lineShape = comparisonData ? lineGenerator(comparisonData.data) : null;
 
   const barWidth = useMemo(() => xScale.bandwidth(), [xScale]);
   const barGap = useMemo(
@@ -159,14 +132,14 @@ export function Sparkbar({
     [barWidth, yScale],
   );
 
-  const dataWithIndex = data.map((value, index) => ({
+  const dataWithIndex = defaultData.data.map((value, index) => ({
     value,
     index,
   }));
 
   const shouldAnimate = !prefersReducedMotion && isAnimated;
 
-  const colorToUse = barColor ?? seriesColor;
+  const colorToUse = defaultData.color ?? seriesColor;
 
   const color = isGradientType(colorToUse)
     ? colorToUse
@@ -191,15 +164,7 @@ export function Sparkbar({
   const viewboxHeight = height + ANIMATION_MARGIN * 2;
 
   return (
-    <div
-      className={styles.Wrapper}
-      ref={setContainerRef}
-      style={{
-        background: selectedTheme.chartContainer.backgroundColor,
-        padding: selectedTheme.chartContainer.padding,
-        borderRadius: selectedTheme.chartContainer.borderRadius,
-      }}
-    >
+    <React.Fragment>
       {accessibilityLabel ? (
         <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
       ) : null}
@@ -226,7 +191,7 @@ export function Sparkbar({
         </defs>
 
         <mask id={clipId}>
-          <g opacity={comparison ? '0.9' : '1'}>
+          <g opacity={comparisonData ? '0.9' : '1'}>
             {transitions(({height: barHeight}, item, _transition, index) => {
               const xPosition = xScale(index.toString());
               const height = shouldAnimate
@@ -255,7 +220,7 @@ export function Sparkbar({
           mask={`url(#${clipId})`}
         />
 
-        {comparison == null ? null : (
+        {comparisonData == null ? null : (
           <path
             stroke={selectedTheme.line.dottedStrokeColor}
             strokeWidth={STROKE_WIDTH}
@@ -267,6 +232,6 @@ export function Sparkbar({
           />
         )}
       </svg>
-    </div>
+    </React.Fragment>
   );
 }

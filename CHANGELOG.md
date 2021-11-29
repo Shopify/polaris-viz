@@ -36,9 +36,25 @@
 
 ## [0.25.1] - 2021-11-16
 
+[0.25.1 Migration Guide](https://docs.google.com/document/d/1iO05cV5POYAjXI6HAiVXBHo7jWdMA7_ad3w08KQ52Dg)
+
 ### Added
 
 - Horizontal overflow style to `<StackedAreaChart />`, which were unintentionally removed
+- Use `<ChartContainer />` in `<SparkBarChart />`.
+- Use `<ChartContainer />` in `<SparkLineChart />`.
+
+
+### Changed
+
+- Renamed `<Sparkbar />` to `<SparkBarChart />`.
+- Renamed `<Sparkline />` to `<SparkLineChart />`.
+- Moved `offsetLeft` & `offsetRight` from `SparkLineChartProps.series` to `SparkLineChartProps`.
+- Renamed `series` to `data` in `SparkLineChartProps`.
+### Removed
+
+- `area`, `lineStyle`, and `hasPoint` from `SparkLineChartProps.series`.
+- `barColor` and `comparison` from `SparkBarChartProps`. These props are now available on the `DataSeries` as `color` and `isComparison`.
 
 ## [0.25.0] - 2021-11-12
 

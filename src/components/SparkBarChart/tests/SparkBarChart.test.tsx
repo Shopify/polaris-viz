@@ -2,16 +2,27 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleBand} from 'd3-scale';
 
-import {Sparkbar} from '../Sparkbar';
+import {SparkBarChart} from '../SparkBarChart';
 import {LinearGradient} from '../../LinearGradient';
+import type {DataSeries} from '../../../types';
 
-const sampleData = [{value: 100}, {value: 200}, {value: 300}, {value: 500}];
-const sampleComparison = [
-  {x: 0, y: 300},
-  {x: 1, y: 300},
-  {x: 2, y: 300},
-  {x: 3, y: 300},
-];
+const sampleData: DataSeries = {
+  data: [
+    {key: 1, value: 100},
+    {key: 2, value: 200},
+    {key: 3, value: 300},
+    {key: 4, value: 500},
+  ],
+};
+const sampleComparison: DataSeries = {
+  data: [
+    {key: 0, value: 300},
+    {key: 1, value: 300},
+    {key: 2, value: 300},
+    {key: 3, value: 300},
+  ],
+  isComparison: true,
+};
 
 jest.mock('d3-scale', () => ({
   scaleBand: jest.fn(() => {
@@ -32,16 +43,16 @@ jest.mock('d3-scale', () => ({
   }),
 }));
 
-describe('<Sparkbar/>', () => {
+describe('<SparkBarChart/>', () => {
   it('renders a <LinearGradient />', () => {
-    const wrapper = mount(<Sparkbar data={sampleData} />);
+    const wrapper = mount(<SparkBarChart data={[sampleData]} />);
 
     expect(wrapper).toContainReactComponent(LinearGradient);
   });
 
   it('renders an accessibility label', () => {
     const wrapper = mount(
-      <Sparkbar data={sampleData} accessibilityLabel="This is a test" />,
+      <SparkBarChart data={[sampleData]} accessibilityLabel="This is a test" />,
     );
 
     expect(wrapper).toContainReactText('This is a test');
@@ -49,7 +60,7 @@ describe('<Sparkbar/>', () => {
 
   it('renders bars with 90% opacity when a comparison is present', () => {
     const wrapper = mount(
-      <Sparkbar data={sampleData} comparison={sampleComparison} />,
+      <SparkBarChart data={[sampleData, sampleComparison]} />,
     );
 
     expect(wrapper).toContainReactComponent('g', {
@@ -58,23 +69,23 @@ describe('<Sparkbar/>', () => {
   });
 
   it('renders bars with 100% opacity when no comparison is present', () => {
-    const wrapper = mount(<Sparkbar data={sampleData} />);
+    const wrapper = mount(<SparkBarChart data={[sampleData]} />);
 
     expect(wrapper).toContainReactComponent('g', {
       opacity: '1',
     });
   });
 
-  it('renders a comparison line when the comparison prop is passed', () => {
+  it('renders a comparison line when series has isComparison=true', () => {
     const wrapper = mount(
-      <Sparkbar data={sampleData} comparison={sampleComparison} />,
+      <SparkBarChart data={[sampleData, sampleComparison]} />,
     );
 
     expect(wrapper).toContainReactComponentTimes('path', 5);
   });
 
-  it('does not render a comparison line when the prop is not passed', () => {
-    const wrapper = mount(<Sparkbar data={sampleData} />);
+  it('does not render a comparison line when no comparison series is passed', () => {
+    const wrapper = mount(<SparkBarChart data={[sampleData]} />);
 
     expect(wrapper).toContainReactComponentTimes('path', 4);
   });
@@ -91,7 +102,7 @@ describe('<Sparkbar/>', () => {
     });
 
     const wrapper = mount(
-      <Sparkbar data={sampleData} comparison={sampleComparison} />,
+      <SparkBarChart data={[sampleData, sampleComparison]} />,
     );
 
     expect(wrapper).toContainReactComponent('path', {
@@ -112,9 +123,8 @@ describe('<Sparkbar/>', () => {
     });
 
     const wrapper = mount(
-      <Sparkbar
-        data={sampleData}
-        comparison={sampleComparison}
+      <SparkBarChart
+        data={[sampleData, sampleComparison]}
         dataOffsetLeft={25}
       />,
     );
@@ -123,37 +133,5 @@ describe('<Sparkbar/>', () => {
       strokeDasharray: '18.5 11.5',
       strokeDashoffset: -25.75,
     });
-  });
-
-  it('reduces the chart width according to the offset and margin', () => {
-    let rangeSpy = jest.fn();
-    (scaleBand as jest.Mock).mockImplementation(() => {
-      const scale = (value: any) => value;
-      rangeSpy = jest.fn((range: any) => (range ? scale : range));
-      scale.range = rangeSpy;
-      scale.paddingInner = (paddingInner: any) =>
-        paddingInner ? scale : paddingInner;
-      scale.domain = (domain: any) => (domain ? scale : domain);
-      scale.bandwidth = (width: any) => (width ? scale : width);
-      scale.step = (step: any) => (step ? scale : step);
-      return scale;
-    });
-
-    const offsetLeft = 100;
-    const offsetRight = 50;
-    const mockWidth = 0;
-
-    mount(
-      <Sparkbar
-        data={sampleData}
-        dataOffsetLeft={offsetLeft}
-        dataOffsetRight={offsetRight}
-      />,
-    );
-
-    expect(rangeSpy).toHaveBeenCalledWith([
-      offsetLeft,
-      mockWidth - offsetRight,
-    ]);
   });
 });
