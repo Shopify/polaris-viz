@@ -23,3 +23,8 @@ export const TYPE_CONTROL_ARGS = {
     'Changes the grouping of the bars. If `stacked` the bar groups will stack vertically, otherwise they will render individual bars for each data point in each group.',
   control: {type: 'select', options: ['default', 'stacked']},
 };
+
+export const DIRECTION_CONTROL_ARGS = {
+  description: '',
+  control: {type: 'select', options: ['vertical', 'horizontal']},
+};

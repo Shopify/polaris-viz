@@ -148,21 +148,6 @@ Used to format content in tooltips. Alternatively, use a custom tooltip. [View d
 
   </td>
 
-  <td>
-
-<a href="https://polaris-viz.shopify.io/?path=/docs/charts-barchart">
-  <img src="../src/components/BarChart/bar-chart.png"/>
-</a>
-
-#### Bar chart
-
-Used to show comparison across categories. [View documentation&nbsp;→](https://polaris-viz.shopify.io/?path=/docs/charts-barchart)
-
-  </td>
-
-
-<tr>
-
 
 
   <td>

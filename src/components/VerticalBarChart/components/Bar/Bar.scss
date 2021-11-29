@@ -1,0 +1,6 @@
+@import '../../../../styles/common';
+
+.Bar {
+  @include no-outline;
+  transition: fill $duration-slow ease;
+}

@@ -4,9 +4,9 @@ describe('shouldRotateZeroBars', () => {
   describe('returns true if', () => {
     it('receives all negative values', () => {
       const rotateZeroBars = shouldRotateZeroBars([
-        {label: '', rawValue: -5},
-        {label: '', rawValue: -3},
-        {label: '', rawValue: -1},
+        {key: '', value: -5},
+        {key: '', value: -3},
+        {key: '', value: -1},
       ]);
 
       expect(rotateZeroBars).toBe(true);
@@ -14,9 +14,9 @@ describe('shouldRotateZeroBars', () => {
 
     it('receives negative and 0 values', () => {
       const rotateZeroBars = shouldRotateZeroBars([
-        {label: '', rawValue: -5},
-        {label: '', rawValue: -3},
-        {label: '', rawValue: 0},
+        {key: '', value: -5},
+        {key: '', value: -3},
+        {key: '', value: 0},
       ]);
 
       expect(rotateZeroBars).toBe(true);
@@ -26,9 +26,9 @@ describe('shouldRotateZeroBars', () => {
   describe('returns false if', () => {
     it('receives all positive values', () => {
       const rotateZeroBars = shouldRotateZeroBars([
-        {label: '', rawValue: 5},
-        {label: '', rawValue: 3},
-        {label: '', rawValue: 2},
+        {key: '', value: 5},
+        {key: '', value: 3},
+        {key: '', value: 2},
       ]);
 
       expect(rotateZeroBars).toBe(false);
@@ -36,9 +36,9 @@ describe('shouldRotateZeroBars', () => {
 
     it('receives all 0 values', () => {
       const rotateZeroBars = shouldRotateZeroBars([
-        {label: '', rawValue: 0},
-        {label: '', rawValue: 0},
-        {label: '', rawValue: 0},
+        {key: '', value: 0},
+        {key: '', value: 0},
+        {key: '', value: 0},
       ]);
 
       expect(rotateZeroBars).toBe(false);
@@ -46,9 +46,9 @@ describe('shouldRotateZeroBars', () => {
 
     it('receives 0 and positive values', () => {
       const rotateZeroBars = shouldRotateZeroBars([
-        {label: '', rawValue: 0},
-        {label: '', rawValue: 3},
-        {label: '', rawValue: 3},
+        {key: '', value: 0},
+        {key: '', value: 3},
+        {key: '', value: 3},
       ]);
 
       expect(rotateZeroBars).toBe(false);
@@ -56,9 +56,9 @@ describe('shouldRotateZeroBars', () => {
 
     it('receives 0, negative, and positive values', () => {
       const rotateZeroBars = shouldRotateZeroBars([
-        {label: '', rawValue: 0},
-        {label: '', rawValue: -3},
-        {label: '', rawValue: 3},
+        {key: '', value: 0},
+        {key: '', value: -3},
+        {key: '', value: 3},
       ]);
 
       expect(rotateZeroBars).toBe(false);

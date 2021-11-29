@@ -11,7 +11,7 @@ import {HorizontalGridLines} from '../../../components/HorizontalGridLines';
 import {mockDefaultTheme} from '../../../test-utilities/mount-with-provider';
 import {TooltipAnimatedContainer} from '../../../components/TooltipWrapper';
 import {LinearGradient} from '../../LinearGradient';
-import {Chart} from '../Chart';
+import {Chart, formatSeriesToDataSeries} from '../Chart';
 import type {Series} from '../types';
 import {Line, GradientArea} from '../components';
 import {YAxis} from '../../YAxis';
@@ -240,7 +240,7 @@ describe('<Chart />', () => {
     const chart = mount(<Chart {...mockProps} />);
 
     expect(chart).toContainReactComponent(VisuallyHiddenRows, {
-      series: mockProps.series,
+      data: formatSeriesToDataSeries(mockProps.series),
       xAxisLabels: mockProps.xAxisOptions.xAxisLabels,
       formatYAxisLabel: mockProps.yAxisOptions.labelFormatter,
     });

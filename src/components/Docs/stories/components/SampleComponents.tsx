@@ -3,15 +3,14 @@ import React from 'react';
 import {
   SparkBarChart,
   SparkLineChart,
-  BarChart,
   LineChart,
-  MultiSeriesBarChart,
+  BarChart,
   StackedAreaChart,
   SimpleNormalizedChart,
 } from '../../../../components';
 import {
-  generateMultipleSeries,
   generateLabels,
+  generateMultipleSeriesNewData,
 } from '../../../../../documentation/utilities';
 
 export const SampleSparkBarChart = ({theme} = {theme: 'Default'}) => {
@@ -104,30 +103,12 @@ export const SampleLineChart = ({theme} = {theme: 'Default'}) => {
   );
 };
 
-export const SampleBarchart = ({theme} = {theme: 'Default'}) => {
-  return (
-    <BarChart
-      theme={theme}
-      data={[
-        {rawValue: 324.19, label: 'Jan. 1'},
-        {rawValue: 613.29, label: 'Jan. 2'},
-        {rawValue: 1000, label: 'Jan. 3'},
-        {rawValue: 432, label: 'Jan. 4'},
-        {rawValue: 1, label: 'Jan. 5'},
-      ]}
-    />
-  );
-};
-
-export const SampleMultiseriesBarChart = (
+export const SampleBarChart = (
   {theme, seriesLength = 3} = {theme: 'Default'},
 ) => {
   return (
-    <MultiSeriesBarChart
-      series={generateMultipleSeries(seriesLength)}
-      xAxisOptions={{
-        labels: generateLabels(1),
-      }}
+    <BarChart
+      data={generateMultipleSeriesNewData(seriesLength)}
       theme={theme}
     />
   );
@@ -138,7 +119,7 @@ export const SampleStackedAreaChart = (
 ) => {
   return (
     <StackedAreaChart
-      series={generateMultipleSeries(seriesLength, 3)}
+      data={generateMultipleSeriesNewData(seriesLength, 3)}
       xAxisOptions={{
         labels: generateLabels(3),
       }}

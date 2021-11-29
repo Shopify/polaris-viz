@@ -3,6 +3,7 @@ import React, {ReactNode, useCallback, useMemo, useState} from 'react';
 import type {HorizontalTransitionStyle} from '../../hooks/useHorizontalTransitions';
 import {GradientDefs, HorizontalGroup} from '../shared';
 import {
+  useBarChartTooltipContent,
   useDataForHorizontalChart,
   useHorizontalBarSizes,
   useHorizontalSeriesColors,
@@ -14,6 +15,7 @@ import {
   XMLNS,
   BarChartMargin as Margin,
   HORIZONTAL_BAR_GROUP_DELAY,
+  HORIZONTAL_GROUP_LABEL_HEIGHT,
 } from '../../constants';
 import {
   eventPointNative,
@@ -28,11 +30,15 @@ import {
   TooltipPositionParams,
   TooltipWrapper,
 } from '../TooltipWrapper';
-import type {TooltipData} from '../TooltipContent';
+import type {
+  AnnotationLookupTable,
+  RenderTooltipContentData,
+  XAxisOptions,
+} from '../BarChart';
+import {AnnotationLine} from '../BarChart';
 
 import {getAlteredHorizontalBarPosition} from './utilities';
 import {VerticalGridLines, XAxisLabels} from './components';
-import type {RenderTooltipContentData, XAxisOptions} from './types';
 import styles from './Chart.scss';
 
 export interface ChartProps {
@@ -41,11 +47,13 @@ export interface ChartProps {
   renderTooltipContent: (data: RenderTooltipContentData) => ReactNode;
   type: ChartType;
   xAxisOptions: Required<XAxisOptions>;
+  annotationsLookupTable?: AnnotationLookupTable;
   dimensions?: Dimensions;
   theme?: string;
 }
 
 export function Chart({
+  annotationsLookupTable = {},
   data,
   dimensions,
   isAnimated,
@@ -138,28 +146,12 @@ export function Chart({
     [data, labelFormatter],
   );
 
-  const getTooltipMarkup = useCallback(
-    (activeIndex: number) => {
-      if (activeIndex === -1) {
-        return null;
-      }
-
-      const tooltipData: TooltipData[] = data.map(
-        ({name, data, color}, index) => {
-          const {value} = data[activeIndex];
-
-          return {
-            label: `${name}`,
-            value: `${value}`,
-            color: color ?? seriesColors[index],
-          };
-        },
-      );
-
-      return renderTooltipContent({data: tooltipData});
-    },
-    [data, seriesColors, renderTooltipContent],
-  );
+  const getTooltipMarkup = useBarChartTooltipContent({
+    annotationsLookupTable,
+    data,
+    seriesColors,
+    renderTooltipContent,
+  });
 
   const {transitions} = useHorizontalTransitions({
     series: data,
@@ -244,6 +236,36 @@ export function Chart({
             />
           );
         })}
+        <g>
+          {Object.keys(annotationsLookupTable).map((key, dataIndex) => {
+            const annotation = annotationsLookupTable[Number(key)];
+
+            if (annotation == null) {
+              return null;
+            }
+
+            const xPosition = groupHeight * annotation.dataSeriesIndex;
+            const xPositionValue = xPosition == null ? 0 : xPosition;
+            const leftOffset = barHeight * annotation.dataPointIndex;
+
+            const position =
+              xPositionValue + HORIZONTAL_GROUP_LABEL_HEIGHT + leftOffset;
+
+            return (
+              <AnnotationLine
+                barSize={barHeight}
+                color={annotation.color}
+                direction="horizontal"
+                drawableSize={width}
+                key={`annotation${dataIndex}${annotation.dataPointIndex}`}
+                position={position}
+                shouldAnimate={isAnimated}
+                width={annotation.width}
+                offset={annotation.offset}
+              />
+            );
+          })}
+        </g>
       </svg>
       <TooltipWrapper
         bandwidth={groupBarsAreaHeight}

@@ -2,6 +2,28 @@
 
 ## Unreleased
 
+[0.28.0 Migration Guide](https://docs.google.com/document/d/1iO05cV5POYAjXI6HAiVXBHo7jWdMA7_ad3w08KQ52Dg)
+
+### Added
+
+- Added `direction` to `BarChartProps` to switch between `vertical` and `horizontal` charts.
+
+### Changed
+
+- Renamed `series` to `data` in `StackedAreaChartProps`.
+- Changed `StackedAreaChartProps.data` to use `DataSeries[]`.
+- Changed `BarChartProps.data` to use `DataSeries[]`.
+- Renamed `isStacked` to `type` in `BarChartProps`.
+- `type` now accepts `default | stacked` to change between stacked or individual bar groups.
+- Renamed `Annotation.xOffset` to `offset`.
+- Renamed `Annotation.dataIndex` to `dataSeriesIndex`.
+- Added `dataPointIndex` to `Annotation`.
+
+### Removed
+
+- Removed `<MultiSeriesBarChart />`.
+- Removed `<HorizontalBarChart />`.
+
 ## [0.27.0] - 2021-12-01
 
 [0.27.0 Migration Guide](https://docs.google.com/document/d/1iO05cV5POYAjXI6HAiVXBHo7jWdMA7_ad3w08KQ52Dg)
