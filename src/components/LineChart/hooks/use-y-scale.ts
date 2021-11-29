@@ -5,24 +5,23 @@ import {maxIndex} from 'd3-array';
 import {getTextWidth, shouldRoundScaleUp} from '../../../utilities';
 import {yAxisMinMax} from '../utilities';
 import {MIN_Y_LABEL_SPACE} from '../constants';
-import type {Series} from '../types';
-import type {NumberLabelFormatter} from '../../../types';
+import type {DataSeries, NumberLabelFormatter} from '../../../types';
 
 export function useYScale({
   drawableHeight,
-  series,
+  data,
   formatYAxisLabel,
   fontSize,
   integersOnly,
 }: {
   fontSize: number;
   drawableHeight: number;
-  series: Series[];
+  data: DataSeries[];
   formatYAxisLabel: NumberLabelFormatter;
   integersOnly: boolean;
 }) {
   const {yScale, ticks, axisMargin} = useMemo(() => {
-    const [minY, maxY] = yAxisMinMax({series, integersOnly});
+    const [minY, maxY] = yAxisMinMax({data, integersOnly});
 
     const maxTicks = Math.max(
       1,
@@ -67,7 +66,7 @@ export function useYScale({
     });
 
     return {yScale, ticks, axisMargin};
-  }, [series, integersOnly, drawableHeight, formatYAxisLabel, fontSize]);
+  }, [data, integersOnly, drawableHeight, formatYAxisLabel, fontSize]);
 
   return {yScale, ticks, axisMargin};
 }

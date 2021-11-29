@@ -39,7 +39,7 @@ import {YAxis} from '../YAxis';
 import {Point} from '../Point';
 import {Crosshair} from '../Crosshair';
 import {LinearGradient} from '../LinearGradient';
-import {DataSeries, DataType, Dimensions} from '../../types';
+import {DataPoint, DataType, Dimensions} from '../../types';
 import {HorizontalGridLines} from '../HorizontalGridLines';
 
 import {MAX_ANIMATED_SERIES_LENGTH} from './constants';
@@ -48,32 +48,16 @@ import type {
   TooltipData,
   XAxisOptions,
   YAxisOptions,
-  SeriesWithDefaults,
+  DataWithDefaults,
 } from './types';
 import {useYScale} from './hooks';
 import {Line, GradientArea} from './components';
 import styles from './Chart.scss';
 
-export function formatSeriesToDataSeries(
-  series: SeriesWithDefaults[],
-): DataSeries[] {
-  return series.map((series) => {
-    return {
-      ...series,
-      data: series.data.map(({rawValue, label}) => {
-        return {
-          value: rawValue,
-          key: label,
-        };
-      }),
-    };
-  });
-}
-
 interface Props {
   isAnimated: boolean;
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
-  series: SeriesWithDefaults[];
+  data: DataWithDefaults[];
   xAxisOptions: XAxisOptions;
   yAxisOptions: Required<YAxisOptions>;
   emptyStateText?: string;
@@ -87,7 +71,7 @@ const TOOLTIP_POSITION = {
 };
 
 export function Chart({
-  series,
+  data,
   dimensions,
   renderTooltipContent,
   emptyStateText,
@@ -108,26 +92,20 @@ export function Chart({
 
   const fontSize = width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
 
-  const emptyState = series.length === 0;
+  const emptyState = data.length === 0;
 
   const {ticks: initialTicks} = useYScale({
     fontSize,
     drawableHeight: height - Margin.Top,
-    series,
+    data,
     formatYAxisLabel: yAxisOptions.labelFormatter,
     integersOnly: yAxisOptions.integersOnly,
   });
 
   const hideXAxis = xAxisOptions.hide ?? selectedTheme.xAxis.hide;
 
-  // TODO: Remove this when this component is
-  // using DataSeries.
-  const formattedToDataSeries = useMemo(() => {
-    return formatSeriesToDataSeries(series);
-  }, [series]);
-
   const xAxisDetails = useLinearXAxisDetails({
-    data: formattedToDataSeries,
+    data,
     fontSize,
     width: width - selectedTheme.grid.horizontalMargin * 2,
     formatXAxisLabel: xAxisOptions.labelFormatter,
@@ -151,23 +129,23 @@ export function Chart({
   const {axisMargin, ticks, yScale} = useYScale({
     fontSize,
     drawableHeight,
-    series,
+    data,
     formatYAxisLabel: yAxisOptions.labelFormatter,
     integersOnly: yAxisOptions.integersOnly,
   });
 
   const getTooltipMarkup = useCallback(
     (index: number) => {
-      const data = series.reduce<TooltipData[]>(
+      const content = data.reduce<TooltipData[]>(
         (accumulator, {data, name, color, lineStyle}) => {
           const currentDataPoint = data[index];
           if (currentDataPoint != null) {
             accumulator.push({
               point: {
-                label: currentDataPoint.label,
-                value: currentDataPoint.rawValue,
+                label: `${currentDataPoint.key}`,
+                value: currentDataPoint.value ?? 0,
               },
-              name,
+              name: name ?? '',
               color,
               lineStyle,
             });
@@ -181,12 +159,12 @@ export function Chart({
         return null;
       }
 
-      return renderTooltipContent({data});
+      return renderTooltipContent({data: content});
     },
-    [renderTooltipContent, series],
+    [renderTooltipContent, data],
   );
 
-  const reversedSeries = useMemo(() => series.slice().reverse(), [series]);
+  const reversedSeries = useMemo(() => data.slice().reverse(), [data]);
 
   const marginBetweenLabelsAndData = SPACING_BASE_TIGHT;
 
@@ -224,9 +202,9 @@ export function Chart({
   });
 
   const lineGenerator = useMemo(() => {
-    const generator = line<{rawValue: number}>()
+    const generator = line<DataPoint>()
       .x((_, index) => (xScale == null ? 0 : xScale(index)))
-      .y(({rawValue}) => yScale(rawValue));
+      .y(({value}) => yScale(value ?? 0));
 
     if (selectedTheme.line.hasSpline) {
       generator.curve(curveStepRounded);
@@ -237,8 +215,8 @@ export function Chart({
   const animatePoints =
     isAnimated && longestSeriesLength <= MAX_ANIMATED_SERIES_LENGTH;
 
-  const {animatedCoordinates} = useLinearChartAnimations<SeriesWithDefaults>({
-    series: reversedSeries,
+  const {animatedCoordinates} = useLinearChartAnimations({
+    data: reversedSeries,
     lineGenerator,
     activeIndex,
     isAnimated: animatePoints,
@@ -374,7 +352,7 @@ export function Chart({
 
         {emptyState ? null : (
           <VisuallyHiddenRows
-            data={formattedToDataSeries}
+            data={data}
             formatYAxisLabel={yAxisOptions.labelFormatter}
             xAxisLabels={formattedLabels}
           />
@@ -470,7 +448,11 @@ export function Chart({
                   />
                 ) : null}
 
-                {data.map(({rawValue}, dataIndex) => {
+                {data.map(({value}, dataIndex) => {
+                  if (value == null) {
+                    return null;
+                  }
+
                   return (
                     <Point
                       dataType={DataType.Point}
@@ -478,7 +460,7 @@ export function Chart({
                       stroke={selectedTheme.line.pointStroke}
                       color={pointColor}
                       cx={xScale(dataIndex)}
-                      cy={yScale(rawValue)}
+                      cy={yScale(value)}
                       active={activeIndex === dataIndex}
                       index={dataIndex}
                       tabIndex={isLongestLine ? 0 : -1}

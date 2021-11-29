@@ -49,15 +49,15 @@ import {ComponentContainer, LogoHeader, Divider} from './components';
   chart={
     <LineChart
       isAnimated
-      series={[
+      data={[
         {
           name: 'Sales',
           data: [
-            {rawValue: 324.19, label: '2020-01-01'},
-            {rawValue: 613.29, label: '2020-01-02'},
-            {rawValue: -422.79, label: '2020-01-03'},
-            {rawValue: 0, label: '2020-01-04'},
-            {rawValue: 1, label: '2020-01-05'},
+            {value: 324.19, key: '2020-01-01'},
+            {value: 613.29, key: '2020-01-02'},
+            {value: -422.79, key: '2020-01-03'},
+            {value: 0, key: '2020-01-04'},
+            {value: 1, key: '2020-01-05'},
           ],
         },
       ]}

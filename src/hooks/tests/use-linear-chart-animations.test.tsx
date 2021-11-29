@@ -1,12 +1,10 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {line} from 'd3-shape';
+import type {DataWithDefaults} from 'components/LineChart/types';
 
 import {useLinearChartAnimations} from '../use-linear-chart-animations';
-import type {Color, Data, LegacyDataSeries} from '../../types';
 import {getPointAtLength} from '../../utilities';
-
-type SeriesWithDefaults = Required<LegacyDataSeries<Data, Color>>;
 
 jest.mock('../../utilities', () => {
   return {
@@ -17,32 +15,33 @@ jest.mock('../../utilities', () => {
 });
 
 const lineGeneratorMock = jest.fn(
-  line<{rawValue: number}>()
+  line<{value: number}>()
     .x((_, index) => index)
-    .y(({rawValue}) => rawValue),
+    .y(({value}) => value),
 ) as any;
 
-const series: SeriesWithDefaults[] = [
+const data: DataWithDefaults[] = [
   {
     name: 'Primary',
     color: 'primary',
     data: [
-      {label: 'Jan 1', rawValue: 1500},
-      {label: 'Jan 2', rawValue: 1000},
-      {label: 'Jan 3', rawValue: 800},
-      {label: 'Jan 4', rawValue: 1300},
-      {label: 'Jan 1', rawValue: 1500},
-      {label: 'Jan 2', rawValue: 1000},
-      {label: 'Jan 3', rawValue: 800},
-      {label: 'Jan 4', rawValue: 1300},
+      {key: 'Jan 1', value: 1500},
+      {key: 'Jan 2', value: 1000},
+      {key: 'Jan 3', value: 800},
+      {key: 'Jan 4', value: 1300},
+      {key: 'Jan 1', value: 1500},
+      {key: 'Jan 2', value: 1000},
+      {key: 'Jan 3', value: 800},
+      {key: 'Jan 4', value: 1300},
     ],
+    lineStyle: 'solid',
   },
 ];
 
 const mockProps = {
   activeIndex: 0,
   lineGenerator: lineGeneratorMock,
-  series,
+  data,
   isAnimated: true,
 };
 
@@ -135,7 +134,7 @@ describe('useLinearChartAnimations', () => {
     function TestComponent() {
       useLinearChartAnimations({
         ...mockProps,
-        series: [],
+        data: [],
       });
 
       return null;
@@ -167,10 +166,10 @@ describe('useLinearChartAnimations', () => {
     function TestComponent() {
       animatedCoordinates = useLinearChartAnimations({
         ...mockProps,
-        series: [
+        data: [
           {
-            ...series[0],
-            data: [{label: 'Jan 1', rawValue: 1500}],
+            ...data[0],
+            data: [{key: 'Jan 1', value: 1500}],
           },
         ],
         isAnimated: true,

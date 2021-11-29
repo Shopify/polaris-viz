@@ -4,7 +4,7 @@ import type {Story, Meta} from '@storybook/react';
 import {LineChart, LineChartProps} from '../LineChart';
 import styles from './LineChart.stories.scss';
 import {
-  series,
+  data,
   xAxisLabels,
   formatXAxisLabel,
   formatYAxisLabel,
@@ -14,7 +14,7 @@ import {colorTeal} from '../../../constants';
 import {THEME_CONTROL_ARGS} from '../../../storybook';
 
 import {
-  generateMultipleSeries,
+  generateMultipleSeriesNewData,
   generateLabels,
 } from '../../../../documentation/utilities';
 
@@ -102,7 +102,7 @@ const Template: Story<LineChartProps> = (args: LineChartProps) => {
 
 export const Default: Story<LineChartProps> = Template.bind({});
 Default.args = {
-  series,
+  data,
   xAxisOptions: {
     xAxisLabels,
     labelFormatter: formatXAxisLabel,
@@ -112,7 +112,7 @@ Default.args = {
 
 export const HideXAxisLabels: Story<LineChartProps> = Template.bind({});
 HideXAxisLabels.args = {
-  series,
+  data,
   xAxisOptions: {
     xAxisLabels,
     labelFormatter: formatXAxisLabel,
@@ -125,7 +125,7 @@ HideXAxisLabels.args = {
 export const NoOverflowStyle: Story<LineChartProps> = Template.bind({});
 NoOverflowStyle.args = {
   theme: 'NoOverflow',
-  series,
+  data,
   xAxisOptions: {
     xAxisLabels,
     labelFormatter: formatXAxisLabel,
@@ -136,17 +136,17 @@ NoOverflowStyle.args = {
 
 export const IntegersOnly: Story<LineChartProps> = Template.bind({});
 IntegersOnly.args = {
-  series: [
+  data: [
     {
       name: 'Integers Only',
       data: [
-        {rawValue: 0.1, label: '2020-04-01T12:00:00'},
-        {rawValue: 0.4, label: '2020-04-02T12:00:00'},
-        {rawValue: 0.6, label: '2020-04-03T12:00:00'},
-        {rawValue: 0.2, label: '2020-04-04T12:00:00'},
-        {rawValue: 0.5, label: '2020-04-05T12:00:00'},
-        {rawValue: 0.9, label: '2020-04-06T12:00:00'},
-        {rawValue: 0.5, label: '2020-04-07T12:00:00'},
+        {value: 0.1, key: '2020-04-01T12:00:00'},
+        {value: 0.4, key: '2020-04-02T12:00:00'},
+        {value: 0.6, key: '2020-04-03T12:00:00'},
+        {value: 0.2, key: '2020-04-04T12:00:00'},
+        {value: 0.5, key: '2020-04-05T12:00:00'},
+        {value: 0.9, key: '2020-04-06T12:00:00'},
+        {value: 0.5, key: '2020-04-07T12:00:00'},
       ],
     },
   ],
@@ -160,17 +160,17 @@ IntegersOnly.args = {
 
 export const NoArea: Story<LineChartProps> = Template.bind({});
 NoArea.args = {
-  series: [
+  data: [
     {
       name: 'Sales',
       data: [
-        {rawValue: 100, label: '2020-04-01T12:00:00'},
-        {rawValue: 99, label: '2020-04-02T12:00:00'},
-        {rawValue: 1000, label: '2020-04-03T12:00:00'},
-        {rawValue: 2, label: '2020-04-04T12:00:00'},
-        {rawValue: 22, label: '2020-04-05T12:00:00'},
-        {rawValue: 6, label: '2020-04-06T12:00:00'},
-        {rawValue: 5, label: '2020-04-07T12:00:00'},
+        {value: 100, key: '2020-04-01T12:00:00'},
+        {value: 99, key: '2020-04-02T12:00:00'},
+        {value: 1000, key: '2020-04-03T12:00:00'},
+        {value: 2, key: '2020-04-04T12:00:00'},
+        {value: 22, key: '2020-04-05T12:00:00'},
+        {value: 6, key: '2020-04-06T12:00:00'},
+        {value: 5, key: '2020-04-07T12:00:00'},
       ],
     },
   ],
@@ -183,17 +183,17 @@ NoArea.args = {
 
 export const SolidColor: Story<LineChartProps> = Template.bind({});
 SolidColor.args = {
-  series: [
+  data: [
     {
       name: 'Sales',
       data: [
-        {rawValue: 100, label: '2020-04-01T12:00:00'},
-        {rawValue: 99, label: '2020-04-02T12:00:00'},
-        {rawValue: 1000, label: '2020-04-03T12:00:00'},
-        {rawValue: 2, label: '2020-04-04T12:00:00'},
-        {rawValue: 22, label: '2020-04-05T12:00:00'},
-        {rawValue: 6, label: '2020-04-06T12:00:00'},
-        {rawValue: 5, label: '2020-04-07T12:00:00'},
+        {value: 100, key: '2020-04-01T12:00:00'},
+        {value: 99, key: '2020-04-02T12:00:00'},
+        {value: 1000, key: '2020-04-03T12:00:00'},
+        {value: 2, key: '2020-04-04T12:00:00'},
+        {value: 22, key: '2020-04-05T12:00:00'},
+        {value: 6, key: '2020-04-06T12:00:00'},
+        {value: 5, key: '2020-04-07T12:00:00'},
       ],
       color: colorTeal,
     },
@@ -208,15 +208,15 @@ SolidColor.args = {
 export const LargeDataSet: Story<LineChartProps> = Template.bind({});
 
 LargeDataSet.args = {
-  series: [
+  data: [
     {
       name: 'series 1',
       data: Array(3000)
         .fill(null)
         .map(() => {
           return {
-            rawValue: Math.random() * Math.random() * 100,
-            label: 'Some value',
+            value: Math.random() * Math.random() * 100,
+            key: 'Some value',
           };
         }),
     },
@@ -226,8 +226,8 @@ LargeDataSet.args = {
         .fill(null)
         .map(() => {
           return {
-            rawValue: Math.random() * Math.random() * 100,
-            label: 'Some value',
+            value: Math.random() * Math.random() * 100,
+            key: 'Some value',
           };
         }),
     },
@@ -245,7 +245,7 @@ LargeDataSet.args = {
 export const SeriesColorsUpToFour: Story<LineChartProps> = Template.bind({});
 
 SeriesColorsUpToFour.args = {
-  series: generateMultipleSeries(4),
+  data: generateMultipleSeriesNewData(4),
   xAxisOptions: {
     xAxisLabels: generateLabels(10),
   },
@@ -258,7 +258,7 @@ export const SeriesColorsFromFiveToSeven: Story<LineChartProps> = Template.bind(
 );
 
 SeriesColorsFromFiveToSeven.args = {
-  series: generateMultipleSeries(7),
+  data: generateMultipleSeriesNewData(7),
   xAxisOptions: {
     xAxisLabels: generateLabels(10),
   },
@@ -270,7 +270,7 @@ export const SeriesColorsUpToFourteen: Story<LineChartProps> = Template.bind(
 );
 
 SeriesColorsUpToFourteen.args = {
-  series: generateMultipleSeries(14),
+  data: generateMultipleSeriesNewData(14),
   xAxisOptions: {
     xAxisLabels: generateLabels(10),
   },
@@ -280,7 +280,7 @@ SeriesColorsUpToFourteen.args = {
 export const NoLabelWrapping: Story<LineChartProps> = Template.bind({});
 
 NoLabelWrapping.args = {
-  series,
+  data,
   xAxisOptions: {
     xAxisLabels,
     wrapLabels: false,

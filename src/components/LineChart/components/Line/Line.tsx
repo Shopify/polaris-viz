@@ -2,18 +2,18 @@ import React, {ReactNode} from 'react';
 import type {Line as D3Line} from 'd3-shape';
 import {useSpring, animated} from '@react-spring/web';
 
+import type {DataPoint, DataSeries, LineStyle} from '../../../../types';
 import {useTheme} from '../../../../hooks';
-import type {SeriesWithDefaults} from '../../types';
 import {ANIMATION_DELAY} from '../../constants';
 import {LINES_LOAD_ANIMATION_CONFIG} from '../../../../constants';
 
 import {StrokeDasharray} from './constants';
 
-interface Props {
-  series: SeriesWithDefaults;
+export interface Props {
+  series: DataSeries;
   isAnimated: boolean;
   index: number;
-  lineGenerator: D3Line<{rawValue: number}>;
+  lineGenerator: D3Line<DataPoint>;
   color: string;
 
   children?: ReactNode;
@@ -32,7 +32,8 @@ export const Line = React.memo(function Shape({
   const selectedTheme = useTheme(theme);
   const path = lineGenerator(series.data);
 
-  const isSolidLine = series.lineStyle == null || series.lineStyle === 'solid';
+  const isSolidLine = series.isComparison !== true;
+  const lineStyle: LineStyle = series.isComparison ? 'dotted' : 'solid';
 
   const styles = useSpring({
     from: isSolidLine ? {transform: 'scaleY(0)'} : {opacity: 0},
@@ -60,7 +61,7 @@ export const Line = React.memo(function Shape({
         stroke={color}
         strokeLinejoin="round"
         strokeLinecap="round"
-        strokeDasharray={StrokeDasharray[series.lineStyle]}
+        strokeDasharray={StrokeDasharray[lineStyle]}
       />
       {children}
     </animated.g>

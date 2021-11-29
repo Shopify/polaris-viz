@@ -46,10 +46,9 @@ import {
   StringLabelFormatter,
   NumberLabelFormatter,
   Dimensions,
-  LegacyDataSeries,
-  Data,
   DataType,
   DataSeries,
+  DataPoint,
 } from '../../types';
 
 import {Spacing} from './constants';
@@ -73,8 +72,6 @@ export interface Props {
   isAnimated: boolean;
   theme?: string;
 }
-
-type SeriesForAnimation = Required<Partial<LegacyDataSeries<Data, null>>>;
 
 export function Chart({
   xAxisOptions,
@@ -207,9 +204,9 @@ export function Chart({
   );
 
   const lineGenerator = useMemo(() => {
-    const generator = line<{rawValue: number}>()
+    const generator = line<DataPoint>()
       .x((_, index) => (xScale == null ? 0 : xScale(index)))
-      .y(({rawValue}) => yScale(rawValue));
+      .y(({value}) => yScale(value ?? 0));
 
     if (selectedTheme.line.hasSpline) {
       generator.curve(curveStepRounded);
@@ -218,23 +215,22 @@ export function Chart({
     return generator;
   }, [xScale, yScale, selectedTheme.line.hasSpline]);
 
-  const seriesForAnimation = useMemo(() => {
+  const seriesForAnimation: DataSeries[] = useMemo(() => {
     return stackedValues.map((value) => {
       return {
         name: '',
-        color: null,
         data: value.map((val) => {
           return {
-            label: '',
-            rawValue: val[1],
+            key: '',
+            value: val[1],
           };
         }),
       };
     });
   }, [stackedValues]);
 
-  const {animatedCoordinates} = useLinearChartAnimations<SeriesForAnimation>({
-    series: seriesForAnimation,
+  const {animatedCoordinates} = useLinearChartAnimations({
+    data: seriesForAnimation,
     lineGenerator,
     activeIndex: activePointIndex,
     isAnimated: true,

@@ -18,7 +18,8 @@
 - Renamed `Annotation.xOffset` to `offset`.
 - Renamed `Annotation.dataIndex` to `dataSeriesIndex`.
 - Added `dataPointIndex` to `Annotation`.
-
+- Renamed `series` to `data` in `LineChartProps`.
+- Changed `LineChartProps.data` to use `DataSeries[]`.
 ### Removed
 
 - Removed `<MultiSeriesBarChart />`.

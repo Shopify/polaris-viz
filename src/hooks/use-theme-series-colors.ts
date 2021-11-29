@@ -38,8 +38,8 @@ export function useThemeSeriesColors(
 
     let lastUsedColorIndex = -1;
 
-    return series.map(({color, lineStyle}) => {
-      if (lineStyle && lineStyle !== 'solid') {
+    return series.map(({color, lineStyle, isComparison}) => {
+      if (isComparison === true || (lineStyle && lineStyle !== 'solid')) {
         return selectedTheme.line.dottedStrokeColor;
       }
 

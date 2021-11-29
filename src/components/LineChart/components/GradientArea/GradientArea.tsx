@@ -4,13 +4,13 @@ import {area} from 'd3-shape';
 
 import {LinearGradient} from '../../../LinearGradient';
 import {uniqueId, curveStepRounded} from '../../../../utilities';
-import type {Data} from '../../../../types';
-import type {SeriesWithDefaults} from '../../types';
+import type {DataPoint} from '../../../../types';
+import type {DataWithDefaults} from '../../types';
 
 import {getGradientDetails} from './utilities/get-gradient-details';
 
-interface Props {
-  series: SeriesWithDefaults;
+export interface Props {
+  series: DataWithDefaults;
   yScale: ScaleLinear<number, number>;
   xScale: ScaleLinear<number, number>;
   hasSpline: boolean;
@@ -21,10 +21,10 @@ export function GradientArea({series, yScale, xScale, hasSpline}: Props) {
   const maskId = useMemo(() => uniqueId('mask'), []);
   const {data, areaColor} = series;
 
-  const areaGenerator = area<Data>()
-    .x((_: Data, index: number) => xScale(index))
+  const areaGenerator = area<DataPoint>()
+    .x((_: DataPoint, index: number) => xScale(index))
     .y0(yScale(0))
-    .y1(({rawValue}: {rawValue: number}) => yScale(rawValue));
+    .y1(({value}) => yScale(value ?? 0));
 
   if (hasSpline) {
     areaGenerator.curve(curveStepRounded);
