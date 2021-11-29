@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### Changed
+
+- Renamed `series` to `data` in `StackedAreaChartProps`.
+- Changed `data` to use `DataSeries[]`.
+
 ## [0.27.0] - 2021-12-01
 
 [0.27.0 Migration Guide](https://docs.google.com/document/d/1iO05cV5POYAjXI6HAiVXBHo7jWdMA7_ad3w08KQ52Dg)

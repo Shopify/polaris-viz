@@ -52,6 +52,30 @@ export const generateMultipleSeries = (
     }));
 };
 
+// TODO: Remove these once all charts are using DataSeries
+export const generateDataSetNewData = (dataLength: number) => {
+  return Array(dataLength)
+    .fill(null)
+    .map(() => {
+      return {
+        value: randomNumber(20, 50),
+        key: names[Math.floor(Math.random() * names.length)],
+      };
+    });
+};
+
+export const generateMultipleSeriesNewData = (
+  quantity: number,
+  dataSetLength = 10,
+) => {
+  return Array(quantity)
+    .fill(null)
+    .map((_, index) => ({
+      name: `Series ${index}`,
+      data: generateDataSetNewData(dataSetLength),
+    }));
+};
+
 export const SPARKLINE_SERIES = [
   {
     data: [
