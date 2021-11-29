@@ -12,6 +12,7 @@ import {
 import {
   generateMultipleSeries,
   generateLabels,
+  generateMultipleSeriesNewData,
 } from '../../../../../documentation/utilities';
 
 export const SampleSparkBarChart = ({theme} = {theme: 'Default'}) => {
@@ -138,7 +139,7 @@ export const SampleStackedAreaChart = (
 ) => {
   return (
     <StackedAreaChart
-      series={generateMultipleSeries(seriesLength, 3)}
+      data={generateMultipleSeriesNewData(seriesLength, 3)}
       xAxisOptions={{
         labels: generateLabels(3),
       }}

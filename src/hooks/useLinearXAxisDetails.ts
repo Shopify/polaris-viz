@@ -18,14 +18,7 @@ import {
   LABEL_SPACE_MINUS_FIRST_AND_LAST,
   LABEL_ELLIPSIS_LENGTH,
 } from '../constants';
-import type {
-  StringLabelFormatter,
-  NullableData,
-  Data,
-  LegacyDataSeries,
-  Color,
-  YAxisTick,
-} from '../types';
+import type {StringLabelFormatter, YAxisTick, DataSeries} from '../types';
 
 import {useLinearXScale} from './useLinearXScale';
 
@@ -37,7 +30,7 @@ function getDatumSpace(width: number, numberOfTicks: number) {
 }
 
 export interface ChartDetails {
-  series: LegacyDataSeries<Data | NullableData, Color>[];
+  data: DataSeries[];
   fontSize: number;
   width: number;
   formatXAxisLabel: StringLabelFormatter;
@@ -48,7 +41,7 @@ export interface ChartDetails {
 }
 
 export function useLinearXAxisDetails({
-  series,
+  data,
   fontSize,
   width,
   formatXAxisLabel,
@@ -87,11 +80,11 @@ export function useLinearXAxisDetails({
 
   const longestSeriesLastIndex = useMemo(
     () =>
-      series.reduce<number>(
+      data.reduce<number>(
         (max, currentSeries) => Math.max(max, currentSeries.data.length - 1),
         0,
       ),
-    [series],
+    [data],
   );
 
   // using the estimated width, use the xscale hook so we can then get the d3's estimated ticks

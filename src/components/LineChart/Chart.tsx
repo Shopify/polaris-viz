@@ -39,7 +39,7 @@ import {YAxis} from '../YAxis';
 import {Point} from '../Point';
 import {Crosshair} from '../Crosshair';
 import {LinearGradient} from '../LinearGradient';
-import {DataType, Dimensions} from '../../types';
+import {DataSeries, DataType, Dimensions} from '../../types';
 import {HorizontalGridLines} from '../HorizontalGridLines';
 
 import {MAX_ANIMATED_SERIES_LENGTH} from './constants';
@@ -53,6 +53,22 @@ import type {
 import {useYScale} from './hooks';
 import {Line, GradientArea} from './components';
 import styles from './Chart.scss';
+
+export function formatSeriesToDataSeries(
+  series: SeriesWithDefaults[],
+): DataSeries[] {
+  return series.map((series) => {
+    return {
+      ...series,
+      data: series.data.map(({rawValue, label}) => {
+        return {
+          value: rawValue,
+          key: label,
+        };
+      }),
+    };
+  });
+}
 
 interface Props {
   isAnimated: boolean;
@@ -104,8 +120,14 @@ export function Chart({
 
   const hideXAxis = xAxisOptions.hide ?? selectedTheme.xAxis.hide;
 
+  // TODO: Remove this when this component is
+  // using DataSeries.
+  const formattedToDataSeries = useMemo(() => {
+    return formatSeriesToDataSeries(series);
+  }, [series]);
+
   const xAxisDetails = useLinearXAxisDetails({
-    series,
+    data: formattedToDataSeries,
     fontSize,
     width: width - selectedTheme.grid.horizontalMargin * 2,
     formatXAxisLabel: xAxisOptions.labelFormatter,
@@ -352,9 +374,9 @@ export function Chart({
 
         {emptyState ? null : (
           <VisuallyHiddenRows
+            data={formattedToDataSeries}
             formatYAxisLabel={yAxisOptions.labelFormatter}
             xAxisLabels={formattedLabels}
-            series={series}
           />
         )}
 

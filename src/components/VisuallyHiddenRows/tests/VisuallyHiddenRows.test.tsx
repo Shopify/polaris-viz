@@ -1,33 +1,33 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
+import {VisuallyHiddenRows, Props} from '../VisuallyHiddenRows';
 
-const mockProps = {
-  series: [
+const mockProps: Props = {
+  data: [
     {
       name: 'Asia',
       data: [
-        {label: '1', rawValue: 502},
-        {label: '2', rawValue: 1000},
-        {label: '3', rawValue: 2000},
-        {label: '4', rawValue: 1000},
-        {label: '5', rawValue: 100},
-        {label: '6', rawValue: 1000},
-        {label: '7', rawValue: 5000},
+        {key: '1', value: 502},
+        {key: '2', value: 1000},
+        {key: '3', value: 2000},
+        {key: '4', value: 1000},
+        {key: '5', value: 100},
+        {key: '6', value: 1000},
+        {key: '7', value: 5000},
       ],
       color: 'purple',
     },
     {
       name: 'Africa',
       data: [
-        {label: '1', rawValue: 106},
-        {label: '2', rawValue: 107},
-        {label: '3', rawValue: 111},
-        {label: '4', rawValue: 133},
-        {label: '5', rawValue: 100},
-        {label: '6', rawValue: 767},
-        {label: '7', rawValue: 1766},
+        {key: '1', value: 106},
+        {key: '2', value: 107},
+        {key: '3', value: 111},
+        {key: '4', value: 133},
+        {key: '5', value: 100},
+        {key: '6', value: 767},
+        {key: '7', value: 1766},
       ],
       color: 'teal',
     },
@@ -79,7 +79,7 @@ describe('<VisuallyHiddenRows', () => {
     });
   });
 
-  describe('series', () => {
+  describe('data', () => {
     it('names get rendered as column headers', () => {
       const chart = mount(
         <svg>
@@ -93,7 +93,7 @@ describe('<VisuallyHiddenRows', () => {
 
       expect(firstRowHeader).toHaveReactProps({
         role: 'rowheader',
-        children: mockProps.series[0].name,
+        children: mockProps.data[0].name,
       });
     });
 
@@ -110,7 +110,7 @@ describe('<VisuallyHiddenRows', () => {
 
       expect(firstCell).toHaveReactProps({
         role: 'cell',
-        children: `$${mockProps.series[0].data[0].rawValue}`,
+        children: `$${mockProps.data[0].data[0].value}`,
       });
     });
   });
