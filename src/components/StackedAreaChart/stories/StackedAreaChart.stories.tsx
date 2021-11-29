@@ -43,7 +43,7 @@ export default {
     },
   },
   argTypes: {
-    series: {
+    data: {
       description:
         'The `Series` type gives the user flexibility to define what each series/area should look like, as well as providing the data to be plotted. [Series type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/StackedAreaChart/types.ts#L3)',
     },
@@ -81,7 +81,7 @@ export default {
 } as Meta;
 
 const defaultProps = {
-  series: data,
+  data,
   skipLinkText: 'Skip chart content',
   xAxisOptions: {labels},
   yAxisOptions: {formatLabel: formatYAxisLabel},
@@ -110,15 +110,15 @@ Gradients.args = {
       .fill(null)
       .map(() => 'label'),
   },
-  series: [
+  data: [
     {
       name: 'One',
       data: Array(5)
         .fill(null)
         .map(() => {
           return {
-            rawValue: Math.random() * Math.random() * 100,
-            label: Math.random().toString(),
+            value: Math.random() * Math.random() * 100,
+            key: Math.random().toString(),
           };
         }),
       color: [
@@ -133,8 +133,8 @@ Gradients.args = {
         .fill(null)
         .map(() => {
           return {
-            rawValue: Math.random() * Math.random() * 100,
-            label: Math.random().toString(),
+            value: Math.random() * Math.random() * 100,
+            key: Math.random().toString(),
           };
         }),
     },
@@ -149,15 +149,15 @@ LargeVolume.args = {
       .fill(null)
       .map(() => 'label'),
   },
-  series: [
+  data: [
     {
       name: 'First-time',
       data: Array(2000)
         .fill(null)
         .map(() => {
           return {
-            rawValue: Math.random() * Math.random() * 100,
-            label: Math.random().toString(),
+            value: Math.random() * Math.random() * 100,
+            key: Math.random().toString(),
           };
         }),
     },
@@ -167,8 +167,8 @@ LargeVolume.args = {
         .fill(null)
         .map(() => {
           return {
-            rawValue: Math.random() * Math.random() * 100,
-            label: Math.random().toString(),
+            value: Math.random() * Math.random() * 100,
+            key: Math.random().toString(),
           };
         }),
     },
@@ -179,19 +179,19 @@ export const SeriesColorsUpToFour = Template.bind({});
 
 SeriesColorsUpToFour.args = {
   ...defaultProps,
-  series: generateMultipleSeries(4),
+  data: generateMultipleSeries(4),
 };
 
 export const SeriesColorsFromFiveToSeven = Template.bind({});
 
 SeriesColorsFromFiveToSeven.args = {
   ...defaultProps,
-  series: generateMultipleSeries(7),
+  data: generateMultipleSeries(7),
 };
 
 export const SeriesColorsUpToFourteen = Template.bind({});
 
 SeriesColorsUpToFourteen.args = {
   ...defaultProps,
-  series: generateMultipleSeries(14),
+  data: generateMultipleSeries(14),
 };

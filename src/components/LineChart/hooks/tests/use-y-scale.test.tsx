@@ -1,8 +1,8 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
+import type {DataSeries} from 'types';
 
-import type {Series} from '../../types';
 import {useYScale} from '../use-y-scale';
 import {DEFAULT_MAX_Y} from '../../../../constants';
 import {shouldRoundScaleUp} from '../../../../utilities';
@@ -27,7 +27,7 @@ jest.mock('../../../../utilities', () => ({
 const mockProps = {
   drawableHeight: 250,
   formatYAxisLabel: jest.fn(),
-  series: [],
+  data: [],
   fontSize: 12,
   integersOnly: false,
 };
@@ -73,19 +73,19 @@ describe('useYScale', () => {
       return scale;
     });
 
-    const deeplyNegative: Series = {
+    const deeplyNegative: DataSeries = {
       name: 'Deeply negative',
-      data: [{label: '1', rawValue: -10000}],
+      data: [{key: '1', value: -10000}],
     };
-    const highlyPositive: Series = {
+    const highlyPositive: DataSeries = {
       name: 'Highly positive',
-      data: [{label: '1', rawValue: 10000}],
+      data: [{key: '1', value: 10000}],
     };
 
     function TestComponent() {
       useYScale({
         ...mockProps,
-        series: [deeplyNegative, highlyPositive],
+        data: [deeplyNegative, highlyPositive],
       });
 
       return null;
@@ -112,14 +112,14 @@ describe('useYScale', () => {
     function TestComponent() {
       useYScale({
         ...mockProps,
-        series: [
+        data: [
           {
             name: 'Test Data 1',
-            data: [{label: '1', rawValue: 0}],
+            data: [{key: '1', value: 0}],
           },
           {
             name: 'Test Data 2',
-            data: [{label: '1', rawValue: 0}],
+            data: [{key: '1', value: 0}],
           },
         ],
       });
@@ -286,19 +286,19 @@ describe('useYScale', () => {
         return scale;
       });
 
-      const series = [
+      const data: DataSeries[] = [
         {
           name: 'Series1',
           data: [
-            {label: '1', rawValue: 0.1},
-            {label: '1', rawValue: 0.9},
+            {key: '1', value: 0.1},
+            {key: '1', value: 0.9},
           ],
         },
         {
           name: 'Series2',
           data: [
-            {label: '1', rawValue: 0.2},
-            {label: '1', rawValue: 0.7},
+            {key: '1', value: 0.2},
+            {key: '1', value: 0.7},
           ],
         },
       ];
@@ -307,7 +307,7 @@ describe('useYScale', () => {
         useYScale({
           ...mockProps,
           integersOnly: true,
-          series,
+          data,
         });
 
         return null;

@@ -43,38 +43,21 @@ import {ComponentContainer, LogoHeader, Divider} from './components';
     }}>
 
 <ComponentContainer
-  title="Bar chart"
-  description="Used to show comparison across categories. "
-  link="https://polaris-viz.shopify.io/?path=/docs/charts-barchart--default"
-  chart={
-    <BarChart
-      data={[
-        {rawValue: 324.19, label: 'Jan. 1'},
-        {rawValue: 613.29, label: 'Jan. 2'},
-        {rawValue: 1000, label: 'Jan. 3'},
-        {rawValue: 0, label: 'Jan. 4'},
-        {rawValue: 1, label: 'Jan. 5'},
-      ]}
-    />
-  }
-/>
-
-<ComponentContainer
   title="Line chart"
   description="Used to show change over time. "
   link="https://polaris-viz.shopify.io/?path=/docs/charts-linechart--default"
   chart={
     <LineChart
       isAnimated
-      series={[
+      data={[
         {
           name: 'Sales',
           data: [
-            {rawValue: 324.19, label: '2020-01-01'},
-            {rawValue: 613.29, label: '2020-01-02'},
-            {rawValue: -422.79, label: '2020-01-03'},
-            {rawValue: 0, label: '2020-01-04'},
-            {rawValue: 1, label: '2020-01-05'},
+            {value: 324.19, key: '2020-01-01'},
+            {value: 613.29, key: '2020-01-02'},
+            {value: -422.79, key: '2020-01-03'},
+            {value: 0, key: '2020-01-04'},
+            {value: 1, key: '2020-01-05'},
           ],
         },
       ]}
@@ -103,29 +86,29 @@ import {ComponentContainer, LogoHeader, Divider} from './components';
           'July',
         ],
       }}
-      series={[
+      data={[
         {
           name: 'First-time',
           data: [
-            {label: 'January', rawValue: 4237},
-            {label: 'February', rawValue: 5024},
-            {label: 'March', rawValue: 5730},
-            {label: 'April', rawValue: 5587},
-            {label: 'May', rawValue: 5303},
-            {label: 'June', rawValue: 5634},
-            {label: 'July', rawValue: 3238},
+            {key: 'January', value: 4237},
+            {key: 'February', value: 5024},
+            {key: 'March', value: 5730},
+            {key: 'April', value: 5587},
+            {key: 'May', value: 5303},
+            {key: 'June', value: 5634},
+            {key: 'July', value: 3238},
           ],
         },
         {
           name: 'Returning',
           data: [
-            {label: 'January', rawValue: 5663},
-            {label: 'February', rawValue: 7349},
-            {label: 'March', rawValue: 9795},
-            {label: 'April', rawValue: 7396},
-            {label: 'May', rawValue: 7028},
-            {label: 'June', rawValue: 12484},
-            {label: 'July', rawValue: 4878},
+            {key: 'January', value: 5663},
+            {key: 'February', value: 7349},
+            {key: 'March', value: 9795},
+            {key: 'April', value: 7396},
+            {key: 'May', value: 7028},
+            {key: 'June', value: 12484},
+            {key: 'July', value: 4878},
           ],
         },
       ]}
@@ -138,34 +121,34 @@ import {ComponentContainer, LogoHeader, Divider} from './components';
   description="Used to show a grouped comparison of different types, across categories or time. "
   link="https://polaris-viz.shopify.io/?path=/docs/charts-multiseriesbarchart--default"
   chart={
-    <MultiSeriesBarChart
+    <BarChart
       isAnimated
       xAxisOptions={{
         labels: ['Monday', 'Tuesday', 'Wednesday'],
       }}
-      series={[
+      data={[
         {
           name: 'Breakfast',
           data: [
-            {label: 'Monday', rawValue: 3},
-            {label: 'Tuesday', rawValue: 10},
-            {label: 'Wednesday', rawValue: 4},
+            {key: 'Monday', value: 3},
+            {key: 'Tuesday', value: 10},
+            {key: 'Wednesday', value: 4},
           ],
         },
         {
           name: 'Lunch',
           data: [
-            {label: 'Monday', rawValue: 4},
-            {label: 'Tuesday', rawValue: 9},
-            {label: 'Wednesday', rawValue: 5},
+            {key: 'Monday', value: 4},
+            {key: 'Tuesday', value: 9},
+            {key: 'Wednesday', value: 5},
           ],
         },
         {
           name: 'Dinner',
           data: [
-            {label: 'Monday', rawValue: 7},
-            {label: 'Tuesday', rawValue: 10},
-            {label: 'Wednesday', rawValue: 6},
+            {key: 'Monday', value: 7},
+            {key: 'Tuesday', value: 10},
+            {key: 'Wednesday', value: 6},
           ],
         },
       ]}
@@ -174,39 +157,39 @@ import {ComponentContainer, LogoHeader, Divider} from './components';
 />
 
 <ComponentContainer
-  title="Multiseries bar chart (stacked)"
+  title="BarChart (stacked)"
   description="Used to show a stacked comparison of different types, across categories or time. "
   link="https://polaris-viz.shopify.io/?path=/docs/charts-multiseriesbarchart--stacked"
   chart={
-    <MultiSeriesBarChart
+    <BarChart
       barOptions={{isStacked: true}}
       isAnimated
       xAxisOptions={{
         labels: ['Monday', 'Tuesday', 'Wednesday'],
       }}
-      series={[
+      data={[
         {
           name: 'Breakfast',
           data: [
-            {label: 'Monday', rawValue: 3},
-            {label: 'Tuesday', rawValue: 7},
-            {label: 'Wednesday', rawValue: 4},
+            {key: 'Monday', value: 3},
+            {key: 'Tuesday', value: 7},
+            {key: 'Wednesday', value: 4},
           ],
         },
         {
           name: 'Lunch',
           data: [
-            {label: 'Monday', rawValue: 4},
-            {label: 'Tuesday', rawValue: 0},
-            {label: 'Wednesday', rawValue: 5},
+            {key: 'Monday', value: 4},
+            {key: 'Tuesday', value: 0},
+            {key: 'Wednesday', value: 5},
           ],
         },
         {
           name: 'Dinner',
           data: [
-            {label: 'Monday', rawValue: 7},
-            {label: 'Tuesday', rawValue: 0},
-            {label: 'Wednesday', rawValue: 6},
+            {key: 'Monday', value: 7},
+            {key: 'Tuesday', value: 0},
+            {key: 'Wednesday', value: 6},
           ],
         },
       ]}

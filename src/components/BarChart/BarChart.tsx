@@ -1,109 +1,109 @@
 import React, {useRef} from 'react';
 
-import type {XAxisOptions, YAxisOptions} from '../../types';
+import {TooltipContent} from '../TooltipContent';
 import {SkipLink} from '../SkipLink';
 import {uniqueId, normalizeData} from '../../utilities';
-import {ChartContainer} from '../ChartContainer';
-
-import {TooltipContent} from './components';
-import {Chart} from './Chart';
+import {HorizontalBarChart} from '../HorizontalBarChart';
+import type {ChartType, DataSeries, Direction} from '../../types';
+import {VerticalBarChart} from '../VerticalBarChart';
 import type {
-  BarChartData,
   RenderTooltipContentData,
-  Annotation,
-  AnnotationLookupTable,
-} from './types';
+  XAxisOptions,
+  YAxisOptions,
+} from '../BarChart';
+
+import type {Annotation} from './types';
 
 export interface BarChartProps {
-  data: BarChartData[];
+  data: DataSeries[];
+  renderTooltipContent?(data: RenderTooltipContentData): React.ReactNode;
+
   annotations?: Annotation[];
-  skipLinkText?: string;
+  direction?: Direction;
   emptyStateText?: string;
   isAnimated?: boolean;
-  renderTooltipContent?: (data: RenderTooltipContentData) => React.ReactNode;
-  xAxisOptions?: XAxisOptions;
-  yAxisOptions?: YAxisOptions;
+  skipLinkText?: string;
   theme?: string;
+  type?: ChartType;
+  xAxisOptions?: Partial<XAxisOptions>;
+  yAxisOptions?: Partial<YAxisOptions>;
 }
 
 export function BarChart({
+  annotations = [],
   data,
-  annotations,
-  renderTooltipContent,
+  direction = 'vertical',
   emptyStateText,
   isAnimated = false,
+  renderTooltipContent,
   skipLinkText,
+  theme,
+  type = 'default',
   xAxisOptions,
   yAxisOptions,
-  theme,
 }: BarChartProps) {
-  const skipLinkAnchorId = useRef(uniqueId('barChart'));
+  const skipLinkAnchorId = useRef(uniqueId('BarChart'));
 
   const emptyState = data.length === 0;
+  const hideSkipLink =
+    skipLinkText == null || skipLinkText.length === 0 || emptyState;
 
-  const xAxisOptionsWithDefaults = {
+  const xAxisOptionsForChart: XAxisOptions = {
     labelFormatter: (value: string) => value,
-    useMinimalLabels: false,
-    wrapLabels: true,
+    hide: false,
+    wrapLabels: false,
     ...xAxisOptions,
   };
 
-  const yAxisOptionsWithDefaults = {
-    labelFormatter: (value: number) => value.toString(),
-    integersOnly: false,
-    ...yAxisOptions,
-  };
+  function renderTooltip({data}: RenderTooltipContentData) {
+    if (renderTooltipContent != null) {
+      return renderTooltipContent({data});
+    }
 
-  function renderDefaultTooltipContent({
-    label,
-    value,
-    annotation,
-  }: RenderTooltipContentData) {
-    const formattedLabel = xAxisOptionsWithDefaults.labelFormatter(label);
-    const formattedValue = yAxisOptionsWithDefaults.labelFormatter(value);
-    return (
-      <TooltipContent
-        label={formattedLabel}
-        value={formattedValue}
-        annotation={annotation}
-        theme={theme}
-      />
-    );
-  }
+    const tooltipData = data.map(({value, label, color, type}) => {
+      return {
+        label,
+        value: xAxisOptionsForChart.labelFormatter!(value),
+        color,
+        type,
+      };
+    });
 
-  let annotationsLookupTable: AnnotationLookupTable = {};
-  if (annotations != null && annotations.length > 0) {
-    annotationsLookupTable = normalizeData(annotations, 'dataIndex');
+    return <TooltipContent data={tooltipData} theme={theme} />;
   }
+  const annotationsLookupTable = normalizeData(annotations, 'dataSeriesIndex');
 
   return (
     <React.Fragment>
-      {skipLinkText == null ||
-      skipLinkText.length === 0 ||
-      emptyState ? null : (
+      {hideSkipLink ? null : (
         <SkipLink anchorId={skipLinkAnchorId.current}>{skipLinkText}</SkipLink>
       )}
-      <ChartContainer theme={theme}>
-        <Chart
-          isAnimated={isAnimated}
-          data={data}
-          annotationsLookupTable={annotationsLookupTable}
-          renderTooltipContent={
-            renderTooltipContent != null
-              ? renderTooltipContent
-              : renderDefaultTooltipContent
-          }
-          xAxisOptions={xAxisOptionsWithDefaults}
-          yAxisOptions={yAxisOptionsWithDefaults}
-          emptyStateText={emptyStateText}
-        />
-      </ChartContainer>
 
-      {skipLinkText == null ||
-      skipLinkText.length === 0 ||
-      emptyState ? null : (
-        <SkipLink anchorId={skipLinkAnchorId.current}>{skipLinkText}</SkipLink>
+      {direction === 'vertical' ? (
+        <VerticalBarChart
+          annotationsLookupTable={annotationsLookupTable}
+          data={data}
+          xAxisOptions={xAxisOptionsForChart}
+          yAxisOptions={yAxisOptions}
+          theme={theme}
+          type={type}
+          emptyStateText={emptyStateText}
+          isAnimated={isAnimated}
+          renderTooltipContent={renderTooltip}
+        />
+      ) : (
+        <HorizontalBarChart
+          annotationsLookupTable={annotationsLookupTable}
+          data={data}
+          isAnimated={isAnimated}
+          renderTooltipContent={renderTooltip}
+          theme={theme}
+          type={type}
+          xAxisOptions={xAxisOptionsForChart}
+        />
       )}
+
+      {hideSkipLink ? null : <SkipLink.Anchor id={skipLinkAnchorId.current} />}
     </React.Fragment>
   );
 }
