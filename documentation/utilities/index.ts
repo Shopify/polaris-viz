@@ -21,22 +21,22 @@ function randomNumber(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-export const generateDataSet = (dataLength: number) => {
-  return Array(dataLength)
-    .fill(null)
-    .map(() => {
-      return {
-        rawValue: randomNumber(20, 50),
-        label: names[Math.floor(Math.random() * names.length)],
-      };
-    });
-};
-
 export const generateLabels = (dataLength: number) => {
   return Array(dataLength)
     .fill(null)
     .map(() => {
       return names[Math.floor(Math.random() * names.length)];
+    });
+};
+
+export const generateDataSet = (dataLength: number) => {
+  return Array(dataLength)
+    .fill(null)
+    .map(() => {
+      return {
+        value: randomNumber(20, 50),
+        key: names[Math.floor(Math.random() * names.length)],
+      };
     });
 };
 

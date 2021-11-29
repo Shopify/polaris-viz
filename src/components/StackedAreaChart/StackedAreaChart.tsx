@@ -2,12 +2,16 @@ import React, {useRef} from 'react';
 
 import {ChartContainer} from '../ChartContainer';
 import {SkipLink} from '../SkipLink';
-import type {StringLabelFormatter, NumberLabelFormatter} from '../../types';
+import type {
+  StringLabelFormatter,
+  NumberLabelFormatter,
+  DataSeries,
+} from '../../types';
 import {TooltipContent} from '../TooltipContent';
 import {uniqueId} from '../../utilities';
 
 import {Chart} from './Chart';
-import type {Series, RenderTooltipContentData} from './types';
+import type {RenderTooltipContentData} from './types';
 
 export interface StackedAreaChartProps {
   renderTooltipContent?(data: RenderTooltipContentData): React.ReactNode;
@@ -20,7 +24,7 @@ export interface StackedAreaChartProps {
   yAxisOptions?: {
     formatLabel?: NumberLabelFormatter;
   };
-  series: Series[];
+  data: DataSeries[];
   isAnimated?: boolean;
   skipLinkText?: string;
   theme?: string;
@@ -29,7 +33,7 @@ export interface StackedAreaChartProps {
 export function StackedAreaChart({
   xAxisOptions,
   yAxisOptions,
-  series,
+  data,
   renderTooltipContent,
   isAnimated = false,
   skipLinkText,
@@ -37,7 +41,7 @@ export function StackedAreaChart({
 }: StackedAreaChartProps) {
   const skipLinkAnchorId = useRef(uniqueId('stackedAreaChart'));
 
-  if (series.length === 0) {
+  if (data.length === 0) {
     return null;
   }
 
@@ -67,7 +71,7 @@ export function StackedAreaChart({
       <ChartContainer theme={theme}>
         <Chart
           xAxisOptions={xAxisOptions}
-          series={series}
+          data={data}
           formatXAxisLabel={xFormatter}
           formatYAxisLabel={yFormatter}
           renderTooltipContent={

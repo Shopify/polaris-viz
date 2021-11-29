@@ -95,7 +95,7 @@ export const COLOR_OVERRIDE_SERIES = [
       {value: 4, key: 'Yesterday'},
       {value: 7, key: 'Today'},
     ],
-    color: 'red',
+    color: 'lime',
   },
   {
     name: 'Pants',

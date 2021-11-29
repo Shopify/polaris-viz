@@ -2,33 +2,27 @@ export {
   SparkLineChart,
   SparkBarChart,
   SimpleNormalizedChart,
-  BarChart,
-  BarChartTooltipContent,
   LineChart,
   LineChartTooltipContent,
   StackedAreaChart,
   Legend,
-  MultiSeriesBarChart,
+  BarChart,
   TooltipContent,
   LinePreview,
   SquareColorPreview,
   PolarisVizProvider,
-  HorizontalBarChart,
 } from './components';
 
 export type {
   SparkLineChartProps,
   SparkBarChartProps,
   SimpleNormalizedChartProps,
-  BarChartProps,
-  BarChartTooltipContentProps,
   LineChartProps,
   LineChartTooltipContentProps,
   StackedAreaChartProps,
-  MultiSeriesBarChartProps,
+  BarChartProps,
   TooltipContentProps,
   PolarisVizProviderProps,
-  HorizontalBarChartProps,
 } from './components';
 
 export {

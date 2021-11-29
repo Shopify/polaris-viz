@@ -7,7 +7,7 @@ import {LinePreview} from '../../../LinePreview';
 
 import styles from './TooltipContent.scss';
 
-interface TooltipData {
+export interface TooltipData {
   name: string;
   point: {
     label: string;

@@ -1,43 +1,16 @@
 import React from 'react';
 
 import {
-  SparkBarChart,
   SparkLineChart,
-  BarChart,
   LineChart,
-  MultiSeriesBarChart,
+  BarChart,
   StackedAreaChart,
   SimpleNormalizedChart,
 } from '../../../../components';
 import {
-  generateMultipleSeries,
   generateLabels,
+  generateMultipleSeries,
 } from '../../../../../documentation/utilities';
-
-export const SampleSparkBarChart = ({theme} = {theme: 'Default'}) => {
-  return (
-    <SparkBarChart
-      theme={theme}
-      data={[
-        {
-          data: [
-            {key: 0, value: 100},
-            {key: 1, value: 200},
-            {key: 2, value: 300},
-            {key: 4, value: 400},
-            {key: 5, value: 400},
-            {key: 6, value: 100},
-            {key: 7, value: 2000},
-            {key: 8, value: 800},
-            {key: 9, value: 900},
-            {key: 10, value: 200},
-            {key: 11, value: 400},
-          ],
-        },
-      ]}
-    />
-  );
-};
 
 export const SampleSparkLineChart = ({theme} = {theme: 'Default'}) => {
   return (
@@ -85,15 +58,15 @@ export const SampleLineChart = ({theme} = {theme: 'Default'}) => {
     <LineChart
       theme={theme}
       isAnimated
-      series={[
+      data={[
         {
           name: 'Sales',
           data: [
-            {rawValue: 324.19, label: '2020-01-01'},
-            {rawValue: 613.29, label: '2020-01-02'},
-            {rawValue: -422.79, label: '2020-01-03'},
-            {rawValue: 0, label: '2020-01-04'},
-            {rawValue: 1, label: '2020-01-05'},
+            {value: 324.19, key: '2020-01-01'},
+            {value: 613.29, key: '2020-01-02'},
+            {value: -422.79, key: '2020-01-03'},
+            {value: 0, key: '2020-01-04'},
+            {value: 1, key: '2020-01-05'},
           ],
         },
       ]}
@@ -104,33 +77,10 @@ export const SampleLineChart = ({theme} = {theme: 'Default'}) => {
   );
 };
 
-export const SampleBarchart = ({theme} = {theme: 'Default'}) => {
-  return (
-    <BarChart
-      theme={theme}
-      data={[
-        {rawValue: 324.19, label: 'Jan. 1'},
-        {rawValue: 613.29, label: 'Jan. 2'},
-        {rawValue: 1000, label: 'Jan. 3'},
-        {rawValue: 432, label: 'Jan. 4'},
-        {rawValue: 1, label: 'Jan. 5'},
-      ]}
-    />
-  );
-};
-
-export const SampleMultiseriesBarChart = (
+export const SampleBarChart = (
   {theme, seriesLength = 3} = {theme: 'Default'},
 ) => {
-  return (
-    <MultiSeriesBarChart
-      series={generateMultipleSeries(seriesLength)}
-      xAxisOptions={{
-        labels: generateLabels(1),
-      }}
-      theme={theme}
-    />
-  );
+  return <BarChart data={generateMultipleSeries(seriesLength)} theme={theme} />;
 };
 
 export const SampleStackedAreaChart = (
@@ -138,7 +88,7 @@ export const SampleStackedAreaChart = (
 ) => {
   return (
     <StackedAreaChart
-      series={generateMultipleSeries(seriesLength, 3)}
+      data={generateMultipleSeries(seriesLength, 3)}
       xAxisOptions={{
         labels: generateLabels(3),
       }}

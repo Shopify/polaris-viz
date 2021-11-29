@@ -28,14 +28,14 @@ jest.mock('../../utilities', () => {
 });
 
 describe('useLinearXAxisDetails', () => {
-  const mockProps = {
-    series: [
+  const mockProps: ChartDetails = {
+    data: [
       {
         data: [
-          {rawValue: 10000, label: 'Some label'},
-          {rawValue: 10, label: 'Some label'},
-          {rawValue: 10, label: 'Some label'},
-          {rawValue: 10, label: 'Some label'},
+          {value: 10000, key: 'Some label'},
+          {value: 10, key: 'Some label'},
+          {value: 10, key: 'Some label'},
+          {value: 10, key: 'Some label'},
         ],
         name: 'Test series 1',
         color: 'colorGreen',
@@ -162,14 +162,14 @@ describe('useLinearXAxisDetails', () => {
             ...mockProps,
             useMinimalLabels: true,
             xAxisLabels: ['Label 1', 'Label 2', 'Label 3', 'Label 4'],
-            series: [
+            data: [
               {
                 data: [
-                  {rawValue: 10000, label: 'Some label'},
-                  {rawValue: 10, label: 'Some label'},
-                  {rawValue: 10, label: 'Some label'},
-                  {rawValue: 10, label: 'Some label'},
-                  {rawValue: 10, label: 'Some label'},
+                  {value: 10000, key: 'Some label'},
+                  {value: 10, key: 'Some label'},
+                  {value: 10, key: 'Some label'},
+                  {value: 10, key: 'Some label'},
+                  {value: 10, key: 'Some label'},
                 ],
                 name: 'Test series 1',
                 color: 'colorGreen',

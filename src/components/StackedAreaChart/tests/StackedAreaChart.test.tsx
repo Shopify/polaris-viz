@@ -1,34 +1,35 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
+import type {DataSeries} from 'types';
 
 import {StackedAreaChart} from '../StackedAreaChart';
 import {Chart} from '../Chart';
 import {SkipLink} from '../../SkipLink';
 
-const mockData = [
+const mockData: DataSeries[] = [
   {
     name: 'Asia',
     data: [
-      {label: '1', rawValue: 502},
-      {label: '2', rawValue: 1000},
-      {label: '3', rawValue: 2000},
-      {label: '4', rawValue: 1000},
-      {label: '5', rawValue: 100},
-      {label: '6', rawValue: 1000},
-      {label: '7', rawValue: 5000},
+      {key: '1', value: 502},
+      {key: '2', value: 1000},
+      {key: '3', value: 2000},
+      {key: '4', value: 1000},
+      {key: '5', value: 100},
+      {key: '6', value: 1000},
+      {key: '7', value: 5000},
     ],
     color: 'purple',
   },
   {
     name: 'Africa',
     data: [
-      {label: '1', rawValue: 106},
-      {label: '2', rawValue: 107},
-      {label: '3', rawValue: 111},
-      {label: '4', rawValue: 133},
-      {label: '5', rawValue: 100},
-      {label: '6', rawValue: 767},
-      {label: '7', rawValue: 1766},
+      {key: '1', value: 106},
+      {key: '2', value: 107},
+      {key: '3', value: 111},
+      {key: '4', value: 133},
+      {key: '5', value: 100},
+      {key: '6', value: 767},
+      {key: '7', value: 1766},
     ],
     color: 'teal',
   },
@@ -39,10 +40,7 @@ const xAxisLabels = ['1', '2', '3', '4', '5', '6', '7'];
 describe('<AreaChart />', () => {
   it('renders a <Chart />', () => {
     const areaChart = mount(
-      <StackedAreaChart
-        series={mockData}
-        xAxisOptions={{labels: xAxisLabels}}
-      />,
+      <StackedAreaChart data={mockData} xAxisOptions={{labels: xAxisLabels}} />,
     );
 
     expect(areaChart).toContainReactComponent(Chart);
@@ -52,7 +50,7 @@ describe('<AreaChart />', () => {
     it('renders an anchor tag that allows skipping the chart content', () => {
       const areaChart = mount(
         <StackedAreaChart
-          series={mockData}
+          data={mockData}
           xAxisOptions={{labels: xAxisLabels}}
           skipLinkText="Skip chart content"
         />,
@@ -66,7 +64,7 @@ describe('<AreaChart />', () => {
     it('does not render an anchor tag if empty', () => {
       const areaChart = mount(
         <StackedAreaChart
-          series={mockData}
+          data={mockData}
           xAxisOptions={{labels: xAxisLabels}}
           skipLinkText=""
         />,

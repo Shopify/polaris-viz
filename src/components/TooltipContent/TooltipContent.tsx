@@ -1,15 +1,21 @@
 import React from 'react';
-import type {Color} from 'types';
 
+import type {Color} from '../../types';
 import {useTheme} from '../../hooks';
-import {SquareColorPreview} from '../SquareColorPreview';
 
+import {DefaultRow, AnnotationRow} from './components';
 import styles from './TooltipContent.scss';
+
+export enum TooltipRowType {
+  Default,
+  Annotation,
+}
 
 export interface TooltipData {
   color: Color;
   label: string;
   value: string;
+  type?: TooltipRowType;
 }
 
 export interface TooltipContentProps {
@@ -35,30 +41,40 @@ export function TooltipContent({
       className={styles.Container}
       style={{
         background: tooltip.backgroundColor,
-        color: tooltip.labelColor,
+        color: tooltip.valueColor,
       }}
     >
       {title == null ? null : <div className={styles.Title}>{title}</div>}
-      {data.map(({color, label, value}, index) => (
-        <React.Fragment key={`${label}-${index}`}>
-          <SquareColorPreview color={color} />
-          <p className={styles.Label}>{label}</p>
-          <p
-            className={styles.Value}
-            style={{
-              color: tooltip.valueColor,
-            }}
-          >
-            {value}
-          </p>
-        </React.Fragment>
-      ))}
+      {data.map(
+        ({color, label, value, type = TooltipRowType.Default}, index) => {
+          switch (type) {
+            default:
+            case TooltipRowType.Default:
+              return (
+                <DefaultRow
+                  color={color}
+                  key={`${label}-${index}`}
+                  label={label}
+                  value={value}
+                />
+              );
+            case TooltipRowType.Annotation:
+              return (
+                <AnnotationRow
+                  key={`${label}-${index}`}
+                  label={label}
+                  value={value}
+                  theme={theme}
+                />
+              );
+          }
+        },
+      )}
       {total == null ? null : (
-        <React.Fragment>
-          <div />
-          <p className={styles.Label}>{total.label}</p>
+        <div className={styles.Row}>
+          <p className={styles.TotalLabel}>{total.label}</p>
           <p className={styles.Value}>{total.value}</p>
-        </React.Fragment>
+        </div>
       )}
     </div>
   );

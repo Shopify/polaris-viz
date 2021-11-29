@@ -1,44 +1,64 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {AnnotationLine} from '../AnnotationLine';
+import {AnnotationLine, AnnotationLineProps} from '../AnnotationLine';
 
 describe('<AnnotationLine />', () => {
   const lineWidth = 5;
-  const mockProps = {
-    xPosition: 0,
-    barWidth: 20,
-    drawableHeight: 300,
+  const mockProps: AnnotationLineProps = {
+    position: 0,
+    barSize: 20,
+    drawableSize: 300,
     width: lineWidth,
     color: 'gray',
     ariaLabel: 'Median: 1.5 hours',
-    xOffset: 0.5,
+    offset: 0.5,
+    direction: 'vertical',
   };
 
-  it('renders a line', () => {
-    const content = mount(
-      <svg>
-        <AnnotationLine {...mockProps} />
-      </svg>,
-    );
+  describe('direction', () => {
+    it('renders a vertical line when vertical', () => {
+      const content = mount(
+        <svg>
+          <AnnotationLine {...mockProps} />
+        </svg>,
+      );
 
-    expect(content).toContainReactComponent('line', {
-      // x1 and x2 will be half of bar width
-      x1: 10,
-      x2: 10,
-      // the drawable height
-      y1: 300,
-      y2: 0,
-      stroke: 'gray',
-      strokeWidth: lineWidth,
+      expect(content).toContainReactComponent('line', {
+        // x1 and x2 will be half of bar width
+        x1: 10,
+        x2: 10,
+        // the drawable height
+        y1: 300,
+        y2: 0,
+        stroke: 'gray',
+        strokeWidth: lineWidth,
+      });
+    });
+
+    it('renders a horizontal line when horizontal', () => {
+      const content = mount(
+        <svg>
+          <AnnotationLine {...mockProps} direction="horizontal" />
+        </svg>,
+      );
+
+      expect(content).toContainReactComponent('line', {
+        y1: 10,
+        y2: 10,
+        x1: 300,
+        x2: 0,
+        stroke: 'gray',
+        strokeWidth: lineWidth,
+      });
     });
   });
 
-  describe('xOffset', () => {
-    it('left aligns when xOffset is 0', () => {
+  describe('offset', () => {
+    it('left aligns when offset is 0', () => {
       const props = {
         ...mockProps,
-        xOffset: 0,
+        offset: 0,
       };
       const content = mount(
         <svg>
@@ -52,10 +72,10 @@ describe('<AnnotationLine />', () => {
       });
     });
 
-    it('centers when xOffset is 0.5', () => {
+    it('centers when offset is 0.5', () => {
       const props = {
         ...mockProps,
-        xOffset: 0.5,
+        offset: 0.5,
       };
       const content = mount(
         <svg>
@@ -69,10 +89,10 @@ describe('<AnnotationLine />', () => {
       });
     });
 
-    it('centers when xOffset is any value besides 0 or 1', () => {
+    it('centers when offset is any value besides 0 or 1', () => {
       const props = {
         ...mockProps,
-        xOffset: 0.4,
+        offset: 0.4,
       };
       const content = mount(
         <svg>
@@ -86,10 +106,10 @@ describe('<AnnotationLine />', () => {
       });
     });
 
-    it('right aligns when xOffset is 1', () => {
+    it('right aligns when offset is 1', () => {
       const props = {
         ...mockProps,
-        xOffset: 1,
+        offset: 1,
       };
       const content = mount(
         <svg>

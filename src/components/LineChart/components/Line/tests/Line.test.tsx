@@ -1,10 +1,9 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
-import {scaleLinear} from 'd3-scale';
 
 import {mountWithProvider} from '../../../../../test-utilities';
 import {mockDefaultTheme} from '../../../../../test-utilities/mount-with-provider';
-import {Line} from '../Line';
+import {Line, Props} from '../Line';
 
 jest.mock('../../../../../utilities', () => {
   return {
@@ -13,40 +12,21 @@ jest.mock('../../../../../utilities', () => {
   };
 });
 
-jest.mock('d3-scale', () => ({
-  scaleLinear: jest.fn(() => jest.fn(() => 250)),
-}));
-
 const color = 'red';
 
-const mockProps = {
+const mockProps: Props = {
   series: {
     name: 'Test series',
     data: [
-      {label: 'Jan 1', rawValue: 0},
-      {label: 'Jan 2', rawValue: 10},
+      {key: 'Jan 1', value: 0},
+      {key: 'Jan 2', value: 10},
     ],
     color: 'primary' as 'primary',
-    lineStyle: 'solid' as 'solid',
-    areaColor: 'primary' as 'primary',
   },
   index: 0,
   isAnimated: false,
   lineGenerator: (() => '') as any,
-  lineOptions: {
-    color: 'red',
-    area: null,
-    sparkArea: null,
-    style: 'dotted' as 'dotted',
-    hasSpline: false,
-    hasPoint: false,
-    width: 10,
-    pointStroke: 'red',
-    dottedStrokeColor: '#ffffff',
-  },
   color,
-  xScale: scaleLinear(),
-  yScale: scaleLinear(),
 };
 
 describe('<Line />', () => {
@@ -58,7 +38,6 @@ describe('<Line />', () => {
             {...mockProps}
             series={{
               ...mockProps.series,
-              lineStyle: 'solid',
             }}
           />
         </svg>,
@@ -70,33 +49,14 @@ describe('<Line />', () => {
       });
     });
 
-    it('renders a line with the series style dashed', () => {
+    it('renders a line with comparison styles', () => {
       const actual = mount(
         <svg>
           <Line
             {...mockProps}
             series={{
               ...mockProps.series,
-              lineStyle: 'dashed',
-            }}
-          />
-        </svg>,
-      );
-
-      expect(actual).toContainReactComponent('path', {
-        strokeDasharray: '2 4',
-        stroke: color,
-      });
-    });
-
-    it('renders a line with the series style dotted', () => {
-      const actual = mount(
-        <svg>
-          <Line
-            {...mockProps}
-            series={{
-              ...mockProps.series,
-              lineStyle: 'dotted',
+              isComparison: true,
             }}
           />
         </svg>,
@@ -112,13 +72,7 @@ describe('<Line />', () => {
   it('uses the width prop', () => {
     const actual = mountWithProvider(
       <svg>
-        <Line
-          {...mockProps}
-          series={{
-            ...mockProps.series,
-            lineStyle: 'dashed',
-          }}
-        />
+        <Line {...mockProps} />
       </svg>,
       mockDefaultTheme({line: {width: 10}}),
     );
