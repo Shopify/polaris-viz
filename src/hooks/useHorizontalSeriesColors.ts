@@ -22,7 +22,14 @@ export function useHorizontalSeriesColors({data, theme}: Props) {
   }, [data]);
 
   const seriesColors = useMemo(() => {
-    const seriesColors = getSeriesColorsFromCount(data.length, selectedTheme);
+    const nonComparison = data.filter(
+      ({isComparison}) => isComparison !== true,
+    );
+
+    const seriesColors = getSeriesColorsFromCount(
+      nonComparison.length,
+      selectedTheme,
+    );
 
     data.forEach(({color, isComparison}, index) => {
       let newColor;
@@ -35,14 +42,10 @@ export function useHorizontalSeriesColors({data, theme}: Props) {
 
       if (newColor) {
         seriesColors.splice(index, 0, newColor);
-        // Remove the extra seriesColor from the
-        // end of the array so we're not rendering
-        // unused defs
-        seriesColors.pop();
       }
     });
 
-    return seriesColors;
+    return seriesColors.slice(0, data.length);
   }, [data, selectedTheme]);
 
   return {longestSeriesCount, seriesColors};
