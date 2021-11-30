@@ -17,3 +17,9 @@ export const getSingleColor = (color: Color): string => {
 
   return color;
 };
+
+export const TYPE_CONTROL_ARGS = {
+  description:
+    'Changes the grouping of the bars. If `stacked` the bar groups will stack vertically, otherwise they will render individual bars for each data point in each group.',
+  control: {type: 'select', options: ['default', 'stacked']},
+};

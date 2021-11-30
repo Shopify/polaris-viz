@@ -273,7 +273,6 @@ export const BAR_ANIMATION_HEIGHT_BUFFER = 20;
 export const DEFAULT_BORDER_RADIUS = 3;
 export const MIN_WIDTH_BORDER_RADIUS = 2;
 export const FONT_SIZE_PADDING = 1;
-export const GRADIENT_ID = 'grad-';
 export const HORIZONTAL_BAR_LABEL_HEIGHT = 12;
 export const HORIZONTAL_BAR_LABEL_OFFSET = 10;
 export const HORIZONTAL_GROUP_LABEL_HEIGHT = 20;

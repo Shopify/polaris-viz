@@ -83,7 +83,7 @@ export function HorizontalBars({
           <React.Fragment key={`series-${seriesIndex}-${id}-${name}`}>
             <Bar
               animationDelay={animationDelay}
-              color={`url(#${getGradientDefId(theme, seriesIndex)})`}
+              color={`url(#${getGradientDefId(theme, seriesIndex, id)})`}
               height={barHeight}
               index={groupIndex}
               isAnimated={isAnimated}
