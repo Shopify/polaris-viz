@@ -93,22 +93,6 @@ Used to show change over time, comparisons, and trends. [View documentation&nbsp
   </td>
 
   <td>
-
-<a href="https://polaris-viz.shopify.io/?path=/docs/simple-charts-simplenormalizedchart--default">
-  <img src="../src/components/SimpleNormalizedChart/simple-normalized-chart.png"/>
-</a>
-
-#### SimpleNormalizedChart
-
-Used for positive datasets with two to four items. [View documentation&nbsp;→](https://polaris-viz.shopify.io/?path=/docs/simple-charts-simplenormalizedchart--default)
-
-  </td>
-
-  </tr>
-
-  <tr>
-
-  <td>
 <a href="https://polaris-viz.shopify.io/?path=/docs/charts-stackedareachart">
   <img src="../src/components/StackedAreaChart/stacked-area-chart.png"/>
 </a>
@@ -120,17 +104,6 @@ Used to compare multiple series of data and display the total value. [View docum
   </td>
 
 
-  <td>
-
-<a href="https://polaris-viz.shopify.io/?path=/docs/spark-charts-sparklinechart--default">
-  <img src="../src/components/SparkLineChart/sparklinechart.png"/>
-</a>
-
-#### SparkLineChart
-
-Used in small sizes to show how a metric has performed over time. [View documentation&nbsp;→](https://polaris-viz.shopify.io/?path=/docs/spark-charts-sparklinechart--default)
-
-  </td>
 
 
   </tr>
@@ -190,17 +163,7 @@ Used to show comparison across categories. [View documentation&nbsp;→](https:/
 
 <tr>
 
-  <td>
 
-<a href="https://polaris-viz.shopify.io/?path=/docs/spark-charts-sparkbarchart--default">
-  <img src="../src/components/SparkBarChart/sparkbarchart.png"/>
-</a>
-
-#### SparkBarChart
-
-Used in small sizes to show how a metric has performed over time with bars. [View documentation&nbsp;→](https://polaris-viz.shopify.io/?path=/docs/spark-charts-sparkbarchart--default)
-
-  </td>
 
   <td>
 <a href="https://polaris-viz.shopify.io/?path=/docs/subcomponents-legend">
@@ -214,6 +177,73 @@ Used on multiseries charts to indicate which color is associated with a certain 
   </td>
   </tr>
 
+</table>
+
+<br />
+
+<a name="simple-charts" href="#simple-charts">
+  <h4>Simple Charts</h4>
+</a>
+
+<table>
+  <tr>
+    <td>
+
+<a href="https://polaris-viz.shopify.io/?path=/docs/simple-charts-simplenormalizedchart--default">
+  <img src="../src/components/SimpleBarChart/simple-bar-chart.png"/>
+</a>
+
+#### SimpleBarChart
+
+Used to show comparison across categories. [View documentation&nbsp;→](https://polaris-viz.shopify.io/?path=/docs/simple-charts-simplebarchart--default)
+
+  </td>
+    <td>
+
+<a href="https://polaris-viz.shopify.io/?path=/docs/simple-charts-simplenormalizedchart--default">
+  <img src="../src/components/SimpleNormalizedChart/simple-normalized-chart.png"/>
+</a>
+
+#### SimpleNormalizedChart
+
+Used for positive datasets with two to four items. [View documentation&nbsp;→](https://polaris-viz.shopify.io/?path=/docs/simple-charts-simplenormalizedchart--default)
+
+  </td>
+  <tr>
+</table>
+
+<br />
+
+<a name="spark-charts" href="#spark-charts">
+  <h4>Spark Charts</h4>
+</a>
+
+<table>
+  <tr>
+    <td>
+
+<a href="https://polaris-viz.shopify.io/?path=/docs/spark-charts-sparkbarchart--default">
+  <img src="../src/components/SparkBarChart/sparkbarchart.png"/>
+</a>
+
+#### SparkBarChart
+
+Used in small sizes to show how a metric has performed over time with bars. [View documentation&nbsp;→](https://polaris-viz.shopify.io/?path=/docs/spark-charts-sparkbarchart--default)
+
+  </td>
+    <td>
+
+<a href="https://polaris-viz.shopify.io/?path=/docs/spark-charts-sparklinechart--default">
+  <img src="../src/components/SparkLineChart/sparklinechart.png"/>
+</a>
+
+#### SparkLineChart
+
+Used in small sizes to show how a metric has performed over time. [View documentation&nbsp;→](https://polaris-viz.shopify.io/?path=/docs/spark-charts-sparklinechart--default)
+
+  </td>
+
+  </tr>
 </table>
 
 <br/>

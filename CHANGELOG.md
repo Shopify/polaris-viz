@@ -19,7 +19,7 @@
 - Renamed `<NormalizedStackedBarChart />` to `<SimpleNormalizedChart />`.
   - Removed `data.formattedValue`. The component now accepts a `labelFormatter` root prop for formatting the `data.value` value.
   - Removed `data.comparisonMetric`. The component now accepts a `comparisonMetric` prop.
-  - Renamed `SparkLineChartProps.orientation` to `SparkLineChartProps.direction`.
+  - Renamed `SimpleNormalizedChart.orientation` to `SimpleNormalizedChart.direction`.
 
 ## [0.26.0] - 2021-11-29
 
