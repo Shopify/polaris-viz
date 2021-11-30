@@ -1,12 +1,12 @@
 import React from 'react';
 import {sum} from 'd3-array';
 import {scaleLinear} from 'd3-scale';
+import type {ComparisonMetricProps} from 'components/ComparisonMetric';
 
 import {getSeriesColorsFromCount} from '../../hooks/use-theme-series-colors';
 import {usePrefersReducedMotion, useTheme} from '../../hooks';
 import {classNames} from '../../utilities';
 import type {DataPoint, Direction, LabelFormatter} from '../../types';
-import type {ComparisonMetricShape} from '../ComparisonMetric';
 
 import {BarSegment, BarLabel} from './components';
 import type {Size, LabelPosition} from './types';
@@ -14,7 +14,7 @@ import styles from './SimpleNormalizedChart.scss';
 
 export interface SimpleNormalizedChartProps {
   data: DataPoint[];
-  comparisonMetrics?: ComparisonMetricShape[];
+  comparisonMetrics?: Omit<ComparisonMetricProps, 'theme'>[];
   labelFormatter?: LabelFormatter;
   labelPosition?: LabelPosition;
   direction?: Direction;

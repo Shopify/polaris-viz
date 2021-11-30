@@ -8,7 +8,7 @@ import {
 import type {Color, Direction, Legend} from '../../../../types';
 import {
   ComparisonMetric,
-  ComparisonMetricShape,
+  ComparisonMetricProps,
 } from '../../../ComparisonMetric';
 import type {LabelPosition} from '../../types';
 
@@ -21,7 +21,7 @@ export interface Props {
   legendColors: Legend;
   direction: Direction;
   labelPosition: LabelPosition;
-  comparisonMetric?: ComparisonMetricShape | null;
+  comparisonMetric?: Omit<ComparisonMetricProps, 'theme'> | null;
 }
 
 export function BarLabel({
