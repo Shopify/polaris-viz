@@ -1,17 +1,20 @@
 import React from 'react';
 
-import {GRADIENT_ID} from '../../../constants';
 import type {Color, GradientStop} from '../../../types';
 import {isGradientType} from '../../../utilities';
 import {LinearGradient} from '../../LinearGradient';
 
+const GRADIENT_ID = 'grad';
+
 interface GradientDefsProps {
   width: number;
+  id: string;
   seriesColors?: Color[];
   theme?: string;
 }
 
 export function GradientDefs({
+  id,
   seriesColors = [],
   theme = 'Default',
   width,
@@ -19,8 +22,10 @@ export function GradientDefs({
   return (
     <defs>
       {seriesColors.map((color, index) => {
-        const id = getGradientDefId(theme, index);
-        return <Gradient key={id} id={id} color={color} width={width} />;
+        const gradId = getGradientDefId(theme, index, id);
+        return (
+          <Gradient key={gradId} id={gradId} color={color} width={width} />
+        );
       })}
     </defs>
   );
@@ -54,6 +59,6 @@ function Gradient({
   );
 }
 
-export function getGradientDefId(theme = 'Default', index: number) {
-  return `${theme}-${GRADIENT_ID}-${index}`;
+export function getGradientDefId(theme = 'Default', index: number, id: string) {
+  return [id, theme, index, GRADIENT_ID].join('-');
 }

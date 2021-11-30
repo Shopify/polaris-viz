@@ -107,31 +107,4 @@ describe('<HorizontalStackedBars />', () => {
     expect(bars[0].props.roundedBorder).toStrictEqual(RoundedBorder.None);
     expect(bars[2].props.roundedBorder).toStrictEqual(RoundedBorder.Right);
   });
-
-  it('uses default color when no color is provided', () => {
-    const chart = mount(
-      <svg>
-        <HorizontalStackedBars {...MOCK_PROPS} />
-      </svg>,
-    );
-
-    const bars = chart.findAll(StackedBar);
-
-    expect(bars[0].props.color).toStrictEqual('Default-grad--0');
-  });
-
-  it('uses custom color when provided', () => {
-    const chart = mount(
-      <svg>
-        <HorizontalStackedBars
-          {...MOCK_PROPS}
-          data={[{data: [{value: 5, key: 'Label 01'}], color: 'red'}]}
-        />
-      </svg>,
-    );
-
-    const bars = chart.findAll(StackedBar);
-
-    expect(bars[0].props.color).toStrictEqual('id-series-0-0');
-  });
 });

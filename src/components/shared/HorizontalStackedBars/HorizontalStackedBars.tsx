@@ -5,7 +5,6 @@ import {animated, useSpring} from '@react-spring/web';
 import {getBarId} from '../../../utilities';
 import {
   BARS_TRANSITION_CONFIG,
-  GRADIENT_ID,
   HORIZONTAL_GROUP_LABEL_HEIGHT,
 } from '../../../constants';
 import {DataSeries, RoundedBorder} from '../../../types';
@@ -73,26 +72,20 @@ export function HorizontalStackedBars({
 
   return (
     <animated.g aria-label={ariaLabel} role="listitem" style={{transform}}>
-      {data.map((dataPoint, seriesIndex) => {
+      {data.map((_, seriesIndex) => {
         const {value} = data[seriesIndex].data[groupIndex];
 
         const x = xOffsets[seriesIndex] + STACKED_BAR_GAP * seriesIndex;
         const barId = getBarId(id, groupIndex, seriesIndex);
         const isLast = seriesIndex === data.length - 1;
 
-        const sliceColor = dataPoint.color
-          ? barId
-          : `${GRADIENT_ID}${seriesIndex}`;
-
         return (
           <StackedBar
-            color={
-              dataPoint.color ? barId : getGradientDefId(theme, seriesIndex)
-            }
+            color={getGradientDefId(theme, seriesIndex, id)}
             groupIndex={groupIndex}
             height={barHeight}
             isAnimated={isAnimated}
-            key={`${name}${sliceColor}`}
+            key={`${name}${barId}`}
             seriesIndex={seriesIndex}
             width={xScale(value ?? 0)}
             x={x}

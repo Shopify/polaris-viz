@@ -112,7 +112,12 @@ export function Chart({
         viewBox={`0 0 ${width} ${height}`}
         xmlns={XMLNS}
       >
-        <GradientDefs seriesColors={seriesColors} theme={theme} width={width} />
+        <GradientDefs
+          id={id}
+          seriesColors={seriesColors}
+          theme={theme}
+          width={width}
+        />
 
         {transitions((style, item, _transition, index) => {
           const {opacity, transform} = style as HorizontalTransitionStyle;

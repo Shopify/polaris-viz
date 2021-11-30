@@ -161,18 +161,6 @@ describe('<HorizontalBars />', () => {
       expect(bars[0].props.tabIndex).toStrictEqual(0);
       expect(bars[1].props.tabIndex).toStrictEqual(-1);
     });
-
-    it('uses default color when no color provided', () => {
-      const chart = mount(
-        <svg>
-          <HorizontalBars {...MOCK_PROPS} />
-        </svg>,
-      );
-
-      const bars = chart.findAll(Bar);
-
-      expect(bars[0].props.color).toStrictEqual('url(#Default-grad--0)');
-    });
   });
 
   describe('<Label />', () => {

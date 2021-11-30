@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-[0.27.0 Migration Guide](https://docs.google.com/document/d/1vRaAnWTvHuqiedZ8FQyCCF0RlMuRjEp_pW7W8c_dEGw/edit#)
+[0.27.0 Migration Guide](https://docs.google.com/document/d/1iO05cV5POYAjXI6HAiVXBHo7jWdMA7_ad3w08KQ52Dg)
 ### Added
 
 - Added `<SimpleBarChart />`.

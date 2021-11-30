@@ -7,6 +7,7 @@ import {GradientDefs} from '../GradientDefs';
 const MOCK_PROPS = {
   theme: 'Light',
   width: 100,
+  id: 'id',
 };
 
 describe('<GradientDefs />', () => {
@@ -38,7 +39,7 @@ describe('<GradientDefs />', () => {
 
       const gradient = container.find(LinearGradient);
 
-      expect(gradient?.props.id).toStrictEqual('Light-grad--0');
+      expect(gradient?.props.id).toStrictEqual('id-Light-0-grad');
     });
   });
 
@@ -61,7 +62,7 @@ describe('<GradientDefs />', () => {
 
       const gradient = container.find(LinearGradient);
 
-      expect(gradient?.props.id).toStrictEqual('CustomTheme-grad--0');
+      expect(gradient?.props.id).toStrictEqual('id-CustomTheme-0-grad');
     });
   });
 });

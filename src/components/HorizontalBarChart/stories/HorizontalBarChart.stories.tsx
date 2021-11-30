@@ -7,7 +7,11 @@ import {
 } from '../HorizontalBarChart';
 
 import type {RenderTooltipContentData} from '../types';
-import {getSingleColor, THEME_CONTROL_ARGS} from '../../../storybook';
+import {
+  getSingleColor,
+  THEME_CONTROL_ARGS,
+  TYPE_CONTROL_ARGS,
+} from '../../../storybook';
 import {
   buildSeries,
   COLOR_OVERRIDE_SERIES,
@@ -75,10 +79,7 @@ export default {
       },
     },
     theme: THEME_CONTROL_ARGS,
-    type: {
-      description:
-        'Changes the grouping of the bars. If `stacked` the bar groups will stack vertically, otherwise they will render individual bars for each data point in each group.',
-    },
+    type: TYPE_CONTROL_ARGS,
     xAxisOptions: {
       description: 'An object used to configure the xAxis and its labels.',
       defaultValue: {
