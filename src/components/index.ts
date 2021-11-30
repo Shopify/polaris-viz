@@ -6,8 +6,6 @@ export {SparkLineChart} from './SparkLineChart';
 export type {SparkLineChartProps} from './SparkLineChart';
 export {SparkBarChart} from './SparkBarChart';
 export type {SparkBarChartProps} from './SparkBarChart';
-export {BarChart, BarChartTooltipContent} from './BarChart';
-export type {BarChartProps, BarChartTooltipContentProps} from './BarChart';
 export {LineChart, LineChartTooltipContent} from './LineChart';
 export type {LineChartProps, LineChartTooltipContentProps} from './LineChart';
 export {SimpleNormalizedChart} from './SimpleNormalizedChart';

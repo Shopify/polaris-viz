@@ -3,7 +3,6 @@ import React from 'react';
 import {
   SparkBarChart,
   SparkLineChart,
-  BarChart,
   LineChart,
   MultiSeriesBarChart,
   StackedAreaChart,
@@ -101,21 +100,6 @@ export const SampleLineChart = ({theme} = {theme: 'Default'}) => {
       xAxisOptions={{
         xAxisLabels: ['Jan. 1', 'Jan. 2', 'Jan. 3', 'Jan. 4', 'Jan. 5'],
       }}
-    />
-  );
-};
-
-export const SampleBarchart = ({theme} = {theme: 'Default'}) => {
-  return (
-    <BarChart
-      theme={theme}
-      data={[
-        {rawValue: 324.19, label: 'Jan. 1'},
-        {rawValue: 613.29, label: 'Jan. 2'},
-        {rawValue: 1000, label: 'Jan. 3'},
-        {rawValue: 432, label: 'Jan. 4'},
-        {rawValue: 1, label: 'Jan. 5'},
-      ]}
     />
   );
 };

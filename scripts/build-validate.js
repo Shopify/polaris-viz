@@ -44,18 +44,18 @@ function validateEsNextBuild() {
   // ESnext build
   assert.ok(fs.existsSync('./build/esnext/index.esnext'));
   assert.ok(
-    fs.existsSync('./build/esnext/components/BarChart/BarChart.esnext'),
+    fs.existsSync('./build/esnext/components/LineChart/LineChart.esnext'),
   );
-  assert.ok(fs.existsSync('./build/esnext/components/BarChart/Chart.css'));
+  assert.ok(fs.existsSync('./build/esnext/components/LineChart/Chart.css'));
 
   // ESnext build css contains namespaced classes, and
   const cssContent = fs.readFileSync(
-    './build/esnext/components/BarChart/Chart.css',
+    './build/esnext/components/LineChart/Chart.css',
     'utf-8',
   );
 
   const jsContent = fs.readFileSync(
-    './build/esnext/components/BarChart/Chart.scss.esnext',
+    './build/esnext/components/LineChart/Chart.scss.esnext',
     'utf-8',
   );
 

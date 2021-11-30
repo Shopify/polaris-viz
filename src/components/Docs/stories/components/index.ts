@@ -8,7 +8,6 @@ export {
   SampleSparkBarChart,
   SampleSparkLineChart,
   SampleLineChart,
-  SampleBarchart,
   SampleMultiseriesBarChart,
   SampleStackedAreaChart,
   SampleSimpleNormalizedChart,
