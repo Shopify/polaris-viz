@@ -2,20 +2,20 @@ import React, {useState} from 'react';
 import type {Story, Meta} from '@storybook/react';
 
 import {
-  NormalizedStackedBarChart,
-  NormalizedStackedBarChartProps,
-} from '../NormalizedStackedBarChart';
+  SimpleNormalizedChart,
+  SimpleNormalizedChartProps,
+} from '../SimpleNormalizedChart';
 import {THEME_CONTROL_ARGS} from '../../../storybook';
 
 export default {
-  title: 'Charts/NormalizedStackedBarChart',
-  component: NormalizedStackedBarChart,
+  title: 'Simple Charts/SimpleNormalizedChart',
+  component: SimpleNormalizedChart,
   parameters: {
     controls: {sort: 'requiredFirst', expanded: true},
     docs: {
       description: {
         component:
-          "Used for positive datasets with two to four items. If your dataset has more than four items, consider grouping the fourth item and the remainder into an “other” category before passing data to the component. <br /><br />  This component inherits its height and width from its container. When the Normalized stacked bar chart is oriented horizontally, it is constrained by the parent's width; in vertical orientation, it's constrained by the parent's height.",
+          "Used for positive datasets with two to four items. If your dataset has more than four items, consider grouping the fourth item and the remainder into an “other” category before passing data to the component. <br /><br />  This component inherits its height and width from its container. When the Normalized stacked bar chart is oriented horizontally, it is constrained by the parent's width; in vertical direction, it's constrained by the parent's height.",
       },
     },
   },
@@ -24,7 +24,7 @@ export default {
       description:
         'Gives the user the ability to define how the bars should look like. The data object also gives the ability to add comparison metric indicators.',
     },
-    orientation: {description: 'Determines the orientation of the chart.'},
+    direction: {description: 'Determines the direction of the chart.'},
     size: {description: 'Determines the width of the chart.'},
     labelPosition: {
       description: 'Determines the position of the labels.',
@@ -33,38 +33,43 @@ export default {
   },
 } as Meta;
 
-const Template: Story<NormalizedStackedBarChartProps> = (
-  args: NormalizedStackedBarChartProps,
+const Template: Story<SimpleNormalizedChartProps> = (
+  args: SimpleNormalizedChartProps,
 ) => {
-  return <NormalizedStackedBarChart {...args} />;
+  return <SimpleNormalizedChart {...args} />;
 };
 
-const defaultProps = {
+const defaultProps: SimpleNormalizedChartProps = {
   data: [
     {
-      label: 'Direct',
+      key: 'Direct',
       value: 200,
-      formattedValue: '$200',
     },
     {
-      label: 'Facebook',
+      key: 'Facebook',
       value: 100,
-      formattedValue: '$100',
     },
     {
-      label: 'Twitter',
+      key: 'Twitter',
       value: 100,
-      formattedValue: '$100',
     },
     {
-      label: 'Google',
+      key: 'Google',
       value: 20,
-      formattedValue: '$20',
     },
   ],
-  orientation: 'horizontal' as 'horizontal',
-  size: 'small' as 'small',
-  labelPosition: 'top-left' as 'top-left',
+  direction: 'horizontal',
+  size: 'small',
+  labelPosition: 'top-left',
+  labelFormatter: (value) => `$${value}`,
+  comparisonMetrics: [
+    {
+      dataIndex: 2,
+      metric: 'Going Up',
+      trend: 'positive',
+      accessibilityLabel: 'Going Up',
+    },
+  ],
 };
 
 export const Default = Template.bind({});
@@ -73,14 +78,14 @@ Default.args = defaultProps;
 export const VerticalSmall = Template.bind({});
 VerticalSmall.args = {
   ...defaultProps,
-  orientation: 'vertical' as 'vertical',
-  size: 'small' as 'small',
+  direction: 'vertical',
+  size: 'small',
 };
 
 export const HorizontalBottomRightLabel = Template.bind({});
 HorizontalBottomRightLabel.args = {
   ...defaultProps,
-  labelPosition: 'bottom-right' as 'bottom-right',
+  labelPosition: 'bottom-right',
 };
 
 export const DynamicData = () => {
@@ -100,11 +105,7 @@ export const DynamicData = () => {
 
   return (
     <>
-      <NormalizedStackedBarChart
-        data={data}
-        orientation="horizontal"
-        size="small"
-      />
+      <SimpleNormalizedChart data={data} direction="horizontal" size="small" />
       <button onClick={onClick}>Change Data</button>
     </>
   );

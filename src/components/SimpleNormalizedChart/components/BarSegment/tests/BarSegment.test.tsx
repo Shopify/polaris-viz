@@ -8,7 +8,7 @@ describe('<BarSegment />', () => {
     scale: 64,
     color: 'rgb(255, 255, 255)',
     size: 'small' as 'small',
-    orientation: 'horizontal' as 'horizontal',
+    direction: 'horizontal' as 'horizontal',
     roundedCorners: true,
     index: 1,
     isAnimated: false,
@@ -24,7 +24,7 @@ describe('<BarSegment />', () => {
 
   it('gives the child a vertical small class name', () => {
     const barSegment = mount(
-      <BarSegment {...mockProps} orientation="vertical" />,
+      <BarSegment {...mockProps} direction="vertical" />,
     );
 
     expect(barSegment).toContainReactComponent('div', {

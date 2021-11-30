@@ -94,13 +94,13 @@ Used to show change over time, comparisons, and trends. [View documentation&nbsp
 
   <td>
 
-<a href="https://polaris-viz.shopify.io/?path=/docs/charts-normalizedstackedbarchart">
-  <img src="../src/components/NormalizedStackedBarChart/normalized-stacked-bar-chart.png"/>
+<a href="https://polaris-viz.shopify.io/?path=/docs/simple-charts-simplenormalizedchart--default">
+  <img src="../src/components/SimpleNormalizedChart/simple-normalized-chart.png"/>
 </a>
 
-#### Normalized stacked bar chart
+#### SimpleNormalizedChart
 
-Used for positive datasets with two to four items. [View documentation&nbsp;→](https://polaris-viz.shopify.io/?path=/docs/charts-normalizedstackedbarchart)
+Used for positive datasets with two to four items. [View documentation&nbsp;→](https://polaris-viz.shopify.io/?path=/docs/simple-charts-simplenormalizedchart--default)
 
   </td>
 

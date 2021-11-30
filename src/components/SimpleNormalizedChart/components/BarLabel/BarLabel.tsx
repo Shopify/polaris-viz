@@ -5,12 +5,12 @@ import {
   isGradientType,
   classNames,
 } from '../../../../utilities';
-import type {Color, Legend} from '../../../../types';
+import type {Color, Direction, Legend} from '../../../../types';
 import {
   ComparisonMetric,
-  ComparisonMetricShape,
+  ComparisonMetricProps,
 } from '../../../ComparisonMetric';
-import type {LabelPosition, Orientation} from '../../types';
+import type {LabelPosition} from '../../types';
 
 import styles from './BarLabel.scss';
 
@@ -18,10 +18,10 @@ export interface Props {
   label: string;
   value: string;
   color: Color;
-  comparisonMetric?: ComparisonMetricShape;
   legendColors: Legend;
-  orientation: Orientation;
+  direction: Direction;
   labelPosition: LabelPosition;
+  comparisonMetric?: Omit<ComparisonMetricProps, 'theme'> | null;
 }
 
 export function BarLabel({
@@ -30,7 +30,7 @@ export function BarLabel({
   color,
   comparisonMetric,
   legendColors,
-  orientation,
+  direction,
   labelPosition,
 }: Props) {
   const {labelColor, valueColor} = legendColors;
@@ -39,7 +39,7 @@ export function BarLabel({
     <ComparisonMetric {...comparisonMetric} theme={legendColors} />
   ) : null;
 
-  const angle = orientation === 'horizontal' ? 90 : 180;
+  const angle = direction === 'horizontal' ? 90 : 180;
 
   const formattedColor = isGradientType(color)
     ? createCSSGradient(color, angle)

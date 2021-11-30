@@ -20,7 +20,7 @@ describe('<BarLabel />', () => {
               neutral: 'grey',
             },
           }}
-          orientation="horizontal"
+          direction="horizontal"
           labelPosition="top-left"
         />,
       );
