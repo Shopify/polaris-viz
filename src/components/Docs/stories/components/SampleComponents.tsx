@@ -4,12 +4,11 @@ import {
   SparkBarChart,
   SparkLineChart,
   LineChart,
-  MultiSeriesBarChart,
+  BarChart,
   StackedAreaChart,
   SimpleNormalizedChart,
 } from '../../../../components';
 import {
-  generateMultipleSeries,
   generateLabels,
   generateMultipleSeriesNewData,
 } from '../../../../../documentation/utilities';
@@ -104,12 +103,12 @@ export const SampleLineChart = ({theme} = {theme: 'Default'}) => {
   );
 };
 
-export const SampleMultiseriesBarChart = (
+export const SampleBarChart = (
   {theme, seriesLength = 3} = {theme: 'Default'},
 ) => {
   return (
-    <MultiSeriesBarChart
-      series={generateMultipleSeries(seriesLength)}
+    <BarChart
+      data={generateMultipleSeriesNewData(seriesLength)}
       xAxisOptions={{
         labels: generateLabels(1),
       }}

@@ -8,7 +8,7 @@ export {
   SampleSparkBarChart,
   SampleSparkLineChart,
   SampleLineChart,
-  SampleMultiseriesBarChart,
+  SampleBarChart,
   SampleStackedAreaChart,
   SampleSimpleNormalizedChart,
 } from './SampleComponents';

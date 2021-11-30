@@ -121,34 +121,34 @@ import {ComponentContainer, LogoHeader, Divider} from './components';
   description="Used to show a grouped comparison of different types, across categories or time. "
   link="https://polaris-viz.shopify.io/?path=/docs/charts-multiseriesbarchart--default"
   chart={
-    <MultiSeriesBarChart
+    <BarChart
       isAnimated
       xAxisOptions={{
         labels: ['Monday', 'Tuesday', 'Wednesday'],
       }}
-      series={[
+      data={[
         {
           name: 'Breakfast',
           data: [
-            {label: 'Monday', rawValue: 3},
-            {label: 'Tuesday', rawValue: 10},
-            {label: 'Wednesday', rawValue: 4},
+            {key: 'Monday', value: 3},
+            {key: 'Tuesday', value: 10},
+            {key: 'Wednesday', value: 4},
           ],
         },
         {
           name: 'Lunch',
           data: [
-            {label: 'Monday', rawValue: 4},
-            {label: 'Tuesday', rawValue: 9},
-            {label: 'Wednesday', rawValue: 5},
+            {key: 'Monday', value: 4},
+            {key: 'Tuesday', value: 9},
+            {key: 'Wednesday', value: 5},
           ],
         },
         {
           name: 'Dinner',
           data: [
-            {label: 'Monday', rawValue: 7},
-            {label: 'Tuesday', rawValue: 10},
-            {label: 'Wednesday', rawValue: 6},
+            {key: 'Monday', value: 7},
+            {key: 'Tuesday', value: 10},
+            {key: 'Wednesday', value: 6},
           ],
         },
       ]}
@@ -157,39 +157,39 @@ import {ComponentContainer, LogoHeader, Divider} from './components';
 />
 
 <ComponentContainer
-  title="Multiseries bar chart (stacked)"
+  title="BarChart (stacked)"
   description="Used to show a stacked comparison of different types, across categories or time. "
   link="https://polaris-viz.shopify.io/?path=/docs/charts-multiseriesbarchart--stacked"
   chart={
-    <MultiSeriesBarChart
+    <BarChart
       barOptions={{isStacked: true}}
       isAnimated
       xAxisOptions={{
         labels: ['Monday', 'Tuesday', 'Wednesday'],
       }}
-      series={[
+      data={[
         {
           name: 'Breakfast',
           data: [
-            {label: 'Monday', rawValue: 3},
-            {label: 'Tuesday', rawValue: 7},
-            {label: 'Wednesday', rawValue: 4},
+            {key: 'Monday', value: 3},
+            {key: 'Tuesday', value: 7},
+            {key: 'Wednesday', value: 4},
           ],
         },
         {
           name: 'Lunch',
           data: [
-            {label: 'Monday', rawValue: 4},
-            {label: 'Tuesday', rawValue: 0},
-            {label: 'Wednesday', rawValue: 5},
+            {key: 'Monday', value: 4},
+            {key: 'Tuesday', value: 0},
+            {key: 'Wednesday', value: 5},
           ],
         },
         {
           name: 'Dinner',
           data: [
-            {label: 'Monday', rawValue: 7},
-            {label: 'Tuesday', rawValue: 0},
-            {label: 'Wednesday', rawValue: 6},
+            {key: 'Monday', value: 7},
+            {key: 'Tuesday', value: 0},
+            {key: 'Wednesday', value: 6},
           ],
         },
       ]}
