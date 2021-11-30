@@ -4,14 +4,21 @@ import type {Legend} from '../../types';
 
 import styles from './ComparisonMetric.scss';
 import {UpChevron, DownChevron} from './components';
-import type {ComparisonMetricShape} from './types';
+
+export interface ComparisonMetricProps {
+  metric: string;
+  trend: 'positive' | 'negative' | 'neutral';
+  accessibilityLabel: string;
+  theme: Legend;
+  dataIndex?: number;
+}
 
 export function ComparisonMetric({
   metric,
   trend,
   accessibilityLabel,
   theme,
-}: ComparisonMetricShape & {theme: Legend}) {
+}: Omit<ComparisonMetricProps, 'dataIndex'>) {
   switch (trend) {
     case 'neutral':
       return (
