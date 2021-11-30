@@ -17,11 +17,11 @@ interface Borders {
   [RoundedBorder.Left]: RoundedCorners;
 }
 
-function keepValuePositive(amount: number): number {
+export function keepValuePositive(amount: number): number {
   return clamp({amount, min: 0, max: Infinity});
 }
 
-function getBorderRadius(
+export function getBorderRadius(
   roundedCorner: RoundedBorder,
   radius: number,
 ): RoundedCorners {

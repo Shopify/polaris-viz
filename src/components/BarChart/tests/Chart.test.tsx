@@ -68,13 +68,13 @@ describe('Chart />', () => {
     expect(barChart).toContainReactComponent('svg');
   });
 
-  describe('<BarChartXAxis />', () => {
-    it('renders', () => {
+  describe('xAxisOptions.hide', () => {
+    it('renders <BarChartXAxis /> when true', () => {
       const barChart = mountWithProvider(<Chart {...mockProps} />);
       expect(barChart).toContainReactComponent(BarChartXAxis);
     });
 
-    it('does not render if hidden', () => {
+    it('does not render <BarChartXAxis /> when false', () => {
       const barChart = mountWithProvider(
         <Chart
           {...mockProps}

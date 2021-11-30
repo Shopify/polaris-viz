@@ -56,7 +56,7 @@ describe('<SparkLineChart />', () => {
   ];
 
   describe('SVG', () => {
-    it('renders', () => {
+    it('renders <svg />', () => {
       const sparkLineChart = mount(<SparkLineChart data={mockData} />);
 
       expect(sparkLineChart).toContainReactComponentTimes('svg', 1);

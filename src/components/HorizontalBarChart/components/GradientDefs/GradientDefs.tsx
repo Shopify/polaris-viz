@@ -7,15 +7,15 @@ import {GRADIENT_ID} from '../../constants';
 import type {ColorOverrides} from '../../types';
 
 interface GradientDefsProps {
-  colorOverrides: ColorOverrides[];
-  seriesColors: Color[];
   width: number;
+  colorOverrides?: ColorOverrides[];
+  seriesColors?: Color[];
   theme?: string;
 }
 
 export function GradientDefs({
-  colorOverrides,
-  seriesColors,
+  colorOverrides = [],
+  seriesColors = [],
   theme = 'Default',
   width,
 }: GradientDefsProps) {

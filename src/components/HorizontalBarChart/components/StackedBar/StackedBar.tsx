@@ -4,7 +4,7 @@ import React from 'react';
 import {getRoundedRectPath} from '../../../../utilities';
 import {DataType, RoundedBorder} from '../../../../types';
 
-interface StackedBarProps {
+export interface StackedBarProps {
   color: string;
   groupIndex: number;
   height: number;

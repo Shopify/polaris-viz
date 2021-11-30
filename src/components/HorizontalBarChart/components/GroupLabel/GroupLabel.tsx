@@ -7,7 +7,7 @@ import {LABEL_HEIGHT} from '../../constants';
 
 import styles from './GroupLabel.scss';
 
-interface GroupLabelProps {
+export interface GroupLabelProps {
   areAllNegative: boolean;
   containerWidth: number;
   label: string;

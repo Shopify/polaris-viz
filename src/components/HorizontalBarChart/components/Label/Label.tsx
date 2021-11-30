@@ -4,7 +4,7 @@ import {animated, useSpring} from '@react-spring/web';
 import {BARS_TRANSITION_CONFIG, FONT_SIZE} from '../../../../constants';
 import {BAR_LABEL_HEIGHT} from '../../constants';
 
-interface LabelProps {
+export interface LabelProps {
   barHeight: number;
   color: string;
   label: string;

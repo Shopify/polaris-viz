@@ -36,7 +36,7 @@ import type {
 import {useBarSizes, useDataForChart, useXScale} from './hooks';
 import styles from './Chart.scss';
 
-interface ChartProps {
+export interface ChartProps {
   dimensions?: Dimensions;
   isAnimated: boolean;
   isSimple: boolean;
