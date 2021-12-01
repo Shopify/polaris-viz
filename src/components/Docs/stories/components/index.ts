@@ -11,5 +11,5 @@ export {
   SampleBarchart,
   SampleMultiseriesBarChart,
   SampleStackedAreaChart,
-  SampleNormalizedStackedBarChart,
+  SampleSimpleNormalizedChart,
 } from './SampleComponents';

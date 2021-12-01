@@ -26,3 +26,6 @@ export {
 } from './change-color-opacity';
 export {getRoundedRectPath} from './get-rounded-rect-path';
 export {getAverageColor} from './get-average-color';
+export {getBarId} from './get-bar-id';
+export {getHighestSumForStacked} from './get-highest-sum-for-stacked';
+export {formatDataIntoGroups} from './format-data-into-groups';

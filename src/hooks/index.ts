@@ -13,3 +13,9 @@ export {
 export {useLinearChartAnimations} from './use-linear-chart-animations';
 export {usePrintResizing} from './use-print-resizing';
 export {useHasTimeoutFinished} from './useHasTimeoutFinished';
+export {useDataForHorizontalChart} from './useDataForHorizontalChart';
+export {useHorizontalBarSizes} from './useHorizontalBarSizes';
+export {useHorizontalXScale} from './useHorizontalXScale';
+export {useHorizontalTransitions} from './useHorizontalTransitions';
+export {useHorizontalSeriesColors} from './useHorizontalSeriesColors';
+export type {HorizontalTransitionStyle} from './useHorizontalTransitions';

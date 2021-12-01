@@ -1,9 +1,13 @@
 import React from 'react';
 import type {ScaleLinear} from 'd3-scale';
+import type {LabelFormatter} from 'types';
 
-import {MAX_X_AXIS_LINES, SPACE_BETWEEN_CHART_AND_AXIS} from '../../constants';
-import {FONT_SIZE, LINE_HEIGHT} from '../../../../constants';
-import type {LabelFormatter} from '../../types';
+import {
+  FONT_SIZE,
+  HORIZONTAL_SPACE_BETWEEN_CHART_AND_AXIS,
+  LINE_HEIGHT,
+  MAX_X_AXIS_LINES,
+} from '../../../../constants';
 
 import styles from './XAxisLabels.scss';
 
@@ -38,7 +42,9 @@ export const XAxisLabels = ({
 }: XAxisLabelsProps) => {
   return (
     <g
-      transform={`translate(0,${chartHeight + SPACE_BETWEEN_CHART_AND_AXIS})`}
+      transform={`translate(0,${
+        chartHeight + HORIZONTAL_SPACE_BETWEEN_CHART_AND_AXIS
+      })`}
       aria-hidden="true"
     >
       {ticks.map((value, index) => {
