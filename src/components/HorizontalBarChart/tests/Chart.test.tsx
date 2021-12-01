@@ -41,6 +41,7 @@ const MOCK_PROPS: ChartProps = {
   xAxisOptions: {
     labelFormatter: (value: string) => value,
     hide: false,
+    wrapLabels: false,
   },
   type: 'default',
 };
@@ -126,6 +127,7 @@ describe('<Chart />', () => {
           <Chart
             {...MOCK_PROPS}
             xAxisOptions={{
+              ...MOCK_PROPS.xAxisOptions,
               labelFormatter: MOCK_PROPS.xAxisOptions.labelFormatter,
               hide: false,
             }}
@@ -141,6 +143,7 @@ describe('<Chart />', () => {
           <Chart
             {...MOCK_PROPS}
             xAxisOptions={{
+              ...MOCK_PROPS.xAxisOptions,
               labelFormatter: MOCK_PROPS.xAxisOptions.labelFormatter,
               hide: true,
             }}
@@ -158,7 +161,8 @@ describe('<Chart />', () => {
           <Chart
             {...MOCK_PROPS}
             xAxisOptions={{
-              labelFormatter: (value) => `${value} pickles`,
+              ...MOCK_PROPS.xAxisOptions,
+              labelFormatter: (value: string) => `${value} pickles`,
               hide: false,
             }}
           />,

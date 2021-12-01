@@ -4,9 +4,9 @@ import type {ChartType, DataSeries} from '../../types';
 import {TooltipContent} from '../TooltipContent';
 import {ChartContainer} from '../../components/ChartContainer';
 import {usePrefersReducedMotion} from '../../hooks';
+import type {RenderTooltipContentData, XAxisOptions} from '../BarChart';
 
 import {Chart} from './Chart';
-import type {RenderTooltipContentData, XAxisOptions} from './types';
 
 export interface HorizontalBarChartProps {
   data: DataSeries[];
@@ -28,6 +28,7 @@ export function HorizontalBarChart({
   const xAxisOptionsForChart: Required<XAxisOptions> = {
     labelFormatter: (value: string) => value,
     hide: false,
+    wrapLabels: false,
     ...xAxisOptions,
   };
 
@@ -41,7 +42,7 @@ export function HorizontalBarChart({
     const tooltipData = data.map(({value, label, color}) => {
       return {
         label,
-        value: xAxisOptionsForChart.labelFormatter(value),
+        value: xAxisOptionsForChart.labelFormatter!(value),
         color,
       };
     });

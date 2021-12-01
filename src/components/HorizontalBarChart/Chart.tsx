@@ -29,10 +29,10 @@ import {
   TooltipWrapper,
 } from '../TooltipWrapper';
 import type {TooltipData} from '../TooltipContent';
+import type {RenderTooltipContentData, XAxisOptions} from '../BarChart';
 
 import {getAlteredHorizontalBarPosition} from './utilities';
 import {VerticalGridLines, XAxisLabels} from './components';
-import type {RenderTooltipContentData, XAxisOptions} from './types';
 import styles from './Chart.scss';
 
 export interface ChartProps {

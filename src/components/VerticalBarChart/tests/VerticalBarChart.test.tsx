@@ -2,11 +2,11 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 
 import {SkipLink} from '../../../components/SkipLink';
-import {BarChart, BarChartProps} from '../BarChart';
+import {VerticalBarChart, VerticalBarChartProps} from '../VerticalBarChart';
 import {Chart} from '../Chart';
 
-describe('<BarChart />', () => {
-  const mockProps: BarChartProps = {
+describe('<VerticalBarChart />', () => {
+  const mockProps: VerticalBarChartProps = {
     data: [
       {
         data: [
@@ -18,27 +18,29 @@ describe('<BarChart />', () => {
         name: 'LABEL1',
       },
     ],
-    xAxisOptions: {labels: ['Something', 'Another', 'Thing']},
+    xAxisOptions: {},
     skipLinkText: 'Skip Chart Content',
   };
 
   it('renders a <Chart />', () => {
-    const barChart = mount(<BarChart {...mockProps} />);
+    const verticalBarChart = mount(<VerticalBarChart {...mockProps} />);
 
-    expect(barChart).toContainReactComponent(Chart);
+    expect(verticalBarChart).toContainReactComponent(Chart);
   });
 
   describe('skipLinkText', () => {
     it('renders a <SkipLink />', () => {
-      const barChart = mount(<BarChart {...mockProps} />);
+      const verticalBarChart = mount(<VerticalBarChart {...mockProps} />);
 
-      expect(barChart).toContainReactComponent(SkipLink);
+      expect(verticalBarChart).toContainReactComponent(SkipLink);
     });
 
     it('does not render a <SkipLink /> when series is empty', () => {
-      const barChart = mount(<BarChart {...mockProps} data={[]} />);
+      const verticalBarChart = mount(
+        <VerticalBarChart {...mockProps} data={[]} />,
+      );
 
-      expect(barChart).not.toContainReactComponent(SkipLink);
+      expect(verticalBarChart).not.toContainReactComponent(SkipLink);
     });
   });
 });

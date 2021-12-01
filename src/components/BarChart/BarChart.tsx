@@ -1,105 +1,63 @@
-import React, {useRef} from 'react';
+import React from 'react';
 
-import {ChartContainer} from '../../components/ChartContainer';
-import {SkipLink} from '../SkipLink';
-import {TooltipContent} from '../TooltipContent';
-import {uniqueId} from '../../utilities';
-import {useTheme, useThemeSeriesColors} from '../../hooks';
-import type {DataSeries} from '../../types';
-
-import {Chart} from './Chart';
+import {HorizontalBarChart} from '../HorizontalBarChart';
+import type {ChartType, DataSeries, Direction} from '../../types';
+import {VerticalBarChart} from '../VerticalBarChart';
 import type {
   RenderTooltipContentData,
   XAxisOptions,
   YAxisOptions,
-} from './types';
+} from '../BarChart';
 
 export interface BarChartProps {
   data: DataSeries[];
   renderTooltipContent?(data: RenderTooltipContentData): React.ReactNode;
 
-  barOptions?: {isStacked: boolean};
+  direction?: Direction;
   emptyStateText?: string;
   isAnimated?: boolean;
   skipLinkText?: string;
   theme?: string;
+  type?: ChartType;
   xAxisOptions?: Partial<XAxisOptions>;
   yAxisOptions?: Partial<YAxisOptions>;
 }
 
 export function BarChart({
   data,
-  barOptions = {isStacked: false},
+  direction = 'vertical',
+  emptyStateText,
+  isAnimated = false,
   renderTooltipContent,
   skipLinkText,
-  isAnimated = false,
+  theme,
+  type = 'default',
   xAxisOptions,
   yAxisOptions,
-  emptyStateText,
-  theme,
 }: BarChartProps) {
-  const selectedTheme = useTheme(theme);
-  const seriesColors = useThemeSeriesColors(data, selectedTheme);
-
-  const skipLinkAnchorId = useRef(uniqueId('BarChart'));
-
-  const emptyState = data.length === 0;
-
-  const xAxisOptionsWithDefaults: XAxisOptions = {
-    labelFormatter: (value: string) => value,
-    labels: [],
-    wrapLabels: true,
-    ...xAxisOptions,
-  };
-
-  const yAxisOptionsWithDefaults: Required<YAxisOptions> = {
-    labelFormatter: (value: number) => value.toString(),
-    integersOnly: false,
-    ...yAxisOptions,
-  };
-
-  function renderDefaultTooltipContent({data}: RenderTooltipContentData) {
-    const formattedData = data.map(({label, value, color}) => ({
-      color,
-      label,
-      value: yAxisOptionsWithDefaults.labelFormatter(value),
-    }));
-
-    return <TooltipContent theme={theme} data={formattedData} />;
-  }
-
-  const seriesWithDefaults = data.map((series, index) => ({
-    color: seriesColors[index],
-    ...series,
-  }));
-
   return (
     <React.Fragment>
-      {skipLinkText == null ||
-      skipLinkText.length === 0 ||
-      emptyState ? null : (
-        <SkipLink anchorId={skipLinkAnchorId.current}>{skipLinkText}</SkipLink>
-      )}
-      <ChartContainer theme={theme}>
-        <Chart
-          isStacked={barOptions.isStacked}
-          data={seriesWithDefaults}
-          xAxisOptions={xAxisOptionsWithDefaults}
-          yAxisOptions={yAxisOptionsWithDefaults}
-          isAnimated={isAnimated}
-          renderTooltipContent={
-            renderTooltipContent != null
-              ? renderTooltipContent
-              : renderDefaultTooltipContent
-          }
+      {direction === 'vertical' ? (
+        <VerticalBarChart
+          data={data}
+          xAxisOptions={xAxisOptions}
+          yAxisOptions={yAxisOptions}
+          theme={theme}
+          type={type}
           emptyStateText={emptyStateText}
+          isAnimated={isAnimated}
+          skipLinkText={skipLinkText}
+          renderTooltipContent={renderTooltipContent}
         />
-      </ChartContainer>
-
-      {skipLinkText == null ||
-      skipLinkText.length === 0 ||
-      emptyState ? null : (
-        <SkipLink.Anchor id={skipLinkAnchorId.current} />
+      ) : (
+        <HorizontalBarChart
+          data={data}
+          isAnimated={isAnimated}
+          renderTooltipContent={renderTooltipContent}
+          theme={theme}
+          type={type}
+          xAxisOptions={xAxisOptions}
+        />
       )}
     </React.Fragment>
   );

@@ -28,7 +28,5 @@ export {LinearGradient} from './LinearGradient';
 export {PolarisVizProvider} from './PolarisVizProvider';
 export type {PolarisVizProviderProps} from './PolarisVizProvider';
 export {TooltipWrapper} from './TooltipWrapper';
-export {HorizontalBarChart} from './HorizontalBarChart';
-export type {HorizontalBarChartProps} from './HorizontalBarChart';
 export {SimpleBarChart} from './SimpleBarChart';
 export type {SimpleBarChartProps} from './SimpleBarChart';

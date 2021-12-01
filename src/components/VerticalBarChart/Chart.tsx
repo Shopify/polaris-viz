@@ -18,15 +18,21 @@ import {
 import {YAxis} from '../YAxis';
 import {BarChartXAxis} from '../BarChartXAxis';
 import {HorizontalGridLines} from '../HorizontalGridLines';
-import {Dimensions, BarMargin, DataType, DataSeries} from '../../types';
+import {
+  Dimensions,
+  BarMargin,
+  DataType,
+  DataSeries,
+  ChartType,
+} from '../../types';
 import {useTheme} from '../../hooks';
-
-import {getStackedValues, formatAriaLabel} from './utilities';
 import type {
   RenderTooltipContentData,
   XAxisOptions,
   YAxisOptions,
-} from './types';
+} from '../BarChart';
+
+import {getStackedValues, formatAriaLabel} from './utilities';
 import {BarGroup, StackedBarGroup} from './components';
 import {useYScale, useXScale} from './hooks';
 import {FONT_SIZE, SMALL_WIDTH, SMALL_FONT_SIZE, SPACING} from './constants';
@@ -36,9 +42,9 @@ export interface Props {
   data: DataSeries[];
   dimensions?: Dimensions;
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
+  type: ChartType;
   xAxisOptions: XAxisOptions;
   yAxisOptions: YAxisOptions;
-  isStacked?: boolean;
   emptyStateText?: string;
   isAnimated?: boolean;
   theme?: string;
@@ -50,10 +56,10 @@ export function Chart({
   renderTooltipContent,
   xAxisOptions,
   yAxisOptions,
-  isStacked = false,
   isAnimated = false,
   emptyStateText,
   theme,
+  type,
 }: Props) {
   const selectedTheme = useTheme(theme);
   const [activeBarGroup, setActiveBarGroup] = useState<number | null>(null);
@@ -65,9 +71,20 @@ export function Chart({
 
   const emptyState = data.length === 0;
 
-  const stackedValues = isStacked
-    ? getStackedValues(data, xAxisOptions.labels)
-    : null;
+  const labels = useMemo(() => {
+    const labels: string[] = [];
+
+    data.forEach(({data}) => {
+      data.forEach(({key}, index) => {
+        labels[index] = xAxisOptions.labelFormatter?.(`${key}`) ?? `${key}`;
+      });
+    });
+
+    return labels;
+  }, [data, xAxisOptions]);
+
+  const stackedValues =
+    type === 'stacked' ? getStackedValues(data, labels) : null;
 
   const {ticks: initialTicks} = useYScale({
     drawableHeight: height - Margin.Top - Margin.Bottom,
@@ -95,11 +112,6 @@ export function Chart({
   const drawableWidth =
     width - Margin.Right - axisMargin - selectedTheme.grid.horizontalMargin * 2;
 
-  const formattedXAxisLabels = useMemo(
-    () => xAxisOptions.labels.map(xAxisOptions.labelFormatter),
-    [xAxisOptions.labelFormatter, xAxisOptions.labels],
-  );
-
   const rotateZeroBars = useMemo(
     () =>
       selectedTheme.bar.zeroAsMinHeight &&
@@ -113,7 +125,7 @@ export function Chart({
     () =>
       getBarXAxisDetails({
         yAxisLabelWidth,
-        xLabels: hideXAxis ? [] : formattedXAxisLabels,
+        xLabels: hideXAxis ? [] : labels,
         fontSize,
         width: width - selectedTheme.grid.horizontalMargin * 2,
         innerMargin: BarMargin[selectedTheme.bar.innerMargin],
@@ -123,7 +135,7 @@ export function Chart({
     [
       hideXAxis,
       yAxisLabelWidth,
-      formattedXAxisLabels,
+      labels,
       fontSize,
       width,
       selectedTheme.grid.horizontalMargin,
@@ -133,7 +145,7 @@ export function Chart({
     ],
   );
 
-  const sortedData = xAxisOptions.labels.map((_, index) => {
+  const sortedData = labels.map((_, index) => {
     return data
       .map((type) => type.data[index].value)
       .filter(Boolean) as number[];
@@ -152,7 +164,7 @@ export function Chart({
     data: sortedData,
     innerMargin: BarMargin[selectedTheme.bar.innerMargin],
     outerMargin: BarMargin[selectedTheme.bar.outerMargin],
-    labels: formattedXAxisLabels,
+    labels,
   });
 
   const {maxXLabelHeight} = xAxisDetails;
@@ -180,21 +192,21 @@ export function Chart({
         return {
           label: name ?? '',
           color: color!,
-          value: data[index].value ?? 0,
+          value: `${data[index].value ?? ''}`,
         };
       });
 
       return renderTooltipContent({
         data: content,
-        title: xAxisOptions.labels[index],
+        title: labels[index],
       });
     },
-    [renderTooltipContent, data, xAxisOptions.labels],
+    [renderTooltipContent, data, labels],
   );
 
   const accessibilityData = useMemo(
     () =>
-      xAxisOptions.labels.map((title, index) => {
+      labels.map((title, index) => {
         const content = data.map(({data, name}) => {
           return {
             label: name ?? '',
@@ -203,7 +215,7 @@ export function Chart({
         });
         return {title, data: content};
       }),
-    [data, xAxisOptions.labels, yAxisOptions],
+    [data, labels, yAxisOptions],
   );
 
   return (
@@ -330,9 +342,10 @@ export function Chart({
     const xPosition = xScale(`${index}`) ?? 0;
     const sortedDataPos = sortedData[index].map((num) => Math.abs(num));
 
-    const highestValuePos = isStacked
-      ? sortedData[index].reduce(sumPositiveData, 0)
-      : Math.max(...sortedDataPos);
+    const highestValuePos =
+      type === 'stacked'
+        ? sortedData[index].reduce(sumPositiveData, 0)
+        : Math.max(...sortedDataPos);
 
     const x = xPosition + chartStartPosition;
     const y = yScale(highestValuePos) + (Margin.Top as number);

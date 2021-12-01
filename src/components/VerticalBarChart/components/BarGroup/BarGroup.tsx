@@ -13,7 +13,7 @@ import {
   MASK_HIGHLIGHT_COLOR,
   BAR_ANIMATION_HEIGHT_BUFFER,
 } from '../../../../constants';
-import {uniqueId} from '../../../../utilities';
+import {clamp, uniqueId} from '../../../../utilities';
 import styles from '../../Chart.scss';
 
 interface Props {
@@ -48,7 +48,9 @@ export function BarGroup({
   rotateZeroBars = false,
 }: Props) {
   const {prefersReducedMotion} = usePrefersReducedMotion();
-  const barWidth = width / data.length - BAR_SPACING;
+
+  const dataLength = clamp({amount: data.length, min: 1, max: Infinity});
+  const barWidth = width / dataLength - BAR_SPACING;
 
   const getBarHeight = useCallback(
     (rawValue: number) => {
@@ -108,7 +110,7 @@ export function BarGroup({
                 hasRoundedCorners={hasRoundedCorners}
                 rotateZeroBars={rotateZeroBars}
                 animationDelay={
-                  barGroupIndex * (LOAD_ANIMATION_DURATION / data.length)
+                  barGroupIndex * (LOAD_ANIMATION_DURATION / dataLength)
                 }
                 isAnimated={shouldAnimate}
               />
