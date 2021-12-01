@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+## [0.26.1] - 2021-12-01
+
+### Added
+
+- Added `position: relative` to `@chart-container` mixin.
+
 ## [0.26.0] - 2021-11-29
 
 [0.26.0 Migration Guide](https://docs.google.com/document/d/1iO05cV5POYAjXI6HAiVXBHo7jWdMA7_ad3w08KQ52Dg)
@@ -20,8 +28,6 @@
 
 - `area`, `lineStyle`, and `hasPoint` from `SparkLineChartProps.series`.
 - `barColor` and `comparison` from `SparkBarChartProps`. These props are now available on the `DataSeries` as `color` and `isComparison`.
-
-## Unreleased
 
 ## [0.25.7] - 2021-11-26
 
