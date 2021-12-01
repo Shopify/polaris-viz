@@ -3,11 +3,12 @@ import {
   BarChart,
   LineChart,
   StackedAreaChart,
-  NormalizedStackedBarChart,
+  SimpleNormalizedChart,
   MultiSeriesBarChart,
   SparkLineChart,
   SparkBarChart,
   HorizontalBarChart,
+  SimpleBarChart,
 } from '../../../../src/components';
 import {PolarisVizProvider} from '../../PolarisVizProvider';
 import {ComponentContainer, LogoHeader, Divider} from './components';
@@ -133,40 +134,6 @@ import {ComponentContainer, LogoHeader, Divider} from './components';
 />
 
 <ComponentContainer
-  title="Normalized stacked bar chart"
-  description="Used for positive datasets with two to four items. "
-  link="https://polaris-viz.shopify.io/?path=/docs/charts-normalizedstackedbarchart--default"
-  center
-  chart={
-    <NormalizedStackedBarChart
-      orientation="vertical"
-      data={[
-        {
-          label: 'Direct',
-          value: 200,
-          formattedValue: '$200',
-          comparisonMetric: {
-            metric: '5',
-            trend: 'positive',
-            accessibilityLabel: 'Increase of',
-          },
-        },
-        {
-          label: 'Facebook',
-          value: 100,
-          formattedValue: '$100',
-          comparisonMetric: {
-            metric: '5',
-            trend: 'negative',
-            accessibilityLabel: 'Decrease of',
-          },
-        },
-      ]}
-    />
-  }
-/>
-
-<ComponentContainer
   title="Multiseries bar chart (grouped)"
   description="Used to show a grouped comparison of different types, across categories or time. "
   link="https://polaris-viz.shopify.io/?path=/docs/charts-multiseriesbarchart--default"
@@ -246,6 +213,34 @@ import {ComponentContainer, LogoHeader, Divider} from './components';
     />
   }
 />
+
+<ComponentContainer
+  title="Horizontal Bar Chart"
+  description="Used to show a grouped comparison of different types, across categories or time. "
+  link="https://polaris-viz.shopify.io/?path=/docs/charts-horizontalbarchart--default"
+  chart={
+    <HorizontalBarChart
+      data={[
+        {
+          name: 'BFCM 2020',
+          data: [
+            {value: 4, key: 'Shirt'},
+            {value: 7, key: 'Shoes'},
+          ],
+        },
+        {
+          name: 'BFCM 2021',
+          data: [
+            {value: 5, key: 'Shirt'},
+            {value: 6, key: 'Shoes'},
+          ],
+        },
+      ]}
+    />
+  }
+/>
+
+<h2 style={{gridColumn: 'span 2'}}>Spark Charts</h2>
 
 <ComponentContainer
   title="SparkLineChart"
@@ -378,38 +373,67 @@ import {ComponentContainer, LogoHeader, Divider} from './components';
   }
 />
 
+<h2 style={{gridColumn: 'span 2'}}>Simple Charts</h2>
+
 <ComponentContainer
-  title="Horizontal Bar Chart"
+  title="SimpleBarChart"
   description="Used to show a grouped comparison of different types, across categories or time. "
-  link="https://polaris-viz.shopify.io/?path=/docs/charts-horizontalbarchart--default"
+  link="https://polaris-viz.shopify.io/?path=/docs/charts-simplebarchart--default"
   chart={
-    <HorizontalBarChart
-      series={[
+    <SimpleBarChart
+      data={[
         {
-          name: 'Womens Leggings',
+          name: 'BFCM 2020',
           data: [
-            {rawValue: 3, label: 'BCFM 2019'},
-            {rawValue: 4, label: 'BCFM 2020'},
-            {rawValue: 7, label: 'BCFM 2021'},
+            {value: 4, key: 'Shirt'},
+            {value: 7, key: 'Shoes'},
           ],
         },
         {
-          name: 'Mens Bottoms',
+          name: 'BFCM 2021',
           data: [
-            {rawValue: 7, label: 'BCFM 2019'},
-            {rawValue: 1, label: 'BCFM 2020'},
-            {rawValue: 1, label: 'BCFM 2021'},
-          ],
-        },
-        {
-          name: 'Mens Shorts',
-          data: [
-            {rawValue: 4, label: 'BCFM 2019'},
-            {rawValue: 5, label: 'BCFM 2020'},
-            {rawValue: 6, label: 'BCFM 2021'},
+            {value: 5, key: 'Shirt'},
+            {value: 6, key: 'Shoes'},
           ],
         },
       ]}
+    />
+  }
+/>
+
+<ComponentContainer
+  title="SimpleNormalizedChart"
+  description="Used for positive datasets with two to four items. "
+  link="https://polaris-viz.shopify.io/?path=/docs/simple-charts-simplenormalizedchart--default"
+  center
+  chart={
+    <SimpleNormalizedChart
+      orientation="vertical"
+      comparisonMetrics={[
+        {
+          dataIndex: 0,
+          metric: '5',
+          trend: 'positive',
+          accessibilityLabel: 'Increase of',
+        },
+        {
+          dataIndex: 1,
+          metric: '5',
+          trend: 'negative',
+          accessibilityLabel: 'Decrease of',
+        },
+      ]}
+      data={[
+        {
+          key: 'Direct',
+          value: 200,
+        },
+        {
+          key: 'Facebook',
+          value: 100,
+        },
+      ]}
+      labelFormatter={(value) => `$${value}`}
     />
   }
 />

@@ -36,6 +36,8 @@ export interface GradientStop {
   stopOpacity?: number;
 }
 
+export type LabelFormatter = (value: string | number | null) => string;
+
 export type StringLabelFormatter = (
   value: string,
   index?: number,
@@ -205,3 +207,6 @@ export enum RoundedBorder {
   Bottom,
   Left,
 }
+
+export type ChartType = 'default' | 'stacked';
+export type Direction = 'horizontal' | 'vertical';
