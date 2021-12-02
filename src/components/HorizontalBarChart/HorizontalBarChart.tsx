@@ -1,9 +1,13 @@
 import React, {ReactNode} from 'react';
 
+import type {
+  AnnotationLookupTable,
+  RenderTooltipContentData,
+  XAxisOptions,
+} from '../BarChart';
 import type {ChartType, DataSeries} from '../../types';
 import {ChartContainer} from '../../components/ChartContainer';
 import {usePrefersReducedMotion} from '../../hooks';
-import type {RenderTooltipContentData, XAxisOptions} from '../BarChart';
 
 import {Chart} from './Chart';
 
@@ -11,12 +15,14 @@ export interface HorizontalBarChartProps {
   data: DataSeries[];
   renderTooltipContent: (data: RenderTooltipContentData) => ReactNode;
   xAxisOptions: XAxisOptions;
+  annotationsLookupTable?: AnnotationLookupTable;
   isAnimated?: boolean;
   theme?: string;
   type?: ChartType;
 }
 
 export function HorizontalBarChart({
+  annotationsLookupTable = {},
   data,
   isAnimated = true,
   renderTooltipContent,
@@ -36,6 +42,7 @@ export function HorizontalBarChart({
   return (
     <ChartContainer theme={theme}>
       <Chart
+        annotationsLookupTable={annotationsLookupTable}
         data={data}
         isAnimated={isAnimated && !prefersReducedMotion}
         renderTooltipContent={renderTooltipContent}

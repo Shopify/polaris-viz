@@ -1,0 +1,14 @@
+$animation-duration: 500ms;
+
+.AnimatedLine {
+  animation: fadeIn $animation-duration ease-in;
+}
+
+@keyframes fadeIn {
+  0% {
+    stroke-opacity: 0;
+  }
+  100% {
+    stroke-opacity: 1;
+  }
+}

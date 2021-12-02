@@ -1,4 +1,5 @@
-import React, {useState, useMemo, useCallback} from 'react';
+import React, {useState, useMemo} from 'react';
+import type {AnnotationLookupTable} from 'components/BarChart/types';
 
 import {BarChartMargin as Margin, XMLNS} from '../../constants';
 import {
@@ -25,17 +26,24 @@ import {
   DataSeries,
   ChartType,
 } from '../../types';
-import {useTheme} from '../../hooks';
+import {useBarChartTooltipContent, useTheme} from '../../hooks';
 import type {
   RenderTooltipContentData,
   XAxisOptions,
   YAxisOptions,
 } from '../BarChart';
+import {AnnotationLine} from '../BarChart';
 
 import {getStackedValues, formatAriaLabel} from './utilities';
 import {BarGroup, StackedBarGroup} from './components';
 import {useYScale, useXScale} from './hooks';
-import {FONT_SIZE, SMALL_WIDTH, SMALL_FONT_SIZE, SPACING} from './constants';
+import {
+  FONT_SIZE,
+  SMALL_WIDTH,
+  SMALL_FONT_SIZE,
+  SPACING,
+  BAR_SPACING,
+} from './constants';
 import styles from './Chart.scss';
 
 export interface Props {
@@ -45,12 +53,14 @@ export interface Props {
   type: ChartType;
   xAxisOptions: XAxisOptions;
   yAxisOptions: YAxisOptions;
+  annotationsLookupTable?: AnnotationLookupTable;
   emptyStateText?: string;
   isAnimated?: boolean;
   theme?: string;
 }
 
 export function Chart({
+  annotationsLookupTable = {},
   data,
   dimensions,
   renderTooltipContent,
@@ -148,7 +158,7 @@ export function Chart({
   const sortedData = labels.map((_, index) => {
     return data
       .map((type) => type.data[index].value)
-      .filter(Boolean) as number[];
+      .filter((value) => value !== null) as number[];
   });
 
   const areAllNegative = useMemo(() => {
@@ -182,27 +192,12 @@ export function Chart({
 
   const barColors = data.map(({color}) => color!);
 
-  const getTooltipMarkup = useCallback(
-    (index: number) => {
-      if (index == null) {
-        return null;
-      }
-
-      const content = data.map(({data, color, name}) => {
-        return {
-          label: name ?? '',
-          color: color!,
-          value: `${data[index].value ?? ''}`,
-        };
-      });
-
-      return renderTooltipContent({
-        data: content,
-        title: labels[index],
-      });
-    },
-    [renderTooltipContent, data, labels],
-  );
+  const getTooltipMarkup = useBarChartTooltipContent({
+    annotationsLookupTable,
+    renderTooltipContent,
+    data,
+    seriesColors: barColors,
+  });
 
   const accessibilityData = useMemo(
     () =>
@@ -318,6 +313,33 @@ export function Chart({
                   />
                 );
               })}
+        </g>
+        <g transform={`translate(${chartStartPosition},${Margin.Top})`}>
+          {Object.keys(annotationsLookupTable).map((key, dataIndex) => {
+            const annotation = annotationsLookupTable[Number(key)];
+
+            if (annotation == null) {
+              return null;
+            }
+
+            const xPosition = xScale(key);
+            const xPositionValue = xPosition == null ? 0 : xPosition;
+            const barWidth = xScale.bandwidth() / data.length - BAR_SPACING;
+            const leftOffset = barWidth * annotation.dataPointIndex;
+
+            return (
+              <AnnotationLine
+                barSize={barWidth}
+                color={annotation.color}
+                drawableSize={drawableHeight}
+                key={`annotation${dataIndex}${annotation.dataPointIndex}`}
+                offset={annotation.offset}
+                position={xPositionValue + leftOffset}
+                shouldAnimate={isAnimated}
+                width={annotation.width}
+              />
+            );
+          })}
         </g>
       </svg>
 
