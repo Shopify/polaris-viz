@@ -1,7 +1,6 @@
 import React, {ReactNode} from 'react';
 
 import type {ChartType, DataSeries} from '../../types';
-import {TooltipContent} from '../TooltipContent';
 import {ChartContainer} from '../../components/ChartContainer';
 import {usePrefersReducedMotion} from '../../hooks';
 import type {RenderTooltipContentData, XAxisOptions} from '../BarChart';
@@ -10,11 +9,11 @@ import {Chart} from './Chart';
 
 export interface HorizontalBarChartProps {
   data: DataSeries[];
+  renderTooltipContent: (data: RenderTooltipContentData) => ReactNode;
+  xAxisOptions: XAxisOptions;
   isAnimated?: boolean;
-  renderTooltipContent?: (data: RenderTooltipContentData) => ReactNode;
   theme?: string;
   type?: ChartType;
-  xAxisOptions?: XAxisOptions;
 }
 
 export function HorizontalBarChart({
@@ -34,28 +33,12 @@ export function HorizontalBarChart({
 
   const {prefersReducedMotion} = usePrefersReducedMotion();
 
-  function renderTooltip({data}: RenderTooltipContentData) {
-    if (renderTooltipContent != null) {
-      return renderTooltipContent({data});
-    }
-
-    const tooltipData = data.map(({value, label, color}) => {
-      return {
-        label,
-        value: xAxisOptionsForChart.labelFormatter!(value),
-        color,
-      };
-    });
-
-    return <TooltipContent data={tooltipData} theme={theme} />;
-  }
-
   return (
     <ChartContainer theme={theme}>
       <Chart
         data={data}
         isAnimated={isAnimated && !prefersReducedMotion}
-        renderTooltipContent={renderTooltip}
+        renderTooltipContent={renderTooltipContent}
         type={type}
         xAxisOptions={xAxisOptionsForChart}
       />
