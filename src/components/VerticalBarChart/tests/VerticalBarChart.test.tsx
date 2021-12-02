@@ -1,7 +1,6 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {SkipLink} from '../../../components/SkipLink';
 import {VerticalBarChart, VerticalBarChartProps} from '../VerticalBarChart';
 import {Chart} from '../Chart';
 
@@ -18,29 +17,13 @@ describe('<VerticalBarChart />', () => {
         name: 'LABEL1',
       },
     ],
+    renderTooltipContent: (value) => `${value}`,
     xAxisOptions: {},
-    skipLinkText: 'Skip Chart Content',
   };
 
   it('renders a <Chart />', () => {
     const verticalBarChart = mount(<VerticalBarChart {...mockProps} />);
 
     expect(verticalBarChart).toContainReactComponent(Chart);
-  });
-
-  describe('skipLinkText', () => {
-    it('renders a <SkipLink />', () => {
-      const verticalBarChart = mount(<VerticalBarChart {...mockProps} />);
-
-      expect(verticalBarChart).toContainReactComponent(SkipLink);
-    });
-
-    it('does not render a <SkipLink /> when series is empty', () => {
-      const verticalBarChart = mount(
-        <VerticalBarChart {...mockProps} data={[]} />,
-      );
-
-      expect(verticalBarChart).not.toContainReactComponent(SkipLink);
-    });
   });
 });
