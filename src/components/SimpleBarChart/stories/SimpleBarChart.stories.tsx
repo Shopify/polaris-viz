@@ -18,7 +18,8 @@ export default {
     previewHeight: 'auto',
     docs: {
       description: {
-        component: '',
+        component:
+          'Used to show comparison of different types, across categories or time. Bars can be stacked or side by side. It is recommended that you use a legend whenever displaying multi-series data. To display one, use the `<Legend />` component. <br /> <br /> This component inherits its height and width from its container.',
       },
     },
     controls: {
@@ -28,8 +29,8 @@ export default {
   },
   argTypes: {
     data: {
-      desciption:
-        'A collection of named data sets to be rendered in the chart. An optional color can be provided for each series, to overwrite the theme `seriesColors` defined in `PolarisVizProvider`. Required.',
+      description:
+        'A collection of named data sets to be rendered in the chart. An optional color can be provided for each series, to overwrite the theme `seriesColors` defined in `PolarisVizProvider`',
     },
     isAnimated: {
       description:
@@ -75,9 +76,11 @@ Comparison.args = {
   data: COMPARISON_SERIES,
 };
 
-export const ColorOverrides: Story<SimpleBarChartProps> = Template.bind({});
+export const OverwrittenSeriesColors: Story<SimpleBarChartProps> = Template.bind(
+  {},
+);
 
-ColorOverrides.args = {
+OverwrittenSeriesColors.args = {
   data: COLOR_OVERRIDE_SERIES,
 };
 

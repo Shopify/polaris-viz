@@ -9,7 +9,7 @@ import {THEME_CONTROL_ARGS} from '../../../storybook';
 import {generateMultipleSeries} from '../../../../documentation/utilities';
 import type {RenderTooltipContentData} from '../types';
 
-const tooltipContent = {
+const TOOLTIP_CONTENT = {
   empty: undefined,
   Custom: ({data}: RenderTooltipContentData) => (
     <div
@@ -31,7 +31,7 @@ const tooltipContent = {
 };
 
 export default {
-  title: 'Charts/StackedAreaChart',
+  title: 'Default Charts/StackedAreaChart',
   component: StackedAreaChart,
   parameters: {
     controls: {sort: 'requiredFirst', expanded: true},
@@ -45,7 +45,7 @@ export default {
   argTypes: {
     data: {
       description:
-        'The `Series` type gives the user flexibility to define what each series/area should look like, as well as providing the data to be plotted. [Series type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/StackedAreaChart/types.ts#L3)',
+        'A collection of named data sets to be rendered in the chart. An optional color can be provided for each series, to overwrite the theme `seriesColors` defined in `PolarisVizProvider`',
     },
     xAxisOptions: {
       description:
@@ -60,8 +60,8 @@ export default {
         'An object containing the `formatYAxisLabel` function, which formats the values displayed on the yAxis and in the tooltip. [NumberLabelFormatter type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/types.ts#L114)',
     },
     renderTooltipContent: {
-      options: Object.keys(tooltipContent),
-      mapping: tooltipContent,
+      options: Object.keys(TOOLTIP_CONTENT),
+      mapping: TOOLTIP_CONTENT,
       control: {
         type: 'select',
         labels: {
@@ -96,14 +96,16 @@ const Template: Story<StackedAreaChartProps> = (
 export const Default: Story<StackedAreaChartProps> = Template.bind({});
 Default.args = defaultProps;
 
-export const HideXAxis: Story<StackedAreaChartProps> = Template.bind({});
-HideXAxis.args = {
+export const HideXAxisLabels: Story<StackedAreaChartProps> = Template.bind({});
+HideXAxisLabels.args = {
   ...defaultProps,
   xAxisOptions: {...defaultProps.xAxisOptions, hide: true},
 };
 
-export const Gradients: Story<StackedAreaChartProps> = Template.bind({});
-Gradients.args = {
+export const OverwrittenSeriesColors: Story<StackedAreaChartProps> = Template.bind(
+  {},
+);
+OverwrittenSeriesColors.args = {
   ...defaultProps,
   xAxisOptions: {
     labels: Array(5)
@@ -121,49 +123,11 @@ Gradients.args = {
             key: Math.random().toString(),
           };
         }),
-      color: [
-        {offset: 0, color: 'rgba(58, 164, 246, 0.8)'},
-        {offset: 60, color: 'rgba(152, 107, 255, 0.8)'},
-        {offset: 100, color: 'rgba(236, 110, 110, 0.8)'},
-      ],
+      color: 'lime',
     },
     {
       name: 'Two',
       data: Array(5)
-        .fill(null)
-        .map(() => {
-          return {
-            value: Math.random() * Math.random() * 100,
-            key: Math.random().toString(),
-          };
-        }),
-    },
-  ],
-};
-
-export const LargeVolume: Story<StackedAreaChartProps> = Template.bind({});
-LargeVolume.args = {
-  ...defaultProps,
-  xAxisOptions: {
-    labels: Array(2000)
-      .fill(null)
-      .map(() => 'label'),
-  },
-  data: [
-    {
-      name: 'First-time',
-      data: Array(2000)
-        .fill(null)
-        .map(() => {
-          return {
-            value: Math.random() * Math.random() * 100,
-            key: Math.random().toString(),
-          };
-        }),
-    },
-    {
-      name: 'Returning',
-      data: Array(2000)
         .fill(null)
         .map(() => {
           return {

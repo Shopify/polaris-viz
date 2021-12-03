@@ -13,6 +13,7 @@
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
   transition: background 0.3s, box-shadow 0.3s;
   margin-top: -1px; // fix background bleeding on border radius
+  min-height: 89px; // always be 2 lines of description high
 }
 
 .HasLink {

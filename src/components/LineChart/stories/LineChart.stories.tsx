@@ -10,7 +10,6 @@ import {
   formatYAxisLabel,
   renderTooltipContent,
 } from './utils.stories';
-import {colorTeal} from '../../../constants';
 import {THEME_CONTROL_ARGS} from '../../../storybook';
 
 import {
@@ -18,7 +17,7 @@ import {
   generateLabels,
 } from '../../../../documentation/utilities';
 
-const tooltipContent = {
+const TOOLTIP_CONTENT = {
   empty: undefined,
   Custom: ({data}: {data: any}) => (
     <div
@@ -40,7 +39,7 @@ const tooltipContent = {
 };
 
 export default {
-  title: 'Charts/LineChart',
+  title: 'Default Charts/LineChart',
   component: LineChart,
   decorators: [
     (Story: any) => <div className={styles.Container}>{Story()}</div>,
@@ -55,9 +54,9 @@ export default {
     },
   },
   argTypes: {
-    series: {
+    data: {
       description:
-        'The `Series` type gives the user the flexibility to define exactly what each series/line should look like, as well as providing the data to be plotted. Note: the configuration of color, line style and area color on the series type overrides the defaults set by the theme provider.',
+        'A collection of named data sets to be rendered in the chart. An optional color can be provided for each series, to overwrite the theme `seriesColors` defined in `PolarisVizProvider`',
     },
     xAxisOptions: {
       description:
@@ -65,15 +64,15 @@ export default {
     },
     emptyStateText: {
       description:
-        'Used to indicate to screenreaders that a chart with no data has been rendered, in the case that an empty array is passed as the series data. It is strongly recommended that this is included if the series prop could be an empty array.',
+        'Used to indicate to screen readers that a chart with no data has been rendered, in the case that an empty array is passed as the series data. It is strongly recommended that this is included if the series prop could be an empty array.',
     },
     isAnimated: {
       description:
         'Whether to animate the lines and gradient when the chart is initially rendered and its data is updated. Even if `isAnimated` is set to true, animations will not be displayed for users with reduced motion preferences.',
     },
     renderTooltipContent: {
-      options: Object.keys(tooltipContent),
-      mapping: tooltipContent,
+      options: Object.keys(TOOLTIP_CONTENT),
+      mapping: TOOLTIP_CONTENT,
       control: {
         type: 'select',
         labels: {
@@ -181,8 +180,8 @@ NoArea.args = {
   renderTooltipContent,
 };
 
-export const SolidColor: Story<LineChartProps> = Template.bind({});
-SolidColor.args = {
+export const OverwrittenSeriesColors: Story<LineChartProps> = Template.bind({});
+OverwrittenSeriesColors.args = {
   data: [
     {
       name: 'Sales',
@@ -195,49 +194,12 @@ SolidColor.args = {
         {value: 6, key: '2020-04-06T12:00:00'},
         {value: 5, key: '2020-04-07T12:00:00'},
       ],
-      color: colorTeal,
+      color: 'lime',
     },
   ],
   xAxisOptions: {
     xAxisLabels,
     labelFormatter: formatXAxisLabel,
-  },
-  renderTooltipContent,
-};
-
-export const LargeDataSet: Story<LineChartProps> = Template.bind({});
-
-LargeDataSet.args = {
-  data: [
-    {
-      name: 'series 1',
-      data: Array(3000)
-        .fill(null)
-        .map(() => {
-          return {
-            value: Math.random() * Math.random() * 100,
-            key: 'Some value',
-          };
-        }),
-    },
-    {
-      name: 'series 2',
-      data: Array(3000)
-        .fill(null)
-        .map(() => {
-          return {
-            value: Math.random() * Math.random() * 100,
-            key: 'Some value',
-          };
-        }),
-    },
-  ],
-  xAxisOptions: {
-    xAxisLabels: Array(3000)
-      .fill(null)
-      .map(() => {
-        return 'Some value';
-      }),
   },
   renderTooltipContent,
 };

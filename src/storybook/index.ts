@@ -25,6 +25,6 @@ export const TYPE_CONTROL_ARGS = {
 };
 
 export const DIRECTION_CONTROL_ARGS = {
-  description: '',
+  description: 'Changes the direction of the chart.',
   control: {type: 'select', options: ['vertical', 'horizontal']},
 };

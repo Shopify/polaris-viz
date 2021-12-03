@@ -81,23 +81,23 @@ Chart components inherit their sizes from their containers, so place your chart 
 <table>
   <tr>
 
-  <td>
+  <td width="50%">
 <a href="https://polaris-viz.shopify.io/?path=/docs/charts-linechart">
-  <img src="../src/components/LineChart/line-chart.png"/>
+  <img src="../src/components/LineChart/line-chart.jpg"/>
 </a>
 
-#### Line chart
+#### LineChart
 
 Used to show change over time, comparisons, and trends. [View documentation&nbsp;→](https://polaris-viz.shopify.io/?path=/docs/charts-linechart)
 
   </td>
 
-  <td>
+  <td width="50%">
 <a href="https://polaris-viz.shopify.io/?path=/docs/charts-stackedareachart">
-  <img src="../src/components/StackedAreaChart/stacked-area-chart.png"/>
+  <img src="../src/components/StackedAreaChart/stacked-area-chart.jpg"/>
 </a>
 
-#### Stacked area chart
+#### StackedAreaChart
 
 Used to compare multiple series of data and display the total value. [View documentation&nbsp;→](https://polaris-viz.shopify.io/?path=/docs/charts-stackedareachart)
 
@@ -110,34 +110,18 @@ Used to compare multiple series of data and display the total value. [View docum
 
    <tr>
 
-  <td>
-<a href="https://polaris-viz.shopify.io/?path=/docs/charts-multiseriesbarchart">
-  <img src="../src/components/MultiSeriesBarChart/grouped-bar-example.png"/>
+  <td width="50%">
+<a href="https://polaris-viz.shopify.io/?path=/docs/charts-bar-chart">
+  <img src="../src/components/BarChart/bar-chart.jpg"/>
 </a>
 
-#### Multi-series grouped bar chart
+#### BarChart
 
-Used to show a grouped comparison of different types, across categories or time. [View documentation&nbsp;→](https://polaris-viz.shopify.io/?path=/docs/charts-multiseriesbarchart)
+Used to show a grouped comparison of different types, across categories or time. [View documentation&nbsp;→](https://polaris-viz.shopify.io/?path=/docs/charts-bar-chart)
 
   </td>
 
-  <td>
-<a href="https://polaris-viz.shopify.io/?path=/docs/charts-multiseriesbarchart--stacked">
-  <img src="../src/components/MultiSeriesBarChart/stacked-bar-example.png"/>
-</a>
-
-#### Multi-series stacked bar chart
-
-Used to show a stacked comparison of different types, across categories or time. [View documentation&nbsp;→](https://polaris-viz.shopify.io/?path=/docs/charts-multiseriesbarchart--stacked)
-
-  </td>
-
-  </tr>
-
-
-  <tr>
-
-  <td>
+  <td width="50%">
 <a href="https://polaris-viz.shopify.io/?path=/docs/subcomponents-tooltipcontent">
   <img src="../src/components/TooltipContent/tooltip-content.jpg"/>
 </a>
@@ -147,10 +131,16 @@ Used to show a stacked comparison of different types, across categories or time.
 Used to format content in tooltips. Alternatively, use a custom tooltip. [View documentation&nbsp;→](https://polaris-viz.shopify.io/?path=/docs/subcomponents-tooltipcontent)
 
   </td>
+  </tr>
+
+
+  <tr>
 
 
 
-  <td>
+
+
+  <td width="50%">
 <a href="https://polaris-viz.shopify.io/?path=/docs/subcomponents-legend">
   <img width="100%" src="../src/components/Legend/legend.png"/>
 </a>
@@ -172,10 +162,10 @@ Used on multiseries charts to indicate which color is associated with a certain 
 
 <table>
   <tr>
-    <td>
+    <td width="50%">
 
 <a href="https://polaris-viz.shopify.io/?path=/docs/simple-charts-simplenormalizedchart--default">
-  <img src="../src/components/SimpleBarChart/simple-bar-chart.png"/>
+  <img src="../src/components/SimpleBarChart/simple-bar-chart.jpg"/>
 </a>
 
 #### SimpleBarChart
@@ -183,10 +173,10 @@ Used on multiseries charts to indicate which color is associated with a certain 
 Used to show comparison across categories. [View documentation&nbsp;→](https://polaris-viz.shopify.io/?path=/docs/simple-charts-simplebarchart--default)
 
   </td>
-    <td>
+    <td width="50%">
 
 <a href="https://polaris-viz.shopify.io/?path=/docs/simple-charts-simplenormalizedchart--default">
-  <img src="../src/components/SimpleNormalizedChart/simple-normalized-chart.png"/>
+  <img src="../src/components/SimpleNormalizedChart/simple-normalized-chart.jpg"/>
 </a>
 
 #### SimpleNormalizedChart
@@ -194,7 +184,7 @@ Used to show comparison across categories. [View documentation&nbsp;→](https:/
 Used for positive datasets with two to four items. [View documentation&nbsp;→](https://polaris-viz.shopify.io/?path=/docs/simple-charts-simplenormalizedchart--default)
 
   </td>
-  <tr>
+  </tr>
 </table>
 
 <br />
@@ -205,10 +195,10 @@ Used for positive datasets with two to four items. [View documentation&nbsp;→]
 
 <table>
   <tr>
-    <td>
+    <td width="50%">
 
 <a href="https://polaris-viz.shopify.io/?path=/docs/spark-charts-sparkbarchart--default">
-  <img src="../src/components/SparkBarChart/sparkbarchart.png"/>
+  <img src="../src/components/SparkBarChart/spark-bar-chart.jpg"/>
 </a>
 
 #### SparkBarChart
@@ -216,10 +206,10 @@ Used for positive datasets with two to four items. [View documentation&nbsp;→]
 Used in small sizes to show how a metric has performed over time with bars. [View documentation&nbsp;→](https://polaris-viz.shopify.io/?path=/docs/spark-charts-sparkbarchart--default)
 
   </td>
-    <td>
+    <td width="50%">
 
 <a href="https://polaris-viz.shopify.io/?path=/docs/spark-charts-sparklinechart--default">
-  <img src="../src/components/SparkLineChart/sparklinechart.png"/>
+  <img src="../src/components/SparkLineChart/spark-line-chart.jpg"/>
 </a>
 
 #### SparkLineChart
