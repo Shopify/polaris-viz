@@ -1,4 +1,5 @@
 import React from 'react';
+import type {AnnotationLookupTable} from 'components/BarChart/types';
 
 import {ChartContainer} from '../../components/ChartContainer';
 import {useTheme, useThemeSeriesColors} from '../../hooks';
@@ -15,6 +16,7 @@ export interface VerticalBarChartProps {
   data: DataSeries[];
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
   xAxisOptions: XAxisOptions;
+  annotationsLookupTable?: AnnotationLookupTable;
   barOptions?: {isStacked: boolean};
   emptyStateText?: string;
   isAnimated?: boolean;
@@ -24,6 +26,7 @@ export interface VerticalBarChartProps {
 }
 
 export function VerticalBarChart({
+  annotationsLookupTable = {},
   data,
   renderTooltipContent,
   isAnimated = false,
@@ -51,6 +54,7 @@ export function VerticalBarChart({
     <React.Fragment>
       <ChartContainer theme={theme}>
         <Chart
+          annotationsLookupTable={annotationsLookupTable}
           data={seriesWithDefaults}
           xAxisOptions={xAxisOptions}
           yAxisOptions={yAxisOptionsWithDefaults}

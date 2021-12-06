@@ -109,6 +109,30 @@ export default {
     },
   },
   argTypes: {
+    annotations: {
+      control: {
+        type: 'select',
+      },
+      description: 'An array of annotations to show on the chart.',
+      options: ['No annotation', 'Annotation on second bar'],
+      mapping: {
+        'No annotation': undefined,
+        'Annotation on second bar': [
+          {
+            dataSeriesIndex: 1,
+            dataPointIndex: 1,
+            offset: 0.5,
+            width: 5,
+            color: 'gray',
+            ariaLabel: 'Median: 1.5',
+            tooltipData: {
+              label: 'Median',
+              value: '1.5 hours',
+            },
+          },
+        ],
+      },
+    },
     data: {
       description:
         'A collection of named data sets to be rendered in the chart. An optional color can be provided for each series, to overwrite the theme `seriesColors`  defined in `PolarisVizProvider`',

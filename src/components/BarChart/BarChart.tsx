@@ -2,7 +2,7 @@ import React, {useRef} from 'react';
 
 import {TooltipContent} from '../TooltipContent';
 import {SkipLink} from '../SkipLink';
-import {uniqueId} from '../../utilities';
+import {uniqueId, normalizeData} from '../../utilities';
 import {HorizontalBarChart} from '../HorizontalBarChart';
 import type {ChartType, DataSeries, Direction} from '../../types';
 import {VerticalBarChart} from '../VerticalBarChart';
@@ -12,10 +12,13 @@ import type {
   YAxisOptions,
 } from '../BarChart';
 
+import type {Annotation} from './types';
+
 export interface BarChartProps {
   data: DataSeries[];
   renderTooltipContent?(data: RenderTooltipContentData): React.ReactNode;
 
+  annotations?: Annotation[];
   direction?: Direction;
   emptyStateText?: string;
   isAnimated?: boolean;
@@ -27,6 +30,7 @@ export interface BarChartProps {
 }
 
 export function BarChart({
+  annotations = [],
   data,
   direction = 'vertical',
   emptyStateText,
@@ -56,16 +60,18 @@ export function BarChart({
       return renderTooltipContent({data});
     }
 
-    const tooltipData = data.map(({value, label, color}) => {
+    const tooltipData = data.map(({value, label, color, type}) => {
       return {
         label,
         value: xAxisOptionsForChart.labelFormatter!(value),
         color,
+        type,
       };
     });
 
     return <TooltipContent data={tooltipData} theme={theme} />;
   }
+  const annotationsLookupTable = normalizeData(annotations, 'dataSeriesIndex');
 
   return (
     <React.Fragment>
@@ -75,6 +81,7 @@ export function BarChart({
 
       {direction === 'vertical' ? (
         <VerticalBarChart
+          annotationsLookupTable={annotationsLookupTable}
           data={data}
           xAxisOptions={xAxisOptionsForChart}
           yAxisOptions={yAxisOptions}
@@ -86,6 +93,7 @@ export function BarChart({
         />
       ) : (
         <HorizontalBarChart
+          annotationsLookupTable={annotationsLookupTable}
           data={data}
           isAnimated={isAnimated}
           renderTooltipContent={renderTooltip}
