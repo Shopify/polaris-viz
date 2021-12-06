@@ -109,9 +109,6 @@ export const SampleBarChart = (
   return (
     <BarChart
       data={generateMultipleSeriesNewData(seriesLength)}
-      xAxisOptions={{
-        labels: generateLabels(1),
-      }}
       theme={theme}
     />
   );

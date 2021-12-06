@@ -1,18 +1,18 @@
 import React from 'react';
 import type {Story, Meta} from '@storybook/react';
 
-import {BarChart, BarChartProps} from '../../../components';
+import {BarChart, BarChartProps} from '../../components';
 
-import styles from './BarChart.stories.scss';
-import {SquareColorPreview} from '../../SquareColorPreview';
-import {PolarisVizProvider} from '../../PolarisVizProvider';
-import {THEME_CONTROL_ARGS} from '../../../storybook';
-
+import {SquareColorPreview} from '../SquareColorPreview';
+import {PolarisVizProvider} from '../PolarisVizProvider';
 import {
-  generateLabels,
-  generateMultipleSeriesNewData,
-} from '../../../../documentation/utilities';
-import type {DataSeries} from 'types';
+  DIRECTION_CONTROL_ARGS,
+  THEME_CONTROL_ARGS,
+  TYPE_CONTROL_ARGS,
+} from '../../storybook';
+
+import {generateMultipleSeriesNewData} from '../../../documentation/utilities';
+import type {DataSeries} from '../../types';
 
 const tooltipContent = {
   empty: undefined,
@@ -92,22 +92,9 @@ const data: DataSeries[] = [
   },
 ];
 
-const labels = [
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday',
-  'Sunday',
-];
-
 export default {
   title: 'Charts/BarChart',
   component: BarChart,
-  decorators: [
-    (Story: any) => <div className={styles.Container}>{Story()}</div>,
-  ],
   parameters: {
     docs: {
       description: {
@@ -121,6 +108,30 @@ export default {
     },
   },
   argTypes: {
+    annotations: {
+      control: {
+        type: 'select',
+      },
+      description: 'An array of annotations to show on the chart.',
+      options: ['No annotation', 'Annotation on 4th series'],
+      mapping: {
+        'No annotation': undefined,
+        'Annotation on 4th series': [
+          {
+            dataSeriesIndex: 3,
+            dataPointIndex: 1,
+            offset: 0.5,
+            width: 5,
+            color: 'gray',
+            ariaLabel: 'Median: 1.5',
+            tooltipData: {
+              label: 'Median',
+              value: '1.5 hours',
+            },
+          },
+        ],
+      },
+    },
     data: {
       description:
         'A collection of named data sets to be rendered in the chart. An optional color can be provided for each series, to overwrite the theme `seriesColors`  defined in `PolarisVizProvider`',
@@ -160,7 +171,9 @@ export default {
       description:
         'This accepts a function that is called to render the tooltip content. By default it calls `formatYAxisLabel` to format the the tooltip value and passes it to `<TooltipContent />`. [RenderTooltipContentData type definition.]()',
     },
+    direction: DIRECTION_CONTROL_ARGS,
     theme: THEME_CONTROL_ARGS,
+    type: TYPE_CONTROL_ARGS,
   },
 } as Meta;
 
@@ -208,7 +221,7 @@ export const Default: Story<BarChartProps> = Template.bind({});
 
 Default.args = {
   data,
-  xAxisOptions: {labels},
+  xAxisOptions: {},
   isAnimated: true,
 };
 
@@ -229,7 +242,7 @@ SingleBar.args = {
       ],
     },
   ],
-  xAxisOptions: {labels},
+  xAxisOptions: {},
   isAnimated: true,
 };
 
@@ -253,13 +266,13 @@ const NoOverflowStyleTemplate: Story<BarChartProps> = (args: BarChartProps) => {
 export const NoOverflowStyle = NoOverflowStyleTemplate.bind({});
 NoOverflowStyle.args = {
   data,
-  xAxisOptions: {labels},
+  xAxisOptions: {},
 };
 
 export const NoXAxis = Template.bind({});
 NoXAxis.args = {
   data,
-  xAxisOptions: {labels, hide: true},
+  xAxisOptions: {hide: true},
 };
 
 const WithoutRoundedCornersTemplate: Story<BarChartProps> = (
@@ -285,25 +298,21 @@ export const WithoutRoundedCorners: Story<BarChartProps> = WithoutRoundedCorners
 );
 WithoutRoundedCorners.args = {
   data,
-  xAxisOptions: {labels},
+  xAxisOptions: {},
 };
 
 export const Stacked: Story<BarChartProps> = Template.bind({});
 Stacked.args = {
   data,
-  xAxisOptions: {labels},
-  barOptions: {
-    isStacked: true,
-  },
+  xAxisOptions: {},
+  type: 'stacked',
 };
 
 export const OverwrittenSeriesColors: Story<BarChartProps> = Template.bind({});
 OverwrittenSeriesColors.args = {
   data: gradientSeries,
-  xAxisOptions: {labels},
-  barOptions: {
-    isStacked: true,
-  },
+  xAxisOptions: {},
+  type: 'stacked',
 };
 
 export const IntegersOnly: Story<BarChartProps> = Template.bind({});
@@ -346,7 +355,7 @@ IntegersOnly.args = {
       ],
     },
   ],
-  xAxisOptions: {labels},
+  xAxisOptions: {},
   yAxisOptions: {integersOnly: true},
 };
 
@@ -376,11 +385,6 @@ LargeVolume.args = {
         }),
     },
   ],
-  xAxisOptions: {
-    labels: Array(200)
-      .fill(null)
-      .map(() => 'some label'),
-  },
 };
 
 export const NegativeOnly = Template.bind({});
@@ -388,25 +392,31 @@ NegativeOnly.args = {
   data: [
     {
       name: 'Breakfast',
-      data: IntegersOnly.args.data![0].data.map(({key, value}) => {
-        return {key, value: value! * -1};
-      }),
+      data: (IntegersOnly.args.data as DataSeries[])[0].data.map(
+        ({key, value}) => {
+          return {key, value: value! * -1};
+        },
+      ),
     },
     {
       name: 'Lunch',
-      data: IntegersOnly.args.data![1].data.map(({key, value}) => {
-        return {key, value: value! * -1};
-      }),
+      data: (IntegersOnly.args.data as DataSeries[])[1].data.map(
+        ({key, value}) => {
+          return {key, value: value! * -1};
+        },
+      ),
     },
     {
       name: 'Dinner',
-      data: IntegersOnly.args.data![2].data.map(({key, value}) => {
-        return {key, value: value! * -1};
-      }),
+      data: (IntegersOnly.args.data as DataSeries[])[2].data.map(
+        ({key, value}) => {
+          return {key, value: value! * -1};
+        },
+      ),
     },
   ],
   isAnimated: true,
-  xAxisOptions: {labels},
+  xAxisOptions: {},
   yAxisOptions: {integersOnly: true},
 };
 
@@ -414,25 +424,16 @@ export const SeriesColorsUpToFour = Template.bind({});
 
 SeriesColorsUpToFour.args = {
   data: generateMultipleSeriesNewData(4),
-  xAxisOptions: {
-    labels: generateLabels(10),
-  },
 };
 
 export const SeriesColorsFromFiveToSeven = Template.bind({});
 
 SeriesColorsFromFiveToSeven.args = {
   data: generateMultipleSeriesNewData(7),
-  xAxisOptions: {
-    labels: generateLabels(10),
-  },
 };
 
 export const SeriesColorsUpToFourteen = Template.bind({});
 
 SeriesColorsUpToFourteen.args = {
   data: generateMultipleSeriesNewData(7),
-  xAxisOptions: {
-    labels: generateLabels(10),
-  },
 };

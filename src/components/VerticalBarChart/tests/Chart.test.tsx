@@ -63,16 +63,15 @@ describe('Chart />', () => {
     ],
     dimensions: {width: 500, height: 250},
     renderTooltipContent,
-    isStacked: false,
     xAxisOptions: {
       labelFormatter: jest.fn((value: string) => value.toString()),
-      labels: ['stuff 1', 'stuff 2', 'stuff 3'],
       hide: false,
     },
     yAxisOptions: {
       labelFormatter: (value: number) => value.toString(),
       integersOnly: false,
     },
+    type: 'default',
   };
 
   it('renders an SVG element', () => {
@@ -102,8 +101,18 @@ describe('Chart />', () => {
   });
 
   it('formats the x axis labels', () => {
-    mount(<Chart {...mockProps} />);
-    expect(mockProps.xAxisOptions.labelFormatter).toHaveBeenCalledTimes(3);
+    const chart = mount(
+      <Chart
+        {...mockProps}
+        xAxisOptions={{
+          labelFormatter: (value: string) => `${value} pickles`,
+        }}
+      />,
+    );
+
+    const xAxis = chart.find(BarChartXAxis);
+
+    expect(xAxis?.props.labels[0].value).toStrictEqual('stuff 1 pickles');
   });
 
   it('does not render <TooltipAnimatedContainer /> if there is no active point', () => {
@@ -148,8 +157,8 @@ describe('Chart />', () => {
       });
     });
 
-    it('does not render BarGroup if isStacked is true', () => {
-      const chart = mount(<Chart {...mockProps} isStacked />);
+    it('does not render BarGroup if type is stacked', () => {
+      const chart = mount(<Chart {...mockProps} type="stacked" />);
 
       expect(chart).not.toContainReactComponent(BarGroup);
     });
@@ -277,20 +286,20 @@ describe('Chart />', () => {
   });
 
   describe('<StackedBarGroup />', () => {
-    it('renders StackedBarGroup if isStacked is true', () => {
-      const chart = mount(<Chart {...mockProps} isStacked />);
+    it('renders StackedBarGroup if type is stacked', () => {
+      const chart = mount(<Chart {...mockProps} type="stacked" />);
 
       expect(chart).toContainReactComponent(StackedBarGroup);
     });
 
     it('renders a StackedBarGroup for each stacked data item', () => {
-      const chart = mount(<Chart {...mockProps} isStacked />);
+      const chart = mount(<Chart {...mockProps} type="stacked" />);
 
       expect(chart).toContainReactComponentTimes(StackedBarGroup, 2);
     });
 
     it('passes active props to the BarGroup that is being hovered', () => {
-      const chart = mount(<Chart {...mockProps} isStacked />);
+      const chart = mount(<Chart {...mockProps} type="stacked" />);
 
       triggerSVGMouseMove(chart);
 

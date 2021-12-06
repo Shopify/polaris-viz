@@ -5,6 +5,8 @@ import {
   TooltipContent as GeneralTooltip,
   TooltipContentProps,
 } from '../../../components';
+import {TooltipRowType} from '../TooltipContent';
+import {DEFAULT_THEME} from '../../../constants';
 
 export default {
   title: 'Subcomponents/Tooltips/TooltipContent',
@@ -53,6 +55,30 @@ Default.args = {
   ...defaultProps,
   total: undefined,
   title: undefined,
+};
+
+export const WithAnnotations: Story<TooltipContentProps> = Template.bind({});
+
+WithAnnotations.args = {
+  data: [
+    {
+      color: DEFAULT_THEME.seriesColors.upToFour[0],
+      label: 'Breakfast',
+      value: '-7',
+    },
+    {color: DEFAULT_THEME.seriesColors.upToFour[1], label: 'Lunch', value: '0'},
+    {
+      color: 'purple',
+      label: 'Median',
+      value: '1.5 hours',
+      type: TooltipRowType.Annotation,
+    },
+    {
+      color: DEFAULT_THEME.seriesColors.upToFour[2],
+      label: 'Dinner',
+      value: '0',
+    },
+  ],
 };
 
 export const WithTitle: Story<TooltipContentProps> = Template.bind({});

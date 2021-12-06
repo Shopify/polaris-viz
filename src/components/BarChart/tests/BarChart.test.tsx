@@ -3,7 +3,8 @@ import {mount} from '@shopify/react-testing';
 
 import {SkipLink} from '../../../components/SkipLink';
 import {BarChart, BarChartProps} from '../BarChart';
-import {Chart} from '../Chart';
+import {VerticalBarChart} from '../../VerticalBarChart';
+import {HorizontalBarChart} from '../../HorizontalBarChart';
 
 describe('<BarChart />', () => {
   const mockProps: BarChartProps = {
@@ -18,27 +19,51 @@ describe('<BarChart />', () => {
         name: 'LABEL1',
       },
     ],
-    xAxisOptions: {labels: ['Something', 'Another', 'Thing']},
+    xAxisOptions: {},
     skipLinkText: 'Skip Chart Content',
   };
 
-  it('renders a <Chart />', () => {
-    const barChart = mount(<BarChart {...mockProps} />);
+  it('passes down renderTooltipContent() when not provided to parent props', () => {
+    const chart = mount(<BarChart {...mockProps} />);
+    const barChart = chart.find(VerticalBarChart);
 
-    expect(barChart).toContainReactComponent(Chart);
+    expect(barChart?.props.renderTooltipContent).toBeDefined();
+  });
+
+  it('sets defaults for xAxisOptions', () => {
+    const chart = mount(<BarChart {...mockProps} />);
+    const barChart = chart.find(VerticalBarChart);
+
+    expect(barChart?.props.xAxisOptions.labelFormatter).toBeDefined();
+    expect(barChart?.props.xAxisOptions.hide).toStrictEqual(false);
+    expect(barChart?.props.xAxisOptions.wrapLabels).toStrictEqual(false);
+  });
+
+  describe('direction', () => {
+    it('renders a <VerticalBarChart /> when vertical', () => {
+      const chart = mount(<BarChart {...mockProps} />);
+
+      expect(chart).toContainReactComponent(VerticalBarChart);
+    });
+
+    it('renders a <HorizontalBarChart /> when horizontal', () => {
+      const chart = mount(<BarChart {...mockProps} direction="horizontal" />);
+
+      expect(chart).toContainReactComponent(HorizontalBarChart);
+    });
   });
 
   describe('skipLinkText', () => {
     it('renders a <SkipLink />', () => {
-      const barChart = mount(<BarChart {...mockProps} />);
+      const chart = mount(<BarChart {...mockProps} />);
 
-      expect(barChart).toContainReactComponent(SkipLink);
+      expect(chart).toContainReactComponent(SkipLink);
     });
 
-    it('does not render a <SkipLink /> when series is empty', () => {
-      const barChart = mount(<BarChart {...mockProps} data={[]} />);
+    it('does not render a <SkipLink /> when data is empty', () => {
+      const chart = mount(<BarChart {...mockProps} data={[]} />);
 
-      expect(barChart).not.toContainReactComponent(SkipLink);
+      expect(chart).not.toContainReactComponent(SkipLink);
     });
   });
 });
