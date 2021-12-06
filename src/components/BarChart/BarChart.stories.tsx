@@ -3,7 +3,6 @@ import type {Story, Meta} from '@storybook/react';
 
 import {BarChart, BarChartProps} from '../../components';
 
-// import styles from './BarChart.stories.scss';
 import {SquareColorPreview} from '../SquareColorPreview';
 import {PolarisVizProvider} from '../PolarisVizProvider';
 import {
@@ -114,12 +113,12 @@ export default {
         type: 'select',
       },
       description: 'An array of annotations to show on the chart.',
-      options: ['No annotation', 'Annotation on second bar'],
+      options: ['No annotation', 'Annotation on 4th series'],
       mapping: {
         'No annotation': undefined,
-        'Annotation on second bar': [
+        'Annotation on 4th series': [
           {
-            dataSeriesIndex: 1,
+            dataSeriesIndex: 3,
             dataPointIndex: 1,
             offset: 0.5,
             width: 5,
