@@ -24,12 +24,6 @@ export interface NullableData {
 
 export type LineStyle = 'dashed' | 'solid' | 'dotted';
 
-export interface LegacyDataSeries<T, C> {
-  name: string;
-  data: T[];
-  color?: C;
-}
-
 export interface GradientStop {
   offset: number;
   color: string;

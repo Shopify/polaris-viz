@@ -2,23 +2,16 @@ import React from 'react';
 
 import {useThemeSeriesColors} from '../../hooks/use-theme-series-colors';
 import {useTheme} from '../../hooks';
-import type {
-  LegacyDataSeries,
-  Data,
-  NullableData,
-  LineStyle,
-  Color,
-} from '../../types';
+import type {LineStyle, Color} from '../../types';
 import {LinePreview} from '../LinePreview';
 import {SquareColorPreview} from '../SquareColorPreview';
 
 import styles from './Legend.scss';
 
-type LegendData = LegacyDataSeries<Data | NullableData, Color>;
-
-interface LegendSeries extends Omit<LegendData, 'data'> {
+interface LegendSeries {
   lineStyle?: LineStyle;
-  data?: (Data | NullableData)[];
+  name?: string;
+  color?: Color;
 }
 
 export interface Props {
