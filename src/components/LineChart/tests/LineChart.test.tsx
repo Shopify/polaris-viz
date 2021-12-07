@@ -1,20 +1,19 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
+import type {DataSeries} from 'types';
 
 import {LineChart} from '../LineChart';
 import {SkipLink} from '../../SkipLink';
 import {Chart} from '../Chart';
-import type {Series} from '../types';
 
-const primarySeries: Series = {
+const primarySeries: DataSeries = {
   name: 'Primary',
   color: 'red',
-  lineStyle: 'solid',
   data: [
-    {label: 'Jan 1', rawValue: 1500},
-    {label: 'Jan 2', rawValue: 1000},
-    {label: 'Jan 3', rawValue: 800},
-    {label: 'Jan 4', rawValue: 1300},
+    {key: 'Jan 1', value: 1500},
+    {key: 'Jan 2', value: 1000},
+    {key: 'Jan 3', value: 800},
+    {key: 'Jan 4', value: 1300},
   ],
 };
 
@@ -30,7 +29,7 @@ describe('<LineChart />', () => {
   it('renders a <Chart />', () => {
     const lineChart = mount(
       <LineChart
-        series={[primarySeries]}
+        data={[primarySeries]}
         xAxisOptions={{xAxisLabels: ['Jan 1']}}
       />,
     );
@@ -43,7 +42,7 @@ describe('<LineChart />', () => {
       const mockContent = 'Skip line chart content';
       const lineChart = mount(
         <LineChart
-          series={[primarySeries]}
+          data={[primarySeries]}
           xAxisOptions={{xAxisLabels: ['Jan 1']}}
           skipLinkText={mockContent}
         />,
@@ -58,7 +57,7 @@ describe('<LineChart />', () => {
       const lineChart = mount(
         <LineChart
           xAxisOptions={{xAxisLabels: ['Jan 1']}}
-          series={[primarySeries]}
+          data={[primarySeries]}
         />,
       );
 
@@ -73,7 +72,7 @@ describe('<LineChart />', () => {
         <LineChart
           xAxisOptions={{xAxisLabels: ['Jan 1'], labelFormatter: xLabelSpy}}
           yAxisOptions={{labelFormatter: yLabelSpy}}
-          series={[primarySeries]}
+          data={[primarySeries]}
         />,
       );
 

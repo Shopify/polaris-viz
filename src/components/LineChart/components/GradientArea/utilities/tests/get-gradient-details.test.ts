@@ -3,16 +3,16 @@ import {getGradientDetails} from '../get-gradient-details';
 describe('getGradientDetails', () => {
   it('returns two stop details for all positive numbers', () => {
     const actual = getGradientDetails([
-      {label: '1', rawValue: 1},
-      {label: '2', rawValue: 2},
-      {label: '3', rawValue: 3},
-      {label: '4', rawValue: 4},
-      {label: '5', rawValue: 5},
-      {label: '6', rawValue: 6},
-      {label: '7', rawValue: 7},
-      {label: '8', rawValue: 8},
-      {label: '9', rawValue: 9},
-      {label: '10', rawValue: 10},
+      {key: '1', value: 1},
+      {key: '2', value: 2},
+      {key: '3', value: 3},
+      {key: '4', value: 4},
+      {key: '5', value: 5},
+      {key: '6', value: 6},
+      {key: '7', value: 7},
+      {key: '8', value: 8},
+      {key: '9', value: 9},
+      {key: '10', value: 10},
     ]);
 
     expect(actual).toStrictEqual([
@@ -23,16 +23,16 @@ describe('getGradientDetails', () => {
 
   it('returns two stop details for all negative numbers', () => {
     const actual = getGradientDetails([
-      {label: '1', rawValue: -1},
-      {label: '2', rawValue: -2},
-      {label: '3', rawValue: -3},
-      {label: '4', rawValue: -4},
-      {label: '5', rawValue: -5},
-      {label: '6', rawValue: -6},
-      {label: '7', rawValue: -7},
-      {label: '8', rawValue: -8},
-      {label: '9', rawValue: -9},
-      {label: '10', rawValue: -10},
+      {key: '1', value: -1},
+      {key: '2', value: -2},
+      {key: '3', value: -3},
+      {key: '4', value: -4},
+      {key: '5', value: -5},
+      {key: '6', value: -6},
+      {key: '7', value: -7},
+      {key: '8', value: -8},
+      {key: '9', value: -9},
+      {key: '10', value: -10},
     ]);
 
     expect(actual).toStrictEqual([
@@ -43,16 +43,16 @@ describe('getGradientDetails', () => {
 
   it('returns three stop details for mixed numbers', () => {
     const actual = getGradientDetails([
-      {label: '1', rawValue: -1},
-      {label: '2', rawValue: -2},
-      {label: '3', rawValue: -3},
-      {label: '4', rawValue: -4},
-      {label: '5', rawValue: -5},
-      {label: '6', rawValue: 6},
-      {label: '7', rawValue: 7},
-      {label: '8', rawValue: 8},
-      {label: '9', rawValue: 9},
-      {label: '10', rawValue: 10},
+      {key: '1', value: -1},
+      {key: '2', value: -2},
+      {key: '3', value: -3},
+      {key: '4', value: -4},
+      {key: '5', value: -5},
+      {key: '6', value: 6},
+      {key: '7', value: 7},
+      {key: '8', value: 8},
+      {key: '9', value: 9},
+      {key: '10', value: 10},
     ]);
 
     expect(actual).toStrictEqual([

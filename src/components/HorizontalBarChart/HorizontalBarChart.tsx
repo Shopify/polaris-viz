@@ -1,23 +1,28 @@
 import React, {ReactNode} from 'react';
 
+import type {
+  AnnotationLookupTable,
+  RenderTooltipContentData,
+  XAxisOptions,
+} from '../BarChart';
 import type {ChartType, DataSeries} from '../../types';
-import {TooltipContent} from '../TooltipContent';
 import {ChartContainer} from '../../components/ChartContainer';
 import {usePrefersReducedMotion} from '../../hooks';
 
 import {Chart} from './Chart';
-import type {RenderTooltipContentData, XAxisOptions} from './types';
 
 export interface HorizontalBarChartProps {
   data: DataSeries[];
+  renderTooltipContent: (data: RenderTooltipContentData) => ReactNode;
+  xAxisOptions: XAxisOptions;
+  annotationsLookupTable?: AnnotationLookupTable;
   isAnimated?: boolean;
-  renderTooltipContent?: (data: RenderTooltipContentData) => ReactNode;
   theme?: string;
   type?: ChartType;
-  xAxisOptions?: XAxisOptions;
 }
 
 export function HorizontalBarChart({
+  annotationsLookupTable = {},
   data,
   isAnimated = true,
   renderTooltipContent,
@@ -28,33 +33,19 @@ export function HorizontalBarChart({
   const xAxisOptionsForChart: Required<XAxisOptions> = {
     labelFormatter: (value: string) => value,
     hide: false,
+    wrapLabels: false,
     ...xAxisOptions,
   };
 
   const {prefersReducedMotion} = usePrefersReducedMotion();
 
-  function renderTooltip({data}: RenderTooltipContentData) {
-    if (renderTooltipContent != null) {
-      return renderTooltipContent({data});
-    }
-
-    const tooltipData = data.map(({value, label, color}) => {
-      return {
-        label,
-        value: xAxisOptionsForChart.labelFormatter(value),
-        color,
-      };
-    });
-
-    return <TooltipContent data={tooltipData} theme={theme} />;
-  }
-
   return (
     <ChartContainer theme={theme}>
       <Chart
+        annotationsLookupTable={annotationsLookupTable}
         data={data}
         isAnimated={isAnimated && !prefersReducedMotion}
-        renderTooltipContent={renderTooltip}
+        renderTooltipContent={renderTooltipContent}
         type={type}
         xAxisOptions={xAxisOptionsForChart}
       />

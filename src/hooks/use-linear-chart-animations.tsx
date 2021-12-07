@@ -3,7 +3,7 @@ import type {Line} from 'd3-shape';
 import {useSprings} from '@react-spring/web';
 
 import {getPathLength, getPointAtLength} from '../utilities';
-import type {Data, LegacyDataSeries} from '../types';
+import type {DataPoint, DataSeries} from '../types';
 
 export const SPRING_CONFIG = {
   friction: 5,
@@ -12,21 +12,19 @@ export const SPRING_CONFIG = {
   tension: 190,
 };
 
-type SeriesWithData = Required<LegacyDataSeries<Data, any>>;
-
-export function useLinearChartAnimations<T extends SeriesWithData>({
+export function useLinearChartAnimations({
   activeIndex,
   lineGenerator,
-  series,
+  data,
   isAnimated,
 }: {
   activeIndex: number | null;
-  lineGenerator: Line<{rawValue: number}>;
-  series: T[];
+  lineGenerator: Line<DataPoint>;
+  data: DataSeries[];
   isAnimated: boolean;
 }) {
   const currentIndex = activeIndex == null ? 0 : activeIndex;
-  const immediate = !isAnimated || series.length === 0 || activeIndex == null;
+  const immediate = !isAnimated || data.length === 0 || activeIndex == null;
 
   // Create off screen paths used for sub path and total path length calculations
   const createOffScreenPath = useCallback(
@@ -42,24 +40,24 @@ export function useLinearChartAnimations<T extends SeriesWithData>({
     [lineGenerator],
   );
 
-  // Get total lengths of paths for all series
+  // Get total lengths of paths for all data
   const totalPaths = useMemo(() => {
     if (immediate) return null;
 
-    return series.map(({data}) => {
+    return data.map(({data}) => {
       const offscreenPath = createOffScreenPath(data);
       return {
         element: offscreenPath,
         length: getPathLength(offscreenPath),
       };
     });
-  }, [immediate, createOffScreenPath, series]);
+  }, [immediate, createOffScreenPath, data]);
 
-  // Get length of subpaths at current index for all series
+  // Get length of subpaths at current index for all data
   const subPaths = useMemo(() => {
     if (immediate) return null;
 
-    return series.map(({data}) => {
+    return data.map(({data}) => {
       const path = createOffScreenPath(data.slice(0, currentIndex + 1));
 
       return {
@@ -67,7 +65,7 @@ export function useLinearChartAnimations<T extends SeriesWithData>({
         length: getPathLength(path),
       };
     });
-  }, [immediate, createOffScreenPath, currentIndex, series]);
+  }, [immediate, createOffScreenPath, currentIndex, data]);
 
   // Get percentage of subpath compared to total length
   const getPercentage = useCallback(
@@ -81,17 +79,17 @@ export function useLinearChartAnimations<T extends SeriesWithData>({
     [],
   );
 
-  // Calculate percentage for subpath compared to total length of all series
+  // Calculate percentage for subpath compared to total length of all data
   const percentages = useMemo(() => {
     if (immediate || !totalPaths || !subPaths) return null;
 
-    return series.map((_, index: number) => {
+    return data.map((_, index: number) => {
       const totalLength = totalPaths[index].length;
       const subPath = subPaths[index];
 
       return getPercentage(subPath.length, totalLength);
     });
-  }, [immediate, totalPaths, subPaths, series, getPercentage]);
+  }, [immediate, totalPaths, subPaths, data, getPercentage]);
 
   // Using the percentage, get the length to calculate the coordinates at the current index
   const getCoordinatesFromPercentage = useCallback(

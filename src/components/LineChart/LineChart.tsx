@@ -1,5 +1,6 @@
 import React, {useRef} from 'react';
 
+import type {DataSeries} from '../../types';
 import {ChartContainer} from '../../components/ChartContainer';
 import {useThemeSeriesColors} from '../../hooks/use-theme-series-colors';
 import {
@@ -13,16 +14,15 @@ import {usePrefersReducedMotion, useTheme} from '../../hooks';
 
 import {Chart} from './Chart';
 import type {
-  Series,
   RenderTooltipContentData,
   XAxisOptions,
   YAxisOptions,
-  SeriesWithDefaults,
+  DataWithDefaults,
 } from './types';
 import {TooltipContent} from './components';
 
 export interface LineChartProps {
-  series: Series[];
+  data: DataSeries[];
 
   emptyStateText?: string;
   isAnimated?: boolean;
@@ -34,7 +34,7 @@ export interface LineChartProps {
 }
 
 export function LineChart({
-  series,
+  data,
   renderTooltipContent,
   skipLinkText,
   emptyStateText,
@@ -44,7 +44,7 @@ export function LineChart({
   theme,
 }: LineChartProps) {
   const selectedTheme = useTheme(theme);
-  const seriesColors = useThemeSeriesColors(series, selectedTheme);
+  const seriesColors = useThemeSeriesColors(data, selectedTheme);
   const {prefersReducedMotion} = usePrefersReducedMotion();
 
   const skipLinkAnchorId = useRef(uniqueId('lineChart'));
@@ -92,13 +92,10 @@ export function LineChart({
     return 0;
   };
 
-  const areaOpacity = getOpacityByDataLength(series.length);
+  const areaOpacity = getOpacityByDataLength(data.length);
 
-  const seriesWithDefaults = series.map<SeriesWithDefaults>((series, index) => {
+  const dataWithDefaults: DataWithDefaults[] = data.map((series, index) => {
     const seriesColor = seriesColors[index];
-
-    const isSolidLine =
-      series.lineStyle == null || series.lineStyle === 'solid';
 
     const areaColor = isGradientType(seriesColor)
       ? getAverageColor(
@@ -108,16 +105,16 @@ export function LineChart({
       : seriesColor;
 
     return {
-      lineStyle: series.lineStyle ?? selectedTheme.line.style,
+      lineStyle: series.isComparison ? 'dotted' : selectedTheme.line.style,
       ...series,
-      areaColor: isSolidLine
-        ? changeColorOpacity(areaColor as string, areaOpacity)
-        : undefined,
+      areaColor: series.isComparison
+        ? undefined
+        : changeColorOpacity(areaColor as string, areaOpacity),
       // We want to override the color, not set a default
       // so it has to come last
-      color: isSolidLine
-        ? series.color ?? seriesColors[index]
-        : seriesColors[index],
+      color: series.isComparison
+        ? seriesColors[index]
+        : series.color ?? seriesColors[index],
     };
   });
 
@@ -125,12 +122,12 @@ export function LineChart({
     <React.Fragment>
       {skipLinkText == null ||
       skipLinkText.length === 0 ||
-      series.length === 0 ? null : (
+      data.length === 0 ? null : (
         <SkipLink anchorId={skipLinkAnchorId.current}>{skipLinkText}</SkipLink>
       )}
       <ChartContainer theme={theme}>
         <Chart
-          series={seriesWithDefaults}
+          data={dataWithDefaults}
           xAxisOptions={xAxisOptionsWithDefaults}
           yAxisOptions={yAxisOptionsWithDefaults}
           isAnimated={isAnimated && !prefersReducedMotion}

@@ -131,8 +131,10 @@ OffsetAndNulls.args = {
   ],
 };
 
-export const OverwrittenBarColor: Story<SparkBarChartProps> = Template.bind({});
-OverwrittenBarColor.args = {
+export const OverwrittenSeriesColors: Story<SparkBarChartProps> = Template.bind(
+  {},
+);
+OverwrittenSeriesColors.args = {
   ...defaultProps,
   data: [
     {
@@ -149,7 +151,7 @@ OverwrittenBarColor.args = {
         {key: 9, value: 900},
         {key: 10, value: 500},
       ],
-      color: 'green',
+      color: 'lime',
     },
     {
       data: [

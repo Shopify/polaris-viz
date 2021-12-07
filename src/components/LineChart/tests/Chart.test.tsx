@@ -12,20 +12,21 @@ import {mockDefaultTheme} from '../../../test-utilities/mount-with-provider';
 import {TooltipAnimatedContainer} from '../../../components/TooltipWrapper';
 import {LinearGradient} from '../../LinearGradient';
 import {Chart} from '../Chart';
-import type {Series} from '../types';
 import {Line, GradientArea} from '../components';
 import {YAxis} from '../../YAxis';
+import type {DataWithDefaults} from '../types';
 
-const primarySeries: Required<Series> = {
+const primaryData: Required<DataWithDefaults> = {
   name: 'Primary',
   color: 'red',
   lineStyle: 'solid',
   areaColor: 'red',
+  isComparison: false,
   data: [
-    {label: 'Jan 1', rawValue: 1500},
-    {label: 'Jan 2', rawValue: 1000},
-    {label: 'Jan 3', rawValue: 800},
-    {label: 'Jan 4', rawValue: 1300},
+    {key: 'Jan 1', value: 1500},
+    {key: 'Jan 2', value: 1000},
+    {key: 'Jan 3', value: 800},
+    {key: 'Jan 4', value: 1300},
   ],
 };
 
@@ -48,7 +49,7 @@ const yAxisOptions = {
 };
 
 const mockProps = {
-  series: [primarySeries],
+  data: [primaryData],
   dimensions: {width: 500, height: 250},
   xAxisOptions,
   yAxisOptions,
@@ -159,11 +160,11 @@ describe('<Chart />', () => {
     expect(chart.find(Crosshair)).toHaveReactProps({opacity: 0});
   });
 
-  it('renders a <Line /> for each series', () => {
+  it('renders a <Line /> for each data-point', () => {
     const chart = mount(
       <Chart
         {...mockProps}
-        series={[primarySeries, {...primarySeries, name: 'A second series'}]}
+        data={[primaryData, {...primaryData, name: 'A second data-point'}]}
       />,
     );
 
@@ -183,32 +184,32 @@ describe('<Chart />', () => {
     mount(
       <Chart
         {...mockProps}
-        series={[primarySeries, {...primarySeries, name: 'A second series'}]}
+        data={[primaryData, {...primaryData, name: 'A second data-point'}]}
       />,
     );
 
     expect(curveSpy).toHaveBeenCalled();
   });
 
-  it('renders a <Point /> for each data item in each series', () => {
-    const series = [primarySeries, {...primarySeries, name: 'A second series'}];
-    const chart = mount(<Chart {...mockProps} series={series} />);
+  it('renders a <Point /> for each data item in each data-point', () => {
+    const data = [primaryData, {...primaryData, name: 'A second data-point'}];
+    const chart = mount(<Chart {...mockProps} data={data} />);
 
     expect(chart).toContainReactComponentTimes(Point, 8);
   });
 
-  it('renders an additional <Point /> for each series if isAnimated is true', () => {
-    const series = [primarySeries, {...primarySeries, name: 'A second series'}];
-    const chart = mount(<Chart {...mockProps} series={series} isAnimated />);
+  it('renders an additional <Point /> for each data-point if isAnimated is true', () => {
+    const data = [primaryData, {...primaryData, name: 'A second data-point'}];
+    const chart = mount(<Chart {...mockProps} data={data} isAnimated />);
 
-    expect(chart).toContainReactComponentTimes(Point, 8 + series.length);
+    expect(chart).toContainReactComponentTimes(Point, 8 + data.length);
   });
 
   it('passes props to <Point />', () => {
     const chart = mount(
       <Chart
         {...mockProps}
-        series={[primarySeries, {...primarySeries, name: 'A second series'}]}
+        data={[primaryData, {...primaryData, name: 'A second data-point'}]}
       />,
     );
 
@@ -240,7 +241,7 @@ describe('<Chart />', () => {
     const chart = mount(<Chart {...mockProps} />);
 
     expect(chart).toContainReactComponent(VisuallyHiddenRows, {
-      series: mockProps.series,
+      data: mockProps.data,
       xAxisLabels: mockProps.xAxisOptions.xAxisLabels,
       formatYAxisLabel: mockProps.yAxisOptions.labelFormatter,
     });
@@ -248,34 +249,34 @@ describe('<Chart />', () => {
 
   describe('empty state', () => {
     it('does not render tooltip for empty state', () => {
-      const chart = mount(<Chart {...mockProps} series={[]} />);
+      const chart = mount(<Chart {...mockProps} data={[]} />);
 
       expect(chart).not.toContainReactText('Mock Tooltip');
       expect(chart).not.toContainReactComponent(TooltipAnimatedContainer);
     });
 
     it('does not render crosshair for empty state', () => {
-      const chart = mount(<Chart {...mockProps} series={[]} />);
+      const chart = mount(<Chart {...mockProps} data={[]} />);
 
       expect(chart).not.toContainReactComponent(Crosshair);
     });
 
     it('does not render Visually Hidden Rows for empty state', () => {
-      const chart = mount(<Chart {...mockProps} series={[]} />);
+      const chart = mount(<Chart {...mockProps} data={[]} />);
 
       expect(chart).not.toContainReactComponent(VisuallyHiddenRows);
     });
   });
 
-  describe('series.color', () => {
+  describe('data-point.color', () => {
     describe('is a CSS color color', () => {
       it('removes transparency for <Point />', () => {
         const chart = mount(
           <Chart
             {...mockProps}
-            series={[
+            data={[
               {
-                ...primarySeries,
+                ...primaryData,
                 color: 'rgba(255, 255, 255, 0.5)',
               },
             ]}
@@ -291,9 +292,9 @@ describe('<Chart />', () => {
         const chart = mount(
           <Chart
             {...mockProps}
-            series={[
+            data={[
               {
-                ...primarySeries,
+                ...primaryData,
                 color: 'rgb(255, 255, 255)',
               },
             ]}
@@ -307,13 +308,13 @@ describe('<Chart />', () => {
     });
 
     describe('is of type GradientStop[]', () => {
-      it('renders a LinearGradient if series color is a gradient', () => {
+      it('renders a LinearGradient if data-point color is a gradient', () => {
         const chart = mount(
           <Chart
             {...mockProps}
-            series={[
+            data={[
               {
-                ...primarySeries,
+                ...primaryData,
                 color: [
                   {
                     offset: 1,
@@ -332,9 +333,9 @@ describe('<Chart />', () => {
         const chart = mount(
           <Chart
             {...mockProps}
-            series={[
+            data={[
               {
-                ...primarySeries,
+                ...primaryData,
                 color: [
                   {
                     offset: 1,
@@ -355,9 +356,9 @@ describe('<Chart />', () => {
         const chart = mount(
           <Chart
             {...mockProps}
-            series={[
+            data={[
               {
-                ...primarySeries,
+                ...primaryData,
                 color: [
                   {
                     offset: 1,
@@ -378,9 +379,9 @@ describe('<Chart />', () => {
         const chart = mount(
           <Chart
             {...mockProps}
-            series={[
+            data={[
               {
-                ...primarySeries,
+                ...primaryData,
                 color: [
                   {
                     offset: 1,
@@ -405,12 +406,9 @@ describe('<Chart />', () => {
   });
 
   describe('areaColor', () => {
-    it('renders a <GradientArea /> for a series if areaColor is specified', () => {
+    it('renders a <GradientArea /> for a data-point if areaColor is specified', () => {
       const chart = mount(
-        <Chart
-          {...mockProps}
-          series={[{...primarySeries, areaColor: 'red'}]}
-        />,
+        <Chart {...mockProps} data={[{...primaryData, areaColor: 'red'}]} />,
       );
 
       expect(chart).toContainReactComponentTimes(GradientArea, 1);

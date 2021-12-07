@@ -46,15 +46,15 @@ import {
   StringLabelFormatter,
   NumberLabelFormatter,
   Dimensions,
-  LegacyDataSeries,
-  Data,
   DataType,
+  DataSeries,
+  DataPoint,
 } from '../../types';
 
 import {Spacing} from './constants';
 import {useYScale} from './hooks';
 import {StackedAreas} from './components';
-import type {Series, RenderTooltipContentData} from './types';
+import type {RenderTooltipContentData} from './types';
 import styles from './Chart.scss';
 
 const TOOLTIP_POSITION: TooltipPositionOffset = {
@@ -62,9 +62,9 @@ const TOOLTIP_POSITION: TooltipPositionOffset = {
   vertical: TooltipVerticalOffset.Center,
 };
 
-interface Props {
+export interface Props {
   xAxisOptions: {labels: string[]; wrapLabels?: boolean; hide?: boolean};
-  series: Series[];
+  data: DataSeries[];
   formatXAxisLabel: StringLabelFormatter;
   formatYAxisLabel: NumberLabelFormatter;
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
@@ -73,11 +73,9 @@ interface Props {
   theme?: string;
 }
 
-type SeriesForAnimation = Required<Partial<LegacyDataSeries<Data, null>>>;
-
 export function Chart({
   xAxisOptions,
-  series,
+  data,
   dimensions,
   formatXAxisLabel,
   formatYAxisLabel,
@@ -87,7 +85,7 @@ export function Chart({
 }: Props) {
   const {prefersReducedMotion} = usePrefersReducedMotion();
   const selectedTheme = useTheme(theme);
-  const colors = useThemeSeriesColors(series, selectedTheme);
+  const colors = useThemeSeriesColors(data, selectedTheme);
 
   const [activePointIndex, setActivePointIndex] = useState<number | null>(null);
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
@@ -101,10 +99,10 @@ export function Chart({
   const areaStack = useMemo(
     () =>
       stack()
-        .keys(series.map(({name}) => name))
+        .keys(data.map(({name}) => name ?? ''))
         .order(stackOrderReverse)
         .offset(stackOffsetNone),
-    [series],
+    [data],
   );
 
   const xAxisLabels = xAxisOptions.labels;
@@ -112,14 +110,14 @@ export function Chart({
   const formattedData = useMemo(
     () =>
       xAxisLabels.map((_, labelIndex) =>
-        series.reduce((acc, {name, data}) => {
-          const {rawValue} = data[labelIndex];
+        data.reduce((acc, {name, data}) => {
+          const {value} = data[labelIndex];
 
-          const dataPoint = {[name]: rawValue};
+          const dataPoint = {[name ?? '']: value};
           return Object.assign(acc, dataPoint);
         }, {}),
       ),
-    [xAxisLabels, series],
+    [xAxisLabels, data],
   );
 
   const fontSize = width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
@@ -137,7 +135,7 @@ export function Chart({
   });
 
   const xAxisDetails = useLinearXAxisDetails({
-    series,
+    data,
     fontSize,
     width: width - selectedTheme.grid.horizontalMargin * 2,
     formatXAxisLabel,
@@ -174,21 +172,21 @@ export function Chart({
 
   const getTooltipMarkup = useCallback(
     (index: number) => {
-      const data = series.reduce<RenderTooltipContentData['data']>(
+      const content = data.reduce<RenderTooltipContentData['data']>(
         function removeNullsAndFormatData(
           tooltipData,
           {name, data},
           seriesIndex,
         ) {
-          const {rawValue} = data[index];
-          if (rawValue == null) {
+          const {value} = data[index];
+          if (value == null) {
             return tooltipData;
           }
 
           tooltipData.push({
             color: colors[seriesIndex],
-            label: name,
-            value: rawValue,
+            label: name ?? '',
+            value,
           });
           return tooltipData;
         },
@@ -198,17 +196,17 @@ export function Chart({
       const title = xAxisLabels[index];
 
       return renderTooltipContent({
-        data,
+        data: content,
         title,
       });
     },
-    [colors, series, xAxisLabels, renderTooltipContent],
+    [colors, data, xAxisLabels, renderTooltipContent],
   );
 
   const lineGenerator = useMemo(() => {
-    const generator = line<{rawValue: number}>()
+    const generator = line<DataPoint>()
       .x((_, index) => (xScale == null ? 0 : xScale(index)))
-      .y(({rawValue}) => yScale(rawValue));
+      .y(({value}) => yScale(value ?? 0));
 
     if (selectedTheme.line.hasSpline) {
       generator.curve(curveStepRounded);
@@ -217,23 +215,22 @@ export function Chart({
     return generator;
   }, [xScale, yScale, selectedTheme.line.hasSpline]);
 
-  const seriesForAnimation = useMemo(() => {
+  const seriesForAnimation: DataSeries[] = useMemo(() => {
     return stackedValues.map((value) => {
       return {
         name: '',
-        color: null,
         data: value.map((val) => {
           return {
-            label: '',
-            rawValue: val[1],
+            key: '',
+            value: val[1],
           };
         }),
       };
     });
   }, [stackedValues]);
 
-  const {animatedCoordinates} = useLinearChartAnimations<SeriesForAnimation>({
-    series: seriesForAnimation,
+  const {animatedCoordinates} = useLinearChartAnimations({
+    data: seriesForAnimation,
     lineGenerator,
     activeIndex: activePointIndex,
     isAnimated: true,
@@ -318,9 +315,9 @@ export function Chart({
         </g>
 
         <VisuallyHiddenRows
+          data={data}
           formatYAxisLabel={formatYAxisLabel}
           xAxisLabels={formattedXAxisLabels}
-          series={series}
         />
 
         <StackedAreas

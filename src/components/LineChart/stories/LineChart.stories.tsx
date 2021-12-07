@@ -4,13 +4,12 @@ import type {Story, Meta} from '@storybook/react';
 import {LineChart, LineChartProps} from '../LineChart';
 import styles from './LineChart.stories.scss';
 import {
-  series,
+  data,
   xAxisLabels,
   formatXAxisLabel,
   formatYAxisLabel,
   renderTooltipContent,
 } from './utils.stories';
-import {colorTeal} from '../../../constants';
 import {THEME_CONTROL_ARGS} from '../../../storybook';
 
 import {
@@ -18,7 +17,7 @@ import {
   generateLabels,
 } from '../../../../documentation/utilities';
 
-const tooltipContent = {
+const TOOLTIP_CONTENT = {
   empty: undefined,
   Custom: ({data}: {data: any}) => (
     <div
@@ -40,7 +39,7 @@ const tooltipContent = {
 };
 
 export default {
-  title: 'Charts/LineChart',
+  title: 'Default Charts/LineChart',
   component: LineChart,
   decorators: [
     (Story: any) => <div className={styles.Container}>{Story()}</div>,
@@ -55,9 +54,9 @@ export default {
     },
   },
   argTypes: {
-    series: {
+    data: {
       description:
-        'The `Series` type gives the user the flexibility to define exactly what each series/line should look like, as well as providing the data to be plotted. Note: the configuration of color, line style and area color on the series type overrides the defaults set by the theme provider.',
+        'A collection of named data sets to be rendered in the chart. An optional color can be provided for each series, to overwrite the theme `seriesColors` defined in `PolarisVizProvider`',
     },
     xAxisOptions: {
       description:
@@ -65,15 +64,15 @@ export default {
     },
     emptyStateText: {
       description:
-        'Used to indicate to screenreaders that a chart with no data has been rendered, in the case that an empty array is passed as the series data. It is strongly recommended that this is included if the series prop could be an empty array.',
+        'Used to indicate to screen readers that a chart with no data has been rendered, in the case that an empty array is passed as the series data. It is strongly recommended that this is included if the series prop could be an empty array.',
     },
     isAnimated: {
       description:
         'Whether to animate the lines and gradient when the chart is initially rendered and its data is updated. Even if `isAnimated` is set to true, animations will not be displayed for users with reduced motion preferences.',
     },
     renderTooltipContent: {
-      options: Object.keys(tooltipContent),
-      mapping: tooltipContent,
+      options: Object.keys(TOOLTIP_CONTENT),
+      mapping: TOOLTIP_CONTENT,
       control: {
         type: 'select',
         labels: {
@@ -102,7 +101,7 @@ const Template: Story<LineChartProps> = (args: LineChartProps) => {
 
 export const Default: Story<LineChartProps> = Template.bind({});
 Default.args = {
-  series,
+  data,
   xAxisOptions: {
     xAxisLabels,
     labelFormatter: formatXAxisLabel,
@@ -112,7 +111,7 @@ Default.args = {
 
 export const HideXAxisLabels: Story<LineChartProps> = Template.bind({});
 HideXAxisLabels.args = {
-  series,
+  data,
   xAxisOptions: {
     xAxisLabels,
     labelFormatter: formatXAxisLabel,
@@ -125,7 +124,7 @@ HideXAxisLabels.args = {
 export const NoOverflowStyle: Story<LineChartProps> = Template.bind({});
 NoOverflowStyle.args = {
   theme: 'NoOverflow',
-  series,
+  data,
   xAxisOptions: {
     xAxisLabels,
     labelFormatter: formatXAxisLabel,
@@ -136,17 +135,17 @@ NoOverflowStyle.args = {
 
 export const IntegersOnly: Story<LineChartProps> = Template.bind({});
 IntegersOnly.args = {
-  series: [
+  data: [
     {
       name: 'Integers Only',
       data: [
-        {rawValue: 0.1, label: '2020-04-01T12:00:00'},
-        {rawValue: 0.4, label: '2020-04-02T12:00:00'},
-        {rawValue: 0.6, label: '2020-04-03T12:00:00'},
-        {rawValue: 0.2, label: '2020-04-04T12:00:00'},
-        {rawValue: 0.5, label: '2020-04-05T12:00:00'},
-        {rawValue: 0.9, label: '2020-04-06T12:00:00'},
-        {rawValue: 0.5, label: '2020-04-07T12:00:00'},
+        {value: 0.1, key: '2020-04-01T12:00:00'},
+        {value: 0.4, key: '2020-04-02T12:00:00'},
+        {value: 0.6, key: '2020-04-03T12:00:00'},
+        {value: 0.2, key: '2020-04-04T12:00:00'},
+        {value: 0.5, key: '2020-04-05T12:00:00'},
+        {value: 0.9, key: '2020-04-06T12:00:00'},
+        {value: 0.5, key: '2020-04-07T12:00:00'},
       ],
     },
   ],
@@ -160,17 +159,17 @@ IntegersOnly.args = {
 
 export const NoArea: Story<LineChartProps> = Template.bind({});
 NoArea.args = {
-  series: [
+  data: [
     {
       name: 'Sales',
       data: [
-        {rawValue: 100, label: '2020-04-01T12:00:00'},
-        {rawValue: 99, label: '2020-04-02T12:00:00'},
-        {rawValue: 1000, label: '2020-04-03T12:00:00'},
-        {rawValue: 2, label: '2020-04-04T12:00:00'},
-        {rawValue: 22, label: '2020-04-05T12:00:00'},
-        {rawValue: 6, label: '2020-04-06T12:00:00'},
-        {rawValue: 5, label: '2020-04-07T12:00:00'},
+        {value: 100, key: '2020-04-01T12:00:00'},
+        {value: 99, key: '2020-04-02T12:00:00'},
+        {value: 1000, key: '2020-04-03T12:00:00'},
+        {value: 2, key: '2020-04-04T12:00:00'},
+        {value: 22, key: '2020-04-05T12:00:00'},
+        {value: 6, key: '2020-04-06T12:00:00'},
+        {value: 5, key: '2020-04-07T12:00:00'},
       ],
     },
   ],
@@ -181,63 +180,26 @@ NoArea.args = {
   renderTooltipContent,
 };
 
-export const SolidColor: Story<LineChartProps> = Template.bind({});
-SolidColor.args = {
-  series: [
+export const OverwrittenSeriesColors: Story<LineChartProps> = Template.bind({});
+OverwrittenSeriesColors.args = {
+  data: [
     {
       name: 'Sales',
       data: [
-        {rawValue: 100, label: '2020-04-01T12:00:00'},
-        {rawValue: 99, label: '2020-04-02T12:00:00'},
-        {rawValue: 1000, label: '2020-04-03T12:00:00'},
-        {rawValue: 2, label: '2020-04-04T12:00:00'},
-        {rawValue: 22, label: '2020-04-05T12:00:00'},
-        {rawValue: 6, label: '2020-04-06T12:00:00'},
-        {rawValue: 5, label: '2020-04-07T12:00:00'},
+        {value: 100, key: '2020-04-01T12:00:00'},
+        {value: 99, key: '2020-04-02T12:00:00'},
+        {value: 1000, key: '2020-04-03T12:00:00'},
+        {value: 2, key: '2020-04-04T12:00:00'},
+        {value: 22, key: '2020-04-05T12:00:00'},
+        {value: 6, key: '2020-04-06T12:00:00'},
+        {value: 5, key: '2020-04-07T12:00:00'},
       ],
-      color: colorTeal,
+      color: 'lime',
     },
   ],
   xAxisOptions: {
     xAxisLabels,
     labelFormatter: formatXAxisLabel,
-  },
-  renderTooltipContent,
-};
-
-export const LargeDataSet: Story<LineChartProps> = Template.bind({});
-
-LargeDataSet.args = {
-  series: [
-    {
-      name: 'series 1',
-      data: Array(3000)
-        .fill(null)
-        .map(() => {
-          return {
-            rawValue: Math.random() * Math.random() * 100,
-            label: 'Some value',
-          };
-        }),
-    },
-    {
-      name: 'series 2',
-      data: Array(3000)
-        .fill(null)
-        .map(() => {
-          return {
-            rawValue: Math.random() * Math.random() * 100,
-            label: 'Some value',
-          };
-        }),
-    },
-  ],
-  xAxisOptions: {
-    xAxisLabels: Array(3000)
-      .fill(null)
-      .map(() => {
-        return 'Some value';
-      }),
   },
   renderTooltipContent,
 };
@@ -245,7 +207,7 @@ LargeDataSet.args = {
 export const SeriesColorsUpToFour: Story<LineChartProps> = Template.bind({});
 
 SeriesColorsUpToFour.args = {
-  series: generateMultipleSeries(4),
+  data: generateMultipleSeries(4),
   xAxisOptions: {
     xAxisLabels: generateLabels(10),
   },
@@ -258,7 +220,7 @@ export const SeriesColorsFromFiveToSeven: Story<LineChartProps> = Template.bind(
 );
 
 SeriesColorsFromFiveToSeven.args = {
-  series: generateMultipleSeries(7),
+  data: generateMultipleSeries(7),
   xAxisOptions: {
     xAxisLabels: generateLabels(10),
   },
@@ -270,7 +232,7 @@ export const SeriesColorsUpToFourteen: Story<LineChartProps> = Template.bind(
 );
 
 SeriesColorsUpToFourteen.args = {
-  series: generateMultipleSeries(14),
+  data: generateMultipleSeries(14),
   xAxisOptions: {
     xAxisLabels: generateLabels(10),
   },
@@ -280,7 +242,7 @@ SeriesColorsUpToFourteen.args = {
 export const NoLabelWrapping: Story<LineChartProps> = Template.bind({});
 
 NoLabelWrapping.args = {
-  series,
+  data,
   xAxisOptions: {
     xAxisLabels,
     wrapLabels: false,

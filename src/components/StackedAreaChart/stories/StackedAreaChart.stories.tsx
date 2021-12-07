@@ -9,7 +9,7 @@ import {THEME_CONTROL_ARGS} from '../../../storybook';
 import {generateMultipleSeries} from '../../../../documentation/utilities';
 import type {RenderTooltipContentData} from '../types';
 
-const tooltipContent = {
+const TOOLTIP_CONTENT = {
   empty: undefined,
   Custom: ({data}: RenderTooltipContentData) => (
     <div
@@ -31,7 +31,7 @@ const tooltipContent = {
 };
 
 export default {
-  title: 'Charts/StackedAreaChart',
+  title: 'Default Charts/StackedAreaChart',
   component: StackedAreaChart,
   parameters: {
     controls: {sort: 'requiredFirst', expanded: true},
@@ -43,9 +43,9 @@ export default {
     },
   },
   argTypes: {
-    series: {
+    data: {
       description:
-        'The `Series` type gives the user flexibility to define what each series/area should look like, as well as providing the data to be plotted. [Series type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/StackedAreaChart/types.ts#L3)',
+        'A collection of named data sets to be rendered in the chart. An optional color can be provided for each series, to overwrite the theme `seriesColors` defined in `PolarisVizProvider`',
     },
     xAxisOptions: {
       description:
@@ -60,8 +60,8 @@ export default {
         'An object containing the `formatYAxisLabel` function, which formats the values displayed on the yAxis and in the tooltip. [NumberLabelFormatter type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/types.ts#L114)',
     },
     renderTooltipContent: {
-      options: Object.keys(tooltipContent),
-      mapping: tooltipContent,
+      options: Object.keys(TOOLTIP_CONTENT),
+      mapping: TOOLTIP_CONTENT,
       control: {
         type: 'select',
         labels: {
@@ -81,7 +81,7 @@ export default {
 } as Meta;
 
 const defaultProps = {
-  series: data,
+  data,
   skipLinkText: 'Skip chart content',
   xAxisOptions: {labels},
   yAxisOptions: {formatLabel: formatYAxisLabel},
@@ -96,36 +96,34 @@ const Template: Story<StackedAreaChartProps> = (
 export const Default: Story<StackedAreaChartProps> = Template.bind({});
 Default.args = defaultProps;
 
-export const HideXAxis: Story<StackedAreaChartProps> = Template.bind({});
-HideXAxis.args = {
+export const HideXAxisLabels: Story<StackedAreaChartProps> = Template.bind({});
+HideXAxisLabels.args = {
   ...defaultProps,
   xAxisOptions: {...defaultProps.xAxisOptions, hide: true},
 };
 
-export const Gradients: Story<StackedAreaChartProps> = Template.bind({});
-Gradients.args = {
+export const OverwrittenSeriesColors: Story<StackedAreaChartProps> = Template.bind(
+  {},
+);
+OverwrittenSeriesColors.args = {
   ...defaultProps,
   xAxisOptions: {
     labels: Array(5)
       .fill(null)
       .map(() => 'label'),
   },
-  series: [
+  data: [
     {
       name: 'One',
       data: Array(5)
         .fill(null)
         .map(() => {
           return {
-            rawValue: Math.random() * Math.random() * 100,
-            label: Math.random().toString(),
+            value: Math.random() * Math.random() * 100,
+            key: Math.random().toString(),
           };
         }),
-      color: [
-        {offset: 0, color: 'rgba(58, 164, 246, 0.8)'},
-        {offset: 60, color: 'rgba(152, 107, 255, 0.8)'},
-        {offset: 100, color: 'rgba(236, 110, 110, 0.8)'},
-      ],
+      color: 'lime',
     },
     {
       name: 'Two',
@@ -133,42 +131,8 @@ Gradients.args = {
         .fill(null)
         .map(() => {
           return {
-            rawValue: Math.random() * Math.random() * 100,
-            label: Math.random().toString(),
-          };
-        }),
-    },
-  ],
-};
-
-export const LargeVolume: Story<StackedAreaChartProps> = Template.bind({});
-LargeVolume.args = {
-  ...defaultProps,
-  xAxisOptions: {
-    labels: Array(2000)
-      .fill(null)
-      .map(() => 'label'),
-  },
-  series: [
-    {
-      name: 'First-time',
-      data: Array(2000)
-        .fill(null)
-        .map(() => {
-          return {
-            rawValue: Math.random() * Math.random() * 100,
-            label: Math.random().toString(),
-          };
-        }),
-    },
-    {
-      name: 'Returning',
-      data: Array(2000)
-        .fill(null)
-        .map(() => {
-          return {
-            rawValue: Math.random() * Math.random() * 100,
-            label: Math.random().toString(),
+            value: Math.random() * Math.random() * 100,
+            key: Math.random().toString(),
           };
         }),
     },
@@ -179,19 +143,19 @@ export const SeriesColorsUpToFour = Template.bind({});
 
 SeriesColorsUpToFour.args = {
   ...defaultProps,
-  series: generateMultipleSeries(4),
+  data: generateMultipleSeries(4),
 };
 
 export const SeriesColorsFromFiveToSeven = Template.bind({});
 
 SeriesColorsFromFiveToSeven.args = {
   ...defaultProps,
-  series: generateMultipleSeries(7),
+  data: generateMultipleSeries(7),
 };
 
 export const SeriesColorsUpToFourteen = Template.bind({});
 
 SeriesColorsUpToFourteen.args = {
   ...defaultProps,
-  series: generateMultipleSeries(14),
+  data: generateMultipleSeries(14),
 };

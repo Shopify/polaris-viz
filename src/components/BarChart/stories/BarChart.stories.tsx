@@ -1,34 +1,145 @@
 import React from 'react';
 import type {Story, Meta} from '@storybook/react';
 
-import {BarChart, BarChartProps, PolarisVizProvider} from '../../../components';
+import {BarChart, BarChartProps} from '../../../components';
 
-import {formatXAxisLabel, defaultProps} from './utils.stories';
-import {THEME_CONTROL_ARGS} from '../../../storybook';
+import {SquareColorPreview} from '../../SquareColorPreview';
+import {PolarisVizProvider} from '../../PolarisVizProvider';
+import {
+  DIRECTION_CONTROL_ARGS,
+  THEME_CONTROL_ARGS,
+  TYPE_CONTROL_ARGS,
+} from '../../../storybook';
 
-const tooltipContent = {
+import {generateMultipleSeries} from '../../../../documentation/utilities';
+import type {DataSeries} from '../../../types';
+
+const TOOLTIP_CONTENT = {
   empty: undefined,
-  Custom: ({label, value}: {label: string; value: number}) => (
+  Custom: ({
+    data,
+    title,
+  }: {
+    data: {label: string; value: number; color: string}[];
+    title: string;
+  }) => (
     <div
       style={{
+        background: 'black',
+        padding: '8px',
+        borderRadius: '4px',
         color: 'white',
-        padding: '10px',
-        borderRadius: '10px',
       }}
     >
-      {`${formatXAxisLabel(label)}: ${value}`}
+      {title}
+      <div>
+        {data.map(({label, value, color}) => (
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '12px 1fr 1fr',
+              gridGap: '5px',
+              fontSize: '12px',
+              marginTop: '4px',
+            }}
+          >
+            <SquareColorPreview color={color} />
+            <div>{label}</div>
+            <div style={{textAlign: 'right'}}>{value}</div>
+          </div>
+        ))}
+      </div>
     </div>
   ),
 };
 
+const DATA: DataSeries[] = [
+  {
+    name: 'Breakfast',
+    data: [
+      {key: 'Monday', value: 3},
+      {key: 'Tuesday', value: -7},
+      {key: 'Wednesday', value: 4},
+      {key: 'Thursday', value: 8},
+      {key: 'Friday', value: 50},
+      {key: 'Saturday', value: 0},
+      {key: 'Sunday', value: 0.1},
+    ],
+  },
+  {
+    name: 'Lunch',
+    data: [
+      {key: 'Monday', value: 4},
+      {key: 'Tuesday', value: 0},
+      {key: 'Wednesday', value: 5},
+      {key: 'Thursday', value: 15},
+      {key: 'Friday', value: 8},
+      {key: 'Saturday', value: 50},
+      {key: 'Sunday', value: 0.1},
+    ],
+  },
+  {
+    name: 'Dinner',
+    data: [
+      {key: 'Monday', value: 7},
+      {key: 'Tuesday', value: 0},
+      {key: 'Wednesday', value: 6},
+      {key: 'Thursday', value: 12},
+      {key: 'Friday', value: 50},
+      {key: 'Saturday', value: 5},
+      {key: 'Sunday', value: 0.1},
+    ],
+  },
+];
+
+const DATA_WITH_COLOR: DataSeries[] = [
+  {
+    name: 'Breakfast',
+    color: 'lime',
+    data: [
+      {key: 'Monday', value: 3},
+      {key: 'Tuesday', value: -7},
+      {key: 'Wednesday', value: 4},
+      {key: 'Thursday', value: 8},
+      {key: 'Friday', value: 50},
+      {key: 'Saturday', value: 0},
+      {key: 'Sunday', value: 0.1},
+    ],
+  },
+  {
+    name: 'Lunch',
+    data: [
+      {key: 'Monday', value: 4},
+      {key: 'Tuesday', value: 0},
+      {key: 'Wednesday', value: 5},
+      {key: 'Thursday', value: 15},
+      {key: 'Friday', value: 8},
+      {key: 'Saturday', value: 50},
+      {key: 'Sunday', value: 0.1},
+    ],
+  },
+  {
+    name: 'Dinner',
+    data: [
+      {key: 'Monday', value: 7},
+      {key: 'Tuesday', value: 0},
+      {key: 'Wednesday', value: 6},
+      {key: 'Thursday', value: 12},
+      {key: 'Friday', value: 50},
+      {key: 'Saturday', value: 5},
+      {key: 'Sunday', value: 0.1},
+    ],
+  },
+];
+
 export default {
-  title: 'Charts/BarChart',
+  title: 'Default Charts/BarChart',
   component: BarChart,
   parameters: {
     docs: {
       description: {
         component:
-          'Used to show comparison across categories or time. <br /> <br /> This component inherits its height and width from its container.',
+          'Used to show comparison of different types, across categories or time. Bars can be stacked or side by side. It is recommended that you use a legend whenever displaying multi-series data. To display one, use the `<Legend />` component. <br /> <br /> This component inherits its height and width from its container.',
       },
     },
     controls: {
@@ -42,15 +153,16 @@ export default {
         type: 'select',
       },
       description: 'An array of annotations to show on the chart.',
-      options: ['No annotation', 'Annotation on second bar'],
+      options: ['No annotation', 'Annotation on 4th series'],
       mapping: {
         'No annotation': undefined,
-        'Annotation on second bar': [
+        'Annotation on 4th series': [
           {
-            dataIndex: 1,
-            xOffset: 0.5,
+            dataSeriesIndex: 3,
+            dataPointIndex: 1,
+            offset: 0.5,
             width: 5,
-            color: 'gray',
+            color: 'lime',
             ariaLabel: 'Median: 1.5',
             tooltipData: {
               label: 'Median',
@@ -60,11 +172,31 @@ export default {
         ],
       },
     },
-    renderTooltipContent: {
+    data: {
       description:
-        'Accepts a function that renders the tooltip content. By default it calls `formatXAxisLabel` and `formatYAxisLabel` to format the the tooltip values and passes them to `<BarChartTooltipContent />`.',
-      options: Object.keys(tooltipContent),
-      mapping: tooltipContent,
+        'A collection of named data sets to be rendered in the chart. An optional color can be provided for each series, to overwrite the theme `seriesColors` defined in `PolarisVizProvider`',
+    },
+    emptyStateText: {
+      description:
+        'Used to indicate to screen readers that a chart with no series data has been rendered, in the case that an empty array is passed as the data. It is strongly recommended that this is included if the series prop could be an empty array.',
+    },
+    isAnimated: {
+      description:
+        'Whether to animate the bars when the chart is initially rendered and its data is updated. Even if `isAnimated` is set to true, animations will not be displayed for users with reduced motion preferences. Note: animations are currently only available for the non-stacked bar chart.',
+    },
+    skipLinkText: {
+      description:
+        'If provided, renders a `<SkipLink/>` button with the string. Use this for charts with large data sets, so keyboard users can skip all the tabbable data points in the chart.',
+    },
+    xAxisOptions: {
+      description: 'An object that defines the xAxis and its options.',
+    },
+    yAxisOptions: {
+      description: 'An object that defines the yAxis and its options.',
+    },
+    renderTooltipContent: {
+      options: Object.keys(TOOLTIP_CONTENT),
+      mapping: TOOLTIP_CONTENT,
       control: {
         type: 'select',
         labels: {
@@ -72,29 +204,12 @@ export default {
           Annotation: 'Custom',
         },
       },
-    },
-    data: {
-      description: 'Data represented as bars. Required.',
-    },
-    emptyStateText: {
       description:
-        'Used to indicate to screen readers that a chart with no data has been rendered, in the case that an empty array is passed as the data. It is strongly recommended that this is included if the data prop could be an empty array.',
+        'This accepts a function that is called to render the tooltip content. By default it calls `formatYAxisLabel` to format the the tooltip value and passes it to `<TooltipContent />`. [RenderTooltipContentData type definition.]()',
     },
-    isAnimated: {
-      description:
-        'Whether to animate the bars when the chart is initially rendered and its data is updated. Even if `isAnimated` is set to true, animations will not be displayed for users with reduced motion preferences.',
-    },
-    skipLinkText: {
-      description:
-        'If provided, renders a `<SkipLink/>` button with the string. Use this for charts with large data sets, so keyboard users can skip all the tabbable data points in the chart.',
-    },
-    xAxisOptions: {
-      description: 'An object used to configure the xAxis and its labels.',
-    },
-    yAxisOptions: {
-      description: 'An object used to configure the yAxis and its labels.',
-    },
+    direction: DIRECTION_CONTROL_ARGS,
     theme: THEME_CONTROL_ARGS,
+    type: TYPE_CONTROL_ARGS,
   },
 } as Meta;
 
@@ -103,166 +218,55 @@ const Template: Story<BarChartProps> = (args: BarChartProps) => {
 };
 
 export const Default: Story<BarChartProps> = Template.bind({});
+
 Default.args = {
-  ...defaultProps,
-  xAxisOptions: {
-    labelFormatter: defaultProps.xAxisOptions.labelFormatter,
-  },
-  yAxisOptions: {
-    labelFormatter: defaultProps.yAxisOptions.labelFormatter,
-  },
+  data: DATA,
+  xAxisOptions: {},
+  isAnimated: true,
 };
 
-export const NoXAxis: Story<BarChartProps> = Template.bind({});
-NoXAxis.args = {
-  ...defaultProps,
-  xAxisOptions: {
-    hide: true,
-  },
-};
+export const SingleBar: Story<BarChartProps> = Template.bind({});
 
-export const Annotations: Story<BarChartProps> = Template.bind({});
-Annotations.args = {
-  ...defaultProps,
+SingleBar.args = {
   data: [
-    {rawValue: 45, label: '1'},
-    {rawValue: 16, label: '2'},
-    {rawValue: 9, label: '3'},
-    {rawValue: 32, label: '4'},
-    {rawValue: 85, label: '5'},
-    {rawValue: 74, label: '6'},
-    {rawValue: 110, label: '7'},
-    {rawValue: 58, label: '8'},
-    {rawValue: 40, label: '9'},
-    {rawValue: 58, label: '10'},
-    {rawValue: 64, label: '11'},
-    {rawValue: 9, label: '12'},
-  ],
-  annotations: [
     {
-      dataIndex: 1,
-      xOffset: 0.5,
-      width: 5,
-      color: 'gray',
-      ariaLabel: 'Median: 1.5',
-      tooltipData: {
-        label: 'Median',
-        value: '1.5 hours',
-      },
+      name: 'Breakfast',
+      data: [
+        {key: 'Monday', value: 3},
+        {key: 'Tuesday', value: -7},
+        {key: 'Wednesday', value: 4},
+        {key: 'Thursday', value: 8},
+        {key: 'Friday', value: 50},
+        {key: 'Saturday', value: 0},
+        {key: 'Sunday', value: 0.1},
+      ],
     },
   ],
+  xAxisOptions: {},
+  isAnimated: true,
 };
 
-export const LastBarTreatment: Story<BarChartProps> = Template.bind({});
-LastBarTreatment.args = {
-  ...defaultProps,
+export const Horizontal: Story<BarChartProps> = Template.bind({});
+
+Horizontal.args = {
   data: [
-    {rawValue: 1324.19, label: '2020-01-01T12:00:00Z'},
-    {rawValue: 1022.79, label: '2020-01-02T12:00:00Z'},
-    {rawValue: 713.29, label: '2020-01-03T12:00:00Z'},
-    {rawValue: 413.29, label: '2020-01-04T12:00:00Z'},
-    {rawValue: 100.79, label: '2020-01-05T12:00:00Z'},
-    {rawValue: 350.6, label: '2020-01-06T12:00:00Z'},
-    {rawValue: 277.69, label: '2020-01-07T12:00:00Z'},
-    {rawValue: 10, label: '2020-01-08T12:00:00Z'},
     {
-      rawValue: 950.19,
-      label: '2020-01-09T12:00:00Z',
-      barColor: 'yellow',
+      name: 'Breakfast',
+      data: [
+        {key: 'Monday', value: 3},
+        {key: 'Tuesday', value: -7},
+        {key: 'Wednesday', value: 4},
+        {key: 'Thursday', value: 8},
+        {key: 'Friday', value: 50},
+        {key: 'Saturday', value: 0},
+        {key: 'Sunday', value: 0.1},
+      ],
     },
   ],
+  xAxisOptions: {},
+  isAnimated: true,
+  direction: 'horizontal',
 };
-
-export const MinimalLabels: Story<BarChartProps> = Template.bind({});
-MinimalLabels.args = {
-  ...defaultProps,
-  data: [
-    {rawValue: 1324.19, label: '1 day'},
-    {rawValue: 1022.79, label: '2 days'},
-    {rawValue: 713.29, label: '3 days'},
-    {rawValue: 413.29, label: '4 days'},
-    {
-      rawValue: 100.79,
-      label: '5 days',
-    },
-    {rawValue: 350.6, label: '6 days'},
-    {rawValue: 277.69, label: '7 days'},
-    {
-      rawValue: 10,
-      label: '8 days',
-    },
-    {
-      rawValue: 10,
-      label: '9 days',
-    },
-    {
-      rawValue: 10,
-      label: '10 days',
-    },
-    {
-      rawValue: 10,
-      label: '11 days',
-    },
-    {
-      rawValue: 10,
-      label: '12 days',
-    },
-  ],
-  xAxisOptions: {
-    ...defaultProps.xAxisOptions,
-    labelFormatter: (label: string) => label,
-    useMinimalLabels: true,
-  },
-};
-
-export const IntegersOnly: Story<BarChartProps> = Template.bind({});
-IntegersOnly.args = {
-  ...defaultProps,
-  data: [
-    {rawValue: 0.19, label: '2020-01-01T12:00:00Z'},
-    {rawValue: 1.29, label: '2020-01-02T12:00:00Z'},
-    {rawValue: 1.79, label: '2020-01-03T12:00:00Z'},
-    {rawValue: 0.6, label: '2020-01-04T12:00:00Z'},
-    {rawValue: 1.69, label: '2020-01-05T12:00:00Z'},
-    {rawValue: 0.19, label: '2020-01-06T12:00:00Z'},
-  ],
-  yAxisOptions: {
-    ...defaultProps.yAxisOptions,
-    integersOnly: true,
-  },
-};
-
-export const LargeVolume: Story<BarChartProps> = Template.bind({});
-LargeVolume.args = {
-  ...defaultProps,
-  data: Array(1000)
-    .fill(null)
-    .map(() => {
-      return {
-        rawValue: Math.random() * Math.random() * 100,
-        label: Math.random().toString(),
-      };
-    }),
-};
-
-const NonRoundCornersTemplate: Story<BarChartProps> = (args: BarChartProps) => {
-  return (
-    <PolarisVizProvider
-      themes={{
-        Default: {
-          bar: {
-            hasRoundedCorners: false,
-          },
-        },
-      }}
-    >
-      <BarChart {...args} />
-    </PolarisVizProvider>
-  );
-};
-
-export const NonRoundCorners = NonRoundCornersTemplate.bind({});
-NonRoundCorners.args = defaultProps;
 
 const NoOverflowStyleTemplate: Story<BarChartProps> = (args: BarChartProps) => {
   return (
@@ -282,13 +286,148 @@ const NoOverflowStyleTemplate: Story<BarChartProps> = (args: BarChartProps) => {
 };
 
 export const NoOverflowStyle = NoOverflowStyleTemplate.bind({});
-NoOverflowStyle.args = defaultProps;
+NoOverflowStyle.args = {
+  data: DATA,
+  xAxisOptions: {},
+};
 
-export const NoLabelWrapping = Template.bind({});
-NoLabelWrapping.args = {
-  ...defaultProps,
-  xAxisOptions: {
-    wrapLabels: false,
-    labelFormatter: defaultProps.xAxisOptions.labelFormatter,
-  },
+export const HideXAxisLabels = Template.bind({});
+HideXAxisLabels.args = {
+  data: DATA,
+  xAxisOptions: {hide: true},
+};
+
+const WithoutRoundedCornersTemplate: Story<BarChartProps> = (
+  args: BarChartProps,
+) => {
+  return (
+    <PolarisVizProvider
+      themes={{
+        Default: {
+          bar: {
+            hasRoundedCorners: false,
+          },
+        },
+      }}
+    >
+      <BarChart {...args} />
+    </PolarisVizProvider>
+  );
+};
+
+export const WithoutRoundedCorners: Story<BarChartProps> = WithoutRoundedCornersTemplate.bind(
+  {},
+);
+WithoutRoundedCorners.args = {
+  data: DATA,
+  xAxisOptions: {},
+};
+
+export const Stacked: Story<BarChartProps> = Template.bind({});
+Stacked.args = {
+  data: DATA,
+  xAxisOptions: {},
+  type: 'stacked',
+};
+
+export const OverwrittenSeriesColors: Story<BarChartProps> = Template.bind({});
+OverwrittenSeriesColors.args = {
+  data: DATA_WITH_COLOR,
+  xAxisOptions: {},
+  type: 'stacked',
+};
+
+export const IntegersOnly: Story<BarChartProps> = Template.bind({});
+IntegersOnly.args = {
+  data: [
+    {
+      name: 'Breakfast',
+      data: [
+        {key: 'Monday', value: 2},
+        {key: 'Tuesday', value: 0.1},
+        {key: 'Wednesday', value: 0.78},
+        {key: 'Thursday', value: 0.12},
+        {key: 'Friday', value: 0.7},
+        {key: 'Saturday', value: 0.3},
+        {key: 'Sunday', value: 0.6},
+      ],
+    },
+    {
+      name: 'Lunch',
+      data: [
+        {key: 'Monday', value: 0},
+        {key: 'Tuesday', value: 0.1},
+        {key: 'Wednesday', value: 0.12},
+        {key: 'Thursday', value: 0.34},
+        {key: 'Friday', value: 1.6},
+        {key: 'Saturday', value: 0.21},
+        {key: 'Sunday', value: 0.1},
+      ],
+    },
+    {
+      name: 'Dinner',
+      data: [
+        {key: 'Monday', value: 1.23},
+        {key: 'Tuesday', value: 1.42},
+        {key: 'Wednesday', value: 2},
+        {key: 'Thursday', value: 1.2},
+        {key: 'Friday', value: 0.5},
+        {key: 'Saturday', value: 0.12},
+        {key: 'Sunday', value: 2},
+      ],
+    },
+  ],
+  xAxisOptions: {},
+  yAxisOptions: {integersOnly: true},
+};
+
+export const NegativeOnly = Template.bind({});
+NegativeOnly.args = {
+  data: [
+    {
+      name: 'Breakfast',
+      data: (IntegersOnly.args.data as DataSeries[])[0].data.map(
+        ({key, value}) => {
+          return {key, value: value! * -1};
+        },
+      ),
+    },
+    {
+      name: 'Lunch',
+      data: (IntegersOnly.args.data as DataSeries[])[1].data.map(
+        ({key, value}) => {
+          return {key, value: value! * -1};
+        },
+      ),
+    },
+    {
+      name: 'Dinner',
+      data: (IntegersOnly.args.data as DataSeries[])[2].data.map(
+        ({key, value}) => {
+          return {key, value: value! * -1};
+        },
+      ),
+    },
+  ],
+  isAnimated: true,
+  xAxisOptions: {},
+  yAxisOptions: {integersOnly: true},
+};
+
+export const SeriesColorsUpToFour = Template.bind({});
+
+SeriesColorsUpToFour.args = {
+  data: generateMultipleSeries(4),
+};
+
+export const SeriesColorsFromFiveToSeven = Template.bind({});
+
+SeriesColorsFromFiveToSeven.args = {
+  data: generateMultipleSeries(7),
+};
+
+export const SeriesColorsUpToFourteen = Template.bind({});
+
+SeriesColorsUpToFourteen.args = {
+  data: generateMultipleSeries(7),
 };

@@ -1,2 +1,2 @@
-export {TooltipContent} from './TooltipContent';
+export {TooltipContent, TooltipRowType} from './TooltipContent';
 export type {TooltipContentProps, TooltipData} from './TooltipContent';

@@ -19,3 +19,4 @@ export {useHorizontalXScale} from './useHorizontalXScale';
 export {useHorizontalTransitions} from './useHorizontalTransitions';
 export {useHorizontalSeriesColors} from './useHorizontalSeriesColors';
 export type {HorizontalTransitionStyle} from './useHorizontalTransitions';
+export {useBarChartTooltipContent} from './useBarChartTooltipContent';

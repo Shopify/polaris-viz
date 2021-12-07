@@ -3,7 +3,7 @@ import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
 import {area} from 'd3-shape';
 
-import {GradientArea} from '../GradientArea';
+import {GradientArea, Props} from '../GradientArea';
 
 jest.mock('d3-shape', () => ({
   area: jest.fn(() => {
@@ -16,24 +16,22 @@ jest.mock('d3-shape', () => ({
 }));
 
 describe('<GradientArea />', () => {
-  const mockProps = {
+  const mockProps: Props = {
     series: {
       name: 'Primary',
       color: 'primary' as any,
       lineStyle: 'solid' as any,
       areaColor: '#ff0000',
       data: [
-        {label: 'Jan 1', rawValue: 1500},
-        {label: 'Jan 2', rawValue: 1000},
-        {label: 'Jan 3', rawValue: 800},
-        {label: 'Jan 4', rawValue: 1300},
+        {key: 'Jan 1', value: 1500},
+        {key: 'Jan 2', value: 1000},
+        {key: 'Jan 3', value: 800},
+        {key: 'Jan 4', value: 1300},
       ],
     },
     xScale: scaleLinear(),
     yScale: scaleLinear(),
     hasSpline: false,
-    isAnimated: false,
-    index: 0,
   };
 
   it('renders a linear gradient', () => {

@@ -11,7 +11,7 @@ import {
   SimpleBarChart,
 } from '../../../../src/components';
 import {PolarisVizProvider} from '../../PolarisVizProvider';
-import {ComponentContainer, LogoHeader, Divider} from './components';
+import {ComponentContainer, LogoHeader, Divider, Title} from './components';
 
 <Meta
   title="Docs/Intro"
@@ -20,7 +20,7 @@ import {ComponentContainer, LogoHeader, Divider} from './components';
   }}
 />
 
-<div style={{ margin: '0 auto', maxWidth: '800px', color: 'white'}}>
+<div style={{ margin: '0 auto', maxWidth: '1000px', color: 'white'}}>
 
 <LogoHeader />
 
@@ -31,7 +31,7 @@ import {ComponentContainer, LogoHeader, Divider} from './components';
 
 <Divider noLine />
 
-<div style={{display: 'grid', gridGap: '20px', gridTemplateColumns: 'repeat(auto-fit, minmax(335px, 1fr))'}}>
+<div style={{display: 'grid', gridGap: '20px', gridTemplateColumns: 'repeat(auto-fit, minmax(490px, 1fr))'}}>
 
   <PolarisVizProvider
     themes={{
@@ -42,39 +42,64 @@ import {ComponentContainer, LogoHeader, Divider} from './components';
       },
     }}>
 
+<Title style={{gridColumn: 'span 2'}}>Default Charts</Title>
+
 <ComponentContainer
-  title="Bar chart"
-  description="Used to show comparison across categories. "
+  title="BarChart"
+  description="Used to show a grouped comparison of different types, across categories or time. "
   link="https://polaris-viz.shopify.io/?path=/docs/charts-barchart--default"
   chart={
     <BarChart
+      isAnimated
+      xAxisOptions={{
+        labels: ['Monday', 'Tuesday', 'Wednesday'],
+      }}
       data={[
-        {rawValue: 324.19, label: 'Jan. 1'},
-        {rawValue: 613.29, label: 'Jan. 2'},
-        {rawValue: 1000, label: 'Jan. 3'},
-        {rawValue: 0, label: 'Jan. 4'},
-        {rawValue: 1, label: 'Jan. 5'},
+        {
+          name: 'Breakfast',
+          data: [
+            {key: 'Monday', value: 3},
+            {key: 'Tuesday', value: 10},
+            {key: 'Wednesday', value: 4},
+          ],
+        },
+        {
+          name: 'Lunch',
+          data: [
+            {key: 'Monday', value: 4},
+            {key: 'Tuesday', value: 9},
+            {key: 'Wednesday', value: 5},
+          ],
+        },
+        {
+          name: 'Dinner',
+          data: [
+            {key: 'Monday', value: 7},
+            {key: 'Tuesday', value: 10},
+            {key: 'Wednesday', value: 6},
+          ],
+        },
       ]}
     />
   }
 />
 
 <ComponentContainer
-  title="Line chart"
+  title="LineChart"
   description="Used to show change over time. "
   link="https://polaris-viz.shopify.io/?path=/docs/charts-linechart--default"
   chart={
     <LineChart
       isAnimated
-      series={[
+      data={[
         {
           name: 'Sales',
           data: [
-            {rawValue: 324.19, label: '2020-01-01'},
-            {rawValue: 613.29, label: '2020-01-02'},
-            {rawValue: -422.79, label: '2020-01-03'},
-            {rawValue: 0, label: '2020-01-04'},
-            {rawValue: 1, label: '2020-01-05'},
+            {value: 324.19, key: '2020-01-01'},
+            {value: 613.29, key: '2020-01-02'},
+            {value: -422.79, key: '2020-01-03'},
+            {value: 0, key: '2020-01-04'},
+            {value: 1, key: '2020-01-05'},
           ],
         },
       ]}
@@ -86,7 +111,7 @@ import {ComponentContainer, LogoHeader, Divider} from './components';
 />
 
 <ComponentContainer
-  title="Stacked area chart"
+  title="StackedAreaChart"
   description="Used to compare multiple series of data and display the total value. "
   link="https://polaris-viz.shopify.io/?path=/docs/charts-stackedareachart--default"
   chart={
@@ -103,29 +128,29 @@ import {ComponentContainer, LogoHeader, Divider} from './components';
           'July',
         ],
       }}
-      series={[
+      data={[
         {
           name: 'First-time',
           data: [
-            {label: 'January', rawValue: 4237},
-            {label: 'February', rawValue: 5024},
-            {label: 'March', rawValue: 5730},
-            {label: 'April', rawValue: 5587},
-            {label: 'May', rawValue: 5303},
-            {label: 'June', rawValue: 5634},
-            {label: 'July', rawValue: 3238},
+            {key: 'January', value: 4237},
+            {key: 'February', value: 5024},
+            {key: 'March', value: 5730},
+            {key: 'April', value: 5587},
+            {key: 'May', value: 5303},
+            {key: 'June', value: 5634},
+            {key: 'July', value: 3238},
           ],
         },
         {
           name: 'Returning',
           data: [
-            {label: 'January', rawValue: 5663},
-            {label: 'February', rawValue: 7349},
-            {label: 'March', rawValue: 9795},
-            {label: 'April', rawValue: 7396},
-            {label: 'May', rawValue: 7028},
-            {label: 'June', rawValue: 12484},
-            {label: 'July', rawValue: 4878},
+            {key: 'January', value: 5663},
+            {key: 'February', value: 7349},
+            {key: 'March', value: 9795},
+            {key: 'April', value: 7396},
+            {key: 'May', value: 7028},
+            {key: 'June', value: 12484},
+            {key: 'July', value: 4878},
           ],
         },
       ]}
@@ -133,161 +158,7 @@ import {ComponentContainer, LogoHeader, Divider} from './components';
   }
 />
 
-<ComponentContainer
-  title="Multiseries bar chart (grouped)"
-  description="Used to show a grouped comparison of different types, across categories or time. "
-  link="https://polaris-viz.shopify.io/?path=/docs/charts-multiseriesbarchart--default"
-  chart={
-    <MultiSeriesBarChart
-      isAnimated
-      xAxisOptions={{
-        labels: ['Monday', 'Tuesday', 'Wednesday'],
-      }}
-      series={[
-        {
-          name: 'Breakfast',
-          data: [
-            {label: 'Monday', rawValue: 3},
-            {label: 'Tuesday', rawValue: 10},
-            {label: 'Wednesday', rawValue: 4},
-          ],
-        },
-        {
-          name: 'Lunch',
-          data: [
-            {label: 'Monday', rawValue: 4},
-            {label: 'Tuesday', rawValue: 9},
-            {label: 'Wednesday', rawValue: 5},
-          ],
-        },
-        {
-          name: 'Dinner',
-          data: [
-            {label: 'Monday', rawValue: 7},
-            {label: 'Tuesday', rawValue: 10},
-            {label: 'Wednesday', rawValue: 6},
-          ],
-        },
-      ]}
-    />
-  }
-/>
-
-<ComponentContainer
-  title="Multiseries bar chart (stacked)"
-  description="Used to show a stacked comparison of different types, across categories or time. "
-  link="https://polaris-viz.shopify.io/?path=/docs/charts-multiseriesbarchart--stacked"
-  chart={
-    <MultiSeriesBarChart
-      barOptions={{isStacked: true}}
-      isAnimated
-      xAxisOptions={{
-        labels: ['Monday', 'Tuesday', 'Wednesday'],
-      }}
-      series={[
-        {
-          name: 'Breakfast',
-          data: [
-            {label: 'Monday', rawValue: 3},
-            {label: 'Tuesday', rawValue: 7},
-            {label: 'Wednesday', rawValue: 4},
-          ],
-        },
-        {
-          name: 'Lunch',
-          data: [
-            {label: 'Monday', rawValue: 4},
-            {label: 'Tuesday', rawValue: 0},
-            {label: 'Wednesday', rawValue: 5},
-          ],
-        },
-        {
-          name: 'Dinner',
-          data: [
-            {label: 'Monday', rawValue: 7},
-            {label: 'Tuesday', rawValue: 0},
-            {label: 'Wednesday', rawValue: 6},
-          ],
-        },
-      ]}
-    />
-  }
-/>
-
-<ComponentContainer
-  title="Horizontal Bar Chart"
-  description="Used to show a grouped comparison of different types, across categories or time. "
-  link="https://polaris-viz.shopify.io/?path=/docs/charts-horizontalbarchart--default"
-  chart={
-    <HorizontalBarChart
-      data={[
-        {
-          name: 'BFCM 2020',
-          data: [
-            {value: 4, key: 'Shirt'},
-            {value: 7, key: 'Shoes'},
-          ],
-        },
-        {
-          name: 'BFCM 2021',
-          data: [
-            {value: 5, key: 'Shirt'},
-            {value: 6, key: 'Shoes'},
-          ],
-        },
-      ]}
-    />
-  }
-/>
-
-<h2 style={{gridColumn: 'span 2'}}>Spark Charts</h2>
-
-<ComponentContainer
-  title="SparkLineChart"
-  description="Used in small sizes to show how a metric has performed over time. "
-  link="https://polaris-viz.shopify.io/?path=/docs/spark-charts-sparklinechart--default"
-  center
-  chart={
-    <div style={{width: '250px', height: '140px'}}>
-      <SparkLineChart
-        isAnimated
-        data={[
-          {
-            data: [
-              {key: 0, value: 100},
-              {key: 1, value: 200},
-              {key: 2, value: 300},
-              {key: 3, value: 400},
-              {key: 4, value: 400},
-              {key: 5, value: 1000},
-              {key: 6, value: 200},
-              {key: 7, value: 800},
-              {key: 8, value: 900},
-              {key: 9, value: 200},
-              {key: 10, value: 400},
-            ],
-          },
-          {
-            isComparison: true,
-            data: [
-              {key: 0, value: 200},
-              {key: 1, value: 200},
-              {key: 2, value: 200},
-              {key: 3, value: 200},
-              {key: 4, value: 200},
-              {key: 5, value: 200},
-              {key: 6, value: 200},
-              {key: 7, value: 200},
-              {key: 8, value: 200},
-              {key: 9, value: 200},
-              {key: 10, value: 200},
-            ],
-          },
-        ]}
-      />
-    </div>
-  }
-/>
+<Title style={{gridColumn: 'span 2'}}>Spark Charts</Title>
 
 <ComponentContainer
   title="SparkBarChart"
@@ -373,7 +244,54 @@ import {ComponentContainer, LogoHeader, Divider} from './components';
   }
 />
 
-<h2 style={{gridColumn: 'span 2'}}>Simple Charts</h2>
+<ComponentContainer
+  title="SparkLineChart"
+  description="Used in small sizes to show how a metric has performed over time. "
+  link="https://polaris-viz.shopify.io/?path=/docs/spark-charts-sparklinechart--default"
+  center
+  chart={
+    <div style={{width: '250px', height: '140px'}}>
+      <SparkLineChart
+        isAnimated
+        data={[
+          {
+            data: [
+              {key: 0, value: 100},
+              {key: 1, value: 200},
+              {key: 2, value: 300},
+              {key: 3, value: 400},
+              {key: 4, value: 400},
+              {key: 5, value: 1000},
+              {key: 6, value: 200},
+              {key: 7, value: 800},
+              {key: 8, value: 900},
+              {key: 9, value: 200},
+              {key: 10, value: 400},
+            ],
+          },
+          {
+            isComparison: true,
+            data: [
+              {key: 0, value: 200},
+              {key: 1, value: 200},
+              {key: 2, value: 200},
+              {key: 3, value: 200},
+              {key: 4, value: 200},
+              {key: 5, value: 200},
+              {key: 6, value: 200},
+              {key: 7, value: 200},
+              {key: 8, value: 200},
+              {key: 9, value: 200},
+              {key: 10, value: 200},
+            ],
+          },
+        ]}
+      />
+    </div>
+  }
+/>
+
+<Title style={{gridColumn: 'span 2'}}>Simple Charts</Title>
 
 <ComponentContainer
   title="SimpleBarChart"
@@ -407,34 +325,36 @@ import {ComponentContainer, LogoHeader, Divider} from './components';
   link="https://polaris-viz.shopify.io/?path=/docs/simple-charts-simplenormalizedchart--default"
   center
   chart={
-    <SimpleNormalizedChart
-      orientation="vertical"
-      comparisonMetrics={[
-        {
-          dataIndex: 0,
-          metric: '5',
-          trend: 'positive',
-          accessibilityLabel: 'Increase of',
-        },
-        {
-          dataIndex: 1,
-          metric: '5',
-          trend: 'negative',
-          accessibilityLabel: 'Decrease of',
-        },
-      ]}
-      data={[
-        {
-          key: 'Direct',
-          value: 200,
-        },
-        {
-          key: 'Facebook',
-          value: 100,
-        },
-      ]}
-      labelFormatter={(value) => `$${value}`}
-    />
+    <div style={{width: 450}}>
+      <SimpleNormalizedChart
+        orientation="vertical"
+        comparisonMetrics={[
+          {
+            dataIndex: 0,
+            metric: '5',
+            trend: 'positive',
+            accessibilityLabel: 'Increase of',
+          },
+          {
+            dataIndex: 1,
+            metric: '5',
+            trend: 'negative',
+            accessibilityLabel: 'Decrease of',
+          },
+        ]}
+        data={[
+          {
+            key: 'Direct',
+            value: 200,
+          },
+          {
+            key: 'Facebook',
+            value: 100,
+          },
+        ]}
+        labelFormatter={(value) => `$${value}`}
+      />
+    </div>
   }
 />
 
