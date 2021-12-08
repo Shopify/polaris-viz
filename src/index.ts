@@ -34,4 +34,4 @@ export {
 
 export {createTheme} from './utilities/create-themes';
 
-export type {GradientStop, Color, DataSeries} from './types';
+export type {GradientStop, Color, DataSeries, DataPoint} from './types';
