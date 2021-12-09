@@ -5,11 +5,6 @@ import {ChartContainer} from '../ChartContainer';
 
 import {Chart} from './Chart';
 
-export interface Coordinates {
-  x: number;
-  y: number | null;
-}
-
 export interface SparkLineChartProps {
   data: DataSeries[];
   accessibilityLabel?: string;
