@@ -48,11 +48,17 @@ export function BarChart({
   const hideSkipLink =
     skipLinkText == null || skipLinkText.length === 0 || emptyState;
 
-  const xAxisOptionsForChart: XAxisOptions = {
+  const xAxisOptionsForChart: Required<XAxisOptions> = {
     labelFormatter: (value: string) => value,
     hide: false,
     wrapLabels: false,
     ...xAxisOptions,
+  };
+
+  const yAxisOptionsForChart: Required<YAxisOptions> = {
+    labelFormatter: (value: number) => value.toString(),
+    integersOnly: false,
+    ...yAxisOptions,
   };
 
   function renderTooltip({data}: RenderTooltipContentData) {
@@ -63,7 +69,7 @@ export function BarChart({
     const tooltipData = data.map(({value, label, color, type}) => {
       return {
         label,
-        value: xAxisOptionsForChart.labelFormatter!(value),
+        value: yAxisOptionsForChart.labelFormatter(value),
         color,
         type,
       };
@@ -84,7 +90,7 @@ export function BarChart({
           annotationsLookupTable={annotationsLookupTable}
           data={data}
           xAxisOptions={xAxisOptionsForChart}
-          yAxisOptions={yAxisOptions}
+          yAxisOptions={yAxisOptionsForChart}
           theme={theme}
           type={type}
           emptyStateText={emptyStateText}

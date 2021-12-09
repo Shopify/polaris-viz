@@ -1,12 +1,18 @@
 import React, {ReactChildren} from 'react';
 
-export function ExamplesGrid({children}: {children: ReactChildren}) {
+export function ExamplesGrid({
+  children,
+  cols = 2,
+}: {
+  children: ReactChildren;
+  cols: number;
+}) {
   return (
     <div
       style={{
         display: 'grid',
         gridGap: '20px',
-        gridTemplateColumns: 'repeat(2, minmax(250px, 1fr))',
+        gridTemplateColumns: `repeat(${cols}, minmax(250px, 1fr))`,
         gridTemplateRows: '1fr',
       }}
     >
