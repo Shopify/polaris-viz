@@ -40,7 +40,7 @@ export function useThemeSeriesColors(
 
     return series.map(({color, lineStyle, isComparison}) => {
       if (isComparison === true || (lineStyle && lineStyle !== 'solid')) {
-        return selectedTheme.line.dottedStrokeColor;
+        return selectedTheme.seriesColors.comparison;
       }
 
       // If the series doesn't have a color property

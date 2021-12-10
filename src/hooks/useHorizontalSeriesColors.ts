@@ -35,7 +35,7 @@ export function useHorizontalSeriesColors({data, theme}: Props) {
       let newColor;
 
       if (isComparison) {
-        newColor = selectedTheme.line.dottedStrokeColor;
+        newColor = selectedTheme.seriesColors.comparison;
       } else if (color != null) {
         newColor = color;
       }

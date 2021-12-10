@@ -205,6 +205,11 @@ export interface GradientStop {
       </>
     }
   />
+  <PropertyTable.Row
+    property="seriesColors.comparison"
+    type={'string'}
+    description="CSS color string used when DataSeries.isComparison is true"
+  />
 </PropertyTable>
 
 <Title type="h4">Examples:</Title>
@@ -368,11 +373,42 @@ export interface GradientStop {
           },
         }}
       >
-        <SampleBarChart seriesLength={11}/>
+        <SampleBarChart seriesLength={11} />
       </PolarisVizProvider>
     </div>
   }
 />
+
+<ComponentContainer
+  codeSample={`
+    <PolarisVizProvider={{
+      Default: {
+        seriesColors: {
+          comparison: 'lime',
+        },
+      }
+    }}>
+    <SparkLineChart series={data} />
+  </PolarisVizProvider>
+    `}
+  center
+  chart={
+    <div style={{width: '350px', height: '140px'}}>
+      <PolarisVizProvider
+        themes={{
+          Default: {
+            seriesColors: {
+              comparison: 'lime',
+            },
+          },
+        }}
+      >
+        <SampleSparkLineChart />
+      </PolarisVizProvider>
+    </div>
+  }
+/>
+
 </ExamplesGrid>
 <Divider noLine />
 
@@ -979,53 +1015,12 @@ export interface GradientStop {
     description="CSS color string used on the stroke around the point displayed when hovering the chart"
     chartsAffected={['LineChart', 'StackedAreaChart']}
   />
-  <PropertyTable.Row
-    property="line.dottedStrokeColor"
-    type={'string'}
-    description="CSS color string used on the stroke of dotted comparison lines"
-    chartsAffected={['SparkLineChart', 'SparkBarChart', 'LineChart']}
-  />
 </PropertyTable>
 
 <Title type="h4">Examples:</Title>
 
 <ExamplesGrid>
 
-<ComponentContainer
-  codeSample={`
-    <PolarisVizProvider={{
-      Default: {
-        line: {
-          sparkArea: 'rgba(250,50,250,0.2)',
-          hasSpline: true,
-          hasPoint: true,
-          dottedStrokeColor: 'lime'
-        }
-      }
-    }}>
-    <SparkLineChart series={data} />
-  </PolarisVizProvider>
-    `}
-  center
-  chart={
-    <div style={{width: '350px', height: '140px'}}>
-      <PolarisVizProvider
-        themes={{
-          Default: {
-            line: {
-              sparkArea: 'rgba(250,50,250,0.2)',
-              hasSpline: true,
-              hasPoint: true,
-              dottedStrokeColor: 'lime',
-            },
-          },
-        }}
-      >
-        <SampleSparkLineChart />
-      </PolarisVizProvider>
-    </div>
-  }
-/>
 <ComponentContainer
   codeSample={`
     <PolarisVizProvider={{

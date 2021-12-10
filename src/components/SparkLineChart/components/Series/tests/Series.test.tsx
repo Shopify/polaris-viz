@@ -4,6 +4,7 @@ import {scaleLinear} from 'd3-scale';
 import {area} from 'd3-shape';
 
 import {Series} from '../Series';
+import {DEFAULT_THEME} from '../../../../../constants';
 import type {DataSeries} from '../../../../../types';
 
 jest.mock('d3-shape', () => ({
@@ -54,9 +55,7 @@ const mockProps = {
   isAnimated: false,
   svgDimensions: {height: 250, width: 250},
   hasSpline: false,
-  theme: {
-    line: {sparkArea: null, style: 'solid', color: 'red', hasPoint: true},
-  } as any,
+  theme: DEFAULT_THEME,
 };
 
 jest.mock('../../../../../utilities/unique-id', () => ({

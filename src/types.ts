@@ -136,7 +136,6 @@ export interface LineTheme {
   hasPoint: boolean;
   width: number;
   pointStroke: string;
-  dottedStrokeColor: string;
 }
 
 export interface TooltipTheme {
@@ -145,6 +144,7 @@ export interface TooltipTheme {
   labelColor: string;
 }
 export interface SeriesColors {
+  comparison: string;
   single: Color;
   upToFour: Color[];
   fromFiveToSeven: Color[];

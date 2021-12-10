@@ -131,7 +131,7 @@ export function Series({
         width={svgDimensions.width}
         height={svgDimensions.height}
         fill={
-          data.isComparison ? theme.line.dottedStrokeColor : `url(#line-${id})`
+          data.isComparison ? theme.seriesColors.comparison : `url(#line-${id})`
         }
         mask={`url(#mask-${`${id}`})`}
         className={classNames(styles.Line, !immediate && styles.AnimatedLine)}
