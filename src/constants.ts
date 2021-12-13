@@ -79,6 +79,7 @@ const NEUTRAL_SINGLE_GRADIENT = [
 
 export const DEFAULT_THEME: Theme = {
   seriesColors: {
+    comparison: variables.colorDarkComparison,
     single: NEUTRAL_SINGLE_GRADIENT,
     upToFour: [
       createGradient(variables.colorIndigo70, variables.colorIndigo90),
@@ -132,7 +133,6 @@ export const DEFAULT_THEME: Theme = {
     hasPoint: true,
     width: 2,
     pointStroke: variables.colorGray160,
-    dottedStrokeColor: variables.colorDarkComparison,
   },
   bar: {
     hasRoundedCorners: true,
@@ -173,6 +173,7 @@ export const DEFAULT_THEME: Theme = {
 
 export const LIGHT_THEME: Theme = {
   seriesColors: {
+    comparison: variables.colorLightComparison,
     single: NEUTRAL_SINGLE_GRADIENT,
     upToFour: [
       createGradient(variables.colorIndigo70, variables.colorIndigo90),
@@ -226,7 +227,6 @@ export const LIGHT_THEME: Theme = {
     hasPoint: true,
     width: 2,
     pointStroke: variables.colorGray00,
-    dottedStrokeColor: variables.colorLightComparison,
   },
   bar: {
     hasRoundedCorners: true,

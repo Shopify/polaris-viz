@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Replaced `theme.line.dottedStrokeColor` by `theme.seriesColors.comparison`
+
 ## [0.28.0] - 2021-12-07
 
 [0.28.0 Migration Guide](https://docs.google.com/document/d/1iO05cV5POYAjXI6HAiVXBHo7jWdMA7_ad3w08KQ52Dg)

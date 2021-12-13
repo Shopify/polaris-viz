@@ -222,7 +222,7 @@ export function Chart({
 
         {comparisonData == null ? null : (
           <path
-            stroke={selectedTheme.line.dottedStrokeColor}
+            stroke={selectedTheme.seriesColors.comparison}
             strokeWidth={STROKE_WIDTH}
             d={lineShape!}
             className={styles.ComparisonLine}

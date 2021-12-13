@@ -102,7 +102,7 @@ export function HorizontalBars({
                 barHeight={barHeight}
                 color={
                   data[seriesIndex].isComparison
-                    ? selectedTheme.line.dottedStrokeColor
+                    ? selectedTheme.seriesColors.comparison
                     : selectedTheme.xAxis.labelColor
                 }
                 isAnimated={isAnimated}
