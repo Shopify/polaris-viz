@@ -15,13 +15,13 @@ import {Chart} from './Chart';
 export interface VerticalBarChartProps {
   data: DataSeries[];
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
-  xAxisOptions: XAxisOptions;
+  xAxisOptions: Required<XAxisOptions>;
+  yAxisOptions: Required<YAxisOptions>;
   annotationsLookupTable?: AnnotationLookupTable;
   barOptions?: {isStacked: boolean};
   emptyStateText?: string;
   isAnimated?: boolean;
   theme?: string;
-  yAxisOptions?: Partial<YAxisOptions>;
   type?: ChartType;
 }
 
@@ -39,12 +39,6 @@ export function VerticalBarChart({
   const selectedTheme = useTheme(theme);
   const seriesColors = useThemeSeriesColors(data, selectedTheme);
 
-  const yAxisOptionsWithDefaults: Required<YAxisOptions> = {
-    labelFormatter: (value: number) => value.toString(),
-    integersOnly: false,
-    ...yAxisOptions,
-  };
-
   const seriesWithDefaults = data.map((series, index) => ({
     color: seriesColors[index],
     ...series,
@@ -57,7 +51,7 @@ export function VerticalBarChart({
           annotationsLookupTable={annotationsLookupTable}
           data={seriesWithDefaults}
           xAxisOptions={xAxisOptions}
-          yAxisOptions={yAxisOptionsWithDefaults}
+          yAxisOptions={yAxisOptions}
           isAnimated={isAnimated}
           renderTooltipContent={renderTooltipContent}
           emptyStateText={emptyStateText}

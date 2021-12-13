@@ -14,8 +14,8 @@ export interface XAxisOptions {
 }
 
 export interface YAxisOptions {
-  labelFormatter: LabelFormatter;
-  integersOnly: boolean;
+  labelFormatter?: LabelFormatter;
+  integersOnly?: boolean;
 }
 
 export interface Annotation {

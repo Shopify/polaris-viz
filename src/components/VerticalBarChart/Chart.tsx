@@ -51,8 +51,8 @@ export interface Props {
   dimensions?: Dimensions;
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
   type: ChartType;
-  xAxisOptions: XAxisOptions;
-  yAxisOptions: YAxisOptions;
+  xAxisOptions: Required<XAxisOptions>;
+  yAxisOptions: Required<YAxisOptions>;
   annotationsLookupTable?: AnnotationLookupTable;
   emptyStateText?: string;
   isAnimated?: boolean;

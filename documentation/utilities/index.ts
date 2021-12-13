@@ -113,3 +113,48 @@ export function copyTextToClipboard(text: string) {
 
   document.body.removeChild(textArea);
 }
+
+export const SHARK_SPECIES_GROWTH = [
+  {
+    name: 'Carcharhinus obscurus',
+    data: [
+      {
+        key: '0',
+        value: 80,
+      },
+      {
+        key: '5',
+        value: 170,
+      },
+      {
+        key: '10',
+        value: 210,
+      },
+      {
+        key: '15',
+        value: 240,
+      },
+    ],
+  },
+  {
+    name: 'Carcharhinus brevipinna',
+    data: [
+      {
+        key: '0',
+        value: 80,
+      },
+      {
+        key: '5',
+        value: 180,
+      },
+      {
+        key: '10',
+        value: 250,
+      },
+      {
+        key: '15',
+        value: 300,
+      },
+    ],
+  },
+];

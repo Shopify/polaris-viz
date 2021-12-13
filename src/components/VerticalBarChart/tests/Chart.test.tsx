@@ -66,6 +66,7 @@ describe('Chart />', () => {
     xAxisOptions: {
       labelFormatter: jest.fn((value: string) => value.toString()),
       hide: false,
+      wrapLabels: false,
     },
     yAxisOptions: {
       labelFormatter: (value: number) => value.toString(),
@@ -105,6 +106,7 @@ describe('Chart />', () => {
       <Chart
         {...mockProps}
         xAxisOptions={{
+          ...mockProps.xAxisOptions,
           labelFormatter: (value: string) => `${value} pickles`,
         }}
       />,
