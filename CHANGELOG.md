@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## [0.28.2] - 2021-12-13
+
 - Replaced `theme.line.dottedStrokeColor` by `theme.seriesColors.comparison`
 
 ## [0.28.0] - 2021-12-07
