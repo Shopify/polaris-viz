@@ -71,24 +71,19 @@ export function Chart({
   const {width, height} = dimensions ?? {width: 0, height: 0};
 
   const [defaultData, comparisonData] = useMemo(() => {
-    const newData = [...data];
-    const comparisonIndex = data.findIndex(
-      ({isComparison}) => isComparison === true,
-    );
+    const defaultData = data.find(({isComparison}) => isComparison !== true);
+    const comparisonData = data.find(({isComparison}) => isComparison === true);
 
-    if (comparisonIndex !== -1) {
-      const comparisonArray = newData.splice(comparisonIndex, 1);
-      return [newData[0], comparisonArray[0]];
-    }
-
-    return [newData[0]];
+    return [defaultData, comparisonData];
   }, [data]);
+
+  const dataForChart = defaultData ?? comparisonData ?? {data: []};
 
   const filteredData = removeNullValues(defaultData);
   const filteredComparisonData = removeNullValues(comparisonData);
 
   const yScale = scaleLinear()
-    .range(calculateRange(defaultData.data, height))
+    .range(calculateRange(dataForChart.data, height))
     .domain([
       Math.min(...filteredData, ...filteredComparisonData, 0),
       Math.max(...filteredData, ...filteredComparisonData, 0),
@@ -97,11 +92,11 @@ export function Chart({
   const xScale = scaleBand()
     .range([dataOffsetLeft, width - dataOffsetRight])
     .paddingInner(BAR_PADDING)
-    .domain(defaultData.data.map((_, index) => index.toString()));
+    .domain(dataForChart.data.map((_, index) => index.toString()));
 
   const xScaleLinear = scaleLinear()
     .range([0, width])
-    .domain([0, defaultData.data.length - 1]);
+    .domain([0, dataForChart.data.length - 1]);
 
   const lineGenerator = line<any>()
     .x(({key}) => xScaleLinear(key))
@@ -132,14 +127,16 @@ export function Chart({
     [barWidth, yScale],
   );
 
-  const dataWithIndex = defaultData.data.map((value, index) => ({
-    value,
-    index,
-  }));
+  const dataWithIndex = defaultData
+    ? defaultData.data.map((value, index) => ({
+        value,
+        index,
+      }))
+    : [];
 
   const shouldAnimate = !prefersReducedMotion && isAnimated;
 
-  const colorToUse = defaultData.color ?? seriesColor;
+  const colorToUse = defaultData?.color ?? seriesColor;
 
   const color = isGradientType(colorToUse)
     ? colorToUse
