@@ -11,6 +11,7 @@ export {
   LinePreview,
   SquareColorPreview,
   PolarisVizProvider,
+  SimpleBarChart,
 } from './components';
 
 export type {
@@ -23,6 +24,7 @@ export type {
   BarChartProps,
   TooltipContentProps,
   PolarisVizProviderProps,
+  SimpleBarChartProps,
 } from './components';
 
 export {
@@ -32,4 +34,4 @@ export {
 
 export {createTheme} from './utilities/create-themes';
 
-export type {GradientStop, Color} from './types';
+export type {GradientStop, Color, DataSeries, DataPoint} from './types';
