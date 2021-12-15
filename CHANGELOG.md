@@ -5,6 +5,7 @@
 ### Changed
 
 - Filter down ticks on horizontal `<BarChart />` based on chart size.
+- Fixed issue where tooltip would still be visible when chart lost focus.
 
 ## [0.28.2] - 2021-12-13
 
