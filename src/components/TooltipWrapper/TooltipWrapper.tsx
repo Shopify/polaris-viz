@@ -48,7 +48,9 @@ export function TooltipWrapper(props: TooltipWrapperProps) {
 
   const activeIndexRef = useRef<number | null>(null);
   const focusElements = useMemo<NodeListOf<SVGPathElement> | undefined>(() => {
-    return parentRef?.querySelectorAll(`[data-type="${focusElementDataType}"]`);
+    return parentRef?.querySelectorAll(
+      `[data-type="${focusElementDataType}"][aria-hidden="false"]`,
+    );
   }, [focusElementDataType, parentRef]);
 
   useEffect(() => {
@@ -96,6 +98,12 @@ export function TooltipWrapper(props: TooltipWrapperProps) {
     [getPosition, onIndexChange],
   );
 
+  const onFocusIn = useCallback(() => {
+    if (!parentRef?.contains(document.activeElement)) {
+      onMouseLeave();
+    }
+  }, [parentRef, onMouseLeave]);
+
   const setFocusListeners = useCallback(
     (attach: boolean) => {
       if (!focusElements) {
@@ -134,6 +142,14 @@ export function TooltipWrapper(props: TooltipWrapperProps) {
       setFocusListeners(false);
     };
   }, [parentRef, onMouseMove, onMouseLeave, onFocus, setFocusListeners]);
+
+  useEffect(() => {
+    document.addEventListener('focusin', onFocusIn);
+
+    return () => {
+      document.removeEventListener('focusin', onFocusIn);
+    };
+  }, [parentRef, onFocusIn]);
 
   if (position.activeIndex == null || position.activeIndex < 0) {
     return null;
