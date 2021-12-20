@@ -4,6 +4,7 @@ import {scaleBand} from 'd3-scale';
 
 import type {DataSeries} from '../../../types';
 import {Chart} from '../Chart';
+import {Bar} from '../components';
 
 const sampleData: DataSeries = {
   data: [
@@ -64,5 +65,59 @@ describe('<Chart/>', () => {
       offsetLeft,
       mockWidth - offsetRight,
     ]);
+  });
+
+  describe('data', () => {
+    it('renders a single non-comparison chart', () => {
+      const chart = mount(<Chart data={[sampleData]} />);
+
+      expect(chart).toContainReactComponentTimes(Bar, 4);
+    });
+
+    it('renders a single comparison chart', () => {
+      const chart = mount(
+        <Chart
+          data={[
+            {
+              data: [
+                {key: 1, value: 200},
+                {key: 2, value: 200},
+                {key: 3, value: 200},
+                {key: 4, value: 200},
+              ],
+              isComparison: true,
+            },
+          ]}
+        />,
+      );
+
+      const line = chart.find('path');
+
+      expect(line).not.toBeNull();
+    });
+
+    it('renders a chart with 2 data sets', () => {
+      const chart = mount(
+        <Chart
+          data={[
+            sampleData,
+            {
+              data: [
+                {key: 1, value: 200},
+                {key: 2, value: 200},
+                {key: 3, value: 200},
+                {key: 4, value: 200},
+              ],
+              isComparison: true,
+            },
+          ]}
+        />,
+      );
+
+      const line = chart.find('path');
+
+      expect(line).not.toBeNull();
+      expect(chart).toContainReactComponentTimes(Bar, 4);
+    });
   });
 });
