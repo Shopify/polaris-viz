@@ -2,6 +2,12 @@ import {extent} from 'd3-array';
 import {scaleLinear} from 'd3-scale';
 import {useMemo} from 'react';
 
+import {clamp} from '../utilities';
+
+const MIN_Y_LABEL_SPACE = 80;
+const MAX_TICKS = 12;
+const MIN_TICKS = 3;
+
 export function useHorizontalXScale({
   allNumbers,
   highestSumForStackedGroup,
@@ -23,8 +29,14 @@ export function useHorizontalXScale({
   }, [maxWidth, allNumbers]);
 
   const ticks = useMemo(() => {
-    return xScale.ticks();
-  }, [xScale]);
+    const maxTicks = clamp({
+      amount: Math.max(1, Math.floor(maxWidth / MIN_Y_LABEL_SPACE)),
+      min: MIN_TICKS,
+      max: MAX_TICKS,
+    });
+
+    return xScale.ticks(maxTicks);
+  }, [xScale, maxWidth]);
 
   const xScaleStacked = useMemo(() => {
     if (!isStacked) {

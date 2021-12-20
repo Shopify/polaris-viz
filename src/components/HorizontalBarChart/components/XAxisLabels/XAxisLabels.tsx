@@ -58,7 +58,7 @@ export const XAxisLabels = ({
         return (
           <foreignObject
             transform={`translate(${
-              isFirstItem ? 0 : xScale(value) - textOffset
+              isFirstItem ? xScale(value) : xScale(value) - textOffset
             },0)`}
             height={tallestXAxisLabel}
             width={width}
