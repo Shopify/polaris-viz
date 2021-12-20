@@ -10,7 +10,7 @@ import {
 export function getAlteredHorizontalBarPosition(
   props: AlteredPositionProps,
 ): AlteredPositionReturn {
-  if (props.currentX <= 0) {
+  if (props.currentX < 0) {
     return getNegativeOffset(props);
   }
 

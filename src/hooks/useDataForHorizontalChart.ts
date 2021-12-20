@@ -25,7 +25,7 @@ export function useDataForHorizontalChart({
     return data.reduce<number[]>((prev, cur) => {
       const numbers = cur.data
         .map(({value}) => value)
-        .filter(Boolean) as number[];
+        .filter((value) => value !== null) as number[];
       return prev.concat(...numbers);
     }, []);
   }, [data]);
@@ -63,7 +63,9 @@ export function useDataForHorizontalChart({
   }, [labelFormatter, isSimple, isStacked, highestPositive, lowestNegative]);
 
   const areAllNegative = useMemo(() => {
-    return !allNumbers.some((num) => num >= 0);
+    return !allNumbers.some((num) => {
+      return num >= 0;
+    });
   }, [allNumbers]);
 
   return {

@@ -5,6 +5,11 @@
 ### Changed
 
 - Filter down ticks on horizontal `<BarChart />` based on chart size.
+
+### Fixed
+
+- Fixed tooltip position when first bar has largest value in series in `<BarChart />`.
+- Fixed tooltip position when all values are 0 in horizontal `<BarChart />`.
 - Fixed issue where tooltip would still be visible when chart lost focus.
 
 ## [0.28.2] - 2021-12-13
