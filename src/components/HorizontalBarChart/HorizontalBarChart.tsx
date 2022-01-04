@@ -34,6 +34,7 @@ export function HorizontalBarChart({
     labelFormatter: (value: string) => value,
     hide: false,
     wrapLabels: false,
+    useMinimalLabels: false,
     ...xAxisOptions,
   };
 
