@@ -12,6 +12,10 @@
 - Fixed tooltip position when all values are 0 in horizontal `<BarChart />`.
 - Fixed issue where tooltip would still be visible when chart lost focus.
 
+### Added
+
+- Add `<ChartContainer />` to `<SimpleNormalizedChart />` so it inherits the print styles.
+
 ## [0.28.2] - 2021-12-13
 
 - Replaced `theme.line.dottedStrokeColor` by `theme.seriesColors.comparison`
