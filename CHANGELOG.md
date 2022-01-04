@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## [0.28.3] - 2022-01-04
+
 ### Changed
 
 - Filter down ticks on horizontal `<BarChart />` based on chart size.
