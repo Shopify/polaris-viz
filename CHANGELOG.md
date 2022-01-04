@@ -5,6 +5,7 @@
 ### Changed
 
 - Filter down ticks on horizontal `<BarChart />` based on chart size.
+- Added `10px` of space between `<TooltipContent />` elements.
 
 ### Fixed
 

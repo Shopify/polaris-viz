@@ -16,7 +16,7 @@ export function DefaultRow({
   return (
     <div className={styles.Row}>
       <SquareColorPreview color={color} />
-      <span className={styles.Label}>{label}</span>
+      <span>{label}</span>
       <span className={styles.Value}>{value}</span>
     </div>
   );
