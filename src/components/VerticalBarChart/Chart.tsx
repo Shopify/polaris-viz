@@ -36,7 +36,7 @@ import {AnnotationLine} from '../BarChart';
 
 import {getStackedValues, formatAriaLabel} from './utilities';
 import {BarGroup, StackedBarGroup} from './components';
-import {useYScale, useXScale} from './hooks';
+import {useYScale, useXScale, useMinimalLabelIndexes} from './hooks';
 import {
   FONT_SIZE,
   SMALL_WIDTH,
@@ -96,6 +96,11 @@ export function Chart({
   const stackedValues =
     type === 'stacked' ? getStackedValues(data, labels) : null;
 
+  const {minimalLabelIndexes} = useMinimalLabelIndexes({
+    useMinimalLabels: xAxisOptions.useMinimalLabels,
+    dataLength: data[0] ? data[0].data.length : 0,
+  });
+
   const {ticks: initialTicks} = useYScale({
     drawableHeight: height - Margin.Top - Margin.Bottom,
     data,
@@ -141,6 +146,7 @@ export function Chart({
         innerMargin: BarMargin[selectedTheme.bar.innerMargin],
         outerMargin: BarMargin[selectedTheme.bar.outerMargin],
         wrapLabels: xAxisOptions.wrapLabels ?? true,
+        minimalLabelIndexes,
       }),
     [
       hideXAxis,
@@ -152,6 +158,7 @@ export function Chart({
       selectedTheme.bar.innerMargin,
       selectedTheme.bar.outerMargin,
       xAxisOptions,
+      minimalLabelIndexes,
     ],
   );
 
@@ -245,6 +252,7 @@ export function Chart({
               xAxisDetails={xAxisDetails}
               fontSize={fontSize}
               theme={theme}
+              minimalLabelIndexes={minimalLabelIndexes}
             />
           </g>
         )}

@@ -16,6 +16,7 @@ export interface TooltipData {
   label: string;
   value: string;
   type?: TooltipRowType;
+  activeIndex?: number;
 }
 
 export interface TooltipContentProps {

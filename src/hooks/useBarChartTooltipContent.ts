@@ -30,13 +30,14 @@ export function useBarChartTooltipContent({
       const tooltipData: TooltipData[] = [];
       const annotation = annotationsLookupTable[activeIndex];
 
-      data.forEach(({name, data, color}, index) => {
-        const {value} = data[activeIndex];
+      data.forEach(({name, data: seriesData, color}, index) => {
+        const {value} = seriesData[activeIndex];
 
         tooltipData.push({
           label: `${name}`,
           value: `${value}`,
           color: color ?? seriesColors[index],
+          activeIndex,
         });
 
         if (

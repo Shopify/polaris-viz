@@ -67,6 +67,7 @@ describe('Chart />', () => {
       labelFormatter: jest.fn((value: string) => value.toString()),
       hide: false,
       wrapLabels: false,
+      useMinimalLabels: false,
     },
     yAxisOptions: {
       labelFormatter: (value: number) => value.toString(),

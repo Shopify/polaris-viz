@@ -11,6 +11,7 @@ export interface XAxisOptions {
   labelFormatter?: LabelFormatter;
   hide?: boolean;
   wrapLabels?: boolean;
+  useMinimalLabels?: boolean;
 }
 
 export interface YAxisOptions {
