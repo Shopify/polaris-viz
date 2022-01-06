@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+## [0.28.4] - 2022-01-06
+
+### Added
+
+- Added `activeIndex` to `TooltipData` so consumers have access to the current hovered data.
+- Re-added `xAxisOptions.isuseMinimalLabels` to `BarChartProps`.
+
 ## [0.28.3] - 2022-01-04
 
 ### Changed
@@ -18,8 +25,6 @@
 ### Added
 
 - Add `<ChartContainer />` to `<SimpleNormalizedChart />` so it inherits the print styles.
-- Re-added `xAxisOptions.isuseMinimalLabels` to `BarChartProps`.
-- Added `activeIndex` to `TooltipData` so consumers have access to the current hovered data.
 
 ## [0.28.2] - 2021-12-13
 
