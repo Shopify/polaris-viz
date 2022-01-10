@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+### Added
+- Added `Print` theme. This theme gets automatically applied when printing charts. Can be overwritten through the [PolarisVizProvider](https://polaris-viz.shopify.io/?path=/docs/docs-themes-customizing--page)
 ## [0.28.4] - 2022-01-06
 
 ### Added

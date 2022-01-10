@@ -1,9 +1,10 @@
 import type {Theme, PartialTheme} from '../types';
-import {DEFAULT_THEME, LIGHT_THEME} from '../constants';
+import {DEFAULT_THEME, LIGHT_THEME, PRINT_THEME} from '../constants';
 
 const BASE_THEMES: {[key: string]: Theme} = {
   Default: DEFAULT_THEME,
   Light: LIGHT_THEME,
+  Print: PRINT_THEME,
 };
 
 export const createTheme = (

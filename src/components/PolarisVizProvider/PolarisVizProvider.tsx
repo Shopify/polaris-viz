@@ -1,7 +1,11 @@
 import React, {useMemo} from 'react';
 
 import type {PartialTheme} from '../../types';
-import {DEFAULT_THEME as Default, LIGHT_THEME as Light} from '../../constants';
+import {
+  DEFAULT_THEME as Default,
+  LIGHT_THEME as Light,
+  PRINT_THEME as Print,
+} from '../../constants';
 import {PolarisVizContext} from '../../utilities/polaris-viz-context';
 import {createThemes} from '../../utilities';
 
@@ -19,6 +23,7 @@ export function PolarisVizProvider({
       themes: createThemes({
         Default,
         Light,
+        Print,
         ...themes,
       }),
     };

@@ -2,7 +2,7 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 
 import {mountWithProvider} from '../../test-utilities';
-import {DEFAULT_THEME, LIGHT_THEME} from '../../constants';
+import {DEFAULT_THEME, LIGHT_THEME, PRINT_THEME} from '../../constants';
 import {usePolarisVizContext} from '../usePolarisVizContext';
 
 describe('usePolarisVizContext', () => {
@@ -43,6 +43,7 @@ describe('usePolarisVizContext', () => {
           },
         },
         Light: LIGHT_THEME,
+        Print: PRINT_THEME,
       }),
     );
   });
@@ -62,6 +63,7 @@ describe('usePolarisVizContext', () => {
       JSON.stringify({
         Default: DEFAULT_THEME,
         Light: LIGHT_THEME,
+        Print: PRINT_THEME,
         SomeOtherTheme: {
           ...DEFAULT_THEME,
           chartContainer: {
