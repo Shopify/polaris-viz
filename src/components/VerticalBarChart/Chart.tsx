@@ -15,6 +15,7 @@ import {
   getBarXAxisDetails,
   shouldRotateZeroBars,
   eventPointNative,
+  getStackedValues,
 } from '../../utilities';
 import {YAxis} from '../YAxis';
 import {BarChartXAxis} from '../BarChartXAxis';
@@ -34,7 +35,7 @@ import type {
 } from '../BarChart';
 import {AnnotationLine} from '../BarChart';
 
-import {getStackedValues, formatAriaLabel} from './utilities';
+import {formatAriaLabel} from './utilities';
 import {BarGroup, StackedBarGroup} from './components';
 import {useYScale, useXScale, useMinimalLabelIndexes} from './hooks';
 import {

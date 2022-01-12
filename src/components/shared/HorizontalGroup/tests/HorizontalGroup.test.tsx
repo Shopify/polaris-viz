@@ -1,6 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
+import type {FormattedStackedSeries} from 'types';
 
 import {HorizontalGroup, HorizontalGroupProps} from '../HorizontalGroup';
 import {HorizontalStackedBars} from '../..';
@@ -45,12 +46,31 @@ const DATA = [
   },
 ];
 
+const STACKED_VALUES = [
+  [
+    [0, 5],
+    [5, 10],
+    [10, 15],
+  ],
+  [
+    [0, 10],
+    [10, 20],
+    [20, 30],
+  ],
+  [
+    [0, 12],
+    [12, 24],
+    [24, 36],
+  ],
+];
+
 const MOCK_PROPS: HorizontalGroupProps = {
   animationDelay: 0,
   areAllNegative: false,
   ariaLabel: '',
   barHeight: 12,
   containerWidth: 200,
+  data: DATA,
   id: 'id',
   index: 1,
   isAnimated: false,
@@ -59,10 +79,9 @@ const MOCK_PROPS: HorizontalGroupProps = {
   labelFormatter: (value) => `${value}`,
   name: 'name',
   opacity: 0 as any,
-  data: DATA,
+  stackedValues: STACKED_VALUES as FormattedStackedSeries,
   transform: '' as any,
   xScale: scaleLinear(),
-  xScaleStacked: scaleLinear(),
   zeroPosition: 0,
 };
 

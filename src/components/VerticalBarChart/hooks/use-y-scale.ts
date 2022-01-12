@@ -1,11 +1,13 @@
 import {useMemo} from 'react';
 import {scaleLinear} from 'd3-scale';
 
-import {shouldRoundScaleUp} from '../../../utilities';
-import type {StackSeries} from '../types';
+import {shouldRoundScaleUp, getStackedMinMax} from '../../../utilities';
 import {MIN_Y_LABEL_SPACE} from '../constants';
-import {getMinMax} from '../utilities';
-import type {DataSeries, NumberLabelFormatter} from '../../../types';
+import type {
+  DataSeries,
+  NumberLabelFormatter,
+  StackedSeries,
+} from '../../../types';
 
 export function useYScale({
   drawableHeight,
@@ -17,11 +19,11 @@ export function useYScale({
   drawableHeight: number;
   data: DataSeries[];
   formatYAxisLabel: NumberLabelFormatter;
-  stackedValues: StackSeries[] | null;
+  stackedValues: StackedSeries[] | null;
   integersOnly: boolean;
 }) {
   const {yScale, ticks} = useMemo(() => {
-    const {min, max} = getMinMax({stackedValues, data, integersOnly});
+    const {min, max} = getStackedMinMax({stackedValues, data, integersOnly});
 
     const maxTicks = Math.max(
       1,

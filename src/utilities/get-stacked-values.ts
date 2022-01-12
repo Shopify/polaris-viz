@@ -1,6 +1,6 @@
 import {stack, stackOffsetDiverging} from 'd3-shape';
 
-import type {DataSeries} from '../../../types';
+import type {DataSeries} from '../types';
 
 export function getStackedValues(series: DataSeries[], labels: string[]) {
   const barStack = stack()

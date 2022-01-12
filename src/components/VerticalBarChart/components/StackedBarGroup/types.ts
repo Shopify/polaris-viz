@@ -1,11 +1,10 @@
 import type {ScaleLinear, ScaleBand} from 'd3-scale';
 
-import type {StackSeries} from '../../types';
-import type {Color} from '../../../../types';
+import type {Color, StackedSeries} from '../../../../types';
 
 export interface StackedBarGroupProps {
   groupIndex: number;
-  data: StackSeries;
+  data: StackedSeries;
   yScale: ScaleLinear<number, number>;
   xScale: ScaleBand<string>;
   colors: Color[];

@@ -1,8 +1,8 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleBand, scaleLinear} from 'd3-scale';
+import type {StackedSeries} from 'types';
 
-import type {StackSeries} from '../../../types';
 import {
   MASK_HIGHLIGHT_COLOR,
   MASK_SUBDUE_COLOR,
@@ -24,7 +24,7 @@ describe('<StackedBarGroup/>', () => {
     [0, 1],
     [0, 2],
     [0, 3],
-  ] as StackSeries;
+  ] as StackedSeries;
 
   const mockProps = {
     groupIndex: 1,

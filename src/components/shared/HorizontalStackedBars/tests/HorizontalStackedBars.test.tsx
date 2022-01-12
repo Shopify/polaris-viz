@@ -7,7 +7,11 @@ import {
   HorizontalStackedBarsProps,
 } from '../HorizontalStackedBars';
 import {StackedBar} from '../components';
-import {RoundedBorder} from '../../../../types';
+import {
+  FormattedStackedSeries,
+  RoundedBorder,
+  StackedSeries,
+} from '../../../../types';
 
 jest.mock('d3-scale', () => ({
   scaleLinear: () => {
@@ -48,15 +52,34 @@ const DATA = [
   },
 ];
 
+const STACKED_VALUES = [
+  [
+    [0, 5],
+    [5, 10],
+    [10, 15],
+  ],
+  [
+    [0, 10],
+    [10, 20],
+    [20, 30],
+  ],
+  [
+    [0, 12],
+    [12, 24],
+    [24, 36],
+  ],
+];
+
 const MOCK_PROPS: HorizontalStackedBarsProps = {
   animationDelay: 0,
   ariaLabel: '',
   barHeight: 20,
+  data: DATA,
   groupIndex: 0,
   id: 'id',
   isAnimated: false,
   name: 'stacked',
-  data: DATA,
+  stackedValues: STACKED_VALUES as FormattedStackedSeries,
   xScale: scaleLinear(),
 };
 

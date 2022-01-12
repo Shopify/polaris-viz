@@ -1,12 +1,3 @@
-import type {Series as ShapeSeries} from 'd3-shape';
-
-export type StackSeries = ShapeSeries<
-  {
-    [key: string]: number;
-  },
-  string
->;
-
 export interface AccessibilitySeries {
   title: string;
   data: {

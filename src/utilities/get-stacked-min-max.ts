@@ -1,14 +1,12 @@
-import type {DataSeries} from 'types';
+import type {DataSeries, StackedSeries} from '../types';
+import {DEFAULT_MAX_Y} from '../constants';
 
-import {DEFAULT_MAX_Y} from '../../../constants';
-import type {StackSeries} from '../types';
-
-export function getMinMax({
+export function getStackedMinMax({
   stackedValues,
   data,
   integersOnly,
 }: {
-  stackedValues: StackSeries[] | null;
+  stackedValues: StackedSeries[] | null;
   data: DataSeries[];
   integersOnly: boolean;
 }) {

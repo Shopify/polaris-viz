@@ -1,6 +1,6 @@
 import {stack} from 'd3-shape';
 
-import type {DataSeries} from '../../../../types';
+import type {DataSeries} from '../../types';
 import {getStackedValues} from '../get-stacked-values';
 
 const mockData: DataSeries[] = [

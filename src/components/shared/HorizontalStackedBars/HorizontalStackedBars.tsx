@@ -7,12 +7,16 @@ import {
   BARS_TRANSITION_CONFIG,
   HORIZONTAL_GROUP_LABEL_HEIGHT,
 } from '../../../constants';
-import {DataSeries, RoundedBorder} from '../../../types';
+import {
+  DataSeries,
+  FormattedStackedSeries,
+  RoundedBorder,
+} from '../../../types';
 import {getGradientDefId} from '..';
 
 import {StackedBar} from './components';
-
-const STACKED_BAR_GAP = 2;
+import {useStackedGaps} from './hooks';
+import {getXPosition} from './utilities';
 
 export interface HorizontalStackedBarsProps {
   animationDelay: number;
@@ -23,41 +27,43 @@ export interface HorizontalStackedBarsProps {
   id: string;
   isAnimated: boolean;
   name: string;
+  stackedValues: FormattedStackedSeries;
   xScale: ScaleLinear<number, number>;
   theme?: string;
+}
+
+function getRoundedBorder({
+  lastIndexes,
+  seriesIndex,
+}: {
+  lastIndexes: number[];
+  seriesIndex: number;
+}) {
+  const [positive, negative] = lastIndexes;
+
+  if (positive === seriesIndex) {
+    return RoundedBorder.Right;
+  }
+
+  if (negative === seriesIndex) {
+    return RoundedBorder.Left;
+  }
+
+  return RoundedBorder.None;
 }
 
 export function HorizontalStackedBars({
   animationDelay,
   ariaLabel,
   barHeight,
-  data,
   groupIndex,
   id,
   isAnimated,
   name,
+  stackedValues,
   theme,
   xScale,
 }: HorizontalStackedBarsProps) {
-  const xOffsets = useMemo(() => {
-    const offsets: number[] = [];
-
-    data.forEach((_, index) => {
-      const prevIndex = index - 1;
-
-      if (data[prevIndex] == null) {
-        offsets.push(0);
-      } else {
-        const previousScale = offsets[index - 1];
-        offsets.push(
-          xScale(data[prevIndex].data[groupIndex].value ?? 0) + previousScale,
-        );
-      }
-    });
-
-    return offsets;
-  }, [data, xScale, groupIndex]);
-
   const {transform} = useSpring({
     from: {
       transform: `scale(0, 1) translate(0, ${HORIZONTAL_GROUP_LABEL_HEIGHT}px`,
@@ -70,14 +76,45 @@ export function HorizontalStackedBars({
     default: {immediate: !isAnimated},
   });
 
-  return (
-    <animated.g aria-label={ariaLabel} role="listitem" style={{transform}}>
-      {data.map((_, seriesIndex) => {
-        const {value} = data[seriesIndex].data[groupIndex];
+  const lastIndexes = useMemo(() => {
+    let lastPos = -1;
+    let lastNeg = -1;
 
-        const x = xOffsets[seriesIndex] + STACKED_BAR_GAP * seriesIndex;
+    stackedValues[groupIndex].forEach(([start, end], index) => {
+      if (start < 0) {
+        lastNeg = index;
+      }
+
+      if (end > 0) {
+        lastPos = index;
+      }
+    });
+
+    return [lastPos, lastNeg];
+  }, [groupIndex, stackedValues]);
+
+  const gaps = useStackedGaps({stackedValues, groupIndex});
+
+  return (
+    <animated.g
+      aria-label={ariaLabel}
+      role="listitem"
+      style={{transform, transformOrigin: `${xScale(0)}px 0px`}}
+    >
+      {stackedValues[groupIndex].map(([start, end], seriesIndex) => {
         const barId = getBarId(id, groupIndex, seriesIndex);
-        const isLast = seriesIndex === data.length - 1;
+        const width = Math.abs(xScale(end) - xScale(start));
+
+        if (width === 0) {
+          return null;
+        }
+
+        const roundedBorder = getRoundedBorder({
+          lastIndexes,
+          seriesIndex,
+        });
+
+        const x = getXPosition({start, end, seriesIndex, gaps, xScale});
 
         return (
           <StackedBar
@@ -87,9 +124,9 @@ export function HorizontalStackedBars({
             isAnimated={isAnimated}
             key={`${name}${barId}`}
             seriesIndex={seriesIndex}
-            width={xScale(value ?? 0)}
+            width={width}
             x={x}
-            roundedBorder={isLast ? RoundedBorder.Right : RoundedBorder.None}
+            roundedBorder={roundedBorder}
           />
         );
       })}
