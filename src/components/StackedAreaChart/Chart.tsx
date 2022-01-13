@@ -321,8 +321,6 @@ export function Chart({
         />
 
         <StackedAreas
-          width={drawableWidth}
-          height={drawableHeight}
           transform={`translate(${dataStartPosition},${Margin.Top})`}
           stackedValues={stackedValues}
           xScale={xScale}

@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Changed
+
+- Changed loaded animation in `<StackedAreaChart />` from left to right to bottom up.
+
 ## [0.28.5] - 2022-01-14
 
 ### Changed
