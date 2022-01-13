@@ -265,6 +265,45 @@ export const LIGHT_THEME: Theme = {
   },
 };
 
+export const PRINT_THEME = {
+  ...LIGHT_THEME,
+  seriesColors: {
+    comparison: variables.colorLightComparison,
+    single: variables.colorIndigo90,
+    upToFour: [
+      variables.colorIndigo90,
+      variables.colorBlue90,
+      variables.colorMagenta90,
+      variables.colorTeal90,
+    ],
+    fromFiveToSeven: [
+      variables.colorTeal90,
+      variables.colorBlue90,
+      variables.colorIndigo90,
+      variables.colorPurple90,
+      variables.colorMagenta90,
+      variables.colorOrange90,
+      variables.colorYellow90,
+    ],
+    all: [
+      variables.colorTeal90,
+      variables.colorBlue70,
+      variables.colorIndigo90,
+      variables.colorPurple70,
+      variables.colorMagenta90,
+      variables.colorOrange80,
+      variables.colorYellow50,
+      variables.colorTeal70,
+      variables.colorBlue80,
+      variables.colorIndigo70,
+      variables.colorPurple90,
+      variables.colorMagenta70,
+      variables.colorOrange110,
+      variables.colorYellow70,
+    ],
+  },
+};
+
 export const BASE_ANIMATION_DURATION = 200;
 export const XMLNS = 'http://www.w3.org/2000/svg';
 

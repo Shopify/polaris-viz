@@ -29,7 +29,8 @@ export type {
 
 export {
   DEFAULT_THEME as PolarisVizDefaultTheme,
-  LIGHT_THEME as PolarisVizLightheme,
+  LIGHT_THEME as PolarisVizLightTheme,
+  PRINT_THEME as PolarisVizPrintTheme,
 } from './constants';
 
 export {createTheme} from './utilities/create-themes';

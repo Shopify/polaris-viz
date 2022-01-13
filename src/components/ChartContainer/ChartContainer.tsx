@@ -25,7 +25,7 @@ export const ChartContainer = (props: Props) => {
   const {ref, setRef, entry} = useResizeObserver();
 
   const {isPrinting} = usePrintResizing({ref, setChartDimensions});
-  const printFriendlyTheme = isPrinting ? 'Light' : props.theme;
+  const printFriendlyTheme = isPrinting ? 'Print' : props.theme;
   const {chartContainer} = useTheme(printFriendlyTheme);
 
   const updateDimensions = useCallback(() => {
