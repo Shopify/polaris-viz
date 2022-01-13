@@ -10,7 +10,7 @@ const storiesOrder = {
     Intro: null,
     'Getting started': null,
     Themes: {
-      'Default and Light': null,
+      'Default Themes': null,
       Customizing: null,
       'createTheme Utility': null,
     },
