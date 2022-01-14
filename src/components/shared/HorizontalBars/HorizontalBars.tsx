@@ -57,6 +57,9 @@ export function HorizontalBars({
       role="listitem"
     >
       {data.map((_, seriesIndex) => {
+        if (data[seriesIndex].data[groupIndex] == null) {
+          return;
+        }
         const {value} = data[seriesIndex].data[groupIndex];
 
         const isNegative = value && value < 0;

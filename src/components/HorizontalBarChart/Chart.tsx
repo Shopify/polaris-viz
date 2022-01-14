@@ -135,6 +135,10 @@ export function Chart({
 
   const getAriaLabel = useCallback(
     (seriesIndex: number) => {
+      if (data[seriesIndex] == null) {
+        return '';
+      }
+
       const ariaSeries = data
         .map(({name, data}) => {
           return `${name} ${labelFormatter(data[seriesIndex].value)}`;
