@@ -63,7 +63,7 @@ describe('<Area />', () => {
     expect(stackedArea).toContainReactComponentTimes('path', 2);
   });
 
-  it('renders proper stroke width based on theme', () => {
+  it('renders stroke width based on theme', () => {
     const {themes} = mockDefaultTheme({line: {width: 10}});
     const stackedArea = mountWithProvider(
       <svg>

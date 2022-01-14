@@ -38,7 +38,7 @@ export function Area({
   const spring = useSpring({
     from: {transform: 'translateY(25%)', opacity: 0},
     to: {transform: 'translateY(0)', opacity: 1},
-    delay,
+    delay: isImmediate ? 0 : delay,
     duration,
     config: LINES_LOAD_ANIMATION_CONFIG,
     immediate: isImmediate,
@@ -48,7 +48,7 @@ export function Area({
   const areaSpring = useSpring({
     from: {opacity: 0},
     to: {opacity: 0.25},
-    delay: delay + duration,
+    delay: isImmediate ? 0 : delay + duration,
     duration,
     config: LINES_LOAD_ANIMATION_CONFIG,
     immediate: isImmediate,

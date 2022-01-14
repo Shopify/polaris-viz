@@ -3,6 +3,12 @@ import isEqual from 'fast-deep-equal';
 import {area, line} from 'd3-shape';
 import type {ScaleLinear} from 'd3-scale';
 
+import {
+  LINE_ANIMATION_FAST_COUNT,
+  LINE_ANIMATION_FAST_DURATION,
+  LINE_ANIMATION_SLOW_DURATION,
+  LINE_ANIMATION_DURATION_STEP,
+} from '../../../../constants';
 import type {Color} from '../../../../types';
 import {curveStepRounded, uniqueId} from '../../../../utilities';
 import {usePrevious, useTheme} from '../../../../hooks';
@@ -20,11 +26,6 @@ interface Props {
   isAnimated: boolean;
   theme?: string;
 }
-
-const FAST_DURATION = 100;
-const SLOW_DURATION = 325;
-const FAST_COUNT = 10;
-const DURATION_STEP = 25;
 
 export function Areas({
   stackedValues,
@@ -64,11 +65,14 @@ export function Areas({
   const duration = useMemo(() => {
     const count = stackedValues.length;
     const duration =
-      count > FAST_COUNT
-        ? FAST_DURATION
-        : SLOW_DURATION - count * DURATION_STEP;
+      count > LINE_ANIMATION_FAST_COUNT
+        ? LINE_ANIMATION_FAST_DURATION
+        : LINE_ANIMATION_SLOW_DURATION - count * LINE_ANIMATION_DURATION_STEP;
 
-    return Math.round(duration / DURATION_STEP) * DURATION_STEP;
+    return (
+      Math.round(duration / LINE_ANIMATION_DURATION_STEP) *
+      LINE_ANIMATION_DURATION_STEP
+    );
   }, [stackedValues.length]);
 
   return (
