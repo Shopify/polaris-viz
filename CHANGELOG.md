@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Changed
+- Added extra conditionals in `HorizontalBarChart` to prevent crashing of the component when `data` prop changes.
+
 ### Added
 - Added `Print` theme. This theme gets automatically applied when printing charts. Can be overwritten through the [PolarisVizProvider](https://polaris-viz.shopify.io/?path=/docs/docs-themes-customizing--page)
 ## [0.28.4] - 2022-01-06
