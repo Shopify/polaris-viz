@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Fixed
+- Prevent tooltips from rendering outside `<ChartContainer/>`
+
 ### Changed
 
 - Changed loaded animation in `<StackedAreaChart />` from left to right to bottom up.

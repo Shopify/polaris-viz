@@ -166,7 +166,11 @@ export function getVerticalCenterPosition(
   });
 
   if (wasOutsideBounds) {
-    y = props.currentY;
+    if (y <= 0) {
+      y = 0;
+    } else {
+      y = props.chartDimensions.height - props.tooltipDimensions.height;
+    }
   }
 
   return {value: y, wasOutsideBounds};

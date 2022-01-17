@@ -13,7 +13,6 @@ export function getAlteredHorizontalBarPosition(
   if (props.currentX < 0) {
     return getNegativeOffset(props);
   }
-
   return getPositiveOffset(props);
 }
 
@@ -23,8 +22,9 @@ function getNegativeOffset(props: AlteredPositionProps): AlteredPositionReturn {
   const flippedX = currentX * -1;
   const yOffset = (bandwidth - tooltipDimensions.height) / 2;
 
+  const y = currentY - tooltipDimensions.height;
   if (flippedX - tooltipDimensions.width < 0) {
-    return {x: flippedX, y: currentY - tooltipDimensions.height};
+    return {x: flippedX, y: y < 0 ? 0 : y};
   }
 
   return {
@@ -48,6 +48,20 @@ function getPositiveOffset(props: AlteredPositionProps): AlteredPositionReturn {
     tooltipDimensions,
     chartDimensions,
   });
+
+  if (isOutside.top && isOutside.right) {
+    return {
+      x: chartDimensions.width - tooltipDimensions.width,
+      y: 0,
+    };
+  }
+
+  if (isOutside.top && !isOutside.right) {
+    return {
+      x: currentX + TOOLTIP_MARGIN,
+      y: 0,
+    };
+  }
 
   if (!isOutside.right && !isOutside.bottom) {
     const yOffset = (bandwidth - tooltipDimensions.height) / 2;
@@ -106,7 +120,9 @@ function isOutsideBounds({
   const bottom = y + tooltipDimensions.height;
 
   return {
+    left: x <= 0,
     right: right > chartDimensions.width,
     bottom: bottom > chartDimensions.height,
+    top: y <= 0,
   };
 }
