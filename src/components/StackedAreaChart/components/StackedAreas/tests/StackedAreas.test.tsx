@@ -1,10 +1,10 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
+import type {StackedSeries} from 'components/StackedAreaChart/types';
 
-import {mountWithProvider} from '../../../../../test-utilities';
-import {mockDefaultTheme} from '../../../../../test-utilities/mount-with-provider';
 import {StackedAreas} from '../StackedAreas';
+import {Area} from '../../Area';
 
 jest.mock('d3-scale', () => ({
   scaleLinear: jest.fn(() => jest.fn(() => 250)),
@@ -16,8 +16,6 @@ jest.mock('../../../../../utilities/unique-id', () => ({
 
 describe('<StackedAreas />', () => {
   const mockProps = {
-    width: 100,
-    height: 50,
     transform: '',
     colors: ['red', 'purple'],
     xScale: scaleLinear(),
@@ -32,106 +30,72 @@ describe('<StackedAreas />', () => {
         [0, 163],
         [0, 203],
       ],
-    ] as any,
+    ] as StackedSeries[],
   };
 
-  it('renders a clipPath with an ID', () => {
+  it('renders a <Area /> for each stacked series', () => {
     const stackedArea = mount(
       <svg>
         <StackedAreas {...mockProps} />
       </svg>,
     );
 
-    expect(stackedArea).toContainReactComponent('clipPath', {
-      id: 'stackedAreas-1',
-    });
+    expect(stackedArea).toContainReactComponentTimes(Area, 2);
   });
 
-  it('renders a rect within the clipPath', () => {
+  it('passes index and animationIndex to <Area />', () => {
     const stackedArea = mount(
       <svg>
         <StackedAreas {...mockProps} />
       </svg>,
     );
 
-    expect(stackedArea.find('clipPath')).toContainReactComponent('rect');
-  });
+    const stacks = stackedArea.findAll(Area);
 
-  it('renders a group referencing the clipPath', () => {
-    const stackedArea = mount(
-      <svg>
-        <StackedAreas {...mockProps} />
-      </svg>,
-    );
+    expect(stacks[0]).toHaveReactProps({
+      animationIndex: 1,
+      index: 0,
+    });
 
-    expect(stackedArea).toContainReactComponent('g', {
-      clipPath: 'url(#stackedAreas-1)',
+    expect(stacks[1]).toHaveReactProps({
+      animationIndex: 0,
+      index: 1,
     });
   });
 
-  it('renders a path for each stacked value', () => {
-    const stackedArea = mount(
-      <svg>
-        <StackedAreas {...mockProps} />
-      </svg>,
-    );
+  describe('stackedValues', () => {
+    it('passes SLOW_DURATION to <Area /> .length is less than 10', () => {
+      const stackedArea = mount(
+        <svg>
+          <StackedAreas {...mockProps} />
+        </svg>,
+      );
 
-    expect(stackedArea).toContainReactComponentTimes('path', 4);
-  });
+      const stacks = stackedArea.findAll(Area);
 
-  it('renders proper stroke width based on theme', () => {
-    const stackedArea = mountWithProvider(
-      <svg>
-        <StackedAreas {...mockProps} />
-      </svg>,
-      mockDefaultTheme({line: {width: 10}}),
-    );
-
-    expect(stackedArea).toContainReactComponent('path', {
-      strokeWidth: 10,
+      expect(stacks[0]).toHaveReactProps({
+        duration: 275,
+      });
     });
-  });
 
-  it('renders correctly when line.hasSpline is false', () => {
-    const stackedArea = mountWithProvider(
-      <svg>
-        <StackedAreas {...mockProps} />
-      </svg>,
-      mockDefaultTheme({line: {hasSpline: false}}),
-    );
+    it('passes FAST_DURATION to <Area /> .length is greater than 10', () => {
+      const stackedArea = mount(
+        <svg>
+          <StackedAreas
+            {...mockProps}
+            stackedValues={new Array(11).fill([
+              [163, 269],
+              [0, 0],
+            ])}
+          />
+        </svg>,
+      );
 
-    // Line
-    expect(stackedArea).toContainReactComponent('path', {
-      // eslint-disable-next-line id-length
-      d: 'M250,250L250,250',
-    });
-  });
+      const stacks = stackedArea.findAll(Area);
 
-  it('generates props for the paths', () => {
-    const line = 'M250,250L250,250C250,250,250,250,250,250L250,250';
-    const area =
-      'M250,250L250,250C250,250,250,250,250,250L250,250L250,250L250,250C250,250,250,250,250,250L250,250Z';
-
-    const stackedArea = mount(
-      <svg>
-        <StackedAreas {...mockProps} />
-      </svg>,
-    );
-
-    // Line
-    expect(stackedArea).toContainReactComponent('path', {
-      // eslint-disable-next-line id-length
-      d: line,
-      fill: 'none',
-      stroke: 'url(#area-stackedAreas-1-0)',
-      strokeWidth: 2,
-    });
-    // Area
-    expect(stackedArea).toContainReactComponent('path', {
-      // eslint-disable-next-line id-length
-      d: area,
-      fill: 'url(#area-stackedAreas-1-0)',
-      fillOpacity: '0.25',
+      expect(stacks[0]).toHaveReactProps({
+        duration: 100,
+      });
     });
   });
 });

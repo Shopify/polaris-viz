@@ -128,8 +128,6 @@ describe('<Chart />', () => {
   it('renders a StackedAreas', () => {
     const chart = mount(<Chart {...mockProps} />);
     expect(chart).toContainReactComponent(StackedAreas, {
-      width: 480,
-      height: 218,
       transform: 'translate(16,8)',
       colors: ['purple', 'teal'],
       isAnimated: true,
