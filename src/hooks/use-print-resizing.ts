@@ -42,6 +42,7 @@ export function usePrintResizing({
       });
     };
 
+    const isFirefox = navigator?.userAgent.includes('Firefox');
     const isChromium = navigator?.userAgent.includes('Chrome');
     const isSafari = navigator?.userAgent.includes('Safari') && !isChromium;
     const addEventListener =
@@ -51,6 +52,11 @@ export function usePrintResizing({
       typeof window.matchMedia('print').addListener === 'function';
     const notSafariOrServer = !isSafari && !isServer;
     const safariNotServer = isSafari && !isServer;
+
+    if (isFirefox) {
+      window.addEventListener('beforeprint', handlePrint);
+      window.addEventListener('afterprint', handlePrint);
+    }
 
     if (notSafariOrServer) {
       if (addEventListener) {
@@ -69,6 +75,11 @@ export function usePrintResizing({
     }
 
     return () => {
+      if (isFirefox) {
+        window.removeEventListener('beforeprint', handlePrint);
+        window.removeEventListener('afterprint', handlePrint);
+      }
+
       if (notSafariOrServer) {
         if (addEventListener) {
           window.matchMedia('print').removeEventListener('change', handlePrint);
