@@ -8,13 +8,20 @@ export function DefaultRow({
   color,
   label,
   value,
+  index,
 }: {
   color: Color;
   label: string;
   value: string;
+  index: number;
 }) {
   return (
-    <div className={styles.Row}>
+    <div
+      className={styles.Row}
+      data-interaction-respond
+      data-interaction-type="single"
+      data-interaction-id={index}
+    >
       <SquareColorPreview color={color} />
       <span>{label}</span>
       <span className={styles.Value}>{value}</span>

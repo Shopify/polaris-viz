@@ -87,6 +87,7 @@ export function GradientArea({series, yScale, xScale, hasSpline}: Props) {
         mask={`url(#${maskId})`}
         strokeWidth="0"
         stroke={areaColor}
+        style={{pointerEvents: 'none'}}
       />
     </React.Fragment>
   );

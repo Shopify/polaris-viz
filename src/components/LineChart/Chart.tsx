@@ -41,6 +41,7 @@ import {Crosshair} from '../Crosshair';
 import {LinearGradient} from '../LinearGradient';
 import {DataPoint, DataType, Dimensions} from '../../types';
 import {HorizontalGridLines} from '../HorizontalGridLines';
+import {InteractionHandler} from '../InteractionHandler';
 
 import {MAX_ANIMATED_SERIES_LENGTH} from './constants';
 import type {
@@ -286,6 +287,7 @@ export function Chart({
 
   return (
     <div className={styles.Container}>
+      <InteractionHandler />
       <svg
         viewBox={`0 0 ${width} ${height}`}
         className={styles.Chart}

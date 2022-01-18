@@ -57,6 +57,7 @@ export function TooltipContent({
                   key={`${label}-${index}`}
                   label={label}
                   value={value}
+                  index={index}
                 />
               );
             case TooltipRowType.Annotation:

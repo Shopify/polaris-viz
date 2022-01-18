@@ -33,6 +33,7 @@ import type {
   YAxisOptions,
 } from '../BarChart';
 import {AnnotationLine} from '../BarChart';
+import {InteractionHandler} from '../InteractionHandler';
 
 import {getStackedValues, formatAriaLabel} from './utilities';
 import {BarGroup, StackedBarGroup} from './components';
@@ -72,7 +73,7 @@ export function Chart({
   type,
 }: Props) {
   const selectedTheme = useTheme(theme);
-  const [activeBarGroup, setActiveBarGroup] = useState<number | null>(null);
+  const [activeBarGroup] = useState<number | null>(null);
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
 
   const {width, height} = dimensions ?? {width: 0, height: 0};
@@ -351,6 +352,31 @@ export function Chart({
         </g>
       </svg>
 
+      <div
+        style={{
+          display: 'grid',
+          gap: '20px',
+          position: 'absolute',
+          top: 0,
+          gridTemplateColumns: 'repeat(3, 1fr)',
+        }}
+      >
+        {data.map((item, index) => {
+          return (
+            <p
+              data-interaction-respond
+              data-interaction-watch
+              data-interaction-type="single"
+              data-interaction-id={index}
+              key={item.name}
+              style={{color: 'white'}}
+            >
+              {item.name}
+            </p>
+          );
+        })}
+      </div>
+
       <TooltipWrapper
         bandwidth={xScale.bandwidth()}
         chartDimensions={{width, height}}
@@ -358,9 +384,10 @@ export function Chart({
         getMarkup={getTooltipMarkup}
         getPosition={getTooltipPosition}
         margin={Margin}
-        onIndexChange={(index) => setActiveBarGroup(index)}
+        // onIndexChange={(index) => setActiveBarGroup(index)}
         parentRef={svgRef}
       />
+      <InteractionHandler />
     </div>
   );
 

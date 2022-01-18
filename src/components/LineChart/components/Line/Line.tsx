@@ -56,13 +56,33 @@ export const Line = React.memo(function Shape({
       <path
         d={path}
         fill="none"
+        strokeWidth={`${selectedTheme.line.width * 10}px`}
+        paintOrder="stroke"
+        stroke="white"
+        strokeLinejoin="round"
+        strokeLinecap="round"
+        strokeDasharray={StrokeDasharray[lineStyle]}
+        data-interaction-watch
+        data-interaction-type="single"
+        data-interaction-id={index}
+        style={{opacity: '0'}}
+        aria-hidden="true"
+      />
+      <path
+        d={path}
+        fill="none"
         strokeWidth={`${selectedTheme.line.width}px`}
         paintOrder="stroke"
         stroke={color}
         strokeLinejoin="round"
         strokeLinecap="round"
         strokeDasharray={StrokeDasharray[lineStyle]}
+        data-interaction-respond
+        data-interaction-type="single"
+        data-interaction-id={index}
+        style={{pointerEvents: 'none'}}
       />
+
       {children}
     </animated.g>
   );
