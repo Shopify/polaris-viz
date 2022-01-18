@@ -4,6 +4,7 @@
 
 ### Fixed
 - Prevent tooltips from rendering outside `<ChartContainer/>`
+- Fixed a bug that prevented Firefox from using `Print` theme on `<SimpleNormalizedChart/>`
 
 ### Changed
 
