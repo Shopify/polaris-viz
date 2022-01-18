@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, useState} from 'react';
 import isEqual from 'fast-deep-equal';
 import {area, line} from 'd3-shape';
 import type {ScaleLinear} from 'd3-scale';
@@ -8,11 +8,15 @@ import {
   LINE_ANIMATION_FAST_DURATION,
   LINE_ANIMATION_SLOW_DURATION,
   LINE_ANIMATION_DURATION_STEP,
+  COLOR_VISION_SINGLE_ITEM,
 } from '../../../../constants';
-import type {Color} from '../../../../types';
+import type {Color, StackedSeries} from '../../../../types';
 import {curveStepRounded, uniqueId} from '../../../../utilities';
-import {usePrevious, useTheme} from '../../../../hooks';
-import type {StackedSeries} from '../../types';
+import {
+  usePrevious,
+  useTheme,
+  useWatchColorVisionEvents,
+} from '../../../../hooks';
 import {Area} from '..';
 
 import styles from './StackedAreas.scss';
@@ -36,6 +40,15 @@ export function Areas({
   isAnimated,
   theme,
 }: Props) {
+  const [activeLineIndex, setActiveLineIndex] = useState(-1);
+
+  useWatchColorVisionEvents({
+    type: COLOR_VISION_SINGLE_ITEM,
+    onIndexChange: ({detail}) => {
+      setActiveLineIndex(detail.index);
+    },
+  });
+
   const selectedTheme = useTheme(theme);
   const prevstackedValues = usePrevious(stackedValues);
   const valuesHaveNotUpdated = isEqual(prevstackedValues, stackedValues);
@@ -76,10 +89,11 @@ export function Areas({
   }, [stackedValues.length]);
 
   return (
-    <g transform={transform} className={styles.Group}>
+    <g transform={transform} className={styles.Group} aria-hidden="true">
       {stackedValues.map((data, index) => {
         return (
           <Area
+            activeLineIndex={activeLineIndex}
             animationIndex={stackedValues.length - 1 - index}
             areaGenerator={areaGenerator}
             colors={colors}

@@ -4,13 +4,16 @@ import React, {
   useLayoutEffect,
   useState,
   cloneElement,
+  useMemo,
 } from 'react';
 import {useDebouncedCallback} from 'use-debounce/lib';
 
+import {uniqueId} from '../../utilities';
 import type {Dimensions} from '../../types';
 import {useResizeObserver, useTheme, usePrintResizing} from '../../hooks';
 
 import styles from './ChartContainer.scss';
+import {ChartContext} from './ChartContext';
 
 interface Props {
   children: ReactElement;
@@ -18,6 +21,13 @@ interface Props {
 }
 
 export const ChartContainer = (props: Props) => {
+  const value = useMemo(
+    () => ({
+      id: uniqueId('chart'),
+    }),
+    [],
+  );
+
   const [chartDimensions, setChartDimensions] = useState<Dimensions | null>(
     null,
   );
@@ -66,24 +76,27 @@ export const ChartContainer = (props: Props) => {
   }, [entry, updateDimensions, debouncedUpdateDimensions]);
 
   return (
-    <div
-      className={styles.ChartContainer}
-      style={{
-        background: chartContainer.backgroundColor,
-        padding: chartContainer.padding,
-        borderRadius: chartContainer.borderRadius,
-      }}
-      ref={setRef}
-    >
-      {chartDimensions == null
-        ? null
-        : cloneElement<{theme: string; dimensions: Dimensions}>(
-            props.children,
-            {
-              theme: printFriendlyTheme,
-              dimensions: chartDimensions,
-            },
-          )}
-    </div>
+    <ChartContext.Provider value={value}>
+      <div
+        className={styles.ChartContainer}
+        style={{
+          background: chartContainer.backgroundColor,
+          padding: chartContainer.padding,
+          borderRadius: chartContainer.borderRadius,
+        }}
+        ref={setRef}
+        id={`chart_${value.id}`}
+      >
+        {chartDimensions == null
+          ? null
+          : cloneElement<{theme: string; dimensions: Dimensions}>(
+              props.children,
+              {
+                theme: printFriendlyTheme,
+                dimensions: chartDimensions,
+              },
+            )}
+      </div>
+    </ChartContext.Provider>
   );
 };

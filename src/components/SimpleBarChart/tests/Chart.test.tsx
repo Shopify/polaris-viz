@@ -41,6 +41,7 @@ const MOCK_PROPS: ChartProps = {
     labelFormatter: (value) => `${value}`,
   },
   type: 'default',
+  showLegend: true,
 };
 
 describe('<Chart />', () => {

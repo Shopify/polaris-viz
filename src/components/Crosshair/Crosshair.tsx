@@ -3,6 +3,8 @@ import {animated, Interpolation} from '@react-spring/web';
 
 import {useTheme} from '../../hooks';
 
+import style from './Crosshair.scss';
+
 interface Props {
   x: number | Interpolation;
   height: number;
@@ -15,6 +17,7 @@ export function Crosshair({x, height, opacity = 1, theme}: Props) {
   const selectedTheme = useTheme(theme);
   return (
     <animated.rect
+      className={style.Crosshair}
       x={x}
       width={selectedTheme.crossHair.width}
       height={height}

@@ -1,17 +1,25 @@
-import React, {useCallback, useMemo} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 
+import type {AccessibilitySeries} from '../../../VerticalBarChart/types';
+import {formatAriaLabel} from '../../utilities';
+import {
+  getColorVisionEventAttrs,
+  getOpacityStylesForActive,
+  usePrefersReducedMotion,
+  useWatchColorVisionEvents,
+} from '../../../../hooks';
 import {Color, DataType} from '../../../../types';
-import {usePrefersReducedMotion} from '../../../../hooks';
 import {Bar} from '../Bar';
 import {LinearGradient} from '../../../LinearGradient';
 import {BAR_SPACING} from '../../constants';
 import {
   MIN_BAR_HEIGHT,
   LOAD_ANIMATION_DURATION,
-  MASK_SUBDUE_COLOR,
   MASK_HIGHLIGHT_COLOR,
   BAR_ANIMATION_HEIGHT_BUFFER,
+  COLOR_VISION_SINGLE_ITEM,
+  COLOR_VISION_GROUP_ITEM,
 } from '../../../../constants';
 import {clamp, uniqueId} from '../../../../utilities';
 import styles from '../../Chart.scss';
@@ -23,11 +31,12 @@ interface Props {
   height: number;
   data: number[];
   colors: Color[];
-  isSubdued: boolean;
   barGroupIndex: number;
-  ariaLabel: string;
   hasRoundedCorners: boolean;
+  accessibilityData: AccessibilitySeries[];
+  activeBarGroup: number;
   zeroAsMinHeight: boolean;
+  gapWidth: number;
   isAnimated?: boolean;
   rotateZeroBars?: boolean;
 }
@@ -40,17 +49,30 @@ export function BarGroup({
   colors,
   height,
   barGroupIndex,
-  ariaLabel,
   hasRoundedCorners,
-  isSubdued,
   zeroAsMinHeight,
   isAnimated = false,
   rotateZeroBars = false,
+  accessibilityData,
+  activeBarGroup,
+  gapWidth,
 }: Props) {
+  const groupAriaLabel = formatAriaLabel(accessibilityData[barGroupIndex]);
+
   const {prefersReducedMotion} = usePrefersReducedMotion();
+  const [activeBarIndex, setActiveBarIndex] = useState(-1);
+
+  useWatchColorVisionEvents({
+    type: COLOR_VISION_SINGLE_ITEM,
+    onIndexChange: ({detail}) => {
+      if (activeBarGroup === -1 || activeBarGroup === barGroupIndex) {
+        setActiveBarIndex(detail.index);
+      }
+    },
+  });
 
   const dataLength = clamp({amount: data.length, min: 1, max: Infinity});
-  const barWidth = width / dataLength - BAR_SPACING;
+  const barWidth = width / dataLength;
 
   const getBarHeight = useCallback(
     (rawValue: number) => {
@@ -84,29 +106,25 @@ export function BarGroup({
     <React.Fragment>
       <mask id={maskId}>
         {data.map((rawValue, index) => {
-          const ariaEnabledBar = index === 0;
-
           return (
             <g
               className={styles.BarGroup}
-              role={ariaEnabledBar ? 'listitem' : undefined}
-              aria-hidden={!ariaEnabledBar}
               data-type={DataType.BarGroup}
               data-index={barGroupIndex}
-              tabIndex={index === 0 ? 0 : -1}
-              aria-label={ariaEnabledBar ? ariaLabel : undefined}
               key={`${barGroupIndex}${index}`}
+              style={getOpacityStylesForActive({
+                activeIndex: activeBarGroup,
+                index: barGroupIndex,
+              })}
             >
               <Bar
                 height={getBarHeight(rawValue)}
-                color={isSubdued ? MASK_SUBDUE_COLOR : MASK_HIGHLIGHT_COLOR}
+                color={MASK_HIGHLIGHT_COLOR}
                 x={x + (barWidth + BAR_SPACING) * index}
                 zeroPosition={yScale(0)}
                 rawValue={rawValue}
                 width={barWidth}
                 index={index}
-                tabIndex={-1}
-                role={ariaEnabledBar ? 'img' : undefined}
                 hasRoundedCorners={hasRoundedCorners}
                 rotateZeroBars={rotateZeroBars}
                 animationDelay={
@@ -129,11 +147,65 @@ export function BarGroup({
               <rect
                 x={x + (barWidth + BAR_SPACING) * index}
                 y={BAR_ANIMATION_HEIGHT_BUFFER * -1}
-                width={barWidth}
+                width={barWidth - BAR_SPACING}
                 height={height + BAR_ANIMATION_HEIGHT_BUFFER * 2}
                 fill={`url(#${gradientId}${index})`}
+                style={getOpacityStylesForActive({
+                  activeIndex: activeBarIndex,
+                  index,
+                })}
               />
             </g>
+          );
+        })}
+      </g>
+      <g
+        {...getColorVisionEventAttrs({
+          type: COLOR_VISION_GROUP_ITEM,
+          index: barGroupIndex,
+        })}
+        className={styles.BarGroup}
+        data-type={DataType.BarGroup}
+        data-index={barGroupIndex}
+        aria-hidden="false"
+        aria-label={groupAriaLabel}
+        role="list"
+      >
+        <rect
+          width={barWidth * dataLength + gapWidth}
+          x={x - gapWidth / 2}
+          height={height}
+          fill="transparent"
+          aria-hidden="true"
+        />
+        {data.map((rawValue, index) => {
+          const {label, value} = accessibilityData[barGroupIndex].data[index];
+          const ariaLabel = `${label} ${value}`;
+          const height = clamp({
+            amount: Math.abs(yScale(rawValue) - yScale(0)),
+            min: 1,
+            max: Infinity,
+          });
+          const isNegative = rawValue < 0;
+          const y = isNegative ? yScale(0) : yScale(0) - height;
+
+          return (
+            <rect
+              key={index}
+              height={height}
+              x={x + barWidth * index}
+              y={y}
+              width={barWidth}
+              fill="transparent"
+              aria-label={ariaLabel}
+              role="listitem"
+              {...getColorVisionEventAttrs({
+                type: COLOR_VISION_SINGLE_ITEM,
+                index,
+              })}
+              className={styles.Bar}
+              tabIndex={-1}
+            />
           );
         })}
       </g>

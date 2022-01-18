@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 
+import {COLOR_VISION_SINGLE_ITEM} from '../../constants';
 import type {Color} from '../../types';
-import {useTheme} from '../../hooks';
+import {useTheme, useWatchColorVisionEvents} from '../../hooks';
 
 import {DefaultRow, AnnotationRow} from './components';
 import styles from './TooltipContent.scss';
@@ -37,6 +38,13 @@ export function TooltipContent({
 }: TooltipContentProps) {
   const {tooltip} = useTheme(theme);
 
+  const [activeBarIndex, setActiveBarIndex] = useState(-1);
+
+  useWatchColorVisionEvents({
+    type: COLOR_VISION_SINGLE_ITEM,
+    onIndexChange: ({detail}) => setActiveBarIndex(detail.index),
+  });
+
   return (
     <div
       className={styles.Container}
@@ -54,6 +62,7 @@ export function TooltipContent({
               return (
                 <DefaultRow
                   color={color}
+                  isActive={activeBarIndex === -1 || index === activeBarIndex}
                   key={`${label}-${index}`}
                   label={label}
                   value={value}

@@ -1,6 +1,7 @@
 import React, {useState, useRef, useMemo, useCallback} from 'react';
 import {line} from 'd3-shape';
 
+import {useLegend, LegendContainer} from '../LegendContainer';
 import {
   TooltipHorizontalOffset,
   TooltipVerticalOffset,
@@ -15,14 +16,14 @@ import {
   uniqueId,
   clamp,
   isGradientType,
-  changeColorOpacity,
-  changeGradientOpacity,
 } from '../../utilities';
 import {
   useLinearXAxisDetails,
   useLinearXScale,
   useTheme,
   useLinearChartAnimations,
+  useColorVisionEvents,
+  useWatchColorVisionEvents,
 } from '../../hooks';
 import {
   SMALL_SCREEN,
@@ -32,16 +33,17 @@ import {
   LineChartMargin as Margin,
   SPACING_BASE_TIGHT,
   XMLNS,
+  COLOR_VISION_SINGLE_ITEM,
 } from '../../constants';
 import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
 import {LinearXAxis} from '../LinearXAxis';
 import {YAxis} from '../YAxis';
-import {Point} from '../Point';
 import {Crosshair} from '../Crosshair';
 import {LinearGradient} from '../LinearGradient';
 import {DataPoint, DataType, Dimensions} from '../../types';
 import {HorizontalGridLines} from '../HorizontalGridLines';
 
+import {Points, Line, GradientArea} from './components';
 import {MAX_ANIMATED_SERIES_LENGTH} from './constants';
 import type {
   RenderTooltipContentData,
@@ -51,13 +53,13 @@ import type {
   DataWithDefaults,
 } from './types';
 import {useYScale} from './hooks';
-import {Line, GradientArea} from './components';
 import styles from './Chart.scss';
 
-interface Props {
+export interface ChartProps {
   isAnimated: boolean;
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
   data: DataWithDefaults[];
+  showLegend: boolean;
   xAxisOptions: XAxisOptions;
   yAxisOptions: Required<YAxisOptions>;
   emptyStateText?: string;
@@ -74,21 +76,35 @@ export function Chart({
   data,
   dimensions,
   renderTooltipContent,
+  showLegend,
   emptyStateText,
   isAnimated,
   xAxisOptions,
   yAxisOptions,
   theme,
-}: Props) {
+}: ChartProps) {
+  useColorVisionEvents(data.length > 1);
+
   const selectedTheme = useTheme(theme);
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [activeLineIndex, setActiveLineIndex] = useState(-1);
+
+  const {legend, setLegendHeight, height, width} = useLegend({
+    data,
+    dimensions,
+    showLegend,
+    type: 'line',
+  });
+
+  useWatchColorVisionEvents({
+    type: COLOR_VISION_SINGLE_ITEM,
+    onIndexChange: ({detail}) => setActiveLineIndex(detail.index),
+  });
 
   const tooltipId = useRef(uniqueId('lineChart'));
   const gradientId = useRef(uniqueId('lineChartGradient'));
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
-
-  const {width, height} = dimensions ?? {width: 0, height: 0};
 
   const fontSize = width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
 
@@ -285,7 +301,7 @@ export function Chart({
   }
 
   return (
-    <div className={styles.Container}>
+    <div className={styles.Container} style={{width, height}}>
       <svg
         viewBox={`0 0 ${width} ${height}`}
         className={styles.Chart}
@@ -381,11 +397,12 @@ export function Chart({
                   </defs>
                 ) : null}
                 <Line
-                  series={singleSeries}
+                  activeLineIndex={activeLineIndex}
                   color={lineColor}
+                  index={reversedSeries.length - 1 - index}
                   isAnimated={isAnimated}
-                  index={index}
                   lineGenerator={lineGenerator}
+                  series={singleSeries}
                   theme={theme}
                 >
                   {areaColor != null ? (
@@ -401,79 +418,19 @@ export function Chart({
             );
           })}
 
-          {reversedSeries.map((singleSeries, index) => {
-            const {data, name, color} = singleSeries;
-            const isLongestLine = index === longestSeriesIndex;
-            const pointGradientId = `${gradientId.current}-point-${index}`;
-
-            const animatedYPosition =
-              animatedCoordinates == null || animatedCoordinates[index] == null
-                ? 0
-                : animatedCoordinates[index].to((coord) => coord.y);
-
-            const hidePoint =
-              animatedCoordinates == null ||
-              (activeIndex != null && activeIndex >= data.length);
-
-            const pointColor = isGradientType(color)
-              ? `url(#${pointGradientId})`
-              : changeColorOpacity(color);
-
-            return (
-              <React.Fragment key={`${name}-${index}`}>
-                {isGradientType(color) ? (
-                  <defs>
-                    <LinearGradient
-                      id={pointGradientId}
-                      gradient={changeGradientOpacity(color)}
-                      gradientUnits="userSpaceOnUse"
-                      y1="100%"
-                      y2="0%"
-                    />
-                  </defs>
-                ) : null}
-
-                {animatePoints ? (
-                  <Point
-                    color={pointColor}
-                    stroke={selectedTheme.line.pointStroke}
-                    cx={getXPosition()}
-                    cy={animatedYPosition}
-                    active={activeIndex != null}
-                    index={index}
-                    tabIndex={-1}
-                    isAnimated={animatePoints}
-                    visuallyHidden={hidePoint}
-                    ariaHidden
-                  />
-                ) : null}
-
-                {data.map(({value}, dataIndex) => {
-                  if (value == null) {
-                    return null;
-                  }
-
-                  return (
-                    <Point
-                      dataType={DataType.Point}
-                      key={`${name}-${index}-${dataIndex}`}
-                      stroke={selectedTheme.line.pointStroke}
-                      color={pointColor}
-                      cx={xScale(dataIndex)}
-                      cy={yScale(value)}
-                      active={activeIndex === dataIndex}
-                      index={dataIndex}
-                      tabIndex={isLongestLine ? 0 : -1}
-                      ariaLabelledby={tooltipId.current}
-                      isAnimated={false}
-                      ariaHidden={false}
-                      visuallyHidden={animatePoints}
-                    />
-                  );
-                })}
-              </React.Fragment>
-            );
-          })}
+          <Points
+            activeIndex={activeIndex}
+            animatedCoordinates={animatedCoordinates}
+            animatePoints={animatePoints}
+            data={reversedSeries}
+            getXPosition={getXPosition}
+            gradientId={gradientId.current}
+            longestSeriesIndex={longestSeriesIndex}
+            theme={theme}
+            tooltipId={tooltipId.current}
+            xScale={xScale}
+            yScale={yScale}
+          />
         </g>
       </svg>
 
@@ -488,6 +445,15 @@ export function Chart({
         onIndexChange={(index) => setActiveIndex(index)}
         parentRef={svgRef}
       />
+
+      {showLegend && (
+        <LegendContainer
+          colorVisionType={COLOR_VISION_SINGLE_ITEM}
+          data={legend}
+          onHeightChange={setLegendHeight}
+          theme={theme}
+        />
+      )}
     </div>
   );
 }

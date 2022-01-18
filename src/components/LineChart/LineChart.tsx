@@ -27,6 +27,7 @@ export interface LineChartProps {
   emptyStateText?: string;
   isAnimated?: boolean;
   renderTooltipContent?: (data: RenderTooltipContentData) => React.ReactNode;
+  showLegend?: boolean;
   skipLinkText?: string;
   theme?: string;
   xAxisOptions?: Partial<XAxisOptions>;
@@ -36,6 +37,7 @@ export interface LineChartProps {
 export function LineChart({
   data,
   renderTooltipContent,
+  showLegend = true,
   skipLinkText,
   emptyStateText,
   isAnimated = false,
@@ -136,6 +138,7 @@ export function LineChart({
               ? renderTooltipContent
               : renderDefaultTooltipContent
           }
+          showLegend={showLegend}
           emptyStateText={emptyStateText}
         />
       </ChartContainer>

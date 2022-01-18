@@ -1,7 +1,10 @@
 import React from 'react';
 import {animated, useSpring} from '@react-spring/web';
 
-import {BARS_TRANSITION_CONFIG} from '../../../../constants';
+import {
+  BARS_TRANSITION_CONFIG,
+  COLOR_VISION_SINGLE_ITEM,
+} from '../../../../constants';
 import {
   createCSSGradient,
   isGradientType,
@@ -9,13 +12,18 @@ import {
 } from '../../../../utilities';
 import type {Size} from '../../types';
 import type {Color, Direction} from '../../../../types';
-import {useHasTimeoutFinished} from '../../../../hooks';
+import {
+  getColorVisionEventAttrs,
+  getOpacityStylesForActive,
+  useHasTimeoutFinished,
+} from '../../../../hooks';
 
 import styles from './BarSegment.scss';
 
 const DELAY = 150;
 
 interface Props {
+  activeIndex: number;
   isAnimated: boolean;
   index: number;
   scale: number;
@@ -26,6 +34,7 @@ interface Props {
 }
 
 export function BarSegment({
+  activeIndex,
   color,
   index,
   isAnimated,
@@ -65,7 +74,13 @@ export function BarSegment({
       style={{
         [dimension]: isAnimated ? spring[dimension] : `${safeScale}%`,
         background: formattedColor,
+        ...getOpacityStylesForActive({activeIndex, index}),
       }}
+      {...getColorVisionEventAttrs({
+        type: COLOR_VISION_SINGLE_ITEM,
+        index,
+      })}
+      tabIndex={0}
     />
   );
 }

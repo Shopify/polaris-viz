@@ -1,6 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
+import {LegendContainer} from '../../LegendContainer';
 import {mockDefaultTheme} from '../../../test-utilities/mount-with-provider';
 import {LinearXAxis} from '../../../components/LinearXAxis';
 import {YAxis} from '../../../components/YAxis';
@@ -71,6 +72,7 @@ describe('<Chart />', () => {
     formatXAxisLabel: (val: string) => val,
     formatYAxisLabel: (val: number) => val.toString(),
     renderTooltipContent: jest.fn(() => <p>Mock Tooltip Content</p>),
+    showLegend: false,
   };
 
   it('renders an SVG', () => {
@@ -234,5 +236,22 @@ describe('<Chart />', () => {
     );
 
     expect(chart).not.toContainReactComponent(HorizontalGridLines);
+  });
+
+  describe('showLegend', () => {
+    it('does not render <LegendContainer /> when false', () => {
+      const chart = mount(<Chart {...mockProps} />);
+      const svg = chart.find('svg');
+
+      expect(chart).not.toContainReactComponent(LegendContainer);
+
+      expect(svg?.props.height).toStrictEqual(250);
+    });
+
+    it('renders <LegendContainer /> when true', () => {
+      const chart = mount(<Chart {...mockProps} showLegend />);
+
+      expect(chart).toContainReactComponent(LegendContainer);
+    });
   });
 });
