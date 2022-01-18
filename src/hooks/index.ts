@@ -21,3 +21,9 @@ export {useHorizontalSeriesColors} from './useHorizontalSeriesColors';
 export type {HorizontalTransitionStyle} from './useHorizontalTransitions';
 export {useBarChartTooltipContent} from './useBarChartTooltipContent';
 export {useHorizontalStackedValues} from './useHorizontalStackedValues';
+export {
+  useColorBlindEvents,
+  getColorBlindEventAttrs,
+  useWatchColorBlindEvents,
+} from './ColorBlindA11y';
+export {useCallbackRef} from './useCallbackRef';
