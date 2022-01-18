@@ -47,7 +47,7 @@ export function Area({areaPath, color, immediate}: AreaProps) {
   return areaGradientColor == null ? null : (
     <React.Fragment>
       <defs>
-        <mask id={maskId} opacity="0.2">
+        <mask id={maskId}>
           <path
             fill={`url(#${maskId}-gradient)`}
             d={areaPath}
@@ -72,6 +72,7 @@ export function Area({areaPath, color, immediate}: AreaProps) {
         d={areaPath}
         fill={`url(#${gradientId})`}
         mask={`url(#${maskId})`}
+        opacity="0.2"
       />
     </React.Fragment>
   );

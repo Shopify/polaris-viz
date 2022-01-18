@@ -5,6 +5,7 @@
 ### Fixed
 - Prevent tooltips from rendering outside `<ChartContainer/>`
 - Fixed a bug that prevented Firefox from using `Print` theme on `<SimpleNormalizedChart/>`
+- Fixed opacity not applying to `<SparkLineChart />` area when animation is disabled.
 
 ### Changed
 
