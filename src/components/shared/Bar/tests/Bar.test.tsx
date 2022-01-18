@@ -7,7 +7,6 @@ import type {BarProps} from '../Bar';
 const MOCK_PROPS: BarProps = {
   color: 'red',
   height: 10,
-  tabIndex: 0,
   width: 100,
   x: 5,
   y: 10,

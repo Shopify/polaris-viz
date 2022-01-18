@@ -5,6 +5,7 @@ import {BarSegment} from '../BarSegment';
 
 describe('<BarSegment />', () => {
   const mockProps = {
+    activeIndex: -1,
     scale: 64,
     color: 'rgb(255, 255, 255)',
     size: 'small' as 'small',

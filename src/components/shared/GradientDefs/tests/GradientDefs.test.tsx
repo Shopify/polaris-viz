@@ -6,7 +6,7 @@ import {GradientDefs} from '../GradientDefs';
 
 const MOCK_PROPS = {
   theme: 'Light',
-  width: '100px',
+  size: `${100}px`,
   id: 'id',
 };
 

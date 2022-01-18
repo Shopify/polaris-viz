@@ -2,13 +2,29 @@
 
 ## Unreleased
 
+### Added
+
+- Added `<Legends />` component.
+- Added `showLegend` to `BarChartProps`, `LineChartProps` and `StackedAreaChartProps` to control the visibility of `<Legends >`.
+- Added Color Vision a11y interactions to all non-Spark charts.
+
+### Changed
+
+- `LegendProps.series` renamed to `LegendProps.data`.
+- `LegendProps.data[].lineStyle` was removed. Use `LegendProps.data[].isComparison` to show a dotted line.
+- `LegendProps.data[].iconType` was added. Use `solid` to display a rectangle icon and `line` to display a line icon.
+
+### Removed
+
+- Removed legacy `<Legend >` component.
+
 ## [0.28.7] - 2022-01-20
 
 ### Fixed
 - Prevent tooltips from rendering outside `<ChartContainer/>`
 - Fixed a bug that prevented Firefox from using `Print` theme on `<SimpleNormalizedChart/>`
 - Fixed opacity not applying to `<SparkLineChart />` area when animation is disabled.
-- Fixed bug where `<BatChart />` would restart animation on every data change.
+- Fixed bug where `<BarChart />` would restart animation on every data change.
 
 ### Changed
 

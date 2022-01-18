@@ -1,5 +1,10 @@
 import React from 'react';
 
+import {COLOR_VISION_SINGLE_ITEM} from '../../../../constants';
+import {
+  getOpacityStylesForActive,
+  getColorVisionEventAttrs,
+} from '../../../../hooks';
 import {
   createCSSGradient,
   isGradientType,
@@ -15,6 +20,8 @@ import type {LabelPosition} from '../../types';
 import styles from './BarLabel.scss';
 
 export interface Props {
+  activeIndex: number;
+  index: number;
   label: string;
   value: string;
   color: Color;
@@ -25,6 +32,8 @@ export interface Props {
 }
 
 export function BarLabel({
+  activeIndex,
+  index,
   label,
   value,
   color,
@@ -53,6 +62,11 @@ export function BarLabel({
           ? styles.ContaineBottomLabel
           : styles.ContainerDefaultLabel,
       )}
+      style={getOpacityStylesForActive({activeIndex, index})}
+      {...getColorVisionEventAttrs({
+        type: COLOR_VISION_SINGLE_ITEM,
+        index,
+      })}
     >
       <div style={{background: formattedColor}} className={styles.LabelColor} />
       <div className={styles.Label}>

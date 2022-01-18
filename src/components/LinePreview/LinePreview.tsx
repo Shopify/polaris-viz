@@ -12,6 +12,7 @@ import {
   DOTTED_LINE_PREVIEW_RADIUS,
   DOT_SPACING,
 } from './constants';
+import styles from './LinePreview.scss';
 
 interface Props {
   color: Color;
@@ -26,7 +27,7 @@ export function LinePreview({color, lineStyle}: Props) {
     : color;
 
   return (
-    <div>
+    <span className={styles.Container}>
       <svg xmlns={XMLNS} width="15px" height="5px">
         {isGradientType(color) ? (
           <defs>
@@ -43,7 +44,7 @@ export function LinePreview({color, lineStyle}: Props) {
         ) : null}
         {getLinePreview(linePreviewColor, lineStyle)}
       </svg>
-    </div>
+    </span>
   );
 }
 

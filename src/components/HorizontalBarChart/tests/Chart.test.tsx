@@ -2,6 +2,7 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import type {DataSeries} from 'types';
 
+import {LegendContainer} from '../../LegendContainer';
 import {
   GradientDefs,
   GroupLabel,
@@ -45,6 +46,7 @@ const MOCK_PROPS: ChartProps = {
     useMinimalLabels: false,
   },
   type: 'default',
+  showLegend: false,
 };
 
 describe('<Chart />', () => {
@@ -187,6 +189,23 @@ describe('<Chart />', () => {
       const chart = mount(<Chart {...MOCK_PROPS} />);
 
       expect(chart).toContainReactComponent(HorizontalBars);
+    });
+  });
+
+  describe('showLegend', () => {
+    it('does not render <LegendContainer /> when false', () => {
+      const chart = mount(<Chart {...MOCK_PROPS} />);
+      const svg = chart.find('svg');
+
+      expect(chart).not.toContainReactComponent(LegendContainer);
+
+      expect(svg?.props.height).toStrictEqual(300);
+    });
+
+    it('renders <LegendContainer /> when true', () => {
+      const chart = mount(<Chart {...MOCK_PROPS} showLegend />);
+
+      expect(chart).toContainReactComponent(LegendContainer);
     });
   });
 });

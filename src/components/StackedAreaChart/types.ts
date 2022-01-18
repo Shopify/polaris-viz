@@ -1,5 +1,3 @@
-import type {Series} from 'd3-shape';
-
 import type {Color} from '../../types';
 
 export interface RenderTooltipContentData {
@@ -10,10 +8,3 @@ export interface RenderTooltipContentData {
     value: number;
   }[];
 }
-
-export type StackedSeries = Series<
-  {
-    [key: string]: number;
-  },
-  string
->;

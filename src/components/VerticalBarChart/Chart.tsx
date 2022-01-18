@@ -1,7 +1,14 @@
 import React, {useState, useMemo} from 'react';
 import type {AnnotationLookupTable} from 'components/BarChart/types';
 
-import {BarChartMargin as Margin, XMLNS} from '../../constants';
+import {LegendContainer, useLegend} from '../LegendContainer';
+import {GradientDefs} from '../shared';
+import {
+  BarChartMargin as Margin,
+  COLOR_VISION_GROUP_ITEM,
+  COLOR_VISION_SINGLE_ITEM,
+  XMLNS,
+} from '../../constants';
 import {
   TooltipHorizontalOffset,
   TooltipVerticalOffset,
@@ -16,6 +23,7 @@ import {
   shouldRotateZeroBars,
   eventPointNative,
   getStackedValues,
+  uniqueId,
 } from '../../utilities';
 import {YAxis} from '../YAxis';
 import {BarChartXAxis} from '../BarChartXAxis';
@@ -27,7 +35,12 @@ import {
   DataSeries,
   ChartType,
 } from '../../types';
-import {useBarChartTooltipContent, useTheme} from '../../hooks';
+import {
+  useBarChartTooltipContent,
+  useColorVisionEvents,
+  useTheme,
+  useWatchColorVisionEvents,
+} from '../../hooks';
 import type {
   RenderTooltipContentData,
   XAxisOptions,
@@ -35,8 +48,7 @@ import type {
 } from '../BarChart';
 import {AnnotationLine} from '../BarChart';
 
-import {formatAriaLabel} from './utilities';
-import {BarGroup, StackedBarGroup} from './components';
+import {BarGroup, StackedBarGroups} from './components';
 import {useYScale, useXScale, useMinimalLabelIndexes} from './hooks';
 import {
   FONT_SIZE,
@@ -46,16 +58,16 @@ import {
   BAR_SPACING,
 } from './constants';
 import styles from './Chart.scss';
-import {useStackedGapsForVerticalChart} from './hooks/useStackedGapsForVerticalChart';
 
 export interface Props {
   data: DataSeries[];
-  dimensions?: Dimensions;
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
+  showLegend: boolean;
   type: ChartType;
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
   annotationsLookupTable?: AnnotationLookupTable;
+  dimensions?: Dimensions;
   emptyStateText?: string;
   isAnimated?: boolean;
   theme?: string;
@@ -65,19 +77,34 @@ export function Chart({
   annotationsLookupTable = {},
   data,
   dimensions,
-  renderTooltipContent,
-  xAxisOptions,
-  yAxisOptions,
-  isAnimated = false,
   emptyStateText,
+  isAnimated = false,
+  renderTooltipContent,
+  showLegend,
   theme,
   type,
+  xAxisOptions,
+  yAxisOptions,
 }: Props) {
-  const selectedTheme = useTheme(theme);
-  const [activeBarGroup, setActiveBarGroup] = useState<number | null>(null);
-  const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
+  useColorVisionEvents(data.length > 1);
 
-  const {width, height} = dimensions ?? {width: 0, height: 0};
+  const selectedTheme = useTheme(theme);
+  const [activeBarGroup, setActiveBarGroup] = useState<number>(-1);
+  const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
+  const id = useMemo(() => uniqueId('VerticalBarChart'), []);
+
+  useWatchColorVisionEvents({
+    type: COLOR_VISION_GROUP_ITEM,
+    onIndexChange: ({detail}) => {
+      setActiveBarGroup(detail.index);
+    },
+  });
+
+  const {legend, setLegendHeight, height, width} = useLegend({
+    data,
+    dimensions,
+    showLegend,
+  });
 
   const fontSize = width < SMALL_WIDTH ? SMALL_FONT_SIZE : FONT_SIZE;
 
@@ -95,8 +122,8 @@ export function Chart({
     return labels;
   }, [data, xAxisOptions]);
 
-  const stackedValues =
-    type === 'stacked' ? getStackedValues(data, labels) : null;
+  const isStacked = type === 'stacked';
+  const stackedValues = isStacked ? getStackedValues(data, labels) : null;
 
   const {minimalLabelIndexes} = useMinimalLabelIndexes({
     useMinimalLabels: xAxisOptions.useMinimalLabels,
@@ -178,7 +205,7 @@ export function Chart({
       .some((num) => num > 0);
   }, [sortedData]);
 
-  const {xScale, xAxisLabels} = useXScale({
+  const {xScale, xAxisLabels, gapWidth} = useXScale({
     drawableWidth,
     data: sortedData,
     innerMargin: BarMargin[selectedTheme.bar.innerMargin],
@@ -222,16 +249,8 @@ export function Chart({
     [data, labels, yAxisOptions],
   );
 
-  const gaps = useStackedGapsForVerticalChart({stackedValues, labels});
-
   return (
-    <div
-      className={styles.ChartContainer}
-      style={{
-        height,
-        width,
-      }}
-    >
+    <div className={styles.ChartContainer} style={{height, width}}>
       <svg
         viewBox={`0 0 ${width} ${height}`}
         xmlns={XMLNS}
@@ -261,6 +280,15 @@ export function Chart({
           </g>
         )}
 
+        <GradientDefs
+          direction="vertical"
+          gradientUnits={isStacked ? 'objectBoundingBox' : 'userSpaceOnUse'}
+          id={id}
+          seriesColors={barColors}
+          size={isStacked ? '100%' : `${width}px`}
+          theme={theme}
+        />
+
         {selectedTheme.grid.showHorizontalLines ? (
           <HorizontalGridLines
             ticks={ticks}
@@ -286,46 +314,44 @@ export function Chart({
         </g>
 
         <g transform={`translate(${chartStartPosition},${Margin.Top})`}>
-          {stackedValues != null
-            ? stackedValues.map((stackData, stackIndex) => {
-                return (
-                  <StackedBarGroup
-                    key={stackIndex}
-                    groupIndex={stackIndex}
-                    activeBarGroup={activeBarGroup}
-                    data={stackData}
-                    xScale={xScale}
-                    yScale={yScale}
-                    colors={barColors}
-                    accessibilityData={accessibilityData}
-                    gaps={gaps}
-                  />
-                );
-              })
-            : sortedData.map((item, index) => {
-                const xPosition = xScale(index.toString());
-                const ariaLabel = formatAriaLabel(accessibilityData[index]);
-                return (
-                  <BarGroup
-                    isAnimated={isAnimated}
-                    key={index}
-                    x={xPosition == null ? 0 : xPosition}
-                    isSubdued={
-                      activeBarGroup != null && index !== activeBarGroup
-                    }
-                    yScale={yScale}
-                    data={item}
-                    width={xScale.bandwidth()}
-                    height={drawableHeight}
-                    colors={barColors}
-                    barGroupIndex={index}
-                    ariaLabel={ariaLabel}
-                    hasRoundedCorners={selectedTheme.bar.hasRoundedCorners}
-                    rotateZeroBars={rotateZeroBars}
-                    zeroAsMinHeight={selectedTheme.bar.zeroAsMinHeight}
-                  />
-                );
-              })}
+          {stackedValues != null ? (
+            <StackedBarGroups
+              accessibilityData={accessibilityData}
+              activeBarGroup={activeBarGroup}
+              colors={barColors}
+              drawableHeight={drawableHeight}
+              gapWidth={gapWidth}
+              id={id}
+              labels={labels}
+              stackedValues={stackedValues}
+              theme={theme}
+              xScale={xScale}
+              yScale={yScale}
+            />
+          ) : (
+            sortedData.map((item, index) => {
+              const xPosition = xScale(index.toString());
+              return (
+                <BarGroup
+                  isAnimated={isAnimated}
+                  gapWidth={gapWidth}
+                  key={index}
+                  x={xPosition == null ? 0 : xPosition}
+                  yScale={yScale}
+                  data={item}
+                  width={xScale.bandwidth()}
+                  height={drawableHeight}
+                  colors={barColors}
+                  barGroupIndex={index}
+                  hasRoundedCorners={selectedTheme.bar.hasRoundedCorners}
+                  rotateZeroBars={rotateZeroBars}
+                  zeroAsMinHeight={selectedTheme.bar.zeroAsMinHeight}
+                  accessibilityData={accessibilityData}
+                  activeBarGroup={activeBarGroup}
+                />
+              );
+            })
+          )}
         </g>
         <g transform={`translate(${chartStartPosition},${Margin.Top})`}>
           {Object.keys(annotationsLookupTable).map((key, dataIndex) => {
@@ -363,9 +389,17 @@ export function Chart({
         getMarkup={getTooltipMarkup}
         getPosition={getTooltipPosition}
         margin={Margin}
-        onIndexChange={(index) => setActiveBarGroup(index)}
         parentRef={svgRef}
       />
+
+      {showLegend && (
+        <LegendContainer
+          colorVisionType={COLOR_VISION_SINGLE_ITEM}
+          data={legend}
+          onHeightChange={setLegendHeight}
+          theme={theme}
+        />
+      )}
     </div>
   );
 

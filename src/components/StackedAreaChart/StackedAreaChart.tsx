@@ -26,6 +26,7 @@ export interface StackedAreaChartProps {
   };
   data: DataSeries[];
   isAnimated?: boolean;
+  showLegend?: boolean;
   skipLinkText?: string;
   theme?: string;
 }
@@ -36,6 +37,7 @@ export function StackedAreaChart({
   data,
   renderTooltipContent,
   isAnimated = false,
+  showLegend = true,
   skipLinkText,
   theme,
 }: StackedAreaChartProps) {
@@ -79,6 +81,7 @@ export function StackedAreaChart({
               ? renderTooltipContent
               : renderDefaultTooltipContent
           }
+          showLegend={showLegend}
           isAnimated={isAnimated}
         />
       </ChartContainer>

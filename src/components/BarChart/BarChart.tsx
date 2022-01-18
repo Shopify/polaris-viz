@@ -22,6 +22,7 @@ export interface BarChartProps {
   direction?: Direction;
   emptyStateText?: string;
   isAnimated?: boolean;
+  showLegend?: boolean;
   skipLinkText?: string;
   theme?: string;
   type?: ChartType;
@@ -36,6 +37,7 @@ export function BarChart({
   emptyStateText,
   isAnimated = false,
   renderTooltipContent,
+  showLegend = false,
   skipLinkText,
   theme,
   type = 'default',
@@ -90,13 +92,14 @@ export function BarChart({
         <VerticalBarChart
           annotationsLookupTable={annotationsLookupTable}
           data={data}
-          xAxisOptions={xAxisOptionsForChart}
-          yAxisOptions={yAxisOptionsForChart}
-          theme={theme}
-          type={type}
           emptyStateText={emptyStateText}
           isAnimated={isAnimated}
           renderTooltipContent={renderTooltip}
+          showLegend={showLegend}
+          theme={theme}
+          type={type}
+          xAxisOptions={xAxisOptionsForChart}
+          yAxisOptions={yAxisOptionsForChart}
         />
       ) : (
         <HorizontalBarChart
@@ -105,6 +108,7 @@ export function BarChart({
           isAnimated={isAnimated}
           renderTooltipContent={renderTooltip}
           theme={theme}
+          showLegend={showLegend}
           type={type}
           xAxisOptions={xAxisOptionsForChart}
         />
