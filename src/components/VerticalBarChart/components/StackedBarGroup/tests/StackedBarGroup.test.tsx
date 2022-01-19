@@ -75,6 +75,7 @@ describe('<StackedBarGroup/>', () => {
         ],
       },
     ],
+    gaps: [],
   };
 
   describe('colors', () => {

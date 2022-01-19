@@ -46,6 +46,7 @@ import {
   BAR_SPACING,
 } from './constants';
 import styles from './Chart.scss';
+import {useStackedGapsForVerticalChart} from './hooks/useStackedGapsForVerticalChart';
 
 export interface Props {
   data: DataSeries[];
@@ -221,6 +222,8 @@ export function Chart({
     [data, labels, yAxisOptions],
   );
 
+  const gaps = useStackedGapsForVerticalChart({stackedValues, labels});
+
   return (
     <div
       className={styles.ChartContainer}
@@ -295,6 +298,7 @@ export function Chart({
                     yScale={yScale}
                     colors={barColors}
                     accessibilityData={accessibilityData}
+                    gaps={gaps}
                   />
                 );
               })

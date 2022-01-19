@@ -30,3 +30,5 @@ export {getBarId} from './get-bar-id';
 export {formatDataIntoGroups} from './format-data-into-groups';
 export {getStackedMinMax} from './get-stacked-min-max';
 export {getStackedValues} from './get-stacked-values';
+export {pushGapToArray} from './push-gap-to-array';
+export {getGapForIndex} from './get-gap-for-index';

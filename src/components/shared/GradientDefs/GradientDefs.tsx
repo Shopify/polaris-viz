@@ -1,30 +1,38 @@
 import React from 'react';
 
-import type {Color, GradientStop} from '../../../types';
+import type {Color, GradientStop, GradientUnits} from '../../../types';
 import {isGradientType} from '../../../utilities';
 import {LinearGradient} from '../../LinearGradient';
 
 const GRADIENT_ID = 'grad';
 
 interface GradientDefsProps {
-  width: number;
+  width: string;
   id: string;
   seriesColors?: Color[];
   theme?: string;
+  gradientUnits?: GradientUnits;
 }
 
 export function GradientDefs({
   id,
   seriesColors = [],
   theme = 'Default',
-  width,
+  width = '100%',
+  gradientUnits,
 }: GradientDefsProps) {
   return (
     <defs>
       {seriesColors.map((color, index) => {
         const gradId = getGradientDefId(theme, index, id);
         return (
-          <Gradient key={gradId} id={gradId} color={color} width={width} />
+          <Gradient
+            key={gradId}
+            id={gradId}
+            color={color}
+            width={width}
+            gradientUnits={gradientUnits}
+          />
         );
       })}
     </defs>
@@ -35,10 +43,12 @@ function Gradient({
   id,
   color,
   width,
+  gradientUnits = 'userSpaceOnUse',
 }: {
   id: string;
   color: Color;
-  width: number;
+  width: string;
+  gradientUnits?: GradientUnits;
 }) {
   const gradient: GradientStop[] = isGradientType(color)
     ? color
@@ -51,9 +61,9 @@ function Gradient({
   return (
     <LinearGradient
       gradient={gradient}
-      gradientUnits="userSpaceOnUse"
+      gradientUnits={gradientUnits}
       id={id}
-      x2={`${width}px`}
+      x2={width}
       y1="0"
     />
   );

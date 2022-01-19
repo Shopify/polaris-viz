@@ -7,11 +7,7 @@ import {
   HorizontalStackedBarsProps,
 } from '../HorizontalStackedBars';
 import {StackedBar} from '../components';
-import {
-  FormattedStackedSeries,
-  RoundedBorder,
-  StackedSeries,
-} from '../../../../types';
+import {FormattedStackedSeries, RoundedBorder} from '../../../../types';
 
 jest.mock('d3-scale', () => ({
   scaleLinear: () => {

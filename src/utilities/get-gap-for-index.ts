@@ -1,7 +1,7 @@
-import type {Gaps} from '../types';
+import type {StackedBarGapDirections} from 'types';
 
 interface Props {
-  gaps: Gaps;
+  gaps: StackedBarGapDirections;
   direction: 'positive' | 'negative';
   seriesIndex: number;
 }

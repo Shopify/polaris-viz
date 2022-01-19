@@ -1,6 +1,10 @@
 import type {ScaleLinear, ScaleBand} from 'd3-scale';
 
-import type {Color, StackedSeries} from '../../../../types';
+import type {
+  Color,
+  StackedBarGapDirections,
+  StackedSeries,
+} from '../../../../types';
 
 export interface StackedBarGroupProps {
   groupIndex: number;
@@ -16,4 +20,5 @@ export interface StackedBarGroupProps {
       value: string;
     }[];
   }[];
+  gaps: {[key: number]: StackedBarGapDirections};
 }

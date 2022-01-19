@@ -1,18 +1,18 @@
 import type {ScaleLinear} from 'd3-scale';
+import type {StackedBarGapDirections} from 'types';
 
-import type {Gaps} from '../types';
-
-import {getGapForIndex} from '.';
+import {getGapForIndex} from '../../../../utilities';
 
 interface Props {
   start: number;
   end: number;
   seriesIndex: number;
-  gaps: Gaps;
+  gaps: StackedBarGapDirections;
   xScale: ScaleLinear<number, number>;
 }
+
 export function getXPosition({start, end, seriesIndex, gaps, xScale}: Props) {
-  if (start < 0 && start !== 0) {
+  if (start < 0) {
     return (
       xScale(start) - getGapForIndex({gaps, direction: 'negative', seriesIndex})
     );

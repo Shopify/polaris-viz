@@ -1,9 +1,12 @@
 import {useMemo} from 'react';
 
-import type {FormattedStackedSeries} from '../../../../types';
-import type {Gaps} from '../types';
+import {STACKED_BAR_GAP} from '../../../../constants';
+import {pushGapToArray} from '../../../../utilities';
+import type {
+  FormattedStackedSeries,
+  StackedBarGapDirections,
+} from '../../../../types';
 
-const STACKED_BAR_GAP = 2;
 interface Props {
   stackedValues: FormattedStackedSeries;
   groupIndex: number;
@@ -11,7 +14,7 @@ interface Props {
 
 export function useStackedGaps({stackedValues, groupIndex}: Props) {
   return useMemo(() => {
-    const gaps: Gaps = {
+    const gaps: StackedBarGapDirections = {
       positive: [],
       negative: [],
     };
@@ -31,25 +34,4 @@ export function useStackedGaps({stackedValues, groupIndex}: Props) {
     });
     return gaps;
   }, [groupIndex, stackedValues]);
-}
-
-interface PushGapToArrayProps {
-  gaps: Gaps;
-  index: number;
-  direction: 'positive' | 'negative';
-  firstGapValue: number;
-}
-
-function pushGapToArray({
-  gaps,
-  index,
-  direction,
-  firstGapValue,
-}: PushGapToArrayProps) {
-  if (!gaps[direction][gaps[direction].length - 1]) {
-    gaps[direction].push({index, gap: firstGapValue});
-    return;
-  }
-  const {gap} = gaps[direction][gaps[direction].length - 1];
-  gaps[direction].push({index, gap: gap + STACKED_BAR_GAP});
 }

@@ -214,3 +214,14 @@ export type StackedSeries = Series<
 export type FormattedStackedSeries = SeriesPoint<{
   [key: string]: number;
 }>[][];
+
+export interface SingleIndexGap {
+  index: number;
+  gap: number;
+}
+export interface StackedBarGapDirections {
+  positive: SingleIndexGap[];
+  negative: SingleIndexGap[];
+}
+
+export type GradientUnits = 'userSpaceOnUse' | 'objectBoundingBox';

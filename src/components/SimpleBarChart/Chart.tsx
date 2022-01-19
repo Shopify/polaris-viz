@@ -115,7 +115,8 @@ export function Chart({
           id={id}
           seriesColors={seriesColors}
           theme={theme}
-          width={width}
+          width={isStacked ? '100%' : `${width}px`}
+          gradientUnits={isStacked ? 'objectBoundingBox' : 'userSpaceOnUse'}
         />
 
         {transitions((style, item, _transition, index) => {

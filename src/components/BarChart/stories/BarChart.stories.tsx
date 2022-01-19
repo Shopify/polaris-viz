@@ -330,7 +330,7 @@ Stacked.args = {
   data: DATA,
   xAxisOptions: {},
   type: 'stacked',
-  direction: 'horizontal',
+  // direction: 'horizontal',
   isAnimated: true,
 };
 

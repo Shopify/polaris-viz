@@ -5,19 +5,21 @@ import {DataType} from '../../../../../../types';
 import {
   formatAriaLabel,
   getRoundedBorderForStackedValues,
+  getYPosition,
 } from '../../../../utilities';
 import {BAR_SPACING} from '../../../../constants';
 import type {StackedBarGroupProps} from '../../types';
 
 export function Stack({
-  data,
-  xScale,
-  ariaHidden,
-  activeBarId,
   accessibilityData,
   activeBarGroup,
-  yScale,
+  activeBarId,
+  ariaHidden,
+  data,
+  gaps,
   groupIndex,
+  xScale,
+  yScale,
 }: Omit<StackedBarGroupProps, 'colors'> & {
   ariaHidden: boolean;
   activeBarId: string;
@@ -43,6 +45,14 @@ export function Stack({
           roundedBorder: getRoundedBorderForStackedValues(values, groupIndex),
         });
 
+        const y = getYPosition({
+          start,
+          end,
+          groupIndex,
+          gaps: gaps[barIndex],
+          yScale,
+        });
+
         return (
           <g
             role={ariaEnabledBar ? 'listitem' : undefined}
@@ -57,7 +67,7 @@ export function Stack({
               d={pathD}
               id={isActive ? activeBarId : ''}
               key={barIndex}
-              transform={`translate(${xPosition},${yScale(end)})`}
+              transform={`translate(${xPosition},${y})`}
             />
           </g>
         );
