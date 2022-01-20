@@ -2,7 +2,10 @@
 
 ## Unreleased
 
+## [0.28.6] - 2022-01-20
+
 ### Fixed
+
 - Prevent tooltips from rendering outside `<ChartContainer/>`
 - Fixed a bug that prevented Firefox from using `Print` theme on `<SimpleNormalizedChart/>`
 
