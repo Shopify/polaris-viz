@@ -33,7 +33,7 @@ describe('<Bar />', () => {
     const path = bar.find('path');
 
     expect(path?.props?.style?.transform).toStrictEqual(
-      'translate(5px, 10px) scaleX(-10)',
+      ' translate(5px, 10px) scaleX(-10)',
     );
   });
 });

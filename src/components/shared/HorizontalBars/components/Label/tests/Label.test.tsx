@@ -45,7 +45,6 @@ describe('<Label />', () => {
 
     const object = label.find('foreignObject');
 
-    expect(object?.props.x).toStrictEqual(10);
     expect(object?.props.y).toStrictEqual(21.5);
   });
 });
