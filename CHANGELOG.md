@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-## [0.28.6] - 2022-01-20
+## [0.28.7] - 2022-01-20
 
 ### Fixed
 - Prevent tooltips from rendering outside `<ChartContainer/>`
