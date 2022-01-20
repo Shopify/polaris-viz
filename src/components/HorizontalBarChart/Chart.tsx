@@ -64,7 +64,7 @@ export function Chart({
 }: ChartProps) {
   const selectedTheme = useTheme(theme);
   const {labelFormatter} = xAxisOptions;
-  const id = uniqueId('HorizontalBarChart');
+  const id = useMemo(() => uniqueId('HorizontalBarChart'), []);
 
   const isStacked = type === 'stacked';
 

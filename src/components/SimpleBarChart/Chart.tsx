@@ -33,7 +33,7 @@ export function Chart({
   type,
   xAxisOptions,
 }: ChartProps) {
-  const id = uniqueId('SimpleBarChart');
+  const id = useMemo(() => uniqueId('SimpleBarChart'), []);
 
   const {labelFormatter} = xAxisOptions;
   const isStacked = type === 'stacked';
