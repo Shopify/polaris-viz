@@ -19,6 +19,19 @@ jest.mock('d3-scale', () => ({
   }),
 }));
 
+const GAPS = {
+  negative: [
+    {index: 0, gap: 0},
+    {index: 1, gap: 2},
+    {index: 2, gap: 4},
+  ],
+  positive: [
+    {index: 0, gap: 0},
+    {index: 1, gap: 2},
+    {index: 2, gap: 4},
+  ],
+};
+
 describe('<StackedBarGroup/>', () => {
   const stackedValues = [
     [0, 1],
@@ -75,7 +88,11 @@ describe('<StackedBarGroup/>', () => {
         ],
       },
     ],
-    gaps: [],
+    gaps: {
+      0: GAPS,
+      1: GAPS,
+      2: GAPS,
+    },
   };
 
   describe('colors', () => {

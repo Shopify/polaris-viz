@@ -10,7 +10,7 @@ interface Props {
 
 export function useHorizontalStackedValues({data, isStacked}: Props) {
   const {stackedValues, stackedMin, stackedMax} = useMemo(() => {
-    if (!isStacked) {
+    if (!isStacked || data.length === 0) {
       return {stackedMin: 0, stackedMax: 0, labels: [], stackedValues: []};
     }
 
