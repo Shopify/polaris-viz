@@ -12,10 +12,7 @@ import {
 } from './utils.stories';
 import {THEME_CONTROL_ARGS} from '../../../storybook';
 
-import {
-  generateMultipleSeries,
-  generateLabels,
-} from '../../../../documentation/utilities';
+import {generateMultipleSeries, generateLabels} from '../../Docs/utilities';
 
 const TOOLTIP_CONTENT = {
   empty: undefined,

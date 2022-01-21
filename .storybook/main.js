@@ -6,7 +6,7 @@ const path = require('path');
 const postcssShopify = require('@shopify/postcss-plugin');
 
 module.exports = {
-  stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(ts|tsx)'],
+  stories: ['../**/src/**/*.stories.mdx', '../**/src/**/*.stories.@(ts|tsx)'],
   addons: [
     '@storybook/addon-links',
     {
@@ -14,6 +14,7 @@ module.exports = {
       options: {docs: true, backgrounds: false},
     },
   ],
+  framework: '@storybook/react',
   typescript: {
     reactDocgen: 'react-docgen-typescript',
     reactDocgenTypescriptOptions: {
@@ -61,6 +62,15 @@ module.exports = {
             },
           },
         ],
+      },
+
+      {
+        test: /\.tsx?$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/,
+        query: {
+          presets: ['babel-preset-expo'],
+        },
       },
     ];
 

@@ -7,10 +7,7 @@ import {
   StackedAreaChart,
   SimpleNormalizedChart,
 } from '../../../../components';
-import {
-  generateLabels,
-  generateMultipleSeries,
-} from '../../../../../documentation/utilities';
+import {generateLabels, generateMultipleSeries} from '../../utilities';
 
 export const SampleSparkLineChart = ({theme} = {theme: 'Default'}) => {
   return (

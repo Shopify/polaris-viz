@@ -1,8 +1,8 @@
 import React from 'react';
 import {themes} from '@storybook/theming';
-import {PolarisVizProvider} from '../src/components';
-import {DEFAULT_THEME, LIGHT_THEME} from '../src/constants';
-import {useTheme} from '../src/hooks';
+import {PolarisVizProvider} from '../packages/web/src/components';
+import {DEFAULT_THEME, LIGHT_THEME} from '../packages/web/src/constants';
+import {useTheme} from '../packages/web/src/hooks';
 
 // https://github.com/storybookjs/storybook/issues/548
 const storiesOrder = {

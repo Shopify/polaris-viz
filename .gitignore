@@ -4,3 +4,4 @@ node_modules
 /sandbox
 .DS_Store
 .loom
+.expo/

@@ -1,7 +1,7 @@
 import React, {CSSProperties, useMemo} from 'react';
 
 import {uniqueId} from '../../../../../utilities';
-import {copyTextToClipboard} from '../../../../../../documentation/utilities';
+import {copyTextToClipboard} from '../../../utilities';
 
 import styles from './Title.scss';
 

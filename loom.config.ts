@@ -13,7 +13,7 @@ import {
 
 // eslint-disable-next-line import/no-default-export
 export default createPackage((pkg) => {
-  pkg.entry({root: './src/index.ts'});
+  pkg.entry({root: './packages/web/src/index.ts'});
 
   pkg.use(
     buildLibrary({

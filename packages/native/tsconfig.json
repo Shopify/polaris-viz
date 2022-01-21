@@ -1,7 +1,8 @@
 {
   "extends": "@shopify/typescript-configs/library.json",
   "compilerOptions": {
-    "baseUrl": "./**/src",
+    "jsx": "react",
+    "baseUrl": "./src",
     "rootDir": ".",
     "outDir": "./build/ts",
     "emitDeclarationOnly": true,
@@ -9,5 +10,5 @@
     "importsNotUsedAsValues": "error",
     "strictFunctionTypes": false
   },
-  "include": ["./**/src", "./**/tests"]
+  "include": ["./src", "./tests"]
 }
