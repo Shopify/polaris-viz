@@ -32,6 +32,6 @@ export type {
   Margin,
   ChartType,
   Direction,
-} from '../../core/types';
+} from '../../core/src/types';
 
-export {RoundedBorder, BarMargin, DataType} from '../../core/types';
+export {RoundedBorder, BarMargin, DataType} from '../../core/src/types';

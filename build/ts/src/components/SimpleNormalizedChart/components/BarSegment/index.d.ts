@@ -1,2 +1,0 @@
-export { BarSegment } from './BarSegment';
-//# sourceMappingURL=index.d.ts.map

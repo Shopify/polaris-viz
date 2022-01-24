@@ -25,14 +25,10 @@
     "directory": "packages/core"
   },
   "scripts": {
+    "prebuild": "rimraf build",
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {
     "url": "https://github.com/Shopify/polaris-viz/issues"
-  },
-  "devDependencies": {
-    "@shopify/loom": "^1.0.1",
-    "@shopify/loom-plugin-build-library": "^1.0.1",
-    "@shopify/loom-plugin-build-library-extended": "^1.0.0"
   }
 }

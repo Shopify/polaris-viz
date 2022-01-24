@@ -1,1 +1,0 @@
-{"version":3,"file":"types.d.ts","sourceRoot":"","sources":["../../../../../src/components/StackedAreaChart/types.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAC,KAAK,EAAC,MAAM,aAAa,CAAC;AAEvC,MAAM,WAAW,wBAAwB;IACvC,KAAK,EAAE,MAAM,CAAC;IACd,IAAI,EAAE;QACJ,KAAK,EAAE,KAAK,CAAC;QACb,KAAK,EAAE,MAAM,CAAC;QACd,KAAK,EAAE,MAAM,CAAC;KACf,EAAE,CAAC;CACL"}

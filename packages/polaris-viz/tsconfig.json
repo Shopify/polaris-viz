@@ -1,13 +1,9 @@
 {
-  "extends": "@shopify/typescript-configs/library.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "baseUrl": "./**/src",
-    "rootDir": ".",
-    "outDir": "./build/ts",
-    "emitDeclarationOnly": true,
-    "incremental": true,
-    "importsNotUsedAsValues": "error",
-    "strictFunctionTypes": false
+    "outDir": "build/ts",
+    "baseUrl": "src",
+    "rootDir": "."
   },
-  "include": ["./**/src", "./**/tests"]
+  "include": ["src", "tests"]
 }
