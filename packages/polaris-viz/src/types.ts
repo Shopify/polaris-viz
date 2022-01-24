@@ -33,6 +33,7 @@ export type {
   Margin,
   ChartType,
   Direction,
+<<<<<<< HEAD
 } from '../../polaris-viz-core/src/';
 
 export {RoundedBorder, BarMargin, DataType} from '../../polaris-viz-core/src/';
@@ -244,3 +245,8 @@ export enum RoundedBorder {
 export type ChartType = 'default' | 'stacked';
 export type Direction = 'horizontal' | 'vertical';
 >>>>>>> 57cc0f8 (Renamed `web` package `polaris-viz`)
+=======
+} from '../../core/src/types';
+
+export {RoundedBorder, BarMargin, DataType} from '../../core/src/types';
+>>>>>>> 395aa6f (extract global scss variables to core)
