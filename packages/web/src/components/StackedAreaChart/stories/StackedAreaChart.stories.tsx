@@ -6,7 +6,7 @@ import {StackedAreaChart, StackedAreaChartProps} from '../StackedAreaChart';
 import {data, labels, formatYAxisLabel} from './utils.stories';
 import {THEME_CONTROL_ARGS} from '../../../storybook';
 
-import {generateMultipleSeries} from '../../../../documentation/utilities';
+import {generateMultipleSeries} from '../../Docs/utilities';
 import type {RenderTooltipContentData} from '../types';
 
 const TOOLTIP_CONTENT = {
@@ -102,9 +102,8 @@ HideXAxisLabels.args = {
   xAxisOptions: {...defaultProps.xAxisOptions, hide: true},
 };
 
-export const OverwrittenSeriesColors: Story<StackedAreaChartProps> = Template.bind(
-  {},
-);
+export const OverwrittenSeriesColors: Story<StackedAreaChartProps> =
+  Template.bind({});
 OverwrittenSeriesColors.args = {
   ...defaultProps,
   xAxisOptions: {

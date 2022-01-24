@@ -11,7 +11,7 @@ import {
   TYPE_CONTROL_ARGS,
 } from '../../../storybook';
 
-import {generateMultipleSeries} from '../../../../documentation/utilities';
+import {generateMultipleSeries} from '../../Docs/utilities';
 import type {DataSeries} from '../../../types';
 
 const TOOLTIP_CONTENT = {
@@ -317,9 +317,8 @@ const WithoutRoundedCornersTemplate: Story<BarChartProps> = (
   );
 };
 
-export const WithoutRoundedCorners: Story<BarChartProps> = WithoutRoundedCornersTemplate.bind(
-  {},
-);
+export const WithoutRoundedCorners: Story<BarChartProps> =
+  WithoutRoundedCornersTemplate.bind({});
 WithoutRoundedCorners.args = {
   data: DATA,
   xAxisOptions: {},
