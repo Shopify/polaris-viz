@@ -5,8 +5,20 @@ import {jest} from '@shopify/loom-plugin-jest';
 import {typescript} from '@shopify/loom-plugin-typescript';
 
 // eslint-disable-next-line import/no-default-export
-export default createWorkspace((workspace) => {
-  workspace.use(
+export default createPackage((pkg) => {
+  pkg.entry({root: './packages/web/src/index.ts'});
+  pkg.use(
+    buildLibrary({
+      jestTestEnvironment: 'jsdom',
+      targets: 'extends @shopify/browserslist-config, node 12.22.0',
+      commonjs: true,
+      esmodules: true,
+      esnext: true,
+      rootEntrypoints: false,
+    }),
+    buildLibraryExtended({graphql: false}),
+    buildLibraryWorkspace(),
+    buildLibraryExtendedWorkspace({graphql: false}),
     eslint(),
     prettier({files: '**/*.{json,md,yaml,yml}'}),
     jest(),

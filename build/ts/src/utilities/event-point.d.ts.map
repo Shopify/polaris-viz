@@ -1,0 +1,1 @@
+{"version":3,"file":"event-point.d.ts","sourceRoot":"","sources":["../../../../src/utilities/event-point.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,KAAK,MAAM,OAAO,CAAC;AAK/B,wBAAgB,UAAU,CACxB,KAAK,EAAE,KAAK,CAAC,UAAU,CAAC,aAAa,CAAC,GAAG,KAAK,CAAC,UAAU,CAAC,aAAa,CAAC;;;;;cAgCzE;AAED,wBAAgB,gBAAgB,CAAC,KAAK,EAAE,UAAU,GAAG,UAAU;;;;;cA+B9D"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"should-round-scale-up.d.ts","sourceRoot":"","sources":["../../../../src/utilities/should-round-scale-up.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAC,WAAW,EAAC,MAAM,UAAU,CAAC;AAE1C,wBAAgB,kBAAkB,CAAC,EACjC,MAAM,EACN,QAAQ,EACR,QAAQ,GACT,EAAE;IACD,MAAM,EAAE,WAAW,CAAC,MAAM,EAAE,MAAM,CAAC,CAAC;IACpC,QAAQ,EAAE,MAAM,CAAC;IACjB,QAAQ,EAAE,MAAM,CAAC;CAClB,WASA"}

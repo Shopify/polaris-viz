@@ -1,0 +1,1 @@
+{"version":3,"file":"get-text-container-height.d.ts","sourceRoot":"","sources":["../../../../src/utilities/get-text-container-height.ts"],"names":[],"mappings":"AAAA,wBAAgB,sBAAsB,CAAC,EACrC,IAAI,EACJ,QAAQ,EACR,cAAc,GACf,EAAE;IACD,IAAI,EAAE,MAAM,CAAC;IACb,QAAQ,EAAE,MAAM,CAAC;IACjB,cAAc,EAAE,MAAM,CAAC;CACxB,UAgBA"}

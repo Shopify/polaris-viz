@@ -1,0 +1,1 @@
+{"version":3,"file":"clamp.d.ts","sourceRoot":"","sources":["../../../../src/utilities/clamp.ts"],"names":[],"mappings":"AAAA,wBAAgB,KAAK,CAAC,EACpB,MAAM,EACN,GAAG,EACH,GAAG,GACJ,EAAE;IACD,MAAM,EAAE,MAAM,CAAC;IACf,GAAG,EAAE,MAAM,CAAC;IACZ,GAAG,EAAE,MAAM,CAAC;CACb,UAEA"}
