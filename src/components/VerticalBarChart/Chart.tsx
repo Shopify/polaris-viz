@@ -1,4 +1,4 @@
-import React, {useState, useMemo} from 'react';
+import React, {useState, useMemo, useEffect} from 'react';
 import type {AnnotationLookupTable} from 'components/BarChart/types';
 
 import {BarChartMargin as Margin, XMLNS} from '../../constants';
@@ -26,14 +26,19 @@ import {
   DataSeries,
   ChartType,
 } from '../../types';
-import {useBarChartTooltipContent, useTheme} from '../../hooks';
+import {
+  getColorBlindEventAttrs,
+  useBarChartTooltipContent,
+  useColorBlindEvents,
+  useTheme,
+  useWatchColorBlindEvents,
+} from '../../hooks';
 import type {
   RenderTooltipContentData,
   XAxisOptions,
   YAxisOptions,
 } from '../BarChart';
 import {AnnotationLine} from '../BarChart';
-import {InteractionHandler} from '../InteractionHandler';
 
 import {getStackedValues, formatAriaLabel} from './utilities';
 import {BarGroup, StackedBarGroup} from './components';
@@ -72,8 +77,18 @@ export function Chart({
   theme,
   type,
 }: Props) {
+  useColorBlindEvents();
+
   const selectedTheme = useTheme(theme);
-  const [activeBarGroup] = useState<number | null>(null);
+  const [activeBarGroup, setActiveBarGroup] = useState<number | null>(null);
+
+  useWatchColorBlindEvents({
+    type: 'group',
+    onIndexChange: ({detail}) => {
+      setActiveBarGroup(detail.index === -1 ? null : detail.index);
+    },
+  });
+
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
 
   const {width, height} = dimensions ?? {width: 0, height: 0};
@@ -352,31 +367,6 @@ export function Chart({
         </g>
       </svg>
 
-      <div
-        style={{
-          display: 'grid',
-          gap: '20px',
-          position: 'absolute',
-          top: 0,
-          gridTemplateColumns: 'repeat(3, 1fr)',
-        }}
-      >
-        {data.map((item, index) => {
-          return (
-            <p
-              data-interaction-respond
-              data-interaction-watch
-              data-interaction-type="single"
-              data-interaction-id={index}
-              key={item.name}
-              style={{color: 'white'}}
-            >
-              {item.name}
-            </p>
-          );
-        })}
-      </div>
-
       <TooltipWrapper
         bandwidth={xScale.bandwidth()}
         chartDimensions={{width, height}}
@@ -387,7 +377,20 @@ export function Chart({
         // onIndexChange={(index) => setActiveBarGroup(index)}
         parentRef={svgRef}
       />
-      <InteractionHandler />
+
+      <div
+        style={{
+          display: 'grid',
+          gap: '20px',
+          position: 'absolute',
+          top: 0,
+          gridTemplateColumns: 'repeat(3, 1fr)',
+        }}
+      >
+        {data.map((item, index) => {
+          return <Item item={item} key={index} index={index} />;
+        })}
+      </div>
     </div>
   );
 
@@ -456,4 +459,32 @@ export function Chart({
 
 function sumPositiveData(prevValue: number, currValue: number) {
   return currValue < 0 ? prevValue : prevValue + currValue;
+}
+
+function Item({item, index}: any) {
+  const [activeBarIndex, setActiveBarIndex] = useState(-1);
+
+  useWatchColorBlindEvents({
+    type: 'single',
+    onIndexChange: ({detail}) => setActiveBarIndex(detail.index),
+  });
+
+  useWatchColorBlindEvents({
+    type: 'single-single',
+    onIndexChange: ({detail}) => setActiveBarIndex(detail.index),
+  });
+
+  return (
+    <p
+      key={item.name}
+      {...getColorBlindEventAttrs({
+        watch: true,
+        type: 'single',
+        index,
+      })}
+      style={{color: 'white', opacity: activeBarIndex === index ? 1 : 0.5}}
+    >
+      {item.name}
+    </p>
+  );
 }

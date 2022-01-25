@@ -8,20 +8,15 @@ export function DefaultRow({
   color,
   label,
   value,
-  index,
+  isActive,
 }: {
   color: Color;
   label: string;
   value: string;
-  index: number;
+  isActive: boolean;
 }) {
   return (
-    <div
-      className={styles.Row}
-      data-interaction-respond
-      data-interaction-type="single"
-      data-interaction-id={index}
-    >
+    <div className={styles.Row} style={{opacity: isActive ? 1 : 0.5}}>
       <SquareColorPreview color={color} />
       <span>{label}</span>
       <span className={styles.Value}>{value}</span>

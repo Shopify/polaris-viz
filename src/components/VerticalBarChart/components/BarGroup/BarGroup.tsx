@@ -1,8 +1,12 @@
-import React, {useCallback, useMemo} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 
 import {Color, DataType} from '../../../../types';
-import {usePrefersReducedMotion} from '../../../../hooks';
+import {
+  getColorBlindEventAttrs,
+  usePrefersReducedMotion,
+  useWatchColorBlindEvents,
+} from '../../../../hooks';
 import {Bar} from '../Bar';
 import {LinearGradient} from '../../../LinearGradient';
 import {BAR_SPACING} from '../../constants';
@@ -49,6 +53,13 @@ export function BarGroup({
 }: Props) {
   const {prefersReducedMotion} = usePrefersReducedMotion();
 
+  const [activeBarIndex, setActiveBarIndex] = useState(-1);
+
+  useWatchColorBlindEvents({
+    type: 'single',
+    onIndexChange: ({detail}) => setActiveBarIndex(detail.index),
+  });
+
   const dataLength = clamp({amount: data.length, min: 1, max: Infinity});
   const barWidth = width / dataLength - BAR_SPACING;
 
@@ -80,58 +91,49 @@ export function BarGroup({
       : color;
   });
 
-  const bars = useMemo(() => {
-    return data.map((rawValue, index) => {
-      const ariaEnabledBar = index === 0;
-
-      return (
-        <g
-          className={styles.BarGroup}
-          role={ariaEnabledBar ? 'listitem' : undefined}
-          aria-hidden={!ariaEnabledBar}
-          data-type={DataType.BarGroup}
-          data-index={barGroupIndex}
-          tabIndex={index === 0 ? 0 : -1}
-          aria-label={ariaEnabledBar ? ariaLabel : undefined}
-          key={`${barGroupIndex}${index}`}
-          data-interaction-watch
-          data-interaction-respond
-          data-interaction-id={index}
-          data-interaction-type="single"
-        >
-          <Bar
-            height={getBarHeight(rawValue)}
-            color={isSubdued ? MASK_SUBDUE_COLOR : MASK_HIGHLIGHT_COLOR}
-            x={x + (barWidth + BAR_SPACING) * index}
-            zeroPosition={yScale(0)}
-            rawValue={rawValue}
-            width={barWidth}
-            index={index}
-            tabIndex={-1}
-            role={ariaEnabledBar ? 'img' : undefined}
-            hasRoundedCorners={hasRoundedCorners}
-            rotateZeroBars={rotateZeroBars}
-            animationDelay={
-              barGroupIndex * (LOAD_ANIMATION_DURATION / dataLength)
-            }
-            isAnimated={shouldAnimate}
-          />
-        </g>
-      );
-    });
-  }, [data]);
-
   return (
     <React.Fragment>
-      <mask id={maskId}>{bars}</mask>
-      <g
-        mask={`url(#${maskId})`}
-        data-interaction-watch
-        data-interaction-respond
-        data-interaction-type="group"
-        data-interaction-id={`group-${barGroupIndex}`}
-      >
+      <mask id={maskId}>
+        {data.map((rawValue, index) => {
+          const ariaEnabledBar = index === 0;
+
+          return (
+            <g
+              className={styles.BarGroup}
+              role={ariaEnabledBar ? 'listitem' : undefined}
+              aria-hidden={!ariaEnabledBar}
+              data-type={DataType.BarGroup}
+              data-index={barGroupIndex}
+              tabIndex={index === 0 ? 0 : -1}
+              aria-label={ariaEnabledBar ? ariaLabel : undefined}
+              key={`${barGroupIndex}${index}`}
+            >
+              <Bar
+                height={getBarHeight(rawValue)}
+                color={isSubdued ? MASK_SUBDUE_COLOR : MASK_HIGHLIGHT_COLOR}
+                x={x + (barWidth + BAR_SPACING) * index}
+                zeroPosition={yScale(0)}
+                rawValue={rawValue}
+                width={barWidth}
+                index={index}
+                tabIndex={-1}
+                role={ariaEnabledBar ? 'img' : undefined}
+                hasRoundedCorners={hasRoundedCorners}
+                rotateZeroBars={rotateZeroBars}
+                animationDelay={
+                  barGroupIndex * (LOAD_ANIMATION_DURATION / dataLength)
+                }
+                isAnimated={shouldAnimate}
+              />
+            </g>
+          );
+        })}
+      </mask>
+      <g mask={`url(#${maskId})`}>
         {gradients.map((gradient, index) => {
+          const activeOpacity = activeBarIndex === index ? 1 : 0.5;
+          const opacity = activeBarIndex === -1 ? 1 : activeOpacity;
+
           return (
             <g key={`${maskId}${index}`}>
               <LinearGradient
@@ -144,13 +146,51 @@ export function BarGroup({
                 width={barWidth}
                 height={height + BAR_ANIMATION_HEIGHT_BUFFER * 2}
                 fill={`url(#${gradientId}${index})`}
+                opacity={opacity}
               />
             </g>
           );
         })}
       </g>
-      <g aria-hidden="true" style={{opacity: 0}}>
-        {bars}
+      <g
+        {...getColorBlindEventAttrs({
+          watch: true,
+          // respond: true,
+          type: 'group',
+          index: barGroupIndex,
+        })}
+      >
+        <rect
+          width={(barWidth + BAR_SPACING) * dataLength}
+          x={x}
+          y={BAR_ANIMATION_HEIGHT_BUFFER * -1}
+          height={height + BAR_ANIMATION_HEIGHT_BUFFER * 2}
+          fill="transparent"
+        />
+        {data.map((rawValue, index) => {
+          return (
+            <rect
+              key={index}
+              height={getBarHeight(rawValue)}
+              x={x + (barWidth + BAR_SPACING) * index}
+              y={yScale(0) - getBarHeight(rawValue)}
+              width={barWidth}
+              fill="transparent"
+              onMouseOver={() => {
+                setActiveBarIndex(index);
+              }}
+              onMouseLeave={() => {
+                setActiveBarIndex(-1);
+              }}
+              {...getColorBlindEventAttrs({
+                watch: true,
+                // respond: true,
+                type: 'single-single',
+                index,
+              })}
+            />
+          );
+        })}
       </g>
     </React.Fragment>
   );
