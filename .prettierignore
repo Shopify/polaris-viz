@@ -1,6 +1,7 @@
 node_modules
-/build
-**/*.md
-/package.json
-/.github
 .loom
+packages/*/build
+**/*.md
+.github
+package.json
+

@@ -84,7 +84,11 @@ module.exports = {
 
     config.resolve.alias = {
       ...config.resolve.alias,
-      '@shopify/polaris-viz': path.resolve(__dirname, '..', 'src'),
+      '@shopify/polaris-viz': path.resolve(
+        __dirname,
+        '..',
+        'packages/polaris-viz/src',
+      ),
     };
     return config;
   },

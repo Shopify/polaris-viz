@@ -1,6 +1,6 @@
 *.log
 node_modules
-/build
+packages/*/build
 /sandbox
 .DS_Store
 .loom

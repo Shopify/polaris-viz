@@ -1,13 +1,9 @@
 {
-  "extends": "@shopify/typescript-configs/library.json",
-  "compilerOptions": {
-    "baseUrl": "./**/src",
-    "rootDir": ".",
-    "outDir": "./build/ts",
-    "emitDeclarationOnly": true,
-    "incremental": true,
-    "importsNotUsedAsValues": "error",
-    "strictFunctionTypes": false
-  },
-  "include": ["./**/src", "./**/tests"]
+  "files": [],
+  "include": [],
+  "references": [
+    {"path": "./packages/core"},
+    {"path": "./packages/native"},
+    {"path": "./packages/polaris-viz"}
+  ]
 }
