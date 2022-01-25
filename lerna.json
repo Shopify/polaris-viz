@@ -1,6 +1,6 @@
 {
   "packages": ["packages/*"],
-  "version": "fixed",
+  "version": "independent",
   "npmClient": "yarn",
   "useWorkspaces": true,
   "ignoreChanges": ["**/*.md", "**/tests/**", "**/test/**"]
