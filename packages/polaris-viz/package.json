@@ -1,5 +1,5 @@
 {
-  "name": "@polaris-viz/web",
+  "name": "@polaris-viz",
   "description": "Shopify’s viz component library",
   "version": "0.28.7",
   "private": false,
