@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 
 import {Color, DataType} from '../../../../types';
@@ -154,8 +154,6 @@ export function BarGroup({
       </g>
       <g
         {...getColorBlindEventAttrs({
-          watch: true,
-          // respond: true,
           type: 'group',
           index: barGroupIndex,
         })}
@@ -183,8 +181,6 @@ export function BarGroup({
                 setActiveBarIndex(-1);
               }}
               {...getColorBlindEventAttrs({
-                watch: true,
-                // respond: true,
                 type: 'single-single',
                 index,
               })}

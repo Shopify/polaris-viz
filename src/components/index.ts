@@ -30,3 +30,4 @@ export type {PolarisVizProviderProps} from './PolarisVizProvider';
 export {TooltipWrapper} from './TooltipWrapper';
 export {SimpleBarChart} from './SimpleBarChart';
 export type {SimpleBarChartProps} from './SimpleBarChart';
+export {ChartContext} from './ChartContainer';

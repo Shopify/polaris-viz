@@ -1,4 +1,4 @@
-import React, {useState, useMemo, useEffect} from 'react';
+import React, {useState, useMemo} from 'react';
 import type {AnnotationLookupTable} from 'components/BarChart/types';
 
 import {BarChartMargin as Margin, XMLNS} from '../../constants';
@@ -478,7 +478,6 @@ function Item({item, index}: any) {
     <p
       key={item.name}
       {...getColorBlindEventAttrs({
-        watch: true,
         type: 'single',
         index,
       })}

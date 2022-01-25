@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 
 import {useWatchColorBlindEvents, useTheme} from '../../hooks';
 import type {Color} from '../../types';

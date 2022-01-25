@@ -1,11 +1,12 @@
-import {useEffect} from 'react';
+import {useContext, useEffect} from 'react';
+
+import {ChartContext} from '../components';
 
 import {useCallbackRef} from './useCallbackRef';
 
 const EVENT_STRING = 'data-color-blind-event';
 const DATA_SET_STRING = 'colorBlindEvent';
-
-const EVENT_NAME = 'cbe';
+const EVENT_NAME = 'color-blind-event';
 
 function capitalize(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -15,6 +16,10 @@ function getDataSetItem(dataset: DOMStringMap, name: string) {
   return dataset[`${DATA_SET_STRING}${capitalize(name)}`];
 }
 
+function getEventName(id: string, type: string) {
+  return `${id}:${EVENT_NAME}:${type}`;
+}
+
 interface EventReturn extends CustomEvent {
   detail: {
     index: number;
@@ -22,8 +27,12 @@ interface EventReturn extends CustomEvent {
 }
 
 export function useColorBlindEvents() {
+  const {id} = useContext(ChartContext);
+
   useEffect(() => {
-    const items = document.querySelectorAll(`[${EVENT_STRING}-watch="true"]`);
+    const items = document.querySelectorAll(
+      `#chart_${id} [${EVENT_STRING}-watch="true"]`,
+    );
 
     function onMouseEnter(event: MouseEvent) {
       const dataset = (event.srcElement as HTMLElement)?.dataset;
@@ -31,7 +40,11 @@ export function useColorBlindEvents() {
       const index = getDataSetItem(dataset, 'index');
       const type = getDataSetItem(dataset, 'type');
 
-      const custom = new CustomEvent(`${EVENT_NAME}:${type}`, {
+      if (id == null || type == null) {
+        return;
+      }
+
+      const custom = new CustomEvent(getEventName(id, type), {
         detail: {
           index: Number(index),
         },
@@ -45,11 +58,11 @@ export function useColorBlindEvents() {
 
       const type = getDataSetItem(dataset, 'type');
 
-      if (type == null) {
+      if (id == null || type == null) {
         return;
       }
 
-      const custom = new CustomEvent(`${EVENT_NAME}:${type}`, {
+      const custom = new CustomEvent(getEventName(id, type), {
         detail: {
           index: -1,
         },
@@ -69,25 +82,20 @@ export function useColorBlindEvents() {
         (item as HTMLElement).removeEventListener('mouseleave', onMouseLeave);
       });
     };
-  }, []);
+  }, [id]);
 }
 
 interface GetColorBlindEventAttrsProps {
-  watch?: boolean;
-  respond?: boolean;
   type: string;
   index: number | string;
 }
 
 export function getColorBlindEventAttrs({
-  watch = false,
-  respond = false,
   type,
   index,
 }: GetColorBlindEventAttrsProps) {
   return {
-    [`${EVENT_STRING}-watch`]: watch,
-    [`${EVENT_STRING}-respond`]: respond,
+    [`${EVENT_STRING}-watch`]: true,
     [`${EVENT_STRING}-type`]: type,
     [`${EVENT_STRING}-index`]: index,
   };
@@ -100,15 +108,15 @@ interface Props {
 
 export function useWatchColorBlindEvents({type, onIndexChange}: Props) {
   const onIndexChangeCallback = useCallbackRef(onIndexChange);
+  const {id} = useContext(ChartContext);
 
   useEffect(() => {
-    window.addEventListener(`${EVENT_NAME}:${type}`, onIndexChangeCallback);
+    const eventName = `${id}:${EVENT_NAME}:${type}`;
+
+    window.addEventListener(eventName, onIndexChangeCallback);
 
     return () => {
-      window.removeEventListener(
-        `${EVENT_NAME}:${type}`,
-        onIndexChangeCallback,
-      );
+      window.removeEventListener(eventName, onIndexChangeCallback);
     };
-  }, [type, onIndexChangeCallback]);
+  }, [id, type, onIndexChangeCallback]);
 }
