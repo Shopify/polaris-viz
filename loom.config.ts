@@ -10,7 +10,7 @@ export default createWorkspace((workspace) => {
     eslint(),
     prettier({files: '**/*.{json,md,yaml,yml}'}),
     jest(),
-    // typescript(),
+    typescript(),
     runWorkspaceTests(),
   );
 });
