@@ -1,9 +1,16 @@
 import {
+<<<<<<< HEAD
   COLOR_BLIND_FADED_OPACITY,
   COLOR_BLIND_ACTIVE_OPACITY,
 } from '../../constants';
 
 import {COLOR_BLIND_EVENT} from './constants';
+=======
+  COLOR_BLIND_ACTIVE_OPACITY,
+  COLOR_BLIND_EVENT,
+  COLOR_BLIND_FADED_OPACITY,
+} from './constants';
+>>>>>>> 8b309e74 (Add color blind events to BarChart)
 
 export function capitalize(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
