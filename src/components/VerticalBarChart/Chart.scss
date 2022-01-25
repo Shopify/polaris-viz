@@ -11,6 +11,7 @@
   max-width: 100%;
 }
 
-.BarGroup {
+.BarGroup,
+.Bar {
   @include no-outline;
 }

@@ -1,15 +1,19 @@
-import React, {useCallback, useMemo} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 
+import {formatAriaLabel} from '../../utilities';
+import {getOpacityForActive} from '../../../../hooks/ColorBlindA11y';
 import {Color, DataType} from '../../../../types';
-import {usePrefersReducedMotion} from '../../../../hooks';
+import {
+  getColorBlindEventAttrs,
+  usePrefersReducedMotion,
+} from '../../../../hooks';
 import {Bar} from '../Bar';
 import {LinearGradient} from '../../../LinearGradient';
 import {BAR_SPACING} from '../../constants';
 import {
   MIN_BAR_HEIGHT,
   LOAD_ANIMATION_DURATION,
-  MASK_SUBDUE_COLOR,
   MASK_HIGHLIGHT_COLOR,
   BAR_ANIMATION_HEIGHT_BUFFER,
 } from '../../../../constants';
@@ -23,10 +27,16 @@ interface Props {
   height: number;
   data: number[];
   colors: Color[];
-  isSubdued: boolean;
   barGroupIndex: number;
-  ariaLabel: string;
   hasRoundedCorners: boolean;
+  accessibilityData: {
+    title: string;
+    data: {
+      label: string;
+      value: string;
+    }[];
+  }[];
+  activeBarGroup: number;
   zeroAsMinHeight: boolean;
   isAnimated?: boolean;
   rotateZeroBars?: boolean;
@@ -40,17 +50,20 @@ export function BarGroup({
   colors,
   height,
   barGroupIndex,
-  ariaLabel,
   hasRoundedCorners,
-  isSubdued,
   zeroAsMinHeight,
   isAnimated = false,
   rotateZeroBars = false,
+  accessibilityData,
+  activeBarGroup,
 }: Props) {
+  const groupAriaLabel = formatAriaLabel(accessibilityData[barGroupIndex]);
+
   const {prefersReducedMotion} = usePrefersReducedMotion();
+  const [activeBarIndex, setActiveBarIndex] = useState(-1);
 
   const dataLength = clamp({amount: data.length, min: 1, max: Infinity});
-  const barWidth = width / dataLength - BAR_SPACING;
+  const barWidth = width / dataLength;
 
   const getBarHeight = useCallback(
     (rawValue: number) => {
@@ -84,29 +97,24 @@ export function BarGroup({
     <React.Fragment>
       <mask id={maskId}>
         {data.map((rawValue, index) => {
-          const ariaEnabledBar = index === 0;
-
           return (
             <g
               className={styles.BarGroup}
-              role={ariaEnabledBar ? 'listitem' : undefined}
-              aria-hidden={!ariaEnabledBar}
               data-type={DataType.BarGroup}
               data-index={barGroupIndex}
-              tabIndex={index === 0 ? 0 : -1}
-              aria-label={ariaEnabledBar ? ariaLabel : undefined}
               key={`${barGroupIndex}${index}`}
+              style={{
+                opacity: getOpacityForActive(activeBarGroup, barGroupIndex),
+              }}
             >
               <Bar
                 height={getBarHeight(rawValue)}
-                color={isSubdued ? MASK_SUBDUE_COLOR : MASK_HIGHLIGHT_COLOR}
-                x={x + (barWidth + BAR_SPACING) * index}
+                color={MASK_HIGHLIGHT_COLOR}
+                x={x + barWidth * index}
                 zeroPosition={yScale(0)}
                 rawValue={rawValue}
-                width={barWidth}
+                width={barWidth - BAR_SPACING}
                 index={index}
-                tabIndex={-1}
-                role={ariaEnabledBar ? 'img' : undefined}
                 hasRoundedCorners={hasRoundedCorners}
                 rotateZeroBars={rotateZeroBars}
                 animationDelay={
@@ -129,11 +137,69 @@ export function BarGroup({
               <rect
                 x={x + (barWidth + BAR_SPACING) * index}
                 y={BAR_ANIMATION_HEIGHT_BUFFER * -1}
-                width={barWidth}
+                width={barWidth - BAR_SPACING}
                 height={height + BAR_ANIMATION_HEIGHT_BUFFER * 2}
                 fill={`url(#${gradientId}${index})`}
+                opacity={getOpacityForActive(activeBarIndex, index)}
               />
             </g>
+          );
+        })}
+      </g>
+      <g
+        {...getColorBlindEventAttrs({
+          type: 'group',
+          index: barGroupIndex,
+        })}
+        className={styles.BarGroup}
+        data-type={DataType.BarGroup}
+        data-index={barGroupIndex}
+        aria-hidden="false"
+        aria-label={groupAriaLabel}
+        role="list"
+      >
+        <rect
+          width={barWidth * dataLength}
+          x={x}
+          y={BAR_ANIMATION_HEIGHT_BUFFER * -1}
+          height={height}
+          fill="transparent"
+          aria-hidden="true"
+        />
+        {data.map((rawValue, index) => {
+          const {label, value} = accessibilityData[barGroupIndex].data[index];
+          const ariaLabel = `${label} ${value}`;
+          const height = clamp({
+            amount: Math.abs(yScale(rawValue) - yScale(0)),
+            min: 1,
+            max: Infinity,
+          });
+          const isNegative = rawValue < 0;
+          const y = isNegative ? yScale(0) : yScale(0) - height;
+
+          return (
+            <rect
+              key={index}
+              height={height}
+              x={x + barWidth * index}
+              y={y}
+              width={barWidth}
+              fill="transparent"
+              aria-label={ariaLabel}
+              role="listitem"
+              onMouseOver={() => {
+                setActiveBarIndex(index);
+              }}
+              onMouseLeave={() => {
+                setActiveBarIndex(-1);
+              }}
+              {...getColorBlindEventAttrs({
+                type: 'singleBar',
+                index,
+              })}
+              className={styles.Bar}
+              tabIndex={-1}
+            />
           );
         })}
       </g>

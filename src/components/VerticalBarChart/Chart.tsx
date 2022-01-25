@@ -27,7 +27,12 @@ import {
   DataSeries,
   ChartType,
 } from '../../types';
-import {useBarChartTooltipContent, useTheme} from '../../hooks';
+import {
+  useBarChartTooltipContent,
+  useColorBlindEvents,
+  useTheme,
+  useWatchColorBlindEvents,
+} from '../../hooks';
 import type {
   RenderTooltipContentData,
   XAxisOptions,
@@ -35,7 +40,6 @@ import type {
 } from '../BarChart';
 import {AnnotationLine} from '../BarChart';
 
-import {formatAriaLabel} from './utilities';
 import {BarGroup, StackedBarGroup} from './components';
 import {useYScale, useXScale, useMinimalLabelIndexes} from './hooks';
 import {
@@ -73,9 +77,18 @@ export function Chart({
   theme,
   type,
 }: Props) {
+  useColorBlindEvents();
+
   const selectedTheme = useTheme(theme);
-  const [activeBarGroup, setActiveBarGroup] = useState<number | null>(null);
+  const [activeBarGroup, setActiveBarGroup] = useState<number>(-1);
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
+
+  useWatchColorBlindEvents({
+    type: 'group',
+    onIndexChange: ({detail}) => {
+      setActiveBarGroup(detail.index);
+    },
+  });
 
   const {width, height} = dimensions ?? {width: 0, height: 0};
 
@@ -304,25 +317,22 @@ export function Chart({
               })
             : sortedData.map((item, index) => {
                 const xPosition = xScale(index.toString());
-                const ariaLabel = formatAriaLabel(accessibilityData[index]);
                 return (
                   <BarGroup
                     isAnimated={isAnimated}
                     key={index}
                     x={xPosition == null ? 0 : xPosition}
-                    isSubdued={
-                      activeBarGroup != null && index !== activeBarGroup
-                    }
                     yScale={yScale}
                     data={item}
                     width={xScale.bandwidth()}
                     height={drawableHeight}
                     colors={barColors}
                     barGroupIndex={index}
-                    ariaLabel={ariaLabel}
                     hasRoundedCorners={selectedTheme.bar.hasRoundedCorners}
                     rotateZeroBars={rotateZeroBars}
                     zeroAsMinHeight={selectedTheme.bar.zeroAsMinHeight}
+                    accessibilityData={accessibilityData}
+                    activeBarGroup={activeBarGroup}
                   />
                 );
               })}
@@ -363,7 +373,6 @@ export function Chart({
         getMarkup={getTooltipMarkup}
         getPosition={getTooltipPosition}
         margin={Margin}
-        onIndexChange={(index) => setActiveBarGroup(index)}
         parentRef={svgRef}
       />
     </div>

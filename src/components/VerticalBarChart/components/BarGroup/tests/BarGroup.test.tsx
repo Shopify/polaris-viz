@@ -14,6 +14,30 @@ jest.mock('d3-scale', () => ({
 
 describe('<BarGroup/>', () => {
   const mockProps = {
+    accessibilityData: [
+      {
+        title: 'Monday',
+        data: [
+          {
+            label: 'Breakfast',
+            value: '10',
+          },
+          {
+            label: 'Lunch',
+            value: '20',
+          },
+          {
+            label: 'Dinner',
+            value: '0',
+          },
+          {
+            label: 'Snack',
+            value: '1',
+          },
+        ],
+      },
+    ],
+    activeBarGroup: -1,
     x: 10,
     yScale: scaleLinear() as any,
     width: 100,

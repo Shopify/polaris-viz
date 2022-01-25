@@ -150,16 +150,6 @@ describe('Chart />', () => {
       expect(chart).toContainReactComponentTimes(BarGroup, 3);
     });
 
-    it('passes isSubdued props to the BarGroup around what is being hovered', () => {
-      const chart = mount(<Chart {...mockProps} />);
-
-      triggerSVGMouseMove(chart);
-
-      expect(chart).toContainReactComponent(BarGroup, {
-        isSubdued: true,
-      });
-    });
-
     it('does not render BarGroup if type is stacked', () => {
       const chart = mount(<Chart {...mockProps} type="stacked" />);
 
@@ -299,16 +289,6 @@ describe('Chart />', () => {
       const chart = mount(<Chart {...mockProps} type="stacked" />);
 
       expect(chart).toContainReactComponentTimes(StackedBarGroup, 2);
-    });
-
-    it('passes active props to the BarGroup that is being hovered', () => {
-      const chart = mount(<Chart {...mockProps} type="stacked" />);
-
-      triggerSVGMouseMove(chart);
-
-      expect(chart).toContainReactComponent(StackedBarGroup, {
-        activeBarGroup: 0,
-      });
     });
   });
 
