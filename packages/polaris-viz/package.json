@@ -1,0 +1,81 @@
+{
+  "name": "@shopify/polaris-viz",
+  "description": "Shopify’s viz component library",
+  "version": "0.28.7",
+  "private": false,
+  "license": "SEE LICENSE IN LICENSE.md",
+  "author": "Shopify <dev@shopify.com>",
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "main": "build/cjs/index.js",
+  "module": "build/esm/index.js",
+  "esnext": "build/esnext/index.esnext",
+  "types": "build/ts/src/index.d.ts",
+  "scripts": {
+    "postbuild": "node ./scripts/build-validate",
+    "prebuild-consumer": "yarn run build",
+    "prebuild": "rimraf build",
+    "build-consumer": "node ./scripts/build-consumer",
+    "prepublish": "in-publish && yarn run build || :"
+  },
+  "devDependencies": {
+    "@juggle/resize-observer": "^3.3.1",
+    "@types/d3-array": "^2.12.1",
+    "@types/d3-color": "1",
+    "@types/d3-scale": "^2.1.1",
+    "@types/d3-shape": "^1.3.2",
+    "@types/jest": "26.0.23",
+    "@types/lodash.throttle": "^4.1.6",
+    "@types/node": "^12.7.5",
+    "@types/react": "^17.0.25",
+    "@types/react-dom": "^17.0.9",
+    "copyfiles": "^2.1.1",
+    "eslint": "^7.32.0",
+    "fs-extra": "^7.0.1",
+    "glob": "^7.1.4",
+    "in-publish": "^2.0.0",
+    "js-yaml": "^3.13.1",
+    "npm-run-all": "^4.1.5",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "rimraf": "^3.0.0",
+    "sass-loader": "^10.1.1",
+    "semver": "^6.3.0",
+    "shelljs": "^0.8.3",
+    "shx": "^0.3.2"
+  },
+  "peerDependencies": {
+    "@juggle/resize-observer": "^3.3.1",
+    "react": "^16.8.6 || ^17.0.0",
+    "react-dom": "^16.8.6 || ^17.0.0"
+  },
+  "files": [
+    "build/",
+    "locales",
+    "!build/ts/**/*.tsbuildinfo",
+    "!build/ts/**/tests/",
+    "!build/ts/**/documentation/",
+    "!*.stories.*"
+  ],
+  "dependencies": {
+    "@shopify/loom": "^1.0.1",
+    "@shopify/loom-plugin-build-library": "^1.0.0",
+    "@shopify/loom-plugin-build-library-extended": "^1.0.0",
+    "@shopify/react-testing": "^3.2.7",
+    "@polaris-viz/core": "0.28.7",
+    "@react-spring/web": "^9.2.4",
+    "babel-preset-expo": "^9.0.2",
+    "d3-array": "2.4.0",
+    "d3-color": "1",
+    "d3-path": "1",
+    "d3-scale": "^1.0.7",
+    "d3-shape": "^1.3.7",
+    "fast-deep-equal": "^3.1.3",
+    "lodash.throttle": "^4.1.1",
+    "use-debounce": "^3.3.0"
+  }
+}

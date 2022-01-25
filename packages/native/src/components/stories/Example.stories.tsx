@@ -17,7 +17,6 @@ export const WithButton = Template.bind({});
 
 WithButton.storyName = 'With button';
 WithButton.args = {
-  title: 'Welcome to my App',
   buttonText: 'Hello from React Native',
   onButtonPress: () => Alert.alert('Signed in'),
 };
