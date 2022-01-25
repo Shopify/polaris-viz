@@ -15,7 +15,12 @@ export default createPackage((pkg) => {
       esnext: true,
       rootEntrypoints: false,
     }),
-    buildLibraryExtended(),
+    buildLibraryExtended({graphql: false}),
+    // buildLibraryWorkspace(),
+    // buildLibraryExtendedWorkspace({graphql: false}),
+    // eslint(),
+    // stylelint({files: '**/*.scss'}),
+    // prettier({files: '**/*.{md,json,yaml,yml}'}),
     rollupAdjustOutputPlugin(),
   );
 });

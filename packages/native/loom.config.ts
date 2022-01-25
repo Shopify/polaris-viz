@@ -8,9 +8,9 @@ export default createPackage((pkg) => {
     buildLibrary({
       targets: 'node 12.22.0',
       commonjs: true,
-      esmodules: false,
-      esnext: false,
-      rootEntrypoints: false,
+      esmodules: true,
+      esnext: true,
+      rootEntrypoints: true,
     }),
   );
 });

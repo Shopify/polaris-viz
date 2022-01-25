@@ -1,10 +1,23 @@
 {
   "name": "@shopify/polaris-viz--root",
   "description": "Shopify’s viz component library",
+  "version": "0.28.7",
   "private": true,
+  "license": "SEE LICENSE IN LICENSE.md",
+  "author": "Shopify <dev@shopify.com>",
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": [
+    "**/*.css"
+  ],
   "workspaces": [
     "packages/*"
   ],
+  "main": "build/cjs/index.js",
+  "module": "build/esm/index.js",
+  "esnext": "build/esnext/index.esnext",
+  "types": "build/ts/src/index.d.ts",
   "scripts": {
     "size": "yarn run build && size-limit",
     "lint": "loom lint",
@@ -124,6 +137,35 @@
     "shx": "^0.3.2",
     "size-limit": "^5.0.1",
     "typescript": "~4.3.2"
+  },
+  "peerDependencies": {
+    "@juggle/resize-observer": "^3.3.1",
+    "react": "^16.8.6 || ^17.0.0",
+    "react-dom": "^16.8.6 || ^17.0.0"
+  },
+  "files": [
+    "build/",
+    "locales",
+    "!build/ts/**/*.tsbuildinfo",
+    "!build/ts/**/tests/",
+    "!build/ts/**/documentation/",
+    "!*.stories.*"
+  ],
+  "dependencies": {
+    "@react-spring/web": "^9.2.4",
+    "@shopify/loom-plugin-typescript": "^1.1.0",
+    "babel-preset-expo": "^9.0.2",
+    "d3-array": "2.4.0",
+    "d3-color": "1",
+    "d3-path": "1",
+    "d3-scale": "^1.0.7",
+    "d3-shape": "^1.3.7",
+    "expo": "^44.0.5",
+    "fast-deep-equal": "^3.1.3",
+    "lerna": "^4.0.0",
+    "lodash.throttle": "^4.1.1",
+    "react-native": "^0.67.1",
+    "use-debounce": "^3.3.0"
   },
   "resolutions": {
     "browserslist": "^4.16.7",

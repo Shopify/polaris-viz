@@ -1,4 +1,5 @@
 import {buildLibrary} from '@shopify/loom-plugin-build-library';
+import {buildLibraryExtended} from '@shopify/loom-plugin-build-library-extended';
 import {createPackage} from '@shopify/loom';
 
 // eslint-disable-next-line import/no-default-export
@@ -12,5 +13,6 @@ export default createPackage((pkg) => {
       esnext: true,
       rootEntrypoints: false,
     }),
+    buildLibraryExtended({graphql: false}),
   );
 });
