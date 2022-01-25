@@ -4,7 +4,7 @@ import type {Story, Meta} from '@storybook/react';
 import {BarChart, BarChartProps} from '../../../components';
 
 import {SquareColorPreview} from '../../SquareColorPreview';
-import {PolarisVizProvider} from '../../PolarisVizProvider';
+import {PolarisVizProvider} from '../../../components';
 import {
   DIRECTION_CONTROL_ARGS,
   THEME_CONTROL_ARGS,

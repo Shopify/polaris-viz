@@ -1,9 +1,9 @@
 import {useMemo} from 'react';
 
 import type {DataSeries} from '../types';
+import {useTheme} from '../hooks';
 
 import {getSeriesColorsFromCount} from './use-theme-series-colors';
-import {useTheme} from './useTheme';
 
 interface Props {
   data: DataSeries[];

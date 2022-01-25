@@ -2,7 +2,11 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 
 import {mountWithProvider} from '../../test-utilities';
-import {DEFAULT_THEME, LIGHT_THEME, PRINT_THEME} from '../../constants';
+import {
+  DEFAULT_THEME,
+  LIGHT_THEME,
+  PRINT_THEME,
+} from '../../../../polaris-viz-core/src';
 import {usePolarisVizContext} from '../usePolarisVizContext';
 
 describe('usePolarisVizContext', () => {

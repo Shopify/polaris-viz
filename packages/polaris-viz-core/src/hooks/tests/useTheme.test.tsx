@@ -2,7 +2,7 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 
 import {mountWithProvider, expectToThrow} from '../../test-utilities';
-import {DEFAULT_THEME} from '../../constants';
+import {DEFAULT_THEME} from '../../../../polaris-viz-core/src';
 import {useTheme} from '../useTheme';
 
 describe('useTheme', () => {

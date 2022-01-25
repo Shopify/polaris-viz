@@ -4,8 +4,6 @@ export type {ChartDetails} from './useLinearXAxisDetails';
 export {useLinearXScale} from './useLinearXScale';
 export {usePrevious} from './use-previous';
 export {useResizeObserver} from './useResizeObserver';
-export {useTheme} from './useTheme';
-export {usePolarisVizContext} from './usePolarisVizContext';
 export {
   useThemeSeriesColors,
   getSeriesColorsFromCount,
@@ -20,3 +18,6 @@ export {useHorizontalTransitions} from './useHorizontalTransitions';
 export {useHorizontalSeriesColors} from './useHorizontalSeriesColors';
 export type {HorizontalTransitionStyle} from './useHorizontalTransitions';
 export {useBarChartTooltipContent} from './useBarChartTooltipContent';
+
+export {useTheme} from '../../../polaris-viz-core/src/hooks';
+export {usePolarisVizContext} from '../../../polaris-viz-core/src/hooks';

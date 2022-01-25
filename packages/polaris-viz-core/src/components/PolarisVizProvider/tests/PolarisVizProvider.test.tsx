@@ -3,7 +3,7 @@ import {mount} from '@shopify/react-testing';
 
 import {usePolarisVizContext} from '../../../hooks';
 import {PolarisVizProvider} from '../PolarisVizProvider';
-import {PolarisVizContext} from '../../../utilities/';
+import {PolarisVizContext} from '../polaris-viz-context';
 import {DEFAULT_THEME} from '../../../constants';
 
 const MockChild = ({theme = 'Default'}) => {
