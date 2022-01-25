@@ -180,6 +180,12 @@ export function BarGroup({
               onMouseLeave={() => {
                 setActiveBarIndex(-1);
               }}
+              onFocus={() => {
+                setActiveBarIndex(index);
+              }}
+              onBlur={() => {
+                setActiveBarIndex(-1);
+              }}
               {...getColorBlindEventAttrs({
                 type: 'single-single',
                 index,

@@ -74,12 +74,16 @@ export function useColorBlindEvents() {
     items.forEach((item) => {
       (item as HTMLElement).addEventListener('mouseenter', onMouseEnter);
       (item as HTMLElement).addEventListener('mouseleave', onMouseLeave);
+      (item as HTMLElement).addEventListener('focus', onMouseEnter);
+      (item as HTMLElement).addEventListener('blur', onMouseLeave);
     });
 
     return () => {
       items.forEach((item) => {
         (item as HTMLElement).removeEventListener('mouseenter', onMouseEnter);
         (item as HTMLElement).removeEventListener('mouseleave', onMouseLeave);
+        (item as HTMLElement).removeEventListener('focus', onMouseEnter);
+        (item as HTMLElement).removeEventListener('blur', onMouseLeave);
       });
     };
   }, [id]);
