@@ -1,9 +1,0 @@
-{
-  "files": [],
-  "include": [],
-  "references": [
-    {"path": "./packages/core"},
-    {"path": "./packages/native"},
-    {"path": "./packages/polaris-viz"}
-  ]
-}
