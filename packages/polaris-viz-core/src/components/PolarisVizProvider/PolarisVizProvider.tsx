@@ -6,8 +6,8 @@ import {
   LIGHT_THEME as Light,
   PRINT_THEME as Print,
 } from '../../constants';
-import {PolarisVizContext} from '../../utilities/polaris-viz-context';
 import {createThemes} from '../../utilities';
+import {PolarisVizContext} from '../../contexts';
 
 export interface PolarisVizProviderProps {
   children: React.ReactNode;
