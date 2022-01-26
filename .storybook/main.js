@@ -63,9 +63,8 @@ module.exports = {
           },
         ],
       },
-
       {
-        test: /\.tsx?$/,
+        test: /\.(tsx|js|jsx|ejs)?$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
         query: {
@@ -82,8 +81,13 @@ module.exports = {
       ...extraRules,
     ];
 
+    // This is to make react-native-svg work
+    // ¯\_(ツ)_/¯
+    config.resolve.extensions.unshift('.web.js');
+
     config.resolve.alias = {
       ...config.resolve.alias,
+      'react-native$': 'react-native-web',
       '@shopify/polaris-viz': path.resolve(
         __dirname,
         '..',
