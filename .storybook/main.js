@@ -64,7 +64,7 @@ module.exports = {
         ],
       },
       {
-        test: /\.tsx?$/,
+        test: /\.(tsx|js|jsx|ejs)?$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
         query: {
