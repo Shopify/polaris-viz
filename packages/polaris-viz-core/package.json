@@ -1,5 +1,5 @@
 {
-  "name": "@polaris-viz/core",
+  "name": "@shopify/polaris-viz-core",
   "version": "0.28.7",
   "description": "Core logic for Polaris Viz that is not platform specific",
   "author": "Shopify Inc.",

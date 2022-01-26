@@ -1,6 +1,6 @@
 {
-  "name": "@polaris-viz/native",
-  "version": "1.0.0",
+  "name": "@shopify/polaris-viz-native",
+  "version": "0.28.7",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "prebuild": "rimraf build",
@@ -11,7 +11,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "@polaris-viz/core": "0.28.7",
+    "@shopify/polaris-viz-core": "0.28.7",
     "@shopify/loom": "^1.0.1",
     "@shopify/loom-plugin-build-library": "^1.0.1",
     "expo": "~44.0.0",
