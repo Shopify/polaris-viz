@@ -32,6 +32,6 @@ export type {
   Margin,
   ChartType,
   Direction,
-} from '../../polaris-viz-core/src/';
+} from '@shopify/polaris-viz-core';
 
-export {RoundedBorder, BarMargin, DataType} from '../../polaris-viz-core/src/';
+export {RoundedBorder, BarMargin, DataType} from '@shopify/polaris-viz-core';

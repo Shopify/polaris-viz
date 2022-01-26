@@ -1,9 +1,10 @@
+/* eslint-disable react/style-prop-object */
 /* eslint-disable import/no-default-export */
 import React from 'react';
 import {StatusBar} from 'expo-status-bar';
 import {StyleSheet, Text, View, Alert} from 'react-native';
 
-import {Example} from './src/components/Example';
+import {Example} from './components/Example';
 
 export default function App() {
   return (

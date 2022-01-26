@@ -1,6 +1,6 @@
 import {useContext} from 'react';
 
-import type {Theme} from '../../../polaris-viz-core/src';
+import type {Theme} from '../types';
 import {PolarisVizContext} from '../contexts/polaris-viz-context';
 
 export function useTheme(themeName = 'Default'): Theme {

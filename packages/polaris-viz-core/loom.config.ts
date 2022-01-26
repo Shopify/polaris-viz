@@ -1,3 +1,4 @@
+import {buildLibraryExtended} from '@shopify/loom-plugin-build-library-extended';
 import {buildLibrary} from '@shopify/loom-plugin-build-library';
 import {createPackage} from '@shopify/loom';
 
@@ -12,5 +13,6 @@ export default createPackage((pkg) => {
       esnext: true,
       rootEntrypoints: false,
     }),
+    buildLibraryExtended(),
   );
 });

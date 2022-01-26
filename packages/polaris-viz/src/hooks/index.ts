@@ -21,4 +21,4 @@ export {
   useThemeSeriesColors,
   getSeriesColorsFromCount,
   usePrefersReducedMotion,
-} from '../../../polaris-viz-core/src';
+} from '@shopify/polaris-viz-core';
