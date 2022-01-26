@@ -16,6 +16,7 @@
   "esnext": "build/esnext/index.esnext",
   "types": "build/ts/src/index.d.ts",
   "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1",
     "postbuild": "node ./scripts/build-validate",
     "prebuild-consumer": "yarn run build",
     "prebuild": "rimraf build",
@@ -66,7 +67,7 @@
     "@shopify/loom-plugin-build-library": "^1.0.0",
     "@shopify/loom-plugin-build-library-extended": "^1.0.0",
     "@shopify/react-testing": "^3.2.7",
-    "@polaris-viz/core": "0.28.7",
+    "@shopify/polaris-viz-core": "0.28.7",
     "@react-spring/web": "^9.2.4",
     "babel-preset-expo": "^9.0.2",
     "d3-array": "2.4.0",

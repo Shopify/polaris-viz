@@ -30,23 +30,27 @@
   },
   "size-limit": [
     {
-      "name": "cjs",
-      "path": "packages/core/build/cjs/index.js"
+      "name": "polaris-viz-core-cjs",
+      "path": "packages/polaris-viz-core/build/cjs/index.js"
     },
     {
-      "name": "cjs",
+      "name": "polaris-viz-native-cjs",
+      "path": "packages/polaris-viz-native/build/cjs/index.js"
+    },
+    {
+      "name": "polaris-viz-cjs",
       "path": "packages/polaris-viz/build/cjs/index.js"
     },
     {
-      "name": "esm",
+      "name": "polaris-viz-esm",
       "path": "packages/polaris-viz/build/esm/index.js"
     },
     {
-      "name": "css",
+      "name": "polaris-viz-css",
       "path": "packages/polaris-viz/build/esm/styles.css"
     },
     {
-      "name": "esnext",
+      "name": "polaris-viz-esnext",
       "path": "packages/polaris-viz/build/esnext/index.esnext"
     }
   ],
