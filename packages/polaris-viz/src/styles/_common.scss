@@ -1,7 +1,8 @@
 // stylelint-disable scss/partial-no-import
+@import '../../../polaris-viz-core/src/styles/shared/variables';
+
 @import './shared/tooltips';
 @import './shared/legends';
 @import './shared/axes';
-@import './shared/variables';
 @import './shared/accessibility';
 @import './shared/chart-container';

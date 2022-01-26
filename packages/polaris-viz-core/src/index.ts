@@ -1,5 +1,3 @@
-export type {GradientStop, Color, DataSeries, DataPoint} from './types';
-
-export const myThing = () => {
-  console.log('test');
-};
+export * from './constants';
+export * from './utilities';
+export * from './types';

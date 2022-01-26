@@ -1,0 +1,1 @@
+export {createGradient} from './createGradient';
