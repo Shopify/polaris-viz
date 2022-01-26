@@ -2,7 +2,7 @@ import React from 'react';
 
 import type {Color, GradientStop} from '../../../types';
 import {isGradientType} from '../../../utilities';
-import {LinearGradient} from '../../LinearGradient';
+import {LinearGradient} from '../../../components';
 
 const GRADIENT_ID = 'grad';
 

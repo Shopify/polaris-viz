@@ -4,7 +4,7 @@ import type {Area as D3Area, Line} from 'd3-shape';
 
 import type {Color, GradientStop, Theme} from '../../../../types';
 import {LINES_LOAD_ANIMATION_CONFIG} from '../../../../constants';
-import {LinearGradient} from '../../../LinearGradient';
+import {LinearGradient} from '../../../../components';
 import {isGradientType} from '../../../../utilities';
 import type {StackedSeries} from '../../types';
 

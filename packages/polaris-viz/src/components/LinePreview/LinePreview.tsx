@@ -2,7 +2,7 @@ import React, {useRef} from 'react';
 
 import type {Color, LineStyle} from '../../types';
 import {isGradientType, uniqueId} from '../../utilities';
-import {LinearGradient} from '../LinearGradient';
+import {LinearGradient} from '../../components';
 import {XMLNS} from '../../constants';
 
 import {

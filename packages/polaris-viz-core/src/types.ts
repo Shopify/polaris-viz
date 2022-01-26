@@ -204,3 +204,12 @@ export enum RoundedBorder {
 
 export type ChartType = 'default' | 'stacked';
 export type Direction = 'horizontal' | 'vertical';
+
+export interface SparkLineChartProps {
+  data: DataSeries[];
+  accessibilityLabel?: string;
+  isAnimated?: boolean;
+  offsetLeft?: number;
+  offsetRight?: number;
+  theme?: string;
+}

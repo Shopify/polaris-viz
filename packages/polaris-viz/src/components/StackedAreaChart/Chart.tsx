@@ -10,7 +10,7 @@ import {
   TooltipWrapper,
   TOOLTIP_POSITION_DEFAULT_RETURN,
 } from '../TooltipWrapper';
-import {LinearGradient} from '../LinearGradient';
+import {LinearGradient} from '../../components';
 import {
   useLinearXAxisDetails,
   useLinearXScale,

@@ -3,8 +3,11 @@ import {sum} from 'd3-array';
 import {scaleLinear} from 'd3-scale';
 
 import type {ComparisonMetricProps} from '../ComparisonMetric';
-import {getSeriesColorsFromCount} from '../../hooks/use-theme-series-colors';
-import {usePrefersReducedMotion, useTheme} from '../../hooks';
+import {
+  getSeriesColorsFromCount,
+  usePrefersReducedMotion,
+  useTheme,
+} from '../../hooks/';
 import {classNames} from '../../utilities';
 import type {DataPoint, Direction, LabelFormatter} from '../../types';
 

@@ -24,9 +24,12 @@ export {SkipLink} from './SkipLink';
 export {VisuallyHiddenRows} from './VisuallyHiddenRows';
 export {LinePreview} from './LinePreview';
 export {Legend} from './Legend';
-export {LinearGradient} from './LinearGradient';
-export {PolarisVizProvider} from '../../../polaris-viz-core/src';
 export type {PolarisVizProviderProps} from '../../../polaris-viz-core/src';
 export {TooltipWrapper} from './TooltipWrapper';
 export {SimpleBarChart} from './SimpleBarChart';
 export type {SimpleBarChartProps} from './SimpleBarChart';
+
+export {
+  PolarisVizProvider,
+  LinearGradient,
+} from '../../../polaris-viz-core/src';

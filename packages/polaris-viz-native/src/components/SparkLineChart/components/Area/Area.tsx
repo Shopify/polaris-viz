@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 
 import type {Color} from '../../../../types';
 import {isGradientType, uniqueId} from '../../../../utilities';
-import {LinearGradient} from '../../../../components';
+import {LinearGradient} from '../../../../../../polaris-viz-core/src';
 
 import styles from './Area.scss';
 

@@ -1,20 +1,22 @@
 import React from 'react';
 import {scaleLinear} from 'd3-scale';
 
-import type {Dimensions} from '../../types';
-import {useThemeSeriesColors} from '../../hooks/use-theme-series-colors';
-import {useTheme} from '../../hooks';
+import type {
+  Dimensions,
+  SparkLineChartProps,
+} from '../../../../polaris-viz-core/src';
+import {useSparkLine} from '../../../../polaris-viz-core/src';
+import {useThemeSeriesColors, useTheme} from '../../hooks/';
 import {XMLNS} from '../../constants';
 
 import styles from './SparkLineChart.scss';
 import {Series} from './components';
-import type {SparkLineChartProps} from './SparkLineChart';
-
-const SVG_MARGIN = 2;
 
 interface Props extends SparkLineChartProps {
   dimensions?: Dimensions;
 }
+
+const SVG_MARGIN = 2;
 
 export function Chart({
   data,
@@ -30,22 +32,11 @@ export function Chart({
 
   const {width, height} = dimensions ?? {height: 0, width: 0};
 
-  const xValues = Array.prototype.concat.apply(
-    [],
-    data.map(({data}) => data.map(({key}) => key)),
-  );
-
-  const minXValues = Math.min(...xValues);
-  const maxXValues = Math.max(...xValues);
-
-  const yValues = Array.prototype.concat.apply(
-    [],
-    data.map(({data}) => data.map(({value}) => value)),
-  );
-
-  const yScale = scaleLinear()
-    .range([height - SVG_MARGIN, SVG_MARGIN])
-    .domain([Math.min(...yValues), Math.max(...yValues)]);
+  const {minXValues, maxXValues, yScale} = useSparkLine({
+    data,
+    height,
+    svgMargin: SVG_MARGIN,
+  });
 
   return (
     <React.Fragment>

@@ -7,7 +7,7 @@ import type {
   DataSeries,
   GradientStop,
   Theme,
-} from '../../../../types';
+} from '../../../../../../polaris-viz-core/src';
 import {LinearGradient} from '../../../../components';
 import {
   curveStepRounded,
