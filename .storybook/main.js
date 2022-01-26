@@ -90,6 +90,15 @@ module.exports = {
         'packages/polaris-viz/src',
       ),
     };
+
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@shopify/polaris-viz-core': path.resolve(
+        __dirname,
+        '..',
+        'packages/polaris-viz-core/src',
+      ),
+    };
     return config;
   },
 };

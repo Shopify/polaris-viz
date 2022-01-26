@@ -3,7 +3,7 @@ import {createPackage} from '@shopify/loom';
 
 // eslint-disable-next-line import/no-default-export
 export default createPackage((pkg) => {
-  pkg.entry({root: 'App.tsx'});
+  pkg.entry({root: './src/index.ts'});
   pkg.use(
     buildLibrary({
       targets: 'node 12.22.0',

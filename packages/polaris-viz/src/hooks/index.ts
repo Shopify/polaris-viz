@@ -19,5 +19,5 @@ export {useHorizontalSeriesColors} from './useHorizontalSeriesColors';
 export type {HorizontalTransitionStyle} from './useHorizontalTransitions';
 export {useBarChartTooltipContent} from './useBarChartTooltipContent';
 
-export {useTheme} from '../../../polaris-viz-core/src/hooks';
-export {usePolarisVizContext} from '../../../polaris-viz-core/src/hooks';
+export {useTheme} from '@shopify/polaris-viz-core';
+export {usePolarisVizContext} from '@shopify/polaris-viz-core';

@@ -9,7 +9,7 @@
   ],
   "settings": {
     "react": {
-      "version": "16.8"
+      "version": "17.0.1"
     }
   },
   "rules": {
@@ -69,6 +69,18 @@
         ]
       }
     ],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": true,
+        "packageDir": [
+          ".",
+          "./packages/polaris-viz",
+          "./packages/polaris-viz-core",
+          "./packages/polaris-viz-native"
+        ]
+      }
+    ],
     "camelcase": [
       "error",
       {
@@ -96,7 +108,11 @@
     {
       "files": ["**/*.test.{ts,tsx}"],
       "parserOptions": {
-        "project": ["./tsconfig.json"]
+        "project": [
+          "./packages/polaris-viz/tsconfig.json",
+          "./packages/polaris-viz-core/tsconfig.json",
+          "./packages/polaris-viz-native/tsconfig.json"
+        ]
       },
       "rules": {
         "jest/no-truthy-falsy": "off",

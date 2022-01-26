@@ -1,4 +1,4 @@
-import {createWorkspace, createWorkspaceTestPlugin} from '@shopify/loom';
+import {createWorkspace} from '@shopify/loom';
 import {buildLibraryWorkspace} from '@shopify/loom-plugin-build-library';
 import {eslint} from '@shopify/loom-plugin-eslint';
 import {prettier} from '@shopify/loom-plugin-prettier';

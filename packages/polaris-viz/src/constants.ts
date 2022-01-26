@@ -56,4 +56,4 @@ export {
   DEFAULT_THEME,
   LIGHT_THEME,
   PRINT_THEME,
-} from '../../polaris-viz-core/src';
+} from '@shopify/polaris-viz-core';

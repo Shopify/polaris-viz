@@ -1,5 +1,5 @@
 node_modules
-/build
-/scripts
+**/*/build
+scripts
 *.stories.*
 .loom
