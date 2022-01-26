@@ -75,7 +75,7 @@ const MOCK_PROPS: HorizontalStackedBarsProps = {
   id: 'id',
   isAnimated: false,
   name: 'stacked',
-  stackedValues: STACKED_VALUES as FormattedStackedSeries,
+  stackedValues: STACKED_VALUES as FormattedStackedSeries[],
   xScale: scaleLinear(),
 };
 

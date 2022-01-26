@@ -27,7 +27,7 @@ export interface HorizontalStackedBarsProps {
   id: string;
   isAnimated: boolean;
   name: string;
-  stackedValues: FormattedStackedSeries;
+  stackedValues: FormattedStackedSeries[];
   xScale: ScaleLinear<number, number>;
   theme?: string;
 }

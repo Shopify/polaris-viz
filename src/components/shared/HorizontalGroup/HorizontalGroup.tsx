@@ -27,7 +27,7 @@ export interface HorizontalGroupProps {
   labelFormatter: LabelFormatter;
   name: string;
   opacity: SpringValue<number>;
-  stackedValues: FormattedStackedSeries;
+  stackedValues: FormattedStackedSeries[];
   transform: SpringValue<string>;
   xScale: ScaleLinear<number, number>;
   zeroPosition: number;

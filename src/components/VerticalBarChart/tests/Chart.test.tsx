@@ -7,7 +7,7 @@ import {HorizontalGridLines} from '../../../components/HorizontalGridLines';
 import {mockDefaultTheme} from '../../../test-utilities/mount-with-provider';
 import {TooltipAnimatedContainer} from '../../../components/TooltipWrapper';
 import {Chart, Props} from '../Chart';
-import {BarGroup, StackedBarGroup} from '../components';
+import {BarGroup, StackedBarGroups} from '../components';
 
 const ZERO_AS_MIN_HEIGHT_THEME = {
   themes: {
@@ -278,17 +278,11 @@ describe('Chart />', () => {
     });
   });
 
-  describe('<StackedBarGroup />', () => {
-    it('renders StackedBarGroup if type is stacked', () => {
+  describe('<StackedBarGroups />', () => {
+    it('renders StackedBarGroups if type is stacked', () => {
       const chart = mount(<Chart {...mockProps} type="stacked" />);
 
-      expect(chart).toContainReactComponent(StackedBarGroup);
-    });
-
-    it('renders a StackedBarGroup for each stacked data item', () => {
-      const chart = mount(<Chart {...mockProps} type="stacked" />);
-
-      expect(chart).toContainReactComponentTimes(StackedBarGroup, 2);
+      expect(chart).toContainReactComponent(StackedBarGroups);
     });
   });
 

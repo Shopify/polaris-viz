@@ -25,5 +25,6 @@ export {
   useColorBlindEvents,
   getColorBlindEventAttrs,
   useWatchColorBlindEvents,
+  getOpacityForActive,
 } from './ColorBlindA11y';
 export {useCallbackRef} from './useCallbackRef';
