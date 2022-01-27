@@ -1,8 +1,9 @@
-import {Svg, Circle, Rect} from 'react-native-svg';
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {scaleLinear} from 'd3-scale';
 
+// eslint-disable-next-line @shopify/strict-component-boundaries
+import {Svg, Rect} from '../../../../polaris-viz-core/src/components/SVG';
 import {
   SparkLineChartProps,
   useTheme,
@@ -12,6 +13,8 @@ import {
 } from '../../../../polaris-viz-core/src';
 
 import {Series} from './components';
+
+[];
 
 export function SparkLineChart({
   data,
@@ -40,7 +43,7 @@ export function SparkLineChart({
         {alignItems: 'center', justifyContent: 'center'},
       ]}
     >
-      <Svg viewBox="0 0 100 100" width={width} height={height}>
+      <Svg native viewBox="0 0 100 100" width={width} height={height}>
         <LinearGradient
           native
           id="sampleGradient"
@@ -57,6 +60,7 @@ export function SparkLineChart({
           ]}
         />
         <Rect
+          native
           x="0"
           y="0"
           width="500"
