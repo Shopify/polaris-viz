@@ -1,8 +1,6 @@
 export {eventPoint, eventPointNative} from './event-point';
 export {getTextWidth, getTextHeight} from './get-text-dimensions';
 export {clamp} from './clamp';
-export {isGradientType} from './is-gradient-type';
-export {uniqueId} from './unique-id';
 export {getTextContainerHeight} from './get-text-container-height';
 export {RightAngleTriangle} from './RightAngleTriangle';
 export {getBarXAxisDetails} from './get-bar-xaxis-details';
@@ -14,7 +12,6 @@ export {getPointAtLength} from './get-point-at-length';
 export {normalizeData} from './normalize-data';
 export {createCSSGradient} from './create-css-gradient';
 export {shouldRoundScaleUp} from './should-round-scale-up';
-export {curveStepRounded} from './curve-step-rounded';
 export {shouldRotateZeroBars} from './should-rotate-zero-bars';
 export {isNumber} from './is-number';
 export {classNames} from './classnames';
@@ -27,3 +24,8 @@ export {getAverageColor} from './get-average-color';
 export {getBarId} from './get-bar-id';
 export {getHighestSumForStacked} from './get-highest-sum-for-stacked';
 export {formatDataIntoGroups} from './format-data-into-groups';
+export {
+  isGradientType,
+  curveStepRounded,
+  uniqueId,
+} from '../../../polaris-viz-core/src';

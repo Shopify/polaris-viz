@@ -111,7 +111,9 @@ export const decorators = [
             },
           },
           Light: {
+            ...LIGHT_THEME,
             chartContainer: {
+              ...LIGHT_THEME.chartContainer,
               padding: '20px',
             },
           },

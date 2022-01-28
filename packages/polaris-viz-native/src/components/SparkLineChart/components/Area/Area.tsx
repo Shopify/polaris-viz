@@ -1,10 +1,14 @@
 import React, {useMemo} from 'react';
 
-import type {Color} from '../../../../types';
-import {isGradientType, uniqueId} from '../../../../utilities';
-import {LinearGradient} from '../../../../../../polaris-viz-core/src';
-
-import styles from './Area.scss';
+import type {Color} from '../../../../../../polaris-viz-core/src';
+import {
+  isGradientType,
+  uniqueId,
+  LinearGradient,
+  Defs,
+  Path,
+  Mask,
+} from '../../../../../../polaris-viz-core/src';
 
 function getGradientFill(color: Color | null) {
   if (color == null) {
@@ -46,14 +50,15 @@ export function Area({areaPath, color, immediate}: AreaProps) {
 
   return areaGradientColor == null ? null : (
     <React.Fragment>
-      <defs>
-        <mask id={maskId}>
-          <path
+      <Defs native>
+        <Mask native id={maskId}>
+          <Path
+            native
             fill={`url(#${maskId}-gradient)`}
             d={areaPath}
-            className={immediate ? undefined : styles.Area}
+            // className={immediate ? undefined : styles.Area}
           />
-        </mask>
+        </Mask>
         <LinearGradient
           id={`${maskId}-gradient`}
           y1="0%"
@@ -67,8 +72,9 @@ export function Area({areaPath, color, immediate}: AreaProps) {
           y2="0%"
           gradient={areaGradientColor}
         />
-      </defs>
-      <path
+      </Defs>
+      <Path
+        native
         d={areaPath}
         fill={`url(#${gradientId})`}
         mask={`url(#${maskId})`}

@@ -4,3 +4,6 @@ export {createGradient} from './createGradient';
 export {getSeriesColors} from './getSeriesColors';
 export {getSeriesColorsFromCount} from './getSeriesColorsFromCount';
 export {getFilteredSeriesCount} from './getFilteredSeriesCount';
+export {uniqueId} from './uniqueId';
+export {isGradientType} from './isGradientType';
+export {curveStepRounded} from './curveStepRounded';

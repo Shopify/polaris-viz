@@ -1,4 +1,4 @@
-import {createElement, ReactChildren} from 'react';
+import {createElement, ReactNode} from 'react';
 import {
   Svg as NativeSvg,
   Circle as NativeCircle,
@@ -26,7 +26,7 @@ import {
 
 interface Props {
   native: boolean;
-  children?: ReactChildren;
+  children?: ReactNode;
   [x: string]: any;
 }
 

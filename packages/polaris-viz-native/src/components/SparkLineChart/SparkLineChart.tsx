@@ -2,20 +2,17 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {scaleLinear} from 'd3-scale';
 
-// eslint-disable-next-line @shopify/strict-component-boundaries
-import {Svg, Rect} from '../../../../polaris-viz-core/src/components/SVG';
 import {
+  Svg,
   SparkLineChartProps,
   useTheme,
   useThemeSeriesColors,
   useSparkLine,
-  LinearGradient,
 } from '../../../../polaris-viz-core/src';
 
 import {Series} from './components';
 
-[];
-
+const SVG_MARGIN = 2;
 export function SparkLineChart({
   data,
   accessibilityLabel,
@@ -24,7 +21,6 @@ export function SparkLineChart({
   offsetRight = 0,
   theme,
 }: SparkLineChartProps) {
-  const SVG_MARGIN = 2;
   const selectedTheme = useTheme(theme);
   const seriesColors = useThemeSeriesColors(data, selectedTheme);
 
@@ -42,31 +38,10 @@ export function SparkLineChart({
         StyleSheet.absoluteFill,
         {alignItems: 'center', justifyContent: 'center'},
       ]}
+      accessibilityRole="image"
+      accessibilityLabel={accessibilityLabel}
     >
-      <Svg native viewBox="0 0 100 100" width={width} height={height}>
-        <LinearGradient
-          native
-          id="sampleGradient"
-          gradientUnits="userSpaceOnUse"
-          gradient={[
-            {
-              color: 'red',
-              offset: 0,
-            },
-            {
-              color: 'green',
-              offset: 10,
-            },
-          ]}
-        />
-        <Rect
-          native
-          x="0"
-          y="0"
-          width="500"
-          height="500"
-          fill="url(#sampleGradient)"
-        />
+      <Svg native width={width} height={height}>
         {data.map((series, index) => {
           const singleOffsetLeft = series.isComparison ? 0 : offsetLeft;
           const singleOffsetRight = series.isComparison ? 0 : offsetRight;
@@ -85,34 +60,16 @@ export function SparkLineChart({
 
           return (
             <React.Fragment key={index}>
-              <LinearGradient
-                native
-                id="sampleGradient"
-                gradient={[
-                  {
-                    color: 'red',
-                    offset: 0,
-                  },
-                  {
-                    color: 'purple',
-                    offset: 50,
-                  },
-                  {
-                    color: 'green',
-                    offset: 100,
-                  },
-                ]}
+              <Series
+                key={index}
+                xScale={xScale}
+                yScale={yScale}
+                data={seriesWithColor}
+                isAnimated={isAnimated}
+                svgDimensions={{height, width}}
+                theme={selectedTheme}
               />
             </React.Fragment>
-            // <Series
-            //   key={index}
-            //   xScale={xScale}
-            //   yScale={yScale}
-            //   data={seriesWithColor}
-            //   isAnimated={isAnimated}
-            //   svgDimensions={{height, width}}
-            //   theme={selectedTheme}
-            // />
           );
         })}
       </Svg>
