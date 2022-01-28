@@ -1,4 +1,3 @@
-export {usePrefersReducedMotion} from './usePrefersReducedMotion';
 export {useLinearXAxisDetails} from './useLinearXAxisDetails';
 export type {ChartDetails} from './useLinearXAxisDetails';
 export {useLinearXScale} from './useLinearXScale';
@@ -21,4 +20,5 @@ export {
   usePolarisVizContext,
   useThemeSeriesColors,
   getSeriesColorsFromCount,
+  usePrefersReducedMotion,
 } from '../../../polaris-viz-core/src';

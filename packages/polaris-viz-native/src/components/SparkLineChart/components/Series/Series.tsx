@@ -16,11 +16,9 @@ import {
   Mask,
   Rect,
   LinearGradient,
+  usePrefersReducedMotion,
 } from '../../../../../../polaris-viz-core/src';
-// import {usePrefersReducedMotion} from '../../../../hooks';
 import {Area} from '../Area';
-
-import styles from './Series.scss';
 
 const POINT_RADIUS = 2;
 
@@ -45,7 +43,7 @@ export function Series({
   svgDimensions: {width: number; height: number};
   theme: Theme;
 }) {
-  // const {prefersReducedMotion} = usePrefersReducedMotion();
+  const {prefersReducedMotion} = usePrefersReducedMotion({native: true});
 
   const lineGenerator = line<DataPoint>()
     .x(({key}) => xScale(Number(key)))
@@ -79,7 +77,7 @@ export function Series({
   const areaPath = areaGenerator(data.data);
 
   const id = useMemo(() => uniqueId('sparkline'), []);
-  const immediate = !isAnimated; // || prefersReducedMotion;
+  const immediate = !isAnimated || prefersReducedMotion;
 
   const lineGradientColor = isGradientType(data.color!)
     ? data.color
