@@ -11,23 +11,73 @@
   "files": [
     "build/"
   ],
-  "publishConfig": {
-    "access": "public",
-    "@shopify:registry": "https://registry.npmjs.org"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Shopify/polaris-viz.git",
-    "directory": "packages/polaris-viz-core"
-  },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "publish-dryrun": "lerna version --no-private --no-push",
+    "size": "yarn run build && size-limit",
+    "lint": "loom lint",
+    "format": "loom lint --fix",
+    "type-check": "loom type-check",
+    "clean": "rimraf ./packages/*/build ./packages/*/*.{d.ts,js,esnext,mjs} .loom",
+    "test": "loom test",
+    "test:coverage": "CI=true yarn test --coverage",
+    "test:debug:chrome": "osascript -e 'tell app \"Google Chrome\" to open location \"chrome://inspect\"' && loom test --debug",
+    "posttest:coverage": "yarn open:coverage",
+    "open:coverage": "open build/coverage/index.html",
+    "test:ci": "yarn test --coverage",
+    "check": "npm-run-all lint type-check test",
+    "check:ci": "npm-run-all lint type-check test:ci",
+    "prebuild": "yarn run clean",
+    "build": "loom build",
+    "postbuild": "node ./scripts/build-validate",
+    "prebuild-consumer": "yarn run build",
+    "build-consumer": "node ./scripts/build-consumer",
+    "prepublish": "in-publish && yarn run build || :",
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -o docs-build  -s public",
+    "add:story": "node ./.storybook/cli.js"
   },
-  "bugs": {
-    "url": "https://github.com/Shopify/polaris-viz/issues"
-  },
-  "directories": {
-    "src": "src"
+  "size-limit": [
+    {
+      "name": "polaris-viz-core-cjs",
+      "path": "packages/polaris-viz-core/build/cjs/index.js"
+    },
+    {
+      "name": "polaris-viz-native-cjs",
+      "path": "packages/polaris-viz-native/build/cjs/index.js"
+    },
+    {
+      "name": "polaris-viz-cjs",
+      "path": "packages/polaris-viz/build/cjs/index.js"
+    },
+    {
+      "name": "polaris-viz-esm",
+      "path": "packages/polaris-viz/build/esm/index.js"
+    },
+    {
+      "name": "polaris-viz-css",
+      "path": "packages/polaris-viz/build/esm/styles.css"
+    },
+    {
+      "name": "polaris-viz-esnext",
+      "path": "packages/polaris-viz/build/esnext/index.esnext"
+    }
+  ],
+  "prettier": "@shopify/prettier-config",
+  "stylelint": {
+    "extends": [
+      "@shopify/stylelint-plugin/prettier"
+    ],
+    "rules": {
+      "selector-class-pattern": "^[a-zA-Z][a-zA-Z0-9-]+$",
+      "selector-pseudo-class-no-unknown": [
+        true,
+        {
+          "ignorePseudoClasses": [
+            "global"
+          ]
+        }
+      ]
+    }
   },
   "dependencies": {
     "@react-spring/core": "^9.4.2",
@@ -40,14 +90,62 @@
     "@react-spring/web": "^9.2.4"
   },
   "devDependencies": {
-    "@shopify/react-testing": "^3.3.3",
-    "@types/d3-array": "^2.12.1",
-    "@types/d3-color": "1",
-    "@types/d3-scale": "^2.1.1",
-    "@types/d3-shape": "^1.3.2",
-    "@types/react-native": "^0.66.15"
-  },
-  "peerDependencies": {
-    "react": "^16.8.6 || ^17.0.0"
+    "@babel/core": "^7.12.9",
+    "@shopify/babel-preset": "^24.0.1",
+    "@shopify/browserslist-config": "^3.0.0",
+    "@shopify/eslint-plugin": "^40.4.0",
+    "@shopify/loom": "^1.0.0",
+    "@shopify/loom-cli": "^1.0.0",
+    "@shopify/loom-plugin-build-library": "^1.0.0",
+    "@shopify/loom-plugin-build-library-extended": "^1.0.0",
+    "@shopify/loom-plugin-eslint": "^1.0.0",
+    "@shopify/loom-plugin-jest": "^1.0.0",
+    "@shopify/loom-plugin-prettier": "^1.0.0",
+    "@shopify/loom-plugin-stylelint": "^1.0.0",
+    "@shopify/postcss-plugin": "^3.1.1",
+    "@shopify/prettier-config": "^1.1.2",
+    "@shopify/stylelint-plugin": "^10.2.0",
+    "@shopify/typescript-configs": "^5.0.0",
+    "@size-limit/preset-big-lib": "^5.0.1",
+    "@storybook/addon-actions": "^6.3.8",
+    "@storybook/addon-docs": "^6.3.8",
+    "@storybook/addon-essentials": "^6.3.8",
+    "@storybook/addon-links": "^6.3.8",
+    "@storybook/react": "^6.3.8",
+    "@storybook/theming": "^6.3.8",
+    "@types/jest": "26.0.23",
+    "@types/lodash.throttle": "^4.1.6",
+    "@types/node": "^12.7.5",
+    "@types/react": "^17.0.25",
+    "@types/react-dom": "^17.0.9",
+    "babel-loader": "^8.2.3",
+    "copyfiles": "^2.1.1",
+    "eslint": "^7.32.0",
+    "fs-extra": "^7.0.1",
+    "glob": "^7.1.4",
+    "in-publish": "^2.0.0",
+    "js-yaml": "^3.13.1",
+    "lerna": "^4.0.0",
+    "metro-react-native-babel-preset": "^0.67.0",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^7.0.18",
+    "postcss-loader": "^3",
+    "postcss-modules-extract-imports": "^2.0.0",
+    "postcss-modules-local-by-default": "^2.0.6",
+    "postcss-modules-parser": "^1.1.1",
+    "postcss-modules-scope": "^2.1.0",
+    "postcss-modules-values": "^2.0.0",
+    "postcss-shopify": "^2.2.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-native-svg": "^12.1.1",
+    "react-native-web": "0.17.1",
+    "rimraf": "^3.0.0",
+    "sass-loader": "^10.1.1",
+    "semver": "^6.3.0",
+    "shelljs": "^0.8.3",
+    "shx": "^0.3.2",
+    "size-limit": "^5.0.1",
+    "typescript": "~4.3.2"
   }
 }

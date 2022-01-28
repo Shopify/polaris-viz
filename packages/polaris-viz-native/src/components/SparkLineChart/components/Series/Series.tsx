@@ -8,14 +8,16 @@ import type {
   GradientStop,
   Theme,
 } from '../../../../../../polaris-viz-core/src';
-import {LinearGradient} from '../../../../components';
 import {
   curveStepRounded,
   uniqueId,
   isGradientType,
-  classNames,
-} from '../../../../utilities';
-import {usePrefersReducedMotion} from '../../../../hooks';
+  Defs,
+  Mask,
+  Rect,
+  LinearGradient,
+} from '../../../../../../polaris-viz-core/src';
+// import {usePrefersReducedMotion} from '../../../../hooks';
 import {Area} from '../Area';
 
 import styles from './Series.scss';
@@ -43,7 +45,7 @@ export function Series({
   svgDimensions: {width: number; height: number};
   theme: Theme;
 }) {
-  const {prefersReducedMotion} = usePrefersReducedMotion();
+  // const {prefersReducedMotion} = usePrefersReducedMotion();
 
   const lineGenerator = line<DataPoint>()
     .x(({key}) => xScale(Number(key)))
@@ -77,7 +79,7 @@ export function Series({
   const areaPath = areaGenerator(data.data);
 
   const id = useMemo(() => uniqueId('sparkline'), []);
-  const immediate = !isAnimated || prefersReducedMotion;
+  const immediate = !isAnimated; // || prefersReducedMotion;
 
   const lineGradientColor = isGradientType(data.color!)
     ? data.color
@@ -98,7 +100,7 @@ export function Series({
 
   return (
     <React.Fragment>
-      <defs>
+      <Defs native>
         <LinearGradient
           id={`line-${id}`}
           gradient={lineGradientColor as GradientStop[]}
@@ -107,7 +109,7 @@ export function Series({
           y2="0%"
         />
 
-        <mask id={`mask-${id}`}>
+        <Mask native id={`mask-${id}`}>
           <path
             d={lineShape}
             stroke="white"
@@ -118,14 +120,15 @@ export function Series({
           {showPoint && (
             <circle cx={lastX} cy={lastY} r={POINT_RADIUS} fill="white" />
           )}
-        </mask>
-      </defs>
+        </Mask>
+      </Defs>
 
       {data.isComparison === true ? null : (
         <Area color={data.color!} immediate={immediate} areaPath={areaPath} />
       )}
 
-      <rect
+      <Rect
+        native
         x="0"
         y="0"
         width={svgDimensions.width}
@@ -134,7 +137,6 @@ export function Series({
           data.isComparison ? theme.seriesColors.comparison : `url(#line-${id})`
         }
         mask={`url(#mask-${`${id}`})`}
-        className={classNames(styles.Line, !immediate && styles.AnimatedLine)}
       />
     </React.Fragment>
   );
