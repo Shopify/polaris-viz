@@ -23,6 +23,8 @@ import {
   useLinearXScale,
   useTheme,
   useLinearChartAnimations,
+  useColorBlindEvents,
+  useWatchColorBlindEvents,
 } from '../../hooks';
 import {
   SMALL_SCREEN,
@@ -80,9 +82,17 @@ export function Chart({
   yAxisOptions,
   theme,
 }: Props) {
+  useColorBlindEvents();
+
   const selectedTheme = useTheme(theme);
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [activeLineIndex, setActiveLineIndex] = useState(-1);
+
+  useWatchColorBlindEvents({
+    type: 'singleLine',
+    onIndexChange: ({detail}) => setActiveLineIndex(detail.index),
+  });
 
   const tooltipId = useRef(uniqueId('lineChart'));
   const gradientId = useRef(uniqueId('lineChartGradient'));
@@ -381,11 +391,12 @@ export function Chart({
                   </defs>
                 ) : null}
                 <Line
-                  series={singleSeries}
+                  activeLineIndex={activeLineIndex}
                   color={lineColor}
+                  index={reversedSeries.length - 1 - index}
                   isAnimated={isAnimated}
-                  index={index}
                   lineGenerator={lineGenerator}
+                  series={singleSeries}
                   theme={theme}
                 >
                   {areaColor != null ? (
