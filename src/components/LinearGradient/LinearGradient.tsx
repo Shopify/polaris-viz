@@ -1,6 +1,6 @@
 import React from 'react';
 
-import type {GradientStop} from '../../types';
+import type {GradientStop, GradientUnits} from '../../types';
 
 export interface LinearGradientProps {
   gradient: GradientStop[];
@@ -9,7 +9,7 @@ export interface LinearGradientProps {
   x2?: string;
   y1?: string;
   y2?: string;
-  gradientUnits?: 'userSpaceOnUse' | 'objectBoundingBox';
+  gradientUnits?: GradientUnits;
 }
 
 export function LinearGradient({

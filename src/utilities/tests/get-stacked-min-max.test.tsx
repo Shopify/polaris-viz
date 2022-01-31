@@ -1,7 +1,6 @@
-import type {StackSeries} from '../../types';
-import {DEFAULT_MAX_Y} from '../../../../constants';
-import type {DataSeries} from '../../../../types';
-import {getMinMax} from '../get-min-max';
+import {DEFAULT_MAX_Y} from '../../constants';
+import type {DataSeries, StackedSeries} from '../../types';
+import {getStackedMinMax} from '../get-stacked-min-max';
 
 const mockData: DataSeries[] = [
   {
@@ -34,7 +33,7 @@ const mockStackedData = [
     [20, 22],
     [30, 33],
   ],
-] as StackSeries[];
+] as StackedSeries[];
 
 const mockZeroData: DataSeries[] = [
   {
@@ -67,7 +66,7 @@ const mockZeroStackedData = [
     [0, 0],
     [0, 0],
   ],
-] as StackSeries[];
+] as StackedSeries[];
 
 const mockNegativeStackedData = [
   [
@@ -82,7 +81,7 @@ const mockNegativeStackedData = [
     [-14, -7],
     [-12, -10],
   ],
-] as StackSeries[];
+] as StackedSeries[];
 
 const mockNegativeSeries: DataSeries[] = [
   {
@@ -123,21 +122,21 @@ const mockProps = {
 
 describe('get-min-max', () => {
   it('returns min and max of non stacked data when stackedValues is null', () => {
-    const {min, max} = getMinMax({...mockProps, stackedValues: null});
+    const {min, max} = getStackedMinMax({...mockProps, stackedValues: null});
 
     expect(min).toStrictEqual(0);
     expect(max).toStrictEqual(30);
   });
 
   it('returns min and max of stacked values when stackedValues is not null', () => {
-    const {min, max} = getMinMax(mockProps);
+    const {min, max} = getStackedMinMax(mockProps);
 
     expect(min).toStrictEqual(0);
     expect(max).toStrictEqual(33);
   });
 
   it('returns the default max y value for non stacked values of all zeros', () => {
-    const {max} = getMinMax({
+    const {max} = getStackedMinMax({
       ...mockProps,
       stackedValues: null,
       data: mockZeroData,
@@ -147,7 +146,7 @@ describe('get-min-max', () => {
   });
 
   it('returns the default max y value for stacked values of all zeros', () => {
-    const {max} = getMinMax({
+    const {max} = getStackedMinMax({
       ...mockProps,
       stackedValues: mockZeroStackedData,
       data: mockZeroData,
@@ -156,7 +155,7 @@ describe('get-min-max', () => {
   });
 
   it('returns 0 as the max when all stacked values are negative', () => {
-    const {max} = getMinMax({
+    const {max} = getStackedMinMax({
       ...mockProps,
       stackedValues: mockNegativeStackedData,
       data: mockNegativeSeries,
@@ -165,7 +164,7 @@ describe('get-min-max', () => {
   });
 
   it('returns 0 as the max when all non-stacked values are negative', () => {
-    const {max} = getMinMax({
+    const {max} = getStackedMinMax({
       ...mockProps,
       stackedValues: null,
       data: mockNegativeSeries,
@@ -175,7 +174,7 @@ describe('get-min-max', () => {
 
   describe('integersOnly', () => {
     it('returns a rounded down min and rounded up max if true', () => {
-      const minMax = getMinMax({
+      const minMax = getStackedMinMax({
         stackedValues: null,
         data: [
           {

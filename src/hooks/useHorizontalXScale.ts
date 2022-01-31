@@ -10,16 +10,16 @@ const MIN_TICKS = 3;
 
 export function useHorizontalXScale({
   allNumbers,
-  highestSumForStackedGroup,
   isStacked,
-  longestSeriesCount,
   maxWidth,
+  stackedMax = 0,
+  stackedMin = 0,
 }: {
   allNumbers: number[];
-  highestSumForStackedGroup: number;
   isStacked: boolean;
-  longestSeriesCount: number;
   maxWidth: number;
+  stackedMax: number;
+  stackedMin: number;
 }) {
   const xScale = useMemo(() => {
     return scaleLinear()
@@ -43,18 +43,24 @@ export function useHorizontalXScale({
       return null;
     }
 
-    return scaleLinear()
-      .domain([0, ticks[ticks.length - 1]])
-      .range([0, maxWidth / longestSeriesCount]);
-  }, [isStacked, maxWidth, longestSeriesCount, ticks]);
+    const xScale = scaleLinear()
+      .range([0, maxWidth])
+      .domain([stackedMin, stackedMax])
+      .nice();
+
+    return xScale;
+  }, [isStacked, maxWidth, stackedMin, stackedMax]);
 
   const ticksStacked = useMemo(() => {
-    if (!isStacked) {
-      return [];
+    if (!isStacked || !xScaleStacked) {
+      return null;
     }
 
-    return scaleLinear().domain([0, highestSumForStackedGroup]).nice().ticks();
-  }, [highestSumForStackedGroup, isStacked]);
+    return xScaleStacked.ticks();
+  }, [isStacked, xScaleStacked]);
 
-  return {xScale, xScaleStacked, ticks, ticksStacked};
+  return {
+    xScale: isStacked ? xScaleStacked! : xScale,
+    ticks: isStacked ? ticksStacked! : ticks,
+  };
 }

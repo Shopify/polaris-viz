@@ -17,6 +17,7 @@ export function StackedBarGroup({
   colors,
   accessibilityData,
   activeBarGroup,
+  gaps,
 }: StackedBarGroupProps) {
   const maskId = useMemo(() => uniqueId('mask'), []);
   const gradientId = useMemo(() => uniqueId('gradient'), []);
@@ -56,6 +57,7 @@ export function StackedBarGroup({
               activeBarGroup={activeBarGroup}
               yScale={yScale}
               groupIndex={groupIndex}
+              gaps={gaps}
             />
           </g>
           <use
@@ -83,6 +85,7 @@ export function StackedBarGroup({
           activeBarGroup={activeBarGroup}
           yScale={yScale}
           groupIndex={groupIndex}
+          gaps={gaps}
         />
       </g>
     </React.Fragment>

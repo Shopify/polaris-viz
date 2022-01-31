@@ -15,6 +15,7 @@ import {
   getBarXAxisDetails,
   shouldRotateZeroBars,
   eventPointNative,
+  getStackedValues,
 } from '../../utilities';
 import {YAxis} from '../YAxis';
 import {BarChartXAxis} from '../BarChartXAxis';
@@ -34,7 +35,7 @@ import type {
 } from '../BarChart';
 import {AnnotationLine} from '../BarChart';
 
-import {getStackedValues, formatAriaLabel} from './utilities';
+import {formatAriaLabel} from './utilities';
 import {BarGroup, StackedBarGroup} from './components';
 import {useYScale, useXScale, useMinimalLabelIndexes} from './hooks';
 import {
@@ -45,6 +46,7 @@ import {
   BAR_SPACING,
 } from './constants';
 import styles from './Chart.scss';
+import {useStackedGapsForVerticalChart} from './hooks/useStackedGapsForVerticalChart';
 
 export interface Props {
   data: DataSeries[];
@@ -220,6 +222,8 @@ export function Chart({
     [data, labels, yAxisOptions],
   );
 
+  const gaps = useStackedGapsForVerticalChart({stackedValues, labels});
+
   return (
     <div
       className={styles.ChartContainer}
@@ -294,6 +298,7 @@ export function Chart({
                     yScale={yScale}
                     colors={barColors}
                     accessibilityData={accessibilityData}
+                    gaps={gaps}
                   />
                 );
               })

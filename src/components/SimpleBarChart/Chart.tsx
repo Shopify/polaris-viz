@@ -1,6 +1,6 @@
-import React, {useCallback, useMemo} from 'react';
+import React, {useCallback} from 'react';
 
-import {getHighestSumForStacked, uniqueId} from '../../utilities';
+import {uniqueId} from '../../utilities';
 import {GradientDefs, HorizontalGroup} from '../shared';
 import {
   useHorizontalBarSizes,
@@ -9,6 +9,7 @@ import {
   useHorizontalTransitions,
   useHorizontalSeriesColors,
   HorizontalTransitionStyle,
+  useHorizontalStackedValues,
 } from '../../hooks';
 import {XMLNS, HORIZONTAL_BAR_GROUP_DELAY} from '../../constants';
 import type {ChartType, DataSeries, Dimensions} from '../../types';
@@ -52,19 +53,17 @@ export function Chart({
     labelFormatter,
   });
 
-  const highestSumForStackedGroup = useMemo(() => {
-    if (!isStacked) {
-      return 0;
-    }
-    return getHighestSumForStacked(data);
-  }, [data, isStacked]);
+  const {stackedValues, stackedMin, stackedMax} = useHorizontalStackedValues({
+    isStacked,
+    data,
+  });
 
-  const {xScale, xScaleStacked, ticks, ticksStacked} = useHorizontalXScale({
+  const {xScale, ticks} = useHorizontalXScale({
     allNumbers,
-    highestSumForStackedGroup,
     isStacked,
     maxWidth: width - longestLabel.negative - longestLabel.positive,
-    longestSeriesCount,
+    stackedMax,
+    stackedMin,
   });
 
   const {barHeight, groupHeight} = useHorizontalBarSizes({
@@ -74,7 +73,7 @@ export function Chart({
     labelFormatter,
     seriesLength: longestSeriesCount,
     singleBarCount: data.length,
-    ticks: isStacked ? ticksStacked : ticks,
+    ticks,
   });
 
   const getAriaLabel = useCallback(
@@ -116,7 +115,8 @@ export function Chart({
           id={id}
           seriesColors={seriesColors}
           theme={theme}
-          width={width}
+          width={isStacked ? '100%' : `${width}px`}
+          gradientUnits={isStacked ? 'objectBoundingBox' : 'userSpaceOnUse'}
         />
 
         {transitions((style, item, _transition, index) => {
@@ -144,10 +144,10 @@ export function Chart({
               labelFormatter={labelFormatter}
               name={name}
               opacity={opacity}
+              stackedValues={stackedValues}
               theme={theme}
               transform={transform}
               xScale={xScale}
-              xScaleStacked={xScaleStacked}
               zeroPosition={zeroPosition}
             />
           );

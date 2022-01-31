@@ -1,8 +1,8 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleBand, scaleLinear} from 'd3-scale';
+import type {StackedSeries} from 'types';
 
-import type {StackSeries} from '../../../types';
 import {
   MASK_HIGHLIGHT_COLOR,
   MASK_SUBDUE_COLOR,
@@ -19,12 +19,25 @@ jest.mock('d3-scale', () => ({
   }),
 }));
 
+const GAPS = {
+  negative: [
+    {index: 0, gap: 0},
+    {index: 1, gap: 2},
+    {index: 2, gap: 4},
+  ],
+  positive: [
+    {index: 0, gap: 0},
+    {index: 1, gap: 2},
+    {index: 2, gap: 4},
+  ],
+};
+
 describe('<StackedBarGroup/>', () => {
   const stackedValues = [
     [0, 1],
     [0, 2],
     [0, 3],
-  ] as StackSeries;
+  ] as StackedSeries;
 
   const mockProps = {
     groupIndex: 1,
@@ -75,6 +88,11 @@ describe('<StackedBarGroup/>', () => {
         ],
       },
     ],
+    gaps: {
+      0: GAPS,
+      1: GAPS,
+      2: GAPS,
+    },
   };
 
   describe('colors', () => {

@@ -7,6 +7,7 @@ import {
   useDataForHorizontalChart,
   useHorizontalBarSizes,
   useHorizontalSeriesColors,
+  useHorizontalStackedValues,
   useHorizontalTransitions,
   useHorizontalXScale,
   useTheme,
@@ -20,7 +21,6 @@ import {
 import {
   eventPointNative,
   formatDataIntoGroups,
-  getHighestSumForStacked,
   uniqueId,
 } from '../../utilities';
 import {ChartType, DataSeries, DataType, Dimensions} from '../../types';
@@ -100,20 +100,17 @@ export function Chart({
     return maxes;
   }, [data, areAllNegative]);
 
-  const highestSumForStackedGroup = useMemo(() => {
-    if (!isStacked) {
-      return 0;
-    }
+  const {stackedValues, stackedMin, stackedMax} = useHorizontalStackedValues({
+    isStacked,
+    data,
+  });
 
-    return getHighestSumForStacked(data);
-  }, [data, isStacked]);
-
-  const {xScale, xScaleStacked, ticks, ticksStacked} = useHorizontalXScale({
+  const {xScale, ticks} = useHorizontalXScale({
     allNumbers,
-    highestSumForStackedGroup,
+    stackedMin,
+    stackedMax,
     isStacked,
     maxWidth: width - longestLabel.negative - longestLabel.positive,
-    longestSeriesCount: data.length,
   });
 
   const {
@@ -130,7 +127,7 @@ export function Chart({
     labelFormatter,
     seriesLength: longestSeriesCount,
     singleBarCount: data.length,
-    ticks: isStacked ? ticksStacked : ticks,
+    ticks,
   });
 
   const getAriaLabel = useCallback(
@@ -185,8 +182,8 @@ export function Chart({
             <VerticalGridLines
               chartHeight={chartHeight}
               stroke={selectedTheme.grid.color}
-              ticks={isStacked ? ticksStacked : ticks}
-              xScale={isStacked ? xScaleStacked! : xScale}
+              ticks={ticks}
+              xScale={xScale}
             />
             <XAxisLabels
               bandwidth={bandwidth}
@@ -194,8 +191,8 @@ export function Chart({
               color={selectedTheme.xAxis.labelColor}
               labelFormatter={labelFormatter}
               tallestXAxisLabel={tallestXAxisLabel}
-              ticks={isStacked ? ticksStacked : ticks}
-              xScale={isStacked ? xScaleStacked! : xScale}
+              ticks={ticks}
+              xScale={xScale}
             />
           </React.Fragment>
         )}
@@ -204,7 +201,8 @@ export function Chart({
           id={id}
           seriesColors={seriesColors}
           theme={theme}
-          width={width}
+          width={isStacked ? '100%' : `${width}px`}
+          gradientUnits={isStacked ? 'objectBoundingBox' : 'userSpaceOnUse'}
         />
 
         {transitions((style, item, _transition, index) => {
@@ -232,10 +230,10 @@ export function Chart({
               labelFormatter={labelFormatter}
               name={name}
               opacity={opacity}
+              stackedValues={stackedValues}
               theme={theme}
               transform={transform}
               xScale={xScale}
-              xScaleStacked={xScaleStacked}
               zeroPosition={zeroPosition}
             />
           );
@@ -310,16 +308,17 @@ export function Chart({
   }
 
   function formatPositionForTooltip(index: number): TooltipPosition {
-    if (isStacked && xScaleStacked) {
-      const x = data.reduce((prev, cur) => {
-        const value = cur.data[index].value;
+    if (isStacked) {
+      const x = stackedValues[index].reduce((prev, cur) => {
+        const [start, end] = cur;
 
-        if (value == null) {
+        if (start < 0) {
           return prev;
         }
 
-        return prev + xScaleStacked(value);
-      }, 0);
+        return prev + (xScale(end) - xScale(start));
+      }, xScale(0));
+
       return {
         x,
         y: groupHeight * index,

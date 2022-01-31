@@ -2,8 +2,7 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
 
-import type {StackSeries} from '../../types';
-import type {DataSeries} from '../../../../types';
+import type {DataSeries, StackedSeries} from '../../../../types';
 import {useYScale} from '../use-y-scale';
 import {shouldRoundScaleUp} from '../../../../utilities';
 
@@ -57,7 +56,7 @@ const mockData: DataSeries[] = [
 ];
 
 interface Props {
-  stackedValues: StackSeries[] | null;
+  stackedValues: StackedSeries[] | null;
   data: DataSeries[];
 }
 
@@ -132,7 +131,7 @@ describe('useYScale', () => {
               [0, 0],
               [0, 43],
             ],
-          ] as StackSeries[]
+          ] as StackedSeries[]
         }
         data={mockData}
       />,
@@ -161,7 +160,7 @@ describe('useYScale', () => {
               [-10, 0],
               [0, 43],
             ],
-          ] as StackSeries[]
+          ] as StackedSeries[]
         }
         data={mockData}
       />,

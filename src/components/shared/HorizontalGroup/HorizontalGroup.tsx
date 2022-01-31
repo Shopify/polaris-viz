@@ -2,7 +2,12 @@ import React from 'react';
 import {animated, SpringValue} from '@react-spring/web';
 import type {ScaleLinear} from 'd3-scale';
 
-import {DataSeries, DataType, LabelFormatter} from '../../../types';
+import {
+  DataSeries,
+  DataType,
+  FormattedStackedSeries,
+  LabelFormatter,
+} from '../../../types';
 import {GroupLabel} from '../GroupLabel';
 import {HorizontalStackedBars} from '../HorizontalStackedBars';
 import {HorizontalBars} from '../HorizontalBars';
@@ -22,9 +27,9 @@ export interface HorizontalGroupProps {
   labelFormatter: LabelFormatter;
   name: string;
   opacity: SpringValue<number>;
+  stackedValues: FormattedStackedSeries;
   transform: SpringValue<string>;
   xScale: ScaleLinear<number, number>;
-  xScaleStacked: ScaleLinear<number, number> | null;
   zeroPosition: number;
   theme?: string;
 }
@@ -44,10 +49,10 @@ export function HorizontalGroup({
   labelFormatter,
   name,
   opacity,
+  stackedValues,
   theme,
   transform,
   xScale,
-  xScaleStacked,
   zeroPosition,
 }: HorizontalGroupProps) {
   return (
@@ -68,7 +73,7 @@ export function HorizontalGroup({
         zeroPosition={zeroPosition}
       />
 
-      {isStacked && xScaleStacked ? (
+      {isStacked ? (
         <HorizontalStackedBars
           animationDelay={animationDelay}
           ariaLabel={ariaLabel}
@@ -78,8 +83,9 @@ export function HorizontalGroup({
           id={id}
           isAnimated={isAnimated}
           name={name}
+          stackedValues={stackedValues}
           theme={theme}
-          xScale={xScaleStacked}
+          xScale={xScale}
         />
       ) : (
         <HorizontalBars

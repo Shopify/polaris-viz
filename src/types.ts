@@ -1,4 +1,5 @@
 import type {InterpolatorFn} from '@react-spring/web';
+import type {Series, SeriesPoint} from 'd3-shape';
 
 export interface DataPoint {
   key: number | string;
@@ -204,3 +205,23 @@ export enum RoundedBorder {
 
 export type ChartType = 'default' | 'stacked';
 export type Direction = 'horizontal' | 'vertical';
+export type StackedSeries = Series<
+  {
+    [key: string]: number;
+  },
+  string
+>;
+export type FormattedStackedSeries = SeriesPoint<{
+  [key: string]: number;
+}>[][];
+
+export interface SingleIndexGap {
+  index: number;
+  gap: number;
+}
+export interface StackedBarGapDirections {
+  positive: SingleIndexGap[];
+  negative: SingleIndexGap[];
+}
+
+export type GradientUnits = 'userSpaceOnUse' | 'objectBoundingBox';

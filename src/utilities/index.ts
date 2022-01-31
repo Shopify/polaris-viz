@@ -27,5 +27,8 @@ export {
 export {getRoundedRectPath} from './get-rounded-rect-path';
 export {getAverageColor} from './get-average-color';
 export {getBarId} from './get-bar-id';
-export {getHighestSumForStacked} from './get-highest-sum-for-stacked';
 export {formatDataIntoGroups} from './format-data-into-groups';
+export {getStackedMinMax} from './get-stacked-min-max';
+export {getStackedValues} from './get-stacked-values';
+export {pushGapToArray} from './push-gap-to-array';
+export {getGapForIndex} from './get-gap-for-index';
