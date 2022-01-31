@@ -51,7 +51,6 @@ const DATA: DataSeries[] = [
 ];
 
 const MOCK_PROPS: HorizontalBarsProps = {
-  ariaLabel: '',
   barHeight: 20,
   groupIndex: 0,
   id: 'id',
@@ -147,19 +146,6 @@ describe('<HorizontalBars />', () => {
       const bars = chart.findAll(Bar);
 
       expect(bars[0].props.width).toStrictEqual(5);
-    });
-
-    it('sets tabIndex to -1 for all items except the first', () => {
-      const chart = mount(
-        <svg>
-          <HorizontalBars {...MOCK_PROPS} />
-        </svg>,
-      );
-
-      const bars = chart.findAll(Bar);
-
-      expect(bars[0].props.tabIndex).toStrictEqual(0);
-      expect(bars[1].props.tabIndex).toStrictEqual(-1);
     });
   });
 

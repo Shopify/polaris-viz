@@ -21,33 +21,6 @@ jest.mock('d3-scale', () => ({
   },
 }));
 
-const DATA = [
-  {
-    name: 'Group 1',
-    data: [
-      {value: 5, key: 'Label 01'},
-      {value: 10, key: 'Label 02'},
-      {value: 12, key: 'Label 03'},
-    ],
-  },
-  {
-    name: 'Group 2',
-    data: [
-      {value: 5, key: 'Label 01'},
-      {value: 10, key: 'Label 02'},
-      {value: 12, key: 'Label 03'},
-    ],
-  },
-  {
-    name: 'Group 3',
-    data: [
-      {value: 5, key: 'Label 01'},
-      {value: 10, key: 'Label 02'},
-      {value: 12, key: 'Label 03'},
-    ],
-  },
-];
-
 const STACKED_VALUES = [
   [
     [0, 5],
@@ -70,7 +43,7 @@ const MOCK_PROPS: HorizontalStackedBarsProps = {
   animationDelay: 0,
   ariaLabel: '',
   barHeight: 20,
-  data: DATA,
+  dataKeys: ['Group 1', 'Group 2', 'Group 3'],
   groupIndex: 0,
   id: 'id',
   isAnimated: false,
