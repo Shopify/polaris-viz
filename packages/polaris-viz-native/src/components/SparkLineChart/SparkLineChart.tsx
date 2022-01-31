@@ -8,9 +8,8 @@ import {
   useTheme,
   useThemeSeriesColors,
   useSparkLine,
+  LineSeries,
 } from '../../../../polaris-viz-core/src';
-
-import {Series} from './components';
 
 const SVG_MARGIN = 2;
 export function SparkLineChart({
@@ -19,7 +18,7 @@ export function SparkLineChart({
   isAnimated = false,
   offsetLeft = 0,
   offsetRight = 0,
-  theme,
+  theme = 'Default',
 }: SparkLineChartProps) {
   const selectedTheme = useTheme(theme);
   const seriesColors = useThemeSeriesColors(data, selectedTheme);
@@ -54,20 +53,21 @@ export function SparkLineChart({
             .domain([minXValues, maxXValues]);
 
           const seriesWithColor = {
-            color: seriesColors[index],
             ...series,
+            color: seriesColors[index],
           };
 
           return (
             <React.Fragment key={index}>
-              <Series
+              <LineSeries
+                native
                 key={index}
                 xScale={xScale}
                 yScale={yScale}
                 data={seriesWithColor}
                 isAnimated={isAnimated}
                 svgDimensions={{height, width}}
-                theme={selectedTheme}
+                theme={theme}
               />
             </React.Fragment>
           );

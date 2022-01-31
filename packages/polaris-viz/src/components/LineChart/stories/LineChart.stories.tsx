@@ -48,6 +48,12 @@ export default {
         component:
           'Used to show change over time, comparisons, and trends. It is reccomended that you use a legend whenever displaying multiseries data. To display one, use the `<Legend />` component. <br /> <br /> This component inherits its height and width from its container.',
       },
+      yScale: {
+        controls: null,
+      },
+      xScale: {
+        controls: null,
+      },
     },
   },
   argTypes: {

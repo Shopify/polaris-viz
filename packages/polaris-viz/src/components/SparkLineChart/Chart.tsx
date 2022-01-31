@@ -5,12 +5,11 @@ import type {
   Dimensions,
   SparkLineChartProps,
 } from '../../../../polaris-viz-core/src';
-import {useSparkLine} from '../../../../polaris-viz-core/src';
+import {useSparkLine, LineSeries} from '../../../../polaris-viz-core/src';
 import {useThemeSeriesColors, useTheme} from '../../hooks/';
 import {XMLNS} from '../../constants';
 
 import styles from './SparkLineChart.scss';
-import {Series} from './components';
 
 interface Props extends SparkLineChartProps {
   dimensions?: Dimensions;
@@ -25,7 +24,7 @@ export function Chart({
   isAnimated = false,
   offsetLeft = 0,
   offsetRight = 0,
-  theme,
+  theme = 'Default',
 }: Props) {
   const selectedTheme = useTheme(theme);
   const seriesColors = useThemeSeriesColors(data, selectedTheme);
@@ -57,19 +56,20 @@ export function Chart({
             .domain([minXValues, maxXValues]);
 
           const seriesWithColor = {
-            color: seriesColors[index],
             ...series,
+            color: seriesColors[index],
           };
 
           return (
             <g key={index}>
-              <Series
+              <LineSeries
+                key={index}
                 xScale={xScale}
                 yScale={yScale}
                 data={seriesWithColor}
                 isAnimated={isAnimated}
                 svgDimensions={{height, width}}
-                theme={selectedTheme}
+                theme={theme}
               />
             </g>
           );

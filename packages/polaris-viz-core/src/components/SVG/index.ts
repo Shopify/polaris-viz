@@ -31,54 +31,48 @@ interface Props {
 }
 
 export const Svg = ({native, children, ...props}: Props) =>
-  createElement(native ? NativeSvg : 'Svg', props, children);
+  createElement(native ? NativeSvg : 'svg', props, children);
 export const Circle = ({native, children, ...props}: Props) =>
-  createElement(native ? NativeCircle : 'Circle', props, children);
+  createElement(native ? NativeCircle : 'circle', props, children);
 export const Ellipse = ({native, children, ...props}: Props) =>
-  createElement(native ? NativeEllipse : 'Ellipse', props, children);
+  createElement(native ? NativeEllipse : 'ellipse', props, children);
 export const G = ({native, children, ...props}: Props) =>
-  createElement(native ? NativeG : 'G', props, children);
+  createElement(native ? NativeG : 'g', props, children);
 export const Text = ({native, children, ...props}: Props) =>
-  createElement(native ? NativeText : 'Text', props, children);
+  createElement(native ? NativeText : 'text', props, children);
 export const TSpan = ({native, children, ...props}: Props) =>
-  createElement(native ? NativeTSpan : 'TSpan', props, children);
+  createElement(native ? NativeTSpan : 'tSpan', props, children);
 export const TextPath = ({native, children, ...props}: Props) =>
-  createElement(native ? NativeTextPath : 'TextPath', props, children);
+  createElement(native ? NativeTextPath : 'textPath', props, children);
 export const Path = ({native, children, ...props}: Props) =>
-  createElement(native ? NativePath : 'Path', props, children);
+  createElement(native ? NativePath : 'path', props, children);
 export const Polygon = ({native, children, ...props}: Props) =>
-  createElement(native ? NativePolygon : 'Polygon', props, children);
+  createElement(native ? NativePolygon : 'polygon', props, children);
 export const Polyline = ({native, children, ...props}: Props) =>
-  createElement(native ? NativePolyline : 'Polyline', props, children);
+  createElement(native ? NativePolyline : 'polyline', props, children);
 export const Line = ({native, children, ...props}: Props) =>
-  createElement(native ? NativeLine : 'Line', props, children);
+  createElement(native ? NativeLine : 'line', props, children);
 export const Rect = ({native, children, ...props}: Props) =>
-  createElement(native ? NativeRect : 'Rect', props, children);
+  createElement(native ? NativeRect : 'rect', props, children);
 export const Use = ({native, children, ...props}: Props) =>
-  createElement(native ? NativeUse : 'Use', props, children);
+  createElement(native ? NativeUse : 'use', props, children);
 export const Image = ({native, children, ...props}: Props) =>
-  createElement(native ? NativeImage : 'Image', props, children);
+  createElement(native ? NativeImage : 'image', props, children);
 export const Symbol = ({native, children, ...props}: Props) =>
-  createElement(native ? NativeSymbol : 'Symbol', props, children);
+  createElement(native ? NativeSymbol : 'symbol', props, children);
 export const Defs = ({native, children, ...props}: Props) =>
-  createElement(native ? NativeDefs : 'Defs', props, children);
-export const LinearGradient = ({native, children, ...props}: Props) =>
-  createElement(
-    native ? NativeLinearGradient : 'LinearGradient',
-    props,
-    children,
-  );
+  createElement(native ? NativeDefs : 'defs', props, children);
 export const RadialGradient = ({native, children, ...props}: Props) =>
   createElement(
-    native ? NativeRadialGradient : 'RadialGradient',
+    native ? NativeRadialGradient : 'radialGradient',
     props,
     children,
   );
 export const Stop = ({native, children, ...props}: Props) =>
-  createElement(native ? NativeStop : 'Stop', props, children);
+  createElement(native ? NativeStop : 'stop', props, children);
 export const ClipPath = ({native, children, ...props}: Props) =>
-  createElement(native ? NativeClipPath : 'ClipPath', props, children);
+  createElement(native ? NativeClipPath : 'clipPath', props, children);
 export const Pattern = ({native, children, ...props}: Props) =>
-  createElement(native ? NativePattern : 'Pattern', props, children);
+  createElement(native ? NativePattern : 'pattern', props, children);
 export const Mask = ({native, children, ...props}: Props) =>
-  createElement(native ? NativeMask : 'Mask', props, children);
+  createElement(native ? NativeMask : 'mask', props, children);

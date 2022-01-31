@@ -1,8 +1,16 @@
 import {AccessibilityInfo} from 'react-native';
 
-export function usePrefersReducedMotion({native = false}) {
+export function usePrefersReducedMotion({native} = {native: false}) {
   if (native) {
-    return {prefersReducedMotion: AccessibilityInfo.isReduceMotionEnabled()};
+    AccessibilityInfo.isReduceMotionEnabled()
+      .then((result) => {
+        return {
+          prefersReducedMotion: result,
+        };
+      })
+      .catch((error) => {
+        return {prefersReducedMotion: error};
+      });
   }
   const prefersReducedMotion =
     typeof window === 'undefined'

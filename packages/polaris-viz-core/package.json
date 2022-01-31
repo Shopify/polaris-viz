@@ -33,7 +33,6 @@
   },
   "dependencies": {
     "react-native": "0.64.3",
-    "react-native-web": "0.17.1",
     "react-native-svg": "^12.1.1"
   }
 }
