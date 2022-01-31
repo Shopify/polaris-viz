@@ -1,6 +1,7 @@
 import React, {useState, useMemo} from 'react';
 import type {AnnotationLookupTable} from 'components/BarChart/types';
 
+import {GradientDefs} from '../shared';
 import {BarChartMargin as Margin, XMLNS} from '../../constants';
 import {
   TooltipHorizontalOffset,
@@ -16,6 +17,7 @@ import {
   shouldRotateZeroBars,
   eventPointNative,
   getStackedValues,
+  uniqueId,
 } from '../../utilities';
 import {YAxis} from '../YAxis';
 import {BarChartXAxis} from '../BarChartXAxis';
@@ -40,7 +42,7 @@ import type {
 } from '../BarChart';
 import {AnnotationLine} from '../BarChart';
 
-import {BarGroup, StackedBarGroup} from './components';
+import {BarGroup, StackedBarGroups} from './components';
 import {useYScale, useXScale, useMinimalLabelIndexes} from './hooks';
 import {
   FONT_SIZE,
@@ -50,7 +52,6 @@ import {
   BAR_SPACING,
 } from './constants';
 import styles from './Chart.scss';
-import {useStackedGapsForVerticalChart} from './hooks/useStackedGapsForVerticalChart';
 
 export interface Props {
   data: DataSeries[];
@@ -82,6 +83,7 @@ export function Chart({
   const selectedTheme = useTheme(theme);
   const [activeBarGroup, setActiveBarGroup] = useState<number>(-1);
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
+  const id = useMemo(() => uniqueId('VerticalBarChart'), []);
 
   useWatchColorBlindEvents({
     type: 'group',
@@ -108,8 +110,8 @@ export function Chart({
     return labels;
   }, [data, xAxisOptions]);
 
-  const stackedValues =
-    type === 'stacked' ? getStackedValues(data, labels) : null;
+  const isStacked = type === 'stacked';
+  const stackedValues = isStacked ? getStackedValues(data, labels) : null;
 
   const {minimalLabelIndexes} = useMinimalLabelIndexes({
     useMinimalLabels: xAxisOptions.useMinimalLabels,
@@ -235,8 +237,6 @@ export function Chart({
     [data, labels, yAxisOptions],
   );
 
-  const gaps = useStackedGapsForVerticalChart({stackedValues, labels});
-
   return (
     <div
       className={styles.ChartContainer}
@@ -274,6 +274,15 @@ export function Chart({
           </g>
         )}
 
+        <GradientDefs
+          direction="vertical"
+          gradientUnits={isStacked ? 'objectBoundingBox' : 'userSpaceOnUse'}
+          id={id}
+          seriesColors={barColors}
+          size={isStacked ? '100%' : `${width}px`}
+          theme={theme}
+        />
+
         {selectedTheme.grid.showHorizontalLines ? (
           <HorizontalGridLines
             ticks={ticks}
@@ -299,43 +308,42 @@ export function Chart({
         </g>
 
         <g transform={`translate(${chartStartPosition},${Margin.Top})`}>
-          {stackedValues != null
-            ? stackedValues.map((stackData, stackIndex) => {
-                return (
-                  <StackedBarGroup
-                    key={stackIndex}
-                    groupIndex={stackIndex}
-                    activeBarGroup={activeBarGroup}
-                    data={stackData}
-                    xScale={xScale}
-                    yScale={yScale}
-                    colors={barColors}
-                    accessibilityData={accessibilityData}
-                    gaps={gaps}
-                  />
-                );
-              })
-            : sortedData.map((item, index) => {
-                const xPosition = xScale(index.toString());
-                return (
-                  <BarGroup
-                    isAnimated={isAnimated}
-                    key={index}
-                    x={xPosition == null ? 0 : xPosition}
-                    yScale={yScale}
-                    data={item}
-                    width={xScale.bandwidth()}
-                    height={drawableHeight}
-                    colors={barColors}
-                    barGroupIndex={index}
-                    hasRoundedCorners={selectedTheme.bar.hasRoundedCorners}
-                    rotateZeroBars={rotateZeroBars}
-                    zeroAsMinHeight={selectedTheme.bar.zeroAsMinHeight}
-                    accessibilityData={accessibilityData}
-                    activeBarGroup={activeBarGroup}
-                  />
-                );
-              })}
+          {stackedValues != null ? (
+            <StackedBarGroups
+              accessibilityData={accessibilityData}
+              activeBarGroup={activeBarGroup}
+              colors={barColors}
+              drawableHeight={drawableHeight}
+              id={id}
+              labels={labels}
+              stackedValues={stackedValues}
+              theme={theme}
+              xScale={xScale}
+              yScale={yScale}
+            />
+          ) : (
+            sortedData.map((item, index) => {
+              const xPosition = xScale(index.toString());
+              return (
+                <BarGroup
+                  isAnimated={isAnimated}
+                  key={index}
+                  x={xPosition == null ? 0 : xPosition}
+                  yScale={yScale}
+                  data={item}
+                  width={xScale.bandwidth()}
+                  height={drawableHeight}
+                  colors={barColors}
+                  barGroupIndex={index}
+                  hasRoundedCorners={selectedTheme.bar.hasRoundedCorners}
+                  rotateZeroBars={rotateZeroBars}
+                  zeroAsMinHeight={selectedTheme.bar.zeroAsMinHeight}
+                  accessibilityData={accessibilityData}
+                  activeBarGroup={activeBarGroup}
+                />
+              );
+            })
+          )}
         </g>
         <g transform={`translate(${chartStartPosition},${Margin.Top})`}>
           {Object.keys(annotationsLookupTable).map((key, dataIndex) => {

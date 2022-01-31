@@ -79,7 +79,7 @@ const MOCK_PROPS: HorizontalGroupProps = {
   labelFormatter: (value) => `${value}`,
   name: 'name',
   opacity: 0 as any,
-  stackedValues: STACKED_VALUES as FormattedStackedSeries,
+  stackedValues: STACKED_VALUES as FormattedStackedSeries[],
   transform: '' as any,
   xScale: scaleLinear(),
   zeroPosition: 0,

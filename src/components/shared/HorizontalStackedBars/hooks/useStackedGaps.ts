@@ -8,7 +8,7 @@ import type {
 } from '../../../../types';
 
 interface Props {
-  stackedValues: FormattedStackedSeries;
+  stackedValues: FormattedStackedSeries[];
   groupIndex: number;
 }
 

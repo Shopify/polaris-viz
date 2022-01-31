@@ -1,6 +1,7 @@
 import React, {useCallback, useMemo, useState} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 
+import type {AccessibilitySeries} from '../../../VerticalBarChart/types';
 import {formatAriaLabel} from '../../utilities';
 import {getOpacityForActive} from '../../../../hooks/ColorBlindA11y';
 import {Color, DataType} from '../../../../types';
@@ -29,13 +30,7 @@ interface Props {
   colors: Color[];
   barGroupIndex: number;
   hasRoundedCorners: boolean;
-  accessibilityData: {
-    title: string;
-    data: {
-      label: string;
-      value: string;
-    }[];
-  }[];
+  accessibilityData: AccessibilitySeries[];
   activeBarGroup: number;
   zeroAsMinHeight: boolean;
   isAnimated?: boolean;

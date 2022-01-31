@@ -213,7 +213,7 @@ export type StackedSeries = Series<
 >;
 export type FormattedStackedSeries = SeriesPoint<{
   [key: string]: number;
-}>[][];
+}>[];
 
 export interface SingleIndexGap {
   index: number;

@@ -20,7 +20,7 @@ export function useStackedGapsForVerticalChart({
     return [];
   }
 
-  const formattedStackedValues: FormattedStackedSeries = labels.map(
+  const formattedStackedValues: FormattedStackedSeries[] = labels.map(
     (_, labelIndex) => {
       return stackedValues.map((data) => {
         return data[labelIndex];

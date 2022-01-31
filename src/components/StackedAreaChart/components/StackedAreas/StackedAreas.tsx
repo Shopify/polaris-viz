@@ -9,10 +9,9 @@ import {
   LINE_ANIMATION_SLOW_DURATION,
   LINE_ANIMATION_DURATION_STEP,
 } from '../../../../constants';
-import type {Color} from '../../../../types';
+import type {Color, StackedSeries} from '../../../../types';
 import {curveStepRounded, uniqueId} from '../../../../utilities';
 import {usePrevious, useTheme} from '../../../../hooks';
-import type {StackedSeries} from '../../types';
 import {Area} from '..';
 
 import styles from './StackedAreas.scss';

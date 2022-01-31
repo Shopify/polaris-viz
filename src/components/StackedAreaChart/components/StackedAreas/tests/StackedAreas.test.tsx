@@ -1,10 +1,10 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
-import type {StackedSeries} from 'components/StackedAreaChart/types';
 
 import {StackedAreas} from '../StackedAreas';
 import {Area} from '../../Area';
+import type {StackedSeries} from '../../../../../types';
 
 jest.mock('d3-scale', () => ({
   scaleLinear: jest.fn(() => jest.fn(() => 250)),
