@@ -18,6 +18,7 @@ import {
   usePrefersReducedMotion,
   useTheme,
   useThemeSeriesColors,
+  useColorBlindEvents,
 } from '../../hooks';
 import {
   SMALL_SCREEN,
@@ -83,6 +84,8 @@ export function Chart({
   isAnimated,
   theme,
 }: Props) {
+  useColorBlindEvents();
+
   const {prefersReducedMotion} = usePrefersReducedMotion();
   const selectedTheme = useTheme(theme);
   const colors = useThemeSeriesColors(data, selectedTheme);

@@ -2,6 +2,7 @@ import React from 'react';
 import {animated, useSpring} from '@react-spring/web';
 import type {Area as D3Area, Line} from 'd3-shape';
 
+import {getColorBlindEventAttrs, getOpacityForActive} from '../../../../hooks';
 import type {
   Color,
   GradientStop,
@@ -13,6 +14,7 @@ import {LinearGradient} from '../../../LinearGradient';
 import {isGradientType} from '../../../../utilities';
 
 export interface AreaProps {
+  activeLineIndex: number;
   animationIndex: number;
   areaGenerator: D3Area<number[]>;
   colors: Color[];
@@ -26,6 +28,7 @@ export interface AreaProps {
 }
 
 export function Area({
+  activeLineIndex,
   animationIndex,
   areaGenerator,
   colors,
@@ -74,7 +77,18 @@ export function Area({
     : [{offset: 0, color: currentColor}];
 
   return (
-    <animated.g style={{...spring, transformOrigin: 'bottom center'}}>
+    <animated.g
+      style={{
+        ...spring,
+        transformOrigin: 'bottom center',
+        opacity: getOpacityForActive(activeLineIndex, index),
+      }}
+      {...getColorBlindEventAttrs({
+        type: 'singleItem',
+        index,
+      })}
+      tabIndex={-1}
+    >
       <defs>
         <LinearGradient
           id={`area-${id}-${index}`}
