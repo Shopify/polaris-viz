@@ -40,7 +40,7 @@ export function TooltipContent({
   const [activeBarIndex, setActiveBarIndex] = useState(-1);
 
   useWatchColorBlindEvents({
-    type: 'singleBar',
+    type: 'singleItem',
     onIndexChange: ({detail}) => setActiveBarIndex(detail.index),
   });
 

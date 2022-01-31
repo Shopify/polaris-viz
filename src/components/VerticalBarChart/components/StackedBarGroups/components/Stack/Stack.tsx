@@ -90,7 +90,7 @@ export function Stack({
               onMouseOver={onMouseOver}
               onMouseLeave={onMouseLeave}
               {...getColorBlindEventAttrs({
-                type: 'singleBar',
+                type: 'singleItem',
                 index,
               })}
               tabIndex={-1}

@@ -37,6 +37,7 @@ describe('<Area />', () => {
     .y(([, lastPoint]) => yScale(lastPoint));
 
   const mockProps: AreaProps = {
+    activeLineIndex: -1,
     animationIndex: 1,
     areaGenerator,
     colors: ['red', 'green'],

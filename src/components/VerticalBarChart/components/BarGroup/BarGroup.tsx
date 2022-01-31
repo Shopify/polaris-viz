@@ -191,7 +191,7 @@ export function BarGroup({
               onMouseOver={onMouseOver}
               onMouseLeave={onMouseLeave}
               {...getColorBlindEventAttrs({
-                type: 'singleBar',
+                type: 'singleItem',
                 index,
               })}
               className={styles.Bar}
