@@ -6,7 +6,7 @@ import {
   useThemeSeriesColors,
   getSeriesColors,
   getSeriesColorsFromCount,
-} from '../use-theme-series-colors';
+} from '../';
 
 const SELECTED_THEME = {
   seriesColors: {

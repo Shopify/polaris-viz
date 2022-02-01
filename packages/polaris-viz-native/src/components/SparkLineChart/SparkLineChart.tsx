@@ -1,49 +1,46 @@
 import React from 'react';
+import {View, StyleSheet} from 'react-native';
 import {scaleLinear} from 'd3-scale';
 
-import type {
-  Dimensions,
+import {
+  Svg,
   SparkLineChartProps,
+  useTheme,
+  useThemeSeriesColors,
+  useSparkLine,
+  LineSeries,
 } from '../../../../polaris-viz-core/src';
-import {useSparkLine, LineSeries} from '../../../../polaris-viz-core/src';
-import {useThemeSeriesColors, useTheme} from '../../hooks/';
-import {XMLNS} from '../../constants';
-
-import styles from './SparkLineChart.scss';
-
-interface Props extends SparkLineChartProps {
-  dimensions?: Dimensions;
-}
 
 const SVG_MARGIN = 2;
-
-export function Chart({
+export function SparkLineChart({
   data,
-  dimensions,
   accessibilityLabel,
   isAnimated = false,
   offsetLeft = 0,
   offsetRight = 0,
   theme = 'Default',
-}: Props) {
+}: SparkLineChartProps) {
   const selectedTheme = useTheme(theme);
   const seriesColors = useThemeSeriesColors(data, selectedTheme);
 
-  const {width, height} = dimensions ?? {height: 0, width: 0};
+  const width = 600;
+  const height = 400;
 
   const {minXValues, maxXValues, yScale} = useSparkLine({
     data,
     height,
-    svgMargin: SVG_MARGIN,
   });
 
   return (
-    <React.Fragment>
-      {accessibilityLabel ? (
-        <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
-      ) : null}
-
-      <svg xmlns={XMLNS} aria-hidden width={width} height={height}>
+    <View
+      style={[
+        StyleSheet.absoluteFill,
+        {alignItems: 'center', justifyContent: 'center'},
+      ]}
+      accessibilityRole="image"
+      accessibilityLabel={accessibilityLabel}
+    >
+      <Svg native width={width} height={height}>
         {data.map((series, index) => {
           const singleOffsetLeft = series.isComparison ? 0 : offsetLeft;
           const singleOffsetRight = series.isComparison ? 0 : offsetRight;
@@ -61,8 +58,9 @@ export function Chart({
           };
 
           return (
-            <g key={index}>
+            <React.Fragment key={index}>
               <LineSeries
+                native
                 key={index}
                 xScale={xScale}
                 yScale={yScale}
@@ -71,10 +69,10 @@ export function Chart({
                 svgDimensions={{height, width}}
                 theme={theme}
               />
-            </g>
+            </React.Fragment>
           );
         })}
-      </svg>
-    </React.Fragment>
+      </Svg>
+    </View>
   );
 }

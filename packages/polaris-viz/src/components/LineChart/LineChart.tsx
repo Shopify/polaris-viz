@@ -2,7 +2,11 @@ import React, {useRef} from 'react';
 
 import type {DataSeries} from '../../types';
 import {ChartContainer} from '../../components/ChartContainer';
-import {useThemeSeriesColors} from '../../hooks/use-theme-series-colors';
+import {
+  useThemeSeriesColors,
+  usePrefersReducedMotion,
+  useTheme,
+} from '../../hooks/';
 import {
   isGradientType,
   changeColorOpacity,
@@ -10,7 +14,6 @@ import {
   getAverageColor,
 } from '../../utilities';
 import {SkipLink} from '../SkipLink';
-import {usePrefersReducedMotion, useTheme} from '../../hooks';
 
 import {Chart} from './Chart';
 import type {

@@ -2,23 +2,22 @@ import React, {useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {area as areaShape, line} from 'd3-shape';
 
-import type {
-  DataPoint,
-  DataSeries,
-  GradientStop,
-  Theme,
-} from '../../../../types';
-import {LinearGradient} from '../../../LinearGradient';
+import type {Color, DataPoint, DataSeries, GradientStop} from '../../';
 import {
+  useTheme,
   curveStepRounded,
   uniqueId,
   isGradientType,
-  classNames,
-} from '../../../../utilities';
-import {usePrefersReducedMotion} from '../../../../hooks';
-import {Area} from '../Area';
+  Defs,
+  Mask,
+  Rect,
+  Circle,
+  Path,
+  LinearGradient,
+  usePrefersReducedMotion,
+} from '../../';
 
-import styles from './Series.scss';
+import {Area} from './components/Area';
 
 const POINT_RADIUS = 2;
 
@@ -28,22 +27,28 @@ const StrokeDasharray = {
   solid: 'unset',
 };
 
-export function Series({
-  xScale,
-  yScale,
-  data,
-  isAnimated,
-  svgDimensions,
-  theme,
-}: {
+export interface LineSeriesProps {
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
   data: DataSeries;
   isAnimated: boolean;
   svgDimensions: {width: number; height: number};
-  theme: Theme;
-}) {
-  const {prefersReducedMotion} = usePrefersReducedMotion();
+  native?: boolean;
+  theme: string;
+}
+
+export function LineSeries({
+  xScale,
+  yScale,
+  data,
+  isAnimated,
+  svgDimensions,
+  theme = 'Default',
+  native = false,
+}: LineSeriesProps) {
+  const color = data?.color;
+  const {prefersReducedMotion} = usePrefersReducedMotion({native});
+  const selectedTheme = useTheme(theme);
 
   const lineGenerator = line<DataPoint>()
     .x(({key}) => xScale(Number(key)))
@@ -56,7 +61,7 @@ export function Series({
     .y1(({value}) => (value == null ? yScale(0) : yScale(value)))
     .defined(({value}) => value != null);
 
-  if (theme.line.hasSpline) {
+  if (selectedTheme.line.hasSpline) {
     lineGenerator.curve(curveStepRounded);
     areaGenerator.curve(curveStepRounded);
   }
@@ -79,11 +84,11 @@ export function Series({
   const id = useMemo(() => uniqueId('sparkline'), []);
   const immediate = !isAnimated || prefersReducedMotion;
 
-  const lineGradientColor = isGradientType(data.color!)
-    ? data.color
+  const lineGradientColor = isGradientType(color!)
+    ? color
     : [
         {
-          color: data.color,
+          color,
           offset: 0,
         },
       ];
@@ -98,8 +103,9 @@ export function Series({
 
   return (
     <React.Fragment>
-      <defs>
+      <Defs native={native}>
         <LinearGradient
+          native={native}
           id={`line-${id}`}
           gradient={lineGradientColor as GradientStop[]}
           gradientUnits="userSpaceOnUse"
@@ -107,8 +113,9 @@ export function Series({
           y2="0%"
         />
 
-        <mask id={`mask-${id}`}>
-          <path
+        <Mask native={native} id={`mask-${id}`}>
+          <Path
+            native={native}
             d={lineShape}
             stroke="white"
             strokeLinejoin="round"
@@ -116,25 +123,38 @@ export function Series({
             style={{strokeDasharray: StrokeDasharray[lineStyle]}}
           />
           {showPoint && (
-            <circle cx={lastX} cy={lastY} r={POINT_RADIUS} fill="white" />
+            <Circle
+              native={native}
+              cx={lastX}
+              cy={lastY}
+              r={POINT_RADIUS}
+              fill="white"
+            />
           )}
-        </mask>
-      </defs>
+        </Mask>
+      </Defs>
 
       {data.isComparison === true ? null : (
-        <Area color={data.color!} immediate={immediate} areaPath={areaPath} />
+        <Area
+          native={native}
+          color={color!}
+          immediate={immediate}
+          areaPath={areaPath}
+        />
       )}
 
-      <rect
+      <Rect
+        native={native}
         x="0"
         y="0"
         width={svgDimensions.width}
         height={svgDimensions.height}
         fill={
-          data.isComparison ? theme.seriesColors.comparison : `url(#line-${id})`
+          data.isComparison
+            ? selectedTheme.seriesColors.comparison
+            : `url(#line-${id})`
         }
         mask={`url(#mask-${`${id}`})`}
-        className={classNames(styles.Line, !immediate && styles.AnimatedLine)}
       />
     </React.Fragment>
   );

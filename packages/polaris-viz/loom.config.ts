@@ -15,7 +15,7 @@ export default createPackage((pkg) => {
       esnext: true,
       rootEntrypoints: false,
     }),
-    buildLibraryExtended(),
+    buildLibraryExtended({graphql: false}),
     rollupAdjustOutputPlugin(),
   );
 });

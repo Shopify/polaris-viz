@@ -3,12 +3,15 @@ import {scaleBand, scaleLinear} from 'd3-scale';
 import {line} from 'd3-shape';
 import {useTransition} from '@react-spring/web';
 
-import {getSeriesColorsFromCount} from '../../hooks/use-theme-series-colors';
-import {usePrefersReducedMotion, useTheme} from '../../hooks';
+import {
+  getSeriesColorsFromCount,
+  usePrefersReducedMotion,
+  useTheme,
+} from '../../hooks';
 import {BARS_TRANSITION_CONFIG, XMLNS} from '../../constants';
 import type {DataPoint, DataSeries, Dimensions} from '../../types';
 import {uniqueId, getAnimationTrail, isGradientType} from '../../utilities';
-import {LinearGradient} from '../LinearGradient';
+import {LinearGradient} from '../../components';
 
 import {Bar} from './components';
 import styles from './SparkBarChart.scss';

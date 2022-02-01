@@ -1,7 +1,6 @@
 import React from 'react';
 
-import {useThemeSeriesColors} from '../../hooks/use-theme-series-colors';
-import {useTheme} from '../../hooks';
+import {useThemeSeriesColors, useTheme} from '../../hooks';
 import type {LineStyle, Color} from '../../types';
 import {LinePreview} from '../LinePreview';
 import {SquareColorPreview} from '../SquareColorPreview';

@@ -38,7 +38,7 @@ import {LinearXAxis} from '../LinearXAxis';
 import {YAxis} from '../YAxis';
 import {Point} from '../Point';
 import {Crosshair} from '../Crosshair';
-import {LinearGradient} from '../LinearGradient';
+import {LinearGradient} from '../../components';
 import {DataPoint, DataType, Dimensions} from '../../types';
 import {HorizontalGridLines} from '../HorizontalGridLines';
 

@@ -3,7 +3,7 @@ import React, {useMemo} from 'react';
 import type {GradientStop} from '../../../../types';
 import {isGradientType, uniqueId} from '../../../../utilities';
 import {MASK_SUBDUE_COLOR, MASK_HIGHLIGHT_COLOR} from '../../../../constants';
-import {LinearGradient} from '../../../LinearGradient';
+import {LinearGradient} from '../../../../components';
 
 import {Stack} from './components';
 import styles from './StackedBarGroup.scss';

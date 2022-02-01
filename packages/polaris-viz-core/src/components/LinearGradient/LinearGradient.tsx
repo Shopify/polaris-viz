@@ -1,5 +1,7 @@
-import React from 'react';
+import React, {createElement, ReactNode} from 'react';
+import {LinearGradient as NativeGradient} from 'react-native-svg';
 
+import {Stop} from '../';
 import type {GradientStop} from '../../types';
 
 export interface LinearGradientProps {
@@ -10,6 +12,23 @@ export interface LinearGradientProps {
   y1?: string;
   y2?: string;
   gradientUnits?: 'userSpaceOnUse' | 'objectBoundingBox';
+  native?: boolean;
+}
+
+function Gradient({
+  native,
+  children,
+  ...props
+}: {
+  native: boolean;
+  children: ReactNode;
+  [x: string]: any;
+}) {
+  return createElement(
+    native ? NativeGradient : 'linearGradient',
+    props,
+    children,
+  );
 }
 
 export function LinearGradient({
@@ -20,9 +39,11 @@ export function LinearGradient({
   y1 = '100%',
   y2 = '0%',
   gradientUnits = 'objectBoundingBox',
+  native = false,
 }: LinearGradientProps) {
   return (
-    <linearGradient
+    <Gradient
+      native={native}
       id={id}
       x1={x1}
       x2={x2}
@@ -31,13 +52,14 @@ export function LinearGradient({
       gradientUnits={gradientUnits}
     >
       {gradient.map(({color, offset, stopOpacity = 1}) => (
-        <stop
+        <Stop
+          native={native}
           key={`${id}-${color}-${offset}`}
           offset={`${offset}%`}
           stopColor={color}
           stopOpacity={stopOpacity}
         />
       ))}
-    </linearGradient>
+    </Gradient>
   );
 }

@@ -5,7 +5,7 @@ import {LinearGradient, LinearGradientProps} from '../LinearGradient';
 import {XMLNS} from '../../../constants';
 
 export default {
-  title: 'Subcomponents/LinearGradient',
+  title: 'Core/LinearGradient',
   component: LinearGradient,
   parameters: {
     controls: {sort: 'requiredFirst', expanded: true},

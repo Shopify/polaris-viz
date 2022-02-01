@@ -1,10 +1,8 @@
 import React, {useMemo} from 'react';
 
-import type {Color} from '../../../../types';
-import {isGradientType, uniqueId} from '../../../../utilities';
-import {LinearGradient} from '../../../LinearGradient';
-
-import styles from './Area.scss';
+import type {Color} from '../../../types';
+import {LinearGradient, Defs, Path, Mask} from '../../../components';
+import {isGradientType, uniqueId} from '../../../utilities';
 
 function getGradientFill(color: Color | null) {
   if (color == null) {
@@ -36,9 +34,10 @@ interface AreaProps {
   color: Color;
   areaPath: string;
   immediate: boolean;
+  native: boolean;
 }
 
-export function Area({areaPath, color, immediate}: AreaProps) {
+export function Area({areaPath, color, immediate, native = false}: AreaProps) {
   const gradientId = useMemo(() => uniqueId('gradient'), []);
   const maskId = useMemo(() => uniqueId('mask'), []);
 
@@ -46,15 +45,17 @@ export function Area({areaPath, color, immediate}: AreaProps) {
 
   return areaGradientColor == null ? null : (
     <React.Fragment>
-      <defs>
-        <mask id={maskId}>
-          <path
+      <Defs native={native}>
+        <Mask native={native} id={maskId}>
+          <Path
+            native={native}
             fill={`url(#${maskId}-gradient)`}
             d={areaPath}
-            className={immediate ? undefined : styles.Area}
+            // className={immediate ? undefined : styles.Area}
           />
-        </mask>
+        </Mask>
         <LinearGradient
+          native={native}
           id={`${maskId}-gradient`}
           y1="0%"
           y2="100%"
@@ -62,13 +63,15 @@ export function Area({areaPath, color, immediate}: AreaProps) {
         />
 
         <LinearGradient
+          native={native}
           id={gradientId}
           y1="100%"
           y2="0%"
           gradient={areaGradientColor}
         />
-      </defs>
-      <path
+      </Defs>
+      <Path
+        native={native}
         d={areaPath}
         fill={`url(#${gradientId})`}
         mask={`url(#${maskId})`}
