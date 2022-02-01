@@ -7,6 +7,7 @@ export default createPackage((pkg) => {
   pkg.entry({root: './src/index.ts'});
   pkg.use(
     buildLibrary({
+      jestTestEnvironment: 'jsdom',
       targets: 'extends @shopify/browserslist-config, node 12.22.0',
       commonjs: true,
       esmodules: true,
