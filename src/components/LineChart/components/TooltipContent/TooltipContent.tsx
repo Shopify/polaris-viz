@@ -1,8 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import type {LineStyle, Color} from 'types';
 
 import {getSeriesColorsFromCount} from '../../../../hooks/use-theme-series-colors';
-import {useTheme} from '../../../../hooks';
+import {
+  getOpacityForActive,
+  useTheme,
+  useWatchColorBlindEvents,
+} from '../../../../hooks';
 import {LinePreview} from '../../../LinePreview';
 
 import styles from './TooltipContent.scss';
@@ -23,8 +27,15 @@ export interface TooltipContentProps {
 }
 
 export function TooltipContent({data, theme}: TooltipContentProps) {
+  const [activeLineIndex, setActiveLineIndex] = useState(-1);
+
   const selectedTheme = useTheme(theme);
   const seriesColor = getSeriesColorsFromCount(data.length, selectedTheme);
+
+  useWatchColorBlindEvents({
+    type: 'singleLine',
+    onIndexChange: ({detail}) => setActiveLineIndex(detail.index),
+  });
 
   const {tooltip} = selectedTheme;
   return (
@@ -37,7 +48,11 @@ export function TooltipContent({data, theme}: TooltipContentProps) {
     >
       {data.map(({name, point: {label, value}, color, lineStyle}, index) => {
         return (
-          <React.Fragment key={`${name}-${index}`}>
+          <div
+            className={styles.Row}
+            key={`${name}-${index}`}
+            style={{opacity: getOpacityForActive(activeLineIndex, index)}}
+          >
             <LinePreview
               color={color ?? seriesColor[index]}
               lineStyle={lineStyle}
@@ -51,7 +66,7 @@ export function TooltipContent({data, theme}: TooltipContentProps) {
             >
               {value}
             </p>
-          </React.Fragment>
+          </div>
         );
       })}
     </div>

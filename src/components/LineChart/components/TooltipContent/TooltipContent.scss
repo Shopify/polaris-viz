@@ -14,11 +14,16 @@
 
 .Container {
   @include tooltip-text;
-  display: grid;
-  grid-template-columns: 1fr auto auto;
   align-items: center;
-  column-gap: $spacing-tight;
-  row-gap: $spacing-tight;
   background: $color-white;
   padding: $spacing-loose;
+  display: grid;
+  row-gap: $spacing-tight;
+}
+
+.Row {
+  width: 100%;
+  column-gap: $spacing-tight;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
 }
