@@ -1,8 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import type {PartialTheme} from 'types';
-
-import {PolarisVizProvider} from '../components/';
+import {PolarisVizProvider} from '@shopify/polaris-viz';
 
 export const mountWithProvider = (
   child: React.ReactElement<any, any>,

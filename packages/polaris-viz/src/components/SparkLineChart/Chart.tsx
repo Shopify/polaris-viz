@@ -64,6 +64,7 @@ export function Chart({
           return (
             <g key={index}>
               <LineSeries
+                index={index}
                 key={index}
                 xScale={xScale}
                 yScale={yScale}

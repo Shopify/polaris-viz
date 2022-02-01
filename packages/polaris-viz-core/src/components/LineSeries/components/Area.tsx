@@ -34,8 +34,6 @@ const MASK_GRADIENT = [
 interface AreaProps {
   color: Color;
   areaPath: string;
-  // eslint-disable-next-line react/no-unused-prop-types
-  immediate: boolean;
 }
 
 export function Area({areaPath, color}: AreaProps) {

@@ -61,6 +61,7 @@ export function SparkLineChart({
               <LineSeries
                 native
                 key={index}
+                index={index}
                 xScale={xScale}
                 yScale={yScale}
                 data={seriesWithColor}

@@ -9,15 +9,15 @@ import {
 
 export const PolarisVizContext = createContext<{
   themes: {[key: string]: Theme};
-  native: boolean;
   components: SvgComponents;
+  animated: (...args: any[]) => React.ReactNode;
 }>({
   themes: {
     Default,
     Light,
   },
-  native: false,
   components: {
     ...DefaultComponents,
   },
+  animated: () => null,
 });
