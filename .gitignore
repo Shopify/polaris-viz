@@ -7,3 +7,4 @@ packages/*/build
 .expo/
 .yalc
 yalc.lock
+build

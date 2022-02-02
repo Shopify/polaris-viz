@@ -2,8 +2,11 @@ import React, {useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {area as areaShape, line} from 'd3-shape';
 
-import type {DataPoint, DataSeries, GradientStop} from '../../';
 import {
+  DataPoint,
+  DataSeries,
+  GradientStop,
+  usePolarisVizContext,
   useTheme,
   curveStepRounded,
   uniqueId,
@@ -44,9 +47,9 @@ export function LineSeries({
   isAnimated,
   svgDimensions,
   theme = 'Default',
-  native = false,
 }: LineSeriesProps) {
   const color = data?.color;
+  const {native} = usePolarisVizContext();
   const {prefersReducedMotion} = usePrefersReducedMotion({native});
   const selectedTheme = useTheme(theme);
 
@@ -103,9 +106,8 @@ export function LineSeries({
 
   return (
     <React.Fragment>
-      <Defs native={native}>
+      <Defs>
         <LinearGradient
-          native={native}
           id={`line-${id}`}
           gradient={lineGradientColor as GradientStop[]}
           gradientUnits="userSpaceOnUse"
@@ -113,9 +115,8 @@ export function LineSeries({
           y2="0%"
         />
 
-        <Mask native={native} id={`mask-${id}`}>
+        <Mask id={`mask-${id}`}>
           <Path
-            native={native}
             d={lineShape}
             stroke="white"
             strokeLinejoin="round"
@@ -123,28 +124,16 @@ export function LineSeries({
             style={{strokeDasharray: StrokeDasharray[lineStyle]}}
           />
           {showPoint && (
-            <Circle
-              native={native}
-              cx={lastX}
-              cy={lastY}
-              r={POINT_RADIUS}
-              fill="white"
-            />
+            <Circle cx={lastX} cy={lastY} r={POINT_RADIUS} fill="white" />
           )}
         </Mask>
       </Defs>
 
       {data.isComparison === true ? null : (
-        <Area
-          native={native}
-          color={color!}
-          immediate={immediate}
-          areaPath={areaPath}
-        />
+        <Area color={color!} immediate={immediate} areaPath={areaPath} />
       )}
 
       <Rect
-        native={native}
         x="0"
         y="0"
         width={svgDimensions.width}

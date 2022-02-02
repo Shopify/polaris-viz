@@ -1,8 +1,8 @@
-import React, {createElement, ReactNode} from 'react';
-import {LinearGradient as NativeGradient} from 'react-native-svg';
+import React from 'react';
 
 import {Stop} from '../';
 import type {GradientStop} from '../../types';
+import {LinearGradient as SVGLinearGradient} from '../SVG';
 
 export interface LinearGradientProps {
   gradient: GradientStop[];
@@ -15,22 +15,6 @@ export interface LinearGradientProps {
   native?: boolean;
 }
 
-function Gradient({
-  native,
-  children,
-  ...props
-}: {
-  native: boolean;
-  children: ReactNode;
-  [x: string]: any;
-}) {
-  return createElement(
-    native ? NativeGradient : 'linearGradient',
-    props,
-    children,
-  );
-}
-
 export function LinearGradient({
   gradient,
   id,
@@ -39,11 +23,9 @@ export function LinearGradient({
   y1 = '100%',
   y2 = '0%',
   gradientUnits = 'objectBoundingBox',
-  native = false,
 }: LinearGradientProps) {
   return (
-    <Gradient
-      native={native}
+    <SVGLinearGradient
       id={id}
       x1={x1}
       x2={x2}
@@ -53,13 +35,12 @@ export function LinearGradient({
     >
       {gradient.map(({color, offset, stopOpacity = 1}) => (
         <Stop
-          native={native}
           key={`${id}-${color}-${offset}`}
           offset={`${offset}%`}
           stopColor={color}
           stopOpacity={stopOpacity}
         />
       ))}
-    </Gradient>
+    </SVGLinearGradient>
   );
 }
