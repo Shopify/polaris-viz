@@ -16,7 +16,6 @@ import {
   Image as NativeImage,
   Symbol as NativeSymbol,
   Defs as NativeDefs,
-  LinearGradient as NativeLinearGradient,
   RadialGradient as NativeRadialGradient,
   Stop as NativeStop,
   ClipPath as NativeClipPath,

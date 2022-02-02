@@ -26,7 +26,7 @@
     "!build/ts/**/documentation/",
     "!*.stories.*"
   ],
-  "dependencies": {
+  "devDependencies": {
     "@shopify/polaris-viz-core": "^1.0.0-alpha0"
   },
   "peerDependencies": {

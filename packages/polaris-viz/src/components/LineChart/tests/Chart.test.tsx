@@ -1,6 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {line} from 'd3-shape';
+import {LinearGradient} from '@shopify/polaris-viz-core';
 
 import {Crosshair} from '../../../components/Crosshair';
 import {LinearXAxis} from '../../../components/LinearXAxis';
@@ -10,7 +11,6 @@ import {mountWithProvider, triggerSVGMouseMove} from '../../../test-utilities';
 import {HorizontalGridLines} from '../../../components/HorizontalGridLines';
 import {mockDefaultTheme} from '../../../test-utilities/mount-with-provider';
 import {TooltipAnimatedContainer} from '../../../components/TooltipWrapper';
-import {LinearGradient} from '../../LinearGradient';
 import {Chart} from '../Chart';
 import {Line, GradientArea} from '../components';
 import {YAxis} from '../../YAxis';

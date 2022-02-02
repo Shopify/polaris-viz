@@ -1,12 +1,12 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
+import {LinearGradient} from '@shopify/polaris-viz-core';
 
 import {BAR_SPACING} from '../../../constants';
 import {MIN_BAR_HEIGHT} from '../../../../../constants';
 import {BarGroup} from '../BarGroup';
 import {Bar} from '../../../components/Bar';
-import {LinearGradient} from '../../../../../components/LinearGradient';
 
 jest.mock('d3-scale', () => ({
   scaleLinear: jest.fn(() => jest.fn((value) => value)),

@@ -1,7 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
+import {LinearGradient} from '@shopify/polaris-viz-core';
 
-import {LinearGradient} from '../../../LinearGradient';
 import {GradientDefs} from '../GradientDefs';
 
 const MOCK_PROPS = {

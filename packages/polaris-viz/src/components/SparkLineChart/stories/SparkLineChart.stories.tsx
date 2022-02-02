@@ -1,7 +1,8 @@
 import React from 'react';
 import type {Story, Meta} from '@storybook/react';
 
-import {SparkLineChart, SparkLineChartProps} from '../';
+import {SparkLineChart} from '../';
+import type {SparkLineChartProps} from '@shopify/polaris-viz-core';
 import {THEME_CONTROL_ARGS} from '../../../storybook';
 
 const DATA = [
@@ -144,9 +145,8 @@ OffsetAndNulls.args = {
   ],
 };
 
-export const OverwrittenSeriesColors: Story<SparkLineChartProps> = Template.bind(
-  {},
-);
+export const OverwrittenSeriesColors: Story<SparkLineChartProps> =
+  Template.bind({});
 OverwrittenSeriesColors.args = {
   ...defaultProps,
   data: [

@@ -1,8 +1,8 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
+import {LineSeries} from '@shopify/polaris-viz-core';
 
 import {SparkLineChart} from '../SparkLineChart';
-import {Series} from '../components';
 import type {DataSeries} from '../../../types';
 
 jest.mock('../../../utilities/unique-id', () => ({
@@ -86,7 +86,7 @@ describe('<SparkLineChart />', () => {
     it('renders a Series for each series provided', () => {
       const sparkLineChart = mount(<SparkLineChart data={mockData} />);
 
-      expect(sparkLineChart.findAll(Series)).toHaveLength(mockData.length);
+      expect(sparkLineChart.findAll(LineSeries)).toHaveLength(mockData.length);
     });
   });
 });

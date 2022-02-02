@@ -1,12 +1,12 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
-
-import type {Theme} from '../../types';
 import {
-  useThemeSeriesColors,
   getSeriesColors,
   getSeriesColorsFromCount,
-} from '../';
+} from '@shopify/poalris-viz-core';
+
+import type {Theme} from '../../types';
+import {useThemeSeriesColors} from '../';
 
 const SELECTED_THEME = {
   seriesColors: {

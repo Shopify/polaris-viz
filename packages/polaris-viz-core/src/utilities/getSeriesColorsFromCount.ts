@@ -1,4 +1,4 @@
-import {Theme, Color} from '../types';
+import type {Theme, Color} from '../types';
 
 import {getSeriesColors} from './getSeriesColors';
 

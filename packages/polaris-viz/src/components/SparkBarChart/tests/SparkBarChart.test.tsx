@@ -1,9 +1,9 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleBand} from 'd3-scale';
+import {LinearGradient} from '@shopify/polaris-viz-core';
 
 import {SparkBarChart} from '../SparkBarChart';
-import {LinearGradient} from '../../LinearGradient';
 import type {DataSeries} from '../../../types';
 
 const sampleData: DataSeries = {

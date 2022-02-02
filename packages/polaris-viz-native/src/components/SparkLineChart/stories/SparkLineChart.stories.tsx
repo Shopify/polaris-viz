@@ -2,7 +2,7 @@ import React from 'react';
 import type {Story, Meta} from '@storybook/react';
 
 import {SparkLineChart} from '../';
-import type {SparkLineChartProps} from '../../../../../polaris-viz-core/src';
+import type {SparkLineChartProps} from '@shopify/polaris-viz-core';
 
 const THEME_CONTROL_ARGS = {
   description: 'The theme that the chart will inherit its styles from',
@@ -149,9 +149,8 @@ OffsetAndNulls.args = {
   ],
 };
 
-export const OverwrittenSeriesColors: Story<SparkLineChartProps> = Template.bind(
-  {},
-);
+export const OverwrittenSeriesColors: Story<SparkLineChartProps> =
+  Template.bind({});
 OverwrittenSeriesColors.args = {
   ...defaultProps,
   data: [

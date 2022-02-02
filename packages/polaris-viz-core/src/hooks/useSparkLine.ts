@@ -1,4 +1,3 @@
-import React from 'react';
 import {scaleLinear} from 'd3-scale';
 
 export function useSparkLine({data, height, svgMargin = 2}) {

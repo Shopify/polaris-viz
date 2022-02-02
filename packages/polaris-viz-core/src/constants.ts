@@ -1,5 +1,3 @@
-import type {Theme} from 'types';
-
 import variables from './styles/shared/_variables.scss';
 import {createGradient} from './utilities';
 import type {Theme} from './types';

@@ -2,7 +2,7 @@ export {Point} from './Point';
 export {Crosshair} from './Crosshair';
 export {HorizontalGridLines} from './HorizontalGridLines';
 export {SparkLineChart} from './SparkLineChart';
-export type {SparkLineChartProps} from './SparkLineChart';
+export type {SparkLineChartProps} from '@shopify/polaris-viz-core';
 export {SparkBarChart} from './SparkBarChart';
 export type {SparkBarChartProps} from './SparkBarChart';
 export {LineChart, LineChartTooltipContent} from './LineChart';

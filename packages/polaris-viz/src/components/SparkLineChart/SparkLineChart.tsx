@@ -1,6 +1,6 @@
 import React from 'react';
+import type {SparkLineChartProps} from '@shopify/polaris-viz-core';
 
-import type {SparkLineChartProps} from '../../../../polaris-viz-core/src';
 import {ChartContainer} from '../ChartContainer';
 
 import {Chart} from './Chart';
