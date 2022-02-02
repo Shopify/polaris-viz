@@ -4,6 +4,7 @@
     "emitDeclarationOnly": true,
     "incremental": true,
     "importsNotUsedAsValues": "error",
-    "strictFunctionTypes": false
+    "strictFunctionTypes": false,
+    "noImplicitAny": false
   }
 }
