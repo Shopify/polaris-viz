@@ -1,0 +1,170 @@
+import {Meta, Story, Canvas} from '@storybook/addon-docs/blocks';
+
+import {
+  Divider,
+  Title,
+} from '../../../polaris-viz/src/components/Docs/stories/components';
+
+<Meta
+  title="Docs/Core/Utilities"
+  parameters={{
+    viewMode: 'docs',
+    docsOnly: true,
+  }}
+/>
+
+<Title>🛠 Utilities</Title>
+
+<p>
+  All Polaris Viz charts have a <code>data</code> prop that accepts an array of{' '}
+  <code>DataSeries</code>:
+</p>
+
+<Title type="h3">
+  <code>createGradient()</code>
+</Title>
+
+<p>Returns a gradient from 2 provided colors.</p>
+
+```tsx
+const gradient = createGradient('red', 'green');
+
+// [
+//   {offset: 0, color: 'red'},
+//   {offset: 100, color: 'green'},
+// ]
+```
+
+<Divider />
+
+<Title type="h3">
+  <code>curveStepRounded()</code>
+</Title>
+
+<p>Apply a rounded curve to `d3-line` or `d3-shape`.</p>
+
+```tsx
+const lineGenerator = useMemo(() => {
+  const generator = line<DataPoint>()
+    .x((_, index) => (xScale == null ? 0 : xScale(index)))
+    .y(({value}) => yScale(value ?? 0));
+
+  // Apply a nice curve to each line point
+  generator.curve(curveStepRounded);
+
+  return generator;
+}, [selectedTheme.line.hasSpline, xScale, yScale]);
+```
+
+<Divider />
+
+<Title type="h3">
+  <code>getFilteredSeriesCount()</code>
+</Title>
+
+<p>Return an array where all comparison data has been removed.</p>
+
+```tsx
+const DATA = [
+  {
+    data: [{key: 0, value: 100}],
+  },
+  {
+    isComparison: true,
+    data: [{key: 0, value: 200}],
+  },
+];
+
+const series = getFilteredSeriesCount(DATA);
+
+// [
+//   {
+//     data: [{key: 0, value: 100}],
+//   },
+// ]
+```
+
+<Divider />
+
+<Title type="h3">
+  <code>getSeriesColors()</code>
+</Title>
+
+<p>
+  Return an array of theme series colors based on provided number. You can{' '}
+  <a href="/docs/docs-themes-theme-definition--page">
+    read more about series colors in the Theme Definition docs.
+  </a>
+</p>
+
+```tsx
+const seriesColors = getSeriesColors(1, 'Default');
+
+// [
+//   {
+//     offset: 0,
+//     color: '#7f4afa',
+//   },
+//   {
+//     offset: 85,
+//     color: '#3672bb',
+//   },
+//   {
+//     offset: 100,
+//     color: '#4b92e5',
+//   },
+// ]
+```
+
+<Divider />
+
+<Title type="h3">
+  <code>getSeriesColorsFromCount()</code>
+</Title>
+
+<p>
+  Return an array of theme series colors that will loop if the provided number
+  value is larger than the number of array items returned from{' '}
+  <code>getSeriesColors()</code>
+</p>
+
+<Divider />
+
+<Title type="h3">
+  <code>isGradientType()</code>
+</Title>
+
+<p>
+  Returns a boolean based on if the provided color is a gradient or solid color.
+</p>
+
+```tsx
+isGradientType([
+  {offset: 0, color: 'red'},
+  {offset: 100, color: 'green'},
+]);
+
+// true
+
+isGradientType('red');
+
+// false
+```
+
+<Divider />
+
+<Title type="h3">
+  <code>uniqueId()</code>
+</Title>
+
+<p>Returns a prefixed, auto-incremented string.</p>
+
+```tsx
+uniqueId('Pickle');
+
+// Pickle-1
+
+uniqueId('Pickle');
+
+// Pickle-2
+```
