@@ -18,7 +18,7 @@ export interface PolarisVizProviderProps {
 export function PolarisVizProvider({
   children,
   themes,
-  native,
+  native = false,
 }: PolarisVizProviderProps) {
   const value = useMemo(() => {
     return {

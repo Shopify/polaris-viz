@@ -34,7 +34,7 @@ const NATIVE_COMPONENTS: {[key: string]: ComponentClass} = {
   g: NativeG,
   text: NativeText,
   tspan: NativeTSpan,
-  textpath: NativeTextPath,
+  textPath: NativeTextPath,
   path: NativePath,
   polygon: NativePolygon,
   polyline: NativePolyline,
@@ -44,20 +44,20 @@ const NATIVE_COMPONENTS: {[key: string]: ComponentClass} = {
   image: NativeImage,
   symbol: NativeSymbol,
   defs: NativeDefs,
-  lineargradient: NativeLinearGradient,
-  radialgradient: NativeRadialGradient,
+  linearGradient: NativeLinearGradient,
+  radialGradient: NativeRadialGradient,
   stop: NativeStop,
   clippath: NativeClipPath,
   pattern: NativePattern,
   mask: NativeMask,
 };
 
-interface RootProps extends SVGProps<SVGElement> {
+interface SvgNodeProps extends SVGProps<SVGElement> {
   tagName: string;
   children?: ReactNode;
 }
 
-function Root({tagName, children, ...props}: RootProps) {
+function SvgNode({tagName, children, ...props}: SvgNodeProps) {
   const {native} = usePolarisVizContext();
 
   return createElement(
@@ -73,130 +73,130 @@ interface Props<T> extends SVGProps<T> {
 
 export const Svg = ({children, ...props}: Props<SVGSVGElement>) => {
   return (
-    <Root tagName="svg" {...props}>
+    <SvgNode tagName="svg" {...props}>
       {children}
-    </Root>
+    </SvgNode>
   );
 };
 
 export const Circle = ({children, ...props}: Props<SVGCircleElement>) => {
   return (
-    <Root tagName="circle" {...props}>
+    <SvgNode tagName="circle" {...props}>
       {children}
-    </Root>
+    </SvgNode>
   );
 };
 
 export const Ellipse = ({children, ...props}: Props<SVGEllipseElement>) => {
   return (
-    <Root tagName="ellipse" {...props}>
+    <SvgNode tagName="ellipse" {...props}>
       {children}
-    </Root>
+    </SvgNode>
   );
 };
 
 // eslint-disable-next-line id-length
 export const G = ({children, ...props}: Props<SVGGElement>) => {
   return (
-    <Root tagName="g" {...props}>
+    <SvgNode tagName="g" {...props}>
       {children}
-    </Root>
+    </SvgNode>
   );
 };
 
 export const Text = ({children, ...props}: Props<SVGTextElement>) => {
   return (
-    <Root tagName="text" {...props}>
+    <SvgNode tagName="text" {...props}>
       {children}
-    </Root>
+    </SvgNode>
   );
 };
 
 export const TSpan = ({children, ...props}: Props<SVGTSpanElement>) => {
   return (
-    <Root tagName="tSpan" {...props}>
+    <SvgNode tagName="tspan" {...props}>
       {children}
-    </Root>
+    </SvgNode>
   );
 };
 
 export const TextPath = ({children, ...props}: Props<SVGTextPathElement>) => {
   return (
-    <Root tagName="textPath" {...props}>
+    <SvgNode tagName="textPath" {...props}>
       {children}
-    </Root>
+    </SvgNode>
   );
 };
 
 export const Path = ({children, ...props}: Props<SVGPathElement>) => {
   return (
-    <Root tagName="path" {...props}>
+    <SvgNode tagName="path" {...props}>
       {children}
-    </Root>
+    </SvgNode>
   );
 };
 
 export const Polygon = ({children, ...props}: Props<SVGPolygonElement>) => {
   return (
-    <Root tagName="polygon" {...props}>
+    <SvgNode tagName="polygon" {...props}>
       {children}
-    </Root>
+    </SvgNode>
   );
 };
 
 export const Polyline = ({children, ...props}: Props<SVGPolylineElement>) => {
   return (
-    <Root tagName="polyline" {...props}>
+    <SvgNode tagName="polyline" {...props}>
       {children}
-    </Root>
+    </SvgNode>
   );
 };
 
 export const Line = ({children, ...props}: Props<SVGLineElement>) => {
   return (
-    <Root tagName="line" {...props}>
+    <SvgNode tagName="line" {...props}>
       {children}
-    </Root>
+    </SvgNode>
   );
 };
 
 export const Rect = ({children, ...props}: Props<SVGRectElement>) => {
   return (
-    <Root tagName="rect" {...props}>
+    <SvgNode tagName="rect" {...props}>
       {children}
-    </Root>
+    </SvgNode>
   );
 };
 
 export const Use = ({children, ...props}: Props<SVGUseElement>) => {
   return (
-    <Root tagName="use" {...props}>
+    <SvgNode tagName="use" {...props}>
       {children}
-    </Root>
+    </SvgNode>
   );
 };
 
 export const Image = ({children, ...props}: Props<SVGImageElement>) => {
   return (
-    <Root tagName="image" {...props}>
+    <SvgNode tagName="image" {...props}>
       {children}
-    </Root>
+    </SvgNode>
   );
 };
 
 export const Symbol = ({children, ...props}: Props<SVGSymbolElement>) => {
   return (
-    <Root tagName="symbol" {...props}>
+    <SvgNode tagName="symbol" {...props}>
       {children}
-    </Root>
+    </SvgNode>
   );
 };
 
 export const Defs = ({children, ...props}: Props<SVGDefsElement>) => {
   return (
-    <Root tagName="defs" {...props}>
+    <SvgNode tagName="defs" {...props}>
       {children}
-    </Root>
+    </SvgNode>
   );
 };
 
@@ -205,9 +205,9 @@ export const RadialGradient = ({
   ...props
 }: Props<SVGRadialGradientElement>) => {
   return (
-    <Root tagName="radialGradient" {...props}>
+    <SvgNode tagName="radialGradient" {...props}>
       {children}
-    </Root>
+    </SvgNode>
   );
 };
 
@@ -216,40 +216,40 @@ export const LinearGradient = ({
   ...props
 }: Props<SVGLinearGradientElement>) => {
   return (
-    <Root tagName="linearGradient" {...props}>
+    <SvgNode tagName="linearGradient" {...props}>
       {children}
-    </Root>
+    </SvgNode>
   );
 };
 
 export const Stop = ({children, ...props}: Props<SVGStopElement>) => {
   return (
-    <Root tagName="stop" {...props}>
+    <SvgNode tagName="stop" {...props}>
       {children}
-    </Root>
+    </SvgNode>
   );
 };
 
 export const ClipPath = ({children, ...props}: Props<SVGClipPathElement>) => {
   return (
-    <Root tagName="clipPath" {...props}>
+    <SvgNode tagName="clipPath" {...props}>
       {children}
-    </Root>
+    </SvgNode>
   );
 };
 
 export const Pattern = ({children, ...props}: Props<SVGPatternElement>) => {
   return (
-    <Root tagName="pattern" {...props}>
+    <SvgNode tagName="pattern" {...props}>
       {children}
-    </Root>
+    </SvgNode>
   );
 };
 
 export const Mask = ({children, ...props}: Props<SVGMaskElement>) => {
   return (
-    <Root tagName="mask" {...props}>
+    <SvgNode tagName="mask" {...props}>
       {children}
-    </Root>
+    </SvgNode>
   );
 };

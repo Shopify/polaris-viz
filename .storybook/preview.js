@@ -130,6 +130,7 @@ export const decorators = [
             },
           },
         }}
+        native={context.parameters.native}
       >
         <Container
           height={context.parameters.previewHeight}
