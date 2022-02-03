@@ -33,11 +33,12 @@ const MASK_GRADIENT = [
 interface AreaProps {
   color: Color;
   areaPath: string;
+  // eslint-disable-next-line react/no-unused-prop-types
   immediate: boolean;
   native: boolean;
 }
 
-export function Area({areaPath, color, immediate, native = false}: AreaProps) {
+export function Area({areaPath, color, native = false}: AreaProps) {
   const gradientId = useMemo(() => uniqueId('gradient'), []);
   const maskId = useMemo(() => uniqueId('mask'), []);
 

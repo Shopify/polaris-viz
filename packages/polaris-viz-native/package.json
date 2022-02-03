@@ -1,33 +1,30 @@
 {
   "name": "@shopify/polaris-viz-native",
-  "version": "0.28.7",
-  "main": "node_modules/expo/AppEntry.js",
-  "scripts": {
-    "prebuild": "rimraf build",
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web",
-    "eject": "expo eject"
+  "version": "1.0.0-alpha0",
+  "main": "build/cjs/index.js",
+  "description": "Polaris Viz for React Native",
+  "private": false,
+  "license": "SEE LICENSE IN LICENSE.md",
+  "author": "Shopify <dev@shopify.com>",
+  "files": [
+    "build/",
+    "!build/tsconfig.tsbuildinfo"
+  ],
+  "publishConfig": {
+    "access": "public"
   },
   "dependencies": {
-    "@shopify/loom": "^1.0.1",
-    "@shopify/loom-plugin-build-library": "^1.0.1",
-    "@shopify/polaris-viz-core": "0.28.7",
+    "@react-spring/native": "^9.4.2",
+    "@shopify/polaris-viz-core": "^1.0.0-alpha0",
     "expo": "~44.0.0",
     "expo-status-bar": "~1.2.0",
-    "react": "17.0.1",
-    "react-dom": "17.0.1",
-    "react-native": "0.64.3",
-    "react-native-web": "0.17.1",
     "d3-scale": "^1.0.7"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9",
-    "@types/react": "~17.0.21",
-    "@types/react-native": "~0.64.12",
-    "babel-loader": "^8.2.3",
-    "typescript": "~4.3.5"
+    "@types/d3-scale": "^2.1.1"
   },
-  "private": true
+  "peerDependencies": {
+    "react": "^16.8.0  || ^17.0.0",
+    "react-native": ">=0.58"
+  }
 }

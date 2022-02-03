@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {scaleLinear} from 'd3-scale';
-
 import {
   Svg,
   SparkLineChartProps,
@@ -9,7 +8,7 @@ import {
   useThemeSeriesColors,
   useSparkLine,
   LineSeries,
-} from '../../../../polaris-viz-core/src';
+} from '@shopify/polaris-viz-core';
 
 const SVG_MARGIN = 2;
 export function SparkLineChart({

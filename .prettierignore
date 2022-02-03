@@ -3,4 +3,4 @@ node_modules
 packages/*/build
 **/*.md
 .github
-package.json
+lerna.json

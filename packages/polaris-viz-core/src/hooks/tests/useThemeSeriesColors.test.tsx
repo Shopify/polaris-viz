@@ -1,12 +1,9 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
+import {getSeriesColors, getSeriesColorsFromCount} from '../../utilities';
 import type {Theme} from '../../types';
-import {
-  useThemeSeriesColors,
-  getSeriesColors,
-  getSeriesColorsFromCount,
-} from '../';
+import {useThemeSeriesColors} from '../';
 
 const SELECTED_THEME = {
   seriesColors: {
@@ -53,11 +50,11 @@ describe('useThemeSeriesColors', () => {
           [
             {
               name: 'First-time',
-              data: [{label: 'January', rawValue: 4237}],
+              data: [{key: 'January', value: 4237}],
             },
             {
               name: 'Returning',
-              data: [{label: 'January', rawValue: 5663}],
+              data: [{key: 'January', value: 5663}],
             },
           ],
           SELECTED_THEME as Theme,
@@ -77,11 +74,11 @@ describe('useThemeSeriesColors', () => {
           [
             {
               name: 'First-time',
-              data: [{label: 'January', rawValue: 4237}],
+              data: [{key: 'January', value: 4237}],
             },
             {
               name: 'Returning',
-              data: [{label: 'January', rawValue: 5663}],
+              data: [{key: 'January', value: 5663}],
               color: '#ff1111',
             },
           ],
@@ -102,7 +99,7 @@ describe('useThemeSeriesColors', () => {
         .map((index) => {
           return {
             name: index,
-            data: [{label: 'January', rawValue: 4237}],
+            data: [{key: 'January', value: 4237}],
           };
         });
 
@@ -134,7 +131,7 @@ describe('useThemeSeriesColors', () => {
         .map((_, index) => {
           return {
             name: `${index}`,
-            data: [{label: 'January', rawValue: 4237}],
+            data: [{key: 'January', value: 4237}],
             color: index === 5 ? '#ff1111' : undefined,
           };
         });

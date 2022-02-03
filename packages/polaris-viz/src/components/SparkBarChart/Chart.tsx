@@ -2,16 +2,16 @@ import React, {useCallback, useMemo} from 'react';
 import {scaleBand, scaleLinear} from 'd3-scale';
 import {line} from 'd3-shape';
 import {useTransition} from '@react-spring/web';
-
 import {
+  LinearGradient,
   getSeriesColorsFromCount,
   usePrefersReducedMotion,
   useTheme,
-} from '../../hooks';
+} from '@shopify/polaris-viz-core';
+
 import {BARS_TRANSITION_CONFIG, XMLNS} from '../../constants';
 import type {DataPoint, DataSeries, Dimensions} from '../../types';
 import {uniqueId, getAnimationTrail, isGradientType} from '../../utilities';
-import {LinearGradient} from '../../components';
 
 import {Bar} from './components';
 import styles from './SparkBarChart.scss';

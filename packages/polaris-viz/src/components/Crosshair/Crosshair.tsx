@@ -1,7 +1,6 @@
 import React from 'react';
 import {animated, Interpolation} from '@react-spring/web';
-
-import {useTheme} from '../../hooks';
+import {useTheme} from '@shopify/polaris-viz-core';
 
 interface Props {
   x: number | Interpolation;

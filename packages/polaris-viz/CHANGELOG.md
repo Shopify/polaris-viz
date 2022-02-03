@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Extracted common logic into new `@shopify/polaris-viz-core` package.
+
 ## [0.28.7] - 2022-01-20
 
 ### Fixed

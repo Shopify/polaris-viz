@@ -1,11 +1,11 @@
-# `core`
+# `@shopify/polaris-viz-core`
 
-> TODO: description
+Contains common constants, hooks, theme logic and `PolarisVizProvider` component.
 
 ## Usage
 
 ```
-const core = require('core');
+import {PolarisVizProvider} from '@shopify/polaris-viz-core';
 
-// TODO: DEMONSTRATE API
+// TODO: BETTER README
 ```

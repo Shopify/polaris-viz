@@ -1,6 +1,6 @@
 import React from 'react';
+import {useTheme} from '@shopify/polaris-viz-core';
 
-import {useTheme} from '../../hooks';
 import type {YAxisTick} from '../../types';
 
 interface Props {

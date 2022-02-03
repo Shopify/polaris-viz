@@ -1,12 +1,12 @@
 import React, {useRef} from 'react';
-
-import type {DataSeries} from '../../types';
-import {ChartContainer} from '../../components/ChartContainer';
 import {
   useThemeSeriesColors,
   usePrefersReducedMotion,
   useTheme,
-} from '../../hooks/';
+} from '@shopify/polaris-viz-core';
+
+import type {DataSeries} from '../../types';
+import {ChartContainer} from '../../components/ChartContainer';
 import {
   isGradientType,
   changeColorOpacity,

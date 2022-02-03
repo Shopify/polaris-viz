@@ -28,4 +28,4 @@ export {
   isGradientType,
   curveStepRounded,
   uniqueId,
-} from '../../../polaris-viz-core/src';
+} from '@shopify/polaris-viz-core';

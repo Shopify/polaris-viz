@@ -1,7 +1,7 @@
 import React from 'react';
 import type {LineStyle, Color} from 'types';
+import {getSeriesColorsFromCount, useTheme} from '@shopify/polaris-viz-core';
 
-import {getSeriesColorsFromCount, useTheme} from '../../../../hooks';
 import {LinePreview} from '../../../LinePreview';
 
 import styles from './TooltipContent.scss';

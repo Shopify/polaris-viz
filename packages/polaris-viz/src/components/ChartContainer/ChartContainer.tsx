@@ -6,9 +6,11 @@ import React, {
   cloneElement,
 } from 'react';
 import {useDebouncedCallback} from 'use-debounce/lib';
+import {useTheme} from '@shopify/polaris-viz-core';
 
 import type {Dimensions} from '../../types';
-import {useResizeObserver, useTheme, usePrintResizing} from '../../hooks';
+import {useResizeObserver} from '../../hooks/useResizeObserver';
+import {usePrintResizing} from '../../hooks/use-print-resizing';
 
 import styles from './ChartContainer.scss';
 
@@ -18,9 +20,8 @@ interface Props {
 }
 
 export const ChartContainer = (props: Props) => {
-  const [chartDimensions, setChartDimensions] = useState<Dimensions | null>(
-    null,
-  );
+  const [chartDimensions, setChartDimensions] =
+    useState<Dimensions | null>(null);
 
   const {ref, setRef, entry} = useResizeObserver();
 
