@@ -1,1 +1,1 @@
-export {SparkLineChart} from 'components/SparkLineChart';
+export {SparkLineChart} from './components/SparkLineChart';

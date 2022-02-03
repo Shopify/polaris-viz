@@ -10,9 +10,6 @@
     "build/",
     "!build/tsconfig.tsbuildinfo"
   ],
-  "directories": {
-    "src": "src"
-  },
   "publishConfig": {
     "access": "public"
   },
@@ -23,7 +20,11 @@
     "@react-spring/native": "^9.4.2",
     "@shopify/polaris-viz-core": "^1.0.0-alpha0",
     "expo": "~44.0.0",
-    "expo-status-bar": "~1.2.0"
+    "expo-status-bar": "~1.2.0",
+    "d3-scale": "^1.0.7"
+  },
+  "devDependencies": {
+    "@types/d3-scale": "^2.1.1"
   },
   "peerDependencies": {
     "react": "^16.8.0  || ^17.0.0",
