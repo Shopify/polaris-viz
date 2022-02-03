@@ -2,7 +2,7 @@ import React from 'react';
 
 import {Stop} from '../';
 import type {GradientStop} from '../../types';
-import {LinearGradient as SVGLinearGradient} from '../SVG';
+import {SvgNode} from '../SVG';
 
 export interface LinearGradientProps {
   gradient: GradientStop[];
@@ -25,7 +25,8 @@ export function LinearGradient({
   gradientUnits = 'objectBoundingBox',
 }: LinearGradientProps) {
   return (
-    <SVGLinearGradient
+    <SvgNode
+      tagName="linearGradient"
       id={id}
       x1={x1}
       x2={x2}
@@ -41,6 +42,6 @@ export function LinearGradient({
           stopOpacity={stopOpacity}
         />
       ))}
-    </SVGLinearGradient>
+    </SvgNode>
   );
 }

@@ -57,7 +57,7 @@ interface SvgNodeProps extends SVGProps<SVGElement> {
   children?: ReactNode;
 }
 
-function SvgNode({tagName, children, ...props}: SvgNodeProps) {
+export function SvgNode({tagName, children, ...props}: SvgNodeProps) {
   const {native} = usePolarisVizContext();
 
   return createElement(
@@ -206,17 +206,6 @@ export const RadialGradient = ({
 }: Props<SVGRadialGradientElement>) => {
   return (
     <SvgNode tagName="radialGradient" {...props}>
-      {children}
-    </SvgNode>
-  );
-};
-
-export const LinearGradient = ({
-  children,
-  ...props
-}: Props<SVGLinearGradientElement>) => {
-  return (
-    <SvgNode tagName="linearGradient" {...props}>
       {children}
     </SvgNode>
   );
