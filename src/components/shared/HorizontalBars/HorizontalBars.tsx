@@ -3,6 +3,7 @@ import type {ScaleLinear} from 'd3-scale';
 
 import {DataSeries, RoundedBorder} from '../../../types';
 import {
+  COLOR_BLIND_SINGLE_BAR,
   FONT_SIZE,
   FONT_SIZE_PADDING,
   HORIZONTAL_BAR_LABEL_OFFSET,
@@ -11,13 +12,18 @@ import {
 } from '../../../constants';
 import type {LabelFormatter} from '../../../types';
 import {getTextWidth} from '../../../utilities';
-import {getColorBlindEventAttrs, useTheme} from '../../../hooks';
+import {
+  getColorBlindEventAttrs,
+  useTheme,
+  useWatchColorBlindEvents,
+} from '../../../hooks';
 import {Bar} from '../Bar';
 import {getGradientDefId} from '../GradientDefs';
 
 import {Label} from './components';
 
 export interface HorizontalBarsProps {
+  activeGroupIndex: number;
   barHeight: number;
   data: DataSeries[];
   groupIndex: number;
@@ -33,6 +39,7 @@ export interface HorizontalBarsProps {
 }
 
 export function HorizontalBars({
+  activeGroupIndex,
   animationDelay,
   barHeight,
   data,
@@ -50,7 +57,14 @@ export function HorizontalBars({
 
   const [activeBarIndex, setActiveBarIndex] = useState(-1);
 
-  const onMouseLeave = () => setActiveBarIndex(-1);
+  useWatchColorBlindEvents({
+    type: COLOR_BLIND_SINGLE_BAR,
+    onIndexChange: ({detail}) => {
+      if (activeGroupIndex === -1 || activeGroupIndex === groupIndex) {
+        setActiveBarIndex(detail.index);
+      }
+    },
+  });
 
   return (
     <g
@@ -84,8 +98,6 @@ export function HorizontalBars({
           HORIZONTAL_SPACE_BETWEEN_SINGLE * seriesIndex;
         const negativeX = (width + leftLabelOffset) * -1;
         const x = isNegative ? negativeX : width + HORIZONTAL_BAR_LABEL_OFFSET;
-
-        const onMouseOver = () => setActiveBarIndex(seriesIndex);
 
         return (
           <React.Fragment key={`series-${seriesIndex}-${id}-${name}`}>
@@ -126,10 +138,8 @@ export function HorizontalBars({
               height={barHeight + HORIZONTAL_SPACE_BETWEEN_SINGLE}
               fill="transparent"
               style={{transform: isNegative ? 'scaleX(-1)' : ''}}
-              onMouseOver={onMouseOver}
-              onMouseLeave={onMouseLeave}
               {...getColorBlindEventAttrs({
-                type: 'singleBar',
+                type: COLOR_BLIND_SINGLE_BAR,
                 index: seriesIndex,
               })}
               tabIndex={-1}

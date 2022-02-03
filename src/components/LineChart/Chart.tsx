@@ -1,6 +1,8 @@
 import React, {useState, useRef, useMemo, useCallback} from 'react';
 import {line} from 'd3-shape';
 
+import {useLegends} from '../Legends';
+import {Legends} from '../';
 import {
   TooltipHorizontalOffset,
   TooltipVerticalOffset,
@@ -34,6 +36,7 @@ import {
   LineChartMargin as Margin,
   SPACING_BASE_TIGHT,
   XMLNS,
+  COLOR_BLIND_SINGLE_LINE,
 } from '../../constants';
 import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
 import {LinearXAxis} from '../LinearXAxis';
@@ -56,10 +59,11 @@ import {useYScale} from './hooks';
 import {Line, GradientArea} from './components';
 import styles from './Chart.scss';
 
-interface Props {
+export interface ChartProps {
   isAnimated: boolean;
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
   data: DataWithDefaults[];
+  showLegend: boolean;
   xAxisOptions: XAxisOptions;
   yAxisOptions: Required<YAxisOptions>;
   emptyStateText?: string;
@@ -76,12 +80,13 @@ export function Chart({
   data,
   dimensions,
   renderTooltipContent,
+  showLegend,
   emptyStateText,
   isAnimated,
   xAxisOptions,
   yAxisOptions,
   theme,
-}: Props) {
+}: ChartProps) {
   useColorBlindEvents();
 
   const selectedTheme = useTheme(theme);
@@ -89,16 +94,21 @@ export function Chart({
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [activeLineIndex, setActiveLineIndex] = useState(-1);
 
+  const {legends, setLegendsHeight, height, width} = useLegends({
+    data,
+    dimensions,
+    showLegend,
+    type: 'line',
+  });
+
   useWatchColorBlindEvents({
-    type: 'singleLine',
+    type: COLOR_BLIND_SINGLE_LINE,
     onIndexChange: ({detail}) => setActiveLineIndex(detail.index),
   });
 
   const tooltipId = useRef(uniqueId('lineChart'));
   const gradientId = useRef(uniqueId('lineChartGradient'));
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
-
-  const {width, height} = dimensions ?? {width: 0, height: 0};
 
   const fontSize = width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
 
@@ -295,7 +305,7 @@ export function Chart({
   }
 
   return (
-    <div className={styles.Container}>
+    <div className={styles.Container} style={{width, height}}>
       <svg
         viewBox={`0 0 ${width} ${height}`}
         className={styles.Chart}
@@ -499,6 +509,14 @@ export function Chart({
         onIndexChange={(index) => setActiveIndex(index)}
         parentRef={svgRef}
       />
+
+      {showLegend && (
+        <Legends
+          colorBlindType={COLOR_BLIND_SINGLE_LINE}
+          legends={legends}
+          onHeightChange={setLegendsHeight}
+        />
+      )}
     </div>
   );
 }

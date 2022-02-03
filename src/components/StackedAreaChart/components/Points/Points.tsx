@@ -15,7 +15,11 @@ import {
   useTheme,
   useWatchColorBlindEvents,
 } from '../../../../hooks';
-import {LineChartMargin as Margin, colorWhite} from '../../../../constants';
+import {
+  LineChartMargin as Margin,
+  colorWhite,
+  COLOR_BLIND_SINGLE_ITEM,
+} from '../../../../constants';
 
 interface PointsProps {
   activePointIndex: number | null;
@@ -64,7 +68,7 @@ export function Points({
   const {prefersReducedMotion} = usePrefersReducedMotion();
 
   useWatchColorBlindEvents({
-    type: 'singleItem',
+    type: COLOR_BLIND_SINGLE_ITEM,
     onIndexChange: ({detail}) => {
       setActiveLineIndex(detail.index);
     },

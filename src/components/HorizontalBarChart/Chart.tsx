@@ -1,5 +1,7 @@
 import React, {ReactNode, useCallback, useMemo, useState} from 'react';
 
+import {useLegends} from '../Legends';
+import {Legends} from '../';
 import type {HorizontalTransitionStyle} from '../../hooks/useHorizontalTransitions';
 import {GradientDefs, HorizontalGroup} from '../shared';
 import {
@@ -18,6 +20,7 @@ import {
   BarChartMargin as Margin,
   HORIZONTAL_BAR_GROUP_DELAY,
   HORIZONTAL_GROUP_LABEL_HEIGHT,
+  COLOR_BLIND_SINGLE_BAR,
 } from '../../constants';
 import {
   eventPointNative,
@@ -46,6 +49,7 @@ export interface ChartProps {
   isAnimated: boolean;
   data: DataSeries[];
   renderTooltipContent: (data: RenderTooltipContentData) => ReactNode;
+  showLegend: boolean;
   type: ChartType;
   xAxisOptions: Required<XAxisOptions>;
   annotationsLookupTable?: AnnotationLookupTable;
@@ -59,6 +63,7 @@ export function Chart({
   dimensions,
   isAnimated,
   renderTooltipContent,
+  showLegend,
   theme,
   type,
   xAxisOptions,
@@ -73,11 +78,16 @@ export function Chart({
 
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
 
-  const {width, height} = dimensions ?? {width: 0, height: 0};
-
   const {longestSeriesCount, seriesColors} = useHorizontalSeriesColors({
     data,
     theme,
+  });
+
+  const {legends, setLegendsHeight, height, width} = useLegends({
+    data,
+    dimensions,
+    showLegend,
+    colors: seriesColors,
   });
 
   const {allNumbers, longestLabel, areAllNegative} = useDataForHorizontalChart({
@@ -179,6 +189,8 @@ export function Chart({
         role="list"
         viewBox={`0 0 ${width} ${height}`}
         xmlns={XMLNS}
+        width={width}
+        height={height}
       >
         {xAxisOptions.hide === true ? null : (
           <React.Fragment>
@@ -201,11 +213,12 @@ export function Chart({
         )}
 
         <GradientDefs
+          direction="horizontal"
+          gradientUnits={isStacked ? 'objectBoundingBox' : 'userSpaceOnUse'}
           id={id}
           seriesColors={seriesColors}
-          theme={theme}
           size={isStacked ? '100%' : `${width}px`}
-          gradientUnits={isStacked ? 'objectBoundingBox' : 'userSpaceOnUse'}
+          theme={theme}
         />
 
         {transitions((style, item, _transition, index) => {
@@ -282,6 +295,14 @@ export function Chart({
         margin={Margin}
         parentRef={svgRef}
       />
+
+      {showLegend && (
+        <Legends
+          colorBlindType={COLOR_BLIND_SINGLE_BAR}
+          legends={legends}
+          onHeightChange={setLegendsHeight}
+        />
+      )}
     </div>
   );
 

@@ -7,12 +7,18 @@ import styles from './SquareColorPreview.scss';
 
 export interface SquareColorPreviewProps {
   color: Color;
+  as?: 'div' | 'span';
 }
 
-export function SquareColorPreview({color}: SquareColorPreviewProps) {
+export function SquareColorPreview({
+  as = 'div',
+  color,
+}: SquareColorPreviewProps) {
   const background = isGradientType(color)
     ? createCSSGradient(color, 305)
     : color;
 
-  return <div className={styles.ColorPreview} style={{background}} />;
+  const Tag = as;
+
+  return <Tag className={styles.ColorPreview} style={{background}} />;
 }

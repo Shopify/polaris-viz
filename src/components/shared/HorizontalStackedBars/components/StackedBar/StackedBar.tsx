@@ -1,7 +1,10 @@
 import {animated, useSpring} from '@react-spring/web';
 import React, {Dispatch, SetStateAction} from 'react';
 
-import {STACKED_BAR_GAP} from '../../../../../constants';
+import {
+  COLOR_BLIND_SINGLE_BAR,
+  STACKED_BAR_GAP,
+} from '../../../../../constants';
 import {
   getColorBlindEventAttrs,
   getOpacityForActive,
@@ -70,7 +73,10 @@ export function StackedBar({
         height={height}
         width={width + STACKED_BAR_GAP}
         x={x}
-        {...getColorBlindEventAttrs({type: 'singleBar', index: seriesIndex})}
+        {...getColorBlindEventAttrs({
+          type: COLOR_BLIND_SINGLE_BAR,
+          index: seriesIndex,
+        })}
         aria-label={ariaLabel}
         role="img"
         tabIndex={-1}

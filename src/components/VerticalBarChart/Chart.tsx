@@ -1,8 +1,13 @@
 import React, {useState, useMemo} from 'react';
 import type {AnnotationLookupTable} from 'components/BarChart/types';
 
+import {Legends} from '../';
 import {GradientDefs} from '../shared';
-import {BarChartMargin as Margin, XMLNS} from '../../constants';
+import {
+  BarChartMargin as Margin,
+  COLOR_BLIND_SINGLE_BAR,
+  XMLNS,
+} from '../../constants';
 import {
   TooltipHorizontalOffset,
   TooltipVerticalOffset,
@@ -41,6 +46,7 @@ import type {
   YAxisOptions,
 } from '../BarChart';
 import {AnnotationLine} from '../BarChart';
+import {useLegends} from '../Legends';
 
 import {BarGroup, StackedBarGroups} from './components';
 import {useYScale, useXScale, useMinimalLabelIndexes} from './hooks';
@@ -55,12 +61,13 @@ import styles from './Chart.scss';
 
 export interface Props {
   data: DataSeries[];
-  dimensions?: Dimensions;
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
+  showLegend: boolean;
   type: ChartType;
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
   annotationsLookupTable?: AnnotationLookupTable;
+  dimensions?: Dimensions;
   emptyStateText?: string;
   isAnimated?: boolean;
   theme?: string;
@@ -70,13 +77,14 @@ export function Chart({
   annotationsLookupTable = {},
   data,
   dimensions,
-  renderTooltipContent,
-  xAxisOptions,
-  yAxisOptions,
-  isAnimated = false,
   emptyStateText,
+  isAnimated = false,
+  renderTooltipContent,
+  showLegend,
   theme,
   type,
+  xAxisOptions,
+  yAxisOptions,
 }: Props) {
   useColorBlindEvents();
 
@@ -92,7 +100,11 @@ export function Chart({
     },
   });
 
-  const {width, height} = dimensions ?? {width: 0, height: 0};
+  const {legends, setLegendsHeight, height, width} = useLegends({
+    data,
+    dimensions,
+    showLegend,
+  });
 
   const fontSize = width < SMALL_WIDTH ? SMALL_FONT_SIZE : FONT_SIZE;
 
@@ -238,13 +250,7 @@ export function Chart({
   );
 
   return (
-    <div
-      className={styles.ChartContainer}
-      style={{
-        height,
-        width,
-      }}
-    >
+    <div className={styles.ChartContainer} style={{height, width}}>
       <svg
         viewBox={`0 0 ${width} ${height}`}
         xmlns={XMLNS}
@@ -383,6 +389,14 @@ export function Chart({
         margin={Margin}
         parentRef={svgRef}
       />
+
+      {showLegend && (
+        <Legends
+          colorBlindType={COLOR_BLIND_SINGLE_BAR}
+          legends={legends}
+          onHeightChange={setLegendsHeight}
+        />
+      )}
     </div>
   );
 

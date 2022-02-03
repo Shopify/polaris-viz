@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 
+import {COLOR_BLIND_SINGLE_ITEM} from '../../constants';
 import type {Color} from '../../types';
 import {useTheme, useWatchColorBlindEvents} from '../../hooks';
 
@@ -40,7 +41,7 @@ export function TooltipContent({
   const [activeBarIndex, setActiveBarIndex] = useState(-1);
 
   useWatchColorBlindEvents({
-    type: 'singleItem',
+    type: COLOR_BLIND_SINGLE_ITEM,
     onIndexChange: ({detail}) => setActiveBarIndex(detail.index),
   });
 

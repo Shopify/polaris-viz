@@ -140,6 +140,7 @@ export function HorizontalGroup({
           />
         ) : (
           <HorizontalBars
+            activeGroupIndex={activeGroupIndex}
             animationDelay={animationDelay}
             barHeight={barHeight}
             data={data}

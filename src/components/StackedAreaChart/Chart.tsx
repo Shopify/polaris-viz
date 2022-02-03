@@ -1,6 +1,8 @@
 import React, {useState, useMemo, useRef, useCallback} from 'react';
 import {line, stack, stackOffsetNone, stackOrderReverse} from 'd3-shape';
 
+import {Legends} from '..';
+import {useLegends} from '../Legends';
 import {
   TooltipHorizontalOffset,
   TooltipVerticalOffset,
@@ -16,8 +18,8 @@ import {
   useLinearChartAnimations,
   usePrefersReducedMotion,
   useTheme,
-  useThemeSeriesColors,
   useColorBlindEvents,
+  useThemeSeriesColors,
 } from '../../hooks';
 import {
   SMALL_SCREEN,
@@ -26,6 +28,7 @@ import {
   FONT_SIZE,
   LineChartMargin as Margin,
   XMLNS,
+  COLOR_BLIND_SINGLE_ITEM,
 } from '../../constants';
 import {uniqueId, curveStepRounded, eventPointNative} from '../../utilities';
 import {YAxis} from '../YAxis';
@@ -59,6 +62,7 @@ export interface Props {
   formatXAxisLabel: StringLabelFormatter;
   formatYAxisLabel: NumberLabelFormatter;
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
+  showLegend: boolean;
   dimensions?: Dimensions;
   isAnimated: boolean;
   theme?: string;
@@ -72,18 +76,25 @@ export function Chart({
   formatYAxisLabel,
   renderTooltipContent,
   isAnimated,
+  showLegend,
   theme,
 }: Props) {
   useColorBlindEvents();
 
   const {prefersReducedMotion} = usePrefersReducedMotion();
   const selectedTheme = useTheme(theme);
-  const colors = useThemeSeriesColors(data, selectedTheme);
+  const seriesColors = useThemeSeriesColors(data, selectedTheme);
 
   const [activePointIndex, setActivePointIndex] = useState<number | null>(null);
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
 
-  const {width, height} = dimensions ?? {width: 0, height: 0};
+  const {legends, setLegendsHeight, height, width} = useLegends({
+    colors: seriesColors,
+    data,
+    dimensions,
+    showLegend,
+    type: 'line',
+  });
 
   const tooltipId = useRef(uniqueId('stackedAreaChart'));
 
@@ -115,10 +126,10 @@ export function Chart({
 
   const fontSize = width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
 
-  const stackedValues = useMemo(() => areaStack(formattedData), [
-    areaStack,
-    formattedData,
-  ]);
+  const stackedValues = useMemo(
+    () => areaStack(formattedData),
+    [areaStack, formattedData],
+  );
 
   const {ticks: initialTicks} = useYScale({
     fontSize,
@@ -166,18 +177,14 @@ export function Chart({
   const getTooltipMarkup = useCallback(
     (index: number) => {
       const content = data.reduce<RenderTooltipContentData['data']>(
-        function removeNullsAndFormatData(
-          tooltipData,
-          {name, data},
-          seriesIndex,
-        ) {
+        function removeNullsAndFormatData(tooltipData, {name, color, data}) {
           const {value} = data[index];
           if (value == null) {
             return tooltipData;
           }
 
           tooltipData.push({
-            color: colors[seriesIndex],
+            color: color!,
             label: name ?? '',
             value,
           });
@@ -193,7 +200,7 @@ export function Chart({
         title,
       });
     },
-    [colors, data, xAxisLabels, renderTooltipContent],
+    [data, xAxisLabels, renderTooltipContent],
   );
 
   const lineGenerator = useMemo(() => {
@@ -263,6 +270,7 @@ export function Chart({
         height={height}
         ref={setSvgRef}
         role="table"
+        style={{height, width}}
       >
         {hideXAxis ? null : (
           <g
@@ -318,7 +326,7 @@ export function Chart({
           stackedValues={stackedValues}
           xScale={xScale}
           yScale={yScale}
-          colors={colors}
+          colors={seriesColors}
           isAnimated={isAnimated && !prefersReducedMotion}
           theme={theme}
         />
@@ -336,7 +344,7 @@ export function Chart({
         <Points
           activePointIndex={activePointIndex}
           animatedCoordinates={animatedCoordinates}
-          colors={colors}
+          colors={seriesColors}
           dataStartPosition={dataStartPosition}
           getXPosition={getXPosition}
           isAnimated={isAnimated}
@@ -358,6 +366,13 @@ export function Chart({
         onIndexChange={(index) => setActivePointIndex(index)}
         parentRef={svgRef}
       />
+      {showLegend && (
+        <Legends
+          colorBlindType={COLOR_BLIND_SINGLE_ITEM}
+          legends={legends}
+          onHeightChange={setLegendsHeight}
+        />
+      )}
     </React.Fragment>
   );
 

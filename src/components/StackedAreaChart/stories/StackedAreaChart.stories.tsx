@@ -77,6 +77,10 @@ export default {
         'If provided, renders a `<SkipLink/>` button with the string. Use this for charts with large data sets, so keyboard users can skip all the tabbable data points in the chart.',
     },
     theme: THEME_CONTROL_ARGS,
+    showLegend: {
+      defaultValue: false,
+      description: 'Renders a `<Legends />` component underneath the chart.',
+    },
   },
 } as Meta;
 
@@ -94,7 +98,10 @@ const Template: Story<StackedAreaChartProps> = (
   return <StackedAreaChart {...args} />;
 };
 export const Default: Story<StackedAreaChartProps> = Template.bind({});
-Default.args = defaultProps;
+Default.args = {
+  ...defaultProps,
+  showLegend: true,
+};
 
 export const HideXAxisLabels: Story<StackedAreaChartProps> = Template.bind({});
 HideXAxisLabels.args = {
@@ -102,9 +109,8 @@ HideXAxisLabels.args = {
   xAxisOptions: {...defaultProps.xAxisOptions, hide: true},
 };
 
-export const OverwrittenSeriesColors: Story<StackedAreaChartProps> = Template.bind(
-  {},
-);
+export const OverwrittenSeriesColors: Story<StackedAreaChartProps> =
+  Template.bind({});
 OverwrittenSeriesColors.args = {
   ...defaultProps,
   xAxisOptions: {

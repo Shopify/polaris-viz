@@ -1,7 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {YAxis, BarChartXAxis} from '../../../components';
+import {YAxis, BarChartXAxis, Legends} from '../../../components';
 import {mountWithProvider, triggerSVGMouseMove} from '../../../test-utilities';
 import {HorizontalGridLines} from '../../../components/HorizontalGridLines';
 import {mockDefaultTheme} from '../../../test-utilities/mount-with-provider';
@@ -74,6 +74,7 @@ describe('Chart />', () => {
       integersOnly: false,
     },
     type: 'default',
+    showLegend: false,
   };
 
   it('renders an SVG element', () => {
@@ -300,6 +301,31 @@ describe('Chart />', () => {
       const chart = mount(<Chart {...mockProps} />);
 
       expect(chart).toContainReactComponent(HorizontalGridLines);
+    });
+  });
+
+  describe('showLegend', () => {
+    it('does not render <Legends /> when false', () => {
+      const chart = mount(<Chart {...mockProps} />);
+      const svg = chart.find('svg');
+
+      expect(chart).not.toContainReactComponent(Legends);
+
+      expect(svg?.props.height).toStrictEqual(250);
+    });
+
+    it('renders <Legends /> when true', () => {
+      const chart = mount(<Chart {...mockProps} showLegend />);
+
+      expect(chart).toContainReactComponent(Legends);
+    });
+
+    it('resizes container when true', () => {
+      const chart = mount(<Chart {...mockProps} showLegend />);
+
+      const svg = chart.find('svg');
+
+      expect(svg?.props.height).toStrictEqual(205);
     });
   });
 });
