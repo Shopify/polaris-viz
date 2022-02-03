@@ -51,7 +51,12 @@ export function TooltipContent({data, theme}: TooltipContentProps) {
           <div
             className={styles.Row}
             key={`${name}-${index}`}
-            style={{opacity: getOpacityForActive(activeLineIndex, index)}}
+            style={{
+              opacity: getOpacityForActive({
+                activeIndex: activeLineIndex,
+                index,
+              }),
+            }}
           >
             <LinePreview
               color={color ?? seriesColor[index]}

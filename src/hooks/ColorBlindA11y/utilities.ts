@@ -17,11 +17,17 @@ export function getEventName(id: string, type: string) {
   return `${id}:${COLOR_BLIND_EVENT.name}:${type}`;
 }
 
-export function getOpacityForActive(activeIndex: number, index: number) {
+export function getOpacityForActive({
+  activeIndex,
+  index,
+  fadedOpacity = COLOR_BLIND_FADED_OPACITY,
+}: {
+  activeIndex: number;
+  index: number;
+  fadedOpacity?: number;
+}) {
   const activeOpacity =
-    activeIndex === index
-      ? COLOR_BLIND_ACTIVE_OPACITY
-      : COLOR_BLIND_FADED_OPACITY;
+    activeIndex === index ? COLOR_BLIND_ACTIVE_OPACITY : fadedOpacity;
 
   return activeIndex === -1 ? COLOR_BLIND_ACTIVE_OPACITY : activeOpacity;
 }
