@@ -88,6 +88,8 @@ export function BarGroup({
       : color;
   });
 
+  const onMouseLeave = () => setActiveBarIndex(-1);
+
   return (
     <React.Fragment>
       <mask id={maskId}>
@@ -172,6 +174,10 @@ export function BarGroup({
           const isNegative = rawValue < 0;
           const y = isNegative ? yScale(0) : yScale(0) - height;
 
+          const onMouseOver = () => {
+            setActiveBarIndex(index);
+          };
+
           return (
             <rect
               key={index}
@@ -182,12 +188,8 @@ export function BarGroup({
               fill="transparent"
               aria-label={ariaLabel}
               role="listitem"
-              onMouseOver={() => {
-                setActiveBarIndex(index);
-              }}
-              onMouseLeave={() => {
-                setActiveBarIndex(-1);
-              }}
+              onMouseOver={onMouseOver}
+              onMouseLeave={onMouseLeave}
               {...getColorBlindEventAttrs({
                 type: 'singleBar',
                 index,

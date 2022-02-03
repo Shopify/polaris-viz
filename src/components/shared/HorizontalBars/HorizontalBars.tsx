@@ -50,6 +50,8 @@ export function HorizontalBars({
 
   const [activeBarIndex, setActiveBarIndex] = useState(-1);
 
+  const onMouseLeave = () => setActiveBarIndex(-1);
+
   return (
     <g
       transform={`translate(${zeroPosition},${HORIZONTAL_GROUP_LABEL_HEIGHT})`}
@@ -82,6 +84,8 @@ export function HorizontalBars({
           HORIZONTAL_SPACE_BETWEEN_SINGLE * seriesIndex;
         const negativeX = (width + leftLabelOffset) * -1;
         const x = isNegative ? negativeX : width + HORIZONTAL_BAR_LABEL_OFFSET;
+
+        const onMouseOver = () => setActiveBarIndex(seriesIndex);
 
         return (
           <React.Fragment key={`series-${seriesIndex}-${id}-${name}`}>
@@ -122,8 +126,8 @@ export function HorizontalBars({
               height={barHeight + HORIZONTAL_SPACE_BETWEEN_SINGLE}
               fill="transparent"
               style={{transform: isNegative ? 'scaleX(-1)' : ''}}
-              onMouseOver={() => setActiveBarIndex(seriesIndex)}
-              onMouseLeave={() => setActiveBarIndex(-1)}
+              onMouseOver={onMouseOver}
+              onMouseLeave={onMouseLeave}
               {...getColorBlindEventAttrs({
                 type: 'singleBar',
                 index: seriesIndex,
