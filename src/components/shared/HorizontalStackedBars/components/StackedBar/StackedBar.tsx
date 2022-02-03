@@ -1,27 +1,36 @@
 import {animated, useSpring} from '@react-spring/web';
-import React from 'react';
+import React, {Dispatch, SetStateAction} from 'react';
 
+import {STACKED_BAR_GAP} from '../../../../../constants';
+import {
+  getColorBlindEventAttrs,
+  getOpacityForActive,
+} from '../../../../../hooks';
 import {getRoundedRectPath} from '../../../../../utilities';
-import {DataType, RoundedBorder} from '../../../../../types';
+import type {RoundedBorder} from '../../../../../types';
 
 export interface StackedBarProps {
+  activeBarIndex: number;
+  ariaLabel: string;
   color: string;
-  groupIndex: number;
   height: number;
   isAnimated: boolean;
   seriesIndex: number;
   roundedBorder: RoundedBorder;
+  setActiveBarIndex: Dispatch<SetStateAction<number>>;
   width: number;
   x: number;
 }
 
 export function StackedBar({
+  activeBarIndex,
+  ariaLabel,
   color,
-  groupIndex,
   height,
   isAnimated,
   roundedBorder,
   seriesIndex,
+  setActiveBarIndex,
   width,
   x,
 }: StackedBarProps) {
@@ -42,15 +51,28 @@ export function StackedBar({
     <animated.g style={{transform}}>
       <path
         d={pathD}
-        data-index={groupIndex}
-        data-type={DataType.Bar}
         fill={`url(#${color})`}
         height={height}
-        key={seriesIndex}
-        style={{outline: 'none', transformOrigin: `${x}px 0px`}}
-        tabIndex={seriesIndex === 0 ? 0 : -1}
+        style={{
+          outline: 'none',
+          transformOrigin: `${x}px 0px`,
+          opacity: getOpacityForActive(activeBarIndex, seriesIndex),
+        }}
         width={width}
         transform={`translate(${x},0)`}
+        aria-hidden="true"
+      />
+      <rect
+        fill="transparent"
+        height={height}
+        width={width + STACKED_BAR_GAP}
+        x={x}
+        {...getColorBlindEventAttrs({type: 'singleBar', index: seriesIndex})}
+        aria-label={ariaLabel}
+        role="img"
+        tabIndex={-1}
+        onMouseOver={() => setActiveBarIndex(seriesIndex)}
+        onMouseLeave={() => setActiveBarIndex(-1)}
       />
     </animated.g>
   );

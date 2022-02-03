@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 
 import {DataSeries, RoundedBorder} from '../../../types';
@@ -11,14 +11,13 @@ import {
 } from '../../../constants';
 import type {LabelFormatter} from '../../../types';
 import {getTextWidth} from '../../../utilities';
-import {useTheme} from '../../../hooks';
+import {getColorBlindEventAttrs, useTheme} from '../../../hooks';
 import {Bar} from '../Bar';
 import {getGradientDefId} from '../GradientDefs';
 
 import {Label} from './components';
 
 export interface HorizontalBarsProps {
-  ariaLabel: string;
   barHeight: number;
   data: DataSeries[];
   groupIndex: number;
@@ -35,7 +34,6 @@ export interface HorizontalBarsProps {
 
 export function HorizontalBars({
   animationDelay,
-  ariaLabel,
   barHeight,
   data,
   groupIndex,
@@ -50,11 +48,14 @@ export function HorizontalBars({
 }: HorizontalBarsProps) {
   const selectedTheme = useTheme(theme);
 
+  const [activeBarIndex, setActiveBarIndex] = useState(-1);
+
+  const onMouseLeave = () => setActiveBarIndex(-1);
+
   return (
     <g
       transform={`translate(${zeroPosition},${HORIZONTAL_GROUP_LABEL_HEIGHT})`}
-      aria-label={ariaLabel}
-      role="listitem"
+      aria-hidden="true"
     >
       {data.map((_, seriesIndex) => {
         if (data[seriesIndex].data[groupIndex] == null) {
@@ -64,6 +65,9 @@ export function HorizontalBars({
 
         const isNegative = value && value < 0;
         const label = labelFormatter(value);
+        const ariaLabel = `${
+          data[seriesIndex] ? data[seriesIndex].name : ''
+        } ${value}`;
 
         const labelWidth = getTextWidth({
           text: `${label}`,
@@ -80,7 +84,8 @@ export function HorizontalBars({
           HORIZONTAL_SPACE_BETWEEN_SINGLE * seriesIndex;
         const negativeX = (width + leftLabelOffset) * -1;
         const x = isNegative ? negativeX : width + HORIZONTAL_BAR_LABEL_OFFSET;
-        const ariaHidden = seriesIndex !== 0;
+
+        const onMouseOver = () => setActiveBarIndex(seriesIndex);
 
         return (
           <React.Fragment key={`series-${seriesIndex}-${id}-${name}`}>
@@ -89,11 +94,10 @@ export function HorizontalBars({
               color={`url(#${getGradientDefId(theme, seriesIndex, id)})`}
               height={barHeight}
               index={groupIndex}
+              isActive={activeBarIndex === -1 || activeBarIndex === seriesIndex}
               isAnimated={isAnimated}
               needsMinWidth
-              role="img"
               roundedBorder={RoundedBorder.Right}
-              tabIndex={ariaHidden ? -1 : 0}
               transform={isNegative ? 'scaleX(-1)' : ''}
               width={width}
               x={0}
@@ -115,6 +119,23 @@ export function HorizontalBars({
                 y={y}
               />
             )}
+            <rect
+              x={0}
+              y={y - HORIZONTAL_SPACE_BETWEEN_SINGLE / 2}
+              width={width}
+              height={barHeight + HORIZONTAL_SPACE_BETWEEN_SINGLE}
+              fill="transparent"
+              style={{transform: isNegative ? 'scaleX(-1)' : ''}}
+              onMouseOver={onMouseOver}
+              onMouseLeave={onMouseLeave}
+              {...getColorBlindEventAttrs({
+                type: 'singleBar',
+                index: seriesIndex,
+              })}
+              tabIndex={-1}
+              role="img"
+              aria-label={ariaLabel}
+            />
           </React.Fragment>
         );
       })}

@@ -4,6 +4,7 @@ import type {HorizontalTransitionStyle} from '../../hooks/useHorizontalTransitio
 import {GradientDefs, HorizontalGroup} from '../shared';
 import {
   useBarChartTooltipContent,
+  useColorBlindEvents,
   useDataForHorizontalChart,
   useHorizontalBarSizes,
   useHorizontalSeriesColors,
@@ -62,6 +63,8 @@ export function Chart({
   type,
   xAxisOptions,
 }: ChartProps) {
+  useColorBlindEvents();
+
   const selectedTheme = useTheme(theme);
   const {labelFormatter} = xAxisOptions;
   const id = useMemo(() => uniqueId('HorizontalBarChart'), []);
@@ -131,18 +134,18 @@ export function Chart({
   });
 
   const getAriaLabel = useCallback(
-    (seriesIndex: number) => {
-      if (data[seriesIndex] == null) {
-        return '';
-      }
-
+    (key: string, seriesIndex: number) => {
       const ariaSeries = data
         .map(({name, data}) => {
+          if (data[seriesIndex] == null) {
+            return name;
+          }
+
           return `${name} ${labelFormatter(data[seriesIndex].value)}`;
         })
         .join(', ');
 
-      return `${data[0].data[seriesIndex].key}: ${ariaSeries}`;
+      return `${key}: ${ariaSeries}`;
     },
     [data, labelFormatter],
   );
@@ -208,7 +211,7 @@ export function Chart({
         {transitions((style, item, _transition, index) => {
           const {opacity, transform} = style as HorizontalTransitionStyle;
           const name = item.key ?? '';
-          const ariaLabel = getAriaLabel(item.index);
+          const ariaLabel = getAriaLabel(item.key, item.index);
 
           const animationDelay = isAnimated
             ? (HORIZONTAL_BAR_GROUP_DELAY * index) / data.length
@@ -272,40 +275,15 @@ export function Chart({
       <TooltipWrapper
         bandwidth={groupBarsAreaHeight}
         chartDimensions={{width, height}}
-        focusElementDataType={DataType.Bar}
+        focusElementDataType={DataType.BarGroup}
         getAlteredPosition={getAlteredHorizontalBarPosition}
         getMarkup={getTooltipMarkup}
         getPosition={getTooltipPosition}
         margin={Margin}
-        onIndexChange={onIndexChange}
         parentRef={svgRef}
       />
     </div>
   );
-
-  function onIndexChange(index: number) {
-    const barElements = svgRef?.querySelectorAll(
-      `[data-type=${DataType.BarGroup}]`,
-    );
-
-    if (!barElements) {
-      return;
-    }
-
-    if (index == null) {
-      barElements.forEach((element: SVGPathElement) => {
-        element.style.opacity = '1';
-      });
-    } else {
-      barElements.forEach((el: SVGPathElement) => {
-        if (el.dataset.id === `${DataType.BarGroup}-${index}`) {
-          el.style.opacity = '1';
-        } else {
-          el.style.opacity = '0.5';
-        }
-      });
-    }
-  }
 
   function formatPositionForTooltip(index: number): TooltipPosition {
     if (isStacked) {

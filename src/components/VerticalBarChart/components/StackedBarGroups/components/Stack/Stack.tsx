@@ -43,6 +43,8 @@ export function Stack({
   const [activeBarIndex, setActiveBarIndex] = useState(-1);
   const keys = data[0] ? Object.keys(data[0].data) : [];
 
+  const onMouseLeave = () => setActiveBarIndex(-1);
+
   return (
     <React.Fragment>
       {data.map((data, index) => {
@@ -67,6 +69,8 @@ export function Stack({
           yScale,
         });
 
+        const onMouseOver = () => setActiveBarIndex(index);
+
         return (
           <g key={`${groupIndex}-${index}`} aria-hidden="true">
             <path
@@ -83,8 +87,8 @@ export function Stack({
               height={height + STACKED_BAR_GAP}
               width={width}
               transform={`translate(${x},${y})`}
-              onMouseOver={() => setActiveBarIndex(index)}
-              onMouseLeave={() => setActiveBarIndex(-1)}
+              onMouseOver={onMouseOver}
+              onMouseLeave={onMouseLeave}
               {...getColorBlindEventAttrs({
                 type: 'singleBar',
                 index,

@@ -10,14 +10,14 @@ import styles from '../TooltipContent.scss';
 
 export function DefaultRow({
   color,
+  isActive,
   label,
   value,
-  isActive,
 }: {
   color: Color;
+  isActive: boolean;
   label: string;
   value: string;
-  isActive: boolean;
 }) {
   return (
     <div

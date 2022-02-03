@@ -61,10 +61,10 @@ export function TooltipContent({
               return (
                 <DefaultRow
                   color={color}
+                  isActive={activeBarIndex === -1 || index === activeBarIndex}
                   key={`${label}-${index}`}
                   label={label}
                   value={value}
-                  isActive={activeBarIndex === -1 || index === activeBarIndex}
                 />
               );
             case TooltipRowType.Annotation:
