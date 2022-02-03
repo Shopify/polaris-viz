@@ -1,10 +1,12 @@
 import React, {useCallback, useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
+import {
+  usePrefersReducedMotion,
+  LinearGradient,
+} from '@shopify/polaris-viz-core';
 
 import {Color, DataType} from '../../../../types';
-import {usePrefersReducedMotion} from '../../../../hooks';
 import {Bar} from '../Bar';
-import {LinearGradient} from '../../../../components';
 import {BAR_SPACING} from '../../constants';
 import {
   MIN_BAR_HEIGHT,

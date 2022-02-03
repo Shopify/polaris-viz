@@ -1,12 +1,13 @@
 import React from 'react';
 import {scaleLinear} from 'd3-scale';
+import type {Dimensions, SparkLineChartProps} from '@shopify/polaris-viz-core';
+import {
+  useSparkLine,
+  useThemeSeriesColors,
+  useTheme,
+  LineSeries,
+} from '@shopify/polaris-viz-core';
 
-import type {
-  Dimensions,
-  SparkLineChartProps,
-} from '../../../../polaris-viz-core/src';
-import {useSparkLine, LineSeries} from '../../../../polaris-viz-core/src';
-import {useThemeSeriesColors, useTheme} from '../../hooks/';
 import {XMLNS} from '../../constants';
 
 import styles from './SparkLineChart.scss';

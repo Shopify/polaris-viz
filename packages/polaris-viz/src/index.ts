@@ -34,5 +34,6 @@ export {
 } from './constants';
 
 export {createTheme} from '@shopify/polaris-viz-core';
+// export type {SparkLineChartProps} from '@shopify/polaris-viz-core';
 
 export type {GradientStop, Color, DataSeries, DataPoint} from './types';

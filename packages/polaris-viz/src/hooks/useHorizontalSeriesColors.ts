@@ -1,7 +1,7 @@
 import {useMemo} from 'react';
+import {useTheme, getSeriesColorsFromCount} from '@shopify/polaris-viz-core';
 
 import type {DataSeries} from '../types';
-import {useTheme, getSeriesColorsFromCount} from '../hooks';
 
 interface Props {
   data: DataSeries[];

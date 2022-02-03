@@ -1,5 +1,6 @@
 import React, {useState, useRef, useMemo, useCallback} from 'react';
 import {line} from 'd3-shape';
+import {LinearGradient} from '@shopify/polaris-viz-core';
 
 import {
   TooltipHorizontalOffset,
@@ -38,7 +39,6 @@ import {LinearXAxis} from '../LinearXAxis';
 import {YAxis} from '../YAxis';
 import {Point} from '../Point';
 import {Crosshair} from '../Crosshair';
-import {LinearGradient} from '../../components';
 import {DataPoint, DataType, Dimensions} from '../../types';
 import {HorizontalGridLines} from '../HorizontalGridLines';
 

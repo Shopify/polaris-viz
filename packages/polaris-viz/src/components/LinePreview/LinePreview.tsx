@@ -1,8 +1,8 @@
 import React, {useRef} from 'react';
+import {LinearGradient} from '@shopify/polaris-viz-core';
 
 import type {Color, LineStyle} from '../../types';
 import {isGradientType, uniqueId} from '../../utilities';
-import {LinearGradient} from '../../components';
 import {XMLNS} from '../../constants';
 
 import {

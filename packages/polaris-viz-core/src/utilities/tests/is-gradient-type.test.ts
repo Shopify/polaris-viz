@@ -1,4 +1,4 @@
-import {isGradientType} from '../is-gradient-type';
+import {isGradientType} from '../';
 
 describe('isGradientType', () => {
   it('returns false for non gradient types', () => {

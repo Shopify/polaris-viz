@@ -6,13 +6,10 @@ import {uniqueId, normalizeData} from '../../utilities';
 import {HorizontalBarChart} from '../HorizontalBarChart';
 import type {ChartType, DataSeries, Direction} from '../../types';
 import {VerticalBarChart} from '../VerticalBarChart';
-import type {
-  RenderTooltipContentData,
-  XAxisOptions,
-  YAxisOptions,
-} from '../BarChart';
 
 import type {Annotation} from './types';
+
+import type {RenderTooltipContentData, XAxisOptions, YAxisOptions} from '.';
 
 export interface BarChartProps {
   data: DataSeries[];
