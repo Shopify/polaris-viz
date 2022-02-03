@@ -3,12 +3,13 @@ import type {ScaleLinear} from 'd3-scale';
 
 import type {AccessibilitySeries} from '../../../VerticalBarChart/types';
 import {formatAriaLabel} from '../../utilities';
-import {getOpacityForActive} from '../../../../hooks/ColorBlindA11y';
-import {Color, DataType} from '../../../../types';
 import {
+  getOpacityForActive,
   getColorBlindEventAttrs,
   usePrefersReducedMotion,
+  useWatchColorBlindEvents,
 } from '../../../../hooks';
+import {Color, DataType} from '../../../../types';
 import {Bar} from '../Bar';
 import {LinearGradient} from '../../../LinearGradient';
 import {BAR_SPACING} from '../../constants';
@@ -17,6 +18,8 @@ import {
   LOAD_ANIMATION_DURATION,
   MASK_HIGHLIGHT_COLOR,
   BAR_ANIMATION_HEIGHT_BUFFER,
+  COLOR_BLIND_SINGLE_BAR,
+  COLOR_BLIND_SINGLE_ITEM,
 } from '../../../../constants';
 import {clamp, uniqueId} from '../../../../utilities';
 import styles from '../../Chart.scss';
@@ -57,6 +60,15 @@ export function BarGroup({
   const {prefersReducedMotion} = usePrefersReducedMotion();
   const [activeBarIndex, setActiveBarIndex] = useState(-1);
 
+  useWatchColorBlindEvents({
+    type: COLOR_BLIND_SINGLE_BAR,
+    onIndexChange: ({detail}) => {
+      if (activeBarGroup === -1 || activeBarGroup === barGroupIndex) {
+        setActiveBarIndex(detail.index);
+      }
+    },
+  });
+
   const dataLength = clamp({amount: data.length, min: 1, max: Infinity});
   const barWidth = width / dataLength;
 
@@ -87,8 +99,6 @@ export function BarGroup({
         ]
       : color;
   });
-
-  const onMouseLeave = () => setActiveBarIndex(-1);
 
   return (
     <React.Fragment>
@@ -180,10 +190,6 @@ export function BarGroup({
           const isNegative = rawValue < 0;
           const y = isNegative ? yScale(0) : yScale(0) - height;
 
-          const onMouseOver = () => {
-            setActiveBarIndex(index);
-          };
-
           return (
             <rect
               key={index}
@@ -194,10 +200,8 @@ export function BarGroup({
               fill="transparent"
               aria-label={ariaLabel}
               role="listitem"
-              onMouseOver={onMouseOver}
-              onMouseLeave={onMouseLeave}
               {...getColorBlindEventAttrs({
-                type: 'singleItem',
+                type: COLOR_BLIND_SINGLE_ITEM,
                 index,
               })}
               className={styles.Bar}

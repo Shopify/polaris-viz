@@ -8,6 +8,7 @@ import {
   LINE_ANIMATION_FAST_DURATION,
   LINE_ANIMATION_SLOW_DURATION,
   LINE_ANIMATION_DURATION_STEP,
+  COLOR_BLIND_SINGLE_ITEM,
 } from '../../../../constants';
 import type {Color, StackedSeries} from '../../../../types';
 import {curveStepRounded, uniqueId} from '../../../../utilities';
@@ -42,7 +43,7 @@ export function Areas({
   const [activeLineIndex, setActiveLineIndex] = useState(-1);
 
   useWatchColorBlindEvents({
-    type: 'singleItem',
+    type: COLOR_BLIND_SINGLE_ITEM,
     onIndexChange: ({detail}) => {
       setActiveLineIndex(detail.index);
     },

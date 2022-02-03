@@ -92,6 +92,10 @@ export default {
         'An object of optional proprties that define the appearance of the yAxis.',
     },
     theme: THEME_CONTROL_ARGS,
+    showLegend: {
+      defaultValue: false,
+      description: 'Renders a `<Legends />` component underneath the chart.',
+    },
   },
 } as Meta;
 
@@ -107,6 +111,7 @@ Default.args = {
     labelFormatter: formatXAxisLabel,
   },
   yAxisOptions: {labelFormatter: formatYAxisLabel},
+  showLegend: true,
 };
 
 export const HideXAxisLabels: Story<LineChartProps> = Template.bind({});

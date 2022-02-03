@@ -14,12 +14,18 @@ import {getGradientDefId} from '../../../../../../components/shared';
 import {
   getColorBlindEventAttrs,
   getOpacityForActive,
+  useWatchColorBlindEvents,
 } from '../../../../../../hooks';
-import {STACKED_BAR_GAP} from '../../../../../../constants';
+import {
+  COLOR_BLIND_SINGLE_BAR,
+  COLOR_BLIND_SINGLE_ITEM,
+  STACKED_BAR_GAP,
+} from '../../../../../../constants';
 
 import styles from './Stack.scss';
 
 interface StackProps {
+  activeBarGroup: number;
   data: FormattedStackedSeries;
   gaps: {[key: number]: StackedBarGapDirections};
   groupIndex: number;
@@ -31,6 +37,7 @@ interface StackProps {
 }
 
 export function Stack({
+  activeBarGroup,
   data,
   gaps,
   groupIndex,
@@ -43,7 +50,14 @@ export function Stack({
   const [activeBarIndex, setActiveBarIndex] = useState(-1);
   const keys = data[0] ? Object.keys(data[0].data) : [];
 
-  const onMouseLeave = () => setActiveBarIndex(-1);
+  useWatchColorBlindEvents({
+    type: COLOR_BLIND_SINGLE_BAR,
+    onIndexChange: ({detail}) => {
+      if (activeBarGroup === -1 || activeBarGroup === groupIndex) {
+        setActiveBarIndex(detail.index);
+      }
+    },
+  });
 
   return (
     <React.Fragment>
@@ -69,8 +83,6 @@ export function Stack({
           yScale,
         });
 
-        const onMouseOver = () => setActiveBarIndex(index);
-
         return (
           <g key={`${groupIndex}-${index}`} aria-hidden="true">
             <path
@@ -92,10 +104,8 @@ export function Stack({
               height={height + STACKED_BAR_GAP}
               width={width}
               transform={`translate(${x},${y})`}
-              onMouseOver={onMouseOver}
-              onMouseLeave={onMouseLeave}
               {...getColorBlindEventAttrs({
-                type: 'singleItem',
+                type: COLOR_BLIND_SINGLE_ITEM,
                 index,
               })}
               tabIndex={-1}

@@ -9,7 +9,10 @@ import type {
   StackedSeries,
   Theme,
 } from '../../../../types';
-import {LINES_LOAD_ANIMATION_CONFIG} from '../../../../constants';
+import {
+  COLOR_BLIND_SINGLE_ITEM,
+  LINES_LOAD_ANIMATION_CONFIG,
+} from '../../../../constants';
 import {LinearGradient} from '../../../LinearGradient';
 import {isGradientType} from '../../../../utilities';
 
@@ -83,7 +86,7 @@ export function Area({
         transformOrigin: 'bottom center',
       }}
       {...getColorBlindEventAttrs({
-        type: 'singleItem',
+        type: COLOR_BLIND_SINGLE_ITEM,
         index,
       })}
       tabIndex={-1}

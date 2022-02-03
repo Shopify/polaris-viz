@@ -12,6 +12,7 @@ const mockProps: HorizontalBarChartProps = {
   data: [{name: 'Test', data: [{value: 10, key: 'data'}]}],
   xAxisOptions: {},
   renderTooltipContent: (value) => `${value}`,
+  showLegend: false,
 };
 
 describe('<HorizontalBarChart />', () => {

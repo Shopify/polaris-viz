@@ -2,6 +2,7 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {line} from 'd3-shape';
 
+import {Legends} from '../../';
 import {Crosshair} from '../../../components/Crosshair';
 import {LinearXAxis} from '../../../components/LinearXAxis';
 import {VisuallyHiddenRows} from '../../../components/VisuallyHiddenRows';
@@ -11,7 +12,7 @@ import {HorizontalGridLines} from '../../../components/HorizontalGridLines';
 import {mockDefaultTheme} from '../../../test-utilities/mount-with-provider';
 import {TooltipAnimatedContainer} from '../../../components/TooltipWrapper';
 import {LinearGradient} from '../../LinearGradient';
-import {Chart} from '../Chart';
+import {Chart, ChartProps} from '../Chart';
 import {Line, GradientArea} from '../components';
 import {YAxis} from '../../YAxis';
 import type {DataWithDefaults} from '../types';
@@ -48,13 +49,14 @@ const yAxisOptions = {
   integersOnly: false,
 };
 
-const mockProps = {
+const mockProps: ChartProps = {
   data: [primaryData],
   dimensions: {width: 500, height: 250},
   xAxisOptions,
   yAxisOptions,
   renderTooltipContent: jest.fn(() => <p>Mock Tooltip</p>),
   isAnimated: false,
+  showLegend: false,
 };
 
 jest.mock('../../../utilities', () => {
@@ -429,6 +431,31 @@ describe('<Chart />', () => {
       const chart = mountWithProvider(<Chart {...mockProps} />);
 
       expect(chart).toContainReactComponent(HorizontalGridLines);
+    });
+  });
+
+  describe('showLegend', () => {
+    it('does not render <Legends /> when false', () => {
+      const chart = mount(<Chart {...mockProps} />);
+      const svg = chart.find('svg');
+
+      expect(chart).not.toContainReactComponent(Legends);
+
+      expect(svg?.props.height).toStrictEqual(250);
+    });
+
+    it('renders <Legends /> when true', () => {
+      const chart = mount(<Chart {...mockProps} showLegend />);
+
+      expect(chart).toContainReactComponent(Legends);
+    });
+
+    it('resizes container when true', () => {
+      const chart = mount(<Chart {...mockProps} showLegend />);
+
+      const svg = chart.find('svg');
+
+      expect(svg?.props.height).toStrictEqual(205);
     });
   });
 });
