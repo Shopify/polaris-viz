@@ -5,7 +5,7 @@ import {
   Svg,
   SparkBarChartProps,
   SparkBarSeries,
-} from '@shopify/polaris-viz-core/src';
+} from '../../../../polaris-viz-core/src';
 
 export function SparkBarChart({
   data,
