@@ -81,7 +81,6 @@ export function Area({
       style={{
         ...spring,
         transformOrigin: 'bottom center',
-        opacity: getOpacityForActive(activeLineIndex, index),
       }}
       {...getColorBlindEventAttrs({
         type: 'singleItem',
@@ -98,19 +97,27 @@ export function Area({
           y2="0%"
         />
       </defs>
-      <path
-        key={`line-${index}`}
-        d={line}
-        fill="none"
-        stroke={`url(#area-${id}-${index})`}
-        strokeWidth={selectedTheme.line.width}
-      />
-      <animated.path
-        key={index}
-        d={shape}
-        fill={`url(#area-${id}-${index})`}
-        style={areaSpring}
-      />
+      <g
+        style={{
+          opacity: getOpacityForActive({activeIndex: activeLineIndex, index}),
+        }}
+        aria-hidden="true"
+        tabIndex={-1}
+      >
+        <path
+          key={`line-${index}`}
+          d={line}
+          fill="none"
+          stroke={`url(#area-${id}-${index})`}
+          strokeWidth={selectedTheme.line.width}
+        />
+        <animated.path
+          key={index}
+          d={shape}
+          fill={`url(#area-${id}-${index})`}
+          style={areaSpring}
+        />
+      </g>
     </animated.g>
   );
 }

@@ -68,7 +68,12 @@ export const Line = React.memo(function Shape({
         strokeLinejoin="round"
         strokeLinecap="round"
         strokeDasharray={StrokeDasharray[lineStyle]}
-        style={{opacity: getOpacityForActive(activeLineIndex, index)}}
+        style={{
+          opacity: getOpacityForActive({
+            activeIndex: activeLineIndex,
+            index,
+          }),
+        }}
       />
       {children}
       <path

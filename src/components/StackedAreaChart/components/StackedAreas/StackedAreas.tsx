@@ -88,7 +88,7 @@ export function Areas({
   }, [stackedValues.length]);
 
   return (
-    <g transform={transform} className={styles.Group}>
+    <g transform={transform} className={styles.Group} aria-hidden="true">
       {stackedValues.map((data, index) => {
         return (
           <Area
