@@ -80,6 +80,7 @@ export function StackedBarGroups({
               aria-hidden="true"
             />
             <Stack
+              activeBarGroup={activeBarGroup}
               data={item}
               gaps={gaps}
               groupIndex={groupIndex}

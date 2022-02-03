@@ -1,8 +1,13 @@
 import React, {useState, useMemo} from 'react';
 import type {AnnotationLookupTable} from 'components/BarChart/types';
 
+import {Legends} from '../';
 import {GradientDefs} from '../shared';
-import {BarChartMargin as Margin, XMLNS} from '../../constants';
+import {
+  BarChartMargin as Margin,
+  DEFAULT_LEGENDS_HEIGHT,
+  XMLNS,
+} from '../../constants';
 import {
   TooltipHorizontalOffset,
   TooltipVerticalOffset,
@@ -55,12 +60,13 @@ import styles from './Chart.scss';
 
 export interface Props {
   data: DataSeries[];
-  dimensions?: Dimensions;
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
+  showLegend: boolean;
   type: ChartType;
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
   annotationsLookupTable?: AnnotationLookupTable;
+  dimensions?: Dimensions;
   emptyStateText?: string;
   isAnimated?: boolean;
   theme?: string;
@@ -70,18 +76,22 @@ export function Chart({
   annotationsLookupTable = {},
   data,
   dimensions,
-  renderTooltipContent,
-  xAxisOptions,
-  yAxisOptions,
-  isAnimated = false,
   emptyStateText,
+  isAnimated = false,
+  renderTooltipContent,
+  showLegend,
   theme,
   type,
+  xAxisOptions,
+  yAxisOptions,
 }: Props) {
   useColorBlindEvents();
 
   const selectedTheme = useTheme(theme);
   const [activeBarGroup, setActiveBarGroup] = useState<number>(-1);
+  const [legendsHeight, setLegendsHeight] = useState(
+    showLegend ? DEFAULT_LEGENDS_HEIGHT : 0,
+  );
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
   const id = useMemo(() => uniqueId('VerticalBarChart'), []);
 
@@ -119,7 +129,7 @@ export function Chart({
   });
 
   const {ticks: initialTicks} = useYScale({
-    drawableHeight: height - Margin.Top - Margin.Bottom,
+    drawableHeight: height - Margin.Top - Margin.Bottom - legendsHeight,
     data,
     formatYAxisLabel: yAxisOptions.labelFormatter,
     stackedValues,
@@ -201,10 +211,21 @@ export function Chart({
     labels,
   });
 
+  const legends = useMemo(() => {
+    return data.map(({name, color}) => ({
+      name: name ?? '',
+      color: color!,
+    }));
+  }, [data]);
+
   const {maxXLabelHeight} = xAxisDetails;
 
   const drawableHeight =
-    height - Margin.Top - Margin.Bottom - xAxisDetails.maxXLabelHeight;
+    height -
+    Margin.Top -
+    Margin.Bottom -
+    xAxisDetails.maxXLabelHeight -
+    legendsHeight;
 
   const {yScale, ticks} = useYScale({
     drawableHeight,
@@ -241,15 +262,15 @@ export function Chart({
     <div
       className={styles.ChartContainer}
       style={{
-        height,
+        height: height - legendsHeight,
         width,
       }}
     >
       <svg
-        viewBox={`0 0 ${width} ${height}`}
+        viewBox={`0 0 ${width} ${height - legendsHeight}`}
         xmlns={XMLNS}
         width={width}
-        height={height}
+        height={height - legendsHeight}
         className={styles.Svg}
         role={emptyState ? 'img' : 'list'}
         aria-label={emptyState ? emptyStateText : undefined}
@@ -258,7 +279,7 @@ export function Chart({
         {hideXAxis ? null : (
           <g
             transform={`translate(${chartStartPosition},${
-              height - Margin.Bottom - maxXLabelHeight
+              height - Margin.Bottom - maxXLabelHeight - legendsHeight
             })`}
             aria-hidden="true"
           >
@@ -383,6 +404,14 @@ export function Chart({
         margin={Margin}
         parentRef={svgRef}
       />
+
+      {showLegend && (
+        <Legends
+          colorBlindType="singleBar"
+          legends={legends}
+          onHeightChange={(height) => setLegendsHeight(height)}
+        />
+      )}
     </div>
   );
 

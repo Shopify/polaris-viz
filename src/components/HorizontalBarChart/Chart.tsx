@@ -1,5 +1,6 @@
 import React, {ReactNode, useCallback, useMemo, useState} from 'react';
 
+import {Legends} from '../';
 import type {HorizontalTransitionStyle} from '../../hooks/useHorizontalTransitions';
 import {GradientDefs, HorizontalGroup} from '../shared';
 import {
@@ -18,6 +19,7 @@ import {
   BarChartMargin as Margin,
   HORIZONTAL_BAR_GROUP_DELAY,
   HORIZONTAL_GROUP_LABEL_HEIGHT,
+  DEFAULT_LEGENDS_HEIGHT,
 } from '../../constants';
 import {
   eventPointNative,
@@ -46,6 +48,7 @@ export interface ChartProps {
   isAnimated: boolean;
   data: DataSeries[];
   renderTooltipContent: (data: RenderTooltipContentData) => ReactNode;
+  showLegend: boolean;
   type: ChartType;
   xAxisOptions: Required<XAxisOptions>;
   annotationsLookupTable?: AnnotationLookupTable;
@@ -59,6 +62,7 @@ export function Chart({
   dimensions,
   isAnimated,
   renderTooltipContent,
+  showLegend,
   theme,
   type,
   xAxisOptions,
@@ -68,6 +72,9 @@ export function Chart({
   const selectedTheme = useTheme(theme);
   const {labelFormatter} = xAxisOptions;
   const id = useMemo(() => uniqueId('HorizontalBarChart'), []);
+  const [legendsHeight, setLegendsHeight] = useState(
+    showLegend ? DEFAULT_LEGENDS_HEIGHT : 0,
+  );
 
   const isStacked = type === 'stacked';
 
@@ -124,7 +131,7 @@ export function Chart({
     groupHeight,
     tallestXAxisLabel,
   } = useHorizontalBarSizes({
-    chartDimensions: {width, height},
+    chartDimensions: {width, height: height - legendsHeight},
     isSimple: xAxisOptions.hide,
     isStacked,
     labelFormatter,
@@ -165,19 +172,26 @@ export function Chart({
 
   const zeroPosition = longestLabel.negative + xScale(0);
 
+  const legends = useMemo(() => {
+    return data.map(({name}, index) => ({
+      name: name ?? '',
+      color: seriesColors[index],
+    }));
+  }, [data, seriesColors]);
+
   return (
     <div
       className={styles.ChartContainer}
       style={{
         width,
-        height,
+        height: height - legendsHeight,
       }}
     >
       <svg
         className={styles.SVG}
         ref={setSvgRef}
         role="list"
-        viewBox={`0 0 ${width} ${height}`}
+        viewBox={`0 0 ${width} ${height - legendsHeight}`}
         xmlns={XMLNS}
       >
         {xAxisOptions.hide === true ? null : (
@@ -201,11 +215,12 @@ export function Chart({
         )}
 
         <GradientDefs
+          direction="horizontal"
+          gradientUnits={isStacked ? 'objectBoundingBox' : 'userSpaceOnUse'}
           id={id}
           seriesColors={seriesColors}
-          theme={theme}
           size={isStacked ? '100%' : `${width}px`}
-          gradientUnits={isStacked ? 'objectBoundingBox' : 'userSpaceOnUse'}
+          theme={theme}
         />
 
         {transitions((style, item, _transition, index) => {
@@ -282,6 +297,14 @@ export function Chart({
         margin={Margin}
         parentRef={svgRef}
       />
+
+      {showLegend && (
+        <Legends
+          colorBlindType="singleBar"
+          legends={legends}
+          onHeightChange={(height) => setLegendsHeight(height)}
+        />
+      )}
     </div>
   );
 
