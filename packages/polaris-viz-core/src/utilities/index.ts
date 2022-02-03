@@ -7,3 +7,4 @@ export {getFilteredSeriesCount} from './getFilteredSeriesCount';
 export {uniqueId} from './uniqueId';
 export {isGradientType} from './isGradientType';
 export {curveStepRounded} from './curveStepRounded';
+export {getAnimationTrail} from './get-animation-trail';

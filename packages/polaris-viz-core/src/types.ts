@@ -213,3 +213,13 @@ export interface SparkLineChartProps {
   offsetRight?: number;
   theme?: string;
 }
+
+export interface SparkBarChartProps {
+  data: DataSeries[];
+  dimensions: Dimensions;
+  dataOffsetRight?: number;
+  dataOffsetLeft?: number;
+  accessibilityLabel?: string;
+  isAnimated?: boolean;
+  theme?: string;
+}

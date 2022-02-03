@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
-import {animated, SpringValue} from '@react-spring/web';
+import {animated, SpringValue} from 'react-spring';
 
 interface Props {
   x: number;

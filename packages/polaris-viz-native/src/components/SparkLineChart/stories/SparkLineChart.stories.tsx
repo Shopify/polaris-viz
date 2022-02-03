@@ -44,7 +44,7 @@ const DATA = [
 ];
 
 export default {
-  title: 'React Native/ Spark Charts/SparkLineChart',
+  title: 'React Native/Spark Charts/SparkLineChart',
   component: SparkLineChart,
   parameters: {
     controls: {sort: 'requiredFirst', expanded: true},

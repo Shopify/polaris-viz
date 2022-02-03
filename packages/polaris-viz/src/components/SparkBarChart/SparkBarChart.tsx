@@ -1,18 +1,9 @@
 import React from 'react';
 
-import type {DataSeries} from '../../types';
+import type {SparkBarChartProps} from '../../../../polaris-viz-core/src';
 import {ChartContainer} from '../ChartContainer';
 
 import {Chart} from './Chart';
-
-export interface SparkBarChartProps {
-  data: DataSeries[];
-  dataOffsetRight?: number;
-  dataOffsetLeft?: number;
-  accessibilityLabel?: string;
-  isAnimated?: boolean;
-  theme?: string;
-}
 
 export function SparkBarChart({
   data,

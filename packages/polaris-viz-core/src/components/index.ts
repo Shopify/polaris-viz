@@ -3,3 +3,4 @@ export {LinearGradient} from './LinearGradient';
 export {LineSeries} from './LineSeries';
 export type {PolarisVizProviderProps} from './PolarisVizProvider';
 export * from './SVG';
+export {SparkBarSeries} from './SparkBarSeries';
