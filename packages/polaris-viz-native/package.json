@@ -13,9 +13,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "scripts": {
-    "start": "react-native start"
-  },
   "dependencies": {
     "@react-spring/native": "^9.4.2",
     "@shopify/polaris-viz-core": "^1.0.0-alpha0",
