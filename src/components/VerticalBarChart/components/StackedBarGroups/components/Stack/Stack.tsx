@@ -79,8 +79,6 @@ export function Stack({
           yScale,
         });
 
-        const onMouseOver = () => setActiveBarIndex(index);
-
         return (
           <g key={`${groupIndex}-${index}`} aria-hidden="true">
             <path

@@ -45,6 +45,7 @@ const MOCK_PROPS: ChartProps = {
     useMinimalLabels: false,
   },
   type: 'default',
+  showLegend: false,
 };
 
 describe('<Chart />', () => {

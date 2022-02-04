@@ -10,7 +10,7 @@ import {SquareColorPreview} from '../../..';
 
 import style from './LegendItem.scss';
 
-interface LegendItemProps {
+export interface LegendItemProps {
   activeIndex: number;
   colorBlindType: string;
   index: number;

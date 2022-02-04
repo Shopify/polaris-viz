@@ -7,7 +7,7 @@ import {useResizeObserver, useWatchColorBlindEvents} from '../../hooks';
 import {LegendItem} from './components';
 import style from './Legends.scss';
 
-interface LegendsProps {
+export interface LegendsProps {
   colorBlindType: string;
   legends: {name: string; color: Color}[];
   onHeightChange: (height: number) => void;
