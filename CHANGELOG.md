@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### Added
+
+- Added `<Legends />` component.
+- Added `showLegend` to `BarChartProps`, `LineChartProps` and `StackedAreaChartProps` to control the visibility of `<Legends >`.
+
+### Removed
+
+- Removed legacy `<Legend >` component.
+
 ## [0.28.7] - 2022-01-20
 
 ### Fixed
