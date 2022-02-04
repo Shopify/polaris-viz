@@ -1,5 +1,5 @@
 import variables from './styles/shared/_variables.scss';
-import {createGradient} from './utilities';
+import {createGradient} from './utilities/createGradient';
 import type {Theme} from './types';
 
 export const XMLNS = 'http://www.w3.org/2000/svg';
