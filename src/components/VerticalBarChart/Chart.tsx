@@ -1,7 +1,7 @@
 import React, {useState, useMemo} from 'react';
 import type {AnnotationLookupTable} from 'components/BarChart/types';
 
-import {Legends} from '../';
+import {LegendsContainer, useLegends} from '../LegendsContainer';
 import {GradientDefs} from '../shared';
 import {
   BarChartMargin as Margin,
@@ -46,7 +46,6 @@ import type {
   YAxisOptions,
 } from '../BarChart';
 import {AnnotationLine} from '../BarChart';
-import {useLegends} from '../Legends';
 
 import {BarGroup, StackedBarGroups} from './components';
 import {useYScale, useXScale, useMinimalLabelIndexes} from './hooks';
@@ -391,10 +390,11 @@ export function Chart({
       />
 
       {showLegend && (
-        <Legends
+        <LegendsContainer
           colorBlindType={COLOR_BLIND_SINGLE_BAR}
-          legends={legends}
+          data={legends}
           onHeightChange={setLegendsHeight}
+          theme={theme}
         />
       )}
     </div>

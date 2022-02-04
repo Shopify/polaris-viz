@@ -17,13 +17,26 @@ describe('<LegendItem />', () => {
     expect(item).toContainReactComponent('button');
   });
 
-  it('applies color blind data attributes', () => {
-    const item = mount(<LegendItem {...mockProps} />);
-    const button = item.find('button');
-    const dataset = button?.domNode?.dataset;
+  describe('colorBlindType', () => {
+    it('applies data attributes', () => {
+      const item = mount(<LegendItem {...mockProps} />);
+      const button = item.find('button');
+      const dataset = button?.domNode?.dataset;
 
-    expect(dataset?.colorBlindEventIndex).toStrictEqual('0');
-    expect(dataset?.colorBlindEventType).toStrictEqual('someType');
+      expect(dataset?.colorBlindEventIndex).toStrictEqual('0');
+      expect(dataset?.colorBlindEventType).toStrictEqual('someType');
+    });
+
+    it('applies nothing when null', () => {
+      const item = mount(
+        <LegendItem {...mockProps} colorBlindType={undefined} />,
+      );
+      const button = item.find('button');
+      const dataset = button?.domNode?.dataset;
+
+      expect(dataset?.colorBlindEventIndex).toStrictEqual(undefined);
+      expect(dataset?.colorBlindEventType).toStrictEqual(undefined);
+    });
   });
 
   describe('activeIndex', () => {

@@ -11,10 +11,11 @@ import {LinePreview, SquareColorPreview} from '../../..';
 import style from './LegendItem.scss';
 
 export interface LegendItemProps {
-  activeIndex: number;
-  colorBlindType: string;
   index: number;
   legend: LegendData;
+  activeIndex?: number;
+  colorBlindType?: string;
+  theme?: string;
 }
 
 function getIcon(legend: LegendData) {
@@ -30,21 +31,27 @@ function getIcon(legend: LegendData) {
 }
 
 export function LegendItem({
-  activeIndex,
+  activeIndex = -1,
   colorBlindType,
   index,
   legend,
+  theme,
 }: LegendItemProps) {
-  const theme = useTheme();
+  const selectedTheme = useTheme(theme);
+
+  const colorBlindAttrs =
+    colorBlindType == null
+      ? {}
+      : getColorBlindEventAttrs({
+          type: colorBlindType,
+          index,
+        });
 
   return (
     <button
-      {...getColorBlindEventAttrs({
-        type: colorBlindType,
-        index,
-      })}
+      {...colorBlindAttrs}
       style={{
-        background: theme.tooltip.backgroundColor,
+        background: selectedTheme.tooltip.backgroundColor,
         opacity: getOpacityForActive({
           activeIndex,
           index,
@@ -54,7 +61,9 @@ export function LegendItem({
       aria-hidden="true"
     >
       {getIcon(legend)}
-      <span style={{color: theme.tooltip.labelColor}}>{legend.name}</span>
+      <span style={{color: selectedTheme.tooltip.labelColor}}>
+        {legend.name}
+      </span>
     </button>
   );
 }

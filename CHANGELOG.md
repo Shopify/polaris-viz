@@ -7,6 +7,12 @@
 - Added `<Legends />` component.
 - Added `showLegend` to `BarChartProps`, `LineChartProps` and `StackedAreaChartProps` to control the visibility of `<Legends >`.
 
+### Changed
+
+- `LegendProps.series` renamed to `LegendProps.data`.
+- `LegendProps.data[].lineStyle` was removed. Use `LegendProps.data[].isComparison` to show a dotted line.
+- `LegendProps.data[].iconType` was added. Use `solid` to display a rectangle icon and `line` to display a line icon.
+
 ### Removed
 
 - Removed legacy `<Legend >` component.

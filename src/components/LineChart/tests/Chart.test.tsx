@@ -2,7 +2,7 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {line} from 'd3-shape';
 
-import {Legends} from '../../';
+import {LegendsContainer} from '../../LegendsContainer';
 import {Crosshair} from '../../../components/Crosshair';
 import {LinearXAxis} from '../../../components/LinearXAxis';
 import {VisuallyHiddenRows} from '../../../components/VisuallyHiddenRows';
@@ -435,19 +435,19 @@ describe('<Chart />', () => {
   });
 
   describe('showLegend', () => {
-    it('does not render <Legends /> when false', () => {
+    it('does not render <LegendsContainer /> when false', () => {
       const chart = mount(<Chart {...mockProps} />);
       const svg = chart.find('svg');
 
-      expect(chart).not.toContainReactComponent(Legends);
+      expect(chart).not.toContainReactComponent(LegendsContainer);
 
       expect(svg?.props.height).toStrictEqual(250);
     });
 
-    it('renders <Legends /> when true', () => {
+    it('renders <LegendsContainer /> when true', () => {
       const chart = mount(<Chart {...mockProps} showLegend />);
 
-      expect(chart).toContainReactComponent(Legends);
+      expect(chart).toContainReactComponent(LegendsContainer);
     });
 
     it('resizes container when true', () => {
