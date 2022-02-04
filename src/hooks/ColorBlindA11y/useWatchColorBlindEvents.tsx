@@ -1,4 +1,5 @@
 import {useContext, useEffect} from 'react';
+import {useDebouncedCallback} from 'use-debounce/lib';
 
 import {ChartContext} from '../../components';
 import {useCallbackRef} from '../../hooks';
@@ -16,7 +17,9 @@ interface Props {
 }
 
 export function useWatchColorBlindEvents({type, onIndexChange}: Props) {
-  const onIndexChangeCallback = useCallbackRef(onIndexChange);
+  const [debounced] = useDebouncedCallback(onIndexChange, 0);
+
+  const onIndexChangeCallback = useCallbackRef(debounced);
   const {id} = useContext(ChartContext);
 
   useEffect(() => {

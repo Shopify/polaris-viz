@@ -98,7 +98,9 @@ export function HorizontalGroup({
       }}
     >
       <g
-        style={{opacity: getOpacityForActive(activeGroupIndex, index)}}
+        style={{
+          opacity: getOpacityForActive({activeIndex: activeGroupIndex, index}),
+        }}
         {...getColorBlindEventAttrs({
           type: 'group',
           index,

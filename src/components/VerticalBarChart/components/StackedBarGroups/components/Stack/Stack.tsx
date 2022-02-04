@@ -78,7 +78,12 @@ export function Stack({
               d={pathD}
               key={index}
               transform={`translate(${x},${y})`}
-              style={{opacity: getOpacityForActive(activeBarIndex, index)}}
+              style={{
+                opacity: getOpacityForActive({
+                  activeIndex: activeBarIndex,
+                  index,
+                }),
+              }}
               aria-hidden="true"
             />
             <rect
@@ -90,7 +95,7 @@ export function Stack({
               onMouseOver={onMouseOver}
               onMouseLeave={onMouseLeave}
               {...getColorBlindEventAttrs({
-                type: 'singleBar',
+                type: 'singleItem',
                 index,
               })}
               tabIndex={-1}

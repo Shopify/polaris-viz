@@ -7,6 +7,8 @@ describe('useWatchColorBlindEvents', () => {
   let events: {[key: string]: any} = {};
 
   beforeEach(() => {
+    jest.useFakeTimers();
+
     events = {};
 
     jest
@@ -18,6 +20,11 @@ describe('useWatchColorBlindEvents', () => {
     jest.spyOn(window, 'removeEventListener').mockImplementation((event) => {
       delete events[event];
     });
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+    jest.useRealTimers();
   });
 
   it('does not attach events when no id provided', () => {
@@ -72,6 +79,8 @@ describe('useWatchColorBlindEvents', () => {
     });
 
     events['123:color-blind-event:someType']();
+
+    jest.runAllTimers();
 
     expect(spy).toHaveBeenCalled();
   });

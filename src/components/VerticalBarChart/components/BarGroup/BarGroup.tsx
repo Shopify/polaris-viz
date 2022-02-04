@@ -101,7 +101,10 @@ export function BarGroup({
               data-index={barGroupIndex}
               key={`${barGroupIndex}${index}`}
               style={{
-                opacity: getOpacityForActive(activeBarGroup, barGroupIndex),
+                opacity: getOpacityForActive({
+                  activeIndex: activeBarGroup,
+                  index: barGroupIndex,
+                }),
               }}
             >
               <Bar
@@ -137,7 +140,10 @@ export function BarGroup({
                 width={barWidth - BAR_SPACING}
                 height={height + BAR_ANIMATION_HEIGHT_BUFFER * 2}
                 fill={`url(#${gradientId}${index})`}
-                opacity={getOpacityForActive(activeBarIndex, index)}
+                opacity={getOpacityForActive({
+                  activeIndex: activeBarIndex,
+                  index,
+                })}
               />
             </g>
           );
@@ -191,7 +197,7 @@ export function BarGroup({
               onMouseOver={onMouseOver}
               onMouseLeave={onMouseLeave}
               {...getColorBlindEventAttrs({
-                type: 'singleBar',
+                type: 'singleItem',
                 index,
               })}
               className={styles.Bar}

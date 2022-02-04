@@ -65,7 +65,12 @@ export function StackedBarGroups({
               index: groupIndex,
             })}
             className={styles.Group}
-            style={{opacity: getOpacityForActive(activeBarGroup, groupIndex)}}
+            style={{
+              opacity: getOpacityForActive({
+                activeIndex: activeBarGroup,
+                index: groupIndex,
+              }),
+            }}
             aria-label={groupAriaLabel}
             role="list"
             data-type={DataType.BarGroup}

@@ -56,7 +56,10 @@ export function StackedBar({
         style={{
           outline: 'none',
           transformOrigin: `${x}px 0px`,
-          opacity: getOpacityForActive(activeBarIndex, seriesIndex),
+          opacity: getOpacityForActive({
+            activeIndex: activeBarIndex,
+            index: seriesIndex,
+          }),
         }}
         width={width}
         transform={`translate(${x},0)`}

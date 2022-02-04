@@ -10,7 +10,6 @@ import {
   TooltipWrapper,
   TOOLTIP_POSITION_DEFAULT_RETURN,
 } from '../TooltipWrapper';
-import {LinearGradient} from '../LinearGradient';
 import {
   useLinearXAxisDetails,
   useLinearXScale,
@@ -18,6 +17,7 @@ import {
   usePrefersReducedMotion,
   useTheme,
   useThemeSeriesColors,
+  useColorBlindEvents,
 } from '../../hooks';
 import {
   SMALL_SCREEN,
@@ -25,20 +25,11 @@ import {
   SPACING_TIGHT,
   FONT_SIZE,
   LineChartMargin as Margin,
-  colorWhite,
   XMLNS,
 } from '../../constants';
-import {
-  isGradientType,
-  changeColorOpacity,
-  changeGradientOpacity,
-  uniqueId,
-  curveStepRounded,
-  eventPointNative,
-} from '../../utilities';
+import {uniqueId, curveStepRounded, eventPointNative} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {Crosshair} from '../Crosshair';
-import {Point} from '../Point';
 import {LinearXAxis} from '../LinearXAxis';
 import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
 import {HorizontalGridLines} from '../HorizontalGridLines';
@@ -53,7 +44,7 @@ import {
 
 import {Spacing} from './constants';
 import {useYScale} from './hooks';
-import {StackedAreas} from './components';
+import {StackedAreas, Points} from './components';
 import type {RenderTooltipContentData} from './types';
 import styles from './Chart.scss';
 
@@ -83,6 +74,8 @@ export function Chart({
   isAnimated,
   theme,
 }: Props) {
+  useColorBlindEvents();
+
   const {prefersReducedMotion} = usePrefersReducedMotion();
   const selectedTheme = useTheme(theme);
   const colors = useThemeSeriesColors(data, selectedTheme);
@@ -340,75 +333,19 @@ export function Chart({
           </g>
         )}
 
-        <g transform={`translate(${dataStartPosition},${Margin.Top})`}>
-          {stackedValues.map((_, stackIndex) => {
-            if (activePointIndex == null) {
-              return null;
-            }
-
-            const id = `${tooltipId.current}-point-${stackIndex}`;
-            const color = colors[stackIndex];
-
-            const animatedYPostion =
-              animatedCoordinates == null ||
-              animatedCoordinates[stackIndex] == null
-                ? 0
-                : animatedCoordinates[stackIndex].to((coord) => coord.y);
-
-            const pointColor = isGradientType(color)
-              ? `url(#${id})`
-              : changeColorOpacity(color);
-
-            return (
-              <React.Fragment key={stackIndex}>
-                {isGradientType(color) && (
-                  <defs>
-                    <LinearGradient
-                      id={id}
-                      gradient={changeGradientOpacity(color)}
-                      gradientUnits="userSpaceOnUse"
-                      y1="100%"
-                      y2="0%"
-                    />
-                  </defs>
-                )}
-                <Point
-                  stroke={selectedTheme.line.pointStroke}
-                  color={pointColor}
-                  cx={getXPosition({isCrosshair: false, index: stackIndex})}
-                  cy={animatedYPostion}
-                  active
-                  index={stackIndex}
-                  tabIndex={stackIndex === 0 ? 0 : -1}
-                  isAnimated={isAnimated && !prefersReducedMotion}
-                />
-              </React.Fragment>
-            );
-          })}
-          {stackedValues[0].map(([x, y], dataIndex) => {
-            // These are the points used for tabbing and
-            // a11y. We only render a single series otherwise
-            // the tabbing would loop through each set of points
-            // for each series.
-            return (
-              <Point
-                dataType={DataType.Point}
-                key={`point-${dataIndex}-${x}}`}
-                stroke={selectedTheme.line.pointStroke}
-                color={colorWhite}
-                cx={xScale(dataIndex)}
-                cy={yScale(y)}
-                active
-                index={dataIndex}
-                tabIndex={0}
-                ariaLabelledby={tooltipId.current}
-                isAnimated={false}
-                ariaHidden={false}
-                visuallyHidden
-              />
-            );
-          })}
-        </g>
+        <Points
+          activePointIndex={activePointIndex}
+          animatedCoordinates={animatedCoordinates}
+          colors={colors}
+          dataStartPosition={dataStartPosition}
+          getXPosition={getXPosition}
+          isAnimated={isAnimated}
+          stackedValues={stackedValues}
+          theme={theme}
+          tooltipId={tooltipId.current}
+          xScale={xScale}
+          yScale={yScale}
+        />
       </svg>
       <TooltipWrapper
         alwaysUpdatePosition
