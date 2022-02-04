@@ -193,6 +193,8 @@ export function Chart({
         role="list"
         viewBox={`0 0 ${width} ${height - legendsHeight}`}
         xmlns={XMLNS}
+        width={width}
+        height={height - legendsHeight}
       >
         {xAxisOptions.hide === true ? null : (
           <React.Fragment>
