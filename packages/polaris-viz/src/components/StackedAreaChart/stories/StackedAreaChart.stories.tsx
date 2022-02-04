@@ -31,7 +31,7 @@ const TOOLTIP_CONTENT = {
 };
 
 export default {
-  title: 'Default Charts/StackedAreaChart',
+  title: 'polaris-viz/Default Charts/StackedAreaChart',
   component: StackedAreaChart,
   parameters: {
     controls: {sort: 'requiredFirst', expanded: true},
@@ -102,8 +102,9 @@ HideXAxisLabels.args = {
   xAxisOptions: {...defaultProps.xAxisOptions, hide: true},
 };
 
-export const OverwrittenSeriesColors: Story<StackedAreaChartProps> =
-  Template.bind({});
+export const OverwrittenSeriesColors: Story<StackedAreaChartProps> = Template.bind(
+  {},
+);
 OverwrittenSeriesColors.args = {
   ...defaultProps,
   xAxisOptions: {

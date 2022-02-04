@@ -5,7 +5,7 @@ import {SparkBarChart, SparkBarChartProps} from '../SparkBarChart';
 import {THEME_CONTROL_ARGS} from '../../../storybook';
 
 export default {
-  title: 'Spark Charts/SparkBarChart',
+  title: 'polaris-viz/Spark Charts/SparkBarChart',
   parameters: {
     controls: {sort: 'requiredFirst', expanded: true},
     docs: {

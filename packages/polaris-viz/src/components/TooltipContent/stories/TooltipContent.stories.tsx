@@ -9,7 +9,7 @@ import {TooltipRowType} from '../TooltipContent';
 import {DEFAULT_THEME} from '../../../constants';
 
 export default {
-  title: 'Subcomponents/Tooltips/TooltipContent',
+  title: 'polaris-viz/Subcomponents/Tooltips/TooltipContent',
   component: GeneralTooltip,
   parameters: {
     docs: {

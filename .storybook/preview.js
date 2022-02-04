@@ -9,21 +9,29 @@ import {useTheme} from '../packages/polaris-viz/src/hooks';
 
 // https://github.com/storybookjs/storybook/issues/548
 const storiesOrder = {
-  Docs: {
+  Essentials: {
     Intro: null,
-    'Getting started': null,
+    'Web and Mobile Development': null,
+    'Data Structure': null,
     Themes: {
       'Default Themes': null,
       Customizing: null,
       'createTheme Utility': null,
     },
+    Types: null,
+    'Utility Functions': null,
   },
-  Providers: null,
-  Charts: null,
-  [`Default Charts`]: null,
-  [`Simple Charts`]: null,
-  [`Spark Charts`]: null,
-  Subcomponents: null,
+  'polaris-viz': {
+    'Getting Started': null,
+    'Spark Charts': null,
+    'Default Charts': null,
+    'Simple Charts': null,
+    Subcomponents: null,
+  },
+  'polaris-viz-native': {
+    'Getting Started': null,
+    'Spark Charts': null,
+  },
   Playground: null,
 };
 

@@ -7,7 +7,7 @@ import {
 } from '../../../components';
 
 export default {
-  title: 'Subcomponents/Tooltips/LineChartTooltipContent',
+  title: 'polaris-viz/Subcomponents/Tooltips/LineChartTooltipContent',
   component: LineChartTooltipContent,
   parameters: {
     controls: {

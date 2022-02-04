@@ -133,7 +133,7 @@ const DATA_WITH_COLOR: DataSeries[] = [
 ];
 
 export default {
-  title: 'Default Charts/BarChart',
+  title: 'polaris-viz/Default Charts/BarChart',
   component: BarChart,
   parameters: {
     docs: {
@@ -317,8 +317,9 @@ const WithoutRoundedCornersTemplate: Story<BarChartProps> = (
   );
 };
 
-export const WithoutRoundedCorners: Story<BarChartProps> =
-  WithoutRoundedCornersTemplate.bind({});
+export const WithoutRoundedCorners: Story<BarChartProps> = WithoutRoundedCornersTemplate.bind(
+  {},
+);
 WithoutRoundedCorners.args = {
   data: DATA,
   xAxisOptions: {},
