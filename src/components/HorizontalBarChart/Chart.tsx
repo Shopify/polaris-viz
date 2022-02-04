@@ -1,4 +1,5 @@
 import React, {ReactNode, useCallback, useMemo, useState} from 'react';
+import type {LegendData} from 'components/Legends/types';
 
 import {Legends} from '../';
 import type {HorizontalTransitionStyle} from '../../hooks/useHorizontalTransitions';
@@ -172,7 +173,7 @@ export function Chart({
 
   const zeroPosition = longestLabel.negative + xScale(0);
 
-  const legends = useMemo(() => {
+  const legends: LegendData[] = useMemo(() => {
     return data.map(({name}, index) => ({
       name: name ?? '',
       color: seriesColors[index],
@@ -304,7 +305,7 @@ export function Chart({
         <Legends
           colorBlindType="singleBar"
           legends={legends}
-          onHeightChange={(height) => setLegendsHeight(height)}
+          onHeightChange={setLegendsHeight}
         />
       )}
     </div>

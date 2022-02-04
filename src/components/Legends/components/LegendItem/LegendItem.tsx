@@ -1,12 +1,12 @@
 import React from 'react';
+import type {LegendData, LegendIconType} from 'components/Legends/types';
 
 import {
   getColorBlindEventAttrs,
   getOpacityForActive,
   useTheme,
 } from '../../../../hooks';
-import type {Color} from '../../../../types';
-import {SquareColorPreview} from '../../..';
+import {LinePreview, SquareColorPreview} from '../../..';
 
 import style from './LegendItem.scss';
 
@@ -14,14 +14,26 @@ export interface LegendItemProps {
   activeIndex: number;
   colorBlindType: string;
   index: number;
-  legend: {name: string; color: Color};
+  legend: LegendData;
+}
+
+function getIcon(legend: LegendData) {
+  switch (legend.iconType) {
+    case 'line': {
+      const style = legend.isComparison ? 'dotted' : 'solid';
+      return <LinePreview color={legend.color} lineStyle={style} />;
+    }
+    case 'solid':
+    default:
+      return <SquareColorPreview color={legend.color} />;
+  }
 }
 
 export function LegendItem({
   activeIndex,
   colorBlindType,
-  legend,
   index,
+  legend,
 }: LegendItemProps) {
   const theme = useTheme();
 
@@ -38,7 +50,7 @@ export function LegendItem({
       className={style.Legend}
       aria-hidden="true"
     >
-      <SquareColorPreview color={legend.color} />
+      {getIcon(legend)}
       <span style={{color: theme.tooltip.labelColor}}>{legend.name}</span>
     </button>
   );

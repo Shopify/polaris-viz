@@ -9,7 +9,10 @@ import {
   useTheme,
 } from '../../../../hooks';
 import {ANIMATION_DELAY} from '../../constants';
-import {LINES_LOAD_ANIMATION_CONFIG} from '../../../../constants';
+import {
+  COLOR_BLIND_SINGLE_LINE,
+  LINES_LOAD_ANIMATION_CONFIG,
+} from '../../../../constants';
 
 import {StrokeDasharray} from './constants';
 import styles from './Line.scss';
@@ -79,7 +82,7 @@ export const Line = React.memo(function Shape({
         stroke="transparent"
         fill="none"
         {...getColorBlindEventAttrs({
-          type: 'singleLine',
+          type: COLOR_BLIND_SINGLE_LINE,
           index,
         })}
         style={{pointerEvents: 'auto'}}

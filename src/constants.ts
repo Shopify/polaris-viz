@@ -327,3 +327,5 @@ export const STACKED_BAR_GAP = 2;
 export const COLOR_BLIND_ACTIVE_OPACITY = 1;
 export const COLOR_BLIND_FADED_OPACITY = 0.3;
 export const DEFAULT_LEGENDS_HEIGHT = 29;
+export const COLOR_BLIND_SINGLE_LINE = 'singleLine';
+export const LEGENDS_TOP_MARGIN = 16;

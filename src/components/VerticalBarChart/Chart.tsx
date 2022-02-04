@@ -1,5 +1,6 @@
 import React, {useState, useMemo} from 'react';
 import type {AnnotationLookupTable} from 'components/BarChart/types';
+import type {LegendData} from 'components/Legends/types';
 
 import {Legends} from '../';
 import {GradientDefs} from '../shared';
@@ -58,6 +59,18 @@ import {
 } from './constants';
 import styles from './Chart.scss';
 
+function getAlteredDimesions(
+  dimensions: Dimensions | undefined,
+  legendsHeight: number,
+) {
+  const {width, height} = dimensions ?? {width: 0, height: 0};
+
+  return {
+    height: height - legendsHeight,
+    width,
+  };
+}
+
 export interface Props {
   data: DataSeries[];
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
@@ -102,7 +115,7 @@ export function Chart({
     },
   });
 
-  const {width, height} = dimensions ?? {width: 0, height: 0};
+  const {width, height} = getAlteredDimesions(dimensions, legendsHeight);
 
   const fontSize = width < SMALL_WIDTH ? SMALL_FONT_SIZE : FONT_SIZE;
 
@@ -129,7 +142,7 @@ export function Chart({
   });
 
   const {ticks: initialTicks} = useYScale({
-    drawableHeight: height - Margin.Top - Margin.Bottom - legendsHeight,
+    drawableHeight: height - Margin.Top - Margin.Bottom,
     data,
     formatYAxisLabel: yAxisOptions.labelFormatter,
     stackedValues,
@@ -211,7 +224,7 @@ export function Chart({
     labels,
   });
 
-  const legends = useMemo(() => {
+  const legends: LegendData[] = useMemo(() => {
     return data.map(({name, color}) => ({
       name: name ?? '',
       color: color!,
@@ -221,11 +234,7 @@ export function Chart({
   const {maxXLabelHeight} = xAxisDetails;
 
   const drawableHeight =
-    height -
-    Margin.Top -
-    Margin.Bottom -
-    xAxisDetails.maxXLabelHeight -
-    legendsHeight;
+    height - Margin.Top - Margin.Bottom - xAxisDetails.maxXLabelHeight;
 
   const {yScale, ticks} = useYScale({
     drawableHeight,
@@ -259,18 +268,12 @@ export function Chart({
   );
 
   return (
-    <div
-      className={styles.ChartContainer}
-      style={{
-        height: height - legendsHeight,
-        width,
-      }}
-    >
+    <div className={styles.ChartContainer} style={{height, width}}>
       <svg
-        viewBox={`0 0 ${width} ${height - legendsHeight}`}
+        viewBox={`0 0 ${width} ${height}`}
         xmlns={XMLNS}
         width={width}
-        height={height - legendsHeight}
+        height={height}
         className={styles.Svg}
         role={emptyState ? 'img' : 'list'}
         aria-label={emptyState ? emptyStateText : undefined}
@@ -279,7 +282,7 @@ export function Chart({
         {hideXAxis ? null : (
           <g
             transform={`translate(${chartStartPosition},${
-              height - Margin.Bottom - maxXLabelHeight - legendsHeight
+              height - Margin.Bottom - maxXLabelHeight
             })`}
             aria-hidden="true"
           >
@@ -409,7 +412,7 @@ export function Chart({
         <Legends
           colorBlindType="singleBar"
           legends={legends}
-          onHeightChange={(height) => setLegendsHeight(height)}
+          onHeightChange={setLegendsHeight}
         />
       )}
     </div>

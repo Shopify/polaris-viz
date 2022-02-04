@@ -1,16 +1,22 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
-import {DEFAULT_LEGENDS_HEIGHT} from '../../constants';
-import type {Color} from '../../types';
+import {DEFAULT_LEGENDS_HEIGHT, LEGENDS_TOP_MARGIN} from '../../constants';
 import {useResizeObserver, useWatchColorBlindEvents} from '../../hooks';
 
 import {LegendItem} from './components';
 import style from './Legends.scss';
+import type {LegendData} from './types';
 
 export interface LegendsProps {
   colorBlindType: string;
-  legends: {name: string; color: Color}[];
-  onHeightChange: (height: number) => void;
+  legends: LegendData[];
+  onHeightChange: Dispatch<SetStateAction<number>>;
 }
 
 export function Legends({
@@ -37,11 +43,11 @@ export function Legends({
     }
 
     previousHeight.current = newHeight!;
-    onHeightChange(newHeight!);
+    onHeightChange(newHeight! + LEGENDS_TOP_MARGIN);
   }, [entry, onHeightChange]);
 
   useEffect(() => {
-    onHeightChange(DEFAULT_LEGENDS_HEIGHT);
+    onHeightChange(DEFAULT_LEGENDS_HEIGHT + LEGENDS_TOP_MARGIN);
 
     return () => {
       onHeightChange(0);
@@ -49,7 +55,11 @@ export function Legends({
   }, [onHeightChange]);
 
   return (
-    <div className={style.Container} ref={setRef}>
+    <div
+      className={style.Container}
+      ref={setRef}
+      style={{marginTop: LEGENDS_TOP_MARGIN}}
+    >
       {legends.map((legend, index) => {
         return (
           <LegendItem
