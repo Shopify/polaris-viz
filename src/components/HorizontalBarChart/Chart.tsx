@@ -1,7 +1,6 @@
 import React, {ReactNode, useCallback, useMemo, useState} from 'react';
 
-import {useLegends} from '../Legends';
-import {Legends} from '../';
+import {useLegends, LegendsContainer} from '../LegendsContainer';
 import type {HorizontalTransitionStyle} from '../../hooks/useHorizontalTransitions';
 import {GradientDefs, HorizontalGroup} from '../shared';
 import {
@@ -297,10 +296,11 @@ export function Chart({
       />
 
       {showLegend && (
-        <Legends
+        <LegendsContainer
           colorBlindType={COLOR_BLIND_SINGLE_BAR}
-          legends={legends}
+          data={legends}
           onHeightChange={setLegendsHeight}
+          theme={theme}
         />
       )}
     </div>

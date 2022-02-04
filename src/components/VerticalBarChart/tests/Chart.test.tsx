@@ -1,13 +1,14 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {YAxis, BarChartXAxis, Legends} from '../../../components';
+import {YAxis, BarChartXAxis} from '../../../components';
 import {mountWithProvider, triggerSVGMouseMove} from '../../../test-utilities';
 import {HorizontalGridLines} from '../../../components/HorizontalGridLines';
 import {mockDefaultTheme} from '../../../test-utilities/mount-with-provider';
 import {TooltipAnimatedContainer} from '../../../components/TooltipWrapper';
 import {Chart, Props} from '../Chart';
 import {BarGroup, StackedBarGroups} from '../components';
+import {LegendsContainer} from '../../LegendsContainer';
 
 const ZERO_AS_MIN_HEIGHT_THEME = {
   themes: {
@@ -305,19 +306,19 @@ describe('Chart />', () => {
   });
 
   describe('showLegend', () => {
-    it('does not render <Legends /> when false', () => {
+    it('does not render <LegendsContainer /> when false', () => {
       const chart = mount(<Chart {...mockProps} />);
       const svg = chart.find('svg');
 
-      expect(chart).not.toContainReactComponent(Legends);
+      expect(chart).not.toContainReactComponent(LegendsContainer);
 
       expect(svg?.props.height).toStrictEqual(250);
     });
 
-    it('renders <Legends /> when true', () => {
+    it('renders <LegendsContainer /> when true', () => {
       const chart = mount(<Chart {...mockProps} showLegend />);
 
-      expect(chart).toContainReactComponent(Legends);
+      expect(chart).toContainReactComponent(LegendsContainer);
     });
 
     it('resizes container when true', () => {

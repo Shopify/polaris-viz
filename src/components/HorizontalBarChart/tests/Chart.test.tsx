@@ -2,7 +2,7 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import type {DataSeries} from 'types';
 
-import {Legends} from '../../';
+import {LegendsContainer} from '../../LegendsContainer';
 import {
   GradientDefs,
   GroupLabel,
@@ -193,19 +193,19 @@ describe('<Chart />', () => {
   });
 
   describe('showLegend', () => {
-    it('does not render <Legends /> when false', () => {
+    it('does not render <LegendsContainer /> when false', () => {
       const chart = mount(<Chart {...MOCK_PROPS} />);
       const svg = chart.find('svg');
 
-      expect(chart).not.toContainReactComponent(Legends);
+      expect(chart).not.toContainReactComponent(LegendsContainer);
 
       expect(svg?.props.height).toStrictEqual(300);
     });
 
-    it('renders <Legends /> when true', () => {
+    it('renders <LegendsContainer /> when true', () => {
       const chart = mount(<Chart {...MOCK_PROPS} showLegend />);
 
-      expect(chart).toContainReactComponent(Legends);
+      expect(chart).toContainReactComponent(LegendsContainer);
     });
 
     it('resizes container when true', () => {

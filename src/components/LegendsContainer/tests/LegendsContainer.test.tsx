@@ -1,12 +1,12 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {Legends, LegendsProps} from '../Legends';
-import {LegendItem} from '../components';
+import {LegendsContainer, LegendsContainerProps} from '../LegendsContainer';
+import {Legend} from '../components';
 
-const mockProps: LegendsProps = {
+const mockProps: LegendsContainerProps = {
   colorBlindType: 'someType',
-  legends: [
+  data: [
     {name: 'Legend One', color: 'red'},
     {name: 'Legend Two', color: 'blue'},
   ],
@@ -24,37 +24,33 @@ jest.mock('../../../hooks/useResizeObserver', () => {
   };
 });
 
-describe('<Legends />', () => {
+describe('<LegendsContainer />', () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
 
-  it('renders a list of <LegendItems />', () => {
-    const component = mount(<Legends {...mockProps} />);
+  it('renders <Legend />', () => {
+    const component = mount(<LegendsContainer {...mockProps} />);
 
-    expect(component).toContainReactComponentTimes(LegendItem, 2);
+    expect(component).toContainReactComponent(Legend, {
+      activeIndex: -1,
+      colorBlindType: 'someType',
+    });
   });
 
   it('triggers onHeightChange() on mount with default value', () => {
-    mount(<Legends {...mockProps} />);
+    mount(<LegendsContainer {...mockProps} />);
 
     expect(mockProps.onHeightChange).toHaveBeenCalledWith(45);
   });
 
   it('triggers onHeightChange() on unmount', () => {
-    const component = mount(<Legends {...mockProps} />);
+    const component = mount(<LegendsContainer {...mockProps} />);
 
     jest.resetAllMocks();
 
     component.unmount();
 
     expect(mockProps.onHeightChange).toHaveBeenCalledWith(0);
-  });
-
-  it('passes colorBlindType to LegendItems', () => {
-    const component = mount(<Legends {...mockProps} />);
-    const item = component.find(LegendItem);
-
-    expect(item?.props.colorBlindType).toStrictEqual('someType');
   });
 });

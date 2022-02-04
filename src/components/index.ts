@@ -30,4 +30,5 @@ export {TooltipWrapper} from './TooltipWrapper';
 export {SimpleBarChart} from './SimpleBarChart';
 export type {SimpleBarChartProps} from './SimpleBarChart';
 export {ChartContext} from './ChartContainer';
-export {Legends} from './Legends';
+export {Legend} from './LegendsContainer';
+export type {LegendProps} from './LegendsContainer';

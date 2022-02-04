@@ -1,8 +1,7 @@
 import React, {useState, useMemo, useRef, useCallback} from 'react';
 import {line, stack, stackOffsetNone, stackOrderReverse} from 'd3-shape';
 
-import {Legends} from '..';
-import {useLegends} from '../Legends';
+import {LegendsContainer, useLegends} from '../LegendsContainer';
 import {
   TooltipHorizontalOffset,
   TooltipVerticalOffset,
@@ -367,10 +366,11 @@ export function Chart({
         parentRef={svgRef}
       />
       {showLegend && (
-        <Legends
+        <LegendsContainer
           colorBlindType={COLOR_BLIND_SINGLE_ITEM}
-          legends={legends}
+          data={legends}
           onHeightChange={setLegendsHeight}
+          theme={theme}
         />
       )}
     </React.Fragment>
