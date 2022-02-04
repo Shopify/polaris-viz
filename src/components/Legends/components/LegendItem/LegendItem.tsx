@@ -6,23 +6,23 @@ import {
   useTheme,
 } from '../../../../hooks';
 import type {Color} from '../../../../types';
-import {SquareColorPreview} from '../../../';
+import {SquareColorPreview} from '../../..';
 
-import style from './Legend.scss';
+import style from './LegendItem.scss';
 
-interface LegendProps {
+interface LegendItemProps {
   activeIndex: number;
   colorBlindType: string;
   index: number;
   legend: {name: string; color: Color};
 }
 
-export function Legend({
+export function LegendItem({
   activeIndex,
   colorBlindType,
   legend,
   index,
-}: LegendProps) {
+}: LegendItemProps) {
   const theme = useTheme();
 
   return (
@@ -36,6 +36,7 @@ export function Legend({
         opacity: getOpacityForActive(activeIndex, index),
       }}
       className={style.Legend}
+      aria-hidden="true"
     >
       <SquareColorPreview color={legend.color} />
       <span style={{color: theme.tooltip.labelColor}}>{legend.name}</span>

@@ -4,7 +4,7 @@ import {DEFAULT_LEGENDS_HEIGHT} from '../../constants';
 import type {Color} from '../../types';
 import {useResizeObserver, useWatchColorBlindEvents} from '../../hooks';
 
-import {Legend} from './components';
+import {LegendItem} from './components';
 import style from './Legends.scss';
 
 interface LegendsProps {
@@ -52,7 +52,7 @@ export function Legends({
     <div className={style.Container} ref={setRef}>
       {legends.map((legend, index) => {
         return (
-          <Legend
+          <LegendItem
             colorBlindType={colorBlindType}
             key={index}
             legend={legend}
