@@ -39,7 +39,7 @@ export function SparkLineChart({
       accessibilityRole="image"
       accessibilityLabel={accessibilityLabel}
     >
-      <Svg native width={width} height={height}>
+      <Svg width={width} height={height}>
         {data.map((series, index) => {
           const singleOffsetLeft = series.isComparison ? 0 : offsetLeft;
           const singleOffsetRight = series.isComparison ? 0 : offsetRight;

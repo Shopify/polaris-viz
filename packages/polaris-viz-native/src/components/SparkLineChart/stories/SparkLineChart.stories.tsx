@@ -54,6 +54,7 @@ export default {
           'Used in small sizes to give an overview of how a metric has performed over time. <br /><br />  This component inherits its height and width from its container.',
       },
     },
+    native: true,
   },
   decorators: [
     (Story: any) => (

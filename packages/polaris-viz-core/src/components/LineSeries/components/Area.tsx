@@ -35,10 +35,9 @@ interface AreaProps {
   areaPath: string;
   // eslint-disable-next-line react/no-unused-prop-types
   immediate: boolean;
-  native: boolean;
 }
 
-export function Area({areaPath, color, native = false}: AreaProps) {
+export function Area({areaPath, color, immediate}: AreaProps) {
   const gradientId = useMemo(() => uniqueId('gradient'), []);
   const maskId = useMemo(() => uniqueId('mask'), []);
 
@@ -46,17 +45,15 @@ export function Area({areaPath, color, native = false}: AreaProps) {
 
   return areaGradientColor == null ? null : (
     <React.Fragment>
-      <Defs native={native}>
-        <Mask native={native} id={maskId}>
+      <Defs>
+        <Mask id={maskId}>
           <Path
-            native={native}
             fill={`url(#${maskId}-gradient)`}
             d={areaPath}
             // className={immediate ? undefined : styles.Area}
           />
         </Mask>
         <LinearGradient
-          native={native}
           id={`${maskId}-gradient`}
           y1="0%"
           y2="100%"
@@ -64,7 +61,6 @@ export function Area({areaPath, color, native = false}: AreaProps) {
         />
 
         <LinearGradient
-          native={native}
           id={gradientId}
           y1="100%"
           y2="0%"
@@ -72,7 +68,6 @@ export function Area({areaPath, color, native = false}: AreaProps) {
         />
       </Defs>
       <Path
-        native={native}
         d={areaPath}
         fill={`url(#${gradientId})`}
         mask={`url(#${maskId})`}
