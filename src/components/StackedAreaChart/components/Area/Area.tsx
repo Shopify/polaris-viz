@@ -2,7 +2,10 @@ import React from 'react';
 import {animated, useSpring} from '@react-spring/web';
 import type {Area as D3Area, Line} from 'd3-shape';
 
-import {getColorBlindEventAttrs, getOpacityForActive} from '../../../../hooks';
+import {
+  getColorBlindEventAttrs,
+  getOpacityStylesForActive,
+} from '../../../../hooks';
 import type {
   Color,
   GradientStop,
@@ -101,9 +104,7 @@ export function Area({
         />
       </defs>
       <g
-        style={{
-          opacity: getOpacityForActive({activeIndex: activeLineIndex, index}),
-        }}
+        style={getOpacityStylesForActive({activeIndex: activeLineIndex, index})}
         aria-hidden="true"
         tabIndex={-1}
       >

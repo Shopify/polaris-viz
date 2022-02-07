@@ -10,7 +10,7 @@ import {
 } from '../../../../utilities';
 import {DataType} from '../../../../types';
 import {
-  getOpacityForActive,
+  getOpacityStylesForActive,
   usePrefersReducedMotion,
   useTheme,
   useWatchColorBlindEvents,
@@ -96,13 +96,11 @@ export function Points({
         return (
           <g
             key={stackIndex}
-            style={{
-              opacity: getOpacityForActive({
-                activeIndex: activeLineIndex,
-                index: stackIndex,
-                fadedOpacity: 0,
-              }),
-            }}
+            style={getOpacityStylesForActive({
+              activeIndex: activeLineIndex,
+              index: stackIndex,
+              fadedOpacity: 0,
+            })}
           >
             {isGradientType(color) && (
               <defs>

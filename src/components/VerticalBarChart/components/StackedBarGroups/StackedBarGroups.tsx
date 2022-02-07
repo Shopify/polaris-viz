@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import type {ScaleBand, ScaleLinear} from 'd3-scale';
 
 import {formatAriaLabel} from '../../../VerticalBarChart/utilities';
-import {getOpacityForActive} from '../../../../hooks/ColorBlindA11y';
+import {getOpacityStylesForActive} from '../../../../hooks/ColorBlindA11y';
 import {BAR_SPACING} from '../../../VerticalBarChart/constants';
 import {getColorBlindEventAttrs} from '../../../../hooks';
 import type {AccessibilitySeries} from '../../../VerticalBarChart/types';
@@ -65,12 +65,10 @@ export function StackedBarGroups({
               index: groupIndex,
             })}
             className={styles.Group}
-            style={{
-              opacity: getOpacityForActive({
-                activeIndex: activeBarGroup,
-                index: groupIndex,
-              }),
-            }}
+            style={getOpacityStylesForActive({
+              activeIndex: activeBarGroup,
+              index: groupIndex,
+            })}
             aria-label={groupAriaLabel}
             role="list"
             data-type={DataType.BarGroup}

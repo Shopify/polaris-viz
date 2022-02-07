@@ -4,7 +4,7 @@ import type {LineStyle, Color} from 'types';
 import {COLOR_BLIND_SINGLE_LINE} from '../../../../constants';
 import {getSeriesColorsFromCount} from '../../../../hooks/use-theme-series-colors';
 import {
-  getOpacityForActive,
+  getOpacityStylesForActive,
   useTheme,
   useWatchColorBlindEvents,
 } from '../../../../hooks';
@@ -52,12 +52,10 @@ export function TooltipContent({data, theme}: TooltipContentProps) {
           <div
             className={styles.Row}
             key={`${name}-${index}`}
-            style={{
-              opacity: getOpacityForActive({
-                activeIndex: activeLineIndex,
-                index,
-              }),
-            }}
+            style={getOpacityStylesForActive({
+              activeIndex: activeLineIndex,
+              index,
+            })}
           >
             <LinePreview
               color={color ?? seriesColor[index]}

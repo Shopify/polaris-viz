@@ -3,7 +3,7 @@ import React from 'react';
 import type {LegendData} from '../../types';
 import {
   getColorBlindEventAttrs,
-  getOpacityForActive,
+  getOpacityStylesForActive,
   useTheme,
 } from '../../../../hooks';
 import {LinePreview, SquareColorPreview} from '../../..';
@@ -52,7 +52,7 @@ export function LegendItem({
       {...colorBlindAttrs}
       style={{
         background: selectedTheme.tooltip.backgroundColor,
-        opacity: getOpacityForActive({
+        ...getOpacityStylesForActive({
           activeIndex,
           index,
         }),
