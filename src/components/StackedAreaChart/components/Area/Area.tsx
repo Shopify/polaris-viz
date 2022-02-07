@@ -3,7 +3,7 @@ import {animated, useSpring} from '@react-spring/web';
 import type {Area as D3Area, Line} from 'd3-shape';
 
 import {
-  getColorBlindEventAttrs,
+  getColorVisionEventAttrs,
   getOpacityStylesForActive,
 } from '../../../../hooks';
 import type {
@@ -13,7 +13,7 @@ import type {
   Theme,
 } from '../../../../types';
 import {
-  COLOR_BLIND_SINGLE_ITEM,
+  COLOR_VISION_SINGLE_ITEM,
   LINES_LOAD_ANIMATION_CONFIG,
 } from '../../../../constants';
 import {LinearGradient} from '../../../LinearGradient';
@@ -88,8 +88,8 @@ export function Area({
         ...spring,
         transformOrigin: 'bottom center',
       }}
-      {...getColorBlindEventAttrs({
-        type: COLOR_BLIND_SINGLE_ITEM,
+      {...getColorVisionEventAttrs({
+        type: COLOR_VISION_SINGLE_ITEM,
         index,
       })}
       tabIndex={-1}

@@ -3,7 +3,7 @@ import {useDebouncedCallback} from 'use-debounce/lib';
 
 import {ChartContext} from '../../components';
 
-import {COLOR_BLIND_EVENT} from './constants';
+import {COLOR_VISION_EVENT} from './constants';
 import {getDataSetItem, getEventName} from './utilities';
 
 type ColorBlindEvent = CustomEvent<{
@@ -12,7 +12,7 @@ type ColorBlindEvent = CustomEvent<{
 
 const DEBOUNCE_TIME = 100;
 
-export function useColorBlindEvents() {
+export function useColorVisionEvents() {
   const {id} = useContext(ChartContext);
 
   const [debounced, cancel] = useDebouncedCallback(function (
@@ -24,7 +24,7 @@ export function useColorBlindEvents() {
 
   useEffect(() => {
     const items = document.querySelectorAll(
-      `#chart_${id} [${COLOR_BLIND_EVENT.dataAttribute}-watch="true"]`,
+      `#chart_${id} [${COLOR_VISION_EVENT.dataAttribute}-watch="true"]`,
     );
 
     function onMouseEnter(event: MouseEvent) {

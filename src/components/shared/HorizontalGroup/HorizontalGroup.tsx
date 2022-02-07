@@ -7,9 +7,9 @@ import {
   HORIZONTAL_SPACE_BETWEEN_SINGLE,
 } from '../../../constants';
 import {
-  getColorBlindEventAttrs,
+  getColorVisionEventAttrs,
   getOpacityStylesForActive,
-  useWatchColorBlindEvents,
+  useWatchColorVisionEvents,
 } from '../../../hooks';
 import {
   DataSeries,
@@ -68,7 +68,7 @@ export function HorizontalGroup({
 }: HorizontalGroupProps) {
   const [activeGroupIndex, setActiveGroupIndex] = useState(-1);
 
-  useWatchColorBlindEvents({
+  useWatchColorVisionEvents({
     type: 'group',
     onIndexChange: ({detail}) => {
       setActiveGroupIndex(detail.index);
@@ -102,7 +102,7 @@ export function HorizontalGroup({
           activeIndex: activeGroupIndex,
           index,
         })}
-        {...getColorBlindEventAttrs({
+        {...getColorVisionEventAttrs({
           type: 'group',
           index,
         })}

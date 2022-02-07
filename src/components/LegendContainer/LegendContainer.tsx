@@ -7,21 +7,21 @@ import React, {
 } from 'react';
 
 import {DEFAULT_LEGEND_HEIGHT, LEGENDS_TOP_MARGIN} from '../../constants';
-import {useResizeObserver, useWatchColorBlindEvents} from '../../hooks';
+import {useResizeObserver, useWatchColorVisionEvents} from '../../hooks';
 
 import {Legend} from './components';
 import type {LegendData} from './types';
 import style from './LegendContainer.scss';
 
 export interface LegendContainerProps {
-  colorBlindType: string;
+  colorVisionType: string;
   data: LegendData[];
   onHeightChange: Dispatch<SetStateAction<number>>;
   theme?: string;
 }
 
 export function LegendContainer({
-  colorBlindType,
+  colorVisionType,
   data,
   onHeightChange,
   theme,
@@ -30,8 +30,8 @@ export function LegendContainer({
   const previousHeight = useRef(DEFAULT_LEGEND_HEIGHT);
   const [activeIndex, setActiveIndex] = useState(-1);
 
-  useWatchColorBlindEvents({
-    type: colorBlindType,
+  useWatchColorVisionEvents({
+    type: colorVisionType,
     onIndexChange: ({detail}) => {
       setActiveIndex(detail.index);
     },
@@ -68,7 +68,7 @@ export function LegendContainer({
     >
       <Legend
         activeIndex={activeIndex}
-        colorBlindType={colorBlindType}
+        colorVisionType={colorVisionType}
         data={data}
         theme={theme}
       />

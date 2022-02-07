@@ -8,14 +8,14 @@ import {
   LINE_ANIMATION_FAST_DURATION,
   LINE_ANIMATION_SLOW_DURATION,
   LINE_ANIMATION_DURATION_STEP,
-  COLOR_BLIND_SINGLE_ITEM,
+  COLOR_VISION_SINGLE_ITEM,
 } from '../../../../constants';
 import type {Color, StackedSeries} from '../../../../types';
 import {curveStepRounded, uniqueId} from '../../../../utilities';
 import {
   usePrevious,
   useTheme,
-  useWatchColorBlindEvents,
+  useWatchColorVisionEvents,
 } from '../../../../hooks';
 import {Area} from '..';
 
@@ -42,8 +42,8 @@ export function Areas({
 }: Props) {
   const [activeLineIndex, setActiveLineIndex] = useState(-1);
 
-  useWatchColorBlindEvents({
-    type: COLOR_BLIND_SINGLE_ITEM,
+  useWatchColorVisionEvents({
+    type: COLOR_VISION_SINGLE_ITEM,
     onIndexChange: ({detail}) => {
       setActiveLineIndex(detail.index);
     },

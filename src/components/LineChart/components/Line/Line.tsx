@@ -4,13 +4,13 @@ import {useSpring, animated} from '@react-spring/web';
 
 import type {DataPoint, DataSeries, LineStyle} from '../../../../types';
 import {
-  getColorBlindEventAttrs,
+  getColorVisionEventAttrs,
   getOpacityStylesForActive,
   useTheme,
 } from '../../../../hooks';
 import {ANIMATION_DELAY} from '../../constants';
 import {
-  COLOR_BLIND_SINGLE_LINE,
+  COLOR_VISION_SINGLE_LINE,
   LINES_LOAD_ANIMATION_CONFIG,
 } from '../../../../constants';
 
@@ -84,8 +84,8 @@ export const Line = React.memo(function Shape({
         paintOrder="stroke"
         stroke="transparent"
         fill="none"
-        {...getColorBlindEventAttrs({
-          type: COLOR_BLIND_SINGLE_LINE,
+        {...getColorVisionEventAttrs({
+          type: COLOR_VISION_SINGLE_LINE,
           index,
         })}
         style={{pointerEvents: 'auto'}}

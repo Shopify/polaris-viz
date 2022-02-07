@@ -4,10 +4,10 @@ import type {ScaleLinear} from 'd3-scale';
 import type {AccessibilitySeries} from '../../../VerticalBarChart/types';
 import {formatAriaLabel} from '../../utilities';
 import {
+  getColorVisionEventAttrs,
   getOpacityStylesForActive,
-  getColorBlindEventAttrs,
   usePrefersReducedMotion,
-  useWatchColorBlindEvents,
+  useWatchColorVisionEvents,
 } from '../../../../hooks';
 import {Color, DataType} from '../../../../types';
 import {Bar} from '../Bar';
@@ -18,7 +18,7 @@ import {
   LOAD_ANIMATION_DURATION,
   MASK_HIGHLIGHT_COLOR,
   BAR_ANIMATION_HEIGHT_BUFFER,
-  COLOR_BLIND_SINGLE_ITEM,
+  COLOR_VISION_SINGLE_ITEM,
 } from '../../../../constants';
 import {clamp, uniqueId} from '../../../../utilities';
 import styles from '../../Chart.scss';
@@ -59,8 +59,8 @@ export function BarGroup({
   const {prefersReducedMotion} = usePrefersReducedMotion();
   const [activeBarIndex, setActiveBarIndex] = useState(-1);
 
-  useWatchColorBlindEvents({
-    type: COLOR_BLIND_SINGLE_ITEM,
+  useWatchColorVisionEvents({
+    type: COLOR_VISION_SINGLE_ITEM,
     onIndexChange: ({detail}) => {
       if (activeBarGroup === -1 || activeBarGroup === barGroupIndex) {
         setActiveBarIndex(detail.index);
@@ -157,7 +157,7 @@ export function BarGroup({
         })}
       </g>
       <g
-        {...getColorBlindEventAttrs({
+        {...getColorVisionEventAttrs({
           type: 'group',
           index: barGroupIndex,
         })}
@@ -196,8 +196,8 @@ export function BarGroup({
               fill="transparent"
               aria-label={ariaLabel}
               role="listitem"
-              {...getColorBlindEventAttrs({
-                type: COLOR_BLIND_SINGLE_ITEM,
+              {...getColorVisionEventAttrs({
+                type: COLOR_VISION_SINGLE_ITEM,
                 index,
               })}
               className={styles.Bar}

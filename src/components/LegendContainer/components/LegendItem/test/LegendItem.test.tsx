@@ -5,7 +5,7 @@ import {LegendItem, LegendItemProps} from '../LegendItem';
 
 const mockProps: LegendItemProps = {
   activeIndex: 2,
-  colorBlindType: 'someType',
+  colorVisionType: 'someType',
   index: 0,
   legend: {name: 'Legend Name', color: 'red'},
 };
@@ -17,25 +17,25 @@ describe('<LegendItem />', () => {
     expect(item).toContainReactComponent('button');
   });
 
-  describe('colorBlindType', () => {
+  describe('colorVisionType', () => {
     it('applies data attributes', () => {
       const item = mount(<LegendItem {...mockProps} />);
       const button = item.find('button');
       const dataset = button?.domNode?.dataset;
 
-      expect(dataset?.colorBlindEventIndex).toStrictEqual('0');
-      expect(dataset?.colorBlindEventType).toStrictEqual('someType');
+      expect(dataset?.colorVisionEventIndex).toStrictEqual('0');
+      expect(dataset?.colorVisionEventType).toStrictEqual('someType');
     });
 
     it('applies nothing when null', () => {
       const item = mount(
-        <LegendItem {...mockProps} colorBlindType={undefined} />,
+        <LegendItem {...mockProps} colorVisionType={undefined} />,
       );
       const button = item.find('button');
       const dataset = button?.domNode?.dataset;
 
-      expect(dataset?.colorBlindEventIndex).toBeUndefined();
-      expect(dataset?.colorBlindEventType).toBeUndefined();
+      expect(dataset?.colorVisionEventIndex).toBeUndefined();
+      expect(dataset?.colorVisionEventType).toBeUndefined();
     });
   });
 

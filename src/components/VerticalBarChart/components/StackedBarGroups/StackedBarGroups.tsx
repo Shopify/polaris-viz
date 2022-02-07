@@ -2,9 +2,11 @@ import React, {useMemo} from 'react';
 import type {ScaleBand, ScaleLinear} from 'd3-scale';
 
 import {formatAriaLabel} from '../../../VerticalBarChart/utilities';
-import {getOpacityStylesForActive} from '../../../../hooks/ColorBlindA11y';
+import {
+  getOpacityStylesForActive,
+  getColorVisionEventAttrs,
+} from '../../../../hooks';
 import {BAR_SPACING} from '../../../VerticalBarChart/constants';
-import {getColorBlindEventAttrs} from '../../../../hooks';
 import type {AccessibilitySeries} from '../../../VerticalBarChart/types';
 import {Color, DataType, StackedSeries} from '../../../../types';
 import {useStackedGapsForVerticalChart} from '../../hooks';
@@ -60,7 +62,7 @@ export function StackedBarGroups({
         return (
           <g
             key={groupIndex}
-            {...getColorBlindEventAttrs({
+            {...getColorVisionEventAttrs({
               type: 'group',
               index: groupIndex,
             })}

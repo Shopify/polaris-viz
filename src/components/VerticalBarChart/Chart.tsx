@@ -5,7 +5,7 @@ import {LegendContainer, useLegend} from '../LegendContainer';
 import {GradientDefs} from '../shared';
 import {
   BarChartMargin as Margin,
-  COLOR_BLIND_SINGLE_ITEM,
+  COLOR_VISION_SINGLE_ITEM,
   XMLNS,
 } from '../../constants';
 import {
@@ -36,9 +36,9 @@ import {
 } from '../../types';
 import {
   useBarChartTooltipContent,
-  useColorBlindEvents,
+  useColorVisionEvents,
   useTheme,
-  useWatchColorBlindEvents,
+  useWatchColorVisionEvents,
 } from '../../hooks';
 import type {
   RenderTooltipContentData,
@@ -85,14 +85,14 @@ export function Chart({
   xAxisOptions,
   yAxisOptions,
 }: Props) {
-  useColorBlindEvents();
+  useColorVisionEvents();
 
   const selectedTheme = useTheme(theme);
   const [activeBarGroup, setActiveBarGroup] = useState<number>(-1);
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
   const id = useMemo(() => uniqueId('VerticalBarChart'), []);
 
-  useWatchColorBlindEvents({
+  useWatchColorVisionEvents({
     type: 'group',
     onIndexChange: ({detail}) => {
       setActiveBarGroup(detail.index);
@@ -391,7 +391,7 @@ export function Chart({
 
       {showLegend && (
         <LegendContainer
-          colorBlindType={COLOR_BLIND_SINGLE_ITEM}
+          colorVisionType={COLOR_VISION_SINGLE_ITEM}
           data={legend}
           onHeightChange={setLegendHeight}
           theme={theme}

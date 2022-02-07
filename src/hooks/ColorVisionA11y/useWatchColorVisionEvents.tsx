@@ -2,7 +2,7 @@ import {useContext, useEffect} from 'react';
 import {useDebouncedCallback} from 'use-debounce/lib';
 
 import {ChartContext} from '../../components';
-import {useCallbackRef} from '../../hooks';
+import {useCallbackRef} from '..';
 
 import {getEventName} from './utilities';
 
@@ -16,7 +16,7 @@ interface Props {
   onIndexChange: (event: EventReturn) => void;
 }
 
-export function useWatchColorBlindEvents({type, onIndexChange}: Props) {
+export function useWatchColorVisionEvents({type, onIndexChange}: Props) {
   const [debounced] = useDebouncedCallback(onIndexChange, 0);
 
   const onIndexChangeCallback = useCallbackRef(debounced);

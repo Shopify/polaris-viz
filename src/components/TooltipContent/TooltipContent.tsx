@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 
-import {COLOR_BLIND_SINGLE_ITEM} from '../../constants';
+import {COLOR_VISION_SINGLE_ITEM} from '../../constants';
 import type {Color} from '../../types';
-import {useTheme, useWatchColorBlindEvents} from '../../hooks';
+import {useTheme, useWatchColorVisionEvents} from '../../hooks';
 
 import {DefaultRow, AnnotationRow} from './components';
 import styles from './TooltipContent.scss';
@@ -40,8 +40,8 @@ export function TooltipContent({
 
   const [activeBarIndex, setActiveBarIndex] = useState(-1);
 
-  useWatchColorBlindEvents({
-    type: COLOR_BLIND_SINGLE_ITEM,
+  useWatchColorVisionEvents({
+    type: COLOR_VISION_SINGLE_ITEM,
     onIndexChange: ({detail}) => setActiveBarIndex(detail.index),
   });
 
