@@ -86,7 +86,7 @@ export function Chart({
   xAxisOptions,
   yAxisOptions,
 }: Props) {
-  useColorVisionEvents();
+  useColorVisionEvents(data.length > 1);
 
   const selectedTheme = useTheme(theme);
   const [activeBarGroup, setActiveBarGroup] = useState<number>(-1);

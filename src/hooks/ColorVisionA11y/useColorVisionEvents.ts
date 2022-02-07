@@ -5,10 +5,14 @@ import {ChartContext} from '../../components';
 import {COLOR_VISION_EVENT} from './constants';
 import {getDataSetItem, getEventName} from './utilities';
 
-export function useColorVisionEvents() {
+export function useColorVisionEvents(enabled = true) {
   const {id} = useContext(ChartContext);
 
   useEffect(() => {
+    if (!enabled) {
+      return;
+    }
+
     const items = document.querySelectorAll(
       `#chart_${id} [${COLOR_VISION_EVENT.dataAttribute}-watch="true"]`,
     );
@@ -65,5 +69,5 @@ export function useColorVisionEvents() {
         item.removeEventListener('blur', onMouseLeave);
       });
     };
-  }, [id]);
+  }, [id, enabled]);
 }

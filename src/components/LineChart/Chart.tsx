@@ -83,7 +83,7 @@ export function Chart({
   yAxisOptions,
   theme,
 }: ChartProps) {
-  useColorVisionEvents();
+  useColorVisionEvents(data.length > 1);
 
   const selectedTheme = useTheme(theme);
 

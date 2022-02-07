@@ -67,7 +67,7 @@ export function Chart({
   type,
   xAxisOptions,
 }: ChartProps) {
-  useColorVisionEvents();
+  useColorVisionEvents(data.length > 1);
 
   const selectedTheme = useTheme(theme);
   const {labelFormatter} = xAxisOptions;
