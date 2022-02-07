@@ -16,8 +16,6 @@ import {
   uniqueId,
   clamp,
   isGradientType,
-  changeColorOpacity,
-  changeGradientOpacity,
 } from '../../utilities';
 import {
   useLinearXAxisDetails,
@@ -35,17 +33,17 @@ import {
   LineChartMargin as Margin,
   SPACING_BASE_TIGHT,
   XMLNS,
-  COLOR_VISION_SINGLE_LINE,
+  COLOR_VISION_SINGLE_ITEM,
 } from '../../constants';
 import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
 import {LinearXAxis} from '../LinearXAxis';
 import {YAxis} from '../YAxis';
-import {Point} from '../Point';
 import {Crosshair} from '../Crosshair';
 import {LinearGradient} from '../LinearGradient';
 import {DataPoint, DataType, Dimensions} from '../../types';
 import {HorizontalGridLines} from '../HorizontalGridLines';
 
+import {Points, Line, GradientArea} from './components';
 import {MAX_ANIMATED_SERIES_LENGTH} from './constants';
 import type {
   RenderTooltipContentData,
@@ -55,7 +53,6 @@ import type {
   DataWithDefaults,
 } from './types';
 import {useYScale} from './hooks';
-import {Line, GradientArea} from './components';
 import styles from './Chart.scss';
 
 export interface ChartProps {
@@ -101,7 +98,7 @@ export function Chart({
   });
 
   useWatchColorVisionEvents({
-    type: COLOR_VISION_SINGLE_LINE,
+    type: COLOR_VISION_SINGLE_ITEM,
     onIndexChange: ({detail}) => setActiveLineIndex(detail.index),
   });
 
@@ -421,79 +418,19 @@ export function Chart({
             );
           })}
 
-          {reversedSeries.map((singleSeries, index) => {
-            const {data, name, color} = singleSeries;
-            const isLongestLine = index === longestSeriesIndex;
-            const pointGradientId = `${gradientId.current}-point-${index}`;
-
-            const animatedYPosition =
-              animatedCoordinates == null || animatedCoordinates[index] == null
-                ? 0
-                : animatedCoordinates[index].to((coord) => coord.y);
-
-            const hidePoint =
-              animatedCoordinates == null ||
-              (activeIndex != null && activeIndex >= data.length);
-
-            const pointColor = isGradientType(color)
-              ? `url(#${pointGradientId})`
-              : changeColorOpacity(color);
-
-            return (
-              <React.Fragment key={`${name}-${index}`}>
-                {isGradientType(color) ? (
-                  <defs>
-                    <LinearGradient
-                      id={pointGradientId}
-                      gradient={changeGradientOpacity(color)}
-                      gradientUnits="userSpaceOnUse"
-                      y1="100%"
-                      y2="0%"
-                    />
-                  </defs>
-                ) : null}
-
-                {animatePoints ? (
-                  <Point
-                    color={pointColor}
-                    stroke={selectedTheme.line.pointStroke}
-                    cx={getXPosition()}
-                    cy={animatedYPosition}
-                    active={activeIndex != null}
-                    index={index}
-                    tabIndex={-1}
-                    isAnimated={animatePoints}
-                    visuallyHidden={hidePoint}
-                    ariaHidden
-                  />
-                ) : null}
-
-                {data.map(({value}, dataIndex) => {
-                  if (value == null) {
-                    return null;
-                  }
-
-                  return (
-                    <Point
-                      dataType={DataType.Point}
-                      key={`${name}-${index}-${dataIndex}`}
-                      stroke={selectedTheme.line.pointStroke}
-                      color={pointColor}
-                      cx={xScale(dataIndex)}
-                      cy={yScale(value)}
-                      active={activeIndex === dataIndex}
-                      index={dataIndex}
-                      tabIndex={isLongestLine ? 0 : -1}
-                      ariaLabelledby={tooltipId.current}
-                      isAnimated={false}
-                      ariaHidden={false}
-                      visuallyHidden={animatePoints}
-                    />
-                  );
-                })}
-              </React.Fragment>
-            );
-          })}
+          <Points
+            activeIndex={activeIndex}
+            animatedCoordinates={animatedCoordinates}
+            animatePoints={animatePoints}
+            data={reversedSeries}
+            getXPosition={getXPosition}
+            gradientId={gradientId.current}
+            longestSeriesIndex={longestSeriesIndex}
+            theme={theme}
+            tooltipId={tooltipId.current}
+            xScale={xScale}
+            yScale={yScale}
+          />
         </g>
       </svg>
 
@@ -511,7 +448,7 @@ export function Chart({
 
       {showLegend && (
         <LegendContainer
-          colorVisionType={COLOR_VISION_SINGLE_LINE}
+          colorVisionType={COLOR_VISION_SINGLE_ITEM}
           data={legend}
           onHeightChange={setLegendHeight}
           theme={theme}
