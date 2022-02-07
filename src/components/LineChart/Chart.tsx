@@ -1,7 +1,7 @@
 import React, {useState, useRef, useMemo, useCallback} from 'react';
 import {line} from 'd3-shape';
 
-import {useLegends, LegendsContainer} from '../LegendsContainer';
+import {useLegend, LegendContainer} from '../LegendContainer';
 import {
   TooltipHorizontalOffset,
   TooltipVerticalOffset,
@@ -93,7 +93,7 @@ export function Chart({
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [activeLineIndex, setActiveLineIndex] = useState(-1);
 
-  const {legends, setLegendsHeight, height, width} = useLegends({
+  const {legend, setLegendHeight, height, width} = useLegend({
     data,
     dimensions,
     showLegend,
@@ -510,10 +510,10 @@ export function Chart({
       />
 
       {showLegend && (
-        <LegendsContainer
+        <LegendContainer
           colorBlindType={COLOR_BLIND_SINGLE_LINE}
-          data={legends}
-          onHeightChange={setLegendsHeight}
+          data={legend}
+          onHeightChange={setLegendHeight}
           theme={theme}
         />
       )}

@@ -17,7 +17,6 @@ import {
   useWatchColorBlindEvents,
 } from '../../../../../../hooks';
 import {
-  COLOR_BLIND_SINGLE_BAR,
   COLOR_BLIND_SINGLE_ITEM,
   STACKED_BAR_GAP,
 } from '../../../../../../constants';
@@ -51,7 +50,7 @@ export function Stack({
   const keys = data[0] ? Object.keys(data[0].data) : [];
 
   useWatchColorBlindEvents({
-    type: COLOR_BLIND_SINGLE_BAR,
+    type: COLOR_BLIND_SINGLE_ITEM,
     onIndexChange: ({detail}) => {
       if (activeBarGroup === -1 || activeBarGroup === groupIndex) {
         setActiveBarIndex(detail.index);

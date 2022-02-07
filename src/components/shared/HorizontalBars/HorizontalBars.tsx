@@ -3,7 +3,7 @@ import type {ScaleLinear} from 'd3-scale';
 
 import {DataSeries, RoundedBorder} from '../../../types';
 import {
-  COLOR_BLIND_SINGLE_BAR,
+  COLOR_BLIND_SINGLE_ITEM,
   FONT_SIZE,
   FONT_SIZE_PADDING,
   HORIZONTAL_BAR_LABEL_OFFSET,
@@ -58,7 +58,7 @@ export function HorizontalBars({
   const [activeBarIndex, setActiveBarIndex] = useState(-1);
 
   useWatchColorBlindEvents({
-    type: COLOR_BLIND_SINGLE_BAR,
+    type: COLOR_BLIND_SINGLE_ITEM,
     onIndexChange: ({detail}) => {
       if (activeGroupIndex === -1 || activeGroupIndex === groupIndex) {
         setActiveBarIndex(detail.index);
@@ -139,7 +139,7 @@ export function HorizontalBars({
               fill="transparent"
               style={{transform: isNegative ? 'scaleX(-1)' : ''}}
               {...getColorBlindEventAttrs({
-                type: COLOR_BLIND_SINGLE_BAR,
+                type: COLOR_BLIND_SINGLE_ITEM,
                 index: seriesIndex,
               })}
               tabIndex={-1}

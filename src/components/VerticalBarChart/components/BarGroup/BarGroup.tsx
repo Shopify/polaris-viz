@@ -18,7 +18,6 @@ import {
   LOAD_ANIMATION_DURATION,
   MASK_HIGHLIGHT_COLOR,
   BAR_ANIMATION_HEIGHT_BUFFER,
-  COLOR_BLIND_SINGLE_BAR,
   COLOR_BLIND_SINGLE_ITEM,
 } from '../../../../constants';
 import {clamp, uniqueId} from '../../../../utilities';
@@ -61,7 +60,7 @@ export function BarGroup({
   const [activeBarIndex, setActiveBarIndex] = useState(-1);
 
   useWatchColorBlindEvents({
-    type: COLOR_BLIND_SINGLE_BAR,
+    type: COLOR_BLIND_SINGLE_ITEM,
     onIndexChange: ({detail}) => {
       if (activeBarGroup === -1 || activeBarGroup === barGroupIndex) {
         setActiveBarIndex(detail.index);

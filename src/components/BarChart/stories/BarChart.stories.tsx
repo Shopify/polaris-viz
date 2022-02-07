@@ -7,6 +7,7 @@ import {SquareColorPreview} from '../../SquareColorPreview';
 import {PolarisVizProvider} from '../../PolarisVizProvider';
 import {
   DIRECTION_CONTROL_ARGS,
+  LEGEND_CONTROL_ARGS,
   THEME_CONTROL_ARGS,
   TYPE_CONTROL_ARGS,
 } from '../../../storybook';
@@ -210,10 +211,7 @@ export default {
     direction: DIRECTION_CONTROL_ARGS,
     theme: THEME_CONTROL_ARGS,
     type: TYPE_CONTROL_ARGS,
-    showLegend: {
-      defaultValue: false,
-      description: 'Renders a `<Legends />` component underneath the chart.',
-    },
+    showLegend: LEGEND_CONTROL_ARGS,
   },
 } as Meta;
 
@@ -322,9 +320,8 @@ const WithoutRoundedCornersTemplate: Story<BarChartProps> = (
   );
 };
 
-export const WithoutRoundedCorners: Story<BarChartProps> = WithoutRoundedCornersTemplate.bind(
-  {},
-);
+export const WithoutRoundedCorners: Story<BarChartProps> =
+  WithoutRoundedCornersTemplate.bind({});
 WithoutRoundedCorners.args = {
   data: DATA,
   xAxisOptions: {},

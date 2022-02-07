@@ -1,6 +1,6 @@
 import React, {ReactNode, useCallback, useMemo, useState} from 'react';
 
-import {useLegends, LegendsContainer} from '../LegendsContainer';
+import {useLegend, LegendContainer} from '../LegendContainer';
 import type {HorizontalTransitionStyle} from '../../hooks/useHorizontalTransitions';
 import {GradientDefs, HorizontalGroup} from '../shared';
 import {
@@ -19,7 +19,7 @@ import {
   BarChartMargin as Margin,
   HORIZONTAL_BAR_GROUP_DELAY,
   HORIZONTAL_GROUP_LABEL_HEIGHT,
-  COLOR_BLIND_SINGLE_BAR,
+  COLOR_BLIND_SINGLE_ITEM,
 } from '../../constants';
 import {
   eventPointNative,
@@ -82,7 +82,7 @@ export function Chart({
     theme,
   });
 
-  const {legends, setLegendsHeight, height, width} = useLegends({
+  const {legend, setLegendHeight, height, width} = useLegend({
     data,
     dimensions,
     showLegend,
@@ -296,10 +296,10 @@ export function Chart({
       />
 
       {showLegend && (
-        <LegendsContainer
-          colorBlindType={COLOR_BLIND_SINGLE_BAR}
-          data={legends}
-          onHeightChange={setLegendsHeight}
+        <LegendContainer
+          colorBlindType={COLOR_BLIND_SINGLE_ITEM}
+          data={legend}
+          onHeightChange={setLegendHeight}
           theme={theme}
         />
       )}

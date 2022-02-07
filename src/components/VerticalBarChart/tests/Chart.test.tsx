@@ -8,7 +8,7 @@ import {mockDefaultTheme} from '../../../test-utilities/mount-with-provider';
 import {TooltipAnimatedContainer} from '../../../components/TooltipWrapper';
 import {Chart, Props} from '../Chart';
 import {BarGroup, StackedBarGroups} from '../components';
-import {LegendsContainer} from '../../LegendsContainer';
+import {LegendContainer} from '../../LegendContainer';
 
 const ZERO_AS_MIN_HEIGHT_THEME = {
   themes: {
@@ -306,27 +306,19 @@ describe('Chart />', () => {
   });
 
   describe('showLegend', () => {
-    it('does not render <LegendsContainer /> when false', () => {
+    it('does not render <LegendContainer /> when false', () => {
       const chart = mount(<Chart {...mockProps} />);
       const svg = chart.find('svg');
 
-      expect(chart).not.toContainReactComponent(LegendsContainer);
+      expect(chart).not.toContainReactComponent(LegendContainer);
 
       expect(svg?.props.height).toStrictEqual(250);
     });
 
-    it('renders <LegendsContainer /> when true', () => {
+    it('renders <LegendContainer /> when true', () => {
       const chart = mount(<Chart {...mockProps} showLegend />);
 
-      expect(chart).toContainReactComponent(LegendsContainer);
-    });
-
-    it('resizes container when true', () => {
-      const chart = mount(<Chart {...mockProps} showLegend />);
-
-      const svg = chart.find('svg');
-
-      expect(svg?.props.height).toStrictEqual(205);
+      expect(chart).toContainReactComponent(LegendContainer);
     });
   });
 });

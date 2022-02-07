@@ -10,7 +10,7 @@ import {
   formatYAxisLabel,
   renderTooltipContent,
 } from './utils.stories';
-import {THEME_CONTROL_ARGS} from '../../../storybook';
+import {LEGEND_CONTROL_ARGS, THEME_CONTROL_ARGS} from '../../../storybook';
 
 import {
   generateMultipleSeries,
@@ -92,10 +92,7 @@ export default {
         'An object of optional proprties that define the appearance of the yAxis.',
     },
     theme: THEME_CONTROL_ARGS,
-    showLegend: {
-      defaultValue: false,
-      description: 'Renders a `<Legends />` component underneath the chart.',
-    },
+    showLegend: LEGEND_CONTROL_ARGS,
   },
 } as Meta;
 
