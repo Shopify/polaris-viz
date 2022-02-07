@@ -13,7 +13,7 @@ import {
 import {getGradientDefId} from '../../../../../../components/shared';
 import {
   getColorBlindEventAttrs,
-  getOpacityForActive,
+  getOpacityStylesForActive,
   useWatchColorBlindEvents,
 } from '../../../../../../hooks';
 import {
@@ -89,12 +89,10 @@ export function Stack({
               d={pathD}
               key={index}
               transform={`translate(${x},${y})`}
-              style={{
-                opacity: getOpacityForActive({
-                  activeIndex: activeBarIndex,
-                  index,
-                }),
-              }}
+              style={getOpacityStylesForActive({
+                activeIndex: activeBarIndex,
+                index,
+              })}
               aria-hidden="true"
             />
             <rect

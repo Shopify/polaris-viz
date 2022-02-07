@@ -5,7 +5,7 @@ import {useSpring, animated} from '@react-spring/web';
 import type {DataPoint, DataSeries, LineStyle} from '../../../../types';
 import {
   getColorBlindEventAttrs,
-  getOpacityForActive,
+  getOpacityStylesForActive,
   useTheme,
 } from '../../../../hooks';
 import {ANIMATION_DELAY} from '../../constants';
@@ -71,12 +71,10 @@ export const Line = React.memo(function Shape({
         strokeLinejoin="round"
         strokeLinecap="round"
         strokeDasharray={StrokeDasharray[lineStyle]}
-        style={{
-          opacity: getOpacityForActive({
-            activeIndex: activeLineIndex,
-            index,
-          }),
-        }}
+        style={getOpacityStylesForActive({
+          activeIndex: activeLineIndex,
+          index,
+        })}
       />
       {children}
       <path

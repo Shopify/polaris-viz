@@ -4,7 +4,7 @@ import type {ScaleLinear} from 'd3-scale';
 import type {AccessibilitySeries} from '../../../VerticalBarChart/types';
 import {formatAriaLabel} from '../../utilities';
 import {
-  getOpacityForActive,
+  getOpacityStylesForActive,
   getColorBlindEventAttrs,
   usePrefersReducedMotion,
   useWatchColorBlindEvents,
@@ -109,12 +109,10 @@ export function BarGroup({
               data-type={DataType.BarGroup}
               data-index={barGroupIndex}
               key={`${barGroupIndex}${index}`}
-              style={{
-                opacity: getOpacityForActive({
-                  activeIndex: activeBarGroup,
-                  index: barGroupIndex,
-                }),
-              }}
+              style={getOpacityStylesForActive({
+                activeIndex: activeBarGroup,
+                index: barGroupIndex,
+              })}
             >
               <Bar
                 height={getBarHeight(rawValue)}
@@ -149,7 +147,7 @@ export function BarGroup({
                 width={barWidth - BAR_SPACING}
                 height={height + BAR_ANIMATION_HEIGHT_BUFFER * 2}
                 fill={`url(#${gradientId}${index})`}
-                opacity={getOpacityForActive({
+                style={getOpacityStylesForActive({
                   activeIndex: activeBarIndex,
                   index,
                 })}
@@ -173,7 +171,6 @@ export function BarGroup({
         <rect
           width={barWidth * dataLength}
           x={x}
-          y={BAR_ANIMATION_HEIGHT_BUFFER * -1}
           height={height}
           fill="transparent"
           aria-hidden="true"

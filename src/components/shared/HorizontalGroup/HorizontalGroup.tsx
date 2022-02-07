@@ -8,7 +8,7 @@ import {
 } from '../../../constants';
 import {
   getColorBlindEventAttrs,
-  getOpacityForActive,
+  getOpacityStylesForActive,
   useWatchColorBlindEvents,
 } from '../../../hooks';
 import {
@@ -98,9 +98,10 @@ export function HorizontalGroup({
       }}
     >
       <g
-        style={{
-          opacity: getOpacityForActive({activeIndex: activeGroupIndex, index}),
-        }}
+        style={getOpacityStylesForActive({
+          activeIndex: activeGroupIndex,
+          index,
+        })}
         {...getColorBlindEventAttrs({
           type: 'group',
           index,

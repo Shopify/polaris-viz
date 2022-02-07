@@ -17,7 +17,7 @@ export function getEventName(id: string, type: string) {
   return `${id}:${COLOR_BLIND_EVENT.name}:${type}`;
 }
 
-export function getOpacityForActive({
+export function getOpacityStylesForActive({
   activeIndex,
   index,
   fadedOpacity = COLOR_BLIND_FADED_OPACITY,
@@ -29,5 +29,8 @@ export function getOpacityForActive({
   const activeOpacity =
     activeIndex === index ? COLOR_BLIND_ACTIVE_OPACITY : fadedOpacity;
 
-  return activeIndex === -1 ? COLOR_BLIND_ACTIVE_OPACITY : activeOpacity;
+  return {
+    opacity: activeIndex === -1 ? COLOR_BLIND_ACTIVE_OPACITY : activeOpacity,
+    transition: 'opacity 100ms ease',
+  };
 }

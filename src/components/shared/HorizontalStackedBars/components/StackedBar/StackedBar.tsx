@@ -7,7 +7,7 @@ import {
 } from '../../../../../constants';
 import {
   getColorBlindEventAttrs,
-  getOpacityForActive,
+  getOpacityStylesForActive,
 } from '../../../../../hooks';
 import {getRoundedRectPath} from '../../../../../utilities';
 import type {RoundedBorder} from '../../../../../types';
@@ -59,7 +59,7 @@ export function StackedBar({
         style={{
           outline: 'none',
           transformOrigin: `${x}px 0px`,
-          opacity: getOpacityForActive({
+          ...getOpacityStylesForActive({
             activeIndex: activeBarIndex,
             index: seriesIndex,
           }),
