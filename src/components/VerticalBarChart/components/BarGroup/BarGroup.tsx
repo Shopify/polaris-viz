@@ -18,6 +18,7 @@ import {
   LOAD_ANIMATION_DURATION,
   MASK_HIGHLIGHT_COLOR,
   BAR_ANIMATION_HEIGHT_BUFFER,
+  COLOR_VISION_GROUP_ITEM,
   COLOR_VISION_SINGLE_ITEM,
 } from '../../../../constants';
 import {clamp, uniqueId} from '../../../../utilities';
@@ -158,7 +159,7 @@ export function BarGroup({
       </g>
       <g
         {...getColorVisionEventAttrs({
-          type: 'group',
+          type: COLOR_VISION_GROUP_ITEM,
           index: barGroupIndex,
         })}
         className={styles.BarGroup}

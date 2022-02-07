@@ -1,7 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import type {ScaleBand} from 'd3-scale';
 
-import {useTheme} from '../../hooks';
+import {
+  getOpacityStylesForActive,
+  useTheme,
+  useWatchColorVisionEvents,
+} from '../../hooks';
 import {
   TICK_SIZE,
   BELOW_X_AXIS_MARGIN,
@@ -10,6 +14,7 @@ import {
   LINE_HEIGHT,
   DEFAULT_LABEL_RATIO,
   SPACING_BASE_TIGHT,
+  COLOR_VISION_GROUP_ITEM,
 } from '../../constants';
 import {RightAngleTriangle} from '../../utilities';
 
@@ -87,6 +92,13 @@ export const BarChartXAxis = React.memo(function BarChartXAxis({
   theme,
 }: BarChartXAxisProps) {
   const selectedTheme = useTheme(theme);
+
+  const [activeGroupIndex, setActiveGroupIndex] = useState(-1);
+
+  useWatchColorVisionEvents({
+    type: COLOR_VISION_GROUP_ITEM,
+    onIndexChange: ({detail}) => setActiveGroupIndex(detail.index),
+  });
 
   const {
     maxXLabelHeight,
@@ -176,6 +188,10 @@ export const BarChartXAxis = React.memo(function BarChartXAxis({
                   ? textTransform
                   : ''
               }
+              style={getOpacityStylesForActive({
+                activeIndex: activeGroupIndex,
+                index,
+              })}
             >
               <div
                 className={textContainerClassName}

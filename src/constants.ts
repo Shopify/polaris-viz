@@ -330,3 +330,4 @@ export const DEFAULT_LEGEND_HEIGHT = 29;
 export const COLOR_VISION_SINGLE_LINE = 'singleLine';
 export const COLOR_VISION_SINGLE_ITEM = 'singleItem';
 export const LEGENDS_TOP_MARGIN = 16;
+export const COLOR_VISION_GROUP_ITEM = 'group';

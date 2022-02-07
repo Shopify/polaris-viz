@@ -6,6 +6,7 @@ import {GradientDefs} from '../shared';
 import {
   BarChartMargin as Margin,
   COLOR_VISION_SINGLE_ITEM,
+  COLOR_VISION_GROUP_ITEM,
   XMLNS,
 } from '../../constants';
 import {
@@ -93,7 +94,7 @@ export function Chart({
   const id = useMemo(() => uniqueId('VerticalBarChart'), []);
 
   useWatchColorVisionEvents({
-    type: 'group',
+    type: COLOR_VISION_GROUP_ITEM,
     onIndexChange: ({detail}) => {
       setActiveBarGroup(detail.index);
     },
