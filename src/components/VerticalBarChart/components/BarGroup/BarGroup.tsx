@@ -117,10 +117,10 @@ export function BarGroup({
               <Bar
                 height={getBarHeight(rawValue)}
                 color={MASK_HIGHLIGHT_COLOR}
-                x={x + barWidth * index}
+                x={x + (barWidth + BAR_SPACING) * index}
                 zeroPosition={yScale(0)}
                 rawValue={rawValue}
-                width={barWidth - BAR_SPACING}
+                width={barWidth}
                 index={index}
                 hasRoundedCorners={hasRoundedCorners}
                 rotateZeroBars={rotateZeroBars}
