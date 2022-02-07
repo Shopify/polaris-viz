@@ -6,28 +6,28 @@ import React, {
   useState,
 } from 'react';
 
-import {DEFAULT_LEGENDS_HEIGHT, LEGENDS_TOP_MARGIN} from '../../constants';
+import {DEFAULT_LEGEND_HEIGHT, LEGENDS_TOP_MARGIN} from '../../constants';
 import {useResizeObserver, useWatchColorBlindEvents} from '../../hooks';
 
 import {Legend} from './components';
 import type {LegendData} from './types';
-import style from './LegendsContainer.scss';
+import style from './LegendContainer.scss';
 
-export interface LegendsContainerProps {
+export interface LegendContainerProps {
   colorBlindType: string;
   data: LegendData[];
   onHeightChange: Dispatch<SetStateAction<number>>;
   theme?: string;
 }
 
-export function LegendsContainer({
+export function LegendContainer({
   colorBlindType,
   data,
   onHeightChange,
   theme,
-}: LegendsContainerProps) {
+}: LegendContainerProps) {
   const {setRef, entry} = useResizeObserver();
-  const previousHeight = useRef(DEFAULT_LEGENDS_HEIGHT);
+  const previousHeight = useRef(DEFAULT_LEGEND_HEIGHT);
   const [activeIndex, setActiveIndex] = useState(-1);
 
   useWatchColorBlindEvents({
@@ -40,16 +40,20 @@ export function LegendsContainer({
   useEffect(() => {
     const newHeight = entry?.contentRect.height;
 
-    if (entry == null || entry?.contentRect.height === previousHeight.current) {
+    if (
+      entry == null ||
+      entry?.contentRect.height === previousHeight.current ||
+      newHeight == null
+    ) {
       return;
     }
 
-    previousHeight.current = newHeight!;
+    previousHeight.current = newHeight;
     onHeightChange(newHeight! + LEGENDS_TOP_MARGIN);
   }, [entry, onHeightChange]);
 
   useEffect(() => {
-    onHeightChange(DEFAULT_LEGENDS_HEIGHT + LEGENDS_TOP_MARGIN);
+    onHeightChange(DEFAULT_LEGEND_HEIGHT + LEGENDS_TOP_MARGIN);
 
     return () => {
       onHeightChange(0);

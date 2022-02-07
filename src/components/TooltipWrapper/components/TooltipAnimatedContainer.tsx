@@ -34,8 +34,9 @@ export function TooltipAnimatedContainer({
   position = DEFAULT_TOOLTIP_POSITION,
 }: TooltipAnimatedContainerProps) {
   const tooltipRef = useRef<HTMLDivElement | null>(null);
-  const [tooltipDimensions, setTooltipDimensions] =
-    useState<Dimensions | null>(null);
+  const [tooltipDimensions, setTooltipDimensions] = useState<Dimensions | null>(
+    null,
+  );
   const firstRender = useRef(true);
 
   const spring: any = useSpring({

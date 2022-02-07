@@ -34,8 +34,13 @@ function getNegativeOffset(props: AlteredPositionProps): AlteredPositionReturn {
 }
 
 function getPositiveOffset(props: AlteredPositionProps): AlteredPositionReturn {
-  const {bandwidth, currentX, currentY, tooltipDimensions, chartDimensions} =
-    props;
+  const {
+    bandwidth,
+    currentX,
+    currentY,
+    tooltipDimensions,
+    chartDimensions,
+  } = props;
 
   const isOutside = isOutsideBounds({
     x: currentX,

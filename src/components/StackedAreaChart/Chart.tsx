@@ -1,7 +1,7 @@
 import React, {useState, useMemo, useRef, useCallback} from 'react';
 import {line, stack, stackOffsetNone, stackOrderReverse} from 'd3-shape';
 
-import {LegendsContainer, useLegends} from '../LegendsContainer';
+import {LegendContainer, useLegend} from '../LegendContainer';
 import {
   TooltipHorizontalOffset,
   TooltipVerticalOffset,
@@ -87,7 +87,7 @@ export function Chart({
   const [activePointIndex, setActivePointIndex] = useState<number | null>(null);
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
 
-  const {legends, setLegendsHeight, height, width} = useLegends({
+  const {legend, setLegendHeight, height, width} = useLegend({
     colors: seriesColors,
     data,
     dimensions,
@@ -125,10 +125,10 @@ export function Chart({
 
   const fontSize = width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
 
-  const stackedValues = useMemo(
-    () => areaStack(formattedData),
-    [areaStack, formattedData],
-  );
+  const stackedValues = useMemo(() => areaStack(formattedData), [
+    areaStack,
+    formattedData,
+  ]);
 
   const {ticks: initialTicks} = useYScale({
     fontSize,
@@ -366,10 +366,10 @@ export function Chart({
         parentRef={svgRef}
       />
       {showLegend && (
-        <LegendsContainer
+        <LegendContainer
           colorBlindType={COLOR_BLIND_SINGLE_ITEM}
-          data={legends}
-          onHeightChange={setLegendsHeight}
+          data={legend}
+          onHeightChange={setLegendHeight}
           theme={theme}
         />
       )}

@@ -28,3 +28,8 @@ export const DIRECTION_CONTROL_ARGS = {
   description: 'Changes the direction of the chart.',
   control: {type: 'select', options: ['vertical', 'horizontal']},
 };
+
+export const LEGEND_CONTROL_ARGS = {
+  defaultValue: false,
+  description: 'Renders a `<Legend />` component underneath the chart.',
+};

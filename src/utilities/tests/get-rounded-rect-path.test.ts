@@ -34,7 +34,10 @@ describe('getBorderRadius()', () => {
 
   it('returns different radius value when provided', () => {
     expect(getBorderRadius(RoundedBorder.Top, 10)).toStrictEqual([
-      10, 10, 0, 0,
+      10,
+      10,
+      0,
+      0,
     ]);
   });
 });

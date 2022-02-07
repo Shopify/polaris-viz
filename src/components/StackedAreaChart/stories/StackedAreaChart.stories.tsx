@@ -4,7 +4,7 @@ import type {Story, Meta} from '@storybook/react';
 import {StackedAreaChart, StackedAreaChartProps} from '../StackedAreaChart';
 
 import {data, labels, formatYAxisLabel} from './utils.stories';
-import {THEME_CONTROL_ARGS} from '../../../storybook';
+import {LEGEND_CONTROL_ARGS, THEME_CONTROL_ARGS} from '../../../storybook';
 
 import {generateMultipleSeries} from '../../../../documentation/utilities';
 import type {RenderTooltipContentData} from '../types';
@@ -77,10 +77,7 @@ export default {
         'If provided, renders a `<SkipLink/>` button with the string. Use this for charts with large data sets, so keyboard users can skip all the tabbable data points in the chart.',
     },
     theme: THEME_CONTROL_ARGS,
-    showLegend: {
-      defaultValue: false,
-      description: 'Renders a `<Legends />` component underneath the chart.',
-    },
+    showLegend: LEGEND_CONTROL_ARGS,
   },
 } as Meta;
 

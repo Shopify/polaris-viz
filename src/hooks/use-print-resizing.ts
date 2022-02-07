@@ -16,8 +16,12 @@ export function usePrintResizing({
 
     function handlePrint() {
       if (ref != null) {
-        const {paddingRight, paddingLeft, paddingTop, paddingBottom} =
-          getComputedStyle(ref);
+        const {
+          paddingRight,
+          paddingLeft,
+          paddingTop,
+          paddingBottom,
+        } = getComputedStyle(ref);
         const width =
           ref.clientWidth -
           parseInt(paddingLeft, 10) -

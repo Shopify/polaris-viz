@@ -1,11 +1,11 @@
 import React, {useState, useMemo} from 'react';
 import type {AnnotationLookupTable} from 'components/BarChart/types';
 
-import {LegendsContainer, useLegends} from '../LegendsContainer';
+import {LegendContainer, useLegend} from '../LegendContainer';
 import {GradientDefs} from '../shared';
 import {
   BarChartMargin as Margin,
-  COLOR_BLIND_SINGLE_BAR,
+  COLOR_BLIND_SINGLE_ITEM,
   XMLNS,
 } from '../../constants';
 import {
@@ -99,7 +99,7 @@ export function Chart({
     },
   });
 
-  const {legends, setLegendsHeight, height, width} = useLegends({
+  const {legend, setLegendHeight, height, width} = useLegend({
     data,
     dimensions,
     showLegend,
@@ -390,10 +390,10 @@ export function Chart({
       />
 
       {showLegend && (
-        <LegendsContainer
-          colorBlindType={COLOR_BLIND_SINGLE_BAR}
-          data={legends}
-          onHeightChange={setLegendsHeight}
+        <LegendContainer
+          colorBlindType={COLOR_BLIND_SINGLE_ITEM}
+          data={legend}
+          onHeightChange={setLegendHeight}
           theme={theme}
         />
       )}

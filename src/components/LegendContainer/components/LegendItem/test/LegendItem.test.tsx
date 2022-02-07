@@ -34,8 +34,8 @@ describe('<LegendItem />', () => {
       const button = item.find('button');
       const dataset = button?.domNode?.dataset;
 
-      expect(dataset?.colorBlindEventIndex).toStrictEqual(undefined);
-      expect(dataset?.colorBlindEventType).toStrictEqual(undefined);
+      expect(dataset?.colorBlindEventIndex).toBeUndefined();
+      expect(dataset?.colorBlindEventType).toBeUndefined();
     });
   });
 

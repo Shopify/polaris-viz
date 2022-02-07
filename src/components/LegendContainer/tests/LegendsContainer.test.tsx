@@ -1,10 +1,10 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {LegendsContainer, LegendsContainerProps} from '../LegendsContainer';
+import {LegendContainer, LegendContainerProps} from '../LegendContainer';
 import {Legend} from '../components';
 
-const mockProps: LegendsContainerProps = {
+const mockProps: LegendContainerProps = {
   colorBlindType: 'someType',
   data: [
     {name: 'Legend One', color: 'red'},
@@ -24,13 +24,13 @@ jest.mock('../../../hooks/useResizeObserver', () => {
   };
 });
 
-describe('<LegendsContainer />', () => {
+describe('<LegendContainer />', () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
 
   it('renders <Legend />', () => {
-    const component = mount(<LegendsContainer {...mockProps} />);
+    const component = mount(<LegendContainer {...mockProps} />);
 
     expect(component).toContainReactComponent(Legend, {
       activeIndex: -1,
@@ -39,13 +39,13 @@ describe('<LegendsContainer />', () => {
   });
 
   it('triggers onHeightChange() on mount with default value', () => {
-    mount(<LegendsContainer {...mockProps} />);
+    mount(<LegendContainer {...mockProps} />);
 
     expect(mockProps.onHeightChange).toHaveBeenCalledWith(45);
   });
 
   it('triggers onHeightChange() on unmount', () => {
-    const component = mount(<LegendsContainer {...mockProps} />);
+    const component = mount(<LegendContainer {...mockProps} />);
 
     jest.resetAllMocks();
 

@@ -1,6 +1,6 @@
 import {useMemo, useState} from 'react';
 
-import {DEFAULT_LEGENDS_HEIGHT} from '../../../constants';
+import {DEFAULT_LEGEND_HEIGHT} from '../../../constants';
 import type {Color, DataSeries, Dimensions} from '../../../types';
 import type {LegendData, LegendIconType} from '../types';
 
@@ -24,18 +24,18 @@ export interface Props {
   type?: LegendIconType;
 }
 
-export function useLegends({
+export function useLegend({
   colors = [],
   data,
   dimensions = {height: 0, width: 0},
   showLegend,
   type = 'solid',
 }: Props) {
-  const [legendsHeight, setLegendsHeight] = useState(
-    showLegend ? DEFAULT_LEGENDS_HEIGHT : 0,
+  const [legendHeight, setLegendHeight] = useState(
+    showLegend ? DEFAULT_LEGEND_HEIGHT : 0,
   );
 
-  const legends: LegendData[] = useMemo(() => {
+  const legend: LegendData[] = useMemo(() => {
     if (showLegend === false) {
       return [];
     }
@@ -53,8 +53,8 @@ export function useLegends({
       return dimensions;
     }
 
-    return getAlteredDimensions(dimensions, legendsHeight);
-  }, [showLegend, dimensions, legendsHeight]);
+    return getAlteredDimensions(dimensions, legendHeight);
+  }, [showLegend, dimensions, legendHeight]);
 
-  return {legends, setLegendsHeight, height, width};
+  return {legend, setLegendHeight, height, width};
 }

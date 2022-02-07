@@ -28,8 +28,9 @@ export const ChartContainer = (props: Props) => {
     [],
   );
 
-  const [chartDimensions, setChartDimensions] =
-    useState<Dimensions | null>(null);
+  const [chartDimensions, setChartDimensions] = useState<Dimensions | null>(
+    null,
+  );
 
   const {ref, setRef, entry} = useResizeObserver();
 
