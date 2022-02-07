@@ -64,7 +64,7 @@ describe('<BarGroup/>', () => {
     expect(barGroup).toContainReactComponentTimes(Bar, 4);
   });
 
-  it("gives each <Bar /> a width that together totals the group's full width, minus spacing", () => {
+  it("gives each rect a width that together totals the group's full width, minus spacing", () => {
     const barGroup = mount(
       <svg>
         <BarGroup {...mockProps} />,
@@ -72,7 +72,7 @@ describe('<BarGroup/>', () => {
     );
 
     const bars = barGroup
-      .findAll(Bar)
+      .findAll('rect')
       .filter(
         ({props}) =>
           props.width === mockProps.width / mockProps.data.length - BAR_SPACING,
@@ -81,17 +81,17 @@ describe('<BarGroup/>', () => {
     expect(bars).toHaveLength(4);
   });
 
-  it('gives each <Bar /> a spaced out X position', () => {
+  it('gives each rect a spaced out X position', () => {
     const barGroup = mount(
       <svg>
         <BarGroup {...mockProps} />,
       </svg>,
     );
 
-    expect(barGroup).toContainReactComponent(Bar, {x: 10});
-    expect(barGroup).toContainReactComponent(Bar, {x: 35});
-    expect(barGroup).toContainReactComponent(Bar, {x: 60});
-    expect(barGroup).toContainReactComponent(Bar, {x: 85});
+    expect(barGroup).toContainReactComponent('rect', {x: 10});
+    expect(barGroup).toContainReactComponent('rect', {x: 35});
+    expect(barGroup).toContainReactComponent('rect', {x: 60});
+    expect(barGroup).toContainReactComponent('rect', {x: 85});
   });
 
   describe('zeroAsMinHeight', () => {
