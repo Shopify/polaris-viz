@@ -1,5 +1,6 @@
 import React, {useCallback, useMemo} from 'react';
 
+import {LegendContainer, useLegend} from '../../components/LegendContainer';
 import {uniqueId} from '../../utilities';
 import {GradientDefs, HorizontalGroup} from '../shared';
 import {
@@ -10,8 +11,13 @@ import {
   useHorizontalSeriesColors,
   HorizontalTransitionStyle,
   useHorizontalStackedValues,
+  useColorVisionEvents,
 } from '../../hooks';
-import {XMLNS, HORIZONTAL_BAR_GROUP_DELAY} from '../../constants';
+import {
+  XMLNS,
+  HORIZONTAL_BAR_GROUP_DELAY,
+  COLOR_VISION_SINGLE_ITEM,
+} from '../../constants';
 import type {ChartType, DataSeries, Dimensions} from '../../types';
 
 import type {XAxisOptions} from './types';
@@ -20,6 +26,7 @@ import styles from './Chart.scss';
 export interface ChartProps {
   data: DataSeries[];
   isAnimated: boolean;
+  showLegend: boolean;
   type: ChartType;
   xAxisOptions: Required<XAxisOptions>;
   dimensions?: Dimensions;
@@ -30,20 +37,28 @@ export function Chart({
   data,
   dimensions,
   isAnimated,
+  showLegend,
   theme,
   type,
   xAxisOptions,
 }: ChartProps) {
+  useColorVisionEvents();
+
   const id = useMemo(() => uniqueId('SimpleBarChart'), []);
 
   const {labelFormatter} = xAxisOptions;
   const isStacked = type === 'stacked';
 
-  const {width, height} = dimensions ?? {width: 0, height: 0};
-
   const {longestSeriesCount, seriesColors} = useHorizontalSeriesColors({
     data,
     theme,
+  });
+
+  const {legend, setLegendHeight, height, width} = useLegend({
+    data,
+    dimensions,
+    colors: seriesColors,
+    showLegend,
   });
 
   const {allNumbers, longestLabel, areAllNegative} = useDataForHorizontalChart({
@@ -112,11 +127,12 @@ export function Chart({
         xmlns={XMLNS}
       >
         <GradientDefs
+          direction="horizontal"
+          gradientUnits={isStacked ? 'objectBoundingBox' : 'userSpaceOnUse'}
           id={id}
           seriesColors={seriesColors}
-          theme={theme}
           size={isStacked ? '100%' : `${width}px`}
-          gradientUnits={isStacked ? 'objectBoundingBox' : 'userSpaceOnUse'}
+          theme={theme}
         />
 
         {transitions((style, item, _transition, index) => {
@@ -153,6 +169,15 @@ export function Chart({
           );
         })}
       </svg>
+
+      {showLegend && (
+        <LegendContainer
+          colorVisionType={COLOR_VISION_SINGLE_ITEM}
+          data={legend}
+          onHeightChange={setLegendHeight}
+          theme={theme}
+        />
+      )}
     </div>
   );
 }

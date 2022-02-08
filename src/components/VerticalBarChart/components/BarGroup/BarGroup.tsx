@@ -19,6 +19,7 @@ import {
   MASK_HIGHLIGHT_COLOR,
   BAR_ANIMATION_HEIGHT_BUFFER,
   COLOR_VISION_SINGLE_ITEM,
+  COLOR_VISION_GROUP_ITEM,
 } from '../../../../constants';
 import {clamp, uniqueId} from '../../../../utilities';
 import styles from '../../Chart.scss';
@@ -158,7 +159,7 @@ export function BarGroup({
       </g>
       <g
         {...getColorVisionEventAttrs({
-          type: 'group',
+          type: COLOR_VISION_GROUP_ITEM,
           index: barGroupIndex,
         })}
         className={styles.BarGroup}

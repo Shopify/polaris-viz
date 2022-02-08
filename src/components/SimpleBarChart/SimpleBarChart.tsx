@@ -10,6 +10,7 @@ import type {XAxisOptions} from './types';
 export interface SimpleBarChartProps {
   data: DataSeries[];
   isAnimated?: boolean;
+  showLegend?: boolean;
   theme?: string;
   type?: ChartType;
   xAxisOptions?: XAxisOptions;
@@ -18,6 +19,7 @@ export interface SimpleBarChartProps {
 export function SimpleBarChart({
   isAnimated = true,
   data,
+  showLegend = true,
   theme,
   type = 'default',
   xAxisOptions,
@@ -34,6 +36,7 @@ export function SimpleBarChart({
       <Chart
         data={data}
         isAnimated={isAnimated && !prefersReducedMotion}
+        showLegend={showLegend}
         type={type}
         xAxisOptions={xAxisOptionsForChart}
       />

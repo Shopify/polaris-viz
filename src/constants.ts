@@ -329,4 +329,5 @@ export const COLOR_VISION_FADED_OPACITY = 0.3;
 export const DEFAULT_LEGEND_HEIGHT = 29;
 export const COLOR_VISION_SINGLE_LINE = 'singleLine';
 export const COLOR_VISION_SINGLE_ITEM = 'singleItem';
+export const COLOR_VISION_GROUP_ITEM = 'group';
 export const LEGENDS_TOP_MARGIN = 16;
