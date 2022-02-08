@@ -19,6 +19,7 @@ interface StackedBarGroupsProps {
   activeBarGroup: number;
   colors: Color[];
   drawableHeight: number;
+  gapWidth: number;
   id: string;
   labels: string[];
   stackedValues: StackedSeries[];
@@ -31,6 +32,7 @@ export function StackedBarGroups({
   accessibilityData,
   activeBarGroup,
   drawableHeight,
+  gapWidth,
   id,
   labels,
   stackedValues,
@@ -79,9 +81,9 @@ export function StackedBarGroups({
           >
             <rect
               height={drawableHeight}
-              x={x}
-              width={xScale.bandwidth()}
               fill="transparent"
+              x={x - gapWidth / 2}
+              width={xScale.bandwidth() + gapWidth}
               aria-hidden="true"
             />
             <Stack

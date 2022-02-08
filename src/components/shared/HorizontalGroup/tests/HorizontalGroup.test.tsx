@@ -71,6 +71,7 @@ const MOCK_PROPS: HorizontalGroupProps = {
   barHeight: 12,
   containerWidth: 200,
   data: DATA,
+  groupHeight: 20,
   id: 'id',
   index: 1,
   isAnimated: false,

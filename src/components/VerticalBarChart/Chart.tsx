@@ -204,7 +204,7 @@ export function Chart({
       .some((num) => num > 0);
   }, [sortedData]);
 
-  const {xScale, xAxisLabels} = useXScale({
+  const {xScale, xAxisLabels, gapWidth} = useXScale({
     drawableWidth,
     data: sortedData,
     innerMargin: BarMargin[selectedTheme.bar.innerMargin],
@@ -319,6 +319,7 @@ export function Chart({
               activeBarGroup={activeBarGroup}
               colors={barColors}
               drawableHeight={drawableHeight}
+              gapWidth={gapWidth}
               id={id}
               labels={labels}
               stackedValues={stackedValues}
@@ -332,6 +333,7 @@ export function Chart({
               return (
                 <BarGroup
                   isAnimated={isAnimated}
+                  gapWidth={gapWidth}
                   key={index}
                   x={xPosition == null ? 0 : xPosition}
                   yScale={yScale}

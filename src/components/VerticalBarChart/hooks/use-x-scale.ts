@@ -35,5 +35,9 @@ export function useXScale({
     });
   }, [labels, xScale, barWidthOffset]);
 
-  return {xScale, xAxisLabels};
+  const gapWidth = useMemo(() => {
+    return xScale.step() - xScale.bandwidth();
+  }, [xScale]);
+
+  return {xScale, xAxisLabels, gapWidth};
 }

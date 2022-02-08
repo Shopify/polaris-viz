@@ -1,26 +1,12 @@
 import {useContext, useEffect} from 'react';
-import {useDebouncedCallback} from 'use-debounce/lib';
 
 import {ChartContext} from '../../components';
 
 import {COLOR_VISION_EVENT} from './constants';
 import {getDataSetItem, getEventName} from './utilities';
 
-type ColorBlindEvent = CustomEvent<{
-  index: number;
-}>;
-
-const DEBOUNCE_TIME = 100;
-
 export function useColorVisionEvents() {
   const {id} = useContext(ChartContext);
-
-  const [debounced, cancel] = useDebouncedCallback(function (
-    custom: ColorBlindEvent,
-  ) {
-    window.dispatchEvent(custom);
-  },
-  DEBOUNCE_TIME);
 
   useEffect(() => {
     const items = document.querySelectorAll(
@@ -36,8 +22,6 @@ export function useColorVisionEvents() {
       if (id == null || type == null) {
         return;
       }
-
-      cancel();
 
       const custom = new CustomEvent(getEventName(id, type), {
         detail: {
@@ -63,7 +47,7 @@ export function useColorVisionEvents() {
         },
       });
 
-      debounced(custom);
+      window.dispatchEvent(custom);
     }
 
     items.forEach((item) => {
@@ -81,5 +65,5 @@ export function useColorVisionEvents() {
         item.removeEventListener('blur', onMouseLeave);
       });
     };
-  }, [id, debounced, cancel]);
+  }, [id]);
 }

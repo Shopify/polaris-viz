@@ -30,6 +30,7 @@ export interface HorizontalGroupProps {
   barHeight: number;
   containerWidth: number;
   data: DataSeries[];
+  groupHeight: number;
   id: string;
   index: number;
   isAnimated: boolean;
@@ -52,6 +53,7 @@ export function HorizontalGroup({
   barHeight,
   containerWidth,
   data,
+  groupHeight,
   id,
   index,
   isAnimated,
@@ -79,7 +81,7 @@ export function HorizontalGroup({
     return data.map(({name}) => name ?? '');
   }, [data]);
 
-  const hitAreaHeight = useMemo(() => {
+  const rowHeight = useMemo(() => {
     const barPlusSpaceHeight = barHeight + HORIZONTAL_SPACE_BETWEEN_SINGLE;
 
     if (isStacked) {
@@ -115,8 +117,9 @@ export function HorizontalGroup({
       >
         <rect
           fill="transparent"
-          height={hitAreaHeight}
+          height={groupHeight}
           width={containerWidth}
+          y={-(groupHeight - rowHeight) / 2}
         />
         <GroupLabel
           areAllNegative={areAllNegative}
