@@ -15,7 +15,6 @@ export {
 } from './components';
 
 export type {
-  SparkLineChartProps,
   SparkBarChartProps,
   SimpleNormalizedChartProps,
   LineChartProps,
@@ -23,7 +22,6 @@ export type {
   StackedAreaChartProps,
   BarChartProps,
   TooltipContentProps,
-  PolarisVizProviderProps,
   SimpleBarChartProps,
 } from './components';
 
@@ -34,6 +32,5 @@ export {
 } from './constants';
 
 export {createTheme} from '@shopify/polaris-viz-core';
-// export type {SparkLineChartProps} from '@shopify/polaris-viz-core';
 
 export type {GradientStop, Color, DataSeries, DataPoint} from './types';

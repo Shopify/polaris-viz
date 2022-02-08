@@ -12,8 +12,9 @@ export function usePrefersReducedMotion({native} = {native: false}) {
         return {prefersReducedMotion: error};
       });
   }
+
   const prefersReducedMotion =
-    typeof window === 'undefined'
+    typeof window.matchMedia !== 'function'
       ? false
       : window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
