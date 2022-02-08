@@ -131,6 +131,7 @@ export function HorizontalGroup({
         />
         {isStacked ? (
           <HorizontalStackedBars
+            activeGroupIndex={activeGroupIndex}
             animationDelay={animationDelay}
             ariaLabel={ariaLabel}
             barHeight={barHeight}

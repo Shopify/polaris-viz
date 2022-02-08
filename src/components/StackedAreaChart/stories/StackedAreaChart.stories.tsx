@@ -97,7 +97,6 @@ const Template: Story<StackedAreaChartProps> = (
 export const Default: Story<StackedAreaChartProps> = Template.bind({});
 Default.args = {
   ...defaultProps,
-  showLegend: true,
 };
 
 export const HideXAxisLabels: Story<StackedAreaChartProps> = Template.bind({});
@@ -106,8 +105,9 @@ HideXAxisLabels.args = {
   xAxisOptions: {...defaultProps.xAxisOptions, hide: true},
 };
 
-export const OverwrittenSeriesColors: Story<StackedAreaChartProps> =
-  Template.bind({});
+export const OverwrittenSeriesColors: Story<StackedAreaChartProps> = Template.bind(
+  {},
+);
 OverwrittenSeriesColors.args = {
   ...defaultProps,
   xAxisOptions: {

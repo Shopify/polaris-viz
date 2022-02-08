@@ -42,7 +42,7 @@ export function Chart({
   type,
   xAxisOptions,
 }: ChartProps) {
-  useColorVisionEvents();
+  useColorVisionEvents(data.length > 1);
 
   const id = useMemo(() => uniqueId('SimpleBarChart'), []);
 

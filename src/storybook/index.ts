@@ -30,6 +30,6 @@ export const DIRECTION_CONTROL_ARGS = {
 };
 
 export const LEGEND_CONTROL_ARGS = {
-  defaultValue: false,
+  defaultValue: true,
   description: 'Renders a `<Legend />` component underneath the chart.',
 };

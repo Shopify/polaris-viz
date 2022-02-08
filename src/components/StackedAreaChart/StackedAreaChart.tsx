@@ -37,7 +37,7 @@ export function StackedAreaChart({
   data,
   renderTooltipContent,
   isAnimated = false,
-  showLegend = false,
+  showLegend = true,
   skipLinkText,
   theme,
 }: StackedAreaChartProps) {

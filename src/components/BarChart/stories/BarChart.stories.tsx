@@ -320,8 +320,9 @@ const WithoutRoundedCornersTemplate: Story<BarChartProps> = (
   );
 };
 
-export const WithoutRoundedCorners: Story<BarChartProps> =
-  WithoutRoundedCornersTemplate.bind({});
+export const WithoutRoundedCorners: Story<BarChartProps> = WithoutRoundedCornersTemplate.bind(
+  {},
+);
 WithoutRoundedCorners.args = {
   data: DATA,
   xAxisOptions: {},

@@ -2,9 +2,11 @@ import React, {useMemo, useState} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {animated, useSpring} from '@react-spring/web';
 
+import {useWatchColorVisionEvents} from '../../../hooks';
 import {getBarId} from '../../../utilities';
 import {
   BARS_TRANSITION_CONFIG,
+  COLOR_VISION_SINGLE_ITEM,
   HORIZONTAL_GROUP_LABEL_HEIGHT,
 } from '../../../constants';
 import {FormattedStackedSeries, RoundedBorder} from '../../../types';
@@ -15,6 +17,7 @@ import {useStackedGaps} from './hooks';
 import {getXPosition} from './utilities';
 
 export interface HorizontalStackedBarsProps {
+  activeGroupIndex: number;
   animationDelay: number;
   ariaLabel: string;
   barHeight: number;
@@ -49,6 +52,7 @@ function getRoundedBorder({
 }
 
 export function HorizontalStackedBars({
+  activeGroupIndex,
   animationDelay,
   barHeight,
   dataKeys,
@@ -61,6 +65,15 @@ export function HorizontalStackedBars({
   xScale,
 }: HorizontalStackedBarsProps) {
   const [activeBarIndex, setActiveBarIndex] = useState(-1);
+
+  useWatchColorVisionEvents({
+    type: COLOR_VISION_SINGLE_ITEM,
+    onIndexChange: ({detail}) => {
+      if (activeGroupIndex === -1 || activeGroupIndex === groupIndex) {
+        setActiveBarIndex(detail.index);
+      }
+    },
+  });
 
   const {transform} = useSpring({
     from: {
