@@ -78,7 +78,7 @@ export function Chart({
   showLegend,
   theme,
 }: Props) {
-  useColorVisionEvents();
+  useColorVisionEvents(data.length > 1);
 
   const {prefersReducedMotion} = usePrefersReducedMotion();
   const selectedTheme = useTheme(theme);
