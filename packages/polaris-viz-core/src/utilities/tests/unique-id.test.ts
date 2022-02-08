@@ -6,7 +6,7 @@ describe('uniqueId', () => {
   it('generates an ID with a prefix', () => {
     // can't use import syntax when restting modules
     /* eslint-disable-next-line @typescript-eslint/no-var-requires */
-    const {uniqueId} = require('../unique-id');
+    const {uniqueId} = require('../uniqueId');
 
     const id = uniqueId('test');
 
@@ -15,7 +15,7 @@ describe('uniqueId', () => {
 
   it('increments the value in the ID', () => {
     /* eslint-disable-next-line @typescript-eslint/no-var-requires */
-    const {uniqueId} = require('../unique-id');
+    const {uniqueId} = require('../uniqueId');
 
     uniqueId('test');
     const id = uniqueId('test');
