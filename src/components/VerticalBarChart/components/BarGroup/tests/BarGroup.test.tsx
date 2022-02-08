@@ -52,6 +52,7 @@ describe('<BarGroup/>', () => {
     isSubdued: false,
     zeroAsMinHeight: false,
     isAnimated: false,
+    gapWidth: 10,
   };
 
   it('renders a <Bar /> for each data item', () => {

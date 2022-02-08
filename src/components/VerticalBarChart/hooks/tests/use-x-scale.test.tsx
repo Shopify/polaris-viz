@@ -36,6 +36,7 @@ describe('useXScale', () => {
       scale.bandwidth = () => 10;
       scale.paddingInner = () => scale;
       scale.paddingOuter = () => scale;
+      scale.step = () => 10;
       return scale;
     });
 
@@ -59,6 +60,7 @@ describe('useXScale', () => {
       scale.bandwidth = () => 10;
       scale.paddingInner = () => scale;
       scale.paddingOuter = () => scale;
+      scale.step = () => 10;
       domainSpy = jest.fn(() => scale);
       scale.domain = domainSpy;
       return scale;
@@ -83,6 +85,7 @@ describe('useXScale', () => {
       scale.paddingInner = () => scale;
       scale.paddingOuter = () => scale;
       scale.domain = () => scale;
+      scale.step = () => 10;
       return scale;
     });
 
@@ -111,6 +114,7 @@ describe('useXScale', () => {
         scale.range = () => scale;
         scale.bandwidth = () => 10;
         scale.paddingOuter = () => scale;
+        scale.step = () => 10;
 
         paddingInnerSpy = jest.fn(() => scale);
         scale.paddingInner = paddingInnerSpy;
@@ -143,6 +147,7 @@ describe('useXScale', () => {
         scale.range = () => scale;
         scale.bandwidth = () => 10;
         scale.paddingInner = () => scale;
+        scale.step = () => 10;
 
         paddingOuterSpy = jest.fn(() => scale);
         scale.paddingOuter = paddingOuterSpy;

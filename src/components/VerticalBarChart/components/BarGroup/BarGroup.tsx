@@ -35,6 +35,7 @@ interface Props {
   accessibilityData: AccessibilitySeries[];
   activeBarGroup: number;
   zeroAsMinHeight: boolean;
+  gapWidth: number;
   isAnimated?: boolean;
   rotateZeroBars?: boolean;
 }
@@ -53,6 +54,7 @@ export function BarGroup({
   rotateZeroBars = false,
   accessibilityData,
   activeBarGroup,
+  gapWidth,
 }: Props) {
   const groupAriaLabel = formatAriaLabel(accessibilityData[barGroupIndex]);
 
@@ -169,8 +171,8 @@ export function BarGroup({
         role="list"
       >
         <rect
-          width={barWidth * dataLength}
-          x={x}
+          width={barWidth * dataLength + gapWidth}
+          x={x - gapWidth / 2}
           height={height}
           fill="transparent"
           aria-hidden="true"

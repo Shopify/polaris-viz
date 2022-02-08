@@ -237,6 +237,7 @@ export function Chart({
               barHeight={barHeight}
               containerWidth={width}
               data={data}
+              groupHeight={groupHeight}
               id={id}
               index={index}
               isAnimated={isAnimated}
