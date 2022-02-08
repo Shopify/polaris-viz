@@ -1,9 +1,10 @@
+import {RoundedBorder} from '@shopify/polaris-viz-core';
+
 import {
   DEFAULT_BORDER_RADIUS,
   MIN_BAR_HEIGHT,
   MIN_WIDTH_BORDER_RADIUS,
 } from '../constants';
-import {RoundedBorder} from '../types';
 
 import {clamp} from './clamp';
 
