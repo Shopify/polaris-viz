@@ -7,7 +7,7 @@
   "license": "SEE LICENSE IN LICENSE.md",
   "main": "build/cjs/index.js",
   "module": "build/cjs/index.js",
-  "types": "build/ts/src/index.d.ts",
+  "types": "build/ts/index.d.ts",
   "files": [
     "build/"
   ],
