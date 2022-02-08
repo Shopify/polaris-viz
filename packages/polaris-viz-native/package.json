@@ -2,6 +2,7 @@
   "name": "@shopify/polaris-viz-native",
   "version": "1.0.0-alpha0",
   "main": "build/cjs/index.js",
+  "types": "build/ts/index.d.ts",
   "description": "Polaris Viz for React Native",
   "private": false,
   "license": "SEE LICENSE IN LICENSE.md",
