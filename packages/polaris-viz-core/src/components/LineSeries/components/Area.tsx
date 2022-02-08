@@ -37,7 +37,7 @@ interface AreaProps {
   immediate: boolean;
 }
 
-export function Area({areaPath, color, immediate}: AreaProps) {
+export function Area({areaPath, color}: AreaProps) {
   const gradientId = useMemo(() => uniqueId('gradient'), []);
   const maskId = useMemo(() => uniqueId('mask'), []);
 
@@ -47,11 +47,7 @@ export function Area({areaPath, color, immediate}: AreaProps) {
     <React.Fragment>
       <Defs>
         <Mask id={maskId}>
-          <Path
-            fill={`url(#${maskId}-gradient)`}
-            d={areaPath}
-            // className={immediate ? undefined : styles.Area}
-          />
+          <Path fill={`url(#${maskId}-gradient)`} d={areaPath} />
         </Mask>
         <LinearGradient
           id={`${maskId}-gradient`}

@@ -37,6 +37,7 @@
     "use-debounce": "^3.3.0"
   },
   "devDependencies": {
+    "@storybook/addon-docs": "^6.3.8",
     "@shopify/react-testing": "^3.3.3",
     "@shopify/polaris-viz-core": "^1.0.0-alpha0",
     "@types/d3-array": "^2.12.1",
