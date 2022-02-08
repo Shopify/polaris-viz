@@ -10,7 +10,7 @@ import {
 } from '../../../../hooks';
 import {ANIMATION_DELAY} from '../../constants';
 import {
-  COLOR_VISION_SINGLE_LINE,
+  COLOR_VISION_SINGLE_ITEM,
   LINES_LOAD_ANIMATION_CONFIG,
 } from '../../../../constants';
 
@@ -85,7 +85,7 @@ export const Line = React.memo(function Shape({
         stroke="transparent"
         fill="none"
         {...getColorVisionEventAttrs({
-          type: COLOR_VISION_SINGLE_LINE,
+          type: COLOR_VISION_SINGLE_ITEM,
           index,
         })}
         style={{pointerEvents: 'auto'}}
