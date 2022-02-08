@@ -22,9 +22,9 @@ export type {HorizontalTransitionStyle} from './useHorizontalTransitions';
 export {useBarChartTooltipContent} from './useBarChartTooltipContent';
 export {useHorizontalStackedValues} from './useHorizontalStackedValues';
 export {
-  useColorBlindEvents,
-  getColorBlindEventAttrs,
-  useWatchColorBlindEvents,
+  useColorVisionEvents,
+  getColorVisionEventAttrs,
+  useWatchColorVisionEvents,
   getOpacityStylesForActive,
-} from './ColorBlindA11y';
+} from './ColorVisionA11y';
 export {useCallbackRef} from './useCallbackRef';

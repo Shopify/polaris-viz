@@ -2,8 +2,8 @@ import React, {useCallback} from 'react';
 import {animated, useSpring} from '@react-spring/web';
 
 import {
-  COLOR_BLIND_ACTIVE_OPACITY,
-  COLOR_BLIND_FADED_OPACITY,
+  COLOR_VISION_ACTIVE_OPACITY,
+  COLOR_VISION_FADED_OPACITY,
   BARS_TRANSITION_CONFIG,
 } from '../../../constants';
 import {getRoundedRectPath} from '../../../utilities';
@@ -72,8 +72,8 @@ export const Bar = React.memo(function Bar({
         style={{
           transform: `translate(${x}px, ${y}px) ${transform}`,
           opacity: isActive
-            ? COLOR_BLIND_ACTIVE_OPACITY
-            : COLOR_BLIND_FADED_OPACITY,
+            ? COLOR_VISION_ACTIVE_OPACITY
+            : COLOR_VISION_FADED_OPACITY,
         }}
         className={styles.Bar}
       />

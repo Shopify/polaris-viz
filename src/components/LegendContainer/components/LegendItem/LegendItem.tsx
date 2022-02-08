@@ -2,7 +2,7 @@ import React from 'react';
 
 import type {LegendData} from '../../types';
 import {
-  getColorBlindEventAttrs,
+  getColorVisionEventAttrs,
   getOpacityStylesForActive,
   useTheme,
 } from '../../../../hooks';
@@ -14,7 +14,7 @@ export interface LegendItemProps {
   index: number;
   legend: LegendData;
   activeIndex?: number;
-  colorBlindType?: string;
+  colorVisionType?: string;
   theme?: string;
 }
 
@@ -32,7 +32,7 @@ function getIcon(legend: LegendData) {
 
 export function LegendItem({
   activeIndex = -1,
-  colorBlindType,
+  colorVisionType,
   index,
   legend,
   theme,
@@ -40,10 +40,10 @@ export function LegendItem({
   const selectedTheme = useTheme(theme);
 
   const colorBlindAttrs =
-    colorBlindType == null
+    colorVisionType == null
       ? {}
-      : getColorBlindEventAttrs({
-          type: colorBlindType,
+      : getColorVisionEventAttrs({
+          type: colorVisionType,
           index,
         });
 

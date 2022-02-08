@@ -5,7 +5,7 @@ import type {HorizontalTransitionStyle} from '../../hooks/useHorizontalTransitio
 import {GradientDefs, HorizontalGroup} from '../shared';
 import {
   useBarChartTooltipContent,
-  useColorBlindEvents,
+  useColorVisionEvents,
   useDataForHorizontalChart,
   useHorizontalBarSizes,
   useHorizontalSeriesColors,
@@ -19,7 +19,7 @@ import {
   BarChartMargin as Margin,
   HORIZONTAL_BAR_GROUP_DELAY,
   HORIZONTAL_GROUP_LABEL_HEIGHT,
-  COLOR_BLIND_SINGLE_ITEM,
+  COLOR_VISION_SINGLE_ITEM,
 } from '../../constants';
 import {
   eventPointNative,
@@ -67,7 +67,7 @@ export function Chart({
   type,
   xAxisOptions,
 }: ChartProps) {
-  useColorBlindEvents();
+  useColorVisionEvents();
 
   const selectedTheme = useTheme(theme);
   const {labelFormatter} = xAxisOptions;
@@ -297,7 +297,7 @@ export function Chart({
 
       {showLegend && (
         <LegendContainer
-          colorBlindType={COLOR_BLIND_SINGLE_ITEM}
+          colorVisionType={COLOR_VISION_SINGLE_ITEM}
           data={legend}
           onHeightChange={setLegendHeight}
           theme={theme}

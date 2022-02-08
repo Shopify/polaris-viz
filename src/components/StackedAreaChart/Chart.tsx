@@ -17,8 +17,8 @@ import {
   useLinearChartAnimations,
   usePrefersReducedMotion,
   useTheme,
-  useColorBlindEvents,
   useThemeSeriesColors,
+  useColorVisionEvents,
 } from '../../hooks';
 import {
   SMALL_SCREEN,
@@ -27,7 +27,7 @@ import {
   FONT_SIZE,
   LineChartMargin as Margin,
   XMLNS,
-  COLOR_BLIND_SINGLE_ITEM,
+  COLOR_VISION_SINGLE_ITEM,
 } from '../../constants';
 import {uniqueId, curveStepRounded, eventPointNative} from '../../utilities';
 import {YAxis} from '../YAxis';
@@ -78,7 +78,7 @@ export function Chart({
   showLegend,
   theme,
 }: Props) {
-  useColorBlindEvents();
+  useColorVisionEvents();
 
   const {prefersReducedMotion} = usePrefersReducedMotion();
   const selectedTheme = useTheme(theme);
@@ -367,7 +367,7 @@ export function Chart({
       />
       {showLegend && (
         <LegendContainer
-          colorBlindType={COLOR_BLIND_SINGLE_ITEM}
+          colorVisionType={COLOR_VISION_SINGLE_ITEM}
           data={legend}
           onHeightChange={setLegendHeight}
           theme={theme}

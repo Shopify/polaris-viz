@@ -5,7 +5,7 @@ import {LegendContainer, LegendContainerProps} from '../LegendContainer';
 import {Legend} from '../components';
 
 const mockProps: LegendContainerProps = {
-  colorBlindType: 'someType',
+  colorVisionType: 'someType',
   data: [
     {name: 'Legend One', color: 'red'},
     {name: 'Legend Two', color: 'blue'},
@@ -34,7 +34,7 @@ describe('<LegendContainer />', () => {
 
     expect(component).toContainReactComponent(Legend, {
       activeIndex: -1,
-      colorBlindType: 'someType',
+      colorVisionType: 'someType',
     });
   });
 

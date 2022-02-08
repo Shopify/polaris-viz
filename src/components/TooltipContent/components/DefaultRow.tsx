@@ -1,8 +1,8 @@
 import React from 'react';
 
 import {
-  COLOR_BLIND_ACTIVE_OPACITY,
-  COLOR_BLIND_FADED_OPACITY,
+  COLOR_VISION_ACTIVE_OPACITY,
+  COLOR_VISION_FADED_OPACITY,
 } from '../../../constants';
 import {SquareColorPreview} from '../../SquareColorPreview';
 import type {Color} from '../../../types';
@@ -24,8 +24,8 @@ export function DefaultRow({
       className={styles.Row}
       style={{
         opacity: isActive
-          ? COLOR_BLIND_ACTIVE_OPACITY
-          : COLOR_BLIND_FADED_OPACITY,
+          ? COLOR_VISION_ACTIVE_OPACITY
+          : COLOR_VISION_FADED_OPACITY,
       }}
     >
       <SquareColorPreview color={color} />

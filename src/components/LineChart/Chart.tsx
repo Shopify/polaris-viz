@@ -24,8 +24,8 @@ import {
   useLinearXScale,
   useTheme,
   useLinearChartAnimations,
-  useColorBlindEvents,
-  useWatchColorBlindEvents,
+  useColorVisionEvents,
+  useWatchColorVisionEvents,
 } from '../../hooks';
 import {
   SMALL_SCREEN,
@@ -35,7 +35,7 @@ import {
   LineChartMargin as Margin,
   SPACING_BASE_TIGHT,
   XMLNS,
-  COLOR_BLIND_SINGLE_LINE,
+  COLOR_VISION_SINGLE_LINE,
 } from '../../constants';
 import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
 import {LinearXAxis} from '../LinearXAxis';
@@ -86,7 +86,7 @@ export function Chart({
   yAxisOptions,
   theme,
 }: ChartProps) {
-  useColorBlindEvents();
+  useColorVisionEvents();
 
   const selectedTheme = useTheme(theme);
 
@@ -100,8 +100,8 @@ export function Chart({
     type: 'line',
   });
 
-  useWatchColorBlindEvents({
-    type: COLOR_BLIND_SINGLE_LINE,
+  useWatchColorVisionEvents({
+    type: COLOR_VISION_SINGLE_LINE,
     onIndexChange: ({detail}) => setActiveLineIndex(detail.index),
   });
 
@@ -511,7 +511,7 @@ export function Chart({
 
       {showLegend && (
         <LegendContainer
-          colorBlindType={COLOR_BLIND_SINGLE_LINE}
+          colorVisionType={COLOR_VISION_SINGLE_LINE}
           data={legend}
           onHeightChange={setLegendHeight}
           theme={theme}

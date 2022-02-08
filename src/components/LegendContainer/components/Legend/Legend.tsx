@@ -6,13 +6,13 @@ import {LegendItem} from '../LegendItem';
 export interface LegendProps {
   data: LegendData[];
   activeIndex?: number;
-  colorBlindType?: string;
+  colorVisionType?: string;
   theme?: string;
 }
 
 export function Legend({
   activeIndex = -1,
-  colorBlindType,
+  colorVisionType,
   data,
   theme,
 }: LegendProps) {
@@ -20,7 +20,7 @@ export function Legend({
     return (
       <LegendItem
         activeIndex={activeIndex}
-        colorBlindType={colorBlindType}
+        colorVisionType={colorVisionType}
         index={index}
         key={index}
         legend={legend}

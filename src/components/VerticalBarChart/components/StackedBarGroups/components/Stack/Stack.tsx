@@ -12,12 +12,12 @@ import {
 } from '../../../../utilities';
 import {getGradientDefId} from '../../../../../../components/shared';
 import {
-  getColorBlindEventAttrs,
+  getColorVisionEventAttrs,
   getOpacityStylesForActive,
-  useWatchColorBlindEvents,
+  useWatchColorVisionEvents,
 } from '../../../../../../hooks';
 import {
-  COLOR_BLIND_SINGLE_ITEM,
+  COLOR_VISION_SINGLE_ITEM,
   STACKED_BAR_GAP,
 } from '../../../../../../constants';
 
@@ -49,8 +49,8 @@ export function Stack({
   const [activeBarIndex, setActiveBarIndex] = useState(-1);
   const keys = data[0] ? Object.keys(data[0].data) : [];
 
-  useWatchColorBlindEvents({
-    type: COLOR_BLIND_SINGLE_ITEM,
+  useWatchColorVisionEvents({
+    type: COLOR_VISION_SINGLE_ITEM,
     onIndexChange: ({detail}) => {
       if (activeBarGroup === -1 || activeBarGroup === groupIndex) {
         setActiveBarIndex(detail.index);
@@ -101,8 +101,8 @@ export function Stack({
               height={height + STACKED_BAR_GAP}
               width={width}
               transform={`translate(${x},${y})`}
-              {...getColorBlindEventAttrs({
-                type: COLOR_BLIND_SINGLE_ITEM,
+              {...getColorVisionEventAttrs({
+                type: COLOR_VISION_SINGLE_ITEM,
                 index,
               })}
               tabIndex={-1}

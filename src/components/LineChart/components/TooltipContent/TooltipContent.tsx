@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import type {LineStyle, Color} from 'types';
 
-import {COLOR_BLIND_SINGLE_LINE} from '../../../../constants';
+import {COLOR_VISION_SINGLE_LINE} from '../../../../constants';
 import {getSeriesColorsFromCount} from '../../../../hooks/use-theme-series-colors';
 import {
   getOpacityStylesForActive,
   useTheme,
-  useWatchColorBlindEvents,
+  useWatchColorVisionEvents,
 } from '../../../../hooks';
 import {LinePreview} from '../../../LinePreview';
 
@@ -33,8 +33,8 @@ export function TooltipContent({data, theme}: TooltipContentProps) {
   const selectedTheme = useTheme(theme);
   const seriesColor = getSeriesColorsFromCount(data.length, selectedTheme);
 
-  useWatchColorBlindEvents({
-    type: COLOR_BLIND_SINGLE_LINE,
+  useWatchColorVisionEvents({
+    type: COLOR_VISION_SINGLE_LINE,
     onIndexChange: ({detail}) => setActiveLineIndex(detail.index),
   });
 

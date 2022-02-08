@@ -40,7 +40,7 @@ export default {
     },
   },
   argTypes: {
-    colorBlindType: {
+    colorVisionType: {
       table: {
         disable: true,
       },

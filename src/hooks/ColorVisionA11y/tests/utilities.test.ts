@@ -15,7 +15,7 @@ describe('utilities', () => {
   describe('getDataSetItem()', () => {
     it('returns a single data-set item', () => {
       const dataset = {
-        colorBlindEventHello: 'world',
+        colorVisionEventHello: 'world',
       };
 
       expect(getDataSetItem(dataset, 'hello')).toStrictEqual('world');
@@ -25,7 +25,7 @@ describe('utilities', () => {
   describe('getEventName()', () => {
     it('returns the event name', () => {
       expect(getEventName('123', 'someType')).toStrictEqual(
-        '123:color-blind-event:someType',
+        '123:color-vision-event:someType',
       );
     });
   });

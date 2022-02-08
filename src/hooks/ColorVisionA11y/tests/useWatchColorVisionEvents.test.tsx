@@ -1,9 +1,9 @@
 import React from 'react';
 
-import {useWatchColorBlindEvents} from '../useWatchColorBlindEvents';
+import {useWatchColorVisionEvents} from '../useWatchColorVisionEvents';
 import {mountWithChartContext} from '../../../test-utilities/mount-with-chart-context';
 
-describe('useWatchColorBlindEvents', () => {
+describe('useWatchColorVisionEvents', () => {
   let events: {[key: string]: any} = {};
 
   beforeEach(() => {
@@ -29,7 +29,7 @@ describe('useWatchColorBlindEvents', () => {
 
   it('does not attach events when no id provided', () => {
     function TestComponent() {
-      useWatchColorBlindEvents({
+      useWatchColorVisionEvents({
         type: 'someType',
         onIndexChange: () => {},
       });
@@ -44,7 +44,7 @@ describe('useWatchColorBlindEvents', () => {
 
   it('attaches events to the window', () => {
     function TestComponent() {
-      useWatchColorBlindEvents({
+      useWatchColorVisionEvents({
         type: 'someType',
         onIndexChange: () => {},
       });
@@ -58,7 +58,7 @@ describe('useWatchColorBlindEvents', () => {
 
     expect(Object.keys(events)).toHaveLength(1);
     expect(Object.keys(events)[0]).toStrictEqual(
-      '123:color-blind-event:someType',
+      '123:color-vision-event:someType',
     );
   });
 
@@ -66,7 +66,7 @@ describe('useWatchColorBlindEvents', () => {
     const spy = jest.fn();
 
     function TestComponent() {
-      useWatchColorBlindEvents({
+      useWatchColorVisionEvents({
         type: 'someType',
         onIndexChange: spy,
       });
@@ -78,7 +78,7 @@ describe('useWatchColorBlindEvents', () => {
       id: '123',
     });
 
-    events['123:color-blind-event:someType']();
+    events['123:color-vision-event:someType']();
 
     jest.runAllTimers();
 
