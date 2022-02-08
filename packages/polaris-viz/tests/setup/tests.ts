@@ -3,8 +3,6 @@ import '@shopify/react-testing/matchers';
 import {destroyAll} from '@shopify/react-testing';
 import {Globals} from '@react-spring/web';
 
-console.log('hello from tests 👋🏻');
-
 jest.mock('../../src/constants.ts', () => {
   const actual = jest.requireActual('../../src/constants.ts');
 
