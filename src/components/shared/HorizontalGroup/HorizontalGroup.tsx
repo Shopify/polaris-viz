@@ -3,6 +3,7 @@ import {animated, SpringValue} from '@react-spring/web';
 import type {ScaleLinear} from 'd3-scale';
 
 import {
+  COLOR_VISION_GROUP_ITEM,
   HORIZONTAL_GROUP_LABEL_HEIGHT,
   HORIZONTAL_SPACE_BETWEEN_SINGLE,
 } from '../../../constants';
@@ -71,7 +72,7 @@ export function HorizontalGroup({
   const [activeGroupIndex, setActiveGroupIndex] = useState(-1);
 
   useWatchColorVisionEvents({
-    type: 'group',
+    type: COLOR_VISION_GROUP_ITEM,
     onIndexChange: ({detail}) => {
       setActiveGroupIndex(detail.index);
     },
@@ -105,7 +106,7 @@ export function HorizontalGroup({
           index,
         })}
         {...getColorVisionEventAttrs({
-          type: 'group',
+          type: COLOR_VISION_GROUP_ITEM,
           index,
         })}
         data-type={DataType.BarGroup}

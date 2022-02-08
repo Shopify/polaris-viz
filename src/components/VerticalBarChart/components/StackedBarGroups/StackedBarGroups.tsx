@@ -1,6 +1,7 @@
 import React, {useMemo} from 'react';
 import type {ScaleBand, ScaleLinear} from 'd3-scale';
 
+import {COLOR_VISION_GROUP_ITEM} from '../../../../constants';
 import {formatAriaLabel} from '../../../VerticalBarChart/utilities';
 import {
   getOpacityStylesForActive,
@@ -65,7 +66,7 @@ export function StackedBarGroups({
           <g
             key={groupIndex}
             {...getColorVisionEventAttrs({
-              type: 'group',
+              type: COLOR_VISION_GROUP_ITEM,
               index: groupIndex,
             })}
             className={styles.Group}
