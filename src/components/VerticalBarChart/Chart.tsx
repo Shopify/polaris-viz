@@ -319,8 +319,8 @@ export function Chart({
               accessibilityData={accessibilityData}
               activeBarGroup={activeBarGroup}
               colors={barColors}
-              drawableHeight={drawableHeight}
               gapWidth={gapWidth}
+              height={height}
               id={id}
               labels={labels}
               stackedValues={stackedValues}
@@ -340,7 +340,7 @@ export function Chart({
                   yScale={yScale}
                   data={item}
                   width={xScale.bandwidth()}
-                  height={drawableHeight}
+                  height={height}
                   colors={barColors}
                   barGroupIndex={index}
                   hasRoundedCorners={selectedTheme.bar.hasRoundedCorners}

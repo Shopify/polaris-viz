@@ -3,11 +3,7 @@ import type {Interpolation} from '@react-spring/web';
 import type {ScaleLinear} from 'd3-scale';
 
 import {COLOR_VISION_SINGLE_ITEM} from '../../../../constants';
-import {
-  getOpacityStylesForActive,
-  useTheme,
-  useWatchColorVisionEvents,
-} from '../../../../hooks';
+import {useTheme, useWatchColorVisionEvents} from '../../../../hooks';
 import {
   isGradientType,
   changeColorOpacity,
@@ -113,12 +109,13 @@ export function Points({
 
             {animatePoints ? (
               <Point
+                activeIndex={activeLineIndex}
                 color={pointColor}
                 stroke={selectedTheme.line.pointStroke}
                 cx={getXPosition()}
                 cy={animatedYPosition}
                 active={activeIndex != null}
-                index={index}
+                index={data.length - 1 - index}
                 tabIndex={-1}
                 isAnimated={animatePoints}
                 visuallyHidden={hidePoint}
@@ -132,29 +129,22 @@ export function Points({
               }
 
               return (
-                <g
+                <Point
+                  activeIndex={activeLineIndex}
+                  dataType={DataType.Point}
+                  stroke={selectedTheme.line.pointStroke}
+                  color={pointColor}
+                  cx={xScale(dataIndex)}
+                  cy={yScale(value)}
+                  active={activeIndex === dataIndex}
+                  index={data.length - 1 - index}
                   key={`${name}-${index}-${dataIndex}`}
-                  style={getOpacityStylesForActive({
-                    activeIndex: activeLineIndex,
-                    index: data.length - 1 - index,
-                    fadedOpacity: 0,
-                  })}
-                >
-                  <Point
-                    dataType={DataType.Point}
-                    stroke={selectedTheme.line.pointStroke}
-                    color={pointColor}
-                    cx={xScale(dataIndex)}
-                    cy={yScale(value)}
-                    active={activeIndex === dataIndex}
-                    index={dataIndex}
-                    tabIndex={isLongestLine ? 0 : -1}
-                    ariaLabelledby={tooltipId}
-                    isAnimated={false}
-                    ariaHidden={false}
-                    visuallyHidden={animatePoints}
-                  />
-                </g>
+                  tabIndex={isLongestLine ? 0 : -1}
+                  ariaLabelledby={tooltipId}
+                  isAnimated={false}
+                  ariaHidden={false}
+                  visuallyHidden={animatePoints}
+                />
               );
             })}
           </React.Fragment>

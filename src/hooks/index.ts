@@ -26,5 +26,6 @@ export {
   getColorVisionEventAttrs,
   useWatchColorVisionEvents,
   getOpacityStylesForActive,
+  getScaleStylesForActive,
 } from './ColorVisionA11y';
 export {useCallbackRef} from './useCallbackRef';

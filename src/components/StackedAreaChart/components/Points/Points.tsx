@@ -10,7 +10,6 @@ import {
 } from '../../../../utilities';
 import {DataType} from '../../../../types';
 import {
-  getOpacityStylesForActive,
   usePrefersReducedMotion,
   useTheme,
   useWatchColorVisionEvents,
@@ -94,14 +93,7 @@ export function Points({
           : changeColorOpacity(color);
 
         return (
-          <g
-            key={stackIndex}
-            style={getOpacityStylesForActive({
-              activeIndex: activeLineIndex,
-              index: stackIndex,
-              fadedOpacity: 0,
-            })}
-          >
+          <g key={stackIndex}>
             {isGradientType(color) && (
               <defs>
                 <LinearGradient
@@ -114,6 +106,7 @@ export function Points({
               </defs>
             )}
             <Point
+              activeIndex={activeLineIndex}
               stroke={selectedTheme.line.pointStroke}
               color={pointColor}
               cx={getXPosition({isCrosshair: false, index: stackIndex})}
@@ -133,6 +126,7 @@ export function Points({
         // for each series.
         return (
           <Point
+            activeIndex={activeLineIndex}
             dataType={DataType.Point}
             key={`point-${dataIndex}-${x}}`}
             stroke={selectedTheme.line.pointStroke}

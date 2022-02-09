@@ -12,6 +12,8 @@ import {
 import {getRoundedRectPath} from '../../../../../utilities';
 import type {RoundedBorder} from '../../../../../types';
 
+import styles from './StackedBar.scss';
+
 export interface StackedBarProps {
   activeBarIndex: number;
   ariaLabel: string;
@@ -69,6 +71,7 @@ export function StackedBar({
         aria-hidden="true"
       />
       <rect
+        className={styles.HitArea}
         fill="transparent"
         height={height}
         width={width + STACKED_BAR_GAP}

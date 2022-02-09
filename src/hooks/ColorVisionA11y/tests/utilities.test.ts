@@ -48,23 +48,5 @@ describe('utilities', () => {
         getOpacityStylesForActive({activeIndex: -1, index: 0}),
       ).toStrictEqual({opacity: 1, transition: 'opacity 100ms ease'});
     });
-
-    describe('fadedOpacity', () => {
-      it('returns default when no match', () => {
-        expect(
-          getOpacityStylesForActive({activeIndex: 0, index: 1}).opacity,
-        ).toStrictEqual(0.3);
-      });
-
-      it('returns fadedOpacity when provided and no match', () => {
-        expect(
-          getOpacityStylesForActive({
-            activeIndex: 0,
-            index: 1,
-            fadedOpacity: 0,
-          }).opacity,
-        ).toStrictEqual(0);
-      });
-    });
   });
 });

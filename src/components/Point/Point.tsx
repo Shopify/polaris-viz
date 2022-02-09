@@ -2,12 +2,14 @@ import React from 'react';
 import type {ActiveTooltip, DataType} from 'types';
 import {useSpring, animated, Interpolation} from '@react-spring/web';
 
+import {getScaleStylesForActive} from '../../hooks';
 import {classNames} from '../../utilities';
 import {BASE_ANIMATION_DURATION} from '../../constants';
 
 import styles from './Point.scss';
 
 interface Props {
+  activeIndex: number;
   active: boolean;
   cx: number | Interpolation;
   cy: number | Interpolation;
@@ -26,6 +28,7 @@ interface Props {
 const DEFAULT_RADIUS = 5;
 
 export const Point = React.memo(function Point({
+  activeIndex,
   dataType,
   cx,
   cy,
@@ -40,12 +43,15 @@ export const Point = React.memo(function Point({
   visuallyHidden = false,
   stroke,
 }: Props) {
+  const rawCx = typeof cx === 'number' ? cx : cx.get();
+  const rawCy = typeof cy === 'number' ? cy : cy.get();
+
   const handleFocus = () => {
     if (onFocus != null) {
       return onFocus({
         index,
-        x: typeof cx === 'number' ? cx : cx.get(),
-        y: typeof cy === 'number' ? cy : cy.get(),
+        x: rawCx,
+        y: rawCy,
       });
     }
   };
@@ -80,6 +86,13 @@ export const Point = React.memo(function Point({
         visuallyHidden ? styles.VisuallyHidden : null,
       )}
       aria-hidden={ariaHidden}
+      style={{
+        transformOrigin: `${rawCx}px ${rawCy}px`,
+        ...getScaleStylesForActive({
+          activeIndex,
+          index,
+        }),
+      }}
     />
   );
 });

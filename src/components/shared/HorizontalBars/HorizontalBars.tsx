@@ -21,6 +21,7 @@ import {Bar} from '../Bar';
 import {getGradientDefId} from '../GradientDefs';
 
 import {Label} from './components';
+import styles from './HorizontalBars.scss';
 
 export interface HorizontalBarsProps {
   activeGroupIndex: number;
@@ -132,6 +133,7 @@ export function HorizontalBars({
               />
             )}
             <rect
+              className={styles.HitArea}
               x={0}
               y={y - HORIZONTAL_SPACE_BETWEEN_SINGLE / 2}
               width={width}

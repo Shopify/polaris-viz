@@ -4,6 +4,7 @@ import {mount} from '@shopify/react-testing';
 import {Point} from '../Point';
 
 const mockProps = {
+  activeIndex: -1,
   cx: 100,
   cy: 100,
   active: false,
