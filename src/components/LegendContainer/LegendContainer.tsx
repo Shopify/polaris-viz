@@ -64,6 +64,7 @@ export function LegendContainer({
     <div
       className={style.Container}
       ref={setRef}
+      role="list"
       style={{marginTop: LEGENDS_TOP_MARGIN}}
     >
       <Legend
