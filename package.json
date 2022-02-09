@@ -93,6 +93,7 @@
     "@shopify/loom-plugin-stylelint": "^1.0.0",
     "@shopify/postcss-plugin": "^3.1.1",
     "@shopify/prettier-config": "^1.1.2",
+    "@shopify/react-testing": "^3.3.3",
     "@shopify/stylelint-plugin": "^10.2.0",
     "@shopify/typescript-configs": "^5.0.0",
     "@size-limit/preset-big-lib": "^5.0.1",
