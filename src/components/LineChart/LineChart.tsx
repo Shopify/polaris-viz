@@ -37,7 +37,7 @@ export interface LineChartProps {
 export function LineChart({
   data,
   renderTooltipContent,
-  showLegend = false,
+  showLegend = true,
   skipLinkText,
   emptyStateText,
   isAnimated = false,

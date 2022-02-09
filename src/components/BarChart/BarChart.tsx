@@ -37,7 +37,7 @@ export function BarChart({
   emptyStateText,
   isAnimated = false,
   renderTooltipContent,
-  showLegend = false,
+  showLegend = true,
   skipLinkText,
   theme,
   type = 'default',
