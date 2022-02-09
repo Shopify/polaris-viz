@@ -8,6 +8,9 @@ import {eslint} from '@shopify/loom-plugin-eslint';
 import {prettier} from '@shopify/loom-plugin-prettier';
 import {stylelint} from '@shopify/loom-plugin-stylelint';
 
+// Needed so TS realises what configuration hooks are provided by Jest
+import type {} from '@shopify/loom-plugin-jest';
+
 // eslint-disable-next-line import/no-default-export
 export default createWorkspace((workspace) => {
   workspace.use(
@@ -15,5 +18,24 @@ export default createWorkspace((workspace) => {
     eslint(),
     prettier({files: '**/*.{json,md,yaml,yml}'}),
     stylelint({files: '**/*.scss'}),
+    runWorkspaceTests(),
   );
 });
+
+// Add root tests folder to jest config
+function runWorkspaceTests() {
+  return createWorkspaceTestPlugin('WorkspaceTests', ({hooks}) => {
+    hooks.configure.hook((hooks) => {
+      hooks.jestConfig?.hook((config) => {
+        if (Array.isArray(config.projects)) {
+          config.projects.unshift({
+            ...(config.projects[0] as any),
+            displayName: 'root',
+            rootDir: 'tests',
+          });
+        }
+        return config;
+      });
+    });
+  });
+}
