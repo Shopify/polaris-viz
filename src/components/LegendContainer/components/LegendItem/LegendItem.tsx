@@ -58,7 +58,6 @@ export function LegendItem({
         }),
       }}
       className={style.Legend}
-      aria-hidden="true"
     >
       {getIcon(legend)}
       <span style={{color: selectedTheme.tooltip.labelColor}}>

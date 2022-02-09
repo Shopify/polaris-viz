@@ -1,10 +1,16 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {sum} from 'd3-array';
 import {scaleLinear} from 'd3-scale';
 
+import {COLOR_VISION_SINGLE_ITEM} from '../../constants';
 import type {ComparisonMetricProps} from '../ComparisonMetric';
 import {getSeriesColorsFromCount} from '../../hooks/use-theme-series-colors';
-import {usePrefersReducedMotion, useTheme} from '../../hooks';
+import {
+  useColorVisionEvents,
+  usePrefersReducedMotion,
+  useTheme,
+  useWatchColorVisionEvents,
+} from '../../hooks';
 import {classNames} from '../../utilities';
 import type {DataPoint, Direction, LabelFormatter} from '../../types';
 
@@ -31,11 +37,20 @@ export function Chart({
   size = 'small',
   theme,
 }: ChartProps) {
+  useColorVisionEvents();
+
   const selectedTheme = useTheme(theme);
   const colors = getSeriesColorsFromCount(data.length, selectedTheme);
   const containsNegatives = data.some(({value}) => value !== null && value < 0);
   const isDevelopment = process.env.NODE_ENV === 'development';
   const {prefersReducedMotion} = usePrefersReducedMotion();
+
+  const [activeIndex, setActiveIndex] = useState(-1);
+
+  useWatchColorVisionEvents({
+    type: COLOR_VISION_SINGLE_ITEM,
+    onIndexChange: ({detail}) => setActiveIndex(detail.index),
+  });
 
   if (isDevelopment && containsNegatives) {
     // eslint-disable-next-line no-console
@@ -95,6 +110,8 @@ export function Chart({
           const formattedValue = labelFormatter(value);
           return (
             <BarLabel
+              activeIndex={activeIndex}
+              index={index}
               key={`${key}-${formattedValue}`}
               label={`${key}`}
               value={formattedValue}
@@ -125,6 +142,7 @@ export function Chart({
 
           return (
             <BarSegment
+              activeIndex={activeIndex}
               index={index}
               isAnimated={!prefersReducedMotion}
               direction={direction}

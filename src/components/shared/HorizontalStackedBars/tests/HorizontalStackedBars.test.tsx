@@ -40,6 +40,7 @@ const STACKED_VALUES = [
 ];
 
 const MOCK_PROPS: HorizontalStackedBarsProps = {
+  activeGroupIndex: -1,
   animationDelay: 0,
   ariaLabel: '',
   barHeight: 20,
