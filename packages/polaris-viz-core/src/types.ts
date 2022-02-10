@@ -1,5 +1,4 @@
 import type {InterpolatorFn} from '@react-spring/web';
-import type React from 'react';
 
 export interface DataPoint {
   key: number | string;
