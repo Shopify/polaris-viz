@@ -1,6 +1,5 @@
 import React from 'react';
 
-import {Stop} from '../';
 import type {GradientStop} from '../../types';
 import {usePolarisVizContext} from '../../hooks';
 
@@ -23,9 +22,9 @@ export function LinearGradientWithStops({
   y1 = '100%',
   y2 = '0%',
   gradientUnits = 'objectBoundingBox',
-}: LinearGradientProps) {
+}: LinearGradientWithStopsProps) {
   const {
-    components: {LinearGradient},
+    components: {LinearGradient, Stop},
   } = usePolarisVizContext();
 
   return (
