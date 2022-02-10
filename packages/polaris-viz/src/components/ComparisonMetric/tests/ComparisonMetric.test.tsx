@@ -1,5 +1,6 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
+import '@shopify/react-testing/matchers';
 
 import {ComparisonMetric} from '../ComparisonMetric';
 import {UpChevron, DownChevron} from '../components';

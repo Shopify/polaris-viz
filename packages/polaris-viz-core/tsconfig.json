@@ -5,6 +5,6 @@
     "baseUrl": "src",
     "rootDir": "src"
   },
-  "include": ["src"],
-  "exclude": ["**/*.test.tsx", "**/*.test.ts"]
+  "include": ["./src/**/*.ts", "./src/**/*.tsx"],
+  "references": [{"path": "../../tests"}]
 }

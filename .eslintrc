@@ -82,10 +82,14 @@
   },
   "overrides": [
     {
-      "files": ["src/**/*.{ts,tsx}"],
+      "files": ["./packages/**/src/**/*.{ts,tsx}"],
       "extends": ["plugin:@shopify/typescript-type-checking"],
       "parserOptions": {
-        "project": ["./tsconfig.json"]
+        "project": [
+          "./packages/polaris-viz/tsconfig.json",
+          "./packages/polaris-viz-core/tsconfig.json",
+          "./packages/polaris-viz-native/tsconfig.json"
+        ]
       },
       "rules": {
         "@typescript-eslint/prefer-readonly": "off",
@@ -104,7 +108,7 @@
       }
     },
     {
-      "files": ["**/*.test.{ts,tsx}"],
+      "files": ["./packages/**/src/**/*.test.{ts,tsx}"],
       "parserOptions": {
         "project": [
           "./packages/polaris-viz/tsconfig.json",

@@ -1,5 +1,6 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
+import '@shopify/react-testing/matchers';
 
 import {SkipLink} from '../../../components/SkipLink';
 import {BarChart, BarChartProps} from '../BarChart';
