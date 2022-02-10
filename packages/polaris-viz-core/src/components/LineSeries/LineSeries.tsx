@@ -11,12 +11,6 @@ import {
   curveStepRounded,
   uniqueId,
   isGradientType,
-  Defs,
-  Mask,
-  Rect,
-  Circle,
-  Path,
-  LinearGradient,
   usePrefersReducedMotion,
 } from '../../';
 
@@ -49,7 +43,10 @@ export function LineSeries({
   theme = 'Default',
 }: LineSeriesProps) {
   const color = data?.color;
-  const {native} = usePolarisVizContext();
+  const {
+    native,
+    components: {Defs, Mask, Rect, Circle, Path, LinearGradient},
+  } = usePolarisVizContext();
   const {prefersReducedMotion} = usePrefersReducedMotion({native});
   const selectedTheme = useTheme(theme);
 
