@@ -2,12 +2,12 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {scaleLinear} from 'd3-scale';
 import {
-  Svg,
   SparkLineChartProps,
   useTheme,
   useThemeSeriesColors,
   useSparkLine,
   LineSeries,
+  usePolarisVizContext,
 } from '@shopify/polaris-viz-core';
 
 const SVG_MARGIN = 2;
@@ -21,6 +21,9 @@ export function SparkLineChart({
 }: SparkLineChartProps) {
   const selectedTheme = useTheme(theme);
   const seriesColors = useThemeSeriesColors(data, selectedTheme);
+  const {
+    components: {Svg},
+  } = usePolarisVizContext();
 
   const width = 600;
   const height = 400;
