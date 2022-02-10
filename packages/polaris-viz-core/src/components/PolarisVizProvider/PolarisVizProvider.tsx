@@ -14,6 +14,7 @@ export interface PolarisVizProviderProps {
   children: React.ReactNode;
   themes?: {[key: string]: PartialTheme};
   components?: SvgComponents;
+  native?: boolean;
   animated: (...args: any[]) => React.ReactNode;
 }
 
@@ -22,6 +23,7 @@ export function PolarisVizProvider({
   themes,
   components,
   animated,
+  native = false,
 }: PolarisVizProviderProps) {
   const value = useMemo(() => {
     return {
@@ -36,8 +38,9 @@ export function PolarisVizProvider({
         ...themes,
       }),
       animated,
+      native,
     };
-  }, [themes, components, animated]);
+  }, [themes, components, animated, native]);
 
   return (
     <PolarisVizContext.Provider value={value}>

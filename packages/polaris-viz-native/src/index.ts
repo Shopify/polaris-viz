@@ -1,2 +1,2 @@
 export {SparkLineChart} from './components/SparkLineChart';
-export {PolarisVizProvider} from '@shopify/polaris-viz-core';
+export {NativePolarisVizProvider as PolarisVizProvider} from './components/NativePolarisVizProvider';
