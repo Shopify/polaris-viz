@@ -1,6 +1,6 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
-import {LinearGradient} from '@shopify/polaris-viz-core';
+import {LinearGradientWithStops} from '@shopify/polaris-viz-core';
 
 import {GradientDefs} from '../GradientDefs';
 
@@ -22,7 +22,7 @@ describe('<GradientDefs />', () => {
   });
 
   describe('seriesColors', () => {
-    it('renders <LinearGradient /> for series colors', () => {
+    it('renders <LinearGradientWithStops /> for series colors', () => {
       const container = mount(
         <svg>
           <GradientDefs
@@ -37,7 +37,7 @@ describe('<GradientDefs />', () => {
         </svg>,
       );
 
-      const gradient = container.find(LinearGradient);
+      const gradient = container.find(LinearGradientWithStops);
 
       expect(gradient?.props.id).toStrictEqual('id-Light-0-grad');
     });
@@ -60,7 +60,7 @@ describe('<GradientDefs />', () => {
         </svg>,
       );
 
-      const gradient = container.find(LinearGradient);
+      const gradient = container.find(LinearGradientWithStops);
 
       expect(gradient?.props.id).toStrictEqual('id-CustomTheme-0-grad');
     });

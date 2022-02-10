@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {area} from 'd3-shape';
-import {LinearGradient} from '@shopify/polaris-viz-core';
+import {LinearGradientWithStops} from '@shopify/polaris-viz-core';
 
 import {uniqueId, curveStepRounded} from '../../../../utilities';
 import type {DataPoint} from '../../../../types';
@@ -46,7 +46,7 @@ export function GradientArea({series, yScale, xScale, hasSpline}: Props) {
         <mask id={maskId}>
           <path d={areaShape} fill={`url(#${maskId}-gradient)`} />
         </mask>
-        <LinearGradient
+        <LinearGradientWithStops
           id={`${maskId}-gradient`}
           x1="0%"
           x2="100%"
@@ -71,7 +71,7 @@ export function GradientArea({series, yScale, xScale, hasSpline}: Props) {
             },
           ]}
         />
-        <LinearGradient
+        <LinearGradientWithStops
           id={gradientId}
           x1="0%"
           x2="0%"

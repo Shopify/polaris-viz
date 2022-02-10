@@ -1,18 +1,21 @@
 import React from 'react';
 import type {Meta, Story} from '@storybook/react/types-6-0';
 
-import {LinearGradient, LinearGradientProps} from '../LinearGradient';
+import {
+  LinearGradientWithStops,
+  LinearGradientWithStopsProps,
+} from '../LinearGradientWithStops';
 import {XMLNS} from '../../../constants';
 
 export default {
   title: 'Core/LinearGradient',
-  component: LinearGradient,
+  component: LinearGradientWithStops,
   parameters: {
     controls: {sort: 'requiredFirst', expanded: true},
     docs: {
       description: {
         component:
-          'Used to create gradients on charts and their subcomponents. SVG elements reference the `<LinearGradient />` by ID.',
+          'Used to create gradients on charts and their subcomponents. SVG elements reference the `<LinearGradientWithStops />` by ID.',
       },
     },
   },
@@ -49,14 +52,14 @@ export default {
   },
 } as Meta;
 
-const Template: Story<LinearGradientProps> = (args) => (
+const Template: Story<LinearGradientWithStopsProps> = (args) => (
   <svg viewBox="0 0 500 500" xmlns={XMLNS} height={500} width={500}>
-    <LinearGradient {...args} />
+    <LinearGradientWithStops {...args} />
     <rect x="0" y="0" width="500" height="500" fill="url(#sampleGradient)" />
   </svg>
 );
 
-export const Default: Story<LinearGradientProps> = Template.bind({});
+export const Default: Story<LinearGradientWithStopsProps> = Template.bind({});
 
 const purple = '#5052b3';
 const negativePurple = '#39337f';

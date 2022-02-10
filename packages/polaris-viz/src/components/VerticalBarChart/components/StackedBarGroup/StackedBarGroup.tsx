@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import {LinearGradient} from '@shopify/polaris-viz-core';
+import {LinearGradientWithStops} from '@shopify/polaris-viz-core';
 
 import type {GradientStop} from '../../../../types';
 import {isGradientType, uniqueId} from '../../../../utilities';
@@ -34,7 +34,7 @@ export function StackedBarGroup({
     <React.Fragment>
       <defs aria-hidden role="none">
         {shouldUseGradient ? (
-          <LinearGradient
+          <LinearGradientWithStops
             id={gradientId}
             gradient={lookedUpColor as GradientStop[]}
           />

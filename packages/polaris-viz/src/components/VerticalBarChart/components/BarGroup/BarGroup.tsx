@@ -2,7 +2,7 @@ import React, {useCallback, useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {
   usePrefersReducedMotion,
-  LinearGradient,
+  LinearGradientWithStops,
 } from '@shopify/polaris-viz-core';
 
 import {Color, DataType} from '../../../../types';
@@ -124,7 +124,7 @@ export function BarGroup({
         {gradients.map((gradient, index) => {
           return (
             <g key={`${maskId}${index}`}>
-              <LinearGradient
+              <LinearGradientWithStops
                 gradient={gradient}
                 id={`${gradientId}${index}`}
               />

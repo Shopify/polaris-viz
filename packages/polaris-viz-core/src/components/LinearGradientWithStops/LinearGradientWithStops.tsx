@@ -2,9 +2,9 @@ import React from 'react';
 
 import {Stop} from '../';
 import type {GradientStop} from '../../types';
-import {SvgNode} from '../SVG';
+import {usePolarisVizContext} from '../../hooks';
 
-export interface LinearGradientProps {
+export interface LinearGradientWithStopsProps {
   gradient: GradientStop[];
   id: string;
   x1?: string;
@@ -15,7 +15,7 @@ export interface LinearGradientProps {
   native?: boolean;
 }
 
-export function LinearGradient({
+export function LinearGradientWithStops({
   gradient,
   id,
   x1 = '0%',
@@ -24,9 +24,12 @@ export function LinearGradient({
   y2 = '0%',
   gradientUnits = 'objectBoundingBox',
 }: LinearGradientProps) {
+  const {
+    components: {LinearGradient},
+  } = usePolarisVizContext();
+
   return (
-    <SvgNode
-      tagName="linearGradient"
+    <LinearGradient
       id={id}
       x1={x1}
       x2={x2}
@@ -42,6 +45,6 @@ export function LinearGradient({
           stopOpacity={stopOpacity}
         />
       ))}
-    </SvgNode>
+    </LinearGradient>
   );
 }

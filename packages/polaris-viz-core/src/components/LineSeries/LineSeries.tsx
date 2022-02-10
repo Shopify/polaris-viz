@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {area as areaShape, line} from 'd3-shape';
 
-import {LinearGradient} from '../../components';
+import {LinearGradientWithStops} from '../../components';
 import {
   DataPoint,
   DataSeries,
@@ -105,7 +105,7 @@ export function LineSeries({
   return (
     <React.Fragment>
       <Defs>
-        <LinearGradient
+        <LinearGradientWithStops
           id={`line-${id}`}
           gradient={lineGradientColor as GradientStop[]}
           gradientUnits="userSpaceOnUse"
