@@ -1,5 +1,6 @@
 import React, {useState, useMemo, useRef, useCallback} from 'react';
 import {line, stack, stackOffsetNone, stackOrderReverse} from 'd3-shape';
+import {LinearGradientWithStops} from '@shopify/polaris-viz-core';
 
 import {
   TooltipHorizontalOffset,
@@ -10,7 +11,6 @@ import {
   TooltipWrapper,
   TOOLTIP_POSITION_DEFAULT_RETURN,
 } from '../TooltipWrapper';
-import {LinearGradient} from '../../components';
 import {
   useLinearXAxisDetails,
   useLinearXScale,
@@ -363,7 +363,7 @@ export function Chart({
               <React.Fragment key={stackIndex}>
                 {isGradientType(color) && (
                   <defs>
-                    <LinearGradient
+                    <LinearGradientWithStops
                       id={id}
                       gradient={changeGradientOpacity(color)}
                       gradientUnits="userSpaceOnUse"

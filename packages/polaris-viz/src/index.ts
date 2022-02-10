@@ -11,6 +11,8 @@ export {
   LinePreview,
   SquareColorPreview,
   SimpleBarChart,
+  LinearGradient,
+  PolarisVizProvider,
 } from './components';
 
 export type {
@@ -30,10 +32,6 @@ export {
   PRINT_THEME as PolarisVizPrintTheme,
 } from './constants';
 
-export {
-  PolarisVizProvider,
-  LinearGradient,
-  createTheme,
-} from '@shopify/polaris-viz-core';
+export {createTheme} from '@shopify/polaris-viz-core';
 
 export type {GradientStop, Color, DataSeries, DataPoint} from './types';

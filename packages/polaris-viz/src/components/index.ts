@@ -26,3 +26,5 @@ export {Legend} from './Legend';
 export {TooltipWrapper} from './TooltipWrapper';
 export {SimpleBarChart} from './SimpleBarChart';
 export type {SimpleBarChartProps} from './SimpleBarChart';
+export {LinearGradient} from '@shopify/polaris-viz-core';
+export {PolarisVizProvider} from '@shopify/polaris-viz-core';

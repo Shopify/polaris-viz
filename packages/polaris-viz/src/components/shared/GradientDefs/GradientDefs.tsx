@@ -1,8 +1,8 @@
 import React from 'react';
+import {LinearGradientWithStops} from '@shopify/polaris-viz-core';
 
 import type {Color, GradientStop} from '../../../types';
 import {isGradientType} from '../../../utilities';
-import {LinearGradient} from '../../../components';
 
 const GRADIENT_ID = 'grad';
 
@@ -49,7 +49,7 @@ function Gradient({
         },
       ];
   return (
-    <LinearGradient
+    <LinearGradientWithStops
       gradient={gradient}
       gradientUnits="userSpaceOnUse"
       id={id}

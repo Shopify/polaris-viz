@@ -1,7 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {LinearGradient} from '../LinearGradient';
+import {LinearGradientWithStops} from '../LinearGradientWithStops';
 
 const defaultProps = {
   id: 'someID',
@@ -14,12 +14,12 @@ const defaultProps = {
   ],
 };
 
-describe('<LinearGradient />', () => {
+describe('<LinearGradientWithStops />', () => {
   describe('gradient', () => {
     it('renders a stop for each color provided', () => {
       const gradient = mount(
         <svg>
-          <LinearGradient
+          <LinearGradientWithStops
             {...defaultProps}
             gradient={[
               {
@@ -38,7 +38,7 @@ describe('<LinearGradient />', () => {
     it('gives each stop its color and offset', () => {
       const gradient = mount(
         <svg>
-          <LinearGradient
+          <LinearGradientWithStops
             {...defaultProps}
             gradient={[
               {
@@ -68,7 +68,7 @@ describe('<LinearGradient />', () => {
     it('get passed to the underlying <Gradient/>', () => {
       const gradient = mount(
         <svg>
-          <LinearGradient
+          <LinearGradientWithStops
             {...defaultProps}
             x1="0px"
             x2="100px"

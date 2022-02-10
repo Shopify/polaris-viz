@@ -1,5 +1,5 @@
 import React, {useRef} from 'react';
-import {LinearGradient} from '@shopify/polaris-viz-core';
+import {LinearGradientWithStops} from '@shopify/polaris-viz-core';
 
 import type {Color, LineStyle} from '../../types';
 import {isGradientType, uniqueId} from '../../utilities';
@@ -29,7 +29,7 @@ export function LinePreview({color, lineStyle}: Props) {
       <svg xmlns={XMLNS} width="15px" height="5px">
         {isGradientType(color) ? (
           <defs>
-            <LinearGradient
+            <LinearGradientWithStops
               id={gradientId.current}
               gradient={color}
               x1="0%"

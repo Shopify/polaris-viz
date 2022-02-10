@@ -1,7 +1,8 @@
 import React, {useMemo} from 'react';
 
+import {usePolarisVizContext} from '../../../hooks';
 import type {Color} from '../../../types';
-import {LinearGradient, Defs, Path, Mask} from '../../../components';
+import {LinearGradientWithStops} from '../../../components';
 import {isGradientType, uniqueId} from '../../../utilities';
 
 function getGradientFill(color: Color | null) {
@@ -43,20 +44,24 @@ export function Area({areaPath, color}: AreaProps) {
 
   const areaGradientColor = getGradientFill(color);
 
+  const {
+    components: {Defs, Mask, Path},
+  } = usePolarisVizContext();
+
   return areaGradientColor == null ? null : (
     <React.Fragment>
       <Defs>
         <Mask id={maskId}>
           <Path fill={`url(#${maskId}-gradient)`} d={areaPath} />
         </Mask>
-        <LinearGradient
+        <LinearGradientWithStops
           id={`${maskId}-gradient`}
           y1="0%"
           y2="100%"
           gradient={MASK_GRADIENT}
         />
 
-        <LinearGradient
+        <LinearGradientWithStops
           id={gradientId}
           y1="100%"
           y2="0%"

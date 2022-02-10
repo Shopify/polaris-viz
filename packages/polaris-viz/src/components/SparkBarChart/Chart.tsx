@@ -3,7 +3,7 @@ import {scaleBand, scaleLinear} from 'd3-scale';
 import {line} from 'd3-shape';
 import {useTransition} from '@react-spring/web';
 import {
-  LinearGradient,
+  LinearGradientWithStops,
   getSeriesColorsFromCount,
   usePrefersReducedMotion,
   useTheme,
@@ -181,7 +181,7 @@ export function Chart({
         width={width}
       >
         <defs>
-          <LinearGradient
+          <LinearGradientWithStops
             id={id}
             gradient={color}
             gradientUnits="userSpaceOnUse"

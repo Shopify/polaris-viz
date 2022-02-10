@@ -1,7 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
-import {LinearGradient} from '@shopify/polaris-viz-core';
+import {LinearGradientWithStops} from '@shopify/polaris-viz-core';
 
 import {BAR_SPACING} from '../../../constants';
 import {MIN_BAR_HEIGHT} from '../../../../../constants';
@@ -110,14 +110,14 @@ describe('<BarGroup/>', () => {
 
   describe('colors', () => {
     describe('if uses solid colors', () => {
-      it('gives <LinearGradient /> a single stop', () => {
+      it('gives <LinearGradientWithStops /> a single stop', () => {
         const barGroup = mount(
           <svg>
             <BarGroup {...mockProps} />,
           </svg>,
         );
 
-        expect(barGroup).toContainReactComponent(LinearGradient, {
+        expect(barGroup).toContainReactComponent(LinearGradientWithStops, {
           gradient: [
             {
               color: 'red',
@@ -129,7 +129,7 @@ describe('<BarGroup/>', () => {
     });
 
     describe('if uses gradient colors', () => {
-      it('passes gradient to <LinearGradient />', () => {
+      it('passes gradient to <LinearGradientWithStops />', () => {
         const mockGradient = [
           {
             color: '#374352',
@@ -146,7 +146,7 @@ describe('<BarGroup/>', () => {
           </svg>,
         );
 
-        expect(barGroup).toContainReactComponent(LinearGradient, {
+        expect(barGroup).toContainReactComponent(LinearGradientWithStops, {
           gradient: mockGradient,
         });
       });

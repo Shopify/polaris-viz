@@ -1,10 +1,10 @@
 import React from 'react';
 import {animated, useSpring} from '@react-spring/web';
 import type {Area as D3Area, Line} from 'd3-shape';
+import {LinearGradientWithStops} from '@shopify/polaris-viz-core';
 
 import type {Color, GradientStop, Theme} from '../../../../types';
 import {LINES_LOAD_ANIMATION_CONFIG} from '../../../../constants';
-import {LinearGradient} from '../../../../components';
 import {isGradientType} from '../../../../utilities';
 import type {StackedSeries} from '../../types';
 
@@ -72,7 +72,7 @@ export function Area({
   return (
     <animated.g style={{...spring, transformOrigin: 'bottom center'}}>
       <defs>
-        <LinearGradient
+        <LinearGradientWithStops
           id={`area-${id}-${index}`}
           gradient={gradient as GradientStop[]}
           gradientUnits="userSpaceOnUse"

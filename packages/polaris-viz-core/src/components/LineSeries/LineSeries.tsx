@@ -2,6 +2,7 @@ import React, {useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {area as areaShape, line} from 'd3-shape';
 
+import {LinearGradientWithStops} from '../../components';
 import {
   DataPoint,
   DataSeries,
@@ -45,7 +46,7 @@ export function LineSeries({
   const color = data?.color;
   const {
     native,
-    components: {Defs, Mask, Rect, Circle, Path, LinearGradient},
+    components: {Defs, Mask, Rect, Circle, Path},
   } = usePolarisVizContext();
   const {prefersReducedMotion} = usePrefersReducedMotion({native});
   const selectedTheme = useTheme(theme);
@@ -104,7 +105,7 @@ export function LineSeries({
   return (
     <React.Fragment>
       <Defs>
-        <LinearGradient
+        <LinearGradientWithStops
           id={`line-${id}`}
           gradient={lineGradientColor as GradientStop[]}
           gradientUnits="userSpaceOnUse"

@@ -1,7 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleBand} from 'd3-scale';
-import {LinearGradient} from '@shopify/polaris-viz-core';
+import {LinearGradientWithStops} from '@shopify/polaris-viz-core';
 
 import {SparkBarChart} from '../SparkBarChart';
 import type {DataSeries} from '../../../types';
@@ -44,7 +44,7 @@ jest.mock('d3-scale', () => ({
 }));
 
 describe('<SparkBarChart/>', () => {
-  it('renders a <LinearGradient />', () => {
+  it('renders a <LinearGradientWithStops />', () => {
     const wrapper = mount(<SparkBarChart data={[sampleData]} />);
 
     expect(wrapper).toContainReactComponent(LinearGradient);
