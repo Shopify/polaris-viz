@@ -18,19 +18,42 @@ export interface PolarisVizProviderProps {
 export function PolarisVizProvider({
   children,
   themes,
-  native = false,
 }: PolarisVizProviderProps) {
   const value = useMemo(() => {
     return {
+      components: {
+        svg: 'svg',
+        circle: 'circle',
+        ellipse: 'ellipse',
+        // eslint-disable-next-line id-length
+        g: 'g',
+        text: 'text',
+        tspan: 'tSpan',
+        textPath: 'textPath',
+        path: 'path',
+        polygon: 'polygon',
+        polyline: 'polyline',
+        line: 'line',
+        rect: 'rect',
+        use: 'use',
+        image: 'image',
+        symbol: 'symbol',
+        defs: 'defs',
+        linearGradient: 'linearGradient',
+        radialGradient: 'radialGradient',
+        stop: 'stop',
+        clippath: 'clipPath',
+        pattern: 'pattern',
+        mask: 'mask',
+      },
       themes: createThemes({
         Default,
         Light,
         Print,
         ...themes,
       }),
-      native,
     };
-  }, [themes, native]);
+  }, [themes]);
 
   return (
     <PolarisVizContext.Provider value={value}>
