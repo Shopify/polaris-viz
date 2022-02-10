@@ -6,11 +6,7 @@ export {usePrevious} from './use-previous';
 export {useResizeObserver} from './useResizeObserver';
 export {useTheme} from './useTheme';
 export {usePolarisVizContext} from './usePolarisVizContext';
-export {
-  useThemeSeriesColors,
-  getSeriesColorsFromCount,
-  getSeriesColors,
-} from './use-theme-series-colors';
+export {useThemeSeriesColors, getSeriesColors} from './use-theme-series-colors';
 export {useLinearChartAnimations} from './use-linear-chart-animations';
 export {usePrintResizing} from './use-print-resizing';
 export {useHasTimeoutFinished} from './useHasTimeoutFinished';

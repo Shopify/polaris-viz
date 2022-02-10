@@ -2,7 +2,7 @@ import {useMemo} from 'react';
 
 import type {DataSeries} from '../types';
 
-import {getSeriesColorsFromCount} from './use-theme-series-colors';
+import {getSeriesColors} from './use-theme-series-colors';
 import {useTheme} from './useTheme';
 
 interface Props {
@@ -26,10 +26,7 @@ export function useHorizontalSeriesColors({data, theme}: Props) {
       ({isComparison}) => isComparison !== true,
     );
 
-    const seriesColors = getSeriesColorsFromCount(
-      nonComparison.length,
-      selectedTheme,
-    );
+    const seriesColors = getSeriesColors(nonComparison.length, selectedTheme);
 
     data.forEach(({color, isComparison}, index) => {
       let newColor;

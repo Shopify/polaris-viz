@@ -4,7 +4,7 @@ import {scaleLinear} from 'd3-scale';
 
 import {COLOR_VISION_SINGLE_ITEM} from '../../constants';
 import type {ComparisonMetricProps} from '../ComparisonMetric';
-import {getSeriesColorsFromCount} from '../../hooks/use-theme-series-colors';
+import {getSeriesColors} from '../../hooks/use-theme-series-colors';
 import {
   useColorVisionEvents,
   usePrefersReducedMotion,
@@ -40,7 +40,7 @@ export function Chart({
   useColorVisionEvents();
 
   const selectedTheme = useTheme(theme);
-  const colors = getSeriesColorsFromCount(data.length, selectedTheme);
+  const colors = getSeriesColors(data.length, selectedTheme);
   const containsNegatives = data.some(({value}) => value !== null && value < 0);
   const isDevelopment = process.env.NODE_ENV === 'development';
   const {prefersReducedMotion} = usePrefersReducedMotion();

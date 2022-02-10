@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import type {LineStyle, Color} from 'types';
 
 import {COLOR_VISION_SINGLE_ITEM} from '../../../../constants';
-import {getSeriesColorsFromCount} from '../../../../hooks/use-theme-series-colors';
+import {getSeriesColors} from '../../../../hooks/use-theme-series-colors';
 import {
   getOpacityStylesForActive,
   useTheme,
@@ -31,7 +31,7 @@ export function TooltipContent({data, theme}: TooltipContentProps) {
   const [activeLineIndex, setActiveLineIndex] = useState(-1);
 
   const selectedTheme = useTheme(theme);
-  const seriesColor = getSeriesColorsFromCount(data.length, selectedTheme);
+  const seriesColor = getSeriesColors(data.length, selectedTheme);
 
   useWatchColorVisionEvents({
     type: COLOR_VISION_SINGLE_ITEM,

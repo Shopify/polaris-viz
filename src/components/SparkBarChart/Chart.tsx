@@ -3,7 +3,7 @@ import {scaleBand, scaleLinear} from 'd3-scale';
 import {line} from 'd3-shape';
 import {useTransition} from '@react-spring/web';
 
-import {getSeriesColorsFromCount} from '../../hooks/use-theme-series-colors';
+import {getSeriesColors} from '../../hooks/use-theme-series-colors';
 import {usePrefersReducedMotion, useTheme} from '../../hooks';
 import {BARS_TRANSITION_CONFIG, XMLNS} from '../../constants';
 import type {DataPoint, DataSeries, Dimensions} from '../../types';
@@ -66,7 +66,7 @@ export function Chart({
 }: Props) {
   const {prefersReducedMotion} = usePrefersReducedMotion();
   const selectedTheme = useTheme(theme);
-  const [seriesColor] = getSeriesColorsFromCount(1, selectedTheme);
+  const [seriesColor] = getSeriesColors(1, selectedTheme);
 
   const {width, height} = dimensions ?? {width: 0, height: 0};
 
