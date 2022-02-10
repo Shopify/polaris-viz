@@ -2,7 +2,7 @@ import {createElement} from 'react';
 
 import variables from './styles/shared/_variables.scss';
 import {createGradient} from './utilities/createGradient';
-import type {Theme} from './types';
+import type {SvgComponents, Theme} from './types';
 
 export const XMLNS = 'http://www.w3.org/2000/svg';
 
@@ -323,7 +323,7 @@ export const PRINT_THEME = {
   },
 };
 
-export const DEFAULT_COMPONENTS = {
+export const DEFAULT_COMPONENTS: SvgComponents = {
   Svg: ({children, ...props}) => createElement('svg', props, children),
   Circle: ({children, ...props}) => createElement('circle', props, children),
   Ellipse: ({children, ...props}) => createElement('ellipse', props, children),
@@ -331,7 +331,7 @@ export const DEFAULT_COMPONENTS = {
   G: ({children, ...props}) => createElement('g', props, children),
   Text: ({children, ...props}) => createElement('text', props, children),
   TSpan: ({children, ...props}) => createElement('tSpan', props, children),
-  Textpath: ({children, ...props}) =>
+  TextPath: ({children, ...props}) =>
     createElement('textPath', props, children),
   Path: ({children, ...props}) => createElement('path', props, children),
   Polygon: ({children, ...props}) => createElement('polygon', props, children),
