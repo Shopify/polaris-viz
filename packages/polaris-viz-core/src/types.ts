@@ -216,26 +216,26 @@ export interface SparkLineChartProps {
 }
 
 export interface SvgComponents {
-  Svg: () => React.ReactNode;
-  Circle: () => React.ReactNode;
-  Ellipse: () => React.ReactNode;
-  G: () => React.ReactNode;
-  Text: () => React.ReactNode;
-  TSpan: () => React.ReactNode;
-  TextPath: () => React.ReactNode;
-  Path: () => React.ReactNode;
-  Polygon: () => React.ReactNode;
-  Polyline: () => React.ReactNode;
-  Line: () => React.ReactNode;
-  Rect: () => React.ReactNode;
-  Use: () => React.ReactNode;
-  Image: () => React.ReactNode;
-  Symbol: () => React.ReactNode;
-  Defs: () => React.ReactNode;
-  LinearGradient: () => React.ReactNode;
-  RadialGradient: () => React.ReactNode;
-  Stop: () => React.ReactNode;
-  ClipPath: () => React.ReactNode;
-  Pattern: () => React.ReactNode;
-  Mask: () => React.ReactNode;
+  Svg: () => any;
+  Circle: () => any;
+  Ellipse: () => any;
+  G: () => any;
+  Text: () => any;
+  TSpan: () => any;
+  TextPath: () => any;
+  Path: () => any;
+  Polygon: () => any;
+  Polyline: () => any;
+  Line: () => any;
+  Rect: () => any;
+  Use: () => any;
+  Image: () => any;
+  Symbol: () => any;
+  Defs: () => any;
+  LinearGradient: () => any;
+  RadialGradient: () => any;
+  Stop: () => any;
+  ClipPath: () => any;
+  Pattern: () => any;
+  Mask: () => any;
 }

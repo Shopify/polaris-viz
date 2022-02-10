@@ -324,32 +324,32 @@ export const PRINT_THEME = {
 };
 
 export const DEFAULT_COMPONENTS = {
-  svg: ({children, ...props}) => createElement('svg', props, children),
-  circle: ({children, ...props}) => createElement('circle', props, children),
-  ellipse: ({children, ...props}) => createElement('ellipse', props, children),
+  Svg: ({children, ...props}) => createElement('svg', props, children),
+  Circle: ({children, ...props}) => createElement('circle', props, children),
+  Ellipse: ({children, ...props}) => createElement('ellipse', props, children),
   // eslint-disable-next-line id-length
-  g: ({children, ...props}) => createElement('g', props, children),
-  text: ({children, ...props}) => createElement('text', props, children),
-  tspan: ({children, ...props}) => createElement('tSpan', props, children),
-  textPath: ({children, ...props}) =>
+  G: ({children, ...props}) => createElement('g', props, children),
+  Text: ({children, ...props}) => createElement('text', props, children),
+  TSpan: ({children, ...props}) => createElement('tSpan', props, children),
+  Textpath: ({children, ...props}) =>
     createElement('textPath', props, children),
-  path: ({children, ...props}) => createElement('path', props, children),
-  polygon: ({children, ...props}) => createElement('polygon', props, children),
-  polyline: ({children, ...props}) =>
+  Path: ({children, ...props}) => createElement('path', props, children),
+  Polygon: ({children, ...props}) => createElement('polygon', props, children),
+  Polyline: ({children, ...props}) =>
     createElement('polyline', props, children),
-  line: ({children, ...props}) => createElement('line', props, children),
-  rect: ({children, ...props}) => createElement('rect', props, children),
-  use: ({children, ...props}) => createElement('use', props, children),
-  image: ({children, ...props}) => createElement('image', props, children),
-  symbol: ({children, ...props}) => createElement('symbol', props, children),
-  defs: ({children, ...props}) => createElement('defs', props, children),
-  linearGradient: ({children, ...props}) =>
+  Line: ({children, ...props}) => createElement('line', props, children),
+  Rect: ({children, ...props}) => createElement('rect', props, children),
+  Use: ({children, ...props}) => createElement('use', props, children),
+  Image: ({children, ...props}) => createElement('image', props, children),
+  Symbol: ({children, ...props}) => createElement('symbol', props, children),
+  Defs: ({children, ...props}) => createElement('defs', props, children),
+  LinearGradient: ({children, ...props}) =>
     createElement('linearGradient', props, children),
-  radialGradient: ({children, ...props}) =>
+  RadialGradient: ({children, ...props}) =>
     createElement('radialGradient', props, children),
-  stop: ({children, ...props}) => createElement('stop', props, children),
-  clippath: ({children, ...props}) =>
+  Stop: ({children, ...props}) => createElement('stop', props, children),
+  ClipPath: ({children, ...props}) =>
     createElement('clipPath', props, children),
-  pattern: ({children, ...props}) => createElement('pattern', props, children),
-  mask: ({children, ...props}) => createElement('mask', props, children),
+  Pattern: ({children, ...props}) => createElement('pattern', props, children),
+  Mask: ({children, ...props}) => createElement('mask', props, children),
 };

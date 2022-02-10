@@ -1,7 +1,8 @@
 import React, {useMemo} from 'react';
 
+import {usePolarisVizContext} from '../../../hooks';
 import type {Color} from '../../../types';
-import {LinearGradient, Defs, Path, Mask} from '../../../components';
+import {LinearGradient} from '../../../components';
 import {isGradientType, uniqueId} from '../../../utilities';
 
 function getGradientFill(color: Color | null) {
@@ -42,6 +43,10 @@ export function Area({areaPath, color}: AreaProps) {
   const maskId = useMemo(() => uniqueId('mask'), []);
 
   const areaGradientColor = getGradientFill(color);
+
+  const {
+    components: {Defs, Mask, Path},
+  } = usePolarisVizContext();
 
   return areaGradientColor == null ? null : (
     <React.Fragment>
