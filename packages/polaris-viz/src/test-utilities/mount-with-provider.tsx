@@ -13,7 +13,7 @@ export const mountWithProvider = (
   const {themes} = providerValues || {themes: {}};
 
   return mount(
-    <PolarisVizProvider themes={themes}>
+    <PolarisVizProvider themes={themes} animated={({children}) => children}>
       <React.Fragment>{child}</React.Fragment>
     </PolarisVizProvider>,
   );
