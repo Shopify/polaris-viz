@@ -11,3 +11,6 @@ export {
   SampleStackedAreaChart,
   SampleSimpleNormalizedChart,
 } from './SampleComponents';
+export {Banner} from './Banner';
+export {WebComponents} from './WebComponents';
+export {MobileComponents} from './MobileComponents';

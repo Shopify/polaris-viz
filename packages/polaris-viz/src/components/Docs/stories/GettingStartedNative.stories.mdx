@@ -1,0 +1,62 @@
+import {Meta} from '@storybook/addon-docs/blocks';
+import {ComponentContainer, Title, Divider, Banner} from './components';
+
+<Meta
+  title="polaris-viz-native/Getting Started"
+  parameters={{
+    viewMode: 'docs',
+    docsOnly: true,
+  }}
+/>
+
+<Title>🏁 Getting Started</Title>
+
+<Title type="h2">Installation</Title>
+
+Install the package by running:
+
+```bash
+# If you use npm:
+npm install @shopify/polaris-viz-native --save
+
+# If you prefer Yarn, use the following command instead:
+yarn add @shopify/polaris-viz-native
+```
+
+Wrap the top-level component of your app with `PolarisVizProvider`
+
+<Banner type="Alert">
+  Remember to pass <code>native</code> to the provider otherwise the app won't
+  work!
+</Banner>
+
+```js
+import {PolarisVizProvider} from '@shopify/polaris-viz';
+
+export const YourTopLevelComponent = () => {
+  return (
+    <PolarisVizProvider native>
+      <App />
+    </PolarisVizProvider>
+  );
+};
+```
+
+<Title type="h2">Peer dependencies</Title>
+
+Polaris Viz has peer dependencies on:
+
+- `react@^16.8.6`
+- `react-native@^0.58`
+
+You are responsible for providing these packages in your project. By requiring these packages as `peerDependencies` we can be sure there won't be duplicate packages included due to version mismatches.
+
+<Divider />
+<Title type="h3">Contributing</Title>
+
+Pull requests are welcome. See the <a href="/CONTRIBUTING.md">contribution guidelines</a> for more information.
+
+<Divider />
+<Title type="h3">Licenses</Title>
+
+- Source code is under a [custom license](https://github.com/Shopify/polaris-viz/blob/master/LICENSE.md) based on MIT. The license restricts Polaris Viz usage to applications that integrate or interoperate with Shopify software or services, with additional restrictions for external, stand-alone applications.

@@ -12,7 +12,7 @@ import {
 } from '../../../storybook/horizontal-charts';
 
 export default {
-  title: 'Simple Charts/SimpleBarChart',
+  title: 'polaris-viz/Simple Charts/SimpleBarChart',
   component: SimpleBarChart,
   parameters: {
     previewHeight: 'auto',

@@ -5,7 +5,7 @@ import {Legend} from '../../../components';
 import type {LegendProps} from '..';
 
 export default {
-  title: 'Subcomponents/Legend',
+  title: 'Essentials/Subcomponents/Legend',
   component: Legend,
   parameters: {
     docs: {

@@ -40,7 +40,7 @@ const DATA = [
 ];
 
 export default {
-  title: 'Spark Charts/SparkLineChart',
+  title: 'polaris-viz/Spark Charts/SparkLineChart',
   component: SparkLineChart,
   parameters: {
     controls: {sort: 'requiredFirst', expanded: true},
@@ -145,8 +145,9 @@ OffsetAndNulls.args = {
   ],
 };
 
-export const OverwrittenSeriesColors: Story<SparkLineChartProps> =
-  Template.bind({});
+export const OverwrittenSeriesColors: Story<SparkLineChartProps> = Template.bind(
+  {},
+);
 OverwrittenSeriesColors.args = {
   ...defaultProps,
   data: [

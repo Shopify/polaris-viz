@@ -5,7 +5,7 @@ import {SquareColorPreview, SquareColorPreviewProps} from '../../../components';
 import {colorTeal} from '../../../constants';
 
 export default {
-  title: 'Subcomponents/SquareColorPreview',
+  title: 'Essentials/Subcomponents/SquareColorPreview',
   component: SquareColorPreview,
   argTypes: {
     color: {

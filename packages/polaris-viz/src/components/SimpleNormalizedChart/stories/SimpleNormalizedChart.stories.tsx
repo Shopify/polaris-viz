@@ -8,7 +8,7 @@ import {
 import {THEME_CONTROL_ARGS} from '../../../storybook';
 
 export default {
-  title: 'Simple Charts/SimpleNormalizedChart',
+  title: 'polaris-viz/Simple Charts/SimpleNormalizedChart',
   component: SimpleNormalizedChart,
   parameters: {
     controls: {sort: 'requiredFirst', expanded: true},

@@ -8,7 +8,7 @@ import {
 import {XMLNS} from '../../../constants';
 
 export default {
-  title: 'Core/LinearGradient',
+  title: 'Essentials/Subcomponents/LinearGradient',
   component: LinearGradientWithStops,
   parameters: {
     controls: {sort: 'requiredFirst', expanded: true},
