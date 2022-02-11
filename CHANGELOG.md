@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## [0.29.0] - 2022-01-20
+
 ### Added
 
 - Added `<Legends />` component.
