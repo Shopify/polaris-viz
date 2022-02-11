@@ -16,7 +16,6 @@ export {
   SquareColorPreview,
   SimpleBarChart,
   LinearGradientWithStops,
-  PolarisVizProvider,
 } from './components';
 
 export type {
