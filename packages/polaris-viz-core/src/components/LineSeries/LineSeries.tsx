@@ -133,6 +133,7 @@ export function LineSeries({
 
   return (
     <React.Fragment>
+      {/* @ts-ignore */}
       <AnimatedGroup transform={isSolidLine ? transform : ''} opacity={opacity}>
         <Defs>
           <LinearGradientWithStops
