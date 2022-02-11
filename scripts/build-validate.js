@@ -69,5 +69,5 @@ function validateEsNextBuild() {
 }
 
 function validateAncillaryOutput() {
-  assert.ok(fs.existsSync('./packages/polaris-viz/build/ts/src/index.d.ts'));
+  assert.ok(fs.existsSync('./packages/polaris-viz/build/ts/index.d.ts'));
 }

@@ -4,7 +4,7 @@ import type {Story, Meta} from '@storybook/react';
 import {BarChart, BarChartProps} from '../../../components';
 
 import {SquareColorPreview} from '../../SquareColorPreview';
-import {PolarisVizProvider} from '@shopify/polaris-viz';
+import {PolarisVizProvider} from '../../';
 import {
   DIRECTION_CONTROL_ARGS,
   THEME_CONTROL_ARGS,
@@ -281,6 +281,7 @@ const NoOverflowStyleTemplate: Story<BarChartProps> = (args: BarChartProps) => {
           },
         },
       }}
+      animated={({children}) => children}
     >
       <BarChart {...args} />
     </PolarisVizProvider>
@@ -311,15 +312,15 @@ const WithoutRoundedCornersTemplate: Story<BarChartProps> = (
           },
         },
       }}
+      animated={({children}) => children}
     >
       <BarChart {...args} />
     </PolarisVizProvider>
   );
 };
 
-export const WithoutRoundedCorners: Story<BarChartProps> = WithoutRoundedCornersTemplate.bind(
-  {},
-);
+export const WithoutRoundedCorners: Story<BarChartProps> =
+  WithoutRoundedCornersTemplate.bind({});
 WithoutRoundedCorners.args = {
   data: DATA,
   xAxisOptions: {},

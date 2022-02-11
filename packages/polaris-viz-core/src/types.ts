@@ -1,5 +1,5 @@
+import type {SVGProps} from 'react';
 import type {InterpolatorFn} from '@react-spring/web';
-import type React from 'react';
 
 export interface DataPoint {
   key: number | string;
@@ -216,26 +216,26 @@ export interface SparkLineChartProps {
 }
 
 export interface SvgComponents {
-  Svg: () => any;
-  Circle: () => any;
-  Ellipse: () => any;
-  G: () => any;
-  Text: () => any;
-  TSpan: () => any;
-  TextPath: () => any;
-  Path: () => any;
-  Polygon: () => any;
-  Polyline: () => any;
-  Line: () => any;
-  Rect: () => any;
-  Use: () => any;
-  Image: () => any;
-  Symbol: () => any;
-  Defs: () => any;
-  LinearGradient: () => any;
-  RadialGradient: () => any;
-  Stop: () => any;
-  ClipPath: () => any;
-  Pattern: () => any;
-  Mask: () => any;
+  Svg: (props: SVGProps<SVGElement>) => any;
+  Circle: (props: SVGProps<SVGCircleElement>) => any;
+  Ellipse: (props: SVGProps<SVGEllipseElement>) => any;
+  G: (props: SVGProps<SVGGElement>) => any;
+  Text: (props: SVGProps<SVGTextElement>) => any;
+  TSpan: (props: SVGProps<SVGTSpanElement>) => any;
+  TextPath: (props: SVGProps<SVGTextPathElement>) => any;
+  Path: (props: SVGProps<SVGPathElement>) => any;
+  Polygon: (props: SVGProps<SVGPolygonElement>) => any;
+  Polyline: (props: SVGProps<SVGPolylineElement>) => any;
+  Line: (props: SVGProps<SVGLineElement>) => any;
+  Rect: (props: SVGProps<SVGRectElement>) => any;
+  Use: (props: SVGProps<SVGUseElement>) => any;
+  Image: (props: SVGProps<SVGImageElement>) => any;
+  Symbol: (props: SVGProps<SVGSymbolElement>) => any;
+  Defs: (props: SVGProps<SVGDefsElement>) => any;
+  LinearGradient: (props: SVGProps<SVGLinearGradientElement>) => any;
+  RadialGradient: (props: SVGProps<SVGRadialGradientElement>) => any;
+  Stop: (props: SVGProps<SVGStopElement>) => any;
+  ClipPath: (props: SVGProps<SVGClipPathElement>) => any;
+  Pattern: (props: SVGProps<SVGPatternElement>) => any;
+  Mask: (props: SVGProps<SVGMaskElement>) => any;
 }

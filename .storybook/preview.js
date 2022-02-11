@@ -138,6 +138,7 @@ export const decorators = [
             },
           },
         }}
+        animated={(children) => children}
       >
         <Container
           height={context.parameters.previewHeight}

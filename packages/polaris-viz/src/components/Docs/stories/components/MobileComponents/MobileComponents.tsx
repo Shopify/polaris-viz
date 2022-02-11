@@ -20,6 +20,7 @@ export function MobileComponents() {
             },
           },
         }}
+        animated={({children}) => children}
       >
         <Title type="h3" style={{gridColumn: 'span 2'}}>
           Spark Charts

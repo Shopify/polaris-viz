@@ -15,7 +15,7 @@ export {
   LinePreview,
   SquareColorPreview,
   SimpleBarChart,
-  LinearGradient,
+  LinearGradientWithStops,
 } from './components';
 
 export type {

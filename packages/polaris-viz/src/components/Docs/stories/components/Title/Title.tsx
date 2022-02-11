@@ -11,7 +11,7 @@ export function Title({
   style = {},
 }: {
   type: string;
-  children: React.ReactChildren;
+  children: React.ReactChildren | string;
   style: CSSProperties;
 }) {
   const id = useMemo(() => uniqueId('titleAnchor'), []);

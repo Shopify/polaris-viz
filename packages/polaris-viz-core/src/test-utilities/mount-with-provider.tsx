@@ -1,7 +1,8 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import type {PartialTheme} from 'types';
-import {PolarisVizProvider} from '@shopify/polaris-viz';
+
+import {PolarisVizProvider} from '../components';
 
 export const mountWithProvider = (
   child: React.ReactElement<any, any>,
@@ -12,7 +13,7 @@ export const mountWithProvider = (
   const {themes} = providerValues || {themes: {}};
 
   return mount(
-    <PolarisVizProvider themes={themes}>
+    <PolarisVizProvider themes={themes} animated={({children}) => children}>
       <React.Fragment>{child}</React.Fragment>
     </PolarisVizProvider>,
   );
