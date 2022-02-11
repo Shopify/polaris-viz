@@ -1,6 +1,6 @@
 export function usePrefersReducedMotion({native} = {native: false}) {
   if (native) {
-    return false;
+    return {prefersReducedMotion: false};
   }
 
   const prefersReducedMotion =
