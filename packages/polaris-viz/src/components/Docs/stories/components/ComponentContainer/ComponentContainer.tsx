@@ -15,7 +15,7 @@ export function ComponentContainer({
   theme = 'Default',
   codeSample,
 }: {
-  chart: React.Component;
+  chart: JSX.Element;
   title?: string;
   description: string;
   link?: string;

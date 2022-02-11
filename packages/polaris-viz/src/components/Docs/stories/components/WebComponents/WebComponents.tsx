@@ -29,6 +29,7 @@ export function WebComponents() {
             },
           },
         }}
+        animated={({children}) => children}
       >
         <Title type="h3" style={{gridColumn: 'span 2'}}>
           Default Charts
@@ -41,9 +42,7 @@ export function WebComponents() {
           chart={
             <BarChart
               isAnimated
-              xAxisOptions={{
-                labels: ['Monday', 'Tuesday', 'Wednesday'],
-              }}
+              xAxisOptions={{}}
               data={[
                 {
                   name: 'Breakfast',
@@ -321,7 +320,7 @@ export function WebComponents() {
           chart={
             <div style={{width: 450}}>
               <SimpleNormalizedChart
-                orientation="vertical"
+                direction="vertical"
                 comparisonMetrics={[
                   {
                     dataIndex: 0,
