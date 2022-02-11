@@ -22,6 +22,7 @@
     "check:ci": "npm-run-all lint type-check test:ci",
     "prebuild": "yarn run clean",
     "build": "loom build",
+    "dev": "loom dev",
     "postbuild": "node ./scripts/build-validate",
     "prebuild-consumer": "yarn run build",
     "build-consumer": "node ./scripts/build-consumer",
