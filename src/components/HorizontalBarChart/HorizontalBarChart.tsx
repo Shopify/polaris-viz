@@ -14,6 +14,7 @@ import {Chart} from './Chart';
 export interface HorizontalBarChartProps {
   data: DataSeries[];
   renderTooltipContent: (data: RenderTooltipContentData) => ReactNode;
+  showLegend: boolean;
   xAxisOptions: XAxisOptions;
   annotationsLookupTable?: AnnotationLookupTable;
   isAnimated?: boolean;
@@ -26,6 +27,7 @@ export function HorizontalBarChart({
   data,
   isAnimated = true,
   renderTooltipContent,
+  showLegend,
   theme,
   type = 'default',
   xAxisOptions,
@@ -47,6 +49,7 @@ export function HorizontalBarChart({
         data={data}
         isAnimated={isAnimated && !prefersReducedMotion}
         renderTooltipContent={renderTooltipContent}
+        showLegend={showLegend}
         type={type}
         xAxisOptions={xAxisOptionsForChart}
       />

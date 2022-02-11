@@ -1,5 +1,8 @@
 import React from 'react';
+import type {DataSeries} from 'types';
 
+import {useTheme, getSeriesColors} from '../../../../hooks';
+import {LegendContainer} from '../../../../components/LegendContainer';
 import {
   SparkLineChart,
   LineChart,
@@ -11,6 +14,8 @@ import {
   generateLabels,
   generateMultipleSeries,
 } from '../../../../../documentation/utilities';
+
+import {SimpleContainer} from './SimpleContainer';
 
 export const SampleSparkLineChart = ({theme} = {theme: 'Default'}) => {
   return (
@@ -122,5 +127,82 @@ export const SampleSimpleNormalizedChart = ({theme} = {theme: 'Default'}) => {
       ]}
       labelFormatter={(value) => `$${value}`}
     />
+  );
+};
+
+export const SampleLegendChart = ({theme} = {theme: 'Default'}) => {
+  const data: DataSeries[] = [
+    {
+      name: 'Breakfast',
+      data: [
+        {key: 'Monday', value: 3},
+        {key: 'Tuesday', value: 7},
+        {key: 'Wednesday', value: 7},
+        {key: 'Thursday', value: 8},
+        {key: 'Friday', value: 20},
+        {key: 'Saturday', value: 0},
+        {key: 'Sunday', value: 0.1},
+      ],
+    },
+    {
+      name: 'Lunch',
+      data: [
+        {key: 'Monday', value: 4},
+        {key: 'Tuesday', value: 0},
+        {key: 'Wednesday', value: 10},
+        {key: 'Thursday', value: 15},
+        {key: 'Friday', value: 8},
+        {key: 'Saturday', value: 20},
+        {key: 'Sunday', value: 2},
+      ],
+    },
+    {
+      name: 'Dinner',
+      data: [
+        {key: 'Monday', value: 7},
+        {key: 'Tuesday', value: 0},
+        {key: 'Wednesday', value: 15},
+        {key: 'Thursday', value: 12},
+        {key: 'Friday', value: 20},
+        {key: 'Saturday', value: 5},
+        {key: 'Sunday', value: 4},
+      ],
+    },
+  ];
+
+  return (
+    <SimpleContainer height={300}>
+      <BarChart data={data} theme={theme} />
+    </SimpleContainer>
+  );
+};
+
+export const SampleLegendContainer = ({theme} = {theme: 'Default'}) => {
+  const selectedTheme = useTheme(theme);
+  const colors = getSeriesColors(3, selectedTheme);
+
+  return (
+    <SimpleContainer>
+      <div style={{marginTop: -16}}>
+        <LegendContainer
+          colorVisionType=""
+          data={[
+            {
+              name: 'Breakfast',
+              color: colors[0],
+            },
+            {
+              name: 'Lunch',
+              color: 'green',
+            },
+            {
+              name: 'Dinner',
+              color: colors[2],
+            },
+          ]}
+          onHeightChange={() => {}}
+        />
+      </div>
+    </SimpleContainer>
   );
 };

@@ -9,8 +9,10 @@
 .Svg {
   overflow: visible;
   max-width: 100%;
+  display: block;
 }
 
-.BarGroup {
+.BarGroup,
+.Bar {
   @include no-outline;
 }

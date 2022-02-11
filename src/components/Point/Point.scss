@@ -2,6 +2,7 @@
 
 .Point {
   @include no-outline;
+  pointer-events: none;
 }
 
 .VisuallyHidden {

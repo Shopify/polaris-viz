@@ -17,10 +17,7 @@ interface Props {
   index: number;
   rotateZeroBars: boolean;
   height: number;
-  tabIndex: number;
   zeroPosition: number;
-
-  onFocus?: ({index, cx, cy}: {index: number; cx: number; cy: number}) => void;
   ariaLabel?: string;
   role?: string;
   hasRoundedCorners?: boolean;
@@ -33,10 +30,8 @@ export const Bar = React.memo(function Bar({
   x,
   rawValue,
   width,
-  onFocus,
   index,
   ariaLabel,
-  tabIndex,
   role,
   height,
   hasRoundedCorners,
@@ -50,11 +45,6 @@ export const Bar = React.memo(function Bar({
   const yPosition = useMemo(() => {
     return treatAsNegative ? zeroPosition + height : zeroPosition - height;
   }, [height, treatAsNegative, zeroPosition]);
-
-  const handleFocus = () => {
-    if (yPosition == null) return;
-    onFocus?.({index, cx: x, cy: yPosition});
-  };
 
   const style = useMemo(() => {
     if (yPosition == null) return;
@@ -103,6 +93,7 @@ export const Bar = React.memo(function Bar({
         transform,
         transformOrigin: `0px ${zeroPosition}px`,
       }}
+      aria-hidden="true"
     >
       <path
         data-id={`bar-${index}`}
@@ -111,11 +102,10 @@ export const Bar = React.memo(function Bar({
         d={path}
         fill={color}
         aria-label={ariaLabel}
-        onFocus={handleFocus}
-        tabIndex={tabIndex}
         role={role}
         style={style}
         className={styles.Bar}
+        aria-hidden="true"
       />
     </animated.g>
   );

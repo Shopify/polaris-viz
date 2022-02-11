@@ -8,6 +8,8 @@ describe('<BarLabel />', () => {
     it('renders BarLabel with props', () => {
       const barLabel = mount(
         <BarLabel
+          activeIndex={-1}
+          index={0}
           label="Google"
           value="200"
           color="rgb(255, 255, 255)"

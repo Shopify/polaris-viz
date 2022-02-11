@@ -1,42 +1,42 @@
 import React, {useCallback} from 'react';
 import {animated, useSpring} from '@react-spring/web';
 
+import {
+  COLOR_VISION_ACTIVE_OPACITY,
+  COLOR_VISION_FADED_OPACITY,
+  BARS_TRANSITION_CONFIG,
+} from '../../../constants';
 import {getRoundedRectPath} from '../../../utilities';
 import {DataType, Direction, RoundedBorder} from '../../../types';
-import {BARS_TRANSITION_CONFIG} from '../../../constants';
 
 import styles from './Bar.scss';
 
 export interface BarProps {
   color: string;
   height: number;
-  tabIndex: number;
   width: number;
   x: number;
   y: number;
   animationDirection?: Direction;
   animationDelay?: number;
-  ariaLabel?: string;
   index?: number;
+  isActive?: boolean;
   isAnimated?: boolean;
   needsMinWidth?: boolean;
-  role?: string;
   roundedBorder?: RoundedBorder;
   transform?: string;
 }
 
 export const Bar = React.memo(function Bar({
-  animationDirection = 'horizontal',
   animationDelay = 0,
-  ariaLabel,
+  animationDirection = 'horizontal',
   color,
   height,
   index,
+  isActive = true,
   isAnimated,
   needsMinWidth = false,
-  role,
   roundedBorder = RoundedBorder.None,
-  tabIndex,
   transform,
   width,
   x,
@@ -61,18 +61,19 @@ export const Bar = React.memo(function Bar({
   });
 
   return (
-    <g className={styles.Group}>
+    <g className={styles.Group} aria-hidden="true">
       <animated.path
         d={spring.pathD}
         data-id={`bar-${index}`}
         data-index={index}
         data-type={DataType.Bar}
         fill={color}
-        aria-label={ariaLabel}
-        tabIndex={tabIndex}
-        role={role}
+        aria-hidden="true"
         style={{
           transform: `translate(${x}px, ${y}px) ${transform}`,
+          opacity: isActive
+            ? COLOR_VISION_ACTIVE_OPACITY
+            : COLOR_VISION_FADED_OPACITY,
         }}
         className={styles.Bar}
       />

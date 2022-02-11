@@ -7,6 +7,7 @@ import {SquareColorPreview} from '../../SquareColorPreview';
 import {PolarisVizProvider} from '../../PolarisVizProvider';
 import {
   DIRECTION_CONTROL_ARGS,
+  LEGEND_CONTROL_ARGS,
   THEME_CONTROL_ARGS,
   TYPE_CONTROL_ARGS,
 } from '../../../storybook';
@@ -210,6 +211,7 @@ export default {
     direction: DIRECTION_CONTROL_ARGS,
     theme: THEME_CONTROL_ARGS,
     type: TYPE_CONTROL_ARGS,
+    showLegend: LEGEND_CONTROL_ARGS,
   },
 } as Meta;
 
@@ -225,6 +227,7 @@ Default.args = {
     useMinimalLabels: true,
   },
   isAnimated: true,
+  showLegend: true,
 };
 
 export const SingleBar: Story<BarChartProps> = Template.bind({});

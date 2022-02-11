@@ -10,4 +10,7 @@ export {
   SampleBarChart,
   SampleStackedAreaChart,
   SampleSimpleNormalizedChart,
+  SampleLegendContainer,
+  SampleLegendChart,
 } from './SampleComponents';
+export {SimpleContainer} from './SimpleContainer';

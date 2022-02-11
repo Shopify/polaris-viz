@@ -7,7 +7,8 @@ import {HorizontalGridLines} from '../../../components/HorizontalGridLines';
 import {mockDefaultTheme} from '../../../test-utilities/mount-with-provider';
 import {TooltipAnimatedContainer} from '../../../components/TooltipWrapper';
 import {Chart, Props} from '../Chart';
-import {BarGroup, StackedBarGroup} from '../components';
+import {BarGroup, StackedBarGroups} from '../components';
+import {LegendContainer} from '../../LegendContainer';
 
 const ZERO_AS_MIN_HEIGHT_THEME = {
   themes: {
@@ -74,6 +75,7 @@ describe('Chart />', () => {
       integersOnly: false,
     },
     type: 'default',
+    showLegend: false,
   };
 
   it('renders an SVG element', () => {
@@ -148,16 +150,6 @@ describe('Chart />', () => {
       const chart = mount(<Chart {...mockProps} />);
 
       expect(chart).toContainReactComponentTimes(BarGroup, 3);
-    });
-
-    it('passes isSubdued props to the BarGroup around what is being hovered', () => {
-      const chart = mount(<Chart {...mockProps} />);
-
-      triggerSVGMouseMove(chart);
-
-      expect(chart).toContainReactComponent(BarGroup, {
-        isSubdued: true,
-      });
     });
 
     it('does not render BarGroup if type is stacked', () => {
@@ -288,27 +280,11 @@ describe('Chart />', () => {
     });
   });
 
-  describe('<StackedBarGroup />', () => {
-    it('renders StackedBarGroup if type is stacked', () => {
+  describe('<StackedBarGroups />', () => {
+    it('renders StackedBarGroups if type is stacked', () => {
       const chart = mount(<Chart {...mockProps} type="stacked" />);
 
-      expect(chart).toContainReactComponent(StackedBarGroup);
-    });
-
-    it('renders a StackedBarGroup for each stacked data item', () => {
-      const chart = mount(<Chart {...mockProps} type="stacked" />);
-
-      expect(chart).toContainReactComponentTimes(StackedBarGroup, 2);
-    });
-
-    it('passes active props to the BarGroup that is being hovered', () => {
-      const chart = mount(<Chart {...mockProps} type="stacked" />);
-
-      triggerSVGMouseMove(chart);
-
-      expect(chart).toContainReactComponent(StackedBarGroup, {
-        activeBarGroup: 0,
-      });
+      expect(chart).toContainReactComponent(StackedBarGroups);
     });
   });
 
@@ -326,6 +302,23 @@ describe('Chart />', () => {
       const chart = mount(<Chart {...mockProps} />);
 
       expect(chart).toContainReactComponent(HorizontalGridLines);
+    });
+  });
+
+  describe('showLegend', () => {
+    it('does not render <LegendContainer /> when false', () => {
+      const chart = mount(<Chart {...mockProps} />);
+      const svg = chart.find('svg');
+
+      expect(chart).not.toContainReactComponent(LegendContainer);
+
+      expect(svg?.props.height).toStrictEqual(250);
+    });
+
+    it('renders <LegendContainer /> when true', () => {
+      const chart = mount(<Chart {...mockProps} showLegend />);
+
+      expect(chart).toContainReactComponent(LegendContainer);
     });
   });
 });

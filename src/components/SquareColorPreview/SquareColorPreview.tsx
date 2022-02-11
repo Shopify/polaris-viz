@@ -14,5 +14,5 @@ export function SquareColorPreview({color}: SquareColorPreviewProps) {
     ? createCSSGradient(color, 305)
     : color;
 
-  return <div className={styles.ColorPreview} style={{background}} />;
+  return <span className={styles.ColorPreview} style={{background}} />;
 }

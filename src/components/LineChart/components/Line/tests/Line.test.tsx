@@ -27,6 +27,7 @@ const mockProps: Props = {
   isAnimated: false,
   lineGenerator: (() => '') as any,
   color,
+  activeLineIndex: -1,
 };
 
 describe('<Line />', () => {

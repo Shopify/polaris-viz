@@ -1,9 +1,11 @@
 import React, {ReactNode, useCallback, useMemo, useState} from 'react';
 
+import {useLegend, LegendContainer} from '../LegendContainer';
 import type {HorizontalTransitionStyle} from '../../hooks/useHorizontalTransitions';
 import {GradientDefs, HorizontalGroup} from '../shared';
 import {
   useBarChartTooltipContent,
+  useColorVisionEvents,
   useDataForHorizontalChart,
   useHorizontalBarSizes,
   useHorizontalSeriesColors,
@@ -17,6 +19,7 @@ import {
   BarChartMargin as Margin,
   HORIZONTAL_BAR_GROUP_DELAY,
   HORIZONTAL_GROUP_LABEL_HEIGHT,
+  COLOR_VISION_SINGLE_ITEM,
 } from '../../constants';
 import {
   eventPointNative,
@@ -45,6 +48,7 @@ export interface ChartProps {
   isAnimated: boolean;
   data: DataSeries[];
   renderTooltipContent: (data: RenderTooltipContentData) => ReactNode;
+  showLegend: boolean;
   type: ChartType;
   xAxisOptions: Required<XAxisOptions>;
   annotationsLookupTable?: AnnotationLookupTable;
@@ -58,10 +62,13 @@ export function Chart({
   dimensions,
   isAnimated,
   renderTooltipContent,
+  showLegend,
   theme,
   type,
   xAxisOptions,
 }: ChartProps) {
+  useColorVisionEvents(data.length > 1);
+
   const selectedTheme = useTheme(theme);
   const {labelFormatter} = xAxisOptions;
   const id = useMemo(() => uniqueId('HorizontalBarChart'), []);
@@ -70,11 +77,16 @@ export function Chart({
 
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
 
-  const {width, height} = dimensions ?? {width: 0, height: 0};
-
   const {longestSeriesCount, seriesColors} = useHorizontalSeriesColors({
     data,
     theme,
+  });
+
+  const {legend, setLegendHeight, height, width} = useLegend({
+    data,
+    dimensions,
+    showLegend,
+    colors: seriesColors,
   });
 
   const {allNumbers, longestLabel, areAllNegative} = useDataForHorizontalChart({
@@ -131,18 +143,18 @@ export function Chart({
   });
 
   const getAriaLabel = useCallback(
-    (seriesIndex: number) => {
-      if (data[seriesIndex] == null) {
-        return '';
-      }
-
+    (key: string, seriesIndex: number) => {
       const ariaSeries = data
         .map(({name, data}) => {
+          if (data[seriesIndex] == null) {
+            return name;
+          }
+
           return `${name} ${labelFormatter(data[seriesIndex].value)}`;
         })
         .join(', ');
 
-      return `${data[0].data[seriesIndex].key}: ${ariaSeries}`;
+      return `${key}: ${ariaSeries}`;
     },
     [data, labelFormatter],
   );
@@ -176,6 +188,8 @@ export function Chart({
         role="list"
         viewBox={`0 0 ${width} ${height}`}
         xmlns={XMLNS}
+        width={width}
+        height={height}
       >
         {xAxisOptions.hide === true ? null : (
           <React.Fragment>
@@ -198,17 +212,18 @@ export function Chart({
         )}
 
         <GradientDefs
+          direction="horizontal"
+          gradientUnits={isStacked ? 'objectBoundingBox' : 'userSpaceOnUse'}
           id={id}
           seriesColors={seriesColors}
+          size={isStacked ? '100%' : `${width}px`}
           theme={theme}
-          width={isStacked ? '100%' : `${width}px`}
-          gradientUnits={isStacked ? 'objectBoundingBox' : 'userSpaceOnUse'}
         />
 
         {transitions((style, item, _transition, index) => {
           const {opacity, transform} = style as HorizontalTransitionStyle;
           const name = item.key ?? '';
-          const ariaLabel = getAriaLabel(item.index);
+          const ariaLabel = getAriaLabel(item.key, item.index);
 
           const animationDelay = isAnimated
             ? (HORIZONTAL_BAR_GROUP_DELAY * index) / data.length
@@ -222,6 +237,7 @@ export function Chart({
               barHeight={barHeight}
               containerWidth={width}
               data={data}
+              groupHeight={groupHeight}
               id={id}
               index={index}
               isAnimated={isAnimated}
@@ -272,40 +288,24 @@ export function Chart({
       <TooltipWrapper
         bandwidth={groupBarsAreaHeight}
         chartDimensions={{width, height}}
-        focusElementDataType={DataType.Bar}
+        focusElementDataType={DataType.BarGroup}
         getAlteredPosition={getAlteredHorizontalBarPosition}
         getMarkup={getTooltipMarkup}
         getPosition={getTooltipPosition}
         margin={Margin}
-        onIndexChange={onIndexChange}
         parentRef={svgRef}
       />
+
+      {showLegend && (
+        <LegendContainer
+          colorVisionType={COLOR_VISION_SINGLE_ITEM}
+          data={legend}
+          onHeightChange={setLegendHeight}
+          theme={theme}
+        />
+      )}
     </div>
   );
-
-  function onIndexChange(index: number) {
-    const barElements = svgRef?.querySelectorAll(
-      `[data-type=${DataType.BarGroup}]`,
-    );
-
-    if (!barElements) {
-      return;
-    }
-
-    if (index == null) {
-      barElements.forEach((element: SVGPathElement) => {
-        element.style.opacity = '1';
-      });
-    } else {
-      barElements.forEach((el: SVGPathElement) => {
-        if (el.dataset.id === `${DataType.BarGroup}-${index}`) {
-          el.style.opacity = '1';
-        } else {
-          el.style.opacity = '0.5';
-        }
-      });
-    }
-  }
 
   function formatPositionForTooltip(index: number): TooltipPosition {
     if (isStacked) {

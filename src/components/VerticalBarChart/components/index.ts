@@ -1,2 +1,2 @@
 export {BarGroup} from './BarGroup';
-export {StackedBarGroup} from './StackedBarGroup';
+export {StackedBarGroups} from './StackedBarGroups';

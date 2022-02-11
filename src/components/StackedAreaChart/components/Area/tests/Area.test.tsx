@@ -6,9 +6,8 @@ import {scaleLinear} from 'd3-scale';
 import {mountWithProvider} from '../../../../../test-utilities';
 import {mockDefaultTheme} from '../../../../../test-utilities/mount-with-provider';
 import {Area, AreaProps} from '../Area';
-import type {StackedSeries} from '../../../types';
 import {DEFAULT_THEME} from '../../../../../constants';
-import type {Theme} from '../../../../../types';
+import type {StackedSeries, Theme} from '../../../../../types';
 
 jest.mock('d3-scale', () => ({
   scaleLinear: jest.fn(() => jest.fn(() => 250)),
@@ -38,6 +37,7 @@ describe('<Area />', () => {
     .y(([, lastPoint]) => yScale(lastPoint));
 
   const mockProps: AreaProps = {
+    activeLineIndex: -1,
     animationIndex: 1,
     areaGenerator,
     colors: ['red', 'green'],

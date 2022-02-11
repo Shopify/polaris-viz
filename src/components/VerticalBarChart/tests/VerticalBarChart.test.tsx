@@ -18,6 +18,7 @@ describe('<VerticalBarChart />', () => {
       },
     ],
     renderTooltipContent: (value) => `${value}`,
+    showLegend: false,
     xAxisOptions: {
       labelFormatter: (value) => `${value}`,
       hide: false,
