@@ -1,6 +1,7 @@
 import React, {useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {area as areaShape, line} from 'd3-shape';
+import {useSpring} from '@react-spring/core';
 
 import {LinearGradientWithStops} from '../../components';
 import {
@@ -13,11 +14,13 @@ import {
   uniqueId,
   isGradientType,
   usePrefersReducedMotion,
+  LINES_LOAD_ANIMATION_CONFIG,
 } from '../../';
 
 import {Area} from './components/Area';
 
 const POINT_RADIUS = 2;
+const ANIMATION_DELAY = 200;
 
 const StrokeDasharray = {
   dotted: '0.1 4',
@@ -33,6 +36,7 @@ export interface LineSeriesProps {
   svgDimensions: {width: number; height: number};
   native?: boolean;
   theme: string;
+  index: number;
 }
 
 export function LineSeries({
@@ -42,13 +46,17 @@ export function LineSeries({
   isAnimated,
   svgDimensions,
   theme = 'Default',
+  index = 0,
 }: LineSeriesProps) {
-  const color = data?.color;
   const {
-    native,
-    components: {Defs, Mask, Rect, Circle, Path},
+    // eslint-disable-next-line id-length
+    components: {Defs, Mask, G, Rect, Circle, Path},
+    animated,
   } = usePolarisVizContext();
-  const {prefersReducedMotion} = usePrefersReducedMotion({native});
+
+  const AnimatedGroup = animated(G);
+  const color = data?.color;
+  const {prefersReducedMotion} = usePrefersReducedMotion();
   const selectedTheme = useTheme(theme);
 
   const lineGenerator = line<DataPoint>()
@@ -94,55 +102,80 @@ export function LineSeries({
         },
       ];
 
+  const showPoint = !data.isComparison && lastLinePointCoordinates != null;
+  const {x: lastX = 0, y: lastY = 0} = lastLinePointCoordinates ?? {};
+  const lineStyle = data.isComparison ? 'dashed' : 'solid';
+  const isSolidLine = data.isComparison !== true;
+
+  const {scaleY, translateY, opacity} = useSpring({
+    from: {
+      translateY: svgDimensions.height,
+      scaleY: 0,
+      opacity: 0,
+    },
+    to: {
+      translateY: 0,
+      scaleY: 1,
+      opacity: 1,
+    },
+    delay: isSolidLine ? index * ANIMATION_DELAY : 0,
+    config: LINES_LOAD_ANIMATION_CONFIG,
+    default: {immediate},
+  });
+
+  const transform = scaleY.to(
+    (value: number) => `translate(0 ${translateY.get()}) scale(1 ${value})`,
+  );
+
   if (lineShape == null || areaPath == null) {
     return null;
   }
 
-  const showPoint = !data.isComparison && lastLinePointCoordinates != null;
-  const {x: lastX = 0, y: lastY = 0} = lastLinePointCoordinates ?? {};
-  const lineStyle = data.isComparison ? 'dashed' : 'solid';
-
   return (
     <React.Fragment>
-      <Defs>
-        <LinearGradientWithStops
-          id={`line-${id}`}
-          gradient={lineGradientColor as GradientStop[]}
-          gradientUnits="userSpaceOnUse"
-          y1="100%"
-          y2="0%"
-        />
-
-        <Mask id={`mask-${id}`}>
-          <Path
-            d={lineShape}
-            stroke="white"
-            strokeLinejoin="round"
-            strokeLinecap="round"
-            style={{strokeDasharray: StrokeDasharray[lineStyle]}}
+      <AnimatedGroup transform={isSolidLine ? transform : ''} opacity={opacity}>
+        <Defs>
+          <LinearGradientWithStops
+            id={`line-${id}`}
+            gradient={lineGradientColor as GradientStop[]}
+            gradientUnits="userSpaceOnUse"
+            y1="100%"
+            y2="0%"
           />
-          {showPoint && (
-            <Circle cx={lastX} cy={lastY} r={POINT_RADIUS} fill="white" />
-          )}
-        </Mask>
-      </Defs>
 
-      {data.isComparison === true ? null : (
-        <Area color={color!} immediate={immediate} areaPath={areaPath} />
-      )}
+          <Mask id={`mask-${id}`}>
+            <Path
+              d={lineShape}
+              stroke="white"
+              strokeLinejoin="round"
+              strokeLinecap="round"
+              style={{
+                // transform: [{skewX: '45deg'}],
+                strokeDasharray: StrokeDasharray[lineStyle],
+              }}
+            />
+            {showPoint && (
+              <Circle cx={lastX} cy={lastY} r={POINT_RADIUS} fill="white" />
+            )}
+          </Mask>
+        </Defs>
 
-      <Rect
-        x="0"
-        y="0"
-        width={svgDimensions.width}
-        height={svgDimensions.height}
-        fill={
-          data.isComparison
-            ? selectedTheme.seriesColors.comparison
-            : `url(#line-${id})`
-        }
-        mask={`url(#mask-${`${id}`})`}
-      />
+        {data.isComparison === true ? null : (
+          <Area color={color!} areaPath={areaPath} />
+        )}
+        <Rect
+          x="0"
+          y="0"
+          width={svgDimensions.width}
+          height={svgDimensions.height}
+          fill={
+            data.isComparison
+              ? selectedTheme.seriesColors.comparison
+              : `url(#line-${id})`
+          }
+          mask={`url(#mask-${`${id}`})`}
+        />
+      </AnimatedGroup>
     </React.Fragment>
   );
 }

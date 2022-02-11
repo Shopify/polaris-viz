@@ -3049,9 +3049,9 @@
     "@react-spring/shared" "~9.4.0"
     "@react-spring/types" "~9.4.0"
 
-"@react-spring/core@~9.4.0":
+"@react-spring/core@^9.4.2", "@react-spring/core@~9.4.0":
   version "9.4.2"
-  resolved "https://registry.npmjs.org/@react-spring/core/-/core-9.4.2.tgz"
+  resolved "https://registry.yarnpkg.com/@react-spring/core/-/core-9.4.2.tgz#c20249535b3acaead015d17e1c4ce839ec3d4c9f"
   integrity sha512-Ej/ULwdx8rQtMAWEpLgwbKcQEx6vPfjyG3cxLP05zAInpCoWkYpl+sXOp9tn3r99mTNQPTTt7BgQsSnmQA8+rQ==
   dependencies:
     "@react-spring/animated" "~9.4.0"

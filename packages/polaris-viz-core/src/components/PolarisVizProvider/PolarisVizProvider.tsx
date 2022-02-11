@@ -13,14 +13,15 @@ import {PolarisVizContext} from '../../contexts';
 export interface PolarisVizProviderProps {
   children: React.ReactNode;
   themes?: {[key: string]: PartialTheme};
-  native?: boolean;
   components?: SvgComponents;
+  animated: (...args: any[]) => React.ReactNode;
 }
 
 export function PolarisVizProvider({
   children,
   themes,
   components,
+  animated,
 }: PolarisVizProviderProps) {
   const value = useMemo(() => {
     return {
@@ -34,8 +35,9 @@ export function PolarisVizProvider({
         Print,
         ...themes,
       }),
+      animated,
     };
-  }, [themes, components]);
+  }, [themes, components, animated]);
 
   return (
     <PolarisVizContext.Provider value={value}>
