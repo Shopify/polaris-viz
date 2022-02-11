@@ -4,7 +4,7 @@ import type {Story, Meta} from '@storybook/react';
 import {BarChart, BarChartProps} from '../../../components';
 
 import {SquareColorPreview} from '../../SquareColorPreview';
-import {PolarisVizProvider} from '@shopify/polaris-viz';
+import {PolarisVizProvider} from '../../';
 import {
   DIRECTION_CONTROL_ARGS,
   THEME_CONTROL_ARGS,
@@ -311,6 +311,7 @@ const WithoutRoundedCornersTemplate: Story<BarChartProps> = (
           },
         },
       }}
+      animated={({children}) => children}
     >
       <BarChart {...args} />
     </PolarisVizProvider>
