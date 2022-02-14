@@ -1,4 +1,5 @@
 import React from 'react';
+import {PolarisVizProvider} from '@shopify/polaris-viz';
 
 import {
   BarChart,
@@ -7,7 +8,6 @@ import {
   SimpleNormalizedChart,
   SparkLineChart,
   SparkBarChart,
-  PolarisVizProvider,
   SimpleBarChart,
 } from '../../../../';
 import {ComponentContainer, Title} from '../';

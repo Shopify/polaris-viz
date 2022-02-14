@@ -56,11 +56,7 @@ export default {
     },
     native: true,
   },
-  decorators: [
-    (Story: any) => (
-      <div style={{width: '100px', height: '50px'}}>{Story()}</div>
-    ),
-  ],
+  decorators: [(Story: any) => <div>{Story()}</div>],
   argTypes: {
     data: {
       description:
@@ -87,7 +83,7 @@ export default {
 
 const Template: Story<SparkLineChartProps> = (args: SparkLineChartProps) => {
   return (
-    <div style={{width: '200px', height: '100px'}}>
+    <div style={{width: '160px', height: '60px'}}>
       <SparkLineChart {...args} />
     </div>
   );
@@ -150,9 +146,8 @@ OffsetAndNulls.args = {
   ],
 };
 
-export const OverwrittenSeriesColors: Story<SparkLineChartProps> = Template.bind(
-  {},
-);
+export const OverwrittenSeriesColors: Story<SparkLineChartProps> =
+  Template.bind({});
 OverwrittenSeriesColors.args = {
   ...defaultProps,
   data: [

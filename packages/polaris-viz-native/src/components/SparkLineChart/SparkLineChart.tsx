@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View} from 'react-native';
 import {scaleLinear} from 'd3-scale';
 import {
   SparkLineChartProps,
@@ -8,25 +8,54 @@ import {
   useSparkLine,
   LineSeries,
   usePolarisVizContext,
+  Dimensions,
 } from '@shopify/polaris-viz-core';
 
+import {ChartContainer} from '../ChartContainer';
+
 const SVG_MARGIN = 2;
+
 export function SparkLineChart({
   data,
   accessibilityLabel,
-  isAnimated = false,
+  isAnimated = true,
   offsetLeft = 0,
   offsetRight = 0,
   theme = 'Default',
 }: SparkLineChartProps) {
+  return (
+    <ChartContainer>
+      <Chart
+        data={data}
+        accessibilityLabel={accessibilityLabel}
+        isAnimated={isAnimated}
+        offsetLeft={offsetLeft}
+        offsetRight={offsetRight}
+        theme={theme}
+      />
+    </ChartContainer>
+  );
+}
+
+interface ChartProps extends SparkLineChartProps {
+  dimensions?: Dimensions;
+}
+
+function Chart({
+  data,
+  accessibilityLabel,
+  isAnimated = true,
+  offsetLeft = 0,
+  offsetRight = 0,
+  theme = 'Default',
+  dimensions = {width: 0, height: 0},
+}: ChartProps) {
+  const {width, height} = dimensions;
   const selectedTheme = useTheme(theme);
   const seriesColors = useThemeSeriesColors(data, selectedTheme);
   const {
     components: {Svg},
   } = usePolarisVizContext();
-
-  const width = 600;
-  const height = 400;
 
   const {minXValues, maxXValues, yScale} = useSparkLine({
     data,
@@ -34,14 +63,7 @@ export function SparkLineChart({
   });
 
   return (
-    <View
-      style={[
-        StyleSheet.absoluteFill,
-        {alignItems: 'center', justifyContent: 'center'},
-      ]}
-      accessibilityRole="image"
-      accessibilityLabel={accessibilityLabel}
-    >
+    <View accessibilityRole="image" accessibilityLabel={accessibilityLabel}>
       <Svg width={width} height={height}>
         {data.map((series, index) => {
           const singleOffsetLeft = series.isComparison ? 0 : offsetLeft;

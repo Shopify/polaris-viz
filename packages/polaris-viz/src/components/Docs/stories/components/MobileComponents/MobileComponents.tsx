@@ -1,6 +1,7 @@
 import React from 'react';
+import {PolarisVizProvider} from '@shopify/polaris-viz';
 
-import {SparkLineChart, PolarisVizProvider} from '../../../../';
+import {SparkLineChart} from '../../../../';
 import {ComponentContainer, Title} from '../';
 
 export function MobileComponents() {
@@ -16,11 +17,10 @@ export function MobileComponents() {
         themes={{
           Default: {
             chartContainer: {
-              padding: '20px',
+              padding: '0px',
             },
           },
         }}
-        animated={({children}) => children}
       >
         <Title type="h3" style={{gridColumn: 'span 2'}}>
           Spark Charts
