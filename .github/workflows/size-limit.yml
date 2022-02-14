@@ -18,6 +18,8 @@ jobs:
       # Needed as self-hosted runners don't come with yarn
       - name: Install Yarn
         run: npm install -g yarn
+      - name: Yarn install
+        run: yarn install
       - uses: actions/checkout@v2
       - uses: andresz1/size-limit-action@v1.5.1
         with:
