@@ -18,7 +18,7 @@ jobs:
       - name: Setup yarn
         run: npm install -g yarn
       - name: Install dependencies
-        run: yarn install && yarn install && node ./node_modules/puppeteer-core/install.js
+        run: yarn install && yarn install && sudo apt install -y chromium-browser
       - uses: andresz1/size-limit-action@v1.5.1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
