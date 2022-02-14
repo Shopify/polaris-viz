@@ -49,12 +49,14 @@ export function ComponentContainer({
     <div
       className={styles.Container}
       style={{
+        // stylelint-disable-next-line value-keyword-case
         background: selectedTheme.chartContainer.backgroundColor,
       }}
     >
       <div
         className={classNames(styles.CardTop, link ? styles.HasLink : '')}
         style={{
+          // stylelint-disable-next-line value-keyword-case
           padding: onlyHasCodeSample ? '0px' : 'undefined',
         }}
       >
