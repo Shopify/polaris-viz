@@ -1,4 +1,5 @@
-import {createContext} from 'react';
+import {createContext, ForwardRefExoticComponent} from 'react';
+import {withAnimated} from '@react-spring/animated/dist/declarations/src/withAnimated';
 
 import type {SvgComponents, Theme} from '../types';
 import {
@@ -10,7 +11,7 @@ import {
 export const PolarisVizContext = createContext<{
   themes: {[key: string]: Theme};
   components: SvgComponents;
-  animated: (...args: any[]) => React.ReactNode;
+  animated: <T>(Component: any) => ForwardRefExoticComponent<T>;
 }>({
   themes: {
     Default,
@@ -19,5 +20,10 @@ export const PolarisVizContext = createContext<{
   components: {
     ...DefaultComponents,
   },
-  animated: () => null,
+  animated: (Component: any) =>
+    withAnimated(Component, {
+      applyAnimatedValues: () => false,
+      createAnimatedStyle: () => Component,
+      getComponentProps: (props) => props,
+    }),
 });

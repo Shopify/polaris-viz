@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, ForwardRefExoticComponent} from 'react';
 
 import type {PartialTheme, SvgComponents} from '../../types';
 import {
@@ -15,7 +15,7 @@ export interface PolarisVizProviderProps {
   themes?: {[key: string]: PartialTheme};
   components?: SvgComponents;
   native?: boolean;
-  animated: (...args: any[]) => React.ReactNode;
+  animated: <T>(Component: any) => ForwardRefExoticComponent<T>;
 }
 
 export function PolarisVizProvider({
