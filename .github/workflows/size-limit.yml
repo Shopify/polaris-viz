@@ -11,6 +11,9 @@ jobs:
     env:
       CI_JOB_NUMBER: 1
     steps:
+      # Needed as self-hosted runners don't come with yarn
+      - name: Install Yarn
+        run: npm install -g yarn
       - uses: actions/checkout@v2
       - uses: andresz1/size-limit-action@v1.5.1
         with:
