@@ -105,7 +105,7 @@ describe('<XAxisLabels />', () => {
     it('applies max-height to labels', () => {
       const labels = container.findAll('foreignObject') ?? [];
 
-      expect(getLabelDiv(labels[0])?.style.maxHeight).toStrictEqual('45px');
+      expect(getLabelDiv(labels[0])?.style.maxHeight).toStrictEqual('42px');
     });
   });
 });

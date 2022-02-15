@@ -11,7 +11,7 @@ jest.mock('../../utilities', () => {
   return {
     ...jest.requireActual('../../utilities'),
     getTextWidth: () => 50,
-    getTextContainerHeight: () => 45,
+    getTextContainerHeight: () => 42,
     getMaxDiagonalDetails: () => {
       return {
         angledLabelMaxLength: MOCK_ANGLED_LABEL_MAX_LENGTH,
