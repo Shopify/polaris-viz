@@ -13,13 +13,13 @@ const storiesOrder = {
     Intro: null,
     'Web and Mobile Development': null,
     'Data Structure': null,
+    Utilities: null,
     Themes: {
       'Default Themes': null,
       Customizing: null,
       'createTheme Utility': null,
     },
     Types: null,
-    'Utility Functions': null,
   },
   'polaris-viz': {
     'Getting Started': null,

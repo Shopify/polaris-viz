@@ -1,11 +1,10 @@
 import type {GradientStop} from 'types';
+import {scaleLinear} from 'd3-scale';
 
-export const createGradient = (
-  color1: string,
-  color2: string,
-): GradientStop[] => {
-  return [
-    {offset: 0, color: color2},
-    {offset: 100, color: color1},
-  ];
+export const createGradient = (...colors: string[]): GradientStop[] => {
+  const scale = scaleLinear().domain([0, 100]).range([0, colors.length]);
+  return colors.map((color, index) => ({
+    offset: scale(index),
+    color,
+  }));
 };
