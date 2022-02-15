@@ -1,8 +1,7 @@
 {
-  "extends": "./config/typescript/tsconfig.base.json",
+  "extends": "./tsconfig.base.json",
   "include": [
     "./loom.config.ts",
-    "./config/**/*.ts",
     "./tests/**/*.ts",
     "./packages/**/*.ts",
     "./packages/**/*.tsx"

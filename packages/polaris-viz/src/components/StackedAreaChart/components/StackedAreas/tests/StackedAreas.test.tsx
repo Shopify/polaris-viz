@@ -1,8 +1,8 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
-import type {StackedSeries} from 'components/StackedAreaChart/types';
 
+import type {StackedSeries} from '../../../types';
 import {StackedAreas} from '../StackedAreas';
 import {Area} from '../../Area';
 
@@ -10,7 +10,8 @@ jest.mock('d3-scale', () => ({
   scaleLinear: jest.fn(() => jest.fn(() => 250)),
 }));
 
-jest.mock('../../../../../utilities/unique-id', () => ({
+jest.mock('@shopify/polaris-viz-core', () => ({
+  ...jest.requireActual('@shopify/polaris-viz-core'),
   uniqueId: jest.fn(() => 'stackedAreas-1'),
 }));
 

@@ -14,7 +14,8 @@ jest.mock('d3-scale', () => ({
   scaleLinear: jest.fn(() => jest.fn(() => 250)),
 }));
 
-jest.mock('../../../../../utilities/unique-id', () => ({
+jest.mock('@shopify/polaris-viz-core', () => ({
+  ...jest.requireActual('@shopify/polaris-viz-core'),
   uniqueId: jest.fn(() => 'stackedAreas-1'),
 }));
 

@@ -1,4 +1,5 @@
 import {createContext} from 'react';
+import {createHost} from '@react-spring/animated';
 
 import type {SvgComponents, Theme} from '../types';
 import {
@@ -7,10 +8,15 @@ import {
   DEFAULT_COMPONENTS as DefaultComponents,
 } from '../constants';
 
+const host = createHost({
+  // eslint-disable-next-line id-length
+  g: 'G',
+});
+
 export const PolarisVizContext = createContext<{
   themes: {[key: string]: Theme};
   components: SvgComponents;
-  animated: (...args: any[]) => React.ReactNode;
+  animated: typeof host.animated;
 }>({
   themes: {
     Default,
@@ -19,5 +25,5 @@ export const PolarisVizContext = createContext<{
   components: {
     ...DefaultComponents,
   },
-  animated: () => null,
+  animated: host.animated,
 });

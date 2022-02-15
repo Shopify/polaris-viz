@@ -1,7 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {line} from 'd3-shape';
-import {LinearGradient} from '@shopify/polaris-viz-core';
+import {LinearGradientWithStops} from '@shopify/polaris-viz-core';
 
 import {Crosshair} from '../../../components/Crosshair';
 import {LinearXAxis} from '../../../components/LinearXAxis';
@@ -57,12 +57,16 @@ const mockProps = {
   isAnimated: false,
 };
 
+jest.mock('@shopify/polaris-viz-core', () => ({
+  ...jest.requireActual('@shopify/polaris-viz-core'),
+  uniqueId: (prefix: string) => `${prefix}-1`,
+}));
+
 jest.mock('../../../utilities', () => {
   return {
     ...jest.requireActual('../../../utilities'),
     getPathLength: () => 0,
     getPointAtLength: () => ({x: 0, y: 0}),
-    uniqueId: (prefix: string) => `${prefix}-1`,
     eventPointNative: () => {
       return {clientX: 0, clientY: 0, svgX: 0, svgY: 0};
     },
@@ -326,7 +330,7 @@ describe('<Chart />', () => {
           />,
         );
 
-        expect(chart).toContainReactComponent(LinearGradient);
+        expect(chart).toContainReactComponent(LinearGradientWithStops);
       });
 
       it('passes gradient url as color prop to <Line />', () => {
@@ -393,7 +397,7 @@ describe('<Chart />', () => {
           />,
         );
 
-        expect(chart).toContainReactComponent(LinearGradient, {
+        expect(chart).toContainReactComponent(LinearGradientWithStops, {
           gradient: [
             {
               offset: 1,

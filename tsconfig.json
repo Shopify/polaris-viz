@@ -2,6 +2,7 @@
   "files": [],
   "include": [],
   "references": [
+    {"path": "./tests"},
     {"path": "./packages/polaris-viz-core"},
     {"path": "./packages/polaris-viz-native"},
     {"path": "./packages/polaris-viz"}

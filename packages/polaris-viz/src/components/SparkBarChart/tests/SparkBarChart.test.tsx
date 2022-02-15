@@ -47,7 +47,7 @@ describe('<SparkBarChart/>', () => {
   it('renders a <LinearGradientWithStops />', () => {
     const wrapper = mount(<SparkBarChart data={[sampleData]} />);
 
-    expect(wrapper).toContainReactComponent(LinearGradient);
+    expect(wrapper).toContainReactComponent(LinearGradientWithStops);
   });
 
   it('renders an accessibility label', () => {

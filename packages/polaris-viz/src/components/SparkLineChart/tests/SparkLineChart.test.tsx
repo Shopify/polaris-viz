@@ -5,7 +5,8 @@ import {LineSeries} from '@shopify/polaris-viz-core';
 import {SparkLineChart} from '../SparkLineChart';
 import type {DataSeries} from '../../../types';
 
-jest.mock('../../../utilities/unique-id', () => ({
+jest.mock('@shopify/polaris-viz-core', () => ({
+  ...jest.requireActual('@shopify/polaris-viz-core'),
   uniqueId: jest.fn(() => 'stackedAreas-1'),
 }));
 

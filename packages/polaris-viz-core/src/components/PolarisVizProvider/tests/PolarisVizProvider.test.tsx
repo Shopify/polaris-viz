@@ -1,5 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
+import '@shopify/react-testing/matchers';
+import {createHost} from '@react-spring/animated';
 
 import {usePolarisVizContext} from '../../../hooks';
 import {PolarisVizProvider} from '../PolarisVizProvider';
@@ -11,10 +13,15 @@ const MockChild = ({theme = 'Default'}) => {
   return <div>{JSON.stringify(themes[theme])}</div>;
 };
 
+const host = createHost({
+  // eslint-disable-next-line id-length
+  g: 'G',
+});
+
 describe('<PolarisVizProvider />', () => {
   it('renders <PolarisVizContext.Provider>', () => {
     const vizProvider = mount(
-      <PolarisVizProvider>
+      <PolarisVizProvider animated={host.animated}>
         <MockChild />
       </PolarisVizProvider>,
     );
@@ -24,7 +31,7 @@ describe('<PolarisVizProvider />', () => {
 
   it('allows children to access the default theme', () => {
     const vizProvider = mount(
-      <PolarisVizProvider>
+      <PolarisVizProvider animated={host.animated}>
         <MockChild />
       </PolarisVizProvider>,
     );
@@ -42,6 +49,7 @@ describe('<PolarisVizProvider />', () => {
             },
           },
         }}
+        animated={host.animated}
       >
         <MockChild theme="Dark" />
       </PolarisVizProvider>,

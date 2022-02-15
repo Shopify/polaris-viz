@@ -30,14 +30,14 @@
     "src": "src"
   },
   "dependencies": {
-    "@react-spring/core": "^9.4.2",
+    "@react-spring/animated": "^9.4.3",
+    "@react-spring/core": "^9.4.3",
     "d3-array": "2.4.0",
     "d3-color": "1",
     "d3-path": "1",
     "d3-scale": "^1.0.7",
     "d3-shape": "^1.3.2",
-    "react-native": "^0.64.3",
-    "@react-spring/web": "^9.2.4"
+    "react-native": "^0.64.3"
   },
   "devDependencies": {
     "@shopify/react-testing": "^3.3.3",
