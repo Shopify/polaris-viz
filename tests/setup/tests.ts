@@ -14,6 +14,8 @@ jest.mock('../../packages/polaris-viz/src/constants.ts', () => {
     SPACING_TIGHT: 8,
     SPACING_BASE_TIGHT: 12,
     SPACING: 16,
+    Y_AXIS_CHART_SPACING: 20,
+    LABEL_AREA_TOP_SPACING: 16,
     LineChartMargin: {
       Top: 8,
       Left: 0,

@@ -6,6 +6,7 @@ import type {
   Dimensions,
 } from '@shopify/polaris-viz-core';
 
+import {HorizontalBarChartXAxisLabels} from '../HorizontalBarChartXAxisLabels';
 import {useLegend, LegendContainer} from '../LegendContainer';
 import type {HorizontalTransitionStyle} from '../../hooks/useHorizontalTransitions';
 import {GradientDefs, HorizontalGroup} from '../shared';
@@ -41,8 +42,8 @@ import type {
 } from '../BarChart';
 import {AnnotationLine} from '../BarChart';
 
+import {VerticalGridLines} from './components';
 import {getAlteredHorizontalBarPosition} from './utilities';
-import {VerticalGridLines, XAxisLabels} from './components';
 import styles from './Chart.scss';
 
 export interface ChartProps {
@@ -77,6 +78,7 @@ export function Chart({
   const isStacked = type === 'stacked';
 
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
+  const [labelHeight, setLabelHeight] = useState(0);
 
   const {longestSeriesCount, seriesColors} = useHorizontalSeriesColors({
     data,
@@ -118,30 +120,27 @@ export function Chart({
     data,
   });
 
-  const {xScale, ticks} = useHorizontalXScale({
-    allNumbers,
-    stackedMin,
-    stackedMax,
-    isStacked,
-    maxWidth: width - longestLabel.negative - longestLabel.positive,
-  });
+  const drawableHeight = height - labelHeight;
 
-  const {
-    bandwidth,
-    barHeight,
-    chartHeight,
-    groupBarsAreaHeight,
-    groupHeight,
-    tallestXAxisLabel,
-  } = useHorizontalBarSizes({
-    chartDimensions: {width, height},
-    isSimple: xAxisOptions.hide,
-    isStacked,
-    labelFormatter,
-    seriesLength: longestSeriesCount,
-    singleBarCount: data.length,
-    ticks,
-  });
+  const {xScale, ticks, ticksFormatted, drawableWidth, chartStartPosition} =
+    useHorizontalXScale({
+      allNumbers,
+      stackedMin,
+      stackedMax,
+      isStacked,
+      maxWidth: width - longestLabel.negative - longestLabel.positive,
+      labelFormatter: xAxisOptions.labelFormatter,
+    });
+
+  const {barHeight, chartHeight, groupBarsAreaHeight, groupHeight} =
+    useHorizontalBarSizes({
+      chartDimensions: {width: drawableWidth, height},
+      isSimple: xAxisOptions.hide,
+      isStacked,
+      seriesLength: longestSeriesCount,
+      singleBarCount: data.length,
+      labelHeight,
+    });
 
   const getAriaLabel = useCallback(
     (key: string, seriesIndex: number) => {
@@ -171,9 +170,12 @@ export function Chart({
     series: data,
     groupHeight,
     isAnimated,
+    chartStartPosition,
   });
 
   const zeroPosition = longestLabel.negative + xScale(0);
+
+  const labelWidth = drawableWidth / ticks.length;
 
   return (
     <div
@@ -193,23 +195,25 @@ export function Chart({
         height={height}
       >
         {xAxisOptions.hide === true ? null : (
-          <React.Fragment>
+          <g transform={`translate(${chartStartPosition}, 0)`}>
             <VerticalGridLines
               chartHeight={chartHeight}
               stroke={selectedTheme.grid.color}
               ticks={ticks}
               xScale={xScale}
             />
-            <XAxisLabels
-              bandwidth={bandwidth}
-              chartHeight={chartHeight}
-              color={selectedTheme.xAxis.labelColor}
-              labelFormatter={labelFormatter}
-              tallestXAxisLabel={tallestXAxisLabel}
+            <HorizontalBarChartXAxisLabels
+              chartHeight={height}
+              chartX={-labelWidth / 2}
+              chartY={drawableHeight}
+              labels={ticksFormatted}
+              labelWidth={labelWidth}
+              onHeightChange={setLabelHeight}
+              theme={theme}
               ticks={ticks}
               xScale={xScale}
             />
-          </React.Fragment>
+          </g>
         )}
 
         <GradientDefs

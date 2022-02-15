@@ -14,3 +14,9 @@
   max-width: 100%;
   display: block;
 }
+
+.Group {
+  @media print {
+    clip-path: none;
+  }
+}

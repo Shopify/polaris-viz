@@ -5,7 +5,6 @@ import {LinearGradientWithStops} from '@shopify/polaris-viz-core';
 
 import {LegendContainer} from '../../LegendContainer';
 import {Crosshair} from '../../../components/Crosshair';
-import {LinearXAxis} from '../../../components/LinearXAxis';
 import {VisuallyHiddenRows} from '../../../components/VisuallyHiddenRows';
 import {Point} from '../../../components/Point';
 import {mountWithProvider, triggerSVGMouseMove} from '../../../test-utilities';
@@ -37,9 +36,7 @@ const xAxisOptions = {
   hideXAxisLabels: false,
   showTicks: true,
   labelColor: 'red',
-  useMinimalLabels: false,
   hide: false,
-  wrapLabels: true,
 };
 
 const yAxisOptions = {
@@ -102,43 +99,6 @@ describe('<Chart />', () => {
     triggerSVGMouseMove(chart);
 
     expect(chart).toContainReactComponent(Point, {active: true});
-  });
-
-  describe('<LinearAxis />', () => {
-    it('renders a <LinearXAxis />', () => {
-      const chart = mount(<Chart {...mockProps} />);
-
-      expect(chart).toContainReactComponent(LinearXAxis, {
-        labels: ['Jan 1'],
-      });
-    });
-
-    it('does not render a <LinearXAxis /> if it is hidden', () => {
-      const chart = mount(
-        <Chart
-          {...mockProps}
-          xAxisOptions={{...mockProps.xAxisOptions, hide: true}}
-        />,
-      );
-
-      expect(chart).not.toContainReactComponent(LinearXAxis);
-    });
-
-    it('passes formatted labels to the <LinearXAxis>, formatting them with formatXAxisLabel', () => {
-      const chart = mount(
-        <Chart
-          {...mockProps}
-          xAxisOptions={{
-            ...mockProps.xAxisOptions,
-            labelFormatter: (value) => `Formatted: ${value}`,
-          }}
-        />,
-      );
-
-      expect(chart).toContainReactComponent(LinearXAxis, {
-        labels: ['Formatted: Jan 1'],
-      });
-    });
   });
 
   it('renders a <YAxis />', () => {
@@ -244,7 +204,6 @@ describe('<Chart />', () => {
     expect(chart).toContainReactComponent(VisuallyHiddenRows, {
       data: mockProps.data,
       xAxisLabels: mockProps.xAxisOptions.xAxisLabels,
-      formatYAxisLabel: mockProps.yAxisOptions.labelFormatter,
     });
   });
 

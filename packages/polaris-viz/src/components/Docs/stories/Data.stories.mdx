@@ -63,14 +63,14 @@ interface DataPoint {
 For this sample data set, that compares the size of different shark species as they
 grow:
 
-- <code>DataSeries.name</code> is the shark species scientific name;
+- <code>DataSeries.name</code> is the shark species name;
 - <code>DataPoint.key</code> is the shark's age in years
 - <code>DataPoint.value</code> is the shark's size in cm, in the given age
 
 ```tsx
 export const SHARK_SPECIES_GROWTH = [
   {
-    name: 'Carcharhinus obscurus',
+    name: 'Mako',
     data: [
       {
         key: '0',
@@ -91,7 +91,7 @@ export const SHARK_SPECIES_GROWTH = [
     ],
   },
   {
-    name: 'Carcharhinus brevipinna',
+    name: 'Great White',
     data: [
       {
         key: '0',

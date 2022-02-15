@@ -1,14 +1,14 @@
 import React from 'react';
 import type {ChartType, DataSeries} from '@shopify/polaris-viz-core';
-import type {AnnotationLookupTable} from 'components/BarChart/types';
 
 import {ChartContainer} from '../../components/ChartContainer';
 import {useTheme, useThemeSeriesColors} from '../../hooks';
 import type {
+  AnnotationLookupTable,
   RenderTooltipContentData,
   XAxisOptions,
   YAxisOptions,
-} from '../BarChart';
+} from '../../components/BarChart';
 
 import {Chart} from './Chart';
 

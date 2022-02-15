@@ -15,6 +15,28 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Added logic to either truncate labels, display them diagonally or horizontally based on container size.
+- `LinearXAxisLabels` to `<LineChart>` & `<StackedAreaChart />`.
+- `LinearXAxisLabels` will now drop labels for space and allow 2 lines of truncation.
+
+### Changed
+
+- `xAxisOptions` renamed to `LinearXAxisOptions` for linear charts.
+- `LinearXAxisOptions.labels` renamed to `LinearXAxisOptions.xAxisLabels`.
+
+### Removed
+
+- Removed `wrapLabels` from `BarChart.xAxisOptions`.
+- Removed `useMinimalLabels` from `xAxisOptions`.
+
+### Fixed
+
+- Removed focus outline on `<StackedAreaChart />` and `<LineChart />`.
+- Fixed issue where color vision events wouldn't correctly update when first interaction was a keyboard event.
+
+
+### Added
+
 - `<LegendContainer />` now uses `grid.horizontalMargin` to match consumer spacing inside the chart container.
 
 ## [1.0.4] - 2022-03-14

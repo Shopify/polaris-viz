@@ -8,6 +8,7 @@ import {LEGEND_CONTROL_ARGS, THEME_CONTROL_ARGS} from '../../../storybook';
 
 import {generateMultipleSeries} from '../../Docs/utilities';
 import type {RenderTooltipContentData} from '../types';
+import {formatHourlyLabel} from '../../../components/LineChart/stories/utils.stories';
 
 const TOOLTIP_CONTENT = {
   empty: undefined,
@@ -84,8 +85,8 @@ export default {
 const defaultProps = {
   data,
   skipLinkText: 'Skip chart content',
-  xAxisOptions: {labels},
-  yAxisOptions: {formatLabel: formatYAxisLabel},
+  xAxisOptions: {xAxisLabels: labels},
+  yAxisOptions: {labelFormatter: formatYAxisLabel},
   isAnimated: true,
 };
 
@@ -110,7 +111,7 @@ export const OverwrittenSeriesColors: Story<StackedAreaChartProps> =
 OverwrittenSeriesColors.args = {
   ...defaultProps,
   xAxisOptions: {
-    labels: Array(5)
+    xAxisLabels: Array(5)
       .fill(null)
       .map(() => 'label'),
   },
@@ -160,4 +161,242 @@ export const SeriesColorsUpToFourteen = Template.bind({});
 SeriesColorsUpToFourteen.args = {
   ...defaultProps,
   data: generateMultipleSeries(14),
+};
+
+export const WebData = Template.bind({});
+
+WebData.args = {
+  xAxisOptions: {
+    labelFormatter: formatHourlyLabel,
+    xAxisLabels: [
+      '2022-03-23T00:00:00-04:00',
+      '2022-03-23T01:00:00-04:00',
+      '2022-03-23T02:00:00-04:00',
+      '2022-03-23T03:00:00-04:00',
+      '2022-03-23T04:00:00-04:00',
+      '2022-03-23T05:00:00-04:00',
+      '2022-03-23T06:00:00-04:00',
+      '2022-03-23T07:00:00-04:00',
+      '2022-03-23T08:00:00-04:00',
+      '2022-03-23T09:00:00-04:00',
+      '2022-03-23T10:00:00-04:00',
+      '2022-03-23T11:00:00-04:00',
+      '2022-03-23T12:00:00-04:00',
+      '2022-03-23T13:00:00-04:00',
+      '2022-03-23T14:00:00-04:00',
+      '2022-03-23T15:00:00-04:00',
+      '2022-03-23T16:00:00-04:00',
+      '2022-03-23T17:00:00-04:00',
+      '2022-03-23T18:00:00-04:00',
+      '2022-03-23T19:00:00-04:00',
+      '2022-03-23T20:00:00-04:00',
+      '2022-03-23T21:00:00-04:00',
+      '2022-03-23T22:00:00-04:00',
+      '2022-03-23T23:00:00-04:00',
+    ],
+  },
+  data: [
+    {
+      data: [
+        {
+          value: 0,
+          key: '2022-03-23T00:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T01:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T02:00:00-04:00',
+        },
+        {
+          value: 1,
+          key: '2022-03-23T03:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T04:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T05:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T06:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T07:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T08:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T09:00:00-04:00',
+        },
+        {
+          value: 3,
+          key: '2022-03-23T10:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T11:00:00-04:00',
+        },
+        {
+          value: 1,
+          key: '2022-03-23T12:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T13:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T14:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T15:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T16:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T17:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T18:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T19:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T20:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T21:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T22:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T23:00:00-04:00',
+        },
+      ],
+      name: 'First-time',
+    },
+    {
+      data: [
+        {
+          value: 0,
+          key: '2022-03-23T00:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T01:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T02:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T03:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T04:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T05:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T06:00:00-04:00',
+        },
+        {
+          value: 1,
+          key: '2022-03-23T07:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T08:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T09:00:00-04:00',
+        },
+        {
+          value: 1,
+          key: '2022-03-23T10:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T11:00:00-04:00',
+        },
+        {
+          value: 1,
+          key: '2022-03-23T12:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T13:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T14:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T15:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T16:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T17:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T18:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T19:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T20:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T21:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T22:00:00-04:00',
+        },
+        {
+          value: 0,
+          key: '2022-03-23T23:00:00-04:00',
+        },
+      ],
+      name: 'Returning',
+    },
+  ],
 };
