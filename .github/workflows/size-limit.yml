@@ -17,6 +17,8 @@ jobs:
           node-version: 16.13.0
       - name: Setup yarn
         run: npm install -g yarn
+      - name: Delete node modules
+        run: rm -rf node_modules
       - name: Install dependencies
         run: yarn install
       - uses: andresz1/size-limit-action@v1.5.1
