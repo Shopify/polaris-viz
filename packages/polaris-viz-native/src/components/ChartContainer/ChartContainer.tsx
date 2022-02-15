@@ -36,7 +36,7 @@ export function ChartContainer({theme, children}: Props) {
     >
       {chartDimensions == null
         ? null
-        : cloneElement<{theme: string; dimensions: Dimensions}>(children, {
+        : cloneElement(children, {
             theme,
             dimensions: chartDimensions,
           })}

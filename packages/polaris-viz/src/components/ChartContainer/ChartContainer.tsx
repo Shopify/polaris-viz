@@ -78,13 +78,10 @@ export const ChartContainer = (props: Props) => {
     >
       {chartDimensions == null
         ? null
-        : cloneElement<{theme: string; dimensions: Dimensions}>(
-            props.children,
-            {
-              theme: printFriendlyTheme,
-              dimensions: chartDimensions,
-            },
-          )}
+        : cloneElement(props.children, {
+            theme: printFriendlyTheme,
+            dimensions: chartDimensions,
+          })}
     </div>
   );
 };

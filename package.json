@@ -63,6 +63,14 @@
       "@shopify/stylelint-plugin/prettier"
     ],
     "rules": {
+      "value-keyword-case": [
+        "lower",
+        {
+          "ignoreFiles": [
+            "**/*.tsx"
+          ]
+        }
+      ],
       "selector-class-pattern": "^[a-zA-Z][a-zA-Z0-9-]+$",
       "selector-pseudo-class-no-unknown": [
         true,
