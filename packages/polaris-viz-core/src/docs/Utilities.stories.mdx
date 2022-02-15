@@ -1,0 +1,167 @@
+import {Meta, Story, Canvas} from '@storybook/addon-docs/blocks';
+
+import {
+  Divider,
+  Title,
+} from '../../../polaris-viz/src/components/Docs/stories/components';
+
+<Meta
+  title="Essentials/Utilities"
+  parameters={{
+    viewMode: 'docs',
+    docsOnly: true,
+  }}
+/>
+
+<Title>🛠 Utilities</Title>
+
+A collection of utility functions you can import either from `polaris-viz` or `polaris-viz-native`
+
+<Divider noLine />
+
+<Title type="h3">
+  <code>createGradient()</code>
+</Title>
+
+<p>Returns a gradient from 2 provided colors.</p>
+
+```tsx
+const gradient = createGradient('red', 'green');
+
+// [
+//   {offset: 0, color: 'red'},
+//   {offset: 100, color: 'green'},
+// ]
+```
+
+<Divider />
+
+<Title type="h3">
+  <code>curveStepRounded()</code>
+</Title>
+
+<p>
+  Apply a rounded curve to <code>d3-line</code> or <code>d3-shape</code>.
+</p>
+
+```tsx
+const lineGenerator = line<DataPoint>()
+  .x((_, index) => (xScale == null ? 0 : xScale(index)))
+  .y(({value}) => yScale(value ?? 0));
+
+// Apply a nice curve to each line point
+generator.curve(curveStepRounded);
+```
+
+<Divider />
+
+<Title type="h3">
+  <code>getFilteredSeries()</code>
+</Title>
+
+<p>Return an array where all comparison data has been removed.</p>
+
+```tsx
+const DATA = [
+  {
+    data: [{key: 0, value: 100}],
+  },
+  {
+    isComparison: true,
+    data: [{key: 0, value: 200}],
+  },
+];
+
+const series = getFilteredSeries(DATA);
+
+// [
+//   {
+//     data: [{key: 0, value: 100}],
+//   },
+// ]
+```
+
+<Divider />
+
+<Title type="h3">
+  <code>getSeriesColors()</code>
+</Title>
+
+<p>
+  In the theme definition, you can choose different colors to be displayed as
+  <code>SeriesColors</code> depending on the amount of <code>DataSeries</code> being
+  rendered. This function returns the colors array specified in the theme, according
+  to the data series count.
+</p>
+<p>
+  If a <code>DataSeries</code> count is higher the maximum amount of available
+  colors, colors will repeat.
+</p>
+<p>
+  Read more about how <code>SeriesColors</code> are used in the{' '}
+  <code>Theme</code>
+  <a hhref="https://polaris-viz.shopify.io/iframe.html?id=docs-themes-theme-definition--page&viewMode=docs&globals=outline:true&args=#titleAnchor-5">
+    here
+  </a>
+</p>
+
+```tsx
+const seriesColors = getSeriesColors(1, 'Default');
+
+// [
+//   {
+//     offset: 0,
+//     color: '#7f4afa',
+//   },
+//   {
+//     offset: 85,
+//     color: '#3672bb',
+//   },
+//   {
+//     offset: 100,
+//     color: '#4b92e5',
+//   },
+// ]
+```
+
+<Divider />
+
+<Title type="h3">
+  <code>isGradientType()</code>
+</Title>
+
+<p>
+  Returns a <code>boolean</code> based on if the provided color is a gradient or
+  solid color.
+</p>
+
+```tsx
+isGradientType([
+  {offset: 0, color: 'red'},
+  {offset: 100, color: 'green'},
+]);
+
+// true
+
+isGradientType('red');
+
+// false
+```
+
+<Divider />
+
+<Title type="h3">
+  <code>uniqueId()</code>
+</Title>
+
+<p>Returns a prefixed, auto-incremented string.</p>
+
+```tsx
+uniqueId('Pickle');
+
+// Pickle-1
+
+uniqueId('Pickle');
+
+// Pickle-2
+```

@@ -1,6 +1,6 @@
 import {useMemo} from 'react';
 
-import {getFilteredSeriesCount, getSeriesColors} from '../utilities';
+import {getFilteredSeries, getSeriesColors} from '../utilities';
 import type {Theme, Color, DataSeries} from '../types';
 
 // Build an array of colors for each item in the series. Colors provided directly
@@ -10,7 +10,7 @@ export function useThemeSeriesColors(
   selectedTheme: Theme,
 ): Color[] {
   return useMemo(() => {
-    const seriesCount = getFilteredSeriesCount(series);
+    const seriesCount = getFilteredSeries(series);
     const seriesColors = getSeriesColors(seriesCount, selectedTheme);
 
     let lastUsedColorIndex = -1;
