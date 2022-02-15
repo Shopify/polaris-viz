@@ -1,66 +1,81 @@
-import {extent} from 'd3-array';
-import {scaleLinear} from 'd3-scale';
-import {useMemo} from 'react';
+import {useContext, useMemo} from 'react';
 
-import {clamp} from '../utilities';
+import {ChartContext} from '../components';
+import {HORIZONTAL_LABEL_MIN_WIDTH} from '../constants';
+import type {LabelFormatter} from '../types';
+import {clamp, estimateStringWidth} from '../utilities';
 
-const MIN_Y_LABEL_SPACE = 80;
-const MAX_TICKS = 12;
-const MIN_TICKS = 3;
+import {useHorizontalTicksAndScale} from './useHorizontalTicksAndScale';
 
-export function useHorizontalXScale({
-  allNumbers,
-  isStacked,
-  maxWidth,
-  stackedMax = 0,
-  stackedMin = 0,
-}: {
+interface Props {
   allNumbers: number[];
   isStacked: boolean;
   maxWidth: number;
   stackedMax: number;
   stackedMin: number;
-}) {
-  const xScale = useMemo(() => {
-    return scaleLinear()
-      .range([0, maxWidth])
-      .domain(extent([0, ...allNumbers], (num) => num) as [number, number])
-      .nice();
-  }, [maxWidth, allNumbers]);
+  labelFormatter: LabelFormatter;
+}
 
-  const ticks = useMemo(() => {
-    const maxTicks = clamp({
-      amount: Math.max(1, Math.floor(maxWidth / MIN_Y_LABEL_SPACE)),
-      min: MIN_TICKS,
-      max: MAX_TICKS,
+export function useHorizontalXScale({
+  allNumbers,
+  isStacked,
+  labelFormatter,
+  maxWidth,
+  stackedMax = 0,
+  stackedMin = 0,
+}: Props) {
+  const {characterWidths} = useContext(ChartContext);
+
+  let drawableWidth = maxWidth;
+  let chartStartPosition = 0;
+
+  const {ticksFormatted: initialTicksFormatted} = useHorizontalTicksAndScale({
+    maxWidth,
+    allNumbers,
+    labelFormatter,
+    isStacked,
+    stackedMin,
+    stackedMax,
+  });
+
+  const labelWidth = useMemo(() => {
+    const longestLabelWidth = initialTicksFormatted.reduce((prev, cur) => {
+      const width = estimateStringWidth(cur, characterWidths);
+
+      if (width > prev) {
+        return width;
+      }
+
+      return prev;
+    }, HORIZONTAL_LABEL_MIN_WIDTH);
+
+    return clamp({
+      amount: Math.min(
+        maxWidth / initialTicksFormatted.length,
+        longestLabelWidth,
+      ),
+      min: 0,
+      max: maxWidth,
     });
+  }, [maxWidth, characterWidths, initialTicksFormatted]);
 
-    return xScale.ticks(maxTicks);
-  }, [xScale, maxWidth]);
+  drawableWidth -= labelWidth;
+  chartStartPosition += labelWidth / 2;
 
-  const xScaleStacked = useMemo(() => {
-    if (!isStacked) {
-      return null;
-    }
-
-    const xScale = scaleLinear()
-      .range([0, maxWidth])
-      .domain([stackedMin, stackedMax])
-      .nice();
-
-    return xScale;
-  }, [isStacked, maxWidth, stackedMin, stackedMax]);
-
-  const ticksStacked = useMemo(() => {
-    if (!isStacked || !xScaleStacked) {
-      return null;
-    }
-
-    return xScaleStacked.ticks();
-  }, [isStacked, xScaleStacked]);
+  const {xScale, ticks, ticksFormatted} = useHorizontalTicksAndScale({
+    maxWidth: drawableWidth,
+    allNumbers,
+    labelFormatter,
+    isStacked,
+    stackedMin,
+    stackedMax,
+  });
 
   return {
-    xScale: isStacked ? xScaleStacked! : xScale,
-    ticks: isStacked ? ticksStacked! : ticks,
+    xScale,
+    ticks,
+    ticksFormatted,
+    drawableWidth,
+    chartStartPosition,
   };
 }

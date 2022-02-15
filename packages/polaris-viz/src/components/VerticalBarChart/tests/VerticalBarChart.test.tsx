@@ -22,8 +22,6 @@ describe('<VerticalBarChart />', () => {
     xAxisOptions: {
       labelFormatter: (value) => `${value}`,
       hide: false,
-      wrapLabels: false,
-      useMinimalLabels: false,
     },
     yAxisOptions: {
       labelFormatter: (value) => `${value}`,

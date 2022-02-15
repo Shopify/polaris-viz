@@ -1,7 +1,5 @@
 import type {Color, DataSeries, LineStyle} from '@shopify/polaris-viz-core';
 
-import type {StringLabelFormatter, NumberLabelFormatter} from '../../types';
-
 export type DataWithDefaults = DataSeries & {
   color: Color;
   lineStyle: LineStyle;
@@ -20,17 +18,4 @@ export interface TooltipData {
 
 export interface RenderTooltipContentData {
   data: TooltipData[];
-}
-
-export interface XAxisOptions {
-  labelFormatter: StringLabelFormatter;
-  xAxisLabels: string[];
-  useMinimalLabels: boolean;
-  hide?: boolean;
-  wrapLabels: boolean;
-}
-
-export interface YAxisOptions {
-  labelFormatter: NumberLabelFormatter;
-  integersOnly: boolean;
 }

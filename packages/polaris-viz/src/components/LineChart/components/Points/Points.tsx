@@ -16,19 +16,11 @@ import {
 import {changeColorOpacity, changeGradientOpacity} from '../../../../utilities';
 import {Point} from '../../../Point';
 import type {DataWithDefaults} from '../../types';
+import type {AnimatedCoordinate} from '../../../../types';
 
 interface PointsProps {
   activeIndex: number | null;
-  animatedCoordinates:
-    | Interpolation<
-        number,
-        | DOMPoint
-        | {
-            x: number;
-            y: number;
-          }
-      >[]
-    | null;
+  animatedCoordinates: AnimatedCoordinate[] | null;
   animatePoints: boolean;
   data: DataWithDefaults[];
   gradientId: string;
@@ -110,7 +102,7 @@ export function Points({
               <Point
                 color={pointColor}
                 stroke={selectedTheme.line.pointStroke}
-                cx={getXPosition()}
+                cx={getXPosition({isCrosshair: false})}
                 cy={animatedYPosition}
                 active={activeIndex != null}
                 index={index}

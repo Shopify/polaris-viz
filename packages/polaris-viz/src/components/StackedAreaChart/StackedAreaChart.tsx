@@ -4,7 +4,7 @@ import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {ChartContainer} from '../ChartContainer';
 import {SkipLink} from '../SkipLink';
-import type {StringLabelFormatter, NumberLabelFormatter} from '../../types';
+import type {LinearXAxisOptions, LinearYAxisOptions} from '../../types';
 import {TooltipContent} from '../TooltipContent';
 
 import {Chart} from './Chart';
@@ -12,20 +12,13 @@ import type {RenderTooltipContentData} from './types';
 
 export interface StackedAreaChartProps {
   renderTooltipContent?(data: RenderTooltipContentData): React.ReactNode;
-  xAxisOptions: {
-    labels: string[];
-    formatLabel?: StringLabelFormatter;
-    hide?: boolean;
-    wrapLabels?: boolean;
-  };
-  yAxisOptions?: {
-    formatLabel?: NumberLabelFormatter;
-  };
   data: DataSeries[];
   isAnimated?: boolean;
   showLegend?: boolean;
   skipLinkText?: string;
   theme?: string;
+  xAxisOptions?: Partial<LinearXAxisOptions>;
+  yAxisOptions?: Partial<LinearYAxisOptions>;
 }
 
 export function StackedAreaChart({
@@ -44,10 +37,18 @@ export function StackedAreaChart({
     return null;
   }
 
-  const yFormatter =
-    yAxisOptions?.formatLabel ?? ((value: number) => value.toString());
+  const xAxisOptionsWithDefaults: Required<LinearXAxisOptions> = {
+    labelFormatter: (value: string) => value,
+    xAxisLabels: [],
+    hide: false,
+    ...xAxisOptions,
+  };
 
-  const xFormatter = xAxisOptions.formatLabel ?? ((value: string) => value);
+  const yAxisOptionsWithDefaults: Required<LinearYAxisOptions> = {
+    labelFormatter: (value: number) => value.toString(),
+    integersOnly: false,
+    ...yAxisOptions,
+  };
 
   function renderDefaultTooltipContent({
     title,
@@ -56,7 +57,7 @@ export function StackedAreaChart({
     const formattedData = data.map(({color, label, value}) => ({
       color,
       label,
-      value: yFormatter(value),
+      value: yAxisOptionsWithDefaults.labelFormatter(value),
     }));
 
     return <TooltipContent theme={theme} title={title} data={formattedData} />;
@@ -69,17 +70,16 @@ export function StackedAreaChart({
       )}
       <ChartContainer theme={theme}>
         <Chart
-          xAxisOptions={xAxisOptions}
           data={data}
-          formatXAxisLabel={xFormatter}
-          formatYAxisLabel={yFormatter}
+          isAnimated={isAnimated}
           renderTooltipContent={
             renderTooltipContent != null
               ? renderTooltipContent
               : renderDefaultTooltipContent
           }
           showLegend={showLegend}
-          isAnimated={isAnimated}
+          xAxisOptions={xAxisOptionsWithDefaults}
+          yAxisOptions={yAxisOptionsWithDefaults}
         />
       </ChartContainer>
 

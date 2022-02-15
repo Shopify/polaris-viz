@@ -27,7 +27,7 @@ function Axis({ticks, fontSize = FONT_SIZE, width, textAlign, theme}: Props) {
             transform={`translate(${selectedTheme.grid.horizontalMargin},${
               yOffset - LINE_HEIGHT / 2
             })`}
-            width={width + PADDING_SIZE * 2}
+            width={width}
             height={LINE_HEIGHT}
             style={{
               color: selectedTheme.yAxis.labelColor,

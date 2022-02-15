@@ -4,6 +4,15 @@ import variables from './styles/shared/_variables.scss';
 import {createGradient} from './utilities/createGradient';
 import type {SvgComponents, Theme} from './types';
 
+export const LINE_HEIGHT = 14;
+export const FONT_SIZE = 12;
+
+export const TICK_SIZE = 6;
+export const SPACING_TIGHT = Number(variables.spacingTight);
+export const SPACING_EXTRA_TIGHT = Number(variables.spacingExtraTight);
+export const SPACING = Number(variables.spacing);
+export const SPACING_BASE_TIGHT = Number(variables.spacingBaseTight);
+export const SPACING_LOOSE = Number(variables.spacingLoose);
 export const XMLNS = 'http://www.w3.org/2000/svg';
 
 export const BASE_ANIMATION_DURATION = 200;
@@ -34,7 +43,6 @@ export const DIAGONAL_ANGLE = -40;
 export const MIN_HORIZONTAL_LABEL_SPACE = 25;
 export const DEFAULT_LABEL_RATIO = 2;
 export const MIN_HORIZONTAL_TICKS = 3;
-export const LINE_HEIGHT = 15;
 export const LABEL_ELLIPSIS_LENGTH = 3;
 export const SMALL_LABEL_WIDTH = 50;
 export const LABEL_SPACE_MINUS_FIRST_AND_LAST = 0.6;
@@ -43,26 +51,19 @@ export const ROUNDED_BAR_RADIUS = 4;
 export const MIN_BAR_HEIGHT = 2;
 export const EMPTY_STATE_CHART_MIN = 0;
 export const EMPTY_STATE_CHART_MAX = 10;
-export const TICK_SIZE = 6;
-export const FONT_SIZE = 12;
-
-export const SPACING_TIGHT = Number(variables.spacingTight);
-export const SPACING_EXTRA_TIGHT = Number(variables.spacingExtraTight);
-export const SPACING = Number(variables.spacing);
-export const SPACING_BASE_TIGHT = Number(variables.spacingBaseTight);
 
 export enum BarChartMargin {
   Top = 5,
   Left = 0,
   Bottom = BELOW_X_AXIS_MARGIN,
-  Right = Number(variables.spacingLoose),
+  Right = SPACING_LOOSE,
 }
 
 export enum LineChartMargin {
-  Top = SPACING_TIGHT,
+  Top = 5,
   Left = 0,
   Bottom = BELOW_X_AXIS_MARGIN,
-  Right = SPACING_EXTRA_TIGHT,
+  Right = 0,
 }
 
 export const BARS_TRANSITION_CONFIG = {mass: 1, tension: 150, friction: 16};
@@ -163,8 +164,8 @@ export const DEFAULT_THEME: Theme = {
     showVerticalLines: false,
     showHorizontalLines: true,
     color: variables.colorGray140,
-    horizontalOverflow: false,
-    horizontalMargin: 0,
+    horizontalOverflow: true,
+    horizontalMargin: 16,
   },
   xAxis: {
     showTicks: false,
@@ -257,8 +258,8 @@ export const LIGHT_THEME: Theme = {
     showVerticalLines: false,
     showHorizontalLines: true,
     color: variables.colorGray20,
-    horizontalOverflow: false,
-    horizontalMargin: 0,
+    horizontalOverflow: true,
+    horizontalMargin: 16,
   },
   xAxis: {
     showTicks: false,
@@ -333,6 +334,20 @@ export const LEGENDS_TOP_MARGIN = 16;
 export const COLOR_BLIND_ACTIVE_OPACITY = 1;
 export const COLOR_BLIND_FADED_OPACITY = 0.3;
 
+export const Y_AXIS_CHART_SPACING = SPACING_LOOSE;
+export const LABEL_AREA_MIN_HEIGHT = 15;
+export const LABEL_AREA_MAX_HEIGHT = 80;
+export const LABEL_AREA_TOP_SPACING = SPACING;
+export const ELLIPSIS = '…';
+export const X_AXIS_LABEL_PADDING = 10;
+export const HORIZONTAL_LABEL_MIN_WIDTH = 46;
+export const HORIZONTAL_LABEL_TARGET_HEIGHT = 80;
+export const DIAGONAL_LABEL_MIN_WIDTH = 30;
+export const MAX_DIAGONAL_LABEL_WIDTH = 100;
+// Visible height of a 100px wide label at 45deg
+export const MAX_DIAGONAL_VISIBLE_HEIGHT = 80;
+export const VERTICAL_LABEL_TARGET_WIDTH = 80;
+export const VERTICAL_LABEL_MIN_WIDTH = 14;
 export const DEFAULT_COMPONENTS: SvgComponents = {
   Svg: ({children, ...props}) => createElement('svg', props, children),
   Circle: ({children, ...props}) => createElement('circle', props, children),
@@ -366,3 +381,4 @@ export const DEFAULT_COMPONENTS: SvgComponents = {
 
 export const STROKE_WIDTH = 1.5;
 export const ANIMATION_MARGIN = 17;
+export const LINEAR_LABELS_INNER_PADDING = 10;

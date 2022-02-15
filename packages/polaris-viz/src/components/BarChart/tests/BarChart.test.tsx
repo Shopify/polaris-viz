@@ -36,7 +36,6 @@ describe('<BarChart />', () => {
 
     expect(barChart?.props.xAxisOptions.labelFormatter).toBeDefined();
     expect(barChart?.props.xAxisOptions.hide).toStrictEqual(false);
-    expect(barChart?.props.xAxisOptions.wrapLabels).toStrictEqual(false);
   });
 
   describe('direction', () => {

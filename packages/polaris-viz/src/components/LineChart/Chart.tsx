@@ -9,6 +9,7 @@ import {
 } from '@shopify/polaris-viz-core';
 import type {DataPoint, Dimensions} from '@shopify/polaris-viz-core';
 
+import {LinearXAxisLabels} from '../LinearXAxisLabels';
 import {useLegend, LegendContainer} from '../LegendContainer';
 import {
   TooltipHorizontalOffset,
@@ -20,27 +21,25 @@ import {
 } from '../../components/TooltipWrapper';
 import {eventPointNative, clamp} from '../../utilities';
 import {
-  useLinearXAxisDetails,
-  useLinearXScale,
   useTheme,
   useLinearChartAnimations,
   useColorVisionEvents,
   useWatchColorVisionEvents,
+  useLinearLabelsAndDimensions,
 } from '../../hooks';
 import {
   SMALL_SCREEN,
   SMALL_FONT_SIZE,
   FONT_SIZE,
-  SPACING_TIGHT,
   LineChartMargin as Margin,
-  SPACING_BASE_TIGHT,
   XMLNS,
   COLOR_VISION_SINGLE_ITEM,
+  LABEL_AREA_TOP_SPACING,
 } from '../../constants';
 import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
-import {LinearXAxis} from '../LinearXAxis';
 import {YAxis} from '../YAxis';
 import {Crosshair} from '../Crosshair';
+import type {LinearXAxisOptions, LinearYAxisOptions} from '../../types';
 import {HorizontalGridLines} from '../HorizontalGridLines';
 
 import {Points, Line, GradientArea} from './components';
@@ -48,11 +47,9 @@ import {MAX_ANIMATED_SERIES_LENGTH} from './constants';
 import type {
   RenderTooltipContentData,
   TooltipData,
-  XAxisOptions,
-  YAxisOptions,
   DataWithDefaults,
 } from './types';
-import {useYScale} from './hooks';
+import {useYScale, useFormatData} from './hooks';
 import styles from './Chart.scss';
 
 export interface ChartProps {
@@ -60,8 +57,8 @@ export interface ChartProps {
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
   data: DataWithDefaults[];
   showLegend: boolean;
-  xAxisOptions: XAxisOptions;
-  yAxisOptions: Required<YAxisOptions>;
+  xAxisOptions: Required<LinearXAxisOptions>;
+  yAxisOptions: Required<LinearYAxisOptions>;
   emptyStateText?: string;
   theme?: string;
   dimensions?: Dimensions;
@@ -89,6 +86,7 @@ export function Chart({
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [activeLineIndex, setActiveLineIndex] = useState(-1);
+  const [labelHeight, setLabelHeight] = useState(0);
 
   const {legend, setLegendHeight, height, width} = useLegend({
     data,
@@ -111,45 +109,35 @@ export function Chart({
   const emptyState =
     data.length === 0 || data.every((series) => series.data.length === 0);
 
-  const {ticks: initialTicks} = useYScale({
-    fontSize,
-    drawableHeight: height - Margin.Top,
-    data,
-    formatYAxisLabel: yAxisOptions.labelFormatter,
-    integersOnly: yAxisOptions.integersOnly,
-  });
-
-  const hideXAxis = xAxisOptions.hide ?? selectedTheme.xAxis.hide;
-
-  const xAxisDetails = useLinearXAxisDetails({
-    data,
-    fontSize,
-    width: width - selectedTheme.grid.horizontalMargin * 2,
-    formatXAxisLabel: xAxisOptions.labelFormatter,
-    initialTicks,
-    xAxisLabels: hideXAxis ? [] : xAxisOptions.xAxisLabels,
-    useMinimalLabels: xAxisOptions.useMinimalLabels,
-    wrapLabels: xAxisOptions.wrapLabels,
-  });
-
-  const marginBottom = hideXAxis
-    ? SPACING_TIGHT
-    : Number(Margin.Bottom) + xAxisDetails.maxXLabelHeight;
-
-  const drawableHeight = height - Margin.Top - marginBottom;
+  const drawableHeight =
+    height - labelHeight - LABEL_AREA_TOP_SPACING - Margin.Top;
 
   const formattedLabels = useMemo(
     () => xAxisOptions.xAxisLabels.map(xAxisOptions.labelFormatter),
     [xAxisOptions.labelFormatter, xAxisOptions.xAxisLabels],
   );
 
-  const {axisMargin, ticks, yScale} = useYScale({
+  const {yAxisLabelWidth, ticks, yScale} = useYScale({
     fontSize,
     drawableHeight,
     data,
     formatYAxisLabel: yAxisOptions.labelFormatter,
     integersOnly: yAxisOptions.integersOnly,
   });
+
+  const {reversedSeries, longestSeriesLength, longestSeriesIndex} =
+    useFormatData(data);
+
+  const {chartStartPosition, drawableWidth, xAxisDetails, xScale, labels} =
+    useLinearLabelsAndDimensions({
+      data,
+      longestSeriesLength,
+      theme,
+      width,
+      labels: formattedLabels,
+      xAxisOptions,
+      yAxisLabelWidth,
+    });
 
   const getTooltipMarkup = useCallback(
     (index: number) => {
@@ -180,43 +168,6 @@ export function Chart({
     },
     [renderTooltipContent, data],
   );
-
-  const reversedSeries = useMemo(() => data.slice().reverse(), [data]);
-
-  const marginBetweenLabelsAndData = SPACING_BASE_TIGHT;
-
-  const dataStartPosition =
-    axisMargin +
-    Number(selectedTheme.grid.horizontalMargin) +
-    marginBetweenLabelsAndData;
-
-  const drawableWidth =
-    axisMargin == null
-      ? null
-      : width -
-        Margin.Right -
-        axisMargin -
-        selectedTheme.grid.horizontalMargin * 2 -
-        marginBetweenLabelsAndData;
-
-  const longestSeriesIndex = useMemo(
-    () =>
-      reversedSeries.reduce((maxIndex, currentSeries, currentIndex) => {
-        return reversedSeries[maxIndex].data.length < currentSeries.data.length
-          ? currentIndex
-          : maxIndex;
-      }, 0),
-    [reversedSeries],
-  );
-
-  const longestSeriesLength = reversedSeries[longestSeriesIndex]
-    ? reversedSeries[longestSeriesIndex].data.length - 1
-    : 0;
-
-  const {xScale} = useLinearXScale({
-    drawableWidth,
-    longestSeriesLength,
-  });
 
   const lineGenerator = useMemo(() => {
     const generator = line<DataPoint>()
@@ -257,7 +208,7 @@ export function Chart({
     return xScale(activeIndex == null ? 0 : activeIndex) - offset;
   };
 
-  if (xScale == null || drawableWidth == null || axisMargin == null) {
+  if (xScale == null || drawableWidth == null || yAxisLabelWidth == null) {
     return null;
   }
 
@@ -279,7 +230,7 @@ export function Chart({
 
       const {svgX, svgY} = point;
 
-      const closestIndex = Math.round(xScale.invert(svgX - dataStartPosition));
+      const closestIndex = Math.round(xScale.invert(svgX - chartStartPosition));
 
       const activeIndex = clamp({
         amount: closestIndex,
@@ -318,22 +269,19 @@ export function Chart({
         aria-label={emptyState ? emptyStateText : undefined}
       >
         {xAxisOptions.hide ? null : (
-          <g
-            transform={`translate(${dataStartPosition},${
-              height - marginBottom
-            })`}
-          >
-            <LinearXAxis
-              xAxisDetails={xAxisDetails}
-              xScale={xScale}
-              labels={hideXAxis ? null : formattedLabels}
-              drawableWidth={drawableWidth}
-              fontSize={fontSize}
-              drawableHeight={drawableHeight}
-              ariaHidden
-              theme={theme}
-            />
-          </g>
+          <LinearXAxisLabels
+            chartHeight={height}
+            chartX={chartStartPosition - xAxisDetails.labelWidth / 2}
+            chartY={
+              drawableHeight + LABEL_AREA_TOP_SPACING + (Margin.Top as number)
+            }
+            labels={labels}
+            labelWidth={xAxisDetails.labelWidth}
+            onHeightChange={setLabelHeight}
+            reducedLabelIndexes={xAxisDetails.reducedLabelIndexes}
+            theme={theme}
+            xScale={xScale}
+          />
         )}
 
         {selectedTheme.grid.showHorizontalLines ? (
@@ -341,7 +289,7 @@ export function Chart({
             ticks={ticks}
             theme={theme}
             transform={{
-              x: selectedTheme.grid.horizontalOverflow ? 0 : dataStartPosition,
+              x: selectedTheme.grid.horizontalOverflow ? 0 : chartStartPosition,
               y: Margin.Top,
             }}
             width={
@@ -354,14 +302,14 @@ export function Chart({
           <YAxis
             ticks={ticks}
             fontSize={fontSize}
-            width={axisMargin}
+            width={yAxisLabelWidth}
             textAlign={selectedTheme.grid.horizontalOverflow ? 'left' : 'right'}
             theme={theme}
           />
         </g>
 
         {emptyState ? null : (
-          <g transform={`translate(${dataStartPosition},${Margin.Top})`}>
+          <g transform={`translate(${chartStartPosition},${Margin.Top})`}>
             <Crosshair
               x={getXPosition({isCrosshair: true})}
               height={drawableHeight}
@@ -375,11 +323,11 @@ export function Chart({
           <VisuallyHiddenRows
             data={data}
             formatYAxisLabel={yAxisOptions.labelFormatter}
-            xAxisLabels={formattedLabels}
+            xAxisLabels={labels}
           />
         )}
 
-        <g transform={`translate(${dataStartPosition},${Margin.Top})`}>
+        <g transform={`translate(${chartStartPosition},${Margin.Top})`}>
           {reversedSeries.map((singleSeries, index) => {
             const {name, color, areaColor} = singleSeries;
             const seriesGradientId = `${gradientId.current}-${index}`;

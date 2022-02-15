@@ -4,3 +4,5 @@ packages/*/build
 **/*.md
 .github
 lerna.json
+packages/polaris-viz/src/data/character-widths.json
+scripts/character-widths/formatted.js
