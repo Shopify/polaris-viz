@@ -3,7 +3,7 @@ export {createThemes} from './createThemes';
 export {createGradient} from './createGradient';
 export {getSeriesColors} from './getSeriesColors';
 export {getSeriesColorsFromCount} from './getSeriesColorsFromCount';
-export {getFilteredSeriesCount} from './getFilteredSeriesCount';
+export {getFilteredSeries} from './getFilteredSeries';
 export {uniqueId} from './uniqueId';
 export {isGradientType} from './isGradientType';
 export {curveStepRounded} from './curveStepRounded';

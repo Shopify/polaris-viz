@@ -1,6 +1,6 @@
 import type {DataSeries} from '../types';
 
-export function getFilteredSeriesCount(series: Partial<DataSeries>[]): number {
+export function getFilteredSeries(series: Partial<DataSeries>[]): number {
   // Only include solid lines (or non-lines) in the
   // count when grabbing the series color.
   return (
