@@ -3,21 +3,15 @@ name: Auto Assign to Project(s)
 on:
   issues:
     types: [opened]
-  # pull_request:
-  #   types: [opened, labeled]
-  issue_comment:
-    types: [created]
-env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
-  assign_one_project:
+  add-issues-to-board:
     runs-on: ubuntu-latest
-    name: Assign to One Project
     steps:
-    - name: Assign NEW issues to General Backlog
-      uses: srggrs/assign-one-project-github-action@1.2.1
-      if: github.event.action == 'opened'
-      with:
-        project: 'https://github.com/Shopify/polaris-viz/projects/1'
-        column_name: 'Backlog ( Unprioritized )'
+      - name: Add to Board
+        uses: monry/actions-add-issue-to-project@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          project-owner: "shopify"
+          project-number: 1
+          issue-id: ${{ github.event.issue.node_id }}
