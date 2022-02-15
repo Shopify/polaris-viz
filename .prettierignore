@@ -4,3 +4,4 @@ packages/*/build
 **/*.md
 .github
 lerna.json
+src/data/character-widths.json

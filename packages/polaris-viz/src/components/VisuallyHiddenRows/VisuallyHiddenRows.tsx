@@ -13,8 +13,8 @@ export interface Props {
 
 export const VisuallyHiddenRows = React.memo(function Rows({
   data,
-  xAxisLabels,
   formatYAxisLabel,
+  xAxisLabels,
 }: Props) {
   return (
     <React.Fragment>

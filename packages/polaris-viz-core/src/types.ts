@@ -1,4 +1,9 @@
+import type {Series, SeriesPoint} from 'd3-shape';
 import type {SVGProps} from 'react';
+import type {
+  StringLabelFormatter,
+  NumberLabelFormatter,
+} from '@shopify/polaris-viz/src/types';
 
 export interface DataPoint {
   key: number | string;
@@ -32,6 +37,16 @@ export interface Dimensions {
 }
 
 export type Color = string | GradientStop[];
+
+export interface XAxisOptions {
+  labelFormatter?: StringLabelFormatter;
+  useMinimalLabels?: boolean;
+  hide?: boolean;
+}
+export interface YAxisOptions {
+  labelFormatter?: NumberLabelFormatter;
+  integersOnly?: boolean;
+}
 
 // === Theme types === //
 enum BarMargin {
@@ -206,3 +221,21 @@ export enum RoundedBorder {
 }
 
 export type Direction = 'horizontal' | 'vertical';
+export type StackedSeries = Series<
+  {
+    [key: string]: number;
+  },
+  string
+>;
+export type FormattedStackedSeries = SeriesPoint<{
+  [key: string]: number;
+}>[];
+
+export interface SingleIndexGap {
+  index: number;
+  gap: number;
+}
+export interface StackedBarGapDirections {
+  positive: SingleIndexGap[];
+  negative: SingleIndexGap[];
+}

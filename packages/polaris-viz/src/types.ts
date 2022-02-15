@@ -1,4 +1,4 @@
-import type {InterpolatorFn} from '@react-spring/web';
+import type {Interpolation, InterpolatorFn} from '@react-spring/web';
 import type {Series, SeriesPoint} from 'd3-shape';
 
 export type LabelFormatter = (value: string | number | null) => string;
@@ -70,3 +70,28 @@ export interface StackedBarGapDirections {
 }
 
 export type GradientUnits = 'userSpaceOnUse' | 'objectBoundingBox';
+
+export interface CharacterWidths {
+  [key: string]: number;
+}
+
+export interface LinearXAxisOptions {
+  labelFormatter: StringLabelFormatter;
+  xAxisLabels: string[];
+  useMinimalLabels: boolean;
+  hide?: boolean;
+}
+
+export interface LinearYAxisOptions {
+  labelFormatter: NumberLabelFormatter;
+  integersOnly: boolean;
+}
+
+export type AnimatedCoordinate = Interpolation<
+  number,
+  | DOMPoint
+  | {
+      x: number;
+      y: number;
+    }
+>;

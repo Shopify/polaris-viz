@@ -1,6 +1,5 @@
 export {usePrefersReducedMotion} from './usePrefersReducedMotion';
-export {useLinearXAxisDetails} from './useLinearXAxisDetails';
-export type {ChartDetails} from './useLinearXAxisDetails';
+export {useReducedLabelIndexes} from './use-reduced-label-indexes';
 export {useLinearXScale} from './useLinearXScale';
 export {usePrevious} from './use-previous';
 export {useResizeObserver} from './useResizeObserver';
@@ -10,6 +9,7 @@ export {useHasTimeoutFinished} from './useHasTimeoutFinished';
 export {useDataForHorizontalChart} from './useDataForHorizontalChart';
 export {useHorizontalBarSizes} from './useHorizontalBarSizes';
 export {useHorizontalXScale} from './useHorizontalXScale';
+export {useHorizontalTicksAndScale} from './useHorizontalTicksAndScale';
 export {useHorizontalTransitions} from './useHorizontalTransitions';
 export {useHorizontalSeriesColors} from './useHorizontalSeriesColors';
 export type {HorizontalTransitionStyle} from './useHorizontalTransitions';
@@ -22,6 +22,7 @@ export {
   getOpacityStylesForActive,
 } from './ColorVisionA11y';
 export {useCallbackRef} from './useCallbackRef';
+export {useLinearLabelsAndDimensions} from './useLinearLabelsAndDimensions';
 
 export {
   useTheme,

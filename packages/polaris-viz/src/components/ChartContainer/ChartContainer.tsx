@@ -10,6 +10,7 @@ import {useDebouncedCallback} from 'use-debounce/lib';
 import {uniqueId} from '@shopify/polaris-viz-core';
 import type {Dimensions} from '@shopify/polaris-viz-core';
 
+import characterWidths from '../../data/character-widths.json';
 import {useResizeObserver, useTheme, usePrintResizing} from '../../hooks';
 
 import styles from './ChartContainer.scss';
@@ -21,12 +22,13 @@ interface Props {
 }
 
 export const ChartContainer = (props: Props) => {
-  const value = useMemo(
-    () => ({
-      id: uniqueId('chart'),
-    }),
-    [],
-  );
+  const value = useMemo(() => {
+    const id = uniqueId('chart');
+    return {
+      id,
+      characterWidths,
+    };
+  }, []);
 
   const [chartDimensions, setChartDimensions] =
     useState<Dimensions | null>(null);

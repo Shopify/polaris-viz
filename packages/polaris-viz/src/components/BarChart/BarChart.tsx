@@ -54,7 +54,6 @@ export function BarChart({
   const xAxisOptionsForChart: Required<XAxisOptions> = {
     labelFormatter: (value: string) => value,
     hide: false,
-    wrapLabels: false,
     useMinimalLabels: false,
     ...xAxisOptions,
   };

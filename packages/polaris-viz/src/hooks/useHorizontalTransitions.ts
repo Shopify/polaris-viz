@@ -15,15 +15,17 @@ export interface HorizontalTransitionStyle {
 }
 
 interface Props {
-  series: DataSeries[];
+  chartStartPosition: number;
   groupHeight: number;
   isAnimated: boolean;
+  series: DataSeries[];
 }
 
 export function useHorizontalTransitions({
-  series,
+  chartStartPosition,
   groupHeight,
   isAnimated,
+  series,
 }: Props) {
   const seriesWithIndex = useMemo(() => {
     return series[0].data.map(({key}, index) => ({
@@ -33,7 +35,7 @@ export function useHorizontalTransitions({
   }, [series]);
 
   const getTransform = (index: number) => {
-    return `translate(0px,${groupHeight * index}px)`;
+    return `translate(${chartStartPosition}px,${groupHeight * index}px)`;
   };
 
   const animationTrail = 50;

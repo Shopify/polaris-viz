@@ -1,16 +1,15 @@
 import React from 'react';
 import {mount, Root} from '@shopify/react-testing';
 
-import {useHorizontalBarSizes} from '../useHorizontalBarSizes';
+import {useHorizontalBarSizes, Props} from '../useHorizontalBarSizes';
 
-const MOCK_PROPS = {
+const MOCK_PROPS: Props = {
   chartDimensions: {height: 400, width: 600},
   isSimple: false,
   isStacked: false,
-  labelFormatter: (value: string) => value,
   seriesLength: 3,
   singleBarCount: 2,
-  ticks: [0, 1, 2, 3, 4, 5],
+  labelHeight: 15,
 };
 
 function parseData(result: Root<any>) {
@@ -30,12 +29,10 @@ describe('useHorizontalBarSizes()', () => {
     const data = parseData(result);
 
     expect(data).toStrictEqual({
-      bandwidth: 100,
-      barHeight: 46,
-      chartHeight: 390,
-      groupBarsAreaHeight: 92,
-      groupHeight: 130,
-      tallestXAxisLabel: 0,
+      barHeight: 43.5,
+      chartHeight: 375,
+      groupBarsAreaHeight: 87,
+      groupHeight: 125,
     });
   });
 
@@ -51,12 +48,10 @@ describe('useHorizontalBarSizes()', () => {
     const data = parseData(result);
 
     expect(data).toStrictEqual({
-      bandwidth: 100,
-      barHeight: 30,
-      chartHeight: 390,
-      groupBarsAreaHeight: 90,
-      groupHeight: 130,
-      tallestXAxisLabel: 0,
+      barHeight: 28.333333333333332,
+      chartHeight: 375,
+      groupBarsAreaHeight: 85,
+      groupHeight: 125,
     });
   });
 
@@ -90,7 +85,7 @@ describe('useHorizontalBarSizes()', () => {
 
       const data = parseData(result);
 
-      expect(data.barHeight).toStrictEqual(92);
+      expect(data.barHeight).toStrictEqual(87);
     });
   });
 });

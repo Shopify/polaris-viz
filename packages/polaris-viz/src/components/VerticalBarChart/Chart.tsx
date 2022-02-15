@@ -7,13 +7,16 @@ import type {
 } from '@shopify/polaris-viz-core';
 import type {AnnotationLookupTable} from 'components/BarChart/types';
 
+import {BarChartXAxisLabels} from '../BarChartXAxisLabels';
 import {LegendContainer, useLegend} from '../LegendContainer';
 import {GradientDefs} from '../shared';
 import {
   BarChartMargin as Margin,
   COLOR_VISION_GROUP_ITEM,
   COLOR_VISION_SINGLE_ITEM,
+  LABEL_AREA_TOP_SPACING,
   XMLNS,
+  Y_AXIS_CHART_SPACING,
 } from '../../constants';
 import {
   TooltipHorizontalOffset,
@@ -25,13 +28,11 @@ import {
 } from '../TooltipWrapper';
 import {
   getTextWidth,
-  getBarXAxisDetails,
   shouldRotateZeroBars,
   eventPointNative,
   getStackedValues,
 } from '../../utilities';
 import {YAxis} from '../YAxis';
-import {BarChartXAxis} from '../BarChartXAxis';
 import {HorizontalGridLines} from '../HorizontalGridLines';
 import {BarMargin} from '../../types';
 import {
@@ -39,6 +40,7 @@ import {
   useColorVisionEvents,
   useTheme,
   useWatchColorVisionEvents,
+  useReducedLabelIndexes,
 } from '../../hooks';
 import type {
   RenderTooltipContentData,
@@ -48,12 +50,11 @@ import type {
 import {AnnotationLine} from '../BarChart';
 
 import {BarGroup, StackedBarGroups} from './components';
-import {useYScale, useXScale, useMinimalLabelIndexes} from './hooks';
+import {useYScale, useXScale} from './hooks';
 import {
   FONT_SIZE,
   SMALL_WIDTH,
   SMALL_FONT_SIZE,
-  SPACING,
   BAR_SPACING,
 } from './constants';
 import styles from './Chart.scss';
@@ -91,6 +92,7 @@ export function Chart({
   const [activeBarGroup, setActiveBarGroup] = useState<number>(-1);
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
   const id = useMemo(() => uniqueId('VerticalBarChart'), []);
+  const [labelHeight, setLabelHeight] = useState(0);
 
   useWatchColorVisionEvents({
     type: COLOR_VISION_GROUP_ITEM,
@@ -124,36 +126,39 @@ export function Chart({
   const isStacked = type === 'stacked';
   const stackedValues = isStacked ? getStackedValues(data, labels) : null;
 
-  const {minimalLabelIndexes} = useMinimalLabelIndexes({
+  const reducedLabelIndexes = useReducedLabelIndexes({
     useMinimalLabels: xAxisOptions.useMinimalLabels,
     dataLength: data[0] ? data[0].data.length : 0,
   });
 
+  const drawableHeight =
+    height - labelHeight - LABEL_AREA_TOP_SPACING - Margin.Top;
+
   const {ticks: initialTicks} = useYScale({
-    drawableHeight: height - Margin.Top - Margin.Bottom,
+    drawableHeight,
     data,
     formatYAxisLabel: yAxisOptions.labelFormatter,
     stackedValues,
     integersOnly: yAxisOptions.integersOnly,
   });
 
-  const yAxisLabelWidth = useMemo(
-    () =>
-      Math.max(
-        ...initialTicks.map(({formattedValue}) =>
-          getTextWidth({
-            text: formattedValue,
-            fontSize,
-          }),
-        ),
+  const yAxisLabelWidth = useMemo(() => {
+    const longest = Math.max(
+      ...initialTicks.map(({formattedValue}) =>
+        getTextWidth({
+          text: formattedValue,
+          fontSize,
+        }),
       ),
-    [fontSize, initialTicks],
-  );
+    );
 
-  const axisMargin = SPACING + yAxisLabelWidth;
-  const chartStartPosition = axisMargin + selectedTheme.grid.horizontalMargin;
-  const drawableWidth =
-    width - Margin.Right - axisMargin - selectedTheme.grid.horizontalMargin * 2;
+    return longest;
+  }, [fontSize, initialTicks]);
+
+  const horizontalMargin = selectedTheme.grid.horizontalMargin;
+  const chartStartPosition =
+    yAxisLabelWidth + Y_AXIS_CHART_SPACING + horizontalMargin;
+  const drawableWidth = width - chartStartPosition - horizontalMargin * 2;
 
   const rotateZeroBars = useMemo(
     () =>
@@ -163,32 +168,6 @@ export function Chart({
   );
 
   const hideXAxis = xAxisOptions.hide ?? selectedTheme.xAxis.hide;
-
-  const xAxisDetails = useMemo(
-    () =>
-      getBarXAxisDetails({
-        yAxisLabelWidth,
-        xLabels: hideXAxis ? [] : labels,
-        fontSize,
-        width: width - selectedTheme.grid.horizontalMargin * 2,
-        innerMargin: BarMargin[selectedTheme.bar.innerMargin],
-        outerMargin: BarMargin[selectedTheme.bar.outerMargin],
-        wrapLabels: xAxisOptions.wrapLabels ?? true,
-        minimalLabelIndexes,
-      }),
-    [
-      hideXAxis,
-      yAxisLabelWidth,
-      labels,
-      fontSize,
-      width,
-      selectedTheme.grid.horizontalMargin,
-      selectedTheme.bar.innerMargin,
-      selectedTheme.bar.outerMargin,
-      xAxisOptions,
-      minimalLabelIndexes,
-    ],
-  );
 
   const sortedData = labels.map((_, index) => {
     return data
@@ -204,18 +183,13 @@ export function Chart({
       .some((num) => num > 0);
   }, [sortedData]);
 
-  const {xScale, xAxisLabels, gapWidth} = useXScale({
+  const {xScale, gapWidth} = useXScale({
     drawableWidth,
     data: sortedData,
     innerMargin: BarMargin[selectedTheme.bar.innerMargin] as number,
     outerMargin: BarMargin[selectedTheme.bar.outerMargin] as number,
     labels,
   });
-
-  const {maxXLabelHeight} = xAxisDetails;
-
-  const drawableHeight =
-    height - Margin.Top - Margin.Bottom - xAxisDetails.maxXLabelHeight;
 
   const {yScale, ticks} = useYScale({
     drawableHeight,
@@ -261,22 +235,16 @@ export function Chart({
         ref={setSvgRef}
       >
         {hideXAxis ? null : (
-          <g
-            transform={`translate(${chartStartPosition},${
-              height - Margin.Bottom - maxXLabelHeight
-            })`}
-            aria-hidden="true"
-          >
-            <BarChartXAxis
-              drawableHeight={drawableHeight}
-              labels={xAxisLabels}
-              xScale={xScale}
-              xAxisDetails={xAxisDetails}
-              fontSize={fontSize}
-              theme={theme}
-              minimalLabelIndexes={minimalLabelIndexes}
-            />
-          </g>
+          <BarChartXAxisLabels
+            chartX={chartStartPosition}
+            chartY={drawableHeight + LABEL_AREA_TOP_SPACING}
+            labels={labels}
+            labelWidth={xScale.bandwidth()}
+            onHeightChange={setLabelHeight}
+            reducedLabelIndexes={reducedLabelIndexes}
+            theme={theme}
+            xScale={xScale}
+          />
         )}
 
         <GradientDefs
@@ -295,9 +263,7 @@ export function Chart({
               x: selectedTheme.grid.horizontalOverflow ? 0 : chartStartPosition,
               y: Margin.Top,
             }}
-            width={
-              selectedTheme.grid.horizontalOverflow ? width : drawableWidth
-            }
+            width={width}
             theme={theme}
           />
         ) : null}
@@ -306,7 +272,7 @@ export function Chart({
           <YAxis
             ticks={ticks}
             fontSize={fontSize}
-            textAlign={selectedTheme.grid.horizontalOverflow ? 'left' : 'right'}
+            textAlign="right"
             width={yAxisLabelWidth}
             theme={theme}
           />
@@ -451,7 +417,7 @@ export function Chart({
         activeIndex < 0 ||
         activeIndex > sortedData.length - 1 ||
         svgY <= Margin.Top ||
-        svgY > drawableHeight + Number(Margin.Bottom) + maxXLabelHeight
+        svgY > drawableHeight + Number(Margin.Bottom) + labelHeight
       ) {
         return TOOLTIP_POSITION_DEFAULT_RETURN;
       }

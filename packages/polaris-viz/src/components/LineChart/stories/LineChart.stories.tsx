@@ -9,6 +9,8 @@ import {
   formatXAxisLabel,
   formatYAxisLabel,
   renderTooltipContent,
+  formatHourlyLabel,
+  HOURLY_DATA,
 } from './utils.stories';
 import {LEGEND_CONTROL_ARGS, THEME_CONTROL_ARGS} from '../../../storybook';
 
@@ -109,6 +111,7 @@ Default.args = {
   xAxisOptions: {
     xAxisLabels,
     labelFormatter: formatXAxisLabel,
+    useMinimalLabels: true,
   },
   yAxisOptions: {labelFormatter: formatYAxisLabel},
   showLegend: true,
@@ -250,9 +253,17 @@ NoLabelWrapping.args = {
   data,
   xAxisOptions: {
     xAxisLabels,
-    wrapLabels: false,
     labelFormatter: formatXAxisLabel,
   },
   yAxisOptions: {labelFormatter: formatYAxisLabel},
   renderTooltipContent,
+};
+
+export const LargeDataSet: Story<LineChartProps> = Template.bind({});
+LargeDataSet.args = {
+  data: HOURLY_DATA,
+  xAxisOptions: {
+    xAxisLabels: HOURLY_DATA[0].data.map(({key}) => key),
+    labelFormatter: formatHourlyLabel,
+  },
 };

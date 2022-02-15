@@ -1,0 +1,1 @@
+export {BarChartXAxisLabels} from './BarChartXAxisLabels';

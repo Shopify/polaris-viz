@@ -50,16 +50,21 @@ note that there have been some other changes to the library that have also been 
 - Added `<Legends />` component.
 - Added `showLegend` to `BarChartProps`, `LineChartProps` and `StackedAreaChartProps` to control the visibility of `<Legends >`.
 - Added Color Vision a11y interactions to all non-Spark charts.
+- Added logic to either truncate labels, display them diagonally or horizontally based on container size.
+- `LinearXAxisLabels` to `<LineChart>` & `<StackedAreaChart />`.
 
 ### Changed
 
 - `LegendProps.series` renamed to `LegendProps.data`.
 - `LegendProps.data[].lineStyle` was removed. Use `LegendProps.data[].isComparison` to show a dotted line.
 - `LegendProps.data[].iconType` was added. Use `solid` to display a rectangle icon and `line` to display a line icon.
+- `xAxisOptions` renamed to `LinearXAxisOptions` for linear charts.
+- `LinearXAxisOptions.labels` renamed to `LinearXAxisOptions.xAxisLabels`.
 
 ### Removed
 
 - Removed legacy `<Legend >` component.
+- Removed `wrapLabels` from `BarChart.xAxisOptions`.
 
 ### Fixed
 

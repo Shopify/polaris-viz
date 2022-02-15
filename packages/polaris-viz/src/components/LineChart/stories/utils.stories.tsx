@@ -1,5 +1,7 @@
-import type {TooltipData} from 'components/LineChart/types';
 import React from 'react';
+
+import {randomNumber} from '../../../components/Docs/utilities';
+import type {TooltipData} from '../../../components/LineChart/types';
 
 import {TooltipContent} from '../components/TooltipContent/TooltipContent';
 
@@ -273,3 +275,25 @@ export const renderTooltipContent: any = ({data}: {data: TooltipData[]}) => {
 
   return <TooltipContent data={formattedData} />;
 };
+
+export const HOURLY_DATA = [
+  {
+    name: 'Hourly Data',
+    data: Array(700)
+      .fill(null)
+      .map((_, index) => {
+        return {
+          key: new Date(2021, 1, 1, index).toISOString(),
+          value: randomNumber(0, 400),
+        };
+      }),
+  },
+];
+
+export function formatHourlyLabel(value: string) {
+  const formatter = new Intl.DateTimeFormat('en', {
+    timeStyle: 'short',
+  });
+
+  return formatter.format(new Date(value)).replace(' ', '').toLocaleLowerCase();
+}

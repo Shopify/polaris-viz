@@ -23,7 +23,7 @@ export function useYScale({
   >[];
   formatYAxisLabel: NumberLabelFormatter;
 }) {
-  const {yScale, ticks, axisMargin} = useMemo(() => {
+  const {yScale, ticks, yAxisLabelWidth} = useMemo(() => {
     const minY = Math.min(
       ...stackedValues.map((value) => {
         return Math.min(
@@ -77,10 +77,10 @@ export function useYScale({
       ),
     );
 
-    const axisMargin = maxTickWidth;
+    const yAxisLabelWidth = maxTickWidth;
 
-    return {yScale, ticks, axisMargin};
+    return {yScale, ticks, yAxisLabelWidth};
   }, [stackedValues, drawableHeight, formatYAxisLabel, fontSize]);
 
-  return {yScale, ticks, axisMargin};
+  return {yScale, ticks, yAxisLabelWidth};
 }
