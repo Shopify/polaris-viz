@@ -37,7 +37,7 @@
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -o docs-build  -s public",
     "add:story": "node ./.storybook/cli.js",
-    "install-chromium": "node scripts/install-chromium.js"
+    "install-chromium": "node ./scripts/install-chromium.js"
   },
   "size-limit": [
     {
