@@ -1,5 +1,5 @@
 import React, {Dispatch, SetStateAction} from 'react';
-import type {ScaleBand} from 'd3-scale';
+import type {ScaleLinear} from 'd3-scale';
 
 import {useLabels} from './hooks/useLabels';
 import {Line} from './components/Line';
@@ -11,12 +11,12 @@ interface LabelsProps {
   labels: string[];
   labelWidth: number;
   onHeightChange: Dispatch<SetStateAction<number>>;
-  xScale: ScaleBand<string>;
+  xScale: ScaleLinear<number, number>;
   minimalLabelIndexes?: number[];
   theme?: string;
 }
 
-export function Labels({
+export function LineChartLabels({
   chartX,
   chartY,
   labels,
@@ -39,7 +39,7 @@ export function Labels({
           return null;
         }
 
-        const x = xScale(index.toString()) ?? 0;
+        const x = xScale(index) ?? 0;
 
         return (
           <g transform={`translate(${chartX + x},${chartY})`} key={index}>

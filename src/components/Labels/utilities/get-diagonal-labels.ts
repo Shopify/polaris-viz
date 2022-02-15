@@ -1,8 +1,8 @@
-import {LINE_HEIGHT} from '../../../constants';
 import {
+  LINE_HEIGHT,
   MAX_DIAGONAL_LABEL_WIDTH,
   MAX_DIAGONAL_VISIBLE_HEIGHT,
-} from '../constants';
+} from '../../../constants';
 import type {CharacterWidths} from '../../../types';
 import {clamp} from '../../../utilities';
 import type {FormattedLine, PreparedLabels} from '../types';

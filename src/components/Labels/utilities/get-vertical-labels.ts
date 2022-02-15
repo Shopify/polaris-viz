@@ -1,7 +1,6 @@
 import type {CharacterWidths} from 'types';
 
-import {LINE_HEIGHT} from '../../../constants';
-import {VERTICAL_LABEL_TARGET_WIDTH} from '../constants';
+import {LINE_HEIGHT, VERTICAL_LABEL_TARGET_WIDTH} from '../../../constants';
 import type {FormattedLine, PreparedLabels} from '../types';
 
 import {truncateLabels} from './truncate-labels';
@@ -27,7 +26,7 @@ export function getVerticalLabels({labels, characterWidths}: Props) {
     lines[i].push({
       truncatedText: truncatedLabels[i].truncatedName,
       fullText: truncatedLabels[i].text,
-      y: 0,
+      y: LINE_HEIGHT / 4,
       x: 0,
       width: VERTICAL_LABEL_TARGET_WIDTH,
       height: LINE_HEIGHT,

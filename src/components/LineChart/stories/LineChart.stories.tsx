@@ -106,6 +106,7 @@ Default.args = {
   xAxisOptions: {
     xAxisLabels,
     labelFormatter: formatXAxisLabel,
+    // labelFormatter: (value) => `${formatXAxisLabel(value)} pickles and stuff`,
   },
   yAxisOptions: {labelFormatter: formatYAxisLabel},
   showLegend: true,

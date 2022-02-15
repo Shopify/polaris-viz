@@ -20,7 +20,7 @@ export function useYScale({
   formatYAxisLabel: NumberLabelFormatter;
   integersOnly: boolean;
 }) {
-  const {yScale, ticks, axisMargin} = useMemo(() => {
+  const {yScale, ticks, yAxisLabelWidth} = useMemo(() => {
     const [minY, maxY] = yAxisMinMax({data, integersOnly});
 
     const maxTicks = Math.max(
@@ -60,13 +60,14 @@ export function useYScale({
       ? ticks[longestYAxisLabel].formattedValue
       : '';
 
-    const axisMargin = getTextWidth({
+    // TODO: Switch this to use our new text measurement
+    const yAxisLabelWidth = getTextWidth({
       fontSize,
       text,
     });
 
-    return {yScale, ticks, axisMargin};
+    return {yScale, ticks, yAxisLabelWidth};
   }, [data, integersOnly, drawableHeight, formatYAxisLabel, fontSize]);
 
-  return {yScale, ticks, axisMargin};
+  return {yScale, ticks, yAxisLabelWidth};
 }

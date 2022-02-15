@@ -1,11 +1,11 @@
 import {Dispatch, SetStateAction, useContext, useEffect, useMemo} from 'react';
 
-import {LINE_HEIGHT, X_AXIS_LABEL_PADDING} from '../../../constants';
 import {
+  LINE_HEIGHT,
   DIAGONAL_LABEL_MIN_WIDTH,
   HORIZONTAL_LABEL_MIN_WIDTH,
   HORIZONTAL_LABEL_TARGET_HEIGHT,
-} from '../constants';
+} from '../../../constants';
 import {ChartContext} from '../../ChartContainer';
 import {getDiagonalLabels} from '../utilities/get-diagonal-labels';
 import {getHorizontalLabels} from '../utilities/get-horizontal-labels';
@@ -41,7 +41,7 @@ export function useLabels({labels, targetWidth, onHeightChange}: Props) {
       case shouldDrawHorizontal: {
         return getHorizontalLabels({
           labels: preparedLabels,
-          targetWidth: targetWidth - X_AXIS_LABEL_PADDING,
+          targetWidth,
           targetHeight: HORIZONTAL_LABEL_TARGET_HEIGHT,
           characterWidths,
         });

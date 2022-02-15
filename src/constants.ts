@@ -35,10 +35,10 @@ export enum BarChartMargin {
 }
 
 export enum LineChartMargin {
-  Top = SPACING_TIGHT,
+  Top = 5,
   Left = 0,
   Bottom = BELOW_X_AXIS_MARGIN,
-  Right = SPACING_EXTRA_TIGHT,
+  Right = 0,
 }
 
 export const BARS_TRANSITION_CONFIG = {mass: 1, tension: 150, friction: 16};
@@ -341,3 +341,10 @@ export const LABEL_AREA_MAX_HEIGHT = 80;
 export const LABEL_AREA_TOP_SPACING = SPACING;
 export const ELLIPSIS = '…';
 export const X_AXIS_LABEL_PADDING = 10;
+export const HORIZONTAL_LABEL_MIN_WIDTH = 46;
+export const HORIZONTAL_LABEL_TARGET_HEIGHT = 80;
+export const DIAGONAL_LABEL_MIN_WIDTH = 30;
+export const MAX_DIAGONAL_LABEL_WIDTH = 100;
+// Visible height of a 100px wide label at 45deg
+export const MAX_DIAGONAL_VISIBLE_HEIGHT = 80;
+export const VERTICAL_LABEL_TARGET_WIDTH = 80;
