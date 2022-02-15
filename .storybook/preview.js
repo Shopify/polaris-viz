@@ -1,6 +1,6 @@
 import React from 'react';
 import {themes} from '@storybook/theming';
-import {PolarisVizProvider} from '../packages/polaris-viz/src/components';
+import {PolarisVizProvider} from '@shopify/polaris-viz';
 import {
   DEFAULT_THEME,
   LIGHT_THEME,
@@ -24,13 +24,15 @@ const storiesOrder = {
   'polaris-viz': {
     'Getting Started': null,
     'Spark Charts': null,
-    'Default Charts': null,
     'Simple Charts': null,
+    'Default Charts': null,
     Subcomponents: null,
   },
   'polaris-viz-native': {
     'Getting Started': null,
     'Spark Charts': null,
+    'Simple Charts': null,
+    'Default Charts': null,
   },
   Playground: null,
 };
@@ -138,7 +140,6 @@ export const decorators = [
             },
           },
         }}
-        animated={(children) => children}
       >
         <Container
           height={context.parameters.previewHeight}

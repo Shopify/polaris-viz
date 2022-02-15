@@ -13,7 +13,6 @@ import {
   curveStepRounded,
   uniqueId,
   isGradientType,
-  usePrefersReducedMotion,
   LINES_LOAD_ANIMATION_CONFIG,
 } from '../../';
 
@@ -56,7 +55,6 @@ export function LineSeries({
 
   const AnimatedGroup = animated(G);
   const color = data?.color;
-  const {prefersReducedMotion} = usePrefersReducedMotion();
   const selectedTheme = useTheme(theme);
 
   const lineGenerator = line<DataPoint>()
@@ -91,7 +89,7 @@ export function LineSeries({
   const areaPath = areaGenerator(data.data);
 
   const id = useMemo(() => uniqueId('sparkline'), []);
-  const immediate = !isAnimated || prefersReducedMotion;
+  const immediate = !isAnimated;
 
   const lineGradientColor = isGradientType(color!)
     ? color

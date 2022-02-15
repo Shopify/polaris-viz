@@ -14,11 +14,11 @@ export {useHorizontalTransitions} from './useHorizontalTransitions';
 export {useHorizontalSeriesColors} from './useHorizontalSeriesColors';
 export type {HorizontalTransitionStyle} from './useHorizontalTransitions';
 export {useBarChartTooltipContent} from './useBarChartTooltipContent';
+export {usePrefersReducedMotion} from './usePrefersReducedMotion';
 
 export {
   useTheme,
   usePolarisVizContext,
   useThemeSeriesColors,
   getSeriesColorsFromCount,
-  usePrefersReducedMotion,
 } from '@shopify/polaris-viz-core';

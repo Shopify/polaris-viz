@@ -5,10 +5,10 @@ import {useTransition} from '@react-spring/web';
 import {
   LinearGradientWithStops,
   getSeriesColorsFromCount,
-  usePrefersReducedMotion,
   useTheme,
 } from '@shopify/polaris-viz-core';
 
+import {usePrefersReducedMotion} from '../../hooks';
 import {BARS_TRANSITION_CONFIG, XMLNS} from '../../constants';
 import type {DataPoint, DataSeries, Dimensions} from '../../types';
 import {uniqueId, getAnimationTrail, isGradientType} from '../../utilities';

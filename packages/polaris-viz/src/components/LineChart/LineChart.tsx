@@ -1,10 +1,7 @@
 import React, {useRef} from 'react';
-import {
-  useThemeSeriesColors,
-  usePrefersReducedMotion,
-  useTheme,
-} from '@shopify/polaris-viz-core';
+import {useThemeSeriesColors, useTheme} from '@shopify/polaris-viz-core';
 
+import {usePrefersReducedMotion} from '../../hooks';
 import type {DataSeries} from '../../types';
 import {ChartContainer} from '../../components/ChartContainer';
 import {

@@ -9,6 +9,7 @@ import {
 } from '@shopify/polaris-viz-core';
 
 import {XMLNS} from '../../constants';
+import {usePrefersReducedMotion} from '../../hooks';
 
 import styles from './SparkLineChart.scss';
 
@@ -22,11 +23,13 @@ export function Chart({
   data,
   dimensions,
   accessibilityLabel,
-  isAnimated = false,
+  isAnimated = true,
   offsetLeft = 0,
   offsetRight = 0,
   theme = 'Default',
 }: Props) {
+  const {prefersReducedMotion} = usePrefersReducedMotion();
+  const shouldAnimate = isAnimated && !prefersReducedMotion;
   const selectedTheme = useTheme(theme);
   const seriesColors = useThemeSeriesColors(data, selectedTheme);
 
@@ -69,7 +72,7 @@ export function Chart({
                 xScale={xScale}
                 yScale={yScale}
                 data={seriesWithColor}
-                isAnimated={isAnimated}
+                isAnimated={shouldAnimate}
                 svgDimensions={{height, width}}
                 theme={theme}
               />

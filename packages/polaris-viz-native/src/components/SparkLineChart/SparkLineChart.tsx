@@ -11,6 +11,7 @@ import {
   Dimensions,
 } from '@shopify/polaris-viz-core';
 
+import {usePrefersReducedMotion} from '../../hooks';
 import {ChartContainer} from '../ChartContainer';
 
 const SVG_MARGIN = 2;
@@ -23,12 +24,15 @@ export function SparkLineChart({
   offsetRight = 0,
   theme = 'Default',
 }: SparkLineChartProps) {
+  const {prefersReducedMotion} = usePrefersReducedMotion();
+  const shouldAnimate = !prefersReducedMotion && isAnimated;
+
   return (
     <ChartContainer>
       <Chart
         data={data}
         accessibilityLabel={accessibilityLabel}
-        isAnimated={isAnimated}
+        isAnimated={shouldAnimate}
         offsetLeft={offsetLeft}
         offsetRight={offsetRight}
         theme={theme}
