@@ -28,7 +28,7 @@
     "test:ci": "yarn test --coverage",
     "check": "npm-run-all lint type-check test",
     "check:ci": "npm-run-all lint type-check test:ci",
-    "prebuild": "rimraf build && node ./scripts/install-chromium.js",
+    "prebuild": "rimraf build",
     "build": "loom build",
     "postbuild": "node ./scripts/build-validate",
     "prebuild-consumer": "yarn run build",
@@ -36,7 +36,8 @@
     "prepublish": "in-publish && yarn run build || :",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -o docs-build  -s public",
-    "add:story": "node ./.storybook/cli.js"
+    "add:story": "node ./.storybook/cli.js",
+    "add-chromium": "node ./scripts/install-chromium.js"
   },
   "size-limit": [
     {
