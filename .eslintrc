@@ -83,6 +83,7 @@
   "overrides": [
     {
       "files": ["./packages/**/src/**/*.{ts,tsx}"],
+      "excludedFiles": ["./packages/**/src/**/*.test.{ts,tsx}"],
       "extends": ["plugin:@shopify/typescript-type-checking"],
       "parserOptions": {
         "project": [
@@ -109,13 +110,6 @@
     },
     {
       "files": ["./packages/**/src/**/*.test.{ts,tsx}"],
-      "parserOptions": {
-        "project": [
-          "./packages/polaris-viz/tsconfig.json",
-          "./packages/polaris-viz-core/tsconfig.json",
-          "./packages/polaris-viz-native/tsconfig.json"
-        ]
-      },
       "rules": {
         "jest/no-truthy-falsy": "off",
         "@shopify/no-ancestor-directory-import": "off",

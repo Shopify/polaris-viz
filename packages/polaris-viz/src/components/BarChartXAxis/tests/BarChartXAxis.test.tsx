@@ -1,7 +1,6 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleBand} from 'd3-scale';
-import '@shopify/react-testing/matchers';
 
 import {mountWithProvider} from '../../../test-utilities';
 import {mockDefaultTheme} from '../../../test-utilities/mount-with-provider';
