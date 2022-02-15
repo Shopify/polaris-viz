@@ -142,7 +142,7 @@ Used to format content in tooltips. Alternatively, use a custom tooltip. [View d
 
   <td width="50%">
 <a href="https://polaris-viz.shopify.io/?path=/docs/subcomponents-legend">
-  <img width="100%" src="../src/components/Legend/legend.png"/>
+  <img width="100%" src="../src/components/LegendContainer/components/Legend/legend.png"/>
 </a>
 
 #### Legend
