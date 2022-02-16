@@ -27,4 +27,4 @@ export {TooltipWrapper} from './TooltipWrapper';
 export {SimpleBarChart} from './SimpleBarChart';
 export type {SimpleBarChartProps} from './SimpleBarChart';
 export {LinearGradientWithStops} from '@shopify/polaris-viz-core';
-export {PolarisVizProvider} from '@shopify/polaris-viz-core';
+export {WebPolarisVizProvider as PolarisVizProvider} from './WebPolarisVizProvider';

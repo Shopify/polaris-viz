@@ -29,7 +29,6 @@ export function WebComponents() {
             },
           },
         }}
-        animated={({children}) => children}
       >
         <Title type="h3" style={{gridColumn: 'span 2'}}>
           Default Charts

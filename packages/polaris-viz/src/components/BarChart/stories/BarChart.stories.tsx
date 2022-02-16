@@ -281,7 +281,6 @@ const NoOverflowStyleTemplate: Story<BarChartProps> = (args: BarChartProps) => {
           },
         },
       }}
-      animated={({children}) => children}
     >
       <BarChart {...args} />
     </PolarisVizProvider>
@@ -312,7 +311,6 @@ const WithoutRoundedCornersTemplate: Story<BarChartProps> = (
           },
         },
       }}
-      animated={({children}) => children}
     >
       <BarChart {...args} />
     </PolarisVizProvider>
