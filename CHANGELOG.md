@@ -19,7 +19,11 @@
 ### Removed
 
 - Removed legacy `<Legend >` component.
+
+### Fixed
+
 - Removed focus outline on `<StackedAreaChart />` and `<LineChart />`.
+- Fixed issue where color vision events wouldn't correctly update when first interaction was a keyboard event.
 
 ## [0.28.7] - 2022-01-20
 

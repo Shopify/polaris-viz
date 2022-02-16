@@ -52,7 +52,11 @@ export function Stack({
   useWatchColorVisionEvents({
     type: COLOR_VISION_SINGLE_ITEM,
     onIndexChange: ({detail}) => {
-      if (activeBarGroup === -1 || activeBarGroup === groupIndex) {
+      if (
+        detail.index === -1 ||
+        activeBarGroup === -1 ||
+        activeBarGroup === groupIndex
+      ) {
         setActiveBarIndex(detail.index);
       }
     },

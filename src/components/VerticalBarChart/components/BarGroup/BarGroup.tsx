@@ -65,7 +65,11 @@ export function BarGroup({
   useWatchColorVisionEvents({
     type: COLOR_VISION_SINGLE_ITEM,
     onIndexChange: ({detail}) => {
-      if (activeBarGroup === -1 || activeBarGroup === barGroupIndex) {
+      if (
+        detail.index === -1 ||
+        activeBarGroup === -1 ||
+        activeBarGroup === barGroupIndex
+      ) {
         setActiveBarIndex(detail.index);
       }
     },
