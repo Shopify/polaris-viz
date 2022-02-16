@@ -1,7 +1,7 @@
 import React from 'react';
-import {PolarisVizProvider} from '@shopify/polaris-viz';
+import {animated} from '@react-spring/web';
 
-import {SparkLineChart} from '../../../../';
+import {PolarisVizProvider, SparkLineChart} from '../../../../';
 import {ComponentContainer, Title} from '../';
 
 export function MobileComponents() {
@@ -21,6 +21,7 @@ export function MobileComponents() {
             },
           },
         }}
+        animated={animated}
       >
         <Title type="h3" style={{gridColumn: 'span 2'}}>
           Spark Charts

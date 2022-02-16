@@ -1,7 +1,7 @@
 import React from 'react';
-import {PolarisVizProvider} from '@shopify/polaris-viz';
 
 import {
+  PolarisVizProvider,
   BarChart,
   LineChart,
   StackedAreaChart,
