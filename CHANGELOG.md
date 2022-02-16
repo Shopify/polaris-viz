@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Fixed
+- `<Sparkbar />` bar shape is now configurable by the theme bar.hasRoundedCorners property
+
 ## [0.29.0] - 2022-01-20
 
 ### Added

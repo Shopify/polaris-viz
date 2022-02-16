@@ -204,6 +204,7 @@ export function Chart({
                   width={barWidth}
                   height={height}
                   fill="white"
+                  hasRoundedCorners={selectedTheme.bar.hasRoundedCorners}
                 />
               );
             })}
