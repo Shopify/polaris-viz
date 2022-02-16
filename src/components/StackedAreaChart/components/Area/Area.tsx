@@ -19,6 +19,8 @@ import {
 import {LinearGradient} from '../../../LinearGradient';
 import {isGradientType} from '../../../../utilities';
 
+import styles from './Area.scss';
+
 export interface AreaProps {
   activeLineIndex: number;
   animationIndex: number;
@@ -107,6 +109,7 @@ export function Area({
         style={getOpacityStylesForActive({activeIndex: activeLineIndex, index})}
         aria-hidden="true"
         tabIndex={-1}
+        className={styles.Group}
       >
         <path
           key={`line-${index}`}
