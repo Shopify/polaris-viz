@@ -19,6 +19,7 @@ describe('<Bar/>', () => {
           width={100}
           yScale={scaleBand() as any}
           fill="red"
+          hasRoundedCorners
         />
       </svg>,
     );
@@ -40,6 +41,7 @@ describe('<Bar/>', () => {
           width={100}
           yScale={scaleBand() as any}
           fill="red"
+          hasRoundedCorners
         />
       </svg>,
     );
@@ -61,6 +63,7 @@ describe('<Bar/>', () => {
           width={100}
           yScale={scaleBand() as any}
           fill="red"
+          hasRoundedCorners
         />
       </svg>,
     );
@@ -69,6 +72,66 @@ describe('<Bar/>', () => {
       // eslint-disable-next-line id-length
       d: ``,
       style: {transform: ` translate(0px, 0px) rotate(0deg)`},
+    });
+  });
+
+  it('renders null if the value is null', () => {
+    const wrapper = mount(
+      <Bar
+        value={null}
+        x={0}
+        yScale={scaleBand() as any}
+        width={10}
+        height={0}
+        fill="red"
+        hasRoundedCorners
+      />,
+    );
+
+    expect(wrapper.children).toHaveLength(0);
+  });
+
+  describe('hasRoundedCorners', () => {
+    const width = 100;
+    const mockProps = {
+      height: 100,
+      x: 0,
+      value: 1000,
+      width,
+      yScale: scaleBand() as any,
+      fill: 'red',
+      hasRoundedCorners: true,
+    };
+    const borderRadius = (hasBorderRadius: boolean) =>
+      hasBorderRadius ? width / 2 : 0;
+
+    it('renders a bar with border radius', () => {
+      const borderRadiusValue = borderRadius(true);
+      const bar = mount(
+        <svg>
+          <Bar {...mockProps} />
+        </svg>,
+      );
+
+      expect(bar).toContainReactComponent('path', {
+        // eslint-disable-next-line id-length
+        d: `M 0 ${borderRadiusValue} A ${borderRadiusValue} ${borderRadiusValue} 0 0 1 100 ${borderRadiusValue} M 100 ${borderRadiusValue} L 100 100 L 0 100 L 0 ${borderRadiusValue}`,
+      });
+    });
+
+    it('renders a bar without border radius', () => {
+      const borderRadiusValue = borderRadius(false);
+
+      const bar = mount(
+        <svg>
+          <Bar {...mockProps} hasRoundedCorners={false} />
+        </svg>,
+      );
+
+      expect(bar).toContainReactComponent('path', {
+        // eslint-disable-next-line id-length
+        d: `M 0 ${borderRadiusValue} A ${borderRadiusValue} ${borderRadiusValue} 0 0 1 100 ${borderRadiusValue} M 100 ${borderRadiusValue} L 100 100 L 0 100 L 0 ${borderRadiusValue}`,
+      });
     });
   });
 });

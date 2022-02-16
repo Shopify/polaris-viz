@@ -9,9 +9,18 @@ interface Props {
   width: number;
   height?: SpringValue<number> | number;
   fill: string;
+  hasRoundedCorners: boolean;
 }
 
-export function Bar({x, value, yScale, width, height, fill}: Props) {
+export function Bar({
+  x,
+  value,
+  yScale,
+  width,
+  height,
+  fill,
+  hasRoundedCorners,
+}: Props) {
   const zeroScale = yScale(0);
   const isNegative = value != null && value < 0;
   const rotation = isNegative ? 'rotate(180deg)' : 'rotate(0deg)';
@@ -50,7 +59,7 @@ export function Bar({x, value, yScale, width, height, fill}: Props) {
         return '';
       }
 
-      const arcRadius = width / 2;
+      const arcRadius = hasRoundedCorners ? width / 2 : 0;
       const arcHigherThanHeight = heightValue < arcRadius;
       const arcWidth = arcHigherThanHeight
         ? (heightValue / arcRadius) * width
@@ -81,7 +90,7 @@ export function Bar({x, value, yScale, width, height, fill}: Props) {
       return calculatePath(height);
     }
     return height.to(calculatePath);
-  }, [height, width]);
+  }, [height, width, hasRoundedCorners]);
 
   if (value == null || width < 0) {
     return null;
