@@ -19,6 +19,7 @@
 ### Removed
 
 - Removed legacy `<Legend >` component.
+- Removed focus outline on `<StackedAreaChart />` and `<LineChart />`.
 
 ## [0.28.7] - 2022-01-20
 
