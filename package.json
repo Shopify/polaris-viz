@@ -16,7 +16,6 @@
   "esnext": "build/esnext/index.esnext",
   "types": "build/ts/src/index.d.ts",
   "scripts": {
-    "size": "yarn run build && size-limit",
     "lint": "loom lint",
     "format": "loom lint --fix",
     "type-check": "loom type-check",
@@ -29,7 +28,7 @@
     "check": "npm-run-all lint type-check test",
     "check:ci": "npm-run-all lint type-check test:ci",
     "prebuild": "rimraf build",
-    "build": "loom build && node ./scripts/install-chromium.js",
+    "build": "loom build",
     "postbuild": "node ./scripts/build-validate",
     "prebuild-consumer": "yarn run build",
     "build-consumer": "node ./scripts/build-consumer",
@@ -38,24 +37,6 @@
     "build-storybook": "build-storybook -o docs-build  -s public",
     "add:story": "node ./.storybook/cli.js"
   },
-  "size-limit": [
-    {
-      "name": "cjs",
-      "path": "build/cjs/index.js"
-    },
-    {
-      "name": "esm",
-      "path": "build/esm/index.js"
-    },
-    {
-      "name": "css",
-      "path": "build/esm/styles.css"
-    },
-    {
-      "name": "esnext",
-      "path": "build/esnext/index.esnext"
-    }
-  ],
   "prettier": "@shopify/prettier-config",
   "stylelint": {
     "extends": [
@@ -91,7 +72,6 @@
     "@shopify/react-testing": "^3.2.7",
     "@shopify/stylelint-plugin": "^10.2.0",
     "@shopify/typescript-configs": "^5.0.0",
-    "@size-limit/preset-small-lib": "^6.0.4",
     "@storybook/addon-actions": "^6.3.8",
     "@storybook/addon-docs": "^6.3.8",
     "@storybook/addon-essentials": "^6.3.8",
@@ -129,7 +109,6 @@
     "semver": "^6.3.0",
     "shelljs": "^0.8.3",
     "shx": "^0.3.2",
-    "size-limit": "^6.0.4",
     "typescript": "~4.3.2"
   },
   "peerDependencies": {

@@ -15,7 +15,7 @@ jobs:
         uses: actions/setup-node@v2.4.1
         with:
           node-version: 16.12.0
-          cache: 'yarn' #do we need to do all the other cache stuff here?
+          cache: 'yarn'
       # Needed as self-hosted runners don't come with yarn
       - name: Install Yarn
         run: npm install -g yarn
