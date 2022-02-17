@@ -32,3 +32,4 @@ export type {SimpleBarChartProps} from './SimpleBarChart';
 export {ChartContext} from './ChartContainer';
 export {Legend} from './LegendContainer';
 export type {LegendProps} from './LegendContainer';
+export {ChartConfig} from './ChartConfig';
