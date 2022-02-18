@@ -1,9 +1,12 @@
 import '@shopify/react-testing/matchers';
 import {destroyAll} from '@shopify/react-testing';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import {Globals} from '@react-spring/web';
 
-jest.mock('../../src/constants.ts', () => {
-  const actual = jest.requireActual('../../src/constants.ts');
+jest.mock('../../packages/polaris-viz/src/constants.ts', () => {
+  const actual = jest.requireActual(
+    '../../packages/polaris-viz/src/constants.ts',
+  );
 
   return {
     ...actual,
@@ -28,27 +31,29 @@ jest.mock('../../src/constants.ts', () => {
   };
 });
 
-Object.defineProperty(window, 'matchMedia', {
-  writable: true,
-  value: jest.fn().mockImplementation((query) => ({
-    matches: false,
-    media: query,
-    onchange: null,
-    addListener: jest.fn(),
-    removeListener: jest.fn(),
-    addEventListener: jest.fn(),
-    removeEventListener: jest.fn(),
-    dispatchEvent: jest.fn(),
-  })),
-});
+if (typeof window !== 'undefined') {
+  Object.defineProperty(window, 'matchMedia', {
+    writable: true,
+    value: jest.fn().mockImplementation((query) => ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addListener: jest.fn(),
+      removeListener: jest.fn(),
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      dispatchEvent: jest.fn(),
+    })),
+  });
 
-Object.defineProperty(window, 'ResizeObserver', {
-  value: jest.fn(() => ({
-    observe: jest.fn(),
-    unobserve: jest.fn(),
-    disconnect: jest.fn(),
-  })),
-});
+  Object.defineProperty(window, 'ResizeObserver', {
+    value: jest.fn(() => ({
+      observe: jest.fn(),
+      unobserve: jest.fn(),
+      disconnect: jest.fn(),
+    })),
+  });
+}
 
 Globals.assign({
   skipAnimation: true,
