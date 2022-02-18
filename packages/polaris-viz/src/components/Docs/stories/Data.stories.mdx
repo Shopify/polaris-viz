@@ -1,0 +1,352 @@
+import {Meta, Story, Canvas} from '@storybook/addon-docs/blocks';
+import {SHARK_SPECIES_GROWTH} from '../utilities';
+import {PolarisVizProvider} from '@shopify/polaris-viz';
+import {BarChart, LineChart} from '../../';
+import {
+  Divider,
+  ComponentContainer,
+  Title,
+  ExamplesGrid,
+  SampleSparkbar,
+  SampleSparkLineChart,
+  SampleBarChart,
+  PropertyTable,
+  SampleLineChart,
+  SampleStackedAreaChart,
+  SampleSimpleNormalizedChart,
+} from './components';
+
+<Meta
+  title="Essentials/Data Structure"
+  parameters={{
+    viewMode: 'docs',
+    docsOnly: true,
+  }}
+/>
+
+<PolarisVizProvider>
+
+<div style={{ margin: '0 auto', maxWidth: '800px', color: 'white'}}>
+<Title>🧪 Data Structure</Title>
+
+<p>
+  All Polaris Viz charts have a <code>data</code> prop that accepts an array of{' '}
+  <code>DataSeries</code>:
+</p>
+
+```tsx
+interface DataSeries {
+  data: DataPoint[];
+  color?: Color;
+  isComparison?: boolean;
+  name?: string;
+}
+```
+
+<Divider />
+<Title type="h2">Properties</Title>
+
+<Title type="h3">
+  <code>DataSeries.data</code>
+</Title>
+
+Accepts an array of `DataPoint`, where `DataPoint` is:
+
+```tsx
+interface DataPoint {
+  key: number | string;
+  value: number | null;
+}
+```
+
+<Title type="h4">Examples:</Title>
+For this sample data set, that compares the size of different shark species as they
+grow:
+
+- <code>DataSeries.name</code> is the shark species scientific name;
+- <code>DataPoint.key</code> is the shark's age in years
+- <code>DataPoint.value</code> is the shark's size in cm, in the given age
+
+```tsx
+export const SHARK_SPECIES_GROWTH = [
+  {
+    name: 'Carcharhinus obscurus',
+    data: [
+      {
+        key: '0',
+        value: 80,
+      },
+      {
+        key: '5',
+        value: 170,
+      },
+      {
+        key: '10',
+        value: 210,
+      },
+      {
+        key: '15',
+        value: 240,
+      },
+    ],
+  },
+  {
+    name: 'Carcharhinus brevipinna',
+    data: [
+      {
+        key: '0',
+        value: 80,
+      },
+      {
+        key: '5',
+        value: 180,
+      },
+      {
+        key: '10',
+        value: 250,
+      },
+      {
+        key: '15',
+        value: 350,
+      },
+    ],
+  },
+];
+```
+
+We can use the same data set to visualize the data in different ways:
+
+<ExamplesGrid cols={2}>
+
+<ComponentContainer
+  codeSample={`
+  <BarChart
+    xAxisOptions={{
+      labelFormatter: (x) => {
+        return \`\${x} years old\`
+      }
+    }}
+    yAxisOptions={{
+      labelFormatter: (y) => {
+        return \`\${y} cm\`
+      }
+    }}
+    data={SHARK_SPECIES_GROWTH}
+  />
+`}
+  center
+  chart={
+    <div style={{width: '350px', height: '200px'}}>
+      <BarChart
+        yAxisOptions={{
+          labelFormatter: (a) => `${a} cm`,
+        }}
+        xAxisOptions={{
+          labelFormatter: (a) => `${a} years old`,
+        }}
+        data={SHARK_SPECIES_GROWTH}
+      />
+    </div>
+  }
+/>
+<ComponentContainer
+  codeSample={`
+  <LineChart
+    xAxisOptions={{
+      labelFormatter: (x) => {
+        return \`\${x} years old\`
+      }
+    }}
+    yAxisOptions={{
+      labelFormatter: (y) => {
+        return \`\${y} cm\`
+      }
+    }}
+    data={SHARK_SPECIES_GROWTH}
+  />
+`}
+  center
+  chart={
+    <div style={{width: '350px', height: '200px'}}>
+      <LineChart
+        yAxisOptions={{
+          labelFormatter: (a) => `${a} cm`,
+        }}
+        xAxisOptions={{
+          labelFormatter: (a) => `${a} years old`,
+        }}
+        data={SHARK_SPECIES_GROWTH}
+      />
+    </div>
+  }
+/>
+
+</ExamplesGrid>
+
+<Title type="h3">
+  <code>DataSeries.color</code>
+</Title>
+
+Can be used to overwrite the <a href='/docs/docs-themes-theme-definition--page&viewMode=docs#titleAnchor-1913'>theme's series color</a>.
+
+<Title type="h4">Examples:</Title>
+
+If we use the same data set used above, but set `color: 'lime'` to the first series:
+
+<ExamplesGrid cols={2}>
+
+<ComponentContainer
+  codeSample={`
+  <BarChart
+     //...
+     data={[
+        {
+          ...SHARK_SPECIES_GROWTH[0],
+          color: 'lime',
+        },
+        SHARK_SPECIES_GROWTH[1],
+      ]}
+  />
+`}
+  center
+  chart={
+    <div style={{width: '350px', height: '200px'}}>
+      <BarChart
+        yAxisOptions={{
+          labelFormatter: (a) => `${a} cm`,
+        }}
+        xAxisOptions={{
+          labelFormatter: (a) => `${a} years old`,
+        }}
+        data={[
+          {
+            ...SHARK_SPECIES_GROWTH[0],
+            color: 'lime',
+          },
+          SHARK_SPECIES_GROWTH[1],
+        ]}
+      />
+    </div>
+  }
+/>
+<ComponentContainer
+  codeSample={`
+  <LineChart
+    //...
+     data={[
+      {
+        ...SHARK_SPECIES_GROWTH[0],
+        color: 'lime',
+      },
+      SHARK_SPECIES_GROWTH[1],
+    ]}
+  />
+`}
+  center
+  chart={
+    <div style={{width: '350px', height: '200px'}}>
+      <LineChart
+        yAxisOptions={{
+          labelFormatter: (a) => `${a} cm`,
+        }}
+        xAxisOptions={{
+          labelFormatter: (a) => `${a} years old`,
+        }}
+        data={[
+          {
+            ...SHARK_SPECIES_GROWTH[0],
+            color: 'lime',
+          },
+          SHARK_SPECIES_GROWTH[1],
+        ]}
+      />
+    </div>
+  }
+/>
+
+</ExamplesGrid>
+
+<Title type="h3">
+  <code>DataSeries.isComparison</code>
+</Title>
+
+If set to `true` will use the default styles of comparison series - gray bars and gray dashed lines.
+
+<Title type="h4">Examples:</Title>
+
+If we use the same data set used above, but set `isComparison: true` to the first series:
+
+<ExamplesGrid cols={2}>
+
+<ComponentContainer
+  codeSample={`
+  <BarChart
+     //...
+     data={[
+        {
+          ...SHARK_SPECIES_GROWTH[0],
+          isComparison: true,
+        },
+        SHARK_SPECIES_GROWTH[1],
+      ]}
+  />
+`}
+  center
+  chart={
+    <div style={{width: '350px', height: '200px'}}>
+      <BarChart
+        yAxisOptions={{
+          labelFormatter: (a) => `${a} cm`,
+        }}
+        xAxisOptions={{
+          labelFormatter: (a) => `${a} years old`,
+        }}
+        data={[
+          {
+            ...SHARK_SPECIES_GROWTH[0],
+            isComparison: true,
+          },
+          SHARK_SPECIES_GROWTH[1],
+        ]}
+      />
+    </div>
+  }
+/>
+<ComponentContainer
+  codeSample={`
+  <LineChart
+    //...
+     data={[
+      {
+        ...SHARK_SPECIES_GROWTH[0],
+        isComparison: true,
+      },
+      SHARK_SPECIES_GROWTH[1],
+    ]}
+  />
+`}
+  center
+  chart={
+    <div style={{width: '350px', height: '200px'}}>
+      <LineChart
+        yAxisOptions={{
+          labelFormatter: (a) => `${a} cm`,
+        }}
+        xAxisOptions={{
+          labelFormatter: (a) => `${a} years old`,
+        }}
+        data={[
+          {
+            ...SHARK_SPECIES_GROWTH[0],
+            isComparison: true,
+          },
+          SHARK_SPECIES_GROWTH[1],
+        ]}
+      />
+    </div>
+  }
+/>
+
+</ExamplesGrid>
+</div>
+</PolarisVizProvider>

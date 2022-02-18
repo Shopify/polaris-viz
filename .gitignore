@@ -1,6 +1,10 @@
 *.log
 node_modules
-/build
+packages/*/build
 /sandbox
 .DS_Store
 .loom
+.expo/
+.yalc
+yalc.lock
+build

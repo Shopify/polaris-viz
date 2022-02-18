@@ -1,0 +1,10 @@
+{
+  "extends": "@shopify/typescript-configs/library.json",
+  "compilerOptions": {
+    "emitDeclarationOnly": true,
+    "incremental": true,
+    "importsNotUsedAsValues": "error",
+    "strictFunctionTypes": false,
+    "noImplicitAny": false
+  }
+}

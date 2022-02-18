@@ -1,27 +1,43 @@
 import React from 'react';
 import {themes} from '@storybook/theming';
-import {PolarisVizProvider} from '../src/components';
-import {DEFAULT_THEME, LIGHT_THEME} from '../src/constants';
-import {useTheme} from '../src/hooks';
+import {PolarisVizProvider} from '@shopify/polaris-viz';
+import {
+  DEFAULT_THEME,
+  LIGHT_THEME,
+} from '../packages/polaris-viz/src/constants';
+import {useTheme} from '../packages/polaris-viz/src/hooks';
 
 // https://github.com/storybookjs/storybook/issues/548
 const storiesOrder = {
-  Docs: {
+  Essentials: {
     Intro: null,
-    'Getting started': null,
+    'Web and Mobile Development': null,
+    'Data Structure': null,
+    Utilities: null,
+    Legends: null,
     Themes: {
       'Default Themes': null,
       Customizing: null,
       'createTheme Utility': null,
     },
+    Types: null,
   },
-  Providers: null,
-  Charts: null,
-  [`Default Charts`]: null,
-  [`Simple Charts`]: null,
-  [`Spark Charts`]: null,
-  Subcomponents: null,
-  Playground: null,
+  'polaris-viz': {
+    'Getting Started': null,
+    'Spark Charts': null,
+    'Simple Charts': null,
+    'Default Charts': null,
+    Subcomponents: null,
+  },
+  'polaris-viz-native': {
+    'Getting Started': null,
+    'Spark Charts': null,
+    'Simple Charts': null,
+    'Default Charts': null,
+  },
+  Playground: {
+    'Playground area': null,
+  },
 };
 
 const hasKey = (obj, key) => Object.prototype.hasOwnProperty.call(obj, key);
@@ -108,7 +124,9 @@ export const decorators = [
             },
           },
           Light: {
+            ...LIGHT_THEME,
             chartContainer: {
+              ...LIGHT_THEME.chartContainer,
               padding: '20px',
             },
           },
