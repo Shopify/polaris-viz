@@ -143,7 +143,7 @@ export function Chart({
           return (
             <BarSegment
               activeIndex={activeIndex}
-              index={index}
+              index={colorIndex}
               isAnimated={!prefersReducedMotion}
               direction={direction}
               size={size}
