@@ -14,14 +14,14 @@ validateAncillaryOutput();
 
 function validateStandardBuild() {
   // Standard build
-  assert.ok(fs.existsSync('./build/cjs/index.js'));
-  assert.ok(fs.existsSync('./build/esm/index.js'));
-  assert.ok(fs.existsSync('./build/esm/styles.css'));
+  assert.ok(fs.existsSync('./packages/polaris-viz/build/cjs/index.js'));
+  assert.ok(fs.existsSync('./packages/polaris-viz/build/esm/index.js'));
+  assert.ok(fs.existsSync('./packages/polaris-viz/build/esm/styles.css'));
 
   // Assert it uses named exports rather than properties from the React default
   // export to help tree-shaking.
   // React.createElement and React.Fragment are the allowed exceptions
-  const files = glob.sync('./build/cjs/**/*.js');
+  const files = glob.sync('./packages/polaris-viz/build/cjs/**/*.js');
   assert.notStrictEqual(files.length, 0);
   const filesContainingUnwantedReactUsage = [];
   files.forEach((file) => {
@@ -42,20 +42,26 @@ function validateStandardBuild() {
 
 function validateEsNextBuild() {
   // ESnext build
-  assert.ok(fs.existsSync('./build/esnext/index.esnext'));
+  assert.ok(fs.existsSync('./packages/polaris-viz/build/esnext/index.esnext'));
   assert.ok(
-    fs.existsSync('./build/esnext/components/LineChart/LineChart.esnext'),
+    fs.existsSync(
+      './packages/polaris-viz/build/esnext/components/LineChart/LineChart.esnext',
+    ),
   );
-  assert.ok(fs.existsSync('./build/esnext/components/LineChart/Chart.css'));
+  assert.ok(
+    fs.existsSync(
+      './packages/polaris-viz/build/esnext/components/LineChart/Chart.css',
+    ),
+  );
 
   // ESnext build css contains namespaced classes, and
   const cssContent = fs.readFileSync(
-    './build/esnext/components/LineChart/Chart.css',
+    './packages/polaris-viz/build/esnext/components/LineChart/Chart.css',
     'utf-8',
   );
 
   const jsContent = fs.readFileSync(
-    './build/esnext/components/LineChart/Chart.scss.esnext',
+    './packages/polaris-viz/build/esnext/components/LineChart/Chart.scss.esnext',
     'utf-8',
   );
 
@@ -63,5 +69,5 @@ function validateEsNextBuild() {
 }
 
 function validateAncillaryOutput() {
-  assert.ok(fs.existsSync('./build/ts/src/index.d.ts'));
+  assert.ok(fs.existsSync('./packages/polaris-viz/build/ts/index.d.ts'));
 }

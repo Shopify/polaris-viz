@@ -1,0 +1,243 @@
+import {Meta} from '@storybook/addon-docs/blocks';
+
+import {PolarisVizProvider} from '@shopify/polaris-viz';
+import {
+  ComponentContainer,
+  Title,
+  SampleSparkLineChart,
+  SampleLineChart,
+} from './components';
+import {SPARKLINE_SERIES} from '../utilities';
+
+<Meta
+  title="Essentials/Themes/Customizing"
+  parameters={{
+    viewMode: 'docs',
+    docsOnly: true,
+  }}
+/>
+
+<PolarisVizProvider
+    themes={{
+      Default: {
+        chartContainer: {
+          padding: '20px',
+        }
+      },
+      Light: {
+        chartContainer: {
+          padding: '20px',
+        }
+      },
+    }}>
+
+<div style={{ margin: '0 auto', maxWidth: '800px', color: 'white'}}>
+
+<Title>✨ Customizing themes</Title>
+<p>
+  If you want to apply a different visual identity to your charts, start by
+  wrapping your app with the <code>PolarisVizProvider</code>:
+</p>
+
+```jsx
+import {PolarisVizProvider} from '@shopify/polaris-viz';
+
+export const YourTopLevelComponent = () => {
+  return (
+    <PolarisVizProvider>
+      <App />
+    </PolarisVizProvider>
+  );
+};
+```
+
+The <code>PolarisVizProvider</code> allows you to:
+
+- Overwite the default styles of all charts in your application
+
+- Define multiple themes that can be used by each instance of your charts
+
+<Divider />
+<Title type="h3">Overwiting the Default theme</Title>
+
+<p>If you only have one style for all charts, overwrite the <code>
+Default
+
+</code> theme and those changes will be applied to all charts that are children
+of <code>PolarisVizProvider</code>, even if you don't explicitly pass anything to the <code>theme</code> prop</p>
+
+```js
+import {PolarisVizProvider, BarChart} from '@shopify/polaris-viz';
+
+export const YourTopLevelComponent = () => {
+  return (
+    <PolarisVizProvider
+      themes={{
+        Default: {
+          chartContainer: {
+            backgroundColor: 'darkblue',
+          },
+        },
+      }}
+    >
+      {/* 👇 Because the "Default" theme's backgroundColor is
+      overwritten; all charts inside <App /> will have a
+      darkblue background color */}
+      <App />
+    </PolarisVizProvider>
+  );
+};
+
+export const App = () => {
+  return (
+    <>
+      {/* 👇 <BarChart/> and <LineChart/> are rendered as
+      children of <PolarisVizProvider/> above, so both
+      will have darkblue background  */}
+      <BarChart series={...}/>
+      <LineChart series={...} />
+    </>
+  );
+};
+```
+
+<div
+  style={{
+    margin: '0 auto',
+    color: 'white',
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gridGap: '10px',
+  }}
+>
+  <PolarisVizProvider
+    themes={{
+      Default: {
+        chartContainer: {
+          backgroundColor: 'darkblue',
+        },
+      },
+    }}
+  >
+  <ComponentContainer
+    center
+    chart={
+      <div style={{width: '350px', height: '140px'}}>
+        <SampleLineChart />
+      </div>
+    }
+    codeSample={"<BarChart series={...}/>"}
+  />
+  <ComponentContainer
+    center
+    chart={
+      <div style={{width: '350px', height: '140px'}}>
+        <SampleLineChart />
+      </div>
+    }
+    codeSample={"<LineChart series={...}/>"}
+  />
+
+  </PolarisVizProvider>
+</div>
+
+<Divider />
+<Title type="h3">Creating multiple themes</Title>
+<p>
+  You can also define multiple extra themes in the themes object. Each top level
+  key in this object will be used as a theme name, that later on you can pass to
+  individual charts.
+</p>
+<p>
+  In this example, the first chart uses a theme named <code>AngryRed</code> and
+  the second <code>HappyGreen</code> 👇
+</p>
+
+```js
+<PolarisVizProvider
+  themes={{
+    AngryRed: {
+      seriesColors: {
+        single: ['black'],
+      },
+      chartContainer: {
+        backgroundColor: '#ff0025',
+      },
+    },
+    HappyGreen: {
+      seriesColors: {
+        single: ['black'],
+      },
+      chartContainer: {
+        backgroundColor: '#00ff64',
+      },
+    },
+  }}
+>
+  <SparkLineChart series={...} theme='AngryRed'/>
+  <SparkLineChart series={...} theme='HappyGreen'/>
+</PolarisVizProvider>
+```
+
+<div
+  style={{
+    margin: '0 auto',
+    color: 'white',
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gridGap: '10px',
+  }}
+>
+  <PolarisVizProvider
+    themes={{
+      AngryRed: {
+        seriesColors: {
+          single: [
+            'black'
+          ]
+        },
+        chartContainer: {
+          backgroundColor: '#ff0025',
+        },
+      },
+      HappyGreen: {
+        seriesColors: {
+          single: [
+            'black'
+          ]
+        },
+        chartContainer: {
+          backgroundColor: '#00ff64',
+        },
+      },
+    }}
+  >
+   <ComponentContainer
+    theme="AngryRed"
+    center
+    chart={
+      <div style={{width: '250px', height: '140px'}}>
+        <SampleSparkLineChart theme="AngryRed" />
+      </div>
+    }
+    codeSample={"<SparkLineChart series={...} theme='AngryRed'/>"}
+  />
+   <ComponentContainer
+    theme="HappyGreen"
+    center
+    chart={
+      <div style={{width: '250px', height: '140px'}}>
+        <SampleSparkLineChart theme="HappyGreen" />
+      </div>
+    }
+    codeSample={"<SparkLineChart series={...} theme='HappyGreen'/>"}
+  />
+
+  </PolarisVizProvider>
+
+</div>
+  <p>
+To learn more about what properties you can change through a<code>Theme</code>, check the <a href='/docs/docs-themes-theme-definition--page'>👉 Theme definition page</a>
+  </p>
+</div>
+</PolarisVizProvider>

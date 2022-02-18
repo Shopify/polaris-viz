@@ -1,0 +1,1 @@
+export {LinearGradientWithStops} from './LinearGradientWithStops';
