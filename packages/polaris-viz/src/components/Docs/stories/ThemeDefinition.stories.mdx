@@ -1,0 +1,1185 @@
+import {Meta, Story, Canvas} from '@storybook/addon-docs/blocks';
+
+import {PolarisVizProvider} from '../../../';
+import {
+  Divider,
+  ComponentContainer,
+  Title,
+  ExamplesGrid,
+  SampleSparkbar,
+  SampleSparkLineChart,
+  SampleBarChart,
+  PropertyTable,
+  SampleLineChart,
+  SampleStackedAreaChart,
+  SampleSimpleNormalizedChart,
+} from './components';
+
+<Meta
+  title="Essentials/Themes/Theme Definition"
+  parameters={{
+    viewMode: 'docs',
+    docsOnly: true,
+  }}
+/>
+
+<PolarisVizProvider
+    themes={{
+      Default: {
+        chartContainer: {
+          padding: '20px',
+        }
+      },
+      Light: {
+        chartContainer: {
+          padding: '20px',
+        }
+      },
+    }}>
+
+<div style={{ margin: '0 auto', maxWidth: '800px', color: 'white'}}>
+<Title>✍️ Theme Definition</Title>
+
+<p>
+  In the <code>Theme</code> type definition, you'll find multiple properties;
+  some apply changes to all charts globally, while others only apply to a
+  specific chart type.
+</p>
+
+```tsx
+export interface Theme {
+  chartContainer: ChartContainerTheme;
+  bar: BarTheme;
+  grid: GridTheme;
+  xAxis: XAxisTheme;
+  yAxis: YAxisTheme;
+  line: LineTheme;
+  crossHair: CrossHairTheme;
+  legend: Legend;
+  seriesColors: SeriesColors;
+  tooltip: TooltipTheme;
+}
+```
+
+<Divider />
+<Title type="h2">🌎 Global properties</Title>
+
+<Title type="h3">
+  <code>chartContainer</code>
+</Title>
+
+| property                                    | type                | description                                                                                    |
+| ------------------------------------------- | ------------------- | ---------------------------------------------------------------------------------------------- |
+| <code>chartContainer.borderRadius</code>    | <code>string</code> | a CSS <code>border-radius</code> string that gets applied to the element wrapping the chart    |
+| <code>chartContainer.padding</code>         | <code>string</code> | a CSS <code>padding</code> string that gets applied to the element wrapping the chart          |
+| <code>chartContainer.backgroundColor</code> | <code>string</code> | a CSS <code>background-color</code> string that gets applied to the element wrapping the chart |
+
+<Title type="h4">Examples:</Title>
+
+<ExamplesGrid>
+
+<ComponentContainer
+  codeSample={`
+    <PolarisVizProvider={{
+      Default: {
+        chartContainer: {
+          borderRadius: '0',
+          padding: '0',
+          backgroundColor: 'black'
+        }
+      }
+    }}>
+      <SparkLineChart series={data} />
+    </PolarisVizProvider>
+    `}
+  theme="Light"
+  center
+  chart={
+    <div style={{width: '350px', height: '140px'}}>
+      <PolarisVizProvider
+        themes={{
+          Default: {
+            chartContainer: {
+              borderRadius: '0',
+              padding: '0',
+              backgroundColor: 'black',
+            },
+          },
+        }}
+      >
+        <SampleSparkLineChart />
+      </PolarisVizProvider>
+    </div>
+  }
+/>
+
+  <ComponentContainer
+    codeSample={`
+    <PolarisVizProvider={{
+      Default: {
+        chartContainer: {
+          borderRadius: '8px',
+          padding: '20px',
+          backgroundColor: '#dde2e9'
+        }
+      }
+    }}>
+      <SparkLineChart series={data} />
+    </PolarisVizProvider>
+    `}
+    theme="Light"
+    center
+    chart={
+      <div style={{width: '350px', height: '140px'}}>
+      <PolarisVizProvider themes={{
+        Default: {
+          chartContainer: {
+            borderRadius: '8px',
+            padding: '20px',
+            backgroundColor: '#dde2e9'
+          }
+        }
+      }}>
+        <SampleSparkLineChart/>
+    </PolarisVizProvider>
+      </div>
+    }
+  />
+</ExamplesGrid>
+
+<Divider noLine />
+<Title type="h3">
+  <code>seriesColors</code>
+</Title>
+{/* =================== seriesColors ================ */}
+
+`seriesColors` allows you to customize what colors the charts will use depending on how many data series are being displayed.
+
+The `Default` and `Light` theme that come with the library out of the box use gradients for charts with up to 7 data series, but use
+solid colors for charts with more. The `Color` type accepts a gradient definition or any valid CSS string color:
+
+```ts
+export type Color = string | GradientStop[];
+
+export interface GradientStop {
+  offset: number;
+  color: string;
+}
+```
+
+<PropertyTable global>
+  <PropertyTable.Row
+    property={`seriesColors.single`}
+    type={'Color'}
+    description={
+      <>Defines the color used in the series on charts with a single series</>
+    }
+  />
+  <PropertyTable.Row
+    property={`seriesColors.upToFour`}
+    type={'Color[]'}
+    description={
+      <>
+        Defines the colors used in the series on charts that have from 2 to 4
+        series
+      </>
+    }
+  />
+  <PropertyTable.Row
+    property={`seriesColors.fromFiveToSeven`}
+    type={'Color[]'}
+    description={
+      <>
+        Defines the colors used in the series on charts that have from 5 to 7
+        series
+      </>
+    }
+  />
+  <PropertyTable.Row
+    property={`seriesColors.all`}
+    type={'Color[]'}
+    description={
+      <>
+        Defines the colors used in the series on charts that have more than 7
+        series
+      </>
+    }
+  />
+  <PropertyTable.Row
+    property="seriesColors.comparison"
+    type={'string'}
+    description="CSS color string used when DataSeries.isComparison is true"
+  />
+</PropertyTable>
+
+<Title type="h4">Examples:</Title>
+
+<ExamplesGrid>
+
+<ComponentContainer
+  codeSample={`
+    <PolarisVizProvider={{
+      Default: {
+        seriesColors: {
+          single: 'lime',
+        },
+      },
+    }}>
+    <StackedAreaCharts series={data} />
+  </PolarisVizProvider>
+    `}
+  center
+  chart={
+    <div style={{width: '350px', height: '140px'}}>
+      <PolarisVizProvider
+        themes={{
+          Default: {
+            seriesColors: {
+              single: 'lime',
+            },
+          },
+        }}
+      >
+        <SampleStackedAreaChart seriesLength={1} />
+      </PolarisVizProvider>
+    </div>
+  }
+/>
+<ComponentContainer
+  codeSample={`
+    <PolarisVizProvider={{
+      Default: {
+        seriesColors: {
+          upToFour: [
+            'yellow',
+            'lime',
+            'aqua',
+            'teal'
+          ],
+        },
+      },
+    }}>
+    <MultiseriesBarChart series={data} />
+  </PolarisVizProvider>
+    `}
+  center
+  chart={
+    <div style={{width: '350px', height: '140px'}}>
+      <PolarisVizProvider
+        themes={{
+          Default: {
+            seriesColors: {
+              upToFour: ['yellow', 'lime', 'aqua', 'Teal'],
+            },
+          },
+        }}
+      >
+        <SampleBarChart seriesLength={4} />
+      </PolarisVizProvider>
+    </div>
+  }
+/>
+<ComponentContainer
+  codeSample={`
+    <PolarisVizProvider={{
+      Default: {
+        fromFiveToSeven: {
+          fromFiveToSeven: [
+            'magenta',
+            'orange',
+            'DarkOrchid',
+            'yellow',
+            'lime',
+            'aqua',
+            'Teal'
+          ],
+        },
+      },
+    }}>
+    <MultiseriesBarChart series={data} />
+  </PolarisVizProvider>
+    `}
+  center
+  chart={
+    <div style={{width: '350px', height: '140px'}}>
+      <PolarisVizProvider
+        themes={{
+          Default: {
+            seriesColors: {
+              fromFiveToSeven: [
+                'magenta',
+                'orange',
+                'DarkOrchid',
+                'yellow',
+                'lime',
+                'aqua',
+                'Teal',
+              ],
+            },
+          },
+        }}
+      >
+        <SampleBarChart seriesLength={7} />
+      </PolarisVizProvider>
+    </div>
+  }
+/>
+
+<ComponentContainer
+  codeSample={`
+    <PolarisVizProvider={{
+      Default: {
+        fromFiveToSeven: {
+          all: [
+            'GreenYellow',
+            'ForestGreen',
+            'LawnGreen',
+            'Lime',
+            'LimeGreen',
+            'PaleGreen',
+            'YellowGreen',
+            'MediumSpringGreen',
+            'SpringGreen',
+            'MediumSeaGreen',
+            'SeaGreen',
+          ],
+        },
+      },
+    }}>
+    <MultiseriesBarChart series={data} />
+  </PolarisVizProvider>
+    `}
+  center
+  chart={
+    <div style={{width: '350px', height: '140px'}}>
+      <PolarisVizProvider
+        themes={{
+          Default: {
+            seriesColors: {
+              all: [
+                'GreenYellow',
+                'ForestGreen',
+                'LawnGreen',
+                'Lime',
+                'LimeGreen',
+                'PaleGreen',
+                'YellowGreen',
+                'MediumSpringGreen',
+                'SpringGreen',
+                'MediumSeaGreen',
+                'SeaGreen',
+              ],
+            },
+          },
+        }}
+      >
+        <SampleBarChart seriesLength={11} />
+      </PolarisVizProvider>
+    </div>
+  }
+/>
+
+<ComponentContainer
+  codeSample={`
+    <PolarisVizProvider={{
+      Default: {
+        seriesColors: {
+          comparison: 'lime',
+        },
+      }
+    }}>
+    <SparkLineChart series={data} />
+  </PolarisVizProvider>
+    `}
+  center
+  chart={
+    <div style={{width: '350px', height: '140px'}}>
+      <PolarisVizProvider
+        themes={{
+          Default: {
+            seriesColors: {
+              comparison: 'lime',
+            },
+          },
+        }}
+      >
+        <SampleSparkLineChart />
+      </PolarisVizProvider>
+    </div>
+  }
+/>
+
+</ExamplesGrid>
+<Divider noLine />
+
+<Title type="h3">
+  <code>tooltip</code>
+</Title>
+{/* =================== tooltip ================ */}
+
+<PropertyTable global>
+  <PropertyTable.Row
+    property={`tooltip.backgroundColor`}
+    type={'string'}
+    description={<>A CSS color string that gets applied to the background</>}
+  />
+  <PropertyTable.Row
+    property={`tooltip.valueColor`}
+    type={'string'}
+    description={<>A CSS color string that gets applied to values</>}
+  />
+</PropertyTable>
+
+<Title type="h4">Examples:</Title>
+
+<ExamplesGrid>
+
+<ComponentContainer
+  codeSample={`
+    <PolarisVizProvider={{
+      Default: {
+        tooltip: {
+          backgroundColor: 'MidnightBlue',
+          valueColor: 'yellow',
+          labelColor: 'Fuchsia',
+        },
+      },
+    }}>
+    <StackedAreaCharts series={data} />
+  </PolarisVizProvider>
+    `}
+  center
+  chart={
+    <div style={{width: '350px', height: '140px'}}>
+      <PolarisVizProvider
+        themes={{
+          Default: {
+            tooltip: {
+              backgroundColor: 'MidnightBlue',
+              valueColor: 'yellow',
+              labelColor: 'Fuchsia',
+            },
+          },
+        }}
+      >
+        <SampleBarChart />
+      </PolarisVizProvider>
+    </div>
+  }
+/>
+
+</ExamplesGrid>
+
+<Divider />
+<Title type="h2">📍 Local properties</Title>
+{/* =================== bar ================ */}
+<Title type="h3">
+  <code>bar</code>
+</Title>
+
+<PropertyTable>
+  <PropertyTable.Row
+    property="bar.hasRoundedCorners"
+    type="boolean"
+    description="determines whether the bar should have sharp or round corners"
+    chartsAffected={[
+      'BarChart',
+      'MultiSeriesBarChart',
+      'SimpleNormalizedChart',
+    ]}
+  />
+  <PropertyTable.Row
+    property="bar.innerMargin"
+    type={['"Small"', '"Medium"', '"Large"', '"None"']}
+    description="determines how big the gaps between bars should be"
+    chartsAffected={['BarChart']}
+  />
+  <PropertyTable.Row
+    property="bar.outerMargin"
+    type={['"Small"', '"Medium"', '"Large"', '"None"']}
+    description="determines how big the gaps from the left edge of the chart until the
+        first bar, and the right edge until the last bar should be"
+    chartsAffected={['BarChart']}
+  />
+</PropertyTable>
+
+<Title type="h4">Examples:</Title>
+
+<ExamplesGrid>
+
+<ComponentContainer
+  codeSample={`
+    <PolarisVizProvider={{
+      Default: {
+        bar: {
+          hasRoundedCorders: true,
+          innerMargin: 'Large',
+          outerMargin: 'Large',
+        }
+      }
+    }}>
+      <BarChart data={data} />
+    </PolarisVizProvider>
+    `}
+  center
+  chart={
+    <div style={{width: '350px', height: '140px'}}>
+      <PolarisVizProvider
+        themes={{
+          Default: {
+            bar: {
+              hasRoundedCorders: false,
+            },
+          },
+        }}
+      >
+        <SampleBarChart />
+      </PolarisVizProvider>
+    </div>
+  }
+/>
+
+<ComponentContainer
+  codeSample={`
+    <PolarisVizProvider={{
+      Default: {
+        bar: {
+          hasRoundedCorders: false,
+        },
+      }
+    }}>
+      <MultiSeriesBarChart series={data} />
+    </PolarisVizProvider>
+    `}
+  center
+  chart={
+    <div style={{width: '350px', height: '140px'}}>
+      <PolarisVizProvider
+        themes={{
+          Default: {
+            bar: {
+              hasRoundedCorders: true,
+              innerMargin: 'Large',
+              outerMargin: 'Large',
+            },
+          },
+        }}
+      >
+        <SampleBarChart />
+      </PolarisVizProvider>
+    </div>
+  }
+/>
+
+</ExamplesGrid>
+<Divider noLine/>
+{/* =================== grid ================ */}
+<Title type="h3">
+  <code>grid</code>
+</Title>
+
+<PropertyTable>
+  <PropertyTable.Row
+    property="grid.showHorizontalLines"
+    type="boolean"
+    description="determines whether or not to show horizontal grid lines"
+    chartsAffected={['BarChart', 'LineChart', 'MultiSeriesBarChart']}
+  />
+  <PropertyTable.Row
+    property="grid.showVerticalLines"
+    type="boolean"
+    description="determines whether or not to show vertical grid lines"
+    chartsAffected={['StackedAreaChart', 'LineChart']}
+  />
+  <PropertyTable.Row
+    property="grid.horizontalOverflow"
+    type="boolean"
+    description="determines whether or not to extend the grid horizontally to the edge of the chart"
+    chartsAffected={['BarChart', 'LineChart', 'MultiSeriesBarChart']}
+  />
+  <PropertyTable.Row
+    property="grid.color"
+    type="string"
+    description="a CSS color string that gets applied to the grid lines"
+    chartsAffected={[
+      'BarChart',
+      'LineChart',
+      'MultiSeriesBarChart',
+      'StackedAreaChart',
+    ]}
+  />
+  <PropertyTable.Row
+    property="grid.horizontalMargin"
+    type="number"
+    description="the number of pixels between the left and right edges of the grid and the edges of the chart container"
+    chartsAffected={[
+      'BarChart',
+      'LineChart',
+      'MultiSeriesBarChart',
+      'StackedAreaChart',
+    ]}
+  />
+</PropertyTable>
+
+<Title type="h4">Examples:</Title>
+
+<ExamplesGrid>
+
+<ComponentContainer
+  codeSample={`
+    <PolarisVizProvider={{
+      Default: {
+        grid: {
+          showHorizontalLines: false,
+        }
+      }
+    }}>
+      <BarChart data={data} />
+    </PolarisVizProvider>
+    `}
+  center
+  chart={
+    <div style={{width: '350px', height: '140px'}}>
+      <PolarisVizProvider
+        themes={{
+          Default: {
+            grid: {
+              showHorizontalLines: false,
+            },
+          },
+        }}
+      >
+        <SampleBarChart />
+      </PolarisVizProvider>
+    </div>
+  }
+/>
+
+<ComponentContainer
+  codeSample={`
+    <PolarisVizProvider={{
+      Default: {
+        grid: {
+          showHorizontalLines: true,
+          showVerticalLines: true,
+        },
+      }
+    }}>
+      <StackedAreaChart series={data} />
+    </PolarisVizProvider>
+    `}
+  center
+  chart={
+    <div style={{width: '350px', height: '140px'}}>
+      <PolarisVizProvider
+        themes={{
+          Default: {
+            grid: {
+              showVerticalLines: true,
+            },
+          },
+        }}
+      >
+        <SampleStackedAreaChart />
+      </PolarisVizProvider>
+    </div>
+  }
+/>
+
+<ComponentContainer
+  codeSample={`
+    <PolarisVizProvider={{
+      Default: {
+        grid: {
+          showVerticalLines: true,
+          showHorizontalLines: true,
+          horizontalOverflow: false,
+          color: 'lime',
+          horizontalMargin: 50,
+        },
+      }
+    }}>
+      <StackedAreaChart series={data} />
+    </PolarisVizProvider>
+    `}
+  center
+  theme="Light"
+  chart={
+    <div style={{width: '350px', height: '140px'}}>
+      <PolarisVizProvider
+        themes={{
+          Default: {
+            grid: {
+              showVerticalLines: true,
+              showHorizontalLines: true,
+              horizontalOverflow: false,
+              color: 'lime',
+              horizontalMargin: 50,
+            },
+          },
+        }}
+      >
+        <SampleLineChart />
+      </PolarisVizProvider>
+    </div>
+  }
+/>
+
+<ComponentContainer
+  codeSample={`
+    <PolarisVizProvider={{
+      Default: {
+        grid: {
+          showVerticalLines: true,
+          showHorizontalLines: true,
+          horizontalOverflow: true,
+          color: 'lime',
+          horizontalMargin: 50,
+        },
+      }
+    }}>
+      <StackedAreaChart series={data} />
+    </PolarisVizProvider>
+    `}
+  center
+  theme="Light"
+  chart={
+    <div style={{width: '350px', height: '140px'}}>
+      <PolarisVizProvider
+        themes={{
+          Default: {
+            grid: {
+              showVerticalLines: true,
+              showHorizontalLines: true,
+              horizontalOverflow: true,
+              color: 'lime',
+              horizontalMargin: 50,
+            },
+          },
+        }}
+      >
+        <SampleLineChart />
+      </PolarisVizProvider>
+    </div>
+  }
+/>
+
+</ExamplesGrid>
+{/* =================== xAxis ================ */}
+<Divider noLine/>
+<Title type="h3">
+  <code>xAxis</code>
+</Title>
+
+<PropertyTable>
+  <PropertyTable.Row
+    property="xAxis.showTicks"
+    type="boolean"
+    description="determines wether or not to show the ticks vertical lines indicating the labels on the X Axis"
+    chartsAffected={[
+      'BarChart',
+      'LineChart',
+      'MultiSeriesBarChart',
+      'StackedAreaChart',
+    ]}
+  />
+  <PropertyTable.Row
+    property="xAxis.labelColor"
+    type="string"
+    description="a CSS color string applied to the labels on the X Axis"
+    chartsAffected={[
+      'BarChart',
+      'LineChart',
+      'MultiSeriesBarChart',
+      'StackedAreaChart',
+    ]}
+  />
+  <PropertyTable.Row
+    property="xAxis.hide"
+    type="boolean"
+    z
+    description="determines wether or not to show the X Axis"
+    chartsAffected={[
+      'BarChart',
+      'LineChart',
+      'MultiSeriesBarChart',
+      'StackedAreaChart',
+    ]}
+  />
+</PropertyTable>
+
+<Title type="h4">Examples:</Title>
+
+<ExamplesGrid>
+
+<ComponentContainer
+  codeSample={`
+    <PolarisVizProvider={{
+      Default: {
+        xAxis: {
+          showTicks: false,
+        }
+      }
+    }}>
+      <BarChart data={data} />
+    </PolarisVizProvider>
+    `}
+  center
+  chart={
+    <div style={{width: '350px', height: '140px'}}>
+      <PolarisVizProvider
+        themes={{
+          Default: {
+            xAxis: {
+              showTicks: false,
+            },
+          },
+        }}
+      >
+        <SampleBarChart />
+      </PolarisVizProvider>
+    </div>
+  }
+/>
+
+<ComponentContainer
+  codeSample={`
+    <PolarisVizProvider={{
+      Default: {
+        xAxis: {
+          showTicks: true,
+          labelColor: 'lime',
+        }
+      }
+    }}>
+      <BarChart data={data} />
+    </PolarisVizProvider>
+    `}
+  center
+  chart={
+    <div style={{width: '350px', height: '140px'}}>
+      <PolarisVizProvider
+        themes={{
+          Default: {
+            xAxis: {
+              showTicks: true,
+              labelColor: 'lime',
+            },
+          },
+        }}
+      >
+        <SampleBarChart />
+      </PolarisVizProvider>
+    </div>
+  }
+/>
+
+<ComponentContainer
+  codeSample={`
+    <PolarisVizProvider={{
+      Default: {
+        xAxis: {
+          hide: true,
+        }
+      }
+    }}>
+      <BarChart data={data} />
+    </PolarisVizProvider>
+    `}
+  center
+  chart={
+    <div style={{width: '350px', height: '140px'}}>
+      <PolarisVizProvider
+        themes={{
+          Default: {
+            xAxis: {
+              hide: true,
+            },
+          },
+        }}
+      >
+        <SampleBarChart />
+      </PolarisVizProvider>
+    </div>
+  }
+/>
+
+</ExamplesGrid>
+{/* =================== yAxis ================ */}
+<Divider noLine/>
+<Title type="h3">
+  <code>yAxis</code>
+</Title>
+
+<PropertyTable>
+  <PropertyTable.Row
+    property="yAxis.labelColor"
+    type="string"
+    description="a CSS color string applied to the labels on the Y Axis"
+    chartsAffected={[
+      'BarChart',
+      'LineChart',
+      'MultiSeriesBarChart',
+      'StackedAreaChart',
+    ]}
+  />
+  <PropertyTable.Row
+    property="yAxis.backgroundColor"
+    type="string"
+    description="a CSS color string applied to the label backgrounds on the Y Axis"
+    chartsAffected={[
+      'BarChart',
+      'LineChart',
+      'MultiSeriesBarChart',
+      'StackedAreaChart',
+    ]}
+  />
+</PropertyTable>
+
+<Title type="h4">Examples:</Title>
+
+<ExamplesGrid>
+
+<ComponentContainer
+  codeSample={`
+    <PolarisVizProvider={{
+      Default: {
+        yAxis: {
+          labelColor: 'lime',
+          backgroundColor: 'black'
+        }
+      }
+    }}>
+      <StackedAreaChart series={data} />
+    </PolarisVizProvider>
+    `}
+  center
+  chart={
+    <div style={{width: '350px', height: '140px'}}>
+      <PolarisVizProvider
+        themes={{
+          Default: {
+            yAxis: {
+              labelColor: 'lime',
+              backgroundColor: 'black',
+            },
+          },
+        }}
+      >
+        <SampleStackedAreaChart />
+      </PolarisVizProvider>
+    </div>
+  }
+/>
+</ExamplesGrid>
+{/* =================== line ================ */}
+<Divider noLine />
+<Title type="h3">
+  <code>line</code>
+</Title>
+
+<PropertyTable>
+  <PropertyTable.Row
+    property="line.sparkArea"
+    type="string"
+    description="a CSS color string applied to the area under the line of Sparklines"
+    chartsAffected={['SparkLineChart']}
+  />
+  <PropertyTable.Row
+    property="line.hasSpline"
+    type="boolean"
+    description="determines wether or not to use curved lines"
+    chartsAffected={['LineChart', 'StackedAreaChart', 'SparkLineChart']}
+  />
+  <PropertyTable.Row
+    property="line.style"
+    type={['"solid"', '"dashed"', '"dotted"']}
+    description="determines wether or not to use curved lines"
+    chartsAffected={['LineChart', 'SparkLineChart']}
+  />
+  <PropertyTable.Row
+    property="line.hasPoint"
+    type={'boolean'}
+    description="determines wether or not to show a circle at the end of the line. Does not get applied on non-solid lines"
+    chartsAffected={['SparkLineChart']}
+  />
+  <PropertyTable.Row
+    property="line.width"
+    type={'number'}
+    description="Value in pixels used to determine the thickness of series lines"
+    chartsAffected={['LineChart', 'StackedAreaChart']}
+  />
+  <PropertyTable.Row
+    property="line.pointStroke"
+    type={'string'}
+    description="CSS color string used on the stroke around the point displayed when hovering the chart"
+    chartsAffected={['LineChart', 'StackedAreaChart']}
+  />
+</PropertyTable>
+
+<Title type="h4">Examples:</Title>
+
+<ExamplesGrid>
+
+<ComponentContainer
+  codeSample={`
+    <PolarisVizProvider={{
+      Default: {
+        line: {
+          hasSpline: false,
+          style: 'dotted'
+          width: 5,
+          pointStroke: 'lime',
+        }
+      }
+    }}>
+    <LineChart series={data} />
+  </PolarisVizProvider>
+    `}
+  center
+  chart={
+    <div style={{width: '350px', height: '140px'}}>
+      <PolarisVizProvider
+        themes={{
+          Default: {
+            line: {
+              hasSpline: false,
+              style: 'dotted',
+              width: 5,
+              pointStroke: 'lime',
+            },
+          },
+        }}
+      >
+        <SampleLineChart />
+      </PolarisVizProvider>
+    </div>
+  }
+/>
+</ExamplesGrid>
+{/* =================== crossHair ================ */}
+<Divider noLine />
+<Title type="h3">
+  <code>crossHair</code>
+</Title>
+
+<PropertyTable>
+  <PropertyTable.Row
+    property="crossHair.color"
+    type="string"
+    description="a CSS color string applied to crosshair displayed when hovering charts"
+    chartsAffected={['LineChart', 'StackedAreaChart']}
+  />
+  <PropertyTable.Row
+    property="crossHair.width"
+    type="number"
+    description="determines how thick the crosshair displayed when hovering charts should be"
+    chartsAffected={['LineChart', 'StackedAreaChart']}
+  />
+</PropertyTable>
+
+<Title type="h4">Examples:</Title>
+
+<ExamplesGrid>
+
+<ComponentContainer
+  codeSample={`
+    <PolarisVizProvider={{
+      Default: {
+        crossHair: {
+          color: 'lime',
+          width: 10,
+        }
+      }
+    }}>
+    <LineChart series={data} />
+  </PolarisVizProvider>
+    `}
+  center
+  chart={
+    <div style={{width: '350px', height: '140px'}}>
+      <PolarisVizProvider
+        themes={{
+          Default: {
+            crossHair: {
+              color: 'lime',
+              width: 10,
+            },
+          },
+        }}
+      >
+        <SampleLineChart />
+      </PolarisVizProvider>
+    </div>
+  }
+/>
+</ExamplesGrid>
+{/* =================== legend ================ */}
+<Divider noLine />
+<Title type="h3">
+  <code>legend</code>
+</Title>
+
+<PropertyTable>
+  <PropertyTable.Row
+    property="legend.labelColor"
+    type="string"
+    description="a CSS color string applied to the labels in legends"
+    chartsAffected={['SimpleNormalizedChart', 'Legend']}
+  />
+  <PropertyTable.Row
+    property="legend.labelColor"
+    type="string"
+    description="a CSS color string applied to the values in legends"
+    chartsAffected={['SimpleNormalizedChart', 'Legend']}
+  />
+  <PropertyTable.Row
+    property="legend.trendIndicator"
+    type={`{positive: string; negative: string; neutral: string}`}
+    description="an object describing the colors to be used in the chevrons that indicate positive, negative and neutral trends "
+    chartsAffected={['SimpleNormalizedChart', 'Legend']}
+  />
+</PropertyTable>
+
+<Title type="h4">Examples:</Title>
+
+<ExamplesGrid>
+
+<ComponentContainer
+  codeSample={`
+    <PolarisVizProvider={{
+      Default: {
+        crossHair: {
+          color: 'lime',
+          width: 10,
+        }
+      }
+    }}>
+    <SimpleNormalizedChart data={data} />
+  </PolarisVizProvider>
+    `}
+  center
+  chart={
+    <div style={{width: '320px', height: '250px'}}>
+      <PolarisVizProvider
+        themes={{
+          Default: {
+            chartContainer: {
+              padding: '10px'
+            },
+            legend: {
+              labelColor: 'lime',
+              valueColor: 'yellow'
+            },
+          },
+        }}
+      >
+        <SampleSimpleNormalizedChart />
+      </PolarisVizProvider>
+    </div>
+  }
+/>
+</ExamplesGrid>
+{/* =================== crossHair ================ */}
+</div>
+</PolarisVizProvider>
