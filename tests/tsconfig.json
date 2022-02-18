@@ -1,0 +1,10 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "build/ts",
+    "baseUrl": "setup",
+    "rootDir": "setup"
+  },
+  "include": ["./setup/**/*.ts"]
+}

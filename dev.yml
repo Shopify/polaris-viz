@@ -13,7 +13,7 @@ commands:
   # People new to the project might be tempted to run some
   # common commands, so let’s have them in here.
   # For a list of Common Commands in Projects, check out:
-  # https://development.shopify.io/tools/dev/getting_started/Common-Commands-in-Projects
+  # https://development.shopify.io/engineering/keytech/dev/getting_started/Common-Commands-in-Projects
   build: yarn run build
   server: yarn run dev
   style: yarn run lint
