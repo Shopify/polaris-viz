@@ -1,0 +1,9 @@
+dependencies:
+  override:
+    - yarn install --frozen-lockfile --no-progress
+    - yarn lerna -- bootstrap
+deploy:
+  pre:
+    - yarn run build
+  override:
+    - yarn run lerna publish from-package --dist-tag beta --yes

@@ -5,21 +5,34 @@ const path = require('path');
 
 const postcssShopify = require('@shopify/postcss-plugin');
 
+const getStories = require('./getStories');
+
 module.exports = {
-  stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(ts|tsx)'],
+  stories: getStories(process.env.NODE_ENV),
   addons: [
     '@storybook/addon-links',
     {
       name: '@storybook/addon-essentials',
       options: {docs: true, backgrounds: false},
     },
+    {
+      name: '@storybook/addon-docs',
+      options: {
+        configureJSX: true,
+        babelOptions: {},
+        sourceLoaderOptions: null,
+        transcludeMarkdown: true,
+      },
+    },
   ],
+  framework: '@storybook/react',
   typescript: {
     reactDocgen: 'react-docgen-typescript',
     reactDocgenTypescriptOptions: {
       compilerOptions: {
         allowSyntheticDefaultImports: false,
         esModuleInterop: false,
+        transcludeMarkdown: true,
       },
     },
   },
@@ -62,6 +75,14 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.tsx?$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/,
+        query: {
+          presets: ['babel-preset-expo'],
+        },
+      },
     ];
 
     config.module.rules = [
@@ -72,9 +93,27 @@ module.exports = {
       ...extraRules,
     ];
 
+    // This is to make react-native-svg work
+    // ¯\_(ツ)_/¯
+    config.resolve.extensions.unshift('.web.js');
+
     config.resolve.alias = {
       ...config.resolve.alias,
-      '@shopify/polaris-viz': path.resolve(__dirname, '..', 'src'),
+      'react-native$': 'react-native-web',
+      '@shopify/polaris-viz': path.resolve(
+        __dirname,
+        '..',
+        'packages/polaris-viz/src',
+      ),
+    };
+
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@shopify/polaris-viz-core': path.resolve(
+        __dirname,
+        '..',
+        'packages/polaris-viz-core/src',
+      ),
     };
     return config;
   },

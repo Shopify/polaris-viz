@@ -1,0 +1,71 @@
+.Container {
+  background: rgb(31, 31, 37);
+  border-radius: 8px;
+  padding-bottom: 10px;
+  color: white;
+  display: inline-table;
+}
+
+.CardTop {
+  border-radius: 8px 8px 0 0;
+  padding: 20px;
+  background: rgb(61, 61, 62);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+  transition: background 0.3s, box-shadow 0.3s;
+  margin-top: -1px; // fix background bleeding on border radius
+  min-height: 89px; // always be 2 lines of description high
+}
+
+.HasLink {
+  &:hover {
+    background: rgb(68, 68, 68);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1), 0 8px 40px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.Heading {
+  margin-top: 0;
+}
+
+.Paragraph {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.Link {
+  text-decoration: none;
+  color: white;
+}
+
+.CenterChartContainer {
+  position: relative;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  width: 100%;
+  height: 250px;
+}
+
+.ChartContainer {
+  position: relative;
+  width: 100%;
+  height: 250px;
+}
+
+.CodeSample {
+  padding-top: 20px;
+  display: block;
+  // stylelint-disable declaration-no-important
+  > * {
+    margin: 0 !important;
+  }
+}
+
+.CodeSampleOnly {
+  padding-top: 0;
+
+  > * {
+    margin: 0 !important;
+    // stylelint-enable declaration-no-important
+  }
+}
