@@ -4,6 +4,8 @@
 
 ### Fixed
 - `<Sparkbar />` bar shape is now configurable by the theme bar.hasRoundedCorners property
+- Fixed bug where `showLabels=false` would cause `<SimpleBarChart >` to render with 0 opacity.
+
 
 ## [0.29.0] - 2022-01-20
 

@@ -44,7 +44,7 @@ export function useHorizontalTransitions({
       return item.key ?? '';
     },
     initial: ({index}) => ({
-      opacity: 0,
+      opacity: 1,
       transform: getTransform(index),
     }),
     from: ({index}) => ({
