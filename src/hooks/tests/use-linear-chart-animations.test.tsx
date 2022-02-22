@@ -4,7 +4,6 @@ import {line} from 'd3-shape';
 import type {DataWithDefaults} from 'components/LineChart/types';
 
 import {useLinearChartAnimations} from '../use-linear-chart-animations';
-import {getPointAtLength} from '../../utilities';
 
 jest.mock('../../utilities', () => {
   return {
@@ -158,30 +157,5 @@ describe('useLinearChartAnimations', () => {
     mount(<TestComponent />);
 
     expect(lineGeneratorMock).not.toHaveBeenCalled();
-  });
-
-  it('calls getPointAtLength with a length of 0 if there is only one point in the series', () => {
-    let animatedCoordinates: any[] | null;
-
-    function TestComponent() {
-      animatedCoordinates = useLinearChartAnimations({
-        ...mockProps,
-        data: [
-          {
-            ...data[0],
-            data: [{key: 'Jan 1', value: 1500}],
-          },
-        ],
-        isAnimated: true,
-      }).animatedCoordinates;
-
-      return null;
-    }
-
-    mount(<TestComponent />);
-
-    animatedCoordinates![0].get();
-
-    expect(getPointAtLength).toHaveBeenCalledWith(expect.any(SVGElement), 0);
   });
 });
