@@ -88,8 +88,10 @@ $spacing: 16px;
 $spacing-loose: 20px;
 $spacing-extra-loose: 32px;
 
-$font-stack-base: -apple-system, blinkmacsystemfont, 'San Francisco', 'Segoe UI',
-  roboto, 'Helvetica Neue', sans-serif;
+// stylelint-disable value-keyword-case
+$font-stack-base: -apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI',
+  Roboto, 'Helvetica Neue', sans-serif;
+// stylelint-enable value-keyword-case
 
 @function strip-unit($number) {
   @if type-of($number) == 'number' and not unitless($number) {
