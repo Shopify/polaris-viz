@@ -1,5 +1,6 @@
 import React from 'react';
 import {scaleLinear} from 'd3-scale';
+import {useSparkLine} from '@shopify/polaris-viz-core';
 
 import type {Dimensions} from '../../types';
 import {useThemeSeriesColors} from '../../hooks/use-theme-series-colors';
@@ -30,22 +31,10 @@ export function Chart({
 
   const {width, height} = dimensions ?? {height: 0, width: 0};
 
-  const xValues = Array.prototype.concat.apply(
-    [],
-    data.map(({data}) => data.map(({key}) => key)),
-  );
-
-  const minXValues = Math.min(...xValues);
-  const maxXValues = Math.max(...xValues);
-
-  const yValues = Array.prototype.concat.apply(
-    [],
-    data.map(({data}) => data.map(({value}) => value)),
-  );
-
-  const yScale = scaleLinear()
-    .range([height - SVG_MARGIN, SVG_MARGIN])
-    .domain([Math.min(...yValues), Math.max(...yValues)]);
+  const {minXDomain, maxXDomain, yScale} = useSparkLine({
+    data,
+    height,
+  });
 
   return (
     <React.Fragment>
@@ -63,7 +52,7 @@ export function Chart({
               singleOffsetLeft + SVG_MARGIN,
               width - singleOffsetRight - SVG_MARGIN,
             ])
-            .domain([minXValues, maxXValues]);
+            .domain([minXDomain, maxXDomain]);
 
           const seriesWithColor = {
             color: seriesColors[index],

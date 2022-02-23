@@ -1,13 +1,19 @@
 import {scaleLinear} from 'd3-scale';
 
-export function useSparkLine({data, height, svgMargin = 2}) {
-  const xValues = Array.prototype.concat.apply(
-    [],
-    data.map(({data}) => data.map(({key}) => key)),
-  );
+import type {DataSeries} from '../types';
 
-  const minXValues = Math.min(...xValues);
-  const maxXValues = Math.max(...xValues);
+export function useSparkLine({
+  data,
+  height,
+  svgMargin = 2,
+}: {
+  data: DataSeries[];
+  height: number;
+  svgMargin?: number;
+}) {
+  const dataLenghts = data.map((series) => series.data.length);
+
+  const maxDataLength = Math.max(...dataLenghts);
 
   const yValues = Array.prototype.concat.apply(
     [],
@@ -19,8 +25,8 @@ export function useSparkLine({data, height, svgMargin = 2}) {
     .domain([Math.min(...yValues), Math.max(...yValues)]);
 
   return {
-    minXValues,
-    maxXValues,
+    minXDomain: 0,
+    maxXDomain: maxDataLength,
     yScale,
   };
 }
