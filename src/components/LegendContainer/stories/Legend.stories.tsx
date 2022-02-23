@@ -31,7 +31,7 @@ export default {
     docs: {
       description: {
         component:
-          'Used to indicate which color is associated with which series. The color preview will appear as a square unless a `iconType` is passed. <br /> <br /> With the exception of the `SimpleNormalizedChart`, Polaris Viz components do not include a legend by default. This is to keep the component layout and style flexible.',
+          'Used to indicate which color is associated with which series. The color preview will appear as a square unless a `iconType` is passed to `LegendData`. <br /> <br /> All charts except spark charts and `SimpleNormalizedChart` include a `Legend` by default.',
       },
     },
     controls: {
