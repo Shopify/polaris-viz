@@ -21,7 +21,7 @@ readChangelogs().forEach(({packageChangelogPath, packageChangelog}) => {
       expect(actualIntro).toBe(CHANGELOG_INTRO);
     });
 
-    it.only('contains only known headers', () => {
+    it('contains only known headers', () => {
       const headerLines = packageChangelog
         .split('\n')
         .filter((line) => /^\s*#/.exec(line));
