@@ -14,7 +14,6 @@ for (const package of packages) {
   process.stdout.write(
     `⚙️ Validating standard and typescript build for '${package}'`,
   );
-  // console.log(`✅ Validating standard and typescript build for '${package}'`);
   validateStandardBuild(package);
   validateAncillaryOutput(package);
   readline.cursorTo(process.stdout, 0);
