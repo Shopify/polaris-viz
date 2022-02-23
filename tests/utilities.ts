@@ -31,7 +31,7 @@ export function stripFullFilePaths(value: any): any {
   }
 
   return Object.keys(value).reduce(
-    (obj: object, key) => ({
+    (obj: {[key: string]: unknown}, key) => ({
       ...obj,
       [key]: stripFullFilePaths(value[key]),
     }),
