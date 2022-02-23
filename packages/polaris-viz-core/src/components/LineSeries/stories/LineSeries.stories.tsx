@@ -101,12 +101,12 @@ const props = {
 };
 
 const Template: Story<LineSeriesProps> = (args) => {
-  const {minXValues, maxXValues, yScale} = useSparkLine({
+  const {minXDomain, maxXDomain, yScale} = useSparkLine({
     data: [dataSeries],
     height: 200,
   });
 
-  const xScale = scaleLinear().range([0, 450]).domain([minXValues, maxXValues]);
+  const xScale = scaleLinear().range([0, 450]).domain([minXDomain, maxXDomain]);
 
   return (
     <svg viewBox="0 0 500 500" xmlns={XMLNS} height={500} width={500}>
