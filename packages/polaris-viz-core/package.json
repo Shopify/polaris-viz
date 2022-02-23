@@ -6,7 +6,7 @@
   "homepage": "https://github.com/Shopify/polaris-viz#readme",
   "license": "SEE LICENSE IN LICENSE.md",
   "main": "build/cjs/index.js",
-  "module": "build/esm/index.mjs",
+  "module": "build/esm/index.js",
   "types": "build/ts/index.d.ts",
   "files": [
     "build/"
