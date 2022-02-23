@@ -61,7 +61,7 @@ function Chart({
     components: {Svg},
   } = usePolarisVizContext();
 
-  const {minXValues, maxXValues, yScale} = useSparkLine({
+  const {minXDomain, maxXDomain, yScale} = useSparkLine({
     data,
     height,
   });
@@ -78,7 +78,7 @@ function Chart({
               singleOffsetLeft + SVG_MARGIN,
               width - singleOffsetRight - SVG_MARGIN,
             ])
-            .domain([minXValues, maxXValues]);
+            .domain([minXDomain, maxXDomain]);
 
           const seriesWithColor = {
             ...series,

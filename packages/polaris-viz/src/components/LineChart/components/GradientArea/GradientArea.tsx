@@ -32,14 +32,17 @@ export function GradientArea({series, yScale, xScale, hasSpline}: Props) {
 
   const areaShape = areaGenerator(data);
 
-  if (areaShape == null || areaColor == null) {
+  const gradientStops = useMemo(() => {
+    return getGradientDetails(data).map((gradientStop) => ({
+      ...gradientStop,
+      color: areaColor as string,
+    }));
+  }, [areaColor, data]);
+
+  if (areaShape == null || areaColor == null || gradientStops == null) {
     return null;
   }
 
-  const gradientStops = getGradientDetails(data).map((gradientStop) => ({
-    ...gradientStop,
-    color: areaColor,
-  }));
   return (
     <React.Fragment>
       <defs>
