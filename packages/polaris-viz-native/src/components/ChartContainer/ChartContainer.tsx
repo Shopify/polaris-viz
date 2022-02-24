@@ -23,8 +23,8 @@ export function ChartContainer({theme, children}: Props) {
       onLayout={handleOnLayout}
       style={[
         {
-          borderRadius: Number(chartContainer.borderRadius),
-          padding: chartContainer.padding,
+          borderRadius: Number(parseInt(chartContainer.borderRadius, 10)),
+          padding: Number(parseInt(chartContainer.padding, 10)),
           backgroundColor: chartContainer.backgroundColor,
         },
         {
