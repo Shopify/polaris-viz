@@ -7,6 +7,22 @@
   "private": false,
   "license": "SEE LICENSE IN LICENSE.md",
   "author": "Shopify <dev@shopify.com>",
+  "watch": {
+    "watch-dev": {
+      "patterns": [
+        "src"
+      ],
+      "extensions": "ts,tsx",
+      "quiet": true,
+      "legacyWatch": true,
+      "delay": 2500,
+      "runOnChangeOnly": false
+    }
+  },
+  "scripts": {
+    "dev": "loom dev",
+    "watch-dev": "npm-watch dev"
+  },
   "files": [
     "build/",
     "!build/tsconfig.tsbuildinfo"
