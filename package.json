@@ -39,10 +39,6 @@
       "path": "packages/polaris-viz-core/build/cjs/index.js"
     },
     {
-      "name": "polaris-viz-native-cjs",
-      "path": "packages/polaris-viz-native/build/cjs/index.js"
-    },
-    {
       "name": "polaris-viz-cjs",
       "path": "packages/polaris-viz/build/cjs/index.js"
     },
