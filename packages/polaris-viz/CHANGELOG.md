@@ -1,8 +1,18 @@
 # Changelog
 
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
+and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+
 ## Unreleased
+
+### Changed
+
 - Extracted common logic into new `@shopify/polaris-viz-core` package.
+
 ### Fixed
+
 - `<Sparkbar />` bar shape is now configurable by the theme bar.hasRoundedCorners property
 - Fixed bug where `showLabels=false` would cause `<SimpleBarChart >` to render with 0 opacity.
 - Fix bug where vertical `<SimpleNormalizedChart />` would use the wrong index for color vision interactions.
@@ -33,6 +43,7 @@
 ## [0.28.7] - 2022-01-20
 
 ### Fixed
+
 - Prevent tooltips from rendering outside `<ChartContainer/>`
 - Fixed a bug that prevented Firefox from using `Print` theme on `<SimpleNormalizedChart/>`
 - Fixed opacity not applying to `<SparkLineChart />` area when animation is disabled.
@@ -100,6 +111,7 @@
 - Added `dataPointIndex` to `Annotation`.
 - Renamed `series` to `data` in `LineChartProps`.
 - Changed `LineChartProps.data` to use `DataSeries[]`.
+
 ### Removed
 
 - Removed `<MultiSeriesBarChart />`.
@@ -363,7 +375,7 @@
 
 - Added `xAxisOption.hide` option in `<LineChart>` to override the theme option.
 
-### Changes
+### Changed
 
 - yAxis labels now default to right aligned in `<MultiSeriesBarChart>`.
 
@@ -539,7 +551,7 @@ It is not advised to use this version -- stick to `0.16.1` or wait for `0.17.1` 
 
 ## [0.13.0] - 2021-05-13
 
-### Addded
+### Added
 
 - Options for the `<Sparkline />` and `<Sparkbar />` to accept `null` data and left and right offsets for their data series.
 
@@ -567,7 +579,7 @@ It is not advised to use this version -- stick to `0.16.1` or wait for `0.17.1` 
 
 - Removes text selection from visualizations so they work better on mobile/touch devices
 
-## [0.12.1] — 2021-05-10
+## [0.12.1] - 2021-05-10
 
 ### Fixed
 
@@ -575,7 +587,7 @@ It is not advised to use this version -- stick to `0.16.1` or wait for `0.17.1` 
 - `<SparkLine/>` and `<Sparkbar/>` stroke dasharray treatment is consistent at all sizes
 - Components now resize when their container resizes, not just when the page resizes
 
-## [0.12.0] — 2021-05-10
+## [0.12.0] - 2021-05-10
 
 ### Fixed
 
@@ -583,20 +595,20 @@ It is not advised to use this version -- stick to `0.16.1` or wait for `0.17.1` 
 - `<Sparkbar />` Bar radius is now proportional to the bar width
 - Added `@juggle/resize-observer` library as a peer and dev dependency
 
-## [0.11.3] — 2021-05-10
+## [0.11.3] - 2021-05-10
 
 ### Changed
 
 - `<MultiSeriesBarChart/>`, `<BarChart />` and `<LineChart/>` yScale will allow data to overflow the highest tick if the highest value is less than half way to the next tick
 
-## [0.11.2] — 2021-05-07
+## [0.11.2] - 2021-05-07
 
 ### Fixed
 
 - yAxis line height is no longer inherited
 - xAxis bar chart ticks are not shown when minimal labels are selected, or when they are disabled
 
-## [0.11.1] — 2021-05-07
+## [0.11.1] - 2021-05-07
 
 ### Added
 
@@ -610,7 +622,7 @@ It is not advised to use this version -- stick to `0.16.1` or wait for `0.17.1` 
 
 - Increased margin between x axis and labels from 8px to 24px
 
-## [0.11.0] — 2021-05-06
+## [0.11.0] - 2021-05-06
 
 ### Added
 
@@ -624,13 +636,13 @@ It is not advised to use this version -- stick to `0.16.1` or wait for `0.17.1` 
 
 - Line chart legend no longer shows square preview
 
-## [0.10.2] — 2021-05-05
+## [0.10.2] - 2021-05-05
 
 ### Fixed
 
 - Reverts dev dependency changes that broke deploy
 
-## [0.10.1] — 2021-05-05
+## [0.10.1] - 2021-05-05
 
 ### Added
 
@@ -640,7 +652,7 @@ It is not advised to use this version -- stick to `0.16.1` or wait for `0.17.1` 
 
 - `<BarChart />` data type
 
-## [0.10.0] — 2021-05-04
+## [0.10.0] - 2021-05-04
 
 ### Added
 
@@ -652,13 +664,13 @@ It is not advised to use this version -- stick to `0.16.1` or wait for `0.17.1` 
 
 - `highLightColor` from `<MultiSeriesBarChart />` `barOptions` prop
 
-## [0.9.4] — 2021-05-04
+## [0.9.4] - 2021-05-04
 
 ### Added
 
 - Dark mode colors to Color type
 
-## [0.9.3] — 2021-05-03
+## [0.9.3] - 2021-05-03
 
 ### Fixed
 
@@ -669,7 +681,7 @@ It is not advised to use this version -- stick to `0.16.1` or wait for `0.17.1` 
 - Check window is defined before accessing window methods
 - Added new dark mode colors
 
-## [0.9.2] — 2021-04-29
+## [0.9.2] - 2021-04-29
 
 ### Added
 
@@ -679,14 +691,14 @@ It is not advised to use this version -- stick to `0.16.1` or wait for `0.17.1` 
 
 - `showArea` for `<LineChart/>` series prop replaced by `areaColor`
 
-## [0.9.1] — 2021-04-27
+## [0.9.1] - 2021-04-27
 
 ### Added
 
 - `<Sparkbar />` component
 - Annotations prop to `<BarChart />`
 
-## [0.9.0] — 2021-04-26
+## [0.9.0] - 2021-04-26
 
 ### Added
 
@@ -704,7 +716,7 @@ It is not advised to use this version -- stick to `0.16.1` or wait for `0.17.1` 
 
 - The timeseries prop has been removed from bar charts, in favour of using that label handling by default (when there is not enough room for all diagonal labels, some will be dropped).
 
-## [0.8.1] — 2021-04-20
+## [0.8.1] - 2021-04-20
 
 ### Added
 
@@ -712,7 +724,7 @@ It is not advised to use this version -- stick to `0.16.1` or wait for `0.17.1` 
 - `emptyStateText` and empty state handling to `<BarChart />`
 - `isAnimated` prop to `LineChart`, `BarChart` and `MultiSeriesBarChart`
 
-## [0.8.0] — 2021-04-14
+## [0.8.0] - 2021-04-14
 
 ### Added
 
@@ -725,7 +737,7 @@ It is not advised to use this version -- stick to `0.16.1` or wait for `0.17.1` 
 
 ## [0.7.3] - 2021-04-07
 
-## Added
+### Added
 
 - Storybook
 
@@ -737,7 +749,7 @@ It is not advised to use this version -- stick to `0.16.1` or wait for `0.17.1` 
 
 ## [0.7.1] - 2021-03-24
 
-## Added
+### Added
 
 - Rounded corners option to bar chart components
 
@@ -913,13 +925,13 @@ It is not advised to use this version -- stick to `0.16.1` or wait for `0.17.1` 
 - Added the `isStacked` bolean prop to `<MultiSeriesBarChart />`
 - Added `<StackedBarGroup />` to `<MultiSeriesBarChart />` to allow for vertically stacked bars
 
-### [0.0.18] - 2020-10-09
+## [0.0.18] - 2020-10-09
 
 ### Fixed
 
 - Made axes and label colors consistent
 
-### [0.0.17] - 2020-10-02
+## [0.0.17] - 2020-10-02
 
 ### Fixed
 
