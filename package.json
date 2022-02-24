@@ -5,10 +5,18 @@
   "workspaces": [
     "packages/*"
   ],
+  "watch": {
+    "dev": {
+      "patterns": [
+        "packages"
+      ],
+      "extensions": "ts,tsx"
+    }
+  },
   "scripts": {
     "build": "loom build",
     "storybook": "start-storybook -p 6006 -s public",
-    "dev": "loom dev",
+    "watch": "npm-watch build",
     "test": "loom test",
     "lint": "loom lint",
     "format": "loom lint --fix",
