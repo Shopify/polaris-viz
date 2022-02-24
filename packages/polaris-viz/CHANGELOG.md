@@ -10,7 +10,9 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Changed
 
 - Extracted common logic into new `@shopify/polaris-viz-core` package.
+
 ### Fixed
+
 - `<Sparkbar />` bar shape is now configurable by the theme bar.hasRoundedCorners property
 - Bug where `showLabels=false` would cause `<SimpleBarChart >` to render with 0 opacity.
 - Bug where vertical `<SimpleNormalizedChart />` would use the wrong index for color vision interactions.
@@ -42,6 +44,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ## [0.28.7] - 2022-01-20
 
 ### Fixed
+
 - Prevent tooltips from rendering outside `<ChartContainer/>`
 - Fixed a bug that prevented Firefox from using `Print` theme on `<SimpleNormalizedChart/>`
 - Fixed opacity not applying to `<SparkLineChart />` area when animation is disabled.
@@ -109,6 +112,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 - Added `dataPointIndex` to `Annotation`.
 - Renamed `series` to `data` in `LineChartProps`.
 - Changed `LineChartProps.data` to use `DataSeries[]`.
+
 ### Removed
 
 - Removed `<MultiSeriesBarChart />`.
