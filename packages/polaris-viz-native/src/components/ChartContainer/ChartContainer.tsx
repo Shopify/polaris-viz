@@ -1,30 +1,30 @@
-import React, { useState, ReactElement, cloneElement } from 'react';
-import { View } from 'react-native';
-import type { Dimensions } from '@shopify/polaris-viz-core';
-import { useTheme } from '@shopify/polaris-viz-core';
+import React, {useState, ReactElement, cloneElement} from 'react';
+import {View} from 'react-native';
+import type {Dimensions} from '@shopify/polaris-viz-core';
+import {useTheme} from '@shopify/polaris-viz-core';
 
 interface Props {
   children: ReactElement;
   theme?: string;
 }
 
-export function ChartContainer({ theme, children }: Props) {
+export function ChartContainer({theme, children}: Props) {
   const [chartDimensions, setChartDimensions] =
     useState<Dimensions | null>(null);
 
-  const { chartContainer } = useTheme(theme);
+  const {chartContainer} = useTheme(theme);
 
   const handleOnLayout = (event) => {
-    const { width, height } = event.nativeEvent.layout;
-    setChartDimensions({ width, height });
+    const {width, height} = event.nativeEvent.layout;
+    setChartDimensions({width, height});
   };
   return (
     <View
       onLayout={handleOnLayout}
       style={[
         {
-          borderRadius: Number(0),
-          padding: Number(1),
+          borderRadius: Number(parseInt(chartContainer.borderRadius, 10)),
+          padding: Number(parseInt(chartContainer.padding, 10)),
           backgroundColor: chartContainer.backgroundColor,
         },
         {
@@ -37,9 +37,9 @@ export function ChartContainer({ theme, children }: Props) {
       {chartDimensions == null
         ? null
         : cloneElement(children, {
-          theme,
-          dimensions: chartDimensions,
-        })}
+            theme,
+            dimensions: chartDimensions,
+          })}
     </View>
   );
 }
