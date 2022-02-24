@@ -34,6 +34,7 @@
     "@react-spring/native": "^9.4.2",
     "@shopify/polaris-viz-core": "^1.0.0-alpha0",
     "d3-scale": "^1.0.7",
+    "npm-watch": "^0.11.0",
     "react-native-svg": "12.1.1"
   },
   "devDependencies": {
