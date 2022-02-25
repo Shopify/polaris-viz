@@ -108,7 +108,8 @@ export function Chart({
 
   const fontSize = width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
 
-  const emptyState = data.length === 0;
+  const emptyState =
+    data.length === 0 || data.every((series) => series.data.length === 0);
 
   const {ticks: initialTicks} = useYScale({
     fontSize,
@@ -268,7 +269,11 @@ export function Chart({
     if (eventType === 'mouse') {
       const point = eventPointNative(event!);
 
-      if (point == null || xScale == null) {
+      if (
+        point == null ||
+        xScale == null ||
+        reversedSeries[longestSeriesIndex] == null
+      ) {
         return TOOLTIP_POSITION_DEFAULT_RETURN;
       }
 
@@ -419,7 +424,7 @@ export function Chart({
           })}
 
           <Points
-            activeIndex={activeIndex}
+            activeIndex={emptyState ? null : activeIndex}
             animatedCoordinates={animatedCoordinates}
             animatePoints={animatePoints}
             data={reversedSeries}

@@ -94,7 +94,7 @@ export function useLinearChartAnimations({
   // Using the percentage, get the length to calculate the coordinates at the current index
   const getCoordinatesFromPercentage = useCallback(
     (percent: number, path: SVGPathElement, totalLength: number) => {
-      if (path == null || totalLength == null) {
+      if (path == null || totalLength == null || totalLength === 0) {
         return {x: 0, y: 0};
       }
 
