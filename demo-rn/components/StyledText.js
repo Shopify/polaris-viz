@@ -1,6 +1,6 @@
-import { Platform } from "react-native";
+import {Platform} from 'react-native';
 
-import { Text } from "./Themed";
+import {Text} from './Themed';
 
 export function MonoText(props) {
   return (
@@ -11,11 +11,11 @@ export function MonoText(props) {
         {
           // The "code" font is different on each platform.
           fontFamily: Platform.select({
-            default: "Courier",
-            ios: "Courier New",
-            android: "monospace",
+            default: 'Courier',
+            ios: 'Courier New',
+            android: 'monospace',
           }),
-          fontWeight: "500",
+          fontWeight: '500',
         },
       ]}
     />
