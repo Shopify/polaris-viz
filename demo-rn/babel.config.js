@@ -3,13 +3,13 @@ module.exports = function (api) {
   return {
     presets: [
       [
-        "babel-preset-expo",
+        'babel-preset-expo',
         {
           // Use React 17 automatic JSX runtime.
-          jsxRuntime: "automatic",
+          jsxRuntime: 'automatic',
         },
       ],
     ],
-    plugins: ["react-native-reanimated/plugin"],
+    // plugins: ["react-native-reanimated/plugin"],
   };
 };
