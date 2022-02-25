@@ -2,7 +2,6 @@ import {createPackage, createProjectBuildPlugin} from '@shopify/loom';
 import {buildLibrary} from '@shopify/loom-plugin-build-library';
 import {buildLibraryExtended} from '@shopify/loom-plugin-build-library-extended';
 
-// eslint-disable-next-line import/no-default-export
 export default createPackage((pkg) => {
   pkg.entry({root: './src/index.ts'});
 
