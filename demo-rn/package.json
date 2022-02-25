@@ -1,13 +1,14 @@
 {
+  "name": "demo-rn",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
   "dependencies": {
     "@expo/vector-icons": "^12.0.0",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/bottom-tabs": "~6.0.9",
     "@react-navigation/native": "~6.0.6",
     "@react-navigation/stack": "~6.0.11",
-    "@react-spring/native": "^9.4.2",
-    "d3-scale": "^4.0.2",
-    "d3-shape": "^1.3.2",
     "expo": "^44.0.0",
     "expo-asset": "~8.4.4",
     "expo-constants": "~13.0.0",
@@ -34,8 +35,5 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web"
-  },
-  "version": "1.0.0",
-  "private": true,
-  "name": "demo-rn"
+  }
 }
