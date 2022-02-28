@@ -7,17 +7,21 @@
     "packages/*"
   ],
   "watch": {
-    "dev": {
+    "build": {
       "patterns": [
-        "packages"
+        "/packages/{polaris-viz-native,polaris-viz-core}/**/*.{tsx,ts}"
       ],
-      "extensions": "ts,tsx"
+      "extensions": "ts,tsx",
+      "ignore": [
+        "*.d.ts"
+      ]
     }
   },
   "scripts": {
     "build": "loom build",
     "storybook": "start-storybook -p 6006 -s public",
-    "watch": "npm-watch build",
+    "dev": "npm-watch build",
+    "sandbox": "yarn --cwd ./demo-rn start -c",
     "test": "loom test",
     "lint": "loom lint",
     "format": "loom lint --fix",
@@ -146,5 +150,8 @@
     "shx": "^0.3.2",
     "size-limit": "^5.0.1",
     "typescript": "~4.3.2"
+  },
+  "dependencies": {
+    "concurrently": "^7.0.0"
   }
 }
