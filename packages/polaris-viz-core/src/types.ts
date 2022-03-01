@@ -275,7 +275,7 @@ export interface SvgComponents {
 
 export interface SparkBarChartProps {
   data: DataSeries[];
-  dimensions: Dimensions;
+  dimensions?: Dimensions;
   dataOffsetRight?: number;
   dataOffsetLeft?: number;
   accessibilityLabel?: string;

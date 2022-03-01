@@ -95,7 +95,6 @@ export default function App() {
           value: 400,
         },
       ],
-      color: 'red',
     },
     {
       data: [

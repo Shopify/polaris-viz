@@ -17,7 +17,6 @@ export function Bar({
   value,
   yScale,
   width,
-  height,
   fill,
   hasRoundedCorners,
 }: Props) {
@@ -26,12 +25,13 @@ export function Bar({
   const rotation = isNegative ? 'rotate(180deg)' : 'rotate(0deg)';
   const xPosition = isNegative ? x + width : x;
 
+  const height = 100;
+
   const {
     components: { Path },
-    animated
   } = usePolarisVizContext();
 
-  const AnimatedPath = animated(Path);
+  // const AnimatedPath = animated(Path);
 
 
   const yPosition = useMemo(() => {
@@ -40,10 +40,10 @@ export function Bar({
     const getYPosition = (value: number) =>
       isNegative ? zeroScale + value : zeroScale - value;
 
-    if (typeof height === 'number') {
-      return getYPosition(height);
-    }
-    return height.to(getYPosition);
+    // if (typeof height === 'number') {
+    return getYPosition(height);
+    // }
+    // return height.to(getYPosition);
   }, [height, isNegative, zeroScale]);
 
   const style = useMemo(() => {
@@ -52,11 +52,9 @@ export function Bar({
     const getStyle = (y: number) =>
       `translate(${xPosition}px, ${y}px) ${rotation}`;
 
-    if (typeof yPosition === 'number') return { transform: getStyle(yPosition) };
+    return { transform: getStyle(yPosition) }
 
-    return {
-      transform: yPosition.to(getStyle),
-    };
+
   }, [yPosition, xPosition, rotation]);
 
   const path = useMemo(() => {
@@ -94,15 +92,15 @@ export function Bar({
       return `${moveToStart}${arc}${moveToEndOfArc}${lineRightTopToBottom}${lineBottomRightToLeft}${lineLeftFromBottomToStart}`;
     };
 
-    if (typeof height === 'number') {
-      return calculatePath(height);
-    }
-    return height.to(calculatePath);
+    // if (typeof height === 'number') {
+    return calculatePath(height);
+    // }
+    // return height.to(calculatePath);
   }, [height, width, hasRoundedCorners]);
 
   if (value == null || width < 0) {
     return null;
   }
 
-  return <AnimatedPath d={path} style={style} fill={fill} />;
+  return <Path d={path} style={style} fill={fill} />;
 }

@@ -61,11 +61,13 @@ export function SparkBarSeries({
   dataOffsetRight = 0,
   prefersReducedMotion
 }: SparkBarChartProps) {
-  const { height, width } = dimensions;
+  const { height = 0, width = 0 } = dimensions ?? { width: 0, height: 0 };
+  console.log({ height, width })
+
   const selectedTheme = useTheme(theme);
   const [seriesColor] = getSeriesColors(1, selectedTheme);
   const {
-    components: { Path, G, Defs, Mask, Rect },
+    components: { Path, G, Defs, Mask, Rect, Svg },
     animated,
   } = usePolarisVizContext();
 
@@ -161,7 +163,7 @@ export function SparkBarSeries({
     ];
 
   return (
-    <React.Fragment>
+    <Svg width={width} height={height}>
       <Defs>
         <LinearGradientWithStops
           id={id}
@@ -176,6 +178,7 @@ export function SparkBarSeries({
         <AnimatedGroup opacity={comparisonData ? '0.9' : '1'}>
           {transitions(({ height: barHeight }, item, _transition, index) => {
             const xPosition = xScale(index.toString());
+            console.log(typeof xPosition)
             const height = shouldAnimate
               ? barHeight
               : getBarHeight(item.value ?? 0);
@@ -188,9 +191,8 @@ export function SparkBarSeries({
                 value={item.value.value}
                 width={barWidth}
                 height={height}
-                // fill="white"
+                fill="white"
                 hasRoundedCorners
-                fill="red"
               />
             );
           })}
@@ -215,6 +217,6 @@ export function SparkBarSeries({
           strokeLinecap="round"
         />
       )}
-    </React.Fragment>
+    </Svg>
   );
 }
