@@ -1,6 +1,6 @@
 {
   "name": "@shopify/polaris-viz-native",
-  "version": "1.0.0-monorepo-beta.1.0",
+  "version": "1.0.0-monorepo-beta.1.1",
   "main": "build/cjs/index.js",
   "types": "build/ts/index.d.ts",
   "description": "Polaris Viz for React Native",
