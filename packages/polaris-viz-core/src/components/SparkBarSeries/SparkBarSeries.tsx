@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import { scaleBand, scaleLinear } from 'd3-scale';
 import { line } from 'd3-shape';
-import { useTransition } from 'react-spring';
+import { useTransition } from '@react-spring/core';
 
 import {
   getSeriesColors,
@@ -9,12 +9,12 @@ import {
   uniqueId,
   getAnimationTrail,
 } from '../../utilities';
-import { usePrefersReducedMotion, useTheme } from '../../hooks';
+import { usePolarisVizContext, useTheme } from '../../hooks';
 import { BARS_TRANSITION_CONFIG } from '../../constants';
 import type { SparkBarChartProps, DataPoint, DataSeries } from '../../types';
-import { Defs, LinearGradient, Mask, Path, Rect } from '..';
 
 import { Bar } from './components';
+import { LinearGradientWithStops } from '../../components';
 
 const STROKE_WIDTH = 1.5;
 const BAR_PADDING = 0.3;
@@ -59,11 +59,18 @@ export function SparkBarSeries({
   isAnimated,
   dataOffsetLeft = 0,
   dataOffsetRight = 0,
+  prefersReducedMotion
 }: SparkBarChartProps) {
   const { height, width } = dimensions;
-  const { prefersReducedMotion } = usePrefersReducedMotion();
   const selectedTheme = useTheme(theme);
   const [seriesColor] = getSeriesColors(1, selectedTheme);
+  const {
+    components: { Path, G, Defs, Mask, Rect },
+    animated,
+  } = usePolarisVizContext();
+
+  const AnimatedGroup = animated(G);
+
 
   const [defaultData, comparisonData] = useMemo(() => {
     const defaultData = data.find(({ isComparison }) => isComparison !== true);
@@ -155,8 +162,8 @@ export function SparkBarSeries({
 
   return (
     <React.Fragment>
-      <Defs native>
-        <LinearGradient
+      <Defs>
+        <LinearGradientWithStops
           id={id}
           gradient={color}
           gradientUnits="userSpaceOnUse"
@@ -165,8 +172,8 @@ export function SparkBarSeries({
         />
       </Defs>
 
-      <Mask native id={clipId}>
-        <g opacity={comparisonData ? '0.9' : '1'}>
+      <Mask id={clipId}>
+        <AnimatedGroup opacity={comparisonData ? '0.9' : '1'}>
           {transitions(({ height: barHeight }, item, _transition, index) => {
             const xPosition = xScale(index.toString());
             const height = shouldAnimate
@@ -181,15 +188,16 @@ export function SparkBarSeries({
                 value={item.value.value}
                 width={barWidth}
                 height={height}
-                fill="white"
+                // fill="white"
+                hasRoundedCorners
+                fill="red"
               />
             );
           })}
-        </g>
+        </AnimatedGroup>
       </Mask>
 
       <Rect
-        native
         fill={`url(#${id})`}
         width={width}
         height={height}
@@ -198,14 +206,13 @@ export function SparkBarSeries({
 
       {comparisonData == null ? null : (
         <Path
-          native
           stroke={selectedTheme.seriesColors.comparison}
           strokeWidth={STROKE_WIDTH}
           d={lineShape!}
           opacity="0.9"
           strokeDashoffset={strokeDashoffset}
           strokeDasharray={strokeDasharray}
-          strokeLineCap="round"
+          strokeLinecap="round"
         />
       )}
     </React.Fragment>

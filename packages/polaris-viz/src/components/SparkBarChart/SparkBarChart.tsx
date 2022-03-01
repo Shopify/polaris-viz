@@ -1,11 +1,11 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 
 import {
-  Svg,
   SparkBarChartProps,
   SparkBarSeries,
-} from '@shopify/polaris-viz-core/src';
+  usePolarisVizContext
+} from '@shopify/polaris-viz-core';
 
 export function SparkBarChart({
   data,
@@ -18,16 +18,16 @@ export function SparkBarChart({
   const width = 600;
   const height = 400;
 
+  const {
+    components: { Svg },
+  } = usePolarisVizContext();
+
   return (
     <View
-      style={[
-        StyleSheet.absoluteFill,
-        { alignItems: 'center', justifyContent: 'center' },
-      ]}
       accessibilityRole="image"
       accessibilityLabel={accessibilityLabel}
     >
-      <Svg native width={width} height={height}>
+      <Svg width={width} height={height}>
         <SparkBarSeries
           data={data}
           dimensions={{ height, width }}

@@ -2,10 +2,11 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 
 import {
-  Svg,
   SparkBarChartProps,
   SparkBarSeries,
-} from '../../../../polaris-viz-core/src';
+  usePolarisVizContext,
+} from '@shopify/polaris-viz-core';
+import { usePrefersReducedMotion } from '../../hooks';
 
 export function SparkBarChart({
   data,
@@ -18,6 +19,13 @@ export function SparkBarChart({
   const width = 600;
   const height = 400;
 
+  const {
+    components: { Svg },
+  } = usePolarisVizContext();
+
+  const { prefersReducedMotion } = usePrefersReducedMotion();
+
+
   return (
     <View
       style={[
@@ -27,7 +35,7 @@ export function SparkBarChart({
       accessibilityRole="image"
       accessibilityLabel={accessibilityLabel}
     >
-      <Svg native width={width} height={height}>
+      <Svg width={width} height={height}>
         <SparkBarSeries
           data={data}
           dimensions={{ height, width }}
@@ -36,6 +44,7 @@ export function SparkBarChart({
           dataOffsetLeft={dataOffsetLeft}
           dataOffsetRight={dataOffsetRight}
           theme={theme}
+          prefersReducedMotion={prefersReducedMotion}
         />
       </Svg>
     </View>

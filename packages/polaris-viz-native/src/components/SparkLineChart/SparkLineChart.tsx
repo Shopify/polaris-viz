@@ -1,6 +1,6 @@
 import React from 'react';
-import {View} from 'react-native';
-import {scaleLinear} from 'd3-scale';
+import { View } from 'react-native';
+import { scaleLinear } from 'd3-scale';
 import {
   SparkLineChartProps,
   useTheme,
@@ -11,8 +11,8 @@ import {
   Dimensions,
 } from '@shopify/polaris-viz-core';
 
-import {usePrefersReducedMotion} from '../../hooks';
-import {ChartContainer} from '../ChartContainer';
+import { usePrefersReducedMotion } from '../../hooks';
+import { ChartContainer } from '../ChartContainer';
 
 const SVG_MARGIN = 2;
 
@@ -24,7 +24,7 @@ export function SparkLineChart({
   offsetRight = 0,
   theme = 'Default',
 }: SparkLineChartProps) {
-  const {prefersReducedMotion} = usePrefersReducedMotion();
+  const { prefersReducedMotion } = usePrefersReducedMotion();
   const shouldAnimate = !prefersReducedMotion && isAnimated;
 
   return (
@@ -52,16 +52,16 @@ function Chart({
   offsetLeft = 0,
   offsetRight = 0,
   theme = 'Default',
-  dimensions = {width: 0, height: 0},
+  dimensions = { width: 0, height: 0 },
 }: ChartProps) {
-  const {width, height} = dimensions;
+  const { width, height } = dimensions;
   const selectedTheme = useTheme(theme);
   const seriesColors = useThemeSeriesColors(data, selectedTheme);
   const {
-    components: {Svg},
+    components: { Svg },
   } = usePolarisVizContext();
 
-  const {minXDomain, maxXDomain, yScale} = useSparkLine({
+  const { minXDomain, maxXDomain, yScale } = useSparkLine({
     data,
     height,
   });
@@ -95,7 +95,7 @@ function Chart({
                 yScale={yScale}
                 data={seriesWithColor}
                 isAnimated={isAnimated}
-                svgDimensions={{height, width}}
+                svgDimensions={{ height, width }}
                 theme={theme}
               />
             </React.Fragment>

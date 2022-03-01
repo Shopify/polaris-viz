@@ -1,13 +1,13 @@
 import React from 'react';
-import type {Story, Meta} from '@storybook/react';
+import type { Story, Meta } from '@storybook/react';
 
-import {SparkBarChart, SparkBarChartProps} from '../SparkBarChart';
-import {THEME_CONTROL_ARGS} from '../../../storybook';
+import { SparkBarChart } from '../SparkBarChart';
+import { THEME_CONTROL_ARGS } from '../../../storybook';
 
 export default {
   title: 'polaris-viz/Spark Charts/SparkBarChart',
   parameters: {
-    controls: {sort: 'requiredFirst', expanded: true},
+    controls: { sort: 'requiredFirst', expanded: true },
     docs: {
       description: {
         component:
@@ -18,7 +18,7 @@ export default {
   component: SparkBarChart,
   decorators: [
     (Story: any) => (
-      <div style={{width: '200px', height: '100px'}}>{Story()}</div>
+      <div style={{ width: '200px', height: '100px' }}>{Story()}</div>
     ),
   ],
   argTypes: {
@@ -44,42 +44,42 @@ export default {
   },
 } as Meta;
 
-const Template: Story<SparkBarChartProps> = (args: SparkBarChartProps) => {
+const Template: Story<any> = (args: any) => {
   return <SparkBarChart {...args} />;
 };
 
 const comparisonValue = 2000;
-const defaultProps: SparkBarChartProps = {
+const defaultProps = {
   isAnimated: true,
   data: [
     {
       data: [
-        {key: 0, value: 100},
-        {key: 1, value: 200},
-        {key: 2, value: 300},
-        {key: 3, value: 400},
-        {key: 4, value: 400},
-        {key: 5, value: 100},
-        {key: 6, value: 2000},
-        {key: 7, value: 800},
-        {key: 8, value: 900},
-        {key: 9, value: 200},
-        {key: 10, value: 400},
+        { key: 0, value: 100 },
+        { key: 1, value: 200 },
+        { key: 2, value: 300 },
+        { key: 3, value: 400 },
+        { key: 4, value: 400 },
+        { key: 5, value: 100 },
+        { key: 6, value: 2000 },
+        { key: 7, value: 800 },
+        { key: 8, value: 900 },
+        { key: 9, value: 200 },
+        { key: 10, value: 400 },
       ],
     },
     {
       data: [
-        {key: 0, value: comparisonValue},
-        {key: 1, value: comparisonValue},
-        {key: 2, value: comparisonValue},
-        {key: 3, value: comparisonValue},
-        {key: 4, value: comparisonValue},
-        {key: 5, value: comparisonValue},
-        {key: 6, value: comparisonValue},
-        {key: 7, value: comparisonValue},
-        {key: 8, value: comparisonValue},
-        {key: 9, value: comparisonValue},
-        {key: 10, value: comparisonValue},
+        { key: 0, value: comparisonValue },
+        { key: 1, value: comparisonValue },
+        { key: 2, value: comparisonValue },
+        { key: 3, value: comparisonValue },
+        { key: 4, value: comparisonValue },
+        { key: 5, value: comparisonValue },
+        { key: 6, value: comparisonValue },
+        { key: 7, value: comparisonValue },
+        { key: 8, value: comparisonValue },
+        { key: 9, value: comparisonValue },
+        { key: 10, value: comparisonValue },
       ],
       isComparison: true,
     },
@@ -88,10 +88,10 @@ const defaultProps: SparkBarChartProps = {
     'A bar chart showing orders over time for the past 11 weeks. The minimum is 100 orders and the maximum is 1,000 orders, compared to an average of 500 orders during previous 11-week period.',
 };
 
-export const Default: Story<SparkBarChartProps> = Template.bind({});
+export const Default: Story<any> = Template.bind({});
 Default.args = defaultProps;
 
-export const OffsetAndNulls: Story<SparkBarChartProps> = Template.bind({});
+export const OffsetAndNulls: Story<any> = Template.bind({});
 OffsetAndNulls.args = {
   ...defaultProps,
   dataOffsetLeft: 10,
@@ -99,39 +99,39 @@ OffsetAndNulls.args = {
   data: [
     {
       data: [
-        {key: 0, value: 100},
-        {key: 1, value: 200},
-        {key: 2, value: -300},
-        {key: 3, value: null},
-        {key: 4, value: 400},
-        {key: 5, value: 0},
-        {key: 6, value: 0},
-        {key: 7, value: 400},
-        {key: 8, value: 700},
-        {key: 9, value: 900},
-        {key: 10, value: 500},
+        { key: 0, value: 100 },
+        { key: 1, value: 200 },
+        { key: 2, value: -300 },
+        { key: 3, value: null },
+        { key: 4, value: 400 },
+        { key: 5, value: 0 },
+        { key: 6, value: 0 },
+        { key: 7, value: 400 },
+        { key: 8, value: 700 },
+        { key: 9, value: 900 },
+        { key: 10, value: 500 },
       ],
     },
     {
       data: [
-        {key: 0, value: comparisonValue},
-        {key: 1, value: comparisonValue},
-        {key: 2, value: comparisonValue},
-        {key: 3, value: comparisonValue},
-        {key: 4, value: comparisonValue},
-        {key: 5, value: comparisonValue},
-        {key: 6, value: comparisonValue},
-        {key: 7, value: comparisonValue},
-        {key: 8, value: comparisonValue},
-        {key: 9, value: comparisonValue},
-        {key: 10, value: comparisonValue},
+        { key: 0, value: comparisonValue },
+        { key: 1, value: comparisonValue },
+        { key: 2, value: comparisonValue },
+        { key: 3, value: comparisonValue },
+        { key: 4, value: comparisonValue },
+        { key: 5, value: comparisonValue },
+        { key: 6, value: comparisonValue },
+        { key: 7, value: comparisonValue },
+        { key: 8, value: comparisonValue },
+        { key: 9, value: comparisonValue },
+        { key: 10, value: comparisonValue },
       ],
       isComparison: true,
     },
   ],
 };
 
-export const OverwrittenSeriesColors: Story<SparkBarChartProps> = Template.bind(
+export const OverwrittenSeriesColors: Story<any> = Template.bind(
   {},
 );
 OverwrittenSeriesColors.args = {
@@ -139,33 +139,33 @@ OverwrittenSeriesColors.args = {
   data: [
     {
       data: [
-        {key: 0, value: 100},
-        {key: 1, value: 200},
-        {key: 2, value: -300},
-        {key: 3, value: null},
-        {key: 4, value: 400},
-        {key: 5, value: 0},
-        {key: 6, value: 0},
-        {key: 7, value: 400},
-        {key: 8, value: 700},
-        {key: 9, value: 900},
-        {key: 10, value: 500},
+        { key: 0, value: 100 },
+        { key: 1, value: 200 },
+        { key: 2, value: -300 },
+        { key: 3, value: null },
+        { key: 4, value: 400 },
+        { key: 5, value: 0 },
+        { key: 6, value: 0 },
+        { key: 7, value: 400 },
+        { key: 8, value: 700 },
+        { key: 9, value: 900 },
+        { key: 10, value: 500 },
       ],
       color: 'lime',
     },
     {
       data: [
-        {key: 0, value: comparisonValue},
-        {key: 1, value: comparisonValue},
-        {key: 2, value: comparisonValue},
-        {key: 3, value: comparisonValue},
-        {key: 4, value: comparisonValue},
-        {key: 5, value: comparisonValue},
-        {key: 6, value: comparisonValue},
-        {key: 7, value: comparisonValue},
-        {key: 8, value: comparisonValue},
-        {key: 9, value: comparisonValue},
-        {key: 10, value: comparisonValue},
+        { key: 0, value: comparisonValue },
+        { key: 1, value: comparisonValue },
+        { key: 2, value: comparisonValue },
+        { key: 3, value: comparisonValue },
+        { key: 4, value: comparisonValue },
+        { key: 5, value: comparisonValue },
+        { key: 6, value: comparisonValue },
+        { key: 7, value: comparisonValue },
+        { key: 8, value: comparisonValue },
+        { key: 9, value: comparisonValue },
+        { key: 10, value: comparisonValue },
       ],
       isComparison: true,
     },

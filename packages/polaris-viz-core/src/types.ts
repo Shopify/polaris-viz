@@ -281,4 +281,5 @@ export interface SparkBarChartProps {
   accessibilityLabel?: string;
   isAnimated?: boolean;
   theme?: string;
+  prefersReducedMotion?: boolean;
 }

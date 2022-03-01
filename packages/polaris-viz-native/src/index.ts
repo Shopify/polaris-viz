@@ -1,1 +1,1 @@
-export {SparkLineChart, PolarisVizProvider} from './components';
+export {SparkLineChart, PolarisVizProvider, SparkBarChart} from './components';

@@ -1,13 +1,13 @@
-import React, {useMemo} from 'react';
-import type {ScaleLinear} from 'd3-scale';
-import {animated, SpringValue} from 'react-spring';
+import React, { useMemo } from 'react';
+import type { ScaleLinear } from 'd3-scale';
+import { usePolarisVizContext } from '../../../../hooks';
 
 interface Props {
   x: number;
   yScale: ScaleLinear<number, number>;
   value: number | null;
   width: number;
-  height?: SpringValue<number> | number;
+  height?: any;
   fill: string;
   hasRoundedCorners: boolean;
 }
@@ -25,6 +25,14 @@ export function Bar({
   const isNegative = value != null && value < 0;
   const rotation = isNegative ? 'rotate(180deg)' : 'rotate(0deg)';
   const xPosition = isNegative ? x + width : x;
+
+  const {
+    components: { Path },
+    animated
+  } = usePolarisVizContext();
+
+  const AnimatedPath = animated(Path);
+
 
   const yPosition = useMemo(() => {
     if (height == null) return;
@@ -44,7 +52,7 @@ export function Bar({
     const getStyle = (y: number) =>
       `translate(${xPosition}px, ${y}px) ${rotation}`;
 
-    if (typeof yPosition === 'number') return {transform: getStyle(yPosition)};
+    if (typeof yPosition === 'number') return { transform: getStyle(yPosition) };
 
     return {
       transform: yPosition.to(getStyle),
@@ -96,5 +104,5 @@ export function Bar({
     return null;
   }
 
-  return <animated.path d={path} style={style} fill={fill} />;
+  return <AnimatedPath d={path} style={style} fill={fill} />;
 }

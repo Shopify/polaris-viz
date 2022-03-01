@@ -1,7 +1,7 @@
 import React from 'react';
 
 // import {PolarisVizProvider} from '../';
-import {WebPolarisVizProvider as PolarisVizProvider} from '../../../../WebPolarisVizProvider';
+import { WebPolarisVizProvider as PolarisVizProvider } from '../../../../WebPolarisVizProvider';
 import {
   BarChart,
   LineChart,
@@ -11,7 +11,7 @@ import {
   SparkBarChart,
   SimpleBarChart,
 } from '../../../../';
-import {ComponentContainer, Title} from '../';
+import { ComponentContainer, Title } from '../';
 
 export function WebComponents() {
   return (
@@ -31,7 +31,7 @@ export function WebComponents() {
           },
         }}
       >
-        <Title type="h3" style={{gridColumn: 'span 2'}}>
+        <Title type="h3" style={{ gridColumn: 'span 2' }}>
           Default Charts
         </Title>
 
@@ -47,25 +47,25 @@ export function WebComponents() {
                 {
                   name: 'Breakfast',
                   data: [
-                    {key: 'Monday', value: 3},
-                    {key: 'Tuesday', value: 10},
-                    {key: 'Wednesday', value: 4},
+                    { key: 'Monday', value: 3 },
+                    { key: 'Tuesday', value: 10 },
+                    { key: 'Wednesday', value: 4 },
                   ],
                 },
                 {
                   name: 'Lunch',
                   data: [
-                    {key: 'Monday', value: 4},
-                    {key: 'Tuesday', value: 9},
-                    {key: 'Wednesday', value: 5},
+                    { key: 'Monday', value: 4 },
+                    { key: 'Tuesday', value: 9 },
+                    { key: 'Wednesday', value: 5 },
                   ],
                 },
                 {
                   name: 'Dinner',
                   data: [
-                    {key: 'Monday', value: 7},
-                    {key: 'Tuesday', value: 10},
-                    {key: 'Wednesday', value: 6},
+                    { key: 'Monday', value: 7 },
+                    { key: 'Tuesday', value: 10 },
+                    { key: 'Wednesday', value: 6 },
                   ],
                 },
               ]}
@@ -84,11 +84,11 @@ export function WebComponents() {
                 {
                   name: 'Sales',
                   data: [
-                    {value: 324.19, key: '2020-01-01'},
-                    {value: 613.29, key: '2020-01-02'},
-                    {value: -422.79, key: '2020-01-03'},
-                    {value: 0, key: '2020-01-04'},
-                    {value: 1, key: '2020-01-05'},
+                    { value: 324.19, key: '2020-01-01' },
+                    { value: 613.29, key: '2020-01-02' },
+                    { value: -422.79, key: '2020-01-03' },
+                    { value: 0, key: '2020-01-04' },
+                    { value: 1, key: '2020-01-05' },
                   ],
                 },
               ]}
@@ -121,25 +121,25 @@ export function WebComponents() {
                 {
                   name: 'First-time',
                   data: [
-                    {key: 'January', value: 4237},
-                    {key: 'February', value: 5024},
-                    {key: 'March', value: 5730},
-                    {key: 'April', value: 5587},
-                    {key: 'May', value: 5303},
-                    {key: 'June', value: 5634},
-                    {key: 'July', value: 3238},
+                    { key: 'January', value: 4237 },
+                    { key: 'February', value: 5024 },
+                    { key: 'March', value: 5730 },
+                    { key: 'April', value: 5587 },
+                    { key: 'May', value: 5303 },
+                    { key: 'June', value: 5634 },
+                    { key: 'July', value: 3238 },
                   ],
                 },
                 {
                   name: 'Returning',
                   data: [
-                    {key: 'January', value: 5663},
-                    {key: 'February', value: 7349},
-                    {key: 'March', value: 9795},
-                    {key: 'April', value: 7396},
-                    {key: 'May', value: 7028},
-                    {key: 'June', value: 12484},
-                    {key: 'July', value: 4878},
+                    { key: 'January', value: 5663 },
+                    { key: 'February', value: 7349 },
+                    { key: 'March', value: 9795 },
+                    { key: 'April', value: 7396 },
+                    { key: 'May', value: 7028 },
+                    { key: 'June', value: 12484 },
+                    { key: 'July', value: 4878 },
                   ],
                 },
               ]}
@@ -147,7 +147,7 @@ export function WebComponents() {
           }
         />
 
-        <Title type="h3" style={{gridColumn: 'span 2'}}>
+        <Title type="h3" style={{ gridColumn: 'span 2' }}>
           Spark Charts
         </Title>
 
@@ -157,76 +157,77 @@ export function WebComponents() {
           link="https://polaris-viz.shopify.io/?path=/docs/spark-charts-sparkbarchart--default"
           center
           chart={
-            <div style={{width: '250px', height: '140px'}}>
+            <div style={{ width: '250px', height: '140px' }}>
               <SparkBarChart
+                dimensions={{ width: 100, height: 100 }}
                 isAnimated
                 data={[
                   {
                     data: [
-                      {key: 0, value: 600},
-                      {key: 1, value: 600},
-                      {key: 2, value: 600},
-                      {key: 3, value: 600},
-                      {key: 4, value: 600},
-                      {key: 5, value: 600},
-                      {key: 6, value: 600},
-                      {key: 7, value: 600},
-                      {key: 8, value: 600},
-                      {key: 9, value: 600},
-                      {key: 10, value: 600},
-                      {key: 11, value: 600},
-                      {key: 12, value: 600},
-                      {key: 13, value: 600},
-                      {key: 14, value: 600},
-                      {key: 15, value: 600},
-                      {key: 16, value: 600},
-                      {key: 17, value: 600},
-                      {key: 18, value: 600},
-                      {key: 19, value: 600},
-                      {key: 20, value: 600},
-                      {key: 21, value: 600},
-                      {key: 22, value: 600},
-                      {key: 23, value: 600},
-                      {key: 24, value: 600},
-                      {key: 25, value: 600},
-                      {key: 26, value: 600},
-                      {key: 27, value: 600},
-                      {key: 28, value: 600},
-                      {key: 29, value: 600},
+                      { key: 0, value: 600 },
+                      { key: 1, value: 600 },
+                      { key: 2, value: 600 },
+                      { key: 3, value: 600 },
+                      { key: 4, value: 600 },
+                      { key: 5, value: 600 },
+                      { key: 6, value: 600 },
+                      { key: 7, value: 600 },
+                      { key: 8, value: 600 },
+                      { key: 9, value: 600 },
+                      { key: 10, value: 600 },
+                      { key: 11, value: 600 },
+                      { key: 12, value: 600 },
+                      { key: 13, value: 600 },
+                      { key: 14, value: 600 },
+                      { key: 15, value: 600 },
+                      { key: 16, value: 600 },
+                      { key: 17, value: 600 },
+                      { key: 18, value: 600 },
+                      { key: 19, value: 600 },
+                      { key: 20, value: 600 },
+                      { key: 21, value: 600 },
+                      { key: 22, value: 600 },
+                      { key: 23, value: 600 },
+                      { key: 24, value: 600 },
+                      { key: 25, value: 600 },
+                      { key: 26, value: 600 },
+                      { key: 27, value: 600 },
+                      { key: 28, value: 600 },
+                      { key: 29, value: 600 },
                     ],
                     isComparison: true,
                   },
                   {
                     data: [
-                      {key: 1, value: 100},
-                      {key: 2, value: 200},
-                      {key: 3, value: 300},
-                      {key: 4, value: 400},
-                      {key: 5, value: 400},
-                      {key: 6, value: 100},
-                      {key: 7, value: 2000},
-                      {key: 8, value: 800},
-                      {key: 9, value: 900},
-                      {key: 10, value: 200},
-                      {key: 11, value: 100},
-                      {key: 12, value: 200},
-                      {key: 13, value: 300},
-                      {key: 14, value: 400},
-                      {key: 15, value: 400},
-                      {key: 16, value: 100},
-                      {key: 17, value: 1000},
-                      {key: 18, value: 800},
-                      {key: 19, value: 900},
-                      {key: 20, value: 200},
-                      {key: 21, value: 100},
-                      {key: 22, value: 200},
-                      {key: 23, value: 300},
-                      {key: 24, value: 400},
-                      {key: 25, value: 400},
-                      {key: 26, value: 100},
-                      {key: 27, value: 800},
-                      {key: 28, value: 800},
-                      {key: 29, value: 900},
+                      { key: 1, value: 100 },
+                      { key: 2, value: 200 },
+                      { key: 3, value: 300 },
+                      { key: 4, value: 400 },
+                      { key: 5, value: 400 },
+                      { key: 6, value: 100 },
+                      { key: 7, value: 2000 },
+                      { key: 8, value: 800 },
+                      { key: 9, value: 900 },
+                      { key: 10, value: 200 },
+                      { key: 11, value: 100 },
+                      { key: 12, value: 200 },
+                      { key: 13, value: 300 },
+                      { key: 14, value: 400 },
+                      { key: 15, value: 400 },
+                      { key: 16, value: 100 },
+                      { key: 17, value: 1000 },
+                      { key: 18, value: 800 },
+                      { key: 19, value: 900 },
+                      { key: 20, value: 200 },
+                      { key: 21, value: 100 },
+                      { key: 22, value: 200 },
+                      { key: 23, value: 300 },
+                      { key: 24, value: 400 },
+                      { key: 25, value: 400 },
+                      { key: 26, value: 100 },
+                      { key: 27, value: 800 },
+                      { key: 28, value: 800 },
+                      { key: 29, value: 900 },
                     ],
                   },
                 ]}
@@ -241,39 +242,39 @@ export function WebComponents() {
           link="https://polaris-viz.shopify.io/?path=/docs/spark-charts-sparklinechart--default"
           center
           chart={
-            <div style={{width: '250px', height: '140px'}}>
+            <div style={{ width: '250px', height: '140px' }}>
               <SparkLineChart
                 isAnimated
                 data={[
                   {
                     data: [
-                      {key: 0, value: 100},
-                      {key: 1, value: 200},
-                      {key: 2, value: 300},
-                      {key: 3, value: 400},
-                      {key: 4, value: 400},
-                      {key: 5, value: 1000},
-                      {key: 6, value: 200},
-                      {key: 7, value: 800},
-                      {key: 8, value: 900},
-                      {key: 9, value: 200},
-                      {key: 10, value: 400},
+                      { key: 0, value: 100 },
+                      { key: 1, value: 200 },
+                      { key: 2, value: 300 },
+                      { key: 3, value: 400 },
+                      { key: 4, value: 400 },
+                      { key: 5, value: 1000 },
+                      { key: 6, value: 200 },
+                      { key: 7, value: 800 },
+                      { key: 8, value: 900 },
+                      { key: 9, value: 200 },
+                      { key: 10, value: 400 },
                     ],
                   },
                   {
                     isComparison: true,
                     data: [
-                      {key: 0, value: 200},
-                      {key: 1, value: 200},
-                      {key: 2, value: 200},
-                      {key: 3, value: 200},
-                      {key: 4, value: 200},
-                      {key: 5, value: 200},
-                      {key: 6, value: 200},
-                      {key: 7, value: 200},
-                      {key: 8, value: 200},
-                      {key: 9, value: 200},
-                      {key: 10, value: 200},
+                      { key: 0, value: 200 },
+                      { key: 1, value: 200 },
+                      { key: 2, value: 200 },
+                      { key: 3, value: 200 },
+                      { key: 4, value: 200 },
+                      { key: 5, value: 200 },
+                      { key: 6, value: 200 },
+                      { key: 7, value: 200 },
+                      { key: 8, value: 200 },
+                      { key: 9, value: 200 },
+                      { key: 10, value: 200 },
                     ],
                   },
                 ]}
@@ -282,7 +283,7 @@ export function WebComponents() {
           }
         />
 
-        <Title type="h3" style={{gridColumn: 'span 2'}}>
+        <Title type="h3" style={{ gridColumn: 'span 2' }}>
           Simple Charts
         </Title>
 
@@ -296,15 +297,15 @@ export function WebComponents() {
                 {
                   name: 'BFCM 2020',
                   data: [
-                    {value: 4, key: 'Shirt'},
-                    {value: 7, key: 'Shoes'},
+                    { value: 4, key: 'Shirt' },
+                    { value: 7, key: 'Shoes' },
                   ],
                 },
                 {
                   name: 'BFCM 2021',
                   data: [
-                    {value: 5, key: 'Shirt'},
-                    {value: 6, key: 'Shoes'},
+                    { value: 5, key: 'Shirt' },
+                    { value: 6, key: 'Shoes' },
                   ],
                 },
               ]}
@@ -318,7 +319,7 @@ export function WebComponents() {
           link="https://polaris-viz.shopify.io/?path=/docs/simple-charts-simplenormalizedchart--default"
           center
           chart={
-            <div style={{width: 450}}>
+            <div style={{ width: 450 }}>
               <SimpleNormalizedChart
                 direction="horizontal"
                 comparisonMetrics={[
