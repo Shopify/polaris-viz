@@ -3,7 +3,7 @@
   "description": "Shopify’s viz component library",
   "private": true,
   "workspaces": [
-    "demo-rn",
+    "sandbox",
     "packages/*"
   ],
   "watch": {
@@ -21,7 +21,7 @@
     "build": "loom build",
     "storybook": "start-storybook -p 6006 -s public",
     "dev": "npm-watch build",
-    "sandbox": "yarn --cwd ./demo-rn start -c",
+    "sandbox": "yarn --cwd ./sandbox start -c",
     "test": "loom test",
     "lint": "loom lint",
     "format": "loom lint --fix",
