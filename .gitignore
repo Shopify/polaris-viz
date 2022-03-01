@@ -1,7 +1,6 @@
 *.log
 node_modules
 packages/*/build
-/sandbox
 .DS_Store
 .loom
 .expo/
