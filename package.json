@@ -3,12 +3,25 @@
   "description": "Shopify’s viz component library",
   "private": true,
   "workspaces": [
+    "sandbox",
     "packages/*"
   ],
+  "watch": {
+    "build": {
+      "patterns": [
+        "/packages/{polaris-viz-native,polaris-viz-core}/**/*.{tsx,ts}"
+      ],
+      "extensions": "ts,tsx",
+      "ignore": [
+        "*.d.ts"
+      ]
+    }
+  },
   "scripts": {
     "build": "loom build",
     "storybook": "start-storybook -p 6006 -s public",
-    "dev": "loom dev",
+    "dev": "npm-watch build",
+    "sandbox": "yarn --cwd ./sandbox start -c",
     "test": "loom test",
     "lint": "loom lint",
     "format": "loom lint --fix",
@@ -137,5 +150,8 @@
     "shx": "^0.3.2",
     "size-limit": "^5.0.1",
     "typescript": "~4.3.2"
+  },
+  "dependencies": {
+    "concurrently": "^7.0.0"
   }
 }
