@@ -1,6 +1,6 @@
 # Polaris Viz
 
-Polaris Viz is a data visualization React component library. It was built to help Shopify merchants better understand their data.
+Polaris Viz Native is a data visualization react native component library. It was built to help Shopify merchants better understand their data.
 
 ## Status
 
