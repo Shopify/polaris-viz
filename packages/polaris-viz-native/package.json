@@ -12,7 +12,8 @@
     "!build/tsconfig.tsbuildinfo"
   ],
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "@shopify:registry": "https://registry.npmjs.org"
   },
   "dependencies": {
     "@react-spring/native": "^9.4.2",
