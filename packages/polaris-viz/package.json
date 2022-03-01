@@ -1,7 +1,7 @@
 {
   "name": "@shopify/polaris-viz",
   "description": "Shopify’s viz component library",
-  "version": "1.0.0-alpha0",
+  "version": "1.0.0-monorepo-beta.1.0",
   "private": false,
   "license": "SEE LICENSE IN LICENSE.md",
   "author": "Shopify <dev@shopify.com>",
@@ -27,8 +27,8 @@
     "!*.stories.*"
   ],
   "dependencies": {
-    "@shopify/polaris-viz-core": "^1.0.0-alpha0",
     "@react-spring/web": "^9.2.4",
+    "@shopify/polaris-viz-core": "^1.0.0-monorepo-beta.1.0",
     "d3-array": "2.4.0",
     "d3-color": "1",
     "d3-path": "1",
@@ -38,8 +38,8 @@
     "use-debounce": "^3.3.0"
   },
   "devDependencies": {
-    "@storybook/addon-docs": "^6.3.8",
     "@shopify/react-testing": "^3.3.3",
+    "@storybook/addon-docs": "^6.3.8",
     "@types/d3-array": "^2.12.1",
     "@types/d3-color": "1",
     "@types/d3-scale": "^2.1.1",
