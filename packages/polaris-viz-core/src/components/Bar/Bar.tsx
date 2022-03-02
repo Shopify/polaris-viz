@@ -32,7 +32,7 @@ export function Bar({
 
   const zeroScale = yScale(0);
   const isNegative = value != null && value < 0;
-  //different on native and web
+  //different on native and web, in terms of px or no px
   const rotation = isNegative ? 180 : 0;
   const xPosition = isNegative ? x + width : x;
 

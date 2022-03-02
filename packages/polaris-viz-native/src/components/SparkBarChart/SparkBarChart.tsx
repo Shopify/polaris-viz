@@ -1,5 +1,4 @@
 import React, {useCallback, useMemo} from 'react';
-import {View} from 'react-native';
 import {
   DataPoint,
   DataSeries,
@@ -16,6 +15,9 @@ import {line} from 'd3-shape';
 import {usePrefersReducedMotion} from '../../hooks';
 
 import {ChartContainer} from '../ChartContainer';
+
+// native specific
+import {View} from 'react-native';
 import {useTransition} from '@react-spring/native';
 
 //cleanup dup
@@ -27,11 +29,11 @@ export interface SparkBarChartProps {
   isAnimated?: boolean;
   theme?: string;
 }
-
 function getAnimationTrail(dataLength: number) {
   return 500 / dataLength;
 }
 
+//this is all the same
 export function SparkBarChart({
   data,
   accessibilityLabel,
@@ -52,16 +54,19 @@ export function SparkBarChart({
     </ChartContainer>
   );
 }
+//
 
+//this can be imported
 interface Dimensions {
   dimensions?: {width: number; height: number};
 }
-
+const BARS_TRANSITION_CONFIG = {mass: 1, tension: 150, friction: 16};
 const STROKE_WIDTH = 1.5;
 const BAR_PADDING = 0.3;
 const MARGIN = 8;
 const ANIMATION_MARGIN = 17;
 const BAR_MIN_HEIGHT_RATIO = 0.5;
+//
 
 function Chart({
   data,
@@ -149,7 +154,6 @@ function Chart({
     : [];
 
   const shouldAnimate = !prefersReducedMotion && isAnimated;
-  const BARS_TRANSITION_CONFIG = {mass: 1, tension: 150, friction: 16};
 
   const colorToUse = defaultData?.color ?? seriesColor;
 
@@ -175,13 +179,15 @@ function Chart({
 
   const viewboxHeight = height + ANIMATION_MARGIN * 2;
 
+  // some specific to RN
   return (
     <View accessibilityRole="image" accessibilityLabel={accessibilityLabel}>
       <Svg
         viewBox={`0 -${ANIMATION_MARGIN} ${width} ${viewboxHeight}`}
-        transform={[{translateY: -1 * ANIMATION_MARGIN}] as any}
         height={viewboxHeight}
         width={width}
+        // different to web
+        transform={[{translateY: -1 * ANIMATION_MARGIN}] as any}
       >
         <Defs>
           <LinearGradientWithStops
@@ -229,6 +235,7 @@ function Chart({
             stroke={selectedTheme.seriesColors.comparison}
             strokeWidth={STROKE_WIDTH}
             d={lineShape!}
+            //actually import
             // className={styles.ComparisonLine}
             opacity="0.9"
             strokeDashoffset={strokeDashoffset}
