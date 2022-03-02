@@ -76,7 +76,7 @@ export default function App() {
         },
         {
           key: 6,
-          value: 2000,
+          value: -2000,
         },
         {
           key: 7,
@@ -152,7 +152,7 @@ export default function App() {
   } else {
     return (
       <SafeAreaProvider>
-        <Navigation colorScheme={colorScheme} />
+        {/* <Navigation colorScheme={colorScheme} /> */}
         <PolarisVizProvider>
           <View width={300} height={100}>
             <SparkBarChart isAnimated={true} data={sparkBarData} />

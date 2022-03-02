@@ -32,7 +32,8 @@ export function Bar({
 
   const zeroScale = yScale(0);
   const isNegative = value != null && value < 0;
-  const rotation = isNegative ? 'rotate(180deg)' : 'rotate(0deg)';
+  //different on native and web
+  const rotation = isNegative ? 180 : 0;
   const xPosition = isNegative ? x + width : x;
 
   const yPosition = useMemo(() => {
@@ -50,10 +51,11 @@ export function Bar({
   const style = useMemo(() => {
     if (yPosition == null) return;
 
+    //different for native and web
     const getStyle = (y: number) =>
-      `translate(${xPosition}px, ${y}px) ${rotation}`;
+      `translate(${xPosition} ${y}), rotate(${rotation})`;
 
-    if (typeof yPosition === 'number') return {transform: getStyle(yPosition)};
+    return getStyle(yPosition);
 
     // return {
     //   transform: yPosition.to(getStyle),
@@ -105,5 +107,5 @@ export function Bar({
     return null;
   }
 
-  return <Path d={path} style={style} fill={fill} />;
+  return <Path d={path} transform={style} fill={fill} />;
 }
