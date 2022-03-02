@@ -152,9 +152,9 @@ export default function App() {
   } else {
     return (
       <SafeAreaProvider>
-        {/* <Navigation colorScheme={colorScheme} /> */}
+        <View width={300} height={200} />
         <PolarisVizProvider>
-          <View width={300} height={100}>
+          <View width={300} height={200}>
             <SparkBarChart isAnimated={true} data={sparkBarData} />
           </View>
         </PolarisVizProvider>

@@ -1,6 +1,5 @@
 import React, {useCallback, useMemo} from 'react';
 import {View} from 'react-native';
-// import {useTransition} from '@react-spring/native';
 import {
   DataPoint,
   DataSeries,
@@ -17,6 +16,7 @@ import {line} from 'd3-shape';
 // import {usePrefersReducedMotion} from '../../hooks';
 
 import {ChartContainer} from '../ChartContainer';
+import {useTransition} from '@react-spring/native';
 
 //cleanup dup
 export interface SparkBarChartProps {
@@ -28,9 +28,9 @@ export interface SparkBarChartProps {
   theme?: string;
 }
 
-// function getAnimationTrail(dataLength: number) {
-//   return 500 / dataLength;
-// }
+function getAnimationTrail(dataLength: number) {
+  return 500 / dataLength;
+}
 
 export function SparkBarChart({
   data,
@@ -70,17 +70,17 @@ function Chart({
   dataOffsetRight = 0,
   dataOffsetLeft = 0,
   theme,
+  isAnimated,
 }: SparkBarChartProps & Dimensions) {
-  console.log(dimensions);
   // const {prefersReducedMotion} = usePrefersReducedMotion();
   const selectedTheme = useTheme(theme);
   const [seriesColor] = getSeriesColors(1, selectedTheme);
   const {
     components: {Svg, Defs, Mask, G, Path, Rect},
-    // animated,
+    animated,
   } = usePolarisVizContext();
 
-  // const AnimatedG = animated(G);
+  const AnimatedG = animated(G);
 
   const {width, height} = dimensions ?? {width: 0, height: 0};
 
@@ -149,6 +149,8 @@ function Chart({
     : [];
 
   // const shouldAnimate = !prefersReducedMotion && isAnimated;
+  const shouldAnimate = isAnimated;
+  const BARS_TRANSITION_CONFIG = {mass: 1, tension: 150, friction: 16};
 
   const colorToUse = defaultData?.color ?? seriesColor;
 
@@ -161,26 +163,25 @@ function Chart({
         },
       ];
 
-  // const transitions = useTransition(dataWithIndex, {
-  //   key: ({index}: {index: number}) => index,
-  //   from: {height: 0},
-  //   leave: {height: 0},
-  //   enter: ({value}) => ({height: getBarHeight(value == null ? 0 : value)}),
-  //   update: ({value}) => ({height: getBarHeight(value == null ? 0 : value)}),
-  //   default: {immediate: !shouldAnimate},
-  //   trail: shouldAnimate ? getAnimationTrail(dataWithIndex.length) : 0,
-  //   config: BARS_TRANSITION_CONFIG,
-  // });
+  const transitions = useTransition(dataWithIndex, {
+    key: ({index}: {index: number}) => index,
+    from: {height: 0},
+    leave: {height: 0},
+    enter: ({value}) => ({height: getBarHeight(value == null ? 0 : value)}),
+    update: ({value}) => ({height: getBarHeight(value == null ? 0 : value)}),
+    default: {immediate: !shouldAnimate},
+    trail: shouldAnimate ? getAnimationTrail(dataWithIndex.length) : 0,
+    config: BARS_TRANSITION_CONFIG,
+  });
 
   const viewboxHeight = height + ANIMATION_MARGIN * 2;
 
   return (
     <View accessibilityRole="image" accessibilityLabel={accessibilityLabel}>
       <Svg
-        // aria-hidden
-        // viewBox={`0 -${ANIMATION_MARGIN} ${width} ${viewboxHeight}`}
+        viewBox={`0 -${ANIMATION_MARGIN} ${width} ${viewboxHeight}`}
         // style={{
-        //   transform: `translateY(-${ANIMATION_MARGIN}px)`,
+        //   transform: `translate(0 -${ANIMATION_MARGIN})`,
         // }}
         height={viewboxHeight}
         width={width}
@@ -196,17 +197,19 @@ function Chart({
         </Defs>
 
         <Mask id={clipId}>
-          <G opacity={comparisonData ? '0.9' : '1'}>
-            {dataWithIndex.map((data, index) => {
+          <AnimatedG opacity={comparisonData ? '0.9' : '1'}>
+            {transitions(({height: barHeight}, item, _transition, index) => {
               const xPosition = xScale(index.toString());
-              const height = getBarHeight(data.value ?? 0);
+              const height = shouldAnimate
+                ? barHeight
+                : getBarHeight(item.value ?? 0);
 
               return (
                 <Bar
                   key={index}
                   x={xPosition == null ? 0 : xPosition}
                   yScale={yScale}
-                  value={data.value.value}
+                  value={item.value.value}
                   width={barWidth}
                   height={height as any}
                   fill="white"
@@ -214,7 +217,7 @@ function Chart({
                 />
               );
             })}
-          </G>
+          </AnimatedG>
         </Mask>
 
         <Rect

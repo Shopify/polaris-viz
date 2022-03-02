@@ -1,15 +1,15 @@
 import React, {useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {usePolarisVizContext} from '../../hooks';
-// import type {SpringValue} from '@react-spring/core';
+import type {SpringValue} from '@react-spring/core';
+import type {Interpolation} from '@react-spring/core';
 
 interface Props {
   x: number;
   yScale: ScaleLinear<number, number>;
   value: number | null;
   width: number;
-  // height?: SpringValue<number> | number;
-  height?: number;
+  height?: SpringValue<number> | number;
   fill: string;
   hasRoundedCorners: boolean;
 }
@@ -25,10 +25,10 @@ export function Bar({
 }: Props) {
   const {
     components: {Path},
-    // animated,
+    animated,
   } = usePolarisVizContext();
 
-  // const AnimatedPath = animated(Path);
+  const AnimatedPath = animated(Path);
 
   const zeroScale = yScale(0);
   const isNegative = value != null && value < 0;
@@ -45,7 +45,7 @@ export function Bar({
     if (typeof height === 'number') {
       return getYPosition(height);
     }
-    // return height.to(getYPosition);
+    return height.to(getYPosition);
   }, [height, isNegative, zeroScale]);
 
   const style = useMemo(() => {
@@ -55,11 +55,13 @@ export function Bar({
     const getStyle = (y: number) =>
       `translate(${xPosition} ${y}), rotate(${rotation})`;
 
-    return getStyle(yPosition);
+    if (typeof height === 'number') {
+      return getStyle(yPosition as number);
+    }
 
-    // return {
-    //   transform: yPosition.to(getStyle),
-    // };
+    const animationValue = (yPosition as Interpolation).to(getStyle);
+
+    return animationValue;
   }, [yPosition, xPosition, rotation]);
 
   const path = useMemo(() => {
@@ -100,12 +102,13 @@ export function Bar({
     if (typeof height === 'number') {
       return calculatePath(height);
     }
-    // return height.to(calculatePath);
+    const heightValue = height.to(calculatePath);
+    return heightValue;
   }, [height, width, hasRoundedCorners]);
 
   if (value == null || width < 0) {
     return null;
   }
 
-  return <Path d={path} transform={style} fill={fill} />;
+  return <AnimatedPath d={path} transform={style} fill={fill} />;
 }
