@@ -13,7 +13,7 @@ import {
 } from '@shopify/polaris-viz-core';
 import {scaleBand, scaleLinear} from 'd3-scale';
 import {line} from 'd3-shape';
-// import {usePrefersReducedMotion} from '../../hooks';
+import {usePrefersReducedMotion} from '../../hooks';
 
 import {ChartContainer} from '../ChartContainer';
 import {useTransition} from '@react-spring/native';
@@ -72,7 +72,7 @@ function Chart({
   theme,
   isAnimated,
 }: SparkBarChartProps & Dimensions) {
-  // const {prefersReducedMotion} = usePrefersReducedMotion();
+  const {prefersReducedMotion} = usePrefersReducedMotion();
   const selectedTheme = useTheme(theme);
   const [seriesColor] = getSeriesColors(1, selectedTheme);
   const {
@@ -148,8 +148,7 @@ function Chart({
       }))
     : [];
 
-  // const shouldAnimate = !prefersReducedMotion && isAnimated;
-  const shouldAnimate = isAnimated;
+  const shouldAnimate = !prefersReducedMotion && isAnimated;
   const BARS_TRANSITION_CONFIG = {mass: 1, tension: 150, friction: 16};
 
   const colorToUse = defaultData?.color ?? seriesColor;
@@ -180,9 +179,7 @@ function Chart({
     <View accessibilityRole="image" accessibilityLabel={accessibilityLabel}>
       <Svg
         viewBox={`0 -${ANIMATION_MARGIN} ${width} ${viewboxHeight}`}
-        // style={{
-        //   transform: `translate(0 -${ANIMATION_MARGIN})`,
-        // }}
+        transform={[{translateY: -1 * ANIMATION_MARGIN}] as any}
         height={viewboxHeight}
         width={width}
       >
