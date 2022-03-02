@@ -6,6 +6,7 @@ import {
   LinearGradientWithStops,
   getSeriesColors,
   useTheme,
+  Bar,
 } from '@shopify/polaris-viz-core';
 
 import {usePrefersReducedMotion} from '../../hooks';
@@ -13,7 +14,6 @@ import {BARS_TRANSITION_CONFIG, XMLNS} from '../../constants';
 import type {DataPoint, DataSeries, Dimensions} from '../../types';
 import {uniqueId, getAnimationTrail, isGradientType} from '../../utilities';
 
-import {Bar} from './components';
 import styles from './SparkBarChart.scss';
 import type {SparkBarChartProps} from './SparkBarChart';
 
@@ -205,7 +205,7 @@ export function Chart({
                   yScale={yScale}
                   value={item.value.value}
                   width={barWidth}
-                  height={height}
+                  height={height as any}
                   fill="white"
                   hasRoundedCorners={selectedTheme.bar.hasRoundedCorners}
                 />
