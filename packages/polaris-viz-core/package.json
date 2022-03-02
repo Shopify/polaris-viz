@@ -2,19 +2,20 @@
   "name": "@shopify/polaris-viz-core",
   "version": "1.0.0-monorepo-beta.1.0",
   "description": "Core logic for Polaris Viz that is not platform specific",
-  "author": "Shopify Inc.",
   "homepage": "https://github.com/Shopify/polaris-viz#readme",
   "license": "SEE LICENSE IN LICENSE.md",
+  "author": "Shopify Inc.",
+  "publishConfig": {
+    "access": "public",
+    "@shopify:registry": "https://registry.npmjs.org"
+  },
+  "sideEffects": false,
   "main": "build/cjs/index.js",
   "module": "build/esm/index.js",
   "types": "build/ts/index.d.ts",
   "files": [
     "build/"
   ],
-  "publishConfig": {
-    "access": "public",
-    "@shopify:registry": "https://registry.npmjs.org"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Shopify/polaris-viz.git",
