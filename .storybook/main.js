@@ -13,6 +13,15 @@ module.exports = {
       name: '@storybook/addon-essentials',
       options: {docs: true, backgrounds: false},
     },
+    {
+      name: '@storybook/addon-docs',
+      options: {
+        configureJSX: true,
+        babelOptions: {},
+        sourceLoaderOptions: null,
+        transcludeMarkdown: true,
+      },
+    },
   ],
   framework: '@storybook/react',
   typescript: {
@@ -21,6 +30,7 @@ module.exports = {
       compilerOptions: {
         allowSyntheticDefaultImports: false,
         esModuleInterop: false,
+        transcludeMarkdown: true,
       },
     },
   },

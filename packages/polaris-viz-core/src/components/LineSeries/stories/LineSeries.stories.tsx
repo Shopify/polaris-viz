@@ -7,7 +7,7 @@ import {XMLNS} from '../../../constants';
 import {useSparkLine} from '../../..';
 
 export default {
-  title: 'Essentials/Subcomponents/LineSeries',
+  title: 'Shared/Subcomponents/LineSeries',
   component: LineSeries,
   parameters: {
     controls: {sort: 'requiredFirst', expanded: true},
