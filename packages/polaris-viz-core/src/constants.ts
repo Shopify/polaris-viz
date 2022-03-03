@@ -363,3 +363,6 @@ export const DEFAULT_COMPONENTS: SvgComponents = {
   Pattern: ({children, ...props}) => createElement('pattern', props, children),
   Mask: ({children, ...props}) => createElement('mask', props, children),
 };
+
+export const STROKE_WIDTH = 1.5;
+export const ANIMATION_MARGIN = 17;

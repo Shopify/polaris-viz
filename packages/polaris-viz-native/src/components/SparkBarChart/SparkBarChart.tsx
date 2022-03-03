@@ -2,7 +2,6 @@ import React, {useMemo} from 'react';
 import {View} from 'react-native';
 import {useTransition} from '@react-spring/native';
 import {
-  DataSeries,
   getSeriesColors,
   LinearGradientWithStops,
   uniqueId,
@@ -10,31 +9,16 @@ import {
   Bar,
   usePolarisVizContext,
   useSparkBar,
+  Dimensions,
+  SparkBarChartProps,
+  BARS_TRANSITION_CONFIG,
+  ANIMATION_MARGIN,
+  STROKE_WIDTH,
+  getAnimationTrail,
 } from '@shopify/polaris-viz-core';
 import {usePrefersReducedMotion} from '../../hooks';
 
 import {ChartContainer} from '../ChartContainer';
-
-//cleanup dup
-export interface SparkBarChartProps {
-  data: DataSeries[];
-  dataOffsetRight?: number;
-  dataOffsetLeft?: number;
-  accessibilityLabel?: string;
-  isAnimated?: boolean;
-  theme?: string;
-}
-function getAnimationTrail(dataLength: number) {
-  return 500 / dataLength;
-}
-
-interface Dimensions {
-  dimensions?: {width: number; height: number};
-}
-const BARS_TRANSITION_CONFIG = {mass: 1, tension: 150, friction: 16};
-const STROKE_WIDTH = 1.5;
-const ANIMATION_MARGIN = 17;
-//
 
 export function SparkBarChart({
   data,
@@ -65,7 +49,7 @@ function Chart({
   dataOffsetLeft = 0,
   theme,
   isAnimated,
-}: SparkBarChartProps & Dimensions) {
+}: SparkBarChartProps & Partial<Dimensions>) {
   const {
     components: {Svg, Defs, Mask, G, Path, Rect},
     animated,
@@ -120,7 +104,7 @@ function Chart({
         viewBox={`0 -${ANIMATION_MARGIN} ${width} ${viewboxHeight}`}
         height={viewboxHeight}
         width={width}
-        transform={[{translateY: -1 * ANIMATION_MARGIN}] as any} //fix
+        transform={[{translateY: -1 * ANIMATION_MARGIN}] as any}
       >
         <Defs>
           <LinearGradientWithStops
@@ -147,7 +131,7 @@ function Chart({
                   yScale={yScale}
                   value={item.value.value}
                   width={barWidth}
-                  height={height as any} //fix
+                  height={height as any}
                   fill="white"
                   hasRoundedCorners={selectedTheme.bar.hasRoundedCorners}
                 />
@@ -168,8 +152,7 @@ function Chart({
             stroke={selectedTheme.seriesColors.comparison}
             strokeWidth={STROKE_WIDTH}
             d={lineShape!}
-            //actually import
-            // className={styles.ComparisonLine}
+            strokeLinecap="round"
             opacity="0.9"
             strokeDashoffset={strokeDashoffset}
             strokeDasharray={strokeDasharray}

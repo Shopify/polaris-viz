@@ -6,15 +6,17 @@ import {
   useTheme,
   Bar,
   useSparkBar,
+  Dimensions,
+  SparkBarChartProps,
+  BARS_TRANSITION_CONFIG,
+  getAnimationTrail,
 } from '@shopify/polaris-viz-core';
 
 import {usePrefersReducedMotion} from '../../hooks';
-import {BARS_TRANSITION_CONFIG, XMLNS} from '../../constants';
-import type {Dimensions} from '../../types';
-import {uniqueId, getAnimationTrail} from '../../utilities';
+import {XMLNS} from '../../constants';
+import {uniqueId} from '../../utilities';
 
 import styles from './SparkBarChart.scss';
-import type {SparkBarChartProps} from './SparkBarChart';
 
 const STROKE_WIDTH = 1.5;
 const ANIMATION_MARGIN = 17;

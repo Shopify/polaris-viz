@@ -58,11 +58,6 @@ export interface YAxisTick {
   yOffset: number;
 }
 
-export interface Dimensions {
-  width: number;
-  height: number;
-}
-
 export interface SparkChartData {
   value: number | null;
 }
