@@ -16,7 +16,6 @@ export {
 
 export type {
   SparkLineChartProps,
-  SparkBarChartProps,
   SimpleNormalizedChartProps,
   LineChartProps,
   LineChartTooltipContentProps,

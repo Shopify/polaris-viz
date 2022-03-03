@@ -272,3 +272,25 @@ export interface SvgComponents {
   Pattern: (props: SVGProps<SVGPatternElement>) => any;
   Mask: (props: SVGProps<SVGMaskElement>) => any;
 }
+
+export interface SparkBarChartProps {
+  data: DataSeries[];
+  dataOffsetRight?: number;
+  dataOffsetLeft?: number;
+  accessibilityLabel?: string;
+  isAnimated?: boolean;
+  theme?: string;
+}
+
+export interface Dimensions {
+  dimensions?: {width: number; height: number};
+}
+
+export interface SparkBarChartProps {
+  data: DataSeries[];
+  dataOffsetRight?: number;
+  dataOffsetLeft?: number;
+  accessibilityLabel?: string;
+  isAnimated?: boolean;
+  theme?: string;
+}

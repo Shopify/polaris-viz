@@ -1,13 +1,19 @@
 import React, {useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
-import {animated, SpringValue} from '@react-spring/web';
+import type {SpringValue} from '@react-spring/core';
+
+import {usePolarisVizContext} from '../../hooks';
+
+// height can't be any, but to avoid importing SpringValue
+// from the web and native packages, we use it to broaden the type
+type Height = SpringValue<number> | number | any;
 
 interface Props {
   x: number;
   yScale: ScaleLinear<number, number>;
   value: number | null;
   width: number;
-  height?: SpringValue<number> | number;
+  height?: Height;
   fill: string;
   hasRoundedCorners: boolean;
 }
@@ -21,9 +27,16 @@ export function Bar({
   fill,
   hasRoundedCorners,
 }: Props) {
+  const {
+    components: {Path},
+    animated,
+  } = usePolarisVizContext();
+
+  const AnimatedPath = animated(Path);
+
   const zeroScale = yScale(0);
   const isNegative = value != null && value < 0;
-  const rotation = isNegative ? 'rotate(180deg)' : 'rotate(0deg)';
+  const rotation = isNegative ? 180 : 0;
   const xPosition = isNegative ? x + width : x;
 
   const yPosition = useMemo(() => {
@@ -42,13 +55,11 @@ export function Bar({
     if (yPosition == null) return;
 
     const getStyle = (y: number) =>
-      `translate(${xPosition}px, ${y}px) ${rotation}`;
+      `translate(${xPosition} ${y}), rotate(${rotation})`;
 
-    if (typeof yPosition === 'number') return {transform: getStyle(yPosition)};
+    if (typeof yPosition === 'number') return getStyle(yPosition);
 
-    return {
-      transform: yPosition.to(getStyle),
-    };
+    return yPosition.to(getStyle);
   }, [yPosition, xPosition, rotation]);
 
   const path = useMemo(() => {
@@ -96,5 +107,5 @@ export function Bar({
     return null;
   }
 
-  return <animated.path d={path} style={style} fill={fill} />;
+  return <AnimatedPath d={path} transform={style} fill={fill} />;
 }
