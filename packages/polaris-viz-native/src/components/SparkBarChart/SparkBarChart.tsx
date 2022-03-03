@@ -1,24 +1,19 @@
-import React, {useCallback, useMemo} from 'react';
+import React, {useMemo} from 'react';
+import {View} from 'react-native';
+import {useTransition} from '@react-spring/native';
 import {
-  DataPoint,
   DataSeries,
   getSeriesColors,
-  isGradientType,
   LinearGradientWithStops,
   uniqueId,
   useTheme,
   Bar,
   usePolarisVizContext,
+  useSparkBar,
 } from '@shopify/polaris-viz-core';
-import {scaleBand, scaleLinear} from 'd3-scale';
-import {line} from 'd3-shape';
 import {usePrefersReducedMotion} from '../../hooks';
 
 import {ChartContainer} from '../ChartContainer';
-
-// native specific
-import {View} from 'react-native';
-import {useTransition} from '@react-spring/native';
 
 //cleanup dup
 export interface SparkBarChartProps {
@@ -33,7 +28,14 @@ function getAnimationTrail(dataLength: number) {
   return 500 / dataLength;
 }
 
-//this is all the same
+interface Dimensions {
+  dimensions?: {width: number; height: number};
+}
+const BARS_TRANSITION_CONFIG = {mass: 1, tension: 150, friction: 16};
+const STROKE_WIDTH = 1.5;
+const ANIMATION_MARGIN = 17;
+//
+
 export function SparkBarChart({
   data,
   accessibilityLabel,
@@ -54,19 +56,6 @@ export function SparkBarChart({
     </ChartContainer>
   );
 }
-//
-
-//this can be imported
-interface Dimensions {
-  dimensions?: {width: number; height: number};
-}
-const BARS_TRANSITION_CONFIG = {mass: 1, tension: 150, friction: 16};
-const STROKE_WIDTH = 1.5;
-const BAR_PADDING = 0.3;
-const MARGIN = 8;
-const ANIMATION_MARGIN = 17;
-const BAR_MIN_HEIGHT_RATIO = 0.5;
-//
 
 function Chart({
   data,
@@ -77,9 +66,6 @@ function Chart({
   theme,
   isAnimated,
 }: SparkBarChartProps & Dimensions) {
-  const {prefersReducedMotion} = usePrefersReducedMotion();
-  const selectedTheme = useTheme(theme);
-  const [seriesColor] = getSeriesColors(1, selectedTheme);
   const {
     components: {Svg, Defs, Mask, G, Path, Rect},
     animated,
@@ -87,84 +73,33 @@ function Chart({
 
   const AnimatedG = animated(G);
 
-  const {width, height} = dimensions ?? {width: 0, height: 0};
-
-  const [defaultData, comparisonData] = useMemo(() => {
-    const defaultData = data.find(({isComparison}) => isComparison !== true);
-    const comparisonData = data.find(({isComparison}) => isComparison === true);
-
-    return [defaultData, comparisonData];
-  }, [data]);
-
-  const dataForChart = defaultData ?? comparisonData ?? {data: []};
-
-  const filteredData = removeNullValues(defaultData);
-  const filteredComparisonData = removeNullValues(comparisonData);
-
-  const yScale = scaleLinear()
-    .range(calculateRange(dataForChart.data, height))
-    .domain([
-      Math.min(...filteredData, ...filteredComparisonData, 0),
-      Math.max(...filteredData, ...filteredComparisonData, 0),
-    ]);
-
-  const xScale = scaleBand()
-    .range([dataOffsetLeft, width - dataOffsetRight])
-    .paddingInner(BAR_PADDING)
-    .domain(dataForChart.data.map((_, index) => index.toString()));
-
-  const xScaleLinear = scaleLinear()
-    .range([0, width])
-    .domain([0, dataForChart.data.length - 1]);
-
-  const lineGenerator = line<any>()
-    .x(({key}) => xScaleLinear(key))
-    .y(({value}) => yScale(value));
-
-  const lineShape = comparisonData ? lineGenerator(comparisonData.data) : null;
-
-  const barWidth = useMemo(() => xScale.bandwidth(), [xScale]);
-  const barGap = useMemo(
-    () => xScale.step() * xScale.paddingInner() + STROKE_WIDTH,
-    [xScale],
-  );
-
-  const strokeDashoffset =
-    dataOffsetLeft == null
-      ? -(STROKE_WIDTH / 2)
-      : -(STROKE_WIDTH / 2) - dataOffsetLeft;
-  const strokeDasharray = `${barWidth - STROKE_WIDTH} ${barGap}`;
-
+  const {prefersReducedMotion} = usePrefersReducedMotion();
+  const selectedTheme = useTheme(theme);
+  const [seriesColor] = getSeriesColors(1, selectedTheme);
   const id = useMemo(() => uniqueId('sparkbar'), []);
   const clipId = useMemo(() => uniqueId('clip'), []);
-
-  const getBarHeight = useCallback(
-    ({value}) => {
-      const height = Math.abs(yScale(value) - yScale(0));
-      return Math.max(height, BAR_MIN_HEIGHT_RATIO * barWidth);
-    },
-    [barWidth, yScale],
-  );
-
-  const dataWithIndex = defaultData
-    ? defaultData.data.map((value, index) => ({
-        value,
-        index,
-      }))
-    : [];
-
+  const {width, height} = dimensions ?? {width: 0, height: 0};
   const shouldAnimate = !prefersReducedMotion && isAnimated;
 
-  const colorToUse = defaultData?.color ?? seriesColor;
-
-  const color = isGradientType(colorToUse)
-    ? colorToUse
-    : [
-        {
-          color: colorToUse,
-          offset: 0,
-        },
-      ];
+  const {
+    dataWithIndex,
+    color,
+    getBarHeight,
+    strokeDasharray,
+    strokeDashoffset,
+    lineShape,
+    comparisonData,
+    xScale,
+    yScale,
+    barWidth,
+  } = useSparkBar({
+    data,
+    height,
+    dataOffsetLeft,
+    dataOffsetRight,
+    width,
+    seriesColor,
+  });
 
   const transitions = useTransition(dataWithIndex, {
     key: ({index}: {index: number}) => index,
@@ -179,15 +114,13 @@ function Chart({
 
   const viewboxHeight = height + ANIMATION_MARGIN * 2;
 
-  // some specific to RN
   return (
     <View accessibilityRole="image" accessibilityLabel={accessibilityLabel}>
       <Svg
         viewBox={`0 -${ANIMATION_MARGIN} ${width} ${viewboxHeight}`}
         height={viewboxHeight}
         width={width}
-        // different to web
-        transform={[{translateY: -1 * ANIMATION_MARGIN}] as any}
+        transform={[{translateY: -1 * ANIMATION_MARGIN}] as any} //fix
       >
         <Defs>
           <LinearGradientWithStops
@@ -214,7 +147,7 @@ function Chart({
                   yScale={yScale}
                   value={item.value.value}
                   width={barWidth}
-                  height={height as any}
+                  height={height as any} //fix
                   fill="white"
                   hasRoundedCorners={selectedTheme.bar.hasRoundedCorners}
                 />
@@ -245,35 +178,4 @@ function Chart({
       </Svg>
     </View>
   );
-}
-
-function calculateRange(data: DataPoint[], height: number) {
-  let hasNegatives;
-  let hasPositives;
-  for (const {value} of data) {
-    if (value != null && value < 0) hasNegatives = true;
-    else if (value != null && value > 0) hasPositives = true;
-
-    if (hasNegatives && hasPositives) break;
-  }
-
-  let range = [height, MARGIN];
-
-  if (hasNegatives && hasPositives) {
-    range = [height - MARGIN, MARGIN];
-  } else if (hasNegatives) {
-    range = [height - MARGIN, 0];
-  }
-
-  return range;
-}
-
-function removeNullValues(data: DataSeries | undefined) {
-  if (data == null) {
-    return [];
-  }
-
-  return data.data
-    .filter(({value}) => typeof value === 'number')
-    .map(({value}) => value) as number[];
 }
