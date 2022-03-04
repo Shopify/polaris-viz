@@ -1,5 +1,8 @@
 import {buildLibrary} from '@shopify/loom-plugin-build-library';
-import {createPackage} from '@shopify/loom';
+import {createPackage, createProjectPlugin} from '@shopify/loom';
+
+// Needed so TS realises what configuration hooks are provided by Jest (in `jestAdjustments` below)
+import type {} from '@shopify/loom-plugin-jest';
 
 // eslint-disable-next-line import/no-default-export
 export default createPackage((pkg) => {
@@ -11,6 +14,29 @@ export default createPackage((pkg) => {
       esmodules: false,
       esnext: false,
       rootEntrypoints: false,
+      jestTestEnvironment: 'jsdom',
     }),
+    jestAdjustments(),
   );
 });
+
+function jestAdjustments() {
+  return createProjectPlugin('PolarisVizNative', ({tasks: {test}}) => {
+    test.hook(({hooks}) => {
+      hooks.configure.hook((configure) => {
+        configure.jestConfig?.hook((config) => {
+          return {
+            ...config,
+            preset: 'react-native',
+            moduleNameMapper: {
+              ...config.moduleNameMapper,
+              '^@quilted/react-testing/matchers$':
+                '@quilted/react-testing/build/cjs/matchers/index.cjs',
+              '\\.(css|less|scss)$': '<rootDir>/__mocks__/styleMock.js',
+            },
+          };
+        });
+      });
+    });
+  });
+}
