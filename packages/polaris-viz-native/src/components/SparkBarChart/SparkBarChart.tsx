@@ -1,46 +1,69 @@
 import React, {useMemo} from 'react';
-import {useTransition} from '@react-spring/web';
+import {View} from 'react-native';
+import {useTransition} from '@react-spring/native';
 import {
-  LinearGradientWithStops,
   getSeriesColors,
+  LinearGradientWithStops,
+  uniqueId,
   useTheme,
   Bar,
+  usePolarisVizContext,
   useSparkBar,
   Dimensions,
   SparkBarChartProps,
   BARS_TRANSITION_CONFIG,
-  getAnimationTrail,
   ANIMATION_MARGIN,
   STROKE_WIDTH,
+  getAnimationTrail,
 } from '@shopify/polaris-viz-core';
 
 import {usePrefersReducedMotion} from '../../hooks';
-import {XMLNS} from '../../constants';
-import {uniqueId} from '../../utilities';
+import {ChartContainer} from '../ChartContainer';
 
-import styles from './SparkBarChart.scss';
-
-interface Props extends SparkBarChartProps {
-  dimensions?: Dimensions;
-}
-
-export function Chart({
+export function SparkBarChart({
   data,
-  dimensions,
   accessibilityLabel,
   isAnimated = false,
   dataOffsetRight = 0,
   dataOffsetLeft = 0,
   theme,
-}: Props) {
+}: SparkBarChartProps) {
+  return (
+    <ChartContainer theme={theme}>
+      <Chart
+        data={data}
+        accessibilityLabel={accessibilityLabel}
+        isAnimated={isAnimated}
+        dataOffsetLeft={dataOffsetLeft}
+        dataOffsetRight={dataOffsetRight}
+      />
+    </ChartContainer>
+  );
+}
+
+function Chart({
+  data,
+  dimensions,
+  accessibilityLabel,
+  dataOffsetRight = 0,
+  dataOffsetLeft = 0,
+  theme,
+  isAnimated,
+}: SparkBarChartProps & Partial<Dimensions>) {
+  const {
+    // eslint-disable-next-line id-length
+    components: {Svg, Defs, Mask, G, Path, Rect},
+    animated,
+  } = usePolarisVizContext();
+
+  const AnimatedG = animated(G);
+
   const {prefersReducedMotion} = usePrefersReducedMotion();
   const selectedTheme = useTheme(theme);
   const [seriesColor] = getSeriesColors(1, selectedTheme);
-
-  const {width, height} = dimensions ?? {width: 0, height: 0};
   const id = useMemo(() => uniqueId('sparkbar'), []);
   const clipId = useMemo(() => uniqueId('clip'), []);
-
+  const {width, height} = dimensions ?? {width: 0, height: 0};
   const shouldAnimate = !prefersReducedMotion && isAnimated;
 
   const {
@@ -77,23 +100,14 @@ export function Chart({
   const viewboxHeight = height + ANIMATION_MARGIN * 2;
 
   return (
-    <React.Fragment>
-      {accessibilityLabel ? (
-        <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
-      ) : null}
-
-      <svg
-        xmlns={XMLNS}
-        aria-hidden
+    <View accessibilityRole="image" accessibilityLabel={accessibilityLabel}>
+      <Svg
         viewBox={`0 -${ANIMATION_MARGIN} ${width} ${viewboxHeight}`}
-        style={{
-          transform: `translateY(-${ANIMATION_MARGIN}px)`,
-        }}
-        className={styles.Svg}
         height={viewboxHeight}
         width={width}
+        transform={[{translateY: -1 * ANIMATION_MARGIN}] as any}
       >
-        <defs>
+        <Defs>
           <LinearGradientWithStops
             id={id}
             gradient={color}
@@ -101,10 +115,10 @@ export function Chart({
             y1="100%"
             y2="0%"
           />
-        </defs>
+        </Defs>
 
-        <mask id={clipId}>
-          <g opacity={comparisonData ? '0.9' : '1'}>
+        <Mask id={clipId}>
+          <AnimatedG opacity={comparisonData ? '0.9' : '1'}>
             {transitions(({height: barHeight}, item, _transition, index) => {
               const xPosition = xScale(index.toString());
               const height = shouldAnimate
@@ -124,10 +138,10 @@ export function Chart({
                 />
               );
             })}
-          </g>
-        </mask>
+          </AnimatedG>
+        </Mask>
 
-        <rect
+        <Rect
           fill={`url(#${id})`}
           width={width}
           height={height}
@@ -135,17 +149,17 @@ export function Chart({
         />
 
         {comparisonData == null ? null : (
-          <path
+          <Path
             stroke={selectedTheme.seriesColors.comparison}
             strokeWidth={STROKE_WIDTH}
             d={lineShape!}
-            className={styles.ComparisonLine}
+            strokeLinecap="round"
             opacity="0.9"
             strokeDashoffset={strokeDashoffset}
             strokeDasharray={strokeDasharray}
           />
         )}
-      </svg>
-    </React.Fragment>
+      </Svg>
+    </View>
   );
 }

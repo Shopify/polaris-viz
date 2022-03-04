@@ -1,18 +1,9 @@
+import type {SparkBarChartProps} from '@shopify/polaris-viz-core';
 import React from 'react';
-import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {ChartContainer} from '../ChartContainer';
 
 import {Chart} from './Chart';
-
-export interface SparkBarChartProps {
-  data: DataSeries[];
-  dataOffsetRight?: number;
-  dataOffsetLeft?: number;
-  accessibilityLabel?: string;
-  isAnimated?: boolean;
-  theme?: string;
-}
 
 export function SparkBarChart({
   data,

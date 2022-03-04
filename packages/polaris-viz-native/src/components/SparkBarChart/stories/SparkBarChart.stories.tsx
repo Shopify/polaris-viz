@@ -2,11 +2,14 @@ import React from 'react';
 import type {Story, Meta} from '@storybook/react';
 
 import {SparkBarChart} from '../SparkBarChart';
-import {THEME_CONTROL_ARGS} from '../../../storybook';
-import type {SparkBarChartProps} from '@shopify/polaris-viz-core';
+
+const THEME_CONTROL_ARGS = {
+  description: 'The theme that the chart will inherit its styles from',
+  control: {type: 'select', options: ['Default', 'Light']},
+};
 
 export default {
-  title: 'polaris-viz/Spark Charts/SparkBarChart',
+  title: 'polaris-viz-native/Spark Charts/SparkBarChart',
   parameters: {
     controls: {sort: 'requiredFirst', expanded: true},
     docs: {
@@ -45,13 +48,14 @@ export default {
   },
 } as Meta;
 
-const Template: Story<SparkBarChartProps> = (args: SparkBarChartProps) => {
+const Template: Story = (args: any) => {
   return <SparkBarChart {...args} />;
 };
 
 const comparisonValue = 2000;
-const defaultProps: SparkBarChartProps = {
+const defaultProps = {
   isAnimated: true,
+  dimensions: {width: 100, height: 100},
   data: [
     {
       data: [
@@ -89,10 +93,10 @@ const defaultProps: SparkBarChartProps = {
     'A bar chart showing orders over time for the past 11 weeks. The minimum is 100 orders and the maximum is 1,000 orders, compared to an average of 500 orders during previous 11-week period.',
 };
 
-export const Default: Story<SparkBarChartProps> = Template.bind({});
+export const Default: Story<any> = Template.bind({});
 Default.args = defaultProps;
 
-export const OffsetAndNulls: Story<SparkBarChartProps> = Template.bind({});
+export const OffsetAndNulls: Story<any> = Template.bind({});
 OffsetAndNulls.args = {
   ...defaultProps,
   dataOffsetLeft: 10,
@@ -132,9 +136,7 @@ OffsetAndNulls.args = {
   ],
 };
 
-export const OverwrittenSeriesColors: Story<SparkBarChartProps> = Template.bind(
-  {},
-);
+export const OverwrittenSeriesColors: Story<any> = Template.bind({});
 OverwrittenSeriesColors.args = {
   ...defaultProps,
   data: [

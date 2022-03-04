@@ -1,16 +1,17 @@
 import React from 'react';
-import {mount} from '@shopify/react-testing';
 import {scaleBand} from 'd3-scale';
 
 import {Bar} from '../Bar';
+import {mountWithProvider} from '../../../test-utilities';
 
 jest.mock('d3-scale', () => ({
   scaleBand: jest.fn(() => jest.fn((value) => value)),
+  scaleLinear: jest.requireActual('d3-scale').scaleLinear,
 }));
 
 describe('<Bar/>', () => {
   it('renders a path', () => {
-    const bar = mount(
+    const bar = mountWithProvider(
       <svg>
         <Bar
           height={100}
@@ -27,12 +28,12 @@ describe('<Bar/>', () => {
     expect(bar).toContainReactComponent('path', {
       // eslint-disable-next-line id-length
       d: 'M 0 50 A 50 50 0 0 1 100 50 M 100 50 L 100 100 L 0 100 L 0 50',
-      style: {transform: ' translate(0px, -100px) rotate(0deg)'},
+      transform: 'translate(0 -100), rotate(0)',
     });
   });
 
   it('d attibute is present if the height is shorter than the arc height', () => {
-    const bar = mount(
+    const bar = mountWithProvider(
       <svg>
         <Bar
           height={49}
@@ -49,12 +50,12 @@ describe('<Bar/>', () => {
     expect(bar).toContainReactComponent('path', {
       // eslint-disable-next-line id-length
       d: `M 1 49 A 50 50 0 0 1 99 49 M 100 49 L 0 49`,
-      style: {transform: ` translate(0px, -49px) rotate(0deg)`},
+      transform: 'translate(0 -49), rotate(0)',
     });
   });
 
   it('gives a 0 value an empty path d attribute and 0 height', () => {
-    const bar = mount(
+    const bar = mountWithProvider(
       <svg>
         <Bar
           height={0}
@@ -71,12 +72,12 @@ describe('<Bar/>', () => {
     expect(bar).toContainReactComponent('path', {
       // eslint-disable-next-line id-length
       d: ``,
-      style: {transform: ` translate(0px, 0px) rotate(0deg)`},
+      transform: `translate(0 0), rotate(0)`,
     });
   });
 
   it('renders null if the value is null', () => {
-    const wrapper = mount(
+    const wrapper = mountWithProvider(
       <Bar
         value={null}
         x={0}
@@ -88,7 +89,7 @@ describe('<Bar/>', () => {
       />,
     );
 
-    expect(wrapper.children).toHaveLength(0);
+    expect(wrapper.find(Bar).children).toHaveLength(0);
   });
 
   describe('hasRoundedCorners', () => {
@@ -107,7 +108,7 @@ describe('<Bar/>', () => {
 
     it('renders a bar with border radius', () => {
       const borderRadiusValue = borderRadius(true);
-      const bar = mount(
+      const bar = mountWithProvider(
         <svg>
           <Bar {...mockProps} />
         </svg>,
@@ -122,7 +123,7 @@ describe('<Bar/>', () => {
     it('renders a bar without border radius', () => {
       const borderRadiusValue = borderRadius(false);
 
-      const bar = mount(
+      const bar = mountWithProvider(
         <svg>
           <Bar {...mockProps} hasRoundedCorners={false} />
         </svg>,
