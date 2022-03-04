@@ -32,11 +32,11 @@ const mockProps: Props = {
       color: 'teal',
     },
   ],
-  xAxisLabels: ['Day 1', 'Day 2'],
   formatYAxisLabel: (val: number) => `$${val}`,
+  xAxisLabels: ['Day 1', 'Day 2'],
 };
 
-describe('<VisuallyHiddenRows', () => {
+describe('<VisuallyHiddenRows />', () => {
   it('renders a first blank row header', () => {
     const chart = mount(
       <svg>

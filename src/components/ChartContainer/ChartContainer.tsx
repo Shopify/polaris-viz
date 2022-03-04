@@ -82,8 +82,7 @@ export const ChartContainer = (props: Props) => {
       <div
         className={styles.ChartContainer}
         style={{
-          // background: chartContainer.backgroundColor,
-          background: 'red',
+          background: chartContainer.backgroundColor,
           padding: chartContainer.padding,
           borderRadius: chartContainer.borderRadius,
         }}

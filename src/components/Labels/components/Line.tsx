@@ -46,12 +46,6 @@ export function Line({index, line, theme}: LineProps) {
                 {truncatedText}
               </text>
               <title>{fullText}</title>
-              {/* <rect
-                width={width}
-                height={height}
-                fill="rgba(0,0,255,0.5)"
-                transform={transform}
-              /> */}
             </React.Fragment>
           );
         },

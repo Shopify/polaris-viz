@@ -1,7 +1,7 @@
 import React, {useState, useMemo} from 'react';
 import type {AnnotationLookupTable} from 'components/BarChart/types';
 
-import {Labels} from '../../components/Labels';
+import {BarChartXAxisLabels} from '../BarChartXAxisLabels';
 import {LegendContainer, useLegend} from '../LegendContainer';
 import {GradientDefs} from '../shared';
 import {
@@ -235,7 +235,7 @@ export function Chart({
         ref={setSvgRef}
       >
         {hideXAxis ? null : (
-          <Labels
+          <BarChartXAxisLabels
             chartX={chartStartPosition}
             chartY={drawableHeight + LABEL_AREA_TOP_SPACING}
             labels={labels}

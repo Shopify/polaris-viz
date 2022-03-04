@@ -225,7 +225,6 @@ Default.args = {
   data: DATA,
   xAxisOptions: {
     useMinimalLabels: true,
-    labelFormatter: (value) => `${value} pickles and stuff`,
   },
   isAnimated: true,
   showLegend: true,

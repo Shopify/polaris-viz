@@ -1,25 +1,25 @@
 import {useContext, useMemo} from 'react';
 
-import {HORIZONTAL_LABEL_MIN_WIDTH} from '../../../constants';
-import {useMinimalLabelIndexes} from '../../../hooks/useMinimalLabelIndexes';
-import {estimateStringWidth} from '../../Labels/utilities';
-import {clamp} from '../../../utilities';
-import {useLinearXScale, useTheme} from '../../../hooks';
-import type {DataSeries} from '../../../types';
-import type {XAxisOptions} from '../types';
-import {ChartContext} from '../../ChartContainer';
+import {HORIZONTAL_LABEL_MIN_WIDTH} from '../constants';
+import {estimateStringWidth, clamp} from '../utilities';
+import type {DataSeries, LinearXAxisOptions} from '../types';
+import {ChartContext} from '../components';
+
+import {useLinearXScale} from './useLinearXScale';
+import {useTheme} from './useTheme';
+import {useMinimalLabelIndexes} from './useMinimalLabelIndexes';
 
 interface Props {
   data: DataSeries[];
   longestSeriesLength: number;
   width: number;
   labels: string[];
-  xAxisOptions: XAxisOptions;
+  xAxisOptions: LinearXAxisOptions;
   yAxisLabelWidth: number;
   theme?: string;
 }
 
-export function useChartLabelsAndDimensions({
+export function useLinearLabelsAndDimensions({
   data,
   longestSeriesLength,
   theme,
@@ -31,8 +31,17 @@ export function useChartLabelsAndDimensions({
   const selectedTheme = useTheme(theme);
   const {characterWidths} = useContext(ChartContext);
 
-  const longestLabelWidth = useMemo(() => {
-    return labels.reduce((prev, cur) => {
+  const horizontalMargin = selectedTheme.grid.horizontalMargin;
+  let chartStartPosition = yAxisLabelWidth + horizontalMargin;
+
+  let drawableWidth = width - chartStartPosition;
+
+  const labelWidth = useMemo(() => {
+    if (data == null || data.length === 0) {
+      return 0;
+    }
+
+    const longestLabelWidth = labels.reduce((prev, cur) => {
       const width = estimateStringWidth(cur, characterWidths);
 
       if (width > prev) {
@@ -43,18 +52,13 @@ export function useChartLabelsAndDimensions({
       // Make the starting point 1px wider than the
       // minimum so we skip the diagonal line logic
     }, HORIZONTAL_LABEL_MIN_WIDTH + 1);
-  }, [labels, characterWidths]);
 
-  const horizontalMargin = selectedTheme.grid.horizontalMargin;
-  let chartStartPosition = yAxisLabelWidth + horizontalMargin;
-
-  let drawableWidth = width - chartStartPosition;
-
-  const labelWidth = clamp({
-    amount: Math.min(drawableWidth / data[0].data.length, longestLabelWidth),
-    min: 0,
-    max: drawableWidth,
-  });
+    return clamp({
+      amount: Math.min(drawableWidth / data[0].data.length, longestLabelWidth),
+      min: 0,
+      max: drawableWidth,
+    });
+  }, [data, drawableWidth, characterWidths, labels]);
 
   const {minimalLabelIndexes} = useMinimalLabelIndexes({
     data,

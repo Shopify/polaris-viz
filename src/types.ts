@@ -75,7 +75,6 @@ export interface XAxisOptions {
   labelFormatter?: StringLabelFormatter;
   useMinimalLabels?: boolean;
   hide?: boolean;
-  wrapLabels?: boolean;
 }
 export interface YAxisOptions {
   labelFormatter?: NumberLabelFormatter;
@@ -228,4 +227,16 @@ export type GradientUnits = 'userSpaceOnUse' | 'objectBoundingBox';
 
 export interface CharacterWidths {
   [key: string]: number;
+}
+
+export interface LinearXAxisOptions {
+  labelFormatter: StringLabelFormatter;
+  xAxisLabels: string[];
+  useMinimalLabels: boolean;
+  hide?: boolean;
+}
+
+export interface LinearYAxisOptions {
+  labelFormatter: NumberLabelFormatter;
+  integersOnly: boolean;
 }

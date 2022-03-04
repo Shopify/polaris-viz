@@ -34,7 +34,7 @@ interface PointsProps {
       >[]
     | null;
   colors: any;
-  dataStartPosition: number;
+  chartStartPosition: number;
   getXPosition: any;
   isAnimated: boolean;
   stackedValues: Series<
@@ -53,7 +53,7 @@ export function Points({
   activePointIndex,
   animatedCoordinates,
   colors,
-  dataStartPosition,
+  chartStartPosition,
   getXPosition,
   isAnimated,
   stackedValues,
@@ -75,7 +75,7 @@ export function Points({
   });
 
   return (
-    <g transform={`translate(${dataStartPosition},${Margin.Top})`}>
+    <g transform={`translate(${chartStartPosition},${Margin.Top})`}>
       {stackedValues.map((_, stackIndex) => {
         if (activePointIndex == null) {
           return null;

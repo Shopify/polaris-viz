@@ -1,6 +1,7 @@
 import React, {useState, useRef, useMemo, useCallback} from 'react';
 import {line} from 'd3-shape';
 
+import {LinearXAxisLabels} from '../LinearXAxisLabels';
 import {useLegend, LegendContainer} from '../LegendContainer';
 import {
   TooltipHorizontalOffset,
@@ -22,6 +23,7 @@ import {
   useLinearChartAnimations,
   useColorVisionEvents,
   useWatchColorVisionEvents,
+  useLinearLabelsAndDimensions,
 } from '../../hooks';
 import {
   SMALL_SCREEN,
@@ -36,20 +38,23 @@ import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
 import {YAxis} from '../YAxis';
 import {Crosshair} from '../Crosshair';
 import {LinearGradient} from '../LinearGradient';
-import {DataPoint, DataType, Dimensions} from '../../types';
+import {
+  DataPoint,
+  DataType,
+  Dimensions,
+  LinearXAxisOptions,
+  LinearYAxisOptions,
+} from '../../types';
 import {HorizontalGridLines} from '../HorizontalGridLines';
-import {LineChartLabels} from '../Labels';
 
 import {Points, Line, GradientArea} from './components';
 import {MAX_ANIMATED_SERIES_LENGTH} from './constants';
 import type {
   RenderTooltipContentData,
   TooltipData,
-  XAxisOptions,
-  YAxisOptions,
   DataWithDefaults,
 } from './types';
-import {useChartLabelsAndDimensions, useYScale, useFormatData} from './hooks';
+import {useYScale, useFormatData} from './hooks';
 import styles from './Chart.scss';
 
 export interface ChartProps {
@@ -57,8 +62,8 @@ export interface ChartProps {
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
   data: DataWithDefaults[];
   showLegend: boolean;
-  xAxisOptions: XAxisOptions;
-  yAxisOptions: Required<YAxisOptions>;
+  xAxisOptions: Required<LinearXAxisOptions>;
+  yAxisOptions: Required<LinearYAxisOptions>;
   emptyStateText?: string;
   theme?: string;
   dimensions?: Dimensions;
@@ -136,7 +141,7 @@ export function Chart({
     drawableWidth,
     xAxisDetails,
     xScale,
-  } = useChartLabelsAndDimensions({
+  } = useLinearLabelsAndDimensions({
     data,
     longestSeriesLength,
     theme,
@@ -276,7 +281,7 @@ export function Chart({
         aria-label={emptyState ? emptyStateText : undefined}
       >
         {xAxisOptions.hide ? null : (
-          <LineChartLabels
+          <LinearXAxisLabels
             chartX={chartStartPosition - xAxisDetails.labelWidth / 2}
             chartY={drawableHeight + LABEL_AREA_TOP_SPACING}
             labels={labels}
@@ -332,11 +337,6 @@ export function Chart({
         )}
 
         <g transform={`translate(${chartStartPosition},${Margin.Top})`}>
-          <rect
-            height={drawableHeight}
-            width={drawableWidth}
-            fill="rgba(255,255,255,0.5)"
-          />
           {reversedSeries.map((singleSeries, index) => {
             const {name, color, areaColor} = singleSeries;
             const seriesGradientId = `${gradientId.current}-${index}`;

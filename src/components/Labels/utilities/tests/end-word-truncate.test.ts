@@ -5,8 +5,8 @@ describe('endWordTruncate()', () => {
   it.each`
     word           | targetWidth | expected
     ${'Wendesday'} | ${40}       | ${'We…'}
-    ${'Wendesday'} | ${60}       | ${'Wendes…'}
-    ${'Wendesday'} | ${68}       | ${'Wendesday'}
+    ${'Wendesday'} | ${60}       | ${'Wende…'}
+    ${'Wendesday'} | ${68}       | ${'Wendes…'}
     ${'Wendesday'} | ${100}      | ${'Wendesday'}
   `(
     'truncates word at target width of $targetWidth',

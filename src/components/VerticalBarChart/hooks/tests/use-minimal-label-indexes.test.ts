@@ -1,22 +1,22 @@
 import {useMinimalLabelIndexes} from '../use-minimal-label-indexes';
 
 describe('useMinimalLabelIndexes', () => {
-  it('returns null when useMinimalLabels is false', () => {
+  it('returns empty array when useMinimalLabels is false', () => {
     const labels = useMinimalLabelIndexes({
       dataLength: 10,
       useMinimalLabels: false,
     });
 
-    expect(labels).toStrictEqual({minimalLabelIndexes: null});
+    expect(labels).toStrictEqual({minimalLabelIndexes: []});
   });
 
-  it('returns null when the data length is less than 2', () => {
+  it('returns empty array when the data length is less than 2', () => {
     const labels = useMinimalLabelIndexes({
       dataLength: 2,
       useMinimalLabels: false,
     });
 
-    expect(labels).toStrictEqual({minimalLabelIndexes: null});
+    expect(labels).toStrictEqual({minimalLabelIndexes: []});
   });
 
   it('returns the first and last indexes when the dataLength is even and less than 10', () => {

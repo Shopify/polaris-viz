@@ -1,11 +1,9 @@
 import React, {Dispatch, SetStateAction} from 'react';
 import type {ScaleBand} from 'd3-scale';
 
-import {useLabels} from './hooks/useLabels';
-import {Line} from './components/Line';
-import {shouldSkipLabel} from './utilities/should-skip-label';
+import {useLabels, Line, shouldSkipLabel} from '../Labels';
 
-interface LabelsProps {
+interface BarChartXAxisLabelsProps {
   chartX: number;
   chartY: number;
   labels: string[];
@@ -16,7 +14,7 @@ interface LabelsProps {
   theme?: string;
 }
 
-export function Labels({
+export function BarChartXAxisLabels({
   chartX,
   chartY,
   labels,
@@ -25,7 +23,7 @@ export function Labels({
   onHeightChange,
   theme,
   xScale,
-}: LabelsProps) {
+}: BarChartXAxisLabelsProps) {
   const {lines} = useLabels({
     labels,
     targetWidth: labelWidth,

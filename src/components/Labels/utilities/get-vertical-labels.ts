@@ -5,6 +5,8 @@ import type {FormattedLine, PreparedLabels} from '../types';
 
 import {truncateLabels} from './truncate-labels';
 
+const QUARTER = 4;
+
 interface Props {
   labels: PreparedLabels[];
   characterWidths: CharacterWidths;
@@ -26,7 +28,7 @@ export function getVerticalLabels({labels, characterWidths}: Props) {
     lines[i].push({
       truncatedText: truncatedLabels[i].truncatedName,
       fullText: truncatedLabels[i].text,
-      y: LINE_HEIGHT / 4,
+      y: LINE_HEIGHT / QUARTER,
       x: 0,
       width: VERTICAL_LABEL_TARGET_WIDTH,
       height: LINE_HEIGHT,

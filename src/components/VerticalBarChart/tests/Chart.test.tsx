@@ -1,7 +1,8 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {YAxis, Labels} from '../../../components';
+import {BarChartXAxisLabels} from '../../BarChartXAxisLabels';
+import {YAxis} from '../../../components';
 import {mountWithProvider, triggerSVGMouseMove} from '../../../test-utilities';
 import {HorizontalGridLines} from '../../../components/HorizontalGridLines';
 import {mockDefaultTheme} from '../../../test-utilities/mount-with-provider';
@@ -67,7 +68,6 @@ describe('Chart />', () => {
     xAxisOptions: {
       labelFormatter: jest.fn((value: string) => value.toString()),
       hide: false,
-      wrapLabels: false,
       useMinimalLabels: false,
     },
     yAxisOptions: {
@@ -86,7 +86,7 @@ describe('Chart />', () => {
 
   it('renders an Labels', () => {
     const chart = mount(<Chart {...mockProps} />);
-    expect(chart).toContainReactComponent(Labels);
+    expect(chart).toContainReactComponent(BarChartXAxisLabels);
   });
 
   it('does not render Labels if it is hidden', () => {
@@ -96,7 +96,7 @@ describe('Chart />', () => {
         xAxisOptions={{...mockProps.xAxisOptions, hide: true}}
       />,
     );
-    expect(chart).not.toContainReactComponent(Labels);
+    expect(chart).not.toContainReactComponent(BarChartXAxisLabels);
   });
 
   it('renders an yAxis', () => {
@@ -115,7 +115,7 @@ describe('Chart />', () => {
       />,
     );
 
-    const xAxis = chart.find(Labels);
+    const xAxis = chart.find(BarChartXAxisLabels);
 
     expect(xAxis?.props.labels[0]).toStrictEqual('stuff 1 pickles');
   });

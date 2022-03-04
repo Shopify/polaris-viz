@@ -3,7 +3,6 @@ import {mount} from '@shopify/react-testing';
 
 import {LegendContainer} from '../../LegendContainer';
 import {mockDefaultTheme} from '../../../test-utilities/mount-with-provider';
-import {LinearXAxis} from '../../../components/LinearXAxis';
 import {YAxis} from '../../../components/YAxis';
 import {HorizontalGridLines} from '../../../components/HorizontalGridLines';
 import {VisuallyHiddenRows} from '../../../components/VisuallyHiddenRows';
@@ -66,11 +65,18 @@ describe('<Chart />', () => {
         color: 'teal',
       },
     ],
-    xAxisOptions: {labels: ['Day 1', 'Day 2']},
+    xAxisOptions: {
+      xAxisLabels: ['Day 1', 'Day 2'],
+      hide: false,
+      useMinimalLabels: false,
+      labelFormatter: (value) => `${value}`,
+    },
+    yAxisOptions: {
+      labelFormatter: (val: number) => val.toString(),
+      integersOnly: false,
+    },
     dimensions: {width: 500, height: 250},
     isAnimated: true,
-    formatXAxisLabel: (val: string) => val,
-    formatYAxisLabel: (val: number) => val.toString(),
     renderTooltipContent: jest.fn(() => <p>Mock Tooltip Content</p>),
     showLegend: false,
   };
@@ -80,49 +86,13 @@ describe('<Chart />', () => {
     expect(chart).toContainReactComponent('svg');
   });
 
-  it('renders a LinearAxis', () => {
-    const chart = mount(<Chart {...mockProps} />);
-    expect(chart).toContainReactComponent(LinearXAxis, {
-      labels: ['Day 1', 'Day 2'],
-      drawableHeight: 218,
-      xAxisDetails: {
-        maxXLabelHeight: 0,
-        maxDiagonalLabelLength: 3,
-        needsDiagonalLabels: false,
-        ticks: [0, 1, 2, 3, 4, 5, 6],
-        horizontalLabelWidth: 43.08571428571428,
-      },
-      fontSize: 12,
-      drawableWidth: 464,
-    });
-  });
-
-  it('does not render LinearAxis labels if the axis is hidden', () => {
-    const chart = mountWithProvider(
-      <Chart {...mockProps} />,
-      mockDefaultTheme({xAxis: {hide: true}}),
-    );
-    expect(chart).not.toContainReactComponent(LinearXAxis);
-  });
-
-  it('formats the x axis labels before passing them to the LinearAxis', () => {
-    const formatXAxisLabelSpy = jest.fn((value) => `Formatted: ${value}`);
-    const chart = mount(
-      <Chart {...mockProps} formatXAxisLabel={formatXAxisLabelSpy} />,
-    );
-
-    expect(chart).toContainReactComponent(LinearXAxis, {
-      labels: ['Formatted: Day 1', 'Formatted: Day 2'],
-    });
-  });
-
   it('renders a YAxis', () => {
     const chart = mount(<Chart {...mockProps} />);
     expect(chart).toContainReactComponent(YAxis, {
       ticks: [
-        {value: 0, formattedValue: '0', yOffset: 218},
-        {value: 500, formattedValue: '500', yOffset: 119.53568202348691},
-        {value: 1000, formattedValue: '1000', yOffset: 21.071364046973812},
+        {value: 0, formattedValue: '0', yOffset: 198},
+        {value: 500, formattedValue: '500', yOffset: 108.56910569105692},
+        {value: 1000, formattedValue: '1000', yOffset: 19.13821138211383},
       ],
     });
   });
@@ -130,7 +100,6 @@ describe('<Chart />', () => {
   it('renders a StackedAreas', () => {
     const chart = mount(<Chart {...mockProps} />);
     expect(chart).toContainReactComponent(StackedAreas, {
-      transform: 'translate(32,8)',
       colors: ['purple', 'teal'],
       isAnimated: true,
       stackedValues: expect.any(Object),
@@ -214,8 +183,7 @@ describe('<Chart />', () => {
 
     expect(chart).toContainReactComponent(VisuallyHiddenRows, {
       data: mockProps.data,
-      xAxisLabels: mockProps.xAxisOptions.labels,
-      formatYAxisLabel: mockProps.formatYAxisLabel,
+      xAxisLabels: mockProps.xAxisOptions.xAxisLabels,
     });
   });
 

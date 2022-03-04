@@ -84,8 +84,8 @@ export default {
 const defaultProps = {
   data,
   skipLinkText: 'Skip chart content',
-  xAxisOptions: {labels},
-  yAxisOptions: {formatLabel: formatYAxisLabel},
+  xAxisOptions: {xAxisLabels: labels},
+  yAxisOptions: {labelFormatter: formatYAxisLabel},
   isAnimated: true,
 };
 
@@ -111,7 +111,7 @@ export const OverwrittenSeriesColors: Story<StackedAreaChartProps> = Template.bi
 OverwrittenSeriesColors.args = {
   ...defaultProps,
   xAxisOptions: {
-    labels: Array(5)
+    xAxisLabels: Array(5)
       .fill(null)
       .map(() => 'label'),
   },

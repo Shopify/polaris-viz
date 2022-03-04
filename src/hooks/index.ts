@@ -24,3 +24,4 @@ export {
   getOpacityStylesForActive,
 } from './ColorVisionA11y';
 export {useCallbackRef} from './useCallbackRef';
+export {useLinearLabelsAndDimensions} from './useLinearLabelsAndDimensions';

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import type {NumberLabelFormatter, DataSeries} from '../../types';
+import type {DataSeries, NumberLabelFormatter} from '../../types';
 
 import styles from './VisuallyHiddenRows.scss';
 
@@ -12,8 +12,8 @@ export interface Props {
 
 export const VisuallyHiddenRows = React.memo(function Rows({
   data,
-  xAxisLabels,
   formatYAxisLabel,
+  xAxisLabels,
 }: Props) {
   return (
     <React.Fragment>

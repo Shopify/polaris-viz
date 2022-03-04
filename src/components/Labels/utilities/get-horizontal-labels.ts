@@ -1,9 +1,9 @@
 import type {CharacterWidths} from '../../../types';
 import {LINE_HEIGHT} from '../../../constants';
 import type {FormattedLine, PreparedLabels} from '../types';
+import {estimateStringWidth} from '../../../utilities';
 
 import {endWordTruncate} from './end-word-truncate';
-import {estimateStringWidth} from './estimate-string-width';
 import {truncateLabels} from './truncate-labels';
 
 const NEXT_INDEX = 1;

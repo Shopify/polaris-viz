@@ -31,3 +31,4 @@ export {getStackedMinMax} from './get-stacked-min-max';
 export {getStackedValues} from './get-stacked-values';
 export {pushGapToArray} from './push-gap-to-array';
 export {getGapForIndex} from './get-gap-for-index';
+export {estimateStringWidth} from './estimate-string-width';

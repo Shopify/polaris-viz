@@ -10,7 +10,6 @@ export interface RenderTooltipContentData {
 export interface XAxisOptions {
   labelFormatter?: LabelFormatter;
   hide?: boolean;
-  wrapLabels?: boolean;
   useMinimalLabels?: boolean;
 }
 
