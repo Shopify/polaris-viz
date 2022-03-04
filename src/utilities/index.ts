@@ -5,7 +5,6 @@ export {isGradientType} from './is-gradient-type';
 export {uniqueId} from './unique-id';
 export {getTextContainerHeight} from './get-text-container-height';
 export {RightAngleTriangle} from './RightAngleTriangle';
-export {getBarXAxisDetails} from './get-bar-xaxis-details';
 export {getLongestLabelDetails} from './get-longest-label-details';
 export {getMaxDiagonalDetails} from './get-max-diagonal-details';
 export {getAnimationTrail} from './get-animation-trail';

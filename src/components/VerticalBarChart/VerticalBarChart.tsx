@@ -1,14 +1,14 @@
 import React from 'react';
-import type {AnnotationLookupTable} from 'components/BarChart/types';
 
-import {ChartContainer} from '../../components/ChartContainer';
-import {useTheme, useThemeSeriesColors} from '../../hooks';
-import type {ChartType, DataSeries} from '../../types';
 import type {
+  AnnotationLookupTable,
   RenderTooltipContentData,
   XAxisOptions,
   YAxisOptions,
-} from '../BarChart';
+} from '../../components/BarChart';
+import {ChartContainer} from '../../components/ChartContainer';
+import {useTheme, useThemeSeriesColors} from '../../hooks';
+import type {ChartType, DataSeries} from '../../types';
 
 import {Chart} from './Chart';
 

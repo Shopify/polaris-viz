@@ -1,7 +1,11 @@
 import {createContext} from 'react';
 
-interface Values {
+export interface ChartContextValues {
   id: string | null;
+  characterWidths: {[key: string]: number};
 }
 
-export const ChartContext = createContext<Values>({id: null});
+export const ChartContext = createContext<ChartContextValues>({
+  id: null,
+  characterWidths: {},
+});

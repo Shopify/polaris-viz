@@ -225,3 +225,7 @@ export interface StackedBarGapDirections {
 }
 
 export type GradientUnits = 'userSpaceOnUse' | 'objectBoundingBox';
+
+export interface CharacterWidths {
+  [key: string]: number;
+}

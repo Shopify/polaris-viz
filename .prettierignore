@@ -4,3 +4,4 @@ node_modules
 /package.json
 /.github
 .loom
+src/data/character-widths.json

@@ -90,10 +90,10 @@ describe('<Chart />', () => {
         maxDiagonalLabelLength: 3,
         needsDiagonalLabels: false,
         ticks: [0, 1, 2, 3, 4, 5, 6],
-        horizontalLabelWidth: 45.82857142857142,
+        horizontalLabelWidth: 43.08571428571428,
       },
       fontSize: 12,
-      drawableWidth: 480,
+      drawableWidth: 464,
     });
   });
 
@@ -130,7 +130,7 @@ describe('<Chart />', () => {
   it('renders a StackedAreas', () => {
     const chart = mount(<Chart {...mockProps} />);
     expect(chart).toContainReactComponent(StackedAreas, {
-      transform: 'translate(16,8)',
+      transform: 'translate(32,8)',
       colors: ['purple', 'teal'],
       isAnimated: true,
       stackedValues: expect.any(Object),
