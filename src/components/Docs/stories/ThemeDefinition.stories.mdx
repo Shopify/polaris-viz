@@ -1155,15 +1155,18 @@ export interface GradientStop {
         }
       }
     }}>
-    <LineChart series={data} />
+    <SimpleNormalizedChart data={data} />
   </PolarisVizProvider>
     `}
   center
   chart={
-    <div style={{width: '320px', height: '180px'}}>
+    <div style={{width: '320px', height: '250px'}}>
       <PolarisVizProvider
         themes={{
           Default: {
+            chartContainer: {
+              padding: '10px'
+            },
             legend: {
               labelColor: 'lime',
               valueColor: 'yellow'
