@@ -4,6 +4,7 @@
 
 ### Fixed
 - `<Sparkbar />` bar shape is now configurable by the theme bar.hasRoundedCorners property
+- `<SimpleNormalizedChart />` overlapping labels when chart was vertical
 - Bug where `showLabels=false` would cause `<SimpleBarChart >` to render with 0 opacity.
 - Bug where vertical `<SimpleNormalizedChart />` would use the wrong index for color vision interactions.
 - Bug causing the animated `<LineChart />` to break when hovered over if empty data was provided
