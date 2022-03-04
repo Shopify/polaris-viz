@@ -158,3 +158,7 @@ export const SHARK_SPECIES_GROWTH = [
     ],
   },
 ];
+
+export function fixImagePath(rawMd: string) {
+  return rawMd.replace('src="../public', 'src="');
+}
