@@ -1,14 +1,10 @@
-import {
-  createWorkspace,
-  createWorkspaceTestPlugin,
-  createWorkspacePlugin,
-} from '@shopify/loom';
+import {createWorkspace, createWorkspaceTestPlugin} from '@shopify/loom';
 import {buildLibraryWorkspace} from '@shopify/loom-plugin-build-library';
 import {eslint} from '@shopify/loom-plugin-eslint';
 import {prettier} from '@shopify/loom-plugin-prettier';
 import {stylelint} from '@shopify/loom-plugin-stylelint';
 
-// Needed so TS realises what configuration hooks are provided by Jest
+// Needed so TS realises what configuration hooks are provided by Jest (in `jestAdjustments` below)
 import type {} from '@shopify/loom-plugin-jest';
 
 // eslint-disable-next-line import/no-default-export
@@ -18,12 +14,12 @@ export default createWorkspace((workspace) => {
     eslint(),
     prettier({files: '**/*.{json,md,yaml,yml}'}),
     stylelint({files: '**/*.scss'}),
-    runWorkspaceTests(),
+    jestAdjustments(),
   );
 });
 
 // Add root tests folder to jest config
-function runWorkspaceTests() {
+function jestAdjustments() {
   return createWorkspaceTestPlugin('WorkspaceTests', ({hooks}) => {
     hooks.configure.hook((hooks) => {
       hooks.jestConfig?.hook((config) => {
