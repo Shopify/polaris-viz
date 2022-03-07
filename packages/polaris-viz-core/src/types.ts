@@ -14,18 +14,6 @@ export interface DataSeries {
   name?: string;
 }
 
-export interface DataPoint {
-  key: number | string;
-  value: number | null;
-}
-
-export interface DataSeries {
-  data: DataPoint[];
-  color?: Color;
-  isComparison?: boolean;
-  name?: string;
-}
-
 export interface Data {
   label: string;
   rawValue: number;
@@ -58,11 +46,6 @@ export interface ActiveTooltip {
   x: number;
   y: number;
   index: number;
-}
-
-export interface GradientStop {
-  offset: number;
-  color: string;
 }
 
 export interface YAxisTick {
@@ -282,10 +265,6 @@ export interface SparkBarChartProps {
   theme?: string;
 }
 
-export interface Dimensions {
-  dimensions?: {width: number; height: number};
-}
-
 export interface SparkBarChartProps {
   data: DataSeries[];
   dataOffsetRight?: number;
@@ -293,4 +272,5 @@ export interface SparkBarChartProps {
   accessibilityLabel?: string;
   isAnimated?: boolean;
   theme?: string;
+  dimensions?: Dimensions;
 }

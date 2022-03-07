@@ -9,7 +9,6 @@ import {
   Bar,
   usePolarisVizContext,
   useSparkBar,
-  Dimensions,
   SparkBarChartProps,
   BARS_TRANSITION_CONFIG,
   ANIMATION_MARGIN,
@@ -49,7 +48,7 @@ function Chart({
   dataOffsetLeft = 0,
   theme,
   isAnimated,
-}: SparkBarChartProps & Partial<Dimensions>) {
+}: SparkBarChartProps) {
   const {
     // eslint-disable-next-line id-length
     components: {Svg, Defs, Mask, G, Path, Rect},
