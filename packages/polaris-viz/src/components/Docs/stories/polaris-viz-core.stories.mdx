@@ -1,7 +1,14 @@
 import {Meta, Description} from '@storybook/addon-docs/blocks';
+import {fixImagePath} from '../utilities';
 
 import Readme from '!raw-loader!../../../../../polaris-viz-core/README.md';
 
-<Meta title="Contributing/polaris-viz-core" />
+<Meta title="Contributing/Polaris Viz Core" />
 
-<Description markdown={Readme} />
+<Description
+  markdown={fixImagePath(
+    Readme,
+    '../../public/PolarisVizProvider_graph.png',
+    'PolarisVizProvider_graph.png',
+  )}
+/>
