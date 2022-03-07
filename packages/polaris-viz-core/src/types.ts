@@ -1,6 +1,4 @@
 import type {SVGProps} from 'react';
-import type {InterpolatorFn} from '@react-spring/web';
-import type {Series, SeriesPoint} from 'd3-shape';
 
 export interface DataPoint {
   key: number | string;
@@ -12,28 +10,6 @@ export interface DataSeries {
   color?: Color;
   isComparison?: boolean;
   name?: string;
-}
-
-export interface DataPoint {
-  key: number | string;
-  value: number | null;
-}
-
-export interface DataSeries {
-  data: DataPoint[];
-  color?: Color;
-  isComparison?: boolean;
-  name?: string;
-}
-
-export interface Data {
-  label: string;
-  rawValue: number;
-}
-
-export interface NullableData {
-  label: string;
-  rawValue: number | null;
 }
 
 export type LineStyle = 'dashed' | 'solid' | 'dotted';
@@ -44,31 +20,10 @@ export interface GradientStop {
   stopOpacity?: number;
 }
 
-export type LabelFormatter = (value: string | number | null) => string;
-
-export type StringLabelFormatter = (
-  value: string,
-  index?: number,
-  data?: string[],
-) => string;
-
-export type NumberLabelFormatter = (value: number) => string;
-
 export interface ActiveTooltip {
   x: number;
   y: number;
   index: number;
-}
-
-export interface GradientStop {
-  offset: number;
-  color: string;
-}
-
-export interface YAxisTick {
-  value: number;
-  formattedValue: string;
-  yOffset: number;
 }
 
 export interface Dimensions {
@@ -76,27 +31,10 @@ export interface Dimensions {
   height: number;
 }
 
-export interface SparkChartData {
-  value: number | null;
-}
-
-export type PathInterpolator = InterpolatorFn<readonly number[], string>;
-export type NumberInterpolator = InterpolatorFn<readonly number[], number>;
 export type Color = string | GradientStop[];
 
-export interface XAxisOptions {
-  labelFormatter?: StringLabelFormatter;
-  useMinimalLabels?: boolean;
-  hide?: boolean;
-  wrapLabels?: boolean;
-}
-export interface YAxisOptions {
-  labelFormatter?: NumberLabelFormatter;
-  integersOnly?: boolean;
-}
-
 // === Theme types === //
-export enum BarMargin {
+enum BarMargin {
   Small = 0.05,
   Medium = 0.1,
   Large = 0.3,
@@ -195,12 +133,6 @@ export interface Theme {
   seriesColors: SeriesColors;
   tooltip: TooltipTheme;
 }
-export interface Margin {
-  Top: number;
-  Left: number;
-  Right: number;
-  Bottom: number;
-}
 
 export enum DataType {
   Point = 'Point',
@@ -208,34 +140,7 @@ export enum DataType {
   Bar = 'Bar',
 }
 
-export enum RoundedBorder {
-  None,
-  Top,
-  Right,
-  Bottom,
-  Left,
-}
-
 export type ChartType = 'default' | 'stacked';
-export type Direction = 'horizontal' | 'vertical';
-export type StackedSeries = Series<
-  {
-    [key: string]: number;
-  },
-  string
->;
-export type FormattedStackedSeries = SeriesPoint<{
-  [key: string]: number;
-}>[];
-
-export interface SingleIndexGap {
-  index: number;
-  gap: number;
-}
-export interface StackedBarGapDirections {
-  positive: SingleIndexGap[];
-  negative: SingleIndexGap[];
-}
 
 export type GradientUnits = 'userSpaceOnUse' | 'objectBoundingBox';
 
@@ -282,10 +187,6 @@ export interface SparkBarChartProps {
   theme?: string;
 }
 
-export interface Dimensions {
-  dimensions?: {width: number; height: number};
-}
-
 export interface SparkBarChartProps {
   data: DataSeries[];
   dataOffsetRight?: number;
@@ -293,4 +194,5 @@ export interface SparkBarChartProps {
   accessibilityLabel?: string;
   isAnimated?: boolean;
   theme?: string;
+  dimensions?: Dimensions;
 }
