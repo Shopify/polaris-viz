@@ -1,5 +1,6 @@
 import React, {ReactNode, useCallback, useMemo, useState} from 'react';
 
+import {HorizontalBarChartXAxisLabels} from '../HorizontalBarChartXAxisLabels';
 import {useLegend, LegendContainer} from '../LegendContainer';
 import type {HorizontalTransitionStyle} from '../../hooks/useHorizontalTransitions';
 import {GradientDefs, HorizontalGroup} from '../shared';
@@ -40,8 +41,8 @@ import type {
 } from '../BarChart';
 import {AnnotationLine} from '../BarChart';
 
+import {VerticalGridLines} from './components';
 import {getAlteredHorizontalBarPosition} from './utilities';
-import {VerticalGridLines, XAxisLabels} from './components';
 import styles from './Chart.scss';
 
 export interface ChartProps {
@@ -76,6 +77,7 @@ export function Chart({
   const isStacked = type === 'stacked';
 
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
+  const [labelHeight, setLabelHeight] = useState(0);
 
   const {longestSeriesCount, seriesColors} = useHorizontalSeriesColors({
     data,
@@ -117,29 +119,35 @@ export function Chart({
     data,
   });
 
-  const {xScale, ticks} = useHorizontalXScale({
+  const drawableHeight = height - labelHeight;
+
+  const {
+    xScale,
+    ticks,
+    ticksFormatted,
+    drawableWidth,
+    chartStartPosition,
+  } = useHorizontalXScale({
     allNumbers,
     stackedMin,
     stackedMax,
     isStacked,
     maxWidth: width - longestLabel.negative - longestLabel.positive,
+    labelFormatter: xAxisOptions.labelFormatter,
   });
 
   const {
-    bandwidth,
     barHeight,
     chartHeight,
     groupBarsAreaHeight,
     groupHeight,
-    tallestXAxisLabel,
   } = useHorizontalBarSizes({
-    chartDimensions: {width, height},
+    chartDimensions: {width: drawableWidth, height},
     isSimple: xAxisOptions.hide,
     isStacked,
-    labelFormatter,
     seriesLength: longestSeriesCount,
     singleBarCount: data.length,
-    ticks,
+    labelHeight,
   });
 
   const getAriaLabel = useCallback(
@@ -170,9 +178,12 @@ export function Chart({
     series: data,
     groupHeight,
     isAnimated,
+    chartStartPosition,
   });
 
   const zeroPosition = longestLabel.negative + xScale(0);
+
+  const bandwidth = drawableWidth / ticks.length;
 
   return (
     <div
@@ -192,23 +203,24 @@ export function Chart({
         height={height}
       >
         {xAxisOptions.hide === true ? null : (
-          <React.Fragment>
+          <g transform={`translate(${chartStartPosition}, 0)`}>
             <VerticalGridLines
               chartHeight={chartHeight}
               stroke={selectedTheme.grid.color}
               ticks={ticks}
               xScale={xScale}
             />
-            <XAxisLabels
-              bandwidth={bandwidth}
-              chartHeight={chartHeight}
-              color={selectedTheme.xAxis.labelColor}
-              labelFormatter={labelFormatter}
-              tallestXAxisLabel={tallestXAxisLabel}
+            <HorizontalBarChartXAxisLabels
+              chartX={-bandwidth / 2}
+              chartY={drawableHeight}
+              labels={ticksFormatted}
+              labelWidth={bandwidth}
+              onHeightChange={setLabelHeight}
+              theme={theme}
               ticks={ticks}
               xScale={xScale}
             />
-          </React.Fragment>
+          </g>
         )}
 
         <GradientDefs

@@ -12,6 +12,7 @@ export {useHasTimeoutFinished} from './useHasTimeoutFinished';
 export {useDataForHorizontalChart} from './useDataForHorizontalChart';
 export {useHorizontalBarSizes} from './useHorizontalBarSizes';
 export {useHorizontalXScale} from './useHorizontalXScale';
+export {useGetHorizontalXScales} from './useGetHorizontalXScales';
 export {useHorizontalTransitions} from './useHorizontalTransitions';
 export {useHorizontalSeriesColors} from './useHorizontalSeriesColors';
 export type {HorizontalTransitionStyle} from './useHorizontalTransitions';
