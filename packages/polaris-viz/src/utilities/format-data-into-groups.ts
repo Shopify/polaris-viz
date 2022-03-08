@@ -1,4 +1,4 @@
-import type {DataSeries} from '../types';
+import type {DataSeries} from '@shopify/polaris-viz-core';
 
 // Take a DataSeries and format it into
 // visual groups used for the chart.

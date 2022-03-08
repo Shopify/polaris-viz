@@ -1,11 +1,11 @@
 import React from 'react';
+import type {Color} from '@shopify/polaris-viz-core';
 
 import {
   COLOR_VISION_ACTIVE_OPACITY,
   COLOR_VISION_FADED_OPACITY,
 } from '../../../constants';
 import {SquareColorPreview} from '../../SquareColorPreview';
-import type {Color} from '../../../types';
 import styles from '../TooltipContent.scss';
 
 export function DefaultRow({

@@ -6,15 +6,11 @@ import {
   curveStepRounded,
   uniqueId,
   isGradientType,
+  DataSeries,
 } from '@shopify/polaris-viz-core';
 
 import {classNames} from '../../../../utilities';
-import type {
-  DataPoint,
-  DataSeries,
-  GradientStop,
-  Theme,
-} from '../../../../types';
+import type {DataPoint, GradientStop, Theme} from '../../../../types';
 import {usePrefersReducedMotion} from '../../../../hooks';
 import {Area} from '../Area';
 

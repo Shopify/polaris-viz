@@ -1,14 +1,11 @@
 import React, {useRef} from 'react';
+import {uniqueId} from '@shopify/polaris-viz-core';
+import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {ChartContainer} from '../ChartContainer';
 import {SkipLink} from '../SkipLink';
-import type {
-  StringLabelFormatter,
-  NumberLabelFormatter,
-  DataSeries,
-} from '../../types';
+import type {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 import {TooltipContent} from '../TooltipContent';
-import {uniqueId} from '../../utilities';
 
 import {Chart} from './Chart';
 import type {RenderTooltipContentData} from './types';

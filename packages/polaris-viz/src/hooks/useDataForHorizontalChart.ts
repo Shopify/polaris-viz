@@ -1,4 +1,5 @@
 import {useMemo} from 'react';
+import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {
   FONT_SIZE,
@@ -6,7 +7,7 @@ import {
   HORIZONTAL_BAR_LABEL_OFFSET,
 } from '../constants';
 import {getTextWidth} from '../utilities';
-import type {DataSeries, LabelFormatter} from '../types';
+import type {LabelFormatter} from '../types';
 
 interface Props {
   data: DataSeries[];

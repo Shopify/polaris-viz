@@ -1,7 +1,11 @@
 import React, {useState} from 'react';
 import type {Interpolation} from '@react-spring/web';
 import type {ScaleLinear} from 'd3-scale';
-import {LinearGradientWithStops} from '@shopify/polaris-viz-core';
+import {
+  LinearGradientWithStops,
+  isGradientType,
+  DataType,
+} from '@shopify/polaris-viz-core';
 
 import {COLOR_VISION_SINGLE_ITEM} from '../../../../constants';
 import {
@@ -9,14 +13,9 @@ import {
   useTheme,
   useWatchColorVisionEvents,
 } from '../../../../hooks';
-import {
-  isGradientType,
-  changeColorOpacity,
-  changeGradientOpacity,
-} from '../../../../utilities';
+import {changeColorOpacity, changeGradientOpacity} from '../../../../utilities';
 import {Point} from '../../../Point';
 import type {DataWithDefaults} from '../../types';
-import {DataType} from '../../../../types';
 
 interface PointsProps {
   activeIndex: number | null;

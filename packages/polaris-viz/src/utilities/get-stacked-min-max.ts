@@ -1,4 +1,6 @@
-import type {DataSeries, StackedSeries} from '../types';
+import type {DataSeries} from '@shopify/polaris-viz-core';
+
+import type {StackedSeries} from '../types';
 import {DEFAULT_MAX_Y} from '../constants';
 
 export function getStackedMinMax({

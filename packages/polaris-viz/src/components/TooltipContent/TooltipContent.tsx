@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
+import type {Color} from '@shopify/polaris-viz-core';
 
 import {COLOR_VISION_SINGLE_ITEM} from '../../constants';
-import type {Color} from '../../types';
 import {useTheme, useWatchColorVisionEvents} from '../../hooks';
 
 import {DefaultRow, AnnotationRow} from './components';

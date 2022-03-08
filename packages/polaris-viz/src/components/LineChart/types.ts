@@ -1,9 +1,9 @@
+import type {Color, DataSeries} from '@shopify/polaris-viz-core';
+
 import type {
   LineStyle,
   StringLabelFormatter,
   NumberLabelFormatter,
-  Color,
-  DataSeries,
 } from '../../types';
 
 export type DataWithDefaults = DataSeries & {

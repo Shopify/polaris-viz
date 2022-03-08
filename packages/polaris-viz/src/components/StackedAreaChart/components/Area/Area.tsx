@@ -1,23 +1,21 @@
 import React from 'react';
 import {animated, useSpring} from '@react-spring/web';
 import type {Area as D3Area, Line} from 'd3-shape';
-import {LinearGradientWithStops} from '@shopify/polaris-viz-core';
+import {
+  LinearGradientWithStops,
+  isGradientType,
+} from '@shopify/polaris-viz-core';
+import type {Color} from '@shopify/polaris-viz-core';
 
 import {
   getColorVisionEventAttrs,
   getOpacityStylesForActive,
 } from '../../../../hooks';
-import type {
-  Color,
-  GradientStop,
-  StackedSeries,
-  Theme,
-} from '../../../../types';
+import type {GradientStop, StackedSeries, Theme} from '../../../../types';
 import {
   COLOR_VISION_SINGLE_ITEM,
   LINES_LOAD_ANIMATION_CONFIG,
 } from '../../../../constants';
-import {isGradientType} from '../../../../utilities';
 
 import styles from './Area.scss';
 

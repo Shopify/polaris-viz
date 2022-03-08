@@ -1,11 +1,12 @@
 import {useMemo} from 'react';
 import {scaleLinear} from 'd3-scale';
 import {maxIndex} from 'd3-array';
+import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {getTextWidth, shouldRoundScaleUp} from '../../../utilities';
 import {yAxisMinMax} from '../utilities';
 import {MIN_Y_LABEL_SPACE} from '../constants';
-import type {DataSeries, NumberLabelFormatter} from '../../../types';
+import type {NumberLabelFormatter} from '../../../types';
 
 export function useYScale({
   drawableHeight,

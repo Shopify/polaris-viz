@@ -1,6 +1,8 @@
 import React, {useMemo, useState} from 'react';
 import {animated, SpringValue} from '@react-spring/web';
+import {DataType} from '@shopify/polaris-viz-core';
 import type {ScaleLinear} from 'd3-scale';
+import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {
   COLOR_VISION_GROUP_ITEM,
@@ -12,12 +14,7 @@ import {
   getOpacityStylesForActive,
   useWatchColorVisionEvents,
 } from '../../../hooks';
-import {
-  DataSeries,
-  DataType,
-  FormattedStackedSeries,
-  LabelFormatter,
-} from '../../../types';
+import type {FormattedStackedSeries, LabelFormatter} from '../../../types';
 import {GroupLabel} from '../GroupLabel';
 import {HorizontalStackedBars} from '../HorizontalStackedBars';
 import {HorizontalBars} from '../HorizontalBars';

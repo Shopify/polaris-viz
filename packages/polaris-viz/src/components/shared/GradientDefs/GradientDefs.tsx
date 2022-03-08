@@ -1,13 +1,11 @@
 import React from 'react';
-import {LinearGradientWithStops} from '@shopify/polaris-viz-core';
+import {
+  LinearGradientWithStops,
+  isGradientType,
+} from '@shopify/polaris-viz-core';
+import type {Color} from '@shopify/polaris-viz-core';
 
-import type {
-  Color,
-  Direction,
-  GradientStop,
-  GradientUnits,
-} from '../../../types';
-import {isGradientType} from '../../../utilities';
+import type {Direction, GradientStop, GradientUnits} from '../../../types';
 
 const GRADIENT_ID = 'grad';
 

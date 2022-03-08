@@ -1,11 +1,11 @@
 import React, {ReactNode} from 'react';
+import type {DataSeries, ChartType} from '@shopify/polaris-viz-core';
 
 import type {
   AnnotationLookupTable,
   RenderTooltipContentData,
   XAxisOptions,
 } from '../BarChart';
-import type {ChartType, DataSeries} from '../../types';
 import {ChartContainer} from '../../components/ChartContainer';
 import {usePrefersReducedMotion} from '../../hooks';
 

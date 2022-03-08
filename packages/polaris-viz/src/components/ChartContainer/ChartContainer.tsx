@@ -7,8 +7,8 @@ import React, {
   useMemo,
 } from 'react';
 import {useDebouncedCallback} from 'use-debounce/lib';
+import {uniqueId} from '@shopify/polaris-viz-core';
 
-import {uniqueId} from '../../utilities';
 import type {Dimensions} from '../../types';
 import {useResizeObserver, useTheme, usePrintResizing} from '../../hooks';
 

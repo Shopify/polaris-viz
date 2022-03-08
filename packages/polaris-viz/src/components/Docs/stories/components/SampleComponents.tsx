@@ -1,5 +1,5 @@
 import React from 'react';
-import type {DataSeries} from 'types';
+import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {useTheme, getSeriesColors} from '../../../../hooks';
 import {LegendContainer} from '../../../../components/LegendContainer';

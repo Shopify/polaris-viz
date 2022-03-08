@@ -1,6 +1,6 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
-import type {DataSeries} from 'types';
+import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {StackedAreaChart} from '../StackedAreaChart';
 import {Chart} from '../Chart';

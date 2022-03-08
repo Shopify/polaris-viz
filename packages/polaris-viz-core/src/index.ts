@@ -86,13 +86,14 @@ export {
   PolarisVizProvider,
 } from './components';
 export type {PolarisVizProviderProps} from './components';
+export {DataType} from './types';
+
 export type {
   ActiveTooltip,
   BarTheme,
   ChartType,
   Color,
   DataSeries,
-  DataType,
   Dimensions,
   GradientStop,
   LineStyle,

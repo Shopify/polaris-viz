@@ -1,8 +1,8 @@
 import {SpringValue, useTransition} from '@react-spring/web';
 import {useMemo} from 'react';
+import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {BARS_SORT_TRANSITION_CONFIG} from '../constants';
-import type {DataSeries} from '../types';
 
 // There is a bug where type inference is broken
 // when returning values from a function. It's fixed

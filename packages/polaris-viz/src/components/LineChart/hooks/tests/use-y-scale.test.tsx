@@ -1,7 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
-import type {DataSeries} from 'types';
+import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {useYScale} from '../use-y-scale';
 import {DEFAULT_MAX_Y} from '../../../../constants';
