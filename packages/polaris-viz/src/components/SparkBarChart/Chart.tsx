@@ -12,11 +12,11 @@ import {
   getAnimationTrail,
   ANIMATION_MARGIN,
   STROKE_WIDTH,
+  uniqueId,
 } from '@shopify/polaris-viz-core';
 
 import {usePrefersReducedMotion} from '../../hooks';
 import {XMLNS} from '../../constants';
-import {uniqueId} from '../../utilities';
 
 import styles from './SparkBarChart.scss';
 

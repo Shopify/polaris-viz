@@ -1,5 +1,7 @@
+import type {DataSeries} from '@shopify/polaris-viz-core';
+
 import {DEFAULT_MAX_Y} from '../../constants';
-import type {DataSeries, StackedSeries} from '../../types';
+import type {StackedSeries} from '../../types';
 import {getStackedMinMax} from '../get-stacked-min-max';
 
 const mockData: DataSeries[] = [

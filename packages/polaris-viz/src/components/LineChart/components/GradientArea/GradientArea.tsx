@@ -1,9 +1,12 @@
 import React, {useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {area} from 'd3-shape';
-import {LinearGradientWithStops} from '@shopify/polaris-viz-core';
+import {
+  LinearGradientWithStops,
+  curveStepRounded,
+  uniqueId,
+} from '@shopify/polaris-viz-core';
 
-import {uniqueId, curveStepRounded} from '../../../../utilities';
 import type {DataPoint} from '../../../../types';
 import type {DataWithDefaults} from '../../types';
 

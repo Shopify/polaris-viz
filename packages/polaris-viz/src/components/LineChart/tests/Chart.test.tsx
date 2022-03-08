@@ -64,7 +64,6 @@ jest.mock('../../../utilities', () => {
     ...jest.requireActual('../../../utilities'),
     getPathLength: () => 0,
     getPointAtLength: () => ({x: 0, y: 0}),
-    uniqueId: (prefix: string) => `${prefix}-1`,
     eventPointNative: () => {
       return {clientX: 0, clientY: 0, svgX: 0, svgY: 0};
     },
@@ -349,9 +348,9 @@ describe('<Chart />', () => {
           />,
         );
 
-        expect(chart.find(Line)).toHaveReactProps({
-          color: 'url(#lineChartGradient-1-0)',
-        });
+        const lineColor = chart.find(Line).prop('color');
+
+        expect(lineColor).toContain('url(#lineChartGradient-');
       });
 
       it('passes point gradient url as color prop to <Point />', () => {
@@ -372,9 +371,9 @@ describe('<Chart />', () => {
           />,
         );
 
-        expect(chart.find(Point)).toHaveReactProps({
-          color: 'url(#lineChartGradient-1-point-0)',
-        });
+        const pointColor = chart.find(Point).prop('color');
+
+        expect(pointColor).toContain('url(#lineChartGradient-');
       });
 
       it('removes transparency from the gradient', () => {

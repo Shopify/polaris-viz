@@ -1,5 +1,5 @@
 import {useMemo} from 'react';
-import type {DataSeries} from 'types';
+import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {getStackedMinMax, getStackedValues} from '../utilities';
 

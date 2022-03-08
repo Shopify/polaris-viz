@@ -9,10 +9,6 @@ const mockProps = {
   immediate: false,
 };
 
-jest.mock('../../../../utilities/unique-id', () => ({
-  uniqueId: jest.fn(() => 'area-1'),
-}));
-
 describe('Area', () => {
   it('renders an area', () => {
     const actual = mount(

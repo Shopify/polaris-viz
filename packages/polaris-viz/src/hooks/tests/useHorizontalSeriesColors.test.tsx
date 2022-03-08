@@ -1,7 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
+import type {DataSeries} from '@shopify/polaris-viz-core';
 
-import type {DataSeries} from '../../types';
 import {useHorizontalSeriesColors} from '../useHorizontalSeriesColors';
 import {DEFAULT_THEME, LIGHT_THEME} from '../../constants';
 

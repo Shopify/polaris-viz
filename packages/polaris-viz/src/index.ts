@@ -31,6 +31,4 @@ export {
   PRINT_THEME as PolarisVizPrintTheme,
 } from './constants';
 
-export {createTheme} from './utilities/create-themes';
-
-export type {GradientStop, Color, DataSeries, DataPoint} from './types';
+export type {GradientStop, DataPoint} from './types';

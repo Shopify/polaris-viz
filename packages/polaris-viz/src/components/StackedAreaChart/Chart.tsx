@@ -1,5 +1,7 @@
 import React, {useState, useMemo, useRef, useCallback} from 'react';
 import {line, stack, stackOffsetNone, stackOrderReverse} from 'd3-shape';
+import type {DataSeries} from '@shopify/polaris-viz-core';
+import {uniqueId, curveStepRounded, DataType} from '@shopify/polaris-viz-core';
 
 import {LegendContainer, useLegend} from '../LegendContainer';
 import {
@@ -29,18 +31,16 @@ import {
   XMLNS,
   COLOR_VISION_SINGLE_ITEM,
 } from '../../constants';
-import {uniqueId, curveStepRounded, eventPointNative} from '../../utilities';
+import {eventPointNative} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {Crosshair} from '../Crosshair';
 import {LinearXAxis} from '../LinearXAxis';
 import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
 import {HorizontalGridLines} from '../HorizontalGridLines';
-import {
+import type {
   StringLabelFormatter,
   NumberLabelFormatter,
   Dimensions,
-  DataType,
-  DataSeries,
   DataPoint,
 } from '../../types';
 

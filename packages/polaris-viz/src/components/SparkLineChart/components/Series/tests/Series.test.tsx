@@ -2,10 +2,10 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
 import {area} from 'd3-shape';
+import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {Series} from '../Series';
 import {DEFAULT_THEME} from '../../../../../constants';
-import type {DataSeries} from '../../../../../types';
 
 jest.mock('d3-shape', () => ({
   area: jest.fn(() => {
@@ -57,10 +57,6 @@ const mockProps = {
   hasSpline: false,
   theme: DEFAULT_THEME,
 };
-
-jest.mock('../../../../../utilities/unique-id', () => ({
-  uniqueId: jest.fn(() => 'sparkline-1'),
-}));
 
 describe('Series', () => {
   it('renders a solid path by default', () => {

@@ -1,4 +1,6 @@
-import type {DataSeries, DataPoint} from '../types';
+import type {DataSeries} from '@shopify/polaris-viz-core';
+
+import type {DataPoint} from '../types';
 
 const LABELS = ['BCFM 2019', 'BCFM 2020', 'BCFM 2021'];
 const GROUPS = [

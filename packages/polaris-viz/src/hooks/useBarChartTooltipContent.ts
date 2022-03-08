@@ -3,7 +3,7 @@ import type {
   RenderTooltipContentData,
 } from 'components/BarChart';
 import {ReactNode, useCallback} from 'react';
-import type {Color, DataSeries} from 'types';
+import type {Color, DataSeries} from '@shopify/polaris-viz-core';
 
 import type {TooltipData} from '../components';
 import {TooltipRowType} from '../components';

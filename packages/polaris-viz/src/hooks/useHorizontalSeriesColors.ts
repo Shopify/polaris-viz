@@ -1,7 +1,6 @@
 import {useMemo} from 'react';
 import {useTheme} from '@shopify/polaris-viz-core';
-
-import type {DataSeries} from '../types';
+import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {getSeriesColors} from './use-theme-series-colors';
 

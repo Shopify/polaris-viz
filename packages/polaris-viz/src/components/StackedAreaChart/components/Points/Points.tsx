@@ -4,11 +4,11 @@ import type {Interpolation} from '@react-spring/web';
 import {
   LinearGradientWithStops,
   isGradientType,
+  DataType,
 } from '@shopify/polaris-viz-core';
 
 import {Point} from '../../../';
 import {changeColorOpacity, changeGradientOpacity} from '../../../../utilities';
-import {DataType} from '../../../../types';
 import {
   getOpacityStylesForActive,
   usePrefersReducedMotion,

@@ -9,9 +9,6 @@ import type {StackedSeries} from '../../../../../types';
 jest.mock('d3-scale', () => ({
   scaleLinear: jest.requireActual('d3-scale').scaleLinear,
 }));
-jest.mock('../../../../../utilities/unique-id', () => ({
-  uniqueId: jest.fn(() => 'stackedAreas-1'),
-}));
 
 describe('<StackedAreas />', () => {
   const mockProps = {

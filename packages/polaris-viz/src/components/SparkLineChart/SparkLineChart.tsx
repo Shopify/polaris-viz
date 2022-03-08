@@ -1,6 +1,6 @@
 import React from 'react';
+import type {DataSeries} from '@shopify/polaris-viz-core';
 
-import type {DataSeries} from '../../types';
 import {ChartContainer} from '../ChartContainer';
 
 import {Chart} from './Chart';

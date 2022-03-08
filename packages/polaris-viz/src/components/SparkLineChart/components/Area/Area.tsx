@@ -4,8 +4,7 @@ import {
   LinearGradientWithStops,
   uniqueId,
 } from '@shopify/polaris-viz-core';
-
-import type {Color} from '../../../../types';
+import type {Color} from '@shopify/polaris-viz-core';
 
 import styles from './Area.scss';
 

@@ -1,4 +1,6 @@
 import React, {useState, useMemo} from 'react';
+import {uniqueId, DataType} from '@shopify/polaris-viz-core';
+import type {DataSeries, ChartType} from '@shopify/polaris-viz-core';
 import type {AnnotationLookupTable} from 'components/BarChart/types';
 
 import {LegendContainer, useLegend} from '../LegendContainer';
@@ -23,18 +25,11 @@ import {
   shouldRotateZeroBars,
   eventPointNative,
   getStackedValues,
-  uniqueId,
 } from '../../utilities';
 import {YAxis} from '../YAxis';
 import {BarChartXAxis} from '../BarChartXAxis';
 import {HorizontalGridLines} from '../HorizontalGridLines';
-import {
-  Dimensions,
-  BarMargin,
-  DataType,
-  DataSeries,
-  ChartType,
-} from '../../types';
+import {Dimensions, BarMargin} from '../../types';
 import {
   useBarChartTooltipContent,
   useColorVisionEvents,

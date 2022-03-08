@@ -6,8 +6,9 @@ import React, {
   useMemo,
   useCallback,
 } from 'react';
+import type {DataType} from '@shopify/polaris-viz-core';
 
-import type {DataType, Dimensions, Margin} from '../../types';
+import type {Dimensions, Margin} from '../../types';
 
 import type {TooltipPosition, TooltipPositionParams} from './types';
 import {DEFAULT_TOOLTIP_POSITION} from './constants';

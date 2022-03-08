@@ -1,7 +1,8 @@
 import {useMemo, useState} from 'react';
+import type {Color, DataSeries} from '@shopify/polaris-viz-core';
 
 import {DEFAULT_LEGEND_HEIGHT} from '../../../constants';
-import type {Color, DataSeries, Dimensions} from '../../../types';
+import type {Dimensions} from '../../../types';
 import type {LegendData, LegendIconType} from '../types';
 
 function getAlteredDimensions(

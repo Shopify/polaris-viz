@@ -1,7 +1,8 @@
 import React from 'react';
 import type {Color} from '@shopify/polaris-viz-core';
+import {isGradientType} from '@shopify/polaris-viz-core';
 
-import {isGradientType, createCSSGradient} from '../../utilities';
+import {createCSSGradient} from '../../utilities';
 
 import styles from './SquareColorPreview.scss';
 

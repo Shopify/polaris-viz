@@ -1,8 +1,8 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
+import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {useDataForHorizontalChart} from '../useDataForHorizontalChart';
-import type {DataSeries} from '../../types';
 
 jest.mock('../../utilities/get-text-dimensions', () => ({
   getTextWidth: jest.fn(() => 100),
