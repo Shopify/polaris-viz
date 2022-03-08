@@ -41,6 +41,7 @@ import {
   useColorVisionEvents,
   useTheme,
   useWatchColorVisionEvents,
+  useMinimalLabelIndexes,
 } from '../../hooks';
 import type {
   RenderTooltipContentData,
@@ -50,7 +51,7 @@ import type {
 import {AnnotationLine} from '../BarChart';
 
 import {BarGroup, StackedBarGroups} from './components';
-import {useYScale, useXScale, useMinimalLabelIndexes} from './hooks';
+import {useYScale, useXScale} from './hooks';
 import {
   FONT_SIZE,
   SMALL_WIDTH,

@@ -1,4 +1,4 @@
-import type {InterpolatorFn} from '@react-spring/web';
+import type {Interpolation, InterpolatorFn} from '@react-spring/web';
 import type {Series, SeriesPoint} from 'd3-shape';
 
 export interface DataPoint {
@@ -240,3 +240,12 @@ export interface LinearYAxisOptions {
   labelFormatter: NumberLabelFormatter;
   integersOnly: boolean;
 }
+
+export type AnimatedCoordinate = Interpolation<
+  number,
+  | DOMPoint
+  | {
+      x: number;
+      y: number;
+    }
+>;

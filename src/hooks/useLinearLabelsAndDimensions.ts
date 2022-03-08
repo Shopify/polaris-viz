@@ -7,7 +7,7 @@ import {ChartContext} from '../components';
 
 import {useLinearXScale} from './useLinearXScale';
 import {useTheme} from './useTheme';
-import {useMinimalLabelIndexes} from './useMinimalLabelIndexes';
+import {useMinimalLabelIndexes} from './use-minimal-label-indexes';
 
 interface Props {
   data: DataSeries[];
@@ -60,8 +60,17 @@ export function useLinearLabelsAndDimensions({
     });
   }, [data, drawableWidth, characterWidths, labels]);
 
+  const longestSeriesLastIndex = useMemo(
+    () =>
+      data.reduce<number>(
+        (max, currentSeries) => Math.max(max, currentSeries.data.length),
+        0,
+      ),
+    [data],
+  );
+
   const {minimalLabelIndexes} = useMinimalLabelIndexes({
-    data,
+    dataLength: longestSeriesLastIndex,
     useMinimalLabels: xAxisOptions.useMinimalLabels,
   });
 

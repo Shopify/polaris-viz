@@ -7,7 +7,7 @@ interface Props {
   xAxisOptions: LinearXAxisOptions;
 }
 
-export function useFormatData({data, xAxisOptions}: Props) {
+export function useStackedData({data, xAxisOptions}: Props) {
   const areaStack = useMemo(
     () =>
       stack()

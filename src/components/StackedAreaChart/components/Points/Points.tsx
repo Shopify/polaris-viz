@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import type {Series} from 'd3-shape';
-import type {Interpolation} from '@react-spring/web';
 
 import {LinearGradient, Point} from '../../../';
 import {
@@ -8,7 +7,7 @@ import {
   changeGradientOpacity,
   isGradientType,
 } from '../../../../utilities';
-import {DataType} from '../../../../types';
+import {AnimatedCoordinate, DataType} from '../../../../types';
 import {
   getOpacityStylesForActive,
   usePrefersReducedMotion,
@@ -23,16 +22,7 @@ import {
 
 interface PointsProps {
   activePointIndex: number | null;
-  animatedCoordinates:
-    | Interpolation<
-        number,
-        | DOMPoint
-        | {
-            x: number;
-            y: number;
-          }
-      >[]
-    | null;
+  animatedCoordinates: AnimatedCoordinate[] | null;
   colors: any;
   chartStartPosition: number;
   getXPosition: any;

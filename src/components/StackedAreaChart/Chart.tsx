@@ -43,11 +43,10 @@ import {
   LinearYAxisOptions,
 } from '../../types';
 
-import {useYScale} from './hooks';
+import {useYScale, useStackedData} from './hooks';
 import {StackedAreas, Points} from './components';
 import type {RenderTooltipContentData} from './types';
 import styles from './Chart.scss';
-import {useFormatData} from './hooks/use-format-data';
 
 const TOOLTIP_POSITION: TooltipPositionOffset = {
   horizontal: TooltipHorizontalOffset.Left,
@@ -97,7 +96,7 @@ export function Chart({
 
   const hideXAxis = xAxisOptions.hide || selectedTheme.xAxis.hide;
 
-  const {stackedValues, longestSeriesLength, labels} = useFormatData({
+  const {stackedValues, longestSeriesLength, labels} = useStackedData({
     data,
     xAxisOptions,
   });

@@ -1,9 +1,9 @@
 import React, {Dispatch, SetStateAction} from 'react';
 import type {ScaleBand} from 'd3-scale';
 
-import {useLabels, Line, shouldSkipLabel} from '../Labels';
+import {useLabels, TextLine, shouldSkipLabel} from '../Labels';
 
-interface BarChartXAxisLabelsProps {
+export interface BarChartXAxisLabelsProps {
   chartX: number;
   chartY: number;
   labels: string[];
@@ -41,7 +41,7 @@ export function BarChartXAxisLabels({
 
         return (
           <g transform={`translate(${chartX + x},${chartY})`} key={index}>
-            <Line line={line} index={index} theme={theme} />
+            <TextLine line={line} index={index} theme={theme} />
           </g>
         );
       })}

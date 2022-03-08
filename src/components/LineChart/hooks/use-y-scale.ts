@@ -60,7 +60,6 @@ export function useYScale({
       ? ticks[longestYAxisLabel].formattedValue
       : '';
 
-    // TODO: Switch this to use our new text measurement
     const yAxisLabelWidth = getTextWidth({
       fontSize,
       text,

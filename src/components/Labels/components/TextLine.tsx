@@ -4,13 +4,13 @@ import {useTheme} from '../../../hooks';
 import {FONT_SIZE} from '../../../constants';
 import type {FormattedLine} from '../types';
 
-interface LineProps {
+interface TextLineProps {
   index: number;
   line: FormattedLine[];
   theme?: string;
 }
 
-export function Line({index, line, theme}: LineProps) {
+export function TextLine({index, line, theme}: TextLineProps) {
   const selectedTheme = useTheme(theme);
 
   return (
@@ -30,8 +30,10 @@ export function Line({index, line, theme}: LineProps) {
           },
           textIndex,
         ) => {
+          const key = `${index}-${textIndex}-${truncatedText}`;
+
           return (
-            <React.Fragment key={index + textIndex}>
+            <React.Fragment key={key}>
               <text
                 textAnchor={textAnchor}
                 dominantBaseline={dominantBaseline}

@@ -1,7 +1,7 @@
 import React, {Dispatch, SetStateAction} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 
-import {useLabels, Line, shouldSkipLabel} from '../Labels';
+import {useLabels, TextLine, shouldSkipLabel} from '../Labels';
 
 interface LinearXAxisLabelsProps {
   chartX: number;
@@ -41,7 +41,7 @@ export function LinearXAxisLabels({
 
         return (
           <g transform={`translate(${chartX + x},${chartY})`} key={index}>
-            <Line line={line} index={index} theme={theme} />
+            <TextLine line={line} index={index} theme={theme} />
           </g>
         );
       })}
