@@ -4,7 +4,7 @@ import {useTheme} from '../../../hooks';
 import {FONT_SIZE} from '../../../constants';
 import type {FormattedLine} from '../types';
 
-interface TextLineProps {
+export interface TextLineProps {
   index: number;
   line: FormattedLine[];
   theme?: string;
@@ -47,7 +47,7 @@ export function TextLine({index, line, theme}: TextLineProps) {
               >
                 {truncatedText}
               </text>
-              <title>{fullText}</title>
+              <title title={fullText}>{fullText}</title>
             </React.Fragment>
           );
         },

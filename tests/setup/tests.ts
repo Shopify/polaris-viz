@@ -30,6 +30,7 @@ jest.mock('../../packages/polaris-viz/src/constants.ts', () => {
     },
     MASK_HIGHLIGHT_COLOR: 'rgb(255, 255, 255)',
     colorPurpleDark: 'rgb(80, 36, 143)',
+    HORIZONTAL_LABEL_TARGET_HEIGHT: 20,
   };
 });
 

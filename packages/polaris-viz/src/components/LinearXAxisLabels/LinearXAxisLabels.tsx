@@ -3,7 +3,7 @@ import type {ScaleLinear} from 'd3-scale';
 
 import {useLabels, TextLine, shouldSkipLabel} from '../Labels';
 
-interface LinearXAxisLabelsProps {
+export interface LinearXAxisLabelsProps {
   chartX: number;
   chartY: number;
   labels: string[];

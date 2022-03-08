@@ -12,7 +12,7 @@ import {getDiagonalLabels} from '../utilities/get-diagonal-labels';
 import {getHorizontalLabels} from '../utilities/get-horizontal-labels';
 import {getVerticalLabels} from '../utilities/get-vertical-labels';
 
-interface Props {
+export interface Props {
   labels: string[];
   targetWidth: number;
   onHeightChange: Dispatch<SetStateAction<number>>;

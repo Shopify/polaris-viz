@@ -7,7 +7,7 @@ import type {CharacterWidths} from '../../../types';
 import {clamp} from '../../../utilities';
 import type {FormattedLine, PreparedLabels} from '../types';
 
-import {getWidestLabel} from './get-widest-label';
+import {getWidestTruncatedWidth} from './get-widest-truncated-width';
 import {truncateLabels} from './truncate-labels';
 
 interface Props {
@@ -48,7 +48,7 @@ export function getDiagonalLabels({
     });
   }
 
-  const {truncatedWidth} = getWidestLabel(truncatedLabels);
+  const truncatedWidth = getWidestTruncatedWidth(truncatedLabels);
 
   return {
     lines,

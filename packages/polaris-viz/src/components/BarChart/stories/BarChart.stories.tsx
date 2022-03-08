@@ -382,7 +382,7 @@ IntegersOnly.args = {
       ],
     },
   ],
-  xAxisOptions: {},
+  xAxisOptions: {labelFormatter: (value) => `${value} is a long string`},
   yAxisOptions: {integersOnly: true},
 };
 

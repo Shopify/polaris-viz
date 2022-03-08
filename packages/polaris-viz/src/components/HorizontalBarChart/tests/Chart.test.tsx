@@ -1,7 +1,7 @@
 import React from 'react';
-import {mount} from '@shopify/react-testing';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
+import {mountWithChartContext} from '../../../test-utilities/mount-with-chart-context';
 import {HorizontalBarChartXAxisLabels} from '../../../components/HorizontalBarChartXAxisLabels';
 import {LegendContainer} from '../../LegendContainer';
 import {
@@ -13,11 +13,9 @@ import {
 import {Chart, ChartProps} from '../Chart';
 import {VerticalGridLines} from '../components';
 
-jest.mock('../../Labels/utilities/get-widest-label', () => {
+jest.mock('../../Labels/utilities/get-widest-truncated-width', () => {
   return {
-    getWidestLabel: () => {
-      return {truncatedWidth: 50};
-    },
+    getWidestTruncatedWidth: () => 50,
   };
 });
 
@@ -60,20 +58,20 @@ const MOCK_PROPS: ChartProps = {
 describe('<Chart />', () => {
   describe('svg', () => {
     it('renders svg', () => {
-      const chart = mount(<Chart {...MOCK_PROPS} />);
+      const chart = mountWithChartContext(<Chart {...MOCK_PROPS} />);
 
       expect(chart).toContainReactComponent('svg');
     });
 
     describe('<GradientDefs />', () => {
       it('renders <GradientDefs />', () => {
-        const chart = mount(<Chart {...MOCK_PROPS} />);
+        const chart = mountWithChartContext(<Chart {...MOCK_PROPS} />);
 
         expect(chart).toContainReactComponent(GradientDefs);
       });
 
       it('renders with series colors', () => {
-        const chart = mount(<Chart {...MOCK_PROPS} />);
+        const chart = mountWithChartContext(<Chart {...MOCK_PROPS} />);
 
         const defs = chart.find(GradientDefs);
 
@@ -90,7 +88,7 @@ describe('<Chart />', () => {
       });
 
       it('renders with color overrides', () => {
-        const chart = mount(
+        const chart = mountWithChartContext(
           <Chart
             {...MOCK_PROPS}
             data={[
@@ -125,7 +123,7 @@ describe('<Chart />', () => {
     });
 
     it('renders <GroupLabel />', () => {
-      const chart = mount(<Chart {...MOCK_PROPS} />);
+      const chart = mountWithChartContext(<Chart {...MOCK_PROPS} />);
 
       expect(chart).toContainReactComponentTimes(GroupLabel, 3);
     });
@@ -134,7 +132,7 @@ describe('<Chart />', () => {
   describe('xAxisOptions', () => {
     describe('hide', () => {
       it('renders <VerticalGridLines /> when false', () => {
-        const chart = mount(
+        const chart = mountWithChartContext(
           <Chart
             {...MOCK_PROPS}
             xAxisOptions={{
@@ -150,7 +148,7 @@ describe('<Chart />', () => {
       });
 
       it('does not render <VerticalGridLines /> when true', () => {
-        const chart = mount(
+        const chart = mountWithChartContext(
           <Chart
             {...MOCK_PROPS}
             xAxisOptions={{
@@ -171,13 +169,15 @@ describe('<Chart />', () => {
 
   describe('type', () => {
     it('renders <HorizontalStackedBars /> when stacked', () => {
-      const chart = mount(<Chart {...MOCK_PROPS} type="stacked" />);
+      const chart = mountWithChartContext(
+        <Chart {...MOCK_PROPS} type="stacked" />,
+      );
 
       expect(chart).toContainReactComponent(HorizontalStackedBars);
     });
 
     it('renders <HorizontalBars /> when default', () => {
-      const chart = mount(<Chart {...MOCK_PROPS} />);
+      const chart = mountWithChartContext(<Chart {...MOCK_PROPS} />);
 
       expect(chart).toContainReactComponent(HorizontalBars);
     });
@@ -185,7 +185,7 @@ describe('<Chart />', () => {
 
   describe('showLegend', () => {
     it('does not render <LegendContainer /> when false', () => {
-      const chart = mount(<Chart {...MOCK_PROPS} />);
+      const chart = mountWithChartContext(<Chart {...MOCK_PROPS} />);
       const svg = chart.find('svg');
 
       expect(chart).not.toContainReactComponent(LegendContainer);
@@ -194,7 +194,7 @@ describe('<Chart />', () => {
     });
 
     it('renders <LegendContainer /> when true', () => {
-      const chart = mount(<Chart {...MOCK_PROPS} showLegend />);
+      const chart = mountWithChartContext(<Chart {...MOCK_PROPS} showLegend />);
 
       expect(chart).toContainReactComponent(LegendContainer);
     });

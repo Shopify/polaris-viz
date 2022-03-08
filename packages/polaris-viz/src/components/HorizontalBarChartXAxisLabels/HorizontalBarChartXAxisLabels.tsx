@@ -3,7 +3,7 @@ import type {ScaleLinear} from 'd3-scale';
 
 import {useLabels, TextLine} from '../Labels';
 
-interface HorizontalBarChartXAxisLabelsProps {
+export interface HorizontalBarChartXAxisLabelsProps {
   chartX: number;
   chartY: number;
   labels: string[];
