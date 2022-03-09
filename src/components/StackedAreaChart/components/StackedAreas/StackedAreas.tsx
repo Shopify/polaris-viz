@@ -19,10 +19,7 @@ import {
 } from '../../../../hooks';
 import {Area} from '..';
 
-import styles from './StackedAreas.scss';
-
 interface Props {
-  transform: string;
   colors: Color[];
   stackedValues: StackedSeries[];
   xScale: ScaleLinear<number, number>;
@@ -33,7 +30,6 @@ interface Props {
 
 export function Areas({
   stackedValues,
-  transform,
   xScale,
   yScale,
   colors,
@@ -89,7 +85,7 @@ export function Areas({
   }, [stackedValues.length]);
 
   return (
-    <g transform={transform} className={styles.Group} aria-hidden="true">
+    <React.Fragment>
       {stackedValues.map((data, index) => {
         return (
           <Area
@@ -108,7 +104,7 @@ export function Areas({
           />
         );
       })}
-    </g>
+    </React.Fragment>
   );
 }
 

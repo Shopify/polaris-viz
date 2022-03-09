@@ -1,4 +1,4 @@
-import type {CharacterWidths} from '../../../types';
+import type {CharacterWidths} from '../types';
 
 export function estimateStringWidth(
   string: string,

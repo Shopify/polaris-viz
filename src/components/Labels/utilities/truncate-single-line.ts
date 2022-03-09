@@ -1,7 +1,7 @@
 import {ELLIPSIS} from '../../../constants';
 import type {CharacterWidths} from '../../../types';
+import {estimateStringWidth} from '../../../utilities';
 
-import {estimateStringWidth} from './estimate-string-width';
 import {formatAndAddEllipsis} from './format-and-add-ellipsis';
 
 interface Props {

@@ -1,9 +1,9 @@
 import type {CharacterWidths} from '../../../types';
 import type {PreparedLabels} from '../types';
+import {estimateStringWidth} from '../../../utilities';
 
 import {endLineTruncate} from './end-line-truncate';
 import {endWordTruncate} from './end-word-truncate';
-import {estimateStringWidth} from './estimate-string-width';
 
 interface Props {
   labels: PreparedLabels[];

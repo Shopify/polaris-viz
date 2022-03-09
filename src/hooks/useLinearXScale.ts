@@ -5,14 +5,10 @@ export function useLinearXScale({
   drawableWidth,
   longestSeriesLength,
 }: {
-  drawableWidth: number | null;
+  drawableWidth: number;
   longestSeriesLength: number;
 }) {
   const xScale = useMemo(() => {
-    if (drawableWidth == null) {
-      return null;
-    }
-
     return scaleLinear()
       .range([0, drawableWidth])
       .domain([0, longestSeriesLength]);

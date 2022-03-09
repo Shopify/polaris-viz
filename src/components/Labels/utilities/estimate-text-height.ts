@@ -1,7 +1,6 @@
 import {LINE_HEIGHT} from '../../../constants';
 import type {CharacterWidths} from '../../../types';
-
-import {estimateStringWidth} from './estimate-string-width';
+import {estimateStringWidth} from '../../../utilities';
 
 interface Props {
   label: string;

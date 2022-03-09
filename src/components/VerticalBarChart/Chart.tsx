@@ -1,7 +1,7 @@
 import React, {useState, useMemo} from 'react';
 import type {AnnotationLookupTable} from 'components/BarChart/types';
 
-import {Labels} from '../../components/Labels';
+import {BarChartXAxisLabels} from '../BarChartXAxisLabels';
 import {LegendContainer, useLegend} from '../LegendContainer';
 import {GradientDefs} from '../shared';
 import {
@@ -41,6 +41,7 @@ import {
   useColorVisionEvents,
   useTheme,
   useWatchColorVisionEvents,
+  useMinimalLabelIndexes,
 } from '../../hooks';
 import type {
   RenderTooltipContentData,
@@ -50,7 +51,7 @@ import type {
 import {AnnotationLine} from '../BarChart';
 
 import {BarGroup, StackedBarGroups} from './components';
-import {useYScale, useXScale, useMinimalLabelIndexes} from './hooks';
+import {useYScale, useXScale} from './hooks';
 import {
   FONT_SIZE,
   SMALL_WIDTH,
@@ -235,7 +236,7 @@ export function Chart({
         ref={setSvgRef}
       >
         {hideXAxis ? null : (
-          <Labels
+          <BarChartXAxisLabels
             chartX={chartStartPosition}
             chartY={drawableHeight + LABEL_AREA_TOP_SPACING}
             labels={labels}

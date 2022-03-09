@@ -95,7 +95,7 @@ export const SampleStackedAreaChart = (
     <StackedAreaChart
       data={generateMultipleSeries(seriesLength, 3)}
       xAxisOptions={{
-        labels: generateLabels(3),
+        xAxisLabels: generateLabels(3),
       }}
       theme={theme}
     />

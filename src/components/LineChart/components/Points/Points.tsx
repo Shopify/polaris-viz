@@ -16,20 +16,11 @@ import {
 import {Point} from '../../../Point';
 import {LinearGradient} from '../../../LinearGradient';
 import type {DataWithDefaults} from '../../types';
-import {DataType} from '../../../../types';
+import {AnimatedCoordinate, DataType} from '../../../../types';
 
 interface PointsProps {
   activeIndex: number | null;
-  animatedCoordinates:
-    | Interpolation<
-        number,
-        | DOMPoint
-        | {
-            x: number;
-            y: number;
-          }
-      >[]
-    | null;
+  animatedCoordinates: AnimatedCoordinate[] | null;
   animatePoints: boolean;
   data: DataWithDefaults[];
   gradientId: string;
@@ -37,7 +28,7 @@ interface PointsProps {
   tooltipId: string;
   getXPosition: ({
     isCrosshair,
-  }?: {
+  }: {
     isCrosshair: boolean;
   }) =>
     | number
@@ -115,7 +106,7 @@ export function Points({
               <Point
                 color={pointColor}
                 stroke={selectedTheme.line.pointStroke}
-                cx={getXPosition()}
+                cx={getXPosition({isCrosshair: false})}
                 cy={animatedYPosition}
                 active={activeIndex != null}
                 index={index}

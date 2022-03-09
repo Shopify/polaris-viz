@@ -1,6 +1,7 @@
 import React, {useState, useMemo, useRef, useCallback} from 'react';
-import {line, stack, stackOffsetNone, stackOrderReverse} from 'd3-shape';
+import {line} from 'd3-shape';
 
+import {LinearXAxisLabels} from '../LinearXAxisLabels';
 import {LegendContainer, useLegend} from '../LegendContainer';
 import {
   TooltipHorizontalOffset,
@@ -12,40 +13,37 @@ import {
   TOOLTIP_POSITION_DEFAULT_RETURN,
 } from '../TooltipWrapper';
 import {
-  useLinearXAxisDetails,
-  useLinearXScale,
   useLinearChartAnimations,
   usePrefersReducedMotion,
   useTheme,
   useThemeSeriesColors,
   useColorVisionEvents,
+  useLinearLabelsAndDimensions,
 } from '../../hooks';
 import {
   SMALL_SCREEN,
   SMALL_FONT_SIZE,
-  SPACING_TIGHT,
   FONT_SIZE,
   LineChartMargin as Margin,
   XMLNS,
   COLOR_VISION_SINGLE_ITEM,
+  LABEL_AREA_TOP_SPACING,
 } from '../../constants';
 import {uniqueId, curveStepRounded, eventPointNative} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {Crosshair} from '../Crosshair';
-import {LinearXAxis} from '../LinearXAxis';
 import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
 import {HorizontalGridLines} from '../HorizontalGridLines';
 import {
-  StringLabelFormatter,
-  NumberLabelFormatter,
   Dimensions,
   DataType,
   DataSeries,
   DataPoint,
+  LinearXAxisOptions,
+  LinearYAxisOptions,
 } from '../../types';
 
-import {Spacing} from './constants';
-import {useYScale} from './hooks';
+import {useYScale, useStackedData} from './hooks';
 import {StackedAreas, Points} from './components';
 import type {RenderTooltipContentData} from './types';
 import styles from './Chart.scss';
@@ -56,14 +54,13 @@ const TOOLTIP_POSITION: TooltipPositionOffset = {
 };
 
 export interface Props {
-  xAxisOptions: {labels: string[]; wrapLabels?: boolean; hide?: boolean};
   data: DataSeries[];
-  formatXAxisLabel: StringLabelFormatter;
-  formatYAxisLabel: NumberLabelFormatter;
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
   showLegend: boolean;
-  dimensions?: Dimensions;
   isAnimated: boolean;
+  xAxisOptions: Required<LinearXAxisOptions>;
+  yAxisOptions: Required<LinearYAxisOptions>;
+  dimensions?: Dimensions;
   theme?: string;
 }
 
@@ -71,12 +68,11 @@ export function Chart({
   xAxisOptions,
   data,
   dimensions,
-  formatXAxisLabel,
-  formatYAxisLabel,
   renderTooltipContent,
   isAnimated,
   showLegend,
   theme,
+  yAxisOptions,
 }: Props) {
   useColorVisionEvents(data.length > 1);
 
@@ -86,6 +82,7 @@ export function Chart({
 
   const [activePointIndex, setActivePointIndex] = useState<number | null>(null);
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
+  const [labelHeight, setLabelHeight] = useState(0);
 
   const {legend, setLegendHeight, height, width} = useLegend({
     colors: seriesColors,
@@ -99,79 +96,37 @@ export function Chart({
 
   const hideXAxis = xAxisOptions.hide || selectedTheme.xAxis.hide;
 
-  const areaStack = useMemo(
-    () =>
-      stack()
-        .keys(data.map(({name}) => name ?? ''))
-        .order(stackOrderReverse)
-        .offset(stackOffsetNone),
-    [data],
-  );
-
-  const xAxisLabels = xAxisOptions.labels;
-
-  const formattedData = useMemo(
-    () =>
-      xAxisLabels.map((_, labelIndex) =>
-        data.reduce((acc, {name, data}) => {
-          const {value} = data[labelIndex];
-
-          const dataPoint = {[name ?? '']: value};
-          return Object.assign(acc, dataPoint);
-        }, {}),
-      ),
-    [xAxisLabels, data],
-  );
+  const {stackedValues, longestSeriesLength, labels} = useStackedData({
+    data,
+    xAxisOptions,
+  });
 
   const fontSize = width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
 
-  const stackedValues = useMemo(() => areaStack(formattedData), [
-    areaStack,
-    formattedData,
-  ]);
+  const drawableHeight =
+    height - labelHeight - LABEL_AREA_TOP_SPACING - Margin.Top;
 
-  const {ticks: initialTicks} = useYScale({
-    fontSize,
-    drawableHeight: height - Margin.Top,
-    stackedValues,
-    formatYAxisLabel,
-  });
-
-  const xAxisDetails = useLinearXAxisDetails({
-    data,
-    fontSize,
-    width: width - selectedTheme.grid.horizontalMargin * 2,
-    formatXAxisLabel,
-    initialTicks,
-    xAxisLabels: xAxisLabels == null ? [] : xAxisLabels,
-    wrapLabels: xAxisOptions.wrapLabels ?? true,
-  });
-
-  const formattedXAxisLabels = xAxisLabels.map(formatXAxisLabel);
-
-  const marginBottom =
-    xAxisLabels == null || hideXAxis
-      ? SPACING_TIGHT
-      : xAxisDetails.maxXLabelHeight + Number(Margin.Bottom);
-
-  const drawableHeight = height - Margin.Top - marginBottom;
-
-  const {axisMargin, ticks, yScale} = useYScale({
+  const {yAxisLabelWidth, ticks, yScale} = useYScale({
     fontSize,
     drawableHeight,
     stackedValues,
-    formatYAxisLabel,
+    formatYAxisLabel: yAxisOptions.labelFormatter,
   });
 
-  const dataStartPosition =
-    axisMargin + Number(selectedTheme.grid.horizontalMargin) + Spacing.Base;
-
-  const drawableWidth = width - Margin.Right - dataStartPosition;
-
-  const longestSeriesLength =
-    Math.max(...stackedValues.map((stack) => stack.length)) - 1;
-
-  const {xScale} = useLinearXScale({drawableWidth, longestSeriesLength});
+  const {
+    chartStartPosition,
+    drawableWidth,
+    xAxisDetails,
+    xScale,
+  } = useLinearLabelsAndDimensions({
+    data,
+    longestSeriesLength,
+    theme,
+    width,
+    labels,
+    xAxisOptions,
+    yAxisLabelWidth,
+  });
 
   const getTooltipMarkup = useCallback(
     (index: number) => {
@@ -192,14 +147,14 @@ export function Chart({
         [],
       );
 
-      const title = xAxisLabels[index];
+      const title = labels[index];
 
       return renderTooltipContent({
         data: content,
         title,
       });
     },
-    [data, xAxisLabels, renderTooltipContent],
+    [data, labels, renderTooltipContent],
   );
 
   const lineGenerator = useMemo(() => {
@@ -255,7 +210,7 @@ export function Chart({
     return xScale(index == null ? 0 : index) - offset;
   };
 
-  if (xScale == null || drawableWidth == null || axisMargin == null) {
+  if (xScale == null || drawableWidth == null || yAxisLabelWidth == null) {
     return null;
   }
 
@@ -272,22 +227,16 @@ export function Chart({
         style={{height, width}}
       >
         {hideXAxis ? null : (
-          <g
-            transform={`translate(${dataStartPosition},${
-              height - marginBottom
-            })`}
-          >
-            <LinearXAxis
-              xScale={xScale}
-              labels={hideXAxis ? null : formattedXAxisLabels}
-              xAxisDetails={xAxisDetails}
-              drawableHeight={drawableHeight}
-              fontSize={fontSize}
-              drawableWidth={drawableWidth}
-              ariaHidden
-              theme={theme}
-            />
-          </g>
+          <LinearXAxisLabels
+            chartX={chartStartPosition - xAxisDetails.labelWidth / 2}
+            chartY={drawableHeight + LABEL_AREA_TOP_SPACING}
+            labels={labels}
+            labelWidth={xAxisDetails.labelWidth}
+            minimalLabelIndexes={xAxisDetails.minimalLabelIndexes}
+            onHeightChange={setLabelHeight}
+            theme={theme}
+            xScale={xScale}
+          />
         )}
 
         {selectedTheme.grid.showHorizontalLines ? (
@@ -295,7 +244,7 @@ export function Chart({
             ticks={ticks}
             theme={theme}
             transform={{
-              x: selectedTheme.grid.horizontalOverflow ? 0 : dataStartPosition,
+              x: selectedTheme.grid.horizontalOverflow ? 0 : chartStartPosition,
               y: Margin.Top,
             }}
             width={
@@ -308,30 +257,35 @@ export function Chart({
           <YAxis
             ticks={ticks}
             fontSize={fontSize}
-            width={axisMargin}
-            textAlign={selectedTheme.grid.horizontalOverflow ? 'left' : 'right'}
+            width={yAxisLabelWidth}
+            textAlign="right"
             theme={theme}
           />
         </g>
 
         <VisuallyHiddenRows
           data={data}
-          formatYAxisLabel={formatYAxisLabel}
-          xAxisLabels={formattedXAxisLabels}
+          formatYAxisLabel={yAxisOptions.labelFormatter}
+          xAxisLabels={labels}
         />
 
-        <StackedAreas
-          transform={`translate(${dataStartPosition},${Margin.Top})`}
-          stackedValues={stackedValues}
-          xScale={xScale}
-          yScale={yScale}
-          colors={seriesColors}
-          isAnimated={isAnimated && !prefersReducedMotion}
-          theme={theme}
-        />
+        <g
+          transform={`translate(${chartStartPosition},${Margin.Top})`}
+          className={styles.Group}
+          area-hidden="true"
+        >
+          <StackedAreas
+            stackedValues={stackedValues}
+            xScale={xScale}
+            yScale={yScale}
+            colors={seriesColors}
+            isAnimated={isAnimated && !prefersReducedMotion}
+            theme={theme}
+          />
+        </g>
 
         {activePointIndex == null ? null : (
-          <g transform={`translate(${dataStartPosition},${Margin.Top})`}>
+          <g transform={`translate(${chartStartPosition},${Margin.Top})`}>
             <Crosshair
               x={getXPosition({isCrosshair: true, index: 0})}
               height={drawableHeight}
@@ -344,7 +298,7 @@ export function Chart({
           activePointIndex={activePointIndex}
           animatedCoordinates={animatedCoordinates}
           colors={seriesColors}
-          dataStartPosition={dataStartPosition}
+          chartStartPosition={chartStartPosition}
           getXPosition={getXPosition}
           isAnimated={isAnimated}
           stackedValues={stackedValues}
@@ -390,7 +344,7 @@ export function Chart({
 
       const {svgX, svgY} = point;
 
-      const closestIndex = Math.round(xScale.invert(svgX - dataStartPosition));
+      const closestIndex = Math.round(xScale.invert(svgX - chartStartPosition));
 
       return {
         x: svgX,

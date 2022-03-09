@@ -1,6 +1,5 @@
 export {usePrefersReducedMotion} from './usePrefersReducedMotion';
-export {useLinearXAxisDetails} from './useLinearXAxisDetails';
-export type {ChartDetails} from './useLinearXAxisDetails';
+export {useMinimalLabelIndexes} from './use-minimal-label-indexes';
 export {useLinearXScale} from './useLinearXScale';
 export {usePrevious} from './use-previous';
 export {useResizeObserver} from './useResizeObserver';
@@ -25,3 +24,4 @@ export {
   getOpacityStylesForActive,
 } from './ColorVisionA11y';
 export {useCallbackRef} from './useCallbackRef';
+export {useLinearLabelsAndDimensions} from './useLinearLabelsAndDimensions';

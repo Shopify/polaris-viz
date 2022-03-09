@@ -106,6 +106,7 @@ Default.args = {
   xAxisOptions: {
     xAxisLabels,
     labelFormatter: formatXAxisLabel,
+    useMinimalLabels: true,
   },
   yAxisOptions: {labelFormatter: formatYAxisLabel},
   showLegend: true,
@@ -247,7 +248,6 @@ NoLabelWrapping.args = {
   data,
   xAxisOptions: {
     xAxisLabels,
-    wrapLabels: false,
     labelFormatter: formatXAxisLabel,
   },
   yAxisOptions: {labelFormatter: formatYAxisLabel},

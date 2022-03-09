@@ -42,7 +42,6 @@ const MOCK_PROPS: ChartProps = {
   xAxisOptions: {
     labelFormatter: (value: string) => value,
     hide: false,
-    wrapLabels: false,
     useMinimalLabels: false,
   },
   type: 'default',

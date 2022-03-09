@@ -1,10 +1,4 @@
-import type {
-  LineStyle,
-  StringLabelFormatter,
-  NumberLabelFormatter,
-  Color,
-  DataSeries,
-} from '../../types';
+import type {LineStyle, Color, DataSeries} from '../../types';
 
 export type DataWithDefaults = DataSeries & {
   color: Color;
@@ -24,17 +18,4 @@ export interface TooltipData {
 
 export interface RenderTooltipContentData {
   data: TooltipData[];
-}
-
-export interface XAxisOptions {
-  labelFormatter: StringLabelFormatter;
-  xAxisLabels: string[];
-  useMinimalLabels: boolean;
-  hide?: boolean;
-  wrapLabels: boolean;
-}
-
-export interface YAxisOptions {
-  labelFormatter: NumberLabelFormatter;
-  integersOnly: boolean;
 }

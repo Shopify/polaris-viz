@@ -1,22 +1,19 @@
 import characterWidths from '../../../../data/character-widths.json';
-import {estimateStringWidth} from '../estimate-string-width';
+import {estimateTextHeight} from '../estimate-text-height';
 
-describe('estimateStringWidth()', () => {
+describe('estimateTextHeight()', () => {
   it.each`
-    string     | expected
-    ${'W'}     | ${11}
-    ${'Label'} | ${29}
-    ${' '}     | ${3}
-    ${'…'}     | ${12}
-  `('return width for $string', ({string, expected}) => {
-    const actual = estimateStringWidth(string, characterWidths);
+    string                               | targetWidth | expected
+    ${'Single'}                          | ${100}      | ${14}
+    ${'Two Lines'}                       | ${100}      | ${28}
+    ${'Multiple lines from this string'} | ${100}      | ${84}
+  `('return width for $string', ({string, targetWidth, expected}) => {
+    const actual = estimateTextHeight({
+      characterWidths,
+      targetWidth,
+      label: string,
+    });
 
     expect(actual).toStrictEqual(expected);
-  });
-
-  it('returns width of W character when character is unavailable', () => {
-    // eslint-disable-next-line id-length
-    const actual = estimateStringWidth('m', {W: characterWidths.W});
-    expect(actual).toStrictEqual(11);
   });
 });

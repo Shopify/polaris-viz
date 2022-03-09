@@ -8,7 +8,7 @@ export function useMinimalLabelIndexes({
   dataLength: number;
 }) {
   if (!useMinimalLabels || dataLength < 2) {
-    return {minimalLabelIndexes: null};
+    return {minimalLabelIndexes: []};
   }
 
   const oddNumberOfBars = dataLength % 2 !== 0;

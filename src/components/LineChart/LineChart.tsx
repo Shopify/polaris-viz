@@ -1,6 +1,10 @@
 import React, {useRef} from 'react';
 
-import type {DataSeries} from '../../types';
+import type {
+  DataSeries,
+  LinearXAxisOptions,
+  LinearYAxisOptions,
+} from '../../types';
 import {ChartContainer} from '../../components/ChartContainer';
 import {useThemeSeriesColors} from '../../hooks/use-theme-series-colors';
 import {
@@ -13,12 +17,7 @@ import {SkipLink} from '../SkipLink';
 import {usePrefersReducedMotion, useTheme} from '../../hooks';
 
 import {Chart} from './Chart';
-import type {
-  RenderTooltipContentData,
-  XAxisOptions,
-  YAxisOptions,
-  DataWithDefaults,
-} from './types';
+import type {RenderTooltipContentData, DataWithDefaults} from './types';
 import {TooltipContent} from './components';
 
 export interface LineChartProps {
@@ -30,8 +29,8 @@ export interface LineChartProps {
   showLegend?: boolean;
   skipLinkText?: string;
   theme?: string;
-  xAxisOptions?: Partial<XAxisOptions>;
-  yAxisOptions?: Partial<YAxisOptions>;
+  xAxisOptions?: Partial<LinearXAxisOptions>;
+  yAxisOptions?: Partial<LinearYAxisOptions>;
 }
 
 export function LineChart({
@@ -51,15 +50,15 @@ export function LineChart({
 
   const skipLinkAnchorId = useRef(uniqueId('lineChart'));
 
-  const xAxisOptionsWithDefaults: XAxisOptions = {
+  const xAxisOptionsWithDefaults: Required<LinearXAxisOptions> = {
     labelFormatter: (value: string) => value,
     useMinimalLabels: false,
     xAxisLabels: [],
-    wrapLabels: true,
+    hide: false,
     ...xAxisOptions,
   };
 
-  const yAxisOptionsWithDefaults: Required<YAxisOptions> = {
+  const yAxisOptionsWithDefaults: Required<LinearYAxisOptions> = {
     labelFormatter: (value: number) => value.toString(),
     integersOnly: false,
     ...yAxisOptions,
