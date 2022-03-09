@@ -159,6 +159,10 @@ export const SHARK_SPECIES_GROWTH = [
   },
 ];
 
-export function fixImagePath(rawMd: string) {
-  return rawMd.replace('src="../public', 'src="');
+export function fixImagePath(
+  rawMd: string,
+  originalPath = '../public/polaris_viz_header.png',
+  newPath = 'polaris_viz_header.png',
+) {
+  return rawMd.replace(originalPath, newPath);
 }

@@ -5,8 +5,10 @@ const path = require('path');
 
 const postcssShopify = require('@shopify/postcss-plugin');
 
+const getStories = require('./getStories');
+
 module.exports = {
-  stories: ['../**/src/**/*.stories.mdx', '../**/src/**/*.stories.@(ts|tsx)'],
+  stories: getStories(process.env.NODE_ENV),
   addons: [
     '@storybook/addon-links',
     {

@@ -16,7 +16,7 @@ We expect all participants to read our [code of conduct](/CODE_OF_CONDUCT.md) to
 ## Development
 <!-- TODO UPDATE LINK -->
 
-👩🏾‍💻 For local development instructions, head to the [Contributing/Getting Started]() section
+👩🏾‍💻 For local development instructions, head to the [Contributing/Local Development](http://polaris-viz.shopify.io/?path=/story/contributing-local-development--page) section
 
 <br/>
 <hr/>

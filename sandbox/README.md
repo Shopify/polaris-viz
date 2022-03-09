@@ -1,4 +1,4 @@
-# Polaris Viz React Native Sandbox
+# 🏜️ Polaris Viz React Native Sandbox
 
 Use this sandbox to import `@shopify/polaris-viz-native` components and test them on real devices. The sandbox consists of a boilerplate expo project.
 
