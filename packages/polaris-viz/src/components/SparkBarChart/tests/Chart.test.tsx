@@ -1,8 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
-import {Bar} from '@shopify/polaris-viz-core';
+import {Bar, DataSeries} from '@shopify/polaris-viz-core';
 
-import type {DataSeries} from '../../../types';
 import {Chart} from '../Chart';
 
 const sampleData: DataSeries = {

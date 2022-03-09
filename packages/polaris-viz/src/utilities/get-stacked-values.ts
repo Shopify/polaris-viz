@@ -1,6 +1,5 @@
 import {stack, stackOffsetDiverging} from 'd3-shape';
-
-import type {DataSeries} from '../types';
+import type {DataSeries} from '@shopify/polaris-viz-core';
 
 export function getStackedValues(series: DataSeries[], labels: string[]) {
   const barStack = stack()

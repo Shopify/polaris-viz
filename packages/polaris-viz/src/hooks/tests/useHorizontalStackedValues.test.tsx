@@ -1,6 +1,6 @@
 import React from 'react';
 import {mount, Root} from '@shopify/react-testing';
-import type {DataSeries} from 'types';
+import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {useHorizontalStackedValues} from '../useHorizontalStackedValues';
 

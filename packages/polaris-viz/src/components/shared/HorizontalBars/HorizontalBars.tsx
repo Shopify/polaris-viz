@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import type {ScaleLinear} from 'd3-scale';
+import type {DataSeries} from '@shopify/polaris-viz-core';
 
-import {DataSeries, RoundedBorder} from '../../../types';
+import {RoundedBorder} from '../../../types';
 import {
   COLOR_VISION_SINGLE_ITEM,
   FONT_SIZE,

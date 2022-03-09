@@ -1,5 +1,6 @@
 import {useMemo} from 'react';
 import {maxIndex} from 'd3-array';
+import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {
   getTextWidth,
@@ -18,7 +19,7 @@ import {
   LABEL_SPACE_MINUS_FIRST_AND_LAST,
   LABEL_ELLIPSIS_LENGTH,
 } from '../constants';
-import type {StringLabelFormatter, YAxisTick, DataSeries} from '../types';
+import type {StringLabelFormatter, YAxisTick} from '../types';
 
 import {useLinearXScale} from './useLinearXScale';
 

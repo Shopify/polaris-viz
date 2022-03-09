@@ -13,10 +13,6 @@ jest.mock('d3-scale', () => ({
   scaleLinear: jest.requireActual('d3-scale').scaleLinear,
 }));
 
-jest.mock('../../../../../utilities/unique-id', () => ({
-  uniqueId: jest.fn(() => 'stackedAreas-1'),
-}));
-
 describe('<Area />', () => {
   const xScale = scaleLinear();
   const yScale = scaleLinear();

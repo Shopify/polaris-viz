@@ -1,6 +1,7 @@
 import React from 'react';
+import type {DataSeries} from '@shopify/polaris-viz-core';
 
-import type {NumberLabelFormatter, DataSeries} from '../../types';
+import type {NumberLabelFormatter} from '../../types';
 
 import styles from './VisuallyHiddenRows.scss';
 

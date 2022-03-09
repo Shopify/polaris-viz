@@ -1,16 +1,10 @@
 import type {InterpolatorFn} from '@react-spring/web';
+import type {Color, BarTheme} from '@shopify/polaris-viz-core';
 import type {Series, SeriesPoint} from 'd3-shape';
 
 export interface DataPoint {
   key: number | string;
   value: number | null;
-}
-
-export interface DataSeries {
-  data: DataPoint[];
-  color?: Color;
-  isComparison?: boolean;
-  name?: string;
 }
 
 export interface Data {
@@ -41,12 +35,6 @@ export type StringLabelFormatter = (
 
 export type NumberLabelFormatter = (value: number) => string;
 
-export interface ActiveTooltip {
-  x: number;
-  y: number;
-  index: number;
-}
-
 export interface GradientStop {
   offset: number;
   color: string;
@@ -69,7 +57,6 @@ export interface SparkChartData {
 
 export type PathInterpolator = InterpolatorFn<readonly number[], string>;
 export type NumberInterpolator = InterpolatorFn<readonly number[], number>;
-export type Color = string | GradientStop[];
 
 export interface XAxisOptions {
   labelFormatter?: StringLabelFormatter;
@@ -96,16 +83,6 @@ export interface GridTheme {
   horizontalOverflow: boolean;
   color: string;
   horizontalMargin: number;
-}
-
-export interface BarTheme {
-  innerMargin: keyof typeof BarMargin;
-  outerMargin: keyof typeof BarMargin;
-  hasRoundedCorners: boolean;
-  /**
-   * @deprecated This prop is experimental and not ready for general use. If you want to use this, come talk to us in #polaris-data-viz
-   */
-  zeroAsMinHeight: boolean;
 }
 
 export interface XAxisTheme {
@@ -189,12 +166,6 @@ export interface Margin {
   Bottom: number;
 }
 
-export enum DataType {
-  Point = 'Point',
-  BarGroup = 'BarGroup',
-  Bar = 'Bar',
-}
-
 export enum RoundedBorder {
   None,
   Top,
@@ -203,7 +174,6 @@ export enum RoundedBorder {
   Left,
 }
 
-export type ChartType = 'default' | 'stacked';
 export type Direction = 'horizontal' | 'vertical';
 export type StackedSeries = Series<
   {

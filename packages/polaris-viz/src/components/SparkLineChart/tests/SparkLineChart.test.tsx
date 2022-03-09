@@ -1,13 +1,9 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
+import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {SparkLineChart} from '../SparkLineChart';
 import {Series} from '../components';
-import type {DataSeries} from '../../../types';
-
-jest.mock('../../../utilities/unique-id', () => ({
-  uniqueId: jest.fn(() => 'stackedAreas-1'),
-}));
 
 jest.mock('d3-scale', () => ({
   scaleLinear: jest.fn(() => {

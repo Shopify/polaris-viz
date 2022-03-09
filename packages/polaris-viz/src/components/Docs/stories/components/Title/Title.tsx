@@ -1,6 +1,6 @@
 import React, {CSSProperties, useMemo} from 'react';
+import {uniqueId} from '@shopify/polaris-viz-core';
 
-import {uniqueId} from '../../../../../utilities';
 import {copyTextToClipboard} from '../../../utilities';
 
 import styles from './Title.scss';

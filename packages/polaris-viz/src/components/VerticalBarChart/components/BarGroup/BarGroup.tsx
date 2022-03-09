@@ -1,6 +1,11 @@
 import React, {useCallback, useMemo, useState} from 'react';
 import type {ScaleLinear} from 'd3-scale';
-import {uniqueId, LinearGradientWithStops} from '@shopify/polaris-viz-core';
+import {
+  uniqueId,
+  LinearGradientWithStops,
+  DataType,
+} from '@shopify/polaris-viz-core';
+import type {Color} from '@shopify/polaris-viz-core';
 
 import type {AccessibilitySeries} from '../../../VerticalBarChart/types';
 import {formatAriaLabel} from '../../utilities';
@@ -11,7 +16,6 @@ import {
   usePrefersReducedMotion,
   useWatchColorVisionEvents,
 } from '../../../../hooks';
-import {Color, DataType} from '../../../../types';
 import {Bar} from '../Bar';
 import {BAR_SPACING} from '../../constants';
 import {

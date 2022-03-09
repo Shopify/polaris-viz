@@ -1,6 +1,12 @@
 import React, {useState, useRef, useMemo, useCallback} from 'react';
 import {line} from 'd3-shape';
-import {LinearGradientWithStops} from '@shopify/polaris-viz-core';
+import {
+  LinearGradientWithStops,
+  curveStepRounded,
+  uniqueId,
+  isGradientType,
+  DataType,
+} from '@shopify/polaris-viz-core';
 
 import {useLegend, LegendContainer} from '../LegendContainer';
 import {
@@ -11,13 +17,7 @@ import {
   TooltipWrapper,
   TOOLTIP_POSITION_DEFAULT_RETURN,
 } from '../../components/TooltipWrapper';
-import {
-  curveStepRounded,
-  eventPointNative,
-  uniqueId,
-  clamp,
-  isGradientType,
-} from '../../utilities';
+import {eventPointNative, clamp} from '../../utilities';
 import {
   useLinearXAxisDetails,
   useLinearXScale,
@@ -40,7 +40,7 @@ import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
 import {LinearXAxis} from '../LinearXAxis';
 import {YAxis} from '../YAxis';
 import {Crosshair} from '../Crosshair';
-import {DataPoint, DataType, Dimensions} from '../../types';
+import type {DataPoint, Dimensions} from '../../types';
 import {HorizontalGridLines} from '../HorizontalGridLines';
 
 import {Points, Line, GradientArea} from './components';

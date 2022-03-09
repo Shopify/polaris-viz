@@ -1,13 +1,10 @@
 import {useMemo} from 'react';
 import {scaleLinear} from 'd3-scale';
+import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {shouldRoundScaleUp, getStackedMinMax} from '../../../utilities';
 import {MIN_Y_LABEL_SPACE} from '../constants';
-import type {
-  DataSeries,
-  NumberLabelFormatter,
-  StackedSeries,
-} from '../../../types';
+import type {NumberLabelFormatter, StackedSeries} from '../../../types';
 
 export function useYScale({
   drawableHeight,

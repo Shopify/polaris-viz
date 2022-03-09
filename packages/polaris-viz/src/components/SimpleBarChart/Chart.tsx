@@ -1,5 +1,6 @@
 import React, {useCallback, useMemo} from 'react';
 import {uniqueId} from '@shopify/polaris-viz-core';
+import type {ChartType, DataSeries} from '@shopify/polaris-viz-core';
 
 import {LegendContainer, useLegend} from '../../components/LegendContainer';
 import {GradientDefs, HorizontalGroup} from '../shared';
@@ -18,7 +19,7 @@ import {
   HORIZONTAL_BAR_GROUP_DELAY,
   COLOR_VISION_SINGLE_ITEM,
 } from '../../constants';
-import type {ChartType, DataSeries, Dimensions} from '../../types';
+import type {Dimensions} from '../../types';
 
 import type {XAxisOptions} from './types';
 import styles from './Chart.scss';

@@ -1,5 +1,6 @@
 import React from 'react';
 import type {Story, Meta} from '@storybook/react';
+import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {BarChart, BarChartProps} from '../../../components';
 
@@ -13,7 +14,6 @@ import {
 } from '../../../storybook';
 
 import {generateMultipleSeries} from '../../Docs/utilities';
-import type {DataSeries} from '../../../types';
 
 const TOOLTIP_CONTENT = {
   empty: undefined,

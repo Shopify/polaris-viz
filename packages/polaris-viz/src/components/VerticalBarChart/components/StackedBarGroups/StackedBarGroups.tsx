@@ -1,5 +1,7 @@
 import React, {useMemo} from 'react';
 import type {ScaleBand, ScaleLinear} from 'd3-scale';
+import type {Color} from '@shopify/polaris-viz-core';
+import {DataType} from '@shopify/polaris-viz-core';
 
 import {COLOR_VISION_GROUP_ITEM} from '../../../../constants';
 import {formatAriaLabel} from '../../../VerticalBarChart/utilities';
@@ -9,7 +11,7 @@ import {
 } from '../../../../hooks';
 import {BAR_SPACING} from '../../../VerticalBarChart/constants';
 import type {AccessibilitySeries} from '../../../VerticalBarChart/types';
-import {Color, DataType, StackedSeries} from '../../../../types';
+import type {StackedSeries} from '../../../../types';
 import {useStackedGapsForVerticalChart} from '../../hooks';
 
 import {Stack} from './components';

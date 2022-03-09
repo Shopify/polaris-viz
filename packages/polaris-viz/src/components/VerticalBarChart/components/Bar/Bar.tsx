@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react';
 import {animated, useSpring} from '@react-spring/web';
+import {DataType} from '@shopify/polaris-viz-core';
 
-import {DataType} from '../../../../types';
 import {
   ROUNDED_BAR_RADIUS,
   BARS_TRANSITION_CONFIG,

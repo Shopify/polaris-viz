@@ -2,6 +2,8 @@ import React, {useMemo, useState} from 'react';
 import isEqual from 'fast-deep-equal';
 import {area, line} from 'd3-shape';
 import type {ScaleLinear} from 'd3-scale';
+import type {Color} from '@shopify/polaris-viz-core';
+import {curveStepRounded, uniqueId} from '@shopify/polaris-viz-core';
 
 import {
   LINE_ANIMATION_FAST_COUNT,
@@ -10,8 +12,7 @@ import {
   LINE_ANIMATION_DURATION_STEP,
   COLOR_VISION_SINGLE_ITEM,
 } from '../../../../constants';
-import type {Color, StackedSeries} from '../../../../types';
-import {curveStepRounded, uniqueId} from '../../../../utilities';
+import type {StackedSeries} from '../../../../types';
 import {
   usePrevious,
   useTheme,

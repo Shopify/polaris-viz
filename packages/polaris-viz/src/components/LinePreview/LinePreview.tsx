@@ -1,8 +1,11 @@
 import React, {useRef} from 'react';
 import type {Color, LineStyle} from '@shopify/polaris-viz-core';
-import {LinearGradientWithStops} from '@shopify/polaris-viz-core';
+import {
+  LinearGradientWithStops,
+  isGradientType,
+  uniqueId,
+} from '@shopify/polaris-viz-core';
 
-import {isGradientType, uniqueId} from '../../utilities';
 import {XMLNS} from '../../constants';
 
 import {

@@ -1,5 +1,5 @@
-import type {Color} from '../types';
-import {isGradientType} from '../utilities';
+import type {Color} from '@shopify/polaris-viz-core';
+import {isGradientType} from '@shopify/polaris-viz-core';
 
 export const getDataPoint = (limit = 1000) => {
   return Math.random() * limit;

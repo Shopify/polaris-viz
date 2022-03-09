@@ -1,4 +1,4 @@
-import type {Color} from '../../types';
+import type {Color} from '@shopify/polaris-viz-core';
 
 export type LegendIconType = 'solid' | 'line';
 

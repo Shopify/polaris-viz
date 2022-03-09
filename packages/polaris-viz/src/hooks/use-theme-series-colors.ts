@@ -1,6 +1,7 @@
 import {useMemo} from 'react';
+import type {Color} from '@shopify/polaris-viz-core';
 
-import type {Theme, Color, LineStyle, DataPoint, Data} from '../types';
+import type {Theme, LineStyle, DataPoint, Data} from '../types';
 
 // Note: This is a bandaid until all component are using
 // the new DataSeries type.
