@@ -25,7 +25,7 @@ To keep the bundle size of the libraries small, `@shopify/polaris-viz-core` shou
 
 ### Sharing UI components
 
-To render SVG tags in React Native, we use [the `react-native-svg` library](https://github.com/react-native-svg/react-native-svg). `@shopify/polaris-viz` doesn't need this package as a dependency though, since it's target is web browsers only. If we added `react-native-svg` as a depency of `@shopify/polaris-viz-core` we would also increase `@shopify/polaris-viz` bundle size for something that only `@shopify/polaris-viz-native` needs.
+To render SVG tags in React Native, we use [the `react-native-svg` library](https://github.com/react-native-svg/react-native-svg). `@shopify/polaris-viz` doesn't need this package as a dependency though, since its target is web browsers only. If we added `react-native-svg` as a depency of `@shopify/polaris-viz-core` we would also increase `@shopify/polaris-viz` bundle size for something that only `@shopify/polaris-viz-native` needs.
 
 To solve this, we:
 
