@@ -183,7 +183,7 @@ export function Chart({
 
   const zeroPosition = longestLabel.negative + xScale(0);
 
-  const bandwidth = drawableWidth / ticks.length;
+  const labelWidth = drawableWidth / ticks.length;
 
   return (
     <div
@@ -211,10 +211,10 @@ export function Chart({
               xScale={xScale}
             />
             <HorizontalBarChartXAxisLabels
-              chartX={-bandwidth / 2}
+              chartX={-labelWidth / 2}
               chartY={drawableHeight}
               labels={ticksFormatted}
-              labelWidth={bandwidth}
+              labelWidth={labelWidth}
               onHeightChange={setLabelHeight}
               theme={theme}
               ticks={ticks}

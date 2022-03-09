@@ -13,7 +13,7 @@ interface Props {
   stackedMin: number;
 }
 
-export function useGetHorizontalXScales({
+export function useHorizontalTicksAndScale({
   maxWidth,
   allNumbers,
   labelFormatter,

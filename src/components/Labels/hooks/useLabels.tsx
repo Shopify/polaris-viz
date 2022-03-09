@@ -33,7 +33,7 @@ export function useLabels({labels, targetWidth, onHeightChange}: Props) {
   }, [labels]);
 
   const {lines, containerHeight} = useMemo(() => {
-    const shouldDrawHorizontal = targetWidth > HORIZONTAL_LABEL_MIN_WIDTH;
+    const shouldDrawHorizontal = targetWidth >= HORIZONTAL_LABEL_MIN_WIDTH;
     const shouldDrawDiagonal = targetWidth > DIAGONAL_LABEL_MIN_WIDTH;
     const shouldDrawVertical = targetWidth > LINE_HEIGHT;
 

@@ -49,9 +49,7 @@ export function useLinearLabelsAndDimensions({
       }
 
       return prev;
-      // Make the starting point 1px wider than the
-      // minimum so we skip the diagonal line logic
-    }, HORIZONTAL_LABEL_MIN_WIDTH + 1);
+    }, HORIZONTAL_LABEL_MIN_WIDTH);
 
     return clamp({
       amount: Math.min(drawableWidth / data[0].data.length, longestLabelWidth),

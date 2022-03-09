@@ -5,7 +5,7 @@ import {HORIZONTAL_LABEL_MIN_WIDTH} from '../constants';
 import type {LabelFormatter} from '../types';
 import {clamp, estimateStringWidth} from '../utilities';
 
-import {useGetHorizontalXScales} from './useGetHorizontalXScales';
+import {useHorizontalTicksAndScale} from './useHorizontalTicksAndScale';
 
 interface Props {
   allNumbers: number[];
@@ -29,7 +29,7 @@ export function useHorizontalXScale({
   let drawableWidth = maxWidth;
   let chartStartPosition = 0;
 
-  const {ticksFormatted: initialTicksFormatted} = useGetHorizontalXScales({
+  const {ticksFormatted: initialTicksFormatted} = useHorizontalTicksAndScale({
     maxWidth,
     allNumbers,
     labelFormatter,
@@ -47,9 +47,7 @@ export function useHorizontalXScale({
       }
 
       return prev;
-      // Make the starting point 1px wider than the
-      // minimum so we skip the diagonal line logic
-    }, HORIZONTAL_LABEL_MIN_WIDTH + 1);
+    }, HORIZONTAL_LABEL_MIN_WIDTH);
 
     return clamp({
       amount: Math.min(
@@ -64,7 +62,7 @@ export function useHorizontalXScale({
   drawableWidth -= labelWidth;
   chartStartPosition += labelWidth / 2;
 
-  const {xScale, ticks, ticksFormatted} = useGetHorizontalXScales({
+  const {xScale, ticks, ticksFormatted} = useHorizontalTicksAndScale({
     maxWidth: drawableWidth,
     allNumbers,
     labelFormatter,
