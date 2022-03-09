@@ -46,7 +46,7 @@ export const PolarisVizContext = createContext({
 });
 ```
 
-- Re-export `PolarisVizProvider` from `polaris-viz-native` overwriting the regular svg tags, with the equivalent tags from `react-native-svg`
+- Re-export `PolarisVizProvider` from `polaris-viz-native` overwriting the regular SVG tags, with the equivalent tags from `react-native-svg`
 
 ```ts
 // packages/polaris-viz-native/PolarisVizProvider.tsx
