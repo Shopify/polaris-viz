@@ -1,5 +1,7 @@
 # Contributor Covenant Code of Conduct
 
+<br />
+
 ## Our Pledge
 
 We as members, contributors, and leaders pledge to make participation in our

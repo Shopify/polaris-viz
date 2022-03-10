@@ -7,7 +7,7 @@
 
 ## Code of conduct
 
-We expect all participants to read our [code of conduct](/CODE_OF_CONDUCT.md) to understand which actions are and aren’t tolerated.
+We expect all participants to read our [code of conduct](http://polaris-viz.shopify.io/?path=/docs/code-of-conduct--page) to understand which actions are and aren’t tolerated.
 
 <br/>
 <hr/>

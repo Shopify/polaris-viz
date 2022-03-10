@@ -37,7 +37,7 @@ Wrap the top-level component of your app with the PolarisVizProvider
 </Banner>
 
 ```js
-import {PolarisVizProvider} from '@shopify/polaris-viz';
+import {PolarisVizProvider} from '@shopify/polaris-viz-native';
 
 export const YourTopLevelComponent = () => {
   return (
@@ -50,9 +50,9 @@ export const YourTopLevelComponent = () => {
 
 <Title type="h2">Peer dependencies</Title>
 
-Polaris Viz has peer dependencies on:
+Polaris Viz Native has peer dependencies on:
 
-- `react@^16.8.6`
+- `react@^16.8.0 || ^17.0.0`
 - `react-native@>=0.58`
 
 You are responsible for providing these packages in your project. By requiring these packages as `peerDependencies` we can be sure there won't be duplicate packages included due to version mismatches.
