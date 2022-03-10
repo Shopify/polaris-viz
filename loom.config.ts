@@ -25,7 +25,8 @@ function jestAdjustments() {
       hooks.jestConfig?.hook((config) => {
         if (Array.isArray(config.projects)) {
           config.projects.unshift({
-            ...(config.projects[0] as any),
+            // generating root based on package with index 1 (polaris-viz-core)
+            ...(config.projects[1] as any),
             displayName: 'root',
             rootDir: 'tests',
           });
