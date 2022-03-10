@@ -1,0 +1,127 @@
+import {Meta} from '@storybook/addon-docs/blocks';
+import {ComponentContainer, Title, SampleLabelsBarChart} from './components';
+
+<Meta
+  title="Shared/Labels"
+  parameters={{
+    viewMode: 'docs',
+    docsOnly: true,
+  }}
+/>
+
+<div style={{ margin: '0 auto', maxWidth: '800px', color: 'white'}}>
+
+<PolarisVizProvider
+  themes={{
+    Default: {
+      chartContainer: {
+        padding: '20px',
+      },
+    },
+    Light: {
+      chartContainer: {
+        padding: '20px',
+      },
+    },
+  }}
+>
+
+<Title>🏷 Labels</Title>
+
+<p>
+  When we were building our Polaris Viz Figma Plugin, we ran into an issue where
+  our labels would not render because we used the <code>foreignObject</code> tag
+  to render the text. This was because the SVG renderer was not able to render
+  the text inside of the <code>foreignObject</code> element.
+</p>
+
+<p>
+  We relied on <code>foreignObject</code> because it allowed us to use css to
+  style the text which meant we got features like truncation for free.
+</p>
+
+<Title type="h2">How does it work?</Title>
+
+<p>
+  A label consists of a container and a text element. This text element can
+  either be a single line, or up to 3 lines of text from the string.
+</p>
+
+<p>
+  <strong>Basic truncation</strong>
+</p>
+
+<SampleLabelsBarChart />
+
+<p>If a string is not wider than it's container, it will display fully.</p>
+<p>
+  If a string is wider than it's container, it will break and truncate up to 3
+  lines. After the third line we use end-line truncation to display{' '}
+  <code>…</code> at the end of the string.
+</p>
+
+<p>
+  If a single word in the string is wider than the container, we use end-word
+  truncation to display <code>…</code> at the end of the word, allowing the
+  other words to display fully.
+</p>
+
+<p>
+  <strong>Diagonal labels</strong>
+</p>
+
+<SampleLabelsBarChart width={500} />
+
+<p>
+  If a container becomes smaller than <code>45px</code>, we display the labels
+  diagonally up to a max width of <code>100px</code>.
+</p>
+
+<p>
+  Diagonal labels will only display a single line and uses end-line truncation.
+</p>
+
+<p>
+  <strong>Vertical labels</strong>
+</p>
+
+<SampleLabelsBarChart width={400} />
+
+<p>
+  If a container becomes smaller than <code>14px</code>, we display the labels
+  diagonally up to a max width of <code>80px</code>.
+</p>
+
+<p>
+  Diagonal labels will only display a single line and uses end-line truncation.
+</p>
+
+<Title type="h2">Skipping labels</Title>
+
+<p>
+  <strong>Large data sets</strong>
+</p>
+
+<p>
+  For charts with large data sets that would result in the labels being too
+  small to visually render, we will attempt to skip labels until we can render
+  labels horizontally.
+</p>
+
+<p>
+  If we can not render labels horizontally, we will skip labels and render them
+  diagonally or vertically, depending on container width
+</p>
+
+<p>
+  <strong>xAxisOptions.useMinimalLabels</strong>
+</p>
+
+<p>
+  When <code>xAxisOptions.useMinimalLabels</code> is set to <code>true</code>,
+  we will only include the first, last and middle labels.
+</p>
+
+</PolarisVizProvider>
+
+</div>

@@ -203,3 +203,22 @@ export const SampleLegendContainer = ({theme} = {theme: 'Default'}) => {
     </SimpleContainer>
   );
 };
+
+export const SampleLabelsBarChart = ({width = 760}: {width: number}) => {
+  return (
+    <SimpleContainer>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          height: '100%',
+          width: '100%',
+        }}
+      >
+        <div style={{height: 200, width}}>
+          <BarChart data={generateMultipleSeries(3)} showLegend={false} />
+        </div>
+      </div>
+    </SimpleContainer>
+  );
+};

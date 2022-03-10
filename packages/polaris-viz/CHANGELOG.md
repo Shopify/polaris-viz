@@ -5,7 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-<!-- ## Unreleased -->
+## Unreleased
+
+### Added
+
+- Added logic to either truncate labels, display them diagonally or horizontally based on container size.
+- `<LinearXAxisLabels />` to `<LineChart />` & `<StackedAreaChart />`.
+- `<BarChartXAxisLabels />` to `<BarChart />`;
+- `<HorizontalBarChartXAxisLabels />` to horizontal direction of `<BarChart />`.
+
+### Changed
+
+- `xAxisOptions` renamed to `LinearXAxisOptions` for linear charts.
+- `LinearXAxisOptions.labels` renamed to `LinearXAxisOptions.xAxisLabels`.
+- xAxis labels now render SVG `<text>` elements instead of `<foreignObject>`.
+
+### Removed
+
+- Removed `wrapLabels` from `BarChart.xAxisOptions`.
 
 ## [1.0.4] - 2022-03-14
 
@@ -34,6 +51,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 - To update to 1.0.0 please ensure that you're using `PolarisVizProvider` as it's now mandatory whenever using `polaris-viz` in your app. Please also
 note that there have been some other changes to the library that have also been released with this version. Please see the "Fixed" section below.
 
+
 ### Fixed
 
 - Color preview square wasn't showing on `<StackedAreaChart/>` tooltip
@@ -41,7 +59,7 @@ note that there have been some other changes to the library that have also been 
 - `<SimpleNormalizedChart />` overlapping labels when chart was vertical
 - Bug where `showLabels=false` would cause `<SimpleBarChart >` to render with 0 opacity.
 - Bug where vertical `<SimpleNormalizedChart />` would use the wrong index for color vision interactions.
-- Bug causing the animated `<LineChart />` to break when hovered over if empty data was provided
+- Bug causing the animated `<LineChart />` to break when hovered over if empty data was provided.
 
 ## [0.29.0] - 2022-01-20
 
@@ -50,21 +68,16 @@ note that there have been some other changes to the library that have also been 
 - Added `<Legends />` component.
 - Added `showLegend` to `BarChartProps`, `LineChartProps` and `StackedAreaChartProps` to control the visibility of `<Legends >`.
 - Added Color Vision a11y interactions to all non-Spark charts.
-- Added logic to either truncate labels, display them diagonally or horizontally based on container size.
-- `LinearXAxisLabels` to `<LineChart>` & `<StackedAreaChart />`.
 
 ### Changed
 
 - `LegendProps.series` renamed to `LegendProps.data`.
 - `LegendProps.data[].lineStyle` was removed. Use `LegendProps.data[].isComparison` to show a dotted line.
 - `LegendProps.data[].iconType` was added. Use `solid` to display a rectangle icon and `line` to display a line icon.
-- `xAxisOptions` renamed to `LinearXAxisOptions` for linear charts.
-- `LinearXAxisOptions.labels` renamed to `LinearXAxisOptions.xAxisLabels`.
 
 ### Removed
 
 - Removed legacy `<Legend >` component.
-- Removed `wrapLabels` from `BarChart.xAxisOptions`.
 
 ### Fixed
 
