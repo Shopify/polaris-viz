@@ -31,4 +31,14 @@ export {
   PRINT_THEME as PolarisVizPrintTheme,
 } from './constants';
 
+export {
+  createGradient,
+  curveStepRounded,
+  getFilteredSeries,
+  getSeriesColors,
+  isGradientType,
+  uniqueId,
+  createTheme,
+} from '@shopify/polaris-viz-core';
+
 export type {GradientStop, DataPoint} from './types';
