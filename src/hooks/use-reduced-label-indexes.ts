@@ -3,7 +3,6 @@ import {useMemo} from 'react';
 import {HORIZONTAL_LABEL_MIN_WIDTH} from '../constants';
 
 const MIDDLE_LABEL_EVEN_THRESHOLD = 10;
-const RETURN_STRING = 'minimalLabelIndexes';
 
 export interface Props {
   useMinimalLabels: boolean;
@@ -11,7 +10,7 @@ export interface Props {
   dropLabelsForWidth?: boolean;
 }
 
-export function useMinimalLabelIndexes({
+export function useReducedLabelIndexes({
   useMinimalLabels,
   dataLength,
   dropLabelsForWidth = false,
@@ -28,11 +27,11 @@ export function useMinimalLabelIndexes({
   }, [dropLabelsForWidth, dataLength, useMinimalLabels]);
 
   if (visibleIndexesForWideCharts.length > 0) {
-    return {[RETURN_STRING]: visibleIndexesForWideCharts};
+    return visibleIndexesForWideCharts;
   }
 
   if (!useMinimalLabels || dataLength < 2) {
-    return {[RETURN_STRING]: []};
+    return [];
   }
 
   const oddNumberOfBars = dataLength % 2 !== 0;
@@ -42,5 +41,5 @@ export function useMinimalLabelIndexes({
       ? [Math.floor(dataLength / 2)]
       : [];
 
-  return {[RETURN_STRING]: [0, ...middleLabelIndex, dataLength - 1]};
+  return [0, ...middleLabelIndex, dataLength - 1];
 }

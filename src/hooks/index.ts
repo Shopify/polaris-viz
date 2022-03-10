@@ -1,5 +1,5 @@
 export {usePrefersReducedMotion} from './usePrefersReducedMotion';
-export {useMinimalLabelIndexes} from './use-minimal-label-indexes';
+export {useReducedLabelIndexes} from './use-reduced-label-indexes';
 export {useLinearXScale} from './useLinearXScale';
 export {usePrevious} from './use-previous';
 export {useResizeObserver} from './useResizeObserver';

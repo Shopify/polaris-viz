@@ -41,7 +41,7 @@ import {
   useColorVisionEvents,
   useTheme,
   useWatchColorVisionEvents,
-  useMinimalLabelIndexes,
+  useReducedLabelIndexes,
 } from '../../hooks';
 import type {
   RenderTooltipContentData,
@@ -127,7 +127,7 @@ export function Chart({
   const isStacked = type === 'stacked';
   const stackedValues = isStacked ? getStackedValues(data, labels) : null;
 
-  const {minimalLabelIndexes} = useMinimalLabelIndexes({
+  const reducedLabelIndexes = useReducedLabelIndexes({
     useMinimalLabels: xAxisOptions.useMinimalLabels,
     dataLength: data[0] ? data[0].data.length : 0,
   });
@@ -241,8 +241,8 @@ export function Chart({
             chartY={drawableHeight + LABEL_AREA_TOP_SPACING}
             labels={labels}
             labelWidth={xScale.bandwidth()}
-            minimalLabelIndexes={minimalLabelIndexes}
             onHeightChange={setLabelHeight}
+            reducedLabelIndexes={reducedLabelIndexes}
             theme={theme}
             xScale={xScale}
           />

@@ -10,7 +10,7 @@ export interface BarChartXAxisLabelsProps {
   labelWidth: number;
   onHeightChange: Dispatch<SetStateAction<number>>;
   xScale: ScaleBand<string>;
-  minimalLabelIndexes?: number[];
+  reducedLabelIndexes?: number[];
   theme?: string;
 }
 
@@ -19,8 +19,8 @@ export function BarChartXAxisLabels({
   chartY,
   labels,
   labelWidth,
-  minimalLabelIndexes,
   onHeightChange,
+  reducedLabelIndexes,
   theme,
   xScale,
 }: BarChartXAxisLabelsProps) {
@@ -33,7 +33,7 @@ export function BarChartXAxisLabels({
   return (
     <React.Fragment>
       {lines.map((line, index) => {
-        if (shouldSkipLabel(index, minimalLabelIndexes)) {
+        if (shouldSkipLabel(index, reducedLabelIndexes)) {
           return null;
         }
 

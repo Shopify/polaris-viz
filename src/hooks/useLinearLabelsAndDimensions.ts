@@ -1,13 +1,16 @@
 import {useContext, useMemo} from 'react';
 
-import {HORIZONTAL_LABEL_MIN_WIDTH, LINE_HEIGHT} from '../constants';
+import {
+  HORIZONTAL_LABEL_MIN_WIDTH,
+  VERTICAL_LABEL_MIN_WIDTH,
+} from '../constants';
 import {estimateStringWidth, clamp} from '../utilities';
 import type {DataSeries, LinearXAxisOptions} from '../types';
 import {ChartContext} from '../components';
 
 import {useLinearXScale} from './useLinearXScale';
 import {useTheme} from './useTheme';
-import {useMinimalLabelIndexes} from './use-minimal-label-indexes';
+import {useReducedLabelIndexes} from './use-reduced-label-indexes';
 
 interface Props {
   data: DataSeries[];
@@ -38,21 +41,22 @@ export function useLinearLabelsAndDimensions({
 
   const longestSeriesLastIndex = useMemo(
     () =>
-      data.reduce<number>(
+      data.reduce(
         (max, currentSeries) => Math.max(max, currentSeries.data.length),
         0,
       ),
     [data],
   );
 
-  const {minimalLabelIndexes} = useMinimalLabelIndexes({
+  const reducedLabelIndexes = useReducedLabelIndexes({
     dataLength: longestSeriesLastIndex,
     useMinimalLabels: xAxisOptions.useMinimalLabels,
-    dropLabelsForWidth: drawableWidth < labels.length * LINE_HEIGHT,
+    dropLabelsForWidth:
+      drawableWidth < labels.length * VERTICAL_LABEL_MIN_WIDTH,
   });
 
   const visibleLabelsCount =
-    minimalLabelIndexes.length > 0 ? minimalLabelIndexes.length : labels.length;
+    reducedLabelIndexes.length > 0 ? reducedLabelIndexes.length : labels.length;
 
   const labelWidth = useMemo(() => {
     if (visibleLabelsCount === 0) {
@@ -89,7 +93,7 @@ export function useLinearLabelsAndDimensions({
     drawableWidth,
     xAxisDetails: {
       labelWidth,
-      minimalLabelIndexes,
+      reducedLabelIndexes,
     },
     xScale,
     labels,

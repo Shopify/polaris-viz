@@ -287,8 +287,8 @@ export function Chart({
             chartY={drawableHeight + LABEL_AREA_TOP_SPACING}
             labels={labels}
             labelWidth={xAxisDetails.labelWidth}
-            minimalLabelIndexes={xAxisDetails.minimalLabelIndexes}
             onHeightChange={setLabelHeight}
+            reducedLabelIndexes={xAxisDetails.reducedLabelIndexes}
             theme={theme}
             xScale={xScale}
           />

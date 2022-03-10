@@ -1,9 +1,9 @@
-export function shouldSkipLabel(index: number, minimalLabelIndexes?: number[]) {
-  if (minimalLabelIndexes == null || minimalLabelIndexes.length === 0) {
+export function shouldSkipLabel(index: number, reducedLabelIndexes?: number[]) {
+  if (reducedLabelIndexes == null || reducedLabelIndexes.length === 0) {
     return false;
   }
 
-  if (!minimalLabelIndexes.includes(index)) {
+  if (!reducedLabelIndexes.includes(index)) {
     return true;
   }
 

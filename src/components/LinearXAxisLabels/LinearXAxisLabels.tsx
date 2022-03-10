@@ -10,7 +10,7 @@ interface LinearXAxisLabelsProps {
   labelWidth: number;
   onHeightChange: Dispatch<SetStateAction<number>>;
   xScale: ScaleLinear<number, number>;
-  minimalLabelIndexes?: number[];
+  reducedLabelIndexes?: number[];
   theme?: string;
 }
 
@@ -19,8 +19,8 @@ export function LinearXAxisLabels({
   chartY,
   labels,
   labelWidth,
-  minimalLabelIndexes,
   onHeightChange,
+  reducedLabelIndexes,
   theme,
   xScale,
 }: LinearXAxisLabelsProps) {
@@ -33,7 +33,7 @@ export function LinearXAxisLabels({
   return (
     <React.Fragment>
       {lines.map((line, index) => {
-        if (shouldSkipLabel(index, minimalLabelIndexes)) {
+        if (shouldSkipLabel(index, reducedLabelIndexes)) {
           return null;
         }
 

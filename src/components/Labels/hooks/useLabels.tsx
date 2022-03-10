@@ -5,6 +5,7 @@ import {
   DIAGONAL_LABEL_MIN_WIDTH,
   HORIZONTAL_LABEL_MIN_WIDTH,
   HORIZONTAL_LABEL_TARGET_HEIGHT,
+  VERTICAL_LABEL_MIN_WIDTH,
 } from '../../../constants';
 import {ChartContext} from '../../ChartContainer';
 import {getDiagonalLabels} from '../utilities/get-diagonal-labels';
@@ -35,7 +36,7 @@ export function useLabels({labels, targetWidth, onHeightChange}: Props) {
   const {lines, containerHeight} = useMemo(() => {
     const shouldDrawHorizontal = targetWidth >= HORIZONTAL_LABEL_MIN_WIDTH;
     const shouldDrawDiagonal = targetWidth > DIAGONAL_LABEL_MIN_WIDTH;
-    const shouldDrawVertical = targetWidth > LINE_HEIGHT;
+    const shouldDrawVertical = targetWidth > VERTICAL_LABEL_MIN_WIDTH;
 
     switch (true) {
       case shouldDrawHorizontal: {

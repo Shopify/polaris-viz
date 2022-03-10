@@ -1,12 +1,12 @@
 import React from 'react';
 import {mount, Root} from '@shopify/react-testing';
 
-import {useMinimalLabelIndexes, Props} from '../use-minimal-label-indexes';
+import {useReducedLabelIndexes, Props} from '../use-reduced-label-indexes';
 
-describe('useMinimalLabelIndexes', () => {
+describe('useReducedLabelIndexes', () => {
   function TestComponent(props: Props) {
-    const {minimalLabelIndexes} = useMinimalLabelIndexes(props);
-    return <div>{JSON.stringify(minimalLabelIndexes)}</div>;
+    const reducedLabelIndexes = useReducedLabelIndexes(props);
+    return <div>{JSON.stringify(reducedLabelIndexes)}</div>;
   }
 
   function parseResult(mockComponent: Root<any>) {
