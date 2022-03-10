@@ -7,7 +7,7 @@ To get started developing locally:
 - Clone the repo: `git clone https://github.com/Shopify/polaris-viz.git`
 - Install all dependencies: `yarn install`
 - Start Storybook locally: `yarn storybook`
-- Commit your changes as you would usually. Make sure to describe your edits or additions in the package's corresponding changelog.
+- Commit your changes as you would usually. Make sure to describe your edits or additions in the package's corresponding CHANGELOG.md.
 
 > ⚠️ If you don't have [yarn](https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable) installed in your computer, install it first by running `npm install --global yarn`
 

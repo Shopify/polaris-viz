@@ -4,15 +4,13 @@
 
 ## 1. Preparing local environment
 
-- Ensure you have the latest `master` branch including all tags:
-
 ```sh
-git checkout main && git pull
+git checkout master && git pull
 ```
 
 **Note🗒️** `git pull` should be used instead of `git pull origin master` to ensure that tags are pulled as well.
 
-## 2. Versioning and Tagging
+## 2. Versioning and tagging
 
 - Begin the release process:
 
@@ -26,7 +24,7 @@ yarn version-bump --force-publish
 
 This command will update all CHANGELOGs to add headings for the new versions you selected.
 
-**Note🗒️** Prereleases will not update changelogs automatically.
+**Note🗒️** Prereleases will not update CHANGELOGs automatically.
 
 ## 3. Pushing Changes
 
@@ -39,7 +37,7 @@ git push origin main --follow-tags
 ## 4. Deploying to npm
 
 - Log in to [Shipit](https://shipit.shopify.io/shopify/polaris-viz)
-- When CI is 🍏 on the commit titled `Publish`, press `Deploy` to update packages on npm.
+- When CI is 🍏 on the commit titled `vX.X.X`, press `Deploy` to update packages on npm.
 
 <br />
 
@@ -52,7 +50,7 @@ git push origin main --follow-tags
   **Note:** Ensure your version includes the `-beta` suffix. This is how [Shipit dictates](https://github.com/Shopify/shipit-engine/blob/master/lib/snippets/publish-lerna-independent-packages#L7-L12) a beta release.
 
 - Push your branch to GitHub with the newly created tags using `git push origin <branch> --follow-tags`
-- Create a temporary stack in Shipit that points to your dev branch. Set the Branch to your PR/feature branch and update the Environment to something specific to your feature (e.g. test-cool-feature)
+- Create a temporary stack in Shipit that points to your dev branch. Set the branch to your PR/feature branch and update the environment to something specific to your feature (e.g. test-cool-feature)
   ![Create Shipit Stack](../images/shipit-stack.png)
 
 - Hit the Deploy button on your Publish commit in Shipit to publish your beta release to npm
