@@ -3,7 +3,6 @@
   "description": "Shopify’s viz component library",
   "private": true,
   "workspaces": [
-    "sandbox",
     "packages/*"
   ],
   "watch": {
