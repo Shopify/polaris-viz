@@ -1,4 +1,4 @@
-// this is requirted for `react-native` tests to work correctly
+// this is required for `react-native` tests to work correctly
 module.exports = function (api) {
   api.cache(true);
   return {
