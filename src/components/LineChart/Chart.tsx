@@ -117,7 +117,7 @@ export function Chart({
   const drawableHeight =
     height - labelHeight - LABEL_AREA_TOP_SPACING - Margin.Top;
 
-  const labels = useMemo(
+  const formattedLabels = useMemo(
     () => xAxisOptions.xAxisLabels.map(xAxisOptions.labelFormatter),
     [xAxisOptions.labelFormatter, xAxisOptions.xAxisLabels],
   );
@@ -141,12 +141,13 @@ export function Chart({
     drawableWidth,
     xAxisDetails,
     xScale,
+    labels,
   } = useLinearLabelsAndDimensions({
     data,
     longestSeriesLength,
     theme,
     width,
-    labels,
+    labels: formattedLabels,
     xAxisOptions,
     yAxisLabelWidth,
   });

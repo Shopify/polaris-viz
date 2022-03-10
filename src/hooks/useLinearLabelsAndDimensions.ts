@@ -1,6 +1,6 @@
 import {useContext, useMemo} from 'react';
 
-import {HORIZONTAL_LABEL_MIN_WIDTH} from '../constants';
+import {HORIZONTAL_LABEL_MIN_WIDTH, LINE_HEIGHT} from '../constants';
 import {estimateStringWidth, clamp} from '../utilities';
 import type {DataSeries, LinearXAxisOptions} from '../types';
 import {ChartContext} from '../components';
@@ -36,8 +36,26 @@ export function useLinearLabelsAndDimensions({
 
   let drawableWidth = width - chartStartPosition;
 
+  const longestSeriesLastIndex = useMemo(
+    () =>
+      data.reduce<number>(
+        (max, currentSeries) => Math.max(max, currentSeries.data.length),
+        0,
+      ),
+    [data],
+  );
+
+  const {minimalLabelIndexes} = useMinimalLabelIndexes({
+    dataLength: longestSeriesLastIndex,
+    useMinimalLabels: xAxisOptions.useMinimalLabels,
+    dropLabelsForWidth: drawableWidth < labels.length * LINE_HEIGHT,
+  });
+
+  const visibleLabelsCount =
+    minimalLabelIndexes.length > 0 ? minimalLabelIndexes.length : labels.length;
+
   const labelWidth = useMemo(() => {
-    if (data == null || data.length === 0) {
+    if (visibleLabelsCount === 0) {
       return 0;
     }
 
@@ -52,25 +70,11 @@ export function useLinearLabelsAndDimensions({
     }, HORIZONTAL_LABEL_MIN_WIDTH);
 
     return clamp({
-      amount: Math.min(drawableWidth / data[0].data.length, longestLabelWidth),
+      amount: Math.min(drawableWidth / visibleLabelsCount, longestLabelWidth),
       min: 0,
       max: drawableWidth,
     });
-  }, [data, drawableWidth, characterWidths, labels]);
-
-  const longestSeriesLastIndex = useMemo(
-    () =>
-      data.reduce<number>(
-        (max, currentSeries) => Math.max(max, currentSeries.data.length),
-        0,
-      ),
-    [data],
-  );
-
-  const {minimalLabelIndexes} = useMinimalLabelIndexes({
-    dataLength: longestSeriesLastIndex,
-    useMinimalLabels: xAxisOptions.useMinimalLabels,
-  });
+  }, [drawableWidth, characterWidths, labels, visibleLabelsCount]);
 
   drawableWidth -= labelWidth;
   chartStartPosition += labelWidth / 2;
@@ -88,5 +92,6 @@ export function useLinearLabelsAndDimensions({
       minimalLabelIndexes,
     },
     xScale,
+    labels,
   };
 }
