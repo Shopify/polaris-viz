@@ -15,7 +15,7 @@
   "main": "build/cjs/index.js",
   "module": "build/esm/index.js",
   "esnext": "build/esnext/index.esnext",
-  "types": "build/ts/src/index.d.ts",
+  "types": "build/ts/index.d.ts",
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
