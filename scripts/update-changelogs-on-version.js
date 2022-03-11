@@ -122,5 +122,5 @@ function updateChangelogForPackage(packageLocation) {
 function headingFormat(version) {
   // Date based on iso8601 - YYYY-MM-DD format
   const isoDate = new Date().toISOString().split('T')[0];
-  return `## ${version} - ${isoDate}`;
+  return `## [${version}] - ${isoDate}`;
 }
