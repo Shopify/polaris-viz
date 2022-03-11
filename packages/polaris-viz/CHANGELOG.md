@@ -9,7 +9,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
-- Extracted common logic into new `@shopify/polaris-viz-core` package.
+- `@shopify/polaris-viz` is now three packages: `@shopify/polaris-viz` (our web, React library), `@shopify/polaris-viz-native` (our mobile, React Native library) and `@shopify/polaris-viz-core` (the library under the hood that powers both consumer-facing libraries).
+- For new React Native consumers, we are releasing our React Native package with two initial components: `SparkLineChart` and `SparkBarChart`. We're planning to add other components in the near future.
+- To update to 1.0.0 please ensure that you're using `PolarisVizProvider` as it's now mandatory whenever using `polaris-viz` in your app. Please also
+note that there have been some other changes to the library that have also been released with this version. Please see the "Fixed" section below.
 
 ### Fixed
 
