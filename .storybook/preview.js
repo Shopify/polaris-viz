@@ -9,8 +9,8 @@ import {useTheme} from '../packages/polaris-viz/src/hooks';
 
 // https://github.com/storybookjs/storybook/issues/548
 const storiesOrder = {
+  Intro: null,
   Shared: {
-    Intro: null,
     'Web and Mobile Development': null,
     'Data Structure': null,
     Utilities: null,
