@@ -1,0 +1,58 @@
+import {Meta} from '@storybook/addon-docs/blocks';
+import {ComponentContainer, Title, Divider, Banner} from './components';
+
+<Meta
+  title="polaris-viz-native/Getting Started"
+  parameters={{
+    viewMode: 'docs',
+    docsOnly: true,
+  }}
+/>
+
+<Title>🏁 Getting Started</Title>
+
+<Title type="h2">Installation</Title>
+
+Install the package by running:
+
+```bash
+# If you use npm:
+npm install @shopify/polaris-viz-native --save
+
+# If you prefer Yarn, use the following command instead:
+yarn add @shopify/polaris-viz-native
+```
+
+<Title type="h3">Set up PolarisVizProvider</Title>
+
+Wrap the top-level component of your app with the PolarisVizProvider
+
+<Banner type="Alert">
+  The PolarisVizProvider is responsible for managing{' '}
+  <a href="http://polaris-viz.shopify.io/iframe.html?id=shared-themes-default-themes--page&args=&viewMode=story">
+    Themes
+  </a>
+  , as well as providing the correct elements and animation functions for native
+  development. Your app won't work without it.
+</Banner>
+
+```js
+import {PolarisVizProvider} from '@shopify/polaris-viz-native';
+
+export const YourTopLevelComponent = () => {
+  return (
+    <PolarisVizProvider>
+      <App />
+    </PolarisVizProvider>
+  );
+};
+```
+
+<Title type="h2">Peer dependencies</Title>
+
+Polaris Viz Native has peer dependencies on:
+
+- `react@^16.8.0 || ^17.0.0`
+- `react-native@>=0.58`
+
+You are responsible for providing these packages in your project. By requiring these packages as `peerDependencies` we can be sure there won't be duplicate packages included due to version mismatches.

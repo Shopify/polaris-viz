@@ -1,0 +1,1 @@
+export {usePrefersReducedMotion} from './usePrefersReducedMotion';
