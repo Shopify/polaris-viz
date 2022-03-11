@@ -7,15 +7,13 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
-### Fixed
-- Color preview square wasn't showing on `<StackedAreaChart/>` tooltip
-
 ### Changed
 
 - Extracted common logic into new `@shopify/polaris-viz-core` package.
 
 ### Fixed
 
+- Color preview square wasn't showing on `<StackedAreaChart/>` tooltip
 - `<Sparkbar />` bar shape is now configurable by the theme bar.hasRoundedCorners property
 - Bug where `showLabels=false` would cause `<SimpleBarChart >` to render with 0 opacity.
 - Bug where vertical `<SimpleNormalizedChart />` would use the wrong index for color vision interactions.
