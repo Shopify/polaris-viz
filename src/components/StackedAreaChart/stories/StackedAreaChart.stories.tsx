@@ -57,7 +57,7 @@ export default {
     },
     yAxisOptions: {
       description:
-        'An object containing the `formatYAxisLabel` function, which formats the values displayed on the yAxis and in the tooltip. [NumberLabelFormatter type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/types.ts#L114)',
+        'An object containing the `formatYAxisLabel` function, which formats the values displayed on the yAxis and in the tooltip. [NumberLabelFormatter type definition.](https://github.com/Shopify/polaris-viz/blob/main/src/types.ts#L114)',
     },
     renderTooltipContent: {
       options: Object.keys(TOOLTIP_CONTENT),
@@ -105,9 +105,8 @@ HideXAxisLabels.args = {
   xAxisOptions: {...defaultProps.xAxisOptions, hide: true},
 };
 
-export const OverwrittenSeriesColors: Story<StackedAreaChartProps> = Template.bind(
-  {},
-);
+export const OverwrittenSeriesColors: Story<StackedAreaChartProps> =
+  Template.bind({});
 OverwrittenSeriesColors.args = {
   ...defaultProps,
   xAxisOptions: {

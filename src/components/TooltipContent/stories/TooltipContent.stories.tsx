@@ -25,7 +25,7 @@ export default {
   argTypes: {
     data: {
       description:
-        'The data and corresponding color displayed in the tooltip. [TooltipData type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/TooltipContent/TooltipContent.tsx#L8)',
+        'The data and corresponding color displayed in the tooltip. [TooltipData type definition.](https://github.com/Shopify/polaris-viz/blob/main/src/components/TooltipContent/TooltipContent.tsx#L8)',
     },
     title: {description: 'An optional title to display on the tooltip.'},
     total: {description: 'An optional total to display on the tooltip.'},
