@@ -1,4 +1,4 @@
-// Inspired by: https://github.com/Shopify/web/blob/master/.storybook/theme.ts
+// Inspired by: https://github.com/Shopify/web/blob/main/.storybook/theme.ts
 import {create} from '@storybook/theming';
 
 import logo from './polaris-viz-logo.svg';

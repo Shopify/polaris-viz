@@ -24,7 +24,7 @@ export default {
   argTypes: {
     data: {
       description:
-        'The data to display in the tooltip. [TooltipData type definition.](https://github.com/Shopify/polaris-viz/blob/master/src/components/LineChart/types.ts#L20)',
+        'The data to display in the tooltip. [TooltipData type definition.](https://github.com/Shopify/polaris-viz/blob/main/src/components/LineChart/types.ts#L20)',
     },
   },
 } as Meta;

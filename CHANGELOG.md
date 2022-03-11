@@ -843,11 +843,11 @@ It is not advised to use this version -- stick to `0.16.1` or wait for `0.17.1` 
 
 ### Changed
 
-- Removed the accessibilityLabel from [`<StackedAreaChart/>`](https://github.com/Shopify/polaris-viz/blob/master/src/)
+- Removed the accessibilityLabel from [`<StackedAreaChart/>`](https://github.com/Shopify/polaris-viz/blob/main/src/)
 
 ### Added
 
-- `skipLinkText` prop to [`<StackedAreaChart/>`](https://github.com/Shopify/polaris-viz/blob/master/src/)
+- `skipLinkText` prop to [`<StackedAreaChart/>`](https://github.com/Shopify/polaris-viz/blob/main/src/)
 
 ### Fixed
 

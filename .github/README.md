@@ -239,4 +239,4 @@ Pull requests are welcome. See the <a href="/CONTRIBUTING.md">contribution guide
   <h3>Licenses</h3>
 </a>
 
-- Source code is under a [custom license](https://github.com/Shopify/polaris-viz/blob/master/LICENSE.md) based on MIT. The license restricts Polaris Viz usage to applications that integrate or interoperate with Shopify software or services, with additional restrictions for external, stand-alone applications.
+- Source code is under a [custom license](https://github.com/Shopify/polaris-viz/blob/main/LICENSE.md) based on MIT. The license restricts Polaris Viz usage to applications that integrate or interoperate with Shopify software or services, with additional restrictions for external, stand-alone applications.
