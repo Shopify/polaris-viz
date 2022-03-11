@@ -7,6 +7,9 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Fixed
+- Color preview square wasn't showing on `<StackedAreaChart/>` tooltip
+
 ### Changed
 
 - Extracted common logic into new `@shopify/polaris-viz-core` package.
