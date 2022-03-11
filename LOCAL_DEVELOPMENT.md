@@ -36,6 +36,15 @@ Lint all files
 - **`yarn version-bump`:**
 Create a new release and tag. Does not push to github. Save to use for testing without pushing.
 
+<br />
+
+### Dependency management
+
+Due to the monorepo setup Polaris Viz now has an additional `package.json` in the root on top of the individual `package.json` files of the libraries.
+
+Add new dependencies to whichever library requires them. For example: When adding a new dependency to `@shopify/polaris-viz` run `yarn add @some/library` (or `yarn add @some/library --dev` respectively) as you usually would while in the `packages/polaris-viz` directory.
+
+The root `package.json` merely contains `devDependencies` that are needed to build all libraries successfully when running `yarn build`. Any runtime libraries need to be added to the individual packages.
 
 ### Developing in React Native
 
