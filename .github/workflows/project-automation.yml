@@ -10,7 +10,7 @@ on:
       - opened
 
 jobs:
-  issue-tagging-job-analytics-standard:
+  issue-tagging-job-polaris-viz:
     runs-on: ubuntu-latest
     name: Assign sub-issues with parents label and project
     steps:
@@ -18,7 +18,7 @@ jobs:
         with:
           repository: Shopify/analytical-standards-github-actions
           ref: v1.7
-          token: ${{ secrets.AS_ACTION_PAT }} # stored in GitHub secrets
+          token: ${{ secrets.PV_ACTION_PAT }} # stored in GitHub secrets
           path: .github/actions/analytical-standards-github-actions
       - name: 'Label issue if parent contains "VizX" label'
         id: issue_labelling
@@ -31,7 +31,7 @@ jobs:
           stories-label: "Story"
         env:
           GRAPHQL_API_BASE: "https://api.github.com"
-          PAT_TOKEN: ${{ secrets.AS_ACTION_PAT }}
+          PAT_TOKEN: ${{ secrets.PV_ACTION_PAT }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Get the action result
         run: echo "AutoLabel Job success ${{ steps.issue_labelling.outputs.success }}"
@@ -39,7 +39,7 @@ jobs:
         id: project_next_move
         uses: ./.github/actions/analytical-standards-github-actions/issue-to-project
         with:
-          project-label: "Analytical Standards"
+          project-label: "polaris-viz"
           project-next-number: 3602
           organization: "Shopify"
           issue-id: ${{ github.event.issue.number }}
@@ -48,7 +48,7 @@ jobs:
           stories-label: "Story"
         env:
           GRAPHQL_API_BASE: "https://api.github.com"
-          PAT_TOKEN: ${{ secrets.AS_ACTION_PAT }}
+          PAT_TOKEN: ${{ secrets.PV_ACTION_PAT }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # Use the output from the project move step
       - name: Get the move result
@@ -60,15 +60,15 @@ jobs:
         id: issue_templating
         uses: ./.github/actions/analytical-standards-github-actions/issue-templating
         with:
-          project-label: "Analytical Standards"
-          stories-label: "Story"
+          project-label: "polaris-viz"
+          stories-label: "story"
           base-path: './.github/actions/analytical-standards-github-actions/issue-templating'
-          project-next-number: 1908
+          project-next-number: 3602
           issue-id: ${{ github.event.issue.number }}
           repo-name: ${{ github.event.repository.name }}
           repo-owner: ${{ github.event.repository.owner.login }}
           organization: "Shopify"
         env:
           GRAPHQL_API_BASE: 'https://api.github.com'
-          PAT_TOKEN: ${{ secrets.KENNY_PAT }}
+          PAT_TOKEN: ${{ secrets.PV_ACTION_PAT }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
