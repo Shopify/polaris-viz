@@ -203,7 +203,7 @@ export function Chart({
         title,
       });
     },
-    [data, xAxisLabels, renderTooltipContent],
+    [data, xAxisLabels, renderTooltipContent, seriesColors],
   );
 
   const lineGenerator = useMemo(() => {
