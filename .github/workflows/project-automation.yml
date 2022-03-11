@@ -20,11 +20,11 @@ jobs:
           ref: v1.7
           token: ${{ secrets.PV_ACTION_PAT }} # stored in GitHub secrets
           path: .github/actions/analytical-standards-github-actions
-      - name: 'Label issue if parent contains "VizX" label'
+      - name: 'Label issue if parent contains "polaris-viz" label'
         id: issue_labelling
         uses: ./.github/actions/analytical-standards-github-actions/issue-labelling
         with:
-          project-label: "VizX"
+          project-label: "polaris-viz"
           issue-id: ${{ github.event.issue.number }}
           repo-name: ${{ github.event.repository.name }}
           repo-owner: ${{ github.event.repository.owner.login }}
