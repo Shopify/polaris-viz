@@ -176,14 +176,18 @@ export function Chart({
   const getTooltipMarkup = useCallback(
     (index: number) => {
       const content = data.reduce<RenderTooltipContentData['data']>(
-        function removeNullsAndFormatData(tooltipData, {name, color, data}) {
+        function removeNullsAndFormatData(
+          tooltipData,
+          {name, color, data},
+          currentIndex,
+        ) {
           const {value} = data[index];
           if (value == null) {
             return tooltipData;
           }
 
           tooltipData.push({
-            color: color!,
+            color: color || seriesColors[currentIndex],
             label: name ?? '',
             value,
           });
