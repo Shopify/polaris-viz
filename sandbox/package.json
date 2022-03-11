@@ -1,6 +1,6 @@
 {
   "name": "sandbox",
-  "version": "1.0.0-monorepo-beta.1.6",
+  "version": "1.0.0-monorepo-beta.1.10",
   "private": true,
   "main": "index.js",
   "dependencies": {
