@@ -6,4 +6,4 @@ deploy:
   pre:
     - yarn run build
   override:
-    - yarn run lerna publish from-package --dist-tag beta --yes
+    - yarn run lerna publish from-package --yes
