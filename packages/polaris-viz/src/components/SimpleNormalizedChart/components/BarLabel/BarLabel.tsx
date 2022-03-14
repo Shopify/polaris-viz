@@ -1,6 +1,6 @@
 import React from 'react';
 import {isGradientType} from '@shopify/polaris-viz-core';
-import type {Color} from '@shopify/polaris-viz-core';
+import type {Color, Legend, Direction} from '@shopify/polaris-viz-core';
 
 import {COLOR_VISION_SINGLE_ITEM} from '../../../../constants';
 import {
@@ -8,7 +8,6 @@ import {
   getColorVisionEventAttrs,
 } from '../../../../hooks';
 import {createCSSGradient, classNames} from '../../../../utilities';
-import type {Direction, Legend} from '../../../../types';
 import {
   ComparisonMetric,
   ComparisonMetricProps,

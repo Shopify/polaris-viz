@@ -1,7 +1,8 @@
 import React, {useEffect, useRef, useState, ReactNode} from 'react';
 import {useSpring, animated} from '@react-spring/web';
+import type {Dimensions} from '@shopify/polaris-viz-core';
 
-import type {Dimensions, Margin} from '../../../types';
+import type {Margin} from '../../../types';
 import styles from '../TooltipContainer.scss';
 import type {TooltipPositionOffset} from '../types';
 import {getAlteredVerticalBarPosition} from '../utilities';

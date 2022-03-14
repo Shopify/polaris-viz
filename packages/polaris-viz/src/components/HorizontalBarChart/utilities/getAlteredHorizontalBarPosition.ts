@@ -1,4 +1,5 @@
-import type {Dimensions} from '../../../types';
+import type {Dimensions} from '@shopify/polaris-viz-core';
+
 import {HORIZONTAL_GROUP_LABEL_HEIGHT} from '../../../constants';
 import {
   AlteredPositionProps,

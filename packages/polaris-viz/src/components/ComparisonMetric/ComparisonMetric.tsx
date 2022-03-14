@@ -1,6 +1,5 @@
 import React from 'react';
-
-import type {Legend} from '../../types';
+import type {Legend} from '@shopify/polaris-viz-core';
 
 import styles from './ComparisonMetric.scss';
 import {UpChevron, DownChevron} from './components';

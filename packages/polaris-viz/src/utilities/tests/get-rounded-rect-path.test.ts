@@ -1,5 +1,6 @@
+import {RoundedBorder} from '@shopify/polaris-viz-core';
+
 import {DEFAULT_BORDER_RADIUS} from '../../constants';
-import {RoundedBorder} from '../../types';
 import {
   keepValuePositive,
   getBorderRadius,

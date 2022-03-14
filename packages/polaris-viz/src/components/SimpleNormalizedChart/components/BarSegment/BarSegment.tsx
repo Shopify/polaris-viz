@@ -1,7 +1,7 @@
 import React from 'react';
 import {animated, useSpring} from '@react-spring/web';
 import {isGradientType} from '@shopify/polaris-viz-core';
-import type {Color} from '@shopify/polaris-viz-core';
+import type {Color, Direction} from '@shopify/polaris-viz-core';
 
 import {
   BARS_TRANSITION_CONFIG,
@@ -9,7 +9,6 @@ import {
 } from '../../../../constants';
 import {createCSSGradient, classNames} from '../../../../utilities';
 import type {Size} from '../../types';
-import type {Direction} from '../../../../types';
 import {
   getColorVisionEventAttrs,
   getOpacityStylesForActive,

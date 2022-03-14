@@ -1,6 +1,7 @@
 import {animated, useSpring} from '@react-spring/web';
 import React, {Dispatch, SetStateAction} from 'react';
 import {STACKED_BAR_GAP} from '@shopify/polaris-viz-core';
+import type {RoundedBorder} from '@shopify/polaris-viz-core';
 
 import {COLOR_VISION_SINGLE_ITEM} from '../../../../../constants';
 import {
@@ -8,7 +9,6 @@ import {
   getOpacityStylesForActive,
 } from '../../../../../hooks';
 import {getRoundedRectPath} from '../../../../../utilities';
-import type {RoundedBorder} from '../../../../../types';
 
 export interface StackedBarProps {
   activeBarIndex: number;
