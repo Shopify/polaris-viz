@@ -1,6 +1,10 @@
 import React, {ReactNode, useCallback, useMemo, useState} from 'react';
 import {uniqueId, DataType} from '@shopify/polaris-viz-core';
-import type {DataSeries, ChartType} from '@shopify/polaris-viz-core';
+import type {
+  DataSeries,
+  ChartType,
+  Dimensions,
+} from '@shopify/polaris-viz-core';
 
 import {useLegend, LegendContainer} from '../LegendContainer';
 import type {HorizontalTransitionStyle} from '../../hooks/useHorizontalTransitions';
@@ -24,7 +28,6 @@ import {
   COLOR_VISION_SINGLE_ITEM,
 } from '../../constants';
 import {eventPointNative, formatDataIntoGroups} from '../../utilities';
-import type {Dimensions} from '../../types';
 import {
   TOOLTIP_POSITION_DEFAULT_RETURN,
   TooltipPosition,

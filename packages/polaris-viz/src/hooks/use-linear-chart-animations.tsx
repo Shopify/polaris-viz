@@ -1,10 +1,9 @@
 import {useCallback, useMemo} from 'react';
 import type {Line} from 'd3-shape';
 import {useSprings} from '@react-spring/web';
-import type {DataSeries} from '@shopify/polaris-viz-core';
+import type {DataSeries, DataPoint} from '@shopify/polaris-viz-core';
 
 import {getPathLength, getPointAtLength} from '../utilities';
-import type {DataPoint} from '../types';
 
 export const SPRING_CONFIG = {
   friction: 5,

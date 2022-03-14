@@ -1,6 +1,5 @@
 import {useLayoutEffect, useState} from 'react';
-
-import type {Dimensions} from '../types';
+import type {Dimensions} from '@shopify/polaris-viz-core';
 
 export function usePrintResizing({
   ref,

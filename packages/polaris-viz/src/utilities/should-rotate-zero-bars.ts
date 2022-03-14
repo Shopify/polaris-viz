@@ -1,4 +1,4 @@
-import type {DataPoint} from '../types';
+import type {DataPoint} from '@shopify/polaris-viz-core';
 
 export function shouldRotateZeroBars(data: DataPoint[]) {
   let allValuesZero = true;

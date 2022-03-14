@@ -41,4 +41,12 @@ export {
   createTheme,
 } from '@shopify/polaris-viz-core';
 
-export type {GradientStop, DataPoint} from './types';
+export type {
+  Color,
+  BarTheme,
+  DataSeries,
+  Theme,
+  PartialTheme,
+  GradientStop,
+  DataPoint,
+} from '@shopify/polaris-viz-core';

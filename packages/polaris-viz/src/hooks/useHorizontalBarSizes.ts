@@ -1,4 +1,5 @@
 import {useMemo} from 'react';
+import type {Dimensions} from '@shopify/polaris-viz-core';
 
 import {clamp, getTextHeight} from '../utilities';
 import {
@@ -10,7 +11,7 @@ import {
   LINE_HEIGHT,
   MAX_X_AXIS_LINES,
 } from '../constants';
-import type {Dimensions, LabelFormatter} from '../types';
+import type {LabelFormatter} from '../types';
 
 const MIN_BAR_HEIGHT = 6;
 

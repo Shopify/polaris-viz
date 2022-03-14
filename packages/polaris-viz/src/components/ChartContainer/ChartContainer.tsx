@@ -8,8 +8,8 @@ import React, {
 } from 'react';
 import {useDebouncedCallback} from 'use-debounce/lib';
 import {uniqueId} from '@shopify/polaris-viz-core';
+import type {Dimensions} from '@shopify/polaris-viz-core';
 
-import type {Dimensions} from '../../types';
 import {useResizeObserver, useTheme, usePrintResizing} from '../../hooks';
 
 import styles from './ChartContainer.scss';

@@ -3,9 +3,9 @@ import {
   LinearGradientWithStops,
   isGradientType,
 } from '@shopify/polaris-viz-core';
-import type {Color} from '@shopify/polaris-viz-core';
+import type {Color, GradientStop, Direction} from '@shopify/polaris-viz-core';
 
-import type {Direction, GradientStop, GradientUnits} from '../../../types';
+import type {GradientUnits} from '../../../types';
 
 const GRADIENT_ID = 'grad';
 

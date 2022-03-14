@@ -1,8 +1,8 @@
 import React from 'react';
 import {scaleLinear} from 'd3-scale';
 import {useSparkLine} from '@shopify/polaris-viz-core';
+import type {Dimensions} from '@shopify/polaris-viz-core';
 
-import type {Dimensions} from '../../types';
 import {useThemeSeriesColors} from '../../hooks/use-theme-series-colors';
 import {useTheme} from '../../hooks';
 import {XMLNS} from '../../constants';

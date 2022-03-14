@@ -1,6 +1,7 @@
 import React, {useMemo, useState} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {animated, useSpring} from '@react-spring/web';
+import {RoundedBorder} from '@shopify/polaris-viz-core';
 
 import {useWatchColorVisionEvents} from '../../../hooks';
 import {getBarId} from '../../../utilities';
@@ -9,7 +10,7 @@ import {
   COLOR_VISION_SINGLE_ITEM,
   HORIZONTAL_GROUP_LABEL_HEIGHT,
 } from '../../../constants';
-import {FormattedStackedSeries, RoundedBorder} from '../../../types';
+import type {FormattedStackedSeries} from '../../../types';
 import {getGradientDefId} from '..';
 
 import {StackedBar} from './components';
