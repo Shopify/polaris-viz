@@ -21,7 +21,6 @@
   },
   "files": [
     "build/",
-    "locales",
     "!build/ts/**/*.tsbuildinfo",
     "!build/ts/**/tests/",
     "!build/ts/**/documentation/",
