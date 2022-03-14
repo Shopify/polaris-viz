@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {sum} from 'd3-array';
 import {scaleLinear} from 'd3-scale';
+import type {DataPoint, Direction} from '@shopify/polaris-viz-core';
 
 import {COLOR_VISION_SINGLE_ITEM} from '../../constants';
 import type {ComparisonMetricProps} from '../ComparisonMetric';
@@ -12,7 +13,7 @@ import {
   useWatchColorVisionEvents,
 } from '../../hooks';
 import {classNames} from '../../utilities';
-import type {DataPoint, Direction, LabelFormatter} from '../../types';
+import type {LabelFormatter} from '../../types';
 
 import {BarSegment, BarLabel} from './components';
 import type {Size, LabelPosition} from './types';

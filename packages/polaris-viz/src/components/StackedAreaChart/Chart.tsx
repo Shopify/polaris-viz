@@ -1,7 +1,12 @@
 import React, {useState, useMemo, useRef, useCallback} from 'react';
 import {line, stack, stackOffsetNone, stackOrderReverse} from 'd3-shape';
-import type {DataSeries} from '@shopify/polaris-viz-core';
-import {uniqueId, curveStepRounded, DataType} from '@shopify/polaris-viz-core';
+import type {DataSeries, DataPoint} from '@shopify/polaris-viz-core';
+import {
+  uniqueId,
+  curveStepRounded,
+  DataType,
+  Dimensions,
+} from '@shopify/polaris-viz-core';
 
 import {LegendContainer, useLegend} from '../LegendContainer';
 import {
@@ -37,12 +42,7 @@ import {Crosshair} from '../Crosshair';
 import {LinearXAxis} from '../LinearXAxis';
 import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
 import {HorizontalGridLines} from '../HorizontalGridLines';
-import type {
-  StringLabelFormatter,
-  NumberLabelFormatter,
-  Dimensions,
-  DataPoint,
-} from '../../types';
+import type {StringLabelFormatter, NumberLabelFormatter} from '../../types';
 
 import {Spacing} from './constants';
 import {useYScale} from './hooks';

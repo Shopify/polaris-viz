@@ -196,3 +196,13 @@ export interface SparkBarChartProps {
   theme?: string;
   dimensions?: Dimensions;
 }
+
+export enum RoundedBorder {
+  None,
+  Top,
+  Right,
+  Bottom,
+  Left,
+}
+
+export type Direction = 'horizontal' | 'vertical';

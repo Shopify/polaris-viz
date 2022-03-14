@@ -8,9 +8,9 @@ import {
   isGradientType,
   DataSeries,
 } from '@shopify/polaris-viz-core';
+import type {Theme, GradientStop, DataPoint} from '@shopify/polaris-viz-core';
 
 import {classNames} from '../../../../utilities';
-import type {DataPoint, GradientStop, Theme} from '../../../../types';
 import {usePrefersReducedMotion} from '../../../../hooks';
 import {Area} from '../Area';
 

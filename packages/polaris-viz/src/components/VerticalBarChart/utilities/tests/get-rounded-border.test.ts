@@ -1,6 +1,7 @@
 /* eslint-disable jest/expect-expect */
 
-import {RoundedBorder} from '../../../../types';
+import {RoundedBorder} from '@shopify/polaris-viz-core';
+
 import {getRoundedBorderForStackedValues} from '../get-rounded-border-for-stacked-values';
 
 describe('getRoundedBorderForStackedValues()', () => {

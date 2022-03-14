@@ -1,11 +1,11 @@
 import React, {useRef} from 'react';
 import {uniqueId, ChartType, DataSeries} from '@shopify/polaris-viz-core';
+import type {Direction} from '@shopify/polaris-viz-core';
 
 import {TooltipContent} from '../TooltipContent';
 import {SkipLink} from '../SkipLink';
 import {normalizeData} from '../../utilities';
 import {HorizontalBarChart} from '../HorizontalBarChart';
-import type {Direction} from '../../types';
 import {VerticalBarChart} from '../VerticalBarChart';
 import type {
   RenderTooltipContentData,

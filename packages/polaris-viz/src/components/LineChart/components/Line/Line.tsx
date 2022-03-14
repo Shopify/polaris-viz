@@ -1,9 +1,8 @@
 import React, {ReactNode} from 'react';
 import type {Line as D3Line} from 'd3-shape';
 import {useSpring, animated} from '@react-spring/web';
-import type {DataSeries, LineStyle} from '@shopify/polaris-viz-core';
+import type {DataSeries, LineStyle, DataPoint} from '@shopify/polaris-viz-core';
 
-import type {DataPoint} from '../../../../types';
 import {
   getColorVisionEventAttrs,
   getOpacityStylesForActive,

@@ -1,4 +1,4 @@
-import type {GradientStop} from 'types';
+import type {GradientStop} from '@shopify/polaris-viz-core';
 
 export const createCSSGradient = (gradient: GradientStop[], angle: number) => {
   const gradientStops = gradient.map(

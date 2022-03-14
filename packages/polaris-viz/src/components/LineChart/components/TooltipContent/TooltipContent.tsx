@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import type {Color} from '@shopify/polaris-viz-core';
-import type {LineStyle} from 'types';
+import type {Color, LineStyle} from '@shopify/polaris-viz-core';
 
 import {COLOR_VISION_SINGLE_ITEM} from '../../../../constants';
 import {getSeriesColors} from '../../../../hooks/use-theme-series-colors';

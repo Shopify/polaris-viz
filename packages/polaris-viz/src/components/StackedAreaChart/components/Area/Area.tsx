@@ -5,13 +5,13 @@ import {
   LinearGradientWithStops,
   isGradientType,
 } from '@shopify/polaris-viz-core';
-import type {Color} from '@shopify/polaris-viz-core';
+import type {Color, Theme, GradientStop} from '@shopify/polaris-viz-core';
 
 import {
   getColorVisionEventAttrs,
   getOpacityStylesForActive,
 } from '../../../../hooks';
-import type {GradientStop, StackedSeries, Theme} from '../../../../types';
+import type {StackedSeries} from '../../../../types';
 import {
   COLOR_VISION_SINGLE_ITEM,
   LINES_LOAD_ANIMATION_CONFIG,

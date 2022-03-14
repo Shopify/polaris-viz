@@ -7,6 +7,7 @@ import {
   isGradientType,
   DataType,
 } from '@shopify/polaris-viz-core';
+import type {DataPoint, Dimensions} from '@shopify/polaris-viz-core';
 
 import {useLegend, LegendContainer} from '../LegendContainer';
 import {
@@ -40,7 +41,6 @@ import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
 import {LinearXAxis} from '../LinearXAxis';
 import {YAxis} from '../YAxis';
 import {Crosshair} from '../Crosshair';
-import type {DataPoint, Dimensions} from '../../types';
 import {HorizontalGridLines} from '../HorizontalGridLines';
 
 import {Points, Line, GradientArea} from './components';

@@ -1,5 +1,5 @@
 import React from 'react';
-import type {Direction} from 'types';
+import type {Direction} from '@shopify/polaris-viz-core';
 
 import {classNames, clamp} from '../../../../utilities';
 import type {Annotation} from '../../types';

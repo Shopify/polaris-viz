@@ -1,4 +1,4 @@
-import {RoundedBorder} from '../../../types';
+import {RoundedBorder} from '@shopify/polaris-viz-core';
 
 export function getRoundedBorderForStackedValues(
   values: number[],

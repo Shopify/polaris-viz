@@ -86,7 +86,7 @@ export {
   PolarisVizProvider,
 } from './components';
 export type {PolarisVizProviderProps} from './components';
-export {DataType} from './types';
+export {DataType, RoundedBorder} from './types';
 
 export type {
   ActiveTooltip,
@@ -103,4 +103,6 @@ export type {
   SvgComponents,
   Theme,
   DataPoint,
+  Legend,
+  Direction,
 } from './types';

@@ -1,5 +1,7 @@
+import type {Dimensions} from '@shopify/polaris-viz-core';
+
 import type {TooltipPositionOffset} from '../TooltipWrapper';
-import type {Dimensions, Margin} from '../../types';
+import type {Margin} from '../../types';
 
 import {TooltipHorizontalOffset, TooltipVerticalOffset} from './types';
 
