@@ -28,7 +28,7 @@ import {ComponentContainer, Title, SampleBarChart} from './components';
   style={{
     display: 'grid',
     gridGap: '20px',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
   }}
 >
   <ComponentContainer
@@ -40,12 +40,7 @@ import {ComponentContainer, Title, SampleBarChart} from './components';
       </>
     }
     theme="Default"
-    center
-    chart={
-      <div style={{width: '250px', height: '140px'}}>
-        <SampleBarChart seriesLength={2} />
-      </div>
-    }
+    chart={<SampleBarChart seriesLength={2} />}
     codeSample={'<BarChart />'}
   />
   <ComponentContainer
@@ -57,12 +52,7 @@ import {ComponentContainer, Title, SampleBarChart} from './components';
       </>
     }
     theme="Light"
-    center
-    chart={
-      <div style={{width: '250px', height: '140px'}}>
-        <SampleBarChart seriesLength={2} theme="Light" />
-      </div>
-    }
+    chart={<SampleBarChart seriesLength={2} theme="Light" />}
     codeSample={"<BarChart theme='Light'/>"}
   />
   <ComponentContainer
@@ -74,12 +64,7 @@ import {ComponentContainer, Title, SampleBarChart} from './components';
       </>
     }
     theme="Light"
-    center
-    chart={
-      <div style={{width: '250px', height: '140px'}}>
-        <SampleBarChart seriesLength={2} theme="Print" />
-      </div>
-    }
+    chart={<SampleBarChart seriesLength={2} theme="Print" />}
     codeSample={"<BarChart theme='Print'/>"}
   />
 </div>

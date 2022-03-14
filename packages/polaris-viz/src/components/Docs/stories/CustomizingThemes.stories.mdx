@@ -6,6 +6,7 @@ import {
   Title,
   SampleSparkLineChart,
   SampleLineChart,
+  SampleBarChart,
 } from './components';
 import {SPARKLINE_SERIES} from '../utilities';
 
@@ -120,21 +121,11 @@ export const App = () => {
     }}
   >
   <ComponentContainer
-    center
-    chart={
-      <div style={{width: '350px', height: '140px'}}>
-        <SampleLineChart />
-      </div>
-    }
+    chart={<SampleBarChart seriesLength={1}/>}
     codeSample={"<BarChart series={...}/>"}
   />
   <ComponentContainer
-    center
-    chart={
-      <div style={{width: '350px', height: '140px'}}>
-        <SampleLineChart />
-      </div>
-    }
+    chart={<SampleLineChart />}
     codeSample={"<LineChart series={...}/>"}
   />
 
