@@ -102,7 +102,7 @@ export interface SeriesColors {
   fromFiveToSeven: Color[];
   all: Color[];
 }
-export interface Legend {
+export interface LegendTheme {
   labelColor: string;
   valueColor: string;
   trendIndicator: {positive: string; negative: string; neutral: string};
@@ -116,7 +116,7 @@ export interface PartialTheme {
   xAxis?: Partial<XAxisTheme>;
   yAxis?: Partial<YAxisTheme>;
   crossHair?: Partial<CrossHairTheme>;
-  legend?: Partial<Legend>;
+  legend?: Partial<LegendTheme>;
   seriesColors?: Partial<SeriesColors>;
   tooltip?: Partial<TooltipTheme>;
 }
@@ -129,7 +129,7 @@ export interface Theme {
   yAxis: YAxisTheme;
   line: LineTheme;
   crossHair: CrossHairTheme;
-  legend: Legend;
+  legend: LegendTheme;
   seriesColors: SeriesColors;
   tooltip: TooltipTheme;
 }
