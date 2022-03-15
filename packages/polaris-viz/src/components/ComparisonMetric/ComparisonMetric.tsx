@@ -1,5 +1,5 @@
 import React from 'react';
-import type {Legend} from '@shopify/polaris-viz-core';
+import type {LegendTheme} from '@shopify/polaris-viz-core';
 
 import styles from './ComparisonMetric.scss';
 import {UpChevron, DownChevron} from './components';
@@ -8,7 +8,7 @@ export interface ComparisonMetricProps {
   metric: string;
   trend: 'positive' | 'negative' | 'neutral';
   accessibilityLabel: string;
-  theme: Legend;
+  theme: LegendTheme;
   dataIndex?: number;
 }
 

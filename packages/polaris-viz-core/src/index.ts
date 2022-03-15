@@ -103,6 +103,6 @@ export type {
   SvgComponents,
   Theme,
   DataPoint,
-  Legend,
+  LegendTheme,
   Direction,
 } from './types';
