@@ -29,27 +29,11 @@ import {ComponentContainer, Title, SampleLabelsBarChart} from './components';
 <Title>🏷 Labels</Title>
 
 <p>
-  When we were building our Polaris Viz Figma Plugin, we ran into an issue where
-  our labels would not render because we used the <code>foreignObject</code> tag
-  to render the text. This was because the SVG renderer was not able to render
-  the text inside of the <code>foreignObject</code> element.
-</p>
-
-<p>
-  We relied on <code>foreignObject</code> because it allowed us to use css to
-  style the text which meant we got features like truncation for free.
-</p>
-
-<Title type="h2">How does it work?</Title>
-
-<p>
   A label consists of a container and a text element. This text element can
   either be a single line, or up to 3 lines of text from the string.
 </p>
 
-<p>
-  <strong>Basic truncation</strong>
-</p>
+<Title type="h3">Basic truncation</Title>
 
 <SampleLabelsBarChart />
 
@@ -66,9 +50,7 @@ import {ComponentContainer, Title, SampleLabelsBarChart} from './components';
   other words to display fully.
 </p>
 
-<p>
-  <strong>Diagonal labels</strong>
-</p>
+<Title type="h3">Diagonal labels</Title>
 
 <SampleLabelsBarChart width={500} />
 
@@ -81,9 +63,7 @@ import {ComponentContainer, Title, SampleLabelsBarChart} from './components';
   Diagonal labels will only display a single line and uses end-line truncation.
 </p>
 
-<p>
-  <strong>Vertical labels</strong>
-</p>
+<Title type="h3">Vertical labels</Title>
 
 <SampleLabelsBarChart width={400} />
 
@@ -119,7 +99,12 @@ import {ComponentContainer, Title, SampleLabelsBarChart} from './components';
 
 <p>
   When <code>xAxisOptions.useMinimalLabels</code> is set to <code>true</code>,
-  we will only include the first, last and middle labels.
+  we will only include the first, last and middle* labels.
+</p>
+
+<p>
+  * We will only show the middle label if there's an odd number of bars or if
+  the number of labels is greater than 10.
 </p>
 
 </PolarisVizProvider>
