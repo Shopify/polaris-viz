@@ -33,7 +33,7 @@ const MOCK_PROPS: TextLineProps = {
 };
 
 describe('<TextLine />', () => {
-  it('renders a lines of text', () => {
+  it('renders lines of text', () => {
     const content = mount(
       <svg>
         <TextLine {...MOCK_PROPS} />

@@ -30,7 +30,10 @@ describe('<HorizontalBarChartXAxisLabels />', () => {
       </svg>,
     );
 
-    expect(content).toContainReactComponentTimes(TextLine, 3);
+    expect(content).toContainReactComponentTimes(
+      TextLine,
+      MOCK_PROPS.labels.length,
+    );
   });
 
   it('applies transform to group', () => {

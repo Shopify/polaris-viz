@@ -30,7 +30,10 @@ describe('<BarChartXAxisLabels />', () => {
       </svg>,
     );
 
-    expect(content).toContainReactComponentTimes(TextLine, 3);
+    expect(content).toContainReactComponentTimes(
+      TextLine,
+      MOCK_PROPS.labels.length,
+    );
   });
 
   it('applies transform to group', () => {
@@ -46,7 +49,7 @@ describe('<BarChartXAxisLabels />', () => {
   });
 
   describe('reducedLabelIndexes', () => {
-    it('skips <TextLine /> when index matches', () => {
+    it('uses reducedLabelIndexes when they are provided', () => {
       const content = mount(
         <svg>
           <BarChartXAxisLabels {...MOCK_PROPS} reducedLabelIndexes={[0, 2]} />

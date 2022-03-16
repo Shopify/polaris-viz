@@ -42,7 +42,7 @@ describe('getWidestTruncatedWidth()', () => {
     expect(getWidestTruncatedWidth([])).toStrictEqual(0);
   });
 
-  it('returns widest label', () => {
+  it('returns widest label width', () => {
     expect(getWidestTruncatedWidth(DATA)).toStrictEqual(156);
   });
 });

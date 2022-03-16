@@ -22,7 +22,7 @@ describe('endLineTruncate()', () => {
   it(`calls truncateSingleLine when targetHeight is less than ${LINE_HEIGHT}`, () => {
     endLineTruncate({
       ...MOCK_DATA,
-      targetHeight: 10,
+      targetHeight: LINE_HEIGHT - 1,
     });
 
     expect(truncateSingleLine).toHaveBeenCalled();
@@ -31,7 +31,7 @@ describe('endLineTruncate()', () => {
   it(`calls truncateLastLine when targetHeight is greater than ${LINE_HEIGHT}`, () => {
     endLineTruncate({
       ...MOCK_DATA,
-      targetHeight: 40,
+      targetHeight: LINE_HEIGHT + 1,
     });
 
     expect(truncateLastLine).toHaveBeenCalled();
