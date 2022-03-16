@@ -22,7 +22,7 @@ const LABELS = [
 ];
 
 describe('truncateLabels()', () => {
-  it('returns data for labels that do not require truncation', () => {
+  it('returns prepared labels data that does not require truncation', () => {
     expect(
       truncateLabels({
         labels: LABELS,
@@ -41,7 +41,7 @@ describe('truncateLabels()', () => {
     ]);
   });
 
-  it('returns data for labels that will end-line truncate', () => {
+  it('returns prepared labels data that will end-line truncate', () => {
     expect(
       truncateLabels({
         labels: LABELS,
@@ -60,7 +60,7 @@ describe('truncateLabels()', () => {
     ]);
   });
 
-  it('returns data for labels that will end-word truncate', () => {
+  it('returns prepared labels data that will end-word truncate', () => {
     expect(
       truncateLabels({
         labels: LABELS,
