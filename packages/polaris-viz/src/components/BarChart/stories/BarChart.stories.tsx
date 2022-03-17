@@ -137,6 +137,7 @@ export default {
   title: 'polaris-viz/Default Charts/BarChart',
   component: BarChart,
   parameters: {
+    horizontalMargin: 0,
     docs: {
       description: {
         component:

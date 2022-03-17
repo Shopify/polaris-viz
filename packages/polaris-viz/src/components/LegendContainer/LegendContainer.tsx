@@ -5,6 +5,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import {useTheme} from '@shopify/polaris-viz-core';
 
 import {DEFAULT_LEGEND_HEIGHT, LEGENDS_TOP_MARGIN} from '../../constants';
 import {useResizeObserver, useWatchColorVisionEvents} from '../../hooks';
@@ -26,6 +27,7 @@ export function LegendContainer({
   onHeightChange,
   theme,
 }: LegendContainerProps) {
+  const selectedTheme = useTheme(theme);
   const {setRef, entry} = useResizeObserver();
   const previousHeight = useRef(DEFAULT_LEGEND_HEIGHT);
   const [activeIndex, setActiveIndex] = useState(-1);
@@ -65,7 +67,9 @@ export function LegendContainer({
       className={style.Container}
       ref={setRef}
       role="list"
-      style={{marginTop: LEGENDS_TOP_MARGIN}}
+      style={{
+        margin: `${LEGENDS_TOP_MARGIN}px ${selectedTheme.grid.horizontalMargin}px 0`,
+      }}
     >
       <Legend
         activeIndex={activeIndex}

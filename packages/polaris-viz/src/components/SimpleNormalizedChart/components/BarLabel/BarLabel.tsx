@@ -1,6 +1,6 @@
 import React from 'react';
 import {isGradientType} from '@shopify/polaris-viz-core';
-import type {Color, Legend, Direction} from '@shopify/polaris-viz-core';
+import type {Color, LegendTheme, Direction} from '@shopify/polaris-viz-core';
 
 import {COLOR_VISION_SINGLE_ITEM} from '../../../../constants';
 import {
@@ -22,7 +22,7 @@ export interface Props {
   label: string;
   value: string;
   color: Color;
-  legendColors: Legend;
+  legendColors: LegendTheme;
   direction: Direction;
   labelPosition: LabelPosition;
   comparisonMetric?: Omit<ComparisonMetricProps, 'theme'> | null;
