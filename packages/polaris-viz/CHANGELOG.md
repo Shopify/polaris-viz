@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Updated
+
+- Updated `@react-spring/web` dependency to version `9.2.6`
+
 ### Added
 
 - `<LegendContainer />` now uses `grid.horizontalMargin` to match consumer spacing inside the chart container.
