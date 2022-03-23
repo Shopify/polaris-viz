@@ -42,6 +42,7 @@
     "prepublish": "in-publish && yarn run build || :",
     "prebuild": "yarn run clean",
     "postbuild": "node ./scripts/build-validate",
+    "postpublish": "node ./scripts/postpublish",
     "open:coverage": "open build/coverage/index.html",
     "test:coverage": "CI=true yarn test --coverage",
     "posttest:coverage": "yarn open:coverage"
