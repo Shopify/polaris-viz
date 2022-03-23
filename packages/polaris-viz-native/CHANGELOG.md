@@ -7,7 +7,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
-## Updated
+### Changed
 
 - Downgraded `@react-spring/native` to `9.2.6`
 

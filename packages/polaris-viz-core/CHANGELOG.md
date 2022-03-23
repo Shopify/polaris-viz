@@ -7,7 +7,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
-## Updated
+### Changed
 
 - Downgraded `@react-spring/animated` and `@react-spring/core` dependency to version `9.2.6`
 
