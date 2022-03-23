@@ -31,8 +31,8 @@
     "src": "src"
   },
   "dependencies": {
-    "@react-spring/animated": "^9.4.3",
-    "@react-spring/core": "^9.4.3",
+    "@react-spring/animated": "9.2.6",
+    "@react-spring/core": "9.2.6",
     "d3-array": "2.4.0",
     "d3-color": "1",
     "d3-path": "1",
