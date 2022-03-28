@@ -224,9 +224,7 @@ export const Default: Story<BarChartProps> = Template.bind({});
 
 Default.args = {
   data: DATA,
-  xAxisOptions: {
-    useMinimalLabels: true,
-  },
+  xAxisOptions: {},
   isAnimated: true,
   showLegend: true,
 };

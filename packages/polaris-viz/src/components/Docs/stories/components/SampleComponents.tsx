@@ -55,7 +55,9 @@ export const SampleSparkLineChart = ({theme} = {theme: 'Default'}) => {
   );
 };
 
-export const SampleLineChart = ({theme} = {theme: 'Default'}) => {
+export const SampleLineChart = (
+  {theme, showLegend = true} = {theme: 'Default'},
+) => {
   return (
     <LineChart
       theme={theme}
@@ -75,25 +77,33 @@ export const SampleLineChart = ({theme} = {theme: 'Default'}) => {
       xAxisOptions={{
         xAxisLabels: ['Jan. 1', 'Jan. 2', 'Jan. 3', 'Jan. 4', 'Jan. 5'],
       }}
+      showLegend={showLegend}
     />
   );
 };
 
 export const SampleBarChart = (
-  {theme, seriesLength = 3} = {theme: 'Default'},
+  {theme, seriesLength = 3, showLegend = true} = {theme: 'Default'},
 ) => {
-  return <BarChart data={generateMultipleSeries(seriesLength)} theme={theme} />;
+  return (
+    <BarChart
+      data={generateMultipleSeries(seriesLength)}
+      theme={theme}
+      showLegend={showLegend}
+    />
+  );
 };
 
 export const SampleStackedAreaChart = (
-  {theme, seriesLength = 3} = {theme: 'Default'},
+  {theme, seriesLength = 3, showLegend = true} = {theme: 'Default'},
 ) => {
   return (
     <StackedAreaChart
       data={generateMultipleSeries(seriesLength, 3)}
       xAxisOptions={{
-        labels: generateLabels(3),
+        xAxisLabels: generateLabels(3),
       }}
+      showLegend={showLegend}
       theme={theme}
     />
   );
@@ -199,6 +209,25 @@ export const SampleLegendContainer = ({theme} = {theme: 'Default'}) => {
           ]}
           onHeightChange={() => {}}
         />
+      </div>
+    </SimpleContainer>
+  );
+};
+
+export const SampleLabelsBarChart = ({width = 760}: {width: number}) => {
+  return (
+    <SimpleContainer>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          height: '100%',
+          width: '100%',
+        }}
+      >
+        <div style={{height: 200, width}}>
+          <BarChart data={generateMultipleSeries(3)} showLegend={false} />
+        </div>
       </div>
     </SimpleContainer>
   );

@@ -2,6 +2,7 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
+import {HorizontalBarChartXAxisLabels} from '../../../components/HorizontalBarChartXAxisLabels';
 import {LegendContainer} from '../../LegendContainer';
 import {
   GradientDefs,
@@ -10,7 +11,15 @@ import {
   HorizontalStackedBars,
 } from '../../shared';
 import {Chart, ChartProps} from '../Chart';
-import {XAxisLabels, VerticalGridLines} from '../components';
+import {VerticalGridLines} from '../components';
+
+jest.mock('../../Labels/utilities/get-widest-label', () => {
+  return {
+    getWidestLabel: () => {
+      return {truncatedWidth: 50};
+    },
+  };
+});
 
 const DATA: DataSeries[] = [
   {
@@ -42,8 +51,6 @@ const MOCK_PROPS: ChartProps = {
   xAxisOptions: {
     labelFormatter: (value: string) => value,
     hide: false,
-    wrapLabels: false,
-    useMinimalLabels: false,
   },
   type: 'default',
   showLegend: false,
@@ -125,7 +132,7 @@ describe('<Chart />', () => {
 
   describe('xAxisOptions', () => {
     describe('hide', () => {
-      it('renders <VerticalGridLines /> & <XAxisLabels /> when false', () => {
+      it('renders <VerticalGridLines /> when false', () => {
         const chart = mount(
           <Chart
             {...MOCK_PROPS}
@@ -138,10 +145,10 @@ describe('<Chart />', () => {
         );
 
         expect(chart).toContainReactComponent(VerticalGridLines);
-        expect(chart).toContainReactComponent(XAxisLabels);
+        expect(chart).toContainReactComponent(HorizontalBarChartXAxisLabels);
       });
 
-      it('does not render <VerticalGridLines /> & <XAxisLabels /> when true', () => {
+      it('does not render <VerticalGridLines /> when true', () => {
         const chart = mount(
           <Chart
             {...MOCK_PROPS}
@@ -154,26 +161,9 @@ describe('<Chart />', () => {
         );
 
         expect(chart).not.toContainReactComponent(VerticalGridLines);
-        expect(chart).not.toContainReactComponent(XAxisLabels);
-      });
-    });
-
-    describe('labelFormatter', () => {
-      it('renders formatted xAxisLabels', () => {
-        const chart = mount(
-          <Chart
-            {...MOCK_PROPS}
-            xAxisOptions={{
-              ...MOCK_PROPS.xAxisOptions,
-              labelFormatter: (value: string) => `${value} pickles`,
-              hide: false,
-            }}
-          />,
+        expect(chart).not.toContainReactComponent(
+          HorizontalBarChartXAxisLabels,
         );
-
-        const xAxisLabels = chart.findAll(XAxisLabels);
-
-        expect(xAxisLabels[0]).toContainReactText('0 pickles');
       });
     });
   });

@@ -40,7 +40,7 @@ const xAxisLabels = ['1', '2', '3', '4', '5', '6', '7'];
 describe('<AreaChart />', () => {
   it('renders a <Chart />', () => {
     const areaChart = mount(
-      <StackedAreaChart data={mockData} xAxisOptions={{labels: xAxisLabels}} />,
+      <StackedAreaChart data={mockData} xAxisOptions={{xAxisLabels}} />,
     );
 
     expect(areaChart).toContainReactComponent(Chart);
@@ -51,7 +51,7 @@ describe('<AreaChart />', () => {
       const areaChart = mount(
         <StackedAreaChart
           data={mockData}
-          xAxisOptions={{labels: xAxisLabels}}
+          xAxisOptions={{xAxisLabels}}
           skipLinkText="Skip chart content"
         />,
       );
@@ -65,7 +65,7 @@ describe('<AreaChart />', () => {
       const areaChart = mount(
         <StackedAreaChart
           data={mockData}
-          xAxisOptions={{labels: xAxisLabels}}
+          xAxisOptions={{xAxisLabels}}
           skipLinkText=""
         />,
       );

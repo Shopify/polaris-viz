@@ -107,7 +107,7 @@ export function WebComponents() {
             <StackedAreaChart
               isAnimated
               xAxisOptions={{
-                labels: [
+                xAxisLabels: [
                   'January',
                   'February',
                   'March',

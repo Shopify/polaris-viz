@@ -1,7 +1,8 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {YAxis, BarChartXAxis} from '../../../components';
+import {BarChartXAxisLabels} from '../../BarChartXAxisLabels';
+import {YAxis} from '../../../components';
 import {mountWithProvider, triggerSVGMouseMove} from '../../../test-utilities';
 import {HorizontalGridLines} from '../../../components/HorizontalGridLines';
 import {mockDefaultTheme} from '../../../test-utilities/mount-with-provider';
@@ -67,8 +68,6 @@ describe('Chart />', () => {
     xAxisOptions: {
       labelFormatter: jest.fn((value: string) => value.toString()),
       hide: false,
-      wrapLabels: false,
-      useMinimalLabels: false,
     },
     yAxisOptions: {
       labelFormatter: (value: number) => value.toString(),
@@ -84,19 +83,19 @@ describe('Chart />', () => {
     expect(multiSeriesBarChart).toContainReactComponent('svg');
   });
 
-  it('renders an BarChartXAxis', () => {
+  it('renders an Labels', () => {
     const chart = mount(<Chart {...mockProps} />);
-    expect(chart).toContainReactComponent(BarChartXAxis);
+    expect(chart).toContainReactComponent(BarChartXAxisLabels);
   });
 
-  it('does not render BarChartXAxis if it is hidden', () => {
+  it('does not render Labels if it is hidden', () => {
     const chart = mount(
       <Chart
         {...mockProps}
         xAxisOptions={{...mockProps.xAxisOptions, hide: true}}
       />,
     );
-    expect(chart).not.toContainReactComponent(BarChartXAxis);
+    expect(chart).not.toContainReactComponent(BarChartXAxisLabels);
   });
 
   it('renders an yAxis', () => {
@@ -115,9 +114,9 @@ describe('Chart />', () => {
       />,
     );
 
-    const xAxis = chart.find(BarChartXAxis);
+    const xAxis = chart.find(BarChartXAxisLabels);
 
-    expect(xAxis?.props.labels[0].value).toStrictEqual('stuff 1 pickles');
+    expect(xAxis?.props.labels[0]).toStrictEqual('stuff 1 pickles');
   });
 
   it('does not render <TooltipAnimatedContainer /> if there is no active point', () => {

@@ -12,6 +12,7 @@ export {
   SampleSimpleNormalizedChart,
   SampleLegendContainer,
   SampleLegendChart,
+  SampleLabelsBarChart,
 } from './SampleComponents';
 export {SimpleContainer} from './SimpleContainer';
 export {Banner} from './Banner';

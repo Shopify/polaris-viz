@@ -1,23 +1,23 @@
-const names = [
-  'Megachasma pelagios',
-  'Chiloscyllium punctatum',
-  'Negaprion brevirostris',
-  'Carcharias taurus',
-  'Carcharhinus melanopterus',
-  'Ginglymostoma cirratum',
-  'Sphyrnidae',
-  'Prionace glauca',
-  'Carcharhinus longimanus',
-  'Carcharodon carcharias',
-  'Galeocerdo cuvier',
-  'Carcharhinus leucas',
-  'Alopias sp.',
-  'Isurus oxyrinchus',
-  'Cetorhinus maximus',
-  'Rhincodon typus',
+const PRODUCT_NAMES = [
+  'Shirts',
+  'Pants',
+  'Shoes',
+  'Hat',
+  'Jacket',
+  'Parka',
+  'Toque',
+  'Wind-breaker',
+  'Sweat pants',
+  'Shorts',
+  'Hoodies',
+  'Scarfs',
+  'Beanies',
+  'Socks',
+  'Flip Flops',
+  'Glasses',
 ];
 
-function randomNumber(min: number, max: number) {
+export function randomNumber(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
@@ -25,7 +25,7 @@ export const generateLabels = (dataLength: number) => {
   return Array(dataLength)
     .fill(null)
     .map(() => {
-      return names[Math.floor(Math.random() * names.length)];
+      return PRODUCT_NAMES[Math.floor(Math.random() * PRODUCT_NAMES.length)];
     });
 };
 
@@ -35,7 +35,7 @@ export const generateDataSet = (dataLength: number) => {
     .map(() => {
       return {
         value: randomNumber(20, 50),
-        key: names[Math.floor(Math.random() * names.length)],
+        key: PRODUCT_NAMES[Math.floor(Math.random() * PRODUCT_NAMES.length)],
       };
     });
 };
@@ -116,7 +116,7 @@ export function copyTextToClipboard(text: string) {
 
 export const SHARK_SPECIES_GROWTH = [
   {
-    name: 'Carcharhinus obscurus',
+    name: 'Mako',
     data: [
       {
         key: '0',
@@ -137,7 +137,7 @@ export const SHARK_SPECIES_GROWTH = [
     ],
   },
   {
-    name: 'Carcharhinus brevipinna',
+    name: 'Great White',
     data: [
       {
         key: '0',

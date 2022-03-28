@@ -10,7 +10,7 @@ const getStories = (environment) => {
     ignore:
       environment === 'development'
         ? ''
-        : `${appDirectory}/**/src/**//Playground.stories.mdx`,
+        : `${appDirectory}/**/src/**/Playground.stories.@(mdx|tsx)`,
   });
 };
 

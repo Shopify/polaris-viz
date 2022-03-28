@@ -77,9 +77,10 @@ export function Chart({
     data,
   });
 
-  const {xScale, ticks} = useHorizontalXScale({
+  const {xScale} = useHorizontalXScale({
     allNumbers,
     isStacked,
+    labelFormatter,
     maxWidth: width - longestLabel.negative - longestLabel.positive,
     stackedMax,
     stackedMin,
@@ -89,10 +90,9 @@ export function Chart({
     chartDimensions: {width, height},
     isSimple: true,
     isStacked,
-    labelFormatter,
     seriesLength: longestSeriesCount,
     singleBarCount: data.length,
-    ticks,
+    labelHeight: 0,
   });
 
   const getAriaLabel = useCallback(
@@ -112,6 +112,7 @@ export function Chart({
     series: data,
     groupHeight,
     isAnimated,
+    chartStartPosition: 0,
   });
 
   const zeroPosition = longestLabel.negative + xScale(0);
