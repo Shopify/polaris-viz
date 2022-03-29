@@ -25,7 +25,7 @@ yarn add @shopify/polaris-viz
 
 <Title type="h3">Set up PolarisVizProvider</Title>
 
-Wrap the top-level component of your app with the PolarisVizProvider
+Wrap the top-level component of your app with the PolarisVizProvider.
 
 <Banner type="Alert">
   The PolarisVizProvider is responsible for managing{' '}
@@ -46,6 +46,17 @@ export const YourTopLevelComponent = () => {
     </PolarisVizProvider>
   );
 };
+```
+
+<Title type="h2">CSS Styles</Title>
+
+If your app is set up to consume esnext builds, import components where you want
+to use them and the styles will automatically be applied.
+
+If your app is not set up for esnext, import the styles where you import components from the library:
+
+```js
+import '@shopify/polaris-viz/build/esm/styles.css';
 ```
 
 <Title type="h2">Peer dependencies</Title>
