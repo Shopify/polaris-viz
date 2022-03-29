@@ -38,7 +38,6 @@ export function WebComponents() {
         <ComponentContainer
           title="BarChart"
           description="Used to show a grouped comparison of different types, across categories or time. "
-          link="https://polaris-viz.shopify.io/?path=/docs/default-charts-barchart--default"
           chart={
             <BarChart
               isAnimated
@@ -76,7 +75,6 @@ export function WebComponents() {
         <ComponentContainer
           title="LineChart"
           description="Used to show change over time. "
-          link="https://polaris-viz.shopify.io/?path=/docs/default-charts-linechart--default"
           chart={
             <LineChart
               isAnimated
@@ -102,7 +100,6 @@ export function WebComponents() {
         <ComponentContainer
           title="StackedAreaChart"
           description="Used to compare multiple series of data and display the total value. "
-          link="https://polaris-viz.shopify.io/?path=/docs/default-charts-stackedareachart--default"
           chart={
             <StackedAreaChart
               isAnimated
@@ -154,7 +151,6 @@ export function WebComponents() {
         <ComponentContainer
           title="SparkBarChart"
           description="Used in small sizes to show how a metric has performed over time. "
-          link="https://polaris-viz.shopify.io/?path=/docs/spark-charts-sparkbarchart--default"
           center
           chart={
             <div style={{width: '250px', height: '140px'}}>
@@ -238,7 +234,6 @@ export function WebComponents() {
         <ComponentContainer
           title="SparkLineChart"
           description="Used in small sizes to show how a metric has performed over time. "
-          link="https://polaris-viz.shopify.io/?path=/docs/spark-charts-sparklinechart--default"
           center
           chart={
             <div style={{width: '250px', height: '140px'}}>
@@ -289,7 +284,6 @@ export function WebComponents() {
         <ComponentContainer
           title="SimpleBarChart"
           description="Used to show a grouped comparison of different types, across categories or time. "
-          link="https://polaris-viz.shopify.io/?path=/docs/simple-charts-simplebarchart--default"
           chart={
             <SimpleBarChart
               data={[
@@ -315,7 +309,6 @@ export function WebComponents() {
         <ComponentContainer
           title="SimpleNormalizedChart"
           description="Used for positive datasets with two to four items. "
-          link="https://polaris-viz.shopify.io/?path=/docs/simple-charts-simplenormalizedchart--default"
           center
           chart={
             <div style={{width: 450}}>
