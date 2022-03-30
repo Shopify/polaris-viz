@@ -299,70 +299,70 @@ const DATAS = {
   DATA_ALL_NEGATIVE: DATA_ALL_NEGATIVE,
 };
 
-const Template: Story<MixedChartProps> = (args: MixedChartProps) => {
-  return (
-    <div style={{height: CONTAINER_HEIGHT}}>
-      <MixedChart {...args} />
-    </div>
-  );
-};
-
-export const Default: Story<MixedChartProps> = Template.bind({});
-
-Default.args = {
-  data: [
-    {
-      shape: 'Bar',
-      series: BAR_CHART_DATA,
-      yAxisOptions: {
-        labelFormatter: (value: number) => `${value}L`,
-      },
-    },
-    {
-      shape: 'Line',
-      series: LINE_CHART_DATA,
-      yAxisOptions: {
-        labelFormatter: (value: number) => `${value}R`,
-      },
-    },
-  ],
-};
-
 // const Template: Story<MixedChartProps> = (args: MixedChartProps) => {
-//   const [data, setData] = useState(DATA_ALL_POSITIVE);
-
 //   return (
-//     <>
-//       <div style={{height: CONTAINER_HEIGHT}}>
-//         <MixedChart data={data} {...args} />
-//       </div>
-//       <select
-//         onChange={(event) => {
-//           console.log(event.target.value, DATAS[event.target.value]);
-//           setData(DATAS[event.target.value]);
-//         }}
-//       >
-//         <option value="DATA_ALL_POSITIVE">All positive</option>
-//         <option value="DATA_FIRST_NEGATIVE">First negative</option>
-//         <option value="DATA_SECOND_NEGATIVE">Second negative</option>
-//         <option value="DATA_BOTH_NEGATIVE">Both negative</option>
-//         <option value="DATA_ALL_NEGATIVE">All negative</option>
-//       </select>
-//     </>
+//     <div style={{height: CONTAINER_HEIGHT}}>
+//       <MixedChart {...args} />
+//     </div>
 //   );
 // };
 
 // export const Default: Story<MixedChartProps> = Template.bind({});
 
 // Default.args = {
-//   // data: [
-//   //   {
-//   //     shape: 'Bar',
-//   //     series: BAR_CHART_DATA,
-//   //   },
-//   //   {
-//   //     shape: 'Line',
-//   //     series: LINE_CHART_DATA,
-//   //   },
-//   // ],
+//   data: [
+//     {
+//       shape: 'Bar',
+//       series: BAR_CHART_DATA,
+//       yAxisOptions: {
+//         labelFormatter: (value: number) => `${value}L`,
+//       },
+//     },
+//     {
+//       shape: 'Line',
+//       series: LINE_CHART_DATA,
+//       yAxisOptions: {
+//         labelFormatter: (value: number) => `${value}R`,
+//       },
+//     },
+//   ],
 // };
+
+const Template: Story<MixedChartProps> = (args: MixedChartProps) => {
+  const [data, setData] = useState(DATA_ALL_POSITIVE);
+
+  return (
+    <>
+      <div style={{height: CONTAINER_HEIGHT}}>
+        <MixedChart data={data} {...args} />
+      </div>
+      <select
+        onChange={(event) => {
+          console.log(event.target.value, DATAS[event.target.value]);
+          setData(DATAS[event.target.value]);
+        }}
+      >
+        <option value="DATA_ALL_POSITIVE">All positive</option>
+        <option value="DATA_FIRST_NEGATIVE">First negative</option>
+        <option value="DATA_SECOND_NEGATIVE">Second negative</option>
+        <option value="DATA_BOTH_NEGATIVE">Both negative</option>
+        <option value="DATA_ALL_NEGATIVE">All negative</option>
+      </select>
+    </>
+  );
+};
+
+export const Default: Story<MixedChartProps> = Template.bind({});
+
+Default.args = {
+  // data: [
+  //   {
+  //     shape: 'Bar',
+  //     series: BAR_CHART_DATA,
+  //   },
+  //   {
+  //     shape: 'Line',
+  //     series: LINE_CHART_DATA,
+  //   },
+  // ],
+};

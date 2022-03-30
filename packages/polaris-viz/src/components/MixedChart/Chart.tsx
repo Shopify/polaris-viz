@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {
   LABEL_AREA_TOP_SPACING,
   useTheme,
@@ -15,6 +15,7 @@ import styles from './Chart.scss';
 import type {MixedChartDataSeries} from './types';
 import {useDualAxisTicks} from './hooks/use-dual-axis-ticks';
 import {useDualAxisTicksWidth} from './hooks/use-dual-axis-tick-widths';
+import {MixedVerticalBarChart} from './compoents/MixedVerticalBarChart';
 
 export interface ChartProps {
   data: MixedChartDataSeries[];
@@ -78,6 +79,14 @@ export function Chart({data, dimensions, showLegend, theme}: ChartProps) {
             height={drawableHeight}
             width={drawableWidth}
             fill="rgba(255,255,255,0.5)"
+          />
+
+          <MixedVerticalBarChart
+            data={data[0]}
+            drawableHeight={drawableHeight}
+            drawableWidth={drawableWidth}
+            theme={theme}
+            // xAxisOptions={}
           />
         </g>
 

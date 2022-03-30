@@ -7,6 +7,7 @@ import type {
 } from '@shopify/polaris-viz-core';
 import type {AnnotationLookupTable} from 'components/BarChart/types';
 
+import {getFormattedLabels} from '../../utilities/get-formatted-labels';
 import {BarChartXAxisLabels} from '../BarChartXAxisLabels';
 import {LegendContainer, useLegend} from '../LegendContainer';
 import {GradientDefs} from '../shared';
@@ -28,19 +29,19 @@ import {
 } from '../TooltipWrapper';
 import {
   getTextWidth,
-  shouldRotateZeroBars,
   eventPointNative,
   getStackedValues,
+  getStackedMinMax,
 } from '../../utilities';
 import {YAxis} from '../YAxis';
 import {HorizontalGridLines} from '../HorizontalGridLines';
-import {BarMargin} from '../../types';
 import {
   useBarChartTooltipContent,
   useColorVisionEvents,
   useTheme,
   useWatchColorVisionEvents,
   useReducedLabelIndexes,
+  useYScale,
 } from '../../hooks';
 import type {
   RenderTooltipContentData,
@@ -49,8 +50,7 @@ import type {
 } from '../BarChart';
 import {AnnotationLine} from '../BarChart';
 
-import {BarGroup, StackedBarGroups} from './components';
-import {useYScale, useXScale} from './hooks';
+import {VerticalBarGroups} from './components';
 import {
   FONT_SIZE,
   SMALL_WIDTH,
@@ -58,6 +58,7 @@ import {
   BAR_SPACING,
 } from './constants';
 import styles from './Chart.scss';
+import {useVerticalBarChart} from './hooks/use-vertical-bar-chart';
 
 export interface Props {
   data: DataSeries[];
@@ -112,15 +113,10 @@ export function Chart({
   const emptyState = data.length === 0;
 
   const labels = useMemo(() => {
-    const labels: string[] = [];
-
-    data.forEach(({data}) => {
-      data.forEach(({key}, index) => {
-        labels[index] = xAxisOptions.labelFormatter?.(`${key}`) ?? `${key}`;
-      });
+    return getFormattedLabels({
+      data,
+      labelFormatter: xAxisOptions.labelFormatter,
     });
-
-    return labels;
   }, [data, xAxisOptions]);
 
   const isStacked = type === 'stacked';
@@ -133,11 +129,19 @@ export function Chart({
   const drawableHeight =
     height - labelHeight - LABEL_AREA_TOP_SPACING - Margin.Top;
 
+  const {min, max} = getStackedMinMax({
+    stackedValues,
+    data,
+    integersOnly: yAxisOptions.integersOnly,
+  });
+
+  const hideXAxis = xAxisOptions.hide ?? selectedTheme.xAxis.hide;
+
   const {ticks: initialTicks} = useYScale({
     drawableHeight,
-    data,
+    min,
+    max,
     formatYAxisLabel: yAxisOptions.labelFormatter,
-    stackedValues,
     integersOnly: yAxisOptions.integersOnly,
   });
 
@@ -159,19 +163,14 @@ export function Chart({
     yAxisLabelWidth + Y_AXIS_CHART_SPACING + horizontalMargin;
   const drawableWidth = width - chartStartPosition - horizontalMargin * 2;
 
-  const rotateZeroBars = useMemo(
-    () =>
-      selectedTheme.bar.zeroAsMinHeight &&
-      data.every(({data}) => shouldRotateZeroBars(data)),
-    [selectedTheme.bar.zeroAsMinHeight, data],
-  );
-
-  const hideXAxis = xAxisOptions.hide ?? selectedTheme.xAxis.hide;
-
-  const sortedData = labels.map((_, index) => {
-    return data
-      .map((type) => type.data[index].value)
-      .filter((value) => value !== null) as number[];
+  const {xScale, gapWidth, sortedData, yScale, ticks} = useVerticalBarChart({
+    data,
+    drawableHeight,
+    drawableWidth,
+    labels,
+    stackedValues,
+    theme,
+    yAxisOptions,
   });
 
   const areAllNegative = useMemo(() => {
@@ -182,22 +181,6 @@ export function Chart({
       .some((num) => num > 0);
   }, [sortedData]);
 
-  const {xScale, gapWidth} = useXScale({
-    drawableWidth,
-    data: sortedData,
-    innerMargin: BarMargin[selectedTheme.bar.innerMargin] as number,
-    outerMargin: BarMargin[selectedTheme.bar.outerMargin] as number,
-    labels,
-  });
-
-  const {yScale, ticks} = useYScale({
-    drawableHeight,
-    data,
-    formatYAxisLabel: yAxisOptions.labelFormatter,
-    stackedValues,
-    integersOnly: yAxisOptions.integersOnly,
-  });
-
   const barColors = data.map(({color}) => color!);
 
   const getTooltipMarkup = useBarChartTooltipContent({
@@ -206,20 +189,6 @@ export function Chart({
     data,
     seriesColors: barColors,
   });
-
-  const accessibilityData = useMemo(
-    () =>
-      labels.map((title, index) => {
-        const content = data.map(({data, name}) => {
-          return {
-            label: name ?? '',
-            value: yAxisOptions.labelFormatter(data[index].value ?? 0),
-          };
-        });
-        return {title, data: content};
-      }),
-    [data, labels, yAxisOptions],
-  );
 
   return (
     <div className={styles.ChartContainer} style={{height, width}}>
@@ -273,7 +242,6 @@ export function Chart({
         <g transform={`translate(0,${Margin.Top})`} aria-hidden="true">
           <YAxis
             ticks={ticks}
-            fontSize={fontSize}
             textAlign="right"
             width={yAxisLabelWidth}
             theme={theme}
@@ -281,44 +249,21 @@ export function Chart({
         </g>
 
         <g transform={`translate(${chartStartPosition},${Margin.Top})`}>
-          {stackedValues != null ? (
-            <StackedBarGroups
-              accessibilityData={accessibilityData}
-              activeBarGroup={activeBarGroup}
-              colors={barColors}
-              drawableHeight={drawableHeight}
-              gapWidth={gapWidth}
-              id={id}
-              labels={labels}
-              stackedValues={stackedValues}
-              theme={theme}
-              xScale={xScale}
-              yScale={yScale}
-            />
-          ) : (
-            sortedData.map((item, index) => {
-              const xPosition = xScale(index.toString());
-              return (
-                <BarGroup
-                  isAnimated={isAnimated}
-                  gapWidth={gapWidth}
-                  key={index}
-                  x={xPosition == null ? 0 : xPosition}
-                  yScale={yScale}
-                  data={item}
-                  width={xScale.bandwidth()}
-                  height={drawableHeight}
-                  colors={barColors}
-                  barGroupIndex={index}
-                  hasRoundedCorners={selectedTheme.bar.hasRoundedCorners}
-                  rotateZeroBars={rotateZeroBars}
-                  zeroAsMinHeight={selectedTheme.bar.zeroAsMinHeight}
-                  accessibilityData={accessibilityData}
-                  activeBarGroup={activeBarGroup}
-                />
-              );
-            })
-          )}
+          <VerticalBarGroups
+            activeBarGroup={activeBarGroup}
+            data={data}
+            drawableHeight={drawableHeight}
+            gapWidth={gapWidth}
+            id={id}
+            isAnimated={isAnimated}
+            labels={labels}
+            sortedData={sortedData}
+            stackedValues={stackedValues}
+            theme={theme}
+            xScale={xScale}
+            yAxisOptions={yAxisOptions}
+            yScale={yScale}
+          />
         </g>
         <g transform={`translate(${chartStartPosition},${Margin.Top})`}>
           {Object.keys(annotationsLookupTable).map((key, dataIndex) => {

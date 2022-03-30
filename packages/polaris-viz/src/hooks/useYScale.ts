@@ -6,25 +6,28 @@ import {shouldRoundScaleUp, estimateStringWidth} from '../utilities';
 import type {NumberLabelFormatter} from '../types';
 import {ChartContext} from '../components';
 
+const MINIMAL_LABEL_SPACE = 80;
+
 export function useYScale({
   drawableHeight,
   formatYAxisLabel,
   integersOnly,
   max,
   min,
-  minLabelSpace,
 }: {
   drawableHeight: number;
   formatYAxisLabel: NumberLabelFormatter;
   integersOnly: boolean;
   max: number;
   min: number;
-  minLabelSpace: number;
 }) {
   const {characterWidths} = useContext(ChartContext);
 
   const {yScale, ticks, yAxisLabelWidth} = useMemo(() => {
-    const maxTicks = Math.max(1, Math.floor(drawableHeight / 80));
+    const maxTicks = Math.max(
+      1,
+      Math.floor(drawableHeight / MINIMAL_LABEL_SPACE),
+    );
 
     const yScale = scaleLinear()
       .range([drawableHeight, 0])
@@ -50,8 +53,6 @@ export function useYScale({
     const filteredTicks = integersOnly
       ? yScale.ticks(maxTicks).filter((tick) => Number.isInteger(tick))
       : yScale.ticks(maxTicks);
-
-    console.log({filteredTicks});
 
     const ticks = filteredTicks.map((value) => ({
       value,
@@ -79,7 +80,6 @@ export function useYScale({
     integersOnly,
     max,
     min,
-    minLabelSpace,
   ]);
 
   return {yScale, ticks, yAxisLabelWidth};
