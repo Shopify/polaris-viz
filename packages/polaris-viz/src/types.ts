@@ -137,3 +137,9 @@ export interface Annotation {
 export interface AnnotationLookupTable {
   [key: number]: Annotation;
 }
+
+export interface FormattedTicks {
+  value: number;
+  formattedValue: string;
+  yOffset: number;
+}

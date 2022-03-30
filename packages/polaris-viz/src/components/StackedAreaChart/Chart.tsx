@@ -50,7 +50,6 @@ import {StackedAreas, Points} from './components';
 import styles from './Chart.scss';
 import {useStackedChartTooltipContent} from './hooks/useStackedChartTooltipContent';
 import {yAxisMinMax} from './utilities/yAxisMinMax';
-import {MIN_Y_LABEL_SPACE} from './constants';
 
 const TOOLTIP_POSITION: TooltipPositionOffset = {
   horizontal: TooltipHorizontalOffset.Left,
@@ -120,7 +119,6 @@ export function Chart({
     integersOnly: yAxisOptions.integersOnly,
     max: maxY,
     min: minY,
-    minLabelSpace: MIN_Y_LABEL_SPACE,
   });
 
   const {chartStartPosition, drawableWidth, xAxisDetails, xScale} =

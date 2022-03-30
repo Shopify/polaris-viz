@@ -58,7 +58,6 @@ import {
 
 import {BarGroup, StackedBarGroups} from './components';
 import {useXScale} from './hooks';
-import {MIN_Y_LABEL_SPACE} from './constants';
 import styles from './Chart.scss';
 
 const ANNOTATIONS_LABELS_OFFSET = 10;
@@ -148,7 +147,6 @@ export function Chart({
     integersOnly: yAxisOptions.integersOnly,
     max,
     min,
-    minLabelSpace: MIN_Y_LABEL_SPACE,
   });
 
   const yAxisLabelWidth = useMemo(() => {
@@ -206,7 +204,6 @@ export function Chart({
     integersOnly: yAxisOptions.integersOnly,
     max,
     min,
-    minLabelSpace: MIN_Y_LABEL_SPACE,
   });
 
   const barColors = data.map(({color}) => color!);
