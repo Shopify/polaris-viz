@@ -1,7 +1,5 @@
-import React, {useState, useRef, useMemo} from 'react';
-import {line} from 'd3-shape';
+import React, {useState, useRef} from 'react';
 import {
-  curveStepRounded,
   uniqueId,
   DataType,
   useYScale,
@@ -14,7 +12,6 @@ import {
   DEFAULT_CHART_PROPS,
 } from '@shopify/polaris-viz-core';
 import type {
-  DataPoint,
   Dimensions,
   XAxisOptions,
   YAxisOptions,
@@ -26,7 +23,7 @@ import type {
   AnnotationLookupTable,
 } from '../../types';
 import {useFormattedLabels} from '../../hooks/useFormattedLabels';
-import {LinearXAxisLabels} from '../LinearXAxisLabels';
+import {XAxis} from '../XAxis';
 import {useLegend, LegendContainer} from '../LegendContainer';
 import {
   TooltipHorizontalOffset,
@@ -39,7 +36,6 @@ import {
 import {eventPointNative} from '../../utilities';
 import {
   useTheme,
-  useLinearChartAnimations,
   useColorVisionEvents,
   useWatchColorVisionEvents,
   useLinearLabelsAndDimensions,
@@ -52,12 +48,10 @@ import {
 } from '../../constants';
 import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
 import {YAxis} from '../YAxis';
-import {Crosshair} from '../Crosshair';
 import {HorizontalGridLines} from '../HorizontalGridLines';
 
 import {useLineChartTooltipContent} from './hooks/useLineChartTooltipContent';
-import {Points} from './components';
-import {MAX_ANIMATED_SERIES_LENGTH, MIN_Y_LABEL_SPACE} from './constants';
+import {PointsAndCrosshair} from './components';
 import {useFormatData} from './hooks';
 import styles from './Chart.scss';
 import {yAxisMinMax} from './utilities';
@@ -123,7 +117,6 @@ export function Chart({
   });
 
   const tooltipId = useRef(uniqueId('lineChart'));
-  const gradientId = useRef(uniqueId('lineChartGradient'));
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
 
   const emptyState =
@@ -145,7 +138,6 @@ export function Chart({
     integersOnly: yAxisOptions.integersOnly,
     max: maxY,
     min: minY,
-    minLabelSpace: MIN_Y_LABEL_SPACE,
   });
 
   const {reversedSeries, longestSeriesLength, longestSeriesIndex} =
@@ -161,45 +153,6 @@ export function Chart({
       xAxisOptions,
       yAxisLabelWidth,
     });
-
-  const lineGenerator = useMemo(() => {
-    const generator = line<DataPoint>()
-      .x((_, index) => (xScale == null ? 0 : xScale(index)))
-      .y(({value}) => yScale(value ?? 0));
-
-    if (selectedTheme.line.hasSpline) {
-      generator.curve(curveStepRounded);
-    }
-    return generator;
-  }, [selectedTheme.line.hasSpline, xScale, yScale]);
-
-  const animatePoints =
-    isAnimated && longestSeriesLength <= MAX_ANIMATED_SERIES_LENGTH;
-
-  const {animatedCoordinates} = useLinearChartAnimations({
-    data: reversedSeries,
-    lineGenerator,
-    activeIndex,
-    isAnimated: animatePoints,
-  });
-
-  const getXPosition = ({isCrosshair} = {isCrosshair: false}) => {
-    if (xScale == null) {
-      return 0;
-    }
-    const offset = isCrosshair ? selectedTheme.crossHair.width / 2 : 0;
-
-    if (
-      animatedCoordinates != null &&
-      animatedCoordinates[longestSeriesIndex] != null &&
-      animatePoints
-    ) {
-      return animatedCoordinates[longestSeriesIndex].to(
-        (coord) => coord.x - offset,
-      );
-    }
-    return xScale(activeIndex == null ? 0 : activeIndex) - offset;
-  };
 
   const getTooltipMarkup = useLineChartTooltipContent({
     data,
@@ -276,7 +229,7 @@ export function Chart({
         aria-label={emptyState ? emptyStateText : undefined}
       >
         {xAxisOptions.hide ? null : (
-          <LinearXAxisLabels
+          <XAxis
             chartHeight={height}
             chartX={chartStartPosition - xAxisDetails.labelWidth / 2}
             chartY={drawableHeight + LABEL_AREA_TOP_SPACING + chartYPosition}
@@ -313,17 +266,6 @@ export function Chart({
             ariaHidden
           />
         </g>
-
-        {emptyState ? null : (
-          <g transform={`translate(${chartStartPosition},${chartYPosition})`}>
-            <Crosshair
-              x={getXPosition({isCrosshair: true})}
-              height={drawableHeight}
-              opacity={activeIndex == null ? 0 : 1}
-              theme={theme}
-            />
-          </g>
-        )}
 
         {emptyState ? null : (
           <VisuallyHiddenRows
@@ -371,14 +313,14 @@ export function Chart({
             );
           })}
 
-          <Points
-            activeIndex={emptyState ? null : activeIndex}
-            animatedCoordinates={animatedCoordinates}
-            animatePoints={animatePoints}
-            data={reversedSeries}
-            getXPosition={getXPosition}
-            gradientId={gradientId.current}
+          <PointsAndCrosshair
+            activeIndex={activeIndex}
+            drawableHeight={drawableHeight}
+            emptyState={emptyState}
+            isAnimated={isAnimated}
             longestSeriesIndex={longestSeriesIndex}
+            longestSeriesLength={longestSeriesLength}
+            reversedSeries={reversedSeries}
             theme={theme}
             tooltipId={tooltipId.current}
             xScale={xScale}

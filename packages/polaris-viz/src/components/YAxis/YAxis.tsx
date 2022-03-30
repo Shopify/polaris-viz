@@ -24,9 +24,7 @@ function Axis({ticks, width, textAlign, theme, ariaHidden = false}: Props) {
           <foreignObject
             key={value}
             aria-hidden={ariaHidden}
-            transform={`translate(${selectedTheme.grid.horizontalMargin},${
-              yOffset - LINE_HEIGHT / 2
-            })`}
+            transform={`translate(0,${yOffset - LINE_HEIGHT / 2})`}
             width={width + PADDING_SIZE * 4}
             height={LINE_HEIGHT}
             style={{

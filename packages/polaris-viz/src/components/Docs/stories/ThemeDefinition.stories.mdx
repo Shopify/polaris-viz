@@ -506,19 +506,6 @@ export interface GradientStop {
       'SimpleNormalizedChart',
     ]}
   />
-  <PropertyTable.Row
-    property="bar.innerMargin"
-    type={['"Small"', '"Medium"', '"Large"', '"None"']}
-    description="determines how big the gaps between bars should be"
-    chartsAffected={['BarChart']}
-  />
-  <PropertyTable.Row
-    property="bar.outerMargin"
-    type={['"Small"', '"Medium"', '"Large"', '"None"']}
-    description="determines how big the gaps from the left edge of the chart until the
-        first bar, and the right edge until the last bar should be"
-    chartsAffected={['BarChart']}
-  />
 </PropertyTable>
 
 <Title type="h4">Examples:</Title>
@@ -532,8 +519,6 @@ export interface GradientStop {
         Default: {
           bar: {
             hasRoundedCorners: true,
-            innerMargin: 'Large',
-            outerMargin: 'Large',
           }
         }
       }}
@@ -549,8 +534,6 @@ export interface GradientStop {
           Default: {
             bar: {
               hasRoundedCorners: true,
-              innerMargin: 'Large',
-              outerMargin: 'Large',
             },
           },
         }}

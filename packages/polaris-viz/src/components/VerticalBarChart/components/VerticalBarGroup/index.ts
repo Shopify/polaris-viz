@@ -1,0 +1,1 @@
+export {VerticalBarGroup} from './VerticalBarGroup';

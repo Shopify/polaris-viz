@@ -1,7 +1,6 @@
 import type {Interpolation, InterpolatorFn} from '@react-spring/web';
 import type {
   Color,
-  DataPoint,
   DataSeries,
   Shape,
   LabelFormatter,
@@ -66,9 +65,11 @@ export type AnimatedCoordinate = Interpolation<
     }
 >;
 
-export interface RenderTooltipDataPoint extends DataPoint {
+export interface RenderTooltipDataPoint {
   color?: Color;
   isComparison?: boolean;
+  key: number | string;
+  value: number | string | null;
 }
 
 export interface RenderTooltipContentData {
@@ -163,3 +164,15 @@ export type GetXPosition = ({
         },
       number
     >;
+
+export interface FormattedTicks {
+  value: number;
+  formattedValue: string;
+  yOffset: number;
+}
+
+export interface FormattedTicks {
+  value: number;
+  formattedValue: string;
+  yOffset: number;
+}

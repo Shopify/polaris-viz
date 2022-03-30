@@ -20,7 +20,7 @@ import type {
   AnnotationLookupTable,
   RenderTooltipContentData,
 } from '../../types';
-import {LinearXAxisLabels} from '../LinearXAxisLabels';
+import {XAxis} from '../XAxis';
 import {LegendContainer, useLegend} from '../LegendContainer';
 import {
   TooltipHorizontalOffset,
@@ -43,6 +43,7 @@ import {
   XMLNS,
   LABEL_AREA_TOP_SPACING,
   ANNOTATIONS_LABELS_OFFSET,
+  MAX_ANIMATED_SERIES_LENGTH,
 } from '../../constants';
 import {eventPointNative} from '../../utilities';
 import {YAxis} from '../YAxis';
@@ -55,7 +56,6 @@ import {StackedAreas, Points} from './components';
 import styles from './Chart.scss';
 import {useStackedChartTooltipContent} from './hooks/useStackedChartTooltipContent';
 import {yAxisMinMax} from './utilities/yAxisMinMax';
-import {MIN_Y_LABEL_SPACE} from './constants';
 
 const TOOLTIP_POSITION: TooltipPositionOffset = {
   horizontal: TooltipHorizontalOffset.Left,
@@ -131,7 +131,6 @@ export function Chart({
     integersOnly: yAxisOptions.integersOnly,
     max: maxY,
     min: minY,
-    minLabelSpace: MIN_Y_LABEL_SPACE,
   });
 
   const {chartStartPosition, drawableWidth, xAxisDetails, xScale} =
@@ -177,11 +176,14 @@ export function Chart({
     });
   }, [stackedValues]);
 
+  const animatePoints =
+    isAnimated && longestSeriesLength <= MAX_ANIMATED_SERIES_LENGTH;
+
   const {animatedCoordinates} = useLinearChartAnimations({
     data: seriesForAnimation,
     lineGenerator,
     activeIndex: activePointIndex,
-    isAnimated: true,
+    isAnimated: animatePoints,
   });
 
   const getXPosition = (
@@ -230,7 +232,7 @@ export function Chart({
         style={{height, width}}
       >
         {hideXAxis ? null : (
-          <LinearXAxisLabels
+          <XAxis
             chartHeight={height}
             chartX={chartStartPosition - xAxisDetails.labelWidth / 2}
             chartY={chartYPosition + drawableHeight + LABEL_AREA_TOP_SPACING}

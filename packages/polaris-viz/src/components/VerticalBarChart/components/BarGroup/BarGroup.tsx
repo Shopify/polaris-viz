@@ -38,6 +38,7 @@ interface Props {
   colors: Color[];
   barGroupIndex: number;
   hasRoundedCorners: boolean;
+  indexOffset: number;
   accessibilityData: AccessibilitySeries[];
   activeBarGroup: number;
   zeroAsMinHeight: boolean;
@@ -53,6 +54,7 @@ export function BarGroup({
   width,
   colors,
   height,
+  indexOffset,
   barGroupIndex,
   hasRoundedCorners,
   zeroAsMinHeight,
@@ -159,7 +161,7 @@ export function BarGroup({
                 fill={`url(#${gradientId}${index})`}
                 style={getColorVisionStylesForActiveIndex({
                   activeIndex: activeBarIndex,
-                  index,
+                  index: index + indexOffset,
                 })}
               />
             </g>
@@ -208,7 +210,7 @@ export function BarGroup({
               role="listitem"
               {...getColorVisionEventAttrs({
                 type: COLOR_VISION_SINGLE_ITEM,
-                index,
+                index: index + indexOffset,
               })}
               className={styles.Bar}
               tabIndex={-1}

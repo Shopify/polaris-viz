@@ -7,14 +7,10 @@ import React, {
   useState,
 } from 'react';
 import isEqual from 'fast-deep-equal';
-import {useTheme} from '@shopify/polaris-viz-core';
+import {useTheme, LEGENDS_TOP_MARGIN} from '@shopify/polaris-viz-core';
 import type {Direction, Dimensions} from '@shopify/polaris-viz-core';
 
-import {
-  DEFAULT_LEGEND_HEIGHT,
-  DEFAULT_LEGEND_WIDTH,
-  LEGENDS_TOP_MARGIN,
-} from '../../constants';
+import {DEFAULT_LEGEND_HEIGHT, DEFAULT_LEGEND_WIDTH} from '../../constants';
 import {useResizeObserver, useWatchColorVisionEvents} from '../../hooks';
 import {Legend} from '../Legend';
 import type {LegendData} from '../../types';
