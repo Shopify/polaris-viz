@@ -92,3 +92,9 @@ export type AnimatedCoordinate = Interpolation<
       y: number;
     }
 >;
+
+export interface FormattedTicks {
+  value: number;
+  formattedValue: string;
+  yOffset: number;
+}

@@ -9,13 +9,12 @@ interface Props {
   textAlign: 'left' | 'right';
   width: number;
 
-  fontSize?: number;
   theme?: string;
 }
 
 const PADDING_SIZE = 1;
 
-function Axis({ticks, fontSize = FONT_SIZE, width, textAlign, theme}: Props) {
+function Axis({ticks, width, textAlign, theme}: Props) {
   const selectedTheme = useTheme(theme);
 
   return (
@@ -24,15 +23,14 @@ function Axis({ticks, fontSize = FONT_SIZE, width, textAlign, theme}: Props) {
         return (
           <foreignObject
             key={value}
-            transform={`translate(${selectedTheme.grid.horizontalMargin},${
-              yOffset - LINE_HEIGHT / 2
-            })`}
+            // TODO Test this in other charts
+            transform={`translate(0,${yOffset - LINE_HEIGHT / 2})`}
             width={width}
             height={LINE_HEIGHT}
             style={{
               color: selectedTheme.yAxis.labelColor,
               textAlign,
-              fontSize,
+              fontSize: FONT_SIZE,
               lineHeight: `${LINE_HEIGHT}px`,
             }}
           >

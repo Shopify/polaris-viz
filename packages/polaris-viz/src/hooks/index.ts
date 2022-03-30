@@ -30,3 +30,4 @@ export {
   useThemeSeriesColors,
   getSeriesColors,
 } from '@shopify/polaris-viz-core';
+export {useYScale} from './useYScale';
