@@ -11,7 +11,12 @@ import {uniqueId} from '@shopify/polaris-viz-core';
 import type {Dimensions} from '@shopify/polaris-viz-core';
 
 import characterWidths from '../../data/character-widths.json';
-import {useResizeObserver, useTheme, usePrintResizing} from '../../hooks';
+import {
+  useResizeObserver,
+  useTheme,
+  usePrintResizing,
+  usePrevious,
+} from '../../hooks';
 
 import styles from './ChartContainer.scss';
 import {ChartContext} from './ChartContext';
@@ -19,6 +24,7 @@ import {ChartContext} from './ChartContext';
 interface Props {
   children: ReactElement;
   theme?: string;
+  sparkChart?: boolean;
 }
 
 export const ChartContainer = (props: Props) => {
@@ -35,26 +41,23 @@ export const ChartContainer = (props: Props) => {
 
   const {ref, setRef, entry} = useResizeObserver();
 
+  const previousEntry = usePrevious(entry);
+
   const {isPrinting} = usePrintResizing({ref, setChartDimensions});
   const printFriendlyTheme = isPrinting ? 'Print' : props.theme;
   const {chartContainer} = useTheme(printFriendlyTheme);
 
   const updateDimensions = useCallback(() => {
-    if (entry != null) {
-      const {width, height} = entry.contentRect;
-      setChartDimensions((prevDimensions) => {
-        if (
-          prevDimensions != null &&
-          width === prevDimensions.width &&
-          height === prevDimensions.height
-        ) {
-          return prevDimensions;
-        } else {
-          return {width, height};
-        }
-      });
-    }
-  }, [entry]);
+    if (
+      previousEntry?.contentRect.width === entry?.contentRect.width ||
+      entry == null
+    )
+      return;
+
+    const {width, height} = entry.contentRect;
+
+    setChartDimensions({width, height});
+  }, [entry, previousEntry?.contentRect.width]);
 
   const [debouncedUpdateDimensions] = useDebouncedCallback(() => {
     updateDimensions();
@@ -62,6 +65,15 @@ export const ChartContainer = (props: Props) => {
 
   useLayoutEffect(() => {
     updateDimensions();
+
+    if (chartDimensions === null) {
+      setChartDimensions({
+        width: 100,
+        height: props.sparkChart
+          ? chartContainer.sparkChartMinHeight
+          : chartContainer.chartMinHeight,
+      });
+    }
 
     const isServer = typeof window === 'undefined';
 
@@ -74,7 +86,15 @@ export const ChartContainer = (props: Props) => {
         window.removeEventListener('resize', debouncedUpdateDimensions);
       }
     };
-  }, [entry, updateDimensions, debouncedUpdateDimensions]);
+  }, [
+    entry,
+    updateDimensions,
+    debouncedUpdateDimensions,
+    chartDimensions,
+    chartContainer.chartMinHeight,
+    props.sparkChart,
+    chartContainer.sparkChartMinHeight,
+  ]);
 
   return (
     <ChartContext.Provider value={value}>

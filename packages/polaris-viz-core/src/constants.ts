@@ -138,6 +138,8 @@ export const DEFAULT_THEME: Theme = {
     borderRadius: '0px',
     padding: '0px',
     backgroundColor: variables.colorGray160,
+    sparkChartMinHeight: 40,
+    chartMinHeight: 500,
   },
   line: {
     sparkArea: [
@@ -232,6 +234,8 @@ export const LIGHT_THEME: Theme = {
     borderRadius: '0px',
     padding: '0px',
     backgroundColor: variables.colorGray00,
+    sparkChartMinHeight: 40,
+    chartMinHeight: 500,
   },
   line: {
     sparkArea: [
