@@ -29,7 +29,6 @@ export function MobileComponents() {
         <ComponentContainer
           title="SparkLineChart"
           description="Used in small sizes to show how a metric has performed over time. "
-          link="https://polaris-viz.shopify.io/?path=/docs/polaris-viz-native-spark-charts-sparklinechart--default"
           center
           chart={
             <div style={{width: '250px', height: '140px'}}>
@@ -76,7 +75,6 @@ export function MobileComponents() {
         <ComponentContainer
           title="SparkBarChart"
           description="Used in small sizes to show how a metric has performed over time. "
-          link="https://polaris-viz.shopify.io/?path=/docs/polaris-viz-native-spark-charts-sparkbarchart--default"
           center
           chart={
             <div style={{width: '250px', height: '140px'}}>
