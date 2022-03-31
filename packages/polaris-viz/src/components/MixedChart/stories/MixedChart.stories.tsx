@@ -652,6 +652,84 @@ const DATA_FAP_NAP = [
   },
 ];
 
+const DATA_FAN_SSN = [
+  {
+    shape: 'Bar',
+    series: [
+      {
+        name: 'Breakfast',
+        data: [{key: 'Monday', value: -1}],
+      },
+      {
+        name: 'Lunch',
+        data: [{key: 'Monday', value: -5}],
+      },
+      {
+        name: 'Dinner',
+        data: [{key: 'Monday', value: -10}],
+      },
+    ],
+  },
+  {
+    shape: 'Line',
+    series: [
+      {
+        name: 'Apr 01–Apr 14, 2020',
+        data: [
+          {value: -100, key: '2020-04-01T12:00:00'},
+          {value: -100, key: '2020-04-01T12:00:00'},
+        ],
+      },
+      {
+        name: 'Mar 01–Mar 14, 2020',
+        data: [
+          {value: 500, key: '2020-03-02T12:00:00'},
+          {value: 500, key: '2020-03-02T12:00:00'},
+        ],
+      },
+    ],
+  },
+];
+
+const DATA_FSN_NAP = [
+  {
+    shape: 'Bar',
+    series: [
+      {
+        name: 'Breakfast',
+        data: [{key: 'Monday', value: 1}],
+      },
+      {
+        name: 'Lunch',
+        data: [{key: 'Monday', value: -5}],
+      },
+      {
+        name: 'Dinner',
+        data: [{key: 'Monday', value: 10}],
+      },
+    ],
+  },
+  {
+    shape: 'Line',
+    series: [
+      {
+        name: 'Apr 01–Apr 14, 2020',
+        data: [
+          {value: -100, key: '2020-04-01T12:00:00'},
+          {value: -100, key: '2020-04-01T12:00:00'},
+        ],
+      },
+      {
+        name: 'Mar 01–Mar 14, 2020',
+        data: [
+          {value: -500, key: '2020-03-02T12:00:00'},
+          {value: -500, key: '2020-03-02T12:00:00'},
+        ],
+      },
+    ],
+  },
+];
+
 const DATAS = {
   DATA_ALL_POSITIVE: DATA_ALL_POSITIVE,
   DATA_FIRST_SOME_NEGATIVE: DATA_FIRST_SOME_NEGATIVE,
@@ -660,6 +738,8 @@ const DATAS = {
   DATA_ALL_NEGATIVE: DATA_ALL_NEGATIVE,
   DATA_FAN_SAP: DATA_FAN_SAP,
   DATA_FAP_NAP: DATA_FAP_NAP,
+  DATA_FAN_SSN: DATA_FAN_SSN,
+  DATA_FSN_NAP: DATA_FSN_NAP,
 };
 
 // const Template: Story<MixedChartProps> = (args: MixedChartProps) => {
@@ -718,6 +798,12 @@ const Template: Story<MixedChartProps> = (args: MixedChartProps) => {
           </option>
           <option value="DATA_FAP_NAP">
             Bar all positive, Line all negative
+          </option>
+          <option value="DATA_FAN_SSN">
+            Bar all negative, Line some negative
+          </option>
+          <option value="DATA_FSN_NAP">
+            Bar some negative, Line all negative
           </option>
         </optgroup>
       </select>
