@@ -60,7 +60,9 @@ export function VerticalBarGroups({
     [selectedTheme.bar.zeroAsMinHeight, data],
   );
 
-  const barColors = data.map(({color}) => color!);
+  // const barColors = data.map(({color}) => color!);
+
+  const barColors = data.map(() => 'grey');
 
   return (
     <React.Fragment>

@@ -14,12 +14,14 @@ export function useYScale({
   integersOnly,
   max,
   min,
+  shouldRoundUp = true,
 }: {
   drawableHeight: number;
   formatYAxisLabel: NumberLabelFormatter;
   integersOnly: boolean;
   max: number;
   min: number;
+  shouldRoundUp?: boolean;
 }) {
   const {characterWidths} = useContext(ChartContext);
 
@@ -40,7 +42,9 @@ export function useYScale({
     //   shouldRoundScaleUp({yScale, maxValue: max, maxTicks}),
     // );
 
-    yScale.nice(maxTicks);
+    if (shouldRoundUp) {
+      yScale.nice(maxTicks);
+    }
 
     // if (shouldRoundScaleUp({yScale, maxValue: max, maxTicks})) {
     //   yScale.nice(maxTicks);
@@ -74,6 +78,7 @@ export function useYScale({
 
     return {yScale, ticks, yAxisLabelWidth};
   }, [
+    shouldRoundUp,
     characterWidths,
     drawableHeight,
     formatYAxisLabel,

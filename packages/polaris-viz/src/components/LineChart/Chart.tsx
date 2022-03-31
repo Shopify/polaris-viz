@@ -51,6 +51,7 @@ import type {
 } from './types';
 import {useYScale, useFormatData} from './hooks';
 import styles from './Chart.scss';
+import {Lines} from './components/Lines/Lines';
 
 export interface ChartProps {
   isAnimated: boolean;
@@ -85,7 +86,6 @@ export function Chart({
   const selectedTheme = useTheme(theme);
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const [activeLineIndex, setActiveLineIndex] = useState(-1);
   const [labelHeight, setLabelHeight] = useState(0);
 
   const {legend, setLegendHeight, height, width} = useLegend({
@@ -93,11 +93,6 @@ export function Chart({
     dimensions,
     showLegend,
     type: 'line',
-  });
-
-  useWatchColorVisionEvents({
-    type: COLOR_VISION_SINGLE_ITEM,
-    onIndexChange: ({detail}) => setActiveLineIndex(detail.index),
   });
 
   const tooltipId = useRef(uniqueId('lineChart'));
@@ -301,7 +296,6 @@ export function Chart({
         <g transform={`translate(0,${Margin.Top})`}>
           <YAxis
             ticks={ticks}
-            fontSize={fontSize}
             width={yAxisLabelWidth}
             textAlign={selectedTheme.grid.horizontalOverflow ? 'left' : 'right'}
             theme={theme}
@@ -328,48 +322,13 @@ export function Chart({
         )}
 
         <g transform={`translate(${chartStartPosition},${Margin.Top})`}>
-          {reversedSeries.map((singleSeries, index) => {
-            const {name, color, areaColor} = singleSeries;
-            const seriesGradientId = `${gradientId.current}-${index}`;
-
-            const lineColor = isGradientType(color)
-              ? `url(#${seriesGradientId})`
-              : color;
-
-            return (
-              <React.Fragment key={`${name}-${index}`}>
-                {isGradientType(color) ? (
-                  <defs>
-                    <LinearGradientWithStops
-                      id={seriesGradientId}
-                      gradient={color}
-                      gradientUnits="userSpaceOnUse"
-                      y1="100%"
-                      y2="0%"
-                    />
-                  </defs>
-                ) : null}
-                <Line
-                  activeLineIndex={activeLineIndex}
-                  color={lineColor}
-                  index={reversedSeries.length - 1 - index}
-                  isAnimated={isAnimated}
-                  lineGenerator={lineGenerator}
-                  series={singleSeries}
-                  theme={theme}
-                >
-                  {areaColor != null ? (
-                    <GradientArea
-                      series={singleSeries}
-                      yScale={yScale}
-                      xScale={xScale}
-                      hasSpline={selectedTheme.line.hasSpline}
-                    />
-                  ) : null}
-                </Line>
-              </React.Fragment>
-            );
-          })}
+          <Lines
+            gradientId={gradientId}
+            isAnimated={isAnimated}
+            lineGenerator={lineGenerator}
+            reversedSeries={reversedSeries}
+            theme={theme}
+          />
 
           <Points
             activeIndex={emptyState ? null : activeIndex}

@@ -1,11 +1,19 @@
 import type {DataSeries} from '@shopify/polaris-viz-core';
-import type {LabelFormatter} from 'types';
+import type {YAxisOptions} from 'types';
+
+type Shape = 'Line' | 'Bar';
 
 export interface MixedChartDataSeries {
-  shape: 'Line' | 'Bar';
+  shape: Shape;
   series: DataSeries[];
-  yAxisOptions?: {
-    labelFormatter?: LabelFormatter;
-    intergersOnly?: boolean;
-  };
+  yAxisOptions?: Partial<YAxisOptions>;
+}
+
+export interface Axis {
+  areAllValuesNegative: boolean;
+  areSomeValuesNegative: boolean;
+  index: number;
+  max: number;
+  min: number;
+  shape: Shape;
 }

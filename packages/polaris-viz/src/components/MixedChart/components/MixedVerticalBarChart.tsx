@@ -12,6 +12,7 @@ interface Props {
   data: MixedChartDataSeries;
   drawableHeight: number;
   drawableWidth: number;
+  yScale: any;
   theme?: string;
   xAxisOptions?: XAxisOptions;
 }
@@ -22,6 +23,7 @@ export function MixedVerticalBarChart({
   drawableWidth,
   theme,
   xAxisOptions,
+  yScale,
 }: Props) {
   const selectedTheme = useTheme(theme);
   const seriesColors = useThemeSeriesColors(data.series, selectedTheme);
@@ -43,8 +45,6 @@ export function MixedVerticalBarChart({
     ...series,
   }));
 
-  console.log(seriesWithDefaults);
-
   // TODO: This is probably wrong
   const labels = useMemo(() => {
     return getFormattedLabels({
@@ -54,12 +54,7 @@ export function MixedVerticalBarChart({
     });
   }, [seriesWithDefaults]);
 
-  const {
-    xScale,
-    gapWidth,
-    sortedData,
-    yScale: barYScale,
-  } = useVerticalBarChart({
+  const {xScale, gapWidth, sortedData} = useVerticalBarChart({
     data: seriesWithDefaults,
     drawableHeight,
     drawableWidth,
@@ -72,7 +67,6 @@ export function MixedVerticalBarChart({
   return (
     <VerticalBarGroups
       activeBarGroup={-1}
-      barColors={[]}
       data={seriesWithDefaults}
       drawableHeight={drawableHeight}
       gapWidth={gapWidth}
@@ -84,7 +78,7 @@ export function MixedVerticalBarChart({
       theme={theme}
       xScale={xScale}
       yAxisOptions={yAxisOptionsForChart}
-      yScale={barYScale}
+      yScale={yScale}
     />
   );
 }
