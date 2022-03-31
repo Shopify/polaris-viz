@@ -68,7 +68,7 @@ export const ChartContainer = (props: Props) => {
 
     if (chartDimensions === null) {
       setChartDimensions({
-        width: 100,
+        width: 0,
         height: props.sparkChart
           ? chartContainer.sparkChartMinHeight
           : chartContainer.chartMinHeight,
@@ -104,6 +104,9 @@ export const ChartContainer = (props: Props) => {
           background: chartContainer.backgroundColor,
           padding: chartContainer.padding,
           borderRadius: chartContainer.borderRadius,
+          minHeight: props.sparkChart
+            ? chartContainer.sparkChartMinHeight
+            : chartContainer.chartMinHeight,
         }}
         ref={setRef}
         id={`chart_${value.id}`}
