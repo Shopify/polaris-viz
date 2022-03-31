@@ -139,7 +139,7 @@ export const DEFAULT_THEME: Theme = {
     padding: '0px',
     backgroundColor: variables.colorGray160,
     sparkChartMinHeight: 40,
-    chartMinHeight: 500,
+    chartMinHeight: 300,
   },
   line: {
     sparkArea: [

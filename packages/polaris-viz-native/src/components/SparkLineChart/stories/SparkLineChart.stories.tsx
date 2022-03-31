@@ -56,7 +56,11 @@ export default {
     },
     native: true,
   },
-  decorators: [(Story: any) => <div>{Story()}</div>],
+  decorators: [
+    (Story: any) => (
+      <div style={{width: '200px', height: '100px'}}>{Story()}</div>
+    ),
+  ],
   argTypes: {
     data: {
       description:
@@ -82,11 +86,7 @@ export default {
 } as Meta;
 
 const Template: Story<SparkLineChartProps> = (args: SparkLineChartProps) => {
-  return (
-    <div style={{width: '160px', height: '60px'}}>
-      <SparkLineChart {...args} />
-    </div>
-  );
+  return <SparkLineChart {...args} />;
 };
 
 const defaultProps: SparkLineChartProps = {
