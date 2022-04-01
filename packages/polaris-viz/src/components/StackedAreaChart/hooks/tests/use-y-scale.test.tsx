@@ -17,6 +17,13 @@ jest.mock('d3-scale', () => ({
   }),
 }));
 
+jest.mock('../../../../utilities', () => {
+  return {
+    ...jest.requireActual('../../../../utilities'),
+    estimateStringWidth: () => 0,
+  };
+});
+
 const mockData = [
   [
     [649, 1151],

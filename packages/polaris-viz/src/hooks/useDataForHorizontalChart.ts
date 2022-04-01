@@ -1,13 +1,10 @@
-import {useMemo} from 'react';
+import {useContext, useMemo} from 'react';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
-import {
-  FONT_SIZE,
-  FONT_SIZE_PADDING,
-  HORIZONTAL_BAR_LABEL_OFFSET,
-} from '../constants';
-import {getTextWidth} from '../utilities';
+import {HORIZONTAL_BAR_LABEL_OFFSET} from '../constants';
+import {estimateStringWidth} from '../utilities';
 import type {LabelFormatter} from '../types';
+import {ChartContext} from '../components';
 
 interface Props {
   data: DataSeries[];
@@ -22,6 +19,8 @@ export function useDataForHorizontalChart({
   isStacked,
   labelFormatter,
 }: Props) {
+  const {characterWidths} = useContext(ChartContext);
+
   const allNumbers = useMemo(() => {
     return data.reduce<number[]>((prev, cur) => {
       const numbers = cur.data
@@ -39,29 +38,34 @@ export function useDataForHorizontalChart({
       return {positive: 0, negative: 0};
     }
 
-    const fontSize = FONT_SIZE + FONT_SIZE_PADDING;
-
     const negativeTextSize =
       lowestNegative >= 0
         ? 0
-        : getTextWidth({
-            text: `${labelFormatter(lowestNegative)}`,
-            fontSize,
-          }) + HORIZONTAL_BAR_LABEL_OFFSET;
+        : estimateStringWidth(
+            `${labelFormatter(lowestNegative)}`,
+            characterWidths,
+          ) + HORIZONTAL_BAR_LABEL_OFFSET;
 
     const positiveTextSize =
       highestPositive < 0
         ? 0
-        : getTextWidth({
-            text: `${labelFormatter(highestPositive)}`,
-            fontSize,
-          }) + HORIZONTAL_BAR_LABEL_OFFSET;
+        : estimateStringWidth(
+            `${labelFormatter(highestPositive)}`,
+            characterWidths,
+          ) + HORIZONTAL_BAR_LABEL_OFFSET;
 
     return {
       negative: negativeTextSize,
       positive: positiveTextSize,
     };
-  }, [labelFormatter, isSimple, isStacked, highestPositive, lowestNegative]);
+  }, [
+    labelFormatter,
+    isSimple,
+    isStacked,
+    highestPositive,
+    lowestNegative,
+    characterWidths,
+  ]);
 
   const areAllNegative = useMemo(() => {
     return !allNumbers.some((num) => {

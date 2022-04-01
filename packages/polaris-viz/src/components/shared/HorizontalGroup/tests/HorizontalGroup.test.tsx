@@ -11,6 +11,13 @@ jest.mock('d3-scale', () => ({
   scaleLinear: jest.requireActual('d3-scale').scaleLinear,
 }));
 
+jest.mock('../../../../utilities', () => {
+  return {
+    ...jest.requireActual('../../../../utilities'),
+    estimateStringWidth: () => 0,
+  };
+});
+
 const DATA = [
   {
     name: 'Group 1',

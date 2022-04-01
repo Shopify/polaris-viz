@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useContext} from 'react';
 
+import {ChartContext} from '../../../components/ChartContainer';
+import {estimateStringWidth} from '../../../utilities';
 import {useTheme} from '../../../hooks';
 import {FONT_SIZE, HORIZONTAL_GROUP_LABEL_HEIGHT} from '../../../constants';
-import {getTextWidth} from '../../../utilities';
 
 import styles from './GroupLabel.scss';
 
@@ -21,7 +22,9 @@ export function GroupLabel({
   theme,
   zeroPosition,
 }: GroupLabelProps) {
-  const labelWidth = getTextWidth({text: label, fontSize: FONT_SIZE});
+  const {characterWidths} = useContext(ChartContext);
+
+  const labelWidth = estimateStringWidth(label, characterWidths);
   const selectedTheme = useTheme(theme);
 
   const maxWidth = areAllNegative

@@ -11,6 +11,13 @@ import {
   Label,
 } from '../../shared';
 
+jest.mock('../../../utilities', () => {
+  return {
+    ...jest.requireActual('../../../utilities'),
+    estimateStringWidth: () => 0,
+  };
+});
+
 const SERIES: DataSeries[] = [
   {
     name: 'Group 1',

@@ -24,6 +24,7 @@ const ZERO_AS_MIN_HEIGHT_THEME = {
 jest.mock('../../../utilities', () => {
   return {
     ...jest.requireActual('../../../utilities'),
+    estimateStringWidth: () => 0,
     eventPointNative: () => {
       return {clientX: 0, clientY: 0, svgX: 100, svgY: 100};
     },

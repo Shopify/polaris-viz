@@ -19,6 +19,7 @@ import {Chart, Props} from '../Chart';
 jest.mock('../../../utilities', () => {
   return {
     ...jest.requireActual('../../../utilities'),
+    estimateStringWidth: () => 0,
     getPathLength: () => 0,
     getPointAtLength: jest.fn(() => ({x: 0, y: 0})),
     eventPointNative: () => {
@@ -89,9 +90,9 @@ describe('<Chart />', () => {
     const chart = mount(<Chart {...mockProps} />);
     expect(chart).toContainReactComponent(YAxis, {
       ticks: [
-        {value: 0, formattedValue: '0', yOffset: 198},
-        {value: 500, formattedValue: '500', yOffset: 108.56910569105692},
-        {value: 1000, formattedValue: '1000', yOffset: 19.13821138211383},
+        {value: 0, formattedValue: '0', yOffset: 212},
+        {value: 500, formattedValue: '500', yOffset: 116.2457091237579},
+        {value: 1000, formattedValue: '1000', yOffset: 20.491418247515817},
       ],
     });
   });

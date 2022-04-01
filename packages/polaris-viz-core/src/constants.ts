@@ -22,8 +22,6 @@ export const BAR_ANIMATION_HEIGHT_BUFFER = 20;
 export const DEFAULT_BORDER_RADIUS = 3;
 export const MIN_WIDTH_BORDER_RADIUS = 2;
 
-export const FONT_SIZE_PADDING = 1;
-
 export const HORIZONTAL_BAR_LABEL_HEIGHT = 12;
 export const HORIZONTAL_BAR_LABEL_OFFSET = 10;
 export const HORIZONTAL_GROUP_LABEL_HEIGHT = 20;
@@ -37,8 +35,6 @@ export const LINE_ANIMATION_SLOW_DURATION = 325;
 export const LINE_ANIMATION_FAST_COUNT = 10;
 export const LINE_ANIMATION_DURATION_STEP = 25;
 export const BELOW_X_AXIS_MARGIN = 24;
-export const SMALL_SCREEN = 500;
-export const SMALL_FONT_SIZE = 10;
 export const DIAGONAL_ANGLE = -40;
 export const MIN_HORIZONTAL_LABEL_SPACE = 25;
 export const DEFAULT_LABEL_RATIO = 2;
