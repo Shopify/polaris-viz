@@ -1,19 +1,18 @@
-import {useMemo} from 'react';
+import {useContext, useMemo} from 'react';
 import {scaleLinear} from 'd3-scale';
 import type {Series} from 'd3-shape';
 
-import {getTextWidth, shouldRoundScaleUp} from '../../../utilities';
+import {ChartContext} from '../../../components/ChartContainer';
+import {estimateStringWidth, shouldRoundScaleUp} from '../../../utilities';
 import {MIN_Y_LABEL_SPACE} from '../constants';
 import {DEFAULT_MAX_Y} from '../../../constants';
 import type {NumberLabelFormatter} from '../../../types';
 
 export function useYScale({
-  fontSize,
   drawableHeight,
   stackedValues,
   formatYAxisLabel,
 }: {
-  fontSize: number;
   drawableHeight: number;
   stackedValues: Series<
     {
@@ -23,6 +22,8 @@ export function useYScale({
   >[];
   formatYAxisLabel: NumberLabelFormatter;
 }) {
+  const {characterWidths} = useContext(ChartContext);
+
   const {yScale, ticks, yAxisLabelWidth} = useMemo(() => {
     const minY = Math.min(
       ...stackedValues.map((value) => {
@@ -73,14 +74,14 @@ export function useYScale({
 
     const maxTickWidth = Math.max(
       ...ticks.map(({formattedValue}) =>
-        getTextWidth({fontSize, text: formattedValue}),
+        estimateStringWidth(formattedValue, characterWidths),
       ),
     );
 
     const yAxisLabelWidth = maxTickWidth;
 
     return {yScale, ticks, yAxisLabelWidth};
-  }, [stackedValues, drawableHeight, formatYAxisLabel, fontSize]);
+  }, [stackedValues, drawableHeight, formatYAxisLabel, characterWidths]);
 
   return {yScale, ticks, yAxisLabelWidth};
 }

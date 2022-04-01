@@ -21,6 +21,7 @@ jest.mock('d3-scale', () => ({
 
 jest.mock('../../../../utilities', () => ({
   ...jest.requireActual('../../../../utilities'),
+  estimateStringWidth: () => 0,
   shouldRoundScaleUp: jest.fn(() => true),
 }));
 

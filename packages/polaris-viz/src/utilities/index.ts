@@ -1,9 +1,6 @@
 export {eventPoint, eventPointNative} from './event-point';
-export {getTextWidth, getTextHeight} from './get-text-dimensions';
 export {clamp} from './clamp';
-export {getTextContainerHeight} from './get-text-container-height';
 export {RightAngleTriangle} from './RightAngleTriangle';
-export {getLongestLabelDetails} from './get-longest-label-details';
 export {getMaxDiagonalDetails} from './get-max-diagonal-details';
 export {getPathLength} from './get-path-length';
 export {getPointAtLength} from './get-point-at-length';

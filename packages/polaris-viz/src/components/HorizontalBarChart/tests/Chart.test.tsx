@@ -21,6 +21,10 @@ jest.mock('../../Labels/utilities/get-widest-label', () => {
   };
 });
 
+jest.mock('../../../utilities/estimate-string-width', () => ({
+  estimateStringWidth: jest.fn(() => 100),
+}));
+
 const DATA: DataSeries[] = [
   {
     name: 'Group 1',

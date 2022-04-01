@@ -1,4 +1,4 @@
-import React, {useState, useMemo} from 'react';
+import React, {useState, useMemo, useContext} from 'react';
 import {uniqueId, DataType} from '@shopify/polaris-viz-core';
 import type {
   DataSeries,
@@ -7,6 +7,7 @@ import type {
 } from '@shopify/polaris-viz-core';
 import type {AnnotationLookupTable} from 'components/BarChart/types';
 
+import {ChartContext} from '../../components/ChartContainer';
 import {BarChartXAxisLabels} from '../BarChartXAxisLabels';
 import {LegendContainer, useLegend} from '../LegendContainer';
 import {GradientDefs} from '../shared';
@@ -27,10 +28,10 @@ import {
   TOOLTIP_POSITION_DEFAULT_RETURN,
 } from '../TooltipWrapper';
 import {
-  getTextWidth,
   shouldRotateZeroBars,
   eventPointNative,
   getStackedValues,
+  estimateStringWidth,
 } from '../../utilities';
 import {YAxis} from '../YAxis';
 import {HorizontalGridLines} from '../HorizontalGridLines';
@@ -51,12 +52,7 @@ import {AnnotationLine} from '../BarChart';
 
 import {BarGroup, StackedBarGroups} from './components';
 import {useYScale, useXScale} from './hooks';
-import {
-  FONT_SIZE,
-  SMALL_WIDTH,
-  SMALL_FONT_SIZE,
-  BAR_SPACING,
-} from './constants';
+import {BAR_SPACING} from './constants';
 import styles from './Chart.scss';
 
 export interface Props {
@@ -89,6 +85,7 @@ export function Chart({
   useColorVisionEvents(data.length > 1);
 
   const selectedTheme = useTheme(theme);
+  const {characterWidths} = useContext(ChartContext);
   const [activeBarGroup, setActiveBarGroup] = useState<number>(-1);
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
   const id = useMemo(() => uniqueId('VerticalBarChart'), []);
@@ -106,8 +103,6 @@ export function Chart({
     dimensions,
     showLegend,
   });
-
-  const fontSize = width < SMALL_WIDTH ? SMALL_FONT_SIZE : FONT_SIZE;
 
   const emptyState = data.length === 0;
 
@@ -144,15 +139,12 @@ export function Chart({
   const yAxisLabelWidth = useMemo(() => {
     const longest = Math.max(
       ...initialTicks.map(({formattedValue}) =>
-        getTextWidth({
-          text: formattedValue,
-          fontSize,
-        }),
+        estimateStringWidth(formattedValue, characterWidths),
       ),
     );
 
     return longest;
-  }, [fontSize, initialTicks]);
+  }, [characterWidths, initialTicks]);
 
   const horizontalMargin = selectedTheme.grid.horizontalMargin;
   const chartStartPosition =
@@ -273,7 +265,6 @@ export function Chart({
         <g transform={`translate(0,${Margin.Top})`} aria-hidden="true">
           <YAxis
             ticks={ticks}
-            fontSize={fontSize}
             textAlign="right"
             width={yAxisLabelWidth}
             theme={theme}

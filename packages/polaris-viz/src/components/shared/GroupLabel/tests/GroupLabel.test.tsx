@@ -4,8 +4,8 @@ import {mount} from '@shopify/react-testing';
 import {GroupLabel} from '../GroupLabel';
 import type {GroupLabelProps} from '../GroupLabel';
 
-jest.mock('../../../../utilities/get-text-dimensions', () => ({
-  getTextWidth: jest.fn(() => 100),
+jest.mock('../../../../utilities/estimate-string-width', () => ({
+  estimateStringWidth: jest.fn(() => 100),
 }));
 
 const MOCK_PROPS: GroupLabelProps = {

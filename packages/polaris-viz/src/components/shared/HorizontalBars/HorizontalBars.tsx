@@ -1,18 +1,16 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 import {RoundedBorder} from '@shopify/polaris-viz-core';
 
+import {estimateStringWidth} from '../../../utilities';
 import {
   COLOR_VISION_SINGLE_ITEM,
-  FONT_SIZE,
-  FONT_SIZE_PADDING,
   HORIZONTAL_BAR_LABEL_OFFSET,
   HORIZONTAL_GROUP_LABEL_HEIGHT,
   HORIZONTAL_SPACE_BETWEEN_SINGLE,
 } from '../../../constants';
 import type {LabelFormatter} from '../../../types';
-import {getTextWidth} from '../../../utilities';
 import {
   useTheme,
   useWatchColorVisionEvents,
@@ -20,6 +18,7 @@ import {
 } from '../../../hooks';
 import {Bar} from '../Bar';
 import {getGradientDefId} from '../GradientDefs';
+import {ChartContext} from '../../../components/ChartContainer';
 
 import {Label} from './components';
 import styles from './HorizontalBars.scss';
@@ -56,6 +55,7 @@ export function HorizontalBars({
   zeroPosition,
 }: HorizontalBarsProps) {
   const selectedTheme = useTheme(theme);
+  const {characterWidths} = useContext(ChartContext);
 
   const [activeBarIndex, setActiveBarIndex] = useState(-1);
 
@@ -85,10 +85,7 @@ export function HorizontalBars({
           data[seriesIndex] ? data[seriesIndex].name : ''
         } ${value}`;
 
-        const labelWidth = getTextWidth({
-          text: `${label}`,
-          fontSize: FONT_SIZE + FONT_SIZE_PADDING,
-        });
+        const labelWidth = estimateStringWidth(`${label}`, characterWidths);
 
         const leftLabelOffset = isSimple
           ? labelWidth + HORIZONTAL_BAR_LABEL_OFFSET
