@@ -1,14 +1,11 @@
 export {eventPoint, eventPointNative} from './event-point';
 export {clamp} from './clamp';
-export {RightAngleTriangle} from './RightAngleTriangle';
-export {getMaxDiagonalDetails} from './get-max-diagonal-details';
 export {getPathLength} from './get-path-length';
 export {getPointAtLength} from './get-point-at-length';
 export {normalizeData} from './normalize-data';
 export {createCSSGradient} from './create-css-gradient';
 export {shouldRoundScaleUp} from './should-round-scale-up';
 export {shouldRotateZeroBars} from './should-rotate-zero-bars';
-export {isNumber} from './is-number';
 export {classNames} from './classnames';
 export {
   changeColorOpacity,
