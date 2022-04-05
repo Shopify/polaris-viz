@@ -4,10 +4,10 @@ import {
   useTheme,
   LINEAR_LABELS_INNER_PADDING,
 } from '@shopify/polaris-viz-core';
+import type {XAxisOptions} from '@shopify/polaris-viz-core';
 
 import {HORIZONTAL_LABEL_MIN_WIDTH} from '../constants';
 import {estimateStringWidth, clamp} from '../utilities';
-import type {LinearXAxisOptions} from '../types';
 import {ChartContext} from '../components';
 
 import {useLinearXScale} from './useLinearXScale';
@@ -18,7 +18,7 @@ interface Props {
   longestSeriesLength: number;
   width: number;
   labels: string[];
-  xAxisOptions: LinearXAxisOptions;
+  xAxisOptions: Required<XAxisOptions>;
   yAxisLabelWidth: number;
   theme?: string;
 }

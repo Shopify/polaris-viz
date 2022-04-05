@@ -24,7 +24,6 @@ export const LargeDataSet: Story<LineChartProps> = Template.bind({});
 LargeDataSet.args = {
   data: HOURLY_DATA,
   xAxisOptions: {
-    xAxisLabels: HOURLY_DATA[0].data.map(({key}) => key),
     labelFormatter: formatHourlyLabel,
   },
 };

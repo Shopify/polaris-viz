@@ -4,6 +4,7 @@ import type {
   DataSeries,
   ChartType,
   Dimensions,
+  XAxisOptions,
 } from '@shopify/polaris-viz-core';
 
 import {HorizontalBarChartXAxisLabels} from '../HorizontalBarChartXAxisLabels';
@@ -38,7 +39,6 @@ import {
 import type {
   AnnotationLookupTable,
   RenderTooltipContentData,
-  XAxisOptions,
 } from '../BarChart';
 import {AnnotationLine} from '../BarChart';
 
@@ -332,7 +332,7 @@ export function Chart({
     }
 
     const highestValue = highestValueForSeries[index];
-    const x = xScale(highestValue);
+    const x = chartStartPosition + xScale(highestValue);
 
     return {
       x: highestValue < 0 ? -x : x,

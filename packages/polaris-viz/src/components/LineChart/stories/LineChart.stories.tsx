@@ -5,14 +5,13 @@ import {LineChart, LineChartProps} from '../LineChart';
 import styles from './LineChart.stories.scss';
 import {
   data,
-  xAxisLabels,
   formatXAxisLabel,
   formatYAxisLabel,
   renderTooltipContent,
 } from './utils.stories';
 import {LEGEND_CONTROL_ARGS, THEME_CONTROL_ARGS} from '../../../storybook';
 
-import {generateMultipleSeries, generateLabels} from '../../Docs/utilities';
+import {generateMultipleSeries} from '../../Docs/utilities';
 
 const TOOLTIP_CONTENT = {
   empty: undefined,
@@ -107,7 +106,6 @@ export const Default: Story<LineChartProps> = Template.bind({});
 Default.args = {
   data,
   xAxisOptions: {
-    xAxisLabels,
     labelFormatter: formatXAxisLabel,
   },
   yAxisOptions: {labelFormatter: formatYAxisLabel},
@@ -118,7 +116,6 @@ export const HideXAxisLabels: Story<LineChartProps> = Template.bind({});
 HideXAxisLabels.args = {
   data,
   xAxisOptions: {
-    xAxisLabels,
     labelFormatter: formatXAxisLabel,
     hide: true,
   },
@@ -131,7 +128,6 @@ NoOverflowStyle.args = {
   theme: 'NoOverflow',
   data,
   xAxisOptions: {
-    xAxisLabels,
     labelFormatter: formatXAxisLabel,
   },
   yAxisOptions: {labelFormatter: formatYAxisLabel},
@@ -155,7 +151,6 @@ IntegersOnly.args = {
     },
   ],
   xAxisOptions: {
-    xAxisLabels,
     labelFormatter: formatXAxisLabel,
   },
   yAxisOptions: {integersOnly: true},
@@ -179,7 +174,6 @@ NoArea.args = {
     },
   ],
   xAxisOptions: {
-    xAxisLabels,
     labelFormatter: formatXAxisLabel,
   },
   renderTooltipContent,
@@ -203,7 +197,6 @@ OverwrittenSeriesColors.args = {
     },
   ],
   xAxisOptions: {
-    xAxisLabels,
     labelFormatter: formatXAxisLabel,
   },
   renderTooltipContent,
@@ -213,9 +206,6 @@ export const SeriesColorsUpToFour: Story<LineChartProps> = Template.bind({});
 
 SeriesColorsUpToFour.args = {
   data: generateMultipleSeries(4),
-  xAxisOptions: {
-    xAxisLabels: generateLabels(10),
-  },
   renderTooltipContent,
   isAnimated: true,
 };
@@ -226,9 +216,6 @@ export const SeriesColorsFromFiveToSeven: Story<LineChartProps> = Template.bind(
 
 SeriesColorsFromFiveToSeven.args = {
   data: generateMultipleSeries(7),
-  xAxisOptions: {
-    xAxisLabels: generateLabels(10),
-  },
   renderTooltipContent,
 };
 
@@ -238,8 +225,5 @@ export const SeriesColorsUpToFourteen: Story<LineChartProps> = Template.bind(
 
 SeriesColorsUpToFourteen.args = {
   data: generateMultipleSeries(14),
-  xAxisOptions: {
-    xAxisLabels: generateLabels(10),
-  },
   renderTooltipContent,
 };

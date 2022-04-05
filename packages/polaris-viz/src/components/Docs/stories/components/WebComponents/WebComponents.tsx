@@ -90,9 +90,6 @@ export function WebComponents() {
                   ],
                 },
               ]}
-              xAxisOptions={{
-                xAxisLabels: ['Jan. 1', 'Jan. 2', 'Jan. 3', 'Jan. 4', 'Jan. 5'],
-              }}
             />
           }
         />
@@ -103,17 +100,6 @@ export function WebComponents() {
           chart={
             <StackedAreaChart
               isAnimated
-              xAxisOptions={{
-                xAxisLabels: [
-                  'January',
-                  'February',
-                  'March',
-                  'April',
-                  'May',
-                  'June',
-                  'July',
-                ],
-              }}
               data={[
                 {
                   name: 'First-time',

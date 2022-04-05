@@ -1,9 +1,8 @@
 import {useContext, useMemo} from 'react';
-import type {DataSeries} from '@shopify/polaris-viz-core';
+import type {DataSeries, LabelFormatter} from '@shopify/polaris-viz-core';
 
 import {HORIZONTAL_BAR_LABEL_OFFSET} from '../constants';
 import {estimateStringWidth} from '../utilities';
-import type {LabelFormatter} from '../types';
 import {ChartContext} from '../components';
 
 interface Props {

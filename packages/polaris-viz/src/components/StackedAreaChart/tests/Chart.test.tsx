@@ -44,11 +44,6 @@ describe('<Chart />', () => {
         data: [
           {key: '1', value: 502},
           {key: '2', value: 1000},
-          {key: '3', value: 2000},
-          {key: '4', value: 1000},
-          {key: '5', value: 100},
-          {key: '6', value: 1000},
-          {key: '7', value: 5000},
         ],
         color: 'purple',
       },
@@ -57,22 +52,16 @@ describe('<Chart />', () => {
         data: [
           {key: '1', value: 106},
           {key: '2', value: 107},
-          {key: '3', value: 111},
-          {key: '4', value: 133},
-          {key: '5', value: 100},
-          {key: '6', value: 767},
-          {key: '7', value: 1766},
         ],
         color: 'teal',
       },
     ],
     xAxisOptions: {
-      xAxisLabels: ['Day 1', 'Day 2'],
       hide: false,
-      labelFormatter: (value) => `${value}`,
+      labelFormatter: (value) => `Day ${value}`,
     },
     yAxisOptions: {
-      labelFormatter: (val: number) => val.toString(),
+      labelFormatter: (value) => value.toString(),
       integersOnly: false,
     },
     dimensions: {width: 500, height: 250},
@@ -183,7 +172,9 @@ describe('<Chart />', () => {
 
     expect(chart).toContainReactComponent(VisuallyHiddenRows, {
       data: mockProps.data,
-      xAxisLabels: mockProps.xAxisOptions.xAxisLabels,
+      xAxisLabels: mockProps.data[0].data.map(({key}) =>
+        mockProps.xAxisOptions.labelFormatter(key),
+      ),
     });
   });
 
