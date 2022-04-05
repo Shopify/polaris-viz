@@ -117,4 +117,5 @@ export type {
   XAxisOptions,
   YAxisOptions,
   LabelFormatter,
+  Shape,
 } from './types';

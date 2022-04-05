@@ -6,7 +6,7 @@ import {
   uniqueId,
 } from '@shopify/polaris-viz-core';
 
-import {XMLNS} from '../../constants';
+import {PREVIEW_ICON_SIZE, XMLNS} from '../../constants';
 
 import {
   DASHED_STROKE_DASHARRAY,
@@ -16,12 +16,14 @@ import {
 } from './constants';
 import styles from './LinePreview.scss';
 
-interface Props {
+export interface LinePreviewProps {
   color: Color;
   lineStyle: LineStyle;
 }
 
-export function LinePreview({color, lineStyle}: Props) {
+const HEIGHT = 2;
+
+export function LinePreview({color, lineStyle}: LinePreviewProps) {
   const gradientId = useRef(uniqueId('linePreviewGradient'));
 
   const linePreviewColor = isGradientType(color)
@@ -29,8 +31,12 @@ export function LinePreview({color, lineStyle}: Props) {
     : color;
 
   return (
-    <span className={styles.Container}>
-      <svg xmlns={XMLNS} width="15px" height="5px">
+    <span className={styles.Container} style={{height: HEIGHT}}>
+      <svg
+        xmlns={XMLNS}
+        width={`${PREVIEW_ICON_SIZE}px`}
+        height={`${HEIGHT}px`}
+      >
         {isGradientType(color) ? (
           <defs>
             <LinearGradientWithStops

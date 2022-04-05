@@ -4,32 +4,38 @@ import type {Story, Meta} from '@storybook/react';
 import {StackedAreaChart, StackedAreaChartProps} from '../StackedAreaChart';
 
 import {data, formatYAxisLabel} from './utils.stories';
-import {LEGEND_CONTROL_ARGS, THEME_CONTROL_ARGS} from '../../../storybook';
+import {
+  LEGEND_CONTROL_ARGS,
+  RENDER_TOOLTIP_DESCRIPTION,
+  THEME_CONTROL_ARGS,
+} from '../../../storybook';
 
 import {generateMultipleSeries} from '../../Docs/utilities';
-import type {RenderTooltipContentData} from '../types';
+import type {RenderTooltipContentData} from '../../../types';
 
 import {PageWithSizingInfo} from '../../Docs/stories/components/PageWithSizingInfo';
 
 const TOOLTIP_CONTENT = {
   empty: undefined,
-  Custom: ({data}: RenderTooltipContentData) => (
-    <div
-      style={{
-        background: 'black',
-        color: 'white',
-        padding: '10px',
-        borderRadius: '10px',
-        display: 'flex',
-        flexDirection: 'column',
-        fontSize: 12,
-      }}
-    >
-      {data.map((x) => (
-        <div>{`${x.label}: ${x.value}`}</div>
-      ))}
-    </div>
-  ),
+  Custom: ({data}: RenderTooltipContentData) => {
+    return (
+      <div
+        style={{
+          background: 'black',
+          color: 'white',
+          padding: '10px',
+          borderRadius: '10px',
+          display: 'flex',
+          flexDirection: 'column',
+          fontSize: 12,
+        }}
+      >
+        {data[0].data.map(({key, value}) => (
+          <div>{`${key}: ${value}`}</div>
+        ))}
+      </div>
+    );
+  },
 };
 
 export default {
@@ -45,6 +51,7 @@ export default {
       },
     },
   },
+  decorators: [(Story) => <div style={{height: 400}}>{Story()}</div>],
   argTypes: {
     data: {
       description:
@@ -72,8 +79,7 @@ export default {
           Annotation: 'Custom',
         },
       },
-      description:
-        'This accepts a function that is called to render the tooltip content. By default it calls `formatXAxisLabel` and `formatYAxisLabel` to format the the tooltip values and passes them to the tooltip. [TooltipData type definition.]()',
+      description: RENDER_TOOLTIP_DESCRIPTION,
     },
     skipLinkText: {
       description:

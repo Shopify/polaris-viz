@@ -6,12 +6,14 @@ import type {
   YAxisOptions,
 } from '@shopify/polaris-viz-core';
 
+import {getXAxisOptions, getYAxisOptions} from '../../utilities';
+import {formatTooltipDataForLinearCharts} from '../../utilities/format-tooltip-data-for-linear-charts';
+import {TooltipContent} from '../';
 import {ChartContainer} from '../ChartContainer';
 import {SkipLink} from '../SkipLink';
-import {TooltipContent} from '../TooltipContent';
+import type {RenderTooltipContentData} from '../../types';
 
 import {Chart} from './Chart';
-import type {RenderTooltipContentData} from './types';
 
 export interface StackedAreaChartProps {
   renderTooltipContent?(data: RenderTooltipContentData): React.ReactNode;
@@ -40,27 +42,22 @@ export function StackedAreaChart({
     return null;
   }
 
-  const xAxisOptionsWithDefaults: Required<XAxisOptions> = {
-    labelFormatter: (value: string) => value,
-    hide: false,
-    ...xAxisOptions,
-  };
+  const xAxisOptionsWithDefaults = getXAxisOptions(xAxisOptions);
+  const yAxisOptionsWithDefaults = getYAxisOptions(yAxisOptions);
 
-  const yAxisOptionsWithDefaults: Required<YAxisOptions> = {
-    labelFormatter: (value: number) => value.toString(),
-    integersOnly: false,
-    ...yAxisOptions,
-  };
+  function renderDefaultTooltipContent(tooltipData: RenderTooltipContentData) {
+    if (renderTooltipContent != null) {
+      return renderTooltipContent({
+        ...tooltipData,
+        dataSeries: data,
+      });
+    }
 
-  function renderDefaultTooltipContent({
-    title,
-    data,
-  }: RenderTooltipContentData) {
-    const formattedData = data.map(({color, label, value}) => ({
-      color,
-      label,
-      value: yAxisOptionsWithDefaults.labelFormatter(value),
-    }));
+    const {formattedData, title} = formatTooltipDataForLinearCharts({
+      data: tooltipData,
+      xAxisOptions: xAxisOptionsWithDefaults,
+      yAxisOptions: yAxisOptionsWithDefaults,
+    });
 
     return <TooltipContent theme={theme} title={title} data={formattedData} />;
   }

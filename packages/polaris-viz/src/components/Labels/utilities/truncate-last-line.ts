@@ -1,4 +1,4 @@
-import type {CharacterWidths} from 'types';
+import type {CharacterWidths} from '../../../types';
 
 import {estimateTextHeight} from './estimate-text-height';
 import {formatAndAddEllipsis} from './format-and-add-ellipsis';

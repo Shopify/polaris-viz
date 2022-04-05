@@ -5,10 +5,10 @@
   top: 1px; // so the focus outline is visible
   left: 1px; // so the focus outline is visible
   background: $color-white;
-  box-shadow: $button-drop-shadow;
-  border-radius: $border-radius-base;
-  color: $color-ink;
-  border: 1px solid $border-subdued;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+  border-radius: 0.4rem;
+  color: rgb(33, 43, 54);
+  border: 1px solid rgba(186, 191, 195, 1);
   padding: $spacing-tight $spacing-base;
   opacity: 0;
   pointer-events: none;

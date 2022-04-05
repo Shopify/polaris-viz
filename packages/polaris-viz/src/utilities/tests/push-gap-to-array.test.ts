@@ -1,5 +1,4 @@
-import type {StackedBarGapDirections} from 'types';
-
+import type {StackedBarGapDirections} from '../../types';
 import {pushGapToArray} from '../push-gap-to-array';
 
 const GAPS: StackedBarGapDirections = {

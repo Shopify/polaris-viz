@@ -131,8 +131,8 @@ export const DEFAULT_THEME: Theme = {
   },
   tooltip: {
     backgroundColor: variables.colorGray150,
-    valueColor: variables.colorGray00,
-    labelColor: variables.colorGray30,
+    textColor: variables.colorWhite,
+    titleColor: variables.colorGray50,
   },
   chartContainer: {
     borderRadius: '0px',
@@ -227,8 +227,8 @@ export const LIGHT_THEME: Theme = {
   },
   tooltip: {
     backgroundColor: variables.colorGray00,
-    valueColor: variables.colorGray160,
-    labelColor: variables.colorGray100,
+    textColor: variables.colorGray160,
+    titleColor: variables.colorGray100,
   },
   chartContainer: {
     ...DEFAULT_THEME.chartContainer,

@@ -46,6 +46,11 @@ const MOCK_PROPS: ChartProps = {
   data: SERIES,
   xAxisOptions: {
     labelFormatter: (value) => `${value}`,
+    hide: false,
+  },
+  yAxisOptions: {
+    labelFormatter: (value) => `${value}`,
+    integersOnly: false,
   },
   type: 'default',
   showLegend: true,

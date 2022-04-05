@@ -1,2 +1,2 @@
-export {DefaultRow} from './DefaultRow';
-export {AnnotationRow} from './AnnotationRow';
+export {TooltipRow} from './TooltipRow';
+export {Annotations} from './Annotations';

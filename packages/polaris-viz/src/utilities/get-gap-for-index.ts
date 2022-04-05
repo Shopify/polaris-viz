@@ -1,4 +1,4 @@
-import type {StackedBarGapDirections} from 'types';
+import type {StackedBarGapDirections} from '../types';
 
 interface Props {
   gaps: StackedBarGapDirections;

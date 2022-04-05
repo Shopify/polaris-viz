@@ -1,4 +1,4 @@
-import React, {useState, useRef, useMemo, useCallback} from 'react';
+import React, {useState, useRef, useMemo} from 'react';
 import {line} from 'd3-shape';
 import {
   LinearGradientWithStops,
@@ -14,6 +14,7 @@ import type {
   YAxisOptions,
 } from '@shopify/polaris-viz-core';
 
+import type {RenderTooltipContentData} from '../../types';
 import {useXAxisLabels} from '../../hooks/useXAxisLabels';
 import {LinearXAxisLabels} from '../LinearXAxisLabels';
 import {useLegend, LegendContainer} from '../LegendContainer';
@@ -44,13 +45,10 @@ import {YAxis} from '../YAxis';
 import {Crosshair} from '../Crosshair';
 import {HorizontalGridLines} from '../HorizontalGridLines';
 
+import {useLineChartTooltipContent} from './hooks/useLineChartTooltipContent';
 import {Points, Line, GradientArea} from './components';
 import {MAX_ANIMATED_SERIES_LENGTH} from './constants';
-import type {
-  RenderTooltipContentData,
-  TooltipData,
-  DataWithDefaults,
-} from './types';
+import type {DataWithDefaults} from './types';
 import {useYScale, useFormatData} from './hooks';
 import styles from './Chart.scss';
 
@@ -135,36 +133,6 @@ export function Chart({
       yAxisLabelWidth,
     });
 
-  const getTooltipMarkup = useCallback(
-    (index: number) => {
-      const content = data.reduce<TooltipData[]>(
-        (accumulator, {data, name, color, lineStyle}) => {
-          const currentDataPoint = data[index];
-          if (currentDataPoint != null) {
-            accumulator.push({
-              point: {
-                label: `${currentDataPoint.key}`,
-                value: currentDataPoint.value ?? 0,
-              },
-              name: name ?? '',
-              color,
-              lineStyle,
-            });
-          }
-          return accumulator;
-        },
-        [],
-      );
-
-      if (data == null) {
-        return null;
-      }
-
-      return renderTooltipContent({data: content});
-    },
-    [renderTooltipContent, data],
-  );
-
   const lineGenerator = useMemo(() => {
     const generator = line<DataPoint>()
       .x((_, index) => (xScale == null ? 0 : xScale(index)))
@@ -203,6 +171,11 @@ export function Chart({
     }
     return xScale(activeIndex == null ? 0 : activeIndex) - offset;
   };
+
+  const getTooltipMarkup = useLineChartTooltipContent({
+    data,
+    renderTooltipContent,
+  });
 
   if (xScale == null || drawableWidth == null || yAxisLabelWidth == null) {
     return null;

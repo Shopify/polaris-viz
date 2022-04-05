@@ -5,6 +5,7 @@ import type {
   DataSeries,
   Dimensions,
   XAxisOptions,
+  YAxisOptions,
 } from '@shopify/polaris-viz-core';
 
 import {LegendContainer, useLegend} from '../../components/LegendContainer';
@@ -33,6 +34,7 @@ export interface ChartProps {
   showLegend: boolean;
   type: ChartType;
   xAxisOptions: Required<XAxisOptions>;
+  yAxisOptions: Required<YAxisOptions>;
   dimensions?: Dimensions;
   theme?: string;
 }
@@ -45,6 +47,7 @@ export function Chart({
   theme,
   type,
   xAxisOptions,
+  yAxisOptions,
 }: ChartProps) {
   useColorVisionEvents(data.length > 1);
 
@@ -163,13 +166,14 @@ export function Chart({
               isAnimated={isAnimated}
               isSimple
               isStacked={isStacked}
-              labelFormatter={labelFormatter}
               name={name}
               opacity={opacity}
               stackedValues={stackedValues}
               theme={theme}
               transform={transform}
+              xAxisOptions={xAxisOptions}
               xScale={xScale}
+              yAxisOptions={yAxisOptions}
               zeroPosition={zeroPosition}
             />
           );

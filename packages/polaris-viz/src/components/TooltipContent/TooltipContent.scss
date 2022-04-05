@@ -1,49 +1,41 @@
 @import '../../styles/common';
 
 .Container {
-  @include tooltip-text;
-  background: $color-white;
-  padding: 18px;
-  min-width: 150px;
+  padding: 8px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(5px);
+  border-radius: 8px;
+  min-width: 180px;
+}
+
+.Title {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  margin: 0 0 10px;
+}
+
+.AxisTitle {
+  line-height: 16px;
+  margin: 0 0 8px;
+}
+
+.Series:not(:last-child) {
+  margin: 0 0 13px;
 }
 
 .Row {
   display: flex;
   align-items: center;
-  width: 100%;
-  margin: 0 0 9px;
-  column-gap: 10px;
-}
-
-.Row:last-child {
-  margin: 0;
-}
-
-.Title {
-  text-align: center;
-  margin-bottom: 12px;
-}
-
-.AnnotationLabel {
-  margin: 0 0 0 22px;
-  font-size: 12px;
-  font-weight: 300;
-}
-
-.TotalLabel {
-  margin: 0 0 0 22px;
+  height: 12px;
 }
 
 .Value {
-  @include tooltip-emphasis;
-  font-feature-settings: 'tnum';
-  margin: 0 0 0 auto;
+  margin-left: auto;
   text-align: right;
+  white-space: nowrap;
 }
 
-.AnnotationValue {
-  @include tooltip-emphasis;
-  margin: 0 0 0 auto;
-  text-align: right;
-  font-size: 12px;
+.Truncate {
+  @include ellipsis-overflow;
 }
