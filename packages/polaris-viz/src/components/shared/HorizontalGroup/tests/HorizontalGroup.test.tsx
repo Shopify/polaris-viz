@@ -76,11 +76,18 @@ const MOCK_PROPS: HorizontalGroupProps = {
   isAnimated: false,
   isSimple: false,
   isStacked: false,
-  labelFormatter: (value) => `${value}`,
   name: 'name',
   opacity: 0 as any,
   stackedValues: STACKED_VALUES as FormattedStackedSeries[],
   transform: '' as any,
+  xAxisOptions: {
+    labelFormatter: (value) => `${value}`,
+    hide: false,
+  },
+  yAxisOptions: {
+    labelFormatter: (value) => `${value}`,
+    integersOnly: false,
+  },
   xScale: scaleLinear(),
   zeroPosition: 0,
 };

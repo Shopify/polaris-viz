@@ -1,6 +1,6 @@
-import type {StackedBarGapDirections} from 'types';
 import {scaleLinear} from 'd3-scale';
 
+import type {StackedBarGapDirections} from '../../../../../types';
 import {getXPosition} from '../get-x-position';
 
 jest.mock('d3-scale', () => ({

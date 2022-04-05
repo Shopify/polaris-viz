@@ -1,25 +1,8 @@
-$button-drop-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
-$border-radius-base: 0.4rem;
-$border-subdued: rgba(186, 191, 195, 1);
-$clip-path-margin: -5px;
-
-$duration-fast: 100;
-$duration-base: 200;
 $duration-slow: 300;
-$duration-slower: 400;
-$duration-slowest: 500;
 
 $color-white: rgb(255, 255, 255);
 $color-black: rgb(0, 0, 0);
-$color-sky-dark: rgb(196, 205, 213);
-$color-sky: rgb(223, 227, 232);
-$color-ink: rgb(33, 43, 54);
-$color-ink-light: rgb(69, 79, 91);
 $color-purple-dark: rgb(80, 36, 143);
-$color-blue: rgb(0, 111, 187);
-$color-teal: rgb(71, 193, 191);
-$positive-color: rgb(0, 128, 96);
-$negative-color: rgb(215, 44, 13);
 
 // Colors are named non-sequencial numbers
 // so it matches the UX Color Matrix
@@ -116,15 +99,7 @@ $font-stack-base: -apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI'
   spacingExtraLoose: strip-unit($spacing-extra-loose);
   colorWhite: $color-white;
   colorBlack: $color-black;
-  colorSky: $color-sky;
-  colorSkyDark: $color-sky-dark;
-  colorInkLight: $color-ink-light;
-  colorInk: $color-ink;
   colorPurpleDark: $color-purple-dark;
-  colorBlue: $color-blue;
-  colorTeal: $color-teal;
-  positiveColor: $positive-color;
-  negativeColor: $negative-color;
 
   // NEW COLORS
   colorDarkComparison: $color-dark-comparison;

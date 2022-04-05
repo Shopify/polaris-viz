@@ -5,6 +5,7 @@ import type {
   XAxisOptions,
 } from '@shopify/polaris-viz-core';
 
+import {getXAxisOptions, getYAxisOptions} from '../../utilities';
 import {ChartContainer} from '../../components/ChartContainer';
 import {usePrefersReducedMotion} from '../../hooks';
 
@@ -27,11 +28,8 @@ export function SimpleBarChart({
   type = 'default',
   xAxisOptions,
 }: SimpleBarChartProps) {
-  const xAxisOptionsForChart: Required<XAxisOptions> = {
-    labelFormatter: (value: string) => value,
-    hide: false,
-    ...xAxisOptions,
-  };
+  const xAxisOptionsForChart = getXAxisOptions(xAxisOptions);
+  const yAxisOptionsForChart = getYAxisOptions();
 
   const {prefersReducedMotion} = usePrefersReducedMotion();
 
@@ -43,6 +41,7 @@ export function SimpleBarChart({
         showLegend={showLegend}
         type={type}
         xAxisOptions={xAxisOptionsForChart}
+        yAxisOptions={yAxisOptionsForChart}
       />
     </ChartContainer>
   );

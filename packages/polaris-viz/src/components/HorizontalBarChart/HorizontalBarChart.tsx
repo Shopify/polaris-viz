@@ -3,12 +3,11 @@ import type {
   DataSeries,
   ChartType,
   XAxisOptions,
+  YAxisOptions,
 } from '@shopify/polaris-viz-core';
 
-import type {
-  AnnotationLookupTable,
-  RenderTooltipContentData,
-} from '../BarChart';
+import type {RenderTooltipContentData} from '../../types';
+import type {AnnotationLookupTable} from '../BarChart';
 import {ChartContainer} from '../../components/ChartContainer';
 import {usePrefersReducedMotion} from '../../hooks';
 
@@ -18,7 +17,8 @@ export interface HorizontalBarChartProps {
   data: DataSeries[];
   renderTooltipContent: (data: RenderTooltipContentData) => ReactNode;
   showLegend: boolean;
-  xAxisOptions: XAxisOptions;
+  xAxisOptions: Required<XAxisOptions>;
+  yAxisOptions: Required<YAxisOptions>;
   annotationsLookupTable?: AnnotationLookupTable;
   isAnimated?: boolean;
   theme?: string;
@@ -34,13 +34,8 @@ export function HorizontalBarChart({
   theme,
   type = 'default',
   xAxisOptions,
+  yAxisOptions,
 }: HorizontalBarChartProps) {
-  const xAxisOptionsForChart: Required<XAxisOptions> = {
-    labelFormatter: (value: string) => value,
-    hide: false,
-    ...xAxisOptions,
-  };
-
   const {prefersReducedMotion} = usePrefersReducedMotion();
 
   return (
@@ -52,7 +47,8 @@ export function HorizontalBarChart({
         renderTooltipContent={renderTooltipContent}
         showLegend={showLegend}
         type={type}
-        xAxisOptions={xAxisOptionsForChart}
+        xAxisOptions={xAxisOptions}
+        yAxisOptions={yAxisOptions}
       />
     </ChartContainer>
   );

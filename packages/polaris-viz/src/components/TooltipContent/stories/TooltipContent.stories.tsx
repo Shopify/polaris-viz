@@ -1,92 +1,182 @@
 import React from 'react';
 import type {Story, Meta} from '@storybook/react';
+import {DEFAULT_THEME} from '@shopify/polaris-viz-core';
 
-import {
-  TooltipContent as GeneralTooltip,
-  TooltipContentProps,
-} from '../../../components';
-import {TooltipRowType} from '../TooltipContent';
-import {DEFAULT_THEME} from '../../../constants';
+import {TooltipContent, TooltipContentProps} from '../TooltipContent';
+import type {TooltipData} from '../../../types';
+import {ChartContext} from '../../ChartContainer';
+import characterWidths from '../../../data/character-widths.json';
 
 export default {
-  title: 'polaris-viz/Subcomponents/Tooltips/TooltipContent',
-  component: GeneralTooltip,
+  title: 'polaris-viz/Subcomponents/TooltipContent',
+  component: TooltipContent,
   parameters: {
+    controls: {sort: 'requiredFirst', expanded: true},
     docs: {
       description: {
-        component: 'Used with multi-series chart components by default.',
+        component: '',
+      },
+      yScale: {
+        controls: null,
+      },
+      xScale: {
+        controls: null,
       },
     },
-    controls: {
-      sort: 'requiredFirst',
-      expanded: true,
-    },
   },
-  argTypes: {
-    data: {
-      description:
-        'The data and corresponding color displayed in the tooltip. [TooltipData type definition.](https://github.com/Shopify/polaris-viz/blob/main/src/components/TooltipContent/TooltipContent.tsx#L8)',
-    },
-    title: {description: 'An optional title to display on the tooltip.'},
-    total: {description: 'An optional total to display on the tooltip.'},
-  },
+  argTypes: {},
 } as Meta;
 
 const Template: Story<TooltipContentProps> = (args: TooltipContentProps) => {
   return (
-    <div style={{width: 170}}>
-      <GeneralTooltip {...args} />
-    </div>
+    <ChartContext.Provider value={{characterWidths, id: 'none'}}>
+      <TooltipContent {...args} />
+    </ChartContext.Provider>
   );
 };
 
-const defaultProps = {
-  title: 'Monday',
-  total: {label: 'Total', value: '$10'},
-  data: [
-    {color: 'red', label: 'Product 1', value: '$0'},
-    {color: 'purple', label: 'Product 2', value: '$10'},
-  ],
-};
+const DATA: TooltipData[] = [
+  {
+    name: 'Sessions',
+    shape: 'Line',
+    data: [
+      {
+        key: 'Sessions from Google ads',
+        value: '5250',
+        color: DEFAULT_THEME.seriesColors.fromFiveToSeven[0],
+      },
+      {
+        key: 'Sessions from Facebook ads',
+        value: '650',
+        color: DEFAULT_THEME.seriesColors.fromFiveToSeven[1],
+        isComparison: true,
+      },
+    ],
+  },
+  {
+    name: 'Sales',
+    shape: 'Bar',
+    data: [
+      {
+        key: 'POS',
+        value: '4999',
+        color: DEFAULT_THEME.seriesColors.fromFiveToSeven[2],
+      },
+      {
+        key: 'Online',
+        value: '10000',
+        color: DEFAULT_THEME.seriesColors.fromFiveToSeven[3],
+      },
+      {
+        key: 'Mobile',
+        value: '16500',
+        color: DEFAULT_THEME.seriesColors.fromFiveToSeven[4],
+      },
+    ],
+  },
+];
 
 export const Default: Story<TooltipContentProps> = Template.bind({});
-
 Default.args = {
-  ...defaultProps,
-  total: undefined,
-  title: undefined,
+  data: DATA,
+  title: 'Tuesday',
 };
 
-export const WithAnnotations: Story<TooltipContentProps> = Template.bind({});
+export const NoTitle: Story<TooltipContentProps> = Template.bind({});
+NoTitle.args = {
+  data: DATA,
+};
 
-WithAnnotations.args = {
+export const NoSeriesName: Story<TooltipContentProps> = Template.bind({});
+NoSeriesName.args = {
+  title: 'Tuesday',
   data: [
     {
-      color: DEFAULT_THEME.seriesColors.upToFour[0],
-      label: 'Breakfast',
-      value: '-7',
-    },
-    {color: DEFAULT_THEME.seriesColors.upToFour[1], label: 'Lunch', value: '0'},
-    {
-      color: 'purple',
-      label: 'Median',
-      value: '1.5 hours',
-      type: TooltipRowType.Annotation,
-    },
-    {
-      color: DEFAULT_THEME.seriesColors.upToFour[2],
-      label: 'Dinner',
-      value: '0',
+      shape: 'Line',
+      data: [
+        {
+          key: 'Sessions from Google ads',
+          value: '5250',
+          color: DEFAULT_THEME.seriesColors.fromFiveToSeven[0],
+        },
+        {
+          key: 'Sessions from Facebook ads',
+          value: '650',
+          color: DEFAULT_THEME.seriesColors.fromFiveToSeven[1],
+        },
+      ],
     },
   ],
 };
 
-export const WithTitle: Story<TooltipContentProps> = Template.bind({});
-
-WithTitle.args = {
-  ...defaultProps,
-  total: undefined,
+export const NoSeriesNoTitle: Story<TooltipContentProps> = Template.bind({});
+NoSeriesNoTitle.args = {
+  data: [
+    {
+      shape: 'Line',
+      data: [
+        {
+          key: 'Sessions from Google ads',
+          value: '5250',
+          color: DEFAULT_THEME.seriesColors.fromFiveToSeven[0],
+        },
+        {
+          key: 'Sessions from Facebook ads',
+          value: '650',
+          color: DEFAULT_THEME.seriesColors.fromFiveToSeven[1],
+        },
+      ],
+    },
+  ],
 };
 
-export const WithTotal: Story<TooltipContentProps> = Template.bind({});
-WithTotal.args = defaultProps;
+export const Annotations: Story<TooltipContentProps> = Template.bind({});
+Annotations.args = {
+  title: 'Jul 7',
+  data: DATA,
+  annotations: [
+    {
+      seriesIndex: 0,
+      dataIndex: 1,
+      key: 'Left axis annotation',
+      value: '1.5 hours',
+    },
+    {
+      seriesIndex: 0,
+      dataIndex: 0,
+      key: 'Right axis annotation',
+      value: '1.5 hours',
+    },
+    {
+      seriesIndex: 0,
+      dataIndex: 0,
+      key: 'Another left axis annotation',
+      value: '1.5 hours',
+    },
+  ],
+};
+
+export const PreviewIcons: Story<TooltipContentProps> = Template.bind({});
+PreviewIcons.args = {
+  data: [
+    {
+      shape: 'Bar',
+      data: [
+        {
+          key: 'This row has a preview icon',
+          value: '650',
+          color: DEFAULT_THEME.seriesColors.fromFiveToSeven[0],
+        },
+        {
+          key: 'This row has a transparent icon',
+          value: '650',
+          color: 'transparent',
+        },
+        {
+          key: 'This row has no preview icon',
+          value: '5250',
+        },
+      ],
+    },
+  ],
+};

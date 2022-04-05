@@ -1,5 +1,6 @@
-import type {GradientStop} from 'types';
 import {scaleLinear} from 'd3-scale';
+
+import type {GradientStop} from '../types';
 
 export const createGradient = (...colors: string[]): GradientStop[] => {
   colors.reverse();

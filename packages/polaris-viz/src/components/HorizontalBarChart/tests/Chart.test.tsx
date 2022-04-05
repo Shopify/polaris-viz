@@ -53,8 +53,12 @@ const MOCK_PROPS: ChartProps = {
   renderTooltipContent: (value) => `${value}`,
   data: DATA,
   xAxisOptions: {
-    labelFormatter: (value: string) => value,
+    labelFormatter: (value) => `${value}`,
     hide: false,
+  },
+  yAxisOptions: {
+    labelFormatter: (value) => `${value}`,
+    integersOnly: false,
   },
   type: 'default',
   showLegend: false,

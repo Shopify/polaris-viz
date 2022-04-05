@@ -4,8 +4,11 @@ export {HorizontalGridLines} from './HorizontalGridLines';
 export {SparkLineChart} from './SparkLineChart';
 export type {SparkLineChartProps} from './SparkLineChart';
 export {SparkBarChart} from './SparkBarChart';
-export {LineChart, LineChartTooltipContent} from './LineChart';
-export type {LineChartProps, LineChartTooltipContentProps} from './LineChart';
+export {LineChart} from './LineChart';
+export type {
+  LineChartProps,
+  DataWithDefaults as LineChartDataWithDefaults,
+} from './LineChart';
 export {SimpleNormalizedChart} from './SimpleNormalizedChart';
 export type {SimpleNormalizedChartProps} from './SimpleNormalizedChart';
 export {YAxis} from './YAxis';
@@ -15,11 +18,10 @@ export {StackedAreaChart} from './StackedAreaChart';
 export type {StackedAreaChartProps} from './StackedAreaChart';
 export {BarChart} from './BarChart';
 export type {BarChartProps} from './BarChart';
-export {TooltipContent, TooltipRowType} from './TooltipContent';
-export type {TooltipContentProps, TooltipData} from './TooltipContent';
 export {SkipLink} from './SkipLink';
 export {VisuallyHiddenRows} from './VisuallyHiddenRows';
 export {LinePreview} from './LinePreview';
+export type {LinePreviewProps} from './LinePreview';
 export {TooltipWrapper} from './TooltipWrapper';
 export {SimpleBarChart} from './SimpleBarChart';
 export type {SimpleBarChartProps} from './SimpleBarChart';
@@ -27,3 +29,4 @@ export {ChartContext} from './ChartContainer';
 export {Legend} from './LegendContainer';
 export type {LegendProps} from './LegendContainer';
 export {WebPolarisVizProvider as PolarisVizProvider} from './WebPolarisVizProvider';
+export {TooltipContent} from './TooltipContent';

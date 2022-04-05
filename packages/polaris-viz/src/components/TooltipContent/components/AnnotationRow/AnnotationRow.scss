@@ -1,0 +1,9 @@
+.Row {
+  line-height: 16px;
+  font-size: 12px;
+  margin-bottom: 0;
+
+  &:not(:last-child) {
+    margin: 0 0 7px;
+  }
+}

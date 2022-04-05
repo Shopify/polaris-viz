@@ -3,25 +3,22 @@ export {
   SparkBarChart,
   SimpleNormalizedChart,
   LineChart,
-  LineChartTooltipContent,
   StackedAreaChart,
   Legend,
   BarChart,
-  TooltipContent,
   LinePreview,
   SquareColorPreview,
   SimpleBarChart,
   PolarisVizProvider,
+  TooltipContent,
 } from './components';
 
 export type {
   SparkLineChartProps,
   SimpleNormalizedChartProps,
   LineChartProps,
-  LineChartTooltipContentProps,
   StackedAreaChartProps,
   BarChartProps,
-  TooltipContentProps,
   SimpleBarChartProps,
 } from './components';
 

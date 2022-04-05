@@ -1,91 +1,107 @@
 import React, {useState} from 'react';
-import type {Color} from '@shopify/polaris-viz-core';
+import {FONT_SIZE, useTheme} from '@shopify/polaris-viz-core';
 
 import {COLOR_VISION_SINGLE_ITEM} from '../../constants';
-import {useTheme, useWatchColorVisionEvents} from '../../hooks';
+import {useWatchColorVisionEvents} from '../../hooks';
+import {changeColorOpacity} from '../../utilities';
+import type {TooltipAnnotation, TooltipData} from '../../types';
 
-import {DefaultRow, AnnotationRow} from './components';
+import {useGetLongestLabelFromData} from './hooks/useGetLongestLabelFromData';
 import styles from './TooltipContent.scss';
-
-export enum TooltipRowType {
-  Default,
-  Annotation,
-}
-
-export interface TooltipData {
-  color: Color;
-  label: string;
-  value: string;
-  type?: TooltipRowType;
-  activeIndex?: number;
-}
+import {SPACE_BETWEEN_LABEL_AND_VALUE} from './constants';
+import {TooltipRow, Annotations} from './components/';
 
 export interface TooltipContentProps {
-  title?: string;
   data: TooltipData[];
-  total?: null | {
-    label: string;
-    value: string;
-  };
+  annotations?: TooltipAnnotation[];
+  title?: string;
   theme?: string;
 }
 
-export function TooltipContent({
-  title,
-  data,
-  total,
-  theme,
-}: TooltipContentProps) {
-  const {tooltip} = useTheme(theme);
+const FONT_SIZE_OFFSET = 1.061;
+const PREVIEW_WIDTH = 14;
 
-  const [activeBarIndex, setActiveBarIndex] = useState(-1);
+export function TooltipContent({
+  annotations = [],
+  data,
+  theme,
+  title,
+}: TooltipContentProps) {
+  const [activeIndex, setActiveIndex] = useState(-1);
+
+  const selectedTheme = useTheme(theme);
+  const {keyWidth, valueWidth} = useGetLongestLabelFromData(data);
 
   useWatchColorVisionEvents({
     type: COLOR_VISION_SINGLE_ITEM,
-    onIndexChange: ({detail}) => setActiveBarIndex(detail.index),
+    onIndexChange: ({detail}) => setActiveIndex(detail.index),
   });
+
+  const leftWidth = keyWidth * FONT_SIZE_OFFSET;
+  const rightWidth = valueWidth * FONT_SIZE_OFFSET;
 
   return (
     <div
       className={styles.Container}
       style={{
-        background: tooltip.backgroundColor,
-        color: tooltip.valueColor,
+        background: changeColorOpacity(
+          selectedTheme.tooltip.backgroundColor,
+          0.8,
+        ),
+        maxWidth:
+          PREVIEW_WIDTH +
+          leftWidth +
+          SPACE_BETWEEN_LABEL_AND_VALUE +
+          rightWidth,
       }}
     >
-      {title == null ? null : <div className={styles.Title}>{title}</div>}
-      {data.map(
-        ({color, label, value, type = TooltipRowType.Default}, index) => {
-          switch (type) {
-            default:
-            case TooltipRowType.Default:
+      {title != null && (
+        <p
+          className={styles.Title}
+          style={{color: selectedTheme.tooltip.titleColor}}
+        >
+          {title}
+        </p>
+      )}
+
+      <Annotations
+        activeIndex={activeIndex}
+        annotations={annotations}
+        theme={theme}
+      />
+
+      {data.map(({data: series, name, shape}, dataIndex) => {
+        return (
+          <div className={styles.Series} key={dataIndex}>
+            {name != null && (
+              <p
+                className={styles.AxisTitle}
+                style={{
+                  color: selectedTheme.tooltip.titleColor,
+                  fontSize: FONT_SIZE,
+                }}
+              >
+                {name}
+              </p>
+            )}
+            {series.map(({key, value, color, isComparison}, seriesIndex) => {
               return (
-                <DefaultRow
+                <TooltipRow
+                  key={`row-${seriesIndex}`}
+                  activeIndex={activeIndex}
                   color={color}
-                  isActive={activeBarIndex === -1 || index === activeBarIndex}
-                  key={`${label}-${index}`}
-                  label={label}
-                  value={value}
-                />
-              );
-            case TooltipRowType.Annotation:
-              return (
-                <AnnotationRow
-                  key={`${label}-${index}`}
-                  label={label}
-                  value={value}
+                  index={seriesIndex}
+                  isComparison={isComparison}
+                  label={key}
+                  shape={shape}
                   theme={theme}
+                  value={value}
                 />
               );
-          }
-        },
-      )}
-      {total == null ? null : (
-        <div className={styles.Row}>
-          <p className={styles.TotalLabel}>{total.label}</p>
-          <p className={styles.Value}>{total.value}</p>
-        </div>
-      )}
+            })}
+          </div>
+        );
+      })}
     </div>
   );
 }

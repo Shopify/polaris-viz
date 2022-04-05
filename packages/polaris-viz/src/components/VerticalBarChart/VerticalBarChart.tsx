@@ -6,12 +6,10 @@ import type {
   YAxisOptions,
 } from '@shopify/polaris-viz-core';
 
-import {ChartContainer} from '../../components/ChartContainer';
+import type {RenderTooltipContentData} from '../../types';
+import {ChartContainer} from '../ChartContainer';
 import {useTheme, useThemeSeriesColors} from '../../hooks';
-import type {
-  AnnotationLookupTable,
-  RenderTooltipContentData,
-} from '../../components/BarChart';
+import type {AnnotationLookupTable} from '../BarChart';
 
 import {Chart} from './Chart';
 

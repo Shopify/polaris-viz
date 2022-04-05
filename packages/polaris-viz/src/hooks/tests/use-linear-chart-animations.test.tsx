@@ -1,8 +1,8 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {line} from 'd3-shape';
-import type {DataWithDefaults} from 'components/LineChart/types';
 
+import type {LineChartDataWithDefaults} from '../../components';
 import {useLinearChartAnimations} from '../use-linear-chart-animations';
 
 jest.mock('../../utilities', () => {
@@ -19,7 +19,7 @@ const lineGeneratorMock = jest.fn(
     .y(({value}) => value),
 ) as any;
 
-const data: DataWithDefaults[] = [
+const data: LineChartDataWithDefaults[] = [
   {
     name: 'Primary',
     color: 'primary',

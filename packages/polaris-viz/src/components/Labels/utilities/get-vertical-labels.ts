@@ -1,5 +1,4 @@
-import type {CharacterWidths} from 'types';
-
+import type {CharacterWidths} from '../../../types';
 import {clamp} from '../../../utilities';
 import {LINE_HEIGHT, VERTICAL_LABEL_TARGET_WIDTH} from '../../../constants';
 import type {FormattedLine, PreparedLabels} from '../types';

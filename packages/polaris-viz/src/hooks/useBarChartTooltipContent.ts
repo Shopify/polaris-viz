@@ -1,25 +1,18 @@
-import type {
-  AnnotationLookupTable,
-  RenderTooltipContentData,
-} from 'components/BarChart';
 import {ReactNode, useCallback} from 'react';
 import type {Color, DataSeries} from '@shopify/polaris-viz-core';
 
-import type {TooltipData} from '../components';
-import {TooltipRowType} from '../components';
+import type {RenderTooltipContentData} from '../types';
 
-interface Props {
-  annotationsLookupTable: AnnotationLookupTable;
+export interface Props {
   data: DataSeries[];
   seriesColors: Color[];
   renderTooltipContent: (data: RenderTooltipContentData) => ReactNode;
 }
 
 export function useBarChartTooltipContent({
-  annotationsLookupTable,
   data,
-  seriesColors,
   renderTooltipContent,
+  seriesColors,
 }: Props) {
   return useCallback(
     (activeIndex: number) => {
@@ -27,35 +20,30 @@ export function useBarChartTooltipContent({
         return null;
       }
 
-      const tooltipData: TooltipData[] = [];
-      const annotation = annotationsLookupTable[activeIndex];
+      const tooltipData: RenderTooltipContentData['data'] = [
+        {
+          shape: 'Bar',
+          data: [],
+        },
+      ];
 
       data.forEach(({name, data: seriesData, color}, index) => {
         const {value} = seriesData[activeIndex];
 
-        tooltipData.push({
-          label: `${name}`,
-          value: `${value}`,
+        tooltipData[0].data.push({
+          key: `${name}`,
+          value,
           color: color ?? seriesColors[index],
-          activeIndex,
         });
-
-        if (
-          annotation &&
-          annotation.dataPointIndex === index &&
-          annotation.tooltipData !== null
-        ) {
-          tooltipData.push({
-            label: annotation.tooltipData?.label ?? '',
-            color: color ?? seriesColors[index],
-            value: annotation.tooltipData?.value ?? '',
-            type: TooltipRowType.Annotation,
-          });
-        }
       });
 
-      return renderTooltipContent({data: tooltipData});
+      return renderTooltipContent({
+        data: tooltipData,
+        activeIndex,
+        title: `${data[0].data[activeIndex].key}`,
+        dataSeries: data,
+      });
     },
-    [annotationsLookupTable, data, seriesColors, renderTooltipContent],
+    [data, seriesColors, renderTooltipContent],
   );
 }

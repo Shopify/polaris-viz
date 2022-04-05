@@ -2,8 +2,7 @@ import type {
   FormattedStackedSeries,
   StackedBarGapDirections,
   StackedSeries,
-} from 'types';
-
+} from '../../../types';
 import {STACKED_BAR_GAP} from '../../../constants';
 import {pushGapToArray} from '../../../utilities';
 
