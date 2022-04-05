@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react';
 import type {ScaleLinear} from 'd3-scale';
-import type {DataSeries} from '@shopify/polaris-viz-core';
+import type {DataSeries, LabelFormatter} from '@shopify/polaris-viz-core';
 import {RoundedBorder} from '@shopify/polaris-viz-core';
 
 import {estimateStringWidth} from '../../../utilities';
@@ -10,7 +10,6 @@ import {
   HORIZONTAL_GROUP_LABEL_HEIGHT,
   HORIZONTAL_SPACE_BETWEEN_SINGLE,
 } from '../../../constants';
-import type {LabelFormatter} from '../../../types';
 import {
   useTheme,
   useWatchColorVisionEvents,

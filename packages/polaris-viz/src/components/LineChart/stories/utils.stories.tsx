@@ -228,8 +228,6 @@ export const seriesUsingSeriesColors = [
   },
 ];
 
-export const xAxisLabels = data[0].data.map(({key}) => `${key}`);
-
 export function formatXAxisLabel(value: string) {
   return new Date(value).toLocaleDateString('en-CA', {
     day: 'numeric',

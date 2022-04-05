@@ -1,10 +1,13 @@
 import React, {useRef} from 'react';
 import {uniqueId} from '@shopify/polaris-viz-core';
-import type {DataSeries} from '@shopify/polaris-viz-core';
+import type {
+  DataSeries,
+  XAxisOptions,
+  YAxisOptions,
+} from '@shopify/polaris-viz-core';
 
 import {ChartContainer} from '../ChartContainer';
 import {SkipLink} from '../SkipLink';
-import type {LinearXAxisOptions, LinearYAxisOptions} from '../../types';
 import {TooltipContent} from '../TooltipContent';
 
 import {Chart} from './Chart';
@@ -17,8 +20,8 @@ export interface StackedAreaChartProps {
   showLegend?: boolean;
   skipLinkText?: string;
   theme?: string;
-  xAxisOptions?: Partial<LinearXAxisOptions>;
-  yAxisOptions?: Partial<LinearYAxisOptions>;
+  xAxisOptions?: Partial<XAxisOptions>;
+  yAxisOptions?: Partial<YAxisOptions>;
 }
 
 export function StackedAreaChart({
@@ -37,14 +40,13 @@ export function StackedAreaChart({
     return null;
   }
 
-  const xAxisOptionsWithDefaults: Required<LinearXAxisOptions> = {
+  const xAxisOptionsWithDefaults: Required<XAxisOptions> = {
     labelFormatter: (value: string) => value,
-    xAxisLabels: [],
     hide: false,
     ...xAxisOptions,
   };
 
-  const yAxisOptionsWithDefaults: Required<LinearYAxisOptions> = {
+  const yAxisOptionsWithDefaults: Required<YAxisOptions> = {
     labelFormatter: (value: number) => value.toString(),
     integersOnly: false,
     ...yAxisOptions,

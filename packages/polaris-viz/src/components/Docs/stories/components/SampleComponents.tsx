@@ -10,7 +10,7 @@ import {
   StackedAreaChart,
   SimpleNormalizedChart,
 } from '../../../../components';
-import {generateLabels, generateMultipleSeries} from '../../../Docs/utilities';
+import {generateMultipleSeries} from '../../../Docs/utilities';
 
 import {SimpleContainer} from './SimpleContainer';
 
@@ -74,9 +74,6 @@ export const SampleLineChart = (
           ],
         },
       ]}
-      xAxisOptions={{
-        xAxisLabels: ['Jan. 1', 'Jan. 2', 'Jan. 3', 'Jan. 4', 'Jan. 5'],
-      }}
       showLegend={showLegend}
     />
   );
@@ -100,9 +97,6 @@ export const SampleStackedAreaChart = (
   return (
     <StackedAreaChart
       data={generateMultipleSeries(seriesLength, 3)}
-      xAxisOptions={{
-        xAxisLabels: generateLabels(3),
-      }}
       showLegend={showLegend}
       theme={theme}
     />

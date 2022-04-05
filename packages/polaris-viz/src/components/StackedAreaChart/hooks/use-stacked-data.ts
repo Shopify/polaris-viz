@@ -1,12 +1,12 @@
 import {useMemo} from 'react';
 import {stack, stackOffsetNone, stackOrderReverse} from 'd3-shape';
-import type {DataSeries} from '@shopify/polaris-viz-core/src/types';
+import type {DataSeries, XAxisOptions} from '@shopify/polaris-viz-core';
 
-import type {LinearXAxisOptions} from '../../../types';
+import {useXAxisLabels} from '../../../hooks/useXAxisLabels';
 
 interface Props {
   data: DataSeries[];
-  xAxisOptions: LinearXAxisOptions;
+  xAxisOptions: Required<XAxisOptions>;
 }
 
 export function useStackedData({data, xAxisOptions}: Props) {
@@ -19,9 +19,11 @@ export function useStackedData({data, xAxisOptions}: Props) {
     [data],
   );
 
+  const labels = useXAxisLabels({data, xAxisOptions});
+
   const formattedData = useMemo(
     () =>
-      xAxisOptions.xAxisLabels.map((_, labelIndex) =>
+      labels.map((_, labelIndex) =>
         data.reduce((acc, {name, data}) => {
           const {value} = data[labelIndex];
 
@@ -29,12 +31,8 @@ export function useStackedData({data, xAxisOptions}: Props) {
           return Object.assign(acc, dataPoint);
         }, {}),
       ),
-    [xAxisOptions.xAxisLabels, data],
+    [labels, data],
   );
-
-  const labels = useMemo(() => {
-    return xAxisOptions.xAxisLabels.map(xAxisOptions.labelFormatter);
-  }, [xAxisOptions]);
 
   const stackedValues = useMemo(
     () => areaStack(formattedData),

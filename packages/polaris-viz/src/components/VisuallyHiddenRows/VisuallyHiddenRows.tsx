@@ -1,14 +1,12 @@
 import React from 'react';
-import type {DataSeries} from '@shopify/polaris-viz-core';
-
-import type {NumberLabelFormatter} from '../../types';
+import type {DataSeries, LabelFormatter} from '@shopify/polaris-viz-core';
 
 import styles from './VisuallyHiddenRows.scss';
 
 export interface Props {
   data: DataSeries[];
   xAxisLabels: string[];
-  formatYAxisLabel: NumberLabelFormatter;
+  formatYAxisLabel: LabelFormatter;
 }
 
 export const VisuallyHiddenRows = React.memo(function Rows({

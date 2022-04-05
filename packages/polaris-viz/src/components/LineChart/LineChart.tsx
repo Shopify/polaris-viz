@@ -1,8 +1,11 @@
 import React, {useRef} from 'react';
-import type {DataSeries} from '@shopify/polaris-viz-core';
+import type {
+  DataSeries,
+  XAxisOptions,
+  YAxisOptions,
+} from '@shopify/polaris-viz-core';
 import {isGradientType, uniqueId} from '@shopify/polaris-viz-core';
 
-import type {LinearXAxisOptions, LinearYAxisOptions} from '../../types';
 import {ChartContainer} from '../../components/ChartContainer';
 import {useThemeSeriesColors} from '../../hooks/use-theme-series-colors';
 import {changeColorOpacity, getAverageColor} from '../../utilities';
@@ -22,8 +25,8 @@ export interface LineChartProps {
   showLegend?: boolean;
   skipLinkText?: string;
   theme?: string;
-  xAxisOptions?: Partial<LinearXAxisOptions>;
-  yAxisOptions?: Partial<LinearYAxisOptions>;
+  xAxisOptions?: Partial<XAxisOptions>;
+  yAxisOptions?: Partial<YAxisOptions>;
 }
 
 export function LineChart({
@@ -43,14 +46,13 @@ export function LineChart({
 
   const skipLinkAnchorId = useRef(uniqueId('lineChart'));
 
-  const xAxisOptionsWithDefaults: Required<LinearXAxisOptions> = {
+  const xAxisOptionsWithDefaults: Required<XAxisOptions> = {
     labelFormatter: (value: string) => value,
-    xAxisLabels: [],
     hide: false,
     ...xAxisOptions,
   };
 
-  const yAxisOptionsWithDefaults: Required<LinearYAxisOptions> = {
+  const yAxisOptionsWithDefaults: Required<YAxisOptions> = {
     labelFormatter: (value: number) => value.toString(),
     integersOnly: false,
     ...yAxisOptions,
