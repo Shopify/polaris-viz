@@ -9,13 +9,12 @@ interface Props {
   textAlign: 'left' | 'right';
   width: number;
 
-  fontSize?: number;
   theme?: string;
 }
 
 const PADDING_SIZE = 1;
 
-function Axis({ticks, fontSize = FONT_SIZE, width, textAlign, theme}: Props) {
+function Axis({ticks, width, textAlign, theme}: Props) {
   const selectedTheme = useTheme(theme);
 
   return (
@@ -32,7 +31,7 @@ function Axis({ticks, fontSize = FONT_SIZE, width, textAlign, theme}: Props) {
             style={{
               color: selectedTheme.yAxis.labelColor,
               textAlign,
-              fontSize,
+              fontSize: FONT_SIZE,
               lineHeight: `${LINE_HEIGHT}px`,
             }}
           >

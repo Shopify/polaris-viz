@@ -11,8 +11,9 @@ jest.mock('d3-scale', () => ({
   scaleLinear: jest.requireActual('d3-scale').scaleLinear,
 }));
 
-jest.mock('../../../../utilities/get-text-dimensions', () => ({
-  getTextWidth: jest.fn(() => 100),
+jest.mock('../../../../utilities', () => ({
+  ...jest.requireActual('../../../../utilities'),
+  estimateStringWidth: () => 100,
 }));
 
 const DATA: DataSeries[] = [

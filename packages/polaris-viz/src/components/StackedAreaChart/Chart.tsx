@@ -28,9 +28,6 @@ import {
   useLinearLabelsAndDimensions,
 } from '../../hooks';
 import {
-  SMALL_SCREEN,
-  SMALL_FONT_SIZE,
-  FONT_SIZE,
   LineChartMargin as Margin,
   XMLNS,
   COLOR_VISION_SINGLE_ITEM,
@@ -101,13 +98,10 @@ export function Chart({
     xAxisOptions,
   });
 
-  const fontSize = width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
-
   const drawableHeight =
     height - labelHeight - LABEL_AREA_TOP_SPACING - Margin.Top;
 
   const {yAxisLabelWidth, ticks, yScale} = useYScale({
-    fontSize,
     drawableHeight,
     stackedValues,
     formatYAxisLabel: yAxisOptions.labelFormatter,
@@ -257,7 +251,6 @@ export function Chart({
         <g transform={`translate(0,${Margin.Top})`}>
           <YAxis
             ticks={ticks}
-            fontSize={fontSize}
             width={yAxisLabelWidth}
             textAlign="right"
             theme={theme}

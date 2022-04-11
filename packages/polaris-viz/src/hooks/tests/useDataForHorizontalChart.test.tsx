@@ -4,8 +4,8 @@ import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {useDataForHorizontalChart} from '../useDataForHorizontalChart';
 
-jest.mock('../../utilities/get-text-dimensions', () => ({
-  getTextWidth: jest.fn(() => 100),
+jest.mock('../../utilities/estimate-string-width', () => ({
+  estimateStringWidth: jest.fn(() => 100),
 }));
 
 const DATA: DataSeries[] = [

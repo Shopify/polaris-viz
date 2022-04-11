@@ -28,9 +28,6 @@ import {
   useLinearLabelsAndDimensions,
 } from '../../hooks';
 import {
-  SMALL_SCREEN,
-  SMALL_FONT_SIZE,
-  FONT_SIZE,
   LineChartMargin as Margin,
   XMLNS,
   COLOR_VISION_SINGLE_ITEM,
@@ -104,8 +101,6 @@ export function Chart({
   const gradientId = useRef(uniqueId('lineChartGradient'));
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
 
-  const fontSize = width < SMALL_SCREEN ? SMALL_FONT_SIZE : FONT_SIZE;
-
   const emptyState =
     data.length === 0 || data.every((series) => series.data.length === 0);
 
@@ -118,7 +113,6 @@ export function Chart({
   );
 
   const {yAxisLabelWidth, ticks, yScale} = useYScale({
-    fontSize,
     drawableHeight,
     data,
     formatYAxisLabel: yAxisOptions.labelFormatter,
@@ -301,9 +295,8 @@ export function Chart({
         <g transform={`translate(0,${Margin.Top})`}>
           <YAxis
             ticks={ticks}
-            fontSize={fontSize}
             width={yAxisLabelWidth}
-            textAlign={selectedTheme.grid.horizontalOverflow ? 'left' : 'right'}
+            textAlign="right"
             theme={theme}
           />
         </g>

@@ -1,26 +1,27 @@
-import {useMemo} from 'react';
+import {useContext, useMemo} from 'react';
 import {scaleLinear} from 'd3-scale';
 import {maxIndex} from 'd3-array';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
-import {getTextWidth, shouldRoundScaleUp} from '../../../utilities';
+import {estimateStringWidth, shouldRoundScaleUp} from '../../../utilities';
 import {yAxisMinMax} from '../utilities';
 import {MIN_Y_LABEL_SPACE} from '../constants';
 import type {NumberLabelFormatter} from '../../../types';
+import {ChartContext} from '../../ChartContainer';
 
 export function useYScale({
   drawableHeight,
   data,
   formatYAxisLabel,
-  fontSize,
   integersOnly,
 }: {
-  fontSize: number;
   drawableHeight: number;
   data: DataSeries[];
   formatYAxisLabel: NumberLabelFormatter;
   integersOnly: boolean;
 }) {
+  const {characterWidths} = useContext(ChartContext);
+
   const {yScale, ticks, yAxisLabelWidth} = useMemo(() => {
     const [minY, maxY] = yAxisMinMax({data, integersOnly});
 
@@ -61,13 +62,10 @@ export function useYScale({
       ? ticks[longestYAxisLabel].formattedValue
       : '';
 
-    const yAxisLabelWidth = getTextWidth({
-      fontSize,
-      text,
-    });
+    const yAxisLabelWidth = estimateStringWidth(text, characterWidths);
 
     return {yScale, ticks, yAxisLabelWidth};
-  }, [data, integersOnly, drawableHeight, formatYAxisLabel, fontSize]);
+  }, [data, integersOnly, drawableHeight, formatYAxisLabel, characterWidths]);
 
   return {yScale, ticks, yAxisLabelWidth};
 }
