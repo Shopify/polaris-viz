@@ -4,6 +4,7 @@ import type {
   ChartType,
   DataSeries,
   Dimensions,
+  XAxisOptions,
 } from '@shopify/polaris-viz-core';
 
 import {LegendContainer, useLegend} from '../../components/LegendContainer';
@@ -24,7 +25,6 @@ import {
   COLOR_VISION_SINGLE_ITEM,
 } from '../../constants';
 
-import type {XAxisOptions} from './types';
 import styles from './Chart.scss';
 
 export interface ChartProps {

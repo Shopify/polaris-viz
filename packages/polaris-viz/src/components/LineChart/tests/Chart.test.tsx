@@ -1,7 +1,11 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {line} from 'd3-shape';
-import {LinearGradientWithStops} from '@shopify/polaris-viz-core';
+import {
+  LinearGradientWithStops,
+  XAxisOptions,
+  YAxisOptions,
+} from '@shopify/polaris-viz-core';
 
 import {LegendContainer} from '../../LegendContainer';
 import {Crosshair} from '../../../components/Crosshair';
@@ -16,7 +20,7 @@ import {Line, GradientArea} from '../components';
 import {YAxis} from '../../YAxis';
 import type {DataWithDefaults} from '../types';
 
-const primaryData: Required<DataWithDefaults> = {
+const MOCK_DATA: Required<DataWithDefaults> = {
   name: 'Primary',
   color: 'red',
   lineStyle: 'solid',
@@ -30,24 +34,18 @@ const primaryData: Required<DataWithDefaults> = {
   ],
 };
 
-const xAxisOptions = {
-  xAxisLabels: ['Jan 1'],
-  labelFormatter: jest.fn((value) => value),
-  hideXAxisLabels: false,
-  showTicks: true,
-  labelColor: 'red',
+const xAxisOptions: Required<XAxisOptions> = {
+  labelFormatter: jest.fn(),
   hide: false,
 };
 
-const yAxisOptions = {
-  labelFormatter: jest.fn((value) => value),
-  labelColor: 'red',
-  backgroundColor: 'transparent',
+const yAxisOptions: Required<YAxisOptions> = {
+  labelFormatter: jest.fn(),
   integersOnly: false,
 };
 
-const mockProps: ChartProps = {
-  data: [primaryData],
+const MOCK_PROPS: ChartProps = {
+  data: [MOCK_DATA],
   dimensions: {width: 500, height: 250},
   xAxisOptions,
   yAxisOptions,
@@ -59,6 +57,7 @@ const mockProps: ChartProps = {
 jest.mock('../../../utilities', () => {
   return {
     ...jest.requireActual('../../../utilities'),
+    estimateStringWidth: () => 100,
     getPathLength: () => 0,
     getPointAtLength: () => ({x: 0, y: 0}),
     eventPointNative: () => {
@@ -88,13 +87,13 @@ describe('<Chart />', () => {
   });
 
   it('renders an svg element', () => {
-    const chart = mount(<Chart {...mockProps} />);
+    const chart = mount(<Chart {...MOCK_PROPS} />);
 
     expect(chart).toContainReactComponent('svg');
   });
 
   it('sets an active point and tooltip position on svg mouse or touch interaction', () => {
-    const chart = mount(<Chart {...mockProps} />);
+    const chart = mount(<Chart {...MOCK_PROPS} />);
 
     triggerSVGMouseMove(chart);
 
@@ -102,13 +101,13 @@ describe('<Chart />', () => {
   });
 
   it('renders a <YAxis />', () => {
-    const chart = mount(<Chart {...mockProps} />);
+    const chart = mount(<Chart {...MOCK_PROPS} />);
 
     expect(chart).toContainReactComponent(YAxis);
   });
 
   it('renders a <Crosshair /> at full opacity if there is an active point', () => {
-    const chart = mount(<Chart {...mockProps} />);
+    const chart = mount(<Chart {...MOCK_PROPS} />);
 
     triggerSVGMouseMove(chart);
 
@@ -116,7 +115,7 @@ describe('<Chart />', () => {
   });
 
   it('renders a <Crosshair /> at 0 opacity if there is no active point', () => {
-    const chart = mount(<Chart {...mockProps} />);
+    const chart = mount(<Chart {...MOCK_PROPS} />);
 
     expect(chart.find(Crosshair)).toHaveReactProps({opacity: 0});
   });
@@ -124,8 +123,8 @@ describe('<Chart />', () => {
   it('renders a <Line /> for each data-point', () => {
     const chart = mount(
       <Chart
-        {...mockProps}
-        data={[primaryData, {...primaryData, name: 'A second data-point'}]}
+        {...MOCK_PROPS}
+        data={[MOCK_DATA, {...MOCK_DATA, name: 'A second data-point'}]}
       />,
     );
 
@@ -144,8 +143,8 @@ describe('<Chart />', () => {
 
     mount(
       <Chart
-        {...mockProps}
-        data={[primaryData, {...primaryData, name: 'A second data-point'}]}
+        {...MOCK_PROPS}
+        data={[MOCK_DATA, {...MOCK_DATA, name: 'A second data-point'}]}
       />,
     );
 
@@ -153,15 +152,15 @@ describe('<Chart />', () => {
   });
 
   it('renders a <Point /> for each data item in each data-point', () => {
-    const data = [primaryData, {...primaryData, name: 'A second data-point'}];
-    const chart = mount(<Chart {...mockProps} data={data} />);
+    const data = [MOCK_DATA, {...MOCK_DATA, name: 'A second data-point'}];
+    const chart = mount(<Chart {...MOCK_PROPS} data={data} />);
 
     expect(chart).toContainReactComponentTimes(Point, 8);
   });
 
   it('renders an additional <Point /> for each data-point if isAnimated is true', () => {
-    const data = [primaryData, {...primaryData, name: 'A second data-point'}];
-    const chart = mount(<Chart {...mockProps} data={data} isAnimated />);
+    const data = [MOCK_DATA, {...MOCK_DATA, name: 'A second data-point'}];
+    const chart = mount(<Chart {...MOCK_PROPS} data={data} isAnimated />);
 
     expect(chart).toContainReactComponentTimes(Point, 8 + data.length);
   });
@@ -169,8 +168,8 @@ describe('<Chart />', () => {
   it('passes props to <Point />', () => {
     const chart = mount(
       <Chart
-        {...mockProps}
-        data={[primaryData, {...primaryData, name: 'A second data-point'}]}
+        {...MOCK_PROPS}
+        data={[MOCK_DATA, {...MOCK_DATA, name: 'A second data-point'}]}
       />,
     );
 
@@ -185,7 +184,7 @@ describe('<Chart />', () => {
   });
 
   it('renders tooltip content inside a <TooltipContainer /> if there is an active point', () => {
-    const chart = mount(<Chart {...mockProps} />);
+    const chart = mount(<Chart {...MOCK_PROPS} />);
 
     // No tooltip if there is no active point
     expect(chart).not.toContainReactText('Mock Tooltip');
@@ -199,30 +198,30 @@ describe('<Chart />', () => {
   });
 
   it('renders <VisuallyHiddenRows />', () => {
-    const chart = mount(<Chart {...mockProps} />);
+    const chart = mount(<Chart {...MOCK_PROPS} />);
 
     expect(chart).toContainReactComponent(VisuallyHiddenRows, {
-      data: mockProps.data,
-      xAxisLabels: mockProps.xAxisOptions.xAxisLabels,
+      data: MOCK_PROPS.data,
+      xAxisLabels: MOCK_DATA.data.map(({key}) => key),
     });
   });
 
   describe('empty state', () => {
     it('does not render tooltip for empty state', () => {
-      const chart = mount(<Chart {...mockProps} data={[]} />);
+      const chart = mount(<Chart {...MOCK_PROPS} data={[]} />);
 
       expect(chart).not.toContainReactText('Mock Tooltip');
       expect(chart).not.toContainReactComponent(TooltipAnimatedContainer);
     });
 
     it('does not render crosshair for empty state', () => {
-      const chart = mount(<Chart {...mockProps} data={[]} />);
+      const chart = mount(<Chart {...MOCK_PROPS} data={[]} />);
 
       expect(chart).not.toContainReactComponent(Crosshair);
     });
 
     it('does not render Visually Hidden Rows for empty state', () => {
-      const chart = mount(<Chart {...mockProps} data={[]} />);
+      const chart = mount(<Chart {...MOCK_PROPS} data={[]} />);
 
       expect(chart).not.toContainReactComponent(VisuallyHiddenRows);
     });
@@ -233,10 +232,10 @@ describe('<Chart />', () => {
       it('removes transparency for <Point />', () => {
         const chart = mount(
           <Chart
-            {...mockProps}
+            {...MOCK_PROPS}
             data={[
               {
-                ...primaryData,
+                ...MOCK_DATA,
                 color: 'rgba(255, 255, 255, 0.5)',
               },
             ]}
@@ -251,10 +250,10 @@ describe('<Chart />', () => {
       it('does not remove transparency for <Line />', () => {
         const chart = mount(
           <Chart
-            {...mockProps}
+            {...MOCK_PROPS}
             data={[
               {
-                ...primaryData,
+                ...MOCK_DATA,
                 color: 'rgb(255, 255, 255)',
               },
             ]}
@@ -271,10 +270,10 @@ describe('<Chart />', () => {
       it('renders a LinearGradientWithStops if data-point color is a gradient', () => {
         const chart = mount(
           <Chart
-            {...mockProps}
+            {...MOCK_PROPS}
             data={[
               {
-                ...primaryData,
+                ...MOCK_DATA,
                 color: [
                   {
                     offset: 1,
@@ -292,10 +291,10 @@ describe('<Chart />', () => {
       it('passes gradient url as color prop to <Line />', () => {
         const chart = mount(
           <Chart
-            {...mockProps}
+            {...MOCK_PROPS}
             data={[
               {
-                ...primaryData,
+                ...MOCK_DATA,
                 color: [
                   {
                     offset: 1,
@@ -315,10 +314,10 @@ describe('<Chart />', () => {
       it('passes point gradient url as color prop to <Point />', () => {
         const chart = mount(
           <Chart
-            {...mockProps}
+            {...MOCK_PROPS}
             data={[
               {
-                ...primaryData,
+                ...MOCK_DATA,
                 color: [
                   {
                     offset: 1,
@@ -338,10 +337,10 @@ describe('<Chart />', () => {
       it('removes transparency from the gradient', () => {
         const chart = mount(
           <Chart
-            {...mockProps}
+            {...MOCK_PROPS}
             data={[
               {
-                ...primaryData,
+                ...MOCK_DATA,
                 color: [
                   {
                     offset: 1,
@@ -368,7 +367,7 @@ describe('<Chart />', () => {
   describe('areaColor', () => {
     it('renders a <GradientArea /> for a data-point if areaColor is specified', () => {
       const chart = mount(
-        <Chart {...mockProps} data={[{...primaryData, areaColor: 'red'}]} />,
+        <Chart {...MOCK_PROPS} data={[{...MOCK_DATA, areaColor: 'red'}]} />,
       );
 
       expect(chart).toContainReactComponentTimes(GradientArea, 1);
@@ -378,7 +377,7 @@ describe('<Chart />', () => {
   describe('gridOptions.showHorizontalLines', () => {
     it('does not render HorizontalGridLines when false', () => {
       const chart = mountWithProvider(
-        <Chart {...mockProps} />,
+        <Chart {...MOCK_PROPS} />,
         mockDefaultTheme({grid: {showHorizontalLines: false}}),
       );
 
@@ -386,7 +385,7 @@ describe('<Chart />', () => {
     });
 
     it('renders HorizontalGridLines when true', () => {
-      const chart = mountWithProvider(<Chart {...mockProps} />);
+      const chart = mountWithProvider(<Chart {...MOCK_PROPS} />);
 
       expect(chart).toContainReactComponent(HorizontalGridLines);
     });
@@ -394,7 +393,7 @@ describe('<Chart />', () => {
 
   describe('showLegend', () => {
     it('does not render <LegendContainer /> when false', () => {
-      const chart = mount(<Chart {...mockProps} />);
+      const chart = mount(<Chart {...MOCK_PROPS} />);
       const svg = chart.find('svg');
 
       expect(chart).not.toContainReactComponent(LegendContainer);
@@ -403,7 +402,7 @@ describe('<Chart />', () => {
     });
 
     it('renders <LegendContainer /> when true', () => {
-      const chart = mount(<Chart {...mockProps} showLegend />);
+      const chart = mount(<Chart {...MOCK_PROPS} showLegend />);
 
       expect(chart).toContainReactComponent(LegendContainer);
     });

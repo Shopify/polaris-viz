@@ -1,6 +1,11 @@
 import React, {useState, useMemo, useRef, useCallback} from 'react';
 import {line} from 'd3-shape';
-import type {DataSeries, DataPoint} from '@shopify/polaris-viz-core';
+import type {
+  DataSeries,
+  DataPoint,
+  XAxisOptions,
+  YAxisOptions,
+} from '@shopify/polaris-viz-core';
 import {
   uniqueId,
   curveStepRounded,
@@ -38,7 +43,6 @@ import {YAxis} from '../YAxis';
 import {Crosshair} from '../Crosshair';
 import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
 import {HorizontalGridLines} from '../HorizontalGridLines';
-import type {LinearXAxisOptions, LinearYAxisOptions} from '../../types';
 
 import {useYScale, useStackedData} from './hooks';
 import {StackedAreas, Points} from './components';
@@ -55,8 +59,8 @@ export interface Props {
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
   showLegend: boolean;
   isAnimated: boolean;
-  xAxisOptions: Required<LinearXAxisOptions>;
-  yAxisOptions: Required<LinearYAxisOptions>;
+  xAxisOptions: Required<XAxisOptions>;
+  yAxisOptions: Required<YAxisOptions>;
   dimensions?: Dimensions;
   theme?: string;
 }
@@ -143,10 +147,10 @@ export function Chart({
 
       return renderTooltipContent({
         data: content,
-        title: xAxisOptions.xAxisLabels[index],
+        title: labels[index],
       });
     },
-    [data, xAxisOptions, renderTooltipContent, seriesColors],
+    [data, labels, renderTooltipContent, seriesColors],
   );
 
   const lineGenerator = useMemo(() => {

@@ -1,12 +1,12 @@
 import {useContext, useMemo} from 'react';
 import {scaleLinear} from 'd3-scale';
 import type {Series} from 'd3-shape';
+import type {LabelFormatter} from '@shopify/polaris-viz-core';
 
 import {ChartContext} from '../../../components/ChartContainer';
 import {estimateStringWidth, shouldRoundScaleUp} from '../../../utilities';
 import {MIN_Y_LABEL_SPACE} from '../constants';
 import {DEFAULT_MAX_Y} from '../../../constants';
-import type {NumberLabelFormatter} from '../../../types';
 
 export function useYScale({
   drawableHeight,
@@ -20,7 +20,7 @@ export function useYScale({
     },
     string
   >[];
-  formatYAxisLabel: NumberLabelFormatter;
+  formatYAxisLabel: LabelFormatter;
 }) {
   const {characterWidths} = useContext(ChartContext);
 

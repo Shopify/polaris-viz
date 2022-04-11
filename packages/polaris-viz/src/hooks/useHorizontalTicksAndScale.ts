@@ -1,8 +1,7 @@
+import type {LabelFormatter} from '@shopify/polaris-viz-core';
 import {extent} from 'd3-array';
 import {scaleLinear} from 'd3-scale';
 import {useMemo} from 'react';
-
-import type {LabelFormatter} from '../types';
 
 interface Props {
   allNumbers: number[];

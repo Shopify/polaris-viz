@@ -25,17 +25,7 @@ export const data = [
   },
 ];
 
-export const labels = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-];
-
-export const formatYAxisLabel = (value?: number) => {
+export const formatYAxisLabel = (value) => {
   const formatter = new Intl.NumberFormat('en').format;
   if (value == null) {
     return '-';

@@ -7,8 +7,14 @@ import {
   isGradientType,
   DataType,
 } from '@shopify/polaris-viz-core';
-import type {DataPoint, Dimensions} from '@shopify/polaris-viz-core';
+import type {
+  DataPoint,
+  Dimensions,
+  XAxisOptions,
+  YAxisOptions,
+} from '@shopify/polaris-viz-core';
 
+import {useXAxisLabels} from '../../hooks/useXAxisLabels';
 import {LinearXAxisLabels} from '../LinearXAxisLabels';
 import {useLegend, LegendContainer} from '../LegendContainer';
 import {
@@ -36,7 +42,6 @@ import {
 import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
 import {YAxis} from '../YAxis';
 import {Crosshair} from '../Crosshair';
-import type {LinearXAxisOptions, LinearYAxisOptions} from '../../types';
 import {HorizontalGridLines} from '../HorizontalGridLines';
 
 import {Points, Line, GradientArea} from './components';
@@ -54,8 +59,8 @@ export interface ChartProps {
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
   data: DataWithDefaults[];
   showLegend: boolean;
-  xAxisOptions: Required<LinearXAxisOptions>;
-  yAxisOptions: Required<LinearYAxisOptions>;
+  xAxisOptions: Required<XAxisOptions>;
+  yAxisOptions: Required<YAxisOptions>;
   emptyStateText?: string;
   theme?: string;
   dimensions?: Dimensions;
@@ -97,6 +102,8 @@ export function Chart({
     onIndexChange: ({detail}) => setActiveLineIndex(detail.index),
   });
 
+  const formattedLabels = useXAxisLabels({data: [data[0]], xAxisOptions});
+
   const tooltipId = useRef(uniqueId('lineChart'));
   const gradientId = useRef(uniqueId('lineChartGradient'));
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
@@ -106,11 +113,6 @@ export function Chart({
 
   const drawableHeight =
     height - labelHeight - LABEL_AREA_TOP_SPACING - Margin.Top;
-
-  const formattedLabels = useMemo(
-    () => xAxisOptions.xAxisLabels.map(xAxisOptions.labelFormatter),
-    [xAxisOptions.labelFormatter, xAxisOptions.xAxisLabels],
-  );
 
   const {yAxisLabelWidth, ticks, yScale} = useYScale({
     drawableHeight,

@@ -1,9 +1,12 @@
 import React from 'react';
-import type {DataPoint, Direction} from '@shopify/polaris-viz-core';
+import type {
+  DataPoint,
+  Direction,
+  LabelFormatter,
+} from '@shopify/polaris-viz-core';
 
 import type {ComparisonMetricProps} from '../ComparisonMetric';
 import {ChartContainer} from '../ChartContainer';
-import type {LabelFormatter} from '../../types';
 
 import {Chart} from './Chart';
 import type {Size, LabelPosition} from './types';

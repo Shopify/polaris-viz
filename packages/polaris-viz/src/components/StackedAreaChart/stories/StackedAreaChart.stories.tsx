@@ -3,12 +3,11 @@ import type {Story, Meta} from '@storybook/react';
 
 import {StackedAreaChart, StackedAreaChartProps} from '../StackedAreaChart';
 
-import {data, labels, formatYAxisLabel} from './utils.stories';
+import {data, formatYAxisLabel} from './utils.stories';
 import {LEGEND_CONTROL_ARGS, THEME_CONTROL_ARGS} from '../../../storybook';
 
 import {generateMultipleSeries} from '../../Docs/utilities';
 import type {RenderTooltipContentData} from '../types';
-import {formatHourlyLabel} from '../../../components/LineChart/stories/utils.stories';
 
 const TOOLTIP_CONTENT = {
   empty: undefined,
@@ -82,10 +81,9 @@ export default {
   },
 } as Meta;
 
-const defaultProps = {
+const DEFAULT_PROPS = {
   data,
   skipLinkText: 'Skip chart content',
-  xAxisOptions: {xAxisLabels: labels},
   yAxisOptions: {labelFormatter: formatYAxisLabel},
   isAnimated: true,
 };
@@ -96,25 +94,18 @@ const Template: Story<StackedAreaChartProps> = (
   return <StackedAreaChart {...args} />;
 };
 export const Default: Story<StackedAreaChartProps> = Template.bind({});
-Default.args = {
-  ...defaultProps,
-};
+Default.args = DEFAULT_PROPS;
 
 export const HideXAxisLabels: Story<StackedAreaChartProps> = Template.bind({});
 HideXAxisLabels.args = {
-  ...defaultProps,
-  xAxisOptions: {...defaultProps.xAxisOptions, hide: true},
+  ...DEFAULT_PROPS,
+  xAxisOptions: {hide: true},
 };
 
 export const OverwrittenSeriesColors: Story<StackedAreaChartProps> =
   Template.bind({});
 OverwrittenSeriesColors.args = {
-  ...defaultProps,
-  xAxisOptions: {
-    xAxisLabels: Array(5)
-      .fill(null)
-      .map(() => 'label'),
-  },
+  ...DEFAULT_PROPS,
   data: [
     {
       name: 'One',
@@ -145,258 +136,20 @@ OverwrittenSeriesColors.args = {
 export const SeriesColorsUpToFour = Template.bind({});
 
 SeriesColorsUpToFour.args = {
-  ...defaultProps,
+  ...DEFAULT_PROPS,
   data: generateMultipleSeries(4),
 };
 
 export const SeriesColorsFromFiveToSeven = Template.bind({});
 
 SeriesColorsFromFiveToSeven.args = {
-  ...defaultProps,
+  ...DEFAULT_PROPS,
   data: generateMultipleSeries(7),
 };
 
 export const SeriesColorsUpToFourteen = Template.bind({});
 
 SeriesColorsUpToFourteen.args = {
-  ...defaultProps,
+  ...DEFAULT_PROPS,
   data: generateMultipleSeries(14),
-};
-
-export const WebData = Template.bind({});
-
-WebData.args = {
-  xAxisOptions: {
-    labelFormatter: formatHourlyLabel,
-    xAxisLabels: [
-      '2022-03-23T00:00:00-04:00',
-      '2022-03-23T01:00:00-04:00',
-      '2022-03-23T02:00:00-04:00',
-      '2022-03-23T03:00:00-04:00',
-      '2022-03-23T04:00:00-04:00',
-      '2022-03-23T05:00:00-04:00',
-      '2022-03-23T06:00:00-04:00',
-      '2022-03-23T07:00:00-04:00',
-      '2022-03-23T08:00:00-04:00',
-      '2022-03-23T09:00:00-04:00',
-      '2022-03-23T10:00:00-04:00',
-      '2022-03-23T11:00:00-04:00',
-      '2022-03-23T12:00:00-04:00',
-      '2022-03-23T13:00:00-04:00',
-      '2022-03-23T14:00:00-04:00',
-      '2022-03-23T15:00:00-04:00',
-      '2022-03-23T16:00:00-04:00',
-      '2022-03-23T17:00:00-04:00',
-      '2022-03-23T18:00:00-04:00',
-      '2022-03-23T19:00:00-04:00',
-      '2022-03-23T20:00:00-04:00',
-      '2022-03-23T21:00:00-04:00',
-      '2022-03-23T22:00:00-04:00',
-      '2022-03-23T23:00:00-04:00',
-    ],
-  },
-  data: [
-    {
-      data: [
-        {
-          value: 0,
-          key: '2022-03-23T00:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T01:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T02:00:00-04:00',
-        },
-        {
-          value: 1,
-          key: '2022-03-23T03:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T04:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T05:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T06:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T07:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T08:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T09:00:00-04:00',
-        },
-        {
-          value: 3,
-          key: '2022-03-23T10:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T11:00:00-04:00',
-        },
-        {
-          value: 1,
-          key: '2022-03-23T12:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T13:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T14:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T15:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T16:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T17:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T18:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T19:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T20:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T21:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T22:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T23:00:00-04:00',
-        },
-      ],
-      name: 'First-time',
-    },
-    {
-      data: [
-        {
-          value: 0,
-          key: '2022-03-23T00:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T01:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T02:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T03:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T04:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T05:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T06:00:00-04:00',
-        },
-        {
-          value: 1,
-          key: '2022-03-23T07:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T08:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T09:00:00-04:00',
-        },
-        {
-          value: 1,
-          key: '2022-03-23T10:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T11:00:00-04:00',
-        },
-        {
-          value: 1,
-          key: '2022-03-23T12:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T13:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T14:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T15:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T16:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T17:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T18:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T19:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T20:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T21:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T22:00:00-04:00',
-        },
-        {
-          value: 0,
-          key: '2022-03-23T23:00:00-04:00',
-        },
-      ],
-      name: 'Returning',
-    },
-  ],
 };

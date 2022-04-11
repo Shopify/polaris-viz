@@ -1,12 +1,11 @@
 import {useContext, useMemo} from 'react';
 import {scaleLinear} from 'd3-scale';
 import {maxIndex} from 'd3-array';
-import type {DataSeries} from '@shopify/polaris-viz-core';
+import type {DataSeries, LabelFormatter} from '@shopify/polaris-viz-core';
 
 import {estimateStringWidth, shouldRoundScaleUp} from '../../../utilities';
 import {yAxisMinMax} from '../utilities';
 import {MIN_Y_LABEL_SPACE} from '../constants';
-import type {NumberLabelFormatter} from '../../../types';
 import {ChartContext} from '../../ChartContainer';
 
 export function useYScale({
@@ -17,7 +16,7 @@ export function useYScale({
 }: {
   drawableHeight: number;
   data: DataSeries[];
-  formatYAxisLabel: NumberLabelFormatter;
+  formatYAxisLabel: LabelFormatter;
   integersOnly: boolean;
 }) {
   const {characterWidths} = useContext(ChartContext);

@@ -113,4 +113,7 @@ export type {
   DataPoint,
   LegendTheme,
   Direction,
+  XAxisOptions,
+  YAxisOptions,
+  LabelFormatter,
 } from './types';

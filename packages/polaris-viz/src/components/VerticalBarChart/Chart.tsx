@@ -4,10 +4,13 @@ import type {
   DataSeries,
   ChartType,
   Dimensions,
+  XAxisOptions,
+  YAxisOptions,
 } from '@shopify/polaris-viz-core';
 import type {AnnotationLookupTable} from 'components/BarChart/types';
 
 import {ChartContext} from '../../components/ChartContainer';
+import {useXAxisLabels} from '../../hooks/useXAxisLabels';
 import {BarChartXAxisLabels} from '../BarChartXAxisLabels';
 import {LegendContainer, useLegend} from '../LegendContainer';
 import {GradientDefs} from '../shared';
@@ -43,11 +46,7 @@ import {
   useWatchColorVisionEvents,
   useReducedLabelIndexes,
 } from '../../hooks';
-import type {
-  RenderTooltipContentData,
-  XAxisOptions,
-  YAxisOptions,
-} from '../BarChart';
+import type {RenderTooltipContentData} from '../BarChart';
 import {AnnotationLine} from '../BarChart';
 
 import {BarGroup, StackedBarGroups} from './components';
@@ -106,17 +105,7 @@ export function Chart({
 
   const emptyState = data.length === 0;
 
-  const labels = useMemo(() => {
-    const labels: string[] = [];
-
-    data.forEach(({data}) => {
-      data.forEach(({key}, index) => {
-        labels[index] = xAxisOptions.labelFormatter?.(`${key}`) ?? `${key}`;
-      });
-    });
-
-    return labels;
-  }, [data, xAxisOptions]);
+  const labels = useXAxisLabels({data, xAxisOptions});
 
   const isStacked = type === 'stacked';
   const stackedValues = isStacked ? getStackedValues(data, labels) : null;

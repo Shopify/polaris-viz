@@ -21,14 +21,6 @@ export function randomNumber(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-export const generateLabels = (dataLength: number) => {
-  return Array(dataLength)
-    .fill(null)
-    .map(() => {
-      return PRODUCT_NAMES[Math.floor(Math.random() * PRODUCT_NAMES.length)];
-    });
-};
-
 export const generateDataSet = (dataLength: number) => {
   return Array(dataLength)
     .fill(null)
