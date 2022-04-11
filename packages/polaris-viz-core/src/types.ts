@@ -92,7 +92,7 @@ export interface ChartContainerTheme {
   padding: string;
   backgroundColor: string;
   sparkChartMinHeight: number;
-  chartMinHeight: number;
+  minHeight: number;
 }
 
 export interface LineTheme {

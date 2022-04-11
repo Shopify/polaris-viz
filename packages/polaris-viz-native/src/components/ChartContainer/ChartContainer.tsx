@@ -59,7 +59,7 @@ export function ChartContainer({theme, children, sparkChart = false}: Props) {
           height: '100%',
           minHeight: sparkChart
             ? chartContainer.sparkChartMinHeight
-            : chartContainer.chartMinHeight,
+            : chartContainer.minHeight,
         },
       ]}
     >

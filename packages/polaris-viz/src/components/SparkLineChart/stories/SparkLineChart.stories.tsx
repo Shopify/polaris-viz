@@ -3,6 +3,8 @@ import type {Story, Meta} from '@storybook/react';
 
 import {SparkLineChart, SparkLineChartProps} from '../';
 import {THEME_CONTROL_ARGS} from '../../../storybook';
+import {PageWithSizingInfo} from '../../Docs/stories/components/PageWithSizingInfo';
+
 
 const DATA = [
   {
@@ -44,9 +46,10 @@ export default {
   parameters: {
     controls: {sort: 'requiredFirst', expanded: true},
     docs: {
+      page: PageWithSizingInfo,
       description: {
         component:
-          'Used in small sizes to give an overview of how a metric has performed over time. <br /><br />  This component inherits its height and width from its container.',
+          'Used in small sizes to give an overview of how a metric has performed over time. ',
       },
     },
   },

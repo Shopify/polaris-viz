@@ -71,7 +71,7 @@ export const ChartContainer = (props: Props) => {
         width: 0,
         height: props.sparkChart
           ? chartContainer.sparkChartMinHeight
-          : chartContainer.chartMinHeight,
+          : chartContainer.minHeight,
       });
     }
 
@@ -91,7 +91,7 @@ export const ChartContainer = (props: Props) => {
     updateDimensions,
     debouncedUpdateDimensions,
     chartDimensions,
-    chartContainer.chartMinHeight,
+    chartContainer.minHeight,
     props.sparkChart,
     chartContainer.sparkChartMinHeight,
   ]);
@@ -106,7 +106,7 @@ export const ChartContainer = (props: Props) => {
           borderRadius: chartContainer.borderRadius,
           minHeight: props.sparkChart
             ? chartContainer.sparkChartMinHeight
-            : chartContainer.chartMinHeight,
+            : chartContainer.minHeight,
         }}
         ref={setRef}
         id={`chart_${value.id}`}

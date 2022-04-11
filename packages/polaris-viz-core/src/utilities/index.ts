@@ -1,5 +1,4 @@
-export {createTheme} from './createThemes';
-export {createThemes} from './createThemes';
+export {createTheme, createThemes} from './createThemes';
 export {createGradient} from './createGradient';
 export {getSeriesColors} from './getSeriesColors';
 export {getFilteredSeries} from './getFilteredSeries';
