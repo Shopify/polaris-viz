@@ -32,7 +32,7 @@ const mockProps: Props = {
       color: 'teal',
     },
   ],
-  formatYAxisLabel: (val: number) => `$${val}`,
+  formatYAxisLabel: (val) => `$${val}`,
   xAxisLabels: ['Day 1', 'Day 2'],
 };
 

@@ -19,7 +19,6 @@ describe('<BarChart />', () => {
         name: 'LABEL1',
       },
     ],
-    xAxisOptions: {},
     skipLinkText: 'Skip Chart Content',
   };
 

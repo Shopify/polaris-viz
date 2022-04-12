@@ -9,7 +9,12 @@ import {
   formatYAxisLabel,
   renderTooltipContent,
 } from './utils.stories';
-import {LEGEND_CONTROL_ARGS, THEME_CONTROL_ARGS} from '../../../storybook';
+import {
+  LEGEND_CONTROL_ARGS,
+  THEME_CONTROL_ARGS,
+  X_AXIS_OPTIONS_ARGS,
+  Y_AXIS_OPTIONS_ARGS,
+} from '../../../storybook';
 
 
 import {generateMultipleSeries} from '../../Docs/utilities';
@@ -50,22 +55,12 @@ export default {
         component:
           'Used to show change over time, comparisons, and trends.',
       },
-      yScale: {
-        controls: null,
-      },
-      xScale: {
-        controls: null,
-      },
     },
   },
   argTypes: {
     data: {
       description:
         'A collection of named data sets to be rendered in the chart. An optional color can be provided for each series, to overwrite the theme `seriesColors` defined in `PolarisVizProvider`',
-    },
-    xAxisOptions: {
-      description:
-        'Configures the xAxis and provides the labels that should be used.',
     },
     emptyStateText: {
       description:
@@ -92,10 +87,8 @@ export default {
       description:
         'If provided, renders a `<SkipLink/>` button with the string. Use this for charts with large data sets, so keyboard users can skip all the tabbable data points in the chart.',
     },
-    yAxisOptions: {
-      description:
-        'An object of optional proprties that define the appearance of the yAxis.',
-    },
+    xAxisOptions: X_AXIS_OPTIONS_ARGS,
+    yAxisOptions: Y_AXIS_OPTIONS_ARGS,
     theme: THEME_CONTROL_ARGS,
     showLegend: LEGEND_CONTROL_ARGS,
   },

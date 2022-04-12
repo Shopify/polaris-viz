@@ -33,3 +33,21 @@ export const LEGEND_CONTROL_ARGS = {
   defaultValue: true,
   description: 'Renders a `<Legend />` component underneath the chart.',
 };
+
+export const X_AXIS_OPTIONS_ARGS = {
+  description:
+    'An object of optional properties that define the appearance of the xAxis.',
+  defaultValue: {
+    hide: false,
+    labelFormatter: (value: string) => `${value}`,
+  },
+};
+
+export const Y_AXIS_OPTIONS_ARGS = {
+  description:
+    'An object of optional properties that define the appearance of the yAxis.',
+  defaultValue: {
+    integersOnly: false,
+    labelFormatter: (value: number) => `${value}`,
+  },
+};

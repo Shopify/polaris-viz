@@ -11,6 +11,8 @@ import {
   LEGEND_CONTROL_ARGS,
   THEME_CONTROL_ARGS,
   TYPE_CONTROL_ARGS,
+  X_AXIS_OPTIONS_ARGS,
+  Y_AXIS_OPTIONS_ARGS,
 } from '../../../storybook';
 
 import {generateMultipleSeries} from '../../Docs/utilities';
@@ -192,12 +194,8 @@ export default {
       description:
         'If provided, renders a `<SkipLink/>` button with the string. Use this for charts with large data sets, so keyboard users can skip all the tabbable data points in the chart.',
     },
-    xAxisOptions: {
-      description: 'An object that defines the xAxis and its options.',
-    },
-    yAxisOptions: {
-      description: 'An object that defines the yAxis and its options.',
-    },
+    xAxisOptions: X_AXIS_OPTIONS_ARGS,
+    yAxisOptions: Y_AXIS_OPTIONS_ARGS,
     renderTooltipContent: {
       options: Object.keys(TOOLTIP_CONTENT),
       mapping: TOOLTIP_CONTENT,
@@ -226,7 +224,6 @@ export const Default: Story<BarChartProps> = Template.bind({});
 
 Default.args = {
   data: DATA,
-  xAxisOptions: {},
   isAnimated: true,
   showLegend: true,
 };
@@ -248,7 +245,7 @@ SingleBar.args = {
       ],
     },
   ],
-  xAxisOptions: {},
+
   isAnimated: true,
 };
 
@@ -269,7 +266,6 @@ Horizontal.args = {
       ],
     },
   ],
-  xAxisOptions: {},
   isAnimated: true,
   direction: 'horizontal',
 };
@@ -294,7 +290,6 @@ const NoOverflowStyleTemplate: Story<BarChartProps> = (args: BarChartProps) => {
 export const NoOverflowStyle = NoOverflowStyleTemplate.bind({});
 NoOverflowStyle.args = {
   data: DATA,
-  xAxisOptions: {},
 };
 
 export const HideXAxisLabels = Template.bind({});
@@ -325,13 +320,12 @@ export const WithoutRoundedCorners: Story<BarChartProps> =
   WithoutRoundedCornersTemplate.bind({});
 WithoutRoundedCorners.args = {
   data: DATA,
-  xAxisOptions: {},
 };
 
 export const Stacked: Story<BarChartProps> = Template.bind({});
 Stacked.args = {
   data: DATA,
-  xAxisOptions: {},
+
   type: 'stacked',
   isAnimated: true,
 };
@@ -339,7 +333,7 @@ Stacked.args = {
 export const OverwrittenSeriesColors: Story<BarChartProps> = Template.bind({});
 OverwrittenSeriesColors.args = {
   data: DATA_WITH_COLOR,
-  xAxisOptions: {},
+
   type: 'stacked',
 };
 
@@ -383,7 +377,7 @@ IntegersOnly.args = {
       ],
     },
   ],
-  xAxisOptions: {},
+
   yAxisOptions: {integersOnly: true},
 };
 
@@ -416,7 +410,7 @@ NegativeOnly.args = {
     },
   ],
   isAnimated: true,
-  xAxisOptions: {},
+
   yAxisOptions: {integersOnly: true},
 };
 

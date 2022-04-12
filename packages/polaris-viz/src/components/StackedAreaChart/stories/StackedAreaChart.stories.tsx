@@ -4,7 +4,12 @@ import type {Story, Meta} from '@storybook/react';
 import {StackedAreaChart, StackedAreaChartProps} from '../StackedAreaChart';
 
 import {data, formatYAxisLabel} from './utils.stories';
-import {LEGEND_CONTROL_ARGS, THEME_CONTROL_ARGS} from '../../../storybook';
+import {
+  LEGEND_CONTROL_ARGS,
+  THEME_CONTROL_ARGS,
+  X_AXIS_OPTIONS_ARGS,
+  Y_AXIS_OPTIONS_ARGS,
+} from '../../../storybook';
 
 import {generateMultipleSeries} from '../../Docs/utilities';
 import type {RenderTooltipContentData} from '../types';
@@ -50,18 +55,12 @@ export default {
       description:
         'A collection of named data sets to be rendered in the chart. An optional color can be provided for each series, to overwrite the theme `seriesColors` defined in `PolarisVizProvider`',
     },
-    xAxisOptions: {
-      description:
-        'The labels to display on the x axis of the chart, label formatter and other configuration of its appearance.',
-    },
     isAnimated: {
       description:
         'Whether to animate the chart when it is initially rendered and its data is updated. Even if `isAnimated` is set to true, animations will not be displayed for users with reduced motion preferences.',
     },
-    yAxisOptions: {
-      description:
-        'An object containing the `formatYAxisLabel` function, which formats the values displayed on the yAxis and in the tooltip. [NumberLabelFormatter type definition.](https://github.com/Shopify/polaris-viz/blob/main/src/types.ts#L114)',
-    },
+    yAxisOptions: Y_AXIS_OPTIONS_ARGS,
+    xAxisOptions: X_AXIS_OPTIONS_ARGS,
     renderTooltipContent: {
       options: Object.keys(TOOLTIP_CONTENT),
       mapping: TOOLTIP_CONTENT,
