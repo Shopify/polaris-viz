@@ -6,3 +6,4 @@ export {uniqueId} from './uniqueId';
 export {isGradientType} from './isGradientType';
 export {curveStepRounded} from './curveStepRounded';
 export {getAnimationTrail} from './getAnimationTrail';
+export {paddingStringToObject} from './paddingStringToObject';

@@ -1,7 +1,10 @@
 import React, {useState, ReactElement, cloneElement} from 'react';
 import {View} from 'react-native';
-import type {Dimensions} from '@shopify/polaris-viz-core';
-import {useTheme} from '@shopify/polaris-viz-core';
+import {
+  Dimensions,
+  paddingStringToObject,
+  useTheme,
+} from '@shopify/polaris-viz-core';
 
 interface Props {
   children: ReactElement;
@@ -29,29 +32,14 @@ export function ChartContainer({theme, children, sparkChart = false}: Props) {
     });
   };
 
-  const padding = (paddingString: string) => {
-    const numberPattern = /\d+/g;
-
-    const [top, right, bottom, left]: any = paddingString.match(numberPattern);
-
-    const alternateLeft = right ? right : top;
-
-    return {
-      paddingTop: top,
-      paddingRight: right ? right : top,
-      paddingBottom: bottom ? bottom : top,
-      paddingLeft: left ? left : alternateLeft,
-    };
-  };
-
   return (
     <View
       onLayout={handleOnLayout}
       style={[
         {
           borderRadius: Number(parseInt(chartContainer.borderRadius, 10)),
-          ...padding(chartContainer.padding),
           backgroundColor: chartContainer.backgroundColor,
+          ...paddingStringToObject(chartContainer.padding),
         },
         {
           position: 'relative',
