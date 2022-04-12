@@ -8,6 +8,14 @@
     content: '⚠️';
     margin-right: 5px;
   }
+
+  code {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 16px;
+    border: 1px solid rgb(68, 68, 68);
+    padding: 2px 5px;
+    border-radius: 3px;
+  }
 }
 
 .Alert {

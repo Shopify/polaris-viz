@@ -5,7 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-<!-- ## Unreleased -->
+## Unreleased
+
+### Fixed
+
+- Charts will now render if the parent container doesn't have a fixed size. Min height from the theme will be used as fallback.
+
+### Added
+
+- `chartContainer.minHeight` and `chartContainer.minSparkChartHeight` to the theme definition
 
 ## [1.1.0] - 2022-03-28
 

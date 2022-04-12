@@ -79,6 +79,7 @@ export {
   isGradientType,
   uniqueId,
   createTheme,
+  paddingStringToObject,
 } from './utilities';
 export {
   useSparkBar,

@@ -14,7 +14,7 @@ export function SparkBarChart({
   theme,
 }: SparkBarChartProps) {
   return (
-    <ChartContainer theme={theme}>
+    <ChartContainer theme={theme} sparkChart>
       <Chart
         data={data}
         dataOffsetRight={dataOffsetRight}

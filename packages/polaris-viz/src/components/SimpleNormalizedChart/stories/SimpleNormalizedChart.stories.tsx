@@ -6,6 +6,7 @@ import {
   SimpleNormalizedChartProps,
 } from '../SimpleNormalizedChart';
 import {THEME_CONTROL_ARGS} from '../../../storybook';
+import {PageWithSizingInfo} from '../../Docs/stories/components/PageWithSizingInfo';
 
 export default {
   title: 'polaris-viz/Simple Charts/SimpleNormalizedChart',
@@ -13,9 +14,10 @@ export default {
   parameters: {
     controls: {sort: 'requiredFirst', expanded: true},
     docs: {
+      page: PageWithSizingInfo,
       description: {
         component:
-          "Used for positive datasets with two to four items. If your dataset has more than four items, consider grouping the fourth item and the remainder into an “other” category before passing data to the component. <br /><br />  This component inherits its height and width from its container. When the Normalized stacked bar chart is oriented horizontally, it is constrained by the parent's width; in vertical direction, it's constrained by the parent's height.",
+          "Used for positive datasets with two to four items. If your dataset has more than four items, consider grouping the fourth item and the remainder into an “other” category before passing data to the component.  ",
       },
     },
   },

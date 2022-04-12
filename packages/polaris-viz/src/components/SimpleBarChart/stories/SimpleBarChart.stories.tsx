@@ -2,7 +2,7 @@ import React from 'react';
 import type {Story, Meta} from '@storybook/react';
 
 import {SimpleBarChart, SimpleBarChartProps} from '../SimpleBarChart';
-
+import {PageWithSizingInfo} from '../../Docs/stories/components/PageWithSizingInfo';
 import {THEME_CONTROL_ARGS, TYPE_CONTROL_ARGS} from '../../../storybook';
 import {
   COLOR_OVERRIDE_SERIES,
@@ -17,9 +17,10 @@ export default {
   parameters: {
     previewHeight: 'auto',
     docs: {
+      page: PageWithSizingInfo,
       description: {
         component:
-          'Used to show comparison of different types, across categories or time. Bars can be stacked or side by side. It is recommended that you use a legend whenever displaying multi-series data. To display one, use the `<Legend />` component. <br /> <br /> This component inherits its height and width from its container.',
+          'Used to show comparison of different types, across categories or time. Bars can be stacked or side by side.  ',
       },
     },
     controls: {

@@ -91,6 +91,8 @@ export interface ChartContainerTheme {
   borderRadius: string;
   padding: string;
   backgroundColor: string;
+  sparkChartMinHeight: number;
+  minHeight: number;
 }
 
 export interface LineTheme {

@@ -28,7 +28,7 @@ export function SparkBarChart({
   theme,
 }: SparkBarChartProps) {
   return (
-    <ChartContainer theme={theme}>
+    <ChartContainer theme={theme} sparkChart>
       <Chart
         data={data}
         accessibilityLabel={accessibilityLabel}
@@ -102,7 +102,7 @@ function Chart({
     <View accessibilityRole="image" accessibilityLabel={accessibilityLabel}>
       <Svg
         viewBox={`0 -${ANIMATION_MARGIN} ${width} ${viewboxHeight}`}
-        height={viewboxHeight}
+        height={height}
         width={width}
         transform={[{translateY: -1 * ANIMATION_MARGIN}] as any}
       >
