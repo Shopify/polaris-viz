@@ -11,7 +11,9 @@ import {
 } from './utils.stories';
 import {LEGEND_CONTROL_ARGS, THEME_CONTROL_ARGS} from '../../../storybook';
 
+
 import {generateMultipleSeries} from '../../Docs/utilities';
+import {PageWithSizingInfo} from '../../Docs/stories/components/PageWithSizingInfo';
 
 const TOOLTIP_CONTENT = {
   empty: undefined,
@@ -43,9 +45,10 @@ export default {
   parameters: {
     controls: {sort: 'requiredFirst', expanded: true},
     docs: {
+      page: PageWithSizingInfo,
       description: {
         component:
-          'Used to show change over time, comparisons, and trends. It is reccomended that you use a legend whenever displaying multiseries data. To display one, use the `<Legend />` component. <br /> <br /> This component inherits its height and width from its container.',
+          'Used to show change over time, comparisons, and trends.',
       },
       yScale: {
         controls: null,

@@ -9,6 +9,8 @@ import {LEGEND_CONTROL_ARGS, THEME_CONTROL_ARGS} from '../../../storybook';
 import {generateMultipleSeries} from '../../Docs/utilities';
 import type {RenderTooltipContentData} from '../types';
 
+import {PageWithSizingInfo} from '../../Docs/stories/components/PageWithSizingInfo';
+
 const TOOLTIP_CONTENT = {
   empty: undefined,
   Custom: ({data}: RenderTooltipContentData) => (
@@ -36,9 +38,10 @@ export default {
   parameters: {
     controls: {sort: 'requiredFirst', expanded: true},
     docs: {
+      page: PageWithSizingInfo,
       description: {
         component:
-          'Used to compare multiple series of data and display the total value. This chart is not ideal for displaying datasets with negatives. <br /> This component inherits its height and width from its container. <br /> <br /> This component inherits its height and width from its container.',
+          'Used to compare multiple series of data and display the total value. This chart is not ideal for displaying datasets with negatives. <br /> ',
       },
     },
   },

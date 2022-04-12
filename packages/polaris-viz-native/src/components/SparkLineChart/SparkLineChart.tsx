@@ -28,7 +28,7 @@ export function SparkLineChart({
   const shouldAnimate = !prefersReducedMotion && isAnimated;
 
   return (
-    <ChartContainer>
+    <ChartContainer sparkChart>
       <Chart
         data={data}
         accessibilityLabel={accessibilityLabel}

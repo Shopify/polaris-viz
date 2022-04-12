@@ -17,6 +17,14 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 - Removed `xAxisLabels` from `LinearXAxisOptions.xAxisOptions`.
 - Removed `StringLabelFormatter` & `NumberLabelFormatter` types.
 
+### Added
+
+- `chartContainer.minHeight` and `chartContainer.minSparkChartHeight` to the theme definition
+
+### Fixed
+
+- Charts will now render if the parent container doesn't have a fixed size. Min height from the theme will be used as fallback.
+
 ## [1.1.0] - 2022-03-28
 
 ### Added

@@ -165,7 +165,7 @@ interface ContainerProps {
   theme: string;
 }
 
-const Container = ({children, theme, height = 400}: ContainerProps) => {
+const Container = ({children, theme}: ContainerProps) => {
   const selectedTheme = useTheme(theme);
 
   return (
@@ -181,7 +181,6 @@ const Container = ({children, theme, height = 400}: ContainerProps) => {
       <div
         style={{
           boxSizing: 'border-box',
-          height: height,
           overflow: 'hidden',
         }}
       >

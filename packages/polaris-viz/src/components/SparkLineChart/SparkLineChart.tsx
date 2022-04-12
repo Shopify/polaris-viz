@@ -23,7 +23,7 @@ export function SparkLineChart({
   theme,
 }: SparkLineChartProps) {
   return (
-    <ChartContainer theme={theme}>
+    <ChartContainer theme={theme} sparkChart>
       <Chart
         data={data}
         accessibilityLabel={accessibilityLabel}
