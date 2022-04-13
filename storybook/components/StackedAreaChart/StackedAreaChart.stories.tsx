@@ -12,11 +12,10 @@ import {
   Y_AXIS_OPTIONS_ARGS,
 } from '../../constants';
 import type {RenderTooltipContentData} from '../../../packages/polaris-viz/src/components/StackedAreaChart/types';
+import {PageWithSizingInfo} from '../Docs/stories/components/PageWithSizingInfo';
 
 import {formatYAxisLabel} from './utilities';
 import {DATA, OVERWRITTEN_SERIES_COLORS} from './data';
-
-import {PageWithSizingInfo} from '../../Docs/stories/components/PageWithSizingInfo';
 
 const TOOLTIP_CONTENT = {
   empty: undefined,

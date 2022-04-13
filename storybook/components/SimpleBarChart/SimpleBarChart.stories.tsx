@@ -7,6 +7,7 @@ import {
   THEME_CONTROL_ARGS,
   TYPE_CONTROL_ARGS,
 } from '../../constants';
+import {PageWithSizingInfo} from '../Docs/stories/components/PageWithSizingInfo';
 
 import {
   COLOR_OVERRIDE_SERIES,
@@ -14,7 +15,6 @@ import {
   SERIES,
   SINGLE_SERIES,
 } from './data';
-import {PageWithSizingInfo} from '../Docs/stories/components/PageWithSizingInfo';
 
 export default {
   title: 'polaris-viz/Simple Charts/SimpleBarChart',

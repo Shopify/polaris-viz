@@ -12,6 +12,7 @@ import {
   Y_AXIS_OPTIONS_ARGS,
 } from '../../constants';
 import {generateMultipleSeries} from '../../utilities/generate-data';
+import {PageWithSizingInfo} from '../Docs/stories/components/PageWithSizingInfo';
 
 import {
   formatXAxisLabel,
@@ -19,7 +20,6 @@ import {
   renderTooltipContent,
 } from './utilities';
 import {DATA} from './data';
-import {PageWithSizingInfo} from '../Docs/stories/components/PageWithSizingInfo';
 
 const TOOLTIP_CONTENT = {
   empty: undefined,

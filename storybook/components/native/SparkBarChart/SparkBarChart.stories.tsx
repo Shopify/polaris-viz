@@ -3,9 +3,7 @@ import type {Story, Meta} from '@storybook/react';
 import {SparkBarChart} from '@shopify/polaris-viz-native';
 
 import {ACCESSIBILITY_LABEL_ARGS, THEME_CONTROL_ARGS} from '../../../constants';
-
 import {PageWithSizingInfo} from '../../Docs/stories/components/PageWithSizingInfo';
-
 
 export default {
   title: 'polaris-viz-native/Spark Charts/SparkBarChart',

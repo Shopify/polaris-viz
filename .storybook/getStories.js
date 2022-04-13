@@ -4,8 +4,6 @@ const getStories = (environment) => {
 
   const appDirectory = path.resolve(__dirname, '../storybook/');
 
-  console.log(appDirectory);
-
   return glob.sync(`${appDirectory}/**/*.stories.@(mdx|tsx)`, {
     ignore:
       environment === 'development'

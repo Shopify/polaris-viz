@@ -34,7 +34,7 @@
     "check": "npm-run-all lint type-check test",
     "check:ci": "npm-run-all lint type-check test:ci",
     "size": "yarn run build && size-limit",
-    "clean": "rimraf ./packages/*/build ./packages/*/*.{d.ts,js,esnext,mjs} .loom",
+    "clean": "rimraf ./packages/*/build ./packages/*/*.{d.ts,js,esnext,mjs} ./storybook/**/*.{.d.ts,js,esnext,mjs} .loom",
     "prebuild-consumer": "yarn run build",
     "build-consumer": "node ./scripts/build-consumer",
     "build-storybook": "build-storybook -o docs-build  -s public",
