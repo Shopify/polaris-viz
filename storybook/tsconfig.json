@@ -1,0 +1,13 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "rootDir": "./"
+  },
+  "include": ["./**/*.ts", "./**/*.tsx"],
+  "references": [
+    {"path": "../packages/polaris-viz"},
+    {"path": "../packages/polaris-viz-native"},
+    {"path": "../packages/polaris-viz-core"}
+  ]
+}

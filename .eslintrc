@@ -134,12 +134,15 @@
       }
     },
     {
-      "files": ["**/*.stories.{ts,tsx}"],
+      "files": ["./storybook/**/*.{ts,tsx}"],
       "parserOptions": {
-        "project": ["./tsconfig.json"]
+        "project": ["./storybook/tsconfig.json"]
       },
       "rules": {
-        "import/no-default-export": "off"
+        "import/no-extraneous-dependencies": "off",
+        "import/no-default-export": "off",
+        "@shopify/jsx-no-hardcoded-content": "off",
+        "@shopify/strict-component-boundaries": "off"
       }
     },
     {

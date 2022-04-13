@@ -23,6 +23,10 @@ export type {
   BarChartProps,
   TooltipContentProps,
   SimpleBarChartProps,
+  SquareColorPreviewProps,
+  LegendProps,
+  TooltipData,
+  LegendData,
 } from './components';
 
 export {

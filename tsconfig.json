@@ -3,6 +3,7 @@
   "include": [],
   "references": [
     {"path": "./tests"},
+    {"path": "./storybook"},
     {"path": "./packages/polaris-viz-core"},
     {"path": "./packages/polaris-viz-native"},
     {"path": "./packages/polaris-viz"}

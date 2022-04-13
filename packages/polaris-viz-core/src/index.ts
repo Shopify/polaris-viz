@@ -94,7 +94,11 @@ export {
   LinearGradientWithStops,
   PolarisVizProvider,
 } from './components';
-export type {PolarisVizProviderProps} from './components';
+export type {
+  PolarisVizProviderProps,
+  LinearGradientWithStopsProps,
+  LineSeriesProps,
+} from './components';
 export {DataType, RoundedBorder} from './types';
 
 export type {
