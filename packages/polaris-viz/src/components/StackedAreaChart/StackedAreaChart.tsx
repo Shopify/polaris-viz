@@ -6,7 +6,10 @@ import type {
   YAxisOptions,
 } from '@shopify/polaris-viz-core';
 
-import {getXAxisOptions, getYAxisOptions} from '../../utilities';
+import {
+  getXAxisOptionsWithDefaults,
+  getYAxisOptionsWithDefaults,
+} from '../../utilities';
 import {formatTooltipDataForLinearCharts} from '../../utilities/format-tooltip-data-for-linear-charts';
 import {TooltipContent} from '../';
 import {ChartContainer} from '../ChartContainer';
@@ -42,8 +45,8 @@ export function StackedAreaChart({
     return null;
   }
 
-  const xAxisOptionsWithDefaults = getXAxisOptions(xAxisOptions);
-  const yAxisOptionsWithDefaults = getYAxisOptions(yAxisOptions);
+  const xAxisOptionsWithDefaults = getXAxisOptionsWithDefaults(xAxisOptions);
+  const yAxisOptionsWithDefaults = getYAxisOptionsWithDefaults(yAxisOptions);
 
   function renderDefaultTooltipContent(tooltipData: RenderTooltipContentData) {
     if (renderTooltipContent != null) {

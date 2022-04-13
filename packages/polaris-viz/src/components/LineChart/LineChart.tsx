@@ -14,8 +14,8 @@ import {useThemeSeriesColors} from '../../hooks/use-theme-series-colors';
 import {
   changeColorOpacity,
   getAverageColor,
-  getXAxisOptions,
-  getYAxisOptions,
+  getXAxisOptionsWithDefaults,
+  getYAxisOptionsWithDefaults,
 } from '../../utilities';
 import {SkipLink} from '../SkipLink';
 import {usePrefersReducedMotion, useTheme} from '../../hooks';
@@ -53,8 +53,8 @@ export function LineChart({
 
   const skipLinkAnchorId = useRef(uniqueId('lineChart'));
 
-  const xAxisOptionsWithDefaults = getXAxisOptions(xAxisOptions);
-  const yAxisOptionsWithDefaults = getYAxisOptions(yAxisOptions);
+  const xAxisOptionsWithDefaults = getXAxisOptionsWithDefaults(xAxisOptions);
+  const yAxisOptionsWithDefaults = getYAxisOptionsWithDefaults(yAxisOptions);
 
   function renderTooltip(tooltipData: RenderTooltipContentData) {
     if (renderTooltipContent != null) {
@@ -73,10 +73,6 @@ export function LineChart({
     return <TooltipContent title={title} data={formattedData} theme={theme} />;
   }
 
-  // I noticed that on charts that have several series, the accumulation
-  // of semi-transparent areas turns quite solid.
-  // maybe we should define then opacity based on the amount of series
-  // on the chart? 🤔
   const getOpacityByDataLength = (dataLength: number) => {
     if (dataLength <= 4) {
       return 0.25;

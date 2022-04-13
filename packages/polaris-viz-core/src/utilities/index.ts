@@ -7,3 +7,4 @@ export {isGradientType} from './isGradientType';
 export {curveStepRounded} from './curveStepRounded';
 export {getAnimationTrail} from './getAnimationTrail';
 export {paddingStringToObject} from './paddingStringToObject';
+export {removeFalsyValues} from './remove-falsy-values';
