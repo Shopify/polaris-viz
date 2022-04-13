@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {ShapePreview} from '../../../shared/ShapePreview';
+import {SeriesIcon} from '../../../shared/SeriesIcon';
 import type {LegendData} from '../../types';
 import {
   getColorVisionEventAttrs,
@@ -47,7 +47,7 @@ export function LegendItem({
       }}
       className={style.Legend}
     >
-      <ShapePreview
+      <SeriesIcon
         shape={legend.iconType === 'line' ? 'Line' : 'Bar'}
         color={legend.color}
         isComparison={legend.isComparison}

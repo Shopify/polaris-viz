@@ -1,1 +1,0 @@
-export {ShapePreview} from './ShapePreview';

@@ -7,15 +7,15 @@ import {SquareColorPreview} from '../../SquareColorPreview';
 
 interface Props {
   color: Color;
-  shape: Shape;
   isComparison?: boolean;
+  shape?: Shape;
   theme?: string;
 }
 
-export function ShapePreview({
+export function SeriesIcon({
   color,
   isComparison = false,
-  shape,
+  shape = 'Bar',
   theme,
 }: Props) {
   const selectedTheme = useTheme(theme);
