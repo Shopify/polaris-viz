@@ -94,7 +94,11 @@ const DEFAULT_PROPS = {
 const Template: Story<StackedAreaChartProps> = (
   args: StackedAreaChartProps,
 ) => {
-  return <StackedAreaChart {...args} />;
+  return (
+    <div style={{height: '500px'}}>
+      <StackedAreaChart {...args} />
+    </div>
+  );
 };
 export const Default: Story<StackedAreaChartProps> = Template.bind({});
 Default.args = DEFAULT_PROPS;
