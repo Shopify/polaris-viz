@@ -2,7 +2,7 @@ import React from 'react';
 import {Color, useTheme} from '@shopify/polaris-viz-core';
 import type {Shape} from '@shopify/polaris-viz-core';
 
-import {ShapePreview} from '../../../shared/ShapePreview';
+import {SeriesIcon} from '../../../shared/SeriesIcon';
 import {getOpacityStylesForActive} from '../../../../hooks';
 import {classNames} from '../../../../utilities';
 import {TITLE_MARGIN} from '../../constants';
@@ -43,7 +43,7 @@ export function TooltipRow({
     >
       {color != null && (
         <div style={{marginRight: 4}}>
-          <ShapePreview
+          <SeriesIcon
             color={color!}
             isComparison={isComparison}
             shape={shape}
