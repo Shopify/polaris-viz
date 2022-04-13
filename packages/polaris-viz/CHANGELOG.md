@@ -18,6 +18,8 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 - All components now use the core `XAxisOptions` & `YAxisOptions` types.
 - All label formatters now use the core `LabelFormatter` type.
 - Renamed `Annotation.tooltipData.label` to `key`.
+- Renamed `theme.tooltip.valueColor` to `textColor`.
+- Renamed `theme.tooltip.labelColor` to `titleColor`.
 
 ### Removed
 

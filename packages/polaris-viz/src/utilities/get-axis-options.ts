@@ -1,11 +1,10 @@
+import {removeFalsyValues} from '@shopify/polaris-viz-core';
 import type {XAxisOptions, YAxisOptions} from '@shopify/polaris-viz-core';
 
-import {filterObject} from './filter-object';
-
-export function getYAxisOptions(
+export function getYAxisOptionsWithDefaults(
   yAxisOptions: Partial<YAxisOptions> = {},
 ): Required<YAxisOptions> {
-  const yAxisOptionsFiltered = filterObject(yAxisOptions);
+  const yAxisOptionsFiltered = removeFalsyValues(yAxisOptions);
 
   return {
     labelFormatter: (value: number) => `${value}`,
@@ -14,10 +13,10 @@ export function getYAxisOptions(
   };
 }
 
-export function getXAxisOptions(
+export function getXAxisOptionsWithDefaults(
   xAxisOptions: Partial<XAxisOptions> = {},
 ): Required<XAxisOptions> {
-  const xAxisOptionsFiltered = filterObject(xAxisOptions);
+  const xAxisOptionsFiltered = removeFalsyValues(xAxisOptions);
 
   return {
     labelFormatter: (value: number) => `${value}`,

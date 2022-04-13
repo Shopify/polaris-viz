@@ -80,6 +80,7 @@ export {
   uniqueId,
   createTheme,
   paddingStringToObject,
+  removeFalsyValues,
 } from './utilities';
 export {
   useSparkBar,

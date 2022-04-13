@@ -136,20 +136,14 @@ Annotations.args = {
   data: DATA,
   annotations: [
     {
-      seriesIndex: 0,
-      dataIndex: 1,
       key: 'Left axis annotation',
       value: '1.5 hours',
     },
     {
-      seriesIndex: 0,
-      dataIndex: 0,
       key: 'Right axis annotation',
       value: '1.5 hours',
     },
     {
-      seriesIndex: 0,
-      dataIndex: 0,
       key: 'Another left axis annotation',
       value: '1.5 hours',
     },

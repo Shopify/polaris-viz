@@ -97,8 +97,6 @@ export interface TooltipData {
 }
 
 export interface TooltipAnnotation {
-  dataIndex: number;
-  seriesIndex: number;
   key: string;
   value: string;
 }

@@ -1,8 +1,8 @@
-import {filterObject} from '../filter-object';
+import {removeFalsyValues} from '../remove-falsy-values';
 
-describe('filterObject()', () => {
+describe('removeFalsyValues()', () => {
   it('filters out nullish values', () => {
-    const filtered = filterObject({
+    const filtered = removeFalsyValues({
       foo: 'bar',
       number: 100,
       boolean: false,

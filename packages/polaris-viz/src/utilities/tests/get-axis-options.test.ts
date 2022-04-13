@@ -1,9 +1,9 @@
-import {getYAxisOptions, getXAxisOptions} from '../';
+import {getYAxisOptionsWithDefaults, getXAxisOptionsWithDefaults} from '../';
 
 describe('get-axis-options', () => {
-  describe('getYAxisOptions', () => {
+  describe('getYAxisOptionsWithDefaults()', () => {
     it('returns options when no data provided', () => {
-      const yAxisOptions = getYAxisOptions();
+      const yAxisOptions = getYAxisOptionsWithDefaults();
 
       expect(yAxisOptions.integersOnly).toStrictEqual(false);
       expect(typeof yAxisOptions.labelFormatter).toBe('function');
@@ -11,7 +11,7 @@ describe('get-axis-options', () => {
     });
 
     it('overrides integersOnly when provided', () => {
-      const yAxisOptions = getYAxisOptions({
+      const yAxisOptions = getYAxisOptionsWithDefaults({
         integersOnly: true,
       });
 
@@ -19,7 +19,7 @@ describe('get-axis-options', () => {
     });
 
     it('overrides labelFormatter when provided', () => {
-      const yAxisOptions = getYAxisOptions({
+      const yAxisOptions = getYAxisOptionsWithDefaults({
         labelFormatter: (value) => `${value} bar`,
       });
 
@@ -27,7 +27,7 @@ describe('get-axis-options', () => {
     });
 
     it('overrides options when both provided', () => {
-      const yAxisOptions = getYAxisOptions({
+      const yAxisOptions = getYAxisOptionsWithDefaults({
         integersOnly: true,
         labelFormatter: (value) => `${value} bar`,
       });
@@ -37,9 +37,9 @@ describe('get-axis-options', () => {
     });
   });
 
-  describe('getXAxisOption', () => {
+  describe('getXAxisOptionsWithDefaults()', () => {
     it('returns options when no data provided', () => {
-      const xAxisOptions = getXAxisOptions();
+      const xAxisOptions = getXAxisOptionsWithDefaults();
 
       expect(xAxisOptions.hide).toStrictEqual(false);
       expect(typeof xAxisOptions.labelFormatter).toBe('function');
@@ -47,7 +47,7 @@ describe('get-axis-options', () => {
     });
 
     it('overrides hide when provided', () => {
-      const xAxisOptions = getXAxisOptions({
+      const xAxisOptions = getXAxisOptionsWithDefaults({
         hide: true,
       });
 
@@ -55,7 +55,7 @@ describe('get-axis-options', () => {
     });
 
     it('overrides labelFormatter when provided', () => {
-      const xAxisOptions = getXAxisOptions({
+      const xAxisOptions = getXAxisOptionsWithDefaults({
         labelFormatter: (value) => `${value} bar`,
       });
 
@@ -63,7 +63,7 @@ describe('get-axis-options', () => {
     });
 
     it('overrides options when both provided', () => {
-      const xAxisOptions = getXAxisOptions({
+      const xAxisOptions = getXAxisOptionsWithDefaults({
         hide: true,
         labelFormatter: (value) => `${value} bar`,
       });

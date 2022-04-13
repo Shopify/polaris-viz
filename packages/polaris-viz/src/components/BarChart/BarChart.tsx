@@ -9,7 +9,11 @@ import type {
 import type {TooltipAnnotation, RenderTooltipContentData} from '../../types';
 import {TooltipContent} from '../';
 import {SkipLink} from '../SkipLink';
-import {getXAxisOptions, getYAxisOptions, normalizeData} from '../../utilities';
+import {
+  getXAxisOptionsWithDefaults,
+  getYAxisOptionsWithDefaults,
+  normalizeData,
+} from '../../utilities';
 import {HorizontalBarChart} from '../HorizontalBarChart';
 import {VerticalBarChart} from '../VerticalBarChart';
 
@@ -52,8 +56,8 @@ export function BarChart({
   const hideSkipLink =
     skipLinkText == null || skipLinkText.length === 0 || emptyState;
 
-  const xAxisOptionsWithDefaults = getXAxisOptions(xAxisOptions);
-  const yAxisOptionsWithDefaults = getYAxisOptions(yAxisOptions);
+  const xAxisOptionsWithDefaults = getXAxisOptionsWithDefaults(xAxisOptions);
+  const yAxisOptionsWithDefaults = getYAxisOptionsWithDefaults(yAxisOptions);
 
   const annotationsLookupTable = normalizeData(annotations, 'dataSeriesIndex');
 
@@ -77,8 +81,6 @@ export function BarChart({
 
     if (annotation) {
       annotations.push({
-        dataIndex: 0,
-        seriesIndex: annotation.dataPointIndex,
         key: annotation.tooltipData?.key ?? '',
         value: annotation.tooltipData?.value ?? '',
       });

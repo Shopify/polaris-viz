@@ -161,6 +161,32 @@ isGradientType('red');
 <Divider />
 
 <Title type="h3">
+  <code>removeFalsyValues()</code>
+</Title>
+
+<p>
+  Takes an object and returns a new object with all the falsy values removed.
+</p>
+
+```tsx
+removeFalsyValues({
+  foo: 'bar',
+  number: 100,
+  boolean: false,
+  one: undefined,
+  three: null,
+});
+
+// {
+//   foo: 'bar',
+//   number: 100,
+//   boolean: false,
+// }
+```
+
+<Divider />
+
+<Title type="h3">
   <code>uniqueId()</code>
 </Title>
 
