@@ -15,6 +15,8 @@ export {StackedAreaChart} from './StackedAreaChart';
 export type {StackedAreaChartProps} from './StackedAreaChart';
 export {BarChart} from './BarChart';
 export type {BarChartProps} from './BarChart';
+export {FunnelChart} from './FunnelChart';
+export type {FunnelChartProps} from './FunnelChart';
 export {SkipLink} from './SkipLink';
 export {VisuallyHiddenRows} from './VisuallyHiddenRows';
 export {LinePreview} from './LinePreview';
