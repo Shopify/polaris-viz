@@ -6,6 +6,7 @@ export {
   StackedAreaChart,
   Legend,
   BarChart,
+  FunnelChart,
   LinePreview,
   SquareColorPreview,
   SimpleBarChart,
