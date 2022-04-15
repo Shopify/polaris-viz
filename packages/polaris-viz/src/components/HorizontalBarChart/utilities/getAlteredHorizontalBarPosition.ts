@@ -17,18 +17,23 @@ export function getAlteredHorizontalBarPosition(
 }
 
 function getNegativeOffset(props: AlteredPositionProps): AlteredPositionReturn {
-  const {bandwidth, currentX, currentY, tooltipDimensions} = props;
+  const {bandwidth, chartDimensions, currentX, currentY, tooltipDimensions} =
+    props;
 
   const flippedX = currentX * -1;
   const yOffset = (bandwidth - tooltipDimensions.height) / 2;
+  const rightAligned = chartDimensions.width - tooltipDimensions.width;
 
   const y = currentY - tooltipDimensions.height;
   if (flippedX - tooltipDimensions.width < 0) {
-    return {x: flippedX, y: y < 0 ? 0 : y};
+    return {
+      x: rightAligned,
+      y: y < 0 ? 0 : y,
+    };
   }
 
   return {
-    x: flippedX - tooltipDimensions.width - TOOLTIP_MARGIN,
+    x: rightAligned,
     y: currentY + HORIZONTAL_GROUP_LABEL_HEIGHT + yOffset,
   };
 }
@@ -44,16 +49,18 @@ function getPositiveOffset(props: AlteredPositionProps): AlteredPositionReturn {
     chartDimensions,
   });
 
+  const right = chartDimensions.width - tooltipDimensions.width;
+
   if (isOutside.top && isOutside.right) {
     return {
-      x: chartDimensions.width - tooltipDimensions.width,
+      x: right,
       y: 0,
     };
   }
 
   if (isOutside.top && !isOutside.right) {
     return {
-      x: currentX + TOOLTIP_MARGIN,
+      x: right,
       y: 0,
     };
   }
@@ -61,13 +68,12 @@ function getPositiveOffset(props: AlteredPositionProps): AlteredPositionReturn {
   if (!isOutside.right && !isOutside.bottom) {
     const yOffset = (bandwidth - tooltipDimensions.height) / 2;
     return {
-      x: currentX + TOOLTIP_MARGIN,
+      x: right,
       y: currentY + HORIZONTAL_GROUP_LABEL_HEIGHT + yOffset,
     };
   }
 
   if (isOutside.right) {
-    const x = currentX - tooltipDimensions.width;
     const y =
       currentY -
       tooltipDimensions.height +
@@ -76,20 +82,20 @@ function getPositiveOffset(props: AlteredPositionProps): AlteredPositionReturn {
 
     if (y < 0) {
       return {
-        x,
+        x: right,
         y: bandwidth + HORIZONTAL_GROUP_LABEL_HEIGHT + TOOLTIP_MARGIN,
       };
     }
 
     return {
-      x,
+      x: right,
       y,
     };
   }
 
   if (isOutside.bottom) {
     return {
-      x: currentX + TOOLTIP_MARGIN,
+      x: right,
       y:
         chartDimensions.height -
         tooltipDimensions.height -
