@@ -31,8 +31,8 @@ export function SimpleBarChart({
   type = 'default',
   xAxisOptions,
 }: SimpleBarChartProps) {
-  const xAxisOptionsForChart = getXAxisOptionsWithDefaults(xAxisOptions);
-  const yAxisOptionsForChart = getYAxisOptionsWithDefaults();
+  const xAxisOptionsWithDefaults = getXAxisOptionsWithDefaults(xAxisOptions);
+  const yAxisOptionsWithDefaults = getYAxisOptionsWithDefaults();
 
   const {prefersReducedMotion} = usePrefersReducedMotion();
 
@@ -43,8 +43,8 @@ export function SimpleBarChart({
         isAnimated={isAnimated && !prefersReducedMotion}
         showLegend={showLegend}
         type={type}
-        xAxisOptions={xAxisOptionsForChart}
-        yAxisOptions={yAxisOptionsForChart}
+        xAxisOptions={xAxisOptionsWithDefaults}
+        yAxisOptions={yAxisOptionsWithDefaults}
       />
     </ChartContainer>
   );
