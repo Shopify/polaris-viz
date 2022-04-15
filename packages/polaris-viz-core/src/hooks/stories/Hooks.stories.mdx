@@ -1,0 +1,66 @@
+import {Meta, Story, Canvas} from '@storybook/addon-docs/blocks';
+
+import {
+  Divider,
+  Title,
+  Banner,
+} from '../../../../polaris-viz/src/components/Docs/stories/components';
+
+<Meta
+  title="Shared/Hooks"
+  parameters={{
+    viewMode: 'docs',
+    docsOnly: true,
+  }}
+/>
+
+<Title>🪝 Hooks</Title>
+
+A collection of React hooks you can import either from `polaris-viz` or `polaris-viz-native`
+
+<Title type="h3">
+  <code>useYScale()</code>
+</Title>
+
+Returns the <code>yScale()</code> and formatted <code>ticks</code> based on the size of your current chart.
+
+The hook will also take into account the size of the chart and round the number of ticks accordingly.
+
+<Banner type="Info">
+  It's recommended that <code>useYScale()</code> is used before trying to write
+  your own <code>yScale</code> function.
+</Banner>
+
+```tsx
+const {yScale, ticks} = useYScale({
+  drawableHeight: 300,
+  formatYAxisLabel: (value) => `${value}`,
+  integersOnly: false,
+  max: 100,
+  min: 0,
+  minLabelSpace: 80,
+});
+
+// ticks = [
+//     {
+//         "value": 0,
+//         "formattedValue": "0",
+//         "yOffset": 300
+//     },
+//     {
+//         "value": 50,
+//         "formattedValue": "50",
+//         "yOffset": 150
+//     },
+//     {
+//         "value": 100,
+//         "formattedValue": "100",
+//         "yOffset": 0
+//     }
+// ]
+```
+
+<p>
+  <code>minLabelSpace</code> is used to determine how much space, in{' '}
+  <code>px</code> a label/tick should take up. Smaller number = more labels.
+</p>

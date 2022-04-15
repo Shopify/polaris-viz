@@ -1,5 +1,5 @@
-import characterWidths from '../../../../data/character-widths.json';
-import {estimateStringWidth} from '../../../../utilities';
+import characterWidths from '../../../../polaris-viz/src/data/character-widths.json';
+import {estimateStringWidth} from '../estimateStringWidth';
 
 describe('estimateStringWidth()', () => {
   it.each`

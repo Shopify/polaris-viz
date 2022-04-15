@@ -4,7 +4,7 @@ import {mount} from '@shopify/react-testing';
 import {Label} from '../Label';
 import type {LabelProps} from '../Label';
 
-jest.mock('../../../../../../utilities/estimateStringWidth', () => ({
+jest.mock('@shopify/polaris-viz-core/src/utilities', () => ({
   estimateStringWidth: jest.fn(() => 100),
 }));
 

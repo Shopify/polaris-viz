@@ -1,6 +1,7 @@
+import type {CharacterWidths} from '@shopify/polaris-viz-core';
+import {estimateStringWidth} from '@shopify/polaris-viz-core';
+
 import {ELLIPSIS} from '../../../constants';
-import type {CharacterWidths} from '../../../types';
-import {estimateStringWidth} from '../../../utilities';
 
 import {formatAndAddEllipsis} from './formatAndAddEllipsis';
 

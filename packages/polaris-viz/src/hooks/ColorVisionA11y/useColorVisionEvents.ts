@@ -1,6 +1,5 @@
 import {useContext, useEffect} from 'react';
-
-import {ChartContext} from '../../components';
+import {ChartContext} from '@shopify/polaris-viz-core';
 
 import {COLOR_VISION_EVENT} from './constants';
 import {getDataSetItem, getEventName} from './utilities';
