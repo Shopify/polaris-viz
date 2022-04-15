@@ -2,7 +2,6 @@
 
 .Container {
   @include chart-container;
-  position: relative;
   user-select: none;
   max-width: 100%;
 }

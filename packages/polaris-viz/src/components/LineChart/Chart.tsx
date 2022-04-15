@@ -15,12 +15,11 @@ import type {
 } from '@shopify/polaris-viz-core';
 
 import type {RenderTooltipContentData} from '../../types';
+import {getAlteredLineChartPosition} from '../../utilities/getAlteredLineChartPosition';
 import {useXAxisLabels} from '../../hooks/useXAxisLabels';
 import {LinearXAxisLabels} from '../LinearXAxisLabels';
 import {useLegend, LegendContainer} from '../LegendContainer';
 import {
-  TooltipHorizontalOffset,
-  TooltipVerticalOffset,
   TooltipPosition,
   TooltipPositionParams,
   TooltipWrapper,
@@ -63,11 +62,6 @@ export interface ChartProps {
   theme?: string;
   dimensions?: Dimensions;
 }
-
-const TOOLTIP_POSITION = {
-  horizontal: TooltipHorizontalOffset.Left,
-  vertical: TooltipVerticalOffset.Center,
-};
 
 export function Chart({
   data,
@@ -186,6 +180,8 @@ export function Chart({
     index,
     eventType,
   }: TooltipPositionParams): TooltipPosition {
+    let activeIndex = 0;
+
     if (eventType === 'mouse') {
       const point = eventPointNative(event!);
 
@@ -197,32 +193,24 @@ export function Chart({
         return TOOLTIP_POSITION_DEFAULT_RETURN;
       }
 
-      const {svgX, svgY} = point;
+      const {svgX} = point;
 
       const closestIndex = Math.round(xScale.invert(svgX - chartStartPosition));
 
-      const activeIndex = clamp({
+      activeIndex = clamp({
         amount: closestIndex,
         min: 0,
         max: reversedSeries[longestSeriesIndex].data.length - 1,
       });
-
-      return {
-        x: svgX,
-        y: svgY,
-        position: TOOLTIP_POSITION,
-        activeIndex,
-      };
     } else {
-      const activeIndex = index ?? 0;
-
-      return {
-        x: xScale?.(activeIndex) ?? 0,
-        y: 0,
-        position: TOOLTIP_POSITION,
-        activeIndex,
-      };
+      activeIndex = index ?? 0;
     }
+
+    return {
+      x: chartStartPosition + xScale?.(activeIndex) ?? 0,
+      y: 0,
+      activeIndex,
+    };
   }
 
   return (
@@ -356,9 +344,9 @@ export function Chart({
       </svg>
 
       <TooltipWrapper
-        alwaysUpdatePosition
         chartDimensions={{width, height}}
         focusElementDataType={DataType.Point}
+        getAlteredPosition={getAlteredLineChartPosition}
         getMarkup={getTooltipMarkup}
         getPosition={getTooltipPosition}
         id={tooltipId.current}
