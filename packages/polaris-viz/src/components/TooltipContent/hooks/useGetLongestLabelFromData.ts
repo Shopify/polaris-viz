@@ -1,7 +1,6 @@
 import {useContext} from 'react';
+import {ChartContext, estimateStringWidth} from '@shopify/polaris-viz-core';
 
-import {estimateStringWidth} from '../../../utilities';
-import {ChartContext} from '../../ChartContainer';
 import type {TooltipData} from '../../../types';
 
 interface Size {

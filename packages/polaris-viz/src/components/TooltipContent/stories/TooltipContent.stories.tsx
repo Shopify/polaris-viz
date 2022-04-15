@@ -1,10 +1,9 @@
 import React from 'react';
 import type {Story, Meta} from '@storybook/react';
-import {DEFAULT_THEME} from '@shopify/polaris-viz-core';
+import {DEFAULT_THEME, ChartContext} from '@shopify/polaris-viz-core';
 
 import {TooltipContent, TooltipContentProps} from '../TooltipContent';
 import type {TooltipData} from '../../../types';
-import {ChartContext} from '../../ChartContainer';
 import characterWidths from '../../../data/character-widths.json';
 
 export default {

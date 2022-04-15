@@ -81,6 +81,8 @@ export {
   createTheme,
   paddingStringToObject,
   removeFalsyValues,
+  estimateStringWidth,
+  shouldRoundScaleUp,
 } from './utilities';
 export {
   useSparkBar,
@@ -88,6 +90,7 @@ export {
   useTheme,
   useThemeSeriesColors,
   usePolarisVizContext,
+  useYScale,
 } from './hooks';
 export {
   Bar,
@@ -95,6 +98,7 @@ export {
   LinearGradientWithStops,
   PolarisVizProvider,
 } from './components';
+export {ChartContext} from './contexts';
 export type {PolarisVizProviderProps} from './components';
 export {DataType, RoundedBorder} from './types';
 
@@ -119,4 +123,5 @@ export type {
   YAxisOptions,
   LabelFormatter,
   Shape,
+  CharacterWidths,
 } from './types';

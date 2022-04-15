@@ -1,7 +1,6 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
-
-import {ChartContext} from '../components';
+import {ChartContext} from '@shopify/polaris-viz-core';
 
 export const mountWithChartContext = (
   child: React.ReactElement<any, any>,

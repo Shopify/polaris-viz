@@ -1,7 +1,6 @@
 import React, {useContext} from 'react';
+import {estimateStringWidth, ChartContext} from '@shopify/polaris-viz-core';
 
-import {ChartContext} from '../../../components/ChartContainer';
-import {estimateStringWidth} from '../../../utilities';
 import {useTheme} from '../../../hooks';
 import {FONT_SIZE, HORIZONTAL_GROUP_LABEL_HEIGHT} from '../../../constants';
 

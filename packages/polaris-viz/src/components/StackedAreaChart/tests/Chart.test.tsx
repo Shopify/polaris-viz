@@ -16,10 +16,15 @@ import {mountWithProvider, triggerSVGMouseMove} from '../../../test-utilities';
 import {StackedAreas} from '../components';
 import {Chart, Props} from '../Chart';
 
+jest.mock('@shopify/polaris-viz-core/src/utilities/estimateStringWidth', () => {
+  return {
+    estimateStringWidth: () => 0,
+  };
+});
+
 jest.mock('../../../utilities', () => {
   return {
     ...jest.requireActual('../../../utilities'),
-    estimateStringWidth: () => 0,
     getPathLength: () => 0,
     getPointAtLength: jest.fn(() => ({x: 0, y: 0})),
     eventPointNative: () => {

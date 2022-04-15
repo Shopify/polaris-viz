@@ -6,6 +6,7 @@ import {
   uniqueId,
   isGradientType,
   DataType,
+  useYScale,
 } from '@shopify/polaris-viz-core';
 import type {
   DataPoint,
@@ -46,10 +47,11 @@ import {HorizontalGridLines} from '../HorizontalGridLines';
 
 import {useLineChartTooltipContent} from './hooks/useLineChartTooltipContent';
 import {Points, Line, GradientArea} from './components';
-import {MAX_ANIMATED_SERIES_LENGTH} from './constants';
+import {MAX_ANIMATED_SERIES_LENGTH, MIN_Y_LABEL_SPACE} from './constants';
 import type {DataWithDefaults} from './types';
-import {useYScale, useFormatData} from './hooks';
+import {useFormatData} from './hooks';
 import styles from './Chart.scss';
+import {yAxisMinMax} from './utilities';
 
 export interface ChartProps {
   isAnimated: boolean;
@@ -106,11 +108,15 @@ export function Chart({
   const drawableHeight =
     height - labelHeight - LABEL_AREA_TOP_SPACING - Margin.Top;
 
+  const {minY, maxY} = yAxisMinMax(data);
+
   const {yAxisLabelWidth, ticks, yScale} = useYScale({
     drawableHeight,
-    data,
     formatYAxisLabel: yAxisOptions.labelFormatter,
     integersOnly: yAxisOptions.integersOnly,
+    max: maxY,
+    min: minY,
+    minLabelSpace: MIN_Y_LABEL_SPACE,
   });
 
   const {reversedSeries, longestSeriesLength, longestSeriesIndex} =

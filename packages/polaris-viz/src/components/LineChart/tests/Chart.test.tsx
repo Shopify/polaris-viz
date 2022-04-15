@@ -54,10 +54,15 @@ const MOCK_PROPS: ChartProps = {
   showLegend: false,
 };
 
+jest.mock('@shopify/polaris-viz-core/src/utilities/estimateStringWidth', () => {
+  return {
+    estimateStringWidth: () => 100,
+  };
+});
+
 jest.mock('../../../utilities', () => {
   return {
     ...jest.requireActual('../../../utilities'),
-    estimateStringWidth: () => 100,
     getPathLength: () => 0,
     getPointAtLength: () => ({x: 0, y: 0}),
     eventPointNative: () => {

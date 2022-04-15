@@ -11,9 +11,9 @@ import {
   Label,
 } from '../../shared';
 
-jest.mock('../../../utilities', () => {
+jest.mock('@shopify/polaris-viz-core/src/utilities', () => {
   return {
-    ...jest.requireActual('../../../utilities'),
+    ...jest.requireActual('@shopify/polaris-viz-core/src/utilities'),
     estimateStringWidth: () => 0,
   };
 });

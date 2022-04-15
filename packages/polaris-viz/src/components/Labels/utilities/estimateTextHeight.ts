@@ -1,6 +1,7 @@
+import type {CharacterWidths} from '@shopify/polaris-viz-core';
+import {estimateStringWidth} from '@shopify/polaris-viz-core';
+
 import {LINE_HEIGHT} from '../../../constants';
-import type {CharacterWidths} from '../../../types';
-import {estimateStringWidth} from '../../../utilities';
 
 interface Props {
   label: string;

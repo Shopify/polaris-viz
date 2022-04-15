@@ -1,5 +1,6 @@
+import type {CharacterWidths} from '@shopify/polaris-viz-core';
+
 import {LINE_HEIGHT} from '../../../constants';
-import type {CharacterWidths} from '../../../types';
 
 import {truncateLastLine} from './truncateLastLine';
 import {truncateSingleLine} from './truncateSingleLine';

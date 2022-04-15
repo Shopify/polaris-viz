@@ -10,6 +10,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Changed
 
 - Tooltips will now stick along the yAxis (or xAxis for horizontal charts).
+- All charts use a unified `useYAxis()` hook instead of 3 slightly different  implementations.
 
 ## [1.3.1] - 2022-04-18
 

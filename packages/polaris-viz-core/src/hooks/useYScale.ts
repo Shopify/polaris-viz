@@ -1,33 +1,45 @@
 import {useContext, useMemo} from 'react';
 import {scaleLinear} from 'd3-scale';
 import {maxIndex} from 'd3-array';
-import type {DataSeries, LabelFormatter} from '@shopify/polaris-viz-core';
 
-import {estimateStringWidth, shouldRoundScaleUp} from '../../../utilities';
-import {yAxisMinMax} from '../utilities';
-import {MIN_Y_LABEL_SPACE} from '../constants';
-import {ChartContext} from '../../ChartContainer';
+import {estimateStringWidth} from '../utilities/estimateStringWidth';
+import type {LabelFormatter} from '../types';
+import {DEFAULT_MAX_Y} from '../constants';
+import {ChartContext} from '../contexts';
+import {shouldRoundScaleUp} from '../utilities/shouldRoundScaleUp';
+
+export interface Props {
+  drawableHeight: number;
+  formatYAxisLabel: LabelFormatter;
+  integersOnly: boolean;
+  max: number;
+  min: number;
+  minLabelSpace: number;
+}
 
 export function useYScale({
   drawableHeight,
-  data,
   formatYAxisLabel,
   integersOnly,
-}: {
-  drawableHeight: number;
-  data: DataSeries[];
-  formatYAxisLabel: LabelFormatter;
-  integersOnly: boolean;
-}) {
+  max,
+  min,
+  minLabelSpace,
+}: Props) {
   const {characterWidths} = useContext(ChartContext);
 
-  const {yScale, ticks, yAxisLabelWidth} = useMemo(() => {
-    const [minY, maxY] = yAxisMinMax({data, integersOnly});
+  const [minY, maxY] = useMemo(() => {
+    const minY = min;
+    const maxY = max === 0 && min === 0 ? DEFAULT_MAX_Y : max;
 
-    const maxTicks = Math.max(
-      1,
-      Math.floor(drawableHeight / MIN_Y_LABEL_SPACE),
-    );
+    if (integersOnly) {
+      return [Math.floor(minY), Math.ceil(maxY)];
+    }
+
+    return [minY, maxY];
+  }, [min, max, integersOnly]);
+
+  const {yScale, ticks, yAxisLabelWidth} = useMemo(() => {
+    const maxTicks = Math.max(1, Math.floor(drawableHeight / minLabelSpace));
 
     const yScale = scaleLinear()
       .range([drawableHeight, 0])
@@ -64,7 +76,15 @@ export function useYScale({
     const yAxisLabelWidth = estimateStringWidth(text, characterWidths);
 
     return {yScale, ticks, yAxisLabelWidth};
-  }, [data, integersOnly, drawableHeight, formatYAxisLabel, characterWidths]);
+  }, [
+    characterWidths,
+    drawableHeight,
+    formatYAxisLabel,
+    integersOnly,
+    maxY,
+    minY,
+    minLabelSpace,
+  ]);
 
   return {yScale, ticks, yAxisLabelWidth};
 }
