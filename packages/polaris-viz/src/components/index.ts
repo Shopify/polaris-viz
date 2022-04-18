@@ -30,3 +30,4 @@ export {Legend} from './LegendContainer';
 export type {LegendProps} from './LegendContainer';
 export {WebPolarisVizProvider as PolarisVizProvider} from './WebPolarisVizProvider';
 export {TooltipContent} from './TooltipContent';
+export type {TooltipContentProps} from './TooltipContent';

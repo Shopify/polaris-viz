@@ -20,6 +20,7 @@ export type {
   StackedAreaChartProps,
   BarChartProps,
   SimpleBarChartProps,
+  TooltipContentProps,
 } from './components';
 
 export {
@@ -27,6 +28,8 @@ export {
   LIGHT_THEME as PolarisVizLightTheme,
   PRINT_THEME as PolarisVizPrintTheme,
 } from './constants';
+
+export type {TooltipData} from './types';
 
 export {
   createGradient,
