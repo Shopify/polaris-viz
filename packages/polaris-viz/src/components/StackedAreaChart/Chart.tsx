@@ -1,4 +1,4 @@
-import React, {useState, useMemo, useRef, useCallback} from 'react';
+import React, {useState, useMemo, useRef} from 'react';
 import {line} from 'd3-shape';
 import type {
   DataSeries,
@@ -13,6 +13,7 @@ import {
   Dimensions,
 } from '@shopify/polaris-viz-core';
 
+import type {RenderTooltipContentData} from '../../types';
 import {LinearXAxisLabels} from '../LinearXAxisLabels';
 import {LegendContainer, useLegend} from '../LegendContainer';
 import {
@@ -46,8 +47,8 @@ import {HorizontalGridLines} from '../HorizontalGridLines';
 
 import {useYScale, useStackedData} from './hooks';
 import {StackedAreas, Points} from './components';
-import type {RenderTooltipContentData} from './types';
 import styles from './Chart.scss';
+import {useStackedChartTooltipContent} from './hooks/useStackedChartTooltipContent';
 
 const TOOLTIP_POSITION: TooltipPositionOffset = {
   horizontal: TooltipHorizontalOffset.Left,
@@ -90,7 +91,7 @@ export function Chart({
     data,
     dimensions,
     showLegend,
-    type: 'line',
+    shape: 'Line',
   });
 
   const tooltipId = useRef(uniqueId('stackedAreaChart'));
@@ -122,36 +123,11 @@ export function Chart({
       yAxisLabelWidth,
     });
 
-  const getTooltipMarkup = useCallback(
-    (index: number) => {
-      const content = data.reduce<RenderTooltipContentData['data']>(
-        function removeNullsAndFormatData(
-          tooltipData,
-          {name, color, data},
-          currentIndex,
-        ) {
-          const {value} = data[index];
-          if (value == null) {
-            return tooltipData;
-          }
-
-          tooltipData.push({
-            color: color || seriesColors[currentIndex],
-            label: name ?? '',
-            value,
-          });
-          return tooltipData;
-        },
-        [],
-      );
-
-      return renderTooltipContent({
-        data: content,
-        title: labels[index],
-      });
-    },
-    [data, labels, renderTooltipContent, seriesColors],
-  );
+  const getTooltipMarkup = useStackedChartTooltipContent({
+    data,
+    renderTooltipContent,
+    seriesColors,
+  });
 
   const lineGenerator = useMemo(() => {
     const generator = line<DataPoint>()

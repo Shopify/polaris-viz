@@ -5,17 +5,3 @@ export type DataWithDefaults = DataSeries & {
   lineStyle: LineStyle;
   areaColor?: string | null;
 };
-
-export interface TooltipData {
-  name: string;
-  point: {
-    label: string;
-    value: number;
-  };
-  color: Color;
-  lineStyle: LineStyle;
-}
-
-export interface RenderTooltipContentData {
-  data: TooltipData[];
-}

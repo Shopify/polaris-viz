@@ -5,8 +5,10 @@ import type {
   ChartType,
   Dimensions,
   XAxisOptions,
+  YAxisOptions,
 } from '@shopify/polaris-viz-core';
 
+import type {RenderTooltipContentData} from '../../types';
 import {HorizontalBarChartXAxisLabels} from '../HorizontalBarChartXAxisLabels';
 import {useLegend, LegendContainer} from '../LegendContainer';
 import type {HorizontalTransitionStyle} from '../../hooks/useHorizontalTransitions';
@@ -36,10 +38,7 @@ import {
   TooltipPositionParams,
   TooltipWrapper,
 } from '../TooltipWrapper';
-import type {
-  AnnotationLookupTable,
-  RenderTooltipContentData,
-} from '../BarChart';
+import type {AnnotationLookupTable} from '../BarChart';
 import {AnnotationLine} from '../BarChart';
 
 import {VerticalGridLines} from './components';
@@ -53,6 +52,7 @@ export interface ChartProps {
   showLegend: boolean;
   type: ChartType;
   xAxisOptions: Required<XAxisOptions>;
+  yAxisOptions: Required<YAxisOptions>;
   annotationsLookupTable?: AnnotationLookupTable;
   dimensions?: Dimensions;
   theme?: string;
@@ -68,11 +68,11 @@ export function Chart({
   theme,
   type,
   xAxisOptions,
+  yAxisOptions,
 }: ChartProps) {
   useColorVisionEvents(data.length > 1);
 
   const selectedTheme = useTheme(theme);
-  const {labelFormatter} = xAxisOptions;
   const id = useMemo(() => uniqueId('HorizontalBarChart'), []);
 
   const isStacked = type === 'stacked';
@@ -96,7 +96,7 @@ export function Chart({
     data,
     isSimple: false,
     isStacked,
-    labelFormatter,
+    labelFormatter: xAxisOptions.labelFormatter,
   });
 
   const highestValueForSeries = useMemo(() => {
@@ -150,17 +150,18 @@ export function Chart({
             return name;
           }
 
-          return `${name} ${labelFormatter(data[seriesIndex].value)}`;
+          return `${name} ${xAxisOptions.labelFormatter(
+            data[seriesIndex].value,
+          )}`;
         })
         .join(', ');
 
-      return `${key}: ${ariaSeries}`;
+      return `${yAxisOptions.labelFormatter(key)}: ${ariaSeries}`;
     },
-    [data, labelFormatter],
+    [data, xAxisOptions, yAxisOptions],
   );
 
   const getTooltipMarkup = useBarChartTooltipContent({
-    annotationsLookupTable,
     data,
     seriesColors,
     renderTooltipContent,
@@ -248,13 +249,14 @@ export function Chart({
               isAnimated={isAnimated}
               isSimple={false}
               isStacked={isStacked}
-              labelFormatter={labelFormatter}
               name={name}
               opacity={opacity}
               stackedValues={stackedValues}
               theme={theme}
               transform={transform}
+              xAxisOptions={xAxisOptions}
               xScale={xScale}
+              yAxisOptions={yAxisOptions}
               zeroPosition={zeroPosition}
             />
           );

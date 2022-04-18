@@ -2,7 +2,11 @@ import React, {useMemo, useState} from 'react';
 import {animated, SpringValue} from '@react-spring/web';
 import {DataType} from '@shopify/polaris-viz-core';
 import type {ScaleLinear} from 'd3-scale';
-import type {DataSeries, LabelFormatter} from '@shopify/polaris-viz-core';
+import type {
+  DataSeries,
+  XAxisOptions,
+  YAxisOptions,
+} from '@shopify/polaris-viz-core';
 
 import {
   COLOR_VISION_GROUP_ITEM,
@@ -34,14 +38,15 @@ export interface HorizontalGroupProps {
   isAnimated: boolean;
   isSimple: boolean;
   isStacked: boolean;
-  labelFormatter: LabelFormatter;
   name: string;
   opacity: SpringValue<number>;
   stackedValues: FormattedStackedSeries[];
-  transform: SpringValue<string>;
-  xScale: ScaleLinear<number, number>;
-  zeroPosition: number;
   theme?: string;
+  transform: SpringValue<string>;
+  xAxisOptions: Required<XAxisOptions>;
+  xScale: ScaleLinear<number, number>;
+  yAxisOptions: Required<YAxisOptions>;
+  zeroPosition: number;
 }
 
 export function HorizontalGroup({
@@ -57,12 +62,13 @@ export function HorizontalGroup({
   isAnimated,
   isSimple,
   isStacked,
-  labelFormatter,
   name,
   opacity,
   stackedValues,
   theme,
   transform,
+  xAxisOptions,
+  yAxisOptions,
   xScale,
   zeroPosition,
 }: HorizontalGroupProps) {
@@ -122,7 +128,7 @@ export function HorizontalGroup({
         <GroupLabel
           areAllNegative={areAllNegative}
           containerWidth={containerWidth}
-          label={name}
+          label={yAxisOptions.labelFormatter(name)}
           theme={theme}
           zeroPosition={zeroPosition}
         />
@@ -151,7 +157,7 @@ export function HorizontalGroup({
             id={id}
             isAnimated={isAnimated}
             isSimple={isSimple}
-            labelFormatter={labelFormatter}
+            labelFormatter={xAxisOptions.labelFormatter}
             name={name}
             theme={theme}
             xScale={xScale}

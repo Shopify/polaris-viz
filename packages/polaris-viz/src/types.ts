@@ -1,4 +1,10 @@
 import type {Interpolation, InterpolatorFn} from '@react-spring/web';
+import type {
+  Color,
+  DataPoint,
+  DataSeries,
+  Shape,
+} from '@shopify/polaris-viz-core';
 import type {Series, SeriesPoint} from 'd3-shape';
 
 export interface YAxisTick {
@@ -62,3 +68,35 @@ export type AnimatedCoordinate = Interpolation<
       y: number;
     }
 >;
+
+export interface RenderTooltipDataPoint extends DataPoint {
+  color?: Color;
+  isComparison?: boolean;
+}
+
+export interface RenderTooltipContentData {
+  data: {
+    shape: Shape;
+    data: RenderTooltipDataPoint[];
+    name?: string;
+  }[];
+  activeIndex: number;
+  dataSeries: DataSeries[];
+  title?: string;
+}
+
+export interface TooltipData {
+  shape: Shape;
+  data: {
+    key: string;
+    value: string;
+    color?: Color;
+    isComparison?: boolean;
+  }[];
+  name?: string;
+}
+
+export interface TooltipAnnotation {
+  key: string;
+  value: string;
+}

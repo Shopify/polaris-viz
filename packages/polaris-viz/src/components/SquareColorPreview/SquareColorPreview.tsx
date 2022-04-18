@@ -2,6 +2,7 @@ import React from 'react';
 import type {Color} from '@shopify/polaris-viz-core';
 import {isGradientType} from '@shopify/polaris-viz-core';
 
+import {PREVIEW_ICON_SIZE} from '../../constants';
 import {createCSSGradient} from '../../utilities';
 
 import styles from './SquareColorPreview.scss';
@@ -15,5 +16,10 @@ export function SquareColorPreview({color}: SquareColorPreviewProps) {
     ? createCSSGradient(color, 305)
     : color;
 
-  return <span className={styles.ColorPreview} style={{background}} />;
+  return (
+    <span
+      className={styles.ColorPreview}
+      style={{background, height: PREVIEW_ICON_SIZE, width: PREVIEW_ICON_SIZE}}
+    />
+  );
 }

@@ -3,37 +3,38 @@ import type {Story, Meta} from '@storybook/react';
 
 import {LineChart, LineChartProps} from '../LineChart';
 import styles from './LineChart.stories.scss';
+import {data, formatXAxisLabel, formatYAxisLabel} from './utils.stories';
 import {
-  data,
-  formatXAxisLabel,
-  formatYAxisLabel,
-  renderTooltipContent,
-} from './utils.stories';
-import {LEGEND_CONTROL_ARGS, THEME_CONTROL_ARGS} from '../../../storybook';
-
+  LEGEND_CONTROL_ARGS,
+  RENDER_TOOLTIP_DESCRIPTION,
+  THEME_CONTROL_ARGS,
+} from '../../../storybook';
 
 import {generateMultipleSeries} from '../../Docs/utilities';
 import {PageWithSizingInfo} from '../../Docs/stories/components/PageWithSizingInfo';
+import type {RenderTooltipContentData} from '../../../types';
 
 const TOOLTIP_CONTENT = {
   empty: undefined,
-  Custom: ({data}: {data: any}) => (
-    <div
-      style={{
-        background: 'black',
-        color: 'white',
-        padding: '10px',
-        borderRadius: '10px',
-        display: 'flex',
-        flexDirection: 'column',
-        fontSize: 12,
-      }}
-    >
-      {data.map((x: any) => (
-        <div>{`${formatXAxisLabel(x.point.label)}: ${x.point.value}`}</div>
-      ))}
-    </div>
-  ),
+  Custom: ({data}: RenderTooltipContentData) => {
+    return (
+      <div
+        style={{
+          background: 'black',
+          color: 'white',
+          padding: '10px',
+          borderRadius: '10px',
+          display: 'flex',
+          flexDirection: 'column',
+          fontSize: 12,
+        }}
+      >
+        {data[0].data.map(({key, value}) => (
+          <div>{`${key}: ${formatYAxisLabel(value!)}`}</div>
+        ))}
+      </div>
+    );
+  },
 };
 
 export default {
@@ -47,8 +48,7 @@ export default {
     docs: {
       page: PageWithSizingInfo,
       description: {
-        component:
-          'Used to show change over time, comparisons, and trends.',
+        component: 'Used to show change over time, comparisons, and trends.',
       },
       yScale: {
         controls: null,
@@ -85,8 +85,7 @@ export default {
           Annotation: 'Custom',
         },
       },
-      description:
-        'This accepts a function that is called to render the tooltip content. By default it calls `formatXAxisLabel` and `formatYAxisLabel` to format the the tooltip values and passes them to `<LineChartTooltipContent />`. The distinction between the `RenderTooltipContentData` and `Series` types is that `RenderTooltipContentData` is for a single data point, instead of an entire series of data.',
+      description: RENDER_TOOLTIP_DESCRIPTION,
     },
     skipLinkText: {
       description:
@@ -94,7 +93,7 @@ export default {
     },
     yAxisOptions: {
       description:
-        'An object of optional proprties that define the appearance of the yAxis.',
+        'An object of optional properties that define the appearance of the yAxis.',
     },
     theme: THEME_CONTROL_ARGS,
     showLegend: LEGEND_CONTROL_ARGS,
@@ -123,7 +122,6 @@ HideXAxisLabels.args = {
     hide: true,
   },
   yAxisOptions: {labelFormatter: formatYAxisLabel},
-  renderTooltipContent,
 };
 
 export const NoOverflowStyle: Story<LineChartProps> = Template.bind({});
@@ -134,7 +132,6 @@ NoOverflowStyle.args = {
     labelFormatter: formatXAxisLabel,
   },
   yAxisOptions: {labelFormatter: formatYAxisLabel},
-  renderTooltipContent,
 };
 
 export const IntegersOnly: Story<LineChartProps> = Template.bind({});
@@ -157,7 +154,6 @@ IntegersOnly.args = {
     labelFormatter: formatXAxisLabel,
   },
   yAxisOptions: {integersOnly: true},
-  renderTooltipContent,
 };
 
 export const NoArea: Story<LineChartProps> = Template.bind({});
@@ -179,7 +175,6 @@ NoArea.args = {
   xAxisOptions: {
     labelFormatter: formatXAxisLabel,
   },
-  renderTooltipContent,
 };
 
 export const OverwrittenSeriesColors: Story<LineChartProps> = Template.bind({});
@@ -202,14 +197,12 @@ OverwrittenSeriesColors.args = {
   xAxisOptions: {
     labelFormatter: formatXAxisLabel,
   },
-  renderTooltipContent,
 };
 
 export const SeriesColorsUpToFour: Story<LineChartProps> = Template.bind({});
 
 SeriesColorsUpToFour.args = {
   data: generateMultipleSeries(4),
-  renderTooltipContent,
   isAnimated: true,
 };
 
@@ -219,7 +212,6 @@ export const SeriesColorsFromFiveToSeven: Story<LineChartProps> = Template.bind(
 
 SeriesColorsFromFiveToSeven.args = {
   data: generateMultipleSeries(7),
-  renderTooltipContent,
 };
 
 export const SeriesColorsUpToFourteen: Story<LineChartProps> = Template.bind(
@@ -228,5 +220,4 @@ export const SeriesColorsUpToFourteen: Story<LineChartProps> = Template.bind(
 
 SeriesColorsUpToFourteen.args = {
   data: generateMultipleSeries(14),
-  renderTooltipContent,
 };

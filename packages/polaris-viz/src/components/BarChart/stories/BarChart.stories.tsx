@@ -3,56 +3,55 @@ import type {Story, Meta} from '@storybook/react';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {BarChart, BarChartProps} from '../../../components';
+import type {Annotation} from '../../../components/BarChart/types';
 
 import {SquareColorPreview} from '../../SquareColorPreview';
 import {PolarisVizProvider} from '../../../';
 import {
   DIRECTION_CONTROL_ARGS,
   LEGEND_CONTROL_ARGS,
+  RENDER_TOOLTIP_DESCRIPTION,
   THEME_CONTROL_ARGS,
   TYPE_CONTROL_ARGS,
 } from '../../../storybook';
 
 import {generateMultipleSeries} from '../../Docs/utilities';
 import {PageWithSizingInfo} from '../../Docs/stories/components/PageWithSizingInfo';
+import type {RenderTooltipContentData} from '../../../types';
 
 const TOOLTIP_CONTENT = {
   empty: undefined,
-  Custom: ({
-    data,
-    title,
-  }: {
-    data: {label: string; value: number; color: string}[];
-    title: string;
-  }) => (
-    <div
-      style={{
-        background: 'black',
-        padding: '8px',
-        borderRadius: '4px',
-        color: 'white',
-      }}
-    >
-      {title}
-      <div>
-        {data.map(({label, value, color}) => (
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '12px 1fr 1fr',
-              gridGap: '5px',
-              fontSize: '12px',
-              marginTop: '4px',
-            }}
-          >
-            <SquareColorPreview color={color} />
-            <div>{label}</div>
-            <div style={{textAlign: 'right'}}>{value}</div>
-          </div>
-        ))}
+  Custom: (tooltipData: RenderTooltipContentData) => {
+    return (
+      <div
+        style={{
+          background: 'black',
+          padding: '8px',
+          borderRadius: '4px',
+          color: 'white',
+        }}
+      >
+        {tooltipData.title}
+        <div>
+          {tooltipData.data[0].data.map(({key, value, color}) => (
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: '12px 1fr 1fr',
+                gridGap: '5px',
+                fontSize: '12px',
+                marginTop: '4px',
+              }}
+            >
+              <SquareColorPreview color={color!} />
+              <div>{key}</div>
+              <div style={{textAlign: 'right'}}>{value}</div>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
-  ),
+    );
+  },
 };
 
 const DATA: DataSeries[] = [
@@ -134,6 +133,21 @@ const DATA_WITH_COLOR: DataSeries[] = [
   },
 ];
 
+const ANNOTATION: Annotation[] = [
+  {
+    dataSeriesIndex: 3,
+    dataPointIndex: 0,
+    offset: 0.5,
+    width: 5,
+    color: 'lime',
+    ariaLabel: 'Median: 1.5',
+    tooltipData: {
+      key: 'Median',
+      value: '1.5 hours',
+    },
+  },
+];
+
 export default {
   title: 'polaris-viz/Default Charts/BarChart',
   component: BarChart,
@@ -151,6 +165,7 @@ export default {
       expanded: true,
     },
   },
+  decorators: [(Story) => <div style={{height: 400}}>{Story()}</div>],
   argTypes: {
     annotations: {
       control: {
@@ -160,20 +175,7 @@ export default {
       options: ['No annotation', 'Annotation on 4th series'],
       mapping: {
         'No annotation': undefined,
-        'Annotation on 4th series': [
-          {
-            dataSeriesIndex: 3,
-            dataPointIndex: 1,
-            offset: 0.5,
-            width: 5,
-            color: 'lime',
-            ariaLabel: 'Median: 1.5',
-            tooltipData: {
-              label: 'Median',
-              value: '1.5 hours',
-            },
-          },
-        ],
+        'Annotation on 4th series': ANNOTATION,
       },
     },
     data: {
@@ -208,8 +210,7 @@ export default {
           Annotation: 'Custom',
         },
       },
-      description:
-        'This accepts a function that is called to render the tooltip content. By default it calls `formatYAxisLabel` to format the the tooltip value and passes it to `<TooltipContent />`. [RenderTooltipContentData type definition.]()',
+      description: RENDER_TOOLTIP_DESCRIPTION,
     },
     direction: DIRECTION_CONTROL_ARGS,
     theme: THEME_CONTROL_ARGS,

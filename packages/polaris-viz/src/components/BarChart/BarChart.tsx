@@ -6,14 +6,19 @@ import type {
   YAxisOptions,
 } from '@shopify/polaris-viz-core';
 
-import {TooltipContent} from '../TooltipContent';
+import type {TooltipAnnotation, RenderTooltipContentData} from '../../types';
+import {TooltipContent} from '../';
 import {SkipLink} from '../SkipLink';
-import {normalizeData} from '../../utilities';
+import {
+  getXAxisOptionsWithDefaults,
+  getYAxisOptionsWithDefaults,
+  normalizeData,
+} from '../../utilities';
 import {HorizontalBarChart} from '../HorizontalBarChart';
 import {VerticalBarChart} from '../VerticalBarChart';
-import type {RenderTooltipContentData} from '../BarChart';
 
 import type {Annotation} from './types';
+import {formatDataForTooltip} from './utilities';
 
 export interface BarChartProps {
   data: DataSeries[];
@@ -51,35 +56,45 @@ export function BarChart({
   const hideSkipLink =
     skipLinkText == null || skipLinkText.length === 0 || emptyState;
 
-  const xAxisOptionsForChart: Required<XAxisOptions> = {
-    labelFormatter: (value: string) => value,
-    hide: false,
-    ...xAxisOptions,
-  };
+  const xAxisOptionsWithDefaults = getXAxisOptionsWithDefaults(xAxisOptions);
+  const yAxisOptionsWithDefaults = getYAxisOptionsWithDefaults(yAxisOptions);
 
-  const yAxisOptionsForChart: Required<YAxisOptions> = {
-    labelFormatter: (value: number) => value.toString(),
-    integersOnly: false,
-    ...yAxisOptions,
-  };
+  const annotationsLookupTable = normalizeData(annotations, 'dataSeriesIndex');
 
-  function renderTooltip({data}: RenderTooltipContentData) {
+  function renderTooltip(tooltipData: RenderTooltipContentData) {
     if (renderTooltipContent != null) {
-      return renderTooltipContent({data});
+      return renderTooltipContent({
+        ...tooltipData,
+        dataSeries: data,
+      });
     }
 
-    const tooltipData = data.map(({value, label, color, type}) => {
-      return {
-        label,
-        value: yAxisOptionsForChart.labelFormatter(value),
-        color,
-        type,
-      };
+    const {title, formattedData} = formatDataForTooltip({
+      data: tooltipData,
+      direction,
+      xAxisOptions: xAxisOptionsWithDefaults,
+      yAxisOptions: yAxisOptionsWithDefaults,
     });
 
-    return <TooltipContent data={tooltipData} theme={theme} />;
+    const annotation = annotationsLookupTable[tooltipData.activeIndex];
+    const annotations: TooltipAnnotation[] = [];
+
+    if (annotation) {
+      annotations.push({
+        key: annotation.tooltipData?.key ?? '',
+        value: annotation.tooltipData?.value ?? '',
+      });
+    }
+
+    return (
+      <TooltipContent
+        annotations={annotations}
+        data={formattedData}
+        theme={theme}
+        title={title}
+      />
+    );
   }
-  const annotationsLookupTable = normalizeData(annotations, 'dataSeriesIndex');
 
   return (
     <React.Fragment>
@@ -97,8 +112,8 @@ export function BarChart({
           showLegend={showLegend}
           theme={theme}
           type={type}
-          xAxisOptions={xAxisOptionsForChart}
-          yAxisOptions={yAxisOptionsForChart}
+          xAxisOptions={xAxisOptionsWithDefaults}
+          yAxisOptions={yAxisOptionsWithDefaults}
         />
       ) : (
         <HorizontalBarChart
@@ -106,10 +121,11 @@ export function BarChart({
           data={data}
           isAnimated={isAnimated}
           renderTooltipContent={renderTooltip}
-          theme={theme}
           showLegend={showLegend}
+          theme={theme}
           type={type}
-          xAxisOptions={xAxisOptionsForChart}
+          xAxisOptions={xAxisOptionsWithDefaults}
+          yAxisOptions={yAxisOptionsWithDefaults}
         />
       )}
 

@@ -1,13 +1,8 @@
-import React from 'react';
-
 import {randomNumber} from '../../../components/Docs/utilities';
-import type {TooltipData} from '../../../components/LineChart/types';
-
-import {TooltipContent} from '../components/TooltipContent/TooltipContent';
 
 export const data = [
   {
-    name: 'Apr 01–Apr 14, 2020',
+    name: 'Apr 1 – Apr 14, 2020',
     data: [
       {value: 333, key: '2020-04-01T12:00:00'},
       {value: 797, key: '2020-04-02T12:00:00'},
@@ -26,7 +21,7 @@ export const data = [
     ],
   },
   {
-    name: 'Mar 01–Mar 14, 2020',
+    name: 'Previous month',
     data: [
       {value: 709, key: '2020-03-02T12:00:00'},
       {value: 238, key: '2020-03-01T12:00:00'},
@@ -230,8 +225,8 @@ export const seriesUsingSeriesColors = [
 
 export function formatXAxisLabel(value: string) {
   return new Date(value).toLocaleDateString('en-CA', {
+    month: 'short',
     day: 'numeric',
-    month: 'numeric',
   });
 }
 
@@ -242,37 +237,6 @@ export function formatYAxisLabel(value: number) {
     currencyDisplay: 'symbol',
   }).format(value);
 }
-
-export const renderTooltipContent: any = ({data}: {data: TooltipData[]}) => {
-  function formatTooltipValue(value: number) {
-    return new Intl.NumberFormat('en', {
-      style: 'currency',
-      currency: 'CAD',
-    }).format(value);
-  }
-
-  function formatTooltipLabel(value: string) {
-    return new Date(value).toLocaleDateString('en-CA', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-    });
-  }
-
-  const formattedData = data.map(
-    ({name, point: {label, value}, color, lineStyle}) => ({
-      name,
-      color,
-      lineStyle,
-      point: {
-        value: formatTooltipValue(value),
-        label: formatTooltipLabel(label),
-      },
-    }),
-  );
-
-  return <TooltipContent data={formattedData} />;
-};
 
 export const HOURLY_DATA = [
   {

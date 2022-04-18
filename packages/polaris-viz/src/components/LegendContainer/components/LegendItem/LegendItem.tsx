@@ -1,12 +1,12 @@
 import React from 'react';
 
+import {SeriesIcon} from '../../../shared/SeriesIcon';
 import type {LegendData} from '../../types';
 import {
   getColorVisionEventAttrs,
   getOpacityStylesForActive,
   useTheme,
 } from '../../../../hooks';
-import {LinePreview, SquareColorPreview} from '../../..';
 
 import style from './LegendItem.scss';
 
@@ -16,18 +16,6 @@ export interface LegendItemProps {
   activeIndex?: number;
   colorVisionType?: string;
   theme?: string;
-}
-
-function getIcon(legend: LegendData) {
-  switch (legend.iconType) {
-    case 'line': {
-      const style = legend.isComparison ? 'dotted' : 'solid';
-      return <LinePreview color={legend.color} lineStyle={style} />;
-    }
-    case 'solid':
-    default:
-      return <SquareColorPreview color={legend.color} />;
-  }
 }
 
 export function LegendItem({
@@ -59,8 +47,12 @@ export function LegendItem({
       }}
       className={style.Legend}
     >
-      {getIcon(legend)}
-      <span style={{color: selectedTheme.tooltip.labelColor}}>
+      <SeriesIcon
+        shape={legend.shape}
+        color={legend.color}
+        isComparison={legend.isComparison}
+      />
+      <span style={{color: selectedTheme.tooltip.textColor}}>
         {legend.name}
       </span>
     </button>

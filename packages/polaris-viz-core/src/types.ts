@@ -15,6 +15,8 @@ export interface DataSeries {
   name?: string;
 }
 
+export type Shape = 'Line' | 'Bar';
+
 export type LineStyle = 'dashed' | 'solid' | 'dotted';
 
 export interface GradientStop {
@@ -106,8 +108,8 @@ export interface LineTheme {
 
 export interface TooltipTheme {
   backgroundColor: string;
-  valueColor: string;
-  labelColor: string;
+  textColor: string;
+  titleColor: string;
 }
 export interface SeriesColors {
   comparison: string;

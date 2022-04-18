@@ -7,9 +7,10 @@ import type {
   XAxisOptions,
   YAxisOptions,
 } from '@shopify/polaris-viz-core';
-import type {AnnotationLookupTable} from 'components/BarChart/types';
 
 import {ChartContext} from '../../components/ChartContainer';
+import type {AnnotationLookupTable} from '../BarChart';
+import type {RenderTooltipContentData} from '../../types';
 import {useXAxisLabels} from '../../hooks/useXAxisLabels';
 import {BarChartXAxisLabels} from '../BarChartXAxisLabels';
 import {LegendContainer, useLegend} from '../LegendContainer';
@@ -46,7 +47,6 @@ import {
   useWatchColorVisionEvents,
   useReducedLabelIndexes,
 } from '../../hooks';
-import type {RenderTooltipContentData} from '../BarChart';
 import {AnnotationLine} from '../BarChart';
 
 import {BarGroup, StackedBarGroups} from './components';
@@ -182,7 +182,6 @@ export function Chart({
   const barColors = data.map(({color}) => color!);
 
   const getTooltipMarkup = useBarChartTooltipContent({
-    annotationsLookupTable,
     renderTooltipContent,
     data,
     seriesColors: barColors,

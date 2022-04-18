@@ -80,6 +80,7 @@ export {
   uniqueId,
   createTheme,
   paddingStringToObject,
+  removeFalsyValues,
 } from './utilities';
 export {
   useSparkBar,
@@ -117,4 +118,5 @@ export type {
   XAxisOptions,
   YAxisOptions,
   LabelFormatter,
+  Shape,
 } from './types';

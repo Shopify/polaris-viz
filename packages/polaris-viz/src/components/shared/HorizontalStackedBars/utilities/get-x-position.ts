@@ -1,6 +1,6 @@
 import type {ScaleLinear} from 'd3-scale';
-import type {StackedBarGapDirections} from 'types';
 
+import type {StackedBarGapDirections} from '../../../../types';
 import {getGapForIndex} from '../../../../utilities';
 
 interface Props {
