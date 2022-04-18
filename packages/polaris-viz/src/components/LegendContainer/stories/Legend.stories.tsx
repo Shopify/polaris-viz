@@ -14,12 +14,12 @@ const DATA: LegendData[] = [
   {
     name: 'Line Icon',
     color: 'blue',
-    iconType: 'line',
+    shape: 'Line',
   },
   {
     name: 'Comparison Line',
     color: 'red',
-    iconType: 'line',
+    shape: 'Line',
     isComparison: true,
   },
 ];

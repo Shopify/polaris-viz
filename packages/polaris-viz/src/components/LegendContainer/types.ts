@@ -1,10 +1,8 @@
-import type {Color} from '@shopify/polaris-viz-core';
-
-export type LegendIconType = 'solid' | 'line';
+import type {Color, Shape} from '@shopify/polaris-viz-core';
 
 export interface LegendData {
   name: string;
   color: Color;
   isComparison?: boolean;
-  iconType?: LegendIconType;
+  shape?: Shape;
 }
