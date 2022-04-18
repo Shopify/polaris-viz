@@ -45,15 +45,15 @@ describe('useLegend()', () => {
       expect(data).toStrictEqual({
         legend: [
           {
-            iconType: 'solid',
+            shape: 'Bar',
             name: 'Breakfast',
           },
           {
-            iconType: 'solid',
+            shape: 'Bar',
             name: 'Lunch',
           },
           {
-            iconType: 'solid',
+            shape: 'Bar',
             name: 'Dinner',
           },
         ],
@@ -84,7 +84,7 @@ describe('useLegend()', () => {
   describe('type', () => {
     it('adds type to legend', () => {
       function TestComponent() {
-        const data = useLegend({...MOCK_PROPS, type: 'line'});
+        const data = useLegend({...MOCK_PROPS, shape: 'Line'});
 
         return <span data-data={`${JSON.stringify(data)}`} />;
       }
@@ -93,7 +93,7 @@ describe('useLegend()', () => {
 
       const data = parseData(result);
 
-      expect(data.legend[0].iconType).toStrictEqual('line');
+      expect(data.legend[0].shape).toStrictEqual('Line');
     });
   });
 

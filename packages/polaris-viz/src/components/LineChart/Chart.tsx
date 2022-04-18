@@ -92,7 +92,7 @@ export function Chart({
     data,
     dimensions,
     showLegend,
-    type: 'line',
+    shape: 'Line',
   });
 
   useWatchColorVisionEvents({

@@ -91,7 +91,7 @@ export function Chart({
     data,
     dimensions,
     showLegend,
-    type: 'line',
+    shape: 'Line',
   });
 
   const tooltipId = useRef(uniqueId('stackedAreaChart'));

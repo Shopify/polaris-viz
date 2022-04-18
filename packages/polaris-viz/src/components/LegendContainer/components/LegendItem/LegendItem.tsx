@@ -48,7 +48,7 @@ export function LegendItem({
       className={style.Legend}
     >
       <SeriesIcon
-        shape={legend.iconType === 'line' ? 'Line' : 'Bar'}
+        shape={legend.shape}
         color={legend.color}
         isComparison={legend.isComparison}
       />
