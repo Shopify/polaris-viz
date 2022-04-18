@@ -15,7 +15,7 @@ export default {
   },
 } as Meta;
 
-const DATA = [
+const data = [
   {
     data: [
       {
@@ -52,5 +52,6 @@ const SingleValuesTemplate: Story<FunnelChartProps> = (
 export const SingleValues = SingleValuesTemplate.bind({});
 
 SingleValues.args = {
-  data: DATA,
+  data,
+  xAxisOptions: {},
 };
