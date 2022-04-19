@@ -15,7 +15,7 @@ jest.mock('d3-scale', () => ({
   }),
 }));
 
-describe('useXScale', () => {
+describe('useLinearXScale', () => {
   afterEach(() => {
     (scaleLinear as jest.Mock).mockReset();
   });

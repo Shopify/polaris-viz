@@ -150,10 +150,7 @@ export const decorators = [
           },
         }}
       >
-        <Container
-          height={context.parameters.previewHeight}
-          theme={context.args.theme}
-        >
+        <Container theme={context.args.theme}>
           <Story />
         </Container>
       </PolarisVizProvider>

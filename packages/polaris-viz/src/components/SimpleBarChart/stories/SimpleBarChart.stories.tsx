@@ -15,7 +15,6 @@ export default {
   title: 'polaris-viz/Simple Charts/SimpleBarChart',
   component: SimpleBarChart,
   parameters: {
-    previewHeight: 'auto',
     docs: {
       page: PageWithSizingInfo,
       description: {
@@ -49,11 +48,9 @@ export default {
   },
 } as Meta;
 
-const CONTAINER_HEIGHT = 500;
-
 const Template: Story<SimpleBarChartProps> = (args: SimpleBarChartProps) => {
   return (
-    <div style={{height: CONTAINER_HEIGHT}}>
+    <div style={{height: '500px'}}>
       <SimpleBarChart {...args} />
     </div>
   );
