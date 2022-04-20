@@ -99,7 +99,7 @@ export function getAlteredVerticalBarPosition(
     x = center.value;
   }
 
-  return {x, y};
+  return {x, y: props.margin.Top};
 }
 
 interface IsOutsideBoundsData {
@@ -222,11 +222,13 @@ export function getLeftPosition(
   const [value, props] = args;
 
   let x = value - props.tooltipDimensions.width;
+
   const wasOutsideBounds = isOutsideBounds({
     current: x,
     direction: 'x',
     alteredPosition: props,
   });
+
   if (wasOutsideBounds) {
     x = props.currentX + props.margin.Left + props.bandwidth + TOOLTIP_MARGIN;
   } else {

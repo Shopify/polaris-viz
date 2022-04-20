@@ -10,7 +10,7 @@ import {
 
 import type {DataWithDefaults} from '../../types';
 
-import {getGradientDetails} from './utilities/get-gradient-details';
+import {getGradientDetails} from './utilities/getGradientDetails';
 
 export interface Props {
   series: DataWithDefaults;

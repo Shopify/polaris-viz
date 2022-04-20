@@ -5,7 +5,7 @@ import {BarChartXAxisLabels} from '../../BarChartXAxisLabels';
 import {YAxis} from '../../../components';
 import {mountWithProvider, triggerSVGMouseMove} from '../../../test-utilities';
 import {HorizontalGridLines} from '../../../components/HorizontalGridLines';
-import {mockDefaultTheme} from '../../../test-utilities/mount-with-provider';
+import {mockDefaultTheme} from '../../../test-utilities/mountWithProvider';
 import {TooltipAnimatedContainer} from '../../../components/TooltipWrapper';
 import {Chart, Props} from '../Chart';
 import {BarGroup, StackedBarGroups} from '../components';
@@ -21,10 +21,16 @@ const ZERO_AS_MIN_HEIGHT_THEME = {
   },
 };
 
+jest.mock('@shopify/polaris-viz-core/src/utilities', () => {
+  return {
+    ...jest.requireActual('@shopify/polaris-viz-core/src/utilities'),
+    estimateStringWidth: () => 0,
+  };
+});
+
 jest.mock('../../../utilities', () => {
   return {
     ...jest.requireActual('../../../utilities'),
-    estimateStringWidth: () => 0,
     eventPointNative: () => {
       return {clientX: 0, clientY: 0, svgX: 100, svgY: 100};
     },
@@ -67,11 +73,11 @@ describe('Chart />', () => {
     dimensions: {width: 500, height: 250},
     renderTooltipContent,
     xAxisOptions: {
-      labelFormatter: jest.fn((value: string) => value.toString()),
+      labelFormatter: jest.fn((value) => value.toString()),
       hide: false,
     },
     yAxisOptions: {
-      labelFormatter: (value: number) => value.toString(),
+      labelFormatter: (value) => value.toString(),
       integersOnly: false,
     },
     type: 'default',

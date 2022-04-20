@@ -22,10 +22,13 @@ export {SkipLink} from './SkipLink';
 export {VisuallyHiddenRows} from './VisuallyHiddenRows';
 export {LinePreview} from './LinePreview';
 export type {LinePreviewProps} from './LinePreview';
-export {TooltipWrapper} from './TooltipWrapper';
+export {TooltipWrapper, TOOLTIP_MARGIN} from './TooltipWrapper';
+export type {
+  AlteredPositionProps,
+  AlteredPositionReturn,
+} from './TooltipWrapper';
 export {SimpleBarChart} from './SimpleBarChart';
 export type {SimpleBarChartProps} from './SimpleBarChart';
-export {ChartContext} from './ChartContainer';
 export {Legend} from './LegendContainer';
 export type {LegendProps} from './LegendContainer';
 export {WebPolarisVizProvider as PolarisVizProvider} from './WebPolarisVizProvider';

@@ -13,7 +13,7 @@ import {VisuallyHiddenRows} from '../../../components/VisuallyHiddenRows';
 import {Point} from '../../../components/Point';
 import {mountWithProvider, triggerSVGMouseMove} from '../../../test-utilities';
 import {HorizontalGridLines} from '../../../components/HorizontalGridLines';
-import {mockDefaultTheme} from '../../../test-utilities/mount-with-provider';
+import {mockDefaultTheme} from '../../../test-utilities/mountWithProvider';
 import {TooltipAnimatedContainer} from '../../../components/TooltipWrapper';
 import {Chart, ChartProps} from '../Chart';
 import {Line, GradientArea} from '../components';
@@ -54,10 +54,15 @@ const MOCK_PROPS: ChartProps = {
   showLegend: false,
 };
 
+jest.mock('@shopify/polaris-viz-core/src/utilities/estimateStringWidth', () => {
+  return {
+    estimateStringWidth: () => 100,
+  };
+});
+
 jest.mock('../../../utilities', () => {
   return {
     ...jest.requireActual('../../../utilities'),
-    estimateStringWidth: () => 100,
     getPathLength: () => 0,
     getPointAtLength: () => ({x: 0, y: 0}),
     eventPointNative: () => {

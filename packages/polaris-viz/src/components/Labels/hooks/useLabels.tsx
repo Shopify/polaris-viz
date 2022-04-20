@@ -1,6 +1,6 @@
 import {Dispatch, SetStateAction, useContext, useEffect, useMemo} from 'react';
+import {estimateStringWidth, ChartContext} from '@shopify/polaris-viz-core';
 
-import {estimateStringWidth} from '../../../utilities';
 import {
   LINE_HEIGHT,
   DIAGONAL_LABEL_MIN_WIDTH,
@@ -8,10 +8,9 @@ import {
   HORIZONTAL_LABEL_TARGET_HEIGHT,
   VERTICAL_LABEL_MIN_WIDTH,
 } from '../../../constants';
-import {ChartContext} from '../../ChartContainer';
-import {getDiagonalLabels} from '../utilities/get-diagonal-labels';
-import {getHorizontalLabels} from '../utilities/get-horizontal-labels';
-import {getVerticalLabels} from '../utilities/get-vertical-labels';
+import {getDiagonalLabels} from '../utilities/getDiagonalLabels';
+import {getHorizontalLabels} from '../utilities/getHorizontalLabels';
+import {getVerticalLabels} from '../utilities/getVerticalLabels';
 
 const LABEL_CONTAINER_MAX_PERCENTAGE = 0.25;
 

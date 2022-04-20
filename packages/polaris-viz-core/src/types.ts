@@ -241,3 +241,7 @@ export interface StackedBarGapDirections {
   positive: SingleIndexGap[];
   negative: SingleIndexGap[];
 }
+
+export interface CharacterWidths {
+  [key: string]: number;
+}

@@ -3,15 +3,16 @@ import {
   DataSeries,
   useTheme,
   LINEAR_LABELS_INNER_PADDING,
+  ChartContext,
+  estimateStringWidth,
 } from '@shopify/polaris-viz-core';
 import type {XAxisOptions} from '@shopify/polaris-viz-core';
 
 import {HORIZONTAL_LABEL_MIN_WIDTH} from '../constants';
-import {estimateStringWidth, clamp} from '../utilities';
-import {ChartContext} from '../components';
+import {clamp} from '../utilities';
 
 import {useLinearXScale} from './useLinearXScale';
-import {useReducedLabelIndexes} from './use-reduced-label-indexes';
+import {useReducedLabelIndexes} from './useReducedLabelIndexes';
 
 interface Props {
   data: DataSeries[];

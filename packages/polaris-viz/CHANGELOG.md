@@ -7,17 +7,25 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- ## Unreleased -->
 
-## [1.3.2] - 2022-04-20
+## [1.4.1] - 2022-04-20
 
 ### Changed
 
 - Legends and tooltips no longer share a background color
 
-## [1.3.1] - 2022-04-18
+
+## [1.4.0] - 2022-04-20
 
 ### Changed
 
 - Tooltips will now stick along the yAxis (or xAxis for horizontal charts).
+- All charts use a unified `useYAxis()` hook instead of 3 slightly different  implementations.
+
+## [1.3.1] - 2022-04-18
+
+### Changed
+
+- Export `TooltipData` & `TooltipContentProps` types.
 
 ## [1.3.0] - 2022-04-18
 

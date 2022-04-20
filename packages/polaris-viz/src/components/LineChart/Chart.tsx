@@ -6,6 +6,7 @@ import {
   uniqueId,
   isGradientType,
   DataType,
+  useYScale,
 } from '@shopify/polaris-viz-core';
 import type {
   DataPoint,
@@ -15,12 +16,11 @@ import type {
 } from '@shopify/polaris-viz-core';
 
 import type {RenderTooltipContentData} from '../../types';
+import {getAlteredLineChartPosition} from '../../utilities/getAlteredLineChartPosition';
 import {useXAxisLabels} from '../../hooks/useXAxisLabels';
 import {LinearXAxisLabels} from '../LinearXAxisLabels';
 import {useLegend, LegendContainer} from '../LegendContainer';
 import {
-  TooltipHorizontalOffset,
-  TooltipVerticalOffset,
   TooltipPosition,
   TooltipPositionParams,
   TooltipWrapper,
@@ -47,10 +47,11 @@ import {HorizontalGridLines} from '../HorizontalGridLines';
 
 import {useLineChartTooltipContent} from './hooks/useLineChartTooltipContent';
 import {Points, Line, GradientArea} from './components';
-import {MAX_ANIMATED_SERIES_LENGTH} from './constants';
+import {MAX_ANIMATED_SERIES_LENGTH, MIN_Y_LABEL_SPACE} from './constants';
 import type {DataWithDefaults} from './types';
-import {useYScale, useFormatData} from './hooks';
+import {useFormatData} from './hooks';
 import styles from './Chart.scss';
+import {yAxisMinMax} from './utilities';
 
 export interface ChartProps {
   isAnimated: boolean;
@@ -63,11 +64,6 @@ export interface ChartProps {
   theme?: string;
   dimensions?: Dimensions;
 }
-
-const TOOLTIP_POSITION = {
-  horizontal: TooltipHorizontalOffset.Left,
-  vertical: TooltipVerticalOffset.Center,
-};
 
 export function Chart({
   data,
@@ -112,11 +108,15 @@ export function Chart({
   const drawableHeight =
     height - labelHeight - LABEL_AREA_TOP_SPACING - Margin.Top;
 
+  const {minY, maxY} = yAxisMinMax(data);
+
   const {yAxisLabelWidth, ticks, yScale} = useYScale({
     drawableHeight,
-    data,
     formatYAxisLabel: yAxisOptions.labelFormatter,
     integersOnly: yAxisOptions.integersOnly,
+    max: maxY,
+    min: minY,
+    minLabelSpace: MIN_Y_LABEL_SPACE,
   });
 
   const {reversedSeries, longestSeriesLength, longestSeriesIndex} =
@@ -186,6 +186,8 @@ export function Chart({
     index,
     eventType,
   }: TooltipPositionParams): TooltipPosition {
+    let activeIndex = 0;
+
     if (eventType === 'mouse') {
       const point = eventPointNative(event!);
 
@@ -197,32 +199,24 @@ export function Chart({
         return TOOLTIP_POSITION_DEFAULT_RETURN;
       }
 
-      const {svgX, svgY} = point;
+      const {svgX} = point;
 
       const closestIndex = Math.round(xScale.invert(svgX - chartStartPosition));
 
-      const activeIndex = clamp({
+      activeIndex = clamp({
         amount: closestIndex,
         min: 0,
         max: reversedSeries[longestSeriesIndex].data.length - 1,
       });
-
-      return {
-        x: svgX,
-        y: svgY,
-        position: TOOLTIP_POSITION,
-        activeIndex,
-      };
     } else {
-      const activeIndex = index ?? 0;
-
-      return {
-        x: xScale?.(activeIndex) ?? 0,
-        y: 0,
-        position: TOOLTIP_POSITION,
-        activeIndex,
-      };
+      activeIndex = index ?? 0;
     }
+
+    return {
+      x: chartStartPosition + xScale?.(activeIndex) ?? 0,
+      y: 0,
+      activeIndex,
+    };
   }
 
   return (
@@ -356,9 +350,9 @@ export function Chart({
       </svg>
 
       <TooltipWrapper
-        alwaysUpdatePosition
         chartDimensions={{width, height}}
         focusElementDataType={DataType.Point}
+        getAlteredPosition={getAlteredLineChartPosition}
         getMarkup={getTooltipMarkup}
         getPosition={getTooltipPosition}
         id={tooltipId.current}

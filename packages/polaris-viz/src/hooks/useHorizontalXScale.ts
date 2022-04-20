@@ -1,9 +1,9 @@
 import type {LabelFormatter} from '@shopify/polaris-viz-core';
 import {useContext, useMemo} from 'react';
+import {ChartContext, estimateStringWidth} from '@shopify/polaris-viz-core';
 
-import {ChartContext} from '../components';
 import {HORIZONTAL_LABEL_MIN_WIDTH} from '../constants';
-import {clamp, estimateStringWidth} from '../utilities';
+import {clamp} from '../utilities';
 
 import {useHorizontalTicksAndScale} from './useHorizontalTicksAndScale';
 

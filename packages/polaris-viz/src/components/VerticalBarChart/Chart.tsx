@@ -1,5 +1,11 @@
 import React, {useState, useMemo, useContext} from 'react';
-import {uniqueId, DataType} from '@shopify/polaris-viz-core';
+import {
+  uniqueId,
+  DataType,
+  useYScale,
+  ChartContext,
+  estimateStringWidth,
+} from '@shopify/polaris-viz-core';
 import type {
   DataSeries,
   ChartType,
@@ -8,7 +14,6 @@ import type {
   YAxisOptions,
 } from '@shopify/polaris-viz-core';
 
-import {ChartContext} from '../../components/ChartContainer';
 import type {AnnotationLookupTable} from '../BarChart';
 import type {RenderTooltipContentData} from '../../types';
 import {useXAxisLabels} from '../../hooks/useXAxisLabels';
@@ -35,7 +40,7 @@ import {
   shouldRotateZeroBars,
   eventPointNative,
   getStackedValues,
-  estimateStringWidth,
+  getStackedMinMax,
 } from '../../utilities';
 import {YAxis} from '../YAxis';
 import {HorizontalGridLines} from '../HorizontalGridLines';
@@ -50,8 +55,8 @@ import {
 import {AnnotationLine} from '../BarChart';
 
 import {BarGroup, StackedBarGroups} from './components';
-import {useYScale, useXScale} from './hooks';
-import {BAR_SPACING} from './constants';
+import {useXScale} from './hooks';
+import {BAR_SPACING, MIN_Y_LABEL_SPACE} from './constants';
 import styles from './Chart.scss';
 
 export interface Props {
@@ -117,12 +122,19 @@ export function Chart({
   const drawableHeight =
     height - labelHeight - LABEL_AREA_TOP_SPACING - Margin.Top;
 
+  const {min, max} = getStackedMinMax({
+    stackedValues,
+    data,
+    integersOnly: yAxisOptions.integersOnly,
+  });
+
   const {ticks: initialTicks} = useYScale({
     drawableHeight,
-    data,
     formatYAxisLabel: yAxisOptions.labelFormatter,
-    stackedValues,
     integersOnly: yAxisOptions.integersOnly,
+    max,
+    min,
+    minLabelSpace: MIN_Y_LABEL_SPACE,
   });
 
   const yAxisLabelWidth = useMemo(() => {
@@ -171,12 +183,13 @@ export function Chart({
     labels,
   });
 
-  const {yScale, ticks} = useYScale({
+  const {ticks, yScale} = useYScale({
     drawableHeight,
-    data,
     formatYAxisLabel: yAxisOptions.labelFormatter,
-    stackedValues,
     integersOnly: yAxisOptions.integersOnly,
+    max,
+    min,
+    minLabelSpace: MIN_Y_LABEL_SPACE,
   });
 
   const barColors = data.map(({color}) => color!);
