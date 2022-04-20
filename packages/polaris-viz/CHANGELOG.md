@@ -7,6 +7,12 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- ## Unreleased -->
 
+## [1.3.2] - 2022-04-20
+
+### Changed
+
+- Legends and tooltips no longer share a background color
+
 ## [1.3.1] - 2022-04-18
 
 ### Changed

@@ -1136,6 +1136,12 @@ export interface GradientStop {
     chartsAffected={['SimpleNormalizedChart', 'Legend']}
   />
   <PropertyTable.Row
+    property="legend.backgroundColor"
+    type="string"
+    description="a CSS color string applied to the background color in legends"
+    chartsAffected={['SimpleNormalizedChart', 'Legend']}
+  />
+  <PropertyTable.Row
     property="legend.trendIndicator"
     type={`{positive: string; negative: string; neutral: string}`}
     description="an object describing the colors to be used in the chevrons that indicate positive, negative and neutral trends "
