@@ -165,7 +165,7 @@ export default {
       expanded: true,
     },
   },
-  decorators: [(Story) => <div style={{height: 400}}>{Story()}</div>],
+  decorators: [(Story) => <div style={{height: '500px'}}>{Story()}</div>],
   argTypes: {
     annotations: {
       control: {
