@@ -1,3 +1,3 @@
-export {formatAriaLabel} from './format-aria-label';
-export {getRoundedBorderForStackedValues} from './get-rounded-border-for-stacked-values';
-export {getYPosition} from './get-y-position';
+export {formatAriaLabel} from './formatAriaLabel';
+export {getRoundedBorderForStackedValues} from './getRoundedBorderForStackedValues';
+export {getYPosition} from './getYPosition';

@@ -5,7 +5,7 @@ import {BarChartXAxisLabels} from '../../BarChartXAxisLabels';
 import {YAxis} from '../../../components';
 import {mountWithProvider, triggerSVGMouseMove} from '../../../test-utilities';
 import {HorizontalGridLines} from '../../../components/HorizontalGridLines';
-import {mockDefaultTheme} from '../../../test-utilities/mount-with-provider';
+import {mockDefaultTheme} from '../../../test-utilities/mountWithProvider';
 import {TooltipAnimatedContainer} from '../../../components/TooltipWrapper';
 import {Chart, Props} from '../Chart';
 import {BarGroup, StackedBarGroups} from '../components';

@@ -1,1 +1,1 @@
-export {mountWithProvider} from './mount-with-provider';
+export {mountWithProvider} from './mountWithProvider';

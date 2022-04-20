@@ -1,1 +1,1 @@
-export {PolarisVizContext} from './polaris-viz-context';
+export {PolarisVizContext} from './PolarisVizContext';

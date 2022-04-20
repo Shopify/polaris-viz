@@ -13,7 +13,7 @@ import {
 import {Chart, ChartProps} from '../Chart';
 import {VerticalGridLines} from '../components';
 
-jest.mock('../../Labels/utilities/get-widest-label', () => {
+jest.mock('../../Labels/utilities/getWidestLabel', () => {
   return {
     getWidestLabel: () => {
       return {truncatedWidth: 50};
@@ -21,7 +21,7 @@ jest.mock('../../Labels/utilities/get-widest-label', () => {
   };
 });
 
-jest.mock('../../../utilities/estimate-string-width', () => ({
+jest.mock('../../../utilities/estimateStringWidth', () => ({
   estimateStringWidth: jest.fn(() => 100),
 }));
 
