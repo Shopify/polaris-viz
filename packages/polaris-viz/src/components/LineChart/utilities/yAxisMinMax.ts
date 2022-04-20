@@ -1,20 +1,10 @@
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
-import {
-  DEFAULT_MAX_Y,
-  EMPTY_STATE_CHART_MIN,
-  EMPTY_STATE_CHART_MAX,
-} from '../../../constants';
+import {EMPTY_STATE_CHART_MIN, EMPTY_STATE_CHART_MAX} from '../../../constants';
 
-export function yAxisMinMax({
-  data,
-  integersOnly,
-}: {
-  data: DataSeries[];
-  integersOnly: boolean;
-}) {
+export function yAxisMinMax(data: DataSeries[]) {
   if (data.length === 0) {
-    return [EMPTY_STATE_CHART_MIN, EMPTY_STATE_CHART_MAX];
+    return {minY: EMPTY_STATE_CHART_MIN, maxY: EMPTY_STATE_CHART_MAX};
   }
 
   let minY = Infinity;
@@ -31,11 +21,5 @@ export function yAxisMinMax({
     });
   });
 
-  maxY = maxY === 0 && minY === 0 ? DEFAULT_MAX_Y : maxY;
-
-  if (integersOnly) {
-    return [Math.floor(minY), Math.ceil(maxY)];
-  }
-
-  return [minY, maxY];
+  return {minY, maxY};
 }

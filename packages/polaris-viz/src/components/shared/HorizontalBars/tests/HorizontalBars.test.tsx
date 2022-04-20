@@ -11,8 +11,8 @@ jest.mock('d3-scale', () => ({
   scaleLinear: jest.requireActual('d3-scale').scaleLinear,
 }));
 
-jest.mock('../../../../utilities', () => ({
-  ...jest.requireActual('../../../../utilities'),
+jest.mock('@shopify/polaris-viz-core/src/utilities', () => ({
+  ...jest.requireActual('@shopify/polaris-viz-core/src/utilities'),
   estimateStringWidth: () => 100,
 }));
 

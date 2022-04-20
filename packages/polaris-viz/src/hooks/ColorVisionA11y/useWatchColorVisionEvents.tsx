@@ -1,7 +1,7 @@
 import {useContext, useEffect} from 'react';
 import {useDebouncedCallback} from 'use-debounce/lib';
+import {ChartContext} from '@shopify/polaris-viz-core';
 
-import {ChartContext} from '../../components';
 import {useCallbackRef} from '..';
 
 import {getEventName} from './utilities';

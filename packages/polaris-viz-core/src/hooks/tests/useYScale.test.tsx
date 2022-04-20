@@ -1,11 +1,11 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
-import type {DataSeries} from '@shopify/polaris-viz-core';
 
-import {useYScale} from '../useYScale';
-import {DEFAULT_MAX_Y} from '../../../../constants';
-import {shouldRoundScaleUp} from '../../../../utilities';
+import {DEFAULT_MAX_Y} from '../../constants';
+import type {DataSeries} from '../../types';
+import {Props, useYScale} from '../useYScale';
+import {shouldRoundScaleUp} from '../../utilities/shouldRoundScaleUp';
 
 jest.mock('d3-scale', () => ({
   scaleLinear: jest.fn(() => {
@@ -19,21 +19,28 @@ jest.mock('d3-scale', () => ({
   }),
 }));
 
-jest.mock('../../../../utilities', () => ({
-  ...jest.requireActual('../../../../utilities'),
-  estimateStringWidth: () => 0,
-  shouldRoundScaleUp: jest.fn(() => true),
-}));
+jest.mock('../../utilities/estimateStringWidth', () => {
+  return {
+    estimateStringWidth: () => 0,
+  };
+});
 
-const mockProps = {
+jest.mock('../../utilities/shouldRoundScaleUp', () => {
+  return {
+    shouldRoundScaleUp: jest.fn(),
+  };
+});
+
+const MOCK_PROPS: Props = {
   drawableHeight: 250,
   formatYAxisLabel: jest.fn(),
-  data: [],
-  fontSize: 12,
   integersOnly: false,
+  max: 0,
+  min: 50,
+  minLabelSpace: 50,
 };
 
-describe('useYScale', () => {
+describe('useYScale()', () => {
   afterEach(() => {
     (scaleLinear as jest.Mock).mockReset();
   });
@@ -51,7 +58,7 @@ describe('useYScale', () => {
     });
 
     function TestComponent() {
-      useYScale(mockProps);
+      useYScale(MOCK_PROPS);
 
       return null;
     }
@@ -74,19 +81,11 @@ describe('useYScale', () => {
       return scale;
     });
 
-    const deeplyNegative: DataSeries = {
-      name: 'Deeply negative',
-      data: [{key: '1', value: -10000}],
-    };
-    const highlyPositive: DataSeries = {
-      name: 'Highly positive',
-      data: [{key: '1', value: 10000}],
-    };
-
     function TestComponent() {
       useYScale({
-        ...mockProps,
-        data: [deeplyNegative, highlyPositive],
+        ...MOCK_PROPS,
+        min: -10000,
+        max: 10000,
       });
 
       return null;
@@ -97,7 +96,7 @@ describe('useYScale', () => {
     expect(domainSpy).toHaveBeenCalledWith([-10000, 10000]);
   });
 
-  it('creates a y scale with the domain maiximum set to the default max y for a data set with all zero values', () => {
+  it('creates a y scale with the domain maximum set to the default max y for a data set with all zero values', () => {
     let domainSpy = jest.fn();
     (scaleLinear as jest.Mock).mockImplementation(() => {
       const scale = (value: any) => value;
@@ -112,17 +111,9 @@ describe('useYScale', () => {
 
     function TestComponent() {
       useYScale({
-        ...mockProps,
-        data: [
-          {
-            name: 'Test Data 1',
-            data: [{key: '1', value: 0}],
-          },
-          {
-            name: 'Test Data 2',
-            data: [{key: '1', value: 0}],
-          },
-        ],
+        ...MOCK_PROPS,
+        min: 0,
+        max: 0,
       });
       return null;
     }
@@ -147,7 +138,7 @@ describe('useYScale', () => {
 
     function TestComponent() {
       useYScale({
-        ...mockProps,
+        ...MOCK_PROPS,
         drawableHeight: 250,
       });
 
@@ -172,7 +163,7 @@ describe('useYScale', () => {
 
     function TestComponent() {
       const {ticks} = useYScale({
-        ...mockProps,
+        ...MOCK_PROPS,
         formatYAxisLabel: jest.fn((value) => `Formatted value: ${value}`),
       });
 
@@ -186,7 +177,7 @@ describe('useYScale', () => {
     expect(wrapper).toContainReactText('Formatted value: 25');
   });
 
-  it('does not update the domain if shouldRoundScaleUp is true', () => {
+  it('creates a y scale with max of 0 when all values are negative', () => {
     let domainSpy = jest.fn();
     (scaleLinear as jest.Mock).mockImplementation(() => {
       const scale = (value: any) => value;
@@ -199,53 +190,83 @@ describe('useYScale', () => {
       return scale;
     });
 
-    (shouldRoundScaleUp as jest.Mock).mockImplementation(jest.fn(() => true));
-
     function TestComponent() {
-      useYScale(mockProps);
+      useYScale({
+        ...MOCK_PROPS,
+        drawableHeight: 250,
+        formatYAxisLabel: jest.fn(),
+        min: -1820,
+        max: -543,
+      });
 
       return null;
     }
 
     mount(<TestComponent />);
 
-    // Check it's only called once
-    expect(domainSpy).toHaveBeenCalledTimes(1);
-
-    // Check it's called with the min and max data
-    expect(domainSpy).toHaveBeenNthCalledWith(1, [0, 10]);
+    expect(domainSpy).toHaveBeenCalledWith([-1820, 0]);
   });
 
-  it('updates the domain is shouldRoundScaleUp is false', () => {
-    let domainSpy = jest.fn();
-    const firstTick = 50;
+  describe('shouldRoundScaleUp()', () => {
+    it('does not update the domain when true', () => {
+      let domainSpy = jest.fn();
+      (scaleLinear as jest.Mock).mockImplementation(() => {
+        const scale = (value: any) => value;
+        scale.ticks = (numTicks: number) => Array.from(Array(numTicks));
+        scale.range = (range: any) => (range ? scale : range);
+        domainSpy = jest.fn((domain: any) => (domain ? scale : domain));
+        scale.domain = domainSpy;
+        scale.nice = () => scale;
+        scale.copy = () => scale;
+        return scale;
+      });
 
-    (scaleLinear as jest.Mock).mockImplementation(() => {
-      const scale = (value: any) => value;
-      scale.ticks = () => [firstTick];
-      scale.range = (range: any) => (range ? scale : range);
-      domainSpy = jest.fn((domain: any) => (domain ? scale : domain));
-      scale.domain = domainSpy;
-      scale.nice = () => scale;
-      scale.copy = () => scale;
-      return scale;
+      (shouldRoundScaleUp as jest.Mock).mockImplementation(jest.fn(() => true));
+
+      function TestComponent() {
+        useYScale({...MOCK_PROPS, max: 10});
+
+        return null;
+      }
+
+      mount(<TestComponent />);
+
+      expect(domainSpy).toHaveBeenNthCalledWith(1, [0, 10]);
     });
 
-    (shouldRoundScaleUp as jest.Mock).mockImplementation(jest.fn(() => false));
+    it('updates the domain when false', () => {
+      let domainSpy = jest.fn();
+      const firstTick = 50;
 
-    function TestComponent() {
-      useYScale(mockProps);
+      (scaleLinear as jest.Mock).mockImplementation(() => {
+        const scale = (value: any) => value;
+        scale.ticks = () => [firstTick];
+        scale.range = (range: any) => (range ? scale : range);
+        domainSpy = jest.fn((domain: any) => (domain ? scale : domain));
+        scale.domain = domainSpy;
+        scale.nice = () => scale;
+        scale.copy = () => scale;
+        return scale;
+      });
 
-      return null;
-    }
+      (shouldRoundScaleUp as jest.Mock).mockImplementation(
+        jest.fn(() => false),
+      );
 
-    mount(<TestComponent />);
+      function TestComponent() {
+        useYScale({...MOCK_PROPS, min: 0, max: 10});
 
-    // Check that it's called with the min and max data
-    expect(domainSpy).toHaveBeenNthCalledWith(1, [0, 10]);
+        return null;
+      }
 
-    // Check that it's called with the first tick and max data the second time
-    expect(domainSpy).toHaveBeenNthCalledWith(2, [0, 10]);
+      mount(<TestComponent />);
+
+      // Check that it's called with the min and max data
+      expect(domainSpy).toHaveBeenNthCalledWith(1, [0, 10]);
+
+      // Check that it's called with the first tick and max data the second time
+      expect(domainSpy).toHaveBeenNthCalledWith(2, [0, 10]);
+    });
   });
 
   describe('integersOnly', () => {
@@ -262,7 +283,7 @@ describe('useYScale', () => {
 
       function TestComponent() {
         const {ticks} = useYScale({
-          ...mockProps,
+          ...MOCK_PROPS,
           integersOnly: true,
         });
 
@@ -306,9 +327,10 @@ describe('useYScale', () => {
 
       function TestComponent() {
         useYScale({
-          ...mockProps,
+          ...MOCK_PROPS,
           integersOnly: true,
-          data,
+          min: 0.1,
+          max: 0.9,
         });
 
         return null;

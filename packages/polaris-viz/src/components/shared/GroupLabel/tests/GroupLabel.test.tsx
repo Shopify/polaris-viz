@@ -4,9 +4,12 @@ import {mount} from '@shopify/react-testing';
 import {GroupLabel} from '../GroupLabel';
 import type {GroupLabelProps} from '../GroupLabel';
 
-jest.mock('../../../../utilities/estimateStringWidth', () => ({
-  estimateStringWidth: jest.fn(() => 100),
-}));
+jest.mock('@shopify/polaris-viz-core/src/utilities', () => {
+  return {
+    ...jest.requireActual('@shopify/polaris-viz-core/src/utilities'),
+    estimateStringWidth: () => 100,
+  };
+});
 
 const MOCK_PROPS: GroupLabelProps = {
   areAllNegative: false,

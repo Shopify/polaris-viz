@@ -1,6 +1,7 @@
-import type {CharacterWidths} from '../../../types';
+import type {CharacterWidths} from '@shopify/polaris-viz-core';
+import {estimateStringWidth} from '@shopify/polaris-viz-core';
+
 import type {PreparedLabels} from '../types';
-import {estimateStringWidth} from '../../../utilities';
 
 import {endLineTruncate} from './endLineTruncate';
 import {endWordTruncate} from './endWordTruncate';

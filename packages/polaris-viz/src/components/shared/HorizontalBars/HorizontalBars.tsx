@@ -1,9 +1,12 @@
 import React, {useContext, useState} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import type {DataSeries, LabelFormatter} from '@shopify/polaris-viz-core';
-import {RoundedBorder} from '@shopify/polaris-viz-core';
+import {
+  RoundedBorder,
+  estimateStringWidth,
+  ChartContext,
+} from '@shopify/polaris-viz-core';
 
-import {estimateStringWidth} from '../../../utilities';
 import {
   COLOR_VISION_SINGLE_ITEM,
   HORIZONTAL_BAR_LABEL_OFFSET,
@@ -17,7 +20,6 @@ import {
 } from '../../../hooks';
 import {Bar} from '../Bar';
 import {getGradientDefId} from '../GradientDefs';
-import {ChartContext} from '../../../components/ChartContainer';
 
 import {Label} from './components';
 import styles from './HorizontalBars.scss';
