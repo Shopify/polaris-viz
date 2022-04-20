@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {useWatchColorVisionEvents} from '../useWatchColorVisionEvents';
-import {mountWithChartContext} from '../../../test-utilities/mount-with-chart-context';
+import {mountWithChartContext} from '../../../test-utilities/mountWithChartContext';
 
 describe('useWatchColorVisionEvents', () => {
   let events: {[key: string]: any} = {};

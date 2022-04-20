@@ -11,7 +11,7 @@ import {estimateStringWidth, clamp} from '../utilities';
 import {ChartContext} from '../components';
 
 import {useLinearXScale} from './useLinearXScale';
-import {useReducedLabelIndexes} from './use-reduced-label-indexes';
+import {useReducedLabelIndexes} from './useReducedLabelIndexes';
 
 interface Props {
   data: DataSeries[];

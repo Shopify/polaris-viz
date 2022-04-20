@@ -4,7 +4,7 @@ import {mount} from '@shopify/react-testing';
 import {Label} from '../Label';
 import type {LabelProps} from '../Label';
 
-jest.mock('../../../../../../utilities/estimate-string-width', () => ({
+jest.mock('../../../../../../utilities/estimateStringWidth', () => ({
   estimateStringWidth: jest.fn(() => 100),
 }));
 

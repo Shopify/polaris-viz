@@ -1,1 +1,1 @@
-export {getXPosition} from './get-x-position';
+export {getXPosition} from './getXPosition';

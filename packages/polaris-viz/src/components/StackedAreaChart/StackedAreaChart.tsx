@@ -10,7 +10,7 @@ import {
   getXAxisOptionsWithDefaults,
   getYAxisOptionsWithDefaults,
 } from '../../utilities';
-import {formatTooltipDataForLinearCharts} from '../../utilities/format-tooltip-data-for-linear-charts';
+import {formatTooltipDataForLinearCharts} from '../../utilities/formatTooltipDataForLinearCharts';
 import {TooltipContent} from '../';
 import {ChartContainer} from '../ChartContainer';
 import {SkipLink} from '../SkipLink';

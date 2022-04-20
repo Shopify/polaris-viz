@@ -1,3 +1,3 @@
 export {useLabels} from './hooks';
 export {TextLine} from './components/TextLine';
-export {shouldSkipLabel} from './utilities/should-skip-label';
+export {shouldSkipLabel} from './utilities/shouldSkipLabel';
