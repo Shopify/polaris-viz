@@ -2,7 +2,7 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 
 import {LegendContainer} from '../../LegendContainer';
-import {mockDefaultTheme} from '../../../test-utilities/mount-with-provider';
+import {mockDefaultTheme} from '../../../test-utilities/mountWithProvider';
 import {YAxis} from '../../../components/YAxis';
 import {HorizontalGridLines} from '../../../components/HorizontalGridLines';
 import {VisuallyHiddenRows} from '../../../components/VisuallyHiddenRows';

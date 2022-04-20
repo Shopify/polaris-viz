@@ -9,9 +9,9 @@ import {
   VERTICAL_LABEL_MIN_WIDTH,
 } from '../../../constants';
 import {ChartContext} from '../../ChartContainer';
-import {getDiagonalLabels} from '../utilities/get-diagonal-labels';
-import {getHorizontalLabels} from '../utilities/get-horizontal-labels';
-import {getVerticalLabels} from '../utilities/get-vertical-labels';
+import {getDiagonalLabels} from '../utilities/getDiagonalLabels';
+import {getHorizontalLabels} from '../utilities/getHorizontalLabels';
+import {getVerticalLabels} from '../utilities/getVerticalLabels';
 
 const LABEL_CONTAINER_MAX_PERCENTAGE = 0.25;
 

@@ -3,7 +3,7 @@ import {scaleLinear} from 'd3-scale';
 import {useSparkLine} from '@shopify/polaris-viz-core';
 import type {Dimensions} from '@shopify/polaris-viz-core';
 
-import {useThemeSeriesColors} from '../../hooks/use-theme-series-colors';
+import {useThemeSeriesColors} from '../../hooks/useThemeSeriesColors';
 import {useTheme} from '../../hooks';
 import {XMLNS} from '../../constants';
 

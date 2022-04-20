@@ -1,2 +1,2 @@
-export {useYScale} from './use-y-scale';
+export {useYScale} from './useYScale';
 export {useFormatData} from './useFormatData';

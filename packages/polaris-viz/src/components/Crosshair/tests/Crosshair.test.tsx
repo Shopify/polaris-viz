@@ -2,7 +2,7 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 
 import {mountWithProvider} from '../../../test-utilities';
-import {mockDefaultTheme} from '../../../test-utilities/mount-with-provider';
+import {mockDefaultTheme} from '../../../test-utilities/mountWithProvider';
 import {Crosshair} from '../Crosshair';
 
 describe('<Crosshair />', () => {

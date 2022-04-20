@@ -9,7 +9,7 @@ import type {
 
 import {COLOR_VISION_SINGLE_ITEM} from '../../constants';
 import type {ComparisonMetricProps} from '../ComparisonMetric';
-import {getSeriesColors} from '../../hooks/use-theme-series-colors';
+import {getSeriesColors} from '../../hooks/useThemeSeriesColors';
 import {
   useColorVisionEvents,
   usePrefersReducedMotion,

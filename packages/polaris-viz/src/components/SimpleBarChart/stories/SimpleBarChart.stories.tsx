@@ -9,7 +9,7 @@ import {
   COMPARISON_SERIES,
   SERIES,
   SINGLE_SERIES,
-} from '../../../storybook/horizontal-charts';
+} from '../../../storybook/horizontalCharts';
 
 export default {
   title: 'polaris-viz/Simple Charts/SimpleBarChart',

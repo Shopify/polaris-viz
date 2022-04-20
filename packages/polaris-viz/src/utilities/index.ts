@@ -1,26 +1,23 @@
-export {eventPoint, eventPointNative} from './event-point';
+export {eventPoint, eventPointNative} from './eventPoint';
 export {clamp} from './clamp';
-export {getPathLength} from './get-path-length';
-export {getPointAtLength} from './get-point-at-length';
-export {normalizeData} from './normalize-data';
-export {createCSSGradient} from './create-css-gradient';
-export {shouldRoundScaleUp} from './should-round-scale-up';
-export {shouldRotateZeroBars} from './should-rotate-zero-bars';
+export {getPathLength} from './getPathLength';
+export {getPointAtLength} from './getPointAtLength';
+export {normalizeData} from './normalizeData';
+export {createCSSGradient} from './createCssGradient';
+export {shouldRoundScaleUp} from './shouldRoundScaleUp';
+export {shouldRotateZeroBars} from './shouldRotateZeroBars';
 export {classNames} from './classnames';
-export {
-  changeColorOpacity,
-  changeGradientOpacity,
-} from './change-color-opacity';
-export {getRoundedRectPath} from './get-rounded-rect-path';
-export {getAverageColor} from './get-average-color';
-export {getBarId} from './get-bar-id';
-export {formatDataIntoGroups} from './format-data-into-groups';
-export {getStackedMinMax} from './get-stacked-min-max';
-export {getStackedValues} from './get-stacked-values';
-export {pushGapToArray} from './push-gap-to-array';
-export {getGapForIndex} from './get-gap-for-index';
-export {estimateStringWidth} from './estimate-string-width';
+export {changeColorOpacity, changeGradientOpacity} from './changeColorOpacity';
+export {getRoundedRectPath} from './getRoundedRectPath';
+export {getAverageColor} from './getAverageColor';
+export {getBarId} from './getBarId';
+export {formatDataIntoGroups} from './formatDataIntoGroups';
+export {getStackedMinMax} from './getStackedMinMax';
+export {getStackedValues} from './getStackedValues';
+export {pushGapToArray} from './pushGapToArray';
+export {getGapForIndex} from './getGapForIndex';
+export {estimateStringWidth} from './estimateStringWidth';
 export {
   getYAxisOptionsWithDefaults,
   getXAxisOptionsWithDefaults,
-} from './get-axis-options';
+} from './getAxisOptions';
