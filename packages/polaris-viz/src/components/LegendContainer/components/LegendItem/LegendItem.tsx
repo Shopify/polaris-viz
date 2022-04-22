@@ -39,7 +39,7 @@ export function LegendItem({
     <button
       {...colorBlindAttrs}
       style={{
-        background: selectedTheme.tooltip.backgroundColor,
+        background: selectedTheme.legend.backgroundColor,
         ...getOpacityStylesForActive({
           activeIndex,
           index,
