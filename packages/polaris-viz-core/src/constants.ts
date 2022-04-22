@@ -181,6 +181,7 @@ export const DEFAULT_THEME: Theme = {
   legend: {
     labelColor: variables.colorGray30,
     valueColor: variables.colorGray00,
+    backgroundColor: variables.colorGray150,
     trendIndicator: {
       positive: '#039c86',
       negative: '#f24f62',
@@ -276,6 +277,7 @@ export const LIGHT_THEME: Theme = {
   legend: {
     valueColor: variables.colorGray160,
     labelColor: variables.colorGray100,
+    backgroundColor: variables.colorGray10,
     trendIndicator: {
       positive: '#119d7f',
       negative: '#eb4c5e',
