@@ -1,6 +1,6 @@
 import React from 'react';
 import {scaleLinear} from 'd3-scale';
-import {useSparkLine} from '@shopify/polaris-viz-core';
+import {LineSeries, useSparkLine} from '@shopify/polaris-viz-core';
 import type {Dimensions} from '@shopify/polaris-viz-core';
 
 import {useThemeSeriesColors} from '../../hooks/useThemeSeriesColors';
@@ -8,7 +8,6 @@ import {useTheme} from '../../hooks';
 import {XMLNS} from '../../constants';
 
 import styles from './SparkLineChart.scss';
-import {Series} from './components';
 import type {SparkLineChartProps} from './SparkLineChart';
 
 const SVG_MARGIN = 2;
@@ -61,13 +60,16 @@ export function Chart({
 
           return (
             <g key={index}>
-              <Series
+              <LineSeries
+                key={index}
+                index={index}
                 xScale={xScale}
                 yScale={yScale}
                 data={seriesWithColor}
                 isAnimated={isAnimated}
                 svgDimensions={{height, width}}
-                theme={selectedTheme}
+                theme={theme}
+                type="spark"
               />
             </g>
           );

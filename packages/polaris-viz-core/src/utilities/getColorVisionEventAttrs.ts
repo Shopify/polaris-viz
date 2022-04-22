@@ -1,4 +1,4 @@
-import {COLOR_VISION_EVENT} from './constants';
+import {COLOR_VISION_EVENT} from '../constants';
 
 interface Props {
   type: string;

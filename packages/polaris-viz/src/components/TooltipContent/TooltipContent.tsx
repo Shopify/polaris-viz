@@ -1,7 +1,10 @@
 import React, {useState} from 'react';
-import {FONT_SIZE, useTheme} from '@shopify/polaris-viz-core';
+import {
+  FONT_SIZE,
+  useTheme,
+  COLOR_VISION_SINGLE_ITEM,
+} from '@shopify/polaris-viz-core';
 
-import {COLOR_VISION_SINGLE_ITEM} from '../../constants';
 import {useWatchColorVisionEvents} from '../../hooks';
 import {changeColorOpacity} from '../../utilities';
 import type {TooltipAnnotation, TooltipData} from '../../types';

@@ -1,9 +1,8 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
-import type {DataSeries} from '@shopify/polaris-viz-core';
+import {DataSeries, LineSeries} from '@shopify/polaris-viz-core';
 
 import {SparkLineChart} from '../SparkLineChart';
-import {Series} from '../components';
 
 jest.mock('d3-scale', () => ({
   scaleLinear: jest.fn(() => {
@@ -78,11 +77,11 @@ describe('<SparkLineChart />', () => {
     });
   });
 
-  describe('<Series />', () => {
-    it('renders a Series for each series provided', () => {
+  describe('<LineSeries />', () => {
+    it('renders a LineSeries for each series provided', () => {
       const sparkLineChart = mount(<SparkLineChart data={mockData} />);
 
-      expect(sparkLineChart.findAll(Series)).toHaveLength(mockData.length);
+      expect(sparkLineChart.findAll(LineSeries)).toHaveLength(mockData.length);
     });
   });
 });

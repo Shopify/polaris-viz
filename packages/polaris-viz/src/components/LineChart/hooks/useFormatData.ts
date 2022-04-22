@@ -1,8 +1,7 @@
 import {useMemo} from 'react';
+import type {LineChartDataSeriesWithDefaults} from '@shopify/polaris-viz-core';
 
-import type {DataWithDefaults} from '../types';
-
-export function useFormatData(data: DataWithDefaults[]) {
+export function useFormatData(data: LineChartDataSeriesWithDefaults[]) {
   const reversedSeries = useMemo(() => data.slice().reverse(), [data]);
 
   const longestSeriesIndex = useMemo(

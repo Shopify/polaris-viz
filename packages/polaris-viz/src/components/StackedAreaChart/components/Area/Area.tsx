@@ -4,18 +4,14 @@ import type {Area as D3Area, Line} from 'd3-shape';
 import {
   LinearGradientWithStops,
   isGradientType,
+  getColorVisionEventAttrs,
+  COLOR_VISION_SINGLE_ITEM,
+  getColorVisionStylesForActiveIndex,
 } from '@shopify/polaris-viz-core';
 import type {Color, Theme, GradientStop} from '@shopify/polaris-viz-core';
 
-import {
-  getColorVisionEventAttrs,
-  getOpacityStylesForActive,
-} from '../../../../hooks';
 import type {StackedSeries} from '../../../../types';
-import {
-  COLOR_VISION_SINGLE_ITEM,
-  LINES_LOAD_ANIMATION_CONFIG,
-} from '../../../../constants';
+import {LINES_LOAD_ANIMATION_CONFIG} from '../../../../constants';
 
 import styles from './Area.scss';
 
@@ -104,7 +100,10 @@ export function Area({
         />
       </defs>
       <g
-        style={getOpacityStylesForActive({activeIndex: activeLineIndex, index})}
+        style={getColorVisionStylesForActiveIndex({
+          activeIndex: activeLineIndex,
+          index,
+        })}
         aria-hidden="true"
         tabIndex={-1}
         className={styles.Group}

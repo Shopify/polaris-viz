@@ -1,5 +1,5 @@
 import React, {useCallback, useMemo} from 'react';
-import {uniqueId} from '@shopify/polaris-viz-core';
+import {uniqueId, COLOR_VISION_SINGLE_ITEM} from '@shopify/polaris-viz-core';
 import type {
   ChartType,
   DataSeries,
@@ -20,11 +20,7 @@ import {
   useHorizontalStackedValues,
   useColorVisionEvents,
 } from '../../hooks';
-import {
-  XMLNS,
-  HORIZONTAL_BAR_GROUP_DELAY,
-  COLOR_VISION_SINGLE_ITEM,
-} from '../../constants';
+import {XMLNS, HORIZONTAL_BAR_GROUP_DELAY} from '../../constants';
 
 import styles from './Chart.scss';
 

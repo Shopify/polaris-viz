@@ -3,14 +3,17 @@ import isEqual from 'fast-deep-equal';
 import {area, line} from 'd3-shape';
 import type {ScaleLinear} from 'd3-scale';
 import type {Color} from '@shopify/polaris-viz-core';
-import {curveStepRounded, uniqueId} from '@shopify/polaris-viz-core';
+import {
+  curveStepRounded,
+  uniqueId,
+  COLOR_VISION_SINGLE_ITEM,
+} from '@shopify/polaris-viz-core';
 
 import {
   LINE_ANIMATION_FAST_COUNT,
   LINE_ANIMATION_FAST_DURATION,
   LINE_ANIMATION_SLOW_DURATION,
   LINE_ANIMATION_DURATION_STEP,
-  COLOR_VISION_SINGLE_ITEM,
 } from '../../../../constants';
 import type {StackedSeries} from '../../../../types';
 import {

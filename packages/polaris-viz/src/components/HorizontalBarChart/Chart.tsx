@@ -1,5 +1,9 @@
 import React, {ReactNode, useCallback, useMemo, useState} from 'react';
-import {uniqueId, DataType} from '@shopify/polaris-viz-core';
+import {
+  uniqueId,
+  DataType,
+  COLOR_VISION_SINGLE_ITEM,
+} from '@shopify/polaris-viz-core';
 import type {
   DataSeries,
   ChartType,
@@ -29,7 +33,6 @@ import {
   BarChartMargin as Margin,
   HORIZONTAL_BAR_GROUP_DELAY,
   HORIZONTAL_GROUP_LABEL_HEIGHT,
-  COLOR_VISION_SINGLE_ITEM,
 } from '../../constants';
 import {eventPointNative, formatDataIntoGroups} from '../../utilities';
 import {

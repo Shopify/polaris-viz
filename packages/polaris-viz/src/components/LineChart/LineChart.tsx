@@ -1,6 +1,7 @@
 import React, {useRef} from 'react';
 import type {
   DataSeries,
+  LineChartDataSeriesWithDefaults,
   XAxisOptions,
   YAxisOptions,
 } from '@shopify/polaris-viz-core';
@@ -21,7 +22,6 @@ import {SkipLink} from '../SkipLink';
 import {usePrefersReducedMotion, useTheme} from '../../hooks';
 
 import {Chart} from './Chart';
-import type {DataWithDefaults} from './types';
 
 export interface LineChartProps {
   data: DataSeries[];
@@ -87,29 +87,30 @@ export function LineChart({
 
   const areaOpacity = getOpacityByDataLength(data.length);
 
-  const dataWithDefaults: DataWithDefaults[] = data.map((series, index) => {
-    const seriesColor = seriesColors[index];
+  const dataWithDefaults: LineChartDataSeriesWithDefaults[] = data.map(
+    (series, index) => {
+      const seriesColor = seriesColors[index];
 
-    const areaColor = isGradientType(seriesColor)
-      ? getAverageColor(
-          seriesColor[0].color,
-          seriesColor[seriesColor.length - 1].color,
-        )
-      : seriesColor;
+      const areaColor = isGradientType(seriesColor)
+        ? getAverageColor(
+            seriesColor[0].color,
+            seriesColor[seriesColor.length - 1].color,
+          )
+        : seriesColor;
 
-    return {
-      lineStyle: series.isComparison ? 'dotted' : selectedTheme.line.style,
-      ...series,
-      areaColor: series.isComparison
-        ? undefined
-        : changeColorOpacity(areaColor as string, areaOpacity),
-      // We want to override the color, not set a default
-      // so it has to come last
-      color: series.isComparison
-        ? seriesColors[index]
-        : series.color ?? seriesColors[index],
-    };
-  });
+      return {
+        ...series,
+        areaColor: series.isComparison
+          ? undefined
+          : changeColorOpacity(areaColor as string, areaOpacity),
+        // We want to override the color, not set a default
+        // so it has to come last
+        color: series.isComparison
+          ? seriesColors[index]
+          : series.color ?? seriesColors[index],
+      };
+    },
+  );
 
   return (
     <React.Fragment>

@@ -1,9 +1,12 @@
 import React from 'react';
-import {Color, useTheme} from '@shopify/polaris-viz-core';
+import {
+  Color,
+  useTheme,
+  getColorVisionStylesForActiveIndex,
+} from '@shopify/polaris-viz-core';
 import type {Shape} from '@shopify/polaris-viz-core';
 
 import {SeriesIcon} from '../../../shared/SeriesIcon';
-import {getOpacityStylesForActive} from '../../../../hooks';
 import {classNames} from '../../../../utilities';
 import {TITLE_MARGIN} from '../../constants';
 import tooltipContentStyles from '../../TooltipContent.scss';
@@ -36,7 +39,7 @@ export function TooltipRow({
   return (
     <div
       className={classNames(tooltipContentStyles.Row, styles.Row)}
-      style={getOpacityStylesForActive({
+      style={getColorVisionStylesForActiveIndex({
         activeIndex,
         index,
       })}

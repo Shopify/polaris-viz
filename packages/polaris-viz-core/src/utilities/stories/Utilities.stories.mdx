@@ -242,3 +242,37 @@ esimateStringWidth('Hello', characterWidths);
 
 // 40
 ```
+
+<Title type="h3">
+  <code>getColorVisionStylesForActiveIndex()</code>
+</Title>
+
+<p>Returns opacity styles for a current active index.</p>
+
+```tsx
+getColorVisionStylesForActiveIndex({index: 1, activeIndex: 1});
+
+// {
+//   opacity: '0.3',
+//   transition: 'opacity 100ms ease',
+// }
+```
+
+<Title type="h3">
+  <code>getColorVisionEventAttrs()</code>
+</Title>
+
+<p>
+  Returns an object of data-set attributes use to enable the color-vision events
+  for an element.
+</p>
+
+```tsx
+getColorVisionEventAttrs({type: 'single', index: 1});
+
+// {
+//   [`data-color-vision-event-watch`]: true,
+//   [`data-color-vision-event-type`]: 'single',
+//   [`data-color-vision-event-index`]: 1,
+// }
+```

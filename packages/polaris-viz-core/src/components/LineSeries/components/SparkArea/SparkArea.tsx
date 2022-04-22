@@ -1,12 +1,9 @@
 import React, {useMemo} from 'react';
-import {
-  isGradientType,
-  LinearGradientWithStops,
-  uniqueId,
-} from '@shopify/polaris-viz-core';
-import type {Color} from '@shopify/polaris-viz-core';
 
-import styles from './Area.scss';
+import {usePolarisVizContext} from '../../../../hooks';
+import type {Color} from '../../../../types';
+import {LinearGradientWithStops} from '../../../../components';
+import {isGradientType, uniqueId} from '../../../../utilities';
 
 function getGradientFill(color: Color | null) {
   if (color == null) {
@@ -34,28 +31,27 @@ const MASK_GRADIENT = [
   },
 ];
 
-interface AreaProps {
+interface SparkAreaProps {
   color: Color;
   areaPath: string;
-  immediate: boolean;
 }
 
-export function Area({areaPath, color, immediate}: AreaProps) {
-  const gradientId = useMemo(() => uniqueId('gradient'), []);
-  const maskId = useMemo(() => uniqueId('mask'), []);
+export function SparkArea({areaPath, color}: SparkAreaProps) {
+  const gradientId = useMemo(() => uniqueId('spark-area-gradient'), []);
+  const maskId = useMemo(() => uniqueId('spark-area-mask'), []);
 
   const areaGradientColor = getGradientFill(color);
 
+  const {
+    components: {Defs, Mask, Path},
+  } = usePolarisVizContext();
+
   return areaGradientColor == null ? null : (
     <React.Fragment>
-      <defs>
-        <mask id={maskId}>
-          <path
-            fill={`url(#${maskId}-gradient)`}
-            d={areaPath}
-            className={immediate ? undefined : styles.Area}
-          />
-        </mask>
+      <Defs>
+        <Mask id={maskId}>
+          <Path fill={`url(#${maskId}-gradient)`} d={areaPath} />
+        </Mask>
         <LinearGradientWithStops
           id={`${maskId}-gradient`}
           y1="0%"
@@ -69,8 +65,8 @@ export function Area({areaPath, color, immediate}: AreaProps) {
           y2="0%"
           gradient={areaGradientColor}
         />
-      </defs>
-      <path
+      </Defs>
+      <Path
         d={areaPath}
         fill={`url(#${gradientId})`}
         mask={`url(#${maskId})`}

@@ -88,7 +88,6 @@ function Chart({
           return (
             <React.Fragment key={index}>
               <LineSeries
-                native
                 key={index}
                 index={index}
                 xScale={xScale}
@@ -97,6 +96,7 @@ function Chart({
                 isAnimated={isAnimated}
                 svgDimensions={{height, width}}
                 theme={theme}
+                type="spark"
               />
             </React.Fragment>
           );

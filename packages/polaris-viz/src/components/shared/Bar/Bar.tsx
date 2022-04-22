@@ -1,13 +1,14 @@
 import React, {useCallback} from 'react';
 import {animated, useSpring} from '@react-spring/web';
-import {DataType, RoundedBorder} from '@shopify/polaris-viz-core';
-import type {Direction} from '@shopify/polaris-viz-core';
-
 import {
+  DataType,
+  RoundedBorder,
   COLOR_VISION_ACTIVE_OPACITY,
   COLOR_VISION_FADED_OPACITY,
-  BARS_TRANSITION_CONFIG,
-} from '../../../constants';
+} from '@shopify/polaris-viz-core';
+import type {Direction} from '@shopify/polaris-viz-core';
+
+import {BARS_TRANSITION_CONFIG} from '../../../constants';
 import {getRoundedRectPath} from '../../../utilities';
 
 import styles from './Bar.scss';
