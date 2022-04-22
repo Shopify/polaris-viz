@@ -9,7 +9,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Added
 
-- Added legend.backgroundColor to the Theme definition
+- Added `legend.backgroundColor` to the Theme definition
 
 
 ## [1.4.0] - 2022-04-20
