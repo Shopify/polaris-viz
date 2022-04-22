@@ -4,6 +4,10 @@ import {
   uniqueId,
   LinearGradientWithStops,
   DataType,
+  COLOR_VISION_SINGLE_ITEM,
+  COLOR_VISION_GROUP_ITEM,
+  getColorVisionEventAttrs,
+  getColorVisionStylesForActiveIndex,
 } from '@shopify/polaris-viz-core';
 import type {Color} from '@shopify/polaris-viz-core';
 
@@ -11,8 +15,6 @@ import type {AccessibilitySeries} from '../../../VerticalBarChart/types';
 import {formatAriaLabel} from '../../utilities';
 import {clamp} from '../../../../utilities';
 import {
-  getColorVisionEventAttrs,
-  getOpacityStylesForActive,
   usePrefersReducedMotion,
   useWatchColorVisionEvents,
 } from '../../../../hooks';
@@ -23,8 +25,6 @@ import {
   LOAD_ANIMATION_DURATION,
   MASK_HIGHLIGHT_COLOR,
   BAR_ANIMATION_HEIGHT_BUFFER,
-  COLOR_VISION_SINGLE_ITEM,
-  COLOR_VISION_GROUP_ITEM,
 } from '../../../../constants';
 import styles from '../../Chart.scss';
 
@@ -120,7 +120,7 @@ export function BarGroup({
               data-type={DataType.BarGroup}
               data-index={barGroupIndex}
               key={`${barGroupIndex}${index}`}
-              style={getOpacityStylesForActive({
+              style={getColorVisionStylesForActiveIndex({
                 activeIndex: activeBarGroup,
                 index: barGroupIndex,
               })}
@@ -158,7 +158,7 @@ export function BarGroup({
                 width={barWidth - BAR_SPACING}
                 height={height + BAR_ANIMATION_HEIGHT_BUFFER * 2}
                 fill={`url(#${gradientId}${index})`}
-                style={getOpacityStylesForActive({
+                style={getColorVisionStylesForActiveIndex({
                   activeIndex: activeBarIndex,
                   index,
                 })}

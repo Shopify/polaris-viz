@@ -1,12 +1,13 @@
 import React, {useState, useRef, useMemo} from 'react';
 import {line} from 'd3-shape';
 import {
-  LinearGradientWithStops,
   curveStepRounded,
   uniqueId,
-  isGradientType,
   DataType,
   useYScale,
+  LineSeries,
+  COLOR_VISION_SINGLE_ITEM,
+  LineChartDataSeriesWithDefaults,
 } from '@shopify/polaris-viz-core';
 import type {
   DataPoint,
@@ -15,6 +16,7 @@ import type {
   YAxisOptions,
 } from '@shopify/polaris-viz-core';
 
+import {clamp} from '../../utilities/clamp';
 import type {RenderTooltipContentData} from '../../types';
 import {getAlteredLineChartPosition} from '../../utilities/getAlteredLineChartPosition';
 import {useXAxisLabels} from '../../hooks/useXAxisLabels';
@@ -26,7 +28,7 @@ import {
   TooltipWrapper,
   TOOLTIP_POSITION_DEFAULT_RETURN,
 } from '../../components/TooltipWrapper';
-import {eventPointNative, clamp} from '../../utilities';
+import {eventPointNative} from '../../utilities';
 import {
   useTheme,
   useLinearChartAnimations,
@@ -37,7 +39,6 @@ import {
 import {
   LineChartMargin as Margin,
   XMLNS,
-  COLOR_VISION_SINGLE_ITEM,
   LABEL_AREA_TOP_SPACING,
 } from '../../constants';
 import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
@@ -46,9 +47,8 @@ import {Crosshair} from '../Crosshair';
 import {HorizontalGridLines} from '../HorizontalGridLines';
 
 import {useLineChartTooltipContent} from './hooks/useLineChartTooltipContent';
-import {Points, Line, GradientArea} from './components';
+import {Points} from './components';
 import {MAX_ANIMATED_SERIES_LENGTH, MIN_Y_LABEL_SPACE} from './constants';
-import type {DataWithDefaults} from './types';
 import {useFormatData} from './hooks';
 import styles from './Chart.scss';
 import {yAxisMinMax} from './utilities';
@@ -56,7 +56,7 @@ import {yAxisMinMax} from './utilities';
 export interface ChartProps {
   isAnimated: boolean;
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
-  data: DataWithDefaults[];
+  data: LineChartDataSeriesWithDefaults[];
   showLegend: boolean;
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
@@ -291,45 +291,19 @@ export function Chart({
 
         <g transform={`translate(${chartStartPosition},${Margin.Top})`}>
           {reversedSeries.map((singleSeries, index) => {
-            const {name, color, areaColor} = singleSeries;
-            const seriesGradientId = `${gradientId.current}-${index}`;
-
-            const lineColor = isGradientType(color)
-              ? `url(#${seriesGradientId})`
-              : color;
-
             return (
-              <React.Fragment key={`${name}-${index}`}>
-                {isGradientType(color) ? (
-                  <defs>
-                    <LinearGradientWithStops
-                      id={seriesGradientId}
-                      gradient={color}
-                      gradientUnits="userSpaceOnUse"
-                      y1="100%"
-                      y2="0%"
-                    />
-                  </defs>
-                ) : null}
-                <Line
-                  activeLineIndex={activeLineIndex}
-                  color={lineColor}
-                  index={reversedSeries.length - 1 - index}
-                  isAnimated={isAnimated}
-                  lineGenerator={lineGenerator}
-                  series={singleSeries}
-                  theme={theme}
-                >
-                  {areaColor != null ? (
-                    <GradientArea
-                      series={singleSeries}
-                      yScale={yScale}
-                      xScale={xScale}
-                      hasSpline={selectedTheme.line.hasSpline}
-                    />
-                  ) : null}
-                </Line>
-              </React.Fragment>
+              <LineSeries
+                activeLineIndex={activeLineIndex}
+                data={singleSeries}
+                index={reversedSeries.length - 1 - index}
+                isAnimated={isAnimated}
+                key={`${name}-${index}`}
+                svgDimensions={{height: drawableHeight, width: drawableWidth}}
+                theme={theme}
+                xScale={xScale}
+                yScale={yScale}
+                type="default"
+              />
             );
           })}
 

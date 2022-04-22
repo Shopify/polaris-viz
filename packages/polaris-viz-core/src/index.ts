@@ -68,6 +68,11 @@ export {
   VERTICAL_LABEL_MIN_WIDTH,
   Y_AXIS_CHART_SPACING,
   LINEAR_LABELS_INNER_PADDING,
+  COLOR_VISION_SINGLE_ITEM,
+  COLOR_VISION_GROUP_ITEM,
+  COLOR_VISION_EVENT,
+  COLOR_VISION_ACTIVE_OPACITY,
+  COLOR_VISION_FADED_OPACITY,
 } from './constants';
 export {
   createGradient,
@@ -83,6 +88,8 @@ export {
   removeFalsyValues,
   estimateStringWidth,
   shouldRoundScaleUp,
+  getColorVisionEventAttrs,
+  getColorVisionStylesForActiveIndex,
 } from './utilities';
 export {
   useSparkBar,
@@ -124,4 +131,5 @@ export type {
   LabelFormatter,
   Shape,
   CharacterWidths,
+  LineChartDataSeriesWithDefaults,
 } from './types';

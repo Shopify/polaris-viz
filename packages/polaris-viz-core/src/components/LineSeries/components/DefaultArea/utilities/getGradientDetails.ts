@@ -1,4 +1,4 @@
-import type {DataPoint} from '@shopify/polaris-viz-core';
+import type {DataPoint} from '../../../../../types';
 
 const HIGHEST_ALPHA = 0.25;
 

@@ -3,10 +3,10 @@ import type {ScaleLinear} from 'd3-scale';
 import {area as areaShape, line} from 'd3-shape';
 import {useSpring} from '@react-spring/core';
 
+import type {LineChartDataSeriesWithDefaults} from '../../types';
 import {LinearGradientWithStops} from '../../components';
 import {
   DataPoint,
-  DataSeries,
   GradientStop,
   usePolarisVizContext,
   useTheme,
@@ -14,38 +14,64 @@ import {
   uniqueId,
   isGradientType,
   LINES_LOAD_ANIMATION_CONFIG,
+  getColorVisionEventAttrs,
+  getColorVisionStylesForActiveIndex,
 } from '../../';
+import {COLOR_VISION_SINGLE_ITEM} from '../../constants';
 
-import {Area} from './components/Area';
+import {Area} from './components';
+import styles from './LineSeries.scss';
 
 const POINT_RADIUS = 2;
 const ANIMATION_DELAY = 200;
+const SPARK_STROKE_WIDTH = 1;
 
-const StrokeDasharray = {
-  dotted: '0.1 4',
+export const StrokeDasharray = {
+  dotted: '0.1 8',
   dashed: '2 4',
   solid: 'unset',
 };
 
+function getLineStyle({
+  isComparison = false,
+  isSparkChart,
+}: {
+  isComparison: boolean | undefined;
+  isSparkChart: boolean;
+}) {
+  if (!isComparison) {
+    return 'solid';
+  }
+
+  if (isSparkChart) {
+    return 'dashed';
+  }
+
+  return 'dotted';
+}
+
 export interface LineSeriesProps {
-  xScale: ScaleLinear<number, number>;
-  yScale: ScaleLinear<number, number>;
-  data: DataSeries;
+  data: LineChartDataSeriesWithDefaults;
+  index: number;
   isAnimated: boolean;
   svgDimensions: {width: number; height: number};
-  native?: boolean;
-  theme: string;
-  index: number;
+  xScale: ScaleLinear<number, number>;
+  yScale: ScaleLinear<number, number>;
+  activeLineIndex?: number;
+  theme?: string;
+  type?: 'default' | 'spark';
 }
 
 export function LineSeries({
-  xScale,
-  yScale,
+  activeLineIndex = -1,
   data,
+  index = 0,
   isAnimated,
   svgDimensions,
   theme = 'Default',
-  index = 0,
+  type = 'default',
+  xScale,
+  yScale,
 }: LineSeriesProps) {
   const {
     // eslint-disable-next-line id-length
@@ -56,16 +82,17 @@ export function LineSeries({
   const AnimatedGroup = animated(G);
   const color = data?.color;
   const selectedTheme = useTheme(theme);
+  const isSparkChart = type === 'spark';
 
   const lineGenerator = line<DataPoint>()
-    .x(({key}) => xScale(Number(key)))
-    .y(({value}) => (value == null ? yScale(0) : yScale(value)))
+    .x((_, index) => (xScale == null ? 0 : xScale(index)))
+    .y(({value}) => yScale(value ?? 0))
     .defined(({value}) => value != null);
 
   const areaGenerator = areaShape<DataPoint>()
-    .x(({key}) => xScale(Number(key)))
+    .x((_: DataPoint, index: number) => xScale(index))
     .y0(svgDimensions.height)
-    .y1(({value}) => (value == null ? yScale(0) : yScale(value)))
+    .y1(({value}) => yScale(value ?? 0))
     .defined(({value}) => value != null);
 
   if (selectedTheme.line.hasSpline) {
@@ -88,7 +115,7 @@ export function LineSeries({
 
   const areaPath = areaGenerator(data.data);
 
-  const id = useMemo(() => uniqueId('sparkline'), []);
+  const id = useMemo(() => uniqueId('line-series'), []);
   const immediate = !isAnimated;
 
   const lineGradientColor = isGradientType(color!)
@@ -100,10 +127,16 @@ export function LineSeries({
         },
       ];
 
-  const showPoint = !data.isComparison && lastLinePointCoordinates != null;
+  const showPoint =
+    isSparkChart && !data.isComparison && lastLinePointCoordinates != null;
   const {x: lastX = 0, y: lastY = 0} = lastLinePointCoordinates ?? {};
-  const lineStyle = data.isComparison ? 'dashed' : 'solid';
+  const lineStyle = getLineStyle({
+    isComparison: data.isComparison,
+    isSparkChart,
+  });
   const isSolidLine = data.isComparison !== true;
+  const solidLineDelay = isSolidLine ? index * ANIMATION_DELAY : 0;
+  const delay = immediate ? 0 : solidLineDelay;
 
   const {scaleY, translateY, opacity} = useSpring({
     from: {
@@ -116,7 +149,7 @@ export function LineSeries({
       scaleY: 1,
       opacity: 1,
     },
-    delay: isSolidLine ? index * ANIMATION_DELAY : 0,
+    delay,
     config: LINES_LOAD_ANIMATION_CONFIG,
     default: {immediate},
   });
@@ -131,7 +164,11 @@ export function LineSeries({
 
   return (
     <React.Fragment>
-      <AnimatedGroup transform={isSolidLine ? transform : ''} opacity={opacity}>
+      <AnimatedGroup
+        className={styles.Group}
+        transform={isSolidLine ? transform : ''}
+        opacity={opacity}
+      >
         <Defs>
           <LinearGradientWithStops
             id={`line-${id}`}
@@ -147,8 +184,16 @@ export function LineSeries({
               stroke="white"
               strokeLinejoin="round"
               strokeLinecap="round"
+              strokeWidth={
+                isSparkChart
+                  ? SPARK_STROKE_WIDTH
+                  : `${selectedTheme.line.width}px`
+              }
               style={{
-                // transform: [{skewX: '45deg'}],
+                ...getColorVisionStylesForActiveIndex({
+                  activeIndex: activeLineIndex,
+                  index,
+                }),
                 strokeDasharray: StrokeDasharray[lineStyle],
               }}
             />
@@ -158,9 +203,8 @@ export function LineSeries({
           </Mask>
         </Defs>
 
-        {data.isComparison === true ? null : (
-          <Area color={color!} areaPath={areaPath} />
-        )}
+        <Area series={data} areaPath={areaPath} type={type} />
+
         <Rect
           x="0"
           y="0"
@@ -172,6 +216,18 @@ export function LineSeries({
               : `url(#line-${id})`
           }
           mask={`url(#mask-${`${id}`})`}
+        />
+
+        <Path
+          className={styles.Line}
+          d={lineShape}
+          strokeWidth={`${10}px`}
+          stroke="transparent"
+          fill="none"
+          {...getColorVisionEventAttrs({
+            type: COLOR_VISION_SINGLE_ITEM,
+            index,
+          })}
         />
       </AnimatedGroup>
     </React.Fragment>

@@ -5,6 +5,8 @@ import {
   useYScale,
   ChartContext,
   estimateStringWidth,
+  COLOR_VISION_GROUP_ITEM,
+  COLOR_VISION_SINGLE_ITEM,
 } from '@shopify/polaris-viz-core';
 import type {
   DataSeries,
@@ -22,8 +24,6 @@ import {LegendContainer, useLegend} from '../LegendContainer';
 import {GradientDefs} from '../shared';
 import {
   BarChartMargin as Margin,
-  COLOR_VISION_GROUP_ITEM,
-  COLOR_VISION_SINGLE_ITEM,
   LABEL_AREA_TOP_SPACING,
   XMLNS,
   Y_AXIS_CHART_SPACING,

@@ -1,7 +1,6 @@
 import {useContext, useEffect} from 'react';
-import {ChartContext} from '@shopify/polaris-viz-core';
+import {ChartContext, COLOR_VISION_EVENT} from '@shopify/polaris-viz-core';
 
-import {COLOR_VISION_EVENT} from './constants';
 import {getDataSetItem, getEventName} from './utilities';
 
 export function useColorVisionEvents(enabled = true) {

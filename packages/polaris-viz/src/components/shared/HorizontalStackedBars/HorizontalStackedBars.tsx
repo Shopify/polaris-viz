@@ -1,13 +1,15 @@
 import React, {useMemo, useState} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {animated, useSpring} from '@react-spring/web';
-import {RoundedBorder} from '@shopify/polaris-viz-core';
+import {
+  RoundedBorder,
+  COLOR_VISION_SINGLE_ITEM,
+} from '@shopify/polaris-viz-core';
 
 import {useWatchColorVisionEvents} from '../../../hooks';
 import {getBarId} from '../../../utilities';
 import {
   BARS_TRANSITION_CONFIG,
-  COLOR_VISION_SINGLE_ITEM,
   HORIZONTAL_GROUP_LABEL_HEIGHT,
 } from '../../../constants';
 import type {FormattedStackedSeries} from '../../../types';

@@ -1,14 +1,14 @@
 import React, {useMemo} from 'react';
 import type {ScaleBand, ScaleLinear} from 'd3-scale';
-import type {Color} from '@shopify/polaris-viz-core';
-import {DataType} from '@shopify/polaris-viz-core';
-
-import {COLOR_VISION_GROUP_ITEM} from '../../../../constants';
-import {formatAriaLabel} from '../../../VerticalBarChart/utilities';
 import {
-  getOpacityStylesForActive,
+  Color,
   getColorVisionEventAttrs,
-} from '../../../../hooks';
+  DataType,
+  COLOR_VISION_GROUP_ITEM,
+  getColorVisionStylesForActiveIndex,
+} from '@shopify/polaris-viz-core';
+
+import {formatAriaLabel} from '../../../VerticalBarChart/utilities';
 import {BAR_SPACING} from '../../../VerticalBarChart/constants';
 import type {AccessibilitySeries} from '../../../VerticalBarChart/types';
 import type {StackedSeries} from '../../../../types';
@@ -72,7 +72,7 @@ export function StackedBarGroups({
               index: groupIndex,
             })}
             className={styles.Group}
-            style={getOpacityStylesForActive({
+            style={getColorVisionStylesForActiveIndex({
               activeIndex: activeBarGroup,
               index: groupIndex,
             })}

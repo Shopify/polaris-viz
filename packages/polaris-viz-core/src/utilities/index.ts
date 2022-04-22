@@ -10,3 +10,5 @@ export {paddingStringToObject} from './paddingStringToObject';
 export {removeFalsyValues} from './removeFalsyValues';
 export {estimateStringWidth} from './estimateStringWidth';
 export {shouldRoundScaleUp} from './shouldRoundScaleUp';
+export {getColorVisionEventAttrs} from './getColorVisionEventAttrs';
+export {getColorVisionStylesForActiveIndex} from './getColorVisionStylesForActiveIndex';

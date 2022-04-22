@@ -1,19 +1,17 @@
 import React from 'react';
 import {animated, useSpring} from '@react-spring/web';
-import {isGradientType} from '@shopify/polaris-viz-core';
+import {
+  COLOR_VISION_SINGLE_ITEM,
+  getColorVisionEventAttrs,
+  isGradientType,
+  getColorVisionStylesForActiveIndex,
+} from '@shopify/polaris-viz-core';
 import type {Color, Direction} from '@shopify/polaris-viz-core';
 
-import {
-  BARS_TRANSITION_CONFIG,
-  COLOR_VISION_SINGLE_ITEM,
-} from '../../../../constants';
+import {BARS_TRANSITION_CONFIG} from '../../../../constants';
 import {createCSSGradient, classNames} from '../../../../utilities';
 import type {Size} from '../../types';
-import {
-  getColorVisionEventAttrs,
-  getOpacityStylesForActive,
-  useHasTimeoutFinished,
-} from '../../../../hooks';
+import {useHasTimeoutFinished} from '../../../../hooks';
 
 import styles from './BarSegment.scss';
 
@@ -71,7 +69,7 @@ export function BarSegment({
       style={{
         [dimension]: isAnimated ? spring[dimension] : `${safeScale}%`,
         background: formattedColor,
-        ...getOpacityStylesForActive({activeIndex, index}),
+        ...getColorVisionStylesForActiveIndex({activeIndex, index}),
       }}
       {...getColorVisionEventAttrs({
         type: COLOR_VISION_SINGLE_ITEM,

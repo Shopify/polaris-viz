@@ -1,39 +1,20 @@
 import React, {useMemo} from 'react';
-import type {ScaleLinear} from 'd3-scale';
-import {area} from 'd3-shape';
-import type {DataPoint} from '@shopify/polaris-viz-core';
-import {
-  LinearGradientWithStops,
-  curveStepRounded,
-  uniqueId,
-} from '@shopify/polaris-viz-core';
 
-import type {DataWithDefaults} from '../../types';
+import type {LineChartDataSeriesWithDefaults} from '../../../../types';
+import {uniqueId} from '../../../../utilities';
+import {LinearGradientWithStops} from '../../../../components';
 
 import {getGradientDetails} from './utilities/getGradientDetails';
 
 export interface Props {
-  series: DataWithDefaults;
-  yScale: ScaleLinear<number, number>;
-  xScale: ScaleLinear<number, number>;
-  hasSpline: boolean;
+  series: LineChartDataSeriesWithDefaults;
+  areaPath: string;
 }
 
-export function GradientArea({series, yScale, xScale, hasSpline}: Props) {
-  const gradientId = useMemo(() => uniqueId('gradient'), []);
-  const maskId = useMemo(() => uniqueId('mask'), []);
+export function DefaultArea({series, areaPath}: Props) {
+  const gradientId = useMemo(() => uniqueId('default-area-gradient'), []);
+  const maskId = useMemo(() => uniqueId('default-area-mask'), []);
   const {data, areaColor} = series;
-
-  const areaGenerator = area<DataPoint>()
-    .x((_: DataPoint, index: number) => xScale(index))
-    .y0(yScale(0))
-    .y1(({value}) => yScale(value ?? 0));
-
-  if (hasSpline) {
-    areaGenerator.curve(curveStepRounded);
-  }
-
-  const areaShape = areaGenerator(data);
 
   const gradientStops = useMemo(() => {
     return getGradientDetails(data).map((gradientStop) => ({
@@ -42,7 +23,7 @@ export function GradientArea({series, yScale, xScale, hasSpline}: Props) {
     }));
   }, [areaColor, data]);
 
-  if (areaShape == null || areaColor == null || gradientStops == null) {
+  if (areaPath == null || areaColor == null || gradientStops == null) {
     return null;
   }
 
@@ -50,7 +31,7 @@ export function GradientArea({series, yScale, xScale, hasSpline}: Props) {
     <React.Fragment>
       <defs>
         <mask id={maskId}>
-          <path d={areaShape} fill={`url(#${maskId}-gradient)`} />
+          <path d={areaPath} fill={`url(#${maskId}-gradient)`} />
         </mask>
         <LinearGradientWithStops
           id={`${maskId}-gradient`}
@@ -88,7 +69,7 @@ export function GradientArea({series, yScale, xScale, hasSpline}: Props) {
       </defs>
 
       <path
-        d={areaShape}
+        d={areaPath}
         fill={`url(#${gradientId})`}
         mask={`url(#${maskId})`}
         strokeWidth="0"

@@ -33,7 +33,6 @@ const data: LineChartDataWithDefaults[] = [
       {key: 'Jan 3', value: 800},
       {key: 'Jan 4', value: 1300},
     ],
-    lineStyle: 'solid',
   },
 ];
 

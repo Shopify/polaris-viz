@@ -9,7 +9,16 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Added
 
-`- Added `legend.backgroundColor` to the Theme definition
+- Added `legend.backgroundColor` to the Theme definition
+
+### Removed
+
+- Removed `lineStyle` from `LineChartProps`.
+
+### Changed
+
+- Moved `getColorVisionStylesForActiveIndex()` & `getColorVisionEventAttrs()` to `polaris-viz-core`.
+- Use `<LineSeries />` for `LineChart` and `StackedAreaChart`.
 
 ## [1.4.0] - 2022-04-20
 

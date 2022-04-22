@@ -5,6 +5,7 @@ import {scaleLinear} from 'd3-scale';
 import {LineSeries, LineSeriesProps} from '../LineSeries';
 import {XMLNS} from '../../../constants';
 import {useSparkLine} from '../../..';
+import type {LineChartDataSeriesWithDefaults} from '../../../types';
 
 export default {
   title: 'Shared/Subcomponents/LineSeries',
@@ -29,7 +30,7 @@ export default {
 
 const xScale = scaleLinear().range([0, 500]).domain([0, 10]);
 
-const dataSeries = {
+const DATA_SERIES: LineChartDataSeriesWithDefaults = {
   color: [
     {
       offset: 0,
@@ -95,14 +96,14 @@ const dataSeries = {
 const props = {
   native: false,
   xScale: xScale,
-  data: dataSeries,
+  data: DATA_SERIES,
   isAnimated: true,
   svgDimensions: {height: 200, width: 500},
 };
 
 const Template: Story<LineSeriesProps> = (args) => {
   const {minXDomain, maxXDomain, yScale} = useSparkLine({
-    data: [dataSeries],
+    data: [DATA_SERIES],
     height: 200,
   });
 
@@ -127,6 +128,6 @@ isComparison.args = {
   ...props,
   data: {
     isComparison: true,
-    ...dataSeries,
+    ...DATA_SERIES,
   },
 };

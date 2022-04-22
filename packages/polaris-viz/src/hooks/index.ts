@@ -17,9 +17,7 @@ export {useBarChartTooltipContent} from './useBarChartTooltipContent';
 export {useHorizontalStackedValues} from './useHorizontalStackedValues';
 export {
   useColorVisionEvents,
-  getColorVisionEventAttrs,
   useWatchColorVisionEvents,
-  getOpacityStylesForActive,
 } from './ColorVisionA11y';
 export {useCallbackRef} from './useCallbackRef';
 export {useLinearLabelsAndDimensions} from './useLinearLabelsAndDimensions';

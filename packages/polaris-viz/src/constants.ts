@@ -66,12 +66,6 @@ export {
   Y_AXIS_CHART_SPACING,
 } from '@shopify/polaris-viz-core';
 
-export const COLOR_VISION_ACTIVE_OPACITY = 1;
-export const COLOR_VISION_FADED_OPACITY = 0.3;
 export const DEFAULT_LEGEND_HEIGHT = 29;
-export const COLOR_VISION_SINGLE_ITEM = 'singleItem';
-export const COLOR_VISION_GROUP_ITEM = 'group';
 export const LEGENDS_TOP_MARGIN = 16;
-export const COLOR_BLIND_ACTIVE_OPACITY = 1;
-export const COLOR_BLIND_FADED_OPACITY = 0.3;
 export const PREVIEW_ICON_SIZE = 12;

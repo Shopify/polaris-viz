@@ -5,24 +5,21 @@ import {
   LinearGradientWithStops,
   isGradientType,
   DataType,
+  getColorVisionStylesForActiveIndex,
+  COLOR_VISION_SINGLE_ITEM,
 } from '@shopify/polaris-viz-core';
+import type {LineChartDataSeriesWithDefaults} from '@shopify/polaris-viz-core';
 
-import {COLOR_VISION_SINGLE_ITEM} from '../../../../constants';
-import {
-  getOpacityStylesForActive,
-  useTheme,
-  useWatchColorVisionEvents,
-} from '../../../../hooks';
+import {useTheme, useWatchColorVisionEvents} from '../../../../hooks';
 import {changeColorOpacity, changeGradientOpacity} from '../../../../utilities';
 import {Point} from '../../../Point';
-import type {DataWithDefaults} from '../../types';
 import type {AnimatedCoordinate} from '../../../../types';
 
 interface PointsProps {
   activeIndex: number | null;
   animatedCoordinates: AnimatedCoordinate[] | null;
   animatePoints: boolean;
-  data: DataWithDefaults[];
+  data: LineChartDataSeriesWithDefaults[];
   gradientId: string;
   longestSeriesIndex: number;
   tooltipId: string;
@@ -121,7 +118,7 @@ export function Points({
               return (
                 <g
                   key={`${name}-${index}-${dataIndex}`}
-                  style={getOpacityStylesForActive({
+                  style={getColorVisionStylesForActiveIndex({
                     activeIndex: activeLineIndex,
                     index: data.length - 1 - index,
                     fadedOpacity: 0,

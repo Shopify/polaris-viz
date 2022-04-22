@@ -3,6 +3,8 @@ import {mount} from '@shopify/react-testing';
 import {line} from 'd3-shape';
 import {
   LinearGradientWithStops,
+  LineChartDataSeriesWithDefaults,
+  LineSeries,
   XAxisOptions,
   YAxisOptions,
 } from '@shopify/polaris-viz-core';
@@ -16,14 +18,11 @@ import {HorizontalGridLines} from '../../../components/HorizontalGridLines';
 import {mockDefaultTheme} from '../../../test-utilities/mountWithProvider';
 import {TooltipAnimatedContainer} from '../../../components/TooltipWrapper';
 import {Chart, ChartProps} from '../Chart';
-import {Line, GradientArea} from '../components';
 import {YAxis} from '../../YAxis';
-import type {DataWithDefaults} from '../types';
 
-const MOCK_DATA: Required<DataWithDefaults> = {
+const MOCK_DATA: Required<LineChartDataSeriesWithDefaults> = {
   name: 'Primary',
   color: 'red',
-  lineStyle: 'solid',
   areaColor: 'red',
   isComparison: false,
   data: [
@@ -78,6 +77,7 @@ jest.mock('d3-shape', () => ({
     shape.x = () => shape;
     shape.y = () => shape;
     shape.curve = () => shape;
+    shape.defined = () => shape;
     return shape;
   }),
 }));
@@ -125,7 +125,7 @@ describe('<Chart />', () => {
     expect(chart.find(Crosshair)).toHaveReactProps({opacity: 0});
   });
 
-  it('renders a <Line /> for each data-point', () => {
+  it('renders a <LineSeries /> for each data-point', () => {
     const chart = mount(
       <Chart
         {...MOCK_PROPS}
@@ -133,7 +133,7 @@ describe('<Chart />', () => {
       />,
     );
 
-    expect(chart).toContainReactComponentTimes(Line, 2);
+    expect(chart).toContainReactComponentTimes(LineSeries, 2);
   });
 
   it('calls the d3 curve method when hasSpline is true', () => {
@@ -265,9 +265,9 @@ describe('<Chart />', () => {
           />,
         );
 
-        expect(chart.find(Line)).toHaveReactProps({
-          color: 'rgb(255, 255, 255)',
-        });
+        const lineSeries = chart.find(LineSeries);
+
+        expect(lineSeries.props.data.color).toStrictEqual('rgb(255, 255, 255)');
       });
     });
 
@@ -291,29 +291,6 @@ describe('<Chart />', () => {
         );
 
         expect(chart).toContainReactComponent(LinearGradientWithStops);
-      });
-
-      it('passes gradient url as color prop to <Line />', () => {
-        const chart = mount(
-          <Chart
-            {...MOCK_PROPS}
-            data={[
-              {
-                ...MOCK_DATA,
-                color: [
-                  {
-                    offset: 1,
-                    color: 'red',
-                  },
-                ],
-              },
-            ]}
-          />,
-        );
-
-        const lineColor = chart.find(Line).prop('color');
-
-        expect(lineColor).toContain('url(#lineChartGradient-');
       });
 
       it('passes point gradient url as color prop to <Point />', () => {
@@ -366,16 +343,6 @@ describe('<Chart />', () => {
           ],
         });
       });
-    });
-  });
-
-  describe('areaColor', () => {
-    it('renders a <GradientArea /> for a data-point if areaColor is specified', () => {
-      const chart = mount(
-        <Chart {...MOCK_PROPS} data={[{...MOCK_DATA, areaColor: 'red'}]} />,
-      );
-
-      expect(chart).toContainReactComponentTimes(GradientArea, 1);
     });
   });
 

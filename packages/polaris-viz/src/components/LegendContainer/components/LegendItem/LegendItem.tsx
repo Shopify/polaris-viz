@@ -1,12 +1,12 @@
 import React from 'react';
+import {
+  getColorVisionEventAttrs,
+  getColorVisionStylesForActiveIndex,
+} from '@shopify/polaris-viz-core';
 
 import {SeriesIcon} from '../../../shared/SeriesIcon';
 import type {LegendData} from '../../types';
-import {
-  getColorVisionEventAttrs,
-  getOpacityStylesForActive,
-  useTheme,
-} from '../../../../hooks';
+import {useTheme} from '../../../../hooks';
 
 import style from './LegendItem.scss';
 
@@ -40,7 +40,7 @@ export function LegendItem({
       {...colorBlindAttrs}
       style={{
         background: selectedTheme.legend.backgroundColor,
-        ...getOpacityStylesForActive({
+        ...getColorVisionStylesForActiveIndex({
           activeIndex,
           index,
         }),
