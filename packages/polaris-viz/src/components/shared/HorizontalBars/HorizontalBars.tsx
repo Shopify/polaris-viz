@@ -4,7 +4,7 @@ import {
   DataSeries,
   getColorVisionEventAttrs,
   LabelFormatter,
-  RoundedBorder,
+  BORDER_RADIUS,
   estimateStringWidth,
   ChartContext,
   COLOR_VISION_SINGLE_ITEM,
@@ -101,13 +101,13 @@ export function HorizontalBars({
           <React.Fragment key={`series-${seriesIndex}-${id}-${name}`}>
             <Bar
               animationDelay={animationDelay}
+              borderRadius={BORDER_RADIUS.Right}
               color={`url(#${getGradientDefId(theme, seriesIndex, id)})`}
               height={barHeight}
               index={groupIndex}
               isActive={activeBarIndex === -1 || activeBarIndex === seriesIndex}
               isAnimated={isAnimated}
               needsMinWidth
-              roundedBorder={RoundedBorder.Right}
               transform={isNegative ? 'scaleX(-1)' : ''}
               width={width}
               x={0}

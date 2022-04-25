@@ -2,8 +2,8 @@ import React, {useMemo, useState} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {animated, useSpring} from '@react-spring/web';
 import {
-  RoundedBorder,
   COLOR_VISION_SINGLE_ITEM,
+  BORDER_RADIUS,
 } from '@shopify/polaris-viz-core';
 
 import {useWatchColorVisionEvents} from '../../../hooks';
@@ -34,7 +34,7 @@ export interface HorizontalStackedBarsProps {
   theme?: string;
 }
 
-function getRoundedBorder({
+function getBorderRadius({
   lastIndexes,
   seriesIndex,
 }: {
@@ -44,14 +44,14 @@ function getRoundedBorder({
   const [positive, negative] = lastIndexes;
 
   if (positive === seriesIndex) {
-    return RoundedBorder.Right;
+    return BORDER_RADIUS.Right;
   }
 
   if (negative === seriesIndex) {
-    return RoundedBorder.Left;
+    return BORDER_RADIUS.Left;
   }
 
-  return RoundedBorder.None;
+  return BORDER_RADIUS.None;
 }
 
 export function HorizontalStackedBars({
@@ -126,7 +126,7 @@ export function HorizontalStackedBars({
           return null;
         }
 
-        const roundedBorder = getRoundedBorder({
+        const borderRadius = getBorderRadius({
           lastIndexes,
           seriesIndex,
         });
@@ -139,11 +139,11 @@ export function HorizontalStackedBars({
           <StackedBar
             activeBarIndex={activeBarIndex}
             ariaLabel={ariaLabel}
+            borderRadius={borderRadius}
             color={getGradientDefId(theme, seriesIndex, id)}
             height={barHeight}
             isAnimated={isAnimated}
             key={`${name}${barId}`}
-            roundedBorder={roundedBorder}
             seriesIndex={seriesIndex}
             setActiveBarIndex={setActiveBarIndex}
             width={width}

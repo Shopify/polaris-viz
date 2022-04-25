@@ -5,11 +5,11 @@ import {
   LINEAR_LABELS_INNER_PADDING,
   ChartContext,
   estimateStringWidth,
+  clamp,
 } from '@shopify/polaris-viz-core';
 import type {XAxisOptions} from '@shopify/polaris-viz-core';
 
 import {HORIZONTAL_LABEL_MIN_WIDTH} from '../constants';
-import {clamp} from '../utilities';
 
 import {useLinearXScale} from './useLinearXScale';
 import {useReducedLabelIndexes} from './useReducedLabelIndexes';

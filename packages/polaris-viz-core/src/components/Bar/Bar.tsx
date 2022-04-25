@@ -2,30 +2,34 @@ import React, {useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import type {SpringValue} from '@react-spring/core';
 
+import {BORDER_RADIUS} from '../../constants';
+import {getRoundedRectPath} from '../../utilities/getRoundedRectPath';
 import {usePolarisVizContext} from '../../hooks';
 
 // height can't be any, but to avoid importing SpringValue
 // from the web and native packages, we use it to broaden the type
 type Height = SpringValue<number> | number | any;
 
-interface Props {
-  x: number;
-  yScale: ScaleLinear<number, number>;
+export interface Props {
+  fill: string;
   value: number | null;
   width: number;
+  x: number;
+  yScale: ScaleLinear<number, number>;
+  borderRadius?: string;
   height?: Height;
-  fill: string;
-  hasRoundedCorners: boolean;
+  needsMinWidth?: boolean;
 }
 
 export function Bar({
-  x,
-  value,
-  yScale,
-  width,
-  height,
+  borderRadius = BORDER_RADIUS.None,
   fill,
-  hasRoundedCorners,
+  height,
+  needsMinWidth = false,
+  value,
+  width,
+  x,
+  yScale,
 }: Props) {
   const {
     components: {Path},
@@ -70,38 +74,19 @@ export function Bar({
         return '';
       }
 
-      const arcRadius = hasRoundedCorners ? width / 2 : 0;
-      const arcHigherThanHeight = heightValue < arcRadius;
-      const arcWidth = arcHigherThanHeight
-        ? (heightValue / arcRadius) * width
-        : width;
-      const barStartY = arcHigherThanHeight ? arcWidth / 2 : arcRadius;
-      const arcX = (width - arcWidth) / 2 + arcWidth;
-
-      const moveToStart = `M ${(width - arcWidth) / 2} ${barStartY} `;
-
-      const arc = `A ${arcRadius} ${arcRadius} 0 0 1 ${arcX} ${barStartY} `;
-
-      const moveToEndOfArc = `M ${width} ${barStartY} `;
-
-      const lineRightTopToBottom = !arcHigherThanHeight
-        ? `L ${width} ${heightValue} `
-        : '';
-
-      const lineBottomRightToLeft = !arcHigherThanHeight
-        ? `L 0 ${heightValue} `
-        : '';
-
-      const lineLeftFromBottomToStart = `L 0 ${barStartY}`;
-
-      return `${moveToStart}${arc}${moveToEndOfArc}${lineRightTopToBottom}${lineBottomRightToLeft}${lineLeftFromBottomToStart}`;
+      return getRoundedRectPath({
+        height: heightValue,
+        width,
+        borderRadius,
+        needsMinWidth,
+      });
     };
 
     if (typeof height === 'number') {
       return calculatePath(height);
     }
     return height.to(calculatePath);
-  }, [height, width, hasRoundedCorners]);
+  }, [borderRadius, needsMinWidth, height, width]);
 
   if (value == null || width < 0) {
     return null;

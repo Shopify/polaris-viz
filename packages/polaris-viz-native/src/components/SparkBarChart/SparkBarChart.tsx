@@ -14,6 +14,7 @@ import {
   ANIMATION_MARGIN,
   STROKE_WIDTH,
   getAnimationTrail,
+  BORDER_RADIUS,
 } from '@shopify/polaris-viz-core';
 
 import {usePrefersReducedMotion} from '../../hooks';
@@ -66,6 +67,7 @@ function Chart({
   const shouldAnimate = !prefersReducedMotion && isAnimated;
 
   const {
+    borderRadius,
     dataWithIndex,
     color,
     getBarHeight,
@@ -126,6 +128,11 @@ function Chart({
 
               return (
                 <Bar
+                  borderRadius={
+                    selectedTheme.bar.hasRoundedCorners
+                      ? borderRadius
+                      : BORDER_RADIUS.None
+                  }
                   key={index}
                   x={xPosition == null ? 0 : xPosition}
                   yScale={yScale}
@@ -133,7 +140,6 @@ function Chart({
                   width={barWidth}
                   height={height}
                   fill="white"
-                  hasRoundedCorners={selectedTheme.bar.hasRoundedCorners}
                 />
               );
             })}

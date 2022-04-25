@@ -8,12 +8,13 @@ import {
   COLOR_VISION_GROUP_ITEM,
   getColorVisionEventAttrs,
   getColorVisionStylesForActiveIndex,
+  clamp,
+  BORDER_RADIUS,
 } from '@shopify/polaris-viz-core';
 import type {Color} from '@shopify/polaris-viz-core';
 
 import type {AccessibilitySeries} from '../../../VerticalBarChart/types';
 import {formatAriaLabel} from '../../utilities';
-import {clamp} from '../../../../utilities';
 import {
   usePrefersReducedMotion,
   useWatchColorVisionEvents,
@@ -42,7 +43,6 @@ interface Props {
   zeroAsMinHeight: boolean;
   gapWidth: number;
   isAnimated?: boolean;
-  rotateZeroBars?: boolean;
 }
 
 export function BarGroup({
@@ -56,7 +56,6 @@ export function BarGroup({
   hasRoundedCorners,
   zeroAsMinHeight,
   isAnimated = false,
-  rotateZeroBars = false,
   accessibilityData,
   activeBarGroup,
   gapWidth,
@@ -133,8 +132,9 @@ export function BarGroup({
                 rawValue={rawValue}
                 width={barWidth}
                 index={index}
-                hasRoundedCorners={hasRoundedCorners}
-                rotateZeroBars={rotateZeroBars}
+                borderRadius={
+                  hasRoundedCorners ? BORDER_RADIUS.Top : BORDER_RADIUS.None
+                }
                 animationDelay={
                   barGroupIndex * (LOAD_ANIMATION_DURATION / dataLength)
                 }
