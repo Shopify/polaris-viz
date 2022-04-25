@@ -10,7 +10,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Added
 
 - Added `legend.backgroundColor` to the Theme definition
-- Fixed missing `themes` prop in documentation
+- Fixed missing `themes` prop in ThemeDefinitions storybook documentation
 
 ### Removed
 
