@@ -23,6 +23,6 @@ Use this sandbox to import `@shopify/polaris-viz-native` components and test the
 
 ### Additional Context on building with the sandbox
 
-If you notice file updates are not being picked up, abort the `yarn sandbox` command using `CTRL+C` and then run `yarn start -c`. This will clear the metro cache.
+If you notice file updates are not being picked up, abort the `yarn sandbox` command using `CTRL+C` and then run `yarn sandbox -c`. This will clear the metro cache.
 
 Any file changes within the libraries will automatically trigger the metro bundler to rebuild. However, because `demo-rn` consumes the libraries `build` folders you will also need to rebuild the packages themselves. A `dev` command has been added to the root `package.json`. `yarn dev` will automatically rebuild `polaris-viz-core` and `polaris-viz-native` as soon as any `tsx` or `ts` files are changed (with the exception of `.d.ts`).

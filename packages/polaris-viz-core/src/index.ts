@@ -106,6 +106,7 @@ export {
   LineSeries,
   LinearGradientWithStops,
   PolarisVizProvider,
+  SparkBarSeries,
 } from './components';
 export {ChartContext} from './contexts';
 export type {PolarisVizProviderProps} from './components';

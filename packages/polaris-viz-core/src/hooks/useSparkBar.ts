@@ -103,7 +103,7 @@ export function useSparkBar({
   const strokeDasharray = `${barWidth - STROKE_WIDTH} ${barGap}`;
 
   const getBarHeight = useCallback(
-    ({value}) => {
+    (value: number) => {
       const height = Math.abs(yScale(value) - yScale(0));
       return Math.max(height, BAR_MIN_HEIGHT_RATIO * barWidth);
     },
