@@ -245,3 +245,8 @@ export interface StackedBarGapDirections {
 export interface CharacterWidths {
   [key: string]: number;
 }
+
+export type LineChartDataSeriesWithDefaults = DataSeries & {
+  color: Color;
+  areaColor?: string | null;
+};

@@ -7,7 +7,7 @@ import {mountWithProvider} from '../../../test-utilities';
 import '@shopify/react-testing/matchers';
 
 import {LineSeries} from '../LineSeries';
-import {Area} from '../components/Area';
+import {Area} from '../components';
 
 const someScale = scaleLinear().domain([0, 100]).range([0, 100]);
 
@@ -49,7 +49,7 @@ describe('<LineSeries />', () => {
     });
   });
 
-  describe('data.color', () => {
+  describe('areaPath', () => {
     it('gets passed to <Area/>', () => {
       const lineSeries = mountWithProvider(
         <svg>
@@ -61,7 +61,8 @@ describe('<LineSeries />', () => {
       );
 
       expect(lineSeries).toContainReactComponent(Area, {
-        color: 'blue',
+        areaPath:
+          'M0,100L0.0050000000000000044,100C0.5891,100,0.41090000000000004,50,0.995,50L1,50L1,100L0.995,100C0.41090000000000004,100,0.5891,100,0.0050000000000000044,100L0,100Z',
       });
     });
   });
@@ -105,7 +106,7 @@ describe('<LineSeries />', () => {
         );
 
         expect(lineSeries).toContainReactComponent('path', {
-          d: 'M0,100L0.0050000000000000044,100C0.5891,100,0.41090000000000004,50,0.995,50L1,50L1,100L0.995,100C0.41090000000000004,100,0.5891,100,0.0050000000000000044,100L0,100Z',
+          d: 'M0,100L0.0050000000000000044,100C0.5891,100,0.41090000000000004,50,0.995,50L1,50',
         });
       });
 

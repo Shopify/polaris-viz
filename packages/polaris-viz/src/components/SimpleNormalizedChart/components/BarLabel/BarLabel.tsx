@@ -1,12 +1,12 @@
 import React from 'react';
-import {isGradientType} from '@shopify/polaris-viz-core';
+import {
+  getColorVisionEventAttrs,
+  isGradientType,
+  COLOR_VISION_SINGLE_ITEM,
+  getColorVisionStylesForActiveIndex,
+} from '@shopify/polaris-viz-core';
 import type {Color, LegendTheme, Direction} from '@shopify/polaris-viz-core';
 
-import {COLOR_VISION_SINGLE_ITEM} from '../../../../constants';
-import {
-  getOpacityStylesForActive,
-  getColorVisionEventAttrs,
-} from '../../../../hooks';
 import {createCSSGradient, classNames} from '../../../../utilities';
 import {
   ComparisonMetric,
@@ -59,7 +59,7 @@ export function BarLabel({
           ? styles.ContaineBottomLabel
           : styles.ContainerDefaultLabel,
       )}
-      style={getOpacityStylesForActive({activeIndex, index})}
+      style={getColorVisionStylesForActiveIndex({activeIndex, index})}
       {...getColorVisionEventAttrs({
         type: COLOR_VISION_SINGLE_ITEM,
         index,

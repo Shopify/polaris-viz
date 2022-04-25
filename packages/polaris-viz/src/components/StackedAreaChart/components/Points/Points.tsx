@@ -4,22 +4,19 @@ import {
   LinearGradientWithStops,
   isGradientType,
   DataType,
+  getColorVisionStylesForActiveIndex,
+  COLOR_VISION_SINGLE_ITEM,
 } from '@shopify/polaris-viz-core';
 
 import {Point} from '../../../';
 import {changeColorOpacity, changeGradientOpacity} from '../../../../utilities';
 import type {AnimatedCoordinate} from '../../../../types';
 import {
-  getOpacityStylesForActive,
   usePrefersReducedMotion,
   useTheme,
   useWatchColorVisionEvents,
 } from '../../../../hooks';
-import {
-  LineChartMargin as Margin,
-  colorWhite,
-  COLOR_VISION_SINGLE_ITEM,
-} from '../../../../constants';
+import {LineChartMargin as Margin, colorWhite} from '../../../../constants';
 
 interface PointsProps {
   activePointIndex: number | null;
@@ -87,7 +84,7 @@ export function Points({
         return (
           <g
             key={stackIndex}
-            style={getOpacityStylesForActive({
+            style={getColorVisionStylesForActiveIndex({
               activeIndex: activeLineIndex,
               index: stackIndex,
               fadedOpacity: 0,

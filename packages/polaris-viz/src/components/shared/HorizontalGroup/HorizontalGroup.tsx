@@ -1,6 +1,11 @@
 import React, {useMemo, useState} from 'react';
 import {animated, SpringValue} from '@react-spring/web';
-import {DataType} from '@shopify/polaris-viz-core';
+import {
+  DataType,
+  getColorVisionEventAttrs,
+  COLOR_VISION_GROUP_ITEM,
+  getColorVisionStylesForActiveIndex,
+} from '@shopify/polaris-viz-core';
 import type {ScaleLinear} from 'd3-scale';
 import type {
   DataSeries,
@@ -9,15 +14,10 @@ import type {
 } from '@shopify/polaris-viz-core';
 
 import {
-  COLOR_VISION_GROUP_ITEM,
   HORIZONTAL_GROUP_LABEL_HEIGHT,
   HORIZONTAL_SPACE_BETWEEN_SINGLE,
 } from '../../../constants';
-import {
-  getColorVisionEventAttrs,
-  getOpacityStylesForActive,
-  useWatchColorVisionEvents,
-} from '../../../hooks';
+import {useWatchColorVisionEvents} from '../../../hooks';
 import type {FormattedStackedSeries} from '../../../types';
 import {GroupLabel} from '../GroupLabel';
 import {HorizontalStackedBars} from '../HorizontalStackedBars';
@@ -104,7 +104,7 @@ export function HorizontalGroup({
       }}
     >
       <g
-        style={getOpacityStylesForActive({
+        style={getColorVisionStylesForActiveIndex({
           activeIndex: activeGroupIndex,
           index,
         })}

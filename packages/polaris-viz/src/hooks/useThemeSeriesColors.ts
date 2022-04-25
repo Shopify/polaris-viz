@@ -4,7 +4,6 @@ import type {
   Color,
   DataSeries,
   DataPoint,
-  LineStyle,
 } from '@shopify/polaris-viz-core';
 
 interface ValidData {
@@ -12,8 +11,6 @@ interface ValidData {
   color?: Color;
   isComparison?: boolean;
   name?: string;
-
-  lineStyle?: LineStyle;
 }
 
 function getFilteredSeriesCount(series: Partial<ValidData>[]): number {
@@ -21,10 +18,7 @@ function getFilteredSeriesCount(series: Partial<ValidData>[]): number {
   // count when grabbing the series color.
   return (
     series.filter((item) => {
-      if (item.isComparison !== true && !item.lineStyle) {
-        return true;
-      }
-      return item.lineStyle === 'solid';
+      return item.isComparison !== true;
     }).length ?? 0
   );
 }
@@ -41,8 +35,8 @@ export function useThemeSeriesColors(
 
     let lastUsedColorIndex = -1;
 
-    return series.map(({color, lineStyle, isComparison}) => {
-      if (isComparison === true || (lineStyle && lineStyle !== 'solid')) {
+    return series.map(({color, isComparison}) => {
+      if (isComparison === true) {
         return selectedTheme.seriesColors.comparison;
       }
 

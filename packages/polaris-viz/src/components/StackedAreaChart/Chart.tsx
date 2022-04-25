@@ -12,6 +12,7 @@ import {
   DataType,
   Dimensions,
   useYScale,
+  COLOR_VISION_SINGLE_ITEM,
 } from '@shopify/polaris-viz-core';
 
 import type {RenderTooltipContentData} from '../../types';
@@ -35,7 +36,6 @@ import {
 import {
   LineChartMargin as Margin,
   XMLNS,
-  COLOR_VISION_SINGLE_ITEM,
   LABEL_AREA_TOP_SPACING,
 } from '../../constants';
 import {eventPointNative} from '../../utilities';

@@ -5,10 +5,7 @@ export {SparkLineChart} from './SparkLineChart';
 export type {SparkLineChartProps} from './SparkLineChart';
 export {SparkBarChart} from './SparkBarChart';
 export {LineChart} from './LineChart';
-export type {
-  LineChartProps,
-  DataWithDefaults as LineChartDataWithDefaults,
-} from './LineChart';
+export type {LineChartProps} from './LineChart';
 export {SimpleNormalizedChart} from './SimpleNormalizedChart';
 export type {SimpleNormalizedChartProps} from './SimpleNormalizedChart';
 export {YAxis} from './YAxis';

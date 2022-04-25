@@ -1,7 +1,9 @@
 import React from 'react';
-import {useTheme} from '@shopify/polaris-viz-core';
+import {
+  useTheme,
+  getColorVisionStylesForActiveIndex,
+} from '@shopify/polaris-viz-core';
 
-import {getOpacityStylesForActive} from '../../../../hooks';
 import {classNames} from '../../../../utilities';
 import {TITLE_MARGIN} from '../../constants';
 import tooltipContentStyles from '../../TooltipContent.scss';
@@ -29,7 +31,7 @@ export function AnnotationRow({
     <div
       className={classNames(tooltipContentStyles.Row, styles.Row)}
       style={{
-        ...getOpacityStylesForActive({
+        ...getColorVisionStylesForActiveIndex({
           activeIndex,
           index,
         }),

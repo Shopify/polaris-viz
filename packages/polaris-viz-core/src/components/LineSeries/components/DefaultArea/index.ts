@@ -1,0 +1,1 @@
+export {DefaultArea} from './DefaultArea';

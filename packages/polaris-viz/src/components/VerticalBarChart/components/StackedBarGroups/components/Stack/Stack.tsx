@@ -1,5 +1,10 @@
 import React, {useState} from 'react';
 import type {ScaleLinear} from 'd3-scale';
+import {
+  COLOR_VISION_SINGLE_ITEM,
+  getColorVisionEventAttrs,
+  getColorVisionStylesForActiveIndex,
+} from '@shopify/polaris-viz-core';
 
 import {getRoundedRectPath} from '../../../../../../utilities';
 import type {
@@ -11,15 +16,8 @@ import {
   getYPosition,
 } from '../../../../utilities';
 import {getGradientDefId} from '../../../../../../components/shared';
-import {
-  getColorVisionEventAttrs,
-  getOpacityStylesForActive,
-  useWatchColorVisionEvents,
-} from '../../../../../../hooks';
-import {
-  COLOR_VISION_SINGLE_ITEM,
-  STACKED_BAR_GAP,
-} from '../../../../../../constants';
+import {useWatchColorVisionEvents} from '../../../../../../hooks';
+import {STACKED_BAR_GAP} from '../../../../../../constants';
 
 import styles from './Stack.scss';
 
@@ -93,7 +91,7 @@ export function Stack({
               d={pathD}
               key={index}
               transform={`translate(${x},${y})`}
-              style={getOpacityStylesForActive({
+              style={getColorVisionStylesForActiveIndex({
                 activeIndex: activeBarIndex,
                 index,
               })}

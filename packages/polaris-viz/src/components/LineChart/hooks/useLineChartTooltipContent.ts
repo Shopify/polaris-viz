@@ -1,10 +1,10 @@
+import type {LineChartDataSeriesWithDefaults} from '@shopify/polaris-viz-core';
 import {ReactNode, useCallback} from 'react';
 
 import type {RenderTooltipContentData} from '../../../types';
-import type {DataWithDefaults} from '../';
 
 interface Props {
-  data: DataWithDefaults[];
+  data: LineChartDataSeriesWithDefaults[];
   renderTooltipContent: (data: RenderTooltipContentData) => ReactNode;
 }
 
@@ -25,14 +25,14 @@ export function useLineChartTooltipContent({
         },
       ];
 
-      data.forEach(({name, data: seriesData, color, lineStyle}) => {
+      data.forEach(({name, data: seriesData, color, isComparison}) => {
         const {value} = seriesData[activeIndex];
 
         tooltipData[0].data.push({
           key: `${name}`,
           value,
           color: color!,
-          isComparison: lineStyle === 'dotted',
+          isComparison,
         });
       });
 

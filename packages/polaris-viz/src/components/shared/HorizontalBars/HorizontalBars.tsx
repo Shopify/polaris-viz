@@ -1,23 +1,21 @@
 import React, {useContext, useState} from 'react';
 import type {ScaleLinear} from 'd3-scale';
-import type {DataSeries, LabelFormatter} from '@shopify/polaris-viz-core';
 import {
+  DataSeries,
+  getColorVisionEventAttrs,
+  LabelFormatter,
   RoundedBorder,
   estimateStringWidth,
   ChartContext,
+  COLOR_VISION_SINGLE_ITEM,
 } from '@shopify/polaris-viz-core';
 
 import {
-  COLOR_VISION_SINGLE_ITEM,
   HORIZONTAL_BAR_LABEL_OFFSET,
   HORIZONTAL_GROUP_LABEL_HEIGHT,
   HORIZONTAL_SPACE_BETWEEN_SINGLE,
 } from '../../../constants';
-import {
-  useTheme,
-  useWatchColorVisionEvents,
-  getColorVisionEventAttrs,
-} from '../../../hooks';
+import {useTheme, useWatchColorVisionEvents} from '../../../hooks';
 import {Bar} from '../Bar';
 import {getGradientDefId} from '../GradientDefs';
 

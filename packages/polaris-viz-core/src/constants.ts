@@ -332,8 +332,6 @@ export const DEFAULT_LEGEND_HEIGHT = 29;
 export const COLOR_VISION_SINGLE_ITEM = 'singleItem';
 export const COLOR_VISION_GROUP_ITEM = 'group';
 export const LEGENDS_TOP_MARGIN = 16;
-export const COLOR_BLIND_ACTIVE_OPACITY = 1;
-export const COLOR_BLIND_FADED_OPACITY = 0.3;
 
 export const Y_AXIS_CHART_SPACING = SPACING_LOOSE;
 export const LABEL_AREA_MIN_HEIGHT = 15;
@@ -383,3 +381,9 @@ export const DEFAULT_COMPONENTS: SvgComponents = {
 export const STROKE_WIDTH = 1.5;
 export const ANIMATION_MARGIN = 17;
 export const LINEAR_LABELS_INNER_PADDING = 10;
+
+export const COLOR_VISION_EVENT = {
+  name: 'color-vision-event',
+  dataAttribute: 'data-color-vision-event',
+  camelCaseName: 'colorVisionEvent',
+};

@@ -1,10 +1,8 @@
-@import '../../../../styles/common';
-
 .Group {
   pointer-events: none;
 }
 
 .Line {
-  @include no-outline;
+  outline: none;
   pointer-events: auto;
 }
