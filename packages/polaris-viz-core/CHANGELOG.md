@@ -12,6 +12,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 - Added `legend.backgroundColor` to the Theme definition
 - Added `type` to `LineSeriesProps`.
 - Moved `getColorVisionStylesForActiveIndex()` & `getColorVisionEventAttrs()` to `polaris-viz-core`.
+- Fixed missing `themes` prop in ThemeDefinitions storybook documentation
 
 ## [1.4.0] - 2022-04-20
 

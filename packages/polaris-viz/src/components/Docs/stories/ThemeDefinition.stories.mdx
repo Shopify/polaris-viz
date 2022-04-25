@@ -82,15 +82,17 @@ export interface Theme {
 
 <ComponentContainer
   codeSample={`
-    <PolarisVizProvider={{
-      Default: {
-        chartContainer: {
-          borderRadius: '0',
-          padding: '0',
-          backgroundColor: 'black'
+    <PolarisVizProvider
+      themes={{
+        Default: {
+          chartContainer: {
+            borderRadius: '0',
+            padding: '0',
+            backgroundColor: 'black'
+          }
         }
-      }
-    }}>
+      }}
+    >
       <SparkLineChart series={data} />
     </PolarisVizProvider>
     `}
@@ -117,15 +119,17 @@ export interface Theme {
 
   <ComponentContainer
     codeSample={`
-    <PolarisVizProvider={{
-      Default: {
-        chartContainer: {
-          borderRadius: '8px',
-          padding: '20px',
-          backgroundColor: '#dde2e9'
+    <PolarisVizProvider
+      themes={{
+        Default: {
+          chartContainer: {
+            borderRadius: '8px',
+            padding: '20px',
+            backgroundColor: '#dde2e9'
+          }
         }
-      }
-    }}>
+      }}
+    >
       <SparkLineChart series={data} />
     </PolarisVizProvider>
     `}
@@ -220,13 +224,15 @@ export interface GradientStop {
 
 <ComponentContainer
   codeSample={`
-    <PolarisVizProvider={{
-      Default: {
-        seriesColors: {
-          single: 'lime',
+    <PolarisVizProvider
+      themes={{
+        Default: {
+          seriesColors: {
+            single: 'lime',
+          },
         },
-      },
-    }}>
+      }}
+    >
     <StackedAreaCharts series={data} />
   </PolarisVizProvider>
     `}
@@ -249,18 +255,20 @@ export interface GradientStop {
 />
 <ComponentContainer
   codeSample={`
-    <PolarisVizProvider={{
-      Default: {
-        seriesColors: {
-          upToFour: [
-            'yellow',
-            'lime',
-            'aqua',
-            'teal'
-          ],
+    <PolarisVizProvider
+      themes={{
+        Default: {
+          seriesColors: {
+            upToFour: [
+              'yellow',
+              'lime',
+              'aqua',
+              'teal'
+            ],
+          },
         },
-      },
-    }}>
+      }}
+    >
     <MultiseriesBarChart series={data} />
   </PolarisVizProvider>
     `}
@@ -283,21 +291,23 @@ export interface GradientStop {
 />
 <ComponentContainer
   codeSample={`
-    <PolarisVizProvider={{
-      Default: {
-        fromFiveToSeven: {
-          fromFiveToSeven: [
-            'magenta',
-            'orange',
-            'DarkOrchid',
-            'yellow',
-            'lime',
-            'aqua',
-            'Teal'
-          ],
+    <PolarisVizProvider
+      themes={{
+        Default: {
+          fromFiveToSeven: {
+            fromFiveToSeven: [
+              'magenta',
+              'orange',
+              'DarkOrchid',
+              'yellow',
+              'lime',
+              'aqua',
+              'Teal'
+            ],
+          },
         },
-      },
-    }}>
+      }}
+    >
     <MultiseriesBarChart series={data} />
   </PolarisVizProvider>
     `}
@@ -329,25 +339,27 @@ export interface GradientStop {
 
 <ComponentContainer
   codeSample={`
-    <PolarisVizProvider={{
-      Default: {
-        fromFiveToSeven: {
-          all: [
-            'GreenYellow',
-            'ForestGreen',
-            'LawnGreen',
-            'Lime',
-            'LimeGreen',
-            'PaleGreen',
-            'YellowGreen',
-            'MediumSpringGreen',
-            'SpringGreen',
-            'MediumSeaGreen',
-            'SeaGreen',
-          ],
+    <PolarisVizProvider
+      themes={{
+        Default: {
+          fromFiveToSeven: {
+            all: [
+              'GreenYellow',
+              'ForestGreen',
+              'LawnGreen',
+              'Lime',
+              'LimeGreen',
+              'PaleGreen',
+              'YellowGreen',
+              'MediumSpringGreen',
+              'SpringGreen',
+              'MediumSeaGreen',
+              'SeaGreen',
+            ],
+          },
         },
-      },
-    }}>
+      }}
+    >
     <MultiseriesBarChart series={data} />
   </PolarisVizProvider>
     `}
@@ -383,13 +395,15 @@ export interface GradientStop {
 
 <ComponentContainer
   codeSample={`
-    <PolarisVizProvider={{
-      Default: {
-        seriesColors: {
-          comparison: 'lime',
-        },
-      }
-    }}>
+    <PolarisVizProvider
+      themes={{
+        Default: {
+          seriesColors: {
+            comparison: 'lime',
+          },
+        }
+      }}
+    >
     <SparkLineChart series={data} />
   </PolarisVizProvider>
     `}
@@ -438,15 +452,17 @@ export interface GradientStop {
 
 <ComponentContainer
   codeSample={`
-    <PolarisVizProvider={{
-      Default: {
-        tooltip: {
-          backgroundColor: 'MidnightBlue',
-          valueColor: 'yellow',
-          labelColor: 'Fuchsia',
+    <PolarisVizProvider
+      themes={{
+        Default: {
+          tooltip: {
+            backgroundColor: 'MidnightBlue',
+            valueColor: 'yellow',
+            labelColor: 'Fuchsia',
+          },
         },
-      },
-    }}>
+      }}
+    >
     <StackedAreaCharts series={data} />
   </PolarisVizProvider>
     `}
@@ -511,15 +527,17 @@ export interface GradientStop {
 
 <ComponentContainer
   codeSample={`
-    <PolarisVizProvider={{
-      Default: {
-        bar: {
-          hasRoundedCorners: true,
-          innerMargin: 'Large',
-          outerMargin: 'Large',
+    <PolarisVizProvider
+      themes={{
+        Default: {
+          bar: {
+            hasRoundedCorners: true,
+            innerMargin: 'Large',
+            outerMargin: 'Large',
+          }
         }
-      }
-    }}>
+      }}
+    >
       <BarChart data={data} />
     </PolarisVizProvider>
     `}
@@ -545,13 +563,15 @@ export interface GradientStop {
 
 <ComponentContainer
   codeSample={`
-    <PolarisVizProvider={{
-      Default: {
-        bar: {
-          hasRoundedCorners: false,
-        },
-      }
-    }}>
+    <PolarisVizProvider
+      themes={{
+        Default: {
+          bar: {
+            hasRoundedCorners: false,
+          },
+        }
+      }}
+    >
       <MultiSeriesBarChart series={data} />
     </PolarisVizProvider>
     `}
@@ -629,13 +649,15 @@ export interface GradientStop {
 
 <ComponentContainer
   codeSample={`
-    <PolarisVizProvider={{
-      Default: {
-        grid: {
-          showHorizontalLines: false,
+    <PolarisVizProvider
+      themes={{
+        Default: {
+          grid: {
+            showHorizontalLines: false,
+          }
         }
-      }
-    }}>
+      }}
+    >
       <BarChart data={data} />
     </PolarisVizProvider>
     `}
@@ -659,14 +681,16 @@ export interface GradientStop {
 
 <ComponentContainer
   codeSample={`
-    <PolarisVizProvider={{
-      Default: {
-        grid: {
-          showHorizontalLines: true,
-          showVerticalLines: true,
-        },
-      }
-    }}>
+    <PolarisVizProvider
+      themes={{
+        Default: {
+          grid: {
+            showHorizontalLines: true,
+            showVerticalLines: true,
+          },
+        }
+      }}
+    >
       <StackedAreaChart series={data} />
     </PolarisVizProvider>
     `}
@@ -690,17 +714,19 @@ export interface GradientStop {
 
 <ComponentContainer
   codeSample={`
-    <PolarisVizProvider={{
-      Default: {
-        grid: {
-          showVerticalLines: true,
-          showHorizontalLines: true,
-          horizontalOverflow: false,
-          color: 'lime',
-          horizontalMargin: 50,
-        },
-      }
-    }}>
+    <PolarisVizProvider
+      themes={{
+        Default: {
+          grid: {
+            showVerticalLines: true,
+            showHorizontalLines: true,
+            horizontalOverflow: false,
+            color: 'lime',
+            horizontalMargin: 50,
+          },
+        }
+      }}
+    >
       <StackedAreaChart series={data} />
     </PolarisVizProvider>
     `}
@@ -729,17 +755,19 @@ export interface GradientStop {
 
 <ComponentContainer
   codeSample={`
-    <PolarisVizProvider={{
-      Default: {
-        grid: {
-          showVerticalLines: true,
-          showHorizontalLines: true,
-          horizontalOverflow: true,
-          color: 'lime',
-          horizontalMargin: 50,
-        },
-      }
-    }}>
+    <PolarisVizProvider
+      themes={{
+        Default: {
+          grid: {
+            showVerticalLines: true,
+            showHorizontalLines: true,
+            horizontalOverflow: true,
+            color: 'lime',
+            horizontalMargin: 50,
+          },
+        }
+      }}
+    >
       <StackedAreaChart series={data} />
     </PolarisVizProvider>
     `}
@@ -816,13 +844,15 @@ export interface GradientStop {
 
 <ComponentContainer
   codeSample={`
-    <PolarisVizProvider={{
-      Default: {
-        xAxis: {
-          showTicks: false,
+    <PolarisVizProvider
+      themes={{
+        Default: {
+          xAxis: {
+            showTicks: false,
+          }
         }
-      }
-    }}>
+      }}
+    >
       <BarChart data={data} />
     </PolarisVizProvider>
     `}
@@ -846,14 +876,16 @@ export interface GradientStop {
 
 <ComponentContainer
   codeSample={`
-    <PolarisVizProvider={{
-      Default: {
-        xAxis: {
-          showTicks: true,
-          labelColor: 'lime',
+    <PolarisVizProvider
+      themes={{
+        Default: {
+          xAxis: {
+            showTicks: true,
+            labelColor: 'lime',
+          }
         }
-      }
-    }}>
+      }}
+    >
       <BarChart data={data} />
     </PolarisVizProvider>
     `}
@@ -878,13 +910,15 @@ export interface GradientStop {
 
 <ComponentContainer
   codeSample={`
-    <PolarisVizProvider={{
-      Default: {
-        xAxis: {
-          hide: true,
+    <PolarisVizProvider
+      themes={{
+        Default: {
+          xAxis: {
+            hide: true,
+          }
         }
-      }
-    }}>
+     }}
+    >
       <BarChart data={data} />
     </PolarisVizProvider>
     `}
@@ -944,14 +978,16 @@ export interface GradientStop {
 
 <ComponentContainer
   codeSample={`
-    <PolarisVizProvider={{
-      Default: {
-        yAxis: {
-          labelColor: 'lime',
-          backgroundColor: 'black'
+    <PolarisVizProvider
+      themes={{
+        Default: {
+          yAxis: {
+            labelColor: 'lime',
+            backgroundColor: 'black'
+          }
         }
-      }
-    }}>
+      }}
+    >
       <StackedAreaChart series={data} />
     </PolarisVizProvider>
     `}
@@ -1025,16 +1061,18 @@ export interface GradientStop {
 
 <ComponentContainer
   codeSample={`
-    <PolarisVizProvider={{
-      Default: {
-        line: {
-          hasSpline: false,
-          style: 'dotted'
-          width: 5,
-          pointStroke: 'lime',
+    <PolarisVizProvider
+      themes={{
+        Default: {
+          line: {
+            hasSpline: false,
+            style: 'dotted'
+            width: 5,
+            pointStroke: 'lime',
+          }
         }
-      }
-    }}>
+      }}
+    >
     <LineChart series={data} />
   </PolarisVizProvider>
     `}
@@ -1086,14 +1124,16 @@ export interface GradientStop {
 
 <ComponentContainer
   codeSample={`
-    <PolarisVizProvider={{
-      Default: {
-        crossHair: {
-          color: 'lime',
-          width: 10,
-        }
-      }
-    }}>
+    <PolarisVizProvider
+        themes={{
+          Default: {
+            crossHair: {
+              color: 'lime',
+              width: 10,
+            }
+          }
+        }}
+      >
     <LineChart series={data} />
   </PolarisVizProvider>
     `}
@@ -1155,14 +1195,16 @@ export interface GradientStop {
 
 <ComponentContainer
   codeSample={`
-    <PolarisVizProvider={{
-      Default: {
-        legend: {
-          labelColor: 'lime',
-          valueColor: 'yellow',
-        },
-      },
-    }}>
+    <PolarisVizProvider
+        themes={{
+          Default: {
+            legend: {
+              labelColor: 'lime',
+              valueColor: 'yellow',
+            },
+          },
+        }}
+      >
     <SimpleNormalizedChart data={data} />
   </PolarisVizProvider>
     `}
@@ -1189,17 +1231,19 @@ export interface GradientStop {
 />
 <ComponentContainer
   codeSample={`
-    <PolarisVizProvider={{
-      Default: {
-        crossHair: {
-          color: 'lime',
-          width: 10,
-        },
-        legend: {
-          backgroundColor: 'purple',
+    <PolarisVizProvider
+      themes={{
+        Default: {
+          crossHair: {
+            color: 'lime',
+            width: 10,
+          },
+          legend: {
+            backgroundColor: 'purple',
+          }
         }
-      }
-    }}>
+      }}
+    >
     <LineChart series={data} />
   </PolarisVizProvider>
     `}
