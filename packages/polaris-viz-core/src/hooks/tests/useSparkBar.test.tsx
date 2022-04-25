@@ -186,4 +186,37 @@ describe('useSparkBar', () => {
       },
     );
   });
+
+  describe('borderRadius', () => {
+    it.each`
+      width     | expected
+      ${100}    | ${'20 20 0 0'}
+      ${53}     | ${'10 10 0 0'}
+      ${11.237} | ${'2 2 0 0'}
+    `('returns a borderRadius based on width', ({width, expected}) => {
+      const TestComponent = () => {
+        const {borderRadius} = useSparkBar({
+          data: [
+            {
+              data: [
+                {key: '1', value: 1},
+                {key: '2', value: 2},
+              ],
+              isComparison: true,
+            },
+          ],
+          height: 300,
+          dataOffsetLeft: 0,
+          dataOffsetRight: 0,
+          width,
+          seriesColor: 'red',
+        });
+
+        return <div>{borderRadius.toString()}</div>;
+      };
+
+      const mockComponent = mount(<TestComponent />);
+      expect(mockComponent.text()).toBe(expected);
+    });
+  });
 });

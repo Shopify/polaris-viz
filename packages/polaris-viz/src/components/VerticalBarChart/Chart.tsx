@@ -37,7 +37,6 @@ import {
   TOOLTIP_POSITION_DEFAULT_RETURN,
 } from '../TooltipWrapper';
 import {
-  shouldRotateZeroBars,
   eventPointNative,
   getStackedValues,
   getStackedMinMax,
@@ -151,13 +150,6 @@ export function Chart({
   const chartStartPosition =
     yAxisLabelWidth + Y_AXIS_CHART_SPACING + horizontalMargin;
   const drawableWidth = width - chartStartPosition - horizontalMargin * 2;
-
-  const rotateZeroBars = useMemo(
-    () =>
-      selectedTheme.bar.zeroAsMinHeight &&
-      data.every(({data}) => shouldRotateZeroBars(data)),
-    [selectedTheme.bar.zeroAsMinHeight, data],
-  );
 
   const hideXAxis = xAxisOptions.hide ?? selectedTheme.xAxis.hide;
 
@@ -303,7 +295,6 @@ export function Chart({
                   colors={barColors}
                   barGroupIndex={index}
                   hasRoundedCorners={selectedTheme.bar.hasRoundedCorners}
-                  rotateZeroBars={rotateZeroBars}
                   zeroAsMinHeight={selectedTheme.bar.zeroAsMinHeight}
                   accessibilityData={accessibilityData}
                   activeBarGroup={activeBarGroup}

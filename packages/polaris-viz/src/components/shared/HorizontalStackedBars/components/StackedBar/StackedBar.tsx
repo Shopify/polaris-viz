@@ -5,19 +5,17 @@ import {
   STACKED_BAR_GAP,
   COLOR_VISION_SINGLE_ITEM,
   getColorVisionStylesForActiveIndex,
+  getRoundedRectPath,
 } from '@shopify/polaris-viz-core';
-import type {RoundedBorder} from '@shopify/polaris-viz-core';
-
-import {getRoundedRectPath} from '../../../../../utilities';
 
 export interface StackedBarProps {
   activeBarIndex: number;
   ariaLabel: string;
+  borderRadius: string;
   color: string;
   height: number;
   isAnimated: boolean;
   seriesIndex: number;
-  roundedBorder: RoundedBorder;
   setActiveBarIndex: Dispatch<SetStateAction<number>>;
   width: number;
   x: number;
@@ -26,10 +24,10 @@ export interface StackedBarProps {
 export function StackedBar({
   activeBarIndex,
   ariaLabel,
+  borderRadius,
   color,
   height,
   isAnimated,
-  roundedBorder,
   seriesIndex,
   setActiveBarIndex,
   width,
@@ -45,7 +43,7 @@ export function StackedBar({
     height,
     width,
     needsMinWidth: false,
-    roundedBorder,
+    borderRadius,
   });
 
   return (

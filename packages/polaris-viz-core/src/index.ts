@@ -42,7 +42,6 @@ export {
   MIN_WIDTH_BORDER_RADIUS,
   NEUTRAL_SINGLE_GRADIENT,
   PRINT_THEME,
-  ROUNDED_BAR_RADIUS,
   SMALL_LABEL_WIDTH,
   SPACING,
   SPACING_BASE_TIGHT,
@@ -73,8 +72,10 @@ export {
   COLOR_VISION_EVENT,
   COLOR_VISION_ACTIVE_OPACITY,
   COLOR_VISION_FADED_OPACITY,
+  BORDER_RADIUS,
 } from './constants';
 export {
+  clamp,
   createGradient,
   createThemes,
   curveStepRounded,
@@ -90,6 +91,7 @@ export {
   shouldRoundScaleUp,
   getColorVisionEventAttrs,
   getColorVisionStylesForActiveIndex,
+  getRoundedRectPath,
 } from './utilities';
 export {
   useSparkBar,
@@ -107,7 +109,7 @@ export {
 } from './components';
 export {ChartContext} from './contexts';
 export type {PolarisVizProviderProps} from './components';
-export {DataType, RoundedBorder} from './types';
+export {DataType} from './types';
 
 export type {
   ActiveTooltip,

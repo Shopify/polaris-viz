@@ -1,6 +1,6 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
-import {RoundedBorder} from '@shopify/polaris-viz-core';
+import {BORDER_RADIUS} from '@shopify/polaris-viz-core';
 
 import {StackedBar, StackedBarProps} from '../StackedBar';
 
@@ -12,7 +12,7 @@ const MOCK_PROPS: StackedBarProps = {
   height: 15,
   isAnimated: false,
   seriesIndex: 0,
-  roundedBorder: RoundedBorder.None,
+  borderRadius: BORDER_RADIUS.None,
   width: 100,
   x: 0,
 };

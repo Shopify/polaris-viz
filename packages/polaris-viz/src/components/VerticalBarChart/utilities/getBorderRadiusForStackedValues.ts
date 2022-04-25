@@ -1,21 +1,21 @@
-import {RoundedBorder} from '@shopify/polaris-viz-core';
+import {BORDER_RADIUS} from '@shopify/polaris-viz-core';
 
-export function getRoundedBorderForStackedValues(
+export function getBorderRadiusForStackedValues(
   values: number[],
   groupIndex: number,
-): RoundedBorder {
+): string {
   const highestIndex = getIndex(values, (value) => value > 0);
   const lowestIndex = getIndex(values, (value) => value < 0);
 
   if (groupIndex === highestIndex) {
-    return RoundedBorder.Top;
+    return BORDER_RADIUS.Top;
   }
 
   if (groupIndex === lowestIndex) {
-    return RoundedBorder.Bottom;
+    return BORDER_RADIUS.Bottom;
   }
 
-  return RoundedBorder.None;
+  return BORDER_RADIUS.None;
 }
 
 function getIndex(values: number[], checkFn: (value: number) => boolean) {

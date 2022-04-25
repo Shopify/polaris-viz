@@ -1,7 +1,7 @@
 import React from 'react';
-import type {Direction} from '@shopify/polaris-viz-core';
+import {clamp, Direction} from '@shopify/polaris-viz-core';
 
-import {classNames, clamp} from '../../../../utilities';
+import {classNames} from '../../../../utilities';
 import type {Annotation} from '../../types';
 
 import styles from './AnnotationLine.scss';

@@ -1,6 +1,5 @@
-import type {CharacterWidths} from '@shopify/polaris-viz-core';
+import {CharacterWidths, clamp} from '@shopify/polaris-viz-core';
 
-import {clamp} from '../../../utilities';
 import {LINE_HEIGHT, VERTICAL_LABEL_TARGET_WIDTH} from '../../../constants';
 import type {FormattedLine, PreparedLabels} from '../types';
 

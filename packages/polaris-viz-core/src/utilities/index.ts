@@ -12,3 +12,6 @@ export {estimateStringWidth} from './estimateStringWidth';
 export {shouldRoundScaleUp} from './shouldRoundScaleUp';
 export {getColorVisionEventAttrs} from './getColorVisionEventAttrs';
 export {getColorVisionStylesForActiveIndex} from './getColorVisionStylesForActiveIndex';
+export {borderRadiusStringToObject} from './borderRadiusStringToObject';
+export {clamp} from './clamp';
+export {getRoundedRectPath} from './getRoundedRectPath';

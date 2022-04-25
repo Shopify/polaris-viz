@@ -214,14 +214,6 @@ export interface SparkBarChartProps {
   dimensions?: Dimensions;
 }
 
-export enum RoundedBorder {
-  None,
-  Top,
-  Right,
-  Bottom,
-  Left,
-}
-
 export type Direction = 'horizontal' | 'vertical';
 export type StackedSeries = Series<
   {
@@ -250,3 +242,10 @@ export type LineChartDataSeriesWithDefaults = DataSeries & {
   color: Color;
   areaColor?: string | null;
 };
+
+export interface BorderRadius {
+  topLeft: number;
+  topRight: number;
+  bottomLeft: number;
+  bottomRight: number;
+}
