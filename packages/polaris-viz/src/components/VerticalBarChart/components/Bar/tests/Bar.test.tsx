@@ -1,12 +1,10 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleBand} from 'd3-scale';
+import {BORDER_RADIUS} from '@shopify/polaris-viz-core';
 
 import {Bar} from '../Bar';
-import {
-  MASK_HIGHLIGHT_COLOR,
-  ROUNDED_BAR_RADIUS,
-} from '../../../../../constants';
+import {MASK_HIGHLIGHT_COLOR} from '../../../../../constants';
 
 jest.mock('d3-scale', () => ({
   scaleBand: jest.requireActual('d3-scale').scaleBand,
@@ -24,73 +22,56 @@ const defaultProps = {
   index: 1,
   onFocus: jest.fn(),
   tabIndex: 0,
-  rotateZeroBars: false,
   zeroPosition: 0,
 };
 
 describe('<Bar/>', () => {
-  describe('hasRoundedCorners', () => {
-    it('renders sharp corners if false', () => {
+  describe('borderRadius', () => {
+    it('renders sharp edges when not provided', () => {
       const bar = mount(
         <svg>
-          <Bar {...defaultProps} hasRoundedCorners={false} />,
+          <Bar {...defaultProps} />,
         </svg>,
       );
 
       expect(bar).toContainReactComponent('path', {
         // eslint-disable-next-line id-length
-        d: `M0 0
-        h100
-        a0 0 0 0 1 0 0
-        v1000
-        H0
-        V0
-        a0 0 0 0 1 0 -0
-        Z`,
+        d: `
+  M0,0
+  h100
+  a0,0 0 0 1 0,0
+  v1000
+  a0,0 0 0 1 -0,0
+  h-100
+  a0,0 0 0 1 -0,-0
+  v-1000
+  a0,0 0 0 1 0,-0
+  Z
+`,
       });
     });
 
-    it('rounds the corners if true', () => {
+    it('applies the provided border radius', () => {
       const bar = mount(
         <svg>
-          <Bar {...defaultProps} hasRoundedCorners />,
+          <Bar {...defaultProps} borderRadius={BORDER_RADIUS.Top} />,
         </svg>,
       );
 
       expect(bar).toContainReactComponent('path', {
         // eslint-disable-next-line id-length
-        d: `M4 0
-        h92
-        a4 4 0 0 1 4 4
-        v996
-        H0
-        V4
-        a4 4 0 0 1 4 -4
-        Z`,
-      });
-    });
-
-    it('rounds the corner if true and height is less than the radius', () => {
-      const bar = mount(
-        <svg>
-          <Bar
-            {...defaultProps}
-            height={ROUNDED_BAR_RADIUS - 1}
-            hasRoundedCorners
-          />
-        </svg>,
-      );
-
-      expect(bar).toContainReactComponent('path', {
-        // eslint-disable-next-line id-length
-        d: `M4 0
-        h92
-        a4 4 0 0 1 4 3
-        v0
-        H0
-        V3
-        a4 4 0 0 1 4 -3
-        Z`,
+        d: `
+  M3,0
+  h94
+  a3,3 0 0 1 3,3
+  v997
+  a0,0 0 0 1 -0,0
+  h-100
+  a0,0 0 0 1 -0,-0
+  v-997
+  a3,3 0 0 1 3,-3
+  Z
+`,
       });
     });
   });

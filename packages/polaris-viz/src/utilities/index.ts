@@ -1,13 +1,10 @@
 export {eventPoint, eventPointNative} from './eventPoint';
-export {clamp} from './clamp';
 export {getPathLength} from './getPathLength';
 export {getPointAtLength} from './getPointAtLength';
 export {normalizeData} from './normalizeData';
 export {createCSSGradient} from './createCssGradient';
-export {shouldRotateZeroBars} from './shouldRotateZeroBars';
 export {classNames} from './classnames';
 export {changeColorOpacity, changeGradientOpacity} from './changeColorOpacity';
-export {getRoundedRectPath} from './getRoundedRectPath';
 export {getAverageColor} from './getAverageColor';
 export {getBarId} from './getBarId';
 export {formatDataIntoGroups} from './formatDataIntoGroups';

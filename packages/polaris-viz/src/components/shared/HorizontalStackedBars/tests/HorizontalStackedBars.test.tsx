@@ -1,7 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
-import {RoundedBorder} from '@shopify/polaris-viz-core';
+import {BORDER_RADIUS} from '@shopify/polaris-viz-core';
 
 import {
   HorizontalStackedBars,
@@ -81,7 +81,7 @@ describe('<HorizontalStackedBars />', () => {
     expect(bars[2].props.x).toStrictEqual(14);
   });
 
-  it('applies roundedBorder to last item', () => {
+  it('applies borderRadius to last item', () => {
     const chart = mount(
       <svg>
         <HorizontalStackedBars {...MOCK_PROPS} />
@@ -90,7 +90,7 @@ describe('<HorizontalStackedBars />', () => {
 
     const bars = chart.findAll(StackedBar);
 
-    expect(bars[0].props.roundedBorder).toStrictEqual(RoundedBorder.None);
-    expect(bars[2].props.roundedBorder).toStrictEqual(RoundedBorder.Right);
+    expect(bars[0].props.borderRadius).toStrictEqual(BORDER_RADIUS.None);
+    expect(bars[2].props.borderRadius).toStrictEqual(BORDER_RADIUS.Right);
   });
 });

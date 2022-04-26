@@ -8,6 +8,7 @@ import {
   LineSeries,
   COLOR_VISION_SINGLE_ITEM,
   LineChartDataSeriesWithDefaults,
+  clamp,
 } from '@shopify/polaris-viz-core';
 import type {
   DataPoint,
@@ -16,7 +17,6 @@ import type {
   YAxisOptions,
 } from '@shopify/polaris-viz-core';
 
-import {clamp} from '../../utilities/clamp';
 import type {RenderTooltipContentData} from '../../types';
 import {getAlteredLineChartPosition} from '../../utilities/getAlteredLineChartPosition';
 import {useXAxisLabels} from '../../hooks/useXAxisLabels';

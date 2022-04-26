@@ -1,15 +1,14 @@
 import React, {useCallback} from 'react';
 import {animated, useSpring} from '@react-spring/web';
 import {
-  DataType,
-  RoundedBorder,
+  BORDER_RADIUS,
+  getRoundedRectPath,
   COLOR_VISION_ACTIVE_OPACITY,
   COLOR_VISION_FADED_OPACITY,
+  BARS_TRANSITION_CONFIG,
+  DataType,
 } from '@shopify/polaris-viz-core';
 import type {Direction} from '@shopify/polaris-viz-core';
-
-import {BARS_TRANSITION_CONFIG} from '../../../constants';
-import {getRoundedRectPath} from '../../../utilities';
 
 import styles from './Bar.scss';
 
@@ -19,26 +18,26 @@ export interface BarProps {
   width: number;
   x: number;
   y: number;
-  animationDirection?: Direction;
   animationDelay?: number;
+  animationDirection?: Direction;
+  borderRadius?: string;
   index?: number;
   isActive?: boolean;
   isAnimated?: boolean;
   needsMinWidth?: boolean;
-  roundedBorder?: RoundedBorder;
   transform?: string;
 }
 
 export const Bar = React.memo(function Bar({
   animationDelay = 0,
   animationDirection = 'horizontal',
+  borderRadius = BORDER_RADIUS.None,
   color,
   height,
   index,
   isActive = true,
   isAnimated,
   needsMinWidth = false,
-  roundedBorder = RoundedBorder.None,
   transform,
   width,
   x,
@@ -46,9 +45,9 @@ export const Bar = React.memo(function Bar({
 }: BarProps) {
   const getPath = useCallback(
     (height = 0, width = 0) => {
-      return getRoundedRectPath({height, width, needsMinWidth, roundedBorder});
+      return getRoundedRectPath({height, width, needsMinWidth, borderRadius});
     },
-    [needsMinWidth, roundedBorder],
+    [needsMinWidth, borderRadius],
   );
 
   const initialHeight = animationDirection === 'horizontal' ? height : 0;

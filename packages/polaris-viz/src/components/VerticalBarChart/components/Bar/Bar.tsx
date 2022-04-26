@@ -1,46 +1,45 @@
 import React, {useMemo} from 'react';
 import {animated, useSpring} from '@react-spring/web';
-import {DataType} from '@shopify/polaris-viz-core';
-
 import {
-  ROUNDED_BAR_RADIUS,
-  BARS_TRANSITION_CONFIG,
-} from '../../../../constants';
+  BORDER_RADIUS,
+  DataType,
+  getRoundedRectPath,
+} from '@shopify/polaris-viz-core';
+
+import {BARS_TRANSITION_CONFIG} from '../../../../constants';
 
 import styles from './Bar.scss';
 
 interface Props {
   color: string;
-  x: number;
+  height: number;
+  index: number;
   rawValue: number;
   width: number;
-  index: number;
-  rotateZeroBars: boolean;
-  height: number;
+  x: number;
   zeroPosition: number;
-  ariaLabel?: string;
-  role?: string;
-  hasRoundedCorners?: boolean;
   animationDelay?: number;
+  ariaLabel?: string;
+  borderRadius?: string;
   isAnimated?: boolean;
+  role?: string;
 }
 
 export const Bar = React.memo(function Bar({
-  color,
-  x,
-  rawValue,
-  width,
-  index,
-  ariaLabel,
-  role,
-  height,
-  hasRoundedCorners,
-  rotateZeroBars,
   animationDelay = 0,
-  zeroPosition,
+  ariaLabel,
+  borderRadius = BORDER_RADIUS.None,
+  color,
+  height,
+  index,
   isAnimated = true,
+  rawValue,
+  role,
+  width,
+  x,
+  zeroPosition,
 }: Props) {
-  const treatAsNegative = rawValue < 0 || (rawValue === 0 && rotateZeroBars);
+  const treatAsNegative = rawValue < 0 || rawValue === 0;
 
   const yPosition = useMemo(() => {
     return treatAsNegative ? zeroPosition + height : zeroPosition - height;
@@ -60,24 +59,11 @@ export const Bar = React.memo(function Bar({
     };
   }, [yPosition, treatAsNegative, x, width]);
 
-  const path = useMemo(() => {
-    const radius = hasRoundedCorners
-      ? Math.min(ROUNDED_BAR_RADIUS, width / 2)
-      : 0;
-
-    const radiusOffset = Math.max(0, radius - height);
-
-    return height === 0
-      ? ''
-      : `M${radius} 0
-        h${width - radius * 2}
-        a${radius} ${radius} 0 0 1 ${radius} ${radius - radiusOffset}
-        v${radiusOffset > 0 ? 0 : height - radius}
-        H0
-        V${radius - radiusOffset}
-        a${radius} ${radius} 0 0 1 ${radius} -${radius - radiusOffset}
-        Z`;
-  }, [height, width, hasRoundedCorners]);
+  const path = getRoundedRectPath({
+    borderRadius,
+    height,
+    width,
+  });
 
   const {transform} = useSpring({
     from: {transform: 'scaleY(0) translateZ(0)'},

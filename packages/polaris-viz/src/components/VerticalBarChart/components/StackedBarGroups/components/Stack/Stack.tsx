@@ -4,15 +4,15 @@ import {
   COLOR_VISION_SINGLE_ITEM,
   getColorVisionEventAttrs,
   getColorVisionStylesForActiveIndex,
+  getRoundedRectPath,
 } from '@shopify/polaris-viz-core';
 
-import {getRoundedRectPath} from '../../../../../../utilities';
 import type {
   FormattedStackedSeries,
   StackedBarGapDirections,
 } from '../../../../../../types';
 import {
-  getRoundedBorderForStackedValues,
+  getBorderRadiusForStackedValues,
   getYPosition,
 } from '../../../../utilities';
 import {getGradientDefId} from '../../../../../../components/shared';
@@ -73,7 +73,7 @@ export function Stack({
           height,
           width,
           needsMinWidth: false,
-          roundedBorder: getRoundedBorderForStackedValues(values, index),
+          borderRadius: getBorderRadiusForStackedValues(values, index),
         });
 
         const y = getYPosition({

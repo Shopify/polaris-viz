@@ -128,6 +128,9 @@ export function useSparkBar({
         },
       ];
 
+  const radius = Math.floor(barWidth / 2);
+  const borderRadius = `${radius} ${radius} 0 0`;
+
   return {
     dataWithIndex,
     color,
@@ -139,5 +142,6 @@ export function useSparkBar({
     getBarHeight,
     xScale,
     yScale,
+    borderRadius,
   };
 }

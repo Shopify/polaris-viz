@@ -1,11 +1,10 @@
-import type {CharacterWidths} from '@shopify/polaris-viz-core';
+import {CharacterWidths, clamp} from '@shopify/polaris-viz-core';
 
 import {
   LINE_HEIGHT,
   MAX_DIAGONAL_LABEL_WIDTH,
   MAX_DIAGONAL_VISIBLE_HEIGHT,
 } from '../../../constants';
-import {clamp} from '../../../utilities';
 import type {FormattedLine, PreparedLabels} from '../types';
 
 import {getWidestLabel} from './getWidestLabel';
