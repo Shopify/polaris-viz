@@ -1,5 +1,3 @@
-@import '../../styles/common';
-
 .ChartContainer {
   position: relative;
   user-select: none;
@@ -10,9 +8,4 @@
   overflow: visible;
   max-width: 100%;
   display: block;
-}
-
-.BarGroup,
-.Bar {
-  @include no-outline;
 }

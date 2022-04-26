@@ -1,9 +1,10 @@
 import React, {ReactNode} from 'react';
-import type {
+import {
   DataSeries,
   ChartType,
   XAxisOptions,
   YAxisOptions,
+  IS_ANIMATED_DEFAULT,
 } from '@shopify/polaris-viz-core';
 
 import type {RenderTooltipContentData} from '../../types';
@@ -28,7 +29,7 @@ export interface HorizontalBarChartProps {
 export function HorizontalBarChart({
   annotationsLookupTable = {},
   data,
-  isAnimated = true,
+  isAnimated = IS_ANIMATED_DEFAULT,
   renderTooltipContent,
   showLegend,
   theme,

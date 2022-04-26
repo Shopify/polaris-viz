@@ -1,12 +1,11 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
-import {LinearGradientWithStops} from '@shopify/polaris-viz-core';
 
-import {BAR_SPACING} from '../../../constants';
-import {MIN_BAR_HEIGHT} from '../../../../../constants';
+import {MIN_BAR_HEIGHT, VERTICAL_BAR_SPACING} from '../../../../../constants';
 import {BarGroup} from '../BarGroup';
-import {Bar} from '../../../components/Bar';
+import {Bar} from '../../../../Bar';
+import {LinearGradientWithStops} from '../../../../LinearGradientWithStops';
 
 jest.mock('d3-scale', () => ({
   scaleLinear: jest.requireActual('d3-scale').scaleLinear,
@@ -76,7 +75,8 @@ describe('<BarGroup/>', () => {
       .findAll('rect')
       .filter(
         ({props}) =>
-          props.width === mockProps.width / mockProps.data.length - BAR_SPACING,
+          props.width ===
+          mockProps.width / mockProps.data.length - VERTICAL_BAR_SPACING,
       );
 
     expect(bars).toHaveLength(4);

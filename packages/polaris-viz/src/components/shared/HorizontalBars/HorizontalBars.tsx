@@ -16,10 +16,9 @@ import {
   HORIZONTAL_SPACE_BETWEEN_SINGLE,
 } from '../../../constants';
 import {useTheme, useWatchColorVisionEvents} from '../../../hooks';
-import {Bar} from '../Bar';
 import {getGradientDefId} from '../GradientDefs';
 
-import {Label} from './components';
+import {Bar, Label} from './components';
 import styles from './HorizontalBars.scss';
 
 export interface HorizontalBarsProps {

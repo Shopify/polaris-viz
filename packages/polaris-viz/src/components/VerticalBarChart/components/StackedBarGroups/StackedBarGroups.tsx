@@ -6,11 +6,11 @@ import {
   DataType,
   COLOR_VISION_GROUP_ITEM,
   getColorVisionStylesForActiveIndex,
+  AccessibilitySeries,
+  VERTICAL_BAR_SPACING,
+  formatAriaLabel,
 } from '@shopify/polaris-viz-core';
 
-import {formatAriaLabel} from '../../../VerticalBarChart/utilities';
-import {BAR_SPACING} from '../../../VerticalBarChart/constants';
-import type {AccessibilitySeries} from '../../../VerticalBarChart/types';
 import type {StackedSeries} from '../../../../types';
 import {useStackedGapsForVerticalChart} from '../../hooks';
 
@@ -43,7 +43,7 @@ export function StackedBarGroups({
   xScale,
   yScale,
 }: StackedBarGroupsProps) {
-  const width = xScale.bandwidth() - BAR_SPACING;
+  const width = xScale.bandwidth() - VERTICAL_BAR_SPACING;
 
   const formattedStackedValues = useMemo(() => {
     return labels.map((_, labelIndex) => {

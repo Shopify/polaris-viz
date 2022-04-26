@@ -9,6 +9,7 @@ import {
   LineSeries,
   usePolarisVizContext,
   Dimensions,
+  IS_ANIMATED_DEFAULT,
 } from '@shopify/polaris-viz-core';
 
 import {usePrefersReducedMotion} from '../../hooks';
@@ -19,7 +20,7 @@ const SVG_MARGIN = 2;
 export function SparkLineChart({
   data,
   accessibilityLabel,
-  isAnimated = true,
+  isAnimated = IS_ANIMATED_DEFAULT,
   offsetLeft = 0,
   offsetRight = 0,
   theme = 'Default',
@@ -48,7 +49,7 @@ interface ChartProps extends SparkLineChartProps {
 function Chart({
   data,
   accessibilityLabel,
-  isAnimated = true,
+  isAnimated = IS_ANIMATED_DEFAULT,
   offsetLeft = 0,
   offsetRight = 0,
   theme = 'Default',

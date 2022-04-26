@@ -235,7 +235,10 @@ paddingStringToObject('50% 0');
   <code>estimateStringWidth()</code>
 </Title>
 
-<p>Returns the approximate with of the provided string at 12px font size.</p>
+<p>
+  Returns the approximate width of the provided string at <code>12px</code> font
+  size.
+</p>
 
 ```tsx
 esimateStringWidth('Hello', characterWidths);
@@ -257,6 +260,47 @@ clamp({
 });
 
 // 15
+```
+
+<Title type="h3">
+  <code>getValuesFromDataSeries()</code>
+</Title>
+
+<p>
+  Returns an array of values mapped to keys provided in{' '}
+  <code>DataSeries[].data</code>.
+</p>
+
+```tsx
+const DATA: DataSeries[] = [
+  {
+    name: 'Breakfast',
+    data: [
+      {key: 'Monday', value: 3},
+      {key: 'Tuesday', value: -7},
+    ],
+  },
+  {
+    name: 'Lunch',
+    data: [
+      {key: 'Monday', value: 4},
+      {key: 'Tuesday', value: 0},
+    ],
+  },
+  {
+    name: 'Dinner',
+    data: [
+      {key: 'Monday', value: 7},
+      {key: 'Tuesday', value: 0},
+    ],
+  },
+];
+
+const LABELS = ['Monday', 'Tuesday'];
+
+getValuesFromDataSeries(DATA, LABELS);
+
+// [[3, 4, 7], [-7, 0, 0]]
 ```
 
 <Title type="h2">

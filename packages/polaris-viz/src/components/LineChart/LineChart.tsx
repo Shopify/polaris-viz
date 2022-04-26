@@ -1,11 +1,13 @@
 import React, {useRef} from 'react';
-import type {
+import {
   DataSeries,
+  IS_ANIMATED_DEFAULT,
   LineChartDataSeriesWithDefaults,
   XAxisOptions,
   YAxisOptions,
+  isGradientType,
+  uniqueId,
 } from '@shopify/polaris-viz-core';
-import {isGradientType, uniqueId} from '@shopify/polaris-viz-core';
 
 import {formatTooltipDataForLinearCharts} from '../../utilities/formatTooltipDataForLinearCharts';
 import type {RenderTooltipContentData} from '../../types';
@@ -42,7 +44,7 @@ export function LineChart({
   showLegend = true,
   skipLinkText,
   emptyStateText,
-  isAnimated = false,
+  isAnimated = IS_ANIMATED_DEFAULT,
   xAxisOptions,
   yAxisOptions,
   theme,

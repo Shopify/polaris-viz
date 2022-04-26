@@ -1,6 +1,10 @@
 import React from 'react';
 import {scaleLinear} from 'd3-scale';
-import {LineSeries, useSparkLine} from '@shopify/polaris-viz-core';
+import {
+  IS_ANIMATED_DEFAULT,
+  LineSeries,
+  useSparkLine,
+} from '@shopify/polaris-viz-core';
 import type {Dimensions} from '@shopify/polaris-viz-core';
 
 import {useThemeSeriesColors} from '../../hooks/useThemeSeriesColors';
@@ -20,7 +24,7 @@ export function Chart({
   data,
   dimensions,
   accessibilityLabel,
-  isAnimated = false,
+  isAnimated = IS_ANIMATED_DEFAULT,
   offsetLeft = 0,
   offsetRight = 0,
   theme,

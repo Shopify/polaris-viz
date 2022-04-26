@@ -249,3 +249,17 @@ export interface BorderRadius {
   bottomLeft: number;
   bottomRight: number;
 }
+
+export interface AccessibilitySeries {
+  title: string;
+  data: {
+    label: string;
+    value: string;
+  }[];
+}
+
+export interface ColorVisionEventReturn extends CustomEvent {
+  detail: {
+    index: number;
+  };
+}

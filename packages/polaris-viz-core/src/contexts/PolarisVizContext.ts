@@ -1,7 +1,8 @@
 import {createContext} from 'react';
 import {createHost} from '@react-spring/animated';
+import {useTransition} from '@react-spring/core';
 
-import type {SvgComponents, Theme} from '../types';
+import type {ColorVisionEventReturn, SvgComponents, Theme} from '../types';
 import {
   DEFAULT_THEME as Default,
   LIGHT_THEME as Light,
@@ -17,6 +18,11 @@ export const PolarisVizContext = createContext<{
   themes: {[key: string]: Theme};
   components: SvgComponents;
   animated: typeof host.animated;
+  useTransition: typeof useTransition;
+  useWatchColorVisionEvents: (props: {
+    type: string;
+    onIndexChange: (event: ColorVisionEventReturn) => void;
+  }) => void;
 }>({
   themes: {
     Default,
@@ -26,4 +32,6 @@ export const PolarisVizContext = createContext<{
     ...DefaultComponents,
   },
   animated: host.animated,
+  useTransition,
+  useWatchColorVisionEvents: () => {},
 });

@@ -1,5 +1,5 @@
 import React, {useRef} from 'react';
-import {uniqueId} from '@shopify/polaris-viz-core';
+import {IS_ANIMATED_DEFAULT, uniqueId} from '@shopify/polaris-viz-core';
 import type {
   DataSeries,
   XAxisOptions,
@@ -34,7 +34,7 @@ export function StackedAreaChart({
   yAxisOptions,
   data,
   renderTooltipContent,
-  isAnimated = false,
+  isAnimated = IS_ANIMATED_DEFAULT,
   showLegend = true,
   skipLinkText,
   theme,

@@ -1,19 +1,15 @@
 import {useContext, useEffect} from 'react';
 import {useDebouncedCallback} from 'use-debounce/lib';
 import {ChartContext} from '@shopify/polaris-viz-core';
+import type {ColorVisionEventReturn} from '@shopify/polaris-viz-core';
 
 import {useCallbackRef} from '..';
 
 import {getEventName} from './utilities';
 
-interface EventReturn extends CustomEvent {
-  detail: {
-    index: number;
-  };
-}
-interface Props {
+export interface Props {
   type: string;
-  onIndexChange: (event: EventReturn) => void;
+  onIndexChange: (event: ColorVisionEventReturn) => void;
 }
 
 export function useWatchColorVisionEvents({type, onIndexChange}: Props) {

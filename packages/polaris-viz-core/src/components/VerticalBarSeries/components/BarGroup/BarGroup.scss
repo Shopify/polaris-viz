@@ -1,0 +1,6 @@
+@import '../../../../../../polaris-viz/src/styles/common';
+
+.BarGroup,
+.Bar {
+  @include no-outline;
+}

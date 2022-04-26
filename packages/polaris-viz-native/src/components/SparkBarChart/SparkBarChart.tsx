@@ -1,11 +1,11 @@
 import React from 'react';
 import {View} from 'react-native';
-import {useTransition} from '@react-spring/native';
 import {
   usePolarisVizContext,
   SparkBarChartProps,
   ANIMATION_MARGIN,
   SparkBarSeries,
+  IS_ANIMATED_DEFAULT,
 } from '@shopify/polaris-viz-core';
 
 import {usePrefersReducedMotion} from '../../hooks';
@@ -14,7 +14,7 @@ import {ChartContainer} from '../ChartContainer';
 export function SparkBarChart({
   data,
   accessibilityLabel,
-  isAnimated = false,
+  isAnimated = IS_ANIMATED_DEFAULT,
   dataOffsetRight = 0,
   dataOffsetLeft = 0,
   theme,
@@ -63,10 +63,9 @@ function Chart({
           data={data}
           dataOffsetLeft={dataOffsetLeft}
           dataOffsetRight={dataOffsetRight}
-          height={height}
+          drawableHeight={height}
           shouldAnimate={shouldAnimate}
           theme={theme}
-          useTransition={useTransition}
           width={width}
         />
       </Svg>

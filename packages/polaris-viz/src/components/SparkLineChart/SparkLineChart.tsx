@@ -1,5 +1,5 @@
 import React from 'react';
-import type {DataSeries} from '@shopify/polaris-viz-core';
+import {DataSeries, IS_ANIMATED_DEFAULT} from '@shopify/polaris-viz-core';
 
 import {ChartContainer} from '../ChartContainer';
 
@@ -17,7 +17,7 @@ export interface SparkLineChartProps {
 export function SparkLineChart({
   data,
   accessibilityLabel,
-  isAnimated = false,
+  isAnimated = IS_ANIMATED_DEFAULT,
   offsetLeft = 0,
   offsetRight = 0,
   theme,

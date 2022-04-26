@@ -30,7 +30,6 @@ export {
   LINE_ANIMATION_FAST_DURATION,
   LINE_ANIMATION_SLOW_DURATION,
   LINE_HEIGHT,
-  LOAD_ANIMATION_DURATION,
   LineChartMargin,
   MASK_HIGHLIGHT_COLOR,
   MASK_SUBDUE_COLOR,
@@ -73,6 +72,8 @@ export {
   COLOR_VISION_ACTIVE_OPACITY,
   COLOR_VISION_FADED_OPACITY,
   BORDER_RADIUS,
+  IS_ANIMATED_DEFAULT,
+  VERTICAL_BAR_SPACING,
 } from './constants';
 export {
   clamp,
@@ -92,6 +93,8 @@ export {
   getColorVisionEventAttrs,
   getColorVisionStylesForActiveIndex,
   getRoundedRectPath,
+  getValuesFromDataSeries,
+  formatAriaLabel,
 } from './utilities';
 export {
   useSparkBar,
@@ -107,12 +110,14 @@ export {
   LinearGradientWithStops,
   PolarisVizProvider,
   SparkBarSeries,
+  VerticalBarSeries,
 } from './components';
 export {ChartContext} from './contexts';
 export type {PolarisVizProviderProps} from './components';
 export {DataType} from './types';
 
 export type {
+  AccessibilitySeries,
   ActiveTooltip,
   BarTheme,
   ChartType,
@@ -135,4 +140,5 @@ export type {
   Shape,
   CharacterWidths,
   LineChartDataSeriesWithDefaults,
+  ColorVisionEventReturn,
 } from './types';

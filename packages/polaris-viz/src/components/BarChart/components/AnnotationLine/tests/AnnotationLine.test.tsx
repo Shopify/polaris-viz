@@ -124,11 +124,11 @@ describe('<AnnotationLine />', () => {
     });
   });
 
-  describe('shouldAnimate', () => {
+  describe('isAnimated', () => {
     it('does not animate when false', () => {
       const content = mount(
         <svg>
-          <AnnotationLine {...mockProps} />
+          <AnnotationLine {...mockProps} isAnimated={false} />
         </svg>,
       );
 
@@ -140,7 +140,7 @@ describe('<AnnotationLine />', () => {
     it('animates when true', () => {
       const props = {
         ...mockProps,
-        shouldAnimate: true,
+        isAnimated: true,
       };
       const content = mount(
         <svg>

@@ -4,8 +4,7 @@ import {scaleLinear} from 'd3-scale';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {HorizontalBars, HorizontalBarsProps} from '../HorizontalBars';
-import {Bar} from '../../Bar';
-import {Label} from '../components';
+import {Bar, Label} from '../components';
 
 jest.mock('d3-scale', () => ({
   scaleLinear: jest.requireActual('d3-scale').scaleLinear,

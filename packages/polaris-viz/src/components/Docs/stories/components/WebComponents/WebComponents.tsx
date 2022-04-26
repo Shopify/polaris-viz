@@ -1,6 +1,5 @@
 import React from 'react';
 
-// import {PolarisVizProvider} from '../';
 import {WebPolarisVizProvider as PolarisVizProvider} from '../../../../WebPolarisVizProvider';
 import {
   BarChart,

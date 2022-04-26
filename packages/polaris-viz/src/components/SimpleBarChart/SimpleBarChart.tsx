@@ -1,7 +1,8 @@
 import React from 'react';
-import type {
+import {
   ChartType,
   DataSeries,
+  IS_ANIMATED_DEFAULT,
   XAxisOptions,
 } from '@shopify/polaris-viz-core';
 
@@ -24,7 +25,7 @@ export interface SimpleBarChartProps {
 }
 
 export function SimpleBarChart({
-  isAnimated = true,
+  isAnimated = IS_ANIMATED_DEFAULT,
   data,
   showLegend = true,
   theme,

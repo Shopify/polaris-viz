@@ -1,7 +1,8 @@
 import React from 'react';
-import type {
+import {
   ChartType,
   DataSeries,
+  IS_ANIMATED_DEFAULT,
   XAxisOptions,
   YAxisOptions,
 } from '@shopify/polaris-viz-core';
@@ -31,7 +32,7 @@ export function VerticalBarChart({
   annotationsLookupTable = {},
   data,
   emptyStateText,
-  isAnimated = false,
+  isAnimated = IS_ANIMATED_DEFAULT,
   renderTooltipContent,
   showLegend,
   theme,

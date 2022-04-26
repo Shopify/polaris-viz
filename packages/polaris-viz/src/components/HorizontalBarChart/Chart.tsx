@@ -285,11 +285,11 @@ export function Chart({
                 color={annotation.color}
                 direction="horizontal"
                 drawableSize={width}
+                isAnimated={isAnimated}
                 key={`annotation${dataIndex}${annotation.dataPointIndex}`}
-                position={position}
-                shouldAnimate={isAnimated}
-                width={annotation.width}
                 offset={annotation.offset}
+                position={position}
+                width={annotation.width}
               />
             );
           })}

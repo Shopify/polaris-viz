@@ -7,6 +7,10 @@ import {
   estimateStringWidth,
   COLOR_VISION_GROUP_ITEM,
   COLOR_VISION_SINGLE_ITEM,
+  getValuesFromDataSeries,
+  VerticalBarSeries,
+  IS_ANIMATED_DEFAULT,
+  VERTICAL_BAR_SPACING,
 } from '@shopify/polaris-viz-core';
 import type {
   DataSeries,
@@ -50,12 +54,13 @@ import {
   useTheme,
   useWatchColorVisionEvents,
   useReducedLabelIndexes,
+  usePrefersReducedMotion,
 } from '../../hooks';
 import {AnnotationLine} from '../BarChart';
 
-import {BarGroup, StackedBarGroups} from './components';
+import {StackedBarGroups} from './components';
 import {useXScale} from './hooks';
-import {BAR_SPACING, MIN_Y_LABEL_SPACE} from './constants';
+import {MIN_Y_LABEL_SPACE} from './constants';
 import styles from './Chart.scss';
 
 export interface Props {
@@ -77,7 +82,7 @@ export function Chart({
   data,
   dimensions,
   emptyStateText,
-  isAnimated = false,
+  isAnimated = IS_ANIMATED_DEFAULT,
   renderTooltipContent,
   showLegend,
   theme,
@@ -87,6 +92,7 @@ export function Chart({
 }: Props) {
   useColorVisionEvents(data.length > 1);
 
+  const {prefersReducedMotion} = usePrefersReducedMotion();
   const selectedTheme = useTheme(theme);
   const {characterWidths} = useContext(ChartContext);
   const [activeBarGroup, setActiveBarGroup] = useState<number>(-1);
@@ -153,11 +159,7 @@ export function Chart({
 
   const hideXAxis = xAxisOptions.hide ?? selectedTheme.xAxis.hide;
 
-  const sortedData = labels.map((_, index) => {
-    return data
-      .map((type) => type.data[index].value)
-      .filter((value) => value !== null) as number[];
-  });
+  const sortedData = getValuesFromDataSeries(data, labels);
 
   const areAllNegative = useMemo(() => {
     return ![...sortedData]
@@ -205,6 +207,8 @@ export function Chart({
       }),
     [data, labels, yAxisOptions],
   );
+
+  const shouldAnimate = !prefersReducedMotion && isAnimated;
 
   return (
     <div className={styles.ChartContainer} style={{height, width}}>
@@ -280,27 +284,18 @@ export function Chart({
               yScale={yScale}
             />
           ) : (
-            sortedData.map((item, index) => {
-              const xPosition = xScale(index.toString());
-              return (
-                <BarGroup
-                  isAnimated={isAnimated}
-                  gapWidth={gapWidth}
-                  key={index}
-                  x={xPosition == null ? 0 : xPosition}
-                  yScale={yScale}
-                  data={item}
-                  width={xScale.bandwidth()}
-                  height={drawableHeight}
-                  colors={barColors}
-                  barGroupIndex={index}
-                  hasRoundedCorners={selectedTheme.bar.hasRoundedCorners}
-                  zeroAsMinHeight={selectedTheme.bar.zeroAsMinHeight}
-                  accessibilityData={accessibilityData}
-                  activeBarGroup={activeBarGroup}
-                />
-              );
-            })
+            <VerticalBarSeries
+              accessibilityData={accessibilityData}
+              activeBarGroup={activeBarGroup}
+              colors={barColors}
+              height={height}
+              gapWidth={gapWidth}
+              theme={theme}
+              xScale={xScale}
+              yScale={yScale}
+              isAnimated={shouldAnimate}
+              data={sortedData}
+            />
           )}
         </g>
         <g transform={`translate(${chartStartPosition},${Margin.Top})`}>
@@ -313,7 +308,8 @@ export function Chart({
 
             const xPosition = xScale(key);
             const xPositionValue = xPosition == null ? 0 : xPosition;
-            const barWidth = xScale.bandwidth() / data.length - BAR_SPACING;
+            const barWidth =
+              xScale.bandwidth() / data.length - VERTICAL_BAR_SPACING;
             const leftOffset = barWidth * annotation.dataPointIndex;
 
             return (
@@ -321,10 +317,10 @@ export function Chart({
                 barSize={barWidth}
                 color={annotation.color}
                 drawableSize={drawableHeight}
+                isAnimated={shouldAnimate}
                 key={`annotation${dataIndex}${annotation.dataPointIndex}`}
                 offset={annotation.offset}
                 position={xPositionValue + leftOffset}
-                shouldAnimate={isAnimated}
                 width={annotation.width}
               />
             );

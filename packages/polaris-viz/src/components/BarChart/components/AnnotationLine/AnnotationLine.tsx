@@ -1,5 +1,5 @@
 import React from 'react';
-import {clamp, Direction} from '@shopify/polaris-viz-core';
+import {clamp, Direction, IS_ANIMATED_DEFAULT} from '@shopify/polaris-viz-core';
 
 import {classNames} from '../../../../utilities';
 import type {Annotation} from '../../types';
@@ -13,8 +13,8 @@ export interface AnnotationLineProps
   position: number;
   barSize: number;
   drawableSize: number;
-  shouldAnimate?: boolean;
   direction?: Direction;
+  isAnimated?: boolean;
 }
 
 export function AnnotationLine({
@@ -22,9 +22,9 @@ export function AnnotationLine({
   color,
   direction = 'vertical',
   drawableSize,
+  isAnimated = IS_ANIMATED_DEFAULT,
   offset = MEDIAN_OFFSET,
   position,
-  shouldAnimate = false,
   width: annotationWidth,
 }: AnnotationLineProps) {
   const halfAnnotationWidth = annotationWidth / 2;
@@ -52,7 +52,7 @@ export function AnnotationLine({
 
   return (
     <line
-      className={classNames(shouldAnimate && styles.AnimatedLine)}
+      className={classNames(isAnimated && styles.AnimatedLine)}
       stroke={color}
       strokeWidth={annotationWidth}
       {...xy}

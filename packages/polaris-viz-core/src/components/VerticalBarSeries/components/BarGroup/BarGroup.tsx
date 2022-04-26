@@ -1,68 +1,68 @@
 import React, {useCallback, useMemo, useState} from 'react';
 import type {ScaleLinear} from 'd3-scale';
+
 import {
-  uniqueId,
-  LinearGradientWithStops,
-  DataType,
-  COLOR_VISION_SINGLE_ITEM,
-  COLOR_VISION_GROUP_ITEM,
+  clamp,
+  getAnimationTrail,
   getColorVisionEventAttrs,
   getColorVisionStylesForActiveIndex,
-  clamp,
-  BORDER_RADIUS,
-} from '@shopify/polaris-viz-core';
-import type {Color} from '@shopify/polaris-viz-core';
-
-import type {AccessibilitySeries} from '../../../VerticalBarChart/types';
-import {formatAriaLabel} from '../../utilities';
+  uniqueId,
+  formatAriaLabel,
+} from '../../../../utilities';
+import {LinearGradientWithStops} from '../../../LinearGradientWithStops';
+import {Bar} from '../../../Bar';
+import {usePolarisVizContext} from '../../../../hooks';
+import {AccessibilitySeries, Color, DataType} from '../../../../types';
 import {
-  usePrefersReducedMotion,
-  useWatchColorVisionEvents,
-} from '../../../../hooks';
-import {Bar} from '../Bar';
-import {BAR_SPACING} from '../../constants';
-import {
-  MIN_BAR_HEIGHT,
-  LOAD_ANIMATION_DURATION,
-  MASK_HIGHLIGHT_COLOR,
+  BARS_TRANSITION_CONFIG,
   BAR_ANIMATION_HEIGHT_BUFFER,
+  BORDER_RADIUS,
+  COLOR_VISION_GROUP_ITEM,
+  COLOR_VISION_SINGLE_ITEM,
+  IS_ANIMATED_DEFAULT,
+  MASK_HIGHLIGHT_COLOR,
+  MIN_BAR_HEIGHT,
+  VERTICAL_BAR_SPACING,
 } from '../../../../constants';
-import styles from '../../Chart.scss';
+
+import styles from './BarGroup.scss';
+
+const DELAY = 100;
 
 interface Props {
-  x: number;
-  yScale: ScaleLinear<number, number>;
-  width: number;
-  height: number;
-  data: number[];
-  colors: Color[];
-  barGroupIndex: number;
-  hasRoundedCorners: boolean;
   accessibilityData: AccessibilitySeries[];
   activeBarGroup: number;
-  zeroAsMinHeight: boolean;
+  barGroupIndex: number;
+  colors: Color[];
+  data: number[];
   gapWidth: number;
+  hasRoundedCorners: boolean;
+  height: number;
+  width: number;
+  x: number;
+  yScale: ScaleLinear<number, number>;
+  zeroAsMinHeight: boolean;
   isAnimated?: boolean;
 }
 
 export function BarGroup({
-  x,
-  data,
-  yScale,
-  width,
-  colors,
-  height,
-  barGroupIndex,
-  hasRoundedCorners,
-  zeroAsMinHeight,
-  isAnimated = false,
   accessibilityData,
   activeBarGroup,
+  barGroupIndex,
+  colors,
+  data,
   gapWidth,
+  hasRoundedCorners,
+  height,
+  isAnimated = IS_ANIMATED_DEFAULT,
+  width,
+  x,
+  yScale,
+  zeroAsMinHeight,
 }: Props) {
+  const {useWatchColorVisionEvents, useTransition} = usePolarisVizContext();
   const groupAriaLabel = formatAriaLabel(accessibilityData[barGroupIndex]);
 
-  const {prefersReducedMotion} = usePrefersReducedMotion();
   const [activeBarIndex, setActiveBarIndex] = useState(-1);
 
   useWatchColorVisionEvents({
@@ -93,8 +93,6 @@ export function BarGroup({
     [yScale, zeroAsMinHeight],
   );
 
-  const shouldAnimate = !prefersReducedMotion && isAnimated;
-
   const gradientId = useMemo(() => uniqueId('gradient'), []);
   const maskId = useMemo(() => uniqueId('mask'), []);
 
@@ -109,10 +107,31 @@ export function BarGroup({
       : color;
   });
 
+  const dataWithIndex = data
+    ? data.map((value, index) => ({
+        value,
+        index,
+      }))
+    : [];
+
+  const transitions = useTransition(dataWithIndex, {
+    key: ({index}: {index: number}) => index,
+    from: {height: 0},
+    leave: {height: 0},
+    enter: ({value}) => ({height: getBarHeight(value == null ? 0 : value)}),
+    update: ({value}) => ({height: getBarHeight(value == null ? 0 : value)}),
+    default: {immediate: !isAnimated},
+    trail: isAnimated ? getAnimationTrail(data.length) : 0,
+    delay: barGroupIndex * DELAY,
+    config: BARS_TRANSITION_CONFIG,
+  });
+
   return (
     <React.Fragment>
       <mask id={maskId}>
-        {data.map((rawValue, index) => {
+        {transitions(({height: barHeight}, item, _transition, index) => {
+          const height = isAnimated ? barHeight : getBarHeight(item.value ?? 0);
+
           return (
             <g
               className={styles.BarGroup}
@@ -125,20 +144,15 @@ export function BarGroup({
               })}
             >
               <Bar
-                height={getBarHeight(rawValue)}
-                color={MASK_HIGHLIGHT_COLOR}
-                x={x + (barWidth + BAR_SPACING) * index}
-                zeroPosition={yScale(0)}
-                rawValue={rawValue}
-                width={barWidth}
-                index={index}
                 borderRadius={
                   hasRoundedCorners ? BORDER_RADIUS.Top : BORDER_RADIUS.None
                 }
-                animationDelay={
-                  barGroupIndex * (LOAD_ANIMATION_DURATION / dataLength)
-                }
-                isAnimated={shouldAnimate}
+                fill={MASK_HIGHLIGHT_COLOR}
+                height={height}
+                value={item.value}
+                width={barWidth}
+                x={x + (barWidth + VERTICAL_BAR_SPACING) * index}
+                yScale={yScale}
               />
             </g>
           );
@@ -153,9 +167,9 @@ export function BarGroup({
                 id={`${gradientId}${index}`}
               />
               <rect
-                x={x + (barWidth + BAR_SPACING) * index}
+                x={x + (barWidth + VERTICAL_BAR_SPACING) * index}
                 y={BAR_ANIMATION_HEIGHT_BUFFER * -1}
-                width={barWidth - BAR_SPACING}
+                width={barWidth - VERTICAL_BAR_SPACING}
                 height={height + BAR_ANIMATION_HEIGHT_BUFFER * 2}
                 fill={`url(#${gradientId}${index})`}
                 style={getColorVisionStylesForActiveIndex({

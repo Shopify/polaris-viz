@@ -1,6 +1,11 @@
 import React, {useMemo, ForwardRefExoticComponent} from 'react';
+import type {useTransition} from '@react-spring/core';
 
-import type {PartialTheme, SvgComponents} from '../../types';
+import type {
+  ColorVisionEventReturn,
+  PartialTheme,
+  SvgComponents,
+} from '../../types';
 import {
   DEFAULT_THEME as Default,
   LIGHT_THEME as Light,
@@ -15,6 +20,11 @@ export interface PolarisVizProviderProps {
   themes?: {[key: string]: PartialTheme};
   components?: SvgComponents;
   animated: <T>(Component: any) => ForwardRefExoticComponent<T>;
+  useTransition: typeof useTransition;
+  useWatchColorVisionEvents: (props: {
+    type: string;
+    onIndexChange: (event: ColorVisionEventReturn) => void;
+  }) => void;
 }
 
 export function PolarisVizProvider({
@@ -22,6 +32,8 @@ export function PolarisVizProvider({
   themes,
   components,
   animated,
+  useTransition,
+  useWatchColorVisionEvents,
 }: PolarisVizProviderProps) {
   const value = useMemo(() => {
     return {
@@ -36,8 +48,10 @@ export function PolarisVizProvider({
         ...themes,
       }),
       animated,
+      useTransition,
+      useWatchColorVisionEvents,
     };
-  }, [themes, components, animated]);
+  }, [themes, components, animated, useTransition, useWatchColorVisionEvents]);
 
   return (
     <PolarisVizContext.Provider value={value}>

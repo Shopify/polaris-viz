@@ -1,10 +1,10 @@
 import React from 'react';
-import {useTransition} from '@react-spring/web';
 import {
   Dimensions,
   SparkBarChartProps,
   ANIMATION_MARGIN,
   SparkBarSeries,
+  IS_ANIMATED_DEFAULT,
 } from '@shopify/polaris-viz-core';
 
 import {usePrefersReducedMotion} from '../../hooks';
@@ -20,7 +20,7 @@ export function Chart({
   data,
   dimensions,
   accessibilityLabel,
-  isAnimated = false,
+  isAnimated = IS_ANIMATED_DEFAULT,
   dataOffsetRight = 0,
   dataOffsetLeft = 0,
   theme,
@@ -53,10 +53,9 @@ export function Chart({
           data={data}
           dataOffsetLeft={dataOffsetLeft}
           dataOffsetRight={dataOffsetRight}
-          height={height}
+          drawableHeight={height}
           shouldAnimate={shouldAnimate}
           theme={theme}
-          useTransition={useTransition}
           width={width}
         />
       </svg>

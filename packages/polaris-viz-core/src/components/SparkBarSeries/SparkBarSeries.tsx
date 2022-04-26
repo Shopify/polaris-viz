@@ -1,6 +1,5 @@
 import React, {useMemo} from 'react';
 import type {DataSeries} from 'types';
-import type {useTransition} from '@react-spring/core';
 
 import {usePolarisVizContext, useSparkBar, useTheme} from '../../hooks';
 import {LinearGradientWithStops} from '../LinearGradientWithStops';
@@ -16,9 +15,8 @@ interface SparkBarSeriesProps {
   data: DataSeries[];
   dataOffsetLeft: number;
   dataOffsetRight: number;
-  height: number;
+  drawableHeight: number;
   shouldAnimate: boolean;
-  useTransition: typeof useTransition;
   width: number;
   theme?: string;
 }
@@ -27,10 +25,9 @@ export function SparkBarSeries({
   data,
   dataOffsetLeft,
   dataOffsetRight,
-  height,
+  drawableHeight,
   shouldAnimate,
   theme,
-  useTransition,
   width,
 }: SparkBarSeriesProps) {
   const selectedTheme = useTheme(theme);
@@ -40,6 +37,7 @@ export function SparkBarSeries({
     // eslint-disable-next-line id-length
     components: {Defs, Mask, G, Path, Rect},
     animated,
+    useTransition,
   } = usePolarisVizContext();
 
   const AnimatedG = animated(G);
@@ -61,7 +59,7 @@ export function SparkBarSeries({
     barWidth,
   } = useSparkBar({
     data,
-    height,
+    height: drawableHeight,
     dataOffsetLeft,
     dataOffsetRight,
     width,
@@ -126,7 +124,7 @@ export function SparkBarSeries({
       <Rect
         fill={`url(#${id})`}
         width={width}
-        height={height}
+        height={drawableHeight}
         mask={`url(#${clipId})`}
       />
 

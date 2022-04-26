@@ -16,7 +16,6 @@ export const SPACING_LOOSE = Number(variables.spacingLoose);
 export const XMLNS = 'http://www.w3.org/2000/svg';
 
 export const BASE_ANIMATION_DURATION = 200;
-export const LOAD_ANIMATION_DURATION = 500;
 export const BAR_ANIMATION_HEIGHT_BUFFER = 20;
 
 export const DEFAULT_BORDER_RADIUS = 3;
@@ -387,9 +386,10 @@ export const DEFAULT_COMPONENTS: SvgComponents = {
 export const STROKE_WIDTH = 1.5;
 export const ANIMATION_MARGIN = 17;
 export const LINEAR_LABELS_INNER_PADDING = 10;
-
+export const IS_ANIMATED_DEFAULT = true;
 export const COLOR_VISION_EVENT = {
   name: 'color-vision-event',
   dataAttribute: 'data-color-vision-event',
   camelCaseName: 'colorVisionEvent',
 };
+export const VERTICAL_BAR_SPACING = 0.5;

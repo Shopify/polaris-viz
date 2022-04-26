@@ -1,5 +1,10 @@
 import React, {useRef} from 'react';
-import {uniqueId, ChartType, DataSeries} from '@shopify/polaris-viz-core';
+import {
+  uniqueId,
+  ChartType,
+  DataSeries,
+  IS_ANIMATED_DEFAULT,
+} from '@shopify/polaris-viz-core';
 import type {
   Direction,
   XAxisOptions,
@@ -41,7 +46,7 @@ export function BarChart({
   data,
   direction = 'vertical',
   emptyStateText,
-  isAnimated = false,
+  isAnimated = IS_ANIMATED_DEFAULT,
   renderTooltipContent,
   showLegend = true,
   skipLinkText,
