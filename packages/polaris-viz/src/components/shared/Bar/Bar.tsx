@@ -38,7 +38,7 @@ export const Bar = React.memo(function Bar({
   isAnimated,
   needsMinWidth = false,
   roundedBorder = RoundedBorder.None,
-  transform,
+  transform = '',
   width,
   x,
   y,

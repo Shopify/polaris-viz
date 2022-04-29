@@ -1,7 +1,7 @@
 import React from 'react';
 import type {Story, Meta} from '@storybook/react';
 
-import {FunnelChart, FunnelChartProps} from '../..';
+import {FunnelChart, FunnelChartProps} from '../FunnelChart';
 
 export default {
   title: 'polaris-viz/Default Charts/FunnelChart/Playground',
@@ -19,27 +19,23 @@ const DATA = [
   {
     data: [
       {
+        value: 126,
+        key: 'Opens',
+      },
+      {
+        value: 48,
+        key: 'Visitors',
+      },
+      {
+        value: 12,
+        key: 'Added to carts',
+      },
+      {
         value: 4,
-        key: '0',
-      },
-      {
-        value: 3,
-        key: '1',
-      },
-      {
-        value: 0,
-        key: '2',
-      },
-      {
-        value: 0,
-        key: '3',
-      },
-      {
-        value: 0,
-        key: '4',
+        key: 'Orders',
       },
     ],
-    name: 'First-time',
+    name: 'Conversion',
   },
 ];
 
@@ -47,7 +43,7 @@ const SingleValuesTemplate: Story<FunnelChartProps> = (
   args: FunnelChartProps,
 ) => {
   return (
-    <div style={{width: 600, height: 400}}>
+    <div style={{height: 400}}>
       <FunnelChart {...args} />
     </div>
   );
