@@ -3,7 +3,7 @@ import type {Story, Meta} from '@storybook/react';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {BarChart, BarChartProps} from '../../../components';
-import type {Annotation} from '../../../components/BarChart/types';
+import type {Annotation} from '../../../types';
 
 import {SquareColorPreview} from '../../SquareColorPreview';
 import {PolarisVizProvider} from '../../../';
@@ -134,21 +134,6 @@ const DATA_WITH_COLOR: DataSeries[] = [
   },
 ];
 
-const ANNOTATION: Annotation[] = [
-  {
-    dataSeriesIndex: 3,
-    dataPointIndex: 0,
-    offset: 0.5,
-    width: 5,
-    color: 'lime',
-    ariaLabel: 'Median: 1.5',
-    tooltipData: {
-      key: 'Median',
-      value: '1.5 hours',
-    },
-  },
-];
-
 export default {
   title: 'polaris-viz/Default Charts/BarChart',
   component: BarChart,
@@ -169,15 +154,7 @@ export default {
   decorators: [(Story) => <div style={{height: '500px'}}>{Story()}</div>],
   argTypes: {
     annotations: {
-      control: {
-        type: 'select',
-      },
       description: 'An array of annotations to show on the chart.',
-      options: ['No annotation', 'Annotation on 4th series'],
-      mapping: {
-        'No annotation': undefined,
-        'Annotation on 4th series': ANNOTATION,
-      },
     },
     data: {
       description:
@@ -439,4 +416,68 @@ export const SeriesColorsUpToFourteen = Template.bind({});
 
 SeriesColorsUpToFourteen.args = {
   data: generateMultipleSeries(7),
+};
+
+function CustomContent() {
+  return (
+    <div>
+      <h1>Custom Content</h1>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
+        elementum, ipsum id semper dictum, ipsum nisi consectetur lacus, sed
+        pretium massa nisi ac ipsum.
+      </p>
+      <a href="https://www.google.com">Google</a>
+    </div>
+  );
+}
+
+const ANNOTATIONS: Annotation[] = [
+  {
+    startIndex: 0,
+    label: 'GDPR rule change',
+    tooltipData: {
+      key: 'Median',
+      value: '1.5 hours',
+    },
+  },
+  {
+    startIndex: 2,
+    label: 'Constitution Day',
+    tooltipData: {
+      key: 'Median',
+      value: '1.5 hours',
+    },
+  },
+  {
+    startIndex: 5,
+    label: 'This one has custom content',
+    content: () => <CustomContent />,
+    tooltipData: {
+      key: 'Median',
+      value: '1.5 hours',
+    },
+  },
+  {
+    startIndex: 1,
+    label: 'One more',
+  },
+  {
+    startIndex: 2,
+    label: 'One more',
+  },
+  {
+    startIndex: 4,
+    label: 'One more',
+  },
+];
+
+export const Annotations: Story<BarChartProps> = Template.bind({});
+
+Annotations.args = {
+  data: DATA,
+  xAxisOptions: {},
+  isAnimated: false,
+  showLegend: true,
+  annotations: ANNOTATIONS,
 };

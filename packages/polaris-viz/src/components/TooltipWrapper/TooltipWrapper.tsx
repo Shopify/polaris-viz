@@ -10,6 +10,7 @@ import type {DataType, Dimensions} from '@shopify/polaris-viz-core';
 
 import type {Margin} from '../../types';
 
+import {shouldBlockTooltipEvents} from './utilities/shouldBlockTooltipEvents';
 import type {TooltipPosition, TooltipPositionParams} from './types';
 import {DEFAULT_TOOLTIP_POSITION} from './constants';
 import {TooltipAnimatedContainer} from './components/TooltipAnimatedContainer';
@@ -66,6 +67,10 @@ export function TooltipWrapper(props: TooltipWrapperProps) {
         !alwaysUpdatePosition &&
         activeIndexRef.current === newPosition.activeIndex
       ) {
+        return;
+      }
+
+      if (shouldBlockTooltipEvents(event)) {
         return;
       }
 
