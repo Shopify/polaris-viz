@@ -94,6 +94,11 @@ export interface YAxisTheme {
   backgroundColor: string;
 }
 
+export interface AnnotationsTheme {
+  backgroundColor: string;
+  textColor: string;
+}
+
 export interface ChartContainerTheme {
   borderRadius: string;
   padding: string;
@@ -142,6 +147,7 @@ export interface PartialTheme {
 }
 
 export interface Theme {
+  annotations: AnnotationsTheme;
   chartContainer: ChartContainerTheme;
   bar: BarTheme;
   grid: GridTheme;

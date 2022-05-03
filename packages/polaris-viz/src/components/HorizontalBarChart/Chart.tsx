@@ -13,7 +13,10 @@ import type {
   YAxisOptions,
 } from '@shopify/polaris-viz-core';
 
-import type {RenderTooltipContentData} from '../../types';
+import type {
+  RenderTooltipContentData,
+  AnnotationLookupTable,
+} from '../../types';
 import {HorizontalBarChartXAxisLabels} from '../HorizontalBarChartXAxisLabels';
 import {useLegend, LegendContainer} from '../LegendContainer';
 import type {HorizontalTransitionStyle} from '../../hooks/useHorizontalTransitions';
@@ -33,7 +36,6 @@ import {
   XMLNS,
   BarChartMargin as Margin,
   HORIZONTAL_BAR_GROUP_DELAY,
-  HORIZONTAL_GROUP_LABEL_HEIGHT,
 } from '../../constants';
 import {eventPointNative, formatDataIntoGroups} from '../../utilities';
 import {
@@ -42,8 +44,6 @@ import {
   TooltipPositionParams,
   TooltipWrapper,
 } from '../TooltipWrapper';
-import type {AnnotationLookupTable} from '../BarChart';
-import {AnnotationLine} from '../BarChart';
 
 import {VerticalGridLines} from './components';
 import {getAlteredHorizontalBarPosition} from './utilities';
@@ -63,7 +63,6 @@ export interface ChartProps {
 }
 
 export function Chart({
-  annotationsLookupTable = {},
   data,
   dimensions,
   isAnimated,
@@ -271,36 +270,6 @@ export function Chart({
             />
           );
         })}
-        <g>
-          {Object.keys(annotationsLookupTable).map((key, dataIndex) => {
-            const annotation = annotationsLookupTable[Number(key)];
-
-            if (annotation == null) {
-              return null;
-            }
-
-            const xPosition = groupHeight * annotation.dataSeriesIndex;
-            const xPositionValue = xPosition == null ? 0 : xPosition;
-            const leftOffset = barHeight * annotation.dataPointIndex;
-
-            const position =
-              xPositionValue + HORIZONTAL_GROUP_LABEL_HEIGHT + leftOffset;
-
-            return (
-              <AnnotationLine
-                barSize={barHeight}
-                color={annotation.color}
-                direction="horizontal"
-                drawableSize={width}
-                key={`annotation${dataIndex}${annotation.dataPointIndex}`}
-                position={position}
-                shouldAnimate={isAnimated}
-                width={annotation.width}
-                offset={annotation.offset}
-              />
-            );
-          })}
-        </g>
       </svg>
       <TooltipWrapper
         bandwidth={groupBarsAreaHeight}
