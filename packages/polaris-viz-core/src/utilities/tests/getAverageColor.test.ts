@@ -2,8 +2,8 @@ import {getAverageColor} from '../getAverageColor';
 
 describe('getAverageColor', () => {
   it('returns average color from 2 different colors', () => {
-    const result = getAverageColor('red', 'green');
-    expect(result).toStrictEqual('rgb(128,64,0)');
+    const result = getAverageColor('rgb(255, 227, 0)', 'rgb(0, 137, 255)');
+    expect(result).toStrictEqual('rgb(128,182,128)');
   });
 
   it('returns first color if both are the same', () => {

@@ -1,0 +1,32 @@
+import {Meta, Story, Canvas} from '@storybook/addon-docs/blocks';
+
+import {
+  Divider,
+  Title,
+  UtilitiesHeader,
+} from '../../../../polaris-viz/src/components/Docs/stories/components';
+
+<Meta
+  title="Shared/Utilities/Color Manipulation/getAverageColor"
+  parameters={{
+    viewMode: 'docs',
+    docsOnly: true,
+  }}
+/>
+
+<UtilitiesHeader />
+
+<Title type="h3">
+  <code>getAverageColor()</code>
+</Title>
+
+Given 2 color strings, it returns the average of them; the resulting color of mixing both.
+
+```tsx
+// mixing yellow and blue:
+
+getAverageColor('rgb(255, 227, 0)', 'rgb(0, 137, 255)');
+
+// returns green:
+// 'rgb(128,182,128)'
+```

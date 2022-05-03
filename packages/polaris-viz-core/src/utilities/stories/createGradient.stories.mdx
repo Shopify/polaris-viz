@@ -1,0 +1,32 @@
+import {Meta, Story, Canvas} from '@storybook/addon-docs/blocks';
+
+import {
+  Divider,
+  Title,
+  UtilitiesHeader,
+} from '../../../../polaris-viz/src/components/Docs/stories/components';
+
+<Meta
+  title="Shared/Utilities/Color Manipulation/createGradient"
+  parameters={{
+    viewMode: 'docs',
+    docsOnly: true,
+  }}
+/>
+
+<UtilitiesHeader />
+
+<Title type="h3">
+  <code>createGradient()</code>
+</Title>
+
+<p>Returns a linear gradient from the provided colors.</p>
+
+```tsx
+const gradient = createGradient('red', 'green');
+
+// [
+//   {offset: 0, color: 'red'},
+//   {offset: 100, color: 'green'},
+// ]
+```

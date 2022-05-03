@@ -1,0 +1,34 @@
+import {Meta, Story, Canvas} from '@storybook/addon-docs/blocks';
+
+import {
+  Divider,
+  Title,
+  UtilitiesHeader,
+} from '../../../../polaris-viz/src/components/Docs/stories/components';
+
+<Meta
+  title="Shared/Utilities/Shape Manipulation/curveStepRounded"
+  parameters={{
+    viewMode: 'docs',
+    docsOnly: true,
+  }}
+/>
+
+<UtilitiesHeader />
+
+<Title type="h3">
+  <code>curveStepRounded()</code>
+</Title>
+
+<p>
+  Apply a rounded curve to <code>d3-line</code> or <code>d3-shape</code>.
+</p>
+
+```tsx
+const lineGenerator = line<DataPoint>()
+  .x((_, index) => (xScale == null ? 0 : xScale(index)))
+  .y(({value}) => yScale(value ?? 0));
+
+// Apply a nice curve to each line point
+generator.curve(curveStepRounded);
+```
