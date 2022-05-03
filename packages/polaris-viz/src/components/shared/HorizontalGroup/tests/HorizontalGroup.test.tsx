@@ -11,12 +11,10 @@ jest.mock('d3-scale', () => ({
   scaleLinear: jest.requireActual('d3-scale').scaleLinear,
 }));
 
-jest.mock('../../../../utilities', () => {
-  return {
-    ...jest.requireActual('../../../../utilities'),
-    estimateStringWidth: () => 0,
-  };
-});
+jest.mock('@shopify/polaris-viz-core/src/utilities', () => ({
+  ...jest.requireActual('@shopify/polaris-viz-core/src/utilities'),
+  estimateStringWidth: jest.fn(() => 0),
+}));
 
 const DATA = [
   {

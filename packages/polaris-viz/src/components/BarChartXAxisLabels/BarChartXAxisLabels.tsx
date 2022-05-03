@@ -35,7 +35,7 @@ export function BarChartXAxisLabels({
   });
 
   return (
-    <React.Fragment>
+    <g aria-hidden>
       {lines.map((line, index) => {
         if (shouldSkipLabel(index, reducedLabelIndexes)) {
           return null;
@@ -49,6 +49,6 @@ export function BarChartXAxisLabels({
           </g>
         );
       })}
-    </React.Fragment>
+    </g>
   );
 }

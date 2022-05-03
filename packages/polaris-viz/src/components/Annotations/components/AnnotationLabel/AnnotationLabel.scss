@@ -1,0 +1,5 @@
+@import '../../../../styles/shared/accessibility';
+
+.Button {
+  @include hidden-button;
+}

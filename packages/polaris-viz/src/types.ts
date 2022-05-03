@@ -92,11 +92,6 @@ export interface TooltipData {
   name?: string;
 }
 
-export interface TooltipAnnotation {
-  key: string;
-  value: string;
-}
-
 export interface PreparedLabels {
   text: string;
   words: {word: string; wordWidth: number}[];
@@ -122,4 +117,23 @@ export interface LegendData {
   color: Color;
   isComparison?: boolean;
   shape?: Shape;
+}
+
+export interface Annotation {
+  label: string;
+  startKey: string | number;
+  endKey?: string | number;
+  axis?: 'x' | 'y';
+  collapseButtonText?: string;
+  expandButtonText?: string;
+  content?: {
+    content: string;
+    linkText?: string;
+    linkUrl?: string;
+    title?: string;
+  };
+}
+
+export interface AnnotationLookupTable {
+  [key: number]: Annotation;
 }

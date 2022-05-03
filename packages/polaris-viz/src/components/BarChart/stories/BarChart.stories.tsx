@@ -3,7 +3,7 @@ import type {Story, Meta} from '@storybook/react';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {BarChart, BarChartProps} from '../../../components';
-import type {Annotation} from '../../../components/BarChart/types';
+import type {Annotation} from '../../../types';
 
 import {SquareColorPreview} from '../../SquareColorPreview';
 import {PolarisVizProvider} from '../../../';
@@ -134,21 +134,6 @@ const DATA_WITH_COLOR: DataSeries[] = [
   },
 ];
 
-const ANNOTATION: Annotation[] = [
-  {
-    dataSeriesIndex: 3,
-    dataPointIndex: 0,
-    offset: 0.5,
-    width: 5,
-    color: 'lime',
-    ariaLabel: 'Median: 1.5',
-    tooltipData: {
-      key: 'Median',
-      value: '1.5 hours',
-    },
-  },
-];
-
 export default {
   title: 'polaris-viz/Charts/BarChart',
   component: BarChart,
@@ -169,15 +154,7 @@ export default {
   decorators: [(Story) => <div style={{height: '500px'}}>{Story()}</div>],
   argTypes: {
     annotations: {
-      control: {
-        type: 'select',
-      },
       description: 'An array of annotations to show on the chart.',
-      options: ['No annotation', 'Annotation on 4th series'],
-      mapping: {
-        'No annotation': undefined,
-        'Annotation on 4th series': ANNOTATION,
-      },
     },
     data: {
       description:
@@ -439,4 +416,59 @@ export const SeriesColorsUpToFourteen = Template.bind({});
 
 SeriesColorsUpToFourteen.args = {
   data: generateMultipleSeries(7),
+};
+
+const ANNOTATIONS: Annotation[] = [
+  {
+    startKey: 'Monday',
+    label: 'Content and title',
+    content: {
+      title: 'GDPR rule change',
+      content:
+        'New GDPR rules that prevent the unauthorized tracking of user sessions came into effect on Thursday, June 1.',
+    },
+  },
+  {
+    startKey: 'Wednesday',
+    label: 'Title, content and no link string',
+    content: {
+      title: 'GDPR rule change',
+      content:
+        'New GDPR rules that prevent the unauthorized tracking of user sessions came into effect on Thursday, June 1.',
+      linkUrl: 'https://shopify.com',
+    },
+  },
+  {
+    startKey: 'Friday',
+    label: 'Just content',
+    content: {
+      content:
+        'New GDPR rules that prevent the unauthorized tracking of user sessions came into effect on Thursday, June 1.',
+    },
+  },
+  {
+    startKey: 'Tuesday',
+    label: 'This has everything',
+    content: {
+      title: 'GDPR rule change',
+      content:
+        'New GDPR rules that prevent the unauthorized tracking of user sessions came into effect on Thursday, June 1.',
+      linkUrl: 'https://shopify.com',
+      linkText: 'Custom link text',
+    },
+  },
+  {
+    startKey: 'Saturday',
+    label: 'No Content',
+  },
+];
+
+export const Annotations: Story<BarChartProps> = Template.bind({});
+
+Annotations.args = {
+  data: DATA,
+  xAxisOptions: {},
+  isAnimated: false,
+  showLegend: true,
+  annotations: ANNOTATIONS,
 };

@@ -10,6 +10,8 @@ import {TooltipAnimatedContainer} from '../../../components/TooltipWrapper';
 import {Chart, Props} from '../Chart';
 import {BarGroup, StackedBarGroups} from '../components';
 import {LegendContainer} from '../../LegendContainer';
+import {Annotations} from '../../Annotations';
+import {normalizeData} from '../../../utilities';
 
 const ZERO_AS_MIN_HEIGHT_THEME = {
   themes: {
@@ -190,6 +192,30 @@ describe('Chart />', () => {
       const chart = mount(<Chart {...mockProps} showLegend />);
 
       expect(chart).toContainReactComponent(LegendContainer);
+    });
+  });
+
+  describe('annotationsLookupTable', () => {
+    it('does not render <Annotations /> when empty', () => {
+      const chart = mount(<Chart {...mockProps} />);
+
+      expect(chart).not.toContainReactComponent(Annotations);
+    });
+
+    it('renders <Annotations /> when not empty', () => {
+      const annotationsLookupTable = normalizeData(
+        [{label: '', startIndex: 0}],
+        'startIndex',
+      );
+
+      const chart = mount(
+        <Chart
+          {...mockProps}
+          annotationsLookupTable={annotationsLookupTable}
+        />,
+      );
+
+      expect(chart).toContainReactComponent(Annotations);
     });
   });
 });

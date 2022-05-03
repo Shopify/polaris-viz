@@ -1,6 +1,8 @@
 import {useLayoutEffect, useState} from 'react';
 import type {Dimensions} from '@shopify/polaris-viz-core';
 
+import {useBrowserCheck} from './useBrowserCheck';
+
 export function usePrintResizing({
   ref,
   setChartDimensions,
@@ -9,6 +11,7 @@ export function usePrintResizing({
   setChartDimensions: (value: React.SetStateAction<Dimensions | null>) => void;
 }) {
   const [isPrinting, setIsPrinting] = useState(false);
+  const {isFirefox, isSafari} = useBrowserCheck();
 
   useLayoutEffect(() => {
     const isServer = typeof window === 'undefined';
@@ -37,9 +40,6 @@ export function usePrintResizing({
       });
     };
 
-    const isFirefox = navigator?.userAgent.includes('Firefox');
-    const isChromium = navigator?.userAgent.includes('Chrome');
-    const isSafari = navigator?.userAgent.includes('Safari') && !isChromium;
     const addEventListener =
       typeof window.matchMedia('print').addEventListener === 'function';
     // older versions of Safari break if we call addEventListener
@@ -91,7 +91,7 @@ export function usePrintResizing({
         }
       }
     };
-  }, [setChartDimensions, ref]);
+  }, [setChartDimensions, ref, isFirefox, isSafari]);
 
   return {isPrinting};
 }
