@@ -5,7 +5,11 @@ import type {
   XAxisOptions,
   YAxisOptions,
 } from '@shopify/polaris-viz-core';
-import {isGradientType, uniqueId} from '@shopify/polaris-viz-core';
+import {
+  isGradientType,
+  uniqueId,
+  changeColorOpacity,
+} from '@shopify/polaris-viz-core';
 
 import {formatTooltipDataForLinearCharts} from '../../utilities/formatTooltipDataForLinearCharts';
 import type {RenderTooltipContentData} from '../../types';
@@ -13,7 +17,6 @@ import {TooltipContent} from '../../components/TooltipContent';
 import {ChartContainer} from '../../components/ChartContainer';
 import {useThemeSeriesColors} from '../../hooks/useThemeSeriesColors';
 import {
-  changeColorOpacity,
   getAverageColor,
   getXAxisOptionsWithDefaults,
   getYAxisOptionsWithDefaults,

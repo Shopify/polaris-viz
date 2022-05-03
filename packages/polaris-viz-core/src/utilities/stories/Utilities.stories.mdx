@@ -259,9 +259,45 @@ clamp({
 // 15
 ```
 
-<Title type="h2">
-  <code>Color Vision Events</code>
+<Title type="h2">Color Manipulation Functions</Title>
+
+<Title type="h3">
+  <code>changeColorOpacity()</code>
 </Title>
+
+<p>
+  Changes the color to have the provided opacity. Accepts any color format,
+  returns an `rgba` string.
+</p>
+
+```tsx
+changeColorOpacity('#ffffff', 0.5);
+// 'rgba(255, 255, 255, 0.5)'
+```
+
+<Title type="h3">
+  <code>changeGradientOpacity()</code>
+</Title>
+
+Similar to `changeColorOpacity`, but changes all colors of `GradientStop[]` to
+the provided target opacity
+
+```tsx
+changeGradientOpacity(
+  [
+    {color: 'rgb(255, 0, 0)', offset: 1},
+    {color: 'rgb(123, 123, 123)', offset: 2},
+  ],
+  0.5,
+);
+
+// [
+//   {color: 'rgba(255, 0, 0, 0.5)', offset: 1},
+//   {color: 'rgba(123, 123, 123, 0.5)', offset: 2},
+// ]
+```
+
+<Title type="h2">Color Vision Events</Title>
 
 Charts that include mouse/touch events include a11y events that bring focus to series that are currently being interacted with.
 
