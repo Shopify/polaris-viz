@@ -8,6 +8,7 @@ import React, {
 } from 'react';
 import type {DataType, Dimensions} from '@shopify/polaris-viz-core';
 
+import {checkEventPath} from '../../utilities';
 import type {Margin} from '../../types';
 
 import type {TooltipPosition, TooltipPositionParams} from './types';
@@ -61,6 +62,15 @@ export function TooltipWrapper(props: TooltipWrapperProps) {
       const newPosition = getPosition({event, eventType: 'mouse'});
 
       if (activeIndexRef.current === newPosition.activeIndex) {
+        return;
+      }
+
+      if (
+        checkEventPath(event.composedPath(), (path) => {
+          const dataset = (path as HTMLElement).dataset;
+          return dataset != null && dataset.blockTooltipEvents === 'true';
+        })
+      ) {
         return;
       }
 

@@ -6,8 +6,10 @@ import type {
   YAxisOptions,
 } from '@shopify/polaris-viz-core';
 
-import type {RenderTooltipContentData} from '../../types';
-import type {AnnotationLookupTable} from '../BarChart';
+import type {
+  AnnotationLookupTable,
+  RenderTooltipContentData,
+} from '../../types';
 import {ChartContainer} from '../../components/ChartContainer';
 import {usePrefersReducedMotion} from '../../hooks';
 
@@ -46,6 +48,7 @@ export function HorizontalBarChart({
         isAnimated={isAnimated && !prefersReducedMotion}
         renderTooltipContent={renderTooltipContent}
         showLegend={showLegend}
+        theme={theme}
         type={type}
         xAxisOptions={xAxisOptions}
         yAxisOptions={yAxisOptions}

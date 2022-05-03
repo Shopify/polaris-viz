@@ -14,3 +14,4 @@ export {
   getYAxisOptionsWithDefaults,
   getXAxisOptionsWithDefaults,
 } from './getAxisOptions';
+export {checkEventPath} from './checkEventPath';

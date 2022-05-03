@@ -16,8 +16,11 @@ import type {
   YAxisOptions,
 } from '@shopify/polaris-viz-core';
 
-import type {AnnotationLookupTable} from '../BarChart';
-import type {RenderTooltipContentData} from '../../types';
+import {PILL_HEIGHT, Annotations} from '../Annotations';
+import type {
+  RenderTooltipContentData,
+  AnnotationLookupTable,
+} from '../../types';
 import {useXAxisLabels} from '../../hooks/useXAxisLabels';
 import {BarChartXAxisLabels} from '../BarChartXAxisLabels';
 import {LegendContainer, useLegend} from '../LegendContainer';
@@ -51,11 +54,10 @@ import {
   useWatchColorVisionEvents,
   useReducedLabelIndexes,
 } from '../../hooks';
-import {AnnotationLine} from '../BarChart';
 
 import {BarGroup, StackedBarGroups} from './components';
 import {useXScale} from './hooks';
-import {BAR_SPACING, MIN_Y_LABEL_SPACE} from './constants';
+import {MIN_Y_LABEL_SPACE} from './constants';
 import styles from './Chart.scss';
 
 export interface Props {
@@ -93,6 +95,7 @@ export function Chart({
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
   const id = useMemo(() => uniqueId('VerticalBarChart'), []);
   const [labelHeight, setLabelHeight] = useState(0);
+  const [annotationsHeight, setAnnotationsHeight] = useState(PILL_HEIGHT);
 
   useWatchColorVisionEvents({
     type: COLOR_VISION_GROUP_ITEM,
@@ -119,7 +122,11 @@ export function Chart({
   });
 
   const drawableHeight =
-    height - labelHeight - LABEL_AREA_TOP_SPACING - Margin.Top;
+    height -
+    annotationsHeight -
+    labelHeight -
+    LABEL_AREA_TOP_SPACING -
+    Margin.Top;
 
   const {min, max} = getStackedMinMax({
     stackedValues,
@@ -147,9 +154,11 @@ export function Chart({
   }, [characterWidths, initialTicks]);
 
   const horizontalMargin = selectedTheme.grid.horizontalMargin;
-  const chartStartPosition =
+  const chartXPosition =
     yAxisLabelWidth + Y_AXIS_CHART_SPACING + horizontalMargin;
-  const drawableWidth = width - chartStartPosition - horizontalMargin * 2;
+  const chartYPosition = (Margin.Top as number) + annotationsHeight;
+
+  const drawableWidth = width - chartXPosition - horizontalMargin * 2;
 
   const hideXAxis = xAxisOptions.hide ?? selectedTheme.xAxis.hide;
 
@@ -221,10 +230,8 @@ export function Chart({
         {hideXAxis ? null : (
           <BarChartXAxisLabels
             chartHeight={height}
-            chartX={chartStartPosition}
-            chartY={
-              drawableHeight + LABEL_AREA_TOP_SPACING + (Margin.Top as number)
-            }
+            chartX={chartXPosition}
+            chartY={drawableHeight + LABEL_AREA_TOP_SPACING + chartYPosition}
             labels={labels}
             labelWidth={xScale.bandwidth()}
             onHeightChange={setLabelHeight}
@@ -247,15 +254,15 @@ export function Chart({
           <HorizontalGridLines
             ticks={ticks}
             transform={{
-              x: selectedTheme.grid.horizontalOverflow ? 0 : chartStartPosition,
-              y: Margin.Top,
+              x: selectedTheme.grid.horizontalOverflow ? 0 : chartXPosition,
+              y: chartYPosition,
             }}
             width={width}
             theme={theme}
           />
         ) : null}
 
-        <g transform={`translate(0,${Margin.Top})`} aria-hidden="true">
+        <g transform={`translate(0,${chartYPosition})`} aria-hidden="true">
           <YAxis
             ticks={ticks}
             textAlign="right"
@@ -264,7 +271,7 @@ export function Chart({
           />
         </g>
 
-        <g transform={`translate(${chartStartPosition},${Margin.Top})`}>
+        <g transform={`translate(${chartXPosition},${chartYPosition})`}>
           {stackedValues != null ? (
             <StackedBarGroups
               accessibilityData={accessibilityData}
@@ -303,32 +310,16 @@ export function Chart({
             })
           )}
         </g>
-        <g transform={`translate(${chartStartPosition},${Margin.Top})`}>
-          {Object.keys(annotationsLookupTable).map((key, dataIndex) => {
-            const annotation = annotationsLookupTable[Number(key)];
-
-            if (annotation == null) {
-              return null;
-            }
-
-            const xPosition = xScale(key);
-            const xPositionValue = xPosition == null ? 0 : xPosition;
-            const barWidth = xScale.bandwidth() / data.length - BAR_SPACING;
-            const leftOffset = barWidth * annotation.dataPointIndex;
-
-            return (
-              <AnnotationLine
-                barSize={barWidth}
-                color={annotation.color}
-                drawableSize={drawableHeight}
-                key={`annotation${dataIndex}${annotation.dataPointIndex}`}
-                offset={annotation.offset}
-                position={xPositionValue + leftOffset}
-                shouldAnimate={isAnimated}
-                width={annotation.width}
-              />
-            );
-          })}
+        <g transform={`translate(${chartXPosition},${Margin.Top})`}>
+          <Annotations
+            annotationsLookupTable={annotationsLookupTable}
+            barWidth={xScale.bandwidth()}
+            drawableHeight={chartYPosition + drawableHeight}
+            drawableWidth={drawableWidth}
+            onHeightChange={setAnnotationsHeight}
+            theme={theme}
+            xScale={xScale}
+          />
         </g>
       </svg>
 
@@ -338,7 +329,7 @@ export function Chart({
         focusElementDataType={DataType.BarGroup}
         getMarkup={getTooltipMarkup}
         getPosition={getTooltipPosition}
-        margin={Margin}
+        margin={{...Margin, Top: chartYPosition}}
         parentRef={svgRef}
       />
 
@@ -366,8 +357,8 @@ export function Chart({
         ? sortedData[index].reduce(sumPositiveData, 0)
         : Math.max(...sortedDataPos);
 
-    const x = xPosition + chartStartPosition;
-    const y = yScale(highestValuePos) + (Margin.Top as number);
+    const x = xPosition + chartXPosition;
+    const y = yScale(highestValuePos) + chartYPosition;
 
     return {
       x,
@@ -395,13 +386,13 @@ export function Chart({
       }
 
       const {svgX, svgY} = point;
-      const currentPoint = svgX - chartStartPosition;
+      const currentPoint = svgX - chartXPosition;
       const activeIndex = Math.floor(currentPoint / xScale.step());
 
       if (
         activeIndex < 0 ||
         activeIndex > sortedData.length - 1 ||
-        svgY <= Margin.Top ||
+        svgY <= chartYPosition ||
         svgY > drawableHeight + Number(Margin.Bottom) + labelHeight
       ) {
         return TOOLTIP_POSITION_DEFAULT_RETURN;
