@@ -1,0 +1,24 @@
+.ComparisonMetric {
+  display: flex;
+  align-items: center;
+}
+
+.Positive {
+  color: var(--p-icon-success);
+
+  svg {
+    fill: var(--p-icon-success);
+  }
+}
+
+.Negative {
+  color: var(--p-icon-critical);
+
+  svg {
+    fill: var(--p-icon-critical);
+  }
+}
+
+.VisuallyHidden {
+  @include visually-hidden;
+}
