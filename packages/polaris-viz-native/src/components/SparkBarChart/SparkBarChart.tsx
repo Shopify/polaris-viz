@@ -1,20 +1,11 @@
-import React, {useMemo} from 'react';
+import React from 'react';
 import {View} from 'react-native';
 import {useTransition} from '@react-spring/native';
 import {
-  getSeriesColors,
-  LinearGradientWithStops,
-  uniqueId,
-  useTheme,
-  Bar,
   usePolarisVizContext,
-  useSparkBar,
   SparkBarChartProps,
-  BARS_TRANSITION_CONFIG,
   ANIMATION_MARGIN,
-  STROKE_WIDTH,
-  getAnimationTrail,
-  BORDER_RADIUS,
+  SparkBarSeries,
 } from '@shopify/polaris-viz-core';
 
 import {usePrefersReducedMotion} from '../../hooks';
@@ -51,52 +42,12 @@ function Chart({
   isAnimated,
 }: SparkBarChartProps) {
   const {
-    // eslint-disable-next-line id-length
-    components: {Svg, Defs, Mask, G, Path, Rect},
-    animated,
+    components: {Svg},
   } = usePolarisVizContext();
 
-  const AnimatedG = animated(G);
-
   const {prefersReducedMotion} = usePrefersReducedMotion();
-  const selectedTheme = useTheme(theme);
-  const [seriesColor] = getSeriesColors(1, selectedTheme);
-  const id = useMemo(() => uniqueId('sparkbar'), []);
-  const clipId = useMemo(() => uniqueId('clip'), []);
   const {width, height} = dimensions ?? {width: 0, height: 0};
-  const shouldAnimate = !prefersReducedMotion && isAnimated;
-
-  const {
-    borderRadius,
-    dataWithIndex,
-    color,
-    getBarHeight,
-    strokeDasharray,
-    strokeDashoffset,
-    lineShape,
-    comparisonData,
-    xScale,
-    yScale,
-    barWidth,
-  } = useSparkBar({
-    data,
-    height,
-    dataOffsetLeft,
-    dataOffsetRight,
-    width,
-    seriesColor,
-  });
-
-  const transitions = useTransition(dataWithIndex, {
-    key: ({index}: {index: number}) => index,
-    from: {height: 0},
-    leave: {height: 0},
-    enter: ({value}) => ({height: getBarHeight(value == null ? 0 : value)}),
-    update: ({value}) => ({height: getBarHeight(value == null ? 0 : value)}),
-    default: {immediate: !shouldAnimate},
-    trail: shouldAnimate ? getAnimationTrail(dataWithIndex.length) : 0,
-    config: BARS_TRANSITION_CONFIG,
-  });
+  const shouldAnimate = Boolean(!prefersReducedMotion && isAnimated);
 
   const viewboxHeight = height + ANIMATION_MARGIN * 2;
 
@@ -108,62 +59,16 @@ function Chart({
         width={width}
         transform={[{translateY: -1 * ANIMATION_MARGIN}] as any}
       >
-        <Defs>
-          <LinearGradientWithStops
-            id={id}
-            gradient={color}
-            gradientUnits="userSpaceOnUse"
-            y1="100%"
-            y2="0%"
-          />
-        </Defs>
-
-        <Mask id={clipId}>
-          <AnimatedG opacity={comparisonData ? '0.9' : '1'}>
-            {transitions(({height: barHeight}, item, _transition, index) => {
-              const xPosition = xScale(index.toString());
-              const height = shouldAnimate
-                ? barHeight
-                : getBarHeight(item.value ?? 0);
-
-              return (
-                <Bar
-                  borderRadius={
-                    selectedTheme.bar.hasRoundedCorners
-                      ? borderRadius
-                      : BORDER_RADIUS.None
-                  }
-                  key={index}
-                  x={xPosition == null ? 0 : xPosition}
-                  yScale={yScale}
-                  value={item.value.value}
-                  width={barWidth}
-                  height={height}
-                  fill="white"
-                />
-              );
-            })}
-          </AnimatedG>
-        </Mask>
-
-        <Rect
-          fill={`url(#${id})`}
-          width={width}
+        <SparkBarSeries
+          data={data}
+          dataOffsetLeft={dataOffsetLeft}
+          dataOffsetRight={dataOffsetRight}
           height={height}
-          mask={`url(#${clipId})`}
+          shouldAnimate={shouldAnimate}
+          theme={theme}
+          useTransition={useTransition}
+          width={width}
         />
-
-        {comparisonData == null ? null : (
-          <Path
-            stroke={selectedTheme.seriesColors.comparison}
-            strokeWidth={STROKE_WIDTH}
-            d={lineShape!}
-            strokeLinecap="round"
-            opacity="0.9"
-            strokeDashoffset={strokeDashoffset}
-            strokeDasharray={strokeDasharray}
-          />
-        )}
       </Svg>
     </View>
   );
