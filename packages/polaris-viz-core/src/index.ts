@@ -94,6 +94,7 @@ export {
   getRoundedRectPath,
   changeColorOpacity,
   changeGradientOpacity,
+  getAverageColor,
 } from './utilities';
 export {
   useSparkBar,

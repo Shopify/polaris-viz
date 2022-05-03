@@ -1,5 +1,6 @@
 import {color} from 'd3-color';
-import type {GradientStop} from '@shopify/polaris-viz-core';
+
+import type {GradientStop} from '../types';
 
 export function changeColorOpacity(colorString: string, opacity = 1): string {
   const rgbColor = color(colorString);

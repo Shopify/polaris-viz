@@ -16,3 +16,4 @@ export {borderRadiusStringToObject} from './borderRadiusStringToObject';
 export {clamp} from './clamp';
 export {getRoundedRectPath} from './getRoundedRectPath';
 export {changeColorOpacity, changeGradientOpacity} from './changeColorOpacity';
+export {getAverageColor} from './getAverageColor';

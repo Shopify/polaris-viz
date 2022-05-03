@@ -1,4 +1,4 @@
-import {getAverageColor} from '../';
+import {getAverageColor} from '../getAverageColor';
 
 describe('getAverageColor', () => {
   it('returns average color from 2 different colors', () => {

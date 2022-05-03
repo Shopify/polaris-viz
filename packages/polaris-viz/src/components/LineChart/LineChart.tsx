@@ -9,6 +9,7 @@ import {
   isGradientType,
   uniqueId,
   changeColorOpacity,
+  getAverageColor,
 } from '@shopify/polaris-viz-core';
 
 import {formatTooltipDataForLinearCharts} from '../../utilities/formatTooltipDataForLinearCharts';
@@ -17,7 +18,6 @@ import {TooltipContent} from '../../components/TooltipContent';
 import {ChartContainer} from '../../components/ChartContainer';
 import {useThemeSeriesColors} from '../../hooks/useThemeSeriesColors';
 import {
-  getAverageColor,
   getXAxisOptionsWithDefaults,
   getYAxisOptionsWithDefaults,
 } from '../../utilities';
