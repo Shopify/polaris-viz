@@ -1,5 +1,5 @@
 import React from 'react';
-import {Icon} from '@shopify/polaris'; // remove - get SVG from figma
+import {Icon} from '@shopify/polaris'; // remove - get from SimpleNormalizeChart
 import {CaretDownMinor, CaretUpMinor} from '@shopify/polaris-icons'; // remove - ++ chevron here? SimpleNormalizedChart
 import {classNames} from '../../../../utilities';
 import {useI18n} from '@shopify/react-i18n'; // can completely remove
