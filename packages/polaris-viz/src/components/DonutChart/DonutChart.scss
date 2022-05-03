@@ -1,0 +1,38 @@
+.Donut {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  user-select: none;
+}
+
+.VisuallyHidden {
+  @include visually-hidden;
+}
+
+.ContentWrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  font-size: rem(20px);
+}
+
+.ContentWrapperWithComparison {
+  transform: translate(-50%, -40%);
+}
+
+.ContentValue {
+  font-size: rem(20px);
+  font-weight: 600;
+  user-select: text;
+}
+
+.ComparisonMetric {
+  font-size: rem(16px);
+  margin-top: spacing(extra-tight);
+}
