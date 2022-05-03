@@ -18,8 +18,9 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
-- Moved `getColorVisionStylesForActiveIndex()` & `getColorVisionEventAttrs()` to `polaris-viz-core`.
+- Moved `getColorVisionStylesForActiveIndex()`, `getColorVisionEventAttrs()`, `getAverageColor()`, `changeGradientOpacity()` and `changeColorOpacity()` to `polaris-viz-core`.
 - Use `<LineSeries />` for `LineChart` and `StackedAreaChart`.
+
 
 ## [1.4.0] - 2022-04-20
 
