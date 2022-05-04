@@ -1,2 +1,2 @@
 export {Arc} from './Arc';
-export {ComparisonMetric} from './ComparisonMetric';
+// export {ComparisonMetric} from './ComparisonMetric';

@@ -1,5 +1,4 @@
 import React from 'react';
-import faker from '@faker-js/faker/locale/en';
 import type {Meta, StoryFn} from '@storybook/react';
 
 import {DonutChart} from '.';
@@ -79,80 +78,80 @@ const Template: StoryFn<DonutChartProps> = (args: DonutChartProps) => {
   return <DonutChart {...args} />;
 };
 
-const DualTemplate: StoryFn<DonutChartProps> = (args: DonutChartProps) => {
-  return (
-    <>
-      <DonutChart {...args} />
-      <div style={{marginTop: '2rem'}} />
-      <DonutChart {...args} accessibilityLabel="Earnings" />
-    </>
-  );
-};
+// const DualTemplate: StoryFn<DonutChartProps> = (args: DonutChartProps) => {
+//   return (
+//     <>
+//       <DonutChart {...args} />
+//       <div style={{marginTop: '2rem'}} />
+//       <DonutChart {...args} accessibilityLabel="Earnings" />
+//     </>
+//   );
+// };
 
 export const SolidColor = Template.bind({});
 
 SolidColor.args = {};
 
-export const WithContent = Template.bind({});
+// export const WithContent = Template.bind({});
 
-WithContent.args = {
-  comparisonMetric: -0.2,
-  total: 70000,
-};
+// WithContent.args = {
+//   comparisonMetric: -0.2,
+//   total: 70000,
+// };
 
-export const AllColors = Template.bind({});
+// export const AllColors = Template.bind({});
 
-export const Multiple = DualTemplate.bind({});
+// export const Multiple = DualTemplate.bind({});
 
-AllColors.args = {
-  data: [
-    {
-      id: 1,
-      label: faker.random.words(2),
-      value: faker.datatype.number(),
-      color: 'teal',
-    },
-    {
-      id: 2,
-      label: faker.random.words(2),
-      value: faker.datatype.number(),
-      color: 'blue',
-    },
-    {
-      id: 3,
-      label: faker.random.words(2),
-      value: faker.datatype.number(),
-      color: 'indigo',
-    },
-    {
-      id: 4,
-      label: faker.random.words(2),
-      value: faker.datatype.number(),
-      color: 'purple',
-    },
-    {
-      id: 5,
-      label: faker.random.words(2),
-      value: faker.datatype.number(),
-      color: 'magenta',
-    },
-    {
-      id: 6,
-      label: faker.random.words(2),
-      value: faker.datatype.number(),
-      color: 'orange',
-    },
-    {
-      id: 7,
-      label: faker.random.words(2),
-      value: faker.datatype.number(),
-      color: 'yellow',
-    },
-  ],
-};
+// AllColors.args = {
+//   data: [
+//     {
+//       id: 1,
+//       label: 'Hello World',
+//       value: 36,
+//       color: 'teal',
+//     },
+//     {
+//       id: 2,
+//       label: 'Someone Help',
+//       value: 35,
+//       color: 'blue',
+//     },
+//     {
+//       id: 3,
+//       label: 'How doin?',
+//       value: 12,
+//       color: 'indigo',
+//     },
+//     {
+//       id: 4,
+//       label: 'More Data',
+//       value: 19,
+//       color: 'purple',
+//     },
+//     {
+//       id: 5,
+//       label: 'Growing Data',
+//       value: 26,
+//       color: 'magenta',
+//     },
+//     {
+//       id: 6,
+//       label: 'Money Stuff',
+//       value: 4,
+//       color: 'orange',
+//     },
+//     {
+//       id: 7,
+//       label: 'Value Prop',
+//       value: 31,
+//       color: 'yellow',
+//     },
+//   ],
+// };
 
-export const EmptyState = Template.bind({});
+// export const EmptyState = Template.bind({});
 
-EmptyState.args = {
-  data: [],
-};
+// EmptyState.args = {
+//   data: [],
+// };
