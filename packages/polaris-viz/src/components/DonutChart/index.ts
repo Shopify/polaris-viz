@@ -1,4 +1,4 @@
 export {Chart} from './Chart';
-export type {DonutChartProps} from './Chart';
-export type {ArcData, DonutChartColors} from './types';
+export type {ChartProps} from './Chart';
+export type {DonutChartProps} from './DonutChart';
 export {DonutChart} from './DonutChart';

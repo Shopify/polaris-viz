@@ -1,50 +1,46 @@
-import React, {useState, useEffect, useLayoutEffect, useCallback} from 'react';
-import {useResizeObserver} from '../../hooks'; // in chart container
-import {classNames} from '../../utilities';
-import {useDebouncedCallback} from 'use-debounce';
+import React from 'react';
 import {pie} from 'd3-shape';
+import {clamp, useTheme} from '@shopify/polaris-viz-core';
+import type {DataPoint, Dimensions} from '@shopify/polaris-viz-core';
 
-import {ComparisonMetric} from 'components/ComparisonMetric';
-import {Arc} from './components'; // Import from polaris viz
-import type {ArcData} from './types';
+import {classNames} from '../../utilities';
+import {ComparisonMetric, ComparisonMetricProps} from '../ComparisonMetric';
+import {getSeriesColors} from '../../hooks';
+
 import styles from './DonutChart.scss';
+import {Arc} from './components';
 
-export interface DonutChartProps {
-  data: ArcData[];
-  accessibilityLabel: string;
-  activeArcId?: number | null;
-  comparisonMetric?: number;
+export interface ChartProps {
+  data: DataPoint[];
+  accessibilityLabel?: string;
+  comparisonMetric?: Omit<ComparisonMetricProps, 'theme'>;
   total?: number;
-  valueFormatter?(value: number): string;
-  onHover?(data: ArcData): void;
-  onBlur?(data: ArcData): void;
-  dimensions: any;
+  dimensions?: Dimensions;
+  theme?: string;
 }
 
 export function Chart({
   data,
-  activeArcId = null,
   accessibilityLabel = '',
-  onHover,
-  onBlur,
-  valueFormatter,
   comparisonMetric,
   total,
-  dimensions,
-}: DonutChartProps) {
+  dimensions = {height: 0, width: 0},
+  theme,
+}: ChartProps) {
   const {width, height} = dimensions;
   const radius = Math.min(width, height) / 2;
+  const selectedTheme = useTheme(theme);
+  const seriesCount = clamp({amount: data.length, min: 1, max: Infinity});
+  const seriesColor = getSeriesColors(seriesCount, selectedTheme);
 
-  const createPie = pie<ArcData>()
-    .value(({value}) => value)
+  const createPie = pie<DataPoint>()
+    .value(({value}) => value!)
     .sort(null);
   const pieChartData = createPie(data);
   const emptyState = pieChartData.length === 0;
 
-  const totalValue = total || data.reduce((acc, {value}) => value + acc, 0);
-  const formattedValue = valueFormatter
-    ? valueFormatter(totalValue)
-    : String(totalValue);
+  const totalValue = total || data.reduce((acc, {value}) => value! + acc, 0);
+  const formattedValue = String(totalValue);
 
   return (
     <div className={styles.Donut}>
@@ -54,33 +50,28 @@ export function Chart({
           {emptyState ? (
             <g aria-hidden>
               <Arc
-                data={{id: 0, label: '', value: 0, color: 'sky'}}
                 width={width}
                 height={height}
                 radius={radius}
-                tabIndex={-1}
                 startAngle={0}
                 endAngle={Math.PI * 2}
-                accessibilityLabel={accessibilityLabel}
+                color={seriesColor[0]}
               />
             </g>
           ) : (
-            pieChartData.map(({data, startAngle, endAngle}) => {
-              const {id} = data;
+            pieChartData.map(({data, startAngle, endAngle}, index) => {
+              const {key} = data;
 
               return (
-                <g key={`${id}-${startAngle}-${endAngle}`}>
+                <g key={`${key}-${startAngle}-${endAngle}`}>
                   <Arc
                     width={width}
                     height={height}
-                    data={data}
                     radius={radius}
-                    tabIndex={0}
                     startAngle={startAngle}
                     endAngle={endAngle}
-                    valueFormatter={valueFormatter}
-                    accessibilityLabel={accessibilityLabel}
                     isOnlySegment={pieChartData.length === 1}
+                    color={seriesColor[index]}
                   />
                 </g>
               );
@@ -97,10 +88,14 @@ export function Chart({
           )}
         >
           <p className={classNames(styles.ContentValue)}>{formattedValue}</p>
-          {comparisonMetric === undefined ||
-          comparisonMetric === Infinity ? null : (
+          {comparisonMetric != null && (
             <div className={styles.ComparisonMetric}>
-              {/* <ComparisonMetric percentage={comparisonMetric} /> */}
+              <ComparisonMetric
+                metric={comparisonMetric.metric}
+                trend={comparisonMetric.trend}
+                theme={selectedTheme.legend}
+                accessibilityLabel="accessibility-label"
+              />
             </div>
           )}
         </div>
