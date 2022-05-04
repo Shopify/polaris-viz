@@ -54,7 +54,7 @@ export function Arc({
   const lastColor =
     GRADIENT_COLORS[color][GRADIENT_COLORS[color].length - 1].color;
   const gradientId = useMemo(() => {
-    const uniqueColorId = uniqueId;
+    const uniqueColorId = uniqueId(color);
     const labelNoSpaces = accessibilityLabel.replace(/\s/g, '');
     return `${labelNoSpaces}-${uniqueColorId}`;
   }, [color, accessibilityLabel]);

@@ -24,7 +24,7 @@ export interface DonutChartProps {
 export function Chart({
   data,
   activeArcId = null,
-  accessibilityLabel,
+  accessibilityLabel = '',
   onHover,
   onBlur,
   valueFormatter,
