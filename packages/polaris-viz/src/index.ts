@@ -39,6 +39,13 @@ export {
   isGradientType,
   uniqueId,
   createTheme,
+  getColorVisionStylesForActiveIndex,
+  getColorVisionEventAttrs,
+  changeColorOpacity,
+  changeGradientOpacity,
+  getAverageColor,
+  paddingStringToObject,
+  removeFalsyValues,
 } from '@shopify/polaris-viz-core';
 
 export type {

@@ -7,11 +7,12 @@ import {
   DataType,
   getColorVisionStylesForActiveIndex,
   COLOR_VISION_SINGLE_ITEM,
+  changeColorOpacity,
+  changeGradientOpacity,
 } from '@shopify/polaris-viz-core';
 import type {LineChartDataSeriesWithDefaults} from '@shopify/polaris-viz-core';
 
 import {useTheme, useWatchColorVisionEvents} from '../../../../hooks';
-import {changeColorOpacity, changeGradientOpacity} from '../../../../utilities';
 import {Point} from '../../../Point';
 import type {AnimatedCoordinate} from '../../../../types';
 

@@ -92,6 +92,9 @@ export {
   getColorVisionEventAttrs,
   getColorVisionStylesForActiveIndex,
   getRoundedRectPath,
+  changeColorOpacity,
+  changeGradientOpacity,
+  getAverageColor,
 } from './utilities';
 export {
   useSparkBar,

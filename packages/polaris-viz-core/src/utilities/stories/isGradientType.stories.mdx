@@ -1,0 +1,39 @@
+import {Meta, Story, Canvas} from '@storybook/addon-docs/blocks';
+
+import {
+  Divider,
+  Title,
+  UtilitiesHeader,
+} from '../../../../polaris-viz/src/components/Docs/stories/components';
+
+<Meta
+  title="Shared/Utilities/Color Manipulation/isGradientType"
+  parameters={{
+    viewMode: 'docs',
+    docsOnly: true,
+  }}
+/>
+
+<UtilitiesHeader />
+
+<Title type="h3">
+  <code>isGradientType()</code>
+</Title>
+
+<p>
+  Returns a <code>boolean</code> based on if the provided color is a gradient or
+  solid color.
+</p>
+
+```tsx
+isGradientType([
+  {offset: 0, color: 'red'},
+  {offset: 100, color: 'green'},
+]);
+
+// true
+
+isGradientType('red');
+
+// false
+```

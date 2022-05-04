@@ -1,0 +1,33 @@
+import {Meta, Story, Canvas} from '@storybook/addon-docs/blocks';
+
+import {
+  Divider,
+  Title,
+  UtilitiesHeader,
+} from '../../../../polaris-viz/src/components/Docs/stories/components';
+
+<Meta
+  title="Shared/Utilities/uniqueId"
+  parameters={{
+    viewMode: 'docs',
+    docsOnly: true,
+  }}
+/>
+
+<UtilitiesHeader />
+
+<Title type="h3">
+  <code>uniqueId()</code>
+</Title>
+
+<p>Returns a prefixed, auto-incremented string.</p>
+
+```tsx
+uniqueId('Pickle');
+
+// Pickle-1
+
+uniqueId('Pickle');
+
+// Pickle-2
+```

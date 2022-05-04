@@ -3,10 +3,10 @@ import {
   FONT_SIZE,
   useTheme,
   COLOR_VISION_SINGLE_ITEM,
+  changeColorOpacity,
 } from '@shopify/polaris-viz-core';
 
 import {useWatchColorVisionEvents} from '../../hooks';
-import {changeColorOpacity} from '../../utilities';
 import type {TooltipAnnotation, TooltipData} from '../../types';
 
 import {useGetLongestLabelFromData} from './hooks/useGetLongestLabelFromData';

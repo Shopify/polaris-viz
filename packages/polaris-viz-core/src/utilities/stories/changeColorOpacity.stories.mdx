@@ -1,0 +1,31 @@
+import {Meta, Story, Canvas} from '@storybook/addon-docs/blocks';
+
+import {
+  Divider,
+  Title,
+  UtilitiesHeader,
+} from '../../../../polaris-viz/src/components/Docs/stories/components';
+
+<Meta
+  title="Shared/Utilities/Color Manipulation/changeColorOpacity"
+  parameters={{
+    viewMode: 'docs',
+    docsOnly: true,
+  }}
+/>
+
+<UtilitiesHeader />
+
+<Title type="h3">
+  <code>changeColorOpacity()</code>
+</Title>
+
+<p>
+  Changes the color to have the provided opacity. Accepts any color format,
+  returns an `rgba` string.
+</p>
+
+```tsx
+changeColorOpacity('#ffffff', 0.5);
+// 'rgba(255, 255, 255, 0.5)'
+```

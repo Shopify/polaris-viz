@@ -1,8 +1,9 @@
-import {color as d3Color} from 'd3-color';
-import type {GradientStop} from '@shopify/polaris-viz-core';
+import {color} from 'd3-color';
 
-export function changeColorOpacity(color: string, opacity = 1): string {
-  const rgbColor = d3Color(color);
+import type {GradientStop} from '../types';
+
+export function changeColorOpacity(colorString: string, opacity = 1): string {
+  const rgbColor = color(colorString);
 
   if (rgbColor == null) {
     throw new Error('Color value is not valid.');

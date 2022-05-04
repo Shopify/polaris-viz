@@ -4,8 +4,6 @@ export {getPointAtLength} from './getPointAtLength';
 export {normalizeData} from './normalizeData';
 export {createCSSGradient} from './createCssGradient';
 export {classNames} from './classnames';
-export {changeColorOpacity, changeGradientOpacity} from './changeColorOpacity';
-export {getAverageColor} from './getAverageColor';
 export {getBarId} from './getBarId';
 export {formatDataIntoGroups} from './formatDataIntoGroups';
 export {getStackedMinMax} from './getStackedMinMax';

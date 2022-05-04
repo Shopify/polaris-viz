@@ -7,12 +7,12 @@ import styles from './Title.scss';
 
 export function Title({
   type = 'h1',
-  children,
+  children = '',
   style = {},
 }: {
-  type: string;
-  children: React.ReactChildren | string;
-  style: CSSProperties;
+  type?: string;
+  children?: React.ReactChildren | string;
+  style?: CSSProperties;
 }) {
   const id = useMemo(() => uniqueId('titleAnchor'), []);
 

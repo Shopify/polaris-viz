@@ -40,4 +40,23 @@ describe('changeGradientOpacity', () => {
       {color: 'rgb(123, 123, 123)', offset: 2},
     ]);
   });
+
+  it('returns the gradient with changed opacity on all colours', () => {
+    (color as jest.Mock).mockImplementation(
+      jest.requireActual('d3-color').color,
+    );
+
+    const gradient = changeGradientOpacity(
+      [
+        {color: 'rgb(255, 0, 0)', offset: 1},
+        {color: 'rgb(123, 123, 123)', offset: 2},
+      ],
+      0.5,
+    );
+
+    expect(gradient).toStrictEqual([
+      {color: 'rgba(255, 0, 0, 0.5)', offset: 1},
+      {color: 'rgba(123, 123, 123, 0.5)', offset: 2},
+    ]);
+  });
 });
