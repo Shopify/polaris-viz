@@ -31,3 +31,4 @@ export type {LegendProps} from './LegendContainer';
 export {WebPolarisVizProvider as PolarisVizProvider} from './WebPolarisVizProvider';
 export {TooltipContent} from './TooltipContent';
 export type {TooltipContentProps} from './TooltipContent';
+export {ChartSkeleton} from './ChartSkeleton';
