@@ -11,7 +11,9 @@
   height: 100%;
   animation-name: shimmer;
   animation-duration: 1s;
+  /* stylelint-disable */
   animation-timing-function: linear;
+  /* stylelint-enable */
   animation-iteration-count: infinite;
   background-size: var(--shimmerSize) 100%;
 }
