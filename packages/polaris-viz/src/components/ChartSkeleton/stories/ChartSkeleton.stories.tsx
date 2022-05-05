@@ -12,7 +12,11 @@ export default {
     controls: {sort: 'requiredFirst', expanded: true},
     docs: {
       description: {
+<<<<<<< HEAD
         component: 'Used to display loading and error states of charts.',
+=======
+        component: 'Used to show change over time, comparisons, and trends.',
+>>>>>>> fef3be6a (set error and loading states in skeleton)
       },
     },
   },
