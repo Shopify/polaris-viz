@@ -29,6 +29,7 @@ export function Chart({
 }: ChartProps) {
   const {width, height} = dimensions;
   const radius = Math.min(width, height) / 2;
+  const FULL_CIRCLE = Math.PI * 2;
   const selectedTheme = useTheme(theme);
   const seriesCount = clamp({amount: data.length, min: 1, max: Infinity});
   const seriesColor = getSeriesColors(seriesCount, selectedTheme);
@@ -54,8 +55,8 @@ export function Chart({
                 height={height}
                 radius={radius}
                 startAngle={0}
-                endAngle={Math.PI * 2}
-                color={seriesColor[0]}
+                endAngle={FULL_CIRCLE}
+                color={selectedTheme.grid.color}
               />
             </g>
           ) : (
