@@ -7,10 +7,6 @@
   user-select: none;
 }
 
-.VisuallyHidden {
-  @include visually-hidden;
-}
-
 .ContentWrapper {
   position: absolute;
   top: 50%;
