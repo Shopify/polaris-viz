@@ -1,10 +1,20 @@
 import React from 'react';
 import {animated} from '@react-spring/web';
-import {useTheme} from '@shopify/polaris-viz-core';
 
 import {HORIZONTAL_BAR_LABEL_HEIGHT} from '../../constants';
 
-const FONT_SIZE = 20;
+type Size = 'small' | 'medium' | 'large';
+
+const LABEL_HEIGHT = 20;
+
+const LARGE_FONT = 20;
+
+const SMALL_FONT = 14;
+
+const FONT_SIZES = {
+  small: SMALL_FONT,
+  large: LARGE_FONT,
+};
 
 export interface LabelProps {
   barHeight: number;
@@ -12,19 +22,26 @@ export interface LabelProps {
   labelWidth: number;
   x: number;
   y: number;
-  animationDelay?: number;
-  isAnimated?: boolean;
-  theme?: string;
+  size: Size;
+  color?: string;
 }
 
-export function Label({barHeight, label, labelWidth, x, y, theme}: LabelProps) {
+export function Label({
+  barHeight,
+  label,
+  labelWidth,
+  x,
+  y,
+  size,
+  color,
+}: LabelProps) {
   const labelYOffset = (barHeight - HORIZONTAL_BAR_LABEL_HEIGHT) / 2;
 
-  const selectedTheme = useTheme(theme);
+  const fontSize = FONT_SIZES[size];
 
   return (
     <animated.foreignObject
-      height={FONT_SIZE}
+      height={LABEL_HEIGHT}
       width={labelWidth}
       aria-hidden="true"
       y={y + labelYOffset}
@@ -34,8 +51,8 @@ export function Label({barHeight, label, labelWidth, x, y, theme}: LabelProps) {
     >
       <div
         style={{
-          fontSize: `${FONT_SIZE}px`,
-          color: selectedTheme.xAxis.labelColor,
+          fontSize: `${fontSize}px`,
+          color,
           lineHeight: `${HORIZONTAL_BAR_LABEL_HEIGHT}px`,
           height: HORIZONTAL_BAR_LABEL_HEIGHT,
           textAlign: 'center',
