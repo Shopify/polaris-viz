@@ -75,3 +75,5 @@ export const LEGENDS_TOP_MARGIN = 16;
 export const COLOR_BLIND_ACTIVE_OPACITY = 1;
 export const COLOR_BLIND_FADED_OPACITY = 0.3;
 export const PREVIEW_ICON_SIZE = 12;
+export const BAR_CONTAINER_TEXT_HEIGHT = 48;
+export const Y_AXIS_LABEL_VERTICAL_OFFSET = 44;
