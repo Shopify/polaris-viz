@@ -3,16 +3,16 @@ import React, {useRef, useEffect} from 'react';
 import type {Dimensions} from '@shopify/polaris-viz-core';
 import {
   useTheme,
-  changeColorOpacity,
   paddingStringToObject,
   FONT_SIZE,
 } from '@shopify/polaris-viz-core';
 import {useSprings, animated} from '@react-spring/web';
 
 import {useLabels} from '../Labels/hooks';
-import {TextLine} from '../Labels/components/TextLine';
+import {TextLine} from '../TextLine';
 
 import styles from './ChartSkeleton.scss';
+import {Shimmer} from './components';
 
 type SkeletonState = 'loading' | 'error';
 
@@ -23,14 +23,14 @@ const NUMBER_OF_BRICKS = 5;
 export interface ChartSkeletonProps {
   theme?: string;
   dimensions: Dimensions;
-  state: SkeletonState;
+  state?: SkeletonState;
   errorText?: string;
 }
 
 export function ChartSkeleton({
   dimensions,
   theme = 'Default',
-  state = 'error',
+  state = 'loading',
   errorText = 'Could not load the chart',
 }: ChartSkeletonProps) {
   const {width, height} = dimensions;
@@ -65,8 +65,6 @@ const AnimatedContent = ({
 
   const {paddingLeft, paddingBottom, paddingTop} =
     paddingStringToObject(padding);
-
-  const semiTransparentBackground = changeColorOpacity(backgroundColor, 0);
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -199,19 +197,7 @@ const AnimatedContent = ({
 
   return (
     <div className={styles.Container} ref={ref}>
-      {state === 'loading' && (
-        <div
-          className={styles.Shimmer}
-          style={{
-            background: `linear-gradient(-40deg,
-            ${semiTransparentBackground} 10%,
-            ${semiTransparentBackground} 35%,
-            ${backgroundColor} 50%,
-            ${semiTransparentBackground} 85%,
-            ${semiTransparentBackground} 90%)`,
-          }}
-        />
-      )}
+      {state === 'loading' && <Shimmer backgroundColor={backgroundColor} />}
       <svg viewBox={`0 0 ${width} ${height}`}>
         {springs.map((style, index) => {
           const y = ticks[index].y;

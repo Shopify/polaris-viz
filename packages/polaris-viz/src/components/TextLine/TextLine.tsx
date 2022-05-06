@@ -1,8 +1,8 @@
 import React from 'react';
 
-import {useTheme} from '../../../hooks';
-import {FONT_SIZE} from '../../../constants';
-import type {FormattedLine} from '../types';
+import {useTheme} from '../../hooks';
+import {FONT_SIZE} from '../../constants';
+import type {FormattedLine} from '../../types';
 
 interface TextLineProps {
   index: number;

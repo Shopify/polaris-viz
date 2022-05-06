@@ -12,7 +12,7 @@ export default {
     controls: {sort: 'requiredFirst', expanded: true},
     docs: {
       description: {
-        component: 'Used to show change over time, comparisons, and trends.',
+        component: 'Used to display loading and error states of charts.',
       },
     },
   },
