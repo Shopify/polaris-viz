@@ -57,6 +57,7 @@ export function Chart({
                 startAngle={0}
                 endAngle={FULL_CIRCLE}
                 color={selectedTheme.grid.color}
+                cornerRadius={selectedTheme.arc.cornerRadius}
               />
             </g>
           ) : (
@@ -73,6 +74,7 @@ export function Chart({
                     endAngle={endAngle}
                     isOnlySegment={pieChartData.length === 1}
                     color={seriesColor[index]}
+                    cornerRadius={selectedTheme.arc.cornerRadius}
                   />
                 </g>
               );

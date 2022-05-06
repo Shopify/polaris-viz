@@ -63,6 +63,10 @@ export interface GridTheme {
   horizontalMargin: number;
 }
 
+export interface ArcTheme {
+  cornerRadius: number;
+}
+
 export interface BarTheme {
   innerMargin: keyof typeof BarMargin;
   outerMargin: keyof typeof BarMargin;
@@ -140,6 +144,7 @@ export interface PartialTheme {
 
 export interface Theme {
   chartContainer: ChartContainerTheme;
+  arc: ArcTheme;
   bar: BarTheme;
   grid: GridTheme;
   xAxis: XAxisTheme;
