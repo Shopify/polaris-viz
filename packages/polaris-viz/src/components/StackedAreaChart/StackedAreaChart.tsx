@@ -1,5 +1,5 @@
 import React, {useRef} from 'react';
-import {uniqueId} from '@shopify/polaris-viz-core';
+import {uniqueId, ChartState} from '@shopify/polaris-viz-core';
 import type {
   DataSeries,
   XAxisOptions,
@@ -13,6 +13,7 @@ import {
 import {formatTooltipDataForLinearCharts} from '../../utilities/formatTooltipDataForLinearCharts';
 import {TooltipContent} from '../';
 import {ChartContainer} from '../ChartContainer';
+import {ChartSkeleton} from '../ChartSkeleton';
 import {SkipLink} from '../SkipLink';
 import type {RenderTooltipContentData} from '../../types';
 
@@ -21,6 +22,8 @@ import {Chart} from './Chart';
 export interface StackedAreaChartProps {
   renderTooltipContent?(data: RenderTooltipContentData): React.ReactNode;
   data: DataSeries[];
+  state?: ChartState;
+  errorText?: string;
   isAnimated?: boolean;
   showLegend?: boolean;
   skipLinkText?: string;
@@ -33,6 +36,8 @@ export function StackedAreaChart({
   xAxisOptions,
   yAxisOptions,
   data,
+  state = ChartState.Success,
+  errorText,
   renderTooltipContent,
   isAnimated = false,
   showLegend = true,
@@ -71,18 +76,22 @@ export function StackedAreaChart({
         <SkipLink anchorId={skipLinkAnchorId.current}>{skipLinkText}</SkipLink>
       )}
       <ChartContainer theme={theme}>
-        <Chart
-          data={data}
-          isAnimated={isAnimated}
-          renderTooltipContent={
-            renderTooltipContent != null
-              ? renderTooltipContent
-              : renderDefaultTooltipContent
-          }
-          showLegend={showLegend}
-          xAxisOptions={xAxisOptionsWithDefaults}
-          yAxisOptions={yAxisOptionsWithDefaults}
-        />
+        {state !== ChartState.Success ? (
+          <ChartSkeleton state={state} errorText={errorText} />
+        ) : (
+          <Chart
+            data={data}
+            isAnimated={isAnimated}
+            renderTooltipContent={
+              renderTooltipContent != null
+                ? renderTooltipContent
+                : renderDefaultTooltipContent
+            }
+            showLegend={showLegend}
+            xAxisOptions={xAxisOptionsWithDefaults}
+            yAxisOptions={yAxisOptionsWithDefaults}
+          />
+        )}
       </ChartContainer>
 
       {skipLinkText == null || skipLinkText.length === 0 ? null : (
