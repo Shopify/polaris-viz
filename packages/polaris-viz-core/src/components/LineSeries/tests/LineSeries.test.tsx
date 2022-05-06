@@ -131,5 +131,36 @@ describe('<LineSeries />', () => {
         });
       });
     });
+
+    describe('theme.line.hasPoint', () => {
+      it('renders a point if true', () => {
+        const lineSeries = mountWithProvider(
+          <svg>
+            <LineSeries {...defaultProps} type="spark" />
+          </svg>,
+        );
+
+        expect(lineSeries).toContainReactComponentTimes('circle', 1);
+      });
+
+      it('does not render a point if false', () => {
+        const lineSeries = mountWithProvider(
+          <svg>
+            <LineSeries {...defaultProps} type="spark" />
+          </svg>,
+          {
+            themes: {
+              Default: {
+                line: {
+                  hasPoint: false,
+                },
+              },
+            },
+          },
+        );
+
+        expect(lineSeries).not.toContainReactComponentTimes('circle', 1);
+      });
+    });
   });
 });

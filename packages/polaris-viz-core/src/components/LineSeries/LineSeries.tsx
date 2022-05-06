@@ -128,7 +128,11 @@ export function LineSeries({
       ];
 
   const showPoint =
-    isSparkChart && !data.isComparison && lastLinePointCoordinates != null;
+    isSparkChart &&
+    !data.isComparison &&
+    lastLinePointCoordinates != null &&
+    selectedTheme.line.hasPoint;
+
   const {x: lastX = 0, y: lastY = 0} = lastLinePointCoordinates ?? {};
   const lineStyle = getLineStyle({
     isComparison: data.isComparison,
@@ -203,7 +207,12 @@ export function LineSeries({
           </Mask>
         </Defs>
 
-        <Area series={data} areaPath={areaPath} type={type} />
+        <Area
+          series={data}
+          areaPath={areaPath}
+          type={type}
+          sparkArea={selectedTheme.line.sparkArea}
+        />
 
         <Rect
           x="0"

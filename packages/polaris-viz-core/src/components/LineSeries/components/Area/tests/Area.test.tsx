@@ -6,6 +6,7 @@ import {Area} from '../Area';
 import {LineChartDataSeriesWithDefaults} from '../../../../../types';
 import {DefaultArea} from '../../DefaultArea';
 import {SparkArea} from '../../SparkArea';
+import {LinearGradientWithStops} from '../../../../../components';
 
 const SERIES: LineChartDataSeriesWithDefaults = {
   data: [],
@@ -45,6 +46,49 @@ describe('<Area />', () => {
       );
 
       expect(area).toContainReactComponent(SparkArea);
+    });
+  });
+
+  describe('color', () => {
+    const sparkArea = '#008000';
+
+    it('renders theme sparkArea when provided', () => {
+      const area = mount(
+        <svg>
+          <Area
+            series={SERIES}
+            areaPath=""
+            type="spark"
+            sparkArea={sparkArea}
+          />
+        </svg>,
+      );
+
+      expect(area).toContainReactComponentTimes(LinearGradientWithStops, 1, {
+        gradient: [
+          {
+            color: sparkArea,
+            offset: 0,
+          },
+        ],
+      });
+    });
+
+    it('renders line color', () => {
+      const area = mount(
+        <svg>
+          <Area series={SERIES} areaPath="" type="spark" />
+        </svg>,
+      );
+
+      expect(area).toContainReactComponentTimes(LinearGradientWithStops, 1, {
+        gradient: [
+          {
+            color: 'red',
+            offset: 0,
+          },
+        ],
+      });
     });
   });
 });
