@@ -68,3 +68,5 @@ export {
 export const DEFAULT_LEGEND_HEIGHT = 29;
 export const LEGENDS_TOP_MARGIN = 16;
 export const PREVIEW_ICON_SIZE = 12;
+export const BAR_CONTAINER_TEXT_HEIGHT = 48;
+export const Y_AXIS_LABEL_VERTICAL_OFFSET = 44;

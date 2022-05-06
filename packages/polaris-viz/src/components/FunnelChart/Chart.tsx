@@ -16,7 +16,15 @@ import {BarChartXAxisLabels} from '../BarChartXAxisLabels';
 import {Bar} from '../shared';
 import {useTheme, useReducedLabelIndexes} from '../../hooks';
 import {getAverageColor, changeColorOpacity} from '../../utilities';
-import {XMLNS, MASK_HIGHLIGHT_COLOR, MIN_BAR_HEIGHT} from '../../constants';
+import {
+  BAR_CONTAINER_TEXT_HEIGHT,
+  XMLNS,
+  MASK_HIGHLIGHT_COLOR,
+  MIN_BAR_HEIGHT,
+  Y_AXIS_LABEL_VERTICAL_OFFSET,
+} from '../../constants';
+
+import {Label} from './Label';
 
 export interface ChartProps {
   data: DataSeries[];
@@ -26,7 +34,13 @@ export interface ChartProps {
   theme?: string;
 }
 
-export function Chart({data, dimensions, theme, xAxisOptions}: ChartProps) {
+export function Chart({
+  data,
+  dimensions,
+  theme,
+  xAxisOptions,
+  yAxisOptions,
+}: ChartProps) {
   const [labelHeight, setLabelHeight] = useState(0);
   const dataSeries = data[0].data;
 
@@ -54,7 +68,7 @@ export function Chart({data, dimensions, theme, xAxisOptions}: ChartProps) {
   const drawableHeight = height - labelHeight;
 
   const yScale = scaleLinear()
-    .range([0, drawableHeight])
+    .range([0, drawableHeight - BAR_CONTAINER_TEXT_HEIGHT])
     .domain([0, Math.max(...yValues)]);
 
   const barWidth = xScale.bandwidth();
@@ -133,6 +147,7 @@ export function Chart({data, dimensions, theme, xAxisOptions}: ChartProps) {
           const barHeight = getBarHeight(dataPoint.value || 0);
           const xPosition = xScale(dataPoint.key as string);
           const x = xPosition == null ? 0 : xPosition;
+          const barWidth = xScale.bandwidth();
 
           return (
             <React.Fragment key={dataPoint.key}>
@@ -154,9 +169,20 @@ export function Chart({data, dimensions, theme, xAxisOptions}: ChartProps) {
         const xPosition = xScale(dataPoint.key as string);
         const x = xPosition == null ? 0 : xPosition;
         const nextBarHeight = getBarHeight(nextPoint?.value || 0);
+        const yAxisValue = dataPoint.value;
+        const barHeight = getBarHeight(dataPoint.value || 0);
+        const formattedYValue = yAxisOptions?.labelFormatter(yAxisValue) || '';
 
         return (
           <React.Fragment key={dataPoint.key}>
+            <Label
+              barHeight={0}
+              theme={theme}
+              label={formattedYValue}
+              labelWidth={barWidth}
+              x={x}
+              y={height - barHeight - Y_AXIS_LABEL_VERTICAL_OFFSET}
+            />
             <g mask={`url(#${connectorGradientId}-${index})`}>
               <LinearGradientWithStops
                 gradient={connectorGradient}
