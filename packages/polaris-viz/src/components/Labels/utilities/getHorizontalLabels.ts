@@ -2,7 +2,7 @@ import type {CharacterWidths} from '@shopify/polaris-viz-core';
 import {estimateStringWidth} from '@shopify/polaris-viz-core';
 
 import {LINE_HEIGHT} from '../../../constants';
-import type {FormattedLine, PreparedLabels} from '../types';
+import type {FormattedLine, PreparedLabels} from '../../../types';
 
 import {endWordTruncate} from './endWordTruncate';
 import {truncateLabels} from './truncateLabels';
