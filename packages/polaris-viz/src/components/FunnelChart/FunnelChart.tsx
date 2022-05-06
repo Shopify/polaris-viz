@@ -3,7 +3,7 @@ import type {
   DataSeries,
   XAxisOptions,
   YAxisOptions,
-} from '@shopify/polaris-viz-core/src/types';
+} from '@shopify/polaris-viz-core';
 
 import {useTheme, useThemeSeriesColors} from '../../hooks';
 import {ChartContainer} from '../../components/ChartContainer';
