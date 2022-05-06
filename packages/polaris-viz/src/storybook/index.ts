@@ -1,5 +1,5 @@
 import type {Color} from '@shopify/polaris-viz-core';
-import {isGradientType} from '@shopify/polaris-viz-core';
+import {isGradientType, ChartState} from '@shopify/polaris-viz-core';
 
 export const getDataPoint = (limit = 1000) => {
   return Math.random() * limit;
@@ -8,6 +8,14 @@ export const getDataPoint = (limit = 1000) => {
 export const THEME_CONTROL_ARGS = {
   description: 'The theme that the chart will inherit its styles from',
   control: {type: 'select', options: ['Default', 'Light']},
+};
+export const CHART_STATE_CONTROL_ARGS = {
+  description:
+    'Controls if the chart should display Loading, Error or Success state',
+  control: {
+    type: 'select',
+    options: [ChartState.Error, ChartState.Loading, ChartState.Success],
+  },
 };
 
 export const getSingleColor = (color: Color): string => {
