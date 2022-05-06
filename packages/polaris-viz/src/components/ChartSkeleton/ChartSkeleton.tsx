@@ -20,6 +20,7 @@ const BRICK_HEIGHT = 12;
 const BRICK_WIDTH = 32;
 const INITIAL_DELAY = 200;
 const NUMBER_OF_BRICKS = 5;
+const TEXT_DROP_SHADOW_SIZE = 3;
 export interface ChartSkeletonProps {
   theme?: string;
   dimensions: Dimensions;
@@ -225,8 +226,15 @@ const AnimatedContent = ({
         })}
         {state === 'error' && (
           <g
+            className={styles.TextLineWrapper}
             style={{
               transform: `translateY(${height / 2 - FONT_SIZE * 2}px)`,
+              filter: `
+                drop-shadow( ${TEXT_DROP_SHADOW_SIZE}px 0px 1px ${backgroundColor})
+                drop-shadow( -${TEXT_DROP_SHADOW_SIZE}px  0px 1px ${backgroundColor})
+                drop-shadow( 0px ${TEXT_DROP_SHADOW_SIZE}px 1px ${backgroundColor})
+                drop-shadow( 0px -${TEXT_DROP_SHADOW_SIZE}px 1px ${backgroundColor})
+              `,
             }}
           >
             <TextLine index={0} theme={theme} line={lines[0]} />
