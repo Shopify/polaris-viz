@@ -1,11 +1,17 @@
 import React, {useRef} from 'react';
-import {uniqueId, ChartType, DataSeries} from '@shopify/polaris-viz-core';
+import {
+  uniqueId,
+  ChartType,
+  DataSeries,
+  ChartState,
+} from '@shopify/polaris-viz-core';
 import type {
   Direction,
   XAxisOptions,
   YAxisOptions,
 } from '@shopify/polaris-viz-core';
 
+import {ChartContainer} from '../../components/ChartContainer';
 import type {TooltipAnnotation, RenderTooltipContentData} from '../../types';
 import {TooltipContent} from '../';
 import {SkipLink} from '../SkipLink';
@@ -16,14 +22,16 @@ import {
 } from '../../utilities';
 import {HorizontalBarChart} from '../HorizontalBarChart';
 import {VerticalBarChart} from '../VerticalBarChart';
+import {ChartSkeleton} from '../../components/ChartSkeleton';
 
 import type {Annotation} from './types';
 import {formatDataForTooltip} from './utilities';
 
 export interface BarChartProps {
   data: DataSeries[];
+  state?: ChartState;
+  errorText?: string;
   renderTooltipContent?(data: RenderTooltipContentData): React.ReactNode;
-
   annotations?: Annotation[];
   direction?: Direction;
   emptyStateText?: string;
@@ -39,6 +47,8 @@ export interface BarChartProps {
 export function BarChart({
   annotations = [],
   data,
+  state = ChartState.Success,
+  errorText,
   direction = 'vertical',
   emptyStateText,
   isAnimated = false,
@@ -95,39 +105,45 @@ export function BarChart({
       />
     );
   }
-
+  const ChartByDirection =
+    direction === 'vertical' ? (
+      <VerticalBarChart
+        annotationsLookupTable={annotationsLookupTable}
+        data={data}
+        emptyStateText={emptyStateText}
+        isAnimated={isAnimated}
+        renderTooltipContent={renderTooltip}
+        showLegend={showLegend}
+        theme={theme}
+        type={type}
+        xAxisOptions={xAxisOptionsWithDefaults}
+        yAxisOptions={yAxisOptionsWithDefaults}
+      />
+    ) : (
+      <HorizontalBarChart
+        annotationsLookupTable={annotationsLookupTable}
+        data={data}
+        isAnimated={isAnimated}
+        renderTooltipContent={renderTooltip}
+        showLegend={showLegend}
+        theme={theme}
+        type={type}
+        xAxisOptions={xAxisOptionsWithDefaults}
+        yAxisOptions={yAxisOptionsWithDefaults}
+      />
+    );
   return (
     <React.Fragment>
       {hideSkipLink ? null : (
         <SkipLink anchorId={skipLinkAnchorId.current}>{skipLinkText}</SkipLink>
       )}
-
-      {direction === 'vertical' ? (
-        <VerticalBarChart
-          annotationsLookupTable={annotationsLookupTable}
-          data={data}
-          emptyStateText={emptyStateText}
-          isAnimated={isAnimated}
-          renderTooltipContent={renderTooltip}
-          showLegend={showLegend}
-          theme={theme}
-          type={type}
-          xAxisOptions={xAxisOptionsWithDefaults}
-          yAxisOptions={yAxisOptionsWithDefaults}
-        />
-      ) : (
-        <HorizontalBarChart
-          annotationsLookupTable={annotationsLookupTable}
-          data={data}
-          isAnimated={isAnimated}
-          renderTooltipContent={renderTooltip}
-          showLegend={showLegend}
-          theme={theme}
-          type={type}
-          xAxisOptions={xAxisOptionsWithDefaults}
-          yAxisOptions={yAxisOptionsWithDefaults}
-        />
-      )}
+      <ChartContainer theme={theme}>
+        {state !== ChartState.Success ? (
+          <ChartSkeleton state={state} errorText={errorText} />
+        ) : (
+          ChartByDirection
+        )}
+      </ChartContainer>
 
       {hideSkipLink ? null : <SkipLink.Anchor id={skipLinkAnchorId.current} />}
     </React.Fragment>
