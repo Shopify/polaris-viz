@@ -71,9 +71,9 @@ describe('useSparkLine', () => {
   describe('maxXDomain', () => {
     it.each`
       lengths              | expected
-      ${[10, 5]}           | ${'10'}
-      ${[320, 0, 50, 100]} | ${'320'}
-      ${[0, 0, 50, 100]}   | ${'100'}
+      ${[10, 5]}           | ${'9'}
+      ${[320, 0, 50, 100]} | ${'319'}
+      ${[0, 0, 50, 100]}   | ${'99'}
     `(
       'is calculated based on the length of the longest data series',
       ({lengths, expected}) => {

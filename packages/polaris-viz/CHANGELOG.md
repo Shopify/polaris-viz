@@ -11,6 +11,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 - Added `ChartSkeleton` component
 
+### Changed
+
+- Fix issue where `<SparkLineChart />` doesn't go to the containers right edge.
+
 ## [1.5.0] - 2022-05-04
 
 ### Added
