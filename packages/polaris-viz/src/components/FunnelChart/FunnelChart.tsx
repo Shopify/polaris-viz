@@ -8,6 +8,7 @@ import type {
 import {useTheme, useThemeSeriesColors} from '../../hooks';
 import {ChartContainer} from '../../components/ChartContainer';
 import {getYAxisOptionsWithDefaults} from '../../utilities';
+
 import {Chart} from './Chart';
 
 export interface FunnelChartProps {
