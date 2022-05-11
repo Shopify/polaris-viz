@@ -120,7 +120,8 @@ export function Chart({
 
   const gradientId = useMemo(() => uniqueId('gradient'), []);
   const maskId = useMemo(() => uniqueId('mask'), []);
-  const handlePercentLabelFormatter = (percentCalculation, percentRounded) => {
+  const handlePercentLabelFormatter = (percentCalculation) => {
+    const percentRounded = Math.round(percentCalculation);
     if (percentCalculation) {
       return `${yAxisOptions.labelFormatter(percentRounded)}%`;
     } else {
@@ -183,11 +184,8 @@ export function Chart({
           nextPoint?.value && yAxisValue
             ? (nextPoint.value / yAxisValue) * 100
             : 0;
-        const percentRounded = Math.round(percentCalculation);
-        const percentLabel = handlePercentLabelFormatter(
-          percentCalculation,
-          percentRounded,
-        );
+
+        const percentLabel = handlePercentLabelFormatter(percentCalculation);
         const barHeight = getBarHeight(dataPoint.value || 0);
         const formattedYValue = yAxisOptions?.labelFormatter(yAxisValue) || '0';
 
@@ -237,7 +235,7 @@ export function Chart({
               x={x + barWidth}
               y={height - nextBarHeight - PERCENT_LABEL_VERTICAL_OFFSET}
               size="small"
-              color={selectedTheme.crossHair.color}
+              color={selectedTheme.xAxis.labelColorLight}
             />
           </React.Fragment>
         );

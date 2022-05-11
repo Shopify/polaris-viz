@@ -3,7 +3,7 @@ import {animated} from '@react-spring/web';
 
 import {HORIZONTAL_BAR_LABEL_HEIGHT} from '../../constants';
 
-type Size = 'small' | 'medium' | 'large';
+type Size = 'small' | 'large';
 
 const LABEL_HEIGHT = 20;
 

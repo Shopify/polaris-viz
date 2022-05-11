@@ -77,6 +77,7 @@ export interface XAxisTheme {
   showTicks: boolean;
   labelColor: string;
   hide: boolean;
+  labelColorLight: string;
 }
 
 export interface CrossHairTheme {
