@@ -30,10 +30,10 @@ import {Label} from './Label';
 
 export interface ChartProps {
   data: DataSeries[];
-  dimensions?: Dimensions;
   xAxisOptions: Required<XAxisOptions>;
-  yAxisOptions?: Required<YAxisOptions>;
+  yAxisOptions: Required<YAxisOptions>;
   theme?: string;
+  dimensions?: Dimensions;
 }
 
 export function Chart({
