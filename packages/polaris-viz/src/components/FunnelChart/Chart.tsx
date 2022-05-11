@@ -120,7 +120,13 @@ export function Chart({
 
   const gradientId = useMemo(() => uniqueId('gradient'), []);
   const maskId = useMemo(() => uniqueId('mask'), []);
-
+  const handlePercentLabelFormatter = (percentCalculation, percentRounded) => {
+    if (percentCalculation) {
+      return `${yAxisOptions.labelFormatter(percentRounded)}%`;
+    } else {
+      return '';
+    }
+  };
   return (
     <svg role="list" viewBox={`0 0 ${width} ${height}`} xmlns={XMLNS}>
       <BarChartXAxisLabels
@@ -152,7 +158,6 @@ export function Chart({
           const xPosition = xScale(dataPoint.key as string);
           const x = xPosition == null ? 0 : xPosition;
           const barWidth = xScale.bandwidth();
-
           return (
             <React.Fragment key={dataPoint.key}>
               <Bar
@@ -179,16 +184,6 @@ export function Chart({
             ? (nextPoint.value / yAxisValue) * 100
             : 0;
         const percentRounded = Math.round(percentCalculation);
-        const handlePercentLabelFormatter = (
-          percentCalculation,
-          percentRounded,
-        ) => {
-          if (yAxisOptions?.labelFormatter && percentCalculation) {
-            return `${yAxisOptions.labelFormatter(percentRounded)}%`;
-          } else {
-            return '';
-          }
-        };
         const percentLabel = handlePercentLabelFormatter(
           percentCalculation,
           percentRounded,
