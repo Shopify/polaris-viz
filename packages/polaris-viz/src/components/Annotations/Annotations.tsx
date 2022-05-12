@@ -10,31 +10,8 @@ import {
   ShowMoreAnnotationsButton,
 } from './components';
 import {useAnnotationPositions} from './hooks/useAnnotationPositions';
-import {COLLAPSED_PILL_COUNT, PILL_HEIGHT} from './constants';
-
-function shouldHideAnnotation({
-  row,
-  isShowingAllAnnotations,
-  rowCount,
-}: {
-  row: number;
-  isShowingAllAnnotations: boolean;
-  rowCount: number;
-}) {
-  if (isShowingAllAnnotations) {
-    return false;
-  }
-
-  if (rowCount === COLLAPSED_PILL_COUNT) {
-    return false;
-  }
-
-  if (rowCount > COLLAPSED_PILL_COUNT && row > COLLAPSED_PILL_COUNT - 1) {
-    return true;
-  }
-
-  return false;
-}
+import {PILL_HEIGHT} from './constants';
+import {shouldHideAnnotation} from './utilities/shouldHideAnnotation';
 
 interface Props {
   annotationsLookupTable: AnnotationLookupTable;
@@ -53,7 +30,7 @@ export function Annotations({
   theme,
   xScale,
 }: Props) {
-  const [hoveredIndex, setIsShowingContent] = useState(-1);
+  const [activeIndex, setActiveIndex] = useState(-1);
   const [isShowingAllAnnotations, setIsShowingAllAnnotations] = useState(false);
 
   const annotations = useMemo(() => {
@@ -88,7 +65,8 @@ export function Annotations({
           return null;
         }
 
-        const hideLabel = index === hoveredIndex && annotation.content != null;
+        const hasContent = annotation.content != null;
+        const hideLabel = index === activeIndex && hasContent;
 
         return (
           <React.Fragment key={`annotation${index}${annotation.startIndex}`}>
@@ -103,7 +81,7 @@ export function Annotations({
                 index={index}
                 label={annotation.label}
                 position={positions[index]}
-                setIsShowingContent={setIsShowingContent}
+                setActiveIndex={setActiveIndex}
                 theme={theme}
               />
             )}
@@ -118,12 +96,13 @@ export function Annotations({
           width={drawableWidth}
         />
       )}
-      {hoveredIndex !== -1 && (
+      {activeIndex !== -1 && (
         <AnnotationContent
-          annotation={annotations[hoveredIndex]}
+          annotation={annotations[activeIndex]}
           drawableWidth={drawableWidth}
-          onMouseLeave={() => setIsShowingContent(-1)}
-          position={positions[hoveredIndex]}
+          onMouseLeave={() => setActiveIndex(-1)}
+          position={positions[activeIndex]}
+          theme={theme}
         />
       )}
     </React.Fragment>

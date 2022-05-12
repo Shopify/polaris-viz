@@ -97,6 +97,7 @@ export interface YAxisTheme {
 export interface AnnotationsTheme {
   backgroundColor: string;
   textColor: string;
+  titleColor: string;
 }
 
 export interface ChartContainerTheme {
