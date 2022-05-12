@@ -28,6 +28,8 @@ export function AnnotationLabel({
     <g
       transform={`translate(${x},${y})`}
       onMouseEnter={() => setIsShowingContent(index)}
+      onFocus={() => setIsShowingContent(index)}
+      tabIndex={0}
     >
       <rect
         height={PILL_HEIGHT}
