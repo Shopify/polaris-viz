@@ -65,6 +65,7 @@ export interface GridTheme {
 
 export interface ArcTheme {
   cornerRadius: number;
+  thickness: number;
 }
 
 export interface BarTheme {

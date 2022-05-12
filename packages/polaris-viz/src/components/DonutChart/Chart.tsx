@@ -1,7 +1,11 @@
 import React from 'react';
 import {pie} from 'd3-shape';
 import {clamp, useTheme} from '@shopify/polaris-viz-core';
-import type {DataPoint, Dimensions} from '@shopify/polaris-viz-core';
+import type {
+  DataPoint,
+  DataSeries,
+  Dimensions,
+} from '@shopify/polaris-viz-core';
 
 import {classNames} from '../../utilities';
 import {ComparisonMetric, ComparisonMetricProps} from '../ComparisonMetric';
@@ -11,7 +15,7 @@ import styles from './DonutChart.scss';
 import {Arc} from './components';
 
 export interface ChartProps {
-  data: DataPoint[];
+  data: DataSeries[];
   accessibilityLabel?: string;
   comparisonMetric?: Omit<ComparisonMetricProps, 'theme'>;
   total?: number;
@@ -37,10 +41,16 @@ export function Chart({
   const createPie = pie<DataPoint>()
     .value(({value}) => value!)
     .sort(null);
-  const pieChartData = createPie(data);
+  const pieChartData = createPie(data.map((d) => d.data).flat());
   const emptyState = pieChartData.length === 0;
 
-  const totalValue = total || data.reduce((acc, {value}) => value! + acc, 0);
+  const totalValue =
+    total ||
+    data
+      .map((data) => data.data)
+      .flat()
+      .reduce((acc, {value}) => value! + acc, 0);
+
   const formattedValue = String(totalValue);
 
   return (
@@ -58,6 +68,7 @@ export function Chart({
                 endAngle={FULL_CIRCLE}
                 color={selectedTheme.grid.color}
                 cornerRadius={selectedTheme.arc.cornerRadius}
+                thickness={selectedTheme.arc.thickness}
               />
             </g>
           ) : (
@@ -75,6 +86,7 @@ export function Chart({
                     isOnlySegment={pieChartData.length === 1}
                     color={seriesColor[index]}
                     cornerRadius={selectedTheme.arc.cornerRadius}
+                    thickness={selectedTheme.arc.thickness}
                   />
                 </g>
               );
