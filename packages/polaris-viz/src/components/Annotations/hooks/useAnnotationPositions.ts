@@ -6,16 +6,20 @@ import {
 import type {ScaleBand} from 'd3-scale';
 import {useContext, useEffect, useMemo} from 'react';
 
-import {PILL_HEIGHT, PILL_PADDING} from '../constants';
+import {
+  COLLAPSED_PILL_COUNT,
+  PILL_HEIGHT,
+  PILL_PADDING,
+  PILL_ROW_GAP,
+} from '../constants';
 import type {Annotation} from '../../../types';
 import type {AnnotationPosition} from '../types';
-
-const ROW_GAP = 8;
 
 interface Props {
   annotations: Annotation[];
   barWidth: number;
   drawableWidth: number;
+  isShowingAllAnnotations: boolean;
   onHeightChange: (height: number) => void;
   xScale: ScaleBand<string>;
 }
@@ -24,9 +28,13 @@ export function useAnnotationPositions({
   annotations,
   barWidth,
   drawableWidth,
+  isShowingAllAnnotations,
   onHeightChange,
   xScale,
-}: Props): AnnotationPosition[] {
+}: Props): {
+  positions: AnnotationPosition[];
+  rowCount: number;
+} {
   const {characterWidths} = useContext(ChartContext);
 
   const textWidths = useMemo(() => {
@@ -35,7 +43,7 @@ export function useAnnotationPositions({
     });
   }, [annotations, characterWidths]);
 
-  const {positions, totalRowHeight} = useMemo(() => {
+  const {positions} = useMemo(() => {
     const positions = annotations.map((annotation, dataIndex) => {
       const xPosition = xScale(`${annotation.startIndex}`) ?? 0;
 
@@ -71,7 +79,7 @@ export function useAnnotationPositions({
         index: dataIndex,
         left,
         right,
-        row: 0,
+        row: 1,
         width,
         lineX: x,
         y: 0,
@@ -82,10 +90,11 @@ export function useAnnotationPositions({
       let checkAgain = false;
 
       [...Array.from({length: totalRows})].forEach((_, rowIndex) => {
+        const currentRow = rowIndex + 1;
         positions
-          .filter(({row}) => row === rowIndex)
+          .filter(({row}) => row === currentRow)
           .forEach((current, index, filtered) => {
-            const nextRow = rowIndex + 1;
+            const nextRow = currentRow + 1;
 
             const next = filtered[index + 1];
 
@@ -109,25 +118,37 @@ export function useAnnotationPositions({
     checkForSpace(1);
 
     positions.forEach((current) => {
-      current.y = current.row * PILL_HEIGHT + current.row * ROW_GAP;
+      const row = current.row - 1;
+      current.y = row * PILL_HEIGHT + row * PILL_ROW_GAP;
     });
 
-    const totalRowHeight =
-      positions.reduce((total, {y}) => {
+    return {positions};
+  }, [annotations, textWidths, barWidth, xScale, drawableWidth]);
+
+  const totalRowHeight = useMemo(() => {
+    return (
+      positions.reduce((total, {y, row}) => {
+        if (!isShowingAllAnnotations && row > COLLAPSED_PILL_COUNT) {
+          return total;
+        }
+
         if (y > total) {
           return y;
         }
         return total;
       }, 0) +
       PILL_HEIGHT +
-      ROW_GAP;
+      PILL_ROW_GAP
+    );
+  }, [isShowingAllAnnotations, positions]);
 
-    return {positions, totalRowHeight};
-  }, [annotations, textWidths, barWidth, xScale, drawableWidth]);
+  const rowCount = useMemo(() => {
+    return Math.max(...positions.map(({row}) => row)) + 1;
+  }, [positions]);
 
   useEffect(() => {
     onHeightChange(totalRowHeight);
   }, [onHeightChange, totalRowHeight]);
 
-  return positions;
+  return {positions, rowCount};
 }

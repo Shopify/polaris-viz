@@ -1,8 +1,7 @@
-import {clamp, useTheme} from '@shopify/polaris-viz-core';
+import {changeColorOpacity, clamp, useTheme} from '@shopify/polaris-viz-core';
 import React, {useEffect, useState} from 'react';
 
 import type {Annotation} from '../../../../types';
-import {changeColorOpacity} from '../../../../utilities';
 import type {AnnotationPosition} from '../../types';
 
 const MAX_WIDTH = 350;

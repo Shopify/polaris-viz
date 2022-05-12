@@ -431,42 +431,58 @@ function CustomContent() {
 }
 
 const ANNOTATIONS: Annotation[] = [
-  {
-    startIndex: 0,
-    label: 'GDPR rule change',
-    tooltipData: {
-      key: 'Median',
-      value: '1.5 hours',
-    },
-  },
-  {
-    startIndex: 2,
-    label: 'Constitution Day',
-    tooltipData: {
-      key: 'Median',
-      value: '1.5 hours',
-    },
-  },
-  {
-    startIndex: 5,
-    label: 'This one has custom content',
-    content: () => <CustomContent />,
-    tooltipData: {
-      key: 'Median',
-      value: '1.5 hours',
-    },
-  },
+  // {
+  //   startIndex: 0,
+  //   label: 'GDPR rule change',
+  //   tooltipData: {
+  //     key: 'Median',
+  //     value: '1.5 hours',
+  //   },
+  // },
+  // {
+  //   startIndex: 2,
+  //   label: 'Constitution Day',
+  //   tooltipData: {
+  //     key: 'Median',
+  //     value: '1.5 hours',
+  //   },
+  // },
+  // {
+  //   startIndex: 5,
+  //   label: 'This one has custom content',
+  //   content: () => <CustomContent />,
+  //   tooltipData: {
+  //     key: 'Median',
+  //     value: '1.5 hours',
+  //   },
+  // },
+  // {
+  //   startIndex: 1,
+  //   label: 'One more',
+  // },
+  // {
+  //   startIndex: 2,
+  //   label: 'One more',
+  // },
+  // {
+  //   startIndex: 4,
+  //   label: 'One more',
+  // },
   {
     startIndex: 1,
-    label: 'One more',
+    label: 'First Pill, really long title',
   },
   {
     startIndex: 2,
-    label: 'One more',
+    label: 'Second Pill',
+  },
+  {
+    startIndex: 3,
+    label: 'Third Pill, really really long title',
   },
   {
     startIndex: 4,
-    label: 'One more',
+    label: 'Fourth Pill',
   },
 ];
 
