@@ -7,6 +7,7 @@ import type {
 
 import {useTheme, useThemeSeriesColors} from '../../hooks';
 import {ChartContainer} from '../../components/ChartContainer';
+import {getYAxisOptionsWithDefaults} from '../../utilities';
 
 import {Chart} from './Chart';
 
@@ -37,11 +38,8 @@ export function FunnelChart({
     ...xAxisOptions,
   };
 
-  const yAxisOptionsForChart: Required<YAxisOptions> = {
-    labelFormatter: (value: number) => value.toString(),
-    integersOnly: false,
-    ...yAxisOptions,
-  };
+  const yAxisOptionsForChart: Required<YAxisOptions> =
+    getYAxisOptionsWithDefaults(yAxisOptions);
 
   return (
     <ChartContainer theme={theme}>
