@@ -418,45 +418,22 @@ SeriesColorsUpToFourteen.args = {
   data: generateMultipleSeries(7),
 };
 
-function CustomContent() {
-  return (
-    <div>
-      <h1>Custom Content</h1>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-        elementum, ipsum id semper dictum, ipsum nisi consectetur lacus, sed
-        pretium massa nisi ac ipsum.
-      </p>
-      <a href="https://www.google.com">Google</a>
-    </div>
-  );
-}
-
 const ANNOTATIONS: Annotation[] = [
   {
-    startIndex: 0,
-    label: 'GDPR rule change',
-  },
-  {
-    startIndex: 2,
-    label: 'Constitution Day',
-  },
-  {
-    startIndex: 5,
-    label: 'This one has custom content',
-    content: () => <CustomContent />,
-  },
-  {
     startIndex: 1,
-    label: 'One more',
+    label: 'First Pill, really long title',
   },
   {
     startIndex: 2,
-    label: 'One more',
+    label: 'Second Pill',
+  },
+  {
+    startIndex: 3,
+    label: 'Third Pill, really really long title',
   },
   {
     startIndex: 4,
-    label: 'One more',
+    label: 'Fourth Pill',
   },
 ];
 
