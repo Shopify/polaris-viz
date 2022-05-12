@@ -4,6 +4,8 @@ import React, {useEffect, useState} from 'react';
 import type {Annotation} from '../../../../types';
 import type {AnnotationPosition} from '../../types';
 
+import styles from './AnnotationContent.scss';
+
 const MAX_WIDTH = 350;
 
 interface Props {
@@ -34,6 +36,8 @@ export function AnnotationContent({
     return null;
   }
 
+  const {content, title, linkText = 'Learn more', linkUrl} = annotation.content;
+
   const width = bounds?.width ?? 0;
   let x = position.line.x - width / 2;
 
@@ -55,6 +59,7 @@ export function AnnotationContent({
         }}
       >
         <div
+          className={styles.Container}
           data-block-tooltip-events
           onMouseLeave={onMouseLeave}
           ref={setRef}
@@ -64,11 +69,28 @@ export function AnnotationContent({
               selectedTheme.annotations.backgroundColor,
               0.85,
             ),
-            pointerEvents: 'auto',
-            backdropFilter: 'blur(5px)',
           }}
         >
-          {annotation.content()}
+          {title != null && (
+            <p
+              className={styles.Title}
+              style={{color: selectedTheme.annotations.titleColor}}
+            >
+              {title}
+            </p>
+          )}
+          <p
+            className={styles.Content}
+            style={{color: selectedTheme.annotations.textColor}}
+          >
+            {content}
+
+            {linkUrl != null && (
+              <a href={linkUrl} className={styles.Link}>
+                {linkText}
+              </a>
+            )}
+          </p>
         </div>
       </div>
     </foreignObject>
