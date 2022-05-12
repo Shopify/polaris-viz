@@ -169,7 +169,6 @@ export const DEFAULT_THEME: Theme = {
     showTicks: false,
     labelColor: variables.colorGray30,
     hide: false,
-    labelColorLight: variables.colorGray70,
   },
   yAxis: {
     backgroundColor: variables.colorGray160,

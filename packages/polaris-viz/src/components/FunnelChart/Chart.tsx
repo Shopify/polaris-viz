@@ -235,7 +235,7 @@ export function Chart({
               x={x + barWidth}
               y={height - nextBarHeight - PERCENT_LABEL_VERTICAL_OFFSET}
               size="small"
-              color={selectedTheme.xAxis.labelColorLight}
+              color={changeColorOpacity(selectedTheme.xAxis.labelColor, 0.7)}
             />
           </React.Fragment>
         );
