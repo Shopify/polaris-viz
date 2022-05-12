@@ -31,7 +31,7 @@ const data = [
         key: 'Added to carts',
       },
       {
-        value: 4,
+        value: 0,
         key: 'Orders',
       },
     ],

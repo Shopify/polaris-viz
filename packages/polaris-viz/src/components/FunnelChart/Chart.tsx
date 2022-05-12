@@ -10,11 +10,12 @@ import {
   LinearGradientWithStops,
   GradientStop,
   RoundedBorder,
+  useTheme,
 } from '@shopify/polaris-viz-core';
 
 import {BarChartXAxisLabels} from '../BarChartXAxisLabels';
 import {Bar} from '../shared';
-import {useTheme, useReducedLabelIndexes} from '../../hooks';
+import {useReducedLabelIndexes} from '../../hooks';
 import {getAverageColor, changeColorOpacity} from '../../utilities';
 import {
   BAR_CONTAINER_TEXT_HEIGHT,
@@ -22,16 +23,17 @@ import {
   MASK_HIGHLIGHT_COLOR,
   MIN_BAR_HEIGHT,
   Y_AXIS_LABEL_VERTICAL_OFFSET,
+  PERCENT_LABEL_VERTICAL_OFFSET,
 } from '../../constants';
 
 import {Label} from './Label';
 
 export interface ChartProps {
   data: DataSeries[];
-  dimensions?: Dimensions;
   xAxisOptions: Required<XAxisOptions>;
-  yAxisOptions?: Required<YAxisOptions>;
+  yAxisOptions: Required<YAxisOptions>;
   theme?: string;
+  dimensions?: Dimensions;
 }
 
 export function Chart({
@@ -46,6 +48,8 @@ export function Chart({
 
   const xValues = dataSeries.map(({key}) => key) as string[];
   const yValues = dataSeries.map(({value}) => value) as [number, number];
+
+  const selectedTheme = useTheme(theme);
 
   const {width, height} = dimensions || {width: 0, height: 0};
 
@@ -116,7 +120,14 @@ export function Chart({
 
   const gradientId = useMemo(() => uniqueId('gradient'), []);
   const maskId = useMemo(() => uniqueId('mask'), []);
-
+  const handlePercentLabelFormatter = (percentCalculation) => {
+    const percentRounded = Math.round(percentCalculation);
+    if (percentCalculation) {
+      return `${yAxisOptions.labelFormatter(percentRounded)}%`;
+    } else {
+      return '';
+    }
+  };
   return (
     <svg role="list" viewBox={`0 0 ${width} ${height}`} xmlns={XMLNS}>
       <BarChartXAxisLabels
@@ -148,7 +159,6 @@ export function Chart({
           const xPosition = xScale(dataPoint.key as string);
           const x = xPosition == null ? 0 : xPosition;
           const barWidth = xScale.bandwidth();
-
           return (
             <React.Fragment key={dataPoint.key}>
               <Bar
@@ -170,18 +180,25 @@ export function Chart({
         const x = xPosition == null ? 0 : xPosition;
         const nextBarHeight = getBarHeight(nextPoint?.value || 0);
         const yAxisValue = dataPoint.value;
+        const percentCalculation =
+          nextPoint?.value && yAxisValue
+            ? (nextPoint.value / yAxisValue) * 100
+            : 0;
+
+        const percentLabel = handlePercentLabelFormatter(percentCalculation);
         const barHeight = getBarHeight(dataPoint.value || 0);
-        const formattedYValue = yAxisOptions?.labelFormatter(yAxisValue) || '';
+        const formattedYValue = yAxisOptions?.labelFormatter(yAxisValue) || '0';
 
         return (
           <React.Fragment key={dataPoint.key}>
             <Label
               barHeight={0}
-              theme={theme}
               label={formattedYValue}
               labelWidth={barWidth}
               x={x}
               y={height - barHeight - Y_AXIS_LABEL_VERTICAL_OFFSET}
+              size="large"
+              color={selectedTheme.xAxis.labelColor}
             />
             <g mask={`url(#${connectorGradientId}-${index})`}>
               <LinearGradientWithStops
@@ -211,6 +228,15 @@ export function Chart({
                 nextPoint={nextPoint}
               />
             </mask>
+            <Label
+              barHeight={0}
+              label={percentLabel}
+              labelWidth={barWidth}
+              x={x + barWidth}
+              y={height - nextBarHeight - PERCENT_LABEL_VERTICAL_OFFSET}
+              size="small"
+              color={changeColorOpacity(selectedTheme.xAxis.labelColor, 0.7)}
+            />
           </React.Fragment>
         );
       })}
