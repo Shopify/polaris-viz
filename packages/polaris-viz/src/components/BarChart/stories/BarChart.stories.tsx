@@ -420,20 +420,54 @@ SeriesColorsUpToFourteen.args = {
 
 const ANNOTATIONS: Annotation[] = [
   {
-    startIndex: 1,
-    label: 'First Pill, really long title',
+    startIndex: 0,
+    label: 'Content and title',
+    tooltipData: {
+      key: 'Median',
+      value: '1.5 hours',
+    },
+    content: {
+      title: 'GDPR rule change',
+      content:
+        'New GDPR rules that prevent the unauthorized tracking of user sessions came into effect on Thursday, June 1.',
+    },
   },
   {
     startIndex: 2,
-    label: 'Second Pill',
+    label: 'Title, content and no link string',
+    tooltipData: {
+      key: 'Median',
+      value: '1.5 hours',
+    },
+    content: {
+      title: 'GDPR rule change',
+      content:
+        'New GDPR rules that prevent the unauthorized tracking of user sessions came into effect on Thursday, June 1.',
+      linkUrl: 'https://shopify.com',
+    },
   },
   {
-    startIndex: 3,
-    label: 'Third Pill, really really long title',
+    startIndex: 5,
+    label: 'Just content',
+    content: {
+      content:
+        'New GDPR rules that prevent the unauthorized tracking of user sessions came into effect on Thursday, June 1.',
+    },
+    tooltipData: {
+      key: 'Median',
+      value: '1.5 hours',
+    },
   },
   {
-    startIndex: 4,
-    label: 'Fourth Pill',
+    startIndex: 1,
+    label: 'This has everything',
+    content: {
+      title: 'GDPR rule change',
+      content:
+        'New GDPR rules that prevent the unauthorized tracking of user sessions came into effect on Thursday, June 1.',
+      linkUrl: 'https://shopify.com',
+      linkText: 'Custom link text',
+    },
   },
 ];
 
