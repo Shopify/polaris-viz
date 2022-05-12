@@ -122,7 +122,12 @@ export interface Annotation {
   label: string;
   startIndex: number;
   endIndex?: number;
-  content?: () => ReactNode;
+  content?: {
+    content: string;
+    linkText?: string;
+    linkUrl?: string;
+    title?: string;
+  };
   tooltipData?: {
     key: string;
     value: string;

@@ -197,6 +197,7 @@ export const DEFAULT_THEME: Theme = {
   annotations: {
     backgroundColor: variables.colorGray140,
     textColor: variables.colorGray30,
+    titleColor: variables.colorGray00,
   },
 };
 
@@ -297,6 +298,7 @@ export const LIGHT_THEME: Theme = {
   annotations: {
     backgroundColor: variables.colorGray30,
     textColor: variables.colorGray100,
+    titleColor: variables.colorGray130,
   },
 };
 

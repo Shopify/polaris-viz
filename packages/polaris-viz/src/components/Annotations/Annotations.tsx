@@ -62,7 +62,7 @@ export function Annotations({
 }: Props) {
   const selectedTheme = useTheme(theme);
   const gradientId = useMemo(() => uniqueId('annotation-line-gradient-'), []);
-  const [hoveredIndex, setIsShowingContent] = useState(-1);
+  const [activeIndex, setActiveIndex] = useState(-1);
   const [isShowingAllAnnotations, setIsShowingAllAnnotations] = useState(false);
 
   const annotations = useMemo(() => {
@@ -116,7 +116,8 @@ export function Annotations({
           return null;
         }
 
-        const hideLabel = index === hoveredIndex && annotation.content != null;
+        const hasContent = annotation.content != null;
+        const hideLabel = index === activeIndex && hasContent;
 
         return (
           <React.Fragment key={`annotation${index}${annotation.startIndex}`}>
@@ -132,7 +133,7 @@ export function Annotations({
                 index={index}
                 label={annotation.label}
                 position={positions[index]}
-                setIsShowingContent={setIsShowingContent}
+                setActiveIndex={setActiveIndex}
                 theme={theme}
               />
             )}
@@ -147,12 +148,13 @@ export function Annotations({
           width={drawableWidth}
         />
       )}
-      {hoveredIndex !== -1 && (
+      {activeIndex !== -1 && (
         <AnnotationContent
-          annotation={annotations[hoveredIndex]}
+          annotation={annotations[activeIndex]}
           drawableWidth={drawableWidth}
-          onMouseLeave={() => setIsShowingContent(-1)}
-          position={positions[hoveredIndex]}
+          onMouseLeave={() => setActiveIndex(-1)}
+          position={positions[activeIndex]}
+          theme={theme}
         />
       )}
     </React.Fragment>
