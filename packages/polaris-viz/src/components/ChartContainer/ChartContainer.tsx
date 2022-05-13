@@ -20,6 +20,14 @@ import {
 
 import styles from './ChartContainer.scss';
 
+function hasValidDimensions(chartDimensions: Dimensions | null) {
+  if (chartDimensions == null) {
+    return false;
+  }
+
+  return chartDimensions.width > 0 || chartDimensions.height > 0;
+}
+
 interface Props {
   children: ReactElement;
   theme: string;
@@ -110,13 +118,13 @@ export const ChartContainer = (props: Props) => {
         ref={setRef}
         id={`chart_${value.id}`}
       >
-        {chartDimensions == null
+        {!hasValidDimensions(chartDimensions)
           ? null
           : cloneElement<{theme: string; dimensions: Dimensions}>(
               props.children,
               {
                 theme: printFriendlyTheme,
-                dimensions: chartDimensions,
+                dimensions: chartDimensions!,
               },
             )}
       </div>
