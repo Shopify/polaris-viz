@@ -14,6 +14,12 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Changed
 
 - Fix issue where `<SparkLineChart />` doesn't go to the containers right edge.
+- Changed `line.sparkArea` to `line.hasArea` from line theme.
+- `line.hasArea` now accepts a boolean to determine when we render the area below a line series.
+
+### Removed
+
+- Removed `line.style` & `line.hasPoint` from line theme.
 
 ## [1.5.0] - 2022-05-04
 

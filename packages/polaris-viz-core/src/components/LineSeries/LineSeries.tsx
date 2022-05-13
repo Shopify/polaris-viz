@@ -203,7 +203,9 @@ export function LineSeries({
           </Mask>
         </Defs>
 
-        <Area series={data} areaPath={areaPath} type={type} />
+        {selectedTheme.line.hasArea && (
+          <Area series={data} areaPath={areaPath} type={type} />
+        )}
 
         <Rect
           x="0"

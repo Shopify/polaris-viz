@@ -148,15 +148,10 @@ export const DEFAULT_THEME: Theme = {
     minHeight: 200,
   },
   line: {
-    sparkArea: [
-      {offset: 0, color: 'rgba(92, 105, 208, 0)'},
-      {offset: 100, color: 'rgba(92, 105, 208, 0.15)'},
-    ],
+    hasArea: true,
     hasSpline: true,
-    style: 'solid',
-    hasPoint: true,
     width: 2,
-    pointStroke: variables.colorGray160,
+    pointStroke: 'variables.colorGray160',
   },
   bar: {
     hasRoundedCorners: true,
@@ -244,13 +239,8 @@ export const LIGHT_THEME: Theme = {
     backgroundColor: variables.colorGray00,
   },
   line: {
-    sparkArea: [
-      {offset: 0, color: 'rgba(92, 105, 208, 0)'},
-      {offset: 100, color: 'rgba(92, 105, 208, 0.15)'},
-    ],
+    hasArea: true,
     hasSpline: true,
-    style: 'solid',
-    hasPoint: true,
     width: 2,
     pointStroke: variables.colorGray00,
   },
