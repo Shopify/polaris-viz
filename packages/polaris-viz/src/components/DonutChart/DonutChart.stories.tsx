@@ -41,9 +41,17 @@ export const Default = Template.bind({});
 
 Default.args = {
   data: [
-    {key: 'Shopify Payments', value: 50000},
-    {key: 'PayPal', value: 25000},
-    {key: 'Other', value: 10000},
-    {key: 'Amazon Pay', value: 4000},
+    {
+      data: [{key: 'Shopify Payments', value: 50000}],
+    },
+    {
+      data: [{key: 'PayPal', value: 25000}],
+    },
+    {
+      data: [{key: 'Other', value: 10000}],
+    },
+    {
+      data: [{key: 'Amazon Pay', value: 4000}],
+    },
   ],
 };

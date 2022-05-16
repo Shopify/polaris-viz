@@ -1,7 +1,11 @@
 import React from 'react';
 import {pie} from 'd3-shape';
 import {clamp, useTheme} from '@shopify/polaris-viz-core';
-import type {DataPoint, Dimensions} from '@shopify/polaris-viz-core';
+import type {
+  DataPoint,
+  DataSeries,
+  Dimensions,
+} from '@shopify/polaris-viz-core';
 
 import {classNames} from '../../utilities';
 import {ComparisonMetric, ComparisonMetricProps} from '../ComparisonMetric';
@@ -11,7 +15,7 @@ import styles from './DonutChart.scss';
 import {Arc} from './components';
 
 export interface ChartProps {
-  data: DataPoint[];
+  data: DataSeries[];
   accessibilityLabel?: string;
   comparisonMetric?: Omit<ComparisonMetricProps, 'theme'>;
   total?: number;
@@ -33,14 +37,20 @@ export function Chart({
   const selectedTheme = useTheme(theme);
   const seriesCount = clamp({amount: data.length, min: 1, max: Infinity});
   const seriesColor = getSeriesColors(seriesCount, selectedTheme);
+  const points: DataPoint[] = data.reduce(
+    (prev: DataPoint[], {data}) => prev.concat(data),
+    [],
+  );
 
   const createPie = pie<DataPoint>()
     .value(({value}) => value!)
     .sort(null);
-  const pieChartData = createPie(data);
+  const pieChartData = createPie(points);
   const emptyState = pieChartData.length === 0;
 
-  const totalValue = total || data.reduce((acc, {value}) => value! + acc, 0);
+  const totalValue =
+    total || points.reduce((acc, {value}) => (value ?? 0) + acc, 0);
+
   const formattedValue = String(totalValue);
 
   return (
@@ -57,6 +67,8 @@ export function Chart({
                 startAngle={0}
                 endAngle={FULL_CIRCLE}
                 color={selectedTheme.grid.color}
+                cornerRadius={selectedTheme.arc.cornerRadius}
+                thickness={selectedTheme.arc.thickness}
               />
             </g>
           ) : (
@@ -73,6 +85,8 @@ export function Chart({
                     endAngle={endAngle}
                     isOnlySegment={pieChartData.length === 1}
                     color={seriesColor[index]}
+                    cornerRadius={selectedTheme.arc.cornerRadius}
+                    thickness={selectedTheme.arc.thickness}
                   />
                 </g>
               );
