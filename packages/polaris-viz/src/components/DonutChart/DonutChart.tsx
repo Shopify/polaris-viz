@@ -1,12 +1,12 @@
 import React from 'react';
-import type {DataPoint} from '@shopify/polaris-viz-core';
+import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {ChartContainer} from '../ChartContainer';
 
 import {Chart} from './Chart';
 
 export interface DonutChartProps {
-  data: DataPoint[];
+  data: DataSeries[];
   theme?: string;
 }
 

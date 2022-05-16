@@ -4,11 +4,7 @@ import {uniqueId} from '@shopify/polaris-viz-core';
 import type {Color, GradientStop} from '@shopify/polaris-viz-core';
 
 import {classNames} from '../../../../utilities';
-import {
-  ARC_CORNER_RADIUS,
-  ARC_PAD_ANGLE,
-  DONUT_CHART_THICKNESS,
-} from '../../constants';
+import {ARC_PAD_ANGLE} from '../../constants';
 
 import styles from './Arc.scss';
 
@@ -20,6 +16,8 @@ export interface ArcProps {
   endAngle: number;
   isOnlySegment?: boolean;
   color: Color;
+  cornerRadius: number;
+  thickness: number;
 }
 
 export function Arc({
@@ -30,16 +28,18 @@ export function Arc({
   endAngle,
   isOnlySegment,
   color,
+  cornerRadius,
+  thickness,
 }: ArcProps) {
   const firstColor = (color[0] as GradientStop).color;
   const gradientId = useMemo(() => uniqueId('DonutChart'), []);
 
   const lastColor = (color[color.length - 1] as GradientStop).color;
 
-  const createArc = arc().cornerRadius(ARC_CORNER_RADIUS);
+  const createArc = arc().cornerRadius(cornerRadius);
 
   const arcOptions = {
-    innerRadius: radius - DONUT_CHART_THICKNESS,
+    innerRadius: radius - thickness,
     outerRadius: radius,
     startAngle,
     endAngle,
