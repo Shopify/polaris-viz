@@ -37,19 +37,19 @@ export function Chart({
   const selectedTheme = useTheme(theme);
   const seriesCount = clamp({amount: data.length, min: 1, max: Infinity});
   const seriesColor = getSeriesColors(seriesCount, selectedTheme);
+  const points: DataPoint[] = data.reduce(
+    (prev: DataPoint[], {data}) => prev.concat(data),
+    [],
+  );
 
   const createPie = pie<DataPoint>()
     .value(({value}) => value!)
     .sort(null);
-  const pieChartData = createPie(data.map((d) => d.data).flat());
+  const pieChartData = createPie(points);
   const emptyState = pieChartData.length === 0;
 
   const totalValue =
-    total ||
-    data
-      .map((data) => data.data)
-      .flat()
-      .reduce((acc, {value}) => value! + acc, 0);
+    total || points.reduce((acc, {value}) => (value ?? 0) + acc, 0);
 
   const formattedValue = String(totalValue);
 
