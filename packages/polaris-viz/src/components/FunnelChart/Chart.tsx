@@ -9,14 +9,15 @@ import {
   isGradientType,
   LinearGradientWithStops,
   GradientStop,
-  RoundedBorder,
+  BORDER_RADIUS,
   useTheme,
+  getAverageColor,
+  changeColorOpacity,
 } from '@shopify/polaris-viz-core';
 
 import {BarChartXAxisLabels} from '../BarChartXAxisLabels';
 import {Bar} from '../shared';
 import {useReducedLabelIndexes} from '../../hooks';
-import {getAverageColor, changeColorOpacity} from '../../utilities';
 import {
   BAR_CONTAINER_TEXT_HEIGHT,
   XMLNS,
@@ -167,7 +168,7 @@ export function Chart({
                 color={MASK_HIGHLIGHT_COLOR}
                 x={x}
                 y={drawableHeight - barHeight}
-                roundedBorder={RoundedBorder.Top}
+                borderRadius={BORDER_RADIUS.Top}
               />
             </React.Fragment>
           );
