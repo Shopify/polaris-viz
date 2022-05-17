@@ -98,10 +98,8 @@ export interface ChartContainerTheme {
 }
 
 export interface LineTheme {
-  sparkArea: Color | null;
+  hasArea: boolean;
   hasSpline: boolean;
-  style: LineStyle;
-  hasPoint: boolean;
   width: number;
   pointStroke: string;
 }
