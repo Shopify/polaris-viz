@@ -11,12 +11,13 @@ import {
   GradientStop,
   BORDER_RADIUS,
   useTheme,
+  getAverageColor,
+  changeColorOpacity,
 } from '@shopify/polaris-viz-core';
 
 import {BarChartXAxisLabels} from '../BarChartXAxisLabels';
 import {Bar} from '../shared';
 import {useReducedLabelIndexes} from '../../hooks';
-import {getAverageColor, changeColorOpacity} from '../../utilities';
 import {
   BAR_CONTAINER_TEXT_HEIGHT,
   XMLNS,
