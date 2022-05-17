@@ -9,7 +9,7 @@ import {
   isGradientType,
   LinearGradientWithStops,
   GradientStop,
-  RoundedBorder,
+  BORDER_RADIUS,
   useTheme,
 } from '@shopify/polaris-viz-core';
 
@@ -167,7 +167,7 @@ export function Chart({
                 color={MASK_HIGHLIGHT_COLOR}
                 x={x}
                 y={drawableHeight - barHeight}
-                roundedBorder={RoundedBorder.Top}
+                borderRadius={BORDER_RADIUS.Top}
               />
             </React.Fragment>
           );
