@@ -312,13 +312,16 @@ export function Chart({
         </g>
         <g transform={`translate(${chartXPosition},${Margin.Top})`}>
           <Annotations
+            annotationsHeight={annotationsHeight}
             annotationsLookupTable={annotationsLookupTable}
-            barWidth={xScale.bandwidth()}
+            colors={barColors}
+            data={data}
             drawableHeight={chartYPosition + drawableHeight}
             drawableWidth={drawableWidth}
             onHeightChange={setAnnotationsHeight}
             theme={theme}
             xScale={xScale}
+            yScale={yScale}
           />
         </g>
       </svg>

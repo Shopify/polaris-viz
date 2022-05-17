@@ -1,12 +1,8 @@
-import React, {useMemo, useState} from 'react';
-import {
-  LinearGradientWithStops,
-  uniqueId,
-  useTheme,
-} from '@shopify/polaris-viz-core';
-import type {ScaleBand} from 'd3-scale';
+import React, {useEffect, useMemo, useState} from 'react';
+import type {Color, DataSeries} from '@shopify/polaris-viz-core';
+import type {ScaleBand, ScaleLinear} from 'd3-scale';
 
-import type {Annotation, AnnotationLookupTable} from '../../types';
+import type {AnnotationLookupTable} from '../../types';
 
 import {
   AnnotationLabel,
@@ -14,8 +10,8 @@ import {
   AnnotationContent,
   ShowMoreAnnotationsButton,
 } from './components';
-import {useAnnotationPositions} from './hooks/useAnnotationPositions';
-import {COLLAPSED_PILL_COUNT, PILL_HEIGHT} from './constants';
+import {COLLAPSED_PILL_COUNT, PILL_HEIGHT, PILL_ROW_GAP} from './constants';
+import {useAnnotations} from './hooks/useAnnotations';
 
 function shouldHideAnnotation({
   row,
@@ -42,77 +38,81 @@ function shouldHideAnnotation({
 }
 
 interface Props {
+  annotationsHeight: number;
   annotationsLookupTable: AnnotationLookupTable;
-  barWidth: number;
+  colors: Color[];
+  data: DataSeries[];
   drawableHeight: number;
   drawableWidth: number;
   onHeightChange: (height: number) => void;
   xScale: ScaleBand<string>;
+  yScale: ScaleLinear<number, number>;
   theme?: string;
 }
 
 export function Annotations({
+  annotationsHeight,
   annotationsLookupTable,
-  barWidth,
+  colors,
+  data,
   drawableHeight,
   drawableWidth,
   onHeightChange,
   theme,
   xScale,
+  yScale,
 }: Props) {
-  const selectedTheme = useTheme(theme);
-  const gradientId = useMemo(() => uniqueId('annotation-line-gradient-'), []);
   const [activeIndex, setActiveIndex] = useState(-1);
   const [isShowingAllAnnotations, setIsShowingAllAnnotations] = useState(false);
 
-  const annotations = useMemo(() => {
-    return Object.keys(annotationsLookupTable)
-      .map((key) => {
-        const annotation = annotationsLookupTable[Number(key)];
+  const {annotations, positions} = useAnnotations({
+    annotationsHeight,
+    annotationsLookupTable,
+    barWidth: xScale.bandwidth(),
+    colors,
+    data,
+    drawableHeight,
+    drawableWidth,
+    theme,
+    xScale,
+    yScale,
+  });
 
-        if (annotation == null) {
-          return null;
+  const totalRowHeight = useMemo(() => {
+    return (
+      positions.reduce((total, {y, row}) => {
+        if (!isShowingAllAnnotations && row > COLLAPSED_PILL_COUNT) {
+          return total;
         }
 
-        return annotation;
-      })
-      .filter(Boolean) as Annotation[];
-  }, [annotationsLookupTable]);
+        if (y > total) {
+          return y;
+        }
+        return total;
+      }, 0) +
+      PILL_HEIGHT +
+      PILL_ROW_GAP
+    );
+  }, [isShowingAllAnnotations, positions]);
 
-  const {positions, rowCount} = useAnnotationPositions({
-    annotations,
-    barWidth,
-    drawableWidth,
-    isShowingAllAnnotations,
-    onHeightChange,
-    xScale,
-  });
+  const rowCount = useMemo(() => {
+    return Math.max(...positions.map(({row}) => row)) + 1;
+  }, [positions]);
+
+  useEffect(() => {
+    onHeightChange(totalRowHeight);
+  }, [onHeightChange, totalRowHeight]);
 
   return (
     <React.Fragment>
-      <defs>
-        <LinearGradientWithStops
-          gradient={[
-            {
-              offset: 0,
-              color: selectedTheme.annotations.backgroundColor,
-            },
-            {
-              offset: 100,
-              color: selectedTheme.annotations.backgroundColor,
-              stopOpacity: 0,
-            },
-          ]}
-          id={gradientId}
-          gradientUnits="userSpaceOnUse"
-          y1="0%"
-          y2="100%"
-        />
-      </defs>
       {annotations.map((annotation, index) => {
-        const {lineX, y, row} = positions[index];
-
-        if (shouldHideAnnotation({row, isShowingAllAnnotations, rowCount})) {
+        if (
+          shouldHideAnnotation({
+            row: annotation.position.row,
+            isShowingAllAnnotations,
+            rowCount,
+          })
+        ) {
           return null;
         }
 
@@ -121,18 +121,12 @@ export function Annotations({
 
         return (
           <React.Fragment key={`annotation${index}${annotation.startIndex}`}>
-            <AnnotationLine
-              color={`url(#${gradientId})`}
-              drawableSize={drawableHeight}
-              theme={theme}
-              x={lineX}
-              y={y + PILL_HEIGHT}
-            />
+            <AnnotationLine line={annotation.line} theme={theme} />
             {!hideLabel && (
               <AnnotationLabel
                 index={index}
                 label={annotation.label}
-                position={positions[index]}
+                position={annotation.position}
                 setActiveIndex={setActiveIndex}
                 theme={theme}
               />

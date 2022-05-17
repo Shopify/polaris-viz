@@ -1,26 +1,18 @@
+import {useContext, useMemo} from 'react';
 import {
   ChartContext,
   clamp,
   estimateStringWidth,
 } from '@shopify/polaris-viz-core';
 import type {ScaleBand} from 'd3-scale';
-import {useContext, useEffect, useMemo} from 'react';
 
-import {
-  COLLAPSED_PILL_COUNT,
-  PILL_HEIGHT,
-  PILL_PADDING,
-  PILL_ROW_GAP,
-} from '../constants';
+import {PILL_HEIGHT, PILL_PADDING, PILL_ROW_GAP} from '../constants';
 import type {Annotation} from '../../../types';
-import type {AnnotationPosition} from '../types';
 
 interface Props {
   annotations: Annotation[];
   barWidth: number;
   drawableWidth: number;
-  isShowingAllAnnotations: boolean;
-  onHeightChange: (height: number) => void;
   xScale: ScaleBand<string>;
 }
 
@@ -28,13 +20,8 @@ export function useAnnotationPositions({
   annotations,
   barWidth,
   drawableWidth,
-  isShowingAllAnnotations,
-  onHeightChange,
   xScale,
-}: Props): {
-  positions: AnnotationPosition[];
-  rowCount: number;
-} {
+}: Props) {
   const {characterWidths} = useContext(ChartContext);
 
   const textWidths = useMemo(() => {
@@ -43,7 +30,7 @@ export function useAnnotationPositions({
     });
   }, [annotations, characterWidths]);
 
-  const {positions} = useMemo(() => {
+  return useMemo(() => {
     const positions = annotations.map((annotation, dataIndex) => {
       const xPosition = xScale(`${annotation.startIndex}`) ?? 0;
 
@@ -122,33 +109,6 @@ export function useAnnotationPositions({
       current.y = row * PILL_HEIGHT + row * PILL_ROW_GAP;
     });
 
-    return {positions};
+    return positions;
   }, [annotations, textWidths, barWidth, xScale, drawableWidth]);
-
-  const totalRowHeight = useMemo(() => {
-    return (
-      positions.reduce((total, {y, row}) => {
-        if (!isShowingAllAnnotations && row > COLLAPSED_PILL_COUNT) {
-          return total;
-        }
-
-        if (y > total) {
-          return y;
-        }
-        return total;
-      }, 0) +
-      PILL_HEIGHT +
-      PILL_ROW_GAP
-    );
-  }, [isShowingAllAnnotations, positions]);
-
-  const rowCount = useMemo(() => {
-    return Math.max(...positions.map(({row}) => row)) + 1;
-  }, [positions]);
-
-  useEffect(() => {
-    onHeightChange(totalRowHeight);
-  }, [onHeightChange, totalRowHeight]);
-
-  return {positions, rowCount};
 }

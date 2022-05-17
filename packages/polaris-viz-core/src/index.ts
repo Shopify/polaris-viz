@@ -95,6 +95,7 @@ export {
   changeColorOpacity,
   changeGradientOpacity,
   getAverageColor,
+  getColorFromGradient,
 } from './utilities';
 export {
   useSparkBar,

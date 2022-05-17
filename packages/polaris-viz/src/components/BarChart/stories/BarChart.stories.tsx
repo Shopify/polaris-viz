@@ -3,7 +3,6 @@ import type {Story, Meta} from '@storybook/react';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {BarChart, BarChartProps} from '../../../components';
-import type {Annotation} from '../../../types';
 
 import {SquareColorPreview} from '../../SquareColorPreview';
 import {PolarisVizProvider} from '../../../';
@@ -414,81 +413,4 @@ export const SeriesColorsUpToFourteen = Template.bind({});
 
 SeriesColorsUpToFourteen.args = {
   data: generateMultipleSeries(7),
-};
-
-function CustomContent() {
-  return (
-    <div>
-      <h1>Custom Content</h1>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-        elementum, ipsum id semper dictum, ipsum nisi consectetur lacus, sed
-        pretium massa nisi ac ipsum.
-      </p>
-      <a href="https://www.google.com">Google</a>
-    </div>
-  );
-}
-
-const ANNOTATIONS: Annotation[] = [
-  {
-    startIndex: 0,
-    label: 'Content and title',
-    tooltipData: {
-      key: 'Median',
-      value: '1.5 hours',
-    },
-    content: {
-      title: 'GDPR rule change',
-      content:
-        'New GDPR rules that prevent the unauthorized tracking of user sessions came into effect on Thursday, June 1.',
-    },
-  },
-  {
-    startIndex: 2,
-    label: 'Title, content and no link string',
-    tooltipData: {
-      key: 'Median',
-      value: '1.5 hours',
-    },
-    content: {
-      title: 'GDPR rule change',
-      content:
-        'New GDPR rules that prevent the unauthorized tracking of user sessions came into effect on Thursday, June 1.',
-      linkUrl: 'https://shopify.com',
-    },
-  },
-  {
-    startIndex: 5,
-    label: 'Just content',
-    content: {
-      content:
-        'New GDPR rules that prevent the unauthorized tracking of user sessions came into effect on Thursday, June 1.',
-    },
-    tooltipData: {
-      key: 'Median',
-      value: '1.5 hours',
-    },
-  },
-  {
-    startIndex: 1,
-    label: 'This has everything',
-    content: {
-      title: 'GDPR rule change',
-      content:
-        'New GDPR rules that prevent the unauthorized tracking of user sessions came into effect on Thursday, June 1.',
-      linkUrl: 'https://shopify.com',
-      linkText: 'Custom link text',
-    },
-  },
-];
-
-export const Annotations: Story<BarChartProps> = Template.bind({});
-
-Annotations.args = {
-  data: DATA,
-  xAxisOptions: {},
-  isAnimated: false,
-  showLegend: true,
-  annotations: ANNOTATIONS,
 };
