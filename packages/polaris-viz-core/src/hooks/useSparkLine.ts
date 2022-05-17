@@ -11,9 +11,9 @@ export function useSparkLine({
   height: number;
   svgMargin?: number;
 }) {
-  const dataLenghts = data.map((series) => series.data.length);
+  const dataLengths = data.map((series) => series.data.length - 1);
 
-  const maxDataLength = Math.max(...dataLenghts);
+  const maxDataLength = Math.max(...dataLengths);
 
   const yValues = Array.prototype.concat.apply(
     [],
