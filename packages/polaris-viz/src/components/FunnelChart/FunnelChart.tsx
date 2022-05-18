@@ -4,8 +4,8 @@ import type {
   XAxisOptions,
   YAxisOptions,
 } from '@shopify/polaris-viz-core';
+import {useTheme, useThemeSeriesColors} from '@shopify/polaris-viz-core';
 
-import {useTheme, useThemeSeriesColors} from '../../hooks';
 import {ChartContainer} from '../../components/ChartContainer';
 import {getYAxisOptionsWithDefaults} from '../../utilities';
 

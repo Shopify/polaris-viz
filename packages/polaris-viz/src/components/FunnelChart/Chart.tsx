@@ -46,6 +46,7 @@ export function Chart({
 }: ChartProps) {
   const [labelHeight, setLabelHeight] = useState(0);
   const dataSeries = data[0].data;
+  const colorOverride = data[0].color;
 
   const xValues = dataSeries.map(({key}) => key) as string[];
   const yValues = dataSeries.map(({value}) => value) as [number, number];
@@ -92,10 +93,14 @@ export function Chart({
     dataLength: data[0] ? data[0].data.length : 0,
   });
 
-  const firstDataPoint = data[0];
-  const barsGradient = isGradientType(firstDataPoint.color!)
-    ? firstDataPoint.color
-    : ([{color: firstDataPoint.color, offset: 0}] as GradientStop[]);
+  const {
+    chartContainer: {backgroundColor},
+  } = useTheme(theme);
+
+  const color = colorOverride || selectedTheme.seriesColors.single;
+  const barsGradient = isGradientType(color!)
+    ? color
+    : ([{color, offset: 0}] as GradientStop[]);
 
   const averageColor = getAverageColor(
     barsGradient[0].color,
@@ -103,10 +108,6 @@ export function Chart({
   );
 
   const connectorGradientId = useMemo(() => uniqueId('connector-gradient'), []);
-
-  const {
-    chartContainer: {backgroundColor},
-  } = useTheme(theme);
 
   const connectorGradient = [
     {
@@ -168,7 +169,11 @@ export function Chart({
                 color={MASK_HIGHLIGHT_COLOR}
                 x={x}
                 y={drawableHeight - barHeight}
-                borderRadius={BORDER_RADIUS.Top}
+                borderRadius={
+                  selectedTheme.bar.hasRoundedCorners
+                    ? BORDER_RADIUS.Top
+                    : BORDER_RADIUS.None
+                }
               />
             </React.Fragment>
           );
@@ -227,6 +232,7 @@ export function Chart({
                 nextX={xScale(nextPoint?.key as string)}
                 nextY={drawableHeight - nextBarHeight}
                 nextPoint={nextPoint}
+                fill={MASK_HIGHLIGHT_COLOR}
               />
             </mask>
             <Label
