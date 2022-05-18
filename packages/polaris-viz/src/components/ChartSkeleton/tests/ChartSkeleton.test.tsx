@@ -1,4 +1,5 @@
 import React from 'react';
+import {ChartState} from '@shopify/polaris-viz-core';
 
 import {ChartSkeleton} from '../ChartSkeleton';
 import {
@@ -18,7 +19,7 @@ describe('<ChartSkeleton />', () => {
   describe('<Shimmer/>', () => {
     it('is visible when state is set to loading', () => {
       const wrapper = mountWithProvider(
-        <ChartSkeleton {...MOCK_PROPS} state="loading" />,
+        <ChartSkeleton {...MOCK_PROPS} state={ChartState.Loading} />,
         mockDefaultTheme({chartContainer: {backgroundColor: 'red'}}),
       );
       expect(wrapper).toContainReactComponent(Shimmer);
@@ -26,7 +27,7 @@ describe('<ChartSkeleton />', () => {
 
     it('is NOT visible when state is set to error', () => {
       const wrapper = mountWithProvider(
-        <ChartSkeleton {...MOCK_PROPS} state="error" />,
+        <ChartSkeleton {...MOCK_PROPS} state={ChartState.Error} />,
         mockDefaultTheme({chartContainer: {backgroundColor: 'red'}}),
       );
       expect(wrapper).not.toContainReactComponent(Shimmer);
@@ -38,7 +39,7 @@ describe('<ChartSkeleton />', () => {
       const wrapper = mountWithProvider(
         <ChartSkeleton
           {...MOCK_PROPS}
-          state="error"
+          state={ChartState.Error}
           errorText="some error msg"
         />,
         mockDefaultTheme({chartContainer: {backgroundColor: 'red'}}),
@@ -50,7 +51,7 @@ describe('<ChartSkeleton />', () => {
       const wrapper = mountWithProvider(
         <ChartSkeleton
           {...MOCK_PROPS}
-          state="loading"
+          state={ChartState.Success}
           errorText="some error msg"
         />,
         mockDefaultTheme({chartContainer: {backgroundColor: 'red'}}),

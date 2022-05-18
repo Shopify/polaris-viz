@@ -20,15 +20,13 @@ const mockProps: HorizontalBarChartProps = {
   },
   renderTooltipContent: (value) => `${value}`,
   showLegend: false,
+  dimensions: {
+    height: 400,
+    width: 400,
+  },
 };
 
 describe('<HorizontalBarChart />', () => {
-  it('renders <ChartContainer />', () => {
-    const barChart = mount(<HorizontalBarChart {...mockProps} />);
-
-    expect(barChart).toContainReactComponent(ChartContainer);
-  });
-
   it('renders <Chart />', () => {
     const barChart = mount(<HorizontalBarChart {...mockProps} />);
 

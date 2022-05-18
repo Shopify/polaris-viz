@@ -5,6 +5,7 @@ import {
   useTheme,
   paddingStringToObject,
   FONT_SIZE,
+  ChartState,
 } from '@shopify/polaris-viz-core';
 import {useSprings, animated} from '@react-spring/web';
 
@@ -14,8 +15,6 @@ import {TextLine} from '../TextLine';
 import styles from './ChartSkeleton.scss';
 import {Shimmer} from './components';
 
-type SkeletonState = 'loading' | 'error';
-
 const BRICK_HEIGHT = 12;
 const BRICK_WIDTH = 32;
 const INITIAL_DELAY = 200;
@@ -23,18 +22,18 @@ const NUMBER_OF_BRICKS = 5;
 const TEXT_DROP_SHADOW_SIZE = 3;
 export interface ChartSkeletonProps {
   theme?: string;
-  dimensions: Dimensions;
-  state?: SkeletonState;
+  dimensions?: Dimensions;
+  state?: ChartState;
   errorText?: string;
 }
 
 export function ChartSkeleton({
   dimensions,
   theme = 'Default',
-  state = 'loading',
+  state = ChartState.Loading,
   errorText = 'Could not load the chart',
 }: ChartSkeletonProps) {
-  const {width, height} = dimensions;
+  const {width, height} = dimensions || {width: 0, height: 0};
 
   if (width === 0) return null;
 
@@ -95,7 +94,7 @@ const AnimatedContent = ({
     const lastTickYPosition = ticks[NUMBER_OF_BRICKS - 1].y;
     const distanceToFloor = (index) => lastTickYPosition - ticks[index].y;
 
-    if (state === 'error') {
+    if (state === ChartState.Error) {
       animation.start((index) => ({
         to: async (next) => {
           switch (index) {
@@ -198,7 +197,9 @@ const AnimatedContent = ({
 
   return (
     <div className={styles.Container} ref={ref}>
-      {state === 'loading' && <Shimmer backgroundColor={backgroundColor} />}
+      {state === ChartState.Loading && (
+        <Shimmer backgroundColor={backgroundColor} />
+      )}
       <svg viewBox={`0 0 ${width} ${height}`}>
         {springs.map((style, index) => {
           const y = ticks[index].y;
@@ -224,7 +225,7 @@ const AnimatedContent = ({
             </g>
           );
         })}
-        {state === 'error' && (
+        {state === ChartState.Error && (
           <g
             className={styles.TextLineWrapper}
             style={{

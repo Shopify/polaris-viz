@@ -13,6 +13,7 @@ import {
   RENDER_TOOLTIP_DESCRIPTION,
   THEME_CONTROL_ARGS,
   TYPE_CONTROL_ARGS,
+  CHART_STATE_CONTROL_ARGS,
 } from '../../../storybook';
 
 import {generateMultipleSeries} from '../../Docs/utilities';
@@ -214,6 +215,7 @@ export default {
     },
     direction: DIRECTION_CONTROL_ARGS,
     theme: THEME_CONTROL_ARGS,
+    state: CHART_STATE_CONTROL_ARGS,
     type: TYPE_CONTROL_ARGS,
     showLegend: LEGEND_CONTROL_ARGS,
   },

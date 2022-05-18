@@ -8,6 +8,7 @@ import {
   LEGEND_CONTROL_ARGS,
   RENDER_TOOLTIP_DESCRIPTION,
   THEME_CONTROL_ARGS,
+  CHART_STATE_CONTROL_ARGS,
 } from '../../../storybook';
 
 import {generateMultipleSeries} from '../../Docs/utilities';
@@ -86,6 +87,7 @@ export default {
         'If provided, renders a `<SkipLink/>` button with the string. Use this for charts with large data sets, so keyboard users can skip all the tabbable data points in the chart.',
     },
     theme: THEME_CONTROL_ARGS,
+    state: CHART_STATE_CONTROL_ARGS,
     showLegend: LEGEND_CONTROL_ARGS,
   },
 } as Meta;

@@ -10,12 +10,14 @@ import {
   uniqueId,
   changeColorOpacity,
   getAverageColor,
+  ChartState,
 } from '@shopify/polaris-viz-core';
 
 import {formatTooltipDataForLinearCharts} from '../../utilities/formatTooltipDataForLinearCharts';
 import type {RenderTooltipContentData} from '../../types';
 import {TooltipContent} from '../../components/TooltipContent';
 import {ChartContainer} from '../../components/ChartContainer';
+import {ChartSkeleton} from '../../components/ChartSkeleton';
 import {useThemeSeriesColors} from '../../hooks/useThemeSeriesColors';
 import {
   getXAxisOptionsWithDefaults,
@@ -28,7 +30,8 @@ import {Chart} from './Chart';
 
 export interface LineChartProps {
   data: DataSeries[];
-
+  state?: ChartState;
+  errorText?: string;
   emptyStateText?: string;
   isAnimated?: boolean;
   renderTooltipContent?: (data: RenderTooltipContentData) => React.ReactNode;
@@ -41,6 +44,8 @@ export interface LineChartProps {
 
 export function LineChart({
   data,
+  state = ChartState.Success,
+  errorText,
   renderTooltipContent,
   showLegend = true,
   skipLinkText,
@@ -123,15 +128,19 @@ export function LineChart({
         <SkipLink anchorId={skipLinkAnchorId.current}>{skipLinkText}</SkipLink>
       )}
       <ChartContainer theme={theme}>
-        <Chart
-          data={dataWithDefaults}
-          xAxisOptions={xAxisOptionsWithDefaults}
-          yAxisOptions={yAxisOptionsWithDefaults}
-          isAnimated={isAnimated && !prefersReducedMotion}
-          renderTooltipContent={renderTooltip}
-          showLegend={showLegend}
-          emptyStateText={emptyStateText}
-        />
+        {state !== ChartState.Success ? (
+          <ChartSkeleton state={state} errorText={errorText} />
+        ) : (
+          <Chart
+            data={dataWithDefaults}
+            xAxisOptions={xAxisOptionsWithDefaults}
+            yAxisOptions={yAxisOptionsWithDefaults}
+            isAnimated={isAnimated && !prefersReducedMotion}
+            renderTooltipContent={renderTooltip}
+            showLegend={showLegend}
+            emptyStateText={emptyStateText}
+          />
+        )}
       </ChartContainer>
 
       {skipLinkText == null || skipLinkText.length === 0 ? null : (

@@ -247,3 +247,9 @@ export interface BorderRadius {
   bottomLeft: number;
   bottomRight: number;
 }
+
+export enum ChartState {
+  Loading = 'Loading',
+  Error = 'Error',
+  Success = 'Success',
+}
