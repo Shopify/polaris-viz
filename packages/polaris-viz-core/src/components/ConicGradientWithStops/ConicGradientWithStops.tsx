@@ -1,5 +1,6 @@
 import React, {useMemo} from 'react';
-import type {GradientStop, Color} from '@shopify/polaris-viz-core';
+
+import type {GradientStop, Color} from '../../types';
 
 import styles from './ConicGradientWithStops.scss';
 
