@@ -6,7 +6,7 @@ import {TextLine} from '../TextLine';
 const ARROW_WIDTH = 11;
 const ARROW_HEIGHT = 9;
 
-export interface BarChartXAxisArrowsProps {
+export interface FunnelChartXAxisArrowsProps {
   chartHeight: number;
   onHeightChange: Dispatch<SetStateAction<number>>;
   x: number;
@@ -17,7 +17,7 @@ export interface BarChartXAxisArrowsProps {
   theme?: string;
 }
 
-export function BarChartXAxisArrows({
+export function FunnelChartXAxisArrows({
   chartHeight,
   onHeightChange,
   x,
@@ -26,7 +26,7 @@ export function BarChartXAxisArrows({
   chartY,
   labelWidth,
   theme,
-}: BarChartXAxisArrowsProps) {
+}: FunnelChartXAxisArrowsProps) {
   const {lines} = useLabels({
     labels: ['→'],
     targetWidth: labelWidth,
