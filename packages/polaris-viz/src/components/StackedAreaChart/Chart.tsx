@@ -195,7 +195,7 @@ export function Chart({
   }
 
   return (
-    <React.Fragment>
+    <div className={styles.Container} style={{height, width}}>
       <svg
         viewBox={`0 0 ${width} ${height}`}
         className={styles.Chart}
@@ -309,7 +309,7 @@ export function Chart({
           theme={theme}
         />
       )}
-    </React.Fragment>
+    </div>
   );
 
   function getTooltipPosition({
