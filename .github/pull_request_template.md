@@ -36,3 +36,5 @@
 - [ ] Update the Changelog's Unreleased section with your changes.
 
 - [ ] Update relevant documentation, tests, and Storybook.
+
+- [ ] Make sure you're exporting any new shared Components, Types and Utilities from the top level index file of the package
