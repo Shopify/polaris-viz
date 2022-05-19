@@ -15,7 +15,6 @@ import {
   changeColorOpacity,
 } from '@shopify/polaris-viz-core';
 
-import {BarChartXAxisLabels} from '../BarChartXAxisLabels';
 import {Bar} from '../shared';
 import {useReducedLabelIndexes} from '../../hooks';
 import {
@@ -27,6 +26,7 @@ import {
   PERCENT_LABEL_VERTICAL_OFFSET,
 } from '../../constants';
 
+import {FunnelChartXAxisLabels} from './FunnelChartXAxisLabels';
 import {Label} from './Label';
 
 export interface ChartProps {
@@ -132,7 +132,7 @@ export function Chart({
   };
   return (
     <svg role="list" viewBox={`0 0 ${width} ${height}`} xmlns={XMLNS}>
-      <BarChartXAxisLabels
+      <FunnelChartXAxisLabels
         chartHeight={height}
         chartX={0}
         chartY={drawableHeight}
