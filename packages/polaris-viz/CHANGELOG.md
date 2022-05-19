@@ -12,6 +12,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 - Re-export `ChartState` type  from `@shopify/polaris-viz-core`
 - Export `ChartSkeleton` subcomponent
 
+### Changed
+
+- Revert tooltip change introduced in `1.3.1`.
+
 ## [1.7.1] - 2022-05-18
 
 - No updates. Transitive dependency bump.
@@ -64,7 +68,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
-- Export `TooltipData` & `TooltipContentProps` types.
+- Tooltips will now stick along the yAxis (or xAxis for horizontal charts).
 
 ## [1.3.0] - 2022-04-18
 
