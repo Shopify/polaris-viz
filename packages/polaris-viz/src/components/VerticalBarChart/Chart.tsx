@@ -69,7 +69,7 @@ export interface Props {
   dimensions?: Dimensions;
   emptyStateText?: string;
   isAnimated?: boolean;
-  theme?: string;
+  theme: string;
 }
 
 export function Chart({

@@ -200,15 +200,6 @@ export interface SparkBarChartProps {
   accessibilityLabel?: string;
   isAnimated?: boolean;
   theme?: string;
-}
-
-export interface SparkBarChartProps {
-  data: DataSeries[];
-  dataOffsetRight?: number;
-  dataOffsetLeft?: number;
-  accessibilityLabel?: string;
-  isAnimated?: boolean;
-  theme?: string;
   dimensions?: Dimensions;
 }
 

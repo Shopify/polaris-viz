@@ -35,7 +35,7 @@ interface PointsProps {
   tooltipId: string;
   xScale: any;
   yScale: any;
-  theme?: string;
+  theme: string;
 }
 
 export function Points({

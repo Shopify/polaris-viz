@@ -9,7 +9,7 @@ interface Props {
   height: number;
 
   opacity?: number;
-  theme?: string;
+  theme: string;
 }
 
 export function Crosshair({x, height, opacity = 1, theme}: Props) {

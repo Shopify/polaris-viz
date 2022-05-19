@@ -34,7 +34,7 @@ interface PointsProps {
           },
         number
       >;
-  theme?: string;
+  theme: string;
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
 }

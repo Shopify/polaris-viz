@@ -1,6 +1,7 @@
 import React, {useState, ReactElement, cloneElement} from 'react';
 import {View} from 'react-native';
 import {
+  DEFAULT_THEME_NAME,
   Dimensions,
   paddingStringToObject,
   useTheme,
@@ -12,7 +13,11 @@ interface Props {
   sparkChart?: boolean;
 }
 
-export function ChartContainer({theme, children, sparkChart = false}: Props) {
+export function ChartContainer({
+  theme = DEFAULT_THEME_NAME,
+  children,
+  sparkChart = false,
+}: Props) {
   const [chartDimensions, setChartDimensions] =
     useState<Dimensions | null>(null);
 

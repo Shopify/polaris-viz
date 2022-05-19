@@ -4,6 +4,7 @@ import {
   ChartType,
   DataSeries,
   ChartState,
+  DEFAULT_THEME_NAME,
 } from '@shopify/polaris-viz-core';
 import type {
   Direction,
@@ -55,7 +56,7 @@ export function BarChart({
   renderTooltipContent,
   showLegend = true,
   skipLinkText,
-  theme,
+  theme = DEFAULT_THEME_NAME,
   type = 'default',
   xAxisOptions,
   yAxisOptions,
@@ -139,7 +140,7 @@ export function BarChart({
       )}
       <ChartContainer theme={theme}>
         {state !== ChartState.Success ? (
-          <ChartSkeleton state={state} errorText={errorText} />
+          <ChartSkeleton state={state} errorText={errorText} theme={theme} />
         ) : (
           ChartByDirection
         )}

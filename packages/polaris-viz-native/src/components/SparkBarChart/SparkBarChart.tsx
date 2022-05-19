@@ -6,6 +6,7 @@ import {
   SparkBarChartProps,
   ANIMATION_MARGIN,
   SparkBarSeries,
+  DEFAULT_THEME_NAME,
 } from '@shopify/polaris-viz-core';
 
 import {usePrefersReducedMotion} from '../../hooks';
@@ -17,7 +18,7 @@ export function SparkBarChart({
   isAnimated = false,
   dataOffsetRight = 0,
   dataOffsetLeft = 0,
-  theme,
+  theme = DEFAULT_THEME_NAME,
 }: SparkBarChartProps) {
   return (
     <ChartContainer theme={theme} sparkChart>
@@ -38,7 +39,7 @@ function Chart({
   accessibilityLabel,
   dataOffsetRight = 0,
   dataOffsetLeft = 0,
-  theme,
+  theme = DEFAULT_THEME_NAME,
   isAnimated,
 }: SparkBarChartProps) {
   const {

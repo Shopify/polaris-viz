@@ -8,7 +8,7 @@ import styles from './Annotations.scss';
 interface Props {
   activeIndex: number;
   annotations: TooltipAnnotation[];
-  theme?: string;
+  theme: string;
 }
 
 export function Annotations({activeIndex, annotations, theme}: Props) {

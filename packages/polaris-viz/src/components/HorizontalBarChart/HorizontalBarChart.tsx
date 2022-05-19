@@ -21,7 +21,7 @@ export interface HorizontalBarChartProps {
   yAxisOptions: Required<YAxisOptions>;
   annotationsLookupTable?: AnnotationLookupTable;
   isAnimated?: boolean;
-  theme?: string;
+  theme: string;
   type?: ChartType;
   dimensions?: Dimensions;
 }

@@ -1,12 +1,11 @@
 import React, {useState, useMemo, useRef} from 'react';
 import {line} from 'd3-shape';
-import type {
+import {
   DataSeries,
   DataPoint,
   XAxisOptions,
   YAxisOptions,
-} from '@shopify/polaris-viz-core';
-import {
+  DEFAULT_THEME_NAME,
   uniqueId,
   curveStepRounded,
   DataType,
@@ -69,7 +68,7 @@ export function Chart({
   renderTooltipContent,
   isAnimated,
   showLegend,
-  theme,
+  theme = DEFAULT_THEME_NAME,
   yAxisOptions,
 }: Props) {
   useColorVisionEvents(data.length > 1);

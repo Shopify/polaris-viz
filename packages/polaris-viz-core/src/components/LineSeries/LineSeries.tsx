@@ -58,7 +58,7 @@ export interface LineSeriesProps {
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
   activeLineIndex?: number;
-  theme?: string;
+  theme: string;
   type?: 'default' | 'spark';
 }
 
@@ -68,7 +68,7 @@ export function LineSeries({
   index = 0,
   isAnimated,
   svgDimensions,
-  theme = 'Default',
+  theme,
   type = 'default',
   xScale,
   yScale,

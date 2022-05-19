@@ -7,7 +7,7 @@ import type {FormattedLine} from '../../types';
 interface TextLineProps {
   index: number;
   line: FormattedLine[];
-  theme?: string;
+  theme: string;
 }
 
 export function TextLine({index, line, theme}: TextLineProps) {

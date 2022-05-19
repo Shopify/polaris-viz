@@ -73,6 +73,7 @@ export {
   COLOR_VISION_ACTIVE_OPACITY,
   COLOR_VISION_FADED_OPACITY,
   BORDER_RADIUS,
+  DEFAULT_THEME_NAME,
 } from './constants';
 export {
   clamp,

@@ -30,7 +30,7 @@ interface StackProps {
   width: number;
   x: number | undefined;
   yScale: ScaleLinear<number, number>;
-  theme?: string;
+  theme: string;
 }
 
 export function Stack({

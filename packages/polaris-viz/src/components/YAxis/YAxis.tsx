@@ -9,7 +9,7 @@ interface Props {
   textAlign: 'left' | 'right';
   width: number;
 
-  theme?: string;
+  theme: string;
 }
 
 const PADDING_SIZE = 1;
