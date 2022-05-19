@@ -15,6 +15,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Changed
 
 - Revert tooltip change introduced in `1.3.1`.
+- Use `getBoundingClientRect()` to accurately measure characters for `character-widths.json`.
 
 ## [1.7.1] - 2022-05-18
 
