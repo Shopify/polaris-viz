@@ -11,6 +11,7 @@ export {
   SimpleBarChart,
   PolarisVizProvider,
   TooltipContent,
+  ChartSkeleton,
 } from './components';
 
 export type {
@@ -56,4 +57,5 @@ export type {
   PartialTheme,
   GradientStop,
   DataPoint,
+  ChartState,
 } from '@shopify/polaris-viz-core';
