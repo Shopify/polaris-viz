@@ -52,13 +52,11 @@
         newWord.style.textAlign = 'center';
         newWord.style.display = 'inline-block';
         newWord.style.verticalAlign = 'top';
-        newWord.style.fontWeight = '400';
+        newWord.style.fontWeight = 'normal';
 
         workspace.appendChild(newWord);
 
-        let wordWidth = newWord.clientWidth;
-
-        return wordWidth;
+        return newWord.getBoundingClientRect().width;
       }
 
       workspace.remove();
