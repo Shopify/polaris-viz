@@ -16,11 +16,13 @@ import {
 } from '@shopify/polaris-viz-core';
 
 import type {RenderTooltipContentData} from '../../types';
-import {getAlteredLineChartPosition} from '../../utilities/getAlteredLineChartPosition';
 import {LinearXAxisLabels} from '../LinearXAxisLabels';
 import {LegendContainer, useLegend} from '../LegendContainer';
 import {
+  TooltipHorizontalOffset,
+  TooltipVerticalOffset,
   TooltipPosition,
+  TooltipPositionOffset,
   TooltipPositionParams,
   TooltipWrapper,
   TOOLTIP_POSITION_DEFAULT_RETURN,
@@ -50,6 +52,11 @@ import styles from './Chart.scss';
 import {useStackedChartTooltipContent} from './hooks/useStackedChartTooltipContent';
 import {yAxisMinMax} from './utilities/yAxisMinMax';
 import {MIN_Y_LABEL_SPACE} from './constants';
+
+const TOOLTIP_POSITION: TooltipPositionOffset = {
+  horizontal: TooltipHorizontalOffset.Left,
+  vertical: TooltipVerticalOffset.Center,
+};
 
 export interface Props {
   data: DataSeries[];
@@ -284,8 +291,8 @@ export function Chart({
         />
       </svg>
       <TooltipWrapper
+        alwaysUpdatePosition
         chartDimensions={{width, height}}
-        getAlteredPosition={getAlteredLineChartPosition}
         focusElementDataType={DataType.Point}
         getMarkup={getTooltipMarkup}
         getPosition={getTooltipPosition}
@@ -310,8 +317,6 @@ export function Chart({
     index,
     eventType,
   }: TooltipPositionParams): TooltipPosition {
-    let activeIndex = -1;
-
     if (eventType === 'mouse' && event) {
       const point = eventPointNative(event!);
 
@@ -319,19 +324,22 @@ export function Chart({
         return TOOLTIP_POSITION_DEFAULT_RETURN;
       }
 
-      const {svgX} = point;
+      const {svgX, svgY} = point;
 
       const closestIndex = Math.round(xScale.invert(svgX - chartStartPosition));
-      activeIndex = Math.min(longestSeriesLength, closestIndex);
-    } else if (index != null) {
-      activeIndex = index;
-    }
 
-    if (activeIndex !== -1) {
       return {
-        x: chartStartPosition + (xScale(activeIndex) ?? 0),
+        x: svgX,
+        y: svgY,
+        position: TOOLTIP_POSITION,
+        activeIndex: Math.min(longestSeriesLength, closestIndex),
+      };
+    } else if (index != null) {
+      return {
+        x: xScale?.(index) ?? 0,
         y: 0,
-        activeIndex,
+        position: TOOLTIP_POSITION,
+        activeIndex: index,
       };
     }
 

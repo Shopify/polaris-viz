@@ -152,7 +152,6 @@ const ANNOTATION: Annotation[] = [
 export default {
   title: 'polaris-viz/Default Charts/BarChart',
   component: BarChart,
-  decorators: [(Story) => <div style={{height: '500px'}}>{Story()}</div>],
   parameters: {
     horizontalMargin: 0,
     docs: {
@@ -167,6 +166,7 @@ export default {
       expanded: true,
     },
   },
+  decorators: [(Story) => <div style={{height: '500px'}}>{Story()}</div>],
   argTypes: {
     annotations: {
       control: {
