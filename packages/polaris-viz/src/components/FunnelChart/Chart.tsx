@@ -157,34 +157,31 @@ export function Chart({
       </g>
 
       <mask id={`${maskId}-${theme}-grad`}>
-        <g role="list">
-          {dataSeries.map((dataPoint) => {
-            const barHeight = getBarHeight(dataPoint.value || 0);
-            const xPosition = xScale(dataPoint.key as string);
-            const x = xPosition == null ? 0 : xPosition;
-            const barWidth = xScale.bandwidth();
-            return (
-              <g
-                role="listitem"
-                aria-label={dataPoint.key as string}
-                key={dataPoint.key}
-              >
-                <Bar
-                  width={barWidth}
-                  height={barHeight}
-                  color={MASK_HIGHLIGHT_COLOR}
-                  x={x}
-                  y={drawableHeight - barHeight}
-                  borderRadius={
-                    selectedTheme.bar.hasRoundedCorners
-                      ? BORDER_RADIUS.Top
-                      : BORDER_RADIUS.None
-                  }
-                />
-              </g>
-            );
-          })}
-        </g>
+        {dataSeries.map((dataPoint) => {
+          const barHeight = getBarHeight(dataPoint.value || 0);
+          const xPosition = xScale(dataPoint.key as string);
+          const x = xPosition == null ? 0 : xPosition;
+          const barWidth = xScale.bandwidth();
+          return (
+            <g key={dataPoint.key} role="listitem">
+              <Bar
+                ariaLabel={`${xAxisOptions.labelFormatter(
+                  dataPoint.key,
+                )}: ${yAxisOptions.labelFormatter(dataPoint.value)}`}
+                width={barWidth}
+                height={barHeight}
+                color={MASK_HIGHLIGHT_COLOR}
+                x={x}
+                y={drawableHeight - barHeight}
+                borderRadius={
+                  selectedTheme.bar.hasRoundedCorners
+                    ? BORDER_RADIUS.Top
+                    : BORDER_RADIUS.None
+                }
+              />
+            </g>
+          );
+        })}
       </mask>
 
       {dataSeries.map((dataPoint, index) => {
@@ -200,7 +197,7 @@ export function Chart({
 
         const percentLabel = handlePercentLabelFormatter(percentCalculation);
         const barHeight = getBarHeight(dataPoint.value || 0);
-        const formattedYValue = yAxisOptions?.labelFormatter(yAxisValue) || '0';
+        const formattedYValue = yAxisOptions.labelFormatter(yAxisValue);
 
         return (
           <React.Fragment key={dataPoint.key}>

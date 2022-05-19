@@ -53,5 +53,4 @@ export const SingleValues = SingleValuesTemplate.bind({});
 
 SingleValues.args = {
   data,
-  xAxisOptions: {},
 };
