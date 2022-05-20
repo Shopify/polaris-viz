@@ -436,27 +436,15 @@ const ANNOTATIONS: Annotation[] = [
   {
     startIndex: 0,
     label: 'GDPR rule change',
-    tooltipData: {
-      key: 'Median',
-      value: '1.5 hours',
-    },
   },
   {
     startIndex: 2,
     label: 'Constitution Day',
-    tooltipData: {
-      key: 'Median',
-      value: '1.5 hours',
-    },
   },
   {
     startIndex: 5,
     label: 'This one has custom content',
     content: () => <CustomContent />,
-    tooltipData: {
-      key: 'Median',
-      value: '1.5 hours',
-    },
   },
   {
     startIndex: 1,
