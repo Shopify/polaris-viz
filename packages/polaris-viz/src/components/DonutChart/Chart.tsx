@@ -84,7 +84,6 @@ export function Chart({
                     radius={radius}
                     startAngle={startAngle}
                     endAngle={endAngle}
-                    isOnlySegment={pieChartData.length === 1}
                     color={seriesColor[index]}
                     cornerRadius={selectedTheme.arc.cornerRadius}
                     thickness={selectedTheme.arc.thickness}
