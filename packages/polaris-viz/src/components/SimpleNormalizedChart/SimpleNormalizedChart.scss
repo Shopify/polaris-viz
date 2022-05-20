@@ -5,6 +5,7 @@
   font-size: 14px;
   display: flex;
   box-sizing: border-box;
+  -webkit-print-color-adjust: exact; /* stylelint-disable-line property-no-vendor-prefix */
   print-color-adjust: exact; /* stylelint-disable-line property-no-unknown */
 }
 
