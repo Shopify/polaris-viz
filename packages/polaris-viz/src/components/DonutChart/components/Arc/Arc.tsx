@@ -1,8 +1,9 @@
 import React, {useMemo} from 'react';
 import {arc} from 'd3-shape';
-import {uniqueId, ConicGradientWithStops} from '@shopify/polaris-viz-core';
+import {uniqueId} from '@shopify/polaris-viz-core';
 import type {Color} from '@shopify/polaris-viz-core';
 
+import {ConicGradientWithStops} from '../../../../components/shared';
 import {classNames} from '../../../../utilities';
 import {ARC_PAD_ANGLE} from '../../constants';
 

@@ -4,3 +4,4 @@ export {Bar} from './Bar';
 export {HorizontalBars, Label} from './HorizontalBars';
 export {HorizontalStackedBars} from './HorizontalStackedBars';
 export {HorizontalGroup} from './HorizontalGroup';
+export {ConicGradientWithStops} from './ConicGradientWithStops';

@@ -1,9 +1,9 @@
-import React, {useMemo} from 'react';
-import type {GradientStop, Color} from '@shopify/polaris-viz-core';
+import React from 'react';
+import type {GradientStop, Color} from '@shopify/polaris-viz-core/src/types';
 
 import styles from './ConicGradientWithStops.scss';
 
-interface ConicGradientWithStopsProps {
+export interface ConicGradientWithStopsProps {
   color: Color;
   startAngle: number;
   endAngle: number;
@@ -24,12 +24,15 @@ export function ConicGradientWithStops({
 
   const arcWidth = endAngle - startAngle;
   const halfwayPoint = startAngle + arcWidth / 2;
-  const conicGradientValue = useMemo((): string => {
+  const conicGradientValue = createGradient(startAngle, endAngle);
+
+  function createGradient(startAngle, endAngle) {
     const stopAdjustment = (startAngle - endAngle) * 0.25;
     return `conic-gradient(from ${startAngle}rad, ${firstColor}, ${lastColor} ${
       halfwayPoint - startAngle - stopAdjustment
     }rad ${endAngle - startAngle}rad, transparent ${endAngle - startAngle}rad)`;
-  }, [endAngle, firstColor, halfwayPoint, lastColor, startAngle]);
+  }
+
   return (
     <div
       className={styles.Gradient}
