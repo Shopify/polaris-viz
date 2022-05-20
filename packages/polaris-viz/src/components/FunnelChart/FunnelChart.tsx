@@ -13,8 +13,8 @@ import {Chart} from './Chart';
 
 export interface FunnelChartProps {
   data: DataSeries[];
-  xAxisOptions?: Partial<XAxisOptions>;
-  yAxisOptions?: Partial<YAxisOptions>;
+  xAxisOptions?: Omit<XAxisOptions, 'hide'>;
+  yAxisOptions?: Omit<XAxisOptions, 'integersOnly'>;
   theme?: string;
 }
 
