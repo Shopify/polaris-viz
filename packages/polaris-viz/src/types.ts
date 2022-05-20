@@ -93,11 +93,6 @@ export interface TooltipData {
   name?: string;
 }
 
-export interface TooltipAnnotation {
-  key: string;
-  value: string;
-}
-
 export interface PreparedLabels {
   text: string;
   words: {word: string; wordWidth: number}[];
@@ -130,10 +125,6 @@ export interface Annotation {
   startIndex: number;
   endIndex?: number;
   content?: () => ReactNode;
-  tooltipData?: {
-    key: string;
-    value: string;
-  };
 }
 
 export interface AnnotationLookupTable {

@@ -133,20 +133,6 @@ export const Annotations: Story<TooltipContentProps> = Template.bind({});
 Annotations.args = {
   title: 'Jul 7',
   data: DATA,
-  annotations: [
-    {
-      key: 'Left axis annotation',
-      value: '1.5 hours',
-    },
-    {
-      key: 'Right axis annotation',
-      value: '1.5 hours',
-    },
-    {
-      key: 'Another left axis annotation',
-      value: '1.5 hours',
-    },
-  ],
 };
 
 export const PreviewIcons: Story<TooltipContentProps> = Template.bind({});
