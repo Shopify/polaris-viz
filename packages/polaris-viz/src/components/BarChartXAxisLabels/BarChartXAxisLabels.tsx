@@ -13,7 +13,7 @@ export interface BarChartXAxisLabelsProps {
   onHeightChange: Dispatch<SetStateAction<number>>;
   xScale: ScaleBand<string>;
   reducedLabelIndexes?: number[];
-  theme?: string;
+  theme: string;
 }
 
 export function BarChartXAxisLabels({

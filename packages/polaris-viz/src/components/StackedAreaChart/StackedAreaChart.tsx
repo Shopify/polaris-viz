@@ -27,7 +27,7 @@ export interface StackedAreaChartProps {
   isAnimated?: boolean;
   showLegend?: boolean;
   skipLinkText?: string;
-  theme?: string;
+  theme: string;
   xAxisOptions?: Partial<XAxisOptions>;
   yAxisOptions?: Partial<YAxisOptions>;
 }
@@ -77,7 +77,7 @@ export function StackedAreaChart({
       )}
       <ChartContainer theme={theme}>
         {state !== ChartState.Success ? (
-          <ChartSkeleton state={state} errorText={errorText} />
+          <ChartSkeleton state={state} errorText={errorText} theme={theme} />
         ) : (
           <Chart
             data={data}

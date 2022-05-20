@@ -93,6 +93,8 @@ export const colorBlack = variables.colorBlack;
 export const colorPurpleDark = variables.colorPurpleDark;
 export const colorTeal = variables.colorTeal;
 
+export const DEFAULT_THEME_NAME = 'Default';
+
 export const NEUTRAL_SINGLE_GRADIENT = [
   {offset: 0, color: variables.colorIndigo90},
   {offset: 85, color: variables.colorBlue90},

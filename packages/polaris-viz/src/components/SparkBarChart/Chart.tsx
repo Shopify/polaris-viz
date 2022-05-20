@@ -5,6 +5,7 @@ import {
   SparkBarChartProps,
   ANIMATION_MARGIN,
   SparkBarSeries,
+  DEFAULT_THEME_NAME,
 } from '@shopify/polaris-viz-core';
 
 import {usePrefersReducedMotion} from '../../hooks';
@@ -23,7 +24,7 @@ export function Chart({
   isAnimated = false,
   dataOffsetRight = 0,
   dataOffsetLeft = 0,
-  theme,
+  theme = DEFAULT_THEME_NAME,
 }: Props) {
   const {prefersReducedMotion} = usePrefersReducedMotion();
   const shouldAnimate = !prefersReducedMotion && isAnimated;

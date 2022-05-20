@@ -1,7 +1,10 @@
 import React, {useState} from 'react';
 import {sum} from 'd3-array';
 import {scaleLinear} from 'd3-scale';
-import {COLOR_VISION_SINGLE_ITEM} from '@shopify/polaris-viz-core';
+import {
+  COLOR_VISION_SINGLE_ITEM,
+  DEFAULT_THEME_NAME,
+} from '@shopify/polaris-viz-core';
 import type {
   DataPoint,
   Direction,
@@ -39,7 +42,7 @@ export function Chart({
   labelPosition = 'top-left',
   direction = 'horizontal',
   size = 'small',
-  theme,
+  theme = DEFAULT_THEME_NAME,
 }: ChartProps) {
   useColorVisionEvents();
 

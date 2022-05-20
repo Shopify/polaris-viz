@@ -35,7 +35,7 @@ export interface HorizontalBarsProps {
   xScale: ScaleLinear<number, number>;
   zeroPosition: number;
   animationDelay?: number;
-  theme?: string;
+  theme: string;
 }
 
 export function HorizontalBars({

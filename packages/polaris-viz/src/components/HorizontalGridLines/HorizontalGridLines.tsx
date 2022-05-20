@@ -8,7 +8,7 @@ interface Props {
   transform: {x: number; y: number};
   width: number;
 
-  theme?: string;
+  theme: string;
 }
 
 export const HorizontalGridLines = React.memo(function HorizontalGridLines({

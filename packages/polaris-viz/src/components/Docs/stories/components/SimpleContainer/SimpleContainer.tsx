@@ -1,3 +1,4 @@
+import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 import React, {ReactNode} from 'react';
 
 import {useTheme} from '../../../../../hooks';
@@ -5,7 +6,7 @@ import {useTheme} from '../../../../../hooks';
 export const SimpleContainer = ({
   children,
   height,
-  theme = 'Default',
+  theme = DEFAULT_THEME_NAME,
 }: {
   children: ReactNode;
   height?: number;

@@ -9,6 +9,7 @@ import {
   COLOR_VISION_SINGLE_ITEM,
   LineChartDataSeriesWithDefaults,
   clamp,
+  DEFAULT_THEME_NAME,
 } from '@shopify/polaris-viz-core';
 import type {
   DataPoint,
@@ -80,7 +81,7 @@ export function Chart({
   isAnimated,
   xAxisOptions,
   yAxisOptions,
-  theme,
+  theme = DEFAULT_THEME_NAME,
 }: ChartProps) {
   useColorVisionEvents(data.length > 1);
 

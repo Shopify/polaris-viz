@@ -18,7 +18,7 @@ export interface SimpleBarChartProps {
   data: DataSeries[];
   isAnimated?: boolean;
   showLegend?: boolean;
-  theme?: string;
+  theme: string;
   type?: ChartType;
   xAxisOptions?: XAxisOptions;
 }

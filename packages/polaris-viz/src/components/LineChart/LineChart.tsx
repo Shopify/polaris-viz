@@ -37,7 +37,7 @@ export interface LineChartProps {
   renderTooltipContent?: (data: RenderTooltipContentData) => React.ReactNode;
   showLegend?: boolean;
   skipLinkText?: string;
-  theme?: string;
+  theme: string;
   xAxisOptions?: Partial<XAxisOptions>;
   yAxisOptions?: Partial<YAxisOptions>;
 }
@@ -129,7 +129,7 @@ export function LineChart({
       )}
       <ChartContainer theme={theme}>
         {state !== ChartState.Success ? (
-          <ChartSkeleton state={state} errorText={errorText} />
+          <ChartSkeleton state={state} errorText={errorText} theme={theme} />
         ) : (
           <Chart
             data={dataWithDefaults}

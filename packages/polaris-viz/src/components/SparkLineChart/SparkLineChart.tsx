@@ -1,5 +1,5 @@
 import React from 'react';
-import type {DataSeries} from '@shopify/polaris-viz-core';
+import {DataSeries, DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 import {ChartContainer} from '../ChartContainer';
 
@@ -20,7 +20,7 @@ export function SparkLineChart({
   isAnimated = false,
   offsetLeft = 0,
   offsetRight = 0,
-  theme,
+  theme = DEFAULT_THEME_NAME,
 }: SparkLineChartProps) {
   return (
     <ChartContainer theme={theme} sparkChart>

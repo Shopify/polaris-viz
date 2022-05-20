@@ -18,7 +18,7 @@ export interface TooltipContentProps {
   data: TooltipData[];
   annotations?: TooltipAnnotation[];
   title?: string;
-  theme?: string;
+  theme: string;
 }
 
 const FONT_SIZE_OFFSET = 1.061;

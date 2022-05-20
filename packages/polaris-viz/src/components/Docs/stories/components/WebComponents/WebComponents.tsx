@@ -1,6 +1,6 @@
 import React from 'react';
+import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
-// import {PolarisVizProvider} from '../';
 import {WebPolarisVizProvider as PolarisVizProvider} from '../../../../WebPolarisVizProvider';
 import {
   BarChart,
@@ -90,6 +90,7 @@ export function WebComponents() {
                   ],
                 },
               ]}
+              theme={DEFAULT_THEME_NAME}
             />
           }
         />
@@ -126,6 +127,7 @@ export function WebComponents() {
                   ],
                 },
               ]}
+              theme={DEFAULT_THEME_NAME}
             />
           }
         />
@@ -288,6 +290,7 @@ export function WebComponents() {
                   ],
                 },
               ]}
+              theme={DEFAULT_THEME_NAME}
             />
           }
         />
@@ -325,6 +328,7 @@ export function WebComponents() {
                   },
                 ]}
                 labelFormatter={(value) => `$${value}`}
+                theme={DEFAULT_THEME_NAME}
               />
             </div>
           }

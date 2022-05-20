@@ -9,6 +9,7 @@ import {
   LineSeries,
   usePolarisVizContext,
   Dimensions,
+  DEFAULT_THEME_NAME,
 } from '@shopify/polaris-viz-core';
 
 import {usePrefersReducedMotion} from '../../hooks';
@@ -22,7 +23,7 @@ export function SparkLineChart({
   isAnimated = true,
   offsetLeft = 0,
   offsetRight = 0,
-  theme = 'Default',
+  theme = DEFAULT_THEME_NAME,
 }: SparkLineChartProps) {
   const {prefersReducedMotion} = usePrefersReducedMotion();
   const shouldAnimate = !prefersReducedMotion && isAnimated;
@@ -51,7 +52,7 @@ function Chart({
   isAnimated = true,
   offsetLeft = 0,
   offsetRight = 0,
-  theme = 'Default',
+  theme = DEFAULT_THEME_NAME,
   dimensions = {width: 0, height: 0},
 }: ChartProps) {
   const {width, height} = dimensions;

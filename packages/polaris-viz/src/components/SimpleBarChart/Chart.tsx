@@ -1,5 +1,9 @@
 import React, {useCallback, useMemo} from 'react';
-import {uniqueId, COLOR_VISION_SINGLE_ITEM} from '@shopify/polaris-viz-core';
+import {
+  uniqueId,
+  COLOR_VISION_SINGLE_ITEM,
+  DEFAULT_THEME_NAME,
+} from '@shopify/polaris-viz-core';
 import type {
   ChartType,
   DataSeries,
@@ -40,7 +44,7 @@ export function Chart({
   dimensions,
   isAnimated,
   showLegend,
-  theme,
+  theme = DEFAULT_THEME_NAME,
   type,
   xAxisOptions,
   yAxisOptions,

@@ -23,7 +23,7 @@ export interface VerticalBarChartProps {
   barOptions?: {isStacked: boolean};
   emptyStateText?: string;
   isAnimated?: boolean;
-  theme?: string;
+  theme: string;
   type?: ChartType;
   dimensions?: Dimensions;
 }

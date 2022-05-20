@@ -13,7 +13,7 @@ interface HorizontalBarChartXAxisLabelsProps {
   onHeightChange: Dispatch<SetStateAction<number>>;
   xScale: ScaleLinear<number, number>;
   ticks: number[];
-  theme?: string;
+  theme: string;
 }
 
 export function HorizontalBarChartXAxisLabels({

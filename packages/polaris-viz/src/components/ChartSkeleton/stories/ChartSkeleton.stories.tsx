@@ -4,7 +4,7 @@ import type {Story, Meta} from '@storybook/react';
 import {ChartSkeleton, ChartSkeletonProps} from '../';
 import {ChartContainer} from '../../ChartContainer';
 import {CHART_STATE_CONTROL_ARGS} from '../../../storybook';
-import {ChartState} from '@shopify/polaris-viz-core';
+import {ChartState, DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 export default {
   title: 'polaris-viz/Subcomponents/ChartSkeleton',
@@ -25,7 +25,7 @@ export default {
 
 const Template: Story<ChartSkeletonProps> = (args: ChartSkeletonProps) => {
   return (
-    <ChartContainer>
+    <ChartContainer theme={DEFAULT_THEME_NAME}>
       <ChartSkeleton {...args} />
     </ChartContainer>
   );

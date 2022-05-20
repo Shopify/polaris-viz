@@ -18,7 +18,7 @@ export interface LegendContainerProps {
   colorVisionType: string;
   data: LegendData[];
   onHeightChange: Dispatch<SetStateAction<number>>;
-  theme?: string;
+  theme: string;
 }
 
 export function LegendContainer({

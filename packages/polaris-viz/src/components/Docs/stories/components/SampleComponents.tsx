@@ -202,6 +202,7 @@ export const SampleLegendContainer = ({theme} = {theme: 'Default'}) => {
             },
           ]}
           onHeightChange={() => {}}
+          theme={theme}
         />
       </div>
     </SimpleContainer>

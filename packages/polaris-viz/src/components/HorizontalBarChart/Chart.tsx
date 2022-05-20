@@ -58,7 +58,7 @@ export interface ChartProps {
   yAxisOptions: Required<YAxisOptions>;
   annotationsLookupTable?: AnnotationLookupTable;
   dimensions?: Dimensions;
-  theme?: string;
+  theme: string;
 }
 
 export function Chart({

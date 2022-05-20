@@ -1,6 +1,7 @@
 import React from 'react';
-import type {
+import {
   DataPoint,
+  DEFAULT_THEME_NAME,
   Direction,
   LabelFormatter,
 } from '@shopify/polaris-viz-core';
@@ -28,7 +29,7 @@ export function SimpleNormalizedChart({
   labelPosition = 'top-left',
   direction = 'horizontal',
   size = 'small',
-  theme,
+  theme = DEFAULT_THEME_NAME,
 }: SimpleNormalizedChartProps) {
   return (
     <ChartContainer theme={theme}>

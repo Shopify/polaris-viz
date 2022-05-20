@@ -7,7 +7,7 @@ export interface LegendProps {
   data: LegendData[];
   activeIndex?: number;
   colorVisionType?: string;
-  theme?: string;
+  theme: string;
 }
 
 export function Legend({

@@ -31,7 +31,7 @@ export interface HorizontalStackedBarsProps {
   name: string;
   stackedValues: FormattedStackedSeries[];
   xScale: ScaleLinear<number, number>;
-  theme?: string;
+  theme: string;
 }
 
 function getBorderRadius({

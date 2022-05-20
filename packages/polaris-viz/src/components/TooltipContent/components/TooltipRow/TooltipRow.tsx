@@ -21,7 +21,7 @@ interface Props {
   value: string;
   color?: Color;
   isComparison?: boolean;
-  theme?: string;
+  theme: string;
 }
 
 export function TooltipRow({

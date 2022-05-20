@@ -9,7 +9,7 @@ interface Props {
   color: Color;
   isComparison?: boolean;
   shape?: Shape;
-  theme?: string;
+  theme: string;
 }
 
 export function SeriesIcon({

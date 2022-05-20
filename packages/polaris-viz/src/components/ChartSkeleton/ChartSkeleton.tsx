@@ -1,7 +1,8 @@
 /* eslint-disable node/callback-return */
 import React, {useRef, useEffect} from 'react';
-import type {Dimensions} from '@shopify/polaris-viz-core';
 import {
+  DEFAULT_THEME_NAME,
+  Dimensions,
   useTheme,
   paddingStringToObject,
   FONT_SIZE,
@@ -21,7 +22,7 @@ const INITIAL_DELAY = 200;
 const NUMBER_OF_BRICKS = 5;
 const TEXT_DROP_SHADOW_SIZE = 3;
 export interface ChartSkeletonProps {
-  theme?: string;
+  theme: string;
   dimensions?: Dimensions;
   state?: ChartState;
   errorText?: string;
@@ -29,7 +30,7 @@ export interface ChartSkeletonProps {
 
 export function ChartSkeleton({
   dimensions,
-  theme = 'Default',
+  theme = DEFAULT_THEME_NAME,
   state = ChartState.Loading,
   errorText = 'Could not load the chart',
 }: ChartSkeletonProps) {

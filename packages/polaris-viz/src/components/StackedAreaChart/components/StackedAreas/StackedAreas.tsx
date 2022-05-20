@@ -29,7 +29,7 @@ interface Props {
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
   isAnimated: boolean;
-  theme?: string;
+  theme: string;
 }
 
 export function Areas({

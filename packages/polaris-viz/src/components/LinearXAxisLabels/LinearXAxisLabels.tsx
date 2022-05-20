@@ -13,7 +13,7 @@ interface LinearXAxisLabelsProps {
   onHeightChange: Dispatch<SetStateAction<number>>;
   xScale: ScaleLinear<number, number>;
   reducedLabelIndexes?: number[];
-  theme?: string;
+  theme: string;
 }
 
 export function LinearXAxisLabels({
