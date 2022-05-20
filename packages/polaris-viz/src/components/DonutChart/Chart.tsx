@@ -14,6 +14,8 @@ import {getSeriesColors} from '../../hooks';
 import styles from './DonutChart.scss';
 import {Arc} from './components';
 
+const FULL_CIRCLE = Math.PI * 2;
+
 export interface ChartProps {
   data: DataSeries[];
   accessibilityLabel?: string;
@@ -33,7 +35,6 @@ export function Chart({
 }: ChartProps) {
   const {width, height} = dimensions;
   const radius = Math.min(width, height) / 2;
-  const FULL_CIRCLE = Math.PI * 2;
   const selectedTheme = useTheme(theme);
   const seriesCount = clamp({amount: data.length, min: 1, max: Infinity});
   const seriesColor = getSeriesColors(seriesCount, selectedTheme);
@@ -102,7 +103,12 @@ export function Chart({
             comparisonMetric && styles.ContentWrapperWithComparison,
           )}
         >
-          <p className={classNames(styles.ContentValue)}>{formattedValue}</p>
+          <p
+            className={classNames(styles.ContentValue)}
+            style={{color: selectedTheme.xAxis.labelColor}}
+          >
+            {formattedValue}
+          </p>
           {comparisonMetric != null && (
             <div className={styles.ComparisonMetric}>
               <ComparisonMetric

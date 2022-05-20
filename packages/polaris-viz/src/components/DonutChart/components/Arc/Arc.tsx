@@ -1,9 +1,9 @@
 import React, {useMemo} from 'react';
 import {arc} from 'd3-shape';
-import {uniqueId} from '@shopify/polaris-viz-core';
+import {GradientStop, uniqueId} from '@shopify/polaris-viz-core';
 import type {Color} from '@shopify/polaris-viz-core';
 
-import {ConicGradientWithStops} from '../../../../components/shared';
+import {ConicGradientWithStops} from '../../../';
 import {classNames} from '../../../../utilities';
 import {ARC_PAD_ANGLE} from '../../constants';
 
@@ -61,7 +61,7 @@ export function Arc({
           width={width}
           startAngle={startAngle}
           endAngle={endAngle}
-          color={color}
+          gradient={color as GradientStop[]}
         />
       </foreignObject>
     </React.Fragment>

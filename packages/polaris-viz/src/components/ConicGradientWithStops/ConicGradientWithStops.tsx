@@ -1,10 +1,10 @@
 import React from 'react';
-import type {GradientStop, Color} from '@shopify/polaris-viz-core/src/types';
+import {GradientStop, isGradientType} from '@shopify/polaris-viz-core';
 
 import styles from './ConicGradientWithStops.scss';
 
 export interface ConicGradientWithStopsProps {
-  color: Color;
+  gradient: GradientStop[];
   startAngle: number;
   endAngle: number;
   height: number;
@@ -12,15 +12,15 @@ export interface ConicGradientWithStopsProps {
 }
 
 export function ConicGradientWithStops({
-  color,
+  gradient,
   startAngle,
   endAngle,
   height,
   width,
 }: ConicGradientWithStopsProps) {
-  const firstColor = (color[0] as GradientStop).color;
-  const lastColor = (color[color.length - 1] as GradientStop).color;
-  const isSolidColor = color.length === 1;
+  const firstColor = gradient[0].color;
+  const lastColor = gradient[gradient.length - 1].color;
+  const isGradient = isGradientType(gradient);
 
   const arcWidth = endAngle - startAngle;
   const halfwayPoint = startAngle + arcWidth / 2;
@@ -39,9 +39,9 @@ export function ConicGradientWithStops({
       style={{
         width: `${width}px`,
         height: `${height}px`,
-        ...(isSolidColor
-          ? {background: lastColor}
-          : {backgroundImage: conicGradientValue}),
+        ...(isGradient
+          ? {backgroundImage: conicGradientValue}
+          : {background: lastColor}),
       }}
     />
   );
