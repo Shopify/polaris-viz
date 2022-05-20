@@ -7,8 +7,10 @@ import type {
   Dimensions,
 } from '@shopify/polaris-viz-core';
 
-import type {RenderTooltipContentData} from '../../types';
-import type {AnnotationLookupTable} from '../BarChart';
+import type {
+  AnnotationLookupTable,
+  RenderTooltipContentData,
+} from '../../types';
 import {usePrefersReducedMotion} from '../../hooks';
 
 import {Chart} from './Chart';
