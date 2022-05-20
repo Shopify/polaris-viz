@@ -26,6 +26,7 @@ export interface BarProps {
   isAnimated?: boolean;
   needsMinWidth?: boolean;
   transform?: string;
+  ariaLabel?: string;
 }
 
 export const Bar = React.memo(function Bar({
@@ -42,6 +43,7 @@ export const Bar = React.memo(function Bar({
   width,
   x,
   y,
+  ariaLabel,
 }: BarProps) {
   const getPath = useCallback(
     (height = 0, width = 0) => {
@@ -61,8 +63,15 @@ export const Bar = React.memo(function Bar({
     default: {immediate: !isAnimated},
   });
 
+  const ariaHidden = !ariaLabel;
+
   return (
-    <g className={styles.Group} aria-hidden="true">
+    <g
+      className={styles.Group}
+      aria-hidden={ariaHidden}
+      role="img"
+      aria-label={ariaLabel}
+    >
       <animated.path
         d={spring.pathD}
         data-id={`bar-${index}`}

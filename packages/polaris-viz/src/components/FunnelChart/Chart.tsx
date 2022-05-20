@@ -132,18 +132,19 @@ export function Chart({
   };
   return (
     <svg role="list" viewBox={`0 0 ${width} ${height}`} xmlns={XMLNS}>
-      <FunnelChartXAxisLabels
-        chartHeight={height}
-        chartX={0}
-        chartY={drawableHeight}
-        labels={labels}
-        labelWidth={barWidth}
-        onHeightChange={setLabelHeight}
-        reducedLabelIndexes={reducedLabelIndexes}
-        theme={theme}
-        xScale={labelXScale}
-      />
-
+      <g aria-hidden="true">
+        <FunnelChartXAxisLabels
+          chartHeight={height}
+          chartX={0}
+          chartY={drawableHeight}
+          labels={labels}
+          labelWidth={barWidth}
+          onHeightChange={setLabelHeight}
+          reducedLabelIndexes={reducedLabelIndexes}
+          theme={theme}
+          xScale={labelXScale}
+        />
+      </g>
       <g mask={`url(#${maskId}-${theme}-grad)`}>
         <LinearGradientWithStops gradient={barsGradient} id={`${gradientId}`} />
         <rect
@@ -162,8 +163,11 @@ export function Chart({
           const x = xPosition == null ? 0 : xPosition;
           const barWidth = xScale.bandwidth();
           return (
-            <React.Fragment key={dataPoint.key}>
+            <g key={dataPoint.key} role="listitem">
               <Bar
+                ariaLabel={`${xAxisOptions.labelFormatter(
+                  dataPoint.key,
+                )}: ${yAxisOptions.labelFormatter(dataPoint.value)}`}
                 width={barWidth}
                 height={barHeight}
                 color={MASK_HIGHLIGHT_COLOR}
@@ -175,7 +179,7 @@ export function Chart({
                     : BORDER_RADIUS.None
                 }
               />
-            </React.Fragment>
+            </g>
           );
         })}
       </mask>
@@ -193,19 +197,21 @@ export function Chart({
 
         const percentLabel = handlePercentLabelFormatter(percentCalculation);
         const barHeight = getBarHeight(dataPoint.value || 0);
-        const formattedYValue = yAxisOptions?.labelFormatter(yAxisValue) || '0';
+        const formattedYValue = yAxisOptions.labelFormatter(yAxisValue);
 
         return (
           <React.Fragment key={dataPoint.key}>
-            <Label
-              barHeight={0}
-              label={formattedYValue}
-              labelWidth={barWidth}
-              x={x}
-              y={height - barHeight - Y_AXIS_LABEL_VERTICAL_OFFSET}
-              size="large"
-              color={selectedTheme.xAxis.labelColor}
-            />
+            <g aria-hidden="true">
+              <Label
+                barHeight={0}
+                label={formattedYValue}
+                labelWidth={barWidth}
+                x={x}
+                y={height - barHeight - Y_AXIS_LABEL_VERTICAL_OFFSET}
+                size="large"
+                color={selectedTheme.xAxis.labelColor}
+              />
+            </g>
             <g mask={`url(#${connectorGradientId}-${index})`}>
               <LinearGradientWithStops
                 gradient={connectorGradient}
@@ -235,15 +241,17 @@ export function Chart({
                 fill={MASK_HIGHLIGHT_COLOR}
               />
             </mask>
-            <Label
-              barHeight={0}
-              label={percentLabel}
-              labelWidth={barWidth}
-              x={x + barWidth}
-              y={height - nextBarHeight - PERCENT_LABEL_VERTICAL_OFFSET}
-              size="small"
-              color={changeColorOpacity(selectedTheme.xAxis.labelColor, 0.7)}
-            />
+            <g aria-hidden="true">
+              <Label
+                barHeight={0}
+                label={percentLabel}
+                labelWidth={barWidth}
+                x={x + barWidth}
+                y={height - nextBarHeight - PERCENT_LABEL_VERTICAL_OFFSET}
+                size="small"
+                color={changeColorOpacity(selectedTheme.xAxis.labelColor, 0.7)}
+              />
+            </g>
           </React.Fragment>
         );
       })}

@@ -31,7 +31,7 @@ const data = [
         key: 'Added to carts',
       },
       {
-        value: 0,
+        value: 4,
         key: 'Orders',
       },
     ],
@@ -53,5 +53,4 @@ export const SingleValues = SingleValuesTemplate.bind({});
 
 SingleValues.args = {
   data,
-  xAxisOptions: {},
 };
