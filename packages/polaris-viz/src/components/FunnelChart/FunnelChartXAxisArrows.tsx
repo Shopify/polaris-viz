@@ -44,7 +44,7 @@ export function FunnelChartXAxisArrows({
       })`;
     }
 
-    return `translate(${chartX - labelWidth + x},${chartY})`;
+    return `translate(${chartX - labelWidth / 1.5 + x},${chartY})`;
   };
 
   const arrowLine = [{...firstLabel, transform: undefined}];

@@ -22,12 +22,15 @@ import {
   XMLNS,
   MASK_HIGHLIGHT_COLOR,
   MIN_BAR_HEIGHT,
-  Y_AXIS_LABEL_VERTICAL_OFFSET,
-  PERCENT_LABEL_VERTICAL_OFFSET,
 } from '../../constants';
 
 import {FunnelChartXAxisLabels} from './FunnelChartXAxisLabels';
 import {Label} from './Label';
+
+const Y_AXIS_LABEL_VERTICAL_OFFSET = 32;
+const PERCENT_LABEL_VERTICAL_OFFSET = 24;
+const X_LABEL_OFFSET = 16;
+const NEGATIVE_LABEL_OFFSET = -4;
 
 export interface ChartProps {
   data: DataSeries[];
@@ -71,7 +74,7 @@ export function Chart({
     .paddingOuter(0)
     .domain(labels.map((_, index) => index.toString()));
 
-  const drawableHeight = height - labelHeight;
+  const drawableHeight = height - labelHeight - X_LABEL_OFFSET;
 
   const yScale = scaleLinear()
     .range([0, drawableHeight - BAR_CONTAINER_TEXT_HEIGHT])
@@ -135,10 +138,10 @@ export function Chart({
       <g aria-hidden="true">
         <FunnelChartXAxisLabels
           chartHeight={height}
-          chartX={0}
-          chartY={drawableHeight}
+          chartX={barWidth / NEGATIVE_LABEL_OFFSET}
+          chartY={drawableHeight + X_LABEL_OFFSET}
           labels={labels}
-          labelWidth={barWidth}
+          labelWidth={barWidth + barWidth / 2}
           onHeightChange={setLabelHeight}
           reducedLabelIndexes={reducedLabelIndexes}
           theme={theme}
@@ -207,7 +210,7 @@ export function Chart({
                 label={formattedYValue}
                 labelWidth={barWidth}
                 x={x}
-                y={height - barHeight - Y_AXIS_LABEL_VERTICAL_OFFSET}
+                y={drawableHeight - barHeight - Y_AXIS_LABEL_VERTICAL_OFFSET}
                 size="large"
                 color={selectedTheme.xAxis.labelColor}
               />
@@ -247,7 +250,9 @@ export function Chart({
                 label={percentLabel}
                 labelWidth={barWidth}
                 x={x + barWidth}
-                y={height - nextBarHeight - PERCENT_LABEL_VERTICAL_OFFSET}
+                y={
+                  drawableHeight - nextBarHeight - PERCENT_LABEL_VERTICAL_OFFSET
+                }
                 size="small"
                 color={changeColorOpacity(selectedTheme.xAxis.labelColor, 0.7)}
               />
