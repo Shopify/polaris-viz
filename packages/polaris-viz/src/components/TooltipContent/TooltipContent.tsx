@@ -7,16 +7,15 @@ import {
 } from '@shopify/polaris-viz-core';
 
 import {useWatchColorVisionEvents} from '../../hooks';
-import type {TooltipAnnotation, TooltipData} from '../../types';
+import type {TooltipData} from '../../types';
 
 import {useGetLongestLabelFromData} from './hooks/useGetLongestLabelFromData';
 import styles from './TooltipContent.scss';
 import {SPACE_BETWEEN_LABEL_AND_VALUE} from './constants';
-import {TooltipRow, Annotations} from './components/';
+import {TooltipRow} from './components/';
 
 export interface TooltipContentProps {
   data: TooltipData[];
-  annotations?: TooltipAnnotation[];
   title?: string;
   theme: string;
 }
@@ -24,12 +23,7 @@ export interface TooltipContentProps {
 const FONT_SIZE_OFFSET = 1.061;
 const PREVIEW_WIDTH = 14;
 
-export function TooltipContent({
-  annotations = [],
-  data,
-  theme,
-  title,
-}: TooltipContentProps) {
+export function TooltipContent({data, theme, title}: TooltipContentProps) {
   const [activeIndex, setActiveIndex] = useState(-1);
 
   const selectedTheme = useTheme(theme);
@@ -66,12 +60,6 @@ export function TooltipContent({
           {title}
         </p>
       )}
-
-      <Annotations
-        activeIndex={activeIndex}
-        annotations={annotations}
-        theme={theme}
-      />
 
       {data.map(({data: series, name, shape}, dataIndex) => {
         return (

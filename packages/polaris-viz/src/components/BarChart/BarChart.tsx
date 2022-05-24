@@ -13,11 +13,7 @@ import type {
 } from '@shopify/polaris-viz-core';
 
 import {ChartContainer} from '../../components/ChartContainer';
-import type {
-  TooltipAnnotation,
-  RenderTooltipContentData,
-  Annotation,
-} from '../../types';
+import type {RenderTooltipContentData, Annotation} from '../../types';
 import {TooltipContent} from '../';
 import {SkipLink} from '../SkipLink';
 import {
@@ -90,24 +86,7 @@ export function BarChart({
       yAxisOptions: yAxisOptionsWithDefaults,
     });
 
-    const annotation = annotationsLookupTable[tooltipData.activeIndex];
-    const annotations: TooltipAnnotation[] = [];
-
-    if (annotation) {
-      annotations.push({
-        key: annotation.tooltipData?.key ?? '',
-        value: annotation.tooltipData?.value ?? '',
-      });
-    }
-
-    return (
-      <TooltipContent
-        annotations={annotations}
-        data={formattedData}
-        theme={theme}
-        title={title}
-      />
-    );
+    return <TooltipContent data={formattedData} theme={theme} title={title} />;
   }
   const ChartByDirection =
     direction === 'vertical' ? (
