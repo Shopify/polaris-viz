@@ -27,7 +27,7 @@ const meta: Meta<DonutChartProps> = {
     },
   },
   decorators: [
-    (Story) => <div style={{width: 200, height: 200}}>{Story()}</div>,
+    (Story) => <div style={{width: 300, height: 300}}>{Story()}</div>,
   ],
 };
 
@@ -57,6 +57,6 @@ Default.args = {
   comparisonMetric: {
     metric: '10%',
     trend: 'positive',
-    accessibilityLabel: 'label',
+    accessibilityLabel: 'trending up 10%',
   },
 };
