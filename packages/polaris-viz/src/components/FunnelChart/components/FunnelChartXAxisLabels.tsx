@@ -1,8 +1,8 @@
 import React, {Dispatch, SetStateAction} from 'react';
 import type {ScaleBand} from 'd3-scale';
 
-import {useLabels, shouldSkipLabel} from '../Labels';
-import {TextLine} from '../TextLine';
+import {useLabels, shouldSkipLabel} from '../../Labels';
+import {TextLine} from '../../TextLine';
 
 import {FunnelChartXAxisArrows} from './FunnelChartXAxisArrows';
 

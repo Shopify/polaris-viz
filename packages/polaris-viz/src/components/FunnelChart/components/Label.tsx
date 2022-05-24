@@ -1,7 +1,8 @@
 import React from 'react';
-import {animated} from '@react-spring/web';
 
-import {HORIZONTAL_BAR_LABEL_HEIGHT} from '../../constants';
+import {HORIZONTAL_BAR_LABEL_HEIGHT} from '../../../constants';
+
+import styles from './Label.scss';
 
 type Size = 'small' | 'large';
 
@@ -24,6 +25,7 @@ export interface LabelProps {
   y: number;
   size: Size;
   color?: string;
+  backgroundColor?: string;
 }
 
 export function Label({
@@ -34,13 +36,14 @@ export function Label({
   y,
   size,
   color,
+  backgroundColor,
 }: LabelProps) {
   const labelYOffset = (barHeight - HORIZONTAL_BAR_LABEL_HEIGHT) / 2;
 
   const fontSize = FONT_SIZES[size];
 
   return (
-    <animated.foreignObject
+    <foreignObject
       height={LABEL_HEIGHT}
       width={labelWidth}
       aria-hidden="true"
@@ -50,17 +53,22 @@ export function Label({
       }}
     >
       <div
+        className={styles.Label}
         style={{
           fontSize: `${fontSize}px`,
           color,
           lineHeight: `${HORIZONTAL_BAR_LABEL_HEIGHT}px`,
           height: HORIZONTAL_BAR_LABEL_HEIGHT,
-          textAlign: 'center',
-          paddingTop: '6px',
         }}
       >
-        {label}
+        <span
+          style={{
+            backgroundColor,
+          }}
+        >
+          {label}
+        </span>
       </div>
-    </animated.foreignObject>
+    </foreignObject>
   );
 }
