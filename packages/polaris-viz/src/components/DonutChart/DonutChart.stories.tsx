@@ -54,4 +54,9 @@ Default.args = {
       data: [{key: 'Amazon Pay', value: 4000}],
     },
   ],
+  comparisonMetric: {
+    metric: '10%',
+    trend: 'positive',
+    accessibilityLabel: 'label',
+  },
 };

@@ -17,7 +17,7 @@ import {Arc} from './components';
 export interface ChartProps {
   data: DataSeries[];
   accessibilityLabel?: string;
-  comparisonMetric?: Omit<ComparisonMetricProps, 'theme'>;
+  comparisonMetric: Omit<ComparisonMetricProps, 'theme'>;
   total?: number;
   dimensions?: Dimensions;
   theme?: string;
