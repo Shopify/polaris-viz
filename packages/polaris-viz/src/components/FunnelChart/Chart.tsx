@@ -13,6 +13,7 @@ import {
   useTheme,
   getAverageColor,
   changeColorOpacity,
+  DEFAULT_THEME_NAME,
 } from '@shopify/polaris-viz-core';
 
 import {Bar} from '../shared';
@@ -42,7 +43,7 @@ export interface ChartProps {
 export function Chart({
   data,
   dimensions,
-  theme,
+  theme = DEFAULT_THEME_NAME,
   xAxisOptions,
   yAxisOptions,
 }: ChartProps) {

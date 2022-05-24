@@ -14,7 +14,7 @@ export interface FunnelChartXAxisArrowsProps {
   chartX: number;
   chartY: number;
   labelWidth: number;
-  theme?: string;
+  theme: string;
 }
 
 export function FunnelChartXAxisArrows({

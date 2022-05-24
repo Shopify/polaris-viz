@@ -4,7 +4,11 @@ import type {
   XAxisOptions,
   YAxisOptions,
 } from '@shopify/polaris-viz-core';
-import {useTheme, useThemeSeriesColors} from '@shopify/polaris-viz-core';
+import {
+  useTheme,
+  useThemeSeriesColors,
+  DEFAULT_THEME_NAME,
+} from '@shopify/polaris-viz-core';
 
 import {ChartContainer} from '../../components/ChartContainer';
 import {getYAxisOptionsWithDefaults} from '../../utilities';
@@ -20,7 +24,7 @@ export interface FunnelChartProps {
 
 export function FunnelChart({
   data,
-  theme = 'Default',
+  theme = DEFAULT_THEME_NAME,
   xAxisOptions,
   yAxisOptions,
 }: FunnelChartProps) {
