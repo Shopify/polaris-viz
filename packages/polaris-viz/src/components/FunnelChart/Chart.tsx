@@ -114,11 +114,11 @@ export function Chart({
 
   const connectorGradient = [
     {
-      color: changeColorOpacity(averageColor, 0.3),
+      color: changeColorOpacity(averageColor, 0.2),
       offset: 0,
     },
     {
-      color: backgroundColor,
+      color: changeColorOpacity(averageColor, 0),
       offset: 100,
     },
   ];
@@ -187,7 +187,7 @@ export function Chart({
         })}
       </mask>
 
-      {dataSeries.map((dataPoint, index) => {
+      {dataSeries.map((dataPoint, index: number) => {
         const nextPoint = dataSeries[index + 1];
         const xPosition = xScale(dataPoint.key as string);
         const x = xPosition == null ? 0 : xPosition;
@@ -215,35 +215,24 @@ export function Chart({
                 color={selectedTheme.xAxis.labelColor}
               />
             </g>
-            <g mask={`url(#${connectorGradientId}-${index})`}>
-              <LinearGradientWithStops
-                gradient={connectorGradient}
-                id={connectorGradientId}
-                x1="0%"
-                x2="100%"
-                y1="0%"
-                y2="0%"
-              />
-              <rect
-                x={x + barWidth}
-                y={0}
-                width={barWidth}
-                height={drawableHeight}
-                fill={`url(#${connectorGradientId})`}
-              />
-            </g>
+            <LinearGradientWithStops
+              gradient={connectorGradient}
+              id={connectorGradientId}
+              x1="0%"
+              x2="0%"
+              y1="100%"
+              y2="0%"
+            />
 
-            <mask id={`${connectorGradientId}-${index}`}>
-              <Connector
-                height={drawableHeight}
-                startX={x + barWidth}
-                startY={drawableHeight - nextBarHeight}
-                nextX={xScale(nextPoint?.key as string)}
-                nextY={drawableHeight - nextBarHeight}
-                nextPoint={nextPoint}
-                fill={MASK_HIGHLIGHT_COLOR}
-              />
-            </mask>
+            <Connector
+              height={drawableHeight}
+              startX={x + barWidth}
+              startY={drawableHeight - barHeight}
+              nextX={xScale(nextPoint?.key as string)}
+              nextY={drawableHeight - nextBarHeight}
+              nextPoint={nextPoint}
+              fill={`url(#${connectorGradientId})`}
+            />
             <g aria-hidden="true">
               <Label
                 barHeight={0}
