@@ -1,6 +1,7 @@
 import {changeColorOpacity, clamp, useTheme} from '@shopify/polaris-viz-core';
 import React, {useEffect, useState} from 'react';
 
+import {useBrowserCheck} from '../../../../hooks/useBrowserCheck';
 import type {Annotation} from '../../../../types';
 import type {AnnotationPosition} from '../../types';
 
@@ -24,6 +25,7 @@ export function AnnotationContent({
   theme,
 }: Props) {
   const selectedTheme = useTheme(theme);
+  const {isFirefox} = useBrowserCheck();
 
   const [ref, setRef] = useState<HTMLDivElement | null>(null);
   const [bounds, setBounds] = useState<DOMRect | undefined>();
@@ -67,7 +69,7 @@ export function AnnotationContent({
             maxWidth: Math.min(drawableWidth, MAX_WIDTH),
             background: changeColorOpacity(
               selectedTheme.annotations.backgroundColor,
-              0.85,
+              isFirefox ? 1 : 0.85,
             ),
           }}
         >
