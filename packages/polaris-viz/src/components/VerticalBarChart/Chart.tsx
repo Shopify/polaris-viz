@@ -60,6 +60,8 @@ import {useXScale} from './hooks';
 import {MIN_Y_LABEL_SPACE} from './constants';
 import styles from './Chart.scss';
 
+const ANNOTATIONS_LABELS_OFFSET = 2;
+
 export interface Props {
   data: DataSeries[];
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
@@ -159,6 +161,8 @@ export function Chart({
   const chartYPosition = (Margin.Top as number) + annotationsHeight;
 
   const drawableWidth = width - chartXPosition - horizontalMargin * 2;
+  const annotationsDrawableHeight =
+    chartYPosition + drawableHeight + labelHeight - ANNOTATIONS_LABELS_OFFSET;
 
   const hideXAxis = xAxisOptions.hide ?? selectedTheme.xAxis.hide;
 
@@ -310,10 +314,10 @@ export function Chart({
             })
           )}
         </g>
-        <g transform={`translate(${chartXPosition},${Margin.Top})`}>
+        <g transform={`translate(${chartXPosition},0)`}>
           <Annotations
             annotationsLookupTable={annotationsLookupTable}
-            drawableHeight={chartYPosition + drawableHeight}
+            drawableHeight={annotationsDrawableHeight}
             drawableWidth={drawableWidth}
             onHeightChange={setAnnotationsHeight}
             theme={theme}

@@ -86,6 +86,7 @@ export function Annotations({
             />
             {!hideLabel && (
               <AnnotationLabel
+                hasContent={hasContent}
                 index={index}
                 label={annotation.label}
                 position={positions[index]}
