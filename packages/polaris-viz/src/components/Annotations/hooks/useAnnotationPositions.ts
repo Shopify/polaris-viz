@@ -11,6 +11,7 @@ import {
   PILL_HEIGHT,
   PILL_PADDING,
   PILL_ROW_GAP,
+  PILL_X_MIN,
 } from '../constants';
 import type {Annotation} from '../../../types';
 import type {AnnotationPosition} from '../types';
@@ -65,7 +66,7 @@ export function useAnnotationPositions({
 
       let x = clamp({
         amount: rawX - width / 2,
-        min: 0,
+        min: PILL_X_MIN,
         max: Infinity,
       });
 

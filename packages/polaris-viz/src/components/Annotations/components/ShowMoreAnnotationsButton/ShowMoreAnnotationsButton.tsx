@@ -6,7 +6,12 @@ import {
   useTheme,
 } from '@shopify/polaris-viz-core';
 
-import {PILL_HEIGHT, PILL_PADDING, PILL_ROW_GAP} from '../../constants';
+import {
+  PILL_HEIGHT,
+  PILL_PADDING,
+  PILL_ROW_GAP,
+  PILL_X_MIN,
+} from '../../constants';
 import {SingleTextLine} from '../../../Labels';
 
 import styles from './ShowMoreAnnotationsButton.scss';
@@ -30,17 +35,20 @@ export function ShowMoreAnnotationsButton({
   const textWidth = estimateStringWidth(label, characterWidths);
 
   const radius = PILL_HEIGHT / 2;
+  const pillWidth = width + Math.abs(PILL_X_MIN);
 
   return (
     <g
       className={styles.Button}
-      transform={`translate(${0},${PILL_HEIGHT * 2 + PILL_ROW_GAP * 2})`}
+      transform={`translate(${PILL_X_MIN},${
+        PILL_HEIGHT * 2 + PILL_ROW_GAP * 2
+      })`}
       onClick={onClick}
       tabIndex={0}
     >
       <rect
         height={PILL_HEIGHT}
-        width={width}
+        width={pillWidth}
         fill={selectedTheme.annotations.backgroundColor}
         ry={radius}
         y={3}
@@ -49,7 +57,7 @@ export function ShowMoreAnnotationsButton({
       />
       <rect
         height={PILL_HEIGHT}
-        width={width}
+        width={pillWidth}
         fill={selectedTheme.annotations.backgroundColor}
         ry={radius}
         stroke={selectedTheme.chartContainer.backgroundColor}
