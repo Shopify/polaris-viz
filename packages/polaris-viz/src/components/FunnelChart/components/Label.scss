@@ -1,0 +1,14 @@
+.Label {
+  text-align: center;
+  padding-top: 6px;
+
+  span {
+    padding: 0 4px;
+    border-radius: '4px';
+    border-radius: 4px;
+  }
+
+  span:empty {
+    display: none;
+  }
+}
