@@ -24,8 +24,7 @@ import {
   MIN_BAR_HEIGHT,
 } from '../../constants';
 
-import {FunnelChartXAxisLabels} from './FunnelChartXAxisLabels';
-import {Label} from './Label';
+import {FunnelChartXAxisLabels, Label} from './components/';
 
 const Y_AXIS_LABEL_VERTICAL_OFFSET = 32;
 const PERCENT_LABEL_VERTICAL_OFFSET = 24;
@@ -135,6 +134,47 @@ export function Chart({
   };
   return (
     <svg role="list" viewBox={`0 0 ${width} ${height}`} xmlns={XMLNS}>
+      <defs>
+        <LinearGradientWithStops
+          gradient={connectorGradient}
+          id={connectorGradientId}
+          x1="0%"
+          x2="0%"
+          y1="100%"
+          y2="0%"
+        />
+
+        <LinearGradientWithStops gradient={barsGradient} id={`${gradientId}`} />
+
+        <mask id={`${maskId}-${theme}-grad`}>
+          {dataSeries.map((dataPoint) => {
+            const barHeight = getBarHeight(dataPoint.value || 0);
+            const xPosition = xScale(dataPoint.key as string);
+            const x = xPosition == null ? 0 : xPosition;
+            const barWidth = xScale.bandwidth();
+            return (
+              <g key={dataPoint.key} role="listitem">
+                <Bar
+                  ariaLabel={`${xAxisOptions.labelFormatter(
+                    dataPoint.key,
+                  )}: ${yAxisOptions.labelFormatter(dataPoint.value)}`}
+                  width={barWidth}
+                  height={barHeight}
+                  color={MASK_HIGHLIGHT_COLOR}
+                  x={x}
+                  y={drawableHeight - barHeight}
+                  borderRadius={
+                    selectedTheme.bar.hasRoundedCorners
+                      ? BORDER_RADIUS.Top
+                      : BORDER_RADIUS.None
+                  }
+                />
+              </g>
+            );
+          })}
+        </mask>
+      </defs>
+
       <g aria-hidden="true">
         <FunnelChartXAxisLabels
           chartHeight={height}
@@ -148,44 +188,15 @@ export function Chart({
           xScale={labelXScale}
         />
       </g>
-      <g mask={`url(#${maskId}-${theme}-grad)`}>
-        <LinearGradientWithStops gradient={barsGradient} id={`${gradientId}`} />
-        <rect
-          x={0}
-          y={0}
-          width={width}
-          height={drawableHeight}
-          fill={`url(#${gradientId})`}
-        />
-      </g>
 
-      <mask id={`${maskId}-${theme}-grad`}>
-        {dataSeries.map((dataPoint) => {
-          const barHeight = getBarHeight(dataPoint.value || 0);
-          const xPosition = xScale(dataPoint.key as string);
-          const x = xPosition == null ? 0 : xPosition;
-          const barWidth = xScale.bandwidth();
-          return (
-            <g key={dataPoint.key} role="listitem">
-              <Bar
-                ariaLabel={`${xAxisOptions.labelFormatter(
-                  dataPoint.key,
-                )}: ${yAxisOptions.labelFormatter(dataPoint.value)}`}
-                width={barWidth}
-                height={barHeight}
-                color={MASK_HIGHLIGHT_COLOR}
-                x={x}
-                y={drawableHeight - barHeight}
-                borderRadius={
-                  selectedTheme.bar.hasRoundedCorners
-                    ? BORDER_RADIUS.Top
-                    : BORDER_RADIUS.None
-                }
-              />
-            </g>
-          );
-        })}
-      </mask>
+      <rect
+        mask={`url(#${maskId}-${theme}-grad)`}
+        x={0}
+        y={0}
+        width={width}
+        height={drawableHeight}
+        fill={`url(#${gradientId})`}
+      />
 
       {dataSeries.map((dataPoint, index: number) => {
         const nextPoint = dataSeries[index + 1];
@@ -215,14 +226,6 @@ export function Chart({
                 color={selectedTheme.xAxis.labelColor}
               />
             </g>
-            <LinearGradientWithStops
-              gradient={connectorGradient}
-              id={connectorGradientId}
-              x1="0%"
-              x2="0%"
-              y1="100%"
-              y2="0%"
-            />
 
             <Connector
               height={drawableHeight}
@@ -235,6 +238,7 @@ export function Chart({
             />
             <g aria-hidden="true">
               <Label
+                backgroundColor={backgroundColor}
                 barHeight={0}
                 label={percentLabel}
                 labelWidth={barWidth}
