@@ -27,7 +27,7 @@ const meta: Meta<DonutChartProps> = {
     },
   },
   decorators: [
-    (Story) => <div style={{width: 300, height: 300}}>{Story()}</div>,
+    (Story) => <div style={{width: 200, height: 200}}>{Story()}</div>,
   ],
 };
 
