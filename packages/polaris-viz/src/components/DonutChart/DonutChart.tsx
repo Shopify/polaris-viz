@@ -8,7 +8,7 @@ import {Chart} from './Chart';
 export interface DonutChartProps {
   data: DataSeries[];
   theme?: string;
-  labelFormatter: LabelFormatter;
+  labelFormatter?: LabelFormatter;
 }
 
 export function DonutChart({
