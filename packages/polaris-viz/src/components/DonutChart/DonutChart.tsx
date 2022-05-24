@@ -8,7 +8,7 @@ import {Chart} from './Chart';
 
 export interface DonutChartProps {
   data: DataSeries[];
-  comparisonMetric: MetricWithTrend;
+  comparisonMetric?: MetricWithTrend;
   theme?: string;
 }
 
