@@ -15,7 +15,7 @@
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  font-size: rem(20px);
+  font-size: 20px;
 }
 
 .ContentWrapperWithComparison {
@@ -23,12 +23,13 @@
 }
 
 .ContentValue {
-  font-size: rem(20px);
+  font-size: 20px;
   font-weight: 600;
   user-select: text;
+  margin: 0;
 }
 
 .ComparisonMetric {
-  font-size: rem(16px);
+  font-size: 16px;
   margin-top: spacing(extra-tight);
 }

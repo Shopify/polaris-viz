@@ -1,9 +1,9 @@
 import React, {useMemo} from 'react';
 import {arc} from 'd3-shape';
-import {uniqueId} from '@shopify/polaris-viz-core';
+import {isGradientType, uniqueId} from '@shopify/polaris-viz-core';
 import type {Color} from '@shopify/polaris-viz-core';
 
-import {ConicGradientWithStops} from '../../../../components/shared';
+import {ConicGradientWithStops} from '../../../';
 import {classNames} from '../../../../utilities';
 import {ARC_PAD_ANGLE} from '../../constants';
 
@@ -15,7 +15,6 @@ export interface ArcProps {
   width: number;
   startAngle: number;
   endAngle: number;
-  isOnlySegment?: boolean;
   color: Color;
   cornerRadius: number;
   thickness: number;
@@ -43,6 +42,8 @@ export function Arc({
   };
   const path = createArc(arcOptions);
 
+  const gradient = isGradientType(color) ? color : [{color, offset: 0}];
+
   return (
     <React.Fragment>
       <clipPath id={gradientId} transform={`translate(${radius} ${radius})`}>
@@ -59,9 +60,7 @@ export function Arc({
         <ConicGradientWithStops
           height={height}
           width={width}
-          startAngle={startAngle}
-          endAngle={endAngle}
-          color={color}
+          gradient={gradient}
         />
       </foreignObject>
     </React.Fragment>

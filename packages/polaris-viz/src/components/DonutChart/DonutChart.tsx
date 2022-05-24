@@ -1,8 +1,8 @@
 import React from 'react';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
-import type {MetricWithTrend} from '../ComparisonMetric';
 import {ChartContainer} from '../ChartContainer';
+import type {MetricWithTrend} from '../../types';
 
 import {Chart} from './Chart';
 
