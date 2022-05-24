@@ -14,8 +14,8 @@ import styles from './ShowMoreAnnotationsButton.scss';
 interface Props {
   label: string;
   onClick: () => void;
+  theme: string;
   width: number;
-  theme?: string;
 }
 
 export function ShowMoreAnnotationsButton({
