@@ -1,8 +1,9 @@
 import React, {useMemo} from 'react';
 import {arc} from 'd3-shape';
-import {uniqueId} from '@shopify/polaris-viz-core';
-import type {Color, GradientStop} from '@shopify/polaris-viz-core';
+import {isGradientType, uniqueId} from '@shopify/polaris-viz-core';
+import type {Color} from '@shopify/polaris-viz-core';
 
+import {ConicGradientWithStops} from '../../../';
 import {classNames} from '../../../../utilities';
 import {ARC_PAD_ANGLE} from '../../constants';
 
@@ -14,7 +15,6 @@ export interface ArcProps {
   width: number;
   startAngle: number;
   endAngle: number;
-  isOnlySegment?: boolean;
   color: Color;
   cornerRadius: number;
   thickness: number;
@@ -26,16 +26,11 @@ export function Arc({
   height,
   startAngle,
   endAngle,
-  isOnlySegment,
   color,
   cornerRadius,
   thickness,
 }: ArcProps) {
-  const firstColor = (color[0] as GradientStop).color;
   const gradientId = useMemo(() => uniqueId('DonutChart'), []);
-
-  const lastColor = (color[color.length - 1] as GradientStop).color;
-
   const createArc = arc().cornerRadius(cornerRadius);
 
   const arcOptions = {
@@ -46,16 +41,8 @@ export function Arc({
     padAngle: ARC_PAD_ANGLE,
   };
   const path = createArc(arcOptions);
-  const arcWidth = endAngle - startAngle;
-  const halfwayPoint = startAngle + arcWidth / 2;
 
-  const conicGradientValue = useMemo((): string => {
-    const stopAdjustment = (startAngle - endAngle) * 0.25;
-
-    return `conic-gradient(from ${startAngle}rad, ${firstColor}, ${lastColor} ${
-      halfwayPoint - startAngle - stopAdjustment
-    }rad ${endAngle - startAngle}rad, transparent ${endAngle - startAngle}rad)`;
-  }, [endAngle, firstColor, halfwayPoint, lastColor, startAngle]);
+  const gradient = isGradientType(color) ? color : [{color, offset: 0}];
 
   return (
     <React.Fragment>
@@ -70,15 +57,10 @@ export function Arc({
         clipPath={`url(#${gradientId})`}
         transform={`translate(-${radius} -${radius})`}
       >
-        <div
-          className={styles.Gradient}
-          style={{
-            width: `${width}px`,
-            height: `${height}px`,
-            ...(isOnlySegment
-              ? {background: lastColor}
-              : {backgroundImage: conicGradientValue}),
-          }}
+        <ConicGradientWithStops
+          height={height}
+          width={width}
+          gradient={gradient}
         />
       </foreignObject>
     </React.Fragment>
