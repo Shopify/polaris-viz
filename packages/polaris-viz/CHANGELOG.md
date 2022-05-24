@@ -7,7 +7,9 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
-- switch to using `print-color-adjust` instead of `color-adjust` to avoid autoprefixer warnings.
+### Changed
+
+- Use print-color-adjust instead of color-adjust to prevent webpack warnings in consumers using `autoprefix`
 
 ## [1.8.0] - 2022-05-19
 
