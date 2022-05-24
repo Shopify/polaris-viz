@@ -1,6 +1,7 @@
 import {changeColorOpacity, clamp, useTheme} from '@shopify/polaris-viz-core';
 import React, {useEffect, useState} from 'react';
 
+import {useBrowserCheck} from '../../../../hooks/useBrowserCheck';
 import type {Annotation} from '../../../../types';
 import type {AnnotationPosition} from '../../types';
 
@@ -13,7 +14,7 @@ interface Props {
   drawableWidth: number;
   onMouseLeave: () => void;
   position: AnnotationPosition;
-  theme?: string;
+  theme: string;
 }
 
 export function AnnotationContent({
@@ -24,6 +25,7 @@ export function AnnotationContent({
   theme,
 }: Props) {
   const selectedTheme = useTheme(theme);
+  const {isFirefox} = useBrowserCheck();
 
   const [ref, setRef] = useState<HTMLDivElement | null>(null);
   const [bounds, setBounds] = useState<DOMRect | undefined>();
@@ -65,9 +67,11 @@ export function AnnotationContent({
           ref={setRef}
           style={{
             maxWidth: Math.min(drawableWidth, MAX_WIDTH),
+            // Firefox doesn't support blur so we'll remove
+            // the opacity on this element.
             background: changeColorOpacity(
               selectedTheme.annotations.backgroundColor,
-              0.85,
+              isFirefox ? 1 : 0.85,
             ),
           }}
         >

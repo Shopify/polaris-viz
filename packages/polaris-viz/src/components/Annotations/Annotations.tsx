@@ -18,8 +18,8 @@ interface Props {
   drawableHeight: number;
   drawableWidth: number;
   onHeightChange: (height: number) => void;
+  theme: string;
   xScale: ScaleBand<string>;
-  theme?: string;
 }
 
 export function Annotations({
@@ -56,6 +56,14 @@ export function Annotations({
     xScale,
   });
 
+  const handleShowMoreAnnotations = () => {
+    setIsShowingAllAnnotations(true);
+  };
+
+  const handleOnMouseLeave = () => {
+    setActiveIndex(-1);
+  };
+
   return (
     <React.Fragment>
       {annotations.map((annotation, index) => {
@@ -91,7 +99,7 @@ export function Annotations({
       {shouldHideAnnotation({row: 3, isShowingAllAnnotations, rowCount}) && (
         <ShowMoreAnnotationsButton
           label={`show +${rowCount - 3} more`}
-          onClick={() => setIsShowingAllAnnotations(true)}
+          onClick={handleShowMoreAnnotations}
           theme={theme}
           width={drawableWidth}
         />
@@ -100,7 +108,7 @@ export function Annotations({
         <AnnotationContent
           annotation={annotations[activeIndex]}
           drawableWidth={drawableWidth}
-          onMouseLeave={() => setActiveIndex(-1)}
+          onMouseLeave={handleOnMouseLeave}
           position={positions[activeIndex]}
           theme={theme}
         />
