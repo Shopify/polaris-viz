@@ -3,8 +3,8 @@ import React from 'react';
 
 import styles from './AnnotationLine.scss';
 
-const CARET_SIZE = 9;
-const CARET_Y_OFFSET = -11;
+const CARET_SIZE = 16;
+const CARET_Y_OFFSET = -4;
 
 export interface AnnotationLineProps {
   size: number;
@@ -56,7 +56,7 @@ export function AnnotationLine({
         {...getLineCoords({direction, size, x, y})}
       />
       <path
-        d="M5.80929 14.3661C5.05774 15.017 3.94222 15.017 3.19067 14.3661L-2.25902e-05 11.5L0 0.5L8.99998 0.500013L8.99997 11.5L5.80929 14.3661Z"
+        d="M9.31 7.866a2 2 0 0 1-2.62 0L1.664 3.512C.263 2.3 1.12 0 2.973 0h10.055c1.852 0 2.709 2.3 1.31 3.512L9.308 7.866Z"
         transform={`translate(${x - CARET_SIZE / 2}, ${y + CARET_Y_OFFSET})`}
         fill={selectedTheme.annotations.backgroundColor}
       />

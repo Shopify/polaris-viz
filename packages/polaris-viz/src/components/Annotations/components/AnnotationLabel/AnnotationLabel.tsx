@@ -6,6 +6,7 @@ import {PILL_HEIGHT, PILL_PADDING} from '../../constants';
 import type {AnnotationPosition} from '../../types';
 
 interface Props {
+  hasContent: boolean;
   index: number;
   label: string;
   position: AnnotationPosition;
@@ -14,6 +15,7 @@ interface Props {
 }
 
 export function AnnotationLabel({
+  hasContent,
   index,
   label,
   position,
@@ -42,6 +44,17 @@ export function AnnotationLabel({
         y={PILL_HEIGHT - LINE_HEIGHT - 1}
         x={PILL_PADDING}
       />
+      {hasContent && (
+        <line
+          x1={PILL_PADDING}
+          x2={width - PILL_PADDING}
+          y1={PILL_HEIGHT - 3}
+          y2={PILL_HEIGHT - 3}
+          stroke={selectedTheme.annotations.textColor}
+          strokeDasharray="1, 3"
+          strokeWidth={1}
+        />
+      )}
     </g>
   );
 }
