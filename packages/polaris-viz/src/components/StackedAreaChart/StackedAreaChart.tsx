@@ -26,6 +26,7 @@ export type StackedAreaChartProps = {
   errorText?: string;
   showLegend?: boolean;
   skipLinkText?: string;
+  theme?: string;
   xAxisOptions?: Partial<XAxisOptions>;
   yAxisOptions?: Partial<YAxisOptions>;
 } & ChartProps;
@@ -90,6 +91,7 @@ export function StackedAreaChart(props: StackedAreaChartProps) {
                 : renderDefaultTooltipContent
             }
             showLegend={showLegend}
+            theme={theme}
             xAxisOptions={xAxisOptionsWithDefaults}
             yAxisOptions={yAxisOptionsWithDefaults}
           />

@@ -422,10 +422,6 @@ const ANNOTATIONS: Annotation[] = [
   {
     startIndex: 0,
     label: 'Content and title',
-    tooltipData: {
-      key: 'Median',
-      value: '1.5 hours',
-    },
     content: {
       title: 'GDPR rule change',
       content:
@@ -435,10 +431,6 @@ const ANNOTATIONS: Annotation[] = [
   {
     startIndex: 2,
     label: 'Title, content and no link string',
-    tooltipData: {
-      key: 'Median',
-      value: '1.5 hours',
-    },
     content: {
       title: 'GDPR rule change',
       content:
@@ -452,10 +444,6 @@ const ANNOTATIONS: Annotation[] = [
     content: {
       content:
         'New GDPR rules that prevent the unauthorized tracking of user sessions came into effect on Thursday, June 1.',
-    },
-    tooltipData: {
-      key: 'Median',
-      value: '1.5 hours',
     },
   },
   {

@@ -5,7 +5,6 @@ import {
   DataPoint,
   XAxisOptions,
   YAxisOptions,
-  DEFAULT_THEME_NAME,
   uniqueId,
   curveStepRounded,
   DataType,
@@ -60,13 +59,13 @@ const TOOLTIP_POSITION: TooltipPositionOffset = {
 
 export interface Props {
   data: DataSeries[];
+  isAnimated: boolean;
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
   showLegend: boolean;
-  isAnimated: boolean;
+  theme: string;
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
   dimensions?: Dimensions;
-  theme?: string;
 }
 
 export function Chart({
@@ -76,7 +75,7 @@ export function Chart({
   renderTooltipContent,
   isAnimated,
   showLegend,
-  theme = DEFAULT_THEME_NAME,
+  theme,
   yAxisOptions,
 }: Props) {
   useColorVisionEvents(data.length > 1);

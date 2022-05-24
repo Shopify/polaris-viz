@@ -8,9 +8,9 @@ const CARET_Y_OFFSET = -11;
 
 export interface AnnotationLineProps {
   size: number;
+  theme: string;
   x: number;
   y: number;
-  theme?: string;
   direction?: Direction;
 }
 
@@ -19,7 +19,7 @@ function getLineCoords({
   size,
   x,
   y,
-}: Omit<AnnotationLineProps, 'color'>) {
+}: Omit<AnnotationLineProps, 'theme'>) {
   if (direction === 'vertical') {
     return {
       x1: x,

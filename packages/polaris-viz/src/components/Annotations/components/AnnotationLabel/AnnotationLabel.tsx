@@ -10,7 +10,7 @@ interface Props {
   label: string;
   position: AnnotationPosition;
   setActiveIndex: Dispatch<SetStateAction<number>>;
-  theme?: string;
+  theme: string;
 }
 
 export function AnnotationLabel({
