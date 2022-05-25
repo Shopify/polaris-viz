@@ -37,7 +37,7 @@ export interface LineChartProps {
   renderTooltipContent?: (data: RenderTooltipContentData) => React.ReactNode;
   showLegend?: boolean;
   skipLinkText?: string;
-  theme: string;
+  theme?: string;
   xAxisOptions?: Partial<XAxisOptions>;
   yAxisOptions?: Partial<YAxisOptions>;
 }
@@ -53,7 +53,7 @@ export function LineChart({
   isAnimated = false,
   xAxisOptions,
   yAxisOptions,
-  theme,
+  theme = 'Default',
 }: LineChartProps) {
   const selectedTheme = useTheme(theme);
   const seriesColors = useThemeSeriesColors(data, selectedTheme);
