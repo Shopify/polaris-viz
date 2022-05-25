@@ -74,6 +74,7 @@ export {
   COLOR_VISION_FADED_OPACITY,
   BORDER_RADIUS,
   DEFAULT_THEME_NAME,
+  DEFAULT_CHART_PROPS,
 } from './constants';
 export {
   clamp,
@@ -139,4 +140,6 @@ export type {
   Shape,
   CharacterWidths,
   LineChartDataSeriesWithDefaults,
+  ChartProps,
+  WithRequired,
 } from './types';

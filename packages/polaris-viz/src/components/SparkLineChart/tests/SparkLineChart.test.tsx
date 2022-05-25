@@ -3,6 +3,7 @@ import {mount} from '@shopify/react-testing';
 import {DataSeries, LineSeries} from '@shopify/polaris-viz-core';
 
 import {SparkLineChart} from '../SparkLineChart';
+import {Chart} from '../Chart';
 
 jest.mock('d3-scale', () => ({
   scaleLinear: jest.fn(() => {
@@ -82,6 +83,26 @@ describe('<SparkLineChart />', () => {
       const sparkLineChart = mount(<SparkLineChart data={mockData} />);
 
       expect(sparkLineChart.findAll(LineSeries)).toHaveLength(mockData.length);
+    });
+  });
+
+  describe('theme', () => {
+    it('gets passed to <Chart/>', () => {
+      const sparklineChart = mount(
+        <SparkLineChart data={mockData} theme="Light" />,
+      );
+
+      expect(sparklineChart).toContainReactComponent(Chart, {
+        theme: 'Light',
+      });
+    });
+
+    it('`Default` is used if no value is provided', () => {
+      const barChart = mount(<SparkLineChart data={mockData} />);
+
+      expect(barChart).toContainReactComponent(Chart, {
+        theme: 'Default',
+      });
     });
   });
 });
