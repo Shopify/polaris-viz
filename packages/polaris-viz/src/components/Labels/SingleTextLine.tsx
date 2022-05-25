@@ -32,7 +32,7 @@ export function SingleTextLine({
   return (
     <React.Fragment>
       <text
-        textAnchor="left"
+        textAnchor="center"
         dominantBaseline="hanging"
         height={LINE_HEIGHT}
         width={targetWidth}

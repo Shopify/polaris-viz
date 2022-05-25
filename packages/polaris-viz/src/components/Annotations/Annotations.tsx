@@ -3,17 +3,23 @@ import type {ScaleBand} from 'd3-scale';
 
 import type {Annotation, AnnotationLookupTable} from '../../types';
 
-import {AnnotationLabel, AnnotationLine, AnnotationContent} from './components';
+import {
+  AnnotationLabel,
+  AnnotationLine,
+  AnnotationContent,
+  ShowMoreAnnotationsButton,
+} from './components';
 import {useAnnotationPositions} from './hooks/useAnnotationPositions';
 import {PILL_HEIGHT} from './constants';
+import {shouldHideAnnotation} from './utilities/shouldHideAnnotation';
 
 interface Props {
   annotationsLookupTable: AnnotationLookupTable;
   drawableHeight: number;
   drawableWidth: number;
   onHeightChange: (height: number) => void;
+  theme: string;
   xScale: ScaleBand<string>;
-  theme?: string;
 }
 
 export function Annotations({
@@ -24,7 +30,8 @@ export function Annotations({
   theme,
   xScale,
 }: Props) {
-  const [hoveredIndex, setIsShowingContent] = useState(-1);
+  const [activeIndex, setActiveIndex] = useState(-1);
+  const [isShowingAllAnnotations, setIsShowingAllAnnotations] = useState(false);
 
   const annotations = useMemo(() => {
     return Object.keys(annotationsLookupTable)
@@ -40,20 +47,34 @@ export function Annotations({
       .filter(Boolean) as Annotation[];
   }, [annotationsLookupTable]);
 
-  const positions = useAnnotationPositions({
+  const {positions, rowCount} = useAnnotationPositions({
     annotations,
     axisLabelWidth: xScale.bandwidth(),
     drawableWidth,
+    isShowingAllAnnotations,
     onHeightChange,
     xScale,
   });
 
+  const handleShowMoreAnnotations = () => {
+    setIsShowingAllAnnotations(true);
+  };
+
+  const handleOnMouseLeave = () => {
+    setActiveIndex(-1);
+  };
+
   return (
     <React.Fragment>
       {annotations.map((annotation, index) => {
-        const {line, y} = positions[index];
+        const {line, y, row} = positions[index];
 
-        const hideLabel = index === hoveredIndex && annotation.content != null;
+        if (shouldHideAnnotation({row, isShowingAllAnnotations, rowCount})) {
+          return null;
+        }
+
+        const hasContent = annotation.content != null;
+        const hideLabel = index === activeIndex && hasContent;
 
         return (
           <React.Fragment key={`annotation${index}${annotation.startIndex}`}>
@@ -68,19 +89,28 @@ export function Annotations({
                 index={index}
                 label={annotation.label}
                 position={positions[index]}
-                setIsShowingContent={setIsShowingContent}
+                setActiveIndex={setActiveIndex}
                 theme={theme}
               />
             )}
           </React.Fragment>
         );
       })}
-      {hoveredIndex !== -1 && (
+      {shouldHideAnnotation({row: 3, isShowingAllAnnotations, rowCount}) && (
+        <ShowMoreAnnotationsButton
+          label={`show +${rowCount - 3} more`}
+          onClick={handleShowMoreAnnotations}
+          theme={theme}
+          width={drawableWidth}
+        />
+      )}
+      {activeIndex !== -1 && (
         <AnnotationContent
-          annotation={annotations[hoveredIndex]}
+          annotation={annotations[activeIndex]}
           drawableWidth={drawableWidth}
-          onMouseLeave={() => setIsShowingContent(-1)}
-          position={positions[hoveredIndex]}
+          onMouseLeave={handleOnMouseLeave}
+          position={positions[activeIndex]}
+          theme={theme}
         />
       )}
     </React.Fragment>

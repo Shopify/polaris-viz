@@ -1,5 +1,9 @@
 import React, {useRef} from 'react';
-import {uniqueId, ChartState} from '@shopify/polaris-viz-core';
+import {
+  uniqueId,
+  ChartState,
+  DEFAULT_THEME_NAME,
+} from '@shopify/polaris-viz-core';
 import type {
   DataSeries,
   XAxisOptions,
@@ -27,7 +31,7 @@ export interface StackedAreaChartProps {
   isAnimated?: boolean;
   showLegend?: boolean;
   skipLinkText?: string;
-  theme: string;
+  theme?: string;
   xAxisOptions?: Partial<XAxisOptions>;
   yAxisOptions?: Partial<YAxisOptions>;
 }
@@ -42,7 +46,7 @@ export function StackedAreaChart({
   isAnimated = false,
   showLegend = true,
   skipLinkText,
-  theme,
+  theme = DEFAULT_THEME_NAME,
 }: StackedAreaChartProps) {
   const skipLinkAnchorId = useRef(uniqueId('stackedAreaChart'));
 
@@ -88,6 +92,7 @@ export function StackedAreaChart({
                 : renderDefaultTooltipContent
             }
             showLegend={showLegend}
+            theme={theme}
             xAxisOptions={xAxisOptionsWithDefaults}
             yAxisOptions={yAxisOptionsWithDefaults}
           />

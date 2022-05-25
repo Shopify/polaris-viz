@@ -9,15 +9,15 @@ interface Props {
   index: number;
   label: string;
   position: AnnotationPosition;
-  setIsShowingContent: Dispatch<SetStateAction<number>>;
-  theme?: string;
+  setActiveIndex: Dispatch<SetStateAction<number>>;
+  theme: string;
 }
 
 export function AnnotationLabel({
   index,
   label,
   position,
-  setIsShowingContent,
+  setActiveIndex,
   theme,
 }: Props) {
   const selectedTheme = useTheme(theme);
@@ -27,7 +27,7 @@ export function AnnotationLabel({
   return (
     <g
       transform={`translate(${x},${y})`}
-      onMouseEnter={() => setIsShowingContent(index)}
+      onMouseEnter={() => setActiveIndex(index)}
     >
       <rect
         height={PILL_HEIGHT}

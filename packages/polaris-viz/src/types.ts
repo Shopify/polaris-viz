@@ -6,7 +6,6 @@ import type {
   Shape,
 } from '@shopify/polaris-viz-core';
 import type {Series, SeriesPoint} from 'd3-shape';
-import type {ReactNode} from 'react';
 
 export interface YAxisTick {
   value: number;
@@ -117,7 +116,12 @@ export interface Annotation {
   label: string;
   startIndex: number;
   endIndex?: number;
-  content?: () => ReactNode;
+  content?: {
+    content: string;
+    linkText?: string;
+    linkUrl?: string;
+    title?: string;
+  };
 }
 
 export interface AnnotationLookupTable {

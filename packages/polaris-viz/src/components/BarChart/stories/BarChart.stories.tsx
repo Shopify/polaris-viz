@@ -418,45 +418,44 @@ SeriesColorsUpToFourteen.args = {
   data: generateMultipleSeries(7),
 };
 
-function CustomContent() {
-  return (
-    <div>
-      <h1>Custom Content</h1>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-        elementum, ipsum id semper dictum, ipsum nisi consectetur lacus, sed
-        pretium massa nisi ac ipsum.
-      </p>
-      <a href="https://www.google.com">Google</a>
-    </div>
-  );
-}
-
 const ANNOTATIONS: Annotation[] = [
   {
     startIndex: 0,
-    label: 'GDPR rule change',
+    label: 'Content and title',
+    content: {
+      title: 'GDPR rule change',
+      content:
+        'New GDPR rules that prevent the unauthorized tracking of user sessions came into effect on Thursday, June 1.',
+    },
   },
   {
     startIndex: 2,
-    label: 'Constitution Day',
+    label: 'Title, content and no link string',
+    content: {
+      title: 'GDPR rule change',
+      content:
+        'New GDPR rules that prevent the unauthorized tracking of user sessions came into effect on Thursday, June 1.',
+      linkUrl: 'https://shopify.com',
+    },
   },
   {
     startIndex: 5,
-    label: 'This one has custom content',
-    content: () => <CustomContent />,
+    label: 'Just content',
+    content: {
+      content:
+        'New GDPR rules that prevent the unauthorized tracking of user sessions came into effect on Thursday, June 1.',
+    },
   },
   {
     startIndex: 1,
-    label: 'One more',
-  },
-  {
-    startIndex: 2,
-    label: 'One more',
-  },
-  {
-    startIndex: 4,
-    label: 'One more',
+    label: 'This has everything',
+    content: {
+      title: 'GDPR rule change',
+      content:
+        'New GDPR rules that prevent the unauthorized tracking of user sessions came into effect on Thursday, June 1.',
+      linkUrl: 'https://shopify.com',
+      linkText: 'Custom link text',
+    },
   },
 ];
 
