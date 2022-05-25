@@ -2,14 +2,15 @@ import React, {useRef} from 'react';
 import {
   uniqueId,
   ChartType,
-  DataSeries,
   ChartState,
-  DEFAULT_THEME_NAME,
+  DEFAULT_CHART_PROPS,
+  ChartProps,
 } from '@shopify/polaris-viz-core';
 import type {
   Direction,
   XAxisOptions,
   YAxisOptions,
+  WithRequired,
 } from '@shopify/polaris-viz-core';
 
 import {ChartContainer} from '../../components/ChartContainer';
@@ -28,39 +29,41 @@ import {ChartSkeleton} from '../../components/ChartSkeleton';
 import type {Annotation} from './types';
 import {formatDataForTooltip} from './utilities';
 
-export interface BarChartProps {
-  data: DataSeries[];
-  state?: ChartState;
+export type BarChartProps = {
   errorText?: string;
   renderTooltipContent?(data: RenderTooltipContentData): React.ReactNode;
   annotations?: Annotation[];
   direction?: Direction;
   emptyStateText?: string;
-  isAnimated?: boolean;
   showLegend?: boolean;
   skipLinkText?: string;
   theme?: string;
   type?: ChartType;
   xAxisOptions?: Partial<XAxisOptions>;
   yAxisOptions?: Partial<YAxisOptions>;
-}
+} & ChartProps;
 
-export function BarChart({
-  annotations = [],
-  data,
-  state = ChartState.Success,
-  errorText,
-  direction = 'vertical',
-  emptyStateText,
-  isAnimated = false,
-  renderTooltipContent,
-  showLegend = true,
-  skipLinkText,
-  theme = DEFAULT_THEME_NAME,
-  type = 'default',
-  xAxisOptions,
-  yAxisOptions,
-}: BarChartProps) {
+export function BarChart(props: BarChartProps) {
+  const {
+    annotations = [],
+    data,
+    state,
+    errorText,
+    direction = 'vertical',
+    emptyStateText,
+    isAnimated,
+    renderTooltipContent,
+    showLegend = true,
+    skipLinkText,
+    theme,
+    type = 'default',
+    xAxisOptions,
+    yAxisOptions,
+  }: WithRequired<BarChartProps, 'theme'> = {
+    ...DEFAULT_CHART_PROPS,
+    ...props,
+  };
+
   const skipLinkAnchorId = useRef(uniqueId('BarChart'));
 
   const emptyState = data.length === 0;
