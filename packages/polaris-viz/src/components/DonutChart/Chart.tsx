@@ -5,6 +5,7 @@ import type {
   DataPoint,
   DataSeries,
   Dimensions,
+  LabelFormatter,
 } from '@shopify/polaris-viz-core';
 
 import {classNames} from '../../utilities';
@@ -23,6 +24,7 @@ export interface ChartProps {
   total?: number;
   dimensions?: Dimensions;
   theme?: string;
+  labelFormatter: LabelFormatter;
 }
 
 export function Chart({
@@ -32,6 +34,7 @@ export function Chart({
   total,
   dimensions = {height: 0, width: 0},
   theme,
+  labelFormatter,
 }: ChartProps) {
   const {width, height} = dimensions;
   const radius = Math.min(width, height) / 2;
@@ -52,7 +55,7 @@ export function Chart({
   const totalValue =
     total || points.reduce((acc, {value}) => (value ?? 0) + acc, 0);
 
-  const formattedValue = String(totalValue);
+  const formattedValue = labelFormatter(totalValue);
 
   return (
     <div className={styles.Donut}>
