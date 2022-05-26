@@ -96,9 +96,3 @@ export interface TooltipAnnotation {
   key: string;
   value: string;
 }
-
-export interface MetricWithTrend {
-  metric: string;
-  trend: 'positive' | 'negative' | 'neutral';
-  accessibilityLabel: string;
-}

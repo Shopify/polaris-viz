@@ -6,10 +6,10 @@ import type {
   DataSeries,
   Dimensions,
 } from '@shopify/polaris-viz-core';
-import type {MetricWithTrend} from 'types';
 
 import {classNames} from '../../utilities';
 import {ComparisonMetric} from '../ComparisonMetric';
+import type {ComparisonMetricProps} from '../ComparisonMetric';
 import {getSeriesColors} from '../../hooks';
 
 import styles from './DonutChart.scss';
@@ -20,7 +20,7 @@ const FULL_CIRCLE = Math.PI * 2;
 export interface ChartProps {
   data: DataSeries[];
   accessibilityLabel?: string;
-  comparisonMetric?: MetricWithTrend;
+  comparisonMetric?: Omit<ComparisonMetricProps, 'theme'>;
   total?: number;
   dimensions?: Dimensions;
   theme?: string;

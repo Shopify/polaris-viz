@@ -2,13 +2,13 @@ import React from 'react';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {ChartContainer} from '../ChartContainer';
-import type {MetricWithTrend} from '../../types';
+import type {ComparisonMetricProps} from '../ComparisonMetric';
 
 import {Chart} from './Chart';
 
 export interface DonutChartProps {
   data: DataSeries[];
-  comparisonMetric?: MetricWithTrend;
+  comparisonMetric?: Omit<ComparisonMetricProps, 'theme'>;
   theme?: string;
 }
 
