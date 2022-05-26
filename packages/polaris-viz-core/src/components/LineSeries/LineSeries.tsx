@@ -106,7 +106,7 @@ export function LineSeries({
     .slice(-1);
 
   const lastLinePointCoordinates =
-    lastLinePoint.value != null
+    lastLinePoint?.value != null
       ? {
           x: xScale(Number(lastLinePoint.key)),
           y: yScale(lastLinePoint.value),
