@@ -1,10 +1,11 @@
 import React, {useRef} from 'react';
-import {uniqueId, ChartState} from '@shopify/polaris-viz-core';
-import type {
-  DataSeries,
-  XAxisOptions,
-  YAxisOptions,
+import {
+  uniqueId,
+  ChartState,
+  ChartProps,
+  DEFAULT_CHART_PROPS,
 } from '@shopify/polaris-viz-core';
+import type {XAxisOptions, YAxisOptions} from '@shopify/polaris-viz-core';
 
 import {
   getXAxisOptionsWithDefaults,
@@ -19,31 +20,32 @@ import type {RenderTooltipContentData} from '../../types';
 
 import {Chart} from './Chart';
 
-export interface StackedAreaChartProps {
+export type StackedAreaChartProps = {
   renderTooltipContent?(data: RenderTooltipContentData): React.ReactNode;
-  data: DataSeries[];
   state?: ChartState;
   errorText?: string;
-  isAnimated?: boolean;
   showLegend?: boolean;
   skipLinkText?: string;
-  theme: string;
   xAxisOptions?: Partial<XAxisOptions>;
   yAxisOptions?: Partial<YAxisOptions>;
-}
+} & ChartProps;
 
-export function StackedAreaChart({
-  xAxisOptions,
-  yAxisOptions,
-  data,
-  state = ChartState.Success,
-  errorText,
-  renderTooltipContent,
-  isAnimated = false,
-  showLegend = true,
-  skipLinkText,
-  theme,
-}: StackedAreaChartProps) {
+export function StackedAreaChart(props: StackedAreaChartProps) {
+  const {
+    xAxisOptions,
+    yAxisOptions,
+    data,
+    state,
+    errorText,
+    renderTooltipContent,
+    isAnimated,
+    showLegend = true,
+    skipLinkText,
+    theme,
+  } = {
+    ...DEFAULT_CHART_PROPS,
+    ...props,
+  };
   const skipLinkAnchorId = useRef(uniqueId('stackedAreaChart'));
 
   if (data.length === 0) {

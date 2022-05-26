@@ -1,9 +1,10 @@
 import React, {useRef} from 'react';
 import type {
-  DataSeries,
   LineChartDataSeriesWithDefaults,
   XAxisOptions,
   YAxisOptions,
+  ChartProps,
+  WithRequired,
 } from '@shopify/polaris-viz-core';
 import {
   isGradientType,
@@ -11,6 +12,7 @@ import {
   changeColorOpacity,
   getAverageColor,
   ChartState,
+  DEFAULT_CHART_PROPS,
 } from '@shopify/polaris-viz-core';
 
 import {formatTooltipDataForLinearCharts} from '../../utilities/formatTooltipDataForLinearCharts';
@@ -28,33 +30,35 @@ import {usePrefersReducedMotion, useTheme} from '../../hooks';
 
 import {Chart} from './Chart';
 
-export interface LineChartProps {
-  data: DataSeries[];
+export type LineChartProps = {
   state?: ChartState;
   errorText?: string;
   emptyStateText?: string;
-  isAnimated?: boolean;
   renderTooltipContent?: (data: RenderTooltipContentData) => React.ReactNode;
   showLegend?: boolean;
   skipLinkText?: string;
-  theme?: string;
   xAxisOptions?: Partial<XAxisOptions>;
   yAxisOptions?: Partial<YAxisOptions>;
-}
+} & ChartProps;
 
-export function LineChart({
-  data,
-  state = ChartState.Success,
-  errorText,
-  renderTooltipContent,
-  showLegend = true,
-  skipLinkText,
-  emptyStateText,
-  isAnimated = false,
-  xAxisOptions,
-  yAxisOptions,
-  theme = 'Default',
-}: LineChartProps) {
+export function LineChart(props: LineChartProps) {
+  const {
+    data,
+    state,
+    errorText,
+    renderTooltipContent,
+    showLegend = true,
+    skipLinkText,
+    emptyStateText,
+    isAnimated,
+    xAxisOptions,
+    yAxisOptions,
+    theme,
+  }: WithRequired<LineChartProps, 'theme'> = {
+    ...DEFAULT_CHART_PROPS,
+    ...props,
+  };
+
   const selectedTheme = useTheme(theme);
   const seriesColors = useThemeSeriesColors(data, selectedTheme);
   const {prefersReducedMotion} = usePrefersReducedMotion();

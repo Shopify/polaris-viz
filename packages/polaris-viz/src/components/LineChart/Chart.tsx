@@ -76,7 +76,7 @@ export function Chart({
   data,
   dimensions,
   renderTooltipContent,
-  showLegend,
+  showLegend = true,
   emptyStateText,
   isAnimated,
   xAxisOptions,

@@ -11,6 +11,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 - Updated react-spring to v9.4.5
 
+## [1.10.0] - 2022-05-25
+
+- No updates. Transitive dependency bump.
+
 ## [1.9.3] - 2022-05-25
 
 - No updates. Transitive dependency bump.

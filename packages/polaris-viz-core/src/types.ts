@@ -193,15 +193,12 @@ export interface SvgComponents {
   Mask: (props: SVGProps<SVGMaskElement>) => any;
 }
 
-export interface SparkBarChartProps {
-  data: DataSeries[];
+export type SparkBarChartProps = {
   dataOffsetRight?: number;
   dataOffsetLeft?: number;
   accessibilityLabel?: string;
-  isAnimated?: boolean;
-  theme?: string;
   dimensions?: Dimensions;
-}
+} & ChartProps;
 
 export type Direction = 'horizontal' | 'vertical';
 export type StackedSeries = Series<
@@ -244,3 +241,12 @@ export enum ChartState {
   Error = 'Error',
   Success = 'Success',
 }
+
+export interface ChartProps {
+  data: DataSeries[];
+  theme?: string;
+  isAnimated?: boolean;
+  state?: ChartState;
+}
+
+export type WithRequired<T, K extends keyof T> = T & {[P in K]-?: T[P]};

@@ -3,6 +3,7 @@ import {createElement} from 'react';
 import variables from './styles/shared/_variables.scss';
 import {createGradient} from './utilities/createGradient';
 import type {SvgComponents, Theme} from './types';
+import {ChartState} from './types';
 
 export const LINE_HEIGHT = 14;
 export const FONT_SIZE = 12;
@@ -384,4 +385,10 @@ export const COLOR_VISION_EVENT = {
   name: 'color-vision-event',
   dataAttribute: 'data-color-vision-event',
   camelCaseName: 'colorVisionEvent',
+};
+
+export const DEFAULT_CHART_PROPS = {
+  isAnimated: true,
+  theme: DEFAULT_THEME_NAME,
+  state: ChartState.Success,
 };
