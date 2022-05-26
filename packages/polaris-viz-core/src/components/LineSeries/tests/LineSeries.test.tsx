@@ -6,7 +6,7 @@ import {scaleLinear} from 'd3-scale';
 import {mountWithProvider} from '../../../test-utilities';
 import '@shopify/react-testing/matchers';
 
-import {LineSeries} from '../LineSeries';
+import {LineSeries, LineSeriesProps} from '../LineSeries';
 import {Area} from '../components';
 
 const someScale = scaleLinear().domain([0, 100]).range([0, 100]);
@@ -23,7 +23,7 @@ const mockData = {
   ],
 };
 
-const defaultProps = {
+const defaultProps: LineSeriesProps = {
   xScale: someScale,
   yScale: someScale,
   data: mockData,
@@ -34,6 +34,16 @@ const defaultProps = {
 };
 
 describe('<LineSeries />', () => {
+  it('renders when data.data is empty', () => {
+    const lineSeries = mountWithProvider(
+      <svg>
+        <LineSeries {...defaultProps} data={{color: 'red', data: []}} />
+      </svg>,
+    );
+
+    expect(lineSeries).toContainReactComponent('svg');
+  });
+
   describe('svgDimensions', () => {
     it('gets passed to <Rect/>', () => {
       const lineSeries = mountWithProvider(
