@@ -54,5 +54,4 @@ Default.args = {
       data: [{key: 'Amazon Pay', value: 4000}],
     },
   ],
-  labelFormatter: (value) => `$${value}`,
 };
