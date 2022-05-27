@@ -4,6 +4,7 @@ import {
   useTheme,
   COLOR_VISION_SINGLE_ITEM,
   changeColorOpacity,
+  DEFAULT_THEME_NAME,
 } from '@shopify/polaris-viz-core';
 
 import {useWatchColorVisionEvents} from '../../hooks';
@@ -18,7 +19,7 @@ export interface TooltipContentProps {
   data: TooltipData[];
   annotations?: TooltipAnnotation[];
   title?: string;
-  theme: string;
+  theme?: string;
 }
 
 const FONT_SIZE_OFFSET = 1.061;
@@ -27,7 +28,7 @@ const PREVIEW_WIDTH = 14;
 export function TooltipContent({
   annotations = [],
   data,
-  theme,
+  theme = DEFAULT_THEME_NAME,
   title,
 }: TooltipContentProps) {
   const [activeIndex, setActiveIndex] = useState(-1);
