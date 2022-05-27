@@ -11,6 +11,7 @@ import type {
 import {classNames} from '../../utilities';
 import {ComparisonMetric, ComparisonMetricProps} from '../ComparisonMetric';
 import {getSeriesColors} from '../../hooks';
+import {LegendContainer} from '../../components/LegendContainer';
 
 import styles from './DonutChart.scss';
 import {Arc} from './components';
@@ -37,7 +38,8 @@ export function Chart({
   labelFormatter,
 }: ChartProps) {
   const {width, height} = dimensions;
-  const radius = Math.min(width, height) / 2;
+  const diameter = Math.min(width, height);
+  const radius = diameter / 2;
   const selectedTheme = useTheme(theme);
   const seriesCount = clamp({amount: data.length, min: 1, max: Infinity});
   const seriesColor = getSeriesColors(seriesCount, selectedTheme);
@@ -57,72 +59,97 @@ export function Chart({
 
   const formattedValue = labelFormatter(totalValue);
 
+  const legendData = data.map(({name, color, isComparison}, index) => ({
+    name: name ?? '',
+    color: color ?? seriesColor[index],
+    isComparison,
+  }));
+
   return (
-    <div className={styles.Donut}>
-      <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
-      <svg aria-hidden width={width} height={height}>
-        <g transform={`translate(${radius} ${radius})`}>
-          {emptyState ? (
-            <g aria-hidden>
-              <Arc
-                width={width}
-                height={height}
-                radius={radius}
-                startAngle={0}
-                endAngle={FULL_CIRCLE}
-                color={selectedTheme.grid.color}
-                cornerRadius={selectedTheme.arc.cornerRadius}
-                thickness={selectedTheme.arc.thickness}
-              />
-            </g>
-          ) : (
-            pieChartData.map(({data, startAngle, endAngle}, index) => {
-              const {key} = data;
+    <div className={styles.DonutWrapper}>
+      <div
+        className={styles.Donut}
+        style={{
+          width: diameter,
+          height: diameter,
+        }}
+      >
+        <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
+        <svg aria-hidden width={width} height={height}>
+          <g transform={`translate(${radius} ${radius})`}>
+            {emptyState ? (
+              <g aria-hidden>
+                <Arc
+                  width={width}
+                  height={height}
+                  radius={radius}
+                  startAngle={0}
+                  endAngle={FULL_CIRCLE}
+                  color={selectedTheme.grid.color}
+                  cornerRadius={selectedTheme.arc.cornerRadius}
+                  thickness={selectedTheme.arc.thickness}
+                />
+              </g>
+            ) : (
+              pieChartData.map(({data, startAngle, endAngle}, index) => {
+                const {key} = data;
 
-              return (
-                <g key={`${key}-${startAngle}-${endAngle}`}>
-                  <Arc
-                    width={width}
-                    height={height}
-                    radius={radius}
-                    startAngle={startAngle}
-                    endAngle={endAngle}
-                    color={seriesColor[index]}
-                    cornerRadius={selectedTheme.arc.cornerRadius}
-                    thickness={selectedTheme.arc.thickness}
-                  />
-                </g>
-              );
-            })
-          )}
-        </g>
-      </svg>
+                return (
+                  <g key={`${key}-${startAngle}-${endAngle}`}>
+                    <Arc
+                      width={width}
+                      height={height}
+                      radius={radius}
+                      startAngle={startAngle}
+                      endAngle={endAngle}
+                      color={seriesColor[index]}
+                      cornerRadius={selectedTheme.arc.cornerRadius}
+                      thickness={selectedTheme.arc.thickness}
+                    />
+                  </g>
+                );
+              })
+            )}
+          </g>
+        </svg>
 
-      {formattedValue && !emptyState && (
-        <div
-          className={classNames(
-            styles.ContentWrapper,
-            comparisonMetric && styles.ContentWrapperWithComparison,
-          )}
-        >
-          <p
-            className={classNames(styles.ContentValue)}
-            style={{color: selectedTheme.xAxis.labelColor}}
+        {formattedValue && !emptyState && (
+          <div
+            className={classNames(
+              styles.ContentWrapper,
+              comparisonMetric && styles.ContentWrapperWithComparison,
+            )}
           >
-            {formattedValue}
-          </p>
-          {comparisonMetric != null && (
-            <div className={styles.ComparisonMetric}>
-              <ComparisonMetric
-                metric={comparisonMetric.metric}
-                trend={comparisonMetric.trend}
-                theme={selectedTheme.legend}
-                accessibilityLabel="accessibility-label"
-              />
-            </div>
-          )}
-        </div>
-      )}
+            <p
+              className={classNames(styles.ContentValue)}
+              style={{color: selectedTheme.xAxis.labelColor}}
+            >
+              {formattedValue}
+            </p>
+            {comparisonMetric != null && (
+              <div className={styles.ComparisonMetric}>
+                <ComparisonMetric
+                  metric={comparisonMetric.metric}
+                  trend={comparisonMetric.trend}
+                  theme={selectedTheme.legend}
+                  accessibilityLabel="accessibility-label"
+                />
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+      <div
+        style={{
+          width: `calc(100% - ${diameter}px)`,
+        }}
+      >
+        <LegendContainer
+          onHeightChange={() => {}}
+          colorVisionType={null}
+          data={legendData}
+        />
+      </div>
     </div>
   );
 }

@@ -7,6 +7,11 @@
   user-select: none;
 }
 
+.DonutWrapper {
+  display: flex;
+  // flex-wrap: wrap;
+}
+
 .ContentWrapper {
   position: absolute;
   top: 50%;
