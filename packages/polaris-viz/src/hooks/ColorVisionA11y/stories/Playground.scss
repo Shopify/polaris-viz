@@ -1,0 +1,26 @@
+.Boxes {
+  display: flex;
+}
+
+.Box {
+  height: 100px;
+  width: 100px;
+  margin: 10px;
+}
+
+.Texts {
+  display: flex;
+}
+
+.Texts p {
+  text-transform: capitalize;
+  margin: 0 20px 0 0;
+}
+
+.Buttons {
+  display: flex;
+}
+
+.Button {
+  margin: 0 20px 0 0;
+}
