@@ -22,7 +22,7 @@ const INITIAL_DELAY = 200;
 const NUMBER_OF_BRICKS = 5;
 const TEXT_DROP_SHADOW_SIZE = 3;
 export interface ChartSkeletonProps {
-  theme: string;
+  theme?: string;
   dimensions?: Dimensions;
   state?: ChartState;
   errorText?: string;
