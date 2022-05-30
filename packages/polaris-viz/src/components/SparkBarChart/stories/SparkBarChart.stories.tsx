@@ -1,12 +1,10 @@
 import React from 'react';
 import type {Story, Meta} from '@storybook/react';
 
-import {SparkBarChart} from '../SparkBarChart';
+import {SparkBarChart, SparkBarChartProps} from '../SparkBarChart';
 import {THEME_CONTROL_ARGS} from '../../../storybook';
-import type {SparkBarChartProps} from '@shopify/polaris-viz-core';
 
 import {PageWithSizingInfo} from '../../Docs/stories/components/PageWithSizingInfo';
-
 
 export default {
   title: 'polaris-viz/Spark Charts/SparkBarChart',

@@ -36,9 +36,7 @@ function readFiles() {
 const ignoredFiles = [
   'SquareColorPreview',
   'LinePreview',
-  'FunnelChart',
   'SimpleNormalizedChart',
-  'SparkBarChart',
   'ChartSkeleton',
 ];
 
@@ -66,11 +64,7 @@ const componentsPerPackage = readFiles().map(({indexSrc, packageDir}) => {
 });
 
 componentsPerPackage.forEach(({componentsFilePaths, packageName}) => {
-  if (
-    packageName === 'polaris-viz-core' ||
-    packageName === 'polaris-viz-native'
-  )
-    return true;
+  if (packageName === 'polaris-viz-core') return true;
 
   describe(`${packageName}`, () => {
     componentsFilePaths.forEach((path) => {

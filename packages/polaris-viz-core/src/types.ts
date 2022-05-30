@@ -159,15 +159,6 @@ export type ChartType = 'default' | 'stacked';
 
 export type GradientUnits = 'userSpaceOnUse' | 'objectBoundingBox';
 
-export interface SparkLineChartProps {
-  data: DataSeries[];
-  accessibilityLabel?: string;
-  isAnimated?: boolean;
-  offsetLeft?: number;
-  offsetRight?: number;
-  theme?: string;
-}
-
 export interface SvgComponents {
   Svg: (props: SVGProps<SVGElement>) => any;
   Circle: (props: SVGProps<SVGCircleElement>) => any;
@@ -192,13 +183,6 @@ export interface SvgComponents {
   Pattern: (props: SVGProps<SVGPatternElement>) => any;
   Mask: (props: SVGProps<SVGMaskElement>) => any;
 }
-
-export type SparkBarChartProps = {
-  dataOffsetRight?: number;
-  dataOffsetLeft?: number;
-  accessibilityLabel?: string;
-  dimensions?: Dimensions;
-} & ChartProps;
 
 export type Direction = 'horizontal' | 'vertical';
 export type StackedSeries = Series<

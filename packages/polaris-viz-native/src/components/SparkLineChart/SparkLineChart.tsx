@@ -2,29 +2,40 @@ import React from 'react';
 import {View} from 'react-native';
 import {scaleLinear} from 'd3-scale';
 import {
-  SparkLineChartProps,
   useTheme,
   useThemeSeriesColors,
   useSparkLine,
   LineSeries,
   usePolarisVizContext,
-  Dimensions,
   DEFAULT_THEME_NAME,
+  DEFAULT_CHART_PROPS,
 } from '@shopify/polaris-viz-core';
+import type {ChartProps, Dimensions} from '@shopify/polaris-viz-core';
 
 import {usePrefersReducedMotion} from '../../hooks';
 import {ChartContainer} from '../ChartContainer';
 
 const SVG_MARGIN = 2;
 
-export function SparkLineChart({
-  data,
-  accessibilityLabel,
-  isAnimated = true,
-  offsetLeft = 0,
-  offsetRight = 0,
-  theme = DEFAULT_THEME_NAME,
-}: SparkLineChartProps) {
+export type SparkLineChartProps = {
+  accessibilityLabel?: string;
+  offsetLeft?: number;
+  offsetRight?: number;
+} & ChartProps;
+
+export function SparkLineChart(props: SparkLineChartProps) {
+  const {
+    data,
+    accessibilityLabel,
+    isAnimated,
+    offsetLeft = 0,
+    offsetRight = 0,
+    theme,
+  } = {
+    ...DEFAULT_CHART_PROPS,
+    ...props,
+  };
+
   const {prefersReducedMotion} = usePrefersReducedMotion();
   const shouldAnimate = !prefersReducedMotion && isAnimated;
 
@@ -42,7 +53,7 @@ export function SparkLineChart({
   );
 }
 
-interface ChartProps extends SparkLineChartProps {
+interface InnerChartProps extends SparkLineChartProps {
   dimensions?: Dimensions;
 }
 
@@ -54,7 +65,7 @@ function Chart({
   offsetRight = 0,
   theme = DEFAULT_THEME_NAME,
   dimensions = {width: 0, height: 0},
-}: ChartProps) {
+}: InnerChartProps) {
   const {width, height} = dimensions;
   const selectedTheme = useTheme(theme);
   const seriesColors = useThemeSeriesColors(data, selectedTheme);
