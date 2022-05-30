@@ -127,8 +127,6 @@ export type {
   GradientStop,
   LineStyle,
   PartialTheme,
-  SparkBarChartProps,
-  SparkLineChartProps,
   SvgComponents,
   Theme,
   DataPoint,

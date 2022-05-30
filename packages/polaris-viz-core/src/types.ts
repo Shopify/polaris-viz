@@ -184,13 +184,6 @@ export interface SvgComponents {
   Mask: (props: SVGProps<SVGMaskElement>) => any;
 }
 
-export type SparkBarChartProps = {
-  dataOffsetRight?: number;
-  dataOffsetLeft?: number;
-  accessibilityLabel?: string;
-  dimensions?: Dimensions;
-} & ChartProps;
-
 export type Direction = 'horizontal' | 'vertical';
 export type StackedSeries = Series<
   {

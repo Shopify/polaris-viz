@@ -36,9 +36,7 @@ function readFiles() {
 const ignoredFiles = [
   'SquareColorPreview',
   'LinePreview',
-  'FunnelChart',
   'SimpleNormalizedChart',
-  'SparkBarChart',
   'ChartSkeleton',
 ];
 

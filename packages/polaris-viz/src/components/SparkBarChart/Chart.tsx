@@ -2,7 +2,6 @@ import React from 'react';
 import {useTransition} from '@react-spring/web';
 import {
   Dimensions,
-  SparkBarChartProps,
   ANIMATION_MARGIN,
   SparkBarSeries,
   DEFAULT_THEME_NAME,
@@ -12,6 +11,7 @@ import {usePrefersReducedMotion} from '../../hooks';
 import {XMLNS} from '../../constants';
 
 import styles from './SparkBarChart.scss';
+import type {SparkBarChartProps} from './SparkBarChart';
 
 interface Props extends SparkBarChartProps {
   dimensions?: Dimensions;

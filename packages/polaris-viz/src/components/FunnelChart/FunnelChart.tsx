@@ -1,13 +1,11 @@
 import React from 'react';
-import type {
-  DataSeries,
+import {
   XAxisOptions,
   YAxisOptions,
-} from '@shopify/polaris-viz-core';
-import {
+  ChartProps,
+  DEFAULT_CHART_PROPS,
   useTheme,
   useThemeSeriesColors,
-  DEFAULT_THEME_NAME,
 } from '@shopify/polaris-viz-core';
 
 import {ChartContainer} from '../../components/ChartContainer';
@@ -15,19 +13,16 @@ import {getYAxisOptionsWithDefaults} from '../../utilities';
 
 import {Chart} from './Chart';
 
-export interface FunnelChartProps {
-  data: DataSeries[];
+export type FunnelChartProps = {
   xAxisOptions?: Omit<XAxisOptions, 'hide'>;
   yAxisOptions?: Omit<XAxisOptions, 'integersOnly'>;
-  theme?: string;
-}
+} & ChartProps;
 
-export function FunnelChart({
-  data,
-  theme = DEFAULT_THEME_NAME,
-  xAxisOptions,
-  yAxisOptions,
-}: FunnelChartProps) {
+export function FunnelChart(props: FunnelChartProps) {
+  const {data, theme, xAxisOptions, yAxisOptions} = {
+    ...DEFAULT_CHART_PROPS,
+    ...props,
+  };
   const selectedTheme = useTheme(theme);
   const seriesColors = useThemeSeriesColors(data, selectedTheme);
 

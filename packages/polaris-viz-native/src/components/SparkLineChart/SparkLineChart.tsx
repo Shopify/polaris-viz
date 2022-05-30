@@ -7,10 +7,10 @@ import {
   useSparkLine,
   LineSeries,
   usePolarisVizContext,
-  Dimensions,
   DEFAULT_THEME_NAME,
   DEFAULT_CHART_PROPS,
 } from '@shopify/polaris-viz-core';
+import type {ChartProps, Dimensions} from '@shopify/polaris-viz-core';
 
 import {usePrefersReducedMotion} from '../../hooks';
 import {ChartContainer} from '../ChartContainer';
@@ -53,7 +53,7 @@ export function SparkLineChart(props: SparkLineChartProps) {
   );
 }
 
-interface ChartProps extends SparkLineChartProps {
+interface InnerChartProps extends SparkLineChartProps {
   dimensions?: Dimensions;
 }
 
@@ -65,7 +65,7 @@ function Chart({
   offsetRight = 0,
   theme = DEFAULT_THEME_NAME,
   dimensions = {width: 0, height: 0},
-}: ChartProps) {
+}: InnerChartProps) {
   const {width, height} = dimensions;
   const selectedTheme = useTheme(theme);
   const seriesColors = useThemeSeriesColors(data, selectedTheme);
