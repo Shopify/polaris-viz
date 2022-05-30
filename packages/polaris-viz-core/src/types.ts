@@ -93,6 +93,7 @@ export interface AnnotationsTheme {
   backgroundColor: string;
   textColor: string;
   titleColor: string;
+  linkColor: string;
 }
 
 export interface ChartContainerTheme {

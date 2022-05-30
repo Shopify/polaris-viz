@@ -196,6 +196,7 @@ export const DEFAULT_THEME: Theme = {
     backgroundColor: variables.colorGray140,
     textColor: variables.colorGray30,
     titleColor: variables.colorGray00,
+    linkColor: variables.colorBlue40,
   },
 };
 
@@ -292,6 +293,7 @@ export const LIGHT_THEME: Theme = {
     backgroundColor: variables.colorGray30,
     textColor: variables.colorGray100,
     titleColor: variables.colorGray130,
+    linkColor: variables.colorBlue110,
   },
 };
 
