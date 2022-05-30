@@ -16,3 +16,12 @@
 @mixin no-outline {
   outline: none;
 }
+
+@mixin hidden-button {
+  border: 0;
+  background: transparent;
+  height: 100%;
+  width: 100%;
+  font-size: 0;
+  display: block;
+}
