@@ -1,1 +1,0 @@
-export {NativePolarisVizProvider} from './NativePolarisVizProvider';

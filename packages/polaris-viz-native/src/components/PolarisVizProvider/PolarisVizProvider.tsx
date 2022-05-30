@@ -5,7 +5,7 @@ import type {PartialTheme} from '@shopify/polaris-viz-core';
 
 import {DEFAULT_COMPONENTS as NativeComponents} from '../../constants';
 
-export const NativePolarisVizProvider = ({
+export const PolarisVizProvider = ({
   themes,
   children,
 }: {
