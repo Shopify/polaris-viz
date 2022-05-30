@@ -58,7 +58,7 @@ export function AnnotationContent({
     <foreignObject
       height="100%"
       width="100%"
-      style={{pointerEvents: 'none'}}
+      style={{pointerEvents: 'none', overflow: 'visible'}}
       x={clamp({amount: x, min: 0, max: drawableWidth})}
       y={position.y}
     >
