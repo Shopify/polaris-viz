@@ -457,6 +457,10 @@ const ANNOTATIONS: Annotation[] = [
       linkText: 'Custom link text',
     },
   },
+  {
+    startIndex: 6,
+    label: 'No Content',
+  },
 ];
 
 export const Annotations: Story<BarChartProps> = Template.bind({});

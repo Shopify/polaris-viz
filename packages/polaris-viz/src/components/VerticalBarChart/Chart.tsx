@@ -282,7 +282,10 @@ export function Chart({
           />
         </g>
 
-        <g transform={`translate(${chartXPosition},${chartYPosition})`}>
+        <g
+          transform={`translate(${chartXPosition},${chartYPosition})`}
+          tabIndex={-1}
+        >
           {stackedValues != null ? (
             <StackedBarGroups
               accessibilityData={accessibilityData}
@@ -321,7 +324,7 @@ export function Chart({
             })
           )}
         </g>
-        <g transform={`translate(${chartXPosition},0)`}>
+        <g transform={`translate(${chartXPosition},0)`} tabIndex={-1}>
           <Annotations
             annotationsLookupTable={annotationsLookupTable}
             drawableHeight={annotationsDrawableHeight}
