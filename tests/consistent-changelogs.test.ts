@@ -1,7 +1,8 @@
 import {join, resolve} from 'path';
 
-import {readFileSync} from 'fs-extra';
 import glob from 'glob';
+
+import {safeReadSync, hasPackageJSON} from './utilities';
 
 const ROOT_PATH = resolve(__dirname, '..');
 
@@ -127,21 +128,4 @@ function readChangelogs() {
         packageChangelog,
       };
     });
-}
-
-function safeReadSync(path, options) {
-  try {
-    return readFileSync(path, options);
-  } catch {
-    return '';
-  }
-}
-
-function hasPackageJSON(packageDir) {
-  const packageJSONPath = join(packageDir, 'package.json');
-  const packageJSON = safeReadSync(packageJSONPath, {
-    encoding: 'utf8',
-  });
-
-  return packageJSON.length > 0;
 }

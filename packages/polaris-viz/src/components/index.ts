@@ -26,7 +26,7 @@ export {SimpleBarChart} from './SimpleBarChart';
 export type {SimpleBarChartProps} from './SimpleBarChart';
 export {Legend} from './Legend';
 export type {LegendProps} from './Legend';
-export {WebPolarisVizProvider as PolarisVizProvider} from './WebPolarisVizProvider';
+export {PolarisVizProvider} from './PolarisVizProvider';
 export {TooltipContent} from './TooltipContent';
 export type {TooltipContentProps} from './TooltipContent';
 export {ChartSkeleton} from './ChartSkeleton';

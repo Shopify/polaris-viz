@@ -1,7 +1,7 @@
 import React from 'react';
 import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
-import {WebPolarisVizProvider as PolarisVizProvider} from '../../../../WebPolarisVizProvider';
+import {PolarisVizProvider} from '../../../../PolarisVizProvider';
 import {
   BarChart,
   LineChart,
