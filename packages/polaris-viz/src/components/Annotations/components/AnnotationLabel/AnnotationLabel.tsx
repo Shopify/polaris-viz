@@ -14,6 +14,9 @@ interface Props {
   theme: string;
 }
 
+const PX_OFFSET = 1;
+const CONTENT_LINE_OFFSET = 3;
+
 export function AnnotationLabel({
   hasContent,
   index,
@@ -40,16 +43,16 @@ export function AnnotationLabel({
       <SingleTextLine
         color={selectedTheme.annotations.textColor}
         text={label}
-        targetWidth={width - PILL_PADDING * 2 + 1}
-        y={PILL_HEIGHT - LINE_HEIGHT - 1}
+        targetWidth={width - PILL_PADDING * 2 + PX_OFFSET}
+        y={PILL_HEIGHT - LINE_HEIGHT - PX_OFFSET}
         x={PILL_PADDING}
       />
       {hasContent && (
         <line
           x1={PILL_PADDING}
           x2={width - PILL_PADDING}
-          y1={PILL_HEIGHT - 3}
-          y2={PILL_HEIGHT - 3}
+          y1={PILL_HEIGHT - CONTENT_LINE_OFFSET}
+          y2={PILL_HEIGHT - CONTENT_LINE_OFFSET}
           stroke={selectedTheme.annotations.textColor}
           strokeDasharray="1, 3"
           strokeWidth={1}
