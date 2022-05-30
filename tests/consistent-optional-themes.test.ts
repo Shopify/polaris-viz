@@ -60,23 +60,31 @@ componentsPerPackage.forEach(({componentsFilePaths, packageName}) => {
   describe(`${packageName}`, () => {
     componentsFilePaths.forEach((path) => {
       const fileName = getNameFromPath(path);
+      const componentFile = readFileSync(path, 'utf8');
 
-      if (fileName.includes('Chart') && !fileName.includes('Skeleton')) {
+      if (fileName.includes('PolarisVizProvider')) {
+        describe('PolarisVizProvider', () => {
+          it(`accepts an optional array of partial themes`, () => {
+            // const componentFile = readFileSync(path, 'utf8');
+            expect(componentFile).toContain('& ChartProps');
+          });
+        });
+      } else if (fileName.includes('Chart') && !fileName.includes('Skeleton')) {
         describe('Chart components', () => {
           it(`${fileName} uses ChartProps type`, () => {
-            const componentFile = readFileSync(path, 'utf8');
+            // const componentFile = readFileSync(path, 'utf8');
             expect(componentFile).toContain('& ChartProps');
           });
 
           it(`${fileName} uses DEFAULT_CHART_PROPS`, () => {
-            const componentFile = readFileSync(path, 'utf8');
+            // const componentFile = readFileSync(path, 'utf8');
             expect(componentFile).toContain('DEFAULT_CHART_PROPS');
           });
         });
       } else {
         describe('Subcomponents exported to package consumers', () => {
           it(`${fileName} has an optional theme prop`, () => {
-            const componentFile = readFileSync(path, 'utf8');
+            // const componentFile = readFileSync(path, 'utf8');
             expect(componentFile).toContain('theme?: string');
           });
         });
