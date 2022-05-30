@@ -3,7 +3,7 @@ import {PolarisVizProvider as OriginalPolarisVizProvider} from '@shopify/polaris
 import {animated} from '@react-spring/web';
 import type {PartialTheme} from '@shopify/polaris-viz-core';
 
-export const WebPolarisVizProvider = ({
+export const PolarisVizProvider = ({
   themes,
   children,
 }: {

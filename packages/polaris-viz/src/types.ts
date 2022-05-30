@@ -116,3 +116,10 @@ export interface FormattedLine {
   dominantBaseline?: string;
   transform?: string;
 }
+
+export interface LegendData {
+  name: string;
+  color: Color;
+  isComparison?: boolean;
+  shape?: Shape;
+}

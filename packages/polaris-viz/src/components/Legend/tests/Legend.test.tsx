@@ -2,7 +2,7 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 
 import {Legend, LegendProps} from '../Legend';
-import {LegendItem} from '../..';
+import {LegendItem} from '../../Legend/components';
 
 const mockProps: LegendProps = {
   data: [

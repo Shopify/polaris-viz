@@ -1,10 +1,10 @@
 import React from 'react';
 import type {Story, Meta} from '@storybook/react';
 
-import {Legend, LegendProps} from '../../../components';
+import {Legend, LegendProps} from '../..';
 
 import {THEME_CONTROL_ARGS} from '../../../storybook';
-import type {LegendData} from '../types';
+import type {LegendData} from '../../../types';
 
 const DATA: LegendData[] = [
   {

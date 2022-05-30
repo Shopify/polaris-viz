@@ -1,0 +1,1 @@
+export {LegendItem} from './LegendItem';
