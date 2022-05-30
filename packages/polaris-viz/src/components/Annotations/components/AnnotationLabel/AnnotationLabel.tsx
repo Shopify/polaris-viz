@@ -36,7 +36,11 @@ export function AnnotationLabel({
   const {x, y, width} = position;
 
   return (
-    <g transform={`translate(${x},${y})`} opacity={isVisible ? 1 : 0}>
+    <g
+      transform={`translate(${x},${y})`}
+      opacity={isVisible ? 1 : 0}
+      aria-hidden
+    >
       <rect
         height={PILL_HEIGHT}
         width={width}
@@ -44,6 +48,7 @@ export function AnnotationLabel({
         ry={PILL_HEIGHT / 2}
       />
       <SingleTextLine
+        ariaHidden
         color={selectedTheme.annotations.textColor}
         text={label}
         targetWidth={width - PILL_PADDING * 2 + PX_OFFSET}
@@ -67,6 +72,8 @@ export function AnnotationLabel({
             style={{overflow: 'visible'}}
           >
             <button
+              aria-hidden
+              aria-describedby={`annotation-content-${index}`}
               className={styles.Button}
               onMouseEnter={() => setActiveIndex(index)}
               onFocus={() => setActiveIndex(index)}
