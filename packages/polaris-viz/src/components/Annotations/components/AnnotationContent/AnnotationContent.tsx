@@ -13,6 +13,7 @@ const MAX_WIDTH = 350;
 interface Props {
   annotation: Annotation;
   drawableWidth: number;
+  index: number;
   onMouseLeave: () => void;
   parentRef: SVGElement | null;
   position: AnnotationPosition;
@@ -23,6 +24,7 @@ interface Props {
 export function AnnotationContent({
   annotation,
   drawableWidth,
+  index,
   onMouseLeave,
   parentRef,
   position,
@@ -74,11 +76,15 @@ export function AnnotationContent({
             isFirefox ? 1 : 0.85,
           ),
         }}
+        id={`annotation-content-${index}`}
+        role="dialog"
       >
         {title != null && (
           <p
             className={styles.Title}
             style={{color: selectedTheme.annotations.titleColor}}
+            role="heading"
+            aria-level={2}
           >
             {title}
           </p>

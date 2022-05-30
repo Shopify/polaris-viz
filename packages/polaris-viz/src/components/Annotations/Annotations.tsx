@@ -111,6 +111,7 @@ export function Annotations({
               <AnnotationContent
                 annotation={annotation}
                 drawableWidth={drawableWidth}
+                index={index}
                 onMouseLeave={handleOnMouseLeave}
                 parentRef={ref}
                 position={positions[index]}
