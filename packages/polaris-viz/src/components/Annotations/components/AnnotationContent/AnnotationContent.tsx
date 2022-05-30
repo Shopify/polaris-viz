@@ -1,4 +1,4 @@
-import React, {useEffect, useLayoutEffect, useState} from 'react';
+import React, {useLayoutEffect, useState} from 'react';
 import {createPortal} from 'react-dom';
 import {changeColorOpacity, clamp, useTheme} from '@shopify/polaris-viz-core';
 
@@ -97,7 +97,12 @@ export function AnnotationContent({
           {content}
 
           {linkUrl != null && (
-            <a href={linkUrl} className={styles.Link} tabIndex={tabIndex}>
+            <a
+              href={linkUrl}
+              className={styles.Link}
+              tabIndex={tabIndex}
+              style={{color: selectedTheme.annotations.linkColor}}
+            >
               {linkText}
             </a>
           )}

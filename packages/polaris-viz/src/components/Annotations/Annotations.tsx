@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import type {ScaleBand} from 'd3-scale';
 
 import type {Annotation, AnnotationLookupTable} from '../../types';
