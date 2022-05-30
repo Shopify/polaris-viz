@@ -159,15 +159,6 @@ export type ChartType = 'default' | 'stacked';
 
 export type GradientUnits = 'userSpaceOnUse' | 'objectBoundingBox';
 
-export interface SparkLineChartProps {
-  data: DataSeries[];
-  accessibilityLabel?: string;
-  isAnimated?: boolean;
-  offsetLeft?: number;
-  offsetRight?: number;
-  theme?: string;
-}
-
 export interface SvgComponents {
   Svg: (props: SVGProps<SVGElement>) => any;
   Circle: (props: SVGProps<SVGCircleElement>) => any;
