@@ -319,12 +319,40 @@ export function WebComponents() {
                 ]}
                 data={[
                   {
-                    key: 'Direct',
-                    value: 200,
+                    name: 'Direct',
+                    data: [
+                      {
+                        key: 'April 2022',
+                        value: 200,
+                      },
+                    ],
                   },
                   {
-                    key: 'Facebook',
-                    value: 100,
+                    name: 'Facebook',
+                    data: [
+                      {
+                        key: 'April 2022',
+                        value: 100,
+                      },
+                    ],
+                  },
+                  {
+                    name: 'Twitter',
+                    data: [
+                      {
+                        key: 'April 2022',
+                        value: 100,
+                      },
+                    ],
+                  },
+                  {
+                    name: 'Google',
+                    data: [
+                      {
+                        key: 'April 2022',
+                        value: 20,
+                      },
+                    ],
                   },
                 ]}
                 labelFormatter={(value) => `$${value}`}

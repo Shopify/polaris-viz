@@ -44,3 +44,8 @@ export const LEGEND_CONTROL_ARGS = {
 
 export const RENDER_TOOLTIP_DESCRIPTION =
   'This accepts a function that is called to render the tooltip content. When necessary it calls `formatXAxisLabel` and/or `formatYAxisLabel` to format the DataSeries[] values and passes them to `<TooltipContent />`. [RenderTooltipContentData type definition.]()';
+
+export const DATA_ARGS = {
+  description:
+    'A collection of named data sets to be rendered in the chart. An optional color can be provided for each series, to overwrite the theme `seriesColors` defined in `PolarisVizProvider`',
+};

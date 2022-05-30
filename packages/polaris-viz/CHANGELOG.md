@@ -5,7 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-<!-- ## Unreleased -->
+## Unreleased
+
+### Added
+
+- `<SimpleNormalizedChart/>` series colors can now be overwritten by using the `color` key in the `DataSeries` passed to the `data` prop
+- `<SimpleNormalizedChart/>` when passing `DataSeries.isComparison: true` to the `data` prop, the corresponding bar will now use the coparison color defined in the `Theme`
+
+### Changed
+
+- `<SimpleNormalizedChart/>` now accepts `DataSeries[]` in `data` prop, instead of `DataPoint[]`
 
 ## [1.11.1] - 2022-06-02
 

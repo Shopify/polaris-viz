@@ -1,10 +1,11 @@
 import React from 'react';
 import {
-  DataPoint,
-  DEFAULT_THEME_NAME,
+  ChartProps,
   Direction,
   LabelFormatter,
+  DEFAULT_CHART_PROPS,
 } from '@shopify/polaris-viz-core';
+import type {WithRequired} from '@shopify/polaris-viz-core';
 
 import type {ComparisonMetricProps} from '../ComparisonMetric';
 import {ChartContainer} from '../ChartContainer';
@@ -12,25 +13,28 @@ import {ChartContainer} from '../ChartContainer';
 import {Chart} from './Chart';
 import type {Size, LabelPosition} from './types';
 
-export interface SimpleNormalizedChartProps {
-  data: DataPoint[];
+export type SimpleNormalizedChartProps = {
   comparisonMetrics?: Omit<ComparisonMetricProps, 'theme'>[];
   labelFormatter?: LabelFormatter;
   labelPosition?: LabelPosition;
   direction?: Direction;
   size?: Size;
-  theme?: string;
-}
+} & ChartProps;
 
-export function SimpleNormalizedChart({
-  comparisonMetrics = [],
-  data,
-  labelFormatter = (value) => `${value}`,
-  labelPosition = 'top-left',
-  direction = 'horizontal',
-  size = 'small',
-  theme = DEFAULT_THEME_NAME,
-}: SimpleNormalizedChartProps) {
+export function SimpleNormalizedChart(props: SimpleNormalizedChartProps) {
+  const {
+    comparisonMetrics = [],
+    data,
+    labelFormatter = (value) => `${value}`,
+    labelPosition = 'top-left',
+    direction = 'horizontal',
+    size = 'small',
+    theme,
+  }: WithRequired<SimpleNormalizedChartProps, 'theme'> = {
+    ...DEFAULT_CHART_PROPS,
+    ...props,
+  };
+
   return (
     <ChartContainer theme={theme}>
       <Chart
