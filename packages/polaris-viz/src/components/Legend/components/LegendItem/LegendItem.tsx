@@ -5,7 +5,7 @@ import {
 } from '@shopify/polaris-viz-core';
 
 import {SeriesIcon} from '../../../shared/SeriesIcon';
-import type {LegendData} from '../../types';
+import type {LegendData} from '../../../../types';
 import {useTheme} from '../../../../hooks';
 
 import style from './LegendItem.scss';

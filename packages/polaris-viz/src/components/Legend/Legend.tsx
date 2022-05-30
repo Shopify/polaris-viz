@@ -2,7 +2,8 @@ import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 import React from 'react';
 
 import type {LegendData} from '../../types';
-import {LegendItem} from '../LegendItem';
+
+import {LegendItem} from './components/';
 
 export interface LegendProps {
   data: LegendData[];
