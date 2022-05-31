@@ -18,7 +18,7 @@ import type {Annotation} from '../../../types';
 import type {AnnotationPosition} from '../types';
 import {isShowMoreAnnotationsButtonVisible} from '../utilities/isShowMoreAnnotationsButtonVisible';
 
-interface Props {
+export interface Props {
   annotations: Annotation[];
   axisLabelWidth: number;
   dataIndexes: {[key: string]: string};
@@ -171,6 +171,7 @@ export function useAnnotationPositions({
         if (y > total) {
           return y;
         }
+
         return total;
       }, 0) +
       PILL_HEIGHT +

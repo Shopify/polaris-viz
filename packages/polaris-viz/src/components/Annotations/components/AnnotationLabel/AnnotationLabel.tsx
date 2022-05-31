@@ -7,7 +7,7 @@ import type {AnnotationPosition} from '../../types';
 
 import styles from './AnnotationLabel.scss';
 
-interface Props {
+export interface AnnotationLabelProps {
   ariaLabel: string;
   index: number;
   isVisible: boolean;
@@ -30,7 +30,7 @@ export function AnnotationLabel({
   setActiveIndex,
   tabIndex,
   theme,
-}: Props) {
+}: AnnotationLabelProps) {
   const selectedTheme = useTheme(theme);
 
   const {x, y, width} = position;

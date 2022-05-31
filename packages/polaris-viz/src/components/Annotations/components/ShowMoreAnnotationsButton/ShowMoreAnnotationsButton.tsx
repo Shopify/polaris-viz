@@ -14,10 +14,11 @@ import {Icon, Shadow} from './components';
 
 const STROKE = 2;
 
-interface Props {
+export interface Props {
   annotationsCount: number;
   isShowingAllAnnotations: boolean;
   onClick: () => void;
+  tabIndex: number;
   theme: string;
   width: number;
   collapseText?: string;
@@ -30,6 +31,7 @@ export function ShowMoreAnnotationsButton({
   expandText = 'Expand annotations',
   isShowingAllAnnotations,
   onClick,
+  tabIndex,
   theme,
   width,
 }: Props) {
@@ -90,6 +92,21 @@ export function ShowMoreAnnotationsButton({
         y={PILL_HEIGHT - LINE_HEIGHT}
         x={pillWidth / 2 - textWidth / 2}
       />
+
+      <foreignObject
+        height={PILL_HEIGHT}
+        width={pillWidth}
+        style={{overflow: 'visible'}}
+      >
+        <button
+          className={styles.Button}
+          onClick={onClick}
+          style={{borderRadius: PILL_HEIGHT / 2}}
+          tabIndex={tabIndex}
+        >
+          {label}
+        </button>
+      </foreignObject>
     </g>
   );
 }

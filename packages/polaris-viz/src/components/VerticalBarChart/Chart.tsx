@@ -226,6 +226,8 @@ export function Chart({
     [data, labels, yAxisOptions],
   );
 
+  const hasAnnotations = Object.keys(annotationsLookupTable).length > 0;
+
   return (
     <div className={styles.ChartContainer} style={{height, width}}>
       <svg
@@ -324,17 +326,19 @@ export function Chart({
             })
           )}
         </g>
-        <g transform={`translate(${chartXPosition},0)`} tabIndex={-1}>
-          <Annotations
-            annotationsLookupTable={annotationsLookupTable}
-            drawableHeight={annotationsDrawableHeight}
-            drawableWidth={drawableWidth}
-            labels={labels}
-            onHeightChange={setAnnotationsHeight}
-            theme={theme}
-            xScale={xScale}
-          />
-        </g>
+        {hasAnnotations && (
+          <g transform={`translate(${chartXPosition},0)`} tabIndex={-1}>
+            <Annotations
+              annotationsLookupTable={annotationsLookupTable}
+              drawableHeight={annotationsDrawableHeight}
+              drawableWidth={drawableWidth}
+              labels={labels}
+              onHeightChange={setAnnotationsHeight}
+              theme={theme}
+              xScale={xScale}
+            />
+          </g>
+        )}
       </svg>
 
       <TooltipWrapper

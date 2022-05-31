@@ -15,7 +15,7 @@ import {PILL_HEIGHT, SHOW_MORE_BUTTON_OFFSET} from './constants';
 import {shouldHideAnnotation} from './utilities/shouldHideAnnotation';
 import {isShowMoreAnnotationsButtonVisible} from './utilities/isShowMoreAnnotationsButtonVisible';
 
-interface Props {
+export interface AnnotationsProps {
   annotationsLookupTable: AnnotationLookupTable;
   drawableHeight: number;
   drawableWidth: number;
@@ -33,7 +33,7 @@ export function Annotations({
   onHeightChange,
   theme,
   xScale,
-}: Props) {
+}: AnnotationsProps) {
   const [activeIndex, setActiveIndex] = useState(-1);
   const [isShowingAllAnnotations, setIsShowingAllAnnotations] = useState(false);
   const [ref, setRef] = useState<SVGGElement | null>(null);
@@ -100,6 +100,7 @@ export function Annotations({
           expandText={annotations[0].expandButtonText}
           isShowingAllAnnotations={isShowingAllAnnotations}
           onClick={handleToggleAllAnnotations}
+          tabIndex={annotations.length}
           theme={theme}
           width={drawableWidth}
         />

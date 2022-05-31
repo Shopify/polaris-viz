@@ -10,7 +10,7 @@ import styles from './AnnotationContent.scss';
 
 const MAX_WIDTH = 350;
 
-interface Props {
+export interface AnnotationContentProps {
   annotation: Annotation;
   drawableWidth: number;
   index: number;
@@ -30,7 +30,7 @@ export function AnnotationContent({
   position,
   tabIndex,
   theme,
-}: Props) {
+}: AnnotationContentProps) {
   const selectedTheme = useTheme(theme);
   const {isFirefox} = useBrowserCheck();
 
@@ -55,12 +55,13 @@ export function AnnotationContent({
   }
 
   return createPortal(
-    <foreignObject
+    <Wrapper
       height="100%"
       width="100%"
       style={{pointerEvents: 'none', overflow: 'visible'}}
       x={clamp({amount: x, min: 0, max: drawableWidth})}
       y={position.y}
+      parentRef={parentRef}
     >
       <div
         className={styles.Container}
@@ -108,7 +109,13 @@ export function AnnotationContent({
           )}
         </p>
       </div>
-    </foreignObject>,
+    </Wrapper>,
     parentRef ?? document.body,
   );
+}
+
+function Wrapper({children, parentRef, ...theRest}) {
+  const Tag = parentRef ? 'foreignObject' : 'div';
+
+  return <Tag {...theRest}>{children}</Tag>;
 }
