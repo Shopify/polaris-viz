@@ -15,6 +15,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Changed
 
 - `<SimpleNormalizedChart/>` now accepts `DataSeries[]` in `data` prop, instead of `DataPoint[]`
+- Changed `@juggle/resize-observer` library as dependency.
 
 ## [1.11.1] - 2022-06-02
 
