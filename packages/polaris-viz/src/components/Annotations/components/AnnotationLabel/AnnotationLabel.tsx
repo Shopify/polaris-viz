@@ -8,7 +8,6 @@ import type {AnnotationPosition} from '../../types';
 import styles from './AnnotationLabel.scss';
 
 interface Props {
-  hasContent: boolean;
   index: number;
   isVisible: boolean;
   label: string;
@@ -22,7 +21,6 @@ const PX_OFFSET = 1;
 const CONTENT_LINE_OFFSET = 3;
 
 export function AnnotationLabel({
-  hasContent,
   index,
   isVisible,
   label,
@@ -55,36 +53,34 @@ export function AnnotationLabel({
         y={PILL_HEIGHT - LINE_HEIGHT - PX_OFFSET}
         x={PILL_PADDING}
       />
-      {hasContent && (
-        <React.Fragment>
-          <line
-            x1={PILL_PADDING}
-            x2={width - PILL_PADDING}
-            y1={PILL_HEIGHT - CONTENT_LINE_OFFSET}
-            y2={PILL_HEIGHT - CONTENT_LINE_OFFSET}
-            stroke={selectedTheme.annotations.textColor}
-            strokeDasharray="1, 3"
-            strokeWidth={1}
-          />
-          <foreignObject
-            height={PILL_HEIGHT}
-            width={width}
-            style={{overflow: 'visible'}}
+      <React.Fragment>
+        <line
+          x1={PILL_PADDING}
+          x2={width - PILL_PADDING}
+          y1={PILL_HEIGHT - CONTENT_LINE_OFFSET}
+          y2={PILL_HEIGHT - CONTENT_LINE_OFFSET}
+          stroke={selectedTheme.annotations.textColor}
+          strokeDasharray="1, 3"
+          strokeWidth={1}
+        />
+        <foreignObject
+          height={PILL_HEIGHT}
+          width={width}
+          style={{overflow: 'visible'}}
+        >
+          <button
+            aria-hidden
+            aria-describedby={`annotation-content-${index}`}
+            className={styles.Button}
+            onMouseEnter={() => setActiveIndex(index)}
+            onFocus={() => setActiveIndex(index)}
+            tabIndex={tabIndex}
+            style={{borderRadius: PILL_HEIGHT / 2}}
           >
-            <button
-              aria-hidden
-              aria-describedby={`annotation-content-${index}`}
-              className={styles.Button}
-              onMouseEnter={() => setActiveIndex(index)}
-              onFocus={() => setActiveIndex(index)}
-              tabIndex={tabIndex}
-              style={{borderRadius: PILL_HEIGHT / 2}}
-            >
-              {label}
-            </button>
-          </foreignObject>
-        </React.Fragment>
-      )}
+            {label}
+          </button>
+        </foreignObject>
+      </React.Fragment>
     </g>
   );
 }

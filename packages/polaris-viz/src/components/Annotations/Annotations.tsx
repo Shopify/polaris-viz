@@ -98,7 +98,6 @@ export function Annotations({
               y={y + PILL_HEIGHT}
             />
             <AnnotationLabel
-              hasContent={hasContent}
               index={index}
               isVisible={!isContentVisible}
               label={annotation.label}
