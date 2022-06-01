@@ -1,9 +1,24 @@
+@import '../../../../styles/common';
+
 .Legend {
-  padding: 7px 12px;
+  padding: 4px 16px 4px 8px;
   outline: none;
   border: none;
   border-radius: 2px;
   display: flex;
+  gap: 8px;
+}
+
+.TextContainer {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  gap: 3px;
+}
+
+.IconContainer {
+  margin-top: 1px;
+  display: flex;
   align-items: center;
-  gap: 10px;
+  justify-items: center;
 }

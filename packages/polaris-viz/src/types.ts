@@ -125,6 +125,7 @@ export interface LegendData {
   color: Color;
   isComparison?: boolean;
   shape?: Shape;
+  value?: string;
 }
 
 export interface Annotation {
