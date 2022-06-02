@@ -82,7 +82,10 @@ export function Chart({
     <div className={styles.Donut}>
       <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
       <svg aria-hidden width={width} height={height}>
-        <g transform={`translate(${radius} ${radius})`}>
+        <g
+          className={styles.DonutChart}
+          transform={`translate(${radius} ${radius})`}
+        >
           {emptyState ? (
             <g aria-hidden>
               <Arc
@@ -103,6 +106,7 @@ export function Chart({
               return (
                 <g
                   key={`${key}-${startAngle}-${endAngle}`}
+                  className={styles.DonutChart}
                   style={{
                     ...getColorVisionStylesForActiveIndex({
                       activeIndex,
