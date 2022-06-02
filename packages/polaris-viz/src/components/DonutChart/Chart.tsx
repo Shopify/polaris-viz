@@ -1,6 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {pie} from 'd3-shape';
-import {clamp, useTheme} from '@shopify/polaris-viz-core';
+import {
+  clamp,
+  useTheme,
+  COLOR_VISION_SINGLE_ITEM,
+  getColorVisionStylesForActiveIndex,
+  getColorVisionEventAttrs,
+} from '@shopify/polaris-viz-core';
 import type {
   DataPoint,
   DataSeries,
@@ -10,7 +16,11 @@ import type {
 
 import {classNames} from '../../utilities';
 import {ComparisonMetric, ComparisonMetricProps} from '../ComparisonMetric';
-import {getSeriesColors} from '../../hooks';
+import {
+  getSeriesColors,
+  useColorVisionEvents,
+  useWatchColorVisionEvents,
+} from '../../hooks';
 
 import styles from './DonutChart.scss';
 import {Arc} from './components';
@@ -36,9 +46,21 @@ export function Chart({
   theme,
   labelFormatter,
 }: ChartProps) {
+  const [activeIndex, setActiveIndex] = useState<number>(-1);
   const {width, height} = dimensions;
   const radius = Math.min(width, height) / 2;
   const selectedTheme = useTheme(theme);
+
+  useColorVisionEvents();
+
+  useWatchColorVisionEvents({
+    type: COLOR_VISION_SINGLE_ITEM,
+    onIndexChange: ({detail}) => {
+      console.log('event firing?');
+      setActiveIndex(detail.index);
+    },
+  });
+
   const seriesCount = clamp({amount: data.length, min: 1, max: Infinity});
   const seriesColor = getSeriesColors(seriesCount, selectedTheme);
   const points: DataPoint[] = data.reduce(
@@ -80,7 +102,17 @@ export function Chart({
               const {key} = data;
 
               return (
-                <g key={`${key}-${startAngle}-${endAngle}`}>
+                <g
+                  key={`${key}-${startAngle}-${endAngle}`}
+                  style={getColorVisionStylesForActiveIndex({
+                    activeIndex,
+                    index,
+                  })}
+                  {...getColorVisionEventAttrs({
+                    type: COLOR_VISION_SINGLE_ITEM,
+                    index,
+                  })}
+                >
                   <Arc
                     width={width}
                     height={height}
