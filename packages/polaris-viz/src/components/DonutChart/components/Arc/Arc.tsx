@@ -1,14 +1,8 @@
-import React, {useState, useMemo} from 'react';
+import React, {useMemo} from 'react';
 import {arc} from 'd3-shape';
-import {
-  isGradientType,
-  uniqueId,
-  getColorVisionEventAttrs,
-  COLOR_VISION_SINGLE_ITEM,
-} from '@shopify/polaris-viz-core';
+import {isGradientType, uniqueId} from '@shopify/polaris-viz-core';
 import type {Color} from '@shopify/polaris-viz-core';
 
-import {useWatchColorVisionEvents} from '../../../../hooks';
 import {ConicGradientWithStops} from '../../../';
 import {classNames} from '../../../../utilities';
 import {ARC_PAD_ANGLE} from '../../constants';
@@ -39,16 +33,6 @@ export function Arc({
   const gradientId = useMemo(() => uniqueId('DonutChart'), []);
   const createArc = arc().cornerRadius(cornerRadius);
 
-  const [activeIndex, setActiveBarIndex] = useState(-1);
-
-  useWatchColorVisionEvents({
-    type: COLOR_VISION_SINGLE_ITEM,
-    onIndexChange: ({detail}) => {
-      console.log('another event');
-      setActiveBarIndex(detail.index);
-    },
-  });
-
   const arcOptions = {
     innerRadius: radius - thickness,
     outerRadius: radius,
@@ -72,10 +56,6 @@ export function Arc({
         height={height}
         clipPath={`url(#${gradientId})`}
         transform={`translate(-${radius} -${radius})`}
-        {...getColorVisionEventAttrs({
-          type: COLOR_VISION_SINGLE_ITEM,
-          index: activeIndex,
-        })}
       >
         <ConicGradientWithStops
           height={height}

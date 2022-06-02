@@ -56,7 +56,6 @@ export function Chart({
   useWatchColorVisionEvents({
     type: COLOR_VISION_SINGLE_ITEM,
     onIndexChange: ({detail}) => {
-      console.log('event firing?');
       setActiveIndex(detail.index);
     },
   });
@@ -104,10 +103,12 @@ export function Chart({
               return (
                 <g
                   key={`${key}-${startAngle}-${endAngle}`}
-                  style={getColorVisionStylesForActiveIndex({
-                    activeIndex,
-                    index,
-                  })}
+                  style={{
+                    ...getColorVisionStylesForActiveIndex({
+                      activeIndex,
+                      index,
+                    }),
+                  }}
                   {...getColorVisionEventAttrs({
                     type: COLOR_VISION_SINGLE_ITEM,
                     index,
