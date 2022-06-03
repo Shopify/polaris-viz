@@ -187,7 +187,7 @@ export const DEFAULT_THEME: Theme = {
     valueColor: variables.colorGray00,
     backgroundColor: variables.colorGray150,
     trendIndicator: {
-      positive: '#039c86',
+      positive: '#03AB92',
       negative: '#f24f62',
       neutral: '#8C9196',
     },
