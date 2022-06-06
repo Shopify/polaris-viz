@@ -18,6 +18,7 @@ interface Props {
   annotationsLookupTable: AnnotationLookupTable;
   drawableHeight: number;
   drawableWidth: number;
+  labels: string[];
   onHeightChange: (height: number) => void;
   theme: string;
   xScale: ScaleBand<string>;
@@ -27,6 +28,7 @@ export function Annotations({
   annotationsLookupTable,
   drawableHeight,
   drawableWidth,
+  labels,
   onHeightChange,
   theme,
   xScale,
@@ -98,6 +100,7 @@ export function Annotations({
               y={y + PILL_HEIGHT}
             />
             <AnnotationLabel
+              ariaLabel={labels[annotation.startIndex]}
               index={index}
               isVisible={!isContentVisible}
               label={annotation.label}
