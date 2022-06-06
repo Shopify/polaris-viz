@@ -14,6 +14,7 @@ interface LinearXAxisLabelsProps {
   xScale: ScaleLinear<number, number>;
   reducedLabelIndexes?: number[];
   theme: string;
+  ariaHidden?: boolean;
 }
 
 export function LinearXAxisLabels({
@@ -26,6 +27,7 @@ export function LinearXAxisLabels({
   reducedLabelIndexes,
   theme,
   xScale,
+  ariaHidden = false,
 }: LinearXAxisLabelsProps) {
   const {lines} = useLabels({
     chartHeight,
@@ -44,7 +46,11 @@ export function LinearXAxisLabels({
         const x = xScale(index) ?? 0;
 
         return (
-          <g transform={`translate(${chartX + x},${chartY})`} key={index}>
+          <g
+            transform={`translate(${chartX + x},${chartY})`}
+            key={index}
+            aria-hidden={ariaHidden}
+          >
             <TextLine line={line} index={index} theme={theme} />
           </g>
         );

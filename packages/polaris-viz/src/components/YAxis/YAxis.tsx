@@ -8,13 +8,13 @@ interface Props {
   ticks: YAxisTick[];
   textAlign: 'left' | 'right';
   width: number;
-
+  ariaHidden?: boolean;
   theme: string;
 }
 
 const PADDING_SIZE = 1;
 
-function Axis({ticks, width, textAlign, theme}: Props) {
+function Axis({ticks, width, textAlign, theme, ariaHidden = false}: Props) {
   const selectedTheme = useTheme(theme);
 
   return (
@@ -23,6 +23,7 @@ function Axis({ticks, width, textAlign, theme}: Props) {
         return (
           <foreignObject
             key={value}
+            aria-hidden={ariaHidden}
             transform={`translate(${selectedTheme.grid.horizontalMargin},${
               yOffset - LINE_HEIGHT / 2
             })`}
