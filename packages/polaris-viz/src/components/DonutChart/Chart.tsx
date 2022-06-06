@@ -9,7 +9,8 @@ import type {
 } from '@shopify/polaris-viz-core';
 
 import {classNames} from '../../utilities';
-import {ComparisonMetric, ComparisonMetricProps} from '../ComparisonMetric';
+import {ComparisonMetric} from '../ComparisonMetric';
+import type {ComparisonMetricProps} from '../ComparisonMetric';
 import {getSeriesColors} from '../../hooks';
 
 import styles from './DonutChart.scss';
