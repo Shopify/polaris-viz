@@ -9,10 +9,42 @@ import type {SimpleNormalizedChartProps} from '../SimpleNormalizedChart';
 describe('<Chart />', () => {
   const mockProps: SimpleNormalizedChartProps = {
     data: [
-      {key: 'label0', value: 993.9266809283133},
-      {key: 'label1', value: 666.4681407384194},
-      {key: 'label2', value: 500},
-      {key: 'label3', value: 200},
+      {
+        name: 'label0',
+        data: [
+          {
+            key: 'April 2022',
+            value: 993.9266809283133,
+          },
+        ],
+      },
+      {
+        name: 'label1',
+        data: [
+          {
+            key: 'April 2022',
+            value: 666.4681407384194,
+          },
+        ],
+      },
+      {
+        name: 'label2',
+        data: [
+          {
+            key: 'April 2022',
+            value: 500,
+          },
+        ],
+      },
+      {
+        name: 'label3',
+        data: [
+          {
+            key: 'April 2022',
+            value: 200,
+          },
+        ],
+      },
     ],
     labelFormatter: (value) => `$${Number(value).toFixed(2)}`,
   };
@@ -28,22 +60,77 @@ describe('<Chart />', () => {
       const highEdgeProps = {
         data: [
           {
-            key: 'DuckDuckGo',
-            value: 993.9266809283133,
+            name: 'DuckDuckGo',
+            data: [
+              {
+                key: 'April 1',
+                value: 993.9266809283133,
+              },
+            ],
           },
           {
-            key: 'Google',
-            value: 666.4681407384194,
+            name: 'Google',
+            data: [
+              {
+                key: 'April 1',
+                value: 666.4681407384194,
+              },
+            ],
           },
-          {key: 'Yahoo', value: 500},
-          {key: 'Bing', value: 200},
           {
-            key: 'DuckDuck',
-            value: 993.9266809283133,
+            name: 'Yahoo',
+            data: [
+              {
+                key: 'April 1',
+                value: 500,
+              },
+            ],
           },
-          {key: 'Goog', value: 666.4681407384194},
-          {key: 'Yah', value: 500},
-          {key: 'Bin', value: 200},
+          {
+            name: 'Bing',
+            data: [
+              {
+                key: 'April 1',
+                value: 200,
+              },
+            ],
+          },
+          {
+            name: 'DuckDuck',
+            data: [
+              {
+                key: 'April 1',
+                value: 993.9266809283133,
+              },
+            ],
+          },
+          {
+            name: 'Goog',
+            data: [
+              {
+                key: 'April 1',
+                value: 666.4681407384194,
+              },
+            ],
+          },
+          {
+            name: 'Yah',
+            data: [
+              {
+                key: 'April 1',
+                value: 500,
+              },
+            ],
+          },
+          {
+            name: 'Bin',
+            data: [
+              {
+                key: 'April 1',
+                value: 200,
+              },
+            ],
+          },
         ],
       };
       const barChart = mount(<SimpleNormalizedChart {...highEdgeProps} />);
@@ -65,8 +152,8 @@ describe('<Chart />', () => {
       const barChart = mount(
         <SimpleNormalizedChart
           data={[
-            {key: 'Bin', value: 200},
-            {key: 'Stuff', value: 0},
+            {name: 'Bin', data: [{key: 'April 1', value: 200}]},
+            {name: 'Stuff', data: [{key: 'April 1', value: 0}]},
           ]}
         />,
       );
@@ -80,28 +167,58 @@ describe('<Chart />', () => {
       const highEdgeProps = {
         data: [
           {
-            key: 'DuckDuckGo',
-            value: 993.9266809283133,
+            name: 'DuckDuckGo',
+            data: [
+              {
+                key: 'April 1',
+                value: 993.9266809283133,
+              },
+            ],
           },
           {
-            key: 'DuckDuckGo1',
-            value: 993.9266809283133,
+            name: 'DuckDuckGo1',
+            data: [
+              {
+                key: 'April 1',
+                value: 993.9266809283133,
+              },
+            ],
           },
           {
-            key: 'DuckDuckGo2',
-            value: 993.9266809283133,
+            name: 'DuckDuckGo2',
+            data: [
+              {
+                key: 'April 1',
+                value: 993.9266809283133,
+              },
+            ],
           },
           {
-            key: 'DuckDuckGo3',
-            value: 993.9266809283133,
+            name: 'DuckDuckGo3',
+            data: [
+              {
+                key: 'April 1',
+                value: 993.9266809283133,
+              },
+            ],
           },
           {
-            key: 'DuckDuckGo4',
-            value: 993.9266809283133,
+            name: 'DuckDuckGo4',
+            data: [
+              {
+                key: 'April 1',
+                value: 993.9266809283133,
+              },
+            ],
           },
           {
-            key: 'DuckDuckGo5',
-            value: 993.9266809283133,
+            name: 'DuckDuckGo5',
+            data: [
+              {
+                key: 'April 1',
+                value: 993.9266809283133,
+              },
+            ],
           },
         ],
       };
@@ -115,12 +232,17 @@ describe('<Chart />', () => {
       const lowEdgeProps = {
         data: [
           {
-            key: 'DuckDuckGo',
-            value: 993.9266809283133,
+            name: 'DuckDuckGo',
+            data: [
+              {
+                key: 'April 1',
+                value: 993.9266809283133,
+              },
+            ],
           },
           {
-            key: 'DuckDuckGo1',
-            value: 993.9266809283133,
+            name: 'DuckDuckGo1',
+            data: [{key: 'April 1', value: 993.9266809283133}],
           },
         ],
       };

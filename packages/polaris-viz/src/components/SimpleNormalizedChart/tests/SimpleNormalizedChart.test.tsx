@@ -10,11 +10,44 @@ import {Chart} from '../Chart';
 
 const mockProps: SimpleNormalizedChartProps = {
   data: [
-    {key: 'label0', value: 993.9266809283133},
-    {key: 'label1', value: 666.4681407384194},
-    {key: 'label2', value: 500},
-    {key: 'label3', value: 200},
+    {
+      name: 'label0',
+      data: [
+        {
+          key: 'April 2022',
+          value: 993.9266809283133,
+        },
+      ],
+    },
+    {
+      name: 'label1',
+      data: [
+        {
+          key: 'April 2022',
+          value: 666.4681407384194,
+        },
+      ],
+    },
+    {
+      name: 'label2',
+      data: [
+        {
+          key: 'April 2022',
+          value: 500,
+        },
+      ],
+    },
+    {
+      name: 'label3',
+      data: [
+        {
+          key: 'April 2022',
+          value: 200,
+        },
+      ],
+    },
   ],
+
   labelFormatter: (value) => `$${Number(value).toFixed(2)}`,
 };
 
