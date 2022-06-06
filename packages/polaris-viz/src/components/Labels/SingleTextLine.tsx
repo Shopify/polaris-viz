@@ -11,9 +11,11 @@ interface SingleTextLineProps {
   text: string;
   x: number;
   y: number;
+  ariaHidden?: boolean;
 }
 
 export function SingleTextLine({
+  ariaHidden = false,
   color,
   targetWidth,
   text,
@@ -32,6 +34,7 @@ export function SingleTextLine({
   return (
     <React.Fragment>
       <text
+        aria-hidden={ariaHidden}
         textAnchor="center"
         dominantBaseline="hanging"
         height={LINE_HEIGHT}

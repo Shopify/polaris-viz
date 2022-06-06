@@ -1,5 +1,6 @@
+import React, {useLayoutEffect, useState} from 'react';
+import {createPortal} from 'react-dom';
 import {changeColorOpacity, clamp, useTheme} from '@shopify/polaris-viz-core';
-import React, {useEffect, useState} from 'react';
 
 import {useBrowserCheck} from '../../../../hooks/useBrowserCheck';
 import type {Annotation} from '../../../../types';
@@ -12,16 +13,22 @@ const MAX_WIDTH = 350;
 interface Props {
   annotation: Annotation;
   drawableWidth: number;
+  index: number;
   onMouseLeave: () => void;
+  parentRef: SVGElement | null;
   position: AnnotationPosition;
+  tabIndex: number;
   theme: string;
 }
 
 export function AnnotationContent({
   annotation,
   drawableWidth,
+  index,
   onMouseLeave,
+  parentRef,
   position,
+  tabIndex,
   theme,
 }: Props) {
   const selectedTheme = useTheme(theme);
@@ -30,7 +37,7 @@ export function AnnotationContent({
   const [ref, setRef] = useState<HTMLDivElement | null>(null);
   const [bounds, setBounds] = useState<DOMRect | undefined>();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setBounds(ref?.getBoundingClientRect());
   }, [ref]);
 
@@ -47,56 +54,61 @@ export function AnnotationContent({
     x = drawableWidth - width;
   }
 
-  return (
+  return createPortal(
     <foreignObject
       height="100%"
       width="100%"
-      style={{pointerEvents: 'none'}}
+      style={{pointerEvents: 'none', overflow: 'visible'}}
       x={clamp({amount: x, min: 0, max: drawableWidth})}
       y={position.y}
     >
       <div
+        className={styles.Container}
+        data-block-tooltip-events
+        onMouseLeave={onMouseLeave}
+        ref={setRef}
         style={{
-          display: 'flex',
+          maxWidth: Math.min(drawableWidth, MAX_WIDTH),
+          // Firefox doesn't support blur so we'll remove
+          // the opacity on this element.
+          background: changeColorOpacity(
+            selectedTheme.annotations.backgroundColor,
+            isFirefox ? 1 : 0.85,
+          ),
         }}
+        id={`annotation-content-${index}`}
+        role="dialog"
       >
-        <div
-          className={styles.Container}
-          data-block-tooltip-events
-          onMouseLeave={onMouseLeave}
-          ref={setRef}
-          style={{
-            maxWidth: Math.min(drawableWidth, MAX_WIDTH),
-            // Firefox doesn't support blur so we'll remove
-            // the opacity on this element.
-            background: changeColorOpacity(
-              selectedTheme.annotations.backgroundColor,
-              isFirefox ? 1 : 0.85,
-            ),
-          }}
-        >
-          {title != null && (
-            <p
-              className={styles.Title}
-              style={{color: selectedTheme.annotations.titleColor}}
-            >
-              {title}
-            </p>
-          )}
+        {title != null && (
           <p
-            className={styles.Content}
-            style={{color: selectedTheme.annotations.textColor}}
+            className={styles.Title}
+            style={{color: selectedTheme.annotations.titleColor}}
+            role="heading"
+            aria-level={2}
           >
-            {content}
-
-            {linkUrl != null && (
-              <a href={linkUrl} className={styles.Link}>
-                {linkText}
-              </a>
-            )}
+            {title}
           </p>
-        </div>
+        )}
+        <p
+          className={styles.Content}
+          style={{color: selectedTheme.annotations.textColor}}
+          data-is-annotation-content
+        >
+          {content}
+
+          {linkUrl != null && (
+            <a
+              href={linkUrl}
+              className={styles.Link}
+              tabIndex={tabIndex}
+              style={{color: selectedTheme.annotations.linkColor}}
+            >
+              {linkText}
+            </a>
+          )}
+        </p>
       </div>
-    </foreignObject>
+    </foreignObject>,
+    parentRef ?? document.body,
   );
 }

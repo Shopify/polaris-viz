@@ -1,5 +1,5 @@
 // stylelint-disable scss/partial-no-import
-@import './shared/variables';
+@import '../../../polaris-viz-core/src/styles/shared/variables';
 @import './shared/accessibility';
 @import './shared/chart-container';
 
@@ -7,4 +7,10 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+*:focus,
+*:focus-visible {
+  outline: 2px solid $color-blue-70;
+  outline-offset: 2px;
 }
