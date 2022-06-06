@@ -322,6 +322,7 @@ export function Chart({
             annotationsLookupTable={annotationsLookupTable}
             drawableHeight={annotationsDrawableHeight}
             drawableWidth={drawableWidth}
+            labels={labels}
             onHeightChange={setAnnotationsHeight}
             theme={theme}
             xScale={xScale}

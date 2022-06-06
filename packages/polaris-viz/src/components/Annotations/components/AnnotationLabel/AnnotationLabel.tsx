@@ -8,6 +8,7 @@ import type {AnnotationPosition} from '../../types';
 import styles from './AnnotationLabel.scss';
 
 interface Props {
+  ariaLabel: string;
   index: number;
   isVisible: boolean;
   label: string;
@@ -21,6 +22,7 @@ const PX_OFFSET = 1;
 const CONTENT_LINE_OFFSET = 3;
 
 export function AnnotationLabel({
+  ariaLabel,
   index,
   isVisible,
   label,
@@ -32,6 +34,8 @@ export function AnnotationLabel({
   const selectedTheme = useTheme(theme);
 
   const {x, y, width} = position;
+
+  const formattedAriaLabel = `${ariaLabel}: ${label}`;
 
   return (
     <g
@@ -69,8 +73,8 @@ export function AnnotationLabel({
           style={{overflow: 'visible'}}
         >
           <button
-            aria-hidden
             aria-describedby={`annotation-content-${index}`}
+            aria-label={formattedAriaLabel}
             className={styles.Button}
             onMouseEnter={() => setActiveIndex(index)}
             onFocus={() => setActiveIndex(index)}
