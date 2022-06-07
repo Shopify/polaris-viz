@@ -20,6 +20,25 @@ A collection of utility functions you can import either from `polaris-viz` or `p
 <Divider noLine />
 
 <Title type="h3">
+  <code>createCssConicGradient()</code>
+</Title>
+
+<p>Returns a css conic gradient from the provided gradient.</p>
+
+```tsx
+const gradient: gradientStop[] = [
+  {color: 'red', offset: 0},
+  {color: 'green', offset: 100},
+];
+
+const conicGradient = createCssConicGradient(gradient);
+
+// conic-gradient(red 0deg, green 100deg)
+```
+
+<Divider />
+
+<Title type="h3">
   <code>createGradient()</code>
 </Title>
 

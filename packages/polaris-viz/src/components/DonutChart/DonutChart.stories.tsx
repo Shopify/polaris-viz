@@ -1,6 +1,7 @@
 import React from 'react';
 import type {Meta, StoryFn} from '@storybook/react';
 
+import {THEME_CONTROL_ARGS} from '../../storybook';
 import {DonutChart} from '.';
 import type {DonutChartProps} from './DonutChart';
 
@@ -23,8 +24,9 @@ const meta: Meta<DonutChartProps> = {
   argTypes: {
     data: {
       description:
-        'Array of `ArcData` that determine what each arc should look like, as well as providing the data to be plotted.',
+        'A collection of named data sets to be rendered in the chart. An optional color can be provided for each series, to overwrite the theme `seriesColors` defined in `PolarisVizProvider`',
     },
+    theme: THEME_CONTROL_ARGS,
   },
   decorators: [
     (Story) => <div style={{width: 200, height: 200}}>{Story()}</div>,
@@ -56,7 +58,7 @@ Default.args = {
   ],
   comparisonMetric: {
     metric: '10%',
-    trend: 'positive',
-    accessibilityLabel: 'trending up 10%',
+    trend: 'negative',
+    accessibilityLabel: 'trending down 10%',
   },
 };
