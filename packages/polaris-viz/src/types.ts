@@ -121,8 +121,9 @@ export interface LegendData {
 
 export interface Annotation {
   label: string;
-  startIndex: number;
-  endIndex?: number;
+  startKey: string | number;
+  endKey?: string | number;
+  axis?: 'x' | 'y';
   content?: {
     content: string;
     linkText?: string;

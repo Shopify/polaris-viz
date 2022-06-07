@@ -72,7 +72,7 @@ export function BarChart(props: BarChartProps) {
   const xAxisOptionsWithDefaults = getXAxisOptionsWithDefaults(xAxisOptions);
   const yAxisOptionsWithDefaults = getYAxisOptionsWithDefaults(yAxisOptions);
 
-  const annotationsLookupTable = normalizeData(annotations, 'startIndex');
+  const annotationsLookupTable = normalizeData(annotations, 'startKey');
 
   function renderTooltip(tooltipData: RenderTooltipContentData) {
     if (renderTooltipContent != null) {
