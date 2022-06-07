@@ -37,23 +37,30 @@ export function Annotations({
   const [isShowingAllAnnotations, setIsShowingAllAnnotations] = useState(false);
   const [ref, setRef] = useState<SVGGElement | null>(null);
 
-  const annotations = useMemo(() => {
-    return Object.keys(annotationsLookupTable)
+  const {annotations, dataIndexes} = useMemo(() => {
+    const dataIndexes = {};
+
+    const annotations = Object.keys(annotationsLookupTable)
       .map((key) => {
-        const annotation = annotationsLookupTable[Number(key)];
+        const annotation = annotationsLookupTable[key];
 
         if (annotation == null) {
           return null;
         }
 
+        dataIndexes[key] = labels.indexOf(key);
+
         return annotation;
       })
       .filter(Boolean) as Annotation[];
-  }, [annotationsLookupTable]);
+
+    return {annotations, dataIndexes};
+  }, [annotationsLookupTable, labels]);
 
   const {positions, rowCount} = useAnnotationPositions({
     annotations,
     axisLabelWidth: xScale.bandwidth(),
+    dataIndexes,
     drawableWidth,
     isShowingAllAnnotations,
     onHeightChange,
@@ -90,9 +97,10 @@ export function Annotations({
         const hasContent = annotation.content != null;
         const isContentVisible = index === activeIndex && hasContent;
         const tabIndex = index + 1;
+        const ariaLabel = `${annotation.startKey}`;
 
         return (
-          <React.Fragment key={`annotation${index}${annotation.startIndex}`}>
+          <React.Fragment key={`annotation${index}${annotation.startKey}`}>
             <AnnotationLine
               size={drawableHeight}
               theme={theme}
@@ -100,7 +108,7 @@ export function Annotations({
               y={y + PILL_HEIGHT}
             />
             <AnnotationLabel
-              ariaLabel={labels[annotation.startIndex]}
+              ariaLabel={ariaLabel}
               index={index}
               isVisible={!isContentVisible}
               label={annotation.label}

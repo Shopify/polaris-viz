@@ -420,7 +420,7 @@ SeriesColorsUpToFourteen.args = {
 
 const ANNOTATIONS: Annotation[] = [
   {
-    startIndex: 0,
+    startKey: 'Monday',
     label: 'Content and title',
     content: {
       title: 'GDPR rule change',
@@ -429,7 +429,7 @@ const ANNOTATIONS: Annotation[] = [
     },
   },
   {
-    startIndex: 2,
+    startKey: 'Wednesday',
     label: 'Title, content and no link string',
     content: {
       title: 'GDPR rule change',
@@ -439,7 +439,7 @@ const ANNOTATIONS: Annotation[] = [
     },
   },
   {
-    startIndex: 5,
+    startKey: 'Friday',
     label: 'Just content',
     content: {
       content:
@@ -447,7 +447,7 @@ const ANNOTATIONS: Annotation[] = [
     },
   },
   {
-    startIndex: 1,
+    startKey: 'Tuesday',
     label: 'This has everything',
     content: {
       title: 'GDPR rule change',
@@ -458,7 +458,7 @@ const ANNOTATIONS: Annotation[] = [
     },
   },
   {
-    startIndex: 6,
+    startKey: 'Saturday',
     label: 'No Content',
   },
 ];
