@@ -61,7 +61,7 @@ import {useXScale} from './hooks';
 import {MIN_Y_LABEL_SPACE} from './constants';
 import styles from './Chart.scss';
 
-const ANNOTATIONS_LABELS_OFFSET = 2;
+const ANNOTATIONS_LABELS_OFFSET = 10;
 
 export interface Props {
   data: DataSeries[];
@@ -162,7 +162,7 @@ export function Chart({
   const chartYPosition = (Margin.Top as number) + annotationsHeight;
   const drawableWidth = width - chartXPosition - horizontalMargin * 2;
   const annotationsDrawableHeight =
-    chartYPosition + drawableHeight + labelHeight - ANNOTATIONS_LABELS_OFFSET;
+    chartYPosition + drawableHeight + ANNOTATIONS_LABELS_OFFSET;
 
   const chartBounds: BoundingRect = {
     width,

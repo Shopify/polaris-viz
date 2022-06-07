@@ -11,8 +11,9 @@ import {
   ShowMoreAnnotationsButton,
 } from './components';
 import {useAnnotationPositions} from './hooks/useAnnotationPositions';
-import {PILL_HEIGHT} from './constants';
+import {PILL_HEIGHT, SHOW_MORE_BUTTON_OFFSET} from './constants';
 import {shouldHideAnnotation} from './utilities/shouldHideAnnotation';
+import {isShowMoreAnnotationsButtonVisible} from './utilities/isShowMoreAnnotationsButtonVisible';
 
 interface Props {
   annotationsLookupTable: AnnotationLookupTable;
@@ -57,7 +58,7 @@ export function Annotations({
     return {annotations, dataIndexes};
   }, [annotationsLookupTable, labels]);
 
-  const {positions, rowCount} = useAnnotationPositions({
+  const {hiddenAnnotationsCount, positions, rowCount} = useAnnotationPositions({
     annotations,
     axisLabelWidth: xScale.bandwidth(),
     dataIndexes,
@@ -67,8 +68,8 @@ export function Annotations({
     xScale,
   });
 
-  const handleShowMoreAnnotations = () => {
-    setIsShowingAllAnnotations(true);
+  const handleToggleAllAnnotations = () => {
+    setIsShowingAllAnnotations(!isShowingAllAnnotations);
   };
 
   const handleOnMouseLeave = () => {
@@ -85,61 +86,69 @@ export function Annotations({
     },
   });
 
+  const isShowMoreButtonVisible = isShowMoreAnnotationsButtonVisible(rowCount);
+  const showMoreButtonOffset = isShowMoreButtonVisible
+    ? SHOW_MORE_BUTTON_OFFSET
+    : 0;
+
   return (
     <g ref={setRef} tabIndex={-1}>
-      {annotations.map((annotation, index) => {
-        const {line, y, row} = positions[index];
-
-        if (shouldHideAnnotation({row, isShowingAllAnnotations, rowCount})) {
-          return null;
-        }
-
-        const hasContent = annotation.content != null;
-        const isContentVisible = index === activeIndex && hasContent;
-        const tabIndex = index + 1;
-        const ariaLabel = `${annotation.startKey}`;
-
-        return (
-          <React.Fragment key={`annotation${index}${annotation.startKey}`}>
-            <AnnotationLine
-              size={drawableHeight}
-              theme={theme}
-              x={line.x}
-              y={y + PILL_HEIGHT}
-            />
-            <AnnotationLabel
-              ariaLabel={ariaLabel}
-              index={index}
-              isVisible={!isContentVisible}
-              label={annotation.label}
-              position={positions[index]}
-              setActiveIndex={setActiveIndex}
-              tabIndex={tabIndex}
-              theme={theme}
-            />
-            {isContentVisible && (
-              <AnnotationContent
-                annotation={annotation}
-                drawableWidth={drawableWidth}
-                index={index}
-                onMouseLeave={handleOnMouseLeave}
-                parentRef={ref}
-                position={positions[index]}
-                tabIndex={tabIndex}
-                theme={theme}
-              />
-            )}
-          </React.Fragment>
-        );
-      })}
-      {shouldHideAnnotation({row: 3, isShowingAllAnnotations, rowCount}) && (
+      {isShowMoreButtonVisible && (
         <ShowMoreAnnotationsButton
-          label={`show +${rowCount - 3} more`}
-          onClick={handleShowMoreAnnotations}
+          annotationsCount={hiddenAnnotationsCount}
+          isShowingAllAnnotations={isShowingAllAnnotations}
+          onClick={handleToggleAllAnnotations}
           theme={theme}
           width={drawableWidth}
         />
       )}
+      <g transform={`translate(0, ${showMoreButtonOffset})`}>
+        {annotations.map((annotation, index) => {
+          const {line, y, row} = positions[index];
+
+          if (shouldHideAnnotation({row, isShowingAllAnnotations, rowCount})) {
+            return null;
+          }
+
+          const hasContent = annotation.content != null;
+          const isContentVisible = index === activeIndex && hasContent;
+          const tabIndex = index + 1;
+          const ariaLabel = `${annotation.startKey}`;
+
+          return (
+            <React.Fragment key={`annotation${index}${annotation.startKey}`}>
+              <AnnotationLine
+                size={drawableHeight - showMoreButtonOffset}
+                theme={theme}
+                x={line.x}
+                y={y + PILL_HEIGHT}
+              />
+              <AnnotationLabel
+                ariaLabel={ariaLabel}
+                index={index}
+                isVisible={!isContentVisible}
+                label={annotation.label}
+                position={positions[index]}
+                setActiveIndex={setActiveIndex}
+                tabIndex={tabIndex}
+                theme={theme}
+              />
+              {isContentVisible && (
+                <AnnotationContent
+                  annotation={annotation}
+                  drawableWidth={drawableWidth}
+                  index={index}
+                  onMouseLeave={handleOnMouseLeave}
+                  parentRef={ref}
+                  position={positions[index]}
+                  tabIndex={tabIndex}
+                  theme={theme}
+                />
+              )}
+            </React.Fragment>
+          );
+        })}
+      </g>
     </g>
   );
 }

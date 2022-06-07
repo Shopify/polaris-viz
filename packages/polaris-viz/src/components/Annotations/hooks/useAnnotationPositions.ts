@@ -1,10 +1,10 @@
+import {useContext, useEffect, useMemo} from 'react';
 import {
   ChartContext,
   clamp,
   estimateStringWidth,
 } from '@shopify/polaris-viz-core';
 import type {ScaleBand} from 'd3-scale';
-import {useContext, useEffect, useMemo} from 'react';
 
 import {
   COLLAPSED_PILL_COUNT,
@@ -12,9 +12,11 @@ import {
   PILL_PADDING,
   PILL_ROW_GAP,
   PILL_X_MIN,
+  SHOW_MORE_BUTTON_OFFSET,
 } from '../constants';
 import type {Annotation} from '../../../types';
 import type {AnnotationPosition} from '../types';
+import {isShowMoreAnnotationsButtonVisible} from '../utilities/isShowMoreAnnotationsButtonVisible';
 
 interface Props {
   annotations: Annotation[];
@@ -35,6 +37,7 @@ export function useAnnotationPositions({
   onHeightChange,
   xScale,
 }: Props): {
+  hiddenAnnotationsCount: number;
   positions: AnnotationPosition[];
   rowCount: number;
 } {
@@ -46,7 +49,7 @@ export function useAnnotationPositions({
     });
   }, [annotations, characterWidths]);
 
-  const {positions} = useMemo(() => {
+  const {positions, hiddenAnnotationsCount} = useMemo(() => {
     const positions = annotations.map((annotation, dataIndex) => {
       const xPosition = xScale(dataIndexes[annotation.startKey]) ?? 0;
 
@@ -130,8 +133,33 @@ export function useAnnotationPositions({
       current.y = row * PILL_HEIGHT + row * PILL_ROW_GAP;
     });
 
-    return {positions};
-  }, [annotations, textWidths, axisLabelWidth, xScale, drawableWidth]);
+    const hiddenAnnotationsCount = positions.filter(
+      ({row}) => row >= COLLAPSED_PILL_COUNT,
+    ).length;
+
+    return {positions, hiddenAnnotationsCount};
+  }, [
+    annotations,
+    dataIndexes,
+    textWidths,
+    axisLabelWidth,
+    xScale,
+    drawableWidth,
+  ]);
+
+  const rowCount = useMemo(() => {
+    return Math.max(...positions.map(({row}) => row)) + 1;
+  }, [positions]);
+
+  const showMoreButtonOffset = useMemo(() => {
+    if (!isShowingAllAnnotations) {
+      return 0;
+    }
+
+    return isShowMoreAnnotationsButtonVisible(rowCount)
+      ? SHOW_MORE_BUTTON_OFFSET
+      : 0;
+  }, [rowCount, isShowingAllAnnotations]);
 
   const totalRowHeight = useMemo(() => {
     return (
@@ -146,17 +174,20 @@ export function useAnnotationPositions({
         return total;
       }, 0) +
       PILL_HEIGHT +
-      PILL_ROW_GAP
+      PILL_ROW_GAP +
+      showMoreButtonOffset
     );
-  }, [isShowingAllAnnotations, positions]);
-
-  const rowCount = useMemo(() => {
-    return Math.max(...positions.map(({row}) => row)) + 1;
-  }, [positions]);
+  }, [isShowingAllAnnotations, showMoreButtonOffset, positions]);
 
   useEffect(() => {
     onHeightChange(totalRowHeight);
   }, [onHeightChange, totalRowHeight]);
 
-  return {positions, rowCount};
+  return {
+    positions,
+    rowCount,
+    hiddenAnnotationsCount: isShowingAllAnnotations
+      ? 0
+      : hiddenAnnotationsCount,
+  };
 }
