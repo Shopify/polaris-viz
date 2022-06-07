@@ -31,7 +31,7 @@
 
 ### Before merging
 
-- [ ] Check your changes on a variety of browsers and devices.
+- [ ] Check your changes on a variety of [browsers](https://help.shopify.com/en/manual/shopify-admin/supported-browsers) and devices.
 
 - [ ] Update the Changelog's Unreleased section with your changes.
 
