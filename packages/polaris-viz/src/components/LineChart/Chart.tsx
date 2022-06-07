@@ -257,6 +257,7 @@ export function Chart({
             reducedLabelIndexes={xAxisDetails.reducedLabelIndexes}
             theme={theme}
             xScale={xScale}
+            ariaHidden
           />
         )}
 
@@ -280,6 +281,7 @@ export function Chart({
             width={yAxisLabelWidth}
             textAlign="right"
             theme={theme}
+            ariaHidden
           />
         </g>
 
