@@ -77,9 +77,9 @@ export function Chart({
               />
             </g>
           ) : (
-            pieChartData.map(({data, startAngle, endAngle}, index) => {
-              const {key} = data;
-
+            pieChartData.map(({data: pieData, startAngle, endAngle}, index) => {
+              const {key} = pieData;
+              const color = data[index]?.color ?? seriesColor[index];
               return (
                 <g key={`${key}-${startAngle}-${endAngle}`}>
                   <Arc
@@ -88,7 +88,7 @@ export function Chart({
                     radius={radius}
                     startAngle={startAngle}
                     endAngle={endAngle}
-                    color={seriesColor[index]}
+                    color={color}
                     cornerRadius={selectedTheme.arc.cornerRadius}
                     thickness={selectedTheme.arc.thickness}
                   />

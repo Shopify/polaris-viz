@@ -5,5 +5,5 @@ export function createCSSConicGradient(gradient: GradientStop[]) {
     ({color, offset}) => `${color} ${offset}deg`,
   );
 
-  return `conic-gradient(${gradientStops.join(',')})`;
+  return `conic-gradient(${gradientStops.join(', ')})`;
 }

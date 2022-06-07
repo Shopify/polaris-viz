@@ -62,3 +62,67 @@ Default.args = {
     accessibilityLabel: 'trending down 10%',
   },
 };
+
+export const SingleDataPoint = Template.bind({});
+
+SingleDataPoint.args = {
+  data: [
+    {
+      data: [{key: 'Engagement', value: 25000}],
+    },
+  ],
+  comparisonMetric: {
+    metric: '6%',
+    trend: 'positive',
+    accessibilityLabel: 'trending up 6%',
+  },
+};
+
+export const CustomColors = Template.bind({});
+
+const purple = '#5052b3';
+const negativePurple = '#39337f';
+const green = '#1bbe9e';
+
+CustomColors.args = {
+  data: [
+    {
+      data: [{key: 'Shopify Payments', value: 50000}],
+      color: [
+        {
+          color: negativePurple,
+          offset: 0,
+        },
+        {
+          color: purple,
+          offset: 50,
+        },
+        {
+          color: green,
+          offset: 100,
+        },
+      ],
+    },
+    {
+      data: [{key: 'PayPal', value: 25000}],
+      color: [
+        {
+          color: 'magenta',
+          offset: 100,
+        },
+        {
+          color: 'lime',
+          offset: 200,
+        },
+      ],
+    },
+    {
+      data: [{key: 'Amazon Pay', value: 4000}],
+    },
+  ],
+  comparisonMetric: {
+    metric: '6%',
+    trend: 'positive',
+    accessibilityLabel: 'trending up 6%',
+  },
+};
