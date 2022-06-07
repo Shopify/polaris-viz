@@ -19,6 +19,7 @@ import type {AnnotationPosition} from '../types';
 interface Props {
   annotations: Annotation[];
   axisLabelWidth: number;
+  dataIndexes: {[key: string]: string};
   drawableWidth: number;
   isShowingAllAnnotations: boolean;
   onHeightChange: (height: number) => void;
@@ -28,6 +29,7 @@ interface Props {
 export function useAnnotationPositions({
   annotations,
   axisLabelWidth,
+  dataIndexes,
   drawableWidth,
   isShowingAllAnnotations,
   onHeightChange,
@@ -46,7 +48,7 @@ export function useAnnotationPositions({
 
   const {positions} = useMemo(() => {
     const positions = annotations.map((annotation, dataIndex) => {
-      const xPosition = xScale(`${annotation.startIndex}`) ?? 0;
+      const xPosition = xScale(dataIndexes[annotation.startKey]) ?? 0;
 
       const textWidth = textWidths[dataIndex];
 
