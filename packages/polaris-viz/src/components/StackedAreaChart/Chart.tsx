@@ -12,6 +12,7 @@ import {
   Dimensions,
   useYScale,
   COLOR_VISION_SINGLE_ITEM,
+  BoundingRect,
 } from '@shopify/polaris-viz-core';
 
 import type {RenderTooltipContentData} from '../../types';
@@ -193,6 +194,13 @@ export function Chart({
     return null;
   }
 
+  const chartBounds: BoundingRect = {
+    width,
+    height,
+    x: chartStartPosition,
+    y: Margin.Top,
+  };
+
   return (
     <div className={styles.Container} style={{height, width}}>
       <svg
@@ -291,7 +299,7 @@ export function Chart({
       </svg>
       <TooltipWrapper
         alwaysUpdatePosition
-        chartDimensions={{width, height}}
+        chartBounds={chartBounds}
         focusElementDataType={DataType.Point}
         getMarkup={getTooltipMarkup}
         getPosition={getTooltipPosition}

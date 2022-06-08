@@ -1,4 +1,4 @@
-import type {Dimensions} from '@shopify/polaris-viz-core';
+import type {BoundingRect, Dimensions} from '@shopify/polaris-viz-core';
 
 import {HORIZONTAL_GROUP_LABEL_HEIGHT} from '../../../constants';
 import {
@@ -34,19 +34,18 @@ function getNegativeOffset(props: AlteredPositionProps): AlteredPositionReturn {
 }
 
 function getPositiveOffset(props: AlteredPositionProps): AlteredPositionReturn {
-  const {bandwidth, currentX, currentY, tooltipDimensions, chartDimensions} =
-    props;
+  const {bandwidth, currentX, currentY, tooltipDimensions, chartBounds} = props;
 
   const isOutside = isOutsideBounds({
     x: currentX,
     y: currentY,
     tooltipDimensions,
-    chartDimensions,
+    chartBounds,
   });
 
   if (isOutside.top && isOutside.right) {
     return {
-      x: chartDimensions.width - tooltipDimensions.width,
+      x: chartBounds.width - tooltipDimensions.width,
       y: 0,
     };
   }
@@ -91,7 +90,7 @@ function getPositiveOffset(props: AlteredPositionProps): AlteredPositionReturn {
     return {
       x: currentX + TOOLTIP_MARGIN,
       y:
-        chartDimensions.height -
+        chartBounds.height -
         tooltipDimensions.height -
         HORIZONTAL_GROUP_LABEL_HEIGHT,
     };
@@ -104,20 +103,20 @@ function isOutsideBounds({
   x,
   y,
   tooltipDimensions,
-  chartDimensions,
+  chartBounds,
 }: {
   x: number;
   y: number;
   tooltipDimensions: Dimensions;
-  chartDimensions: Dimensions;
+  chartBounds: BoundingRect;
 }) {
   const right = x + TOOLTIP_MARGIN + tooltipDimensions.width;
   const bottom = y + tooltipDimensions.height;
 
   return {
     left: x <= 0,
-    right: right > chartDimensions.width,
-    bottom: bottom > chartDimensions.height,
+    right: right > chartBounds.width,
+    bottom: bottom > chartBounds.height,
     top: y <= 0,
   };
 }

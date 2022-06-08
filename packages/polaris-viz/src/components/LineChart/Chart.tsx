@@ -10,6 +10,7 @@ import {
   LineChartDataSeriesWithDefaults,
   clamp,
   DEFAULT_THEME_NAME,
+  BoundingRect,
 } from '@shopify/polaris-viz-core';
 import type {
   DataPoint,
@@ -232,6 +233,13 @@ export function Chart({
     }
   }
 
+  const chartBounds: BoundingRect = {
+    width,
+    height,
+    x: chartStartPosition,
+    y: Margin.Top,
+  };
+
   return (
     <div className={styles.Container} style={{width, height}}>
       <svg
@@ -340,7 +348,7 @@ export function Chart({
 
       <TooltipWrapper
         alwaysUpdatePosition
-        chartDimensions={{width, height}}
+        chartBounds={chartBounds}
         focusElementDataType={DataType.Point}
         getMarkup={getTooltipMarkup}
         getPosition={getTooltipPosition}
