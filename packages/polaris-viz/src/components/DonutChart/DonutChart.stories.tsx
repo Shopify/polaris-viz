@@ -95,11 +95,11 @@ CustomColors.args = {
         },
         {
           color: purple,
-          offset: 50,
+          offset: 10,
         },
         {
           color: green,
-          offset: 100,
+          offset: 30,
         },
       ],
     },
@@ -108,11 +108,11 @@ CustomColors.args = {
       color: [
         {
           color: 'magenta',
-          offset: 100,
+          offset: 35,
         },
         {
           color: 'lime',
-          offset: 200,
+          offset: 55,
         },
       ],
     },
