@@ -15,12 +15,15 @@ import type {
 } from '@shopify/polaris-viz-core';
 
 import {classNames} from '../../utilities';
-import {ComparisonMetric, ComparisonMetricProps} from '../ComparisonMetric';
+
 import {
   getSeriesColors,
   useColorVisionEvents,
   useWatchColorVisionEvents,
 } from '../../hooks';
+
+import {ComparisonMetric} from '../ComparisonMetric';
+import type {ComparisonMetricProps} from '../ComparisonMetric';
 
 import styles from './DonutChart.scss';
 import {Arc} from './components';
