@@ -1,3 +1,5 @@
+@import '../../styles/common';
+
 .Donut {
   position: relative;
   display: flex;
@@ -32,4 +34,8 @@
 
 .ComparisonMetric {
   font-size: 16px;
+}
+
+.DonutChart {
+  @include no-outline;
 }
