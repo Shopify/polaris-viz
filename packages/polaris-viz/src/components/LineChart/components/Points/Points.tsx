@@ -24,7 +24,7 @@ interface PointsProps {
   gradientId: string;
   longestSeriesIndex: number;
   tooltipId: string;
-  getXPosition: ({isCrosshair}?: {isCrosshair: boolean}) =>
+  getXPosition: ({isCrosshair}: {isCrosshair: boolean}) =>
     | number
     | Interpolation<
         | DOMPoint

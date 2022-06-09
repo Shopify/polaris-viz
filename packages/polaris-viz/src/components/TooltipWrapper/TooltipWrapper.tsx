@@ -6,7 +6,7 @@ import React, {
   useMemo,
   useCallback,
 } from 'react';
-import type {DataType, Dimensions} from '@shopify/polaris-viz-core';
+import type {DataType, BoundingRect} from '@shopify/polaris-viz-core';
 
 import type {Margin} from '../../types';
 
@@ -16,7 +16,7 @@ import {TooltipAnimatedContainer} from './components/TooltipAnimatedContainer';
 import type {AlteredPosition} from './utilities';
 
 interface TooltipWrapperProps {
-  chartDimensions: Dimensions;
+  chartBounds: BoundingRect;
   getMarkup: (index: number) => ReactNode;
   getPosition: (data: TooltipPositionParams) => TooltipPosition;
   margin: Margin;
@@ -160,7 +160,7 @@ export function TooltipWrapper(props: TooltipWrapperProps) {
     <TooltipAnimatedContainer
       activePointIndex={position.activeIndex}
       bandwidth={bandwidth}
-      chartDimensions={props.chartDimensions}
+      chartBounds={props.chartBounds}
       currentX={position.x}
       currentY={position.y}
       id={id}

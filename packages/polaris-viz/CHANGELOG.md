@@ -16,6 +16,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 - `<SimpleNormalizedChart/>` now accepts `DataSeries[]` in `data` prop, instead of `DataPoint[]`
 - Changed `@juggle/resize-observer` library as dependency.
+- Stop tooltip from rendering outside of `<BarChart />` when only a single series is provided.
 
 ## [1.11.1] - 2022-06-02
 

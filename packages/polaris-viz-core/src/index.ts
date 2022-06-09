@@ -140,4 +140,5 @@ export type {
   LineChartDataSeriesWithDefaults,
   ChartProps,
   WithRequired,
+  BoundingRect,
 } from './types';
