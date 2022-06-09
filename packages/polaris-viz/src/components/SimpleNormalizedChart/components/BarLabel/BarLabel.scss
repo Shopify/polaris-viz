@@ -26,7 +26,10 @@
   word-break: break-word;
 }
 
-.Value {
+.ValueContainer {
   margin-top: $spacing-extra-tight;
   display: flex;
+}
+.Value {
+  margin-right: $spacing-tight;
 }

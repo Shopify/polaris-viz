@@ -58,4 +58,9 @@ Default.args = {
       data: [{key: 'april - march', value: 4000}],
     },
   ],
+  comparisonMetric: {
+    metric: '10%',
+    trend: 'positive',
+    accessibilityLabel: 'trending up 10%',
+  },
 };

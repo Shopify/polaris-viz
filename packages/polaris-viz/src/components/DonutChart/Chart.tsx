@@ -1,6 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {pie} from 'd3-shape';
-import {clamp, useTheme} from '@shopify/polaris-viz-core';
+import {
+  clamp,
+  useTheme,
+  COLOR_VISION_SINGLE_ITEM,
+  getColorVisionStylesForActiveIndex,
+  getColorVisionEventAttrs,
+} from '@shopify/polaris-viz-core';
 import type {
   DataPoint,
   DataSeries,
@@ -9,9 +15,14 @@ import type {
 } from '@shopify/polaris-viz-core';
 
 import {classNames} from '../../utilities';
-import {ComparisonMetric, ComparisonMetricProps} from '../ComparisonMetric';
-import {getSeriesColors} from '../../hooks';
+import {ComparisonMetric} from '../ComparisonMetric';
+import type {ComparisonMetricProps} from '../ComparisonMetric';
 import {LegendContainer} from '../../components/LegendContainer';
+import {
+  getSeriesColors,
+  useColorVisionEvents,
+  useWatchColorVisionEvents,
+} from '../../hooks';
 
 import styles from './DonutChart.scss';
 import {Arc} from './components';
@@ -37,10 +48,21 @@ export function Chart({
   theme,
   labelFormatter,
 }: ChartProps) {
+  const [activeIndex, setActiveIndex] = useState<number>(-1);
   const {width, height} = dimensions;
   const diameter = Math.min(width, height);
   const radius = diameter / 2;
   const selectedTheme = useTheme(theme);
+
+  useColorVisionEvents();
+
+  useWatchColorVisionEvents({
+    type: COLOR_VISION_SINGLE_ITEM,
+    onIndexChange: ({detail}) => {
+      setActiveIndex(detail.index);
+    },
+  });
+
   const seriesCount = clamp({amount: data.length, min: 1, max: Infinity});
   const seriesColor = getSeriesColors(seriesCount, selectedTheme);
   const points: DataPoint[] = data.reduce(
@@ -67,16 +89,13 @@ export function Chart({
 
   return (
     <div className={styles.DonutWrapper}>
-      <div
-        className={styles.Donut}
-        style={{
-          width: diameter,
-          height: diameter,
-        }}
-      >
+      <div className={styles.Donut}>
         <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
         <svg aria-hidden width={width} height={height}>
-          <g transform={`translate(${radius} ${radius})`}>
+          <g
+            className={styles.DonutChart}
+            transform={`translate(${radius} ${radius})`}
+          >
             {emptyState ? (
               <g aria-hidden>
                 <Arc
@@ -95,7 +114,20 @@ export function Chart({
                 const {key} = data;
 
                 return (
-                  <g key={`${key}-${startAngle}-${endAngle}`}>
+                  <g
+                    key={`${key}-${startAngle}-${endAngle}`}
+                    className={styles.DonutChart}
+                    style={{
+                      ...getColorVisionStylesForActiveIndex({
+                        activeIndex,
+                        index,
+                      }),
+                    }}
+                    {...getColorVisionEventAttrs({
+                      type: COLOR_VISION_SINGLE_ITEM,
+                      index,
+                    })}
+                  >
                     <Arc
                       width={width}
                       height={height}
@@ -146,7 +178,7 @@ export function Chart({
       >
         <LegendContainer
           onHeightChange={() => {}}
-          colorVisionType={null}
+          colorVisionType=""
           data={legendData}
         />
       </div>

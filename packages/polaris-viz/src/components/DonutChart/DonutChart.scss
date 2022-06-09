@@ -1,3 +1,5 @@
+@import '../../styles/common';
+
 .Donut {
   position: relative;
   display: flex;
@@ -20,7 +22,7 @@
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  font-size: rem(20px);
+  font-size: 20px;
 }
 
 .ContentWrapperWithComparison {
@@ -28,12 +30,17 @@
 }
 
 .ContentValue {
-  font-size: rem(20px);
-  font-weight: 600;
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 400;
   user-select: text;
+  margin: 0;
 }
 
 .ComparisonMetric {
-  font-size: rem(16px);
-  margin-top: spacing(extra-tight);
+  font-size: 16px;
+}
+
+.DonutChart {
+  @include no-outline;
 }

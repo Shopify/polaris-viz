@@ -68,8 +68,8 @@ export function BarLabel({
       <div style={{background: formattedColor}} className={styles.LabelColor} />
       <div className={styles.Label}>
         <strong style={{color: labelColor}}>{label}</strong>
-        <div style={{color: valueColor}} className={styles.Value}>
-          {value}
+        <div style={{color: valueColor}} className={styles.ValueContainer}>
+          <span className={styles.Value}>{value}</span>
           {comparisonIndicator}
         </div>
       </div>
