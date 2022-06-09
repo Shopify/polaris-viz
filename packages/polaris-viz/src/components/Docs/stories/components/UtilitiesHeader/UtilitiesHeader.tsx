@@ -7,7 +7,7 @@ export function UtilitiesHeader() {
     <React.Fragment>
       <Title>🛠 Utilities</Title>
       <p>
-        You can import utility functions from either from
+        You can import utility functions from either
         <code>polaris-viz</code> or <code>polaris-viz-native</code>
       </p>
     </React.Fragment>
