@@ -96,6 +96,8 @@ export function Annotations({
       {isShowMoreButtonVisible && (
         <ShowMoreAnnotationsButton
           annotationsCount={hiddenAnnotationsCount}
+          collapseText={annotations[0].collapseButtonText}
+          expandText={annotations[0].expandButtonText}
           isShowingAllAnnotations={isShowingAllAnnotations}
           onClick={handleToggleAllAnnotations}
           theme={theme}

@@ -20,10 +20,14 @@ interface Props {
   onClick: () => void;
   theme: string;
   width: number;
+  collapseText?: string;
+  expandText?: string;
 }
 
 export function ShowMoreAnnotationsButton({
   annotationsCount,
+  collapseText = 'Collapse annotations',
+  expandText = 'Expand annotations',
   isShowingAllAnnotations,
   onClick,
   theme,
@@ -33,8 +37,8 @@ export function ShowMoreAnnotationsButton({
   const {characterWidths} = useContext(ChartContext);
 
   const label = isShowingAllAnnotations
-    ? 'Collapse annotations'
-    : `Expand annotations (${annotationsCount})`;
+    ? collapseText
+    : `${expandText} (${annotationsCount})`;
   const textWidth = estimateStringWidth(label, characterWidths);
 
   const radius = PILL_HEIGHT / 2;
