@@ -33,6 +33,7 @@ export interface ChartProps {
   data: DataSeries[];
   accessibilityLabel?: string;
   comparisonMetric?: Omit<ComparisonMetricProps, 'theme'>;
+  showLegend: boolean;
   total?: number;
   dimensions?: Dimensions;
   theme?: string;
@@ -44,13 +45,17 @@ export function Chart({
   accessibilityLabel = '',
   comparisonMetric,
   total,
+  showLegend = true,
   dimensions = {height: 0, width: 0},
   theme,
   labelFormatter,
 }: ChartProps) {
   const [activeIndex, setActiveIndex] = useState<number>(-1);
   const {width, height} = dimensions;
-  const diameter = Math.min(width, height);
+  const drawableHeight = height;
+  const drawableWidth = width - 200;
+
+  const diameter = Math.min(drawableHeight, drawableWidth);
   const radius = diameter / 2;
   const selectedTheme = useTheme(theme);
 
@@ -91,7 +96,7 @@ export function Chart({
     <div className={styles.DonutWrapper}>
       <div className={styles.Donut}>
         <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
-        <svg aria-hidden width={width} height={height}>
+        <svg aria-hidden width={drawableWidth} height={drawableWidth}>
           <g
             className={styles.DonutChart}
             transform={`translate(${radius} ${radius})`}
@@ -129,8 +134,8 @@ export function Chart({
                     })}
                   >
                     <Arc
-                      width={width}
-                      height={height}
+                      width={drawableWidth}
+                      height={drawableHeight}
                       radius={radius}
                       startAngle={startAngle}
                       endAngle={endAngle}
@@ -144,13 +149,13 @@ export function Chart({
             )}
           </g>
         </svg>
-
         {formattedValue && !emptyState && (
           <div
-            className={classNames(
-              styles.ContentWrapper,
-              comparisonMetric && styles.ContentWrapperWithComparison,
-            )}
+            className={styles.ContentWrapper}
+            style={{
+              height: drawableWidth,
+              width: drawableWidth,
+            }}
           >
             <p
               className={classNames(styles.ContentValue)}
@@ -171,17 +176,20 @@ export function Chart({
           </div>
         )}
       </div>
-      <div
-        style={{
-          width: `calc(100% - ${diameter}px)`,
-        }}
-      >
-        <LegendContainer
-          onHeightChange={() => {}}
-          colorVisionType=""
-          data={legendData}
-        />
-      </div>
+      {showLegend && (
+        <div
+          style={{
+            width: `calc(100% - ${diameter}px)`,
+          }}
+        >
+          <LegendContainer
+            onHeightChange={() => {}}
+            colorVisionType={COLOR_VISION_SINGLE_ITEM}
+            data={legendData}
+            theme={theme}
+          />
+        </div>
+      )}
     </div>
   );
 }

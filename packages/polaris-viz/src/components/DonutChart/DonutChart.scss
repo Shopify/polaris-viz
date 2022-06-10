@@ -10,23 +10,19 @@
 }
 
 .DonutWrapper {
+  position: relative;
   display: flex;
-  // flex-wrap: wrap;
+  align-items: center;
 }
 
 .ContentWrapper {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  justify-content: center;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
   font-size: 20px;
-}
-
-.ContentWrapperWithComparison {
-  transform: translate(-50%, -40%);
+  pointer-events: none;
 }
 
 .ContentValue {
