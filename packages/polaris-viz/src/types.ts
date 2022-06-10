@@ -124,6 +124,8 @@ export interface Annotation {
   startKey: string | number;
   endKey?: string | number;
   axis?: 'x' | 'y';
+  collapseButtonText?: string;
+  expandButtonText?: string;
   content?: {
     content: string;
     linkText?: string;
