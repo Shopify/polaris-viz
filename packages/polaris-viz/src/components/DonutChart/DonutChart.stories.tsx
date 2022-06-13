@@ -27,7 +27,7 @@ const meta: Meta<DonutChartProps> = {
     },
   },
   decorators: [
-    (Story) => <div style={{width: 200, height: 200}}>{Story()}</div>,
+    (Story) => <div style={{width: 400, height: 300}}>{Story()}</div>,
   ],
 };
 
@@ -42,16 +42,20 @@ export const Default = Template.bind({});
 Default.args = {
   data: [
     {
-      data: [{key: 'Shopify Payments', value: 50000}],
+      name: 'Shopify Payments',
+      data: [{key: 'april - march', value: 50000}],
     },
     {
-      data: [{key: 'PayPal', value: 25000}],
+      name: 'Paypal',
+      data: [{key: 'april - march', value: 25000}],
     },
     {
-      data: [{key: 'Other', value: 10000}],
+      name: 'Other',
+      data: [{key: 'april - march', value: 10000}],
     },
     {
-      data: [{key: 'Amazon Pay', value: 4000}],
+      name: 'Amazon Pay',
+      data: [{key: 'april - march', value: 4000}],
     },
   ],
   comparisonMetric: {

@@ -9,6 +9,7 @@ import {Chart} from './Chart';
 export interface DonutChartProps {
   data: DataSeries[];
   comparisonMetric?: Omit<ComparisonMetricProps, 'theme'>;
+  showLegend?: boolean;
   theme?: string;
   labelFormatter?: LabelFormatter;
 }
@@ -17,6 +18,7 @@ export function DonutChart({
   data,
   theme,
   comparisonMetric,
+  showLegend = true,
   labelFormatter = (value) => `${value}`,
 }: DonutChartProps) {
   return (
@@ -25,6 +27,7 @@ export function DonutChart({
         data={data}
         labelFormatter={labelFormatter}
         comparisonMetric={comparisonMetric}
+        showLegend={showLegend}
       />
     </ChartContainer>
   );
