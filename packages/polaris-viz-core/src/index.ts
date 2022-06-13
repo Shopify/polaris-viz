@@ -123,6 +123,7 @@ export type {
   ChartType,
   Color,
   DataSeries,
+  DataGroup,
   Dimensions,
   GradientStop,
   LineStyle,

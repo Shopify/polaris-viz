@@ -1,6 +1,6 @@
 import React from 'react';
 import {mount, Root} from '@shopify/react-testing';
-import type {DataSeries} from '@shopify/polaris-viz-core';
+import type {DataSeries, DataGroup} from '@shopify/polaris-viz-core';
 
 import {useLegend, Props} from '../useLegend';
 
@@ -19,10 +19,21 @@ const DATA: DataSeries[] = [
   },
 ];
 
+const DATAGROUP: DataGroup[] = [
+  {
+    shape: 'Line',
+    series: DATA,
+  },
+  {
+    shape: 'Bar',
+    series: DATA,
+  },
+];
+
 const MOCK_PROPS: Props = {
   dimensions: {height: 100, width: 100},
   showLegend: true,
-  data: DATA,
+  data: DATAGROUP,
 };
 
 function parseData(result: Root<any>) {
@@ -34,7 +45,6 @@ describe('useLegend()', () => {
     it('returns data', () => {
       function TestComponent() {
         const data = useLegend(MOCK_PROPS);
-
         return <span data-data={`${JSON.stringify(data)}`} />;
       }
 
@@ -44,18 +54,12 @@ describe('useLegend()', () => {
 
       expect(data).toStrictEqual({
         legend: [
-          {
-            shape: 'Bar',
-            name: 'Breakfast',
-          },
-          {
-            shape: 'Bar',
-            name: 'Lunch',
-          },
-          {
-            shape: 'Bar',
-            name: 'Dinner',
-          },
+          {name: 'Breakfast', shape: 'Line'},
+          {name: 'Lunch', shape: 'Line'},
+          {name: 'Dinner', shape: 'Line'},
+          {name: 'Breakfast', shape: 'Bar'},
+          {name: 'Lunch', shape: 'Bar'},
+          {name: 'Dinner', shape: 'Bar'},
         ],
         height: 71,
         width: 100,
@@ -82,9 +86,9 @@ describe('useLegend()', () => {
   });
 
   describe('type', () => {
-    it('adds type to legend', () => {
+    it('adds type `Line` to legend', () => {
       function TestComponent() {
-        const data = useLegend({...MOCK_PROPS, shape: 'Line'});
+        const data = useLegend(MOCK_PROPS);
 
         return <span data-data={`${JSON.stringify(data)}`} />;
       }
@@ -95,18 +99,36 @@ describe('useLegend()', () => {
 
       expect(data.legend[0].shape).toStrictEqual('Line');
     });
+
+    it('adds type `Bar` to legend', () => {
+      function TestComponent() {
+        const data = useLegend(MOCK_PROPS);
+        return <span data-data={`${JSON.stringify(data)}`} />;
+      }
+
+      const result = mount(<TestComponent />);
+
+      const data = parseData(result);
+
+      expect(data.legend[3].shape).toStrictEqual('Bar');
+    });
   });
 
   describe('colors', () => {
-    it('uses data.color when available', () => {
+    it('uses color when no data.color is available', () => {
       function TestComponent() {
         const data = useLegend({
           ...MOCK_PROPS,
           colors: ['red'],
           data: [
             {
-              name: 'Breakfast',
-              data: [],
+              shape: 'Bar',
+              series: [
+                {
+                  name: 'Breakfast',
+                  data: [],
+                },
+              ],
             },
           ],
         });
@@ -121,16 +143,21 @@ describe('useLegend()', () => {
       expect(data.legend[0].color).toStrictEqual('red');
     });
 
-    it('uses color when no data.color is available', () => {
+    it('uses data.color when available', () => {
       function TestComponent() {
         const data = useLegend({
           ...MOCK_PROPS,
           colors: ['red'],
           data: [
             {
-              name: 'Breakfast',
-              data: [],
-              color: 'blue',
+              shape: 'Bar',
+              series: [
+                {
+                  name: 'Breakfast',
+                  data: [],
+                  color: 'blue',
+                },
+              ],
             },
           ],
         });

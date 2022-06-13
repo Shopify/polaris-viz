@@ -91,10 +91,14 @@ export function Chart({
 
   const {legend, setLegendHeight, height, width} = useLegend({
     colors: seriesColors,
-    data,
+    data: [
+      {
+        shape: 'Line',
+        series: data,
+      },
+    ],
     dimensions,
     showLegend,
-    shape: 'Line',
   });
 
   const tooltipId = useRef(uniqueId('stackedAreaChart'));

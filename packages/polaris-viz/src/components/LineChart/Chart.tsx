@@ -93,10 +93,14 @@ export function Chart({
   const [labelHeight, setLabelHeight] = useState(0);
 
   const {legend, setLegendHeight, height, width} = useLegend({
-    data,
+    data: [
+      {
+        shape: 'Line',
+        series: data,
+      },
+    ],
     dimensions,
     showLegend,
-    shape: 'Line',
   });
 
   useWatchColorVisionEvents({
