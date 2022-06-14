@@ -5,9 +5,9 @@ import {
   getStackedMinMax,
   getYAxisOptionsWithDefaults,
 } from '../../../utilities';
-import type {MixedChartDataSeries, Axis} from '../types';
+import type {ComboChartDataSeries, Axis} from '../types';
 
-export function useGetDualAxis({data}: {data: MixedChartDataSeries[]}): Axis[] {
+export function useGetDualAxis({data}: {data: ComboChartDataSeries[]}): Axis[] {
   return useMemo(() => {
     return data.map((series, index) => {
       let min;

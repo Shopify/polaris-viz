@@ -1,14 +1,14 @@
 import React, {useState} from 'react';
 import type {Story, Meta} from '@storybook/react';
 
-import {MixedChart, MixedChartProps} from '../MixedChart';
+import {ComboChart, ComboChartProps} from '../ComboChart';
 
 import {THEME_CONTROL_ARGS, TYPE_CONTROL_ARGS} from '../../../storybook';
-import type {MixedChartDataSeries} from '../types';
+import type {ComboChartDataSeries} from '../types';
 
 export default {
-  title: 'polaris-viz/Default Charts/MixedChart',
-  component: MixedChart,
+  title: 'polaris-viz/Default Charts/ComboChart',
+  component: ComboChart,
   parameters: {
     previewHeight: 'auto',
     docs: {
@@ -44,7 +44,7 @@ export default {
 
 const CONTAINER_HEIGHT = 500;
 
-const DATA_ALL_POSITIVE: MixedChartDataSeries[] = [
+const DATA_ALL_POSITIVE: ComboChartDataSeries[] = [
   {
     shape: 'Bar',
     series: [
@@ -83,7 +83,7 @@ const DATA_ALL_POSITIVE: MixedChartDataSeries[] = [
   },
 ];
 
-const DATA_FIRST_SOME_NEGATIVE: MixedChartDataSeries[] = [
+const DATA_FIRST_SOME_NEGATIVE: ComboChartDataSeries[] = [
   {
     shape: 'Bar',
     series: [
@@ -122,7 +122,7 @@ const DATA_FIRST_SOME_NEGATIVE: MixedChartDataSeries[] = [
   },
 ];
 
-const DATA_SECOND_SOME_NEGATIVE: MixedChartDataSeries[] = [
+const DATA_SECOND_SOME_NEGATIVE: ComboChartDataSeries[] = [
   {
     shape: 'Bar',
     series: [
@@ -161,7 +161,7 @@ const DATA_SECOND_SOME_NEGATIVE: MixedChartDataSeries[] = [
   },
 ];
 
-const DATA_BOTH_SOME_NEGATIVE: MixedChartDataSeries[] = [
+const DATA_BOTH_SOME_NEGATIVE: ComboChartDataSeries[] = [
   {
     shape: 'Bar',
     series: [
@@ -200,7 +200,7 @@ const DATA_BOTH_SOME_NEGATIVE: MixedChartDataSeries[] = [
   },
 ];
 
-const DATA_ALL_NEGATIVE: MixedChartDataSeries[] = [
+const DATA_ALL_NEGATIVE: ComboChartDataSeries[] = [
   {
     shape: 'Bar',
     series: [
@@ -239,7 +239,7 @@ const DATA_ALL_NEGATIVE: MixedChartDataSeries[] = [
   },
 ];
 
-const DATA_FAN_SAP: MixedChartDataSeries[] = [
+const DATA_FAN_SAP: ComboChartDataSeries[] = [
   {
     shape: 'Bar',
     series: [
@@ -283,7 +283,7 @@ const DATA_FAN_SAP: MixedChartDataSeries[] = [
   },
 ];
 
-const DATA_FAP_NAP: MixedChartDataSeries[] = [
+const DATA_FAP_NAP: ComboChartDataSeries[] = [
   {
     shape: 'Bar',
     series: [
@@ -322,7 +322,7 @@ const DATA_FAP_NAP: MixedChartDataSeries[] = [
   },
 ];
 
-const DATA_FAN_SSN: MixedChartDataSeries[] = [
+const DATA_FAN_SSN: ComboChartDataSeries[] = [
   {
     shape: 'Bar',
     series: [
@@ -361,7 +361,7 @@ const DATA_FAN_SSN: MixedChartDataSeries[] = [
   },
 ];
 
-const DATA_FSN_NAP: MixedChartDataSeries[] = [
+const DATA_FSN_NAP: ComboChartDataSeries[] = [
   {
     shape: 'Bar',
     series: [
@@ -412,16 +412,16 @@ const CASES = {
   DATA_FSN_NAP: DATA_FSN_NAP,
 };
 
-const Template: Story<MixedChartProps> = ({
+const Template: Story<ComboChartProps> = ({
   data: argData,
   ...args
-}: MixedChartProps) => {
-  const [data, setData] = useState<MixedChartDataSeries[]>(DATA_ALL_POSITIVE);
+}: ComboChartProps) => {
+  const [data, setData] = useState<ComboChartDataSeries[]>(DATA_ALL_POSITIVE);
 
   return (
     <>
       <div style={{height: CONTAINER_HEIGHT}}>
-        <MixedChart data={data} {...args} />
+        <ComboChart data={data} {...args} />
       </div>
       <select
         onChange={(event) => {
@@ -454,6 +454,6 @@ const Template: Story<MixedChartProps> = ({
   );
 };
 
-export const Default: Story<MixedChartProps> = Template.bind({});
+export const Default: Story<ComboChartProps> = Template.bind({});
 
 Default.args = {};
