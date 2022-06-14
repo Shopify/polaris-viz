@@ -88,20 +88,6 @@ CustomColors.args = {
   data: [
     {
       data: [{key: 'Shopify Payments', value: 50000}],
-      color: [
-        {
-          color: negativePurple,
-          offset: 0,
-        },
-        {
-          color: purple,
-          offset: 10,
-        },
-        {
-          color: green,
-          offset: 30,
-        },
-      ],
     },
     {
       data: [{key: 'PayPal', value: 25000}],
