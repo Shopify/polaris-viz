@@ -6,13 +6,13 @@ export function getLongestTickWidth(
   ticks: FormattedTicks[],
   characterWidths: CharacterWidths,
 ) {
-  return ticks.reduce((prev, cur) => {
-    const width = estimateStringWidth(cur.formattedValue, characterWidths);
+  return ticks.reduce((previous, {formattedValue}) => {
+    const width = estimateStringWidth(formattedValue, characterWidths);
 
-    if (width > prev) {
+    if (width > previous) {
       return width;
     }
 
-    return prev;
+    return previous;
   }, 0);
 }

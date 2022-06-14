@@ -5,20 +5,20 @@ import {
   Y_AXIS_CHART_SPACING,
 } from '@shopify/polaris-viz-core';
 import type {Dimensions} from '@shopify/polaris-viz-core';
+import type {DataGroup} from '@shopify/polaris-viz-core/src/types';
 
 import {HorizontalGridLines} from '../HorizontalGridLines';
 import {YAxis} from '../YAxis';
 import {useLegend} from '../LegendContainer';
 import {XMLNS} from '../../constants';
 
-import styles from './Chart.scss';
-import type {ComboChartDataSeries} from './types';
 import {useDualAxisTicks} from './hooks/useDualAxisTicks';
 import {useDualAxisTicksWidth} from './hooks/useDualAxisTickWidths';
 import {useDualAxisScale} from './hooks/useDualAxisScale';
+import styles from './Chart.scss';
 
 export interface ChartProps {
-  data: ComboChartDataSeries[];
+  data: DataGroup[];
   isAnimated: boolean;
   showLegend: boolean;
   theme: string;
