@@ -72,7 +72,8 @@ export const SingleDataPoint = Template.bind({});
 SingleDataPoint.args = {
   data: [
     {
-      data: [{key: 'Engagement', value: 25000}],
+      name: 'Engagement',
+      data: [{key: 'april - march', value: 25000}],
     },
   ],
   comparisonMetric: {
@@ -84,30 +85,29 @@ SingleDataPoint.args = {
 
 export const CustomColors = Template.bind({});
 
-const purple = '#5052b3';
-const negativePurple = '#39337f';
-const green = '#1bbe9e';
-
 CustomColors.args = {
   data: [
     {
-      data: [{key: 'Shopify Payments', value: 50000}],
+      name: 'Shopify Payments',
+      data: [{key: 'april - march', value: 50000}],
     },
     {
-      data: [{key: 'PayPal', value: 25000}],
+      name: 'Paypal',
+      data: [{key: 'april - march', value: 25000}],
       color: [
         {
           color: 'magenta',
-          offset: 35,
+          offset: 75,
         },
         {
           color: 'lime',
-          offset: 55,
+          offset: 90,
         },
       ],
     },
     {
-      data: [{key: 'Amazon Pay', value: 4000}],
+      name: 'Amazon Pay',
+      data: [{key: 'april - march', value: 4000}],
     },
   ],
   comparisonMetric: {
