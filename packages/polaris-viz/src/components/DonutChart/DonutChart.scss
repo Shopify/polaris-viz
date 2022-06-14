@@ -1,3 +1,5 @@
+@import '../../styles/common';
+
 .Donut {
   position: relative;
   display: flex;
@@ -7,19 +9,20 @@
   user-select: none;
 }
 
+.DonutWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
 .ContentWrapper {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  justify-content: center;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
   font-size: 20px;
-}
-
-.ContentWrapperWithComparison {
-  transform: translate(-50%, -40%);
+  pointer-events: none;
 }
 
 .ContentValue {
@@ -32,4 +35,8 @@
 
 .ComparisonMetric {
   font-size: 16px;
+}
+
+.DonutChart {
+  @include no-outline;
 }
