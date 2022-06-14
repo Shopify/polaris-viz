@@ -12,8 +12,6 @@ interface Props {
   theme: string;
 }
 
-const PADDING_SIZE = 1;
-
 function Axis({ticks, width, textAlign, theme, ariaHidden = false}: Props) {
   const selectedTheme = useTheme(theme);
 
@@ -24,9 +22,7 @@ function Axis({ticks, width, textAlign, theme, ariaHidden = false}: Props) {
           <foreignObject
             key={value}
             aria-hidden={ariaHidden}
-            transform={`translate(${selectedTheme.grid.horizontalMargin},${
-              yOffset - LINE_HEIGHT / 2
-            })`}
+            transform={`translate(0,${yOffset - LINE_HEIGHT / 2})`}
             width={width}
             height={LINE_HEIGHT}
             style={{
@@ -39,7 +35,6 @@ function Axis({ticks, width, textAlign, theme, ariaHidden = false}: Props) {
             <span
               style={{
                 background: selectedTheme.yAxis.backgroundColor,
-                padding: PADDING_SIZE,
                 whiteSpace: 'nowrap',
                 fontFeatureSettings: 'tnum',
               }}

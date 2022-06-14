@@ -123,3 +123,9 @@ export interface LegendData {
   isComparison?: boolean;
   shape?: Shape;
 }
+
+export interface FormattedTicks {
+  value: number;
+  formattedValue: string;
+  yOffset: number;
+}

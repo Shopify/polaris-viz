@@ -1,56 +1,42 @@
 import {useContext, useMemo} from 'react';
 import {scaleLinear} from 'd3-scale';
 import {maxIndex} from 'd3-array';
+import type {LabelFormatter} from 'types';
 
-import {estimateStringWidth} from '../utilities/estimateStringWidth';
-import type {LabelFormatter} from '../types';
-import {DEFAULT_MAX_Y} from '../constants';
 import {ChartContext} from '../contexts';
-import {shouldRoundScaleUp} from '../utilities/shouldRoundScaleUp';
+import {estimateStringWidth} from '../utilities';
 
-export interface Props {
-  drawableHeight: number;
-  formatYAxisLabel: LabelFormatter;
-  integersOnly: boolean;
-  max: number;
-  min: number;
-  minLabelSpace: number;
-}
+const MINIMAL_LABEL_SPACE = 80;
 
 export function useYScale({
   drawableHeight,
   formatYAxisLabel,
-  integersOnly,
+  integersOnly = false,
   max,
   min,
-  minLabelSpace,
-}: Props) {
+  shouldRoundUp = true,
+}: {
+  drawableHeight: number;
+  formatYAxisLabel: LabelFormatter;
+  max: number;
+  min: number;
+  integersOnly?: boolean;
+  shouldRoundUp?: boolean;
+}) {
   const {characterWidths} = useContext(ChartContext);
 
-  const [minY, maxY] = useMemo(() => {
-    const minY = min;
-    const maxY = max === 0 && min === 0 ? DEFAULT_MAX_Y : max;
-
-    if (integersOnly) {
-      return [Math.floor(minY), Math.ceil(maxY)];
-    }
-
-    return [minY, maxY];
-  }, [min, max, integersOnly]);
-
   const {yScale, ticks, yAxisLabelWidth} = useMemo(() => {
-    const maxTicks = Math.max(1, Math.floor(drawableHeight / minLabelSpace));
+    const maxTicks = Math.max(
+      1,
+      Math.floor(drawableHeight / MINIMAL_LABEL_SPACE),
+    );
 
     const yScale = scaleLinear()
       .range([drawableHeight, 0])
-      .domain([Math.min(0, minY), Math.max(0, maxY)]);
+      .domain([Math.min(0, min), Math.max(0, max)]);
 
-    if (shouldRoundScaleUp({yScale, maxValue: maxY, maxTicks})) {
+    if (shouldRoundUp) {
       yScale.nice(maxTicks);
-    } else {
-      const roundedDownMin = yScale.copy().nice(maxTicks).ticks(maxTicks)[0];
-
-      yScale.domain([Math.min(roundedDownMin, minY), Math.max(0, maxY)]);
     }
 
     const filteredTicks = integersOnly
@@ -77,13 +63,13 @@ export function useYScale({
 
     return {yScale, ticks, yAxisLabelWidth};
   }, [
+    shouldRoundUp,
     characterWidths,
     drawableHeight,
     formatYAxisLabel,
     integersOnly,
-    maxY,
-    minY,
-    minLabelSpace,
+    max,
+    min,
   ]);
 
   return {yScale, ticks, yAxisLabelWidth};

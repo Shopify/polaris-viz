@@ -15,6 +15,12 @@ export interface DataSeries {
   name?: string;
 }
 
+export interface DataGroup {
+  shape: Shape;
+  series: DataSeries[];
+  yAxisOptions?: YAxisOptions;
+}
+
 export type Shape = 'Line' | 'Bar';
 
 export type LineStyle = 'dashed' | 'solid' | 'dotted';

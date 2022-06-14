@@ -51,7 +51,7 @@ import {HorizontalGridLines} from '../HorizontalGridLines';
 
 import {useLineChartTooltipContent} from './hooks/useLineChartTooltipContent';
 import {Points} from './components';
-import {MAX_ANIMATED_SERIES_LENGTH, MIN_Y_LABEL_SPACE} from './constants';
+import {MAX_ANIMATED_SERIES_LENGTH} from './constants';
 import {useFormatData} from './hooks';
 import styles from './Chart.scss';
 import {yAxisMinMax} from './utilities';
@@ -124,7 +124,6 @@ export function Chart({
     integersOnly: yAxisOptions.integersOnly,
     max: maxY,
     min: minY,
-    minLabelSpace: MIN_Y_LABEL_SPACE,
   });
 
   const {reversedSeries, longestSeriesLength, longestSeriesIndex} =
