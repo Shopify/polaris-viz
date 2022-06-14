@@ -3,11 +3,10 @@ import type {Story, Meta} from '@storybook/react';
 
 import {ComboChart, ComboChartProps} from '../ComboChart';
 
-import {THEME_CONTROL_ARGS, TYPE_CONTROL_ARGS} from '../../../storybook';
-import type {ComboChartDataSeries} from '../types';
+import type {DataGroup} from '@shopify/polaris-viz-core/src/types';
 
 export default {
-  title: 'polaris-viz/Default Charts/ComboChart',
+  title: 'polaris-viz/Default Charts/ComboChart/Playground',
   component: ComboChart,
   parameters: {
     previewHeight: 'auto',
@@ -21,30 +20,12 @@ export default {
       expanded: true,
     },
   },
-  argTypes: {
-    data: {
-      description:
-        'A collection of named data sets to be rendered in the chart. An optional color can be provided for each series, to overwrite the theme `seriesColors` defined in `PolarisVizProvider`',
-    },
-    isAnimated: {
-      description:
-        'Whether to animate the bars when the chart is initially rendered and its data is updated. Even if `isAnimated` is set to true, animations will not be displayed for users with reduced motion preferences.',
-    },
-    type: TYPE_CONTROL_ARGS,
-    theme: THEME_CONTROL_ARGS,
-    xAxisOptions: {
-      description:
-        'An object used to configure the labels displayed beside the bars.',
-      defaultValue: {
-        labelFormatter: (value: string) => value,
-      },
-    },
-  },
+  argTypes: {},
 } as Meta;
 
 const CONTAINER_HEIGHT = 500;
 
-const DATA_ALL_POSITIVE: ComboChartDataSeries[] = [
+const DATA_ALL_POSITIVE: DataGroup[] = [
   {
     shape: 'Bar',
     series: [
@@ -83,7 +64,7 @@ const DATA_ALL_POSITIVE: ComboChartDataSeries[] = [
   },
 ];
 
-const DATA_FIRST_SOME_NEGATIVE: ComboChartDataSeries[] = [
+const DATA_FIRST_SOME_NEGATIVE: DataGroup[] = [
   {
     shape: 'Bar',
     series: [
@@ -122,7 +103,7 @@ const DATA_FIRST_SOME_NEGATIVE: ComboChartDataSeries[] = [
   },
 ];
 
-const DATA_SECOND_SOME_NEGATIVE: ComboChartDataSeries[] = [
+const DATA_SECOND_SOME_NEGATIVE: DataGroup[] = [
   {
     shape: 'Bar',
     series: [
@@ -161,7 +142,7 @@ const DATA_SECOND_SOME_NEGATIVE: ComboChartDataSeries[] = [
   },
 ];
 
-const DATA_BOTH_SOME_NEGATIVE: ComboChartDataSeries[] = [
+const DATA_BOTH_SOME_NEGATIVE: DataGroup[] = [
   {
     shape: 'Bar',
     series: [
@@ -200,7 +181,7 @@ const DATA_BOTH_SOME_NEGATIVE: ComboChartDataSeries[] = [
   },
 ];
 
-const DATA_ALL_NEGATIVE: ComboChartDataSeries[] = [
+const DATA_ALL_NEGATIVE: DataGroup[] = [
   {
     shape: 'Bar',
     series: [
@@ -239,7 +220,7 @@ const DATA_ALL_NEGATIVE: ComboChartDataSeries[] = [
   },
 ];
 
-const DATA_FAN_SAP: ComboChartDataSeries[] = [
+const DATA_FAN_SAP: DataGroup[] = [
   {
     shape: 'Bar',
     series: [
@@ -283,7 +264,7 @@ const DATA_FAN_SAP: ComboChartDataSeries[] = [
   },
 ];
 
-const DATA_FAP_NAP: ComboChartDataSeries[] = [
+const DATA_FAP_NAP: DataGroup[] = [
   {
     shape: 'Bar',
     series: [
@@ -322,7 +303,7 @@ const DATA_FAP_NAP: ComboChartDataSeries[] = [
   },
 ];
 
-const DATA_FAN_SSN: ComboChartDataSeries[] = [
+const DATA_FAN_SSN: DataGroup[] = [
   {
     shape: 'Bar',
     series: [
@@ -361,7 +342,7 @@ const DATA_FAN_SSN: ComboChartDataSeries[] = [
   },
 ];
 
-const DATA_FSN_NAP: ComboChartDataSeries[] = [
+const DATA_FSN_NAP: DataGroup[] = [
   {
     shape: 'Bar',
     series: [
@@ -416,7 +397,7 @@ const Template: Story<ComboChartProps> = ({
   data: argData,
   ...args
 }: ComboChartProps) => {
-  const [data, setData] = useState<ComboChartDataSeries[]>(DATA_ALL_POSITIVE);
+  const [data, setData] = useState<DataGroup[]>(DATA_ALL_POSITIVE);
 
   return (
     <>

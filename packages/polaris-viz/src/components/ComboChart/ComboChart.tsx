@@ -5,16 +5,16 @@ import {
   WithRequired,
   XAxisOptions,
 } from '@shopify/polaris-viz-core';
+import type {DataGroup} from '@shopify/polaris-viz-core/src/types';
 
 import {getXAxisOptionsWithDefaults} from '../../utilities';
 import {ChartContainer} from '../ChartContainer';
 import {usePrefersReducedMotion} from '../../hooks';
 
 import {Chart} from './Chart';
-import type {ComboChartDataSeries} from './types';
 
 export type ComboChartProps = {
-  data: ComboChartDataSeries[];
+  data: DataGroup[];
   isAnimated?: boolean;
   showLegend?: boolean;
   theme?: string;

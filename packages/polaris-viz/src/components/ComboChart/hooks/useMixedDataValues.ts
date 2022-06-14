@@ -1,17 +1,17 @@
 import {useMemo} from 'react';
 
-import type {Axis} from '../types';
+import {Axis, AxisValueRange} from '../types';
 
 export function useMixedDataValues(axes: Axis[]) {
   return useMemo(() => {
     const areAllValuesNegative = axes.every(
-      ({areAllValuesNegative}) => areAllValuesNegative,
+      ({valuesRange}) => valuesRange === AxisValueRange.AllNegative,
     );
     const doesOneChartContainAllNegativeValues = axes.some(
-      ({areAllValuesNegative}) => areAllValuesNegative,
+      ({valuesRange}) => valuesRange === AxisValueRange.AllNegative,
     );
     const doBothChartsContainMixedValues = axes.every(
-      ({areSomeValuesNegative}) => areSomeValuesNegative,
+      ({valuesRange}) => valuesRange === AxisValueRange.SomeNegative,
     );
 
     const shouldPlaceZeroInMiddleOfChart =

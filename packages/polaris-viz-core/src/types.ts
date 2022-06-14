@@ -18,7 +18,7 @@ export interface DataSeries {
 export interface DataGroup {
   shape: Shape;
   series: DataSeries[];
-  yAxisOptions?: YAxisOptions[];
+  yAxisOptions?: YAxisOptions;
 }
 
 export type Shape = 'Line' | 'Bar';

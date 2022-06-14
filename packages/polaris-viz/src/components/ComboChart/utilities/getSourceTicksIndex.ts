@@ -1,4 +1,4 @@
-import type {Axis} from '../types';
+import {Axis, AxisValueRange} from '../types';
 
 export function getSourceTicksIndex({
   axes,
@@ -11,7 +11,7 @@ export function getSourceTicksIndex({
 }) {
   if (shouldPlaceZeroInMiddleOfChart) {
     const indexWithNegative = axes.findIndex(
-      ({areAllValuesNegative}) => !areAllValuesNegative,
+      ({valuesRange}) => valuesRange !== AxisValueRange.AllNegative,
     );
 
     return indexWithNegative === -1 ? 0 : indexWithNegative;
@@ -32,7 +32,7 @@ export function getSourceTicksIndex({
 
   // Otherwise find the index that has negative values.
   const indexWithNegative = axes.findIndex(
-    ({areSomeValuesNegative}) => areSomeValuesNegative,
+    ({valuesRange}) => valuesRange === AxisValueRange.SomeNegative,
   );
 
   return indexWithNegative === -1 ? 0 : indexWithNegative;

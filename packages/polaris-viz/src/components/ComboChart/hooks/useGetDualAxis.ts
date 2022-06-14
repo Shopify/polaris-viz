@@ -1,13 +1,14 @@
 import {useMemo} from 'react';
+import type {DataGroup} from '@shopify/polaris-viz-core/src/types';
 
 import {yAxisMinMax} from '../../LineChart/utilities';
 import {
   getStackedMinMax,
   getYAxisOptionsWithDefaults,
 } from '../../../utilities';
-import type {ComboChartDataSeries, Axis} from '../types';
+import {Axis, AxisValueRange} from '../types';
 
-export function useGetDualAxis({data}: {data: ComboChartDataSeries[]}): Axis[] {
+export function useGetDualAxis({data}: {data: DataGroup[]}): Axis[] {
   return useMemo(() => {
     return data.map((series, index) => {
       let min;
@@ -36,18 +37,24 @@ export function useGetDualAxis({data}: {data: ComboChartDataSeries[]}): Axis[] {
         }
       }
 
-      const areAllValuesNegative = min <= 0 && max <= 0;
-      const areSomeValuesNegative = min < 0 || max < 0;
-
       return {
+        valuesRange: getValuesRange(min, max),
         min,
         max,
-        areAllValuesNegative,
-        areSomeValuesNegative,
         index,
         shape: series.shape,
         yAxisOptions,
       };
     });
   }, [data]);
+}
+
+function getValuesRange(min, max) {
+  if (min <= 0 && max <= 0) {
+    return AxisValueRange.AllNegative;
+  } else if (min < 0 || max < 0) {
+    return AxisValueRange.SomeNegative;
+  } else {
+    return AxisValueRange.AllPositive;
+  }
 }

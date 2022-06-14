@@ -1,6 +1,6 @@
 import type {ScaleLinear} from 'd3-scale';
 
-import type {Axis} from '../types';
+import {Axis, AxisValueRange} from '../types';
 
 interface Props {
   shouldPlaceZeroInMiddleOfChart: boolean;
@@ -23,7 +23,7 @@ export function getSecondaryDataForMixedData({
     let min = -secondaryAxis.max;
     let max = secondaryAxis.max;
 
-    if (secondaryAxis.areAllValuesNegative) {
+    if (secondaryAxis.valuesRange === AxisValueRange.AllNegative) {
       min = secondaryAxis.min;
       max = -secondaryAxis.min;
     }
