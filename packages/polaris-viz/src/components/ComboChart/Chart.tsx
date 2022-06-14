@@ -6,19 +6,19 @@ import {
 } from '@shopify/polaris-viz-core';
 import type {Dimensions} from '@shopify/polaris-viz-core';
 
-import {HorizontalGridLines} from '../../components/HorizontalGridLines';
+import {HorizontalGridLines} from '../HorizontalGridLines';
 import {YAxis} from '../YAxis';
 import {useLegend} from '../LegendContainer';
 import {XMLNS} from '../../constants';
 
 import styles from './Chart.scss';
-import type {MixedChartDataSeries} from './types';
+import type {ComboChartDataSeries} from './types';
 import {useDualAxisTicks} from './hooks/useDualAxisTicks';
 import {useDualAxisTicksWidth} from './hooks/useDualAxisTickWidths';
 import {useDualAxisScale} from './hooks/useDualAxisScale';
 
 export interface ChartProps {
-  data: MixedChartDataSeries[];
+  data: ComboChartDataSeries[];
   isAnimated: boolean;
   showLegend: boolean;
   theme: string;

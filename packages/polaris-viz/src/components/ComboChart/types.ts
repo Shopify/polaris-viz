@@ -2,7 +2,7 @@ import type {DataSeries, YAxisOptions} from '@shopify/polaris-viz-core';
 
 type Shape = 'Line' | 'Bar';
 
-export interface MixedChartDataSeries {
+export interface ComboChartDataSeries {
   shape: Shape;
   series: DataSeries[];
   yAxisOptions?: Partial<YAxisOptions>;

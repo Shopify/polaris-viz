@@ -1,6 +1,6 @@
 import {useYScale} from '@shopify/polaris-viz-core';
 
-import type {MixedChartDataSeries} from '../types';
+import type {ComboChartDataSeries} from '../types';
 import {getZeroIndex} from '../utilities/getZeroIndex';
 import {getTicksBetweenZeroAndMax} from '../utilities/getTicksBetweenZeroAndMax';
 import {getSourceTicksIndex} from '../utilities/getSourceTicksIndex';
@@ -10,7 +10,7 @@ import {useGetDualAxis} from './useGetDualAxis';
 import {useMixedDataValues} from './useMixedDataValues';
 
 interface Props {
-  data: MixedChartDataSeries[];
+  data: ComboChartDataSeries[];
   drawableHeight: number;
 }
 

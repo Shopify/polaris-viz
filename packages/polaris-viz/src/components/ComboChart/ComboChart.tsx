@@ -11,24 +11,24 @@ import {ChartContainer} from '../ChartContainer';
 import {usePrefersReducedMotion} from '../../hooks';
 
 import {Chart} from './Chart';
-import type {MixedChartDataSeries} from './types';
+import type {ComboChartDataSeries} from './types';
 
-export type MixedChartProps = {
-  data: MixedChartDataSeries[];
+export type ComboChartProps = {
+  data: ComboChartDataSeries[];
   isAnimated?: boolean;
   showLegend?: boolean;
   theme?: string;
   xAxisOptions?: Partial<XAxisOptions>;
 } & Omit<ChartProps, 'data'>;
 
-export function MixedChart(props: MixedChartProps) {
+export function ComboChart(props: ComboChartProps) {
   const {
     data,
     isAnimated,
     showLegend = true,
     theme,
     xAxisOptions,
-  }: WithRequired<MixedChartProps, 'theme'> = {
+  }: WithRequired<ComboChartProps, 'theme'> = {
     ...DEFAULT_CHART_PROPS,
     ...props,
   };
