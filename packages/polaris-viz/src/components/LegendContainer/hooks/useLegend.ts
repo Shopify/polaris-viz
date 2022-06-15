@@ -49,9 +49,9 @@ export function useLegend({
       });
     });
 
-    return legends.flat().map(({color, ...theRest}, index) => {
+    return legends.flat().map(({color, ...rest}, index) => {
       return {
-        ...theRest,
+        ...rest,
         color: color ?? colors[index],
       };
     });
