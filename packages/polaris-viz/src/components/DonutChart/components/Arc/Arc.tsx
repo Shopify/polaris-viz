@@ -42,7 +42,12 @@ export function Arc({
   };
   const path = createArc(arcOptions);
 
-  const gradient = isGradientType(color) ? color : [{color, offset: 0}];
+  const gradient = isGradientType(color)
+    ? color
+    : [
+        {color, offset: 0},
+        {color, offset: 1},
+      ];
 
   return (
     <React.Fragment>

@@ -45,7 +45,7 @@ export function Chart({
   accessibilityLabel = '',
   comparisonMetric,
   total,
-  showLegend = true,
+  showLegend,
   dimensions = {height: 0, width: 0},
   theme,
   labelFormatter,
@@ -96,7 +96,7 @@ export function Chart({
     <div className={styles.DonutWrapper}>
       <div className={styles.Donut}>
         <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
-        <svg aria-hidden width={drawableWidth} height={drawableWidth}>
+        <svg aria-hidden width={diameter} height={diameter}>
           <g
             className={styles.DonutChart}
             transform={`translate(${radius} ${radius})`}
@@ -104,8 +104,8 @@ export function Chart({
             {emptyState ? (
               <g aria-hidden>
                 <Arc
-                  width={width}
-                  height={height}
+                  width={diameter}
+                  height={diameter}
                   radius={radius}
                   startAngle={0}
                   endAngle={FULL_CIRCLE}
@@ -115,37 +115,40 @@ export function Chart({
                 />
               </g>
             ) : (
-              pieChartData.map(({data, startAngle, endAngle}, index) => {
-                const {key} = data;
+              pieChartData.map(
+                ({data: pieData, startAngle, endAngle}, index) => {
+                  const {key} = pieData;
+                  const color = data[index]?.color ?? seriesColor[index];
 
-                return (
-                  <g
-                    key={`${key}-${startAngle}-${endAngle}`}
-                    className={styles.DonutChart}
-                    style={{
-                      ...getColorVisionStylesForActiveIndex({
-                        activeIndex,
+                  return (
+                    <g
+                      key={`${key}-${startAngle}-${endAngle}`}
+                      className={styles.DonutChart}
+                      style={{
+                        ...getColorVisionStylesForActiveIndex({
+                          activeIndex,
+                          index,
+                        }),
+                      }}
+                      {...getColorVisionEventAttrs({
+                        type: COLOR_VISION_SINGLE_ITEM,
                         index,
-                      }),
-                    }}
-                    {...getColorVisionEventAttrs({
-                      type: COLOR_VISION_SINGLE_ITEM,
-                      index,
-                    })}
-                  >
-                    <Arc
-                      width={drawableWidth}
-                      height={drawableHeight}
-                      radius={radius}
-                      startAngle={startAngle}
-                      endAngle={endAngle}
-                      color={seriesColor[index]}
-                      cornerRadius={selectedTheme.arc.cornerRadius}
-                      thickness={selectedTheme.arc.thickness}
-                    />
-                  </g>
-                );
-              })
+                      })}
+                    >
+                      <Arc
+                        width={diameter}
+                        height={diameter}
+                        radius={radius}
+                        startAngle={startAngle}
+                        endAngle={endAngle}
+                        color={color}
+                        cornerRadius={selectedTheme.arc.cornerRadius}
+                        thickness={selectedTheme.arc.thickness}
+                      />
+                    </g>
+                  );
+                },
+              )
             )}
           </g>
         </svg>
@@ -153,8 +156,8 @@ export function Chart({
           <div
             className={styles.ContentWrapper}
             style={{
-              height: drawableWidth,
-              width: drawableWidth,
+              height: diameter,
+              width: diameter,
             }}
           >
             <p
