@@ -94,16 +94,7 @@ CustomColors.args = {
     {
       name: 'Paypal',
       data: [{key: 'april - march', value: 25000}],
-      color: [
-        {
-          color: 'magenta',
-          offset: 75,
-        },
-        {
-          color: 'lime',
-          offset: 90,
-        },
-      ],
+      color: 'lime',
     },
     {
       name: 'Amazon Pay',
