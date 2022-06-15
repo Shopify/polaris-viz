@@ -1,6 +1,6 @@
 import React from 'react';
 import type {Story, Meta} from '@storybook/react';
-import type {DataGroup} from '@shopify/polaris-viz-core/src/types';
+import type {DataGroup} from '@shopify/polaris-viz-core';
 
 import {ComboChart, ComboChartProps} from '../ComboChart';
 
@@ -67,6 +67,7 @@ const DATA: DataGroup[] = [
           {value: 100, key: '2020-07-10T12:00:00'},
           {value: 100, key: '2020-07-11T12:00:00'},
         ],
+        color: 'lime',
       },
       {
         name: 'Mobile',

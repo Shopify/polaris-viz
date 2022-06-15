@@ -1,13 +1,13 @@
-import React, {useMemo, useState} from 'react';
+import React, {useState} from 'react';
 import {
   LABEL_AREA_TOP_SPACING,
   useTheme,
   XAxisOptions,
   Y_AXIS_CHART_SPACING,
 } from '@shopify/polaris-viz-core';
-import type {Dimensions} from '@shopify/polaris-viz-core';
-import type {DataGroup} from '@shopify/polaris-viz-core/src/types';
+import type {Dimensions, DataGroup} from '@shopify/polaris-viz-core';
 
+import {useThemeSeriesColorsForDataGroup} from '../../hooks/useThemeSeriesColorsForDataGroup';
 import {useReducedLabelIndexes} from '../../hooks';
 import {HorizontalGridLines} from '../HorizontalGridLines';
 import {YAxis} from '../YAxis';
@@ -19,7 +19,8 @@ import {useDualAxisTicksWidth} from './hooks/useDualAxisTickWidths';
 import {useDualAxisScale} from './hooks/useDualAxisScale';
 import {useXScale} from './hooks/useXScale';
 import styles from './Chart.scss';
-import {ComboChartXAxisLabels} from './components';
+import {ComboChartXAxisLabels, ComboBarChart} from './components';
+import {useSplitDataForCharts} from './hooks/useSplitDataForCharts';
 
 export interface ChartProps {
   data: DataGroup[];
@@ -33,11 +34,14 @@ export interface ChartProps {
 export function Chart({
   data,
   dimensions,
+  isAnimated,
   showLegend,
   theme,
   xAxisOptions,
 }: ChartProps) {
   const selectedTheme = useTheme(theme);
+
+  const colors = useThemeSeriesColorsForDataGroup(data, selectedTheme);
 
   const [labelHeight, setLabelHeight] = useState(0);
 
@@ -72,7 +76,7 @@ export function Chart({
   // These are used once we want to render the charts
   // eslint-disable-next-line no-empty-pattern
   const {
-    // barYScale,
+    barYScale,
     // lineYScale
   } = useDualAxisScale({
     doesOneChartContainAllNegativeValues,
@@ -94,19 +98,7 @@ export function Chart({
   const drawableWidth =
     width - chartXPosition - horizontalMargin * 2 - rightTickWidth;
 
-  // These are used once we want to render the charts
-  // eslint-disable-next-line no-empty-pattern
-  const {
-    // barChartData,
-    // lineChartData
-  } = useMemo(() => {
-    const barChartDataIndex = data.findIndex(({shape}) => shape === 'Bar');
-
-    return {
-      barChartData: data[barChartDataIndex],
-      lineChartData: data[barChartDataIndex === 0 ? 1 : 0],
-    };
-  }, [data]);
+  const {barChartData, barChartColors} = useSplitDataForCharts(data, colors);
 
   const {xScale, labels} = useXScale({drawableWidth, data, xAxisOptions});
 
@@ -178,6 +170,19 @@ export function Chart({
             textAlign="left"
             width={rightTickWidth}
             theme={theme}
+          />
+        </g>
+
+        <g transform={`translate(${chartXPosition},${0})`}>
+          <ComboBarChart
+            colors={barChartColors}
+            data={barChartData}
+            drawableHeight={drawableHeight}
+            drawableWidth={drawableWidth}
+            isAnimated={isAnimated}
+            labels={labels}
+            theme={theme}
+            yScale={barYScale}
           />
         </g>
       </svg>

@@ -5,7 +5,7 @@ import {
   WithRequired,
   XAxisOptions,
 } from '@shopify/polaris-viz-core';
-import type {DataGroup} from '@shopify/polaris-viz-core/src/types';
+import type {DataGroup} from '@shopify/polaris-viz-core';
 
 import {getXAxisOptionsWithDefaults} from '../../utilities';
 import {ChartContainer} from '../ChartContainer';

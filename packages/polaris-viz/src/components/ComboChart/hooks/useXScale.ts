@@ -1,9 +1,6 @@
 import {useMemo} from 'react';
 import {scaleLinear} from 'd3-scale';
-import type {
-  DataGroup,
-  XAxisOptions,
-} from '@shopify/polaris-viz-core/src/types';
+import type {DataGroup, XAxisOptions} from '@shopify/polaris-viz-core';
 
 import {useGetLabelsFromDataGroups} from './useGetLabelsFromDataGroups';
 

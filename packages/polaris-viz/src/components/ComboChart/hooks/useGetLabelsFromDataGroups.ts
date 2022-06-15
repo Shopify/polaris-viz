@@ -1,7 +1,4 @@
-import type {
-  DataGroup,
-  XAxisOptions,
-} from '@shopify/polaris-viz-core/src/types';
+import type {DataGroup, XAxisOptions} from '@shopify/polaris-viz-core';
 import isEqual from 'fast-deep-equal';
 
 import {useXAxisLabels} from '../../../hooks/useXAxisLabels';
