@@ -1,8 +1,8 @@
 import React, {Dispatch, SetStateAction} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 
-import {useLabels, shouldSkipLabel} from '../../Labels';
-import {TextLine} from '../../TextLine';
+import {useLabels, shouldSkipLabel} from '../../../Labels';
+import {TextLine} from '../../../TextLine';
 
 export interface ComboChartXAxisLabelsProps {
   chartX: number;

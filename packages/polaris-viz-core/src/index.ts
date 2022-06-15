@@ -146,4 +146,6 @@ export type {
   ChartProps,
   WithRequired,
   BoundingRect,
+  StackedValues,
+  DataGroup,
 } from './types';
