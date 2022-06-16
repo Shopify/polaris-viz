@@ -44,7 +44,7 @@ const DATA = [
 ];
 
 export default {
-  title: 'polaris-viz-native/Spark Charts/SparkLineChart',
+  title: 'polaris-viz-native/Charts/SparkLineChart',
   component: SparkLineChart,
   parameters: {
     controls: {sort: 'requiredFirst', expanded: true},

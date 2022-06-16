@@ -39,7 +39,7 @@ const TOOLTIP_CONTENT = {
 };
 
 export default {
-  title: 'polaris-viz/Default Charts/LineChart',
+  title: 'polaris-viz/Charts/LineChart',
   component: LineChart,
   decorators: [
     (Story: any) => <div className={styles.Container}>{Story()}</div>,
