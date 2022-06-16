@@ -12,7 +12,7 @@ interface Props {
   theme: string;
 }
 
-const PADDING_SIZE = 1;
+const PADDING_SIZE = 2;
 
 function Axis({ticks, width, textAlign, theme, ariaHidden = false}: Props) {
   const selectedTheme = useTheme(theme);
@@ -27,7 +27,7 @@ function Axis({ticks, width, textAlign, theme, ariaHidden = false}: Props) {
             transform={`translate(${selectedTheme.grid.horizontalMargin},${
               yOffset - LINE_HEIGHT / 2
             })`}
-            width={width}
+            width={width + PADDING_SIZE * 4}
             height={LINE_HEIGHT}
             style={{
               color: selectedTheme.yAxis.labelColor,
@@ -38,8 +38,8 @@ function Axis({ticks, width, textAlign, theme, ariaHidden = false}: Props) {
           >
             <span
               style={{
+                padding: `0 ${PADDING_SIZE}px`,
                 background: selectedTheme.yAxis.backgroundColor,
-                padding: PADDING_SIZE,
                 whiteSpace: 'nowrap',
                 fontFeatureSettings: 'tnum',
               }}
