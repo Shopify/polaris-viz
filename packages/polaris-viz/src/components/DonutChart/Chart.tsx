@@ -36,7 +36,7 @@ export interface ChartProps {
   showLegend: boolean;
   total?: number;
   dimensions?: Dimensions;
-  theme?: string;
+  theme: string;
   labelFormatter: LabelFormatter;
 }
 
@@ -189,7 +189,7 @@ export function Chart({
             onHeightChange={() => {}}
             colorVisionType={COLOR_VISION_SINGLE_ITEM}
             data={legendData}
-            theme={theme!}
+            theme={theme}
           />
         </div>
       )}
