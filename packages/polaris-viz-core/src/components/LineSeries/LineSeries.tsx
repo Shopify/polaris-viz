@@ -17,7 +17,10 @@ import {
   getColorVisionEventAttrs,
   getColorVisionStylesForActiveIndex,
 } from '../../';
-import {COLOR_VISION_SINGLE_ITEM} from '../../constants';
+import {
+  COLOR_VISION_SINGLE_ITEM,
+  SHAPE_ANIMATION_HEIGHT_BUFFER,
+} from '../../constants';
 
 import {Area} from './components';
 import styles from './LineSeries.scss';
@@ -80,6 +83,7 @@ export function LineSeries({
   } = usePolarisVizContext();
 
   const AnimatedGroup = animated(G);
+  const AnimatedPath = animated(Path);
   const color = data?.color;
   const selectedTheme = useTheme(theme);
   const isSparkChart = type === 'spark';
@@ -138,14 +142,12 @@ export function LineSeries({
   const solidLineDelay = isSolidLine ? index * ANIMATION_DELAY : 0;
   const delay = immediate ? 0 : solidLineDelay;
 
-  const {scaleY, translateY, opacity} = useSpring({
+  const {scaleY, opacity} = useSpring({
     from: {
-      translateY: svgDimensions.height,
       scaleY: 0,
       opacity: 0,
     },
     to: {
-      translateY: 0,
       scaleY: 1,
       opacity: 1,
     },
@@ -154,21 +156,21 @@ export function LineSeries({
     default: {immediate},
   });
 
-  const transform = scaleY.to(
-    (value: number) => `translate(0 ${translateY.get()}) scale(1 ${value})`,
-  );
-
+  const transform = scaleY.to((value: number) => ` scale(1 ${value})`);
+  const transformOrigin = `0 ${svgDimensions.height}px`;
   if (lineShape == null || areaPath == null) {
     return null;
   }
 
+  const strokeWidth = isSparkChart
+    ? SPARK_STROKE_WIDTH
+    : selectedTheme.line.width;
+
+  const PathHoverTargetSize = 40;
+
   return (
     <React.Fragment>
-      <AnimatedGroup
-        className={styles.Group}
-        transform={isSolidLine ? transform : ''}
-        opacity={opacity}
-      >
+      <AnimatedGroup className={styles.Group} opacity={opacity}>
         <Defs>
           <LinearGradientWithStops
             id={`line-${id}`}
@@ -179,39 +181,47 @@ export function LineSeries({
           />
 
           <Mask id={`mask-${id}`}>
-            <Path
-              d={lineShape}
-              stroke="white"
-              strokeLinejoin="round"
-              strokeLinecap="round"
-              strokeWidth={
-                isSparkChart
-                  ? SPARK_STROKE_WIDTH
-                  : `${selectedTheme.line.width}px`
-              }
-              style={{
-                ...getColorVisionStylesForActiveIndex({
-                  activeIndex: activeLineIndex,
-                  index,
-                }),
-                strokeDasharray: StrokeDasharray[lineStyle],
-              }}
-            />
-            {showPoint && (
-              <Circle cx={lastX} cy={lastY} r={POINT_RADIUS} fill="white" />
-            )}
+            <AnimatedGroup
+              transform={isSolidLine ? transform : ''}
+              transform-origin={transformOrigin}
+            >
+              <AnimatedPath
+                d={lineShape}
+                stroke="white"
+                strokeLinejoin="round"
+                strokeLinecap="round"
+                strokeWidth={strokeWidth}
+                style={{
+                  ...getColorVisionStylesForActiveIndex({
+                    activeIndex: activeLineIndex,
+                    index,
+                  }),
+                  strokeDasharray: StrokeDasharray[lineStyle],
+                }}
+              />
+              {showPoint && (
+                <Circle cx={lastX} cy={lastY} r={POINT_RADIUS} fill="white" />
+              )}
+            </AnimatedGroup>
           </Mask>
         </Defs>
 
         {selectedTheme.line.hasArea && (
-          <Area series={data} areaPath={areaPath} type={type} />
+          <AnimatedGroup
+            transform={isSolidLine ? transform : ''}
+            transform-origin={transformOrigin}
+          >
+            <Area series={data} areaPath={areaPath} type={type} />
+          </AnimatedGroup>
         )}
 
         <Rect
           x="0"
-          y="0"
+          y={(strokeWidth + SHAPE_ANIMATION_HEIGHT_BUFFER) * -1}
           width={svgDimensions.width}
-          height={svgDimensions.height}
+          height={
+            svgDimensions.height + strokeWidth + SHAPE_ANIMATION_HEIGHT_BUFFER
+          }
           fill={
             data.isComparison
               ? selectedTheme.seriesColors.comparison
@@ -223,7 +233,7 @@ export function LineSeries({
         <Path
           className={styles.Line}
           d={lineShape}
-          strokeWidth={`${10}px`}
+          strokeWidth={PathHoverTargetSize}
           stroke="transparent"
           fill="none"
           {...getColorVisionEventAttrs({
