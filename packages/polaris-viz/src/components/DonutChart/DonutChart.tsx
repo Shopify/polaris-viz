@@ -1,5 +1,9 @@
 import React from 'react';
-import type {DataSeries, LabelFormatter} from '@shopify/polaris-viz-core';
+import {
+  DataSeries,
+  DEFAULT_THEME_NAME,
+  LabelFormatter,
+} from '@shopify/polaris-viz-core';
 
 import {ChartContainer} from '../ChartContainer';
 import type {ComparisonMetricProps} from '../ComparisonMetric';
@@ -16,7 +20,7 @@ export interface DonutChartProps {
 
 export function DonutChart({
   data,
-  theme,
+  theme = DEFAULT_THEME_NAME,
   comparisonMetric,
   showLegend = true,
   labelFormatter = (value) => `${value}`,
@@ -28,6 +32,7 @@ export function DonutChart({
         labelFormatter={labelFormatter}
         comparisonMetric={comparisonMetric}
         showLegend={showLegend}
+        theme={theme}
       />
     </ChartContainer>
   );
