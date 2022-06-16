@@ -1,26 +1,36 @@
 import React from 'react';
-import type {DataSeries, LabelFormatter} from '@shopify/polaris-viz-core';
+import type {
+  LabelFormatter,
+  ChartProps,
+  WithRequired,
+} from '@shopify/polaris-viz-core';
+import {DEFAULT_CHART_PROPS} from '@shopify/polaris-viz-core';
 
 import {ChartContainer} from '../ChartContainer';
 import type {ComparisonMetricProps} from '../ComparisonMetric';
 
 import {Chart} from './Chart';
 
-export interface DonutChartProps {
-  data: DataSeries[];
+export type DonutChartProps = {
   comparisonMetric?: Omit<ComparisonMetricProps, 'theme'>;
   showLegend?: boolean;
-  theme?: string;
   labelFormatter?: LabelFormatter;
-}
+} & ChartProps;
 
-export function DonutChart({
-  data,
-  theme,
-  comparisonMetric,
-  showLegend = true,
-  labelFormatter = (value) => `${value}`,
-}: DonutChartProps) {
+export function DonutChart(props: DonutChartProps) {
+  const {
+    data,
+    theme,
+    comparisonMetric,
+    showLegend,
+    labelFormatter,
+  }: WithRequired<DonutChartProps, 'theme'> = {
+    ...DEFAULT_CHART_PROPS,
+    labelFormatter: (value) => `${value}`,
+    showLegend: true,
+    ...props,
+  };
+
   return (
     <ChartContainer theme={theme}>
       <Chart

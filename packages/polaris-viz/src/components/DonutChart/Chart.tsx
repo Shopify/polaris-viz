@@ -6,6 +6,7 @@ import {
   COLOR_VISION_SINGLE_ITEM,
   getColorVisionStylesForActiveIndex,
   getColorVisionEventAttrs,
+  DEFAULT_THEME_NAME,
 } from '@shopify/polaris-viz-core';
 import type {
   DataPoint,
@@ -47,7 +48,7 @@ export function Chart({
   total,
   showLegend,
   dimensions = {height: 0, width: 0},
-  theme,
+  theme = DEFAULT_THEME_NAME,
   labelFormatter,
 }: ChartProps) {
   const [activeIndex, setActiveIndex] = useState<number>(-1);
