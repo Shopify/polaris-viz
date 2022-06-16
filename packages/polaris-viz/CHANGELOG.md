@@ -9,7 +9,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
-- `useLegend` hook now accepts `DataGroup` type instead of `DataSeries`
+- `useLegend` hook now accepts `DataGroup[]` and `DataSeries[]`
 
 ## [2.0.0] - 2022-06-09
 
