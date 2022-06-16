@@ -11,6 +11,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 - introduces a new `createCSSConicGradient` utility function
 
+### Fixed
+
+- LineSeries line being cropped on the top
+- LineSeries loading animation origin not using correct position on the bottom of the chart
 
 ## [2.0.0] - 2022-06-09
 
