@@ -1,5 +1,6 @@
 import React from 'react';
 import {Source} from '@storybook/addon-docs';
+import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 import {classNames} from '../../../../../utilities';
 import {useTheme} from '../../../../../hooks';
@@ -12,7 +13,7 @@ export function ComponentContainer({
   description,
   link,
   center,
-  theme = 'Default',
+  theme = DEFAULT_THEME_NAME,
   codeSample,
 }: {
   chart: JSX.Element;

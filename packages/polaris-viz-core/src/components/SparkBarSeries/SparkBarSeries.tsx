@@ -20,7 +20,7 @@ interface SparkBarSeriesProps {
   shouldAnimate: boolean;
   useTransition: typeof useTransition;
   width: number;
-  theme?: string;
+  theme: string;
 }
 
 export function SparkBarSeries({

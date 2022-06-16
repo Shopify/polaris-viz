@@ -5,7 +5,7 @@ import {
   MAX_DIAGONAL_LABEL_WIDTH,
   MAX_DIAGONAL_VISIBLE_HEIGHT,
 } from '../../../constants';
-import type {FormattedLine, PreparedLabels} from '../types';
+import type {FormattedLine, PreparedLabels} from '../../../types';
 
 import {getWidestLabel} from './getWidestLabel';
 import {truncateLabels} from './truncateLabels';

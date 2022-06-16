@@ -1,1 +1,0 @@
-export {WebPolarisVizProvider} from './WebPolarisVizProvider';

@@ -1,7 +1,8 @@
 import React, {Dispatch, SetStateAction} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 
-import {useLabels, TextLine, shouldSkipLabel} from '../Labels';
+import {useLabels, shouldSkipLabel} from '../Labels';
+import {TextLine} from '../TextLine';
 
 interface LinearXAxisLabelsProps {
   chartHeight: number;
@@ -12,7 +13,8 @@ interface LinearXAxisLabelsProps {
   onHeightChange: Dispatch<SetStateAction<number>>;
   xScale: ScaleLinear<number, number>;
   reducedLabelIndexes?: number[];
-  theme?: string;
+  theme: string;
+  ariaHidden?: boolean;
 }
 
 export function LinearXAxisLabels({
@@ -25,6 +27,7 @@ export function LinearXAxisLabels({
   reducedLabelIndexes,
   theme,
   xScale,
+  ariaHidden = false,
 }: LinearXAxisLabelsProps) {
   const {lines} = useLabels({
     chartHeight,
@@ -43,7 +46,11 @@ export function LinearXAxisLabels({
         const x = xScale(index) ?? 0;
 
         return (
-          <g transform={`translate(${chartX + x},${chartY})`} key={index}>
+          <g
+            transform={`translate(${chartX + x},${chartY})`}
+            key={index}
+            aria-hidden={ariaHidden}
+          >
             <TextLine line={line} index={index} theme={theme} />
           </g>
         );

@@ -3,6 +3,7 @@ import {createElement} from 'react';
 import variables from './styles/shared/_variables.scss';
 import {createGradient} from './utilities/createGradient';
 import type {SvgComponents, Theme} from './types';
+import {ChartState} from './types';
 
 export const LINE_HEIGHT = 14;
 export const FONT_SIZE = 12;
@@ -96,6 +97,8 @@ export const colorBlack = variables.colorBlack;
 export const colorPurpleDark = variables.colorPurpleDark;
 export const colorTeal = variables.colorTeal;
 
+export const DEFAULT_THEME_NAME = 'Default';
+
 export const NEUTRAL_SINGLE_GRADIENT = [
   {offset: 0, color: variables.colorIndigo90},
   {offset: 85, color: variables.colorBlue90},
@@ -151,15 +154,10 @@ export const DEFAULT_THEME: Theme = {
     minHeight: 200,
   },
   line: {
-    sparkArea: [
-      {offset: 0, color: 'rgba(92, 105, 208, 0)'},
-      {offset: 100, color: 'rgba(92, 105, 208, 0.15)'},
-    ],
+    hasArea: true,
     hasSpline: true,
-    style: 'solid',
-    hasPoint: true,
     width: 2,
-    pointStroke: variables.colorGray160,
+    pointStroke: 'variables.colorGray160',
   },
   arc: {
     cornerRadius: DONUT_CHART_CORNER_RADIUS,
@@ -196,7 +194,7 @@ export const DEFAULT_THEME: Theme = {
     valueColor: variables.colorGray00,
     backgroundColor: variables.colorGray150,
     trendIndicator: {
-      positive: '#039c86',
+      positive: '#03AB92',
       negative: '#f24f62',
       neutral: '#8C9196',
     },
@@ -251,13 +249,8 @@ export const LIGHT_THEME: Theme = {
     backgroundColor: variables.colorGray00,
   },
   line: {
-    sparkArea: [
-      {offset: 0, color: 'rgba(92, 105, 208, 0)'},
-      {offset: 100, color: 'rgba(92, 105, 208, 0.15)'},
-    ],
+    hasArea: true,
     hasSpline: true,
-    style: 'solid',
-    hasPoint: true,
     width: 2,
     pointStroke: variables.colorGray00,
   },
@@ -403,4 +396,10 @@ export const COLOR_VISION_EVENT = {
   name: 'color-vision-event',
   dataAttribute: 'data-color-vision-event',
   camelCaseName: 'colorVisionEvent',
+};
+
+export const DEFAULT_CHART_PROPS = {
+  isAnimated: true,
+  theme: DEFAULT_THEME_NAME,
+  state: ChartState.Success,
 };

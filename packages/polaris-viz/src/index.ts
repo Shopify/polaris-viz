@@ -6,11 +6,13 @@ export {
   StackedAreaChart,
   Legend,
   BarChart,
+  FunnelChart,
   LinePreview,
   SquareColorPreview,
   SimpleBarChart,
   PolarisVizProvider,
   TooltipContent,
+  ChartSkeleton,
 } from './components';
 
 export type {
@@ -39,6 +41,13 @@ export {
   isGradientType,
   uniqueId,
   createTheme,
+  getColorVisionStylesForActiveIndex,
+  getColorVisionEventAttrs,
+  changeColorOpacity,
+  changeGradientOpacity,
+  getAverageColor,
+  paddingStringToObject,
+  removeFalsyValues,
 } from '@shopify/polaris-viz-core';
 
 export type {
@@ -49,4 +58,5 @@ export type {
   PartialTheme,
   GradientStop,
   DataPoint,
+  ChartState,
 } from '@shopify/polaris-viz-core';

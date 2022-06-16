@@ -3,6 +3,7 @@ import {
   uniqueId,
   DataType,
   COLOR_VISION_SINGLE_ITEM,
+  BoundingRect,
 } from '@shopify/polaris-viz-core';
 import type {
   DataSeries,
@@ -58,7 +59,7 @@ export interface ChartProps {
   yAxisOptions: Required<YAxisOptions>;
   annotationsLookupTable?: AnnotationLookupTable;
   dimensions?: Dimensions;
-  theme?: string;
+  theme: string;
 }
 
 export function Chart({
@@ -180,6 +181,12 @@ export function Chart({
   const zeroPosition = longestLabel.negative + xScale(0);
 
   const labelWidth = drawableWidth / ticks.length;
+  const chartBounds: BoundingRect = {
+    width,
+    height,
+    x: chartStartPosition,
+    y: 0,
+  };
 
   return (
     <div
@@ -297,7 +304,7 @@ export function Chart({
       </svg>
       <TooltipWrapper
         bandwidth={groupBarsAreaHeight}
-        chartDimensions={{width, height}}
+        chartBounds={chartBounds}
         focusElementDataType={DataType.BarGroup}
         getAlteredPosition={getAlteredHorizontalBarPosition}
         getMarkup={getTooltipMarkup}

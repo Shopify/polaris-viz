@@ -805,7 +805,7 @@ export interface GradientStop {
   <PropertyTable.Row
     property="xAxis.showTicks"
     type="boolean"
-    description="determines wether or not to show the ticks vertical lines indicating the labels on the X Axis"
+    description="determines whether or not to show the ticks vertical lines indicating the labels on the X Axis"
     chartsAffected={[
       'BarChart',
       'LineChart',
@@ -828,7 +828,7 @@ export interface GradientStop {
     property="xAxis.hide"
     type="boolean"
     z
-    description="determines wether or not to show the X Axis"
+    description="determines whether or not to show the X Axis"
     chartsAffected={[
       'BarChart',
       'LineChart',
@@ -1018,28 +1018,16 @@ export interface GradientStop {
 
 <PropertyTable>
   <PropertyTable.Row
-    property="line.sparkArea"
+    property="line.hasArea"
     type="string"
-    description="a CSS color string applied to the area under the line of Sparklines"
+    description="determines whether or not to show the area under the line"
     chartsAffected={['SparkLineChart']}
   />
   <PropertyTable.Row
     property="line.hasSpline"
     type="boolean"
-    description="determines wether or not to use curved lines"
+    description="determines whether or not to use curved lines"
     chartsAffected={['LineChart', 'StackedAreaChart', 'SparkLineChart']}
-  />
-  <PropertyTable.Row
-    property="line.style"
-    type={['"solid"', '"dashed"', '"dotted"']}
-    description="determines wether or not to use curved lines"
-    chartsAffected={['LineChart', 'SparkLineChart']}
-  />
-  <PropertyTable.Row
-    property="line.hasPoint"
-    type={'boolean'}
-    description="determines wether or not to show a circle at the end of the line. Does not get applied on non-solid lines"
-    chartsAffected={['SparkLineChart']}
   />
   <PropertyTable.Row
     property="line.width"

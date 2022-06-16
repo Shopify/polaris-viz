@@ -1,10 +1,11 @@
 import React, {useRef} from 'react';
-import {uniqueId} from '@shopify/polaris-viz-core';
-import type {
-  DataSeries,
-  XAxisOptions,
-  YAxisOptions,
+import {
+  uniqueId,
+  ChartState,
+  ChartProps,
+  DEFAULT_CHART_PROPS,
 } from '@shopify/polaris-viz-core';
+import type {XAxisOptions, YAxisOptions} from '@shopify/polaris-viz-core';
 
 import {
   getXAxisOptionsWithDefaults,
@@ -13,32 +14,38 @@ import {
 import {formatTooltipDataForLinearCharts} from '../../utilities/formatTooltipDataForLinearCharts';
 import {TooltipContent} from '../';
 import {ChartContainer} from '../ChartContainer';
+import {ChartSkeleton} from '../ChartSkeleton';
 import {SkipLink} from '../SkipLink';
 import type {RenderTooltipContentData} from '../../types';
 
 import {Chart} from './Chart';
 
-export interface StackedAreaChartProps {
+export type StackedAreaChartProps = {
   renderTooltipContent?(data: RenderTooltipContentData): React.ReactNode;
-  data: DataSeries[];
-  isAnimated?: boolean;
+  state?: ChartState;
+  errorText?: string;
   showLegend?: boolean;
   skipLinkText?: string;
-  theme?: string;
   xAxisOptions?: Partial<XAxisOptions>;
   yAxisOptions?: Partial<YAxisOptions>;
-}
+} & ChartProps;
 
-export function StackedAreaChart({
-  xAxisOptions,
-  yAxisOptions,
-  data,
-  renderTooltipContent,
-  isAnimated = false,
-  showLegend = true,
-  skipLinkText,
-  theme,
-}: StackedAreaChartProps) {
+export function StackedAreaChart(props: StackedAreaChartProps) {
+  const {
+    xAxisOptions,
+    yAxisOptions,
+    data,
+    state,
+    errorText,
+    renderTooltipContent,
+    isAnimated,
+    showLegend = true,
+    skipLinkText,
+    theme,
+  } = {
+    ...DEFAULT_CHART_PROPS,
+    ...props,
+  };
   const skipLinkAnchorId = useRef(uniqueId('stackedAreaChart'));
 
   if (data.length === 0) {
@@ -71,18 +78,22 @@ export function StackedAreaChart({
         <SkipLink anchorId={skipLinkAnchorId.current}>{skipLinkText}</SkipLink>
       )}
       <ChartContainer theme={theme}>
-        <Chart
-          data={data}
-          isAnimated={isAnimated}
-          renderTooltipContent={
-            renderTooltipContent != null
-              ? renderTooltipContent
-              : renderDefaultTooltipContent
-          }
-          showLegend={showLegend}
-          xAxisOptions={xAxisOptionsWithDefaults}
-          yAxisOptions={yAxisOptionsWithDefaults}
-        />
+        {state !== ChartState.Success ? (
+          <ChartSkeleton state={state} errorText={errorText} theme={theme} />
+        ) : (
+          <Chart
+            data={data}
+            isAnimated={isAnimated}
+            renderTooltipContent={
+              renderTooltipContent != null
+                ? renderTooltipContent
+                : renderDefaultTooltipContent
+            }
+            showLegend={showLegend}
+            xAxisOptions={xAxisOptionsWithDefaults}
+            yAxisOptions={yAxisOptionsWithDefaults}
+          />
+        )}
       </ChartContainer>
 
       {skipLinkText == null || skipLinkText.length === 0 ? null : (

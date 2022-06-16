@@ -73,6 +73,8 @@ export {
   COLOR_VISION_ACTIVE_OPACITY,
   COLOR_VISION_FADED_OPACITY,
   BORDER_RADIUS,
+  DEFAULT_THEME_NAME,
+  DEFAULT_CHART_PROPS,
 } from './constants';
 export {
   clamp,
@@ -92,6 +94,9 @@ export {
   getColorVisionEventAttrs,
   getColorVisionStylesForActiveIndex,
   getRoundedRectPath,
+  changeColorOpacity,
+  changeGradientOpacity,
+  getAverageColor,
 } from './utilities';
 export {
   useSparkBar,
@@ -110,7 +115,7 @@ export {
 } from './components';
 export {ChartContext} from './contexts';
 export type {PolarisVizProviderProps} from './components';
-export {DataType} from './types';
+export {DataType, ChartState} from './types';
 
 export type {
   ActiveTooltip,
@@ -122,8 +127,6 @@ export type {
   GradientStop,
   LineStyle,
   PartialTheme,
-  SparkBarChartProps,
-  SparkLineChartProps,
   SvgComponents,
   Theme,
   DataPoint,
@@ -135,4 +138,7 @@ export type {
   Shape,
   CharacterWidths,
   LineChartDataSeriesWithDefaults,
+  ChartProps,
+  WithRequired,
+  BoundingRect,
 } from './types';

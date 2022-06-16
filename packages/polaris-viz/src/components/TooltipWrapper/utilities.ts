@@ -1,4 +1,4 @@
-import type {Dimensions} from '@shopify/polaris-viz-core';
+import {BoundingRect, clamp, Dimensions} from '@shopify/polaris-viz-core';
 
 import type {TooltipPositionOffset} from '../TooltipWrapper';
 import type {Margin} from '../../types';
@@ -13,7 +13,7 @@ export interface AlteredPositionProps {
   currentY: number;
   position: TooltipPositionOffset;
   tooltipDimensions: Dimensions;
-  chartDimensions: Dimensions;
+  chartBounds: BoundingRect;
   margin: Margin;
   bandwidth: number;
 }
@@ -34,7 +34,7 @@ export type AlteredPosition = (
 export function getAlteredVerticalBarPosition(
   props: AlteredPositionProps,
 ): AlteredPositionReturn {
-  const {currentX, currentY, position} = props;
+  const {currentX, currentY, position, chartBounds} = props;
 
   const newPosition = {...position};
 
@@ -99,7 +99,14 @@ export function getAlteredVerticalBarPosition(
     x = center.value;
   }
 
-  return {x, y: props.margin.Top};
+  return {
+    x: clamp({
+      amount: x,
+      min: chartBounds.x ?? 0,
+      max: chartBounds.width,
+    }),
+    y,
+  };
 }
 
 interface IsOutsideBoundsData {
@@ -115,14 +122,14 @@ function isOutsideBounds(data: IsOutsideBoundsData): boolean {
     const isLeft = current < alteredPosition.margin.Left;
     const isRight =
       current + alteredPosition.tooltipDimensions.width >
-      alteredPosition.chartDimensions.width - alteredPosition.margin.Right;
+      alteredPosition.chartBounds.width - alteredPosition.margin.Right;
 
     return isLeft || isRight;
   } else {
     const isAbove = current < 0;
     const isBelow =
       current + alteredPosition.tooltipDimensions.height >
-      alteredPosition.chartDimensions.height - alteredPosition.margin.Bottom;
+      alteredPosition.chartBounds.height - alteredPosition.margin.Bottom;
 
     return isAbove || isBelow;
   }
@@ -147,7 +154,7 @@ export function getInlinePosition(
 
   if (wasOutsideBounds) {
     const bottom = y + props.tooltipDimensions.height;
-    const offset = bottom - props.chartDimensions.height;
+    const offset = bottom - props.chartBounds.height;
 
     y -= offset + props.margin.Bottom;
   }
@@ -171,7 +178,7 @@ export function getVerticalCenterPosition(
     if (y <= 0) {
       y = 0;
     } else {
-      y = props.chartDimensions.height - props.tooltipDimensions.height;
+      y = props.chartBounds.height - props.tooltipDimensions.height;
     }
   }
 
@@ -222,13 +229,11 @@ export function getLeftPosition(
   const [value, props] = args;
 
   let x = value - props.tooltipDimensions.width;
-
   const wasOutsideBounds = isOutsideBounds({
     current: x,
     direction: 'x',
     alteredPosition: props,
   });
-
   if (wasOutsideBounds) {
     x = props.currentX + props.margin.Left + props.bandwidth + TOOLTIP_MARGIN;
   } else {
@@ -279,7 +284,7 @@ export function getCenterPosition(
 
   if (wasOutsideBounds) {
     x =
-      props.chartDimensions.width -
+      props.chartBounds.width -
       props.tooltipDimensions.width -
       TOOLTIP_MARGIN * 2;
   }

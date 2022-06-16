@@ -6,10 +6,11 @@ import {
   DataType,
   getColorVisionStylesForActiveIndex,
   COLOR_VISION_SINGLE_ITEM,
+  changeColorOpacity,
+  changeGradientOpacity,
 } from '@shopify/polaris-viz-core';
 
 import {Point} from '../../../';
-import {changeColorOpacity, changeGradientOpacity} from '../../../../utilities';
 import type {AnimatedCoordinate} from '../../../../types';
 import {
   usePrefersReducedMotion,
@@ -34,7 +35,7 @@ interface PointsProps {
   tooltipId: string;
   xScale: any;
   yScale: any;
-  theme?: string;
+  theme: string;
 }
 
 export function Points({

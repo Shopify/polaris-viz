@@ -11,7 +11,7 @@ export interface GroupLabelProps {
   containerWidth: number;
   label: string;
   zeroPosition: number;
-  theme?: string;
+  theme: string;
 }
 
 export function GroupLabel({

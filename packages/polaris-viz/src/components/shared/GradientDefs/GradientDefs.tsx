@@ -14,7 +14,7 @@ interface GradientDefsProps {
   id: string;
   direction?: Direction;
   seriesColors?: Color[];
-  theme?: string;
+  theme: string;
   gradientUnits?: GradientUnits;
 }
 
@@ -22,7 +22,7 @@ export function GradientDefs({
   direction = 'vertical',
   id,
   seriesColors = [],
-  theme = 'Default',
+  theme,
   size = '100%',
   gradientUnits,
 }: GradientDefsProps) {

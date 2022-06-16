@@ -28,7 +28,7 @@ interface StackedBarGroupsProps {
   stackedValues: StackedSeries[];
   xScale: ScaleBand<string>;
   yScale: ScaleLinear<number, number>;
-  theme?: string;
+  theme: string;
 }
 
 export function StackedBarGroups({

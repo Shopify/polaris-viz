@@ -15,20 +15,19 @@ export {StackedAreaChart} from './StackedAreaChart';
 export type {StackedAreaChartProps} from './StackedAreaChart';
 export {BarChart} from './BarChart';
 export type {BarChartProps} from './BarChart';
+export {FunnelChart} from './FunnelChart';
+export type {FunnelChartProps} from './FunnelChart';
 export {SkipLink} from './SkipLink';
 export {VisuallyHiddenRows} from './VisuallyHiddenRows';
 export {LinePreview} from './LinePreview';
 export type {LinePreviewProps} from './LinePreview';
-export {TooltipWrapper, TOOLTIP_MARGIN} from './TooltipWrapper';
-export type {
-  AlteredPositionProps,
-  AlteredPositionReturn,
-} from './TooltipWrapper';
+export {TooltipWrapper} from './TooltipWrapper';
 export {SimpleBarChart} from './SimpleBarChart';
 export type {SimpleBarChartProps} from './SimpleBarChart';
-export {Legend} from './LegendContainer';
-export type {LegendProps} from './LegendContainer';
-export {WebPolarisVizProvider as PolarisVizProvider} from './WebPolarisVizProvider';
+export {Legend} from './Legend';
+export type {LegendProps} from './Legend';
+export {PolarisVizProvider} from './PolarisVizProvider';
 export {TooltipContent} from './TooltipContent';
 export type {TooltipContentProps} from './TooltipContent';
 export {ConicGradientWithStops} from './ConicGradientWithStops';
+export {ChartSkeleton} from './ChartSkeleton';

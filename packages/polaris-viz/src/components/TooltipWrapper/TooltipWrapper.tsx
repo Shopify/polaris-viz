@@ -6,7 +6,7 @@ import React, {
   useMemo,
   useCallback,
 } from 'react';
-import type {DataType, Dimensions} from '@shopify/polaris-viz-core';
+import type {DataType, BoundingRect} from '@shopify/polaris-viz-core';
 
 import type {Margin} from '../../types';
 
@@ -16,12 +16,13 @@ import {TooltipAnimatedContainer} from './components/TooltipAnimatedContainer';
 import type {AlteredPosition} from './utilities';
 
 interface TooltipWrapperProps {
-  chartDimensions: Dimensions;
+  chartBounds: BoundingRect;
   getMarkup: (index: number) => ReactNode;
   getPosition: (data: TooltipPositionParams) => TooltipPosition;
   margin: Margin;
   parentRef: SVGSVGElement | null;
   focusElementDataType: DataType;
+  alwaysUpdatePosition?: boolean;
   bandwidth?: number;
   getAlteredPosition?: AlteredPosition;
   id?: string;
@@ -30,6 +31,7 @@ interface TooltipWrapperProps {
 
 export function TooltipWrapper(props: TooltipWrapperProps) {
   const {
+    alwaysUpdatePosition = false,
     bandwidth = 0,
     focusElementDataType,
     getAlteredPosition,
@@ -60,14 +62,17 @@ export function TooltipWrapper(props: TooltipWrapperProps) {
     (event: MouseEvent | TouchEvent) => {
       const newPosition = getPosition({event, eventType: 'mouse'});
 
-      if (activeIndexRef.current === newPosition.activeIndex) {
+      if (
+        !alwaysUpdatePosition &&
+        activeIndexRef.current === newPosition.activeIndex
+      ) {
         return;
       }
 
       setPosition(newPosition);
       onIndexChange?.(newPosition.activeIndex);
     },
-    [getPosition, onIndexChange],
+    [alwaysUpdatePosition, getPosition, onIndexChange],
   );
 
   const onMouseLeave = useCallback(() => {
@@ -155,7 +160,7 @@ export function TooltipWrapper(props: TooltipWrapperProps) {
     <TooltipAnimatedContainer
       activePointIndex={position.activeIndex}
       bandwidth={bandwidth}
-      chartDimensions={props.chartDimensions}
+      chartBounds={props.chartBounds}
       currentX={position.x}
       currentY={position.y}
       id={id}

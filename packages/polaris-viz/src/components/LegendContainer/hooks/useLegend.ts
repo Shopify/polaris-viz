@@ -7,7 +7,7 @@ import type {
 } from '@shopify/polaris-viz-core';
 
 import {DEFAULT_LEGEND_HEIGHT} from '../../../constants';
-import type {LegendData} from '../types';
+import type {LegendData} from '../../../types';
 
 function getAlteredDimensions(
   dimensions: Dimensions | undefined,

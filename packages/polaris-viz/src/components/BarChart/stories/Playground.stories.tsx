@@ -258,3 +258,29 @@ SingleValues.args = {
   type: 'stacked',
   data: DATA,
 };
+
+const MULTIPLE_BARS_DATA = [...new Array(3)].fill(null).map(() => {
+  return {
+    name: 'total_sales OVER day',
+    data: [
+      {
+        key: 'Apr 30, 2022',
+        value: Math.random(),
+      },
+    ],
+  };
+});
+
+export const SingleSeriesMultipleBars: Story<BarChartProps> = (
+  args: BarChartProps,
+) => {
+  return (
+    <div style={{width: 600, height: 400}}>
+      <BarChart {...args} />
+    </div>
+  );
+};
+
+SingleSeriesMultipleBars.args = {
+  data: MULTIPLE_BARS_DATA,
+};

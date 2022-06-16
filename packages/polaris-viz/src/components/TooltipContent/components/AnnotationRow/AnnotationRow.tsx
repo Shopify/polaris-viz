@@ -15,7 +15,7 @@ interface Props {
   index: number;
   label: string;
   value: string;
-  theme?: string;
+  theme: string;
 }
 
 export function AnnotationRow({

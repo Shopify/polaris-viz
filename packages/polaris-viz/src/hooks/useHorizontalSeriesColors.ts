@@ -6,7 +6,7 @@ import {getSeriesColors} from './useThemeSeriesColors';
 
 interface Props {
   data: DataSeries[];
-  theme?: string;
+  theme: string;
 }
 
 export function useHorizontalSeriesColors({data, theme}: Props) {

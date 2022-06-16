@@ -1,15 +1,15 @@
 import React, {useState} from 'react';
 import {sum} from 'd3-array';
 import {scaleLinear} from 'd3-scale';
-import {COLOR_VISION_SINGLE_ITEM} from '@shopify/polaris-viz-core';
-import type {
-  DataPoint,
-  Direction,
-  LabelFormatter,
+import {
+  COLOR_VISION_SINGLE_ITEM,
+  DataSeries,
+  DEFAULT_THEME_NAME,
 } from '@shopify/polaris-viz-core';
+import type {Direction, LabelFormatter} from '@shopify/polaris-viz-core';
 
 import type {ComparisonMetricProps} from '../ComparisonMetric';
-import {getSeriesColors} from '../../hooks/useThemeSeriesColors';
+import {useThemeSeriesColors} from '../../hooks/useThemeSeriesColors';
 import {
   useColorVisionEvents,
   usePrefersReducedMotion,
@@ -23,7 +23,7 @@ import type {Size, LabelPosition} from './types';
 import styles from './SimpleNormalizedChart.scss';
 
 export interface ChartProps {
-  data: DataPoint[];
+  data: DataSeries[];
   comparisonMetrics?: Omit<ComparisonMetricProps, 'theme'>[];
   labelFormatter?: LabelFormatter;
   labelPosition?: LabelPosition;
@@ -39,13 +39,18 @@ export function Chart({
   labelPosition = 'top-left',
   direction = 'horizontal',
   size = 'small',
-  theme,
+  theme = DEFAULT_THEME_NAME,
 }: ChartProps) {
+  const flattenedData = data.map(({data}) => data).flat();
+
   useColorVisionEvents();
 
   const selectedTheme = useTheme(theme);
-  const colors = getSeriesColors(data.length, selectedTheme);
-  const containsNegatives = data.some(({value}) => value !== null && value < 0);
+  const colors = useThemeSeriesColors(data, selectedTheme);
+
+  const containsNegatives = flattenedData.some(
+    ({value}) => value !== null && value < 0,
+  );
   const isDevelopment = process.env.NODE_ENV === 'development';
   const {prefersReducedMotion} = usePrefersReducedMotion();
 
@@ -63,13 +68,13 @@ export function Chart({
     );
   }
 
-  if (isDevelopment && data.length > 4) {
+  if (isDevelopment && flattenedData.length > 4) {
     throw new Error(
       'This component displays a max of 4 data items. Please modify your data before passing it into this component.',
     );
   }
 
-  const slicedData = data.slice(0, 4);
+  const slicedData = flattenedData.slice(0, 4);
   const totalValue = sum(slicedData, ({value}) => value);
 
   const xScale = scaleLinear().range([0, 100]).domain([0, totalValue]);
@@ -116,8 +121,8 @@ export function Chart({
             <BarLabel
               activeIndex={activeIndex}
               index={index}
-              key={`${key}-${formattedValue}`}
-              label={`${key}`}
+              key={`${key}-${formattedValue}-${index}`}
+              label={`${data[index].name}`}
               value={formattedValue}
               color={colors[index]}
               comparisonMetric={comparisonMetric}
@@ -152,7 +157,7 @@ export function Chart({
               direction={direction}
               size={size}
               scale={xScale(value)}
-              key={`${key}`}
+              key={`${key}-${index}`}
               color={colors[colorIndex]}
               roundedCorners={selectedTheme.bar.hasRoundedCorners}
             />

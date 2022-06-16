@@ -18,13 +18,13 @@ interface Props {
   chartHeight: number;
   labels: string[];
   targetWidth: number;
-  onHeightChange: Dispatch<SetStateAction<number>>;
+  onHeightChange?: Dispatch<SetStateAction<number>> | (() => void);
 }
 
 export function useLabels({
   chartHeight,
   labels,
-  onHeightChange,
+  onHeightChange = () => {},
   targetWidth,
 }: Props) {
   const {characterWidths} = useContext(ChartContext);

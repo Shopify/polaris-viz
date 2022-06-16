@@ -1,24 +1,38 @@
 import React from 'react';
 import {View} from 'react-native';
 import {useTransition} from '@react-spring/native';
+import type {Dimensions, ChartProps} from '@shopify/polaris-viz-core';
 import {
   usePolarisVizContext,
-  SparkBarChartProps,
   ANIMATION_MARGIN,
   SparkBarSeries,
+  DEFAULT_THEME_NAME,
+  DEFAULT_CHART_PROPS,
 } from '@shopify/polaris-viz-core';
 
 import {usePrefersReducedMotion} from '../../hooks';
 import {ChartContainer} from '../ChartContainer';
 
-export function SparkBarChart({
-  data,
-  accessibilityLabel,
-  isAnimated = false,
-  dataOffsetRight = 0,
-  dataOffsetLeft = 0,
-  theme,
-}: SparkBarChartProps) {
+export type SparkBarChartProps = {
+  dataOffsetRight?: number;
+  dataOffsetLeft?: number;
+  accessibilityLabel?: string;
+  dimensions?: Dimensions;
+} & ChartProps;
+
+export function SparkBarChart(props: SparkBarChartProps) {
+  const {
+    data,
+    accessibilityLabel,
+    isAnimated,
+    dataOffsetRight = 0,
+    dataOffsetLeft = 0,
+    theme,
+  } = {
+    ...DEFAULT_CHART_PROPS,
+    ...props,
+  };
+
   return (
     <ChartContainer theme={theme} sparkChart>
       <Chart
@@ -38,7 +52,7 @@ function Chart({
   accessibilityLabel,
   dataOffsetRight = 0,
   dataOffsetLeft = 0,
-  theme,
+  theme = DEFAULT_THEME_NAME,
   isAnimated,
 }: SparkBarChartProps) {
   const {

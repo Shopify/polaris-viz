@@ -21,4 +21,22 @@ describe('<SimpleBarChart />', () => {
 
     expect(barChart).toContainReactComponent(Chart);
   });
+
+  describe('theme', () => {
+    it('gets passed to <Chart/>', () => {
+      const barChart = mount(<SimpleBarChart {...mockProps} theme="Light" />);
+
+      expect(barChart).toContainReactComponent(Chart, {
+        theme: 'Light',
+      });
+    });
+
+    it('`Default` is used if no value is provided', () => {
+      const barChart = mount(<SimpleBarChart {...mockProps} />);
+
+      expect(barChart).toContainReactComponent(Chart, {
+        theme: 'Default',
+      });
+    });
+  });
 });

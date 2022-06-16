@@ -7,11 +7,12 @@ import {
   DataType,
   getColorVisionStylesForActiveIndex,
   COLOR_VISION_SINGLE_ITEM,
+  changeColorOpacity,
+  changeGradientOpacity,
 } from '@shopify/polaris-viz-core';
 import type {LineChartDataSeriesWithDefaults} from '@shopify/polaris-viz-core';
 
 import {useTheme, useWatchColorVisionEvents} from '../../../../hooks';
-import {changeColorOpacity, changeGradientOpacity} from '../../../../utilities';
 import {Point} from '../../../Point';
 import type {AnimatedCoordinate} from '../../../../types';
 
@@ -23,7 +24,7 @@ interface PointsProps {
   gradientId: string;
   longestSeriesIndex: number;
   tooltipId: string;
-  getXPosition: ({isCrosshair}?: {isCrosshair: boolean}) =>
+  getXPosition: ({isCrosshair}: {isCrosshair: boolean}) =>
     | number
     | Interpolation<
         | DOMPoint
@@ -33,7 +34,7 @@ interface PointsProps {
           },
         number
       >;
-  theme?: string;
+  theme: string;
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
 }

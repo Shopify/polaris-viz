@@ -1,0 +1,36 @@
+import {Meta, Story, Canvas} from '@storybook/addon-docs/blocks';
+
+import {
+  Divider,
+  Title,
+  UtilitiesHeader,
+} from '../../../../polaris-viz/src/components/Docs/stories/components';
+
+<Meta
+  title="Shared/Utilities/Color Manipulation/createCSSConicGradient"
+  parameters={{
+    viewMode: 'docs',
+    docsOnly: true,
+  }}
+/>
+
+<UtilitiesHeader />
+
+<Title type="h3">
+  <code>createCSSConicGradient()</code>
+</Title>
+
+<p>Returns a css conic gradient from the provided gradient.</p>
+
+```tsx
+const gradient: gradientStop[] = [
+  {color: 'red', offset: 0},
+  {color: 'green', offset: 100},
+];
+
+const conicGradient = createCSSConicGradient(gradient);
+
+// conic-gradient(red 0%, green 100%)
+```
+
+<Divider />

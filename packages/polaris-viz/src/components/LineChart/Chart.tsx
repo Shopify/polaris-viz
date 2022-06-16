@@ -9,6 +9,8 @@ import {
   COLOR_VISION_SINGLE_ITEM,
   LineChartDataSeriesWithDefaults,
   clamp,
+  DEFAULT_THEME_NAME,
+  BoundingRect,
 } from '@shopify/polaris-viz-core';
 import type {
   DataPoint,
@@ -18,11 +20,12 @@ import type {
 } from '@shopify/polaris-viz-core';
 
 import type {RenderTooltipContentData} from '../../types';
-import {getAlteredLineChartPosition} from '../../utilities/getAlteredLineChartPosition';
 import {useXAxisLabels} from '../../hooks/useXAxisLabels';
 import {LinearXAxisLabels} from '../LinearXAxisLabels';
 import {useLegend, LegendContainer} from '../LegendContainer';
 import {
+  TooltipHorizontalOffset,
+  TooltipVerticalOffset,
   TooltipPosition,
   TooltipPositionParams,
   TooltipWrapper,
@@ -65,16 +68,21 @@ export interface ChartProps {
   dimensions?: Dimensions;
 }
 
+const TOOLTIP_POSITION = {
+  horizontal: TooltipHorizontalOffset.Left,
+  vertical: TooltipVerticalOffset.Center,
+};
+
 export function Chart({
   data,
   dimensions,
   renderTooltipContent,
-  showLegend,
+  showLegend = true,
   emptyStateText,
   isAnimated,
   xAxisOptions,
   yAxisOptions,
-  theme,
+  theme = DEFAULT_THEME_NAME,
 }: ChartProps) {
   useColorVisionEvents(data.length > 1);
 
@@ -186,8 +194,6 @@ export function Chart({
     index,
     eventType,
   }: TooltipPositionParams): TooltipPosition {
-    let activeIndex = 0;
-
     if (eventType === 'mouse') {
       const point = eventPointNative(event!);
 
@@ -199,25 +205,40 @@ export function Chart({
         return TOOLTIP_POSITION_DEFAULT_RETURN;
       }
 
-      const {svgX} = point;
+      const {svgX, svgY} = point;
 
       const closestIndex = Math.round(xScale.invert(svgX - chartStartPosition));
 
-      activeIndex = clamp({
+      const activeIndex = clamp({
         amount: closestIndex,
         min: 0,
         max: reversedSeries[longestSeriesIndex].data.length - 1,
       });
-    } else {
-      activeIndex = index ?? 0;
-    }
 
-    return {
-      x: chartStartPosition + xScale?.(activeIndex) ?? 0,
-      y: 0,
-      activeIndex,
-    };
+      return {
+        x: svgX,
+        y: svgY,
+        position: TOOLTIP_POSITION,
+        activeIndex,
+      };
+    } else {
+      const activeIndex = index ?? 0;
+
+      return {
+        x: xScale?.(activeIndex) ?? 0,
+        y: 0,
+        position: TOOLTIP_POSITION,
+        activeIndex,
+      };
+    }
   }
+
+  const chartBounds: BoundingRect = {
+    width,
+    height,
+    x: chartStartPosition,
+    y: Margin.Top,
+  };
 
   return (
     <div className={styles.Container} style={{width, height}}>
@@ -244,6 +265,7 @@ export function Chart({
             reducedLabelIndexes={xAxisDetails.reducedLabelIndexes}
             theme={theme}
             xScale={xScale}
+            ariaHidden
           />
         )}
 
@@ -267,6 +289,7 @@ export function Chart({
             width={yAxisLabelWidth}
             textAlign="right"
             theme={theme}
+            ariaHidden
           />
         </g>
 
@@ -324,9 +347,9 @@ export function Chart({
       </svg>
 
       <TooltipWrapper
-        chartDimensions={{width, height}}
+        alwaysUpdatePosition
+        chartBounds={chartBounds}
         focusElementDataType={DataType.Point}
-        getAlteredPosition={getAlteredLineChartPosition}
         getMarkup={getTooltipMarkup}
         getPosition={getTooltipPosition}
         id={tooltipId.current}

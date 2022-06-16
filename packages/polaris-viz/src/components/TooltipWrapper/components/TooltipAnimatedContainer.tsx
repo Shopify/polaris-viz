@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState, ReactNode} from 'react';
 import {useSpring, animated} from '@react-spring/web';
-import type {Dimensions} from '@shopify/polaris-viz-core';
+import type {BoundingRect, Dimensions} from '@shopify/polaris-viz-core';
 
 import type {Margin} from '../../../types';
 import styles from '../TooltipContainer.scss';
@@ -15,7 +15,7 @@ export interface TooltipAnimatedContainerProps {
   activePointIndex: number;
   currentX: number;
   currentY: number;
-  chartDimensions: Dimensions;
+  chartBounds: BoundingRect;
   getAlteredPosition?: AlteredPosition;
   position?: TooltipPositionOffset;
   id?: string;
@@ -25,7 +25,7 @@ export interface TooltipAnimatedContainerProps {
 export function TooltipAnimatedContainer({
   activePointIndex,
   bandwidth = 0,
-  chartDimensions,
+  chartBounds,
   children,
   currentX,
   currentY,
@@ -54,7 +54,7 @@ export function TooltipAnimatedContainer({
         currentY,
         position,
         tooltipDimensions,
-        chartDimensions,
+        chartBounds,
         margin,
         bandwidth,
       });

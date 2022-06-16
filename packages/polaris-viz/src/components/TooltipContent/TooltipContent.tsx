@@ -3,10 +3,11 @@ import {
   FONT_SIZE,
   useTheme,
   COLOR_VISION_SINGLE_ITEM,
+  changeColorOpacity,
+  DEFAULT_THEME_NAME,
 } from '@shopify/polaris-viz-core';
 
 import {useWatchColorVisionEvents} from '../../hooks';
-import {changeColorOpacity} from '../../utilities';
 import type {TooltipAnnotation, TooltipData} from '../../types';
 
 import {useGetLongestLabelFromData} from './hooks/useGetLongestLabelFromData';
@@ -27,7 +28,7 @@ const PREVIEW_WIDTH = 14;
 export function TooltipContent({
   annotations = [],
   data,
-  theme,
+  theme = DEFAULT_THEME_NAME,
   title,
 }: TooltipContentProps) {
   const [activeIndex, setActiveIndex] = useState(-1);

@@ -1,0 +1,33 @@
+import {Meta, Story, Canvas} from '@storybook/addon-docs/blocks';
+
+import {
+  Divider,
+  Title,
+  UtilitiesHeader,
+} from '../../../../polaris-viz/src/components/Docs/stories/components';
+
+<Meta
+  title="Shared/Utilities/clamp"
+  parameters={{
+    viewMode: 'docs',
+    docsOnly: true,
+  }}
+/>
+
+<UtilitiesHeader />
+
+<Title type="h3">
+  <code>clamp()</code>
+</Title>
+
+<p>Keep a number within a min/max bounds.</p>
+
+```tsx
+clamp({
+  amount: 10,
+  min: 15,
+  max: 20,
+});
+
+// 15
+```
