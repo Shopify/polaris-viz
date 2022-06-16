@@ -1,5 +1,3 @@
-import {access} from 'fs';
-
 import React, {useState} from 'react';
 import {pie} from 'd3-shape';
 import {
