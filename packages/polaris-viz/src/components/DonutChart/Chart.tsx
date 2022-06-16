@@ -1,3 +1,5 @@
+import {access} from 'fs';
+
 import React, {useState} from 'react';
 import {pie} from 'd3-shape';
 import {
@@ -96,7 +98,7 @@ export function Chart({
     <div className={styles.DonutWrapper}>
       <div className={styles.Donut}>
         <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
-        <svg aria-hidden width={diameter} height={diameter}>
+        <svg width={diameter} height={diameter}>
           <g
             className={styles.DonutChart}
             transform={`translate(${radius} ${radius})`}
@@ -119,11 +121,14 @@ export function Chart({
                 ({data: pieData, startAngle, endAngle}, index) => {
                   const {key} = pieData;
                   const color = data[index]?.color ?? seriesColor[index];
-
+                  const name = data[index].name;
+                  const accessibilityLabel = `${name}: ${pieData.key} - ${pieData.value}`;
                   return (
                     <g
                       key={`${key}-${startAngle}-${endAngle}`}
                       className={styles.DonutChart}
+                      aria-label={accessibilityLabel}
+                      role="img"
                       style={{
                         ...getColorVisionStylesForActiveIndex({
                           activeIndex,
@@ -172,7 +177,7 @@ export function Chart({
                   metric={comparisonMetric.metric}
                   trend={comparisonMetric.trend}
                   theme={selectedTheme.legend}
-                  accessibilityLabel="accessibility-label"
+                  accessibilityLabel={comparisonMetric.accessibilityLabel}
                 />
               </div>
             )}

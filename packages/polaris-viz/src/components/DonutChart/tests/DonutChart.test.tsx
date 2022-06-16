@@ -67,7 +67,22 @@ describe('<DonutChart />', () => {
     it('renders if comparisonMetric is provided', () => {
       const chart = mount(<DonutChart {...mockProps} />);
 
-      expect(chart).toContainReactComponent(ComparisonMetric);
+      expect(chart).toContainReactComponent(
+        ComparisonMetric,
+        mockProps.comparisonMetric,
+      );
+    });
+  });
+
+  describe('empty state', () => {
+    it('renders single <Arc /> when true', () => {
+      const chart = mount(<DonutChart {...mockProps} data={[]} />);
+      expect(chart).toContainReactComponentTimes(Arc, 1);
+    });
+
+    it('renders multiple <Arc /> when false', () => {
+      const chart = mount(<DonutChart {...mockProps} />);
+      expect(chart).toContainReactComponentTimes(Arc, 4);
     });
   });
 });
