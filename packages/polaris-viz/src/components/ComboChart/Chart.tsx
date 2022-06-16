@@ -20,7 +20,7 @@ import {useDualAxisTicksWidth} from './hooks/useDualAxisTickWidths';
 import {useDualAxisScale} from './hooks/useDualAxisScale';
 import {useXScale} from './hooks/useXScale';
 import styles from './Chart.scss';
-import {ComboBarChart} from './components';
+import {ComboBarChart, ComboLineChart} from './components';
 import {useSplitDataForCharts} from './hooks/useSplitDataForCharts';
 
 export interface ChartProps {
@@ -74,12 +74,7 @@ export function Chart({
     rightTicks,
   );
 
-  // These are used once we want to render the charts
-  // eslint-disable-next-line no-empty-pattern
-  const {
-    barYScale,
-    // lineYScale
-  } = useDualAxisScale({
+  const {barYScale, lineYScale} = useDualAxisScale({
     doesOneChartContainAllNegativeValues,
     doBothChartsContainMixedValues,
     drawableHeight,
@@ -99,7 +94,8 @@ export function Chart({
   const drawableWidth =
     width - chartXPosition - horizontalMargin * 2 - rightTickWidth;
 
-  const {barChartData, barChartColors} = useSplitDataForCharts(data, colors);
+  const {barChartData, barChartColors, lineChartColors, lineChartData} =
+    useSplitDataForCharts(data, colors);
 
   const {xScale, labels} = useXScale({drawableWidth, data, xAxisOptions});
 
@@ -184,6 +180,23 @@ export function Chart({
             labels={labels}
             theme={theme}
             yScale={barYScale}
+          />
+        </g>
+
+        <g
+          transform={`translate(${
+            chartXPosition + drawableWidth / labels.length / 2
+          },${0})`}
+        >
+          <ComboLineChart
+            colors={lineChartColors}
+            data={lineChartData}
+            drawableHeight={drawableHeight}
+            drawableWidth={drawableWidth}
+            isAnimated={isAnimated}
+            theme={theme}
+            xScale={xScale}
+            yScale={lineYScale}
           />
         </g>
       </svg>
