@@ -1,4 +1,5 @@
 import {Meta} from '@storybook/addon-docs/blocks';
+import LinkTo from '@storybook/addon-links/react';
 
 import {PolarisVizProvider} from '@shopify/polaris-viz';
 import {ComponentContainer, Title, SampleBarChart} from './components';
@@ -35,7 +36,7 @@ import {ComponentContainer, Title, SampleBarChart} from './components';
     title="Default Theme"
     description={
       <>
-        If nothing is passed to the <code>theme</code> prop of the chart, it
+        If nothing is passed to the chart's <code>theme</code> prop, it
         will use the <code>Default</code> theme
       </>
     }
@@ -60,7 +61,7 @@ import {ComponentContainer, Title, SampleBarChart} from './components';
     description={
       <>
         Gets automatically applied to all charts when printing. Based on{' '}
-        <code>Light</code> but with reduced gradients to optimize for print
+        the <code>Light</code> theme but with reduced gradients to optimize for printing
       </>
     }
     theme="Light"
@@ -70,14 +71,14 @@ import {ComponentContainer, Title, SampleBarChart} from './components';
 </div>
 
 <p>
-  You can read more about customizing or creating your own themes in the
-  <a href="/docs/docs-themes-customizing--page"> 👉 Theme customization page</a>
+  You can read more about customizing or creating your own themes in 👉
+  <LinkTo kind='Shared/Themes/Customizing'>Theme customization page</LinkTo>.
 </p>
 
 <Title type="h2">🖨 Print Support</Title>
-<p>We aim to make the components printable on all evergreen browsers.</p>
+<p>We aim to make the components printable in all evergreen browsers.</p>
 <p>
-  Firefox, however{' '}
+  However, Firefox{' '}
   <a target="_blank" href="https://bugzilla.mozilla.org/show_bug.cgi?id=774398">
     does not respond super well to print
   </a>

@@ -1,10 +1,12 @@
 import {Meta, Story, Canvas} from '@storybook/addon-docs/blocks';
+import LinkTo from '@storybook/addon-links/react';
 
 import {
   Divider,
   Title,
   UtilitiesHeader,
 } from '../../../../polaris-viz/src/components/Docs/stories/components';
+
 
 <Meta
   title="Shared/Utilities/Theme Handling/getSeriesColors"
@@ -22,19 +24,17 @@ import {
 <p>
   In the theme definition, you can choose different colors to be displayed as
   <code>SeriesColors</code> depending on the amount of <code>DataSeries</code> being
-  rendered. This function returns the colors array specified in the theme, according
+  rendered. This function returns an array of colors specified in the theme, according
   to the data series count.
 </p>
 <p>
-  If a <code>DataSeries</code> count is higher the maximum amount of available
+  If the <code>DataSeries</code> count is higher than the maximum amount of available
   colors, colors will repeat.
 </p>
 <p>
   Read more about how <code>SeriesColors</code> are used in the{' '}
   <code>Theme</code>
-  <a hhref="https://polaris-viz.shopify.io/iframe.html?id=docs-themes-theme-definition--page&viewMode=docs&globals=outline:true&args=#titleAnchor-5">
-    here
-  </a>
+  <LinkTo kind='Shared/Themes/Theme Definition'>here</LinkTo>
 </p>
 
 ```tsx
