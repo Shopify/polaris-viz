@@ -11,10 +11,11 @@ import {useTheme} from '../packages/polaris-viz/src/hooks';
 const storiesOrder = {
   Intro: null,
   Shared: {
-    'Web and Mobile Development': null,
     'Data Structure': null,
-    Utilities: null,
     Legends: null,
+    Labels: null,
+    Hooks: null,
+    Utilities: null,
     Themes: {
       'Default Themes': null,
       Customizing: null,

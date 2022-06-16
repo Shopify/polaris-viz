@@ -5,7 +5,7 @@ import {
   SimpleNormalizedChart,
   SimpleNormalizedChartProps,
 } from '../SimpleNormalizedChart';
-import {THEME_CONTROL_ARGS} from '../../../storybook';
+import {THEME_CONTROL_ARGS, DATA_ARGS} from '../../../storybook';
 import {PageWithSizingInfo} from '../../Docs/stories/components/PageWithSizingInfo';
 
 export default {
@@ -17,17 +17,17 @@ export default {
       page: PageWithSizingInfo,
       description: {
         component:
-          "Used for positive datasets with two to four items. If your dataset has more than four items, consider grouping the fourth item and the remainder into an “other” category before passing data to the component.  ",
+          'Used for positive datasets with two to four items. If your dataset has more than four items, consider grouping the fourth item and the remainder into an “other” category before passing data to the component.  ',
       },
     },
   },
   argTypes: {
-    data: {
-      description:
-        'Gives the user the ability to define how the bars should look like. The data object also gives the ability to add comparison metric indicators.',
-    },
+    data: DATA_ARGS,
     direction: {description: 'Determines the direction of the chart.'},
-    size: {description: 'Determines the width of the chart.'},
+    size: {
+      description:
+        'Determines the width or height of the bar segments depending on `direction`.',
+    },
     labelPosition: {
       description: 'Determines the position of the labels.',
     },
@@ -44,22 +44,43 @@ const Template: Story<SimpleNormalizedChartProps> = (
 const defaultProps: SimpleNormalizedChartProps = {
   data: [
     {
-      key: 'Direct',
-      value: 200,
+      name: 'Direct',
+      data: [
+        {
+          key: 'April 2022',
+          value: 200,
+        },
+      ],
     },
     {
-      key: 'Facebook',
-      value: 100,
+      name: 'Facebook',
+      data: [
+        {
+          key: 'April 2022',
+          value: 100,
+        },
+      ],
     },
     {
-      key: 'Twitter',
-      value: 100,
+      name: 'Twitter',
+      data: [
+        {
+          key: 'April 2022',
+          value: 100,
+        },
+      ],
     },
     {
-      key: 'Google',
-      value: 20,
+      name: 'Google',
+      data: [
+        {
+          key: 'April 2022',
+          value: 20,
+        },
+      ],
     },
   ],
+
   direction: 'horizontal',
   size: 'small',
   labelPosition: 'top-left',
@@ -76,6 +97,17 @@ const defaultProps: SimpleNormalizedChartProps = {
 
 export const Default = Template.bind({});
 Default.args = defaultProps;
+
+export const OverwrittenSeriesColors = Template.bind({});
+OverwrittenSeriesColors.args = {
+  ...defaultProps,
+  data: defaultProps.data.map((item, index) => {
+    if (index === 0) {
+      return {...item, color: 'lime'};
+    }
+    return item;
+  }),
+};
 
 export const VerticalSmall = Template.bind({});
 VerticalSmall.args = {
@@ -98,8 +130,12 @@ export const DynamicData = () => {
       const newValue = Math.floor(Math.random() * 200);
       return {
         ...item,
-        value: newValue,
-        formattedValue: `$${newValue}`,
+        data: [
+          {
+            ...item.data[0],
+            value: newValue,
+          },
+        ],
       };
     });
     setData(newData);

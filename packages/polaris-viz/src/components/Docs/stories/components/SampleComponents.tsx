@@ -110,20 +110,40 @@ export const SampleSimpleNormalizedChart = ({theme} = {theme: 'Default'}) => {
       theme={theme}
       data={[
         {
-          key: 'Direct',
-          value: 200,
+          name: 'Direct',
+          data: [
+            {
+              key: 'April 2022',
+              value: 200,
+            },
+          ],
         },
         {
-          key: 'Facebook',
-          value: 100,
+          name: 'Facebook',
+          data: [
+            {
+              key: 'April 2022',
+              value: 100,
+            },
+          ],
         },
         {
-          key: 'Twitter',
-          value: 100,
+          name: 'Twitter',
+          data: [
+            {
+              key: 'April 2022',
+              value: 100,
+            },
+          ],
         },
         {
-          key: 'Google',
-          value: 20,
+          name: 'Google',
+          data: [
+            {
+              key: 'April 2022',
+              value: 20,
+            },
+          ],
         },
       ]}
       labelFormatter={(value) => `$${value}`}
@@ -202,6 +222,7 @@ export const SampleLegendContainer = ({theme} = {theme: 'Default'}) => {
             },
           ]}
           onHeightChange={() => {}}
+          theme={theme}
         />
       </div>
     </SimpleContainer>

@@ -36,6 +36,11 @@ export interface Dimensions {
   height: number;
 }
 
+export interface BoundingRect extends Dimensions {
+  x: number;
+  y: number;
+}
+
 export type Color = string | GradientStop[];
 
 export interface XAxisOptions {
@@ -103,10 +108,8 @@ export interface ChartContainerTheme {
 }
 
 export interface LineTheme {
-  sparkArea: Color | null;
+  hasArea: boolean;
   hasSpline: boolean;
-  style: LineStyle;
-  hasPoint: boolean;
   width: number;
   pointStroke: string;
 }
@@ -167,15 +170,6 @@ export type ChartType = 'default' | 'stacked';
 
 export type GradientUnits = 'userSpaceOnUse' | 'objectBoundingBox';
 
-export interface SparkLineChartProps {
-  data: DataSeries[];
-  accessibilityLabel?: string;
-  isAnimated?: boolean;
-  offsetLeft?: number;
-  offsetRight?: number;
-  theme?: string;
-}
-
 export interface SvgComponents {
   Svg: (props: SVGProps<SVGElement>) => any;
   Circle: (props: SVGProps<SVGCircleElement>) => any;
@@ -199,25 +193,6 @@ export interface SvgComponents {
   ClipPath: (props: SVGProps<SVGClipPathElement>) => any;
   Pattern: (props: SVGProps<SVGPatternElement>) => any;
   Mask: (props: SVGProps<SVGMaskElement>) => any;
-}
-
-export interface SparkBarChartProps {
-  data: DataSeries[];
-  dataOffsetRight?: number;
-  dataOffsetLeft?: number;
-  accessibilityLabel?: string;
-  isAnimated?: boolean;
-  theme?: string;
-}
-
-export interface SparkBarChartProps {
-  data: DataSeries[];
-  dataOffsetRight?: number;
-  dataOffsetLeft?: number;
-  accessibilityLabel?: string;
-  isAnimated?: boolean;
-  theme?: string;
-  dimensions?: Dimensions;
 }
 
 export type Direction = 'horizontal' | 'vertical';
@@ -255,3 +230,18 @@ export interface BorderRadius {
   bottomLeft: number;
   bottomRight: number;
 }
+
+export enum ChartState {
+  Loading = 'Loading',
+  Error = 'Error',
+  Success = 'Success',
+}
+
+export interface ChartProps {
+  data: DataSeries[];
+  theme?: string;
+  isAnimated?: boolean;
+  state?: ChartState;
+}
+
+export type WithRequired<T, K extends keyof T> = T & {[P in K]-?: T[P]};

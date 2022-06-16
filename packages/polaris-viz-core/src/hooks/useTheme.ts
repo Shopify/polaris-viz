@@ -1,9 +1,10 @@
 import {useContext} from 'react';
 
+import {DEFAULT_THEME_NAME} from '../constants';
 import type {Theme} from '../types';
 import {PolarisVizContext} from '../contexts/PolarisVizContext';
 
-export function useTheme(themeName = 'Default'): Theme {
+export function useTheme(themeName = DEFAULT_THEME_NAME): Theme {
   const {themes} = useContext(PolarisVizContext);
 
   if (Object.prototype.hasOwnProperty.call(themes, themeName)) {

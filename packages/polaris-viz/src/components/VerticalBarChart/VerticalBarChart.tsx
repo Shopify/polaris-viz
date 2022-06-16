@@ -4,10 +4,10 @@ import type {
   DataSeries,
   XAxisOptions,
   YAxisOptions,
+  Dimensions,
 } from '@shopify/polaris-viz-core';
 
 import type {RenderTooltipContentData} from '../../types';
-import {ChartContainer} from '../ChartContainer';
 import {useTheme, useThemeSeriesColors} from '../../hooks';
 import type {AnnotationLookupTable} from '../BarChart';
 
@@ -23,11 +23,13 @@ export interface VerticalBarChartProps {
   barOptions?: {isStacked: boolean};
   emptyStateText?: string;
   isAnimated?: boolean;
-  theme?: string;
+  theme: string;
   type?: ChartType;
+  dimensions?: Dimensions;
 }
 
 export function VerticalBarChart({
+  dimensions,
   annotationsLookupTable = {},
   data,
   emptyStateText,
@@ -48,20 +50,18 @@ export function VerticalBarChart({
   }));
 
   return (
-    <React.Fragment>
-      <ChartContainer theme={theme}>
-        <Chart
-          annotationsLookupTable={annotationsLookupTable}
-          data={seriesWithDefaults}
-          emptyStateText={emptyStateText}
-          isAnimated={isAnimated}
-          renderTooltipContent={renderTooltipContent}
-          showLegend={showLegend}
-          type={type}
-          xAxisOptions={xAxisOptions}
-          yAxisOptions={yAxisOptions}
-        />
-      </ChartContainer>
-    </React.Fragment>
+    <Chart
+      dimensions={dimensions}
+      theme={theme}
+      annotationsLookupTable={annotationsLookupTable}
+      data={seriesWithDefaults}
+      emptyStateText={emptyStateText}
+      isAnimated={isAnimated}
+      renderTooltipContent={renderTooltipContent}
+      showLegend={showLegend}
+      type={type}
+      xAxisOptions={xAxisOptions}
+      yAxisOptions={yAxisOptions}
+    />
   );
 }

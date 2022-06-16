@@ -2,15 +2,16 @@ import React from 'react';
 import {useTransition} from '@react-spring/web';
 import {
   Dimensions,
-  SparkBarChartProps,
   ANIMATION_MARGIN,
   SparkBarSeries,
+  DEFAULT_THEME_NAME,
 } from '@shopify/polaris-viz-core';
 
 import {usePrefersReducedMotion} from '../../hooks';
 import {XMLNS} from '../../constants';
 
 import styles from './SparkBarChart.scss';
+import type {SparkBarChartProps} from './SparkBarChart';
 
 interface Props extends SparkBarChartProps {
   dimensions?: Dimensions;
@@ -23,7 +24,7 @@ export function Chart({
   isAnimated = false,
   dataOffsetRight = 0,
   dataOffsetLeft = 0,
-  theme,
+  theme = DEFAULT_THEME_NAME,
 }: Props) {
   const {prefersReducedMotion} = usePrefersReducedMotion();
   const shouldAnimate = !prefersReducedMotion && isAnimated;

@@ -1,7 +1,8 @@
 import React, {Dispatch, SetStateAction} from 'react';
 import type {ScaleBand} from 'd3-scale';
 
-import {useLabels, TextLine, shouldSkipLabel} from '../Labels';
+import {useLabels, shouldSkipLabel} from '../Labels';
+import {TextLine} from '../TextLine';
 
 export interface BarChartXAxisLabelsProps {
   chartX: number;
@@ -12,7 +13,7 @@ export interface BarChartXAxisLabelsProps {
   onHeightChange: Dispatch<SetStateAction<number>>;
   xScale: ScaleBand<string>;
   reducedLabelIndexes?: number[];
-  theme?: string;
+  theme: string;
 }
 
 export function BarChartXAxisLabels({

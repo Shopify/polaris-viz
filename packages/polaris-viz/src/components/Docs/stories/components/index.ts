@@ -18,3 +18,4 @@ export {SimpleContainer} from './SimpleContainer';
 export {Banner} from './Banner';
 export {WebComponents} from './WebComponents';
 export {MobileComponents} from './MobileComponents';
+export {UtilitiesHeader} from './UtilitiesHeader';

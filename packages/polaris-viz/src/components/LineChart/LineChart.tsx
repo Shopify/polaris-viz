@@ -1,20 +1,27 @@
 import React, {useRef} from 'react';
 import type {
-  DataSeries,
   LineChartDataSeriesWithDefaults,
   XAxisOptions,
   YAxisOptions,
+  ChartProps,
+  WithRequired,
 } from '@shopify/polaris-viz-core';
-import {isGradientType, uniqueId} from '@shopify/polaris-viz-core';
+import {
+  isGradientType,
+  uniqueId,
+  changeColorOpacity,
+  getAverageColor,
+  ChartState,
+  DEFAULT_CHART_PROPS,
+} from '@shopify/polaris-viz-core';
 
 import {formatTooltipDataForLinearCharts} from '../../utilities/formatTooltipDataForLinearCharts';
 import type {RenderTooltipContentData} from '../../types';
 import {TooltipContent} from '../../components/TooltipContent';
 import {ChartContainer} from '../../components/ChartContainer';
+import {ChartSkeleton} from '../../components/ChartSkeleton';
 import {useThemeSeriesColors} from '../../hooks/useThemeSeriesColors';
 import {
-  changeColorOpacity,
-  getAverageColor,
   getXAxisOptionsWithDefaults,
   getYAxisOptionsWithDefaults,
 } from '../../utilities';
@@ -23,30 +30,35 @@ import {usePrefersReducedMotion, useTheme} from '../../hooks';
 
 import {Chart} from './Chart';
 
-export interface LineChartProps {
-  data: DataSeries[];
-
+export type LineChartProps = {
+  state?: ChartState;
+  errorText?: string;
   emptyStateText?: string;
-  isAnimated?: boolean;
   renderTooltipContent?: (data: RenderTooltipContentData) => React.ReactNode;
   showLegend?: boolean;
   skipLinkText?: string;
-  theme?: string;
   xAxisOptions?: Partial<XAxisOptions>;
   yAxisOptions?: Partial<YAxisOptions>;
-}
+} & ChartProps;
 
-export function LineChart({
-  data,
-  renderTooltipContent,
-  showLegend = true,
-  skipLinkText,
-  emptyStateText,
-  isAnimated = false,
-  xAxisOptions,
-  yAxisOptions,
-  theme,
-}: LineChartProps) {
+export function LineChart(props: LineChartProps) {
+  const {
+    data,
+    state,
+    errorText,
+    renderTooltipContent,
+    showLegend = true,
+    skipLinkText,
+    emptyStateText,
+    isAnimated,
+    xAxisOptions,
+    yAxisOptions,
+    theme,
+  }: WithRequired<LineChartProps, 'theme'> = {
+    ...DEFAULT_CHART_PROPS,
+    ...props,
+  };
+
   const selectedTheme = useTheme(theme);
   const seriesColors = useThemeSeriesColors(data, selectedTheme);
   const {prefersReducedMotion} = usePrefersReducedMotion();
@@ -120,15 +132,19 @@ export function LineChart({
         <SkipLink anchorId={skipLinkAnchorId.current}>{skipLinkText}</SkipLink>
       )}
       <ChartContainer theme={theme}>
-        <Chart
-          data={dataWithDefaults}
-          xAxisOptions={xAxisOptionsWithDefaults}
-          yAxisOptions={yAxisOptionsWithDefaults}
-          isAnimated={isAnimated && !prefersReducedMotion}
-          renderTooltipContent={renderTooltip}
-          showLegend={showLegend}
-          emptyStateText={emptyStateText}
-        />
+        {state !== ChartState.Success ? (
+          <ChartSkeleton state={state} errorText={errorText} theme={theme} />
+        ) : (
+          <Chart
+            data={dataWithDefaults}
+            xAxisOptions={xAxisOptionsWithDefaults}
+            yAxisOptions={yAxisOptionsWithDefaults}
+            isAnimated={isAnimated && !prefersReducedMotion}
+            renderTooltipContent={renderTooltip}
+            showLegend={showLegend}
+            emptyStateText={emptyStateText}
+          />
+        )}
       </ChartContainer>
 
       {skipLinkText == null || skipLinkText.length === 0 ? null : (

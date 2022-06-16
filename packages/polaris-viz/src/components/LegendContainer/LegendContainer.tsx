@@ -9,16 +9,16 @@ import {useTheme} from '@shopify/polaris-viz-core';
 
 import {DEFAULT_LEGEND_HEIGHT, LEGENDS_TOP_MARGIN} from '../../constants';
 import {useResizeObserver, useWatchColorVisionEvents} from '../../hooks';
+import {Legend} from '../Legend';
+import type {LegendData} from '../../types';
 
-import {Legend} from './components';
-import type {LegendData} from './types';
 import style from './LegendContainer.scss';
 
 export interface LegendContainerProps {
   colorVisionType: string;
   data: LegendData[];
   onHeightChange: Dispatch<SetStateAction<number>>;
-  theme?: string;
+  theme: string;
 }
 
 export function LegendContainer({

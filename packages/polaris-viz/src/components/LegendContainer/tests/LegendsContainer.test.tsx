@@ -2,7 +2,7 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 
 import {LegendContainer, LegendContainerProps} from '../LegendContainer';
-import {Legend} from '../components';
+import {Legend} from '../../Legend';
 
 const mockProps: LegendContainerProps = {
   colorVisionType: 'someType',

@@ -1,9 +1,10 @@
 import React from 'react';
 import type {
   ChartType,
-  DataSeries,
   XAxisOptions,
+  ChartProps,
 } from '@shopify/polaris-viz-core';
+import {DEFAULT_CHART_PROPS} from '@shopify/polaris-viz-core';
 
 import {
   getXAxisOptionsWithDefaults,
@@ -14,23 +15,24 @@ import {usePrefersReducedMotion} from '../../hooks';
 
 import {Chart} from './Chart';
 
-export interface SimpleBarChartProps {
-  data: DataSeries[];
-  isAnimated?: boolean;
+export type SimpleBarChartProps = {
   showLegend?: boolean;
-  theme?: string;
   type?: ChartType;
   xAxisOptions?: XAxisOptions;
-}
+} & ChartProps;
 
-export function SimpleBarChart({
-  isAnimated = true,
-  data,
-  showLegend = true,
-  theme,
-  type = 'default',
-  xAxisOptions,
-}: SimpleBarChartProps) {
+export function SimpleBarChart(props: SimpleBarChartProps) {
+  const {
+    isAnimated,
+    data,
+    showLegend = true,
+    theme,
+    type = 'default',
+    xAxisOptions,
+  }: SimpleBarChartProps = {
+    ...DEFAULT_CHART_PROPS,
+    ...props,
+  };
   const xAxisOptionsWithDefaults = getXAxisOptionsWithDefaults(xAxisOptions);
   const yAxisOptionsWithDefaults = getYAxisOptionsWithDefaults();
 

@@ -1,7 +1,8 @@
 import React, {Dispatch, SetStateAction} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 
-import {useLabels, TextLine} from '../Labels';
+import {useLabels} from '../Labels';
+import {TextLine} from '../TextLine';
 
 interface HorizontalBarChartXAxisLabelsProps {
   chartHeight: number;
@@ -12,7 +13,7 @@ interface HorizontalBarChartXAxisLabelsProps {
   onHeightChange: Dispatch<SetStateAction<number>>;
   xScale: ScaleLinear<number, number>;
   ticks: number[];
-  theme?: string;
+  theme: string;
 }
 
 export function HorizontalBarChartXAxisLabels({

@@ -7,14 +7,21 @@ import {
   getRightPosition,
   getVerticalCenterPosition,
 } from '../utilities';
+import type {AlteredPositionProps} from '../utilities';
 
 const MARGIN = {Top: 0, Left: 0, Right: 0, Bottom: 0};
-const BASE_PROPS = {
-  chartDimensions: {height: 100, width: 100},
+const BASE_PROPS: AlteredPositionProps = {
+  chartBounds: {height: 100, width: 100, x: 0, y: 0},
   tooltipDimensions: {height: 20, width: 20},
   margin: MARGIN,
   bandwidth: 40,
-} as any;
+  currentX: 0,
+  currentY: 0,
+  position: {
+    horizontal: 0,
+    vertical: 0,
+  },
+};
 
 describe('getInlinePosition()', () => {
   it('returns altered values', () => {

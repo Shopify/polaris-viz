@@ -73,4 +73,24 @@ describe('<AreaChart />', () => {
       expect(areaChart).not.toContainReactComponent('a');
     });
   });
+
+  describe('theme', () => {
+    it('gets passed to <Chart/>', () => {
+      const areaChart = mount(
+        <StackedAreaChart data={mockData} theme="Light" />,
+      );
+
+      expect(areaChart).toContainReactComponent(Chart, {
+        theme: 'Light',
+      });
+    });
+
+    it('`Default` is used if no value is provided', () => {
+      const areaChart = mount(<StackedAreaChart data={mockData} />);
+
+      expect(areaChart).toContainReactComponent(Chart, {
+        theme: 'Default',
+      });
+    });
+  });
 });

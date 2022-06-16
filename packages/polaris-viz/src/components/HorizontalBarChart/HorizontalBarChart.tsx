@@ -4,11 +4,11 @@ import type {
   ChartType,
   XAxisOptions,
   YAxisOptions,
+  Dimensions,
 } from '@shopify/polaris-viz-core';
 
 import type {RenderTooltipContentData} from '../../types';
 import type {AnnotationLookupTable} from '../BarChart';
-import {ChartContainer} from '../../components/ChartContainer';
 import {usePrefersReducedMotion} from '../../hooks';
 
 import {Chart} from './Chart';
@@ -21,8 +21,9 @@ export interface HorizontalBarChartProps {
   yAxisOptions: Required<YAxisOptions>;
   annotationsLookupTable?: AnnotationLookupTable;
   isAnimated?: boolean;
-  theme?: string;
+  theme: string;
   type?: ChartType;
+  dimensions?: Dimensions;
 }
 
 export function HorizontalBarChart({
@@ -35,21 +36,22 @@ export function HorizontalBarChart({
   type = 'default',
   xAxisOptions,
   yAxisOptions,
+  dimensions,
 }: HorizontalBarChartProps) {
   const {prefersReducedMotion} = usePrefersReducedMotion();
 
   return (
-    <ChartContainer theme={theme}>
-      <Chart
-        annotationsLookupTable={annotationsLookupTable}
-        data={data}
-        isAnimated={isAnimated && !prefersReducedMotion}
-        renderTooltipContent={renderTooltipContent}
-        showLegend={showLegend}
-        type={type}
-        xAxisOptions={xAxisOptions}
-        yAxisOptions={yAxisOptions}
-      />
-    </ChartContainer>
+    <Chart
+      dimensions={dimensions}
+      theme={theme}
+      annotationsLookupTable={annotationsLookupTable}
+      data={data}
+      isAnimated={isAnimated && !prefersReducedMotion}
+      renderTooltipContent={renderTooltipContent}
+      showLegend={showLegend}
+      type={type}
+      xAxisOptions={xAxisOptions}
+      yAxisOptions={yAxisOptions}
+    />
   );
 }

@@ -22,7 +22,7 @@ import styles from './ChartContainer.scss';
 
 interface Props {
   children: ReactElement;
-  theme?: string;
+  theme: string;
   sparkChart?: boolean;
 }
 

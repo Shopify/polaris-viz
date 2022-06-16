@@ -13,6 +13,7 @@ import {
   RENDER_TOOLTIP_DESCRIPTION,
   THEME_CONTROL_ARGS,
   TYPE_CONTROL_ARGS,
+  CHART_STATE_CONTROL_ARGS,
 } from '../../../storybook';
 
 import {generateMultipleSeries} from '../../Docs/utilities';
@@ -151,7 +152,6 @@ const ANNOTATION: Annotation[] = [
 export default {
   title: 'polaris-viz/Default Charts/BarChart',
   component: BarChart,
-  decorators: [(Story) => <div style={{height: '500px'}}>{Story()}</div>],
   parameters: {
     horizontalMargin: 0,
     docs: {
@@ -166,6 +166,7 @@ export default {
       expanded: true,
     },
   },
+  decorators: [(Story) => <div style={{height: '500px'}}>{Story()}</div>],
   argTypes: {
     annotations: {
       control: {
@@ -214,6 +215,7 @@ export default {
     },
     direction: DIRECTION_CONTROL_ARGS,
     theme: THEME_CONTROL_ARGS,
+    state: CHART_STATE_CONTROL_ARGS,
     type: TYPE_CONTROL_ARGS,
     showLegend: LEGEND_CONTROL_ARGS,
   },

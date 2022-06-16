@@ -7,6 +7,7 @@ import {
   estimateStringWidth,
   COLOR_VISION_GROUP_ITEM,
   COLOR_VISION_SINGLE_ITEM,
+  BoundingRect,
 } from '@shopify/polaris-viz-core';
 import type {
   DataSeries,
@@ -69,7 +70,7 @@ export interface Props {
   dimensions?: Dimensions;
   emptyStateText?: string;
   isAnimated?: boolean;
-  theme?: string;
+  theme: string;
 }
 
 export function Chart({
@@ -147,9 +148,18 @@ export function Chart({
   }, [characterWidths, initialTicks]);
 
   const horizontalMargin = selectedTheme.grid.horizontalMargin;
-  const chartStartPosition =
+  const chartXPosition =
     yAxisLabelWidth + Y_AXIS_CHART_SPACING + horizontalMargin;
-  const drawableWidth = width - chartStartPosition - horizontalMargin * 2;
+  const chartYPosition =
+    drawableHeight + LABEL_AREA_TOP_SPACING + (Margin.Top as number);
+  const drawableWidth = width - chartXPosition - horizontalMargin * 2;
+
+  const chartBounds: BoundingRect = {
+    width,
+    height,
+    x: chartXPosition,
+    y: chartYPosition,
+  };
 
   const hideXAxis = xAxisOptions.hide ?? selectedTheme.xAxis.hide;
 
@@ -221,10 +231,8 @@ export function Chart({
         {hideXAxis ? null : (
           <BarChartXAxisLabels
             chartHeight={height}
-            chartX={chartStartPosition}
-            chartY={
-              drawableHeight + LABEL_AREA_TOP_SPACING + (Margin.Top as number)
-            }
+            chartX={chartXPosition}
+            chartY={chartYPosition}
             labels={labels}
             labelWidth={xScale.bandwidth()}
             onHeightChange={setLabelHeight}
@@ -247,7 +255,7 @@ export function Chart({
           <HorizontalGridLines
             ticks={ticks}
             transform={{
-              x: selectedTheme.grid.horizontalOverflow ? 0 : chartStartPosition,
+              x: selectedTheme.grid.horizontalOverflow ? 0 : chartXPosition,
               y: Margin.Top,
             }}
             width={width}
@@ -264,7 +272,7 @@ export function Chart({
           />
         </g>
 
-        <g transform={`translate(${chartStartPosition},${Margin.Top})`}>
+        <g transform={`translate(${chartXPosition},${Margin.Top})`}>
           {stackedValues != null ? (
             <StackedBarGroups
               accessibilityData={accessibilityData}
@@ -303,7 +311,7 @@ export function Chart({
             })
           )}
         </g>
-        <g transform={`translate(${chartStartPosition},${Margin.Top})`}>
+        <g transform={`translate(${chartXPosition},${Margin.Top})`}>
           {Object.keys(annotationsLookupTable).map((key, dataIndex) => {
             const annotation = annotationsLookupTable[Number(key)];
 
@@ -334,7 +342,7 @@ export function Chart({
 
       <TooltipWrapper
         bandwidth={xScale.bandwidth()}
-        chartDimensions={{width, height}}
+        chartBounds={chartBounds}
         focusElementDataType={DataType.BarGroup}
         getMarkup={getTooltipMarkup}
         getPosition={getTooltipPosition}
@@ -366,7 +374,7 @@ export function Chart({
         ? sortedData[index].reduce(sumPositiveData, 0)
         : Math.max(...sortedDataPos);
 
-    const x = xPosition + chartStartPosition;
+    const x = xPosition + chartXPosition;
     const y = yScale(highestValuePos) + (Margin.Top as number);
 
     return {
@@ -395,7 +403,7 @@ export function Chart({
       }
 
       const {svgX, svgY} = point;
-      const currentPoint = svgX - chartStartPosition;
+      const currentPoint = svgX - chartXPosition;
       const activeIndex = Math.floor(currentPoint / xScale.step());
 
       if (

@@ -1,26 +1,28 @@
 import React, {useState, useMemo, useRef} from 'react';
 import {line} from 'd3-shape';
-import type {
+import {
   DataSeries,
   DataPoint,
   XAxisOptions,
   YAxisOptions,
-} from '@shopify/polaris-viz-core';
-import {
+  DEFAULT_THEME_NAME,
   uniqueId,
   curveStepRounded,
   DataType,
   Dimensions,
   useYScale,
   COLOR_VISION_SINGLE_ITEM,
+  BoundingRect,
 } from '@shopify/polaris-viz-core';
 
 import type {RenderTooltipContentData} from '../../types';
-import {getAlteredLineChartPosition} from '../../utilities/getAlteredLineChartPosition';
 import {LinearXAxisLabels} from '../LinearXAxisLabels';
 import {LegendContainer, useLegend} from '../LegendContainer';
 import {
+  TooltipHorizontalOffset,
+  TooltipVerticalOffset,
   TooltipPosition,
+  TooltipPositionOffset,
   TooltipPositionParams,
   TooltipWrapper,
   TOOLTIP_POSITION_DEFAULT_RETURN,
@@ -51,6 +53,11 @@ import {useStackedChartTooltipContent} from './hooks/useStackedChartTooltipConte
 import {yAxisMinMax} from './utilities/yAxisMinMax';
 import {MIN_Y_LABEL_SPACE} from './constants';
 
+const TOOLTIP_POSITION: TooltipPositionOffset = {
+  horizontal: TooltipHorizontalOffset.Left,
+  vertical: TooltipVerticalOffset.Center,
+};
+
 export interface Props {
   data: DataSeries[];
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
@@ -69,7 +76,7 @@ export function Chart({
   renderTooltipContent,
   isAnimated,
   showLegend,
-  theme,
+  theme = DEFAULT_THEME_NAME,
   yAxisOptions,
 }: Props) {
   useColorVisionEvents(data.length > 1);
@@ -187,6 +194,13 @@ export function Chart({
     return null;
   }
 
+  const chartBounds: BoundingRect = {
+    width,
+    height,
+    x: chartStartPosition,
+    y: Margin.Top,
+  };
+
   return (
     <div className={styles.Container} style={{height, width}}>
       <svg
@@ -284,8 +298,8 @@ export function Chart({
         />
       </svg>
       <TooltipWrapper
-        chartDimensions={{width, height}}
-        getAlteredPosition={getAlteredLineChartPosition}
+        alwaysUpdatePosition
+        chartBounds={chartBounds}
         focusElementDataType={DataType.Point}
         getMarkup={getTooltipMarkup}
         getPosition={getTooltipPosition}
@@ -310,8 +324,6 @@ export function Chart({
     index,
     eventType,
   }: TooltipPositionParams): TooltipPosition {
-    let activeIndex = -1;
-
     if (eventType === 'mouse' && event) {
       const point = eventPointNative(event!);
 
@@ -319,19 +331,22 @@ export function Chart({
         return TOOLTIP_POSITION_DEFAULT_RETURN;
       }
 
-      const {svgX} = point;
+      const {svgX, svgY} = point;
 
       const closestIndex = Math.round(xScale.invert(svgX - chartStartPosition));
-      activeIndex = Math.min(longestSeriesLength, closestIndex);
-    } else if (index != null) {
-      activeIndex = index;
-    }
 
-    if (activeIndex !== -1) {
       return {
-        x: chartStartPosition + (xScale(activeIndex) ?? 0),
+        x: svgX,
+        y: svgY,
+        position: TOOLTIP_POSITION,
+        activeIndex: Math.min(longestSeriesLength, closestIndex),
+      };
+    } else if (index != null) {
+      return {
+        x: xScale?.(index) ?? 0,
         y: 0,
-        activeIndex,
+        position: TOOLTIP_POSITION,
+        activeIndex: index,
       };
     }
 

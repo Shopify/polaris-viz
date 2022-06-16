@@ -5,7 +5,110 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+<!-- ## Unreleased -->
+
+## [2.0.0] - 2022-06-09
+
+### Added
+
+- `<SimpleNormalizedChart/>` series colors can now be overwritten by using the `color` key in the `DataSeries` passed to the `data` prop
+- `<SimpleNormalizedChart/>` when passing `DataSeries.isComparison: true` to the `data` prop, the corresponding bar will now use the coparison color defined in the `Theme`
+
+### Changed
+
+- `<SimpleNormalizedChart/>` now accepts `DataSeries[]` in `data` prop, instead of `DataPoint[]`
+- Changed `@juggle/resize-observer` library as dependency.
+- Stop tooltip from rendering outside of `<BarChart />` when only a single series is provided.
+
+## [1.11.1] - 2022-06-02
+
+### Changed
+
+- Bumped `simple-plist` to `1.3.1`.
+
+## [1.11.0] - 2022-06-02
+
+- No updates. Transitive dependency bump.
+
+## [1.10.3] - 2022-05-27
+
+### Changed
+
+- `theme` is now optional for `<ChartSkeleton />`, `<Legend />` & `<TooltipContent />`.
+
+## [1.10.2] - 2022-05-26
+
+### Fixed
+
+- Fixed issue where `<LineSeries />` would crash if the `data` array was empty.
+
+## [1.10.1] - 2022-05-26
+
+### Changed
+
+- Updated react-spring to v9.4.5
+
+## [1.10.0] - 2022-05-25
+
+### Changed
+
+- `ChartProps` and `DEFAULT_CHART_PROPS` are now used on `<LineChart/>`, `<BarChart/>`, `<SimpleBarChart/>`, `<SparkBarChart/>`, `<SparklineChart/>` and `<StackedAreaChart/>`
+
+## [1.9.3] - 2022-05-25
+
+### Fixed
+
+- LineChart `theme` prop is optional again
+
+## [1.9.2] - 2022-05-24
+
+### Changed
+
+- Use print-color-adjust instead of color-adjust to prevent webpack warnings in consumers using `autoprefix`
+
+## [1.9.0] - 2022-05-24
+
+### Added
+
+- Added `FunnelChart` component
+
+## [1.8.0] - 2022-05-19
+
+### Added
+
+- Re-export `ChartState` type  from `@shopify/polaris-viz-core`
+- Export `ChartSkeleton` subcomponent
+
+### Changed
+
+- Revert tooltip change introduced in `1.3.1`.
+- Use `getBoundingClientRect()` to accurately measure characters for `character-widths.json`.
+
+## [1.7.1] - 2022-05-18
+
+- No updates. Transitive dependency bump.
+
+## [1.7.0] - 2022-05-18
+
+- No updates. Transitive dependency bump.
+
+## [1.6.0] - 2022-05-17
+
+### Added
+
+- Added `ChartSkeleton` component
+
+### Changed
+
+- Fix issue where `<SparkLineChart />` doesn't go to the containers right edge.
+- Changed `line.sparkArea` to `line.hasArea` from line theme.
+- `line.hasArea` now accepts a boolean to determine when we render the area below a line series.
+
+### Removed
+
+- Removed `line.style` & `line.hasPoint` from line theme.
+
+## [1.5.0] - 2022-05-04
 
 ### Added
 
@@ -18,8 +121,9 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
-- Moved `getColorVisionStylesForActiveIndex()` & `getColorVisionEventAttrs()` to `polaris-viz-core`.
+- Moved `getColorVisionStylesForActiveIndex()`, `getColorVisionEventAttrs()`, `getAverageColor()`, `changeGradientOpacity()` and `changeColorOpacity()` to `polaris-viz-core`.
 - Use `<LineSeries />` for `LineChart` and `StackedAreaChart`.
+
 
 ## [1.4.0] - 2022-04-20
 
@@ -32,7 +136,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
-- Export `TooltipData` & `TooltipContentProps` types.
+- Tooltips will now stick along the yAxis (or xAxis for horizontal charts).
 
 ## [1.3.0] - 2022-04-18
 

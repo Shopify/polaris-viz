@@ -41,7 +41,7 @@ export interface HorizontalGroupProps {
   name: string;
   opacity: SpringValue<number>;
   stackedValues: FormattedStackedSeries[];
-  theme?: string;
+  theme: string;
   transform: SpringValue<string>;
   xAxisOptions: Required<XAxisOptions>;
   xScale: ScaleLinear<number, number>;

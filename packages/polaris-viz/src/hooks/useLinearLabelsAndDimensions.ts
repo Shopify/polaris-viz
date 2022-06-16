@@ -21,7 +21,7 @@ interface Props {
   labels: string[];
   xAxisOptions: Required<XAxisOptions>;
   yAxisLabelWidth: number;
-  theme?: string;
+  theme: string;
 }
 
 export function useLinearLabelsAndDimensions({

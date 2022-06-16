@@ -10,6 +10,7 @@ const getStories = require('./getStories');
 module.exports = {
   stories: getStories(process.env.NODE_ENV),
   addons: [
+    '@storybook/addon-a11y',
     '@storybook/addon-links',
     {
       name: '@storybook/addon-essentials',

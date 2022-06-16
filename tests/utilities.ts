@@ -1,4 +1,5 @@
-import {resolve, sep} from 'path';
+import {resolve, sep, join} from 'path';
+import {readFileSync} from 'fs';
 
 // For packages that have been emptied pending removal
 export const EXCLUDED_PACKAGES = [];
@@ -37,4 +38,21 @@ export function stripFullFilePaths(value: any): any {
     }),
     {},
   );
+}
+
+export function safeReadSync(path, options) {
+  try {
+    return readFileSync(path, options);
+  } catch {
+    return '';
+  }
+}
+
+export function hasPackageJSON(packageDir) {
+  const packageJSONPath = join(packageDir, 'package.json');
+  const packageJSON = safeReadSync(packageJSONPath, {
+    encoding: 'utf8',
+  });
+
+  return packageJSON.length > 0;
 }

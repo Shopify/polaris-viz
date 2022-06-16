@@ -1,4 +1,4 @@
-import type {PreparedLabels} from '../types';
+import type {PreparedLabels} from '../../../types';
 
 export function getWidestLabel(labels: PreparedLabels[]) {
   let longestIndex = -1;
