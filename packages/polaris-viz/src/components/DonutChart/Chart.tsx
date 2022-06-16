@@ -189,7 +189,7 @@ export function Chart({
             onHeightChange={() => {}}
             colorVisionType={COLOR_VISION_SINGLE_ITEM}
             data={legendData}
-            theme={theme}
+            theme={theme!}
           />
         </div>
       )}

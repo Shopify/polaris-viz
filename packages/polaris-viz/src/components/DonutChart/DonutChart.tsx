@@ -10,7 +10,7 @@ export interface DonutChartProps {
   data: DataSeries[];
   comparisonMetric?: Omit<ComparisonMetricProps, 'theme'>;
   showLegend?: boolean;
-  theme?: string;
+  theme: string;
   labelFormatter?: LabelFormatter;
 }
 
