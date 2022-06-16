@@ -6,7 +6,7 @@ import {DonutChart} from '.';
 import type {DonutChartProps} from './DonutChart';
 
 const meta: Meta<DonutChartProps> = {
-  title: 'polaris-viz/Default Charts/DonutChart',
+  title: 'polaris-viz/Charts/DonutChart',
   component: DonutChart,
   parameters: {
     a11y: {disable: true},

@@ -26,21 +26,21 @@ const storiesOrder = {
   'polaris-viz': {
     'Getting Started': null,
     'Available Charts': null,
-    'Spark Charts': null,
-    'Simple Charts': null,
-    'Default Charts': null,
     Subcomponents: null,
+    Charts: null,
   },
   'polaris-viz-native': {
     'Getting Started': null,
     'Available Charts': null,
-    'Spark Charts': null,
-    'Simple Charts': null,
-    'Default Charts': null,
+    Subcomponents: null,
+    Charts: null,
   },
   Contributing: {
     README: null,
-    'Getting Started': null,
+    'Code of Conduct': null,
+    'Creating Releases': null,
+    'Local Development': null,
+    'Polaris Viz Core': null,
   },
   Playground: {
     'Playground area': null,

@@ -7,7 +7,7 @@ import {THEME_CONTROL_ARGS} from '../../../storybook';
 import {PageWithSizingInfo} from '../../Docs/stories/components/PageWithSizingInfo';
 
 export default {
-  title: 'polaris-viz/Spark Charts/SparkBarChart',
+  title: 'polaris-viz/Charts/SparkBarChart',
   parameters: {
     controls: {sort: 'requiredFirst', expanded: true},
     docs: {

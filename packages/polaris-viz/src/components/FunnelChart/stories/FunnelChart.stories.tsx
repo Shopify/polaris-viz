@@ -5,7 +5,7 @@ import {THEME_CONTROL_ARGS} from '../../../storybook';
 import {FunnelChart, FunnelChartProps} from '../FunnelChart';
 
 export default {
-  title: 'polaris-viz/Default Charts/FunnelChart',
+  title: 'polaris-viz/Charts/FunnelChart',
   component: FunnelChart,
   parameters: {
     controls: {sort: 'requiredFirst', expanded: true},

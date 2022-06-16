@@ -9,7 +9,7 @@ import {THEME_CONTROL_ARGS, DATA_ARGS} from '../../../storybook';
 import {PageWithSizingInfo} from '../../Docs/stories/components/PageWithSizingInfo';
 
 export default {
-  title: 'polaris-viz/Simple Charts/SimpleNormalizedChart',
+  title: 'polaris-viz/Charts/SimpleNormalizedChart',
   component: SimpleNormalizedChart,
   parameters: {
     controls: {sort: 'requiredFirst', expanded: true},
