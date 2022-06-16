@@ -55,6 +55,9 @@ export const MIN_BAR_HEIGHT = 2;
 export const EMPTY_STATE_CHART_MIN = 0;
 export const EMPTY_STATE_CHART_MAX = 10;
 
+export const DONUT_CHART_CORNER_RADIUS = 2;
+export const DONUT_CHART_THICKNESS = 18;
+
 export enum BarChartMargin {
   Top = 5,
   Left = 0,
@@ -156,6 +159,10 @@ export const DEFAULT_THEME: Theme = {
     width: 2,
     pointStroke: 'variables.colorGray160',
   },
+  arc: {
+    cornerRadius: DONUT_CHART_CORNER_RADIUS,
+    thickness: DONUT_CHART_THICKNESS,
+  },
   bar: {
     hasRoundedCorners: true,
     innerMargin: 'Medium',
@@ -246,6 +253,10 @@ export const LIGHT_THEME: Theme = {
     hasSpline: true,
     width: 2,
     pointStroke: variables.colorGray00,
+  },
+  arc: {
+    cornerRadius: 2,
+    thickness: 18,
   },
   bar: {
     hasRoundedCorners: true,
