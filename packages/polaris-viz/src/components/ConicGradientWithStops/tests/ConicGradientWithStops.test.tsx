@@ -57,7 +57,7 @@ const result3 = {
 const result4 = {
   height: `${mockProps4.height}px`,
   width: `${mockProps4.width}px`,
-  backgroundImage: 'conic-gradient(black 0%)',
+  backgroundImage: 'conic-gradient(black 0%, black 100%)',
 };
 
 describe('<ConicGradientWithStops />', () => {

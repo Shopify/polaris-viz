@@ -22,7 +22,7 @@ const result1 = 'conic-gradient(lime 0%, magenta 1%)';
 const result2 = 'conic-gradient(red 50%, green 75%, blue 90%)';
 const result3 =
   'conic-gradient(purple 10%, orange 30%, purple 60%, orange 100%)';
-const result4 = 'conic-gradient(black 0%)';
+const result4 = 'conic-gradient(black 0%, black 100%)';
 
 describe('createCssConicGradient', () => {
   it.each([
