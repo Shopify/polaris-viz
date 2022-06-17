@@ -15,6 +15,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 - LineChart and SparkLine lines being cropped on the top
 - LineChart and SparkLine lines animation playing from the middle instead of from the bottom
+- Cropped labels on the YAxis
 
 ## [2.0.0] - 2022-06-09
 
