@@ -38,6 +38,7 @@ export function DonutChart(props: DonutChartProps) {
         labelFormatter={labelFormatter}
         comparisonMetric={comparisonMetric}
         showLegend={showLegend}
+        theme={theme}
       />
     </ChartContainer>
   );
