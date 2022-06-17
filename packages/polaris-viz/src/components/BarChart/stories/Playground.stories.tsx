@@ -4,7 +4,7 @@ import type {Story, Meta} from '@storybook/react';
 import {BarChart, BarChartProps} from '../../../components';
 
 export default {
-  title: 'polaris-viz/Default Charts/BarChart/Playground',
+  title: 'polaris-viz/Charts/BarChart/Playground',
   component: BarChart,
   parameters: {
     horizontalMargin: 0,

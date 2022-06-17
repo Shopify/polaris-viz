@@ -40,7 +40,7 @@ const TOOLTIP_CONTENT = {
 };
 
 export default {
-  title: 'polaris-viz/Default Charts/StackedAreaChart',
+  title: 'polaris-viz/Charts/StackedAreaChart',
   component: StackedAreaChart,
   parameters: {
     controls: {sort: 'requiredFirst', expanded: true},

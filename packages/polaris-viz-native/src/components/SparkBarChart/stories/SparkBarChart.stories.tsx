@@ -9,7 +9,7 @@ const THEME_CONTROL_ARGS = {
 };
 
 export default {
-  title: 'polaris-viz-native/Spark Charts/SparkBarChart',
+  title: 'polaris-viz-native/Charts/SparkBarChart',
   parameters: {
     controls: {sort: 'requiredFirst', expanded: true},
     docs: {

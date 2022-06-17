@@ -4,7 +4,7 @@ import type {Story, Meta} from '@storybook/react';
 import {StackedAreaChart, StackedAreaChartProps} from '../StackedAreaChart';
 import {formatHourlyLabel} from '../../../components/LineChart/stories/utils.stories';
 export default {
-  title: 'polaris-viz/Default Charts/StackedAreaChart/Playground',
+  title: 'polaris-viz/Charts/StackedAreaChart/Playground',
   component: StackedAreaChart,
   parameters: {
     controls: {sort: 'requiredFirst', expanded: true},

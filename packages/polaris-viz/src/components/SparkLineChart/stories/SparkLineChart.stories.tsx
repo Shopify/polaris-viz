@@ -5,7 +5,6 @@ import {SparkLineChart, SparkLineChartProps} from '../';
 import {THEME_CONTROL_ARGS} from '../../../storybook';
 import {PageWithSizingInfo} from '../../Docs/stories/components/PageWithSizingInfo';
 
-
 const DATA = [
   {
     data: [
@@ -41,7 +40,7 @@ const DATA = [
 ];
 
 export default {
-  title: 'polaris-viz/Spark Charts/SparkLineChart',
+  title: 'polaris-viz/Charts/SparkLineChart',
   component: SparkLineChart,
   parameters: {
     controls: {sort: 'requiredFirst', expanded: true},

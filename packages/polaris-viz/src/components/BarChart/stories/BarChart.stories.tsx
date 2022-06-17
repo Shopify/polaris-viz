@@ -150,7 +150,7 @@ const ANNOTATION: Annotation[] = [
 ];
 
 export default {
-  title: 'polaris-viz/Default Charts/BarChart',
+  title: 'polaris-viz/Charts/BarChart',
   component: BarChart,
   parameters: {
     horizontalMargin: 0,

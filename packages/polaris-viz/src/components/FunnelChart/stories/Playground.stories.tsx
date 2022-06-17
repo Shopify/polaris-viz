@@ -4,7 +4,7 @@ import type {Story, Meta} from '@storybook/react';
 import {FunnelChart, FunnelChartProps} from '../FunnelChart';
 
 export default {
-  title: 'polaris-viz/Default Charts/FunnelChart/Playground',
+  title: 'polaris-viz/Charts/FunnelChart/Playground',
   component: FunnelChart,
   parameters: {
     horizontalMargin: 0,

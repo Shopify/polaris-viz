@@ -6,7 +6,7 @@ import styles from './LineChart.stories.scss';
 import {formatHourlyLabel, HOURLY_DATA} from './utils.stories';
 
 export default {
-  title: 'polaris-viz/Default Charts/LineChart/Playground',
+  title: 'polaris-viz/Charts/LineChart/Playground',
   component: LineChart,
   decorators: [
     (Story: any) => <div className={styles.Container}>{Story()}</div>,
