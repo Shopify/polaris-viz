@@ -8,6 +8,7 @@ import '@shopify/react-testing/matchers';
 
 import {LineSeries, LineSeriesProps} from '../LineSeries';
 import {Area} from '../components';
+import {SHAPE_ANIMATION_HEIGHT_BUFFER} from '../../../constants';
 
 const someScale = scaleLinear().domain([0, 100]).range([0, 100]);
 
@@ -45,16 +46,28 @@ describe('<LineSeries />', () => {
   });
 
   describe('svgDimensions', () => {
-    it('gets passed to <Rect/>', () => {
+    it('is used to calculate <Rect/> height', () => {
       const lineSeries = mountWithProvider(
         <svg>
           <LineSeries {...defaultProps} />
         </svg>,
+        {
+          themes: {
+            Default: {
+              line: {
+                width: 10,
+              },
+            },
+          },
+        },
       );
 
       expect(lineSeries).toContainReactComponent('rect', {
         width: defaultProps.svgDimensions.width,
-        height: defaultProps.svgDimensions.height,
+        height:
+          defaultProps.svgDimensions.height +
+          10 +
+          SHAPE_ANIMATION_HEIGHT_BUFFER,
       });
     });
   });

@@ -25,7 +25,7 @@ import {
   MIN_BAR_HEIGHT,
   LOAD_ANIMATION_DURATION,
   MASK_HIGHLIGHT_COLOR,
-  BAR_ANIMATION_HEIGHT_BUFFER,
+  SHAPE_ANIMATION_HEIGHT_BUFFER,
 } from '../../../../constants';
 import styles from '../../Chart.scss';
 
@@ -154,9 +154,9 @@ export function BarGroup({
               />
               <rect
                 x={x + (barWidth + BAR_SPACING) * index}
-                y={BAR_ANIMATION_HEIGHT_BUFFER * -1}
+                y={SHAPE_ANIMATION_HEIGHT_BUFFER * -1}
                 width={barWidth - BAR_SPACING}
-                height={height + BAR_ANIMATION_HEIGHT_BUFFER * 2}
+                height={height + SHAPE_ANIMATION_HEIGHT_BUFFER * 2}
                 fill={`url(#${gradientId}${index})`}
                 style={getColorVisionStylesForActiveIndex({
                   activeIndex: activeBarIndex,

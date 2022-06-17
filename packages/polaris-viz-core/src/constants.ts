@@ -18,7 +18,7 @@ export const XMLNS = 'http://www.w3.org/2000/svg';
 
 export const BASE_ANIMATION_DURATION = 200;
 export const LOAD_ANIMATION_DURATION = 500;
-export const BAR_ANIMATION_HEIGHT_BUFFER = 20;
+export const SHAPE_ANIMATION_HEIGHT_BUFFER = 30;
 
 export const DEFAULT_BORDER_RADIUS = 3;
 export const MIN_WIDTH_BORDER_RADIUS = 2;
