@@ -10,6 +10,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Changed
 
 - `useLegend` hook now accepts `DataGroup[]` and `DataSeries[]`
+- `<SimpleNormalizedChart/>` now displays an empty bar when data values are all zero or no data is passed
 
 ## [3.0.0] - 2022-06-20
 

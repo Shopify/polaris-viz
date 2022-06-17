@@ -40,6 +40,7 @@ export function BarSegment({
 }: Props) {
   const scaleNeedsRounding = scale > 0 && scale < 1.5;
   const safeScale = scaleNeedsRounding ? 1.5 : scale;
+  const isMaxScale = scale >= 100;
 
   const delay = index * DELAY;
   const angle = direction === 'horizontal' ? 90 : 180;
@@ -63,7 +64,8 @@ export function BarSegment({
     <animated.div
       className={classNames(
         styles.Segment,
-        roundedCorners && styles[`${direction}-RoundedCorners`],
+        roundedCorners && !isMaxScale && styles[`${direction}-RoundedCorners`],
+        roundedCorners && isMaxScale && styles.RoundedCorners,
         styles[`${direction}-${size}`],
       )}
       style={{

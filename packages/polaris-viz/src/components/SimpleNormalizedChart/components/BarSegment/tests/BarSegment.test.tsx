@@ -33,6 +33,14 @@ describe('<BarSegment />', () => {
     });
   });
 
+  it('gives the child an all rounded corners class name when scale is 100', () => {
+    const barSegment = mount(<BarSegment {...mockProps} scale={100} />);
+
+    expect(barSegment).toContainReactComponent('div', {
+      className: 'Segment RoundedCorners horizontal-small',
+    });
+  });
+
   it('does not round up a 0 scale', () => {
     const barSegment = mount(<BarSegment {...mockProps} scale={0} />);
 

@@ -81,6 +81,7 @@ export function Chart({
 
   const isVertical = direction === 'vertical';
   const bars = isVertical ? slicedData.reverse() : slicedData;
+  const isEmptyValues = slicedData.every(({value}) => !value);
 
   const isRightLabel = labelPosition.includes('right');
   const isBottomLabel = labelPosition.includes('bottom');
@@ -142,27 +143,41 @@ export function Chart({
             : styles.HorizontalBarContainer,
         )}
       >
-        {bars.map(({value, key}, index) => {
-          if (value == null || value === 0) {
-            return null;
-          }
+        {isEmptyValues ? (
+          <BarSegment
+            activeIndex={-1}
+            index={-1}
+            isAnimated={!prefersReducedMotion}
+            direction={direction}
+            size={size}
+            scale={100}
+            key="empty-bar"
+            color={selectedTheme.seriesColors.empty}
+            roundedCorners={selectedTheme.bar.hasRoundedCorners}
+          />
+        ) : (
+          bars.map(({value, key}, index) => {
+            if (value == null || value === 0) {
+              return null;
+            }
 
-          const colorIndex = isVertical ? bars.length - 1 - index : index;
+            const colorIndex = isVertical ? bars.length - 1 - index : index;
 
-          return (
-            <BarSegment
-              activeIndex={activeIndex}
-              index={colorIndex}
-              isAnimated={!prefersReducedMotion}
-              direction={direction}
-              size={size}
-              scale={xScale(value)}
-              key={`${key}-${index}`}
-              color={colors[colorIndex]}
-              roundedCorners={selectedTheme.bar.hasRoundedCorners}
-            />
-          );
-        })}
+            return (
+              <BarSegment
+                activeIndex={activeIndex}
+                index={colorIndex}
+                isAnimated={!prefersReducedMotion}
+                direction={direction}
+                size={size}
+                scale={xScale(value)}
+                key={`${key}-${index}`}
+                color={colors[colorIndex]}
+                roundedCorners={selectedTheme.bar.hasRoundedCorners}
+              />
+            );
+          })
+        )}
       </div>
     </div>
   );
