@@ -13,28 +13,28 @@ const mockProps1 = {
   ],
 };
 const mockProps2 = {
-  height: 200,
+  height: 100,
   width: 200,
   gradient: [
     {color: 'red', offset: 50},
     {color: 'green', offset: 75},
+    {color: 'blue', offset: 90},
   ],
 };
 const mockProps3 = {
-  height: 200,
-  width: 200,
+  height: 300,
+  width: 900,
   gradient: [
-    {color: 'purple', offset: 12},
-    {color: 'orange', offset: 12},
+    {color: 'purple', offset: 10},
+    {color: 'orange', offset: 30},
+    {color: 'purple', offset: 60},
+    {color: 'orange', offset: 100},
   ],
 };
 const mockProps4 = {
-  height: 200,
-  width: 200,
-  gradient: [
-    {color: 'black', offset: 0},
-    {color: 'white', offset: 166},
-  ],
+  height: 15,
+  width: 30,
+  gradient: [{color: 'black', offset: 0}],
 };
 
 const result1 = {
@@ -45,18 +45,19 @@ const result1 = {
 const result2 = {
   height: `${mockProps2.height}px`,
   width: `${mockProps2.width}px`,
-  backgroundImage: 'conic-gradient(red 50%, green 75%)',
+  backgroundImage: 'conic-gradient(red 50%, green 75%, blue 90%)',
 };
 
 const result3 = {
   height: `${mockProps3.height}px`,
   width: `${mockProps3.width}px`,
-  backgroundImage: 'conic-gradient(purple 12%, orange 12%)',
+  backgroundImage:
+    'conic-gradient(purple 10%, orange 30%, purple 60%, orange 100%)',
 };
 const result4 = {
   height: `${mockProps4.height}px`,
   width: `${mockProps4.width}px`,
-  backgroundImage: 'conic-gradient(black 0%, white 166%)',
+  backgroundImage: 'conic-gradient(black 0%)',
 };
 
 describe('<ConicGradientWithStops />', () => {

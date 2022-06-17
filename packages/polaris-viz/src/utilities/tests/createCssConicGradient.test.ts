@@ -8,20 +8,21 @@ const gradientStop1 = [
 const gradientStop2 = [
   {color: 'red', offset: 50},
   {color: 'green', offset: 75},
+  {color: 'blue', offset: 90},
 ];
 const gradientStop3 = [
-  {color: 'purple', offset: 12},
-  {color: 'orange', offset: 12},
+  {color: 'purple', offset: 10},
+  {color: 'orange', offset: 30},
+  {color: 'purple', offset: 60},
+  {color: 'orange', offset: 100},
 ];
-const gradientStop4 = [
-  {color: 'black', offset: 0},
-  {color: 'white', offset: 166},
-];
+const gradientStop4 = [{color: 'black', offset: 0}];
 
 const result1 = 'conic-gradient(lime 0%, magenta 1%)';
-const result2 = 'conic-gradient(red 50%, green 75%)';
-const result3 = 'conic-gradient(purple 12%, orange 12%)';
-const result4 = 'conic-gradient(black 0%, white 166%)';
+const result2 = 'conic-gradient(red 50%, green 75%, blue 90%)';
+const result3 =
+  'conic-gradient(purple 10%, orange 30%, purple 60%, orange 100%)';
+const result4 = 'conic-gradient(black 0%)';
 
 describe('createCssConicGradient', () => {
   it.each([
