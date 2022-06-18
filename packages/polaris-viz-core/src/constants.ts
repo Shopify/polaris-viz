@@ -86,6 +86,20 @@ export const LINES_LOAD_ANIMATION_CONFIG = {
   tension: 140,
   friction: 18,
 };
+
+export const ARC_LOAD_ANIMATION_CONFIG = {
+  mass: 1,
+  tension: 150,
+  friction: 10,
+  // restVelocity: 200,
+};
+
+export const ARC_DATA_CHANGE_ANIMATION_CONFIG = {
+  mass: 1,
+  tension: 150,
+  friction: 20,
+  restVelocity: 200,
+};
 export const MAX_TRAIL_DURATION = 500;
 export const HORIZONTAL_BAR_GROUP_DELAY = 200;
 

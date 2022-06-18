@@ -9,23 +9,29 @@ export interface ConicGradientWithStopsProps {
   gradient: GradientStop[];
   height: number;
   width: number;
+  x?: number;
+  y?: number;
 }
 
 export function ConicGradientWithStops({
   gradient,
   height,
   width,
+  x = 0,
+  y = 0,
 }: ConicGradientWithStopsProps) {
   const conicGradientValue = createCSSConicGradient(gradient);
 
   return (
-    <div
-      className={styles.Gradient}
-      style={{
-        width: `${width}px`,
-        height: `${height}px`,
-        backgroundImage: conicGradientValue,
-      }}
-    />
+    <foreignObject x={x} y={y} width={width} height={height}>
+      <div
+        className={styles.Gradient}
+        style={{
+          width: `${width}px`,
+          height: `${height}px`,
+          backgroundImage: conicGradientValue,
+        }}
+      />
+    </foreignObject>
   );
 }

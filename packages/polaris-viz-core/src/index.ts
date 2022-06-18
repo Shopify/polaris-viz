@@ -75,6 +75,8 @@ export {
   BORDER_RADIUS,
   DEFAULT_THEME_NAME,
   DEFAULT_CHART_PROPS,
+  ARC_LOAD_ANIMATION_CONFIG,
+  ARC_DATA_CHANGE_ANIMATION_CONFIG,
 } from './constants';
 export {
   clamp,
@@ -105,6 +107,8 @@ export {
   useThemeSeriesColors,
   usePolarisVizContext,
   useYScale,
+  useUniqueId,
+  useComponentDidMount,
 } from './hooks';
 export {
   Bar,

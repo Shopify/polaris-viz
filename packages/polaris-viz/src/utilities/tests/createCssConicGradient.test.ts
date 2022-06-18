@@ -1,15 +1,10 @@
 import {createCSSConicGradient} from '../createCssConicGradient';
 
-<<<<<<< HEAD
 const gradientStop1 = [
-=======
-const GRADIENT_STOP = [
->>>>>>> 4415e3c7 (adds tests to DonutChart)
   {color: 'lime', offset: 0},
   {color: 'magenta', offset: 1},
 ];
 
-<<<<<<< HEAD
 const gradientStop2 = [
   {color: 'red', offset: 50},
   {color: 'green', offset: 75},
@@ -55,14 +50,4 @@ describe('createCssConicGradient', () => {
       expect(conicGradient).toStrictEqual(expected);
     },
   );
-=======
-const CONIC_GRADIENT = 'conic-gradient(lime 0%, magenta 1%)';
-
-describe('createCssConicGradient', () => {
-  it('returns a conic gradient string with given values', () => {
-    const conicGradient = createCSSConicGradient(GRADIENT_STOP);
-
-    expect(conicGradient).toBe(CONIC_GRADIENT);
-  });
->>>>>>> 4415e3c7 (adds tests to DonutChart)
 });

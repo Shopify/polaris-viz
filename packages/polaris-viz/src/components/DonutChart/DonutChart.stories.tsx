@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import type {Meta, StoryFn} from '@storybook/react';
 
 import {THEME_CONTROL_ARGS} from '../../storybook';
@@ -29,7 +29,7 @@ const meta: Meta<DonutChartProps> = {
     theme: THEME_CONTROL_ARGS,
   },
   decorators: [
-    (Story) => <div style={{width: 400, height: 300}}>{Story()}</div>,
+    (Story) => <div style={{width: 400, height: 200}}>{Story()}</div>,
   ],
 };
 
@@ -106,4 +106,57 @@ CustomColors.args = {
     trend: 'positive',
     accessibilityLabel: 'trending up 6%',
   },
+};
+
+export const DynamicData = () => {
+  const [data, setData] = useState([
+    {
+      name: 'Shopify Payments',
+      data: [{key: 'april - march', value: 50000}],
+    },
+    {
+      name: 'Paypal',
+      data: [{key: 'april - march', value: 25000}],
+    },
+    {
+      name: 'Amazon Pay',
+      data: [{key: 'april - march', value: 4000}],
+    },
+    {
+      name: 'Other',
+      data: [{key: 'april - march', value: 4000}],
+    },
+  ]);
+
+  const onClick = () => {
+    const newData = data.map((item) => {
+      const newValue = Math.floor(Math.random() * 200);
+      return {
+        ...item,
+        data: [
+          {
+            ...item.data[0],
+            value: newValue,
+          },
+        ],
+      };
+    });
+    setData(newData);
+  };
+
+  return (
+    <>
+      <DonutChart data={data} />
+      <button
+        style={{
+          position: 'absolute',
+          top: '10px',
+          left: '10px',
+        }}
+        onClick={onClick}
+      >
+        Change Data
+      </button>
+    </>
+  );
 };

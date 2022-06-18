@@ -1,7 +1,14 @@
 import React, {useMemo} from 'react';
 import {arc} from 'd3-shape';
-import {isGradientType, uniqueId} from '@shopify/polaris-viz-core';
+import {
+  ARC_LOAD_ANIMATION_CONFIG,
+  ARC_DATA_CHANGE_ANIMATION_CONFIG,
+  isGradientType,
+  uniqueId,
+  useComponentDidMount,
+} from '@shopify/polaris-viz-core';
 import type {Color} from '@shopify/polaris-viz-core';
+import {useSpring, animated, to} from '@react-spring/web';
 
 import {ConicGradientWithStops} from '../../../';
 import {classNames} from '../../../../utilities';
@@ -9,6 +16,7 @@ import {ARC_PAD_ANGLE} from '../../constants';
 
 import styles from './Arc.scss';
 
+const ANIMATION_SIZE_BUFFER = 30;
 export interface ArcProps {
   radius: number;
   height: number;
@@ -18,6 +26,8 @@ export interface ArcProps {
   color: Color;
   cornerRadius: number;
   thickness: number;
+  index?: number;
+  isAnimated: boolean;
 }
 
 export function Arc({
@@ -29,19 +39,11 @@ export function Arc({
   color,
   cornerRadius,
   thickness,
+  index = 0,
+  isAnimated,
 }: ArcProps) {
   const gradientId = useMemo(() => uniqueId('DonutChart'), []);
   const createArc = arc().cornerRadius(cornerRadius);
-
-  const arcOptions = {
-    innerRadius: radius - thickness,
-    outerRadius: radius,
-    startAngle,
-    endAngle,
-    padAngle: ARC_PAD_ANGLE,
-  };
-  const path = createArc(arcOptions);
-
   const gradient = isGradientType(color)
     ? color
     : [
@@ -49,25 +51,89 @@ export function Arc({
         {color, offset: 1},
       ];
 
+  const mounted = useComponentDidMount();
+  const getDelay = () => {
+    if (isAnimated) {
+      return mounted ? 0 : index * 100;
+    }
+    return 0;
+  };
+
+  const {
+    animatedInnerRadius,
+    animatedOuterRadius,
+    animatedStartAngle,
+    animatedEndAngle,
+    animatedPadAngle,
+  } = useSpring<{
+    animatedInnerRadius: number;
+    animatedOuterRadius: number;
+    animatedStartAngle: number;
+    animatedEndAngle: number;
+    animatedPadAngle: number;
+  }>({
+    animatedInnerRadius: radius - thickness,
+    animatedOuterRadius: radius,
+    animatedStartAngle: startAngle,
+    animatedEndAngle: endAngle,
+    animatedPadAngle: ARC_PAD_ANGLE,
+    from: {
+      animatedOuterRadius: radius - thickness,
+    },
+    config: mounted
+      ? ARC_DATA_CHANGE_ANIMATION_CONFIG
+      : ARC_LOAD_ANIMATION_CONFIG,
+    delay: getDelay(),
+    default: {
+      immediate: !isAnimated,
+    },
+  });
+
   return (
     <React.Fragment>
-      <clipPath id={gradientId} transform={`translate(${radius} ${radius})`}>
-        <path className={classNames(styles.Arc)} d={path!} />
-      </clipPath>
-      <foreignObject
-        x="0"
-        y="0"
-        width={width}
-        height={height}
-        clipPath={`url(#${gradientId})`}
-        transform={`translate(-${radius} -${radius})`}
+      <clipPath
+        id={gradientId}
+        transform={`translate(${width / 2 - ANIMATION_SIZE_BUFFER} ${
+          height / 2 - ANIMATION_SIZE_BUFFER
+        })`}
       >
+        <animated.path
+          className={classNames(styles.Arc)}
+          d={to(
+            [
+              animatedInnerRadius,
+              animatedOuterRadius,
+              animatedStartAngle,
+              animatedEndAngle,
+              animatedPadAngle,
+            ],
+            (
+              animatedInnerRadius,
+              animatedOuterRadius,
+              animatedStartAngle,
+              animatedEndAngle,
+              animatedPadAngle,
+            ) => {
+              return createArc({
+                innerRadius: animatedInnerRadius,
+                outerRadius: animatedOuterRadius,
+                startAngle: animatedStartAngle,
+                endAngle: animatedEndAngle,
+                padAngle: animatedPadAngle,
+              });
+            },
+          )}
+        />
+      </clipPath>
+      <g clipPath={`url(#${gradientId})`}>
         <ConicGradientWithStops
-          height={height}
-          width={width}
+          x={width / -2 - ANIMATION_SIZE_BUFFER}
+          y={height / -2 - ANIMATION_SIZE_BUFFER}
+          height={radius * 4}
+          width={radius * 4}
           gradient={gradient}
         />
-      </foreignObject>
+      </g>
     </React.Fragment>
   );
 }
