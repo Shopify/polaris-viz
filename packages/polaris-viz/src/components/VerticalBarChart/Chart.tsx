@@ -44,7 +44,6 @@ import {
 } from '../../utilities';
 import {YAxis} from '../YAxis';
 import {HorizontalGridLines} from '../HorizontalGridLines';
-import {BarMargin} from '../../types';
 import {
   useBarChartTooltipContent,
   useColorVisionEvents,
@@ -54,10 +53,10 @@ import {
 } from '../../hooks';
 import {AnnotationLine} from '../BarChart';
 
-import {BarGroup, StackedBarGroups} from './components';
-import {useXScale} from './hooks';
+import {VerticalBarGroup} from './components';
 import {BAR_SPACING} from './constants';
 import styles from './Chart.scss';
+import {useVerticalBarChart} from './hooks/useVerticalBarChart';
 
 export interface Props {
   data: DataSeries[];
@@ -162,26 +161,11 @@ export function Chart({
 
   const hideXAxis = xAxisOptions.hide ?? selectedTheme.xAxis.hide;
 
-  const sortedData = labels.map((_, index) => {
-    return data
-      .map((type) => type.data[index].value)
-      .filter((value) => value !== null) as number[];
-  });
-
-  const areAllNegative = useMemo(() => {
-    return ![...sortedData]
-      .reduce((prev, cur) => prev.concat(cur), [])
-      // If one value is greater than zero,
-      // bail out of the loop
-      .some((num) => num > 0);
-  }, [sortedData]);
-
-  const {xScale, gapWidth} = useXScale({
+  const {sortedData, areAllNegative, xScale, gapWidth} = useVerticalBarChart({
+    data,
     drawableWidth,
-    data: sortedData,
-    innerMargin: BarMargin[selectedTheme.bar.innerMargin] as number,
-    outerMargin: BarMargin[selectedTheme.bar.outerMargin] as number,
     labels,
+    theme,
   });
 
   const {ticks, yScale} = useYScale({
@@ -199,20 +183,6 @@ export function Chart({
     data,
     seriesColors: barColors,
   });
-
-  const accessibilityData = useMemo(
-    () =>
-      labels.map((title, index) => {
-        const content = data.map(({data, name}) => {
-          return {
-            label: name ?? '',
-            value: yAxisOptions.labelFormatter(data[index].value ?? 0),
-          };
-        });
-        return {title, data: content};
-      }),
-    [data, labels, yAxisOptions],
-  );
 
   return (
     <div className={styles.ChartContainer} style={{height, width}}>
@@ -271,44 +241,24 @@ export function Chart({
         </g>
 
         <g transform={`translate(${chartXPosition},${Margin.Top})`}>
-          {stackedValues != null ? (
-            <StackedBarGroups
-              accessibilityData={accessibilityData}
-              activeBarGroup={activeBarGroup}
-              colors={barColors}
-              drawableHeight={drawableHeight}
-              gapWidth={gapWidth}
-              id={id}
-              labels={labels}
-              stackedValues={stackedValues}
-              theme={theme}
-              xScale={xScale}
-              yScale={yScale}
-            />
-          ) : (
-            sortedData.map((item, index) => {
-              const xPosition = xScale(index.toString());
-              return (
-                <BarGroup
-                  isAnimated={isAnimated}
-                  gapWidth={gapWidth}
-                  key={index}
-                  x={xPosition == null ? 0 : xPosition}
-                  yScale={yScale}
-                  data={item}
-                  width={xScale.bandwidth()}
-                  height={drawableHeight}
-                  colors={barColors}
-                  barGroupIndex={index}
-                  hasRoundedCorners={selectedTheme.bar.hasRoundedCorners}
-                  zeroAsMinHeight={selectedTheme.bar.zeroAsMinHeight}
-                  accessibilityData={accessibilityData}
-                  activeBarGroup={activeBarGroup}
-                />
-              );
-            })
-          )}
+          <VerticalBarGroup
+            activeBarGroup={activeBarGroup}
+            colors={barColors}
+            data={data}
+            drawableHeight={drawableHeight}
+            gapWidth={gapWidth}
+            id={id}
+            isAnimated={isAnimated}
+            labels={labels}
+            sortedData={sortedData}
+            stackedValues={stackedValues}
+            theme={theme}
+            xScale={xScale}
+            yAxisOptions={yAxisOptions}
+            yScale={yScale}
+          />
         </g>
+
         <g transform={`translate(${chartXPosition},${Margin.Top})`}>
           {Object.keys(annotationsLookupTable).map((key, dataIndex) => {
             const annotation = annotationsLookupTable[Number(key)];

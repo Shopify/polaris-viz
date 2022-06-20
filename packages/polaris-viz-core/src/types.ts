@@ -245,3 +245,10 @@ export interface ChartProps {
 }
 
 export type WithRequired<T, K extends keyof T> = T & {[P in K]-?: T[P]};
+
+export type StackedValues = Series<
+  {
+    [key: string]: number;
+  },
+  string
+>[];

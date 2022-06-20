@@ -1,5 +1,5 @@
 import {useYScale} from '@shopify/polaris-viz-core';
-import type {DataGroup} from '@shopify/polaris-viz-core/src/types';
+import type {DataGroup} from '@shopify/polaris-viz-core';
 
 import {getZeroIndex} from '../utilities/getZeroIndex';
 import {getTicksBetweenZeroAndMax} from '../utilities/getTicksBetweenZeroAndMax';

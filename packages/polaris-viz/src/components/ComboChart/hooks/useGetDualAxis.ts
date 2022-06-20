@@ -1,5 +1,5 @@
 import {useMemo} from 'react';
-import type {DataGroup} from '@shopify/polaris-viz-core/src/types';
+import type {DataGroup} from '@shopify/polaris-viz-core';
 
 import {yAxisMinMax} from '../../LineChart/utilities';
 import {
