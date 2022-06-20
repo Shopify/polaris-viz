@@ -91,7 +91,6 @@ export const ARC_LOAD_ANIMATION_CONFIG = {
   mass: 1,
   tension: 150,
   friction: 10,
-  // restVelocity: 200,
 };
 
 export const ARC_DATA_CHANGE_ANIMATION_CONFIG = {

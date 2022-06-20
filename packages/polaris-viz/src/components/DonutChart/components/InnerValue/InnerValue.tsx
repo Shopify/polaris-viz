@@ -1,5 +1,5 @@
 import React from 'react';
-import {useSpring, animated} from '@react-spring/web';
+import {useSpring, animated, config} from '@react-spring/web';
 
 import {classNames} from '../../../../utilities';
 import {ComparisonMetric} from '../../../ComparisonMetric';
@@ -15,7 +15,7 @@ export function InnerValue({
   const {animatedValue} = useSpring({
     animatedValue: totalValue,
     from: {animatedValue: 0},
-    config: {mass: 1, tension: 210, friction: 20},
+    config: config.stiff,
     default: {
       immediate: !isAnimated,
     },
