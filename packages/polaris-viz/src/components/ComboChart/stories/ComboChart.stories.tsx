@@ -7,7 +7,7 @@ import {ComboChart, ComboChartProps} from '../ComboChart';
 import {THEME_CONTROL_ARGS, TYPE_CONTROL_ARGS} from '../../../storybook';
 
 export default {
-  title: 'polaris-viz/Default Charts/ComboChart',
+  title: 'polaris-viz/Charts/ComboChart',
   component: ComboChart,
   parameters: {
     previewHeight: 'auto',

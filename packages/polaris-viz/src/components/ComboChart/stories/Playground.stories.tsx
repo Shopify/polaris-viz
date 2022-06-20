@@ -6,7 +6,7 @@ import {ComboChart, ComboChartProps} from '../ComboChart';
 import type {DataGroup} from '@shopify/polaris-viz-core';
 
 export default {
-  title: 'polaris-viz/Default Charts/ComboChart/Playground',
+  title: 'polaris-viz/Charts/ComboChart/Playground',
   component: ComboChart,
   parameters: {
     previewHeight: 'auto',

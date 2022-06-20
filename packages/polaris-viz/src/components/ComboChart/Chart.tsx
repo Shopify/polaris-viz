@@ -7,6 +7,7 @@ import {
 } from '@shopify/polaris-viz-core';
 import type {Dimensions, DataGroup} from '@shopify/polaris-viz-core';
 
+import {XAxis} from '../XAxis';
 import {useThemeSeriesColorsForDataGroup} from '../../hooks/useThemeSeriesColorsForDataGroup';
 import {useReducedLabelIndexes} from '../../hooks';
 import {HorizontalGridLines} from '../HorizontalGridLines';
@@ -19,7 +20,7 @@ import {useDualAxisTicksWidth} from './hooks/useDualAxisTickWidths';
 import {useDualAxisScale} from './hooks/useDualAxisScale';
 import {useXScale} from './hooks/useXScale';
 import styles from './Chart.scss';
-import {ComboChartXAxisLabels, ComboBarChart} from './components';
+import {ComboBarChart} from './components';
 import {useSplitDataForCharts} from './hooks/useSplitDataForCharts';
 
 export interface ChartProps {
@@ -46,7 +47,7 @@ export function Chart({
   const [labelHeight, setLabelHeight] = useState(0);
 
   const {height, width} = useLegend({
-    data: data[0].series,
+    data,
     dimensions,
     showLegend,
   });
@@ -137,7 +138,7 @@ export function Chart({
         ) : null}
 
         {hideXAxis ? null : (
-          <ComboChartXAxisLabels
+          <XAxis
             chartHeight={height}
             chartX={chartXPosition}
             chartY={labelsYPosition}

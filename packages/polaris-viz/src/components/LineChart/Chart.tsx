@@ -21,7 +21,7 @@ import type {
 
 import type {RenderTooltipContentData} from '../../types';
 import {useXAxisLabels} from '../../hooks/useXAxisLabels';
-import {LinearXAxisLabels} from '../LinearXAxisLabels';
+import {XAxis} from '../XAxis';
 import {useLegend, LegendContainer} from '../LegendContainer';
 import {
   TooltipHorizontalOffset,
@@ -256,7 +256,7 @@ export function Chart({
         aria-label={emptyState ? emptyStateText : undefined}
       >
         {xAxisOptions.hide ? null : (
-          <LinearXAxisLabels
+          <XAxis
             chartHeight={height}
             chartX={chartStartPosition - xAxisDetails.labelWidth / 2}
             chartY={

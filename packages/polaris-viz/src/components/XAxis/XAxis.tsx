@@ -1,22 +1,23 @@
 import React, {Dispatch, SetStateAction} from 'react';
-import type {ScaleBand} from 'd3-scale';
+import {ScaleBand, scaleLinear, ScaleLinear} from 'd3-scale';
 
 import {useLabels, shouldSkipLabel} from '../Labels';
 import {TextLine} from '../TextLine';
 
-export interface BarChartXAxisLabelsProps {
+interface XAxisProps {
+  chartHeight: number;
   chartX: number;
   chartY: number;
-  chartHeight: number;
   labels: string[];
   labelWidth: number;
   onHeightChange: Dispatch<SetStateAction<number>>;
-  xScale: ScaleBand<string>;
+  xScale: ScaleLinear<number, number> | ScaleBand<string>;
   reducedLabelIndexes?: number[];
   theme: string;
+  ariaHidden?: boolean;
 }
 
-export function BarChartXAxisLabels({
+export function XAxis({
   chartHeight,
   chartX,
   chartY,
@@ -26,12 +27,13 @@ export function BarChartXAxisLabels({
   reducedLabelIndexes,
   theme,
   xScale,
-}: BarChartXAxisLabelsProps) {
+  ariaHidden = false,
+}: XAxisProps) {
   const {lines} = useLabels({
-    labels,
-    targetWidth: labelWidth,
-    onHeightChange,
     chartHeight,
+    labels,
+    onHeightChange,
+    targetWidth: labelWidth,
   });
 
   return (
@@ -41,14 +43,29 @@ export function BarChartXAxisLabels({
           return null;
         }
 
-        const x = xScale(index.toString()) ?? 0;
+        const x = getXPosition(index, xScale);
 
         return (
-          <g transform={`translate(${chartX + x},${chartY})`} key={index}>
+          <g
+            transform={`translate(${chartX + (x ?? 0)},${chartY})`}
+            key={index}
+            aria-hidden={ariaHidden}
+          >
             <TextLine line={line} index={index} theme={theme} />
           </g>
         );
       })}
     </g>
   );
+}
+
+function getXPosition(
+  index: number,
+  xScale: ScaleLinear<number, number> | ScaleBand<string>,
+) {
+  if (xScale instanceof scaleLinear) {
+    return (xScale as ScaleLinear<number, number>)(index);
+  }
+
+  return (xScale as ScaleBand<string>)(`${index}`);
 }
