@@ -1,0 +1,45 @@
+import {Meta, Story, Canvas} from '@storybook/addon-docs/blocks';
+
+import {
+  Divider,
+  Title,
+  UtilitiesHeader,
+} from '../../../../polaris-viz/src/components/Docs/stories/components';
+
+<Meta
+  title="Shared/Utilities/useSVGBlurEvents"
+  parameters={{
+    viewMode: 'docs',
+    docsOnly: true,
+  }}
+/>
+
+<UtilitiesHeader />
+
+<Title type="h3">
+  <code>useSVGBlurEvents()</code>
+</Title>
+
+<p>
+  Attaches a <code>focusout</code> event to a ref which fires an{' '}
+  <code>onBlur</code> when the ref loses focus.
+</p>
+
+<p>
+  A <code>checkFn</code> is available to determine if the blur event should be
+  fired.
+</p>
+
+```tsx
+const [ref, setRef] = useState<SVGGElement | null>(null);
+
+useSVGBlurEvents({
+  checkFn: () => {
+    return document.activeElement === document.body;
+  },
+  onBlur: () => {
+    console.log('onBlur has fired');
+  },
+  ref,
+});
+```

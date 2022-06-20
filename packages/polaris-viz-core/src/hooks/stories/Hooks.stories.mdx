@@ -89,3 +89,13 @@ const isMounted = useComponentDidMount();
 
 - Before the component mounts, `isMounted` is `false`.
 - After the component mounts `isMounted` is `true`
+
+<Title type="h3">
+  <code>useBrowserCheck()</code>
+</Title>
+
+Checks the `userAgent` and returns `true` for the current browser.
+
+```ts
+const {isChromium, isSafari, isFirefox} = useBrowserCheck();
+```
