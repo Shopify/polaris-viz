@@ -11,6 +11,15 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 - Introduces `useUniqueId` and `useComponentDidMount` hooks
 
+### Changed
+
+- Annotations on `<BarChart />` now display new design with optional content on hover/focus.
+
+### Removed
+
+- Removed `tooltipContent` from `Annotations` type. Content is no longer displayed in the `<BarChart />` tooltip.
+- Removed `annotations` from `<HorizontalBarChart />`.
+
 ## [2.1.0] - 2022-06-17
 
 ### Added

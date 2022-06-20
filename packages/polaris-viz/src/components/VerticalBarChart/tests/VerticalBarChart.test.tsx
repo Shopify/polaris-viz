@@ -4,6 +4,11 @@ import {mount} from '@shopify/react-testing';
 import {VerticalBarChart, VerticalBarChartProps} from '../VerticalBarChart';
 import {Chart} from '../Chart';
 
+jest.mock('@shopify/polaris-viz-core/src/utilities', () => ({
+  ...jest.requireActual('@shopify/polaris-viz-core/src/utilities'),
+  estimateStringWidth: jest.fn(() => 50),
+}));
+
 describe('<VerticalBarChart />', () => {
   const mockProps: VerticalBarChartProps = {
     data: [
