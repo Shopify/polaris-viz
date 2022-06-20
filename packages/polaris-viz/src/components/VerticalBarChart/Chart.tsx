@@ -20,7 +20,7 @@ import type {
 import type {AnnotationLookupTable} from '../BarChart';
 import type {RenderTooltipContentData} from '../../types';
 import {useXAxisLabels} from '../../hooks/useXAxisLabels';
-import {BarChartXAxisLabels} from '../BarChartXAxisLabels';
+import {XAxis} from '../XAxis';
 import {LegendContainer, useLegend} from '../LegendContainer';
 import {GradientDefs} from '../shared';
 import {
@@ -197,7 +197,7 @@ export function Chart({
         ref={setSvgRef}
       >
         {hideXAxis ? null : (
-          <BarChartXAxisLabels
+          <XAxis
             chartHeight={height}
             chartX={chartXPosition}
             chartY={chartYPosition}

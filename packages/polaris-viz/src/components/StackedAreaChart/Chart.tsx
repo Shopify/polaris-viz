@@ -16,7 +16,7 @@ import {
 } from '@shopify/polaris-viz-core';
 
 import type {RenderTooltipContentData} from '../../types';
-import {LinearXAxisLabels} from '../LinearXAxisLabels';
+import {XAxis} from '../XAxis';
 import {LegendContainer, useLegend} from '../LegendContainer';
 import {
   TooltipHorizontalOffset,
@@ -212,7 +212,7 @@ export function Chart({
         style={{height, width}}
       >
         {hideXAxis ? null : (
-          <LinearXAxisLabels
+          <XAxis
             chartHeight={height}
             chartX={chartStartPosition - xAxisDetails.labelWidth / 2}
             chartY={
