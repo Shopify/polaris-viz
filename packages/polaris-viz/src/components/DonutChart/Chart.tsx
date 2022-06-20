@@ -7,6 +7,7 @@ import {
   getColorVisionStylesForActiveIndex,
   getColorVisionEventAttrs,
   DEFAULT_THEME_NAME,
+  useUniqueId,
 } from '@shopify/polaris-viz-core';
 import type {
   DataPoint,
@@ -15,8 +16,6 @@ import type {
   LabelFormatter,
 } from '@shopify/polaris-viz-core';
 
-import {classNames} from '../../utilities';
-import {ComparisonMetric} from '../ComparisonMetric';
 import type {ComparisonMetricProps} from '../ComparisonMetric';
 import {LegendContainer} from '../../components/LegendContainer';
 import {
@@ -26,7 +25,7 @@ import {
 } from '../../hooks';
 
 import styles from './DonutChart.scss';
-import {Arc} from './components';
+import {Arc, InnerValue} from './components';
 
 const FULL_CIRCLE = Math.PI * 2;
 
@@ -35,6 +34,7 @@ export interface ChartProps {
   accessibilityLabel?: string;
   comparisonMetric?: Omit<ComparisonMetricProps, 'theme'>;
   showLegend: boolean;
+  isAnimated: boolean;
   total?: number;
   dimensions?: Dimensions;
   theme: string;
@@ -50,7 +50,9 @@ export function Chart({
   dimensions = {height: 0, width: 0},
   theme = DEFAULT_THEME_NAME,
   labelFormatter,
+  isAnimated,
 }: ChartProps) {
+  const chartId = useUniqueId('Donut');
   const [activeIndex, setActiveIndex] = useState<number>(-1);
   const {width, height} = dimensions;
   const drawableHeight = height;
@@ -85,26 +87,24 @@ export function Chart({
   const totalValue =
     total || points.reduce((acc, {value}) => (value ?? 0) + acc, 0);
 
-  const formattedValue = labelFormatter(totalValue);
-
   const legendData = data.map(({name, color, isComparison}, index) => ({
     name: name ?? '',
     color: color ?? seriesColor[index],
     isComparison,
   }));
 
+  if (!width || !height) return null;
+
   return (
     <div className={styles.DonutWrapper}>
       <div className={styles.Donut}>
         <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
-        <svg width={diameter} height={diameter}>
-          <g
-            className={styles.DonutChart}
-            transform={`translate(${radius} ${radius})`}
-          >
+        <svg viewBox={`-40 -40 ${diameter + 20} ${diameter + 20}`}>
+          <g className={styles.DonutChart}>
             {emptyState ? (
               <g aria-hidden>
                 <Arc
+                  isAnimated={isAnimated}
                   width={diameter}
                   height={diameter}
                   radius={radius}
@@ -118,13 +118,12 @@ export function Chart({
             ) : (
               pieChartData.map(
                 ({data: pieData, startAngle, endAngle}, index) => {
-                  const {key} = pieData;
                   const color = data[index]?.color ?? seriesColor[index];
                   const name = data[index].name;
                   const accessibilityLabel = `${name}: ${pieData.key} - ${pieData.value}`;
                   return (
                     <g
-                      key={`${key}-${startAngle}-${endAngle}`}
+                      key={`${chartId}-arc-${index}`}
                       className={styles.DonutChart}
                       aria-label={accessibilityLabel}
                       role="img"
@@ -140,6 +139,8 @@ export function Chart({
                       })}
                     >
                       <Arc
+                        isAnimated={isAnimated}
+                        index={index}
                         width={diameter}
                         height={diameter}
                         radius={radius}
@@ -156,31 +157,14 @@ export function Chart({
             )}
           </g>
         </svg>
-        {formattedValue && !emptyState && (
-          <div
-            className={styles.ContentWrapper}
-            style={{
-              height: diameter,
-              width: diameter,
-            }}
-          >
-            <p
-              className={classNames(styles.ContentValue)}
-              style={{color: selectedTheme.xAxis.labelColor}}
-            >
-              {formattedValue}
-            </p>
-            {comparisonMetric != null && (
-              <div className={styles.ComparisonMetric}>
-                <ComparisonMetric
-                  metric={comparisonMetric.metric}
-                  trend={comparisonMetric.trend}
-                  theme={selectedTheme.legend}
-                  accessibilityLabel={comparisonMetric.accessibilityLabel}
-                />
-              </div>
-            )}
-          </div>
+        {totalValue && !emptyState && (
+          <InnerValue
+            isAnimated={isAnimated}
+            selectedTheme={selectedTheme}
+            totalValue={totalValue}
+            comparisonMetric={comparisonMetric}
+            labelFormatter={labelFormatter}
+          />
         )}
       </div>
       {showLegend && (

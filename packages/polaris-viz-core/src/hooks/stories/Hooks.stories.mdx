@@ -64,3 +64,28 @@ const {yScale, ticks} = useYScale({
   <code>minLabelSpace</code> is used to determine how much space, in{' '}
   <code>px</code> a label/tick should take up. Smaller number = more labels.
 </p>
+
+<Title type="h3">
+  <code>useUniqueId()</code>
+</Title>
+
+Uses the given slug to create a unique ID string
+
+```ts
+const donutId = useUniqueId('Donut');
+
+// => `Donut-103`
+```
+
+<Title type="h3">
+  <code>useComponentDidMount()</code>
+</Title>
+
+Checks wether or not the component has mounted
+
+```ts
+const isMounted = useComponentDidMount();
+```
+
+- Before the component mounts, `isMounted` is `false`.
+- After the component mounts `isMounted` is `true`
