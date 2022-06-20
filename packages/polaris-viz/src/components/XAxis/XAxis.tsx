@@ -1,23 +1,23 @@
 import React, {Dispatch, SetStateAction} from 'react';
-import type {ScaleLinear} from 'd3-scale';
+import {ScaleBand, scaleLinear, ScaleLinear} from 'd3-scale';
 
 import {useLabels, shouldSkipLabel} from '../Labels';
 import {TextLine} from '../TextLine';
 
-interface LinearXAxisLabelsProps {
+interface XAxisProps {
   chartHeight: number;
   chartX: number;
   chartY: number;
   labels: string[];
   labelWidth: number;
   onHeightChange: Dispatch<SetStateAction<number>>;
-  xScale: ScaleLinear<number, number>;
+  xScale: ScaleLinear<number, number> | ScaleBand<string>;
   reducedLabelIndexes?: number[];
   theme: string;
   ariaHidden?: boolean;
 }
 
-export function LinearXAxisLabels({
+export function XAxis({
   chartHeight,
   chartX,
   chartY,
@@ -28,7 +28,7 @@ export function LinearXAxisLabels({
   theme,
   xScale,
   ariaHidden = false,
-}: LinearXAxisLabelsProps) {
+}: XAxisProps) {
   const {lines} = useLabels({
     chartHeight,
     labels,
@@ -38,16 +38,16 @@ export function LinearXAxisLabels({
 
   return (
     <React.Fragment>
-      {lines.map((line, index) => {
+      {lines.map((line, index = 0) => {
         if (shouldSkipLabel(index, reducedLabelIndexes)) {
           return null;
         }
 
-        const x = xScale(index) ?? 0;
+        const x = getXPosition(index, xScale);
 
         return (
           <g
-            transform={`translate(${chartX + x},${chartY})`}
+            transform={`translate(${chartX + (x ?? 0)},${chartY})`}
             key={index}
             aria-hidden={ariaHidden}
           >
@@ -57,4 +57,15 @@ export function LinearXAxisLabels({
       })}
     </React.Fragment>
   );
+}
+
+function getXPosition(
+  index: number,
+  xScale: ScaleLinear<number, number> | ScaleBand<string>,
+) {
+  if (xScale instanceof scaleLinear) {
+    return (xScale as ScaleLinear<number, number>)(index);
+  }
+
+  return (xScale as ScaleBand<string>)(`${index}`);
 }
