@@ -108,7 +108,12 @@ export function Chart({
   });
 
   const {legend, setLegendHeight, height, width} = useLegend({
-    data,
+    data: [
+      {
+        shape: 'Bar',
+        series: data,
+      },
+    ],
     dimensions,
     showLegend,
   });

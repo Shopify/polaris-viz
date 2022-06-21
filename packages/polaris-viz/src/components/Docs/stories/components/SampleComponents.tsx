@@ -2,7 +2,10 @@ import React from 'react';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {useTheme, getSeriesColors} from '../../../../hooks';
-import {LegendContainer} from '../../../../components/LegendContainer';
+import {
+  LegendContainer,
+  useLegend,
+} from '../../../../components/LegendContainer';
 import {
   SparkLineChart,
   LineChart,
@@ -200,27 +203,55 @@ export const SampleLegendChart = ({theme} = {theme: 'Default'}) => {
 
 export const SampleLegendContainer = ({theme} = {theme: 'Default'}) => {
   const selectedTheme = useTheme(theme);
-  const colors = getSeriesColors(3, selectedTheme);
+  const colors = getSeriesColors(6, selectedTheme);
+  const {legend} = useLegend({
+    data: [
+      {
+        shape: 'Line',
+        series: [
+          {
+            name: 'Breakfast',
+            data: [{key: 'Monday', value: 3}],
+          },
+          {
+            name: 'Lunch',
+            data: [{key: 'Monday', value: 4}],
+          },
+          {
+            name: 'Dinner',
+            data: [{key: 'Monday', value: 7}],
+          },
+        ],
+      },
+      {
+        shape: 'Bar',
+        series: [
+          {
+            name: 'Sunday',
+            data: [{key: 'Monday', value: 3}],
+          },
+          {
+            name: 'Monday',
+            data: [{key: 'Monday', value: 4}],
+          },
+          {
+            name: 'Tuesday',
+            data: [{key: 'Monday', value: 7}],
+          },
+        ],
+      },
+    ],
+    showLegend: true,
+    dimensions: {height: 0, width: 0},
+    colors,
+  });
 
   return (
     <SimpleContainer>
       <div style={{marginTop: -16}}>
         <LegendContainer
           colorVisionType=""
-          data={[
-            {
-              name: 'Breakfast',
-              color: colors[0],
-            },
-            {
-              name: 'Lunch',
-              color: 'green',
-            },
-            {
-              name: 'Dinner',
-              color: colors[2],
-            },
-          ]}
+          data={legend}
           onHeightChange={() => {}}
           theme={theme}
         />

@@ -1,10 +1,5 @@
 import {useMemo, useState} from 'react';
-import type {
-  Color,
-  DataSeries,
-  Dimensions,
-  Shape,
-} from '@shopify/polaris-viz-core';
+import type {Color, Dimensions, DataGroup} from '@shopify/polaris-viz-core';
 
 import {DEFAULT_LEGEND_HEIGHT} from '../../../constants';
 import type {LegendData} from '../../../types';
@@ -23,10 +18,9 @@ function getAlteredDimensions(
 
 export interface Props {
   showLegend: boolean;
-  data: DataSeries[];
+  data: DataGroup[];
   colors?: Color[];
   dimensions?: Dimensions;
-  shape?: Shape;
 }
 
 export function useLegend({
@@ -34,7 +28,6 @@ export function useLegend({
   data,
   dimensions = {height: 0, width: 0},
   showLegend,
-  shape = 'Bar',
 }: Props) {
   const [legendHeight, setLegendHeight] = useState(
     showLegend ? DEFAULT_LEGEND_HEIGHT : 0,
@@ -45,13 +38,24 @@ export function useLegend({
       return [];
     }
 
-    return data.map(({name, color, isComparison}, index) => ({
-      name: name ?? '',
-      color: color ?? colors[index],
-      shape,
-      isComparison,
-    }));
-  }, [colors, data, showLegend, shape]);
+    const legends = data.map(({series, shape}) => {
+      return series.map(({name, color, isComparison}) => {
+        return {
+          name: name ?? '',
+          color,
+          shape,
+          isComparison,
+        };
+      });
+    });
+
+    return legends.flat().map(({color, ...rest}, index) => {
+      return {
+        ...rest,
+        color: color ?? colors[index],
+      };
+    });
+  }, [colors, data, showLegend]);
 
   const {height, width} = useMemo(() => {
     if (showLegend === false) {
