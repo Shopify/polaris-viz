@@ -31,7 +31,7 @@ import {
 
 <p>
   All Polaris Viz charts have a <code>data</code> prop that accepts an array of{' '}
-  <code>DataSeries</code>:
+  <code>DataSeries</code> or <code>DataGroup</code>:
 </p>
 
 ```tsx
@@ -40,6 +40,14 @@ interface DataSeries {
   color?: Color;
   isComparison?: boolean;
   name?: string;
+}
+```
+
+```tsx
+interface DataGroup {
+  shape: Shape;
+  series: DataSeries[];
+  yAxisOptions?: YAxisOptions[];
 }
 ```
 
