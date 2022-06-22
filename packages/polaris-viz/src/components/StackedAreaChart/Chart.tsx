@@ -38,6 +38,7 @@ import {
   LineChartMargin as Margin,
   XMLNS,
   LABEL_AREA_TOP_SPACING,
+  MAX_ANIMATED_SERIES_LENGTH,
 } from '../../constants';
 import {eventPointNative} from '../../utilities';
 import {YAxis} from '../YAxis';
@@ -164,11 +165,14 @@ export function Chart({
     });
   }, [stackedValues]);
 
+  const animatePoints =
+    isAnimated && longestSeriesLength <= MAX_ANIMATED_SERIES_LENGTH;
+
   const {animatedCoordinates} = useLinearChartAnimations({
     data: seriesForAnimation,
     lineGenerator,
     activeIndex: activePointIndex,
-    isAnimated: true,
+    isAnimated: animatePoints,
   });
 
   const getXPosition = (
@@ -287,8 +291,8 @@ export function Chart({
         <Points
           activePointIndex={activePointIndex}
           animatedCoordinates={animatedCoordinates}
-          colors={seriesColors}
           chartStartPosition={chartStartPosition}
+          colors={seriesColors}
           getXPosition={getXPosition}
           isAnimated={isAnimated}
           stackedValues={stackedValues}

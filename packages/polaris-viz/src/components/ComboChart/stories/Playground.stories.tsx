@@ -56,19 +56,19 @@ const DATA_ALL_POSITIVE: DataGroup[] = [
     shape: 'Line',
     series: [
       {
+        name: 'Mar 01–Mar 14, 2020',
+        data: [
+          {value: 500, key: '2020-03-02T12:00:00'},
+          {value: 500, key: '2020-03-02T12:00:00'},
+        ],
+      },
+      {
         name: 'Apr 01–Apr 14, 2020',
         data: [
           {value: 100, key: '2020-04-01T12:00:00'},
-          {value: 100, key: '2020-04-02T12:00:00'},
+          {value: 50, key: '2020-04-02T12:00:00'},
         ],
       },
-      // {
-      //   name: 'Mar 01–Mar 14, 2020',
-      //   data: [
-      //     {value: 500, key: '2020-03-02T12:00:00'},
-      //     {value: 500, key: '2020-03-02T12:00:00'},
-      //   ],
-      // },
     ],
   },
 ];
@@ -107,7 +107,7 @@ const DATA_FIRST_SOME_NEGATIVE: DataGroup[] = [
         name: 'Apr 01–Apr 14, 2020',
         data: [
           {value: 100, key: '2020-04-01T12:00:00'},
-          {value: 100, key: '2020-04-01T12:00:00'},
+          {value: 50, key: '2020-04-01T12:00:00'},
         ],
       },
       // {
@@ -155,7 +155,7 @@ const DATA_SECOND_SOME_NEGATIVE: DataGroup[] = [
         name: 'Apr 01–Apr 14, 2020',
         data: [
           {value: -100, key: '2020-04-01T12:00:00'},
-          {value: -100, key: '2020-04-01T12:00:00'},
+          {value: -50, key: '2020-04-01T12:00:00'},
         ],
       },
       // {
@@ -203,7 +203,7 @@ const DATA_BOTH_SOME_NEGATIVE: DataGroup[] = [
         name: 'Apr 01–Apr 14, 2020',
         data: [
           {value: -100, key: '2020-04-01T12:00:00'},
-          {value: -100, key: '2020-04-01T12:00:00'},
+          {value: -50, key: '2020-04-01T12:00:00'},
         ],
       },
       // {
@@ -251,7 +251,7 @@ const DATA_ALL_NEGATIVE: DataGroup[] = [
         name: 'Apr 01–Apr 14, 2020',
         data: [
           {value: -100, key: '2020-04-01T12:00:00'},
-          {value: -100, key: '2020-04-01T12:00:00'},
+          {value: -50, key: '2020-04-01T12:00:00'},
         ],
       },
       // {
@@ -304,7 +304,7 @@ const DATA_FAN_SAP: DataGroup[] = [
         name: 'Apr 01–Apr 14, 2020',
         data: [
           {value: 100, key: '2020-04-01T12:00:00'},
-          {value: 100, key: '2020-04-01T12:00:00'},
+          {value: 50, key: '2020-04-01T12:00:00'},
         ],
       },
       // {
@@ -352,7 +352,7 @@ const DATA_FAP_NAP: DataGroup[] = [
         name: 'Apr 01–Apr 14, 2020',
         data: [
           {value: -100, key: '2020-04-01T12:00:00'},
-          {value: -100, key: '2020-04-01T12:00:00'},
+          {value: -50, key: '2020-04-01T12:00:00'},
         ],
       },
       // {
@@ -400,7 +400,7 @@ const DATA_FAN_SSN: DataGroup[] = [
         name: 'Apr 01–Apr 14, 2020',
         data: [
           {value: -100, key: '2020-04-01T12:00:00'},
-          {value: -100, key: '2020-04-01T12:00:00'},
+          {value: 50, key: '2020-04-01T12:00:00'},
         ],
       },
       // {
@@ -448,7 +448,7 @@ const DATA_FSN_NAP: DataGroup[] = [
         name: 'Apr 01–Apr 14, 2020',
         data: [
           {value: -100, key: '2020-04-01T12:00:00'},
-          {value: -100, key: '2020-04-01T12:00:00'},
+          {value: -50, key: '2020-04-01T12:00:00'},
         ],
       },
       // {

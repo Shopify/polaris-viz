@@ -55,9 +55,7 @@ import {
   useReducedLabelIndexes,
 } from '../../hooks';
 
-import {BarGroup, StackedBarGroups, VerticalBarGroup} from './components';
-import {useXScale} from './hooks';
-import {BAR_SPACING} from './constants';
+import {VerticalBarGroup} from './components';
 import styles from './Chart.scss';
 import {useVerticalBarChart} from './hooks/useVerticalBarChart';
 
