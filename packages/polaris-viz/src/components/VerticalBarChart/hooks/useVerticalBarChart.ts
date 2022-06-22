@@ -1,6 +1,7 @@
 import {DataSeries, useTheme} from '@shopify/polaris-viz-core';
 import {useMemo} from 'react';
 
+import {sortBarChartData} from '../../../utilities/sortBarChartData';
 import {BarMargin} from '../../../types';
 
 import {useXScale} from './useXScale';
@@ -20,11 +21,7 @@ export function useVerticalBarChart({
 }: Props) {
   const selectedTheme = useTheme(theme);
 
-  const sortedData = labels.map((_, index) => {
-    return data
-      .map((type) => type.data[index].value)
-      .filter((value) => value !== null) as number[];
-  });
+  const sortedData = sortBarChartData(labels, data);
 
   const areAllNegative = useMemo(() => {
     return ![...sortedData]

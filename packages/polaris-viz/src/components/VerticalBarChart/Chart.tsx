@@ -18,10 +18,7 @@ import type {
 } from '@shopify/polaris-viz-core';
 
 import {PILL_HEIGHT, Annotations} from '../Annotations';
-import type {
-  RenderTooltipContentData,
-  AnnotationLookupTable,
-} from '../../types';
+import {getVerticalBarChartTooltipPosition} from '../../utilities/getVerticalBarChartTooltipPosition';
 import {useXAxisLabels} from '../../hooks/useXAxisLabels';
 import {XAxis} from '../XAxis';
 import {LegendContainer, useLegend} from '../LegendContainer';
@@ -40,11 +37,7 @@ import {
   TooltipWrapper,
   TOOLTIP_POSITION_DEFAULT_RETURN,
 } from '../TooltipWrapper';
-import {
-  eventPointNative,
-  getStackedValues,
-  getStackedMinMax,
-} from '../../utilities';
+import {getStackedValues, getStackedMinMax} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {HorizontalGridLines} from '../HorizontalGridLines';
 import {
@@ -54,6 +47,10 @@ import {
   useWatchColorVisionEvents,
   useReducedLabelIndexes,
 } from '../../hooks';
+import type {
+  RenderTooltipContentData,
+  AnnotationLookupTable,
+} from '../../types';
 
 import {VerticalBarGroup} from './components';
 import styles from './Chart.scss';
@@ -345,32 +342,15 @@ export function Chart({
     index,
     eventType,
   }: TooltipPositionParams): TooltipPosition {
-    if (eventType === 'mouse' && event) {
-      const point = eventPointNative(event);
-
-      if (point == null) {
-        return TOOLTIP_POSITION_DEFAULT_RETURN;
-      }
-
-      const {svgX, svgY} = point;
-      const currentPoint = svgX - chartXPosition;
-      const activeIndex = Math.floor(currentPoint / xScale.step());
-
-      if (
-        activeIndex < 0 ||
-        activeIndex > sortedData.length - 1 ||
-        svgY <= chartYPosition ||
-        svgY > drawableHeight + Number(Margin.Bottom) + labelHeight
-      ) {
-        return TOOLTIP_POSITION_DEFAULT_RETURN;
-      }
-
-      return formatPositionForTooltip(activeIndex);
-    } else if (index != null) {
-      return formatPositionForTooltip(index);
-    }
-
-    return TOOLTIP_POSITION_DEFAULT_RETURN;
+    return getVerticalBarChartTooltipPosition({
+      tooltipPosition: {event, index, eventType},
+      chartXPosition,
+      formatPositionForTooltip,
+      maxIndex: sortedData.length - 1,
+      step: xScale.step(),
+      yMin: Margin.Top,
+      yMax: drawableHeight + Number(Margin.Bottom) + labelHeight,
+    });
   }
 }
 

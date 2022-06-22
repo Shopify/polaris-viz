@@ -47,6 +47,7 @@ const CONTAINER_HEIGHT = 500;
 const DATA: DataGroup[] = [
   {
     shape: 'Bar',
+    name: 'Sales',
     series: [
       {
         name: 'POS',
@@ -83,6 +84,7 @@ const DATA: DataGroup[] = [
   },
   {
     shape: 'Line',
+    name: 'Sessions',
     series: [
       {
         name: 'Sessions from Google ads',
