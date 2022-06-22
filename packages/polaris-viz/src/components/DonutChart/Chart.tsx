@@ -17,7 +17,7 @@ import type {
 } from '@shopify/polaris-viz-core';
 
 import type {ComparisonMetricProps} from '../ComparisonMetric';
-import {LegendContainer} from '../../components/LegendContainer';
+import {LegendContainer, useLegend} from '../../components/LegendContainer';
 import {
   getSeriesColors,
   useColorVisionEvents,
@@ -54,11 +54,16 @@ export function Chart({
 }: ChartProps) {
   const chartId = useUniqueId('Donut');
   const [activeIndex, setActiveIndex] = useState<number>(-1);
-  const {width, height} = dimensions;
-  const drawableHeight = height;
-  const drawableWidth = width - 200;
+  // const {width, height} = dimensions;
+  // const drawableHeight = height;
+  // const drawableWidth = width - 200;
+  const {height, width, setLegendWidth} = useLegend({
+    data: [{series: data, shape: 'Line'}],
+    dimensions,
+    showLegend,
+  });
 
-  const diameter = Math.min(drawableHeight, drawableWidth);
+  const diameter = Math.min(height, width);
   const radius = diameter / 2;
   const selectedTheme = useTheme(theme);
 
@@ -175,6 +180,7 @@ export function Chart({
         >
           <LegendContainer
             onHeightChange={() => {}}
+            onWidthChange={setLegendWidth}
             colorVisionType={COLOR_VISION_SINGLE_ITEM}
             data={legendData}
             theme={theme}

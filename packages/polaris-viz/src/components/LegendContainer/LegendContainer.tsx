@@ -18,6 +18,7 @@ export interface LegendContainerProps {
   colorVisionType: string;
   data: LegendData[];
   onHeightChange: Dispatch<SetStateAction<number>>;
+  onWidthChange?: Dispatch<SetStateAction<number>>;
   theme: string;
 }
 
@@ -25,6 +26,7 @@ export function LegendContainer({
   colorVisionType,
   data,
   onHeightChange,
+  onWidthChange = () => {},
   theme,
 }: LegendContainerProps) {
   const selectedTheme = useTheme(theme);
@@ -61,6 +63,27 @@ export function LegendContainer({
       onHeightChange(0);
     };
   }, [onHeightChange]);
+
+  useEffect(() => {
+    const newWidth = entry?.contentRect.width;
+    if (
+      entry == null ||
+      entry?.contentRect.width === previousHeight.current ||
+      newWidth == null
+    ) {
+      return;
+    }
+
+    previousHeight.current = newWidth;
+    onWidthChange(newWidth! + LEGENDS_TOP_MARGIN);
+  }, [entry, onWidthChange]);
+
+  useEffect(() => {
+    onWidthChange(DEFAULT_LEGEND_HEIGHT + LEGENDS_TOP_MARGIN);
+    return () => {
+      onWidthChange(0);
+    };
+  }, [onWidthChange]);
 
   return (
     <div

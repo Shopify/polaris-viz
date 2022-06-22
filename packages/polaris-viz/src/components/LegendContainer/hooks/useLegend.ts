@@ -1,18 +1,19 @@
 import {useMemo, useState} from 'react';
 import type {Color, Dimensions, DataGroup} from '@shopify/polaris-viz-core';
 
-import {DEFAULT_LEGEND_HEIGHT} from '../../../constants';
+import {DEFAULT_LEGEND_HEIGHT, DEFAULT_LEGEND_WIDTH} from '../../../constants';
 import type {LegendData} from '../../../types';
 
 function getAlteredDimensions(
   dimensions: Dimensions | undefined,
   legendsHeight: number,
+  legendsWidth: number,
 ) {
   const {width, height} = dimensions ?? {width: 0, height: 0};
 
   return {
     height: height - legendsHeight,
-    width,
+    width: width - legendsWidth,
   };
 }
 
@@ -31,6 +32,9 @@ export function useLegend({
 }: Props) {
   const [legendHeight, setLegendHeight] = useState(
     showLegend ? DEFAULT_LEGEND_HEIGHT : 0,
+  );
+  const [legendWidth, setLegendWidth] = useState(
+    showLegend ? DEFAULT_LEGEND_WIDTH : 0,
   );
 
   const legend: LegendData[] = useMemo(() => {
@@ -62,8 +66,8 @@ export function useLegend({
       return dimensions;
     }
 
-    return getAlteredDimensions(dimensions, legendHeight);
-  }, [showLegend, dimensions, legendHeight]);
+    return getAlteredDimensions(dimensions, legendHeight, legendWidth);
+  }, [showLegend, dimensions, legendHeight, legendWidth]);
 
-  return {legend, setLegendHeight, height, width};
+  return {legend, setLegendHeight, height, width, setLegendWidth};
 }
