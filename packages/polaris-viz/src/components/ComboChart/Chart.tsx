@@ -3,6 +3,7 @@ import {
   BarChartMargin,
   BoundingRect,
   DataType,
+  COLOR_VISION_SINGLE_ITEM,
   LABEL_AREA_TOP_SPACING,
   useTheme,
   XAxisOptions,
@@ -26,7 +27,7 @@ import {useThemeSeriesColorsForDataGroup} from '../../hooks/useThemeSeriesColors
 import {useReducedLabelIndexes} from '../../hooks';
 import {HorizontalGridLines} from '../HorizontalGridLines';
 import {YAxis} from '../YAxis';
-import {useLegend} from '../LegendContainer';
+import {LegendContainer, useLegend} from '../LegendContainer';
 import {XMLNS} from '../../constants';
 
 import {useDualAxisTicks} from './hooks/useDualAxisTicks';
@@ -65,7 +66,8 @@ export function Chart({
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
-  const {height, width} = useLegend({
+  const {legend, setLegendHeight, height, width} = useLegend({
+    colors,
     data,
     dimensions,
     showLegend,
@@ -246,6 +248,15 @@ export function Chart({
         onIndexChange={(index) => setActiveIndex(index)}
         parentRef={svgRef}
       />
+
+      {showLegend && (
+        <LegendContainer
+          colorVisionType={COLOR_VISION_SINGLE_ITEM}
+          data={legend}
+          onHeightChange={setLegendHeight}
+          theme={theme}
+        />
+      )}
     </div>
   );
 
