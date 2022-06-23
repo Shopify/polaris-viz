@@ -25,7 +25,14 @@ export function useLineChartTooltipContent({
         },
       ];
 
+      const key = data[0].data[activeIndex]
+        ? data[0].data[activeIndex].key
+        : '';
+
       data.forEach(({name, data: seriesData, color, isComparison}) => {
+        if (!seriesData[activeIndex]) {
+          return;
+        }
         const {value} = seriesData[activeIndex];
 
         tooltipData[0].data.push({
@@ -39,7 +46,7 @@ export function useLineChartTooltipContent({
       return renderTooltipContent({
         data: tooltipData,
         activeIndex,
-        title: `${data[0].data[activeIndex].key}`,
+        title: key,
         dataSeries: data,
       });
     },
