@@ -6,6 +6,9 @@ import {
   isGradientType,
   uniqueId,
   useComponentDidMount,
+  getColorVisionEventAttrs,
+  getColorVisionStylesForActiveIndex,
+  COLOR_VISION_SINGLE_ITEM,
 } from '@shopify/polaris-viz-core';
 import type {Color} from '@shopify/polaris-viz-core';
 import {useSpring, animated, to} from '@react-spring/web';
@@ -28,6 +31,7 @@ export interface ArcProps {
   thickness: number;
   index?: number;
   isAnimated: boolean;
+  activeIndex?: number;
 }
 
 export function Arc({
@@ -41,6 +45,7 @@ export function Arc({
   thickness,
   index = 0,
   isAnimated,
+  activeIndex = 0,
 }: ArcProps) {
   const gradientId = useMemo(() => uniqueId('DonutChart'), []);
   const createArc = arc().cornerRadius(cornerRadius);
@@ -125,7 +130,19 @@ export function Arc({
           )}
         />
       </clipPath>
-      <g clipPath={`url(#${gradientId})`}>
+      <g
+        style={{
+          ...getColorVisionStylesForActiveIndex({
+            activeIndex,
+            index,
+          }),
+        }}
+        {...getColorVisionEventAttrs({
+          type: COLOR_VISION_SINGLE_ITEM,
+          index,
+        })}
+        clipPath={`url(#${gradientId})`}
+      >
         <ConicGradientWithStops
           x={width / -2 - ANIMATION_SIZE_BUFFER}
           y={height / -2 - ANIMATION_SIZE_BUFFER}

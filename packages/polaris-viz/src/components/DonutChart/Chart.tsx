@@ -4,8 +4,6 @@ import {
   clamp,
   useTheme,
   COLOR_VISION_SINGLE_ITEM,
-  getColorVisionStylesForActiveIndex,
-  getColorVisionEventAttrs,
   DEFAULT_THEME_NAME,
   useUniqueId,
 } from '@shopify/polaris-viz-core';
@@ -54,20 +52,25 @@ export function Chart({
 }: ChartProps) {
   const chartId = useUniqueId('Donut');
   const [activeIndex, setActiveIndex] = useState<number>(-1);
-  // const {width, height} = dimensions;
-  // const drawableHeight = height;
-  // const drawableWidth = width - 200;
-  const {height, width, setLegendWidth} = useLegend({
-    data: [{series: data, shape: 'Line'}],
+  const selectedTheme = useTheme(theme);
+
+  const seriesCount = clamp({amount: data.length, min: 1, max: Infinity});
+  const seriesColor = getSeriesColors(seriesCount, selectedTheme);
+
+  const {height, width, legend, setLegendDimensions} = useLegend({
+    data: [{series: data, shape: 'Bar'}],
     dimensions,
     showLegend,
+    direction: 'vertical',
+    colors: seriesColor,
   });
 
   const diameter = Math.min(height, width);
   const radius = diameter / 2;
-  const selectedTheme = useTheme(theme);
 
-  useColorVisionEvents();
+  const shouldColorVis = Boolean(width && height);
+
+  useColorVisionEvents(shouldColorVis);
 
   useWatchColorVisionEvents({
     type: COLOR_VISION_SINGLE_ITEM,
@@ -76,8 +79,6 @@ export function Chart({
     },
   });
 
-  const seriesCount = clamp({amount: data.length, min: 1, max: Infinity});
-  const seriesColor = getSeriesColors(seriesCount, selectedTheme);
   const points: DataPoint[] = data.reduce(
     (prev: DataPoint[], {data}) => prev.concat(data),
     [],
@@ -91,12 +92,6 @@ export function Chart({
 
   const totalValue =
     total || points.reduce((acc, {value}) => (value ?? 0) + acc, 0);
-
-  const legendData = data.map(({name, color, isComparison}, index) => ({
-    name: name ?? '',
-    color: color ?? seriesColor[index],
-    isComparison,
-  }));
 
   if (!width || !height) return null;
 
@@ -132,20 +127,11 @@ export function Chart({
                       className={styles.DonutChart}
                       aria-label={accessibilityLabel}
                       role="img"
-                      style={{
-                        ...getColorVisionStylesForActiveIndex({
-                          activeIndex,
-                          index,
-                        }),
-                      }}
-                      {...getColorVisionEventAttrs({
-                        type: COLOR_VISION_SINGLE_ITEM,
-                        index,
-                      })}
                     >
                       <Arc
                         isAnimated={isAnimated}
                         index={index}
+                        activeIndex={activeIndex}
                         width={diameter}
                         height={diameter}
                         radius={radius}
@@ -179,10 +165,9 @@ export function Chart({
           }}
         >
           <LegendContainer
-            onHeightChange={() => {}}
-            onWidthChange={setLegendWidth}
+            onDimensionChange={setLegendDimensions}
             colorVisionType={COLOR_VISION_SINGLE_ITEM}
-            data={legendData}
+            data={legend}
             theme={theme}
             direction="vertical"
           />

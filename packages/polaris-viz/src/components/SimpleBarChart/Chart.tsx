@@ -61,7 +61,7 @@ export function Chart({
     theme,
   });
 
-  const {legend, setLegendHeight, height, width} = useLegend({
+  const {legend, setLegendDimensions, height, width} = useLegend({
     data: [
       {
         shape: 'Bar',
@@ -189,7 +189,7 @@ export function Chart({
         <LegendContainer
           colorVisionType={COLOR_VISION_SINGLE_ITEM}
           data={legend}
-          onHeightChange={setLegendHeight}
+          onDimensionChange={setLegendDimensions}
           theme={theme}
         />
       )}

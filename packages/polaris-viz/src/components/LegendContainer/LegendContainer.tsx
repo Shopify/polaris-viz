@@ -5,8 +5,9 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import isEqual from 'fast-deep-equal';
 import {useTheme} from '@shopify/polaris-viz-core';
-import type {Direction} from '@shopify/polaris-viz-core';
+import type {Direction, Dimensions} from '@shopify/polaris-viz-core';
 
 import {
   DEFAULT_LEGEND_HEIGHT,
@@ -23,8 +24,7 @@ import style from './LegendContainer.scss';
 export interface LegendContainerProps {
   colorVisionType: string;
   data: LegendData[];
-  onHeightChange: Dispatch<SetStateAction<number>>;
-  onWidthChange?: Dispatch<SetStateAction<number>>;
+  onDimensionChange: Dispatch<SetStateAction<Dimensions>>;
   theme: string;
   direction?: Direction;
 }
@@ -32,23 +32,23 @@ export interface LegendContainerProps {
 export function LegendContainer({
   colorVisionType,
   data,
-  onHeightChange,
-  onWidthChange = () => {},
+  onDimensionChange,
   theme,
   direction = 'horizontal',
 }: LegendContainerProps) {
   const selectedTheme = useTheme(theme);
   const {setRef, entry} = useResizeObserver();
   const previousHeight = useRef(DEFAULT_LEGEND_HEIGHT);
+  const previousWidth = useRef(DEFAULT_LEGEND_WIDTH);
   const [activeIndex, setActiveIndex] = useState(-1);
 
   const styleMap = {
     horizontal: {
-      container: style.Horizontal,
+      justifyContent: 'flex-end',
       margin: `${LEGENDS_TOP_MARGIN}px ${selectedTheme.grid.horizontalMargin}px 0`,
     },
     vertical: {
-      container: style.Vertical,
+      justifyContent: 'flex-start',
       margin: `0 ${selectedTheme.grid.horizontalMargin}px 0`,
     },
   };
@@ -62,54 +62,30 @@ export function LegendContainer({
 
   useEffect(() => {
     const newHeight = entry?.contentRect.height;
-
-    if (
-      entry == null ||
-      entry?.contentRect.height === previousHeight.current ||
-      newHeight == null
-    ) {
-      return;
-    }
-
-    previousHeight.current = newHeight;
-    onHeightChange(newHeight! + LEGENDS_TOP_MARGIN);
-  }, [entry, onHeightChange]);
-
-  useEffect(() => {
-    onHeightChange(DEFAULT_LEGEND_HEIGHT + LEGENDS_TOP_MARGIN);
-
-    return () => {
-      onHeightChange(0);
-    };
-  }, [onHeightChange]);
-
-  useEffect(() => {
     const newWidth = entry?.contentRect.width;
+    const newDimensions = {height: newHeight!, width: newWidth!};
+    if (entry == null || newHeight == null || newWidth == null) {
+      return;
+    }
     if (
-      entry == null ||
-      entry?.contentRect.width === previousHeight.current ||
-      newWidth == null
+      isEqual(
+        {height: previousHeight.current, width: previousWidth.current},
+        newDimensions,
+      )
     ) {
       return;
     }
-
-    previousHeight.current = newWidth;
-    onWidthChange(newWidth! + LEGENDS_TOP_MARGIN);
-  }, [entry, onWidthChange]);
-
-  useEffect(() => {
-    onWidthChange(DEFAULT_LEGEND_WIDTH + LEGENDS_TOP_MARGIN);
-    return () => {
-      onWidthChange(0);
-    };
-  }, [onWidthChange]);
+    previousHeight.current = newDimensions.height;
+    previousWidth.current = newDimensions.width;
+    onDimensionChange(newDimensions);
+  }, [entry, onDimensionChange]);
 
   return (
     <div
-      className={classNames(style.Container, styleMap[direction].container)}
+      className={classNames(style.Container)}
       ref={setRef}
       role="list"
-      style={{margin: styleMap[direction].margin}}
+      style={{...styleMap[direction]}}
     >
       <Legend
         activeIndex={activeIndex}
