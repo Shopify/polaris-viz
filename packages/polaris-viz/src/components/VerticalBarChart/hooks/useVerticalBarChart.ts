@@ -34,8 +34,6 @@ export function useVerticalBarChart({
   const {xScale, gapWidth} = useXScale({
     drawableWidth,
     data: sortedData,
-    innerMargin: BarMargin[selectedTheme.bar.innerMargin] as number,
-    outerMargin: BarMargin[selectedTheme.bar.outerMargin] as number,
     labels,
   });
 

@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Removed
+
+- `bar.innerPadding` and `bar.outerPadding`
+
 ### Changed
 
 - `useLegend` hook now accepts `DataGroup[]` and `DataSeries[]`

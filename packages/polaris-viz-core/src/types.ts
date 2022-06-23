@@ -60,12 +60,6 @@ export interface YAxisOptions {
 }
 
 // === Theme types === //
-enum BarMargin {
-  Small = 0.05,
-  Medium = 0.1,
-  Large = 0.3,
-  None = 0,
-}
 
 export interface GridTheme {
   showHorizontalLines: boolean;
@@ -81,8 +75,6 @@ export interface ArcTheme {
 }
 
 export interface BarTheme {
-  innerMargin: keyof typeof BarMargin;
-  outerMargin: keyof typeof BarMargin;
   hasRoundedCorners: boolean;
   /**
    * @deprecated This prop is experimental and not ready for general use. If you want to use this, come talk to us in #polaris-data-viz
