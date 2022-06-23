@@ -10,18 +10,17 @@ import type {XAxisOptions, YAxisOptions} from '@shopify/polaris-viz-core';
 import {
   getXAxisOptionsWithDefaults,
   getYAxisOptionsWithDefaults,
-  formatDataForTooltip,
 } from '../../utilities';
-import {TooltipContent} from '../';
 import {ChartContainer} from '../ChartContainer';
 import {ChartSkeleton} from '../ChartSkeleton';
 import {SkipLink} from '../SkipLink';
-import type {RenderTooltipContentData, TooltipOptions} from '../../types';
+import type {TooltipOptions} from '../../types';
+import {useRenderTooltipContent} from '../../hooks';
 
 import {Chart} from './Chart';
 
 export type StackedAreaChartProps = {
-  tooltipOptions: TooltipOptions;
+  tooltipOptions?: TooltipOptions;
   state?: ChartState;
   errorText?: string;
   showLegend?: boolean;
@@ -48,6 +47,7 @@ export function StackedAreaChart(props: StackedAreaChartProps) {
     ...props,
   };
   const skipLinkAnchorId = useRef(uniqueId('stackedAreaChart'));
+  const renderTooltip = useRenderTooltipContent({tooltipOptions, theme, data});
 
   if (data.length === 0) {
     return null;
@@ -55,22 +55,6 @@ export function StackedAreaChart(props: StackedAreaChartProps) {
 
   const xAxisOptionsWithDefaults = getXAxisOptionsWithDefaults(xAxisOptions);
   const yAxisOptionsWithDefaults = getYAxisOptionsWithDefaults(yAxisOptions);
-
-  function renderTooltipContent(tooltipData: RenderTooltipContentData) {
-    if (tooltipOptions?.renderTooltipContent != null) {
-      return tooltipOptions.renderTooltipContent({
-        ...tooltipData,
-        dataSeries: data,
-      });
-    }
-
-    const {formattedData, title} = formatDataForTooltip({
-      data: tooltipData,
-      tooltipOptions,
-    });
-
-    return <TooltipContent theme={theme} title={title} data={formattedData} />;
-  }
 
   return (
     <React.Fragment>
@@ -84,7 +68,7 @@ export function StackedAreaChart(props: StackedAreaChartProps) {
           <Chart
             data={data}
             isAnimated={isAnimated}
-            renderTooltipContent={renderTooltipContent}
+            renderTooltipContent={renderTooltip}
             showLegend={showLegend}
             theme={theme}
             xAxisOptions={xAxisOptionsWithDefaults}

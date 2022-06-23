@@ -207,11 +207,6 @@ export const Default: Story<BarChartProps> = Template.bind({});
 Default.args = {
   data: DATA,
   xAxisOptions: {},
-  tooltipOptions: {
-    keyFormatter: (val) => `label: ${val}`,
-    valueFormatter: (val) => `value: ${val}`,
-    titleFormatter: (val) => `title: ${val}`,
-  },
   isAnimated: true,
   showLegend: true,
 };

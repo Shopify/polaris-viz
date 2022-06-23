@@ -1,10 +1,4 @@
 import type {
-  XAxisOptions,
-  YAxisOptions,
-  Direction,
-} from '@shopify/polaris-viz-core';
-
-import type {
   TooltipData,
   RenderTooltipContentData,
   TooltipOptions,
@@ -12,9 +6,6 @@ import type {
 
 interface Props {
   data: RenderTooltipContentData;
-  direction: Direction;
-  xAxisOptions: Required<XAxisOptions>;
-  yAxisOptions: Required<YAxisOptions>;
   tooltipOptions: TooltipOptions;
 }
 

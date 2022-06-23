@@ -7,9 +7,16 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Added
+
+- `tooltipOptions.keyFormatter` to `<LineChart/>`, `<BarChart/>` and `<StackedAreaChart/>`
+- `tooltipOptions.valueFormatter` to `<LineChart/>`, `<BarChart/>` and `<StackedAreaChart/>`
+- `tooltipOptions.titleFormatter` to `<LineChart/>`, `<BarChart/>` and `<StackedAreaChart/>`
+
 ### Changed
 
 - `<LineChart />` now supports series that are shorter than the X-Axis.
+- `renderTooltipContent` is now nested inside `tooltipOptions` in `<LineChart/>`, `<BarChart/>` and `<StackedAreaChart/>`
 - `useLegend` hook now accepts `DataGroup[]` and `DataSeries[]`
 - `<SimpleNormalizedChart/>` now displays an empty bar when data values are all zero or no data is passed
 

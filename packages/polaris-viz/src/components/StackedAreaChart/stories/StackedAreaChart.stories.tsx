@@ -97,11 +97,6 @@ const DEFAULT_PROPS = {
   skipLinkText: 'Skip chart content',
   yAxisOptions: {labelFormatter: formatYAxisLabel},
   isAnimated: true,
-  tooltipOptions: {
-    keyFormatter: (val) => `label: ${val}`,
-    valueFormatter: (val) => `value: ${val}`,
-    titleFormatter: (val) => `title: ${val}`,
-  },
 };
 
 const Template: Story<StackedAreaChartProps> = (

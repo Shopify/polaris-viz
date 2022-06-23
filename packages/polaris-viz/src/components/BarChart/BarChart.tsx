@@ -14,26 +14,21 @@ import type {
 } from '@shopify/polaris-viz-core';
 
 import {ChartContainer} from '../../components/ChartContainer';
-import type {
-  RenderTooltipContentData,
-  Annotation,
-  TooltipOptions,
-} from '../../types';
-import {TooltipContent} from '../';
+import type {Annotation, TooltipOptions} from '../../types';
 import {SkipLink} from '../SkipLink';
 import {
   getXAxisOptionsWithDefaults,
   getYAxisOptionsWithDefaults,
   normalizeData,
-  formatDataForTooltip,
 } from '../../utilities';
+import {useRenderTooltipContent} from '../../hooks';
 import {HorizontalBarChart} from '../HorizontalBarChart';
 import {VerticalBarChart} from '../VerticalBarChart';
 import {ChartSkeleton} from '../../components/ChartSkeleton';
 
 export type BarChartProps = {
   errorText?: string;
-  tooltipOptions: TooltipOptions;
+  tooltipOptions?: TooltipOptions;
   annotations?: Annotation[];
   direction?: Direction;
   emptyStateText?: string;
@@ -77,21 +72,8 @@ export function BarChart(props: BarChartProps) {
 
   const annotationsLookupTable = normalizeData(annotations, 'startKey');
 
-  function renderTooltip(tooltipData: RenderTooltipContentData) {
-    if (tooltipOptions?.renderTooltipContent != null) {
-      return tooltipOptions.renderTooltipContent({
-        ...tooltipData,
-        dataSeries: data,
-      });
-    }
+  const renderTooltip = useRenderTooltipContent({tooltipOptions, theme, data});
 
-    const {title, formattedData} = formatDataForTooltip({
-      data: tooltipData,
-      tooltipOptions,
-    });
-
-    return <TooltipContent data={formattedData} theme={theme} title={title} />;
-  }
   const ChartByDirection =
     direction === 'vertical' ? (
       <VerticalBarChart

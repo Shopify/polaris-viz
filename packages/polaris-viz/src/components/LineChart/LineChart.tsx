@@ -16,17 +16,19 @@ import {
 } from '@shopify/polaris-viz-core';
 
 import {
-  formatDataForTooltip,
   getXAxisOptionsWithDefaults,
   getYAxisOptionsWithDefaults,
 } from '../../utilities';
-import type {RenderTooltipContentData} from '../../types';
-import {TooltipContent} from '../../components/TooltipContent';
 import {ChartContainer} from '../../components/ChartContainer';
 import {ChartSkeleton} from '../../components/ChartSkeleton';
 import {useThemeSeriesColors} from '../../hooks/useThemeSeriesColors';
 import {SkipLink} from '../SkipLink';
-import {usePrefersReducedMotion, useTheme} from '../../hooks';
+import {
+  useRenderTooltipContent,
+  usePrefersReducedMotion,
+  useTheme,
+} from '../../hooks';
+import type {TooltipOptions} from '../../types';
 
 import {Chart} from './Chart';
 
@@ -34,7 +36,7 @@ export type LineChartProps = {
   state?: ChartState;
   errorText?: string;
   emptyStateText?: string;
-  tooltipOptions: TooltipOptions;
+  tooltipOptions?: TooltipOptions;
   showLegend?: boolean;
   skipLinkText?: string;
   xAxisOptions?: Partial<XAxisOptions>;
@@ -68,21 +70,7 @@ export function LineChart(props: LineChartProps) {
   const xAxisOptionsWithDefaults = getXAxisOptionsWithDefaults(xAxisOptions);
   const yAxisOptionsWithDefaults = getYAxisOptionsWithDefaults(yAxisOptions);
 
-  function renderTooltip(tooltipData: RenderTooltipContentData) {
-    if (tooltipOptions?.renderTooltipContent != null) {
-      return tooltipOptions.renderTooltipContent({
-        ...tooltipData,
-        dataSeries: data,
-      });
-    }
-
-    const {formattedData, title} = formatDataForTooltip({
-      data: tooltipData,
-      tooltipOptions,
-    });
-
-    return <TooltipContent title={title} data={formattedData} theme={theme} />;
-  }
+  const renderTooltip = useRenderTooltipContent({tooltipOptions, theme, data});
 
   const getOpacityByDataLength = (dataLength: number) => {
     if (dataLength <= 4) {
