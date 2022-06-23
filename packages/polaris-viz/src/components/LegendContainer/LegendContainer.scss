@@ -1,6 +1,13 @@
 .Container {
   display: flex;
   gap: 10px;
-  justify-content: flex-end;
   flex-wrap: wrap;
+}
+
+.Horizontal {
+  justify-content: flex-end;
+}
+
+.Vertical {
+  justify-content: flex-start;
 }

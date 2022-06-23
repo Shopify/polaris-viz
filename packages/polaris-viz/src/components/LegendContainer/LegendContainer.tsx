@@ -6,11 +6,13 @@ import React, {
   useState,
 } from 'react';
 import {useTheme} from '@shopify/polaris-viz-core';
+import type {Direction} from '@shopify/polaris-viz-core';
 
 import {DEFAULT_LEGEND_HEIGHT, LEGENDS_TOP_MARGIN} from '../../constants';
 import {useResizeObserver, useWatchColorVisionEvents} from '../../hooks';
 import {Legend} from '../Legend';
 import type {LegendData} from '../../types';
+import {classNames} from '../../utilities';
 
 import style from './LegendContainer.scss';
 
@@ -20,6 +22,7 @@ export interface LegendContainerProps {
   onHeightChange: Dispatch<SetStateAction<number>>;
   onWidthChange?: Dispatch<SetStateAction<number>>;
   theme: string;
+  direction?: Direction;
 }
 
 export function LegendContainer({
@@ -28,11 +31,23 @@ export function LegendContainer({
   onHeightChange,
   onWidthChange = () => {},
   theme,
+  direction = 'horizontal',
 }: LegendContainerProps) {
   const selectedTheme = useTheme(theme);
   const {setRef, entry} = useResizeObserver();
   const previousHeight = useRef(DEFAULT_LEGEND_HEIGHT);
   const [activeIndex, setActiveIndex] = useState(-1);
+
+  const styleMap = {
+    horizontal: {
+      container: style.Horizontal,
+      margin: `${LEGENDS_TOP_MARGIN}px ${selectedTheme.grid.horizontalMargin}px 0`,
+    },
+    vertical: {
+      container: style.Vertical,
+      margin: `0 ${selectedTheme.grid.horizontalMargin}px 0`,
+    },
+  };
 
   useWatchColorVisionEvents({
     type: colorVisionType,
@@ -87,12 +102,10 @@ export function LegendContainer({
 
   return (
     <div
-      className={style.Container}
+      className={classNames(style.Container, styleMap[direction].container)}
       ref={setRef}
       role="list"
-      style={{
-        margin: `${LEGENDS_TOP_MARGIN}px ${selectedTheme.grid.horizontalMargin}px 0`,
-      }}
+      style={{margin: styleMap[direction].margin}}
     >
       <Legend
         activeIndex={activeIndex}

@@ -184,6 +184,7 @@ export function Chart({
             colorVisionType={COLOR_VISION_SINGLE_ITEM}
             data={legendData}
             theme={theme}
+            direction="vertical"
           />
         </div>
       )}
