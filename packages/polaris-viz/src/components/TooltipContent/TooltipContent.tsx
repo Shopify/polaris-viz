@@ -81,12 +81,16 @@ export function TooltipContent({
               </p>
             )}
             {series.map(({key, value, color, isComparison}, seriesIndex) => {
+              const indexOffset = data[dataIndex - 1]
+                ? data[dataIndex - 1].data.length
+                : 0;
+
               return (
                 <TooltipRow
                   key={`row-${seriesIndex}`}
                   activeIndex={activeIndex}
                   color={color}
-                  index={seriesIndex}
+                  index={seriesIndex + indexOffset}
                   isComparison={isComparison}
                   label={key}
                   shape={shape}

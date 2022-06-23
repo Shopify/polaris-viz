@@ -17,11 +17,16 @@ export function useSplitDataForCharts(data: DataGroup[], colors: Color[]) {
     const barChartColors = chartColors[barChartDataIndex];
     const lineChartColors = chartColors[barChartDataIndex === 0 ? 1 : 0];
 
+    const barChartIndexOffset = barChartDataIndex === 0 ? 0 : firstLength;
+    const lineChartIndexOffset = barChartDataIndex !== 0 ? 0 : firstLength;
+
     return {
       barChartData,
       lineChartData,
       barChartColors,
       lineChartColors,
+      barChartIndexOffset,
+      lineChartIndexOffset,
     };
   }, [colors, data]);
 }

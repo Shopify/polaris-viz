@@ -1,4 +1,4 @@
-import {useTheme} from '@shopify/polaris-viz-core';
+import {COLOR_VISION_GROUP_ITEM, useTheme} from '@shopify/polaris-viz-core';
 import type {
   StackedValues,
   YAxisOptions,
@@ -6,13 +6,13 @@ import type {
   DataSeries,
 } from '@shopify/polaris-viz-core';
 import type {ScaleBand, ScaleLinear} from 'd3-scale';
-import React, {useMemo} from 'react';
+import React, {useMemo, useState} from 'react';
 
+import {useWatchColorVisionEvents} from '../../../../hooks';
 import {BarGroup} from '../BarGroup';
 import {StackedBarGroups} from '../StackedBarGroups';
 
 interface VerticalBarGroupProps {
-  activeBarGroup: number;
   colors: Color[];
   data: DataSeries[];
   drawableHeight: number;
@@ -26,15 +26,16 @@ interface VerticalBarGroupProps {
   xScale: ScaleBand<string>;
   yAxisOptions: Required<YAxisOptions>;
   yScale: ScaleLinear<number, number>;
+  indexOffset?: number;
 }
 
 export function VerticalBarGroup({
-  activeBarGroup,
   colors,
   data,
   drawableHeight,
   gapWidth,
   id,
+  indexOffset = 0,
   isAnimated,
   labels,
   sortedData,
@@ -45,6 +46,15 @@ export function VerticalBarGroup({
   yAxisOptions,
 }: VerticalBarGroupProps) {
   const selectedTheme = useTheme(theme);
+
+  const [activeBarGroup, setActiveBarGroup] = useState<number>(-1);
+
+  useWatchColorVisionEvents({
+    type: COLOR_VISION_GROUP_ITEM,
+    onIndexChange: ({detail}) => {
+      setActiveBarGroup(detail.index);
+    },
+  });
 
   const accessibilityData = useMemo(
     () =>
@@ -92,6 +102,7 @@ export function VerticalBarGroup({
             gapWidth={gapWidth}
             hasRoundedCorners={selectedTheme.bar.hasRoundedCorners}
             height={drawableHeight}
+            indexOffset={indexOffset}
             isAnimated={isAnimated}
             key={index}
             width={xScale.bandwidth()}
