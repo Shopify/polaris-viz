@@ -9,6 +9,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Tooltips now dynamically rows based on available tooltip data rathern than being hard-coded to passed in series (e.g. series ending early on `LineChart`)
 - `useLegend` hook now accepts `DataGroup[]` and `DataSeries[]`
 - `<SimpleNormalizedChart/>` now displays an empty bar when data values are all zero or no data is passed
 
