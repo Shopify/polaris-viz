@@ -8,7 +8,11 @@ import React, {
 import {useTheme} from '@shopify/polaris-viz-core';
 import type {Direction} from '@shopify/polaris-viz-core';
 
-import {DEFAULT_LEGEND_HEIGHT, LEGENDS_TOP_MARGIN} from '../../constants';
+import {
+  DEFAULT_LEGEND_HEIGHT,
+  DEFAULT_LEGEND_WIDTH,
+  LEGENDS_TOP_MARGIN,
+} from '../../constants';
 import {useResizeObserver, useWatchColorVisionEvents} from '../../hooks';
 import {Legend} from '../Legend';
 import type {LegendData} from '../../types';
@@ -94,7 +98,7 @@ export function LegendContainer({
   }, [entry, onWidthChange]);
 
   useEffect(() => {
-    onWidthChange(DEFAULT_LEGEND_HEIGHT + LEGENDS_TOP_MARGIN);
+    onWidthChange(DEFAULT_LEGEND_WIDTH + LEGENDS_TOP_MARGIN);
     return () => {
       onWidthChange(0);
     };
