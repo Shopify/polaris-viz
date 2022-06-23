@@ -4,6 +4,7 @@ import type {
   DataPoint,
   DataSeries,
   Shape,
+  LabelFormatter,
 } from '@shopify/polaris-viz-core';
 import type {Series, SeriesPoint} from 'd3-shape';
 
@@ -90,6 +91,13 @@ export interface TooltipData {
     isComparison?: boolean;
   }[];
   name?: string;
+}
+
+export interface TooltipOptions {
+  renderTooltipContent?: (data: RenderTooltipContentData) => React.ReactNode;
+  valueFormatter?: LabelFormatter;
+  keyFormatter?: LabelFormatter;
+  titleFormatter?: LabelFormatter;
 }
 
 export interface PreparedLabels {
