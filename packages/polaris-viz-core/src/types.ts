@@ -18,6 +18,7 @@ export interface DataSeries {
 export interface DataGroup {
   shape: Shape;
   series: DataSeries[];
+  name?: string;
   yAxisOptions?: YAxisOptions;
 }
 

@@ -21,7 +21,11 @@ export {SkipLink} from './SkipLink';
 export {VisuallyHiddenRows} from './VisuallyHiddenRows';
 export {LinePreview} from './LinePreview';
 export type {LinePreviewProps} from './LinePreview';
-export {TooltipWrapper} from './TooltipWrapper';
+export {
+  TooltipWrapper,
+  TOOLTIP_POSITION_DEFAULT_RETURN,
+} from './TooltipWrapper';
+export type {TooltipPosition, TooltipPositionParams} from './TooltipWrapper';
 export {SimpleBarChart} from './SimpleBarChart';
 export type {SimpleBarChartProps} from './SimpleBarChart';
 export {Legend} from './Legend';

@@ -1,4 +1,6 @@
-import type {DataGroup, DataSeries, Theme} from '@shopify/polaris-viz-core';
+import type {DataGroup, Theme} from '@shopify/polaris-viz-core';
+
+import {flattenDataGroupToDataSeries} from '../utilities/flattenDataGroupToDataSeries';
 
 import {useThemeSeriesColors} from './useThemeSeriesColors';
 
@@ -6,9 +8,7 @@ export function useThemeSeriesColorsForDataGroup(
   data: DataGroup[],
   selectedTheme: Theme,
 ) {
-  const series = data.reduce<DataSeries[]>((previous, {series}) => {
-    return previous.concat(series);
-  }, []);
+  const series = flattenDataGroupToDataSeries(data);
 
   return useThemeSeriesColors(series, selectedTheme);
 }

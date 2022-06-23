@@ -1,11 +1,12 @@
 import React from 'react';
 import {Color, DataGroup, LineSeries} from '@shopify/polaris-viz-core';
 
-import {PointsAndCrosshair} from '../../../LineChart/components';
+import {PointsAndCrosshair} from '../../../LineChart';
 import {useFormatData} from '../../../LineChart/hooks';
 import {getLineChartDataWithDefaults} from '../../../../utilities/getLineChartDataWithDefaults';
 
 interface ComboLineChartProps {
+  activeIndex: number | null;
   colors: Color[];
   data: DataGroup;
   drawableHeight: number;
@@ -17,6 +18,7 @@ interface ComboLineChartProps {
 }
 
 export function ComboLineChart({
+  activeIndex,
   colors,
   data,
   drawableHeight,
@@ -50,7 +52,7 @@ export function ComboLineChart({
         );
       })}
       <PointsAndCrosshair
-        activeIndex={3}
+        activeIndex={activeIndex}
         drawableHeight={drawableHeight}
         emptyState={false}
         isAnimated={isAnimated}

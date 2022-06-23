@@ -1,5 +1,8 @@
 import React, {useState} from 'react';
 import {
+  BarChartMargin,
+  BoundingRect,
+  DataType,
   LABEL_AREA_TOP_SPACING,
   useTheme,
   XAxisOptions,
@@ -7,6 +10,17 @@ import {
 } from '@shopify/polaris-viz-core';
 import type {Dimensions, DataGroup} from '@shopify/polaris-viz-core';
 
+import {sortBarChartData} from '../../utilities/sortBarChartData';
+import {getVerticalBarChartTooltipPosition} from '../../utilities/getVerticalBarChartTooltipPosition';
+import {
+  TooltipHorizontalOffset,
+  TooltipPosition,
+  TooltipPositionParams,
+  TooltipVerticalOffset,
+  TooltipWrapper,
+  TOOLTIP_POSITION_DEFAULT_RETURN,
+} from '../TooltipWrapper';
+import type {RenderTooltipContentData} from '../../types';
 import {XAxis} from '../XAxis';
 import {useThemeSeriesColorsForDataGroup} from '../../hooks/useThemeSeriesColorsForDataGroup';
 import {useReducedLabelIndexes} from '../../hooks';
@@ -22,10 +36,12 @@ import {useXScale} from './hooks/useXScale';
 import styles from './Chart.scss';
 import {ComboBarChart, ComboLineChart} from './components';
 import {useSplitDataForCharts} from './hooks/useSplitDataForCharts';
+import {useComboChartTooltipContent} from './hooks/useComboChartTooltipContent';
 
 export interface ChartProps {
   data: DataGroup[];
   isAnimated: boolean;
+  renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
   showLegend: boolean;
   theme: string;
   xAxisOptions: Required<XAxisOptions>;
@@ -36,6 +52,7 @@ export function Chart({
   data,
   dimensions,
   isAnimated,
+  renderTooltipContent,
   showLegend,
   theme,
   xAxisOptions,
@@ -45,6 +62,8 @@ export function Chart({
   const colors = useThemeSeriesColorsForDataGroup(data, selectedTheme);
 
   const [labelHeight, setLabelHeight] = useState(0);
+  const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const {height, width} = useLegend({
     data,
@@ -53,7 +72,7 @@ export function Chart({
   });
 
   const drawableHeight =
-    height - labelHeight - LABEL_AREA_TOP_SPACING - /* Margin.Top*/ 0;
+    height - labelHeight - LABEL_AREA_TOP_SPACING - BarChartMargin.Top;
 
   const {
     doBothChartsContainMixedValues,
@@ -104,6 +123,20 @@ export function Chart({
   });
 
   const hideXAxis = false;
+  const labelWidth = drawableWidth / labels.length;
+
+  const chartBounds: BoundingRect = {
+    width,
+    height,
+    x: chartXPosition,
+    y: chartYPosition,
+  };
+
+  const getTooltipMarkup = useComboChartTooltipContent({
+    renderTooltipContent,
+    data,
+    seriesColors: colors,
+  });
 
   return (
     <div
@@ -118,6 +151,7 @@ export function Chart({
         role="list"
         viewBox={`0 0 ${width} ${height}`}
         xmlns={XMLNS}
+        ref={setSvgRef}
       >
         {selectedTheme.grid.showHorizontalLines ? (
           <HorizontalGridLines
@@ -139,7 +173,7 @@ export function Chart({
             chartX={chartXPosition}
             chartY={labelsYPosition}
             labels={labels}
-            labelWidth={drawableWidth / labels.length}
+            labelWidth={labelWidth}
             onHeightChange={setLabelHeight}
             reducedLabelIndexes={reducedLabelIndexes}
             theme={theme}
@@ -189,6 +223,7 @@ export function Chart({
           },${0})`}
         >
           <ComboLineChart
+            activeIndex={activeIndex}
             colors={lineChartColors}
             data={lineChartData}
             drawableHeight={drawableHeight}
@@ -200,6 +235,59 @@ export function Chart({
           />
         </g>
       </svg>
+
+      <TooltipWrapper
+        bandwidth={labelWidth}
+        chartBounds={chartBounds}
+        focusElementDataType={DataType.BarGroup}
+        getMarkup={getTooltipMarkup}
+        getPosition={getTooltipPosition}
+        margin={BarChartMargin}
+        onIndexChange={(index) => setActiveIndex(index)}
+        parentRef={svgRef}
+      />
     </div>
   );
+
+  function formatPositionForTooltip(index: number | null): TooltipPosition {
+    if (index == null) {
+      return TOOLTIP_POSITION_DEFAULT_RETURN;
+    }
+
+    const sortedData = sortBarChartData(labels, barChartData.series);
+
+    const xPosition = xScale(index) ?? 0;
+    const sortedDataPos = sortedData[index].map((num) => Math.abs(num));
+
+    const highestValuePos = Math.max(...sortedDataPos);
+
+    const x = xPosition + chartXPosition;
+    const y = yScale(highestValuePos) + (BarChartMargin.Top as number);
+
+    return {
+      x,
+      y: Math.abs(y),
+      position: {
+        horizontal: TooltipHorizontalOffset.Left,
+        vertical: TooltipVerticalOffset.Above,
+      },
+      activeIndex: index,
+    };
+  }
+
+  function getTooltipPosition({
+    event,
+    index,
+    eventType,
+  }: TooltipPositionParams): TooltipPosition {
+    return getVerticalBarChartTooltipPosition({
+      tooltipPosition: {event, index, eventType},
+      chartXPosition,
+      formatPositionForTooltip,
+      maxIndex: labels.length - 1,
+      step: labelWidth,
+      yMin: BarChartMargin.Top,
+      yMax: drawableHeight + Number(BarChartMargin.Bottom) + labelHeight,
+    });
+  }
 }
