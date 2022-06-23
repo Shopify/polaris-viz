@@ -46,7 +46,7 @@ export function useLineChartTooltipContent({
       return renderTooltipContent({
         data: tooltipData,
         activeIndex,
-        title: key,
+        title: `${key}`,
         dataSeries: data,
       });
     },
