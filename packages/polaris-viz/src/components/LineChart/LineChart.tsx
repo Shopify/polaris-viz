@@ -15,16 +15,16 @@ import {
   DEFAULT_CHART_PROPS,
 } from '@shopify/polaris-viz-core';
 
-import {formatTooltipDataForLinearCharts} from '../../utilities/formatTooltipDataForLinearCharts';
+import {
+  formatDataForTooltip,
+  getXAxisOptionsWithDefaults,
+  getYAxisOptionsWithDefaults,
+} from '../../utilities';
 import type {RenderTooltipContentData} from '../../types';
 import {TooltipContent} from '../../components/TooltipContent';
 import {ChartContainer} from '../../components/ChartContainer';
 import {ChartSkeleton} from '../../components/ChartSkeleton';
 import {useThemeSeriesColors} from '../../hooks/useThemeSeriesColors';
-import {
-  getXAxisOptionsWithDefaults,
-  getYAxisOptionsWithDefaults,
-} from '../../utilities';
 import {SkipLink} from '../SkipLink';
 import {usePrefersReducedMotion, useTheme} from '../../hooks';
 
@@ -34,7 +34,7 @@ export type LineChartProps = {
   state?: ChartState;
   errorText?: string;
   emptyStateText?: string;
-  renderTooltipContent?: (data: RenderTooltipContentData) => React.ReactNode;
+  tooltipOptions: TooltipOptions;
   showLegend?: boolean;
   skipLinkText?: string;
   xAxisOptions?: Partial<XAxisOptions>;
@@ -46,7 +46,7 @@ export function LineChart(props: LineChartProps) {
     data,
     state,
     errorText,
-    renderTooltipContent,
+    tooltipOptions,
     showLegend = true,
     skipLinkText,
     emptyStateText,
@@ -69,17 +69,16 @@ export function LineChart(props: LineChartProps) {
   const yAxisOptionsWithDefaults = getYAxisOptionsWithDefaults(yAxisOptions);
 
   function renderTooltip(tooltipData: RenderTooltipContentData) {
-    if (renderTooltipContent != null) {
-      return renderTooltipContent({
+    if (tooltipOptions?.renderTooltipContent != null) {
+      return tooltipOptions.renderTooltipContent({
         ...tooltipData,
         dataSeries: data,
       });
     }
 
-    const {formattedData, title} = formatTooltipDataForLinearCharts({
+    const {formattedData, title} = formatDataForTooltip({
       data: tooltipData,
-      xAxisOptions: xAxisOptionsWithDefaults,
-      yAxisOptions: yAxisOptionsWithDefaults,
+      tooltipOptions,
     });
 
     return <TooltipContent title={title} data={formattedData} theme={theme} />;

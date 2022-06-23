@@ -10,18 +10,18 @@ import type {XAxisOptions, YAxisOptions} from '@shopify/polaris-viz-core';
 import {
   getXAxisOptionsWithDefaults,
   getYAxisOptionsWithDefaults,
+  formatDataForTooltip,
 } from '../../utilities';
-import {formatTooltipDataForLinearCharts} from '../../utilities/formatTooltipDataForLinearCharts';
 import {TooltipContent} from '../';
 import {ChartContainer} from '../ChartContainer';
 import {ChartSkeleton} from '../ChartSkeleton';
 import {SkipLink} from '../SkipLink';
-import type {RenderTooltipContentData} from '../../types';
+import type {RenderTooltipContentData, TooltipOptions} from '../../types';
 
 import {Chart} from './Chart';
 
 export type StackedAreaChartProps = {
-  renderTooltipContent?(data: RenderTooltipContentData): React.ReactNode;
+  tooltipOptions: TooltipOptions;
   state?: ChartState;
   errorText?: string;
   showLegend?: boolean;
@@ -38,7 +38,7 @@ export function StackedAreaChart(props: StackedAreaChartProps) {
     data,
     state,
     errorText,
-    renderTooltipContent,
+    tooltipOptions,
     isAnimated,
     showLegend = true,
     skipLinkText,
@@ -56,18 +56,17 @@ export function StackedAreaChart(props: StackedAreaChartProps) {
   const xAxisOptionsWithDefaults = getXAxisOptionsWithDefaults(xAxisOptions);
   const yAxisOptionsWithDefaults = getYAxisOptionsWithDefaults(yAxisOptions);
 
-  function renderDefaultTooltipContent(tooltipData: RenderTooltipContentData) {
-    if (renderTooltipContent != null) {
-      return renderTooltipContent({
+  function renderTooltipContent(tooltipData: RenderTooltipContentData) {
+    if (tooltipOptions?.renderTooltipContent != null) {
+      return tooltipOptions.renderTooltipContent({
         ...tooltipData,
         dataSeries: data,
       });
     }
 
-    const {formattedData, title} = formatTooltipDataForLinearCharts({
+    const {formattedData, title} = formatDataForTooltip({
       data: tooltipData,
-      xAxisOptions: xAxisOptionsWithDefaults,
-      yAxisOptions: yAxisOptionsWithDefaults,
+      tooltipOptions,
     });
 
     return <TooltipContent theme={theme} title={title} data={formattedData} />;
@@ -85,11 +84,7 @@ export function StackedAreaChart(props: StackedAreaChartProps) {
           <Chart
             data={data}
             isAnimated={isAnimated}
-            renderTooltipContent={
-              renderTooltipContent != null
-                ? renderTooltipContent
-                : renderDefaultTooltipContent
-            }
+            renderTooltipContent={renderTooltipContent}
             showLegend={showLegend}
             theme={theme}
             xAxisOptions={xAxisOptionsWithDefaults}

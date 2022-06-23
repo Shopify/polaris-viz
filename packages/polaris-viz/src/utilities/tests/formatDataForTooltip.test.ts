@@ -1,5 +1,5 @@
 import {RenderTooltipContentData} from '../../types';
-import {formatTooltipDataForLinearCharts} from '../formatTooltipDataForLinearCharts';
+import {formatDataForTooltip} from '../formatDataForTooltip';
 
 const DATA: RenderTooltipContentData = {
   data: [
@@ -35,35 +35,8 @@ const PROPS = {
 };
 
 describe('get-axis-options', () => {
-  it('formats values using labelFormatter', () => {
-    const formattedData = formatTooltipDataForLinearCharts({
-      data: DATA,
-      ...PROPS,
-    });
-
-    expect(formattedData).toStrictEqual({
-      formattedData: [
-        {
-          data: [
-            {
-              key: 'one',
-              value: '1 foo',
-            },
-            {
-              key: 'two',
-              value: '1 foo',
-            },
-          ],
-          name: 'foo',
-          shape: 'Line',
-        },
-      ],
-      title: 'foo title bar',
-    });
-  });
-
   it('excludes title when not provided', () => {
-    const formattedData = formatTooltipDataForLinearCharts({
+    const formattedData = formatDataForTooltip({
       data: {
         activeIndex: -1,
         dataSeries: [],

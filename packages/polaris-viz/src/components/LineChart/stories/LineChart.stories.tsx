@@ -113,6 +113,11 @@ Default.args = {
     labelFormatter: formatXAxisLabel,
   },
   yAxisOptions: {labelFormatter: formatYAxisLabel},
+  tooltipOptions: {
+    keyFormatter: (val) => `label: ${val}`,
+    valueFormatter: (val) => `value: ${val}`,
+    titleFormatter: (val) => `title: ${val}`,
+  },
   showLegend: true,
 };
 

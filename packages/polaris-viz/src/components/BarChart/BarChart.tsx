@@ -14,23 +14,26 @@ import type {
 } from '@shopify/polaris-viz-core';
 
 import {ChartContainer} from '../../components/ChartContainer';
-import type {RenderTooltipContentData, Annotation} from '../../types';
+import type {
+  RenderTooltipContentData,
+  Annotation,
+  TooltipOptions,
+} from '../../types';
 import {TooltipContent} from '../';
 import {SkipLink} from '../SkipLink';
 import {
   getXAxisOptionsWithDefaults,
   getYAxisOptionsWithDefaults,
   normalizeData,
+  formatDataForTooltip,
 } from '../../utilities';
 import {HorizontalBarChart} from '../HorizontalBarChart';
 import {VerticalBarChart} from '../VerticalBarChart';
 import {ChartSkeleton} from '../../components/ChartSkeleton';
 
-import {formatDataForTooltip} from './utilities';
-
 export type BarChartProps = {
   errorText?: string;
-  renderTooltipContent?(data: RenderTooltipContentData): React.ReactNode;
+  tooltipOptions: TooltipOptions;
   annotations?: Annotation[];
   direction?: Direction;
   emptyStateText?: string;
@@ -51,7 +54,7 @@ export function BarChart(props: BarChartProps) {
     direction = 'vertical',
     emptyStateText,
     isAnimated,
-    renderTooltipContent,
+    tooltipOptions,
     showLegend = true,
     skipLinkText,
     theme,
@@ -75,8 +78,8 @@ export function BarChart(props: BarChartProps) {
   const annotationsLookupTable = normalizeData(annotations, 'startKey');
 
   function renderTooltip(tooltipData: RenderTooltipContentData) {
-    if (renderTooltipContent != null) {
-      return renderTooltipContent({
+    if (tooltipOptions?.renderTooltipContent != null) {
+      return tooltipOptions.renderTooltipContent({
         ...tooltipData,
         dataSeries: data,
       });
@@ -84,9 +87,7 @@ export function BarChart(props: BarChartProps) {
 
     const {title, formattedData} = formatDataForTooltip({
       data: tooltipData,
-      direction,
-      xAxisOptions: xAxisOptionsWithDefaults,
-      yAxisOptions: yAxisOptionsWithDefaults,
+      tooltipOptions,
     });
 
     return <TooltipContent data={formattedData} theme={theme} title={title} />;
