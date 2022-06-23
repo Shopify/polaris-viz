@@ -5,7 +5,7 @@ describe('createTheme', () => {
   it('generates a theme with default values, from the partial theme provided', () => {
     const result = createTheme({
       bar: {
-        innerMargin: 'Small',
+        hasRoundedCorners: false,
       },
     });
     expect(result).not.toStrictEqual(DEFAULT_THEME);
@@ -14,7 +14,7 @@ describe('createTheme', () => {
       expect.objectContaining({
         bar: {
           ...DEFAULT_THEME.bar,
-          innerMargin: 'Small',
+          hasRoundedCorners: false,
         },
       }),
     );
@@ -26,7 +26,7 @@ describe('createThemes', () => {
     const result = createThemes({
       Default: {
         bar: {
-          innerMargin: 'Small',
+          hasRoundedCorners: false,
         },
       },
     });
@@ -38,7 +38,7 @@ describe('createThemes', () => {
           ...DEFAULT_THEME,
           bar: {
             ...DEFAULT_THEME.bar,
-            innerMargin: 'Small',
+            hasRoundedCorners: false,
           },
         },
       }),
