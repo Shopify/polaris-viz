@@ -24,11 +24,7 @@ import {ChartContainer} from '../../components/ChartContainer';
 import {ChartSkeleton} from '../../components/ChartSkeleton';
 import {useThemeSeriesColors} from '../../hooks/useThemeSeriesColors';
 import {SkipLink} from '../SkipLink';
-import {
-  useRenderTooltipContent,
-  usePrefersReducedMotion,
-  useTheme,
-} from '../../hooks';
+import {useRenderTooltipContent, useTheme} from '../../hooks';
 import type {Annotation, TooltipOptions} from '../../types';
 
 import {Chart} from './Chart';
@@ -66,7 +62,6 @@ export function LineChart(props: LineChartProps) {
 
   const selectedTheme = useTheme(theme);
   const seriesColors = useThemeSeriesColors(data, selectedTheme);
-  const {prefersReducedMotion} = usePrefersReducedMotion();
 
   const skipLinkAnchorId = useRef(uniqueId('lineChart'));
 
@@ -122,7 +117,7 @@ export function LineChart(props: LineChartProps) {
       data.length === 0 ? null : (
         <SkipLink anchorId={skipLinkAnchorId.current}>{skipLinkText}</SkipLink>
       )}
-      <ChartContainer theme={theme}>
+      <ChartContainer theme={theme} isAnimated={isAnimated}>
         {state !== ChartState.Success ? (
           <ChartSkeleton state={state} errorText={errorText} theme={theme} />
         ) : (
@@ -131,7 +126,6 @@ export function LineChart(props: LineChartProps) {
             data={dataWithDefaults}
             xAxisOptions={xAxisOptionsWithDefaults}
             yAxisOptions={yAxisOptionsWithDefaults}
-            isAnimated={isAnimated && !prefersReducedMotion}
             renderTooltipContent={renderTooltip}
             showLegend={showLegend}
             emptyStateText={emptyStateText}

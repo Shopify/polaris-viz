@@ -11,6 +11,7 @@ import {
   clamp,
   DEFAULT_THEME_NAME,
   BoundingRect,
+  DEFAULT_CHART_PROPS,
 } from '@shopify/polaris-viz-core';
 import type {
   DataPoint,
@@ -62,7 +63,6 @@ import styles from './Chart.scss';
 import {yAxisMinMax} from './utilities';
 
 export interface ChartProps {
-  isAnimated: boolean;
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
   annotationsLookupTable: AnnotationLookupTable;
   data: LineChartDataSeriesWithDefaults[];
@@ -72,6 +72,7 @@ export interface ChartProps {
   emptyStateText?: string;
   theme?: string;
   dimensions?: Dimensions;
+  isAnimated?: boolean;
 }
 
 const TOOLTIP_POSITION = {
@@ -86,7 +87,7 @@ export function Chart({
   renderTooltipContent,
   showLegend = true,
   emptyStateText,
-  isAnimated,
+  isAnimated = DEFAULT_CHART_PROPS.isAnimated,
   xAxisOptions,
   yAxisOptions,
   theme = DEFAULT_THEME_NAME,

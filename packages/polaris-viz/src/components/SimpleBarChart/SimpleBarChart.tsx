@@ -11,7 +11,6 @@ import {
   getYAxisOptionsWithDefaults,
 } from '../../utilities';
 import {ChartContainer} from '../../components/ChartContainer';
-import {usePrefersReducedMotion} from '../../hooks';
 
 import {Chart} from './Chart';
 
@@ -36,13 +35,10 @@ export function SimpleBarChart(props: SimpleBarChartProps) {
   const xAxisOptionsWithDefaults = getXAxisOptionsWithDefaults(xAxisOptions);
   const yAxisOptionsWithDefaults = getYAxisOptionsWithDefaults();
 
-  const {prefersReducedMotion} = usePrefersReducedMotion();
-
   return (
-    <ChartContainer theme={theme}>
+    <ChartContainer theme={theme} isAnimated={isAnimated}>
       <Chart
         data={data}
-        isAnimated={isAnimated && !prefersReducedMotion}
         showLegend={showLegend}
         type={type}
         xAxisOptions={xAxisOptionsWithDefaults}

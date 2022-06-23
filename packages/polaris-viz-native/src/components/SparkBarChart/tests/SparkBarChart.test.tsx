@@ -1,10 +1,14 @@
-import 'react-native';
+import {AccessibilityInfo} from 'react-native';
 import React from 'react';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {ChartContainer} from '../..';
 import {mountWithProvider} from '../../../test-utilities';
 import {SparkBarChart} from '../SparkBarChart';
+
+jest
+  .spyOn(AccessibilityInfo, 'isReduceMotionEnabled')
+  .mockImplementation(() => Promise.resolve(true));
 
 const sampleData: DataSeries = {
   data: [
