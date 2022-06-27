@@ -86,6 +86,7 @@ export function Chart({
     rightTicks,
     secondaryAxis,
     shouldPlaceZeroInMiddleOfChart,
+    ticksBetweenZeroAndMax,
     yScale,
   } = useDualAxisTicks({
     data,
@@ -105,6 +106,7 @@ export function Chart({
     secondaryAxis,
     yScale,
     shouldPlaceZeroInMiddleOfChart,
+    ticksBetweenZeroAndMax,
   });
 
   const horizontalMargin = selectedTheme.grid.horizontalMargin;

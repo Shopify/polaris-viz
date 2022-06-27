@@ -1,4 +1,8 @@
-import {useYScale} from '@shopify/polaris-viz-core';
+import {
+  getClosestDivisibleNumber,
+  roundToDecimals,
+  useYScale,
+} from '@shopify/polaris-viz-core';
 import type {DataGroup} from '@shopify/polaris-viz-core';
 
 import {getZeroIndex} from '../utilities/getZeroIndex';
@@ -60,21 +64,29 @@ export function useDualAxisTicks({data, drawableHeight}: Props) {
     zeroIndex,
   });
 
-  const secondaryMaxforTicks = Math.abs(
+  let secondaryMaxforTicks = Math.abs(
     doesOneChartContainAllNegativeValues
       ? secondaryAxis.min
       : secondaryAxis.max,
+  );
+
+  // Make the ticks a nice round number between
+  // 0 and max.
+  secondaryMaxforTicks = getClosestDivisibleNumber(
+    secondaryMaxforTicks,
+    ticksBetweenZeroAndMax,
   );
 
   const tickHeight = Math.abs(secondaryMaxforTicks / ticksBetweenZeroAndMax);
 
   const secondaryTicks = ticks.map((tick, index) => {
     const alteredIndex = index - zeroIndex;
+    const formattedValue = roundToDecimals(tickHeight * alteredIndex, 2);
 
     return {
       value: tickHeight * alteredIndex,
       formattedValue: secondaryAxis.yAxisOptions.labelFormatter(
-        `${tickHeight * alteredIndex}`,
+        `${formattedValue}`,
       ),
       yOffset: yScale(tick.value),
     };
@@ -93,5 +105,6 @@ export function useDualAxisTicks({data, drawableHeight}: Props) {
     secondaryAxis,
     yScale,
     shouldPlaceZeroInMiddleOfChart,
+    ticksBetweenZeroAndMax,
   };
 }

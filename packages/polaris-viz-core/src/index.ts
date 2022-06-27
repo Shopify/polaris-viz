@@ -99,6 +99,8 @@ export {
   changeColorOpacity,
   changeGradientOpacity,
   getAverageColor,
+  getClosestDivisibleNumber,
+  roundToDecimals,
 } from './utilities';
 export {
   useSparkBar,

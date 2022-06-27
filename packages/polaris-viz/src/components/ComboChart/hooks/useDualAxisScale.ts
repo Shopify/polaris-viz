@@ -1,4 +1,4 @@
-import {useYScale} from '@shopify/polaris-viz-core';
+import {getClosestDivisibleNumber, useYScale} from '@shopify/polaris-viz-core';
 import type {ScaleLinear} from 'd3-scale';
 
 import type {Axis} from '../types';
@@ -11,6 +11,7 @@ interface Props {
   primaryAxis: Axis;
   secondaryAxis: Axis;
   shouldPlaceZeroInMiddleOfChart: boolean;
+  ticksBetweenZeroAndMax: number;
   yScale: ScaleLinear<number, number>;
 }
 
@@ -21,6 +22,7 @@ export function useDualAxisScale({
   primaryAxis,
   secondaryAxis,
   shouldPlaceZeroInMiddleOfChart,
+  ticksBetweenZeroAndMax,
   yScale,
 }: Props) {
   const {secondaryDrawableHeight, secondaryMax, secondaryMin} =
@@ -37,7 +39,7 @@ export function useDualAxisScale({
     drawableHeight: secondaryDrawableHeight,
     formatYAxisLabel: secondaryAxis.yAxisOptions.labelFormatter,
     integersOnly: secondaryAxis.yAxisOptions.integersOnly,
-    max: secondaryMax,
+    max: getClosestDivisibleNumber(secondaryMax, ticksBetweenZeroAndMax),
     min: secondaryMin,
     // For non-source of truth, the ticks are exactly
     // what they should be, so we don't want to apply .nice()
