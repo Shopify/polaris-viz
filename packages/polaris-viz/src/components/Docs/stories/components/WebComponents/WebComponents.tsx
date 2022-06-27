@@ -13,6 +13,8 @@ import {
 } from '../../../../';
 import {ComponentContainer, Title} from '../';
 
+const KIND = 'polaris-viz/Charts/';
+
 export function WebComponents() {
   return (
     <div
@@ -38,6 +40,7 @@ export function WebComponents() {
         <ComponentContainer
           title="BarChart"
           description="Used to show a grouped comparison of different types, across categories or time. "
+          kind={KIND}
           chart={
             <BarChart
               isAnimated
@@ -75,6 +78,7 @@ export function WebComponents() {
         <ComponentContainer
           title="LineChart"
           description="Used to show change over time. "
+          kind={KIND}
           chart={
             <LineChart
               isAnimated
@@ -98,6 +102,7 @@ export function WebComponents() {
         <ComponentContainer
           title="StackedAreaChart"
           description="Used to compare multiple series of data and display the total value. "
+          kind={KIND}
           chart={
             <StackedAreaChart
               isAnimated
@@ -140,6 +145,7 @@ export function WebComponents() {
           title="SparkBarChart"
           description="Used in small sizes to show how a metric has performed over time. "
           center
+          kind={KIND}
           chart={
             <div style={{width: '250px', height: '140px'}}>
               <SparkBarChart
@@ -223,6 +229,7 @@ export function WebComponents() {
           title="SparkLineChart"
           description="Used in small sizes to show how a metric has performed over time. "
           center
+          kind={KIND}
           chart={
             <div style={{width: '250px', height: '140px'}}>
               <SparkLineChart
@@ -272,6 +279,7 @@ export function WebComponents() {
         <ComponentContainer
           title="SimpleBarChart"
           description="Used to show a grouped comparison of different types, across categories or time. "
+          kind={KIND}
           chart={
             <SimpleBarChart
               data={[
@@ -299,6 +307,7 @@ export function WebComponents() {
           title="SimpleNormalizedChart"
           description="Used for positive datasets with two to four items. "
           center
+          kind={KIND}
           chart={
             <div style={{width: 450}}>
               <SimpleNormalizedChart

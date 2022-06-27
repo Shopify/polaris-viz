@@ -1,5 +1,6 @@
 import React from 'react';
 import {Source} from '@storybook/addon-docs';
+import LinkTo from '@storybook/addon-links/react';
 import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 import {classNames} from '../../../../../utilities';
@@ -11,7 +12,7 @@ export function ComponentContainer({
   chart,
   title,
   description,
-  link,
+  kind,
   center,
   theme = DEFAULT_THEME_NAME,
   codeSample,
@@ -19,7 +20,7 @@ export function ComponentContainer({
   chart: JSX.Element;
   title?: string;
   description: string;
-  link?: string;
+  kind: string;
   center?: boolean;
   theme?: string;
   codeSample?: string;
@@ -27,11 +28,15 @@ export function ComponentContainer({
   const selectedTheme = useTheme(theme);
 
   const onlyHasCodeSample =
-    !link && !title && !description && Boolean(codeSample);
+    !kind && !title && !description && Boolean(codeSample);
 
   const cardTopMarkup = (
     <React.Fragment>
-      {title && <h3 className={styles.Heading}>{title}</h3>}
+      {title && (
+        <h3 className={classNames(styles.Heading, kind && styles.Link)}>
+          {title}
+        </h3>
+      )}
       <div className={styles.Paragraph}>
         {description}
         {codeSample && (
@@ -55,16 +60,16 @@ export function ComponentContainer({
       }}
     >
       <div
-        className={classNames(styles.CardTop, link ? styles.HasLink : '')}
+        className={classNames(styles.CardTop, kind ? styles.HasLink : '')}
         style={{
           // stylelint-disable-next-line value-keyword-case
           padding: onlyHasCodeSample ? '0px' : 'undefined',
         }}
       >
-        {link ? (
-          <a className={styles.Link} href={link}>
+        {kind ? (
+          <LinkTo kind={kind} story={title}>
             {cardTopMarkup}
-          </a>
+          </LinkTo>
         ) : (
           cardTopMarkup
         )}
