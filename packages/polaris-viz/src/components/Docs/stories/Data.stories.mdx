@@ -1,4 +1,5 @@
 import {Meta, Story, Canvas} from '@storybook/addon-docs/blocks';
+import LinkTo from '@storybook/addon-links/react';
 import {SHARK_SPECIES_GROWTH} from '../utilities';
 import {PolarisVizProvider} from '@shopify/polaris-viz';
 import {BarChart, LineChart} from '../../';
@@ -15,6 +16,7 @@ import {
   SampleStackedAreaChart,
   SampleSimpleNormalizedChart,
 } from './components';
+
 
 <Meta
   title="Shared/Data Structure"
@@ -195,11 +197,12 @@ We can use the same data set to visualize the data in different ways:
   <code>DataSeries.color</code>
 </Title>
 
-Can be used to overwrite the <a href='/docs/docs-themes-theme-definition--page&viewMode=docs#titleAnchor-1913'>theme's series color</a>.
+Can be used to overwrite the <LinkTo kind='Shared/Themes/Theme Definition'>theme's series color</LinkTo>.
+
 
 <Title type="h4">Examples:</Title>
 
-If we use the same data set used above, but set `color: 'lime'` to the first series:
+If we use the same data set used above but set `color: 'lime'` to the first series:
 
 <ExamplesGrid cols={2}>
 
@@ -278,11 +281,11 @@ If we use the same data set used above, but set `color: 'lime'` to the first ser
   <code>DataSeries.isComparison</code>
 </Title>
 
-If set to `true` will use the default styles of comparison series - gray bars and gray dashed lines.
+If `isComparison` is set to `true` a chart will use the default styles of comparison series - gray bars and gray dashed lines.
 
 <Title type="h4">Examples:</Title>
 
-If we use the same data set used above, but set `isComparison: true` to the first series:
+If we use the same data set used above but set `isComparison: true` to the first series:
 
 <ExamplesGrid cols={2}>
 

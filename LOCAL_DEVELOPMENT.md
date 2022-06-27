@@ -9,7 +9,7 @@ To get started developing locally:
 - Start Storybook locally: `yarn storybook`
 - Commit your changes as you would usually. Make sure to describe your edits or additions in the package's corresponding CHANGELOG.md.
 
-> ⚠️ If you don't have [yarn](https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable) installed in your computer, install it first by running `npm install --global yarn`
+> ⚠️ If you don't have [yarn](https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable) installed on your computer, install it first by running `npm install --global yarn`
 
 ### Scripts
 
@@ -25,16 +25,16 @@ Will type check all packages
 Will start the jest test runner
 
 - **`yarn dev`:**
-Build all libraries and automatically rebuild on code change. This can be combined with the [Sandbox](http://polaris-viz.shopify.io/?path=/docs/contributing-sandbox--page) to get near live updates.
+Builds all libraries and automatically rebuilds on code change. This can be combined with the [Sandbox](http://polaris-viz.shopify.io/?path=/docs/contributing-sandbox--page) to get near live updates.
 
 - **`yarn storybook`:**
-Run storybook locally
+Runs storybook locally
 
 - **`yarn lint`:**
-Lint all files
+Lints all files
 
 - **`yarn version-bump`:**
-Create a new release and tag. Does not push to github. Save to use for testing without pushing.
+Creates a new release and a tag. Does not push to github. Save to use for testing without pushing.
 
 <br />
 
@@ -75,7 +75,7 @@ This monorepo is managed with Shopify's [Loom](https://www.npmjs.com/package/@sh
 
 We use [Storybook](https://storybook.js.org/) to document and develop our components. Story files are located in `/stories/` folders in each package `/src/` folder.
 
-If you create a new chart component, new subcomponent used throughout the repo or add a new prop to an existing component, ensure any new states are covered by stories.
+If you add a new prop to an existing component or create a new chart component or a new subcomponent that are used throughout the repo, ensure any new states are covered by stories.
 
 For complex props, like callback functions, consider adding a select to stories with a few different predefined options.
 
@@ -84,4 +84,4 @@ For complex props, like callback functions, consider adding a select to stories 
 
 ### `/sandbox`
 
-The sandbox folder contains an [Expo](https://docs.expo.dev/) app pre-configured so you can test the build of each library in a web browse, an iOS simulator or an Android simulator. Read more about how to use it on the [Sandbox page](http://polaris-viz.shopify.io/?path=/docs/contributing-sandbox--page).
+The sandbox folder contains an [Expo](https://docs.expo.dev/) app pre-configured so you can test the build of each library in a web browser, an iOS simulator or an Android simulator. Read more about how to use it on the [Sandbox page](http://polaris-viz.shopify.io/?path=/docs/contributing-sandbox--page).
