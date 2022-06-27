@@ -1,7 +1,7 @@
 @import '../../../../styles/common';
 
 .Legend {
-  padding: 4px 16px 4px 8px;
+  padding: 6px 16px 6px 8px;
   outline: none;
   border: none;
   border-radius: 2px;
@@ -14,10 +14,13 @@
   flex-direction: column;
   text-align: left;
   gap: 3px;
+  line-height: 16px;
+  margin: -2px 0;
+  font-size: 12px;
+  font-family: $font-stack-base;
 }
 
 .IconContainer {
-  margin-top: 1px;
   display: flex;
   align-items: center;
   justify-items: center;
