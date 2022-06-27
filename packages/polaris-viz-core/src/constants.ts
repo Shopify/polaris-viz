@@ -204,8 +204,8 @@ export const DEFAULT_THEME: Theme = {
     width: 1,
   },
   legend: {
+    valueColor: variables.colorGray70,
     labelColor: variables.colorGray30,
-    valueColor: variables.colorGray00,
     backgroundColor: variables.colorGray150,
     trendIndicator: {
       positive: '#03AB92',

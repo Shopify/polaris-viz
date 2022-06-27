@@ -17,6 +17,17 @@ describe('<LegendItem />', () => {
     expect(item).toContainReactComponent('button');
   });
 
+  it('renders legend.value if available', () => {
+    const item = mount(
+      <LegendItem
+        {...mockProps}
+        legend={{name: 'Legend Name', color: 'red', value: 'LegendValue'}}
+      />,
+    );
+
+    expect(item).toContainReactText('LegendValue');
+  });
+
   describe('colorVisionType', () => {
     it('applies data attributes', () => {
       const item = mount(<LegendItem {...mockProps} />);

@@ -59,6 +59,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 - `<SimpleNormalizedChart/>` series colors can now be overwritten by using the `color` key in the `DataSeries` passed to the `data` prop
 - `<SimpleNormalizedChart/>` when passing `DataSeries.isComparison: true` to the `data` prop, the corresponding bar will now use the coparison color defined in the `Theme`
+- Added `value` prop to `<LegendItem />`.
 
 ### Changed
 
