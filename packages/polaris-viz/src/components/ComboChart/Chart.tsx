@@ -24,7 +24,7 @@ import {
 import type {RenderTooltipContentData} from '../../types';
 import {XAxis} from '../XAxis';
 import {useThemeSeriesColorsForDataGroup} from '../../hooks/useThemeSeriesColorsForDataGroup';
-import {useReducedLabelIndexes} from '../../hooks';
+import {useColorVisionEvents, useReducedLabelIndexes} from '../../hooks';
 import {HorizontalGridLines} from '../HorizontalGridLines';
 import {YAxis} from '../YAxis';
 import {LegendContainer, useLegend} from '../LegendContainer';
@@ -59,6 +59,8 @@ export function Chart({
   xAxisOptions,
 }: ChartProps) {
   const selectedTheme = useTheme(theme);
+
+  useColorVisionEvents();
 
   const colors = useThemeSeriesColorsForDataGroup(data, selectedTheme);
 
@@ -115,8 +117,14 @@ export function Chart({
   const drawableWidth =
     width - chartXPosition - horizontalMargin * 2 - rightTickWidth;
 
-  const {barChartData, barChartColors, lineChartColors, lineChartData} =
-    useSplitDataForCharts(data, colors);
+  const {
+    barChartData,
+    barChartColors,
+    lineChartColors,
+    lineChartData,
+    barChartIndexOffset,
+    lineChartIndexOffset,
+  } = useSplitDataForCharts(data, colors);
 
   const {xScale, labels} = useXScale({drawableWidth, data, xAxisOptions});
 
@@ -208,6 +216,7 @@ export function Chart({
 
         <g transform={`translate(${chartXPosition},${0})`}>
           <ComboBarChart
+            indexOffset={barChartIndexOffset}
             colors={barChartColors}
             data={barChartData}
             drawableHeight={drawableHeight}
@@ -230,6 +239,7 @@ export function Chart({
             data={lineChartData}
             drawableHeight={drawableHeight}
             drawableWidth={drawableWidth}
+            indexOffset={lineChartIndexOffset}
             isAnimated={isAnimated}
             theme={theme}
             xScale={xScale}

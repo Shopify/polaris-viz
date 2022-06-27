@@ -89,18 +89,11 @@ export function Chart({
 
   const selectedTheme = useTheme(theme);
   const {characterWidths} = useContext(ChartContext);
-  const [activeBarGroup, setActiveBarGroup] = useState<number>(-1);
+
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
   const id = useMemo(() => uniqueId('VerticalBarChart'), []);
   const [labelHeight, setLabelHeight] = useState(0);
   const [annotationsHeight, setAnnotationsHeight] = useState(PILL_HEIGHT);
-
-  useWatchColorVisionEvents({
-    type: COLOR_VISION_GROUP_ITEM,
-    onIndexChange: ({detail}) => {
-      setActiveBarGroup(detail.index);
-    },
-  });
 
   const {legend, setLegendHeight, height, width} = useLegend({
     data: [
@@ -253,9 +246,8 @@ export function Chart({
           />
         </g>
 
-        <g transform={`translate(${chartXPosition},${Margin.Top})`}>
+        <g transform={`translate(${chartXPosition},${chartYPosition})`}>
           <VerticalBarGroup
-            activeBarGroup={activeBarGroup}
             colors={barColors}
             data={data}
             drawableHeight={drawableHeight}
