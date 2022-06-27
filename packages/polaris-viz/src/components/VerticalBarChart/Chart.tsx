@@ -8,6 +8,7 @@ import {
   COLOR_VISION_GROUP_ITEM,
   COLOR_VISION_SINGLE_ITEM,
   BoundingRect,
+  LOAD_ANIMATION_DURATION,
 } from '@shopify/polaris-viz-core';
 import type {
   DataSeries,
@@ -310,8 +311,12 @@ export function Chart({
           ) : (
             sortedData.map((item, index) => {
               const xPosition = xScale(index.toString());
+              const animationDelay =
+                index * (LOAD_ANIMATION_DURATION / sortedData.length);
+
               return (
                 <BarGroup
+                  animationDelay={animationDelay}
                   isAnimated={isAnimated}
                   gapWidth={gapWidth}
                   key={index}
