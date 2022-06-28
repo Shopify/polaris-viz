@@ -8,19 +8,21 @@ import type {LegendData} from '../../../types';
 
 const DATA: LegendData[] = [
   {
-    name: 'Solid Icon',
+    name: 'Direct',
     color: 'green',
+    value: '$200',
   },
   {
-    name: 'Line Icon',
+    name: 'Facebook',
     color: 'blue',
     shape: 'Line',
   },
   {
-    name: 'Comparison Line',
+    name: 'Twitter',
     color: 'red',
     shape: 'Line',
     isComparison: true,
+    value: '$100',
   },
 ];
 
@@ -31,7 +33,7 @@ export default {
     docs: {
       description: {
         component:
-          'Used to indicate which color is associated with which series. The color preview will appear as a square unless a `iconType` is passed to `LegendData`. <br /> <br /> All charts except spark charts and `SimpleNormalizedChart` include a `Legend` by default.',
+          'Used to indicate which color is associated with which series. The color preview will appear as a square unless a `shape` is passed to `LegendData`. <br /> <br /> All charts except spark charts and `SimpleNormalizedChart` include a `Legend` by default.',
       },
     },
     controls: {
@@ -40,6 +42,10 @@ export default {
     },
   },
   argTypes: {
+    data: {
+      description:
+        '`name` and `color` props should be passed to each legend to display a title and a color icon. `isComparison`, `shape` and `value` props are optional.'
+    },
     colorVisionType: {
       table: {
         disable: true,
@@ -51,7 +57,7 @@ export default {
 
 const Template: Story<LegendProps> = (args: LegendProps) => {
   return (
-    <div style={{display: 'flex', gap: 10}}>
+    <div style={{display: 'flex', gap: 10, alignItems: 'start'}}>
       <Legend {...args} />
     </div>
   );

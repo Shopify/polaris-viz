@@ -120,6 +120,7 @@ export const NEUTRAL_SINGLE_GRADIENT = [
 
 export const DEFAULT_THEME: Theme = {
   seriesColors: {
+    empty: variables.colorGray140,
     comparison: variables.colorDarkComparison,
     single: NEUTRAL_SINGLE_GRADIENT,
     upToFour: [
@@ -203,8 +204,8 @@ export const DEFAULT_THEME: Theme = {
     width: 1,
   },
   legend: {
+    valueColor: variables.colorGray70,
     labelColor: variables.colorGray30,
-    valueColor: variables.colorGray00,
     backgroundColor: variables.colorGray150,
     trendIndicator: {
       positive: '#03AB92',
@@ -222,6 +223,7 @@ export const DEFAULT_THEME: Theme = {
 
 export const LIGHT_THEME: Theme = {
   seriesColors: {
+    empty: variables.colorGray20,
     comparison: variables.colorLightComparison,
     single: NEUTRAL_SINGLE_GRADIENT,
     upToFour: [
@@ -324,6 +326,7 @@ export const LIGHT_THEME: Theme = {
 export const PRINT_THEME = {
   ...LIGHT_THEME,
   seriesColors: {
+    empty: variables.colorGray20,
     comparison: variables.colorLightComparison,
     single: variables.colorIndigo90,
     upToFour: [

@@ -1,4 +1,5 @@
 import {Meta} from '@storybook/addon-docs/blocks';
+import LinkTo from '@storybook/addon-links/react';
 import {ComponentContainer, Title, Divider, Banner} from './components';
 
 <Meta
@@ -29,9 +30,9 @@ Wrap the top-level component of your app with the PolarisVizProvider.
 
 <Banner type="Alert">
   The PolarisVizProvider is responsible for managing{' '}
-  <a href="http://polaris-viz.shopify.io/iframe.html?id=shared-themes-default-themes--page&args=&viewMode=story">
+  <LinkTo kind="Shared/Themes/Default Themes">
     Themes
-  </a>
+  </LinkTo>
   , as well as providing the correct elements and animation functions for web development.
   Your app won't work without it.
 </Banner>

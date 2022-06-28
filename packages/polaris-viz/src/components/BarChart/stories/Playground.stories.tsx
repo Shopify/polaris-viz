@@ -284,3 +284,15 @@ export const SingleSeriesMultipleBars: Story<BarChartProps> = (
 SingleSeriesMultipleBars.args = {
   data: MULTIPLE_BARS_DATA,
 };
+
+export const LotsOfSingleBars: Story<BarChartProps> = (args: BarChartProps) => {
+  return (
+    <div style={{width: 600, height: 400}}>
+      <BarChart {...args} />
+    </div>
+  );
+};
+
+LotsOfSingleBars.args = {
+  data: [DATA[0]],
+};

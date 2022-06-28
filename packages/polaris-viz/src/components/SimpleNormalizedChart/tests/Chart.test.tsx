@@ -138,14 +138,59 @@ describe('<Chart />', () => {
       expect(barChart.findAll(BarSegment)).toHaveLength(4);
     });
 
-    it('renders 0 bars when given 0', () => {
+    it('renders empty bar when data is empty', () => {
       const lowEdgeProps = {
         data: [],
       };
 
-      const barChart = mount(<SimpleNormalizedChart {...lowEdgeProps} />);
+      const barChart = mountWithProvider(
+        <SimpleNormalizedChart {...lowEdgeProps} />,
+        {
+          themes: {
+            Default: {
+              seriesColors: {
+                empty: '#00A',
+              },
+            },
+          },
+        },
+      );
 
-      expect(barChart.findAll(BarSegment)).toHaveLength(0);
+      const barSegment = barChart.findAll(BarSegment);
+
+      expect(barSegment).toHaveLength(1);
+      expect(barSegment[0].props).toStrictEqual(
+        expect.objectContaining({scale: 100, color: '#00A'}),
+      );
+    });
+
+    it('renders empty bar when all data values are 0 or null', () => {
+      const lowEdgeProps = {
+        data: [
+          {name: 'Bin', data: [{key: 'April 1', value: 0}]},
+          {name: 'Stuff', data: [{key: 'May 1', value: null}]},
+        ],
+      };
+
+      const barChart = mountWithProvider(
+        <SimpleNormalizedChart {...lowEdgeProps} />,
+        {
+          themes: {
+            Default: {
+              seriesColors: {
+                empty: '#00A',
+              },
+            },
+          },
+        },
+      );
+
+      const barSegment = barChart.findAll(BarSegment);
+
+      expect(barSegment).toHaveLength(1);
+      expect(barSegment[0].props).toStrictEqual(
+        expect.objectContaining({scale: 100, color: '#00A'}),
+      );
     });
 
     it('does not render a bar for 0 values', () => {

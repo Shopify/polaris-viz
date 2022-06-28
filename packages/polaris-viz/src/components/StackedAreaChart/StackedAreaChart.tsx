@@ -11,17 +11,16 @@ import {
   getXAxisOptionsWithDefaults,
   getYAxisOptionsWithDefaults,
 } from '../../utilities';
-import {formatTooltipDataForLinearCharts} from '../../utilities/formatTooltipDataForLinearCharts';
-import {TooltipContent} from '../';
 import {ChartContainer} from '../ChartContainer';
 import {ChartSkeleton} from '../ChartSkeleton';
 import {SkipLink} from '../SkipLink';
-import type {RenderTooltipContentData} from '../../types';
+import type {TooltipOptions} from '../../types';
+import {useRenderTooltipContent} from '../../hooks';
 
 import {Chart} from './Chart';
 
 export type StackedAreaChartProps = {
-  renderTooltipContent?(data: RenderTooltipContentData): React.ReactNode;
+  tooltipOptions?: TooltipOptions;
   state?: ChartState;
   errorText?: string;
   showLegend?: boolean;
@@ -38,7 +37,7 @@ export function StackedAreaChart(props: StackedAreaChartProps) {
     data,
     state,
     errorText,
-    renderTooltipContent,
+    tooltipOptions,
     isAnimated,
     showLegend = true,
     skipLinkText,
@@ -48,6 +47,7 @@ export function StackedAreaChart(props: StackedAreaChartProps) {
     ...props,
   };
   const skipLinkAnchorId = useRef(uniqueId('stackedAreaChart'));
+  const renderTooltip = useRenderTooltipContent({tooltipOptions, theme, data});
 
   if (data.length === 0) {
     return null;
@@ -55,23 +55,6 @@ export function StackedAreaChart(props: StackedAreaChartProps) {
 
   const xAxisOptionsWithDefaults = getXAxisOptionsWithDefaults(xAxisOptions);
   const yAxisOptionsWithDefaults = getYAxisOptionsWithDefaults(yAxisOptions);
-
-  function renderDefaultTooltipContent(tooltipData: RenderTooltipContentData) {
-    if (renderTooltipContent != null) {
-      return renderTooltipContent({
-        ...tooltipData,
-        dataSeries: data,
-      });
-    }
-
-    const {formattedData, title} = formatTooltipDataForLinearCharts({
-      data: tooltipData,
-      xAxisOptions: xAxisOptionsWithDefaults,
-      yAxisOptions: yAxisOptionsWithDefaults,
-    });
-
-    return <TooltipContent theme={theme} title={title} data={formattedData} />;
-  }
 
   return (
     <React.Fragment>
@@ -85,11 +68,7 @@ export function StackedAreaChart(props: StackedAreaChartProps) {
           <Chart
             data={data}
             isAnimated={isAnimated}
-            renderTooltipContent={
-              renderTooltipContent != null
-                ? renderTooltipContent
-                : renderDefaultTooltipContent
-            }
+            renderTooltipContent={renderTooltip}
             showLegend={showLegend}
             theme={theme}
             xAxisOptions={xAxisOptionsWithDefaults}

@@ -20,7 +20,7 @@ import {
   <code>clamp()</code>
 </Title>
 
-<p>Keep a number within a min/max bounds.</p>
+<p>Is used to keep a number within the inclusive range within the min and max bounds. This method returns the clamped amount.</p>
 
 ```tsx
 clamp({
@@ -29,5 +29,16 @@ clamp({
   max: 20,
 });
 
+// Output:
 // 15
+
+
+clamp({
+  amount: 1000,
+  min: 150,
+  max: 200,
+});
+
+// Output:
+// 200
 ```

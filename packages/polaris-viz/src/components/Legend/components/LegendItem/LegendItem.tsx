@@ -4,6 +4,7 @@ import {
   getColorVisionStylesForActiveIndex,
 } from '@shopify/polaris-viz-core';
 
+import {PREVIEW_ICON_SIZE} from '../../../../constants';
 import {SeriesIcon} from '../../../shared/SeriesIcon';
 import type {LegendData} from '../../../../types';
 import {useTheme} from '../../../../hooks';
@@ -47,14 +48,26 @@ export function LegendItem({
       }}
       className={style.Legend}
     >
-      <SeriesIcon
-        shape={legend.shape}
-        color={legend.color}
-        isComparison={legend.isComparison}
-        theme={theme}
-      />
-      <span style={{color: selectedTheme.tooltip.textColor}}>
-        {legend.name}
+      <span
+        style={{height: PREVIEW_ICON_SIZE, width: PREVIEW_ICON_SIZE}}
+        className={style.IconContainer}
+      >
+        <SeriesIcon
+          shape={legend.shape}
+          color={legend.color}
+          isComparison={legend.isComparison}
+          theme={theme}
+        />
+      </span>
+      <span className={style.TextContainer}>
+        <span style={{color: selectedTheme.legend.labelColor}}>
+          {legend.name}
+        </span>
+        {legend.value == null ? null : (
+          <span style={{color: selectedTheme.legend.valueColor}}>
+            {legend.value}
+          </span>
+        )}
       </span>
     </button>
   );

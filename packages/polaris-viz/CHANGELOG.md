@@ -9,7 +9,22 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Sped up `<BarChart/>` animations for large, single series data sets.
+
+## [4.0.0] - 2022-06-23
+
+### Added
+
+- `tooltipOptions.keyFormatter` to `<LineChart/>`, `<BarChart/>` and `<StackedAreaChart/>`
+- `tooltipOptions.valueFormatter` to `<LineChart/>`, `<BarChart/>` and `<StackedAreaChart/>`
+- `tooltipOptions.titleFormatter` to `<LineChart/>`, `<BarChart/>` and `<StackedAreaChart/>`
+
+### Changed
+
+- `<LineChart />` now supports series that are shorter than the X-Axis.
+- `renderTooltipContent` is now nested inside `tooltipOptions` in `<LineChart/>`, `<BarChart/>` and `<StackedAreaChart/>`
 - `useLegend` hook now accepts `DataGroup[]` and `DataSeries[]`
+- `<SimpleNormalizedChart/>` now displays an empty bar when data values are all zero or no data is passed
 
 ## [3.0.0] - 2022-06-20
 
@@ -44,6 +59,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 - `<SimpleNormalizedChart/>` series colors can now be overwritten by using the `color` key in the `DataSeries` passed to the `data` prop
 - `<SimpleNormalizedChart/>` when passing `DataSeries.isComparison: true` to the `data` prop, the corresponding bar will now use the coparison color defined in the `Theme`
+- Added `value` prop to `<LegendItem />`.
 
 ### Changed
 

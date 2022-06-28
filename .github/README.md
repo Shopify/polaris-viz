@@ -20,7 +20,7 @@
 
 <br/>
 
-Both libraries use the same [Data Structure](http://polaris-viz.shopify.io/iframe.html?id=shared-data-structure--page&args=&viewMode=story), [Utility functions](http://polaris-viz.shopify.io/iframe.html?id=shared-utilities--page&viewMode=story), [Themes](http://polaris-viz.shopify.io/iframe.html?id=shared-themes-default-themes--page&args=&viewMode=story) and SubComponents. _All things shared_ between `@shopify/polaris-viz` and `@shopify/polaris-viz-native` are documented in Storybook's `Shared` folder
+Both libraries use the same [Data Structure](http://polaris-viz.shopify.io/iframe.html?id=shared-data-structure--page&args=&viewMode=story), [Utility functions](http://polaris-viz.shopify.io/iframe.html?id=shared-utilities--page&viewMode=story), [Themes](http://polaris-viz.shopify.io/iframe.html?id=shared-themes-default-themes--page&args=&viewMode=story) and SubComponents. _All things shared_ between `@shopify/polaris-viz` and `@shopify/polaris-viz-native` are documented in the Storybook's `Shared` folder
 
 
 - [📓 Docs & Examples](https://polaris-viz.shopify.io)
@@ -34,7 +34,7 @@ Both libraries use the same [Data Structure](http://polaris-viz.shopify.io/ifram
 <hr/>
 <br/>
 
-Our libraries are opinionated by design. Here you will find charts that prioritize accessibility, motion design and delight to create meaningful analytics experiences.
+Our libraries are structured to favor charts that prioritize accessibility and motion design. The goal is to help users create clear and meaningful analytics experiences.
 
 We want to do the heavy lifting of developing charts, so our partners can focus on telling amazing data stories and not re-inventing the wheel.
 
@@ -50,7 +50,7 @@ We want to do the heavy lifting of developing charts, so our partners can focus 
 Want to help us build the future of data viz?
 The system is currently in active development and we are working on expanding its features and available charts.
 
-Pull requests are welcome! See the [contribution docs](https://github.com/Shopify/polaris-viz/blob/master/CONTRIBUTING.md) to learn how to set up your development environment and more information.
+Pull requests are welcome! See the [contribution docs](https://github.com/Shopify/polaris-viz/blob/master/CONTRIBUTING.md) for more information and to learn how to set up your development environment.
 
 
 <br/>

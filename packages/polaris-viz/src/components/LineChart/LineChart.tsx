@@ -15,18 +15,20 @@ import {
   DEFAULT_CHART_PROPS,
 } from '@shopify/polaris-viz-core';
 
-import {formatTooltipDataForLinearCharts} from '../../utilities/formatTooltipDataForLinearCharts';
-import type {RenderTooltipContentData} from '../../types';
-import {TooltipContent} from '../../components/TooltipContent';
-import {ChartContainer} from '../../components/ChartContainer';
-import {ChartSkeleton} from '../../components/ChartSkeleton';
-import {useThemeSeriesColors} from '../../hooks/useThemeSeriesColors';
 import {
   getXAxisOptionsWithDefaults,
   getYAxisOptionsWithDefaults,
 } from '../../utilities';
+import {ChartContainer} from '../../components/ChartContainer';
+import {ChartSkeleton} from '../../components/ChartSkeleton';
+import {useThemeSeriesColors} from '../../hooks/useThemeSeriesColors';
 import {SkipLink} from '../SkipLink';
-import {usePrefersReducedMotion, useTheme} from '../../hooks';
+import {
+  useRenderTooltipContent,
+  usePrefersReducedMotion,
+  useTheme,
+} from '../../hooks';
+import type {TooltipOptions} from '../../types';
 
 import {Chart} from './Chart';
 
@@ -34,7 +36,7 @@ export type LineChartProps = {
   state?: ChartState;
   errorText?: string;
   emptyStateText?: string;
-  renderTooltipContent?: (data: RenderTooltipContentData) => React.ReactNode;
+  tooltipOptions?: TooltipOptions;
   showLegend?: boolean;
   skipLinkText?: string;
   xAxisOptions?: Partial<XAxisOptions>;
@@ -46,7 +48,7 @@ export function LineChart(props: LineChartProps) {
     data,
     state,
     errorText,
-    renderTooltipContent,
+    tooltipOptions,
     showLegend = true,
     skipLinkText,
     emptyStateText,
@@ -68,22 +70,7 @@ export function LineChart(props: LineChartProps) {
   const xAxisOptionsWithDefaults = getXAxisOptionsWithDefaults(xAxisOptions);
   const yAxisOptionsWithDefaults = getYAxisOptionsWithDefaults(yAxisOptions);
 
-  function renderTooltip(tooltipData: RenderTooltipContentData) {
-    if (renderTooltipContent != null) {
-      return renderTooltipContent({
-        ...tooltipData,
-        dataSeries: data,
-      });
-    }
-
-    const {formattedData, title} = formatTooltipDataForLinearCharts({
-      data: tooltipData,
-      xAxisOptions: xAxisOptionsWithDefaults,
-      yAxisOptions: yAxisOptionsWithDefaults,
-    });
-
-    return <TooltipContent title={title} data={formattedData} theme={theme} />;
-  }
+  const renderTooltip = useRenderTooltipContent({tooltipOptions, theme, data});
 
   const getOpacityByDataLength = (dataLength: number) => {
     if (dataLength <= 4) {

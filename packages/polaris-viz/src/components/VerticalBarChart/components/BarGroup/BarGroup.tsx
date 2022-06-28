@@ -23,13 +23,13 @@ import {Bar} from '../Bar';
 import {BAR_SPACING} from '../../constants';
 import {
   MIN_BAR_HEIGHT,
-  LOAD_ANIMATION_DURATION,
   MASK_HIGHLIGHT_COLOR,
   SHAPE_ANIMATION_HEIGHT_BUFFER,
 } from '../../../../constants';
 import styles from '../../Chart.scss';
 
 interface Props {
+  animationDelay: number;
   x: number;
   yScale: ScaleLinear<number, number>;
   width: number;
@@ -46,6 +46,7 @@ interface Props {
 }
 
 export function BarGroup({
+  animationDelay,
   x,
   data,
   yScale,
@@ -135,9 +136,7 @@ export function BarGroup({
                 borderRadius={
                   hasRoundedCorners ? BORDER_RADIUS.Top : BORDER_RADIUS.None
                 }
-                animationDelay={
-                  barGroupIndex * (LOAD_ANIMATION_DURATION / dataLength)
-                }
+                animationDelay={animationDelay}
                 isAnimated={shouldAnimate}
               />
             </g>

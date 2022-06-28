@@ -11,7 +11,7 @@ Use this sandbox to import `@shopify/polaris-viz-native` components and test the
 2. `yarn dev`
 3. Open second terminal
 4. `yarn sandbox`
-6. Hit `i` for `iOS` or `a` for android. You can also scan the QR Code to open the app on your phone (with the expo app).
+6. Hit `i` for `iOS` or `a` for android. You can also scan the QR Code to open the app on your phone (with the [expo app](https://expo.dev/)).
 
 <br>
 
