@@ -1,4 +1,5 @@
 import React, {
+  CSSProperties,
   Dispatch,
   SetStateAction,
   useEffect,
@@ -42,14 +43,16 @@ export function LegendContainer({
   const previousWidth = useRef(DEFAULT_LEGEND_WIDTH);
   const [activeIndex, setActiveIndex] = useState(-1);
 
-  const styleMap = {
+  const styleMap: {[key: string]: CSSProperties} = {
     horizontal: {
       justifyContent: 'flex-end',
       margin: `${LEGENDS_TOP_MARGIN}px ${selectedTheme.grid.horizontalMargin}px 0`,
+      flexDirection: 'row',
     },
     vertical: {
-      justifyContent: 'flex-start',
+      alignItems: 'flex-start',
       margin: `0 ${selectedTheme.grid.horizontalMargin}px 0`,
+      flexDirection: 'column',
     },
   };
 
@@ -85,7 +88,7 @@ export function LegendContainer({
       className={classNames(style.Container)}
       ref={setRef}
       role="list"
-      style={{...styleMap[direction]}}
+      style={styleMap[direction]}
     >
       <Legend
         activeIndex={activeIndex}

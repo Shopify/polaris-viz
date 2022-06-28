@@ -68,9 +68,9 @@ export function Chart({
   const diameter = Math.min(height, width);
   const radius = diameter / 2;
 
-  const shouldColorVis = Boolean(width && height);
+  const shouldUseColorVisionEvents = Boolean(width && height);
 
-  useColorVisionEvents(shouldColorVis);
+  useColorVisionEvents(shouldUseColorVisionEvents);
 
   useWatchColorVisionEvents({
     type: COLOR_VISION_SINGLE_ITEM,
