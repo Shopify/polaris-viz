@@ -63,6 +63,7 @@ const ANNOTATIONS: Annotation[] = [
 
 const MOCK_PROPS: AnnotationsProps = {
   annotationsLookupTable: normalizeData(ANNOTATIONS, 'startKey'),
+  axisLabelWidth: 50,
   drawableHeight: 200,
   drawableWidth: 600,
   labels: [

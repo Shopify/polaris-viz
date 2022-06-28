@@ -3,8 +3,9 @@ import {
   ChartContext,
   clamp,
   estimateStringWidth,
+  getValueFromXScale,
 } from '@shopify/polaris-viz-core';
-import type {ScaleBand} from 'd3-scale';
+import type {ScaleBand, ScaleLinear} from 'd3-scale';
 
 import {
   COLLAPSED_PILL_COUNT,
@@ -25,7 +26,7 @@ export interface Props {
   drawableWidth: number;
   isShowingAllAnnotations: boolean;
   onHeightChange: (height: number) => void;
-  xScale: ScaleBand<string>;
+  xScale: ScaleLinear<number, number> | ScaleBand<string>;
 }
 
 export function useAnnotationPositions({
@@ -51,7 +52,10 @@ export function useAnnotationPositions({
 
   const {positions, hiddenAnnotationsCount} = useMemo(() => {
     const positions = annotations.map((annotation, dataIndex) => {
-      const xPosition = xScale(dataIndexes[annotation.startKey]) ?? 0;
+      const xPosition = getValueFromXScale(
+        dataIndexes[annotation.startKey],
+        xScale,
+      );
 
       const textWidth = textWidths[dataIndex];
 

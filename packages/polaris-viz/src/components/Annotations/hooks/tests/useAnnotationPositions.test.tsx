@@ -7,6 +7,7 @@ import {useAnnotationPositions, Props} from '../useAnnotationPositions';
 jest.mock('@shopify/polaris-viz-core/src/utilities', () => ({
   ...jest.requireActual('@shopify/polaris-viz-core/src/utilities'),
   estimateStringWidth: jest.fn(() => 50),
+  getValueFromScale: jest.fn(() => 50),
 }));
 
 jest.mock('d3-scale', () => ({

@@ -14,7 +14,11 @@ import {
   BoundingRect,
 } from '@shopify/polaris-viz-core';
 
-import type {RenderTooltipContentData} from '../../types';
+import {Annotations} from '../Annotations';
+import type {
+  AnnotationLookupTable,
+  RenderTooltipContentData,
+} from '../../types';
 import {LinearXAxisLabels} from '../LinearXAxisLabels';
 import {LegendContainer, useLegend} from '../LegendContainer';
 import {
@@ -38,6 +42,7 @@ import {
   LineChartMargin as Margin,
   XMLNS,
   LABEL_AREA_TOP_SPACING,
+  ANNOTATIONS_LABELS_OFFSET,
 } from '../../constants';
 import {eventPointNative} from '../../utilities';
 import {YAxis} from '../YAxis';
@@ -58,6 +63,7 @@ const TOOLTIP_POSITION: TooltipPositionOffset = {
 };
 
 export interface Props {
+  annotationsLookupTable: AnnotationLookupTable;
   data: DataSeries[];
   isAnimated: boolean;
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
@@ -69,6 +75,7 @@ export interface Props {
 }
 
 export function Chart({
+  annotationsLookupTable,
   xAxisOptions,
   data,
   dimensions,
@@ -87,6 +94,7 @@ export function Chart({
   const [activePointIndex, setActivePointIndex] = useState<number | null>(null);
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
   const [labelHeight, setLabelHeight] = useState(0);
+  const [annotationsHeight, setAnnotationsHeight] = useState(0);
 
   const {legend, setLegendHeight, height, width} = useLegend({
     colors: seriesColors,
@@ -109,8 +117,12 @@ export function Chart({
     xAxisOptions,
   });
 
+  const chartYPosition = (Margin.Top as number) + annotationsHeight;
   const drawableHeight =
-    height - labelHeight - LABEL_AREA_TOP_SPACING - Margin.Top;
+    height - chartYPosition - labelHeight - LABEL_AREA_TOP_SPACING;
+
+  const annotationsDrawableHeight =
+    chartYPosition + drawableHeight + ANNOTATIONS_LABELS_OFFSET;
 
   const {minY, maxY} = yAxisMinMax(stackedValues);
 
@@ -201,8 +213,10 @@ export function Chart({
     width,
     height,
     x: chartStartPosition,
-    y: Margin.Top,
+    y: chartYPosition,
   };
+
+  const hasAnnotations = Object.keys(annotationsLookupTable).length > 0;
 
   return (
     <div className={styles.Container} style={{height, width}}>
@@ -220,9 +234,7 @@ export function Chart({
           <LinearXAxisLabels
             chartHeight={height}
             chartX={chartStartPosition - xAxisDetails.labelWidth / 2}
-            chartY={
-              drawableHeight + LABEL_AREA_TOP_SPACING + (Margin.Top as number)
-            }
+            chartY={chartYPosition + drawableHeight + LABEL_AREA_TOP_SPACING}
             labels={labels}
             labelWidth={xAxisDetails.labelWidth}
             onHeightChange={setLabelHeight}
@@ -238,7 +250,7 @@ export function Chart({
             theme={theme}
             transform={{
               x: selectedTheme.grid.horizontalOverflow ? 0 : chartStartPosition,
-              y: Margin.Top,
+              y: chartYPosition,
             }}
             width={
               selectedTheme.grid.horizontalOverflow ? width : drawableWidth
@@ -246,7 +258,7 @@ export function Chart({
           />
         ) : null}
 
-        <g transform={`translate(0,${Margin.Top})`}>
+        <g transform={`translate(0,${chartYPosition})`}>
           <YAxis
             ticks={ticks}
             width={yAxisLabelWidth}
@@ -262,7 +274,7 @@ export function Chart({
         />
 
         <g
-          transform={`translate(${chartStartPosition},${Margin.Top})`}
+          transform={`translate(${chartStartPosition},${chartYPosition})`}
           className={styles.Group}
           area-hidden="true"
         >
@@ -277,7 +289,7 @@ export function Chart({
         </g>
 
         {activePointIndex == null ? null : (
-          <g transform={`translate(${chartStartPosition},${Margin.Top})`}>
+          <g transform={`translate(${chartStartPosition},${chartYPosition})`}>
             <Crosshair
               x={getXPosition({isCrosshair: true, index: 0})}
               height={drawableHeight}
@@ -286,20 +298,42 @@ export function Chart({
           </g>
         )}
 
-        <Points
-          activePointIndex={activePointIndex}
-          animatedCoordinates={animatedCoordinates}
-          colors={seriesColors}
-          chartStartPosition={chartStartPosition}
-          getXPosition={getXPosition}
-          isAnimated={isAnimated}
-          stackedValues={stackedValues}
-          theme={theme}
-          tooltipId={tooltipId.current}
-          xScale={xScale}
-          yScale={yScale}
-        />
+        {hasAnnotations && (
+          <g
+            transform={`translate(${
+              chartStartPosition - xAxisDetails.labelWidth / 2
+            },0)`}
+            tabIndex={-1}
+          >
+            <Annotations
+              annotationsLookupTable={annotationsLookupTable}
+              axisLabelWidth={xAxisDetails.labelWidth}
+              drawableHeight={annotationsDrawableHeight}
+              drawableWidth={drawableWidth}
+              labels={labels}
+              onHeightChange={setAnnotationsHeight}
+              theme={theme}
+              xScale={xScale}
+            />
+          </g>
+        )}
+
+        <g transform={`translate(${chartStartPosition},${chartYPosition})`}>
+          <Points
+            activePointIndex={activePointIndex}
+            animatedCoordinates={animatedCoordinates}
+            colors={seriesColors}
+            getXPosition={getXPosition}
+            isAnimated={isAnimated}
+            stackedValues={stackedValues}
+            theme={theme}
+            tooltipId={tooltipId.current}
+            xScale={xScale}
+            yScale={yScale}
+          />
+        </g>
       </svg>
+
       <TooltipWrapper
         alwaysUpdatePosition
         chartBounds={chartBounds}
@@ -311,6 +345,7 @@ export function Chart({
         onIndexChange={(index) => setActivePointIndex(index)}
         parentRef={svgRef}
       />
+
       {showLegend && (
         <LegendContainer
           colorVisionType={COLOR_VISION_SINGLE_ITEM}

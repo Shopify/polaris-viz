@@ -34,6 +34,7 @@ export function TooltipWrapper(props: TooltipWrapperProps) {
   const {
     alwaysUpdatePosition = false,
     bandwidth = 0,
+    chartBounds,
     focusElementDataType,
     getAlteredPosition,
     getPosition,
@@ -64,6 +65,13 @@ export function TooltipWrapper(props: TooltipWrapperProps) {
       const newPosition = getPosition({event, eventType: 'mouse'});
 
       if (
+        alwaysUpdatePosition &&
+        (newPosition.x < chartBounds.x || newPosition.y < chartBounds.y)
+      ) {
+        return;
+      }
+
+      if (
         !alwaysUpdatePosition &&
         activeIndexRef.current === newPosition.activeIndex
       ) {
@@ -77,7 +85,7 @@ export function TooltipWrapper(props: TooltipWrapperProps) {
       setPosition(newPosition);
       onIndexChange?.(newPosition.activeIndex);
     },
-    [alwaysUpdatePosition, getPosition, onIndexChange],
+    [alwaysUpdatePosition, chartBounds, getPosition, onIndexChange],
   );
 
   const onMouseLeave = useCallback(() => {
@@ -165,7 +173,7 @@ export function TooltipWrapper(props: TooltipWrapperProps) {
     <TooltipAnimatedContainer
       activePointIndex={position.activeIndex}
       bandwidth={bandwidth}
-      chartBounds={props.chartBounds}
+      chartBounds={chartBounds}
       currentX={position.x}
       currentY={position.y}
       id={id}

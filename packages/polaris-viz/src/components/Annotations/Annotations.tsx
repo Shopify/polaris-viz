@@ -1,5 +1,5 @@
 import React, {useMemo, useState} from 'react';
-import type {ScaleBand} from 'd3-scale';
+import type {ScaleBand, ScaleLinear} from 'd3-scale';
 
 import type {Annotation, AnnotationLookupTable} from '../../types';
 import {useSVGBlurEvent} from '../../hooks/useSVGBlurEvent';
@@ -17,16 +17,18 @@ import {isShowMoreAnnotationsButtonVisible} from './utilities/isShowMoreAnnotati
 
 export interface AnnotationsProps {
   annotationsLookupTable: AnnotationLookupTable;
+  axisLabelWidth: number;
   drawableHeight: number;
   drawableWidth: number;
   labels: string[];
   onHeightChange: (height: number) => void;
   theme: string;
-  xScale: ScaleBand<string>;
+  xScale: ScaleLinear<number, number> | ScaleBand<string>;
 }
 
 export function Annotations({
   annotationsLookupTable,
+  axisLabelWidth,
   drawableHeight,
   drawableWidth,
   labels,
@@ -60,7 +62,7 @@ export function Annotations({
 
   const {hiddenAnnotationsCount, positions, rowCount} = useAnnotationPositions({
     annotations,
-    axisLabelWidth: xScale.bandwidth(),
+    axisLabelWidth,
     dataIndexes,
     drawableWidth,
     isShowingAllAnnotations,
@@ -128,6 +130,7 @@ export function Annotations({
               />
               <AnnotationLabel
                 ariaLabel={ariaLabel}
+                hasContent={hasContent}
                 index={index}
                 isVisible={!isContentVisible}
                 label={annotation.label}

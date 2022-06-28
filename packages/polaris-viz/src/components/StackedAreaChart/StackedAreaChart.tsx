@@ -10,16 +10,18 @@ import type {XAxisOptions, YAxisOptions} from '@shopify/polaris-viz-core';
 import {
   getXAxisOptionsWithDefaults,
   getYAxisOptionsWithDefaults,
+  normalizeData,
 } from '../../utilities';
 import {ChartContainer} from '../ChartContainer';
 import {ChartSkeleton} from '../ChartSkeleton';
 import {SkipLink} from '../SkipLink';
-import type {TooltipOptions} from '../../types';
+import type {Annotation, TooltipOptions} from '../../types';
 import {useRenderTooltipContent} from '../../hooks';
 
 import {Chart} from './Chart';
 
 export type StackedAreaChartProps = {
+  annotations?: Annotation[];
   tooltipOptions?: TooltipOptions;
   state?: ChartState;
   errorText?: string;
@@ -32,6 +34,7 @@ export type StackedAreaChartProps = {
 
 export function StackedAreaChart(props: StackedAreaChartProps) {
   const {
+    annotations = [],
     xAxisOptions,
     yAxisOptions,
     data,
@@ -56,6 +59,8 @@ export function StackedAreaChart(props: StackedAreaChartProps) {
   const xAxisOptionsWithDefaults = getXAxisOptionsWithDefaults(xAxisOptions);
   const yAxisOptionsWithDefaults = getYAxisOptionsWithDefaults(yAxisOptions);
 
+  const annotationsLookupTable = normalizeData(annotations, 'startKey');
+
   return (
     <React.Fragment>
       {skipLinkText == null || skipLinkText.length === 0 ? null : (
@@ -66,6 +71,7 @@ export function StackedAreaChart(props: StackedAreaChartProps) {
           <ChartSkeleton state={state} errorText={errorText} theme={theme} />
         ) : (
           <Chart
+            annotationsLookupTable={annotationsLookupTable}
             data={data}
             isAnimated={isAnimated}
             renderTooltipContent={renderTooltip}

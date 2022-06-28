@@ -8,23 +8,24 @@ import {
   COLOR_VISION_SINGLE_ITEM,
   changeColorOpacity,
   changeGradientOpacity,
+  Color,
 } from '@shopify/polaris-viz-core';
+import type {ScaleLinear} from 'd3-scale';
 
 import {Point} from '../../../';
-import type {AnimatedCoordinate} from '../../../../types';
+import type {AnimatedCoordinate, GetXPosition} from '../../../../types';
 import {
   usePrefersReducedMotion,
   useTheme,
   useWatchColorVisionEvents,
 } from '../../../../hooks';
-import {LineChartMargin as Margin, colorWhite} from '../../../../constants';
+import {colorWhite} from '../../../../constants';
 
 interface PointsProps {
   activePointIndex: number | null;
   animatedCoordinates: AnimatedCoordinate[] | null;
-  colors: any;
-  chartStartPosition: number;
-  getXPosition: any;
+  colors: Color[];
+  getXPosition: GetXPosition;
   isAnimated: boolean;
   stackedValues: Series<
     {
@@ -33,8 +34,8 @@ interface PointsProps {
     string
   >[];
   tooltipId: string;
-  xScale: any;
-  yScale: any;
+  xScale: ScaleLinear<number, number>;
+  yScale: ScaleLinear<number, number>;
   theme: string;
 }
 
@@ -42,7 +43,6 @@ export function Points({
   activePointIndex,
   animatedCoordinates,
   colors,
-  chartStartPosition,
   getXPosition,
   isAnimated,
   stackedValues,
@@ -64,7 +64,7 @@ export function Points({
   });
 
   return (
-    <g transform={`translate(${chartStartPosition},${Margin.Top})`}>
+    <React.Fragment>
       {stackedValues.map((_, stackIndex) => {
         if (activePointIndex == null) {
           return null;
@@ -138,6 +138,6 @@ export function Points({
           />
         );
       })}
-    </g>
+    </React.Fragment>
   );
 }

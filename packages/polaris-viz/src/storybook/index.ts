@@ -49,3 +49,7 @@ export const DATA_ARGS = {
   description:
     'A collection of named data sets to be rendered in the chart. An optional color can be provided for each series, to overwrite the theme `seriesColors` defined in `PolarisVizProvider`',
 };
+
+export const ANNOTATIONS_ARGS = {
+  description: 'An array of annotations to show on the chart.',
+};
