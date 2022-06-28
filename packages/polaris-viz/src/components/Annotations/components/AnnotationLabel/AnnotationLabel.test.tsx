@@ -13,6 +13,7 @@ jest.mock('@shopify/polaris-viz-core/src/utilities', () => ({
 const MOCK_PROPS: AnnotationLabelProps = {
   ariaLabel: 'Aria string',
   index: 0,
+  hasContent: false,
   isVisible: true,
   label: 'Label',
   position: {
@@ -74,14 +75,6 @@ describe('<AnnotationLabel />', () => {
         </svg>,
       );
 
-      expect(chart).toContainReactComponent('line', {
-        x1: 10,
-        x2: 90,
-        y1: 17,
-        y2: 17,
-        strokeWidth: 1,
-      });
-
       expect(chart).toContainReactComponent('button', {
         'aria-label': 'Aria string: Label',
         'aria-describedby': 'annotation-content-0',
@@ -114,6 +107,34 @@ describe('<AnnotationLabel />', () => {
       button?.trigger('onFocus');
 
       expect(MOCK_PROPS.setActiveIndex).toHaveBeenCalledWith(0);
+    });
+  });
+
+  describe('hasContent', () => {
+    it('renders a line when true', () => {
+      const chart = mount(
+        <svg>
+          <AnnotationLabel {...MOCK_PROPS} hasContent />
+        </svg>,
+      );
+
+      expect(chart).toContainReactComponent('line', {
+        x1: 10,
+        x2: 90,
+        y1: 17,
+        y2: 17,
+        strokeWidth: 1,
+      });
+    });
+
+    it('renders no line when false', () => {
+      const chart = mount(
+        <svg>
+          <AnnotationLabel {...MOCK_PROPS} />
+        </svg>,
+      );
+
+      expect(chart).not.toContainReactComponent('line');
     });
   });
 });

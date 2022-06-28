@@ -9,10 +9,11 @@ import {
   RENDER_TOOLTIP_DESCRIPTION,
   THEME_CONTROL_ARGS,
   CHART_STATE_CONTROL_ARGS,
+  ANNOTATIONS_ARGS,
 } from '../../../storybook';
 
 import {generateMultipleSeries} from '../../Docs/utilities';
-import type {RenderTooltipContentData} from '../../../types';
+import type {Annotation, RenderTooltipContentData} from '../../../types';
 
 import {PageWithSizingInfo} from '../../Docs/stories/components/PageWithSizingInfo';
 
@@ -54,6 +55,7 @@ export default {
   },
   decorators: [(Story) => <div style={{height: '500px'}}>{Story()}</div>],
   argTypes: {
+    annotations: ANNOTATIONS_ARGS,
     data: {
       description:
         'A collection of named data sets to be rendered in the chart. An optional color can be provided for each series, to overwrite the theme `seriesColors` defined in `PolarisVizProvider`',
@@ -167,4 +169,25 @@ export const SeriesColorsUpToFourteen = Template.bind({});
 SeriesColorsUpToFourteen.args = {
   ...DEFAULT_PROPS,
   data: generateMultipleSeries(14),
+};
+
+const ANNOTATIONS: Annotation[] = [
+  {
+    startKey: 'February',
+    label: 'Sales increase',
+  },
+  {
+    startKey: 'May',
+    label: 'Super Big Sale',
+    content: {
+      content: 'We ran a massive sale on our products. We made a lot of money!',
+    },
+  },
+];
+
+export const Annotations: Story<StackedAreaChartProps> = Template.bind({});
+
+Annotations.args = {
+  ...DEFAULT_PROPS,
+  annotations: ANNOTATIONS,
 };
