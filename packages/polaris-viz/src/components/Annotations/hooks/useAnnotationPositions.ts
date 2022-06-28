@@ -51,7 +51,7 @@ export function useAnnotationPositions({
   }, [annotations, characterWidths]);
 
   const {positions, hiddenAnnotationsCount} = useMemo(() => {
-    const positions = annotations.map((annotation, dataIndex) => {
+    let positions = annotations.map((annotation, dataIndex) => {
       const xPosition = getValueFromXScale(
         dataIndexes[annotation.startKey],
         xScale,
@@ -98,6 +98,8 @@ export function useAnnotationPositions({
       };
     });
 
+    positions = positions.sort((one, two) => one.x - two.x);
+
     function checkForSpace(totalRows: number) {
       let checkAgain = false;
 
@@ -114,10 +116,10 @@ export function useAnnotationPositions({
               return;
             }
 
-            if (
-              current.row === next.row &&
-              current.x + current.width > next.x
-            ) {
+            const left = current.x;
+            const right = current.x + current.width;
+
+            if (current.row === next.row && next.x > left && next.x < right) {
               next.row = nextRow;
 
               checkAgain = true;

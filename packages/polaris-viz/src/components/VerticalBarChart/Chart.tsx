@@ -18,7 +18,7 @@ import type {
   YAxisOptions,
 } from '@shopify/polaris-viz-core';
 
-import {Annotations} from '../Annotations';
+import {YAxisAnnotations, Annotations} from '../Annotations';
 import type {
   RenderTooltipContentData,
   AnnotationLookupTable,
@@ -331,19 +331,35 @@ export function Chart({
             })
           )}
         </g>
+
         {hasAnnotations && (
-          <g transform={`translate(${chartXPosition},0)`} tabIndex={-1}>
-            <Annotations
-              annotationsLookupTable={annotationsLookupTable}
-              axisLabelWidth={xScale.bandwidth()}
-              drawableHeight={annotationsDrawableHeight}
-              drawableWidth={drawableWidth}
-              labels={labels}
-              onHeightChange={setAnnotationsHeight}
-              theme={theme}
-              xScale={xScale}
-            />
-          </g>
+          <React.Fragment>
+            <g transform={`translate(${chartXPosition},0)`} tabIndex={-1}>
+              <Annotations
+                annotationsLookupTable={annotationsLookupTable}
+                axisLabelWidth={xScale.bandwidth()}
+                drawableHeight={annotationsDrawableHeight}
+                drawableWidth={drawableWidth}
+                labels={labels}
+                onHeightChange={setAnnotationsHeight}
+                theme={theme}
+                xScale={xScale}
+              />
+            </g>
+            <g
+              transform={`translate(${chartXPosition},${chartYPosition})`}
+              tabIndex={-1}
+            >
+              <YAxisAnnotations
+                annotationsLookupTable={annotationsLookupTable}
+                drawableHeight={annotationsDrawableHeight}
+                drawableWidth={drawableWidth}
+                theme={theme}
+                ticks={ticks}
+                yScale={yScale}
+              />
+            </g>
+          </React.Fragment>
         )}
       </svg>
 

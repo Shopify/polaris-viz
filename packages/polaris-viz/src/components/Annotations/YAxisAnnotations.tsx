@@ -1,82 +1,69 @@
 import React, {useMemo, useState} from 'react';
-import type {ScaleBand, ScaleLinear} from 'd3-scale';
+import type {ScaleLinear} from 'd3-scale';
+import {isValueWithinDomain} from '@shopify/polaris-viz-core';
 
-import type {Annotation, AnnotationLookupTable} from '../../types';
+import type {Annotation, AnnotationLookupTable, YAxisTick} from '../../types';
 import {useSVGBlurEvent} from '../../hooks/useSVGBlurEvent';
 
+import {useYAxisAnnotationPositions} from './hooks/useYAxisAnnotationPositions';
 import {
+  AnnotationContent,
   AnnotationLabel,
   AnnotationLine,
-  AnnotationContent,
-  ShowMoreAnnotationsButton,
+  AnnotationYAxisLabel,
 } from './components';
-import {useAnnotationPositions} from './hooks/useAnnotationPositions';
-import {PILL_HEIGHT, SHOW_MORE_BUTTON_OFFSET} from './constants';
-import {shouldHideAnnotation} from './utilities/shouldHideAnnotation';
-import {isShowMoreAnnotationsButtonVisible} from './utilities/isShowMoreAnnotationsButtonVisible';
 
-export interface AnnotationsProps {
+export interface YAxisAnnotationsProps {
   annotationsLookupTable: AnnotationLookupTable;
-  axisLabelWidth: number;
   drawableHeight: number;
   drawableWidth: number;
-  labels: string[];
-  onHeightChange: (height: number) => void;
   theme: string;
-  xScale: ScaleLinear<number, number> | ScaleBand<string>;
+  ticks: YAxisTick[];
+  yScale: ScaleLinear<number, number>;
 }
 
-export function Annotations({
+export function YAxisAnnotations({
   annotationsLookupTable,
-  axisLabelWidth,
-  drawableHeight,
   drawableWidth,
-  labels,
-  onHeightChange,
   theme,
-  xScale,
-}: AnnotationsProps) {
+  ticks,
+  yScale,
+}: YAxisAnnotationsProps) {
   const [activeIndex, setActiveIndex] = useState(-1);
-  const [isShowingAllAnnotations, setIsShowingAllAnnotations] = useState(false);
   const [ref, setRef] = useState<SVGGElement | null>(null);
 
-  const {annotations, dataIndexes} = useMemo(() => {
-    const dataIndexes = {};
-
+  const {annotations} = useMemo(() => {
     const annotations = Object.keys(annotationsLookupTable)
       .map((key) => {
         const annotation = annotationsLookupTable[key];
 
         if (
-          !labels.includes(key) ||
-          annotation == null ||
-          annotation.axis === 'y'
+          !isValueWithinDomain(Number(annotation.startKey), yScale.domain())
         ) {
           return null;
         }
 
-        dataIndexes[key] = labels.indexOf(key);
+        if (
+          annotation == null ||
+          annotation.axis == null ||
+          annotation.axis === 'x'
+        ) {
+          return null;
+        }
 
         return annotation;
       })
       .filter(Boolean) as Annotation[];
 
-    return {annotations, dataIndexes};
-  }, [annotationsLookupTable, labels]);
+    return {annotations};
+  }, [annotationsLookupTable, yScale]);
 
-  const {hiddenAnnotationsCount, positions, rowCount} = useAnnotationPositions({
+  const {positions} = useYAxisAnnotationPositions({
     annotations,
-    axisLabelWidth,
-    dataIndexes,
     drawableWidth,
-    isShowingAllAnnotations,
-    onHeightChange,
-    xScale,
+    ticks,
+    yScale,
   });
-
-  const handleToggleAllAnnotations = () => {
-    setIsShowingAllAnnotations(!isShowingAllAnnotations);
-  };
 
   const handleOnMouseLeave = () => {
     setActiveIndex(-1);
@@ -92,33 +79,14 @@ export function Annotations({
     },
   });
 
-  const isShowMoreButtonVisible = isShowMoreAnnotationsButtonVisible(rowCount);
-  const showMoreButtonOffset = isShowMoreButtonVisible
-    ? SHOW_MORE_BUTTON_OFFSET
-    : 0;
-
   return (
     <g ref={setRef} tabIndex={-1}>
-      {isShowMoreButtonVisible && (
-        <ShowMoreAnnotationsButton
-          annotationsCount={hiddenAnnotationsCount}
-          collapseText={annotations[0].collapseButtonText}
-          expandText={annotations[0].expandButtonText}
-          isShowingAllAnnotations={isShowingAllAnnotations}
-          onClick={handleToggleAllAnnotations}
-          tabIndex={annotations.length}
-          theme={theme}
-          width={drawableWidth}
-        />
-      )}
-      <g transform={`translate(0, ${showMoreButtonOffset})`}>
+      <g transform={`translate(0, ${0})`}>
         {positions.map((position) => {
-          const {line, y, row, index} = position;
+          const index = position.index;
           const annotation = annotations[index];
 
-          if (shouldHideAnnotation({row, isShowingAllAnnotations, rowCount})) {
-            return null;
-          }
+          const {line, x, y} = position;
 
           const hasContent = annotation.content != null;
           const isContentVisible = index === activeIndex && hasContent;
@@ -127,11 +95,20 @@ export function Annotations({
 
           return (
             <React.Fragment key={`annotation${index}${annotation.startKey}`}>
+              {position.showYAxisLabel && (
+                <AnnotationYAxisLabel
+                  y={line.y}
+                  label={annotation.startKey}
+                  theme={theme}
+                />
+              )}
               <AnnotationLine
-                size={drawableHeight - showMoreButtonOffset}
+                direction="horizontal"
+                hasCaret={false}
+                size={drawableWidth - (drawableWidth - x)}
                 theme={theme}
                 x={line.x}
-                y={y + PILL_HEIGHT}
+                y={line.y}
               />
               <AnnotationLabel
                 ariaLabel={ariaLabel}
@@ -154,7 +131,7 @@ export function Annotations({
                   position={position}
                   tabIndex={tabIndex}
                   theme={theme}
-                  x={line.x}
+                  x={drawableWidth - (drawableWidth - x)}
                   y={y}
                 />
               )}

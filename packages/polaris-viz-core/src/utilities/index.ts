@@ -18,3 +18,4 @@ export {getRoundedRectPath} from './getRoundedRectPath';
 export {changeColorOpacity, changeGradientOpacity} from './changeColorOpacity';
 export {getAverageColor} from './getAverageColor';
 export {getValueFromXScale} from './getValueFromXScale';
+export {isValueWithinDomain} from './isValueWithinDomain';

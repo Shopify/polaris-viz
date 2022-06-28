@@ -7,6 +7,8 @@ import {
   DEFAULT_THEME_NAME,
 } from '@shopify/polaris-viz-core';
 
+import {useBrowserCheck} from '../../hooks/useBrowserCheck';
+import {TOOLTIP_BG_OPACITY} from '../../constants';
 import {useWatchColorVisionEvents} from '../../hooks';
 import type {TooltipData} from '../../types';
 
@@ -30,6 +32,7 @@ export function TooltipContent({
   title,
 }: TooltipContentProps) {
   const [activeIndex, setActiveIndex] = useState(-1);
+  const {isFirefox} = useBrowserCheck();
 
   const selectedTheme = useTheme(theme);
   const {keyWidth, valueWidth} = useGetLongestLabelFromData(data);
@@ -48,7 +51,7 @@ export function TooltipContent({
       style={{
         background: changeColorOpacity(
           selectedTheme.tooltip.backgroundColor,
-          0.8,
+          isFirefox ? 1 : TOOLTIP_BG_OPACITY,
         ),
         maxWidth:
           PREVIEW_WIDTH +

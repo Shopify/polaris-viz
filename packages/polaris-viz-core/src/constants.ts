@@ -216,8 +216,10 @@ export const DEFAULT_THEME: Theme = {
   annotations: {
     backgroundColor: variables.colorGray140,
     textColor: variables.colorGray30,
-    titleColor: variables.colorGray00,
+    titleColor: variables.colorWhite,
     linkColor: variables.colorBlue40,
+    axisLabelColor: variables.colorGray80,
+    lineColor: variables.colorGray80,
   },
 };
 
@@ -316,10 +318,12 @@ export const LIGHT_THEME: Theme = {
     },
   },
   annotations: {
-    backgroundColor: variables.colorGray30,
-    textColor: variables.colorGray100,
-    titleColor: variables.colorGray130,
-    linkColor: variables.colorBlue110,
+    backgroundColor: variables.colorGray140,
+    textColor: variables.colorGray30,
+    titleColor: variables.colorWhite,
+    linkColor: variables.colorBlue40,
+    axisLabelColor: variables.colorGray70,
+    lineColor: variables.colorGray70,
   },
 };
 

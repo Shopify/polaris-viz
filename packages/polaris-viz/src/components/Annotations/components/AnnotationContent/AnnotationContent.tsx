@@ -1,7 +1,8 @@
-import React, {useLayoutEffect, useState} from 'react';
+import React, {useEffect, useLayoutEffect, useState} from 'react';
 import {createPortal} from 'react-dom';
 import {changeColorOpacity, clamp, useTheme} from '@shopify/polaris-viz-core';
 
+import {TOOLTIP_BG_OPACITY} from '../../../../constants';
 import {useBrowserCheck} from '../../../../hooks/useBrowserCheck';
 import type {Annotation} from '../../../../types';
 import type {AnnotationPosition} from '../../types';
@@ -19,6 +20,8 @@ export interface AnnotationContentProps {
   position: AnnotationPosition;
   tabIndex: number;
   theme: string;
+  x: number;
+  y: number;
 }
 
 export function AnnotationContent({
@@ -27,9 +30,10 @@ export function AnnotationContent({
   index,
   onMouseLeave,
   parentRef,
-  position,
   tabIndex,
   theme,
+  x,
+  y,
 }: AnnotationContentProps) {
   const selectedTheme = useTheme(theme);
   const {isFirefox} = useBrowserCheck();
@@ -41,6 +45,20 @@ export function AnnotationContent({
     setBounds(ref?.getBoundingClientRect());
   }, [ref]);
 
+  useEffect(() => {
+    const tooltip = document.querySelector<HTMLElement>('[data-tooltip]');
+
+    if (tooltip) {
+      tooltip.style.display = 'none';
+    }
+
+    return () => {
+      if (tooltip) {
+        tooltip.style.display = 'block';
+      }
+    };
+  }, []);
+
   if (annotation.content == null) {
     return null;
   }
@@ -48,10 +66,10 @@ export function AnnotationContent({
   const {content, title, linkText = 'Learn more', linkUrl} = annotation.content;
 
   const width = bounds?.width ?? 0;
-  let x = position.line.x - width / 2;
+  let xPosition = x - width / 2;
 
-  if (x + width > drawableWidth) {
-    x = drawableWidth - width;
+  if (xPosition + width > drawableWidth) {
+    xPosition = drawableWidth - width;
   }
 
   return createPortal(
@@ -59,8 +77,8 @@ export function AnnotationContent({
       height="100%"
       width="100%"
       style={{pointerEvents: 'none', overflow: 'visible'}}
-      x={clamp({amount: x, min: 0, max: drawableWidth})}
-      y={position.y}
+      x={clamp({amount: xPosition, min: 0, max: drawableWidth})}
+      y={y}
       parentRef={parentRef}
     >
       <div
@@ -69,12 +87,13 @@ export function AnnotationContent({
         onMouseLeave={onMouseLeave}
         ref={setRef}
         style={{
+          width: 'fit-content',
           maxWidth: Math.min(drawableWidth, MAX_WIDTH),
           // Firefox doesn't support blur so we'll remove
           // the opacity on this element.
           background: changeColorOpacity(
-            selectedTheme.annotations.backgroundColor,
-            isFirefox ? 1 : 0.85,
+            selectedTheme.tooltip.backgroundColor,
+            isFirefox ? 1 : TOOLTIP_BG_OPACITY,
           ),
         }}
         id={`annotation-content-${index}`}

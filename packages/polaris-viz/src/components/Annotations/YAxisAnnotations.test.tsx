@@ -1,30 +1,16 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
-import {scaleBand} from 'd3-scale';
+import {scaleLinear} from 'd3-scale';
 
 import {Annotation} from '../../types';
 import {normalizeData} from '../../utilities/normalizeData';
 
-import {Annotations, AnnotationsProps} from './Annotations';
-import {
-  AnnotationContent,
-  AnnotationLabel,
-  AnnotationLine,
-  ShowMoreAnnotationsButton,
-} from './components';
+import {YAxisAnnotations, YAxisAnnotationsProps} from './YAxisAnnotations';
+import {AnnotationContent, AnnotationLabel, AnnotationLine} from './components';
 
 jest.mock('@shopify/polaris-viz-core/src/utilities', () => ({
   ...jest.requireActual('@shopify/polaris-viz-core/src/utilities'),
   estimateStringWidth: jest.fn(() => 100),
-}));
-
-jest.mock('d3-scale', () => ({
-  ...jest.requireActual('d3-scale'),
-  scaleBand: jest.fn(() => {
-    const scale = (value: any) => Number(value) * 100;
-    scale.bandwidth = (width: any) => 100;
-    return scale;
-  }),
 }));
 
 jest.mock('@shopify/polaris-viz-core/src/hooks/useTheme', () => ({
@@ -49,45 +35,44 @@ jest.mock('@shopify/polaris-viz-core/src/hooks/useTheme', () => ({
 const ANNOTATIONS: Annotation[] = [
   {
     label: 'Annotation 1',
-    startKey: 'Monday',
+    startKey: '0.1',
+    axis: 'y',
   },
   {
     label: 'Annotation 2',
-    startKey: 'Tuesday',
+    startKey: '0.2',
+    axis: 'y',
     content: {
       content: 'Hello Annotation',
     },
   },
   {
     label: 'Annotation 3',
-    startKey: 'Wednesday',
+    startKey: '0.3',
+    axis: 'y',
   },
 ];
 
-const MOCK_PROPS: AnnotationsProps = {
+const MOCK_PROPS: YAxisAnnotationsProps = {
   annotationsLookupTable: normalizeData(ANNOTATIONS, 'startKey'),
-  axisLabelWidth: 50,
   drawableHeight: 200,
   drawableWidth: 600,
-  labels: [
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-    'Sunday',
-  ],
-  onHeightChange: jest.fn(),
   theme: 'Default',
-  xScale: scaleBand(),
+  ticks: [
+    {value: 0, formattedValue: '0', yOffset: 0},
+    {value: 10, formattedValue: '10', yOffset: 10},
+    {value: 20, formattedValue: '20', yOffset: 20},
+    {value: 30, formattedValue: '30', yOffset: 30},
+    {value: 40, formattedValue: '40', yOffset: 40},
+  ],
+  yScale: scaleLinear(),
 };
 
-describe('<Annotations />', () => {
+describe('<YAxisAnnotations />', () => {
   it('renders 3 annotations', () => {
     const component = mount(
       <svg>
-        <Annotations {...MOCK_PROPS} />
+        <YAxisAnnotations {...MOCK_PROPS} />
       </svg>,
     );
 
@@ -95,60 +80,10 @@ describe('<Annotations />', () => {
     expect(component).toContainReactComponentTimes(AnnotationLine, 3);
   });
 
-  it('shows all annotations after <ShowMoreAnnotationsButton /> click', () => {
-    const annotations = normalizeData(
-      [
-        {
-          label: 'Annotation 1',
-          startKey: 'Monday',
-        },
-        {
-          label: 'Annotation 2',
-          startKey: 'Tuesday',
-        },
-        {
-          label: 'Annotation 3',
-          startKey: 'Wednesday',
-        },
-        {
-          label: 'Annotation 4',
-          startKey: 'Thursday',
-        },
-        {
-          label: 'Annotation 5',
-          startKey: 'Friday',
-        },
-        {
-          label: 'Annotation 6',
-          startKey: 'Saturday',
-        },
-      ],
-      'startKey',
-    );
-
-    const component = mount(
-      <svg>
-        <Annotations
-          {...MOCK_PROPS}
-          annotationsLookupTable={annotations}
-          drawableWidth={300}
-        />
-      </svg>,
-    );
-
-    const showMoreButton = component.find(ShowMoreAnnotationsButton);
-
-    expect(component).toContainReactComponentTimes(AnnotationLabel, 3);
-
-    showMoreButton?.trigger('onClick');
-
-    expect(component).toContainReactComponentTimes(AnnotationLabel, 6);
-  });
-
   it('shows content for active annotation', () => {
     const component = mount(
       <svg>
-        <Annotations {...MOCK_PROPS} />
+        <YAxisAnnotations {...MOCK_PROPS} />
       </svg>,
     );
 
@@ -159,16 +94,16 @@ describe('<Annotations />', () => {
     expect(component).toContainReactComponent(AnnotationContent);
   });
 
-  it('filters out y-axis annotations', () => {
+  it('filters out x-axis annotations', () => {
     const annotationsLookupTable = normalizeData(
       [
         {
           label: 'Annotation 1',
-          startKey: 'Monday',
+          startKey: '0.1',
         },
         {
           label: 'Annotation 2',
-          startKey: 'Tuesday',
+          startKey: '0.2',
           axis: 'y',
         },
       ],
@@ -177,7 +112,7 @@ describe('<Annotations />', () => {
 
     const component = mount(
       <svg>
-        <Annotations
+        <YAxisAnnotations
           {...MOCK_PROPS}
           annotationsLookupTable={annotationsLookupTable}
         />
@@ -192,11 +127,13 @@ describe('<Annotations />', () => {
       [
         {
           label: 'Annotation 1',
-          startKey: 'Monday',
+          startKey: '0.1',
+          axis: 'y',
         },
         {
           label: 'Bad Annotation',
-          startKey: 'NoKey',
+          startKey: '20',
+          axis: 'y',
         },
       ],
       'startKey',
@@ -204,7 +141,7 @@ describe('<Annotations />', () => {
 
     const component = mount(
       <svg>
-        <Annotations
+        <YAxisAnnotations
           {...MOCK_PROPS}
           annotationsLookupTable={annotationsLookupTable}
         />

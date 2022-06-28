@@ -14,6 +14,9 @@ jest.mock('@shopify/polaris-viz-core/src/hooks', () => ({
   ...jest.requireActual('@shopify/polaris-viz-core/src/hooks'),
   useTheme: jest.fn(() => {
     return {
+      tooltip: {
+        backgroundColor: 'red',
+      },
       annotations: {
         backgroundColor: 'red',
         textColor: 'red',
@@ -52,6 +55,8 @@ const MOCK_PROPS: AnnotationContentProps = {
   },
   tabIndex: 1,
   theme: 'Default',
+  x: 0,
+  y: 0,
 };
 
 let svg;
@@ -175,7 +180,7 @@ describe('<AnnotationContent />', () => {
     const chart = mount(<AnnotationContent {...MOCK_PROPS} parentRef={svg} />);
 
     expect(chart.find('div')?.prop('style')?.background).toStrictEqual(
-      'rgba(255, 0, 0, 0.85)',
+      'rgba(255, 0, 0, 0.8)',
     );
   });
 

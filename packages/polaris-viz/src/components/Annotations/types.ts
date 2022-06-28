@@ -8,4 +8,5 @@ export interface AnnotationPosition {
   width: number;
   x: number;
   y: number;
+  showYAxisLabel?: boolean;
 }

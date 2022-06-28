@@ -129,10 +129,10 @@ export interface LegendData {
 }
 
 export interface Annotation {
+  axis: 'x' | 'y';
   label: string;
   startKey: string | number;
   endKey?: string | number;
-  axis?: 'x' | 'y';
   collapseButtonText?: string;
   expandButtonText?: string;
   content?: {

@@ -419,46 +419,33 @@ SeriesColorsUpToFourteen.args = {
 
 const ANNOTATIONS: Annotation[] = [
   {
-    startKey: 'Monday',
-    label: 'Content and title',
-    content: {
-      title: 'GDPR rule change',
-      content:
-        'New GDPR rules that prevent the unauthorized tracking of user sessions came into effect on Thursday, June 1.',
-    },
+    startKey: 'Friday',
+    label: 'Big Sale',
+    axis: 'x',
   },
   {
     startKey: 'Wednesday',
-    label: 'Title, content and no link string',
+    label: 'GDPR rule change',
     content: {
       title: 'GDPR rule change',
       content:
         'New GDPR rules that prevent the unauthorized tracking of user sessions came into effect on Thursday, June 1.',
       linkUrl: 'https://shopify.com',
     },
+    axis: 'x',
   },
   {
-    startKey: 'Friday',
-    label: 'Just content',
+    startKey: '30',
+    label: 'Sales target',
+    axis: 'y',
+  },
+  {
+    startKey: '10',
+    label: 'Break-even',
+    axis: 'y',
     content: {
-      content:
-        'New GDPR rules that prevent the unauthorized tracking of user sessions came into effect on Thursday, June 1.',
+      content: 'This is our break-even point. We can sell for $10 per unit.',
     },
-  },
-  {
-    startKey: 'Tuesday',
-    label: 'This has everything',
-    content: {
-      title: 'GDPR rule change',
-      content:
-        'New GDPR rules that prevent the unauthorized tracking of user sessions came into effect on Thursday, June 1.',
-      linkUrl: 'https://shopify.com',
-      linkText: 'Custom link text',
-    },
-  },
-  {
-    startKey: 'Saturday',
-    label: 'No Content',
   },
 ];
 

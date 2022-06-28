@@ -46,7 +46,7 @@ describe('<AnnotationLine />', () => {
       expect(chart).toContainReactComponent('line', {
         x1: 10,
         x2: 10,
-        y1: 20,
+        y1: 24,
         y2: 100,
       });
     });
@@ -61,8 +61,8 @@ describe('<AnnotationLine />', () => {
       expect(chart).toContainReactComponent('line', {
         x1: 10,
         x2: 100,
-        y1: 20,
-        y2: 20,
+        y1: 24,
+        y2: 24,
       });
     });
   });

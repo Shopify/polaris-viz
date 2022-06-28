@@ -11,6 +11,7 @@ import {uniqueId, ChartContext} from '@shopify/polaris-viz-core';
 import type {Dimensions} from '@shopify/polaris-viz-core';
 
 import characterWidths from '../../data/character-widths.json';
+import characterWidthOffsets from '../../data/character-width-offsets.json';
 import {
   useResizeObserver,
   useTheme,
@@ -40,6 +41,7 @@ export const ChartContainer = (props: Props) => {
     return {
       id,
       characterWidths,
+      characterWidthOffsets,
     };
   }, []);
 

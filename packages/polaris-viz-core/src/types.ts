@@ -110,6 +110,8 @@ export interface AnnotationsTheme {
   textColor: string;
   titleColor: string;
   linkColor: string;
+  axisLabelColor: string;
+  lineColor: string;
 }
 
 export interface ChartContainerTheme {
