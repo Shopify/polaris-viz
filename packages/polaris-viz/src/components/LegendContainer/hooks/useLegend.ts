@@ -6,7 +6,6 @@ import type {
   Direction,
 } from '@shopify/polaris-viz-core';
 
-import {DEFAULT_LEGEND_HEIGHT, DEFAULT_LEGEND_WIDTH} from '../../../constants';
 import type {LegendData} from '../../../types';
 
 function getAlteredDimensions(
