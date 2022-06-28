@@ -61,7 +61,7 @@ describe('useLegend()', () => {
           {name: 'Lunch', shape: 'Bar'},
           {name: 'Dinner', shape: 'Bar'},
         ],
-        height: 71,
+        height: 100,
         width: 100,
       });
     });
