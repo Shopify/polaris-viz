@@ -65,9 +65,6 @@ export function Chart({
     colors: seriesColor,
   });
 
-  const diameter = Math.min(height, width);
-  const radius = diameter / 2;
-
   const shouldUseColorVisionEvents = Boolean(width && height);
 
   useColorVisionEvents(shouldUseColorVisionEvents);
@@ -78,6 +75,11 @@ export function Chart({
       setActiveIndex(detail.index);
     },
   });
+
+  if (!width || !height) return null;
+
+  const diameter = Math.min(height, width);
+  const radius = diameter / 2;
 
   const points: DataPoint[] = data.reduce(
     (prev: DataPoint[], {data}) => prev.concat(data),
@@ -92,8 +94,6 @@ export function Chart({
 
   const totalValue =
     total || points.reduce((acc, {value}) => (value ?? 0) + acc, 0);
-
-  if (!width || !height) return null;
 
   return (
     <div className={styles.DonutWrapper}>

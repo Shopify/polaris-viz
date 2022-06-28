@@ -108,7 +108,6 @@ export {
   usePolarisVizContext,
   useYScale,
   useUniqueId,
-  useComponentDidMount,
 } from './hooks';
 export {
   Bar,

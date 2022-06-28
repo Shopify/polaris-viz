@@ -16,5 +16,4 @@ export {
   paddingStringToObject,
   removeFalsyValues,
   useUniqueId,
-  useComponentDidMount,
 } from '@shopify/polaris-viz-core';

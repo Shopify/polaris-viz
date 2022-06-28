@@ -10,7 +10,8 @@ const mockProps: LegendContainerProps = {
     {name: 'Legend One', color: 'red'},
     {name: 'Legend Two', color: 'blue'},
   ],
-  onHeightChange: jest.fn(),
+  onDimensionChange: jest.fn(),
+  theme: 'Default',
 };
 
 jest.mock('../../../hooks/useResizeObserver', () => {
@@ -36,21 +37,5 @@ describe('<LegendContainer />', () => {
       activeIndex: -1,
       colorVisionType: 'someType',
     });
-  });
-
-  it('triggers onHeightChange() on mount with default value', () => {
-    mount(<LegendContainer {...mockProps} />);
-
-    expect(mockProps.onHeightChange).toHaveBeenCalledWith(45);
-  });
-
-  it('triggers onHeightChange() on unmount', () => {
-    const component = mount(<LegendContainer {...mockProps} />);
-
-    jest.resetAllMocks();
-
-    component.unmount();
-
-    expect(mockProps.onHeightChange).toHaveBeenCalledWith(0);
   });
 });
