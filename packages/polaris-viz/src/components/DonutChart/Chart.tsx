@@ -4,8 +4,6 @@ import {
   clamp,
   useTheme,
   COLOR_VISION_SINGLE_ITEM,
-  getColorVisionStylesForActiveIndex,
-  getColorVisionEventAttrs,
   DEFAULT_THEME_NAME,
   useUniqueId,
 } from '@shopify/polaris-viz-core';
@@ -17,7 +15,7 @@ import type {
 } from '@shopify/polaris-viz-core';
 
 import type {ComparisonMetricProps} from '../ComparisonMetric';
-import {LegendContainer} from '../../components/LegendContainer';
+import {LegendContainer, useLegend} from '../../components/LegendContainer';
 import {
   getSeriesColors,
   useColorVisionEvents,
@@ -54,15 +52,22 @@ export function Chart({
 }: ChartProps) {
   const chartId = useUniqueId('Donut');
   const [activeIndex, setActiveIndex] = useState<number>(-1);
-  const {width, height} = dimensions;
-  const drawableHeight = height;
-  const drawableWidth = width - 200;
-
-  const diameter = Math.min(drawableHeight, drawableWidth);
-  const radius = diameter / 2;
   const selectedTheme = useTheme(theme);
 
-  useColorVisionEvents();
+  const seriesCount = clamp({amount: data.length, min: 1, max: Infinity});
+  const seriesColor = getSeriesColors(seriesCount, selectedTheme);
+
+  const {height, width, legend, setLegendDimensions} = useLegend({
+    data: [{series: data, shape: 'Bar'}],
+    dimensions,
+    showLegend,
+    direction: 'vertical',
+    colors: seriesColor,
+  });
+
+  const shouldUseColorVisionEvents = Boolean(width && height);
+
+  useColorVisionEvents(shouldUseColorVisionEvents);
 
   useWatchColorVisionEvents({
     type: COLOR_VISION_SINGLE_ITEM,
@@ -71,8 +76,11 @@ export function Chart({
     },
   });
 
-  const seriesCount = clamp({amount: data.length, min: 1, max: Infinity});
-  const seriesColor = getSeriesColors(seriesCount, selectedTheme);
+  if (!width || !height) return null;
+
+  const diameter = Math.min(height, width);
+  const radius = diameter / 2;
+
   const points: DataPoint[] = data.reduce(
     (prev: DataPoint[], {data}) => prev.concat(data),
     [],
@@ -86,14 +94,6 @@ export function Chart({
 
   const totalValue =
     total || points.reduce((acc, {value}) => (value ?? 0) + acc, 0);
-
-  const legendData = data.map(({name, color, isComparison}, index) => ({
-    name: name ?? '',
-    color: color ?? seriesColor[index],
-    isComparison,
-  }));
-
-  if (!width || !height) return null;
 
   return (
     <div className={styles.DonutWrapper}>
@@ -127,20 +127,11 @@ export function Chart({
                       className={styles.DonutChart}
                       aria-label={accessibilityLabel}
                       role="img"
-                      style={{
-                        ...getColorVisionStylesForActiveIndex({
-                          activeIndex,
-                          index,
-                        }),
-                      }}
-                      {...getColorVisionEventAttrs({
-                        type: COLOR_VISION_SINGLE_ITEM,
-                        index,
-                      })}
                     >
                       <Arc
                         isAnimated={isAnimated}
                         index={index}
+                        activeIndex={activeIndex}
                         width={diameter}
                         height={diameter}
                         radius={radius}
@@ -174,10 +165,11 @@ export function Chart({
           }}
         >
           <LegendContainer
-            onHeightChange={() => {}}
+            onDimensionChange={setLegendDimensions}
             colorVisionType={COLOR_VISION_SINGLE_ITEM}
-            data={legendData}
+            data={legend}
             theme={theme}
+            direction="vertical"
           />
         </div>
       )}

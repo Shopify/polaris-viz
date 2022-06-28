@@ -1,18 +1,25 @@
 import {useMemo, useState} from 'react';
-import type {Color, Dimensions, DataGroup} from '@shopify/polaris-viz-core';
+import type {
+  Color,
+  Dimensions,
+  DataGroup,
+  Direction,
+} from '@shopify/polaris-viz-core';
 
-import {DEFAULT_LEGEND_HEIGHT} from '../../../constants';
 import type {LegendData} from '../../../types';
 
 function getAlteredDimensions(
   dimensions: Dimensions | undefined,
   legendsHeight: number,
+  legendsWidth: number,
+  direction: Direction,
 ) {
   const {width, height} = dimensions ?? {width: 0, height: 0};
+  const isHorizontal = direction === 'horizontal';
 
   return {
-    height: height - legendsHeight,
-    width,
+    height: isHorizontal ? height - legendsHeight : height,
+    width: !isHorizontal ? width - legendsWidth : width,
   };
 }
 
@@ -21,6 +28,7 @@ export interface Props {
   data: DataGroup[];
   colors?: Color[];
   dimensions?: Dimensions;
+  direction?: Direction;
 }
 
 export function useLegend({
@@ -28,10 +36,12 @@ export function useLegend({
   data,
   dimensions = {height: 0, width: 0},
   showLegend,
+  direction = 'horizontal',
 }: Props) {
-  const [legendHeight, setLegendHeight] = useState(
-    showLegend ? DEFAULT_LEGEND_HEIGHT : 0,
-  );
+  const [legendDimensions, setLegendDimensions] = useState({
+    height: 0,
+    width: 0,
+  });
 
   const legend: LegendData[] = useMemo(() => {
     if (showLegend === false) {
@@ -62,8 +72,19 @@ export function useLegend({
       return dimensions;
     }
 
-    return getAlteredDimensions(dimensions, legendHeight);
-  }, [showLegend, dimensions, legendHeight]);
+    return getAlteredDimensions(
+      dimensions,
+      legendDimensions.height,
+      legendDimensions.width,
+      direction,
+    );
+  }, [
+    showLegend,
+    dimensions,
+    legendDimensions.height,
+    legendDimensions.width,
+    direction,
+  ]);
 
-  return {legend, setLegendHeight, height, width};
+  return {legend, height, width, setLegendDimensions};
 }

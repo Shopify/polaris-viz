@@ -88,7 +88,7 @@ export function Chart({
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
   const [labelHeight, setLabelHeight] = useState(0);
 
-  const {legend, setLegendHeight, height, width} = useLegend({
+  const {legend, setLegendDimensions, height, width} = useLegend({
     colors: seriesColors,
     data: [
       {
@@ -315,7 +315,7 @@ export function Chart({
         <LegendContainer
           colorVisionType={COLOR_VISION_SINGLE_ITEM}
           data={legend}
-          onHeightChange={setLegendHeight}
+          onDimensionChange={setLegendDimensions}
           theme={theme}
         />
       )}

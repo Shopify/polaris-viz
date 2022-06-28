@@ -1,3 +1,5 @@
+import {request} from 'https';
+
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
@@ -49,15 +51,22 @@ describe('<DonutChart />', () => {
 
     it('renders an SVG element', () => {
       const chart = mount(<DonutChart {...mockProps} />);
-
-      expect(chart).toContainReactComponent('svg');
+      chart.act(() => {
+        requestAnimationFrame(() => {
+          expect(chart).toContainReactComponent('svg');
+        });
+      });
     });
 
     it('renders total value', () => {
       const chart = mount(<DonutChart {...mockProps} />);
 
-      expect(chart).toContainReactComponent(InnerValue, {
-        totalValue: valueSum,
+      chart.act(() => {
+        requestAnimationFrame(() => {
+          expect(chart).toContainReactComponent(InnerValue, {
+            totalValue: valueSum,
+          });
+        });
       });
     });
 
@@ -67,28 +76,44 @@ describe('<DonutChart />', () => {
           <DonutChart {...mockProps} comparisonMetric={undefined} />,
         );
 
-        expect(chart).not.toContainReactComponent(ComparisonMetric);
+        chart.act(() => {
+          requestAnimationFrame(() => {
+            expect(chart).not.toContainReactComponent(ComparisonMetric);
+          });
+        });
       });
 
       it('renders if comparisonMetric is provided', () => {
         const chart = mount(<DonutChart {...mockProps} />);
 
-        expect(chart).toContainReactComponent(
-          ComparisonMetric,
-          mockProps.comparisonMetric,
-        );
+        chart.act(() => {
+          requestAnimationFrame(() => {
+            expect(chart).toContainReactComponent(
+              ComparisonMetric,
+              mockProps.comparisonMetric,
+            );
+          });
+        });
       });
     });
 
     describe('empty state', () => {
       it('renders single <Arc /> when true', () => {
         const chart = mount(<DonutChart {...mockProps} data={[]} />);
-        expect(chart).toContainReactComponentTimes(Arc, 1);
+        chart.act(() => {
+          requestAnimationFrame(() => {
+            expect(chart).toContainReactComponentTimes(Arc, 1);
+          });
+        });
       });
 
       it('renders multiple <Arc /> when false', () => {
         const chart = mount(<DonutChart {...mockProps} />);
-        expect(chart).toContainReactComponentTimes(Arc, 4);
+        chart.act(() => {
+          requestAnimationFrame(() => {
+            expect(chart).toContainReactComponentTimes(Arc, 4);
+          });
+        });
       });
     });
   });

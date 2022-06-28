@@ -92,7 +92,7 @@ export function Chart({
   const [activeLineIndex, setActiveLineIndex] = useState(-1);
   const [labelHeight, setLabelHeight] = useState(0);
 
-  const {legend, setLegendHeight, height, width} = useLegend({
+  const {legend, setLegendDimensions, height, width} = useLegend({
     data: [
       {
         shape: 'Line',
@@ -366,7 +366,7 @@ export function Chart({
         <LegendContainer
           colorVisionType={COLOR_VISION_SINGLE_ITEM}
           data={legend}
-          onHeightChange={setLegendHeight}
+          onDimensionChange={setLegendDimensions}
           theme={theme}
         />
       )}
