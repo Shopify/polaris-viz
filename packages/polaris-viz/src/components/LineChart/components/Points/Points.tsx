@@ -14,7 +14,7 @@ import type {LineChartDataSeriesWithDefaults} from '@shopify/polaris-viz-core';
 
 import {useTheme, useWatchColorVisionEvents} from '../../../../hooks';
 import {Point} from '../../../Point';
-import type {AnimatedCoordinate} from '../../../../types';
+import type {AnimatedCoordinate,} from '../../../../types';
 
 interface PointsProps {
   activeIndex: number | null;

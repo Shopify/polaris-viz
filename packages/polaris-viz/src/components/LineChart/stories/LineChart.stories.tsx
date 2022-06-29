@@ -9,11 +9,12 @@ import {
   RENDER_TOOLTIP_DESCRIPTION,
   THEME_CONTROL_ARGS,
   CHART_STATE_CONTROL_ARGS,
+  ANNOTATIONS_ARGS,
 } from '../../../storybook';
 
 import {generateMultipleSeries} from '../../Docs/utilities';
 import {PageWithSizingInfo} from '../../Docs/stories/components/PageWithSizingInfo';
-import type {RenderTooltipContentData} from '../../../types';
+import type {Annotation, RenderTooltipContentData} from '../../../types';
 
 const TOOLTIP_CONTENT = {
   empty: undefined,
@@ -60,6 +61,7 @@ export default {
     },
   },
   argTypes: {
+    annotations: ANNOTATIONS_ARGS,
     data: {
       description:
         'A collection of named data sets to be rendered in the chart. An optional color can be provided for each series, to overwrite the theme `seriesColors` defined in `PolarisVizProvider`',
@@ -101,6 +103,15 @@ export default {
     showLegend: LEGEND_CONTROL_ARGS,
   },
 } as Meta;
+
+///
+const DEFAULT_PROPS = {
+  data,
+  skipLinkText: 'Skip chart content',
+  yAxisOptions: {labelFormatter: formatYAxisLabel},
+  isAnimated: true,
+};
+///
 
 const Template: Story<LineChartProps> = (args: LineChartProps) => {
   return <LineChart {...args} />;
@@ -222,4 +233,25 @@ export const SeriesColorsUpToFourteen: Story<LineChartProps> = Template.bind(
 
 SeriesColorsUpToFourteen.args = {
   data: generateMultipleSeries(14),
+};
+
+const ANNOTATIONS: Annotation[] = [
+  {
+    startKey: '2020-04-01T12:00:00',
+    label: 'Sales increase',
+  },
+  {
+    startKey: '2020-04-06T12:00:00',
+    label: 'Super Big Sale',
+    content: {
+      content: 'We ran a massive sale on our products. We made a lot of money!',
+    },
+  },
+];
+
+export const Annotations: Story<LineChartProps> = Template.bind({});
+
+Annotations.args = {
+  ...DEFAULT_PROPS,
+  annotations: ANNOTATIONS,
 };

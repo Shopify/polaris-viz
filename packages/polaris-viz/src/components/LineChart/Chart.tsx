@@ -19,7 +19,8 @@ import type {
   YAxisOptions,
 } from '@shopify/polaris-viz-core';
 
-import type {RenderTooltipContentData} from '../../types';
+import {Annotations} from '../Annotations';
+import type {RenderTooltipContentData, AnnotationLookupTable} from '../../types';
 import {useXAxisLabels} from '../../hooks/useXAxisLabels';
 import {LinearXAxisLabels} from '../LinearXAxisLabels';
 import {useLegend, LegendContainer} from '../LegendContainer';
@@ -51,14 +52,16 @@ import {HorizontalGridLines} from '../HorizontalGridLines';
 
 import {useLineChartTooltipContent} from './hooks/useLineChartTooltipContent';
 import {Points} from './components';
-import {MAX_ANIMATED_SERIES_LENGTH, MIN_Y_LABEL_SPACE} from './constants';
+import {MAX_ANIMATED_SERIES_LENGTH, MIN_Y_LABEL_SPACE,} from './constants';
 import {useFormatData} from './hooks';
 import styles from './Chart.scss';
 import {yAxisMinMax} from './utilities';
+import {ANNOTATIONS_LABELS_OFFSET} from '../../constants';
 
 export interface ChartProps {
   isAnimated: boolean;
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
+  annotationsLookupTable: AnnotationLookupTable;
   data: LineChartDataSeriesWithDefaults[];
   showLegend: boolean;
   xAxisOptions: Required<XAxisOptions>;
@@ -75,6 +78,7 @@ const TOOLTIP_POSITION = {
 
 export function Chart({
   data,
+  annotationsLookupTable,
   dimensions,
   renderTooltipContent,
   showLegend = true,
@@ -91,6 +95,7 @@ export function Chart({
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [activeLineIndex, setActiveLineIndex] = useState(-1);
   const [labelHeight, setLabelHeight] = useState(0);
+  const [annotationsHeight, setAnnotationsHeight] = useState(0);
 
   const {legend, setLegendHeight, height, width} = useLegend({
     data: [
@@ -117,8 +122,13 @@ export function Chart({
   const emptyState =
     data.length === 0 || data.every((series) => series.data.length === 0);
 
+  const chartYPosition = (Margin.Top as number) + annotationsHeight;
+
   const drawableHeight =
-    height - labelHeight - LABEL_AREA_TOP_SPACING - Margin.Top;
+    height - labelHeight - LABEL_AREA_TOP_SPACING - chartYPosition;
+
+  const annotationsDrawableHeight =
+      chartYPosition + drawableHeight + ANNOTATIONS_LABELS_OFFSET;
 
   const {minY, maxY} = yAxisMinMax(data);
 
@@ -241,8 +251,10 @@ export function Chart({
     width,
     height,
     x: chartStartPosition,
-    y: Margin.Top,
+    y: chartYPosition,
   };
+
+  const hasAnnotations = Object.keys(annotationsLookupTable).length > 0;
 
   return (
     <div className={styles.Container} style={{width, height}}>
@@ -261,7 +273,7 @@ export function Chart({
             chartHeight={height}
             chartX={chartStartPosition - xAxisDetails.labelWidth / 2}
             chartY={
-              drawableHeight + LABEL_AREA_TOP_SPACING + (Margin.Top as number)
+              drawableHeight + LABEL_AREA_TOP_SPACING + chartYPosition
             }
             labels={labels}
             labelWidth={xAxisDetails.labelWidth}
@@ -279,7 +291,7 @@ export function Chart({
             theme={theme}
             transform={{
               x: selectedTheme.grid.horizontalOverflow ? 0 : chartStartPosition,
-              y: Margin.Top,
+              y: chartYPosition,
             }}
             width={
               selectedTheme.grid.horizontalOverflow ? width : drawableWidth
@@ -287,7 +299,7 @@ export function Chart({
           />
         ) : null}
 
-        <g transform={`translate(0,${Margin.Top})`}>
+        <g transform={`translate(0,${chartYPosition})`}>
           <YAxis
             ticks={ticks}
             width={yAxisLabelWidth}
@@ -298,7 +310,7 @@ export function Chart({
         </g>
 
         {emptyState ? null : (
-          <g transform={`translate(${chartStartPosition},${Margin.Top})`}>
+          <g transform={`translate(${chartStartPosition},${chartYPosition})`}>
             <Crosshair
               x={getXPosition({isCrosshair: true})}
               height={drawableHeight}
@@ -316,7 +328,8 @@ export function Chart({
           />
         )}
 
-        <g transform={`translate(${chartStartPosition},${Margin.Top})`}>
+
+        <g transform={`translate(${chartStartPosition},${chartYPosition})`}>
           {reversedSeries.map((singleSeries, index) => {
             return (
               <LineSeries
@@ -333,6 +346,27 @@ export function Chart({
               />
             );
           })}
+
+      {hasAnnotations && (
+          <g
+            transform={`translate(${
+              chartStartPosition - xAxisDetails.labelWidth / 2
+            },0)`}
+            tabIndex={-1}
+          >
+            <Annotations
+              annotationsLookupTable={annotationsLookupTable}
+              axisLabelWidth={xAxisDetails.labelWidth}
+              drawableHeight={annotationsDrawableHeight}
+              drawableWidth={drawableWidth}
+              labels={labels}
+              onHeightChange={setAnnotationsHeight}
+              theme={theme}
+              xScale={xScale}
+            />
+          </g>
+        )}
+
 
           <Points
             activeIndex={emptyState ? null : activeIndex}
