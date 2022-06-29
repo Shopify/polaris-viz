@@ -37,7 +37,7 @@
     "clean": "rimraf ./packages/*/build ./packages/*/*.{d.ts,js,esnext,mjs} .loom",
     "prebuild-consumer": "yarn run build",
     "build-consumer": "node ./scripts/build-consumer",
-    "build-storybook": "build-storybook -o docs-build  -s public",
+    "build-storybook": "build-storybook -o docs-build -s public",
     "add:story": "node ./.storybook/cli.js",
     "prepublish": "in-publish && yarn run build || :",
     "prebuild": "yarn run clean",
