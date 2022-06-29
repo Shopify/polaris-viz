@@ -20,7 +20,10 @@ import type {
 } from '@shopify/polaris-viz-core';
 
 import {Annotations} from '../Annotations';
-import type {RenderTooltipContentData, AnnotationLookupTable} from '../../types';
+import type {
+  RenderTooltipContentData,
+  AnnotationLookupTable,
+} from '../../types';
 import {useXAxisLabels} from '../../hooks/useXAxisLabels';
 import {LinearXAxisLabels} from '../LinearXAxisLabels';
 import {useLegend, LegendContainer} from '../LegendContainer';
@@ -52,7 +55,7 @@ import {HorizontalGridLines} from '../HorizontalGridLines';
 
 import {useLineChartTooltipContent} from './hooks/useLineChartTooltipContent';
 import {Points} from './components';
-import {MAX_ANIMATED_SERIES_LENGTH, MIN_Y_LABEL_SPACE,} from './constants';
+import {MAX_ANIMATED_SERIES_LENGTH, MIN_Y_LABEL_SPACE} from './constants';
 import {useFormatData} from './hooks';
 import styles from './Chart.scss';
 import {yAxisMinMax} from './utilities';
@@ -128,7 +131,7 @@ export function Chart({
     height - labelHeight - LABEL_AREA_TOP_SPACING - chartYPosition;
 
   const annotationsDrawableHeight =
-      chartYPosition + drawableHeight + ANNOTATIONS_LABELS_OFFSET;
+    chartYPosition + drawableHeight + ANNOTATIONS_LABELS_OFFSET;
 
   const {minY, maxY} = yAxisMinMax(data);
 
@@ -272,9 +275,7 @@ export function Chart({
           <LinearXAxisLabels
             chartHeight={height}
             chartX={chartStartPosition - xAxisDetails.labelWidth / 2}
-            chartY={
-              drawableHeight + LABEL_AREA_TOP_SPACING + chartYPosition
-            }
+            chartY={drawableHeight + LABEL_AREA_TOP_SPACING + chartYPosition}
             labels={labels}
             labelWidth={xAxisDetails.labelWidth}
             onHeightChange={setLabelHeight}
@@ -328,26 +329,7 @@ export function Chart({
           />
         )}
 
-
-        <g transform={`translate(${chartStartPosition},${chartYPosition})`}>
-          {reversedSeries.map((singleSeries, index) => {
-            return (
-              <LineSeries
-                activeLineIndex={activeLineIndex}
-                data={singleSeries}
-                index={reversedSeries.length - 1 - index}
-                isAnimated={isAnimated}
-                key={`${name}-${index}`}
-                svgDimensions={{height: drawableHeight, width: drawableWidth}}
-                theme={theme}
-                xScale={xScale}
-                yScale={yScale}
-                type="default"
-              />
-            );
-          })}
-
-      {hasAnnotations && (
+        {hasAnnotations && (
           <g
             transform={`translate(${
               chartStartPosition - xAxisDetails.labelWidth / 2
@@ -367,6 +349,23 @@ export function Chart({
           </g>
         )}
 
+        <g transform={`translate(${chartStartPosition},${chartYPosition})`}>
+          {reversedSeries.map((singleSeries, index) => {
+            return (
+              <LineSeries
+                activeLineIndex={activeLineIndex}
+                data={singleSeries}
+                index={reversedSeries.length - 1 - index}
+                isAnimated={isAnimated}
+                key={`${name}-${index}`}
+                svgDimensions={{height: drawableHeight, width: drawableWidth}}
+                theme={theme}
+                xScale={xScale}
+                yScale={yScale}
+                type="default"
+              />
+            );
+          })}
 
           <Points
             activeIndex={emptyState ? null : activeIndex}

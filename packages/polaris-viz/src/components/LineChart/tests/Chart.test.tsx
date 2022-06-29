@@ -69,7 +69,7 @@ jest.mock('../../../utilities', () => {
     getPathLength: () => 0,
     getPointAtLength: () => ({x: 0, y: 0}),
     eventPointNative: () => {
-      return {clientX: 0, clientY: 0, svgX: 0, svgY: 0};
+      return {clientX: 200, clientY: 200, svgX: 200, svgY: 200};
     },
   };
 });
@@ -119,7 +119,6 @@ describe('<Chart />', () => {
     const chart = mount(<Chart {...MOCK_PROPS} />);
 
     triggerSVGMouseMove(chart);
-    // console.log(chart.find(Crosshair))
 
     expect(chart.find(Crosshair)).toHaveReactProps({opacity: 1});
   });
@@ -201,9 +200,9 @@ describe('<Chart />', () => {
     expect(chart).not.toContainReactComponent(TooltipAnimatedContainer);
 
     triggerSVGMouseMove(chart);
-    // console.log(chart.debug())
+
     const tooltipContainer = chart.find(TooltipAnimatedContainer)!;
-    // console.log(chart.find(TooltipAnimatedContainer))
+
     expect(tooltipContainer).toContainReactText('Mock Tooltip');
   });
 
