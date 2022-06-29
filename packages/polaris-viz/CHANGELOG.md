@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Added
+
+- Added `annotations` to `StackedAreaChartProps`.
+
 ### Changed
 
 - Sped up `<BarChart/>` animations for large, single series data sets.

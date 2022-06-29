@@ -65,7 +65,7 @@ jest.mock('../../../utilities', () => {
     getPathLength: () => 0,
     getPointAtLength: () => ({x: 0, y: 0}),
     eventPointNative: () => {
-      return {clientX: 0, clientY: 0, svgX: 0, svgY: 0};
+      return {clientX: 200, clientY: 100, svgX: 200, svgY: 100};
     },
   };
 });
@@ -311,7 +311,7 @@ describe('<Chart />', () => {
           />,
         );
 
-        const pointColor = chart.find(Point).prop('color');
+        const pointColor = chart.find(Point)?.prop('color');
 
         expect(pointColor).toContain('url(#lineChartGradient-');
       });

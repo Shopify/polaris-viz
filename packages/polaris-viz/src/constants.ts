@@ -70,3 +70,4 @@ export const DEFAULT_LEGEND_WIDTH = 29;
 export const LEGENDS_TOP_MARGIN = 16;
 export const PREVIEW_ICON_SIZE = 12;
 export const BAR_CONTAINER_TEXT_HEIGHT = 48;
+export const ANNOTATIONS_LABELS_OFFSET = 10;

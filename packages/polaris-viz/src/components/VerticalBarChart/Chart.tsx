@@ -18,7 +18,7 @@ import type {
   YAxisOptions,
 } from '@shopify/polaris-viz-core';
 
-import {PILL_HEIGHT, Annotations} from '../Annotations';
+import {Annotations} from '../Annotations';
 import type {
   RenderTooltipContentData,
   AnnotationLookupTable,
@@ -28,6 +28,7 @@ import {BarChartXAxisLabels} from '../BarChartXAxisLabels';
 import {LegendContainer, useLegend} from '../LegendContainer';
 import {GradientDefs} from '../shared';
 import {
+  ANNOTATIONS_LABELS_OFFSET,
   BarChartMargin as Margin,
   LABEL_AREA_TOP_SPACING,
   XMLNS,
@@ -61,8 +62,6 @@ import {BarGroup, StackedBarGroups} from './components';
 import {useXScale} from './hooks';
 import {MIN_Y_LABEL_SPACE} from './constants';
 import styles from './Chart.scss';
-
-const ANNOTATIONS_LABELS_OFFSET = 10;
 
 export interface Props {
   data: DataSeries[];
@@ -99,7 +98,7 @@ export function Chart({
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
   const id = useMemo(() => uniqueId('VerticalBarChart'), []);
   const [labelHeight, setLabelHeight] = useState(0);
-  const [annotationsHeight, setAnnotationsHeight] = useState(PILL_HEIGHT);
+  const [annotationsHeight, setAnnotationsHeight] = useState(0);
 
   useWatchColorVisionEvents({
     type: COLOR_VISION_GROUP_ITEM,
@@ -130,12 +129,9 @@ export function Chart({
     dataLength: data[0] ? data[0].data.length : 0,
   });
 
+  const chartYPosition = (Margin.Top as number) + annotationsHeight;
   const drawableHeight =
-    height -
-    annotationsHeight -
-    labelHeight -
-    LABEL_AREA_TOP_SPACING -
-    Margin.Top;
+    height - chartYPosition - labelHeight - LABEL_AREA_TOP_SPACING;
 
   const {min, max} = getStackedMinMax({
     stackedValues,
@@ -165,7 +161,6 @@ export function Chart({
   const horizontalMargin = selectedTheme.grid.horizontalMargin;
   const chartXPosition =
     yAxisLabelWidth + Y_AXIS_CHART_SPACING + horizontalMargin;
-  const chartYPosition = (Margin.Top as number) + annotationsHeight;
   const drawableWidth = width - chartXPosition - horizontalMargin * 2;
   const annotationsDrawableHeight =
     chartYPosition + drawableHeight + ANNOTATIONS_LABELS_OFFSET;
@@ -340,6 +335,7 @@ export function Chart({
           <g transform={`translate(${chartXPosition},0)`} tabIndex={-1}>
             <Annotations
               annotationsLookupTable={annotationsLookupTable}
+              axisLabelWidth={xScale.bandwidth()}
               drawableHeight={annotationsDrawableHeight}
               drawableWidth={drawableWidth}
               labels={labels}

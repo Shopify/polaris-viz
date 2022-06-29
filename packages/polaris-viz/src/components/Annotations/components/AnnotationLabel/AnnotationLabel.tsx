@@ -9,6 +9,7 @@ import styles from './AnnotationLabel.scss';
 
 export interface AnnotationLabelProps {
   ariaLabel: string;
+  hasContent: boolean;
   index: number;
   isVisible: boolean;
   label: string;
@@ -23,6 +24,7 @@ const CONTENT_LINE_OFFSET = 3;
 
 export function AnnotationLabel({
   ariaLabel,
+  hasContent,
   index,
   isVisible,
   label,
@@ -58,15 +60,17 @@ export function AnnotationLabel({
         x={PILL_PADDING}
       />
       <React.Fragment>
-        <line
-          x1={PILL_PADDING}
-          x2={width - PILL_PADDING}
-          y1={PILL_HEIGHT - CONTENT_LINE_OFFSET}
-          y2={PILL_HEIGHT - CONTENT_LINE_OFFSET}
-          stroke={selectedTheme.annotations.textColor}
-          strokeDasharray="1, 3"
-          strokeWidth={1}
-        />
+        {hasContent && (
+          <line
+            x1={PILL_PADDING}
+            x2={width - PILL_PADDING}
+            y1={PILL_HEIGHT - CONTENT_LINE_OFFSET}
+            y2={PILL_HEIGHT - CONTENT_LINE_OFFSET}
+            stroke={selectedTheme.annotations.textColor}
+            strokeDasharray="1, 3"
+            strokeWidth={1}
+          />
+        )}
         <foreignObject
           height={PILL_HEIGHT}
           width={width}

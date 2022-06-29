@@ -15,6 +15,7 @@ import {
 import {mountWithProvider, triggerSVGMouseMove} from '../../../test-utilities';
 import {StackedAreas} from '../components';
 import {Chart, Props} from '../Chart';
+import {Annotations} from '../../Annotations';
 
 jest.mock('@shopify/polaris-viz-core/src/utilities/estimateStringWidth', () => {
   return {
@@ -28,7 +29,7 @@ jest.mock('../../../utilities', () => {
     getPathLength: () => 0,
     getPointAtLength: jest.fn(() => ({x: 0, y: 0})),
     eventPointNative: () => {
-      return {clientX: 0, clientY: 0, svgX: 0, svgY: 0};
+      return {clientX: 100, clientY: 100, svgX: 100, svgY: 100};
     },
   };
 });
@@ -43,6 +44,7 @@ describe('<Chart />', () => {
   });
 
   const mockProps: Props = {
+    annotationsLookupTable: {},
     data: [
       {
         name: 'Asia',
@@ -66,13 +68,14 @@ describe('<Chart />', () => {
       labelFormatter: (value) => `Day ${value}`,
     },
     yAxisOptions: {
-      labelFormatter: (value) => value.toString(),
+      labelFormatter: (value) => `${value}`,
       integersOnly: false,
     },
     dimensions: {width: 500, height: 250},
     isAnimated: true,
     renderTooltipContent: jest.fn(() => <p>Mock Tooltip Content</p>),
     showLegend: false,
+    theme: 'Default',
   };
 
   it('renders an SVG', () => {
@@ -216,6 +219,26 @@ describe('<Chart />', () => {
       const chart = mount(<Chart {...mockProps} showLegend />);
 
       expect(chart).toContainReactComponent(LegendContainer);
+    });
+  });
+
+  describe('annotationsLookupTable', () => {
+    it('does not render <Annotations /> when false', () => {
+      const chart = mount(<Chart {...mockProps} />);
+      const group = chart.find('g');
+
+      expect(chart).not.toContainReactComponent(Annotations);
+
+      expect(group?.props.transform).toStrictEqual('translate(16,236)');
+    });
+
+    it('renders <LegendContainer /> when true', () => {
+      const chart = mount(<Chart {...mockProps} showLegend />);
+      const group = chart.find('g');
+
+      expect(chart).not.toContainReactComponent(Annotations);
+
+      expect(group?.props.transform).toStrictEqual('translate(16,191)');
     });
   });
 });

@@ -146,3 +146,20 @@ export interface Annotation {
 export interface AnnotationLookupTable {
   [key: number]: Annotation;
 }
+
+export type GetXPosition = ({
+  isCrosshair,
+  index,
+}?: {
+  isCrosshair: boolean;
+  index: number | null;
+}) =>
+  | number
+  | Interpolation<
+      | DOMPoint
+      | {
+          x: number;
+          y: number;
+        },
+      number
+    >;

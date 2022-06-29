@@ -14,6 +14,7 @@ import {
   THEME_CONTROL_ARGS,
   TYPE_CONTROL_ARGS,
   CHART_STATE_CONTROL_ARGS,
+  ANNOTATIONS_ARGS,
 } from '../../../storybook';
 
 import {generateMultipleSeries} from '../../Docs/utilities';
@@ -153,9 +154,7 @@ export default {
   },
   decorators: [(Story) => <div style={{height: '500px'}}>{Story()}</div>],
   argTypes: {
-    annotations: {
-      description: 'An array of annotations to show on the chart.',
-    },
+    annotations: ANNOTATIONS_ARGS,
     data: {
       description:
         'A collection of named data sets to be rendered in the chart. An optional color can be provided for each series, to overwrite the theme `seriesColors` defined in `PolarisVizProvider`',
