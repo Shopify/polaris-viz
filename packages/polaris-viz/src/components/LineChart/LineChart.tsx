@@ -18,6 +18,7 @@ import {
 import {
   getXAxisOptionsWithDefaults,
   getYAxisOptionsWithDefaults,
+  normalizeData,
 } from '../../utilities';
 import {ChartContainer} from '../../components/ChartContainer';
 import {ChartSkeleton} from '../../components/ChartSkeleton';
@@ -28,11 +29,12 @@ import {
   usePrefersReducedMotion,
   useTheme,
 } from '../../hooks';
-import type {TooltipOptions} from '../../types';
+import type {Annotation, TooltipOptions} from '../../types';
 
 import {Chart} from './Chart';
 
 export type LineChartProps = {
+  annotations?: Annotation[];
   state?: ChartState;
   errorText?: string;
   emptyStateText?: string;
@@ -45,6 +47,7 @@ export type LineChartProps = {
 
 export function LineChart(props: LineChartProps) {
   const {
+    annotations = [],
     data,
     state,
     errorText,
@@ -71,6 +74,7 @@ export function LineChart(props: LineChartProps) {
   const yAxisOptionsWithDefaults = getYAxisOptionsWithDefaults(yAxisOptions);
 
   const renderTooltip = useRenderTooltipContent({tooltipOptions, theme, data});
+  const annotationsLookupTable = normalizeData(annotations, 'startKey');
 
   const getOpacityByDataLength = (dataLength: number) => {
     if (dataLength <= 4) {
@@ -123,6 +127,7 @@ export function LineChart(props: LineChartProps) {
           <ChartSkeleton state={state} errorText={errorText} theme={theme} />
         ) : (
           <Chart
+            annotationsLookupTable={annotationsLookupTable}
             data={dataWithDefaults}
             xAxisOptions={xAxisOptionsWithDefaults}
             yAxisOptions={yAxisOptionsWithDefaults}
