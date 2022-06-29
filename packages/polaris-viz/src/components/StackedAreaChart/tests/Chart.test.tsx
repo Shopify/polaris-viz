@@ -16,6 +16,7 @@ import {mountWithProvider, triggerSVGMouseMove} from '../../../test-utilities';
 import {StackedAreas} from '../components';
 import {Chart, Props} from '../Chart';
 import {Annotations} from '../../Annotations';
+import {normalizeData} from '../../../utilities';
 
 jest.mock('@shopify/polaris-viz-core/src/utilities/estimateStringWidth', () => {
   return {
@@ -223,7 +224,7 @@ describe('<Chart />', () => {
   });
 
   describe('annotationsLookupTable', () => {
-    it('does not render <Annotations /> when false', () => {
+    it('does not render <Annotations /> when empty', () => {
       const chart = mount(<Chart {...mockProps} />);
       const group = chart.find('g');
 
@@ -232,13 +233,28 @@ describe('<Chart />', () => {
       expect(group?.props.transform).toStrictEqual('translate(16,236)');
     });
 
-    it('renders <LegendContainer /> when true', () => {
-      const chart = mount(<Chart {...mockProps} showLegend />);
+    it('renders <Annotations /> when provided', () => {
+      const annotationsLookupTable = normalizeData(
+        [
+          {
+            startKey: '1',
+            label: 'Sales increase',
+          },
+        ],
+        'startKey',
+      );
+
+      const chart = mount(
+        <Chart
+          {...mockProps}
+          annotationsLookupTable={annotationsLookupTable}
+        />,
+      );
       const group = chart.find('g');
 
-      expect(chart).not.toContainReactComponent(Annotations);
+      expect(chart).toContainReactComponent(Annotations);
 
-      expect(group?.props.transform).toStrictEqual('translate(16,191)');
+      expect(group?.props.transform).toStrictEqual('translate(16,236)');
     });
   });
 });
