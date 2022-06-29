@@ -14,6 +14,17 @@
   transition: background 0.3s, box-shadow 0.3s;
   margin-top: -1px; // fix background bleeding on border radius
   min-height: 89px; // always be 2 lines of description high
+
+  button {
+    background: none;
+    appearance: none;
+    color: inherit;
+    border: none;
+    outline: none;
+    text-align: inherit;
+    font-size: inherit;
+    cursor: pointer;
+  }
 }
 
 .HasLink {

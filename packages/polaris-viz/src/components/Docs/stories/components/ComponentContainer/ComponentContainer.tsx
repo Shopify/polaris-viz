@@ -1,6 +1,7 @@
 import React from 'react';
 import {Source} from '@storybook/addon-docs';
-import LinkTo from '@storybook/addon-links/react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import {linkTo} from '@storybook/addon-links';
 import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 import {classNames} from '../../../../../utilities';
@@ -51,6 +52,7 @@ export function ComponentContainer({
       </div>
     </React.Fragment>
   );
+
   return (
     <div
       className={styles.Container}
@@ -67,9 +69,9 @@ export function ComponentContainer({
         }}
       >
         {kind ? (
-          <LinkTo kind={kind} story={title}>
+          <button onClick={linkTo(`${kind} + ${title}`, 'Default')}>
             {cardTopMarkup}
-          </LinkTo>
+          </button>
         ) : (
           cardTopMarkup
         )}
