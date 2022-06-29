@@ -104,14 +104,12 @@ export default {
   },
 } as Meta;
 
-///
 const DEFAULT_PROPS = {
   data,
   skipLinkText: 'Skip chart content',
   yAxisOptions: {labelFormatter: formatYAxisLabel},
   isAnimated: true,
 };
-///
 
 const Template: Story<LineChartProps> = (args: LineChartProps) => {
   return <LineChart {...args} />;
@@ -119,22 +117,20 @@ const Template: Story<LineChartProps> = (args: LineChartProps) => {
 
 export const Default: Story<LineChartProps> = Template.bind({});
 Default.args = {
-  data,
+ ...DEFAULT_PROPS,
   xAxisOptions: {
     labelFormatter: formatXAxisLabel,
   },
-  yAxisOptions: {labelFormatter: formatYAxisLabel},
   showLegend: true,
 };
 
 export const HideXAxisLabels: Story<LineChartProps> = Template.bind({});
 HideXAxisLabels.args = {
-  data,
+  ...DEFAULT_PROPS,
   xAxisOptions: {
     labelFormatter: formatXAxisLabel,
     hide: true,
   },
-  yAxisOptions: {labelFormatter: formatYAxisLabel},
 };
 
 export const NoOverflowStyle: Story<LineChartProps> = Template.bind({});
@@ -237,7 +233,7 @@ SeriesColorsUpToFourteen.args = {
 
 const ANNOTATIONS: Annotation[] = [
   {
-    startKey: '2020-04-01T12:00:00',
+    startKey: '2020-04-02T12:00:00',
     label: 'Sales increase',
   },
   {

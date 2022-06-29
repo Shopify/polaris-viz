@@ -19,6 +19,9 @@ import {mockDefaultTheme} from '../../../test-utilities/mountWithProvider';
 import {TooltipAnimatedContainer} from '../../../components/TooltipWrapper';
 import {Chart, ChartProps} from '../Chart';
 import {YAxis} from '../../YAxis';
+import {Annotations} from '../../Annotations';
+import {normalizeData} from '../../../utilities';
+
 
 const MOCK_DATA: Required<LineChartDataSeriesWithDefaults> = {
   name: 'Primary',
@@ -45,6 +48,7 @@ const yAxisOptions: Required<YAxisOptions> = {
 
 const MOCK_PROPS: ChartProps = {
   data: [MOCK_DATA],
+  annotationsLookupTable: {},
   dimensions: {width: 500, height: 250},
   xAxisOptions,
   yAxisOptions,
@@ -115,6 +119,7 @@ describe('<Chart />', () => {
     const chart = mount(<Chart {...MOCK_PROPS} />);
 
     triggerSVGMouseMove(chart);
+    // console.log(chart.find(Crosshair))
 
     expect(chart.find(Crosshair)).toHaveReactProps({opacity: 1});
   });
@@ -196,9 +201,9 @@ describe('<Chart />', () => {
     expect(chart).not.toContainReactComponent(TooltipAnimatedContainer);
 
     triggerSVGMouseMove(chart);
-
+    // console.log(chart.debug())
     const tooltipContainer = chart.find(TooltipAnimatedContainer)!;
-
+    // console.log(chart.find(TooltipAnimatedContainer))
     expect(tooltipContainer).toContainReactText('Mock Tooltip');
   });
 
@@ -377,6 +382,36 @@ describe('<Chart />', () => {
       const chart = mount(<Chart {...MOCK_PROPS} showLegend />);
 
       expect(chart).toContainReactComponent(LegendContainer);
+    });
+  });
+
+  describe('annotationsLookupTable', () => {
+    it('does not render <Annotations /> when empty', () => {
+      const chart = mount(<Chart {...MOCK_PROPS} />);
+      const group = chart.find('g');
+
+      expect(chart).not.toContainReactComponent(Annotations);
+
+      expect(group?.props.transform).toStrictEqual('translate(116,222)');
+    });
+
+    it('renders <Annotations /> when provided', () => {
+      const annotationsLookupTable = normalizeData(
+        [
+          {
+            startKey: '1',
+            label: 'Sales increase',
+          },
+        ],
+        'startKey',
+      );
+
+      const chart = mount(<Chart {...MOCK_PROPS} annotationsLookupTable={annotationsLookupTable} />);
+      const group = chart.find('g');
+
+      expect(chart).toContainReactComponent(Annotations);
+
+      expect(group?.props.transform).toStrictEqual('translate(116,222)');
     });
   });
 });
