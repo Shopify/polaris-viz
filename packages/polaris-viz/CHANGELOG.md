@@ -15,6 +15,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 - Sped up `<BarChart/>` animations for large, single series data sets.
 
+### Fixed
+
+- `<SimpleBarChart/>` label positions on Safari
+
 ## [4.0.0] - 2022-06-23
 
 ### Added
