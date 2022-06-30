@@ -27,11 +27,14 @@ const meta: Meta<DonutChartProps> = {
       description:
         'A collection of named data sets to be rendered in the chart. An optional color can be provided for each series, to overwrite the theme `seriesColors` defined in `PolarisVizProvider`',
     },
+    legendPosition: {
+      description: 'Determines the position of the legend.',
+    },
     theme: THEME_CONTROL_ARGS,
     state: CHART_STATE_CONTROL_ARGS,
   },
   decorators: [
-    (Story) => <div style={{width: 400, height: 200}}>{Story()}</div>,
+    (Story) => <div style={{width: 400, height: 400}}>{Story()}</div>,
   ],
 };
 
@@ -67,6 +70,7 @@ Default.args = {
     trend: 'negative',
     accessibilityLabel: 'trending down 10%',
   },
+  legendPosition: 'left',
 };
 
 export const SingleDataPoint = Template.bind({});
@@ -83,6 +87,7 @@ SingleDataPoint.args = {
     trend: 'positive',
     accessibilityLabel: 'trending up 6%',
   },
+  legendPosition: 'top',
 };
 
 export const ErrorState = Template.bind({});

@@ -29,7 +29,7 @@ export default {
         'Determines the width or height of the bar segments depending on `direction`.',
     },
     legendPosition: {
-      description: 'Determines the position of the labels.',
+      description: 'Determines the position of the legend.',
     },
     theme: THEME_CONTROL_ARGS,
   },

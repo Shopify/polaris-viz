@@ -7,6 +7,7 @@ import {
   DEFAULT_THEME_NAME,
   useUniqueId,
   DEFAULT_CHART_PROPS,
+  Direction,
 } from '@shopify/polaris-viz-core';
 import type {
   DataPoint,
@@ -23,6 +24,7 @@ import {
   useWatchColorVisionEvents,
 } from '../../hooks';
 import {Arc} from '../Arc';
+import type {LegendPosition} from '../../types';
 
 import styles from './DonutChart.scss';
 import {InnerValue} from './components';
@@ -39,6 +41,7 @@ export interface ChartProps {
   dimensions?: Dimensions;
   theme?: string;
   labelFormatter: LabelFormatter;
+  legendPosition?: LegendPosition;
 }
 
 export function Chart({
@@ -51,6 +54,7 @@ export function Chart({
   theme = DEFAULT_THEME_NAME,
   labelFormatter,
   isAnimated = DEFAULT_CHART_PROPS.isAnimated,
+  legendPosition = 'right',
 }: ChartProps) {
   const chartId = useUniqueId('Donut');
   const [activeIndex, setActiveIndex] = useState<number>(-1);
@@ -59,11 +63,16 @@ export function Chart({
   const seriesCount = clamp({amount: data.length, min: 1, max: Infinity});
   const seriesColor = getSeriesColors(seriesCount, selectedTheme);
 
+  const legendDirection: Direction =
+    legendPosition === 'right' || legendPosition === 'left'
+      ? 'vertical'
+      : 'horizontal';
+
   const {height, width, legend, setLegendDimensions} = useLegend({
     data: [{series: data, shape: 'Bar'}],
     dimensions,
     showLegend,
-    direction: 'vertical',
+    direction: legendDirection,
     colors: seriesColor,
   });
 
@@ -77,6 +86,21 @@ export function Chart({
       setActiveIndex(detail.index);
     },
   });
+
+  const styleMap = {
+    top: {
+      flexDirection: 'column-reverse',
+    },
+    bottom: {
+      flexDirection: 'column',
+    },
+    right: {
+      flexDirection: 'row',
+    },
+    left: {
+      flexDirection: 'row-reverse',
+    },
+  };
 
   if (!width || !height) return null;
 
@@ -98,10 +122,14 @@ export function Chart({
     total || points.reduce((acc, {value}) => (value ?? 0) + acc, 0);
 
   return (
-    <div className={styles.DonutWrapper}>
+    <div className={styles.DonutWrapper} style={styleMap[legendPosition]}>
       <div className={styles.Donut}>
         <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
-        <svg viewBox={`-40 -40 ${diameter + 20} ${diameter + 20}`}>
+        <svg
+          viewBox={`-40 -40 ${diameter + 20} ${diameter + 20}`}
+          height={diameter}
+          width={diameter}
+        >
           <g className={styles.DonutChart}>
             {emptyState ? (
               <g aria-hidden>
@@ -160,21 +188,17 @@ export function Chart({
           />
         )}
       </div>
-      {showLegend && (
-        <div
-          style={{
-            width: `calc(100% - ${diameter}px)`,
-          }}
-        >
+      <div>
+        {showLegend && (
           <LegendContainer
             onDimensionChange={setLegendDimensions}
             colorVisionType={COLOR_VISION_SINGLE_ITEM}
             data={legend}
             theme={theme}
-            direction="vertical"
+            direction={legendDirection}
           />
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }

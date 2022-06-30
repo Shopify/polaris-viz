@@ -175,4 +175,8 @@ export type LegendPosition =
   | 'top-left'
   | 'top-right'
   | 'bottom-left'
-  | 'bottom-right';
+  | 'bottom-right'
+  | 'top'
+  | 'right'
+  | 'bottom'
+  | 'left';
