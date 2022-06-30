@@ -4,6 +4,8 @@ import {PolarisVizProvider} from '../../../../../';
 import {SparkLineChart, SparkBarChart} from '../../../../';
 import {ComponentContainer, Title} from '../';
 
+const KIND = 'polaris-viz/Charts/';
+
 export function MobileComponents() {
   return (
     <div
@@ -30,6 +32,7 @@ export function MobileComponents() {
           title="SparkLineChart"
           description="Used in small sizes to show how a metric has performed over time. "
           center
+          kind={KIND}
           chart={
             <div style={{width: '250px', height: '140px'}}>
               <SparkLineChart
@@ -76,6 +79,7 @@ export function MobileComponents() {
           title="SparkBarChart"
           description="Used in small sizes to show how a metric has performed over time. "
           center
+          kind={KIND}
           chart={
             <div style={{width: '250px', height: '140px'}}>
               <SparkBarChart
