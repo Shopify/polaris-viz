@@ -39,26 +39,31 @@ export function Label({
   });
 
   return (
-    <animated.foreignObject
-      height={FONT_SIZE}
-      width={labelWidth}
-      aria-hidden="true"
-      y={y + labelYOffset}
+    // animating the foreignObject does not work on Safari,
+    // so we need to use a g instead
+    <animated.g
       style={{
         opacity: spring.opacity,
         transform: spring.transform,
       }}
     >
-      <div
-        style={{
-          fontSize: `${FONT_SIZE}px`,
-          color,
-          lineHeight: `${HORIZONTAL_BAR_LABEL_HEIGHT}px`,
-          height: HORIZONTAL_BAR_LABEL_HEIGHT,
-        }}
+      <foreignObject
+        height={FONT_SIZE}
+        width={labelWidth}
+        aria-hidden="true"
+        y={y + labelYOffset}
       >
-        {label}
-      </div>
-    </animated.foreignObject>
+        <div
+          style={{
+            fontSize: `${FONT_SIZE}px`,
+            color,
+            lineHeight: `${HORIZONTAL_BAR_LABEL_HEIGHT}px`,
+            height: HORIZONTAL_BAR_LABEL_HEIGHT,
+          }}
+        >
+          {label}
+        </div>
+      </foreignObject>
+    </animated.g>
   );
 }
