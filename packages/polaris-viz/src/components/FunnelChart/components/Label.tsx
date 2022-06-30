@@ -43,32 +43,37 @@ export function Label({
   const fontSize = FONT_SIZES[size];
 
   return (
-    <foreignObject
-      height={LABEL_HEIGHT}
-      width={labelWidth}
-      aria-hidden="true"
-      y={y + labelYOffset}
+    /* To display labels correctly in Safari, we need to wrap foreignObject in group element
+    and apply the transform property on the group element. */
+    <g
       style={{
         transform: `translateX(${x}px)`,
       }}
     >
-      <div
-        className={styles.Label}
-        style={{
-          fontSize: `${fontSize}px`,
-          color,
-          lineHeight: `${HORIZONTAL_BAR_LABEL_HEIGHT}px`,
-          height: HORIZONTAL_BAR_LABEL_HEIGHT,
-        }}
+      <foreignObject
+        height={LABEL_HEIGHT}
+        width={labelWidth}
+        aria-hidden="true"
+        y={y + labelYOffset}
       >
-        <span
+        <div
+          className={styles.Label}
           style={{
-            backgroundColor,
+            fontSize: `${fontSize}px`,
+            color,
+            lineHeight: `${HORIZONTAL_BAR_LABEL_HEIGHT}px`,
+            height: HORIZONTAL_BAR_LABEL_HEIGHT,
           }}
         >
-          {label}
-        </span>
-      </div>
-    </foreignObject>
+          <span
+            style={{
+              backgroundColor,
+            }}
+          >
+            {label}
+          </span>
+        </div>
+      </foreignObject>
+    </g>
   );
 }
