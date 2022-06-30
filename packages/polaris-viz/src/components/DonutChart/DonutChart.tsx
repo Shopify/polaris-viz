@@ -1,12 +1,14 @@
 import React from 'react';
-import type {
+import {
   LabelFormatter,
   ChartProps,
   WithRequired,
+  ChartState,
+  DEFAULT_CHART_PROPS,
 } from '@shopify/polaris-viz-core';
-import {DEFAULT_CHART_PROPS} from '@shopify/polaris-viz-core';
 
 import {ChartContainer} from '../ChartContainer';
+import {ChartSkeleton} from '../ChartSkeleton';
 import type {ComparisonMetricProps} from '../ComparisonMetric';
 import {usePrefersReducedMotion} from '../../hooks';
 
@@ -26,6 +28,7 @@ export function DonutChart(props: DonutChartProps) {
     showLegend,
     labelFormatter,
     isAnimated,
+    state,
   }: WithRequired<DonutChartProps, 'theme'> = {
     ...DEFAULT_CHART_PROPS,
     labelFormatter: (value) => `${value}`,
@@ -38,14 +41,18 @@ export function DonutChart(props: DonutChartProps) {
 
   return (
     <ChartContainer theme={theme}>
-      <Chart
-        isAnimated={shouldAnimate}
-        data={data}
-        labelFormatter={labelFormatter}
-        comparisonMetric={comparisonMetric}
-        showLegend={showLegend}
-        theme={theme}
-      />
+      {state === ChartState.Success ? (
+        <Chart
+          isAnimated={shouldAnimate}
+          data={data}
+          labelFormatter={labelFormatter}
+          comparisonMetric={comparisonMetric}
+          showLegend={showLegend}
+          theme={theme}
+        />
+      ) : (
+        <ChartSkeleton state={state} type="Donut" />
+      )}
     </ChartContainer>
   );
 }

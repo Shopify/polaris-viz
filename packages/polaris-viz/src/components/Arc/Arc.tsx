@@ -12,8 +12,8 @@ import {
 import type {Color} from '@shopify/polaris-viz-core';
 import {useSpring, animated, to} from '@react-spring/web';
 
-import {ConicGradientWithStops} from '../../../';
-import {classNames} from '../../../../utilities';
+import {ConicGradientWithStops} from '..';
+import {classNames} from '../../utilities';
 import {ARC_PAD_ANGLE} from '../../constants';
 
 import styles from './Arc.scss';

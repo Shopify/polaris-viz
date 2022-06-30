@@ -10,6 +10,8 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Added
 
 - Added `annotations` to `StackedAreaChartProps`.
+- Added loading and error states to `<DonutChart/>`.
+- Added `type` prop to `<ChartSkeleton/>`.
 
 ### Changed
 

@@ -108,7 +108,12 @@ export function BarChart(props: BarChartProps) {
       )}
       <ChartContainer theme={theme}>
         {state !== ChartState.Success ? (
-          <ChartSkeleton state={state} errorText={errorText} theme={theme} />
+          <ChartSkeleton
+            type="Default"
+            state={state}
+            errorText={errorText}
+            theme={theme}
+          />
         ) : (
           ChartByDirection
         )}
