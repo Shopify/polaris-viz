@@ -22,9 +22,10 @@ import {
   useColorVisionEvents,
   useWatchColorVisionEvents,
 } from '../../hooks';
+import {Arc} from '../Arc';
 
 import styles from './DonutChart.scss';
-import {Arc, InnerValue} from './components';
+import {InnerValue} from './components';
 
 const FULL_CIRCLE = Math.PI * 2;
 
@@ -36,7 +37,7 @@ export interface ChartProps {
   isAnimated?: boolean;
   total?: number;
   dimensions?: Dimensions;
-  theme: string;
+  theme?: string;
   labelFormatter: LabelFormatter;
 }
 

@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import type {Meta, StoryFn} from '@storybook/react';
 
-import {THEME_CONTROL_ARGS} from '../../storybook';
+import {THEME_CONTROL_ARGS, CHART_STATE_CONTROL_ARGS} from '../../storybook';
 import {DonutChart} from '.';
 import type {DonutChartProps} from './DonutChart';
+import {ChartState} from '@shopify/polaris-viz-core';
 
 const meta: Meta<DonutChartProps> = {
   title: 'polaris-viz/Charts/DonutChart',
@@ -27,6 +28,7 @@ const meta: Meta<DonutChartProps> = {
         'A collection of named data sets to be rendered in the chart. An optional color can be provided for each series, to overwrite the theme `seriesColors` defined in `PolarisVizProvider`',
     },
     theme: THEME_CONTROL_ARGS,
+    state: CHART_STATE_CONTROL_ARGS,
   },
   decorators: [
     (Story) => <div style={{width: 400, height: 200}}>{Story()}</div>,
@@ -81,6 +83,23 @@ SingleDataPoint.args = {
     trend: 'positive',
     accessibilityLabel: 'trending up 6%',
   },
+};
+
+export const ErrorState = Template.bind({});
+
+ErrorState.args = {
+  data: [
+    {
+      name: 'Engagement',
+      data: [{key: 'april - march', value: 25000}],
+    },
+  ],
+  comparisonMetric: {
+    metric: '6%',
+    trend: 'positive',
+    accessibilityLabel: 'trending up 6%',
+  },
+  state: ChartState.Error,
 };
 
 export const CustomColors = Template.bind({});
