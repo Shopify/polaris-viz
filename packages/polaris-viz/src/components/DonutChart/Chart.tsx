@@ -68,13 +68,14 @@ export function Chart({
       ? 'vertical'
       : 'horizontal';
 
-  const {height, width, legend, setLegendDimensions} = useLegend({
-    data: [{series: data, shape: 'Bar'}],
-    dimensions,
-    showLegend,
-    direction: legendDirection,
-    colors: seriesColor,
-  });
+  const {height, width, legend, setLegendDimensions, isLegendMounted} =
+    useLegend({
+      data: [{series: data, shape: 'Bar'}],
+      dimensions,
+      showLegend,
+      direction: legendDirection,
+      colors: seriesColor,
+    });
 
   const shouldUseColorVisionEvents = Boolean(width && height);
 
@@ -103,7 +104,6 @@ export function Chart({
   };
 
   if (!width || !height) return null;
-
   const diameter = Math.min(height, width);
   const radius = diameter / 2;
 
@@ -130,55 +130,58 @@ export function Chart({
           height={diameter}
           width={diameter}
         >
-          <g className={styles.DonutChart}>
-            {emptyState ? (
-              <g aria-hidden>
-                <Arc
-                  isAnimated={isAnimated}
-                  width={diameter}
-                  height={diameter}
-                  radius={radius}
-                  startAngle={0}
-                  endAngle={FULL_CIRCLE}
-                  color={selectedTheme.grid.color}
-                  cornerRadius={selectedTheme.arc.cornerRadius}
-                  thickness={selectedTheme.arc.thickness}
-                />
-              </g>
-            ) : (
-              pieChartData.map(
-                ({data: pieData, startAngle, endAngle}, index) => {
-                  const color = data[index]?.color ?? seriesColor[index];
-                  const name = data[index].name;
-                  const accessibilityLabel = `${name}: ${pieData.key} - ${pieData.value}`;
-                  return (
-                    <g
-                      key={`${chartId}-arc-${index}`}
-                      className={styles.DonutChart}
-                      aria-label={accessibilityLabel}
-                      role="img"
-                    >
-                      <Arc
-                        isAnimated={isAnimated}
-                        index={index}
-                        activeIndex={activeIndex}
-                        width={diameter}
-                        height={diameter}
-                        radius={radius}
-                        startAngle={startAngle}
-                        endAngle={endAngle}
-                        color={color}
-                        cornerRadius={selectedTheme.arc.cornerRadius}
-                        thickness={selectedTheme.arc.thickness}
-                      />
-                    </g>
-                  );
-                },
-              )
-            )}
-          </g>
+          {isLegendMounted && (
+            <g className={styles.DonutChart}>
+              {emptyState ? (
+                <g aria-hidden>
+                  <Arc
+                    isAnimated={isAnimated}
+                    width={diameter}
+                    height={diameter}
+                    radius={radius}
+                    startAngle={0}
+                    endAngle={FULL_CIRCLE}
+                    color={selectedTheme.grid.color}
+                    cornerRadius={selectedTheme.arc.cornerRadius}
+                    thickness={selectedTheme.arc.thickness}
+                  />
+                </g>
+              ) : (
+                pieChartData.map(
+                  ({data: pieData, startAngle, endAngle}, index) => {
+                    const color = data[index]?.color ?? seriesColor[index];
+                    const name = data[index].name;
+                    const accessibilityLabel = `${name}: ${pieData.key} - ${pieData.value}`;
+
+                    return (
+                      <g
+                        key={`${chartId}-arc-${index}`}
+                        className={styles.DonutChart}
+                        aria-label={accessibilityLabel}
+                        role="img"
+                      >
+                        <Arc
+                          isAnimated={isAnimated}
+                          index={index}
+                          activeIndex={activeIndex}
+                          width={diameter}
+                          height={diameter}
+                          radius={radius}
+                          startAngle={startAngle}
+                          endAngle={endAngle}
+                          color={color}
+                          cornerRadius={selectedTheme.arc.cornerRadius}
+                          thickness={selectedTheme.arc.thickness}
+                        />
+                      </g>
+                    );
+                  },
+                )
+              )}
+            </g>
+          )}
         </svg>
-        {totalValue && !emptyState && (
+        {totalValue && !emptyState && isLegendMounted && (
           <InnerValue
             isAnimated={isAnimated}
             selectedTheme={selectedTheme}
@@ -188,17 +191,15 @@ export function Chart({
           />
         )}
       </div>
-      <div>
-        {showLegend && (
-          <LegendContainer
-            onDimensionChange={setLegendDimensions}
-            colorVisionType={COLOR_VISION_SINGLE_ITEM}
-            data={legend}
-            theme={theme}
-            direction={legendDirection}
-          />
-        )}
-      </div>
+      {showLegend && (
+        <LegendContainer
+          onDimensionChange={setLegendDimensions}
+          colorVisionType={COLOR_VISION_SINGLE_ITEM}
+          data={legend}
+          theme={theme}
+          direction={legendDirection}
+        />
+      )}
     </div>
   );
 }
