@@ -28,7 +28,7 @@ export default {
       description:
         'Determines the width or height of the bar segments depending on `direction`.',
     },
-    labelPosition: {
+    legendPosition: {
       description: 'Determines the position of the labels.',
     },
     theme: THEME_CONTROL_ARGS,
@@ -83,7 +83,7 @@ const defaultProps: SimpleNormalizedChartProps = {
 
   direction: 'horizontal',
   size: 'small',
-  labelPosition: 'top-left',
+  legendPosition: 'top-left',
   labelFormatter: (value) => `$${value}`,
   comparisonMetrics: [
     {
@@ -119,7 +119,7 @@ VerticalSmall.args = {
 export const HorizontalBottomRightLabel = Template.bind({});
 HorizontalBottomRightLabel.args = {
   ...defaultProps,
-  labelPosition: 'bottom-right',
+  legendPosition: 'bottom-right',
 };
 
 export const DynamicData = () => {

@@ -171,8 +171,8 @@ export interface FormattedTicks {
   yOffset: number;
 }
 
-export interface FormattedTicks {
-  value: number;
-  formattedValue: string;
-  yOffset: number;
-}
+export type LegendPosition =
+  | 'top-left'
+  | 'top-right'
+  | 'bottom-left'
+  | 'bottom-right';

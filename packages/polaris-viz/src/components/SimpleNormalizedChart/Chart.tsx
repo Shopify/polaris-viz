@@ -17,16 +17,17 @@ import {
   useWatchColorVisionEvents,
 } from '../../hooks';
 import {classNames} from '../../utilities';
+import type {LegendPosition} from '../../types';
 
 import {BarSegment, BarLabel} from './components';
-import type {Size, LabelPosition} from './types';
+import type {Size} from './types';
 import styles from './SimpleNormalizedChart.scss';
 
 export interface ChartProps {
   data: DataSeries[];
   comparisonMetrics?: Omit<ComparisonMetricProps, 'theme'>[];
   labelFormatter?: LabelFormatter;
-  labelPosition?: LabelPosition;
+  legendPosition?: LegendPosition;
   direction?: Direction;
   size?: Size;
   theme?: string;
@@ -37,7 +38,7 @@ export function Chart({
   comparisonMetrics = [],
   data,
   labelFormatter = (value) => `${value}`,
-  labelPosition = 'top-left',
+  legendPosition = 'top-left',
   direction = 'horizontal',
   size = 'small',
   theme = DEFAULT_THEME_NAME,
@@ -84,8 +85,8 @@ export function Chart({
   const bars = isVertical ? slicedData.reverse() : slicedData;
   const isEmptyValues = slicedData.every(({value}) => !value);
 
-  const isRightLabel = labelPosition.includes('right');
-  const isBottomLabel = labelPosition.includes('bottom');
+  const isRightLabel = legendPosition.includes('right');
+  const isBottomLabel = legendPosition.includes('bottom');
   const isVerticalAndRightLabel = isVertical && isRightLabel;
   const isVerticalAndBottomLabel = isVertical && isBottomLabel;
   const isHorizontalAndRightLabel = !isVertical && isRightLabel;
@@ -130,7 +131,7 @@ export function Chart({
               comparisonMetric={comparisonMetric}
               legendColors={selectedTheme.legend}
               direction={direction}
-              labelPosition={labelPosition}
+              legendPosition={legendPosition}
             />
           );
         })}

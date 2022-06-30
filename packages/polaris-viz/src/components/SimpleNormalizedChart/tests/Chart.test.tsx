@@ -337,15 +337,17 @@ describe('<Chart />', () => {
     it('defaults to top-left label position and passes it to BarLabel', () => {
       const barChart = mount(<SimpleNormalizedChart {...mockProps} />);
 
-      expect(barChart.find(BarLabel)!.props.labelPosition).toBe('top-left');
+      expect(barChart.find(BarLabel)!.props.legendPosition).toBe('top-left');
     });
 
     it('accepts bottom-right label position and passes it to BarLabel', () => {
       const barChart = mount(
-        <SimpleNormalizedChart {...mockProps} labelPosition="bottom-right" />,
+        <SimpleNormalizedChart {...mockProps} legendPosition="bottom-right" />,
       );
 
-      expect(barChart.find(BarLabel)!.props.labelPosition).toBe('bottom-right');
+      expect(barChart.find(BarLabel)!.props.legendPosition).toBe(
+        'bottom-right',
+      );
     });
   });
 });

@@ -12,7 +12,7 @@ import {
   ComparisonMetric,
   ComparisonMetricProps,
 } from '../../../ComparisonMetric';
-import type {LabelPosition} from '../../types';
+import type {LegendPosition} from '../../../../types';
 
 import styles from './BarLabel.scss';
 
@@ -24,7 +24,7 @@ export interface Props {
   color: Color;
   legendColors: LegendTheme;
   direction: Direction;
-  labelPosition: LabelPosition;
+  legendPosition: LegendPosition;
   comparisonMetric?: Omit<ComparisonMetricProps, 'theme'> | null;
 }
 
@@ -37,7 +37,7 @@ export function BarLabel({
   comparisonMetric,
   legendColors,
   direction,
-  labelPosition,
+  legendPosition,
 }: Props) {
   const {labelColor, valueColor} = legendColors;
 
@@ -55,7 +55,7 @@ export function BarLabel({
     <li
       className={classNames(
         styles.Container,
-        labelPosition.includes('bottom')
+        legendPosition.includes('bottom')
           ? styles.ContaineBottomLabel
           : styles.ContainerDefaultLabel,
       )}

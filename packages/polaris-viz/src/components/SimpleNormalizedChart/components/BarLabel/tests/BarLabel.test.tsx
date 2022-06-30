@@ -23,7 +23,7 @@ describe('<BarLabel />', () => {
             },
           }}
           direction="horizontal"
-          labelPosition="top-left"
+          legendPosition="top-left"
         />,
       );
 
