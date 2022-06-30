@@ -2,6 +2,7 @@ import React from 'react';
 import type {Story, Meta} from '@storybook/react';
 
 import {BarChart, BarChartProps} from '../../../components';
+import type {Annotation} from '../../../types';
 
 export default {
   title: 'polaris-viz/Charts/BarChart/Playground',
@@ -295,4 +296,32 @@ export const LotsOfSingleBars: Story<BarChartProps> = (args: BarChartProps) => {
 
 LotsOfSingleBars.args = {
   data: [DATA[0]],
+};
+
+export const AnnotationMania: Story<BarChartProps> = (args: BarChartProps) => {
+  return (
+    <div style={{width: 600, height: 400}}>
+      <BarChart {...args} />
+    </div>
+  );
+};
+
+AnnotationMania.args = {
+  data: DATA,
+  annotations: [
+    ...[...new Array(23)].fill(null).map((_, index) => {
+      return {
+        startKey: `${index}`,
+        label: `Label ${index}`,
+        axis: 'x',
+      } as Annotation;
+    }),
+    ...[...new Array(5)].fill(null).map((_, index) => {
+      return {
+        startKey: `${index}`,
+        label: `Label ${index}`,
+        axis: 'y',
+      } as Annotation;
+    }),
+  ],
 };

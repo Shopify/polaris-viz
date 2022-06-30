@@ -175,6 +175,7 @@ const ANNOTATIONS: Annotation[] = [
   {
     startKey: 'February',
     label: 'Sales increase',
+    axis: 'x',
   },
   {
     startKey: 'May',
@@ -182,6 +183,7 @@ const ANNOTATIONS: Annotation[] = [
     content: {
       content: 'We ran a massive sale on our products. We made a lot of money!',
     },
+    axis: 'x',
   },
 ];
 

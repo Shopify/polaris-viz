@@ -35,8 +35,8 @@ const MOCK_PROPS: Props = {
 
 describe('useAnnotationPositions', () => {
   function TestComponent(props: Props) {
-    const {positions, rowCount} = useAnnotationPositions(props);
-    return <div>{JSON.stringify({positions, rowCount})}</div>;
+    const result = useAnnotationPositions(props);
+    return <div>{JSON.stringify(result)}</div>;
   }
 
   function parseResult(mockComponent: Root<any>) {
@@ -91,7 +91,6 @@ describe('useAnnotationPositions', () => {
       const mockComponent = mount(
         <TestComponent
           {...MOCK_PROPS}
-          drawableWidth={10}
           annotations={[
             {label: 'Annotation 1', startKey: 'key0'},
             {label: 'Annotation 2', startKey: 'key1'},
@@ -117,11 +116,10 @@ describe('useAnnotationPositions', () => {
 
   describe('isShowingAllAnnotations', () => {
     it('returns all values when true', () => {
-      mount(
+      const mockComponent = mount(
         <TestComponent
           {...MOCK_PROPS}
           isShowingAllAnnotations
-          drawableWidth={10}
           annotations={[
             {label: 'Annotation 1', startKey: 'key0'},
             {label: 'Annotation 2', startKey: 'key1'},
@@ -133,14 +131,16 @@ describe('useAnnotationPositions', () => {
         />,
       );
 
-      expect(MOCK_PROPS.onHeightChange).toHaveBeenLastCalledWith(111);
+      const result = parseResult(mockComponent);
+
+      expect(result.hiddenAnnotationsCount).toStrictEqual(0);
+      expect(MOCK_PROPS.onHeightChange).toHaveBeenLastCalledWith(56);
     });
 
     it('returns limited value when false', () => {
-      mount(
+      const mockComponent = mount(
         <TestComponent
           {...MOCK_PROPS}
-          drawableWidth={10}
           annotations={[
             {label: 'Annotation 1', startKey: 'key0'},
             {label: 'Annotation 2', startKey: 'key1'},
@@ -152,7 +152,10 @@ describe('useAnnotationPositions', () => {
         />,
       );
 
-      expect(MOCK_PROPS.onHeightChange).toHaveBeenLastCalledWith(84);
+      const result = parseResult(mockComponent);
+
+      expect(result.hiddenAnnotationsCount).toStrictEqual(0);
+      expect(MOCK_PROPS.onHeightChange).toHaveBeenLastCalledWith(56);
     });
   });
 });

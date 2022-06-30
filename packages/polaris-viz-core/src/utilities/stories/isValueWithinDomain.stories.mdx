@@ -1,0 +1,33 @@
+import {Meta, Story, Canvas} from '@storybook/addon-docs/blocks';
+
+import {
+  Divider,
+  Title,
+  UtilitiesHeader,
+} from '../../../../polaris-viz/src/components/Docs/stories/components';
+
+<Meta
+  title="Shared/Utilities/isValueWithinDomain"
+  parameters={{
+    viewMode: 'docs',
+    docsOnly: true,
+  }}
+/>
+
+<UtilitiesHeader />
+
+<Title type="h3">
+  <code>isValueWithinDomain()</code>
+</Title>
+
+<p>
+  Checks if the provided value is within the values of the provided
+  domain/array.
+</p>
+
+```tsx
+isValueWithinDomain(6, [0, 10]);
+
+// Output:
+// true
+```

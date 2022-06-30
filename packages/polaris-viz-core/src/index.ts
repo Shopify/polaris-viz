@@ -100,6 +100,7 @@ export {
   changeGradientOpacity,
   getAverageColor,
   getValueFromXScale,
+  isValueWithinDomain,
 } from './utilities';
 export {
   useSparkBar,

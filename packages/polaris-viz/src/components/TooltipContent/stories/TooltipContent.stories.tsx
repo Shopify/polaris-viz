@@ -5,6 +5,7 @@ import {DEFAULT_THEME, ChartContext} from '@shopify/polaris-viz-core';
 import {TooltipContent, TooltipContentProps} from '../TooltipContent';
 import type {TooltipData} from '../../../types';
 import characterWidths from '../../../data/character-widths.json';
+import characterWidthOffsets from '../../../data/character-width-offsets.json';
 
 export default {
   title: 'polaris-viz/Subcomponents/TooltipContent',
@@ -28,7 +29,9 @@ export default {
 
 const Template: Story<TooltipContentProps> = (args: TooltipContentProps) => {
   return (
-    <ChartContext.Provider value={{characterWidths, id: 'none'}}>
+    <ChartContext.Provider
+      value={{characterWidths, id: 'none', characterWidthOffsets}}
+    >
       <TooltipContent {...args} />
     </ChartContext.Provider>
   );

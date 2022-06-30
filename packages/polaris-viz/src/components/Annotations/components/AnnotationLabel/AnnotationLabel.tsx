@@ -1,8 +1,9 @@
 import React, {Dispatch, SetStateAction} from 'react';
 import {LINE_HEIGHT, useTheme} from '@shopify/polaris-viz-core';
 
+import {useBrowserCheck} from '../../../../hooks/useBrowserCheck';
 import {SingleTextLine} from '../../../Labels';
-import {PILL_HEIGHT, PILL_PADDING} from '../../constants';
+import {PILL_HEIGHT, PILL_OPACITY, PILL_PADDING} from '../../constants';
 import type {AnnotationPosition} from '../../types';
 
 import styles from './AnnotationLabel.scss';
@@ -34,6 +35,7 @@ export function AnnotationLabel({
   theme,
 }: AnnotationLabelProps) {
   const selectedTheme = useTheme(theme);
+  const {isFirefox} = useBrowserCheck();
 
   const {x, y, width} = position;
 
@@ -45,11 +47,19 @@ export function AnnotationLabel({
       opacity={isVisible ? 1 : 0}
       aria-hidden
     >
+      <foreignObject
+        height={PILL_HEIGHT}
+        width={width}
+        style={{overflow: 'visible'}}
+      >
+        <div className={styles.Blur} style={{borderRadius: PILL_HEIGHT / 2}} />
+      </foreignObject>
       <rect
         height={PILL_HEIGHT}
         width={width}
         fill={selectedTheme.annotations.backgroundColor}
         ry={PILL_HEIGHT / 2}
+        opacity={isFirefox ? 1 : PILL_OPACITY}
       />
       <SingleTextLine
         ariaHidden

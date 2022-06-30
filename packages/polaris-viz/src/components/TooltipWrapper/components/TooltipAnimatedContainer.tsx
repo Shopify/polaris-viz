@@ -84,6 +84,7 @@ export function TooltipAnimatedContainer({
     <animated.div
       id={id}
       className={styles.Container}
+      data-tooltip
       style={{
         top: 0,
         left: 0,

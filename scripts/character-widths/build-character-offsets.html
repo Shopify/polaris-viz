@@ -17,17 +17,16 @@
   <body>
     <div id="workspace"></div>
 
-    <script src="characters.js"></script>
     <script>
       const set = new Set([]);
       const workspace = document.querySelector('#workspace');
 
-      z;
+      const baselineWidth = getWidth('w', 12);
 
       const characters = {};
 
-      set.forEach((item) => {
-        characters[`${item}`] = getWidth(item);
+      new Array(20).fill(null).forEach((item, index) => {
+        characters[index] = getWidth(item, index) / baselineWidth;
       });
 
       let string = JSON.stringify(characters);
@@ -35,12 +34,12 @@
 
       console.log(string);
 
-      function getWidth(word) {
+      function getWidth(word, size) {
         let newWord = document.createElement('div');
-        newWord.innerHTML = word;
+        newWord.innerHTML = 'w';
 
         newWord.style.width = 'fit-content';
-        newWord.style.fontSize = `${FONT_SIZE}px`;
+        newWord.style.fontSize = `${size}px`;
         newWord.style.textAlign = 'center';
         newWord.style.display = 'inline-block';
         newWord.style.verticalAlign = 'top';
