@@ -9,11 +9,12 @@ import {
   RENDER_TOOLTIP_DESCRIPTION,
   THEME_CONTROL_ARGS,
   CHART_STATE_CONTROL_ARGS,
+  ANNOTATIONS_ARGS,
 } from '../../../storybook';
 
 import {generateMultipleSeries} from '../../Docs/utilities';
 import {PageWithSizingInfo} from '../../Docs/stories/components/PageWithSizingInfo';
-import type {RenderTooltipContentData} from '../../../types';
+import type {Annotation, RenderTooltipContentData} from '../../../types';
 
 const TOOLTIP_CONTENT = {
   empty: undefined,
@@ -60,6 +61,7 @@ export default {
     },
   },
   argTypes: {
+    annotations: ANNOTATIONS_ARGS,
     data: {
       description:
         'A collection of named data sets to be rendered in the chart. An optional color can be provided for each series, to overwrite the theme `seriesColors` defined in `PolarisVizProvider`',
@@ -102,28 +104,33 @@ export default {
   },
 } as Meta;
 
+const DEFAULT_PROPS = {
+  data,
+  skipLinkText: 'Skip chart content',
+  yAxisOptions: {labelFormatter: formatYAxisLabel},
+  isAnimated: true,
+};
+
 const Template: Story<LineChartProps> = (args: LineChartProps) => {
   return <LineChart {...args} />;
 };
 
 export const Default: Story<LineChartProps> = Template.bind({});
 Default.args = {
-  data,
+ ...DEFAULT_PROPS,
   xAxisOptions: {
     labelFormatter: formatXAxisLabel,
   },
-  yAxisOptions: {labelFormatter: formatYAxisLabel},
   showLegend: true,
 };
 
 export const HideXAxisLabels: Story<LineChartProps> = Template.bind({});
 HideXAxisLabels.args = {
-  data,
+  ...DEFAULT_PROPS,
   xAxisOptions: {
     labelFormatter: formatXAxisLabel,
     hide: true,
   },
-  yAxisOptions: {labelFormatter: formatYAxisLabel},
 };
 
 export const NoOverflowStyle: Story<LineChartProps> = Template.bind({});
@@ -222,4 +229,25 @@ export const SeriesColorsUpToFourteen: Story<LineChartProps> = Template.bind(
 
 SeriesColorsUpToFourteen.args = {
   data: generateMultipleSeries(14),
+};
+
+const ANNOTATIONS: Annotation[] = [
+  {
+    startKey: '2020-04-02T12:00:00',
+    label: 'Sales increase',
+  },
+  {
+    startKey: '2020-04-06T12:00:00',
+    label: 'Super Big Sale',
+    content: {
+      content: 'We ran a massive sale on our products. We made a lot of money!',
+    },
+  },
+];
+
+export const Annotations: Story<LineChartProps> = Template.bind({});
+
+Annotations.args = {
+  ...DEFAULT_PROPS,
+  annotations: ANNOTATIONS,
 };

@@ -19,6 +19,8 @@ import {mockDefaultTheme} from '../../../test-utilities/mountWithProvider';
 import {TooltipAnimatedContainer} from '../../../components/TooltipWrapper';
 import {Chart, ChartProps} from '../Chart';
 import {YAxis} from '../../YAxis';
+import {Annotations} from '../../Annotations';
+import {normalizeData} from '../../../utilities';
 
 const MOCK_DATA: Required<LineChartDataSeriesWithDefaults> = {
   name: 'Primary',
@@ -45,6 +47,7 @@ const yAxisOptions: Required<YAxisOptions> = {
 
 const MOCK_PROPS: ChartProps = {
   data: [MOCK_DATA],
+  annotationsLookupTable: {},
   dimensions: {width: 500, height: 250},
   xAxisOptions,
   yAxisOptions,
@@ -65,7 +68,7 @@ jest.mock('../../../utilities', () => {
     getPathLength: () => 0,
     getPointAtLength: () => ({x: 0, y: 0}),
     eventPointNative: () => {
-      return {clientX: 200, clientY: 100, svgX: 200, svgY: 100};
+      return {clientX: 200, clientY: 200, svgX: 200, svgY: 200};
     },
   };
 });
@@ -377,6 +380,41 @@ describe('<Chart />', () => {
       const chart = mount(<Chart {...MOCK_PROPS} showLegend />);
 
       expect(chart).toContainReactComponent(LegendContainer);
+    });
+  });
+
+  describe('annotationsLookupTable', () => {
+    it('does not render <Annotations /> when empty', () => {
+      const chart = mount(<Chart {...MOCK_PROPS} />);
+      const group = chart.find('g');
+
+      expect(chart).not.toContainReactComponent(Annotations);
+
+      expect(group?.props.transform).toStrictEqual('translate(116,222)');
+    });
+
+    it('renders <Annotations /> when provided', () => {
+      const annotationsLookupTable = normalizeData(
+        [
+          {
+            startKey: '1',
+            label: 'Sales increase',
+          },
+        ],
+        'startKey',
+      );
+
+      const chart = mount(
+        <Chart
+          {...MOCK_PROPS}
+          annotationsLookupTable={annotationsLookupTable}
+        />,
+      );
+      const group = chart.find('g');
+
+      expect(chart).toContainReactComponent(Annotations);
+
+      expect(group?.props.transform).toStrictEqual('translate(116,222)');
     });
   });
 });
