@@ -235,10 +235,12 @@ const ANNOTATIONS: Annotation[] = [
   {
     startKey: '2020-04-02T12:00:00',
     label: 'Sales increase',
+    axis: 'x'
   },
   {
     startKey: '2020-04-06T12:00:00',
     label: 'Super Big Sale',
+    axis: 'x',
     content: {
       content: 'We ran a massive sale on our products. We made a lot of money!',
     },
