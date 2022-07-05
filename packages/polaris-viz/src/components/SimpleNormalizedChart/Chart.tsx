@@ -4,6 +4,7 @@ import {scaleLinear} from 'd3-scale';
 import {
   COLOR_VISION_SINGLE_ITEM,
   DataSeries,
+  DEFAULT_CHART_PROPS,
   DEFAULT_THEME_NAME,
 } from '@shopify/polaris-viz-core';
 import type {Direction, LabelFormatter} from '@shopify/polaris-viz-core';
@@ -12,7 +13,6 @@ import type {ComparisonMetricProps} from '../ComparisonMetric';
 import {useThemeSeriesColors} from '../../hooks/useThemeSeriesColors';
 import {
   useColorVisionEvents,
-  usePrefersReducedMotion,
   useTheme,
   useWatchColorVisionEvents,
 } from '../../hooks';
@@ -30,6 +30,7 @@ export interface ChartProps {
   direction?: Direction;
   size?: Size;
   theme?: string;
+  isAnimated?: boolean;
 }
 
 export function Chart({
@@ -40,6 +41,7 @@ export function Chart({
   direction = 'horizontal',
   size = 'small',
   theme = DEFAULT_THEME_NAME,
+  isAnimated = DEFAULT_CHART_PROPS.isAnimated,
 }: ChartProps) {
   const flattenedData = data.map(({data}) => data).flat();
 
@@ -52,7 +54,6 @@ export function Chart({
     ({value}) => value !== null && value < 0,
   );
   const isDevelopment = process.env.NODE_ENV === 'development';
-  const {prefersReducedMotion} = usePrefersReducedMotion();
 
   const [activeIndex, setActiveIndex] = useState(-1);
 
@@ -147,7 +148,7 @@ export function Chart({
           <BarSegment
             activeIndex={-1}
             index={-1}
-            isAnimated={!prefersReducedMotion}
+            isAnimated={isAnimated}
             direction={direction}
             size={size}
             scale={100}
@@ -167,7 +168,7 @@ export function Chart({
               <BarSegment
                 activeIndex={activeIndex}
                 index={colorIndex}
-                isAnimated={!prefersReducedMotion}
+                isAnimated={isAnimated}
                 direction={direction}
                 size={size}
                 scale={xScale(value)}

@@ -8,7 +8,6 @@ import {DEFAULT_CHART_PROPS} from '@shopify/polaris-viz-core';
 
 import {ChartContainer} from '../ChartContainer';
 import type {ComparisonMetricProps} from '../ComparisonMetric';
-import {usePrefersReducedMotion} from '../../hooks';
 
 import {Chart} from './Chart';
 
@@ -33,13 +32,9 @@ export function DonutChart(props: DonutChartProps) {
     ...props,
   };
 
-  const {prefersReducedMotion} = usePrefersReducedMotion();
-  const shouldAnimate = !prefersReducedMotion && isAnimated;
-
   return (
-    <ChartContainer theme={theme}>
+    <ChartContainer theme={theme} isAnimated={isAnimated}>
       <Chart
-        isAnimated={shouldAnimate}
         data={data}
         labelFormatter={labelFormatter}
         comparisonMetric={comparisonMetric}

@@ -3,6 +3,7 @@ import {
   uniqueId,
   COLOR_VISION_SINGLE_ITEM,
   DEFAULT_THEME_NAME,
+  DEFAULT_CHART_PROPS,
 } from '@shopify/polaris-viz-core';
 import type {
   ChartType,
@@ -30,19 +31,19 @@ import styles from './Chart.scss';
 
 export interface ChartProps {
   data: DataSeries[];
-  isAnimated: boolean;
   showLegend: boolean;
   type: ChartType;
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
   dimensions?: Dimensions;
   theme?: string;
+  isAnimated?: boolean;
 }
 
 export function Chart({
   data,
   dimensions,
-  isAnimated,
+  isAnimated = DEFAULT_CHART_PROPS.isAnimated,
   showLegend,
   theme = DEFAULT_THEME_NAME,
   type,

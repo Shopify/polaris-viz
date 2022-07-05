@@ -12,6 +12,7 @@ import {
   useYScale,
   COLOR_VISION_SINGLE_ITEM,
   BoundingRect,
+  DEFAULT_CHART_PROPS,
 } from '@shopify/polaris-viz-core';
 
 import {Annotations} from '../Annotations';
@@ -32,7 +33,6 @@ import {
 } from '../TooltipWrapper';
 import {
   useLinearChartAnimations,
-  usePrefersReducedMotion,
   useTheme,
   useThemeSeriesColors,
   useColorVisionEvents,
@@ -65,13 +65,13 @@ const TOOLTIP_POSITION: TooltipPositionOffset = {
 export interface Props {
   annotationsLookupTable: AnnotationLookupTable;
   data: DataSeries[];
-  isAnimated: boolean;
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
   showLegend: boolean;
   theme: string;
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
   dimensions?: Dimensions;
+  isAnimated?: boolean;
 }
 
 export function Chart({
@@ -80,14 +80,13 @@ export function Chart({
   data,
   dimensions,
   renderTooltipContent,
-  isAnimated,
+  isAnimated = DEFAULT_CHART_PROPS.isAnimated,
   showLegend,
   theme,
   yAxisOptions,
 }: Props) {
   useColorVisionEvents(data.length > 1);
 
-  const {prefersReducedMotion} = usePrefersReducedMotion();
   const selectedTheme = useTheme(theme);
   const seriesColors = useThemeSeriesColors(data, selectedTheme);
 
@@ -283,7 +282,7 @@ export function Chart({
             xScale={xScale}
             yScale={yScale}
             colors={seriesColors}
-            isAnimated={isAnimated && !prefersReducedMotion}
+            isAnimated={isAnimated}
             theme={theme}
           />
         </g>

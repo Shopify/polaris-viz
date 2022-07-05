@@ -17,6 +17,7 @@ import {
   useTheme,
   usePrintResizing,
   usePrevious,
+  usePrefersReducedMotion,
 } from '../../hooks';
 
 import styles from './ChartContainer.scss';
@@ -33,6 +34,7 @@ interface Props {
   children: ReactElement;
   theme: string;
   sparkChart?: boolean;
+  isAnimated?: boolean;
 }
 
 export const ChartContainer = (props: Props) => {
@@ -71,6 +73,10 @@ export const ChartContainer = (props: Props) => {
   const [debouncedUpdateDimensions] = useDebouncedCallback(() => {
     updateDimensions();
   }, 100);
+
+  const {prefersReducedMotion} = usePrefersReducedMotion();
+
+  const shouldAnimate = props.isAnimated && !prefersReducedMotion;
 
   useLayoutEffect(() => {
     updateDimensions();
@@ -122,13 +128,15 @@ export const ChartContainer = (props: Props) => {
       >
         {!hasValidDimensions(chartDimensions)
           ? null
-          : cloneElement<{theme: string; dimensions: Dimensions}>(
-              props.children,
-              {
-                theme: printFriendlyTheme,
-                dimensions: chartDimensions!,
-              },
-            )}
+          : cloneElement<{
+              theme: string;
+              dimensions: Dimensions;
+              isAnimated: boolean;
+            }>(props.children, {
+              theme: printFriendlyTheme,
+              dimensions: chartDimensions!,
+              isAnimated: shouldAnimate,
+            })}
       </div>
     </ChartContext.Provider>
   );

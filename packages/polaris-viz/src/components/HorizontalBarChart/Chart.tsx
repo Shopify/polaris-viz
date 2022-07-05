@@ -4,6 +4,7 @@ import {
   DataType,
   COLOR_VISION_SINGLE_ITEM,
   BoundingRect,
+  DEFAULT_CHART_PROPS,
 } from '@shopify/polaris-viz-core';
 import type {
   DataSeries,
@@ -50,7 +51,6 @@ import {getAlteredHorizontalBarPosition} from './utilities';
 import styles from './Chart.scss';
 
 export interface ChartProps {
-  isAnimated: boolean;
   data: DataSeries[];
   renderTooltipContent: (data: RenderTooltipContentData) => ReactNode;
   showLegend: boolean;
@@ -58,14 +58,15 @@ export interface ChartProps {
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
   annotationsLookupTable?: AnnotationLookupTable;
-  dimensions?: Dimensions;
   theme: string;
+  dimensions?: Dimensions;
+  isAnimated?: boolean;
 }
 
 export function Chart({
   data,
   dimensions,
-  isAnimated,
+  isAnimated = DEFAULT_CHART_PROPS.isAnimated,
   renderTooltipContent,
   showLegend,
   theme,

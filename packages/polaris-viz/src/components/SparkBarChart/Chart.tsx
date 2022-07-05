@@ -5,9 +5,9 @@ import {
   ANIMATION_MARGIN,
   SparkBarSeries,
   DEFAULT_THEME_NAME,
+  DEFAULT_CHART_PROPS,
 } from '@shopify/polaris-viz-core';
 
-import {usePrefersReducedMotion} from '../../hooks';
 import {XMLNS} from '../../constants';
 
 import styles from './SparkBarChart.scss';
@@ -15,20 +15,18 @@ import type {SparkBarChartProps} from './SparkBarChart';
 
 interface Props extends SparkBarChartProps {
   dimensions?: Dimensions;
+  isAnimated?: boolean;
 }
 
 export function Chart({
   data,
   dimensions,
   accessibilityLabel,
-  isAnimated = false,
+  isAnimated = DEFAULT_CHART_PROPS.isAnimated,
   dataOffsetRight = 0,
   dataOffsetLeft = 0,
   theme = DEFAULT_THEME_NAME,
 }: Props) {
-  const {prefersReducedMotion} = usePrefersReducedMotion();
-  const shouldAnimate = !prefersReducedMotion && isAnimated;
-
   const {width, height} = dimensions ?? {width: 0, height: 0};
 
   const viewboxHeight = height + ANIMATION_MARGIN * 2;
@@ -55,7 +53,7 @@ export function Chart({
           dataOffsetLeft={dataOffsetLeft}
           dataOffsetRight={dataOffsetRight}
           height={height}
-          shouldAnimate={shouldAnimate}
+          shouldAnimate={isAnimated}
           theme={theme}
           useTransition={useTransition}
           width={width}

@@ -11,7 +11,6 @@ import type {
   AnnotationLookupTable,
   RenderTooltipContentData,
 } from '../../types';
-import {usePrefersReducedMotion} from '../../hooks';
 
 import {Chart} from './Chart';
 
@@ -31,7 +30,7 @@ export interface HorizontalBarChartProps {
 export function HorizontalBarChart({
   annotationsLookupTable = {},
   data,
-  isAnimated = true,
+  isAnimated,
   renderTooltipContent,
   showLegend,
   theme,
@@ -40,20 +39,18 @@ export function HorizontalBarChart({
   yAxisOptions,
   dimensions,
 }: HorizontalBarChartProps) {
-  const {prefersReducedMotion} = usePrefersReducedMotion();
-
   return (
     <Chart
       dimensions={dimensions}
       theme={theme}
       annotationsLookupTable={annotationsLookupTable}
       data={data}
-      isAnimated={isAnimated && !prefersReducedMotion}
       renderTooltipContent={renderTooltipContent}
       showLegend={showLegend}
       type={type}
       xAxisOptions={xAxisOptions}
       yAxisOptions={yAxisOptions}
+      isAnimated={isAnimated}
     />
   );
 }

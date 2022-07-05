@@ -30,13 +30,14 @@ export function SimpleNormalizedChart(props: SimpleNormalizedChartProps) {
     direction = 'horizontal',
     size = 'small',
     theme,
+    isAnimated,
   }: WithRequired<SimpleNormalizedChartProps, 'theme'> = {
     ...DEFAULT_CHART_PROPS,
     ...props,
   };
 
   return (
-    <ChartContainer theme={theme}>
+    <ChartContainer theme={theme} isAnimated={isAnimated}>
       <Chart
         comparisonMetrics={comparisonMetrics}
         data={data}

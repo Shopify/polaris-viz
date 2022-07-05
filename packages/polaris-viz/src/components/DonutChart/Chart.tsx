@@ -6,6 +6,7 @@ import {
   COLOR_VISION_SINGLE_ITEM,
   DEFAULT_THEME_NAME,
   useUniqueId,
+  DEFAULT_CHART_PROPS,
 } from '@shopify/polaris-viz-core';
 import type {
   DataPoint,
@@ -32,7 +33,7 @@ export interface ChartProps {
   accessibilityLabel?: string;
   comparisonMetric?: Omit<ComparisonMetricProps, 'theme'>;
   showLegend: boolean;
-  isAnimated: boolean;
+  isAnimated?: boolean;
   total?: number;
   dimensions?: Dimensions;
   theme: string;
@@ -48,7 +49,7 @@ export function Chart({
   dimensions = {height: 0, width: 0},
   theme = DEFAULT_THEME_NAME,
   labelFormatter,
-  isAnimated,
+  isAnimated = DEFAULT_CHART_PROPS.isAnimated,
 }: ChartProps) {
   const chartId = useUniqueId('Donut');
   const [activeIndex, setActiveIndex] = useState<number>(-1);

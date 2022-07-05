@@ -7,16 +7,20 @@ import {
   useTheme,
 } from '@shopify/polaris-viz-core';
 
+import {usePrefersReducedMotion} from '../../hooks';
+
 interface Props {
   children: ReactElement;
   theme?: string;
   sparkChart?: boolean;
+  isAnimated?: boolean;
 }
 
 export function ChartContainer({
   theme = DEFAULT_THEME_NAME,
   children,
   sparkChart = false,
+  isAnimated,
 }: Props) {
   const [chartDimensions, setChartDimensions] =
     useState<Dimensions | null>(null);
@@ -36,6 +40,10 @@ export function ChartContainer({
       return {width, height};
     });
   };
+
+  const {prefersReducedMotion} = usePrefersReducedMotion();
+
+  const shouldAnimate = isAnimated && !prefersReducedMotion;
 
   return (
     <View
@@ -64,6 +72,7 @@ export function ChartContainer({
               width: chartDimensions.width,
               height: chartDimensions.height,
             },
+            isAnimated: shouldAnimate,
           })}
     </View>
   );
