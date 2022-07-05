@@ -263,6 +263,7 @@ export function Chart({
             xScale={xScale}
             yAxisOptions={yAxisOptions}
             yScale={yScale}
+            areAllNegative={areAllNegative}
           />
         </g>
 

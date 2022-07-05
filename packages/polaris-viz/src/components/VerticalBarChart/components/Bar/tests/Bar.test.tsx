@@ -89,4 +89,16 @@ describe('<Bar/>', () => {
       });
     });
   });
+
+  describe('zero value', () => {
+    it('renders a line component when passed value is zero', () => {
+      const bar = mount(
+        <svg>
+          <Bar {...defaultProps} rawValue={0} />
+        </svg>,
+      );
+
+      expect(bar).toContainReactComponent('line');
+    });
+  });
 });

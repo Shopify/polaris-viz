@@ -6,6 +6,7 @@ import {
   getRoundedRectPath,
 } from '@shopify/polaris-viz-core';
 
+import {ZeroValueLine} from '../../../shared/ZeroValueLine';
 import {BARS_TRANSITION_CONFIG} from '../../../../constants';
 
 import styles from './Bar.scss';
@@ -23,6 +24,7 @@ interface Props {
   borderRadius?: string;
   isAnimated?: boolean;
   role?: string;
+  areAllNegative?: boolean;
 }
 
 export const Bar = React.memo(function Bar({
@@ -38,8 +40,10 @@ export const Bar = React.memo(function Bar({
   width,
   x,
   zeroPosition,
+  areAllNegative,
 }: Props) {
   const treatAsNegative = rawValue < 0 || rawValue === 0;
+  const zeroValue = rawValue === 0;
 
   const yPosition = useMemo(() => {
     return treatAsNegative ? zeroPosition + height : zeroPosition - height;
@@ -81,18 +85,27 @@ export const Bar = React.memo(function Bar({
       }}
       aria-hidden="true"
     >
-      <path
-        data-id={`bar-${index}`}
-        data-index={index}
-        data-type={DataType.Bar}
-        d={path}
-        fill={color}
-        aria-label={ariaLabel}
-        role={role}
-        style={style}
-        className={styles.Bar}
-        aria-hidden="true"
-      />
+      {!zeroValue ? (
+        <path
+          data-id={`bar-${index}`}
+          data-index={index}
+          data-type={DataType.Bar}
+          d={path}
+          fill={color}
+          aria-label={ariaLabel}
+          role={role}
+          style={style}
+          className={styles.Bar}
+          aria-hidden="true"
+        />
+      ) : (
+        <ZeroValueLine
+          x={x + width / 2}
+          y={yPosition}
+          direction="vertical"
+          areAllNegative={areAllNegative}
+        />
+      )}
     </animated.g>
   );
 });

@@ -31,6 +31,7 @@ interface VerticalBarGroupProps {
   yAxisOptions: Required<YAxisOptions>;
   yScale: ScaleLinear<number, number>;
   indexOffset?: number;
+  areAllNegative?: boolean;
 }
 
 export function VerticalBarGroup({
@@ -48,6 +49,7 @@ export function VerticalBarGroup({
   xScale,
   yScale,
   yAxisOptions,
+  areAllNegative,
 }: VerticalBarGroupProps) {
   const selectedTheme = useTheme(theme);
 
@@ -116,7 +118,7 @@ export function VerticalBarGroup({
             width={xScale.bandwidth()}
             x={xPosition == null ? 0 : xPosition}
             yScale={yScale}
-            zeroAsMinHeight={selectedTheme.bar.zeroAsMinHeight}
+            areAllNegative={areAllNegative}
           />
         );
       })}

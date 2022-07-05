@@ -179,7 +179,7 @@ export const DEFAULT_THEME: Theme = {
   },
   bar: {
     hasRoundedCorners: true,
-    zeroAsMinHeight: false,
+    zeroValueColor: variables.colorGray80,
   },
   grid: {
     showVerticalLines: false,
@@ -281,7 +281,7 @@ export const LIGHT_THEME: Theme = {
   },
   bar: {
     hasRoundedCorners: true,
-    zeroAsMinHeight: false,
+    zeroValueColor: variables.colorGray70,
   },
   grid: {
     showVerticalLines: false,

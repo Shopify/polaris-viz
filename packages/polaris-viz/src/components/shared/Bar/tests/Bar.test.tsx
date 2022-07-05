@@ -36,3 +36,14 @@ describe('<Bar />', () => {
     );
   });
 });
+
+describe('Zero Value', () => {
+  it('renders a line component when passed value is zero', () => {
+    const bar = mount(
+      <svg>
+        <Bar {...MOCK_PROPS} width={0} />
+      </svg>,
+    );
+    expect(bar).toContainReactComponent('line');
+  });
+});

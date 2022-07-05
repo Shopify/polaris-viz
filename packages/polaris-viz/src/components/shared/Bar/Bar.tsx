@@ -10,6 +10,8 @@ import {
 } from '@shopify/polaris-viz-core';
 import type {Direction} from '@shopify/polaris-viz-core';
 
+import {ZeroValueLine} from '../ZeroValueLine';
+
 import styles from './Bar.scss';
 
 export interface BarProps {
@@ -72,21 +74,29 @@ export const Bar = React.memo(function Bar({
       role="img"
       aria-label={ariaLabel}
     >
-      <animated.path
-        d={spring.pathD}
-        data-id={`bar-${index}`}
-        data-index={index}
-        data-type={DataType.Bar}
-        fill={color}
-        aria-hidden="true"
-        style={{
-          transform: `translate(${x}px, ${y}px) ${transform}`,
-          opacity: isActive
-            ? COLOR_VISION_ACTIVE_OPACITY
-            : COLOR_VISION_FADED_OPACITY,
-        }}
-        className={styles.Bar}
-      />
+      {width !== 0 ? (
+        <animated.path
+          d={spring.pathD}
+          data-id={`bar-${index}`}
+          data-index={index}
+          data-type={DataType.Bar}
+          fill={color}
+          aria-hidden="true"
+          style={{
+            transform: `translate(${x}px, ${y}px) ${transform}`,
+            opacity: isActive
+              ? COLOR_VISION_ACTIVE_OPACITY
+              : COLOR_VISION_FADED_OPACITY,
+          }}
+          className={styles.Bar}
+        />
+      ) : (
+        <ZeroValueLine
+          x={x}
+          y={y + height / 2}
+          direction={animationDirection}
+        />
+      )}
     </g>
   );
 });
