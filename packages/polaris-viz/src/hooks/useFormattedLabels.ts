@@ -1,12 +1,12 @@
 import {useMemo} from 'react';
-import type {DataSeries, XAxisOptions} from '@shopify/polaris-viz-core';
+import type {DataSeries, LabelFormatter} from '@shopify/polaris-viz-core';
 
 interface Props {
   data: DataSeries[];
-  xAxisOptions: Required<XAxisOptions>;
+  labelFormatter: LabelFormatter;
 }
 
-export function useXAxisLabels({data, xAxisOptions}: Props) {
+export function useFormattedLabels({data, labelFormatter}: Props) {
   return useMemo(() => {
     const labels: string[] = [];
 
@@ -20,10 +20,10 @@ export function useXAxisLabels({data, xAxisOptions}: Props) {
       }
 
       series.data.forEach(({key}, index) => {
-        labels[index] = xAxisOptions.labelFormatter?.(`${key}`) ?? `${key}`;
+        labels[index] = labelFormatter?.(`${key}`) ?? `${key}`;
       });
     });
 
     return labels;
-  }, [data, xAxisOptions]);
+  }, [data, labelFormatter]);
 }

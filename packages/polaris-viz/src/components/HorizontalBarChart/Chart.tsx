@@ -5,6 +5,7 @@ import {
   COLOR_VISION_SINGLE_ITEM,
   BoundingRect,
   DEFAULT_CHART_PROPS,
+  HORIZONTAL_SPACE_BETWEEN_CHART_AND_AXIS,
 } from '@shopify/polaris-viz-core';
 import type {
   DataSeries,
@@ -14,6 +15,7 @@ import type {
   YAxisOptions,
 } from '@shopify/polaris-viz-core';
 
+import {useFormattedLabels} from '../../hooks/useFormattedLabels';
 import type {
   RenderTooltipContentData,
   AnnotationLookupTable,
@@ -37,6 +39,7 @@ import {
   XMLNS,
   BarChartMargin as Margin,
   HORIZONTAL_BAR_GROUP_DELAY,
+  ANNOTATIONS_LABELS_OFFSET,
 } from '../../constants';
 import {eventPointNative, formatDataIntoGroups} from '../../utilities';
 import {
@@ -46,24 +49,29 @@ import {
   TooltipWrapper,
 } from '../TooltipWrapper';
 
-import {VerticalGridLines} from './components';
+import {
+  VerticalGridLines,
+  HorizontalBarChartYAnnotations,
+  HorizontalBarChartXAnnotations,
+} from './components';
 import {getAlteredHorizontalBarPosition} from './utilities';
 import styles from './Chart.scss';
 
 export interface ChartProps {
+  annotationsLookupTable: AnnotationLookupTable;
   data: DataSeries[];
   renderTooltipContent: (data: RenderTooltipContentData) => ReactNode;
   showLegend: boolean;
   type: ChartType;
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
-  annotationsLookupTable?: AnnotationLookupTable;
-  theme: string;
   dimensions?: Dimensions;
+  theme: string;
   isAnimated?: boolean;
 }
 
 export function Chart({
+  annotationsLookupTable,
   data,
   dimensions,
   isAnimated = DEFAULT_CHART_PROPS.isAnimated,
@@ -83,6 +91,7 @@ export function Chart({
 
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
   const [labelHeight, setLabelHeight] = useState(0);
+  const [annotationsHeight, setAnnotationsHeight] = useState(0);
 
   const {longestSeriesCount, seriesColors} = useHorizontalSeriesColors({
     data,
@@ -129,9 +138,10 @@ export function Chart({
     data,
   });
 
-  const drawableHeight = height - labelHeight;
+  const chartYPosition = (Margin.Top as number) + annotationsHeight;
+  const drawableHeight = height - labelHeight - chartYPosition;
 
-  const {xScale, ticks, ticksFormatted, drawableWidth, chartStartPosition} =
+  const {xScale, ticks, ticksFormatted, drawableWidth, chartXPosition} =
     useHorizontalXScale({
       allNumbers,
       stackedMin,
@@ -143,13 +153,16 @@ export function Chart({
 
   const {barHeight, chartHeight, groupBarsAreaHeight, groupHeight} =
     useHorizontalBarSizes({
-      chartDimensions: {width: drawableWidth, height},
+      chartDimensions: {width: drawableWidth, height: drawableHeight},
       isSimple: xAxisOptions.hide,
       isStacked,
       seriesLength: longestSeriesCount,
       singleBarCount: data.length,
       labelHeight,
     });
+
+  const annotationsDrawableHeight =
+    chartYPosition + chartHeight + ANNOTATIONS_LABELS_OFFSET;
 
   const getAriaLabel = useCallback(
     (key: string, seriesIndex: number) => {
@@ -180,7 +193,7 @@ export function Chart({
     series: data,
     groupHeight,
     isAnimated,
-    chartStartPosition,
+    chartXPosition,
   });
 
   const zeroPosition = longestLabel.negative + xScale(0);
@@ -189,9 +202,16 @@ export function Chart({
   const chartBounds: BoundingRect = {
     width,
     height,
-    x: chartStartPosition,
+    x: chartXPosition,
     y: 0,
   };
+
+  const hasAnnotations = Object.keys(annotationsLookupTable).length > 0;
+
+  const labels = useFormattedLabels({
+    data,
+    labelFormatter: yAxisOptions.labelFormatter,
+  });
 
   return (
     <div
@@ -211,9 +231,11 @@ export function Chart({
         height={height}
       >
         {xAxisOptions.hide === true ? null : (
-          <g transform={`translate(${chartStartPosition}, 0)`}>
+          <g transform={`translate(${chartXPosition}, ${chartYPosition})`}>
             <VerticalGridLines
-              chartHeight={chartHeight}
+              chartHeight={
+                chartHeight + HORIZONTAL_SPACE_BETWEEN_CHART_AND_AXIS
+              }
               stroke={selectedTheme.grid.color}
               ticks={ticks}
               xScale={xScale}
@@ -241,42 +263,70 @@ export function Chart({
           theme={theme}
         />
 
-        {transitions((style, item, _transition, index) => {
-          const {opacity, transform} = style as HorizontalTransitionStyle;
-          const name = item.key ?? '';
-          const ariaLabel = getAriaLabel(item.key, item.index);
+        <g transform={`translate(${0}, ${chartYPosition})`}>
+          {transitions((style, item, _transition, index) => {
+            const {opacity, transform} = style as HorizontalTransitionStyle;
+            const name = item.key ?? '';
+            const ariaLabel = getAriaLabel(item.key, item.index);
 
-          const animationDelay = isAnimated
-            ? (HORIZONTAL_BAR_GROUP_DELAY * index) / data.length
-            : 0;
+            const animationDelay = isAnimated
+              ? (HORIZONTAL_BAR_GROUP_DELAY * index) / data.length
+              : 0;
 
-          return (
-            <HorizontalGroup
-              animationDelay={animationDelay}
-              areAllNegative={areAllNegative}
-              ariaLabel={ariaLabel}
-              barHeight={barHeight}
-              containerWidth={width}
-              data={data}
-              groupHeight={groupHeight}
-              id={id}
-              index={index}
-              isAnimated={isAnimated}
-              isSimple={false}
-              isStacked={isStacked}
-              name={name}
-              opacity={opacity}
-              stackedValues={stackedValues}
-              theme={theme}
-              transform={transform}
-              xAxisOptions={xAxisOptions}
-              xScale={xScale}
-              yAxisOptions={yAxisOptions}
-              zeroPosition={zeroPosition}
-            />
-          );
-        })}
+            return (
+              <HorizontalGroup
+                animationDelay={animationDelay}
+                areAllNegative={areAllNegative}
+                ariaLabel={ariaLabel}
+                barHeight={barHeight}
+                containerWidth={width}
+                data={data}
+                groupHeight={groupHeight}
+                id={id}
+                index={index}
+                isAnimated={isAnimated}
+                isSimple={false}
+                isStacked={isStacked}
+                name={name}
+                opacity={opacity}
+                stackedValues={stackedValues}
+                theme={theme}
+                transform={transform}
+                xAxisOptions={xAxisOptions}
+                xScale={xScale}
+                yAxisOptions={yAxisOptions}
+                zeroPosition={zeroPosition}
+              />
+            );
+          })}
+        </g>
+
+        {hasAnnotations && (
+          <React.Fragment>
+            <g transform={`translate(${chartXPosition}, ${0})`}>
+              <HorizontalBarChartXAnnotations
+                annotationsLookupTable={annotationsLookupTable}
+                drawableHeight={annotationsDrawableHeight}
+                drawableWidth={drawableWidth}
+                onHeightChange={setAnnotationsHeight}
+                theme={theme}
+                xScale={xScale}
+              />
+            </g>
+            <g transform={`translate(${chartXPosition}, ${chartYPosition})`}>
+              <HorizontalBarChartYAnnotations
+                annotationsLookupTable={annotationsLookupTable}
+                drawableWidth={drawableWidth}
+                groupHeight={groupHeight}
+                labels={labels}
+                theme={theme}
+                zeroPosition={zeroPosition}
+              />
+            </g>
+          </React.Fragment>
+        )}
       </svg>
+
       <TooltipWrapper
         bandwidth={groupBarsAreaHeight}
         chartBounds={chartBounds}
@@ -319,7 +369,7 @@ export function Chart({
     }
 
     const highestValue = highestValueForSeries[index];
-    const x = chartStartPosition + xScale(highestValue);
+    const x = chartXPosition + xScale(highestValue);
 
     return {
       x: highestValue < 0 ? -x : x,

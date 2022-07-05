@@ -15,14 +15,14 @@ export interface HorizontalTransitionStyle {
 }
 
 interface Props {
-  chartStartPosition: number;
+  chartXPosition: number;
   groupHeight: number;
   isAnimated: boolean;
   series: DataSeries[];
 }
 
 export function useHorizontalTransitions({
-  chartStartPosition,
+  chartXPosition,
   groupHeight,
   isAnimated,
   series,
@@ -35,7 +35,7 @@ export function useHorizontalTransitions({
   }, [series]);
 
   const getTransform = (index: number) => {
-    return `translate(${chartStartPosition}px,${groupHeight * index}px)`;
+    return `translate(${chartXPosition}px,${groupHeight * index}px)`;
   };
 
   const animationTrail = 50;

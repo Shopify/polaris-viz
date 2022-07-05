@@ -29,10 +29,10 @@ describe('useHorizontalBarSizes()', () => {
     const data = parseData(result);
 
     expect(data).toStrictEqual({
-      barHeight: 43.5,
-      chartHeight: 375,
-      groupBarsAreaHeight: 87,
-      groupHeight: 125,
+      barHeight: 44.333333333333336,
+      chartHeight: 380,
+      groupBarsAreaHeight: 88.66666666666667,
+      groupHeight: 126.66666666666667,
     });
   });
 
@@ -48,10 +48,10 @@ describe('useHorizontalBarSizes()', () => {
     const data = parseData(result);
 
     expect(data).toStrictEqual({
-      barHeight: 28.333333333333332,
-      chartHeight: 375,
-      groupBarsAreaHeight: 85,
-      groupHeight: 125,
+      barHeight: 28.88888888888889,
+      chartHeight: 380,
+      groupBarsAreaHeight: 86.66666666666667,
+      groupHeight: 126.66666666666667,
     });
   });
 
@@ -85,7 +85,7 @@ describe('useHorizontalBarSizes()', () => {
 
       const data = parseData(result);
 
-      expect(data.barHeight).toStrictEqual(87);
+      expect(data.barHeight).toStrictEqual(88.66666666666667);
     });
   });
 });

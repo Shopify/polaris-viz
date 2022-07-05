@@ -3,37 +3,31 @@ import {
   ChartContext,
   clamp,
   estimateStringWidth,
-  getValueFromXScale,
 } from '@shopify/polaris-viz-core';
-import type {ScaleBand, ScaleLinear} from 'd3-scale';
+import type {ScaleLinear} from 'd3-scale';
 
-import {COLLAPSED_ANNOTATIONS_COUNT} from '../../../constants';
 import {
+  checkForHorizontalSpace,
+  useShowMoreAnnotationsButton,
   PILL_HEIGHT,
   PILL_PADDING,
   PILL_ROW_GAP,
   PILL_X_MIN,
-} from '../constants';
-import type {Annotation} from '../../../types';
-import type {AnnotationPosition} from '../types';
-import {checkForHorizontalSpace} from '../utilities/checkForHorizontalSpace';
-
-import {useShowMoreAnnotationsButton} from './useShowMoreAnnotationsButton';
+  AnnotationPosition,
+} from '../../../../Annotations';
+import {COLLAPSED_ANNOTATIONS_COUNT} from '../../../../../constants';
+import type {Annotation} from '../../../../../types';
 
 export interface Props {
   annotations: Annotation[];
-  axisLabelWidth: number;
-  dataIndexes: {[key: string]: string};
   drawableWidth: number;
   isShowingAllAnnotations: boolean;
   onHeightChange: (height: number) => void;
-  xScale: ScaleLinear<number, number> | ScaleBand<string>;
+  xScale: ScaleLinear<number, number>;
 }
 
-export function useAnnotationPositions({
+export function useHorizontalBarChartXAnnotationPositions({
   annotations,
-  axisLabelWidth,
-  dataIndexes,
   drawableWidth,
   isShowingAllAnnotations,
   onHeightChange,
@@ -53,10 +47,7 @@ export function useAnnotationPositions({
 
   const {positions, hiddenAnnotationsCount} = useMemo(() => {
     let positions = annotations.map((annotation, dataIndex) => {
-      const xPosition = getValueFromXScale(
-        dataIndexes[annotation.startKey],
-        xScale,
-      );
+      const xPosition = xScale(Number(annotation.startKey));
 
       const textWidth = textWidths[dataIndex];
 
@@ -66,16 +57,8 @@ export function useAnnotationPositions({
         max: drawableWidth,
       });
 
-      const centerOffset = axisLabelWidth / 2;
-
-      const rawX = clamp({
-        amount: xPosition + centerOffset,
-        min: xPosition,
-        max: xPosition + axisLabelWidth,
-      });
-
       let x = clamp({
-        amount: rawX - width / 2,
+        amount: xPosition - width / 2,
         min: PILL_X_MIN,
         max: Infinity,
       });
@@ -89,7 +72,7 @@ export function useAnnotationPositions({
       return {
         index: dataIndex,
         line: {
-          x: rawX,
+          x: xPosition,
           y: 0,
         },
         row: 1,
@@ -113,16 +96,9 @@ export function useAnnotationPositions({
     ).length;
 
     return {positions, hiddenAnnotationsCount};
-  }, [
-    annotations,
-    dataIndexes,
-    textWidths,
-    axisLabelWidth,
-    xScale,
-    drawableWidth,
-  ]);
+  }, [annotations, textWidths, xScale, drawableWidth]);
 
-  const {totalRowHeight, rowCount} = useShowMoreAnnotationsButton({
+  const {rowCount, totalRowHeight} = useShowMoreAnnotationsButton({
     isShowingAllAnnotations,
     positions,
   });
