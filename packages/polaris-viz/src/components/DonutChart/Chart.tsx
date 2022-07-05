@@ -77,7 +77,9 @@ export function Chart({
       colors: seriesColor,
     });
 
-  const shouldUseColorVisionEvents = Boolean(width && height);
+  const shouldUseColorVisionEvents = Boolean(
+    width && height && isLegendMounted,
+  );
 
   useColorVisionEvents(shouldUseColorVisionEvents);
 
@@ -198,6 +200,7 @@ export function Chart({
           data={legend}
           theme={theme}
           direction={legendDirection}
+          position={legendPosition}
         />
       )}
     </div>

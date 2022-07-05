@@ -13,7 +13,7 @@ import type {Direction, Dimensions} from '@shopify/polaris-viz-core';
 import {DEFAULT_LEGEND_HEIGHT, DEFAULT_LEGEND_WIDTH} from '../../constants';
 import {useResizeObserver, useWatchColorVisionEvents} from '../../hooks';
 import {Legend} from '../Legend';
-import type {LegendData} from '../../types';
+import type {LegendData, LegendPosition} from '../../types';
 import {classNames} from '../../utilities';
 
 import style from './LegendContainer.scss';
@@ -24,6 +24,7 @@ export interface LegendContainerProps {
   onDimensionChange: Dispatch<SetStateAction<Dimensions>>;
   theme: string;
   direction?: Direction;
+  position?: LegendPosition;
 }
 
 export function LegendContainer({
@@ -32,6 +33,7 @@ export function LegendContainer({
   onDimensionChange,
   theme,
   direction = 'horizontal',
+  position = 'top-left',
 }: LegendContainerProps) {
   const selectedTheme = useTheme(theme);
   const {setRef, entry} = useResizeObserver();
@@ -50,6 +52,15 @@ export function LegendContainer({
       margin: `0 ${selectedTheme.grid.horizontalMargin}px 0`,
       flexDirection: 'column',
     },
+    centerTiles: {
+      justifyContent: 'center',
+    },
+  };
+
+  const shouldCenterTiles = (pos) => {
+    if (pos === 'top' || pos === 'bottom') {
+      return {justifyContent: 'center'};
+    }
   };
 
   useWatchColorVisionEvents({
@@ -84,7 +95,7 @@ export function LegendContainer({
       className={classNames(style.Container)}
       ref={setRef}
       role="list"
-      style={styleMap[direction]}
+      style={{...styleMap[direction], ...shouldCenterTiles(position)}}
     >
       <Legend
         activeIndex={activeIndex}
