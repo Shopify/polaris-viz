@@ -41,7 +41,7 @@ export interface ChartProps {
   dimensions?: Dimensions;
   theme?: string;
   labelFormatter: LabelFormatter;
-  legendPosition?: LegendPosition;
+  legendPosition: LegendPosition;
 }
 
 export function Chart({
