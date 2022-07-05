@@ -18,6 +18,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Fixed
 
 - `<SimpleBarChart/>` label positions on Safari
+- `FunnelChart` labels in Safari
 
 ## [4.0.0] - 2022-06-23
 
