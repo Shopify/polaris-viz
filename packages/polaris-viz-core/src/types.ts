@@ -247,8 +247,8 @@ export enum ChartState {
   Success = 'Success',
 }
 
-export interface ChartProps {
-  data: DataSeries[];
+export interface ChartProps<T = DataSeries[]> {
+  data: T;
   theme?: string;
   isAnimated?: boolean;
   state?: ChartState;

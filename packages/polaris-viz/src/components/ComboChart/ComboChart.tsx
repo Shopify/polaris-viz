@@ -19,12 +19,10 @@ import {formatDataForTooltip} from './utilities/formatDataForTooltip';
 
 export type ComboChartProps = {
   data: DataGroup[];
-  isAnimated?: boolean;
   renderTooltipContent?(data: RenderTooltipContentData): React.ReactNode;
   showLegend?: boolean;
-  theme?: string;
   xAxisOptions?: Partial<XAxisOptions>;
-} & Omit<ChartProps, 'data'>;
+} & ChartProps<DataGroup[]>;
 
 export function ComboChart(props: ComboChartProps) {
   const {

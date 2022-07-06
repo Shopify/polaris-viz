@@ -3,10 +3,20 @@ import {scaleLinear} from 'd3-scale';
 import {maxIndex} from 'd3-array';
 import type {LabelFormatter} from 'types';
 
+import {DEFAULT_MAX_Y} from '../constants';
 import {ChartContext} from '../contexts';
-import {estimateStringWidth} from '../utilities';
+import {estimateStringWidth, shouldRoundScaleUp} from '../utilities';
 
 const MINIMAL_LABEL_SPACE = 80;
+
+export interface Props {
+  drawableHeight: number;
+  formatYAxisLabel: LabelFormatter;
+  max: number;
+  min: number;
+  integersOnly?: boolean;
+  shouldRoundUp?: boolean;
+}
 
 export function useYScale({
   drawableHeight,
@@ -15,15 +25,19 @@ export function useYScale({
   max,
   min,
   shouldRoundUp = true,
-}: {
-  drawableHeight: number;
-  formatYAxisLabel: LabelFormatter;
-  max: number;
-  min: number;
-  integersOnly?: boolean;
-  shouldRoundUp?: boolean;
-}) {
+}: Props) {
   const {characterWidths} = useContext(ChartContext);
+
+  const [minY, maxY] = useMemo(() => {
+    const minY = min;
+    const maxY = max === 0 && min === 0 ? DEFAULT_MAX_Y : max;
+
+    if (integersOnly) {
+      return [Math.floor(minY), Math.ceil(maxY)];
+    }
+
+    return [minY, maxY];
+  }, [min, max, integersOnly]);
 
   const {yScale, ticks, yAxisLabelWidth} = useMemo(() => {
     const maxTicks = Math.max(
@@ -33,10 +47,17 @@ export function useYScale({
 
     const yScale = scaleLinear()
       .range([drawableHeight, 0])
-      .domain([Math.min(0, min), Math.max(0, max)]);
+      .domain([Math.min(0, minY), Math.max(0, maxY)]);
 
-    if (shouldRoundUp) {
+    if (
+      shouldRoundUp &&
+      shouldRoundScaleUp({yScale, maxValue: maxY, maxTicks})
+    ) {
       yScale.nice(maxTicks);
+    } else {
+      const roundedDownMin = yScale.copy().nice(maxTicks).ticks(maxTicks)[0];
+
+      yScale.domain([Math.min(roundedDownMin, minY), Math.max(0, maxY)]);
     }
 
     const filteredTicks = integersOnly
@@ -68,8 +89,8 @@ export function useYScale({
     drawableHeight,
     formatYAxisLabel,
     integersOnly,
-    max,
-    min,
+    maxY,
+    minY,
   ]);
 
   return {yScale, ticks, yAxisLabelWidth};

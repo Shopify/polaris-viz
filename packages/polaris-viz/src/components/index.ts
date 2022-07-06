@@ -35,3 +35,6 @@ export {TooltipContent} from './TooltipContent';
 export type {TooltipContentProps} from './TooltipContent';
 export {ConicGradientWithStops} from './ConicGradientWithStops';
 export {ChartSkeleton} from './ChartSkeleton';
+export {ComboChart} from './ComboChart';
+export type {ComboChartProps} from './ComboChart';
+export {XAxis} from './XAxis';

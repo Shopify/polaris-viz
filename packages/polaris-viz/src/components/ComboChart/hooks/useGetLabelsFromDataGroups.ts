@@ -1,7 +1,7 @@
 import type {DataGroup, XAxisOptions} from '@shopify/polaris-viz-core';
 import isEqual from 'fast-deep-equal';
 
-import {useXAxisLabels} from '../../../hooks/useXAxisLabels';
+import {useFormattedLabels} from '../../../hooks/useFormattedLabels';
 
 export interface Props {
   data: DataGroup[];
@@ -9,14 +9,14 @@ export interface Props {
 }
 
 export function useGetLabelsFromDataGroups({data, xAxisOptions}: Props) {
-  const firstLabels = useXAxisLabels({
+  const firstLabels = useFormattedLabels({
     data: data[0].series,
-    xAxisOptions,
+    labelFormatter: xAxisOptions.labelFormatter,
   });
 
-  const secondLabels = useXAxisLabels({
+  const secondLabels = useFormattedLabels({
     data: data[1].series,
-    xAxisOptions,
+    labelFormatter: xAxisOptions.labelFormatter,
   });
 
   if (isEqual(firstLabels, secondLabels)) {

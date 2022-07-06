@@ -5,7 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-<!-- ## Unreleased -->
+## Unreleased
+
+### Added
+
+- Added `<ComboChart />`.
 
 ## [4.1.1] - 2022-07-06
 
@@ -16,6 +20,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Added
 
 - Added `annotations` to `StackedAreaChartProps` and `LineChartProps`
+
 ### Removed
 
 - `bar.innerPadding` and `bar.outerPadding`

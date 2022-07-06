@@ -1,40 +1,28 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {BarChartXAxisLabels} from '../../BarChartXAxisLabels';
-import {YAxis} from '../../../components';
+import {YAxis, XAxis} from '../../../components';
 import {mountWithProvider, triggerSVGMouseMove} from '../../../test-utilities';
 import {HorizontalGridLines} from '../../../components/HorizontalGridLines';
 import {mockDefaultTheme} from '../../../test-utilities/mountWithProvider';
 import {TooltipAnimatedContainer} from '../../../components/TooltipWrapper';
 import {Chart, Props} from '../Chart';
-import {BarGroup, StackedBarGroups} from '../components';
+import {StackedBarGroups} from '../components';
 import {LegendContainer} from '../../LegendContainer';
 import {Annotations} from '../../Annotations';
 import {normalizeData} from '../../../utilities';
 
-const ZERO_AS_MIN_HEIGHT_THEME = {
-  themes: {
-    Default: {
-      bar: {
-        zeroAsMinHeight: true,
-      },
-    },
-  },
-};
-
 jest.mock('@shopify/polaris-viz-core/src/utilities', () => {
   return {
     ...jest.requireActual('@shopify/polaris-viz-core/src/utilities'),
-    estimateStringWidth: () => 0,
+    estimateStringWidth: () => 100,
   };
 });
 
-jest.mock('../../../utilities', () => {
+jest.mock('../../../utilities/eventPoint', () => {
   return {
-    ...jest.requireActual('../../../utilities'),
     eventPointNative: () => {
-      return {clientX: 0, clientY: 0, svgX: 100, svgY: 100};
+      return {clientX: 0, clientY: 0, svgX: 150, svgY: 150};
     },
   };
 });
@@ -75,15 +63,16 @@ describe('Chart />', () => {
     dimensions: {width: 500, height: 250},
     renderTooltipContent,
     xAxisOptions: {
-      labelFormatter: jest.fn((value) => value.toString()),
+      labelFormatter: jest.fn((value) => `${value}`),
       hide: false,
     },
     yAxisOptions: {
-      labelFormatter: (value) => value.toString(),
+      labelFormatter: (value) => `${value}`,
       integersOnly: false,
     },
     type: 'default',
     showLegend: false,
+    theme: 'Default',
   };
 
   it('renders an SVG element', () => {
@@ -94,7 +83,7 @@ describe('Chart />', () => {
 
   it('renders an Labels', () => {
     const chart = mount(<Chart {...mockProps} />);
-    expect(chart).toContainReactComponent(BarChartXAxisLabels);
+    expect(chart).toContainReactComponent(XAxis);
   });
 
   it('does not render Labels if it is hidden', () => {
@@ -104,7 +93,7 @@ describe('Chart />', () => {
         xAxisOptions={{...mockProps.xAxisOptions, hide: true}}
       />,
     );
-    expect(chart).not.toContainReactComponent(BarChartXAxisLabels);
+    expect(chart).not.toContainReactComponent(XAxis);
   });
 
   it('renders an yAxis', () => {
@@ -118,12 +107,12 @@ describe('Chart />', () => {
         {...mockProps}
         xAxisOptions={{
           ...mockProps.xAxisOptions,
-          labelFormatter: (value: string) => `${value} pickles`,
+          labelFormatter: (value) => `${value} pickles`,
         }}
       />,
     );
 
-    const xAxis = chart.find(BarChartXAxisLabels);
+    const xAxis = chart.find(XAxis);
 
     expect(xAxis?.props.labels[0]).toStrictEqual('stuff 1 pickles');
   });

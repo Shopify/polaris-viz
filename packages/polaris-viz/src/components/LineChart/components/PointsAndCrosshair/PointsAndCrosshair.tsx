@@ -86,12 +86,14 @@ export function PointsAndCrosshair({
 
   return (
     <React.Fragment>
-      <Crosshair
-        x={getXPosition({isCrosshair: true})}
-        height={drawableHeight}
-        opacity={activeIndex == null ? 0 : 1}
-        theme={theme}
-      />
+      {emptyState ? null : (
+        <Crosshair
+          x={getXPosition({isCrosshair: true})}
+          height={drawableHeight}
+          opacity={activeIndex == null ? 0 : 1}
+          theme={theme}
+        />
+      )}
       <Points
         activeIndex={emptyState ? null : activeIndex}
         animatedCoordinates={animatedCoordinates}

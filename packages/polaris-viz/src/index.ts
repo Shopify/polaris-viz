@@ -13,6 +13,7 @@ export {
   PolarisVizProvider,
   TooltipContent,
   ChartSkeleton,
+  ComboChart,
 } from './components';
 
 export type {
@@ -23,6 +24,7 @@ export type {
   BarChartProps,
   SimpleBarChartProps,
   TooltipContentProps,
+  ComboChartProps,
 } from './components';
 
 export {

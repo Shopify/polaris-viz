@@ -5,6 +5,7 @@ import {scaleBand} from 'd3-scale';
 import {useXScale} from '../useXScale';
 
 jest.mock('d3-scale', () => ({
+  ...jest.requireActual('d3-scale'),
   scaleBand: jest.fn(() => {
     return (value: any) => value;
   }),
