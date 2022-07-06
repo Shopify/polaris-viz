@@ -13,7 +13,6 @@ interface XAxisProps {
   onHeightChange: Dispatch<SetStateAction<number>>;
   xScale: ScaleLinear<number, number> | ScaleBand<string>;
   reducedLabelIndexes?: number[];
-  theme: string;
   ariaHidden?: boolean;
 }
 
@@ -25,7 +24,6 @@ export function XAxis({
   labelWidth,
   onHeightChange,
   reducedLabelIndexes,
-  theme,
   xScale,
   ariaHidden = false,
 }: XAxisProps) {
@@ -51,7 +49,7 @@ export function XAxis({
             key={index}
             aria-hidden={ariaHidden}
           >
-            <TextLine line={line} index={index} theme={theme} />
+            <TextLine line={line} index={index} />
           </g>
         );
       })}

@@ -21,7 +21,6 @@ export interface HorizontalBarChartProps {
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
   annotationsLookupTable?: AnnotationLookupTable;
-  theme: string;
   type?: ChartType;
   dimensions?: Dimensions;
 }
@@ -31,7 +30,6 @@ export function HorizontalBarChart({
   data,
   renderTooltipContent,
   showLegend,
-  theme,
   type = 'default',
   xAxisOptions,
   yAxisOptions,
@@ -40,7 +38,6 @@ export function HorizontalBarChart({
   return (
     <Chart
       dimensions={dimensions}
-      theme={theme}
       annotationsLookupTable={annotationsLookupTable}
       data={data}
       renderTooltipContent={renderTooltipContent}

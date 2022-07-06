@@ -5,6 +5,7 @@ import {
   getColorVisionEventAttrs,
   getColorVisionStylesForActiveIndex,
   getRoundedRectPath,
+  useChartContext,
 } from '@shopify/polaris-viz-core';
 
 import type {
@@ -30,7 +31,6 @@ interface StackProps {
   width: number;
   x: number | undefined;
   yScale: ScaleLinear<number, number>;
-  theme: string;
 }
 
 export function Stack({
@@ -39,12 +39,13 @@ export function Stack({
   gaps,
   groupIndex,
   id,
-  theme,
   width,
   x,
   yScale,
 }: StackProps) {
   const [activeBarIndex, setActiveBarIndex] = useState(-1);
+  const {theme} = useChartContext();
+
   const keys = data[0] ? Object.keys(data[0].data) : [];
 
   useWatchColorVisionEvents({

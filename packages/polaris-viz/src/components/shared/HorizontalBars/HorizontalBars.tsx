@@ -34,7 +34,6 @@ export interface HorizontalBarsProps {
   xScale: ScaleLinear<number, number>;
   zeroPosition: number;
   animationDelay?: number;
-  theme: string;
 }
 
 export function HorizontalBars({
@@ -47,12 +46,11 @@ export function HorizontalBars({
   isSimple,
   labelFormatter,
   name,
-  theme,
   xScale,
   zeroPosition,
 }: HorizontalBarsProps) {
-  const selectedTheme = useTheme(theme);
-  const {characterWidths} = useChartContext();
+  const selectedTheme = useTheme();
+  const {characterWidths, theme} = useChartContext();
 
   const [activeBarIndex, setActiveBarIndex] = useState(-1);
 

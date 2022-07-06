@@ -240,7 +240,6 @@ export function Chart({
             labelWidth={xAxisDetails.labelWidth}
             onHeightChange={setLabelHeight}
             reducedLabelIndexes={xAxisDetails.reducedLabelIndexes}
-            theme={theme}
             xScale={xScale}
             ariaHidden
           />
@@ -249,7 +248,6 @@ export function Chart({
         {selectedTheme.grid.showHorizontalLines ? (
           <HorizontalGridLines
             ticks={ticks}
-            theme={theme}
             transform={{
               x: selectedTheme.grid.horizontalOverflow ? 0 : chartXPosition,
               y: chartYPosition,
@@ -264,7 +262,6 @@ export function Chart({
           ticks={ticks}
           width={yAxisLabelWidth}
           textAlign="right"
-          theme={theme}
           ariaHidden
           x={selectedTheme.grid.horizontalMargin}
           y={chartYPosition}
@@ -292,7 +289,6 @@ export function Chart({
               drawableWidth={drawableWidth}
               labels={labels}
               onHeightChange={setAnnotationsHeight}
-              theme={theme}
               xScale={xScale}
             />
           </g>
@@ -339,7 +335,6 @@ export function Chart({
               annotationsLookupTable={annotationsLookupTable}
               drawableHeight={annotationsDrawableHeight}
               drawableWidth={drawableWidth + xAxisDetails.labelWidth * 1.25}
-              theme={theme}
               ticks={ticks}
               yScale={yScale}
             />
@@ -364,7 +359,6 @@ export function Chart({
           colorVisionType={COLOR_VISION_SINGLE_ITEM}
           data={legend}
           onDimensionChange={setLegendDimensions}
-          theme={theme}
         />
       )}
     </div>

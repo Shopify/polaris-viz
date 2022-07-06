@@ -15,7 +15,7 @@ import {Chart} from './Chart';
 import type {Size} from './types';
 
 export type SimpleNormalizedChartProps = {
-  comparisonMetrics?: Omit<ComparisonMetricProps, 'theme'>[];
+  comparisonMetrics?: ComparisonMetricProps[];
   labelFormatter?: LabelFormatter;
   legendPosition?: LegendPosition;
   direction?: Direction;

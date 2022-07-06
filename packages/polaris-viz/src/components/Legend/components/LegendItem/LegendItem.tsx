@@ -16,7 +16,7 @@ export interface LegendItemProps {
   legend: LegendData;
   activeIndex?: number;
   colorVisionType?: string;
-  theme: string;
+  theme?: string;
 }
 
 export function LegendItem({
@@ -56,7 +56,6 @@ export function LegendItem({
           shape={legend.shape}
           color={legend.color}
           isComparison={legend.isComparison}
-          theme={theme}
         />
       </span>
       <span className={style.TextContainer}>

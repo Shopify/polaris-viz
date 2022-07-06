@@ -166,7 +166,6 @@ export function Chart({
         {selectedTheme.grid.showHorizontalLines ? (
           <HorizontalGridLines
             ticks={leftTicks}
-            theme={theme}
             transform={{
               x: selectedTheme.grid.horizontalOverflow ? 0 : chartXPosition,
               y: 0,
@@ -186,7 +185,6 @@ export function Chart({
             labelWidth={labelWidth}
             onHeightChange={setLabelHeight}
             reducedLabelIndexes={reducedLabelIndexes}
-            theme={theme}
             xScale={xScale}
           />
         )}
@@ -195,7 +193,6 @@ export function Chart({
           ticks={leftTicks}
           textAlign="right"
           width={leftTickWidth}
-          theme={theme}
           x={horizontalMargin}
           y={0}
         />
@@ -204,7 +201,6 @@ export function Chart({
           ticks={rightTicks}
           textAlign="left"
           width={rightTickWidth}
-          theme={theme}
           x={chartXPosition + drawableWidth + Y_AXIS_CHART_SPACING}
           y={0}
         />
@@ -217,7 +213,6 @@ export function Chart({
             drawableHeight={drawableHeight}
             drawableWidth={drawableWidth}
             labels={labels}
-            theme={theme}
             yScale={barYScale}
           />
         </g>
@@ -257,7 +252,6 @@ export function Chart({
           colorVisionType={COLOR_VISION_SINGLE_ITEM}
           data={legend}
           onDimensionChange={setLegendDimensions}
-          theme={theme}
         />
       )}
     </div>

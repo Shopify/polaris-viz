@@ -15,7 +15,6 @@ export interface FunnelChartXAxisLabelsProps {
   onHeightChange: Dispatch<SetStateAction<number>>;
   xScale: ScaleBand<string>;
   reducedLabelIndexes?: number[];
-  theme: string;
 }
 
 export function FunnelChartXAxisLabels({
@@ -26,7 +25,6 @@ export function FunnelChartXAxisLabels({
   labelWidth,
   onHeightChange,
   reducedLabelIndexes,
-  theme,
   xScale,
 }: FunnelChartXAxisLabelsProps) {
   const {lines} = useLabels({
@@ -56,11 +54,10 @@ export function FunnelChartXAxisLabels({
                 chartX={chartX}
                 chartY={chartY}
                 labelWidth={labelWidth}
-                theme={theme}
               />
             )}
             <g transform={`translate(${chartX + x},${chartY})`} key={index}>
-              <TextLine line={line} index={index} theme={theme} />
+              <TextLine line={line} index={index} />
             </g>
           </g>
         );

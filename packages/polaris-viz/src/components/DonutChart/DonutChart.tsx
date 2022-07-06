@@ -13,7 +13,7 @@ import type {LegendPosition} from '../../types';
 import {Chart} from './Chart';
 
 export type DonutChartProps = {
-  comparisonMetric?: Omit<ComparisonMetricProps, 'theme'>;
+  comparisonMetric?: ComparisonMetricProps;
   showLegend?: boolean;
   labelFormatter?: LabelFormatter;
   legendPosition?: LegendPosition;

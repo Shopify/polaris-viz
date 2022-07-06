@@ -19,7 +19,6 @@ export interface AnnotationContentProps {
   parentRef: SVGElement | null;
   position: AnnotationPosition;
   tabIndex: number;
-  theme: string;
   x: number;
   y: number;
 }
@@ -31,11 +30,10 @@ export function AnnotationContent({
   onMouseLeave,
   parentRef,
   tabIndex,
-  theme,
   x,
   y,
 }: AnnotationContentProps) {
-  const selectedTheme = useTheme(theme);
+  const selectedTheme = useTheme();
   const {isFirefox} = useBrowserCheck();
 
   const [ref, setRef] = useState<HTMLDivElement | null>(null);

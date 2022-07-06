@@ -19,7 +19,6 @@ export interface Props {
   isShowingAllAnnotations: boolean;
   onClick: () => void;
   tabIndex: number;
-  theme: string;
   width: number;
   collapseText?: string;
   expandText?: string;
@@ -32,11 +31,10 @@ export function ShowMoreAnnotationsButton({
   isShowingAllAnnotations,
   onClick,
   tabIndex,
-  theme,
   width,
 }: Props) {
-  const selectedTheme = useTheme(theme);
   const {characterWidths} = useChartContext();
+  const selectedTheme = useTheme();
 
   const label = isShowingAllAnnotations
     ? collapseText

@@ -1,6 +1,10 @@
 import React from 'react';
 import type {Story, Meta} from '@storybook/react';
-import {DEFAULT_THEME, ChartContext} from '@shopify/polaris-viz-core';
+import {
+  DEFAULT_THEME,
+  ChartContext,
+  DEFAULT_THEME_NAME,
+} from '@shopify/polaris-viz-core';
 
 import {TooltipContent, TooltipContentProps} from '../TooltipContent';
 import type {TooltipData} from '../../../types';
@@ -35,6 +39,7 @@ const Template: Story<TooltipContentProps> = (args: TooltipContentProps) => {
         id: 'none',
         characterWidthOffsets,
         shouldAnimate: true,
+        theme: DEFAULT_THEME_NAME,
       }}
     >
       <TooltipContent {...args} />

@@ -20,7 +20,6 @@ const NUMBER_OF_BRICKS = 5;
 const TEXT_DROP_SHADOW_SIZE = 3;
 
 export interface ChartSkeletonProps {
-  theme?: string;
   dimensions?: Dimensions;
   state?: ChartState;
   errorText?: string;
@@ -28,7 +27,6 @@ export interface ChartSkeletonProps {
 
 export function GridSkeleton({
   dimensions,
-  theme,
   state,
   errorText,
 }: Required<ChartSkeletonProps>) {
@@ -37,7 +35,7 @@ export function GridSkeleton({
   const {
     chartContainer: {backgroundColor, padding},
     grid: {color: gridColor},
-  } = useTheme(theme);
+  } = useTheme();
 
   const {paddingLeft, paddingBottom, paddingTop} =
     paddingStringToObject(padding);
@@ -204,7 +202,7 @@ export function GridSkeleton({
               `,
             }}
           >
-            <TextLine index={0} theme={theme} line={lines[0]} />
+            <TextLine index={0} line={lines[0]} />
           </g>
         )}
       </svg>

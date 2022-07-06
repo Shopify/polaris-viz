@@ -69,7 +69,6 @@ export interface Props {
   annotationsLookupTable?: AnnotationLookupTable;
   dimensions?: Dimensions;
   emptyStateText?: string;
-  theme: string;
 }
 
 export function Chart({
@@ -79,15 +78,14 @@ export function Chart({
   emptyStateText,
   renderTooltipContent,
   showLegend,
-  theme,
   type,
   xAxisOptions,
   yAxisOptions,
 }: Props) {
   useColorVisionEvents(data.length > 1);
 
-  const selectedTheme = useTheme(theme);
-  const {characterWidths} = useChartContext();
+  const selectedTheme = useTheme();
+  const {characterWidths, theme} = useChartContext();
 
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
   const id = useMemo(() => uniqueId('VerticalBarChart'), []);
@@ -211,7 +209,6 @@ export function Chart({
             labelWidth={xScale.bandwidth()}
             onHeightChange={setLabelHeight}
             reducedLabelIndexes={reducedLabelIndexes}
-            theme={theme}
             xScale={xScale}
           />
         )}
@@ -222,7 +219,6 @@ export function Chart({
           id={id}
           seriesColors={barColors}
           size={isStacked ? '100%' : `${width}px`}
-          theme={theme}
         />
 
         {selectedTheme.grid.showHorizontalLines ? (
@@ -233,7 +229,6 @@ export function Chart({
               y: chartYPosition,
             }}
             width={width}
-            theme={theme}
           />
         ) : null}
 
@@ -241,7 +236,6 @@ export function Chart({
           ticks={ticks}
           textAlign="right"
           width={yAxisLabelWidth}
-          theme={theme}
           x={chartXPosition - yAxisWidth}
           y={chartYPosition}
         />
@@ -256,7 +250,6 @@ export function Chart({
             labels={labels}
             sortedData={sortedData}
             stackedValues={stackedValues}
-            theme={theme}
             xScale={xScale}
             yAxisOptions={yAxisOptions}
             yScale={yScale}
@@ -273,7 +266,6 @@ export function Chart({
               drawableWidth={drawableWidth}
               labels={labels}
               onHeightChange={setAnnotationsHeight}
-              theme={theme}
               xScale={xScale}
             />
           </g>
@@ -288,7 +280,6 @@ export function Chart({
               annotationsLookupTable={annotationsLookupTable}
               drawableHeight={annotationsDrawableHeight}
               drawableWidth={drawableWidth}
-              theme={theme}
               ticks={ticks}
               yScale={yScale}
             />
@@ -311,7 +302,6 @@ export function Chart({
           colorVisionType={COLOR_VISION_SINGLE_ITEM}
           data={legend}
           onDimensionChange={setLegendDimensions}
-          theme={theme}
         />
       )}
     </div>

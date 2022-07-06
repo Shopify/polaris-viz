@@ -23,34 +23,6 @@ describe('<BarChart />', () => {
     skipLinkText: 'Skip Chart Content',
   };
 
-  describe('theme', () => {
-    it('gets passed to <VerticalBarChart/>', () => {
-      const barChart = mount(<BarChart {...mockProps} theme="Light" />);
-
-      expect(barChart).toContainReactComponent(VerticalBarChart, {
-        theme: 'Light',
-      });
-    });
-
-    it('gets passed to <HorizontalBarChart/>', () => {
-      const barChart = mount(
-        <BarChart {...mockProps} theme="Light" direction="horizontal" />,
-      );
-
-      expect(barChart).toContainReactComponent(HorizontalBarChart, {
-        theme: 'Light',
-      });
-    });
-
-    it('`Default` is used if no value is provided', () => {
-      const barChart = mount(<BarChart {...mockProps} />);
-
-      expect(barChart).toContainReactComponent(VerticalBarChart, {
-        theme: 'Default',
-      });
-    });
-  });
-
   it('passes down renderTooltipContent() when not provided to parent props', () => {
     const chart = mount(<BarChart {...mockProps} />);
     const barChart = chart.find(VerticalBarChart);

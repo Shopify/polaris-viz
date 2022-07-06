@@ -13,7 +13,6 @@ interface HorizontalBarChartXAxisLabelsProps {
   onHeightChange: Dispatch<SetStateAction<number>>;
   xScale: ScaleLinear<number, number>;
   ticks: number[];
-  theme: string;
 }
 
 export function HorizontalBarChartXAxisLabels({
@@ -23,7 +22,6 @@ export function HorizontalBarChartXAxisLabels({
   labels,
   labelWidth,
   onHeightChange,
-  theme,
   ticks,
   xScale,
 }: HorizontalBarChartXAxisLabelsProps) {
@@ -41,7 +39,7 @@ export function HorizontalBarChartXAxisLabels({
 
         return (
           <g transform={`translate(${chartX + x},${chartY})`} key={index}>
-            <TextLine line={line} index={index} theme={theme} />
+            <TextLine line={line} index={index} />
           </g>
         );
       })}

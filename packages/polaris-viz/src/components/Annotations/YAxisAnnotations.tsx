@@ -17,7 +17,6 @@ export interface YAxisAnnotationsProps {
   annotationsLookupTable: AnnotationLookupTable;
   drawableHeight: number;
   drawableWidth: number;
-  theme: string;
   ticks: YAxisTick[];
   yScale: ScaleLinear<number, number>;
 }
@@ -25,7 +24,6 @@ export interface YAxisAnnotationsProps {
 export function YAxisAnnotations({
   annotationsLookupTable,
   drawableWidth,
-  theme,
   ticks,
   yScale,
 }: YAxisAnnotationsProps) {
@@ -96,17 +94,12 @@ export function YAxisAnnotations({
           return (
             <React.Fragment key={`annotation${index}${annotation.startKey}`}>
               {position.showYAxisLabel && (
-                <AnnotationYAxisLabel
-                  y={line.y}
-                  label={annotation.startKey}
-                  theme={theme}
-                />
+                <AnnotationYAxisLabel y={line.y} label={annotation.startKey} />
               )}
               <AnnotationLine
                 direction="horizontal"
                 hasCaret={false}
                 size={drawableWidth - (drawableWidth - x)}
-                theme={theme}
                 x={line.x}
                 y={line.y}
               />
@@ -119,7 +112,6 @@ export function YAxisAnnotations({
                 position={position}
                 setActiveIndex={setActiveIndex}
                 tabIndex={tabIndex}
-                theme={theme}
               />
               {isContentVisible && (
                 <AnnotationContent
@@ -130,7 +122,6 @@ export function YAxisAnnotations({
                   parentRef={ref}
                   position={position}
                   tabIndex={tabIndex}
-                  theme={theme}
                   x={drawableWidth - (drawableWidth - x)}
                   y={y}
                 />

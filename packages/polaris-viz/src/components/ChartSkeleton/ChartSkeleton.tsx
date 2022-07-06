@@ -1,17 +1,11 @@
 import React from 'react';
-import {
-  DEFAULT_THEME_NAME,
-  Dimensions,
-  ChartState,
-  useTheme,
-} from '@shopify/polaris-viz-core';
+import {Dimensions, ChartState, useTheme} from '@shopify/polaris-viz-core';
 
 import {GridSkeleton, DonutSkeleton, Shimmer} from './components';
 import styles from './ChartSkeleton.scss';
 
 type SkeletonType = 'Default' | 'Donut';
 export interface ChartSkeletonProps {
-  theme?: string;
   dimensions?: Dimensions;
   state?: ChartState;
   errorText?: string;
@@ -20,14 +14,13 @@ export interface ChartSkeletonProps {
 
 export function ChartSkeleton({
   dimensions,
-  theme = DEFAULT_THEME_NAME,
   state = ChartState.Loading,
   errorText = 'Could not load the chart',
   type = 'Default',
 }: ChartSkeletonProps) {
   const {
     chartContainer: {backgroundColor},
-  } = useTheme(theme);
+  } = useTheme();
 
   const {width, height} = dimensions || {width: 0, height: 0};
 
@@ -40,7 +33,6 @@ export function ChartSkeleton({
               width,
               height,
             }}
-            theme={theme}
             state={state}
             errorText={errorText}
           />
@@ -54,7 +46,6 @@ export function ChartSkeleton({
               width,
               height,
             }}
-            theme={theme}
             state={state}
             errorText={errorText}
           />

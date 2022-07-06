@@ -1,17 +1,29 @@
 import React from 'react';
 import {useSpring, animated, config} from '@react-spring/web';
+import {LabelFormatter, useTheme} from '@shopify/polaris-viz-core';
 
 import {classNames} from '../../../../utilities';
-import {ComparisonMetric} from '../../../ComparisonMetric';
+import {
+  ComparisonMetric,
+  ComparisonMetricProps,
+} from '../../../ComparisonMetric';
 import styles from '../../DonutChart.scss';
 
+interface Props {
+  totalValue: number;
+  labelFormatter: LabelFormatter;
+  isAnimated: boolean;
+  comparisonMetric?: ComparisonMetricProps;
+}
+
 export function InnerValue({
-  selectedTheme,
   totalValue,
   comparisonMetric,
   labelFormatter,
   isAnimated,
-}) {
+}: Props) {
+  const selectedTheme = useTheme();
+
   const {animatedValue} = useSpring({
     animatedValue: totalValue,
     from: {animatedValue: 0},
@@ -38,7 +50,6 @@ export function InnerValue({
           <ComparisonMetric
             metric={comparisonMetric.metric}
             trend={comparisonMetric.trend}
-            theme={selectedTheme.legend}
             accessibilityLabel={comparisonMetric.accessibilityLabel}
           />
         </div>

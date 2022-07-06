@@ -11,20 +11,18 @@ export interface GroupLabelProps {
   containerWidth: number;
   label: string;
   zeroPosition: number;
-  theme: string;
 }
 
 export function GroupLabel({
   areAllNegative,
   containerWidth,
   label,
-  theme,
   zeroPosition,
 }: GroupLabelProps) {
   const {characterWidths} = useChartContext();
 
   const labelWidth = estimateStringWidth(label, characterWidths);
-  const selectedTheme = useTheme(theme);
+  const selectedTheme = useTheme();
 
   const maxWidth = areAllNegative ? labelWidth : containerWidth - zeroPosition;
 

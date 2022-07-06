@@ -68,7 +68,6 @@ export interface ChartProps {
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
   dimensions?: Dimensions;
-  theme: string;
 }
 
 export function Chart({
@@ -77,7 +76,6 @@ export function Chart({
   dimensions,
   renderTooltipContent,
   showLegend,
-  theme,
   type,
   xAxisOptions,
   yAxisOptions,
@@ -85,7 +83,7 @@ export function Chart({
   useColorVisionEvents(data.length > 1);
 
   const {shouldAnimate} = useChartContext();
-  const selectedTheme = useTheme(theme);
+  const selectedTheme = useTheme();
   const id = useMemo(() => uniqueId('HorizontalBarChart'), []);
 
   const isStacked = type === 'stacked';
@@ -94,10 +92,7 @@ export function Chart({
   const [labelHeight, setLabelHeight] = useState(0);
   const [annotationsHeight, setAnnotationsHeight] = useState(0);
 
-  const {longestSeriesCount, seriesColors} = useHorizontalSeriesColors({
-    data,
-    theme,
-  });
+  const {longestSeriesCount, seriesColors} = useHorizontalSeriesColors(data);
 
   const {legend, setLegendDimensions, height, width} = useLegend({
     data: [
@@ -235,7 +230,6 @@ export function Chart({
               labels={ticksFormatted}
               labelWidth={labelWidth}
               onHeightChange={setLabelHeight}
-              theme={theme}
               ticks={ticks}
               xScale={xScale}
             />
@@ -248,7 +242,6 @@ export function Chart({
           id={id}
           seriesColors={seriesColors}
           size={isStacked ? '100%' : `${width}px`}
-          theme={theme}
         />
 
         <g transform={`translate(${0}, ${chartYPosition})`}>
@@ -280,7 +273,6 @@ export function Chart({
                 name={name}
                 opacity={opacity}
                 stackedValues={stackedValues}
-                theme={theme}
                 transform={transform}
                 xAxisOptions={xAxisOptions}
                 xScale={xScale}
@@ -298,7 +290,6 @@ export function Chart({
               drawableHeight={annotationsDrawableHeight}
               drawableWidth={drawableWidth}
               onHeightChange={setAnnotationsHeight}
-              theme={theme}
               xScale={xScale}
             />
           </g>
@@ -311,7 +302,6 @@ export function Chart({
               drawableWidth={drawableWidth}
               groupHeight={groupHeight}
               labels={labels}
-              theme={theme}
               zeroPosition={zeroPosition}
             />
           </g>
@@ -334,7 +324,6 @@ export function Chart({
           colorVisionType={COLOR_VISION_SINGLE_ITEM}
           data={legend}
           onDimensionChange={setLegendDimensions}
-          theme={theme}
         />
       )}
     </div>
