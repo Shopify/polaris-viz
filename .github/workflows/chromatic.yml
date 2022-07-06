@@ -34,4 +34,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           msg: "Chromatic Storybook: [${{ steps.chromatic.outputs.storybookUrl }}](${{ steps.chromatic.outputs.storybookUrl }})"
-          check_for_duplicate_msg: true
