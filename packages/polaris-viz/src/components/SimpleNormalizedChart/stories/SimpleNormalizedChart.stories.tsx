@@ -5,7 +5,11 @@ import {
   SimpleNormalizedChart,
   SimpleNormalizedChartProps,
 } from '../SimpleNormalizedChart';
-import {THEME_CONTROL_ARGS, DATA_ARGS} from '../../../storybook';
+import {
+  THEME_CONTROL_ARGS,
+  DATA_ARGS,
+  LEGEND_POSITION_ARGS,
+} from '../../../storybook';
 import {PageWithSizingInfo} from '../../Docs/stories/components/PageWithSizingInfo';
 
 export default {
@@ -28,9 +32,7 @@ export default {
       description:
         'Determines the width or height of the bar segments depending on `direction`.',
     },
-    legendPosition: {
-      description: 'Determines the position of the legend.',
-    },
+    legendPosition: LEGEND_POSITION_ARGS,
     theme: THEME_CONTROL_ARGS,
   },
 } as Meta;

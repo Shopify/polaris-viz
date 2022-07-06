@@ -53,3 +53,20 @@ export const DATA_ARGS = {
 export const ANNOTATIONS_ARGS = {
   description: 'An array of annotations to show on the chart.',
 };
+
+export const LEGEND_POSITION_ARGS = {
+  description: 'Determines the position of the legend.',
+  control: {
+    type: 'select',
+    options: [
+      'top-left',
+      'top-right',
+      'bottom-left',
+      'bottom-right',
+      'top',
+      'right',
+      'bottom',
+      'left',
+    ],
+  },
+};
