@@ -1,43 +1,33 @@
 import React, {useMemo, useState} from 'react';
-import type {ScaleBand, ScaleLinear} from 'd3-scale';
-
-import type {Annotation, AnnotationLookupTable} from '../../types';
-import {useSVGBlurEvent} from '../../hooks/useSVGBlurEvent';
-import {shouldHideAnnotation} from '../../utilities/shouldHideAnnotation';
-import {isShowMoreAnnotationsButtonVisible} from '../../utilities/isShowMoreAnnotationsButtonVisible';
 
 import {
+  AnnotationContent,
   AnnotationLabel,
   AnnotationLine,
-  AnnotationContent,
-  ShowMoreAnnotationsButton,
-} from './components';
-import {useAnnotationPositions} from './hooks/useAnnotationPositions';
-import {PILL_HEIGHT, SHOW_MORE_BUTTON_OFFSET} from './constants';
+} from '../../../Annotations';
+import type {Annotation, AnnotationLookupTable} from '../../../../types';
+import {useSVGBlurEvent} from '../../../../hooks/useSVGBlurEvent';
 
-export interface AnnotationsProps {
+import {useHorizontalBarChartYAnnotationsPositions} from './hooks/useHorizontalBarChartYAnnotationsPositions';
+
+export interface YAxisAnnotationsProps {
   annotationsLookupTable: AnnotationLookupTable;
-  axisLabelWidth: number;
-  drawableHeight: number;
   drawableWidth: number;
+  groupHeight: number;
   labels: string[];
-  onHeightChange: (height: number) => void;
   theme: string;
-  xScale: ScaleLinear<number, number> | ScaleBand<string>;
+  zeroPosition: number;
 }
 
-export function Annotations({
+export function HorizontalBarChartYAnnotations({
   annotationsLookupTable,
-  axisLabelWidth,
-  drawableHeight,
   drawableWidth,
+  groupHeight,
   labels,
-  onHeightChange,
   theme,
-  xScale,
-}: AnnotationsProps) {
+  zeroPosition,
+}: YAxisAnnotationsProps) {
   const [activeIndex, setActiveIndex] = useState(-1);
-  const [isShowingAllAnnotations, setIsShowingAllAnnotations] = useState(false);
   const [ref, setRef] = useState<SVGGElement | null>(null);
 
   const {annotations, dataIndexes} = useMemo(() => {
@@ -50,7 +40,7 @@ export function Annotations({
         if (
           !labels.includes(key) ||
           annotation == null ||
-          annotation.axis === 'y'
+          annotation.axis === 'x'
         ) {
           return null;
         }
@@ -64,19 +54,13 @@ export function Annotations({
     return {annotations, dataIndexes};
   }, [annotationsLookupTable, labels]);
 
-  const {hiddenAnnotationsCount, positions, rowCount} = useAnnotationPositions({
+  const {positions} = useHorizontalBarChartYAnnotationsPositions({
     annotations,
-    axisLabelWidth,
     dataIndexes,
     drawableWidth,
-    isShowingAllAnnotations,
-    onHeightChange,
-    xScale,
+    groupHeight,
+    zeroPosition,
   });
-
-  const handleToggleAllAnnotations = () => {
-    setIsShowingAllAnnotations(!isShowingAllAnnotations);
-  };
 
   const handleOnMouseLeave = () => {
     setActiveIndex(-1);
@@ -92,33 +76,14 @@ export function Annotations({
     },
   });
 
-  const isShowMoreButtonVisible = isShowMoreAnnotationsButtonVisible(rowCount);
-  const showMoreButtonOffset = isShowMoreButtonVisible
-    ? SHOW_MORE_BUTTON_OFFSET
-    : 0;
-
   return (
     <g ref={setRef} tabIndex={-1}>
-      {isShowMoreButtonVisible && (
-        <ShowMoreAnnotationsButton
-          annotationsCount={hiddenAnnotationsCount}
-          collapseText={annotations[0].collapseButtonText}
-          expandText={annotations[0].expandButtonText}
-          isShowingAllAnnotations={isShowingAllAnnotations}
-          onClick={handleToggleAllAnnotations}
-          tabIndex={annotations.length}
-          theme={theme}
-          width={drawableWidth}
-        />
-      )}
-      <g transform={`translate(0, ${showMoreButtonOffset})`}>
+      <g transform={`translate(0, ${0})`}>
         {positions.map((position) => {
-          const {line, y, row, index} = position;
+          const index = position.index;
           const annotation = annotations[index];
 
-          if (shouldHideAnnotation({row, isShowingAllAnnotations, rowCount})) {
-            return null;
-          }
+          const {line, x, y} = position;
 
           const hasContent = annotation.content != null;
           const isContentVisible = index === activeIndex && hasContent;
@@ -128,10 +93,12 @@ export function Annotations({
           return (
             <React.Fragment key={`annotation${index}${annotation.startKey}`}>
               <AnnotationLine
-                size={drawableHeight - showMoreButtonOffset}
+                direction="horizontal"
+                hasCaret={false}
+                size={drawableWidth - (drawableWidth - x)}
                 theme={theme}
                 x={line.x}
-                y={y + PILL_HEIGHT}
+                y={line.y}
               />
               <AnnotationLabel
                 ariaLabel={ariaLabel}
@@ -154,7 +121,7 @@ export function Annotations({
                   position={position}
                   tabIndex={tabIndex}
                   theme={theme}
-                  x={line.x}
+                  x={drawableWidth - (drawableWidth - x)}
                   y={y}
                 />
               )}

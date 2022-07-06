@@ -16,6 +16,7 @@ const MOCK_PROPS: GroupLabelProps = {
   containerWidth: 300,
   label: 'Label Text',
   zeroPosition: 0,
+  theme: 'Default',
 };
 
 describe('<GroupLabel />', () => {
@@ -46,7 +47,7 @@ describe('<GroupLabel />', () => {
 
     const div = label.find('div');
 
-    expect(div?.props?.style?.width).toStrictEqual(120);
+    expect(div?.props?.style?.width).toStrictEqual(100);
   });
 
   describe('areAllNegative', () => {
@@ -95,7 +96,7 @@ describe('<GroupLabel />', () => {
 
       const div = label.find('div');
 
-      expect(div?.props?.style?.maxWidth).toStrictEqual(120);
+      expect(div?.props?.style?.maxWidth).toStrictEqual(100);
     });
 
     it('renders max-width when false', () => {

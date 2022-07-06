@@ -23,7 +23,7 @@ import type {
   RenderTooltipContentData,
   AnnotationLookupTable,
 } from '../../types';
-import {useXAxisLabels} from '../../hooks/useXAxisLabels';
+import {useFormattedLabels} from '../../hooks/useFormattedLabels';
 import {BarChartXAxisLabels} from '../BarChartXAxisLabels';
 import {LegendContainer, useLegend} from '../LegendContainer';
 import {GradientDefs} from '../shared';
@@ -120,7 +120,10 @@ export function Chart({
 
   const emptyState = data.length === 0;
 
-  const labels = useXAxisLabels({data, xAxisOptions});
+  const labels = useFormattedLabels({
+    data,
+    labelFormatter: xAxisOptions.labelFormatter,
+  });
 
   const isStacked = type === 'stacked';
   const stackedValues = isStacked ? getStackedValues(data, labels) : null;

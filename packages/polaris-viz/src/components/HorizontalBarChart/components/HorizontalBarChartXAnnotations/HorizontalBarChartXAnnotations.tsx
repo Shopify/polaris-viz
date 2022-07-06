@@ -1,37 +1,35 @@
 import React, {useMemo, useState} from 'react';
-import type {ScaleBand, ScaleLinear} from 'd3-scale';
+import type {ScaleLinear} from 'd3-scale';
+import {isValueWithinDomain} from '@shopify/polaris-viz-core';
 
-import type {Annotation, AnnotationLookupTable} from '../../types';
-import {useSVGBlurEvent} from '../../hooks/useSVGBlurEvent';
-import {shouldHideAnnotation} from '../../utilities/shouldHideAnnotation';
-import {isShowMoreAnnotationsButtonVisible} from '../../utilities/isShowMoreAnnotationsButtonVisible';
-
+import type {Annotation, AnnotationLookupTable} from '../../../../types';
+import {useSVGBlurEvent} from '../../../../hooks/useSVGBlurEvent';
 import {
   AnnotationLabel,
   AnnotationLine,
   AnnotationContent,
   ShowMoreAnnotationsButton,
-} from './components';
-import {useAnnotationPositions} from './hooks/useAnnotationPositions';
-import {PILL_HEIGHT, SHOW_MORE_BUTTON_OFFSET} from './constants';
+  PILL_HEIGHT,
+  SHOW_MORE_BUTTON_OFFSET,
+} from '../../../Annotations';
+import {isShowMoreAnnotationsButtonVisible} from '../../../../utilities/isShowMoreAnnotationsButtonVisible';
+import {shouldHideAnnotation} from '../../../../utilities/shouldHideAnnotation';
+
+import {useHorizontalBarChartXAnnotationPositions} from './hooks/useHorizontalBarChartXAnnotationPositions';
 
 export interface AnnotationsProps {
   annotationsLookupTable: AnnotationLookupTable;
-  axisLabelWidth: number;
   drawableHeight: number;
   drawableWidth: number;
-  labels: string[];
   onHeightChange: (height: number) => void;
   theme: string;
-  xScale: ScaleLinear<number, number> | ScaleBand<string>;
+  xScale: ScaleLinear<number, number>;
 }
 
-export function Annotations({
+export function HorizontalBarChartXAnnotations({
   annotationsLookupTable,
-  axisLabelWidth,
   drawableHeight,
   drawableWidth,
-  labels,
   onHeightChange,
   theme,
   xScale,
@@ -40,39 +38,40 @@ export function Annotations({
   const [isShowingAllAnnotations, setIsShowingAllAnnotations] = useState(false);
   const [ref, setRef] = useState<SVGGElement | null>(null);
 
-  const {annotations, dataIndexes} = useMemo(() => {
-    const dataIndexes = {};
-
+  const {annotations} = useMemo(() => {
     const annotations = Object.keys(annotationsLookupTable)
       .map((key) => {
         const annotation = annotationsLookupTable[key];
 
         if (
-          !labels.includes(key) ||
+          !isValueWithinDomain(Number(annotation.startKey), xScale.domain())
+        ) {
+          return null;
+        }
+
+        if (
           annotation == null ||
+          annotation.axis == null ||
           annotation.axis === 'y'
         ) {
           return null;
         }
 
-        dataIndexes[key] = labels.indexOf(key);
-
         return annotation;
       })
       .filter(Boolean) as Annotation[];
 
-    return {annotations, dataIndexes};
-  }, [annotationsLookupTable, labels]);
+    return {annotations};
+  }, [annotationsLookupTable, xScale]);
 
-  const {hiddenAnnotationsCount, positions, rowCount} = useAnnotationPositions({
-    annotations,
-    axisLabelWidth,
-    dataIndexes,
-    drawableWidth,
-    isShowingAllAnnotations,
-    onHeightChange,
-    xScale,
-  });
+  const {hiddenAnnotationsCount, positions, rowCount} =
+    useHorizontalBarChartXAnnotationPositions({
+      annotations,
+      drawableWidth,
+      isShowingAllAnnotations,
+      onHeightChange,
+      xScale,
+    });
 
   const handleToggleAllAnnotations = () => {
     setIsShowingAllAnnotations(!isShowingAllAnnotations);

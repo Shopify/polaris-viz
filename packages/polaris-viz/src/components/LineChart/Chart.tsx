@@ -25,7 +25,7 @@ import type {
   RenderTooltipContentData,
   AnnotationLookupTable,
 } from '../../types';
-import {useXAxisLabels} from '../../hooks/useXAxisLabels';
+import {useFormattedLabels} from '../../hooks/useFormattedLabels';
 import {LinearXAxisLabels} from '../LinearXAxisLabels';
 import {useLegend, LegendContainer} from '../LegendContainer';
 import {
@@ -117,7 +117,10 @@ export function Chart({
     onIndexChange: ({detail}) => setActiveLineIndex(detail.index),
   });
 
-  const formattedLabels = useXAxisLabels({data: [data[0]], xAxisOptions});
+  const formattedLabels = useFormattedLabels({
+    data: [data[0]],
+    labelFormatter: xAxisOptions.labelFormatter,
+  });
 
   const tooltipId = useRef(uniqueId('lineChart'));
   const gradientId = useRef(uniqueId('lineChartGradient'));

@@ -1,4 +1,4 @@
-import {COLLAPSED_PILL_COUNT} from '../constants';
+import {COLLAPSED_ANNOTATIONS_COUNT} from '../constants';
 
 export function shouldHideAnnotation({
   row,
@@ -13,11 +13,14 @@ export function shouldHideAnnotation({
     return false;
   }
 
-  if (rowCount === COLLAPSED_PILL_COUNT) {
+  if (rowCount === COLLAPSED_ANNOTATIONS_COUNT) {
     return false;
   }
 
-  if (rowCount > COLLAPSED_PILL_COUNT && row > COLLAPSED_PILL_COUNT - 1) {
+  if (
+    rowCount > COLLAPSED_ANNOTATIONS_COUNT &&
+    row > COLLAPSED_ANNOTATIONS_COUNT - 1
+  ) {
     return true;
   }
 

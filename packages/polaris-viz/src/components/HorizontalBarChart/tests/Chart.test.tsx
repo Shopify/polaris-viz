@@ -11,7 +11,12 @@ import {
   HorizontalStackedBars,
 } from '../../shared';
 import {Chart, ChartProps} from '../Chart';
-import {VerticalGridLines} from '../components';
+import {
+  HorizontalBarChartXAnnotations,
+  HorizontalBarChartYAnnotations,
+  VerticalGridLines,
+} from '../components';
+import {normalizeData} from '../../../utilities';
 
 jest.mock('../../Labels/utilities/getWidestLabel', () => {
   return {
@@ -46,6 +51,7 @@ const DATA: DataSeries[] = [
 ];
 
 const MOCK_PROPS: ChartProps = {
+  annotationsLookupTable: {},
   dimensions: {
     height: 300,
     width: 600,
@@ -61,8 +67,9 @@ const MOCK_PROPS: ChartProps = {
     labelFormatter: (value) => `${value}`,
     integersOnly: false,
   },
-  type: 'default',
   showLegend: false,
+  type: 'default',
+  theme: 'Default',
 };
 
 describe('<Chart />', () => {
@@ -205,6 +212,47 @@ describe('<Chart />', () => {
       const chart = mount(<Chart {...MOCK_PROPS} showLegend />);
 
       expect(chart).toContainReactComponent(LegendContainer);
+    });
+  });
+
+  describe('annotationsLookupTable', () => {
+    it('does not render <HorizontalBarChartXAnnotations /> when empty', () => {
+      const chart = mount(<Chart {...MOCK_PROPS} />);
+      const group = chart.find('g');
+
+      expect(chart).not.toContainReactComponent(HorizontalBarChartXAnnotations);
+      expect(chart).not.toContainReactComponent(HorizontalBarChartYAnnotations);
+
+      expect(group?.props.transform).toStrictEqual(
+        'translate(23.076923076923077, 5)',
+      );
+    });
+
+    it('renders <Annotations /> when provided', () => {
+      const annotationsLookupTable = normalizeData(
+        [
+          {
+            startKey: '1',
+            label: 'Sales increase',
+          },
+        ],
+        'startKey',
+      );
+
+      const chart = mount(
+        <Chart
+          {...MOCK_PROPS}
+          annotationsLookupTable={annotationsLookupTable}
+        />,
+      );
+      const group = chart.find('g');
+
+      expect(chart).toContainReactComponent(HorizontalBarChartXAnnotations);
+      expect(chart).toContainReactComponent(HorizontalBarChartYAnnotations);
+
+      expect(group?.props.transform).toStrictEqual(
+        'translate(23.076923076923077, 33)',
+      );
     });
   });
 });

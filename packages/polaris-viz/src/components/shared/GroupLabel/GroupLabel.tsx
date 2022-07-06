@@ -26,9 +26,7 @@ export function GroupLabel({
   const labelWidth = estimateStringWidth(label, characterWidths);
   const selectedTheme = useTheme(theme);
 
-  const maxWidth = areAllNegative
-    ? labelWidth + HORIZONTAL_GROUP_LABEL_HEIGHT
-    : containerWidth - zeroPosition;
+  const maxWidth = areAllNegative ? labelWidth : containerWidth - zeroPosition;
 
   return (
     <foreignObject
@@ -45,7 +43,7 @@ export function GroupLabel({
           color: selectedTheme.yAxis.labelColor,
           maxWidth,
           height: HORIZONTAL_GROUP_LABEL_HEIGHT,
-          width: labelWidth + HORIZONTAL_GROUP_LABEL_HEIGHT,
+          width: labelWidth,
         }}
       >
         {label}

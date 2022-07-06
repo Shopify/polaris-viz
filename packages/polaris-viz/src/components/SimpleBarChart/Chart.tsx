@@ -121,7 +121,7 @@ export function Chart({
     series: data,
     groupHeight,
     isAnimated,
-    chartStartPosition: 0,
+    chartXPosition: 0,
   });
 
   const zeroPosition = longestLabel.negative + xScale(0);

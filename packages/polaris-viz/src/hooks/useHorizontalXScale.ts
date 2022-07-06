@@ -30,7 +30,7 @@ export function useHorizontalXScale({
   const {characterWidths} = useContext(ChartContext);
 
   let drawableWidth = maxWidth;
-  let chartStartPosition = 0;
+  let chartXPosition = 0;
 
   const {ticksFormatted: initialTicksFormatted} = useHorizontalTicksAndScale({
     maxWidth,
@@ -63,7 +63,7 @@ export function useHorizontalXScale({
   }, [maxWidth, characterWidths, initialTicksFormatted]);
 
   drawableWidth -= labelWidth;
-  chartStartPosition += labelWidth / 2;
+  chartXPosition += labelWidth / 2;
 
   const {xScale, ticks, ticksFormatted} = useHorizontalTicksAndScale({
     maxWidth: drawableWidth,
@@ -79,6 +79,6 @@ export function useHorizontalXScale({
     ticks,
     ticksFormatted,
     drawableWidth,
-    chartStartPosition,
+    chartXPosition,
   };
 }

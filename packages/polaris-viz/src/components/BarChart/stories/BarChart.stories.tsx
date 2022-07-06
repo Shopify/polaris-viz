@@ -3,9 +3,7 @@ import type {Story, Meta} from '@storybook/react';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {BarChart, BarChartProps} from '../../../components';
-import type {Annotation} from '../../../types';
 
-import {SquareColorPreview} from '../../SquareColorPreview';
 import {PolarisVizProvider} from '../../../';
 import {
   DIRECTION_CONTROL_ARGS,
@@ -19,81 +17,7 @@ import {
 
 import {generateMultipleSeries} from '../../Docs/utilities';
 import {PageWithSizingInfo} from '../../Docs/stories/components/PageWithSizingInfo';
-import type {RenderTooltipContentData} from '../../../types';
-
-const TOOLTIP_CONTENT = {
-  empty: undefined,
-  Custom: (tooltipData: RenderTooltipContentData) => {
-    return (
-      <div
-        style={{
-          background: 'black',
-          padding: '8px',
-          borderRadius: '4px',
-          color: 'white',
-        }}
-      >
-        {tooltipData.title}
-        <div>
-          {tooltipData.data[0].data.map(({key, value, color}) => (
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: '12px 1fr 1fr',
-                gridGap: '5px',
-                fontSize: '12px',
-                marginTop: '4px',
-              }}
-            >
-              <SquareColorPreview color={color!} />
-              <div>{key}</div>
-              <div style={{textAlign: 'right'}}>{value}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  },
-};
-
-const DATA: DataSeries[] = [
-  {
-    name: 'Breakfast',
-    data: [
-      {key: 'Monday', value: 3},
-      {key: 'Tuesday', value: -7},
-      {key: 'Wednesday', value: -7},
-      {key: 'Thursday', value: -8},
-      {key: 'Friday', value: 50},
-      {key: 'Saturday', value: 0},
-      {key: 'Sunday', value: 0.1},
-    ],
-  },
-  {
-    name: 'Lunch',
-    data: [
-      {key: 'Monday', value: 4},
-      {key: 'Tuesday', value: 0},
-      {key: 'Wednesday', value: -10},
-      {key: 'Thursday', value: 15},
-      {key: 'Friday', value: 8},
-      {key: 'Saturday', value: 50},
-      {key: 'Sunday', value: 0.1},
-    ],
-  },
-  {
-    name: 'Dinner',
-    data: [
-      {key: 'Monday', value: 7},
-      {key: 'Tuesday', value: 0},
-      {key: 'Wednesday', value: -15},
-      {key: 'Thursday', value: -12},
-      {key: 'Friday', value: 50},
-      {key: 'Saturday', value: 5},
-      {key: 'Sunday', value: 0.1},
-    ],
-  },
-];
+import {DATA, TOOLTIP_CONTENT} from './utilities';
 
 const DATA_WITH_COLOR: DataSeries[] = [
   {
@@ -415,46 +339,4 @@ export const SeriesColorsUpToFourteen = Template.bind({});
 
 SeriesColorsUpToFourteen.args = {
   data: generateMultipleSeries(7),
-};
-
-const ANNOTATIONS: Annotation[] = [
-  {
-    startKey: 'Friday',
-    label: 'Big Sale',
-    axis: 'x',
-  },
-  {
-    startKey: 'Wednesday',
-    label: 'GDPR rule change',
-    content: {
-      title: 'GDPR rule change',
-      content:
-        'New GDPR rules that prevent the unauthorized tracking of user sessions came into effect on Thursday, June 1.',
-      linkUrl: 'https://shopify.com',
-    },
-    axis: 'x',
-  },
-  {
-    startKey: '30',
-    label: 'Sales target',
-    axis: 'y',
-  },
-  {
-    startKey: '10',
-    label: 'Break-even',
-    axis: 'y',
-    content: {
-      content: 'This is our break-even point. We can sell for $10 per unit.',
-    },
-  },
-];
-
-export const Annotations: Story<BarChartProps> = Template.bind({});
-
-Annotations.args = {
-  data: DATA,
-  xAxisOptions: {},
-  isAnimated: false,
-  showLegend: true,
-  annotations: ANNOTATIONS,
 };
