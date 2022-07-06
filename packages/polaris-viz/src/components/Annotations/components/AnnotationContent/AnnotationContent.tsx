@@ -102,7 +102,7 @@ export function AnnotationContent({
         {title != null && (
           <p
             className={styles.Title}
-            style={{color: selectedTheme.annotations.titleColor}}
+            style={{color: selectedTheme.tooltip.textColor}}
             role="heading"
             aria-level={2}
           >
@@ -111,7 +111,7 @@ export function AnnotationContent({
         )}
         <p
           className={styles.Content}
-          style={{color: selectedTheme.annotations.textColor}}
+          style={{color: selectedTheme.tooltip.textColor}}
           data-is-annotation-content
         >
           {content}
