@@ -65,7 +65,7 @@ export const Point = React.memo(function Point({
     <animated.circle
       data-type={dataType}
       data-index={index}
-      role={ariaLabelledby == null ? '' : 'image'}
+      role={ariaLabelledby == null ? '' : 'img'}
       aria-labelledby={ariaLabelledby}
       tabIndex={tabIndex}
       cx={cx}

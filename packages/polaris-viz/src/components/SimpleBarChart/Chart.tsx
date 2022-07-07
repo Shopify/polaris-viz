@@ -136,7 +136,7 @@ export function Chart({
     >
       <svg
         className={styles.SVG}
-        role="list"
+        role="group"
         viewBox={`0 0 ${width} ${height}`}
         xmlns={XMLNS}
       >

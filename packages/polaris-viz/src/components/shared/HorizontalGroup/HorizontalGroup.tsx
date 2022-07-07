@@ -116,7 +116,7 @@ export function HorizontalGroup({
         data-index={index}
         aria-hidden="false"
         aria-label={ariaLabel}
-        role="list"
+        role="group"
         className={style.Group}
       >
         <rect

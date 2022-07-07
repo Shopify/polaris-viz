@@ -221,7 +221,7 @@ export function Chart({
       <svg
         viewBox={`0 0 ${width} ${height}`}
         className={styles.Chart}
-        role={emptyState ? 'img' : 'table'}
+        role={emptyState ? 'img' : 'group'}
         xmlns={XMLNS}
         width={width}
         height={height}

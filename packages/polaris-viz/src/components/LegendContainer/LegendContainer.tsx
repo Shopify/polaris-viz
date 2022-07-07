@@ -83,7 +83,7 @@ export function LegendContainer({
     <div
       className={classNames(style.Container)}
       ref={setRef}
-      role="list"
+      role="group"
       style={styleMap[direction]}
     >
       <Legend

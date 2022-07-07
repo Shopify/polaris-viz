@@ -194,7 +194,7 @@ export function Chart({
         width={width}
         height={height}
         className={styles.Svg}
-        role={emptyState ? 'img' : 'list'}
+        role={emptyState ? 'img' : 'group'}
         aria-label={emptyState ? emptyStateText : undefined}
         ref={setSvgRef}
       >
