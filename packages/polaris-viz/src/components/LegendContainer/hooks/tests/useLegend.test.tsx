@@ -63,6 +63,7 @@ describe('useLegend()', () => {
         ],
         height: 100,
         width: 100,
+        isLegendMounted: false,
       });
     });
 
@@ -81,6 +82,35 @@ describe('useLegend()', () => {
         legend: [],
         height: 100,
         width: 100,
+        isLegendMounted: false,
+      });
+    });
+
+    it('mounts after initializing', () => {
+      function TestComponent() {
+        const data = useLegend(MOCK_PROPS);
+        return <span data-data={`${JSON.stringify(data)}`} />;
+      }
+
+      const result = mount(<TestComponent />);
+
+      result.act(() => {
+        requestAnimationFrame(() => {
+          const data = parseData(result);
+          expect(data).toStrictEqual({
+            legend: [
+              {name: 'Breakfast', shape: 'Line'},
+              {name: 'Lunch', shape: 'Line'},
+              {name: 'Dinner', shape: 'Line'},
+              {name: 'Breakfast', shape: 'Bar'},
+              {name: 'Lunch', shape: 'Bar'},
+              {name: 'Dinner', shape: 'Bar'},
+            ],
+            height: 100,
+            width: 100,
+            isLegendMounted: true,
+          });
+        });
       });
     });
   });
