@@ -1,0 +1,35 @@
+$width: calc(var(--shimmerWidth) * 1);
+$height: calc(var(--shimmerHeight) * 1);
+
+.Shimmer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: scale(5, 10);
+  animation-name: shimmer;
+  animation-duration: 10s;
+  /* stylelint-disable */
+  animation-timing-function: linear;
+  /* stylelint-enable */
+  animation-iteration-count: infinite;
+  background-size: $width $height;
+  background-position-y: 0;
+  pointer-events: none;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position-x: calc($width * -1);
+  }
+  50% {
+    background-position-x: calc($width * 2);
+  }
+  51% {
+    background-position-x: calc($width * -1);
+  }
+  100% {
+    background-position-x: calc($width * 2);
+  }
+}

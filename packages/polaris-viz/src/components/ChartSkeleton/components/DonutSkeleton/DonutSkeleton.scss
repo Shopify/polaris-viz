@@ -1,0 +1,48 @@
+@import '../../../../styles/common';
+
+.Donut {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  user-select: none;
+  align-items: center;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.DonutWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.ContentWrapper {
+  position: absolute;
+  justify-content: center;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  font-size: 20px;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+
+  span {
+    max-width: 40%;
+    text-align: center;
+    color: white;
+    font-size: 12px;
+  }
+}
+
+.DonutChart {
+  @include no-outline;
+  overflow: visible;
+}
