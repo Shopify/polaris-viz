@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, CSSProperties} from 'react';
 import {pie} from 'd3-shape';
 import {
   clamp,
@@ -90,7 +90,7 @@ export function Chart({
     },
   });
 
-  const styleMap = {
+  const styleMap: {[key: string]: CSSProperties} = {
     top: {
       flexDirection: 'column-reverse',
     },
