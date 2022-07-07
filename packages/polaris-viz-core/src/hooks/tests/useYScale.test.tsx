@@ -37,7 +37,6 @@ const MOCK_PROPS: Props = {
   integersOnly: false,
   max: 0,
   min: 50,
-  minLabelSpace: 50,
 };
 
 describe('useYScale()', () => {
@@ -65,7 +64,7 @@ describe('useYScale()', () => {
 
     mount(<TestComponent />);
 
-    expect(ticksSpy).toHaveBeenCalledWith(5);
+    expect(ticksSpy).toHaveBeenCalledWith(3);
   });
 
   it('creates a y scale with a domain corresponding to the minimum and maximum values in the data set, plus some padding', () => {
@@ -224,7 +223,7 @@ describe('useYScale()', () => {
       (shouldRoundScaleUp as jest.Mock).mockImplementation(jest.fn(() => true));
 
       function TestComponent() {
-        useYScale({...MOCK_PROPS, max: 10});
+        useYScale({...MOCK_PROPS, max: 10, shouldRoundUp: true});
 
         return null;
       }
@@ -254,7 +253,7 @@ describe('useYScale()', () => {
       );
 
       function TestComponent() {
-        useYScale({...MOCK_PROPS, min: 0, max: 10});
+        useYScale({...MOCK_PROPS, min: 0, max: 10, shouldRoundUp: false});
 
         return null;
       }
@@ -307,23 +306,6 @@ describe('useYScale()', () => {
         scale.copy = () => scale;
         return scale;
       });
-
-      const data: DataSeries[] = [
-        {
-          name: 'Series1',
-          data: [
-            {key: '1', value: 0.1},
-            {key: '1', value: 0.9},
-          ],
-        },
-        {
-          name: 'Series2',
-          data: [
-            {key: '1', value: 0.2},
-            {key: '1', value: 0.7},
-          ],
-        },
-      ];
 
       function TestComponent() {
         useYScale({

@@ -77,6 +77,7 @@ export {
   DEFAULT_CHART_PROPS,
   ARC_LOAD_ANIMATION_CONFIG,
   ARC_DATA_CHANGE_ANIMATION_CONFIG,
+  LEGENDS_TOP_MARGIN,
 } from './constants';
 export {
   clamp,
@@ -101,6 +102,8 @@ export {
   getAverageColor,
   getValueFromXScale,
   isValueWithinDomain,
+  getClosestDivisibleNumber,
+  roundToDecimals,
 } from './utilities';
 export {
   useSparkBar,
@@ -128,7 +131,6 @@ export type {
   ChartType,
   Color,
   DataSeries,
-  DataGroup,
   Dimensions,
   GradientStop,
   LineStyle,
@@ -147,4 +149,6 @@ export type {
   ChartProps,
   WithRequired,
   BoundingRect,
+  StackedValues,
+  DataGroup,
 } from './types';

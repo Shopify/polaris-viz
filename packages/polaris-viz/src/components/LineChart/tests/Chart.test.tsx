@@ -1,6 +1,5 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
-import {line} from 'd3-shape';
 import {
   LinearGradientWithStops,
   LineChartDataSeriesWithDefaults,
@@ -139,26 +138,6 @@ describe('<Chart />', () => {
     expect(chart).toContainReactComponentTimes(LineSeries, 2);
   });
 
-  it('calls the d3 curve method when hasSpline is true', () => {
-    const curveSpy = jest.fn();
-    (line as jest.Mock).mockImplementationOnce(() => {
-      const shape = (value: any) => value;
-      shape.x = () => shape;
-      shape.y = () => shape;
-      shape.curve = curveSpy;
-      return shape;
-    });
-
-    mount(
-      <Chart
-        {...MOCK_PROPS}
-        data={[MOCK_DATA, {...MOCK_DATA, name: 'A second data-point'}]}
-      />,
-    );
-
-    expect(curveSpy).toHaveBeenCalled();
-  });
-
   it('renders a <Point /> for each data item in each data-point', () => {
     const data = [MOCK_DATA, {...MOCK_DATA, name: 'A second data-point'}];
     const chart = mount(<Chart {...MOCK_PROPS} data={data} />);
@@ -187,7 +166,7 @@ describe('<Chart />', () => {
       cy: 0,
       active: false,
       index: 0,
-      tabIndex: -1,
+      tabIndex: 0,
     });
   });
 
@@ -210,7 +189,7 @@ describe('<Chart />', () => {
 
     expect(chart).toContainReactComponent(VisuallyHiddenRows, {
       data: MOCK_PROPS.data,
-      xAxisLabels: MOCK_DATA.data.map(({key}) => key),
+      xAxisLabels: MOCK_DATA.data.map(({key}) => `${key}`),
     });
   });
 
@@ -270,7 +249,9 @@ describe('<Chart />', () => {
 
         const lineSeries = chart.find(LineSeries);
 
-        expect(lineSeries.props.data.color).toStrictEqual('rgb(255, 255, 255)');
+        expect(lineSeries?.props.data.color).toStrictEqual(
+          'rgb(255, 255, 255)',
+        );
       });
     });
 
@@ -386,11 +367,10 @@ describe('<Chart />', () => {
   describe('annotationsLookupTable', () => {
     it('does not render <Annotations /> when empty', () => {
       const chart = mount(<Chart {...MOCK_PROPS} />);
-      const group = chart.find('g');
+      const group = chart.find('g', {transform: 'translate(0,8)'});
 
       expect(chart).not.toContainReactComponent(Annotations);
-
-      expect(group?.props.transform).toStrictEqual('translate(116,222)');
+      expect(group).toBeDefined();
     });
 
     it('renders <Annotations /> when provided', () => {
@@ -410,11 +390,10 @@ describe('<Chart />', () => {
           annotationsLookupTable={annotationsLookupTable}
         />,
       );
-      const group = chart.find('g');
+      const group = chart.find('g', {transform: 'translate(0,36)'});
 
       expect(chart).toContainReactComponent(Annotations);
-
-      expect(group?.props.transform).toStrictEqual('translate(116,222)');
+      expect(group).toBeDefined();
     });
   });
 });

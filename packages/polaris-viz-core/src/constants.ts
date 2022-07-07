@@ -179,8 +179,6 @@ export const DEFAULT_THEME: Theme = {
   },
   bar: {
     hasRoundedCorners: true,
-    innerMargin: 'Medium',
-    outerMargin: 'Medium',
     zeroAsMinHeight: false,
   },
   grid: {
@@ -283,8 +281,6 @@ export const LIGHT_THEME: Theme = {
   },
   bar: {
     hasRoundedCorners: true,
-    innerMargin: 'Medium',
-    outerMargin: 'Medium',
     zeroAsMinHeight: false,
   },
   grid: {

@@ -18,7 +18,8 @@ export interface DataSeries {
 export interface DataGroup {
   shape: Shape;
   series: DataSeries[];
-  yAxisOptions?: YAxisOptions[];
+  name?: string;
+  yAxisOptions?: YAxisOptions;
 }
 
 export type Shape = 'Line' | 'Bar';
@@ -59,12 +60,6 @@ export interface YAxisOptions {
 }
 
 // === Theme types === //
-enum BarMargin {
-  Small = 0.05,
-  Medium = 0.1,
-  Large = 0.3,
-  None = 0,
-}
 
 export interface GridTheme {
   showHorizontalLines: boolean;
@@ -80,8 +75,6 @@ export interface ArcTheme {
 }
 
 export interface BarTheme {
-  innerMargin: keyof typeof BarMargin;
-  outerMargin: keyof typeof BarMargin;
   hasRoundedCorners: boolean;
   /**
    * @deprecated This prop is experimental and not ready for general use. If you want to use this, come talk to us in #polaris-data-viz
@@ -254,11 +247,18 @@ export enum ChartState {
   Success = 'Success',
 }
 
-export interface ChartProps {
-  data: DataSeries[];
+export interface ChartProps<T = DataSeries[]> {
+  data: T;
   theme?: string;
   isAnimated?: boolean;
   state?: ChartState;
 }
 
 export type WithRequired<T, K extends keyof T> = T & {[P in K]-?: T[P]};
+
+export type StackedValues = Series<
+  {
+    [key: string]: number;
+  },
+  string
+>[];

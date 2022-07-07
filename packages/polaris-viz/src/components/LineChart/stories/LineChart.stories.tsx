@@ -32,7 +32,7 @@ const TOOLTIP_CONTENT = {
         }}
       >
         {data[0].data.map(({key, value}) => (
-          <div>{`${key}: ${formatYAxisLabel(value!)}`}</div>
+          <div>{`${key}: ${formatYAxisLabel(+value!)}`}</div>
         ))}
       </div>
     );

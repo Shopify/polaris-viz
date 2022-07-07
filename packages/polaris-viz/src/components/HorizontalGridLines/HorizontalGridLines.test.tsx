@@ -4,7 +4,14 @@ import {mount} from '@shopify/react-testing';
 import {mountWithProvider} from '../../test-utilities';
 import {mockDefaultTheme} from '../../test-utilities/mountWithProvider';
 
-import {HorizontalGridLines} from './HorizontalGridLines';
+import {HorizontalGridLines, Props} from './HorizontalGridLines';
+
+const MOCK_PROPS: Props = {
+  ticks: [],
+  transform: {x: 10, y: 20},
+  width: 100,
+  theme: 'Default',
+};
 
 describe('<HorizontalGridLines />', () => {
   describe('ticks', () => {
@@ -12,12 +19,11 @@ describe('<HorizontalGridLines />', () => {
       const actual = mount(
         <svg>
           <HorizontalGridLines
+            {...MOCK_PROPS}
             ticks={[
               {value: 10, formattedValue: '$10', yOffset: 0},
               {value: 10, formattedValue: '$8', yOffset: 10},
             ]}
-            transform={{x: 10, y: 20}}
-            width={100}
           />
           ,
         </svg>,
@@ -32,9 +38,8 @@ describe('<HorizontalGridLines />', () => {
       const actual = mount(
         <svg>
           <HorizontalGridLines
+            {...MOCK_PROPS}
             ticks={[{value: 10, formattedValue: '$10', yOffset: 0}]}
-            transform={{x: 10, y: 20}}
-            width={100}
           />
         </svg>,
       );
@@ -50,9 +55,8 @@ describe('<HorizontalGridLines />', () => {
       const actual = mountWithProvider(
         <svg>
           <HorizontalGridLines
+            {...MOCK_PROPS}
             ticks={[{value: 10, formattedValue: '$10', yOffset: 0}]}
-            transform={{x: 10, y: 20}}
-            width={100}
           />
         </svg>,
         mockDefaultTheme({grid: {color: 'red'}}),

@@ -3,12 +3,11 @@ import {useTheme} from '@shopify/polaris-viz-core';
 
 import type {YAxisTick} from '../../types';
 
-interface Props {
+export interface Props {
+  theme: string;
   ticks: YAxisTick[];
   transform: {x: number; y: number};
   width: number;
-
-  theme: string;
 }
 
 export const HorizontalGridLines = React.memo(function HorizontalGridLines({
