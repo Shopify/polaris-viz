@@ -150,6 +150,8 @@ export function DonutSkeleton({
           viewBox={`-40 -40 ${diameter + RADIUS_PADDING} ${
             diameter + RADIUS_PADDING
           }`}
+          height={diameter}
+          width={diameter}
         >
           <g className={styles.DonutChart}>
             {springs.map((style, index) => {
@@ -185,11 +187,7 @@ export function DonutSkeleton({
           </div>
         )}
       </div>
-      <div
-        style={{
-          width: `calc(100% - ${diameter}px)`,
-        }}
-      />
+      <div />
     </div>
   );
 }

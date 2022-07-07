@@ -103,6 +103,22 @@ export function Chart({
     left: {
       flexDirection: 'row-reverse',
     },
+    'top-left': {
+      flexDirection: 'row-reverse',
+      alignItems: 'start',
+    },
+    'top-right': {
+      flexDirection: 'row',
+      alignItems: 'start',
+    },
+    'bottom-right': {
+      flexDirection: 'row',
+      alignItems: 'end',
+    },
+    'bottom-left': {
+      flexDirection: 'row-reverse',
+      alignItems: 'end',
+    },
   };
 
   if (!width || !height) return null;
