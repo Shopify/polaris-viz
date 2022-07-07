@@ -107,7 +107,7 @@ export function useYAxisAnnotationPositions({
             const top = current.y;
             const bottom = current.y + PILL_HEIGHT;
 
-            if (next.y > top && next.y < bottom) {
+            if (current.row === next.row && next.y > top && next.y < bottom) {
               next.row = nextRow;
 
               checkAgain = true;
