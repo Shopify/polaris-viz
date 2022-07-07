@@ -36,9 +36,9 @@ export function useLinearLabelsAndDimensions({
   const {characterWidths} = useContext(ChartContext);
 
   const horizontalMargin = selectedTheme.grid.horizontalMargin;
-  let chartStartPosition = yAxisLabelWidth + horizontalMargin;
+  let chartXPosition = yAxisLabelWidth + horizontalMargin;
 
-  let drawableWidth = width - chartStartPosition - horizontalMargin;
+  let drawableWidth = width - chartXPosition - horizontalMargin;
 
   const longestSeriesLastIndex = useMemo(
     () =>
@@ -95,7 +95,7 @@ export function useLinearLabelsAndDimensions({
   }, [drawableWidth, visibleLabelsCount, longestLabelWidth]);
 
   drawableWidth -= labelWidth;
-  chartStartPosition += labelWidth / 2;
+  chartXPosition += labelWidth / 2;
 
   const {xScale} = useLinearXScale({
     drawableWidth,
@@ -103,7 +103,7 @@ export function useLinearLabelsAndDimensions({
   });
 
   return {
-    chartStartPosition,
+    chartXPosition,
     drawableWidth,
     xAxisDetails: {
       labelWidth,

@@ -15,6 +15,7 @@ import type {
   YAxisOptions,
 } from '@shopify/polaris-viz-core';
 
+import {checkAvailableAnnotations} from '../../components/Annotations';
 import {useFormattedLabels} from '../../hooks/useFormattedLabels';
 import type {
   RenderTooltipContentData,
@@ -206,7 +207,9 @@ export function Chart({
     y: 0,
   };
 
-  const hasAnnotations = Object.keys(annotationsLookupTable).length > 0;
+  const {hasXAxisAnnotations, hasYAxisAnnotations} = checkAvailableAnnotations(
+    annotationsLookupTable,
+  );
 
   const labels = useFormattedLabels({
     data,
@@ -301,29 +304,30 @@ export function Chart({
           })}
         </g>
 
-        {hasAnnotations && (
-          <React.Fragment>
-            <g transform={`translate(${chartXPosition}, ${0})`}>
-              <HorizontalBarChartXAnnotations
-                annotationsLookupTable={annotationsLookupTable}
-                drawableHeight={annotationsDrawableHeight}
-                drawableWidth={drawableWidth}
-                onHeightChange={setAnnotationsHeight}
-                theme={theme}
-                xScale={xScale}
-              />
-            </g>
-            <g transform={`translate(${chartXPosition}, ${chartYPosition})`}>
-              <HorizontalBarChartYAnnotations
-                annotationsLookupTable={annotationsLookupTable}
-                drawableWidth={drawableWidth}
-                groupHeight={groupHeight}
-                labels={labels}
-                theme={theme}
-                zeroPosition={zeroPosition}
-              />
-            </g>
-          </React.Fragment>
+        {hasXAxisAnnotations && (
+          <g transform={`translate(${chartXPosition}, ${0})`}>
+            <HorizontalBarChartXAnnotations
+              annotationsLookupTable={annotationsLookupTable}
+              drawableHeight={annotationsDrawableHeight}
+              drawableWidth={drawableWidth}
+              onHeightChange={setAnnotationsHeight}
+              theme={theme}
+              xScale={xScale}
+            />
+          </g>
+        )}
+
+        {hasYAxisAnnotations && (
+          <g transform={`translate(${chartXPosition}, ${chartYPosition})`}>
+            <HorizontalBarChartYAnnotations
+              annotationsLookupTable={annotationsLookupTable}
+              drawableWidth={drawableWidth}
+              groupHeight={groupHeight}
+              labels={labels}
+              theme={theme}
+              zeroPosition={zeroPosition}
+            />
+          </g>
         )}
       </svg>
 

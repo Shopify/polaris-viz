@@ -17,7 +17,11 @@ import type {
   YAxisOptions,
 } from '@shopify/polaris-viz-core';
 
-import {Annotations} from '../Annotations';
+import {
+  Annotations,
+  checkAvailableAnnotations,
+  YAxisAnnotations,
+} from '../Annotations';
 import type {
   RenderTooltipContentData,
   AnnotationLookupTable,
@@ -143,7 +147,7 @@ export function Chart({
   const {reversedSeries, longestSeriesLength, longestSeriesIndex} =
     useFormatData(data);
 
-  const {chartStartPosition, drawableWidth, xAxisDetails, xScale, labels} =
+  const {chartXPosition, drawableWidth, xAxisDetails, xScale, labels} =
     useLinearLabelsAndDimensions({
       data,
       longestSeriesLength,
@@ -181,7 +185,7 @@ export function Chart({
 
       const {svgX, svgY} = point;
 
-      const closestIndex = Math.round(xScale.invert(svgX - chartStartPosition));
+      const closestIndex = Math.round(xScale.invert(svgX - chartXPosition));
 
       const activeIndex = clamp({
         amount: closestIndex,
@@ -210,11 +214,13 @@ export function Chart({
   const chartBounds: BoundingRect = {
     width,
     height,
-    x: chartStartPosition,
+    x: chartXPosition,
     y: chartYPosition,
   };
 
-  const hasAnnotations = Object.keys(annotationsLookupTable).length > 0;
+  const {hasXAxisAnnotations, hasYAxisAnnotations} = checkAvailableAnnotations(
+    annotationsLookupTable,
+  );
 
   return (
     <div className={styles.Container} style={{width, height}}>
@@ -231,7 +237,7 @@ export function Chart({
         {xAxisOptions.hide ? null : (
           <XAxis
             chartHeight={height}
-            chartX={chartStartPosition - xAxisDetails.labelWidth / 2}
+            chartX={chartXPosition - xAxisDetails.labelWidth / 2}
             chartY={drawableHeight + LABEL_AREA_TOP_SPACING + chartYPosition}
             labels={labels}
             labelWidth={xAxisDetails.labelWidth}
@@ -248,7 +254,7 @@ export function Chart({
             ticks={ticks}
             theme={theme}
             transform={{
-              x: selectedTheme.grid.horizontalOverflow ? 0 : chartStartPosition,
+              x: selectedTheme.grid.horizontalOverflow ? 0 : chartXPosition,
               y: chartYPosition,
             }}
             width={
@@ -275,10 +281,10 @@ export function Chart({
           />
         )}
 
-        {hasAnnotations && (
+        {hasXAxisAnnotations && (
           <g
             transform={`translate(${
-              chartStartPosition - xAxisDetails.labelWidth / 2
+              chartXPosition - xAxisDetails.labelWidth / 2
             },0)`}
             tabIndex={-1}
           >
@@ -295,7 +301,7 @@ export function Chart({
           </g>
         )}
 
-        <g transform={`translate(${chartStartPosition},${chartYPosition})`}>
+        <g transform={`translate(${chartXPosition},${chartYPosition})`}>
           {reversedSeries.map((singleSeries, index) => {
             return (
               <LineSeries
@@ -327,6 +333,24 @@ export function Chart({
             yScale={yScale}
           />
         </g>
+
+        {hasYAxisAnnotations && (
+          <g
+            transform={`translate(${
+              chartXPosition - xAxisDetails.labelWidth / 2
+            },${chartYPosition})`}
+            tabIndex={-1}
+          >
+            <YAxisAnnotations
+              annotationsLookupTable={annotationsLookupTable}
+              drawableHeight={annotationsDrawableHeight}
+              drawableWidth={drawableWidth + xAxisDetails.labelWidth * 1.25}
+              theme={theme}
+              ticks={ticks}
+              yScale={yScale}
+            />
+          </g>
+        )}
       </svg>
 
       <TooltipWrapper

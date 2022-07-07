@@ -18,7 +18,7 @@ import {mockDefaultTheme} from '../../../test-utilities/mountWithProvider';
 import {TooltipAnimatedContainer} from '../../../components/TooltipWrapper';
 import {Chart, ChartProps} from '../Chart';
 import {YAxis} from '../../YAxis';
-import {Annotations} from '../../Annotations';
+import {Annotations, YAxisAnnotations} from '../../Annotations';
 import {normalizeData} from '../../../utilities';
 
 const MOCK_DATA: Required<LineChartDataSeriesWithDefaults> = {
@@ -370,6 +370,7 @@ describe('<Chart />', () => {
       const group = chart.find('g', {transform: 'translate(0,8)'});
 
       expect(chart).not.toContainReactComponent(Annotations);
+      expect(chart).not.toContainReactComponent(YAxisAnnotations);
       expect(group).toBeDefined();
     });
 
@@ -379,6 +380,7 @@ describe('<Chart />', () => {
           {
             startKey: '1',
             label: 'Sales increase',
+            axis: 'x',
           },
         ],
         'startKey',
@@ -393,7 +395,59 @@ describe('<Chart />', () => {
       const group = chart.find('g', {transform: 'translate(0,36)'});
 
       expect(chart).toContainReactComponent(Annotations);
+      expect(chart).not.toContainReactComponent(YAxisAnnotations);
       expect(group).toBeDefined();
+    });
+
+    it('renders <YAXisAnnotations /> when provided', () => {
+      const annotationsLookupTable = normalizeData(
+        [
+          {
+            startKey: '1',
+            label: 'Sales increase',
+            axis: 'y',
+          },
+        ],
+        'startKey',
+      );
+
+      const chart = mount(
+        <Chart
+          {...MOCK_PROPS}
+          annotationsLookupTable={annotationsLookupTable}
+        />,
+      );
+
+      expect(chart).toContainReactComponent(YAxisAnnotations);
+      expect(chart).not.toContainReactComponent(Annotations);
+    });
+
+    it('renders <Annotations /> & <YAXisAnnotations /> when provided', () => {
+      const annotationsLookupTable = normalizeData(
+        [
+          {
+            startKey: '10',
+            label: 'Sales increase',
+            axis: 'x',
+          },
+          {
+            startKey: '1',
+            label: 'Sales increase',
+            axis: 'y',
+          },
+        ],
+        'startKey',
+      );
+
+      const chart = mount(
+        <Chart
+          {...MOCK_PROPS}
+          annotationsLookupTable={annotationsLookupTable}
+        />,
+      );
+
+      expect(chart).toContainReactComponent(YAxisAnnotations);
+      expect(chart).toContainReactComponent(Annotations);
     });
   });
 });
