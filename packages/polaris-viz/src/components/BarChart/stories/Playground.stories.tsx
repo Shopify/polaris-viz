@@ -3,6 +3,7 @@ import type {Story, Meta} from '@storybook/react';
 
 import {BarChart, BarChartProps} from '../../../components';
 import type {Annotation} from '../../../types';
+import {generateMultipleSeries} from '../../Docs/utilities';
 
 export default {
   title: 'polaris-viz/Charts/BarChart/Playground',
@@ -324,4 +325,16 @@ AnnotationMania.args = {
       } as Annotation;
     }),
   ],
+};
+
+export const BarsOnBarsOnBars: Story<BarChartProps> = (args: BarChartProps) => {
+  return (
+    <div style={{width: 1700, height: 600}}>
+      <BarChart {...args} />
+    </div>
+  );
+};
+
+BarsOnBarsOnBars.args = {
+  data: generateMultipleSeries(1, 225),
 };

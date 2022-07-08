@@ -35,42 +35,23 @@ export function TooltipAnimatedContainer({
   position = DEFAULT_TOOLTIP_POSITION,
 }: TooltipAnimatedContainerProps) {
   const tooltipRef = useRef<HTMLDivElement | null>(null);
-  const [tooltipDimensions, setTooltipDimensions] =
-    useState<Dimensions | null>(null);
+  const [tooltipDimensions, setTooltipDimensions] = useState<Dimensions>({
+    width: 0,
+    height: 0,
+  });
   const firstRender = useRef(true);
 
-  const spring: any = useSpring({
-    from: {
-      translate: [0, 0, 0],
-      opacity: 0,
-    },
-    to: async (next: any) => {
-      if (tooltipDimensions == null) {
-        return;
-      }
-
-      const {x, y} = getAlteredPosition({
-        currentX,
-        currentY,
-        position,
-        tooltipDimensions,
-        chartBounds,
-        margin,
-        bandwidth,
-      });
-
-      const shouldRenderImmediate = firstRender.current;
-      firstRender.current = false;
-
-      // @react-spring/web docs do not return the `next` callback
-      // eslint-disable-next-line node/callback-return
-      await next({
-        translate: [x, y, 0],
-        opacity: 1,
-        immediate: shouldRenderImmediate,
-      });
-    },
+  const {x, y} = getAlteredPosition({
+    currentX,
+    currentY,
+    position,
+    tooltipDimensions,
+    chartBounds,
+    margin,
+    bandwidth,
   });
+
+  firstRender.current = false;
 
   useEffect(() => {
     if (tooltipRef.current == null) {
@@ -88,12 +69,9 @@ export function TooltipAnimatedContainer({
       style={{
         top: 0,
         left: 0,
-        opacity: spring.opacity,
-        transform: spring.translate.to(
-          // eslint-disable-next-line id-length
-          (x: number, y: number, z: number) =>
-            `translate3d(${x}px, ${y}px, ${z}px)`,
-        ),
+        opacity: firstRender.current ? 0 : 1,
+        transform: `translate3d(${x}px, ${y}px, 0px)`,
+        transition: 'transform 100ms',
       }}
       ref={tooltipRef}
       aria-hidden="true"
