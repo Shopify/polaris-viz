@@ -8,6 +8,7 @@ import {
   useUniqueId,
   DEFAULT_CHART_PROPS,
   Direction,
+  ChartState,
 } from '@shopify/polaris-viz-core';
 import type {
   DataPoint,
@@ -25,6 +26,7 @@ import {
 } from '../../hooks';
 import {Arc} from '../Arc';
 import type {LegendPosition} from '../../types';
+import {ChartSkeleton} from '../../components/ChartSkeleton';
 
 import styles from './DonutChart.scss';
 import {InnerValue} from './components';
@@ -42,6 +44,8 @@ export interface ChartProps {
   theme?: string;
   labelFormatter: LabelFormatter;
   legendPosition: LegendPosition;
+  state: ChartState;
+  errorText?: string;
 }
 
 export function Chart({
@@ -55,6 +59,8 @@ export function Chart({
   labelFormatter,
   isAnimated = DEFAULT_CHART_PROPS.isAnimated,
   legendPosition = 'right',
+  state,
+  errorText,
 }: ChartProps) {
   const chartId = useUniqueId('Donut');
   const [activeIndex, setActiveIndex] = useState<number>(-1);
@@ -142,70 +148,80 @@ export function Chart({
   return (
     <div className={styles.DonutWrapper} style={styleMap[legendPosition]}>
       <div className={styles.Donut}>
-        <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
-        <svg
-          viewBox={`-40 -40 ${diameter + 20} ${diameter + 20}`}
-          height={diameter}
-          width={diameter}
-        >
-          {isLegendMounted && (
-            <g className={styles.DonutChart}>
-              {emptyState ? (
-                <g aria-hidden>
-                  <Arc
-                    isAnimated={isAnimated}
-                    width={diameter}
-                    height={diameter}
-                    radius={radius}
-                    startAngle={0}
-                    endAngle={FULL_CIRCLE}
-                    color={selectedTheme.grid.color}
-                    cornerRadius={selectedTheme.arc.cornerRadius}
-                    thickness={selectedTheme.arc.thickness}
-                  />
-                </g>
-              ) : (
-                pieChartData.map(
-                  ({data: pieData, startAngle, endAngle}, index) => {
-                    const color = data[index]?.color ?? seriesColor[index];
-                    const name = data[index].name;
-                    const accessibilityLabel = `${name}: ${pieData.key} - ${pieData.value}`;
+        {state === ChartState.Success ? (
+          <React.Fragment>
+            <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
+            <svg
+              viewBox={`-40 -40 ${diameter + 20} ${diameter + 20}`}
+              height={diameter}
+              width={diameter}
+            >
+              {isLegendMounted && (
+                <g className={styles.DonutChart}>
+                  {emptyState ? (
+                    <g aria-hidden>
+                      <Arc
+                        isAnimated={isAnimated}
+                        width={diameter}
+                        height={diameter}
+                        radius={radius}
+                        startAngle={0}
+                        endAngle={FULL_CIRCLE}
+                        color={selectedTheme.grid.color}
+                        cornerRadius={selectedTheme.arc.cornerRadius}
+                        thickness={selectedTheme.arc.thickness}
+                      />
+                    </g>
+                  ) : (
+                    pieChartData.map(
+                      ({data: pieData, startAngle, endAngle}, index) => {
+                        const color = data[index]?.color ?? seriesColor[index];
+                        const name = data[index].name;
+                        const accessibilityLabel = `${name}: ${pieData.key} - ${pieData.value}`;
 
-                    return (
-                      <g
-                        key={`${chartId}-arc-${index}`}
-                        className={styles.DonutChart}
-                        aria-label={accessibilityLabel}
-                        role="img"
-                      >
-                        <Arc
-                          isAnimated={isAnimated}
-                          index={index}
-                          activeIndex={activeIndex}
-                          width={diameter}
-                          height={diameter}
-                          radius={radius}
-                          startAngle={startAngle}
-                          endAngle={endAngle}
-                          color={color}
-                          cornerRadius={selectedTheme.arc.cornerRadius}
-                          thickness={selectedTheme.arc.thickness}
-                        />
-                      </g>
-                    );
-                  },
-                )
+                        return (
+                          <g
+                            key={`${chartId}-arc-${index}`}
+                            className={styles.DonutChart}
+                            aria-label={accessibilityLabel}
+                            role="img"
+                          >
+                            <Arc
+                              isAnimated={isAnimated}
+                              index={index}
+                              activeIndex={activeIndex}
+                              width={diameter}
+                              height={diameter}
+                              radius={radius}
+                              startAngle={startAngle}
+                              endAngle={endAngle}
+                              color={color}
+                              cornerRadius={selectedTheme.arc.cornerRadius}
+                              thickness={selectedTheme.arc.thickness}
+                            />
+                          </g>
+                        );
+                      },
+                    )
+                  )}
+                </g>
               )}
-            </g>
-          )}
-        </svg>
-        {totalValue && !emptyState && isLegendMounted && (
-          <InnerValue
-            isAnimated={isAnimated}
-            selectedTheme={selectedTheme}
-            totalValue={totalValue}
-            comparisonMetric={comparisonMetric}
-            labelFormatter={labelFormatter}
+            </svg>
+            <InnerValue
+              isAnimated={isAnimated}
+              selectedTheme={selectedTheme}
+              totalValue={totalValue}
+              comparisonMetric={comparisonMetric}
+              labelFormatter={labelFormatter}
+            />
+          </React.Fragment>
+        ) : (
+          <ChartSkeleton
+            dimensions={{width: diameter, height: diameter}}
+            state={state}
+            type="Donut"
+            errorText={errorText}
+            theme={theme}
           />
         )}
       </div>

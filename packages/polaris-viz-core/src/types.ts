@@ -252,6 +252,7 @@ export interface ChartProps<T = DataSeries[]> {
   theme?: string;
   isAnimated?: boolean;
   state?: ChartState;
+  errorText?: string;
 }
 
 export type WithRequired<T, K extends keyof T> = T & {[P in K]-?: T[P]};
