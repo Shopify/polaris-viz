@@ -228,12 +228,13 @@ describe('<Chart />', () => {
       );
     });
 
-    it('renders <Annotations /> when provided', () => {
+    it('renders <HorizontalBarChartXAnnotations /> when provided', () => {
       const annotationsLookupTable = normalizeData(
         [
           {
             startKey: '1',
             label: 'Sales increase',
+            axis: 'x',
           },
         ],
         'startKey',
@@ -248,11 +249,62 @@ describe('<Chart />', () => {
       const group = chart.find('g');
 
       expect(chart).toContainReactComponent(HorizontalBarChartXAnnotations);
-      expect(chart).toContainReactComponent(HorizontalBarChartYAnnotations);
+      expect(chart).not.toContainReactComponent(HorizontalBarChartYAnnotations);
 
       expect(group?.props.transform).toStrictEqual(
         'translate(23.076923076923077, 33)',
       );
+    });
+
+    it('renders <HorizontalBarChartYAnnotations /> when provided', () => {
+      const annotationsLookupTable = normalizeData(
+        [
+          {
+            startKey: '1',
+            label: 'Sales increase',
+            axis: 'y',
+          },
+        ],
+        'startKey',
+      );
+
+      const chart = mount(
+        <Chart
+          {...MOCK_PROPS}
+          annotationsLookupTable={annotationsLookupTable}
+        />,
+      );
+
+      expect(chart).toContainReactComponent(HorizontalBarChartYAnnotations);
+      expect(chart).not.toContainReactComponent(HorizontalBarChartXAnnotations);
+    });
+
+    it('renders <HorizontalBarChartXAnnotations /> & <HorizontalBarChartYAnnotations /> when provided', () => {
+      const annotationsLookupTable = normalizeData(
+        [
+          {
+            startKey: '10',
+            label: 'Sales increase',
+            axis: 'x',
+          },
+          {
+            startKey: '1',
+            label: 'Sales increase',
+            axis: 'y',
+          },
+        ],
+        'startKey',
+      );
+
+      const chart = mount(
+        <Chart
+          {...MOCK_PROPS}
+          annotationsLookupTable={annotationsLookupTable}
+        />,
+      );
+
+      expect(chart).toContainReactComponent(HorizontalBarChartYAnnotations);
+      expect(chart).toContainReactComponent(HorizontalBarChartXAnnotations);
     });
   });
 });

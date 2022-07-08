@@ -14,3 +14,4 @@ export type {AnnotationPosition} from './types';
 export {ShowMoreAnnotationsButton} from './components/ShowMoreAnnotationsButton';
 export {useShowMoreAnnotationsButton} from './hooks/useShowMoreAnnotationsButton';
 export {checkForHorizontalSpace} from './utilities/checkForHorizontalSpace';
+export {checkAvailableAnnotations} from './utilities/checkAvailableAnnotations';

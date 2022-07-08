@@ -16,7 +16,11 @@ import type {
   YAxisOptions,
 } from '@shopify/polaris-viz-core';
 
-import {YAxisAnnotations, Annotations} from '../Annotations';
+import {
+  YAxisAnnotations,
+  Annotations,
+  checkAvailableAnnotations,
+} from '../Annotations';
 import type {
   RenderTooltipContentData,
   AnnotationLookupTable,
@@ -184,7 +188,9 @@ export function Chart({
     seriesColors: barColors,
   });
 
-  const hasAnnotations = Object.keys(annotationsLookupTable).length > 0;
+  const {hasXAxisAnnotations, hasYAxisAnnotations} = checkAvailableAnnotations(
+    annotationsLookupTable,
+  );
 
   return (
     <div className={styles.ChartContainer} style={{height, width}}>
@@ -260,34 +266,35 @@ export function Chart({
           />
         </g>
 
-        {hasAnnotations && (
-          <React.Fragment>
-            <g transform={`translate(${chartXPosition},0)`} tabIndex={-1}>
-              <Annotations
-                annotationsLookupTable={annotationsLookupTable}
-                axisLabelWidth={xScale.bandwidth()}
-                drawableHeight={annotationsDrawableHeight}
-                drawableWidth={drawableWidth}
-                labels={labels}
-                onHeightChange={setAnnotationsHeight}
-                theme={theme}
-                xScale={xScale}
-              />
-            </g>
-            <g
-              transform={`translate(${chartXPosition},${chartYPosition})`}
-              tabIndex={-1}
-            >
-              <YAxisAnnotations
-                annotationsLookupTable={annotationsLookupTable}
-                drawableHeight={annotationsDrawableHeight}
-                drawableWidth={drawableWidth}
-                theme={theme}
-                ticks={ticks}
-                yScale={yScale}
-              />
-            </g>
-          </React.Fragment>
+        {hasXAxisAnnotations && (
+          <g transform={`translate(${chartXPosition},0)`} tabIndex={-1}>
+            <Annotations
+              annotationsLookupTable={annotationsLookupTable}
+              axisLabelWidth={xScale.bandwidth()}
+              drawableHeight={annotationsDrawableHeight}
+              drawableWidth={drawableWidth}
+              labels={labels}
+              onHeightChange={setAnnotationsHeight}
+              theme={theme}
+              xScale={xScale}
+            />
+          </g>
+        )}
+
+        {hasYAxisAnnotations && (
+          <g
+            transform={`translate(${chartXPosition},${chartYPosition})`}
+            tabIndex={-1}
+          >
+            <YAxisAnnotations
+              annotationsLookupTable={annotationsLookupTable}
+              drawableHeight={annotationsDrawableHeight}
+              drawableWidth={drawableWidth}
+              theme={theme}
+              ticks={ticks}
+              yScale={yScale}
+            />
+          </g>
         )}
       </svg>
 

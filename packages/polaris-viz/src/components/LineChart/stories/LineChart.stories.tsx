@@ -117,7 +117,7 @@ const Template: Story<LineChartProps> = (args: LineChartProps) => {
 
 export const Default: Story<LineChartProps> = Template.bind({});
 Default.args = {
- ...DEFAULT_PROPS,
+  ...DEFAULT_PROPS,
   xAxisOptions: {
     labelFormatter: formatXAxisLabel,
   },
@@ -235,7 +235,7 @@ const ANNOTATIONS: Annotation[] = [
   {
     startKey: '2020-04-02T12:00:00',
     label: 'Sales increase',
-    axis: 'x'
+    axis: 'x',
   },
   {
     startKey: '2020-04-06T12:00:00',
@@ -243,7 +243,20 @@ const ANNOTATIONS: Annotation[] = [
     content: {
       content: 'We ran a massive sale on our products. We made a lot of money!',
     },
-    axis: 'x'
+    axis: 'x',
+  },
+  {
+    startKey: '540',
+    label: 'Sales target',
+    axis: 'y',
+  },
+  {
+    startKey: '300',
+    label: 'Break-even',
+    axis: 'y',
+    content: {
+      content: 'This is our break-even point. We can sell for $10 per unit.',
+    },
   },
 ];
 
