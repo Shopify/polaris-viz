@@ -5,7 +5,11 @@ import {
   SimpleNormalizedChart,
   SimpleNormalizedChartProps,
 } from '../SimpleNormalizedChart';
-import {THEME_CONTROL_ARGS, DATA_ARGS} from '../../../storybook';
+import {
+  THEME_CONTROL_ARGS,
+  DATA_ARGS,
+  LEGEND_POSITION_ARGS,
+} from '../../../storybook';
 import {PageWithSizingInfo} from '../../Docs/stories/components/PageWithSizingInfo';
 
 export default {
@@ -28,9 +32,7 @@ export default {
       description:
         'Determines the width or height of the bar segments depending on `direction`.',
     },
-    labelPosition: {
-      description: 'Determines the position of the labels.',
-    },
+    legendPosition: LEGEND_POSITION_ARGS,
     theme: THEME_CONTROL_ARGS,
   },
 } as Meta;
@@ -83,7 +85,7 @@ const defaultProps: SimpleNormalizedChartProps = {
 
   direction: 'horizontal',
   size: 'small',
-  labelPosition: 'top-left',
+  legendPosition: 'top-left',
   labelFormatter: (value) => `$${value}`,
   comparisonMetrics: [
     {
@@ -119,7 +121,7 @@ VerticalSmall.args = {
 export const HorizontalBottomRightLabel = Template.bind({});
 HorizontalBottomRightLabel.args = {
   ...defaultProps,
-  labelPosition: 'bottom-right',
+  legendPosition: 'bottom-right',
 };
 
 export const DynamicData = () => {

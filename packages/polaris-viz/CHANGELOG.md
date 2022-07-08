@@ -11,7 +11,9 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 - Added loading and error states to `<DonutChart/>`.
 - Added `type` prop to `<ChartSkeleton/>`.
-- Added yAxis annotations to `<LineChart />` & `<StackedAreaChart />`;
+- Added `legendPosition` prop to `<DonutChart />`.
+- Renamed `labelPosition` prop to `legendPosition` in `<SimpleNormalizedChart />`
+- Added yAxis annotations to `<LineChart />` & `<StackedAreaChart />`
 
 ## [5.0.0] - 2022-07-07
 

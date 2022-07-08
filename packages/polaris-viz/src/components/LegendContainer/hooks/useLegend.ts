@@ -86,5 +86,13 @@ export function useLegend({
     direction,
   ]);
 
-  return {legend, height, width, setLegendDimensions};
+  return {
+    legend,
+    height,
+    width,
+    setLegendDimensions,
+    isLegendMounted:
+      showLegend &&
+      (legendDimensions.height !== 0 || legendDimensions.width !== 0),
+  };
 }

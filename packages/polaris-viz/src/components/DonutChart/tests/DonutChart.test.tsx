@@ -13,6 +13,11 @@ jest.mock('../components', () => ({
   ComparisonMetric: () => null,
 }));
 
+jest.mock('@shopify/polaris-viz-core/src/utilities', () => ({
+  ...jest.requireActual('@shopify/polaris-viz-core/src/utilities'),
+  changeColorOpacity: jest.fn(() => 'black'),
+}));
+
 describe('<DonutChart />', () => {
   describe('<Chart/>', () => {
     const mockProps: ChartProps = {

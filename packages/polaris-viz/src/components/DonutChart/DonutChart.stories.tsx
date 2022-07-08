@@ -1,7 +1,11 @@
 import React, {useState} from 'react';
 import type {Meta, StoryFn} from '@storybook/react';
 
-import {THEME_CONTROL_ARGS, CHART_STATE_CONTROL_ARGS} from '../../storybook';
+import {
+  THEME_CONTROL_ARGS,
+  CHART_STATE_CONTROL_ARGS,
+  LEGEND_POSITION_ARGS,
+} from '../../storybook';
 import {DonutChart} from '.';
 import type {DonutChartProps} from './DonutChart';
 import {ChartState} from '@shopify/polaris-viz-core';
@@ -27,11 +31,12 @@ const meta: Meta<DonutChartProps> = {
       description:
         'A collection of named data sets to be rendered in the chart. An optional color can be provided for each series, to overwrite the theme `seriesColors` defined in `PolarisVizProvider`',
     },
+    legendPosition: LEGEND_POSITION_ARGS,
     theme: THEME_CONTROL_ARGS,
     state: CHART_STATE_CONTROL_ARGS,
   },
   decorators: [
-    (Story) => <div style={{width: 400, height: 200}}>{Story()}</div>,
+    (Story) => <div style={{width: 400, height: 400}}>{Story()}</div>,
   ],
 };
 
@@ -83,6 +88,7 @@ SingleDataPoint.args = {
     trend: 'positive',
     accessibilityLabel: 'trending up 6%',
   },
+  legendPosition: 'left',
 };
 
 export const ErrorState = Template.bind({});

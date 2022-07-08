@@ -15,7 +15,7 @@ const SECONDARY_DELAY = 200;
 const RADIUS_PADDING = 20;
 
 export function DonutSkeleton({
-  dimensions: {width, height},
+  dimensions: {height},
   theme = 'Default',
   state,
   errorText,
@@ -25,7 +25,7 @@ export function DonutSkeleton({
   state: ChartState;
   errorText: string;
 }) {
-  const diameter = Math.min(height, width);
+  const diameter = 160;
   const radius = diameter / 2;
   const selectedTheme = useTheme(theme);
 
@@ -56,7 +56,7 @@ export function DonutSkeleton({
   }));
 
   useEffect(() => {
-    const baseDistance = height - radius;
+    const baseDistance = 82;
 
     const floor = {
       x: baseDistance * -0.1,
@@ -83,26 +83,26 @@ export function DonutSkeleton({
               await next(firstFrame);
               await next({
                 config: {
-                  duration: 300,
+                  duration: 400,
                   easing: easings.easeInExpo,
                 },
                 delay: SECONDARY_DELAY,
                 transform: `translate(
-                  ${baseDistance * 0.5}px,
-                  ${baseDistance * 1.4}px) rotate(-35deg)`,
+                  ${baseDistance * 0.28}px,
+                  ${baseDistance * 1.49}px) rotate(-48deg)`,
               });
               break;
             case 1:
               await next(firstFrame);
               await next({
                 config: {
-                  duration: 340,
+                  duration: 140,
                   easing: easings.easeOutExpo,
                 },
                 delay: SECONDARY_DELAY + 200,
                 transform: `translate(
-                  ${baseDistance * 0.68}px,
-                  ${baseDistance * 0.18}px) rotate(55deg)`,
+                  ${baseDistance * 0.62}px,
+                  ${baseDistance * 0.17}px) rotate(55deg)`,
               });
               break;
             case 2:
@@ -170,7 +170,7 @@ export function DonutSkeleton({
                     endAngle={arcs[index].endAngle}
                     color={selectedTheme.grid.color}
                     cornerRadius={selectedTheme.arc.cornerRadius}
-                    thickness={selectedTheme.arc.thickness}
+                    thickness={14}
                   />
                 </animated.g>
               );
@@ -185,11 +185,6 @@ export function DonutSkeleton({
           </div>
         )}
       </div>
-      <div
-        style={{
-          width: `calc(100% - ${diameter}px)`,
-        }}
-      />
     </div>
   );
 }
