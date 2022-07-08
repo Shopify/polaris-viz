@@ -107,12 +107,16 @@ export function Chart({
   const getAriaLabel = useCallback(
     (seriesIndex: number) => {
       const ariaSeries = data
-        .map(({name, data}) => {
-          return `${name} ${labelFormatter(data[seriesIndex].value)}`;
-        })
+        .map(({name, data}) =>
+          data[seriesIndex]
+            ? `${name} ${labelFormatter(data[seriesIndex].value)}`
+            : null,
+        )
         .join(', ');
 
-      return `${data[0].data[seriesIndex].key}: ${ariaSeries}`;
+      return data[0].data[seriesIndex]
+        ? `${data[0].data[seriesIndex].key}: ${ariaSeries}`
+        : null;
     },
     [data, labelFormatter],
   );

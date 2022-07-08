@@ -168,15 +168,11 @@ export function Chart({
   const getAriaLabel = useCallback(
     (key: string, seriesIndex: number) => {
       const ariaSeries = data
-        .map(({name, data}) => {
-          if (data[seriesIndex] == null) {
-            return name;
-          }
-
-          return `${name} ${xAxisOptions.labelFormatter(
-            data[seriesIndex].value,
-          )}`;
-        })
+        .map(({name, data}) =>
+          data[seriesIndex] == null
+            ? name
+            : `${name} ${xAxisOptions.labelFormatter(data[seriesIndex].value)}`,
+        )
         .join(', ');
 
       return `${yAxisOptions.labelFormatter(key)}: ${ariaSeries}`;

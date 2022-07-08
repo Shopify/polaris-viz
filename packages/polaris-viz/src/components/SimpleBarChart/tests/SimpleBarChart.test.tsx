@@ -1,12 +1,22 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
+import {DataSeries} from '@shopify/polaris-viz-core';
 
 import {ChartContainer} from '../../ChartContainer';
 import {SimpleBarChart, SimpleBarChartProps} from '../SimpleBarChart';
 import {Chart} from '../Chart';
 
 const mockProps: SimpleBarChartProps = {
-  data: [{name: 'Test', data: [{value: 10, key: 'data'}]}],
+  data: [
+    {
+      name: 'Test',
+      data: [
+        {value: 1, key: 'Label 01'},
+        {value: 2, key: 'Label 02'},
+        {value: 3, key: 'Label 03'},
+      ],
+    },
+  ] as DataSeries[],
 };
 
 describe('<SimpleBarChart />', () => {
@@ -20,6 +30,23 @@ describe('<SimpleBarChart />', () => {
     const barChart = mount(<SimpleBarChart {...mockProps} />);
 
     expect(barChart).toContainReactComponent(Chart);
+  });
+
+  it('correctly rerenders if new data object is passed in as prop', () => {
+    const alteredData = [
+      {
+        name: 'Test',
+        data: [
+          {value: 1, key: 'Label 01'},
+          {value: 2, key: 'Label 02'},
+        ],
+      },
+    ] as DataSeries[];
+
+    const chart = mount(<SimpleBarChart {...mockProps} />);
+    chart.setProps({...mockProps, data: alteredData});
+
+    expect(chart).toContainReactComponent(Chart);
   });
 
   describe('theme', () => {
