@@ -3,12 +3,10 @@ import {
   LabelFormatter,
   ChartProps,
   WithRequired,
-  ChartState,
   DEFAULT_CHART_PROPS,
 } from '@shopify/polaris-viz-core';
 
 import {ChartContainer} from '../ChartContainer';
-import {ChartSkeleton} from '../ChartSkeleton';
 import type {ComparisonMetricProps} from '../ComparisonMetric';
 import type {LegendPosition} from '../../types';
 
@@ -31,6 +29,7 @@ export function DonutChart(props: DonutChartProps) {
     legendPosition,
     isAnimated,
     state,
+    errorText,
   }: WithRequired<DonutChartProps, 'theme'> = {
     ...DEFAULT_CHART_PROPS,
     labelFormatter: (value) => `${value}`,
@@ -41,17 +40,15 @@ export function DonutChart(props: DonutChartProps) {
 
   return (
     <ChartContainer theme={theme} isAnimated={isAnimated}>
-      {state === ChartState.Success ? (
-        <Chart
-          data={data}
-          labelFormatter={labelFormatter}
-          comparisonMetric={comparisonMetric}
-          showLegend={showLegend}
-          legendPosition={legendPosition}
-        />
-      ) : (
-        <ChartSkeleton state={state} type="Donut" />
-      )}
+      <Chart
+        errorText={errorText}
+        state={state}
+        data={data}
+        labelFormatter={labelFormatter}
+        comparisonMetric={comparisonMetric}
+        showLegend={showLegend}
+        legendPosition={legendPosition}
+      />
     </ChartContainer>
   );
 }
