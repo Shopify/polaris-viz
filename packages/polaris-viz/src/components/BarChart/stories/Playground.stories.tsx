@@ -296,7 +296,16 @@ export const LotsOfSingleBars: Story<BarChartProps> = (args: BarChartProps) => {
 };
 
 LotsOfSingleBars.args = {
-  data: [DATA[0]],
+  data: [
+    DATA[0],
+    DATA[0],
+    DATA[0],
+    DATA[0],
+    DATA[0],
+    DATA[0],
+    DATA[0],
+    DATA[0],
+  ],
 };
 
 export const AnnotationMania: Story<BarChartProps> = (args: BarChartProps) => {

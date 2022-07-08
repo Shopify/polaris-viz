@@ -340,3 +340,16 @@ export const SeriesColorsUpToFourteen = Template.bind({});
 SeriesColorsUpToFourteen.args = {
   data: generateMultipleSeries(7),
 };
+
+// TODO REMOVE THIS!!!
+export const BarsOnBarsOnBars: Story<BarChartProps> = (args: BarChartProps) => {
+  return (
+    <div style={{width: 1700, height: 600}}>
+      <BarChart {...args} />
+    </div>
+  );
+};
+
+BarsOnBarsOnBars.args = {
+  data: generateMultipleSeries(1, 225),
+};

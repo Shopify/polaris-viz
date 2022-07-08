@@ -22,6 +22,27 @@ export interface TooltipAnimatedContainerProps {
   bandwidth?: number;
 }
 
+function useThrottle<T>(value: T, interval = 500): T {
+  const [throttledValue, setThrottledValue] = useState<T>(value);
+  const lastExecuted = useRef<number>(Date.now());
+
+  useEffect(() => {
+    if (Date.now() >= lastExecuted.current + interval) {
+      lastExecuted.current = Date.now();
+      setThrottledValue(value);
+    } else {
+      const timerId = setTimeout(() => {
+        lastExecuted.current = Date.now();
+        setThrottledValue(value);
+      }, interval);
+
+      return () => clearTimeout(timerId);
+    }
+  }, [value, interval]);
+
+  return throttledValue;
+}
+
 export function TooltipAnimatedContainer({
   activePointIndex,
   bandwidth = 0,
@@ -51,6 +72,8 @@ export function TooltipAnimatedContainer({
     bandwidth,
   });
 
+  const throttledValue = useThrottle({x, y}, 150);
+
   firstRender.current = false;
 
   useEffect(() => {
@@ -70,8 +93,8 @@ export function TooltipAnimatedContainer({
         top: 0,
         left: 0,
         opacity: firstRender.current ? 0 : 1,
-        transform: `translate3d(${x}px, ${y}px, 0px)`,
-        transition: 'transform 100ms',
+        transform: `translate3d(${throttledValue.x}px, ${throttledValue.y}px, 0px)`,
+        transition: 'transform 250ms',
       }}
       ref={tooltipRef}
       aria-hidden="true"
