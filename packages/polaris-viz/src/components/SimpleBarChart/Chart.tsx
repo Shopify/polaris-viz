@@ -4,6 +4,7 @@ import {
   COLOR_VISION_SINGLE_ITEM,
   DEFAULT_THEME_NAME,
   DEFAULT_CHART_PROPS,
+  getAriaLabel,
 } from '@shopify/polaris-viz-core';
 import type {
   ChartType,
@@ -104,23 +105,6 @@ export function Chart({
     labelHeight: 0,
   });
 
-  const getAriaLabel = useCallback(
-    (seriesIndex: number) => {
-      const ariaSeries = data
-        .map(({name, data}) =>
-          data[seriesIndex]
-            ? `${name} ${labelFormatter(data[seriesIndex].value)}`
-            : null,
-        )
-        .join(', ');
-
-      return data[0].data[seriesIndex]
-        ? `${data[0].data[seriesIndex].key}: ${ariaSeries}`
-        : null;
-    },
-    [data, labelFormatter],
-  );
-
   const {transitions} = useHorizontalTransitions({
     series: data,
     groupHeight,
@@ -156,7 +140,14 @@ export function Chart({
         {transitions((style, item, _transition, index) => {
           const {opacity, transform} = style as HorizontalTransitionStyle;
           const name = item.key ?? '';
-          const ariaLabel = getAriaLabel(item.index);
+          const ariaLabel = getAriaLabel({
+            seriesIndex: item.index,
+            data,
+            key: data[0].data[item.index]?.key,
+            options: {
+              xAxisLabelFormatter: labelFormatter,
+            },
+          });
 
           const animationDelay = isAnimated
             ? (HORIZONTAL_BAR_GROUP_DELAY * index) / data.length

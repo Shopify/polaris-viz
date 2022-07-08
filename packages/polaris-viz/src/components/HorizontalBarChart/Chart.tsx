@@ -6,6 +6,7 @@ import {
   BoundingRect,
   DEFAULT_CHART_PROPS,
   HORIZONTAL_SPACE_BETWEEN_CHART_AND_AXIS,
+  getAriaLabel,
 } from '@shopify/polaris-viz-core';
 import type {
   DataSeries,
@@ -165,21 +166,6 @@ export function Chart({
   const annotationsDrawableHeight =
     chartYPosition + chartHeight + ANNOTATIONS_LABELS_OFFSET;
 
-  const getAriaLabel = useCallback(
-    (key: string, seriesIndex: number) => {
-      const ariaSeries = data
-        .map(({name, data}) =>
-          data[seriesIndex] == null
-            ? name
-            : `${name} ${xAxisOptions.labelFormatter(data[seriesIndex].value)}`,
-        )
-        .join(', ');
-
-      return `${yAxisOptions.labelFormatter(key)}: ${ariaSeries}`;
-    },
-    [data, xAxisOptions, yAxisOptions],
-  );
-
   const getTooltipMarkup = useBarChartTooltipContent({
     data,
     seriesColors,
@@ -266,7 +252,15 @@ export function Chart({
           {transitions((style, item, _transition, index) => {
             const {opacity, transform} = style as HorizontalTransitionStyle;
             const name = item.key ?? '';
-            const ariaLabel = getAriaLabel(item.key, item.index);
+            const ariaLabel = getAriaLabel({
+              seriesIndex: item.index,
+              data,
+              key: item.key,
+              options: {
+                xAxisLabelFormatter: xAxisOptions.labelFormatter,
+                yAxisLabelFormatter: yAxisOptions.labelFormatter,
+              },
+            });
 
             const animationDelay = isAnimated
               ? (HORIZONTAL_BAR_GROUP_DELAY * index) / data.length

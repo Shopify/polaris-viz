@@ -87,6 +87,7 @@ export {
   getAnimationTrail,
   getFilteredSeries,
   getSeriesColors,
+  getAriaLabel,
   isGradientType,
   uniqueId,
   createTheme,
