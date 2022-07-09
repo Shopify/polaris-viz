@@ -1,4 +1,4 @@
-import React, {ReactNode, useCallback, useMemo, useState} from 'react';
+import React, {ReactNode, useMemo, useState} from 'react';
 import {
   uniqueId,
   DataType,
@@ -6,7 +6,7 @@ import {
   BoundingRect,
   DEFAULT_CHART_PROPS,
   HORIZONTAL_SPACE_BETWEEN_CHART_AND_AXIS,
-  getAriaLabel,
+  useAriaLabel,
 } from '@shopify/polaris-viz-core';
 import type {
   DataSeries,
@@ -198,6 +198,11 @@ export function Chart({
     labelFormatter: yAxisOptions.labelFormatter,
   });
 
+  const getAriaLabel = useAriaLabel(data, {
+    xAxisLabelFormatter: xAxisOptions.labelFormatter,
+    yAxisLabelFormatter: yAxisOptions.labelFormatter,
+  });
+
   return (
     <div
       className={styles.ChartContainer}
@@ -254,12 +259,7 @@ export function Chart({
             const name = item.key ?? '';
             const ariaLabel = getAriaLabel({
               seriesIndex: item.index,
-              data,
               key: item.key,
-              options: {
-                xAxisLabelFormatter: xAxisOptions.labelFormatter,
-                yAxisLabelFormatter: yAxisOptions.labelFormatter,
-              },
             });
 
             const animationDelay = isAnimated

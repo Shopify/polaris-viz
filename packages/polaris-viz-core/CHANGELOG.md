@@ -9,7 +9,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Added
 
-- Introduces `getAriaLabel` utility.
+- Introduces `useAriaLabel` hook.
 
 ## [5.0.0] - 2022-07-07
 

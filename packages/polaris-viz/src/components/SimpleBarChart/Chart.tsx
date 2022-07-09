@@ -1,10 +1,10 @@
-import React, {useCallback, useMemo} from 'react';
+import React, {useMemo} from 'react';
 import {
   uniqueId,
   COLOR_VISION_SINGLE_ITEM,
   DEFAULT_THEME_NAME,
   DEFAULT_CHART_PROPS,
-  getAriaLabel,
+  useAriaLabel,
 } from '@shopify/polaris-viz-core';
 import type {
   ChartType,
@@ -113,6 +113,9 @@ export function Chart({
   });
 
   const zeroPosition = longestLabel.negative + xScale(0);
+  const getAriaLabel = useAriaLabel(data, {
+    xAxisLabelFormatter: labelFormatter,
+  });
 
   return (
     <div
@@ -142,11 +145,7 @@ export function Chart({
           const name = item.key ?? '';
           const ariaLabel = getAriaLabel({
             seriesIndex: item.index,
-            data,
             key: data[0].data[item.index]?.key,
-            options: {
-              xAxisLabelFormatter: labelFormatter,
-            },
           });
 
           const animationDelay = isAnimated

@@ -87,7 +87,6 @@ export {
   getAnimationTrail,
   getFilteredSeries,
   getSeriesColors,
-  getAriaLabel,
   isGradientType,
   uniqueId,
   createTheme,
@@ -114,6 +113,7 @@ export {
   usePolarisVizContext,
   useYScale,
   useUniqueId,
+  useAriaLabel,
 } from './hooks';
 export {
   Bar,
