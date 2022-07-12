@@ -1,0 +1,20 @@
+import {Meta, Description} from '@storybook/addon-docs/blocks';
+
+import {Title} from './components';
+
+import Development from '!raw-loader!../../../../../../BUILDING_BLOCKS.md';
+
+
+<Meta
+  title="Shared/Design System/Building Blocks"
+  parameters={{
+    viewMode: 'docs',
+    docsOnly: true,
+  }}
+/>
+
+<Title>Building blocks overview</Title>
+
+<Description markdown={Development} />
+
+
