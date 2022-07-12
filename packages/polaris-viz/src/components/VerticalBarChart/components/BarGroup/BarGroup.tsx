@@ -10,6 +10,7 @@ import {
   getColorVisionStylesForActiveIndex,
   clamp,
   BORDER_RADIUS,
+  useTheme,
 } from '@shopify/polaris-viz-core';
 import type {Color} from '@shopify/polaris-viz-core';
 
@@ -22,7 +23,6 @@ import {
 import {Bar} from '../Bar';
 import {BAR_SPACING} from '../../constants';
 import {
-  MIN_BAR_HEIGHT,
   MASK_HIGHLIGHT_COLOR,
   SHAPE_ANIMATION_HEIGHT_BUFFER,
 } from '../../../../constants';
@@ -41,9 +41,10 @@ interface Props {
   indexOffset: number;
   accessibilityData: AccessibilitySeries[];
   activeBarGroup: number;
-  zeroAsMinHeight: boolean;
   gapWidth: number;
+  areAllNegative?: boolean;
   isAnimated?: boolean;
+  theme?: string;
 }
 
 export function BarGroup({
@@ -57,16 +58,18 @@ export function BarGroup({
   indexOffset,
   barGroupIndex,
   hasRoundedCorners,
-  zeroAsMinHeight,
   isAnimated = false,
   accessibilityData,
   activeBarGroup,
   gapWidth,
+  theme,
+  areAllNegative,
 }: Props) {
   const groupAriaLabel = formatAriaLabel(accessibilityData[barGroupIndex]);
 
   const {prefersReducedMotion} = usePrefersReducedMotion();
   const [activeBarIndex, setActiveBarIndex] = useState(-1);
+  const selectedTheme = useTheme(theme);
 
   useWatchColorVisionEvents({
     type: COLOR_VISION_SINGLE_ITEM,
@@ -86,14 +89,9 @@ export function BarGroup({
 
   const getBarHeight = useCallback(
     (rawValue: number) => {
-      const rawHeight = Math.abs(yScale(rawValue) - yScale(0));
-      const needsMinHeight = zeroAsMinHeight
-        ? rawHeight < MIN_BAR_HEIGHT
-        : rawHeight < MIN_BAR_HEIGHT && rawHeight !== 0;
-
-      return needsMinHeight ? MIN_BAR_HEIGHT : rawHeight;
+      return Math.abs(yScale(rawValue) - yScale(0));
     },
-    [yScale, zeroAsMinHeight],
+    [yScale],
   );
 
   const shouldAnimate = !prefersReducedMotion && isAnimated;
@@ -140,11 +138,13 @@ export function BarGroup({
                 }
                 animationDelay={animationDelay}
                 isAnimated={shouldAnimate}
+                areAllNegative={areAllNegative}
               />
             </g>
           );
         })}
       </mask>
+
       <g mask={`url(#${maskId})`}>
         {gradients.map((gradient, index) => {
           return (
@@ -158,7 +158,11 @@ export function BarGroup({
                 y={SHAPE_ANIMATION_HEIGHT_BUFFER * -1}
                 width={barWidth - BAR_SPACING}
                 height={height + SHAPE_ANIMATION_HEIGHT_BUFFER * 2}
-                fill={`url(#${gradientId}${index})`}
+                fill={
+                  data[index] === 0
+                    ? selectedTheme.bar.zeroValueColor
+                    : `url(#${gradientId}${index})`
+                }
                 style={getColorVisionStylesForActiveIndex({
                   activeIndex: activeBarIndex,
                   index: index + indexOffset,
@@ -168,6 +172,7 @@ export function BarGroup({
           );
         })}
       </g>
+
       <g
         {...getColorVisionEventAttrs({
           type: COLOR_VISION_GROUP_ITEM,

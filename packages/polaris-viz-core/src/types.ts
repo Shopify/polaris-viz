@@ -76,10 +76,7 @@ export interface ArcTheme {
 
 export interface BarTheme {
   hasRoundedCorners: boolean;
-  /**
-   * @deprecated This prop is experimental and not ready for general use. If you want to use this, come talk to us in #polaris-data-viz
-   */
-  zeroAsMinHeight: boolean;
+  zeroValueColor: string;
 }
 
 export interface XAxisTheme {

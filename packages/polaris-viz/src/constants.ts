@@ -75,3 +75,4 @@ export const COLLAPSED_ANNOTATIONS_COUNT = 3;
 export const MAX_ANIMATED_SERIES_LENGTH = 1000;
 export const PREVIEW_ICON_SIZE = 12;
 export const ARC_PAD_ANGLE = 0.02;
+export const ZERO_VALUE_LINE_HEIGHT = 6;
