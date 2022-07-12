@@ -12,7 +12,7 @@ When interacting with a line chart, a dot will appear on the line(s) for the dat
 
 ### Empty/Loading state
 
-When a vertical bar chart first appears on the screen, the initial animation starts from zero on the y-axis. For line charts, the line draws itself from one side to the other.
+When a vertical  chart first appears on the screen, the initial animation starts from zero on the y-axis. The shape that represent the data, for example bars of lines, then grow from the zero line to their final position
 
 <img src='barchart_loading.gif' alt="Bar chart animation" />
 
