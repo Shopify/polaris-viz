@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {animated, useSpring} from '@react-spring/web';
 import type {Area as D3Area, Line} from 'd3-shape';
 import {
@@ -7,6 +7,7 @@ import {
   getColorVisionEventAttrs,
   COLOR_VISION_SINGLE_ITEM,
   getColorVisionStylesForActiveIndex,
+  useChartContext,
 } from '@shopify/polaris-viz-core';
 import type {Color, Theme, GradientStop} from '@shopify/polaris-viz-core';
 
@@ -24,7 +25,6 @@ export interface AreaProps {
   duration: number;
   id: string;
   index: number;
-  isImmediate: boolean;
   lineGenerator: Line<number[]>;
   selectedTheme: Theme;
 }
@@ -38,30 +38,36 @@ export function Area({
   duration,
   id,
   index,
-  isImmediate,
   lineGenerator,
   selectedTheme,
 }: AreaProps) {
+  const [mounted, setMounted] = useState(false);
+  const {shouldAnimate} = useChartContext();
+
   const delay = animationIndex * (duration / 2);
 
   const spring = useSpring({
     from: {transform: 'translateY(25%)', opacity: 0},
     to: {transform: 'translateY(0)', opacity: 1},
-    delay: isImmediate ? 0 : delay,
+    delay: mounted ? 0 : delay,
     duration,
     config: LINES_LOAD_ANIMATION_CONFIG,
-    immediate: isImmediate,
-    reset: true,
+    default: {
+      immediate: !shouldAnimate || mounted,
+    },
+    onRest: () => setMounted(true),
   });
 
   const areaSpring = useSpring({
     from: {opacity: 0},
     to: {opacity: 0.25},
-    delay: isImmediate ? 0 : delay + duration,
+    delay: !shouldAnimate ? 0 : delay + duration,
     duration,
     config: LINES_LOAD_ANIMATION_CONFIG,
-    immediate: isImmediate,
-    reset: true,
+
+    default: {
+      immediate: !shouldAnimate || mounted,
+    },
   });
 
   const shape = areaGenerator(data);
