@@ -4,7 +4,8 @@ import {
   TOO_MANY_DATA_SERIES_THRESHOLD,
 } from '../constants';
 
-import {isDataSeriesArray, isDataGroupArray} from './';
+import {isDataGroupArray} from './isDataGroup';
+import {isDataSeriesArray} from './isDataSeries';
 
 const hasTooManyDataPoints = (seriesArray: DataGroup['series']) => {
   return seriesArray.some((series) => {

@@ -23,6 +23,7 @@ export function useLinearChartAnimations({
   data: DataSeries[];
 }) {
   const {shouldAnimate} = useChartContext();
+
   const currentIndex = activeIndex == null ? 0 : activeIndex;
   const immediate = !shouldAnimate || data.length === 0 || activeIndex == null;
 

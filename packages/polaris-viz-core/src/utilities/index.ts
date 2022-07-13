@@ -21,6 +21,4 @@ export {getValueFromXScale} from './getValueFromXScale';
 export {isValueWithinDomain} from './isValueWithinDomain';
 export {getClosestDivisibleNumber} from './getClosestDivisibleNumber';
 export {roundToDecimals} from './roundToDecimals';
-export {isDataSeries, isDataSeriesArray} from './isDataSeries';
-export {isDataGroup, isDataGroupArray} from './isDataGroup';
 export {isLargeDataSet} from './isLargeDataSet';
