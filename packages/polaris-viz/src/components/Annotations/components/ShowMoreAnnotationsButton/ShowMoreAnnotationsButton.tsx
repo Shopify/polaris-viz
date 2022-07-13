@@ -1,8 +1,8 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {
-  ChartContext,
   estimateStringWidth,
   LINE_HEIGHT,
+  useChartContext,
   useTheme,
 } from '@shopify/polaris-viz-core';
 
@@ -36,7 +36,7 @@ export function ShowMoreAnnotationsButton({
   width,
 }: Props) {
   const selectedTheme = useTheme(theme);
-  const {characterWidths} = useContext(ChartContext);
+  const {characterWidths} = useChartContext();
 
   const label = isShowingAllAnnotations
     ? collapseText

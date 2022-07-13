@@ -6,6 +6,7 @@ import {
   COLOR_VISION_SINGLE_ITEM,
   getColorVisionStylesForActiveIndex,
   getRoundedRectPath,
+  useChartContext,
 } from '@shopify/polaris-viz-core';
 
 export interface StackedBarProps {
@@ -14,7 +15,6 @@ export interface StackedBarProps {
   borderRadius: string;
   color: string;
   height: number;
-  isAnimated: boolean;
   seriesIndex: number;
   setActiveBarIndex: Dispatch<SetStateAction<number>>;
   width: number;
@@ -27,16 +27,17 @@ export function StackedBar({
   borderRadius,
   color,
   height,
-  isAnimated,
   seriesIndex,
   setActiveBarIndex,
   width,
   x,
 }: StackedBarProps) {
+  const {shouldAnimate} = useChartContext();
+
   const {transform} = useSpring({
     from: {transform: `scale(0.5, 1)`},
     to: {transform: `scale(1, 1)`},
-    default: {immediate: !isAnimated},
+    default: {immediate: !shouldAnimate},
   });
 
   const pathD = getRoundedRectPath({

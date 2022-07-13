@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {
   DataSeries,
@@ -6,8 +6,8 @@ import {
   LabelFormatter,
   BORDER_RADIUS,
   estimateStringWidth,
-  ChartContext,
   COLOR_VISION_SINGLE_ITEM,
+  useChartContext,
 } from '@shopify/polaris-viz-core';
 
 import {
@@ -28,7 +28,6 @@ export interface HorizontalBarsProps {
   data: DataSeries[];
   groupIndex: number;
   id: string;
-  isAnimated: boolean;
   isSimple: boolean;
   labelFormatter: LabelFormatter;
   name: string;
@@ -45,7 +44,6 @@ export function HorizontalBars({
   data,
   groupIndex,
   id,
-  isAnimated,
   isSimple,
   labelFormatter,
   name,
@@ -54,7 +52,7 @@ export function HorizontalBars({
   zeroPosition,
 }: HorizontalBarsProps) {
   const selectedTheme = useTheme(theme);
-  const {characterWidths} = useContext(ChartContext);
+  const {characterWidths} = useChartContext();
 
   const [activeBarIndex, setActiveBarIndex] = useState(-1);
 
@@ -106,7 +104,6 @@ export function HorizontalBars({
               height={barHeight}
               index={groupIndex}
               isActive={activeBarIndex === -1 || activeBarIndex === seriesIndex}
-              isAnimated={isAnimated}
               needsMinWidth
               transform={isNegative ? 'scaleX(-1)' : ''}
               width={width}
@@ -122,7 +119,6 @@ export function HorizontalBars({
                     ? selectedTheme.seriesColors.comparison
                     : selectedTheme.xAxis.labelColor
                 }
-                isAnimated={isAnimated}
                 label={label}
                 labelWidth={labelWidth}
                 x={x}

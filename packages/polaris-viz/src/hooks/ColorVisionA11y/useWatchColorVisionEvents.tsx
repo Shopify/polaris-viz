@@ -1,6 +1,6 @@
-import {useContext, useEffect} from 'react';
+import {useEffect} from 'react';
 import {useDebouncedCallback} from 'use-debounce/lib';
-import {ChartContext} from '@shopify/polaris-viz-core';
+import {useChartContext} from '@shopify/polaris-viz-core';
 
 import {useCallbackRef} from '..';
 
@@ -20,7 +20,7 @@ export function useWatchColorVisionEvents({type, onIndexChange}: Props) {
   const [debounced] = useDebouncedCallback(onIndexChange, 0);
 
   const onIndexChangeCallback = useCallbackRef(debounced);
-  const {id} = useContext(ChartContext);
+  const {id} = useChartContext();
 
   useEffect(() => {
     if (!id) {

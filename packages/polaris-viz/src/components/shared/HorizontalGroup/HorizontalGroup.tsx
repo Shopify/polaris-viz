@@ -35,7 +35,7 @@ export interface HorizontalGroupProps {
   groupHeight: number;
   id: string;
   index: number;
-  isAnimated: boolean;
+
   isSimple: boolean;
   isStacked: boolean;
   name: string;
@@ -59,7 +59,6 @@ export function HorizontalGroup({
   groupHeight,
   id,
   index,
-  isAnimated,
   isSimple,
   isStacked,
   name,
@@ -141,7 +140,6 @@ export function HorizontalGroup({
             dataKeys={dataKeys}
             groupIndex={index}
             id={id}
-            isAnimated={isAnimated}
             name={name}
             stackedValues={stackedValues}
             theme={theme}
@@ -155,7 +153,6 @@ export function HorizontalGroup({
             data={data}
             groupIndex={index}
             id={id}
-            isAnimated={isAnimated}
             isSimple={isSimple}
             labelFormatter={xAxisOptions.labelFormatter}
             name={name}

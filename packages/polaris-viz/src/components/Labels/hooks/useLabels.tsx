@@ -1,5 +1,5 @@
-import {Dispatch, SetStateAction, useContext, useEffect, useMemo} from 'react';
-import {estimateStringWidth, ChartContext} from '@shopify/polaris-viz-core';
+import {Dispatch, SetStateAction, useEffect, useMemo} from 'react';
+import {estimateStringWidth, useChartContext} from '@shopify/polaris-viz-core';
 
 import {
   LINE_HEIGHT,
@@ -27,7 +27,7 @@ export function useLabels({
   onHeightChange = () => {},
   targetWidth,
 }: Props) {
-  const {characterWidths} = useContext(ChartContext);
+  const {characterWidths} = useChartContext();
 
   const preparedLabels = useMemo(() => {
     return labels.map((label) => {

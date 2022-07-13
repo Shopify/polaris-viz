@@ -41,7 +41,6 @@ import {useComboChartTooltipContent} from './hooks/useComboChartTooltipContent';
 
 export interface ChartProps {
   data: DataGroup[];
-  isAnimated: boolean;
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
   showLegend: boolean;
   theme: string;
@@ -52,7 +51,6 @@ export interface ChartProps {
 export function Chart({
   data,
   dimensions,
-  isAnimated,
   renderTooltipContent,
   showLegend,
   theme,
@@ -223,7 +221,6 @@ export function Chart({
             data={barChartData}
             drawableHeight={drawableHeight}
             drawableWidth={drawableWidth}
-            isAnimated={isAnimated}
             labels={labels}
             theme={theme}
             yScale={barYScale}
@@ -242,7 +239,6 @@ export function Chart({
             drawableHeight={drawableHeight}
             drawableWidth={drawableWidth}
             indexOffset={lineChartIndexOffset}
-            isAnimated={isAnimated}
             theme={theme}
             xScale={xScale}
             yScale={lineYScale}

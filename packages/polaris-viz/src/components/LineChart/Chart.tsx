@@ -9,7 +9,6 @@ import {
   clamp,
   DEFAULT_THEME_NAME,
   BoundingRect,
-  DEFAULT_CHART_PROPS,
 } from '@shopify/polaris-viz-core';
 import type {
   Dimensions,
@@ -70,7 +69,6 @@ export interface ChartProps {
   emptyStateText?: string;
   theme?: string;
   dimensions?: Dimensions;
-  isAnimated?: boolean;
 }
 
 const TOOLTIP_POSITION = {
@@ -85,7 +83,6 @@ export function Chart({
   renderTooltipContent,
   showLegend = true,
   emptyStateText,
-  isAnimated = DEFAULT_CHART_PROPS.isAnimated,
   xAxisOptions,
   yAxisOptions,
   theme = DEFAULT_THEME_NAME,
@@ -308,7 +305,6 @@ export function Chart({
                 activeLineIndex={activeLineIndex}
                 data={singleSeries}
                 index={reversedSeries.length - 1 - index}
-                isAnimated={isAnimated}
                 key={`${name}-${index}`}
                 svgDimensions={{height: drawableHeight, width: drawableWidth}}
                 theme={theme}
@@ -323,9 +319,7 @@ export function Chart({
             activeIndex={activeIndex}
             drawableHeight={drawableHeight}
             emptyState={emptyState}
-            isAnimated={isAnimated}
             longestSeriesIndex={longestSeriesIndex}
-            longestSeriesLength={longestSeriesLength}
             reversedSeries={reversedSeries}
             theme={theme}
             tooltipId={tooltipId.current}

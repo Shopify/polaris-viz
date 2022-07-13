@@ -7,6 +7,7 @@ import {
   curveStepRounded,
   uniqueId,
   COLOR_VISION_SINGLE_ITEM,
+  useChartContext,
 } from '@shopify/polaris-viz-core';
 
 import {
@@ -28,18 +29,11 @@ interface Props {
   stackedValues: StackedSeries[];
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
-  isAnimated: boolean;
   theme: string;
 }
 
-export function Areas({
-  stackedValues,
-  xScale,
-  yScale,
-  colors,
-  isAnimated,
-  theme,
-}: Props) {
+export function Areas({stackedValues, xScale, yScale, colors, theme}: Props) {
+  const {shouldAnimate} = useChartContext();
   const [activeLineIndex, setActiveLineIndex] = useState(-1);
 
   useWatchColorVisionEvents({
@@ -51,7 +45,7 @@ export function Areas({
 
   const selectedTheme = useTheme(theme);
   const prevstackedValues = usePrevious(stackedValues);
-  const valuesHaveNotUpdated = isEqual(prevstackedValues, stackedValues);
+  const valuesHaveUpdated = !isEqual(prevstackedValues, stackedValues);
 
   const id = useMemo(() => uniqueId('stackedAreas'), []);
 
@@ -88,6 +82,8 @@ export function Areas({
     );
   }, [stackedValues.length]);
 
+  const isImmediate = !shouldAnimate || valuesHaveUpdated;
+
   return (
     <React.Fragment>
       {stackedValues.map((data, index) => {
@@ -101,7 +97,7 @@ export function Areas({
             duration={duration}
             id={id}
             index={index}
-            isImmediate={!isAnimated || valuesHaveNotUpdated}
+            isImmediate={isImmediate}
             key={index}
             lineGenerator={lineGenerator}
             selectedTheme={selectedTheme}

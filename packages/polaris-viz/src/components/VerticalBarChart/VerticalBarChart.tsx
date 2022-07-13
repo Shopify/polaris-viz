@@ -24,7 +24,6 @@ export interface VerticalBarChartProps {
   annotationsLookupTable?: AnnotationLookupTable;
   barOptions?: {isStacked: boolean};
   emptyStateText?: string;
-  isAnimated?: boolean;
   theme: string;
   type?: ChartType;
   dimensions?: Dimensions;
@@ -35,7 +34,6 @@ export function VerticalBarChart({
   annotationsLookupTable = {},
   data,
   emptyStateText,
-  isAnimated = false,
   renderTooltipContent,
   showLegend,
   theme,
@@ -58,7 +56,6 @@ export function VerticalBarChart({
       annotationsLookupTable={annotationsLookupTable}
       data={seriesWithDefaults}
       emptyStateText={emptyStateText}
-      isAnimated={isAnimated}
       renderTooltipContent={renderTooltipContent}
       showLegend={showLegend}
       type={type}

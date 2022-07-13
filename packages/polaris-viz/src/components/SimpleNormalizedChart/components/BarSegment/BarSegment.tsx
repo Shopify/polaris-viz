@@ -5,6 +5,7 @@ import {
   getColorVisionEventAttrs,
   isGradientType,
   getColorVisionStylesForActiveIndex,
+  useChartContext,
 } from '@shopify/polaris-viz-core';
 import type {Color, Direction} from '@shopify/polaris-viz-core';
 
@@ -19,7 +20,6 @@ const DELAY = 150;
 
 interface Props {
   activeIndex: number;
-  isAnimated: boolean;
   index: number;
   scale: number;
   color: Color;
@@ -32,12 +32,12 @@ export function BarSegment({
   activeIndex,
   color,
   index,
-  isAnimated,
   scale,
   size,
   direction,
   roundedCorners,
 }: Props) {
+  const {shouldAnimate} = useChartContext();
   const scaleNeedsRounding = scale > 0 && scale < 1.5;
   const safeScale = scaleNeedsRounding ? 1.5 : scale;
   const isMaxScale = scale >= 100;
@@ -46,7 +46,7 @@ export function BarSegment({
   const angle = direction === 'horizontal' ? 90 : 180;
   const dimension = direction === 'horizontal' ? 'width' : 'height';
 
-  const isMountDone = useHasTimeoutFinished(isAnimated ? delay : 0);
+  const isMountDone = useHasTimeoutFinished(shouldAnimate ? delay : 0);
 
   const formattedColor = isGradientType(color)
     ? createCSSGradient(color, angle)
@@ -56,7 +56,7 @@ export function BarSegment({
     from: {[dimension]: `0%`},
     to: {[dimension]: `${safeScale}%`},
     config: BARS_TRANSITION_CONFIG,
-    default: {immediate: !isAnimated},
+    default: {immediate: !shouldAnimate},
     delay: isMountDone ? 0 : delay,
   });
 
@@ -69,7 +69,7 @@ export function BarSegment({
         styles[`${direction}-${size}`],
       )}
       style={{
-        [dimension]: isAnimated ? spring[dimension] : `${safeScale}%`,
+        [dimension]: shouldAnimate ? spring[dimension] : `${safeScale}%`,
         background: formattedColor,
         ...getColorVisionStylesForActiveIndex({activeIndex, index}),
       }}

@@ -1,6 +1,10 @@
-import {useContext, useMemo} from 'react';
-import type {DataSeries, LabelFormatter} from '@shopify/polaris-viz-core';
-import {estimateStringWidth, ChartContext} from '@shopify/polaris-viz-core';
+import {useMemo} from 'react';
+import {
+  DataSeries,
+  LabelFormatter,
+  useChartContext,
+  estimateStringWidth,
+} from '@shopify/polaris-viz-core';
 
 import {HORIZONTAL_BAR_LABEL_OFFSET} from '../constants';
 
@@ -17,7 +21,7 @@ export function useDataForHorizontalChart({
   isStacked,
   labelFormatter,
 }: Props) {
-  const {characterWidths} = useContext(ChartContext);
+  const {characterWidths} = useChartContext();
 
   const allNumbers = useMemo(() => {
     return data.reduce<number[]>((prev, cur) => {

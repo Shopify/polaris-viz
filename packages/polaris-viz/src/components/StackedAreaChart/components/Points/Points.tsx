@@ -9,16 +9,13 @@ import {
   changeColorOpacity,
   changeGradientOpacity,
   Color,
+  useChartContext,
 } from '@shopify/polaris-viz-core';
 import type {ScaleLinear} from 'd3-scale';
 
 import {Point} from '../../../';
 import type {AnimatedCoordinate, GetXPosition} from '../../../../types';
-import {
-  usePrefersReducedMotion,
-  useTheme,
-  useWatchColorVisionEvents,
-} from '../../../../hooks';
+import {useTheme, useWatchColorVisionEvents} from '../../../../hooks';
 import {colorWhite} from '../../../../constants';
 
 interface PointsProps {
@@ -26,7 +23,7 @@ interface PointsProps {
   animatedCoordinates: AnimatedCoordinate[] | null;
   colors: Color[];
   getXPosition: GetXPosition;
-  isAnimated: boolean;
+
   stackedValues: Series<
     {
       [key: string]: number;
@@ -44,7 +41,6 @@ export function Points({
   animatedCoordinates,
   colors,
   getXPosition,
-  isAnimated,
   stackedValues,
   theme,
   tooltipId,
@@ -54,7 +50,7 @@ export function Points({
   const [activeLineIndex, setActiveLineIndex] = useState(-1);
 
   const selectedTheme = useTheme(theme);
-  const {prefersReducedMotion} = usePrefersReducedMotion();
+  const {shouldAnimate} = useChartContext();
 
   useWatchColorVisionEvents({
     type: COLOR_VISION_SINGLE_ITEM,
@@ -110,7 +106,7 @@ export function Points({
               active
               index={stackIndex}
               tabIndex={stackIndex === 0 ? 0 : -1}
-              isAnimated={isAnimated && !prefersReducedMotion}
+              isAnimated={shouldAnimate}
             />
           </g>
         );

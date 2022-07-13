@@ -24,7 +24,6 @@ export function Chart({
   data,
   dimensions,
   accessibilityLabel,
-  isAnimated = false,
   offsetLeft = 0,
   offsetRight = 0,
   theme = DEFAULT_THEME_NAME,
@@ -70,7 +69,6 @@ export function Chart({
                 xScale={xScale}
                 yScale={yScale}
                 data={seriesWithColor}
-                isAnimated={isAnimated}
                 svgDimensions={{height, width}}
                 theme={theme}
                 type="spark"

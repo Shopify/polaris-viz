@@ -80,7 +80,6 @@ export function BarChart(props: BarChartProps) {
         annotationsLookupTable={annotationsLookupTable}
         data={data}
         emptyStateText={emptyStateText}
-        isAnimated={isAnimated}
         renderTooltipContent={renderTooltip}
         showLegend={showLegend}
         theme={theme}
@@ -92,7 +91,6 @@ export function BarChart(props: BarChartProps) {
       <HorizontalBarChart
         annotationsLookupTable={annotationsLookupTable}
         data={data}
-        isAnimated={isAnimated}
         renderTooltipContent={renderTooltip}
         showLegend={showLegend}
         theme={theme}
@@ -106,7 +104,7 @@ export function BarChart(props: BarChartProps) {
       {hideSkipLink ? null : (
         <SkipLink anchorId={skipLinkAnchorId.current}>{skipLinkText}</SkipLink>
       )}
-      <ChartContainer theme={theme}>
+      <ChartContainer isAnimated={isAnimated} data={data} theme={theme}>
         {state !== ChartState.Success ? (
           <ChartSkeleton state={state} errorText={errorText} theme={theme} />
         ) : (

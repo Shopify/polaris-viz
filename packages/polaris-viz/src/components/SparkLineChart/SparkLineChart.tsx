@@ -24,11 +24,15 @@ export function SparkLineChart(props: SparkLineChartProps) {
     ...props,
   };
   return (
-    <ChartContainer theme={theme} sparkChart>
+    <ChartContainer
+      isAnimated={isAnimated}
+      data={data}
+      theme={theme}
+      sparkChart
+    >
       <Chart
         data={data}
         accessibilityLabel={accessibilityLabel}
-        isAnimated={isAnimated}
         offsetLeft={offsetLeft}
         offsetRight={offsetRight}
         theme={theme}
