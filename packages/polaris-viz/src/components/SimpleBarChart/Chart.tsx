@@ -3,7 +3,6 @@ import {
   uniqueId,
   COLOR_VISION_SINGLE_ITEM,
   DEFAULT_THEME_NAME,
-  DEFAULT_CHART_PROPS,
   useAriaLabel,
   useChartContext,
 } from '@shopify/polaris-viz-core';

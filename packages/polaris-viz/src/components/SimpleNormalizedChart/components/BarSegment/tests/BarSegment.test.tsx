@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-constructed-context-values */
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {ChartContext} from '@shopify/polaris-viz-core';

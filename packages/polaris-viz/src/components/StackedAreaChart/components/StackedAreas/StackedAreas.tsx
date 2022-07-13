@@ -1,5 +1,4 @@
 import React, {useMemo, useState} from 'react';
-import isEqual from 'fast-deep-equal';
 import {area, line} from 'd3-shape';
 import type {ScaleLinear} from 'd3-scale';
 import type {Color} from '@shopify/polaris-viz-core';
@@ -7,7 +6,6 @@ import {
   curveStepRounded,
   uniqueId,
   COLOR_VISION_SINGLE_ITEM,
-  useChartContext,
 } from '@shopify/polaris-viz-core';
 
 import {
@@ -17,11 +15,7 @@ import {
   LINE_ANIMATION_DURATION_STEP,
 } from '../../../../constants';
 import type {StackedSeries} from '../../../../types';
-import {
-  usePrevious,
-  useTheme,
-  useWatchColorVisionEvents,
-} from '../../../../hooks';
+import {useTheme, useWatchColorVisionEvents} from '../../../../hooks';
 import {Area} from '..';
 
 interface Props {
@@ -32,8 +26,13 @@ interface Props {
   theme: string;
 }
 
-export function Areas({stackedValues, xScale, yScale, colors, theme}: Props) {
-  const {shouldAnimate} = useChartContext();
+export function StackedAreas({
+  stackedValues,
+  xScale,
+  yScale,
+  colors,
+  theme,
+}: Props) {
   const [activeLineIndex, setActiveLineIndex] = useState(-1);
 
   useWatchColorVisionEvents({
@@ -44,8 +43,6 @@ export function Areas({stackedValues, xScale, yScale, colors, theme}: Props) {
   });
 
   const selectedTheme = useTheme(theme);
-  const prevstackedValues = usePrevious(stackedValues);
-  const valuesHaveUpdated = !isEqual(prevstackedValues, stackedValues);
 
   const id = useMemo(() => uniqueId('stackedAreas'), []);
 
@@ -82,8 +79,6 @@ export function Areas({stackedValues, xScale, yScale, colors, theme}: Props) {
     );
   }, [stackedValues.length]);
 
-  const isImmediate = !shouldAnimate || valuesHaveUpdated;
-
   return (
     <React.Fragment>
       {stackedValues.map((data, index) => {
@@ -97,8 +92,7 @@ export function Areas({stackedValues, xScale, yScale, colors, theme}: Props) {
             duration={duration}
             id={id}
             index={index}
-            isImmediate={isImmediate}
-            key={index}
+            key={`${id}-${index}`}
             lineGenerator={lineGenerator}
             selectedTheme={selectedTheme}
           />
@@ -107,5 +101,3 @@ export function Areas({stackedValues, xScale, yScale, colors, theme}: Props) {
     </React.Fragment>
   );
 }
-
-export const StackedAreas = React.memo(Areas);
