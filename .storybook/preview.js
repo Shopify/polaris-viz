@@ -11,6 +11,15 @@ import {useTheme} from '../packages/polaris-viz/src/hooks';
 const storiesOrder = {
   Intro: null,
   Shared: {
+    'Design System': {
+      Context: null,
+      Definitions: null,
+      Principles: null,
+      'Analytics Design Language': null,
+      'Analytics Experiences': null,
+      Behavior: null,
+      'Building blocks': null,
+    },
     'Data Structure': null,
     Legends: null,
     Labels: null,
