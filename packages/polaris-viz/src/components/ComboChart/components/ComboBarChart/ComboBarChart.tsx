@@ -12,7 +12,6 @@ interface ComboBarChartProps {
   drawableHeight: number;
   drawableWidth: number;
   indexOffset: number;
-  isAnimated: any;
   labels: string[];
   theme: string;
   yScale: ScaleLinear<number, number>;
@@ -23,7 +22,6 @@ export function ComboBarChart({
   data,
   drawableHeight,
   drawableWidth,
-  isAnimated,
   indexOffset,
   labels,
   theme,
@@ -50,7 +48,6 @@ export function ComboBarChart({
       gapWidth={gapWidth}
       id={id}
       indexOffset={indexOffset}
-      isAnimated={isAnimated}
       labels={labels}
       sortedData={sortedData}
       stackedValues={null}

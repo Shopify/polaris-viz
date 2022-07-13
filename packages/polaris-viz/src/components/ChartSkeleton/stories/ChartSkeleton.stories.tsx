@@ -30,7 +30,7 @@ export default {
 
 const Template: Story<ChartSkeletonProps> = (args: ChartSkeletonProps) => {
   return (
-    <ChartContainer theme={DEFAULT_THEME_NAME}>
+    <ChartContainer data={[]} isAnimated={true} theme={DEFAULT_THEME_NAME}>
       <ChartSkeleton {...args} />
     </ChartContainer>
   );
@@ -57,7 +57,7 @@ error.args = {
 const Donut: Story<ChartSkeletonProps> = (args: ChartSkeletonProps) => {
   return (
     <div style={{width: 400, height: 200}}>
-      <ChartContainer theme={args.theme!}>
+      <ChartContainer data={[]} isAnimated={true} theme={args.theme!}>
         <ChartSkeleton {...args} />
       </ChartContainer>
     </div>

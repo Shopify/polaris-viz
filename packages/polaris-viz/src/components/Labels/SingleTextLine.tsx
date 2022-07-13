@@ -1,5 +1,5 @@
-import React, {useContext} from 'react';
-import {ChartContext, LINE_HEIGHT} from '@shopify/polaris-viz-core';
+import React from 'react';
+import {LINE_HEIGHT, useChartContext} from '@shopify/polaris-viz-core';
 
 import {FONT_SIZE} from '../../constants';
 
@@ -22,7 +22,7 @@ export function SingleTextLine({
   y,
   x,
 }: SingleTextLineProps) {
-  const {characterWidths} = useContext(ChartContext);
+  const {characterWidths} = useChartContext();
 
   const truncated = endLineTruncate({
     label: text,

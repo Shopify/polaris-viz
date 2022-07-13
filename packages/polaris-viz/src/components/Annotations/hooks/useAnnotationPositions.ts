@@ -1,9 +1,9 @@
-import {useContext, useEffect, useMemo} from 'react';
+import {useEffect, useMemo} from 'react';
 import {
-  ChartContext,
   clamp,
   estimateStringWidth,
   getValueFromXScale,
+  useChartContext,
 } from '@shopify/polaris-viz-core';
 import type {ScaleBand, ScaleLinear} from 'd3-scale';
 
@@ -43,7 +43,7 @@ export function useAnnotationPositions({
   positions: AnnotationPosition[];
   rowCount: number;
 } {
-  const {characterWidths} = useContext(ChartContext);
+  const {characterWidths} = useChartContext();
 
   const textWidths = useMemo(() => {
     return annotations.map((annotation) => {

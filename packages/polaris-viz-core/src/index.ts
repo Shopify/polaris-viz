@@ -104,6 +104,11 @@ export {
   isValueWithinDomain,
   getClosestDivisibleNumber,
   roundToDecimals,
+  isDataSeries,
+  isDataSeriesArray,
+  isDataGroup,
+  isDataGroupArray,
+  isLargeDataSet,
 } from './utilities';
 export {
   useSparkBar,
@@ -113,6 +118,7 @@ export {
   usePolarisVizContext,
   useYScale,
   useUniqueId,
+  useChartContext,
 } from './hooks';
 export {
   Bar,

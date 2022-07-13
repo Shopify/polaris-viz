@@ -1,6 +1,6 @@
 import {SpringValue, useTransition} from '@react-spring/web';
 import {useMemo} from 'react';
-import type {DataSeries} from '@shopify/polaris-viz-core';
+import {DataSeries, useChartContext} from '@shopify/polaris-viz-core';
 
 import {BARS_SORT_TRANSITION_CONFIG} from '../constants';
 
@@ -17,16 +17,15 @@ export interface HorizontalTransitionStyle {
 interface Props {
   chartXPosition: number;
   groupHeight: number;
-  isAnimated: boolean;
   series: DataSeries[];
 }
 
 export function useHorizontalTransitions({
   chartXPosition,
   groupHeight,
-  isAnimated,
   series,
 }: Props) {
+  const {shouldAnimate} = useChartContext();
   const seriesWithIndex = useMemo(() => {
     return series[0].data.map(({key}, index) => ({
       key: `${key}`,
@@ -51,7 +50,7 @@ export function useHorizontalTransitions({
     }),
     from: ({index}) => ({
       opacity: 0,
-      transform: isAnimated ? outOfChartPosition : getTransform(index),
+      transform: shouldAnimate ? outOfChartPosition : getTransform(index),
     }),
     leave: {
       opacity: 0,
@@ -60,8 +59,8 @@ export function useHorizontalTransitions({
     update: ({index}) => ({opacity: 1, transform: getTransform(index)}),
     expires: true,
     config: BARS_SORT_TRANSITION_CONFIG,
-    trail: isAnimated ? animationTrail : 0,
-    immediate: !isAnimated,
+    trail: shouldAnimate ? animationTrail : 0,
+    immediate: !shouldAnimate,
   });
 
   return {transitions};

@@ -4,7 +4,6 @@ import {scaleLinear} from 'd3-scale';
 import {
   COLOR_VISION_SINGLE_ITEM,
   DataSeries,
-  DEFAULT_CHART_PROPS,
   DEFAULT_THEME_NAME,
 } from '@shopify/polaris-viz-core';
 import type {Direction, LabelFormatter} from '@shopify/polaris-viz-core';
@@ -31,7 +30,6 @@ export interface ChartProps {
   direction?: Direction;
   size?: Size;
   theme?: string;
-  isAnimated?: boolean;
 }
 
 export function Chart({
@@ -42,7 +40,6 @@ export function Chart({
   direction = 'horizontal',
   size = 'small',
   theme = DEFAULT_THEME_NAME,
-  isAnimated = DEFAULT_CHART_PROPS.isAnimated,
 }: ChartProps) {
   const flattenedData = data.map(({data}) => data).flat();
 
@@ -149,7 +146,6 @@ export function Chart({
           <BarSegment
             activeIndex={-1}
             index={-1}
-            isAnimated={isAnimated}
             direction={direction}
             size={size}
             scale={100}
@@ -169,7 +165,6 @@ export function Chart({
               <BarSegment
                 activeIndex={activeIndex}
                 index={colorIndex}
-                isAnimated={isAnimated}
                 direction={direction}
                 size={size}
                 scale={xScale(value)}

@@ -6,9 +6,9 @@ import {
   COLOR_VISION_SINGLE_ITEM,
   DEFAULT_THEME_NAME,
   useUniqueId,
-  DEFAULT_CHART_PROPS,
   Direction,
   ChartState,
+  useChartContext,
 } from '@shopify/polaris-viz-core';
 import type {
   DataPoint,
@@ -38,7 +38,6 @@ export interface ChartProps {
   accessibilityLabel?: string;
   comparisonMetric?: Omit<ComparisonMetricProps, 'theme'>;
   showLegend: boolean;
-  isAnimated?: boolean;
   total?: number;
   dimensions?: Dimensions;
   theme?: string;
@@ -57,11 +56,11 @@ export function Chart({
   dimensions = {height: 0, width: 0},
   theme = DEFAULT_THEME_NAME,
   labelFormatter,
-  isAnimated = DEFAULT_CHART_PROPS.isAnimated,
   legendPosition = 'right',
   state,
   errorText,
 }: ChartProps) {
+  const {shouldAnimate} = useChartContext();
   const chartId = useUniqueId('Donut');
   const [activeIndex, setActiveIndex] = useState<number>(-1);
   const selectedTheme = useTheme(theme);
@@ -161,7 +160,7 @@ export function Chart({
                   {emptyState ? (
                     <g aria-hidden>
                       <Arc
-                        isAnimated={isAnimated}
+                        isAnimated={shouldAnimate}
                         width={diameter}
                         height={diameter}
                         radius={radius}
@@ -187,7 +186,7 @@ export function Chart({
                             role="img"
                           >
                             <Arc
-                              isAnimated={isAnimated}
+                              isAnimated={shouldAnimate}
                               index={index}
                               activeIndex={activeIndex}
                               width={diameter}
@@ -208,7 +207,7 @@ export function Chart({
               )}
             </svg>
             <InnerValue
-              isAnimated={isAnimated}
+              isAnimated={shouldAnimate}
               selectedTheme={selectedTheme}
               totalValue={totalValue}
               comparisonMetric={comparisonMetric}

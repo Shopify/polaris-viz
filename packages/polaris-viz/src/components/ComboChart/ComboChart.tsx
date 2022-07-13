@@ -11,7 +11,6 @@ import {flattenDataGroupToDataSeries} from '../../utilities/flattenDataGroupToDa
 import {TooltipContent} from '../TooltipContent';
 import {getXAxisOptionsWithDefaults} from '../../utilities';
 import {ChartContainer} from '../ChartContainer';
-import {usePrefersReducedMotion} from '../../hooks';
 import type {RenderTooltipContentData} from '../../types';
 
 import {Chart} from './Chart';
@@ -39,8 +38,6 @@ export function ComboChart(props: ComboChartProps) {
 
   const xAxisOptionsWithDefaults = getXAxisOptionsWithDefaults(xAxisOptions);
 
-  const {prefersReducedMotion} = usePrefersReducedMotion();
-
   function renderTooltip(tooltipData: RenderTooltipContentData) {
     if (renderTooltipContent != null) {
       return renderTooltipContent({
@@ -58,10 +55,9 @@ export function ComboChart(props: ComboChartProps) {
   }
 
   return (
-    <ChartContainer theme={theme}>
+    <ChartContainer data={data} isAnimated={isAnimated} theme={theme}>
       <Chart
         data={data}
-        isAnimated={isAnimated && !prefersReducedMotion}
         renderTooltipContent={renderTooltip}
         showLegend={showLegend}
         theme={theme}

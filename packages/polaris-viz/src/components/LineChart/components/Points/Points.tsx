@@ -9,6 +9,7 @@ import {
   COLOR_VISION_SINGLE_ITEM,
   changeColorOpacity,
   changeGradientOpacity,
+  useChartContext,
 } from '@shopify/polaris-viz-core';
 import type {LineChartDataSeriesWithDefaults} from '@shopify/polaris-viz-core';
 
@@ -19,7 +20,6 @@ import type {AnimatedCoordinate} from '../../../../types';
 interface PointsProps {
   activeIndex: number | null;
   animatedCoordinates: AnimatedCoordinate[] | null;
-  animatePoints: boolean;
   data: LineChartDataSeriesWithDefaults[];
   gradientId: string;
   longestSeriesIndex: number;
@@ -42,7 +42,6 @@ interface PointsProps {
 export function Points({
   activeIndex,
   animatedCoordinates,
-  animatePoints,
   data,
   getXPosition,
   gradientId,
@@ -52,6 +51,8 @@ export function Points({
   xScale,
   yScale,
 }: PointsProps) {
+  const {shouldAnimate} = useChartContext();
+
   const selectedTheme = useTheme(theme);
   const [activeLineIndex, setActiveLineIndex] = useState(-1);
 
@@ -96,7 +97,7 @@ export function Points({
               </defs>
             ) : null}
 
-            {animatePoints ? (
+            {shouldAnimate ? (
               <Point
                 color={pointColor}
                 stroke={selectedTheme.line.pointStroke}
@@ -105,7 +106,7 @@ export function Points({
                 active={activeIndex != null}
                 index={index}
                 tabIndex={-1}
-                isAnimated={animatePoints}
+                isAnimated={shouldAnimate}
                 visuallyHidden={hidePoint}
                 ariaHidden
               />
@@ -137,7 +138,7 @@ export function Points({
                     ariaLabelledby={tooltipId}
                     isAnimated={false}
                     ariaHidden={false}
-                    visuallyHidden={animatePoints}
+                    visuallyHidden={shouldAnimate}
                   />
                 </g>
               );

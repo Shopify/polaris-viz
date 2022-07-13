@@ -38,7 +38,7 @@ export function SimpleNormalizedChart(props: SimpleNormalizedChartProps) {
   };
 
   return (
-    <ChartContainer theme={theme} isAnimated={isAnimated}>
+    <ChartContainer data={data} theme={theme} isAnimated={isAnimated}>
       <Chart
         comparisonMetrics={comparisonMetrics}
         data={data}

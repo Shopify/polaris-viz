@@ -1,5 +1,4 @@
-import {useContext} from 'react';
-import {ChartContext, estimateStringWidth} from '@shopify/polaris-viz-core';
+import {estimateStringWidth, useChartContext} from '@shopify/polaris-viz-core';
 
 import type {TooltipData} from '../../../types';
 
@@ -10,7 +9,7 @@ interface Size {
 }
 
 export function useGetLongestLabelFromData(tooltipData: TooltipData[] = []) {
-  const {characterWidths} = useContext(ChartContext);
+  const {characterWidths} = useChartContext();
 
   const sizes: Size[] = [];
 

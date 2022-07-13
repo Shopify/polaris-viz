@@ -33,7 +33,12 @@ export function SparkBarChart(props: SparkBarChartProps) {
   };
 
   return (
-    <ChartContainer theme={theme} sparkChart isAnimated={isAnimated}>
+    <ChartContainer
+      data={data}
+      theme={theme}
+      sparkChart
+      isAnimated={isAnimated}
+    >
       <Chart
         data={data}
         accessibilityLabel={accessibilityLabel}

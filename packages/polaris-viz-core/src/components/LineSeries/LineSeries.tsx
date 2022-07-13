@@ -16,6 +16,7 @@ import {
   LINES_LOAD_ANIMATION_CONFIG,
   getColorVisionEventAttrs,
   getColorVisionStylesForActiveIndex,
+  useChartContext,
 } from '../../';
 import {
   COLOR_VISION_SINGLE_ITEM,
@@ -56,7 +57,7 @@ function getLineStyle({
 export interface LineSeriesProps {
   data: LineChartDataSeriesWithDefaults;
   index: number;
-  isAnimated: boolean;
+
   svgDimensions: {width: number; height: number};
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
@@ -69,7 +70,6 @@ export function LineSeries({
   activeLineIndex = -1,
   data,
   index = 0,
-  isAnimated,
   svgDimensions,
   theme,
   type = 'default',
@@ -81,6 +81,8 @@ export function LineSeries({
     components: {Defs, Mask, G, Rect, Circle, Path},
     animated,
   } = usePolarisVizContext();
+
+  const {shouldAnimate} = useChartContext();
 
   const AnimatedGroup = animated(G);
   const AnimatedPath = animated(Path);
@@ -120,7 +122,7 @@ export function LineSeries({
   const areaPath = areaGenerator(data.data);
 
   const id = useMemo(() => uniqueId('line-series'), []);
-  const immediate = !isAnimated;
+  const immediate = !shouldAnimate;
 
   const lineGradientColor = isGradientType(color!)
     ? color

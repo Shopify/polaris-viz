@@ -22,7 +22,6 @@ interface VerticalBarGroupProps {
   drawableHeight: number;
   gapWidth: number;
   id: string;
-  isAnimated: boolean;
   labels: string[];
   sortedData: number[][];
   stackedValues: StackedValues | null;
@@ -41,7 +40,6 @@ export function VerticalBarGroup({
   gapWidth,
   id,
   indexOffset = 0,
-  isAnimated,
   labels,
   sortedData,
   stackedValues,
@@ -113,7 +111,6 @@ export function VerticalBarGroup({
             hasRoundedCorners={selectedTheme.bar.hasRoundedCorners}
             height={drawableHeight}
             indexOffset={indexOffset}
-            isAnimated={isAnimated}
             key={index}
             width={xScale.bandwidth()}
             x={xPosition == null ? 0 : xPosition}

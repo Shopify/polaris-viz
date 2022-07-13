@@ -12,7 +12,6 @@ import {
   useYScale,
   COLOR_VISION_SINGLE_ITEM,
   BoundingRect,
-  DEFAULT_CHART_PROPS,
 } from '@shopify/polaris-viz-core';
 
 import {
@@ -47,7 +46,6 @@ import {
   XMLNS,
   LABEL_AREA_TOP_SPACING,
   ANNOTATIONS_LABELS_OFFSET,
-  MAX_ANIMATED_SERIES_LENGTH,
 } from '../../constants';
 import {eventPointNative} from '../../utilities';
 import {YAxis} from '../YAxis';
@@ -75,7 +73,6 @@ export interface Props {
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
   dimensions?: Dimensions;
-  isAnimated?: boolean;
 }
 
 export function Chart({
@@ -84,7 +81,6 @@ export function Chart({
   data,
   dimensions,
   renderTooltipContent,
-  isAnimated = DEFAULT_CHART_PROPS.isAnimated,
   showLegend,
   theme,
   yAxisOptions,
@@ -180,14 +176,10 @@ export function Chart({
     });
   }, [stackedValues]);
 
-  const animatePoints =
-    isAnimated && longestSeriesLength <= MAX_ANIMATED_SERIES_LENGTH;
-
   const {animatedCoordinates} = useLinearChartAnimations({
     data: seriesForAnimation,
     lineGenerator,
     activeIndex: activePointIndex,
-    isAnimated: animatePoints,
   });
 
   const getXPosition = (
@@ -290,7 +282,6 @@ export function Chart({
             xScale={xScale}
             yScale={yScale}
             colors={seriesColors}
-            isAnimated={isAnimated}
             theme={theme}
           />
         </g>
@@ -331,7 +322,6 @@ export function Chart({
             animatedCoordinates={animatedCoordinates}
             colors={seriesColors}
             getXPosition={getXPosition}
-            isAnimated={isAnimated}
             stackedValues={stackedValues}
             theme={theme}
             tooltipId={tooltipId.current}

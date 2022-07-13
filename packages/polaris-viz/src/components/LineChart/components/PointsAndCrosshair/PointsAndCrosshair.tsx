@@ -4,13 +4,13 @@ import {
   DataPoint,
   LineChartDataSeriesWithDefaults,
   uniqueId,
+  useChartContext,
   useTheme,
 } from '@shopify/polaris-viz-core';
 import {line} from 'd3-shape';
 import type {ScaleLinear} from 'd3-scale';
 
 import {useLinearChartAnimations} from '../../../../hooks';
-import {MAX_ANIMATED_SERIES_LENGTH} from '../../../../constants';
 import {Crosshair} from '../../../Crosshair';
 import {Points} from '../Points';
 
@@ -18,9 +18,7 @@ interface PointsAndCrosshairProps {
   activeIndex: number | null;
   drawableHeight: number;
   emptyState: boolean;
-  isAnimated: boolean;
   longestSeriesIndex: number;
-  longestSeriesLength: number;
   reversedSeries: LineChartDataSeriesWithDefaults[];
   theme: string;
   tooltipId: string;
@@ -32,9 +30,7 @@ export function PointsAndCrosshair({
   activeIndex,
   drawableHeight,
   emptyState,
-  isAnimated,
   longestSeriesIndex,
-  longestSeriesLength,
   reversedSeries,
   theme,
   tooltipId,
@@ -42,6 +38,7 @@ export function PointsAndCrosshair({
   yScale,
 }: PointsAndCrosshairProps) {
   const selectedTheme = useTheme(theme);
+  const {shouldAnimate} = useChartContext();
 
   const gradientId = useRef(uniqueId('lineChartGradient'));
 
@@ -56,14 +53,10 @@ export function PointsAndCrosshair({
     return generator;
   }, [selectedTheme.line.hasSpline, xScale, yScale]);
 
-  const animatePoints =
-    isAnimated && longestSeriesLength <= MAX_ANIMATED_SERIES_LENGTH;
-
   const {animatedCoordinates} = useLinearChartAnimations({
     data: reversedSeries,
     lineGenerator,
     activeIndex,
-    isAnimated: animatePoints,
   });
 
   const getXPosition = ({isCrosshair} = {isCrosshair: false}) => {
@@ -75,7 +68,7 @@ export function PointsAndCrosshair({
     if (
       animatedCoordinates != null &&
       animatedCoordinates[longestSeriesIndex] != null &&
-      animatePoints
+      shouldAnimate
     ) {
       return animatedCoordinates[longestSeriesIndex].to(
         (coord) => coord.x - offset,
@@ -97,7 +90,6 @@ export function PointsAndCrosshair({
       <Points
         activeIndex={emptyState ? null : activeIndex}
         animatedCoordinates={animatedCoordinates}
-        animatePoints={animatePoints}
         data={reversedSeries}
         getXPosition={getXPosition}
         gradientId={gradientId.current}

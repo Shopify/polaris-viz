@@ -36,7 +36,7 @@ export function SimpleBarChart(props: SimpleBarChartProps) {
   const yAxisOptionsWithDefaults = getYAxisOptionsWithDefaults();
 
   return (
-    <ChartContainer theme={theme} isAnimated={isAnimated}>
+    <ChartContainer data={data} theme={theme} isAnimated={isAnimated}>
       <Chart
         data={data}
         showLegend={showLegend}

@@ -16,10 +16,7 @@ import type {Color} from '@shopify/polaris-viz-core';
 
 import type {AccessibilitySeries} from '../../../VerticalBarChart/types';
 import {formatAriaLabel} from '../../utilities';
-import {
-  usePrefersReducedMotion,
-  useWatchColorVisionEvents,
-} from '../../../../hooks';
+import {useWatchColorVisionEvents} from '../../../../hooks';
 import {Bar} from '../Bar';
 import {BAR_SPACING} from '../../constants';
 import {
@@ -43,7 +40,6 @@ interface Props {
   activeBarGroup: number;
   gapWidth: number;
   areAllNegative?: boolean;
-  isAnimated?: boolean;
   theme?: string;
 }
 
@@ -58,7 +54,6 @@ export function BarGroup({
   indexOffset,
   barGroupIndex,
   hasRoundedCorners,
-  isAnimated = false,
   accessibilityData,
   activeBarGroup,
   gapWidth,
@@ -67,7 +62,6 @@ export function BarGroup({
 }: Props) {
   const groupAriaLabel = formatAriaLabel(accessibilityData[barGroupIndex]);
 
-  const {prefersReducedMotion} = usePrefersReducedMotion();
   const [activeBarIndex, setActiveBarIndex] = useState(-1);
   const selectedTheme = useTheme(theme);
 
@@ -93,9 +87,6 @@ export function BarGroup({
     },
     [yScale],
   );
-
-  const shouldAnimate = !prefersReducedMotion && isAnimated;
-
   const gradientId = useMemo(() => uniqueId('gradient'), []);
   const maskId = useMemo(() => uniqueId('mask'), []);
 
@@ -137,7 +128,6 @@ export function BarGroup({
                   hasRoundedCorners ? BORDER_RADIUS.Top : BORDER_RADIUS.None
                 }
                 animationDelay={animationDelay}
-                isAnimated={shouldAnimate}
                 areAllNegative={areAllNegative}
               />
             </g>
