@@ -104,10 +104,6 @@ export {
   isValueWithinDomain,
   getClosestDivisibleNumber,
   roundToDecimals,
-  isDataSeries,
-  isDataSeriesArray,
-  isDataGroup,
-  isDataGroupArray,
   isLargeDataSet,
 } from './utilities';
 export {

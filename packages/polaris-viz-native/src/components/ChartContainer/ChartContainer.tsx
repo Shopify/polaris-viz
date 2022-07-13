@@ -7,8 +7,7 @@ import {
   useTheme,
   ChartContext,
   uniqueId,
-  isDataGroupArray,
-  isDataSeriesArray,
+  isLargeDataSet,
 } from '@shopify/polaris-viz-core';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
@@ -53,24 +52,13 @@ export function ChartContainer({
   const value = useMemo(() => {
     const id = uniqueId('chart');
 
-    let isLargeDataSet = false;
-
-    if (isDataSeriesArray(data)) {
-      isLargeDataSet = hasTooManyDataPoints(data);
-    }
-
-    if (isDataGroupArray(props.data)) {
-      isLargeDataSet = data.some((dataGroup) => {
-        return hasTooManyDataPoints(dataGroup.series);
-      });
-    }
-
-    const hasManySeries = data.length > 14;
-
+    const tooBigToAnimate = isLargeDataSet(data);
     const shouldAnimate =
-      isAnimated && !prefersReducedMotion && !isLargeDataSet && !hasManySeries;
+      isAnimated && !prefersReducedMotion && !tooBigToAnimate;
 
     return {
+      characterWidths: {},
+      characterWidthOffsets: {},
       id,
       shouldAnimate,
     };

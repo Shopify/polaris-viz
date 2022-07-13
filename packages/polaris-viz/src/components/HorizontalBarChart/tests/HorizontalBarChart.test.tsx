@@ -9,6 +9,7 @@ import {Chart} from '../Chart';
 
 jest.mock('@shopify/polaris-viz-core/src/utilities', () => ({
   ...jest.requireActual('@shopify/polaris-viz-core/src/utilities'),
+  isLargeDataSet: jest.fn(() => true),
   estimateStringWidth: jest.fn(() => 50),
 }));
 

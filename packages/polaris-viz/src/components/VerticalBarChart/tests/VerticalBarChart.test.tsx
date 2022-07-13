@@ -7,6 +7,7 @@ import {Chart} from '../Chart';
 jest.mock('@shopify/polaris-viz-core/src/utilities', () => ({
   ...jest.requireActual('@shopify/polaris-viz-core/src/utilities'),
   estimateStringWidth: jest.fn(() => 50),
+  isLargeDataSet: jest.fn(() => true),
 }));
 
 describe('<VerticalBarChart />', () => {

@@ -49,7 +49,6 @@ export const ChartContainer = (props: Props) => {
 
   const value = useMemo(() => {
     const tooBigToAnimate = isLargeDataSet(props.data);
-
     const shouldAnimate =
       props.isAnimated && !prefersReducedMotion && !tooBigToAnimate;
     const id = uniqueId('chart');
@@ -60,7 +59,7 @@ export const ChartContainer = (props: Props) => {
       characterWidths,
       characterWidthOffsets,
     };
-  }, []);
+  }, [prefersReducedMotion, props.data, props.isAnimated]);
 
   const [chartDimensions, setChartDimensions] =
     useState<Dimensions | null>(null);

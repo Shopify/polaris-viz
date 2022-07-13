@@ -6,6 +6,7 @@ import {
   LineSeries,
   XAxisOptions,
   YAxisOptions,
+  ChartContext,
 } from '@shopify/polaris-viz-core';
 
 import {LegendContainer} from '../../LegendContainer';
@@ -20,6 +21,8 @@ import {Chart, ChartProps} from '../Chart';
 import {YAxis} from '../../YAxis';
 import {Annotations, YAxisAnnotations} from '../../Annotations';
 import {normalizeData} from '../../../utilities';
+import characterWidths from '../../../data/character-widths.json';
+import characterWidthOffsets from '../../../data/character-width-offsets.json';
 
 const MOCK_DATA: Required<LineChartDataSeriesWithDefaults> = {
   name: 'Primary',
@@ -51,7 +54,6 @@ const MOCK_PROPS: ChartProps = {
   xAxisOptions,
   yAxisOptions,
   renderTooltipContent: jest.fn(() => <p>Mock Tooltip</p>),
-  isAnimated: false,
   showLegend: false,
 };
 
@@ -64,6 +66,7 @@ jest.mock('@shopify/polaris-viz-core/src/utilities/estimateStringWidth', () => {
 jest.mock('../../../utilities', () => {
   return {
     ...jest.requireActual('../../../utilities'),
+    isLargeDataSet: jest.fn(() => true),
     getPathLength: () => 0,
     getPointAtLength: () => ({x: 0, y: 0}),
     eventPointNative: () => {
@@ -140,14 +143,24 @@ describe('<Chart />', () => {
 
   it('renders a <Point /> for each data item in each data-point', () => {
     const data = [MOCK_DATA, {...MOCK_DATA, name: 'A second data-point'}];
-    const chart = mount(<Chart {...MOCK_PROPS} data={data} />);
+    const chart = mount(
+      <ChartContext.Provider
+        value={{
+          shouldAnimate: false,
+          characterWidths,
+          characterWidthOffsets,
+        }}
+      >
+        <Chart {...MOCK_PROPS} data={data} />
+      </ChartContext.Provider>,
+    );
 
     expect(chart).toContainReactComponentTimes(Point, 8);
   });
 
   it('renders an additional <Point /> for each data-point if isAnimated is true', () => {
     const data = [MOCK_DATA, {...MOCK_DATA, name: 'A second data-point'}];
-    const chart = mount(<Chart {...MOCK_PROPS} data={data} isAnimated />);
+    const chart = mount(<Chart {...MOCK_PROPS} data={data} />);
 
     expect(chart).toContainReactComponentTimes(Point, 8 + data.length);
   });

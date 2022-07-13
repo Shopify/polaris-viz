@@ -55,7 +55,6 @@ interface InnerChartProps extends SparkLineChartProps {
 function Chart({
   data,
   accessibilityLabel,
-  isAnimated = DEFAULT_CHART_PROPS.isAnimated,
   offsetLeft = 0,
   offsetRight = 0,
   theme = DEFAULT_THEME_NAME,
