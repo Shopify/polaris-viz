@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import type {
   XAxisOptions,
   YAxisOptions,
@@ -10,7 +10,8 @@ import {
   ChartState,
   DEFAULT_CHART_PROPS,
 } from '@shopify/polaris-viz-core';
-import normalizerWorker from 'workerize-loader!../../workers/normalizer.worker.ts';
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import NormalizerWorker from 'workerize-loader!../../workers/normalizer.worker';
 
 import {getLineChartDataWithDefaults} from '../../utilities/getLineChartDataWithDefaults';
 import {ChartContainer} from '../../components/ChartContainer';
@@ -19,11 +20,14 @@ import {useThemeSeriesColors} from '../../hooks/useThemeSeriesColors';
 import {
   getXAxisOptionsWithDefaults,
   getYAxisOptionsWithDefaults,
-  normalizeData,
 } from '../../utilities';
 import {SkipLink} from '../SkipLink';
 import {useRenderTooltipContent, useTheme} from '../../hooks';
-import type {Annotation, TooltipOptions} from '../../types';
+import type {
+  Annotation,
+  AnnotationLookupTable,
+  TooltipOptions,
+} from '../../types';
 
 import {Chart} from './Chart';
 
@@ -58,14 +62,21 @@ export function LineChart(props: LineChartProps) {
     ...props,
   };
 
-  const worker = normalizerWorker();
-
   const [annotationsLookupTable, setAnnotationsLookupTable] = useState({});
 
-  worker.normalize(annotations, 'startKey').then((message) => {
-    console.table(message);
-    setAnnotationsLookupTable(message);
-  });
+  useEffect(() => {
+    const workerInstance = new NormalizerWorker();
+
+    workerInstance
+      .normalize(annotations, 'startKey')
+      .then((message: AnnotationLookupTable) => {
+        setAnnotationsLookupTable(message);
+      })
+      .catch((error: any) => {
+        // eslint-disable-next-line no-console
+        console.error(error);
+      });
+  }, [annotations]);
 
   const selectedTheme = useTheme(theme);
   const seriesColors = useThemeSeriesColors(data, selectedTheme);

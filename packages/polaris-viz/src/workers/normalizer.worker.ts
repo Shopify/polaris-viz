@@ -1,11 +1,8 @@
-import {normalizeData} from '../utilities';
+interface Data {
+  [k: string]: any;
+}
 
-export function normalize(data, key) {
-  // const start = Date.now();
-  // let count = 0;
-  // while (Date.now() - start < time) count++;
-  // return count;
-  // return normalize(data, key);
+export function normalize(data: Data, key: string) {
   const normalizedData = {};
   data.forEach((item) => {
     const keyName = item[key];

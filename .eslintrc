@@ -82,6 +82,12 @@
   },
   "overrides": [
     {
+      "files": ["*.worker.ts"],
+      "rules": {
+        "import/no-default-export": "off"
+      }
+    },
+    {
       "files": ["./packages/**/src/**/*.{ts,tsx}"],
       "excludedFiles": ["./packages/**/src/**/*.test.{ts,tsx}"],
       "extends": ["plugin:@shopify/typescript-type-checking"],
