@@ -21800,6 +21800,13 @@ worker-rpc@^0.1.0:
   dependencies:
     microevent.ts "~0.1.1"
 
+workerize-loader@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/workerize-loader/-/workerize-loader-2.0.2.tgz#2f39c3e6eb6c41fac8d28d5b9fa20b4035e3db7a"
+  integrity sha512-HoZ6XY4sHWxA2w0WpzgBwUiR3dv1oo7bS+oCwIpb6n54MclQ/7KXdXsVIChTCygyuHtVuGBO1+i3HzTt699UJQ==
+  dependencies:
+    loader-utils "^2.0.0"
+
 wrap-ansi@^6.2.0:
   version "6.2.0"
   resolved "https://registry.npmjs.org/wrap-ansi/-/wrap-ansi-6.2.0.tgz"

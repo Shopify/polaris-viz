@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import type {
   XAxisOptions,
   YAxisOptions,
@@ -10,6 +10,7 @@ import {
   ChartState,
   DEFAULT_CHART_PROPS,
 } from '@shopify/polaris-viz-core';
+import normalizerWorker from 'workerize-loader!../../workers/normalizer.worker.ts';
 
 import {getLineChartDataWithDefaults} from '../../utilities/getLineChartDataWithDefaults';
 import {ChartContainer} from '../../components/ChartContainer';
@@ -57,6 +58,15 @@ export function LineChart(props: LineChartProps) {
     ...props,
   };
 
+  const worker = normalizerWorker();
+
+  const [annotationsLookupTable, setAnnotationsLookupTable] = useState({});
+
+  worker.normalize(annotations, 'startKey').then((message) => {
+    console.table(message);
+    setAnnotationsLookupTable(message);
+  });
+
   const selectedTheme = useTheme(theme);
   const seriesColors = useThemeSeriesColors(data, selectedTheme);
 
@@ -66,7 +76,7 @@ export function LineChart(props: LineChartProps) {
   const yAxisOptionsWithDefaults = getYAxisOptionsWithDefaults(yAxisOptions);
 
   const renderTooltip = useRenderTooltipContent({tooltipOptions, theme, data});
-  const annotationsLookupTable = normalizeData(annotations, 'startKey');
+  // const annotationsLookupTable = normalizeData(annotations, 'startKey');
 
   const dataWithDefaults = getLineChartDataWithDefaults(data, seriesColors);
 
