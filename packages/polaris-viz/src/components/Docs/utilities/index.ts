@@ -39,7 +39,7 @@ export const generateMultipleSeries = (
   return Array(quantity)
     .fill(null)
     .map((_, index) => ({
-      name: `Series ${index}`,
+      name: `Series ${index + 1}`,
       data: generateDataSet(dataSetLength),
     }));
 };
