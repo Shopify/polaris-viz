@@ -1,5 +1,6 @@
 import React from 'react';
 import {animated, useSpring} from '@react-spring/web';
+import {useChartContext} from '@shopify/polaris-viz-core';
 
 import {
   HORIZONTAL_BAR_LABEL_HEIGHT,
@@ -15,27 +16,26 @@ export interface LabelProps {
   x: number;
   y: number;
   animationDelay?: number;
-  isAnimated?: boolean;
 }
 
 export function Label({
   animationDelay,
   barHeight,
   color,
-  isAnimated,
   label,
   labelWidth,
   x,
   y,
 }: LabelProps) {
+  const {shouldAnimate} = useChartContext();
   const labelYOffset = (barHeight - HORIZONTAL_BAR_LABEL_HEIGHT) / 2;
 
   const spring = useSpring({
     from: {transform: 'translateX(0px)', opacity: 0},
     to: {opacity: 1, transform: `translateX(${x}px)`},
-    delay: isAnimated ? animationDelay : 0,
+    delay: shouldAnimate ? animationDelay : 0,
     config: BARS_TRANSITION_CONFIG,
-    default: {immediate: !isAnimated},
+    default: {immediate: !shouldAnimate},
   });
 
   return (

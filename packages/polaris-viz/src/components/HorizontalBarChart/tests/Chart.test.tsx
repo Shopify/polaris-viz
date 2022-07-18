@@ -29,6 +29,7 @@ jest.mock('../../Labels/utilities/getWidestLabel', () => {
 jest.mock('@shopify/polaris-viz-core/src/utilities', () => ({
   ...jest.requireActual('@shopify/polaris-viz-core/src/utilities'),
   estimateStringWidth: jest.fn(() => 100),
+  isLargeDataSet: jest.fn(() => true),
 }));
 
 const DATA: DataSeries[] = [

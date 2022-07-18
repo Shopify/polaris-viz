@@ -1,5 +1,4 @@
 import React, {useMemo, useState} from 'react';
-import isEqual from 'fast-deep-equal';
 import {area, line} from 'd3-shape';
 import type {ScaleLinear} from 'd3-scale';
 import type {Color} from '@shopify/polaris-viz-core';
@@ -16,11 +15,7 @@ import {
   LINE_ANIMATION_DURATION_STEP,
 } from '../../../../constants';
 import type {StackedSeries} from '../../../../types';
-import {
-  usePrevious,
-  useTheme,
-  useWatchColorVisionEvents,
-} from '../../../../hooks';
+import {useTheme, useWatchColorVisionEvents} from '../../../../hooks';
 import {Area} from '..';
 
 interface Props {
@@ -28,16 +23,14 @@ interface Props {
   stackedValues: StackedSeries[];
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
-  isAnimated: boolean;
   theme: string;
 }
 
-export function Areas({
+export function StackedAreas({
   stackedValues,
   xScale,
   yScale,
   colors,
-  isAnimated,
   theme,
 }: Props) {
   const [activeLineIndex, setActiveLineIndex] = useState(-1);
@@ -50,8 +43,6 @@ export function Areas({
   });
 
   const selectedTheme = useTheme(theme);
-  const prevstackedValues = usePrevious(stackedValues);
-  const valuesHaveNotUpdated = isEqual(prevstackedValues, stackedValues);
 
   const id = useMemo(() => uniqueId('stackedAreas'), []);
 
@@ -101,8 +92,7 @@ export function Areas({
             duration={duration}
             id={id}
             index={index}
-            isImmediate={!isAnimated || valuesHaveNotUpdated}
-            key={index}
+            key={`${id}-${index}`}
             lineGenerator={lineGenerator}
             selectedTheme={selectedTheme}
           />
@@ -111,5 +101,3 @@ export function Areas({
     </React.Fragment>
   );
 }
-
-export const StackedAreas = React.memo(Areas);

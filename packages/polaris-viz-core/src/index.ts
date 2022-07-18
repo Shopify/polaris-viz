@@ -104,6 +104,7 @@ export {
   isValueWithinDomain,
   getClosestDivisibleNumber,
   roundToDecimals,
+  isLargeDataSet,
 } from './utilities';
 export {
   useSparkBar,
@@ -114,6 +115,7 @@ export {
   useYScale,
   useUniqueId,
   useAriaLabel,
+  useChartContext,
 } from './hooks';
 export {
   Bar,

@@ -1,13 +1,18 @@
+/* eslint-disable react/jsx-no-constructed-context-values */
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {line} from 'd3-shape';
+import {ChartContext} from '@shopify/polaris-viz-core';
 
 import type {LineChartDataWithDefaults} from '../../components';
 import {useLinearChartAnimations} from '../useLinearChartAnimations';
+import characterWidths from '../../data/character-widths.json';
+import characterWidthOffsets from '../../data/character-width-offsets.json';
 
 jest.mock('../../utilities', () => {
   return {
     ...jest.requireActual('../../utilities'),
+    isLargeDataSet: jest.fn(() => true),
     getPathLength: () => 0,
     getPointAtLength: jest.fn(() => ({x: 0, y: 0})),
   };
@@ -54,7 +59,6 @@ describe('useLinearChartAnimations', () => {
     function TestComponent() {
       animatedCoordinates = useLinearChartAnimations({
         ...mockProps,
-        isAnimated: true,
       }).animatedCoordinates;
 
       return null;
@@ -63,23 +67,6 @@ describe('useLinearChartAnimations', () => {
     mount(<TestComponent />);
 
     expect(animatedCoordinates![0].get()).toMatchObject({x: 0, y: 0});
-  });
-
-  it('returns null if isAnimated is false', () => {
-    let animatedCoordinates;
-
-    function TestComponent() {
-      animatedCoordinates = useLinearChartAnimations({
-        ...mockProps,
-        isAnimated: false,
-      }).animatedCoordinates;
-
-      return null;
-    }
-
-    mount(<TestComponent />);
-
-    expect(animatedCoordinates).toBeNull();
   });
 
   it('returns null if the activeIndex is null', () => {
@@ -117,13 +104,22 @@ describe('useLinearChartAnimations', () => {
     function TestComponent() {
       useLinearChartAnimations({
         ...mockProps,
-        isAnimated: false,
       });
 
       return null;
     }
 
-    mount(<TestComponent />);
+    mount(
+      <ChartContext.Provider
+        value={{
+          characterWidths,
+          characterWidthOffsets,
+          shouldAnimate: false,
+        }}
+      >
+        <TestComponent />
+      </ChartContext.Provider>,
+    );
 
     expect(lineGeneratorMock).not.toHaveBeenCalled();
   });

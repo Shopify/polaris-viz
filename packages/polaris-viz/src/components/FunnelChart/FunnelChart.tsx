@@ -19,7 +19,7 @@ export type FunnelChartProps = {
 } & ChartProps;
 
 export function FunnelChart(props: FunnelChartProps) {
-  const {data, theme, xAxisOptions, yAxisOptions} = {
+  const {data, theme, xAxisOptions, yAxisOptions, isAnimated} = {
     ...DEFAULT_CHART_PROPS,
     ...props,
   };
@@ -41,7 +41,7 @@ export function FunnelChart(props: FunnelChartProps) {
     getYAxisOptionsWithDefaults(yAxisOptions);
 
   return (
-    <ChartContainer theme={theme}>
+    <ChartContainer data={data} isAnimated={isAnimated} theme={theme}>
       <Chart
         data={seriesWithDefaults}
         xAxisOptions={xAxisOptionsForChart}

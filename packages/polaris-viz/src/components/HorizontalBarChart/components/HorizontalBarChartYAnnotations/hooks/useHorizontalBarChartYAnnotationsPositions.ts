@@ -1,9 +1,9 @@
-import {useContext, useMemo} from 'react';
+import {useMemo} from 'react';
 import {
-  ChartContext,
   clamp,
   estimateStringWidth,
   LINE_HEIGHT,
+  useChartContext,
 } from '@shopify/polaris-viz-core';
 
 import type {AnnotationPosition} from '../../../../Annotations';
@@ -30,7 +30,7 @@ export function useHorizontalBarChartYAnnotationsPositions({
 }: Props): {
   positions: AnnotationPosition[];
 } {
-  const {characterWidths} = useContext(ChartContext);
+  const {characterWidths} = useChartContext();
 
   const textWidths = useMemo(() => {
     return annotations.map((annotation) => {

@@ -36,7 +36,7 @@ export function SparkLineChart(props: SparkLineChartProps) {
   };
 
   return (
-    <ChartContainer sparkChart isAnimated={isAnimated}>
+    <ChartContainer data={data} sparkChart isAnimated={isAnimated}>
       <Chart
         data={data}
         accessibilityLabel={accessibilityLabel}
@@ -55,7 +55,6 @@ interface InnerChartProps extends SparkLineChartProps {
 function Chart({
   data,
   accessibilityLabel,
-  isAnimated = DEFAULT_CHART_PROPS.isAnimated,
   offsetLeft = 0,
   offsetRight = 0,
   theme = DEFAULT_THEME_NAME,
@@ -100,7 +99,6 @@ function Chart({
                 xScale={xScale}
                 yScale={yScale}
                 data={seriesWithColor}
-                isAnimated={isAnimated}
                 svgDimensions={{height, width}}
                 theme={theme}
                 type="spark"

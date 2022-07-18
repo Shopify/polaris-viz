@@ -30,7 +30,12 @@ export default {
 const Template: Story<TooltipContentProps> = (args: TooltipContentProps) => {
   return (
     <ChartContext.Provider
-      value={{characterWidths, id: 'none', characterWidthOffsets}}
+      value={{
+        characterWidths,
+        id: 'none',
+        characterWidthOffsets,
+        shouldAnimate: true,
+      }}
     >
       <TooltipContent {...args} />
     </ChartContext.Provider>

@@ -1,11 +1,12 @@
-import {useContext, useMemo} from 'react';
+import {useMemo} from 'react';
 import {scaleLinear} from 'd3-scale';
 import {maxIndex} from 'd3-array';
 import type {LabelFormatter} from 'types';
 
 import {DEFAULT_MAX_Y} from '../constants';
-import {ChartContext} from '../contexts';
 import {estimateStringWidth, shouldRoundScaleUp} from '../utilities';
+
+import {useChartContext} from './useChartContext';
 
 const MINIMAL_LABEL_SPACE = 80;
 
@@ -26,7 +27,7 @@ export function useYScale({
   min,
   shouldRoundUp = true,
 }: Props) {
-  const {characterWidths} = useContext(ChartContext);
+  const {characterWidths} = useChartContext();
 
   const [minY, maxY] = useMemo(() => {
     const minY = min;

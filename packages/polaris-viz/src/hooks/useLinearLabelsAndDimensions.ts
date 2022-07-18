@@ -1,11 +1,11 @@
-import {useContext, useMemo} from 'react';
+import {useMemo} from 'react';
 import {
   DataSeries,
   useTheme,
   LINEAR_LABELS_INNER_PADDING,
-  ChartContext,
   estimateStringWidth,
   clamp,
+  useChartContext,
 } from '@shopify/polaris-viz-core';
 import type {XAxisOptions} from '@shopify/polaris-viz-core';
 
@@ -33,7 +33,7 @@ export function useLinearLabelsAndDimensions({
   yAxisLabelWidth,
 }: Props) {
   const selectedTheme = useTheme(theme);
-  const {characterWidths} = useContext(ChartContext);
+  const {characterWidths} = useChartContext();
 
   const horizontalMargin = selectedTheme.grid.horizontalMargin;
   let chartXPosition = yAxisLabelWidth + horizontalMargin;

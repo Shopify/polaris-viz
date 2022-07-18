@@ -17,7 +17,6 @@ interface ComboLineChartProps {
   data: DataGroup;
   drawableHeight: number;
   drawableWidth: number;
-  isAnimated: boolean;
   indexOffset: number;
   theme: string;
   xScale;
@@ -31,7 +30,6 @@ export function ComboLineChart({
   drawableHeight,
   drawableWidth,
   indexOffset,
-  isAnimated,
   theme,
   xScale,
   yScale,
@@ -45,8 +43,7 @@ export function ComboLineChart({
 
   const dataWithDefaults = getLineChartDataWithDefaults(data.series, colors);
 
-  const {reversedSeries, longestSeriesLength, longestSeriesIndex} =
-    useFormatData(dataWithDefaults);
+  const {reversedSeries, longestSeriesIndex} = useFormatData(dataWithDefaults);
 
   return (
     <React.Fragment>
@@ -56,7 +53,6 @@ export function ComboLineChart({
             activeLineIndex={activeLineIndex}
             data={singleSeries}
             index={index + indexOffset}
-            isAnimated={isAnimated}
             key={`${name}-${index}`}
             svgDimensions={{height: drawableHeight, width: drawableWidth}}
             theme={theme}
@@ -70,9 +66,7 @@ export function ComboLineChart({
         activeIndex={activeIndex}
         drawableHeight={drawableHeight}
         emptyState={false}
-        isAnimated={isAnimated}
         longestSeriesIndex={longestSeriesIndex}
-        longestSeriesLength={longestSeriesLength}
         reversedSeries={reversedSeries}
         theme={theme}
         tooltipId="none"

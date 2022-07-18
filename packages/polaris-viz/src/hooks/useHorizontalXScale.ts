@@ -1,10 +1,10 @@
 import {
   clamp,
   LabelFormatter,
-  ChartContext,
   estimateStringWidth,
+  useChartContext,
 } from '@shopify/polaris-viz-core';
-import {useContext, useMemo} from 'react';
+import {useMemo} from 'react';
 
 import {HORIZONTAL_LABEL_MIN_WIDTH} from '../constants';
 
@@ -27,7 +27,7 @@ export function useHorizontalXScale({
   stackedMax = 0,
   stackedMin = 0,
 }: Props) {
-  const {characterWidths} = useContext(ChartContext);
+  const {characterWidths} = useChartContext();
 
   let drawableWidth = maxWidth;
   let chartXPosition = 0;

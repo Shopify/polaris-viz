@@ -1,12 +1,12 @@
-import React, {useState, useMemo, useContext} from 'react';
+import React, {useState, useMemo} from 'react';
 import {
   uniqueId,
   DataType,
   useYScale,
-  ChartContext,
   estimateStringWidth,
   COLOR_VISION_SINGLE_ITEM,
   BoundingRect,
+  useChartContext,
 } from '@shopify/polaris-viz-core';
 import type {
   DataSeries,
@@ -69,7 +69,6 @@ export interface Props {
   annotationsLookupTable?: AnnotationLookupTable;
   dimensions?: Dimensions;
   emptyStateText?: string;
-  isAnimated?: boolean;
   theme: string;
 }
 
@@ -78,7 +77,6 @@ export function Chart({
   data,
   dimensions,
   emptyStateText,
-  isAnimated = false,
   renderTooltipContent,
   showLegend,
   theme,
@@ -89,7 +87,7 @@ export function Chart({
   useColorVisionEvents(data.length > 1);
 
   const selectedTheme = useTheme(theme);
-  const {characterWidths} = useContext(ChartContext);
+  const {characterWidths} = useChartContext();
 
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
   const id = useMemo(() => uniqueId('VerticalBarChart'), []);
@@ -255,7 +253,6 @@ export function Chart({
             drawableHeight={drawableHeight}
             gapWidth={gapWidth}
             id={id}
-            isAnimated={isAnimated}
             labels={labels}
             sortedData={sortedData}
             stackedValues={stackedValues}

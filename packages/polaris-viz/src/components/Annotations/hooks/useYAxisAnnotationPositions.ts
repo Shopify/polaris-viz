@@ -1,9 +1,9 @@
-import {useContext, useMemo} from 'react';
+import {useMemo} from 'react';
 import {
-  ChartContext,
   clamp,
   estimateStringWidth,
   LINE_HEIGHT,
+  useChartContext,
 } from '@shopify/polaris-viz-core';
 import type {ScaleLinear} from 'd3-scale';
 
@@ -31,7 +31,7 @@ export function useYAxisAnnotationPositions({
 }: Props): {
   positions: AnnotationPosition[];
 } {
-  const {characterWidths} = useContext(ChartContext);
+  const {characterWidths} = useChartContext();
 
   const textWidths = useMemo(() => {
     return annotations.map((annotation) => {

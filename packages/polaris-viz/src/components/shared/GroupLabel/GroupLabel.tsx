@@ -1,5 +1,5 @@
-import React, {useContext} from 'react';
-import {estimateStringWidth, ChartContext} from '@shopify/polaris-viz-core';
+import React from 'react';
+import {estimateStringWidth, useChartContext} from '@shopify/polaris-viz-core';
 
 import {useTheme} from '../../../hooks';
 import {FONT_SIZE, HORIZONTAL_GROUP_LABEL_HEIGHT} from '../../../constants';
@@ -21,7 +21,7 @@ export function GroupLabel({
   theme,
   zeroPosition,
 }: GroupLabelProps) {
-  const {characterWidths} = useContext(ChartContext);
+  const {characterWidths} = useChartContext();
 
   const labelWidth = estimateStringWidth(label, characterWidths);
   const selectedTheme = useTheme(theme);

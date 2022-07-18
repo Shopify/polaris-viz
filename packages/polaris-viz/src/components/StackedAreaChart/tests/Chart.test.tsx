@@ -64,7 +64,6 @@ const MOCK_PROPS: Props = {
     integersOnly: false,
   },
   dimensions: {width: 500, height: 250},
-  isAnimated: true,
   renderTooltipContent: jest.fn(() => <p>Mock Tooltip Content</p>),
   showLegend: false,
   theme: 'Default',
@@ -95,11 +94,10 @@ describe('<Chart />', () => {
     });
   });
 
-  it('renders a StackedAreas', () => {
+  it('renders <StackedAreas/>', () => {
     const chart = mount(<Chart {...MOCK_PROPS} />);
     expect(chart).toContainReactComponent(StackedAreas, {
       colors: ['purple', 'teal'],
-      isAnimated: true,
       stackedValues: expect.any(Object),
     });
   });

@@ -4,6 +4,7 @@ import {animated, useSpring} from '@react-spring/web';
 import {
   COLOR_VISION_SINGLE_ITEM,
   BORDER_RADIUS,
+  useChartContext,
 } from '@shopify/polaris-viz-core';
 
 import {useWatchColorVisionEvents} from '../../../hooks';
@@ -27,7 +28,6 @@ export interface HorizontalStackedBarsProps {
   dataKeys: string[];
   groupIndex: number;
   id: string;
-  isAnimated: boolean;
   name: string;
   stackedValues: FormattedStackedSeries[];
   xScale: ScaleLinear<number, number>;
@@ -61,12 +61,12 @@ export function HorizontalStackedBars({
   dataKeys,
   groupIndex,
   id,
-  isAnimated,
   name,
   stackedValues,
   theme,
   xScale,
 }: HorizontalStackedBarsProps) {
+  const {shouldAnimate} = useChartContext();
   const [activeBarIndex, setActiveBarIndex] = useState(-1);
 
   useWatchColorVisionEvents({
@@ -87,7 +87,7 @@ export function HorizontalStackedBars({
     },
     config: BARS_TRANSITION_CONFIG,
     delay: animationDelay,
-    default: {immediate: !isAnimated},
+    default: {immediate: !shouldAnimate},
   });
 
   const lastIndexes = useMemo(() => {
@@ -142,7 +142,6 @@ export function HorizontalStackedBars({
             borderRadius={borderRadius}
             color={getGradientDefId(theme, seriesIndex, id)}
             height={barHeight}
-            isAnimated={isAnimated}
             key={`${name}${barId}`}
             seriesIndex={seriesIndex}
             setActiveBarIndex={setActiveBarIndex}

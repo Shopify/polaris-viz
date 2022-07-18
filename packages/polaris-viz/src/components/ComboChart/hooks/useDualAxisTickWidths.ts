@@ -1,5 +1,5 @@
-import {ChartContext} from '@shopify/polaris-viz-core';
-import {useContext, useMemo} from 'react';
+import {useChartContext} from '@shopify/polaris-viz-core';
+import {useMemo} from 'react';
 
 import type {FormattedTicks} from '../../../types';
 import {getLongestTickWidth} from '../utilities/getLongestTickWidth';
@@ -8,7 +8,7 @@ export function useDualAxisTicksWidth(
   leftTicks: FormattedTicks[],
   rightTicks: FormattedTicks[],
 ) {
-  const {characterWidths} = useContext(ChartContext);
+  const {characterWidths} = useChartContext();
 
   return useMemo(() => {
     return {

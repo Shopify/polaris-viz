@@ -2,6 +2,7 @@ import {useCallback, useMemo} from 'react';
 import type {Line} from 'd3-shape';
 import {useSprings} from '@react-spring/web';
 import type {DataSeries, DataPoint} from '@shopify/polaris-viz-core';
+import {useChartContext} from '@shopify/polaris-viz-core';
 
 import {getPathLength, getPointAtLength} from '../utilities';
 
@@ -16,15 +17,15 @@ export function useLinearChartAnimations({
   activeIndex,
   lineGenerator,
   data,
-  isAnimated,
 }: {
   activeIndex: number | null;
   lineGenerator: Line<DataPoint>;
   data: DataSeries[];
-  isAnimated: boolean;
 }) {
+  const {shouldAnimate} = useChartContext();
+
   const currentIndex = activeIndex == null ? 0 : activeIndex;
-  const immediate = !isAnimated || data.length === 0 || activeIndex == null;
+  const immediate = !shouldAnimate || data.length === 0 || activeIndex == null;
 
   // Create off screen paths used for sub path and total path length calculations
   const createOffScreenPath = useCallback(

@@ -7,7 +7,13 @@ import React, {
   useMemo,
 } from 'react';
 import {useDebouncedCallback} from 'use-debounce/lib';
-import {uniqueId, ChartContext} from '@shopify/polaris-viz-core';
+import {
+  uniqueId,
+  ChartContext,
+  DataGroup,
+  DataSeries,
+  isLargeDataSet,
+} from '@shopify/polaris-viz-core';
 import type {Dimensions} from '@shopify/polaris-viz-core';
 
 import characterWidths from '../../data/character-widths.json';
@@ -34,18 +40,26 @@ interface Props {
   children: ReactElement;
   theme: string;
   sparkChart?: boolean;
-  isAnimated?: boolean;
+  isAnimated: boolean;
+  data: DataSeries[] | DataGroup[];
 }
 
 export const ChartContainer = (props: Props) => {
+  const {prefersReducedMotion} = usePrefersReducedMotion();
+
   const value = useMemo(() => {
+    const tooBigToAnimate = isLargeDataSet(props.data);
+    const shouldAnimate =
+      props.isAnimated && !prefersReducedMotion && !tooBigToAnimate;
     const id = uniqueId('chart');
+
     return {
+      shouldAnimate,
       id,
       characterWidths,
       characterWidthOffsets,
     };
-  }, []);
+  }, [prefersReducedMotion, props.data, props.isAnimated]);
 
   const [chartDimensions, setChartDimensions] =
     useState<Dimensions | null>(null);
@@ -73,10 +87,6 @@ export const ChartContainer = (props: Props) => {
   const [debouncedUpdateDimensions] = useDebouncedCallback(() => {
     updateDimensions();
   }, 100);
-
-  const {prefersReducedMotion} = usePrefersReducedMotion();
-
-  const shouldAnimate = props.isAnimated && !prefersReducedMotion;
 
   useLayoutEffect(() => {
     updateDimensions();
@@ -131,11 +141,9 @@ export const ChartContainer = (props: Props) => {
           : cloneElement<{
               theme: string;
               dimensions: Dimensions;
-              isAnimated: boolean;
             }>(props.children, {
               theme: printFriendlyTheme,
               dimensions: chartDimensions!,
-              isAnimated: shouldAnimate,
             })}
       </div>
     </ChartContext.Provider>

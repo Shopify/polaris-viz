@@ -3,8 +3,8 @@ import {
   uniqueId,
   COLOR_VISION_SINGLE_ITEM,
   DEFAULT_THEME_NAME,
-  DEFAULT_CHART_PROPS,
   useAriaLabel,
+  useChartContext,
 } from '@shopify/polaris-viz-core';
 import type {
   ChartType,
@@ -38,13 +38,11 @@ export interface ChartProps {
   yAxisOptions: Required<YAxisOptions>;
   dimensions?: Dimensions;
   theme?: string;
-  isAnimated?: boolean;
 }
 
 export function Chart({
   data,
   dimensions,
-  isAnimated = DEFAULT_CHART_PROPS.isAnimated,
   showLegend,
   theme = DEFAULT_THEME_NAME,
   type,
@@ -52,6 +50,7 @@ export function Chart({
   yAxisOptions,
 }: ChartProps) {
   useColorVisionEvents(data.length > 1);
+  const {shouldAnimate} = useChartContext();
 
   const id = useMemo(() => uniqueId('SimpleBarChart'), []);
 
@@ -108,7 +107,6 @@ export function Chart({
   const {transitions} = useHorizontalTransitions({
     series: data,
     groupHeight,
-    isAnimated,
     chartXPosition: 0,
   });
 
@@ -148,7 +146,7 @@ export function Chart({
             key: data[0].data[item.index]?.key,
           });
 
-          const animationDelay = isAnimated
+          const animationDelay = shouldAnimate
             ? (HORIZONTAL_BAR_GROUP_DELAY * index) / data.length
             : 0;
 
@@ -163,7 +161,6 @@ export function Chart({
               groupHeight={groupHeight}
               id={id}
               index={index}
-              isAnimated={isAnimated}
               isSimple
               isStacked={isStacked}
               name={name}

@@ -152,7 +152,7 @@ export const VerticalBarChart: Story<BarChartProps> = Template.bind({});
 VerticalBarChart.args = {
   data: DATA,
   xAxisOptions: {},
-  isAnimated: false,
+  isAnimated: true,
   showLegend: true,
   annotations: VERTICAL_ANNOTATIONS,
 };
@@ -162,7 +162,7 @@ export const HorizontalBarChart: Story<BarChartProps> = Template.bind({});
 HorizontalBarChart.args = {
   data: DATA,
   xAxisOptions: {},
-  isAnimated: false,
+  isAnimated: true,
   showLegend: true,
   annotations: HORIZONTAL_ANNOTATIONS,
   direction: 'horizontal',

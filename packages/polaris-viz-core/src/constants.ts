@@ -432,3 +432,6 @@ export const DEFAULT_CHART_PROPS = {
   state: ChartState.Success,
   errorText: 'Could not load the chart',
 };
+
+export const TOO_MANY_DATA_POINTS_THRESHOLD = 500;
+export const TOO_MANY_DATA_SERIES_THRESHOLD = 14;

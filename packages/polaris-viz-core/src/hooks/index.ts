@@ -6,3 +6,4 @@ export {useSparkBar} from './useSparkBar';
 export {useYScale} from './useYScale';
 export {useUniqueId} from './useUniqueId';
 export {useAriaLabel} from './useAriaLabel';
+export {useChartContext} from './useChartContext';

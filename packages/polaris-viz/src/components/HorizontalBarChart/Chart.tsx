@@ -4,9 +4,9 @@ import {
   DataType,
   COLOR_VISION_SINGLE_ITEM,
   BoundingRect,
-  DEFAULT_CHART_PROPS,
   HORIZONTAL_SPACE_BETWEEN_CHART_AND_AXIS,
   useAriaLabel,
+  useChartContext,
 } from '@shopify/polaris-viz-core';
 import type {
   DataSeries,
@@ -69,14 +69,12 @@ export interface ChartProps {
   yAxisOptions: Required<YAxisOptions>;
   dimensions?: Dimensions;
   theme: string;
-  isAnimated?: boolean;
 }
 
 export function Chart({
   annotationsLookupTable,
   data,
   dimensions,
-  isAnimated = DEFAULT_CHART_PROPS.isAnimated,
   renderTooltipContent,
   showLegend,
   theme,
@@ -86,6 +84,7 @@ export function Chart({
 }: ChartProps) {
   useColorVisionEvents(data.length > 1);
 
+  const {shouldAnimate} = useChartContext();
   const selectedTheme = useTheme(theme);
   const id = useMemo(() => uniqueId('HorizontalBarChart'), []);
 
@@ -175,7 +174,6 @@ export function Chart({
   const {transitions} = useHorizontalTransitions({
     series: data,
     groupHeight,
-    isAnimated,
     chartXPosition,
   });
 
@@ -262,7 +260,7 @@ export function Chart({
               key: item.key,
             });
 
-            const animationDelay = isAnimated
+            const animationDelay = shouldAnimate
               ? (HORIZONTAL_BAR_GROUP_DELAY * index) / data.length
               : 0;
 
@@ -277,7 +275,6 @@ export function Chart({
                 groupHeight={groupHeight}
                 id={id}
                 index={index}
-                isAnimated={isAnimated}
                 isSimple={false}
                 isStacked={isStacked}
                 name={name}

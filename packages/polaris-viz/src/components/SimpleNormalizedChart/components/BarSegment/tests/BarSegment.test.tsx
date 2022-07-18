@@ -1,7 +1,11 @@
+/* eslint-disable react/jsx-no-constructed-context-values */
 import React from 'react';
 import {mount} from '@shopify/react-testing';
+import {ChartContext} from '@shopify/polaris-viz-core';
 
 import {BarSegment} from '../BarSegment';
+import characterWidths from '../../../../../data/character-widths.json';
+import characterWidthOffsets from '../../../../../data/character-width-offsets.json';
 
 describe('<BarSegment />', () => {
   const mockProps = {
@@ -44,21 +48,47 @@ describe('<BarSegment />', () => {
   it('does not round up a 0 scale', () => {
     const barSegment = mount(<BarSegment {...mockProps} scale={0} />);
 
-    const barSegmentFlex = barSegment.find('div')!.props!.style!.width;
-
-    expect(barSegmentFlex).toBe('0%');
+    barSegment.act(() => {
+      requestAnimationFrame(() => {
+        const barSegmentFlex = barSegment.find('div')!.props!.style!.width;
+        expect(barSegmentFlex).toBe('0%');
+      });
+    });
   });
 
   it('rounds up a scale above 0 and below 1.5', () => {
-    const barSegment = mount(<BarSegment {...mockProps} scale={0.1} />);
+    const barSegment = mount(
+      <ChartContext.Provider
+        value={{
+          shouldAnimate: false,
+          characterWidths,
+          characterWidthOffsets,
+        }}
+      >
+        <BarSegment {...mockProps} scale={0.1} />
+      </ChartContext.Provider>,
+    );
 
-    const barSegmentFlex = barSegment.find('div')!.props!.style!.width;
-
-    expect(barSegmentFlex).toBe('1.5%');
+    barSegment.act(() => {
+      requestAnimationFrame(() => {
+        const barSegmentFlex = barSegment.find('div')!.props!.style!.width;
+        expect(barSegmentFlex).toBe('1.5%');
+      });
+    });
   });
 
   it('does not round up a scale above 1.5', () => {
-    const barSegment = mount(<BarSegment {...mockProps} scale={1.51} />);
+    const barSegment = mount(
+      <ChartContext.Provider
+        value={{
+          shouldAnimate: false,
+          characterWidths,
+          characterWidthOffsets,
+        }}
+      >
+        <BarSegment {...mockProps} scale={1.51} />
+      </ChartContext.Provider>,
+    );
 
     const barSegmentFlex = barSegment.find('div')!.props!.style!.width;
 
