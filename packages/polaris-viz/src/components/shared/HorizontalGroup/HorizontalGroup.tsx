@@ -154,6 +154,7 @@ export function HorizontalGroup({
             name={name}
             xScale={xScale}
             zeroPosition={zeroPosition}
+            containerWidth={containerWidth}
           />
         )}
       </g>

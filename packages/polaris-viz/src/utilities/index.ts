@@ -16,3 +16,4 @@ export {
   getYAxisOptionsWithDefaults,
   getXAxisOptionsWithDefaults,
 } from './getAxisOptions';
+export {getHoverZoneOffset} from './getHoverZoneOffset';

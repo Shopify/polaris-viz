@@ -10,6 +10,7 @@ import {
   useChartContext,
 } from '@shopify/polaris-viz-core';
 
+import {getHoverZoneOffset} from '../../../utilities';
 import {
   HORIZONTAL_BAR_LABEL_OFFSET,
   HORIZONTAL_GROUP_LABEL_HEIGHT,
@@ -34,6 +35,7 @@ export interface HorizontalBarsProps {
   xScale: ScaleLinear<number, number>;
   zeroPosition: number;
   animationDelay?: number;
+  containerWidth: number;
 }
 
 export function HorizontalBars({
@@ -48,6 +50,7 @@ export function HorizontalBars({
   name,
   xScale,
   zeroPosition,
+  containerWidth,
 }: HorizontalBarsProps) {
   const selectedTheme = useTheme();
   const {characterWidths, theme} = useChartContext();
@@ -75,7 +78,7 @@ export function HorizontalBars({
 
         const {value} = data[seriesIndex].data[groupIndex];
 
-        if (value == null || !value) {
+        if (value == null) {
           return null;
         }
 
@@ -97,6 +100,14 @@ export function HorizontalBars({
           HORIZONTAL_SPACE_BETWEEN_SINGLE * seriesIndex;
         const negativeX = (width + leftLabelOffset) * -1;
         const x = isNegative ? negativeX : width + HORIZONTAL_BAR_LABEL_OFFSET;
+
+        const {clampedSize} = getHoverZoneOffset({
+          barSize: width,
+          zeroPosition: xScale(0),
+          max: containerWidth - x,
+          position: 'horizontal',
+          isNegative: value < 0,
+        });
 
         return (
           <React.Fragment key={`series-${seriesIndex}-${id}-${name}`}>
@@ -131,7 +142,7 @@ export function HorizontalBars({
               className={styles.Bar}
               x={0}
               y={y - HORIZONTAL_SPACE_BETWEEN_SINGLE / 2}
-              width={width}
+              width={clampedSize}
               height={barHeight + HORIZONTAL_SPACE_BETWEEN_SINGLE}
               fill="transparent"
               style={{transform: isNegative ? 'scaleX(-1)' : ''}}
