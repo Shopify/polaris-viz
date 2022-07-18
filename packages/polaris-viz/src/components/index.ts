@@ -14,6 +14,7 @@ export type {SquareColorPreviewProps} from './SquareColorPreview';
 export {StackedAreaChart} from './StackedAreaChart';
 export type {StackedAreaChartProps} from './StackedAreaChart';
 export {BarChart} from './BarChart';
+export {DonutChart} from './DonutChart';
 export type {BarChartProps} from './BarChart';
 export {FunnelChart} from './FunnelChart';
 export type {FunnelChartProps} from './FunnelChart';

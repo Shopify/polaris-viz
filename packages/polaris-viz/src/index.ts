@@ -14,6 +14,7 @@ export {
   TooltipContent,
   ChartSkeleton,
   ComboChart,
+  DonutChart,
 } from './components';
 
 export type {
