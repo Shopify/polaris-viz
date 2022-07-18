@@ -1,9 +1,10 @@
-import React, {useCallback, useMemo} from 'react';
+import React, {useMemo} from 'react';
 import {
   uniqueId,
   COLOR_VISION_SINGLE_ITEM,
   DEFAULT_THEME_NAME,
   DEFAULT_CHART_PROPS,
+  useAriaLabel,
 } from '@shopify/polaris-viz-core';
 import type {
   ChartType,
@@ -104,19 +105,6 @@ export function Chart({
     labelHeight: 0,
   });
 
-  const getAriaLabel = useCallback(
-    (seriesIndex: number) => {
-      const ariaSeries = data
-        .map(({name, data}) => {
-          return `${name} ${labelFormatter(data[seriesIndex].value)}`;
-        })
-        .join(', ');
-
-      return `${data[0].data[seriesIndex].key}: ${ariaSeries}`;
-    },
-    [data, labelFormatter],
-  );
-
   const {transitions} = useHorizontalTransitions({
     series: data,
     groupHeight,
@@ -125,6 +113,9 @@ export function Chart({
   });
 
   const zeroPosition = longestLabel.negative + xScale(0);
+  const getAriaLabel = useAriaLabel(data, {
+    xAxisLabelFormatter: labelFormatter,
+  });
 
   return (
     <div
@@ -152,7 +143,10 @@ export function Chart({
         {transitions((style, item, _transition, index) => {
           const {opacity, transform} = style as HorizontalTransitionStyle;
           const name = item.key ?? '';
-          const ariaLabel = getAriaLabel(item.index);
+          const ariaLabel = getAriaLabel({
+            seriesIndex: item.index,
+            key: data[0].data[item.index]?.key,
+          });
 
           const animationDelay = isAnimated
             ? (HORIZONTAL_BAR_GROUP_DELAY * index) / data.length

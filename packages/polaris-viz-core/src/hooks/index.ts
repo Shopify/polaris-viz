@@ -5,3 +5,4 @@ export {useSparkLine} from './useSparkLine';
 export {useSparkBar} from './useSparkBar';
 export {useYScale} from './useYScale';
 export {useUniqueId} from './useUniqueId';
+export {useAriaLabel} from './useAriaLabel';

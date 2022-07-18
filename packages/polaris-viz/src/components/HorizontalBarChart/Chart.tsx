@@ -1,4 +1,4 @@
-import React, {ReactNode, useCallback, useMemo, useState} from 'react';
+import React, {ReactNode, useMemo, useState} from 'react';
 import {
   uniqueId,
   DataType,
@@ -6,6 +6,7 @@ import {
   BoundingRect,
   DEFAULT_CHART_PROPS,
   HORIZONTAL_SPACE_BETWEEN_CHART_AND_AXIS,
+  useAriaLabel,
 } from '@shopify/polaris-viz-core';
 import type {
   DataSeries,
@@ -165,25 +166,6 @@ export function Chart({
   const annotationsDrawableHeight =
     chartYPosition + chartHeight + ANNOTATIONS_LABELS_OFFSET;
 
-  const getAriaLabel = useCallback(
-    (key: string, seriesIndex: number) => {
-      const ariaSeries = data
-        .map(({name, data}) => {
-          if (data[seriesIndex] == null) {
-            return name;
-          }
-
-          return `${name} ${xAxisOptions.labelFormatter(
-            data[seriesIndex].value,
-          )}`;
-        })
-        .join(', ');
-
-      return `${yAxisOptions.labelFormatter(key)}: ${ariaSeries}`;
-    },
-    [data, xAxisOptions, yAxisOptions],
-  );
-
   const getTooltipMarkup = useBarChartTooltipContent({
     data,
     seriesColors,
@@ -214,6 +196,11 @@ export function Chart({
   const labels = useFormattedLabels({
     data,
     labelFormatter: yAxisOptions.labelFormatter,
+  });
+
+  const getAriaLabel = useAriaLabel(data, {
+    xAxisLabelFormatter: xAxisOptions.labelFormatter,
+    yAxisLabelFormatter: yAxisOptions.labelFormatter,
   });
 
   return (
@@ -270,7 +257,10 @@ export function Chart({
           {transitions((style, item, _transition, index) => {
             const {opacity, transform} = style as HorizontalTransitionStyle;
             const name = item.key ?? '';
-            const ariaLabel = getAriaLabel(item.key, item.index);
+            const ariaLabel = getAriaLabel({
+              seriesIndex: item.index,
+              key: item.key,
+            });
 
             const animationDelay = isAnimated
               ? (HORIZONTAL_BAR_GROUP_DELAY * index) / data.length

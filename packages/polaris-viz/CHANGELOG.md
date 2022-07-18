@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Fixed
+
+- Added null checks in `SimpleBarChart` and `HorizontalBarChart` to avoid crashes when `data` prop changes
+
 ### Added
 
 - Added loading and error states to `<DonutChart/>`.

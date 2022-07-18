@@ -113,6 +113,7 @@ export {
   usePolarisVizContext,
   useYScale,
   useUniqueId,
+  useAriaLabel,
 } from './hooks';
 export {
   Bar,
