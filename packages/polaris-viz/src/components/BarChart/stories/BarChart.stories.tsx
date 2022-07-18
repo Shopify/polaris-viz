@@ -182,6 +182,9 @@ const NoOverflowStyleTemplate: Story<BarChartProps> = (args: BarChartProps) => {
     <PolarisVizProvider
       themes={{
         Default: {
+          chartContainer: {
+            padding: '20px',
+          },
           grid: {
             horizontalOverflow: false,
             horizontalMargin: 0,
@@ -215,6 +218,9 @@ const WithoutRoundedCornersTemplate: Story<BarChartProps> = (
         Default: {
           bar: {
             hasRoundedCorners: false,
+          },
+          chartContainer: {
+            padding: '20px',
           },
         },
       }}

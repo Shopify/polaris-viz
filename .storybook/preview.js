@@ -152,7 +152,12 @@ export const decorators = [
           NoxAxisLabels: {
             xAxis: {hide: true},
           },
-          NoOverflow: {grid: {horizontalOverflow: false}},
+          NoOverflow: {
+            grid: {horizontalOverflow: false},
+            chartContainer: {
+              padding: '20px',
+            },
+          },
           Positive: {
             bar: {
               color: 'rgb(0, 164, 124)',
