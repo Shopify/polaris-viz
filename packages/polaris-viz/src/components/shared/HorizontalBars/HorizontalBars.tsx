@@ -72,7 +72,12 @@ export function HorizontalBars({
         if (data[seriesIndex].data[groupIndex] == null) {
           return;
         }
+
         const {value} = data[seriesIndex].data[groupIndex];
+
+        if (value == null || !value) {
+          return null;
+        }
 
         const isNegative = value && value < 0;
         const label = labelFormatter(value);
@@ -102,7 +107,6 @@ export function HorizontalBars({
               height={barHeight}
               index={groupIndex}
               isActive={activeBarIndex === -1 || activeBarIndex === seriesIndex}
-              needsMinWidth
               transform={isNegative ? 'scaleX(-1)' : ''}
               width={width}
               x={0}

@@ -20,7 +20,7 @@ export function useVerticalBarChart({data, drawableWidth, labels}: Props) {
       .reduce((prev, cur) => prev.concat(cur), [])
       // If one value is greater than zero,
       // bail out of the loop
-      .some((num) => num > 0);
+      .some((num) => num !== null && num > 0);
   }, [sortedData]);
 
   const {xScale, gapWidth} = useXScale({

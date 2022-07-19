@@ -180,3 +180,5 @@ export type LegendPosition =
   | 'right'
   | 'bottom'
   | 'left';
+
+export type SortedBarChartData = (number | null)[][];

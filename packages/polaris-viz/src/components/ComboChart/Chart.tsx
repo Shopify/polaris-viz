@@ -265,7 +265,7 @@ export function Chart({
     const sortedData = sortBarChartData(labels, barChartData.series);
 
     const xPosition = xScale(index) ?? 0;
-    const sortedDataPos = sortedData[index].map((num) => Math.abs(num));
+    const sortedDataPos = sortedData[index].map((num) => Math.abs(num ?? 0));
 
     const highestValuePos = Math.max(...sortedDataPos);
 

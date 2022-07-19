@@ -313,7 +313,9 @@ export function Chart({
     }
 
     const xPosition = xScale(`${index}`) ?? 0;
-    const sortedDataPos = sortedData[index].map((num) => Math.abs(num));
+    const sortedDataPos = sortedData[index].map((num) =>
+      Math.abs(num ?? 0),
+    ) as number[];
 
     const highestValuePos =
       type === 'stacked'
@@ -321,7 +323,7 @@ export function Chart({
         : Math.max(...sortedDataPos);
 
     const x = xPosition + chartXPosition;
-    const y = yScale(highestValuePos) + chartYPosition;
+    const y = yScale(highestValuePos!) + chartYPosition;
 
     return {
       x,

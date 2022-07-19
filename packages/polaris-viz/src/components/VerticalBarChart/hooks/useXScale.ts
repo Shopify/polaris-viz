@@ -1,6 +1,8 @@
 import {useMemo} from 'react';
 import {scaleBand, scaleLog} from 'd3-scale';
 
+import type {SortedBarChartData} from '../../../types';
+
 // Max number of groups taken into consideration to
 // calculate the gap size. If there are more,
 // it will use the same gap size as 9 groups.
@@ -18,7 +20,7 @@ export function useXScale({
   labels,
 }: {
   drawableWidth: number;
-  data: number[][];
+  data: SortedBarChartData;
   labels: string[];
 }) {
   const gapScale = scaleLog()
