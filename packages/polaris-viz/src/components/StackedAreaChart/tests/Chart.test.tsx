@@ -87,9 +87,9 @@ describe('<Chart />', () => {
     const chart = mount(<Chart {...MOCK_PROPS} />);
     expect(chart).toContainReactComponent(YAxis, {
       ticks: [
-        {value: 0, formattedValue: '0', yOffset: 212},
-        {value: 500, formattedValue: '500', yOffset: 116.2457091237579},
-        {value: 1000, formattedValue: '1000', yOffset: 20.491418247515817},
+        {value: 0, formattedValue: '0', yOffset: 215},
+        {value: 500, formattedValue: '500', yOffset: 117.89069557362241},
+        {value: 1000, formattedValue: '1000', yOffset: 20.781391147244815},
       ],
     });
   });

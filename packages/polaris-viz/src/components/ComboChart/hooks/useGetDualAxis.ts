@@ -44,6 +44,7 @@ export function useGetDualAxis({data}: {data: DataGroup[]}): Axis[] {
         index,
         shape: series.shape,
         yAxisOptions,
+        name: series.name,
       };
     });
   }, [data]);

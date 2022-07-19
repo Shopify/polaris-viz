@@ -42,7 +42,7 @@ import {
   useLinearLabelsAndDimensions,
 } from '../../hooks';
 import {
-  LineChartMargin as Margin,
+  ChartMargin,
   XMLNS,
   LABEL_AREA_TOP_SPACING,
   ANNOTATIONS_LABELS_OFFSET,
@@ -116,7 +116,7 @@ export function Chart({
     xAxisOptions,
   });
 
-  const chartYPosition = (Margin.Top as number) + annotationsHeight;
+  const chartYPosition = (ChartMargin.Top as number) + annotationsHeight;
   const drawableHeight =
     height - chartYPosition - labelHeight - LABEL_AREA_TOP_SPACING;
 
@@ -352,7 +352,7 @@ export function Chart({
         getMarkup={getTooltipMarkup}
         getPosition={getTooltipPosition}
         id={tooltipId.current}
-        margin={Margin}
+        margin={ChartMargin}
         onIndexChange={(index) => setActivePointIndex(index)}
         parentRef={svgRef}
       />

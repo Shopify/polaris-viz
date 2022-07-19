@@ -6,6 +6,12 @@ import {Chart, ChartProps} from '../Chart';
 import {getXAxisOptionsWithDefaults, normalizeData} from '../../../utilities';
 import {LegendContainer} from '../../LegendContainer';
 import {Annotations, YAxisAnnotations} from '../../Annotations';
+import {AxisLabel} from '../components';
+import {YAxis} from '../../YAxis';
+
+jest.mock('../../../hooks/useEstimateStringWidth', () => ({
+  useEstimateStringWidth: () => 100,
+}));
 
 jest.mock('../../../hooks/useThemeSeriesColorsForDataGroup', () => ({
   useThemeSeriesColorsForDataGroup: () => [
@@ -19,8 +25,8 @@ jest.mock('../../../hooks/useThemeSeriesColorsForDataGroup', () => ({
 
 jest.mock('@shopify/polaris-viz-core/src/utilities', () => ({
   ...jest.requireActual('@shopify/polaris-viz-core/src/utilities'),
-  // estimateStringWidth: jest.fn(() => 100),
-  // getAverageColor: jest.fn(() => 'red'),
+  estimateStringWidth: jest.fn(() => 100),
+  getAverageColor: jest.fn(() => 'red'),
 }));
 
 const DATA: DataGroup[] = [
@@ -148,6 +154,138 @@ describe('<Chart />', () => {
 
       expect(chart).toContainReactComponent(YAxisAnnotations);
       expect(chart).toContainReactComponent(Annotations);
+    });
+  });
+
+  describe('<AxisLabel />', () => {
+    it('renders <AxisLabel /> for each axis', () => {
+      const component = mount(<Chart {...PROPS} />);
+
+      expect(component).toContainReactComponentTimes(AxisLabel, 2);
+    });
+
+    it('renders only primary <AxisLabel />', () => {
+      const component = mount(
+        <Chart
+          {...PROPS}
+          data={[
+            {
+              shape: 'Bar',
+              name: 'Total Sales',
+              series: [
+                {
+                  name: 'POS',
+                  data: [{value: 3, key: '2020-07-07T12:00:00'}],
+                },
+              ],
+            },
+            {
+              shape: 'Line',
+              series: [
+                {
+                  name: 'Sessions from Google ads',
+                  data: [{value: 333, key: '2020-07-07T12:00:00'}],
+                },
+              ],
+            },
+          ]}
+        />,
+      );
+
+      expect(component).toContainReactComponentTimes(AxisLabel, 1);
+      expect(component).toContainReactComponent(AxisLabel, {
+        name: 'Total Sales',
+      });
+    });
+
+    it('renders only secondary <AxisLabel />', () => {
+      const component = mount(
+        <Chart
+          {...PROPS}
+          data={[
+            {
+              shape: 'Bar',
+              series: [
+                {
+                  name: 'POS',
+                  data: [{value: 3, key: '2020-07-07T12:00:00'}],
+                },
+              ],
+            },
+            {
+              shape: 'Line',
+              name: 'Total Sessions',
+              series: [
+                {
+                  name: 'Sessions from Google ads',
+                  data: [{value: 333, key: '2020-07-07T12:00:00'}],
+                },
+              ],
+            },
+          ]}
+        />,
+      );
+
+      expect(component).toContainReactComponentTimes(AxisLabel, 1);
+      expect(component).toContainReactComponent(AxisLabel, {
+        name: 'Total Sessions',
+      });
+    });
+
+    it('applies outside offset for each <AxisLabel />', () => {
+      const component = mount(<Chart {...PROPS} />);
+
+      const [primaryAxis, secondaryAxis] = component.findAll(YAxis);
+
+      expect(primaryAxis).toHaveReactProps({
+        x: 48,
+        y: 5,
+      });
+
+      expect(secondaryAxis).toHaveReactProps({
+        x: 656,
+        y: 5,
+      });
+    });
+
+    it('does not apply outside offset when no AxisLabels are used', () => {
+      const component = mount(
+        <Chart
+          {...PROPS}
+          data={[
+            {
+              shape: 'Bar',
+              series: [
+                {
+                  name: 'POS',
+                  data: [{value: 3, key: '2020-07-07T12:00:00'}],
+                },
+              ],
+            },
+            {
+              shape: 'Line',
+              series: [
+                {
+                  name: 'Sessions from Google ads',
+                  data: [{value: 333, key: '2020-07-07T12:00:00'}],
+                },
+              ],
+            },
+          ]}
+        />,
+      );
+
+      const [primaryAxis, secondaryAxis] = component.findAll(YAxis);
+
+      expect(primaryAxis).toHaveReactProps({
+        x: 16,
+        y: 5,
+      });
+
+      expect(secondaryAxis).toHaveReactProps({
+        x: 688,
+        y: 5,
+      });
     });
   });
 });

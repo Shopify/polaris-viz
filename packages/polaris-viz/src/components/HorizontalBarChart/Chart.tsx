@@ -39,7 +39,7 @@ import {
 } from '../../hooks';
 import {
   XMLNS,
-  BarChartMargin as Margin,
+  ChartMargin,
   HORIZONTAL_BAR_GROUP_DELAY,
   ANNOTATIONS_LABELS_OFFSET,
 } from '../../constants';
@@ -134,7 +134,7 @@ export function Chart({
     data,
   });
 
-  const chartYPosition = (Margin.Top as number) + annotationsHeight;
+  const chartYPosition = (ChartMargin.Top as number) + annotationsHeight;
   const drawableHeight = height - labelHeight - chartYPosition;
 
   const {xScale, ticks, ticksFormatted, drawableWidth, chartXPosition} =
@@ -315,7 +315,7 @@ export function Chart({
         getAlteredPosition={getAlteredHorizontalBarPosition}
         getMarkup={getTooltipMarkup}
         getPosition={getTooltipPosition}
-        margin={Margin}
+        margin={ChartMargin}
         parentRef={svgRef}
       />
 

@@ -58,14 +58,7 @@ export const EMPTY_STATE_CHART_MAX = 10;
 export const DONUT_CHART_CORNER_RADIUS = 2;
 export const DONUT_CHART_THICKNESS = 18;
 
-export enum BarChartMargin {
-  Top = 5,
-  Left = 0,
-  Bottom = BELOW_X_AXIS_MARGIN,
-  Right = SPACING_LOOSE,
-}
-
-export enum LineChartMargin {
+export enum ChartMargin {
   Top = 5,
   Left = 0,
   Bottom = BELOW_X_AXIS_MARGIN,
