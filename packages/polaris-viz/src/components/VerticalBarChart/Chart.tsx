@@ -148,9 +148,9 @@ export function Chart({
   }, [characterWidths, initialTicks]);
 
   const horizontalMargin = selectedTheme.grid.horizontalMargin;
-  const chartXPosition =
-    yAxisLabelWidth + Y_AXIS_CHART_SPACING + horizontalMargin;
-  const drawableWidth = width - chartXPosition - horizontalMargin * 2;
+  const yAxisWidth = yAxisLabelWidth + Y_AXIS_CHART_SPACING;
+  const chartXPosition = yAxisWidth + horizontalMargin;
+  const drawableWidth = width - chartXPosition - horizontalMargin;
   const annotationsDrawableHeight =
     chartYPosition + drawableHeight + ANNOTATIONS_LABELS_OFFSET;
 
@@ -237,14 +237,14 @@ export function Chart({
           />
         ) : null}
 
-        <g transform={`translate(0,${chartYPosition})`} aria-hidden="true">
-          <YAxis
-            ticks={ticks}
-            textAlign="right"
-            width={yAxisLabelWidth}
-            theme={theme}
-          />
-        </g>
+        <YAxis
+          ticks={ticks}
+          textAlign="right"
+          width={yAxisLabelWidth}
+          theme={theme}
+          x={chartXPosition - yAxisWidth}
+          y={chartYPosition}
+        />
 
         <g transform={`translate(${chartXPosition},${chartYPosition})`}>
           <VerticalBarGroup

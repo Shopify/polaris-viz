@@ -191,28 +191,23 @@ export function Chart({
           />
         )}
 
-        <g transform={`translate(${horizontalMargin},0)`} aria-hidden="true">
-          <YAxis
-            ticks={leftTicks}
-            textAlign="right"
-            width={leftTickWidth}
-            theme={theme}
-          />
-        </g>
+        <YAxis
+          ticks={leftTicks}
+          textAlign="right"
+          width={leftTickWidth}
+          theme={theme}
+          x={horizontalMargin}
+          y={0}
+        />
 
-        <g
-          transform={`translate(${
-            chartXPosition + drawableWidth + Y_AXIS_CHART_SPACING
-          },0)`}
-          aria-hidden="true"
-        >
-          <YAxis
-            ticks={rightTicks}
-            textAlign="left"
-            width={rightTickWidth}
-            theme={theme}
-          />
-        </g>
+        <YAxis
+          ticks={rightTicks}
+          textAlign="left"
+          width={rightTickWidth}
+          theme={theme}
+          x={chartXPosition + drawableWidth + Y_AXIS_CHART_SPACING}
+          y={0}
+        />
 
         <g transform={`translate(${chartXPosition},${0})`}>
           <ComboBarChart
