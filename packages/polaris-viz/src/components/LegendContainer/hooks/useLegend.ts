@@ -1,9 +1,10 @@
 import {useMemo, useState} from 'react';
-import type {
+import {
   Color,
   Dimensions,
   DataGroup,
   Direction,
+  LEGENDS_TOP_MARGIN,
 } from '@shopify/polaris-viz-core';
 
 import type {LegendData} from '../../../types';
@@ -18,7 +19,7 @@ function getAlteredDimensions(
   const isHorizontal = direction === 'horizontal';
 
   return {
-    height: isHorizontal ? height - legendsHeight : height,
+    height: isHorizontal ? height - legendsHeight - LEGENDS_TOP_MARGIN : height,
     width: !isHorizontal ? width - legendsWidth : width,
   };
 }
