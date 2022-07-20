@@ -11,6 +11,7 @@ import {
 } from '@shopify/polaris-viz-core';
 import type {Dimensions, DataGroup} from '@shopify/polaris-viz-core';
 
+import {Annotations, checkAvailableAnnotations} from '../Annotations';
 import {sortBarChartData} from '../../utilities/sortBarChartData';
 import {getVerticalBarChartTooltipPosition} from '../../utilities/getVerticalBarChartTooltipPosition';
 import {
@@ -21,14 +22,17 @@ import {
   TooltipWrapper,
   TOOLTIP_POSITION_DEFAULT_RETURN,
 } from '../TooltipWrapper';
-import type {RenderTooltipContentData} from '../../types';
+import type {
+  AnnotationLookupTable,
+  RenderTooltipContentData,
+} from '../../types';
 import {XAxis} from '../XAxis';
 import {useThemeSeriesColorsForDataGroup} from '../../hooks/useThemeSeriesColorsForDataGroup';
 import {useColorVisionEvents, useReducedLabelIndexes} from '../../hooks';
 import {HorizontalGridLines} from '../HorizontalGridLines';
 import {YAxis} from '../YAxis';
 import {LegendContainer, useLegend} from '../LegendContainer';
-import {XMLNS} from '../../constants';
+import {ANNOTATIONS_LABELS_OFFSET, XMLNS} from '../../constants';
 
 import {useDualAxisTicks} from './hooks/useDualAxisTicks';
 import {useDualAxisTicksWidth} from './hooks/useDualAxisTickWidths';
@@ -40,6 +44,7 @@ import {useSplitDataForCharts} from './hooks/useSplitDataForCharts';
 import {useComboChartTooltipContent} from './hooks/useComboChartTooltipContent';
 
 export interface ChartProps {
+  annotationsLookupTable: AnnotationLookupTable;
   data: DataGroup[];
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
   showLegend: boolean;
@@ -49,6 +54,7 @@ export interface ChartProps {
 }
 
 export function Chart({
+  annotationsLookupTable,
   data,
   dimensions,
   renderTooltipContent,
@@ -65,6 +71,7 @@ export function Chart({
   const [labelHeight, setLabelHeight] = useState(0);
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [annotationsHeight, setAnnotationsHeight] = useState(0);
 
   const {legend, setLegendDimensions, height, width} = useLegend({
     colors,
@@ -73,8 +80,12 @@ export function Chart({
     showLegend,
   });
 
+  const chartYPosition = (BarChartMargin.Top as number) + annotationsHeight;
+
   const drawableHeight =
-    height - labelHeight - LABEL_AREA_TOP_SPACING - BarChartMargin.Top;
+    height - labelHeight - LABEL_AREA_TOP_SPACING - chartYPosition;
+  const labelsYPosition =
+    chartYPosition + drawableHeight + LABEL_AREA_TOP_SPACING;
 
   const {
     doBothChartsContainMixedValues,
@@ -110,12 +121,12 @@ export function Chart({
   const horizontalMargin = selectedTheme.grid.horizontalMargin;
   const chartXPosition =
     leftTickWidth + Y_AXIS_CHART_SPACING + horizontalMargin;
-  const chartYPosition = 0;
-  const labelsYPosition =
-    chartYPosition + drawableHeight + LABEL_AREA_TOP_SPACING;
 
   const drawableWidth =
     width - chartXPosition - horizontalMargin * 2 - rightTickWidth;
+
+  const annotationsDrawableHeight =
+    chartYPosition + drawableHeight + ANNOTATIONS_LABELS_OFFSET;
 
   const {
     barChartData,
@@ -147,6 +158,10 @@ export function Chart({
     data,
     seriesColors: colors,
   });
+
+  const {hasXAxisAnnotations, hasYAxisAnnotations} = checkAvailableAnnotations(
+    annotationsLookupTable,
+  );
 
   return (
     <div
@@ -205,7 +220,7 @@ export function Chart({
           y={0}
         />
 
-        <g transform={`translate(${chartXPosition},${0})`}>
+        <g transform={`translate(${chartXPosition},${chartYPosition})`}>
           <ComboBarChart
             indexOffset={barChartIndexOffset}
             colors={barChartColors}
@@ -217,10 +232,25 @@ export function Chart({
           />
         </g>
 
+        {hasXAxisAnnotations && (
+          <g transform={`translate(${chartXPosition},0)`} tabIndex={-1}>
+            <Annotations
+              annotationsLookupTable={annotationsLookupTable}
+              axisLabelWidth={labelWidth}
+              drawableHeight={annotationsDrawableHeight}
+              drawableWidth={drawableWidth}
+              labels={labels}
+              onHeightChange={setAnnotationsHeight}
+              theme={theme}
+              xScale={xScale}
+            />
+          </g>
+        )}
+
         <g
           transform={`translate(${
             chartXPosition + drawableWidth / labels.length / 2
-          },${0})`}
+          },${chartYPosition})`}
         >
           <ComboLineChart
             activeIndex={activeIndex}

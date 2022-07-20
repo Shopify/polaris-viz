@@ -9,15 +9,16 @@ import type {DataGroup} from '@shopify/polaris-viz-core';
 
 import {flattenDataGroupToDataSeries} from '../../utilities/flattenDataGroupToDataSeries';
 import {TooltipContent} from '../TooltipContent';
-import {getXAxisOptionsWithDefaults} from '../../utilities';
+import {getXAxisOptionsWithDefaults, normalizeData} from '../../utilities';
 import {ChartContainer} from '../ChartContainer';
-import type {RenderTooltipContentData} from '../../types';
+import type {ComboAnnotation, RenderTooltipContentData} from '../../types';
 
 import {Chart} from './Chart';
 import {formatDataForTooltip} from './utilities/formatDataForTooltip';
 
 export type ComboChartProps = {
   data: DataGroup[];
+  annotations?: ComboAnnotation[];
   renderTooltipContent?(data: RenderTooltipContentData): React.ReactNode;
   showLegend?: boolean;
   xAxisOptions?: Partial<XAxisOptions>;
@@ -26,6 +27,7 @@ export type ComboChartProps = {
 export function ComboChart(props: ComboChartProps) {
   const {
     data,
+    annotations = [],
     isAnimated,
     renderTooltipContent,
     showLegend = true,
@@ -37,6 +39,8 @@ export function ComboChart(props: ComboChartProps) {
   };
 
   const xAxisOptionsWithDefaults = getXAxisOptionsWithDefaults(xAxisOptions);
+
+  const annotationsLookupTable = normalizeData(annotations, 'startKey');
 
   function renderTooltip(tooltipData: RenderTooltipContentData) {
     if (renderTooltipContent != null) {
@@ -57,6 +61,7 @@ export function ComboChart(props: ComboChartProps) {
   return (
     <ChartContainer data={data} isAnimated={isAnimated} theme={theme}>
       <Chart
+        annotationsLookupTable={annotationsLookupTable}
         data={data}
         renderTooltipContent={renderTooltip}
         showLegend={showLegend}

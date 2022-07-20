@@ -144,6 +144,10 @@ export interface Annotation {
   };
 }
 
+export interface ComboAnnotation extends Omit<Annotation, 'axis'> {
+  axis: 'x' | 'y1' | 'y2';
+}
+
 export interface AnnotationLookupTable {
   [key: number]: Annotation;
 }
