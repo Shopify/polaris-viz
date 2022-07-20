@@ -1,6 +1,10 @@
 import React from 'react';
 import {mount, Root} from '@shopify/react-testing';
-import type {DataSeries, DataGroup} from '@shopify/polaris-viz-core';
+import {
+  DataSeries,
+  DataGroup,
+  LEGENDS_TOP_MARGIN,
+} from '@shopify/polaris-viz-core';
 
 import {useLegend, Props} from '../useLegend';
 
@@ -61,7 +65,7 @@ describe('useLegend()', () => {
           {name: 'Lunch', shape: 'Bar'},
           {name: 'Dinner', shape: 'Bar'},
         ],
-        height: 100,
+        height: MOCK_PROPS.dimensions!.height - LEGENDS_TOP_MARGIN,
         width: 100,
         isLegendMounted: false,
       });
