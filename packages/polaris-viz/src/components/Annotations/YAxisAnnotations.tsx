@@ -1,6 +1,9 @@
 import React, {useMemo, useState} from 'react';
 import type {ScaleLinear} from 'd3-scale';
-import {isValueWithinDomain} from '@shopify/polaris-viz-core';
+import {
+  isValueWithinDomain,
+  Y_AXIS_CHART_SPACING,
+} from '@shopify/polaris-viz-core';
 
 import type {Annotation, AnnotationLookupTable, YAxisTick} from '../../types';
 import {useSVGBlurEvent} from '../../hooks/useSVGBlurEvent';
@@ -13,15 +16,19 @@ import {
   AnnotationYAxisLabel,
 } from './components';
 
+const Y_OFFSET = 13;
+
 export interface YAxisAnnotationsProps {
   annotationsLookupTable: AnnotationLookupTable;
   drawableHeight: number;
   drawableWidth: number;
   ticks: YAxisTick[];
   yScale: ScaleLinear<number, number>;
+  axis?: 'y' | 'y1' | 'y2';
 }
 
 export function YAxisAnnotations({
+  axis = 'y',
   annotationsLookupTable,
   drawableWidth,
   ticks,
@@ -44,7 +51,7 @@ export function YAxisAnnotations({
         if (
           annotation == null ||
           annotation.axis == null ||
-          annotation.axis === 'x'
+          annotation.axis !== axis
         ) {
           return null;
         }
@@ -54,9 +61,10 @@ export function YAxisAnnotations({
       .filter(Boolean) as Annotation[];
 
     return {annotations};
-  }, [annotationsLookupTable, yScale]);
+  }, [annotationsLookupTable, yScale, axis]);
 
   const {positions} = useYAxisAnnotationPositions({
+    axis,
     annotations,
     drawableWidth,
     ticks,
@@ -84,22 +92,31 @@ export function YAxisAnnotations({
           const index = position.index;
           const annotation = annotations[index];
 
-          const {line, x, y} = position;
+          const {line, x, y, width} = position;
 
           const hasContent = annotation.content != null;
           const isContentVisible = index === activeIndex && hasContent;
           const tabIndex = index + 1;
           const ariaLabel = `${annotation.startKey}`;
 
+          const axisLabelX =
+            axis === 'y2'
+              ? drawableWidth + Y_AXIS_CHART_SPACING
+              : -width - Y_OFFSET;
+
           return (
             <React.Fragment key={`annotation${index}${annotation.startKey}`}>
               {position.showYAxisLabel && (
-                <AnnotationYAxisLabel y={line.y} label={annotation.startKey} />
+                <AnnotationYAxisLabel
+                  y={line.y}
+                  x={axisLabelX}
+                  label={annotation.startKey}
+                />
               )}
               <AnnotationLine
                 direction="horizontal"
                 hasCaret={false}
-                size={drawableWidth - (drawableWidth - x)}
+                size={line.width ?? 0}
                 x={line.x}
                 y={line.y}
               />

@@ -5,7 +5,7 @@ import type {DataGroup} from '@shopify/polaris-viz-core';
 import {ComboChart, ComboChartProps} from '../ComboChart';
 
 import {THEME_CONTROL_ARGS, TYPE_CONTROL_ARGS} from '../../../storybook';
-import type {Annotation, ComboAnnotation} from 'types';
+import type {ComboAnnotation} from 'types';
 
 export default {
   title: 'polaris-viz/Charts/ComboChart',
@@ -104,7 +104,7 @@ const DATA: DataGroup[] = [
           {value: 238, key: '2020-07-08T12:00:00'},
           {value: 190, key: '2020-07-09T12:00:00'},
           {value: 90, key: '2020-07-10T12:00:00'},
-          {value: 237, key: '2020-07-11T12:00:00'},
+          {value: 399, key: '2020-07-11T12:00:00'},
         ],
         isComparison: true,
       },
@@ -136,7 +136,7 @@ Default.args = {
 
 const ANNOTATIONS: ComboAnnotation[] = [
   {
-    startKey: '2020-07-11T12:00:00',
+    startKey: '2020-07-08T12:00:00',
     label: 'Big Sale',
     axis: 'x',
   },
@@ -152,12 +152,12 @@ const ANNOTATIONS: ComboAnnotation[] = [
     axis: 'x',
   },
   {
-    startKey: '25',
+    startKey: '15',
     label: 'Sales target',
     axis: 'y1',
   },
   {
-    startKey: '255',
+    startKey: '399',
     label: 'Break-even',
     axis: 'y2',
     content: {

@@ -52,6 +52,7 @@ export function AnnotationLabel({
       >
         <div className={styles.Blur} style={{borderRadius: PILL_HEIGHT / 2}} />
       </foreignObject>
+
       <rect
         height={PILL_HEIGHT}
         width={width}
@@ -59,6 +60,7 @@ export function AnnotationLabel({
         ry={PILL_HEIGHT / 2}
         opacity={isFirefox ? 1 : PILL_OPACITY}
       />
+
       <SingleTextLine
         ariaHidden
         color={selectedTheme.annotations.textColor}
@@ -67,6 +69,7 @@ export function AnnotationLabel({
         y={PILL_HEIGHT - LINE_HEIGHT - PX_OFFSET}
         x={PILL_PADDING}
       />
+
       <React.Fragment>
         {hasContent && (
           <line

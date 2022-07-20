@@ -43,7 +43,7 @@ export function useYScale({
   const {yScale, ticks, yAxisLabelWidth} = useMemo(() => {
     const maxTicks = Math.max(
       1,
-      Math.floor(drawableHeight / MINIMAL_LABEL_SPACE),
+      Math.ceil(drawableHeight / MINIMAL_LABEL_SPACE),
     );
 
     const yScale = scaleLinear()

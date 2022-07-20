@@ -11,7 +11,11 @@ import {
 } from '@shopify/polaris-viz-core';
 import type {Dimensions, DataGroup} from '@shopify/polaris-viz-core';
 
-import {Annotations, checkAvailableAnnotations} from '../Annotations';
+import {
+  Annotations,
+  checkAvailableAnnotations,
+  YAxisAnnotations,
+} from '../Annotations';
 import {sortBarChartData} from '../../utilities/sortBarChartData';
 import {getVerticalBarChartTooltipPosition} from '../../utilities/getVerticalBarChartTooltipPosition';
 import {
@@ -81,18 +85,20 @@ export function Chart({
   });
 
   const chartYPosition = (BarChartMargin.Top as number) + annotationsHeight;
-
   const drawableHeight =
-    height - labelHeight - LABEL_AREA_TOP_SPACING - chartYPosition;
+    height - chartYPosition - labelHeight - LABEL_AREA_TOP_SPACING;
+  const annotationsDrawableHeight =
+    chartYPosition + drawableHeight + ANNOTATIONS_LABELS_OFFSET;
+
   const labelsYPosition =
     chartYPosition + drawableHeight + LABEL_AREA_TOP_SPACING;
 
   const {
     doBothChartsContainMixedValues,
     doesOneChartContainAllNegativeValues,
-    leftTicks,
+    primaryTicks,
     primaryAxis,
-    rightTicks,
+    secondaryTicks,
     secondaryAxis,
     shouldPlaceZeroInMiddleOfChart,
     ticksBetweenZeroAndMax,
@@ -103,20 +109,21 @@ export function Chart({
   });
 
   const {leftTickWidth, rightTickWidth} = useDualAxisTicksWidth(
-    leftTicks,
-    rightTicks,
+    primaryTicks,
+    secondaryTicks,
   );
 
-  const {barYScale, lineYScale} = useDualAxisScale({
-    doesOneChartContainAllNegativeValues,
-    doBothChartsContainMixedValues,
-    drawableHeight,
-    primaryAxis,
-    secondaryAxis,
-    yScale,
-    shouldPlaceZeroInMiddleOfChart,
-    ticksBetweenZeroAndMax,
-  });
+  const {barYScale, lineYScale, primaryYScale, secondaryYScale} =
+    useDualAxisScale({
+      doesOneChartContainAllNegativeValues,
+      doBothChartsContainMixedValues,
+      drawableHeight: annotationsDrawableHeight,
+      primaryAxis,
+      secondaryAxis,
+      yScale,
+      shouldPlaceZeroInMiddleOfChart,
+      ticksBetweenZeroAndMax,
+    });
 
   const horizontalMargin = selectedTheme.grid.horizontalMargin;
   const chartXPosition =
@@ -124,9 +131,6 @@ export function Chart({
 
   const drawableWidth =
     width - chartXPosition - horizontalMargin * 2 - rightTickWidth;
-
-  const annotationsDrawableHeight =
-    chartYPosition + drawableHeight + ANNOTATIONS_LABELS_OFFSET;
 
   const {
     barChartData,
@@ -177,13 +181,15 @@ export function Chart({
         viewBox={`0 0 ${width} ${height}`}
         xmlns={XMLNS}
         ref={setSvgRef}
+        width={width}
+        height={height}
       >
         {selectedTheme.grid.showHorizontalLines ? (
           <HorizontalGridLines
-            ticks={leftTicks}
+            ticks={primaryTicks}
             transform={{
               x: selectedTheme.grid.horizontalOverflow ? 0 : chartXPosition,
-              y: 0,
+              y: chartYPosition,
             }}
             width={
               selectedTheme.grid.horizontalOverflow ? width : drawableWidth
@@ -205,19 +211,19 @@ export function Chart({
         )}
 
         <YAxis
-          ticks={leftTicks}
+          ticks={primaryTicks}
           textAlign="right"
           width={leftTickWidth}
           x={horizontalMargin}
-          y={0}
+          y={chartYPosition}
         />
 
         <YAxis
-          ticks={rightTicks}
+          ticks={secondaryTicks}
           textAlign="left"
           width={rightTickWidth}
           x={chartXPosition + drawableWidth + Y_AXIS_CHART_SPACING}
-          y={0}
+          y={chartYPosition}
         />
 
         <g transform={`translate(${chartXPosition},${chartYPosition})`}>
@@ -241,7 +247,6 @@ export function Chart({
               drawableWidth={drawableWidth}
               labels={labels}
               onHeightChange={setAnnotationsHeight}
-              theme={theme}
               xScale={xScale}
             />
           </g>
@@ -264,6 +269,32 @@ export function Chart({
             yScale={lineYScale}
           />
         </g>
+
+        {hasYAxisAnnotations && (
+          <React.Fragment>
+            <g
+              transform={`translate(${chartXPosition},${chartYPosition})`}
+              tabIndex={-1}
+            >
+              <YAxisAnnotations
+                axis="y1"
+                annotationsLookupTable={annotationsLookupTable}
+                drawableHeight={annotationsDrawableHeight}
+                drawableWidth={drawableWidth}
+                ticks={primaryTicks}
+                yScale={primaryYScale}
+              />
+              <YAxisAnnotations
+                axis="y2"
+                annotationsLookupTable={annotationsLookupTable}
+                drawableHeight={annotationsDrawableHeight}
+                drawableWidth={drawableWidth}
+                ticks={secondaryTicks}
+                yScale={secondaryYScale}
+              />
+            </g>
+          </React.Fragment>
+        )}
       </svg>
 
       <TooltipWrapper

@@ -49,6 +49,18 @@ jest.mock('../../packages/polaris-viz/src/constants.ts', () => {
   };
 });
 
+jest.mock('../../packages/polaris-viz-core/src/constants.ts', () => {
+  const actual = jest.requireActual(
+    '../../packages/polaris-viz-core/src/constants.ts',
+  );
+
+  return {
+    ...actual,
+    LABEL_AREA_TOP_SPACING: 16,
+    Y_AXIS_CHART_SPACING: 20,
+  };
+});
+
 if (typeof window !== 'undefined') {
   Object.defineProperty(window, 'matchMedia', {
     writable: true,
