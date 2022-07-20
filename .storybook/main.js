@@ -8,7 +8,7 @@ const postcssShopify = require('@shopify/postcss-plugin');
 const getStories = require('./getStories');
 
 module.exports = {
-  stories: getStories(process.env.NODE_ENV),
+  stories: getStories(),
   addons: [
     '@storybook/addon-a11y',
     '@storybook/addon-links',

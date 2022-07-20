@@ -63,7 +63,6 @@ export interface YAxisOptions {
 
 export interface GridTheme {
   showHorizontalLines: boolean;
-  showVerticalLines: boolean;
   horizontalOverflow: boolean;
   color: string;
   horizontalMargin: number;
@@ -80,7 +79,6 @@ export interface BarTheme {
 }
 
 export interface XAxisTheme {
-  showTicks: boolean;
   labelColor: string;
   hide: boolean;
 }

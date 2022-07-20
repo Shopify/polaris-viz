@@ -175,14 +175,12 @@ export const DEFAULT_THEME: Theme = {
     zeroValueColor: variables.colorGray80,
   },
   grid: {
-    showVerticalLines: false,
     showHorizontalLines: true,
     color: variables.colorGray140,
     horizontalOverflow: true,
     horizontalMargin: 16,
   },
   xAxis: {
-    showTicks: false,
     labelColor: variables.colorGray30,
     hide: false,
   },
@@ -277,14 +275,12 @@ export const LIGHT_THEME: Theme = {
     zeroValueColor: variables.colorGray70,
   },
   grid: {
-    showVerticalLines: false,
     showHorizontalLines: true,
     color: variables.colorGray20,
     horizontalOverflow: true,
     horizontalMargin: 16,
   },
   xAxis: {
-    showTicks: false,
     labelColor: variables.colorGray100,
     hide: false,
   },

@@ -29,6 +29,7 @@ jobs:
           autoAcceptChanges: 'main'
           exitZeroOnChanges: true
           exitOnceUploaded: true
+          buildScriptName: build-storybook:chromatic
       - name: Add Chromatic link to PR
         uses: unsplash/comment-on-pr@v1.3.0
         env:

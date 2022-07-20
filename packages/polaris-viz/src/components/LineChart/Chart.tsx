@@ -208,6 +208,8 @@ export function Chart({
     }
   }
 
+  const hideXAxis = xAxisOptions.hide || selectedTheme.xAxis.hide;
+
   const chartBounds: BoundingRect = {
     width,
     height,
@@ -231,7 +233,7 @@ export function Chart({
         ref={setSvgRef}
         aria-label={emptyState ? emptyStateText : undefined}
       >
-        {xAxisOptions.hide ? null : (
+        {hideXAxis ? null : (
           <XAxis
             chartHeight={height}
             chartX={chartXPosition - xAxisDetails.labelWidth / 2}

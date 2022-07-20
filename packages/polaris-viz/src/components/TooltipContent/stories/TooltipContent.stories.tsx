@@ -142,12 +142,6 @@ NoSeriesNoTitle.args = {
   ],
 };
 
-export const Annotations: Story<TooltipContentProps> = Template.bind({});
-Annotations.args = {
-  title: 'Jul 7',
-  data: DATA,
-};
-
 export const PreviewIcons: Story<TooltipContentProps> = Template.bind({});
 PreviewIcons.args = {
   data: [
