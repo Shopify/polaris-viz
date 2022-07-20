@@ -185,23 +185,38 @@ describe('<Chart />', () => {
     });
   });
 
-  it('renders <HorizontalGridLines />', () => {
-    const updatedProps = {
-      ...MOCK_PROPS,
-      gridOtions: {horizontalOverflow: true},
-    };
-    const chart = mount(<Chart {...updatedProps} />);
+  describe('gridOptions.showHorizontalLines', () => {
+    it('renders <HorizontalGridLines />', () => {
+      const updatedProps = {
+        ...MOCK_PROPS,
+        gridOtions: {horizontalOverflow: true},
+      };
+      const chart = mount(<Chart {...updatedProps} />);
 
-    expect(chart).toContainReactComponent(HorizontalGridLines);
+      expect(chart).toContainReactComponent(HorizontalGridLines);
+    });
+
+    it("doesn't render <HorizontalGridLines /> when theme disables them", () => {
+      const chart = mountWithProvider(
+        <Chart {...MOCK_PROPS} />,
+        mockDefaultTheme({grid: {showHorizontalLines: false}}),
+      );
+
+      expect(chart).not.toContainReactComponent(HorizontalGridLines);
+    });
   });
 
-  it("doesn't render <HorizontalGridLines /> when theme disables them", () => {
-    const chart = mountWithProvider(
-      <Chart {...MOCK_PROPS} />,
-      mockDefaultTheme({grid: {showHorizontalLines: false}}),
-    );
+  describe('gridOptions.horizontalMargin', () => {
+    it('applies horizontalMargin to chart', () => {
+      const chart = mountWithProvider(
+        <Chart {...MOCK_PROPS} />,
+        mockDefaultTheme({grid: {horizontalMargin: 75}}),
+      );
 
-    expect(chart).not.toContainReactComponent(HorizontalGridLines);
+      expect(chart).toContainReactComponent(YAxis, {
+        x: 75,
+      });
+    });
   });
 
   describe('showLegend', () => {

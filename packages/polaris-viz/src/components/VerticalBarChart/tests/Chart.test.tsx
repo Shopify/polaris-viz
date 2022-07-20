@@ -167,6 +167,20 @@ describe('Chart />', () => {
     });
   });
 
+  describe('gridOptions.horizontalMargin', () => {
+    it('applies horizontalMargin to chart', () => {
+      const chart = mountWithProvider(
+        <Chart {...MOCK_PROPS} />,
+        mockDefaultTheme({grid: {horizontalMargin: 75}}),
+      );
+
+      expect(chart).toContainReactComponent(YAxis, {
+        x: 75,
+        y: 5,
+      });
+    });
+  });
+
   describe('showLegend', () => {
     it('does not render <LegendContainer /> when false', () => {
       const chart = mount(<Chart {...MOCK_PROPS} />);

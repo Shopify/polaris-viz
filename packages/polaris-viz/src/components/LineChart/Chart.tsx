@@ -260,15 +260,15 @@ export function Chart({
           />
         ) : null}
 
-        <g transform={`translate(0,${chartYPosition})`}>
-          <YAxis
-            ticks={ticks}
-            width={yAxisLabelWidth}
-            textAlign="right"
-            theme={theme}
-            ariaHidden
-          />
-        </g>
+        <YAxis
+          ticks={ticks}
+          width={yAxisLabelWidth}
+          textAlign="right"
+          theme={theme}
+          ariaHidden
+          x={selectedTheme.grid.horizontalMargin}
+          y={chartYPosition}
+        />
 
         {emptyState ? null : (
           <VisuallyHiddenRows

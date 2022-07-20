@@ -63,7 +63,6 @@ export default {
   title: 'polaris-viz/Charts/BarChart',
   component: BarChart,
   parameters: {
-    horizontalMargin: 0,
     docs: {
       page: PageWithSizingInfo,
       description: {

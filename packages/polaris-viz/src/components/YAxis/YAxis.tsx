@@ -8,17 +8,27 @@ interface Props {
   ticks: YAxisTick[];
   textAlign: 'left' | 'right';
   width: number;
+  x: number;
+  y: number;
   ariaHidden?: boolean;
   theme: string;
 }
 
 const PADDING_SIZE = 2;
 
-function Axis({ticks, width, textAlign, theme, ariaHidden = false}: Props) {
+function Axis({
+  ticks,
+  width,
+  textAlign,
+  theme,
+  ariaHidden = false,
+  x,
+  y,
+}: Props) {
   const selectedTheme = useTheme(theme);
 
   return (
-    <React.Fragment>
+    <g transform={`translate(${x},${y})`} aria-hidden="true">
       {ticks.map(({value, formattedValue, yOffset}) => {
         return (
           <foreignObject
@@ -47,7 +57,7 @@ function Axis({ticks, width, textAlign, theme, ariaHidden = false}: Props) {
           </foreignObject>
         );
       })}
-    </React.Fragment>
+    </g>
   );
 }
 

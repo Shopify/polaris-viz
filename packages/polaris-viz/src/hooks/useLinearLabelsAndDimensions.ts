@@ -36,7 +36,7 @@ export function useLinearLabelsAndDimensions({
   const {characterWidths} = useChartContext();
 
   const horizontalMargin = selectedTheme.grid.horizontalMargin;
-  let chartXPosition = yAxisLabelWidth + horizontalMargin;
+  let chartXPosition = horizontalMargin + yAxisLabelWidth;
 
   let drawableWidth = width - chartXPosition - horizontalMargin;
 
