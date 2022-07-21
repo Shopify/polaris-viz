@@ -31,7 +31,7 @@ interface Props {
   yScale: ScaleLinear<number, number>;
   width: number;
   height: number;
-  data: number[];
+  data: (number | null)[];
   colors: Color[];
   barGroupIndex: number;
   hasRoundedCorners: boolean;
@@ -105,6 +105,10 @@ export function BarGroup({
     <React.Fragment>
       <mask id={maskId}>
         {data.map((rawValue, index) => {
+          if (rawValue == null) {
+            return null;
+          }
+
           return (
             <g
               className={styles.BarGroup}
@@ -183,6 +187,10 @@ export function BarGroup({
           aria-hidden="true"
         />
         {data.map((rawValue, index) => {
+          if (rawValue === null) {
+            return null;
+          }
+
           const {label, value} = accessibilityData[barGroupIndex].data[index];
           const ariaLabel = `${label} ${value}`;
           const height = clamp({

@@ -23,7 +23,6 @@ export function getRoundedRectPath({
   if (height == null || width == null) {
     return '';
   }
-
   // Return a basic rect if the rounded arcs
   // would make the rect bigger than the min size.
   if (!needsMinWidth && (height < MIN_BAR_HEIGHT || width < MIN_BAR_HEIGHT)) {

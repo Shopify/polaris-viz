@@ -12,6 +12,7 @@ import type {
 import type {ScaleBand, ScaleLinear} from 'd3-scale';
 import React, {useMemo, useState} from 'react';
 
+import type {SortedBarChartData} from '../../../../types';
 import {useWatchColorVisionEvents} from '../../../../hooks';
 import {BarGroup} from '../BarGroup';
 import {StackedBarGroups} from '../StackedBarGroups';
@@ -23,7 +24,7 @@ interface VerticalBarGroupProps {
   gapWidth: number;
   id: string;
   labels: string[];
-  sortedData: number[][];
+  sortedData: SortedBarChartData;
   stackedValues: StackedValues | null;
   xScale: ScaleBand<string>;
   yAxisOptions: Required<YAxisOptions>;

@@ -26,7 +26,6 @@ export interface BarProps {
   index?: number;
   isActive?: boolean;
   isAnimated?: boolean;
-  needsMinWidth?: boolean;
   transform?: string;
   ariaLabel?: string;
 }
@@ -40,7 +39,6 @@ export const Bar = React.memo(function Bar({
   index,
   isActive = true,
   isAnimated,
-  needsMinWidth = false,
   transform = '',
   width,
   x,
@@ -49,9 +47,9 @@ export const Bar = React.memo(function Bar({
 }: BarProps) {
   const getPath = useCallback(
     (height = 0, width = 0) => {
-      return getRoundedRectPath({height, width, needsMinWidth, borderRadius});
+      return getRoundedRectPath({height, width, borderRadius});
     },
-    [needsMinWidth, borderRadius],
+    [borderRadius],
   );
 
   const initialHeight = animationDirection === 'horizontal' ? height : 0;

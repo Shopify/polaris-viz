@@ -120,7 +120,7 @@ describe('<HorizontalBars />', () => {
   });
 
   describe('<Bar />', () => {
-    it('renders <Bar />', () => {
+    it('renders a <Bar />', () => {
       const chart = mount(
         <svg>
           <HorizontalBars {...MOCK_PROPS} />
@@ -128,6 +128,21 @@ describe('<HorizontalBars />', () => {
       );
 
       expect(chart).toContainReactComponentTimes(Bar, 3);
+    });
+
+    it('does not render a <Bar /> when passed value is null', () => {
+      const nullData = {
+        name: 'Group 1',
+        data: [{value: null, key: 'Label 01'}],
+      };
+
+      const chart = mount(
+        <svg>
+          <HorizontalBars {...MOCK_PROPS} data={[nullData]} />
+        </svg>,
+      );
+
+      expect(chart).not.toContainReactComponent(Bar);
     });
 
     it('applies width', () => {
