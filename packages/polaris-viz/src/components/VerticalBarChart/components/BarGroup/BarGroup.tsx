@@ -11,6 +11,7 @@ import {
   clamp,
   BORDER_RADIUS,
   useTheme,
+  useChartContext,
 } from '@shopify/polaris-viz-core';
 import type {Color} from '@shopify/polaris-viz-core';
 
@@ -61,6 +62,7 @@ export function BarGroup({
   areAllNegative,
 }: Props) {
   const groupAriaLabel = formatAriaLabel(accessibilityData[barGroupIndex]);
+  const {shouldAnimate} = useChartContext();
 
   const [activeBarIndex, setActiveBarIndex] = useState(-1);
   const selectedTheme = useTheme(theme);
@@ -118,6 +120,7 @@ export function BarGroup({
             >
               <Bar
                 height={getBarHeight(rawValue)}
+                isAnimated={shouldAnimate}
                 color={MASK_HIGHLIGHT_COLOR}
                 x={x + (barWidth + BAR_SPACING) * index}
                 zeroPosition={yScale(0)}
