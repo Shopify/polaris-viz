@@ -17,7 +17,6 @@ export interface AnnotationLabelProps {
   position: AnnotationPosition;
   setActiveIndex: Dispatch<SetStateAction<number>>;
   tabIndex: number;
-  theme: string;
 }
 
 const PX_OFFSET = 1;
@@ -32,9 +31,8 @@ export function AnnotationLabel({
   position,
   setActiveIndex,
   tabIndex,
-  theme,
 }: AnnotationLabelProps) {
-  const selectedTheme = useTheme(theme);
+  const selectedTheme = useTheme();
   const {isFirefox} = useBrowserCheck();
 
   const {x, y, width} = position;

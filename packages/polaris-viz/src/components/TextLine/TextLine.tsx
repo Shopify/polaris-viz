@@ -7,11 +7,10 @@ import type {FormattedLine} from '../../types';
 interface TextLineProps {
   index: number;
   line: FormattedLine[];
-  theme: string;
 }
 
-export function TextLine({index, line, theme}: TextLineProps) {
-  const selectedTheme = useTheme(theme);
+export function TextLine({index, line}: TextLineProps) {
+  const selectedTheme = useTheme();
 
   return (
     <React.Fragment>

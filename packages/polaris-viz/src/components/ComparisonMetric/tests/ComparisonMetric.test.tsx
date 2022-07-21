@@ -17,7 +17,6 @@ describe('<ComparisonMetric />', () => {
         metric="5"
         trend="positive"
         accessibilityLabel="label"
-        theme={theme}
       />,
     );
     expect(comparisonMetric).toContainReactComponent(UpChevron);
@@ -29,7 +28,6 @@ describe('<ComparisonMetric />', () => {
         metric="5"
         trend="negative"
         accessibilityLabel="label"
-        theme={theme}
       />,
     );
     expect(comparisonMetric).toContainReactComponent(DownChevron);
@@ -41,7 +39,6 @@ describe('<ComparisonMetric />', () => {
         metric="5"
         trend="neutral"
         accessibilityLabel="label"
-        theme={theme}
       />,
     );
     expect(comparisonMetric).toContainReactComponentTimes('svg', 0);

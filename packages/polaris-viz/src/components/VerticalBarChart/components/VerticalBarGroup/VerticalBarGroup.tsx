@@ -25,7 +25,6 @@ interface VerticalBarGroupProps {
   labels: string[];
   sortedData: number[][];
   stackedValues: StackedValues | null;
-  theme: string;
   xScale: ScaleBand<string>;
   yAxisOptions: Required<YAxisOptions>;
   yScale: ScaleLinear<number, number>;
@@ -43,13 +42,12 @@ export function VerticalBarGroup({
   labels,
   sortedData,
   stackedValues,
-  theme,
   xScale,
   yScale,
   yAxisOptions,
   areAllNegative,
 }: VerticalBarGroupProps) {
-  const selectedTheme = useTheme(theme);
+  const selectedTheme = useTheme();
 
   const [activeBarGroup, setActiveBarGroup] = useState<number>(-1);
 
@@ -85,7 +83,6 @@ export function VerticalBarGroup({
         id={id}
         labels={labels}
         stackedValues={stackedValues}
-        theme={theme}
         xScale={xScale}
         yScale={yScale}
       />

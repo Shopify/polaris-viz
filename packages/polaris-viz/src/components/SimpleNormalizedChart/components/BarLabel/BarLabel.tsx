@@ -4,8 +4,9 @@ import {
   isGradientType,
   COLOR_VISION_SINGLE_ITEM,
   getColorVisionStylesForActiveIndex,
+  useTheme,
 } from '@shopify/polaris-viz-core';
-import type {Color, LegendTheme, Direction} from '@shopify/polaris-viz-core';
+import type {Color, Direction} from '@shopify/polaris-viz-core';
 
 import {createCSSGradient, classNames} from '../../../../utilities';
 import {
@@ -22,10 +23,9 @@ export interface Props {
   label: string;
   value: string;
   color: Color;
-  legendColors: LegendTheme;
   direction: Direction;
   legendPosition: LegendPosition;
-  comparisonMetric?: Omit<ComparisonMetricProps, 'theme'> | null;
+  comparisonMetric?: ComparisonMetricProps | null;
 }
 
 export function BarLabel({
@@ -35,14 +35,14 @@ export function BarLabel({
   value,
   color,
   comparisonMetric,
-  legendColors,
   direction,
   legendPosition,
 }: Props) {
-  const {labelColor, valueColor} = legendColors;
+  const selectedTheme = useTheme();
+  const {labelColor, valueColor} = selectedTheme.legend;
 
   const comparisonIndicator = comparisonMetric ? (
-    <ComparisonMetric {...comparisonMetric} theme={legendColors} />
+    <ComparisonMetric {...comparisonMetric} />
   ) : null;
 
   const angle = direction === 'horizontal' ? 90 : 180;

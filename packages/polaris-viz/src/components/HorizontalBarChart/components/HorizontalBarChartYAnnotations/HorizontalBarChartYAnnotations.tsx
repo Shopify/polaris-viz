@@ -15,7 +15,6 @@ export interface YAxisAnnotationsProps {
   drawableWidth: number;
   groupHeight: number;
   labels: string[];
-  theme: string;
   zeroPosition: number;
 }
 
@@ -24,7 +23,6 @@ export function HorizontalBarChartYAnnotations({
   drawableWidth,
   groupHeight,
   labels,
-  theme,
   zeroPosition,
 }: YAxisAnnotationsProps) {
   const [activeIndex, setActiveIndex] = useState(-1);
@@ -96,7 +94,6 @@ export function HorizontalBarChartYAnnotations({
                 direction="horizontal"
                 hasCaret={false}
                 size={drawableWidth - (drawableWidth - x)}
-                theme={theme}
                 x={line.x}
                 y={line.y}
               />
@@ -109,7 +106,6 @@ export function HorizontalBarChartYAnnotations({
                 position={position}
                 setActiveIndex={setActiveIndex}
                 tabIndex={tabIndex}
-                theme={theme}
               />
               {isContentVisible && (
                 <AnnotationContent
@@ -120,7 +116,6 @@ export function HorizontalBarChartYAnnotations({
                   parentRef={ref}
                   position={position}
                   tabIndex={tabIndex}
-                  theme={theme}
                   x={drawableWidth - (drawableWidth - x)}
                   y={y}
                 />

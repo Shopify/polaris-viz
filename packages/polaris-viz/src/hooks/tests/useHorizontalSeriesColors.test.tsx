@@ -31,7 +31,7 @@ const MOCK_PROPS = {
 describe('useHorizontalSeriesColors()', () => {
   it('returns colors with no overrides', () => {
     function TestComponent() {
-      const data = useHorizontalSeriesColors(MOCK_PROPS);
+      const data = useHorizontalSeriesColors(MOCK_PROPS.data);
 
       return <span data-data={`${JSON.stringify(data)}`} />;
     }
@@ -48,7 +48,7 @@ describe('useHorizontalSeriesColors()', () => {
 
   it('returns colors for theme', () => {
     function TestComponent() {
-      const data = useHorizontalSeriesColors({...MOCK_PROPS, theme: 'Light'});
+      const data = useHorizontalSeriesColors(MOCK_PROPS.data);
 
       return <span data-data={`${JSON.stringify(data)}`} />;
     }
@@ -65,25 +65,23 @@ describe('useHorizontalSeriesColors()', () => {
 
   it('returns colors with overrides', () => {
     function TestComponent() {
-      const data = useHorizontalSeriesColors({
-        data: [
-          {
-            name: 'Group 1',
-            data: [
-              {value: 5, key: 'Label 01'},
-              {value: -10, key: 'Label 02'},
-            ],
-            color: 'red',
-          },
-          {
-            name: 'Group 2',
-            data: [
-              {value: 1, key: 'Label 01'},
-              {value: -2, key: 'Label 02'},
-            ],
-          },
-        ],
-      });
+      const data = useHorizontalSeriesColors([
+        {
+          name: 'Group 1',
+          data: [
+            {value: 5, key: 'Label 01'},
+            {value: -10, key: 'Label 02'},
+          ],
+          color: 'red',
+        },
+        {
+          name: 'Group 2',
+          data: [
+            {value: 1, key: 'Label 01'},
+            {value: -2, key: 'Label 02'},
+          ],
+        },
+      ]);
 
       return <span data-data={`${JSON.stringify(data)}`} />;
     }
@@ -100,27 +98,25 @@ describe('useHorizontalSeriesColors()', () => {
 
   it('returns comparison colors', () => {
     function TestComponent() {
-      const data = useHorizontalSeriesColors({
-        data: [
-          {
-            name: 'Group 1',
-            data: [
-              {value: 5, key: 'Label 01'},
-              {value: -10, key: 'Label 02'},
-              {value: 12, key: 'Label 03'},
-            ],
-          },
-          {
-            name: 'Group 2',
-            isComparison: true,
-            data: [
-              {value: 1, key: 'Label 01'},
-              {value: -2, key: 'Label 02'},
-              {value: 3, key: 'Label 03'},
-            ],
-          },
-        ],
-      });
+      const data = useHorizontalSeriesColors([
+        {
+          name: 'Group 1',
+          data: [
+            {value: 5, key: 'Label 01'},
+            {value: -10, key: 'Label 02'},
+            {value: 12, key: 'Label 03'},
+          ],
+        },
+        {
+          name: 'Group 2',
+          isComparison: true,
+          data: [
+            {value: 1, key: 'Label 01'},
+            {value: -2, key: 'Label 02'},
+            {value: 3, key: 'Label 03'},
+          ],
+        },
+      ]);
 
       return <span data-data={`${JSON.stringify(data)}`} />;
     }

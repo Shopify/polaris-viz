@@ -1,6 +1,7 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {LinearGradientWithStops} from '@shopify/polaris-viz-core';
+import {useChartContext} from '@shopify/polaris-viz-core/src/hooks/useChartContext';
 
 import {GradientDefs} from '../GradientDefs';
 
@@ -9,6 +10,12 @@ const MOCK_PROPS = {
   size: `${100}px`,
   id: 'id',
 };
+
+jest.mock('@shopify/polaris-viz-core/src/hooks/useChartContext', () => ({
+  useChartContext: jest.fn(() => {
+    return {theme: 'Light'};
+  }),
+}));
 
 describe('<GradientDefs />', () => {
   it('renders <defs>', () => {
@@ -45,6 +52,10 @@ describe('<GradientDefs />', () => {
 
   describe('theme', () => {
     it('provides an id for the passed theme', () => {
+      useChartContext.mockImplementation(() => {
+        return {theme: 'CustomTheme'};
+      });
+
       const container = mount(
         <svg>
           <GradientDefs
@@ -55,7 +66,6 @@ describe('<GradientDefs />', () => {
                 {offset: 100, color: 'blue'},
               ],
             ]}
-            theme="CustomTheme"
           />
         </svg>,
       );

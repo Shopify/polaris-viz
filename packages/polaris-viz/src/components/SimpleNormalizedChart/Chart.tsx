@@ -1,11 +1,7 @@
 import React, {useState} from 'react';
 import {sum} from 'd3-array';
 import {scaleLinear} from 'd3-scale';
-import {
-  COLOR_VISION_SINGLE_ITEM,
-  DataSeries,
-  DEFAULT_THEME_NAME,
-} from '@shopify/polaris-viz-core';
+import {COLOR_VISION_SINGLE_ITEM, DataSeries} from '@shopify/polaris-viz-core';
 import type {Direction, LabelFormatter} from '@shopify/polaris-viz-core';
 
 import type {ComparisonMetricProps} from '../ComparisonMetric';
@@ -29,7 +25,6 @@ export interface ChartProps {
   legendPosition?: LegendPosition;
   direction?: Direction;
   size?: Size;
-  theme?: string;
 }
 
 export function Chart({
@@ -39,13 +34,12 @@ export function Chart({
   legendPosition = 'top-left',
   direction = 'horizontal',
   size = 'small',
-  theme = DEFAULT_THEME_NAME,
 }: ChartProps) {
   const flattenedData = data.map(({data}) => data).flat();
 
   useColorVisionEvents();
 
-  const selectedTheme = useTheme(theme);
+  const selectedTheme = useTheme();
   const colors = useThemeSeriesColors(data, selectedTheme);
 
   const containsNegatives = flattenedData.some(
@@ -126,7 +120,6 @@ export function Chart({
               value={formattedValue}
               color={colors[index]}
               comparisonMetric={comparisonMetric}
-              legendColors={selectedTheme.legend}
               direction={direction}
               legendPosition={legendPosition}
             />

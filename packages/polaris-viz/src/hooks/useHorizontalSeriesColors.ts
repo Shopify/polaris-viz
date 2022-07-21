@@ -4,13 +4,8 @@ import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {getSeriesColors} from './useThemeSeriesColors';
 
-interface Props {
-  data: DataSeries[];
-  theme: string;
-}
-
-export function useHorizontalSeriesColors({data, theme}: Props) {
-  const selectedTheme = useTheme(theme);
+export function useHorizontalSeriesColors(data: DataSeries[]) {
+  const selectedTheme = useTheme();
 
   const longestSeriesCount = useMemo(() => {
     return data.reduce((prev, cur) => {

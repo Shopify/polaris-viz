@@ -11,21 +11,12 @@ interface Props {
   x: number;
   y: number;
   ariaHidden?: boolean;
-  theme: string;
 }
 
 const PADDING_SIZE = 2;
 
-function Axis({
-  ticks,
-  width,
-  textAlign,
-  theme,
-  ariaHidden = false,
-  x,
-  y,
-}: Props) {
-  const selectedTheme = useTheme(theme);
+function Axis({ticks, width, textAlign, ariaHidden = false, x, y}: Props) {
+  const selectedTheme = useTheme();
 
   return (
     <g transform={`translate(${x},${y})`} aria-hidden="true">

@@ -253,7 +253,6 @@ export const SampleLegendContainer = ({theme} = {theme: 'Default'}) => {
           colorVisionType=""
           data={legend}
           onDimensionChange={() => {}}
-          theme={theme}
         />
       </div>
     </SimpleContainer>

@@ -11,7 +11,6 @@ const CARET_Y_OFFSET = -4;
 
 export interface AnnotationLineProps {
   size: number;
-  theme: string;
   x: number;
   y: number;
   direction?: Direction;
@@ -45,11 +44,10 @@ export function AnnotationLine({
   direction = 'vertical',
   hasCaret = true,
   size,
-  theme,
   x,
   y,
 }: AnnotationLineProps) {
-  const selectedTheme = useTheme(theme);
+  const selectedTheme = useTheme();
   const {isFirefox} = useBrowserCheck();
 
   const yPosition = hasCaret ? y + Math.abs(CARET_Y_OFFSET) : y;

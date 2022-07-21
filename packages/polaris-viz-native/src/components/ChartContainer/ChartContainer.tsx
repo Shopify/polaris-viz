@@ -61,8 +61,9 @@ export function ChartContainer({
       characterWidthOffsets: {},
       id,
       shouldAnimate,
+      theme,
     };
-  }, [prefersReducedMotion, data, isAnimated]);
+  }, [prefersReducedMotion, data, isAnimated, theme]);
 
   return (
     <ChartContext.Provider value={value}>

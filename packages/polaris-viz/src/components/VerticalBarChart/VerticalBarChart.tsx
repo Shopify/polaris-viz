@@ -24,7 +24,6 @@ export interface VerticalBarChartProps {
   annotationsLookupTable?: AnnotationLookupTable;
   barOptions?: {isStacked: boolean};
   emptyStateText?: string;
-  theme: string;
   type?: ChartType;
   dimensions?: Dimensions;
 }
@@ -36,12 +35,11 @@ export function VerticalBarChart({
   emptyStateText,
   renderTooltipContent,
   showLegend,
-  theme,
   type = 'default',
   xAxisOptions,
   yAxisOptions,
 }: VerticalBarChartProps) {
-  const selectedTheme = useTheme(theme);
+  const selectedTheme = useTheme();
   const seriesColors = useThemeSeriesColors(data, selectedTheme);
 
   const seriesWithDefaults = data.map((series, index) => ({
@@ -52,7 +50,6 @@ export function VerticalBarChart({
   return (
     <Chart
       dimensions={dimensions}
-      theme={theme}
       annotationsLookupTable={annotationsLookupTable}
       data={seriesWithDefaults}
       emptyStateText={emptyStateText}

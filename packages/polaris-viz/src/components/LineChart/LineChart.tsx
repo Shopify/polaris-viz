@@ -79,7 +79,7 @@ export function LineChart(props: LineChartProps) {
       )}
       <ChartContainer data={data} theme={theme} isAnimated={isAnimated}>
         {state !== ChartState.Success ? (
-          <ChartSkeleton state={state} errorText={errorText} theme={theme} />
+          <ChartSkeleton state={state} errorText={errorText} />
         ) : (
           <Chart
             annotationsLookupTable={annotationsLookupTable}

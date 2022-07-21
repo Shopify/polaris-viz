@@ -16,18 +16,16 @@ const RADIUS_PADDING = 20;
 
 export function DonutSkeleton({
   dimensions: {height},
-  theme = 'Default',
   state,
   errorText,
 }: {
   dimensions: Dimensions;
-  theme: string;
   state: ChartState;
   errorText: string;
 }) {
   const diameter = 160;
   const radius = diameter / 2;
-  const selectedTheme = useTheme(theme);
+  const selectedTheme = useTheme();
 
   const arcs = [
     {

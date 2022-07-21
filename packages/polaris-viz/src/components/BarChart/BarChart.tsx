@@ -82,7 +82,6 @@ export function BarChart(props: BarChartProps) {
         emptyStateText={emptyStateText}
         renderTooltipContent={renderTooltip}
         showLegend={showLegend}
-        theme={theme}
         type={type}
         xAxisOptions={xAxisOptionsWithDefaults}
         yAxisOptions={yAxisOptionsWithDefaults}
@@ -93,7 +92,6 @@ export function BarChart(props: BarChartProps) {
         data={data}
         renderTooltipContent={renderTooltip}
         showLegend={showLegend}
-        theme={theme}
         type={type}
         xAxisOptions={xAxisOptionsWithDefaults}
         yAxisOptions={yAxisOptionsWithDefaults}
@@ -106,7 +104,7 @@ export function BarChart(props: BarChartProps) {
       )}
       <ChartContainer isAnimated={isAnimated} data={data} theme={theme}>
         {state !== ChartState.Success ? (
-          <ChartSkeleton state={state} errorText={errorText} theme={theme} />
+          <ChartSkeleton state={state} errorText={errorText} />
         ) : (
           ChartByDirection
         )}

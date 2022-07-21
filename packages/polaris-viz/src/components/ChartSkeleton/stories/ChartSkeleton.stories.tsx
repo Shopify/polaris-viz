@@ -57,7 +57,7 @@ error.args = {
 const Donut: Story<ChartSkeletonProps> = (args: ChartSkeletonProps) => {
   return (
     <div style={{width: 400, height: 200}}>
-      <ChartContainer data={[]} isAnimated={true} theme={args.theme!}>
+      <ChartContainer data={[]} isAnimated={true} theme={DEFAULT_THEME_NAME}>
         <ChartSkeleton {...args} />
       </ChartContainer>
     </div>

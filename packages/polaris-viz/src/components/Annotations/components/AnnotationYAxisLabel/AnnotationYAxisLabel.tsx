@@ -10,11 +10,10 @@ const Y_OFFSET = 13;
 interface Props {
   label: string | number;
   y: number;
-  theme: string;
 }
 
-export function AnnotationYAxisLabel({label, theme, y}: Props) {
-  const selectedTheme = useTheme(theme);
+export function AnnotationYAxisLabel({label, y}: Props) {
+  const selectedTheme = useTheme();
   const width = useEstimateStringWidth(`${label}`, FONT_SIZE);
 
   return (

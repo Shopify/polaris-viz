@@ -13,7 +13,7 @@ import {
   useTheme,
   getAverageColor,
   changeColorOpacity,
-  DEFAULT_THEME_NAME,
+  useChartContext,
 } from '@shopify/polaris-viz-core';
 
 import {Bar} from '../shared';
@@ -36,25 +36,24 @@ export interface ChartProps {
   data: DataSeries[];
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
-  theme?: string;
   dimensions?: Dimensions;
 }
 
 export function Chart({
   data,
   dimensions,
-  theme = DEFAULT_THEME_NAME,
   xAxisOptions,
   yAxisOptions,
 }: ChartProps) {
+  const {theme} = useChartContext();
+  const selectedTheme = useTheme();
+
   const [labelHeight, setLabelHeight] = useState(0);
   const dataSeries = data[0].data;
   const colorOverride = data[0].color;
 
   const xValues = dataSeries.map(({key}) => key) as string[];
   const yValues = dataSeries.map(({value}) => value) as [number, number];
-
-  const selectedTheme = useTheme(theme);
 
   const {width, height} = dimensions || {width: 0, height: 0};
 
@@ -98,7 +97,7 @@ export function Chart({
 
   const {
     chartContainer: {backgroundColor},
-  } = useTheme(theme);
+  } = useTheme();
 
   const color = colorOverride || selectedTheme.seriesColors.single;
   const barsGradient = isGradientType(color!)
@@ -185,7 +184,6 @@ export function Chart({
           labelWidth={barWidth + barWidth / 2}
           onHeightChange={setLabelHeight}
           reducedLabelIndexes={reducedLabelIndexes}
-          theme={theme}
           xScale={labelXScale}
         />
       </g>

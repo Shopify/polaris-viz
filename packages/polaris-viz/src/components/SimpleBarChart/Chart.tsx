@@ -2,7 +2,6 @@ import React, {useMemo} from 'react';
 import {
   uniqueId,
   COLOR_VISION_SINGLE_ITEM,
-  DEFAULT_THEME_NAME,
   useAriaLabel,
   useChartContext,
 } from '@shopify/polaris-viz-core';
@@ -37,14 +36,12 @@ export interface ChartProps {
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
   dimensions?: Dimensions;
-  theme?: string;
 }
 
 export function Chart({
   data,
   dimensions,
   showLegend,
-  theme = DEFAULT_THEME_NAME,
   type,
   xAxisOptions,
   yAxisOptions,
@@ -57,10 +54,7 @@ export function Chart({
   const {labelFormatter} = xAxisOptions;
   const isStacked = type === 'stacked';
 
-  const {longestSeriesCount, seriesColors} = useHorizontalSeriesColors({
-    data,
-    theme,
-  });
+  const {longestSeriesCount, seriesColors} = useHorizontalSeriesColors(data);
 
   const {legend, setLegendDimensions, height, width} = useLegend({
     data: [
@@ -135,7 +129,6 @@ export function Chart({
           id={id}
           seriesColors={seriesColors}
           size={isStacked ? '100%' : `${width}px`}
-          theme={theme}
         />
 
         {transitions((style, item, _transition, index) => {
@@ -166,7 +159,6 @@ export function Chart({
               name={name}
               opacity={opacity}
               stackedValues={stackedValues}
-              theme={theme}
               transform={transform}
               xAxisOptions={xAxisOptions}
               xScale={xScale}
@@ -182,7 +174,6 @@ export function Chart({
           colorVisionType={COLOR_VISION_SINGLE_ITEM}
           data={legend}
           onDimensionChange={setLegendDimensions}
-          theme={theme}
         />
       )}
     </div>

@@ -28,7 +28,6 @@ interface StackedBarGroupsProps {
   stackedValues: StackedSeries[];
   xScale: ScaleBand<string>;
   yScale: ScaleLinear<number, number>;
-  theme: string;
 }
 
 export function StackedBarGroups({
@@ -39,7 +38,6 @@ export function StackedBarGroups({
   id,
   labels,
   stackedValues,
-  theme,
   xScale,
   yScale,
 }: StackedBarGroupsProps) {
@@ -95,7 +93,6 @@ export function StackedBarGroups({
               gaps={gaps}
               groupIndex={groupIndex}
               id={id}
-              theme={theme}
               width={width}
               x={x}
               yScale={yScale}

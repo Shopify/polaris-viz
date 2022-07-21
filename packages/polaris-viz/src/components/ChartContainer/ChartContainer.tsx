@@ -38,28 +38,14 @@ function hasValidDimensions(chartDimensions: Dimensions | null) {
 
 interface Props {
   children: ReactElement;
+  data: DataSeries[] | DataGroup[];
+  isAnimated: boolean;
   theme: string;
   sparkChart?: boolean;
-  isAnimated: boolean;
-  data: DataSeries[] | DataGroup[];
 }
 
 export const ChartContainer = (props: Props) => {
   const {prefersReducedMotion} = usePrefersReducedMotion();
-
-  const value = useMemo(() => {
-    const tooBigToAnimate = isLargeDataSet(props.data);
-    const shouldAnimate =
-      props.isAnimated && !prefersReducedMotion && !tooBigToAnimate;
-    const id = uniqueId('chart');
-
-    return {
-      shouldAnimate,
-      id,
-      characterWidths,
-      characterWidthOffsets,
-    };
-  }, [prefersReducedMotion, props.data, props.isAnimated]);
 
   const [chartDimensions, setChartDimensions] =
     useState<Dimensions | null>(null);
@@ -69,8 +55,30 @@ export const ChartContainer = (props: Props) => {
   const previousEntry = usePrevious(entry);
 
   const {isPrinting} = usePrintResizing({ref, setChartDimensions});
-  const printFriendlyTheme = isPrinting ? 'Print' : props.theme;
-  const {chartContainer} = useTheme(printFriendlyTheme);
+
+  const value = useMemo(() => {
+    const tooBigToAnimate = isLargeDataSet(props.data);
+    const shouldAnimate =
+      props.isAnimated && !prefersReducedMotion && !tooBigToAnimate;
+    const id = uniqueId('chart');
+    const printFriendlyTheme = isPrinting ? 'Print' : props.theme;
+
+    return {
+      shouldAnimate,
+      id,
+      characterWidths,
+      characterWidthOffsets,
+      theme: printFriendlyTheme,
+    };
+  }, [
+    prefersReducedMotion,
+    props.data,
+    props.isAnimated,
+    props.theme,
+    isPrinting,
+  ]);
+
+  const {chartContainer} = useTheme(value.theme);
 
   const updateDimensions = useCallback(() => {
     if (
@@ -139,10 +147,8 @@ export const ChartContainer = (props: Props) => {
         {!hasValidDimensions(chartDimensions)
           ? null
           : cloneElement<{
-              theme: string;
               dimensions: Dimensions;
             }>(props.children, {
-              theme: printFriendlyTheme,
               dimensions: chartDimensions!,
             })}
       </div>

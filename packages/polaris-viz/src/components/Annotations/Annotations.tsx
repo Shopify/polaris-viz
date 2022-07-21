@@ -22,7 +22,6 @@ export interface AnnotationsProps {
   drawableWidth: number;
   labels: string[];
   onHeightChange: (height: number) => void;
-  theme: string;
   xScale: ScaleLinear<number, number> | ScaleBand<string>;
 }
 
@@ -33,7 +32,6 @@ export function Annotations({
   drawableWidth,
   labels,
   onHeightChange,
-  theme,
   xScale,
 }: AnnotationsProps) {
   const [activeIndex, setActiveIndex] = useState(-1);
@@ -107,7 +105,6 @@ export function Annotations({
           isShowingAllAnnotations={isShowingAllAnnotations}
           onClick={handleToggleAllAnnotations}
           tabIndex={annotations.length}
-          theme={theme}
           width={drawableWidth}
         />
       )}
@@ -129,7 +126,6 @@ export function Annotations({
             <React.Fragment key={`annotation${index}${annotation.startKey}`}>
               <AnnotationLine
                 size={drawableHeight - showMoreButtonOffset}
-                theme={theme}
                 x={line.x}
                 y={y + PILL_HEIGHT}
               />
@@ -142,7 +138,6 @@ export function Annotations({
                 position={position}
                 setActiveIndex={setActiveIndex}
                 tabIndex={tabIndex}
-                theme={theme}
               />
               {isContentVisible && (
                 <AnnotationContent
@@ -153,7 +148,6 @@ export function Annotations({
                   parentRef={ref}
                   position={position}
                   tabIndex={tabIndex}
-                  theme={theme}
                   x={line.x}
                   y={y}
                 />

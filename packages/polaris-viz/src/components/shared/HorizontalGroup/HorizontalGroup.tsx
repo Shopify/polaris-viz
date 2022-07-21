@@ -41,7 +41,6 @@ export interface HorizontalGroupProps {
   name: string;
   opacity: SpringValue<number>;
   stackedValues: FormattedStackedSeries[];
-  theme: string;
   transform: SpringValue<string>;
   xAxisOptions: Required<XAxisOptions>;
   xScale: ScaleLinear<number, number>;
@@ -64,7 +63,6 @@ export function HorizontalGroup({
   name,
   opacity,
   stackedValues,
-  theme,
   transform,
   xAxisOptions,
   yAxisOptions,
@@ -128,7 +126,6 @@ export function HorizontalGroup({
           areAllNegative={areAllNegative}
           containerWidth={containerWidth}
           label={yAxisOptions.labelFormatter(name)}
-          theme={theme}
           zeroPosition={zeroPosition}
         />
         {isStacked ? (
@@ -142,7 +139,6 @@ export function HorizontalGroup({
             id={id}
             name={name}
             stackedValues={stackedValues}
-            theme={theme}
             xScale={xScale}
           />
         ) : (
@@ -156,7 +152,6 @@ export function HorizontalGroup({
             isSimple={isSimple}
             labelFormatter={xAxisOptions.labelFormatter}
             name={name}
-            theme={theme}
             xScale={xScale}
             zeroPosition={zeroPosition}
           />

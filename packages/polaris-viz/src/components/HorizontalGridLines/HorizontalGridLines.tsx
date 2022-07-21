@@ -4,7 +4,6 @@ import {useTheme} from '@shopify/polaris-viz-core';
 import type {YAxisTick} from '../../types';
 
 export interface Props {
-  theme: string;
   ticks: YAxisTick[];
   transform: {x: number; y: number};
   width: number;
@@ -14,9 +13,8 @@ export const HorizontalGridLines = React.memo(function HorizontalGridLines({
   ticks,
   transform,
   width,
-  theme,
 }: Props) {
-  const selectedTheme = useTheme(theme);
+  const selectedTheme = useTheme();
 
   return (
     <React.Fragment>

@@ -14,7 +14,6 @@ export interface FunnelChartXAxisArrowsProps {
   chartX: number;
   chartY: number;
   labelWidth: number;
-  theme: string;
 }
 
 export function FunnelChartXAxisArrows({
@@ -25,7 +24,6 @@ export function FunnelChartXAxisArrows({
   chartX,
   chartY,
   labelWidth,
-  theme,
 }: FunnelChartXAxisArrowsProps) {
   const {lines} = useLabels({
     labels: ['→'],
@@ -51,7 +49,7 @@ export function FunnelChartXAxisArrows({
 
   return (
     <g transform={getArrowTransform()} key={`${index}-arrow`}>
-      <TextLine line={arrowLine} index={index} theme={theme} />
+      <TextLine line={arrowLine} index={index} />
     </g>
   );
 }

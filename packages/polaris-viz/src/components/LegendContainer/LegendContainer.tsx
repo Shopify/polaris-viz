@@ -7,7 +7,11 @@ import React, {
   useState,
 } from 'react';
 import isEqual from 'fast-deep-equal';
-import {useTheme, LEGENDS_TOP_MARGIN} from '@shopify/polaris-viz-core';
+import {
+  useTheme,
+  LEGENDS_TOP_MARGIN,
+  useChartContext,
+} from '@shopify/polaris-viz-core';
 import type {Direction, Dimensions} from '@shopify/polaris-viz-core';
 
 import {DEFAULT_LEGEND_HEIGHT, DEFAULT_LEGEND_WIDTH} from '../../constants';
@@ -22,7 +26,6 @@ export interface LegendContainerProps {
   colorVisionType: string;
   data: LegendData[];
   onDimensionChange: Dispatch<SetStateAction<Dimensions>>;
-  theme: string;
   direction?: Direction;
   position?: LegendPosition;
 }
@@ -31,12 +34,13 @@ export function LegendContainer({
   colorVisionType,
   data,
   onDimensionChange,
-  theme,
   direction = 'horizontal',
   position = 'top-left',
 }: LegendContainerProps) {
-  const selectedTheme = useTheme(theme);
+  const selectedTheme = useTheme();
   const {setRef, entry} = useResizeObserver();
+  const {theme} = useChartContext();
+
   const previousHeight = useRef(DEFAULT_LEGEND_HEIGHT);
   const previousWidth = useRef(DEFAULT_LEGEND_WIDTH);
   const [activeIndex, setActiveIndex] = useState(-1);

@@ -9,16 +9,14 @@ interface Props {
   color: Color;
   isComparison?: boolean;
   shape?: Shape;
-  theme: string;
 }
 
 export function SeriesIcon({
   color,
   isComparison = false,
   shape = 'Bar',
-  theme,
 }: Props) {
-  const selectedTheme = useTheme(theme);
+  const selectedTheme = useTheme();
 
   switch (shape) {
     case 'Line': {

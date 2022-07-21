@@ -22,7 +22,6 @@ export interface AnnotationsProps {
   drawableHeight: number;
   drawableWidth: number;
   onHeightChange: (height: number) => void;
-  theme: string;
   xScale: ScaleLinear<number, number>;
 }
 
@@ -31,7 +30,6 @@ export function HorizontalBarChartXAnnotations({
   drawableHeight,
   drawableWidth,
   onHeightChange,
-  theme,
   xScale,
 }: AnnotationsProps) {
   const [activeIndex, setActiveIndex] = useState(-1);
@@ -106,7 +104,6 @@ export function HorizontalBarChartXAnnotations({
           isShowingAllAnnotations={isShowingAllAnnotations}
           onClick={handleToggleAllAnnotations}
           tabIndex={annotations.length}
-          theme={theme}
           width={drawableWidth}
         />
       )}
@@ -128,7 +125,6 @@ export function HorizontalBarChartXAnnotations({
             <React.Fragment key={`annotation${index}${annotation.startKey}`}>
               <AnnotationLine
                 size={drawableHeight - showMoreButtonOffset}
-                theme={theme}
                 x={line.x}
                 y={y + PILL_HEIGHT}
               />
@@ -141,7 +137,6 @@ export function HorizontalBarChartXAnnotations({
                 position={position}
                 setActiveIndex={setActiveIndex}
                 tabIndex={tabIndex}
-                theme={theme}
               />
               {isContentVisible && (
                 <AnnotationContent
@@ -152,7 +147,6 @@ export function HorizontalBarChartXAnnotations({
                   parentRef={ref}
                   position={position}
                   tabIndex={tabIndex}
-                  theme={theme}
                   x={line.x}
                   y={y}
                 />

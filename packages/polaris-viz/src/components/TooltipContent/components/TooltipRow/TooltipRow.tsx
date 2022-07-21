@@ -21,7 +21,6 @@ interface Props {
   value: string;
   color?: Color;
   isComparison?: boolean;
-  theme: string;
 }
 
 export function TooltipRow({
@@ -31,10 +30,9 @@ export function TooltipRow({
   isComparison = false,
   label,
   shape,
-  theme,
   value,
 }: Props) {
-  const selectedTheme = useTheme(theme);
+  const selectedTheme = useTheme();
 
   return (
     <div
@@ -50,7 +48,6 @@ export function TooltipRow({
             color={color!}
             isComparison={isComparison}
             shape={shape}
-            theme={theme}
           />
         </div>
       )}

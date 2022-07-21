@@ -97,7 +97,6 @@ export function TooltipContent({
                   isComparison={isComparison}
                   label={key}
                   shape={shape}
-                  theme={theme}
                   value={value}
                 />
               );

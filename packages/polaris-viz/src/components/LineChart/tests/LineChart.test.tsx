@@ -32,26 +32,6 @@ describe('<LineChart />', () => {
     expect(lineChart).toContainReactComponent(Chart);
   });
 
-  describe('theme', () => {
-    it('gets passed to <Chart/>', () => {
-      const lineChart = mount(
-        <LineChart data={[primarySeries]} theme="Light" />,
-      );
-
-      expect(lineChart).toContainReactComponent(Chart, {
-        theme: 'Light',
-      });
-    });
-
-    it('`Default` is used if no value is provided', () => {
-      const lineChart = mount(<LineChart data={[primarySeries]} />);
-
-      expect(lineChart).toContainReactComponent(Chart, {
-        theme: 'Default',
-      });
-    });
-  });
-
   describe('skipLinkText', () => {
     it('renders a SkipLink if skipLinkText is provided', () => {
       const mockContent = 'Skip line chart content';

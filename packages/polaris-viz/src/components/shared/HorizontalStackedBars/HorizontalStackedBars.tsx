@@ -31,7 +31,6 @@ export interface HorizontalStackedBarsProps {
   name: string;
   stackedValues: FormattedStackedSeries[];
   xScale: ScaleLinear<number, number>;
-  theme: string;
 }
 
 function getBorderRadius({
@@ -63,10 +62,9 @@ export function HorizontalStackedBars({
   id,
   name,
   stackedValues,
-  theme,
   xScale,
 }: HorizontalStackedBarsProps) {
-  const {shouldAnimate} = useChartContext();
+  const {shouldAnimate, theme} = useChartContext();
   const [activeBarIndex, setActiveBarIndex] = useState(-1);
 
   useWatchColorVisionEvents({

@@ -4,7 +4,6 @@ import {
   clamp,
   useTheme,
   COLOR_VISION_SINGLE_ITEM,
-  DEFAULT_THEME_NAME,
   useUniqueId,
   Direction,
   ChartState,
@@ -36,11 +35,10 @@ const FULL_CIRCLE = Math.PI * 2;
 export interface ChartProps {
   data: DataSeries[];
   accessibilityLabel?: string;
-  comparisonMetric?: Omit<ComparisonMetricProps, 'theme'>;
+  comparisonMetric?: ComparisonMetricProps;
   showLegend: boolean;
   total?: number;
   dimensions?: Dimensions;
-  theme?: string;
   labelFormatter: LabelFormatter;
   legendPosition: LegendPosition;
   state: ChartState;
@@ -54,7 +52,6 @@ export function Chart({
   total,
   showLegend,
   dimensions = {height: 0, width: 0},
-  theme = DEFAULT_THEME_NAME,
   labelFormatter,
   legendPosition = 'right',
   state,
@@ -63,7 +60,7 @@ export function Chart({
   const {shouldAnimate} = useChartContext();
   const chartId = useUniqueId('Donut');
   const [activeIndex, setActiveIndex] = useState<number>(-1);
-  const selectedTheme = useTheme(theme);
+  const selectedTheme = useTheme();
 
   const seriesCount = clamp({amount: data.length, min: 1, max: Infinity});
   const seriesColor = getSeriesColors(seriesCount, selectedTheme);
@@ -208,7 +205,6 @@ export function Chart({
             </svg>
             <InnerValue
               isAnimated={shouldAnimate}
-              selectedTheme={selectedTheme}
               totalValue={totalValue}
               comparisonMetric={comparisonMetric}
               labelFormatter={labelFormatter}
@@ -220,7 +216,6 @@ export function Chart({
             state={state}
             type="Donut"
             errorText={errorText}
-            theme={theme}
           />
         )}
       </div>
@@ -229,7 +224,6 @@ export function Chart({
           onDimensionChange={setLegendDimensions}
           colorVisionType={COLOR_VISION_SINGLE_ITEM}
           data={legend}
-          theme={theme}
           direction={legendDirection}
           position={legendPosition}
         />

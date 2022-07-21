@@ -2,6 +2,7 @@ import React from 'react';
 import {
   LinearGradientWithStops,
   isGradientType,
+  useChartContext,
 } from '@shopify/polaris-viz-core';
 import type {Color, GradientStop, Direction} from '@shopify/polaris-viz-core';
 
@@ -14,7 +15,6 @@ interface GradientDefsProps {
   id: string;
   direction?: Direction;
   seriesColors?: Color[];
-  theme: string;
   gradientUnits?: GradientUnits;
 }
 
@@ -22,10 +22,11 @@ export function GradientDefs({
   direction = 'vertical',
   id,
   seriesColors = [],
-  theme,
   size = '100%',
   gradientUnits,
 }: GradientDefsProps) {
+  const {theme} = useChartContext();
+
   return (
     <defs>
       {seriesColors.map((color, index) => {
