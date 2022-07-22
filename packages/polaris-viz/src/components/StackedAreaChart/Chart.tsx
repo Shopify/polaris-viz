@@ -153,7 +153,8 @@ export function Chart({
   const lineGenerator = useMemo(() => {
     const generator = line<DataPoint>()
       .x((_, index) => (xScale == null ? 0 : xScale(index)))
-      .y(({value}) => yScale(value ?? 0));
+      .y(({value}) => yScale(value ?? 0))
+      .defined(({value}) => value != null);
 
     if (selectedTheme.line.hasSpline) {
       generator.curve(curveStepRounded);

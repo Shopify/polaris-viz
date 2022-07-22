@@ -1,7 +1,6 @@
 export {usePrefersReducedMotion} from './usePrefersReducedMotion';
 export {useReducedLabelIndexes} from './useReducedLabelIndexes';
 export {useLinearXScale} from './useLinearXScale';
-export {usePrevious} from './usePrevious';
 export {useResizeObserver} from './useResizeObserver';
 export {useLinearChartAnimations} from './useLinearChartAnimations';
 export {usePrintResizing} from './usePrintResizing';
@@ -28,4 +27,5 @@ export {
   usePolarisVizContext,
   useThemeSeriesColors,
   getSeriesColors,
+  usePrevious,
 } from '@shopify/polaris-viz-core';

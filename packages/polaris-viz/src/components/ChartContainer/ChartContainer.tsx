@@ -8,6 +8,7 @@ import React, {
 } from 'react';
 import {useDebouncedCallback} from 'use-debounce/lib';
 import {
+  usePrevious,
   uniqueId,
   ChartContext,
   DataGroup,
@@ -22,7 +23,6 @@ import {
   useResizeObserver,
   useTheme,
   usePrintResizing,
-  usePrevious,
   usePrefersReducedMotion,
 } from '../../hooks';
 
@@ -33,7 +33,7 @@ function hasValidDimensions(chartDimensions: Dimensions | null) {
     return false;
   }
 
-  return chartDimensions.width > 0 || chartDimensions.height > 0;
+  return chartDimensions.width > 0 && chartDimensions.height > 0;
 }
 
 interface Props {

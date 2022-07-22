@@ -7,3 +7,4 @@ export {useYScale} from './useYScale';
 export {useUniqueId} from './useUniqueId';
 export {useAriaLabel} from './useAriaLabel';
 export {useChartContext} from './useChartContext';
+export {usePrevious} from './usePrevious';

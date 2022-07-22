@@ -1,20 +1,29 @@
 import React, {useMemo} from 'react';
+import type {SpringValue} from '@react-spring/core';
 
 import type {LineChartDataSeriesWithDefaults} from '../../../../types';
 import {uniqueId} from '../../../../utilities';
 import {LinearGradientWithStops} from '../../../../components';
+import {usePolarisVizContext} from '../../../../hooks';
 
 import {getGradientDetails} from './utilities/getGradientDetails';
 
 export interface Props {
   series: LineChartDataSeriesWithDefaults;
-  areaPath: string;
+  areaPath: SpringValue<string | null> | string;
 }
 
 export function DefaultArea({series, areaPath}: Props) {
   const gradientId = useMemo(() => uniqueId('default-area-gradient'), []);
   const maskId = useMemo(() => uniqueId('default-area-mask'), []);
   const {data, areaColor} = series;
+
+  const {
+    components: {Path, Defs, Mask},
+    animated,
+  } = usePolarisVizContext();
+
+  const AnimatedPath = animated(Path);
 
   const gradientStops = useMemo(() => {
     return getGradientDetails(data).map((gradientStop) => ({
@@ -29,10 +38,10 @@ export function DefaultArea({series, areaPath}: Props) {
 
   return (
     <React.Fragment>
-      <defs>
-        <mask id={maskId}>
-          <path d={areaPath} fill={`url(#${maskId}-gradient)`} />
-        </mask>
+      <Defs>
+        <Mask id={maskId}>
+          <AnimatedPath d={areaPath} fill={`url(#${maskId}-gradient)`} />
+        </Mask>
         <LinearGradientWithStops
           id={`${maskId}-gradient`}
           x1="0%"
@@ -66,9 +75,9 @@ export function DefaultArea({series, areaPath}: Props) {
           y2="100%"
           gradient={gradientStops}
         />
-      </defs>
+      </Defs>
 
-      <path
+      <AnimatedPath
         d={areaPath}
         fill={`url(#${gradientId})`}
         mask={`url(#${maskId})`}

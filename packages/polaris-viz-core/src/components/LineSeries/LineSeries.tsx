@@ -1,8 +1,8 @@
 import React, {useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {area as areaShape, line} from 'd3-shape';
-import {useSpring} from '@react-spring/core';
 
+import {usePrevious} from '../../hooks';
 import type {LineChartDataSeriesWithDefaults} from '../../types';
 import {LinearGradientWithStops} from '../../components';
 import {
@@ -13,7 +13,6 @@ import {
   curveStepRounded,
   uniqueId,
   isGradientType,
-  LINES_LOAD_ANIMATION_CONFIG,
   getColorVisionEventAttrs,
   getColorVisionStylesForActiveIndex,
   useChartContext,
@@ -21,12 +20,12 @@ import {
 import {
   COLOR_VISION_SINGLE_ITEM,
   SHAPE_ANIMATION_HEIGHT_BUFFER,
+  LINE_SERIES_POINT_RADIUS,
 } from '../../constants';
 
-import {Area} from './components';
+import {Area, AnimatedLine, AnimatedArea} from './components';
 import styles from './LineSeries.scss';
 
-const POINT_RADIUS = 2;
 const ANIMATION_DELAY = 200;
 const SPARK_STROKE_WIDTH = 1;
 
@@ -78,17 +77,23 @@ export function LineSeries({
 }: LineSeriesProps) {
   const {
     // eslint-disable-next-line id-length
-    components: {Defs, Mask, G, Rect, Circle, Path},
+    components: {Defs, Mask, G, Rect, Path, Circle},
     animated,
   } = usePolarisVizContext();
+
+  const previousData = usePrevious(data);
 
   const {shouldAnimate} = useChartContext();
 
   const AnimatedGroup = animated(G);
-  const AnimatedPath = animated(Path);
+
   const color = data?.color;
   const selectedTheme = useTheme(theme);
   const isSparkChart = type === 'spark';
+  const lineStyle = getLineStyle({
+    isComparison: data.isComparison,
+    isSparkChart,
+  });
 
   const lineGenerator = line<DataPoint>()
     .x((_, index) => (xScale == null ? 0 : xScale(index)))
@@ -133,33 +138,25 @@ export function LineSeries({
         },
       ];
 
-  const showPoint =
-    isSparkChart && !data.isComparison && lastLinePointCoordinates != null;
-  const {x: lastX = 0, y: lastY = 0} = lastLinePointCoordinates ?? {};
-  const lineStyle = getLineStyle({
-    isComparison: data.isComparison,
-    isSparkChart,
-  });
   const isSolidLine = data.isComparison !== true;
   const solidLineDelay = isSolidLine ? index * ANIMATION_DELAY : 0;
   const delay = immediate ? 0 : solidLineDelay;
 
-  const {scaleY, opacity} = useSpring({
-    from: {
-      scaleY: 0,
-      opacity: 0,
-    },
-    to: {
-      scaleY: 1,
-      opacity: 1,
-    },
-    delay,
-    config: LINES_LOAD_ANIMATION_CONFIG,
-    default: {immediate},
-  });
+  const hasNulls = (data?: LineChartDataSeriesWithDefaults) =>
+    data?.data.some(({value}) => value == null);
 
-  const transform = scaleY.to((value: number) => ` scale(1 ${value})`);
-  const transformOrigin = `0 ${svgDimensions.height}px`;
+  const dataIsValidForAnimation =
+    !hasNulls(data) &&
+    !hasNulls(previousData) &&
+    data.data.length === previousData?.data.length;
+
+  const {x: lastX = 0, y: lastY = 0} = lastLinePointCoordinates ?? {};
+
+  const zeroLineData = data.data.map((dataPoint) => ({
+    ...dataPoint,
+    value: dataPoint.value === null ? null : 0,
+  }));
+
   if (lineShape == null || areaPath == null) {
     return null;
   }
@@ -170,9 +167,14 @@ export function LineSeries({
 
   const PathHoverTargetSize = 40;
 
+  const showPoint =
+    -isSparkChart && !data.isComparison && lastLinePointCoordinates != null;
+
+  const zeroLineY = yScale(0);
+
   return (
     <React.Fragment>
-      <AnimatedGroup className={styles.Group} opacity={opacity}>
+      <AnimatedGroup className={styles.Group} opacity={1}>
         <Defs>
           <LinearGradientWithStops
             id={`line-${id}`}
@@ -183,39 +185,66 @@ export function LineSeries({
           />
 
           <Mask id={`mask-${id}`}>
-            <AnimatedGroup
-              transform={isSolidLine ? transform : ''}
-              transform-origin={transformOrigin}
-            >
-              <AnimatedPath
-                d={lineShape}
-                stroke="white"
-                strokeLinejoin="round"
-                strokeLinecap="round"
+            {dataIsValidForAnimation ? (
+              <AnimatedLine
+                lastX={lastX}
+                lastY={lastY}
+                showPoint={showPoint}
+                delay={delay}
+                lineGenerator={lineGenerator}
                 strokeWidth={strokeWidth}
-                style={{
-                  ...getColorVisionStylesForActiveIndex({
-                    activeIndex: activeLineIndex,
-                    index,
-                  }),
-                  strokeDasharray: StrokeDasharray[lineStyle],
-                }}
+                immediate={immediate}
+                index={index}
+                activeLineIndex={activeLineIndex}
+                strokeDasharray={StrokeDasharray[lineStyle]}
+                fromData={previousData}
+                toData={data}
+                zeroLineY={zeroLineY}
+                zeroLineData={zeroLineData}
               />
-              {showPoint && (
-                <Circle cx={lastX} cy={lastY} r={POINT_RADIUS} fill="white" />
-              )}
-            </AnimatedGroup>
+            ) : (
+              <React.Fragment>
+                <Path
+                  d={lineShape}
+                  stroke="white"
+                  strokeLinejoin="round"
+                  strokeLinecap="round"
+                  strokeWidth={strokeWidth}
+                  style={{
+                    ...getColorVisionStylesForActiveIndex({
+                      activeIndex: activeLineIndex,
+                      index,
+                    }),
+                    strokeDasharray: StrokeDasharray[lineStyle],
+                  }}
+                />
+                {showPoint && (
+                  <Circle
+                    cx={lastX}
+                    cy={lastY}
+                    r={LINE_SERIES_POINT_RADIUS}
+                    fill="white"
+                  />
+                )}
+              </React.Fragment>
+            )}
           </Mask>
         </Defs>
 
-        {selectedTheme.line.hasArea && (
-          <AnimatedGroup
-            transform={isSolidLine ? transform : ''}
-            transform-origin={transformOrigin}
-          >
+        {selectedTheme.line.hasArea &&
+          (dataIsValidForAnimation ? (
+            <AnimatedArea
+              areaGenerator={areaGenerator}
+              fromData={previousData}
+              toData={data}
+              zeroLineData={zeroLineData}
+              type={type}
+              delay={delay}
+              immediate={immediate}
+            />
+          ) : (
             <Area series={data} areaPath={areaPath} type={type} />
-          </AnimatedGroup>
-        )}
+          ))}
 
         <Rect
           x="0"
