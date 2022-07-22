@@ -8,6 +8,7 @@ import {
   ChartContext,
   uniqueId,
   isLargeDataSet,
+  InternalChartType,
 } from '@shopify/polaris-viz-core';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
@@ -15,10 +16,11 @@ import {usePrefersReducedMotion} from '../../hooks';
 
 interface Props {
   children: ReactElement;
-  theme?: string;
-  sparkChart?: boolean;
   isAnimated: boolean;
   data: DataSeries[];
+  sparkChart?: boolean;
+  theme?: string;
+  type?: InternalChartType;
 }
 
 export function ChartContainer({
@@ -27,6 +29,7 @@ export function ChartContainer({
   children,
   sparkChart = false,
   isAnimated,
+  type,
 }: Props) {
   const [chartDimensions, setChartDimensions] =
     useState<Dimensions | null>(null);
@@ -52,7 +55,7 @@ export function ChartContainer({
   const value = useMemo(() => {
     const id = uniqueId('chart');
 
-    const tooBigToAnimate = isLargeDataSet(data);
+    const tooBigToAnimate = isLargeDataSet(data, type);
     const shouldAnimate =
       isAnimated && !prefersReducedMotion && !tooBigToAnimate;
 
@@ -62,8 +65,9 @@ export function ChartContainer({
       id,
       shouldAnimate,
       theme,
+      isPerformanceImpacted: tooBigToAnimate,
     };
-  }, [prefersReducedMotion, data, isAnimated, theme]);
+  }, [prefersReducedMotion, data, isAnimated, theme, type]);
 
   return (
     <ChartContext.Provider value={value}>

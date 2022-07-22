@@ -42,7 +42,6 @@ describe('getRoundedRectPath()', () => {
       height: 10,
       width: 10,
       borderRadius: test,
-      needsMinWidth: false,
     });
 
     expect(makeDSingleLine(result)).toStrictEqual(EXPECTED_RESULTS[test]);
@@ -53,24 +52,8 @@ describe('getRoundedRectPath()', () => {
       height: 1,
       width: 1,
       borderRadius: BORDER_RADIUS.Left,
-      needsMinWidth: false,
     });
 
     expect(result).toStrictEqual('m 0 0 h 1 v 1 h -1 z');
-  });
-
-  describe('needsMinWidth', () => {
-    it('returns smaller radius when needsMinWidth=false', () => {
-      const result = getRoundedRectPath({
-        height: 5,
-        width: 5,
-        borderRadius: BORDER_RADIUS.Left,
-        needsMinWidth: false,
-      });
-
-      expect(makeDSingleLine(result)).toStrictEqual(
-        'M3,0 h2 a0,0 0 0 1 0,0 v5 a0,0 0 0 1 -0,0 h-2 a3,3 0 0 1 -3,-3 v-0 a3,3 0 0 1 3,-3 Z',
-      );
-    });
   });
 });

@@ -2,8 +2,7 @@ import {createElement} from 'react';
 
 import variables from './styles/shared/_variables.scss';
 import {createGradient} from './utilities/createGradient';
-import type {SvgComponents, Theme} from './types';
-import {ChartState} from './types';
+import {InternalChartType, SvgComponents, Theme, ChartState} from './types';
 
 export const LINE_HEIGHT = 14;
 export const FONT_SIZE = 12;
@@ -422,6 +421,11 @@ export const DEFAULT_CHART_PROPS = {
   errorText: 'Could not load the chart',
 };
 
-export const TOO_MANY_DATA_POINTS_THRESHOLD = 500;
+export const TOO_MANY_DATA_POINTS_THRESHOLD = {
+  [InternalChartType.Bar]: 60,
+  [InternalChartType.Line]: 150,
+  [InternalChartType.Combo]: 60,
+};
+
 export const TOO_MANY_DATA_SERIES_THRESHOLD = 14;
 export const LINE_SERIES_POINT_RADIUS = 2;

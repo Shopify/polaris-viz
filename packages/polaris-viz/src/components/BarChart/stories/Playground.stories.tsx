@@ -324,3 +324,36 @@ AnnotationMania.args = {
     }),
   ],
 };
+
+const POINTS = 100;
+
+export const PerformanceTest: Story<BarChartProps> = (args: BarChartProps) => {
+  return (
+    <div style={{width: 1000, height: 400}}>
+      <BarChart {...args} />
+    </div>
+  );
+};
+
+PerformanceTest.args = {
+  data: [
+    {
+      name: 'One',
+      data: new Array(POINTS).fill(null).map((_, index) => {
+        return {
+          value: Math.random() * (25 - 0) + 0,
+          key: index,
+        };
+      }),
+    },
+    {
+      name: 'Two',
+      data: new Array(POINTS).fill(null).map((_, index) => {
+        return {
+          value: Math.random() * (25 - 0) + 0,
+          key: index,
+        };
+      }),
+    },
+  ],
+};

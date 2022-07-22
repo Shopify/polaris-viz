@@ -8,6 +8,7 @@ export interface ChartContextValues {
   characterWidthOffsets: {[key: string]: number};
   shouldAnimate: boolean;
   theme: string;
+  isPerformanceImpacted: boolean;
 }
 
 export const ChartContext = createContext<ChartContextValues>({
@@ -16,4 +17,5 @@ export const ChartContext = createContext<ChartContextValues>({
   characterWidthOffsets: {},
   shouldAnimate: true,
   theme: DEFAULT_THEME_NAME,
+  isPerformanceImpacted: false,
 });

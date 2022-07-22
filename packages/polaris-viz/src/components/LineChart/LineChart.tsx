@@ -1,11 +1,10 @@
 import React, {useRef} from 'react';
-import type {
+import {
   XAxisOptions,
   YAxisOptions,
   ChartProps,
   WithRequired,
-} from '@shopify/polaris-viz-core';
-import {
+  InternalChartType,
   uniqueId,
   ChartState,
   DEFAULT_CHART_PROPS,
@@ -77,7 +76,12 @@ export function LineChart(props: LineChartProps) {
       data.length === 0 ? null : (
         <SkipLink anchorId={skipLinkAnchorId.current}>{skipLinkText}</SkipLink>
       )}
-      <ChartContainer data={data} theme={theme} isAnimated={isAnimated}>
+      <ChartContainer
+        data={data}
+        theme={theme}
+        isAnimated={isAnimated}
+        type={InternalChartType.Line}
+      >
         {state !== ChartState.Success ? (
           <ChartSkeleton state={state} errorText={errorText} />
         ) : (

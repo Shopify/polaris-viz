@@ -73,7 +73,6 @@ export function Stack({
         const pathD = getRoundedRectPath({
           height,
           width,
-          needsMinWidth: false,
           borderRadius: getBorderRadiusForStackedValues(values, index),
         });
 

@@ -14,6 +14,7 @@ import {
   DataGroup,
   DataSeries,
   isLargeDataSet,
+  InternalChartType,
 } from '@shopify/polaris-viz-core';
 import type {Dimensions} from '@shopify/polaris-viz-core';
 
@@ -44,7 +45,8 @@ interface Props {
   isAnimated: boolean;
   theme: string;
   sparkChart?: boolean;
-  type?: SkeletonType;
+  skeletonType?: SkeletonType;
+  type?: InternalChartType;
 }
 
 export const ChartContainer = (props: Props) => {
@@ -60,7 +62,8 @@ export const ChartContainer = (props: Props) => {
   const {isPrinting} = usePrintResizing({ref, setChartDimensions});
 
   const value = useMemo(() => {
-    const tooBigToAnimate = isLargeDataSet(props.data);
+    const tooBigToAnimate = isLargeDataSet(props.data, props.type);
+
     const shouldAnimate =
       props.isAnimated && !prefersReducedMotion && !tooBigToAnimate;
     const id = uniqueId('chart');
@@ -72,12 +75,14 @@ export const ChartContainer = (props: Props) => {
       characterWidths,
       characterWidthOffsets,
       theme: printFriendlyTheme,
+      isPerformanceImpacted: tooBigToAnimate,
     };
   }, [
     prefersReducedMotion,
     props.data,
     props.isAnimated,
     props.theme,
+    props.type,
     isPrinting,
   ]);
 
@@ -149,7 +154,7 @@ export const ChartContainer = (props: Props) => {
       >
         {!hasValidDimensions(chartDimensions) ? null : (
           <ChartErrorBoundary
-            type={props.type ?? 'Default'}
+            type={props.skeletonType ?? 'Default'}
             dimensions={chartDimensions!}
           >
             {cloneElement<{

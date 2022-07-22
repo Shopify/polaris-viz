@@ -9,13 +9,14 @@ import {TooltipHorizontalOffset, TooltipVerticalOffset} from './types';
 export const TOOLTIP_MARGIN = 10;
 
 export interface AlteredPositionProps {
+  bandwidth: number;
+  chartBounds: BoundingRect;
   currentX: number;
   currentY: number;
+  isPerformanceImpacted: boolean;
+  margin: Margin;
   position: TooltipPositionOffset;
   tooltipDimensions: Dimensions;
-  chartBounds: BoundingRect;
-  margin: Margin;
-  bandwidth: number;
 }
 
 export interface AlteredPositionReturn {
@@ -45,34 +46,38 @@ export function getAlteredVerticalBarPosition(
   // Y POSITIONING
   //
 
-  if (newPosition.vertical === TooltipVerticalOffset.Inline) {
-    newPosition.horizontal = TooltipHorizontalOffset.Left;
-
-    const inline = getInlinePosition(y, props);
-    y = inline.value;
-  }
-
-  if (newPosition.vertical === TooltipVerticalOffset.Center) {
-    const verticalCenter = getVerticalCenterPosition(y, props);
-    y = verticalCenter.value;
-  }
-
-  if (newPosition.vertical === TooltipVerticalOffset.Above) {
-    const above = getAbovePosition(y, props);
-    y = above.value;
-
-    if (above.wasOutsideBounds) {
+  if (!props.isPerformanceImpacted) {
+    if (newPosition.vertical === TooltipVerticalOffset.Inline) {
       newPosition.horizontal = TooltipHorizontalOffset.Left;
-    }
-  }
 
-  if (newPosition.vertical === TooltipVerticalOffset.Below) {
-    const below = getBelowPosition(y, props);
-    y = below.value;
-
-    if (below.wasOutsideBounds) {
-      newPosition.horizontal = TooltipHorizontalOffset.Left;
+      const inline = getInlinePosition(y, props);
+      y = inline.value;
     }
+
+    if (newPosition.vertical === TooltipVerticalOffset.Center) {
+      const verticalCenter = getVerticalCenterPosition(y, props);
+      y = verticalCenter.value;
+    }
+
+    if (newPosition.vertical === TooltipVerticalOffset.Above) {
+      const above = getAbovePosition(y, props);
+      y = above.value;
+
+      if (above.wasOutsideBounds) {
+        newPosition.horizontal = TooltipHorizontalOffset.Left;
+      }
+    }
+
+    if (newPosition.vertical === TooltipVerticalOffset.Below) {
+      const below = getBelowPosition(y, props);
+      y = below.value;
+
+      if (below.wasOutsideBounds) {
+        newPosition.horizontal = TooltipHorizontalOffset.Left;
+      }
+    }
+  } else {
+    y = 0;
   }
 
   //

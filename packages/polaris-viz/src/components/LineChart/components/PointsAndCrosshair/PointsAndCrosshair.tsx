@@ -10,6 +10,7 @@ import {
 import {line} from 'd3-shape';
 import type {ScaleLinear} from 'd3-scale';
 
+import {CROSSHAIR_ID} from '../../../../constants';
 import {useLinearChartAnimations} from '../../../../hooks';
 import {Crosshair} from '../../../Crosshair';
 import {Points} from '../Points';
@@ -82,10 +83,11 @@ export function PointsAndCrosshair({
     <React.Fragment>
       {emptyState ? null : (
         <Crosshair
-          x={getXPosition({isCrosshair: true})}
           height={drawableHeight}
+          id={`${tooltipId}-${CROSSHAIR_ID}`}
           opacity={activeIndex == null ? 0 : 1}
           theme={theme}
+          x={getXPosition({isCrosshair: true})}
         />
       )}
       <Points
@@ -100,7 +102,6 @@ export function PointsAndCrosshair({
         xScale={xScale}
         yScale={yScale}
       />
-      *
     </React.Fragment>
   );
 }

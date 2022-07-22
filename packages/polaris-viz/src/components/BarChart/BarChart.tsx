@@ -5,6 +5,7 @@ import {
   ChartState,
   DEFAULT_CHART_PROPS,
   ChartProps,
+  InternalChartType,
 } from '@shopify/polaris-viz-core';
 import type {
   Direction,
@@ -102,7 +103,12 @@ export function BarChart(props: BarChartProps) {
       {hideSkipLink ? null : (
         <SkipLink anchorId={skipLinkAnchorId.current}>{skipLinkText}</SkipLink>
       )}
-      <ChartContainer isAnimated={isAnimated} data={data} theme={theme}>
+      <ChartContainer
+        isAnimated={isAnimated}
+        data={data}
+        theme={theme}
+        type={InternalChartType.Bar}
+      >
         {state !== ChartState.Success ? (
           <ChartSkeleton state={state} errorText={errorText} />
         ) : (

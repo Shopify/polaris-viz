@@ -10,6 +10,7 @@ import {
   DEFAULT_THEME_NAME,
   BoundingRect,
   useChartPositions,
+  useChartContext,
 } from '@shopify/polaris-viz-core';
 import type {
   Dimensions,
@@ -44,7 +45,12 @@ import {
   useWatchColorVisionEvents,
   useLinearLabelsAndDimensions,
 } from '../../hooks';
-import {ChartMargin, XMLNS, ANNOTATIONS_LABELS_OFFSET} from '../../constants';
+import {
+  ChartMargin,
+  XMLNS,
+  ANNOTATIONS_LABELS_OFFSET,
+  CROSSHAIR_ID,
+} from '../../constants';
 import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
 import {YAxis} from '../YAxis';
 import {HorizontalGridLines} from '../HorizontalGridLines';
@@ -86,6 +92,7 @@ export function Chart({
   useColorVisionEvents(data.length > 1);
 
   const selectedTheme = useTheme(theme);
+  const {isPerformanceImpacted} = useChartContext();
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [activeLineIndex, setActiveLineIndex] = useState(-1);
@@ -219,6 +226,27 @@ export function Chart({
   }
 
   const hideXAxis = xAxisOptions.hide || selectedTheme.xAxis.hide;
+
+  function moveCrosshair(index: number | null) {
+    setActiveIndex(0);
+
+    if (index == null) {
+      return;
+    }
+
+    const crosshair = document.getElementById(
+      `${tooltipId.current}-${CROSSHAIR_ID}`,
+    );
+
+    if (crosshair == null) {
+      return;
+    }
+
+    crosshair.setAttribute(
+      'x',
+      `${xScale(index) - selectedTheme.crossHair.width / 2}`,
+    );
+  }
 
   const chartBounds: BoundingRect = {
     width,
@@ -361,7 +389,13 @@ export function Chart({
         getPosition={getTooltipPosition}
         id={tooltipId.current}
         margin={ChartMargin}
-        onIndexChange={(index) => setActiveIndex(index)}
+        onIndexChange={(index) => {
+          if (isPerformanceImpacted) {
+            moveCrosshair(index);
+          } else {
+            setActiveIndex(index);
+          }
+        }}
         parentRef={svgRef}
       />
 

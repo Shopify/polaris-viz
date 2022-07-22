@@ -128,7 +128,7 @@ export {
 } from './components';
 export {ChartContext} from './contexts';
 export type {PolarisVizProviderProps} from './components';
-export {DataType, ChartState} from './types';
+export {DataType, ChartState, InternalChartType} from './types';
 
 export type {
   ActiveTooltip,

@@ -1,6 +1,9 @@
-import React, {useEffect, useRef, useState, ReactNode} from 'react';
-import {useSpring, animated} from '@react-spring/web';
-import type {BoundingRect, Dimensions} from '@shopify/polaris-viz-core';
+import React, {useEffect, useRef, useState, ReactNode, useMemo} from 'react';
+import {
+  BoundingRect,
+  Dimensions,
+  useChartContext,
+} from '@shopify/polaris-viz-core';
 
 import type {Margin} from '../../../types';
 import styles from '../TooltipContainer.scss';
@@ -34,43 +37,49 @@ export function TooltipAnimatedContainer({
   margin,
   position = DEFAULT_TOOLTIP_POSITION,
 }: TooltipAnimatedContainerProps) {
+  const {isPerformanceImpacted} = useChartContext();
+
   const tooltipRef = useRef<HTMLDivElement | null>(null);
   const [tooltipDimensions, setTooltipDimensions] =
     useState<Dimensions | null>(null);
   const firstRender = useRef(true);
 
-  const spring: any = useSpring({
-    from: {
-      translate: [0, 0, 0],
-      opacity: 0,
-    },
-    to: async (next: any) => {
-      if (tooltipDimensions == null) {
-        return;
-      }
+  const {x, y, opacity, immediate} = useMemo(() => {
+    if (tooltipDimensions == null) {
+      return {x: 0, y: 0, opacity: 0};
+    }
 
-      const {x, y} = getAlteredPosition({
-        currentX,
-        currentY,
-        position,
-        tooltipDimensions,
-        chartBounds,
-        margin,
-        bandwidth,
-      });
+    const {x, y} = getAlteredPosition({
+      currentX,
+      currentY,
+      position,
+      tooltipDimensions,
+      chartBounds,
+      margin,
+      bandwidth,
+      isPerformanceImpacted,
+    });
 
-      const shouldRenderImmediate = firstRender.current;
-      firstRender.current = false;
+    const shouldRenderImmediate = firstRender.current;
+    firstRender.current = false;
 
-      // @react-spring/web docs do not return the `next` callback
-      // eslint-disable-next-line node/callback-return
-      await next({
-        translate: [x, y, 0],
-        opacity: 1,
-        immediate: shouldRenderImmediate,
-      });
-    },
-  });
+    return {
+      x,
+      y,
+      opacity: 1,
+      immediate: isPerformanceImpacted || shouldRenderImmediate,
+    };
+  }, [
+    bandwidth,
+    chartBounds,
+    currentX,
+    currentY,
+    getAlteredPosition,
+    margin,
+    position,
+    isPerformanceImpacted,
+    tooltipDimensions,
+  ]);
 
   useEffect(() => {
     if (tooltipRef.current == null) {
@@ -81,24 +90,23 @@ export function TooltipAnimatedContainer({
   }, [activePointIndex]);
 
   return (
-    <animated.div
+    <div
       id={id}
       className={styles.Container}
       data-tooltip
       style={{
         top: 0,
         left: 0,
-        opacity: spring.opacity,
-        transform: spring.translate.to(
-          // eslint-disable-next-line id-length
-          (x: number, y: number, z: number) =>
-            `translate3d(${x}px, ${y}px, ${z}px)`,
-        ),
+        opacity,
+        transform: `translate3d(${x}px, ${y}px, 0px)`,
+        transition: immediate
+          ? 'none'
+          : 'opacity 300ms ease, transform 300ms ease',
       }}
       ref={tooltipRef}
       aria-hidden="true"
     >
       {children}
-    </animated.div>
+    </div>
   );
 }
