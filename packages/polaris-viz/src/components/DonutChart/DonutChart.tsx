@@ -39,7 +39,12 @@ export function DonutChart(props: DonutChartProps) {
   };
 
   return (
-    <ChartContainer data={data} theme={theme} isAnimated={isAnimated}>
+    <ChartContainer
+      type="Donut"
+      data={data}
+      theme={theme}
+      isAnimated={isAnimated}
+    >
       <Chart
         errorText={errorText}
         state={state}
