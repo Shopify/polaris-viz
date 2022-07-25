@@ -32,10 +32,10 @@ describe('<ChartErrorBoundary />', () => {
     it('is not visible when an error does not occur', () => {
       const wrapper = mountWithProvider(
         <ChartErrorBoundary type="Default" {...MOCK_PROPS}>
-          <div>This should be visible!</div>
+          <div>Visible!</div>
         </ChartErrorBoundary>,
       );
-      expect(wrapper).toContainReactComponent('div');
+      expect(wrapper.text()).toBe('Visible!');
     });
   });
 });
