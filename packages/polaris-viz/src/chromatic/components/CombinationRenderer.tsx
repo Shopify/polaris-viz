@@ -1,5 +1,8 @@
-import React, {Attributes, FC} from 'react';
+import {ChartContext, DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
+import React, {Attributes, FC, useMemo} from 'react';
 
+import characterWidths from '../../data/character-widths.json';
+import characterWidthOffsets from '../../data/character-width-offsets.json';
 import type {UserOptions} from '../types';
 
 export interface CombinationRendererProps<T> {
@@ -17,5 +20,21 @@ export function CombinationRenderer<T extends Attributes>({
 
   const el = React.createElement(Component, props);
 
-  return <div style={style}>{el}</div>;
+  const theme = (props as any).theme ?? DEFAULT_THEME_NAME;
+
+  const values = useMemo(() => {
+    return {
+      theme: theme ?? DEFAULT_THEME_NAME,
+      shouldAnimate: false,
+      id: 'chart',
+      characterWidths,
+      characterWidthOffsets,
+    };
+  }, [theme]);
+
+  return (
+    <ChartContext.Provider value={values}>
+      <div style={style}>{el}</div>
+    </ChartContext.Provider>
+  );
 }

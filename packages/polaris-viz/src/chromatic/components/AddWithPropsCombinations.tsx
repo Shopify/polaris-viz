@@ -1,13 +1,10 @@
-import React, {FC, ReactNode} from 'react';
+import React, {FC} from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import objectHash from 'object-hash';
 
-import type {UserOptions} from '../types';
+import type {PropCombinations, UserOptions} from '../types';
 import {getCombinations} from '../utilities/getCombinations';
 import {CombinationRenderer} from '../components/CombinationRenderer';
-
-export type PropCombinations<T> = {[P in keyof T]: any} & {
-  children?: ReactNode[];
-};
 
 export function addWithPropsCombinations<T>(
   component: FC<T>,
