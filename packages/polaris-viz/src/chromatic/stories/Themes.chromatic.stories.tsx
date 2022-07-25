@@ -5,7 +5,7 @@ import {
   LineChart,
   PolarisVizProvider,
   StackedAreaChart,
-} from '../components';
+} from '../../components';
 import {DEFAULT_THEME, LIGHT_THEME} from '@shopify/polaris-viz-core';
 
 const STORIES = ['Shared', 'BarChart', 'LineChart', 'StackedAreaChart'];
@@ -14,6 +14,7 @@ const VALUES_FOR_CHARTS = {
   Shared: ['chartContainer', 'legend'],
   BarChart: ['grid', 'bar', 'xAxis', 'yAxis'],
   LineChart: ['grid', 'line', 'xAxis', 'yAxis'],
+  StackedAreaChart: ['grid', 'line', 'xAxis', 'yAxis'],
 };
 
 const COMPONENTS = {
@@ -33,8 +34,6 @@ const THEME = {
     borderRadius: [10],
     padding: [20],
     backgroundColor: ['green'],
-    // sparkChartMinHeight: [40],
-    // minHeight: [200],
   },
   grid: {
     showHorizontalLines: [false],
@@ -58,17 +57,11 @@ const THEME = {
     hasArea: [false],
     hasSpline: [false],
     width: [10],
-    // pointStroke: ['lime'],
   },
   legend: {
     valueColor: ['lime'],
     labelColor: ['lime'],
     backgroundColor: ['lime'],
-    // trendIndicator: {
-    //   positive: '#03AB92',
-    //   negative: '#f24f62',
-    //   neutral: '#8C9196',
-    // },
   },
 };
 
@@ -106,9 +99,7 @@ STORIES.forEach((chart) => {
         const stories = storiesOf(
           `Chromatic/Themes/${chart}/${themeName}/${themeProperty}`,
           module,
-        );
-
-        stories.addParameters({chromatic: {disableSnapshot: false}});
+        ).addParameters({chromatic: {disableSnapshot: false}});
 
         ['default', ...THEME[themeProperty][themeValue]].forEach((option) => {
           const value =

@@ -13,6 +13,13 @@ export function useGetLongestLabelFromData(tooltipData: TooltipData[] = []) {
 
   const sizes: Size[] = [];
 
+  if (tooltipData.length === 0) {
+    return {
+      keyWidth: 0,
+      valueWidth: 0,
+    };
+  }
+
   tooltipData.forEach(({data}) => {
     data.forEach(({key, value}) => {
       const keyWidth = estimateStringWidth(key, characterWidths);
