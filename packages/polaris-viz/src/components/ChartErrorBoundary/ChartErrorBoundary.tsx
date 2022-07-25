@@ -19,7 +19,6 @@ export class ChartErrorBoundary extends React.Component<
   ErrorBoundaryState
 > {
   static getDerivedStateFromError(_: Error) {
-    // Update state so the next render will show the fallback UI.
     return {hasError: true};
   }
 
@@ -44,8 +43,6 @@ export class ChartErrorBoundary extends React.Component<
 
   render() {
     if (this.state.hasError) {
-      // You can render any custom fallback UI
-      console.log(this.props);
       return (
         <ChartSkeleton
           type={this.props.type}
