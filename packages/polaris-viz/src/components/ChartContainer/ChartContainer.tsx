@@ -17,6 +17,7 @@ import {
 } from '@shopify/polaris-viz-core';
 import type {Dimensions} from '@shopify/polaris-viz-core';
 
+import {ChartErrorBoundary} from '../ChartErrorBoundary';
 import characterWidths from '../../data/character-widths.json';
 import characterWidthOffsets from '../../data/character-width-offsets.json';
 import {
@@ -25,6 +26,7 @@ import {
   usePrintResizing,
   usePrefersReducedMotion,
 } from '../../hooks';
+import type {SkeletonType} from '../ChartSkeleton';
 
 import styles from './ChartContainer.scss';
 
@@ -42,6 +44,7 @@ interface Props {
   isAnimated: boolean;
   theme: string;
   sparkChart?: boolean;
+  type?: SkeletonType;
 }
 
 export const ChartContainer = (props: Props) => {
@@ -144,13 +147,18 @@ export const ChartContainer = (props: Props) => {
         ref={setRef}
         id={`chart_${value.id}`}
       >
-        {!hasValidDimensions(chartDimensions)
-          ? null
-          : cloneElement<{
+        {!hasValidDimensions(chartDimensions) ? null : (
+          <ChartErrorBoundary
+            type={props.type ?? 'Default'}
+            dimensions={chartDimensions!}
+          >
+            {cloneElement<{
               dimensions: Dimensions;
             }>(props.children, {
               dimensions: chartDimensions!,
             })}
+          </ChartErrorBoundary>
+        )}
       </div>
     </ChartContext.Provider>
   );

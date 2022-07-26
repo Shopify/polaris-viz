@@ -4,7 +4,7 @@ import {Dimensions, ChartState, useTheme} from '@shopify/polaris-viz-core';
 import {GridSkeleton, DonutSkeleton, Shimmer} from './components';
 import styles from './ChartSkeleton.scss';
 
-type SkeletonType = 'Default' | 'Donut';
+export type SkeletonType = 'Default' | 'Donut';
 export interface ChartSkeletonProps {
   dimensions?: Dimensions;
   state?: ChartState;

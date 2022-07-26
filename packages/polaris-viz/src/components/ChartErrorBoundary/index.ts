@@ -1,0 +1,1 @@
+export {ChartErrorBoundary} from './ChartErrorBoundary';
