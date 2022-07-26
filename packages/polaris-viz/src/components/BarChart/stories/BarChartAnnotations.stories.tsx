@@ -21,7 +21,6 @@ export default {
   title: 'polaris-viz/Charts/BarChart/Annotations',
   component: BarChart,
   parameters: {
-    horizontalMargin: 0,
     docs: {
       page: PageWithSizingInfo,
       description: {

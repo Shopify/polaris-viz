@@ -6,21 +6,13 @@ import {SingleTextLine} from '../../../Labels';
 
 export interface AxisLabelProps {
   axis: 'primary' | 'secondary';
-  containerWidth: number;
   height: number;
   name: string;
   x: number;
   y: number;
 }
 
-export function AxisLabel({
-  containerWidth,
-  height,
-  name,
-  axis,
-  x,
-  y,
-}: AxisLabelProps) {
+export function AxisLabel({height, name, axis, x, y}: AxisLabelProps) {
   const stringWidth = useEstimateStringWidth(name);
   const selectedTheme = useTheme();
 
@@ -30,8 +22,7 @@ export function AxisLabel({
   const halfStringSize = stringWidth / 2;
 
   const yOffset = axis === 'primary' ? yCenter : yCenter - stringWidth;
-  const xOffset =
-    axis === 'primary' ? -LINE_HEIGHT * 2 : LINE_HEIGHT * 2 + containerWidth;
+  const xOffset = axis === 'primary' ? 0 : LINE_HEIGHT;
 
   return (
     <g

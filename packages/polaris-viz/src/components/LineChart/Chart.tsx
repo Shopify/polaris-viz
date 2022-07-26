@@ -9,6 +9,8 @@ import {
   clamp,
   DEFAULT_THEME_NAME,
   BoundingRect,
+  useChartPositions,
+  LINE_HEIGHT,
 } from '@shopify/polaris-viz-core';
 import type {
   Dimensions,
@@ -43,12 +45,7 @@ import {
   useWatchColorVisionEvents,
   useLinearLabelsAndDimensions,
 } from '../../hooks';
-import {
-  ChartMargin,
-  XMLNS,
-  LABEL_AREA_TOP_SPACING,
-  ANNOTATIONS_LABELS_OFFSET,
-} from '../../constants';
+import {ChartMargin, XMLNS, ANNOTATIONS_LABELS_OFFSET} from '../../constants';
 import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
 import {YAxis} from '../YAxis';
 import {HorizontalGridLines} from '../HorizontalGridLines';
@@ -93,7 +90,7 @@ export function Chart({
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [activeLineIndex, setActiveLineIndex] = useState(-1);
-  const [labelHeight, setLabelHeight] = useState(0);
+  const [xAxisHeight, setXAxisHeight] = useState(0);
   const [annotationsHeight, setAnnotationsHeight] = useState(0);
 
   const {legend, setLegendDimensions, height, width} = useLegend({
@@ -123,18 +120,10 @@ export function Chart({
   const emptyState =
     data.length === 0 || data.every((series) => series.data.length === 0);
 
-  const chartYPosition = (ChartMargin.Top as number) + annotationsHeight;
-
-  const drawableHeight =
-    height - labelHeight - LABEL_AREA_TOP_SPACING - chartYPosition;
-
-  const annotationsDrawableHeight =
-    chartYPosition + drawableHeight + ANNOTATIONS_LABELS_OFFSET;
-
   const {minY, maxY} = yAxisMinMax(data);
 
-  const {yAxisLabelWidth, ticks, yScale} = useYScale({
-    drawableHeight,
+  const {yAxisLabelWidth} = useYScale({
+    drawableHeight: height,
     formatYAxisLabel: yAxisOptions.labelFormatter,
     integersOnly: yAxisOptions.integersOnly,
     max: maxY,
@@ -144,16 +133,38 @@ export function Chart({
   const {reversedSeries, longestSeriesLength, longestSeriesIndex} =
     useFormatData(data);
 
-  const {chartXPosition, drawableWidth, xAxisDetails, xScale, labels} =
-    useLinearLabelsAndDimensions({
-      data,
-      longestSeriesLength,
-      theme,
-      width,
-      labels: formattedLabels,
-      xAxisOptions,
-      yAxisLabelWidth,
-    });
+  const {
+    drawableWidth,
+    drawableHeight,
+    chartXPosition,
+    chartYPosition,
+    xAxisBounds,
+    yAxisBounds,
+  } = useChartPositions({
+    annotationsHeight,
+    height,
+    width,
+    xAxisHeight,
+    yAxisWidth: yAxisLabelWidth,
+  });
+
+  const {xAxisDetails, xScale, labels} = useLinearLabelsAndDimensions({
+    data,
+    drawableWidth,
+    labels: formattedLabels,
+    longestSeriesLength,
+  });
+
+  const {ticks, yScale} = useYScale({
+    drawableHeight,
+    formatYAxisLabel: yAxisOptions.labelFormatter,
+    integersOnly: yAxisOptions.integersOnly,
+    max: maxY,
+    min: minY,
+  });
+
+  const annotationsDrawableHeight =
+    chartYPosition + drawableHeight + ANNOTATIONS_LABELS_OFFSET;
 
   const getTooltipMarkup = useLineChartTooltipContent({
     data,
@@ -219,6 +230,8 @@ export function Chart({
     annotationsLookupTable,
   );
 
+  const halfXAxisLabelWidth = xAxisDetails.labelWidth / 2;
+
   return (
     <div className={styles.Container} style={{width, height}}>
       <svg
@@ -234,11 +247,11 @@ export function Chart({
         {xAxisOptions.hide ? null : (
           <XAxis
             chartHeight={height}
-            chartX={chartXPosition - xAxisDetails.labelWidth / 2}
-            chartY={drawableHeight + LABEL_AREA_TOP_SPACING + chartYPosition}
+            chartX={xAxisBounds.x - halfXAxisLabelWidth}
+            chartY={xAxisBounds.y}
             labels={labels}
             labelWidth={xAxisDetails.labelWidth}
-            onHeightChange={setLabelHeight}
+            onHeightChange={setXAxisHeight}
             reducedLabelIndexes={xAxisDetails.reducedLabelIndexes}
             xScale={xScale}
             ariaHidden
@@ -263,8 +276,8 @@ export function Chart({
           width={yAxisLabelWidth}
           textAlign="right"
           ariaHidden
-          x={selectedTheme.grid.horizontalMargin}
-          y={chartYPosition}
+          x={yAxisBounds.x}
+          y={yAxisBounds.y}
         />
 
         {emptyState ? null : (
@@ -277,9 +290,7 @@ export function Chart({
 
         {hasXAxisAnnotations && (
           <g
-            transform={`translate(${
-              chartXPosition - xAxisDetails.labelWidth / 2
-            },0)`}
+            transform={`translate(${chartXPosition - halfXAxisLabelWidth},0)`}
             tabIndex={-1}
           >
             <Annotations
@@ -326,15 +337,13 @@ export function Chart({
 
         {hasYAxisAnnotations && (
           <g
-            transform={`translate(${
-              chartXPosition - xAxisDetails.labelWidth / 2
-            },${chartYPosition})`}
+            transform={`translate(${chartXPosition},${chartYPosition})`}
             tabIndex={-1}
           >
             <YAxisAnnotations
               annotationsLookupTable={annotationsLookupTable}
               drawableHeight={annotationsDrawableHeight}
-              drawableWidth={drawableWidth + xAxisDetails.labelWidth * 1.25}
+              drawableWidth={drawableWidth}
               ticks={ticks}
               yScale={yScale}
             />

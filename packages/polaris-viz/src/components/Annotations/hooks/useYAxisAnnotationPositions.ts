@@ -14,11 +14,11 @@ import {
   PILL_ROW_GAP,
 } from '../constants';
 import type {Annotation, YAxisTick} from '../../../types';
-import type {AnnotationPosition} from '../types';
+import type {AnnotationPosition, DualAxisYAxis} from '../types';
 
 export interface Props {
   annotations: Annotation[];
-  axis: 'y' | 'y1' | 'y2';
+  axis: DualAxisYAxis;
   drawableWidth: number;
   ticks: YAxisTick[];
   yScale: ScaleLinear<number, number>;

@@ -11,3 +11,5 @@ export interface AnnotationPosition {
   y: number;
   showYAxisLabel?: boolean;
 }
+
+export type DualAxisYAxis = 'y' | 'y1' | 'y2';
