@@ -7,10 +7,9 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
-
 ### Added
 
-- added `ChartErrorBoundary` around every chart to catch unhandled errors that prevent the chart from rendering
+- `ChartErrorBoundary` around every chart to catch unhandled errors that prevent the chart from rendering
 
 ### Fixed
 
