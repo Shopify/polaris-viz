@@ -15,15 +15,16 @@ import {
 } from '@shopify/polaris-viz-core';
 import type {Color} from '@shopify/polaris-viz-core';
 
+import {getHoverZoneOffset} from '../../../../utilities';
+import {
+  MASK_HIGHLIGHT_COLOR,
+  SHAPE_ANIMATION_HEIGHT_BUFFER,
+} from '../../../../constants';
 import type {AccessibilitySeries} from '../../../VerticalBarChart/types';
 import {formatAriaLabel} from '../../utilities';
 import {useWatchColorVisionEvents} from '../../../../hooks';
 import {Bar} from '../Bar';
 import {BAR_SPACING} from '../../constants';
-import {
-  MASK_HIGHLIGHT_COLOR,
-  SHAPE_ANIMATION_HEIGHT_BUFFER,
-} from '../../../../constants';
 import styles from '../../Chart.scss';
 
 interface Props {
@@ -31,7 +32,7 @@ interface Props {
   x: number;
   yScale: ScaleLinear<number, number>;
   width: number;
-  height: number;
+  drawableHeight: number;
   data: (number | null)[];
   colors: Color[];
   barGroupIndex: number;
@@ -51,7 +52,7 @@ export function BarGroup({
   yScale,
   width,
   colors,
-  height,
+  drawableHeight,
   indexOffset,
   barGroupIndex,
   hasRoundedCorners,
@@ -154,7 +155,7 @@ export function BarGroup({
                 x={x + (barWidth + BAR_SPACING) * index}
                 y={SHAPE_ANIMATION_HEIGHT_BUFFER * -1}
                 width={barWidth - BAR_SPACING}
-                height={height + SHAPE_ANIMATION_HEIGHT_BUFFER * 2}
+                height={drawableHeight + SHAPE_ANIMATION_HEIGHT_BUFFER * 2}
                 fill={
                   data[index] === 0
                     ? selectedTheme.bar.zeroValueColor
@@ -185,10 +186,11 @@ export function BarGroup({
         <rect
           width={barWidth * dataLength + gapWidth}
           x={x - gapWidth / 2}
-          height={height}
+          height={drawableHeight}
           fill="transparent"
           aria-hidden="true"
         />
+
         {data.map((rawValue, index) => {
           if (rawValue === null) {
             return null;
@@ -204,12 +206,20 @@ export function BarGroup({
           const isNegative = rawValue < 0;
           const y = isNegative ? yScale(0) : yScale(0) - height;
 
+          const {clampedSize, offset} = getHoverZoneOffset({
+            barSize: height,
+            zeroPosition: yScale(0),
+            max: drawableHeight,
+            isNegative,
+            position: 'vertical',
+          });
+
           return (
             <rect
               key={index}
-              height={height}
+              height={clampedSize}
               x={x + barWidth * index}
-              y={y}
+              y={isNegative || areAllNegative ? y : y - offset}
               width={barWidth}
               fill="transparent"
               aria-label={ariaLabel}

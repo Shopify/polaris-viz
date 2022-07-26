@@ -107,7 +107,7 @@ export function VerticalBarGroup({
             data={item}
             gapWidth={gapWidth}
             hasRoundedCorners={selectedTheme.bar.hasRoundedCorners}
-            height={drawableHeight}
+            drawableHeight={drawableHeight}
             indexOffset={indexOffset}
             key={index}
             width={xScale.bandwidth()}
