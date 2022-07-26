@@ -40,7 +40,6 @@ const MOCK_PROPS: HorizontalStackedBarsProps = {
   dataKeys: ['Group 1', 'Group 2', 'Group 3'],
   groupIndex: 0,
   id: 'id',
-  isAnimated: false,
   name: 'stacked',
   stackedValues: STACKED_VALUES as FormattedStackedSeries[],
   xScale: scaleLinear(),
@@ -92,5 +91,47 @@ describe('<HorizontalStackedBars />', () => {
 
     expect(bars[0].props.borderRadius).toStrictEqual(BORDER_RADIUS.None);
     expect(bars[2].props.borderRadius).toStrictEqual(BORDER_RADIUS.Right);
+  });
+});
+
+describe('Zero Value', () => {
+  it('renders a line component when all passed values are zero', () => {
+    const chart = mount(
+      <svg>
+        <HorizontalStackedBars
+          {...MOCK_PROPS}
+          stackedValues={
+            [
+              [
+                [0, 0],
+                [0, 0],
+                [0, 0],
+              ],
+            ] as FormattedStackedSeries[]
+          }
+        />
+      </svg>,
+    );
+    expect(chart).toContainReactComponent('line');
+  });
+
+  it('does not render a line component when at least one passed value is not zero', () => {
+    const chart = mount(
+      <svg>
+        <HorizontalStackedBars
+          {...MOCK_PROPS}
+          stackedValues={
+            [
+              [
+                [0, 0],
+                [1, 0],
+                [0, 0],
+              ],
+            ] as FormattedStackedSeries[]
+          }
+        />
+      </svg>,
+    );
+    expect(chart).not.toContainReactComponent('line');
   });
 });

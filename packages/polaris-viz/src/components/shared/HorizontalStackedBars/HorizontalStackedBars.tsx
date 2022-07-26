@@ -15,6 +15,7 @@ import {
 } from '../../../constants';
 import type {FormattedStackedSeries} from '../../../types';
 import {getGradientDefId} from '..';
+import {ZeroValueLine} from '../ZeroValueLine';
 
 import {StackedBar} from './components';
 import {useStackedGaps} from './hooks';
@@ -120,10 +121,6 @@ export function HorizontalStackedBars({
         const barId = getBarId(id, groupIndex, seriesIndex);
         const width = Math.abs(xScale(end) - xScale(start));
 
-        if (width === 0) {
-          return null;
-        }
-
         const borderRadius = getBorderRadius({
           lastIndexes,
           seriesIndex,
@@ -133,19 +130,33 @@ export function HorizontalStackedBars({
         const key = dataKeys[seriesIndex] ?? '';
         const ariaLabel = `${key} ${end}`;
 
+        const areSomeGreaterThanZero = stackedValues[groupIndex].some(
+          ([start, end]) => start + end > 0,
+        );
+
         return (
-          <StackedBar
-            activeBarIndex={activeBarIndex}
-            ariaLabel={ariaLabel}
-            borderRadius={borderRadius}
-            color={getGradientDefId(theme, seriesIndex, id)}
-            height={barHeight}
-            key={`${name}${barId}`}
-            seriesIndex={seriesIndex}
-            setActiveBarIndex={setActiveBarIndex}
-            width={width}
-            x={x}
-          />
+          <React.Fragment key={`stackedBar ${barId}`}>
+            {!areSomeGreaterThanZero ? (
+              <ZeroValueLine
+                x={x}
+                y={x + barHeight / 2}
+                direction="horizontal"
+              />
+            ) : (
+              <StackedBar
+                activeBarIndex={activeBarIndex}
+                ariaLabel={ariaLabel}
+                borderRadius={borderRadius}
+                color={getGradientDefId(theme, seriesIndex, id)}
+                height={barHeight}
+                key={`${name}${barId}`}
+                seriesIndex={seriesIndex}
+                setActiveBarIndex={setActiveBarIndex}
+                width={width}
+                x={x}
+              />
+            )}
+          </React.Fragment>
         );
       })}
     </animated.g>
