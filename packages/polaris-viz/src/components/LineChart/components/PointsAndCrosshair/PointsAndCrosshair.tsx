@@ -39,7 +39,7 @@ export function PointsAndCrosshair({
   yScale,
 }: PointsAndCrosshairProps) {
   const selectedTheme = useTheme(theme);
-  const {shouldAnimate} = useChartContext();
+  const {shouldAnimate, isPerformanceImpacted} = useChartContext();
 
   const gradientId = useRef(uniqueId('lineChartGradient'));
 
@@ -90,18 +90,20 @@ export function PointsAndCrosshair({
           x={getXPosition({isCrosshair: true})}
         />
       )}
-      <Points
-        activeIndex={emptyState ? null : activeIndex}
-        animatedCoordinates={animatedCoordinates}
-        data={reversedSeries}
-        getXPosition={getXPosition}
-        gradientId={gradientId.current}
-        longestSeriesIndex={longestSeriesIndex}
-        theme={theme}
-        tooltipId={tooltipId}
-        xScale={xScale}
-        yScale={yScale}
-      />
+      {isPerformanceImpacted ? null : (
+        <Points
+          activeIndex={emptyState ? null : activeIndex}
+          animatedCoordinates={animatedCoordinates}
+          data={reversedSeries}
+          getXPosition={getXPosition}
+          gradientId={gradientId.current}
+          longestSeriesIndex={longestSeriesIndex}
+          theme={theme}
+          tooltipId={tooltipId}
+          xScale={xScale}
+          yScale={yScale}
+        />
+      )}
     </React.Fragment>
   );
 }

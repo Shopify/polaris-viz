@@ -29,6 +29,7 @@ export function CombinationRenderer<T extends Attributes>({
       id: 'chart',
       characterWidths,
       characterWidthOffsets,
+      isPerformanceImpacted: false,
     };
   }, [theme]);
 
