@@ -7,6 +7,11 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+
+### Added
+
+- added `ChartErrorBoundary` around every chart to catch unhandled errors that prevent the chart from rendering
+
 ### Fixed
 
 - `HorizontalBarChart` and `VerticalBarChart` don't display a bar if a passed value is null or missing.
