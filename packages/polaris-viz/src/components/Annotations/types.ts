@@ -3,6 +3,7 @@ export interface AnnotationPosition {
   line: {
     y: number;
     x: number;
+    width?: number;
   };
   row: number;
   width: number;

@@ -53,5 +53,7 @@ export function useDualAxisScale({
   return {
     barYScale,
     lineYScale,
+    primaryYScale: yScale,
+    secondaryYScale,
   };
 }

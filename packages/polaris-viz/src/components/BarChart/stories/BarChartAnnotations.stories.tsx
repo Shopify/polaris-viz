@@ -101,7 +101,7 @@ const VERTICAL_ANNOTATIONS: Annotation[] = [
     axis: 'x',
   },
   {
-    startKey: '30',
+    startKey: '35',
     label: 'Sales target',
     axis: 'y',
   },
@@ -133,7 +133,7 @@ const HORIZONTAL_ANNOTATIONS: Annotation[] = [
     axis: 'y',
   },
   {
-    startKey: '30',
+    startKey: '33',
     label: 'Sales target',
     axis: 'x',
   },

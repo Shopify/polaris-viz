@@ -5,14 +5,14 @@ import {ANNOTATION_Y_AXIS_LABEL_HEIGHT} from '../../constants';
 import {useEstimateStringWidth} from '../../../../hooks/useEstimateStringWidth';
 
 const FONT_SIZE = 10;
-const Y_OFFSET = 13;
 
 interface Props {
   label: string | number;
   y: number;
+  x: number;
 }
 
-export function AnnotationYAxisLabel({label, y}: Props) {
+export function AnnotationYAxisLabel({label, x, y}: Props) {
   const selectedTheme = useTheme();
   const width = useEstimateStringWidth(`${label}`, FONT_SIZE);
 
@@ -23,7 +23,7 @@ export function AnnotationYAxisLabel({label, y}: Props) {
       y={y}
       dominantBaseline="middle"
       fontSize={FONT_SIZE}
-      x={-width - Y_OFFSET}
+      x={x}
       fill={selectedTheme.annotations.axisLabelColor}
     >
       {label}

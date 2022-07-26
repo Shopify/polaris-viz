@@ -7,6 +7,6 @@ export function checkAvailableAnnotations(
 
   return {
     hasXAxisAnnotations: values.some(({axis}) => axis === 'x'),
-    hasYAxisAnnotations: values.some(({axis}) => axis === 'y'),
+    hasYAxisAnnotations: values.some(({axis}) => axis.includes('y')),
   };
 }

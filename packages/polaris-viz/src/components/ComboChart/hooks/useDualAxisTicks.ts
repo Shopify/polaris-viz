@@ -79,7 +79,7 @@ export function useDualAxisTicks({data, drawableHeight}: Props) {
 
   const tickHeight = Math.abs(secondaryMaxforTicks / ticksBetweenZeroAndMax);
 
-  const secondaryTicks = ticks.map((tick, index) => {
+  const intialSecondaryTicks = ticks.map((tick, index) => {
     const alteredIndex = index - zeroIndex;
     const formattedValue = roundToDecimals(tickHeight * alteredIndex, 2);
 
@@ -92,16 +92,17 @@ export function useDualAxisTicks({data, drawableHeight}: Props) {
     };
   });
 
-  const leftTicks = sourceOfTruthIndex === 0 ? ticks : secondaryTicks;
-  const rightTicks = sourceOfTruthIndex === 0 ? secondaryTicks : ticks;
+  const primaryTicks = sourceOfTruthIndex === 0 ? ticks : intialSecondaryTicks;
+  const secondaryTicks =
+    sourceOfTruthIndex === 0 ? intialSecondaryTicks : ticks;
 
   return {
     areAllValuesNegative,
     doesOneChartContainAllNegativeValues,
     doBothChartsContainMixedValues,
-    leftTicks,
+    primaryTicks,
     primaryAxis,
-    rightTicks,
+    secondaryTicks,
     secondaryAxis,
     yScale,
     shouldPlaceZeroInMiddleOfChart,

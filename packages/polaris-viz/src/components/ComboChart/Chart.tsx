@@ -11,6 +11,11 @@ import {
 } from '@shopify/polaris-viz-core';
 import type {Dimensions, DataGroup} from '@shopify/polaris-viz-core';
 
+import {
+  Annotations,
+  checkAvailableAnnotations,
+  YAxisAnnotations,
+} from '../Annotations';
 import {sortBarChartData} from '../../utilities/sortBarChartData';
 import {getVerticalBarChartTooltipPosition} from '../../utilities/getVerticalBarChartTooltipPosition';
 import {
@@ -21,14 +26,17 @@ import {
   TooltipWrapper,
   TOOLTIP_POSITION_DEFAULT_RETURN,
 } from '../TooltipWrapper';
-import type {RenderTooltipContentData} from '../../types';
+import type {
+  AnnotationLookupTable,
+  RenderTooltipContentData,
+} from '../../types';
 import {XAxis} from '../XAxis';
 import {useThemeSeriesColorsForDataGroup} from '../../hooks/useThemeSeriesColorsForDataGroup';
 import {useColorVisionEvents, useReducedLabelIndexes} from '../../hooks';
 import {HorizontalGridLines} from '../HorizontalGridLines';
 import {YAxis} from '../YAxis';
 import {LegendContainer, useLegend} from '../LegendContainer';
-import {XMLNS} from '../../constants';
+import {ANNOTATIONS_LABELS_OFFSET, XMLNS} from '../../constants';
 
 import {useDualAxisTicks} from './hooks/useDualAxisTicks';
 import {useDualAxisTicksWidth} from './hooks/useDualAxisTickWidths';
@@ -40,6 +48,7 @@ import {useSplitDataForCharts} from './hooks/useSplitDataForCharts';
 import {useComboChartTooltipContent} from './hooks/useComboChartTooltipContent';
 
 export interface ChartProps {
+  annotationsLookupTable: AnnotationLookupTable;
   data: DataGroup[];
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
   showLegend: boolean;
@@ -49,6 +58,7 @@ export interface ChartProps {
 }
 
 export function Chart({
+  annotationsLookupTable,
   data,
   dimensions,
   renderTooltipContent,
@@ -65,6 +75,7 @@ export function Chart({
   const [labelHeight, setLabelHeight] = useState(0);
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [annotationsHeight, setAnnotationsHeight] = useState(0);
 
   const {legend, setLegendDimensions, height, width} = useLegend({
     colors,
@@ -73,15 +84,21 @@ export function Chart({
     showLegend,
   });
 
+  const chartYPosition = (BarChartMargin.Top as number) + annotationsHeight;
   const drawableHeight =
-    height - labelHeight - LABEL_AREA_TOP_SPACING - BarChartMargin.Top;
+    height - chartYPosition - labelHeight - LABEL_AREA_TOP_SPACING;
+  const annotationsDrawableHeight =
+    chartYPosition + drawableHeight + ANNOTATIONS_LABELS_OFFSET;
+
+  const labelsYPosition =
+    chartYPosition + drawableHeight + LABEL_AREA_TOP_SPACING;
 
   const {
     doBothChartsContainMixedValues,
     doesOneChartContainAllNegativeValues,
-    leftTicks,
+    primaryTicks,
     primaryAxis,
-    rightTicks,
+    secondaryTicks,
     secondaryAxis,
     shouldPlaceZeroInMiddleOfChart,
     ticksBetweenZeroAndMax,
@@ -92,27 +109,25 @@ export function Chart({
   });
 
   const {leftTickWidth, rightTickWidth} = useDualAxisTicksWidth(
-    leftTicks,
-    rightTicks,
+    primaryTicks,
+    secondaryTicks,
   );
 
-  const {barYScale, lineYScale} = useDualAxisScale({
-    doesOneChartContainAllNegativeValues,
-    doBothChartsContainMixedValues,
-    drawableHeight,
-    primaryAxis,
-    secondaryAxis,
-    yScale,
-    shouldPlaceZeroInMiddleOfChart,
-    ticksBetweenZeroAndMax,
-  });
+  const {barYScale, lineYScale, primaryYScale, secondaryYScale} =
+    useDualAxisScale({
+      doesOneChartContainAllNegativeValues,
+      doBothChartsContainMixedValues,
+      drawableHeight: annotationsDrawableHeight,
+      primaryAxis,
+      secondaryAxis,
+      yScale,
+      shouldPlaceZeroInMiddleOfChart,
+      ticksBetweenZeroAndMax,
+    });
 
   const horizontalMargin = selectedTheme.grid.horizontalMargin;
   const chartXPosition =
     leftTickWidth + Y_AXIS_CHART_SPACING + horizontalMargin;
-  const chartYPosition = 0;
-  const labelsYPosition =
-    chartYPosition + drawableHeight + LABEL_AREA_TOP_SPACING;
 
   const drawableWidth =
     width - chartXPosition - horizontalMargin * 2 - rightTickWidth;
@@ -148,6 +163,10 @@ export function Chart({
     seriesColors: colors,
   });
 
+  const {hasXAxisAnnotations, hasYAxisAnnotations} = checkAvailableAnnotations(
+    annotationsLookupTable,
+  );
+
   return (
     <div
       className={styles.ChartContainer}
@@ -162,13 +181,15 @@ export function Chart({
         viewBox={`0 0 ${width} ${height}`}
         xmlns={XMLNS}
         ref={setSvgRef}
+        width={width}
+        height={height}
       >
         {selectedTheme.grid.showHorizontalLines ? (
           <HorizontalGridLines
-            ticks={leftTicks}
+            ticks={primaryTicks}
             transform={{
               x: selectedTheme.grid.horizontalOverflow ? 0 : chartXPosition,
-              y: 0,
+              y: chartYPosition,
             }}
             width={
               selectedTheme.grid.horizontalOverflow ? width : drawableWidth
@@ -190,22 +211,22 @@ export function Chart({
         )}
 
         <YAxis
-          ticks={leftTicks}
+          ticks={primaryTicks}
           textAlign="right"
           width={leftTickWidth}
           x={horizontalMargin}
-          y={0}
+          y={chartYPosition}
         />
 
         <YAxis
-          ticks={rightTicks}
+          ticks={secondaryTicks}
           textAlign="left"
           width={rightTickWidth}
           x={chartXPosition + drawableWidth + Y_AXIS_CHART_SPACING}
-          y={0}
+          y={chartYPosition}
         />
 
-        <g transform={`translate(${chartXPosition},${0})`}>
+        <g transform={`translate(${chartXPosition},${chartYPosition})`}>
           <ComboBarChart
             indexOffset={barChartIndexOffset}
             colors={barChartColors}
@@ -217,10 +238,24 @@ export function Chart({
           />
         </g>
 
+        {hasXAxisAnnotations && (
+          <g transform={`translate(${chartXPosition},0)`} tabIndex={-1}>
+            <Annotations
+              annotationsLookupTable={annotationsLookupTable}
+              axisLabelWidth={labelWidth}
+              drawableHeight={annotationsDrawableHeight}
+              drawableWidth={drawableWidth}
+              labels={labels}
+              onHeightChange={setAnnotationsHeight}
+              xScale={xScale}
+            />
+          </g>
+        )}
+
         <g
           transform={`translate(${
             chartXPosition + drawableWidth / labels.length / 2
-          },${0})`}
+          },${chartYPosition})`}
         >
           <ComboLineChart
             activeIndex={activeIndex}
@@ -234,6 +269,32 @@ export function Chart({
             yScale={lineYScale}
           />
         </g>
+
+        {hasYAxisAnnotations && (
+          <React.Fragment>
+            <g
+              transform={`translate(${chartXPosition},${chartYPosition})`}
+              tabIndex={-1}
+            >
+              <YAxisAnnotations
+                axis="y1"
+                annotationsLookupTable={annotationsLookupTable}
+                drawableHeight={annotationsDrawableHeight}
+                drawableWidth={drawableWidth}
+                ticks={primaryTicks}
+                yScale={primaryYScale}
+              />
+              <YAxisAnnotations
+                axis="y2"
+                annotationsLookupTable={annotationsLookupTable}
+                drawableHeight={annotationsDrawableHeight}
+                drawableWidth={drawableWidth}
+                ticks={secondaryTicks}
+                yScale={secondaryYScale}
+              />
+            </g>
+          </React.Fragment>
+        )}
       </svg>
 
       <TooltipWrapper

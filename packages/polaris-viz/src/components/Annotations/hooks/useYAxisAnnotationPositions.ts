@@ -18,6 +18,7 @@ import type {AnnotationPosition} from '../types';
 
 export interface Props {
   annotations: Annotation[];
+  axis: 'y' | 'y1' | 'y2';
   drawableWidth: number;
   ticks: YAxisTick[];
   yScale: ScaleLinear<number, number>;
@@ -25,6 +26,7 @@ export interface Props {
 
 export function useYAxisAnnotationPositions({
   annotations,
+  axis,
   drawableWidth,
   ticks,
   yScale,
@@ -57,16 +59,21 @@ export function useYAxisAnnotationPositions({
         max: Infinity,
       });
 
+      const x = axis === 'y2' ? 0 : drawableWidth - width;
+      const lineWidth =
+        axis === 'y2' ? drawableWidth : drawableWidth - (drawableWidth - x);
+
       return {
         index: dataIndex,
         line: {
           x: 0,
           y: rawY,
+          width: lineWidth,
         },
         showYAxisLabel: true,
         row: 1,
         width,
-        x: drawableWidth - width,
+        x,
         y,
       };
     });
@@ -124,11 +131,16 @@ export function useYAxisAnnotationPositions({
 
     positions.forEach((current) => {
       const row = current.row - 1;
-      current.x -= (current.width + PILL_ROW_GAP) * row;
+
+      if (axis === 'y2') {
+        current.x += (current.width + PILL_ROW_GAP) * row;
+      } else {
+        current.x -= (current.width + PILL_ROW_GAP) * row;
+      }
     });
 
     return {positions};
-  }, [annotations, ticks, textWidths, yScale, drawableWidth]);
+  }, [annotations, ticks, textWidths, yScale, drawableWidth, axis]);
 
   return {
     positions,

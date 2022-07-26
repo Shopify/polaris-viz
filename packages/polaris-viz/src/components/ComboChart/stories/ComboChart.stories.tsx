@@ -5,6 +5,7 @@ import type {DataGroup} from '@shopify/polaris-viz-core';
 import {ComboChart, ComboChartProps} from '../ComboChart';
 
 import {THEME_CONTROL_ARGS, TYPE_CONTROL_ARGS} from '../../../storybook';
+import type {ComboAnnotation} from 'types';
 
 export default {
   title: 'polaris-viz/Charts/ComboChart',
@@ -103,7 +104,7 @@ const DATA: DataGroup[] = [
           {value: 238, key: '2020-07-08T12:00:00'},
           {value: 190, key: '2020-07-09T12:00:00'},
           {value: 90, key: '2020-07-10T12:00:00'},
-          {value: 237, key: '2020-07-11T12:00:00'},
+          {value: 399, key: '2020-07-11T12:00:00'},
         ],
         isComparison: true,
       },
@@ -131,4 +132,43 @@ Default.args = {
       });
     },
   },
+};
+
+const ANNOTATIONS: ComboAnnotation[] = [
+  {
+    startKey: '2020-07-08T12:00:00',
+    label: 'Big Sale',
+    axis: 'x',
+  },
+  {
+    startKey: '2020-07-11T12:00:00',
+    label: 'GDPR rule change',
+    content: {
+      title: 'GDPR rule change',
+      content:
+        'New GDPR rules that prevent the unauthorized tracking of user sessions came into effect on Thursday, June 1.',
+      linkUrl: 'https://shopify.com',
+    },
+    axis: 'x',
+  },
+  {
+    startKey: '15',
+    label: 'Sales target',
+    axis: 'y1',
+  },
+  {
+    startKey: '399',
+    label: 'Break-even',
+    axis: 'y2',
+    content: {
+      content: 'This is our break-even point. We can sell for $10 per unit.',
+    },
+  },
+];
+
+export const Annotations: Story<ComboChartProps> = Template.bind({});
+
+Annotations.args = {
+  data: DATA,
+  annotations: ANNOTATIONS,
 };
