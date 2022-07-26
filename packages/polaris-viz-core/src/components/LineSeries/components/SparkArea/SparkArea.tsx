@@ -1,4 +1,5 @@
 import React, {useMemo} from 'react';
+import type {SpringValue} from '@react-spring/core';
 
 import {usePolarisVizContext} from '../../../../hooks';
 import type {Color} from '../../../../types';
@@ -33,7 +34,7 @@ const MASK_GRADIENT = [
 
 interface SparkAreaProps {
   color: Color;
-  areaPath: string;
+  areaPath: SpringValue<string | null> | string;
 }
 
 export function SparkArea({areaPath, color}: SparkAreaProps) {
@@ -44,13 +45,15 @@ export function SparkArea({areaPath, color}: SparkAreaProps) {
 
   const {
     components: {Defs, Mask, Path},
+    animated,
   } = usePolarisVizContext();
+  const AnimatedPath = animated(Path);
 
   return areaGradientColor == null ? null : (
     <React.Fragment>
       <Defs>
         <Mask id={maskId}>
-          <Path fill={`url(#${maskId}-gradient)`} d={areaPath} />
+          <AnimatedPath fill={`url(#${maskId}-gradient)`} d={areaPath} />
         </Mask>
         <LinearGradientWithStops
           id={`${maskId}-gradient`}
@@ -66,7 +69,7 @@ export function SparkArea({areaPath, color}: SparkAreaProps) {
           gradient={areaGradientColor}
         />
       </Defs>
-      <Path
+      <AnimatedPath
         d={areaPath}
         fill={`url(#${gradientId})`}
         mask={`url(#${maskId})`}

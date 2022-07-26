@@ -78,6 +78,7 @@ export {
   ARC_LOAD_ANIMATION_CONFIG,
   ARC_DATA_CHANGE_ANIMATION_CONFIG,
   LEGENDS_TOP_MARGIN,
+  LINE_SERIES_POINT_RADIUS,
 } from './constants';
 export {
   clamp,
@@ -116,6 +117,7 @@ export {
   useUniqueId,
   useAriaLabel,
   useChartContext,
+  usePrevious,
 } from './hooks';
 export {
   Bar,

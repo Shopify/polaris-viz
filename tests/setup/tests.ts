@@ -1,7 +1,23 @@
 import '@shopify/react-testing/matchers';
 import {destroyAll} from '@shopify/react-testing';
+import {cloneElement} from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import {Globals} from '@react-spring/web';
+
+const mockCloneElement = (element: React.ReactElement, props) =>
+  cloneElement(element, props);
+
+jest.mock('../../packages/polaris-viz/src/components/ChartContainer', () => {
+  return {
+    ChartContainer: ({children}) =>
+      mockCloneElement(children, {
+        dimensions: {
+          width: 600,
+          height: 400,
+        },
+      }),
+  };
+});
 
 jest.mock('../../packages/polaris-viz/src/constants.ts', () => {
   const actual = jest.requireActual(

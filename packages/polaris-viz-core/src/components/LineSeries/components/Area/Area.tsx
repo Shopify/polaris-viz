@@ -1,4 +1,5 @@
 import React from 'react';
+import type {SpringValue} from '@react-spring/core';
 
 import type {LineChartDataSeriesWithDefaults} from '../../../../types';
 import {DefaultArea} from '../DefaultArea';
@@ -6,7 +7,7 @@ import {SparkArea} from '../SparkArea';
 
 interface Props {
   series: LineChartDataSeriesWithDefaults;
-  areaPath: string;
+  areaPath: SpringValue<string | null> | string;
   type: 'default' | 'spark';
 }
 

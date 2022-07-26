@@ -9,14 +9,15 @@ describe('usePrevious', () => {
     return <div>{result == null ? 'undefined' : result}</div>;
   }
 
-  it('returns undefined when there was no previous value', () => {
+  it('returns the initial value when there was no previous value', () => {
     const mockComponent = mount(<TestComponent prop="hello" />);
-    expect(mockComponent.text()).toBe('undefined');
+    expect(mockComponent.text()).toBe('hello');
   });
 
   it('returns the previous value', () => {
     const mockComponent = mount(<TestComponent prop="hello" />);
     mockComponent.setProps({prop: 'again'});
-    expect(mockComponent.text()).toBe('hello');
+    mockComponent.setProps({prop: 'another time'});
+    expect(mockComponent.text()).toBe('again');
   });
 });
