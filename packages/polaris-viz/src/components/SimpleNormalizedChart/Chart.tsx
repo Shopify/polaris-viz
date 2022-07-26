@@ -13,6 +13,7 @@ import {
 } from '../../hooks';
 import {classNames} from '../../utilities';
 import type {LegendPosition} from '../../types';
+import {WARN_FOR_DEVELOPMENT} from '../../constants';
 
 import {BarSegment, BarLabel} from './components';
 import type {Size} from './types';
@@ -45,7 +46,6 @@ export function Chart({
   const containsNegatives = flattenedData.some(
     ({value}) => value !== null && value < 0,
   );
-  const isDevelopment = process.env.NODE_ENV === 'development';
 
   const [activeIndex, setActiveIndex] = useState(-1);
 
@@ -54,14 +54,14 @@ export function Chart({
     onIndexChange: ({detail}) => setActiveIndex(detail.index),
   });
 
-  if (isDevelopment && containsNegatives) {
+  if (WARN_FOR_DEVELOPMENT && containsNegatives) {
     // eslint-disable-next-line no-console
     console.warn(
       'This component is not built to handle negatives. Consider using a different component.',
     );
   }
 
-  if (isDevelopment && flattenedData.length > 4) {
+  if (WARN_FOR_DEVELOPMENT && flattenedData.length > 4) {
     throw new Error(
       'This component displays a max of 4 data items. Please modify your data before passing it into this component.',
     );

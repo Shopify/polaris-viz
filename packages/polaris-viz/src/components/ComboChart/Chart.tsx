@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {
-  BarChartMargin,
+  ChartMargin,
   BoundingRect,
   DataType,
   COLOR_VISION_SINGLE_ITEM,
@@ -8,6 +8,8 @@ import {
   useTheme,
   XAxisOptions,
   Y_AXIS_CHART_SPACING,
+  LINE_HEIGHT,
+  clamp,
 } from '@shopify/polaris-viz-core';
 import type {Dimensions, DataGroup} from '@shopify/polaris-viz-core';
 
@@ -43,9 +45,11 @@ import {useDualAxisTicksWidth} from './hooks/useDualAxisTickWidths';
 import {useDualAxisScale} from './hooks/useDualAxisScale';
 import {useXScale} from './hooks/useXScale';
 import styles from './Chart.scss';
-import {ComboBarChart, ComboLineChart} from './components';
+import {ComboBarChart, ComboLineChart, AxisLabel} from './components';
 import {useSplitDataForCharts} from './hooks/useSplitDataForCharts';
 import {useComboChartTooltipContent} from './hooks/useComboChartTooltipContent';
+
+const MIN_OUTSIDE_OFFSET = 20;
 
 export interface ChartProps {
   annotationsLookupTable: AnnotationLookupTable;
@@ -84,7 +88,7 @@ export function Chart({
     showLegend,
   });
 
-  const chartYPosition = (BarChartMargin.Top as number) + annotationsHeight;
+  const chartYPosition = (ChartMargin.Top as number) + annotationsHeight;
   const drawableHeight =
     height - chartYPosition - labelHeight - LABEL_AREA_TOP_SPACING;
   const annotationsDrawableHeight =
@@ -126,11 +130,30 @@ export function Chart({
     });
 
   const horizontalMargin = selectedTheme.grid.horizontalMargin;
+
+  const outsideOffset = clamp({
+    amount: MIN_OUTSIDE_OFFSET - horizontalMargin,
+    min: 0,
+    max: MIN_OUTSIDE_OFFSET,
+  });
+
+  const primaryLabelOffset =
+    primaryAxis.name == null ? 0 : outsideOffset + LINE_HEIGHT * 2;
+  const secondaryLabelOffset =
+    secondaryAxis.name == null ? 0 : outsideOffset + LINE_HEIGHT * 2;
+
   const chartXPosition =
-    leftTickWidth + Y_AXIS_CHART_SPACING + horizontalMargin;
+    primaryLabelOffset +
+    leftTickWidth +
+    Y_AXIS_CHART_SPACING +
+    horizontalMargin;
 
   const drawableWidth =
-    width - chartXPosition - horizontalMargin * 2 - rightTickWidth;
+    width -
+    chartXPosition -
+    horizontalMargin * 2 -
+    rightTickWidth -
+    secondaryLabelOffset;
 
   const {
     barChartData,
@@ -210,19 +233,22 @@ export function Chart({
           />
         )}
 
+        {primaryAxis.name != null && (
+          <AxisLabel
+            axis="primary"
+            containerWidth={leftTickWidth}
+            height={drawableHeight}
+            name={primaryAxis.name}
+            x={horizontalMargin + primaryLabelOffset}
+            y={0}
+          />
+        )}
+
         <YAxis
           ticks={primaryTicks}
           textAlign="right"
           width={leftTickWidth}
-          x={horizontalMargin}
-          y={chartYPosition}
-        />
-
-        <YAxis
-          ticks={secondaryTicks}
-          textAlign="left"
-          width={rightTickWidth}
-          x={chartXPosition + drawableWidth + Y_AXIS_CHART_SPACING}
+          x={horizontalMargin + primaryLabelOffset}
           y={chartYPosition}
         />
 
@@ -295,6 +321,24 @@ export function Chart({
             </g>
           </React.Fragment>
         )}
+        {secondaryAxis.name != null && (
+          <AxisLabel
+            axis="secondary"
+            containerWidth={rightTickWidth}
+            height={drawableHeight}
+            name={secondaryAxis.name}
+            x={chartXPosition + drawableWidth + Y_AXIS_CHART_SPACING}
+            y={0}
+          />
+        )}
+
+        <YAxis
+          ticks={secondaryTicks}
+          textAlign="left"
+          width={rightTickWidth}
+          x={chartXPosition + drawableWidth + Y_AXIS_CHART_SPACING}
+          y={chartYPosition}
+        />
       </svg>
 
       <TooltipWrapper
@@ -303,7 +347,7 @@ export function Chart({
         focusElementDataType={DataType.BarGroup}
         getMarkup={getTooltipMarkup}
         getPosition={getTooltipPosition}
-        margin={BarChartMargin}
+        margin={ChartMargin}
         onIndexChange={(index) => setActiveIndex(index)}
         parentRef={svgRef}
       />
@@ -331,7 +375,7 @@ export function Chart({
     const highestValuePos = Math.max(...sortedDataPos);
 
     const x = xPosition + chartXPosition;
-    const y = yScale(highestValuePos) + (BarChartMargin.Top as number);
+    const y = yScale(highestValuePos) + (ChartMargin.Top as number);
 
     return {
       x,
@@ -355,8 +399,8 @@ export function Chart({
       formatPositionForTooltip,
       maxIndex: labels.length - 1,
       step: labelWidth,
-      yMin: BarChartMargin.Top,
-      yMax: drawableHeight + Number(BarChartMargin.Bottom) + labelHeight,
+      yMin: ChartMargin.Top,
+      yMax: drawableHeight + Number(ChartMargin.Bottom) + labelHeight,
     });
   }
 }

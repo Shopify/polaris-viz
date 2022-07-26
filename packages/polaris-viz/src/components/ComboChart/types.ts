@@ -13,4 +13,5 @@ export interface Axis {
   min: number;
   shape: Shape;
   yAxisOptions: Required<YAxisOptions>;
+  name?: string;
 }

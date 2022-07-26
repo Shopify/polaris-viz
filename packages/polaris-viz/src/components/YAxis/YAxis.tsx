@@ -1,4 +1,5 @@
 import React from 'react';
+import {estimateStringWidth, useChartContext} from '@shopify/polaris-viz-core';
 
 import {useTheme} from '../../hooks';
 import {LINE_HEIGHT, FONT_SIZE} from '../../constants';
@@ -15,41 +16,52 @@ interface Props {
 
 const PADDING_SIZE = 2;
 
-function Axis({ticks, width, textAlign, ariaHidden = false, x, y}: Props) {
+export function YAxis({
+  ticks,
+  width,
+  textAlign,
+  ariaHidden = false,
+  x,
+  y,
+}: Props) {
   const selectedTheme = useTheme();
+  const {characterWidths} = useChartContext();
 
   return (
     <g transform={`translate(${x},${y})`} aria-hidden="true">
       {ticks.map(({value, formattedValue, yOffset}) => {
+        const stringWidth = estimateStringWidth(
+          formattedValue,
+          characterWidths,
+        );
+
+        const x = textAlign === 'right' ? width - stringWidth : 0;
+
         return (
-          <foreignObject
-            key={value}
-            aria-hidden={ariaHidden}
-            transform={`translate(0,${yOffset - LINE_HEIGHT / 2})`}
-            width={width + PADDING_SIZE * 4}
-            height={LINE_HEIGHT}
-            style={{
-              color: selectedTheme.yAxis.labelColor,
-              textAlign,
-              fontSize: FONT_SIZE,
-              lineHeight: `${LINE_HEIGHT}px`,
-            }}
-          >
-            <span
+          <g key={value} transform={`translate(${x},${yOffset})`}>
+            <rect
+              height={LINE_HEIGHT}
+              width={stringWidth + PADDING_SIZE * 2}
+              fill={selectedTheme.chartContainer.backgroundColor}
+              y={-LINE_HEIGHT / 2}
+              x={-PADDING_SIZE}
+            />
+            <text
+              aria-hidden={ariaHidden}
+              width={width + PADDING_SIZE * 4}
+              height={LINE_HEIGHT}
+              fill={selectedTheme.yAxis.labelColor}
+              fontSize={FONT_SIZE}
+              dominantBaseline="middle"
               style={{
-                padding: `0 ${PADDING_SIZE}px`,
-                background: selectedTheme.yAxis.backgroundColor,
-                whiteSpace: 'nowrap',
                 fontFeatureSettings: 'tnum',
               }}
             >
               {formattedValue}
-            </span>
-          </foreignObject>
+            </text>
+          </g>
         );
       })}
     </g>
   );
 }
-
-export const YAxis = React.memo(Axis);

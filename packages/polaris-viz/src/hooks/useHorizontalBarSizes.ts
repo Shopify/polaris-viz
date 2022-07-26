@@ -6,6 +6,7 @@ import {
   HORIZONTAL_SPACE_BETWEEN_CHART_AND_AXIS,
   HORIZONTAL_SPACE_BETWEEN_SETS,
   HORIZONTAL_SPACE_BETWEEN_SINGLE,
+  WARN_FOR_DEVELOPMENT,
 } from '../constants';
 
 const MIN_BAR_HEIGHT = 6;
@@ -54,7 +55,7 @@ export function useHorizontalBarSizes({
       max: Infinity,
     });
 
-    if (groupBarsAreaHeight < 0) {
+    if (WARN_FOR_DEVELOPMENT && groupBarsAreaHeight < 0) {
       // eslint-disable-next-line no-console
       console.error(
         'The height available for drawing the chart is too small and this will cause overlaps between labels and bars. Maybe you should increase the chart height or use fewer data series?',

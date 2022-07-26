@@ -79,7 +79,11 @@ describe('<ConicGradientWithStops />', () => {
       style: result4,
     },
   ])('renders a div with the given styles', ({props, style}) => {
-    const conicGradient = mount(<ConicGradientWithStops {...props} />);
+    const conicGradient = mount(
+      <svg>
+        <ConicGradientWithStops {...props} />
+      </svg>,
+    );
 
     expect(conicGradient).toContainReactComponent('div', {
       style,

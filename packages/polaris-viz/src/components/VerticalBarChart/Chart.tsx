@@ -32,7 +32,7 @@ import {LegendContainer, useLegend} from '../LegendContainer';
 import {GradientDefs} from '../shared';
 import {
   ANNOTATIONS_LABELS_OFFSET,
-  BarChartMargin as Margin,
+  ChartMargin,
   LABEL_AREA_TOP_SPACING,
   XMLNS,
   Y_AXIS_CHART_SPACING,
@@ -117,7 +117,7 @@ export function Chart({
     dataLength: data[0] ? data[0].data.length : 0,
   });
 
-  const chartYPosition = (Margin.Top as number) + annotationsHeight;
+  const chartYPosition = (ChartMargin.Top as number) + annotationsHeight;
   const drawableHeight =
     height - chartYPosition - labelHeight - LABEL_AREA_TOP_SPACING;
 
@@ -293,7 +293,7 @@ export function Chart({
         focusElementDataType={DataType.BarGroup}
         getMarkup={getTooltipMarkup}
         getPosition={getTooltipPosition}
-        margin={{...Margin, Top: chartYPosition}}
+        margin={{...ChartMargin, Top: chartYPosition}}
         parentRef={svgRef}
       />
 
@@ -349,8 +349,8 @@ export function Chart({
       formatPositionForTooltip,
       maxIndex: sortedData.length - 1,
       step: xScale.step(),
-      yMin: Margin.Top,
-      yMax: drawableHeight + Number(Margin.Bottom) + labelHeight,
+      yMin: ChartMargin.Top,
+      yMax: drawableHeight + Number(ChartMargin.Bottom) + labelHeight,
     });
   }
 }

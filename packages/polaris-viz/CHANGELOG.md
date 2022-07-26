@@ -14,6 +14,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Added
 
 - Render xAxis and dual yAxis annotations in `<ComboChart />`.
+- Render labels for each axis in `<ComboChart />`.
 
 ## [6.1.0] - 2022-07-21
 
