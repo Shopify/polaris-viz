@@ -6,7 +6,7 @@ import {
 
 import {useTheme} from './useTheme';
 
-interface Props {
+export interface Props {
   annotationsHeight: number;
   height: number;
   width: number;

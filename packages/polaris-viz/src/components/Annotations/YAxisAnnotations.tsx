@@ -15,7 +15,7 @@ import {
   AnnotationLine,
   AnnotationYAxisLabel,
 } from './components';
-import type {DualAxisYAxis} from './types';
+import type {OptionalDualAxisYAxis} from './types';
 
 export interface YAxisAnnotationsProps {
   annotationsLookupTable: AnnotationLookupTable;
@@ -23,7 +23,7 @@ export interface YAxisAnnotationsProps {
   drawableWidth: number;
   ticks: YAxisTick[];
   yScale: ScaleLinear<number, number>;
-  axis?: DualAxisYAxis;
+  axis?: OptionalDualAxisYAxis;
 }
 
 export function YAxisAnnotations({

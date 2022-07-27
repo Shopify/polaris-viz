@@ -1,6 +1,6 @@
 import React from 'react';
 import {useTheme} from '@shopify/polaris-viz-core';
-import type {DualAxisYAxis} from 'components/Annotations/types';
+import type {OptionalDualAxisYAxis} from 'components/Annotations/types';
 
 import {ANNOTATION_Y_AXIS_LABEL_HEIGHT} from '../../constants';
 import {useEstimateStringWidth} from '../../../../hooks/useEstimateStringWidth';
@@ -8,7 +8,7 @@ import {useEstimateStringWidth} from '../../../../hooks/useEstimateStringWidth';
 const FONT_SIZE = 10;
 
 interface Props {
-  axis: DualAxisYAxis;
+  axis: OptionalDualAxisYAxis;
   label: string | number;
   y: number;
   x: number;

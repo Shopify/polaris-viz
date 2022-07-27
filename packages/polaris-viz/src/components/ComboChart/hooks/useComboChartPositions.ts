@@ -6,7 +6,7 @@ import {
 
 import type {Axis} from '../types';
 
-interface Props {
+export interface Props {
   leftTickWidth: number;
   primaryAxis: Axis;
   rightTickWidth: number;
@@ -14,7 +14,7 @@ interface Props {
   width: number;
 }
 
-export function useComboChartPostions({
+export function useComboChartPositions({
   leftTickWidth,
   primaryAxis,
   rightTickWidth,

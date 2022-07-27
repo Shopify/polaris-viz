@@ -10,7 +10,6 @@ import {
   DEFAULT_THEME_NAME,
   BoundingRect,
   useChartPositions,
-  LINE_HEIGHT,
 } from '@shopify/polaris-viz-core';
 import type {
   Dimensions,

@@ -45,7 +45,7 @@ import styles from './Chart.scss';
 import {ComboBarChart, ComboLineChart, AxisLabel} from './components';
 import {useSplitDataForCharts} from './hooks/useSplitDataForCharts';
 import {useComboChartTooltipContent} from './hooks/useComboChartTooltipContent';
-import {useComboChartPostions} from './hooks/useComboChartPositions';
+import {useComboChartPositions} from './hooks/useComboChartPositions';
 
 export interface ChartProps {
   annotationsLookupTable: AnnotationLookupTable;
@@ -129,7 +129,7 @@ export function Chart({
     });
 
   const {chartXPosition, drawableWidth, leftAxis, rightAxis} =
-    useComboChartPostions({
+    useComboChartPositions({
       leftTickWidth,
       primaryAxis,
       rightTickWidth,
