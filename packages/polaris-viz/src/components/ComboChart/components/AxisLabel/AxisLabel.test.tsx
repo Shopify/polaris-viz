@@ -30,7 +30,7 @@ describe('<AxisLabel />', () => {
       );
 
       expect(component).toContainReactComponent('g', {
-        transform: 'translate(-28,100) rotate(-90)',
+        transform: 'translate(0,100) rotate(-90)',
       });
     });
 
@@ -42,7 +42,7 @@ describe('<AxisLabel />', () => {
       );
 
       expect(component).toContainReactComponent('g', {
-        transform: 'translate(128,0) rotate(90)',
+        transform: 'translate(14,0) rotate(90)',
       });
     });
   });
@@ -78,7 +78,7 @@ describe('<AxisLabel />', () => {
       );
 
       expect(component).toContainReactComponent('g', {
-        transform: 'translate(-18,120) rotate(-90)',
+        transform: 'translate(10,120) rotate(-90)',
       });
     });
   });
