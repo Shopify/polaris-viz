@@ -1,4 +1,5 @@
-import React, {useMemo, useState, useCallback} from 'react';
+import React, {useMemo, useState, useCallback, useRef} from 'react';
+import {createPortal} from 'react-dom';
 import {scaleBand, scaleLinear} from 'd3-scale';
 import {
   DataSeries,
@@ -132,71 +133,22 @@ export function Chart({
       return '';
     }
   };
+
+  const maskRef = useRef<SVGMaskElement>(null);
   return (
     <svg role="list" viewBox={`0 0 ${width} ${height}`} xmlns={XMLNS}>
-      <defs>
-        <LinearGradientWithStops
-          gradient={connectorGradient}
-          id={connectorGradientId}
-          x1="0%"
-          x2="0%"
-          y1="100%"
-          y2="0%"
-        />
-
-        <LinearGradientWithStops gradient={barsGradient} id={`${gradientId}`} />
-
-        <mask id={`${maskId}-${theme}-grad`}>
-          {dataSeries.map((dataPoint) => {
-            const barHeight = getBarHeight(dataPoint.value || 0);
-            const xPosition = xScale(dataPoint.key as string);
-            const x = xPosition == null ? 0 : xPosition;
-            const barWidth = xScale.bandwidth();
-            return (
-              <g key={dataPoint.key} role="listitem">
-                <Bar
-                  ariaLabel={`${xAxisOptions.labelFormatter(
-                    dataPoint.key,
-                  )}: ${yAxisOptions.labelFormatter(dataPoint.value)}`}
-                  width={barWidth}
-                  height={barHeight}
-                  color={MASK_HIGHLIGHT_COLOR}
-                  x={x}
-                  y={drawableHeight - barHeight}
-                  borderRadius={
-                    selectedTheme.bar.hasRoundedCorners
-                      ? BORDER_RADIUS.Top
-                      : BORDER_RADIUS.None
-                  }
-                />
-              </g>
-            );
-          })}
-        </mask>
-      </defs>
-
-      <g aria-hidden="true">
-        <FunnelChartXAxisLabels
-          chartHeight={height}
-          chartX={barWidth / NEGATIVE_LABEL_OFFSET}
-          chartY={drawableHeight + X_LABEL_OFFSET}
-          labels={labels}
-          labelWidth={barWidth + barWidth / 2}
-          onHeightChange={setLabelHeight}
-          reducedLabelIndexes={reducedLabelIndexes}
-          xScale={labelXScale}
-        />
-      </g>
-
-      <rect
-        mask={`url(#${maskId}-${theme}-grad)`}
-        x={0}
-        y={0}
-        width={width}
-        height={drawableHeight}
-        fill={`url(#${gradientId})`}
+      <LinearGradientWithStops
+        gradient={connectorGradient}
+        id={connectorGradientId}
+        x1="0%"
+        x2="0%"
+        y1="100%"
+        y2="0%"
       />
 
+      <LinearGradientWithStops gradient={barsGradient} id={`${gradientId}`} />
+
+      <mask ref={maskRef} id={`${maskId}-${theme}-grad`} />
       {dataSeries.map((dataPoint, index: number) => {
         const nextPoint = dataSeries[index + 1];
         const xPosition = xScale(dataPoint.key as string);
@@ -214,6 +166,27 @@ export function Chart({
 
         return (
           <React.Fragment key={dataPoint.key}>
+            {maskRef.current &&
+              createPortal(
+                <g key={dataPoint.key} role="listitem">
+                  <Bar
+                    ariaLabel={`${xAxisOptions.labelFormatter(
+                      dataPoint.key,
+                    )}: ${yAxisOptions.labelFormatter(dataPoint.value)}`}
+                    width={barWidth}
+                    height={barHeight}
+                    color={MASK_HIGHLIGHT_COLOR}
+                    x={x}
+                    y={drawableHeight - barHeight}
+                    borderRadius={
+                      selectedTheme.bar.hasRoundedCorners
+                        ? BORDER_RADIUS.Top
+                        : BORDER_RADIUS.None
+                    }
+                  />
+                </g>,
+                maskRef.current,
+              )}
             <g aria-hidden="true">
               <Label
                 barHeight={0}
@@ -252,6 +225,28 @@ export function Chart({
           </React.Fragment>
         );
       })}
+
+      <g aria-hidden="true">
+        <FunnelChartXAxisLabels
+          chartHeight={height}
+          chartX={barWidth / NEGATIVE_LABEL_OFFSET}
+          chartY={drawableHeight + X_LABEL_OFFSET}
+          labels={labels}
+          labelWidth={barWidth + barWidth / 2}
+          onHeightChange={setLabelHeight}
+          reducedLabelIndexes={reducedLabelIndexes}
+          xScale={labelXScale}
+        />
+      </g>
+
+      <rect
+        mask={`url(#${maskId}-${theme}-grad)`}
+        x={0}
+        y={0}
+        width={width}
+        height={drawableHeight}
+        fill={`url(#${gradientId})`}
+      />
     </svg>
   );
 }
