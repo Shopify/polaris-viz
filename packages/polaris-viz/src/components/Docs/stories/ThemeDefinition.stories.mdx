@@ -591,12 +591,6 @@ export interface GradientStop {
     chartsAffected={['BarChart', 'LineChart', 'MultiSeriesBarChart']}
   />
   <PropertyTable.Row
-    property="grid.showVerticalLines"
-    type="boolean"
-    description="determines whether or not to show vertical grid lines"
-    chartsAffected={['StackedAreaChart', 'LineChart']}
-  />
-  <PropertyTable.Row
     property="grid.horizontalOverflow"
     type="boolean"
     description="determines whether or not to extend the grid horizontally to the edge of the chart"
@@ -669,7 +663,6 @@ export interface GradientStop {
         Default: {
           grid: {
             showHorizontalLines: true,
-            showVerticalLines: true,
           },
         }
       }}
@@ -683,9 +676,7 @@ export interface GradientStop {
       <PolarisVizProvider
         themes={{
           Default: {
-            grid: {
-              showVerticalLines: true,
-            },
+            grid: {},
           },
         }}
       >
@@ -701,7 +692,6 @@ export interface GradientStop {
       themes={{
         Default: {
           grid: {
-            showVerticalLines: true,
             showHorizontalLines: true,
             horizontalOverflow: false,
             color: 'lime',
@@ -721,7 +711,6 @@ export interface GradientStop {
         themes={{
           Default: {
             grid: {
-              showVerticalLines: true,
               showHorizontalLines: true,
               horizontalOverflow: false,
               color: 'lime',
@@ -742,7 +731,6 @@ export interface GradientStop {
       themes={{
         Default: {
           grid: {
-            showVerticalLines: true,
             showHorizontalLines: true,
             horizontalOverflow: true,
             color: 'lime',
@@ -762,7 +750,6 @@ export interface GradientStop {
         themes={{
           Default: {
             grid: {
-              showVerticalLines: true,
               showHorizontalLines: true,
               horizontalOverflow: true,
               color: 'lime',
@@ -786,7 +773,6 @@ export interface GradientStop {
 
 <PropertyTable>
   <PropertyTable.Row
-    property="xAxis.showTicks"
     type="boolean"
     description="determines whether or not to show the ticks vertical lines indicating the labels on the X Axis"
     chartsAffected={[
@@ -831,7 +817,6 @@ export interface GradientStop {
       themes={{
         Default: {
           xAxis: {
-            showTicks: false,
           }
         }
       }}
@@ -845,9 +830,7 @@ export interface GradientStop {
       <PolarisVizProvider
         themes={{
           Default: {
-            xAxis: {
-              showTicks: false,
-            },
+            xAxis: {},
           },
         }}
       >
@@ -863,7 +846,6 @@ export interface GradientStop {
       themes={{
         Default: {
           xAxis: {
-            showTicks: true,
             labelColor: 'lime',
           }
         }
@@ -879,7 +861,6 @@ export interface GradientStop {
         themes={{
           Default: {
             xAxis: {
-              showTicks: true,
               labelColor: 'lime',
             },
           },

@@ -7,7 +7,8 @@ const mockProps: LegendItemProps = {
   activeIndex: 2,
   colorVisionType: 'someType',
   index: 0,
-  legend: {name: 'Legend Name', color: 'red'},
+  name: 'Legend Name',
+  color: 'red',
 };
 
 describe('<LegendItem />', () => {
@@ -21,7 +22,9 @@ describe('<LegendItem />', () => {
     const item = mount(
       <LegendItem
         {...mockProps}
-        legend={{name: 'Legend Name', color: 'red', value: 'LegendValue'}}
+        name="Legend Name"
+        color="red"
+        value="LegendValue"
       />,
     );
 

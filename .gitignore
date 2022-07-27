@@ -7,3 +7,4 @@ packages/*/build
 .yalc
 yalc.lock
 build
+storybook-static-chromatic

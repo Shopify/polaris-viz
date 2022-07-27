@@ -21,11 +21,11 @@ export function Legend({
   const items = data.map((legend, index) => {
     return (
       <LegendItem
+        key={index}
+        {...legend}
         activeIndex={activeIndex}
         colorVisionType={colorVisionType}
         index={index}
-        key={index}
-        legend={legend}
         theme={theme}
       />
     );

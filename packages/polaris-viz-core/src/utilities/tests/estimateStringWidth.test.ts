@@ -19,4 +19,9 @@ describe('estimateStringWidth()', () => {
     const actual = estimateStringWidth('m', {W: characterWidths.W});
     expect(actual).toStrictEqual(11.6171875);
   });
+
+  it('returns hardcode default when characterWidths is unavailable', () => {
+    const actual = estimateStringWidth('m', {});
+    expect(actual).toStrictEqual(11.6171875);
+  });
 });

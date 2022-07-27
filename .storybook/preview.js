@@ -123,6 +123,7 @@ export const parameters = {
       return compareStoryPaths(storiesOrder, story1Path, story2Path);
     },
   },
+  chromatic: {disableSnapshot: true, delay: 300},
 };
 
 export const decorators = [

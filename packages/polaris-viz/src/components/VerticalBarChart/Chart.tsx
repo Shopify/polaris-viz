@@ -159,7 +159,7 @@ export function Chart({
     y: chartYPosition,
   };
 
-  const hideXAxis = xAxisOptions.hide ?? selectedTheme.xAxis.hide;
+  const hideXAxis = xAxisOptions.hide || selectedTheme.xAxis.hide;
 
   const {sortedData, areAllNegative, xScale, gapWidth} = useVerticalBarChart({
     data,

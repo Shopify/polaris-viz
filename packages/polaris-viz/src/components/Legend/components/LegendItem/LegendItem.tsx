@@ -11,9 +11,8 @@ import {useTheme} from '../../../../hooks';
 
 import style from './LegendItem.scss';
 
-export interface LegendItemProps {
+export interface LegendItemProps extends LegendData {
   index: number;
-  legend: LegendData;
   activeIndex?: number;
   colorVisionType?: string;
   theme?: string;
@@ -21,10 +20,14 @@ export interface LegendItemProps {
 
 export function LegendItem({
   activeIndex = -1,
+  color,
   colorVisionType,
   index,
-  legend,
+  isComparison,
+  name,
+  shape,
   theme,
+  value,
 }: LegendItemProps) {
   const selectedTheme = useTheme(theme);
 
@@ -52,20 +55,12 @@ export function LegendItem({
         style={{height: PREVIEW_ICON_SIZE, width: PREVIEW_ICON_SIZE}}
         className={style.IconContainer}
       >
-        <SeriesIcon
-          shape={legend.shape}
-          color={legend.color}
-          isComparison={legend.isComparison}
-        />
+        <SeriesIcon shape={shape} color={color} isComparison={isComparison} />
       </span>
       <span className={style.TextContainer}>
-        <span style={{color: selectedTheme.legend.labelColor}}>
-          {legend.name}
-        </span>
-        {legend.value == null ? null : (
-          <span style={{color: selectedTheme.legend.valueColor}}>
-            {legend.value}
-          </span>
+        <span style={{color: selectedTheme.legend.labelColor}}>{name}</span>
+        {value == null ? null : (
+          <span style={{color: selectedTheme.legend.valueColor}}>{value}</span>
         )}
       </span>
     </button>

@@ -11,7 +11,10 @@ jest.mock('react', () => {
       characterWidths: {
         // eslint-disable-next-line id-length
         a: 1,
+        // eslint-disable-next-line id-length
+        b: 1,
         1: 1,
+        0: 1,
       },
     }),
   };
