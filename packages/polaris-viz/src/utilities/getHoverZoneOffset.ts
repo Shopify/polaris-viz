@@ -2,7 +2,7 @@ import {clamp} from '@shopify/polaris-viz-core';
 
 import {HOVER_TARGET_ZONE} from '../constants';
 
-interface Props {
+export interface Props {
   barSize: number;
   zeroPosition: number;
   max: number;

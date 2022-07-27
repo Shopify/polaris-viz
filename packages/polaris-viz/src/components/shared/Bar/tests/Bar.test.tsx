@@ -3,6 +3,10 @@ import {mount} from '@shopify/react-testing';
 
 import {Bar} from '../Bar';
 import type {BarProps} from '../Bar';
+import {
+  getHoverZoneOffset,
+  Props,
+} from '../../../../utilities/getHoverZoneOffset';
 
 const MOCK_PROPS: BarProps = {
   color: 'red',
@@ -11,6 +15,14 @@ const MOCK_PROPS: BarProps = {
   x: 5,
   y: 10,
   transform: 'scaleX(-10)',
+};
+
+const mockPropsForHoverZone: Props = {
+  barSize: 100,
+  zeroPosition: 5,
+  max: 119,
+  position: 'horizontal',
+  isNegative: false,
 };
 
 describe('<Bar />', () => {
@@ -45,5 +57,12 @@ describe('Zero Value', () => {
       </svg>,
     );
     expect(bar).toContainReactComponent('line');
+  });
+
+  describe('hover target zone', () => {
+    it("gets an offset for a hover target zone based on the bar's width", () => {
+      const bar = getHoverZoneOffset({...mockPropsForHoverZone});
+      expect(bar).toStrictEqual({clampedSize: 114, offset: 14});
+    });
   });
 });
