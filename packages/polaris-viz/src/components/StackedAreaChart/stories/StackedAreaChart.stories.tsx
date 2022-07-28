@@ -154,21 +154,21 @@ export const SeriesColorsUpToFour = Template.bind({});
 
 SeriesColorsUpToFour.args = {
   ...DEFAULT_PROPS,
-  data: generateMultipleSeries(4),
+  data: generateMultipleSeries(4, "dates"),
 };
 
 export const SeriesColorsFromFiveToSeven = Template.bind({});
 
 SeriesColorsFromFiveToSeven.args = {
   ...DEFAULT_PROPS,
-  data: generateMultipleSeries(7),
+  data: generateMultipleSeries(7, "dates"),
 };
 
 export const SeriesColorsUpToFourteen = Template.bind({});
 
 SeriesColorsUpToFourteen.args = {
   ...DEFAULT_PROPS,
-  data: generateMultipleSeries(14),
+  data: generateMultipleSeries(14, "dates"),
 };
 
 const ANNOTATIONS: Annotation[] = [
