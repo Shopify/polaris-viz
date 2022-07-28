@@ -117,6 +117,7 @@ export {
   useAriaLabel,
   useChartContext,
   usePrevious,
+  useChartPositions,
 } from './hooks';
 export {
   Bar,

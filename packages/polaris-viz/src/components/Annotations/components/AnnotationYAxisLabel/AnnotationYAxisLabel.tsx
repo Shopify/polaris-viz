@@ -1,5 +1,6 @@
 import React from 'react';
 import {useTheme} from '@shopify/polaris-viz-core';
+import type {OptionalDualAxisYAxis} from 'components/Annotations/types';
 
 import {ANNOTATION_Y_AXIS_LABEL_HEIGHT} from '../../constants';
 import {useEstimateStringWidth} from '../../../../hooks/useEstimateStringWidth';
@@ -7,14 +8,17 @@ import {useEstimateStringWidth} from '../../../../hooks/useEstimateStringWidth';
 const FONT_SIZE = 10;
 
 interface Props {
+  axis: OptionalDualAxisYAxis;
   label: string | number;
   y: number;
   x: number;
 }
 
-export function AnnotationYAxisLabel({label, x, y}: Props) {
+export function AnnotationYAxisLabel({axis, label, x, y}: Props) {
   const selectedTheme = useTheme();
   const width = useEstimateStringWidth(`${label}`, FONT_SIZE);
+
+  const xOffset = axis === 'y2' ? 0 : width;
 
   return (
     <text
@@ -23,7 +27,7 @@ export function AnnotationYAxisLabel({label, x, y}: Props) {
       y={y}
       dominantBaseline="middle"
       fontSize={FONT_SIZE}
-      x={x}
+      x={x - xOffset}
       fill={selectedTheme.annotations.axisLabelColor}
     >
       {label}

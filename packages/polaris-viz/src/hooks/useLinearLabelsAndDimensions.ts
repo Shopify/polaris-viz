@@ -1,13 +1,11 @@
 import {useMemo} from 'react';
 import {
   DataSeries,
-  useTheme,
   LINEAR_LABELS_INNER_PADDING,
   estimateStringWidth,
   clamp,
   useChartContext,
 } from '@shopify/polaris-viz-core';
-import type {XAxisOptions} from '@shopify/polaris-viz-core';
 
 import {HORIZONTAL_LABEL_MIN_WIDTH} from '../constants';
 
@@ -16,29 +14,18 @@ import {useReducedLabelIndexes} from './useReducedLabelIndexes';
 
 interface Props {
   data: DataSeries[];
-  longestSeriesLength: number;
-  width: number;
+  drawableWidth: number;
   labels: string[];
-  xAxisOptions: Required<XAxisOptions>;
-  yAxisLabelWidth: number;
-  theme: string;
+  longestSeriesLength: number;
 }
 
 export function useLinearLabelsAndDimensions({
   data,
-  longestSeriesLength,
-  theme,
+  drawableWidth: initialDrawableWidth,
   labels,
-  width,
-  yAxisLabelWidth,
+  longestSeriesLength,
 }: Props) {
-  const selectedTheme = useTheme(theme);
   const {characterWidths} = useChartContext();
-
-  const horizontalMargin = selectedTheme.grid.horizontalMargin;
-  let chartXPosition = horizontalMargin + yAxisLabelWidth;
-
-  let drawableWidth = width - chartXPosition - horizontalMargin;
 
   const longestSeriesLastIndex = useMemo(
     () =>
@@ -68,7 +55,9 @@ export function useLinearLabelsAndDimensions({
     });
   }, [labels, characterWidths]);
 
-  const numberOfLabelsThatFit = Math.floor(drawableWidth / longestLabelWidth);
+  const numberOfLabelsThatFit = Math.floor(
+    initialDrawableWidth / longestLabelWidth,
+  );
   const skipEveryNthLabel = Math.ceil(labels.length / numberOfLabelsThatFit);
 
   const reducedLabelIndexes = useReducedLabelIndexes({
@@ -86,16 +75,15 @@ export function useLinearLabelsAndDimensions({
 
     return clamp({
       amount: Math.min(
-        drawableWidth / visibleLabelsCount - LINEAR_LABELS_INNER_PADDING,
+        initialDrawableWidth / visibleLabelsCount - LINEAR_LABELS_INNER_PADDING,
         longestLabelWidth,
       ),
       min: 0,
-      max: drawableWidth,
+      max: initialDrawableWidth,
     });
-  }, [drawableWidth, visibleLabelsCount, longestLabelWidth]);
+  }, [initialDrawableWidth, visibleLabelsCount, longestLabelWidth]);
 
-  drawableWidth -= labelWidth;
-  chartXPosition += labelWidth / 2;
+  const drawableWidth = initialDrawableWidth - labelWidth;
 
   const {xScale} = useLinearXScale({
     drawableWidth,
@@ -103,13 +91,11 @@ export function useLinearLabelsAndDimensions({
   });
 
   return {
-    chartXPosition,
-    drawableWidth,
+    labels,
+    xScale,
     xAxisDetails: {
       labelWidth,
       reducedLabelIndexes,
     },
-    xScale,
-    labels,
   };
 }

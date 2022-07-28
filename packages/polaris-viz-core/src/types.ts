@@ -43,11 +43,12 @@ export interface Dimensions {
   height: number;
 }
 
-export interface BoundingRect extends Dimensions {
+export interface Position {
   x: number;
   y: number;
 }
 
+export type BoundingRect = Position & Dimensions;
 export type Color = string | GradientStop[];
 
 export interface XAxisOptions {

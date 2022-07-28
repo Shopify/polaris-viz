@@ -8,7 +8,6 @@ export default {
   title: 'polaris-viz/Charts/BarChart/Playground',
   component: BarChart,
   parameters: {
-    horizontalMargin: 0,
     controls: {
       sort: 'requiredFirst',
       expanded: true,

@@ -4,12 +4,9 @@ import {
   BoundingRect,
   DataType,
   COLOR_VISION_SINGLE_ITEM,
-  LABEL_AREA_TOP_SPACING,
   useTheme,
   XAxisOptions,
-  Y_AXIS_CHART_SPACING,
-  LINE_HEIGHT,
-  clamp,
+  useChartPositions,
 } from '@shopify/polaris-viz-core';
 import type {Dimensions, DataGroup} from '@shopify/polaris-viz-core';
 
@@ -48,8 +45,7 @@ import styles from './Chart.scss';
 import {ComboBarChart, ComboLineChart, AxisLabel} from './components';
 import {useSplitDataForCharts} from './hooks/useSplitDataForCharts';
 import {useComboChartTooltipContent} from './hooks/useComboChartTooltipContent';
-
-const MIN_OUTSIDE_OFFSET = 20;
+import {useComboChartPositions} from './hooks/useComboChartPositions';
 
 export interface ChartProps {
   annotationsLookupTable: AnnotationLookupTable;
@@ -76,7 +72,7 @@ export function Chart({
 
   const colors = useThemeSeriesColorsForDataGroup(data, selectedTheme);
 
-  const [labelHeight, setLabelHeight] = useState(0);
+  const [xAxisHeight, setXAxisHeight] = useState(0);
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [annotationsHeight, setAnnotationsHeight] = useState(0);
@@ -88,14 +84,17 @@ export function Chart({
     showLegend,
   });
 
-  const chartYPosition = (ChartMargin.Top as number) + annotationsHeight;
-  const drawableHeight =
-    height - chartYPosition - labelHeight - LABEL_AREA_TOP_SPACING;
+  const {drawableHeight, chartYPosition, xAxisBounds, yAxisBounds} =
+    useChartPositions({
+      annotationsHeight,
+      height,
+      width,
+      xAxisHeight,
+      yAxisWidth: 0,
+    });
+
   const annotationsDrawableHeight =
     chartYPosition + drawableHeight + ANNOTATIONS_LABELS_OFFSET;
-
-  const labelsYPosition =
-    chartYPosition + drawableHeight + LABEL_AREA_TOP_SPACING;
 
   const {
     doBothChartsContainMixedValues,
@@ -129,31 +128,14 @@ export function Chart({
       ticksBetweenZeroAndMax,
     });
 
-  const horizontalMargin = selectedTheme.grid.horizontalMargin;
-
-  const outsideOffset = clamp({
-    amount: MIN_OUTSIDE_OFFSET - horizontalMargin,
-    min: 0,
-    max: MIN_OUTSIDE_OFFSET,
-  });
-
-  const primaryLabelOffset =
-    primaryAxis.name == null ? 0 : outsideOffset + LINE_HEIGHT * 2;
-  const secondaryLabelOffset =
-    secondaryAxis.name == null ? 0 : outsideOffset + LINE_HEIGHT * 2;
-
-  const chartXPosition =
-    primaryLabelOffset +
-    leftTickWidth +
-    Y_AXIS_CHART_SPACING +
-    horizontalMargin;
-
-  const drawableWidth =
-    width -
-    chartXPosition -
-    horizontalMargin * 2 -
-    rightTickWidth -
-    secondaryLabelOffset;
+  const {chartXPosition, drawableWidth, leftAxis, rightAxis} =
+    useComboChartPositions({
+      leftTickWidth,
+      primaryAxis,
+      rightTickWidth,
+      secondaryAxis,
+      width,
+    });
 
   const {
     barChartData,
@@ -224,10 +206,10 @@ export function Chart({
           <XAxis
             chartHeight={height}
             chartX={chartXPosition}
-            chartY={labelsYPosition}
+            chartY={xAxisBounds.y}
             labels={labels}
             labelWidth={labelWidth}
-            onHeightChange={setLabelHeight}
+            onHeightChange={setXAxisHeight}
             reducedLabelIndexes={reducedLabelIndexes}
             xScale={xScale}
           />
@@ -236,11 +218,10 @@ export function Chart({
         {primaryAxis.name != null && (
           <AxisLabel
             axis="primary"
-            containerWidth={leftTickWidth}
             height={drawableHeight}
             name={primaryAxis.name}
-            x={horizontalMargin + primaryLabelOffset}
-            y={0}
+            x={leftAxis.labelX}
+            y={yAxisBounds.y}
           />
         )}
 
@@ -248,8 +229,8 @@ export function Chart({
           ticks={primaryTicks}
           textAlign="right"
           width={leftTickWidth}
-          x={horizontalMargin + primaryLabelOffset}
-          y={chartYPosition}
+          x={leftAxis.x}
+          y={yAxisBounds.y}
         />
 
         <g transform={`translate(${chartXPosition},${chartYPosition})`}>
@@ -321,24 +302,24 @@ export function Chart({
             </g>
           </React.Fragment>
         )}
-        {secondaryAxis.name != null && (
-          <AxisLabel
-            axis="secondary"
-            containerWidth={rightTickWidth}
-            height={drawableHeight}
-            name={secondaryAxis.name}
-            x={chartXPosition + drawableWidth + Y_AXIS_CHART_SPACING}
-            y={0}
-          />
-        )}
 
         <YAxis
           ticks={secondaryTicks}
           textAlign="left"
           width={rightTickWidth}
-          x={chartXPosition + drawableWidth + Y_AXIS_CHART_SPACING}
-          y={chartYPosition}
+          x={rightAxis.x}
+          y={yAxisBounds.y}
         />
+
+        {secondaryAxis.name != null && (
+          <AxisLabel
+            axis="secondary"
+            height={drawableHeight}
+            name={secondaryAxis.name}
+            x={rightAxis.labelX}
+            y={yAxisBounds.y}
+          />
+        )}
       </svg>
 
       <TooltipWrapper
@@ -400,7 +381,7 @@ export function Chart({
       maxIndex: labels.length - 1,
       step: labelWidth,
       yMin: ChartMargin.Top,
-      yMax: drawableHeight + Number(ChartMargin.Bottom) + labelHeight,
+      yMax: drawableHeight + Number(ChartMargin.Bottom) + xAxisHeight,
     });
   }
 }

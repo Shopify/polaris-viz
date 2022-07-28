@@ -238,7 +238,7 @@ describe('<Chart />', () => {
       const [primaryAxis, secondaryAxis] = component.findAll(YAxis);
 
       expect(primaryAxis).toHaveReactProps({
-        x: 48,
+        x: 44,
         y: 5,
       });
 
@@ -283,7 +283,7 @@ describe('<Chart />', () => {
       });
 
       expect(secondaryAxis).toHaveReactProps({
-        x: 688,
+        x: 684,
         y: 5,
       });
     });

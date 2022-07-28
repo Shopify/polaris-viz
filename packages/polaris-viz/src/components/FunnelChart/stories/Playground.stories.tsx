@@ -7,7 +7,6 @@ export default {
   title: 'polaris-viz/Charts/FunnelChart/Playground',
   component: FunnelChart,
   parameters: {
-    horizontalMargin: 0,
     controls: {
       sort: 'requiredFirst',
       expanded: true,

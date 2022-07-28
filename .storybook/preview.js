@@ -136,7 +136,9 @@ export const decorators = [
               padding: '20px',
             },
             grid: {
-              horizontalMargin: context.parameters.horizontalMargin ?? 20,
+              horizontalMargin:
+                context.parameters.horizontalMargin ??
+                DEFAULT_THEME.grid.horizontalMargin,
               horizontalOverflow: true,
             },
           },

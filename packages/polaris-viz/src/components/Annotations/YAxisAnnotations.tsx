@@ -15,8 +15,7 @@ import {
   AnnotationLine,
   AnnotationYAxisLabel,
 } from './components';
-
-const Y_OFFSET = 13;
+import type {OptionalDualAxisYAxis} from './types';
 
 export interface YAxisAnnotationsProps {
   annotationsLookupTable: AnnotationLookupTable;
@@ -24,7 +23,7 @@ export interface YAxisAnnotationsProps {
   drawableWidth: number;
   ticks: YAxisTick[];
   yScale: ScaleLinear<number, number>;
-  axis?: 'y' | 'y1' | 'y2';
+  axis?: OptionalDualAxisYAxis;
 }
 
 export function YAxisAnnotations({
@@ -92,7 +91,7 @@ export function YAxisAnnotations({
           const index = position.index;
           const annotation = annotations[index];
 
-          const {line, x, y, width} = position;
+          const {line, x, y} = position;
 
           const hasContent = annotation.content != null;
           const isContentVisible = index === activeIndex && hasContent;
@@ -102,12 +101,13 @@ export function YAxisAnnotations({
           const axisLabelX =
             axis === 'y2'
               ? drawableWidth + Y_AXIS_CHART_SPACING
-              : -width - Y_OFFSET;
+              : -Y_AXIS_CHART_SPACING;
 
           return (
             <React.Fragment key={`annotation${index}${annotation.startKey}`}>
               {position.showYAxisLabel && (
                 <AnnotationYAxisLabel
+                  axis={axis}
                   y={line.y}
                   x={axisLabelX}
                   label={annotation.startKey}
