@@ -250,7 +250,7 @@ export function Chart({
         {hideXAxis ? null : (
           <XAxis
             chartHeight={height}
-            chartX={xAxisBounds.x - halfXAxisLabelWidth}
+            chartX={xAxisBounds.x}
             chartY={xAxisBounds.y}
             labels={labels}
             labelWidth={xAxisDetails.labelWidth}
@@ -288,7 +288,9 @@ export function Chart({
         />
 
         <g
-          transform={`translate(${chartXPosition},${chartYPosition})`}
+          transform={`translate(${
+            chartXPosition + halfXAxisLabelWidth
+          },${chartYPosition})`}
           className={styles.Group}
           area-hidden="true"
         >
@@ -302,10 +304,7 @@ export function Chart({
         </g>
 
         {hasXAxisAnnotations && (
-          <g
-            transform={`translate(${chartXPosition - halfXAxisLabelWidth},0)`}
-            tabIndex={-1}
-          >
+          <g transform={`translate(${chartXPosition},0)`} tabIndex={-1}>
             <Annotations
               annotationsLookupTable={annotationsLookupTable}
               axisLabelWidth={xAxisDetails.labelWidth}
@@ -319,7 +318,11 @@ export function Chart({
         )}
 
         {activePointIndex == null ? null : (
-          <g transform={`translate(${chartXPosition},${chartYPosition})`}>
+          <g
+            transform={`translate(${
+              chartXPosition + halfXAxisLabelWidth
+            },${chartYPosition})`}
+          >
             <Crosshair
               x={getXPosition({isCrosshair: true, index: 0})}
               height={drawableHeight}
@@ -328,7 +331,11 @@ export function Chart({
           </g>
         )}
 
-        <g transform={`translate(${chartXPosition},${chartYPosition})`}>
+        <g
+          transform={`translate(${
+            chartXPosition + halfXAxisLabelWidth
+          },${chartYPosition})`}
+        >
           <Points
             activePointIndex={activePointIndex}
             animatedCoordinates={animatedCoordinates}

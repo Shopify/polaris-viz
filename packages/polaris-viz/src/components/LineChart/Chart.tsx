@@ -246,7 +246,7 @@ export function Chart({
         {xAxisOptions.hide ? null : (
           <XAxis
             chartHeight={height}
-            chartX={xAxisBounds.x - halfXAxisLabelWidth}
+            chartX={xAxisBounds.x}
             chartY={xAxisBounds.y}
             labels={labels}
             labelWidth={xAxisDetails.labelWidth}
@@ -288,10 +288,7 @@ export function Chart({
         )}
 
         {hasXAxisAnnotations && (
-          <g
-            transform={`translate(${chartXPosition - halfXAxisLabelWidth},0)`}
-            tabIndex={-1}
-          >
+          <g transform={`translate(${chartXPosition},0)`} tabIndex={-1}>
             <Annotations
               annotationsLookupTable={annotationsLookupTable}
               axisLabelWidth={xAxisDetails.labelWidth}
@@ -304,7 +301,11 @@ export function Chart({
           </g>
         )}
 
-        <g transform={`translate(${chartXPosition},${chartYPosition})`}>
+        <g
+          transform={`translate(${
+            chartXPosition + halfXAxisLabelWidth
+          },${chartYPosition})`}
+        >
           {reversedSeries.map((singleSeries, index) => {
             return (
               <LineSeries
