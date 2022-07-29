@@ -1,6 +1,8 @@
 import {
   COLOR_VISION_GROUP_ITEM,
+  DataType,
   LOAD_ANIMATION_DURATION,
+  useChartContext,
   useTheme,
 } from '@shopify/polaris-viz-core';
 import type {
@@ -12,6 +14,7 @@ import type {
 import type {ScaleBand, ScaleLinear} from 'd3-scale';
 import React, {useMemo, useState} from 'react';
 
+import {applyColorVisionToDomElement} from '../../../../utilities/applyColorVisionToDomElement';
 import type {SortedBarChartData} from '../../../../types';
 import {useWatchColorVisionEvents} from '../../../../hooks';
 import {BarGroup} from '../BarGroup';
@@ -49,13 +52,31 @@ export function VerticalBarGroup({
   areAllNegative,
 }: VerticalBarGroupProps) {
   const selectedTheme = useTheme();
+  const {isPerformanceImpacted} = useChartContext();
 
   const [activeBarGroup, setActiveBarGroup] = useState<number>(-1);
+
+  const groupElements = useMemo(() => {
+    return document.querySelectorAll<SVGGElement>(
+      `[data-type="${DataType.BarGroup}"]`,
+    );
+    // We want this to run whenever colors change so we
+    // get all the groups again.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sortedData]);
 
   useWatchColorVisionEvents({
     type: COLOR_VISION_GROUP_ITEM,
     onIndexChange: ({detail}) => {
       setActiveBarGroup(detail.index);
+
+      groupElements.forEach((element) => {
+        applyColorVisionToDomElement({
+          element,
+          activeIndex: detail.index,
+          isPerformanceImpacted,
+        });
+      });
     },
   });
 

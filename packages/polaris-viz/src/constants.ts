@@ -78,3 +78,4 @@ export const IS_DEVELOPMENT = process.env.NODE_ENV === 'development';
 export const IS_TEST = process.env.NODE_ENV === 'test';
 export const WARN_FOR_DEVELOPMENT = IS_DEVELOPMENT && !IS_TEST;
 export const HOVER_TARGET_ZONE = 48;
+export const CROSSHAIR_ID = 'Crosshair';

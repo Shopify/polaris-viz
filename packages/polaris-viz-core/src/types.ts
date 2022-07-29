@@ -259,3 +259,9 @@ export type StackedValues = Series<
   },
   string
 >[];
+
+export enum InternalChartType {
+  Bar = 'Bar',
+  Combo = 'Combo',
+  Line = 'Line',
+}

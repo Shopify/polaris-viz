@@ -40,6 +40,7 @@ const Template: Story<TooltipContentProps> = (args: TooltipContentProps) => {
         characterWidthOffsets,
         shouldAnimate: true,
         theme: DEFAULT_THEME_NAME,
+        isPerformanceImpacted: false,
       }}
     >
       <TooltipContent {...args} />

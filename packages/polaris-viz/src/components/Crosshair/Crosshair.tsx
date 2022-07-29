@@ -7,12 +7,13 @@ import style from './Crosshair.scss';
 interface Props {
   x: number | Interpolation;
   height: number;
-
-  opacity?: number;
   theme: string;
+
+  id?: string;
+  opacity?: number;
 }
 
-export function Crosshair({x, height, opacity = 1, theme}: Props) {
+export function Crosshair({x, height, opacity = 1, theme, id}: Props) {
   const selectedTheme = useTheme(theme);
   return (
     <animated.rect
@@ -21,6 +22,7 @@ export function Crosshair({x, height, opacity = 1, theme}: Props) {
       width={selectedTheme.crossHair.width}
       height={height}
       stroke="none"
+      id={id}
       style={{
         opacity,
         fill: selectedTheme.crossHair.color,

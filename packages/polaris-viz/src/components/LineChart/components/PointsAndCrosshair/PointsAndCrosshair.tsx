@@ -10,6 +10,7 @@ import {
 import {line} from 'd3-shape';
 import type {ScaleLinear} from 'd3-scale';
 
+import {CROSSHAIR_ID} from '../../../../constants';
 import {useLinearChartAnimations} from '../../../../hooks';
 import {Crosshair} from '../../../Crosshair';
 import {Points} from '../Points';
@@ -38,7 +39,7 @@ export function PointsAndCrosshair({
   yScale,
 }: PointsAndCrosshairProps) {
   const selectedTheme = useTheme(theme);
-  const {shouldAnimate} = useChartContext();
+  const {shouldAnimate, isPerformanceImpacted} = useChartContext();
 
   const gradientId = useRef(uniqueId('lineChartGradient'));
 
@@ -82,25 +83,27 @@ export function PointsAndCrosshair({
     <React.Fragment>
       {emptyState ? null : (
         <Crosshair
-          x={getXPosition({isCrosshair: true})}
           height={drawableHeight}
+          id={`${tooltipId}-${CROSSHAIR_ID}`}
           opacity={activeIndex == null ? 0 : 1}
           theme={theme}
+          x={getXPosition({isCrosshair: true})}
         />
       )}
-      <Points
-        activeIndex={emptyState ? null : activeIndex}
-        animatedCoordinates={animatedCoordinates}
-        data={reversedSeries}
-        getXPosition={getXPosition}
-        gradientId={gradientId.current}
-        longestSeriesIndex={longestSeriesIndex}
-        theme={theme}
-        tooltipId={tooltipId}
-        xScale={xScale}
-        yScale={yScale}
-      />
-      *
+      {isPerformanceImpacted ? null : (
+        <Points
+          activeIndex={emptyState ? null : activeIndex}
+          animatedCoordinates={animatedCoordinates}
+          data={reversedSeries}
+          getXPosition={getXPosition}
+          gradientId={gradientId.current}
+          longestSeriesIndex={longestSeriesIndex}
+          theme={theme}
+          tooltipId={tooltipId}
+          xScale={xScale}
+          yScale={yScale}
+        />
+      )}
     </React.Fragment>
   );
 }

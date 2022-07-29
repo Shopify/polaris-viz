@@ -2,6 +2,7 @@ import React from 'react';
 import {
   ChartProps,
   DEFAULT_CHART_PROPS,
+  InternalChartType,
   WithRequired,
   XAxisOptions,
 } from '@shopify/polaris-viz-core';
@@ -59,7 +60,12 @@ export function ComboChart(props: ComboChartProps) {
   }
 
   return (
-    <ChartContainer data={data} isAnimated={isAnimated} theme={theme}>
+    <ChartContainer
+      data={data}
+      isAnimated={isAnimated}
+      theme={theme}
+      type={InternalChartType.Combo}
+    >
       <Chart
         annotationsLookupTable={annotationsLookupTable}
         data={data}

@@ -1,5 +1,3 @@
-import {MIN_BAR_HEIGHT} from '../constants';
-
 import {borderRadiusStringToObject} from './borderRadiusStringToObject';
 import {clamp} from './clamp';
 
@@ -11,26 +9,24 @@ interface Props {
   borderRadius: string;
   height: number;
   width: number;
-  needsMinWidth?: boolean;
 }
 
-export function getRoundedRectPath({
-  borderRadius,
-  height,
-  needsMinWidth = false,
-  width,
-}: Props) {
+export function getRoundedRectPath({borderRadius, height, width}: Props) {
   if (height == null || width == null) {
     return '';
-  }
-  // Return a basic rect if the rounded arcs
-  // would make the rect bigger than the min size.
-  if (!needsMinWidth && (height < MIN_BAR_HEIGHT || width < MIN_BAR_HEIGHT)) {
-    return `m 0 0 h ${width} v ${height} h -${width} z`;
   }
 
   const {topLeft, topRight, bottomRight, bottomLeft} =
     borderRadiusStringToObject(borderRadius);
+
+  const minWidth = Math.max(topLeft + topRight, bottomLeft + bottomRight);
+  const minHeight = Math.max(topLeft + bottomLeft, topRight + bottomRight);
+
+  // Return a basic rect if the rounded arcs
+  // would make the rect bigger than the min size.
+  if (height < minHeight || width < minWidth) {
+    return `m 0 0 h ${width} v ${height} h -${width} z`;
+  }
 
   const top = topLeft + topRight;
   const right = topRight + bottomRight;

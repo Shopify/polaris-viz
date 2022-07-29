@@ -18,14 +18,12 @@ export interface Props {
   yScale: ScaleLinear<number, number>;
   borderRadius?: string;
   height?: Height;
-  needsMinWidth?: boolean;
 }
 
 export function Bar({
   borderRadius = BORDER_RADIUS.None,
   fill,
   height,
-  needsMinWidth = false,
   value,
   width,
   x,
@@ -78,7 +76,6 @@ export function Bar({
         height: heightValue,
         width,
         borderRadius,
-        needsMinWidth,
       });
     };
 
@@ -86,7 +83,7 @@ export function Bar({
       return calculatePath(height);
     }
     return height.to(calculatePath);
-  }, [borderRadius, needsMinWidth, height, width]);
+  }, [borderRadius, height, width]);
 
   if (value == null || width < 0) {
     return null;

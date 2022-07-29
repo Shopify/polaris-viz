@@ -43,7 +43,6 @@ export function StackedBar({
   const pathD = getRoundedRectPath({
     height,
     width,
-    needsMinWidth: false,
     borderRadius,
   });
 

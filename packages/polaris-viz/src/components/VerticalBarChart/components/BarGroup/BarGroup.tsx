@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {
   uniqueId,
@@ -7,7 +7,6 @@ import {
   COLOR_VISION_SINGLE_ITEM,
   COLOR_VISION_GROUP_ITEM,
   getColorVisionEventAttrs,
-  getColorVisionStylesForActiveIndex,
   clamp,
   BORDER_RADIUS,
   useTheme,
@@ -22,10 +21,13 @@ import {
 } from '../../../../constants';
 import type {AccessibilitySeries} from '../../../VerticalBarChart/types';
 import {formatAriaLabel} from '../../utilities';
+import {applyColorVisionToDomElement} from '../../../../utilities/applyColorVisionToDomElement';
 import {useWatchColorVisionEvents} from '../../../../hooks';
 import {Bar} from '../Bar';
 import {BAR_SPACING} from '../../constants';
 import styles from '../../Chart.scss';
+
+const COLOR_VISION_MASK = 'colorVisionMask';
 
 interface Props {
   animationDelay: number;
@@ -63,10 +65,18 @@ export function BarGroup({
   areAllNegative,
 }: Props) {
   const groupAriaLabel = formatAriaLabel(accessibilityData[barGroupIndex]);
-  const {shouldAnimate} = useChartContext();
+  const {shouldAnimate, isPerformanceImpacted} = useChartContext();
 
-  const [activeBarIndex, setActiveBarIndex] = useState(-1);
   const selectedTheme = useTheme(theme);
+
+  const maskItems = useMemo(() => {
+    return document.querySelectorAll<SVGRectElement>(
+      `[data-type="${COLOR_VISION_MASK}"][data-group-index="${barGroupIndex}"]`,
+    );
+    // We want this to run whenever colors change so we
+    // get all the mask items again.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [colors]);
 
   useWatchColorVisionEvents({
     type: COLOR_VISION_SINGLE_ITEM,
@@ -76,7 +86,13 @@ export function BarGroup({
         activeBarGroup === -1 ||
         activeBarGroup === barGroupIndex
       ) {
-        setActiveBarIndex(detail.index);
+        maskItems.forEach((element) => {
+          applyColorVisionToDomElement({
+            element,
+            activeIndex: detail.index,
+            isPerformanceImpacted,
+          });
+        });
       }
     },
   });
@@ -118,10 +134,6 @@ export function BarGroup({
               data-type={DataType.BarGroup}
               data-index={barGroupIndex}
               key={`${barGroupIndex}${index}`}
-              style={getColorVisionStylesForActiveIndex({
-                activeIndex: activeBarGroup,
-                index: barGroupIndex,
-              })}
             >
               <Bar
                 height={getBarHeight(rawValue)}
@@ -156,15 +168,14 @@ export function BarGroup({
                 y={SHAPE_ANIMATION_HEIGHT_BUFFER * -1}
                 width={barWidth - BAR_SPACING}
                 height={drawableHeight + SHAPE_ANIMATION_HEIGHT_BUFFER * 2}
+                data-type={COLOR_VISION_MASK}
+                data-index={index}
+                data-group-index={barGroupIndex}
                 fill={
                   data[index] === 0
                     ? selectedTheme.bar.zeroValueColor
                     : `url(#${gradientId}${index})`
                 }
-                style={getColorVisionStylesForActiveIndex({
-                  activeIndex: activeBarIndex,
-                  index: index + indexOffset,
-                })}
               />
             </g>
           );
@@ -227,6 +238,7 @@ export function BarGroup({
               {...getColorVisionEventAttrs({
                 type: COLOR_VISION_SINGLE_ITEM,
                 index: index + indexOffset,
+                watch: !isPerformanceImpacted,
               })}
               className={styles.Bar}
               tabIndex={-1}
