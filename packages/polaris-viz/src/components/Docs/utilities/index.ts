@@ -17,30 +17,47 @@ const PRODUCT_NAMES = [
   'Glasses',
 ];
 
+const DATES = [
+  '2020-04-10T12:00:00',
+  '2020-04-09T12:00:00',
+  '2020-04-08T12:00:00',
+  '2020-04-07T12:00:00',
+  '2020-04-06T12:00:00',
+  '2020-04-05T12:00:00',
+  '2020-04-04T12:00:00',
+  '2020-04-03T12:00:00',
+  '2020-04-02T12:00:00',
+  '2020-04-01T12:00:00',
+];
+
 export function randomNumber(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-export const generateDataSet = (dataLength: number) => {
+export const generateDataSet = (dataLength: number, typeOfData: string) => {
   return Array(dataLength)
     .fill(null)
     .map(() => {
       return {
         value: randomNumber(20, 50),
-        key: PRODUCT_NAMES[Math.floor(Math.random() * PRODUCT_NAMES.length)],
+        key:
+          typeOfData === 'dates'
+            ? DATES[Math.floor(Math.random() * DATES.length)]
+            : PRODUCT_NAMES[Math.floor(Math.random() * PRODUCT_NAMES.length)],
       };
     });
 };
 
 export const generateMultipleSeries = (
   quantity: number,
+  typeOfData = 'categories',
   dataSetLength = 10,
 ) => {
   return Array(quantity)
     .fill(null)
     .map((_, index) => ({
       name: `Series ${index + 1}`,
-      data: generateDataSet(dataSetLength),
+      data: generateDataSet(dataSetLength, typeOfData),
     }));
 };
 

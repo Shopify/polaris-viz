@@ -208,10 +208,11 @@ OverwrittenSeriesColors.args = {
   },
 };
 
+
 export const SeriesColorsUpToFour: Story<LineChartProps> = Template.bind({});
 
 SeriesColorsUpToFour.args = {
-  data: generateMultipleSeries(4),
+  data: generateMultipleSeries(4, 'dates'),
   isAnimated: true,
 };
 
@@ -220,7 +221,7 @@ export const SeriesColorsFromFiveToSeven: Story<LineChartProps> = Template.bind(
 );
 
 SeriesColorsFromFiveToSeven.args = {
-  data: generateMultipleSeries(7),
+  data: generateMultipleSeries(7, 'dates'),
 };
 
 export const SeriesColorsUpToFourteen: Story<LineChartProps> = Template.bind(
@@ -228,7 +229,7 @@ export const SeriesColorsUpToFourteen: Story<LineChartProps> = Template.bind(
 );
 
 SeriesColorsUpToFourteen.args = {
-  data: generateMultipleSeries(14),
+  data: generateMultipleSeries(14, 'dates'),
 };
 
 const ANNOTATIONS: Annotation[] = [

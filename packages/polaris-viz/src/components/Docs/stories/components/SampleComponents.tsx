@@ -99,7 +99,7 @@ export const SampleStackedAreaChart = (
 ) => {
   return (
     <StackedAreaChart
-      data={generateMultipleSeries(seriesLength, 3)}
+      data={generateMultipleSeries(3, 'categories', seriesLength)}
       showLegend={showLegend}
       theme={theme}
     />
