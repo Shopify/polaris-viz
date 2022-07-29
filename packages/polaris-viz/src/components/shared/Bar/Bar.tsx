@@ -4,12 +4,11 @@ import {
   getRoundedRectPath,
   COLOR_VISION_ACTIVE_OPACITY,
   COLOR_VISION_FADED_OPACITY,
-  BARS_TRANSITION_CONFIG,
   DataType,
   useTheme,
 } from '@shopify/polaris-viz-core';
-import type {Direction} from '@shopify/polaris-viz-core';
 
+import {useBarSpringConfig} from '../../../hooks/useBarSpringConfig';
 import {ZeroValueLine} from '../ZeroValueLine';
 
 import styles from './Bar.scss';
@@ -21,29 +20,25 @@ export interface BarProps {
   x: number;
   y: number;
   animationDelay?: number;
-  animationDirection?: Direction;
   index?: number;
   isActive?: boolean;
-  isAnimated?: boolean;
-  transform?: string;
   ariaLabel?: string;
   areAllNegative?: boolean;
+  transform?: string;
 }
 
 export const Bar = React.memo(function Bar({
   animationDelay = 0,
-  animationDirection = 'horizontal',
+  areAllNegative,
+  ariaLabel,
   color,
   height,
   index,
   isActive = true,
-  isAnimated,
-  transform = '',
+  transform,
   width,
   x,
   y,
-  ariaLabel,
-  areAllNegative,
 }: BarProps) {
   const selectedTheme = useTheme();
   const borderRadius = `0 ${selectedTheme.bar.borderRadius} ${selectedTheme.bar.borderRadius} 0`;
@@ -55,15 +50,12 @@ export const Bar = React.memo(function Bar({
     [borderRadius],
   );
 
-  const initialHeight = animationDirection === 'horizontal' ? height : 0;
-  const initialWidth = animationDirection === 'horizontal' ? 0 : width;
+  const springConfig = useBarSpringConfig({animationDelay});
 
-  const spring = useSpring<{pathD: string}>({
-    from: {pathD: getPath(initialHeight, initialWidth)},
+  const spring = useSpring({
+    from: {pathD: getPath(height, 1)},
     to: {pathD: getPath(height, width)},
-    delay: isAnimated ? animationDelay : 0,
-    config: BARS_TRANSITION_CONFIG,
-    default: {immediate: !isAnimated},
+    ...springConfig,
   });
 
   const ariaHidden = !ariaLabel;
@@ -74,6 +66,7 @@ export const Bar = React.memo(function Bar({
       aria-hidden={ariaHidden}
       role="img"
       aria-label={ariaLabel}
+      transform={`translate(${x}, ${y})`}
     >
       {width !== 0 ? (
         <animated.path
@@ -84,7 +77,7 @@ export const Bar = React.memo(function Bar({
           fill={color}
           aria-hidden="true"
           style={{
-            transform: `translate(${x}px, ${y}px) ${transform}`,
+            transform,
             opacity: isActive
               ? COLOR_VISION_ACTIVE_OPACITY
               : COLOR_VISION_FADED_OPACITY,
@@ -92,12 +85,14 @@ export const Bar = React.memo(function Bar({
           className={styles.Bar}
         />
       ) : (
-        <ZeroValueLine
-          x={x}
-          y={y + height / 2}
-          direction={animationDirection}
-          areAllNegative={areAllNegative}
-        />
+        <animated.g style={{transform: `translate(${x}px, ${-y}px)`}}>
+          <ZeroValueLine
+            x={x}
+            y={y + height / 2}
+            direction="horizontal"
+            areAllNegative={areAllNegative}
+          />
+        </animated.g>
       )}
     </g>
   );

@@ -14,7 +14,6 @@ const MOCK_PROPS: BarProps = {
   width: 100,
   x: 5,
   y: 10,
-  transform: 'scaleX(-10)',
 };
 
 const mockPropsForHoverZone: Props = {
@@ -41,11 +40,9 @@ describe('<Bar />', () => {
         <Bar {...MOCK_PROPS} />
       </svg>,
     );
-    const path = bar.find('path');
+    const group = bar.find('g');
 
-    expect(path?.props?.style?.transform).toStrictEqual(
-      ' translate(5px, 10px) scaleX(-10)',
-    );
+    expect(group?.props?.transform).toStrictEqual('translate(5, 10)');
   });
 });
 

@@ -1,12 +1,8 @@
 import React from 'react';
 import {animated, useSpring} from '@react-spring/web';
-import {useChartContext} from '@shopify/polaris-viz-core';
 
-import {
-  HORIZONTAL_BAR_LABEL_HEIGHT,
-  BARS_TRANSITION_CONFIG,
-  FONT_SIZE,
-} from '../../../../../constants';
+import {useBarSpringConfig} from '../../../../../hooks/useBarSpringConfig';
+import {HORIZONTAL_BAR_LABEL_HEIGHT, FONT_SIZE} from '../../../../../constants';
 
 export interface LabelProps {
   barHeight: number;
@@ -27,15 +23,14 @@ export function Label({
   x,
   y,
 }: LabelProps) {
-  const {shouldAnimate} = useChartContext();
   const labelYOffset = (barHeight - HORIZONTAL_BAR_LABEL_HEIGHT) / 2;
+
+  const springConfig = useBarSpringConfig({animationDelay});
 
   const spring = useSpring({
     from: {transform: 'translateX(0px)', opacity: 0},
     to: {opacity: 1, transform: `translateX(${x}px)`},
-    delay: shouldAnimate ? animationDelay : 0,
-    config: BARS_TRANSITION_CONFIG,
-    default: {immediate: !shouldAnimate},
+    ...springConfig,
   });
 
   return (

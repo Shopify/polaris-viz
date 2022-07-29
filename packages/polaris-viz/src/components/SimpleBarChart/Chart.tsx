@@ -3,7 +3,6 @@ import {
   uniqueId,
   COLOR_VISION_SINGLE_ITEM,
   useAriaLabel,
-  useChartContext,
 } from '@shopify/polaris-viz-core';
 import type {
   ChartType,
@@ -12,6 +11,7 @@ import type {
   XAxisOptions,
   YAxisOptions,
 } from '@shopify/polaris-viz-core';
+import {animated} from '@react-spring/web';
 
 import {LegendContainer, useLegend} from '../../components/LegendContainer';
 import {GradientDefs, HorizontalGroup} from '../shared';
@@ -25,7 +25,7 @@ import {
   useHorizontalStackedValues,
   useColorVisionEvents,
 } from '../../hooks';
-import {XMLNS, HORIZONTAL_BAR_GROUP_DELAY} from '../../constants';
+import {XMLNS} from '../../constants';
 
 import styles from './Chart.scss';
 
@@ -47,7 +47,6 @@ export function Chart({
   yAxisOptions,
 }: ChartProps) {
   useColorVisionEvents(data.length > 1);
-  const {shouldAnimate} = useChartContext();
 
   const id = useMemo(() => uniqueId('SimpleBarChart'), []);
 
@@ -139,32 +138,33 @@ export function Chart({
             key: data[0].data[item.index]?.key,
           });
 
-          const animationDelay = shouldAnimate
-            ? (HORIZONTAL_BAR_GROUP_DELAY * index) / data.length
-            : 0;
-
           return (
-            <HorizontalGroup
-              animationDelay={animationDelay}
-              areAllNegative={areAllNegative}
-              ariaLabel={ariaLabel}
-              barHeight={barHeight}
-              containerWidth={width}
-              data={data}
-              groupHeight={groupHeight}
-              id={id}
-              index={index}
-              isSimple
-              isStacked={isStacked}
-              name={name}
-              opacity={opacity}
-              stackedValues={stackedValues}
-              transform={transform}
-              xAxisOptions={xAxisOptions}
-              xScale={xScale}
-              yAxisOptions={yAxisOptions}
-              zeroPosition={zeroPosition}
-            />
+            <animated.g
+              key={`group-${name}`}
+              style={{
+                opacity,
+                transform,
+              }}
+            >
+              <HorizontalGroup
+                areAllNegative={areAllNegative}
+                ariaLabel={ariaLabel}
+                barHeight={barHeight}
+                containerWidth={width}
+                data={data}
+                groupHeight={groupHeight}
+                id={id}
+                index={index}
+                isSimple
+                isStacked={isStacked}
+                name={name}
+                stackedValues={stackedValues}
+                xAxisOptions={xAxisOptions}
+                xScale={xScale}
+                yAxisOptions={yAxisOptions}
+                zeroPosition={zeroPosition}
+              />
+            </animated.g>
           );
         })}
       </svg>

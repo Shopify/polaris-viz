@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import type {Story, Meta} from '@storybook/react';
 
 import {SimpleBarChart, SimpleBarChartProps} from '../SimpleBarChart';
@@ -91,4 +91,105 @@ export const SimpleStacked: Story<SimpleBarChartProps> = Template.bind({});
 SimpleStacked.args = {
   data: SERIES,
   type: 'stacked',
+};
+
+export const DynamicData = () => {
+  const [data, setData] = useState([
+    {
+      name: 'BCFM 2019',
+      data: [
+        {
+          key: 'Womens Leggings',
+          value: 3,
+        },
+        {
+          key: 'Mens Bottoms',
+          value: 7,
+        },
+        {
+          key: 'Mens Shorts',
+          value: 4,
+        },
+      ],
+    },
+    {
+      name: 'BCFM 2020',
+      data: [
+        {
+          key: 'Womens Leggings',
+          value: 1,
+        },
+        {
+          key: 'Mens Bottoms',
+          value: 2,
+        },
+        {
+          key: 'Mens Shorts',
+          value: 5,
+        },
+      ],
+    },
+  ]);
+
+  const onClick = () => {
+    const newData = data.map((series) => {
+      return {
+        ...series,
+        data: series.data.map(({key}) => {
+          const newValue = Math.floor(Math.random() * 200);
+          return {
+            key,
+            value: newValue,
+          };
+        }),
+      };
+    });
+
+    setData(newData);
+  };
+
+  return (
+    <>
+      <div style={{height: '500px', width: 800}}>
+        <SimpleBarChart data={data} showLegend={true} />
+      </div>
+      <button
+        style={{
+          position: 'absolute',
+          top: '10px',
+          left: '10px',
+        }}
+        onClick={onClick}
+      >
+        Change Data
+      </button>
+    </>
+  );
+};
+
+export const Sorting = () => {
+  const [data, setData] = useState(SINGLE_SERIES);
+
+  const onClick = () => {
+    setData([
+      {
+        ...data[0],
+        data: [...data[0].data].sort(() => (Math.random() > 0.5 ? 1 : -1)),
+      },
+    ]);
+  };
+
+  return (
+    <>
+      <div style={{height: '500px', width: 800}}>
+        <SimpleBarChart
+          data={[{...data[0], data: [...data[0].data.slice(0, 5)]}]}
+          showLegend={true}
+        />
+      </div>
+      <button onClick={onClick} style={{marginRight: 10}}>
+        Shuffle Position
+      </button>
+    </>
+  );
 };
