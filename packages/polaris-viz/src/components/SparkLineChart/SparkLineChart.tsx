@@ -30,6 +30,7 @@ export function SparkLineChart(props: SparkLineChartProps) {
     ...DEFAULT_CHART_PROPS,
     ...props,
   };
+
   return (
     <ChartContainer
       isAnimated={isAnimated}

@@ -131,24 +131,4 @@ describe('<SparkBarChart/>', () => {
       strokeDashoffset: -25.75,
     });
   });
-
-  describe('theme', () => {
-    it('gets passed to <Chart/>', () => {
-      const sparklineChart = mount(
-        <SparkBarChart data={[sampleData]} theme="Light" />,
-      );
-
-      expect(sparklineChart).toContainReactComponent(Chart, {
-        theme: 'Light',
-      });
-    });
-
-    it('`Default` is used if no value is provided', () => {
-      const barChart = mount(<SparkBarChart data={[sampleData]} />);
-
-      expect(barChart).toContainReactComponent(Chart, {
-        theme: 'Default',
-      });
-    });
-  });
 });

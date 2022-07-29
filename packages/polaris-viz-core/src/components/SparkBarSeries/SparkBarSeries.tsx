@@ -20,7 +20,7 @@ interface SparkBarSeriesProps {
   shouldAnimate: boolean;
   useTransition: typeof useTransition;
   width: number;
-  theme: string;
+  theme?: string;
 }
 
 export function SparkBarSeries({
@@ -28,9 +28,9 @@ export function SparkBarSeries({
   targetLine,
   height,
   shouldAnimate,
-  theme,
   useTransition,
   width,
+  theme,
 }: SparkBarSeriesProps) {
   const selectedTheme = useTheme(theme);
   const [seriesColor] = getSeriesColors(1, selectedTheme);

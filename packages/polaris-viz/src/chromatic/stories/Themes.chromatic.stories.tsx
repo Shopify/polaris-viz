@@ -4,17 +4,28 @@ import {
   BarChart,
   LineChart,
   PolarisVizProvider,
+  SparkBarChart,
+  SparkLineChart,
   StackedAreaChart,
 } from '../../components';
 import {DEFAULT_THEME, LIGHT_THEME} from '@shopify/polaris-viz-core';
 
-const STORIES = ['Shared', 'BarChart', 'LineChart', 'StackedAreaChart'];
+const STORIES = [
+  'Shared',
+  'BarChart',
+  'LineChart',
+  'StackedAreaChart',
+  'SparkLineChart',
+  'SparkBarChart',
+];
 
 const VALUES_FOR_CHARTS = {
   Shared: ['chartContainer', 'legend'],
   BarChart: ['grid', 'bar', 'xAxis', 'yAxis'],
   LineChart: ['grid', 'line', 'xAxis', 'yAxis'],
   StackedAreaChart: ['grid', 'line', 'xAxis', 'yAxis'],
+  SparkLineChart: ['line'],
+  SparkBarChart: ['bar'],
 };
 
 const COMPONENTS = {
@@ -22,6 +33,8 @@ const COMPONENTS = {
   BarChart: BarChart,
   LineChart: LineChart,
   StackedAreaChart: StackedAreaChart,
+  SparkLineChart: SparkLineChart,
+  SparkBarChart: SparkBarChart,
 };
 
 const DEFAULT_THEMES = {
@@ -110,11 +123,25 @@ STORIES.forEach((chart) => {
           stories.add(`${themeValue}: ${value}`, () => {
             const Chart = COMPONENTS[chart];
 
+            const isSpark = chart.includes('Spark');
+
+            const data = DATA.map((series) => {
+              return {
+                ...series,
+                data: series.data.map(({key, value}, index) => {
+                  return {
+                    key: isSpark ? index : key,
+                    value,
+                  };
+                }),
+              };
+            });
+
             return (
               <div
                 style={{
-                  width: 800,
-                  height: 500,
+                  width: isSpark ? 200 : 800,
+                  height: isSpark ? 100 : 500,
                   padding: 20,
                   background: '#e1e1e1',
                 }}
@@ -128,7 +155,7 @@ STORIES.forEach((chart) => {
                     },
                   }}
                 >
-                  <Chart data={DATA} isAnimated={false} theme={themeName} />
+                  <Chart data={data} isAnimated={false} theme={themeName} />
                 </PolarisVizProvider>
               </div>
             );

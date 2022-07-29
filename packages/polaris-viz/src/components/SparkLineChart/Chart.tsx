@@ -1,8 +1,8 @@
 import React from 'react';
 import {scaleLinear} from 'd3-scale';
 import {
-  DEFAULT_THEME_NAME,
   LineSeries,
+  useChartContext,
   useSparkLine,
 } from '@shopify/polaris-viz-core';
 import type {Dimensions} from '@shopify/polaris-viz-core';
@@ -26,9 +26,9 @@ export function Chart({
   accessibilityLabel,
   offsetLeft = 0,
   offsetRight = 0,
-  theme = DEFAULT_THEME_NAME,
 }: Props) {
-  const selectedTheme = useTheme(theme);
+  const {theme} = useChartContext();
+  const selectedTheme = useTheme();
   const seriesColors = useThemeSeriesColors(data, selectedTheme);
 
   const {width, height} = dimensions ?? {height: 0, width: 0};
