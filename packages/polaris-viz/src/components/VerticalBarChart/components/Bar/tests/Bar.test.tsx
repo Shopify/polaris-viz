@@ -5,6 +5,10 @@ import {BORDER_RADIUS} from '@shopify/polaris-viz-core';
 
 import {Bar} from '../Bar';
 import {MASK_HIGHLIGHT_COLOR} from '../../../../../constants';
+import {
+  getHoverZoneOffset,
+  Props,
+} from '../../../../../utilities/getHoverZoneOffset';
 
 jest.mock('d3-scale', () => ({
   scaleBand: jest.requireActual('d3-scale').scaleBand,
@@ -23,6 +27,14 @@ const defaultProps = {
   onFocus: jest.fn(),
   tabIndex: 0,
   zeroPosition: 0,
+};
+
+const mockProps: Props = {
+  barSize: 100,
+  zeroPosition: 0,
+  max: 135,
+  position: 'vertical',
+  isNegative: false,
 };
 
 describe('<Bar/>', () => {
@@ -99,6 +111,13 @@ describe('<Bar/>', () => {
       );
 
       expect(bar).toContainReactComponent('line');
+    });
+  });
+
+  describe('hover target zone', () => {
+    it("gets an offset for a hover target zone based on the bar's height", () => {
+      const bar = getHoverZoneOffset({...mockProps});
+      expect(bar).toStrictEqual({clampedSize: 100, offset: -100});
     });
   });
 });
