@@ -157,7 +157,7 @@ describe('useDataForHorizontalChart()', () => {
     expect(data.allNumbers).toStrictEqual([0, 0, 0]);
   });
 
-  it('areAllNegative returns false when all numbers are 0', () => {
+  it('areAllNegative returns true when all numbers are 0', () => {
     function TestComponent() {
       const data = useDataForHorizontalChart({
         ...MOCK_PROPS,
@@ -180,6 +180,6 @@ describe('useDataForHorizontalChart()', () => {
 
     const data = JSON.parse(result.domNode?.dataset.data ?? '');
 
-    expect(data.areAllNegative).toStrictEqual(false);
+    expect(data.areAllNegative).toStrictEqual(true);
   });
 });
