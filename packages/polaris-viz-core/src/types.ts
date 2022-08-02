@@ -265,3 +265,13 @@ export enum InternalChartType {
   Combo = 'Combo',
   Line = 'Line',
 }
+
+export enum Hue {
+  Teal = 'Teal',
+  Blue = 'Blue',
+  Indigo = 'Indigo',
+  Purple = 'Purple',
+  Magenta = 'Magenta',
+  Orange = 'Orange',
+  Yellow = 'Yellow',
+}

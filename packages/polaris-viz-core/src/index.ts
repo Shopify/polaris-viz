@@ -105,6 +105,7 @@ export {
   getClosestDivisibleNumber,
   roundToDecimals,
   isLargeDataSet,
+  ColorScale,
 } from './utilities';
 export {
   useSparkBar,
