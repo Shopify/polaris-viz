@@ -1,5 +1,4 @@
 import React, {useMemo, useState, useCallback, useRef} from 'react';
-import {createPortal} from 'react-dom';
 import {scaleBand, scaleLinear} from 'd3-scale';
 import {
   DataSeries,
@@ -153,68 +152,45 @@ export function Chart({
             ? (nextPoint.value / yAxisValue) * 100
             : 0;
 
-        const percentLabel = handlePercentLabelFormatter(percentCalculation);
         const barHeight = getBarHeight(dataPoint.value || 0);
+        const percentLabel = handlePercentLabelFormatter(percentCalculation);
         const formattedYValue = yAxisOptions.labelFormatter(yAxisValue);
 
         return (
           <React.Fragment key={dataPoint.key}>
-            {maskRef.current &&
-              createPortal(
-                <g key={dataPoint.key} role="listitem">
-                  <Bar
-                    ariaLabel={`${xAxisOptions.labelFormatter(
-                      dataPoint.key,
-                    )}: ${yAxisOptions.labelFormatter(dataPoint.value)}`}
-                    width={barWidth}
-                    height={barHeight}
-                    color={MASK_HIGHLIGHT_COLOR}
-                    x={x}
-                    y={drawableHeight - barHeight}
-                    borderRadius={
-                      selectedTheme.bar.hasRoundedCorners
-                        ? BORDER_RADIUS.Top
-                        : BORDER_RADIUS.None
-                    }
-                  />
-                </g>,
-                maskRef.current,
-              )}
-            <g aria-hidden="true">
-              <Label
-                barHeight={0}
-                label={formattedYValue}
-                labelWidth={barWidth}
-                x={x}
-                y={drawableHeight - barHeight - Y_AXIS_LABEL_VERTICAL_OFFSET}
-                size="large"
-                color={selectedTheme.xAxis.labelColor}
-              />
-            </g>
-
-            <Connector
-              height={drawableHeight}
-              startX={x + barWidth}
-              startY={drawableHeight - barHeight}
-              nextX={xScale(nextPoint?.key as string)}
-              nextY={drawableHeight - nextBarHeight}
-              nextPoint={nextPoint}
-              fill={`url(#${connectorGradientId})`}
-            />
-            <g aria-hidden="true">
-              <Label
-                backgroundColor={backgroundColor}
-                barHeight={0}
-                label={percentLabel}
-                labelWidth={barWidth}
-                x={x + barWidth}
-                y={
-                  drawableHeight - nextBarHeight - PERCENT_LABEL_VERTICAL_OFFSET
-                }
-                size="small"
-                color={changeColorOpacity(selectedTheme.xAxis.labelColor, 0.7)}
-              />
-            </g>
+            {maskRef.current && (
+              <g key={dataPoint.key} role="listitem">
+                <FunnelSegment
+                  percentLabel={percentLabel}
+                  formattedYValue={formattedYValue}
+                  isLast={index === dataSeries.length - 1}
+                  connector={{
+                    height: drawableHeight,
+                    startX: x + barWidth,
+                    startY: drawableHeight - barHeight,
+                    nextX: xScale(nextPoint?.key as string),
+                    nextY: drawableHeight - nextBarHeight,
+                    nextPoint,
+                    fill: `url(#${connectorGradientId})`,
+                  }}
+                  ariaLabel={`${xAxisOptions.labelFormatter(
+                    dataPoint.key,
+                  )}: ${yAxisOptions.labelFormatter(dataPoint.value)}`}
+                  barWidth={barWidth}
+                  barHeight={barHeight}
+                  color={MASK_HIGHLIGHT_COLOR}
+                  x={x}
+                  portalTo={maskRef.current}
+                  index={index}
+                  drawableHeight={drawableHeight}
+                  borderRadius={
+                    selectedTheme.bar.hasRoundedCorners
+                      ? BORDER_RADIUS.Top
+                      : BORDER_RADIUS.None
+                  }
+                />
+              </g>
+            )}
           </React.Fragment>
         );
       })}
