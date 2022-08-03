@@ -1,7 +1,12 @@
 import React from 'react';
-import {ChartProps, DEFAULT_CHART_PROPS} from '@shopify/polaris-viz-core';
+import {
+  ChartProps,
+  DEFAULT_CHART_PROPS,
+  ChartState,
+} from '@shopify/polaris-viz-core';
 
 import {ChartContainer} from '../ChartContainer';
+import {ChartSkeleton} from '../ChartSkeleton';
 
 import {Chart} from './Chart';
 
@@ -19,6 +24,8 @@ export function SparkLineChart(props: SparkLineChartProps) {
     offsetLeft = 0,
     offsetRight = 0,
     theme,
+    state,
+    errorText,
   } = {
     ...DEFAULT_CHART_PROPS,
     ...props,
@@ -30,13 +37,17 @@ export function SparkLineChart(props: SparkLineChartProps) {
       theme={theme}
       sparkChart
     >
-      <Chart
-        data={data}
-        accessibilityLabel={accessibilityLabel}
-        offsetLeft={offsetLeft}
-        offsetRight={offsetRight}
-        theme={theme}
-      />
+      {state !== ChartState.Success ? (
+        <ChartSkeleton type="Spark" state={state} errorText={errorText} />
+      ) : (
+        <Chart
+          data={data}
+          accessibilityLabel={accessibilityLabel}
+          offsetLeft={offsetLeft}
+          offsetRight={offsetRight}
+          theme={theme}
+        />
+      )}
     </ChartContainer>
   );
 }

@@ -1,8 +1,9 @@
 import React from 'react';
-import {DEFAULT_CHART_PROPS} from '@shopify/polaris-viz-core';
+import {DEFAULT_CHART_PROPS, ChartState} from '@shopify/polaris-viz-core';
 import type {Dimensions, ChartProps} from '@shopify/polaris-viz-core';
 
 import {ChartContainer} from '../ChartContainer';
+import {ChartSkeleton} from '../';
 
 import {Chart} from './Chart';
 
@@ -21,6 +22,8 @@ export function SparkBarChart(props: SparkBarChartProps) {
     dataOffsetRight = 0,
     dataOffsetLeft = 0,
     theme,
+    state,
+    errorText,
   } = {
     ...DEFAULT_CHART_PROPS,
     ...props,
@@ -32,13 +35,17 @@ export function SparkBarChart(props: SparkBarChartProps) {
       sparkChart
       isAnimated={isAnimated}
     >
-      <Chart
-        data={data}
-        dataOffsetRight={dataOffsetRight}
-        dataOffsetLeft={dataOffsetLeft}
-        accessibilityLabel={accessibilityLabel}
-        theme={theme}
-      />
+      {state !== ChartState.Success ? (
+        <ChartSkeleton type="Spark" state={state} errorText={errorText} />
+      ) : (
+        <Chart
+          data={data}
+          dataOffsetRight={dataOffsetRight}
+          dataOffsetLeft={dataOffsetLeft}
+          accessibilityLabel={accessibilityLabel}
+          theme={theme}
+        />
+      )}
     </ChartContainer>
   );
 }
