@@ -1,8 +1,11 @@
+@import '../../../../polaris-viz/src/styles/common';
+
 .Group {
+  @include no-outline;
   pointer-events: none;
 }
 
 .Line {
-  outline: none;
+  @include no-outline;
   pointer-events: auto;
 }

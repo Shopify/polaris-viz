@@ -1,3 +1,5 @@
+@import '../../styles/common';
+
 .Arc {
-  outline: none;
+  @include no-outline;
 }

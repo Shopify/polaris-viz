@@ -1,6 +1,7 @@
 export {
   BARS_TRANSITION_CONFIG,
   BARS_SORT_TRANSITION_CONFIG,
+  BARS_LOAD_ANIMATION_CONFIG,
   SHAPE_ANIMATION_HEIGHT_BUFFER,
   BASE_ANIMATION_DURATION,
   BELOW_X_AXIS_MARGIN,
@@ -105,6 +106,7 @@ export {
   getClosestDivisibleNumber,
   roundToDecimals,
   isLargeDataSet,
+  ColorScale,
 } from './utilities';
 export {
   useSparkBar,

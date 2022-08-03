@@ -6,10 +6,12 @@ import {
   DEFAULT_CHART_PROPS,
   useTheme,
   useThemeSeriesColors,
+  ChartState,
 } from '@shopify/polaris-viz-core';
 
 import {ChartContainer} from '../../components/ChartContainer';
 import {getYAxisOptionsWithDefaults} from '../../utilities';
+import {ChartSkeleton} from '../';
 
 import {Chart} from './Chart';
 
@@ -19,7 +21,15 @@ export type FunnelChartProps = {
 } & ChartProps;
 
 export function FunnelChart(props: FunnelChartProps) {
-  const {data, theme, xAxisOptions, yAxisOptions, isAnimated} = {
+  const {
+    data,
+    theme,
+    xAxisOptions,
+    yAxisOptions,
+    isAnimated,
+    state,
+    errorText,
+  } = {
     ...DEFAULT_CHART_PROPS,
     ...props,
   };
@@ -42,11 +52,15 @@ export function FunnelChart(props: FunnelChartProps) {
 
   return (
     <ChartContainer data={data} isAnimated={isAnimated} theme={theme}>
-      <Chart
-        data={seriesWithDefaults}
-        xAxisOptions={xAxisOptionsForChart}
-        yAxisOptions={yAxisOptionsForChart}
-      />
+      {state !== ChartState.Success ? (
+        <ChartSkeleton type="Funnel" state={state} errorText={errorText} />
+      ) : (
+        <Chart
+          data={seriesWithDefaults}
+          xAxisOptions={xAxisOptionsForChart}
+          yAxisOptions={yAxisOptionsForChart}
+        />
+      )}
     </ChartContainer>
   );
 }

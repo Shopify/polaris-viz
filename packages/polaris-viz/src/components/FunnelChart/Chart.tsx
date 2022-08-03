@@ -1,4 +1,4 @@
-import React, {useMemo, useState, useCallback} from 'react';
+import React, {useMemo, useState, useCallback, useRef} from 'react';
 import {scaleBand, scaleLinear} from 'd3-scale';
 import {
   DataSeries,
@@ -16,7 +16,6 @@ import {
   useChartContext,
 } from '@shopify/polaris-viz-core';
 
-import {Bar} from '../shared';
 import {useReducedLabelIndexes} from '../../hooks';
 import {
   BAR_CONTAINER_TEXT_HEIGHT,
@@ -25,10 +24,8 @@ import {
   MIN_BAR_HEIGHT,
 } from '../../constants';
 
-import {FunnelChartXAxisLabels, Label} from './components/';
+import {FunnelChartXAxisLabels, FunnelSegment} from './components/';
 
-const Y_AXIS_LABEL_VERTICAL_OFFSET = 32;
-const PERCENT_LABEL_VERTICAL_OFFSET = 24;
 const X_LABEL_OFFSET = 16;
 const NEGATIVE_LABEL_OFFSET = -4;
 
@@ -95,10 +92,6 @@ export function Chart({
     dataLength: data[0] ? data[0].data.length : 0,
   });
 
-  const {
-    chartContainer: {backgroundColor},
-  } = useTheme();
-
   const color = colorOverride || selectedTheme.seriesColors.single;
   const barsGradient = isGradientType(color!)
     ? color
@@ -132,37 +125,64 @@ export function Chart({
       return '';
     }
   };
+
+  const maskRef = useRef<SVGMaskElement>(null);
   return (
     <svg role="list" viewBox={`0 0 ${width} ${height}`} xmlns={XMLNS}>
-      <defs>
-        <LinearGradientWithStops
-          gradient={connectorGradient}
-          id={connectorGradientId}
-          x1="0%"
-          x2="0%"
-          y1="100%"
-          y2="0%"
-        />
+      <LinearGradientWithStops
+        gradient={connectorGradient}
+        id={connectorGradientId}
+        x1="0%"
+        x2="0%"
+        y1="100%"
+        y2="0%"
+      />
 
-        <LinearGradientWithStops gradient={barsGradient} id={`${gradientId}`} />
+      <LinearGradientWithStops gradient={barsGradient} id={`${gradientId}`} />
 
-        <mask id={`${maskId}-${theme}-grad`}>
-          {dataSeries.map((dataPoint) => {
-            const barHeight = getBarHeight(dataPoint.value || 0);
-            const xPosition = xScale(dataPoint.key as string);
-            const x = xPosition == null ? 0 : xPosition;
-            const barWidth = xScale.bandwidth();
-            return (
+      <mask ref={maskRef} id={`${maskId}-${theme}-grad`} />
+      {dataSeries.map((dataPoint, index: number) => {
+        const nextPoint = dataSeries[index + 1];
+        const xPosition = xScale(dataPoint.key as string);
+        const x = xPosition == null ? 0 : xPosition;
+        const nextBarHeight = getBarHeight(nextPoint?.value || 0);
+        const yAxisValue = dataPoint.value;
+        const percentCalculation =
+          nextPoint?.value && yAxisValue
+            ? (nextPoint.value / yAxisValue) * 100
+            : 0;
+
+        const barHeight = getBarHeight(dataPoint.value || 0);
+        const percentLabel = handlePercentLabelFormatter(percentCalculation);
+        const formattedYValue = yAxisOptions.labelFormatter(yAxisValue);
+
+        return (
+          <React.Fragment key={dataPoint.key}>
+            {maskRef.current && (
               <g key={dataPoint.key} role="listitem">
-                <Bar
+                <FunnelSegment
+                  percentLabel={percentLabel}
+                  formattedYValue={formattedYValue}
+                  isLast={index === dataSeries.length - 1}
+                  connector={{
+                    height: drawableHeight,
+                    startX: x + barWidth,
+                    startY: drawableHeight - barHeight,
+                    nextX: xScale(nextPoint?.key as string),
+                    nextY: drawableHeight - nextBarHeight,
+                    nextPoint,
+                    fill: `url(#${connectorGradientId})`,
+                  }}
                   ariaLabel={`${xAxisOptions.labelFormatter(
                     dataPoint.key,
                   )}: ${yAxisOptions.labelFormatter(dataPoint.value)}`}
-                  width={barWidth}
-                  height={barHeight}
+                  barWidth={barWidth}
+                  barHeight={barHeight}
                   color={MASK_HIGHLIGHT_COLOR}
                   x={x}
-                  y={drawableHeight - barHeight}
+                  portalTo={maskRef.current}
+                  index={index}
+                  drawableHeight={drawableHeight}
                   borderRadius={
                     selectedTheme.bar.hasRoundedCorners
                       ? BORDER_RADIUS.Top
@@ -170,10 +190,10 @@ export function Chart({
                   }
                 />
               </g>
-            );
-          })}
-        </mask>
-      </defs>
+            )}
+          </React.Fragment>
+        );
+      })}
 
       <g aria-hidden="true">
         <FunnelChartXAxisLabels
@@ -196,83 +216,6 @@ export function Chart({
         height={drawableHeight}
         fill={`url(#${gradientId})`}
       />
-
-      {dataSeries.map((dataPoint, index: number) => {
-        const nextPoint = dataSeries[index + 1];
-        const xPosition = xScale(dataPoint.key as string);
-        const x = xPosition == null ? 0 : xPosition;
-        const nextBarHeight = getBarHeight(nextPoint?.value || 0);
-        const yAxisValue = dataPoint.value;
-        const percentCalculation =
-          nextPoint?.value && yAxisValue
-            ? (nextPoint.value / yAxisValue) * 100
-            : 0;
-
-        const percentLabel = handlePercentLabelFormatter(percentCalculation);
-        const barHeight = getBarHeight(dataPoint.value || 0);
-        const formattedYValue = yAxisOptions.labelFormatter(yAxisValue);
-
-        return (
-          <React.Fragment key={dataPoint.key}>
-            <g aria-hidden="true">
-              <Label
-                barHeight={0}
-                label={formattedYValue}
-                labelWidth={barWidth}
-                x={x}
-                y={drawableHeight - barHeight - Y_AXIS_LABEL_VERTICAL_OFFSET}
-                size="large"
-                color={selectedTheme.xAxis.labelColor}
-              />
-            </g>
-
-            <Connector
-              height={drawableHeight}
-              startX={x + barWidth}
-              startY={drawableHeight - barHeight}
-              nextX={xScale(nextPoint?.key as string)}
-              nextY={drawableHeight - nextBarHeight}
-              nextPoint={nextPoint}
-              fill={`url(#${connectorGradientId})`}
-            />
-            <g aria-hidden="true">
-              <Label
-                backgroundColor={backgroundColor}
-                barHeight={0}
-                label={percentLabel}
-                labelWidth={barWidth}
-                x={x + barWidth}
-                y={
-                  drawableHeight - nextBarHeight - PERCENT_LABEL_VERTICAL_OFFSET
-                }
-                size="small"
-                color={changeColorOpacity(selectedTheme.xAxis.labelColor, 0.7)}
-              />
-            </g>
-          </React.Fragment>
-        );
-      })}
     </svg>
-  );
-}
-
-function Connector({
-  height,
-  nextPoint,
-  nextX,
-  nextY,
-  startX,
-  startY,
-  fill = MASK_HIGHLIGHT_COLOR,
-}) {
-  if (nextPoint == null) {
-    return null;
-  }
-
-  return (
-    <path
-      d={`M${startX} ${startY} L ${nextX} ${nextY} V ${height} H ${startX} Z`}
-      fill={fill}
-    />
   );
 }

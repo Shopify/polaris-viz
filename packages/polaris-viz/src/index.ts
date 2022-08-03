@@ -51,6 +51,7 @@ export {
   getAverageColor,
   paddingStringToObject,
   removeFalsyValues,
+  ColorScale,
 } from '@shopify/polaris-viz-core';
 
 export type {

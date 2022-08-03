@@ -266,6 +266,16 @@ export enum InternalChartType {
   Line = 'Line',
 }
 
+export enum Hue {
+  Teal = 'Teal',
+  Blue = 'Blue',
+  Indigo = 'Indigo',
+  Purple = 'Purple',
+  Magenta = 'Magenta',
+  Orange = 'Orange',
+  Yellow = 'Yellow',
+}
+
 export interface TargetLine {
   value: number;
   offsetRight?: number;
