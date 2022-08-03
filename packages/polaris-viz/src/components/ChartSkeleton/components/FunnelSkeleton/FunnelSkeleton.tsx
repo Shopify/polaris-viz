@@ -32,7 +32,7 @@ export function FunnelSkeleton({
   const segmentWidth = innerWidth / barsQuantity;
   const barWidth = segmentWidth / 2;
   const id = useUniqueId('loadingFunnel');
-  const heightGap = (height * 1.3) / barsQuantity;
+  const heightGap = (height * 0.92) / barsQuantity;
 
   const {lines} = useLabels({
     labels: [errorText],
