@@ -390,7 +390,7 @@ export function Chart({
         id={tooltipId.current}
         margin={ChartMargin}
         onIndexChange={(index) => {
-          if (isPerformanceImpacted) {
+          if (index != null && isPerformanceImpacted) {
             moveCrosshair(index);
           } else {
             setActiveIndex(index);

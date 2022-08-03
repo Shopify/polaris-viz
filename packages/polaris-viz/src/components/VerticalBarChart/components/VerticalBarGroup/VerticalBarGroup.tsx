@@ -14,6 +14,7 @@ import type {
 import type {ScaleBand, ScaleLinear} from 'd3-scale';
 import React, {useMemo, useState} from 'react';
 
+import {getChartId} from '../../../../utilities/getChartId';
 import {applyColorVisionToDomElement} from '../../../../utilities/applyColorVisionToDomElement';
 import type {SortedBarChartData} from '../../../../types';
 import {useWatchColorVisionEvents} from '../../../../hooks';
@@ -52,12 +53,18 @@ export function VerticalBarGroup({
   areAllNegative,
 }: VerticalBarGroupProps) {
   const selectedTheme = useTheme();
-  const {isPerformanceImpacted} = useChartContext();
+  const {id: chartId, isPerformanceImpacted} = useChartContext();
 
   const [activeBarGroup, setActiveBarGroup] = useState<number>(-1);
 
   const groupElements = useMemo(() => {
-    return document.querySelectorAll<SVGGElement>(
+    const chart = document.getElementById(getChartId(chartId));
+
+    if (chart == null) {
+      return [];
+    }
+
+    return chart.querySelectorAll<SVGGElement>(
       `[data-type="${DataType.BarGroup}"]`,
     );
     // We want this to run whenever colors change so we
