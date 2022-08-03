@@ -11,6 +11,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 - Fixed issue where color vision updates to groups would affect all charts on the page. Now changes are scoped to each chart.
 
+### Added
+
+- Added `xAxisOptions.allowLineWrap` to toggle line wrapping in xAxis labels.
+
 ## [6.5.0] - 2022-08-03
 
 ### Added

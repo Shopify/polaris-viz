@@ -15,6 +15,7 @@ import {getVerticalLabels} from '../utilities/getVerticalLabels';
 const LABEL_CONTAINER_MAX_PERCENTAGE = 0.25;
 
 interface Props {
+  allowLineWrap: boolean;
   chartHeight: number;
   labels: string[];
   targetWidth: number;
@@ -22,6 +23,7 @@ interface Props {
 }
 
 export function useLabels({
+  allowLineWrap,
   chartHeight,
   labels,
   onHeightChange = () => {},
@@ -56,10 +58,11 @@ export function useLabels({
   const maxWidth = Math.floor(chartHeight * LABEL_CONTAINER_MAX_PERCENTAGE);
 
   const {lines, containerHeight} = useMemo(() => {
-    const shouldDrawHorizontal =
-      targetWidth >= HORIZONTAL_LABEL_MIN_WIDTH ||
-      targetWidth > longestLabelWidth;
-
+    const shouldDrawHorizontal = checkIfShouldDrawHorizontal({
+      allowLineWrap,
+      longestLabelWidth,
+      targetWidth,
+    });
     const shouldDrawDiagonal = targetWidth > DIAGONAL_LABEL_MIN_WIDTH;
     const shouldDrawVertical = targetWidth > VERTICAL_LABEL_MIN_WIDTH;
 
@@ -97,6 +100,7 @@ export function useLabels({
       }
     }
   }, [
+    allowLineWrap,
     maxWidth,
     targetWidth,
     characterWidths,
@@ -109,4 +113,22 @@ export function useLabels({
   }, [containerHeight, onHeightChange]);
 
   return {lines, containerHeight};
+}
+
+function checkIfShouldDrawHorizontal({
+  allowLineWrap,
+  longestLabelWidth,
+  targetWidth,
+}: {
+  allowLineWrap: boolean;
+  longestLabelWidth: number;
+  targetWidth: number;
+}) {
+  const isLabelLongerThanTarget = targetWidth > longestLabelWidth;
+
+  if (allowLineWrap === false) {
+    return isLabelLongerThanTarget;
+  }
+
+  return targetWidth >= HORIZONTAL_LABEL_MIN_WIDTH || isLabelLongerThanTarget;
 }

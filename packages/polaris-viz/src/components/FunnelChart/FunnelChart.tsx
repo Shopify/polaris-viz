@@ -10,7 +10,10 @@ import {
 } from '@shopify/polaris-viz-core';
 
 import {ChartContainer} from '../../components/ChartContainer';
-import {getYAxisOptionsWithDefaults} from '../../utilities';
+import {
+  getYAxisOptionsWithDefaults,
+  getXAxisOptionsWithDefaults,
+} from '../../utilities';
 import {ChartSkeleton} from '../';
 
 import {Chart} from './Chart';
@@ -41,11 +44,8 @@ export function FunnelChart(props: FunnelChartProps) {
     ...series,
   }));
 
-  const xAxisOptionsForChart: Required<XAxisOptions> = {
-    labelFormatter: (value: string) => value,
-    hide: false,
-    ...xAxisOptions,
-  };
+  const xAxisOptionsForChart: Required<XAxisOptions> =
+    getXAxisOptionsWithDefaults(xAxisOptions);
 
   const yAxisOptionsForChart: Required<YAxisOptions> =
     getYAxisOptionsWithDefaults(yAxisOptions);

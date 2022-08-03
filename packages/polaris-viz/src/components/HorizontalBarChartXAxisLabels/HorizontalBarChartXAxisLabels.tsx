@@ -5,6 +5,7 @@ import {useLabels} from '../Labels';
 import {TextLine} from '../TextLine';
 
 interface HorizontalBarChartXAxisLabelsProps {
+  allowLineWrap: boolean;
   chartHeight: number;
   chartX: number;
   chartY: number;
@@ -16,6 +17,7 @@ interface HorizontalBarChartXAxisLabelsProps {
 }
 
 export function HorizontalBarChartXAxisLabels({
+  allowLineWrap,
   chartHeight,
   chartX,
   chartY,
@@ -26,6 +28,7 @@ export function HorizontalBarChartXAxisLabels({
   xScale,
 }: HorizontalBarChartXAxisLabelsProps) {
   const {lines} = useLabels({
+    allowLineWrap,
     chartHeight,
     labels,
     onHeightChange,

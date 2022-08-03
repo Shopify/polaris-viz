@@ -5,6 +5,7 @@ import {useLabels, shouldSkipLabel} from '../Labels';
 import {TextLine} from '../TextLine';
 
 interface XAxisProps {
+  allowLineWrap: boolean;
   chartHeight: number;
   chartX: number;
   chartY: number;
@@ -17,6 +18,8 @@ interface XAxisProps {
 }
 
 export function XAxis({
+  ariaHidden = false,
+  allowLineWrap,
   chartHeight,
   chartX,
   chartY,
@@ -25,13 +28,13 @@ export function XAxis({
   onHeightChange,
   reducedLabelIndexes,
   xScale,
-  ariaHidden = false,
 }: XAxisProps) {
   const {lines} = useLabels({
     chartHeight,
     labels,
     onHeightChange,
     targetWidth: labelWidth,
+    allowLineWrap,
   });
 
   return (

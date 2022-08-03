@@ -7,6 +7,7 @@ import {TextLine} from '../../TextLine';
 import {FunnelChartXAxisArrows} from './FunnelChartXAxisArrows';
 
 export interface FunnelChartXAxisLabelsProps {
+  allowLineWrap: boolean;
   chartX: number;
   chartY: number;
   chartHeight: number;
@@ -18,6 +19,7 @@ export interface FunnelChartXAxisLabelsProps {
 }
 
 export function FunnelChartXAxisLabels({
+  allowLineWrap,
   chartHeight,
   chartX,
   chartY,
@@ -28,6 +30,7 @@ export function FunnelChartXAxisLabels({
   xScale,
 }: FunnelChartXAxisLabelsProps) {
   const {lines} = useLabels({
+    allowLineWrap,
     labels,
     targetWidth: labelWidth,
     onHeightChange,

@@ -12,6 +12,7 @@ export function ErrorText({errorText, width, height}) {
   } = useTheme();
 
   const {lines} = useLabels({
+    allowLineWrap: true,
     labels: [errorText],
     targetWidth: width,
     chartHeight: height,

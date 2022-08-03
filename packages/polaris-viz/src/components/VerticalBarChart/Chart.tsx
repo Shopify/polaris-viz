@@ -204,6 +204,7 @@ export function Chart({
       >
         {hideXAxis ? null : (
           <XAxis
+            allowLineWrap={xAxisOptions.allowLineWrap}
             chartHeight={drawableHeight}
             chartX={xAxisBounds.x}
             chartY={xAxisBounds.y}

@@ -127,8 +127,9 @@ Default.args = {
   xAxisOptions: {
     labelFormatter: (value: string) => {
       return new Date(value).toLocaleDateString('en-CA', {
-        month: 'short',
+        month: 'long',
         day: 'numeric',
+        year: 'numeric',
       });
     },
   },
