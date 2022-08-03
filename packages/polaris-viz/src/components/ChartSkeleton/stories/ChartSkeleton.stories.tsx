@@ -30,28 +30,38 @@ export default {
 
 const Template: Story<ChartSkeletonProps> = (args: ChartSkeletonProps) => {
   return (
-    <ChartContainer data={[]} isAnimated={true} theme={DEFAULT_THEME_NAME}>
-      <ChartSkeleton {...args} />
-    </ChartContainer>
+    <div
+      style={{
+        width: 700,
+        height: 400,
+      }}
+    >
+      <ChartContainer data={[]} isAnimated={true} theme={DEFAULT_THEME_NAME}>
+        <ChartSkeleton {...args} />
+      </ChartContainer>
+    </div>
   );
 };
 
 export const loading: Story<ChartSkeletonProps> = Template.bind({});
 loading.args = {
   state: ChartState.Loading,
-  dimensions: {
-    width: 1000,
-    height: 400,
-  },
 };
 
 export const error: Story<ChartSkeletonProps> = Template.bind({});
 error.args = {
   state: ChartState.Error,
-  dimensions: {
-    width: 1000,
-    height: 400,
-  },
+};
+
+export const loadingFunnel: Story<ChartSkeletonProps> = Template.bind({});
+loadingFunnel.args = {
+  state: ChartState.Loading,
+  type: 'Funnel',
+};
+export const errorFunnel: Story<ChartSkeletonProps> = Template.bind({});
+errorFunnel.args = {
+  state: ChartState.Error,
+  type: 'Funnel',
 };
 
 const Donut: Story<ChartSkeletonProps> = (args: ChartSkeletonProps) => {
