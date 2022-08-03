@@ -137,6 +137,7 @@ export function Arc({
             index,
           }),
         }}
+        className={classNames(styles.Arc)}
         {...getColorVisionEventAttrs({
           type: COLOR_VISION_SINGLE_ITEM,
           index,

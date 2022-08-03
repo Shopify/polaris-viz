@@ -2,4 +2,8 @@
 
 .ChartContainer {
   @include chart-container;
+
+  * {
+    @include focus-outline;
+  }
 }

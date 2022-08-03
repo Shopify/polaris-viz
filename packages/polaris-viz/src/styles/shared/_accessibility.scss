@@ -18,7 +18,16 @@
 
   &:focus,
   &:focus-visible {
-    outline: none;
+    // stylelint-disable-next-line declaration-no-important
+    outline: none !important;
+  }
+}
+
+@mixin focus-outline {
+  &:focus,
+  &:focus-visible {
+    outline: 2px solid $color-blue-70;
+    outline-offset: 2px;
   }
 }
 

@@ -3,8 +3,6 @@ import type {GradientStop} from '@shopify/polaris-viz-core';
 
 import {createCSSConicGradient} from '../../utilities';
 
-import styles from './ConicGradientWithStops.scss';
-
 export interface ConicGradientWithStopsProps {
   gradient: GradientStop[];
   height: number;
@@ -25,7 +23,6 @@ export function ConicGradientWithStops({
   return (
     <foreignObject x={x} y={y} width={width} height={height}>
       <div
-        className={styles.Gradient}
         style={{
           width: `${width}px`,
           height: `${height}px`,
