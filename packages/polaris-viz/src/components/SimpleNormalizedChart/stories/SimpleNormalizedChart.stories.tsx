@@ -9,6 +9,7 @@ import {
   THEME_CONTROL_ARGS,
   DATA_ARGS,
   LEGEND_POSITION_ARGS,
+  CHART_STATE_CONTROL_ARGS,
 } from '../../../storybook';
 import {PageWithSizingInfo} from '../../Docs/stories/components/PageWithSizingInfo';
 
@@ -34,6 +35,7 @@ export default {
     },
     legendPosition: LEGEND_POSITION_ARGS,
     theme: THEME_CONTROL_ARGS,
+    state: CHART_STATE_CONTROL_ARGS,
   },
 } as Meta;
 

@@ -1,0 +1,1 @@
+export {SimpleNormalizedSkeleton} from './SimpleNormalizedSkeleton';

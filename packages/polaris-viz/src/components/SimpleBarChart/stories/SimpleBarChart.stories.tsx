@@ -3,7 +3,11 @@ import type {Story, Meta} from '@storybook/react';
 
 import {SimpleBarChart, SimpleBarChartProps} from '../SimpleBarChart';
 import {PageWithSizingInfo} from '../../Docs/stories/components/PageWithSizingInfo';
-import {THEME_CONTROL_ARGS, TYPE_CONTROL_ARGS} from '../../../storybook';
+import {
+  THEME_CONTROL_ARGS,
+  TYPE_CONTROL_ARGS,
+  CHART_STATE_CONTROL_ARGS,
+} from '../../../storybook';
 import {
   COLOR_OVERRIDE_SERIES,
   COMPARISON_SERIES,
@@ -37,6 +41,7 @@ export default {
         'Whether to animate the bars when the chart is initially rendered and its data is updated. Even if `isAnimated` is set to true, animations will not be displayed for users with reduced motion preferences.',
     },
     type: TYPE_CONTROL_ARGS,
+    state: CHART_STATE_CONTROL_ARGS,
     theme: THEME_CONTROL_ARGS,
     xAxisOptions: {
       description:
