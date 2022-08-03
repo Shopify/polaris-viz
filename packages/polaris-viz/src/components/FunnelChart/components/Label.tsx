@@ -1,4 +1,6 @@
 import React from 'react';
+import {animated} from '@react-spring/web';
+import type {SpringValue} from '@react-spring/web';
 
 import {HORIZONTAL_BAR_LABEL_HEIGHT} from '../../../constants';
 
@@ -18,43 +20,37 @@ const FONT_SIZES = {
 };
 
 export interface LabelProps {
-  barHeight: number;
   label: string;
   labelWidth: number;
-  x: number;
-  y: number;
   size: Size;
   color?: string;
   backgroundColor?: string;
+  transform: SpringValue;
 }
 
 export function Label({
-  barHeight,
   label,
   labelWidth,
-  x,
-  y,
   size,
   color,
   backgroundColor,
+  transform,
 }: LabelProps) {
-  const labelYOffset = (barHeight - HORIZONTAL_BAR_LABEL_HEIGHT) / 2;
-
   const fontSize = FONT_SIZES[size];
 
   return (
     /* To display labels correctly in Safari, we need to wrap foreignObject in group element
     and apply the transform property on the group element. */
-    <g
+    <animated.g
+      aria-hidden
       style={{
-        transform: `translateX(${x}px)`,
+        transform,
       }}
     >
       <foreignObject
         height={LABEL_HEIGHT}
         width={labelWidth}
         aria-hidden="true"
-        y={y + labelYOffset}
       >
         <div
           className={styles.Label}
@@ -74,6 +70,6 @@ export function Label({
           </span>
         </div>
       </foreignObject>
-    </g>
+    </animated.g>
   );
 }

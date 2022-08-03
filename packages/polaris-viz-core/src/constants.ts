@@ -79,6 +79,12 @@ export const LINES_LOAD_ANIMATION_CONFIG = {
   friction: 18,
 };
 
+export const BARS_LOAD_ANIMATION_CONFIG = {
+  mass: 1,
+  tension: 140,
+  friction: 18,
+};
+
 export const ARC_LOAD_ANIMATION_CONFIG = {
   mass: 1,
   tension: 150,
