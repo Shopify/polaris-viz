@@ -277,8 +277,8 @@ export function Chart({
           <XAxis
             allowLineWrap={xAxisOptions.allowLineWrap}
             chartHeight={height}
-            chartX={xAxisBounds.x}
-            chartY={xAxisBounds.y}
+            x={xAxisBounds.x}
+            y={xAxisBounds.y}
             labels={labels}
             labelWidth={xAxisDetails.labelWidth}
             onHeightChange={setXAxisHeight}

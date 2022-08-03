@@ -251,13 +251,13 @@ export function Chart({
           <XAxis
             allowLineWrap={xAxisOptions.allowLineWrap}
             chartHeight={height}
-            chartX={xAxisBounds.x}
-            chartY={xAxisBounds.y}
             labels={labels}
             labelWidth={xAxisDetails.labelWidth}
             onHeightChange={setXAxisHeight}
             reducedLabelIndexes={xAxisDetails.reducedLabelIndexes}
+            x={xAxisBounds.x}
             xScale={xScale}
+            y={xAxisBounds.y}
           />
         )}
 

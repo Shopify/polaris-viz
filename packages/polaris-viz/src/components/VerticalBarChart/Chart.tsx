@@ -80,7 +80,7 @@ export function Chart({
   useColorVisionEvents(data.length > 1);
 
   const selectedTheme = useTheme();
-  const {characterWidths, theme} = useChartContext();
+  const {characterWidths} = useChartContext();
 
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
   const id = useMemo(() => uniqueId('VerticalBarChart'), []);
@@ -167,7 +167,6 @@ export function Chart({
     data,
     drawableWidth,
     labels,
-    theme,
   });
 
   const {ticks, yScale} = useYScale({
@@ -206,13 +205,13 @@ export function Chart({
           <XAxis
             allowLineWrap={xAxisOptions.allowLineWrap}
             chartHeight={drawableHeight}
-            chartX={xAxisBounds.x}
-            chartY={xAxisBounds.y}
             labels={labels}
             labelWidth={xScale.bandwidth()}
             onHeightChange={setXAxisHeight}
             reducedLabelIndexes={reducedLabelIndexes}
+            x={xAxisBounds.x}
             xScale={xScale}
+            y={xAxisBounds.y}
           />
         )}
 

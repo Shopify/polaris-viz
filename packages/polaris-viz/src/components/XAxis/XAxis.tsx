@@ -7,8 +7,8 @@ import {TextLine} from '../TextLine';
 interface XAxisProps {
   allowLineWrap: boolean;
   chartHeight: number;
-  chartX: number;
-  chartY: number;
+  x: number;
+  y: number;
   labels: string[];
   labelWidth: number;
   onHeightChange: Dispatch<SetStateAction<number>>;
@@ -21,8 +21,8 @@ export function XAxis({
   ariaHidden = false,
   allowLineWrap,
   chartHeight,
-  chartX,
-  chartY,
+  x,
+  y,
   labels,
   labelWidth,
   onHeightChange,
@@ -44,11 +44,11 @@ export function XAxis({
           return null;
         }
 
-        const x = getXPosition(index, xScale);
+        const xPosition = getXPosition(index, xScale);
 
         return (
           <g
-            transform={`translate(${chartX + (x ?? 0)},${chartY})`}
+            transform={`translate(${x + (xPosition ?? 0)},${y})`}
             key={index}
             aria-hidden={ariaHidden}
           >
