@@ -1,10 +1,15 @@
 import React from 'react';
 import {Dimensions, ChartState, useTheme} from '@shopify/polaris-viz-core';
 
-import {GridSkeleton, DonutSkeleton, Shimmer} from './components';
+import {
+  GridSkeleton,
+  DonutSkeleton,
+  FunnelSkeleton,
+  Shimmer,
+} from './components';
 import styles from './ChartSkeleton.scss';
 
-export type SkeletonType = 'Default' | 'Donut';
+export type SkeletonType = 'Default' | 'Donut' | 'Funnel';
 export interface ChartSkeletonProps {
   dimensions?: Dimensions;
   state?: ChartState;
@@ -29,6 +34,18 @@ export function ChartSkeleton({
       case 'Donut':
         return (
           <DonutSkeleton
+            dimensions={{
+              width,
+              height,
+            }}
+            state={state}
+            errorText={errorText}
+          />
+        );
+        break;
+      case 'Funnel':
+        return (
+          <FunnelSkeleton
             dimensions={{
               width,
               height,

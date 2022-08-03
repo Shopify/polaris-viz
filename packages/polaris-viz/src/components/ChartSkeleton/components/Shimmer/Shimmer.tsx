@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {changeColorOpacity} from '@shopify/polaris-viz-core';
 
 import styles from './Shimmer.scss';
@@ -22,10 +22,8 @@ export function Shimmer({
     ref.current.style.setProperty('--shimmerHeight', `${height}px`);
   }, [width, height]);
 
-  const angle = useMemo(() => {
-    const [min, max] = [width, height].sort();
-    return Math.asin(min / max) / (Math.PI / 180);
-  }, [width, height]);
+  const [min, max] = [width, height];
+  const angle = Math.asin(max / min) / (Math.PI / 180);
 
   return (
     <div
