@@ -1,11 +1,11 @@
-import React, {useState, useMemo, useRef} from 'react';
+import React, {useState, useMemo} from 'react';
 import {line} from 'd3-shape';
 import {
   DataSeries,
   DataPoint,
   XAxisOptions,
   YAxisOptions,
-  uniqueId,
+  useUniqueId,
   curveStepRounded,
   DataType,
   Dimensions,
@@ -103,7 +103,8 @@ export function Chart({
     showLegend,
   });
 
-  const tooltipId = useRef(uniqueId('stackedAreaChart'));
+  const tooltipId = useUniqueId('stackedAreaChart');
+  const clipPathId = useUniqueId('areaChartClipPath');
 
   const hideXAxis = xAxisOptions.hide || selectedTheme.xAxis.hide;
 
@@ -113,6 +114,16 @@ export function Chart({
     labels: formattedLabels,
   } = useStackedData({
     data,
+    xAxisOptions,
+  });
+
+  const zeroLineData = data.map((series) => ({
+    ...series,
+    data: series.data.map((point) => ({...point, value: 0})),
+  }));
+
+  const {stackedValues: zeroLineValues} = useStackedData({
+    data: zeroLineData,
     xAxisOptions,
   });
 
@@ -293,15 +304,20 @@ export function Chart({
           },${chartYPosition})`}
           className={styles.Group}
           area-hidden="true"
+          clipPath={`url(#${clipPathId})`}
         >
           <StackedAreas
             stackedValues={stackedValues}
+            zeroLineValues={zeroLineValues}
             xScale={xScale}
             yScale={yScale}
             colors={seriesColors}
             theme={theme}
           />
         </g>
+        <clipPath id={clipPathId}>
+          <rect width={width} height={drawableHeight} fill="black" />
+        </clipPath>
 
         {hasXAxisAnnotations && (
           <g transform={`translate(${chartXPosition},0)`} tabIndex={-1}>
@@ -343,7 +359,7 @@ export function Chart({
             getXPosition={getXPosition}
             stackedValues={stackedValues}
             theme={theme}
-            tooltipId={tooltipId.current}
+            tooltipId={tooltipId}
             xScale={xScale}
             yScale={yScale}
           />
@@ -371,7 +387,7 @@ export function Chart({
         focusElementDataType={DataType.Point}
         getMarkup={getTooltipMarkup}
         getPosition={getTooltipPosition}
-        id={tooltipId.current}
+        id={tooltipId}
         margin={ChartMargin}
         onIndexChange={(index) => setActivePointIndex(index)}
         parentRef={svgRef}

@@ -10,6 +10,17 @@ jest.mock('d3-scale', () => ({
   scaleLinear: jest.requireActual('d3-scale').scaleLinear,
 }));
 
+const mockStackedValues = [
+  [
+    [163, 269],
+    [0, 0],
+  ],
+  [
+    [0, 163],
+    [0, 203],
+  ],
+] as StackedSeries[];
+
 describe('<StackedAreas />', () => {
   const mockProps = {
     transform: '',
@@ -17,16 +28,8 @@ describe('<StackedAreas />', () => {
     xScale: scaleLinear(),
     yScale: scaleLinear(),
     isAnimated: true,
-    stackedValues: [
-      [
-        [163, 269],
-        [0, 0],
-      ],
-      [
-        [0, 163],
-        [0, 203],
-      ],
-    ] as StackedSeries[],
+    stackedValues: mockStackedValues,
+    zeroLineValues: mockStackedValues,
   };
 
   it('renders a <Area /> for each stacked series', () => {
@@ -75,14 +78,16 @@ describe('<StackedAreas />', () => {
     });
 
     it('passes FAST_DURATION to <Area /> .length is greater than 10', () => {
+      const mockValues = new Array(11).fill([
+        [163, 269],
+        [0, 0],
+      ]);
       const stackedArea = mount(
         <svg>
           <StackedAreas
             {...mockProps}
-            stackedValues={new Array(11).fill([
-              [163, 269],
-              [0, 0],
-            ])}
+            stackedValues={mockValues}
+            zeroLineValues={mockValues}
           />
         </svg>,
       );

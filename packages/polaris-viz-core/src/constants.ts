@@ -80,6 +80,13 @@ export const BARS_SORT_TRANSITION_CONFIG = {
   restVelocity: 200,
 };
 
+export const AREAS_LOAD_ANIMATION_CONFIG = {
+  mass: 1,
+  tension: 120,
+  friction: 20,
+  clamp: true,
+};
+
 export const LINES_LOAD_ANIMATION_CONFIG = {
   mass: 1,
   tension: 140,
