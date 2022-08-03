@@ -155,6 +155,7 @@ export function HorizontalGroup({
             xScale={xScale}
             zeroPosition={zeroPosition}
             containerWidth={containerWidth}
+            areAllNegative={areAllNegative}
           />
         )}
       </g>

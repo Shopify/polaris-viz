@@ -34,8 +34,9 @@ export interface HorizontalBarsProps {
   name: string;
   xScale: ScaleLinear<number, number>;
   zeroPosition: number;
-  animationDelay?: number;
   containerWidth: number;
+  animationDelay?: number;
+  areAllNegative?: boolean;
 }
 
 export function HorizontalBars({
@@ -51,6 +52,7 @@ export function HorizontalBars({
   xScale,
   zeroPosition,
   containerWidth,
+  areAllNegative,
 }: HorizontalBarsProps) {
   const selectedTheme = useTheme();
   const {characterWidths, theme} = useChartContext();
@@ -122,6 +124,7 @@ export function HorizontalBars({
               width={width}
               x={0}
               y={y}
+              areAllNegative={areAllNegative}
             />
             {isSimple && (
               <Label

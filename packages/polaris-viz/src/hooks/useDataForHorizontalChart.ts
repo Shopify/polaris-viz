@@ -70,9 +70,7 @@ export function useDataForHorizontalChart({
   ]);
 
   const areAllNegative = useMemo(() => {
-    return !allNumbers.some((num) => {
-      return num >= 0;
-    });
+    return !allNumbers.some((num) => num !== null && num > 0);
   }, [allNumbers]);
 
   return {

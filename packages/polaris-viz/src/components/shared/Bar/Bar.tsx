@@ -28,6 +28,7 @@ export interface BarProps {
   isAnimated?: boolean;
   transform?: string;
   ariaLabel?: string;
+  areAllNegative?: boolean;
 }
 
 export const Bar = React.memo(function Bar({
@@ -44,6 +45,7 @@ export const Bar = React.memo(function Bar({
   x,
   y,
   ariaLabel,
+  areAllNegative,
 }: BarProps) {
   const getPath = useCallback(
     (height = 0, width = 0) => {
@@ -93,6 +95,7 @@ export const Bar = React.memo(function Bar({
           x={x}
           y={y + height / 2}
           direction={animationDirection}
+          areAllNegative={areAllNegative}
         />
       )}
     </g>
