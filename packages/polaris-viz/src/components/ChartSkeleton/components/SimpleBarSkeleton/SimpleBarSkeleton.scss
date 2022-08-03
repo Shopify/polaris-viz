@@ -1,0 +1,17 @@
+.SimpleBarSkeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 100%;
+}
+
+.Item {
+  display: grid;
+  grid-template-rows: 16px 40px;
+  grid-template-columns: 20% auto;
+  gap: 20px;
+
+  > *:last-child {
+    grid-column: span 2;
+  }
+}

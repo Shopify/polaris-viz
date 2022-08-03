@@ -5,15 +5,11 @@ import {
   BORDER_RADIUS,
   changeColorOpacity,
   ChartState,
-  FONT_SIZE,
 } from '@shopify/polaris-viz-core';
 
-import {useLabels} from '../../../Labels/hooks';
-import {TextLine} from '../../../TextLine';
 import type {ChartSkeletonProps} from '../../ChartSkeleton';
 import {Bar} from '../../../shared';
-
-const TEXT_DROP_SHADOW_SIZE = 3;
+import {ErrorText} from '../ErrorText';
 
 export function FunnelSkeleton({
   dimensions,
@@ -23,7 +19,6 @@ export function FunnelSkeleton({
   const {width, height} = dimensions;
 
   const {
-    chartContainer: {backgroundColor},
     grid: {color: gridColor},
   } = useTheme();
   const barsQuantity = 4;
@@ -33,12 +28,6 @@ export function FunnelSkeleton({
   const barWidth = segmentWidth / 2;
   const id = useUniqueId('loadingFunnel');
   const heightGap = (height * 1.3) / barsQuantity;
-
-  const {lines} = useLabels({
-    labels: [errorText],
-    targetWidth: width,
-    chartHeight: height,
-  });
 
   return (
     <svg viewBox={`0 0 ${width} ${height}`}>
@@ -83,19 +72,7 @@ export function FunnelSkeleton({
             );
           })}
       {state === ChartState.Error && (
-        <g
-          style={{
-            transform: `translateY(${height / 2 - FONT_SIZE * 2}px)`,
-            filter: `
-                drop-shadow( ${TEXT_DROP_SHADOW_SIZE}px 0px 1px ${backgroundColor})
-                drop-shadow( -${TEXT_DROP_SHADOW_SIZE}px  0px 1px ${backgroundColor})
-                drop-shadow( 0px ${TEXT_DROP_SHADOW_SIZE}px 1px ${backgroundColor})
-                drop-shadow( 0px -${TEXT_DROP_SHADOW_SIZE}px 1px ${backgroundColor})
-              `,
-          }}
-        >
-          <TextLine index={0} line={lines[0]} />
-        </g>
+        <ErrorText errorText={errorText} width={width} height={height} />
       )}
     </svg>
   );

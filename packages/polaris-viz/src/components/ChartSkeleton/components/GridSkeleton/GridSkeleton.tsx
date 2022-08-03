@@ -4,20 +4,16 @@ import {
   Dimensions,
   useTheme,
   paddingStringToObject,
-  FONT_SIZE,
   ChartState,
 } from '@shopify/polaris-viz-core';
 import {useSprings, animated} from '@react-spring/web';
 
-import {useLabels} from '../../../Labels/hooks';
-import {TextLine} from '../../../TextLine';
-import styles from '../../ChartSkeleton.scss';
+import {ErrorText} from '../ErrorText';
 
 const BRICK_HEIGHT = 12;
 const BRICK_WIDTH = 32;
 const INITIAL_DELAY = 200;
 const NUMBER_OF_BRICKS = 5;
-const TEXT_DROP_SHADOW_SIZE = 3;
 
 export interface ChartSkeletonProps {
   dimensions?: Dimensions;
@@ -33,7 +29,7 @@ export function GridSkeleton({
   const {width, height} = dimensions;
 
   const {
-    chartContainer: {backgroundColor, padding},
+    chartContainer: {padding},
     grid: {color: gridColor},
   } = useTheme();
 
@@ -156,12 +152,6 @@ export function GridSkeleton({
     }
   }, [animation, state, ticks]);
 
-  const {lines} = useLabels({
-    labels: [errorText],
-    targetWidth: width,
-    chartHeight: height,
-  });
-
   return (
     <React.Fragment>
       <svg viewBox={`0 0 ${width} ${height}`}>
@@ -190,20 +180,7 @@ export function GridSkeleton({
           );
         })}
         {state === ChartState.Error && (
-          <g
-            className={styles.TextLineWrapper}
-            style={{
-              transform: `translateY(${height / 2 - FONT_SIZE * 2}px)`,
-              filter: `
-                drop-shadow( ${TEXT_DROP_SHADOW_SIZE}px 0px 1px ${backgroundColor})
-                drop-shadow( -${TEXT_DROP_SHADOW_SIZE}px  0px 1px ${backgroundColor})
-                drop-shadow( 0px ${TEXT_DROP_SHADOW_SIZE}px 1px ${backgroundColor})
-                drop-shadow( 0px -${TEXT_DROP_SHADOW_SIZE}px 1px ${backgroundColor})
-              `,
-            }}
-          >
-            <TextLine index={0} line={lines[0]} />
-          </g>
+          <ErrorText errorText={errorText} width={width} height={height} />
         )}
       </svg>
     </React.Fragment>

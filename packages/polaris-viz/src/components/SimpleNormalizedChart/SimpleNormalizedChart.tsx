@@ -3,12 +3,14 @@ import {
   ChartProps,
   Direction,
   LabelFormatter,
+  ChartState,
   DEFAULT_CHART_PROPS,
 } from '@shopify/polaris-viz-core';
 import type {WithRequired} from '@shopify/polaris-viz-core';
 
 import type {ComparisonMetricProps} from '../ComparisonMetric';
 import {ChartContainer} from '../ChartContainer';
+import {ChartSkeleton} from '../ChartSkeleton';
 import type {LegendPosition} from '../../types';
 
 import {Chart} from './Chart';
@@ -32,6 +34,8 @@ export function SimpleNormalizedChart(props: SimpleNormalizedChartProps) {
     size = 'small',
     theme,
     isAnimated,
+    state,
+    errorText,
   }: WithRequired<SimpleNormalizedChartProps, 'theme'> = {
     ...DEFAULT_CHART_PROPS,
     ...props,
@@ -39,14 +43,22 @@ export function SimpleNormalizedChart(props: SimpleNormalizedChartProps) {
 
   return (
     <ChartContainer data={data} theme={theme} isAnimated={isAnimated}>
-      <Chart
-        comparisonMetrics={comparisonMetrics}
-        data={data}
-        labelFormatter={labelFormatter}
-        legendPosition={legendPosition}
-        direction={direction}
-        size={size}
-      />
+      {state !== ChartState.Success ? (
+        <ChartSkeleton
+          type="SimpleNormalized"
+          state={state}
+          errorText={errorText}
+        />
+      ) : (
+        <Chart
+          comparisonMetrics={comparisonMetrics}
+          data={data}
+          labelFormatter={labelFormatter}
+          legendPosition={legendPosition}
+          direction={direction}
+          size={size}
+        />
+      )}
     </ChartContainer>
   );
 }
