@@ -11,11 +11,11 @@ import {
   BORDER_RADIUS,
   STROKE_WIDTH,
 } from '../../constants';
+import type {TargetLine} from '../../types';
 
 interface SparkBarSeriesProps {
   data: DataSeries[];
-  dataOffsetLeft: number;
-  dataOffsetRight: number;
+  targetLine: TargetLine;
   height: number;
   shouldAnimate: boolean;
   useTransition: typeof useTransition;
@@ -25,8 +25,7 @@ interface SparkBarSeriesProps {
 
 export function SparkBarSeries({
   data,
-  dataOffsetLeft,
-  dataOffsetRight,
+  targetLine,
   height,
   shouldAnimate,
   theme,
@@ -38,7 +37,7 @@ export function SparkBarSeries({
 
   const {
     // eslint-disable-next-line id-length
-    components: {Defs, Mask, G, Path, Rect},
+    components: {Defs, Mask, G, Rect, Line},
     animated,
   } = usePolarisVizContext();
 
@@ -54,18 +53,18 @@ export function SparkBarSeries({
     getBarHeight,
     strokeDasharray,
     strokeDashoffset,
-    lineShape,
-    comparisonData,
     xScale,
     yScale,
     barWidth,
+    targetLineYPosition,
+    targetLineX1,
+    targetLineX2,
   } = useSparkBar({
     data,
     height,
-    dataOffsetLeft,
-    dataOffsetRight,
     width,
     seriesColor,
+    targetLine,
   });
 
   const transitions = useTransition(dataWithIndex, {
@@ -96,7 +95,7 @@ export function SparkBarSeries({
       </Defs>
 
       <Mask id={clipId}>
-        <AnimatedG opacity={comparisonData ? '0.9' : '1'}>
+        <AnimatedG opacity={targetLine.value ? '0.9' : '1'}>
           {transitions(({height: barHeight}, item, _transition, index) => {
             const xPosition = xScale(index.toString());
             const height = shouldAnimate
@@ -130,11 +129,14 @@ export function SparkBarSeries({
         mask={`url(#${clipId})`}
       />
 
-      {comparisonData == null ? null : (
-        <Path
+      {targetLine.value == null ? null : (
+        <Line
           stroke={selectedTheme.seriesColors.comparison}
           strokeWidth={STROKE_WIDTH}
-          d={lineShape!}
+          x1={targetLineX1}
+          x2={targetLineX2}
+          y1={targetLineYPosition}
+          y2={targetLineYPosition}
           strokeLinecap="round"
           opacity="0.9"
           strokeDashoffset={strokeDashoffset}

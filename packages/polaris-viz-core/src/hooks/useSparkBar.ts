@@ -1,9 +1,8 @@
 import {scaleBand, scaleLinear} from 'd3-scale';
-import {line} from 'd3-shape';
 import {useCallback, useMemo} from 'react';
 
 import {isGradientType} from '../utilities';
-import type {Color, DataPoint, DataSeries} from '../types';
+import type {Color, DataPoint, DataSeries, TargetLine} from '../types';
 
 const STROKE_WIDTH = 1.5;
 const BAR_PADDING = 0.3;
@@ -44,51 +43,41 @@ function removeNullValues(data: DataSeries | undefined) {
 export function useSparkBar({
   data,
   height,
-  dataOffsetLeft,
-  dataOffsetRight,
   width,
   seriesColor,
+  targetLine,
 }: {
   data: DataSeries[];
   height: number;
-  dataOffsetLeft: number;
-  dataOffsetRight: number;
   width: number;
   seriesColor: Color;
+  targetLine: TargetLine;
 }) {
-  const [defaultData, comparisonData] = useMemo(() => {
-    const defaultData = data.find(({isComparison}) => isComparison !== true);
-    const comparisonData = data.find(({isComparison}) => isComparison === true);
+  const {
+    offsetLeft: rawOffsetLeft = 0,
+    offsetRight: rawOffsetRight = 0,
+    value: targetValue = 0,
+  } = targetLine;
 
-    return [defaultData, comparisonData];
-  }, [data]);
+  const offsetLeft = Math.abs(rawOffsetLeft);
+  const offsetRight = Math.abs(rawOffsetRight);
 
-  const dataForChart = defaultData ?? comparisonData ?? {data: []};
-
-  const filteredData = removeNullValues(defaultData);
-  const filteredComparisonData = removeNullValues(comparisonData);
+  const filteredData = removeNullValues(data[0]);
+  const [defaultData] = data;
 
   const yScale = scaleLinear()
-    .range(calculateRange(dataForChart.data, height))
+    .range(calculateRange(defaultData.data, height))
     .domain([
-      Math.min(...filteredData, ...filteredComparisonData, 0),
-      Math.max(...filteredData, ...filteredComparisonData, 0),
+      Math.min(...filteredData, targetValue, 0),
+      Math.max(...filteredData, targetValue, 0),
     ]);
 
+  const targetLineYPosition = yScale(targetValue);
+
   const xScale = scaleBand()
-    .range([dataOffsetLeft, width - dataOffsetRight])
+    .range([offsetLeft, width - offsetRight])
     .paddingInner(BAR_PADDING)
-    .domain(dataForChart.data.map((_, index) => index.toString()));
-
-  const xScaleLinear = scaleLinear()
-    .range([0, width])
-    .domain([0, dataForChart.data.length - 1]);
-
-  const lineGenerator = line<any>()
-    .x(({key}) => xScaleLinear(key))
-    .y(({value}) => yScale(value));
-
-  const lineShape = comparisonData ? lineGenerator(comparisonData.data) : null;
+    .domain(defaultData.data.map((_, index) => index.toString()));
 
   const barWidth = useMemo(() => xScale.bandwidth(), [xScale]);
   const barGap = useMemo(
@@ -97,9 +86,9 @@ export function useSparkBar({
   );
 
   const strokeDashoffset =
-    dataOffsetLeft == null
+    offsetLeft == null
       ? -(STROKE_WIDTH / 2)
-      : -(STROKE_WIDTH / 2) - dataOffsetLeft;
+      : -(STROKE_WIDTH / 2) - offsetRight;
   const strokeDasharray = `${barWidth - STROKE_WIDTH} ${barGap}`;
 
   const getBarHeight = useCallback(
@@ -136,12 +125,13 @@ export function useSparkBar({
     color,
     strokeDasharray,
     strokeDashoffset,
-    comparisonData,
     barWidth,
-    lineShape,
     getBarHeight,
     xScale,
     yScale,
     borderRadius,
+    targetLineYPosition,
+    targetLineX1: 0 - offsetLeft,
+    targetLineX2: width + offsetRight,
   };
 }

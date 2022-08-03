@@ -265,3 +265,9 @@ export enum InternalChartType {
   Combo = 'Combo',
   Line = 'Line',
 }
+
+export interface TargetLine {
+  value: number;
+  offsetRight?: number;
+  offsetLeft?: number;
+}
