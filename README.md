@@ -1,6 +1,8 @@
 <a name="polaris-viz" href="#polaris-viz"><img src="../public/polaris_viz_header.png" alt="Polaris viz" /></a><br/><br/>
 
-**Polaris Viz** is a data visualization system composed of two consumer-facing libraries:
+**Polaris Viz** is Shopify's data visualization system. It's what powers many of our data heavy experiences, including [ShopifyQL Notebooks](https://shopify.engineering/shopify-commerce-data-querying-language-shopifyql).
+
+It is composed of two consumer-facing libraries:
 
 <br/>
 
