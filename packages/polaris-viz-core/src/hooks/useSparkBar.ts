@@ -86,9 +86,7 @@ export function useSparkBar({
   );
 
   const strokeDashoffset =
-    offsetLeft == null
-      ? -(STROKE_WIDTH / 2)
-      : -(STROKE_WIDTH / 2) - offsetRight;
+    offsetLeft == null ? -(STROKE_WIDTH / 2) : -(STROKE_WIDTH / 2) - offsetLeft;
   const strokeDasharray = `${barWidth - STROKE_WIDTH} ${barGap}`;
 
   const getBarHeight = useCallback(
