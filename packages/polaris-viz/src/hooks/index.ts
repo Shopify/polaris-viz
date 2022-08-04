@@ -4,7 +4,7 @@ export {useLinearXScale} from './useLinearXScale';
 export {useResizeObserver} from './useResizeObserver';
 export {useLinearChartAnimations} from './useLinearChartAnimations';
 export {usePrintResizing} from './usePrintResizing';
-export {useHasTimeoutFinished} from './useHasTimeoutFinished';
+
 export {useDataForHorizontalChart} from './useDataForHorizontalChart';
 export {useHorizontalBarSizes} from './useHorizontalBarSizes';
 export {useHorizontalXScale} from './useHorizontalXScale';

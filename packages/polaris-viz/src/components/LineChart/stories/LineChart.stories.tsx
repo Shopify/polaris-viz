@@ -108,6 +108,10 @@ const DEFAULT_PROPS = {
   data,
   skipLinkText: 'Skip chart content',
   yAxisOptions: {labelFormatter: formatYAxisLabel},
+  tooltipOptions: {
+    titleFormatter: (value) => new Date(value).toLocaleDateString(),
+    valueFormatter: formatYAxisLabel,
+  },
   isAnimated: true,
 };
 
@@ -165,27 +169,6 @@ IntegersOnly.args = {
   yAxisOptions: {integersOnly: true},
 };
 
-export const NoArea: Story<LineChartProps> = Template.bind({});
-NoArea.args = {
-  data: [
-    {
-      name: 'Sales',
-      data: [
-        {value: 100, key: '2020-04-01T12:00:00'},
-        {value: 99, key: '2020-04-02T12:00:00'},
-        {value: 1000, key: '2020-04-03T12:00:00'},
-        {value: 2, key: '2020-04-04T12:00:00'},
-        {value: 22, key: '2020-04-05T12:00:00'},
-        {value: 6, key: '2020-04-06T12:00:00'},
-        {value: 5, key: '2020-04-07T12:00:00'},
-      ],
-    },
-  ],
-  xAxisOptions: {
-    labelFormatter: formatXAxisLabel,
-  },
-};
-
 export const OverwrittenSeriesColors: Story<LineChartProps> = Template.bind({});
 OverwrittenSeriesColors.args = {
   data: [
@@ -207,7 +190,6 @@ OverwrittenSeriesColors.args = {
     labelFormatter: formatXAxisLabel,
   },
 };
-
 
 export const SeriesColorsUpToFour: Story<LineChartProps> = Template.bind({});
 

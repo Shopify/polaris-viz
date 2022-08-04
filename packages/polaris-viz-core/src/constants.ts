@@ -33,6 +33,7 @@ export const BORDER_RADIUS = {
   Right: `0 ${DEFAULT_BORDER_RADIUS} ${DEFAULT_BORDER_RADIUS} 0`,
   Bottom: `0 0 ${DEFAULT_BORDER_RADIUS} ${DEFAULT_BORDER_RADIUS}`,
   Left: `${DEFAULT_BORDER_RADIUS} 0 0 ${DEFAULT_BORDER_RADIUS}`,
+  All: `${DEFAULT_BORDER_RADIUS}`,
 };
 
 export const HORIZONTAL_BAR_LABEL_HEIGHT = 12;
@@ -70,13 +71,25 @@ export enum ChartMargin {
   Right = 0,
 }
 
-export const BARS_TRANSITION_CONFIG = {mass: 1, tension: 150, friction: 16};
+export const BARS_TRANSITION_CONFIG = {
+  mass: 1,
+  tension: 190,
+  friction: 26,
+  clamp: true,
+};
 
 export const BARS_SORT_TRANSITION_CONFIG = {
   mass: 1,
   tension: 150,
   friction: 20,
   restVelocity: 200,
+};
+
+export const AREAS_LOAD_ANIMATION_CONFIG = {
+  mass: 1,
+  tension: 120,
+  friction: 20,
+  clamp: true,
 };
 
 export const LINES_LOAD_ANIMATION_CONFIG = {

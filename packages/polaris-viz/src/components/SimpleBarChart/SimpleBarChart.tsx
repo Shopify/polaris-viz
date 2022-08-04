@@ -4,13 +4,14 @@ import type {
   XAxisOptions,
   ChartProps,
 } from '@shopify/polaris-viz-core';
-import {DEFAULT_CHART_PROPS} from '@shopify/polaris-viz-core';
+import {DEFAULT_CHART_PROPS, ChartState} from '@shopify/polaris-viz-core';
 
 import {
   getXAxisOptionsWithDefaults,
   getYAxisOptionsWithDefaults,
 } from '../../utilities';
 import {ChartContainer} from '../../components/ChartContainer';
+import {ChartSkeleton} from '../../components';
 
 import {Chart} from './Chart';
 
@@ -28,6 +29,8 @@ export function SimpleBarChart(props: SimpleBarChartProps) {
     theme,
     type = 'default',
     xAxisOptions,
+    state,
+    errorText,
   }: SimpleBarChartProps = {
     ...DEFAULT_CHART_PROPS,
     ...props,
@@ -37,13 +40,17 @@ export function SimpleBarChart(props: SimpleBarChartProps) {
 
   return (
     <ChartContainer data={data} theme={theme} isAnimated={isAnimated}>
-      <Chart
-        data={data}
-        showLegend={showLegend}
-        type={type}
-        xAxisOptions={xAxisOptionsWithDefaults}
-        yAxisOptions={yAxisOptionsWithDefaults}
-      />
+      {state !== ChartState.Success ? (
+        <ChartSkeleton type="SimpleBar" state={state} errorText={errorText} />
+      ) : (
+        <Chart
+          data={data}
+          showLegend={showLegend}
+          type={type}
+          xAxisOptions={xAxisOptionsWithDefaults}
+          yAxisOptions={yAxisOptionsWithDefaults}
+        />
+      )}
     </ChartContainer>
   );
 }

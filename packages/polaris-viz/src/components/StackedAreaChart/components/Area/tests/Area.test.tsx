@@ -32,15 +32,17 @@ describe('<Area />', () => {
     .x((_, index) => xScale(index))
     .y(([, lastPoint]) => yScale(lastPoint));
 
+  const mockValues = [
+    [163, 269],
+    [0, 0],
+  ] as StackedSeries;
   const mockProps: AreaProps = {
     activeLineIndex: -1,
     animationIndex: 1,
     areaGenerator,
     colors: ['red', 'green'],
-    data: [
-      [163, 269],
-      [0, 0],
-    ] as StackedSeries,
+    data: mockValues,
+    zeroLineValues: mockValues,
     duration: 300,
     id: 'stackedAreas-1',
     index: 0,
