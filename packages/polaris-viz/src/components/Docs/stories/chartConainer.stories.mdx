@@ -1,0 +1,115 @@
+import {Meta, Story, Canvas} from '@storybook/addon-docs/blocks';
+
+import {PolarisVizProvider} from '../../../';
+import {
+  Divider,
+  ComponentContainer,
+  Title,
+  ExamplesGrid,
+  SampleSparkbar,
+  SampleSparkLineChart,
+  SampleBarChart,
+  PropertyTable,
+  SampleLineChart,
+  SampleStackedAreaChart,
+  SampleSimpleNormalizedChart,
+} from './components';
+
+<Meta
+  title="Shared/Themes/Theme Definition/Global Properties/chartContainer"
+  parameters={{
+    viewMode: 'docs',
+    docsOnly: true,
+  }}
+/>
+
+<Title>✍️ Theme Definition</Title>
+
+<Title type="h3">
+  <code>chartContainer</code>
+</Title>
+
+| property                                        | type                | description                                                                                    |
+| ----------------------------------------------- | ------------------- | ---------------------------------------------------------------------------------------------- |
+| <code>chartContainer.borderRadius</code>        | <code>string</code> | a CSS <code>border-radius</code> string that gets applied to the element wrapping the chart    |
+| <code>chartContainer.padding</code>             | <code>string</code> | a CSS <code>padding</code> string that gets applied to the element wrapping the chart          |
+| <code>chartContainer.backgroundColor</code>     | <code>string</code> | a CSS <code>background-color</code> string that gets applied to the element wrapping the chart |
+| <code>chartContainer.sparkChartMinHeight</code> | <code>number</code> | the minimum height in pixels a Spark Chart will have                                           |
+| <code>chartContainer.minHeight</code>           | <code>number</code> | the minimum height in pixels any chart - excluding Spark Charts - will have                    |
+
+<Title type="h4">Examples:</Title>
+
+<ExamplesGrid>
+
+<ComponentContainer
+  codeSample={`
+    <PolarisVizProvider
+      themes={{
+        Default: {
+          chartContainer: {
+            borderRadius: '0',
+            padding: '0',
+            backgroundColor: 'black'
+          }
+        }
+      }}
+    >
+      <SparkLineChart series={data} />
+    </PolarisVizProvider>
+    `}
+  theme="Light"
+  center
+  chart={
+    <div style={{width: '350px', height: '140px'}}>
+      <PolarisVizProvider
+        themes={{
+          Default: {
+            chartContainer: {
+              borderRadius: '0',
+              padding: '0',
+              backgroundColor: 'black',
+            },
+          },
+        }}
+      >
+        <SampleSparkLineChart />
+      </PolarisVizProvider>
+    </div>
+  }
+/>
+
+  <ComponentContainer
+    codeSample={`
+    <PolarisVizProvider
+      themes={{
+        Default: {
+          chartContainer: {
+            borderRadius: '8px',
+            padding: '20px',
+            backgroundColor: '#dde2e9'
+          }
+        }
+      }}
+    >
+      <SparkLineChart series={data} />
+    </PolarisVizProvider>
+    `}
+    theme="Light"
+    center
+    chart={
+      <div style={{width: '350px', height: '140px'}}>
+      <PolarisVizProvider themes={{
+        Default: {
+          chartContainer: {
+            borderRadius: '8px',
+            padding: '20px',
+            backgroundColor: '#dde2e9'
+          }
+        }
+      }}>
+        <SampleSparkLineChart/>
+    </PolarisVizProvider>
+      </div>
+    }
+  />
+</ExamplesGrid>
