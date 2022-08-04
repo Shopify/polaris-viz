@@ -8,6 +8,7 @@ import {
   Shimmer,
   SimpleBarSkeleton,
   SimpleNormalizedSkeleton,
+  SparkSkeleton,
 } from './components';
 import styles from './ChartSkeleton.scss';
 
@@ -16,6 +17,7 @@ export type SkeletonType =
   | 'Donut'
   | 'Funnel'
   | 'SimpleBar'
+  | 'Spark'
   | 'SimpleNormalized';
 export interface ChartSkeletonProps {
   dimensions?: Dimensions;
@@ -77,6 +79,18 @@ export function ChartSkeleton({
       case 'SimpleNormalized':
         return (
           <SimpleNormalizedSkeleton
+            dimensions={{
+              width,
+              height,
+            }}
+            state={state}
+            errorText={errorText}
+          />
+        );
+        break;
+      case 'Spark':
+        return (
+          <SparkSkeleton
             dimensions={{
               width,
               height,
