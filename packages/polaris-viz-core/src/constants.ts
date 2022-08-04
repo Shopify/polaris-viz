@@ -71,7 +71,12 @@ export enum ChartMargin {
   Right = 0,
 }
 
-export const BARS_TRANSITION_CONFIG = {mass: 1, tension: 150, friction: 16};
+export const BARS_TRANSITION_CONFIG = {
+  mass: 1,
+  tension: 190,
+  friction: 26,
+  clamp: true,
+};
 
 export const BARS_SORT_TRANSITION_CONFIG = {
   mass: 1,

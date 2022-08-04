@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {animated, useSpring} from '@react-spring/web';
 import {
   COLOR_VISION_SINGLE_ITEM,
@@ -9,10 +9,12 @@ import {
 } from '@shopify/polaris-viz-core';
 import type {Color, Direction} from '@shopify/polaris-viz-core';
 
-import {BARS_TRANSITION_CONFIG} from '../../../../constants';
+import {
+  BARS_TRANSITION_CONFIG,
+  BARS_LOAD_ANIMATION_CONFIG,
+} from '../../../../constants';
 import {createCSSGradient, classNames} from '../../../../utilities';
 import type {Size} from '../../types';
-import {useHasTimeoutFinished} from '../../../../hooks';
 
 import styles from './BarSegment.scss';
 
@@ -46,7 +48,7 @@ export function BarSegment({
   const angle = direction === 'horizontal' ? 90 : 180;
   const dimension = direction === 'horizontal' ? 'width' : 'height';
 
-  const isMountDone = useHasTimeoutFinished(shouldAnimate ? delay : 0);
+  const isMounted = useRef(false);
 
   const formattedColor = isGradientType(color)
     ? createCSSGradient(color, angle)
@@ -55,9 +57,12 @@ export function BarSegment({
   const spring = useSpring({
     from: {[dimension]: `0%`},
     to: {[dimension]: `${safeScale}%`},
-    config: BARS_TRANSITION_CONFIG,
+    config: isMounted.current
+      ? BARS_TRANSITION_CONFIG
+      : BARS_LOAD_ANIMATION_CONFIG,
     default: {immediate: !shouldAnimate},
-    delay: isMountDone ? 0 : delay,
+    delay: isMounted.current ? 0 : delay,
+    onRest: () => (isMounted.current = true),
   });
 
   return (
