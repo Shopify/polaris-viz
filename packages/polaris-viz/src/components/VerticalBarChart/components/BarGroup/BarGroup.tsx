@@ -14,6 +14,7 @@ import {
 } from '@shopify/polaris-viz-core';
 import type {Color} from '@shopify/polaris-viz-core';
 
+import {getChartId} from '../../../../utilities/getChartId';
 import {getHoverZoneOffset} from '../../../../utilities';
 import {
   MASK_HIGHLIGHT_COLOR,
@@ -65,12 +66,18 @@ export function BarGroup({
   areAllNegative,
 }: Props) {
   const groupAriaLabel = formatAriaLabel(accessibilityData[barGroupIndex]);
-  const {shouldAnimate, isPerformanceImpacted} = useChartContext();
+  const {id, shouldAnimate, isPerformanceImpacted} = useChartContext();
 
   const selectedTheme = useTheme(theme);
 
   const maskItems = useMemo(() => {
-    return document.querySelectorAll<SVGRectElement>(
+    const chart = document.getElementById(getChartId(id));
+
+    if (chart == null) {
+      return [];
+    }
+
+    return chart.querySelectorAll<SVGRectElement>(
       `[data-type="${COLOR_VISION_MASK}"][data-group-index="${barGroupIndex}"]`,
     );
     // We want this to run whenever colors change so we

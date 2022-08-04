@@ -18,6 +18,7 @@ import {
 } from '@shopify/polaris-viz-core';
 import type {Dimensions} from '@shopify/polaris-viz-core';
 
+import {getChartId} from '../../utilities/getChartId';
 import {ChartErrorBoundary} from '../ChartErrorBoundary';
 import characterWidths from '../../data/character-widths.json';
 import characterWidthOffsets from '../../data/character-width-offsets.json';
@@ -150,7 +151,7 @@ export const ChartContainer = (props: Props) => {
             : chartContainer.minHeight,
         }}
         ref={setRef}
-        id={`chart_${value.id}`}
+        id={getChartId(value.id)}
       >
         {!hasValidDimensions(chartDimensions) ? null : (
           <ChartErrorBoundary
