@@ -100,7 +100,6 @@ describe('useSparkBar', () => {
       'returns a strokeDashoffset based on dataOffsetLeft',
       ({dataOffsetLeft, data, expected}) => {
         const TestComponent = () => {
-          console.log(dataOffsetLeft);
           const {strokeDashoffset} = useSparkBar({
             data: [{data}],
             height: 500,
