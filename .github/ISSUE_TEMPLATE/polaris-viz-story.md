@@ -12,14 +12,11 @@ assignees: ''
 ## Additional Context
 
 ## Engineering Tasks
-### Backend
+
 - [ ] 
 
 
 ⛔️ Blocked by ?
-### Frontend 
+
 - [ ] 
  
-### Data Requirements
-
-- [ ]
