@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Removed
+
+- `SparkBarSeries` now does not support displaying dataSeries with `isComparison: true` as dashed lines. Use the new `TargetLine` prop instead
+
 ### Changed
 
 - Removed `dataOffsetLeft` and `dataOffsetRight` props from `SparkBarSeries` and unified them under the `TargetLine` prop.
