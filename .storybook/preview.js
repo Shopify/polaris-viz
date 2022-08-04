@@ -29,6 +29,9 @@ const storiesOrder = {
       'Default Themes': null,
       Customizing: null,
       'createTheme Utility': null,
+      'Theme Definition': {
+        Intro: null,
+      },
     },
     Types: null,
   },

@@ -4,3 +4,24 @@
 <meta name="theme-color" content="#22272b" />
 <link rel="shortcut icon" href="/storybook.ico" />
 <link rel="icon" type="image/png" href="/storybook.png" sizes="192x192" />
+<style>
+  #storybook-explorer-tree .sidebar-item {
+    position: relative;
+  }
+  #storybook-explorer-tree .sidebar-item svg {
+    opacity: 0;
+  }
+  #storybook-explorer-tree .sidebar-item[data-nodetype='component']::before,
+  #storybook-explorer-tree .sidebar-item[data-nodetype='group']::before {
+    position: relative;
+    content: url('/FolderMajor.svg');
+    left: 29px;
+  }
+
+  #storybook-explorer-tree .sidebar-item[data-nodetype='document']::before,
+  #storybook-explorer-tree .sidebar-item[data-nodetype='story']::before {
+    position: relative;
+    content: url('/NoteMajor.svg');
+    left: 13px;
+  }
+</style>

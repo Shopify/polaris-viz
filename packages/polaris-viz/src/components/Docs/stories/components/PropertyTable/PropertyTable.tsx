@@ -54,7 +54,7 @@ PropertyTable.Row = ({
             {type.map((i, index) => {
               return (
                 <span key={`${i}${index}`}>
-                  <code>{i}</code>
+                  <code style={{whiteSpace: 'pre'}}>{i}</code>
                   {index === type.length - 1 ? null : (
                     // eslint-disable-next-line @shopify/jsx-no-hardcoded-content
                     <React.Fragment>{'|\n'}</React.Fragment>
@@ -71,7 +71,9 @@ PropertyTable.Row = ({
       {chartsAffected && (
         <td>
           {chartsAffected.map((chart, index) => (
-            <code key={`${chart}${index}`}>{chart}</code>
+            <code style={{whiteSpace: 'pre'}} key={`${chart}${index}`}>
+              {chart}
+            </code>
           ))}
         </td>
       )}

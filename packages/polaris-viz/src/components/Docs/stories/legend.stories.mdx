@@ -1,0 +1,140 @@
+import {Meta, Story, Canvas} from '@storybook/addon-docs/blocks';
+
+import {PolarisVizProvider} from '../../../';
+import {
+  Divider,
+  ComponentContainer,
+  Title,
+  ExamplesGrid,
+  SampleSparkbar,
+  SampleSparkLineChart,
+  SampleBarChart,
+  PropertyTable,
+  SampleLineChart,
+  SampleStackedAreaChart,
+  SampleSimpleNormalizedChart,
+} from './components';
+
+<Meta
+  title="Shared/Themes/Theme Definition/Chart Specific Properties/legend"
+  parameters={{
+    viewMode: 'docs',
+    docsOnly: true,
+  }}
+/>
+
+<Title type="h3">
+  <code>legend</code>
+</Title>
+
+<PropertyTable>
+  <PropertyTable.Row
+    property="legend.labelColor"
+    type="string"
+    description="a CSS color string applied to the labels in legends"
+    chartsAffected={['SimpleNormalizedChart', 'Legend']}
+  />
+  <PropertyTable.Row
+    property="legend.valueColor"
+    type="string"
+    description="a CSS color string applied to the values in legends"
+    chartsAffected={['SimpleNormalizedChart', 'Legend']}
+  />
+  <PropertyTable.Row
+    property="legend.backgroundColor"
+    type="string"
+    description="a CSS color string applied to the background color in legends"
+    chartsAffected={['SimpleNormalizedChart', 'Legend']}
+  />
+  <PropertyTable.Row
+    property="legend.trendIndicator"
+    type={`{
+  positive: string;
+  negative: string;
+  neutral: string
+}`}
+    description="an object describing the colors to be used in the chevrons that indicate positive, negative and neutral trends "
+    chartsAffected={['SimpleNormalizedChart', 'Legend']}
+  />
+</PropertyTable>
+
+<Title type="h4">Examples:</Title>
+
+<ExamplesGrid>
+
+<ComponentContainer
+  codeSample={`
+    <PolarisVizProvider
+        themes={{
+          Default: {
+            legend: {
+              labelColor: 'lime',
+              valueColor: 'yellow',
+            },
+          },
+        }}
+      >
+    <SimpleNormalizedChart data={data} />
+  </PolarisVizProvider>
+    `}
+  center
+  chart={
+    <div style={{width: '320px', height: '250px'}}>
+      <PolarisVizProvider
+        themes={{
+          Default: {
+            chartContainer: {
+              padding: '10px'
+            },
+            legend: {
+              labelColor: 'lime',
+              valueColor: 'yellow',
+            },
+          },
+        }}
+      >
+        <SampleSimpleNormalizedChart />
+      </PolarisVizProvider>
+    </div>
+  }
+/>
+<ComponentContainer
+  codeSample={`
+    <PolarisVizProvider
+      themes={{
+        Default: {
+          crossHair: {
+            color: 'lime',
+            width: 10,
+          },
+          legend: {
+            backgroundColor: 'purple',
+          }
+        }
+      }}
+    >
+    <LineChart series={data} />
+  </PolarisVizProvider>
+    `}
+  center
+  chart={
+    <div style={{width: '350px', height: '140px'}}>
+      <PolarisVizProvider
+        themes={{
+          Default: {
+            crossHair: {
+              color: 'lime',
+              width: 10,
+            },
+            legend: {
+              backgroundColor: 'purple',
+            }
+          },
+        }}
+      >
+        <SampleLineChart />
+      </PolarisVizProvider>
+    </div>
+  }
+/>
+</ExamplesGrid>
