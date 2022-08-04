@@ -20,7 +20,11 @@ interface Props extends SparkBarChartProps {
 export function Chart({
   data,
   dimensions,
-  targetLine,
+  targetLine = {
+    offsetLeft: 0,
+    offsetRight: 0,
+    value: 0,
+  },
   accessibilityLabel,
   theme = DEFAULT_THEME_NAME,
 }: Props) {

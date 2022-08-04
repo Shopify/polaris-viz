@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Changed
+
+- Removed `dataOffsetLeft` and `dataOffsetRight` props from `SparkBarChart` and unified them under the `TargetLine` prop.
+
 ### Fixed
 
 - Fixed issue where color vision updates to groups would affect all charts on the page. Now changes are scoped to each chart.

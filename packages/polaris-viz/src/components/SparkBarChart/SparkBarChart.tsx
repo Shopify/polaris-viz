@@ -12,7 +12,7 @@ import {ChartSkeleton} from '../';
 import {Chart} from './Chart';
 
 export type SparkBarChartProps = {
-  targetLine: TargetLine;
+  targetLine?: TargetLine;
   accessibilityLabel?: string;
   dimensions?: Dimensions;
 } & ChartProps;
@@ -22,7 +22,11 @@ export function SparkBarChart(props: SparkBarChartProps) {
     data,
     accessibilityLabel,
     isAnimated,
-    targetLine,
+    targetLine = {
+      offsetLeft: 0,
+      offsetRight: 0,
+      value: 0,
+    },
     theme,
     state,
     errorText,

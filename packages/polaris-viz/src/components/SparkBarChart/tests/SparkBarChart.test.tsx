@@ -2,7 +2,7 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleBand} from 'd3-scale';
 import {LinearGradientWithStops} from '@shopify/polaris-viz-core';
-import type {DataSeries} from '@shopify/polaris-viz-core';
+import type {DataSeries, TargetLine} from '@shopify/polaris-viz-core';
 
 import {SparkBarChart} from '../SparkBarChart';
 import {Chart} from '../Chart';
@@ -15,14 +15,10 @@ const sampleData: DataSeries = {
     {key: 4, value: 500},
   ],
 };
-const sampleComparison: DataSeries = {
-  data: [
-    {key: 0, value: 300},
-    {key: 1, value: 300},
-    {key: 2, value: 300},
-    {key: 3, value: 300},
-  ],
-  isComparison: true,
+const sampleComparison: TargetLine = {
+  offsetLeft: 0,
+  offsetRight: 0,
+  value: 300,
 };
 
 jest.mock('d3-scale', () => ({
@@ -61,7 +57,7 @@ describe('<SparkBarChart/>', () => {
 
   it('renders bars with 90% opacity when a comparison is present', () => {
     const wrapper = mount(
-      <SparkBarChart data={[sampleData, sampleComparison]} />,
+      <SparkBarChart data={[sampleData]} targetLine={{value: 100}} />,
     );
 
     expect(wrapper).toContainReactComponent('g', {
@@ -79,10 +75,10 @@ describe('<SparkBarChart/>', () => {
 
   it('renders a comparison line when series has isComparison=true', () => {
     const wrapper = mount(
-      <SparkBarChart data={[sampleData, sampleComparison]} />,
+      <SparkBarChart data={[sampleData]} targetLine={sampleComparison} />,
     );
 
-    expect(wrapper).toContainReactComponentTimes('path', 5);
+    expect(wrapper).toContainReactComponentTimes('path', 4);
   });
 
   it('does not render a comparison line when no comparison series is passed', () => {
@@ -103,10 +99,10 @@ describe('<SparkBarChart/>', () => {
     });
 
     const wrapper = mount(
-      <SparkBarChart data={[sampleData, sampleComparison]} />,
+      <SparkBarChart data={[sampleData]} targetLine={sampleComparison} />,
     );
 
-    expect(wrapper).toContainReactComponent('path', {
+    expect(wrapper).toContainReactComponent('line', {
       strokeDasharray: '18.5 11.5',
       strokeDashoffset: -0.75,
     });
@@ -125,12 +121,12 @@ describe('<SparkBarChart/>', () => {
 
     const wrapper = mount(
       <SparkBarChart
-        data={[sampleData, sampleComparison]}
-        dataOffsetLeft={25}
+        data={[sampleData]}
+        targetLine={{...sampleComparison, offsetLeft: 25}}
       />,
     );
 
-    expect(wrapper).toContainReactComponent('path', {
+    expect(wrapper).toContainReactComponent('line', {
       strokeDasharray: '18.5 11.5',
       strokeDashoffset: -25.75,
     });
