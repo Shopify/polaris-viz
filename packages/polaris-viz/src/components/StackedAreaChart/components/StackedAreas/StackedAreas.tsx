@@ -21,6 +21,7 @@ import {Area} from '..';
 interface Props {
   colors: Color[];
   stackedValues: StackedSeries[];
+  zeroLineValues: StackedSeries[];
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
   theme: string;
@@ -32,6 +33,7 @@ export function StackedAreas({
   yScale,
   colors,
   theme,
+  zeroLineValues,
 }: Props) {
   const [activeLineIndex, setActiveLineIndex] = useState(-1);
 
@@ -89,6 +91,7 @@ export function StackedAreas({
             areaGenerator={areaGenerator}
             colors={colors}
             data={data}
+            zeroLineValues={zeroLineValues[index]}
             duration={duration}
             id={id}
             index={index}

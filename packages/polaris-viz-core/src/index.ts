@@ -79,6 +79,7 @@ export {
   ARC_DATA_CHANGE_ANIMATION_CONFIG,
   LEGENDS_TOP_MARGIN,
   LINE_SERIES_POINT_RADIUS,
+  AREAS_LOAD_ANIMATION_CONFIG,
 } from './constants';
 export {
   clamp,

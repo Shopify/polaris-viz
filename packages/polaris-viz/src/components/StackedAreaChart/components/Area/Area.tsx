@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, {useRef} from 'react';
 import {animated, useSpring} from '@react-spring/web';
+import type {SpringValue} from '@react-spring/web';
 import type {Area as D3Area, Line} from 'd3-shape';
 import {
   LinearGradientWithStops,
@@ -8,11 +9,11 @@ import {
   COLOR_VISION_SINGLE_ITEM,
   getColorVisionStylesForActiveIndex,
   useChartContext,
+  AREAS_LOAD_ANIMATION_CONFIG,
 } from '@shopify/polaris-viz-core';
 import type {Color, Theme, GradientStop} from '@shopify/polaris-viz-core';
 
 import type {StackedSeries} from '../../../../types';
-import {LINES_LOAD_ANIMATION_CONFIG} from '../../../../constants';
 
 import styles from './Area.scss';
 
@@ -22,6 +23,7 @@ export interface AreaProps {
   areaGenerator: D3Area<number[]>;
   colors: Color[];
   data: StackedSeries;
+  zeroLineValues: StackedSeries;
   duration: number;
   id: string;
   index: number;
@@ -40,40 +42,40 @@ export function Area({
   index,
   lineGenerator,
   selectedTheme,
+  zeroLineValues,
 }: AreaProps) {
-  const [mounted, setMounted] = useState(false);
   const {shouldAnimate} = useChartContext();
 
   const delay = animationIndex * (duration / 2);
 
-  const spring = useSpring({
-    from: {transform: 'translateY(25%)', opacity: 0},
-    to: {transform: 'translateY(0)', opacity: 1},
-    delay: mounted ? 0 : delay,
-    duration,
-    config: LINES_LOAD_ANIMATION_CONFIG,
-    default: {
-      immediate: !shouldAnimate || mounted,
+  const mounted = useRef(false);
+
+  const {
+    animatedAreaShape,
+    animatedLineShape,
+    opacity,
+  }: {
+    animatedAreaShape: SpringValue;
+    animatedLineShape: SpringValue;
+    opacity: SpringValue;
+  } = useSpring({
+    from: {
+      opacity: 0,
+      animatedAreaShape: areaGenerator(mounted.current ? data : zeroLineValues),
+      animatedLineShape: lineGenerator(mounted.current ? data : zeroLineValues),
     },
-    onRest: () => setMounted(true),
+    to: {
+      opacity: 0.25,
+      animatedAreaShape: areaGenerator(data),
+      animatedLineShape: lineGenerator(data),
+    },
+    delay: mounted.current ? 0 : delay,
+    config: AREAS_LOAD_ANIMATION_CONFIG,
+    default: {immediate: !shouldAnimate},
+    onRest: () => (mounted.current = true),
   });
 
-  const areaSpring = useSpring({
-    from: {opacity: 0},
-    to: {opacity: 0.25},
-    delay: !shouldAnimate ? 0 : delay + duration,
-    duration,
-    config: LINES_LOAD_ANIMATION_CONFIG,
-
-    default: {
-      immediate: !shouldAnimate || mounted,
-    },
-  });
-
-  const shape = areaGenerator(data);
-  const line = lineGenerator(data);
-
-  if (shape == null || line == null) {
+  if (animatedAreaShape == null || animatedLineShape == null) {
     return null;
   }
 
@@ -85,11 +87,7 @@ export function Area({
     : [{offset: 0, color: currentColor}];
 
   return (
-    <animated.g
-      style={{
-        ...spring,
-        transformOrigin: 'bottom center',
-      }}
+    <g
       {...getColorVisionEventAttrs({
         type: COLOR_VISION_SINGLE_ITEM,
         index,
@@ -114,20 +112,20 @@ export function Area({
         tabIndex={-1}
         className={styles.Group}
       >
-        <path
+        <animated.path
           key={`line-${index}`}
-          d={line}
+          d={animatedLineShape}
           fill="none"
           stroke={`url(#area-${id}-${index})`}
           strokeWidth={selectedTheme.line.width}
         />
         <animated.path
           key={index}
-          d={shape}
+          style={{opacity}}
+          d={animatedAreaShape}
           fill={`url(#area-${id}-${index})`}
-          style={areaSpring}
         />
       </g>
-    </animated.g>
+    </g>
   );
 }
