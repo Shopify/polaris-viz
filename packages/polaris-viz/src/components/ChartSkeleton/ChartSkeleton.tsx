@@ -1,5 +1,10 @@
 import React from 'react';
-import {Dimensions, ChartState, useTheme} from '@shopify/polaris-viz-core';
+import {
+  Dimensions,
+  ChartState,
+  useTheme,
+  DEFAULT_THEME_NAME,
+} from '@shopify/polaris-viz-core';
 
 import {
   GridSkeleton,
@@ -19,10 +24,12 @@ export type SkeletonType =
   | 'SimpleBar'
   | 'Spark'
   | 'SimpleNormalized';
+
 export interface ChartSkeletonProps {
   dimensions?: Dimensions;
   state?: ChartState;
   errorText?: string;
+  theme?: string;
   type?: SkeletonType;
 }
 
@@ -30,11 +37,12 @@ export function ChartSkeleton({
   dimensions,
   state = ChartState.Loading,
   errorText = 'Could not load the chart',
+  theme = DEFAULT_THEME_NAME,
   type = 'Default',
 }: ChartSkeletonProps) {
   const {
     chartContainer: {backgroundColor},
-  } = useTheme();
+  } = useTheme(theme);
 
   const {width, height} = dimensions || {width: 0, height: 0};
 
@@ -51,7 +59,6 @@ export function ChartSkeleton({
             errorText={errorText}
           />
         );
-        break;
       case 'Funnel':
         return (
           <FunnelSkeleton
@@ -63,7 +70,6 @@ export function ChartSkeleton({
             errorText={errorText}
           />
         );
-        break;
       case 'SimpleBar':
         return (
           <SimpleBarSkeleton
@@ -75,7 +81,6 @@ export function ChartSkeleton({
             errorText={errorText}
           />
         );
-        break;
       case 'SimpleNormalized':
         return (
           <SimpleNormalizedSkeleton
@@ -87,7 +92,6 @@ export function ChartSkeleton({
             errorText={errorText}
           />
         );
-        break;
       case 'Spark':
         return (
           <SparkSkeleton
@@ -99,7 +103,6 @@ export function ChartSkeleton({
             errorText={errorText}
           />
         );
-        break;
 
       default:
         return (
@@ -112,7 +115,6 @@ export function ChartSkeleton({
             errorText={errorText}
           />
         );
-        break;
     }
   };
 

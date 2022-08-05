@@ -12,7 +12,7 @@ export function SparkSkeleton({
   dimensions,
   state,
   errorText,
-}: Omit<Required<ChartSkeletonProps>, 'type'>) {
+}: Omit<Required<ChartSkeletonProps>, 'type' | 'theme'>) {
   const {width, height} = dimensions;
 
   const {
