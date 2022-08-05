@@ -42,7 +42,6 @@ const MOCK_PROPS: BarGroupProps = {
   data: [10, 20, 0, 1],
   colors: ['purple', 'teal', 'red', 'orange'],
   barGroupIndex: 0,
-  hasRoundedCorners: false,
   gapWidth: 10,
   animationDelay: 0,
   indexOffset: 0,

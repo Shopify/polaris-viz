@@ -6,11 +6,7 @@ import {usePolarisVizContext, useSparkBar, useTheme} from '../../hooks';
 import {LinearGradientWithStops} from '../LinearGradientWithStops';
 import {getAnimationTrail, getSeriesColors, uniqueId} from '../../utilities';
 import {Bar} from '../Bar';
-import {
-  BARS_TRANSITION_CONFIG,
-  BORDER_RADIUS,
-  STROKE_WIDTH,
-} from '../../constants';
+import {BARS_TRANSITION_CONFIG, STROKE_WIDTH} from '../../constants';
 import type {TargetLine} from '../../types';
 
 interface SparkBarSeriesProps {
@@ -47,7 +43,6 @@ export function SparkBarSeries({
   const clipId = useMemo(() => uniqueId('sparkbar-series-clip'), []);
 
   const {
-    borderRadius,
     dataWithIndex,
     color,
     getBarHeight,
@@ -106,11 +101,7 @@ export function SparkBarSeries({
 
             return (
               <Bar
-                borderRadius={
-                  selectedTheme.bar.hasRoundedCorners
-                    ? borderRadius
-                    : BORDER_RADIUS.None
-                }
+                borderRadius={selectedTheme.bar.borderRadius}
                 key={index}
                 x={xPosition == null ? 0 : xPosition}
                 yScale={yScale}

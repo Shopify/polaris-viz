@@ -3,7 +3,6 @@ import {
   DataType,
   LOAD_ANIMATION_DURATION,
   useChartContext,
-  useTheme,
 } from '@shopify/polaris-viz-core';
 import type {
   StackedValues,
@@ -52,7 +51,6 @@ export function VerticalBarGroup({
   yAxisOptions,
   areAllNegative,
 }: VerticalBarGroupProps) {
-  const selectedTheme = useTheme();
   const {id: chartId, isPerformanceImpacted} = useChartContext();
 
   const [activeBarGroup, setActiveBarGroup] = useState<number>(-1);
@@ -134,7 +132,6 @@ export function VerticalBarGroup({
             colors={colors}
             data={item}
             gapWidth={gapWidth}
-            hasRoundedCorners={selectedTheme.bar.hasRoundedCorners}
             drawableHeight={drawableHeight}
             indexOffset={indexOffset}
             key={index}

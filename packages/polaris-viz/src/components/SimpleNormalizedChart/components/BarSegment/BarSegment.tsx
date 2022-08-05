@@ -27,7 +27,7 @@ interface Props {
   color: Color;
   size: Size;
   direction: Direction;
-  roundedCorners: boolean;
+  roundedCorners: number;
 }
 
 export function BarSegment({

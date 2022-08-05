@@ -6,6 +6,8 @@ import {THEME_CONTROL_ARGS, CHART_STATE_CONTROL_ARGS} from '../../../storybook';
 
 import {PageWithSizingInfo} from '../../Docs/stories/components/PageWithSizingInfo';
 
+import {PolarisVizProvider} from '../../../';
+
 export default {
   title: 'polaris-viz/Charts/SparkBarChart',
   parameters: {
@@ -45,7 +47,19 @@ export default {
 } as Meta;
 
 const Template: Story<SparkBarChartProps> = (args: SparkBarChartProps) => {
-  return <SparkBarChart {...args} />;
+  return (
+    <PolarisVizProvider
+      themes={{
+        Default: {
+          bar: {
+            borderRadius: 5,
+          },
+        },
+      }}
+    >
+      <SparkBarChart {...args} />
+    </PolarisVizProvider>
+  );
 };
 
 const comparisonValue = 2000;

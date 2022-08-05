@@ -35,7 +35,6 @@ export interface HorizontalGroupProps {
   groupHeight: number;
   id: string;
   index: number;
-
   isSimple: boolean;
   isStacked: boolean;
   name: string;

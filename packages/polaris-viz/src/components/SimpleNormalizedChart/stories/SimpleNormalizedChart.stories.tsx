@@ -11,6 +11,7 @@ import {
   LEGEND_POSITION_ARGS,
   CHART_STATE_CONTROL_ARGS,
 } from '../../../storybook';
+import {PolarisVizProvider} from '../../../';
 import {PageWithSizingInfo} from '../../Docs/stories/components/PageWithSizingInfo';
 
 export default {
@@ -42,7 +43,19 @@ export default {
 const Template: Story<SimpleNormalizedChartProps> = (
   args: SimpleNormalizedChartProps,
 ) => {
-  return <SimpleNormalizedChart {...args} />;
+  return (
+    <PolarisVizProvider
+      themes={{
+        Default: {
+          bar: {
+            borderRadius: 2,
+          },
+        },
+      }}
+    >
+      <SimpleNormalizedChart {...args} />;
+    </PolarisVizProvider>
+  );
 };
 
 const defaultProps: SimpleNormalizedChartProps = {

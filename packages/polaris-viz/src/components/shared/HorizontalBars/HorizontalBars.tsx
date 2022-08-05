@@ -4,7 +4,6 @@ import {
   DataSeries,
   getColorVisionEventAttrs,
   LabelFormatter,
-  BORDER_RADIUS,
   estimateStringWidth,
   COLOR_VISION_SINGLE_ITEM,
   useChartContext,
@@ -115,7 +114,6 @@ export function HorizontalBars({
           <React.Fragment key={`series-${seriesIndex}-${id}-${name}`}>
             <Bar
               animationDelay={animationDelay}
-              borderRadius={BORDER_RADIUS.Right}
               color={`url(#${getGradientDefId(theme, seriesIndex, id)})`}
               height={barHeight}
               index={groupIndex}

@@ -130,13 +130,13 @@ export function HorizontalStackedBars({
         const key = dataKeys[seriesIndex] ?? '';
         const ariaLabel = `${key} ${end}`;
 
-        const areAllValuesAreZero = stackedValues[groupIndex].every(
+        const areAllValuesZero = stackedValues[groupIndex].every(
           ([start, end]) => start + end === 0,
         );
 
         return (
           <React.Fragment key={`stackedBar ${barId}`}>
-            {areAllValuesAreZero ? (
+            {areAllValuesZero ? (
               <ZeroValueLine x={x} y={barHeight / 2} direction="horizontal" />
             ) : (
               <StackedBar

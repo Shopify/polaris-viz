@@ -19,7 +19,6 @@ export function FunnelSegment({
   barHeight,
   drawableHeight,
   x,
-  borderRadius,
   ariaLabel,
   index = 0,
   color,
@@ -29,8 +28,11 @@ export function FunnelSegment({
   percentLabel,
   formattedYValue,
 }) {
+  const selectedTheme = useTheme();
   const mounted = useRef(false);
   const {shouldAnimate} = useChartContext();
+
+  const borderRadius = selectedTheme.bar.borderRadius;
 
   const {
     xAxis: {labelColor: axisLabelColor},
@@ -62,7 +64,11 @@ export function FunnelSegment({
           fill={color}
           width={barWidth}
           d={animatedHeight.to((value: number) =>
-            getRoundedRectPath({height: value, width: barWidth, borderRadius}),
+            getRoundedRectPath({
+              height: value,
+              width: barWidth,
+              borderRadius: `${borderRadius} ${borderRadius} 0 0`,
+            }),
           )}
           style={{
             transform: animatedHeight.to(

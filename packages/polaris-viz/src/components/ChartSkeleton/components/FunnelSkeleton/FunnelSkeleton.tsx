@@ -2,7 +2,6 @@ import React from 'react';
 import {
   useTheme,
   useUniqueId,
-  BORDER_RADIUS,
   changeColorOpacity,
   ChartState,
 } from '@shopify/polaris-viz-core';
@@ -48,7 +47,6 @@ export function FunnelSkeleton({
             return (
               <React.Fragment key={`${id}${index}`}>
                 <Bar
-                  borderRadius={BORDER_RADIUS.Top}
                   color={gridColor}
                   x={segmentWidth * index}
                   y={height - barHeight}

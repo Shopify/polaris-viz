@@ -11,6 +11,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 - Fixed bug where points in `<StackedAreaChart />` were in the wrong positions when `StackedAreaChart.isAnimated=false`.
 
+### Changed
+
+- Replaced bar chart `hasRoundedCorners` by `borderRadius`.
+
 ## [6.6.1] - 2022-08-10
 
 ### Fixed
