@@ -8,7 +8,6 @@ import {
   COLOR_VISION_GROUP_ITEM,
   getColorVisionEventAttrs,
   clamp,
-  BORDER_RADIUS,
   useTheme,
   useChartContext,
 } from '@shopify/polaris-viz-core';
@@ -39,7 +38,6 @@ interface Props {
   data: (number | null)[];
   colors: Color[];
   barGroupIndex: number;
-  hasRoundedCorners: boolean;
   indexOffset: number;
   accessibilityData: AccessibilitySeries[];
   activeBarGroup: number;
@@ -58,7 +56,6 @@ export function BarGroup({
   drawableHeight,
   indexOffset,
   barGroupIndex,
-  hasRoundedCorners,
   accessibilityData,
   activeBarGroup,
   gapWidth,
@@ -151,9 +148,6 @@ export function BarGroup({
                 rawValue={rawValue}
                 width={barWidth}
                 index={index}
-                borderRadius={
-                  hasRoundedCorners ? BORDER_RADIUS.Top : BORDER_RADIUS.None
-                }
                 animationDelay={animationDelay}
                 areAllNegative={areAllNegative}
               />

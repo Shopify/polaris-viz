@@ -144,7 +144,7 @@ export function Chart({
             scale={100}
             key="empty-bar"
             color={selectedTheme.seriesColors.empty}
-            roundedCorners={selectedTheme.bar.hasRoundedCorners}
+            roundedCorners={selectedTheme.bar.borderRadius}
           />
         ) : (
           bars.map(({value, key}, index) => {
@@ -163,7 +163,7 @@ export function Chart({
                 scale={xScale(value)}
                 key={`${key}-${index}`}
                 color={colors[colorIndex]}
-                roundedCorners={selectedTheme.bar.hasRoundedCorners}
+                roundedCorners={selectedTheme.bar.borderRadius}
               />
             );
           })

@@ -4,6 +4,7 @@ import {PageWithSizingInfo} from '../../Docs/stories/components/PageWithSizingIn
 import {THEME_CONTROL_ARGS, CHART_STATE_CONTROL_ARGS} from '../../../storybook';
 import {FunnelChart, FunnelChartProps} from '../FunnelChart';
 
+
 export default {
   title: 'polaris-viz/Charts/FunnelChart',
   component: FunnelChart,
@@ -59,7 +60,7 @@ const data = [
   },
 ];
 
-const DefaultTemplate: Story<FunnelChartProps> = (args: FunnelChartProps) => {
+const Template: Story<FunnelChartProps> = (args: FunnelChartProps) => {
   return (
     <div style={{height: 400}}>
       <FunnelChart {...args} />
@@ -67,7 +68,7 @@ const DefaultTemplate: Story<FunnelChartProps> = (args: FunnelChartProps) => {
   );
 };
 
-export const Default = DefaultTemplate.bind({});
+export const Default = Template.bind({});
 
 Default.args = {
   data,
@@ -79,7 +80,7 @@ Default.args = {
   },
 };
 
-export const Light = DefaultTemplate.bind({});
+export const Light = Template.bind({});
 
 Light.args = {
   theme: 'Light',

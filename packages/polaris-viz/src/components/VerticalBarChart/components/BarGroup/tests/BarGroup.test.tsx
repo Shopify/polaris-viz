@@ -48,7 +48,7 @@ describe('<BarGroup/>', () => {
     onFocus: jest.fn(),
     barGroupIndex: 0,
     ariaLabel: 'Aria Label',
-    hasRoundedCorners: false,
+    borderRadius: '0',
     isSubdued: false,
     isAnimated: false,
     gapWidth: 10,

@@ -5,7 +5,7 @@ describe('createTheme', () => {
   it('generates a theme with default values, from the partial theme provided', () => {
     const result = createTheme({
       bar: {
-        hasRoundedCorners: false,
+        borderRadius: '3',
       },
     });
     expect(result).not.toStrictEqual(DEFAULT_THEME);
@@ -14,7 +14,7 @@ describe('createTheme', () => {
       expect.objectContaining({
         bar: {
           ...DEFAULT_THEME.bar,
-          hasRoundedCorners: false,
+          borderRadius: '3',
         },
       }),
     );
@@ -26,7 +26,7 @@ describe('createThemes', () => {
     const result = createThemes({
       Default: {
         bar: {
-          hasRoundedCorners: false,
+          borderRadius: '3',
         },
       },
     });
@@ -38,7 +38,7 @@ describe('createThemes', () => {
           ...DEFAULT_THEME,
           bar: {
             ...DEFAULT_THEME.bar,
-            hasRoundedCorners: false,
+            borderRadius: '3',
           },
         },
       }),
@@ -50,7 +50,7 @@ describe('createThemes', () => {
       Default: DEFAULT_THEME,
       SomeTheme: {
         bar: {
-          hasRoundedCorners: false,
+          borderRadius: '0',
         },
       },
     });
@@ -62,7 +62,7 @@ describe('createThemes', () => {
           ...DEFAULT_THEME,
           bar: {
             ...DEFAULT_THEME.bar,
-            hasRoundedCorners: false,
+            borderRadius: '0',
           },
         },
       }),

@@ -2,7 +2,6 @@ import React, {useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import type {SpringValue} from '@react-spring/core';
 
-import {BORDER_RADIUS} from '../../constants';
 import {getRoundedRectPath} from '../../utilities/getRoundedRectPath';
 import {usePolarisVizContext} from '../../hooks';
 
@@ -16,12 +15,12 @@ export interface Props {
   width: number;
   x: number;
   yScale: ScaleLinear<number, number>;
-  borderRadius?: string;
+  borderRadius?: number;
   height?: Height;
 }
 
 export function Bar({
-  borderRadius = BORDER_RADIUS.None,
+  borderRadius = 5,
   fill,
   height,
   value,
@@ -75,7 +74,7 @@ export function Bar({
       return getRoundedRectPath({
         height: heightValue,
         width,
-        borderRadius,
+        borderRadius: `${borderRadius} ${borderRadius} 0 0`,
       });
     };
 

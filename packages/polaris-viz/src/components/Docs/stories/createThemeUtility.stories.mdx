@@ -2,6 +2,7 @@ import {Meta} from '@storybook/addon-docs/blocks';
 
 import {PolarisVizProvider} from '@shopify/polaris-viz';
 import {Title} from './components';
+import {BORDER_RADIUS} from '../../../../../polaris-viz-core/src/constants.ts';
 
 <Meta
   title="Shared/Themes/createTheme Utility"
@@ -61,7 +62,7 @@ import {createTheme} from '@shopify/polaris-viz';
 
 const myDefaultTheme = createTheme({
   barTheme: {
-    hasRoundedCorners: false,
+    borderRadius: 1,
   },
   chartContainer: {
     backgroundColor: 'red',
