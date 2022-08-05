@@ -37,7 +37,6 @@ const ignoredFiles = [
   'SquareColorPreview',
   'LinePreview',
   'SimpleNormalizedChart',
-  'ChartSkeleton',
 ];
 
 const componentsPerPackage = readFiles().map(({indexSrc, packageDir}) => {
@@ -79,7 +78,7 @@ componentsPerPackage.forEach(({componentsFilePaths, packageName}) => {
             );
           });
         });
-      } else if (fileName.includes('Chart')) {
+      } else if (fileName.includes('Chart') && !fileName.includes('Skeleton')) {
         describe('Chart components', () => {
           it(`${fileName} uses ChartProps type`, () => {
             expect(componentFile).toContain('& ChartProps');
