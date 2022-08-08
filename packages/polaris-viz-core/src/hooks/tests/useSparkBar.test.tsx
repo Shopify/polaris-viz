@@ -14,37 +14,16 @@ describe('useSparkBar', () => {
         const {dataWithIndex} = useSparkBar({
           data: [{data}],
           height: 500,
-          dataOffsetLeft: 0,
-          dataOffsetRight: 0,
           width: 600,
           seriesColor: 'red',
+          targetLine: {
+            offsetLeft: 0,
+            offsetRight: 0,
+            value: 0,
+          },
         });
 
         return <div>{JSON.stringify(dataWithIndex)}</div>;
-      };
-
-      const mockComponent = mount(<TestComponent />);
-      expect(mockComponent.text()).toBe(expected);
-    });
-  });
-
-  describe('color', () => {
-    it.each`
-      initialColor                    | expected
-      ${'red'}                        | ${'[{"color":"red","offset":0}]'}
-      ${[{color: '#fff', offset: 0}]} | ${'[{"color":"#fff","offset":0}]'}
-    `('returns a usable color', ({initialColor, expected}) => {
-      const TestComponent = () => {
-        const {color} = useSparkBar({
-          data: [],
-          height: 500,
-          dataOffsetLeft: 0,
-          dataOffsetRight: 0,
-          width: 600,
-          seriesColor: initialColor,
-        });
-
-        return <div>{JSON.stringify(color)}</div>;
       };
 
       const mockComponent = mount(<TestComponent />);
@@ -64,8 +43,11 @@ describe('useSparkBar', () => {
           const {strokeDasharray} = useSparkBar({
             data: [{data}],
             height: 500,
-            dataOffsetLeft: 0,
-            dataOffsetRight: 0,
+            targetLine: {
+              offsetLeft: 0,
+              offsetRight: 0,
+              value: 0,
+            },
             width,
             seriesColor: 'red',
           });
@@ -91,8 +73,11 @@ describe('useSparkBar', () => {
           const {barWidth} = useSparkBar({
             data: [{data}],
             height: 500,
-            dataOffsetLeft: 0,
-            dataOffsetRight: 0,
+            targetLine: {
+              offsetLeft: 0,
+              offsetRight: 0,
+              value: 0,
+            },
             width,
             seriesColor: 'red',
           });
@@ -118,67 +103,15 @@ describe('useSparkBar', () => {
           const {strokeDashoffset} = useSparkBar({
             data: [{data}],
             height: 500,
-            dataOffsetLeft,
-            dataOffsetRight: 0,
             width: 100,
+            targetLine: {
+              offsetLeft: dataOffsetLeft,
+              offsetRight: 0,
+              value: 0,
+            },
             seriesColor: 'red',
           });
-
           return <div>{strokeDashoffset}</div>;
-        };
-
-        const mockComponent = mount(<TestComponent />);
-        expect(mockComponent.text()).toBe(expected);
-      },
-    );
-  });
-
-  describe('comparisonData', () => {
-    it.each`
-      data                                                                  | isComparison | expected
-      ${[{key: '1', value: 1}, {key: '2', value: 2}]}                       | ${true}      | ${'{"data":[{"key":"1","value":1},{"key":"2","value":2}],"isComparison":true}'}
-      ${[{key: '1', value: 1}, {key: '2', value: 2}, {key: '3', value: 3}]} | ${false}     | ${''}
-    `(
-      'returns filtered comparisonData if it exists',
-      ({data, isComparison, expected}) => {
-        const TestComponent = () => {
-          const {comparisonData} = useSparkBar({
-            data: [{data, isComparison}],
-            height: 500,
-            dataOffsetLeft: 0,
-            dataOffsetRight: 0,
-            width: 100,
-            seriesColor: 'red',
-          });
-
-          return <div>{JSON.stringify(comparisonData)}</div>;
-        };
-
-        const mockComponent = mount(<TestComponent />);
-        expect(mockComponent.text()).toBe(expected);
-      },
-    );
-  });
-
-  describe('lineShape', () => {
-    it.each`
-      data                                                                  | width  | height | expected
-      ${[{key: '1', value: 1}, {key: '2', value: 2}]}                       | ${300} | ${300} | ${'M300,154L600,8'}
-      ${[{key: '1', value: 1}, {key: '2', value: 2}, {key: '3', value: 3}]} | ${100} | ${100} | ${'M50,69.33333333333334L100,38.66666666666667L150,8'}
-    `(
-      'returns a lineShape if comparisonData if it exists',
-      ({data, width, height, expected}) => {
-        const TestComponent = () => {
-          const {lineShape} = useSparkBar({
-            data: [{data, isComparison: true}],
-            height,
-            dataOffsetLeft: 0,
-            dataOffsetRight: 0,
-            width,
-            seriesColor: 'red',
-          });
-
-          return <div>{lineShape.toString()}</div>;
         };
 
         const mockComponent = mount(<TestComponent />);
@@ -206,8 +139,11 @@ describe('useSparkBar', () => {
             },
           ],
           height: 300,
-          dataOffsetLeft: 0,
-          dataOffsetRight: 0,
+          targetLine: {
+            offsetLeft: 0,
+            offsetRight: 0,
+            value: 0,
+          },
           width,
           seriesColor: 'red',
         });

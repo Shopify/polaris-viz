@@ -5,7 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-<!-- ## Unreleased -->
+## Unreleased
+
+### Removed
+
+- `SparkBarSeries` now does not support displaying dataSeries with `isComparison: true` as dashed lines. Use the new `TargetLine` prop instead
+
+### Changed
+
+- Removed `dataOffsetLeft` and `dataOffsetRight` props from `SparkBarSeries` and unified them under the `TargetLine` prop.
 
 ## [6.6.0] - 2022-08-05
 

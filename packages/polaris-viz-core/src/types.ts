@@ -276,3 +276,9 @@ export enum Hue {
   Orange = 'Orange',
   Yellow = 'Yellow',
 }
+
+export interface TargetLine {
+  value: number;
+  offsetRight?: number;
+  offsetLeft?: number;
+}

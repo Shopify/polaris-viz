@@ -159,4 +159,5 @@ export type {
   BoundingRect,
   StackedValues,
   DataGroup,
+  TargetLine,
 } from './types';

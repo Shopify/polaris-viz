@@ -9,6 +9,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [6.6.0] - 2022-08-05
 
+### Changed
+
+- Removed `dataOffsetLeft` and `dataOffsetRight` props from `SparkBarChart` and unified them under the `TargetLine` prop.
+
 ### Added
 
 - Loading and Error states to all charts.
