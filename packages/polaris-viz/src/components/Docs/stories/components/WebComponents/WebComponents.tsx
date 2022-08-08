@@ -10,6 +10,9 @@ import {
   SparkLineChart,
   SparkBarChart,
   SimpleBarChart,
+  DonutChart,
+  FunnelChart,
+  ComboChart,
 } from '../../../../';
 import {ComponentContainer, Title} from '../';
 
@@ -133,6 +136,235 @@ export function WebComponents() {
                 },
               ]}
               theme={DEFAULT_THEME_NAME}
+            />
+          }
+        />
+
+        <ComponentContainer
+          title="DonutChart"
+          description="Circular statistical graphic, which is divided into slices to illustrate numerical proportion. "
+          kind={KIND}
+          chart={
+            <DonutChart
+              isAnimated
+              data={[
+                {
+                  data: [
+                    {
+                      key: 'april - march',
+                      value: 50000,
+                    },
+                  ],
+                  name: 'Shopify Payments',
+                },
+                {
+                  color: 'lime',
+                  data: [
+                    {
+                      key: 'april - march',
+                      value: 25000,
+                    },
+                  ],
+                  name: 'Paypal',
+                },
+                {
+                  data: [
+                    {
+                      key: 'april - march',
+                      value: 4000,
+                    },
+                  ],
+                  name: 'Amazon Pay',
+                },
+              ]}
+              theme={DEFAULT_THEME_NAME}
+            />
+          }
+        />
+
+        <ComponentContainer
+          title="FunnelChart"
+          description="Used to show conversion data."
+          kind={KIND}
+          chart={
+            <FunnelChart
+              data={[
+                {
+                  data: [
+                    {
+                      key: 'Opens',
+                      value: 126,
+                    },
+                    {
+                      key: 'Visitors',
+                      value: 48,
+                    },
+                    {
+                      key: 'Added to carts',
+                      value: 12,
+                    },
+                    {
+                      key: 'Orders',
+                      value: 0,
+                    },
+                  ],
+                  name: 'Conversion',
+                },
+              ]}
+              theme={DEFAULT_THEME_NAME}
+            />
+          }
+        />
+
+        <ComponentContainer
+          title="ComboChart"
+          description="Combines BarChart and LineChart."
+          kind={KIND}
+          chart={
+            <ComboChart
+              data={[
+                {
+                  name: 'Total Sales',
+                  series: [
+                    {
+                      data: [
+                        {
+                          key: '2020-07-07T12:00:00',
+                          value: 3,
+                        },
+                        {
+                          key: '2020-07-08T12:00:00',
+                          value: -7,
+                        },
+                        {
+                          key: '2020-07-09T12:00:00',
+                          value: -7,
+                        },
+                        {
+                          key: '2020-07-10T12:00:00',
+                          value: -8,
+                        },
+                        {
+                          key: '2020-07-11T12:00:00',
+                          value: 50,
+                        },
+                      ],
+                      name: 'POS',
+                    },
+                    {
+                      color: 'lime',
+                      data: [
+                        {
+                          key: '2020-07-07T12:00:00',
+                          value: 4,
+                        },
+                        {
+                          key: '2020-07-08T12:00:00',
+                          value: 0,
+                        },
+                        {
+                          key: '2020-07-09T12:00:00',
+                          value: -10,
+                        },
+                        {
+                          key: '2020-07-10T12:00:00',
+                          value: 15,
+                        },
+                        {
+                          key: '2020-07-11T12:00:00',
+                          value: 8,
+                        },
+                      ],
+                      name: 'Online',
+                    },
+                    {
+                      data: [
+                        {
+                          key: '2020-07-07T12:00:00',
+                          value: 7,
+                        },
+                        {
+                          key: '2020-07-08T12:00:00',
+                          value: 0,
+                        },
+                        {
+                          key: '2020-07-09T12:00:00',
+                          value: -15,
+                        },
+                        {
+                          key: '2020-07-10T12:00:00',
+                          value: 8,
+                        },
+                        {
+                          key: '2020-07-11T12:00:00',
+                          value: 50,
+                        },
+                      ],
+                      name: 'Mobile',
+                    },
+                  ],
+                  shape: 'Bar',
+                },
+                {
+                  name: 'Total Sessions',
+                  series: [
+                    {
+                      data: [
+                        {
+                          key: '2020-07-07T12:00:00',
+                          value: 333,
+                        },
+                        {
+                          key: '2020-07-08T12:00:00',
+                          value: 797,
+                        },
+                        {
+                          key: '2020-07-09T12:00:00',
+                          value: 234,
+                        },
+                        {
+                          key: '2020-07-10T12:00:00',
+                          value: 534,
+                        },
+                        {
+                          key: '2020-07-11T12:00:00',
+                          value: 132,
+                        },
+                      ],
+                      name: 'Sessions from Google ads',
+                    },
+                    {
+                      data: [
+                        {
+                          key: '2020-07-07T12:00:00',
+                          value: 709,
+                        },
+                        {
+                          key: '2020-07-08T12:00:00',
+                          value: 238,
+                        },
+                        {
+                          key: '2020-07-09T12:00:00',
+                          value: 190,
+                        },
+                        {
+                          key: '2020-07-10T12:00:00',
+                          value: 90,
+                        },
+                        {
+                          key: '2020-07-11T12:00:00',
+                          value: 399,
+                        },
+                      ],
+                      isComparison: true,
+                      name: 'Sessions from Facebooks ads',
+                    },
+                  ],
+                  shape: 'Line',
+                },
+              ]}
+              theme={DEFAULT_THEME_NAME}
+              showLegend={false}
             />
           }
         />
