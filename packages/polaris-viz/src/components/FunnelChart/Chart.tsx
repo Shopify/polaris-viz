@@ -197,6 +197,7 @@ export function Chart({
 
       <g aria-hidden="true">
         <FunnelChartXAxisLabels
+          allowLineWrap={xAxisOptions.allowLineWrap}
           chartHeight={height}
           chartX={barWidth / NEGATIVE_LABEL_OFFSET}
           chartY={drawableHeight + X_LABEL_OFFSET}

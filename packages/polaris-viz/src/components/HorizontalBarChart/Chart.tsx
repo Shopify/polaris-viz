@@ -224,6 +224,7 @@ export function Chart({
               xScale={xScale}
             />
             <HorizontalBarChartXAxisLabels
+              allowLineWrap={xAxisOptions.allowLineWrap}
               chartHeight={height}
               chartX={-labelWidth / 2}
               chartY={drawableHeight}

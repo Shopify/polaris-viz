@@ -21,6 +21,7 @@ export function getXAxisOptionsWithDefaults(
   return {
     labelFormatter: (value: number) => `${value}`,
     hide: false,
+    allowLineWrap: true,
     ...xAxisOptionsFiltered,
   };
 }

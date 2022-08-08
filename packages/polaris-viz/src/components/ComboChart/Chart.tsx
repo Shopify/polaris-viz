@@ -204,14 +204,15 @@ export function Chart({
 
         {hideXAxis ? null : (
           <XAxis
+            allowLineWrap={xAxisOptions.allowLineWrap}
             chartHeight={height}
-            chartX={chartXPosition}
-            chartY={xAxisBounds.y}
             labels={labels}
             labelWidth={labelWidth}
             onHeightChange={setXAxisHeight}
             reducedLabelIndexes={reducedLabelIndexes}
+            x={chartXPosition}
             xScale={xScale}
+            y={xAxisBounds.y}
           />
         )}
 

@@ -1,6 +1,6 @@
 import type {ScaleLinear} from 'd3-scale';
 import React, {useMemo} from 'react';
-import {uniqueId, useChartContext} from '@shopify/polaris-viz-core';
+import {uniqueId} from '@shopify/polaris-viz-core';
 import type {Color, DataGroup} from '@shopify/polaris-viz-core';
 
 import {getYAxisOptionsWithDefaults} from '../../../../utilities';
@@ -25,7 +25,6 @@ export function ComboBarChart({
   labels,
   yScale,
 }: ComboBarChartProps) {
-  const {theme} = useChartContext();
   const id = useMemo(() => uniqueId('ComboBarChart'), []);
 
   const yAxisOptionsWithDefaults = getYAxisOptionsWithDefaults(
@@ -36,7 +35,6 @@ export function ComboBarChart({
     data: data.series,
     drawableWidth,
     labels,
-    theme,
   });
 
   return (

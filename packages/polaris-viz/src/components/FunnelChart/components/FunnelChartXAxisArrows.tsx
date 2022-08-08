@@ -26,6 +26,7 @@ export function FunnelChartXAxisArrows({
   labelWidth,
 }: FunnelChartXAxisArrowsProps) {
   const {lines} = useLabels({
+    allowLineWrap: true,
     labels: ['→'],
     targetWidth: labelWidth,
     onHeightChange,

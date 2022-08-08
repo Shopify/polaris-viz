@@ -227,6 +227,7 @@ export function formatXAxisLabel(value: string) {
   return new Date(value).toLocaleDateString('en-CA', {
     month: 'short',
     day: 'numeric',
+    year: 'numeric',
   });
 }
 

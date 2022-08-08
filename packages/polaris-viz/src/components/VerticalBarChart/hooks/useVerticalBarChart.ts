@@ -9,7 +9,6 @@ interface Props {
   data: DataSeries[];
   drawableWidth: number;
   labels: string[];
-  theme: string;
 }
 
 export function useVerticalBarChart({data, drawableWidth, labels}: Props) {
