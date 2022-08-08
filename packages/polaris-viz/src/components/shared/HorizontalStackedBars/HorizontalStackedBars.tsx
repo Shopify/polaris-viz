@@ -118,9 +118,9 @@ export function HorizontalStackedBars({
     >
       {stackedValues[groupIndex].map((item, seriesIndex) => {
         const [start, end] = item;
+
         const barId = getBarId(id, groupIndex, seriesIndex);
         const width = Math.abs(xScale(end) - xScale(start));
-
         const borderRadius = getBorderRadius({
           lastIndexes,
           seriesIndex,
@@ -130,18 +130,14 @@ export function HorizontalStackedBars({
         const key = dataKeys[seriesIndex] ?? '';
         const ariaLabel = `${key} ${end}`;
 
-        const areSomeGreaterThanZero = stackedValues[groupIndex].some(
-          ([start, end]) => start + end > 0,
+        const areAllValuesAreZero = stackedValues[groupIndex].every(
+          ([start, end]) => start + end === 0,
         );
 
         return (
           <React.Fragment key={`stackedBar ${barId}`}>
-            {!areSomeGreaterThanZero ? (
-              <ZeroValueLine
-                x={x}
-                y={x + barHeight / 2}
-                direction="horizontal"
-              />
+            {areAllValuesAreZero ? (
+              <ZeroValueLine x={x} y={barHeight / 2} direction="horizontal" />
             ) : (
               <StackedBar
                 activeBarIndex={activeBarIndex}
