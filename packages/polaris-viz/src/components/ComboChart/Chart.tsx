@@ -246,20 +246,6 @@ export function Chart({
           />
         </g>
 
-        {hasXAxisAnnotations && (
-          <g transform={`translate(${chartXPosition},0)`} tabIndex={-1}>
-            <Annotations
-              annotationsLookupTable={annotationsLookupTable}
-              axisLabelWidth={labelWidth}
-              drawableHeight={annotationsDrawableHeight}
-              drawableWidth={drawableWidth}
-              labels={labels}
-              onHeightChange={setAnnotationsHeight}
-              xScale={xScale}
-            />
-          </g>
-        )}
-
         <g
           transform={`translate(${
             chartXPosition + drawableWidth / labels.length / 2
@@ -277,6 +263,20 @@ export function Chart({
             yScale={lineYScale}
           />
         </g>
+
+        {hasXAxisAnnotations && (
+          <g transform={`translate(${chartXPosition},0)`} tabIndex={-1}>
+            <Annotations
+              annotationsLookupTable={annotationsLookupTable}
+              axisLabelWidth={labelWidth}
+              drawableHeight={annotationsDrawableHeight}
+              drawableWidth={drawableWidth}
+              labels={labels}
+              onHeightChange={setAnnotationsHeight}
+              xScale={xScale}
+            />
+          </g>
+        )}
 
         {hasYAxisAnnotations && (
           <React.Fragment>

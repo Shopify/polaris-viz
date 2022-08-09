@@ -287,7 +287,6 @@ export function Chart({
             ariaHidden
           />
         )}
-
         {selectedTheme.grid.showHorizontalLines ? (
           <HorizontalGridLines
             ticks={ticks}
@@ -300,7 +299,6 @@ export function Chart({
             }
           />
         ) : null}
-
         <YAxis
           ticks={ticks}
           width={yAxisLabelWidth}
@@ -309,7 +307,6 @@ export function Chart({
           x={yAxisBounds.x}
           y={yAxisBounds.y}
         />
-
         {emptyState ? null : (
           <VisuallyHiddenRows
             data={data}
@@ -317,21 +314,6 @@ export function Chart({
             xAxisLabels={labels}
           />
         )}
-
-        {hasXAxisAnnotations && (
-          <g transform={`translate(${chartXPosition},0)`} tabIndex={-1}>
-            <Annotations
-              annotationsLookupTable={annotationsLookupTable}
-              axisLabelWidth={xAxisDetails.labelWidth}
-              drawableHeight={annotationsDrawableHeight}
-              drawableWidth={drawableWidth}
-              labels={labels}
-              onHeightChange={setAnnotationsHeight}
-              xScale={xScale}
-            />
-          </g>
-        )}
-
         <g
           transform={`translate(${
             chartXPosition + halfXAxisLabelWidth
@@ -365,6 +347,20 @@ export function Chart({
             yScale={yScale}
           />
         </g>
+
+        {hasXAxisAnnotations && (
+          <g transform={`translate(${chartXPosition},0)`} tabIndex={-1}>
+            <Annotations
+              annotationsLookupTable={annotationsLookupTable}
+              axisLabelWidth={xAxisDetails.labelWidth}
+              drawableHeight={annotationsDrawableHeight}
+              drawableWidth={drawableWidth}
+              labels={labels}
+              onHeightChange={setAnnotationsHeight}
+              xScale={xScale}
+            />
+          </g>
+        )}
 
         {hasYAxisAnnotations && (
           <g

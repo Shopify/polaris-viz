@@ -320,20 +320,6 @@ export function Chart({
           <rect width={width} height={drawableHeight} fill="black" />
         </clipPath>
 
-        {hasXAxisAnnotations && (
-          <g transform={`translate(${chartXPosition},0)`} tabIndex={-1}>
-            <Annotations
-              annotationsLookupTable={annotationsLookupTable}
-              axisLabelWidth={xAxisDetails.labelWidth}
-              drawableHeight={annotationsDrawableHeight}
-              drawableWidth={drawableWidth}
-              labels={labels}
-              onHeightChange={setAnnotationsHeight}
-              xScale={xScale}
-            />
-          </g>
-        )}
-
         {activePointIndex == null ? null : (
           <g
             transform={`translate(${
@@ -365,6 +351,20 @@ export function Chart({
             yScale={yScale}
           />
         </g>
+
+        {hasXAxisAnnotations && (
+          <g transform={`translate(${chartXPosition},0)`} tabIndex={-1}>
+            <Annotations
+              annotationsLookupTable={annotationsLookupTable}
+              axisLabelWidth={xAxisDetails.labelWidth}
+              drawableHeight={annotationsDrawableHeight}
+              drawableWidth={drawableWidth}
+              labels={labels}
+              onHeightChange={setAnnotationsHeight}
+              xScale={xScale}
+            />
+          </g>
+        )}
 
         {hasYAxisAnnotations && (
           <g
