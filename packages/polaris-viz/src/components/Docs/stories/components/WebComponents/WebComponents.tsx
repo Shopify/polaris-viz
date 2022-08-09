@@ -382,42 +382,10 @@ export function WebComponents() {
             <div style={{width: '250px', height: '140px'}}>
               <SparkBarChart
                 isAnimated
+                targetLine={{
+                  value: 2000,
+                }}
                 data={[
-                  {
-                    data: [
-                      {key: 0, value: 600},
-                      {key: 1, value: 600},
-                      {key: 2, value: 600},
-                      {key: 3, value: 600},
-                      {key: 4, value: 600},
-                      {key: 5, value: 600},
-                      {key: 6, value: 600},
-                      {key: 7, value: 600},
-                      {key: 8, value: 600},
-                      {key: 9, value: 600},
-                      {key: 10, value: 600},
-                      {key: 11, value: 600},
-                      {key: 12, value: 600},
-                      {key: 13, value: 600},
-                      {key: 14, value: 600},
-                      {key: 15, value: 600},
-                      {key: 16, value: 600},
-                      {key: 17, value: 600},
-                      {key: 18, value: 600},
-                      {key: 19, value: 600},
-                      {key: 20, value: 600},
-                      {key: 21, value: 600},
-                      {key: 22, value: 600},
-                      {key: 23, value: 600},
-                      {key: 24, value: 600},
-                      {key: 25, value: 600},
-                      {key: 26, value: 600},
-                      {key: 27, value: 600},
-                      {key: 28, value: 600},
-                      {key: 29, value: 600},
-                    ],
-                    isComparison: true,
-                  },
                   {
                     data: [
                       {key: 1, value: 100},
