@@ -19,11 +19,7 @@ interface Props extends SparkBarChartProps {
 export function Chart({
   data,
   dimensions,
-  targetLine = {
-    offsetLeft: 0,
-    offsetRight: 0,
-    value: 0,
-  },
+  targetLine,
   accessibilityLabel,
 }: Props) {
   const {shouldAnimate} = useChartContext();

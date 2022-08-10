@@ -22,11 +22,7 @@ export function SparkBarChart(props: SparkBarChartProps) {
     data,
     accessibilityLabel,
     isAnimated,
-    targetLine = {
-      offsetLeft: 0,
-      offsetRight: 0,
-      value: 0,
-    },
+    targetLine,
     theme,
     state,
     errorText,

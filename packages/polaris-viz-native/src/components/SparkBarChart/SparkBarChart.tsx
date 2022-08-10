@@ -48,11 +48,7 @@ function Chart({
   data,
   dimensions,
   accessibilityLabel,
-  targetLine = {
-    offsetLeft: 0,
-    offsetRight: 0,
-    value: 0,
-  },
+  targetLine,
   theme = DEFAULT_THEME_NAME,
   isAnimated = DEFAULT_CHART_PROPS.isAnimated,
 }: SparkBarChartProps) {

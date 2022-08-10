@@ -45,23 +45,6 @@ const BAR_NULLS = {
   ],
 };
 
-const COMPARISON = {
-  isComparison: true,
-  data: [
-    {key: 0, value: 200},
-    {key: 1, value: 200},
-    {key: 2, value: 200},
-    {key: 3, value: 200},
-    {key: 4, value: 200},
-    {key: 5, value: 200},
-    {key: 6, value: 200},
-    {key: 7, value: 200},
-    {key: 8, value: 200},
-    {key: 9, value: 200},
-    {key: 10, value: 200},
-  ],
-};
-
 const DEFAULT_PROPS: PropCombinations<SparkBarChartProps> = {
   data: [[BAR]],
   isAnimated: [false],
@@ -76,19 +59,35 @@ const combinations = renderCombinationSections([
       SparkBarChart,
       {
         ...DEFAULT_PROPS,
-        data: [[BAR], [COMPARISON], [BAR_NULLS], [BAR, COMPARISON]],
+        data: [[BAR], [BAR_NULLS]],
       },
       OPTIONS,
     ),
   ],
   [
-    'Offsets',
+    'Target Line',
     addWithPropsCombinations(
       SparkBarChart,
       {
         ...DEFAULT_PROPS,
-        dataOffsetLeft: [undefined, 30],
-        dataOffsetRight: [undefined, 30],
+        targetLine: [
+          undefined,
+          {
+            offsetLeft: 10,
+            offsetRight: 20,
+            value: 0,
+          },
+          {
+            offsetLeft: 0,
+            offsetRight: 0,
+            value: 700,
+          },
+          {
+            offsetLeft: 50,
+            offsetRight: 50,
+            value: 500,
+          },
+        ],
       },
       OPTIONS,
     ),

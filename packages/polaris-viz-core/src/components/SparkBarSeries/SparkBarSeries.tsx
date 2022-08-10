@@ -15,11 +15,11 @@ import type {TargetLine} from '../../types';
 
 interface SparkBarSeriesProps {
   data: DataSeries[];
-  targetLine: TargetLine;
   height: number;
   shouldAnimate: boolean;
   useTransition: typeof useTransition;
   width: number;
+  targetLine?: TargetLine;
   theme?: string;
 }
 
@@ -82,6 +82,8 @@ export function SparkBarSeries({
     config: BARS_TRANSITION_CONFIG,
   });
 
+  const hasTargetLine = targetLine != null && targetLine.value != null;
+
   return (
     <React.Fragment>
       <Defs>
@@ -95,7 +97,7 @@ export function SparkBarSeries({
       </Defs>
 
       <Mask id={clipId}>
-        <AnimatedG opacity={targetLine.value ? '0.9' : '1'}>
+        <AnimatedG opacity={hasTargetLine ? '0.9' : '1'}>
           {transitions(({height: barHeight}, item, _transition, index) => {
             const xPosition = xScale(index.toString());
             const height = shouldAnimate
@@ -129,7 +131,7 @@ export function SparkBarSeries({
         mask={`url(#${clipId})`}
       />
 
-      {targetLine.value == null ? null : (
+      {hasTargetLine ? (
         <Line
           stroke={selectedTheme.seriesColors.comparison}
           strokeWidth={STROKE_WIDTH}
@@ -142,7 +144,7 @@ export function SparkBarSeries({
           strokeDashoffset={strokeDashoffset}
           strokeDasharray={strokeDasharray}
         />
-      )}
+      ) : null}
     </React.Fragment>
   );
 }

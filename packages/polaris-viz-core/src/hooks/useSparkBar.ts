@@ -45,13 +45,13 @@ export function useSparkBar({
   height,
   width,
   seriesColor,
-  targetLine,
+  targetLine = {offsetLeft: 0, offsetRight: 0, value: 0},
 }: {
   data: DataSeries[];
   height: number;
   width: number;
   seriesColor: Color;
-  targetLine: TargetLine;
+  targetLine?: TargetLine;
 }) {
   const {
     offsetLeft: rawOffsetLeft = 0,
