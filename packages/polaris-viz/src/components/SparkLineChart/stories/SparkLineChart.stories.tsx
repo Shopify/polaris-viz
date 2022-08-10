@@ -2,7 +2,7 @@ import React from 'react';
 import type {Story, Meta} from '@storybook/react';
 
 import {SparkLineChart, SparkLineChartProps} from '../';
-import {THEME_CONTROL_ARGS, CHART_STATE_CONTROL_ARGS} from '../../../storybook';
+import {THEME_CONTROL_ARGS} from '../../../storybook';
 import {PageWithSizingInfo} from '../../Docs/stories/components/PageWithSizingInfo';
 
 const DATA = [
@@ -78,7 +78,6 @@ export default {
         'The amount of pixels to add as a right margin to the non-comparison line data.',
     },
     theme: THEME_CONTROL_ARGS,
-    state: CHART_STATE_CONTROL_ARGS,
   },
 } as Meta;
 
