@@ -22,7 +22,6 @@ export interface BarProps {
   y: number;
   animationDelay?: number;
   animationDirection?: Direction;
-  borderRadius?: number;
   index?: number;
   isActive?: boolean;
   isAnimated?: boolean;
@@ -34,7 +33,6 @@ export interface BarProps {
 export const Bar = React.memo(function Bar({
   animationDelay = 0,
   animationDirection = 'horizontal',
-  borderRadius,
   color,
   height,
   index,

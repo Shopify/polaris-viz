@@ -45,21 +45,20 @@ describe('<Bar/>', () => {
           <Bar {...defaultProps} />,
         </svg>,
       );
-     
       expect(bar).toContainReactComponent('path', {
         // eslint-disable-next-line id-length
         d: `
-        M3,0
-        h94
-        a3,3 0 0 1 3,3
-        v997
-        a0,0 0 0 1 -0,0
-        h-100
-        a0,0 0 0 1 -0,-0
-        v-997
-        a3,3 0 0 1 3,-3
-        Z
-        `,
+  M3,0
+  h94
+  a3,3 0 0 1 3,3
+  v997
+  a0,0 0 0 1 -0,0
+  h-100
+  a0,0 0 0 1 -0,-0
+  v-997
+  a3,3 0 0 1 3,-3
+  Z
+`,
       });
     });
 
