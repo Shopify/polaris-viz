@@ -16,6 +16,7 @@ import type {
   LabelFormatter,
 } from '@shopify/polaris-viz-core';
 
+import {estimateLegendItemWidth} from '../Legend';
 import type {ComparisonMetricProps} from '../ComparisonMetric';
 import {LegendContainer, useLegend} from '../../components/LegendContainer';
 import {
@@ -31,6 +32,7 @@ import styles from './DonutChart.scss';
 import {InnerValue} from './components';
 
 const FULL_CIRCLE = Math.PI * 2;
+const MAX_LEGEND_WIDTH_PERCENTAGE = 0.35;
 
 export interface ChartProps {
   data: DataSeries[];
@@ -57,7 +59,7 @@ export function Chart({
   state,
   errorText,
 }: ChartProps) {
-  const {shouldAnimate} = useChartContext();
+  const {shouldAnimate, characterWidths} = useChartContext();
   const chartId = useUniqueId('Donut');
   const [activeIndex, setActiveIndex] = useState<number>(-1);
   const selectedTheme = useTheme();
@@ -70,6 +72,27 @@ export function Chart({
       ? 'vertical'
       : 'horizontal';
 
+  const longestLegendWidth = data.reduce((previous, current) => {
+    const estimatedLegendWidth = estimateLegendItemWidth(
+      current.name ?? '',
+      characterWidths,
+    );
+
+    if (estimatedLegendWidth > previous) {
+      return estimatedLegendWidth;
+    }
+
+    return previous;
+  }, 0);
+
+  const maxLegendWidth =
+    legendDirection === 'vertical'
+      ? Math.min(
+          longestLegendWidth,
+          dimensions.width * MAX_LEGEND_WIDTH_PERCENTAGE,
+        )
+      : 0;
+
   const {height, width, legend, setLegendDimensions, isLegendMounted} =
     useLegend({
       data: [{series: data, shape: 'Bar'}],
@@ -77,6 +100,7 @@ export function Chart({
       showLegend,
       direction: legendDirection,
       colors: seriesColor,
+      maxWidth: maxLegendWidth,
     });
 
   const shouldUseColorVisionEvents = Boolean(
@@ -226,6 +250,7 @@ export function Chart({
           data={legend}
           direction={legendDirection}
           position={legendPosition}
+          maxWidth={maxLegendWidth}
         />
       )}
     </div>

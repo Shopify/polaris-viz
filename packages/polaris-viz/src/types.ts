@@ -155,9 +155,9 @@ export interface AnnotationLookupTable {
 export type GetXPosition = ({
   isCrosshair,
   index,
-}?: {
+}: {
   isCrosshair: boolean;
-  index: number | null;
+  index?: number | null;
 }) =>
   | number
   | Interpolation<

@@ -1,4 +1,4 @@
-import React, {useMemo, useState, useCallback, useRef} from 'react';
+import React, {useMemo, useState, useCallback} from 'react';
 import {scaleBand, scaleLinear} from 'd3-scale';
 import {
   DataSeries,
@@ -14,6 +14,7 @@ import {
   getAverageColor,
   changeColorOpacity,
   useChartContext,
+  LINE_HEIGHT,
 } from '@shopify/polaris-viz-core';
 
 import {useReducedLabelIndexes} from '../../hooks';
@@ -45,9 +46,10 @@ export function Chart({
   const {theme} = useChartContext();
   const selectedTheme = useTheme();
 
-  const [labelHeight, setLabelHeight] = useState(0);
+  const [xAxisHeight, setXAxisHeight] = useState(LINE_HEIGHT);
   const dataSeries = data[0].data;
   const colorOverride = data[0].color;
+  const [maskRef, setMaskRef] = useState<SVGMaskElement | null>(null);
 
   const xValues = dataSeries.map(({key}) => key) as string[];
   const yValues = dataSeries.map(({value}) => value) as [number, number];
@@ -70,7 +72,7 @@ export function Chart({
     .paddingOuter(0)
     .domain(labels.map((_, index) => index.toString()));
 
-  const drawableHeight = height - labelHeight - X_LABEL_OFFSET;
+  const drawableHeight = height - xAxisHeight - X_LABEL_OFFSET;
 
   const yScale = scaleLinear()
     .range([0, drawableHeight - BAR_CONTAINER_TEXT_HEIGHT])
@@ -126,7 +128,6 @@ export function Chart({
     }
   };
 
-  const maskRef = useRef<SVGMaskElement>(null);
   return (
     <svg role="list" viewBox={`0 0 ${width} ${height}`} xmlns={XMLNS}>
       <LinearGradientWithStops
@@ -140,7 +141,7 @@ export function Chart({
 
       <LinearGradientWithStops gradient={barsGradient} id={`${gradientId}`} />
 
-      <mask ref={maskRef} id={`${maskId}-${theme}-grad`} />
+      <mask ref={setMaskRef} id={`${maskId}-${theme}-grad`} />
       {dataSeries.map((dataPoint, index: number) => {
         const nextPoint = dataSeries[index + 1];
         const xPosition = xScale(dataPoint.key as string);
@@ -158,7 +159,7 @@ export function Chart({
 
         return (
           <React.Fragment key={dataPoint.key}>
-            {maskRef.current && (
+            {maskRef && (
               <g key={dataPoint.key} role="listitem">
                 <FunnelSegment
                   percentLabel={percentLabel}
@@ -180,7 +181,7 @@ export function Chart({
                   barHeight={barHeight}
                   color={MASK_HIGHLIGHT_COLOR}
                   x={x}
-                  portalTo={maskRef.current}
+                  portalTo={maskRef}
                   index={index}
                   drawableHeight={drawableHeight}
                   borderRadius={
@@ -203,7 +204,7 @@ export function Chart({
           chartY={drawableHeight + X_LABEL_OFFSET}
           labels={labels}
           labelWidth={barWidth + barWidth / 2}
-          onHeightChange={setLabelHeight}
+          onHeightChange={setXAxisHeight}
           reducedLabelIndexes={reducedLabelIndexes}
           xScale={labelXScale}
         />

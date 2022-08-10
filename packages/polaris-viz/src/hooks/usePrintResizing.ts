@@ -1,15 +1,19 @@
-import {useLayoutEffect, useState} from 'react';
+import {Dispatch, useLayoutEffect, useState} from 'react';
 import type {Dimensions} from '@shopify/polaris-viz-core';
 
 import {useBrowserCheck} from './useBrowserCheck';
 
+interface Props {
+  ref: HTMLElement | null;
+  setChartDimensions: (value: React.SetStateAction<Dimensions | null>) => void;
+  onIsPrintingChange: Dispatch<React.SetStateAction<boolean>>;
+}
+
 export function usePrintResizing({
   ref,
   setChartDimensions,
-}: {
-  ref: HTMLElement | null;
-  setChartDimensions: (value: React.SetStateAction<Dimensions | null>) => void;
-}) {
+  onIsPrintingChange,
+}: Props) {
   const [isPrinting, setIsPrinting] = useState(false);
   const {isFirefox, isSafari} = useBrowserCheck();
 
@@ -30,7 +34,11 @@ export function usePrintResizing({
           parseInt(paddingBottom, 10);
         setChartDimensions({width, height});
 
-        setIsPrinting((isPrinting) => !isPrinting);
+        setIsPrinting((isPrinting) => {
+          const newIsPrinting = !isPrinting;
+          onIsPrintingChange(newIsPrinting);
+          return newIsPrinting;
+        });
       }
     }
 
@@ -91,7 +99,7 @@ export function usePrintResizing({
         }
       }
     };
-  }, [setChartDimensions, ref, isFirefox, isSafari]);
+  }, [onIsPrintingChange, setChartDimensions, ref, isFirefox, isSafari]);
 
   return {isPrinting};
 }

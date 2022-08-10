@@ -95,7 +95,7 @@ export function Chart({
     isStacked,
     seriesLength: longestSeriesCount,
     singleBarCount: data.length,
-    labelHeight: 0,
+    xAxisHeight: 0,
   });
 
   const {transitions} = useHorizontalTransitions({

@@ -28,6 +28,7 @@ export interface LegendContainerProps {
   onDimensionChange: Dispatch<SetStateAction<Dimensions>>;
   direction?: Direction;
   position?: LegendPosition;
+  maxWidth?: number;
 }
 
 export function LegendContainer({
@@ -36,6 +37,7 @@ export function LegendContainer({
   onDimensionChange,
   direction = 'horizontal',
   position = 'top-left',
+  maxWidth,
 }: LegendContainerProps) {
   const selectedTheme = useTheme();
   const {setRef, entry} = useResizeObserver();
@@ -55,6 +57,7 @@ export function LegendContainer({
       alignItems: 'flex-start',
       margin: `0 ${selectedTheme.grid.horizontalMargin}px 0`,
       flexDirection: 'column',
+      maxWidth,
     },
     centerTiles: {
       justifyContent: 'center',

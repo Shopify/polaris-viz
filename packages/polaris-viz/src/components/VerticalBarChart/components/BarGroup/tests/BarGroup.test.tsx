@@ -4,72 +4,66 @@ import {scaleLinear} from 'd3-scale';
 import {LinearGradientWithStops} from '@shopify/polaris-viz-core';
 
 import {BAR_SPACING} from '../../../constants';
-import {MIN_BAR_HEIGHT} from '../../../../../constants';
-import {BarGroup} from '../BarGroup';
-import {Bar} from '../../../components/Bar';
+import {BarGroup, BarGroupProps} from '../BarGroup';
+import {VerticalBar} from '../../VerticalBar';
 
 jest.mock('d3-scale', () => ({
   scaleLinear: jest.requireActual('d3-scale').scaleLinear,
 }));
 
-describe('<BarGroup/>', () => {
-  const mockProps = {
-    accessibilityData: [
-      {
-        title: 'Monday',
-        data: [
-          {
-            label: 'Breakfast',
-            value: '10',
-          },
-          {
-            label: 'Lunch',
-            value: '20',
-          },
-          {
-            label: 'Dinner',
-            value: '0',
-          },
-          {
-            label: 'Snack',
-            value: '1',
-          },
-        ],
-      },
-    ],
-    activeBarGroup: -1,
-    x: 10,
-    yScale: scaleLinear() as any,
-    width: 100,
-    height: 100,
-    data: [10, 20, 0, 1],
-    colors: ['purple', 'teal', 'red', 'orange'],
-    hasActiveGroup: false,
-    onFocus: jest.fn(),
-    barGroupIndex: 0,
-    ariaLabel: 'Aria Label',
-    hasRoundedCorners: false,
-    isSubdued: false,
-    isAnimated: false,
-    gapWidth: 10,
-    animationDelay: 0,
-    indexOffset: 0,
-  };
+const MOCK_PROPS: BarGroupProps = {
+  accessibilityData: [
+    {
+      title: 'Monday',
+      data: [
+        {
+          label: 'Breakfast',
+          value: '10',
+        },
+        {
+          label: 'Lunch',
+          value: '20',
+        },
+        {
+          label: 'Dinner',
+          value: '0',
+        },
+        {
+          label: 'Snack',
+          value: '1',
+        },
+      ],
+    },
+  ],
+  activeBarGroup: -1,
+  x: 10,
+  yScale: scaleLinear() as any,
+  width: 100,
+  data: [10, 20, 0, 1],
+  colors: ['purple', 'teal', 'red', 'orange'],
+  barGroupIndex: 0,
+  hasRoundedCorners: false,
+  gapWidth: 10,
+  animationDelay: 0,
+  indexOffset: 0,
+  drawableHeight: 500,
+};
 
+describe('<BarGroup/>', () => {
   it('renders a <Bar /> for each data item', () => {
     const barGroup = mount(
       <svg>
-        <BarGroup {...mockProps} />,
+        <BarGroup {...MOCK_PROPS} />,
       </svg>,
     );
 
-    expect(barGroup).toContainReactComponentTimes(Bar, 4);
+    expect(barGroup).toContainReactComponentTimes(VerticalBar, 4);
   });
 
   it("gives each rect a width that together totals the group's full width, minus spacing", () => {
     const barGroup = mount(
       <svg>
-        <BarGroup {...mockProps} />,
+        <BarGroup {...MOCK_PROPS} />,
       </svg>,
     );
 
@@ -77,7 +71,8 @@ describe('<BarGroup/>', () => {
       .findAll('rect')
       .filter(
         ({props}) =>
-          props.width === mockProps.width / mockProps.data.length - BAR_SPACING,
+          props.width ===
+          MOCK_PROPS.width / MOCK_PROPS.data.length - BAR_SPACING,
       );
 
     expect(bars).toHaveLength(4);
@@ -86,7 +81,7 @@ describe('<BarGroup/>', () => {
   it('gives each rect a spaced out X position', () => {
     const barGroup = mount(
       <svg>
-        <BarGroup {...mockProps} />,
+        <BarGroup {...MOCK_PROPS} />,
       </svg>,
     );
 
@@ -101,7 +96,7 @@ describe('<BarGroup/>', () => {
       it('gives <LinearGradientWithStops /> a single stop', () => {
         const barGroup = mount(
           <svg>
-            <BarGroup {...mockProps} />,
+            <BarGroup {...MOCK_PROPS} />,
           </svg>,
         );
 
@@ -130,7 +125,7 @@ describe('<BarGroup/>', () => {
         ];
         const barGroup = mount(
           <svg>
-            <BarGroup {...mockProps} colors={[mockGradient]} />
+            <BarGroup {...MOCK_PROPS} colors={[mockGradient]} />
           </svg>,
         );
 

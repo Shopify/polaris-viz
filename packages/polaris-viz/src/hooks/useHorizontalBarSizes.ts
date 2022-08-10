@@ -15,9 +15,9 @@ export interface Props {
   chartDimensions: Dimensions;
   isSimple: boolean;
   isStacked: boolean;
-  labelHeight: number;
   seriesLength: number;
   singleBarCount: number;
+  xAxisHeight: number;
 }
 
 // Returns all the data needed to size and position the
@@ -26,9 +26,9 @@ export function useHorizontalBarSizes({
   chartDimensions,
   isSimple,
   isStacked,
-  labelHeight,
   seriesLength,
   singleBarCount,
+  xAxisHeight,
 }: Props) {
   return useMemo(() => {
     const spaceBetweenXAxis = isSimple
@@ -38,8 +38,8 @@ export function useHorizontalBarSizes({
     const simpleHeight = chartDimensions.height + HORIZONTAL_SPACE_BETWEEN_SETS;
 
     const containerHeight = isSimple ? simpleHeight : chartDimensions.height;
-    const xAxisHeight = isSimple ? 0 : labelHeight + spaceBetweenXAxis;
-    const chartHeight = containerHeight - xAxisHeight;
+    const xAxisAreaHeight = isSimple ? 0 : xAxisHeight + spaceBetweenXAxis;
+    const chartHeight = containerHeight - xAxisAreaHeight;
 
     const groupHeight = chartHeight / seriesLength;
 
@@ -74,6 +74,6 @@ export function useHorizontalBarSizes({
     isStacked,
     seriesLength,
     singleBarCount,
-    labelHeight,
+    xAxisHeight,
   ]);
 }

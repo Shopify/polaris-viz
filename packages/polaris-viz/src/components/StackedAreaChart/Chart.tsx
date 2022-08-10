@@ -13,6 +13,7 @@ import {
   COLOR_VISION_SINGLE_ITEM,
   BoundingRect,
   useChartPositions,
+  LINE_HEIGHT,
 } from '@shopify/polaris-viz-core';
 
 import {
@@ -22,6 +23,7 @@ import {
 } from '../Annotations';
 import type {
   AnnotationLookupTable,
+  GetXPosition,
   RenderTooltipContentData,
 } from '../../types';
 import {XAxis} from '../XAxis';
@@ -51,9 +53,9 @@ import {HorizontalGridLines} from '../HorizontalGridLines';
 
 import {useStackedData} from './hooks';
 import {StackedAreas, Points} from './components';
-import styles from './Chart.scss';
 import {useStackedChartTooltipContent} from './hooks/useStackedChartTooltipContent';
 import {yAxisMinMax} from './utilities/yAxisMinMax';
+import styles from './Chart.scss';
 
 const TOOLTIP_POSITION: TooltipPositionOffset = {
   horizontal: TooltipHorizontalOffset.Left,
@@ -88,7 +90,7 @@ export function Chart({
 
   const [activePointIndex, setActivePointIndex] = useState<number | null>(null);
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
-  const [xAxisHeight, setXAxisHeight] = useState(0);
+  const [xAxisHeight, setXAxisHeight] = useState(LINE_HEIGHT);
   const [annotationsHeight, setAnnotationsHeight] = useState(0);
 
   const {legend, setLegendDimensions, height, width} = useLegend({
@@ -209,16 +211,14 @@ export function Chart({
     activeIndex: activePointIndex,
   });
 
-  const getXPosition = (
-    {isCrosshair, index} = {isCrosshair: false, index: activePointIndex},
-  ) => {
+  const getXPosition: GetXPosition = ({isCrosshair, index}) => {
     if (xScale == null) {
       return 0;
     }
     const offset = isCrosshair ? selectedTheme.crossHair.width / 2 : 0;
 
     if (
-      index !== null &&
+      index != null &&
       animatedCoordinates != null &&
       activePointIndex != null &&
       animatedCoordinates[index]
@@ -247,10 +247,9 @@ export function Chart({
   const halfXAxisLabelWidth = xAxisDetails.labelWidth / 2;
 
   return (
-    <div className={styles.Container} style={{height, width}}>
+    <React.Fragment>
       <svg
         viewBox={`0 0 ${width} ${height}`}
-        className={styles.Chart}
         xmlns={XMLNS}
         width={width}
         height={height}
@@ -401,7 +400,7 @@ export function Chart({
           onDimensionChange={setLegendDimensions}
         />
       )}
-    </div>
+    </React.Fragment>
   );
 
   function getTooltipPosition({

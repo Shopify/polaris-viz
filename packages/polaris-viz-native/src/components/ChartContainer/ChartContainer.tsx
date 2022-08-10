@@ -55,9 +55,9 @@ export function ChartContainer({
   const value = useMemo(() => {
     const id = uniqueId('chart');
 
-    const tooBigToAnimate = isLargeDataSet(data, type);
+    const dataTooBigToAnimate = isLargeDataSet(data, type);
     const shouldAnimate =
-      isAnimated && !prefersReducedMotion && !tooBigToAnimate;
+      isAnimated && !prefersReducedMotion && !dataTooBigToAnimate;
 
     return {
       characterWidths: {},
@@ -65,7 +65,7 @@ export function ChartContainer({
       id,
       shouldAnimate,
       theme,
-      isPerformanceImpacted: tooBigToAnimate,
+      isPerformanceImpacted: dataTooBigToAnimate,
     };
   }, [prefersReducedMotion, data, isAnimated, theme, type]);
 

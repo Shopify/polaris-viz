@@ -9,7 +9,7 @@ const MOCK_PROPS: Props = {
   isStacked: false,
   seriesLength: 3,
   singleBarCount: 2,
-  labelHeight: 15,
+  xAxisHeight: 15,
 };
 
 function parseData(result: Root<any>) {

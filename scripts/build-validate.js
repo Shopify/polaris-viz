@@ -60,28 +60,28 @@ function validateEsNextBuild(package) {
     case 'polaris-viz':
       assert.ok(
         fs.existsSync(
-          `./packages/${package}/build/esnext/components/LineChart/LineChart.esnext`,
+          `./packages/${package}/build/esnext/components/ChartContainer/ChartContainer.esnext`,
         ),
       );
 
       assert.ok(
         fs.existsSync(
-          `./packages/${package}/build/esnext/components/LineChart/Chart.css`,
+          `./packages/${package}/build/esnext/components/ChartContainer/ChartContainer.css`,
         ),
       );
 
       // ESnext build css contains namespaced classes, and
       const cssContentPV = fs.readFileSync(
-        `./packages/${package}/build/esnext/components/LineChart/Chart.css`,
+        `./packages/${package}/build/esnext/components/ChartContainer/ChartContainer.css`,
         'utf-8',
       );
 
       const jsContentPV = fs.readFileSync(
-        `./packages/${package}/build/esnext/components/LineChart/Chart.scss.esnext`,
+        `./packages/${package}/build/esnext/components/ChartContainer/ChartContainer.scss.esnext`,
         'utf-8',
       );
 
-      assert.ok(jsContentPV.includes("import './Chart.css';"));
+      assert.ok(jsContentPV.includes("import './ChartContainer.css';"));
       break;
     default:
     case 'polaris-viz-core':
