@@ -62,7 +62,11 @@ export function FunnelSegment({
           fill={color}
           width={barWidth}
           d={animatedHeight.to((value: number) =>
-            getRoundedRectPath({height: value, width: barWidth, borderRadius}),
+            getRoundedRectPath({
+              height: value,
+              width: barWidth,
+              borderRadius: `${borderRadius} ${borderRadius} 0 0`,
+            }),
           )}
           style={{
             transform: animatedHeight.to(

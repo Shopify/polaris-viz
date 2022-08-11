@@ -20,7 +20,7 @@ export interface Props {
 }
 
 export function Bar({
-  borderRadius = 5,
+  borderRadius = 0,
   fill,
   height,
   value,

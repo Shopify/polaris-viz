@@ -4,7 +4,6 @@ import {PageWithSizingInfo} from '../../Docs/stories/components/PageWithSizingIn
 import {THEME_CONTROL_ARGS, CHART_STATE_CONTROL_ARGS} from '../../../storybook';
 import {FunnelChart, FunnelChartProps} from '../FunnelChart';
 
-
 export default {
   title: 'polaris-viz/Charts/FunnelChart',
   component: FunnelChart,
