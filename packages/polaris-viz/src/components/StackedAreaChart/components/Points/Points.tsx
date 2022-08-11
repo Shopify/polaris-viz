@@ -61,17 +61,19 @@ export function Points({
 
   return (
     <React.Fragment>
-      {stackedValues.map((_, stackIndex) => {
+      {stackedValues.map((stack, stackIndex) => {
         if (activePointIndex == null) {
           return null;
         }
+
+        const [_, y] = stack[activePointIndex];
 
         const id = `${tooltipId}-point-${stackIndex}`;
         const color = colors[stackIndex];
 
         const animatedYPostion =
           animatedCoordinates == null || animatedCoordinates[stackIndex] == null
-            ? 0
+            ? yScale(y)
             : animatedCoordinates[stackIndex].to((coord) => coord.y);
 
         const pointColor = isGradientType(color)
