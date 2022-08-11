@@ -8,6 +8,7 @@ import {
   BoundingRect,
   useChartContext,
   useChartPositions,
+  LINE_HEIGHT,
 } from '@shopify/polaris-viz-core';
 import type {
   DataSeries,
@@ -84,7 +85,7 @@ export function Chart({
 
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
   const id = useMemo(() => uniqueId('VerticalBarChart'), []);
-  const [xAxisHeight, setXAxisHeight] = useState(0);
+  const [xAxisHeight, setXAxisHeight] = useState(LINE_HEIGHT);
   const [annotationsHeight, setAnnotationsHeight] = useState(0);
 
   const {legend, setLegendDimensions, height, width} = useLegend({

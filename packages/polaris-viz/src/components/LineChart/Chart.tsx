@@ -11,6 +11,7 @@ import {
   BoundingRect,
   useChartPositions,
   useChartContext,
+  LINE_HEIGHT,
 } from '@shopify/polaris-viz-core';
 import type {
   Dimensions,
@@ -58,7 +59,6 @@ import {HorizontalGridLines} from '../HorizontalGridLines';
 import {useLineChartTooltipContent} from './hooks/useLineChartTooltipContent';
 import {PointsAndCrosshair} from './components';
 import {useFormatData} from './hooks';
-import styles from './Chart.scss';
 import {yAxisMinMax} from './utilities';
 
 export interface ChartProps {
@@ -96,7 +96,7 @@ export function Chart({
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [activeLineIndex, setActiveLineIndex] = useState(-1);
-  const [xAxisHeight, setXAxisHeight] = useState(0);
+  const [xAxisHeight, setXAxisHeight] = useState(LINE_HEIGHT);
   const [annotationsHeight, setAnnotationsHeight] = useState(0);
 
   const {legend, setLegendDimensions, height, width} = useLegend({
@@ -262,10 +262,9 @@ export function Chart({
   const halfXAxisLabelWidth = xAxisDetails.labelWidth / 2;
 
   return (
-    <div className={styles.Container} style={{width, height}}>
+    <React.Fragment>
       <svg
         viewBox={`0 0 ${width} ${height}`}
-        className={styles.Chart}
         role={emptyState ? 'img' : 'table'}
         xmlns={XMLNS}
         width={width}
@@ -403,6 +402,6 @@ export function Chart({
           onDimensionChange={setLegendDimensions}
         />
       )}
-    </div>
+    </React.Fragment>
   );
 }

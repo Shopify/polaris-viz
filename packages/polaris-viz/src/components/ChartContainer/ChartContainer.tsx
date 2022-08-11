@@ -1,14 +1,5 @@
-import React, {
-  ReactElement,
-  useCallback,
-  useLayoutEffect,
-  useState,
-  cloneElement,
-  useMemo,
-} from 'react';
-import {useDebouncedCallback} from 'use-debounce/lib';
+import React, {ReactElement, useState, useMemo} from 'react';
 import {
-  usePrevious,
   uniqueId,
   ChartContext,
   DataGroup,
@@ -16,29 +7,15 @@ import {
   isLargeDataSet,
   InternalChartType,
 } from '@shopify/polaris-viz-core';
-import type {Dimensions} from '@shopify/polaris-viz-core';
 
 import {getChartId} from '../../utilities/getChartId';
-import {ChartErrorBoundary} from '../ChartErrorBoundary';
 import characterWidths from '../../data/character-widths.json';
 import characterWidthOffsets from '../../data/character-width-offsets.json';
-import {
-  useResizeObserver,
-  useTheme,
-  usePrintResizing,
-  usePrefersReducedMotion,
-} from '../../hooks';
+import {useTheme, usePrefersReducedMotion} from '../../hooks';
 import type {SkeletonType} from '../ChartSkeleton';
 
 import styles from './ChartContainer.scss';
-
-function hasValidDimensions(chartDimensions: Dimensions | null) {
-  if (chartDimensions == null) {
-    return false;
-  }
-
-  return chartDimensions.width > 0 && chartDimensions.height > 0;
-}
+import {ChartDimensions} from './components/';
 
 interface Props {
   children: ReactElement;
@@ -51,23 +28,18 @@ interface Props {
 }
 
 export const ChartContainer = (props: Props) => {
+  const id = uniqueId('chart');
+
   const {prefersReducedMotion} = usePrefersReducedMotion();
+  const [isPrinting, setIsPrinting] = useState(false);
 
-  const [chartDimensions, setChartDimensions] =
-    useState<Dimensions | null>(null);
-
-  const {ref, setRef, entry} = useResizeObserver();
-
-  const previousEntry = usePrevious(entry);
-
-  const {isPrinting} = usePrintResizing({ref, setChartDimensions});
+  const dataTooBigToAnimate = useMemo(() => {
+    return isLargeDataSet(props.data, props.type);
+  }, [props.data, props.type]);
 
   const value = useMemo(() => {
-    const tooBigToAnimate = isLargeDataSet(props.data, props.type);
-
     const shouldAnimate =
-      props.isAnimated && !prefersReducedMotion && !tooBigToAnimate;
-    const id = uniqueId('chart');
+      props.isAnimated && !prefersReducedMotion && !dataTooBigToAnimate;
     const printFriendlyTheme = isPrinting ? 'Print' : props.theme;
 
     return {
@@ -76,67 +48,18 @@ export const ChartContainer = (props: Props) => {
       characterWidths,
       characterWidthOffsets,
       theme: printFriendlyTheme,
-      isPerformanceImpacted: tooBigToAnimate,
+      isPerformanceImpacted: dataTooBigToAnimate,
     };
   }, [
+    id,
+    isPrinting,
     prefersReducedMotion,
-    props.data,
     props.isAnimated,
     props.theme,
-    props.type,
-    isPrinting,
+    dataTooBigToAnimate,
   ]);
 
   const {chartContainer} = useTheme(value.theme);
-
-  const updateDimensions = useCallback(() => {
-    if (
-      previousEntry?.contentRect.width === entry?.contentRect.width ||
-      entry == null
-    )
-      return;
-
-    const {width, height} = entry.contentRect;
-
-    setChartDimensions({width, height});
-  }, [entry, previousEntry?.contentRect.width]);
-
-  const [debouncedUpdateDimensions] = useDebouncedCallback(() => {
-    updateDimensions();
-  }, 100);
-
-  useLayoutEffect(() => {
-    updateDimensions();
-
-    if (chartDimensions === null) {
-      setChartDimensions({
-        width: 0,
-        height: props.sparkChart
-          ? chartContainer.sparkChartMinHeight
-          : chartContainer.minHeight,
-      });
-    }
-
-    const isServer = typeof window === 'undefined';
-
-    if (!isServer) {
-      window.addEventListener('resize', debouncedUpdateDimensions);
-    }
-
-    return () => {
-      if (!isServer) {
-        window.removeEventListener('resize', debouncedUpdateDimensions);
-      }
-    };
-  }, [
-    entry,
-    updateDimensions,
-    debouncedUpdateDimensions,
-    chartDimensions,
-    chartContainer.minHeight,
-    props.sparkChart,
-    chartContainer.sparkChartMinHeight,
-  ]);
 
   return (
     <ChartContext.Provider value={value}>
@@ -146,25 +69,16 @@ export const ChartContainer = (props: Props) => {
           background: chartContainer.backgroundColor,
           padding: chartContainer.padding,
           borderRadius: chartContainer.borderRadius,
-          minHeight: props.sparkChart
-            ? chartContainer.sparkChartMinHeight
-            : chartContainer.minHeight,
         }}
-        ref={setRef}
         id={getChartId(value.id)}
       >
-        {!hasValidDimensions(chartDimensions) ? null : (
-          <ChartErrorBoundary
-            type={props.skeletonType ?? 'Default'}
-            dimensions={chartDimensions!}
-          >
-            {cloneElement<{
-              dimensions: Dimensions;
-            }>(props.children, {
-              dimensions: chartDimensions!,
-            })}
-          </ChartErrorBoundary>
-        )}
+        <ChartDimensions
+          onIsPrintingChange={setIsPrinting}
+          skeletonType={props.skeletonType}
+          sparkChart={props.sparkChart}
+        >
+          {props.children}
+        </ChartDimensions>
       </div>
     </ChartContext.Provider>
   );

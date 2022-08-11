@@ -4,6 +4,11 @@ import {
   getColorVisionStylesForActiveIndex,
 } from '@shopify/polaris-viz-core';
 
+import {
+  LEGEND_ITEM_LEFT_PADDING,
+  LEGEND_ITEM_RIGHT_PADDING,
+  LEGEND_ITEM_GAP,
+} from '../../constants';
 import {PREVIEW_ICON_SIZE} from '../../../../constants';
 import {SeriesIcon} from '../../../shared/SeriesIcon';
 import type {LegendData} from '../../../../types';
@@ -48,6 +53,9 @@ export function LegendItem({
           activeIndex,
           index,
         }),
+        paddingLeft: LEGEND_ITEM_LEFT_PADDING,
+        paddingRight: LEGEND_ITEM_RIGHT_PADDING,
+        gap: LEGEND_ITEM_GAP,
       }}
       className={style.Legend}
     >

@@ -9,9 +9,9 @@ import {
 import {ZeroValueLine} from '../../../shared/ZeroValueLine';
 import {BARS_TRANSITION_CONFIG} from '../../../../constants';
 
-import styles from './Bar.scss';
+import styles from './VerticalBar.scss';
 
-interface Props {
+export interface VerticalBarProps {
   color: string;
   height: number;
   index: number;
@@ -27,7 +27,7 @@ interface Props {
   areAllNegative?: boolean;
 }
 
-export const Bar = React.memo(function Bar({
+export const VerticalBar = React.memo(function Bar({
   animationDelay = 0,
   ariaLabel,
   borderRadius = BORDER_RADIUS.None,
@@ -41,7 +41,7 @@ export const Bar = React.memo(function Bar({
   x,
   zeroPosition,
   areAllNegative,
-}: Props) {
+}: VerticalBarProps) {
   const treatAsNegative = rawValue < 0 || rawValue === 0;
   const zeroValue = rawValue === 0;
 

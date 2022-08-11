@@ -11,10 +11,15 @@ jest.mock('d3-scale', () => ({
   scaleLinear: jest.requireActual('d3-scale').scaleLinear,
 }));
 
-jest.mock('@shopify/polaris-viz-core/src/utilities', () => ({
-  ...jest.requireActual('@shopify/polaris-viz-core/src/utilities'),
-  estimateStringWidth: () => 100,
-}));
+jest.mock(
+  '@shopify/polaris-viz-core/src/utilities/estimateStringWidth',
+  () => ({
+    ...jest.requireActual(
+      '@shopify/polaris-viz-core/src/utilities/estimateStringWidth',
+    ),
+    estimateStringWidth: () => 100,
+  }),
+);
 
 const DATA: DataSeries[] = [
   {
@@ -48,13 +53,13 @@ const MOCK_PROPS: HorizontalBarsProps = {
   barHeight: 20,
   groupIndex: 0,
   id: 'id',
-  isAnimated: false,
   isSimple: false,
   labelFormatter: (value) => `${value}`,
   name: 'Bar',
   data: DATA,
   xScale: scaleLinear(),
   zeroPosition: 0,
+  containerWidth: 600,
 };
 
 describe('<HorizontalBars />', () => {

@@ -3,11 +3,11 @@ import {mount} from '@shopify/react-testing';
 import {scaleBand} from 'd3-scale';
 import {BORDER_RADIUS} from '@shopify/polaris-viz-core';
 
-import {Bar} from '../Bar';
+import {VerticalBar, VerticalBarProps} from '../VerticalBar';
 import {MASK_HIGHLIGHT_COLOR} from '../../../../../constants';
 import {
   getHoverZoneOffset,
-  Props,
+  Props as HoverZoneOffsetProps,
 } from '../../../../../utilities/getHoverZoneOffset';
 
 jest.mock('d3-scale', () => ({
@@ -15,21 +15,17 @@ jest.mock('d3-scale', () => ({
   scaleLinear: jest.requireActual('d3-scale').scaleLinear,
 }));
 
-const defaultProps = {
+const DEFAULT_PROPS: VerticalBarProps = {
   height: 1000,
   color: MASK_HIGHLIGHT_COLOR,
-  isSelected: false,
   x: 0,
   rawValue: 1000,
   width: 100,
-  yScale: scaleBand() as any,
   index: 1,
-  onFocus: jest.fn(),
-  tabIndex: 0,
   zeroPosition: 0,
 };
 
-const mockProps: Props = {
+const HOVER_ZONE_MOCK_PROPS: HoverZoneOffsetProps = {
   barSize: 100,
   zeroPosition: 0,
   max: 135,
@@ -37,12 +33,12 @@ const mockProps: Props = {
   isNegative: false,
 };
 
-describe('<Bar/>', () => {
+describe('<VerticalBar/>', () => {
   describe('borderRadius', () => {
     it('renders sharp edges when not provided', () => {
       const bar = mount(
         <svg>
-          <Bar {...defaultProps} />,
+          <VerticalBar {...DEFAULT_PROPS} />,
         </svg>,
       );
 
@@ -66,7 +62,7 @@ describe('<Bar/>', () => {
     it('applies the provided border radius', () => {
       const bar = mount(
         <svg>
-          <Bar {...defaultProps} borderRadius={BORDER_RADIUS.Top} />,
+          <VerticalBar {...DEFAULT_PROPS} borderRadius={BORDER_RADIUS.Top} />,
         </svg>,
       );
 
@@ -92,7 +88,7 @@ describe('<Bar/>', () => {
     it('gets passed to the underlying path', () => {
       const bar = mount(
         <svg>
-          <Bar {...defaultProps} color="rgb(156, 106, 222)" />,
+          <VerticalBar {...DEFAULT_PROPS} color="rgb(156, 106, 222)" />,
         </svg>,
       );
 
@@ -106,7 +102,7 @@ describe('<Bar/>', () => {
     it('renders a line component when passed value is zero', () => {
       const bar = mount(
         <svg>
-          <Bar {...defaultProps} rawValue={0} />
+          <VerticalBar {...DEFAULT_PROPS} rawValue={0} />
         </svg>,
       );
 
@@ -116,7 +112,7 @@ describe('<Bar/>', () => {
 
   describe('hover target zone', () => {
     it("gets an offset for a hover target zone based on the bar's height", () => {
-      const bar = getHoverZoneOffset({...mockProps});
+      const bar = getHoverZoneOffset({...HOVER_ZONE_MOCK_PROPS});
       expect(bar).toStrictEqual({clampedSize: 100, offset: -100});
     });
   });

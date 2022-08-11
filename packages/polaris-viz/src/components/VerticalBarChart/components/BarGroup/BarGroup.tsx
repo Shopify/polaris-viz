@@ -24,13 +24,13 @@ import type {AccessibilitySeries} from '../../../VerticalBarChart/types';
 import {formatAriaLabel} from '../../utilities';
 import {applyColorVisionToDomElement} from '../../../../utilities/applyColorVisionToDomElement';
 import {useWatchColorVisionEvents} from '../../../../hooks';
-import {Bar} from '../Bar';
+import {VerticalBar} from '../VerticalBar';
 import {BAR_SPACING} from '../../constants';
 import styles from '../../Chart.scss';
 
 const COLOR_VISION_MASK = 'colorVisionMask';
 
-interface Props {
+export interface BarGroupProps {
   animationDelay: number;
   x: number;
   yScale: ScaleLinear<number, number>;
@@ -64,7 +64,7 @@ export function BarGroup({
   gapWidth,
   theme,
   areAllNegative,
-}: Props) {
+}: BarGroupProps) {
   const groupAriaLabel = formatAriaLabel(accessibilityData[barGroupIndex]);
   const {id, shouldAnimate, isPerformanceImpacted} = useChartContext();
 
@@ -142,7 +142,7 @@ export function BarGroup({
               data-index={barGroupIndex}
               key={`${barGroupIndex}${index}`}
             >
-              <Bar
+              <VerticalBar
                 height={getBarHeight(rawValue)}
                 isAnimated={shouldAnimate}
                 color={MASK_HIGHLIGHT_COLOR}

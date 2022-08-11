@@ -65,7 +65,7 @@ describe('useLegend()', () => {
           {name: 'Lunch', shape: 'Bar'},
           {name: 'Dinner', shape: 'Bar'},
         ],
-        height: MOCK_PROPS.dimensions!.height - LEGENDS_TOP_MARGIN,
+        height: 60,
         width: 100,
         isLegendMounted: false,
       });
@@ -86,7 +86,7 @@ describe('useLegend()', () => {
         legend: [],
         height: 100,
         width: 100,
-        isLegendMounted: false,
+        isLegendMounted: true,
       });
     });
 
@@ -204,6 +204,22 @@ describe('useLegend()', () => {
       const data = parseData(result);
 
       expect(data.legend[0].color).toStrictEqual('blue');
+    });
+  });
+
+  describe('isLegendMounted', () => {
+    it('returns true when showLegend=false', () => {
+      function TestComponent() {
+        const data = useLegend({...MOCK_PROPS, showLegend: false});
+
+        return <span data-data={`${JSON.stringify(data)}`} />;
+      }
+
+      const result = mount(<TestComponent />);
+
+      const data = parseData(result);
+
+      expect(data.isLegendMounted).toStrictEqual(true);
     });
   });
 });

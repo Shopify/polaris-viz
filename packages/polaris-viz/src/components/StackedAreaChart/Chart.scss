@@ -1,20 +1,3 @@
-@import '../../styles/common';
-
-.Container {
-  @include chart-container;
-  position: relative;
-  user-select: none;
-  max-width: 100%;
-}
-
-.Chart {
-  height: 100%;
-  width: 100%;
-  overflow: visible;
-  max-width: 100%;
-  display: block;
-}
-
 .Group {
   @media print {
     clip-path: none;

@@ -7,6 +7,7 @@ import {
   useTheme,
   XAxisOptions,
   useChartPositions,
+  LINE_HEIGHT,
 } from '@shopify/polaris-viz-core';
 import type {Dimensions, DataGroup} from '@shopify/polaris-viz-core';
 
@@ -72,7 +73,7 @@ export function Chart({
 
   const colors = useThemeSeriesColorsForDataGroup(data, selectedTheme);
 
-  const [xAxisHeight, setXAxisHeight] = useState(0);
+  const [xAxisHeight, setXAxisHeight] = useState(LINE_HEIGHT);
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [annotationsHeight, setAnnotationsHeight] = useState(0);

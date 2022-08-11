@@ -7,6 +7,7 @@ import {
   LEGENDS_TOP_MARGIN,
 } from '@shopify/polaris-viz-core';
 
+import {DEFAULT_LEGEND_HEIGHT} from '../../../constants';
 import type {LegendData} from '../../../types';
 
 function getAlteredDimensions(
@@ -30,6 +31,7 @@ export interface Props {
   colors?: Color[];
   dimensions?: Dimensions;
   direction?: Direction;
+  maxWidth?: number;
 }
 
 export function useLegend({
@@ -38,10 +40,13 @@ export function useLegend({
   dimensions = {height: 0, width: 0},
   showLegend,
   direction = 'horizontal',
+  maxWidth = 0,
 }: Props) {
+  const defaultHeight = showLegend ? DEFAULT_LEGEND_HEIGHT : 0;
+
   const [legendDimensions, setLegendDimensions] = useState({
-    height: 0,
-    width: 0,
+    height: defaultHeight,
+    width: maxWidth,
   });
 
   const legend: LegendData[] = useMemo(() => {
@@ -87,13 +92,15 @@ export function useLegend({
     direction,
   ]);
 
+  const hasValidDimensions =
+    legendDimensions.height !== defaultHeight ||
+    legendDimensions.width !== maxWidth;
+
   return {
     legend,
     height,
     width,
     setLegendDimensions,
-    isLegendMounted:
-      showLegend &&
-      (legendDimensions.height !== 0 || legendDimensions.width !== 0),
+    isLegendMounted: showLegend === false || hasValidDimensions,
   };
 }

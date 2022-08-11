@@ -65,7 +65,7 @@ export {
   Y_AXIS_CHART_SPACING,
 } from '@shopify/polaris-viz-core';
 
-export const DEFAULT_LEGEND_HEIGHT = 29;
+export const DEFAULT_LEGEND_HEIGHT = 24;
 export const DEFAULT_LEGEND_WIDTH = 29;
 export const LEGEND_ICON_SIZE = 12;
 export const BAR_CONTAINER_TEXT_HEIGHT = 48;

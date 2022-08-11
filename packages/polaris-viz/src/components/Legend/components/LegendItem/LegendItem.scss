@@ -1,12 +1,11 @@
 @import '../../../../styles/common';
 
 .Legend {
-  padding: 6px 16px 6px 8px;
+  padding: 6px 0;
   outline: none;
   border: none;
   border-radius: 2px;
   display: flex;
-  gap: 8px;
   @include focus-outline;
 }
 

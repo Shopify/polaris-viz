@@ -7,6 +7,7 @@ import {
   HORIZONTAL_SPACE_BETWEEN_CHART_AND_AXIS,
   useAriaLabel,
   useChartContext,
+  LINE_HEIGHT,
 } from '@shopify/polaris-viz-core';
 import type {
   DataSeries,
@@ -57,7 +58,6 @@ import {
   HorizontalBarChartXAnnotations,
 } from './components';
 import {getAlteredHorizontalBarPosition} from './utilities';
-import styles from './Chart.scss';
 
 export interface ChartProps {
   annotationsLookupTable: AnnotationLookupTable;
@@ -89,7 +89,7 @@ export function Chart({
   const isStacked = type === 'stacked';
 
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
-  const [labelHeight, setLabelHeight] = useState(0);
+  const [xAxisHeight, setXAxisHeight] = useState(LINE_HEIGHT);
   const [annotationsHeight, setAnnotationsHeight] = useState(0);
 
   const {longestSeriesCount, seriesColors} = useHorizontalSeriesColors(data);
@@ -135,7 +135,7 @@ export function Chart({
   });
 
   const chartYPosition = (ChartMargin.Top as number) + annotationsHeight;
-  const drawableHeight = height - labelHeight - chartYPosition;
+  const drawableHeight = height - xAxisHeight - chartYPosition;
 
   const {xScale, ticks, ticksFormatted, drawableWidth, chartXPosition} =
     useHorizontalXScale({
@@ -154,7 +154,7 @@ export function Chart({
       isStacked,
       seriesLength: longestSeriesCount,
       singleBarCount: data.length,
-      labelHeight,
+      xAxisHeight,
     });
 
   const annotationsDrawableHeight =
@@ -197,15 +197,8 @@ export function Chart({
   });
 
   return (
-    <div
-      className={styles.ChartContainer}
-      style={{
-        width,
-        height,
-      }}
-    >
+    <React.Fragment>
       <svg
-        className={styles.SVG}
         ref={setSvgRef}
         role="list"
         viewBox={`0 0 ${width} ${height}`}
@@ -230,7 +223,7 @@ export function Chart({
               chartY={drawableHeight}
               labels={ticksFormatted}
               labelWidth={labelWidth}
-              onHeightChange={setLabelHeight}
+              onHeightChange={setXAxisHeight}
               ticks={ticks}
               xScale={xScale}
             />
@@ -327,7 +320,7 @@ export function Chart({
           onDimensionChange={setLegendDimensions}
         />
       )}
-    </div>
+    </React.Fragment>
   );
 
   function formatPositionForTooltip(index: number): TooltipPosition {
