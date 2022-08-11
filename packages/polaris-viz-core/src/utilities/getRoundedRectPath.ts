@@ -16,17 +16,15 @@ export function getRoundedRectPath({borderRadius, height, width}: Props) {
     return '';
   }
 
-  const {topLeft, topRight, bottomRight, bottomLeft} =
+  let {topLeft, topRight, bottomRight, bottomLeft} =
     borderRadiusStringToObject(borderRadius);
 
-  const minWidth = Math.max(topLeft + topRight, bottomLeft + bottomRight);
-  const minHeight = Math.max(topLeft + bottomLeft, topRight + bottomRight);
+  const smallestSize = Math.min(height, width);
 
-  // Return a basic rect if the rounded arcs
-  // would make the rect bigger than the min size.
-  if (height < minHeight || width < minWidth) {
-    return `m 0 0 h ${width} v ${height} h -${width} z`;
-  }
+  topLeft = Math.min(topLeft, smallestSize / 2);
+  topRight = Math.min(topRight, smallestSize / 2);
+  bottomRight = Math.min(bottomRight, smallestSize / 2);
+  bottomLeft = Math.min(bottomLeft, smallestSize / 2);
 
   const top = topLeft + topRight;
   const right = topRight + bottomRight;

@@ -47,13 +47,27 @@ describe('getRoundedRectPath()', () => {
     expect(makeDSingleLine(result)).toStrictEqual(EXPECTED_RESULTS[test]);
   });
 
-  it('returns a non-rounded rect if arcs are smaller than overall size', () => {
+  it('clamps the radius if the borderRadius is larger than the height', () => {
     const result = getRoundedRectPath({
-      height: 1,
-      width: 1,
-      borderRadius: BORDER_RADIUS.Left,
+      height: 5,
+      width: 100,
+      borderRadius: '0 10 10 0',
     });
 
-    expect(result).toStrictEqual('m 0 0 h 1 v 1 h -1 z');
+    expect(makeDSingleLine(result)).toStrictEqual(
+      'M0,0 h97.5 a2.5,2.5 0 0 1 2.5,2.5 v0 a2.5,2.5 0 0 1 -2.5,2.5 h-97.5 a0,0 0 0 1 -0,-0 v-5 a0,0 0 0 1 0,-0 Z',
+    );
+  });
+
+  it('clamps the radius if the borderRadius is larger than the width', () => {
+    const result = getRoundedRectPath({
+      height: 100,
+      width: 5,
+      borderRadius: '10 0 0 10',
+    });
+
+    expect(makeDSingleLine(result)).toStrictEqual(
+      'M2.5,0 h2.5 a0,0 0 0 1 0,0 v100 a0,0 0 0 1 -0,0 h-2.5 a2.5,2.5 0 0 1 -2.5,-2.5 v-95 a2.5,2.5 0 0 1 2.5,-2.5 Z',
+    );
   });
 });
