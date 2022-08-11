@@ -4,7 +4,6 @@ import {
   Dimensions,
   ANIMATION_MARGIN,
   SparkBarSeries,
-  DEFAULT_THEME_NAME,
   useChartContext,
 } from '@shopify/polaris-viz-core';
 
@@ -20,13 +19,8 @@ interface Props extends SparkBarChartProps {
 export function Chart({
   data,
   dimensions,
-  targetLine = {
-    offsetLeft: 0,
-    offsetRight: 0,
-    value: 0,
-  },
+  targetLine,
   accessibilityLabel,
-  theme = DEFAULT_THEME_NAME,
 }: Props) {
   const {shouldAnimate} = useChartContext();
   const {width, height} = dimensions ?? {width: 0, height: 0};
@@ -55,7 +49,6 @@ export function Chart({
           targetLine={targetLine}
           height={height}
           shouldAnimate={shouldAnimate}
-          theme={theme}
           useTransition={useTransition}
           width={width}
         />
