@@ -1,5 +1,5 @@
 import React from 'react';
-import type {ActiveTooltip, DataType} from '@shopify/polaris-viz-core';
+import {ActiveTooltip, DataType, useTheme} from '@shopify/polaris-viz-core';
 import {useSpring, animated, Interpolation} from '@react-spring/web';
 
 import {classNames} from '../../utilities';
@@ -7,20 +7,19 @@ import {BASE_ANIMATION_DURATION} from '../../constants';
 
 import styles from './Point.scss';
 
-interface Props {
+export interface PointProps {
   active: boolean;
   cx: number | Interpolation;
   cy: number | Interpolation;
   color: string;
   index: number;
   isAnimated: boolean;
+  ariaHidden?: boolean;
+  ariaLabelledby?: string;
+  dataType?: DataType;
   onFocus?: ({index, x, y}: ActiveTooltip) => void;
   tabIndex?: number;
-  ariaLabelledby?: string;
-  ariaHidden?: boolean;
   visuallyHidden?: boolean;
-  stroke: string;
-  dataType?: DataType;
 }
 
 const DEFAULT_RADIUS = 5;
@@ -38,8 +37,9 @@ export const Point = React.memo(function Point({
   isAnimated,
   ariaHidden = false,
   visuallyHidden = false,
-  stroke,
-}: Props) {
+}: PointProps) {
+  const selectedTheme = useTheme();
+
   const handleFocus = () => {
     if (onFocus != null) {
       return onFocus({
@@ -72,7 +72,7 @@ export const Point = React.memo(function Point({
       cy={cy}
       r={isAnimated ? animatedRadius : radius}
       fill={color}
-      stroke={stroke}
+      stroke={selectedTheme.line.pointStroke}
       strokeWidth={2}
       onFocus={handleFocus}
       className={classNames(

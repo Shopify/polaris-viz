@@ -12,6 +12,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Fixed
 
 - Fixed bug where points in `<StackedAreaChart />` were in the wrong positions when `StackedAreaChart.isAnimated=false`.
+- Fixed missing stroke for `<LineChart />` & `<StackedAreaChart />` points in `Default` theme.
 
 ### Changed
 

@@ -344,7 +344,6 @@ export function Chart({
             colors={seriesColors}
             getXPosition={getXPosition}
             stackedValues={stackedValues}
-            theme={theme}
             tooltipId={tooltipId}
             xScale={xScale}
             yScale={yScale}

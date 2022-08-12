@@ -15,7 +15,7 @@ import type {ScaleLinear} from 'd3-scale';
 
 import {Point} from '../../../';
 import type {AnimatedCoordinate, GetXPosition} from '../../../../types';
-import {useTheme, useWatchColorVisionEvents} from '../../../../hooks';
+import {useWatchColorVisionEvents} from '../../../../hooks';
 import {colorWhite} from '../../../../constants';
 
 interface PointsProps {
@@ -33,7 +33,6 @@ interface PointsProps {
   tooltipId: string;
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
-  theme: string;
 }
 
 export function Points({
@@ -42,14 +41,12 @@ export function Points({
   colors,
   getXPosition,
   stackedValues,
-  theme,
   tooltipId,
   xScale,
   yScale,
 }: PointsProps) {
   const [activeLineIndex, setActiveLineIndex] = useState(-1);
 
-  const selectedTheme = useTheme(theme);
   const {shouldAnimate} = useChartContext();
 
   useWatchColorVisionEvents({
@@ -101,7 +98,6 @@ export function Points({
               </defs>
             )}
             <Point
-              stroke={selectedTheme.line.pointStroke}
               color={pointColor}
               cx={getXPosition({isCrosshair: false, index: stackIndex})}
               cy={animatedYPostion}
@@ -122,7 +118,6 @@ export function Points({
           <Point
             dataType={DataType.Point}
             key={`point-${dataIndex}-${x}}`}
-            stroke={selectedTheme.line.pointStroke}
             color={colorWhite}
             cx={xScale(dataIndex)}
             cy={yScale(y)}

@@ -188,7 +188,7 @@ export const DEFAULT_THEME: Theme = {
     hasArea: true,
     hasSpline: true,
     width: 2,
-    pointStroke: 'variables.colorGray160',
+    pointStroke: variables.colorGray160,
   },
   arc: {
     cornerRadius: DONUT_CHART_CORNER_RADIUS,
