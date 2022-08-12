@@ -13,7 +13,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
-- Replaced bar chart `hasRoundedCorners` by `borderRadius`.
+- Replaced `bar.hasRoundedCorners` with `bar.borderRadius` which now accepts a `number`
 
 ## [6.6.1] - 2022-08-10
 
