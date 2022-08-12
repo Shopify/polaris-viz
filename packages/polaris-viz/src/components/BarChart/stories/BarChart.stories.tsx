@@ -121,7 +121,19 @@ export default {
 } as Meta;
 
 const Template: Story<BarChartProps> = (args: BarChartProps) => {
-  return <BarChart {...args} />;
+  return (
+    <PolarisVizProvider
+      themes={{
+        Default: {
+          chartContainer: {
+            padding: '20px',
+          },
+        },
+      }}
+    >
+      <BarChart {...args} />
+    </PolarisVizProvider>
+  );
 };
 
 export const Default: Story<BarChartProps> = Template.bind({});
@@ -216,7 +228,7 @@ const WithoutRoundedCornersTemplate: Story<BarChartProps> = (
       themes={{
         Default: {
           bar: {
-            hasRoundedCorners: false,
+            borderRadius: 0,
           },
           chartContainer: {
             padding: '20px',

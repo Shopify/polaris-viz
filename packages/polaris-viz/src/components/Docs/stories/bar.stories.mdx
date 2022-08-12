@@ -1,6 +1,5 @@
 import {Meta, Story, Canvas} from '@storybook/addon-docs/blocks';
 
-import {PolarisVizProvider} from '../../../';
 import {
   Divider,
   ComponentContainer,
@@ -31,13 +30,16 @@ import {
 
 <PropertyTable>
   <PropertyTable.Row
-    property="bar.hasRoundedCorners"
-    type="boolean"
+    property="bar.borderRadius"
+    type="number"
     description="determines whether the bar should have sharp or round corners"
     chartsAffected={[
       'BarChart',
       'MultiSeriesBarChart',
       'SimpleNormalizedChart',
+      'FunnelChart',
+      'SparkBarChart',
+      'ComboChart',
     ]}
   />
 </PropertyTable>
@@ -48,32 +50,12 @@ import {
 
 <ComponentContainer
   codeSample={`
-    <PolarisVizProvider
-      themes={{
-        Default: {
-          bar: {
-            hasRoundedCorners: false,
-          }
-        }
-      }}
-    >
       <BarChart data={data} />
-    </PolarisVizProvider>
     `}
   center
   chart={
     <div style={{width: '350px', height: '140px'}}>
-      <PolarisVizProvider
-        themes={{
-          Default: {
-            bar: {
-              hasRoundedCorners: true,
-            },
-          },
-        }}
-      >
-        <SampleBarChart showLegend={false} />
-      </PolarisVizProvider>
+      <SampleBarChart showLegend={false} />
     </div>
   }
 />

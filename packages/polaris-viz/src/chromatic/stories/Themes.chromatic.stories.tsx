@@ -55,7 +55,7 @@ const THEME = {
     horizontalMargin: [0, 20],
   },
   bar: {
-    hasRoundedCorners: [false],
+    borderRadius: [0, 5, 10],
     zeroValueColor: ['lime'],
   },
   xAxis: {

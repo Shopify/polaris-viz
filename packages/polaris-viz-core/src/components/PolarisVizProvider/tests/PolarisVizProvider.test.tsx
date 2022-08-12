@@ -51,7 +51,7 @@ describe('<PolarisVizProvider />', () => {
           themes={{
             Dark: {
               bar: {
-                hasRoundedCorners: false,
+                borderRadius: 3,
               },
             },
           }}
@@ -66,7 +66,7 @@ describe('<PolarisVizProvider />', () => {
           ...DEFAULT_THEME,
           bar: {
             ...DEFAULT_THEME.bar,
-            hasRoundedCorners: false,
+            borderRadius: 3,
           },
         }),
       );

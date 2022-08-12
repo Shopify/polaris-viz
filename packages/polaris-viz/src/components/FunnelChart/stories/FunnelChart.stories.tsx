@@ -59,7 +59,7 @@ const data = [
   },
 ];
 
-const DefaultTemplate: Story<FunnelChartProps> = (args: FunnelChartProps) => {
+const Template: Story<FunnelChartProps> = (args: FunnelChartProps) => {
   return (
     <div style={{height: 400}}>
       <FunnelChart {...args} />
@@ -67,7 +67,7 @@ const DefaultTemplate: Story<FunnelChartProps> = (args: FunnelChartProps) => {
   );
 };
 
-export const Default = DefaultTemplate.bind({});
+export const Default = Template.bind({});
 
 Default.args = {
   data,
@@ -79,7 +79,7 @@ Default.args = {
   },
 };
 
-export const Light = DefaultTemplate.bind({});
+export const Light = Template.bind({});
 
 Light.args = {
   theme: 'Light',

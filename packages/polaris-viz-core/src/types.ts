@@ -76,8 +76,8 @@ export interface ArcTheme {
 }
 
 export interface BarTheme {
-  hasRoundedCorners: boolean;
   zeroValueColor: string;
+  borderRadius: number;
 }
 
 export interface XAxisTheme {

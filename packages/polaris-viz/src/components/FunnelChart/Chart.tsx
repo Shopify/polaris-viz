@@ -9,7 +9,6 @@ import {
   isGradientType,
   LinearGradientWithStops,
   GradientStop,
-  BORDER_RADIUS,
   useTheme,
   getAverageColor,
   changeColorOpacity,
@@ -184,11 +183,6 @@ export function Chart({
                   portalTo={maskRef}
                   index={index}
                   drawableHeight={drawableHeight}
-                  borderRadius={
-                    selectedTheme.bar.hasRoundedCorners
-                      ? BORDER_RADIUS.Top
-                      : BORDER_RADIUS.None
-                  }
                 />
               </g>
             )}

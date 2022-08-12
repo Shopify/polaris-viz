@@ -1,12 +1,12 @@
 import React, {useCallback} from 'react';
 import {animated, useSpring} from '@react-spring/web';
 import {
-  BORDER_RADIUS,
   getRoundedRectPath,
   COLOR_VISION_ACTIVE_OPACITY,
   COLOR_VISION_FADED_OPACITY,
   BARS_TRANSITION_CONFIG,
   DataType,
+  useTheme,
 } from '@shopify/polaris-viz-core';
 import type {Direction} from '@shopify/polaris-viz-core';
 
@@ -22,7 +22,6 @@ export interface BarProps {
   y: number;
   animationDelay?: number;
   animationDirection?: Direction;
-  borderRadius?: string;
   index?: number;
   isActive?: boolean;
   isAnimated?: boolean;
@@ -34,7 +33,6 @@ export interface BarProps {
 export const Bar = React.memo(function Bar({
   animationDelay = 0,
   animationDirection = 'horizontal',
-  borderRadius = BORDER_RADIUS.None,
   color,
   height,
   index,
@@ -47,6 +45,9 @@ export const Bar = React.memo(function Bar({
   ariaLabel,
   areAllNegative,
 }: BarProps) {
+  const selectedTheme = useTheme();
+  const borderRadius = `0 ${selectedTheme.bar.borderRadius} ${selectedTheme.bar.borderRadius} 0`;
+
   const getPath = useCallback(
     (height = 0, width = 0) => {
       return getRoundedRectPath({height, width, borderRadius});

@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  useTheme,
-  ChartState,
-  BORDER_RADIUS,
-  useUniqueId,
-} from '@shopify/polaris-viz-core';
+import {useTheme, ChartState, useUniqueId} from '@shopify/polaris-viz-core';
 
 import type {ChartSkeletonProps} from '../../ChartSkeleton';
 import {ErrorText} from '../ErrorText';
@@ -20,7 +15,7 @@ export function SimpleNormalizedSkeleton({
 
   const {
     grid: {color: gridColor},
-    bar: {hasRoundedCorners},
+    bar: {borderRadius},
     chartContainer: {padding},
   } = useTheme();
 
@@ -30,9 +25,7 @@ export function SimpleNormalizedSkeleton({
     <span
       style={{
         background: gridColor,
-        borderRadius: hasRoundedCorners
-          ? `${BORDER_RADIUS.All}px`
-          : BORDER_RADIUS.None,
+        borderRadius,
       }}
     />
   );

@@ -1,9 +1,9 @@
 import React, {useMemo} from 'react';
 import {animated, useSpring} from '@react-spring/web';
 import {
-  BORDER_RADIUS,
   DataType,
   getRoundedRectPath,
+  useTheme,
 } from '@shopify/polaris-viz-core';
 
 import {ZeroValueLine} from '../../../shared/ZeroValueLine';
@@ -21,7 +21,6 @@ export interface VerticalBarProps {
   zeroPosition: number;
   animationDelay?: number;
   ariaLabel?: string;
-  borderRadius?: string;
   isAnimated?: boolean;
   role?: string;
   areAllNegative?: boolean;
@@ -30,7 +29,6 @@ export interface VerticalBarProps {
 export const VerticalBar = React.memo(function Bar({
   animationDelay = 0,
   ariaLabel,
-  borderRadius = BORDER_RADIUS.None,
   color,
   height,
   index,
@@ -42,6 +40,8 @@ export const VerticalBar = React.memo(function Bar({
   zeroPosition,
   areAllNegative,
 }: VerticalBarProps) {
+  const selectedTheme = useTheme();
+  const borderRadius = selectedTheme.bar.borderRadius;
   const treatAsNegative = rawValue < 0 || rawValue === 0;
   const zeroValue = rawValue === 0;
 
@@ -64,7 +64,7 @@ export const VerticalBar = React.memo(function Bar({
   }, [yPosition, treatAsNegative, x, width]);
 
   const path = getRoundedRectPath({
-    borderRadius,
+    borderRadius: `${borderRadius} ${borderRadius} 0 0`,
     height,
     width,
   });

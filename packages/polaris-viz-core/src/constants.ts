@@ -195,8 +195,8 @@ export const DEFAULT_THEME: Theme = {
     thickness: DONUT_CHART_THICKNESS,
   },
   bar: {
-    hasRoundedCorners: true,
     zeroValueColor: variables.colorGray80,
+    borderRadius: 3,
   },
   grid: {
     showHorizontalLines: true,
@@ -295,8 +295,8 @@ export const LIGHT_THEME: Theme = {
     thickness: 18,
   },
   bar: {
-    hasRoundedCorners: true,
     zeroValueColor: variables.colorGray70,
+    borderRadius: 3,
   },
   grid: {
     showHorizontalLines: true,
