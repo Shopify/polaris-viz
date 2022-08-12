@@ -14,7 +14,11 @@ export default {
 const Template: Story<StackedAreaChartProps> = (
   args: StackedAreaChartProps,
 ) => {
-  return <StackedAreaChart {...args} />;
+  return (
+    <div style={{height: 400}}>
+      <StackedAreaChart {...args} />
+    </div>
+  );
 };
 
 export const WebData = Template.bind({});
@@ -227,4 +231,29 @@ WebData.args = {
       name: 'Returning',
     },
   ],
+};
+
+export const NonAnimatedSmallData: Story<StackedAreaChartProps> = Template.bind(
+  {},
+);
+NonAnimatedSmallData.args = {
+  data: [
+    {
+      name: 'Impressions',
+      data: [
+        {key: '2022-07-10', value: 1},
+        {key: '2022-07-11', value: 0},
+        {key: '2022-07-12', value: 0},
+      ],
+    },
+    {
+      name: 'Conversions',
+      data: [
+        {key: '2022-07-10', value: 0},
+        {key: '2022-07-11', value: 0},
+        {key: '2022-07-12', value: 0},
+      ],
+    },
+  ],
+  isAnimated: false,
 };

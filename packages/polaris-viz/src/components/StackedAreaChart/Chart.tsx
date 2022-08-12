@@ -220,13 +220,13 @@ export function Chart({
     if (
       index != null &&
       animatedCoordinates != null &&
-      activePointIndex != null &&
+      animatedCoordinates[index] != null &&
       animatedCoordinates[index]
     ) {
       return animatedCoordinates[index].to((coord) => coord.x - offset);
     }
 
-    return xScale(index == null ? 0 : index) - offset;
+    return xScale(activePointIndex == null ? 0 : activePointIndex) - offset;
   };
 
   if (xScale == null || drawableWidth == null || yAxisLabelWidth == null) {
