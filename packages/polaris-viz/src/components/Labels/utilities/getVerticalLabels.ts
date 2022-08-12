@@ -30,6 +30,7 @@ export function getVerticalLabels({
     targetWidth: clampedTargetWidth,
     targetHeight: LINE_HEIGHT,
     characterWidths,
+    skipEndWordTruncate: true,
   });
 
   const lines: FormattedLine[][] = [];

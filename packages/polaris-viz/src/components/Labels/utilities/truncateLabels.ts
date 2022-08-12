@@ -11,6 +11,7 @@ interface Props {
   targetWidth: number;
   targetHeight: number;
   characterWidths: CharacterWidths;
+  skipEndWordTruncate?: boolean;
 }
 
 export function truncateLabels({
@@ -18,6 +19,7 @@ export function truncateLabels({
   targetWidth,
   targetHeight,
   characterWidths,
+  skipEndWordTruncate = false,
 }: Props) {
   const truncatedLabels = [...labels];
 
@@ -29,26 +31,30 @@ export function truncateLabels({
       .split(/(\s+)/)
       .filter((word) => word.trim().length > 0);
 
-    words.forEach((word) => {
-      const wordWidth = estimateStringWidth(word, characterWidths);
+    if (skipEndWordTruncate) {
+      truncatedLabels[index].truncatedWords.push(truncatedLabels[index].text);
+    } else {
+      words.forEach((word) => {
+        const wordWidth = estimateStringWidth(word, characterWidths);
 
-      truncatedLabels[index].words.push({
-        word,
-        wordWidth,
+        truncatedLabels[index].words.push({
+          word,
+          wordWidth,
+        });
+
+        if (wordWidth > targetWidth) {
+          truncatedLabels[index].truncatedWords.push(
+            endWordTruncate({
+              word,
+              targetWidth,
+              characterWidths,
+            }),
+          );
+        } else {
+          truncatedLabels[index].truncatedWords.push(word);
+        }
       });
-
-      if (wordWidth > targetWidth) {
-        truncatedLabels[index].truncatedWords.push(
-          endWordTruncate({
-            word,
-            targetWidth,
-            characterWidths,
-          }),
-        );
-      } else {
-        truncatedLabels[index].truncatedWords.push(word);
-      }
-    });
+    }
 
     truncatedLabels[index].truncatedName =
       truncatedLabels[index].truncatedWords.join(' ');
