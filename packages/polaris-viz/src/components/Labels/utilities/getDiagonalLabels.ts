@@ -36,6 +36,7 @@ export function getDiagonalLabels({
     targetWidth: clampedTargetWidth,
     targetHeight,
     characterWidths,
+    skipEndWordTruncate: true,
   });
 
   const lines: FormattedLine[][] = [];
