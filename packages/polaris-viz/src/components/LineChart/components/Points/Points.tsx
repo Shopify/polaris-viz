@@ -13,7 +13,7 @@ import {
 } from '@shopify/polaris-viz-core';
 import type {LineChartDataSeriesWithDefaults} from '@shopify/polaris-viz-core';
 
-import {useTheme, useWatchColorVisionEvents} from '../../../../hooks';
+import {useWatchColorVisionEvents} from '../../../../hooks';
 import {Point} from '../../../Point';
 import type {AnimatedCoordinate} from '../../../../types';
 
@@ -34,7 +34,6 @@ interface PointsProps {
           },
         number
       >;
-  theme: string;
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
 }
@@ -46,14 +45,12 @@ export function Points({
   getXPosition,
   gradientId,
   longestSeriesIndex,
-  theme,
   tooltipId,
   xScale,
   yScale,
 }: PointsProps) {
   const {shouldAnimate} = useChartContext();
 
-  const selectedTheme = useTheme(theme);
   const [activeLineIndex, setActiveLineIndex] = useState(-1);
 
   useWatchColorVisionEvents({
@@ -100,7 +97,6 @@ export function Points({
             {shouldAnimate ? (
               <Point
                 color={pointColor}
-                stroke={selectedTheme.line.pointStroke}
                 cx={getXPosition({isCrosshair: false})}
                 cy={animatedYPosition}
                 active={activeIndex != null}
@@ -128,7 +124,6 @@ export function Points({
                 >
                   <Point
                     dataType={DataType.Point}
-                    stroke={selectedTheme.line.pointStroke}
                     color={pointColor}
                     cx={xScale(dataIndex)}
                     cy={yScale(value)}

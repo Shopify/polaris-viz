@@ -98,7 +98,6 @@ export function PointsAndCrosshair({
           getXPosition={getXPosition}
           gradientId={gradientId.current}
           longestSeriesIndex={longestSeriesIndex}
-          theme={theme}
           tooltipId={tooltipId}
           xScale={xScale}
           yScale={yScale}
