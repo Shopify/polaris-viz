@@ -8,3 +8,8 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+@mixin print-color {
+  -webkit-print-color-adjust: exact; /* stylelint-disable-line property-no-vendor-prefix */
+  print-color-adjust: exact; /* stylelint-disable-line property-no-unknown */
+}
