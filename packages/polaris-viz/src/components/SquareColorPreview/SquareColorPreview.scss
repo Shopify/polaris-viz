@@ -1,5 +1,8 @@
+@import '../../styles/common';
+
 .ColorPreview {
   border-radius: 2px;
   display: block;
   flex: none;
+  @include print-color;
 }
