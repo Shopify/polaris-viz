@@ -1,10 +1,10 @@
 import React, {useMemo, useState} from 'react';
-import {animated, SpringValue} from '@react-spring/web';
 import {
   DataType,
   getColorVisionEventAttrs,
   COLOR_VISION_GROUP_ITEM,
   getColorVisionStylesForActiveIndex,
+  LOAD_ANIMATION_DURATION,
 } from '@shopify/polaris-viz-core';
 import type {ScaleLinear} from 'd3-scale';
 import type {
@@ -26,7 +26,6 @@ import {HorizontalBars} from '../HorizontalBars';
 import style from './HorizontalGroup.scss';
 
 export interface HorizontalGroupProps {
-  animationDelay: number;
   areAllNegative: boolean;
   ariaLabel: string;
   barHeight: number;
@@ -38,9 +37,7 @@ export interface HorizontalGroupProps {
   isSimple: boolean;
   isStacked: boolean;
   name: string;
-  opacity: SpringValue<number>;
   stackedValues: FormattedStackedSeries[];
-  transform: SpringValue<string>;
   xAxisOptions: Required<XAxisOptions>;
   xScale: ScaleLinear<number, number>;
   yAxisOptions: Required<YAxisOptions>;
@@ -48,7 +45,6 @@ export interface HorizontalGroupProps {
 }
 
 export function HorizontalGroup({
-  animationDelay,
   areAllNegative,
   ariaLabel,
   barHeight,
@@ -60,9 +56,7 @@ export function HorizontalGroup({
   isSimple,
   isStacked,
   name,
-  opacity,
   stackedValues,
-  transform,
   xAxisOptions,
   yAxisOptions,
   xScale,
@@ -91,73 +85,70 @@ export function HorizontalGroup({
     return HORIZONTAL_GROUP_LABEL_HEIGHT + barPlusSpaceHeight * data.length;
   }, [barHeight, data.length, isStacked]);
 
+  const animationDelay =
+    index * (LOAD_ANIMATION_DURATION / data[0].data.length);
+
   return (
-    <animated.g
-      key={`group-${name}`}
-      style={{
-        opacity,
-        transform,
-      }}
+    <g
+      style={getColorVisionStylesForActiveIndex({
+        activeIndex: activeGroupIndex,
+        index,
+      })}
+      {...getColorVisionEventAttrs({
+        type: COLOR_VISION_GROUP_ITEM,
+        index,
+      })}
+      data-type={DataType.BarGroup}
+      data-index={index}
+      aria-hidden="false"
+      aria-label={ariaLabel}
+      role="list"
+      className={style.Group}
     >
-      <g
-        style={getColorVisionStylesForActiveIndex({
-          activeIndex: activeGroupIndex,
-          index,
-        })}
-        {...getColorVisionEventAttrs({
-          type: COLOR_VISION_GROUP_ITEM,
-          index,
-        })}
-        data-type={DataType.BarGroup}
-        data-index={index}
-        aria-hidden="false"
-        aria-label={ariaLabel}
-        role="list"
-        className={style.Group}
-      >
-        <rect
-          fill="transparent"
-          height={groupHeight}
-          width={containerWidth}
-          y={-(groupHeight - rowHeight) / 2}
+      <rect
+        fill="transparent"
+        height={groupHeight}
+        width={containerWidth}
+        y={-(groupHeight - rowHeight) / 2}
+      />
+
+      <GroupLabel
+        areAllNegative={areAllNegative}
+        containerWidth={containerWidth}
+        label={yAxisOptions.labelFormatter(name)}
+        zeroPosition={zeroPosition}
+      />
+
+      {isStacked ? (
+        <HorizontalStackedBars
+          activeGroupIndex={activeGroupIndex}
+          animationDelay={animationDelay}
+          ariaLabel={ariaLabel}
+          barHeight={barHeight}
+          dataKeys={dataKeys}
+          groupIndex={index}
+          id={id}
+          name={name}
+          stackedValues={stackedValues}
+          xScale={xScale}
         />
-        <GroupLabel
-          areAllNegative={areAllNegative}
-          containerWidth={containerWidth}
-          label={yAxisOptions.labelFormatter(name)}
+      ) : (
+        <HorizontalBars
+          animationDelay={animationDelay}
+          activeGroupIndex={activeGroupIndex}
+          barHeight={barHeight}
+          data={data}
+          groupIndex={index}
+          id={id}
+          isSimple={isSimple}
+          labelFormatter={xAxisOptions.labelFormatter}
+          name={name}
+          xScale={xScale}
           zeroPosition={zeroPosition}
+          containerWidth={containerWidth}
+          areAllNegative={areAllNegative}
         />
-        {isStacked ? (
-          <HorizontalStackedBars
-            activeGroupIndex={activeGroupIndex}
-            animationDelay={animationDelay}
-            ariaLabel={ariaLabel}
-            barHeight={barHeight}
-            dataKeys={dataKeys}
-            groupIndex={index}
-            id={id}
-            name={name}
-            stackedValues={stackedValues}
-            xScale={xScale}
-          />
-        ) : (
-          <HorizontalBars
-            activeGroupIndex={activeGroupIndex}
-            animationDelay={animationDelay}
-            barHeight={barHeight}
-            data={data}
-            groupIndex={index}
-            id={id}
-            isSimple={isSimple}
-            labelFormatter={xAxisOptions.labelFormatter}
-            name={name}
-            xScale={xScale}
-            zeroPosition={zeroPosition}
-            containerWidth={containerWidth}
-            areAllNegative={areAllNegative}
-          />
-        )}
-      </g>
-    </animated.g>
+      )}
+    </g>
   );
 }

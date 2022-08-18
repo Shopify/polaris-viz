@@ -16,11 +16,12 @@ import {
   HORIZONTAL_SPACE_BETWEEN_SINGLE,
 } from '../../../constants';
 import {useTheme, useWatchColorVisionEvents} from '../../../hooks';
-import {Bar} from '../Bar';
 import {getGradientDefId} from '../GradientDefs';
 
-import {Label} from './components';
+import {Label, Bar} from './components';
 import styles from './HorizontalBars.scss';
+
+const SERIES_DELAY = 150;
 
 export interface HorizontalBarsProps {
   activeGroupIndex: number;
@@ -40,7 +41,7 @@ export interface HorizontalBarsProps {
 
 export function HorizontalBars({
   activeGroupIndex,
-  animationDelay,
+  animationDelay = 0,
   barHeight,
   data,
   groupIndex,
@@ -76,6 +77,9 @@ export function HorizontalBars({
         if (data[seriesIndex].data[groupIndex] == null) {
           return;
         }
+
+        const seriesAnimationDelay =
+          animationDelay + SERIES_DELAY * seriesIndex;
 
         const {value} = data[seriesIndex].data[groupIndex];
 
@@ -113,7 +117,8 @@ export function HorizontalBars({
         return (
           <React.Fragment key={`series-${seriesIndex}-${id}-${name}`}>
             <Bar
-              animationDelay={animationDelay}
+              animationDelay={seriesAnimationDelay}
+              areAllNegative={areAllNegative}
               color={`url(#${getGradientDefId(theme, seriesIndex, id)})`}
               height={barHeight}
               index={groupIndex}
@@ -122,11 +127,10 @@ export function HorizontalBars({
               width={width}
               x={0}
               y={y}
-              areAllNegative={areAllNegative}
             />
             {isSimple && (
               <Label
-                animationDelay={animationDelay}
+                animationDelay={seriesAnimationDelay}
                 barHeight={barHeight}
                 color={
                   data[seriesIndex].isComparison
