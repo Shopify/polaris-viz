@@ -1,62 +1,32 @@
-import React from 'react';
-import type {Story, Meta} from '@storybook/react';
+import type {Story} from '@storybook/react';
+import {COLOR_VARIABLES} from '@shopify/polaris-viz-core';
 
-import {SquareColorPreview, SquareColorPreviewProps} from '../../../components';
-import {colorTeal} from '../../../constants';
+export {META as default} from './meta';
 
-export default {
-  title: 'Shared/Subcomponents/SquareColorPreview',
-  component: SquareColorPreview,
-  argTypes: {
-    color: {
-      description:
-        'The CSS color or gradient array color to be displayed in the square.',
-    },
-  },
-  parameters: {
-    controls: {
-      sort: 'requiredFirst',
-      expanded: true,
-    },
-    docs: {
-      description: {
-        component:
-          'Used to connect chart colors and gradients to information in tooltips and legends.',
-      },
-    },
-  },
-} as Meta;
+import type {SquareColorPreviewProps} from '../../../components';
 
-const Template: Story<SquareColorPreviewProps> = (
-  args: SquareColorPreviewProps,
-) => {
-  return <SquareColorPreview {...args} />;
-};
+import {Template} from './data';
 
 export const Solid: Story<SquareColorPreviewProps> = Template.bind({});
 
 Solid.args = {
-  color: colorTeal,
+  color: COLOR_VARIABLES.colorTeal80,
 };
-
-const purple = '#5052b3';
-const negativePurple = '#39337f';
-const green = '#1bbe9e';
 
 export const Gradient: Story<SquareColorPreviewProps> = Template.bind({});
 
 Gradient.args = {
   color: [
     {
-      color: negativePurple,
+      color: '#39337f',
       offset: 0,
     },
     {
-      color: purple,
+      color: '#5052b3',
       offset: 50,
     },
     {
-      color: green,
+      color: '#1bbe9e',
       offset: 100,
     },
   ],

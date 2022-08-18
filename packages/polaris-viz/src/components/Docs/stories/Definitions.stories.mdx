@@ -1,9 +1,8 @@
-import {Meta, Description} from '@storybook/addon-docs/blocks';
+import {Meta, Description} from '@storybook/addon-docs';
 
 import Development from '!raw-loader!../../../../../../DEFINITIONS.md';
 
 import {Title} from './components';
-
 
 <Meta
   title="Shared/Design System/Definitions"
@@ -13,8 +12,6 @@ import {Title} from './components';
   }}
 />
 
-<Title type='h1'>Definitions</Title>
+<Title type="h1">Definitions</Title>
 
 <Description markdown={Development} />
-
-

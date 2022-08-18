@@ -1,65 +1,32 @@
-import React from 'react';
-import type {Story, Meta} from '@storybook/react';
+import {COLOR_VARIABLES} from '@shopify/polaris-viz-core';
+import type {Story} from '@storybook/react';
 
-import {LinePreview, LinePreviewProps} from '../../../components';
-import {colorTeal} from '../../../constants';
+export {META as default} from './meta';
 
-export default {
-  title: 'Shared/Subcomponents/LinePreview',
-  component: LinePreview,
-  argTypes: {
-    color: {
-      description:
-        'The CSS color or gradient array color to be displayed in the line.',
-    },
-    lineStyle: {
-      options: ['solid', 'dashed', 'dotted'],
-      description: 'Set the display style of the line.',
-      defaultValue: 'solid',
-    },
-  },
-  parameters: {
-    controls: {
-      sort: 'requiredFirst',
-      expanded: true,
-    },
-    docs: {
-      description: {
-        component:
-          'Used to connect chart colors and gradients to information in tooltips and legends.',
-      },
-    },
-  },
-} as Meta;
+import type {LinePreviewProps} from '../../../components';
 
-const Template: Story<LinePreviewProps> = (args: LinePreviewProps) => {
-  return <LinePreview {...args} />;
-};
+import {Template} from './data';
 
 export const Solid: Story<LinePreviewProps> = Template.bind({});
 
 Solid.args = {
-  color: colorTeal,
+  color: COLOR_VARIABLES.colorTeal80,
 };
-
-const purple = '#5052b3';
-const negativePurple = '#39337f';
-const green = '#1bbe9e';
 
 export const Gradient: Story<LinePreviewProps> = Template.bind({});
 
 Gradient.args = {
   color: [
     {
-      color: negativePurple,
+      color: '#39337f',
       offset: 0,
     },
     {
-      color: purple,
+      color: '#5052b3',
       offset: 50,
     },
     {
-      color: green,
+      color: '#1bbe9e',
       offset: 100,
     },
   ],

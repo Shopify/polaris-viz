@@ -1,4 +1,4 @@
-import {Meta} from '@storybook/addon-docs/blocks';
+import {Meta} from '@storybook/addon-docs';
 import LinkTo from '@storybook/addon-links/react';
 
 import {PolarisVizProvider} from '@shopify/polaris-viz';
@@ -36,8 +36,8 @@ import {ComponentContainer, Title, SampleBarChart} from './components';
     title="Default Theme"
     description={
       <>
-        If nothing is passed to the chart's <code>theme</code> prop, it
-        will use the <code>Default</code> theme
+        If nothing is passed to the chart's <code>theme</code> prop, it will use
+        the <code>Default</code> theme
       </>
     }
     theme="Default"
@@ -60,8 +60,9 @@ import {ComponentContainer, Title, SampleBarChart} from './components';
     title="Print Theme"
     description={
       <>
-        Gets automatically applied to all charts when printing. Based on{' '}
-        the <code>Light</code> theme but with reduced gradients to optimize for printing
+        Gets automatically applied to all charts when printing. Based on the{' '}
+        <code>Light</code> theme but with reduced gradients to optimize for
+        printing
       </>
     }
     theme="Light"
@@ -72,7 +73,7 @@ import {ComponentContainer, Title, SampleBarChart} from './components';
 
 <p>
   You can read more about customizing or creating your own themes in 👉
-  <LinkTo kind='Shared/Themes/Customizing'>Theme customization page</LinkTo>.
+  <LinkTo kind="Shared/Themes/Customizing">Theme customization page</LinkTo>.
 </p>
 
 <Title type="h2">🖨 Print Support</Title>

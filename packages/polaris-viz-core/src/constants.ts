@@ -122,10 +122,7 @@ export const HORIZONTAL_BAR_GROUP_DELAY = 200;
 export const MASK_HIGHLIGHT_COLOR = variables.colorWhite;
 export const MASK_SUBDUE_COLOR = '#434343';
 
-export const colorWhite = variables.colorWhite;
-export const colorBlack = variables.colorBlack;
-export const colorPurpleDark = variables.colorPurpleDark;
-export const colorTeal = variables.colorTeal;
+export const COLOR_VARIABLES = variables;
 
 export const DEFAULT_THEME_NAME = 'Default';
 

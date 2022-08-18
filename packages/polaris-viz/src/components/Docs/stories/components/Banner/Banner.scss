@@ -1,8 +1,11 @@
+@import '../../../../../styles/common';
+
 .Banner {
   padding: 8px 15px;
   border-radius: 5px;
   box-shadow: -2px 2px 9px 0 rgba(0, 0, 0, 0.3);
   line-height: 1.5;
+  font-family: $font-stack-base;
 
   &::before {
     content: '⚠️';

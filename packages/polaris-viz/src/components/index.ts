@@ -4,6 +4,7 @@ export {HorizontalGridLines} from './HorizontalGridLines';
 export {SparkLineChart} from './SparkLineChart';
 export type {SparkLineChartProps} from './SparkLineChart';
 export {SparkBarChart} from './SparkBarChart';
+export type {SparkBarChartProps} from './SparkBarChart';
 export {LineChart} from './LineChart';
 export type {LineChartProps} from './LineChart';
 export {SimpleNormalizedChart} from './SimpleNormalizedChart';
