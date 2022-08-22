@@ -30,8 +30,6 @@ Both libraries use the same [Data Structure](https://polaris-viz.shopify.com/?pa
 - [📱 Getting Started with Polaris Viz **Native**](https://polaris-viz.shopify.com/?path=/docs/polaris-viz-native-getting-started--page)
 
 
-
-
 <br/>
 <hr/>
 <br/>
