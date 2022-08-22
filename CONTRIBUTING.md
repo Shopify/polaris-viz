@@ -7,7 +7,7 @@
 
 ## Code of conduct
 
-We expect all participants to read our [code of conduct](https://polaris-viz.shopify.io/?path=/docs/contributing-code-of-conduct--page) to understand which actions are and aren’t tolerated.
+We expect all participants to read our [code of conduct](https://polaris-viz.shopify.com/?path=/docs/contributing-code-of-conduct--page) to understand which actions are and aren’t tolerated.
 
 <br/>
 <hr/>
@@ -16,7 +16,7 @@ We expect all participants to read our [code of conduct](https://polaris-viz.sho
 ## Development
 <!-- TODO UPDATE LINK -->
 
-👩🏾‍💻 For local development instructions, head to the [Contributing/Local Development](http://polaris-viz.shopify.io/?path=/story/contributing-local-development--page) section
+👩🏾‍💻 For local development instructions, head to the [Contributing/Local Development](http://polaris-viz.shopify.com/?path=/story/contributing-local-development--page) section
 
 <br/>
 <hr/>

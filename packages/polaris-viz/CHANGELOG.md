@@ -10,6 +10,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Fixed
 
 - Fixed horizontal bar charts not animating their bars in on mount.
+- Fixed links from `polaris-viz.shopify.io` to `polaris-viz.shopify.com` in documentation.
 
 ## [7.0.0] - 2022-08-12
 
