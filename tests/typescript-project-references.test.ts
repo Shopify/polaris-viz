@@ -4,7 +4,6 @@ import internal from 'stream';
 import glob from 'glob';
 import {readJSONSync} from 'fs-extra';
 
-import {shouldSkipShopifyPrefix} from './skip-shopify-prefix';
 import {EXCLUDED_PACKAGES} from './utilities';
 
 const ROOT = resolve(__dirname, '..');
@@ -76,11 +75,6 @@ describe('typescript project references', () => {
 });
 
 function prefixPackageName(packageName: string) {
-  const skipPrefix = shouldSkipShopifyPrefix(packageName);
-  if (skipPrefix) {
-    return packageName;
-  }
-
   return `@shopify/${packageName}`;
 }
 
