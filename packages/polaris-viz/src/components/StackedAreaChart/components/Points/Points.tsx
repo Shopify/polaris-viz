@@ -16,7 +16,6 @@ import type {ScaleLinear} from 'd3-scale';
 import {Point} from '../../../';
 import type {AnimatedCoordinate, GetXPosition} from '../../../../types';
 import {useWatchColorVisionEvents} from '../../../../hooks';
-import {colorWhite} from '../../../../constants';
 
 interface PointsProps {
   activePointIndex: number | null;
@@ -118,7 +117,7 @@ export function Points({
           <Point
             dataType={DataType.Point}
             key={`point-${dataIndex}-${x}}`}
-            color={colorWhite}
+            color="white"
             cx={xScale(dataIndex)}
             cy={yScale(y)}
             active

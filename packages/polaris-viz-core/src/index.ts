@@ -51,10 +51,6 @@ export {
   STROKE_WIDTH,
   TICK_SIZE,
   XMLNS,
-  colorBlack,
-  colorPurpleDark,
-  colorTeal,
-  colorWhite,
   ANIMATION_MARGIN,
   LABEL_AREA_TOP_SPACING,
   HORIZONTAL_LABEL_MIN_WIDTH,
@@ -80,6 +76,7 @@ export {
   LEGENDS_TOP_MARGIN,
   LINE_SERIES_POINT_RADIUS,
   AREAS_LOAD_ANIMATION_CONFIG,
+  COLOR_VARIABLES,
 } from './constants';
 export {
   clamp,
