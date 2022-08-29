@@ -110,7 +110,7 @@ export function BarChart(props: BarChartProps) {
         type={InternalChartType.Bar}
       >
         {state !== ChartState.Success ? (
-          <ChartSkeleton state={state} errorText={errorText} />
+          <ChartSkeleton state={state} errorText={errorText} theme={theme} />
         ) : (
           ChartByDirection
         )}

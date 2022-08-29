@@ -53,7 +53,12 @@ export function FunnelChart(props: FunnelChartProps) {
   return (
     <ChartContainer data={data} isAnimated={isAnimated} theme={theme}>
       {state !== ChartState.Success ? (
-        <ChartSkeleton type="Funnel" state={state} errorText={errorText} />
+        <ChartSkeleton
+          type="Funnel"
+          state={state}
+          errorText={errorText}
+          theme={theme}
+        />
       ) : (
         <Chart
           data={seriesWithDefaults}

@@ -83,7 +83,7 @@ export function LineChart(props: LineChartProps) {
         type={InternalChartType.Line}
       >
         {state !== ChartState.Success ? (
-          <ChartSkeleton state={state} errorText={errorText} />
+          <ChartSkeleton state={state} errorText={errorText} theme={theme} />
         ) : (
           <Chart
             annotationsLookupTable={annotationsLookupTable}

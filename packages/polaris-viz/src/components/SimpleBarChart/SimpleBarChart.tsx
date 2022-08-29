@@ -41,7 +41,12 @@ export function SimpleBarChart(props: SimpleBarChartProps) {
   return (
     <ChartContainer data={data} theme={theme} isAnimated={isAnimated}>
       {state !== ChartState.Success ? (
-        <ChartSkeleton type="SimpleBar" state={state} errorText={errorText} />
+        <ChartSkeleton
+          type="SimpleBar"
+          state={state}
+          errorText={errorText}
+          theme={theme}
+        />
       ) : (
         <Chart
           data={data}
