@@ -1,5 +1,5 @@
 import type {DataGroup, DataSeries} from '@shopify/polaris-viz-core';
-import {isDataGroupArray} from '@shopify/polaris-viz-core/src/utilities/isDataGroup';
+import {isDataGroupArray} from '@shopify/polaris-viz-core';
 
 export function checkForMismatchedData(data: DataSeries[] | DataGroup[]) {
   if (data == null || data.length === 0) {
