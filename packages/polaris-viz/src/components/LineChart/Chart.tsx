@@ -154,9 +154,12 @@ export function Chart({
     yAxisWidth: yAxisLabelWidth,
   });
 
+  const hideXAxis = xAxisOptions.hide || selectedTheme.xAxis.hide;
+
   const {xAxisDetails, xScale, labels} = useLinearLabelsAndDimensions({
     data,
     drawableWidth,
+    hideXAxis,
     labels: formattedLabels,
     longestSeriesLength,
   });
@@ -224,8 +227,6 @@ export function Chart({
       };
     }
   }
-
-  const hideXAxis = xAxisOptions.hide || selectedTheme.xAxis.hide;
 
   function moveCrosshair(index: number | null) {
     setActiveIndex(0);

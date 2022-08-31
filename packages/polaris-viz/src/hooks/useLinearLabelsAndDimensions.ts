@@ -15,6 +15,7 @@ import {useReducedLabelIndexes} from './useReducedLabelIndexes';
 interface Props {
   data: DataSeries[];
   drawableWidth: number;
+  hideXAxis: boolean;
   labels: string[];
   longestSeriesLength: number;
 }
@@ -22,6 +23,7 @@ interface Props {
 export function useLinearLabelsAndDimensions({
   data,
   drawableWidth: initialDrawableWidth,
+  hideXAxis,
   labels,
   longestSeriesLength,
 }: Props) {
@@ -69,7 +71,7 @@ export function useLinearLabelsAndDimensions({
     reducedLabelIndexes.length > 0 ? reducedLabelIndexes.length : labels.length;
 
   const labelWidth = useMemo(() => {
-    if (visibleLabelsCount === 0) {
+    if (visibleLabelsCount === 0 || hideXAxis) {
       return 0;
     }
 
@@ -81,7 +83,7 @@ export function useLinearLabelsAndDimensions({
       min: 0,
       max: initialDrawableWidth,
     });
-  }, [initialDrawableWidth, visibleLabelsCount, longestLabelWidth]);
+  }, [initialDrawableWidth, visibleLabelsCount, hideXAxis, longestLabelWidth]);
 
   const drawableWidth = initialDrawableWidth - labelWidth;
 
