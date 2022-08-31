@@ -7,7 +7,6 @@ const ARROW_WIDTH = 11;
 const ARROW_HEIGHT = 9;
 
 export interface FunnelChartXAxisArrowsProps {
-  chartHeight: number;
   onHeightChange: Dispatch<SetStateAction<number>>;
   x: number;
   index: number;
@@ -17,7 +16,6 @@ export interface FunnelChartXAxisArrowsProps {
 }
 
 export function FunnelChartXAxisArrows({
-  chartHeight,
   onHeightChange,
   x,
   index,
@@ -30,7 +28,6 @@ export function FunnelChartXAxisArrows({
     labels: ['→'],
     targetWidth: labelWidth,
     onHeightChange,
-    chartHeight,
   });
   const firstLine = lines[0];
   const firstLabel = firstLine[0];

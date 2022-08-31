@@ -37,7 +37,6 @@ const stories = storiesOf(
               <XAxis
                 allowLineWrap={allowLineWrap}
                 ariaHidden={false}
-                chartHeight={CHART_HEIGHT}
                 labels={LABELS}
                 labelWidth={labelWidth}
                 onHeightChange={() => {}}
@@ -66,7 +65,6 @@ stories.add(`reducedLabelIndexes`, () => {
             <XAxis
               allowLineWrap={true}
               ariaHidden={false}
-              chartHeight={CHART_HEIGHT}
               labels={LABELS}
               labelWidth={labelWidth}
               onHeightChange={() => {}}

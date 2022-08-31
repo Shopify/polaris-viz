@@ -10,7 +10,6 @@ export interface FunnelChartXAxisLabelsProps {
   allowLineWrap: boolean;
   chartX: number;
   chartY: number;
-  chartHeight: number;
   labels: string[];
   labelWidth: number;
   onHeightChange: Dispatch<SetStateAction<number>>;
@@ -20,7 +19,6 @@ export interface FunnelChartXAxisLabelsProps {
 
 export function FunnelChartXAxisLabels({
   allowLineWrap,
-  chartHeight,
   chartX,
   chartY,
   labels,
@@ -34,7 +32,6 @@ export function FunnelChartXAxisLabels({
     labels,
     targetWidth: labelWidth,
     onHeightChange,
-    chartHeight,
   });
 
   return (
@@ -50,7 +47,6 @@ export function FunnelChartXAxisLabels({
           <g key={`label-group-${index}`}>
             {index === 0 ? null : (
               <FunnelChartXAxisArrows
-                chartHeight={chartHeight}
                 onHeightChange={onHeightChange}
                 x={x}
                 index={index}

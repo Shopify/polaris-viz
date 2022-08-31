@@ -486,3 +486,60 @@ export const JumpyLabels = () => {
 };
 
 JumpyLabels.args = {};
+
+export const JumpyLabelsFromNotebooks = () => {
+  return (
+    <BarChart
+      data={[
+        {
+          name: 'Total Sales',
+          data: [
+            {
+              key: 'Persistent Cart + Custom Checkout App',
+              value: 1899932.26,
+            },
+            {
+              key: 'Feedonomics-Walmart',
+              value: 183214.61,
+            },
+            {
+              key: 'Feedonomics-Target',
+              value: 84626.41,
+            },
+            {
+              key: 'Online Store',
+              value: 17653.79,
+            },
+            {
+              key: 'Draft Orders',
+              value: 16524.72,
+            },
+            {
+              key: 'Feedonomics-Amazon',
+              value: 8854.52,
+            },
+            {
+              key: 'Gorgias ‑ Live Chat & Helpdesk',
+              value: 2195.97,
+            },
+            {
+              key: 'Wholesale',
+              value: 389.8,
+            },
+            {
+              key: 'Return & Exchange Portal',
+              value: 0,
+            },
+            {
+              key: 'Feedonomics',
+              value: -185.69,
+            },
+          ],
+        },
+      ]}
+      showLegend={false}
+    />
+  );
+};
+
+JumpyLabelsFromNotebooks.args = {};
