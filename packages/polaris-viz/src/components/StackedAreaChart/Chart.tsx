@@ -157,6 +157,7 @@ export function Chart({
   const {xAxisDetails, xScale, labels} = useLinearLabelsAndDimensions({
     data,
     drawableWidth,
+    hideXAxis,
     labels: formattedLabels,
     longestSeriesLength,
   });
