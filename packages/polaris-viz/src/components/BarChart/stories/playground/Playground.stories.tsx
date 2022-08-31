@@ -543,3 +543,15 @@ export const JumpyLabelsFromNotebooks = () => {
 };
 
 JumpyLabelsFromNotebooks.args = {};
+
+export const BadData: Story<BarChartProps> = (args: BarChartProps) => {
+  return (
+    <div style={{width: 600, height: 400}}>
+      <BarChart {...args} />
+    </div>
+  );
+};
+
+BadData.args = {
+  data: [{name: 'Empty', data: []}],
+};

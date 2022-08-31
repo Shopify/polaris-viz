@@ -289,15 +289,17 @@ export function Chart({
         )}
       </svg>
 
-      <TooltipWrapper
-        bandwidth={xScale.bandwidth()}
-        chartBounds={chartBounds}
-        focusElementDataType={DataType.BarGroup}
-        getMarkup={getTooltipMarkup}
-        getPosition={getTooltipPosition}
-        margin={{...ChartMargin, Top: chartYPosition}}
-        parentRef={svgRef}
-      />
+      {sortedData.length > 0 && (
+        <TooltipWrapper
+          bandwidth={xScale.bandwidth()}
+          chartBounds={chartBounds}
+          focusElementDataType={DataType.BarGroup}
+          getMarkup={getTooltipMarkup}
+          getPosition={getTooltipPosition}
+          margin={{...ChartMargin, Top: chartYPosition}}
+          parentRef={svgRef}
+        />
+      )}
 
       {showLegend && (
         <LegendContainer

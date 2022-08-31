@@ -73,6 +73,7 @@ export const ChartContainer = (props: Props) => {
         id={getChartId(value.id)}
       >
         <ChartDimensions
+          data={props.data}
           onIsPrintingChange={setIsPrinting}
           skeletonType={props.skeletonType}
           sparkChart={props.sparkChart}

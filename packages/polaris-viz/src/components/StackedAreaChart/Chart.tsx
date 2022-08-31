@@ -380,17 +380,19 @@ export function Chart({
         )}
       </svg>
 
-      <TooltipWrapper
-        alwaysUpdatePosition
-        chartBounds={chartBounds}
-        focusElementDataType={DataType.Point}
-        getMarkup={getTooltipMarkup}
-        getPosition={getTooltipPosition}
-        id={tooltipId}
-        margin={ChartMargin}
-        onIndexChange={(index) => setActivePointIndex(index)}
-        parentRef={svgRef}
-      />
+      {longestSeriesLength !== -1 && (
+        <TooltipWrapper
+          alwaysUpdatePosition
+          chartBounds={chartBounds}
+          focusElementDataType={DataType.Point}
+          getMarkup={getTooltipMarkup}
+          getPosition={getTooltipPosition}
+          id={tooltipId}
+          margin={ChartMargin}
+          onIndexChange={(index) => setActivePointIndex(index)}
+          parentRef={svgRef}
+        />
+      )}
 
       {showLegend && (
         <LegendContainer

@@ -256,3 +256,17 @@ NonAnimatedSmallData.args = {
   ],
   isAnimated: false,
 };
+
+export const BadData: Story<StackedAreaChartProps> = (
+  args: StackedAreaChartProps,
+) => {
+  return (
+    <div style={{width: 600, height: 400}}>
+      <StackedAreaChart {...args} />
+    </div>
+  );
+};
+
+BadData.args = {
+  data: [{name: 'Empty', data: []}],
+};

@@ -17,7 +17,10 @@ import {Point} from '../../../components/Point';
 import {mountWithProvider, triggerSVGMouseMove} from '../../../test-utilities';
 import {HorizontalGridLines} from '../../../components/HorizontalGridLines';
 import {mockDefaultTheme} from '../../../test-utilities/mountWithProvider';
-import {TooltipAnimatedContainer} from '../../../components/TooltipWrapper';
+import {
+  TooltipAnimatedContainer,
+  TooltipWrapper,
+} from '../../../components/TooltipWrapper';
 import {Chart, ChartProps} from '../Chart';
 import {YAxis} from '../../YAxis';
 import {Annotations, YAxisAnnotations} from '../../Annotations';
@@ -475,6 +478,22 @@ describe('<Chart />', () => {
 
       expect(chart).toContainReactComponent(YAxisAnnotations);
       expect(chart).toContainReactComponent(Annotations);
+    });
+  });
+
+  describe('<TooltipWrapper />', () => {
+    it('does not render <TooltipWrapper /> data series is empty', () => {
+      const chart = mount(
+        <Chart {...MOCK_PROPS} data={[{name: 'Empty', color: [], data: []}]} />,
+      );
+
+      expect(chart).not.toContainReactComponent(TooltipWrapper);
+    });
+
+    it('renders <TooltipWrapper /> data series has data', () => {
+      const chart = mount(<Chart {...MOCK_PROPS} />);
+
+      expect(chart).toContainReactComponent(TooltipWrapper);
     });
   });
 });
