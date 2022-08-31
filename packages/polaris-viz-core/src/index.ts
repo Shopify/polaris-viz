@@ -105,6 +105,7 @@ export {
   roundToDecimals,
   isLargeDataSet,
   ColorScale,
+  isDataGroupArray,
 } from './utilities';
 export {
   useSparkBar,

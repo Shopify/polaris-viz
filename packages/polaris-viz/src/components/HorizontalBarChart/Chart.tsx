@@ -290,16 +290,18 @@ export function Chart({
         )}
       </svg>
 
-      <TooltipWrapper
-        bandwidth={groupBarsAreaHeight}
-        chartBounds={chartBounds}
-        focusElementDataType={DataType.BarGroup}
-        getAlteredPosition={getAlteredHorizontalBarPosition}
-        getMarkup={getTooltipMarkup}
-        getPosition={getTooltipPosition}
-        margin={ChartMargin}
-        parentRef={svgRef}
-      />
+      {highestValueForSeries.length !== 0 && (
+        <TooltipWrapper
+          bandwidth={groupBarsAreaHeight}
+          chartBounds={chartBounds}
+          focusElementDataType={DataType.BarGroup}
+          getAlteredPosition={getAlteredHorizontalBarPosition}
+          getMarkup={getTooltipMarkup}
+          getPosition={getTooltipPosition}
+          margin={ChartMargin}
+          parentRef={svgRef}
+        />
+      )}
 
       {showLegend && (
         <LegendContainer

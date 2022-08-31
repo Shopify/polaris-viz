@@ -23,3 +23,4 @@ export {getClosestDivisibleNumber} from './getClosestDivisibleNumber';
 export {roundToDecimals} from './roundToDecimals';
 export {isLargeDataSet} from './isLargeDataSet';
 export {ColorScale} from './ColorScale/ColorScale';
+export {isDataGroupArray} from './isDataGroup';

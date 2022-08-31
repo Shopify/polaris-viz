@@ -7,7 +7,13 @@ import React, {
   useLayoutEffect,
   useState,
 } from 'react';
-import {Dimensions, usePrevious, useTheme} from '@shopify/polaris-viz-core';
+import {
+  DataGroup,
+  DataSeries,
+  Dimensions,
+  usePrevious,
+  useTheme,
+} from '@shopify/polaris-viz-core';
 import {useDebouncedCallback} from 'use-debounce/lib';
 import type {SkeletonType} from 'components/ChartSkeleton';
 
@@ -18,6 +24,7 @@ import styles from './ChartDimensions.scss';
 
 interface ChartDimensionsProps {
   children: ReactElement;
+  data: DataSeries[] | DataGroup[];
   onIsPrintingChange: Dispatch<SetStateAction<boolean>>;
   sparkChart?: boolean;
   skeletonType?: SkeletonType;
@@ -25,6 +32,7 @@ interface ChartDimensionsProps {
 
 export function ChartDimensions({
   children,
+  data,
   onIsPrintingChange,
   sparkChart = false,
   skeletonType = 'Default',
@@ -108,6 +116,7 @@ export function ChartDimensions({
         <ChartErrorBoundary
           type={skeletonType ?? 'Default'}
           dimensions={chartDimensions!}
+          data={data}
         >
           <div
             className={styles.Chart}

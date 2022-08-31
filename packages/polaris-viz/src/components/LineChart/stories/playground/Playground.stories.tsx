@@ -37,3 +37,15 @@ LargeDataSet.args = {
     labelFormatter: formatLinearXAxisLabel,
   },
 };
+
+export const BadData: Story<LineChartProps> = (args: LineChartProps) => {
+  return (
+    <div style={{width: 600, height: 400}}>
+      <LineChart {...args} />
+    </div>
+  );
+};
+
+BadData.args = {
+  data: [{name: 'Empty', data: []}],
+};

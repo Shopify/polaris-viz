@@ -1,11 +1,19 @@
-import {ChartState, Dimensions} from '@shopify/polaris-viz-core';
+import {
+  ChartState,
+  DataGroup,
+  DataSeries,
+  Dimensions,
+} from '@shopify/polaris-viz-core';
 import React, {ErrorInfo} from 'react';
 
 import {ChartSkeleton} from '../ChartSkeleton';
 import type {SkeletonType} from '../ChartSkeleton';
 
+import {checkForMismatchedData} from './utilities/checkForMismatchedData';
+
 interface ErrorBoundaryProps {
   onError?: (error: Error, errorInfo: ErrorInfo) => void;
+  data: DataSeries[] | DataGroup[];
   dimensions: Dimensions;
   type: SkeletonType;
 }
@@ -29,6 +37,8 @@ export class ChartErrorBoundary extends React.Component<
   }
 
   onError = (error, errorInfo) => {
+    checkForMismatchedData(this.props.data);
+
     if (this.props.onError) {
       this.props.onError(error, errorInfo);
     } else {

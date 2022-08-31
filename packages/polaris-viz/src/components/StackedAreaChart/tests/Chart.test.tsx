@@ -322,4 +322,20 @@ describe('<Chart />', () => {
       expect(chart).toContainReactComponent(Annotations);
     });
   });
+
+  describe('<TooltipWrapper />', () => {
+    it('does not render <TooltipWrapper /> data series is empty', () => {
+      const chart = mount(
+        <Chart {...MOCK_PROPS} data={[{name: 'Empty', data: []}]} />,
+      );
+
+      expect(chart).not.toContainReactComponent(TooltipWrapper);
+    });
+
+    it('renders <TooltipWrapper /> data series has data', () => {
+      const chart = mount(<Chart {...MOCK_PROPS} />);
+
+      expect(chart).toContainReactComponent(TooltipWrapper);
+    });
+  });
 });
