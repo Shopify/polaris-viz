@@ -127,7 +127,7 @@ export const COLOR_VARIABLES = variables;
 export const DEFAULT_THEME_NAME = 'Default';
 
 export const NEUTRAL_SINGLE_GRADIENT = [
-  {offset: 0, color: variables.colorIndigo90},
+  {offset: 0, color: 'red'},
   {offset: 85, color: variables.colorBlue90},
   {offset: 100, color: variables.colorBlue70},
 ];
