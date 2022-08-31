@@ -212,7 +212,6 @@ export function Chart({
             />
             <HorizontalBarChartXAxisLabels
               allowLineWrap={xAxisOptions.allowLineWrap}
-              chartHeight={height}
               chartX={-labelWidth / 2}
               chartY={drawableHeight}
               labels={ticksFormatted}

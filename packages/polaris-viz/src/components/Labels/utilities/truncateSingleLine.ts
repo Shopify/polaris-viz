@@ -18,7 +18,7 @@ export function truncateSingleLine({
 }: Props) {
   const estimatedWidth = estimateStringWidth(label, characterWidths);
 
-  if (estimatedWidth < targetWidth) {
+  if (estimatedWidth <= targetWidth) {
     return label;
   }
 

@@ -8,21 +8,21 @@ import {truncateLabels} from './truncateLabels';
 const QUARTER = 4;
 
 interface Props {
+  targetWidth: number;
+  longestLabelWidth: number;
   labels: PreparedLabels[];
   characterWidths: CharacterWidths;
-  maxWidth: number;
-  targetWidth: number;
 }
 
 export function getVerticalLabels({
   labels,
   characterWidths,
-  maxWidth,
+  longestLabelWidth,
   targetWidth,
 }: Props) {
   const clampedTargetWidth = clamp({
-    amount: maxWidth,
-    min: maxWidth,
+    amount: longestLabelWidth,
+    min: targetWidth,
     max: VERTICAL_LABEL_TARGET_WIDTH,
   });
   const truncatedLabels = truncateLabels({

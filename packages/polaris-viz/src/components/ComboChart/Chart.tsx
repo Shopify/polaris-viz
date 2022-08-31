@@ -206,7 +206,6 @@ export function Chart({
         {hideXAxis ? null : (
           <XAxis
             allowLineWrap={xAxisOptions.allowLineWrap}
-            chartHeight={height}
             labels={labels}
             labelWidth={labelWidth}
             onHeightChange={setXAxisHeight}

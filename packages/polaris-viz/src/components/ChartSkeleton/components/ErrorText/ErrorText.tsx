@@ -6,7 +6,13 @@ import {TextLine} from '../../../TextLine';
 
 const TEXT_DROP_SHADOW_SIZE = 3;
 
-export function ErrorText({errorText, width, height}) {
+interface ErrorTextProps {
+  width: number;
+  height: number;
+  errorText: string;
+}
+
+export function ErrorText({errorText, width, height}: ErrorTextProps) {
   const {
     chartContainer: {backgroundColor},
   } = useTheme();
@@ -15,7 +21,6 @@ export function ErrorText({errorText, width, height}) {
     allowLineWrap: true,
     labels: [errorText],
     targetWidth: width,
-    chartHeight: height,
   });
 
   return (

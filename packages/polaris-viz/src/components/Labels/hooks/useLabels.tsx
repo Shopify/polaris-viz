@@ -12,11 +12,8 @@ import {getDiagonalLabels} from '../utilities/getDiagonalLabels';
 import {getHorizontalLabels} from '../utilities/getHorizontalLabels';
 import {getVerticalLabels} from '../utilities/getVerticalLabels';
 
-const LABEL_CONTAINER_MAX_PERCENTAGE = 0.25;
-
 interface Props {
   allowLineWrap: boolean;
-  chartHeight: number;
   labels: string[];
   targetWidth: number;
   onHeightChange?: Dispatch<SetStateAction<number>> | (() => void);
@@ -24,7 +21,6 @@ interface Props {
 
 export function useLabels({
   allowLineWrap,
-  chartHeight,
   labels,
   onHeightChange = () => {},
   targetWidth,
@@ -55,8 +51,6 @@ export function useLabels({
     }, 0);
   }, [labels, characterWidths]);
 
-  const maxWidth = Math.floor(chartHeight * LABEL_CONTAINER_MAX_PERCENTAGE);
-
   const {lines, containerHeight} = useMemo(() => {
     const shouldDrawHorizontal = checkIfShouldDrawHorizontal({
       allowLineWrap,
@@ -79,7 +73,7 @@ export function useLabels({
         return getDiagonalLabels({
           characterWidths,
           labels: preparedLabels,
-          maxWidth,
+          longestLabelWidth,
           targetHeight: LINE_HEIGHT,
           targetWidth,
         });
@@ -88,7 +82,7 @@ export function useLabels({
         return getVerticalLabels({
           characterWidths,
           labels: preparedLabels,
-          maxWidth,
+          longestLabelWidth,
           targetWidth,
         });
       }
@@ -101,7 +95,6 @@ export function useLabels({
     }
   }, [
     allowLineWrap,
-    maxWidth,
     targetWidth,
     characterWidths,
     preparedLabels,

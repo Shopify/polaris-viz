@@ -6,7 +6,6 @@ import {TextLine} from '../TextLine';
 
 interface HorizontalBarChartXAxisLabelsProps {
   allowLineWrap: boolean;
-  chartHeight: number;
   chartX: number;
   chartY: number;
   labels: string[];
@@ -18,7 +17,6 @@ interface HorizontalBarChartXAxisLabelsProps {
 
 export function HorizontalBarChartXAxisLabels({
   allowLineWrap,
-  chartHeight,
   chartX,
   chartY,
   labels,
@@ -29,7 +27,6 @@ export function HorizontalBarChartXAxisLabels({
 }: HorizontalBarChartXAxisLabelsProps) {
   const {lines} = useLabels({
     allowLineWrap,
-    chartHeight,
     labels,
     onHeightChange,
     targetWidth: labelWidth,

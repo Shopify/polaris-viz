@@ -12,7 +12,7 @@ import {truncateLabels} from './truncateLabels';
 
 interface Props {
   labels: PreparedLabels[];
-  maxWidth: number;
+  longestLabelWidth: number;
   targetHeight: number;
   targetWidth: number;
   characterWidths: CharacterWidths;
@@ -21,13 +21,13 @@ interface Props {
 export function getDiagonalLabels({
   characterWidths,
   labels,
-  maxWidth,
+  longestLabelWidth,
   targetHeight,
   targetWidth,
 }: Props) {
   const clampedTargetWidth = clamp({
-    amount: targetWidth,
-    min: maxWidth,
+    amount: longestLabelWidth,
+    min: targetWidth,
     max: MAX_DIAGONAL_LABEL_WIDTH,
   });
 
