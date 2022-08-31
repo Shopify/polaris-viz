@@ -27,7 +27,7 @@ jobs:
           # 👇 Chromatic projectToken, refer to the manage page to obtain it.
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           autoAcceptChanges: 'main'
-          exitZeroOnChanges: true
+          exitZeroOnChanges: false
           exitOnceUploaded: true
           buildScriptName: build-storybook:chromatic
       - name: Add Chromatic link to PR
