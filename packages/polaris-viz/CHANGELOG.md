@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Changed
+
+- Don't inset `<LineSeries />` when labels are hidden.
+
 ### Fixed
 
 - Fixed horizontal bar charts not animating their bars in on mount.
