@@ -4,12 +4,13 @@ export {META as default} from './meta';
 
 import type {LineChartProps} from '../../../components';
 
-import {DEFAULT_PROPS, Template} from './data';
+import {DEFAULT_DATA, DEFAULT_PROPS, Template} from './data';
 
 export const Annotations: Story<LineChartProps> = Template.bind({});
 
 Annotations.args = {
   ...DEFAULT_PROPS,
+  data: DEFAULT_DATA,
   annotations: [
     {
       startKey: '2020-04-02T12:00:00',

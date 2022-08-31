@@ -68,7 +68,7 @@ export function StackedAreaChart(props: StackedAreaChartProps) {
       )}
       <ChartContainer data={data} theme={theme} isAnimated={isAnimated}>
         {state !== ChartState.Success ? (
-          <ChartSkeleton state={state} errorText={errorText} />
+          <ChartSkeleton state={state} errorText={errorText} theme={theme} />
         ) : (
           <Chart
             annotationsLookupTable={annotationsLookupTable}
