@@ -11,6 +11,7 @@ import {
 } from '@shopify/polaris-viz-core';
 import type {Dimensions, DataGroup} from '@shopify/polaris-viz-core';
 
+import {ChartElements} from '../ChartElements';
 import {
   Annotations,
   checkAvailableAnnotations,
@@ -36,13 +37,12 @@ import {useColorVisionEvents, useReducedLabelIndexes} from '../../hooks';
 import {HorizontalGridLines} from '../HorizontalGridLines';
 import {YAxis} from '../YAxis';
 import {LegendContainer, useLegend} from '../LegendContainer';
-import {ANNOTATIONS_LABELS_OFFSET, XMLNS} from '../../constants';
+import {ANNOTATIONS_LABELS_OFFSET} from '../../constants';
 
 import {useDualAxisTicks} from './hooks/useDualAxisTicks';
 import {useDualAxisTicksWidth} from './hooks/useDualAxisTickWidths';
 import {useDualAxisScale} from './hooks/useDualAxisScale';
 import {useXScale} from './hooks/useXScale';
-import styles from './Chart.scss';
 import {ComboBarChart, ComboLineChart, AxisLabel} from './components';
 import {useSplitDataForCharts} from './hooks/useSplitDataForCharts';
 import {useComboChartTooltipContent} from './hooks/useComboChartTooltipContent';
@@ -174,22 +174,8 @@ export function Chart({
   );
 
   return (
-    <div
-      className={styles.ChartContainer}
-      style={{
-        width,
-        height,
-      }}
-    >
-      <svg
-        className={styles.SVG}
-        role="list"
-        viewBox={`0 0 ${width} ${height}`}
-        xmlns={XMLNS}
-        ref={setSvgRef}
-        width={width}
-        height={height}
-      >
+    <ChartElements.Div height={height} width={width}>
+      <ChartElements.Svg width={width} setRef={setSvgRef} height={height}>
         {selectedTheme.grid.showHorizontalLines ? (
           <HorizontalGridLines
             ticks={primaryTicks}
@@ -321,7 +307,7 @@ export function Chart({
             y={yAxisBounds.y}
           />
         )}
-      </svg>
+      </ChartElements.Svg>
 
       <TooltipWrapper
         bandwidth={labelWidth}
@@ -341,7 +327,7 @@ export function Chart({
           onDimensionChange={setLegendDimensions}
         />
       )}
-    </div>
+    </ChartElements.Div>
   );
 
   function formatPositionForTooltip(index: number | null): TooltipPosition {

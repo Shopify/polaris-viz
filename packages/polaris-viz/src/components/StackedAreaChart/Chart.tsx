@@ -16,6 +16,7 @@ import {
   LINE_HEIGHT,
 } from '@shopify/polaris-viz-core';
 
+import {ChartElements} from '../ChartElements';
 import {
   Annotations,
   checkAvailableAnnotations,
@@ -44,7 +45,7 @@ import {
   useColorVisionEvents,
   useLinearLabelsAndDimensions,
 } from '../../hooks';
-import {ChartMargin, XMLNS, ANNOTATIONS_LABELS_OFFSET} from '../../constants';
+import {ChartMargin, ANNOTATIONS_LABELS_OFFSET} from '../../constants';
 import {eventPointNative} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {Crosshair} from '../Crosshair';
@@ -248,15 +249,12 @@ export function Chart({
   const halfXAxisLabelWidth = xAxisDetails.labelWidth / 2;
 
   return (
-    <React.Fragment>
-      <svg
-        viewBox={`0 0 ${width} ${height}`}
-        xmlns={XMLNS}
+    <ChartElements.Div height={height} width={width}>
+      <ChartElements.Svg
         width={width}
-        height={height}
-        ref={setSvgRef}
+        setRef={setSvgRef}
         role="table"
-        style={{height, width}}
+        height={height}
       >
         {hideXAxis ? null : (
           <XAxis
@@ -378,7 +376,7 @@ export function Chart({
             />
           </g>
         )}
-      </svg>
+      </ChartElements.Svg>
 
       {longestSeriesLength !== -1 && (
         <TooltipWrapper
@@ -401,7 +399,7 @@ export function Chart({
           onDimensionChange={setLegendDimensions}
         />
       )}
-    </React.Fragment>
+    </ChartElements.Div>
   );
 
   function getTooltipPosition({
