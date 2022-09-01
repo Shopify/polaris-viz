@@ -6,10 +6,10 @@ import {
   DataType,
   COLOR_VISION_GROUP_ITEM,
   getColorVisionStylesForActiveIndex,
+  BAR_SPACING,
 } from '@shopify/polaris-viz-core';
 
 import {formatAriaLabel} from '../../../VerticalBarChart/utilities';
-import {BAR_SPACING} from '../../../VerticalBarChart/constants';
 import type {AccessibilitySeries} from '../../../VerticalBarChart/types';
 import type {StackedSeries} from '../../../../types';
 import {useStackedGapsForVerticalChart} from '../../hooks';

@@ -1,16 +1,14 @@
-@import '../../../../styles/common';
-
 .Container {
   display: flex;
   align-items: baseline;
 }
 
 .ContainerDefaultLabel {
-  margin-bottom: $spacing-extra-loose;
+  margin-bottom: 32px;
 }
 
 .ContaineBottomLabel {
-  margin-top: $spacing-loose;
+  margin-top: 20px;
 }
 
 .LabelColor {
@@ -22,14 +20,14 @@
 
 .Label {
   flex: 1;
-  margin: 0 $spacing-tight;
+  margin: 0 8px;
   word-break: break-word;
 }
 
 .ValueContainer {
-  margin-top: $spacing-extra-tight;
+  margin-top: 4px;
   display: flex;
 }
 .Value {
-  margin-right: $spacing-tight;
+  margin-right: 8px;
 }

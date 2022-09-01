@@ -13,12 +13,6 @@ import {
 export const LINE_HEIGHT = 14;
 export const FONT_SIZE = 12;
 
-export const TICK_SIZE = 6;
-export const SPACING_TIGHT = Number(variables.spacingTight);
-export const SPACING_EXTRA_TIGHT = Number(variables.spacingExtraTight);
-export const SPACING = Number(variables.spacing);
-export const SPACING_BASE_TIGHT = Number(variables.spacingBaseTight);
-export const SPACING_LOOSE = Number(variables.spacingLoose);
 export const XMLNS = 'http://www.w3.org/2000/svg';
 
 export const BASE_ANIMATION_DURATION = 200;
@@ -26,7 +20,6 @@ export const LOAD_ANIMATION_DURATION = 500;
 export const SHAPE_ANIMATION_HEIGHT_BUFFER = 30;
 
 export const DEFAULT_BORDER_RADIUS = 3;
-export const MIN_WIDTH_BORDER_RADIUS = 2;
 export const BORDER_RADIUS = {
   None: '0 0 0 0',
   Top: `${DEFAULT_BORDER_RADIUS} ${DEFAULT_BORDER_RADIUS} 0 0`,
@@ -42,32 +35,21 @@ export const HORIZONTAL_GROUP_LABEL_HEIGHT = 20;
 export const HORIZONTAL_SPACE_BETWEEN_SETS = 16;
 export const HORIZONTAL_SPACE_BETWEEN_SINGLE = 2;
 export const HORIZONTAL_SPACE_BETWEEN_CHART_AND_AXIS = 5;
-export const MAX_X_AXIS_LINES = 3;
+export const BAR_SPACING = 0.5;
 
 export const LINE_ANIMATION_FAST_DURATION = 100;
 export const LINE_ANIMATION_SLOW_DURATION = 325;
 export const LINE_ANIMATION_FAST_COUNT = 10;
 export const LINE_ANIMATION_DURATION_STEP = 25;
-export const BELOW_X_AXIS_MARGIN = 24;
-export const DIAGONAL_ANGLE = -40;
-export const MIN_HORIZONTAL_LABEL_SPACE = 25;
-export const DEFAULT_LABEL_RATIO = 2;
-export const MIN_HORIZONTAL_TICKS = 3;
-export const LABEL_ELLIPSIS_LENGTH = 3;
-export const SMALL_LABEL_WIDTH = 50;
-export const LABEL_SPACE_MINUS_FIRST_AND_LAST = 0.6;
 export const DEFAULT_MAX_Y = 10;
 export const MIN_BAR_HEIGHT = 2;
 export const EMPTY_STATE_CHART_MIN = 0;
 export const EMPTY_STATE_CHART_MAX = 10;
 
-export const DONUT_CHART_CORNER_RADIUS = 2;
-export const DONUT_CHART_THICKNESS = 18;
-
 export enum ChartMargin {
   Top = 5,
   Left = 0,
-  Bottom = BELOW_X_AXIS_MARGIN,
+  Bottom = 24,
   Right = 0,
 }
 
@@ -116,11 +98,8 @@ export const ARC_DATA_CHANGE_ANIMATION_CONFIG = {
   friction: 20,
   restVelocity: 200,
 };
-export const MAX_TRAIL_DURATION = 500;
-export const HORIZONTAL_BAR_GROUP_DELAY = 200;
 
-export const MASK_HIGHLIGHT_COLOR = variables.colorWhite;
-export const MASK_SUBDUE_COLOR = '#434343';
+export const MASK_HIGHLIGHT_COLOR = '#ffffff';
 
 export const COLOR_VARIABLES = variables;
 
@@ -188,8 +167,9 @@ export const DEFAULT_THEME: Theme = {
     pointStroke: variables.colorGray160,
   },
   arc: {
-    cornerRadius: DONUT_CHART_CORNER_RADIUS,
-    thickness: DONUT_CHART_THICKNESS,
+    // TODO Add contsts for all these
+    cornerRadius: 2,
+    thickness: 18,
   },
   bar: {
     zeroValueColor: variables.colorGray80,
@@ -379,13 +359,9 @@ export const COLOR_VISION_FADED_OPACITY = 0.3;
 export const COLOR_VISION_SINGLE_ITEM = 'singleItem';
 export const COLOR_VISION_GROUP_ITEM = 'group';
 export const LEGENDS_TOP_MARGIN = 16;
-
-export const Y_AXIS_CHART_SPACING = SPACING_LOOSE;
-export const LABEL_AREA_MIN_HEIGHT = 15;
-export const LABEL_AREA_MAX_HEIGHT = 80;
-export const LABEL_AREA_TOP_SPACING = SPACING;
+export const Y_AXIS_CHART_SPACING = 20;
+export const LABEL_AREA_TOP_SPACING = 16;
 export const ELLIPSIS = '…';
-export const X_AXIS_LABEL_PADDING = 10;
 export const HORIZONTAL_LABEL_MIN_WIDTH = 46;
 export const HORIZONTAL_LABEL_TARGET_HEIGHT = 80;
 export const DIAGONAL_LABEL_MIN_WIDTH = 30;
