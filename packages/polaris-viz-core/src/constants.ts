@@ -111,6 +111,26 @@ export const NEUTRAL_SINGLE_GRADIENT = [
   {offset: 100, color: variables.colorBlue70},
 ];
 
+const DEFAULT_CHART_BORDER_RADIUS = '0px';
+const DEFAULT_CHART_PADDING = '0px';
+const DEFAULT_SPARK_CHART_MIN_HEIGHT = 40;
+const DEFAULT_CHART_MIN_HEIGHT = 200;
+
+const DEFAULT_LINE_HAS_AREA = true;
+const DEFAULT_LINE_HAS_SPLINE = true;
+const DEFAULT_LINE_WIDTH = 2;
+
+const DEFAULT_ARC_CORNER_RADIUS = 2;
+const DEFAULT_ARC_CORNER_THICKNESS = 18;
+
+const DEFAULT_GRID_SHOW_HORIZONTAL_LINES = true;
+const DEFAULT_GRID_HORIZONTAL_OVERFLOW = true;
+const DEFAULT_GRID_HORIZONTAL_MARGIN = 16;
+
+const DEFAULT_X_AXIS_HIDE = false;
+
+const DEFAULT_CROSSHAIR_WIDTH = 1;
+
 export const DEFAULT_THEME: Theme = {
   seriesColors: {
     empty: variables.colorGray140,
@@ -154,36 +174,35 @@ export const DEFAULT_THEME: Theme = {
     titleColor: variables.colorGray50,
   },
   chartContainer: {
-    borderRadius: '0px',
-    padding: '0px',
+    borderRadius: DEFAULT_CHART_BORDER_RADIUS,
+    padding: DEFAULT_CHART_PADDING,
     backgroundColor: variables.colorGray160,
-    sparkChartMinHeight: 40,
-    minHeight: 200,
+    sparkChartMinHeight: DEFAULT_SPARK_CHART_MIN_HEIGHT,
+    minHeight: DEFAULT_CHART_MIN_HEIGHT,
   },
   line: {
-    hasArea: true,
-    hasSpline: true,
-    width: 2,
+    hasArea: DEFAULT_LINE_HAS_AREA,
+    hasSpline: DEFAULT_LINE_HAS_SPLINE,
+    width: DEFAULT_LINE_WIDTH,
     pointStroke: variables.colorGray160,
   },
   arc: {
-    // TODO Add contsts for all these
-    cornerRadius: 2,
-    thickness: 18,
+    cornerRadius: DEFAULT_ARC_CORNER_RADIUS,
+    thickness: DEFAULT_ARC_CORNER_THICKNESS,
   },
   bar: {
     zeroValueColor: variables.colorGray80,
-    borderRadius: 3,
+    borderRadius: DEFAULT_BORDER_RADIUS,
   },
   grid: {
-    showHorizontalLines: true,
+    showHorizontalLines: DEFAULT_GRID_SHOW_HORIZONTAL_LINES,
     color: variables.colorGray140,
-    horizontalOverflow: true,
-    horizontalMargin: 16,
+    horizontalOverflow: DEFAULT_GRID_HORIZONTAL_OVERFLOW,
+    horizontalMargin: DEFAULT_GRID_HORIZONTAL_MARGIN,
   },
   xAxis: {
     labelColor: variables.colorGray30,
-    hide: false,
+    hide: DEFAULT_X_AXIS_HIDE,
   },
   yAxis: {
     backgroundColor: variables.colorGray160,
@@ -191,7 +210,7 @@ export const DEFAULT_THEME: Theme = {
   },
   crossHair: {
     color: variables.colorGray70,
-    width: 1,
+    width: DEFAULT_CROSSHAIR_WIDTH,
   },
   legend: {
     valueColor: variables.colorGray70,
@@ -256,34 +275,35 @@ export const LIGHT_THEME: Theme = {
     titleColor: variables.colorGray100,
   },
   chartContainer: {
-    ...DEFAULT_THEME.chartContainer,
-    borderRadius: '0px',
-    padding: '0px',
+    sparkChartMinHeight: DEFAULT_SPARK_CHART_MIN_HEIGHT,
+    padding: DEFAULT_CHART_PADDING,
+    minHeight: DEFAULT_CHART_MIN_HEIGHT,
+    borderRadius: DEFAULT_CHART_BORDER_RADIUS,
     backgroundColor: variables.colorGray00,
   },
   line: {
-    hasArea: true,
-    hasSpline: true,
-    width: 2,
+    hasArea: DEFAULT_LINE_HAS_AREA,
+    hasSpline: DEFAULT_LINE_HAS_SPLINE,
+    width: DEFAULT_LINE_WIDTH,
     pointStroke: variables.colorGray00,
   },
   arc: {
-    cornerRadius: 2,
-    thickness: 18,
+    cornerRadius: DEFAULT_ARC_CORNER_RADIUS,
+    thickness: DEFAULT_ARC_CORNER_THICKNESS,
   },
   bar: {
     zeroValueColor: variables.colorGray70,
-    borderRadius: 3,
+    borderRadius: DEFAULT_BORDER_RADIUS,
   },
   grid: {
-    showHorizontalLines: true,
+    showHorizontalLines: DEFAULT_GRID_SHOW_HORIZONTAL_LINES,
     color: variables.colorGray20,
-    horizontalOverflow: true,
-    horizontalMargin: 16,
+    horizontalOverflow: DEFAULT_GRID_HORIZONTAL_OVERFLOW,
+    horizontalMargin: DEFAULT_GRID_HORIZONTAL_MARGIN,
   },
   xAxis: {
     labelColor: variables.colorGray100,
-    hide: false,
+    hide: DEFAULT_X_AXIS_HIDE,
   },
   yAxis: {
     backgroundColor: variables.colorGray00,
@@ -291,7 +311,7 @@ export const LIGHT_THEME: Theme = {
   },
   crossHair: {
     color: variables.colorGray40,
-    width: 1,
+    width: DEFAULT_CROSSHAIR_WIDTH,
   },
   legend: {
     valueColor: variables.colorGray160,
