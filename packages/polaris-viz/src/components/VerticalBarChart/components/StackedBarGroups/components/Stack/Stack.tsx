@@ -1,12 +1,14 @@
 import React, {useState} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {
+  BARS_TRANSITION_CONFIG,
   COLOR_VISION_SINGLE_ITEM,
   getColorVisionEventAttrs,
   getColorVisionStylesForActiveIndex,
   getRoundedRectPath,
   useChartContext,
 } from '@shopify/polaris-viz-core';
+import {useSpring, animated} from '@react-spring/web';
 
 import type {
   FormattedStackedSeries,
@@ -24,6 +26,7 @@ import styles from './Stack.scss';
 
 interface StackProps {
   activeBarGroup: number;
+  animationDelay: number;
   data: FormattedStackedSeries;
   gaps: {[key: number]: StackedBarGapDirections};
   groupIndex: number;
@@ -35,6 +38,7 @@ interface StackProps {
 
 export function Stack({
   activeBarGroup,
+  animationDelay,
   data,
   gaps,
   groupIndex,
@@ -44,7 +48,7 @@ export function Stack({
   yScale,
 }: StackProps) {
   const [activeBarIndex, setActiveBarIndex] = useState(-1);
-  const {theme} = useChartContext();
+  const {theme, shouldAnimate} = useChartContext();
 
   const keys = data[0] ? Object.keys(data[0].data) : [];
 
@@ -61,8 +65,20 @@ export function Stack({
     },
   });
 
+  const {transform} = useSpring({
+    from: {
+      transform: `scale(1, 0)`,
+    },
+    to: {
+      transform: `scale(1, 1)`,
+    },
+    config: BARS_TRANSITION_CONFIG,
+    delay: animationDelay,
+    default: {immediate: !shouldAnimate},
+  });
+
   return (
-    <React.Fragment>
+    <animated.g style={{transform, transformOrigin: `0px ${yScale(0)}px`}}>
       {data.map((data, index) => {
         const [start, end] = data;
 
@@ -114,6 +130,6 @@ export function Stack({
           </g>
         );
       })}
-    </React.Fragment>
+    </animated.g>
   );
 }

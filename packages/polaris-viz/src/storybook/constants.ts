@@ -62,3 +62,23 @@ export const X_AXIS_OPTIONS_ARGS = {
 export const Y_AXIS_OPTIONS_ARGS = {
   description: 'An object that defines the yAxis and its options.',
 };
+
+export const SKIP_LINK_ARGS = {
+  description:
+    'If provided, renders a `<SkipLink/>` button with the string. Use this for charts with large data sets, so keyboard users can skip all the tabbable data points in the chart.',
+};
+
+export const IS_ANIMATED_ARGS = {
+  description:
+    'Whether to animate when the chart is initially rendered and its data is updated. Even if `isAnimated` is set to true, animations will not be displayed for users with reduced motion preferences.',
+};
+
+export const DATA_SERIES_ARGS = {
+  description:
+    'A collection of named data sets to be rendered in the chart. An optional color can be provided for each series, to overwrite the theme `seriesColors` defined in `PolarisVizProvider`',
+};
+
+export const EMPTY_STATE_TEXT_ARGS = {
+  description:
+    'Used to indicate to screen readers that a chart with no series data has been rendered, in the case that an empty array is passed as the data. If the series prop could be an empty array, it is strongly recommended to include this prop.',
+};

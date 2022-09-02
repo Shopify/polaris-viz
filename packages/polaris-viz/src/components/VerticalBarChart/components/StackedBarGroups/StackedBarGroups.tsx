@@ -9,6 +9,7 @@ import {
   BAR_SPACING,
 } from '@shopify/polaris-viz-core';
 
+import {getLoadAnimationDelay} from '../../../../utilities/getLoadAnimationDelay';
 import {formatAriaLabel} from '../../../VerticalBarChart/utilities';
 import type {AccessibilitySeries} from '../../../VerticalBarChart/types';
 import type {StackedSeries} from '../../../../types';
@@ -61,6 +62,10 @@ export function StackedBarGroups({
       {formattedStackedValues.map((item, groupIndex) => {
         const x = xScale(groupIndex.toString()) ?? 0;
         const groupAriaLabel = formatAriaLabel(accessibilityData[groupIndex]);
+        const animationDelay = getLoadAnimationDelay(
+          groupIndex,
+          formattedStackedValues.length,
+        );
 
         return (
           <g
@@ -89,6 +94,7 @@ export function StackedBarGroups({
             />
             <Stack
               activeBarGroup={activeBarGroup}
+              animationDelay={animationDelay}
               data={item}
               gaps={gaps}
               groupIndex={groupIndex}

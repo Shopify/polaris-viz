@@ -10,6 +10,12 @@ import {
   TYPE_CONTROL_ARGS,
   CHART_STATE_CONTROL_ARGS,
   ANNOTATIONS_ARGS,
+  X_AXIS_OPTIONS_ARGS,
+  Y_AXIS_OPTIONS_ARGS,
+  SKIP_LINK_ARGS,
+  IS_ANIMATED_ARGS,
+  DATA_SERIES_ARGS,
+  EMPTY_STATE_TEXT_ARGS,
 } from '../../../storybook/constants';
 import {PageWithSizingInfo} from '../../Docs/stories';
 
@@ -34,28 +40,12 @@ export const META: Meta = {
   decorators: [(Story) => <div style={{height: '500px'}}>{Story()}</div>],
   argTypes: {
     annotations: ANNOTATIONS_ARGS,
-    data: {
-      description:
-        'A collection of named data sets to be rendered in the chart. An optional color can be provided for each series, to overwrite the theme `seriesColors` defined in `PolarisVizProvider`',
-    },
-    emptyStateText: {
-      description:
-        'Used to indicate to screen readers that a chart with no series data has been rendered, in the case that an empty array is passed as the data. If the series prop could be an empty array, it is strongly recommended to include this prop.',
-    },
-    isAnimated: {
-      description:
-        'Whether to animate the bars when the chart is initially rendered and its data is updated. Even if `isAnimated` is set to true, animations will not be displayed for users with reduced motion preferences. Note: animations are currently only available for the non-stacked bar chart.',
-    },
-    skipLinkText: {
-      description:
-        'If provided, renders a `<SkipLink/>` button with the string. Use this for charts with large data sets, so keyboard users can skip all the tabbable data points in the chart.',
-    },
-    xAxisOptions: {
-      description: 'An object that defines the xAxis and its options.',
-    },
-    yAxisOptions: {
-      description: 'An object that defines the yAxis and its options.',
-    },
+    data: DATA_SERIES_ARGS,
+    emptyStateText: EMPTY_STATE_TEXT_ARGS,
+    isAnimated: IS_ANIMATED_ARGS,
+    skipLinkText: SKIP_LINK_ARGS,
+    xAxisOptions: X_AXIS_OPTIONS_ARGS,
+    yAxisOptions: Y_AXIS_OPTIONS_ARGS,
     renderTooltipContent: {
       options: Object.keys(TOOLTIP_CONTENT),
       mapping: TOOLTIP_CONTENT,
