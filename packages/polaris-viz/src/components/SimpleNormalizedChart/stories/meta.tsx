@@ -3,6 +3,7 @@ import type {Meta} from '@storybook/react';
 import {PageWithSizingInfo} from '../../Docs/stories';
 import {
   CHART_STATE_CONTROL_ARGS,
+  CONTROLS_ARGS,
   DATA_ARGS,
   LEGEND_POSITION_ARGS,
   THEME_CONTROL_ARGS,
@@ -13,7 +14,7 @@ export const META: Meta = {
   title: 'polaris-viz/Charts/SimpleNormalizedChart',
   component: SimpleNormalizedChart,
   parameters: {
-    controls: {sort: 'requiredFirst', expanded: true},
+    controls: CONTROLS_ARGS,
     docs: {
       page: PageWithSizingInfo,
       description: {

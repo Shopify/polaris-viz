@@ -4,6 +4,8 @@ import React from 'react';
 import {PageWithSizingInfo} from '../../Docs/stories';
 import {
   CHART_STATE_CONTROL_ARGS,
+  CONTROLS_ARGS,
+  IS_ANIMATED_ARGS,
   THEME_CONTROL_ARGS,
 } from '../../../storybook/constants';
 import {SparkLineChart} from '../SparkLineChart';
@@ -12,7 +14,7 @@ export const META: Meta = {
   title: 'polaris-viz/Charts/SparkLineChart',
   component: SparkLineChart,
   parameters: {
-    controls: {sort: 'requiredFirst', expanded: true},
+    controls: CONTROLS_ARGS,
     docs: {
       page: PageWithSizingInfo,
       description: {
@@ -35,9 +37,7 @@ export const META: Meta = {
       description:
         'Visually hidden text for screen readers. Make sure to write [informative alt text.](https://medium.com/nightingale/writing-alt-text-for-data-visualization-2a218ef43f81)',
     },
-    isAnimated: {
-      description: 'Determines whether to animate the chart on state changes.',
-    },
+    isAnimated: IS_ANIMATED_ARGS,
     offsetLeft: {
       description:
         'The amount of pixels to add as a left margin to the non-comparison line data.',

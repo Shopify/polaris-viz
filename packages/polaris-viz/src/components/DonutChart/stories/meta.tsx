@@ -3,6 +3,8 @@ import type {Meta} from '@storybook/react';
 
 import {
   CHART_STATE_CONTROL_ARGS,
+  CONTROLS_ARGS,
+  DATA_SERIES_ARGS,
   LEGEND_POSITION_ARGS,
   THEME_CONTROL_ARGS,
 } from '../../../storybook/constants';
@@ -13,10 +15,7 @@ export const META: Meta<DonutChartProps> = {
   component: DonutChart,
   parameters: {
     a11y: {disable: true},
-    controls: {
-      sort: 'requiredFirst',
-      expanded: true,
-    },
+    controls: CONTROLS_ARGS,
     docs: {
       description: {
         component:
@@ -25,10 +24,7 @@ export const META: Meta<DonutChartProps> = {
     },
   },
   argTypes: {
-    data: {
-      description:
-        'A collection of named data sets to be rendered in the chart. An optional color can be provided for each series, to overwrite the theme `seriesColors` defined in `PolarisVizProvider`',
-    },
+    data: DATA_SERIES_ARGS,
     legendPosition: LEGEND_POSITION_ARGS,
     theme: THEME_CONTROL_ARGS,
     state: CHART_STATE_CONTROL_ARGS,

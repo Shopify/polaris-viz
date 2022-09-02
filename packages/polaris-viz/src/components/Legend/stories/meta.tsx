@@ -1,6 +1,6 @@
 import type {Meta} from '@storybook/react';
 
-import {THEME_CONTROL_ARGS} from '../../../storybook/constants';
+import {CONTROLS_ARGS, THEME_CONTROL_ARGS} from '../../../storybook/constants';
 import {Legend} from '../Legend';
 
 export const META: Meta = {
@@ -13,10 +13,7 @@ export const META: Meta = {
           'Used to indicate which color is associated with which series. The color preview will appear as a square unless a `shape` is passed to `LegendData`. <br /> <br /> All charts except spark charts and `SimpleNormalizedChart` include a `Legend` by default.',
       },
     },
-    controls: {
-      sort: 'requiredFirst',
-      expanded: true,
-    },
+    controls: CONTROLS_ARGS,
   },
   argTypes: {
     data: {

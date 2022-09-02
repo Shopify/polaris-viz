@@ -1,5 +1,6 @@
 import type {Meta} from '@storybook/react';
 
+import {CONTROLS_ARGS} from '../../../storybook/constants';
 import {SquareColorPreview} from '../SquareColorPreview';
 
 export const META: Meta = {
@@ -12,10 +13,7 @@ export const META: Meta = {
     },
   },
   parameters: {
-    controls: {
-      sort: 'requiredFirst',
-      expanded: true,
-    },
+    controls: CONTROLS_ARGS,
     docs: {
       description: {
         component:
