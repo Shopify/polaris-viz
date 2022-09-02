@@ -1,7 +1,6 @@
 import {
   COLOR_VISION_GROUP_ITEM,
   DataType,
-  LOAD_ANIMATION_DURATION,
   useChartContext,
 } from '@shopify/polaris-viz-core';
 import type {
@@ -13,6 +12,7 @@ import type {
 import type {ScaleBand, ScaleLinear} from 'd3-scale';
 import React, {useMemo, useState} from 'react';
 
+import {getLoadAnimationDelay} from '../../../../utilities/getLoadAnimationDelay';
 import {getChartId} from '../../../../utilities/getChartId';
 import {applyColorVisionToDomElement} from '../../../../utilities/applyColorVisionToDomElement';
 import type {SortedBarChartData} from '../../../../types';
@@ -120,8 +120,7 @@ export function VerticalBarGroup({
     <React.Fragment>
       {sortedData.map((item, index) => {
         const xPosition = xScale(index.toString());
-        const animationDelay =
-          index * (LOAD_ANIMATION_DURATION / sortedData.length);
+        const animationDelay = getLoadAnimationDelay(index, sortedData.length);
 
         return (
           <BarGroup
