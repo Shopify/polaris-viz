@@ -18,6 +18,7 @@ import type {
   YAxisOptions,
 } from '@shopify/polaris-viz-core';
 
+import {ChartElements} from '../ChartElements';
 import {
   YAxisAnnotations,
   Annotations,
@@ -32,7 +33,7 @@ import {getVerticalBarChartTooltipPosition} from '../../utilities/getVerticalBar
 import {XAxis} from '../XAxis';
 import {LegendContainer, useLegend} from '../LegendContainer';
 import {GradientDefs} from '../shared';
-import {ANNOTATIONS_LABELS_OFFSET, ChartMargin, XMLNS} from '../../constants';
+import {ANNOTATIONS_LABELS_OFFSET, ChartMargin} from '../../constants';
 import {
   TooltipHorizontalOffset,
   TooltipVerticalOffset,
@@ -52,7 +53,6 @@ import {
 } from '../../hooks';
 
 import {VerticalBarGroup} from './components';
-import styles from './Chart.scss';
 import {useVerticalBarChart} from './hooks/useVerticalBarChart';
 
 export interface Props {
@@ -191,16 +191,13 @@ export function Chart({
   );
 
   return (
-    <div className={styles.ChartContainer} style={{height, width}}>
-      <svg
-        viewBox={`0 0 ${width} ${height}`}
-        xmlns={XMLNS}
-        width={width}
+    <ChartElements.Div height={height} width={width}>
+      <ChartElements.Svg
         height={height}
-        className={styles.Svg}
-        role={emptyState ? 'img' : 'list'}
-        aria-label={emptyState ? emptyStateText : undefined}
-        ref={setSvgRef}
+        width={width}
+        emptyStateText={emptyStateText}
+        emptyState={emptyState}
+        setRef={setSvgRef}
       >
         {hideXAxis ? null : (
           <XAxis
@@ -287,7 +284,7 @@ export function Chart({
             />
           </g>
         )}
-      </svg>
+      </ChartElements.Svg>
 
       {sortedData.length > 0 && (
         <TooltipWrapper
@@ -308,7 +305,7 @@ export function Chart({
           onDimensionChange={setLegendDimensions}
         />
       )}
-    </div>
+    </ChartElements.Div>
   );
 
   function formatPositionForTooltip(index: number | null): TooltipPosition {

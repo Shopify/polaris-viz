@@ -1,9 +1,8 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
-import {LinearGradientWithStops} from '@shopify/polaris-viz-core';
+import {LinearGradientWithStops, BAR_SPACING} from '@shopify/polaris-viz-core';
 
-import {BAR_SPACING} from '../../../constants';
 import {BarGroup, BarGroupProps} from '../BarGroup';
 import {VerticalBar} from '../../VerticalBar';
 

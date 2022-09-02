@@ -10,6 +10,7 @@ import {
   clamp,
   useTheme,
   useChartContext,
+  BAR_SPACING,
 } from '@shopify/polaris-viz-core';
 import type {Color} from '@shopify/polaris-viz-core';
 
@@ -24,8 +25,8 @@ import {formatAriaLabel} from '../../utilities';
 import {applyColorVisionToDomElement} from '../../../../utilities/applyColorVisionToDomElement';
 import {useWatchColorVisionEvents} from '../../../../hooks';
 import {VerticalBar} from '../VerticalBar';
-import {BAR_SPACING} from '../../constants';
-import styles from '../../Chart.scss';
+
+import styles from './BarGroup.scss';
 
 const COLOR_VISION_MASK = 'colorVisionMask';
 

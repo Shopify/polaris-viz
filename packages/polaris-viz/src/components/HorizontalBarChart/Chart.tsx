@@ -17,6 +17,7 @@ import type {
 } from '@shopify/polaris-viz-core';
 import {animated} from '@react-spring/web';
 
+import {ChartElements} from '../ChartElements';
 import {checkAvailableAnnotations} from '../../components/Annotations';
 import {useFormattedLabels} from '../../hooks/useFormattedLabels';
 import type {
@@ -38,7 +39,7 @@ import {
   useHorizontalXScale,
   useTheme,
 } from '../../hooks';
-import {XMLNS, ChartMargin, ANNOTATIONS_LABELS_OFFSET} from '../../constants';
+import {ChartMargin, ANNOTATIONS_LABELS_OFFSET} from '../../constants';
 import {eventPointNative, formatDataIntoGroups} from '../../utilities';
 import {
   TOOLTIP_POSITION_DEFAULT_RETURN,
@@ -191,15 +192,8 @@ export function Chart({
   });
 
   return (
-    <React.Fragment>
-      <svg
-        ref={setSvgRef}
-        role="list"
-        viewBox={`0 0 ${width} ${height}`}
-        xmlns={XMLNS}
-        width={width}
-        height={height}
-      >
+    <ChartElements.Div height={height} width={width}>
+      <ChartElements.Svg setRef={setSvgRef} width={width} height={height}>
         {xAxisOptions.hide === true ? null : (
           <g transform={`translate(${chartXPosition}, ${chartYPosition})`}>
             <VerticalGridLines
@@ -288,7 +282,7 @@ export function Chart({
             />
           </g>
         )}
-      </svg>
+      </ChartElements.Svg>
 
       {highestValueForSeries.length !== 0 && (
         <TooltipWrapper
@@ -310,7 +304,7 @@ export function Chart({
           onDimensionChange={setLegendDimensions}
         />
       )}
-    </React.Fragment>
+    </ChartElements.Div>
   );
 
   function formatPositionForTooltip(index: number): TooltipPosition {

@@ -16,10 +16,10 @@ import {
   LINE_HEIGHT,
 } from '@shopify/polaris-viz-core';
 
+import {ChartElements} from '../ChartElements';
 import {useReducedLabelIndexes} from '../../hooks';
 import {
   BAR_CONTAINER_TEXT_HEIGHT,
-  XMLNS,
   MASK_HIGHLIGHT_COLOR,
   MIN_BAR_HEIGHT,
 } from '../../constants';
@@ -128,7 +128,7 @@ export function Chart({
   };
 
   return (
-    <svg role="list" viewBox={`0 0 ${width} ${height}`} xmlns={XMLNS}>
+    <ChartElements.Svg height={height} width={width}>
       <LinearGradientWithStops
         gradient={connectorGradient}
         id={connectorGradientId}
@@ -211,6 +211,6 @@ export function Chart({
         height={drawableHeight}
         fill={`url(#${gradientId})`}
       />
-    </svg>
+    </ChartElements.Svg>
   );
 }

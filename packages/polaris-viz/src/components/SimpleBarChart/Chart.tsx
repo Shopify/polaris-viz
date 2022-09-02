@@ -13,6 +13,7 @@ import type {
 } from '@shopify/polaris-viz-core';
 import {animated} from '@react-spring/web';
 
+import {ChartElements} from '../ChartElements';
 import {LegendContainer, useLegend} from '../../components/LegendContainer';
 import {GradientDefs, HorizontalGroup} from '../shared';
 import {
@@ -25,9 +26,6 @@ import {
   useHorizontalStackedValues,
   useColorVisionEvents,
 } from '../../hooks';
-import {XMLNS} from '../../constants';
-
-import styles from './Chart.scss';
 
 export interface ChartProps {
   data: DataSeries[];
@@ -109,19 +107,8 @@ export function Chart({
   });
 
   return (
-    <div
-      className={styles.ChartContainer}
-      style={{
-        width,
-        height,
-      }}
-    >
-      <svg
-        className={styles.SVG}
-        role="list"
-        viewBox={`0 0 ${width} ${height}`}
-        xmlns={XMLNS}
-      >
+    <ChartElements.Div height={height} width={width}>
+      <ChartElements.Svg height={height} width={width}>
         <GradientDefs
           direction="horizontal"
           gradientUnits={isStacked ? 'objectBoundingBox' : 'userSpaceOnUse'}
@@ -167,7 +154,7 @@ export function Chart({
             </animated.g>
           );
         })}
-      </svg>
+      </ChartElements.Svg>
 
       {showLegend && (
         <LegendContainer
@@ -176,6 +163,6 @@ export function Chart({
           onDimensionChange={setLegendDimensions}
         />
       )}
-    </div>
+    </ChartElements.Div>
   );
 }

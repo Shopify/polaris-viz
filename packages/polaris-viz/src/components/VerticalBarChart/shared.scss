@@ -3,7 +3,3 @@
 .Bar {
   transition: fill $duration-slow;
 }
-
-.StackNoOutline {
-  @include no-outline;
-}
