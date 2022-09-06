@@ -14,6 +14,7 @@ import {CROSSHAIR_ID} from '../../../../constants';
 import {useLinearChartAnimations} from '../../../../hooks';
 import {Crosshair} from '../../../Crosshair';
 import {Points} from '../Points';
+import type {GetXPosition} from '../Points';
 
 interface PointsAndCrosshairProps {
   activeIndex: number | null;
@@ -61,7 +62,7 @@ export function PointsAndCrosshair({
     activeIndex,
   });
 
-  const getXPosition = ({isCrosshair} = {isCrosshair: false}) => {
+  const getXPosition: GetXPosition = ({isCrosshair, index}) => {
     if (xScale == null) {
       return 0;
     }
@@ -69,12 +70,10 @@ export function PointsAndCrosshair({
 
     if (
       animatedCoordinates != null &&
-      animatedCoordinates[longestSeriesIndex] != null &&
+      animatedCoordinates[index] != null &&
       shouldAnimate
     ) {
-      return animatedCoordinates[longestSeriesIndex].to(
-        (coord) => coord.x - offset,
-      );
+      return animatedCoordinates[index].to((coord) => coord.x - offset);
     }
     return xScale(activeIndex == null ? 0 : activeIndex) - offset;
   };
@@ -87,7 +86,7 @@ export function PointsAndCrosshair({
           id={`${tooltipId}-${CROSSHAIR_ID}`}
           opacity={activeIndex == null ? 0 : 1}
           theme={theme}
-          x={getXPosition({isCrosshair: true})}
+          x={getXPosition({isCrosshair: true, index: longestSeriesIndex})}
         />
       )}
       {isPerformanceImpacted ? null : (

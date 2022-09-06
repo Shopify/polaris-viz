@@ -17,6 +17,23 @@ import {useWatchColorVisionEvents} from '../../../../hooks';
 import {Point} from '../../../Point';
 import type {AnimatedCoordinate} from '../../../../types';
 
+export type GetXPosition = ({
+  isCrosshair,
+  index,
+}: {
+  isCrosshair: boolean;
+  index: number;
+}) =>
+  | number
+  | Interpolation<
+      | DOMPoint
+      | {
+          x: number;
+          y: number;
+        },
+      number
+    >;
+
 interface PointsProps {
   activeIndex: number | null;
   animatedCoordinates: AnimatedCoordinate[] | null;
@@ -24,16 +41,7 @@ interface PointsProps {
   gradientId: string;
   longestSeriesIndex: number;
   tooltipId: string;
-  getXPosition: ({isCrosshair}: {isCrosshair: boolean}) =>
-    | number
-    | Interpolation<
-        | DOMPoint
-        | {
-            x: number;
-            y: number;
-          },
-        number
-      >;
+  getXPosition: GetXPosition;
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
 }
@@ -97,7 +105,7 @@ export function Points({
             {shouldAnimate ? (
               <Point
                 color={pointColor}
-                cx={getXPosition({isCrosshair: false})}
+                cx={getXPosition({isCrosshair: false, index})}
                 cy={animatedYPosition}
                 active={activeIndex != null}
                 index={index}
