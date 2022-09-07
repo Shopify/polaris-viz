@@ -1,14 +1,14 @@
 import React from 'react';
 import {
   getColorVisionEventAttrs,
-  isGradientType,
   COLOR_VISION_SINGLE_ITEM,
   getColorVisionStylesForActiveIndex,
   useTheme,
 } from '@shopify/polaris-viz-core';
 import type {Color, Direction} from '@shopify/polaris-viz-core';
 
-import {createCSSGradient, classNames} from '../../../../utilities';
+import {getCSSBackgroundFromColor} from '../../../../utilities/getCSSBackgroundFromColor';
+import {classNames} from '../../../../utilities';
 import {
   ComparisonMetric,
   ComparisonMetricProps,
@@ -47,9 +47,7 @@ export function BarLabel({
 
   const angle = direction === 'horizontal' ? 90 : 180;
 
-  const formattedColor = isGradientType(color)
-    ? createCSSGradient(color, angle)
-    : color;
+  const backgroundColor = getCSSBackgroundFromColor(color, angle);
 
   return (
     <li
@@ -65,7 +63,10 @@ export function BarLabel({
         index,
       })}
     >
-      <div style={{background: formattedColor}} className={styles.LabelColor} />
+      <div
+        style={{background: backgroundColor}}
+        className={styles.LabelColor}
+      />
       <div className={styles.Label}>
         <strong style={{color: labelColor}}>{label}</strong>
         <div style={{color: valueColor}} className={styles.ValueContainer}>

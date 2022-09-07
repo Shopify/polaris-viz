@@ -1,7 +1,7 @@
 import {scaleBand, scaleLinear} from 'd3-scale';
 import {useCallback, useMemo} from 'react';
 
-import {isGradientType} from '../utilities';
+import {getGradientFromColor} from '../utilities';
 import type {Color, DataPoint, DataSeries, TargetLine} from '../types';
 
 const STROKE_WIDTH = 1.5;
@@ -105,15 +105,7 @@ export function useSparkBar({
     : [];
 
   const colorToUse = defaultData?.color ?? seriesColor;
-
-  const color = isGradientType(colorToUse)
-    ? colorToUse
-    : [
-        {
-          color: colorToUse,
-          offset: 0,
-        },
-      ];
+  const color = getGradientFromColor(colorToUse);
 
   return {
     dataWithIndex,

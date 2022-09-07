@@ -4,21 +4,14 @@ import type {SpringValue} from '@react-spring/core';
 import {usePolarisVizContext} from '../../../../hooks';
 import type {Color} from '../../../../types';
 import {LinearGradientWithStops} from '../../../../components';
-import {isGradientType, uniqueId} from '../../../../utilities';
+import {getGradientFromColor, uniqueId} from '../../../../utilities';
 
 function getGradientFill(color: Color | null) {
   if (color == null) {
     return null;
   }
 
-  return isGradientType(color)
-    ? color
-    : [
-        {
-          color,
-          offset: 0,
-        },
-      ];
+  return getGradientFromColor(color);
 }
 
 const MASK_GRADIENT = [

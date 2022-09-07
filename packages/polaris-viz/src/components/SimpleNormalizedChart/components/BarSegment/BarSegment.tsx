@@ -3,17 +3,17 @@ import {animated, useSpring} from '@react-spring/web';
 import {
   COLOR_VISION_SINGLE_ITEM,
   getColorVisionEventAttrs,
-  isGradientType,
   getColorVisionStylesForActiveIndex,
   useChartContext,
 } from '@shopify/polaris-viz-core';
 import type {Color, Direction} from '@shopify/polaris-viz-core';
 
+import {getCSSBackgroundFromColor} from '../../../../utilities/getCSSBackgroundFromColor';
 import {
   BARS_TRANSITION_CONFIG,
   BARS_LOAD_ANIMATION_CONFIG,
 } from '../../../../constants';
-import {createCSSGradient, classNames} from '../../../../utilities';
+import {classNames} from '../../../../utilities';
 import type {Size} from '../../types';
 
 import styles from './BarSegment.scss';
@@ -50,9 +50,7 @@ export function BarSegment({
 
   const isMounted = useRef(false);
 
-  const formattedColor = isGradientType(color)
-    ? createCSSGradient(color, angle)
-    : color;
+  const backgroundColor = getCSSBackgroundFromColor(color, angle);
 
   const spring = useSpring({
     from: {[dimension]: `0%`},
@@ -75,7 +73,7 @@ export function BarSegment({
       )}
       style={{
         [dimension]: shouldAnimate ? spring[dimension] : `${safeScale}%`,
-        background: formattedColor,
+        background: backgroundColor,
         ...getColorVisionStylesForActiveIndex({activeIndex, index}),
       }}
       {...getColorVisionEventAttrs({
