@@ -6,14 +6,13 @@ import {
   XAxisOptions,
   YAxisOptions,
   uniqueId,
-  isGradientType,
   LinearGradientWithStops,
-  GradientStop,
   useTheme,
   getAverageColor,
   changeColorOpacity,
   useChartContext,
   LINE_HEIGHT,
+  getGradientFromColor,
 } from '@shopify/polaris-viz-core';
 
 import {ChartElements} from '../ChartElements';
@@ -94,9 +93,7 @@ export function Chart({
   });
 
   const color = colorOverride || selectedTheme.seriesColors.single;
-  const barsGradient = isGradientType(color!)
-    ? color
-    : ([{color, offset: 0}] as GradientStop[]);
+  const barsGradient = getGradientFromColor(color);
 
   const averageColor = getAverageColor(
     barsGradient[0].color,

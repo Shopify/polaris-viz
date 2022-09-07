@@ -4,12 +4,12 @@ import type {SpringValue} from '@react-spring/web';
 import type {Area as D3Area, Line} from 'd3-shape';
 import {
   LinearGradientWithStops,
-  isGradientType,
   getColorVisionEventAttrs,
   COLOR_VISION_SINGLE_ITEM,
   getColorVisionStylesForActiveIndex,
   useChartContext,
   AREAS_LOAD_ANIMATION_CONFIG,
+  getGradientFromColor,
 } from '@shopify/polaris-viz-core';
 import type {Color, Theme, GradientStop} from '@shopify/polaris-viz-core';
 
@@ -79,12 +79,7 @@ export function Area({
     return null;
   }
 
-  const currentColor = colors[index];
-  const isGradient = isGradientType(currentColor);
-
-  const gradient = isGradient
-    ? currentColor
-    : [{offset: 0, color: currentColor}];
+  const gradient = getGradientFromColor(colors[index]);
 
   return (
     <g

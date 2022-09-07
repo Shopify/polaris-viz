@@ -1,10 +1,10 @@
 import React from 'react';
 import {
   LinearGradientWithStops,
-  isGradientType,
   useChartContext,
+  getGradientFromColor,
 } from '@shopify/polaris-viz-core';
-import type {Color, GradientStop, Direction} from '@shopify/polaris-viz-core';
+import type {Color, Direction} from '@shopify/polaris-viz-core';
 
 import type {GradientUnits} from '../../../types';
 
@@ -59,15 +59,7 @@ function Gradient({
   size: string;
   gradientUnits?: GradientUnits;
 }) {
-  const gradient: GradientStop[] = isGradientType(color)
-    ? color
-    : [
-        {
-          color,
-          offset: 0,
-        },
-      ];
-
+  const gradient = getGradientFromColor(color);
   const position = direction === 'vertical' ? {y1: size} : {x2: size};
 
   return (

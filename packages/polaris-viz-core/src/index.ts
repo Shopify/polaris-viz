@@ -89,6 +89,7 @@ export {
   isLargeDataSet,
   ColorScale,
   isDataGroupArray,
+  getGradientFromColor,
 } from './utilities';
 export {
   useSparkBar,

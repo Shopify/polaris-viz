@@ -12,10 +12,10 @@ import {
   useTheme,
   curveStepRounded,
   uniqueId,
-  isGradientType,
   getColorVisionEventAttrs,
   getColorVisionStylesForActiveIndex,
   useChartContext,
+  getGradientFromColor,
 } from '../../';
 import {
   COLOR_VISION_SINGLE_ITEM,
@@ -129,14 +129,7 @@ export function LineSeries({
   const id = useMemo(() => uniqueId('line-series'), []);
   const immediate = !shouldAnimate;
 
-  const lineGradientColor = isGradientType(color!)
-    ? color
-    : [
-        {
-          color,
-          offset: 0,
-        },
-      ];
+  const lineGradientColor = getGradientFromColor(color);
 
   const isSolidLine = data.isComparison !== true;
   const solidLineDelay = isSolidLine ? index * ANIMATION_DELAY : 0;

@@ -3,7 +3,7 @@ import {arc} from 'd3-shape';
 import {
   ARC_LOAD_ANIMATION_CONFIG,
   ARC_DATA_CHANGE_ANIMATION_CONFIG,
-  isGradientType,
+  getGradientFromColor,
   uniqueId,
   getColorVisionEventAttrs,
   getColorVisionStylesForActiveIndex,
@@ -49,12 +49,7 @@ export function Arc({
   const [mounted, setMounted] = useState(false);
   const gradientId = useMemo(() => uniqueId('DonutChart'), []);
   const createArc = arc().cornerRadius(cornerRadius);
-  const gradient = isGradientType(color)
-    ? color
-    : [
-        {color, offset: 0},
-        {color, offset: 1},
-      ];
+  const gradient = getGradientFromColor(color);
 
   const getDelay = () => {
     if (isAnimated) {

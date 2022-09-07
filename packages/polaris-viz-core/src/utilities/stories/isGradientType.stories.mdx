@@ -37,3 +37,32 @@ isGradientType('red');
 
 // false
 ```
+
+<Title type="h3">
+  <code>getGradientFromColor()</code>
+</Title>
+
+<p>
+  Returns a valid `GradientStop[]` based on the `Color` provided. If the `Color`
+  provided is a `string`, it will return a gradient otherwise it will return the
+  provided gradient.
+</p>
+
+```tsx
+getGradientFromColor([
+  {offset: 0, color: 'red'},
+  {offset: 100, color: 'green'},
+]);
+
+// [
+//   {offset: 0, color: 'red'},
+//   {offset: 100, color: 'green'},
+// ]
+
+getGradientFromColor('red');
+
+// [
+//   {offset: 0, color: 'red'},
+//   {offset: 1, color: 'red'},
+// ]
+```
