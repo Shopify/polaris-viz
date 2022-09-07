@@ -1,6 +1,11 @@
 import {ChartState} from '@shopify/polaris-viz-core';
 import type {ArgType} from '@storybook/components';
 
+export const CONTROLS_ARGS = {
+  sort: 'requiredFirst',
+  expanded: true,
+};
+
 export const THEME_CONTROL_ARGS = {
   description: 'The theme that the chart will inherit its styles from',
   options: ['Default', 'Light'],

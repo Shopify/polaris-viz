@@ -1,76 +1,142 @@
+const inquirer = require('inquirer');
+const chalk = require('chalk');
+const figlet = require('figlet');
+const shell = require('shelljs');
 const fs = require('fs');
-const {exec} = require('child_process');
+const path = require('path');
 
-const colors = {
-  textRed: '\x1b[31m',
-  textYellow: '\x1b[33m',
-  textGreen: '\x1b[32m',
-  reset: '\x1b[0m',
+const init = () => {
+  console.log(
+    chalk.magenta(
+      figlet.textSync('Polaris Viz', {
+        font: 'roman',
+        horizontalLayout: 'default',
+        verticalLayout: 'default',
+      }),
+    ),
+  );
 };
 
-const params = JSON.parse(process.env.npm_config_argv);
+const askQuestions = () => {
+  const questions = [
+    {
+      name: 'componentName',
+      type: 'input',
+      default: 'BarChart',
+      message: 'What is the name of your component? (PascalCase, please)',
+      validate: (componentName) => {
+        const componentExists = fs.existsSync(getComponentPath(componentName));
 
-const [command, componentName] = params.original;
-const shouldRemoveComments = params.original.includes('--no-comments');
-
-const componentPath = `./src/components/${componentName}`;
-const storyPath = `${componentPath}/stories/${componentName}.stories.tsx`;
-
-const replaceComponentName = (path) => {
-  const data = fs.readFileSync(path, 'utf8');
-  const result = data.replace(/ComponentName/g, componentName).trim();
-  fs.writeFileSync(path, result, 'utf8');
+        return !componentExists ? `${componentName} does not exist.` : true;
+      },
+    },
+    {
+      name: 'storyName',
+      type: 'input',
+      default: 'Default',
+      message: 'What is the name of your story? (PascalCase, please)',
+      validate: (storyName, {componentName}) => {
+        const storyExists = fs.existsSync(
+          `${getComponentPath(componentName)}/stories/${storyName}.stories.tsx`,
+        );
+        return storyExists
+          ? `${storyName} story already exists. Please choose a different name.`
+          : true;
+      },
+    },
+  ];
+  return inquirer.prompt(questions);
 };
 
-const removeComments = (path) => {
-  const commentRegex = new RegExp(/[\s\n]*\/\//gm);
-  const data = fs.readFileSync(path, 'utf8');
+function getComponentPath(componentName) {
+  return path.resolve(
+    __dirname,
+    `../packages/polaris-viz/src/components/${componentName}`,
+  );
+}
 
-  const result = data
-    .split('\n')
-    .filter((line) => !line.match(commentRegex))
-    .join('\n');
-
-  fs.writeFileSync(path, result, 'utf8');
+const success = (filepath) => {
+  console.log(chalk.white.bgGreen.bold(`Done! File created at ${filepath}`));
 };
 
-const createStoryFiles = (shouldRemoveComments) => {
-  fs.mkdirSync(`${componentPath}/stories`);
-  fs.copyFileSync('./.storybook/boilerplate/Template.stories.tsx', storyPath);
-  replaceComponentName(storyPath);
+const TEMPLATE_NAME = 'Template.stories.tsx';
 
-  if (shouldRemoveComments) {
-    removeComments(storyPath);
+const templateBase = path.resolve(__dirname, './boilerplate/');
+
+const run = async () => {
+  init();
+
+  const answers = await askQuestions();
+  const {componentName, storyName} = answers;
+
+  const componentPath = getComponentPath(componentName);
+  const hasStories = fs.existsSync(`${componentPath}/stories`);
+
+  if (hasStories) {
+    console.log(
+      chalk.gray.bold(
+        `Stories already set up for ${componentName}, creating ${storyName} story.`,
+      ),
+    );
+
+    addSingleStory(componentName, storyName);
+  } else {
+    console.log(
+      chalk.gray.bold(
+        `No stories for ${componentName} exist, creating default stories.`,
+      ),
+    );
+
+    createStoriesFolder(componentName, storyName);
   }
 };
 
-if (!fs.existsSync(`${componentPath}`)) {
-  console.error(
-    colors.textYellow,
-    `⚠️ Could not find a component in '${componentPath}'`,
-    colors.textRed,
+run();
+
+function addSingleStory(componentName, storyName) {
+  const componentPath = getComponentPath(componentName);
+
+  shell.cp(
+    `${templateBase}/${TEMPLATE_NAME}`,
+    `${componentPath}/stories/${storyName}.stories.tsx`,
   );
 
-  throw `Component with this name does not exist`;
-} else if (fs.existsSync(`${componentPath}/stories`)) {
-  console.error(
-    colors.textYellow,
-    `⚠️ Story already exists in '${componentPath}'`,
-    colors.textRed,
+  replaceStoryData(
+    `${componentPath}/stories/${storyName}.stories.tsx`,
+    componentName,
+    storyName,
   );
-  throw `Story with this name is already exists`;
-} else if (fs.existsSync(`${componentPath}`)) {
+
   console.log(
-    colors.textGreen,
-    `📝 Writing story for ${componentName} in '${componentPath}'`,
-  );
-  createStoryFiles(shouldRemoveComments);
-  console.log(
-    colors.reset,
-    `\n🎉 Success! Now open`,
-    colors.textGreen,
-    storyPath,
-    colors.reset,
-    `and configure Default.args \n\nMore information in: https://storybook.js.org/docs/react/api/argtypes\n\n`,
+    chalk.green.bold(`${storyName} story created for ${componentName}`),
   );
 }
+
+function createStoriesFolder(componentName, storyName) {
+  const componentPath = getComponentPath(componentName);
+
+  shell.cp('-r', `${templateBase}`, `${componentPath}/stories`);
+
+  shell.mv(
+    `${componentPath}/stories/${TEMPLATE_NAME}`,
+    `${componentPath}/stories/${storyName}.stories.tsx`,
+  );
+
+  [
+    `${componentPath}/stories/${storyName}.stories.tsx`,
+    `${componentPath}/stories/data.tsx`,
+    `${componentPath}/stories/meta.tsx`,
+  ].forEach((path) => {
+    replaceStoryData(path, componentName, storyName);
+  });
+
+  console.log(chalk.green.bold(`Stories setup for ${componentName}`));
+}
+
+const replaceStoryData = (path, componentName, storyName) => {
+  const data = fs.readFileSync(path, 'utf8');
+  let result = data.replace(/ComponentName/g, componentName).trim();
+  result = result.replace(/Default/g, storyName).trim();
+
+  fs.writeFileSync(path, result, 'utf8');
+};

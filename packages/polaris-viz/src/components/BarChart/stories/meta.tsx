@@ -16,6 +16,7 @@ import {
   IS_ANIMATED_ARGS,
   DATA_SERIES_ARGS,
   EMPTY_STATE_TEXT_ARGS,
+  CONTROLS_ARGS,
 } from '../../../storybook/constants';
 import {PageWithSizingInfo} from '../../Docs/stories';
 
@@ -32,10 +33,7 @@ export const META: Meta = {
           'Used to show comparison of different types, across categories or time. Bars can be stacked or side by side.',
       },
     },
-    controls: {
-      sort: 'requiredFirst',
-      expanded: true,
-    },
+    controls: CONTROLS_ARGS,
   },
   decorators: [(Story) => <div style={{height: '500px'}}>{Story()}</div>],
   argTypes: {
