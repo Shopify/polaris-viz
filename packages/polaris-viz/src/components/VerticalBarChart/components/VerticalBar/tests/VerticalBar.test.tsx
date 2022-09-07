@@ -34,53 +34,27 @@ const HOVER_ZONE_MOCK_PROPS: HoverZoneOffsetProps = {
 };
 
 describe('<VerticalBar/>', () => {
-  describe('borderRadius', () => {
-    it('renders sharp edges when not provided', () => {
-      const bar = mount(
-        <svg>
-          <VerticalBar {...DEFAULT_PROPS} />,
-        </svg>,
-      );
+  it('renders a bar', () => {
+    const bar = mount(
+      <svg>
+        <VerticalBar {...DEFAULT_PROPS} />,
+      </svg>,
+    );
 
-      expect(bar).toContainReactComponent('path', {
-        // eslint-disable-next-line id-length
-        d: `
-  M3,0
-  h94
-  a3,3 0 0 1 3,3
-  v997
-  a0,0 0 0 1 -0,0
+    expect(bar).toContainReactComponent('path', {
+      // eslint-disable-next-line id-length
+      d: `
+  M0.5,0
+  h99
+  a0.5,0.5 0 0 1 0.5,0.5
+  v0.5
+  a0,0 0 0 1 0,0
   h-100
-  a0,0 0 0 1 -0,-0
-  v-997
-  a3,3 0 0 1 3,-3
+  a0,0 0 0 1 0,0
+  v-0.5
+  a0.5,0.5 0 0 1 0.5,-0.5
   Z
 `,
-      });
-    });
-
-    it('applies the provided border radius', () => {
-      const bar = mount(
-        <svg>
-          <VerticalBar {...DEFAULT_PROPS} borderRadius={BORDER_RADIUS.Top} />,
-        </svg>,
-      );
-
-      expect(bar).toContainReactComponent('path', {
-        // eslint-disable-next-line id-length
-        d: `
-  M3,0
-  h94
-  a3,3 0 0 1 3,3
-  v997
-  a0,0 0 0 1 -0,0
-  h-100
-  a0,0 0 0 1 -0,-0
-  v-997
-  a3,3 0 0 1 3,-3
-  Z
-`,
-      });
     });
   });
 
