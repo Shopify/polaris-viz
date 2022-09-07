@@ -7,6 +7,8 @@ import {
   LINE_SERIES_POINT_RADIUS,
   getColorVisionStylesForActiveIndex,
 } from '../../../../';
+import {useSpringConfig} from '../../../../hooks/useSpringConfig';
+import {LINES_TRANSITION_CONFIG} from '../../../../constants';
 
 export function AnimatedLine({
   immediate,
@@ -31,6 +33,13 @@ export function AnimatedLine({
   const AnimatedPath = animated(Path);
   const AnimatedCircle = animated(Circle);
 
+  const springConfig = useSpringConfig({
+    shouldAnimate: !immediate,
+    animationDelay: delay,
+    mountedSpringConfig: LINES_TRANSITION_CONFIG,
+    unmountedSpringConfig: LINES_LOAD_ANIMATION_CONFIG,
+  });
+
   const mounted = useRef(false);
 
   const {animatedLineShape, cy} = useSpring({
@@ -44,10 +53,7 @@ export function AnimatedLine({
       cy: lastY,
       animatedLineShape: lineGenerator(toData.data),
     },
-    delay,
-    config: LINES_LOAD_ANIMATION_CONFIG,
-    default: {immediate},
-    onRest: () => (mounted.current = true),
+    ...springConfig,
   });
 
   return (

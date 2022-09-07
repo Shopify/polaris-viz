@@ -9,3 +9,4 @@ export {useAriaLabel} from './useAriaLabel';
 export {useChartContext} from './useChartContext';
 export {usePrevious} from './usePrevious';
 export {useChartPositions} from './useChartPositions';
+export {useSpringConfig} from './useSpringConfig';
