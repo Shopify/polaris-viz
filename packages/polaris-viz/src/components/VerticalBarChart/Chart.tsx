@@ -119,12 +119,16 @@ export function Chart({
     integersOnly: yAxisOptions.integersOnly,
   });
 
-  const {ticks: initialTicks} = useYScale({
-    drawableHeight: height,
+  const yScaleOptions = {
     formatYAxisLabel: yAxisOptions.labelFormatter,
     integersOnly: yAxisOptions.integersOnly,
     max,
     min,
+  };
+
+  const {ticks: initialTicks} = useYScale({
+    ...yScaleOptions,
+    drawableHeight: height,
   });
 
   const yAxisLabelWidth = useMemo(() => {
@@ -171,11 +175,8 @@ export function Chart({
   });
 
   const {ticks, yScale} = useYScale({
+    ...yScaleOptions,
     drawableHeight,
-    formatYAxisLabel: yAxisOptions.labelFormatter,
-    integersOnly: yAxisOptions.integersOnly,
-    max,
-    min,
   });
 
   const barColors = data.map(({color}) => color!);

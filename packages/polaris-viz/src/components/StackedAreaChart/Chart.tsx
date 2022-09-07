@@ -132,12 +132,16 @@ export function Chart({
 
   const {minY, maxY} = yAxisMinMax(stackedValues);
 
-  const {yAxisLabelWidth} = useYScale({
-    drawableHeight: height,
+  const yScaleOptions = {
     formatYAxisLabel: yAxisOptions.labelFormatter,
     integersOnly: yAxisOptions.integersOnly,
     max: maxY,
     min: minY,
+  };
+
+  const {yAxisLabelWidth} = useYScale({
+    ...yScaleOptions,
+    drawableHeight: height,
   });
 
   const {
@@ -164,11 +168,8 @@ export function Chart({
   });
 
   const {ticks, yScale} = useYScale({
+    ...yScaleOptions,
     drawableHeight,
-    formatYAxisLabel: yAxisOptions.labelFormatter,
-    integersOnly: yAxisOptions.integersOnly,
-    max: maxY,
-    min: minY,
   });
 
   const annotationsDrawableHeight =
