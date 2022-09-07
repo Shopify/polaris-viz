@@ -17,6 +17,7 @@ import type {
   XAxisOptions,
   YAxisOptions,
 } from '@shopify/polaris-viz-core';
+import {stackOffsetDiverging, stackOrderNone} from 'd3-shape';
 
 import {ChartElements} from '../ChartElements';
 import {
@@ -107,7 +108,14 @@ export function Chart({
   });
 
   const isStacked = type === 'stacked';
-  const stackedValues = isStacked ? getStackedValues(data, labels) : null;
+  const stackedValues = isStacked
+    ? getStackedValues({
+        series: data,
+        labels,
+        order: stackOrderNone,
+        offset: stackOffsetDiverging,
+      })
+    : null;
 
   const reducedLabelIndexes = useReducedLabelIndexes({
     dataLength: data[0] ? data[0].data.length : 0,

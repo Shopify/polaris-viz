@@ -1,4 +1,4 @@
-import {stack} from 'd3-shape';
+import {stack, stackOffsetNone, stackOrderReverse} from 'd3-shape';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {getStackedValues} from '../getStackedValues';
@@ -39,6 +39,7 @@ jest.mock('d3-shape', () => ({
     const generator = (value: any) => value;
     generator.offset = () => generator;
     generator.keys = () => generator;
+    generator.order = () => generator;
     return generator;
   }),
 }));
@@ -49,10 +50,16 @@ describe('get-stacked-values', () => {
       const stack = () => (value: any) => value;
       stack.offset = () => stack;
       stack.keys = () => stack;
+      stack.order = () => stack;
       return stack;
     });
 
-    getStackedValues(mockData, labels);
+    getStackedValues({
+      series: mockData,
+      labels,
+      order: stackOrderReverse,
+      offset: stackOffsetNone,
+    });
 
     expect(stack).toHaveBeenCalledTimes(1);
   });
@@ -65,10 +72,16 @@ describe('get-stacked-values', () => {
       offsetSpy = jest.fn((offset: any) => (offset ? offset : stack));
       stack.offset = offsetSpy;
       stack.keys = (keys: any) => (keys ? stack : keys);
+      stack.order = () => stack;
       return stack;
     });
 
-    getStackedValues(mockData, labels);
+    getStackedValues({
+      series: mockData,
+      labels,
+      order: stackOrderReverse,
+      offset: stackOffsetNone,
+    });
 
     expect(offsetSpy).toHaveBeenCalledTimes(1);
   });
@@ -79,13 +92,19 @@ describe('get-stacked-values', () => {
     (stack as jest.Mock).mockImplementation(() => {
       const stack = () => (value: any) => value;
       stack.offset = (offset: any) => (offset ? offset : stack);
+      stack.order = () => stack;
 
       keySpy = jest.fn(() => stack);
       stack.keys = () => keySpy;
       return stack;
     });
 
-    getStackedValues(mockData, labels);
+    getStackedValues({
+      series: mockData,
+      labels,
+      order: stackOrderReverse,
+      offset: stackOffsetNone,
+    });
 
     expect(keySpy).toHaveBeenCalledTimes(1);
   });

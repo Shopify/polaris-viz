@@ -1,5 +1,6 @@
 import {useMemo} from 'react';
 import type {DataSeries} from '@shopify/polaris-viz-core';
+import {stackOffsetDiverging, stackOrderNone} from 'd3-shape';
 
 import {getStackedMinMax, getStackedValues} from '../utilities';
 
@@ -22,7 +23,12 @@ export function useHorizontalStackedValues({data, isStacked}: Props) {
     }, data[0]);
 
     const labels = longestSeries.data.map(({key}) => `${key}`);
-    const stackedValues = getStackedValues(data, labels);
+    const stackedValues = getStackedValues({
+      series: data,
+      labels,
+      order: stackOrderNone,
+      offset: stackOffsetDiverging,
+    });
 
     const {min, max} = getStackedMinMax({
       stackedValues,
