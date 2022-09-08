@@ -1,4 +1,5 @@
 import {createElement} from 'react';
+import type {SpringConfig} from '@react-spring/core';
 
 import variables from './styles/shared/_variables.scss';
 import {createGradient} from './utilities/createGradient';
@@ -53,46 +54,58 @@ export enum ChartMargin {
   Right = 0,
 }
 
-export const BARS_TRANSITION_CONFIG = {
+export const BARS_TRANSITION_CONFIG: SpringConfig = {
   mass: 1,
   tension: 190,
   friction: 26,
-  clamp: true,
 };
 
-export const BARS_SORT_TRANSITION_CONFIG = {
+export const BARS_SORT_TRANSITION_CONFIG: SpringConfig = {
   mass: 1,
   tension: 150,
   friction: 20,
   restVelocity: 200,
 };
 
-export const AREAS_LOAD_ANIMATION_CONFIG = {
+export const BARS_LOAD_ANIMATION_CONFIG: SpringConfig = {
+  mass: 1,
+  tension: 140,
+  friction: 18,
+};
+
+export const AREAS_LOAD_ANIMATION_CONFIG: SpringConfig = {
   mass: 1,
   tension: 120,
   friction: 20,
   clamp: true,
 };
 
-export const LINES_LOAD_ANIMATION_CONFIG = {
+export const AREAS_TRANSITION_CONFIG: SpringConfig = {
+  mass: 1,
+  tension: 190,
+  friction: 26,
+  clamp: true,
+};
+
+export const LINES_LOAD_ANIMATION_CONFIG: SpringConfig = {
   mass: 1,
   tension: 140,
   friction: 18,
 };
 
-export const BARS_LOAD_ANIMATION_CONFIG = {
+export const LINES_TRANSITION_CONFIG: SpringConfig = {
   mass: 1,
-  tension: 140,
-  friction: 18,
+  tension: 190,
+  friction: 26,
 };
 
-export const ARC_LOAD_ANIMATION_CONFIG = {
+export const ARC_LOAD_ANIMATION_CONFIG: SpringConfig = {
   mass: 1,
   tension: 150,
   friction: 10,
 };
 
-export const ARC_DATA_CHANGE_ANIMATION_CONFIG = {
+export const ARC_DATA_CHANGE_ANIMATION_CONFIG: SpringConfig = {
   mass: 1,
   tension: 150,
   friction: 20,

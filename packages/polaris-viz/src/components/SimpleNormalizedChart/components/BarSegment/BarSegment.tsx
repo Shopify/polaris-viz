@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import {animated, useSpring} from '@react-spring/web';
 import {
   COLOR_VISION_SINGLE_ITEM,
@@ -9,11 +9,8 @@ import {
 import type {Color, Direction} from '@shopify/polaris-viz-core';
 
 import {getCSSBackgroundFromColor} from '../../../../utilities/getCSSBackgroundFromColor';
-import {
-  BARS_TRANSITION_CONFIG,
-  BARS_LOAD_ANIMATION_CONFIG,
-} from '../../../../constants';
 import {classNames} from '../../../../utilities';
+import {useBarSpringConfig} from '../../../../hooks/useBarSpringConfig';
 import type {Size} from '../../types';
 
 import styles from './BarSegment.scss';
@@ -48,19 +45,14 @@ export function BarSegment({
   const angle = direction === 'horizontal' ? 90 : 180;
   const dimension = direction === 'horizontal' ? 'width' : 'height';
 
-  const isMounted = useRef(false);
-
   const backgroundColor = getCSSBackgroundFromColor(color, angle);
+
+  const springConfig = useBarSpringConfig({animationDelay: delay});
 
   const spring = useSpring({
     from: {[dimension]: `0%`},
     to: {[dimension]: `${safeScale}%`},
-    config: isMounted.current
-      ? BARS_TRANSITION_CONFIG
-      : BARS_LOAD_ANIMATION_CONFIG,
-    default: {immediate: !shouldAnimate},
-    delay: isMounted.current ? 0 : delay,
-    onRest: () => (isMounted.current = true),
+    ...springConfig,
   });
 
   return (

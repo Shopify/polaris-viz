@@ -60,6 +60,7 @@ export {
   LINE_SERIES_POINT_RADIUS,
   AREAS_LOAD_ANIMATION_CONFIG,
   COLOR_VARIABLES,
+  AREAS_TRANSITION_CONFIG,
 } from './constants';
 export {
   clamp,
@@ -103,6 +104,7 @@ export {
   useChartContext,
   usePrevious,
   useChartPositions,
+  useSpringConfig,
 } from './hooks';
 export {
   Bar,

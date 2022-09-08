@@ -6,22 +6,26 @@ import {
   COLOR_VISION_SINGLE_ITEM,
   getColorVisionStylesForActiveIndex,
   getRoundedRectPath,
-  useChartContext,
 } from '@shopify/polaris-viz-core';
 
+import {useBarSpringConfig} from '../../../../../hooks/useBarSpringConfig';
+
 export interface StackedBarProps {
-  activeBarIndex: number;
-  ariaLabel: string;
-  borderRadius: string;
-  color: string;
-  height: number;
-  seriesIndex: number;
-  setActiveBarIndex: Dispatch<SetStateAction<number>>;
-  width: number;
+  zeroPosition: number;
   x: number;
+  width: number;
+  setActiveBarIndex: Dispatch<SetStateAction<number>>;
+  seriesIndex: number;
+  height: number;
+  color: string;
+  borderRadius: string;
+  ariaLabel: string;
+  animationDelay: number;
+  activeBarIndex: number;
 }
 
 export function StackedBar({
+  animationDelay,
   activeBarIndex,
   ariaLabel,
   borderRadius,
@@ -31,13 +35,13 @@ export function StackedBar({
   setActiveBarIndex,
   width,
   x,
+  zeroPosition,
 }: StackedBarProps) {
-  const {shouldAnimate} = useChartContext();
-
+  const springConfig = useBarSpringConfig({animationDelay});
   const {transform} = useSpring({
-    from: {transform: `scale(0.5, 1)`},
+    from: {transform: `scale(0, 1)`},
     to: {transform: `scale(1, 1)`},
-    default: {immediate: !shouldAnimate},
+    ...springConfig,
   });
 
   const pathD = getRoundedRectPath({
@@ -47,7 +51,7 @@ export function StackedBar({
   });
 
   return (
-    <animated.g style={{transform}}>
+    <animated.g style={{transform, transformOrigin: `${zeroPosition}px 0px`}}>
       <path
         d={pathD}
         fill={`url(#${color})`}

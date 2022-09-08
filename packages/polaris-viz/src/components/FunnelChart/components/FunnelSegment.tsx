@@ -3,11 +3,11 @@ import {createPortal} from 'react-dom';
 import {useSpring, animated, to} from '@react-spring/web';
 import {
   getRoundedRectPath,
-  BARS_LOAD_ANIMATION_CONFIG,
-  useChartContext,
   changeColorOpacity,
   useTheme,
 } from '@shopify/polaris-viz-core';
+
+import {useBarSpringConfig} from '../../../hooks/useBarSpringConfig';
 
 import {Label} from './Label';
 
@@ -30,7 +30,6 @@ export function FunnelSegment({
 }) {
   const selectedTheme = useTheme();
   const mounted = useRef(false);
-  const {shouldAnimate} = useChartContext();
 
   const borderRadius = selectedTheme.bar.borderRadius;
 
@@ -38,6 +37,8 @@ export function FunnelSegment({
     xAxis: {labelColor: axisLabelColor},
     chartContainer: {backgroundColor},
   } = useTheme();
+
+  const springConfig = useBarSpringConfig({animationDelay: index * 150});
 
   const {animatedHeight, animatedStartY, animatedNextY} = useSpring({
     from: {
@@ -50,10 +51,7 @@ export function FunnelSegment({
       animatedStartY: connector.startY,
       animatedNextY: connector.nextY,
     },
-    delay: mounted.current ? 0 : index * 150,
-    config: BARS_LOAD_ANIMATION_CONFIG,
-    default: {immediate: !shouldAnimate},
-    onRest: () => (mounted.current = true),
+    ...springConfig,
   });
 
   return (

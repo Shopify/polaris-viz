@@ -6,8 +6,8 @@ import {
   useTheme,
 } from '@shopify/polaris-viz-core';
 
+import {useBarSpringConfig} from '../../../../hooks/useBarSpringConfig';
 import {ZeroValueLine} from '../../../shared/ZeroValueLine';
-import {BARS_TRANSITION_CONFIG} from '../../../../constants';
 
 import styles from './VerticalBar.scss';
 
@@ -21,7 +21,6 @@ export interface VerticalBarProps {
   zeroPosition: number;
   animationDelay?: number;
   ariaLabel?: string;
-  isAnimated?: boolean;
   role?: string;
   areAllNegative?: boolean;
 }
@@ -32,7 +31,6 @@ export const VerticalBar = React.memo(function Bar({
   color,
   height,
   index,
-  isAnimated = true,
   rawValue,
   role,
   width,
@@ -69,12 +67,12 @@ export const VerticalBar = React.memo(function Bar({
     width,
   });
 
+  const springConfig = useBarSpringConfig({animationDelay});
+
   const {transform} = useSpring({
     from: {transform: 'scaleY(0) translateZ(0)'},
     to: {transform: 'scaleY(1) translateZ(0)'},
-    delay: isAnimated ? animationDelay : 0,
-    config: BARS_TRANSITION_CONFIG,
-    default: {immediate: !isAnimated},
+    ...springConfig,
   });
 
   return (

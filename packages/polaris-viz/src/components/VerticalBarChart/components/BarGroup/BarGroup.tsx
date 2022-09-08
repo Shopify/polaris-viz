@@ -64,7 +64,7 @@ export function BarGroup({
   areAllNegative,
 }: BarGroupProps) {
   const groupAriaLabel = formatAriaLabel(accessibilityData[barGroupIndex]);
-  const {id, shouldAnimate, isPerformanceImpacted} = useChartContext();
+  const {id, isPerformanceImpacted} = useChartContext();
 
   const selectedTheme = useTheme(theme);
 
@@ -142,7 +142,6 @@ export function BarGroup({
             >
               <VerticalBar
                 height={getBarHeight(rawValue)}
-                isAnimated={shouldAnimate}
                 color={MASK_HIGHLIGHT_COLOR}
                 x={x + (barWidth + BAR_SPACING) * index}
                 zeroPosition={yScale(0)}

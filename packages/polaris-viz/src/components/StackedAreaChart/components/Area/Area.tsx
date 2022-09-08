@@ -10,6 +10,8 @@ import {
   useChartContext,
   AREAS_LOAD_ANIMATION_CONFIG,
   getGradientFromColor,
+  useSpringConfig,
+  AREAS_TRANSITION_CONFIG,
 } from '@shopify/polaris-viz-core';
 import type {Color, Theme, GradientStop} from '@shopify/polaris-viz-core';
 
@@ -45,10 +47,16 @@ export function Area({
   zeroLineValues,
 }: AreaProps) {
   const {shouldAnimate} = useChartContext();
-
   const delay = animationIndex * (duration / 2);
 
   const mounted = useRef(false);
+
+  const springConfig = useSpringConfig({
+    shouldAnimate,
+    animationDelay: delay,
+    mountedSpringConfig: AREAS_TRANSITION_CONFIG,
+    unmountedSpringConfig: AREAS_LOAD_ANIMATION_CONFIG,
+  });
 
   const {
     animatedAreaShape,
@@ -69,10 +77,7 @@ export function Area({
       animatedAreaShape: areaGenerator(data),
       animatedLineShape: lineGenerator(data),
     },
-    delay: mounted.current ? 0 : delay,
-    config: AREAS_LOAD_ANIMATION_CONFIG,
-    default: {immediate: !shouldAnimate},
-    onRest: () => (mounted.current = true),
+    ...springConfig,
   });
 
   if (animatedAreaShape == null || animatedLineShape == null) {

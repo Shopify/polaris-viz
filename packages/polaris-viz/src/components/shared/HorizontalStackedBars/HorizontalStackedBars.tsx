@@ -1,6 +1,5 @@
 import React, {useMemo, useState} from 'react';
 import type {ScaleLinear} from 'd3-scale';
-import {animated, useSpring} from '@react-spring/web';
 import {
   COLOR_VISION_SINGLE_ITEM,
   BORDER_RADIUS,
@@ -9,10 +8,7 @@ import {
 
 import {useWatchColorVisionEvents} from '../../../hooks';
 import {getBarId} from '../../../utilities';
-import {
-  BARS_TRANSITION_CONFIG,
-  HORIZONTAL_GROUP_LABEL_HEIGHT,
-} from '../../../constants';
+import {HORIZONTAL_GROUP_LABEL_HEIGHT} from '../../../constants';
 import type {FormattedStackedSeries} from '../../../types';
 import {getGradientDefId} from '..';
 import {ZeroValueLine} from '../ZeroValueLine';
@@ -65,7 +61,7 @@ export function HorizontalStackedBars({
   stackedValues,
   xScale,
 }: HorizontalStackedBarsProps) {
-  const {shouldAnimate, theme} = useChartContext();
+  const {theme} = useChartContext();
   const [activeBarIndex, setActiveBarIndex] = useState(-1);
 
   useWatchColorVisionEvents({
@@ -75,18 +71,6 @@ export function HorizontalStackedBars({
         setActiveBarIndex(detail.index);
       }
     },
-  });
-
-  const {transform} = useSpring({
-    from: {
-      transform: `scale(0, 1) translate(0, ${HORIZONTAL_GROUP_LABEL_HEIGHT}px`,
-    },
-    to: {
-      transform: `scale(1, 1) translate(0, ${HORIZONTAL_GROUP_LABEL_HEIGHT}px`,
-    },
-    config: BARS_TRANSITION_CONFIG,
-    delay: animationDelay,
-    default: {immediate: !shouldAnimate},
   });
 
   const lastIndexes = useMemo(() => {
@@ -109,10 +93,9 @@ export function HorizontalStackedBars({
   const gaps = useStackedGaps({stackedValues, groupIndex});
 
   return (
-    <animated.g
+    <g
       style={{
-        transform,
-        transformOrigin: `${xScale(0)}px 0px`,
+        transform: `translate(0, ${HORIZONTAL_GROUP_LABEL_HEIGHT}px`,
       }}
       aria-hidden="true"
     >
@@ -140,6 +123,7 @@ export function HorizontalStackedBars({
               <ZeroValueLine x={x} y={barHeight / 2} direction="horizontal" />
             ) : (
               <StackedBar
+                animationDelay={animationDelay}
                 activeBarIndex={activeBarIndex}
                 ariaLabel={ariaLabel}
                 borderRadius={borderRadius}
@@ -150,11 +134,12 @@ export function HorizontalStackedBars({
                 setActiveBarIndex={setActiveBarIndex}
                 width={width}
                 x={x}
+                zeroPosition={xScale(0)}
               />
             )}
           </React.Fragment>
         );
       })}
-    </animated.g>
+    </g>
   );
 }

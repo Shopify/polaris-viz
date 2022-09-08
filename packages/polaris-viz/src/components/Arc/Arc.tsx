@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useMemo} from 'react';
 import {arc} from 'd3-shape';
 import {
   ARC_LOAD_ANIMATION_CONFIG,
@@ -8,6 +8,7 @@ import {
   getColorVisionEventAttrs,
   getColorVisionStylesForActiveIndex,
   COLOR_VISION_SINGLE_ITEM,
+  useSpringConfig,
 } from '@shopify/polaris-viz-core';
 import type {Color} from '@shopify/polaris-viz-core';
 import {useSpring, animated, to} from '@react-spring/web';
@@ -46,17 +47,16 @@ export function Arc({
   isAnimated,
   activeIndex = 0,
 }: ArcProps) {
-  const [mounted, setMounted] = useState(false);
   const gradientId = useMemo(() => uniqueId('DonutChart'), []);
   const createArc = arc().cornerRadius(cornerRadius);
   const gradient = getGradientFromColor(color);
 
-  const getDelay = () => {
-    if (isAnimated) {
-      return mounted ? 0 : index * 100;
-    }
-    return 0;
-  };
+  const springConfig = useSpringConfig({
+    animationDelay: index * 100,
+    shouldAnimate: isAnimated,
+    mountedSpringConfig: ARC_DATA_CHANGE_ANIMATION_CONFIG,
+    unmountedSpringConfig: ARC_LOAD_ANIMATION_CONFIG,
+  });
 
   const {
     animatedInnerRadius,
@@ -79,14 +79,7 @@ export function Arc({
     from: {
       animatedOuterRadius: radius - thickness,
     },
-    config: mounted
-      ? ARC_DATA_CHANGE_ANIMATION_CONFIG
-      : ARC_LOAD_ANIMATION_CONFIG,
-    delay: getDelay(),
-    default: {
-      immediate: !isAnimated,
-    },
-    onRest: () => setMounted(true),
+    ...springConfig,
   });
 
   return (
