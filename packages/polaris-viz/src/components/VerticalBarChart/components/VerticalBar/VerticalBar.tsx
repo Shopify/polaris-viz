@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {animated, useSpring} from '@react-spring/web';
 import {
   DataType,
@@ -50,52 +50,54 @@ export const VerticalBar = React.memo(function Bar({
   const style = useMemo(() => {
     if (yPosition == null) return;
 
-    const translate = `translate(${
-      treatAsNegative ? x + width : x
-    }px, ${yPosition}px)`;
-
-    const rotate = `rotate(${treatAsNegative ? 180 : 0}deg)`;
-
     return {
-      transform: ` ${translate} ${rotate}`,
+      transform: `translateX(${treatAsNegative ? x + width : x}px)`,
     };
   }, [yPosition, treatAsNegative, x, width]);
 
-  const path = getRoundedRectPath({
-    borderRadius: `${borderRadius} ${borderRadius} 0 0`,
-    height,
-    width,
-  });
+  const getPath = useCallback(
+    (height = 0, width = 0) => {
+      return getRoundedRectPath({
+        height,
+        width,
+        borderRadius: `${borderRadius} ${borderRadius} 0 0`,
+      });
+    },
+    [borderRadius],
+  );
 
   const springConfig = useBarSpringConfig({animationDelay});
+  const rotate = `${treatAsNegative ? 'rotate(180)' : ''}`;
 
-  const {transform} = useSpring({
-    from: {transform: 'scaleY(0) translateZ(0)'},
-    to: {transform: 'scaleY(1) translateZ(0)'},
+  const {pathD, transform} = useSpring({
+    from: {
+      pathD: getPath(1, width),
+      transform: `translate(0 ${zeroPosition}) ${rotate}`,
+    },
+    to: {
+      pathD: getPath(height, width),
+      transform: `translate(0 ${yPosition}) ${rotate}`,
+    },
     ...springConfig,
   });
 
   return (
-    <animated.g
-      style={{
-        transform,
-        transformOrigin: `0px ${zeroPosition}px`,
-      }}
-      aria-hidden="true"
-    >
+    <React.Fragment>
       {!zeroValue ? (
-        <path
-          data-id={`bar-${index}`}
-          data-index={index}
-          data-type={DataType.Bar}
-          d={path}
-          fill={color}
-          aria-label={ariaLabel}
-          role={role}
-          style={style}
-          className={styles.Bar}
-          aria-hidden="true"
-        />
+        <g aria-hidden="true" style={style}>
+          <animated.path
+            data-id={`bar-${index}`}
+            data-index={index}
+            data-type={DataType.Bar}
+            d={pathD}
+            fill={color}
+            aria-label={ariaLabel}
+            role={role}
+            className={styles.Bar}
+            aria-hidden="true"
+            transform={transform}
+          />
+        </g>
       ) : (
         <ZeroValueLine
           x={x + width / 2}
@@ -104,6 +106,6 @@ export const VerticalBar = React.memo(function Bar({
           areAllNegative={areAllNegative}
         />
       )}
-    </animated.g>
+    </React.Fragment>
   );
 });

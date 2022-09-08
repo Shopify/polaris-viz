@@ -10,6 +10,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Added
 
 - Added animations to vertical stacked `<BarChart />'.
+- Added data change animations to vertical `<BarChart />'.
 
 ## [7.3.0] - 2022-08-31
 
