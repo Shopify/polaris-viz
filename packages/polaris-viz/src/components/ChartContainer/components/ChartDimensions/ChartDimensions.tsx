@@ -14,7 +14,7 @@ import {
   usePrevious,
   useTheme,
 } from '@shopify/polaris-viz-core';
-import {useDebouncedCallback} from 'use-debounce/lib';
+import {useDebouncedCallback} from 'use-debounce';
 import type {SkeletonType} from 'components/ChartSkeleton';
 
 import {ChartErrorBoundary} from '../../../ChartErrorBoundary';
@@ -65,7 +65,7 @@ export function ChartDimensions({
     setChartDimensions({width, height});
   }, [entry, previousEntry?.contentRect.width]);
 
-  const [debouncedUpdateDimensions] = useDebouncedCallback(() => {
+  const debouncedUpdateDimensions = useDebouncedCallback(() => {
     updateDimensions();
   }, 100);
 
