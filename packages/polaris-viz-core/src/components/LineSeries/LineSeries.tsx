@@ -119,7 +119,7 @@ export function LineSeries({
   const lastLinePointCoordinates =
     lastLinePoint?.value != null
       ? {
-          x: xScale(Number(lastLinePoint.key)),
+          x: xScale(data.data.indexOf(lastLinePoint)),
           y: yScale(lastLinePoint.value),
         }
       : null;

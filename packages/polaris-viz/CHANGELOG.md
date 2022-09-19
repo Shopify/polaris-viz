@@ -12,6 +12,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 - Added animations to vertical stacked `<BarChart />'.
 - Added data change animations to vertical `<BarChart />'.
 
+### Fixed
+
+- Fixed position of dot in SparkLineCharts when series use non-numeric data keys.
+
 ## [7.3.0] - 2022-08-31
 
 ### Fixed
