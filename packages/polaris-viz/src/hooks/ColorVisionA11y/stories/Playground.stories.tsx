@@ -1,18 +1,17 @@
 import React from 'react';
-import type {Story, Meta} from '@storybook/react';
+import type {Story} from '@storybook/react';
 import {Playground} from './Playground';
 
 export default {
-  title: 'playground/ColorVision',
-  parameters: {
-    horizontalMargin: 0,
-  },
-} as Meta;
-
-const Template: Story = () => {
-  return <Playground />;
+  title: 'shared/Accessability/Color Vision A11y',
 };
 
-export const Default = Template.bind({});
+const Template: Story = () => {
+  return (
+    <div style={{height: 500}}>
+      <Playground />
+    </div>
+  );
+};
 
-Default.args = {};
+export const Example = Template.bind({});

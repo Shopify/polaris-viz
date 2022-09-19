@@ -16,7 +16,6 @@ const items = ['red', 'green', 'blue'];
 export function Playground() {
   // STEP 1: Make sure your chart is wrapped by <ChartContainer />.
   //
-  //
   // Our custom event is triggered on the window so we want
   // to scope the events to each individual chart.
   //
@@ -26,7 +25,7 @@ export function Playground() {
   // Without the id, useColorVisionEvents() won't
   // find any elements to attach the mouse events to.
   return (
-    <ChartContainer theme="Default">
+    <ChartContainer theme="Default" data={[]} isAnimated>
       <Chart />
     </ChartContainer>
   );
@@ -82,8 +81,7 @@ export function Chart() {
           return (
             <div
               key={index}
-              // STEP 4: Attach data-attributes to an item that useColorVisionEvents()
-              // will use to attach mouse events to.
+              // STEP 4: Attach data-attributes to an item that //useColorVisionEvents() will use to attach mouse events to.
               //
               // This element will have mouse events attached to it
               // and will fire events for the 'single' type.

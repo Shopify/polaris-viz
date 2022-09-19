@@ -1,0 +1,154 @@
+import {Meta, Story, Canvas} from '@storybook/addon-docs';
+
+import {
+  Divider,
+  Title,
+  UtilitiesHeader,
+} from '../../../../../polaris-viz/src/components/Docs/stories/components';
+
+<Meta
+  title="shared/Accessability/Color Vision A11y/Usage"
+  parameters={{
+    viewMode: 'docs',
+    docsOnly: true,
+  }}
+/>
+
+<Title>🌈 Color Vision Accessibility</Title>
+
+<p>
+  We rely on color to visually group data, which is why it’s important to ensure
+  that our charts are accessible to all users. This is especially important for
+  users with color vision deficiencies, who may not be able to distinguish
+  between certain colors.
+</p>
+
+<p>
+  To help we draw focus to different data points by changing the opacity of the
+  data series that are being currently interacted with.
+</p>
+
+<p>
+  We provide a few hooks and utilites that make it easy to emit and respond to
+  these user events.
+</p>
+
+<Title type="h3">
+  <code>useColorVisionEvents()</code>
+</Title>
+
+<p>
+  This hook is used to add event listeners to the document to toggle the
+  <code>data-polaris-color-vision</code> attribute on the document body. This attribute
+  is used to toggle the color vision styles for individual charts.
+</p>
+
+<p>
+  This hook should be called as high up in the chart/component tree as possible.
+</p>
+
+```tsx
+useColorVisionEvents();
+```
+
+<Title type="h3">
+  <code>useWatchColorVisionEvents()</code>
+</Title>
+
+<p>
+  Watch for events triggered by the <code>useColorVisionEvents()</code> hook.
+</p>
+
+```tsx
+useWatchColorVisionEvents({
+  type: COLOR_VISION_GROUP_ITEM,
+  onIndexChange: ({detail}) => {
+    setActiveBarGroup(detail.index);
+  },
+});
+```
+
+<Title type="h3">
+  <code>getColorVisionEventAttrs()</code>
+</Title>
+
+<p>
+  Returns an object of all data attributes required to respond to
+  <code>useColorVisionEvents()</code>.
+</p>
+
+```tsx
+getColorVisionEventAttrs({
+  type: COLOR_VISION_SINGLE_ITEM,
+  index: 1,
+});
+
+// {
+//   [`data-color-vision-event-watch`]: true,
+//   [`data-color-vision-event-type`]: 'single',
+//   [`data-color-vision-event-index`]: 1,
+// }
+```
+
+<Title type="h3">
+  <code>getColorVisionStylesForActiveIndex()</code>
+</Title>
+
+<p>
+  Apply opacity and transition css/style properties to a DOM element. Opacity is
+  determined by <code>index</code> and <code>activeIndex</code>.
+</p>
+
+```tsx
+getColorVisionStylesForActiveIndex({
+  activeIndex: 1,
+  index: 1,
+});
+
+// {
+//   opacity: '0.3',
+//   transition: 'opacity 100ms ease',
+// }
+```
+
+<Title type="h3">
+  <code>applyColorVisionToDomElement()</code>
+</Title>
+
+<p>
+  When performance matters, like updating state on mouse-move, we don't want to
+  trigger too many re-renders.
+</p>
+
+<p>
+  Instead, we use <code>applyColorVisionToDomElement()</code> to apply the
+  opacity directly to the DOM element.
+</p>
+
+<p>
+  When <code>isPerformanceImpacted</code> the css transition is set to{' '}
+  <code>none</code> which makes the transition instant.
+</p>
+
+```tsx
+const maskItems = useMemo(() => {
+  const chart = document.getElementById('#my_chart');
+
+  return chart.querySelectorAll<SVGRectElement>(
+    `[data-type="${COLOR_VISION_MASK}"]`,
+  );
+}, [colors]);
+
+useWatchColorVisionEvents({
+  type: COLOR_VISION_SINGLE_ITEM,
+  onIndexChange: ({detail}) => {
+    maskItems.forEach((element) => {
+      applyColorVisionToDomElement({
+        element,
+        activeIndex: detail.index,
+        isPerformanceImpacted,
+      });
+    });
+  },
+});
+```
