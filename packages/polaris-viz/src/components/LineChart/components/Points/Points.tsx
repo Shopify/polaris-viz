@@ -66,7 +66,9 @@ export function Points({
         const {data: singleData, name, color} = singleSeries;
         const isLongestLine = index === longestSeriesIndex;
         const pointGradientId = `${gradientId}-point-${index}`;
-
+        const noNullSingleData = singleData.filter((data) => {
+          return data.value != null;
+        });
         const animatedYPosition =
           animatedCoordinates == null || animatedCoordinates[index] == null
             ? 0
@@ -74,12 +76,11 @@ export function Points({
 
         const hidePoint =
           animatedCoordinates == null ||
-          (activeIndex != null && activeIndex >= singleData.length);
+          (activeIndex != null && activeIndex >= noNullSingleData.length);
 
         const pointColor = isGradientType(color)
           ? `url(#${pointGradientId})`
           : changeColorOpacity(color);
-
         return (
           <React.Fragment key={`${name}-${index}`}>
             {isGradientType(color) ? (
@@ -93,7 +94,6 @@ export function Points({
                 />
               </defs>
             ) : null}
-
             {shouldAnimate ? (
               <Point
                 color={pointColor}
@@ -108,11 +108,10 @@ export function Points({
               />
             ) : null}
 
-            {singleData.map(({value}, dataIndex) => {
+            {noNullSingleData.map(({value}, dataIndex) => {
               if (value == null) {
                 return null;
               }
-
               return (
                 <g
                   key={`${name}-${index}-${dataIndex}`}
