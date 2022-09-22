@@ -9,11 +9,11 @@ interface Props {
   tooltipOptions: TooltipOptions;
 }
 
-export function formatDataForTooltip({ data, tooltipOptions }: Props): {
+export function formatDataForTooltip({data, tooltipOptions}: Props): {
   formattedData: TooltipData[];
   title: string | undefined;
 } {
-  const { keyFormatter, valueFormatter, titleFormatter } = {
+  const {keyFormatter, valueFormatter, titleFormatter} = {
     keyFormatter: (key) => `${key}`,
     // valueFormatter: (value) => `${value}`,
     valueFormatter: (value) => value.toFixed(3),
