@@ -14,6 +14,7 @@ import {
 } from './components';
 import {useAnnotationPositions} from './hooks/useAnnotationPositions';
 import {PILL_HEIGHT, SHOW_MORE_BUTTON_OFFSET} from './constants';
+import styles from './Annotations.scss';
 
 export interface AnnotationsProps {
   annotationsLookupTable: AnnotationLookupTable;
@@ -96,7 +97,7 @@ export function Annotations({
     : 0;
 
   return (
-    <g ref={setRef} tabIndex={-1}>
+    <g ref={setRef} tabIndex={-1} className={styles.Group}>
       {isShowMoreButtonVisible && (
         <ShowMoreAnnotationsButton
           annotationsCount={hiddenAnnotationsCount}
