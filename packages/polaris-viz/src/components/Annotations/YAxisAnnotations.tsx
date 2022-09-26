@@ -16,6 +16,7 @@ import {
   AnnotationYAxisLabel,
 } from './components';
 import type {OptionalDualAxisYAxis} from './types';
+import styles from './Annotations.scss';
 
 export interface YAxisAnnotationsProps {
   annotationsLookupTable: AnnotationLookupTable;
@@ -85,7 +86,7 @@ export function YAxisAnnotations({
   });
 
   return (
-    <g ref={setRef} tabIndex={-1}>
+    <g ref={setRef} tabIndex={-1} className={styles.Group}>
       <g transform={`translate(0, ${0})`}>
         {positions.map((position) => {
           const index = position.index;
