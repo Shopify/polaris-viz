@@ -15,8 +15,7 @@ export function formatDataForTooltip({data, tooltipOptions}: Props): {
 } {
   const {keyFormatter, valueFormatter, titleFormatter} = {
     keyFormatter: (key) => `${key}`,
-    // valueFormatter: (value) => `${value}`,
-    valueFormatter: (value) => value.toFixed(3),
+    valueFormatter: (value) => `${value}`,
     titleFormatter: (title) => `${title}`,
     ...tooltipOptions,
   };
