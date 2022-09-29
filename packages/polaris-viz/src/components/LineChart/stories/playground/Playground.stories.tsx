@@ -194,13 +194,14 @@ const parseReportify = (reportifyDataObj) => {
   const oganizedData: DataSeries[] = [];
   const reportifyData = reportifyDataObj.result.data;
   for (let index = 0; index < reportifyData.length; index++) {
-    const row = reportifyData[index];
-    if (row[0] in oganizedData) {
-      oganizedData[row[0]].data.push({key: row[1], value: row[2]});
+    const [date, key, percentValue] = reportifyData[index];
+    const formattedValue = parseFloat((percentValue * 100).toFixed(3));
+    if (date in oganizedData) {
+      oganizedData[date].data.push({key: key, value: formattedValue});
     } else {
-      const cleanName = getName(row[0]);
-      oganizedData[row[0]] = {
-        data: [{key: row[1], value: row[2]}],
+      const cleanName = getName(date);
+      oganizedData[date] = {
+        data: [{key: key, value: formattedValue}],
         name: cleanName,
       };
     }
