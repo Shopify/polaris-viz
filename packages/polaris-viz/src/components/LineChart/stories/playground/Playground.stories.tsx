@@ -255,4 +255,9 @@ export const CohortDataSet: Story<LineChartProps> = Template.bind({});
 
 CohortDataSet.args = {
   data: COHORT_DATA,
+  yAxisOptions: {
+    labelFormatter: (y) => {
+      return `${y}%`;
+    },
+  },
 };
