@@ -47,7 +47,7 @@ describe('<HorizontalGridLines />', () => {
       expect(actual).toContainReactComponent('line', {
         x2: 100,
         transform: `translate(10,20)`,
-        stroke: 'colorGray140',
+        stroke: '#43434e',
       });
     });
 

@@ -19,6 +19,45 @@ jest.mock('../../packages/polaris-viz/src/components/ChartContainer', () => {
   };
 });
 
+jest.mock(
+  '../../packages/polaris-viz-core/src/styles/shared/_variables.scss',
+  () => {
+    const actual = jest.requireActual(
+      '../../packages/polaris-viz-core/src/styles/shared/_variables.scss',
+    );
+
+    return {
+      ...actual,
+
+      colorGray30: '#dadadd',
+      colorGray70: '#9d9da5',
+      colorGray140: '#43434e',
+      colorGray150: '#2e2e36',
+      colorGray160: '#1f1f25',
+
+      colorTeal70: '#4c9aaf',
+
+      colorBlue20: '#eeeeef',
+      colorBlue70: '#4b92e5',
+      colorBlue80: '#4282cd',
+      colorBlue90: '#3672bb',
+      colorBlue110: '#5e5e69',
+
+      colorIndigo70: '#997afc',
+      colorIndigo90: '#7f4afa',
+
+      colorPurple70: '#b176e2',
+      colorMagenta70: '#da62c4',
+      colorOrange70: '#ca7d4a',
+      colorYellow70: '#97933e',
+
+      colorDarkComparison: 'rgba(144, 176, 223, 0.6)',
+
+      colorWhite: '#ffffff',
+    };
+  },
+);
+
 jest.mock('../../packages/polaris-viz/src/constants.ts', () => {
   const actual = jest.requireActual(
     '../../packages/polaris-viz/src/constants.ts',

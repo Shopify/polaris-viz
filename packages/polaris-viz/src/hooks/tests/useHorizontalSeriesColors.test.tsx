@@ -127,7 +127,10 @@ describe('useHorizontalSeriesColors()', () => {
 
     expect(data).toStrictEqual({
       longestSeriesCount: 3,
-      seriesColors: [DEFAULT_THEME.seriesColors.single, 'colorDarkComparison'],
+      seriesColors: [
+        DEFAULT_THEME.seriesColors.single,
+        'rgba(144, 176, 223, 0.6)',
+      ],
     });
   });
 });

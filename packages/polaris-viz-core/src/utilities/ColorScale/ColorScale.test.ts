@@ -31,14 +31,14 @@ describe('ColorScale', () => {
   it('returns dark textColor for light hues', () => {
     const scale = ColorScale({hue: Hue.Blue, max: 16});
 
-    expect(scale(2).textColor).toStrictEqual('colorGray150');
-    expect(scale(7).textColor).toStrictEqual('colorGray150');
+    expect(scale(2).textColor).toStrictEqual('#2e2e36');
+    expect(scale(7).textColor).toStrictEqual('#2e2e36');
   });
 
   it('returns light textColor for light hues', () => {
     const scale = ColorScale({hue: Hue.Blue, max: 16});
 
-    expect(scale(8).textColor).toStrictEqual('colorWhite');
-    expect(scale(11).textColor).toStrictEqual('colorWhite');
+    expect(scale(8).textColor).toStrictEqual('#ffffff');
+    expect(scale(11).textColor).toStrictEqual('#ffffff');
   });
 });
