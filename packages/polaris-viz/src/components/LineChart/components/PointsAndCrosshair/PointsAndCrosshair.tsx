@@ -70,7 +70,8 @@ export function PointsAndCrosshair({
     if (
       animatedCoordinates != null &&
       animatedCoordinates[longestSeriesIndex] != null &&
-      shouldAnimate
+      shouldAnimate &&
+      longestSeriesIndex !== 0
     ) {
       return animatedCoordinates[longestSeriesIndex].to(
         (coord) => coord.x - offset,

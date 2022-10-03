@@ -21,9 +21,13 @@ export function formatDataForTooltip({data, tooltipOptions}: Props): {
   };
 
   const formattedData = data.data.map((data) => {
+    const shape = data.shape;
+    const noNullData = data.data.filter((data) => {
+      return data.value !== null;
+    });
     return {
-      ...data,
-      data: data.data.map((values) => {
+      shape,
+      data: noNullData.map((values) => {
         return {
           ...values,
           key: keyFormatter(values.key),
@@ -32,7 +36,6 @@ export function formatDataForTooltip({data, tooltipOptions}: Props): {
       }),
     };
   });
-
   return {
     formattedData,
     title: data.title ? titleFormatter(data.title) : undefined,
