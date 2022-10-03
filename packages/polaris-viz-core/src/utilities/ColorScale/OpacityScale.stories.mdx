@@ -1,0 +1,49 @@
+import {Meta, Story, Canvas} from '@storybook/addon-docs';
+
+import {
+  Divider,
+  Title,
+  UtilitiesHeader,
+} from '../../../../polaris-viz/src/components/Docs/stories/components';
+
+<Meta
+  title="Shared/Utilities/Color Manipulation/OpacityScale"
+  parameters={{
+    viewMode: 'docs',
+    docsOnly: true,
+  }}
+/>
+
+<UtilitiesHeader />
+
+<Title type="h3">
+  <code>OpacityScale()</code>
+</Title>
+
+<p>
+  Generates a scale of 10 steps between the <code>min</code> and
+  <code>max</code> values. The color returned is a rgba string with opacity applied
+  based on the 10 step scale.
+</p>
+
+<p>
+  The base color used is the <code>70</code> version of each hue available in
+  the{' '}
+  <a href="https://www.figma.com/file/mHsuyaQuY4WWmTDw7F5gVp/Analytics-system-resources?node-id=142%3A7173">
+    Analytics system resources
+  </a>
+  . This allows us to ensure that accessibility standards for <code>
+    colorGray160
+  </code> as text color will pass.
+</p>
+
+```tsx
+const tealScale = OpacityScale(Hue.Teal, 0, 13);
+
+tealScale(4);
+
+// {
+//   backgroundColor: 'rgba(76, 154, 175, 0.4)',
+//   textColor: 'colorGray160'
+// }
+```
