@@ -37,7 +37,6 @@ const Template: Story = (args) => {
             <div style={{display: 'flex', flexWrap: 'wrap'}}>
               {range(args.min, args.max).map((value, i) => {
                 const styles = scale(value);
-                console.log(styles, value);
                 return (
                   <div
                     key={`${hue}-${i}`}

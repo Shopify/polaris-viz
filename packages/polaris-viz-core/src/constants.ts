@@ -1,7 +1,7 @@
 import {createElement} from 'react';
 import type {SpringConfig} from '@react-spring/core';
 
-import {changeColorOpacity} from './utilities';
+import {changeColorOpacity} from './utilities/changeColorOpacity';
 import variables from './styles/shared/_variables.scss';
 import {createGradient} from './utilities/createGradient';
 import {
