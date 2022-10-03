@@ -57,11 +57,11 @@ describe('<AxisLabel />', () => {
     expect(component).toContainReactComponent('rect', {
       width: 100,
       height: 14,
-      fill: 'colorGray160',
+      fill: '#1f1f25',
     });
 
     expect(component).toContainReactComponent(SingleTextLine, {
-      color: 'colorGray30',
+      color: '#dadadd',
       targetWidth: 100,
       text: 'Primary Axis',
       x: 0,

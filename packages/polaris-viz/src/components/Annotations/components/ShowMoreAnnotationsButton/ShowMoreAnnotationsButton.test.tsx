@@ -63,7 +63,7 @@ describe('<ShowMoreAnnotationsButton />', () => {
       );
 
       expect(chart).toContainReactComponent(SingleTextLine, {
-        color: 'colorGray30',
+        color: '#dadadd',
         text: 'Expand annotations (1)',
         targetWidth: 190,
         y: 6,
@@ -151,7 +151,7 @@ describe('<ShowMoreAnnotationsButton />', () => {
         const path = chart.find('rect');
 
         expect(path?.props.fill).toStrictEqual('transparent');
-        expect(path?.props.stroke).toStrictEqual('colorGray140');
+        expect(path?.props.stroke).toStrictEqual('#43434e');
       });
 
       it('renders filled when false', () => {
@@ -166,8 +166,8 @@ describe('<ShowMoreAnnotationsButton />', () => {
 
         const path = chart.findAll('rect');
 
-        expect(path[1]?.props.fill).toStrictEqual('colorGray140');
-        expect(path[1]?.props.stroke).toStrictEqual('colorGray160');
+        expect(path[1]?.props.fill).toStrictEqual('#43434e');
+        expect(path[1]?.props.stroke).toStrictEqual('#1f1f25');
       });
     });
   });

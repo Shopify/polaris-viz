@@ -34,7 +34,7 @@ describe('<Crosshair />', () => {
     );
 
     expect(crosshair).toContainReactComponent('rect', {
-      style: {opacity: 1, fill: 'colorGray70'},
+      style: {opacity: 1, fill: '#9d9da5'},
     });
   });
 
@@ -46,7 +46,7 @@ describe('<Crosshair />', () => {
     );
 
     expect(crosshair).toContainReactComponent('rect', {
-      style: {opacity: 0.8, fill: 'colorGray70'},
+      style: {opacity: 0.8, fill: '#9d9da5'},
     });
   });
 

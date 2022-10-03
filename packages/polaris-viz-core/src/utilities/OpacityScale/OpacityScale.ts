@@ -1,8 +1,9 @@
 import {scaleQuantize} from 'd3-scale';
 import type {Hue} from 'types';
 
-import {HUE_OPACITIES} from '../../constants';
 import variables from '../../styles/shared/_variables.scss';
+
+import {HUE_OPACITIES} from './constants';
 
 const HUE_COUNT = 10;
 

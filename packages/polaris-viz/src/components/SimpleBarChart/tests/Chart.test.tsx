@@ -47,6 +47,7 @@ const MOCK_PROPS: ChartProps = {
   xAxisOptions: {
     labelFormatter: (value) => `${value}`,
     hide: false,
+    allowLineWrap: true,
   },
   yAxisOptions: {
     labelFormatter: (value) => `${value}`,
@@ -78,12 +79,12 @@ describe('<Chart />', () => {
 
         expect(defs?.props.seriesColors).toStrictEqual([
           [
-            {color: 'colorIndigo90', offset: 0},
-            {color: 'colorIndigo70', offset: 100},
+            {color: '#7f4afa', offset: 0},
+            {color: '#997afc', offset: 100},
           ],
           [
-            {color: 'colorBlue90', offset: 0},
-            {color: 'colorBlue70', offset: 100},
+            {color: '#3672bb', offset: 0},
+            {color: '#4b92e5', offset: 100},
           ],
         ]);
       });
@@ -116,8 +117,8 @@ describe('<Chart />', () => {
         expect(defs?.props.seriesColors).toStrictEqual([
           'red',
           [
-            {color: 'colorIndigo90', offset: 0},
-            {color: 'colorIndigo70', offset: 100},
+            {color: '#7f4afa', offset: 0},
+            {color: '#997afc', offset: 100},
           ],
         ]);
       });

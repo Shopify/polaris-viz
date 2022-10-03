@@ -23,6 +23,6 @@ export {getClosestDivisibleNumber} from './getClosestDivisibleNumber';
 export {roundToDecimals} from './roundToDecimals';
 export {isLargeDataSet} from './isLargeDataSet';
 export {ColorScale} from './ColorScale/ColorScale';
-export {OpacityScale} from './ColorScale/OpacityScale';
+export {OpacityScale} from './OpacityScale/OpacityScale';
 export {isDataGroupArray} from './isDataGroup';
 export {getGradientFromColor} from './getGradientFromColor';
