@@ -91,6 +91,7 @@ export {
   ColorScale,
   isDataGroupArray,
   getGradientFromColor,
+  OpacityScale,
 } from './utilities';
 export {
   useSparkBar,
