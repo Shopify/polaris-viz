@@ -76,6 +76,7 @@ export function Points({
 
         const hidePoint =
           animatedCoordinates == null ||
+          activeLineIndex === index ||
           (activeIndex != null && activeIndex >= noNullSingleData.length);
 
         const pointColor = isGradientType(color)
