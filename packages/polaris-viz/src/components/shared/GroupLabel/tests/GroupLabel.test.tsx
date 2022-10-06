@@ -38,18 +38,6 @@ describe('<GroupLabel />', () => {
     expect(label).toContainReactText('Label Text');
   });
 
-  it('renders label with the passed width', () => {
-    const label = mount(
-      <svg>
-        <GroupLabel {...MOCK_PROPS} />
-      </svg>,
-    );
-
-    const div = label.find('div');
-
-    expect(div?.props?.style?.width).toStrictEqual(100);
-  });
-
   describe('areAllNegative', () => {
     it('positions label negatively when true', () => {
       const label = mount(
