@@ -760,3 +760,90 @@ export const CohortDataSet: Story<LineChartProps> = Template.bind({});
 CohortDataSet.args = {
   data: COHORT_DATA,
 };
+
+export const CohortComparisonDataSet: Story<LineChartProps> = Template.bind({});
+
+CohortComparisonDataSet.args = {
+  data: [
+    {
+      data: [
+        {
+          key: 0,
+          value: 1,
+        },
+        {
+          key: 1,
+          value: 0.113,
+        },
+        {
+          key: 2,
+          value: 0.06,
+        },
+        {
+          key: 3,
+          value: 0.0511,
+        },
+        {
+          key: 4,
+          value: 0.0459,
+        },
+        {
+          key: 5,
+          value: null,
+        },
+        {
+          key: 6,
+          value: null,
+        },
+        {
+          key: 7,
+          value: null,
+        },
+        {
+          key: 8,
+          value: null,
+        },
+        {
+          key: 9,
+          value: null,
+        },
+        {
+          key: 10,
+          value: null,
+        },
+        {
+          key: 11,
+          value: null,
+        },
+      ],
+      color: '#4282cd',
+      name: '2022-04-01T00:00:00-07:00',
+    },
+    {
+      data: [
+        {
+          key: 0,
+          value: 1,
+        },
+        {
+          key: 1,
+          value: 0,
+        },
+        {
+          key: 2,
+          value: 0,
+        },
+        {
+          key: 3,
+          value: 0,
+        },
+        {
+          key: 4,
+          value: 0,
+        },
+      ],
+      color: '#997afc',
+      name: '2022-05-01T00:00:00-07:00',
+    },
+  ],
+};

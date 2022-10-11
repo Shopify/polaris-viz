@@ -2,7 +2,7 @@ import React from 'react';
 import {mount, Root} from '@shopify/react-testing';
 
 import {useGetLongestLabelFromData} from '../useGetLongestLabelFromData';
-import {TooltipData} from '../../types';
+import {TooltipData} from '../../../../types';
 
 jest.mock('react', () => {
   return {
@@ -55,5 +55,24 @@ describe('useGetLongestLabelFromData()', () => {
     const data = parseData(result);
 
     expect(data).toStrictEqual({keyWidth: 1, valueWidth: 4});
+  });
+
+  it('does not throw error when data is missing', () => {
+    function TestComponent() {
+      const data = useGetLongestLabelFromData([
+        {
+          shape: 'Line',
+          data: [],
+        },
+      ]);
+
+      return <span data-data={`${JSON.stringify(data)}`} />;
+    }
+
+    const result = mount(<TestComponent />);
+
+    const data = parseData(result);
+
+    expect(data).toStrictEqual({keyWidth: 0, valueWidth: 0});
   });
 });
