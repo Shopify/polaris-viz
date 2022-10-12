@@ -21,16 +21,24 @@ export function useGetLongestLabelFromData(tooltipData: TooltipData[] = []) {
   }
 
   tooltipData.forEach(({data}) => {
-    data.forEach(({key, value}) => {
-      const keyWidth = estimateStringWidth(key, characterWidths);
-      const valueWidth = estimateStringWidth(value, characterWidths);
-
+    if (!data.length) {
       sizes.push({
-        width: keyWidth + valueWidth,
-        keyWidth,
-        valueWidth,
+        width: 0,
+        keyWidth: 0,
+        valueWidth: 0,
       });
-    });
+    } else {
+      data.forEach(({key, value}) => {
+        const keyWidth = estimateStringWidth(key, characterWidths);
+        const valueWidth = estimateStringWidth(value, characterWidths);
+
+        sizes.push({
+          width: keyWidth + valueWidth,
+          keyWidth,
+          valueWidth,
+        });
+      });
+    }
   });
 
   const {keyWidth, valueWidth} = sizes.reduce((prev, cur) => {
