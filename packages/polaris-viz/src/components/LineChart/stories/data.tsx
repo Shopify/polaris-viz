@@ -44,7 +44,7 @@ export const DEFAULT_PROPS: Partial<LineChartProps> = {
   },
   yAxisOptions: {labelFormatter: formatLinearYAxisLabel},
   tooltipOptions: {
-    titleFormatter: (value) => new Date(Number(value)).toLocaleDateString(),
+    titleFormatter: (value) => new Date(value!).toLocaleDateString(),
     valueFormatter: formatLinearYAxisLabel,
   },
 };
