@@ -27,6 +27,12 @@ export function useRenderTooltipContent({
       tooltipOptions,
     });
 
-    return <TooltipContent data={formattedData} theme={theme} title={title} />;
+    if (formattedData[0].data.length === 0) {
+      return null;
+    } else {
+      return (
+        <TooltipContent data={formattedData} theme={theme} title={title} />
+      );
+    }
   };
 }
