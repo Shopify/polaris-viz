@@ -34,6 +34,7 @@ function jestAdjustments() {
                 '@quilted/react-testing/build/cjs/matchers/index.cjs',
               '\\.(css|less|scss)$': '<rootDir>/__mocks__/styleMock.js',
             },
+            transformIgnorePatterns: ['<rootDir>/node_modules/(?!d3)'],
           };
         });
       });

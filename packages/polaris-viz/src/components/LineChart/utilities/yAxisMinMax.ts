@@ -21,5 +21,12 @@ export function yAxisMinMax(series: DataSeries[]) {
     });
   });
 
+  if (minY === Infinity || maxY === -Infinity) {
+    return {
+      minY: Math.min(minY, EMPTY_STATE_CHART_MIN),
+      maxY: Math.max(maxY, EMPTY_STATE_CHART_MAX),
+    };
+  }
+
   return {minY, maxY};
 }
