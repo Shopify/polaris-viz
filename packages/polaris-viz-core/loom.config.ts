@@ -1,6 +1,10 @@
 import {buildLibraryExtended} from '@shopify/loom-plugin-build-library-extended';
 import {buildLibrary} from '@shopify/loom-plugin-build-library';
-import {createPackage, createProjectBuildPlugin} from '@shopify/loom';
+import {
+  createPackage,
+  createProjectBuildPlugin,
+  createProjectPlugin,
+} from '@shopify/loom';
 
 // eslint-disable-next-line import/no-default-export
 export default createPackage((pkg) => {
@@ -14,6 +18,7 @@ export default createPackage((pkg) => {
       esnext: true,
       rootEntrypoints: false,
     }),
+    jestAdjustments(),
     buildLibraryExtended(),
     rollupAdjustOutputPlugin(),
   );
@@ -41,6 +46,21 @@ function rollupAdjustOutputPlugin() {
           }
 
           return outputs;
+        });
+      });
+    });
+  });
+}
+
+function jestAdjustments() {
+  return createProjectPlugin('PolarisVizCore', ({tasks: {test}}) => {
+    test.hook(({hooks}) => {
+      hooks.configure.hook((configure) => {
+        configure.jestConfig?.hook((config) => {
+          return {
+            ...config,
+            transformIgnorePatterns: ['<rootDir>/node_modules/(?!d3)'],
+          };
         });
       });
     });

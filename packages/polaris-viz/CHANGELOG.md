@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Changed
+
+- Bumped the following packages: `d3-array@^3.2.0`, `d3-color@^3.1.0`, `d3-path@^3.0.1`, `d3-scale@^4.0.2` & `d3-shape@^3.1.0`.
+
 ### Fixed
 
 - If a tooltip does not contain any data, it is not rendered.
