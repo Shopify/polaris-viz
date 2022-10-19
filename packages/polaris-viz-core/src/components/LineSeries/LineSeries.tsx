@@ -32,7 +32,7 @@ const SPARK_STROKE_WIDTH = 1;
 export const StrokeDasharray = {
   dotted: '0.1 8',
   dashed: '2 4',
-  solid: 'unset',
+  solid: 'none',
 };
 
 function getLineStyle({

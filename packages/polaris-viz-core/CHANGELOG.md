@@ -5,7 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-<!-- ## Unreleased -->
+## Unreleased
+
+### Changed
+
+- `LineSeries` `strokeDasharray` value for `solid` lines is now `none` vs `unset`, avoiding a failure on Android
 
 ## [7.5.1] - 2022-10-18
 
