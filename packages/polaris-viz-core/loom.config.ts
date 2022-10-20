@@ -1,3 +1,5 @@
+import path from 'path';
+
 import {buildLibraryExtended} from '@shopify/loom-plugin-build-library-extended';
 import {buildLibrary} from '@shopify/loom-plugin-build-library';
 import {
@@ -59,7 +61,13 @@ function jestAdjustments() {
         configure.jestConfig?.hook((config) => {
           return {
             ...config,
-            transformIgnorePatterns: ['<rootDir>/node_modules/(?!d3)'],
+            moduleNameMapper: {
+              ...config.moduleNameMapper,
+              '^d3-(.*)$': path.resolve(
+                __dirname,
+                '../../node_modules/d3-$1/dist/d3-$1',
+              ),
+            },
           };
         });
       });
