@@ -28,7 +28,6 @@ const defaultProps: LineSeriesProps = {
   xScale: someScale,
   yScale: someScale,
   data: mockData,
-  isAnimated: false,
   svgDimensions: {width: 100, height: 100},
   index: 0,
   theme: 'Default',
@@ -66,7 +65,7 @@ describe('<LineSeries />', () => {
         width: defaultProps.svgDimensions.width,
         height:
           defaultProps.svgDimensions.height +
-          10 +
+          20 +
           SHAPE_ANIMATION_HEIGHT_BUFFER,
       });
     });
