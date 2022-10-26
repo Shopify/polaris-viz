@@ -244,7 +244,9 @@ export function LineSeries({
           y={(strokeWidth + SHAPE_ANIMATION_HEIGHT_BUFFER) * -1}
           width={svgDimensions.width}
           height={
-            svgDimensions.height + strokeWidth + SHAPE_ANIMATION_HEIGHT_BUFFER
+            svgDimensions.height +
+            strokeWidth * 2 +
+            SHAPE_ANIMATION_HEIGHT_BUFFER
           }
           fill={
             data.isComparison
