@@ -18,6 +18,9 @@ export const Template: Story<SimpleNormalizedChartProps> = (
           bar: {
             borderRadius: 2,
           },
+          chartContainer: {
+            minHeight: 400,
+          },
         },
       }}
     >
@@ -43,7 +46,7 @@ export const DEFAULT_PROPS: Partial<SimpleNormalizedChartProps> = {
 
 export const DEFAULT_DATA: DataSeries[] = [
   {
-    name: 'Direct',
+    name: 'This is an extremely long label that gets truncated at the fith row and shows some dots',
     data: [
       {
         key: 'April 2022',
@@ -61,7 +64,7 @@ export const DEFAULT_DATA: DataSeries[] = [
     ],
   },
   {
-    name: 'Twitter',
+    name: 'This is an extremely long label which does not get truncated here',
     data: [
       {
         key: 'April 2022',
