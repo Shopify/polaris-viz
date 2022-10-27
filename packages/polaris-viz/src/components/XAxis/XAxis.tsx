@@ -6,26 +6,28 @@ import {TextLine} from '../TextLine';
 
 interface XAxisProps {
   allowLineWrap: boolean;
-  x: number;
-  y: number;
   labels: string[];
   labelWidth: number;
   onHeightChange: Dispatch<SetStateAction<number>>;
+  x: number;
   xScale: ScaleLinear<number, number> | ScaleBand<string>;
-  reducedLabelIndexes?: number[];
+  y: number;
   ariaHidden?: boolean;
+  isLinearChart?: boolean;
+  reducedLabelIndexes?: number[];
 }
 
 export function XAxis({
-  ariaHidden = false,
   allowLineWrap,
-  x,
-  y,
+  ariaHidden = false,
+  isLinearChart = false,
   labels,
   labelWidth,
   onHeightChange,
   reducedLabelIndexes,
+  x,
   xScale,
+  y,
 }: XAxisProps) {
   const {lines} = useLabels({
     labels,
@@ -37,7 +39,11 @@ export function XAxis({
   return (
     <g aria-hidden>
       {lines.map((line, index) => {
-        if (shouldSkipLabel(index, reducedLabelIndexes)) {
+        // Skip last labels for linear charts so they
+        // don't spill outside the chart area.
+        const skipLastLabel = isLinearChart && index === labels.length - 1;
+
+        if (shouldSkipLabel(index, reducedLabelIndexes) || skipLastLabel) {
           return null;
         }
 

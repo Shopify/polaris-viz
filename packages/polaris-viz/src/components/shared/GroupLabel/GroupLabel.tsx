@@ -13,6 +13,8 @@ export interface GroupLabelProps {
   zeroPosition: number;
 }
 
+const LABEL_RIGHT_PADDING = 15;
+
 export function GroupLabel({
   areAllNegative,
   containerWidth,
@@ -41,7 +43,7 @@ export function GroupLabel({
           color: selectedTheme.yAxis.labelColor,
           maxWidth,
           height: HORIZONTAL_GROUP_LABEL_HEIGHT,
-          width: '100%',
+          width: labelWidth + LABEL_RIGHT_PADDING,
         }}
       >
         {label}

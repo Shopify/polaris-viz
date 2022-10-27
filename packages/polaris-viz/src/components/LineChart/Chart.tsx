@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useMemo} from 'react';
 import {
   uniqueId,
   DataType,
@@ -115,8 +115,23 @@ export function Chart({
     onIndexChange: ({detail}) => setActiveLineIndex(detail.index),
   });
 
+  const indexForLabels = useMemo(() => {
+    return data.reduce((longestIndex, currentSeries, index, array) => {
+      const previousSeries = array[index - 1];
+
+      if (
+        previousSeries &&
+        previousSeries.data.length < currentSeries.data.length
+      ) {
+        return index;
+      }
+
+      return longestIndex;
+    }, 0);
+  }, [data]);
+
   const formattedLabels = useFormattedLabels({
-    data: [data[0]],
+    data: [data[indexForLabels]],
     labelFormatter: xAxisOptions.labelFormatter,
   });
 
@@ -279,14 +294,15 @@ export function Chart({
         {hideXAxis ? null : (
           <XAxis
             allowLineWrap={xAxisOptions.allowLineWrap}
-            x={xAxisBounds.x}
-            y={xAxisBounds.y}
+            ariaHidden
+            isLinearChart
             labels={labels}
             labelWidth={xAxisDetails.labelWidth}
             onHeightChange={setXAxisHeight}
             reducedLabelIndexes={xAxisDetails.reducedLabelIndexes}
+            x={xAxisBounds.x - halfXAxisLabelWidth}
             xScale={xScale}
-            ariaHidden
+            y={xAxisBounds.y}
           />
         )}
         {selectedTheme.grid.showHorizontalLines ? (
@@ -316,11 +332,7 @@ export function Chart({
             xAxisLabels={labels}
           />
         )}
-        <g
-          transform={`translate(${
-            chartXPosition + halfXAxisLabelWidth
-          },${chartYPosition})`}
-        >
+        <g transform={`translate(${chartXPosition},${chartYPosition})`}>
           {reversedSeries.map((singleSeries, index) => {
             return (
               <LineSeries

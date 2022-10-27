@@ -12,6 +12,8 @@ import {HORIZONTAL_LABEL_MIN_WIDTH} from '../constants';
 import {useLinearXScale} from './useLinearXScale';
 import {useReducedLabelIndexes} from './useReducedLabelIndexes';
 
+const MAX_LINEAR_LABEL_WIDTH = 90;
+
 interface Props {
   data: DataSeries[];
   drawableWidth: number;
@@ -53,7 +55,7 @@ export function useLinearLabelsAndDimensions({
     return clamp({
       amount: longestLabelWidth,
       min: 0,
-      max: 75,
+      max: MAX_LINEAR_LABEL_WIDTH,
     });
   }, [labels, characterWidths]);
 
@@ -85,7 +87,7 @@ export function useLinearLabelsAndDimensions({
     });
   }, [initialDrawableWidth, visibleLabelsCount, hideXAxis, longestLabelWidth]);
 
-  const drawableWidth = initialDrawableWidth - labelWidth;
+  const drawableWidth = initialDrawableWidth;
 
   const {xScale} = useLinearXScale({
     drawableWidth,

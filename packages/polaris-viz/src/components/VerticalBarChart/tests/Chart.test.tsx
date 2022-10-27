@@ -14,6 +14,7 @@ import {StackedBarGroups} from '../components';
 import {LegendContainer} from '../../LegendContainer';
 import {Annotations, YAxisAnnotations} from '../../Annotations';
 import {normalizeData} from '../../../utilities';
+import {TextLine} from '../../TextLine';
 
 jest.mock('@shopify/polaris-viz-core/src/utilities', () => {
   return {
@@ -84,40 +85,48 @@ describe('Chart />', () => {
     expect(multiSeriesBarChart).toContainReactComponent('svg');
   });
 
-  it('renders an Labels', () => {
-    const chart = mount(<Chart {...MOCK_PROPS} />);
-    expect(chart).toContainReactComponent(XAxis);
-  });
+  describe('XAxis', () => {
+    it('renders <XAxis>', () => {
+      const chart = mount(<Chart {...MOCK_PROPS} />);
+      expect(chart).toContainReactComponent(XAxis);
+    });
 
-  it('does not render Labels if it is hidden', () => {
-    const chart = mount(
-      <Chart
-        {...MOCK_PROPS}
-        xAxisOptions={{...MOCK_PROPS.xAxisOptions, hide: true}}
-      />,
-    );
-    expect(chart).not.toContainReactComponent(XAxis);
-  });
+    it('does not render <XAxis> if it is hidden', () => {
+      const chart = mount(
+        <Chart
+          {...MOCK_PROPS}
+          xAxisOptions={{...MOCK_PROPS.xAxisOptions, hide: true}}
+        />,
+      );
+      expect(chart).not.toContainReactComponent(XAxis);
+    });
 
-  it('renders an yAxis', () => {
-    const chart = mount(<Chart {...MOCK_PROPS} />);
-    expect(chart).toContainReactComponent(YAxis);
-  });
+    it('renders an yAxis', () => {
+      const chart = mount(<Chart {...MOCK_PROPS} />);
+      expect(chart).toContainReactComponent(YAxis);
+    });
 
-  it('formats the x axis labels', () => {
-    const chart = mount(
-      <Chart
-        {...MOCK_PROPS}
-        xAxisOptions={{
-          ...MOCK_PROPS.xAxisOptions,
-          labelFormatter: (value) => `${value} pickles`,
-        }}
-      />,
-    );
+    it('formats the x axis labels', () => {
+      const chart = mount(
+        <Chart
+          {...MOCK_PROPS}
+          xAxisOptions={{
+            ...MOCK_PROPS.xAxisOptions,
+            labelFormatter: (value) => `${value} pickles`,
+          }}
+        />,
+      );
 
-    const xAxis = chart.find(XAxis);
+      const xAxis = chart.find(XAxis);
 
-    expect(xAxis?.props.labels[0]).toStrictEqual('stuff 1 pickles');
+      expect(xAxis?.props.labels[0]).toStrictEqual('stuff 1 pickles');
+    });
+
+    it('renders all labels', () => {
+      const chart = mount(<Chart {...MOCK_PROPS} />);
+
+      expect(chart.findAll(TextLine)).toHaveLength(3);
+    });
   });
 
   it('does not render <TooltipAnimatedContainer /> if there is no active point', () => {
