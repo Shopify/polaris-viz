@@ -11,6 +11,8 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- `LineSeries` comparison colors have been updated to meet accessibility standards
+
 - `LineSeries` `strokeDasharray` value for `solid` lines is now `none` vs `unset`, avoiding a failure on Android
 
 ## [7.5.1] - 2022-10-18
