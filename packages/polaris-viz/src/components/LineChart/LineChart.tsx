@@ -93,6 +93,7 @@ export function LineChart(props: LineChartProps) {
             renderTooltipContent={renderTooltip}
             showLegend={showLegend}
             emptyStateText={emptyStateText}
+            theme={theme}
           />
         )}
       </ChartContainer>

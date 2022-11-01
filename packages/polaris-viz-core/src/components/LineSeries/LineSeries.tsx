@@ -30,7 +30,7 @@ const ANIMATION_DELAY = 200;
 const SPARK_STROKE_WIDTH = 1;
 
 export const StrokeDasharray = {
-  dotted: '0.1 8',
+  dotted: '0.1 4',
   dashed: '2 4',
   solid: 'none',
 };
