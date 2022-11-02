@@ -194,6 +194,7 @@ export function Chart({
   const getTooltipMarkup = useLineChartTooltipContent({
     data,
     renderTooltipContent,
+    indexForLabels,
   });
 
   if (xScale == null || drawableWidth == null || yAxisLabelWidth == null) {
