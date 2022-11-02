@@ -12,6 +12,9 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 - Fixed the case where the `LineChart` was not properly inheriting the theme theme passed to the chart.
 
 - Fixed `<LineSeries />` path being cut off when data was along the bottom of the chart.
+- We no longer inset `<LineChart />`'s `<XAxis>`.
+- Don't render last label on `<LineChart />` or `<StackedAreaChart />`.
+- Use `DataSeries` with longest series length when building `<XAxis>` labels.
 
 ## [7.6.0] - 2022-10-25
 

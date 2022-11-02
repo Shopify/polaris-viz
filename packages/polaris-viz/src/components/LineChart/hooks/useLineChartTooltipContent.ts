@@ -5,11 +5,13 @@ import type {RenderTooltipContentData} from '../../../types';
 
 interface Props {
   data: LineChartDataSeriesWithDefaults[];
+  indexForLabels: number;
   renderTooltipContent: (data: RenderTooltipContentData) => ReactNode;
 }
 
 export function useLineChartTooltipContent({
   data,
+  indexForLabels,
   renderTooltipContent,
 }: Props) {
   return useCallback(
@@ -25,8 +27,8 @@ export function useLineChartTooltipContent({
         },
       ];
 
-      const key = data[0].data[activeIndex]
-        ? data[0].data[activeIndex].key
+      const key = data[indexForLabels].data[activeIndex]
+        ? data[indexForLabels].data[activeIndex].key
         : '';
 
       data.forEach(({name, data: seriesData, color, isComparison}) => {
@@ -50,6 +52,6 @@ export function useLineChartTooltipContent({
         dataSeries: data,
       });
     },
-    [data, renderTooltipContent],
+    [data, renderTooltipContent, indexForLabels],
   );
 }

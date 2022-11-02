@@ -27,6 +27,7 @@ import {Annotations, YAxisAnnotations} from '../../Annotations';
 import {normalizeData} from '../../../utilities';
 import characterWidths from '../../../data/character-widths.json';
 import characterWidthOffsets from '../../../data/character-width-offsets.json';
+import {TextLine} from '../../TextLine';
 
 const MOCK_DATA: Required<LineChartDataSeriesWithDefaults> = {
   name: 'Primary',
@@ -42,6 +43,7 @@ const MOCK_DATA: Required<LineChartDataSeriesWithDefaults> = {
 };
 
 const xAxisOptions: Required<XAxisOptions> = {
+  allowLineWrap: false,
   labelFormatter: jest.fn(),
   hide: false,
 };

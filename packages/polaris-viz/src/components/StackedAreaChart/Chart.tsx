@@ -107,7 +107,6 @@ export function Chart({
   });
 
   const tooltipId = useUniqueId('stackedAreaChart');
-  const clipPathId = useUniqueId('areaChartClipPath');
 
   const hideXAxis = xAxisOptions.hide || selectedTheme.xAxis.hide;
 
@@ -260,11 +259,12 @@ export function Chart({
         {hideXAxis ? null : (
           <XAxis
             allowLineWrap={xAxisOptions.allowLineWrap}
+            isLinearChart
             labels={labels}
             labelWidth={xAxisDetails.labelWidth}
             onHeightChange={setXAxisHeight}
             reducedLabelIndexes={xAxisDetails.reducedLabelIndexes}
-            x={xAxisBounds.x}
+            x={xAxisBounds.x - halfXAxisLabelWidth}
             xScale={xScale}
             y={xAxisBounds.y}
           />
@@ -298,12 +298,9 @@ export function Chart({
         />
 
         <g
-          transform={`translate(${
-            chartXPosition + halfXAxisLabelWidth
-          },${chartYPosition})`}
+          transform={`translate(${chartXPosition},${chartYPosition})`}
           className={styles.Group}
           area-hidden="true"
-          clipPath={`url(#${clipPathId})`}
         >
           <StackedAreas
             stackedValues={stackedValues}
@@ -314,16 +311,9 @@ export function Chart({
             theme={theme}
           />
         </g>
-        <clipPath id={clipPathId}>
-          <rect width={width} height={drawableHeight} fill="black" />
-        </clipPath>
 
         {activePointIndex == null ? null : (
-          <g
-            transform={`translate(${
-              chartXPosition + halfXAxisLabelWidth
-            },${chartYPosition})`}
-          >
+          <g transform={`translate(${chartXPosition},${chartYPosition})`}>
             <Crosshair
               x={getXPosition({isCrosshair: true, index: 0})}
               height={drawableHeight}
@@ -332,11 +322,7 @@ export function Chart({
           </g>
         )}
 
-        <g
-          transform={`translate(${
-            chartXPosition + halfXAxisLabelWidth
-          },${chartYPosition})`}
-        >
+        <g transform={`translate(${chartXPosition},${chartYPosition})`}>
           <Points
             activePointIndex={activePointIndex}
             animatedCoordinates={animatedCoordinates}

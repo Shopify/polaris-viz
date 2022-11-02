@@ -17,6 +17,7 @@ import {StackedAreas} from '../components';
 import {Chart, Props} from '../Chart';
 import {Annotations, YAxisAnnotations} from '../../Annotations';
 import {normalizeData} from '../../../utilities';
+import {TextLine} from '../../TextLine';
 
 jest.mock('@shopify/polaris-viz-core/src/utilities/estimateStringWidth', () => {
   return {
@@ -56,6 +57,7 @@ const MOCK_PROPS: Props = {
     },
   ],
   xAxisOptions: {
+    allowLineWrap: false,
     hide: false,
     labelFormatter: (value) => `Day ${value}`,
   },
@@ -336,6 +338,14 @@ describe('<Chart />', () => {
       const chart = mount(<Chart {...MOCK_PROPS} />);
 
       expect(chart).toContainReactComponent(TooltipWrapper);
+    });
+  });
+
+  describe('XAxis', () => {
+    it('does not render the last label', () => {
+      const chart = mount(<Chart {...MOCK_PROPS} />);
+
+      expect(chart.findAll(TextLine)).toHaveLength(1);
     });
   });
 });
