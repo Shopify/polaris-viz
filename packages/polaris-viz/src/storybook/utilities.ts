@@ -22,6 +22,7 @@ export function formatLinearYAxisLabel(value: number) {
   return new Intl.NumberFormat('en', {
     style: 'currency',
     currency: 'CAD',
-    currencyDisplay: 'symbol',
+    currencyDisplay: 'narrowSymbol',
+    minimumFractionDigits: 0,
   }).format(value);
 }
