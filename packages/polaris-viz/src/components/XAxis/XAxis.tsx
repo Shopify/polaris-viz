@@ -41,7 +41,8 @@ export function XAxis({
       {lines.map((line, index) => {
         // Skip last labels for linear charts so they
         // don't spill outside the chart area.
-        const skipLastLabel = isLinearChart && index === labels.length - 1;
+        const skipLastLabel =
+          isLinearChart && labels.length > 1 && index === labels.length - 1;
 
         if (shouldSkipLabel(index, reducedLabelIndexes) || skipLastLabel) {
           return null;
