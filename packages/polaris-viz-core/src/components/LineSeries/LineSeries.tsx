@@ -24,7 +24,6 @@ import {
 } from '../../constants';
 
 import {Area, AnimatedLine, AnimatedArea} from './components';
-import styles from './LineSeries.scss';
 
 const ANIMATION_DELAY = 200;
 const SPARK_STROKE_WIDTH = 1;
@@ -63,6 +62,8 @@ export interface LineSeriesProps {
   activeLineIndex?: number;
   theme: string;
   type?: 'default' | 'spark';
+  lineStyles?: string;
+  groupStyles?: string;
 }
 
 export function LineSeries({
@@ -74,6 +75,8 @@ export function LineSeries({
   type = 'default',
   xScale,
   yScale,
+  lineStyles,
+  groupStyles,
 }: LineSeriesProps) {
   const {
     // eslint-disable-next-line id-length
@@ -167,7 +170,7 @@ export function LineSeries({
 
   return (
     <React.Fragment>
-      <AnimatedGroup className={styles.Group} opacity={1}>
+      <AnimatedGroup className={groupStyles} opacity={1}>
         <Defs>
           <LinearGradientWithStops
             id={`line-${id}`}
@@ -257,7 +260,7 @@ export function LineSeries({
         />
 
         <Path
-          className={styles.Line}
+          className={lineStyles}
           d={lineShape}
           strokeWidth={PathHoverTargetSize}
           stroke="transparent"

@@ -11,6 +11,8 @@ import {PointsAndCrosshair} from '../../../LineChart';
 import {useFormatData} from '../../../LineChart/hooks';
 import {getLineChartDataWithDefaults} from '../../../../utilities/getLineChartDataWithDefaults';
 
+import styles from './ComboLineChart.scss';
+
 interface ComboLineChartProps {
   activeIndex: number | null;
   colors: Color[];
@@ -59,6 +61,8 @@ export function ComboLineChart({
             xScale={xScale}
             yScale={yScale}
             type="default"
+            lineStyles={styles.Line}
+            groupStyles={styles.Group}
           />
         );
       })}

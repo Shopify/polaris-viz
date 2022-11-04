@@ -72,6 +72,8 @@ export function Chart({
                 svgDimensions={{height, width}}
                 theme={theme}
                 type="spark"
+                lineStyles={styles.Line}
+                groupStyles={styles.Group}
               />
             </g>
           );

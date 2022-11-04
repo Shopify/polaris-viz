@@ -56,6 +56,7 @@ import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
 import {YAxis} from '../YAxis';
 import {HorizontalGridLines} from '../HorizontalGridLines';
 
+import styles from './LineChart.scss';
 import {useLineChartTooltipContent} from './hooks/useLineChartTooltipContent';
 import {PointsAndCrosshair} from './components';
 import {useFormatData} from './hooks';
@@ -346,6 +347,8 @@ export function Chart({
                 xScale={xScale}
                 yScale={yScale}
                 type="default"
+                lineStyles={styles.Line}
+                groupStyles={styles.Group}
               />
             );
           })}
