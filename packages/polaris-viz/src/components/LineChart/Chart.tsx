@@ -60,6 +60,7 @@ import {useLineChartTooltipContent} from './hooks/useLineChartTooltipContent';
 import {PointsAndCrosshair} from './components';
 import {useFormatData} from './hooks';
 import {yAxisMinMax} from './utilities';
+import styles from './Chart.scss';
 
 export interface ChartProps {
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
@@ -333,7 +334,10 @@ export function Chart({
             xAxisLabels={labels}
           />
         )}
-        <g transform={`translate(${chartXPosition},${chartYPosition})`}>
+        <g
+          transform={`translate(${chartXPosition},${chartYPosition})`}
+          className={styles.Group}
+        >
           {reversedSeries.map((singleSeries, index) => {
             return (
               <LineSeries

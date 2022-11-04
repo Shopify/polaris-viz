@@ -24,7 +24,6 @@ import {
 } from '../../constants';
 
 import {Area, AnimatedLine, AnimatedArea} from './components';
-import styles from './LineSeries.scss';
 
 const ANIMATION_DELAY = 200;
 const SPARK_STROKE_WIDTH = 1;
@@ -167,7 +166,7 @@ export function LineSeries({
 
   return (
     <React.Fragment>
-      <AnimatedGroup className={styles.Group} opacity={1}>
+      <AnimatedGroup opacity={1}>
         <Defs>
           <LinearGradientWithStops
             id={`line-${id}`}
@@ -257,7 +256,6 @@ export function LineSeries({
         />
 
         <Path
-          className={styles.Line}
           d={lineShape}
           strokeWidth={PathHoverTargetSize}
           stroke="transparent"
