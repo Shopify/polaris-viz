@@ -296,6 +296,14 @@ describe('<Chart />', () => {
 
       expect(barChart.findAll(BarLabel)).toHaveLength(2);
     });
+
+    it('renders no labels if showLegend is false', () => {
+      const barChart = mount(
+        <SimpleNormalizedChart {...mockProps} showLegend={false} />,
+      );
+
+      expect(barChart.findAll(BarLabel)).toHaveLength(0);
+    });
   });
 
   describe('Colors', () => {

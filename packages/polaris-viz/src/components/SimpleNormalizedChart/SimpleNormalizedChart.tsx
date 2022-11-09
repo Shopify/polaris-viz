@@ -22,6 +22,7 @@ export type SimpleNormalizedChartProps = {
   legendPosition?: LegendPosition;
   direction?: Direction;
   size?: Size;
+  showLegend?: boolean;
 } & ChartProps;
 
 export function SimpleNormalizedChart(props: SimpleNormalizedChartProps) {
@@ -32,6 +33,7 @@ export function SimpleNormalizedChart(props: SimpleNormalizedChartProps) {
     legendPosition = 'top-left',
     direction = 'horizontal',
     size = 'small',
+    showLegend = true,
     theme,
     isAnimated,
     state,
@@ -55,6 +57,7 @@ export function SimpleNormalizedChart(props: SimpleNormalizedChartProps) {
           data={data}
           labelFormatter={labelFormatter}
           legendPosition={legendPosition}
+          showLegend={showLegend}
           direction={direction}
           size={size}
         />

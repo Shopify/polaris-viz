@@ -26,6 +26,7 @@ export interface ChartProps {
   legendPosition?: LegendPosition;
   direction?: Direction;
   size?: Size;
+  showLegend?: boolean;
 }
 
 export function Chart({
@@ -35,6 +36,7 @@ export function Chart({
   legendPosition = 'top-left',
   direction = 'horizontal',
   size = 'small',
+  showLegend = true,
 }: ChartProps) {
   const flattenedData = data.map(({data}) => data).flat();
 
@@ -83,6 +85,43 @@ export function Chart({
   const isHorizontalAndRightLabel = !isVertical && isRightLabel;
   const isHorizontalAndBottomLabel = !isVertical && isBottomLabel;
 
+  const legend = showLegend && (
+    <ul
+      className={classNames(
+        isVertical
+          ? styles.VerticalLabelContainer
+          : styles.HorizontalLabelContainer,
+        (isVerticalAndBottomLabel || isHorizontalAndRightLabel) &&
+          styles.LabelContainerEndJustify,
+      )}
+    >
+      {slicedData.map(({key, value}, index) => {
+        if (value == null) {
+          return null;
+        }
+
+        const comparisonMetric = comparisonMetrics.find(
+          ({dataIndex}) => index === dataIndex,
+        );
+
+        const formattedValue = labelFormatter(value);
+        return (
+          <BarLabel
+            activeIndex={activeIndex}
+            index={index}
+            key={`${key}-${formattedValue}-${index}`}
+            label={`${data[index].name}`}
+            value={formattedValue}
+            color={colors[index]}
+            comparisonMetric={comparisonMetric}
+            direction={direction}
+            legendPosition={legendPosition}
+          />
+        );
+      })}
+    </ul>
+  );
+
   return (
     <div
       className={classNames(
@@ -92,41 +131,7 @@ export function Chart({
         isHorizontalAndBottomLabel && styles.HorizontalContainerBottomLabel,
       )}
     >
-      <ul
-        className={classNames(
-          isVertical
-            ? styles.VerticalLabelContainer
-            : styles.HorizontalLabelContainer,
-          (isVerticalAndBottomLabel || isHorizontalAndRightLabel) &&
-            styles.LabelContainerEndJustify,
-        )}
-      >
-        {slicedData.map(({key, value}, index) => {
-          if (value == null) {
-            return null;
-          }
-
-          const comparisonMetric = comparisonMetrics.find(
-            ({dataIndex}) => index === dataIndex,
-          );
-
-          const formattedValue = labelFormatter(value);
-          return (
-            <BarLabel
-              activeIndex={activeIndex}
-              index={index}
-              key={`${key}-${formattedValue}-${index}`}
-              label={`${data[index].name}`}
-              value={formattedValue}
-              color={colors[index]}
-              comparisonMetric={comparisonMetric}
-              direction={direction}
-              legendPosition={legendPosition}
-            />
-          );
-        })}
-      </ul>
-
+      {legend}
       <div
         className={classNames(
           styles.BarContainer,
