@@ -5,6 +5,7 @@ import {ComboChart, ComboChartProps} from '../../ComboChart';
 
 import type {DataGroup} from '@shopify/polaris-viz-core';
 import {META} from '../meta';
+import {Template as BasicTemplate} from '../data';
 
 export default {
   ...META,
@@ -507,3 +508,83 @@ const Template: Story<ComboChartProps> = ({
 export const Default: Story<ComboChartProps> = Template.bind({});
 
 Default.args = {};
+
+export const WebVitals: Story<ComboChartProps> = BasicTemplate.bind({});
+
+WebVitals.args = {
+  data: [
+    {
+      name: 'Web vitals',
+      series: [
+        {
+          data: [
+            {
+              key: 'June 25',
+              value: 4.1,
+            },
+            {
+              key: 'June 26',
+              value: 6.7,
+            },
+            {
+              key: 'June 27',
+              value: 7.4,
+            },
+            {
+              key: 'June 28',
+              value: 7.6,
+            },
+            {
+              key: 'June 29',
+              value: 6.7,
+            },
+            {
+              key: 'June 30',
+              value: 8.6,
+            },
+          ],
+          name: 'LCP',
+          color: '#5C6AC4',
+        },
+      ],
+      shape: 'Line',
+    },
+    {
+      name: 'Sessions measured',
+      series: [
+        {
+          isComparison: true,
+          data: [
+            {
+              key: 'June 25',
+              value: 4057,
+            },
+            {
+              key: 'June 26',
+              value: 21583,
+            },
+            {
+              key: 'June 27',
+              value: 18069,
+            },
+            {
+              key: 'June 28',
+              value: 19332,
+            },
+            {
+              key: 'June 29',
+              value: 20282,
+            },
+            {
+              key: 'June 30',
+              value: 23515,
+            },
+          ],
+          name: 'Sessions measured',
+          color: '#79CCE5',
+        },
+      ],
+      shape: 'Bar',
+    },
+  ],
+};

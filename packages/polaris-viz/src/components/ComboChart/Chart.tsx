@@ -343,7 +343,7 @@ export function Chart({
     const highestValuePos = Math.max(...sortedDataPos);
 
     const x = xPosition + chartXPosition;
-    const y = yScale(highestValuePos) + (ChartMargin.Top as number);
+    const y = barYScale(highestValuePos) + (ChartMargin.Top as number);
 
     return {
       x,
