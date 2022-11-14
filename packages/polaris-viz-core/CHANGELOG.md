@@ -7,7 +7,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
-### Updated
+### Changed
 
 - Increased `<SparkLineChart />` stroke width from 1px to 1.5px
 
