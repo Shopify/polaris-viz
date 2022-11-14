@@ -220,9 +220,7 @@ export function Chart({
 
       const {svgX, svgY} = point;
 
-      const closestIndex = Math.round(
-        xScale.invert(svgX - (chartXPosition + halfXAxisLabelWidth)),
-      );
+      const closestIndex = Math.round(xScale.invert(svgX - chartXPosition));
 
       const activeIndex = clamp({
         amount: closestIndex,
