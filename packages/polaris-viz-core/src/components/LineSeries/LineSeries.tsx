@@ -26,7 +26,7 @@ import {
 import {Area, AnimatedLine, AnimatedArea} from './components';
 
 const ANIMATION_DELAY = 200;
-const SPARK_STROKE_WIDTH = 1;
+const SPARK_STROKE_WIDTH = 1.5;
 
 export const StrokeDasharray = {
   dotted: '0.1 4',
