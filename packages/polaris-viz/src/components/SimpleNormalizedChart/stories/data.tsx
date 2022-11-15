@@ -24,7 +24,7 @@ export const Template: Story<SimpleNormalizedChartProps> = (
         },
       }}
     >
-      <SimpleNormalizedChart {...args} />;
+      <SimpleNormalizedChart {...args} />
     </PolarisVizProvider>
   );
 };
