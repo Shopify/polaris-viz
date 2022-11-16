@@ -4,7 +4,6 @@ export {getSeriesColors} from './getSeriesColors';
 export {getFilteredSeries} from './getFilteredSeries';
 export {uniqueId} from './uniqueId';
 export {isGradientType} from './isGradientType';
-export {curveStepRounded} from './curveStepRounded';
 export {getAnimationTrail} from './getAnimationTrail';
 export {paddingStringToObject} from './paddingStringToObject';
 export {removeFalsyValues} from './removeFalsyValues';

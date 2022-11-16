@@ -66,7 +66,6 @@ export {
   clamp,
   createGradient,
   createThemes,
-  curveStepRounded,
   getAnimationTrail,
   getFilteredSeries,
   getSeriesColors,

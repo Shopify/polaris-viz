@@ -38,7 +38,6 @@ export type {TooltipData} from './types';
 
 export {
   createGradient,
-  curveStepRounded,
   getFilteredSeries,
   getSeriesColors,
   isGradientType,

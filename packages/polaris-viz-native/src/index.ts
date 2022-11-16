@@ -2,7 +2,6 @@ export {SparkLineChart, PolarisVizProvider, SparkBarChart} from './components';
 
 export {
   createGradient,
-  curveStepRounded,
   getFilteredSeries,
   getSeriesColors,
   isGradientType,

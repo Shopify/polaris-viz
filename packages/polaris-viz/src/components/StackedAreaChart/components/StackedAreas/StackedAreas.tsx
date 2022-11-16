@@ -1,9 +1,8 @@
 import React, {useMemo, useState} from 'react';
-import {area, line} from 'd3-shape';
+import {area, line, curveMonotoneX} from 'd3-shape';
 import type {ScaleLinear} from 'd3-scale';
 import type {Color} from '@shopify/polaris-viz-core';
 import {
-  curveStepRounded,
   uniqueId,
   COLOR_VISION_SINGLE_ITEM,
 } from '@shopify/polaris-viz-core';
@@ -64,8 +63,8 @@ export function StackedAreas({
     .y(([, lastPoint]) => yScale(lastPoint));
 
   if (selectedTheme.line.hasSpline) {
-    areaGenerator.curve(curveStepRounded);
-    lineGenerator.curve(curveStepRounded);
+    areaGenerator.curve(curveMonotoneX);
+    lineGenerator.curve(curveMonotoneX);
   }
 
   const duration = useMemo(() => {

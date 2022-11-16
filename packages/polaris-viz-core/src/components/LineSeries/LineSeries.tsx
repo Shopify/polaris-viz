@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
-import {area as areaShape, line} from 'd3-shape';
+import {area as areaShape, line, curveMonotoneX} from 'd3-shape';
 
 import {usePrevious} from '../../hooks';
 import type {LineChartDataSeriesWithDefaults} from '../../types';
@@ -10,7 +10,6 @@ import {
   GradientStop,
   usePolarisVizContext,
   useTheme,
-  curveStepRounded,
   uniqueId,
   getColorVisionEventAttrs,
   getColorVisionStylesForActiveIndex,
@@ -106,8 +105,8 @@ export function LineSeries({
     .defined(({value}) => value != null);
 
   if (selectedTheme.line.hasSpline) {
-    lineGenerator.curve(curveStepRounded);
-    areaGenerator.curve(curveStepRounded);
+    lineGenerator.curve(curveMonotoneX);
+    areaGenerator.curve(curveMonotoneX);
   }
 
   const lineShape = lineGenerator(data.data);

@@ -1,13 +1,12 @@
 import React, {useMemo, useRef} from 'react';
 import {
-  curveStepRounded,
   DataPoint,
   LineChartDataSeriesWithDefaults,
   uniqueId,
   useChartContext,
   useTheme,
 } from '@shopify/polaris-viz-core';
-import {line} from 'd3-shape';
+import {line, curveMonotoneX} from 'd3-shape';
 import type {ScaleLinear} from 'd3-scale';
 
 import {CROSSHAIR_ID} from '../../../../constants';
@@ -50,7 +49,7 @@ export function PointsAndCrosshair({
       .defined(({value}) => value != null);
 
     if (selectedTheme.line.hasSpline) {
-      generator.curve(curveStepRounded);
+      generator.curve(curveMonotoneX);
     }
     return generator;
   }, [selectedTheme.line.hasSpline, xScale, yScale]);

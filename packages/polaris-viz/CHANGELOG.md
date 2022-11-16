@@ -7,6 +7,12 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- ## Unreleased -->
 
+### Changed
+
+- moving from our custom `curveStepRounded` smoothing function, to
+curveMonotoneX which doesn't exhibit stepping artifcats, but still adheres to
+chart's minima / maxima / flat areas well.
+
 ## [7.8.1] - 2022-11-15
 
 ### Fixed

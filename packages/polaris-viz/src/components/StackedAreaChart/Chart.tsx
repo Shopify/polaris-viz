@@ -1,12 +1,11 @@
 import React, {useState, useMemo} from 'react';
-import {line} from 'd3-shape';
+import {line, curveMonotoneX} from 'd3-shape';
 import {
   DataSeries,
   DataPoint,
   XAxisOptions,
   YAxisOptions,
   useUniqueId,
-  curveStepRounded,
   DataType,
   Dimensions,
   useYScale,
@@ -187,7 +186,7 @@ export function Chart({
       .defined(({value}) => value != null);
 
     if (selectedTheme.line.hasSpline) {
-      generator.curve(curveStepRounded);
+      generator.curve(curveMonotoneX);
     }
 
     return generator;
