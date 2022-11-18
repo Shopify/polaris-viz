@@ -31,6 +31,9 @@ export const META: Meta = {
         'Determines the width or height of the bar segments depending on `direction`.',
     },
     legendPosition: LEGEND_POSITION_ARGS,
+    showLegend: {
+      description: 'Shows the legend for the chart.',
+    },
     theme: THEME_CONTROL_ARGS,
     state: CHART_STATE_CONTROL_ARGS,
   },
