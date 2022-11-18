@@ -1,4 +1,6 @@
+// stylelint-disable value-no-vendor-prefix, property-no-vendor-prefix
 .Container {
+  position: relative;
   display: flex;
   align-items: baseline;
 }
@@ -22,12 +24,38 @@
   flex: 1;
   margin: 0 8px;
   word-break: break-word;
+  max-width: 120px;
+  line-height: 18px;
+}
+
+.FormattedVerticalLabel {
+  font-weight: 700;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  white-space: normal;
+}
+
+.FormattedHorizontalLabel {
+  font-weight: 700;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .ValueContainer {
   margin-top: 4px;
   display: flex;
 }
+
+.ValueHorizontalContainer {
+  position: absolute;
+  bottom: -20px;
+  margin-top: 4px;
+  display: flex;
+}
+
 .Value {
   margin-right: 8px;
 }

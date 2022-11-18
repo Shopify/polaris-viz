@@ -68,8 +68,24 @@ export function BarLabel({
         className={styles.LabelColor}
       />
       <div className={styles.Label}>
-        <strong style={{color: labelColor}}>{label}</strong>
-        <div style={{color: valueColor}} className={styles.ValueContainer}>
+        <div
+          style={{color: labelColor}}
+          className={
+            direction === 'horizontal'
+              ? styles.FormattedHorizontalLabel
+              : styles.FormattedVerticalLabel
+          }
+        >
+          {label}
+        </div>
+        <div
+          style={{color: valueColor}}
+          className={
+            direction === 'horizontal'
+              ? styles.ValueHorizontalContainer
+              : styles.ValueContainer
+          }
+        >
           <span className={styles.Value}>{value}</span>
           {comparisonIndicator}
         </div>
