@@ -80,14 +80,9 @@ export function useSparkBar({
     .domain(defaultData.data.map((_, index) => index.toString()));
 
   const barWidth = useMemo(() => xScale.bandwidth(), [xScale]);
-  const barGap = useMemo(
-    () => xScale.step() * xScale.paddingInner() + STROKE_WIDTH,
-    [xScale],
-  );
 
   const strokeDashoffset =
     offsetLeft == null ? -(STROKE_WIDTH / 2) : -(STROKE_WIDTH / 2) - offsetLeft;
-  const strokeDasharray = `${barWidth - STROKE_WIDTH} ${barGap}`;
 
   const getBarHeight = useCallback(
     (value: number) => {
@@ -110,7 +105,6 @@ export function useSparkBar({
   return {
     dataWithIndex,
     color,
-    strokeDasharray,
     strokeDashoffset,
     barWidth,
     getBarHeight,

@@ -6,7 +6,11 @@ import {usePolarisVizContext, useSparkBar, useTheme} from '../../hooks';
 import {LinearGradientWithStops} from '../LinearGradientWithStops';
 import {getAnimationTrail, getSeriesColors, uniqueId} from '../../utilities';
 import {Bar} from '../Bar';
-import {BARS_TRANSITION_CONFIG, STROKE_WIDTH} from '../../constants';
+import {
+  BARS_TRANSITION_CONFIG,
+  STROKE_WIDTH,
+  STROKE_DOT_ARRAY_WIDTH,
+} from '../../constants';
 import type {TargetLine} from '../../types';
 
 interface SparkBarSeriesProps {
@@ -46,7 +50,6 @@ export function SparkBarSeries({
     dataWithIndex,
     color,
     getBarHeight,
-    strokeDasharray,
     strokeDashoffset,
     xScale,
     yScale,
@@ -78,7 +81,6 @@ export function SparkBarSeries({
   });
 
   const hasTargetLine = targetLine != null && targetLine.value != null;
-
   return (
     <React.Fragment>
       <Defs>
@@ -133,7 +135,7 @@ export function SparkBarSeries({
           strokeLinecap="round"
           opacity="0.9"
           strokeDashoffset={strokeDashoffset}
-          strokeDasharray={strokeDasharray}
+          strokeDasharray={STROKE_DOT_ARRAY_WIDTH}
         />
       ) : null}
     </React.Fragment>

@@ -31,36 +31,6 @@ describe('useSparkBar', () => {
     });
   });
 
-  describe('strokeDasharray', () => {
-    it.each`
-      width  | data                                                                  | expected
-      ${100} | ${[{key: '1', value: 1}, {key: '2', value: 2}]}                       | ${'39.6764705882353 19.147058823529413'}
-      ${500} | ${[{key: '1', value: 1}, {key: '2', value: 2}, {key: '3', value: 3}]} | ${'128.12962962962962 57.05555555555555'}
-    `(
-      'returns a strokeDasharray based on the width and amount of data',
-      ({width, data, expected}) => {
-        const TestComponent = () => {
-          const {strokeDasharray} = useSparkBar({
-            data: [{data}],
-            height: 500,
-            targetLine: {
-              offsetLeft: 0,
-              offsetRight: 0,
-              value: 0,
-            },
-            width,
-            seriesColor: 'red',
-          });
-
-          return <div>{strokeDasharray.toString()}</div>;
-        };
-
-        const mockComponent = mount(<TestComponent />);
-        expect(mockComponent.text()).toBe(expected);
-      },
-    );
-  });
-
   describe('barWidth', () => {
     it.each`
       width  | data                                                                  | expected

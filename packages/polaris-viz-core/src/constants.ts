@@ -435,6 +435,7 @@ export const DEFAULT_COMPONENTS: SvgComponents = {
 };
 
 export const STROKE_WIDTH = 1.5;
+export const STROKE_DOT_ARRAY_WIDTH = '0.1 4';
 export const ANIMATION_MARGIN = 17;
 export const LINEAR_LABELS_INNER_PADDING = 10;
 

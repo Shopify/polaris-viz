@@ -5,7 +5,6 @@ import {LinearGradientWithStops} from '@shopify/polaris-viz-core';
 import type {DataSeries, TargetLine} from '@shopify/polaris-viz-core';
 
 import {SparkBarChart} from '../SparkBarChart';
-import {Chart} from '../Chart';
 
 const sampleData: DataSeries = {
   data: [
@@ -43,7 +42,6 @@ jest.mock('d3-scale', () => ({
 describe('<SparkBarChart/>', () => {
   it('renders a <LinearGradientWithStops />', () => {
     const wrapper = mount(<SparkBarChart data={[sampleData]} />);
-
     expect(wrapper).toContainReactComponent(LinearGradientWithStops);
   });
 
@@ -103,7 +101,7 @@ describe('<SparkBarChart/>', () => {
     );
 
     expect(wrapper).toContainReactComponent('line', {
-      strokeDasharray: '18.5 11.5',
+      strokeDasharray: '0.1 4',
       strokeDashoffset: -0.75,
     });
   });
@@ -127,7 +125,7 @@ describe('<SparkBarChart/>', () => {
     );
 
     expect(wrapper).toContainReactComponent('line', {
-      strokeDasharray: '18.5 11.5',
+      strokeDasharray: '0.1 4',
       strokeDashoffset: -25.75,
     });
   });
