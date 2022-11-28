@@ -1,0 +1,6 @@
+@import '../../styles/common';
+
+.Group * {
+  @include no-outline;
+  pointer-events: none;
+}
