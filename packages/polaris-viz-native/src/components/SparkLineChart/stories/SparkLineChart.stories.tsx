@@ -1,7 +1,7 @@
 import React from 'react';
 import type {Story, Meta} from '@storybook/react';
 
-import {SparkLineChart} from '../';
+import {SparkLineChart} from '../SparkLineChart';
 import type {SparkLineChartProps} from '../SparkLineChart';
 
 const THEME_CONTROL_ARGS = {
@@ -12,8 +12,8 @@ const THEME_CONTROL_ARGS = {
 const DATA = [
   {
     data: [
-      {key: 0, value: 100},
-      {key: 1, value: 200},
+      {key: 0, value: 200},
+      {key: 1, value: 250},
       {key: 2, value: 300},
       {key: 3, value: 400},
       {key: 4, value: 400},
@@ -83,7 +83,7 @@ export default {
 
 const Template: Story<SparkLineChartProps> = (args: SparkLineChartProps) => {
   return (
-    <div style={{width: '160px', height: '60px'}}>
+    <div style={{width: '160px'}}>
       <SparkLineChart {...args} />
     </div>
   );

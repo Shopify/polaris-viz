@@ -20,6 +20,7 @@ import {
 import {
   COLOR_VISION_SINGLE_ITEM,
   SHAPE_ANIMATION_HEIGHT_BUFFER,
+  STROKE_DOT_ARRAY_WIDTH,
   LINE_SERIES_POINT_RADIUS,
 } from '../../constants';
 
@@ -29,24 +30,17 @@ const ANIMATION_DELAY = 200;
 const SPARK_STROKE_WIDTH = 1.5;
 
 export const StrokeDasharray = {
-  dotted: '0.1 4',
-  dashed: '2 4',
+  dotted: STROKE_DOT_ARRAY_WIDTH,
   solid: 'none',
 };
 
 function getLineStyle({
   isComparison = false,
-  isSparkChart,
 }: {
   isComparison: boolean | undefined;
-  isSparkChart: boolean;
 }) {
   if (!isComparison) {
     return 'solid';
-  }
-
-  if (isSparkChart) {
-    return 'dashed';
   }
 
   return 'dotted';
@@ -55,7 +49,6 @@ function getLineStyle({
 export interface LineSeriesProps {
   data: LineChartDataSeriesWithDefaults;
   index: number;
-
   svgDimensions: {width: number; height: number};
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
@@ -85,13 +78,11 @@ export function LineSeries({
   const {shouldAnimate} = useChartContext();
 
   const AnimatedGroup = animated(G);
-
   const color = data?.color;
   const selectedTheme = useTheme(theme);
   const isSparkChart = type === 'spark';
   const lineStyle = getLineStyle({
     isComparison: data.isComparison,
-    isSparkChart,
   });
 
   const lineGenerator = line<DataPoint>()

@@ -52,8 +52,8 @@ const Template: Story = (args: any) => {
   return <SparkBarChart {...args} />;
 };
 
-const comparisonValue = 2000;
-const defaultProps = {
+const DEFAULT_COMPARISON_VALUE = 2000;
+const DEFAULT_PROPS = {
   isAnimated: true,
   dimensions: {width: 100, height: 100},
   data: [
@@ -72,33 +72,23 @@ const defaultProps = {
         {key: 10, value: 400},
       ],
     },
-    {
-      data: [
-        {key: 0, value: comparisonValue},
-        {key: 1, value: comparisonValue},
-        {key: 2, value: comparisonValue},
-        {key: 3, value: comparisonValue},
-        {key: 4, value: comparisonValue},
-        {key: 5, value: comparisonValue},
-        {key: 6, value: comparisonValue},
-        {key: 7, value: comparisonValue},
-        {key: 8, value: comparisonValue},
-        {key: 9, value: comparisonValue},
-        {key: 10, value: comparisonValue},
-      ],
-      isComparison: true,
-    },
   ],
   accessibilityLabel:
     'A bar chart showing orders over time for the past 11 weeks. The minimum is 100 orders and the maximum is 1,000 orders, compared to an average of 500 orders during previous 11-week period.',
 };
 
 export const Default: Story<any> = Template.bind({});
-Default.args = defaultProps;
+
+Default.args = {
+  ...DEFAULT_PROPS,
+  targetLine: {
+    value: DEFAULT_COMPARISON_VALUE,
+  },
+};
 
 export const OffsetAndNulls: Story<any> = Template.bind({});
 OffsetAndNulls.args = {
-  ...defaultProps,
+  ...DEFAULT_PROPS,
   dataOffsetLeft: 10,
   dataOffsetRight: 20,
   data: [
@@ -117,28 +107,15 @@ OffsetAndNulls.args = {
         {key: 10, value: 500},
       ],
     },
-    {
-      data: [
-        {key: 0, value: comparisonValue},
-        {key: 1, value: comparisonValue},
-        {key: 2, value: comparisonValue},
-        {key: 3, value: comparisonValue},
-        {key: 4, value: comparisonValue},
-        {key: 5, value: comparisonValue},
-        {key: 6, value: comparisonValue},
-        {key: 7, value: comparisonValue},
-        {key: 8, value: comparisonValue},
-        {key: 9, value: comparisonValue},
-        {key: 10, value: comparisonValue},
-      ],
-      isComparison: true,
-    },
   ],
+  targetLine: {
+    value: DEFAULT_COMPARISON_VALUE,
+  },
 };
 
 export const OverwrittenSeriesColors: Story<any> = Template.bind({});
 OverwrittenSeriesColors.args = {
-  ...defaultProps,
+  ...DEFAULT_PROPS,
   data: [
     {
       data: [
@@ -156,21 +133,8 @@ OverwrittenSeriesColors.args = {
       ],
       color: 'lime',
     },
-    {
-      data: [
-        {key: 0, value: comparisonValue},
-        {key: 1, value: comparisonValue},
-        {key: 2, value: comparisonValue},
-        {key: 3, value: comparisonValue},
-        {key: 4, value: comparisonValue},
-        {key: 5, value: comparisonValue},
-        {key: 6, value: comparisonValue},
-        {key: 7, value: comparisonValue},
-        {key: 8, value: comparisonValue},
-        {key: 9, value: comparisonValue},
-        {key: 10, value: comparisonValue},
-      ],
-      isComparison: true,
-    },
   ],
+  targetLine: {
+    value: DEFAULT_COMPARISON_VALUE,
+  },
 };
