@@ -19,6 +19,7 @@ import type {
 } from '@shopify/polaris-viz-core';
 import {stackOffsetDiverging, stackOrderNone} from 'd3-shape';
 
+import {useIndexForLabels} from '../../hooks/useIndexForLabels';
 import {ChartElements} from '../ChartElements';
 import {
   YAxisAnnotations,
@@ -102,8 +103,10 @@ export function Chart({
 
   const emptyState = data.length === 0;
 
-  const labels = useFormattedLabels({
-    data,
+  const indexForLabels = useIndexForLabels(data);
+
+  const formattedLabels = useFormattedLabels({
+    data: [data[indexForLabels]],
     labelFormatter: xAxisOptions.labelFormatter,
   });
 
@@ -111,7 +114,7 @@ export function Chart({
   const stackedValues = isStacked
     ? getStackedValues({
         series: data,
-        labels,
+        labels: formattedLabels,
         order: stackOrderNone,
         offset: stackOffsetDiverging,
       })
@@ -179,7 +182,7 @@ export function Chart({
   const {sortedData, areAllNegative, xScale, gapWidth} = useVerticalBarChart({
     data,
     drawableWidth,
-    labels,
+    labels: formattedLabels,
   });
 
   const {ticks, yScale} = useYScale({
@@ -211,7 +214,7 @@ export function Chart({
         {hideXAxis ? null : (
           <XAxis
             allowLineWrap={xAxisOptions.allowLineWrap}
-            labels={labels}
+            labels={formattedLabels}
             labelWidth={xScale.bandwidth()}
             onHeightChange={setXAxisHeight}
             reducedLabelIndexes={reducedLabelIndexes}
@@ -255,7 +258,7 @@ export function Chart({
             drawableHeight={drawableHeight}
             gapWidth={gapWidth}
             id={id}
-            labels={labels}
+            labels={formattedLabels}
             sortedData={sortedData}
             stackedValues={stackedValues}
             xScale={xScale}
@@ -272,7 +275,7 @@ export function Chart({
               axisLabelWidth={xScale.bandwidth()}
               drawableHeight={annotationsDrawableHeight}
               drawableWidth={drawableWidth}
-              labels={labels}
+              labels={formattedLabels}
               onHeightChange={setAnnotationsHeight}
               xScale={xScale}
             />

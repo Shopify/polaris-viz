@@ -1,4 +1,4 @@
-import React, {useState, useRef, useMemo} from 'react';
+import React, {useState, useRef} from 'react';
 import {
   uniqueId,
   DataType,
@@ -19,6 +19,7 @@ import type {
   YAxisOptions,
 } from '@shopify/polaris-viz-core';
 
+import {useIndexForLabels} from '../../hooks/useIndexForLabels';
 import {
   Annotations,
   checkAvailableAnnotations,
@@ -116,20 +117,7 @@ export function Chart({
     onIndexChange: ({detail}) => setActiveLineIndex(detail.index),
   });
 
-  const indexForLabels = useMemo(() => {
-    return data.reduce((longestIndex, currentSeries, index, array) => {
-      const previousSeries = array[index - 1];
-
-      if (
-        previousSeries &&
-        previousSeries.data.length < currentSeries.data.length
-      ) {
-        return index;
-      }
-
-      return longestIndex;
-    }, 0);
-  }, [data]);
+  const indexForLabels = useIndexForLabels(data);
 
   const formattedLabels = useFormattedLabels({
     data: [data[indexForLabels]],
