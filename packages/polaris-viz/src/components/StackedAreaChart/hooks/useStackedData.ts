@@ -2,6 +2,7 @@ import {useMemo} from 'react';
 import type {DataSeries, XAxisOptions} from '@shopify/polaris-viz-core';
 import {stackOffsetNone, stackOrderReverse} from 'd3-shape';
 
+import {useIndexForLabels} from '../../../hooks/useIndexForLabels';
 import {getStackedValues} from '../../../utilities/getStackedValues';
 import {useFormattedLabels} from '../../../hooks/useFormattedLabels';
 
@@ -11,8 +12,10 @@ interface Props {
 }
 
 export function useStackedData({data, xAxisOptions}: Props) {
+  const indexForLabels = useIndexForLabels(data);
+
   const labels = useFormattedLabels({
-    data,
+    data: [data[indexForLabels]],
     labelFormatter: xAxisOptions.labelFormatter,
   });
 
