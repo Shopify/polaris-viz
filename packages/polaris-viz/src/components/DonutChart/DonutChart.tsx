@@ -8,7 +8,7 @@ import {
 
 import {ChartContainer} from '../ChartContainer';
 import type {ComparisonMetricProps} from '../ComparisonMetric';
-import type {LegendPosition} from '../../types';
+import type {LegendPosition, RenderLegendContent} from '../../types';
 
 import {Chart} from './Chart';
 
@@ -17,6 +17,7 @@ export type DonutChartProps = {
   showLegend?: boolean;
   labelFormatter?: LabelFormatter;
   legendPosition?: LegendPosition;
+  renderLegendContent?: RenderLegendContent;
 } & ChartProps;
 
 export function DonutChart(props: DonutChartProps) {
@@ -30,6 +31,7 @@ export function DonutChart(props: DonutChartProps) {
     isAnimated,
     state,
     errorText,
+    renderLegendContent,
   }: WithRequired<DonutChartProps, 'theme'> = {
     ...DEFAULT_CHART_PROPS,
     labelFormatter: (value) => `${value}`,
@@ -53,6 +55,7 @@ export function DonutChart(props: DonutChartProps) {
         comparisonMetric={comparisonMetric}
         showLegend={showLegend}
         legendPosition={legendPosition}
+        renderLegendContent={renderLegendContent}
       />
     </ChartContainer>
   );

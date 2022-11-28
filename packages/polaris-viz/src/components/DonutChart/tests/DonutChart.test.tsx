@@ -7,6 +7,7 @@ import {Chart as DonutChart} from '../Chart';
 import type {ChartProps} from '../Chart';
 import {Arc, InnerValue} from '../components';
 import {ComparisonMetric} from '../../ComparisonMetric';
+import {LegendContainer} from '../../LegendContainer';
 
 jest.mock('../components', () => ({
   ...jest.requireActual('../components'),
@@ -98,6 +99,35 @@ describe('<DonutChart />', () => {
               mockProps.comparisonMetric,
             );
           });
+        });
+      });
+    });
+
+    describe('<LegendContainer />', () => {
+      it('does not render if showLegend is false', () => {
+        const chart = mount(<DonutChart {...mockProps} showLegend={false} />);
+
+        expect(chart).not.toContainReactComponent(LegendContainer);
+      });
+
+      it('renders with renderLegendContent prop', () => {
+        const renderLegendContent = () => (
+          <ul>
+            <li>Group 1</li>
+            <li>Group 2</li>
+            <li>Group 3</li>
+          </ul>
+        );
+
+        const chart = mount(
+          <DonutChart
+            {...mockProps}
+            renderLegendContent={renderLegendContent}
+          />,
+        );
+
+        expect(chart).not.toContainReactComponent(LegendContainer, {
+          renderLegendContent,
         });
       });
     });

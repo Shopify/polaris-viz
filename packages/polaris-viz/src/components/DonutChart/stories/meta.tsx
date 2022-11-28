@@ -6,6 +6,7 @@ import {
   CONTROLS_ARGS,
   DATA_SERIES_ARGS,
   LEGEND_POSITION_ARGS,
+  RENDER_LEGEND_CONTENT_ARGS,
   THEME_CONTROL_ARGS,
 } from '../../../storybook/constants';
 import {DonutChart, DonutChartProps} from '../DonutChart';
@@ -26,6 +27,7 @@ export const META: Meta<DonutChartProps> = {
   argTypes: {
     data: DATA_SERIES_ARGS,
     legendPosition: LEGEND_POSITION_ARGS,
+    renderLegendContent: RENDER_LEGEND_CONTENT_ARGS,
     theme: THEME_CONTROL_ARGS,
     state: CHART_STATE_CONTROL_ARGS,
   },

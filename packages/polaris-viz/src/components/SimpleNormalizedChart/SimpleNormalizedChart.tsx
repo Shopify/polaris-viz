@@ -11,7 +11,7 @@ import type {WithRequired} from '@shopify/polaris-viz-core';
 import type {ComparisonMetricProps} from '../ComparisonMetric';
 import {ChartContainer} from '../ChartContainer';
 import {ChartSkeleton} from '../ChartSkeleton';
-import type {LegendPosition} from '../../types';
+import type {LegendPosition, RenderLegendContent} from '../../types';
 
 import {Chart} from './Chart';
 import type {Size} from './types';
@@ -23,6 +23,7 @@ export type SimpleNormalizedChartProps = {
   direction?: Direction;
   size?: Size;
   showLegend?: boolean;
+  renderLegendContent?: RenderLegendContent;
 } & ChartProps;
 
 export function SimpleNormalizedChart(props: SimpleNormalizedChartProps) {
@@ -38,6 +39,7 @@ export function SimpleNormalizedChart(props: SimpleNormalizedChartProps) {
     isAnimated,
     state,
     errorText,
+    renderLegendContent,
   }: WithRequired<SimpleNormalizedChartProps, 'theme'> = {
     ...DEFAULT_CHART_PROPS,
     ...props,
@@ -60,6 +62,7 @@ export function SimpleNormalizedChart(props: SimpleNormalizedChartProps) {
           showLegend={showLegend}
           direction={direction}
           size={size}
+          renderLegendContent={renderLegendContent}
         />
       )}
     </ChartContainer>

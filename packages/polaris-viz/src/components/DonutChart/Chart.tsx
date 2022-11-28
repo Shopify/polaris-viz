@@ -25,7 +25,7 @@ import {
   useWatchColorVisionEvents,
 } from '../../hooks';
 import {Arc} from '../Arc';
-import type {LegendPosition} from '../../types';
+import type {LegendPosition, RenderLegendContent} from '../../types';
 import {ChartSkeleton} from '../../components/ChartSkeleton';
 
 import styles from './DonutChart.scss';
@@ -45,6 +45,7 @@ export interface ChartProps {
   legendPosition: LegendPosition;
   state: ChartState;
   errorText?: string;
+  renderLegendContent?: RenderLegendContent;
 }
 
 export function Chart({
@@ -58,6 +59,7 @@ export function Chart({
   legendPosition = 'right',
   state,
   errorText,
+  renderLegendContent,
 }: ChartProps) {
   const {shouldAnimate, characterWidths} = useChartContext();
   const chartId = useUniqueId('Donut');
@@ -251,6 +253,7 @@ export function Chart({
           direction={legendDirection}
           position={legendPosition}
           maxWidth={maxLegendWidth}
+          renderLegendContent={renderLegendContent}
         />
       )}
     </div>

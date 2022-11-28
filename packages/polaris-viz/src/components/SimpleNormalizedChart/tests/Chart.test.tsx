@@ -306,6 +306,45 @@ describe('<Chart />', () => {
     });
   });
 
+  describe('renderLegendContent', () => {
+    const renderLegendContent = () => (
+      <ul>
+        <li>Group 1</li>
+        <li>Group 2</li>
+        <li>Group 3</li>
+      </ul>
+    );
+
+    it('renders legend content if given', () => {
+      const barChart = mount(
+        <SimpleNormalizedChart
+          {...mockProps}
+          renderLegendContent={renderLegendContent}
+        />,
+      );
+
+      expect(barChart.findAll('li')).toHaveLength(3);
+    });
+
+    it('renders no custom legend if showLegend is false', () => {
+      const barChart = mount(
+        <SimpleNormalizedChart
+          {...mockProps}
+          showLegend={false}
+          renderLegendContent={renderLegendContent}
+        />,
+      );
+
+      expect(barChart.findAll('li')).toHaveLength(0);
+    });
+
+    it('defaults to BarLabels if no custom legend is provided', () => {
+      const barChart = mount(<SimpleNormalizedChart {...mockProps} />);
+
+      expect(barChart.findAll(BarLabel)).toHaveLength(4);
+    });
+  });
+
   describe('Colors', () => {
     it('inherits colors from the theme', () => {
       const barChart = mountWithProvider(

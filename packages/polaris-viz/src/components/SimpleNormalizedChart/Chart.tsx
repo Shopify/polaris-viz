@@ -1,7 +1,12 @@
 import React, {useState} from 'react';
 import {sum} from 'd3-array';
 import {scaleLinear} from 'd3-scale';
-import {COLOR_VISION_SINGLE_ITEM, DataSeries} from '@shopify/polaris-viz-core';
+import {
+  COLOR_VISION_SINGLE_ITEM,
+  DataSeries,
+  getColorVisionEventAttrs,
+  getColorVisionStylesForActiveIndex,
+} from '@shopify/polaris-viz-core';
 import type {Direction, LabelFormatter} from '@shopify/polaris-viz-core';
 
 import type {ComparisonMetricProps} from '../ComparisonMetric';
@@ -12,7 +17,7 @@ import {
   useWatchColorVisionEvents,
 } from '../../hooks';
 import {classNames} from '../../utilities';
-import type {LegendPosition} from '../../types';
+import type {LegendPosition, RenderLegendContent} from '../../types';
 import {WARN_FOR_DEVELOPMENT} from '../../constants';
 
 import {BarSegment, BarLabel} from './components';
@@ -27,6 +32,7 @@ export interface ChartProps {
   direction?: Direction;
   size?: Size;
   showLegend?: boolean;
+  renderLegendContent?: RenderLegendContent;
 }
 
 export function Chart({
@@ -37,6 +43,7 @@ export function Chart({
   direction = 'horizontal',
   size = 'small',
   showLegend = true,
+  renderLegendContent,
 }: ChartProps) {
   const flattenedData = data.map(({data}) => data).flat();
 
@@ -85,42 +92,63 @@ export function Chart({
   const isHorizontalAndRightLabel = !isVertical && isRightLabel;
   const isHorizontalAndBottomLabel = !isVertical && isBottomLabel;
 
-  const legend = showLegend && (
-    <ul
-      className={classNames(
-        isVertical
-          ? styles.VerticalLabelContainer
-          : styles.HorizontalLabelContainer,
-        (isVerticalAndBottomLabel || isHorizontalAndRightLabel) &&
-          styles.LabelContainerEndJustify,
-      )}
-    >
-      {slicedData.map(({key, value}, index) => {
-        if (value == null) {
-          return null;
-        }
+  const legendMarkup = () => {
+    if (!showLegend) {
+      return null;
+    }
 
-        const comparisonMetric = comparisonMetrics.find(
-          ({dataIndex}) => index === dataIndex,
-        );
+    const containerPositionClassNames = classNames(
+      isVertical
+        ? styles.VerticalLabelContainer
+        : styles.HorizontalLabelContainer,
+      (isVerticalAndBottomLabel || isHorizontalAndRightLabel) &&
+        styles.LabelContainerEndJustify,
+    );
 
-        const formattedValue = labelFormatter(value);
-        return (
-          <BarLabel
-            activeIndex={activeIndex}
-            index={index}
-            key={`${key}-${formattedValue}-${index}`}
-            label={`${data[index].name}`}
-            value={formattedValue}
-            color={colors[index]}
-            comparisonMetric={comparisonMetric}
-            direction={direction}
-            legendPosition={legendPosition}
-          />
-        );
-      })}
-    </ul>
-  );
+    if (renderLegendContent) {
+      const colorVisionInteractionMethods = {
+        getColorVisionStyles: (index: number) =>
+          getColorVisionStylesForActiveIndex({activeIndex, index}),
+        getColorVisionEventAttrs: (index: number) =>
+          getColorVisionEventAttrs({type: COLOR_VISION_SINGLE_ITEM, index}),
+      };
+
+      return (
+        <div className={containerPositionClassNames}>
+          {renderLegendContent(colorVisionInteractionMethods)}
+        </div>
+      );
+    }
+
+    return (
+      <ul className={containerPositionClassNames}>
+        {slicedData.map(({key, value}, index) => {
+          if (value == null) {
+            return null;
+          }
+
+          const comparisonMetric = comparisonMetrics.find(
+            ({dataIndex}) => index === dataIndex,
+          );
+
+          const formattedValue = labelFormatter(value);
+          return (
+            <BarLabel
+              activeIndex={activeIndex}
+              index={index}
+              key={`${key}-${formattedValue}-${index}`}
+              label={`${data[index].name}`}
+              value={formattedValue}
+              color={colors[index]}
+              comparisonMetric={comparisonMetric}
+              direction={direction}
+              legendPosition={legendPosition}
+            />
+          );
+        })}
+      </ul>
+    );
+  };
 
   return (
     <div
@@ -131,7 +159,7 @@ export function Chart({
         isHorizontalAndBottomLabel && styles.HorizontalContainerBottomLabel,
       )}
     >
-      {legend}
+      {legendMarkup()}
       <div
         className={classNames(
           styles.BarContainer,
