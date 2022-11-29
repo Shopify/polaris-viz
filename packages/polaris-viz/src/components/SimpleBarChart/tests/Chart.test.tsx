@@ -3,6 +3,7 @@ import {mount} from '@shopify/react-testing';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {Chart, ChartProps} from '../Chart';
+import {LegendContainer} from '../../LegendContainer';
 import {
   GroupLabel,
   GradientDefs,
@@ -161,6 +162,45 @@ describe('<Chart />', () => {
       const chart = mount(<Chart {...MOCK_PROPS} />);
 
       expect(chart).toContainReactComponent(HorizontalBars);
+    });
+  });
+
+  describe('<LegendContainer />', () => {
+    it('renders <LegendContainer /> when showLegend is true', () => {
+      const chart = mount(<Chart {...MOCK_PROPS} showLegend />);
+
+      expect(chart).toContainReactComponent(LegendContainer);
+    });
+
+    it('renders <LegendContainer /> with renderLegendContent when showLegend is true', () => {
+      const renderLegendContent = () => (
+        <ul>
+          <li>Group 1</li>
+          <li>Group 2</li>
+          <li>Group 3</li>
+        </ul>
+      );
+
+      const chart = mount(
+        <Chart
+          {...MOCK_PROPS}
+          showLegend
+          renderLegendContent={renderLegendContent}
+        />,
+      );
+
+      expect(chart).toContainReactComponent(LegendContainer, {
+        renderLegendContent,
+      });
+    });
+
+    it('does not render <LegendContainer /> when showLegend is false', () => {
+      const chart = mount(<Chart {...MOCK_PROPS} showLegend={false} />);
+      const svg = chart.find('svg');
+
+      expect(chart).not.toContainReactComponent(LegendContainer);
+
+      expect(svg?.props.height).toStrictEqual(300);
     });
   });
 });
