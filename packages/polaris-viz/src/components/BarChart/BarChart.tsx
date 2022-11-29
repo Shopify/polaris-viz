@@ -15,7 +15,11 @@ import type {
 } from '@shopify/polaris-viz-core';
 
 import {ChartContainer} from '../../components/ChartContainer';
-import type {Annotation, TooltipOptions} from '../../types';
+import type {
+  Annotation,
+  RenderLegendContent,
+  TooltipOptions,
+} from '../../types';
 import {SkipLink} from '../SkipLink';
 import {
   getXAxisOptionsWithDefaults,
@@ -33,6 +37,7 @@ export type BarChartProps = {
   annotations?: Annotation[];
   direction?: Direction;
   emptyStateText?: string;
+  renderLegendContent?: RenderLegendContent;
   showLegend?: boolean;
   skipLinkText?: string;
   theme?: string;
@@ -51,6 +56,7 @@ export function BarChart(props: BarChartProps) {
     emptyStateText,
     isAnimated,
     tooltipOptions,
+    renderLegendContent,
     showLegend = true,
     skipLinkText,
     theme,
@@ -81,6 +87,7 @@ export function BarChart(props: BarChartProps) {
         annotationsLookupTable={annotationsLookupTable}
         data={data}
         emptyStateText={emptyStateText}
+        renderLegendContent={renderLegendContent}
         renderTooltipContent={renderTooltip}
         showLegend={showLegend}
         type={type}
@@ -91,6 +98,7 @@ export function BarChart(props: BarChartProps) {
       <HorizontalBarChart
         annotationsLookupTable={annotationsLookupTable}
         data={data}
+        renderLegendContent={renderLegendContent}
         renderTooltipContent={renderTooltip}
         showLegend={showLegend}
         type={type}

@@ -21,8 +21,9 @@ import {ChartElements} from '../ChartElements';
 import {checkAvailableAnnotations} from '../../components/Annotations';
 import {useFormattedLabels} from '../../hooks/useFormattedLabels';
 import type {
-  RenderTooltipContentData,
   AnnotationLookupTable,
+  RenderLegendContent,
+  RenderTooltipContentData,
 } from '../../types';
 import {HorizontalBarChartXAxisLabels} from '../HorizontalBarChartXAxisLabels';
 import {useLegend, LegendContainer} from '../LegendContainer';
@@ -64,12 +65,14 @@ export interface ChartProps {
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
   dimensions?: Dimensions;
+  renderLegendContent?: RenderLegendContent;
 }
 
 export function Chart({
   annotationsLookupTable,
   data,
   dimensions,
+  renderLegendContent,
   renderTooltipContent,
   showLegend,
   type,
@@ -302,6 +305,7 @@ export function Chart({
           colorVisionType={COLOR_VISION_SINGLE_ITEM}
           data={legend}
           onDimensionChange={setLegendDimensions}
+          renderLegendContent={renderLegendContent}
         />
       )}
     </ChartElements.Div>

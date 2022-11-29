@@ -9,6 +9,7 @@ import type {
 
 import type {
   AnnotationLookupTable,
+  RenderLegendContent,
   RenderTooltipContentData,
 } from '../../types';
 import {useTheme, useThemeSeriesColors} from '../../hooks';
@@ -23,16 +24,18 @@ export interface VerticalBarChartProps {
   yAxisOptions: Required<YAxisOptions>;
   annotationsLookupTable?: AnnotationLookupTable;
   barOptions?: {isStacked: boolean};
-  emptyStateText?: string;
-  type?: ChartType;
   dimensions?: Dimensions;
+  emptyStateText?: string;
+  renderLegendContent?: RenderLegendContent;
+  type?: ChartType;
 }
 
 export function VerticalBarChart({
-  dimensions,
   annotationsLookupTable = {},
   data,
+  dimensions,
   emptyStateText,
+  renderLegendContent,
   renderTooltipContent,
   showLegend,
   type = 'default',
@@ -53,6 +56,7 @@ export function VerticalBarChart({
       annotationsLookupTable={annotationsLookupTable}
       data={seriesWithDefaults}
       emptyStateText={emptyStateText}
+      renderLegendContent={renderLegendContent}
       renderTooltipContent={renderTooltipContent}
       showLegend={showLegend}
       type={type}

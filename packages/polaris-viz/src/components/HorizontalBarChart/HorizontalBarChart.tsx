@@ -10,6 +10,7 @@ import type {
 import type {
   AnnotationLookupTable,
   RenderTooltipContentData,
+  RenderLegendContent,
 } from '../../types';
 
 import {Chart} from './Chart';
@@ -21,19 +22,21 @@ export interface HorizontalBarChartProps {
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
   annotationsLookupTable?: AnnotationLookupTable;
-  type?: ChartType;
   dimensions?: Dimensions;
+  renderLegendContent?: RenderLegendContent;
+  type?: ChartType;
 }
 
 export function HorizontalBarChart({
   annotationsLookupTable = {},
   data,
+  dimensions,
+  renderLegendContent,
   renderTooltipContent,
   showLegend,
   type = 'default',
   xAxisOptions,
   yAxisOptions,
-  dimensions,
 }: HorizontalBarChartProps) {
   return (
     <Chart
@@ -45,6 +48,7 @@ export function HorizontalBarChart({
       type={type}
       xAxisOptions={xAxisOptions}
       yAxisOptions={yAxisOptions}
+      renderLegendContent={renderLegendContent}
     />
   );
 }

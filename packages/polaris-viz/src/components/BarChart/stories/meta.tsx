@@ -3,20 +3,21 @@ import type {Meta} from '@storybook/react';
 
 import {BarChart} from '../../../components';
 import {
+  ANNOTATIONS_ARGS,
+  CHART_STATE_CONTROL_ARGS,
+  CONTROLS_ARGS,
+  DATA_SERIES_ARGS,
   DIRECTION_CONTROL_ARGS,
+  EMPTY_STATE_TEXT_ARGS,
+  IS_ANIMATED_ARGS,
   LEGEND_CONTROL_ARGS,
+  RENDER_LEGEND_CONTENT_ARGS,
   RENDER_TOOLTIP_DESCRIPTION,
+  SKIP_LINK_ARGS,
   THEME_CONTROL_ARGS,
   TYPE_CONTROL_ARGS,
-  CHART_STATE_CONTROL_ARGS,
-  ANNOTATIONS_ARGS,
   X_AXIS_OPTIONS_ARGS,
   Y_AXIS_OPTIONS_ARGS,
-  SKIP_LINK_ARGS,
-  IS_ANIMATED_ARGS,
-  DATA_SERIES_ARGS,
-  EMPTY_STATE_TEXT_ARGS,
-  CONTROLS_ARGS,
 } from '../../../storybook/constants';
 import {PageWithSizingInfo} from '../../Docs/stories';
 
@@ -41,6 +42,7 @@ export const META: Meta = {
     data: DATA_SERIES_ARGS,
     emptyStateText: EMPTY_STATE_TEXT_ARGS,
     isAnimated: IS_ANIMATED_ARGS,
+    renderLegendContent: RENDER_LEGEND_CONTENT_ARGS,
     skipLinkText: SKIP_LINK_ARGS,
     xAxisOptions: X_AXIS_OPTIONS_ARGS,
     yAxisOptions: Y_AXIS_OPTIONS_ARGS,

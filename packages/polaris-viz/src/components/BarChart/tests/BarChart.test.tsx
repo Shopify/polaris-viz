@@ -38,6 +38,44 @@ describe('<BarChart />', () => {
     expect(barChart?.props.xAxisOptions.hide).toStrictEqual(false);
   });
 
+  describe('renderLegendContent', () => {
+    const renderLegendContent = () => (
+      <ul>
+        <li>Group 1</li>
+        <li>Group 2</li>
+        <li>Group 3</li>
+      </ul>
+    );
+
+    it('passes down renderLegendContent to <VerticalBarChart /> when provided to parent props', () => {
+      const chart = mount(
+        <BarChart
+          {...mockProps}
+          direction="vertical"
+          renderLegendContent={renderLegendContent}
+        />,
+      );
+
+      expect(chart).toContainReactComponent(VerticalBarChart, {
+        renderLegendContent,
+      });
+    });
+
+    it('passes down renderLegendContent to <HorizontalBarChart /> when provided to parent props', () => {
+      const chart = mount(
+        <BarChart
+          {...mockProps}
+          direction="horizontal"
+          renderLegendContent={renderLegendContent}
+        />,
+      );
+
+      expect(chart).toContainReactComponent(HorizontalBarChart, {
+        renderLegendContent,
+      });
+    });
+  });
+
   describe('direction', () => {
     it('renders a <VerticalBarChart /> when vertical', () => {
       const chart = mount(<BarChart {...mockProps} />);

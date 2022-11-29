@@ -27,8 +27,9 @@ import {
   checkAvailableAnnotations,
 } from '../Annotations';
 import type {
-  RenderTooltipContentData,
   AnnotationLookupTable,
+  RenderLegendContent,
+  RenderTooltipContentData,
 } from '../../types';
 import {useFormattedLabels} from '../../hooks/useFormattedLabels';
 import {getVerticalBarChartTooltipPosition} from '../../utilities/getVerticalBarChartTooltipPosition';
@@ -67,6 +68,7 @@ export interface Props {
   annotationsLookupTable?: AnnotationLookupTable;
   dimensions?: Dimensions;
   emptyStateText?: string;
+  renderLegendContent?: RenderLegendContent;
 }
 
 export function Chart({
@@ -74,6 +76,7 @@ export function Chart({
   data,
   dimensions,
   emptyStateText,
+  renderLegendContent,
   renderTooltipContent,
   showLegend,
   type,
@@ -315,6 +318,7 @@ export function Chart({
           colorVisionType={COLOR_VISION_SINGLE_ITEM}
           data={legend}
           onDimensionChange={setLegendDimensions}
+          renderLegendContent={renderLegendContent}
         />
       )}
     </ChartElements.Div>

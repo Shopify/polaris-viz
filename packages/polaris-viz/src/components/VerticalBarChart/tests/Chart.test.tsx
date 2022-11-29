@@ -193,23 +193,6 @@ describe('Chart />', () => {
     });
   });
 
-  describe('showLegend', () => {
-    it('does not render <LegendContainer /> when false', () => {
-      const chart = mount(<Chart {...MOCK_PROPS} />);
-      const svg = chart.find('svg');
-
-      expect(chart).not.toContainReactComponent(LegendContainer);
-
-      expect(svg?.props.height).toStrictEqual(250);
-    });
-
-    it('renders <LegendContainer /> when true', () => {
-      const chart = mount(<Chart {...MOCK_PROPS} showLegend />);
-
-      expect(chart).toContainReactComponent(LegendContainer);
-    });
-  });
-
   describe('annotationsLookupTable', () => {
     it('does not render <Annotations /> when empty', () => {
       const chart = mount(<Chart {...MOCK_PROPS} />);
@@ -299,6 +282,45 @@ describe('Chart />', () => {
       const chart = mount(<Chart {...MOCK_PROPS} />);
 
       expect(chart).toContainReactComponent(TooltipWrapper);
+    });
+  });
+
+  describe('<LegendContainer />', () => {
+    it('renders <LegendContainer /> when showLegend is true', () => {
+      const chart = mount(<Chart {...MOCK_PROPS} showLegend />);
+
+      expect(chart).toContainReactComponent(LegendContainer);
+    });
+
+    it('renders <LegendContainer /> with renderLegendContent when showLegend is true', () => {
+      const renderLegendContent = () => (
+        <ul>
+          <li>Group 1</li>
+          <li>Group 2</li>
+          <li>Group 3</li>
+        </ul>
+      );
+
+      const chart = mount(
+        <Chart
+          {...MOCK_PROPS}
+          showLegend
+          renderLegendContent={renderLegendContent}
+        />,
+      );
+
+      expect(chart).toContainReactComponent(LegendContainer, {
+        renderLegendContent,
+      });
+    });
+
+    it('does not render <LegendContainer /> when showLegend is false', () => {
+      const chart = mount(<Chart {...MOCK_PROPS} />);
+      const svg = chart.find('svg');
+
+      expect(chart).not.toContainReactComponent(LegendContainer);
+
+      expect(svg?.props.height).toStrictEqual(250);
     });
   });
 });
