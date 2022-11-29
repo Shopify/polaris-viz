@@ -4,6 +4,7 @@ import {
   CONTROLS_ARGS,
   DATA_SERIES_ARGS,
   IS_ANIMATED_ARGS,
+  RENDER_LEGEND_CONTENT_ARGS,
   THEME_CONTROL_ARGS,
   TYPE_CONTROL_ARGS,
   X_AXIS_OPTIONS_ARGS,
@@ -25,6 +26,7 @@ export const META: Meta = {
   argTypes: {
     data: DATA_SERIES_ARGS,
     isAnimated: IS_ANIMATED_ARGS,
+    renderLegendContent: RENDER_LEGEND_CONTENT_ARGS,
     type: TYPE_CONTROL_ARGS,
     theme: THEME_CONTROL_ARGS,
     xAxisOptions: X_AXIS_OPTIONS_ARGS,

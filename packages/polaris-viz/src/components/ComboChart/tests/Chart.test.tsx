@@ -75,19 +75,43 @@ const PROPS: ChartProps = {
 };
 
 describe('<Chart />', () => {
-  it('does not render <LegendContainer /> when false', () => {
-    const chart = mount(<Chart {...PROPS} showLegend={false} />);
-    const svg = chart.find('svg');
+  describe('<LegendContainer />', () => {
+    it('renders <LegendContainer /> when showLegend is true', () => {
+      const chart = mount(<Chart {...PROPS} showLegend />);
 
-    expect(chart).not.toContainReactComponent(LegendContainer);
+      expect(chart).toContainReactComponent(LegendContainer);
+    });
 
-    expect(svg?.props.height).toStrictEqual(400);
-  });
+    it('renders <LegendContainer /> with renderLegendContent when showLegend is true', () => {
+      const renderLegendContent = () => (
+        <ul>
+          <li>Group 1</li>
+          <li>Group 2</li>
+          <li>Group 3</li>
+        </ul>
+      );
 
-  it('renders <LegendContainer /> when true', () => {
-    const chart = mount(<Chart {...PROPS} showLegend />);
+      const chart = mount(
+        <Chart
+          {...PROPS}
+          showLegend
+          renderLegendContent={renderLegendContent}
+        />,
+      );
 
-    expect(chart).toContainReactComponent(LegendContainer);
+      expect(chart).toContainReactComponent(LegendContainer, {
+        renderLegendContent,
+      });
+    });
+
+    it('does not render <LegendContainer /> when showLegend is false', () => {
+      const chart = mount(<Chart {...PROPS} showLegend={false} />);
+      const svg = chart.find('svg');
+
+      expect(chart).not.toContainReactComponent(LegendContainer);
+
+      expect(svg?.props.height).toStrictEqual(400);
+    });
   });
 
   describe('annotationsLookupTable', () => {
