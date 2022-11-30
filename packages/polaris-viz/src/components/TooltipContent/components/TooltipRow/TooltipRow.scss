@@ -1,6 +1,7 @@
 .Row {
   line-height: 20px;
   font-size: 14px;
+  gap: 8px;
 
   &:not(:last-child) {
     margin: 0 0 10px;

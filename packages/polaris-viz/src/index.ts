@@ -64,3 +64,5 @@ export type {
   DataPoint,
   ChartState,
 } from '@shopify/polaris-viz-core';
+
+export {renderLinearComparisonTooltip} from './utilities';

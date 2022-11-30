@@ -61,6 +61,7 @@ export {
   AREAS_LOAD_ANIMATION_CONFIG,
   COLOR_VARIABLES,
   AREAS_TRANSITION_CONFIG,
+  STROKE_DOT_ARRAY_WIDTH,
 } from './constants';
 export {
   clamp,

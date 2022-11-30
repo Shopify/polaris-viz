@@ -98,7 +98,7 @@ export function TooltipAnimatedContainer({
         top: 0,
         left: 0,
         opacity,
-        transform: `translate3d(${x}px, ${y}px, 0px)`,
+        transform: `translate3d(${Math.round(x)}px, ${Math.round(y)}px, 0px)`,
         transition: immediate
           ? 'none'
           : 'opacity 300ms ease, transform 300ms ease',
