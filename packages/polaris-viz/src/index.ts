@@ -51,6 +51,7 @@ export {
   getAverageColor,
   paddingStringToObject,
   removeFalsyValues,
+  ChartState,
   ColorScale,
 } from '@shopify/polaris-viz-core';
 
@@ -62,5 +63,4 @@ export type {
   PartialTheme,
   GradientStop,
   DataPoint,
-  ChartState,
 } from '@shopify/polaris-viz-core';
