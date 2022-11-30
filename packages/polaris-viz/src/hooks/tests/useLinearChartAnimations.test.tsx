@@ -2,18 +2,23 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {line} from 'd3-shape';
-import {ChartContext} from '@shopify/polaris-viz-core';
+import {
+  ChartContext,
+  LineChartDataSeriesWithDefaults,
+} from '@shopify/polaris-viz-core';
 
-import type {LineChartDataWithDefaults} from '../../components';
 import {useLinearChartAnimations} from '../useLinearChartAnimations';
 import characterWidths from '../../data/character-widths.json';
 import characterWidthOffsets from '../../data/character-width-offsets.json';
 
-jest.mock('../../utilities', () => {
+jest.mock('../../utilities/getPathLength', () => {
   return {
-    ...jest.requireActual('../../utilities'),
-    isLargeDataSet: jest.fn(() => true),
     getPathLength: () => 0,
+  };
+});
+
+jest.mock('../../utilities/getPointAtLength', () => {
+  return {
     getPointAtLength: jest.fn(() => ({x: 0, y: 0})),
   };
 });
@@ -24,7 +29,7 @@ const lineGeneratorMock = jest.fn(
     .y(({value}) => value),
 ) as any;
 
-const data: LineChartDataWithDefaults[] = [
+const data: LineChartDataSeriesWithDefaults[] = [
   {
     name: 'Primary',
     color: 'primary',

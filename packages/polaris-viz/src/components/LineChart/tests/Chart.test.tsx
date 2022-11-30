@@ -27,7 +27,6 @@ import {Annotations, YAxisAnnotations} from '../../Annotations';
 import {normalizeData} from '../../../utilities';
 import characterWidths from '../../../data/character-widths.json';
 import characterWidthOffsets from '../../../data/character-width-offsets.json';
-import {TextLine} from '../../TextLine';
 
 const MOCK_DATA: Required<LineChartDataSeriesWithDefaults> = {
   name: 'Primary',
@@ -69,12 +68,20 @@ jest.mock('@shopify/polaris-viz-core/src/utilities/estimateStringWidth', () => {
   };
 });
 
-jest.mock('../../../utilities', () => {
+jest.mock('../../../utilities/getPathLength', () => {
   return {
-    ...jest.requireActual('../../../utilities'),
-    isLargeDataSet: jest.fn(() => true),
     getPathLength: () => 0,
+  };
+});
+
+jest.mock('../../../utilities/getPointAtLength', () => {
+  return {
     getPointAtLength: () => ({x: 0, y: 0}),
+  };
+});
+
+jest.mock('../../../utilities/eventPoint', () => {
+  return {
     eventPointNative: () => {
       return {clientX: 200, clientY: 200, svgX: 200, svgY: 200};
     },
