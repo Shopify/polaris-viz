@@ -21,18 +21,22 @@ import {
 } from '../../utilities';
 import {SkipLink} from '../SkipLink';
 import {useRenderTooltipContent, useTheme} from '../../hooks';
-import type {Annotation, TooltipOptions} from '../../types';
+import type {
+  Annotation,
+  RenderLegendContent,
+  TooltipOptions,
+} from '../../types';
 
 import {Chart} from './Chart';
 
 export type LineChartProps = {
   annotations?: Annotation[];
-  state?: ChartState;
   errorText?: string;
   emptyStateText?: string;
-  tooltipOptions?: TooltipOptions;
+  renderLegendContent?: RenderLegendContent;
   showLegend?: boolean;
   skipLinkText?: string;
+  tooltipOptions?: TooltipOptions;
   xAxisOptions?: Partial<XAxisOptions>;
   yAxisOptions?: Partial<YAxisOptions>;
 } & ChartProps;
@@ -41,16 +45,17 @@ export function LineChart(props: LineChartProps) {
   const {
     annotations = [],
     data,
-    state,
     errorText,
-    tooltipOptions,
-    showLegend = true,
-    skipLinkText,
     emptyStateText,
     isAnimated,
+    renderLegendContent,
+    showLegend = true,
+    skipLinkText,
+    state,
+    theme,
+    tooltipOptions,
     xAxisOptions,
     yAxisOptions,
-    theme,
   }: WithRequired<LineChartProps, 'theme'> = {
     ...DEFAULT_CHART_PROPS,
     ...props,
@@ -88,12 +93,13 @@ export function LineChart(props: LineChartProps) {
           <Chart
             annotationsLookupTable={annotationsLookupTable}
             data={dataWithDefaults}
-            xAxisOptions={xAxisOptionsWithDefaults}
-            yAxisOptions={yAxisOptionsWithDefaults}
+            emptyStateText={emptyStateText}
+            renderLegendContent={renderLegendContent}
             renderTooltipContent={renderTooltip}
             showLegend={showLegend}
-            emptyStateText={emptyStateText}
             theme={theme}
+            xAxisOptions={xAxisOptionsWithDefaults}
+            yAxisOptions={yAxisOptionsWithDefaults}
           />
         )}
       </ChartContainer>

@@ -6,6 +6,7 @@ import {
   CONTROLS_ARGS,
   DATA_ARGS,
   LEGEND_POSITION_ARGS,
+  RENDER_LEGEND_CONTENT_ARGS,
   THEME_CONTROL_ARGS,
 } from '../../../storybook/constants';
 import {SimpleNormalizedChart} from '../SimpleNormalizedChart';
@@ -31,6 +32,7 @@ export const META: Meta = {
         'Determines the width or height of the bar segments depending on `direction`.',
     },
     legendPosition: LEGEND_POSITION_ARGS,
+    renderLegendContent: RENDER_LEGEND_CONTENT_ARGS,
     showLegend: {
       description: 'Shows the legend for the chart.',
     },

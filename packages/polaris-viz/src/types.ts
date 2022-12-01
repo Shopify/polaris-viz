@@ -1,3 +1,4 @@
+import type {ReactNode} from 'react';
 import type {Interpolation, InterpolatorFn} from '@react-spring/web';
 import type {
   Color,
@@ -184,5 +185,16 @@ export type LegendPosition =
   | 'right'
   | 'bottom'
   | 'left';
+
+export interface ColorVisionInteractionMethods {
+  getColorVisionEventAttrs: (
+    index: number,
+  ) => React.HTMLAttributes<HTMLElement>;
+  getColorVisionStyles: (index: number) => React.CSSProperties;
+}
+
+export type RenderLegendContent = (
+  colorVisionInteractionMethods: ColorVisionInteractionMethods,
+) => ReactNode;
 
 export type SortedBarChartData = (number | null)[][];

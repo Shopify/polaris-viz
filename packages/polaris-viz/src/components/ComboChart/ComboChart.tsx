@@ -12,7 +12,11 @@ import {flattenDataGroupToDataSeries} from '../../utilities/flattenDataGroupToDa
 import {TooltipContent} from '../TooltipContent';
 import {getXAxisOptionsWithDefaults, normalizeData} from '../../utilities';
 import {ChartContainer} from '../ChartContainer';
-import type {ComboAnnotation, RenderTooltipContentData} from '../../types';
+import type {
+  ComboAnnotation,
+  RenderLegendContent,
+  RenderTooltipContentData,
+} from '../../types';
 
 import {Chart} from './Chart';
 import {formatDataForTooltip} from './utilities/formatDataForTooltip';
@@ -23,6 +27,7 @@ export type ComboChartProps = {
   renderTooltipContent?(data: RenderTooltipContentData): React.ReactNode;
   showLegend?: boolean;
   xAxisOptions?: Partial<XAxisOptions>;
+  renderLegendContent?: RenderLegendContent;
 } & ChartProps<DataGroup[]>;
 
 export function ComboChart(props: ComboChartProps) {
@@ -34,6 +39,7 @@ export function ComboChart(props: ComboChartProps) {
     showLegend = true,
     theme,
     xAxisOptions,
+    renderLegendContent,
   }: WithRequired<ComboChartProps, 'theme'> = {
     ...DEFAULT_CHART_PROPS,
     ...props,
@@ -73,6 +79,7 @@ export function ComboChart(props: ComboChartProps) {
         showLegend={showLegend}
         theme={theme}
         xAxisOptions={xAxisOptionsWithDefaults}
+        renderLegendContent={renderLegendContent}
       />
     </ChartContainer>
   );

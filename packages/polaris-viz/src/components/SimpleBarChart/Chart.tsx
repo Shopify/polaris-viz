@@ -26,6 +26,7 @@ import {
   useHorizontalStackedValues,
   useColorVisionEvents,
 } from '../../hooks';
+import type {RenderLegendContent} from '../../types';
 
 export interface ChartProps {
   data: DataSeries[];
@@ -34,11 +35,13 @@ export interface ChartProps {
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
   dimensions?: Dimensions;
+  renderLegendContent?: RenderLegendContent;
 }
 
 export function Chart({
   data,
   dimensions,
+  renderLegendContent,
   showLegend,
   type,
   xAxisOptions,
@@ -161,6 +164,7 @@ export function Chart({
           colorVisionType={COLOR_VISION_SINGLE_ITEM}
           data={legend}
           onDimensionChange={setLegendDimensions}
+          renderLegendContent={renderLegendContent}
         />
       )}
     </ChartElements.Div>

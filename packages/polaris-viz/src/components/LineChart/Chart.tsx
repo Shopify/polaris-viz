@@ -26,8 +26,9 @@ import {
   YAxisAnnotations,
 } from '../Annotations';
 import type {
-  RenderTooltipContentData,
   AnnotationLookupTable,
+  RenderLegendContent,
+  RenderTooltipContentData,
 } from '../../types';
 import {useFormattedLabels} from '../../hooks/useFormattedLabels';
 import {XAxis} from '../XAxis';
@@ -70,9 +71,10 @@ export interface ChartProps {
   showLegend: boolean;
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
-  emptyStateText?: string;
-  theme?: string;
   dimensions?: Dimensions;
+  emptyStateText?: string;
+  renderLegendContent?: RenderLegendContent;
+  theme?: string;
 }
 
 const TOOLTIP_POSITION = {
@@ -81,15 +83,16 @@ const TOOLTIP_POSITION = {
 };
 
 export function Chart({
-  data,
   annotationsLookupTable,
+  emptyStateText,
+  data,
   dimensions,
+  renderLegendContent,
   renderTooltipContent,
   showLegend = true,
-  emptyStateText,
+  theme = DEFAULT_THEME_NAME,
   xAxisOptions,
   yAxisOptions,
-  theme = DEFAULT_THEME_NAME,
 }: ChartProps) {
   useColorVisionEvents(data.length > 1);
 
@@ -408,6 +411,7 @@ export function Chart({
           colorVisionType={COLOR_VISION_SINGLE_ITEM}
           data={legend}
           onDimensionChange={setLegendDimensions}
+          renderLegendContent={renderLegendContent}
         />
       )}
     </React.Fragment>

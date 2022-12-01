@@ -29,6 +29,7 @@ import {
 } from '../TooltipWrapper';
 import type {
   AnnotationLookupTable,
+  RenderLegendContent,
   RenderTooltipContentData,
 } from '../../types';
 import {XAxis} from '../XAxis';
@@ -57,6 +58,7 @@ export interface ChartProps {
   theme: string;
   xAxisOptions: Required<XAxisOptions>;
   dimensions?: Dimensions;
+  renderLegendContent?: RenderLegendContent;
 }
 
 export function Chart({
@@ -67,6 +69,7 @@ export function Chart({
   showLegend,
   theme,
   xAxisOptions,
+  renderLegendContent,
 }: ChartProps) {
   const selectedTheme = useTheme(theme);
 
@@ -327,6 +330,7 @@ export function Chart({
           colorVisionType={COLOR_VISION_SINGLE_ITEM}
           data={legend}
           onDimensionChange={setLegendDimensions}
+          renderLegendContent={renderLegendContent}
         />
       )}
     </ChartElements.Div>

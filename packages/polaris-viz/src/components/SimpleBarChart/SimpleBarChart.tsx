@@ -12,10 +12,12 @@ import {
 } from '../../utilities';
 import {ChartContainer} from '../../components/ChartContainer';
 import {ChartSkeleton} from '../../components';
+import type {RenderLegendContent} from '../../types';
 
 import {Chart} from './Chart';
 
 export type SimpleBarChartProps = {
+  renderLegendContent?: RenderLegendContent;
   showLegend?: boolean;
   type?: ChartType;
   xAxisOptions?: XAxisOptions;
@@ -25,6 +27,7 @@ export function SimpleBarChart(props: SimpleBarChartProps) {
   const {
     isAnimated,
     data,
+    renderLegendContent,
     showLegend = true,
     theme,
     type = 'default',
@@ -50,6 +53,7 @@ export function SimpleBarChart(props: SimpleBarChartProps) {
       ) : (
         <Chart
           data={data}
+          renderLegendContent={renderLegendContent}
           showLegend={showLegend}
           type={type}
           xAxisOptions={xAxisOptionsWithDefaults}

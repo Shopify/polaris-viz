@@ -25,6 +25,7 @@ import {
 import type {
   AnnotationLookupTable,
   GetXPosition,
+  RenderLegendContent,
   RenderTooltipContentData,
 } from '../../types';
 import {XAxis} from '../XAxis';
@@ -72,6 +73,7 @@ export interface Props {
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
   dimensions?: Dimensions;
+  renderLegendContent?: RenderLegendContent;
 }
 
 export function Chart({
@@ -79,6 +81,7 @@ export function Chart({
   xAxisOptions,
   data,
   dimensions,
+  renderLegendContent,
   renderTooltipContent,
   showLegend,
   theme,
@@ -384,6 +387,7 @@ export function Chart({
           colorVisionType={COLOR_VISION_SINGLE_ITEM}
           data={legend}
           onDimensionChange={setLegendDimensions}
+          renderLegendContent={renderLegendContent}
         />
       )}
     </ChartElements.Div>

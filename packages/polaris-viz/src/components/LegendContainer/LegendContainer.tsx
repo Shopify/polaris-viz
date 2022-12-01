@@ -8,16 +8,22 @@ import React, {
 } from 'react';
 import isEqual from 'fast-deep-equal';
 import {
-  useTheme,
+  getColorVisionEventAttrs,
+  getColorVisionStylesForActiveIndex,
   LEGENDS_TOP_MARGIN,
   useChartContext,
+  useTheme,
 } from '@shopify/polaris-viz-core';
 import type {Direction, Dimensions} from '@shopify/polaris-viz-core';
 
 import {DEFAULT_LEGEND_HEIGHT, DEFAULT_LEGEND_WIDTH} from '../../constants';
 import {useResizeObserver, useWatchColorVisionEvents} from '../../hooks';
 import {Legend} from '../Legend';
-import type {LegendData, LegendPosition} from '../../types';
+import type {
+  LegendData,
+  LegendPosition,
+  RenderLegendContent,
+} from '../../types';
 import {classNames} from '../../utilities';
 
 import style from './LegendContainer.scss';
@@ -29,6 +35,7 @@ export interface LegendContainerProps {
   direction?: Direction;
   position?: LegendPosition;
   maxWidth?: number;
+  renderLegendContent?: RenderLegendContent;
 }
 
 export function LegendContainer({
@@ -38,6 +45,7 @@ export function LegendContainer({
   direction = 'horizontal',
   position = 'top-left',
   maxWidth,
+  renderLegendContent,
 }: LegendContainerProps) {
   const selectedTheme = useTheme();
   const {setRef, entry} = useResizeObserver();
@@ -68,6 +76,13 @@ export function LegendContainer({
     if (pos === 'top' || pos === 'bottom') {
       return {justifyContent: 'center'};
     }
+  };
+
+  const colorVisionInteractionMethods = {
+    getColorVisionStyles: (index: number) =>
+      getColorVisionStylesForActiveIndex({activeIndex, index}),
+    getColorVisionEventAttrs: (index: number) =>
+      getColorVisionEventAttrs({type: colorVisionType, index}),
   };
 
   useWatchColorVisionEvents({
@@ -104,12 +119,14 @@ export function LegendContainer({
       role="list"
       style={{...styleMap[direction], ...shouldCenterTiles(position)}}
     >
-      <Legend
-        activeIndex={activeIndex}
-        colorVisionType={colorVisionType}
-        data={data}
-        theme={theme}
-      />
+      {renderLegendContent?.(colorVisionInteractionMethods) ?? (
+        <Legend
+          activeIndex={activeIndex}
+          colorVisionType={colorVisionType}
+          data={data}
+          theme={theme}
+        />
+      )}
     </div>
   );
 }

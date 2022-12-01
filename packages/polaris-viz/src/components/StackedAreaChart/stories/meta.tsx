@@ -8,6 +8,7 @@ import {
   DATA_SERIES_ARGS,
   IS_ANIMATED_ARGS,
   LEGEND_CONTROL_ARGS,
+  RENDER_LEGEND_CONTENT_ARGS,
   RENDER_TOOLTIP_DESCRIPTION,
   SKIP_LINK_ARGS,
   THEME_CONTROL_ARGS,
@@ -39,6 +40,7 @@ export const META: Meta = {
     xAxisOptions: X_AXIS_OPTIONS_ARGS,
     isAnimated: IS_ANIMATED_ARGS,
     yAxisOptions: Y_AXIS_OPTIONS_ARGS,
+    renderLegendContent: RENDER_LEGEND_CONTENT_ARGS,
     renderTooltipContent: {
       options: Object.keys(TOOLTIP_CONTENT),
       mapping: TOOLTIP_CONTENT,
