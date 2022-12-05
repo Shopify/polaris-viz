@@ -1,6 +1,6 @@
 {
   "name": "sandbox",
-  "version": "7.11.0",
+  "version": "7.11.1",
   "private": true,
   "main": "index.js",
   "dependencies": {
