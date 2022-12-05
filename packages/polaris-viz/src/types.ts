@@ -73,6 +73,12 @@ export interface RenderTooltipDataPoint {
   value: number | string | null;
 }
 
+export interface TooltipFormatters {
+  valueFormatter?: LabelFormatter;
+  keyFormatter?: LabelFormatter;
+  titleFormatter?: LabelFormatter;
+}
+
 export interface RenderTooltipContentData {
   data: {
     shape: Shape;
@@ -82,6 +88,7 @@ export interface RenderTooltipContentData {
   activeIndex: number;
   dataSeries: DataSeries[];
   title?: string;
+  formatters?: TooltipFormatters;
 }
 
 export interface TooltipData {
@@ -95,11 +102,8 @@ export interface TooltipData {
   name?: string;
 }
 
-export interface TooltipOptions {
+export interface TooltipOptions extends TooltipFormatters {
   renderTooltipContent?: (data: RenderTooltipContentData) => React.ReactNode;
-  valueFormatter?: LabelFormatter;
-  keyFormatter?: LabelFormatter;
-  titleFormatter?: LabelFormatter;
 }
 
 export interface PreparedLabels {

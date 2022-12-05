@@ -6,6 +6,7 @@ import {
 } from '@shopify/polaris-viz-core';
 import type {Shape} from '@shopify/polaris-viz-core';
 
+import {PREVIEW_ICON_SIZE} from '../../../../constants';
 import {SeriesIcon} from '../../../shared/SeriesIcon';
 import {classNames} from '../../../../utilities';
 import {TITLE_MARGIN} from '../../constants';
@@ -43,7 +44,7 @@ export function TooltipRow({
       })}
     >
       {color != null && (
-        <div style={{marginRight: 4}}>
+        <div className={styles.SeriesIcon} style={{width: PREVIEW_ICON_SIZE}}>
           <SeriesIcon
             color={color!}
             isComparison={isComparison}

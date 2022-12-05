@@ -3,8 +3,12 @@ import type {Story} from '@storybook/react';
 
 import {LineChart, LineChartProps} from '../../LineChart';
 import {randomNumber} from '../../../Docs/utilities';
-import {formatLinearXAxisLabel} from '../../../../storybook/utilities';
+import {
+  formatLinearXAxisLabel,
+  formatLinearYAxisLabel,
+} from '../../../../storybook/utilities';
 import {META} from '../meta';
+import {renderLinearComparisonTooltip} from '../../../../utilities';
 
 export default {
   ...META,
@@ -883,6 +887,94 @@ MissingData.args = {
         {value: 21, key: '2020-03-14T12:00:00'},
       ],
       isComparison: true,
+    },
+  ],
+};
+
+export const LinearComparisonTooltip: Story<LineChartProps> = Template.bind({});
+
+LinearComparisonTooltip.args = {
+  tooltipOptions: {
+    renderTooltipContent: (tooltipData) => {
+      return renderLinearComparisonTooltip(tooltipData, {
+        groups: [
+          {title: 'Net sales', indexes: [0, 1]},
+          {title: 'Average order value', indexes: [2, 3, 18]},
+        ],
+      });
+    },
+    valueFormatter: formatLinearYAxisLabel,
+  },
+  data: [
+    {
+      name: 'Bfcm sales',
+      data: [
+        {
+          key: 'Nov 25, 2022',
+          value: 4597927.99,
+        },
+        {
+          key: 'Nov 26, 2022',
+          value: 4597927.99,
+        },
+        {
+          key: 'Nov 27, 2022',
+          value: 4597927.99,
+        },
+      ],
+    },
+    {
+      name: 'Bfcm sales bfcm2021',
+      isComparison: true,
+      data: [
+        {
+          key: 'Nov 26, 2021',
+          value: 1856721.98,
+        },
+        {
+          key: 'Nov 27, 2021',
+          value: 1856721.98,
+        },
+        {
+          key: 'Nov 28, 2021',
+          value: 1856721.98,
+        },
+      ],
+    },
+    {
+      name: 'AOV',
+      data: [
+        {
+          key: 'Nov 25, 2022',
+          value: 5597927.99,
+        },
+        {
+          key: 'Nov 26, 2022',
+          value: 5597927.99,
+        },
+        {
+          key: 'Nov 27, 2022',
+          value: 5597927.99,
+        },
+      ],
+    },
+    {
+      name: 'AOV bfcm2021',
+      isComparison: true,
+      data: [
+        {
+          key: 'Nov 26, 2021',
+          value: 1956721.98,
+        },
+        {
+          key: 'Nov 27, 2021',
+          value: 1956721.98,
+        },
+        {
+          key: 'Nov 28, 2021',
+          value: 1956721.98,
+        },
+      ],
     },
   ],
 };

@@ -17,3 +17,4 @@ export {
   getXAxisOptionsWithDefaults,
 } from './getAxisOptions';
 export {getHoverZoneOffset} from './getHoverZoneOffset';
+export {renderLinearComparisonTooltip} from './renderLinearComparisonTooltip';

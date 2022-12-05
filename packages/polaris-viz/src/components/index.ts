@@ -33,7 +33,13 @@ export type {SimpleBarChartProps} from './SimpleBarChart';
 export {Legend} from './Legend';
 export type {LegendProps} from './Legend';
 export {PolarisVizProvider} from './PolarisVizProvider';
-export {TooltipContent} from './TooltipContent';
+export {
+  TooltipContent,
+  TooltipContentContainer,
+  TooltipSeriesName,
+  TooltipTitle,
+  TooltipRow,
+} from './TooltipContent';
 export type {TooltipContentProps} from './TooltipContent';
 export {ConicGradientWithStops} from './ConicGradientWithStops';
 export {ChartSkeleton} from './ChartSkeleton';

@@ -9,7 +9,6 @@ import {
 import {PREVIEW_ICON_SIZE, XMLNS} from '../../constants';
 
 import {
-  DASHED_STROKE_DASHARRAY,
   DOTTED_LINE_PREVIEW_CY,
   DOTTED_LINE_PREVIEW_RADIUS,
   DOT_SPACING,
@@ -31,11 +30,16 @@ export function LinePreview({color, lineStyle}: LinePreviewProps) {
     : color;
 
   return (
-    <span className={styles.Container} style={{height: HEIGHT}}>
+    <span
+      className={styles.Container}
+      style={{height: HEIGHT, width: PREVIEW_ICON_SIZE}}
+    >
       <svg
-        xmlns={XMLNS}
-        width={`${PREVIEW_ICON_SIZE}px`}
+        className={styles.SVG}
         height={`${HEIGHT}px`}
+        viewBox={`0 0 ${PREVIEW_ICON_SIZE} ${HEIGHT}`}
+        width={`${PREVIEW_ICON_SIZE}px`}
+        xmlns={XMLNS}
       >
         {isGradientType(color) ? (
           <defs>
@@ -57,46 +61,31 @@ export function LinePreview({color, lineStyle}: LinePreviewProps) {
 }
 
 function getLinePreview(color: string, lineStyle: LineStyle) {
-  const solidLine = (
-    <path
-      d="M1,1L13.5,1"
-      stroke={color}
-      strokeLinejoin="round"
-      strokeLinecap="round"
-      strokeWidth="2"
-    />
-  );
-
-  const dashedLine = (
-    <path
-      d="M0,1L15,1"
-      stroke={color}
-      strokeWidth="2"
-      strokeDasharray={DASHED_STROKE_DASHARRAY}
-    />
-  );
-
-  const dottedLine = (
-    <g fill={color}>
-      {[...Array(3)].map((_, index) => {
-        return (
-          <circle
-            key={index}
-            cx={1 + index * DOT_SPACING}
-            cy={DOTTED_LINE_PREVIEW_CY}
-            r={DOTTED_LINE_PREVIEW_RADIUS}
-          />
-        );
-      })}
-    </g>
-  );
-
   switch (lineStyle) {
-    case 'dashed':
-      return dashedLine;
     case 'dotted':
-      return dottedLine;
+      return (
+        <g fill={color}>
+          {[...Array(3)].map((_, index) => {
+            return (
+              <circle
+                key={index}
+                cx={DOTTED_LINE_PREVIEW_CY + index * DOT_SPACING}
+                cy={DOTTED_LINE_PREVIEW_CY}
+                r={DOTTED_LINE_PREVIEW_RADIUS}
+              />
+            );
+          })}
+        </g>
+      );
     default:
-      return solidLine;
+      return (
+        <path
+          d={`M1 1 H${PREVIEW_ICON_SIZE}`}
+          stroke={color}
+          strokeLinejoin="round"
+          strokeLinecap="round"
+          strokeWidth="2"
+        />
+      );
   }
 }

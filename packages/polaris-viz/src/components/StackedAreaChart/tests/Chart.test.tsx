@@ -25,11 +25,20 @@ jest.mock('@shopify/polaris-viz-core/src/utilities/estimateStringWidth', () => {
   };
 });
 
-jest.mock('../../../utilities', () => {
+jest.mock('../../../utilities/getPathLength', () => {
   return {
-    ...jest.requireActual('../../../utilities'),
     getPathLength: () => 0,
+  };
+});
+
+jest.mock('../../../utilities/getPointAtLength', () => {
+  return {
     getPointAtLength: jest.fn(() => ({x: 0, y: 0})),
+  };
+});
+
+jest.mock('../../../utilities/eventPoint', () => {
+  return {
     eventPointNative: () => {
       return {clientX: 100, clientY: 100, svgX: 100, svgY: 100};
     },

@@ -16,9 +16,12 @@ export function useRenderTooltipContent({
 }) {
   return function renderTooltipContent(tooltipData: RenderTooltipContentData) {
     if (tooltipOptions?.renderTooltipContent != null) {
-      return tooltipOptions.renderTooltipContent({
+      const {renderTooltipContent, ...formatters} = tooltipOptions;
+
+      return renderTooltipContent({
         ...tooltipData,
         dataSeries: data,
+        formatters,
       });
     }
 

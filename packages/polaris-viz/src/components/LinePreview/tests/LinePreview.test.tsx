@@ -2,21 +2,12 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 
 import {LinePreview} from '../LinePreview';
-import {DASHED_STROKE_DASHARRAY} from '../constants';
 
 describe('<LinePreview />', () => {
   it('renders a path with the given color', () => {
     const linePreview = mount(<LinePreview color="red" lineStyle="solid" />);
 
     expect(linePreview).toContainReactComponent('path', {stroke: 'red'});
-  });
-
-  it('renders a dashed path if lineStyle is dashed', () => {
-    const linePreview = mount(<LinePreview color="red" lineStyle="dashed" />);
-
-    expect(linePreview).toContainReactComponent('path', {
-      strokeDasharray: DASHED_STROKE_DASHARRAY,
-    });
   });
 
   it('renders a solid path if lineStyle is solid', () => {
