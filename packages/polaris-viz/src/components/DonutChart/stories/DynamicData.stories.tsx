@@ -4,25 +4,10 @@ export {META as default} from './meta';
 
 import {DonutChart} from '../DonutChart';
 
+import {DEFAULT_DATA} from './data';
+
 export const DynamicData = () => {
-  const [data, setData] = useState([
-    {
-      name: 'Shopify Payments',
-      data: [{key: 'april - march', value: 50000}],
-    },
-    {
-      name: 'Paypal',
-      data: [{key: 'april - march', value: 25000}],
-    },
-    {
-      name: 'Amazon Pay',
-      data: [{key: 'april - march', value: 4000}],
-    },
-    {
-      name: 'Other',
-      data: [{key: 'april - march', value: 4000}],
-    },
-  ]);
+  const [data, setData] = useState(DEFAULT_DATA);
 
   const onClick = () => {
     const newData = data.map((item) => {

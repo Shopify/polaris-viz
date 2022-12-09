@@ -7,6 +7,8 @@ import {PolarisVizProvider} from '../../PolarisVizProvider';
 import {DonutChart} from '../DonutChart';
 import type {DonutChartProps} from '../DonutChart';
 
+import {DEFAULT_DATA, DEFAULT_PROPS} from './data';
+
 const CustomArcWidthTemplate: StoryFn<DonutChartProps> = (args: DonutChartProps) => {
   return (
     <PolarisVizProvider
@@ -26,27 +28,6 @@ const CustomArcWidthTemplate: StoryFn<DonutChartProps> = (args: DonutChartProps)
 export const CustomArcWidth: Story<DonutChartProps> = CustomArcWidthTemplate.bind({});
 
 CustomArcWidth.args = {
-  data: [
-    {
-      name: 'Shopify Payments',
-      data: [{key: 'april - march', value: 50000}],
-    },
-    {
-      name: 'Paypal',
-      data: [{key: 'april - march', value: 25000}],
-    },
-    {
-      name: 'Other',
-      data: [{key: 'april - march', value: 10000}],
-    },
-    {
-      name: 'Amazon Pay',
-      data: [{key: 'april - march', value: 4000}],
-    },
-  ],
-  comparisonMetric: {
-    metric: '10%',
-    trend: 'negative',
-    accessibilityLabel: 'trending down 10%',
-  },
+  ...DEFAULT_PROPS,
+  data: DEFAULT_DATA,
 };
