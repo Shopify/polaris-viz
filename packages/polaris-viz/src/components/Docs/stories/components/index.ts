@@ -13,6 +13,7 @@ export {
   SampleLegendContainer,
   SampleLegendChart,
   SampleLabelsBarChart,
+  SampleDonutChart,
 } from './SampleComponents';
 export {SimpleContainer} from './SimpleContainer';
 export {Banner} from './Banner';

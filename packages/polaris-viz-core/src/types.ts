@@ -140,6 +140,7 @@ export interface LegendTheme {
 }
 
 export interface PartialTheme {
+  arc?: Partial<ArcTheme>;
   chartContainer?: Partial<ChartContainerTheme>;
   bar?: Partial<BarTheme>;
   line?: Partial<LineTheme>;

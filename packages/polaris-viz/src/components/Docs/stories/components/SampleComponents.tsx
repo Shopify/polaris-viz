@@ -12,6 +12,7 @@ import {
   BarChart,
   StackedAreaChart,
   SimpleNormalizedChart,
+  DonutChart,
 } from '../../../../components';
 import {generateMultipleSeries} from '../../../Docs/utilities';
 
@@ -275,5 +276,31 @@ export const SampleLabelsBarChart = ({width = 760}: {width: number}) => {
         </div>
       </div>
     </SimpleContainer>
+  );
+};
+
+export const SampleDonutChart = ({theme} = {theme: 'Default'}) => {
+  return (
+    <DonutChart
+      theme={theme}
+      data={[
+        {
+          name: 'Shopify Payments',
+          data: [{key: 'april - march', value: 50000}],
+        },
+        {
+          name: 'Paypal',
+          data: [{key: 'april - march', value: 25000}],
+        },
+        {
+          name: 'Other',
+          data: [{key: 'april - march', value: 10000}],
+        },
+        {
+          name: 'Amazon Pay',
+          data: [{key: 'april - march', value: 4000}],
+        },
+      ]}
+    />
   );
 };

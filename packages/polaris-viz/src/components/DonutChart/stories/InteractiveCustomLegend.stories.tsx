@@ -7,26 +7,7 @@ import {DEFAULT_THEME} from '../../../constants';
 import type {DonutChartProps} from '../../DonutChart';
 import {SquareColorPreview} from '../../SquareColorPreview';
 
-import {Template} from './data';
-
-const DATA = [
-  {
-    name: 'Shopify Payments',
-    data: [{key: 'april - march', value: 50000}],
-  },
-  {
-    name: 'Paypal',
-    data: [{key: 'april - march', value: 25000}],
-  },
-  {
-    name: 'Other',
-    data: [{key: 'april - march', value: 10000}],
-  },
-  {
-    name: 'Amazon Pay',
-    data: [{key: 'april - march', value: 4000}],
-  },
-];
+import {DEFAULT_DATA, DEFAULT_PROPS, Template} from './data';
 
 const liStyles = {
   alignItems: 'center',
@@ -40,11 +21,11 @@ const liStyles = {
 export const InteractiveCustomLegend: Story<DonutChartProps> = Template.bind({});
 
 InteractiveCustomLegend.args = {
-  data: DATA,
-  legendPosition: 'left',
+  ...DEFAULT_PROPS,
+  data: DEFAULT_DATA,
   renderLegendContent: ({getColorVisionStyles, getColorVisionEventAttrs}) => (
     <ul>
-      {DATA.map(({name}, index) => (
+      {DEFAULT_DATA.map(({name}, index) => (
         <li
           key={name}
           style={{

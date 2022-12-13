@@ -4,21 +4,16 @@ export {META as default} from './meta';
 
 import type {DonutChartProps} from '../DonutChart';
 
-import {Template} from './data';
+import {DEFAULT_PROPS, Template} from './data';
 
 export const SingleDataPoint: Story<DonutChartProps> = Template.bind({});
 
 SingleDataPoint.args = {
+  ...DEFAULT_PROPS,
   data: [
     {
       name: 'Engagement',
       data: [{key: 'april - march', value: 25000}],
     },
   ],
-  comparisonMetric: {
-    metric: '6%',
-    trend: 'positive',
-    accessibilityLabel: 'trending up 6%',
-  },
-  legendPosition: 'left',
 };
