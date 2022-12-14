@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Fixed
+
+- Use correct width for `<HorizontalGridLines />` in `<BarChart />` based on `grid.horizontalOverflow` value.
+
 ### Added
 
 - Added `arc` property to `PartialTheme` to allow override of the default theme option for `DonutChart`.
