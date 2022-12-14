@@ -242,7 +242,9 @@ export function Chart({
               x: selectedTheme.grid.horizontalOverflow ? 0 : chartXPosition,
               y: chartYPosition,
             }}
-            width={width}
+            width={
+              selectedTheme.grid.horizontalOverflow ? width : drawableWidth
+            }
           />
         ) : null}
 
