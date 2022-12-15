@@ -97,14 +97,6 @@ export function Chart({
       return null;
     }
 
-    const containerPositionClassNames = classNames(
-      isVertical
-        ? styles.VerticalLabelContainer
-        : styles.HorizontalLabelContainer,
-      (isVerticalAndBottomLabel || isHorizontalAndRightLabel) &&
-        styles.LabelContainerEndJustify,
-    );
-
     if (renderLegendContent) {
       const colorVisionInteractionMethods = {
         getColorVisionStyles: (index: number) =>
@@ -114,14 +106,33 @@ export function Chart({
       };
 
       return (
-        <div className={containerPositionClassNames}>
+        <div
+          className={classNames(
+            isVertical
+              ? styles.VerticalLabelContainer
+              : styles.HorizontalLabelContainer,
+            (isVerticalAndBottomLabel || isHorizontalAndRightLabel) &&
+              styles.LabelContainerEndJustify,
+          )}
+        >
           {renderLegendContent(colorVisionInteractionMethods)}
         </div>
       );
     }
 
     return (
-      <ul className={containerPositionClassNames}>
+      <ul
+        className={classNames(
+          ...(isVertical
+            ? [styles.VerticalLabelContainer]
+            : [
+                styles.HorizontalLabelContainer,
+                styles.HorizontalLabelContainerGrid,
+              ]),
+          (isVerticalAndBottomLabel || isHorizontalAndRightLabel) &&
+            styles.LabelContainerEndJustify,
+        )}
+      >
         {slicedData.map(({key, value}, index) => {
           if (value == null) {
             return null;

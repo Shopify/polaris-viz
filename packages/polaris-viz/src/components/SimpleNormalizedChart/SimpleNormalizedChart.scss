@@ -45,6 +45,10 @@
 
 .HorizontalLabelContainer {
   padding: 0;
+  display: flex;
+}
+
+.HorizontalLabelContainerGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, max-content));
 }
