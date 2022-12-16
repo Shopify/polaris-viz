@@ -10,6 +10,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Fixed
 
 - Use correct width for `<HorizontalGridLines />` in `<BarChart />` based on `grid.horizontalOverflow` value.
+- Export `ColorVisionInteractionMethods` type
 
 ### Added
 
