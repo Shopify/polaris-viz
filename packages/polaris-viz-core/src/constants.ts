@@ -242,6 +242,7 @@ export const DEFAULT_THEME: Theme = {
     linkColor: variables.colorBlue40,
     axisLabelColor: variables.colorGray80,
     lineColor: variables.colorGray80,
+    pillOpacity: 0.6,
   },
 };
 
@@ -337,12 +338,13 @@ export const LIGHT_THEME: Theme = {
     },
   },
   annotations: {
-    backgroundColor: variables.colorGray140,
-    textColor: variables.colorGray30,
+    backgroundColor: variables.colorGray100,
+    textColor: variables.colorWhite,
     titleColor: variables.colorWhite,
     linkColor: variables.colorBlue40,
     axisLabelColor: variables.colorGray70,
     lineColor: variables.colorGray70,
+    pillOpacity: 1,
   },
 };
 

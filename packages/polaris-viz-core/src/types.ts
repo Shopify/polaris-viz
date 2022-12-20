@@ -102,6 +102,7 @@ export interface AnnotationsTheme {
   linkColor: string;
   axisLabelColor: string;
   lineColor: string;
+  pillOpacity: number;
 }
 
 export interface ChartContainerTheme {
