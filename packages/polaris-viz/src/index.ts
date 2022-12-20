@@ -34,7 +34,7 @@ export {
   PRINT_THEME as PolarisVizPrintTheme,
 } from './constants';
 
-export type {TooltipData} from './types';
+export type {RenderInnerValueContent, TooltipData} from './types';
 
 export {
   createGradient,

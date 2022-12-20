@@ -202,3 +202,11 @@ export type RenderLegendContent = (
 ) => ReactNode;
 
 export type SortedBarChartData = (number | null)[][];
+
+export type RenderInnerValueContent = (
+  values: {
+    activeValue: number | null;
+    totalValue: number;
+  },
+  getAnimatedTotalValue: (styles: React.CSSProperties) => ReactNode,
+) => ReactNode;
