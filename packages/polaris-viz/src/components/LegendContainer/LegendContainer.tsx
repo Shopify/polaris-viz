@@ -33,6 +33,7 @@ export interface LegendContainerProps {
   data: LegendData[];
   onDimensionChange: Dispatch<SetStateAction<Dimensions>>;
   direction?: Direction;
+  fullWidth?: boolean;
   position?: LegendPosition;
   maxWidth?: number;
   renderLegendContent?: RenderLegendContent;
@@ -43,6 +44,7 @@ export function LegendContainer({
   data,
   onDimensionChange,
   direction = 'horizontal',
+  fullWidth = false,
   position = 'top-left',
   maxWidth,
   renderLegendContent,
@@ -65,7 +67,8 @@ export function LegendContainer({
       alignItems: 'flex-start',
       margin: `0 ${selectedTheme.grid.horizontalMargin}px 0`,
       flexDirection: 'column',
-      maxWidth,
+      maxWidth: fullWidth ? 'none' : maxWidth,
+      flex: fullWidth ? 1 : 'initial',
     },
     centerTiles: {
       justifyContent: 'center',

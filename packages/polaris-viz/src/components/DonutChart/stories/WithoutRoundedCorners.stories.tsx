@@ -11,17 +11,19 @@ import {DEFAULT_DATA, DEFAULT_PROPS} from './data';
 
 const WithoutRoundedCornersTemplate: StoryFn<DonutChartProps> = (args: DonutChartProps) => {
   return (
-    <PolarisVizProvider
-      themes={{
-        Default: {
-          arc: {
-            cornerRadius: 0,
-          }
-        },
-      }}
-    >
-      <DonutChart {...args} />
-    </PolarisVizProvider>
+    <div style={{width: 550, height: 400}}>
+      <PolarisVizProvider
+        themes={{
+          Default: {
+            arc: {
+              cornerRadius: 0,
+            }
+          },
+        }}
+      >
+        <DonutChart {...args} />
+      </PolarisVizProvider>
+    </div>
   );
 };
 

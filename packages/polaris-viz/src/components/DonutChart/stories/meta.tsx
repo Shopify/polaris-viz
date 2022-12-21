@@ -1,10 +1,10 @@
-import React from 'react';
 import type {Meta} from '@storybook/react';
 
 import {
   CHART_STATE_CONTROL_ARGS,
   CONTROLS_ARGS,
   DATA_SERIES_ARGS,
+  LEGEND_FULL_WIDTH_ARGS,
   LEGEND_POSITION_ARGS,
   RENDER_LEGEND_CONTENT_ARGS,
   THEME_CONTROL_ARGS,
@@ -26,12 +26,10 @@ export const META: Meta<DonutChartProps> = {
   },
   argTypes: {
     data: DATA_SERIES_ARGS,
+    legendFullWidth: LEGEND_FULL_WIDTH_ARGS,
     legendPosition: LEGEND_POSITION_ARGS,
     renderLegendContent: RENDER_LEGEND_CONTENT_ARGS,
     theme: THEME_CONTROL_ARGS,
     state: CHART_STATE_CONTROL_ARGS,
   },
-  decorators: [
-    (Story) => <div style={{width: 550, height: 400}}>{Story()}</div>,
-  ],
 };

@@ -13,7 +13,8 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Added
 
-- Added `arc` property to `PartialTheme` to allow override of the default theme option for `DonutChart`.
+- Added `arc` property to `PartialTheme` to allow override of the default theme option for `<DonutChart />`.
+- Added `legendFullWidth` prop to `<DonutChart />`
 
 ## [7.11.1] - 2022-12-05
 

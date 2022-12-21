@@ -34,6 +34,14 @@ export const LEGEND_CONTROL_ARGS: ArgType = {
   description: 'Renders a `<Legend />` component underneath the chart.',
 };
 
+export const LEGEND_FULL_WIDTH_ARGS = {
+  description:
+    'Allows the legend to take up the remaining width of the chart container.',
+  control: {
+    type: 'boolean',
+  },
+};
+
 export const RENDER_LEGEND_CONTENT_ARGS = {
   description:
     'This accepts a function that is called to render the legend content instead of the given legend. If `showLegend` is false, this prop will have no effect.',
