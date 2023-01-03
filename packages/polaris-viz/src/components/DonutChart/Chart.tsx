@@ -25,7 +25,11 @@ import {
   useWatchColorVisionEvents,
 } from '../../hooks';
 import {Arc} from '../Arc';
-import type {LegendPosition, RenderLegendContent} from '../../types';
+import type {
+  LegendPosition,
+  RenderInnerValueContent,
+  RenderLegendContent,
+} from '../../types';
 import {ChartSkeleton} from '../../components/ChartSkeleton';
 
 import styles from './DonutChart.scss';
@@ -46,6 +50,7 @@ export interface ChartProps {
   legendPosition: LegendPosition;
   state: ChartState;
   errorText?: string;
+  renderInnerValueContent?: RenderInnerValueContent;
   renderLegendContent?: RenderLegendContent;
 }
 
@@ -61,6 +66,7 @@ export function Chart({
   legendPosition = 'right',
   state,
   errorText,
+  renderInnerValueContent,
   renderLegendContent,
 }: ChartProps) {
   const {shouldAnimate, characterWidths} = useChartContext();
@@ -169,6 +175,8 @@ export function Chart({
   const totalValue =
     total || points.reduce((acc, {value}) => (value ?? 0) + acc, 0);
 
+  const activeValue = points[activeIndex]?.value;
+
   return (
     <div className={styles.DonutWrapper} style={styleMap[legendPosition]}>
       <div className={styles.Donut}>
@@ -232,10 +240,12 @@ export function Chart({
               )}
             </svg>
             <InnerValue
+              activeValue={activeValue}
               isAnimated={shouldAnimate}
               totalValue={totalValue}
               comparisonMetric={comparisonMetric}
               labelFormatter={labelFormatter}
+              renderInnerValueContent={renderInnerValueContent}
             />
           </React.Fragment>
         ) : (
