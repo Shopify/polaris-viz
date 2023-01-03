@@ -42,6 +42,7 @@ export interface ChartProps {
   total?: number;
   dimensions?: Dimensions;
   labelFormatter: LabelFormatter;
+  legendFullWidth?: boolean;
   legendPosition: LegendPosition;
   state: ChartState;
   errorText?: string;
@@ -56,6 +57,7 @@ export function Chart({
   showLegend,
   dimensions = {height: 0, width: 0},
   labelFormatter,
+  legendFullWidth = false,
   legendPosition = 'right',
   state,
   errorText,
@@ -247,6 +249,7 @@ export function Chart({
       </div>
       {showLegend && (
         <LegendContainer
+          fullWidth={legendFullWidth}
           onDimensionChange={setLegendDimensions}
           colorVisionType={COLOR_VISION_SINGLE_ITEM}
           data={legend}

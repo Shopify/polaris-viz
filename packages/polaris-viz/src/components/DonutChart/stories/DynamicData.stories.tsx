@@ -26,7 +26,7 @@ export const DynamicData = () => {
   };
 
   return (
-    <>
+    <div style={{width: 550, height: 400}}>
       <DonutChart data={data} />
       <button
         style={{
@@ -38,6 +38,6 @@ export const DynamicData = () => {
       >
         Change Data
       </button>
-    </>
+    </div>
   );
 };

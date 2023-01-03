@@ -16,6 +16,7 @@ export type DonutChartProps = {
   comparisonMetric?: ComparisonMetricProps;
   showLegend?: boolean;
   labelFormatter?: LabelFormatter;
+  legendFullWidth?: boolean;
   legendPosition?: LegendPosition;
   renderLegendContent?: RenderLegendContent;
 } & ChartProps;
@@ -27,6 +28,7 @@ export function DonutChart(props: DonutChartProps) {
     comparisonMetric,
     showLegend,
     labelFormatter,
+    legendFullWidth,
     legendPosition,
     isAnimated,
     state,
@@ -54,6 +56,7 @@ export function DonutChart(props: DonutChartProps) {
         labelFormatter={labelFormatter}
         comparisonMetric={comparisonMetric}
         showLegend={showLegend}
+        legendFullWidth={legendFullWidth}
         legendPosition={legendPosition}
         renderLegendContent={renderLegendContent}
       />

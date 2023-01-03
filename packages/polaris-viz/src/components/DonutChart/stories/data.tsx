@@ -4,7 +4,11 @@ import type {StoryFn} from '@storybook/react';
 import {DonutChart, DonutChartProps} from '../DonutChart';
 
 export const Template: StoryFn<DonutChartProps> = (args: DonutChartProps) => {
-  return <DonutChart {...args} />;
+  return (
+    <div style={{width: 550, height: 400}}>
+      <DonutChart {...args} />
+    </div>
+  );
 };
 
 export const DEFAULT_PROPS: Partial<DonutChartProps> = {
