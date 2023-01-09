@@ -1,0 +1,1 @@
+export {RelatedArea} from './RelatedArea';

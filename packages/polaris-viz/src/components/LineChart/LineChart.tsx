@@ -39,6 +39,9 @@ export type LineChartProps = {
   tooltipOptions?: TooltipOptions;
   xAxisOptions?: Partial<XAxisOptions>;
   yAxisOptions?: Partial<YAxisOptions>;
+  slots?: {
+    chart?: ({xScale, yScale}) => JSX.Element;
+  };
 } & ChartProps;
 
 export function LineChart(props: LineChartProps) {
@@ -100,6 +103,7 @@ export function LineChart(props: LineChartProps) {
             theme={theme}
             xAxisOptions={xAxisOptionsWithDefaults}
             yAxisOptions={yAxisOptionsWithDefaults}
+            slots={props.slots}
           />
         )}
       </ChartContainer>

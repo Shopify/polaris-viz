@@ -2,6 +2,7 @@ import React from 'react';
 import {scaleLinear} from 'd3-scale';
 import {
   LineSeries,
+  STROKE_DOT_ARRAY_WIDTH,
   useChartContext,
   useSparkLine,
 } from '@shopify/polaris-viz-core';
@@ -58,6 +59,9 @@ export function Chart({
 
           const seriesWithColor = {
             color: seriesColors[index],
+            strokeDasharray: series.isComparison
+              ? STROKE_DOT_ARRAY_WIDTH
+              : 'none',
             ...series,
           };
 
