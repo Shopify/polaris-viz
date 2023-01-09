@@ -13,6 +13,15 @@ export interface DataSeries {
   color?: Color;
   isComparison?: boolean;
   name?: string;
+  metadata?: {[key: string]: any};
+  styleOverride?: StyleOverride;
+}
+
+interface StyleOverride {
+  line?: {
+    width?: number;
+    strokeDasharray?: string;
+  };
 }
 
 export interface DataGroup {
@@ -239,7 +248,9 @@ export interface CharacterWidths {
 
 export type LineChartDataSeriesWithDefaults = DataSeries & {
   color: Color;
+  strokeDasharray?: string;
   areaColor?: string | null;
+  width?: number;
 };
 
 export interface BorderRadius {
