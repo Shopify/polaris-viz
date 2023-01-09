@@ -9,6 +9,7 @@ import {
   usePolarisVizContext,
   DEFAULT_THEME_NAME,
   DEFAULT_CHART_PROPS,
+  STROKE_DOT_ARRAY_WIDTH,
 } from '@shopify/polaris-viz-core';
 import type {ChartProps, Dimensions} from '@shopify/polaris-viz-core';
 
@@ -89,6 +90,9 @@ function Chart({
           const seriesWithColor = {
             ...series,
             color: seriesColors[index],
+            strokeDasharray: series.isComparison
+              ? STROKE_DOT_ARRAY_WIDTH
+              : 'none',
           };
 
           return (

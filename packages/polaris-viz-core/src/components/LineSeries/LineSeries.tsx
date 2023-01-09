@@ -19,7 +19,6 @@ import {
 import {
   COLOR_VISION_SINGLE_ITEM,
   SHAPE_ANIMATION_HEIGHT_BUFFER,
-  STROKE_DOT_ARRAY_WIDTH,
   LINE_SERIES_POINT_RADIUS,
 } from '../../constants';
 
@@ -27,23 +26,6 @@ import {Area, AnimatedLine, AnimatedArea} from './components';
 
 const ANIMATION_DELAY = 200;
 const SPARK_STROKE_WIDTH = 1.5;
-
-export const StrokeDasharray = {
-  dotted: STROKE_DOT_ARRAY_WIDTH,
-  solid: 'none',
-};
-
-function getLineStyle({
-  isComparison = false,
-}: {
-  isComparison: boolean | undefined;
-}) {
-  if (!isComparison) {
-    return 'solid';
-  }
-
-  return 'dotted';
-}
 
 export interface LineSeriesProps {
   data: LineChartDataSeriesWithDefaults;
@@ -80,9 +62,6 @@ export function LineSeries({
   const color = data?.color;
   const selectedTheme = useTheme(theme);
   const isSparkChart = type === 'spark';
-  const lineStyle = getLineStyle({
-    isComparison: data.isComparison,
-  });
 
   const lineGenerator = line<DataPoint>()
     .x((_, index) => (xScale == null ? 0 : xScale(index)))
@@ -145,7 +124,8 @@ export function LineSeries({
 
   const strokeWidth = isSparkChart
     ? SPARK_STROKE_WIDTH
-    : selectedTheme.line.width;
+    : data.width ?? selectedTheme.line.width;
+  const strokeDasharray = data.strokeDasharray ?? 'none';
 
   const PathHoverTargetSize = 40;
 
@@ -178,7 +158,7 @@ export function LineSeries({
                 immediate={immediate}
                 index={index}
                 activeLineIndex={activeLineIndex}
-                strokeDasharray={StrokeDasharray[lineStyle]}
+                strokeDasharray={strokeDasharray}
                 fromData={previousData}
                 toData={data}
                 zeroLineY={zeroLineY}
@@ -197,7 +177,8 @@ export function LineSeries({
                       activeIndex: activeLineIndex,
                       index,
                     }),
-                    strokeDasharray: StrokeDasharray[lineStyle],
+                    strokeDasharray,
+                    strokeLinecap: 'round',
                   }}
                 />
                 {showPoint && (

@@ -7,6 +7,7 @@ import {
   changeColorOpacity,
   getAverageColor,
   isGradientType,
+  STROKE_DOT_ARRAY_WIDTH,
 } from '@shopify/polaris-viz-core';
 
 import {getOpacityByDataLength} from './getOpacityByLength';
@@ -38,9 +39,19 @@ export function getLineChartDataWithDefaults(
         color: series.isComparison
           ? colors[index]
           : series.color ?? colors[index],
+        strokeDasharray: getStrokeDasharray(series),
+        width: series.styleOverride?.line?.width,
       };
     },
   );
 
   return dataWithDefaults;
+}
+
+function getStrokeDasharray(series: DataSeries) {
+  if (series.styleOverride?.line?.strokeDasharray != null) {
+    return series.styleOverride.line.strokeDasharray;
+  }
+
+  return series.isComparison ? STROKE_DOT_ARRAY_WIDTH : 'none';
 }
