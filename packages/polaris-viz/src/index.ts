@@ -16,6 +16,7 @@ export {
   ComboChart,
   DonutChart,
   TrendIndicator,
+  LineChartRelational,
 } from './components';
 
 export type {
@@ -74,4 +75,6 @@ export type {
   ChartState,
 } from '@shopify/polaris-viz-core';
 
-export {renderLinearComparisonTooltip} from './utilities';
+export {renderLinearTooltipContent, setSingleSeriesActive} from './utilities';
+
+export {useWatchActiveSeries, setHiddenItems} from './hooks';

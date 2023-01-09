@@ -19,7 +19,6 @@ import {
 import {
   COLOR_VISION_SINGLE_ITEM,
   SHAPE_ANIMATION_HEIGHT_BUFFER,
-  STROKE_DOT_ARRAY_WIDTH,
   LINE_SERIES_POINT_RADIUS,
 } from '../../constants';
 
@@ -28,23 +27,6 @@ import {Area, AnimatedLine, AnimatedArea} from './components';
 const ANIMATION_DELAY = 200;
 const SPARK_STROKE_WIDTH = 1.5;
 
-export const StrokeDasharray = {
-  dotted: STROKE_DOT_ARRAY_WIDTH,
-  solid: 'none',
-};
-
-function getLineStyle({
-  isComparison = false,
-}: {
-  isComparison: boolean | undefined;
-}) {
-  if (!isComparison) {
-    return 'solid';
-  }
-
-  return 'dotted';
-}
-
 export interface LineSeriesProps {
   data: LineChartDataSeriesWithDefaults;
   index: number;
@@ -52,6 +34,7 @@ export interface LineSeriesProps {
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
   activeLineIndex?: number;
+  hiddenIndexes?: number[];
   theme: string;
   type?: 'default' | 'spark';
 }
@@ -59,6 +42,7 @@ export interface LineSeriesProps {
 export function LineSeries({
   activeLineIndex = -1,
   data,
+  hiddenIndexes = [],
   index = 0,
   svgDimensions,
   theme,
@@ -80,9 +64,6 @@ export function LineSeries({
   const color = data?.color;
   const selectedTheme = useTheme(theme);
   const isSparkChart = type === 'spark';
-  const lineStyle = getLineStyle({
-    isComparison: data.isComparison,
-  });
 
   const lineGenerator = line<DataPoint>()
     .x((_, index) => (xScale == null ? 0 : xScale(index)))
@@ -145,18 +126,24 @@ export function LineSeries({
 
   const strokeWidth = isSparkChart
     ? SPARK_STROKE_WIDTH
-    : selectedTheme.line.width;
+    : data.width ?? selectedTheme.line.width;
+  const strokeDasharray = data.strokeDasharray ?? 'none';
 
-  const PathHoverTargetSize = 40;
+  const PathHoverTargetSize = 15;
 
   const showPoint =
     -isSparkChart && !data.isComparison && lastLinePointCoordinates != null;
+  const showArea =
+    selectedTheme.line.hasArea && data?.styleOverride?.line?.hasArea !== false;
 
   const zeroLineY = yScale(0);
 
   return (
     <Fragment>
-      <AnimatedGroup opacity={1}>
+      <AnimatedGroup
+        opacity={1}
+        style={{display: hiddenIndexes.includes(index) ? 'none' : undefined}}
+      >
         <Defs>
           <LinearGradientWithStops
             id={`line-${id}`}
@@ -178,7 +165,7 @@ export function LineSeries({
                 immediate={immediate}
                 index={index}
                 activeLineIndex={activeLineIndex}
-                strokeDasharray={StrokeDasharray[lineStyle]}
+                strokeDasharray={strokeDasharray}
                 fromData={previousData}
                 toData={data}
                 zeroLineY={zeroLineY}
@@ -197,7 +184,8 @@ export function LineSeries({
                       activeIndex: activeLineIndex,
                       index,
                     }),
-                    strokeDasharray: StrokeDasharray[lineStyle],
+                    strokeDasharray,
+                    strokeLinecap: 'round',
                   }}
                 />
                 {showPoint && (
@@ -213,7 +201,7 @@ export function LineSeries({
           </Mask>
         </Defs>
 
-        {selectedTheme.line.hasArea &&
+        {showArea &&
           (dataIsValidForAnimation ? (
             <AnimatedArea
               areaGenerator={areaGenerator}

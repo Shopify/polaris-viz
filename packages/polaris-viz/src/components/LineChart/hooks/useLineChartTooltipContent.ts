@@ -9,10 +9,12 @@ interface Props {
   data: LineChartDataSeriesWithDefaults[];
   indexForLabels: number;
   renderTooltipContent: (data: RenderTooltipContentData) => ReactNode;
+  hiddenIndexes?: number[];
 }
 
 export function useLineChartTooltipContent({
   data,
+  hiddenIndexes = [],
   indexForLabels,
   renderTooltipContent,
 }: Props) {
@@ -35,7 +37,7 @@ export function useLineChartTooltipContent({
         ? data[indexForLabels].data[activeIndex].key
         : '';
 
-      data.forEach(({name, data: seriesData, color, isComparison}) => {
+      data.forEach(({name, data: seriesData, color, isComparison}, index) => {
         if (!seriesData[activeIndex]) {
           return;
         }
@@ -46,6 +48,7 @@ export function useLineChartTooltipContent({
           value,
           color: color!,
           isComparison,
+          isHidden: hiddenIndexes.includes(index),
         });
       });
 
@@ -57,6 +60,6 @@ export function useLineChartTooltipContent({
         theme,
       });
     },
-    [data, renderTooltipContent, theme, indexForLabels],
+    [data, renderTooltipContent, theme, hiddenIndexes, indexForLabels],
   );
 }

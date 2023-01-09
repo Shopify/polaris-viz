@@ -29,3 +29,5 @@ export {
   getSeriesColors,
   usePrevious,
 } from '@shopify/polaris-viz-core';
+export {useWatchActiveSeries} from './useWatchActiveSeries';
+export {useExternalHideEvents, setHiddenItems} from './ExternalEvents';

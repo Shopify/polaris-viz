@@ -7,7 +7,7 @@ import {
   formatLinearYAxisLabel,
 } from '../../../../storybook/utilities';
 import {META} from '../meta';
-import {renderLinearComparisonTooltip} from '../../../../utilities';
+import {renderLinearTooltipContent} from '../../../../utilities';
 
 export default {
   ...META,
@@ -941,7 +941,7 @@ export const LinearComparisonTooltip: Story<LineChartProps> = Template.bind({});
 LinearComparisonTooltip.args = {
   tooltipOptions: {
     renderTooltipContent: (tooltipData) => {
-      return renderLinearComparisonTooltip(tooltipData, {
+      return renderLinearTooltipContent(tooltipData, {
         groups: [
           {title: 'Net sales', indexes: [0, 1]},
           {title: 'Average order value', indexes: [2, 3, 18]},

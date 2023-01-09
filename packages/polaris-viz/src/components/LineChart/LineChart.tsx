@@ -25,6 +25,7 @@ import {SkipLink} from '../SkipLink';
 import {useRenderTooltipContent, useTheme} from '../../hooks';
 import type {
   Annotation,
+  LineChartSlotProps,
   RenderLegendContent,
   TooltipOptions,
 } from '../../types';
@@ -41,14 +42,18 @@ export type LineChartProps = {
   tooltipOptions?: TooltipOptions;
   xAxisOptions?: Partial<XAxisOptions>;
   yAxisOptions?: Partial<YAxisOptions>;
+  slots?: {
+    chart?: (props: LineChartSlotProps) => JSX.Element;
+  };
 } & ChartProps;
 
 export function LineChart(props: LineChartProps) {
   const {
     annotations = [],
     data,
-    errorText,
     emptyStateText,
+    errorText,
+    id,
     isAnimated,
     renderLegendContent,
     showLegend = true,
@@ -84,6 +89,7 @@ export function LineChart(props: LineChartProps) {
         <SkipLink anchorId={skipLinkAnchorId.current}>{skipLinkText}</SkipLink>
       )}
       <ChartContainer
+        id={id}
         data={data}
         theme={theme}
         isAnimated={isAnimated}
@@ -102,6 +108,7 @@ export function LineChart(props: LineChartProps) {
             theme={theme}
             xAxisOptions={xAxisOptionsWithDefaults}
             yAxisOptions={yAxisOptionsWithDefaults}
+            slots={props.slots}
           />
         )}
       </ChartContainer>

@@ -18,11 +18,19 @@ import styles from './LinePreview.scss';
 export interface LinePreviewProps {
   color: Color;
   lineStyle: LineStyle;
+  width?: number;
+  strokeDasharray?: string;
 }
 
 const HEIGHT = 2;
+const WIDTH = 2;
 
-export function LinePreview({color, lineStyle}: LinePreviewProps) {
+export function LinePreview({
+  color,
+  lineStyle,
+  width = WIDTH,
+  strokeDasharray = 'none',
+}: LinePreviewProps) {
   const gradientId = useRef(uniqueId('linePreviewGradient'));
 
   const linePreviewColor = isGradientType(color)
@@ -54,13 +62,30 @@ export function LinePreview({color, lineStyle}: LinePreviewProps) {
             />
           </defs>
         ) : null}
-        {getLinePreview(linePreviewColor, lineStyle)}
+        {getLinePreview({
+          color: linePreviewColor,
+          lineStyle,
+          width,
+          strokeDasharray,
+        })}
       </svg>
     </span>
   );
 }
 
-function getLinePreview(color: string, lineStyle: LineStyle) {
+interface GetLinePreview {
+  color: string;
+  lineStyle: LineStyle;
+  width: number;
+  strokeDasharray: string;
+}
+
+function getLinePreview({
+  color,
+  lineStyle,
+  width,
+  strokeDasharray,
+}: GetLinePreview) {
   switch (lineStyle) {
     case 'dotted':
       return (
@@ -84,7 +109,8 @@ function getLinePreview(color: string, lineStyle: LineStyle) {
           stroke={color}
           strokeLinejoin="round"
           strokeLinecap="round"
-          strokeWidth="2"
+          strokeWidth={width}
+          strokeDasharray={strokeDasharray}
         />
       );
   }

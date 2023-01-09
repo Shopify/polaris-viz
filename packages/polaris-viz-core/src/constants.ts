@@ -245,6 +245,9 @@ export const DEFAULT_THEME: Theme = {
     neutral: variables.colorDarkNeutral,
     background: variables.colorGray150,
   },
+  missingData: {
+    lineColor: variables.colorGray130,
+  },
 };
 
 export const LIGHT_THEME: Theme = {
@@ -353,6 +356,9 @@ export const LIGHT_THEME: Theme = {
     neutral: variables.colorLightNeutral,
     background: variables.colorGray10,
   },
+  missingData: {
+    lineColor: variables.colorGray40,
+  },
 };
 
 export const PRINT_THEME = {
@@ -400,6 +406,8 @@ export const COLOR_VISION_ACTIVE_OPACITY = 1;
 export const COLOR_VISION_FADED_OPACITY = 0.3;
 export const COLOR_VISION_SINGLE_ITEM = 'singleItem';
 export const COLOR_VISION_GROUP_ITEM = 'group';
+export const EXTERNAL_EVENTS_SET_HIDDEN_ITEMS = 'setHiddenItems';
+
 export const LEGENDS_TOP_MARGIN = 16;
 export const Y_AXIS_CHART_SPACING = 20;
 export const LABEL_AREA_TOP_SPACING = 16;

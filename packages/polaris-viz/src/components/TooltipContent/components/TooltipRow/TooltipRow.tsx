@@ -20,6 +20,8 @@ interface Props {
   value: string;
   color?: Color;
   isComparison?: boolean;
+  isHidden?: boolean;
+  renderSeriesIcon?: () => React.ReactNode;
 }
 
 export function TooltipRow({
@@ -27,11 +29,17 @@ export function TooltipRow({
   color,
   index,
   isComparison = false,
+  isHidden = false,
   label,
+  renderSeriesIcon,
   shape,
   value,
 }: Props) {
   const selectedTheme = useTheme();
+
+  if (isHidden) {
+    return null;
+  }
 
   return (
     <div
@@ -43,11 +51,13 @@ export function TooltipRow({
     >
       {color != null && (
         <div className={styles.SeriesIcon} style={{width: PREVIEW_ICON_SIZE}}>
-          <SeriesIcon
-            color={color!}
-            isComparison={isComparison}
-            shape={shape}
-          />
+          {renderSeriesIcon?.() ?? (
+            <SeriesIcon
+              color={color!}
+              isComparison={isComparison}
+              shape={shape}
+            />
+          )}
         </div>
       )}
       <span

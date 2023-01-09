@@ -7,9 +7,19 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Added
+
+- `<LineChartRelational />` component to support Benchmarks.
+- `useExternalHideEvents()` & `setHiddenItems()` to allow consumers to toggle visibility of series in `<LineChartRelational />` & `<LineChart>`.
+
+### Changed
+
+- Reduced `<LineChart />` hit area from `40px` to `15px`.
+
 ### Fixed
 
 - Fixed `<LinePreview />` right side being cut off.
+- Don't render `<TooltipSeriesName />` when a group doesn't have any visible items.
 
 ## [8.2.0] - 2023-03-08
 
