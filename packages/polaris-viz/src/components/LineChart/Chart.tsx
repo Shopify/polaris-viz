@@ -1,5 +1,4 @@
-import {useState, useRef} from 'react';
-import * as React from 'react';
+import {useState, useRef, Fragment} from 'react';
 import {
   uniqueId,
   DataType,
@@ -19,6 +18,7 @@ import type {
   LineChartDataSeriesWithDefaults,
   BoundingRect,
 } from '@shopify/polaris-viz-core';
+import type {ScaleLinear} from 'd3-scale';
 
 import {useIndexForLabels} from '../../hooks/useIndexForLabels';
 import {
@@ -66,8 +66,13 @@ import {PointsAndCrosshair} from './components';
 import {useFormatData} from './hooks';
 import {yAxisMinMax} from './utilities';
 
+interface SlotScales {
+  xScale: ScaleLinear<number, number>;
+  yScale: ScaleLinear<number, number>;
+}
+
 export interface ChartProps {
-  renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
+  renderTooltipContent: (data: RenderTooltipContentData) => ReactNode;
   annotationsLookupTable: AnnotationLookupTable;
   data: LineChartDataSeriesWithDefaults[];
   showLegend: boolean;
@@ -76,6 +81,9 @@ export interface ChartProps {
   dimensions?: Dimensions;
   emptyStateText?: string;
   renderLegendContent?: RenderLegendContent;
+  slots?: {
+    chart?: ({xScale, yScale}: SlotScales) => JSX.Element;
+  };
   theme?: string;
 }
 
@@ -92,6 +100,7 @@ export function Chart({
   renderLegendContent,
   renderTooltipContent,
   showLegend = true,
+  slots,
   theme = DEFAULT_THEME_NAME,
   xAxisOptions,
   yAxisOptions,
@@ -274,7 +283,7 @@ export function Chart({
   const halfXAxisLabelWidth = xAxisDetails.labelWidth / 2;
 
   return (
-    <React.Fragment>
+    <Fragment>
       <ChartElements.Svg
         emptyState={emptyState}
         emptyStateText={emptyStateText}
@@ -309,6 +318,7 @@ export function Chart({
             }
           />
         ) : null}
+
         <YAxis
           ticks={ticks}
           width={yAxisLabelWidth}
@@ -317,6 +327,7 @@ export function Chart({
           x={yAxisBounds.x}
           y={yAxisBounds.y}
         />
+
         {emptyState ? null : (
           <VisuallyHiddenRows
             data={data}
@@ -325,6 +336,8 @@ export function Chart({
           />
         )}
         <g transform={`translate(${chartXPosition},${chartYPosition})`}>
+          {slots?.chart?.({yScale, xScale})}
+
           {reversedSeries.map((singleSeries, index) => {
             return (
               <LineSeries
@@ -412,6 +425,6 @@ export function Chart({
           renderLegendContent={renderLegendContent}
         />
       )}
-    </React.Fragment>
+    </Fragment>
   );
 }
