@@ -5,17 +5,15 @@ export {META as default} from './meta';
 
 import type {DonutChartProps} from '../DonutChart';
 
-import {DEFAULT_PROPS, Template} from './data';
+import {DEFAULT_PROPS, DEFAULT_DATA, Template} from './data';
 
 export const ErrorState: Story<DonutChartProps> = Template.bind({});
 
 ErrorState.args = {
   ...DEFAULT_PROPS,
-  data: [
-    {
-      name: 'Engagement',
-      data: [{key: 'april - march', value: 25000}],
-    },
-  ],
+  data: DEFAULT_DATA.map(({name}) => ({
+    name,
+    data: [],
+  })),
   state: ChartState.Error,
 };

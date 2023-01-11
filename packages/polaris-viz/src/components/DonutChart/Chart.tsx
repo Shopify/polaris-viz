@@ -35,8 +35,10 @@ import {ChartSkeleton} from '../../components/ChartSkeleton';
 import styles from './DonutChart.scss';
 import {InnerValue} from './components';
 
+const ERROR_ANIMATION_PADDING = 30;
 const FULL_CIRCLE = Math.PI * 2;
 const MAX_LEGEND_WIDTH_PERCENTAGE = 0.35;
+const RADIUS_PADDING = 20;
 
 export interface ChartProps {
   data: DataSeries[];
@@ -179,6 +181,13 @@ export function Chart({
 
   const activeValue = points[activeIndex]?.value;
 
+  const minX = -(40 + ERROR_ANIMATION_PADDING);
+  const minY = -40;
+  const viewBoxDimensions = {
+    height: diameter + RADIUS_PADDING,
+    width: diameter + RADIUS_PADDING - minX,
+  };
+
   return (
     <div className={styles.DonutWrapper} style={styleMap[legendPosition]}>
       <div className={styles.Donut}>
@@ -186,7 +195,7 @@ export function Chart({
           <React.Fragment>
             <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
             <svg
-              viewBox={`-40 -40 ${diameter + 20} ${diameter + 20}`}
+              viewBox={`${minX} ${minY} ${viewBoxDimensions.width} ${viewBoxDimensions.height}`}
               height={diameter}
               width={diameter}
             >

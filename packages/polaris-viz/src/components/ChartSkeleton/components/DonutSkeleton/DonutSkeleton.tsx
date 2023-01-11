@@ -9,13 +9,14 @@ import {useTheme} from '../../../../hooks';
 
 import styles from './DonutSkeleton.scss';
 
+const ERROR_ANIMATION_PADDING = 30;
 const FULL_CIRCLE = Math.PI * 2;
 const INITIAL_DELAY = 700;
-const SECONDARY_DELAY = 200;
 const RADIUS_PADDING = 20;
+const SECONDARY_DELAY = 200;
 
 export function DonutSkeleton({
-  dimensions: {height},
+  dimensions: {height, width},
   state,
   errorText,
 }: {
@@ -23,9 +24,11 @@ export function DonutSkeleton({
   state: ChartState;
   errorText: string;
 }) {
-  const diameter = 160;
+  const diameter = Math.min(width, height);
   const radius = diameter / 2;
+
   const selectedTheme = useTheme();
+  const arcThickness = selectedTheme.arc.thickness;
 
   const arcs = [
     {
@@ -137,6 +140,13 @@ export function DonutSkeleton({
     }
   }, [animation, height, radius, state]);
 
+  const minX = -(40 + ERROR_ANIMATION_PADDING);
+  const minY = -40;
+  const viewBoxDimensions = {
+    height: diameter + RADIUS_PADDING,
+    width: diameter + RADIUS_PADDING - minX,
+  };
+
   const center = (radius + RADIUS_PADDING) / 2;
 
   const transformOrigin = `${center}px ${RADIUS_PADDING * 2}px`;
@@ -145,9 +155,9 @@ export function DonutSkeleton({
     <div className={styles.DonutWrapper}>
       <div className={styles.Donut}>
         <svg
-          viewBox={`-40 -40 ${diameter + RADIUS_PADDING} ${
-            diameter + RADIUS_PADDING
-          }`}
+          viewBox={`${minX} ${minY} ${viewBoxDimensions.width} ${viewBoxDimensions.height}`}
+          height={diameter}
+          width={diameter}
         >
           <g className={styles.DonutChart}>
             {springs.map((style, index) => {
@@ -168,7 +178,7 @@ export function DonutSkeleton({
                     endAngle={arcs[index].endAngle}
                     color={selectedTheme.grid.color}
                     cornerRadius={selectedTheme.arc.cornerRadius}
-                    thickness={selectedTheme.arc.thickness}
+                    thickness={arcThickness}
                   />
                 </animated.g>
               );
