@@ -1,7 +1,6 @@
 import {Direction, useTheme} from '@shopify/polaris-viz-core';
 import React from 'react';
 
-import {PILL_OPACITY} from '../../constants';
 import {useBrowserCheck} from '../../../../hooks/useBrowserCheck';
 
 import styles from './AnnotationLine.scss';
@@ -66,7 +65,7 @@ export function AnnotationLine({
           d="M9.31 7.866a2 2 0 0 1-2.62 0L1.664 3.512C.263 2.3 1.12 0 2.973 0h10.055c1.852 0 2.709 2.3 1.31 3.512L9.308 7.866Z"
           transform={`translate(${x - CARET_SIZE / 2}, ${y + CARET_Y_OFFSET})`}
           fill={selectedTheme.annotations.backgroundColor}
-          opacity={isFirefox ? 1 : PILL_OPACITY}
+          opacity={isFirefox ? 1 : selectedTheme.annotations.pillOpacity}
         />
       )}
     </React.Fragment>
