@@ -1,16 +1,33 @@
 import React from 'react';
-import {useTheme, ChartState, useUniqueId} from '@shopify/polaris-viz-core';
+import {useTheme, useUniqueId, ChartState} from '@shopify/polaris-viz-core';
+import type {Dimensions} from '@shopify/polaris-viz-core';
 
-import type {ChartSkeletonProps} from '../../ChartSkeleton';
+import type {Size} from '../../../SimpleNormalizedChart';
 import {ErrorText} from '../ErrorText';
 
 import styles from './SimpleNormalizedSkeleton.scss';
 
+const SIZE_TO_PX = {
+  small: 16,
+  medium: 36,
+  large: 56,
+};
+
+interface Props {
+  dimensions: Dimensions;
+  errorText: string;
+  showLegend: boolean;
+  size: Size;
+  state: ChartState;
+}
+
 export function SimpleNormalizedSkeleton({
   dimensions,
-  state,
   errorText,
-}: Omit<Required<ChartSkeletonProps>, 'type' | 'theme'>) {
+  showLegend,
+  size,
+  state,
+}: Props) {
   const {width, height} = dimensions;
 
   const {
@@ -21,29 +38,32 @@ export function SimpleNormalizedSkeleton({
 
   const id = useUniqueId('simple-bar-skeleton');
 
-  const BarMarkup = () => (
-    <span
-      style={{
-        background: gridColor,
-        borderRadius,
-      }}
-    />
-  );
-
   return (
-    <div className={styles.SimpleNormalizedSkeleton} style={{padding}}>
+    <div style={{padding}}>
       {state === ChartState.Loading && (
         <React.Fragment>
-          <div className={styles.Legend}>
-            {new Array(3).fill(0).map((_, index) => (
-              <div key={`${id}${index}`} className={styles.LegendItem}>
-                {new Array(3).fill(0).map((_, innerIndex) => (
-                  <BarMarkup key={`${id}${index}${innerIndex}`} />
-                ))}
-              </div>
-            ))}
-          </div>
-          <BarMarkup />
+          {showLegend && (
+            <div className={styles.Legend}>
+              {new Array(3).fill(0).map((_, index) => (
+                <div key={`${id}${index}`} className={styles.LegendItem}>
+                  {new Array(3).fill(0).map((_, innerIndex) => (
+                    <div
+                      key={`${id}${index}${innerIndex}`}
+                      className={styles.LegendItemComponent}
+                      style={{background: gridColor}}
+                    />
+                  ))}
+                </div>
+              ))}
+            </div>
+          )}
+          <div
+            style={{
+              background: gridColor,
+              borderRadius,
+              height: SIZE_TO_PX[size],
+            }}
+          />
         </React.Fragment>
       )}
       {state === ChartState.Error && (
