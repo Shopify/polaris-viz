@@ -52,6 +52,9 @@ export function SimpleNormalizedChart(props: SimpleNormalizedChartProps) {
           type="SimpleNormalized"
           state={state}
           errorText={errorText}
+          theme={theme}
+          showLegend={showLegend && !renderLegendContent}
+          size={size}
         />
       ) : (
         <Chart
