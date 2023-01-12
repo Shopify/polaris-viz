@@ -1,16 +1,22 @@
 import React from 'react';
-import {useTheme, ChartState, useUniqueId} from '@shopify/polaris-viz-core';
+import {
+  useTheme,
+  useUniqueId,
+  ChartState,
+  Dimensions,
+} from '@shopify/polaris-viz-core';
 
-import type {ChartSkeletonProps} from '../../ChartSkeleton';
 import {ErrorText} from '../ErrorText';
 
 import styles from './SimpleBarSkeleton.scss';
 
-export function SimpleBarSkeleton({
-  dimensions,
-  state,
-  errorText,
-}: Omit<Required<ChartSkeletonProps>, 'type' | 'theme'>) {
+interface Props {
+  dimensions: Dimensions;
+  state: ChartState;
+  errorText: string;
+}
+
+export function SimpleBarSkeleton({dimensions, state, errorText}: Props) {
   const {width, height} = dimensions;
 
   const {

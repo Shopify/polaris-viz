@@ -2,17 +2,19 @@ import React from 'react';
 import {
   useTheme,
   ChartState,
+  Dimensions,
   DEFAULT_BORDER_RADIUS,
 } from '@shopify/polaris-viz-core';
 
-import type {ChartSkeletonProps} from '../../ChartSkeleton';
 import {ErrorText} from '../ErrorText';
 
-export function SparkSkeleton({
-  dimensions,
-  state,
-  errorText,
-}: Omit<Required<ChartSkeletonProps>, 'type' | 'theme'>) {
+interface Props {
+  dimensions: Dimensions;
+  state: ChartState;
+  errorText: string;
+}
+
+export function SparkSkeleton({dimensions, state, errorText}: Props) {
   const {width, height} = dimensions;
 
   const {
