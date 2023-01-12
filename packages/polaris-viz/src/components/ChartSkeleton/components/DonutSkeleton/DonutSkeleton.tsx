@@ -168,7 +168,7 @@ export function DonutSkeleton({
                     endAngle={arcs[index].endAngle}
                     color={selectedTheme.grid.color}
                     cornerRadius={selectedTheme.arc.cornerRadius}
-                    thickness={14}
+                    thickness={selectedTheme.arc.thickness}
                   />
                 </animated.g>
               );

@@ -40,34 +40,36 @@ const MAX_LEGEND_WIDTH_PERCENTAGE = 0.35;
 
 export interface ChartProps {
   data: DataSeries[];
+  labelFormatter: LabelFormatter;
+  legendPosition: LegendPosition;
+  showLegend: boolean;
+  state: ChartState;
+  theme: string;
   accessibilityLabel?: string;
   comparisonMetric?: ComparisonMetricProps;
-  showLegend: boolean;
-  total?: number;
   dimensions?: Dimensions;
-  labelFormatter: LabelFormatter;
-  legendFullWidth?: boolean;
-  legendPosition: LegendPosition;
-  state: ChartState;
   errorText?: string;
+  legendFullWidth?: boolean;
   renderInnerValueContent?: RenderInnerValueContent;
   renderLegendContent?: RenderLegendContent;
+  total?: number;
 }
 
 export function Chart({
   data,
+  labelFormatter,
+  legendPosition = 'right',
+  showLegend,
+  state,
+  theme,
   accessibilityLabel = '',
   comparisonMetric,
-  total,
-  showLegend,
   dimensions = {height: 0, width: 0},
-  labelFormatter,
-  legendFullWidth = false,
-  legendPosition = 'right',
-  state,
   errorText,
+  legendFullWidth = false,
   renderInnerValueContent,
   renderLegendContent,
+  total,
 }: ChartProps) {
   const {shouldAnimate, characterWidths} = useChartContext();
   const chartId = useUniqueId('Donut');
@@ -254,6 +256,7 @@ export function Chart({
             state={state}
             type="Donut"
             errorText={errorText}
+            theme={theme}
           />
         )}
       </div>

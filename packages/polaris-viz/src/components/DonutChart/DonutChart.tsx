@@ -66,6 +66,7 @@ export function DonutChart(props: DonutChartProps) {
         legendPosition={legendPosition}
         renderInnerValueContent={renderInnerValueContent}
         renderLegendContent={renderLegendContent}
+        theme={theme}
       />
     </ChartContainer>
   );
