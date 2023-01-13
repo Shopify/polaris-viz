@@ -269,6 +269,7 @@ export enum ChartState {
 export interface ChartProps<T = DataSeries[]> {
   data: T;
   theme?: string;
+  id?: string;
   isAnimated?: boolean;
   state?: ChartState;
   errorText?: string;
