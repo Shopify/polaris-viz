@@ -19,3 +19,4 @@ export {
 export {getHoverZoneOffset} from './getHoverZoneOffset';
 export {renderLinearComparisonTooltip} from './renderLinearComparisonTooltip';
 export {estimateStringWidthWithOffset} from './estimateStringWidthWithOffset';
+export {setSingleSeriesActive} from './setSingleSeriesActive';
