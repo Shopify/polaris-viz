@@ -215,3 +215,10 @@ export type RenderInnerValueContent = (values: InnerValueContents) => ReactNode;
 export type Trend = 'positive' | 'negative' | 'neutral';
 export type TrendSize = 'default' | 'small';
 export type TrendDirection = 'upward' | 'downward';
+
+export interface CustomEventReturn extends CustomEvent {
+  detail: {
+    index: number;
+    data?: DataSeries[];
+  };
+}
