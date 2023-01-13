@@ -45,8 +45,9 @@ export function LineChart(props: LineChartProps) {
   const {
     annotations = [],
     data,
-    errorText,
     emptyStateText,
+    errorText,
+    id,
     isAnimated,
     renderLegendContent,
     showLegend = true,
@@ -82,6 +83,7 @@ export function LineChart(props: LineChartProps) {
         <SkipLink anchorId={skipLinkAnchorId.current}>{skipLinkText}</SkipLink>
       )}
       <ChartContainer
+        id={id}
         data={data}
         theme={theme}
         isAnimated={isAnimated}

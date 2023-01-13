@@ -22,13 +22,14 @@ interface Props {
   data: DataSeries[] | DataGroup[];
   isAnimated: boolean;
   theme: string;
+  id?: string;
   sparkChart?: boolean;
   skeletonType?: SkeletonType;
   type?: InternalChartType;
 }
 
 export const ChartContainer = (props: Props) => {
-  const id = uniqueId('chart');
+  const id = props.id ?? uniqueId('chart');
 
   const {prefersReducedMotion} = usePrefersReducedMotion();
   const [isPrinting, setIsPrinting] = useState(false);

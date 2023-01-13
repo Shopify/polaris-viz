@@ -69,4 +69,9 @@ export type {
   ChartState,
 } from '@shopify/polaris-viz-core';
 
-export {renderLinearComparisonTooltip} from './utilities';
+export {
+  renderLinearComparisonTooltip,
+  setSingleSeriesActive,
+} from './utilities';
+
+export {useWatchActiveSeries} from './hooks';

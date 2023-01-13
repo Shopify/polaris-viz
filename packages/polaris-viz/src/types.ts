@@ -211,3 +211,10 @@ export type RenderInnerValueContent = (
   },
   getAnimatedTotalValue: (styles: React.CSSProperties) => ReactNode,
 ) => ReactNode;
+
+export interface CustomEventReturn extends CustomEvent {
+  detail: {
+    index: number;
+    data?: DataSeries[];
+  };
+}

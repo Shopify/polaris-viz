@@ -18,3 +18,4 @@ export {
 } from './getAxisOptions';
 export {getHoverZoneOffset} from './getHoverZoneOffset';
 export {renderLinearComparisonTooltip} from './renderLinearComparisonTooltip';
+export {setSingleSeriesActive} from './setSingleSeriesActive';
