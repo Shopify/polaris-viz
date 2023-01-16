@@ -5,7 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-<!-- ## Unreleased -->
+## Unreleased
+
+### Fixed
+
+- Use the `theme.chartContainer.backgroundColor` property for the shimmer in loading state for `<DonutChart />`
+- Use the `theme.arc.thickness` property in loading/error states for `<DonutChart />`
+
+### Changed
+
+- Fixed the size difference between success and loading/error states for `<DonutChart />`
 
 ## [7.13.0] - 2023-01-13
 

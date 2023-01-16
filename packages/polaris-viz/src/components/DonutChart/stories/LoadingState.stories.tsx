@@ -7,13 +7,13 @@ import type {DonutChartProps} from '../DonutChart';
 
 import {DEFAULT_PROPS, DEFAULT_DATA, Template} from './data';
 
-export const ErrorState: Story<DonutChartProps> = Template.bind({});
+export const LoadingState: Story<DonutChartProps> = Template.bind({});
 
-ErrorState.args = {
+LoadingState.args = {
   ...DEFAULT_PROPS,
   data: DEFAULT_DATA.map(({name}) => ({
     name,
     data: [],
   })),
-  state: ChartState.Error,
+  state: ChartState.Loading,
 };
