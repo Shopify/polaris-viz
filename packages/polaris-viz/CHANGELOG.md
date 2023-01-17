@@ -11,6 +11,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 - Use the `theme.chartContainer.backgroundColor` property for the shimmer in loading state for `<DonutChart />`
 - Use the `theme.arc.thickness` property in loading/error states for `<DonutChart />`
+- Change positioning of `ValueHorizontalContainer` so that value does not overlap label
 
 ### Changed
 
