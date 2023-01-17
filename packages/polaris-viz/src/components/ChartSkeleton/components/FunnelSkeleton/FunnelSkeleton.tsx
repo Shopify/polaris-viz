@@ -4,17 +4,19 @@ import {
   useUniqueId,
   changeColorOpacity,
   ChartState,
+  Dimensions,
 } from '@shopify/polaris-viz-core';
 
-import type {ChartSkeletonProps} from '../../ChartSkeleton';
 import {Bar} from '../../../shared';
 import {ErrorText} from '../ErrorText';
 
-export function FunnelSkeleton({
-  dimensions,
-  state,
-  errorText,
-}: Omit<Required<ChartSkeletonProps>, 'type' | 'theme'>) {
+interface Props {
+  dimensions: Dimensions;
+  state: ChartState;
+  errorText: string;
+}
+
+export function FunnelSkeleton({dimensions, state, errorText}: Props) {
   const {width, height} = dimensions;
 
   const {

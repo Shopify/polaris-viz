@@ -1,16 +1,9 @@
-.SimpleNormalizedSkeleton {
-  > span {
-    width: 100%;
-    height: 16px;
-    display: block;
-  }
-}
-
 .Legend {
-  height: 100px;
+  height: 50px;
   display: flex;
   gap: 5%;
   max-width: 60%;
+  margin: 14px 0;
 }
 
 .LegendItem {
@@ -33,4 +26,10 @@
     height: 16px;
     width: 80%;
   }
+}
+
+.LegendItemComponent {
+  border-radius: 2px;
+  height: 16px;
+  width: 100%;
 }
