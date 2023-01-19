@@ -9,6 +9,7 @@ import React, {
 import type {DataType, BoundingRect} from '@shopify/polaris-viz-core';
 
 import type {Margin} from '../../types';
+import {SwallowErrors} from '../SwallowErrors';
 
 import {shouldBlockTooltipEvents} from './utilities/shouldBlockTooltipEvents';
 import type {TooltipPosition, TooltipPositionParams} from './types';
@@ -30,7 +31,7 @@ interface TooltipWrapperProps {
   onIndexChange?: (index: number | null) => void;
 }
 
-export function TooltipWrapper(props: TooltipWrapperProps) {
+function TooltipWrapperRaw(props: TooltipWrapperProps) {
   const {
     alwaysUpdatePosition = false,
     bandwidth = 0,
@@ -183,5 +184,13 @@ export function TooltipWrapper(props: TooltipWrapperProps) {
     >
       {props.getMarkup(position.activeIndex)}
     </TooltipAnimatedContainer>
+  );
+}
+
+export function TooltipWrapper(props) {
+  return (
+    <SwallowErrors>
+      <TooltipWrapperRaw {...props} />
+    </SwallowErrors>
   );
 }
