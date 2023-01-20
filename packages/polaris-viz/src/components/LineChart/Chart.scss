@@ -1,6 +1,10 @@
 @import '../../styles/common';
 
-.Group * {
+.Group *:not([data-color-vision-event-watch='true']) {
   @include no-outline;
+  pointer-events: none;
+}
+
+[data-color-vision-event-watch='true'] {
   pointer-events: none;
 }
