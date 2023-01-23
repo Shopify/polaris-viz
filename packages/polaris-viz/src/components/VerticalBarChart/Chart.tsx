@@ -108,7 +108,7 @@ export function Chart({
 
   const indexForLabels = useIndexForLabels(data);
 
-  const {formattedLabels} = useFormattedLabels({
+  const {formattedLabels, unformattedLabels} = useFormattedLabels({
     data: [data[indexForLabels]],
     labelFormatter: xAxisOptions.labelFormatter,
   });
@@ -285,7 +285,7 @@ export function Chart({
               axisLabelWidth={xScale.bandwidth()}
               drawableHeight={annotationsDrawableHeight}
               drawableWidth={drawableWidth}
-              labels={formattedLabels}
+              labels={unformattedLabels}
               onHeightChange={setAnnotationsHeight}
               xScale={xScale}
             />

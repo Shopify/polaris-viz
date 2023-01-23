@@ -46,7 +46,4 @@ HorizontalBarChart.args = {
     },
   ],
   direction: 'horizontal',
-  yAxisOptions: {
-    labelFormatter: (value) => `${value} meals`,
-  },
 };
