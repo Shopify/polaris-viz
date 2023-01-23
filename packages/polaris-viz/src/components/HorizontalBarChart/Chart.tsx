@@ -184,7 +184,7 @@ export function Chart({
     annotationsLookupTable,
   );
 
-  const labels = useFormattedLabels({
+  const {unformattedLabels} = useFormattedLabels({
     data,
     labelFormatter: yAxisOptions.labelFormatter,
   });
@@ -280,7 +280,7 @@ export function Chart({
               annotationsLookupTable={annotationsLookupTable}
               drawableWidth={drawableWidth}
               groupHeight={groupHeight}
-              labels={labels}
+              labels={unformattedLabels}
               zeroPosition={zeroPosition}
             />
           </g>

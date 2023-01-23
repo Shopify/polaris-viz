@@ -10,12 +10,12 @@ export interface Props {
 }
 
 export function useGetLabelsFromDataGroups({data, xAxisOptions}: Props) {
-  const firstLabels = useFormattedLabels({
+  const {formattedLabels: firstLabels} = useFormattedLabels({
     data: data[0].series,
     labelFormatter: xAxisOptions.labelFormatter,
   });
 
-  const secondLabels = useFormattedLabels({
+  const {formattedLabels: secondLabels} = useFormattedLabels({
     data: data[1].series,
     labelFormatter: xAxisOptions.labelFormatter,
   });

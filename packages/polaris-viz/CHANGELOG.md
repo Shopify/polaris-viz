@@ -10,6 +10,8 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Fixed
 
 - Fixed `<LineSeries />` single line hover events not firing.
+- Fixed annotations x position in `<LineChart />` being offset from actual value.
+- Fixed x-axis annotations not rendering if the x-axis labels have been formatted with `xAxisOptions.labelFormatter`.
 
 ## [7.13.1] - 2023-01-18
 

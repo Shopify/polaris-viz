@@ -14,14 +14,14 @@ interface Props {
 export function useStackedData({data, xAxisOptions}: Props) {
   const indexForLabels = useIndexForLabels(data);
 
-  const labels = useFormattedLabels({
+  const {formattedLabels} = useFormattedLabels({
     data: [data[indexForLabels]],
     labelFormatter: xAxisOptions.labelFormatter,
   });
 
   const stackedValues = getStackedValues({
     series: data,
-    labels,
+    labels: formattedLabels,
     order: stackOrderReverse,
     offset: stackOffsetNone,
   });
@@ -30,5 +30,5 @@ export function useStackedData({data, xAxisOptions}: Props) {
     return Math.max(...stackedValues.map((stack) => stack.length)) - 1;
   }, [stackedValues]);
 
-  return {labels, longestSeriesLength, stackedValues};
+  return {labels: formattedLabels, longestSeriesLength, stackedValues};
 }

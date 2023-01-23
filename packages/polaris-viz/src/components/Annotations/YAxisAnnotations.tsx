@@ -87,67 +87,65 @@ export function YAxisAnnotations({
 
   return (
     <g ref={setRef} tabIndex={-1} className={styles.Group}>
-      <g transform={`translate(0, ${0})`}>
-        {positions.map((position) => {
-          const index = position.index;
-          const annotation = annotations[index];
+      {positions.map((position) => {
+        const index = position.index;
+        const annotation = annotations[index];
 
-          const {line, x, y} = position;
+        const {line, x, y} = position;
 
-          const hasContent = annotation.content != null;
-          const isContentVisible = index === activeIndex && hasContent;
-          const tabIndex = index + 1;
-          const ariaLabel = `${annotation.startKey}`;
+        const hasContent = annotation.content != null;
+        const isContentVisible = index === activeIndex && hasContent;
+        const tabIndex = index + 1;
+        const ariaLabel = `${annotation.startKey}`;
 
-          const axisLabelX =
-            axis === 'y2'
-              ? drawableWidth + Y_AXIS_CHART_SPACING
-              : -Y_AXIS_CHART_SPACING;
+        const axisLabelX =
+          axis === 'y2'
+            ? drawableWidth + Y_AXIS_CHART_SPACING
+            : -Y_AXIS_CHART_SPACING;
 
-          return (
-            <React.Fragment key={`annotation${index}${annotation.startKey}`}>
-              {position.showYAxisLabel && (
-                <AnnotationYAxisLabel
-                  axis={axis}
-                  y={line.y}
-                  x={axisLabelX}
-                  label={annotation.startKey}
-                />
-              )}
-              <AnnotationLine
-                direction="horizontal"
-                hasCaret={false}
-                size={line.width ?? 0}
-                x={line.x}
+        return (
+          <React.Fragment key={`annotation${index}${annotation.startKey}`}>
+            {position.showYAxisLabel && (
+              <AnnotationYAxisLabel
+                axis={axis}
                 y={line.y}
+                x={axisLabelX}
+                label={annotation.startKey}
               />
-              <AnnotationLabel
-                ariaLabel={ariaLabel}
-                hasContent={hasContent}
+            )}
+            <AnnotationLine
+              direction="horizontal"
+              hasCaret={false}
+              size={line.width ?? 0}
+              x={line.x}
+              y={line.y}
+            />
+            <AnnotationLabel
+              ariaLabel={ariaLabel}
+              hasContent={hasContent}
+              index={index}
+              isVisible={!isContentVisible}
+              label={annotation.label}
+              position={position}
+              setActiveIndex={setActiveIndex}
+              tabIndex={tabIndex}
+            />
+            {isContentVisible && (
+              <AnnotationContent
+                annotation={annotation}
+                drawableWidth={drawableWidth}
                 index={index}
-                isVisible={!isContentVisible}
-                label={annotation.label}
+                onMouseLeave={handleOnMouseLeave}
+                parentRef={ref}
                 position={position}
-                setActiveIndex={setActiveIndex}
                 tabIndex={tabIndex}
+                x={drawableWidth - (drawableWidth - x)}
+                y={y}
               />
-              {isContentVisible && (
-                <AnnotationContent
-                  annotation={annotation}
-                  drawableWidth={drawableWidth}
-                  index={index}
-                  onMouseLeave={handleOnMouseLeave}
-                  parentRef={ref}
-                  position={position}
-                  tabIndex={tabIndex}
-                  x={drawableWidth - (drawableWidth - x)}
-                  y={y}
-                />
-              )}
-            </React.Fragment>
-          );
-        })}
-      </g>
+            )}
+          </React.Fragment>
+        );
+      })}
     </g>
   );
 }
