@@ -108,7 +108,7 @@ export function Chart({
 
   const indexForLabels = useIndexForLabels(data);
 
-  const formattedLabels = useFormattedLabels({
+  const {formattedLabels, unformattedLabels} = useFormattedLabels({
     data: [data[indexForLabels]],
     labelFormatter: xAxisOptions.labelFormatter,
   });
@@ -205,6 +205,8 @@ export function Chart({
     annotationsLookupTable,
   );
 
+  const xAxisLabelHalf = xScale.bandwidth() / 2;
+
   return (
     <ChartElements.Div height={height} width={width}>
       <ChartElements.Svg
@@ -274,13 +276,16 @@ export function Chart({
         </g>
 
         {hasXAxisAnnotations && (
-          <g transform={`translate(${chartXPosition},0)`} tabIndex={-1}>
+          <g
+            transform={`translate(${chartXPosition + xAxisLabelHalf},0)`}
+            tabIndex={-1}
+          >
             <Annotations
               annotationsLookupTable={annotationsLookupTable}
               axisLabelWidth={xScale.bandwidth()}
               drawableHeight={annotationsDrawableHeight}
               drawableWidth={drawableWidth}
-              labels={formattedLabels}
+              labels={unformattedLabels}
               onHeightChange={setAnnotationsHeight}
               xScale={xScale}
             />

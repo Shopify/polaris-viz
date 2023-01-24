@@ -66,10 +66,8 @@ export function useAnnotationPositions({
         max: drawableWidth,
       });
 
-      const centerOffset = axisLabelWidth / 2;
-
       const rawX = clamp({
-        amount: xPosition + centerOffset,
+        amount: xPosition,
         min: xPosition,
         max: xPosition + axisLabelWidth,
       });
