@@ -22,6 +22,7 @@ export function useRenderTooltipContent({
         ...tooltipData,
         dataSeries: data,
         formatters,
+        theme,
       });
     }
 

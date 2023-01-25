@@ -1,5 +1,10 @@
 import {ReactNode, useCallback} from 'react';
-import type {Color, DataGroup, Shape} from '@shopify/polaris-viz-core';
+import {
+  Color,
+  DataGroup,
+  Shape,
+  useChartContext,
+} from '@shopify/polaris-viz-core';
 
 import {flattenDataGroupToDataSeries} from '../../../utilities/flattenDataGroupToDataSeries';
 import {getYAxisOptionsWithDefaults} from '../../../utilities';
@@ -19,6 +24,8 @@ export function useComboChartTooltipContent({
   renderTooltipContent,
   seriesColors,
 }: Props) {
+  const {theme} = useChartContext();
+
   return useCallback(
     (activeIndex: number) => {
       if (activeIndex === -1) {
@@ -64,8 +71,9 @@ export function useComboChartTooltipContent({
         activeIndex,
         title: `${data[0].series[0].data[activeIndex].key}`,
         dataSeries: flattenDataGroupToDataSeries(data),
+        theme,
       });
     },
-    [data, seriesColors, renderTooltipContent],
+    [data, seriesColors, renderTooltipContent, theme],
   );
 }
