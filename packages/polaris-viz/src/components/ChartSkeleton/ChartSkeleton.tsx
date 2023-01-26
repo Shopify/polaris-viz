@@ -6,6 +6,8 @@ import {
   DEFAULT_THEME_NAME,
 } from '@shopify/polaris-viz-core';
 
+import type {Size} from '../SimpleNormalizedChart';
+
 import {
   GridSkeleton,
   DonutSkeleton,
@@ -25,21 +27,56 @@ export type SkeletonType =
   | 'Spark'
   | 'SimpleNormalized';
 
-export interface ChartSkeletonProps {
+interface ChartSkeletonProps {
   dimensions?: Dimensions;
-  state?: ChartState;
   errorText?: string;
+  state?: ChartState;
   theme?: string;
-  type?: SkeletonType;
 }
 
-export function ChartSkeleton({
-  dimensions,
-  state = ChartState.Loading,
-  errorText = 'Could not load the chart',
-  theme = DEFAULT_THEME_NAME,
-  type = 'Default',
-}: ChartSkeletonProps) {
+interface DefaultSkeletonProps extends ChartSkeletonProps {
+  type?: 'Default';
+}
+
+export interface DonutSkeletonProps extends ChartSkeletonProps {
+  type: 'Donut';
+}
+
+export interface FunnelSkeletonProps extends ChartSkeletonProps {
+  type: 'Funnel';
+}
+
+export interface SimpleBarSkeletonProps extends ChartSkeletonProps {
+  type: 'SimpleBar';
+}
+
+export interface SparkSkeletonProps extends ChartSkeletonProps {
+  type: 'Spark';
+}
+
+export interface SimpleNormalizedSkeletonProps extends ChartSkeletonProps {
+  type: 'SimpleNormalized';
+  showLegend?: boolean;
+  size?: Size;
+}
+
+type Props =
+  | DefaultSkeletonProps
+  | DonutSkeletonProps
+  | FunnelSkeletonProps
+  | SimpleBarSkeletonProps
+  | SimpleNormalizedSkeletonProps
+  | SparkSkeletonProps;
+
+export function ChartSkeleton(props: Props) {
+  const {
+    dimensions,
+    errorText = 'Could not load the chart',
+    state = ChartState.Loading,
+    theme = DEFAULT_THEME_NAME,
+    type,
+  } = props;
+
   const {
     chartContainer: {backgroundColor},
   } = useTheme(theme);
@@ -81,7 +118,8 @@ export function ChartSkeleton({
             errorText={errorText}
           />
         );
-      case 'SimpleNormalized':
+      case 'SimpleNormalized': {
+        const {showLegend = true, size = 'small'} = props;
         return (
           <SimpleNormalizedSkeleton
             dimensions={{
@@ -90,8 +128,11 @@ export function ChartSkeleton({
             }}
             state={state}
             errorText={errorText}
+            showLegend={showLegend}
+            size={size}
           />
         );
+      }
       case 'Spark':
         return (
           <SparkSkeleton
