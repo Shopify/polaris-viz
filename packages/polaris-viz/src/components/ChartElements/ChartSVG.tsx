@@ -28,7 +28,7 @@ export function ChartSVG({
       xmlns={XMLNS}
       width={width}
       height={height}
-      className={styles.Svg}
+      className={styles.SVG}
       role={emptyState ? 'img' : role}
       aria-label={emptyState ? emptyStateText : undefined}
       ref={setRef}
