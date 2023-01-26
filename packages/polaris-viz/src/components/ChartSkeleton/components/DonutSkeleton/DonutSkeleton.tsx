@@ -8,7 +8,7 @@ import {useTheme} from '../../../../hooks';
 
 import styles from './DonutSkeleton.scss';
 
-const ERROR_ANIMATION_PADDING = 30;
+const ERROR_ANIMATION_PADDING = 40;
 const FULL_CIRCLE = Math.PI * 2;
 const INITIAL_DELAY = 700;
 const RADIUS_PADDING = 20;

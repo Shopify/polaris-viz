@@ -35,7 +35,7 @@ import {ChartSkeleton} from '../../components/ChartSkeleton';
 import styles from './DonutChart.scss';
 import {InnerValue} from './components';
 
-const ERROR_ANIMATION_PADDING = 30;
+const ERROR_ANIMATION_PADDING = 40;
 const FULL_CIRCLE = Math.PI * 2;
 const MAX_LEGEND_WIDTH_PERCENTAGE = 0.35;
 const RADIUS_PADDING = 20;
