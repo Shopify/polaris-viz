@@ -204,10 +204,10 @@ export type RenderLegendContent = (
 
 export type SortedBarChartData = (number | null)[][];
 
-export type RenderInnerValueContent = (
-  values: {
-    activeValue: number | null;
-    totalValue: number;
-  },
-  getAnimatedTotalValue: (styles: React.CSSProperties) => ReactNode,
-) => ReactNode;
+export interface InnerValueContents {
+  activeValue: number | null;
+  animatedTotalValue: ReactNode;
+  totalValue: number;
+}
+
+export type RenderInnerValueContent = (values: InnerValueContents) => ReactNode;

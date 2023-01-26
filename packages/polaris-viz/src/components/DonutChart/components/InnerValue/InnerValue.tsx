@@ -38,23 +38,21 @@ export function InnerValue({
     },
   });
 
-  const animatedTotalValue = animatedValue.to((value) =>
-    animatedValue.isPaused
-      ? labelFormatter(value)
-      : labelFormatter(Math.abs(Math.floor(value))),
+  const animatedTotalValue = (
+    <animated.span>
+      {animatedValue.to((value) =>
+        animatedValue.isPaused
+          ? labelFormatter(value)
+          : labelFormatter(Math.abs(Math.floor(value))),
+      )}
+    </animated.span>
   );
 
-  const getAnimatedTotalValue = (styles: React.CSSProperties) => (
-    <animated.span style={styles}>{animatedTotalValue}</animated.span>
-  );
-
-  const innerContent = renderInnerValueContent?.(
-    {
-      activeValue,
-      totalValue,
-    },
-    getAnimatedTotalValue,
-  ) ?? (
+  const innerContent = renderInnerValueContent?.({
+    activeValue,
+    animatedTotalValue,
+    totalValue,
+  }) ?? (
     <React.Fragment>
       <animated.p
         className={classNames(styles.ContentValue)}

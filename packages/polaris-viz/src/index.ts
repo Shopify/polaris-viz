@@ -36,6 +36,7 @@ export {
 
 export type {
   ColorVisionInteractionMethods,
+  InnerValueContents,
   RenderInnerValueContent,
   TooltipData,
 } from './types';
