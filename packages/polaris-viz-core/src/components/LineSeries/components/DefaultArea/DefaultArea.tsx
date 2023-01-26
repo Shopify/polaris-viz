@@ -83,6 +83,7 @@ export function DefaultArea({series, areaPath}: Props) {
         mask={`url(#${maskId})`}
         strokeWidth="0"
         stroke={areaColor}
+        style={{pointerEvents: 'none'}}
       />
     </React.Fragment>
   );

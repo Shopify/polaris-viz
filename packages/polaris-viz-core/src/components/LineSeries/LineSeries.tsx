@@ -244,6 +244,7 @@ export function LineSeries({
               : `url(#line-${id})`
           }
           mask={`url(#mask-${`${id}`})`}
+          style={{pointerEvents: 'none'}}
         />
 
         <Path
