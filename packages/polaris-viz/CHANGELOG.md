@@ -13,6 +13,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 - Use the `showLegend` and `size` properties in loading state for `<SimpleNormalizedChart />`
 - Fixed bug where hover events in `<LineChart />` were not working.
+- Fixed positioning issue in `<DonutChart />` where inner value content is not centered properly.
 
 ## [7.15.0] - 2023-01-26
 
