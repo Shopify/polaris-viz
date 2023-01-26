@@ -50,19 +50,18 @@ import {
 } from '../../hooks';
 import {
   ChartMargin,
-  XMLNS,
   ANNOTATIONS_LABELS_OFFSET,
   CROSSHAIR_ID,
 } from '../../constants';
 import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
 import {YAxis} from '../YAxis';
 import {HorizontalGridLines} from '../HorizontalGridLines';
+import {ChartElements} from '../ChartElements';
 
 import {useLineChartTooltipContent} from './hooks/useLineChartTooltipContent';
 import {PointsAndCrosshair} from './components';
 import {useFormatData} from './hooks';
 import {yAxisMinMax} from './utilities';
-import styles from './Chart.scss';
 
 export interface ChartProps {
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
@@ -273,14 +272,13 @@ export function Chart({
 
   return (
     <React.Fragment>
-      <svg
-        viewBox={`0 0 ${width} ${height}`}
-        role={emptyState ? 'img' : 'table'}
-        xmlns={XMLNS}
-        width={width}
+      <ChartElements.Svg
+        emptyState={emptyState}
+        emptyStateText={emptyStateText}
         height={height}
-        ref={setSvgRef}
-        aria-label={emptyState ? emptyStateText : undefined}
+        role="table"
+        setRef={setSvgRef}
+        width={width}
       >
         {hideXAxis ? null : (
           <XAxis
@@ -323,10 +321,7 @@ export function Chart({
             xAxisLabels={labels}
           />
         )}
-        <g
-          transform={`translate(${chartXPosition},${chartYPosition})`}
-          className={styles.Group}
-        >
+        <g transform={`translate(${chartXPosition},${chartYPosition})`}>
           {reversedSeries.map((singleSeries, index) => {
             return (
               <LineSeries
@@ -384,7 +379,7 @@ export function Chart({
             />
           </g>
         )}
-      </svg>
+      </ChartElements.Svg>
 
       {longestSeriesLength !== -1 && (
         <TooltipWrapper

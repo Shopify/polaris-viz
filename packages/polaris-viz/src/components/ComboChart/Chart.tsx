@@ -48,7 +48,6 @@ import {ComboBarChart, ComboLineChart, AxisLabel} from './components';
 import {useSplitDataForCharts} from './hooks/useSplitDataForCharts';
 import {useComboChartTooltipContent} from './hooks/useComboChartTooltipContent';
 import {useComboChartPositions} from './hooks/useComboChartPositions';
-import styles from './Chart.scss';
 
 export interface ChartProps {
   annotationsLookupTable: AnnotationLookupTable;
@@ -240,7 +239,6 @@ export function Chart({
           transform={`translate(${
             chartXPosition + drawableWidth / labels.length / 2
           },${chartYPosition})`}
-          className={styles.Group}
         >
           <ComboLineChart
             activeIndex={activeIndex}
