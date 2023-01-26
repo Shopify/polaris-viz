@@ -37,6 +37,8 @@ export function renderLinearComparisonTooltip(
     ],
   } = options;
 
+  const {theme} = tooltipData;
+
   const formatters = {
     keyFormatter: (key) => `${key}`,
     valueFormatter: (value) => `${value}`,
@@ -64,7 +66,7 @@ export function renderLinearComparisonTooltip(
 
     return (
       <React.Fragment key={seriesName}>
-        <TooltipSeriesName theme="Default">{seriesName}</TooltipSeriesName>
+        <TooltipSeriesName theme={theme}>{seriesName}</TooltipSeriesName>
         {dataSeries.map(({data, color, isComparison, groupIndex}) => {
           const item = data[tooltipData.activeIndex];
 
@@ -86,9 +88,9 @@ export function renderLinearComparisonTooltip(
   });
 
   return (
-    <TooltipContentContainer maxWidth={300} theme="Default">
+    <TooltipContentContainer maxWidth={300} theme={theme}>
       {title != null && (
-        <TooltipTitle theme="Default">
+        <TooltipTitle theme={theme}>
           {formatters.titleFormatter(title)}
         </TooltipTitle>
       )}

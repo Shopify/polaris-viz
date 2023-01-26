@@ -6,11 +6,12 @@ import {
 } from '@shopify/polaris-viz-core';
 
 import type {Margin} from '../../../types';
-import styles from '../TooltipContainer.scss';
 import type {TooltipPositionOffset} from '../types';
 import {getAlteredVerticalBarPosition} from '../utilities';
 import type {AlteredPosition} from '../utilities';
 import {DEFAULT_TOOLTIP_POSITION} from '../constants';
+
+import styles from './TooltipAnimatedContainer.scss';
 
 export interface TooltipAnimatedContainerProps {
   children: ReactNode;

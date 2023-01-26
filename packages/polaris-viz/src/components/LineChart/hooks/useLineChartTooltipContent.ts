@@ -1,4 +1,7 @@
-import type {LineChartDataSeriesWithDefaults} from '@shopify/polaris-viz-core';
+import {
+  LineChartDataSeriesWithDefaults,
+  useChartContext,
+} from '@shopify/polaris-viz-core';
 import {ReactNode, useCallback} from 'react';
 
 import type {RenderTooltipContentData} from '../../../types';
@@ -14,6 +17,8 @@ export function useLineChartTooltipContent({
   indexForLabels,
   renderTooltipContent,
 }: Props) {
+  const {theme} = useChartContext();
+
   return useCallback(
     (activeIndex: number) => {
       if (activeIndex === -1) {
@@ -50,8 +55,9 @@ export function useLineChartTooltipContent({
         activeIndex,
         title: `${key}`,
         dataSeries: data,
+        theme,
       });
     },
-    [data, renderTooltipContent, indexForLabels],
+    [data, renderTooltipContent, theme, indexForLabels],
   );
 }

@@ -1,5 +1,5 @@
 import {ReactNode, useCallback} from 'react';
-import type {Color, DataSeries} from '@shopify/polaris-viz-core';
+import {Color, DataSeries, useChartContext} from '@shopify/polaris-viz-core';
 
 import type {RenderTooltipContentData} from '../../../types';
 
@@ -14,6 +14,8 @@ export function useStackedChartTooltipContent({
   renderTooltipContent,
   seriesColors,
 }: Props) {
+  const {theme} = useChartContext();
+
   return useCallback(
     (activeIndex: number) => {
       if (activeIndex === -1) {
@@ -42,8 +44,9 @@ export function useStackedChartTooltipContent({
         activeIndex,
         title: `${data[0].data[activeIndex].key}`,
         dataSeries: data,
+        theme,
       });
     },
-    [data, seriesColors, renderTooltipContent],
+    [data, seriesColors, renderTooltipContent, theme],
   );
 }

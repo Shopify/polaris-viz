@@ -87,6 +87,7 @@ export interface RenderTooltipContentData {
   }[];
   activeIndex: number;
   dataSeries: DataSeries[];
+  theme: string;
   title?: string;
   formatters?: TooltipFormatters;
 }
