@@ -17,7 +17,7 @@ export const CustomInnerValueContent: Story<DonutChartProps> = Template.bind({})
 CustomInnerValueContent.args = {
   ...DEFAULT_PROPS,
   data: DEFAULT_DATA,
-  renderInnerValueContent: ({activeValue, totalValue}, getAnimatedTotalValue) => {
+  renderInnerValueContent: ({activeValue, animatedTotalValue, totalValue}) => {
     const activeValuePercentage = activeValue
       ? `${(activeValue / totalValue * 100).toFixed(1)}%`
       : null;
@@ -43,11 +43,15 @@ CustomInnerValueContent.args = {
           gap: 4,
           margin: '8px 0',
         }}>
-          <span>Total:</span>
-          {getAnimatedTotalValue({
-            fontSize: 20,
-            ...numberStyles
-          })}
+          Total:
+          <span
+            style={{
+              fontSize: 20,
+              ...numberStyles
+            }}
+          >
+            {animatedTotalValue}
+          </span>
         </p>
       </div>
     )
