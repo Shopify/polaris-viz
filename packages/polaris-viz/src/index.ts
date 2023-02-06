@@ -15,6 +15,7 @@ export {
   ChartSkeleton,
   ComboChart,
   DonutChart,
+  TrendIndicator,
 } from './components';
 
 export type {
@@ -39,6 +40,9 @@ export type {
   InnerValueContents,
   RenderInnerValueContent,
   TooltipData,
+  Trend,
+  TrendSize,
+  TrendDirection,
 } from './types';
 
 export {

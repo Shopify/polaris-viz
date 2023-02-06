@@ -225,9 +225,9 @@ export const DEFAULT_THEME: Theme = {
     labelColor: variables.colorGray30,
     backgroundColor: variables.colorGray150,
     trendIndicator: {
-      positive: '#03AB92',
-      negative: '#f24f62',
-      neutral: '#8C9196',
+      positive: variables.colorDarkPositive,
+      negative: variables.colorDarkNegative,
+      neutral: variables.colorDarkNeutral,
     },
   },
   annotations: {
@@ -238,6 +238,12 @@ export const DEFAULT_THEME: Theme = {
     axisLabelColor: variables.colorGray80,
     lineColor: variables.colorGray80,
     pillOpacity: 0.6,
+  },
+  trendIndicator: {
+    positive: variables.colorDarkPositive,
+    negative: variables.colorDarkNegative,
+    neutral: variables.colorDarkNeutral,
+    background: variables.colorGray150,
   },
 };
 
@@ -327,9 +333,9 @@ export const LIGHT_THEME: Theme = {
     labelColor: variables.colorGray100,
     backgroundColor: variables.colorGray10,
     trendIndicator: {
-      positive: '#119d7f',
-      negative: '#eb4c5e',
-      neutral: '#8C9196',
+      positive: variables.colorLightPositive,
+      negative: variables.colorLightNegative,
+      neutral: variables.colorLightNeutral,
     },
   },
   annotations: {
@@ -340,6 +346,12 @@ export const LIGHT_THEME: Theme = {
     axisLabelColor: variables.colorGray70,
     lineColor: variables.colorGray70,
     pillOpacity: 1,
+  },
+  trendIndicator: {
+    positive: variables.colorLightPositive,
+    negative: variables.colorLightNegative,
+    neutral: variables.colorLightNeutral,
+    background: variables.colorGray10,
   },
 };
 

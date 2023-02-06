@@ -10,6 +10,14 @@ $color-purple-dark: rgb(80, 36, 143);
 $color-dark-comparison: rgba(144, 176, 223, 0.8);
 $color-light-comparison: rgba(103, 147, 204, 1);
 
+$color-light-positive: #119d7f;
+$color-light-negative: #eb4c5e;
+$color-light-neutral: #8c9196;
+
+$color-dark-positive: #039c86;
+$color-dark-negative: #f24f62;
+$color-dark-neutral: #8c9196;
+
 $color-gray-00: #ffffff;
 $color-gray-10: #f6f6f7;
 $color-gray-20: #eeeeef;
@@ -168,6 +176,14 @@ $font-stack-base: -apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI'
 
   colorDarkComparison: $color-dark-comparison;
   colorLightComparison: $color-light-comparison;
+
+  colorLightPositive: $color-light-positive;
+  colorLightNegative: $color-light-negative;
+  colorLightNeutral: $color-light-neutral;
+
+  colorDarkPositive: $color-dark-positive;
+  colorDarkNegative: $color-dark-negative;
+  colorDarkNeutral: $color-dark-neutral;
 
   colorGray00: $color-gray-00;
   colorGray10: $color-gray-10;
