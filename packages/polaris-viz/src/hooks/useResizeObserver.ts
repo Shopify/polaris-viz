@@ -1,8 +1,6 @@
 import {useLayoutEffect, useState} from 'react';
-import {
-  ResizeObserver as Polyfill,
-  ResizeObserverEntry,
-} from '@juggle/resize-observer';
+import type {ResizeObserverEntry} from '@juggle/resize-observer';
+import {ResizeObserver as Polyfill} from '@juggle/resize-observer';
 
 // This default value is used in our tests so that consumers of Polaris Viz don't need to mock or fire a ResizeObserver event
 const defaultEntry =

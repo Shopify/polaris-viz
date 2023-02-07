@@ -1,13 +1,12 @@
-import React, {useMemo} from 'react';
+import {Fragment, useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {area as areaShape, line} from 'd3-shape';
 
 import {usePrevious} from '../../hooks';
 import type {LineChartDataSeriesWithDefaults} from '../../types';
 import {LinearGradientWithStops} from '../../components';
+import type {DataPoint, GradientStop} from '../../';
 import {
-  DataPoint,
-  GradientStop,
   usePolarisVizContext,
   useTheme,
   curveStepRounded,
@@ -156,7 +155,7 @@ export function LineSeries({
   const zeroLineY = yScale(0);
 
   return (
-    <React.Fragment>
+    <Fragment>
       <AnimatedGroup opacity={1}>
         <Defs>
           <LinearGradientWithStops
@@ -186,7 +185,7 @@ export function LineSeries({
                 zeroLineData={zeroLineData}
               />
             ) : (
-              <React.Fragment>
+              <Fragment>
                 <Path
                   d={lineShape}
                   stroke="white"
@@ -209,7 +208,7 @@ export function LineSeries({
                     fill="white"
                   />
                 )}
-              </React.Fragment>
+              </Fragment>
             )}
           </Mask>
         </Defs>
@@ -258,6 +257,6 @@ export function LineSeries({
           })}
         />
       </AnimatedGroup>
-    </React.Fragment>
+    </Fragment>
   );
 }

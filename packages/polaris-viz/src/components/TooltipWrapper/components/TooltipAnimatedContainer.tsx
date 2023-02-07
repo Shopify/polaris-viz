@@ -1,9 +1,7 @@
-import React, {useEffect, useRef, useState, ReactNode, useMemo} from 'react';
-import {
-  BoundingRect,
-  Dimensions,
-  useChartContext,
-} from '@shopify/polaris-viz-core';
+import type {ReactNode} from 'react';
+import {useEffect, useRef, useState, useMemo} from 'react';
+import type {BoundingRect, Dimensions} from '@shopify/polaris-viz-core';
+import {useChartContext} from '@shopify/polaris-viz-core';
 
 import type {Margin} from '../../../types';
 import type {TooltipPositionOffset} from '../types';

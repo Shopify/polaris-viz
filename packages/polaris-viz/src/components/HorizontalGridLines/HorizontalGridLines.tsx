@@ -1,4 +1,4 @@
-import React from 'react';
+import {memo, Fragment} from 'react';
 import {useTheme} from '@shopify/polaris-viz-core';
 
 import type {YAxisTick} from '../../types';
@@ -9,7 +9,7 @@ export interface Props {
   width: number;
 }
 
-export const HorizontalGridLines = React.memo(function HorizontalGridLines({
+export const HorizontalGridLines = memo(function HorizontalGridLines({
   ticks,
   transform,
   width,
@@ -17,7 +17,7 @@ export const HorizontalGridLines = React.memo(function HorizontalGridLines({
   const selectedTheme = useTheme();
 
   return (
-    <React.Fragment>
+    <Fragment>
       {ticks.map(({yOffset}, index) => (
         <line
           key={index}
@@ -26,6 +26,6 @@ export const HorizontalGridLines = React.memo(function HorizontalGridLines({
           transform={`translate(${transform.x},${transform.y + yOffset})`}
         />
       ))}
-    </React.Fragment>
+    </Fragment>
   );
 });

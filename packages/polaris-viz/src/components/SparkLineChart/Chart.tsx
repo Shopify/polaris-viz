@@ -1,4 +1,4 @@
-import React from 'react';
+import {Fragment} from 'react';
 import {scaleLinear} from 'd3-scale';
 import {
   LineSeries,
@@ -39,7 +39,7 @@ export function Chart({
   });
 
   return (
-    <React.Fragment>
+    <Fragment>
       {accessibilityLabel ? (
         <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
       ) : null}
@@ -77,6 +77,6 @@ export function Chart({
           );
         })}
       </svg>
-    </React.Fragment>
+    </Fragment>
   );
 }

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import { useState } from 'react';
 import {SimpleNormalizedChart} from '../SimpleNormalizedChart';
 import {DEFAULT_DATA} from './data';
 

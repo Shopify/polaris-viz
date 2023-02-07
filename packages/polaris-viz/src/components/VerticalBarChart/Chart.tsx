@@ -1,11 +1,11 @@
-import React, {useState, useMemo} from 'react';
+import type {ReactNode} from 'react';
+import {useState, useMemo} from 'react';
 import {
   uniqueId,
   DataType,
   useYScale,
   estimateStringWidth,
   COLOR_VISION_SINGLE_ITEM,
-  BoundingRect,
   useChartContext,
   useChartPositions,
   LINE_HEIGHT,
@@ -16,6 +16,7 @@ import type {
   Dimensions,
   XAxisOptions,
   YAxisOptions,
+  BoundingRect,
 } from '@shopify/polaris-viz-core';
 import {stackOffsetDiverging, stackOrderNone} from 'd3-shape';
 
@@ -37,11 +38,10 @@ import {XAxis} from '../XAxis';
 import {LegendContainer, useLegend} from '../LegendContainer';
 import {GradientDefs} from '../shared';
 import {ANNOTATIONS_LABELS_OFFSET, ChartMargin} from '../../constants';
+import type {TooltipPosition, TooltipPositionParams} from '../TooltipWrapper';
 import {
   TooltipHorizontalOffset,
   TooltipVerticalOffset,
-  TooltipPosition,
-  TooltipPositionParams,
   TooltipWrapper,
   TOOLTIP_POSITION_DEFAULT_RETURN,
 } from '../TooltipWrapper';
@@ -60,7 +60,7 @@ import {useVerticalBarChart} from './hooks/useVerticalBarChart';
 
 export interface Props {
   data: DataSeries[];
-  renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
+  renderTooltipContent(data: RenderTooltipContentData): ReactNode;
   showLegend: boolean;
   type: ChartType;
   xAxisOptions: Required<XAxisOptions>;

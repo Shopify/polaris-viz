@@ -1,7 +1,7 @@
-import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {VisuallyHiddenRows, Props} from '../VisuallyHiddenRows';
+import type {Props} from '../VisuallyHiddenRows';
+import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
 
 const mockProps: Props = {
   data: [

@@ -1,12 +1,9 @@
-import React from 'react';
 import type {Story} from '@storybook/react';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {PolarisVizProvider} from '../../PolarisVizProvider';
-import {
-  SimpleNormalizedChart,
-  SimpleNormalizedChartProps,
-} from '../SimpleNormalizedChart';
+import type {SimpleNormalizedChartProps} from '../SimpleNormalizedChart';
+import {SimpleNormalizedChart} from '../SimpleNormalizedChart';
 
 export const Template: Story<SimpleNormalizedChartProps> = (
   args: SimpleNormalizedChartProps,

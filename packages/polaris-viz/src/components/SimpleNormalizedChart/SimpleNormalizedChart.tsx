@@ -1,12 +1,10 @@
-import React from 'react';
-import {
+import {ChartState, DEFAULT_CHART_PROPS} from '@shopify/polaris-viz-core';
+import type {
+  WithRequired,
   ChartProps,
   Direction,
   LabelFormatter,
-  ChartState,
-  DEFAULT_CHART_PROPS,
 } from '@shopify/polaris-viz-core';
-import type {WithRequired} from '@shopify/polaris-viz-core';
 
 import type {ComparisonMetricProps} from '../ComparisonMetric';
 import {ChartContainer} from '../ChartContainer';

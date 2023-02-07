@@ -1,9 +1,9 @@
-import React from 'react';
 import {mount} from '@shopify/react-testing';
 
 import {SingleTextLine} from '../../../Labels';
 
-import {AnnotationLabel, AnnotationLabelProps} from './AnnotationLabel';
+import type {AnnotationLabelProps} from './AnnotationLabel';
+import {AnnotationLabel} from './AnnotationLabel';
 
 jest.mock('@shopify/polaris-viz-core/src/utilities', () => ({
   ...jest.requireActual('@shopify/polaris-viz-core/src/utilities'),

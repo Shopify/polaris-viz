@@ -1,4 +1,3 @@
-import React from 'react';
 import type {Story} from '@storybook/react';
 
 export {META as default} from './meta';

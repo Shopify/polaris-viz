@@ -1,13 +1,16 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import {sum} from 'd3-array';
 import {scaleLinear} from 'd3-scale';
 import {
   COLOR_VISION_SINGLE_ITEM,
-  DataSeries,
   getColorVisionEventAttrs,
   getColorVisionStylesForActiveIndex,
 } from '@shopify/polaris-viz-core';
-import type {Direction, LabelFormatter} from '@shopify/polaris-viz-core';
+import type {
+  Direction,
+  LabelFormatter,
+  DataSeries,
+} from '@shopify/polaris-viz-core';
 
 import type {ComparisonMetricProps} from '../ComparisonMetric';
 import {useThemeSeriesColors} from '../../hooks/useThemeSeriesColors';

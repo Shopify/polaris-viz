@@ -1,4 +1,5 @@
-import {CharacterWidths, clamp} from '@shopify/polaris-viz-core';
+import type {CharacterWidths} from '@shopify/polaris-viz-core';
+import {clamp} from '@shopify/polaris-viz-core';
 
 import {
   LINE_HEIGHT,

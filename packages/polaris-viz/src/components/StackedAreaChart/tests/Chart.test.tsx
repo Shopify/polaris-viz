@@ -1,4 +1,3 @@
-import React from 'react';
 import {mount} from '@shopify/react-testing';
 
 import {LegendContainer} from '../../LegendContainer';
@@ -14,7 +13,8 @@ import {
 } from '../../../components/TooltipWrapper';
 import {mountWithProvider, triggerSVGMouseMove} from '../../../test-utilities';
 import {StackedAreas} from '../components';
-import {Chart, Props} from '../Chart';
+import type {Props} from '../Chart';
+import {Chart} from '../Chart';
 import {Annotations, YAxisAnnotations} from '../../Annotations';
 import {normalizeData} from '../../../utilities';
 import {TextLine} from '../../TextLine';

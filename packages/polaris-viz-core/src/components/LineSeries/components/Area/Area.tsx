@@ -1,4 +1,3 @@
-import React from 'react';
 import type {SpringValue} from '@react-spring/core';
 
 import type {LineChartDataSeriesWithDefaults} from '../../../../types';

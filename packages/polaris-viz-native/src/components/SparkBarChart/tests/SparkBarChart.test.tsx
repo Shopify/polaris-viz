@@ -1,5 +1,4 @@
 import {AccessibilityInfo} from 'react-native';
-import React from 'react';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {ChartContainer} from '../..';

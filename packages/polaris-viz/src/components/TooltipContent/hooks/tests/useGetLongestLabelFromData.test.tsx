@@ -1,8 +1,8 @@
-import React from 'react';
-import {mount, Root} from '@shopify/react-testing';
+import type {Root} from '@shopify/react-testing';
+import {mount} from '@shopify/react-testing';
 
 import {useGetLongestLabelFromData} from '../useGetLongestLabelFromData';
-import {TooltipData} from '../../../../types';
+import type {TooltipData} from '../../../../types';
 
 jest.mock('react', () => {
   return {

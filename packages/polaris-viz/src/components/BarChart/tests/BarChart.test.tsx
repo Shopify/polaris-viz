@@ -1,8 +1,8 @@
-import React from 'react';
 import {mount} from '@shopify/react-testing';
 
 import {SkipLink} from '../../../components/SkipLink';
-import {BarChart, BarChartProps} from '../BarChart';
+import type {BarChartProps} from '../BarChart';
+import {BarChart} from '../BarChart';
 import {VerticalBarChart} from '../../VerticalBarChart';
 import {HorizontalBarChart} from '../../HorizontalBarChart';
 

@@ -1,9 +1,9 @@
-import React from 'react';
+import type {ReactNode} from 'react';
 
 import styles from './SkipLink.scss';
 
 interface SkipLinkProps {
-  children: React.ReactNode;
+  children: ReactNode;
   anchorId: string;
 }
 

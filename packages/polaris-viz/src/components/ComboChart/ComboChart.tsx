@@ -1,12 +1,14 @@
-import React from 'react';
 import {
-  ChartProps,
   DEFAULT_CHART_PROPS,
   InternalChartType,
+} from '@shopify/polaris-viz-core';
+import type {
+  DataGroup,
+  ChartProps,
   WithRequired,
   XAxisOptions,
 } from '@shopify/polaris-viz-core';
-import type {DataGroup} from '@shopify/polaris-viz-core';
+import type {ReactNode} from 'react';
 
 import {flattenDataGroupToDataSeries} from '../../utilities/flattenDataGroupToDataSeries';
 import {TooltipContent} from '../TooltipContent';
@@ -24,7 +26,7 @@ import {formatDataForTooltip} from './utilities/formatDataForTooltip';
 export type ComboChartProps = {
   data: DataGroup[];
   annotations?: ComboAnnotation[];
-  renderTooltipContent?(data: RenderTooltipContentData): React.ReactNode;
+  renderTooltipContent?(data: RenderTooltipContentData): ReactNode;
   showLegend?: boolean;
   xAxisOptions?: Partial<XAxisOptions>;
   renderLegendContent?: RenderLegendContent;

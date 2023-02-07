@@ -1,4 +1,3 @@
-import React from 'react';
 import type {
   ChartType,
   DataSeries,
@@ -6,6 +5,7 @@ import type {
   YAxisOptions,
   Dimensions,
 } from '@shopify/polaris-viz-core';
+import type {ReactNode} from 'react';
 
 import type {
   AnnotationLookupTable,
@@ -18,7 +18,7 @@ import {Chart} from './Chart';
 
 export interface VerticalBarChartProps {
   data: DataSeries[];
-  renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
+  renderTooltipContent(data: RenderTooltipContentData): ReactNode;
   showLegend: boolean;
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;

@@ -1,6 +1,7 @@
 import {useMemo} from 'react';
 
-import {Axis, AxisValueRange} from '../types';
+import type {Axis} from '../types';
+import {AxisValueRange} from '../types';
 
 export function useMixedDataValues(axes: Axis[]) {
   return useMemo(() => {

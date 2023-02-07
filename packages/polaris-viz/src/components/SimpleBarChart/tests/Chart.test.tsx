@@ -1,8 +1,8 @@
-import React from 'react';
 import {mount} from '@shopify/react-testing';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
-import {Chart, ChartProps} from '../Chart';
+import type {ChartProps} from '../Chart';
+import {Chart} from '../Chart';
 import {LegendContainer} from '../../LegendContainer';
 import {
   GroupLabel,

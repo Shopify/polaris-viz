@@ -1,9 +1,9 @@
-import React from 'react';
 import type {Story} from '@storybook/react';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {PolarisVizProvider} from '../../PolarisVizProvider';
-import {SparkBarChart, SparkBarChartProps} from '../SparkBarChart';
+import type {SparkBarChartProps} from '../SparkBarChart';
+import {SparkBarChart} from '../SparkBarChart';
 
 export const Template: Story<SparkBarChartProps> = (
   args: SparkBarChartProps,

@@ -1,6 +1,3 @@
-import {request} from 'https';
-
-import React from 'react';
 import {mount} from '@shopify/react-testing';
 
 import {Chart as DonutChart} from '../Chart';

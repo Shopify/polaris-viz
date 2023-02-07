@@ -1,11 +1,14 @@
-import React, {useRef} from 'react';
+import {Fragment, useRef} from 'react';
 import {
   uniqueId,
   ChartState,
-  ChartProps,
   DEFAULT_CHART_PROPS,
 } from '@shopify/polaris-viz-core';
-import type {XAxisOptions, YAxisOptions} from '@shopify/polaris-viz-core';
+import type {
+  XAxisOptions,
+  YAxisOptions,
+  ChartProps,
+} from '@shopify/polaris-viz-core';
 
 import {
   getXAxisOptionsWithDefaults,
@@ -68,7 +71,7 @@ export function StackedAreaChart(props: StackedAreaChartProps) {
   const annotationsLookupTable = normalizeData(annotations, 'startKey');
 
   return (
-    <React.Fragment>
+    <Fragment>
       {skipLinkText == null || skipLinkText.length === 0 ? null : (
         <SkipLink anchorId={skipLinkAnchorId.current}>{skipLinkText}</SkipLink>
       )}
@@ -92,6 +95,6 @@ export function StackedAreaChart(props: StackedAreaChartProps) {
       {skipLinkText == null || skipLinkText.length === 0 ? null : (
         <SkipLink.Anchor id={skipLinkAnchorId.current} />
       )}
-    </React.Fragment>
+    </Fragment>
   );
 }

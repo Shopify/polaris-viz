@@ -1,11 +1,8 @@
-import React from 'react';
 import {mount} from '@shopify/react-testing';
-import {DataSeries} from '@shopify/polaris-viz-core';
+import type {DataSeries} from '@shopify/polaris-viz-core';
 
-import {
-  HorizontalBarChart,
-  HorizontalBarChartProps,
-} from '../HorizontalBarChart';
+import type {HorizontalBarChartProps} from '../HorizontalBarChart';
+import {HorizontalBarChart} from '../HorizontalBarChart';
 import {Chart} from '../Chart';
 
 jest.mock('@shopify/polaris-viz-core/src/utilities', () => ({

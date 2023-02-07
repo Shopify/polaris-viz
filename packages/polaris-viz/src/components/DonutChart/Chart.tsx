@@ -1,11 +1,11 @@
-import React, {useState, CSSProperties} from 'react';
+import type {CSSProperties} from 'react';
+import {Fragment, useState} from 'react';
 import {pie} from 'd3-shape';
 import {
   clamp,
   useTheme,
   COLOR_VISION_SINGLE_ITEM,
   useUniqueId,
-  Direction,
   ChartState,
   useChartContext,
 } from '@shopify/polaris-viz-core';
@@ -14,6 +14,7 @@ import type {
   DataSeries,
   Dimensions,
   LabelFormatter,
+  Direction,
 } from '@shopify/polaris-viz-core';
 
 import {estimateLegendItemWidth} from '../Legend';
@@ -192,7 +193,7 @@ export function Chart({
     <div className={styles.DonutWrapper} style={styleMap[legendPosition]}>
       <div className={styles.Donut}>
         {state === ChartState.Success ? (
-          <React.Fragment>
+          <Fragment>
             <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
             <svg
               viewBox={`${minX} ${minY} ${viewBoxDimensions.width} ${viewBoxDimensions.height}`}
@@ -258,7 +259,7 @@ export function Chart({
               labelFormatter={labelFormatter}
               renderInnerValueContent={renderInnerValueContent}
             />
-          </React.Fragment>
+          </Fragment>
         ) : (
           <ChartSkeleton
             dimensions={{width: diameter, height: diameter}}

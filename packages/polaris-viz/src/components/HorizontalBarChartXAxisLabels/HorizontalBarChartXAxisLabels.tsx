@@ -1,4 +1,5 @@
-import React, {Dispatch, SetStateAction} from 'react';
+import type {Dispatch, SetStateAction} from 'react';
+import {Fragment} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 
 import {useLabels} from '../Labels';
@@ -33,7 +34,7 @@ export function HorizontalBarChartXAxisLabels({
   });
 
   return (
-    <React.Fragment>
+    <Fragment>
       {lines.map((line, index) => {
         const x = xScale(ticks[index]) ?? 0;
 
@@ -43,6 +44,6 @@ export function HorizontalBarChartXAxisLabels({
           </g>
         );
       })}
-    </React.Fragment>
+    </Fragment>
   );
 }

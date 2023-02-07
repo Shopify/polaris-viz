@@ -9,7 +9,8 @@ import {
   RENDER_LEGEND_CONTENT_ARGS,
   THEME_CONTROL_ARGS,
 } from '../../../storybook/constants';
-import {DonutChart, DonutChartProps} from '../DonutChart';
+import type {DonutChartProps} from '../DonutChart';
+import {DonutChart} from '../DonutChart';
 
 export const META: Meta<DonutChartProps> = {
   title: 'polaris-viz/Charts/DonutChart',

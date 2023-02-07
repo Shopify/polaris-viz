@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import {Fragment, useRef} from 'react';
 import {useSpring} from '@react-spring/core';
 
 import {
@@ -57,7 +57,7 @@ export function AnimatedLine({
   });
 
   return (
-    <React.Fragment>
+    <Fragment>
       <AnimatedPath
         d={animatedLineShape}
         stroke="white"
@@ -80,6 +80,6 @@ export function AnimatedLine({
           fill="white"
         />
       )}
-    </React.Fragment>
+    </Fragment>
   );
 }

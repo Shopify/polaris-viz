@@ -1,8 +1,8 @@
-import React from 'react';
 import type {Story} from '@storybook/react';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
-import {SparkLineChart, SparkLineChartProps} from '../SparkLineChart';
+import type {SparkLineChartProps} from '../SparkLineChart';
+import {SparkLineChart} from '../SparkLineChart';
 
 export const DEFAULT_DATA: DataSeries[] = [
   {

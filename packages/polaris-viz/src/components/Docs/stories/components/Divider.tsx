@@ -1,8 +1,8 @@
-import React from 'react';
+import {Fragment} from 'react';
 
 export function Divider({noLine}: {noLine?: string}) {
   return (
-    <React.Fragment>
+    <Fragment>
       <hr
         style={{
           margin: '32px 0',
@@ -10,6 +10,6 @@ export function Divider({noLine}: {noLine?: string}) {
           border: noLine ? '0' : 'undefined',
         }}
       />
-    </React.Fragment>
+    </Fragment>
   );
 }

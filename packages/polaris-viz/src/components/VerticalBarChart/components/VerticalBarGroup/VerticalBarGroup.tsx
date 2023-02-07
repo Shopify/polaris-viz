@@ -10,7 +10,7 @@ import type {
   DataSeries,
 } from '@shopify/polaris-viz-core';
 import type {ScaleBand, ScaleLinear} from 'd3-scale';
-import React, {useMemo, useState} from 'react';
+import {Fragment, useMemo, useState} from 'react';
 
 import {getLoadAnimationDelay} from '../../../../utilities/getLoadAnimationDelay';
 import {getChartId} from '../../../../utilities/getChartId';
@@ -117,7 +117,7 @@ export function VerticalBarGroup({
   }
 
   return (
-    <React.Fragment>
+    <Fragment>
       {sortedData.map((item, index) => {
         const xPosition = xScale(index.toString());
         const animationDelay = getLoadAnimationDelay(index, sortedData.length);
@@ -141,6 +141,6 @@ export function VerticalBarGroup({
           />
         );
       })}
-    </React.Fragment>
+    </Fragment>
   );
 }

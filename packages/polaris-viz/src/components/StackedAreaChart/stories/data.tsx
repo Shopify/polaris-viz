@@ -1,9 +1,9 @@
-import React from 'react';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 import type {Story} from '@storybook/react';
 
 import type {RenderTooltipContentData} from '../../../types';
-import {StackedAreaChart, StackedAreaChartProps} from '../StackedAreaChart';
+import type {StackedAreaChartProps} from '../StackedAreaChart';
+import {StackedAreaChart} from '../StackedAreaChart';
 import {formatLinearYAxisLabel} from '../../../storybook/utilities';
 
 export const TOOLTIP_CONTENT = {

@@ -23,9 +23,10 @@
     "react-native-svg": "12.1.1"
   },
   "devDependencies": {
-    "@quilted/react-testing": "^0.5.2",
+    "@quilted/react-testing": "^0.5.25",
     "@types/d3-scale": "^4.0.2",
-    "@types/d3-shape": "^3.1.0"
+    "@types/d3-shape": "^3.1.0",
+    "react-test-renderer": "^18.2.0"
   },
   "peerDependencies": {
     "react": "^16.8.0  || ^17.0.0",

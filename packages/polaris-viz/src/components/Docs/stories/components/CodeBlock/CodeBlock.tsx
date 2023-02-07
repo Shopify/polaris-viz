@@ -1,12 +1,12 @@
-import React, {ReactChildren} from 'react';
+import type {ReactNode} from 'react';
 import {Source} from '@storybook/addon-docs';
 
 import styles from './CodeBlock.scss';
 
-export function CodeBlock({children}: {children: ReactChildren}) {
+export function CodeBlock({children}: {children: ReactNode}) {
   return (
     <div className={styles.CodeBlock}>
-      <Source dark language="jsx" code={children.toString()} />
+      <Source dark language="jsx" code={children?.toString()} />
     </div>
   );
 }

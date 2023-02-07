@@ -1,10 +1,10 @@
-import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
 
-import {Annotation} from '../../../types';
+import type {Annotation} from '../../../types';
 import {normalizeData} from '../../../utilities/normalizeData';
-import {YAxisAnnotations, YAxisAnnotationsProps} from '../YAxisAnnotations';
+import type {YAxisAnnotationsProps} from '../YAxisAnnotations';
+import {YAxisAnnotations} from '../YAxisAnnotations';
 import {
   AnnotationContent,
   AnnotationLabel,

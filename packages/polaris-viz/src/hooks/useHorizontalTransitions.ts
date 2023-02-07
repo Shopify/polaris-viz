@@ -1,6 +1,8 @@
-import {SpringValue, useTransition} from '@react-spring/web';
+import type {SpringValue} from '@react-spring/web';
+import {useTransition} from '@react-spring/web';
 import {useMemo} from 'react';
-import {DataSeries, useChartContext} from '@shopify/polaris-viz-core';
+import type {DataSeries} from '@shopify/polaris-viz-core';
+import {useChartContext} from '@shopify/polaris-viz-core';
 
 import {BARS_SORT_TRANSITION_CONFIG} from '../constants';
 

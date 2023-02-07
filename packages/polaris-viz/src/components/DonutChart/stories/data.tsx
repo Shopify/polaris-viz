@@ -1,7 +1,7 @@
-import React from 'react';
 import type {StoryFn} from '@storybook/react';
 
-import {DonutChart, DonutChartProps} from '../DonutChart';
+import type {DonutChartProps} from '../DonutChart';
+import {DonutChart} from '../DonutChart';
 
 export const Template: StoryFn<DonutChartProps> = (args: DonutChartProps) => {
   return (

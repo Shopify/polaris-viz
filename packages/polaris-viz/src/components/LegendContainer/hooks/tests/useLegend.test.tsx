@@ -1,12 +1,10 @@
-import React from 'react';
-import {mount, Root} from '@shopify/react-testing';
-import {
-  DataSeries,
-  DataGroup,
-  LEGENDS_TOP_MARGIN,
-} from '@shopify/polaris-viz-core';
+import type {Root} from '@shopify/react-testing';
+import {mount} from '@shopify/react-testing';
+import type {DataSeries, DataGroup} from '@shopify/polaris-viz-core';
+import {LEGENDS_TOP_MARGIN} from '@shopify/polaris-viz-core';
 
-import {useLegend, Props} from '../useLegend';
+import type {Props} from '../useLegend';
+import {useLegend} from '../useLegend';
 
 const DATA: DataSeries[] = [
   {

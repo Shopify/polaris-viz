@@ -1,10 +1,10 @@
-import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
 
 import {DEFAULT_MAX_Y} from '../../constants';
 import type {DataSeries} from '../../types';
-import {Props, useYScale} from '../useYScale';
+import type {Props} from '../useYScale';
+import {useYScale} from '../useYScale';
 import {shouldRoundScaleUp} from '../../utilities/shouldRoundScaleUp';
 
 jest.mock('d3-scale', () => ({

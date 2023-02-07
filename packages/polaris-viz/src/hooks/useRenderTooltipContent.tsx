@@ -1,4 +1,3 @@
-import React from 'react';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import type {TooltipOptions, RenderTooltipContentData} from '../types';

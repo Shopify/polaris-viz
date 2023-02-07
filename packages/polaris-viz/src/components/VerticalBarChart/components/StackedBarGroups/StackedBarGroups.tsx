@@ -1,7 +1,7 @@
-import React, {useMemo} from 'react';
+import {Fragment, useMemo} from 'react';
 import type {ScaleBand, ScaleLinear} from 'd3-scale';
+import type {Color} from '@shopify/polaris-viz-core';
 import {
-  Color,
   getColorVisionEventAttrs,
   DataType,
   COLOR_VISION_GROUP_ITEM,
@@ -58,7 +58,7 @@ export function StackedBarGroups({
   });
 
   return (
-    <React.Fragment>
+    <Fragment>
       {formattedStackedValues.map((item, groupIndex) => {
         const x = xScale(groupIndex.toString()) ?? 0;
         const groupAriaLabel = formatAriaLabel(accessibilityData[groupIndex]);
@@ -106,6 +106,6 @@ export function StackedBarGroups({
           </g>
         );
       })}
-    </React.Fragment>
+    </Fragment>
   );
 }

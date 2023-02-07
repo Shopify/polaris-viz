@@ -5,8 +5,10 @@ import {
   createProjectBuildPlugin,
   createProjectPlugin,
 } from '@shopify/loom';
-import {buildLibrary} from '@shopify/loom-plugin-build-library';
+import {buildLibrary, babel} from '@shopify/loom-plugin-build-library';
 import {buildLibraryExtended} from '@shopify/loom-plugin-build-library-extended';
+
+import {setupReact18} from '../../loom.config';
 
 export default createPackage((pkg) => {
   pkg.entry({root: './src/index.ts'});
@@ -23,6 +25,7 @@ export default createPackage((pkg) => {
     jestAdjustments(),
     buildLibraryExtended({graphql: false}),
     rollupAdjustOutputPlugin(),
+    setupReact18(),
   );
 });
 

@@ -1,17 +1,20 @@
-import React, {useState, useMemo} from 'react';
+import type {ReactNode} from 'react';
+import {useState, useMemo} from 'react';
 import {line} from 'd3-shape';
-import {
+import type {
   DataSeries,
   DataPoint,
   XAxisOptions,
   YAxisOptions,
+  Dimensions,
+  BoundingRect,
+} from '@shopify/polaris-viz-core';
+import {
   useUniqueId,
   curveStepRounded,
   DataType,
-  Dimensions,
   useYScale,
   COLOR_VISION_SINGLE_ITEM,
-  BoundingRect,
   useChartPositions,
   LINE_HEIGHT,
 } from '@shopify/polaris-viz-core';
@@ -30,12 +33,14 @@ import type {
 } from '../../types';
 import {XAxis} from '../XAxis';
 import {LegendContainer, useLegend} from '../LegendContainer';
-import {
-  TooltipHorizontalOffset,
-  TooltipVerticalOffset,
+import type {
   TooltipPosition,
   TooltipPositionOffset,
   TooltipPositionParams,
+} from '../TooltipWrapper';
+import {
+  TooltipHorizontalOffset,
+  TooltipVerticalOffset,
   TooltipWrapper,
   TOOLTIP_POSITION_DEFAULT_RETURN,
 } from '../TooltipWrapper';
@@ -67,7 +72,7 @@ const TOOLTIP_POSITION: TooltipPositionOffset = {
 export interface Props {
   annotationsLookupTable: AnnotationLookupTable;
   data: DataSeries[];
-  renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
+  renderTooltipContent(data: RenderTooltipContentData): ReactNode;
   showLegend: boolean;
   theme: string;
   xAxisOptions: Required<XAxisOptions>;

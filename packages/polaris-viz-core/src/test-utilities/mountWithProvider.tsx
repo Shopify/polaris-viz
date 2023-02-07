@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import {mount} from '@shopify/react-testing';
 
 import type {PartialTheme} from '../types';

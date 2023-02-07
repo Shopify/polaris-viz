@@ -1,10 +1,12 @@
-import {
-  changeColorOpacity,
+import type {
   Color,
   DataSeries,
+  LineChartDataSeriesWithDefaults,
+} from '@shopify/polaris-viz-core';
+import {
+  changeColorOpacity,
   getAverageColor,
   isGradientType,
-  LineChartDataSeriesWithDefaults,
 } from '@shopify/polaris-viz-core';
 
 import {getOpacityByDataLength} from './getOpacityByLength';

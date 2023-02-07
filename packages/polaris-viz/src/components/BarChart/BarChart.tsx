@@ -1,10 +1,8 @@
-import React, {useRef} from 'react';
+import {Fragment, useRef} from 'react';
 import {
   uniqueId,
-  ChartType,
   ChartState,
   DEFAULT_CHART_PROPS,
-  ChartProps,
   InternalChartType,
 } from '@shopify/polaris-viz-core';
 import type {
@@ -12,6 +10,8 @@ import type {
   XAxisOptions,
   YAxisOptions,
   WithRequired,
+  ChartType,
+  ChartProps,
 } from '@shopify/polaris-viz-core';
 
 import {ChartContainer} from '../../components/ChartContainer';
@@ -107,7 +107,7 @@ export function BarChart(props: BarChartProps) {
       />
     );
   return (
-    <React.Fragment>
+    <Fragment>
       {hideSkipLink ? null : (
         <SkipLink anchorId={skipLinkAnchorId.current}>{skipLinkText}</SkipLink>
       )}
@@ -125,6 +125,6 @@ export function BarChart(props: BarChartProps) {
       </ChartContainer>
 
       {hideSkipLink ? null : <SkipLink.Anchor id={skipLinkAnchorId.current} />}
-    </React.Fragment>
+    </Fragment>
   );
 }

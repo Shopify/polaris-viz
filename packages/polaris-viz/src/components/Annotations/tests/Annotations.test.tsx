@@ -1,10 +1,10 @@
-import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleBand} from 'd3-scale';
 
-import {Annotation} from '../../../types';
+import type {Annotation} from '../../../types';
 import {normalizeData} from '../../../utilities/normalizeData';
-import {Annotations, AnnotationsProps} from '../Annotations';
+import type {AnnotationsProps} from '../Annotations';
+import {Annotations} from '../Annotations';
 import {
   AnnotationContent,
   AnnotationLabel,

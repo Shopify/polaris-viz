@@ -1,4 +1,4 @@
-import React from 'react';
+import { Fragment } from 'react';
 import type {Story, Meta} from '@storybook/react';
 
 import {ColorScale} from './ColorScale';
@@ -9,55 +9,53 @@ export default {
 } as Meta;
 
 const Template: Story = (args) => {
-  return (
-    <>
-      {[
-        Hue.Teal,
-        Hue.Blue,
-        Hue.Indigo,
-        Hue.Purple,
-        Hue.Magenta,
-        Hue.Orange,
-        Hue.Yellow,
-      ].map((hue) => {
-        const scale = ColorScale({
-          hue,
-          min: args.min,
-          max: args.max,
-        });
+  return <>
+    {[
+      Hue.Teal,
+      Hue.Blue,
+      Hue.Indigo,
+      Hue.Purple,
+      Hue.Magenta,
+      Hue.Orange,
+      Hue.Yellow,
+    ].map((hue) => {
+      const scale = ColorScale({
+        hue,
+        min: args.min,
+        max: args.max,
+      });
 
-        return (
-          <React.Fragment key={hue}>
-            <p>
-              <strong>{hue}</strong>
-            </p>
-            <div style={{display: 'flex', flexWrap: 'wrap'}}>
-              {new Array(args.count).fill(null).map((_, i) => {
-                const styles = scale(i * args.multiplier);
-                return (
-                  <div
-                    key={`${hue}-${i}`}
-                    style={{
-                      background: styles.backgroundColor,
-                      color: styles.textColor,
-                      height: 100,
-                      width: 100,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      flex: 'none',
-                    }}
-                  >
-                    {i * args.multiplier}
-                  </div>
-                );
-              })}
-            </div>
-          </React.Fragment>
-        );
-      })}
-    </>
-  );
+      return (
+        <Fragment key={hue}>
+          <p>
+            <strong>{hue}</strong>
+          </p>
+          <div style={{display: 'flex', flexWrap: 'wrap'}}>
+            {new Array(args.count).fill(null).map((_, i) => {
+              const styles = scale(i * args.multiplier);
+              return (
+                <div
+                  key={`${hue}-${i}`}
+                  style={{
+                    background: styles.backgroundColor,
+                    color: styles.textColor,
+                    height: 100,
+                    width: 100,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flex: 'none',
+                  }}
+                >
+                  {i * args.multiplier}
+                </div>
+              );
+            })}
+          </div>
+        </Fragment>
+      );
+    })}
+  </>;
 };
 
 export const Default: Story = Template.bind({});

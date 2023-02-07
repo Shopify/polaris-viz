@@ -1,4 +1,4 @@
-import React from 'react';
+import {Fragment} from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleBand} from 'd3-scale';
 
@@ -91,11 +91,11 @@ describe('useXScale', () => {
     function TestComponent() {
       const {xAxisLabels} = useXScale(mockProps);
       return (
-        <React.Fragment>
+        <Fragment>
           {xAxisLabels.map(({value, xOffset}, index) => (
             <div key={index}>{`${value}-${xOffset}`}</div>
           ))}
-        </React.Fragment>
+        </Fragment>
       );
     }
 

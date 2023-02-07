@@ -1,9 +1,9 @@
-import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
 import {LinearGradientWithStops, BAR_SPACING} from '@shopify/polaris-viz-core';
 
-import {BarGroup, BarGroupProps} from '../BarGroup';
+import type {BarGroupProps} from '../BarGroup';
+import {BarGroup} from '../BarGroup';
 import {VerticalBar} from '../../VerticalBar';
 
 jest.mock('d3-scale', () => ({

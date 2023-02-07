@@ -1,7 +1,8 @@
-import React from 'react';
-import {mount, Root} from '@shopify/react-testing';
+import type {Root} from '@shopify/react-testing';
+import {mount} from '@shopify/react-testing';
 
-import {useReducedLabelIndexes, Props} from '../useReducedLabelIndexes';
+import type {Props} from '../useReducedLabelIndexes';
+import {useReducedLabelIndexes} from '../useReducedLabelIndexes';
 
 describe('useReducedLabelIndexes', () => {
   function TestComponent(props: Props) {

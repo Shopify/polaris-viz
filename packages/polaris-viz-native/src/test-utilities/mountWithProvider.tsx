@@ -1,4 +1,3 @@
-import React from 'react';
 import {createMount} from '@quilted/react-testing';
 import type {PartialTheme} from '@shopify/polaris-viz-core';
 

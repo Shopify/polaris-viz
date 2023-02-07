@@ -1,4 +1,5 @@
-import {getHoverZoneOffset, Props} from '../getHoverZoneOffset';
+import type {Props} from '../getHoverZoneOffset';
+import {getHoverZoneOffset} from '../getHoverZoneOffset';
 
 const mockProps: Props = {
   barSize: 15,

@@ -35,6 +35,9 @@
     "react/no-array-index-key": "off",
     "react/jsx-fragments": ["error", "element"],
     "react/no-unsafe": ["error", {"checkAliases": true}],
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/consistent-type-imports": "error",
     "@shopify/jsx-no-complex-expressions": "off",
     "@shopify/jsx-prefer-fragment-wrappers": "off",
     "import/no-useless-path-segments": "off",
@@ -106,7 +109,6 @@
         // to cause unnecessary package bumps in every package that consumes them.
         // Test files with extraneous dependencies won't cause runtime errors in production.
         "import/no-extraneous-dependencies": "off",
-        "react/react-in-jsx-scope": "off",
         "no-use-before-define": "off",
         "@shopify/jsx-no-hardcoded-content": "off",
         "import/no-default-export": "off",

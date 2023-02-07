@@ -1,5 +1,3 @@
-import React from 'react';
-
 import {PolarisVizLogo} from './images';
 import styles from './LogoHeader.scss';
 

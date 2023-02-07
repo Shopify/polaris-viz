@@ -1,4 +1,5 @@
-import {ScaleBand, scaleLinear, ScaleLinear} from 'd3-scale';
+import type {ScaleBand, ScaleLinear} from 'd3-scale';
+import {scaleLinear} from 'd3-scale';
 
 export function getValueFromXScale(
   index: number | string,

@@ -1,4 +1,3 @@
-import React from 'react';
 import type {GradientStop} from '@shopify/polaris-viz-core';
 
 import {createCSSConicGradient} from '../../utilities';

@@ -1,7 +1,7 @@
-import React from 'react';
 import {scaleBand, scaleLinear} from 'd3-scale';
 
-import {Bar, Props} from '../Bar';
+import type {Props} from '../Bar';
+import {Bar} from '../Bar';
 import {mountWithProvider} from '../../../test-utilities';
 import {BORDER_RADIUS} from '../../../constants';
 

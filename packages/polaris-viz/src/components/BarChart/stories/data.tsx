@@ -1,10 +1,10 @@
-import React from 'react';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 import type {Story} from '@storybook/react';
 
 import {SquareColorPreview} from '../../SquareColorPreview';
 import type {RenderTooltipContentData} from '../../../types';
-import {BarChart, BarChartProps} from '../BarChart';
+import type {BarChartProps} from '../BarChart';
+import {BarChart} from '../BarChart';
 import {PolarisVizProvider} from '../../PolarisVizProvider';
 
 export const Template: Story<BarChartProps> = (args: BarChartProps) => {

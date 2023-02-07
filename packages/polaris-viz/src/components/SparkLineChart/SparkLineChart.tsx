@@ -1,9 +1,5 @@
-import React from 'react';
-import {
-  ChartProps,
-  DEFAULT_CHART_PROPS,
-  ChartState,
-} from '@shopify/polaris-viz-core';
+import type {ChartProps} from '@shopify/polaris-viz-core';
+import {DEFAULT_CHART_PROPS, ChartState} from '@shopify/polaris-viz-core';
 
 import {ChartContainer} from '../ChartContainer';
 import {ChartSkeleton} from '../ChartSkeleton';

@@ -1,9 +1,8 @@
-import React, {useState} from 'react';
+import {Fragment, useState} from 'react';
 import type {ScaleLinear} from 'd3-scale';
+import type {DataSeries, LabelFormatter} from '@shopify/polaris-viz-core';
 import {
-  DataSeries,
   getColorVisionEventAttrs,
-  LabelFormatter,
   estimateStringWidth,
   COLOR_VISION_SINGLE_ITEM,
   useChartContext,
@@ -115,7 +114,7 @@ export function HorizontalBars({
         });
 
         return (
-          <React.Fragment key={`series-${seriesIndex}-${id}-${name}`}>
+          <Fragment key={`series-${seriesIndex}-${id}-${name}`}>
             <Bar
               animationDelay={seriesAnimationDelay}
               areAllNegative={areAllNegative}
@@ -159,7 +158,7 @@ export function HorizontalBars({
               role="img"
               aria-label={ariaLabel}
             />
-          </React.Fragment>
+          </Fragment>
         );
       })}
     </g>

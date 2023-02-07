@@ -1,5 +1,4 @@
 import {changeColorOpacity, useTheme} from '@shopify/polaris-viz-core';
-import React from 'react';
 
 import {TOOLTIP_BG_OPACITY} from '../../../../constants';
 import {useBrowserCheck} from '../../../../hooks/useBrowserCheck';

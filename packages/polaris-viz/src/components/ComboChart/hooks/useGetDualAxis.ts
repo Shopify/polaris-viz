@@ -6,7 +6,8 @@ import {
   getStackedMinMax,
   getYAxisOptionsWithDefaults,
 } from '../../../utilities';
-import {Axis, AxisValueRange} from '../types';
+import type {Axis} from '../types';
+import {AxisValueRange} from '../types';
 
 export function useGetDualAxis({data}: {data: DataGroup[]}): Axis[] {
   return useMemo(() => {

@@ -1,14 +1,12 @@
-import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleBand} from 'd3-scale';
 import {BORDER_RADIUS} from '@shopify/polaris-viz-core';
 
-import {VerticalBar, VerticalBarProps} from '../VerticalBar';
+import type {VerticalBarProps} from '../VerticalBar';
+import {VerticalBar} from '../VerticalBar';
 import {MASK_HIGHLIGHT_COLOR} from '../../../../../constants';
-import {
-  getHoverZoneOffset,
-  Props as HoverZoneOffsetProps,
-} from '../../../../../utilities/getHoverZoneOffset';
+import type {Props as HoverZoneOffsetProps} from '../../../../../utilities/getHoverZoneOffset';
+import {getHoverZoneOffset} from '../../../../../utilities/getHoverZoneOffset';
 
 jest.mock('d3-scale', () => ({
   scaleBand: jest.requireActual('d3-scale').scaleBand,

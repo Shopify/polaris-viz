@@ -1,6 +1,5 @@
-import React from 'react';
+import type {Dimensions} from '@shopify/polaris-viz-core';
 import {
-  Dimensions,
   ChartState,
   useTheme,
   DEFAULT_THEME_NAME,

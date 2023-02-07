@@ -1,16 +1,19 @@
-import React, {useState, useMemo, ReactElement, cloneElement} from 'react';
+import type {ReactElement} from 'react';
+import {useState, useMemo, cloneElement} from 'react';
 import {View} from 'react-native';
 import {
   DEFAULT_THEME_NAME,
-  Dimensions,
   paddingStringToObject,
   useTheme,
   ChartContext,
   uniqueId,
   isLargeDataSet,
+} from '@shopify/polaris-viz-core';
+import type {
+  DataSeries,
+  Dimensions,
   InternalChartType,
 } from '@shopify/polaris-viz-core';
-import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {usePrefersReducedMotion} from '../../hooks';
 

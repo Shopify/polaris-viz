@@ -1,11 +1,11 @@
-import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {area, line} from 'd3-shape';
 import {scaleLinear} from 'd3-scale';
 
 import {mountWithProvider} from '../../../../../test-utilities';
 import {mockDefaultTheme} from '../../../../../test-utilities/mountWithProvider';
-import {Area, AreaProps} from '../Area';
+import type {AreaProps} from '../Area';
+import {Area} from '../Area';
 import {DEFAULT_THEME} from '../../../../../constants';
 import type {StackedSeries, Theme} from '../../../../../types';
 

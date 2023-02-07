@@ -1,4 +1,5 @@
-import {Dispatch, useLayoutEffect, useState} from 'react';
+import type {Dispatch} from 'react';
+import {useLayoutEffect, useState} from 'react';
 import type {Dimensions} from '@shopify/polaris-viz-core';
 
 import {useBrowserCheck} from './useBrowserCheck';

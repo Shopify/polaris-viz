@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import type {FC} from 'react';
 
 import {StorySection} from '../components/StorySection';
 import {PolarisVizProvider} from '../../components';

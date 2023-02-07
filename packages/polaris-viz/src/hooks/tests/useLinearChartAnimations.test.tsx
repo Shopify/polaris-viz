@@ -1,11 +1,8 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
-import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {line} from 'd3-shape';
-import {
-  ChartContext,
-  LineChartDataSeriesWithDefaults,
-} from '@shopify/polaris-viz-core';
+import type {LineChartDataSeriesWithDefaults} from '@shopify/polaris-viz-core';
+import {ChartContext} from '@shopify/polaris-viz-core';
 
 import {useLinearChartAnimations} from '../useLinearChartAnimations';
 import characterWidths from '../../data/character-widths.json';

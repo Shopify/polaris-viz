@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import {Fragment, useMemo, useState} from 'react';
 import {area, line} from 'd3-shape';
 import type {ScaleLinear} from 'd3-scale';
 import type {Color} from '@shopify/polaris-viz-core';
@@ -82,7 +82,7 @@ export function StackedAreas({
   }, [stackedValues.length]);
 
   return (
-    <React.Fragment>
+    <Fragment>
       {stackedValues.map((data, index) => {
         return (
           <Area
@@ -101,6 +101,6 @@ export function StackedAreas({
           />
         );
       })}
-    </React.Fragment>
+    </Fragment>
   );
 }

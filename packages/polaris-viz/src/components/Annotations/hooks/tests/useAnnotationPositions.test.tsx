@@ -1,8 +1,9 @@
-import React from 'react';
-import {mount, Root} from '@shopify/react-testing';
+import type {Root} from '@shopify/react-testing';
+import {mount} from '@shopify/react-testing';
 import {scaleBand} from 'd3-scale';
 
-import {useAnnotationPositions, Props} from '../useAnnotationPositions';
+import type {Props} from '../useAnnotationPositions';
+import {useAnnotationPositions} from '../useAnnotationPositions';
 
 jest.mock('@shopify/polaris-viz-core/src/utilities', () => ({
   ...jest.requireActual('@shopify/polaris-viz-core/src/utilities'),

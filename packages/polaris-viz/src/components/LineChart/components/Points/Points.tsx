@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import {Fragment, useState} from 'react';
 import type {Interpolation} from '@react-spring/web';
 import type {ScaleLinear} from 'd3-scale';
 import {
@@ -61,7 +61,7 @@ export function Points({
   });
 
   return (
-    <React.Fragment>
+    <Fragment>
       {data.map((singleSeries, index) => {
         const {data: singleData, name, color} = singleSeries;
         const isLongestLine = index === longestSeriesIndex;
@@ -83,7 +83,7 @@ export function Points({
           ? `url(#${pointGradientId})`
           : changeColorOpacity(color);
         return (
-          <React.Fragment key={`${name}-${index}`}>
+          <Fragment key={`${name}-${index}`}>
             {isGradientType(color) ? (
               <defs>
                 <LinearGradientWithStops
@@ -138,9 +138,9 @@ export function Points({
                 </g>
               );
             })}
-          </React.Fragment>
+          </Fragment>
         );
       })}
-    </React.Fragment>
+    </Fragment>
   );
 }

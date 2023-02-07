@@ -1,4 +1,3 @@
-import React from 'react';
 import {mount} from '@shopify/react-testing';
 
 import {YAxis, XAxis} from '../../../components';
@@ -9,7 +8,8 @@ import {
   TooltipAnimatedContainer,
   TooltipWrapper,
 } from '../../../components/TooltipWrapper';
-import {Chart, Props} from '../Chart';
+import type {Props} from '../Chart';
+import {Chart} from '../Chart';
 import {StackedBarGroups} from '../components';
 import {LegendContainer} from '../../LegendContainer';
 import {Annotations, YAxisAnnotations} from '../../Annotations';

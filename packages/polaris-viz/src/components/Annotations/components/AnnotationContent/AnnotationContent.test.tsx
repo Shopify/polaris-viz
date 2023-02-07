@@ -1,9 +1,9 @@
-import React from 'react';
 import {mount} from '@shopify/react-testing';
 
 import {useBrowserCheck} from '../../../../hooks/useBrowserCheck';
 
-import {AnnotationContent, AnnotationContentProps} from './AnnotationContent';
+import type {AnnotationContentProps} from './AnnotationContent';
+import {AnnotationContent} from './AnnotationContent';
 
 jest.mock('@shopify/polaris-viz-core/src/utilities', () => ({
   ...jest.requireActual('@shopify/polaris-viz-core/src/utilities'),

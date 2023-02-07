@@ -1,4 +1,5 @@
-import {BoundingRect, clamp, Dimensions} from '@shopify/polaris-viz-core';
+import type {BoundingRect, Dimensions} from '@shopify/polaris-viz-core';
+import {clamp} from '@shopify/polaris-viz-core';
 
 import type {TooltipPositionOffset} from '../TooltipWrapper';
 import type {Margin} from '../../types';

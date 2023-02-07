@@ -1,4 +1,3 @@
-import React from 'react';
 import {DEFAULT_CHART_PROPS, ChartState} from '@shopify/polaris-viz-core';
 import type {
   Dimensions,

@@ -1,7 +1,7 @@
-import React from 'react';
 import type {Story} from '@storybook/react';
 
-import {Legend, LegendProps} from '../Legend';
+import type {LegendProps} from '../Legend';
+import {Legend} from '../Legend';
 
 export const Template: Story<LegendProps> = (args: LegendProps) => {
   return (
