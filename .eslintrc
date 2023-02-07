@@ -96,6 +96,7 @@
         "@typescript-eslint/prefer-readonly": "off",
         "@typescript-eslint/no-unnecessary-condition": "off",
         "@typescript-eslint/unbound-method": "off",
+        "react/jsx-uses-react": "off",
         "react/react-in-jsx-scope": "off"
       }
     },

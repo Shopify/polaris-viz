@@ -9,6 +9,12 @@ module.exports = function (api) {
           jsxRuntime: 'automatic',
         },
       ],
+      [
+        '@babel/preset-react',
+        {
+          runtime: 'automatic',
+        },
+      ],
     ],
     plugins: ['react-native-reanimated/plugin'],
   };
