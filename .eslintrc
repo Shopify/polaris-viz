@@ -95,7 +95,8 @@
       "rules": {
         "@typescript-eslint/prefer-readonly": "off",
         "@typescript-eslint/no-unnecessary-condition": "off",
-        "@typescript-eslint/unbound-method": "off"
+        "@typescript-eslint/unbound-method": "off",
+        "react/react-in-jsx-scope": "off"
       }
     },
     {
@@ -106,7 +107,6 @@
         // to cause unnecessary package bumps in every package that consumes them.
         // Test files with extraneous dependencies won't cause runtime errors in production.
         "import/no-extraneous-dependencies": "off",
-        "react/react-in-jsx-scope": "off",
         "no-use-before-define": "off",
         "@shopify/jsx-no-hardcoded-content": "off",
         "import/no-default-export": "off",
