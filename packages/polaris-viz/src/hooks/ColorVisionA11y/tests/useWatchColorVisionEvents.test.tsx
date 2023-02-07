@@ -1,5 +1,3 @@
-import React from 'react';
-
 import {useWatchColorVisionEvents} from '../useWatchColorVisionEvents';
 import {mountWithChartContext} from '../../../test-utilities/mountWithChartContext';
 

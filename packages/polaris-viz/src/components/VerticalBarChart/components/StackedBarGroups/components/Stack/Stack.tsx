@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import { useState } from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {
   BARS_TRANSITION_CONFIG,

@@ -1,5 +1,5 @@
 import {ChartContext, DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
-import React, {Attributes, FC, useMemo} from 'react';
+import {createElement, Attributes, FC, useMemo} from 'react';
 
 import characterWidths from '../../data/character-widths.json';
 import characterWidthOffsets from '../../data/character-width-offsets.json';
@@ -18,7 +18,7 @@ export function CombinationRenderer<T extends Attributes>({
 }: CombinationRendererProps<T>) {
   const {style} = options;
 
-  const el = React.createElement(Component, props);
+  const el = createElement(Component, props);
 
   const theme = (props as any).theme ?? DEFAULT_THEME_NAME;
 

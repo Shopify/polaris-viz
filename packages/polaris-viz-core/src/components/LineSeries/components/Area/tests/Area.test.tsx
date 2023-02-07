@@ -1,4 +1,3 @@
-import React from 'react';
 import {scaleLinear} from 'd3-scale';
 import {mount} from '@shopify/react-testing';
 

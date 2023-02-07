@@ -1,4 +1,4 @@
-import React from 'react';
+import { Fragment } from 'react';
 import {
   useTheme,
   useUniqueId,
@@ -39,14 +39,14 @@ export function SimpleBarSkeleton({dimensions, state, errorText}: Props) {
   return (
     <div className={styles.SimpleBarSkeleton}>
       {state === ChartState.Loading && (
-        <React.Fragment>
+        <Fragment>
           {new Array(4).fill(0).map((_, index) => (
             <div key={`${id}${index}`} className={styles.Item}>
               <BarMarkup />
               <BarMarkup />
             </div>
           ))}
-        </React.Fragment>
+        </Fragment>
       )}
       {state === ChartState.Error && (
         <svg viewBox={`0 0 ${width} ${height}`}>

@@ -1,4 +1,4 @@
-import React from 'react';
+import { Fragment } from 'react';
 import {Source} from '@storybook/addon-docs';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import {linkTo} from '@storybook/addon-links';
@@ -32,7 +32,7 @@ export function ComponentContainer({
     !kind && !title && !description && Boolean(codeSample);
 
   const cardTopMarkup = (
-    <React.Fragment>
+    <Fragment>
       {title && (
         <h3 className={classNames(styles.Heading, kind && styles.Link)}>
           {title}
@@ -50,7 +50,7 @@ export function ComponentContainer({
           </span>
         )}
       </div>
-    </React.Fragment>
+    </Fragment>
   );
 
   return (

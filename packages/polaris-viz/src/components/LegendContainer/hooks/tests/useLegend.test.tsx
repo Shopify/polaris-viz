@@ -1,4 +1,3 @@
-import React from 'react';
 import {mount, Root} from '@shopify/react-testing';
 import {
   DataSeries,

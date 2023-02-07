@@ -1,4 +1,4 @@
-import React from 'react';
+import { memo, Fragment } from 'react';
 import type {DataSeries, LabelFormatter} from '@shopify/polaris-viz-core';
 
 import styles from './VisuallyHiddenRows.scss';
@@ -9,13 +9,13 @@ export interface Props {
   formatYAxisLabel: LabelFormatter;
 }
 
-export const VisuallyHiddenRows = React.memo(function Rows({
+export const VisuallyHiddenRows = memo(function Rows({
   data,
   formatYAxisLabel,
   xAxisLabels,
 }: Props) {
   return (
-    <React.Fragment>
+    <Fragment>
       <g role="row">
         <text role="rowheader" />
         {xAxisLabels.map((xAxisLabel, index) => {
@@ -50,6 +50,6 @@ export const VisuallyHiddenRows = React.memo(function Rows({
           </g>
         );
       })}
-    </React.Fragment>
+    </Fragment>
   );
 });

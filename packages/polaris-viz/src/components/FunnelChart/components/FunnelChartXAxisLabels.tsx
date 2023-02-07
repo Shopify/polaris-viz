@@ -1,4 +1,4 @@
-import React, {Dispatch, SetStateAction} from 'react';
+import { Fragment, Dispatch, SetStateAction } from 'react';
 import type {ScaleBand} from 'd3-scale';
 
 import {useLabels, shouldSkipLabel} from '../../Labels';
@@ -35,7 +35,7 @@ export function FunnelChartXAxisLabels({
   });
 
   return (
-    <React.Fragment>
+    <Fragment>
       {lines.map((line, index) => {
         if (shouldSkipLabel(index, reducedLabelIndexes)) {
           return null;
@@ -61,6 +61,6 @@ export function FunnelChartXAxisLabels({
           </g>
         );
       })}
-    </React.Fragment>
+    </Fragment>
   );
 }

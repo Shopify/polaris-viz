@@ -1,5 +1,5 @@
 import type {ScaleLinear} from 'd3-scale';
-import React, {useMemo} from 'react';
+import { useMemo } from 'react';
 import {uniqueId} from '@shopify/polaris-viz-core';
 import type {Color, DataGroup} from '@shopify/polaris-viz-core';
 

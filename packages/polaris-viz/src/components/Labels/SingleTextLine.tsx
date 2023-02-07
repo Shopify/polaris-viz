@@ -1,4 +1,4 @@
-import React from 'react';
+import { Fragment } from 'react';
 import {LINE_HEIGHT, useChartContext} from '@shopify/polaris-viz-core';
 
 import {FONT_SIZE} from '../../constants';
@@ -32,7 +32,7 @@ export function SingleTextLine({
   });
 
   return (
-    <React.Fragment>
+    <Fragment>
       <text
         aria-hidden={ariaHidden}
         textAnchor="center"
@@ -47,6 +47,6 @@ export function SingleTextLine({
         {truncated}
       </text>
       <title>{text}</title>
-    </React.Fragment>
+    </Fragment>
   );
 }

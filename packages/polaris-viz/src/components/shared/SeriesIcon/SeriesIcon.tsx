@@ -1,4 +1,3 @@
-import React from 'react';
 import type {Shape, Color} from '@shopify/polaris-viz-core';
 import {useTheme} from '@shopify/polaris-viz-core';
 

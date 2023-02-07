@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import { memo, useCallback } from 'react';
 import {animated, useSpring} from '@react-spring/web';
 import {
   getRoundedRectPath,
@@ -27,7 +27,7 @@ export interface BarProps {
   transform?: string;
 }
 
-export const Bar = React.memo(function Bar({
+export const Bar = memo(function Bar({
   animationDelay = 0,
   areAllNegative,
   ariaLabel,

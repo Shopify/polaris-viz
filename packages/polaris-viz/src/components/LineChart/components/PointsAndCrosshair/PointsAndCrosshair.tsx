@@ -1,4 +1,4 @@
-import React, {useMemo, useRef} from 'react';
+import { Fragment, useMemo, useRef } from 'react';
 import {
   curveStepRounded,
   DataPoint,
@@ -81,7 +81,7 @@ export function PointsAndCrosshair({
   };
 
   return (
-    <React.Fragment>
+    <Fragment>
       {emptyState ? null : (
         <Crosshair
           height={drawableHeight}
@@ -104,6 +104,6 @@ export function PointsAndCrosshair({
           yScale={yScale}
         />
       )}
-    </React.Fragment>
+    </Fragment>
   );
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import { Fragment } from 'react';
 import {View} from 'react-native';
 import {scaleLinear} from 'd3-scale';
 import {
@@ -92,7 +92,7 @@ function Chart({
           };
 
           return (
-            <React.Fragment key={index}>
+            <Fragment key={index}>
               <LineSeries
                 key={index}
                 index={index}
@@ -103,7 +103,7 @@ function Chart({
                 theme={theme}
                 type="spark"
               />
-            </React.Fragment>
+            </Fragment>
           );
         })}
       </Svg>

@@ -1,4 +1,3 @@
-import React from 'react';
 import {ChartState} from '@shopify/polaris-viz-core';
 
 import {ChartSkeleton} from '../ChartSkeleton';

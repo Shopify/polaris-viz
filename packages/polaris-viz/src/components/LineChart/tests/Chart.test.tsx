@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
-import React from 'react';
-import {mount} from '@shopify/react-testing';
+import { mount } from '@shopify/react-testing';
 import {
   LinearGradientWithStops,
   LineChartDataSeriesWithDefaults,

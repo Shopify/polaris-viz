@@ -1,4 +1,4 @@
-import React from 'react';
+import { Fragment } from 'react';
 import {
   Title,
   Subtitle,
@@ -13,7 +13,7 @@ import {Banner} from '../Banner';
 
 export function PageWithSizingInfo() {
   return (
-    <React.Fragment>
+    <Fragment>
       <Title />
       <Subtitle />
       <Description />
@@ -25,6 +25,6 @@ export function PageWithSizingInfo() {
       <Primary />
       <ArgsTable story={PRIMARY_STORY} />
       <Stories />
-    </React.Fragment>
+    </Fragment>
   );
 }

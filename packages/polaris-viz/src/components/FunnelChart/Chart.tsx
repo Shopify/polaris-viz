@@ -1,4 +1,4 @@
-import React, {useMemo, useState, useCallback} from 'react';
+import { Fragment, useMemo, useState, useCallback } from 'react';
 import {scaleBand, scaleLinear} from 'd3-scale';
 import {
   DataSeries,
@@ -154,7 +154,7 @@ export function Chart({
         const formattedYValue = yAxisOptions.labelFormatter(yAxisValue);
 
         return (
-          <React.Fragment key={dataPoint.key}>
+          <Fragment key={dataPoint.key}>
             {maskRef && (
               <g key={dataPoint.key} role="listitem">
                 <FunnelSegment
@@ -183,7 +183,7 @@ export function Chart({
                 />
               </g>
             )}
-          </React.Fragment>
+          </Fragment>
         );
       })}
 

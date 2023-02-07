@@ -1,5 +1,5 @@
 import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
-import React, {ReactNode} from 'react';
+import type {ReactNode} from 'react';
 
 import {useTheme} from '../../../../../hooks';
 

@@ -1,5 +1,5 @@
 import type {DataSeries} from '@shopify/polaris-viz-core';
-import React, {ReactNode} from 'react';
+import { Fragment, ReactNode } from 'react';
 
 import {
   TooltipContentContainer,
@@ -65,7 +65,7 @@ export function renderLinearComparisonTooltip(
       .filter((series): series is TooltipDataSeries => Boolean(series));
 
     return (
-      <React.Fragment key={seriesName}>
+      <Fragment key={seriesName}>
         <TooltipSeriesName theme={theme}>{seriesName}</TooltipSeriesName>
         {dataSeries.map(({data, color, isComparison, groupIndex}) => {
           const item = data[tooltipData.activeIndex];
@@ -83,7 +83,7 @@ export function renderLinearComparisonTooltip(
             />
           );
         })}
-      </React.Fragment>
+      </Fragment>
     );
   });
 

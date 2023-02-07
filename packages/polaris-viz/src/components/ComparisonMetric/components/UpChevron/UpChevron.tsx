@@ -1,4 +1,4 @@
-import React from 'react';
+import { Fragment } from 'react';
 
 import {XMLNS} from '../../../../constants';
 
@@ -11,7 +11,7 @@ interface Props {
 
 export function UpChevron({accessibilityLabel, fill}: Props) {
   return (
-    <React.Fragment>
+    <Fragment>
       <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
       <svg
         xmlns={XMLNS}
@@ -26,6 +26,6 @@ export function UpChevron({accessibilityLabel, fill}: Props) {
           fill="#039C86"
         />
       </svg>
-    </React.Fragment>
+    </Fragment>
   );
 }

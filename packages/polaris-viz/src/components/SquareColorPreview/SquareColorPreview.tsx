@@ -1,4 +1,3 @@
-import React from 'react';
 import type {Color} from '@shopify/polaris-viz-core';
 
 import {getCSSBackgroundFromColor} from '../../utilities/getCSSBackgroundFromColor';

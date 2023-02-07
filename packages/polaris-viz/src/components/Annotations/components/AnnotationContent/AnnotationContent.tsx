@@ -1,4 +1,4 @@
-import React, {useEffect, useLayoutEffect, useState} from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import {createPortal} from 'react-dom';
 import {changeColorOpacity, clamp, useTheme} from '@shopify/polaris-viz-core';
 

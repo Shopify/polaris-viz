@@ -1,4 +1,4 @@
-import React from 'react';
+import { Fragment } from 'react';
 import {useTheme, Direction} from '@shopify/polaris-viz-core';
 
 import {ZERO_VALUE_LINE_HEIGHT} from '../../../constants';
@@ -48,12 +48,12 @@ export function ZeroValueLine({
   const selectedTheme = useTheme(theme);
 
   return (
-    <React.Fragment>
+    <Fragment>
       <line
         stroke={selectedTheme.bar.zeroValueColor}
         strokeWidth="1"
         {...getZeroValueLineCoords({x, y, direction, areAllNegative})}
       />
-    </React.Fragment>
+    </Fragment>
   );
 }

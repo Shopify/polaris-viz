@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import { Fragment, useState } from 'react';
 import type {Series} from 'd3-shape';
 import {
   LinearGradientWithStops,
@@ -56,7 +56,7 @@ export function Points({
   });
 
   return (
-    <React.Fragment>
+    <Fragment>
       {stackedValues.map((stack, stackIndex) => {
         if (activePointIndex == null) {
           return null;
@@ -130,6 +130,6 @@ export function Points({
           />
         );
       })}
-    </React.Fragment>
+    </Fragment>
   );
 }

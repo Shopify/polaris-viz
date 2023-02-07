@@ -1,5 +1,5 @@
 import {animated, useSpring} from '@react-spring/web';
-import React, {Dispatch, SetStateAction} from 'react';
+import type {Dispatch, SetStateAction} from 'react';
 import {
   getColorVisionEventAttrs,
   STACKED_BAR_GAP,

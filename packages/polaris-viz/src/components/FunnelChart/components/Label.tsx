@@ -1,4 +1,3 @@
-import React from 'react';
 import {animated} from '@react-spring/web';
 import type {SpringValue} from '@react-spring/web';
 

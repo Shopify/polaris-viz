@@ -1,4 +1,3 @@
-import React from 'react';
 import {mount} from '@shopify/react-testing';
 
 import {ZERO_VALUE_LINE_HEIGHT} from '../../../constants';

@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import { Fragment, useMemo } from 'react';
 import type {SpringValue} from '@react-spring/core';
 
 import type {LineChartDataSeriesWithDefaults} from '../../../../types';
@@ -37,7 +37,7 @@ export function DefaultArea({series, areaPath}: Props) {
   }
 
   return (
-    <React.Fragment>
+    <Fragment>
       <Defs>
         <Mask id={maskId}>
           <AnimatedPath d={areaPath} fill={`url(#${maskId}-gradient)`} />
@@ -85,6 +85,6 @@ export function DefaultArea({series, areaPath}: Props) {
         stroke={areaColor}
         style={{pointerEvents: 'none'}}
       />
-    </React.Fragment>
+    </Fragment>
   );
 }

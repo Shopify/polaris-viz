@@ -1,4 +1,4 @@
-import React, {useState, useMemo} from 'react';
+import {useState, useMemo, ReactNode} from 'react';
 import {
   uniqueId,
   DataType,
@@ -60,7 +60,7 @@ import {useVerticalBarChart} from './hooks/useVerticalBarChart';
 
 export interface Props {
   data: DataSeries[];
-  renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
+  renderTooltipContent(data: RenderTooltipContentData): ReactNode;
   showLegend: boolean;
   type: ChartType;
   xAxisOptions: Required<XAxisOptions>;

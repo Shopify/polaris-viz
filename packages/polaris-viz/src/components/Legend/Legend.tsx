@@ -1,4 +1,4 @@
-import React from 'react';
+import { Fragment } from 'react';
 import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 import type {LegendData} from '../../types';
@@ -31,5 +31,5 @@ export function Legend({
     );
   });
 
-  return <React.Fragment>{items}</React.Fragment>;
+  return <Fragment>{items}</Fragment>;
 }

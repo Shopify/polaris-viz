@@ -1,4 +1,4 @@
-import React from 'react';
+import { memo } from 'react';
 import {ActiveTooltip, DataType, useTheme} from '@shopify/polaris-viz-core';
 import {useSpring, animated, Interpolation} from '@react-spring/web';
 
@@ -24,7 +24,7 @@ export interface PointProps {
 
 const DEFAULT_RADIUS = 5;
 
-export const Point = React.memo(function Point({
+export const Point = memo(function Point({
   dataType,
   cx,
   cy,

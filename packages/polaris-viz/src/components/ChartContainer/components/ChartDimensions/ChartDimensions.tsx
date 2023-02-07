@@ -1,4 +1,4 @@
-import React, {
+import {
   cloneElement,
   Dispatch,
   ReactElement,

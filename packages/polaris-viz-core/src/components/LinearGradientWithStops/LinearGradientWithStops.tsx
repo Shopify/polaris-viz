@@ -1,5 +1,3 @@
-import React from 'react';
-
 import type {GradientStop} from '../../types';
 import {usePolarisVizContext} from '../../hooks';
 

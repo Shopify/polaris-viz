@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   getColorVisionEventAttrs,
   COLOR_VISION_SINGLE_ITEM,

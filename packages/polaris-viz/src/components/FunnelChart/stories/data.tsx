@@ -1,4 +1,3 @@
-import React from 'react';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 import type {Story} from '@storybook/react';
 

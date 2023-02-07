@@ -1,4 +1,4 @@
-import React from 'react';
+import { Fragment } from 'react';
 import {useTransition} from '@react-spring/web';
 import {
   Dimensions,
@@ -28,7 +28,7 @@ export function Chart({
   const viewboxHeight = height + ANIMATION_MARGIN * 2;
 
   return (
-    <React.Fragment>
+    <Fragment>
       {accessibilityLabel ? (
         <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
       ) : null}
@@ -53,6 +53,6 @@ export function Chart({
           width={width}
         />
       </svg>
-    </React.Fragment>
+    </Fragment>
   );
 }

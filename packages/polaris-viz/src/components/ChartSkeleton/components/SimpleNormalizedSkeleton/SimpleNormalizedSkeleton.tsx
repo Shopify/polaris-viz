@@ -1,4 +1,4 @@
-import React from 'react';
+import { Fragment } from 'react';
 import {useTheme, useUniqueId, ChartState} from '@shopify/polaris-viz-core';
 import type {Dimensions} from '@shopify/polaris-viz-core';
 
@@ -41,7 +41,7 @@ export function SimpleNormalizedSkeleton({
   return (
     <div style={{padding}}>
       {state === ChartState.Loading && (
-        <React.Fragment>
+        <Fragment>
           {showLegend && (
             <div className={styles.Legend}>
               {new Array(3).fill(0).map((_, index) => (
@@ -64,7 +64,7 @@ export function SimpleNormalizedSkeleton({
               height: SIZE_TO_PX[size],
             }}
           />
-        </React.Fragment>
+        </Fragment>
       )}
       {state === ChartState.Error && (
         <svg viewBox={`0 0 ${width} ${height}`}>

@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   ChartProps,
   DEFAULT_CHART_PROPS,

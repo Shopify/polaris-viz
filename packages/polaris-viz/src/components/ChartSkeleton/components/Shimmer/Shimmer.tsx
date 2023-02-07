@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import { useEffect, useRef } from 'react';
 import {changeColorOpacity} from '@shopify/polaris-viz-core';
 
 import styles from './Shimmer.scss';

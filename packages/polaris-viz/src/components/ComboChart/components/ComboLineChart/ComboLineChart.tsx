@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import { Fragment, useState } from 'react';
 import {
   Color,
   COLOR_VISION_SINGLE_ITEM,
@@ -46,7 +46,7 @@ export function ComboLineChart({
   const {reversedSeries, longestSeriesIndex} = useFormatData(dataWithDefaults);
 
   return (
-    <React.Fragment>
+    <Fragment>
       {dataWithDefaults.map((singleSeries, index) => {
         return (
           <LineSeries
@@ -73,6 +73,6 @@ export function ComboLineChart({
         xScale={xScale}
         yScale={yScale}
       />
-    </React.Fragment>
+    </Fragment>
   );
 }

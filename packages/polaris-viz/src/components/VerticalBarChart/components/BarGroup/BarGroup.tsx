@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo} from 'react';
+import { Fragment, useCallback, useMemo } from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {
   uniqueId,
@@ -126,7 +126,7 @@ export function BarGroup({
   });
 
   return (
-    <React.Fragment>
+    <Fragment>
       <mask id={maskId}>
         {data.map((rawValue, index) => {
           if (rawValue == null) {
@@ -247,6 +247,6 @@ export function BarGroup({
           );
         })}
       </g>
-    </React.Fragment>
+    </Fragment>
   );
 }

@@ -1,4 +1,4 @@
-import React, {CSSProperties, useMemo} from 'react';
+import {CSSProperties, ReactNode, useMemo} from 'react';
 import {uniqueId} from '@shopify/polaris-viz-core';
 
 import {copyTextToClipboard} from '../../../utilities';
@@ -11,7 +11,7 @@ export function Title({
   style = {},
 }: {
   type?: string;
-  children?: React.ReactChildren | string;
+  children?: ReactNode;
   style?: CSSProperties;
 }) {
   const id = useMemo(() => uniqueId('titleAnchor'), []);

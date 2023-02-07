@@ -1,4 +1,3 @@
-import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {LinearGradientWithStops} from '@shopify/polaris-viz-core';
 import {useChartContext} from '@shopify/polaris-viz-core/src/hooks/useChartContext';

@@ -1,4 +1,4 @@
-import React, {useState, useMemo, ReactElement, cloneElement} from 'react';
+import { useState, useMemo, ReactElement, cloneElement } from 'react';
 import {View} from 'react-native';
 import {
   DEFAULT_THEME_NAME,

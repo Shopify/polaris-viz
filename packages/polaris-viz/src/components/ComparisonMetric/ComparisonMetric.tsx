@@ -1,4 +1,3 @@
-import React from 'react';
 import {useTheme} from '@shopify/polaris-viz-core';
 
 import styles from './ComparisonMetric.scss';

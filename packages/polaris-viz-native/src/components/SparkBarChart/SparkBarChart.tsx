@@ -1,4 +1,3 @@
-import React from 'react';
 import {View} from 'react-native';
 import {useTransition} from '@react-spring/native';
 import type {

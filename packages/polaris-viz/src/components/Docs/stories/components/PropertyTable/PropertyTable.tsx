@@ -1,4 +1,4 @@
-import React, {ReactChildren} from 'react';
+import {Fragment, ReactNode} from 'react';
 
 import styles from './PropertyTable.scss';
 
@@ -6,7 +6,7 @@ export function PropertyTable({
   children,
   global = false,
 }: {
-  children: ReactChildren;
+  children: ReactNode;
   global: boolean;
 }) {
   return (
@@ -57,7 +57,7 @@ PropertyTable.Row = ({
                   <code style={{whiteSpace: 'pre'}}>{i}</code>
                   {index === type.length - 1 ? null : (
                     // eslint-disable-next-line @shopify/jsx-no-hardcoded-content
-                    <React.Fragment>{'|\n'}</React.Fragment>
+                    <Fragment>{'|\n'}</Fragment>
                   )}
                 </span>
               );

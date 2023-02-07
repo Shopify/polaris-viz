@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import { Fragment, useMemo, useState } from 'react';
 
 import {
   AnnotationContent,
@@ -89,7 +89,7 @@ export function HorizontalBarChartYAnnotations({
           const ariaLabel = `${annotation.startKey}`;
 
           return (
-            <React.Fragment key={`annotation${index}${annotation.startKey}`}>
+            <Fragment key={`annotation${index}${annotation.startKey}`}>
               <AnnotationLine
                 direction="horizontal"
                 hasCaret={false}
@@ -120,7 +120,7 @@ export function HorizontalBarChartYAnnotations({
                   y={y}
                 />
               )}
-            </React.Fragment>
+            </Fragment>
           );
         })}
       </g>

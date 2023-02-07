@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import { Fragment, useState } from 'react';
 import {
   getColorVisionEventAttrs,
   getColorVisionStylesForActiveIndex,
@@ -74,7 +74,7 @@ export function Chart() {
   });
 
   return (
-    <React.Fragment>
+    <Fragment>
       <h2>Trigger and respond to events</h2>
       <div className={styles.Boxes}>
         {items.map((color, index) => {
@@ -128,7 +128,7 @@ export function Chart() {
       <h2>Only trigger events</h2>
 
       <Buttons />
-    </React.Fragment>
+    </Fragment>
   );
 }
 

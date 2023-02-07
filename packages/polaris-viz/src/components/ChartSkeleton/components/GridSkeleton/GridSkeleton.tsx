@@ -1,5 +1,5 @@
 /* eslint-disable node/callback-return */
-import React, {useEffect} from 'react';
+import { Fragment, useEffect } from 'react';
 import {
   paddingStringToObject,
   useTheme,
@@ -149,7 +149,7 @@ export function GridSkeleton({dimensions, state, errorText}: Props) {
   }, [animation, state, ticks]);
 
   return (
-    <React.Fragment>
+    <Fragment>
       <svg viewBox={`0 0 ${width} ${height}`}>
         {springs.map((style, index) => {
           const y = ticks[index].y;
@@ -179,6 +179,6 @@ export function GridSkeleton({dimensions, state, errorText}: Props) {
           <ErrorText errorText={errorText} width={width} height={height} />
         )}
       </svg>
-    </React.Fragment>
+    </Fragment>
   );
 }

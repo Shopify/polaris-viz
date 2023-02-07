@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import { Fragment, useMemo } from 'react';
 import {arc} from 'd3-shape';
 import {
   ARC_LOAD_ANIMATION_CONFIG,
@@ -83,7 +83,7 @@ export function Arc({
   });
 
   return (
-    <React.Fragment>
+    <Fragment>
       <clipPath
         id={gradientId}
         transform={`translate(${width / 2 - ANIMATION_SIZE_BUFFER} ${
@@ -140,6 +140,6 @@ export function Arc({
           gradient={gradient}
         />
       </g>
-    </React.Fragment>
+    </Fragment>
   );
 }

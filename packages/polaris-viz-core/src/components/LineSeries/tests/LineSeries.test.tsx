@@ -1,6 +1,5 @@
 /* eslint-disable id-length */
-import React from 'react';
-import {scaleLinear} from 'd3-scale';
+import { scaleLinear } from 'd3-scale';
 
 // eslint-disable-next-line import/order
 import {mountWithProvider} from '../../../test-utilities';

@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo} from 'react';
+import { memo, Fragment, useCallback, useMemo } from 'react';
 import {animated, useSpring} from '@react-spring/web';
 import {
   DataType,
@@ -25,7 +25,7 @@ export interface VerticalBarProps {
   areAllNegative?: boolean;
 }
 
-export const VerticalBar = React.memo(function Bar({
+export const VerticalBar = memo(function Bar({
   animationDelay = 0,
   ariaLabel,
   color,
@@ -82,7 +82,7 @@ export const VerticalBar = React.memo(function Bar({
   });
 
   return (
-    <React.Fragment>
+    <Fragment>
       {!zeroValue ? (
         <g aria-hidden="true" style={style}>
           <animated.path
@@ -106,6 +106,6 @@ export const VerticalBar = React.memo(function Bar({
           areAllNegative={areAllNegative}
         />
       )}
-    </React.Fragment>
+    </Fragment>
   );
 });

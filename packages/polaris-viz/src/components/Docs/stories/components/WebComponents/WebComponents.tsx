@@ -1,4 +1,3 @@
-import React from 'react';
 import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 import {PolarisVizProvider} from '../../../../PolarisVizProvider';

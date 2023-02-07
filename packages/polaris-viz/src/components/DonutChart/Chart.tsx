@@ -1,4 +1,4 @@
-import React, {useState, CSSProperties} from 'react';
+import { Fragment, useState, CSSProperties } from 'react';
 import {pie} from 'd3-shape';
 import {
   clamp,
@@ -192,7 +192,7 @@ export function Chart({
     <div className={styles.DonutWrapper} style={styleMap[legendPosition]}>
       <div className={styles.Donut}>
         {state === ChartState.Success ? (
-          <React.Fragment>
+          <Fragment>
             <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
             <svg
               viewBox={`${minX} ${minY} ${viewBoxDimensions.width} ${viewBoxDimensions.height}`}
@@ -258,7 +258,7 @@ export function Chart({
               labelFormatter={labelFormatter}
               renderInnerValueContent={renderInnerValueContent}
             />
-          </React.Fragment>
+          </Fragment>
         ) : (
           <ChartSkeleton
             dimensions={{width: diameter, height: diameter}}

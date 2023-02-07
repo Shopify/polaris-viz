@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import { useRef } from 'react';
 import {animated, useSpring} from '@react-spring/web';
 import type {SpringValue} from '@react-spring/web';
 import type {Area as D3Area, Line} from 'd3-shape';

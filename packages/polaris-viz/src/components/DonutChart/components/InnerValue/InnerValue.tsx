@@ -1,4 +1,4 @@
-import React from 'react';
+import { Fragment } from 'react';
 import {useSpring, animated, config} from '@react-spring/web';
 import {LabelFormatter, useTheme} from '@shopify/polaris-viz-core';
 
@@ -53,7 +53,7 @@ export function InnerValue({
     animatedTotalValue,
     totalValue,
   }) ?? (
-    <React.Fragment>
+    <Fragment>
       <animated.p
         className={classNames(styles.ContentValue)}
         style={{color: selectedTheme.xAxis.labelColor}}
@@ -69,7 +69,7 @@ export function InnerValue({
           />
         </div>
       )}
-    </React.Fragment>
+    </Fragment>
   );
 
   return <div className={styles.ContentWrapper}>{innerContent}</div>;

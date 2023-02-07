@@ -1,4 +1,4 @@
-import React from 'react';
+import { Fragment } from 'react';
 import {
   useTheme,
   useUniqueId,
@@ -47,7 +47,7 @@ export function FunnelSkeleton({dimensions, state, errorText}: Props) {
             };
 
             return (
-              <React.Fragment key={`${id}${index}`}>
+              <Fragment key={`${id}${index}`}>
                 <Bar
                   color={gridColor}
                   x={segmentWidth * index}
@@ -68,7 +68,7 @@ export function FunnelSkeleton({dimensions, state, errorText}: Props) {
                     V ${connector.height} H ${connector.startX} Z`}
                   />
                 )}
-              </React.Fragment>
+              </Fragment>
             );
           })}
       {state === ChartState.Error && (

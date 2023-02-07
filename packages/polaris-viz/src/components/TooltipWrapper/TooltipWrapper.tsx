@@ -1,11 +1,4 @@
-import React, {
-  useEffect,
-  useRef,
-  useState,
-  ReactNode,
-  useMemo,
-  useCallback,
-} from 'react';
+import { useEffect, useRef, useState, ReactNode, useMemo, useCallback } from 'react';
 import type {DataType, BoundingRect} from '@shopify/polaris-viz-core';
 
 import type {Margin} from '../../types';

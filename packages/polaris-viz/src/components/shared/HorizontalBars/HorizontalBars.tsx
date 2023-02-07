@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import { Fragment, useState } from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {
   DataSeries,
@@ -115,7 +115,7 @@ export function HorizontalBars({
         });
 
         return (
-          <React.Fragment key={`series-${seriesIndex}-${id}-${name}`}>
+          <Fragment key={`series-${seriesIndex}-${id}-${name}`}>
             <Bar
               animationDelay={seriesAnimationDelay}
               areAllNegative={areAllNegative}
@@ -159,7 +159,7 @@ export function HorizontalBars({
               role="img"
               aria-label={ariaLabel}
             />
-          </React.Fragment>
+          </Fragment>
         );
       })}
     </g>

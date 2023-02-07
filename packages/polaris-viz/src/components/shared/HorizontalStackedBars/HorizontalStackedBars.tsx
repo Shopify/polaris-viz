@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import { Fragment, useMemo, useState } from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {
   COLOR_VISION_SINGLE_ITEM,
@@ -118,7 +118,7 @@ export function HorizontalStackedBars({
         );
 
         return (
-          <React.Fragment key={`stackedBar ${barId}`}>
+          <Fragment key={`stackedBar ${barId}`}>
             {areAllValuesZero ? (
               <ZeroValueLine x={x} y={barHeight / 2} direction="horizontal" />
             ) : (
@@ -137,7 +137,7 @@ export function HorizontalStackedBars({
                 zeroPosition={xScale(0)}
               />
             )}
-          </React.Fragment>
+          </Fragment>
         );
       })}
     </g>

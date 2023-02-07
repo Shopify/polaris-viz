@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import { Fragment, useRef } from 'react';
 import {
   XAxisOptions,
   YAxisOptions,
@@ -75,7 +75,7 @@ export function LineChart(props: LineChartProps) {
   const dataWithDefaults = getLineChartDataWithDefaults(data, seriesColors);
 
   return (
-    <React.Fragment>
+    <Fragment>
       {skipLinkText == null ||
       skipLinkText.length === 0 ||
       data.length === 0 ? null : (
@@ -107,6 +107,6 @@ export function LineChart(props: LineChartProps) {
       {skipLinkText == null || skipLinkText.length === 0 ? null : (
         <SkipLink.Anchor id={skipLinkAnchorId.current} />
       )}
-    </React.Fragment>
+    </Fragment>
   );
 }

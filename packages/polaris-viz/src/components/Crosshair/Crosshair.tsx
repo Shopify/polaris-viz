@@ -1,4 +1,3 @@
-import React from 'react';
 import {animated, Interpolation} from '@react-spring/web';
 import {useTheme} from '@shopify/polaris-viz-core';
 

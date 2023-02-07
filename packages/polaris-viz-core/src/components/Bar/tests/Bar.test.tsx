@@ -1,4 +1,3 @@
-import React from 'react';
 import {scaleBand, scaleLinear} from 'd3-scale';
 
 import {Bar, Props} from '../Bar';

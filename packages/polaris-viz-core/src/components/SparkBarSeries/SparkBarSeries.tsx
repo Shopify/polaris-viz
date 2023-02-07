@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import { Fragment, useMemo } from 'react';
 import type {DataSeries} from 'types';
 import type {useTransition} from '@react-spring/core';
 
@@ -82,7 +82,7 @@ export function SparkBarSeries({
 
   const hasTargetLine = targetLine != null && targetLine.value != null;
   return (
-    <React.Fragment>
+    <Fragment>
       <Defs>
         <LinearGradientWithStops
           id={id}
@@ -138,6 +138,6 @@ export function SparkBarSeries({
           strokeDasharray={STROKE_DOT_ARRAY_WIDTH}
         />
       ) : null}
-    </React.Fragment>
+    </Fragment>
   );
 }

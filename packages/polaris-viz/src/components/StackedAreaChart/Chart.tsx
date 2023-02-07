@@ -1,4 +1,4 @@
-import React, {useState, useMemo} from 'react';
+import {useState, useMemo, ReactNode} from 'react';
 import {line} from 'd3-shape';
 import {
   DataSeries,
@@ -67,7 +67,7 @@ const TOOLTIP_POSITION: TooltipPositionOffset = {
 export interface Props {
   annotationsLookupTable: AnnotationLookupTable;
   data: DataSeries[];
-  renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
+  renderTooltipContent(data: RenderTooltipContentData): ReactNode;
   showLegend: boolean;
   theme: string;
   xAxisOptions: Required<XAxisOptions>;

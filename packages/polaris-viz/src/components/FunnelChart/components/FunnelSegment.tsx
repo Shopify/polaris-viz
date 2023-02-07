@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import { Fragment, useRef } from 'react';
 import {createPortal} from 'react-dom';
 import {useSpring, animated, to} from '@react-spring/web';
 import {
@@ -55,7 +55,7 @@ export function FunnelSegment({
   });
 
   return (
-    <React.Fragment>
+    <Fragment>
       {createPortal(
         <animated.path
           aria-label={ariaLabel}
@@ -113,6 +113,6 @@ export function FunnelSegment({
         size="small"
         color={changeColorOpacity(axisLabelColor, 0.7)}
       />
-    </React.Fragment>
+    </Fragment>
   );
 }
