@@ -1,4 +1,4 @@
-import { Fragment, useState, CSSProperties } from 'react';
+import {Fragment, useState, CSSProperties} from 'react';
 import {pie} from 'd3-shape';
 import {
   clamp,

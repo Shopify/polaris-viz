@@ -1,4 +1,4 @@
-import { Fragment, useRef } from 'react';
+import {Fragment, useRef} from 'react';
 import {createPortal} from 'react-dom';
 import {useSpring, animated, to} from '@react-spring/web';
 import {

@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import {Fragment} from 'react';
 
 import {useTheme} from '../../hooks';
 import {FONT_SIZE} from '../../constants';

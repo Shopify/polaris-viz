@@ -1,4 +1,4 @@
-import { Fragment, useMemo } from 'react';
+import {Fragment, useMemo} from 'react';
 import type {ScaleBand, ScaleLinear} from 'd3-scale';
 import {
   Color,

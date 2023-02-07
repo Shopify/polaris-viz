@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useState} from 'react';
 import {
   COLOR_VISION_SINGLE_ITEM,
   DEFAULT_THEME_NAME,

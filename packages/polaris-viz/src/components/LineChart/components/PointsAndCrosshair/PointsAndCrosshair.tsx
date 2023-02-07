@@ -1,4 +1,4 @@
-import { Fragment, useMemo, useRef } from 'react';
+import {Fragment, useMemo, useRef} from 'react';
 import {
   curveStepRounded,
   DataPoint,

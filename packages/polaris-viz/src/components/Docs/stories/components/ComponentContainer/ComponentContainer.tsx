@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import {Fragment} from 'react';
 import {Source} from '@storybook/addon-docs';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import {linkTo} from '@storybook/addon-links';

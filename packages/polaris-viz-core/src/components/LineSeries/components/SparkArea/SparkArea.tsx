@@ -1,4 +1,4 @@
-import { Fragment, useMemo } from 'react';
+import {Fragment, useMemo} from 'react';
 import type {SpringValue} from '@react-spring/core';
 
 import {usePolarisVizContext} from '../../../../hooks';

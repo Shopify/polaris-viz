@@ -1,4 +1,11 @@
-import { CSSProperties, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import {
+  CSSProperties,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import isEqual from 'fast-deep-equal';
 import {
   getColorVisionEventAttrs,

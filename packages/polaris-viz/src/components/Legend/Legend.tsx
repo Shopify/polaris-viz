@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import {Fragment} from 'react';
 import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 import type {LegendData} from '../../types';

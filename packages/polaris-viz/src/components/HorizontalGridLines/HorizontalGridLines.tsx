@@ -1,4 +1,4 @@
-import { memo, Fragment } from 'react';
+import {memo, Fragment} from 'react';
 import {useTheme} from '@shopify/polaris-viz-core';
 
 import type {YAxisTick} from '../../types';

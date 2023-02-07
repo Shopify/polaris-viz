@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import {Fragment} from 'react';
 import {LINE_HEIGHT, useChartContext} from '@shopify/polaris-viz-core';
 
 import {FONT_SIZE} from '../../constants';

@@ -1,5 +1,5 @@
 /* eslint-disable node/callback-return */
-import { Fragment, useEffect } from 'react';
+import {Fragment, useEffect} from 'react';
 import {
   paddingStringToObject,
   useTheme,

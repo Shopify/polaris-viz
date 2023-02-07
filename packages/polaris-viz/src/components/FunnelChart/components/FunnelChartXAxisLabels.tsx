@@ -1,4 +1,4 @@
-import { Fragment, Dispatch, SetStateAction } from 'react';
+import {Fragment, Dispatch, SetStateAction} from 'react';
 import type {ScaleBand} from 'd3-scale';
 
 import {useLabels, shouldSkipLabel} from '../../Labels';

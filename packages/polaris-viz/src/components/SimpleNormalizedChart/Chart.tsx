@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useState} from 'react';
 import {sum} from 'd3-array';
 import {scaleLinear} from 'd3-scale';
 import {

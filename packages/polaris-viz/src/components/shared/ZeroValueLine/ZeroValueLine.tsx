@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import {Fragment} from 'react';
 import {useTheme, Direction} from '@shopify/polaris-viz-core';
 
 import {ZERO_VALUE_LINE_HEIGHT} from '../../../constants';

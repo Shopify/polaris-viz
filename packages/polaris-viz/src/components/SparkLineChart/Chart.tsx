@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import {Fragment} from 'react';
 import {scaleLinear} from 'd3-scale';
 import {
   LineSeries,

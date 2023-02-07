@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import {Fragment, useState} from 'react';
 import type {Interpolation} from '@react-spring/web';
 import type {ScaleLinear} from 'd3-scale';
 import {

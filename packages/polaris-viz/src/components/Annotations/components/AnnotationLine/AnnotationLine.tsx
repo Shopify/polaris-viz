@@ -1,5 +1,5 @@
 import {Direction, useTheme} from '@shopify/polaris-viz-core';
-import { Fragment } from 'react';
+import {Fragment} from 'react';
 
 import {useBrowserCheck} from '../../../../hooks/useBrowserCheck';
 

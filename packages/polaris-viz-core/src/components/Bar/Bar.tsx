@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import {useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import type {SpringValue} from '@react-spring/core';
 

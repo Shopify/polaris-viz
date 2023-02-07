@@ -1,4 +1,4 @@
-import { Fragment, useMemo, useState, useCallback } from 'react';
+import {Fragment, useMemo, useState, useCallback} from 'react';
 import {scaleBand, scaleLinear} from 'd3-scale';
 import {
   DataSeries,

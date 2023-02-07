@@ -10,7 +10,7 @@ import type {
   DataSeries,
 } from '@shopify/polaris-viz-core';
 import type {ScaleBand, ScaleLinear} from 'd3-scale';
-import { Fragment, useMemo, useState } from 'react';
+import {Fragment, useMemo, useState} from 'react';
 
 import {getLoadAnimationDelay} from '../../../../utilities/getLoadAnimationDelay';
 import {getChartId} from '../../../../utilities/getChartId';

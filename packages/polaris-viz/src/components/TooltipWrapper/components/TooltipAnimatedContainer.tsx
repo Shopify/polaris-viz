@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, ReactNode, useMemo } from 'react';
+import {useEffect, useRef, useState, ReactNode, useMemo} from 'react';
 import {
   BoundingRect,
   Dimensions,

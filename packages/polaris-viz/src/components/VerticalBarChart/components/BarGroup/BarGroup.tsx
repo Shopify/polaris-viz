@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useMemo } from 'react';
+import {Fragment, useCallback, useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {
   uniqueId,

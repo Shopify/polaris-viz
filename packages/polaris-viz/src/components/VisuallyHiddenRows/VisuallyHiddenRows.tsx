@@ -1,4 +1,4 @@
-import { memo, Fragment } from 'react';
+import {memo, Fragment} from 'react';
 import type {DataSeries, LabelFormatter} from '@shopify/polaris-viz-core';
 
 import styles from './VisuallyHiddenRows.scss';

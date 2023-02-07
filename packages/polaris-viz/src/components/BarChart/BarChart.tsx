@@ -1,4 +1,4 @@
-import { Fragment, useRef } from 'react';
+import {Fragment, useRef} from 'react';
 import {
   uniqueId,
   ChartType,

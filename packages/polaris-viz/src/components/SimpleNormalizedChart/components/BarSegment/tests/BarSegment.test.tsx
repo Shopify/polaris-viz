@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
-import { mount } from '@shopify/react-testing';
+import {mount} from '@shopify/react-testing';
 import {ChartContext} from '@shopify/polaris-viz-core';
 
 import {BarSegment} from '../BarSegment';

@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import {Fragment} from 'react';
 
 export function Divider({noLine}: {noLine?: string}) {
   return (

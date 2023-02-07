@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import {Fragment, useState} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {
   DataSeries,

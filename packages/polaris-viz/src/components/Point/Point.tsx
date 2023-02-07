@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import {memo} from 'react';
 import {ActiveTooltip, DataType, useTheme} from '@shopify/polaris-viz-core';
 import {useSpring, animated, Interpolation} from '@react-spring/web';
 

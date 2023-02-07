@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import {Fragment} from 'react';
 import {useSpring, animated, config} from '@react-spring/web';
 import {LabelFormatter, useTheme} from '@shopify/polaris-viz-core';
 

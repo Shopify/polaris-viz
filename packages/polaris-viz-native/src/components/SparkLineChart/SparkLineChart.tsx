@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import {Fragment} from 'react';
 import {View} from 'react-native';
 import {scaleLinear} from 'd3-scale';
 import {

@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import {useRef} from 'react';
 import {useSpring} from '@react-spring/core';
 
 import {useSpringConfig} from '../../../../hooks/useSpringConfig';

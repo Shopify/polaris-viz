@@ -1,4 +1,4 @@
-import { Fragment, useRef } from 'react';
+import {Fragment, useRef} from 'react';
 import {useSpring} from '@react-spring/core';
 
 import {

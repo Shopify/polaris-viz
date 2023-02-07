@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import {Fragment} from 'react';
 import {useTransition} from '@react-spring/web';
 import {
   Dimensions,

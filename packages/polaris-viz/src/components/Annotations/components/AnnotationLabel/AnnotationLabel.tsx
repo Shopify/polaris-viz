@@ -1,4 +1,4 @@
-import { Fragment, Dispatch, SetStateAction } from 'react';
+import {Fragment, Dispatch, SetStateAction} from 'react';
 import {LINE_HEIGHT, useTheme} from '@shopify/polaris-viz-core';
 
 import {useBrowserCheck} from '../../../../hooks/useBrowserCheck';

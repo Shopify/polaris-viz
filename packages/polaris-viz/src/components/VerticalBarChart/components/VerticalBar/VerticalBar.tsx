@@ -1,4 +1,4 @@
-import { memo, Fragment, useCallback, useMemo } from 'react';
+import {memo, Fragment, useCallback, useMemo} from 'react';
 import {animated, useSpring} from '@react-spring/web';
 import {
   DataType,

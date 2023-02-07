@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import {useRef} from 'react';
 import type {Color, LineStyle} from '@shopify/polaris-viz-core';
 import {
   LinearGradientWithStops,

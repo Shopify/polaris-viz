@@ -1,4 +1,4 @@
-import { Fragment, useMemo, useState } from 'react';
+import {Fragment, useMemo, useState} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {
   COLOR_VISION_SINGLE_ITEM,

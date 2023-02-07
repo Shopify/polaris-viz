@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { DataGroup, DataSeries } from '@shopify/polaris-viz-core';
+import {DataGroup, DataSeries} from '@shopify/polaris-viz-core';
 
 import {ChartSkeleton} from '../../ChartSkeleton';
 import {ChartErrorBoundary} from '../ChartErrorBoundary';

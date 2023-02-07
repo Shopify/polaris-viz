@@ -1,4 +1,4 @@
-import { ReactElement, useState, useMemo } from 'react';
+import {ReactElement, useState, useMemo} from 'react';
 import {
   uniqueId,
   ChartContext,

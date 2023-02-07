@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import {memo, useCallback} from 'react';
 import {animated, useSpring} from '@react-spring/web';
 import {
   getRoundedRectPath,

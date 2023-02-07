@@ -1,5 +1,5 @@
 import type {DataSeries} from '@shopify/polaris-viz-core';
-import { Fragment, ReactNode } from 'react';
+import {Fragment, ReactNode} from 'react';
 
 import {
   TooltipContentContainer,

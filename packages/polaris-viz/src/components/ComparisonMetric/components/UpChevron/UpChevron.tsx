@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import {Fragment} from 'react';
 
 import {XMLNS} from '../../../../constants';
 

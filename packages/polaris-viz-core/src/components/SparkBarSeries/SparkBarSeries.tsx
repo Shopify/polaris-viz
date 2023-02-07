@@ -1,4 +1,4 @@
-import { Fragment, useMemo } from 'react';
+import {Fragment, useMemo} from 'react';
 import type {DataSeries} from 'types';
 import type {useTransition} from '@react-spring/core';
 

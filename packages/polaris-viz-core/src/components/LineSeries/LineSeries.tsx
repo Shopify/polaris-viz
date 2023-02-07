@@ -1,4 +1,4 @@
-import { Fragment, useMemo } from 'react';
+import {Fragment, useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {area as areaShape, line} from 'd3-shape';
 
