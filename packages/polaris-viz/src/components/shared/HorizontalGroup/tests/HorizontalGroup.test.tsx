@@ -1,9 +1,9 @@
-import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
 import type {FormattedStackedSeries} from '@shopify/polaris-viz-core';
 
-import {HorizontalGroup, HorizontalGroupProps} from '../HorizontalGroup';
+import type {HorizontalGroupProps} from '../HorizontalGroup';
+import {HorizontalGroup} from '../HorizontalGroup';
 import {HorizontalStackedBars} from '../..';
 import {HorizontalBars} from '../../HorizontalBars';
 

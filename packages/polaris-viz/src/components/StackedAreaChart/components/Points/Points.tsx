@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import {Fragment, useState} from 'react';
 import type {Series} from 'd3-shape';
+import type {Color} from '@shopify/polaris-viz-core';
 import {
   LinearGradientWithStops,
   isGradientType,
@@ -8,7 +9,6 @@ import {
   COLOR_VISION_SINGLE_ITEM,
   changeColorOpacity,
   changeGradientOpacity,
-  Color,
   useChartContext,
 } from '@shopify/polaris-viz-core';
 import type {ScaleLinear} from 'd3-scale';
@@ -56,7 +56,7 @@ export function Points({
   });
 
   return (
-    <React.Fragment>
+    <Fragment>
       {stackedValues.map((stack, stackIndex) => {
         if (activePointIndex == null) {
           return null;
@@ -130,6 +130,6 @@ export function Points({
           />
         );
       })}
-    </React.Fragment>
+    </Fragment>
   );
 }

@@ -1,8 +1,9 @@
-import React from 'react';
-import {mount, Root} from '@shopify/react-testing';
+import type {Root} from '@shopify/react-testing';
+import {mount} from '@shopify/react-testing';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
-import {useBarChartTooltipContent, Props} from '../useBarChartTooltipContent';
+import type {Props} from '../useBarChartTooltipContent';
+import {useBarChartTooltipContent} from '../useBarChartTooltipContent';
 
 function parseData(result: Root<any>) {
   return JSON.parse(result.domNode?.dataset.data ?? '');

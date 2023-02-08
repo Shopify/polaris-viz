@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import {useMemo} from 'react';
 import type {Story} from '@storybook/react';
 import {
   ChartContext,
@@ -6,7 +6,8 @@ import {
   DEFAULT_THEME,
 } from '@shopify/polaris-viz-core';
 
-import {TooltipContent, TooltipContentProps} from '../TooltipContent';
+import type {TooltipContentProps} from '../TooltipContent';
+import {TooltipContent} from '../TooltipContent';
 import characterWidths from '../../../data/character-widths.json';
 import characterWidthOffsets from '../../../data/character-width-offsets.json';
 import type {TooltipData} from '../../../types';

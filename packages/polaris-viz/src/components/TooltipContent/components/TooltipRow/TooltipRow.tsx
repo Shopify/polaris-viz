@@ -1,10 +1,8 @@
-import React from 'react';
 import {
-  Color,
   useTheme,
   getColorVisionStylesForActiveIndex,
 } from '@shopify/polaris-viz-core';
-import type {Shape} from '@shopify/polaris-viz-core';
+import type {Shape, Color} from '@shopify/polaris-viz-core';
 
 import {PREVIEW_ICON_SIZE} from '../../../../constants';
 import {SeriesIcon} from '../../../shared/SeriesIcon';

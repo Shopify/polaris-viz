@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
-import React from 'react';
-import {DataGroup, DataSeries} from '@shopify/polaris-viz-core';
+import type {DataGroup, DataSeries} from '@shopify/polaris-viz-core';
 
 import {ChartSkeleton} from '../../ChartSkeleton';
 import {ChartErrorBoundary} from '../ChartErrorBoundary';

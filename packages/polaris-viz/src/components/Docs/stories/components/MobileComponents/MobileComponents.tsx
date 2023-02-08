@@ -1,5 +1,3 @@
-import React from 'react';
-
 import {PolarisVizProvider} from '../../../../../';
 import {SparkLineChart, SparkBarChart} from '../../../../';
 import {ComponentContainer, Title} from '../';

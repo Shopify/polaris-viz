@@ -8,6 +8,8 @@ import {
   createProjectPlugin,
 } from '@shopify/loom';
 
+import {setupReact18} from '../../loom.config';
+
 // eslint-disable-next-line import/no-default-export
 export default createPackage((pkg) => {
   pkg.entry({root: './src/index.ts'});
@@ -23,6 +25,7 @@ export default createPackage((pkg) => {
     jestAdjustments(),
     buildLibraryExtended(),
     rollupAdjustOutputPlugin(),
+    setupReact18(),
   );
 });
 

@@ -1,9 +1,8 @@
-import React from 'react';
 import {mount} from '@shopify/react-testing';
 
 import {SingleTextLine} from '../../../Labels';
 
-import {AxisLabelProps} from './AxisLabel';
+import type {AxisLabelProps} from './AxisLabel';
 
 import {AxisLabel} from './';
 

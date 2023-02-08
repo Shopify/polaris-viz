@@ -1,11 +1,11 @@
 import {useMemo, useState} from 'react';
-import {
+import type {
   Color,
   Dimensions,
   DataGroup,
   Direction,
-  LEGENDS_TOP_MARGIN,
 } from '@shopify/polaris-viz-core';
+import {LEGENDS_TOP_MARGIN} from '@shopify/polaris-viz-core';
 
 import {DEFAULT_LEGEND_HEIGHT} from '../../../constants';
 import type {LegendData} from '../../../types';

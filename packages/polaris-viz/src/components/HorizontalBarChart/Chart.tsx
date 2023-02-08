@@ -1,9 +1,9 @@
-import React, {ReactNode, useMemo, useState} from 'react';
+import type {ReactNode} from 'react';
+import {useMemo, useState} from 'react';
 import {
   uniqueId,
   DataType,
   COLOR_VISION_SINGLE_ITEM,
-  BoundingRect,
   HORIZONTAL_SPACE_BETWEEN_CHART_AND_AXIS,
   useAriaLabel,
   LINE_HEIGHT,
@@ -14,6 +14,7 @@ import type {
   Dimensions,
   XAxisOptions,
   YAxisOptions,
+  BoundingRect,
 } from '@shopify/polaris-viz-core';
 import {animated} from '@react-spring/web';
 
@@ -42,10 +43,9 @@ import {
 } from '../../hooks';
 import {ChartMargin, ANNOTATIONS_LABELS_OFFSET} from '../../constants';
 import {eventPointNative, formatDataIntoGroups} from '../../utilities';
+import type {TooltipPosition, TooltipPositionParams} from '../TooltipWrapper';
 import {
   TOOLTIP_POSITION_DEFAULT_RETURN,
-  TooltipPosition,
-  TooltipPositionParams,
   TooltipWrapper,
 } from '../TooltipWrapper';
 

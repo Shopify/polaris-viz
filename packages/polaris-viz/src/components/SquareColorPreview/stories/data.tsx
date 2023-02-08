@@ -1,10 +1,7 @@
-import React from 'react';
 import type {Story} from '@storybook/react';
 
-import {
-  SquareColorPreview,
-  SquareColorPreviewProps,
-} from '../SquareColorPreview';
+import type {SquareColorPreviewProps} from '../SquareColorPreview';
+import {SquareColorPreview} from '../SquareColorPreview';
 
 export const Template: Story<SquareColorPreviewProps> = (
   args: SquareColorPreviewProps,

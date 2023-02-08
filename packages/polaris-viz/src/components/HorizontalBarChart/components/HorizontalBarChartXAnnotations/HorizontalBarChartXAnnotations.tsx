@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import {Fragment, useMemo, useState} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {isValueWithinDomain} from '@shopify/polaris-viz-core';
 
@@ -122,7 +122,7 @@ export function HorizontalBarChartXAnnotations({
           const ariaLabel = `${annotation.startKey}`;
 
           return (
-            <React.Fragment key={`annotation${index}${annotation.startKey}`}>
+            <Fragment key={`annotation${index}${annotation.startKey}`}>
               <AnnotationLine
                 size={drawableHeight - showMoreButtonOffset}
                 x={line.x}
@@ -151,7 +151,7 @@ export function HorizontalBarChartXAnnotations({
                   y={y}
                 />
               )}
-            </React.Fragment>
+            </Fragment>
           );
         })}
       </g>

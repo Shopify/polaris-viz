@@ -1,4 +1,4 @@
-import React, {AriaRole, Dispatch, ReactNode, SetStateAction} from 'react';
+import type {AriaRole, Dispatch, ReactNode, SetStateAction} from 'react';
 import {XMLNS} from '@shopify/polaris-viz-core';
 
 import styles from './ChartElements.scss';

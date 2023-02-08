@@ -1,12 +1,9 @@
-import React from 'react';
 import {mount} from '@shopify/react-testing';
 
 import {Bar} from '../Bar';
 import type {BarProps} from '../Bar';
-import {
-  getHoverZoneOffset,
-  Props,
-} from '../../../../utilities/getHoverZoneOffset';
+import type {Props} from '../../../../utilities/getHoverZoneOffset';
+import {getHoverZoneOffset} from '../../../../utilities/getHoverZoneOffset';
 
 const MOCK_PROPS: BarProps = {
   color: 'red',

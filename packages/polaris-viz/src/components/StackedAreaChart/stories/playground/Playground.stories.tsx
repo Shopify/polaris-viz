@@ -1,4 +1,3 @@
-import React from 'react';
 import type {Story} from '@storybook/react';
 
 import {StackedAreaChart, StackedAreaChartProps} from '../../StackedAreaChart';

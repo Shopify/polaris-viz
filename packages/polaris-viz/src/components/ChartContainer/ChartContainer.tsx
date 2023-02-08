@@ -1,11 +1,14 @@
-import React, {ReactElement, useState, useMemo} from 'react';
+import type {ReactElement} from 'react';
+import {useState, useMemo} from 'react';
+import type {
+  DataGroup,
+  DataSeries,
+  InternalChartType,
+} from '@shopify/polaris-viz-core';
 import {
   uniqueId,
   ChartContext,
-  DataGroup,
-  DataSeries,
   isLargeDataSet,
-  InternalChartType,
 } from '@shopify/polaris-viz-core';
 
 import {getChartId} from '../../utilities/getChartId';

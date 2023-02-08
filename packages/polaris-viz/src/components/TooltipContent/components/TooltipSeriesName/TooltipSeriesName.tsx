@@ -1,5 +1,5 @@
 import {FONT_SIZE, useTheme} from '@shopify/polaris-viz-core';
-import React, {ReactNode} from 'react';
+import type {ReactNode} from 'react';
 
 import styles from './TooltipSeriesName.scss';
 

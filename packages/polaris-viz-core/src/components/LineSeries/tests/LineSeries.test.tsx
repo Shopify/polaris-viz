@@ -1,12 +1,12 @@
 /* eslint-disable id-length */
-import React from 'react';
 import {scaleLinear} from 'd3-scale';
 
 // eslint-disable-next-line import/order
 import {mountWithProvider} from '../../../test-utilities';
 import '@shopify/react-testing/matchers';
 
-import {LineSeries, LineSeriesProps} from '../LineSeries';
+import type {LineSeriesProps} from '../LineSeries';
+import {LineSeries} from '../LineSeries';
 import {Area} from '../components';
 import {SHAPE_ANIMATION_HEIGHT_BUFFER} from '../../../constants';
 

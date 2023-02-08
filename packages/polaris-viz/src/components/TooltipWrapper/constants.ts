@@ -1,8 +1,5 @@
-import {
-  TooltipPosition,
-  TooltipHorizontalOffset,
-  TooltipVerticalOffset,
-} from './types';
+import type {TooltipPosition} from './types';
+import {TooltipHorizontalOffset, TooltipVerticalOffset} from './types';
 
 export const DEFAULT_TOOLTIP_POSITION = {
   horizontal: TooltipHorizontalOffset.Center,

@@ -1,10 +1,10 @@
-import React, {ReactChildren} from 'react';
+import type {ReactNode} from 'react';
 
 export function ExamplesGrid({
   children,
   cols = 2,
 }: {
-  children: ReactChildren;
+  children: ReactNode;
   cols: number;
 }) {
   return (

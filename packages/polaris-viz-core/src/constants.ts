@@ -3,13 +3,8 @@ import type {SpringConfig} from '@react-spring/core';
 
 import variables from './styles/shared/_variables.scss';
 import {createGradient} from './utilities/createGradient';
-import {
-  InternalChartType,
-  SvgComponents,
-  Theme,
-  ChartState,
-  Hue,
-} from './types';
+import type {SvgComponents, Theme} from './types';
+import {InternalChartType, ChartState, Hue} from './types';
 
 export const LINE_HEIGHT = 14;
 export const FONT_SIZE = 12;

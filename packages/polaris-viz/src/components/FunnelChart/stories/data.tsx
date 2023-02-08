@@ -1,8 +1,8 @@
-import React from 'react';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 import type {Story} from '@storybook/react';
 
-import {FunnelChart, FunnelChartProps} from '../FunnelChart';
+import type {FunnelChartProps} from '../FunnelChart';
+import {FunnelChart} from '../FunnelChart';
 
 export const DEFAULT_DATA: DataSeries[] = [
   {

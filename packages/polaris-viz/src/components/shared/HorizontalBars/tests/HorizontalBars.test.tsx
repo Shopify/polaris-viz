@@ -1,9 +1,9 @@
-import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
-import {HorizontalBars, HorizontalBarsProps} from '../HorizontalBars';
+import type {HorizontalBarsProps} from '../HorizontalBars';
+import {HorizontalBars} from '../HorizontalBars';
 import {Bar} from '../../Bar';
 import {Label} from '../components';
 

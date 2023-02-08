@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import {useMemo} from 'react';
 import {
   uniqueId,
   COLOR_VISION_SINGLE_ITEM,
@@ -16,13 +16,13 @@ import {animated} from '@react-spring/web';
 import {ChartElements} from '../ChartElements';
 import {LegendContainer, useLegend} from '../../components/LegendContainer';
 import {GradientDefs, HorizontalGroup} from '../shared';
+import type {HorizontalTransitionStyle} from '../../hooks';
 import {
   useHorizontalBarSizes,
   useDataForHorizontalChart,
   useHorizontalXScale,
   useHorizontalTransitions,
   useHorizontalSeriesColors,
-  HorizontalTransitionStyle,
   useHorizontalStackedValues,
   useColorVisionEvents,
 } from '../../hooks';

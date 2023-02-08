@@ -1,4 +1,5 @@
-import {CharacterWidths, estimateStringWidth} from '@shopify/polaris-viz-core';
+import type {CharacterWidths} from '@shopify/polaris-viz-core';
+import {estimateStringWidth} from '@shopify/polaris-viz-core';
 
 import type {FormattedTicks} from '../../../types';
 

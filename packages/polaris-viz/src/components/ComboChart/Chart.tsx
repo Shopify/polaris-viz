@@ -1,15 +1,19 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
+import * as React from 'react';
 import {
   ChartMargin,
-  BoundingRect,
   DataType,
   COLOR_VISION_SINGLE_ITEM,
   useTheme,
-  XAxisOptions,
   useChartPositions,
   LINE_HEIGHT,
 } from '@shopify/polaris-viz-core';
-import type {Dimensions, DataGroup} from '@shopify/polaris-viz-core';
+import type {
+  Dimensions,
+  DataGroup,
+  BoundingRect,
+  XAxisOptions,
+} from '@shopify/polaris-viz-core';
 
 import {ChartElements} from '../ChartElements';
 import {
@@ -19,10 +23,9 @@ import {
 } from '../Annotations';
 import {sortBarChartData} from '../../utilities/sortBarChartData';
 import {getVerticalBarChartTooltipPosition} from '../../utilities/getVerticalBarChartTooltipPosition';
+import type {TooltipPosition, TooltipPositionParams} from '../TooltipWrapper';
 import {
   TooltipHorizontalOffset,
-  TooltipPosition,
-  TooltipPositionParams,
   TooltipVerticalOffset,
   TooltipWrapper,
   TOOLTIP_POSITION_DEFAULT_RETURN,

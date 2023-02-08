@@ -1,8 +1,10 @@
-import React, {useMemo, useRef} from 'react';
-import {
-  curveStepRounded,
+import {Fragment, useMemo, useRef} from 'react';
+import type {
   DataPoint,
   LineChartDataSeriesWithDefaults,
+} from '@shopify/polaris-viz-core';
+import {
+  curveStepRounded,
   uniqueId,
   useChartContext,
   useTheme,
@@ -81,7 +83,7 @@ export function PointsAndCrosshair({
   };
 
   return (
-    <React.Fragment>
+    <Fragment>
       {emptyState ? null : (
         <Crosshair
           height={drawableHeight}
@@ -104,6 +106,6 @@ export function PointsAndCrosshair({
           yScale={yScale}
         />
       )}
-    </React.Fragment>
+    </Fragment>
   );
 }

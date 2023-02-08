@@ -1,5 +1,6 @@
-import {Direction, useTheme} from '@shopify/polaris-viz-core';
-import React from 'react';
+import type {Direction} from '@shopify/polaris-viz-core';
+import {useTheme} from '@shopify/polaris-viz-core';
+import {Fragment} from 'react';
 
 import {useBrowserCheck} from '../../../../hooks/useBrowserCheck';
 
@@ -52,7 +53,7 @@ export function AnnotationLine({
   const yPosition = hasCaret ? y + Math.abs(CARET_Y_OFFSET) : y;
 
   return (
-    <React.Fragment>
+    <Fragment>
       <line
         className={styles.Line}
         stroke={selectedTheme.annotations.lineColor}
@@ -68,6 +69,6 @@ export function AnnotationLine({
           opacity={isFirefox ? 1 : selectedTheme.annotations.pillOpacity}
         />
       )}
-    </React.Fragment>
+    </Fragment>
   );
 }

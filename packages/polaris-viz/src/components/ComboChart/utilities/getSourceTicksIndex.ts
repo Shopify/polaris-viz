@@ -1,4 +1,5 @@
-import {Axis, AxisValueRange} from '../types';
+import type {Axis} from '../types';
+import {AxisValueRange} from '../types';
 
 export function getSourceTicksIndex({
   axes,

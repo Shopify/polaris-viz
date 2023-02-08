@@ -1,4 +1,4 @@
-import React from 'react';
+import {Fragment} from 'react';
 
 import {useTheme} from '../../hooks';
 import {FONT_SIZE} from '../../constants';
@@ -13,7 +13,7 @@ export function TextLine({index, line}: TextLineProps) {
   const selectedTheme = useTheme();
 
   return (
-    <React.Fragment>
+    <Fragment>
       {line.map(
         (
           {
@@ -32,7 +32,7 @@ export function TextLine({index, line}: TextLineProps) {
           const key = `${index}-${textIndex}-${truncatedText}`;
 
           return (
-            <React.Fragment key={key}>
+            <Fragment key={key}>
               <text
                 textAnchor={textAnchor}
                 dominantBaseline={dominantBaseline}
@@ -47,10 +47,10 @@ export function TextLine({index, line}: TextLineProps) {
                 {truncatedText}
               </text>
               <title>{fullText}</title>
-            </React.Fragment>
+            </Fragment>
           );
         },
       )}
-    </React.Fragment>
+    </Fragment>
   );
 }

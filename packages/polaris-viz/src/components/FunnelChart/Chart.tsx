@@ -1,10 +1,12 @@
-import React, {useMemo, useState, useCallback} from 'react';
+import {Fragment, useMemo, useState, useCallback} from 'react';
 import {scaleBand, scaleLinear} from 'd3-scale';
-import {
+import type {
   DataSeries,
   Dimensions,
   XAxisOptions,
   YAxisOptions,
+} from '@shopify/polaris-viz-core';
+import {
   uniqueId,
   LinearGradientWithStops,
   useTheme,
@@ -154,7 +156,7 @@ export function Chart({
         const formattedYValue = yAxisOptions.labelFormatter(yAxisValue);
 
         return (
-          <React.Fragment key={dataPoint.key}>
+          <Fragment key={dataPoint.key}>
             {maskRef && (
               <g key={dataPoint.key} role="listitem">
                 <FunnelSegment
@@ -183,7 +185,7 @@ export function Chart({
                 />
               </g>
             )}
-          </React.Fragment>
+          </Fragment>
         );
       })}
 

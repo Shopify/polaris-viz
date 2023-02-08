@@ -1,9 +1,8 @@
-import React from 'react';
 import {scaleLinear} from 'd3-scale';
 import {mount} from '@shopify/react-testing';
 
 import {Area} from '../Area';
-import {LineChartDataSeriesWithDefaults} from '../../../../../types';
+import type {LineChartDataSeriesWithDefaults} from '../../../../../types';
 import {DefaultArea} from '../../DefaultArea';
 import {SparkArea} from '../../SparkArea';
 

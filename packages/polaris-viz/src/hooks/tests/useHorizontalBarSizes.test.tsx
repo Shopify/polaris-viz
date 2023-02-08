@@ -1,7 +1,8 @@
-import React from 'react';
-import {mount, Root} from '@shopify/react-testing';
+import type {Root} from '@shopify/react-testing';
+import {mount} from '@shopify/react-testing';
 
-import {useHorizontalBarSizes, Props} from '../useHorizontalBarSizes';
+import type {Props} from '../useHorizontalBarSizes';
+import {useHorizontalBarSizes} from '../useHorizontalBarSizes';
 
 const MOCK_PROPS: Props = {
   chartDimensions: {height: 400, width: 600},

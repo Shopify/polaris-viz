@@ -1,5 +1,6 @@
-import React, {Dispatch, SetStateAction} from 'react';
-import {ScaleBand, scaleLinear, ScaleLinear} from 'd3-scale';
+import type {Dispatch, SetStateAction} from 'react';
+import type {ScaleBand, ScaleLinear} from 'd3-scale';
+import {scaleLinear} from 'd3-scale';
 
 import {useLabels, shouldSkipLabel} from '../Labels';
 import {TextLine} from '../TextLine';

@@ -1,8 +1,8 @@
-import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {BORDER_RADIUS} from '@shopify/polaris-viz-core';
 
-import {StackedBar, StackedBarProps} from '../StackedBar';
+import type {StackedBarProps} from '../StackedBar';
+import {StackedBar} from '../StackedBar';
 
 const MOCK_PROPS: StackedBarProps = {
   activeBarIndex: -1,

@@ -1,6 +1,6 @@
 import {useMemo} from 'react';
+import type {DataSeries} from '@shopify/polaris-viz-core';
 import {
-  DataSeries,
   LINEAR_LABELS_INNER_PADDING,
   estimateStringWidth,
   clamp,

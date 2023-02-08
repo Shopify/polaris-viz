@@ -1,7 +1,8 @@
-import React from 'react';
-import {mount, Root} from '@shopify/react-testing';
+import type {Root} from '@shopify/react-testing';
+import {mount} from '@shopify/react-testing';
 
-import {useChartPositions, Props} from '../useChartPositions';
+import type {Props} from '../useChartPositions';
+import {useChartPositions} from '../useChartPositions';
 import {useTheme} from '../useTheme';
 
 jest.mock('../useTheme', () => ({

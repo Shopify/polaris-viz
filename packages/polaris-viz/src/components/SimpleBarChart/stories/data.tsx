@@ -1,8 +1,8 @@
-import React from 'react';
 import type {Story} from '@storybook/react';
 import type {DataSeries, DataPoint} from '@shopify/polaris-viz-core';
 
-import {SimpleBarChart, SimpleBarChartProps} from '../SimpleBarChart';
+import type {SimpleBarChartProps} from '../SimpleBarChart';
+import {SimpleBarChart} from '../SimpleBarChart';
 
 export const Template: Story<SimpleBarChartProps> = (
   args: SimpleBarChartProps,

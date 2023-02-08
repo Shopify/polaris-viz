@@ -1,6 +1,6 @@
+import type {LabelFormatter} from '@shopify/polaris-viz-core';
 import {
   clamp,
-  LabelFormatter,
   estimateStringWidth,
   useChartContext,
 } from '@shopify/polaris-viz-core';

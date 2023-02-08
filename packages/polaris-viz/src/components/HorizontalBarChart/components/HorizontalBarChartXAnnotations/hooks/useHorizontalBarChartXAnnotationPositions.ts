@@ -6,6 +6,7 @@ import {
 } from '@shopify/polaris-viz-core';
 import type {ScaleLinear} from 'd3-scale';
 
+import type {AnnotationPosition} from '../../../../Annotations';
 import {
   checkForHorizontalSpace,
   useShowMoreAnnotationsButton,
@@ -13,7 +14,6 @@ import {
   PILL_PADDING,
   PILL_ROW_GAP,
   PILL_X_MIN,
-  AnnotationPosition,
 } from '../../../../Annotations';
 import {COLLAPSED_ANNOTATIONS_COUNT} from '../../../../../constants';
 import type {Annotation} from '../../../../../types';

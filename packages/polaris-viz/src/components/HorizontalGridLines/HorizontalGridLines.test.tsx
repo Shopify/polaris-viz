@@ -1,10 +1,10 @@
-import React from 'react';
 import {mount} from '@shopify/react-testing';
 
 import {mountWithProvider} from '../../test-utilities';
 import {mockDefaultTheme} from '../../test-utilities/mountWithProvider';
 
-import {HorizontalGridLines, Props} from './HorizontalGridLines';
+import type {Props} from './HorizontalGridLines';
+import {HorizontalGridLines} from './HorizontalGridLines';
 
 const MOCK_PROPS: Props = {
   ticks: [],

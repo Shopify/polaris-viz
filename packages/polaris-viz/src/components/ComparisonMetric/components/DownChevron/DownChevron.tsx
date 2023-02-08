@@ -1,4 +1,4 @@
-import React from 'react';
+import {Fragment} from 'react';
 
 import {XMLNS} from '../../../../constants';
 
@@ -11,7 +11,7 @@ interface Props {
 
 export function DownChevron({accessibilityLabel, fill}: Props) {
   return (
-    <React.Fragment>
+    <Fragment>
       <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
       <svg
         xmlns={XMLNS}
@@ -26,6 +26,6 @@ export function DownChevron({accessibilityLabel, fill}: Props) {
           fill="#F24F62"
         />
       </svg>
-    </React.Fragment>
+    </Fragment>
   );
 }

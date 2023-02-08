@@ -1,7 +1,7 @@
-import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {DefaultArea, Props} from '../DefaultArea';
+import type {Props} from '../DefaultArea';
+import {DefaultArea} from '../DefaultArea';
 
 jest.mock('d3-shape', () => ({
   area: jest.fn(() => {

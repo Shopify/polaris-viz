@@ -1,12 +1,13 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
-import React from 'react';
 import {mount} from '@shopify/react-testing';
-import {
-  LinearGradientWithStops,
+import type {
   LineChartDataSeriesWithDefaults,
-  LineSeries,
   XAxisOptions,
   YAxisOptions,
+} from '@shopify/polaris-viz-core';
+import {
+  LinearGradientWithStops,
+  LineSeries,
   ChartContext,
 } from '@shopify/polaris-viz-core';
 
@@ -21,7 +22,8 @@ import {
   TooltipAnimatedContainer,
   TooltipWrapper,
 } from '../../../components/TooltipWrapper';
-import {Chart, ChartProps} from '../Chart';
+import type {ChartProps} from '../Chart';
+import {Chart} from '../Chart';
 import {YAxis} from '../../YAxis';
 import {Annotations, YAxisAnnotations} from '../../Annotations';
 import {normalizeData} from '../../../utilities';

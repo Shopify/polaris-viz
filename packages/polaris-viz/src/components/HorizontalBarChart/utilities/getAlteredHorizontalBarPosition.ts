@@ -1,11 +1,11 @@
 import type {BoundingRect, Dimensions} from '@shopify/polaris-viz-core';
 
 import {HORIZONTAL_GROUP_LABEL_HEIGHT} from '../../../constants';
-import {
+import type {
   AlteredPositionProps,
   AlteredPositionReturn,
-  TOOLTIP_MARGIN,
 } from '../../../components/TooltipWrapper';
+import {TOOLTIP_MARGIN} from '../../../components/TooltipWrapper';
 
 export function getAlteredHorizontalBarPosition(
   props: AlteredPositionProps,

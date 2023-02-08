@@ -1,11 +1,8 @@
-import React from 'react';
 import {mount} from '@shopify/react-testing';
 
 import {ChartContainer} from '../../ChartContainer';
-import {
-  SimpleNormalizedChart,
-  SimpleNormalizedChartProps,
-} from '../SimpleNormalizedChart';
+import type {SimpleNormalizedChartProps} from '../SimpleNormalizedChart';
+import {SimpleNormalizedChart} from '../SimpleNormalizedChart';
 import {Chart} from '../Chart';
 
 const mockProps: SimpleNormalizedChartProps = {

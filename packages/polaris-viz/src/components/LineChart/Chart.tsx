@@ -1,14 +1,13 @@
-import React, {useState, useRef} from 'react';
+import {useState, useRef} from 'react';
+import * as React from 'react';
 import {
   uniqueId,
   DataType,
   useYScale,
   LineSeries,
   COLOR_VISION_SINGLE_ITEM,
-  LineChartDataSeriesWithDefaults,
   clamp,
   DEFAULT_THEME_NAME,
-  BoundingRect,
   useChartPositions,
   useChartContext,
   LINE_HEIGHT,
@@ -17,6 +16,8 @@ import type {
   Dimensions,
   XAxisOptions,
   YAxisOptions,
+  LineChartDataSeriesWithDefaults,
+  BoundingRect,
 } from '@shopify/polaris-viz-core';
 
 import {useIndexForLabels} from '../../hooks/useIndexForLabels';
@@ -33,11 +34,13 @@ import type {
 import {useFormattedLabels} from '../../hooks/useFormattedLabels';
 import {XAxis} from '../XAxis';
 import {useLegend, LegendContainer} from '../LegendContainer';
+import type {
+  TooltipPosition,
+  TooltipPositionParams,
+} from '../../components/TooltipWrapper';
 import {
   TooltipHorizontalOffset,
   TooltipVerticalOffset,
-  TooltipPosition,
-  TooltipPositionParams,
   TooltipWrapper,
   TOOLTIP_POSITION_DEFAULT_RETURN,
 } from '../../components/TooltipWrapper';

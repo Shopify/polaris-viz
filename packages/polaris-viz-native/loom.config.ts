@@ -2,6 +2,7 @@ import path from 'path';
 
 import {buildLibrary} from '@shopify/loom-plugin-build-library';
 import {createPackage, createProjectPlugin} from '@shopify/loom';
+
 // Needed so TS realises what configuration hooks are provided by Jest (in `jestAdjustments` below)
 import type {} from '@shopify/loom-plugin-jest';
 

@@ -1,13 +1,12 @@
-import React from 'react';
+import {Fragment} from 'react';
 import {useSpring, animated, config} from '@react-spring/web';
-import {LabelFormatter, useTheme} from '@shopify/polaris-viz-core';
+import type {LabelFormatter} from '@shopify/polaris-viz-core';
+import {useTheme} from '@shopify/polaris-viz-core';
 
 import type {RenderInnerValueContent} from '../../../../types';
 import {classNames} from '../../../../utilities';
-import {
-  ComparisonMetric,
-  ComparisonMetricProps,
-} from '../../../ComparisonMetric';
+import type {ComparisonMetricProps} from '../../../ComparisonMetric';
+import {ComparisonMetric} from '../../../ComparisonMetric';
 import styles from '../../DonutChart.scss';
 
 interface Props {
@@ -53,7 +52,7 @@ export function InnerValue({
     animatedTotalValue,
     totalValue,
   }) ?? (
-    <React.Fragment>
+    <Fragment>
       <animated.p
         className={classNames(styles.ContentValue)}
         style={{color: selectedTheme.xAxis.labelColor}}
@@ -69,7 +68,7 @@ export function InnerValue({
           />
         </div>
       )}
-    </React.Fragment>
+    </Fragment>
   );
 
   return <div className={styles.ContentWrapper}>{innerContent}</div>;

@@ -1,10 +1,6 @@
 import {useMemo} from 'react';
-import {
-  DataSeries,
-  LabelFormatter,
-  useChartContext,
-  estimateStringWidth,
-} from '@shopify/polaris-viz-core';
+import type {DataSeries, LabelFormatter} from '@shopify/polaris-viz-core';
+import {useChartContext, estimateStringWidth} from '@shopify/polaris-viz-core';
 
 import {HORIZONTAL_BAR_LABEL_OFFSET} from '../constants';
 

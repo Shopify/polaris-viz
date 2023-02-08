@@ -1,4 +1,5 @@
-import {Color, isGradientType} from '@shopify/polaris-viz-core';
+import type {Color} from '@shopify/polaris-viz-core';
+import {isGradientType} from '@shopify/polaris-viz-core';
 
 import {createCSSGradient} from './createCssGradient';
 

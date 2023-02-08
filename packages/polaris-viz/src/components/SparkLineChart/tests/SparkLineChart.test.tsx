@@ -1,6 +1,6 @@
-import React from 'react';
 import {mount} from '@shopify/react-testing';
-import {DataSeries, LineSeries} from '@shopify/polaris-viz-core';
+import type {DataSeries} from '@shopify/polaris-viz-core';
+import {LineSeries} from '@shopify/polaris-viz-core';
 
 import {SparkLineChart} from '../SparkLineChart';
 import {Chart} from '../Chart';

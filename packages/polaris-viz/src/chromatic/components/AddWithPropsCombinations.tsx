@@ -1,4 +1,5 @@
-import React, {FC} from 'react';
+import type {FC} from 'react';
+import {Fragment} from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import objectHash from 'object-hash';
 
@@ -7,7 +8,7 @@ import {getCombinations} from '../utilities/getCombinations';
 import {CombinationRenderer} from '../components/CombinationRenderer';
 
 export function addWithPropsCombinations<T>(
-  component: FC<T>,
+  component: FC,
   possibleValuesByPropName: PropCombinations<T>,
   userOptions: UserOptions = {},
 ) {
@@ -15,7 +16,7 @@ export function addWithPropsCombinations<T>(
     const propsCombinations = getCombinations(possibleValuesByPropName);
 
     return (
-      <React.Fragment>
+      <Fragment>
         {propsCombinations.map((props, index) => (
           <CombinationRenderer
             Component={component}
@@ -24,7 +25,7 @@ export function addWithPropsCombinations<T>(
             key={`${index}:${objectHash(props)}`}
           />
         ))}
-      </React.Fragment>
+      </Fragment>
     );
   };
 }

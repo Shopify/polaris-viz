@@ -1,8 +1,9 @@
-import React from 'react';
-import {
+import type {
   XAxisOptions,
   YAxisOptions,
   ChartProps,
+} from '@shopify/polaris-viz-core';
+import {
   DEFAULT_CHART_PROPS,
   useTheme,
   useThemeSeriesColors,

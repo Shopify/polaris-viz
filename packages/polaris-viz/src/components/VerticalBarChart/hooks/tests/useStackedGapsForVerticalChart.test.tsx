@@ -1,5 +1,5 @@
-import React from 'react';
-import {mount, Root} from '@shopify/react-testing';
+import type {Root} from '@shopify/react-testing';
+import {mount} from '@shopify/react-testing';
 
 import {useStackedGapsForVerticalChart} from '../useStackedGapsForVerticalChart';
 

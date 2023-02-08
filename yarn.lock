@@ -2999,15 +2999,12 @@
   resolved "https://registry.npmjs.org/@polka/url/-/url-1.0.0-next.21.tgz"
   integrity sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==
 
-"@quilted/react-testing@^0.5.2":
-  version "0.5.2"
-  resolved "https://registry.npmjs.org/@quilted/react-testing/-/react-testing-0.5.2.tgz"
-  integrity sha512-ouh6qEqq1ptQIb0FNdFK8GXeD6p7SnKAqnn89otYFZmrj1Xok2MEESS4E6OSXxnRGuu9v43XaWNgpNTcadBKbw==
+"@quilted/react-testing@^0.5.25":
+  version "0.5.25"
+  resolved "https://registry.yarnpkg.com/@quilted/react-testing/-/react-testing-0.5.25.tgz#6818febe61a1feff57505d1a14e58593ab850c0c"
+  integrity sha512-GnsigSdmTT9yk4IytEJD62ijzN1exnMXyvjJaeizOTYgmyiSV5GA8djadx63KPIOI55rlfUAA2xRxXUtT50qCg==
   dependencies:
-    "@types/react-test-renderer" "^17.0.0"
     jest-matcher-utils "^27.0.0"
-    react-reconciler "^0.26.0"
-    react-test-renderer "^17.0.0"
 
 "@react-native-community/cli-debugger-ui@^5.0.1":
   version "5.0.1"
@@ -3410,26 +3407,27 @@
     supports-hyperlinks "^2.1.0"
     yargs "^17.2.1"
 
-"@shopify/loom-plugin-babel@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.npmjs.org/@shopify/loom-plugin-babel/-/loom-plugin-babel-1.0.1.tgz"
-  integrity sha512-/wigmMJby9uGQVm9rO4+YeqV9YMWPJ6Jr2XZ1rCAHcEOKq0qUGXdXsF8D46ffbh2HTKrOAk7ELoN/7VEelNiow==
+"@shopify/loom-plugin-babel@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@shopify/loom-plugin-babel/-/loom-plugin-babel-1.0.2.tgz#9e6377baac47ff92af5b2b1c1b90215a1302b458"
+  integrity sha512-/1elnwjztldaQ60QNGm0Hg099cWO5VjQ/yVY+l49UEWxsb1NWWpn6DxNB4+PbiER3w5pY9NUyiEIPmvXpZHVtA==
   dependencies:
-    "@shopify/loom" "^1.0.1"
+    "@shopify/loom" "^1.0.2"
     "@types/babel__core" "^7.1.7"
     core-js "^3.14.0"
 
-"@shopify/loom-plugin-build-library-extended@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.npmjs.org/@shopify/loom-plugin-build-library-extended/-/loom-plugin-build-library-extended-2.0.1.tgz"
-  integrity sha512-MuPo/n9+O9lpJXxgH9Hse8NMFWhm5+vVJfOVt3365JqcbBcTx3Z1PB2B/faP6pn+5tXQZNOQ0nftR8Npb8dR4A==
+"@shopify/loom-plugin-build-library-extended@^2.1.2":
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/@shopify/loom-plugin-build-library-extended/-/loom-plugin-build-library-extended-2.1.2.tgz#d911a0f47fb66f94ee332dd3753bf7be93cb0bd5"
+  integrity sha512-+VUhMwEwtxc7OfBtCNes/K6F+sCdi2R+JmuM/K7ooS5lht94D/PtqdKX/Hs1aQIRCW0g5peCdueq+caklXLElA==
   dependencies:
     "@jest/transform" "^27.0.2"
     "@rollup/plugin-graphql" "^1.0.0"
     "@rollup/plugin-image" "^2.1.1"
     "@rollup/plugin-json" "^4.1.0"
     "@rollup/pluginutils" "^4.1.0"
-    "@shopify/loom" "^1.0.1"
+    "@shopify/loom" "^1.0.2"
+    "@shopify/loom-plugin-postcss" "^1.0.1"
     "@shopify/postcss-plugin" "^5.0.1"
     "@svgr/rollup" "^4.3.3"
     graphql-mini-transforms "^3.2.0"
@@ -3438,20 +3436,20 @@
     postcss-modules "^4.2.2"
     sass "^1.43.4"
 
-"@shopify/loom-plugin-build-library@^1.0.0":
-  version "1.0.1"
-  resolved "https://registry.npmjs.org/@shopify/loom-plugin-build-library/-/loom-plugin-build-library-1.0.1.tgz"
-  integrity sha512-uLnkK6mpKJW4jO7rtycxOFyoE7QM1wDYz6RKO3n8KKLAqflfbOkxM3sMh+JwEVPfIxPAeVdNgga2F0uE9jOeGA==
+"@shopify/loom-plugin-build-library@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@shopify/loom-plugin-build-library/-/loom-plugin-build-library-1.0.3.tgz#7a3259ab8a6ab3ebd2b9976899a1150ab504adeb"
+  integrity sha512-dUHSc6a2o/gTr7UQR3CZfXXIF4+q3C1/NsU7WDDWFAPANHKigkEdh6DTNSmG9QiA20Hfi8vnBC6wfOPissZL9A==
   dependencies:
     "@rollup/plugin-babel" "^5.3.0"
     "@rollup/plugin-commonjs" "^19.0.0"
     "@rollup/plugin-node-resolve" "^13.0.0"
     "@shopify/babel-preset" "^24.1.4"
-    "@shopify/loom" "^1.0.1"
-    "@shopify/loom-plugin-babel" "^1.0.1"
-    "@shopify/loom-plugin-jest" "^1.0.1"
-    "@shopify/loom-plugin-rollup" "^1.0.1"
-    "@shopify/loom-plugin-typescript" "^1.1.0"
+    "@shopify/loom" "^1.0.2"
+    "@shopify/loom-plugin-babel" "^1.0.2"
+    "@shopify/loom-plugin-jest" "^1.0.2"
+    "@shopify/loom-plugin-rollup" "^1.0.2"
+    "@shopify/loom-plugin-typescript" "^1.1.1"
     babel-jest "^27.2.4"
     common-ancestor-path "^1.0.1"
     rollup-plugin-node-externals "^2.2.0"
@@ -3464,15 +3462,22 @@
     "@shopify/loom" "^1.0.1"
     eslint "^7.0.0"
 
-"@shopify/loom-plugin-jest@^1.0.0", "@shopify/loom-plugin-jest@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.npmjs.org/@shopify/loom-plugin-jest/-/loom-plugin-jest-1.0.1.tgz"
-  integrity sha512-PzIgdsEnZ5tdrahHkGlBu7ZU4KcZJK8zEQ5LXnU+PrOnGXjHlRzA048ED0CA2DKB5N4mOLp/M8l6Mkn2bN/X2A==
+"@shopify/loom-plugin-jest@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@shopify/loom-plugin-jest/-/loom-plugin-jest-1.0.2.tgz#fd7ab52bcb79e9231a7e48da4ef96d7702c83d5d"
+  integrity sha512-NcKTeItd/JpSdSTJeUTvDuciRqw/fSz3sy4h8iiSXo3cJovXnVLJLdA4qzGhvXHtQNaHYLJDb7oAUnPy5jgGHw==
   dependencies:
-    "@shopify/loom" "^1.0.1"
+    "@shopify/loom" "^1.0.2"
     "@types/jest" "^27.0.2"
     jest "^27.2.4"
     jest-watch-typeahead "^1.0.0"
+
+"@shopify/loom-plugin-postcss@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@shopify/loom-plugin-postcss/-/loom-plugin-postcss-1.0.1.tgz#ca9ee2ba92fdf64c2aad8673c08897ee66ef01f2"
+  integrity sha512-l6He+WOKMCqPt1aAOOGHGn2pKobrzpTgUhaxroXbuJLioJkli/Br/emu+4hQ8h5A+bdCID/orDQzu8A8ZaDWcA==
+  dependencies:
+    "@shopify/loom" "^1.0.2"
 
 "@shopify/loom-plugin-prettier@^1.0.0":
   version "1.0.1"
@@ -3482,12 +3487,12 @@
     "@shopify/loom" "^1.0.1"
     prettier "^2.0.0"
 
-"@shopify/loom-plugin-rollup@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.npmjs.org/@shopify/loom-plugin-rollup/-/loom-plugin-rollup-1.0.1.tgz"
-  integrity sha512-kQ94AJHoErM/tsZDwyNWpidgqFWWbuU3e+6Xb2cpBa2vqXoFiplgxWZP5GayoRF83zNn/U82kRDlH7wQJPtIXA==
+"@shopify/loom-plugin-rollup@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@shopify/loom-plugin-rollup/-/loom-plugin-rollup-1.0.2.tgz#01513f7b04e9630123dbd4bb042e0db2e5c9aeb9"
+  integrity sha512-zZW5LwhXmHdrgwJOmklcCuE+T/34YL7hw784eCBgru2yBKYjvO+rvheUKkxfULF4PItxixGoa8weVPIay43O6g==
   dependencies:
-    "@shopify/loom" "^1.0.1"
+    "@shopify/loom" "^1.0.2"
     rollup "^2.60.1"
 
 "@shopify/loom-plugin-stylelint@^1.0.0":
@@ -3498,18 +3503,32 @@
     "@shopify/loom" "^1.0.1"
     stylelint "^13.10.0"
 
-"@shopify/loom-plugin-typescript@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.npmjs.org/@shopify/loom-plugin-typescript/-/loom-plugin-typescript-1.1.0.tgz"
-  integrity sha512-uoo89fCunsdlv0KReaDi0PYQFHaH7A+aTBeKlwfFW51DXJnXn2bHPCmzPXFtAds5YoByxQkHcfkJCZIKWYnZ1w==
+"@shopify/loom-plugin-typescript@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@shopify/loom-plugin-typescript/-/loom-plugin-typescript-1.1.1.tgz#55260b8f314ffb307dca0b39415aeb4db903dda6"
+  integrity sha512-DSZ41Eq/RIHl3zhHILBowGn83T9Jyx7seH/iCT/ZLaPfBgHmjSLea8iADLuF8SUsRIibjmdhiz0hplgoARJhsg==
   dependencies:
-    "@shopify/loom" "^1.0.1"
+    "@shopify/loom" "^1.0.2"
     typescript "^4.3.5"
 
-"@shopify/loom@^1.0.0", "@shopify/loom@^1.0.1":
+"@shopify/loom@^1.0.1":
   version "1.0.1"
   resolved "https://registry.npmjs.org/@shopify/loom/-/loom-1.0.1.tgz"
   integrity sha512-FpL77FrqlYYXUbx04ELQQmXWN4+hZ9aYwmxCVWcH0CR9bOuLSizYiiAjNhp1/fB6IJjOGctofT+NJ6xEQ/DYlQ==
+  dependencies:
+    "@babel/preset-env" "^7.14.5"
+    "@babel/preset-typescript" "^7.14.5"
+    "@babel/register" "^7.14.5"
+    "@types/fs-extra" "^9.0.0"
+    "@types/glob" "^7.1.1"
+    change-case "^4.1.0"
+    fs-extra "^9.0.0"
+    glob "^7.1.6"
+
+"@shopify/loom@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@shopify/loom/-/loom-1.0.2.tgz#8d1e194fca09a26cc1c49b4e83dde5c1d1ed1470"
+  integrity sha512-kbvl3upG51QVvPVe1NLtnpZZeUZWRfVGtE0ZUOqcTjvnS4Blugw/0GoLxDmhhrQFY5fY3cQokJsDpslopWz/Jw==
   dependencies:
     "@babel/preset-env" "^7.14.5"
     "@babel/preset-typescript" "^7.14.5"
@@ -3549,14 +3568,14 @@
   resolved "https://registry.npmjs.org/@shopify/prettier-config/-/prettier-config-1.1.2.tgz"
   integrity sha512-5ugCL9sPGzmOaZjeRGaWUWhHgAbemrS6z+R7v6gwiD+BiqSeoFhIY+imLpfdFCVpuOGalpHeCv6o3gv++EHs0A==
 
-"@shopify/react-testing@^3.3.3":
-  version "3.3.3"
-  resolved "https://registry.npmjs.org/@shopify/react-testing/-/react-testing-3.3.3.tgz"
-  integrity sha512-NWiGEXOjsiARbPsapYZQMF1YUKeo8ZOy1OfT8tC45olGM7uP9c7E4a/GjdPsHQMAKn0p0NLE9Heb03vMnbzsSg==
+"@shopify/react-testing@^5.1.0":
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@shopify/react-testing/-/react-testing-5.1.0.tgz#b4ef2e8fee32ae7e20aca3122685e632f95cbd65"
+  integrity sha512-M7CzSPT8YqjJXDA6zZsqkfIeeLgyqOd6nLH69w1jIl3hNSNMadXQ0Y4TE14fcw+4ATPT1+oWr4sur519uPnwFQ==
   dependencies:
-    "@shopify/useful-types" "^3.0.7"
+    "@shopify/useful-types" "^5.1.1"
     jest-matcher-utils "^26.6.2"
-    react-reconciler "^0.26.2"
+    react-reconciler "^0.28.0"
 
 "@shopify/stylelint-plugin@^10.2.0":
   version "10.2.0"
@@ -3574,10 +3593,10 @@
   resolved "https://registry.npmjs.org/@shopify/typescript-configs/-/typescript-configs-5.1.0.tgz"
   integrity sha512-RywGBTR+nQyJLxcrUcihPkHPIG3pIQI6i0YwMrM5rs9nWJ0+9A5HKEcboyGPLH+8V08EXGfFQ6H820O9ajyk4A==
 
-"@shopify/useful-types@^3.0.7":
-  version "3.0.7"
-  resolved "https://registry.npmjs.org/@shopify/useful-types/-/useful-types-3.0.7.tgz"
-  integrity sha512-iBrpNFq22zZw+/qU763CgCVH9tGEVrnJK+y5Jg4OeuDHyiD0ALypv1Rd5u4aofQyn8Q+PPKjV0NsWgW1pIsSww==
+"@shopify/useful-types@^5.1.1":
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/@shopify/useful-types/-/useful-types-5.1.1.tgz#83e7b951dc360910925d62d107d39939536b7b8c"
+  integrity sha512-Lnzo84EsrbdO54togslYiwT4EVGDuQW96rRKSEJhkkluyirEjx61aw0SEzZOkNy6VOi5z6CdTBo/vlsnXIhV1Q==
 
 "@sideway/address@^4.1.3":
   version "4.1.3"
@@ -4940,10 +4959,10 @@
   resolved "https://registry.npmjs.org/@types/qs/-/qs-6.9.7.tgz"
   integrity sha512-FGa1F62FT09qcrueBA6qYTrJPVDzah9a+493+o2PCXsesWHIn27G98TsSMs3WPNbZIEj4+VJf6saSFpvD+3Zsw==
 
-"@types/react-dom@^17.0.9":
-  version "17.0.11"
-  resolved "https://registry.npmjs.org/@types/react-dom/-/react-dom-17.0.11.tgz"
-  integrity sha512-f96K3k+24RaLGVu/Y2Ng3e1EbZ8/cVJvypZWd7cy0ofCBaf2lcM46xNhycMZ2xGwbBjRql7hOlZ+e2WlJ5MH3Q==
+"@types/react-dom@^18.0.10":
+  version "18.0.10"
+  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-18.0.10.tgz#3b66dec56aa0f16a6cc26da9e9ca96c35c0b4352"
+  integrity sha512-E42GW/JA4Qv15wQdqJq8DL4JhNpB3prJgjgapN3qJT9K2zO5IIAQh4VXvCEDupoqAwnz0cY4RlXeC/ajX5SFHg==
   dependencies:
     "@types/react" "*"
 
@@ -4961,17 +4980,19 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-test-renderer@^17.0.0":
-  version "17.0.1"
-  resolved "https://registry.npmjs.org/@types/react-test-renderer/-/react-test-renderer-17.0.1.tgz"
-  integrity sha512-3Fi2O6Zzq/f3QR9dRnlnHso9bMl7weKCviFmfF6B4LS1Uat6Hkm15k0ZAQuDz+UBq6B3+g+NM6IT2nr5QgPzCw==
-  dependencies:
-    "@types/react" "*"
-
-"@types/react@*", "@types/react@^17.0.25":
+"@types/react@*":
   version "17.0.38"
   resolved "https://registry.npmjs.org/@types/react/-/react-17.0.38.tgz"
   integrity sha512-SI92X1IA+FMnP3qM5m4QReluXzhcmovhZnLNm3pyeQlooi02qI7sLiepEYqT678uNiyc25XfCqxREFpy3W7YhQ==
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
+
+"@types/react@^18.0.27":
+  version "18.0.27"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.0.27.tgz#d9425abe187a00f8a5ec182b010d4fd9da703b71"
+  integrity sha512-3vtRKHgVxu3Jp9t718R9BuzoD4NcQ8YJ5XRzsSKxNDiDonD2MXIT1TmSkenxuCycZJoQT5d2vE8LwWJxBC1gmA==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -17025,7 +17046,7 @@ react-docgen@^5.0.0:
     node-dir "^0.1.10"
     strip-indent "^3.0.0"
 
-react-dom@17.0.2, react-dom@^17.0.2:
+react-dom@17.0.2:
   version "17.0.2"
   resolved "https://registry.npmjs.org/react-dom/-/react-dom-17.0.2.tgz"
   integrity sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA==
@@ -17033,6 +17054,14 @@ react-dom@17.0.2, react-dom@^17.0.2:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     scheduler "^0.20.2"
+
+react-dom@^18.2.0:
+  version "18.2.0"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.2.0.tgz#22aaf38708db2674ed9ada224ca4aa708d821e3d"
+  integrity sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==
+  dependencies:
+    loose-envify "^1.1.0"
+    scheduler "^0.23.0"
 
 react-element-to-jsx-string@^14.3.4:
   version "14.3.4"
@@ -17057,10 +17086,15 @@ react-inspector@^5.1.0:
     is-dom "^1.0.0"
     prop-types "^15.0.0"
 
-react-is@17.0.2, "react-is@^16.12.0 || ^17.0.0", react-is@^17.0.1, react-is@^17.0.2:
+react-is@17.0.2, react-is@^17.0.1:
   version "17.0.2"
   resolved "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
+
+"react-is@^16.12.0 || ^17.0.0 || ^18.0.0", react-is@^18.2.0:
+  version "18.2.0"
+  resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.2.0.tgz#199431eeaaa2e09f86427efbb4f1473edb47609b"
+  integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
 
 react-is@^16.13.0, react-is@^16.13.1, react-is@^16.7.0:
   version "16.13.1"
@@ -17180,14 +17214,13 @@ react-native@0.64.3:
     whatwg-fetch "^3.0.0"
     ws "^6.1.4"
 
-react-reconciler@^0.26.0, react-reconciler@^0.26.2:
-  version "0.26.2"
-  resolved "https://registry.npmjs.org/react-reconciler/-/react-reconciler-0.26.2.tgz"
-  integrity sha512-nK6kgY28HwrMNwDnMui3dvm3rCFjZrcGiuwLc5COUipBK5hWHLOxMJhSnSomirqWwjPBJKV1QcbkI0VJr7Gl1Q==
+react-reconciler@^0.28.0:
+  version "0.28.0"
+  resolved "https://registry.yarnpkg.com/react-reconciler/-/react-reconciler-0.28.0.tgz#52ede33c584c9b6d4c9bea02a53d368c5751c9c9"
+  integrity sha512-sGIHDOpgVjRYgsi8NgosDnbkDvvkYFFSF900ZUhUw0+lSBEA5n76TcKFaVkfYMIuYm+7W6mT8Q673DLBfuTxcQ==
   dependencies:
     loose-envify "^1.1.0"
-    object-assign "^4.1.1"
-    scheduler "^0.20.2"
+    scheduler "^0.22.0"
 
 react-refresh@^0.11.0:
   version "0.11.0"
@@ -17199,13 +17232,13 @@ react-refresh@^0.4.0:
   resolved "https://registry.npmjs.org/react-refresh/-/react-refresh-0.4.3.tgz"
   integrity sha512-Hwln1VNuGl/6bVwnd0Xdn1e84gT/8T9aYNL+HAKDArLCS7LWjwr7StE30IEYbIkx0Vi3vs+coQxe+SQDbGbbpA==
 
-react-shallow-renderer@^16.13.1:
-  version "16.14.1"
-  resolved "https://registry.npmjs.org/react-shallow-renderer/-/react-shallow-renderer-16.14.1.tgz"
-  integrity sha512-rkIMcQi01/+kxiTE9D3fdS959U1g7gs+/rborw++42m1O9FAQiNI/UNRZExVUoAOprn4umcXf+pFRou8i4zuBg==
+react-shallow-renderer@^16.15.0:
+  version "16.15.0"
+  resolved "https://registry.yarnpkg.com/react-shallow-renderer/-/react-shallow-renderer-16.15.0.tgz#48fb2cf9b23d23cde96708fe5273a7d3446f4457"
+  integrity sha512-oScf2FqQ9LFVQgA73vr86xl2NaOIX73rh+YFqcOp68CWj56tSfgtGKrEbyhCj0rSijyG9M1CYprTh39fBi5hzA==
   dependencies:
     object-assign "^4.1.1"
-    react-is "^16.12.0 || ^17.0.0"
+    react-is "^16.12.0 || ^17.0.0 || ^18.0.0"
 
 react-sizeme@^3.0.1:
   version "3.0.2"
@@ -17228,15 +17261,14 @@ react-syntax-highlighter@^15.4.5:
     prismjs "^1.27.0"
     refractor "^3.6.0"
 
-react-test-renderer@^17.0.0:
-  version "17.0.2"
-  resolved "https://registry.npmjs.org/react-test-renderer/-/react-test-renderer-17.0.2.tgz"
-  integrity sha512-yaQ9cB89c17PUb0x6UfWRs7kQCorVdHlutU1boVPEsB8IDZH6n9tHxMacc3y0JoXOJUsZb/t/Mb8FUWMKaM7iQ==
+react-test-renderer@^18.2.0:
+  version "18.2.0"
+  resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-18.2.0.tgz#1dd912bd908ff26da5b9fca4fd1c489b9523d37e"
+  integrity sha512-JWD+aQ0lh2gvh4NM3bBM42Kx+XybOxCpgYK7F8ugAlpaTSnWsX+39Z4XkOykGZAHrjwwTZT3x3KxswVWxHPUqA==
   dependencies:
-    object-assign "^4.1.1"
-    react-is "^17.0.2"
-    react-shallow-renderer "^16.13.1"
-    scheduler "^0.20.2"
+    react-is "^18.2.0"
+    react-shallow-renderer "^16.15.0"
+    scheduler "^0.23.0"
 
 react@17.0.2, react@^17.0.2:
   version "17.0.2"
@@ -17245,6 +17277,13 @@ react@17.0.2, react@^17.0.2:
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
+
+react@^18.2.0:
+  version "18.2.0"
+  resolved "https://registry.yarnpkg.com/react/-/react-18.2.0.tgz#555bd98592883255fa00de14f1151a917b5d77d5"
+  integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
+  dependencies:
+    loose-envify "^1.1.0"
 
 read-cmd-shim@^2.0.0:
   version "2.0.0"
@@ -17992,6 +18031,20 @@ scheduler@^0.20.1, scheduler@^0.20.2:
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
+
+scheduler@^0.22.0:
+  version "0.22.0"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.22.0.tgz#83a5d63594edf074add9a7198b1bae76c3db01b8"
+  integrity sha512-6QAm1BgQI88NPYymgGQLCZgvep4FyePDWFpXVK+zNSUgHwlqpJy8VEh8Et0KxTACS4VWwMousBElAZOH9nkkoQ==
+  dependencies:
+    loose-envify "^1.1.0"
+
+scheduler@^0.23.0:
+  version "0.23.0"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.23.0.tgz#ba8041afc3d30eb206a487b6b384002e4e61fdfe"
+  integrity sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==
+  dependencies:
+    loose-envify "^1.1.0"
 
 schema-utils@2.7.0:
   version "2.7.0"

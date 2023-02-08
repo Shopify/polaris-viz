@@ -1,10 +1,6 @@
-import React, {useState} from 'react';
-import {
-  Color,
-  COLOR_VISION_SINGLE_ITEM,
-  DataGroup,
-  LineSeries,
-} from '@shopify/polaris-viz-core';
+import {Fragment, useState} from 'react';
+import type {Color, DataGroup} from '@shopify/polaris-viz-core';
+import {COLOR_VISION_SINGLE_ITEM, LineSeries} from '@shopify/polaris-viz-core';
 
 import {useWatchColorVisionEvents} from '../../../../hooks';
 import {PointsAndCrosshair} from '../../../LineChart';
@@ -46,7 +42,7 @@ export function ComboLineChart({
   const {reversedSeries, longestSeriesIndex} = useFormatData(dataWithDefaults);
 
   return (
-    <React.Fragment>
+    <Fragment>
       {dataWithDefaults.map((singleSeries, index) => {
         return (
           <LineSeries
@@ -73,6 +69,6 @@ export function ComboLineChart({
         xScale={xScale}
         yScale={yScale}
       />
-    </React.Fragment>
+    </Fragment>
   );
 }

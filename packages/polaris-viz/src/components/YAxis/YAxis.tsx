@@ -1,4 +1,3 @@
-import React from 'react';
 import {estimateStringWidth, useChartContext} from '@shopify/polaris-viz-core';
 
 import {useTheme} from '../../hooks';

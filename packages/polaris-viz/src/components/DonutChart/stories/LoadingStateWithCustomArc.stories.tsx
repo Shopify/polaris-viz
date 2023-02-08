@@ -1,4 +1,3 @@
-import React from 'react';
 import {ChartState} from '@shopify/polaris-viz-core';
 import type {Story, StoryFn} from '@storybook/react';
 

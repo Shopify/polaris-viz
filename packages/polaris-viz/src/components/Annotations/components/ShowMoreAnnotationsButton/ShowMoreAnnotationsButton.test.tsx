@@ -1,9 +1,9 @@
-import React from 'react';
 import {mount} from '@shopify/react-testing';
 
 import {SingleTextLine} from '../../../Labels';
 
-import {ShowMoreAnnotationsButton, Props} from './ShowMoreAnnotationsButton';
+import type {Props} from './ShowMoreAnnotationsButton';
+import {ShowMoreAnnotationsButton} from './ShowMoreAnnotationsButton';
 import {Icon, Shadow} from './components';
 
 jest.mock('@shopify/polaris-viz-core/src/utilities', () => ({

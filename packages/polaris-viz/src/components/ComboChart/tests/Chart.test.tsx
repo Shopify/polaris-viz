@@ -1,8 +1,8 @@
-import React from 'react';
 import {mount} from '@shopify/react-testing';
-import {DataGroup} from '@shopify/polaris-viz-core';
+import type {DataGroup} from '@shopify/polaris-viz-core';
 
-import {Chart, ChartProps} from '../Chart';
+import type {ChartProps} from '../Chart';
+import {Chart} from '../Chart';
 import {getXAxisOptionsWithDefaults, normalizeData} from '../../../utilities';
 import {LegendContainer} from '../../LegendContainer';
 import {Annotations, YAxisAnnotations} from '../../Annotations';

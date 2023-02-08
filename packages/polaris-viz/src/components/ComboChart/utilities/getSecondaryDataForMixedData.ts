@@ -1,6 +1,7 @@
 import type {ScaleLinear} from 'd3-scale';
 
-import {Axis, AxisValueRange} from '../types';
+import type {Axis} from '../types';
+import {AxisValueRange} from '../types';
 
 interface Props {
   shouldPlaceZeroInMiddleOfChart: boolean;

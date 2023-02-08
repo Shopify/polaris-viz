@@ -1,5 +1,5 @@
 import {createWorkspace, createWorkspaceTestPlugin} from '@shopify/loom';
-import {buildLibraryWorkspace} from '@shopify/loom-plugin-build-library';
+import {buildLibraryWorkspace, babel} from '@shopify/loom-plugin-build-library';
 import {eslint} from '@shopify/loom-plugin-eslint';
 import {prettier} from '@shopify/loom-plugin-prettier';
 import {stylelint} from '@shopify/loom-plugin-stylelint';
@@ -15,6 +15,7 @@ export default createWorkspace((workspace) => {
     prettier({files: '**/*.{json,md,yaml,yml}'}),
     stylelint({files: '**/*.scss'}),
     jestAdjustments(),
+    setupReact18(),
   );
 });
 
@@ -34,5 +35,28 @@ function jestAdjustments() {
         return config;
       });
     });
+  });
+}
+
+export function setupReact18() {
+  return babel({
+    config(babelConfig) {
+      return {
+        ...babelConfig,
+        presets: [
+          ...(babelConfig.plugins || []),
+          [
+            '@shopify/babel-preset',
+            {
+              typescript: true,
+              react: true,
+              reactOptions: {
+                runtime: 'automatic',
+              },
+            },
+          ],
+        ],
+      };
+    },
   });
 }

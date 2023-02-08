@@ -1,6 +1,7 @@
 /* eslint-disable node/callback-return */
-import React, {useEffect} from 'react';
-import {ChartState, Dimensions} from '@shopify/polaris-viz-core';
+import {useEffect} from 'react';
+import type {Dimensions} from '@shopify/polaris-viz-core';
+import {ChartState} from '@shopify/polaris-viz-core';
 import {useSprings, animated, config, easings} from '@react-spring/web';
 
 import {Arc} from '../../../Arc/';

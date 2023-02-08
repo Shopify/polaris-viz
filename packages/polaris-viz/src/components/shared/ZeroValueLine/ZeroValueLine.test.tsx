@@ -1,9 +1,9 @@
-import React from 'react';
 import {mount} from '@shopify/react-testing';
 
 import {ZERO_VALUE_LINE_HEIGHT} from '../../../constants';
 
-import {ZeroValueLine, ZeroValueLineProps} from './ZeroValueLine';
+import type {ZeroValueLineProps} from './ZeroValueLine';
+import {ZeroValueLine} from './ZeroValueLine';
 
 const MOCK_PROPS: ZeroValueLineProps = {
   x: 10,

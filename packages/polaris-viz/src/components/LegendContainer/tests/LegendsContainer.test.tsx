@@ -1,7 +1,7 @@
-import React from 'react';
 import {mount} from '@shopify/react-testing';
 
-import {LegendContainer, LegendContainerProps} from '../LegendContainer';
+import type {LegendContainerProps} from '../LegendContainer';
+import {LegendContainer} from '../LegendContainer';
 import {Legend} from '../../Legend';
 
 const mockProps: LegendContainerProps = {

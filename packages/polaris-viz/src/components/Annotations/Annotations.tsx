@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import {Fragment, useMemo, useState} from 'react';
 import type {ScaleBand, ScaleLinear} from 'd3-scale';
 
 import type {Annotation, AnnotationLookupTable} from '../../types';
@@ -124,7 +124,7 @@ export function Annotations({
           const ariaLabel = `${annotation.startKey}`;
 
           return (
-            <React.Fragment key={`annotation${index}${annotation.startKey}`}>
+            <Fragment key={`annotation${index}${annotation.startKey}`}>
               <AnnotationLine
                 size={drawableHeight - showMoreButtonOffset}
                 x={line.x}
@@ -153,7 +153,7 @@ export function Annotations({
                   y={y}
                 />
               )}
-            </React.Fragment>
+            </Fragment>
           );
         })}
       </g>

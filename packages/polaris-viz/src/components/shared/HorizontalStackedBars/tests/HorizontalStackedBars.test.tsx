@@ -1,14 +1,11 @@
-import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
 import {BORDER_RADIUS} from '@shopify/polaris-viz-core';
 
-import {
-  HorizontalStackedBars,
-  HorizontalStackedBarsProps,
-} from '../HorizontalStackedBars';
+import type {HorizontalStackedBarsProps} from '../HorizontalStackedBars';
+import {HorizontalStackedBars} from '../HorizontalStackedBars';
 import {StackedBar} from '../components';
-import {FormattedStackedSeries} from '../../../../types';
+import type {FormattedStackedSeries} from '../../../../types';
 
 jest.mock('d3-scale', () => ({
   scaleLinear: jest.requireActual('d3-scale').scaleLinear,

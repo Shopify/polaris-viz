@@ -1,9 +1,9 @@
-import React from 'react';
 import {mount} from '@shopify/react-testing';
-import {DataSeries} from '@shopify/polaris-viz-core';
+import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {ChartContainer} from '../../ChartContainer';
-import {SimpleBarChart, SimpleBarChartProps} from '../SimpleBarChart';
+import type {SimpleBarChartProps} from '../SimpleBarChart';
+import {SimpleBarChart} from '../SimpleBarChart';
 import {Chart} from '../Chart';
 
 const mockProps: SimpleBarChartProps = {

@@ -1,7 +1,8 @@
-import React from 'react';
-import {mount, Root} from '@shopify/react-testing';
+import type {Root} from '@shopify/react-testing';
+import {mount} from '@shopify/react-testing';
 
-import {useComboChartPositions, Props} from '../useComboChartPositions';
+import type {Props} from '../useComboChartPositions';
+import {useComboChartPositions} from '../useComboChartPositions';
 import {useTheme} from '../../../../../../polaris-viz-core/src/hooks/useTheme';
 
 jest.mock('../../../../../../polaris-viz-core/src/hooks/useTheme', () => ({

@@ -1,8 +1,8 @@
-import React from 'react';
 import type {DataGroup} from '@shopify/polaris-viz-core';
 import type {Story} from '@storybook/react';
 
-import {ComboChart, ComboChartProps} from '../ComboChart';
+import type {ComboChartProps} from '../ComboChart';
+import {ComboChart} from '../ComboChart';
 
 export const Template: Story<ComboChartProps> = ({
   ...args

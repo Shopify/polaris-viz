@@ -1,4 +1,4 @@
-import React, {Dispatch, SetStateAction} from 'react';
+import type {Dispatch, SetStateAction} from 'react';
 
 import {useLabels} from '../../Labels';
 import {TextLine} from '../../TextLine';

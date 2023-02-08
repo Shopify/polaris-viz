@@ -1,5 +1,5 @@
-import React from 'react';
-import {animated, Interpolation} from '@react-spring/web';
+import type {Interpolation} from '@react-spring/web';
+import {animated} from '@react-spring/web';
 import {useTheme} from '@shopify/polaris-viz-core';
 
 import style from './Crosshair.scss';

@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import {Fragment, useMemo, useState} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {
   isValueWithinDomain,
@@ -104,7 +104,7 @@ export function YAxisAnnotations({
             : -Y_AXIS_CHART_SPACING;
 
         return (
-          <React.Fragment key={`annotation${index}${annotation.startKey}`}>
+          <Fragment key={`annotation${index}${annotation.startKey}`}>
             {position.showYAxisLabel && (
               <AnnotationYAxisLabel
                 axis={axis}
@@ -143,7 +143,7 @@ export function YAxisAnnotations({
                 y={y}
               />
             )}
-          </React.Fragment>
+          </Fragment>
         );
       })}
     </g>

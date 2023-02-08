@@ -1,4 +1,5 @@
-import {Dispatch, SetStateAction, useEffect, useMemo} from 'react';
+import type {Dispatch, SetStateAction} from 'react';
+import {useEffect, useMemo} from 'react';
 import {estimateStringWidth, useChartContext} from '@shopify/polaris-viz-core';
 
 import {

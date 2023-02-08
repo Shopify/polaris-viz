@@ -1,4 +1,3 @@
-import React from 'react';
 import {themes} from '@storybook/theming';
 import {PolarisVizProvider} from '@shopify/polaris-viz';
 import {

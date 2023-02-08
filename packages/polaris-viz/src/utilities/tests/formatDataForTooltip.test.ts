@@ -1,4 +1,4 @@
-import {RenderTooltipContentData} from '../../types';
+import type {RenderTooltipContentData} from '../../types';
 import {formatDataForTooltip} from '../formatDataForTooltip';
 
 const DATA: RenderTooltipContentData = {

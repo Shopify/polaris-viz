@@ -1,8 +1,7 @@
-import {
-  LineChartDataSeriesWithDefaults,
-  useChartContext,
-} from '@shopify/polaris-viz-core';
-import {ReactNode, useCallback} from 'react';
+import type {LineChartDataSeriesWithDefaults} from '@shopify/polaris-viz-core';
+import {useChartContext} from '@shopify/polaris-viz-core';
+import type {ReactNode} from 'react';
+import {useCallback} from 'react';
 
 import type {RenderTooltipContentData} from '../../../types';
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   getColorVisionEventAttrs,
   COLOR_VISION_SINGLE_ITEM,
@@ -9,10 +8,8 @@ import type {Color, Direction} from '@shopify/polaris-viz-core';
 
 import {getCSSBackgroundFromColor} from '../../../../utilities/getCSSBackgroundFromColor';
 import {classNames} from '../../../../utilities';
-import {
-  ComparisonMetric,
-  ComparisonMetricProps,
-} from '../../../ComparisonMetric';
+import type {ComparisonMetricProps} from '../../../ComparisonMetric';
+import {ComparisonMetric} from '../../../ComparisonMetric';
 import type {LegendPosition} from '../../../../types';
 
 import styles from './BarLabel.scss';

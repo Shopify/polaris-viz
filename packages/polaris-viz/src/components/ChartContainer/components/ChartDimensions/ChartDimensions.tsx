@@ -1,19 +1,11 @@
-import React, {
-  cloneElement,
-  Dispatch,
-  ReactElement,
-  SetStateAction,
-  useCallback,
-  useLayoutEffect,
-  useState,
-} from 'react';
-import {
+import type {Dispatch, ReactElement, SetStateAction} from 'react';
+import {cloneElement, useCallback, useLayoutEffect, useState} from 'react';
+import type {
   DataGroup,
   DataSeries,
   Dimensions,
-  usePrevious,
-  useTheme,
 } from '@shopify/polaris-viz-core';
+import {usePrevious, useTheme} from '@shopify/polaris-viz-core';
 import {useDebouncedCallback} from 'use-debounce';
 import type {SkeletonType} from 'components/ChartSkeleton';
 

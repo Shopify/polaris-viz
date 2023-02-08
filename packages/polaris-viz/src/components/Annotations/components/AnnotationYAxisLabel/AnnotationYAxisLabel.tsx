@@ -1,4 +1,3 @@
-import React from 'react';
 import {useTheme} from '@shopify/polaris-viz-core';
 import type {OptionalDualAxisYAxis} from 'components/Annotations/types';
 

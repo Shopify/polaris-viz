@@ -1,5 +1,6 @@
 import {useMemo} from 'react';
-import {clamp, Dimensions} from '@shopify/polaris-viz-core';
+import type {Dimensions} from '@shopify/polaris-viz-core';
+import {clamp} from '@shopify/polaris-viz-core';
 
 import {
   HORIZONTAL_GROUP_LABEL_HEIGHT,

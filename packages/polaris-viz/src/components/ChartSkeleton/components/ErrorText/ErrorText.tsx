@@ -1,4 +1,3 @@
-import React from 'react';
 import {FONT_SIZE, useTheme} from '@shopify/polaris-viz-core';
 
 import {useLabels} from '../../../Labels/hooks';

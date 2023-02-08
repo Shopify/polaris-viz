@@ -1,5 +1,4 @@
 import {LINE_HEIGHT, useTheme} from '@shopify/polaris-viz-core';
-import React from 'react';
 
 import {useEstimateStringWidth} from '../../../../hooks/useEstimateStringWidth';
 import {SingleTextLine} from '../../../Labels';

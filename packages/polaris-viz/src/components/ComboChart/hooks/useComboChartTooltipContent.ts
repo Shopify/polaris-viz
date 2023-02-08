@@ -1,10 +1,7 @@
-import {ReactNode, useCallback} from 'react';
-import {
-  Color,
-  DataGroup,
-  Shape,
-  useChartContext,
-} from '@shopify/polaris-viz-core';
+import type {ReactNode} from 'react';
+import {useCallback} from 'react';
+import type {Color, DataGroup, Shape} from '@shopify/polaris-viz-core';
+import {useChartContext} from '@shopify/polaris-viz-core';
 
 import {flattenDataGroupToDataSeries} from '../../../utilities/flattenDataGroupToDataSeries';
 import {getYAxisOptionsWithDefaults} from '../../../utilities';

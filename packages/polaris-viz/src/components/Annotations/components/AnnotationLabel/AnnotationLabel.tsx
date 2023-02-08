@@ -1,4 +1,5 @@
-import React, {Dispatch, SetStateAction} from 'react';
+import type {Dispatch, SetStateAction} from 'react';
+import {Fragment} from 'react';
 import {LINE_HEIGHT, useTheme} from '@shopify/polaris-viz-core';
 
 import {useBrowserCheck} from '../../../../hooks/useBrowserCheck';
@@ -70,7 +71,7 @@ export function AnnotationLabel({
         x={PILL_PADDING}
       />
 
-      <React.Fragment>
+      <Fragment>
         {hasContent && (
           <line
             x1={PILL_PADDING}
@@ -99,7 +100,7 @@ export function AnnotationLabel({
             {label}
           </button>
         </foreignObject>
-      </React.Fragment>
+      </Fragment>
     </g>
   );
 }

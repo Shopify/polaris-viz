@@ -1,8 +1,8 @@
 import type {Story} from '@storybook/react';
-import React from 'react';
 import type {RenderTooltipContentData} from 'types';
 
-import {LineChart, LineChartProps} from '../LineChart';
+import type {LineChartProps} from '../LineChart';
+import {LineChart} from '../LineChart';
 import {
   formatLinearXAxisLabel,
   formatLinearYAxisLabel,
