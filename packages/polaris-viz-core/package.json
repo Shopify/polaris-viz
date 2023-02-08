@@ -49,6 +49,6 @@
     "@types/react-native": "^0.66.15"
   },
   "peerDependencies": {
-    "react": "^16.8.6 || ^17.0.0"
+    "react": "^16.14.0 || ^17.0.0 || ^18.0.0"
   }
 }
