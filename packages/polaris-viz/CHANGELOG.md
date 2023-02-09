@@ -20,6 +20,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Changed
 
 - Change `RenderInnerValueContent` type introduced in `7.12.0`.
+- Updated `react` and `react-dom` to `18.2.0`.
 
 ## [7.16.1] - 2023-01-26
 
