@@ -140,6 +140,13 @@ export interface LegendTheme {
   trendIndicator: {positive: string; negative: string; neutral: string};
 }
 
+export interface TrendIndicatorTheme {
+  positive: string;
+  negative: string;
+  neutral: string;
+  background: string;
+}
+
 export interface PartialTheme {
   arc?: Partial<ArcTheme>;
   chartContainer?: Partial<ChartContainerTheme>;
@@ -152,6 +159,7 @@ export interface PartialTheme {
   legend?: Partial<LegendTheme>;
   seriesColors?: Partial<SeriesColors>;
   tooltip?: Partial<TooltipTheme>;
+  trendIndicator?: Partial<TrendIndicatorTheme>;
 }
 
 export interface Theme {
@@ -167,6 +175,7 @@ export interface Theme {
   legend: LegendTheme;
   seriesColors: SeriesColors;
   tooltip: TooltipTheme;
+  trendIndicator: TrendIndicatorTheme;
 }
 
 export enum DataType {
