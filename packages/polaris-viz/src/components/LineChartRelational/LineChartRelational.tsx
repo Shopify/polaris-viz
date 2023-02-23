@@ -1,7 +1,8 @@
-import React from 'react';
-import {WithRequired, DEFAULT_CHART_PROPS} from '@shopify/polaris-viz-core';
+import type {WithRequired} from '@shopify/polaris-viz-core';
+import {DEFAULT_CHART_PROPS} from '@shopify/polaris-viz-core';
 
-import {LineChart, LineChartProps} from '../LineChart';
+import type {LineChartProps} from '../LineChart';
+import {LineChart} from '../LineChart';
 
 import {renderTooltipContent} from './utilities/renderTooltipContent';
 import {RelatedArea} from './components';

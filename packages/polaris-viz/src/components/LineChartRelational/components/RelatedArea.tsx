@@ -1,5 +1,6 @@
 import React from 'react';
-import {curveStepRounded, DataPoint} from '@shopify/polaris-viz-core';
+import type {DataPoint} from '@shopify/polaris-viz-core';
+import {curveStepRounded} from '@shopify/polaris-viz-core';
 import {area as areaShape} from 'd3-shape';
 import type {ScaleLinear} from 'd3-scale';
 
