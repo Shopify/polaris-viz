@@ -1,5 +1,4 @@
 import type {Story} from '@storybook/react';
-import React from 'react';
 import type {RenderTooltipContentData} from 'types';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 import type {LineChartProps} from 'components/LineChart/LineChart';
