@@ -16,6 +16,7 @@ export {
   ComboChart,
   DonutChart,
   TrendIndicator,
+  LineChartRelational,
 } from './components';
 
 export type {

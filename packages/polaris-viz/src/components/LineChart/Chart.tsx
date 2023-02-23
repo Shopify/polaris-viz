@@ -1,3 +1,4 @@
+import type {ReactNode} from 'react';
 import {useState, useRef, Fragment} from 'react';
 import {
   uniqueId,
