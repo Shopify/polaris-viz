@@ -4247,7 +4247,7 @@
     "@types/babel__core" "^7.1.7"
     core-js "^3.14.0"
 
-"@shopify/loom-plugin-build-library-extended@^2.2.0":
+"@shopify/loom-plugin-build-library-extended@^2.1.2":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@shopify/loom-plugin-build-library-extended/-/loom-plugin-build-library-extended-2.2.0.tgz#1d9c5430cb2fa4efb57c82ff63d512e725d18d81"
   integrity sha512-Ph9cdGEIJlXm4hfMT4YV3jqH2LPkU6Nvnh4qk6j+cQKzW+O+MniBzD2wSDHOu5UySRPci7I7PcTdSXrFGwHTnw==
