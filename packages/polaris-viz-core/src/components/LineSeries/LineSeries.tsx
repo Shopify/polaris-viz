@@ -34,6 +34,7 @@ export interface LineSeriesProps {
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
   activeLineIndex?: number;
+  hiddenIndexes?: number[];
   theme: string;
   type?: 'default' | 'spark';
 }
@@ -41,6 +42,7 @@ export interface LineSeriesProps {
 export function LineSeries({
   activeLineIndex = -1,
   data,
+  hiddenIndexes = [],
   index = 0,
   svgDimensions,
   theme,
@@ -136,7 +138,10 @@ export function LineSeries({
 
   return (
     <Fragment>
-      <AnimatedGroup opacity={1}>
+      <AnimatedGroup
+        opacity={1}
+        style={{display: hiddenIndexes.includes(index) ? 'none' : undefined}}
+      >
         <Defs>
           <LinearGradientWithStops
             id={`line-${id}`}
