@@ -80,4 +80,4 @@ export {
   setSingleSeriesActive,
 } from './utilities';
 
-export {useWatchActiveSeries} from './hooks';
+export {useWatchActiveSeries, setHiddenItems} from './hooks';

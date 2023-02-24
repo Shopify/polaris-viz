@@ -1,14 +1,14 @@
 import {COLOR_VISION_SINGLE_ITEM} from '@shopify/polaris-viz-core';
 import {useEffect} from 'react';
 
-import type {CustomEventReturn} from '../types';
+import type {ColorVisionEventReturn} from '../types';
 
 import {getEventName} from './ColorVisionA11y';
 import {useCallbackRef} from './useCallbackRef';
 
 export function useWatchActiveSeries(
   id: string,
-  onIndexChange: (event: CustomEventReturn) => void,
+  onIndexChange: (event: ColorVisionEventReturn) => void,
 ) {
   const onIndexChangeCallback = useCallbackRef(onIndexChange);
 

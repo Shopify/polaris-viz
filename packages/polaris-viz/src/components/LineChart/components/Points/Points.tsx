@@ -36,6 +36,7 @@ interface PointsProps {
       >;
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
+  hiddenIndexes?: number[];
 }
 
 export function Points({
@@ -44,6 +45,7 @@ export function Points({
   data,
   getXPosition,
   gradientId,
+  hiddenIndexes = [],
   longestSeriesIndex,
   tooltipId,
   xScale,
@@ -63,6 +65,12 @@ export function Points({
   return (
     <Fragment>
       {data.map((singleSeries, index) => {
+        const unreversedIndex = data.length - 1 - index;
+
+        if (hiddenIndexes.includes(unreversedIndex)) {
+          return null;
+        }
+
         const {data: singleData, name, color} = singleSeries;
         const isLongestLine = index === longestSeriesIndex;
         const pointGradientId = `${gradientId}-point-${index}`;
