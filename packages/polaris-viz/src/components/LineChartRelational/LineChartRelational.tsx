@@ -5,7 +5,7 @@ import type {LineChartProps} from '../LineChart';
 import {LineChart} from '../LineChart';
 
 import {renderTooltipContent} from './utilities/renderTooltipContent';
-import {RelatedArea} from './components';
+import {RelatedAreas} from './components';
 
 export function LineChartRelational(props: LineChartProps) {
   const {
@@ -44,7 +44,7 @@ export function LineChartRelational(props: LineChartProps) {
       renderLegendContent={renderLegendContent}
       showLegend={showLegend}
       skipLinkText={skipLinkText}
-      slots={{chart: (props) => <RelatedArea {...props} data={data} />}}
+      slots={{chart: (props) => <RelatedAreas {...props} data={data} />}}
       state={state}
       theme={theme}
       tooltipOptions={tooltipOptionsWithDefaults}
