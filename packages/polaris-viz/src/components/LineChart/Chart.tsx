@@ -21,6 +21,7 @@ import type {
 } from '@shopify/polaris-viz-core';
 import type {ScaleLinear} from 'd3-scale';
 
+import {useExternalHideEvents} from '../../hooks/ExternalEvents';
 import {useIndexForLabels} from '../../hooks/useIndexForLabels';
 import {
   Annotations,
@@ -132,6 +133,8 @@ export function Chart({
     onIndexChange: ({detail}) => setActiveLineIndex(detail.index),
   });
 
+  const {hiddenIndexes: hiddenLineIndexes} = useExternalHideEvents();
+
   const indexForLabels = useIndexForLabels(data);
 
   const {formattedLabels, unformattedLabels} = useFormattedLabels({
@@ -145,7 +148,9 @@ export function Chart({
   const emptyState =
     data.length === 0 || data.every((series) => series.data.length === 0);
 
-  const {minY, maxY} = yAxisMinMax(data);
+  const {minY, maxY} = yAxisMinMax([
+    ...data.filter((_, index) => !hiddenLineIndexes.includes(index)),
+  ]);
 
   const yScaleOptions = {
     formatYAxisLabel: yAxisOptions.labelFormatter,
@@ -199,6 +204,7 @@ export function Chart({
     data,
     renderTooltipContent,
     indexForLabels,
+    hiddenIndexes: hiddenLineIndexes,
   });
 
   if (xScale == null || drawableWidth == null || yAxisLabelWidth == null) {
@@ -347,6 +353,7 @@ export function Chart({
               <LineSeries
                 activeLineIndex={activeLineIndex}
                 data={singleSeries}
+                hiddenIndexes={hiddenLineIndexes}
                 index={reversedSeries.length - 1 - index}
                 key={`${name}-${index}`}
                 svgDimensions={{height: drawableHeight, width: drawableWidth}}
@@ -362,6 +369,7 @@ export function Chart({
             activeIndex={activeIndex}
             drawableHeight={drawableHeight}
             emptyState={emptyState}
+            hiddenIndexes={hiddenLineIndexes}
             longestSeriesIndex={longestSeriesIndex}
             reversedSeries={reversedSeries}
             theme={theme}
