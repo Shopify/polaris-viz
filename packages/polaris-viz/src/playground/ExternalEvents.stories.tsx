@@ -2,7 +2,7 @@ import React from 'react';
 import type {Story} from '@storybook/react';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
-import {LineChart} from '../components/LineChart';
+import {LineChartRelational} from '../components/LineChartRelational';
 import {PolarisVizProvider} from '../components/PolarisVizProvider';
 import {setSingleSeriesActive} from '../utilities';
 import {useWatchActiveSeries} from '../hooks';
@@ -98,7 +98,7 @@ const Template: Story = () => {
           },
         }}
       >
-        <LineChart id={CHART_ID} data={DEFAULT_DATA} />
+        <LineChartRelational id={CHART_ID} data={DEFAULT_DATA} />
       </PolarisVizProvider>
     </>
   );
