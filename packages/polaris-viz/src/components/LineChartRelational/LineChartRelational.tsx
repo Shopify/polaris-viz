@@ -13,6 +13,7 @@ export function LineChartRelational(props: LineChartProps) {
     data,
     errorText,
     emptyStateText,
+    id,
     isAnimated,
     renderLegendContent,
     showLegend = true,
@@ -38,6 +39,7 @@ export function LineChartRelational(props: LineChartProps) {
       data={data}
       emptyStateText={emptyStateText}
       errorText={errorText}
+      id={id}
       isAnimated={isAnimated}
       renderLegendContent={renderLegendContent}
       showLegend={showLegend}
