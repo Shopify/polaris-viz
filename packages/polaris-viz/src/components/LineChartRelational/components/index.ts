@@ -1,1 +1,1 @@
-export {RelatedArea} from './RelatedArea';
+export {RelatedAreas} from './RelatedAreas';

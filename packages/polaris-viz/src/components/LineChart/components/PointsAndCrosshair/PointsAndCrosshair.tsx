@@ -27,12 +27,14 @@ interface PointsAndCrosshairProps {
   tooltipId: string;
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
+  hiddenIndexes?: number[];
 }
 
 export function PointsAndCrosshair({
   activeIndex,
   drawableHeight,
   emptyState,
+  hiddenIndexes = [],
   longestSeriesIndex,
   reversedSeries,
   theme,
@@ -98,6 +100,7 @@ export function PointsAndCrosshair({
           data={reversedSeries}
           getXPosition={getXPosition}
           gradientId={gradientId.current}
+          hiddenIndexes={hiddenIndexes}
           longestSeriesIndex={longestSeriesIndex}
           tooltipId={tooltipId}
           xScale={xScale}

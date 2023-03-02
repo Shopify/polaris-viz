@@ -62,6 +62,7 @@ export {
   COLOR_VARIABLES,
   AREAS_TRANSITION_CONFIG,
   STROKE_DOT_ARRAY_WIDTH,
+  EXTERNAL_EVENTS_SET_HIDDEN_ITEMS,
 } from './constants';
 export {
   clamp,
