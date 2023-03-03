@@ -148,9 +148,7 @@ export function Chart({
   const emptyState =
     data.length === 0 || data.every((series) => series.data.length === 0);
 
-  const {minY, maxY} = yAxisMinMax([
-    ...data.filter((_, index) => !hiddenLineIndexes.includes(index)),
-  ]);
+  const {minY, maxY} = yAxisMinMax(data);
 
   const yScaleOptions = {
     formatYAxisLabel: yAxisOptions.labelFormatter,
