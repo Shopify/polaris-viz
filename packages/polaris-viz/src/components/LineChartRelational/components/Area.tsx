@@ -4,24 +4,36 @@ import {
   usePrevious,
 } from '@shopify/polaris-viz-core';
 
+import type {LineChartRelationalDataSeries} from '../types';
+
+interface AreaProps {
+  activeIndex: number;
+  fill: string;
+  getAreaGenerator: (series: LineChartRelationalDataSeries) => string | null;
+  index: number;
+  series: LineChartRelationalDataSeries;
+  hiddenIndexes?: number[];
+  shouldAnimate?: boolean;
+}
+
 export function Area({
   activeIndex,
   fill,
   getAreaGenerator,
-  hiddenIndexes,
+  hiddenIndexes = [],
   index,
   series,
-  shouldAnimate,
-}) {
-  const areaD = getAreaGenerator(series);
-  const previous = usePrevious(areaD);
+  shouldAnimate = false,
+}: AreaProps) {
+  const pathD = getAreaGenerator(series);
+  const previous = usePrevious(pathD);
 
-  const spring = useSpring({
+  const spring = useSpring<{pathD: string}>({
     from: {
-      areaD: previous,
+      pathD: previous,
     },
     to: {
-      areaD,
+      pathD,
     },
     immediate: !shouldAnimate,
   });
@@ -30,19 +42,18 @@ export function Area({
     return null;
   }
 
-  if (hiddenIndexes.includes(series.metadata?.relatedIndex)) {
+  if (hiddenIndexes.includes(series.metadata?.relatedIndex ?? -1)) {
     return null;
   }
 
-  if (areaD == null) {
+  if (pathD == null) {
     return null;
   }
 
   return (
     <animated.path
-      d={spring.areaD}
+      d={spring.pathD}
       fill={fill}
-      fillOpacity={0.5}
       style={{
         ...getColorVisionStylesForActiveIndex({activeIndex, index}),
       }}
