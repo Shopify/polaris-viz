@@ -159,7 +159,7 @@ const RELATIONAL_DATA: DataSeries[] = [
     color: 'red',
     metadata: {
       relatedIndex: 2,
-      areaColor: 'red',
+      areaColor: 'rgba(255,0,0,0.1)',
       shape: 'Bar',
     },
   },
@@ -211,7 +211,7 @@ const RELATIONAL_DATA: DataSeries[] = [
     metadata: {
       shape: 'Bar',
       relatedIndex: 2,
-      areaColor: 'blue',
+      areaColor: 'rgba(0,0,255,0.1)',
     },
   },
 ];

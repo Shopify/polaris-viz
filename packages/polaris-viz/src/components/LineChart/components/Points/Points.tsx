@@ -87,7 +87,7 @@ export function Points({
         const hidePoint =
           !hasValidData ||
           animatedCoordinates == null ||
-          activeLineIndex === index;
+          activeLineIndex !== unreversedIndex;
 
         const pointColor = isGradientType(color)
           ? `url(#${pointGradientId})`

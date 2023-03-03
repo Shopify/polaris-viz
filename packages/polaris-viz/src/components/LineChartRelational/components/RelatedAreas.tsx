@@ -28,7 +28,9 @@ export function RelatedAreas({yScale, xScale, data}: RelatedAreaProps) {
   const {shouldAnimate, id} = useChartContext();
 
   const springConfig = useSpringConfig({
-    animationDelay: BASE_ANIMATION_DURATION * (data.length + 1),
+    animationDelay: shouldAnimate
+      ? BASE_ANIMATION_DURATION * (data.length + 1)
+      : 0,
   });
 
   const {opacity} = useSpring({
@@ -46,8 +48,8 @@ export function RelatedAreas({yScale, xScale, data}: RelatedAreaProps) {
     setActiveIndex(index);
   });
 
-  function getAreaGenerator(series) {
-    const {relatedIndex} = series.metadata;
+  function getAreaGenerator(series: LineChartRelationalDataSeries) {
+    const relatedIndex = series.metadata?.relatedIndex!;
 
     const areaGenerator = areaShape<DataPoint>()
       .x((_: DataPoint, index: number) => {
@@ -72,7 +74,10 @@ export function RelatedAreas({yScale, xScale, data}: RelatedAreaProps) {
   return (
     <animated.g style={{opacity}}>
       {data.map((series, index) => {
-        if (series.metadata?.relatedIndex == null) {
+        if (
+          series.metadata?.relatedIndex == null ||
+          series.metadata?.areaColor == null
+        ) {
           return null;
         }
 
