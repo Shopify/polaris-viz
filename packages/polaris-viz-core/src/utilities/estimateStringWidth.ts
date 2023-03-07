@@ -1,6 +1,6 @@
 import type {CharacterWidths} from '../types';
 
-const DEFAULT_WIDTH = 11.6171875;
+const DEFAULT_WIDTH = 11.63;
 
 export function estimateStringWidth(
   string: string,

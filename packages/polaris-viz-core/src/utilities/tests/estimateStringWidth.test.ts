@@ -4,10 +4,10 @@ import {estimateStringWidth} from '../estimateStringWidth';
 describe('estimateStringWidth()', () => {
   it.each`
     string     | expected
-    ${'W'}     | ${11.6171875}
-    ${'Label'} | ${30.71875}
-    ${' '}     | ${3.375}
-    ${'…'}     | ${9.65625}
+    ${'W'}     | ${11.63}
+    ${'Label'} | ${30.75}
+    ${' '}     | ${3.38}
+    ${'…'}     | ${9.66}
   `('return width for $string', ({string, expected}) => {
     const actual = estimateStringWidth(string, characterWidths);
 
@@ -17,11 +17,11 @@ describe('estimateStringWidth()', () => {
   it('returns width of W character when character is unavailable', () => {
     // eslint-disable-next-line id-length
     const actual = estimateStringWidth('m', {W: characterWidths.W});
-    expect(actual).toStrictEqual(11.6171875);
+    expect(actual).toStrictEqual(11.63);
   });
 
   it('returns hardcode default when characterWidths is unavailable', () => {
     const actual = estimateStringWidth('m', {});
-    expect(actual).toStrictEqual(11.6171875);
+    expect(actual).toStrictEqual(11.63);
   });
 });

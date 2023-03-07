@@ -16,23 +16,31 @@ const combinations = renderCombinationSections([
   [
     'Data',
     addWithPropsCombinations<TrendIndicatorProps>(TrendIndicator, {
-      value: [undefined, '10%', '1000000%'],
-      trend: ['positive', 'negative', 'neutral'],
+      value: ['82%', '123%', '-12%', '0.0%', '10000000%'],
+    }),
+  ],
+  [
+    'Trend',
+    addWithPropsCombinations<TrendIndicatorProps>(TrendIndicator, {
+      value: ['82%'],
       direction: ['upward', 'downward'],
     }),
   ],
   [
     'Size & Theme',
     addWithPropsCombinations(TrendIndicator, {
-      value: [undefined, '10'],
+      value: ['82%'],
       size: ['default', 'small'],
+      trend: ['positive', 'negative', 'neutral'],
+      theme: ['Default', 'Light'],
     }),
   ],
   [
-    'Theme',
+    'Null data',
     addWithPropsCombinations(TrendIndicator, {
-      value: ['10'],
-      trend: ['positive', 'negative', 'neutral'],
+      value: [null, undefined],
+      size: ['default', 'small'],
+      trend: ['positive'],
       theme: ['Default', 'Light'],
     }),
   ],

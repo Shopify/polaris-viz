@@ -1,11 +1,12 @@
 import {createContext} from 'react';
+import type {CharacterWidthOffsets, CharacterWidths} from 'types';
 
 import {DEFAULT_THEME_NAME} from '../constants';
 
 export interface ChartContextValues {
   id: string | null;
-  characterWidths: {[key: string]: number};
-  characterWidthOffsets: {[key: string]: number};
+  characterWidths: CharacterWidths;
+  characterWidthOffsets: CharacterWidthOffsets;
   shouldAnimate: boolean;
   theme: string;
   isPerformanceImpacted: boolean;
@@ -14,7 +15,10 @@ export interface ChartContextValues {
 export const ChartContext = createContext<ChartContextValues>({
   id: null,
   characterWidths: {},
-  characterWidthOffsets: {},
+  characterWidthOffsets: {
+    fontSize: {},
+    fontWeight: {},
+  },
   shouldAnimate: true,
   theme: DEFAULT_THEME_NAME,
   isPerformanceImpacted: false,
