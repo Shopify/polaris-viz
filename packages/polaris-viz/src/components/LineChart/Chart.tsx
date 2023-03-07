@@ -64,7 +64,7 @@ import {ChartElements} from '../ChartElements';
 import {useLineChartTooltipContent} from './hooks/useLineChartTooltipContent';
 import {PointsAndCrosshair} from './components';
 import {useFormatData} from './hooks';
-import {yAxisMinMax} from './utilities';
+import {getAlteredLineChartPosition, yAxisMinMax} from './utilities';
 
 export interface ChartProps {
   renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
@@ -222,7 +222,10 @@ export function Chart({
       });
 
       return {
-        x: svgX,
+        x:
+          xScale(activeIndex) +
+          chartXPosition +
+          parseInt(selectedTheme.chartContainer.padding, 10),
         y: svgY,
         position: TOOLTIP_POSITION,
         activeIndex,
@@ -389,6 +392,7 @@ export function Chart({
           alwaysUpdatePosition
           chartBounds={chartBounds}
           focusElementDataType={DataType.Point}
+          getAlteredPosition={getAlteredLineChartPosition}
           getMarkup={getTooltipMarkup}
           getPosition={getTooltipPosition}
           id={tooltipId.current}
