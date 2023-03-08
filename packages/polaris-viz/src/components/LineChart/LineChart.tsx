@@ -25,6 +25,7 @@ import {SkipLink} from '../SkipLink';
 import {useRenderTooltipContent, useTheme} from '../../hooks';
 import type {
   Annotation,
+  LineChartSlotProps,
   RenderLegendContent,
   TooltipOptions,
 } from '../../types';
@@ -42,7 +43,7 @@ export type LineChartProps = {
   xAxisOptions?: Partial<XAxisOptions>;
   yAxisOptions?: Partial<YAxisOptions>;
   slots?: {
-    chart?: ({xScale, yScale}) => JSX.Element;
+    chart?: (props: LineChartSlotProps) => JSX.Element;
   };
 } & ChartProps;
 
