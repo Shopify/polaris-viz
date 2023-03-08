@@ -64,7 +64,10 @@ export function ChartContainer({
 
     return {
       characterWidths: {},
-      characterWidthOffsets: {},
+      characterWidthOffsets: {
+        fontSize: {},
+        fontWeight: {},
+      },
       id,
       shouldAnimate,
       theme,

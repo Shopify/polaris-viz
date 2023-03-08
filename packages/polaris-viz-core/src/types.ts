@@ -237,6 +237,11 @@ export interface CharacterWidths {
   [key: string]: number;
 }
 
+export interface CharacterWidthOffsets {
+  fontSize: {[key: string]: number};
+  fontWeight: {[key: string]: number};
+}
+
 export type LineChartDataSeriesWithDefaults = DataSeries & {
   color: Color;
   areaColor?: string | null;

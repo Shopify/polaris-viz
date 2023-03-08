@@ -8,7 +8,7 @@ export function useEstimateStringWidth(
 ) {
   const {characterWidths, characterWidthOffsets} = useChartContext();
 
-  const offset = characterWidthOffsets[fontSize] ?? 1;
+  const offset = characterWidthOffsets.fontSize[fontSize] ?? 1;
   const width = estimateStringWidth(string, characterWidths);
 
   return width * offset;
