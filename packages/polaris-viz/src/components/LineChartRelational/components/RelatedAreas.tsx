@@ -7,17 +7,15 @@ import {
   curveStepRounded,
 } from '@shopify/polaris-viz-core';
 import {area as areaShape} from 'd3-shape';
-import type {ScaleLinear} from 'd3-scale';
 import {animated, useSpring} from '@react-spring/web';
+import type {LineChartSlotProps} from 'types';
 
 import {useExternalHideEvents, useWatchActiveSeries} from '../../../hooks';
 import type {LineChartRelationalDataSeries} from '../types';
 
 import {Area} from './Area';
 
-interface RelatedAreaProps {
-  xScale: ScaleLinear<number, number>;
-  yScale: ScaleLinear<number, number>;
+interface RelatedAreaProps extends LineChartSlotProps {
   data: LineChartRelationalDataSeries[];
 }
 
