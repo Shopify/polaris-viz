@@ -19,7 +19,6 @@ import type {
   LineChartDataSeriesWithDefaults,
   BoundingRect,
 } from '@shopify/polaris-viz-core';
-import type {ScaleLinear} from 'd3-scale';
 
 import {useExternalHideEvents} from '../../hooks/ExternalEvents';
 import {useIndexForLabels} from '../../hooks/useIndexForLabels';
@@ -30,6 +29,7 @@ import {
 } from '../Annotations';
 import type {
   AnnotationLookupTable,
+  LineChartSlotProps,
   RenderLegendContent,
   RenderTooltipContentData,
 } from '../../types';
@@ -68,11 +68,6 @@ import {PointsAndCrosshair} from './components';
 import {useFormatData} from './hooks';
 import {getAlteredLineChartPosition, yAxisMinMax} from './utilities';
 
-interface SlotScales {
-  xScale: ScaleLinear<number, number>;
-  yScale: ScaleLinear<number, number>;
-}
-
 export interface ChartProps {
   renderTooltipContent: (data: RenderTooltipContentData) => ReactNode;
   annotationsLookupTable: AnnotationLookupTable;
@@ -84,7 +79,7 @@ export interface ChartProps {
   emptyStateText?: string;
   renderLegendContent?: RenderLegendContent;
   slots?: {
-    chart?: ({xScale, yScale}: SlotScales) => JSX.Element;
+    chart?: (props: LineChartSlotProps) => JSX.Element;
   };
   theme?: string;
 }
@@ -344,7 +339,12 @@ export function Chart({
           />
         )}
         <g transform={`translate(${chartXPosition},${chartYPosition})`}>
-          {slots?.chart?.({yScale, xScale})}
+          {slots?.chart?.({
+            yScale,
+            xScale,
+            drawableWidth,
+            drawableHeight,
+          })}
 
           {reversedSeries.map((singleSeries, index) => {
             return (
