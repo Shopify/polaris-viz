@@ -16,4 +16,8 @@ MinimalLineChart.args = {
     labelFormatter: formatLinearXAxisLabel,
     hide: true,
   },
+  yAxisOptions: {
+    hide: true,
+  },
+  showLegend: false,
 };

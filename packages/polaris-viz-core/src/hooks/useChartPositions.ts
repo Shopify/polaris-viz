@@ -12,7 +12,10 @@ export interface Props {
   width: number;
   xAxisHeight: number;
   yAxisWidth: number;
+  hideYAxis?: boolean;
 }
+
+function getDrawableWidth() {}
 
 export function useChartPositions({
   annotationsHeight,
@@ -30,10 +33,11 @@ export function useChartPositions({
 
   const drawableHeight =
     height - chartYPosition - xAxisHeight - LABEL_AREA_TOP_SPACING;
+
   const drawableWidth = width - chartXPosition - horizontalMargin;
 
   return {
-    chartXPosition,
+    chartXPosition: -Y_AXIS_CHART_SPACING,
     chartYPosition,
     drawableHeight,
     drawableWidth,

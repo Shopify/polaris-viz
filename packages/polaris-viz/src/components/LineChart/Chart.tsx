@@ -153,6 +153,10 @@ export function Chart({
   const {reversedSeries, longestSeriesLength, longestSeriesIndex} =
     useFormatData(data);
 
+  const hideXAxis = xAxisOptions.hide || selectedTheme.xAxis.hide;
+
+  const hideYAxis = yAxisOptions.hide || selectedTheme.yAxis.hide;
+
   const {
     drawableWidth,
     drawableHeight,
@@ -166,9 +170,8 @@ export function Chart({
     width,
     xAxisHeight,
     yAxisWidth: yAxisLabelWidth,
+    hideYAxis,
   });
-
-  const hideXAxis = xAxisOptions.hide || selectedTheme.xAxis.hide;
 
   const {xAxisDetails, xScale, labels} = useLinearLabelsAndDimensions({
     data,
@@ -313,14 +316,16 @@ export function Chart({
             }
           />
         ) : null}
-        <YAxis
-          ticks={ticks}
-          width={yAxisLabelWidth}
-          textAlign="right"
-          ariaHidden
-          x={yAxisBounds.x}
-          y={yAxisBounds.y}
-        />
+        {hideYAxis ? null : (
+          <YAxis
+            ticks={ticks}
+            width={yAxisLabelWidth}
+            textAlign="right"
+            ariaHidden
+            x={yAxisBounds.x}
+            y={yAxisBounds.y}
+          />
+        )}
         {emptyState ? null : (
           <VisuallyHiddenRows
             data={data}
