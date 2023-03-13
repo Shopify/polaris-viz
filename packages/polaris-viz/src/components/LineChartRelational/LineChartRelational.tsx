@@ -4,7 +4,6 @@ import {DEFAULT_CHART_PROPS} from '@shopify/polaris-viz-core';
 import type {LineChartProps} from '../LineChart';
 import {LineChart} from '../LineChart';
 
-import {renderTooltipContent} from './utilities/renderTooltipContent';
 import {RelatedAreas} from './components';
 
 export function LineChartRelational(props: LineChartProps) {
@@ -28,11 +27,6 @@ export function LineChartRelational(props: LineChartProps) {
     ...props,
   };
 
-  const tooltipOptionsWithDefaults = {
-    ...tooltipOptions,
-    renderTooltipContent: (data) => renderTooltipContent(data, theme),
-  };
-
   return (
     <LineChart
       annotations={annotations}
@@ -47,7 +41,7 @@ export function LineChartRelational(props: LineChartProps) {
       slots={{chart: (props) => <RelatedAreas {...props} data={data} />}}
       state={state}
       theme={theme}
-      tooltipOptions={tooltipOptionsWithDefaults}
+      tooltipOptions={tooltipOptions}
       xAxisOptions={xAxisOptions}
       yAxisOptions={yAxisOptions}
     />
