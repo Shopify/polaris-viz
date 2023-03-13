@@ -1,13 +1,34 @@
+import {PolarisVizProvider} from '../../PolarisVizProvider';
 import type {Story} from '@storybook/react';
 
 export {META as default} from './meta';
 
-import type {LineChartProps} from '../..';
+import {LineChart, LineChartProps} from '../..';
 import {formatLinearXAxisLabel} from '../../../storybook/utilities';
 
-import {DEFAULT_DATA, DEFAULT_PROPS, Template} from './data';
+import {DEFAULT_DATA, DEFAULT_PROPS} from './data';
 
-export const MinimalLineChart: Story<LineChartProps> = Template.bind({});
+const MinimalLineChartTemplate: Story<LineChartProps> = (args: LineChartProps) => {
+  return (
+    <PolarisVizProvider
+      themes={{
+        Default: {
+          chartContainer: {
+            padding: '0px',
+          },
+          grid: {
+            showHorizontalLines: false,
+            horizontalMargin: 0,
+          },
+        },
+      }}
+    >
+      <LineChart {...args} />
+    </PolarisVizProvider>
+  )
+};
+
+export const MinimalLineChart: Story<LineChartProps> = MinimalLineChartTemplate.bind({});
 
 MinimalLineChart.args = {
   ...DEFAULT_PROPS,

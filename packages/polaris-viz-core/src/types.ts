@@ -58,6 +58,7 @@ export interface XAxisOptions {
 }
 export interface YAxisOptions {
   labelFormatter?: LabelFormatter;
+  hide?: boolean;
   integersOnly?: boolean;
 }
 
@@ -92,6 +93,7 @@ export interface CrossHairTheme {
 
 export interface YAxisTheme {
   labelColor: string;
+  hide?: boolean;
   backgroundColor: string;
 }
 

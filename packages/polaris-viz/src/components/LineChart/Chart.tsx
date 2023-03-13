@@ -154,7 +154,6 @@ export function Chart({
     useFormatData(data);
 
   const hideXAxis = xAxisOptions.hide || selectedTheme.xAxis.hide;
-
   const hideYAxis = yAxisOptions.hide || selectedTheme.yAxis.hide;
 
   const {
