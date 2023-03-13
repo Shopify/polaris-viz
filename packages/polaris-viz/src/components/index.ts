@@ -48,3 +48,4 @@ export type {ComboChartProps} from './ComboChart';
 export {XAxis} from './XAxis';
 export {TrendIndicator} from './TrendIndicator';
 export {LineChartRelational} from './LineChartRelational';
+export {renderRelationalTooltipContent} from './LineChartRelational';
