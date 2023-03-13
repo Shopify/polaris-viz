@@ -1,1 +1,0 @@
-export {renderRelationalTooltipContent} from './renderRelationalTooltipContent';
