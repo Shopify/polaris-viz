@@ -8,6 +8,7 @@ import {
   formatLinearXAxisLabel,
   formatLinearYAxisLabel,
 } from '../../../storybook/utilities';
+import {renderRelationalTooltipContent} from '../utilities';
 
 export const TOOLTIP_CONTENT = {
   empty: undefined,
@@ -47,12 +48,21 @@ export const DEFAULT_PROPS: Partial<LineChartProps> = {
   tooltipOptions: {
     titleFormatter: (value) => new Date(value!).toLocaleDateString(),
     valueFormatter: formatLinearYAxisLabel,
+    renderTooltipContent: (tooltipData) => {
+      return renderRelationalTooltipContent(tooltipData, {
+        title: tooltipData.title,
+        groups: [
+          {title: 'Your store', indexes: [0]},
+          {title: 'Similar stores', indexes: [1, 2, 3]},
+        ],
+      });
+    },
   },
 };
 
 export const DEFAULT_DATA: DataSeries[] = [
   {
-    name: 'Apr 1 – Apr 14, 2020',
+    name: 'Average',
     data: [
       {value: 333, key: '2020-04-01T12:00:00'},
       {value: 797, key: '2020-04-02T12:00:00'},
@@ -70,14 +80,9 @@ export const DEFAULT_DATA: DataSeries[] = [
       {value: 129, key: '2020-04-14T12:00:00'},
     ],
     color: [
-      {offset: 0, color: '#986BFF'},
-      {offset: 100, color: '#3AA4F6'},
+      {offset: 0, color: 'rgba(149, 101, 255, 1)'},
+      {offset: 100, color: 'rgba(75, 146, 229, 1)'},
     ],
-    styleOverride: {
-      line: {
-        width: 3,
-      },
-    },
   },
   {
     name: '75th Percentile',
@@ -97,15 +102,14 @@ export const DEFAULT_DATA: DataSeries[] = [
       {value: 773, key: '2020-03-13T12:00:00'},
       {value: 171, key: '2020-03-14T12:00:00'},
     ],
-    color: '#9EDAEF',
+    color: 'rgba(103, 197, 228, 1)',
     metadata: {
       relatedIndex: 2,
-      areaColor: '#C8E7F4',
-      shape: 'Bar',
+      areaColor: 'rgba(103, 197, 228, 0.1)',
     },
   },
   {
-    name: 'Similar stores median',
+    name: 'Median',
     data: [
       {value: 759, key: '2020-03-02T12:00:00'},
       {value: 238, key: '2020-03-01T12:00:00'},
@@ -122,15 +126,14 @@ export const DEFAULT_DATA: DataSeries[] = [
       {value: 623, key: '2020-03-13T12:00:00'},
       {value: 21, key: '2020-03-14T12:00:00'},
     ],
-    color: '#286A7B',
+    color: 'rgba(40, 106, 123, 1)',
     metadata: {
       relatedIndex: 3,
-      areaColor: '#F0F8FB',
+      areaColor: 'rgba(47, 175, 218, 0.2)',
     },
     styleOverride: {
       line: {
         strokeDasharray: '3 6',
-        width: 3,
       },
     },
   },
@@ -152,9 +155,6 @@ export const DEFAULT_DATA: DataSeries[] = [
       {value: 473, key: '2020-03-13T12:00:00'},
       {value: 0, key: '2020-03-14T12:00:00'},
     ],
-    color: '#E0F1F8',
-    metadata: {
-      shape: 'Bar',
-    },
+    color: 'rgba(103, 197, 228, 1)',
   },
 ];
