@@ -77,6 +77,7 @@ export type {
 
 export {
   renderLinearComparisonTooltip,
+  renderRelationalTooltipContent,
   setSingleSeriesActive,
 } from './utilities';
 

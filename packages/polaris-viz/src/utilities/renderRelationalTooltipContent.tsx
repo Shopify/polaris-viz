@@ -8,8 +8,8 @@ import {
   TooltipTitle,
   TooltipRow,
   LinePreview,
-} from '../../';
-import type {RenderTooltipContentData, TooltipFormatters} from '../../../types';
+} from '../components';
+import type {RenderTooltipContentData, TooltipFormatters} from '../types';
 
 interface Group {
   title: string;
