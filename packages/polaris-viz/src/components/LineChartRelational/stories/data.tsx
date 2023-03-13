@@ -8,7 +8,7 @@ import {
   formatLinearXAxisLabel,
   formatLinearYAxisLabel,
 } from '../../../storybook/utilities';
-import {renderRelationalTooltipContent} from '../utilities';
+import {renderRelationalTooltipContent} from '../../../utilities';
 
 export const TOOLTIP_CONTENT = {
   empty: undefined,
