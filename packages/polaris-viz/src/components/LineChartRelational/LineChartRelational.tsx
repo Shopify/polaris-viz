@@ -1,10 +1,12 @@
 import type {WithRequired} from '@shopify/polaris-viz-core';
 import {DEFAULT_CHART_PROPS} from '@shopify/polaris-viz-core';
+import {Fragment} from 'react';
 
 import type {LineChartProps} from '../LineChart';
 import {LineChart} from '../LineChart';
 
 import {RelatedAreas} from './components';
+import {MissingDataArea} from './components/MissingDataArea';
 
 export function LineChartRelational(props: LineChartProps) {
   const {
@@ -38,7 +40,16 @@ export function LineChartRelational(props: LineChartProps) {
       renderLegendContent={renderLegendContent}
       showLegend={showLegend}
       skipLinkText={skipLinkText}
-      slots={{chart: (props) => <RelatedAreas {...props} data={data} />}}
+      slots={{
+        chart: (props) => {
+          return (
+            <Fragment>
+              <MissingDataArea {...props} data={data} />
+              <RelatedAreas {...props} data={data} />
+            </Fragment>
+          );
+        },
+      }}
       state={state}
       theme={theme}
       tooltipOptions={tooltipOptions}

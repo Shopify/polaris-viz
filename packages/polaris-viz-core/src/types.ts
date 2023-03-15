@@ -156,6 +156,10 @@ export interface TrendIndicatorTheme {
   background: string;
 }
 
+export interface MissingDataTheme {
+  lineColor: string;
+}
+
 export interface PartialTheme {
   arc?: Partial<ArcTheme>;
   chartContainer?: Partial<ChartContainerTheme>;
@@ -169,6 +173,7 @@ export interface PartialTheme {
   seriesColors?: Partial<SeriesColors>;
   tooltip?: Partial<TooltipTheme>;
   trendIndicator?: Partial<TrendIndicatorTheme>;
+  missingData?: Partial<MissingDataTheme>;
 }
 
 export interface Theme {
@@ -185,6 +190,7 @@ export interface Theme {
   seriesColors: SeriesColors;
   tooltip: TooltipTheme;
   trendIndicator: TrendIndicatorTheme;
+  missingData: MissingDataTheme;
 }
 
 export enum DataType {
