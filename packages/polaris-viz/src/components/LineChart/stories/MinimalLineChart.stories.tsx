@@ -12,7 +12,7 @@ const MinimalLineChartTemplate: Story<LineChartProps> = (args: LineChartProps) =
   return (
     <PolarisVizProvider
       themes={{
-        Default: {
+        Light: {
           chartContainer: {
             padding: '0px',
           },

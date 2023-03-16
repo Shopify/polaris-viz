@@ -64,6 +64,7 @@ export function LineChart(props: LineChartProps) {
   };
 
   const selectedTheme = useTheme(theme);
+  console.log({selectedTheme})
   const seriesColors = useThemeSeriesColors(data, selectedTheme);
 
   const skipLinkAnchorId = useRef(uniqueId('lineChart'));

@@ -52,6 +52,7 @@ const xAxisOptions: Required<XAxisOptions> = {
 const yAxisOptions: Required<YAxisOptions> = {
   labelFormatter: jest.fn(),
   integersOnly: false,
+  hide: false,
 };
 
 const MOCK_PROPS: ChartProps = {
@@ -529,4 +530,21 @@ describe('<Chart />', () => {
       expect(chart).toContainReactComponent(TooltipWrapper);
     });
   });
+
+  // describe('yAxisOptions.hide', () => {
+  //   it('does not render YAxis when true', () => {
+  //     const chart = mountWithProvider(
+  //       <Chart {...MOCK_PROPS} />,
+  //       mockDefaultTheme({grid: {showHorizontalLines: false}}),
+  //     );
+
+  //     expect(chart).not.toContainReactComponent(HorizontalGridLines);
+  //   });
+
+  //   it('renders HorizontalGridLines when true', () => {
+  //     const chart = mountWithProvider(<Chart {...MOCK_PROPS} />);
+
+  //     expect(chart).toContainReactComponent(HorizontalGridLines);
+  //   });
+  // });
 });
