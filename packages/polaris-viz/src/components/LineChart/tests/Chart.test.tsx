@@ -531,20 +531,25 @@ describe('<Chart />', () => {
     });
   });
 
-  // describe('yAxisOptions.hide', () => {
-  //   it('does not render YAxis when true', () => {
-  //     const chart = mountWithProvider(
-  //       <Chart {...MOCK_PROPS} />,
-  //       mockDefaultTheme({grid: {showHorizontalLines: false}}),
-  //     );
+  describe('yAxisOptions.hide', () => {
+    it('does not render YAxis when true', () => {
+      const chart = mountWithProvider(
+        <Chart
+          {...MOCK_PROPS}
+          yAxisOptions={{...MOCK_PROPS.yAxisOptions, hide: true}}
+        />,
+      );
 
-  //     expect(chart).not.toContainReactComponent(HorizontalGridLines);
-  //   });
+      expect(chart).not.toContainReactComponent(YAxis);
+    });
 
-  //   it('renders HorizontalGridLines when true', () => {
-  //     const chart = mountWithProvider(<Chart {...MOCK_PROPS} />);
+    it('does not render YAxis when theme is set to hide it', () => {
+      const chart = mountWithProvider(
+        <Chart {...MOCK_PROPS} />,
+        mockDefaultTheme({yAxis: {hide: true}}),
+      );
 
-  //     expect(chart).toContainReactComponent(HorizontalGridLines);
-  //   });
-  // });
+      expect(chart).not.toContainReactComponent(YAxis);
+    });
+  });
 });
