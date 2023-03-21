@@ -9,6 +9,7 @@ export function getYAxisOptionsWithDefaults(
   return {
     labelFormatter: (value: number) => `${value}`,
     integersOnly: false,
+    hide: false,
     ...yAxisOptionsFiltered,
   };
 }

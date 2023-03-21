@@ -4,7 +4,6 @@ import type {Story} from '@storybook/react';
 export {META as default} from './meta';
 
 import {LineChart, LineChartProps} from '../..';
-import {formatLinearXAxisLabel} from '../../../storybook/utilities';
 
 import {DEFAULT_DATA, DEFAULT_PROPS} from './data';
 
@@ -33,12 +32,7 @@ export const MinimalLineChart: Story<LineChartProps> = MinimalLineChartTemplate.
 MinimalLineChart.args = {
   ...DEFAULT_PROPS,
   data: DEFAULT_DATA,
-  xAxisOptions: {
-    labelFormatter: formatLinearXAxisLabel,
-    hide: true,
-  },
   yAxisOptions: {
     hide: true,
   },
-  showLegend: false,
 };

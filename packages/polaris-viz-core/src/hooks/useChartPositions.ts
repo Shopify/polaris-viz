@@ -15,9 +15,6 @@ export interface Props {
   hideYAxis?: boolean;
 }
 
-const leftOffset = -20;
-const rightOffset = 20;
-
 export function useChartPositions({
   annotationsHeight,
   height,
@@ -30,13 +27,13 @@ export function useChartPositions({
     grid: {horizontalMargin},
   } = useTheme();
 
-  const chartXPosition = hideYAxis ? leftOffset : horizontalMargin + yAxisWidth + Y_AXIS_CHART_SPACING;
+  const chartXPosition = hideYAxis ? 0 : horizontalMargin + yAxisWidth + Y_AXIS_CHART_SPACING;
   const chartYPosition = (ChartMargin.Top as number) + annotationsHeight;
 
   const drawableHeight =
     height - chartYPosition - xAxisHeight - LABEL_AREA_TOP_SPACING;
 
-  const drawableWidth = width - chartXPosition - horizontalMargin + rightOffset;
+  const drawableWidth = width - chartXPosition - horizontalMargin;
 
   return {
     chartXPosition,
