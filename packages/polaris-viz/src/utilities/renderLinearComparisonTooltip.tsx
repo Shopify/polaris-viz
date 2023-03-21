@@ -67,7 +67,9 @@ export function renderLinearComparisonTooltip(
 
     return (
       <Fragment key={seriesName}>
-        <TooltipSeriesName theme={theme}>{seriesName}</TooltipSeriesName>
+        {dataSeries.length > 0 && (
+          <TooltipSeriesName theme={theme}>{seriesName}</TooltipSeriesName>
+        )}
         {dataSeries.map(({data, color, isComparison, groupIndex}) => {
           const item = data[tooltipData.activeIndex];
 

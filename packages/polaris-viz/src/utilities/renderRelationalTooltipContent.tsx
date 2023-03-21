@@ -82,7 +82,9 @@ export function renderRelationalTooltipContent(
 
     return (
       <Fragment key={seriesName}>
-        <TooltipSeriesName theme={theme}>{seriesName}</TooltipSeriesName>
+        {dataSeries.length > 0 && (
+          <TooltipSeriesName theme={theme}>{seriesName}</TooltipSeriesName>
+        )}
         {dataSeries.map(({name, data, color, groupIndex, styleOverride}) => {
           const item = data[tooltipData.activeIndex];
 
