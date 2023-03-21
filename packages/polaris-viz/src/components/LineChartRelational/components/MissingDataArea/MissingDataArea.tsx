@@ -2,9 +2,9 @@ import {Fragment, memo, useRef} from 'react';
 import type {LineChartSlotProps} from 'types';
 import {uniqueId, useTheme} from '@shopify/polaris-viz-core';
 
-import type {LineChartRelationalDataSeries} from '../types';
+import type {LineChartRelationalDataSeries} from '../../types';
 
-interface Props extends LineChartSlotProps {
+export interface Props extends LineChartSlotProps {
   data: LineChartRelationalDataSeries[];
 }
 
@@ -31,6 +31,11 @@ function MissingDataAreaRaw({
   });
 
   const lengthDiff = largestLength - smallestLength;
+
+  if (lengthDiff === largestLength) {
+    return null;
+  }
+
   const width = xScale(lengthDiff);
 
   return (

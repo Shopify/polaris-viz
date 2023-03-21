@@ -10,12 +10,11 @@ import {area as areaShape} from 'd3-shape';
 import {animated, useSpring} from '@react-spring/web';
 import type {LineChartSlotProps} from 'types';
 
-import {useExternalHideEvents, useWatchActiveSeries} from '../../../hooks';
-import type {LineChartRelationalDataSeries} from '../types';
+import {useExternalHideEvents, useWatchActiveSeries} from '../../../../hooks';
+import type {LineChartRelationalDataSeries} from '../../types';
+import {Area} from '../Area';
 
-import {Area} from './Area';
-
-interface RelatedAreaProps extends LineChartSlotProps {
+export interface RelatedAreaProps extends LineChartSlotProps {
   data: LineChartRelationalDataSeries[];
 }
 

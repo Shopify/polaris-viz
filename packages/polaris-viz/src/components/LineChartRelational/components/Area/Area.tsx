@@ -4,9 +4,9 @@ import {
   usePrevious,
 } from '@shopify/polaris-viz-core';
 
-import type {LineChartRelationalDataSeries} from '../types';
+import type {LineChartRelationalDataSeries} from '../../types';
 
-interface AreaProps {
+export interface AreaProps {
   activeIndex: number;
   fill: string;
   getAreaGenerator: (series: LineChartRelationalDataSeries) => string | null;
