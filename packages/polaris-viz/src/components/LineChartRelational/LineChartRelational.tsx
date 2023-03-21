@@ -5,8 +5,7 @@ import {Fragment} from 'react';
 import type {LineChartProps} from '../LineChart';
 import {LineChart} from '../LineChart';
 
-import {RelatedAreas} from './components';
-import {MissingDataArea} from './components/MissingDataArea';
+import {RelatedAreas, MissingDataArea} from './components';
 
 export function LineChartRelational(props: LineChartProps) {
   const {
