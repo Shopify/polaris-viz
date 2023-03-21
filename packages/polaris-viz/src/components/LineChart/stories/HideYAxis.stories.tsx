@@ -18,6 +18,7 @@ const MinimalLineChartTemplate: Story<LineChartProps> = (args: LineChartProps) =
           grid: {
             showHorizontalLines: false,
             horizontalMargin: 0,
+            horizontalOverflow: true,
           },
         },
       }}
