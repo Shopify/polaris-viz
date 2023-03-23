@@ -7,20 +7,23 @@ import {LineChart, LineChartProps} from '../..';
 
 import {DEFAULT_DATA, DEFAULT_PROPS} from './data';
 
-const MinimalLineChartTemplate: Story<LineChartProps> = (args: LineChartProps) => {
+const HideYAxisTemplate: Story<LineChartProps> = (args: LineChartProps) => {
+  const themeOverrides = {
+    chartContainer: {
+      // padding: '0px',
+    },
+    grid: {
+      // showHorizontalLines: false,
+      horizontalMargin: 0, //controls right gap
+      horizontalOverflow: false,
+    },
+
+  }
   return (
     <PolarisVizProvider
       themes={{
-        Light: {
-          chartContainer: {
-            padding: '0px',
-          },
-          grid: {
-            showHorizontalLines: false,
-            horizontalMargin: 0,
-            horizontalOverflow: true,
-          },
-        },
+        Default: themeOverrides,
+        Light: themeOverrides,
       }}
     >
       <LineChart {...args} />
@@ -28,9 +31,9 @@ const MinimalLineChartTemplate: Story<LineChartProps> = (args: LineChartProps) =
   )
 };
 
-export const MinimalLineChart: Story<LineChartProps> = MinimalLineChartTemplate.bind({});
+export const HideYAxis: Story<LineChartProps> = HideYAxisTemplate.bind({});
 
-MinimalLineChart.args = {
+HideYAxis.args = {
   ...DEFAULT_PROPS,
   data: DEFAULT_DATA,
   yAxisOptions: {

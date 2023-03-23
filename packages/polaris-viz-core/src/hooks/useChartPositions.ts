@@ -27,7 +27,7 @@ export function useChartPositions({
     grid: {horizontalMargin},
   } = useTheme();
 
-  const chartXPosition = hideYAxis ? 0 : horizontalMargin + yAxisWidth + Y_AXIS_CHART_SPACING;
+  const chartXPosition = hideYAxis ? horizontalMargin : horizontalMargin + yAxisWidth + Y_AXIS_CHART_SPACING;
   const chartYPosition = (ChartMargin.Top as number) + annotationsHeight;
 
   const drawableHeight =

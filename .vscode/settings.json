@@ -5,7 +5,7 @@
     "source.fixAll.eslint": true
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true,
+  "editor.formatOnSave": false,
   "files.exclude": {
     "**/.DS_Store": true,
     "**/.git": true,
@@ -27,6 +27,6 @@
   "typescript.tsserver.maxTsServerMemory": 8000,
   "typescript.tsdk": "./node_modules/typescript/lib",
   "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "vscode.typescript-language-features"
   }
 }
