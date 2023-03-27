@@ -58,24 +58,27 @@ export function TooltipContent({
             {name != null && (
               <TooltipSeriesName theme={theme}>{name}</TooltipSeriesName>
             )}
-            {series.map(({key, value, color, isComparison}, seriesIndex) => {
-              const indexOffset = data[dataIndex - 1]
-                ? data[dataIndex - 1].data.length
-                : 0;
+            {series.map(
+              ({key, value, color, isComparison, isHidden}, seriesIndex) => {
+                const indexOffset = data[dataIndex - 1]
+                  ? data[dataIndex - 1].data.length
+                  : 0;
 
-              return (
-                <TooltipRow
-                  key={`row-${seriesIndex}`}
-                  activeIndex={activeIndex}
-                  color={color}
-                  index={seriesIndex + indexOffset}
-                  isComparison={isComparison}
-                  label={key}
-                  shape={shape}
-                  value={value}
-                />
-              );
-            })}
+                return (
+                  <TooltipRow
+                    key={`row-${seriesIndex}`}
+                    activeIndex={activeIndex}
+                    color={color}
+                    index={seriesIndex + indexOffset}
+                    isComparison={isComparison}
+                    isHidden={isHidden}
+                    label={key}
+                    shape={shape}
+                    value={value}
+                  />
+                );
+              },
+            )}
           </div>
         );
       })}
