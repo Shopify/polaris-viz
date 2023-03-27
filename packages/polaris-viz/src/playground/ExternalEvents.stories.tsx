@@ -3,7 +3,6 @@ import type {Story} from '@storybook/react';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {LineChartRelational} from '../components/LineChartRelational';
-import {PolarisVizProvider} from '../components/PolarisVizProvider';
 import {setSingleSeriesActive} from '../utilities';
 import {useWatchActiveSeries} from '../hooks';
 import {setHiddenItems} from '../hooks/ExternalEvents';
@@ -11,7 +10,7 @@ import {setHiddenItems} from '../hooks/ExternalEvents';
 export default {
   title: 'polaris-viz/Playground/ExternalEvents',
   parameters: {},
-  decorators: [(Story) => <div>{Story()}</div>],
+  decorators: [(Story) => <div style={{height: 500}}>{Story()}</div>],
   argTypes: {},
 };
 
@@ -90,17 +89,7 @@ const Template: Story = () => {
           <strong>{activeName}</strong>.
         </p>
       </div>
-      <PolarisVizProvider
-        themes={{
-          Default: {
-            chartContainer: {
-              padding: '20px',
-            },
-          },
-        }}
-      >
-        <LineChartRelational id={CHART_ID} data={DEFAULT_DATA} />
-      </PolarisVizProvider>
+      <LineChartRelational id={CHART_ID} data={DEFAULT_DATA} />
     </>
   );
 };
@@ -111,7 +100,7 @@ const style = {marginBottom: 10, gap: 10, display: 'flex'};
 
 const RELATIONAL_DATA: DataSeries[] = [
   {
-    name: 'Apr 1 – Apr 14, 2020',
+    name: 'Average',
     data: [
       {value: 333, key: '2020-04-01T12:00:00'},
       {value: 797, key: '2020-04-02T12:00:00'},
@@ -129,14 +118,9 @@ const RELATIONAL_DATA: DataSeries[] = [
       {value: 129, key: '2020-04-14T12:00:00'},
     ],
     color: [
-      {offset: 0, color: '#986BFF'},
-      {offset: 100, color: '#3AA4F6'},
+      {offset: 0, color: 'rgba(149, 101, 255, 1)'},
+      {offset: 100, color: 'rgba(75, 146, 229, 1)'},
     ],
-    styleOverride: {
-      line: {
-        width: 3,
-      },
-    },
   },
   {
     name: '75th Percentile',
@@ -156,15 +140,14 @@ const RELATIONAL_DATA: DataSeries[] = [
       {value: 773, key: '2020-03-13T12:00:00'},
       {value: 171, key: '2020-03-14T12:00:00'},
     ],
-    color: 'red',
+    color: 'rgba(103, 197, 228, 1)',
     metadata: {
       relatedIndex: 2,
-      areaColor: 'rgba(255,0,0,0.1)',
-      shape: 'Bar',
+      areaColor: 'rgba(103, 197, 228, 0.1)',
     },
   },
   {
-    name: 'Similar stores median',
+    name: 'Median',
     data: [
       {value: 759, key: '2020-03-02T12:00:00'},
       {value: 238, key: '2020-03-01T12:00:00'},
@@ -181,11 +164,14 @@ const RELATIONAL_DATA: DataSeries[] = [
       {value: 623, key: '2020-03-13T12:00:00'},
       {value: 21, key: '2020-03-14T12:00:00'},
     ],
-    color: '#286A7B',
+    color: 'rgba(40, 106, 123, 1)',
+    metadata: {
+      relatedIndex: 3,
+      areaColor: 'rgba(47, 175, 218, 0.2)',
+    },
     styleOverride: {
       line: {
         strokeDasharray: '3 6',
-        width: 3,
       },
     },
   },
@@ -207,12 +193,7 @@ const RELATIONAL_DATA: DataSeries[] = [
       {value: 473, key: '2020-03-13T12:00:00'},
       {value: 0, key: '2020-03-14T12:00:00'},
     ],
-    color: 'blue',
-    metadata: {
-      shape: 'Bar',
-      relatedIndex: 2,
-      areaColor: 'rgba(0,0,255,0.1)',
-    },
+    color: 'rgba(103, 197, 228, 1)',
   },
 ];
 
@@ -282,22 +263,13 @@ const HiddenTemplate: Story = () => {
           );
         })}
       </div>
-      <PolarisVizProvider
-        themes={{
-          Default: {
-            chartContainer: {
-              padding: '20px',
-            },
-          },
-        }}
-      >
-        <LineChartRelational
-          data={RELATIONAL_DATA}
-          id={CHART_ID}
-          showLegend={false}
-          theme="Light"
-        />
-      </PolarisVizProvider>
+      <LineChartRelational
+        isAnimated={true}
+        data={RELATIONAL_DATA}
+        id={CHART_ID}
+        // showLegend={false}
+        theme="Light"
+      />
     </>
   );
 };
