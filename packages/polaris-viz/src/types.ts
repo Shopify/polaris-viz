@@ -96,7 +96,13 @@ export interface RenderTooltipContentData {
 
 export interface TooltipData {
   shape: Shape;
-  data: RenderTooltipDataPoint[];
+  data: {
+    key: string;
+    value: string;
+    color?: Color;
+    isComparison?: boolean;
+    isHidden?: boolean;
+  }[];
   name?: string;
 }
 
