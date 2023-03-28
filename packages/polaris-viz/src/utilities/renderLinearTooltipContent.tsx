@@ -23,9 +23,10 @@ interface Options {
 
 interface TooltipDataSeries extends Required<DataSeries> {
   groupIndex: number;
+  isHidden: boolean;
 }
 
-export function renderRelationalTooltipContent(
+export function renderLinearTooltipContent(
   tooltipData: RenderTooltipContentData,
   options: Options = {},
 ): ReactNode {
@@ -76,31 +77,37 @@ export function renderRelationalTooltipContent(
           ...tooltipData.dataSeries[groupIndex],
           color: rawDataSeries.color,
           groupIndex,
+          isHidden: rawDataSeries.isHidden,
         };
       })
       .filter((series): series is TooltipDataSeries => Boolean(series));
 
+    const hasTitle = dataSeries.some(({isHidden}) => isHidden !== true);
+
     return (
       <Fragment key={seriesName}>
-        {dataSeries.length > 0 && (
+        {hasTitle && (
           <TooltipSeriesName theme={theme}>{seriesName}</TooltipSeriesName>
         )}
-        {dataSeries.map(({name, data, color, groupIndex, styleOverride}) => {
-          const item = data[tooltipData.activeIndex];
+        {dataSeries.map(
+          ({name, data, color, groupIndex, styleOverride, isHidden}) => {
+            const item = data[tooltipData.activeIndex];
 
-          return (
-            <TooltipRow
-              activeIndex={-1}
-              color={color}
-              index={groupIndex}
-              key={`row-${groupIndex}`}
-              label={name}
-              renderSeriesIcon={() => renderSeriesIcon(color, styleOverride)}
-              shape="Line"
-              value={formatters.valueFormatter(item.value ?? 0)}
-            />
-          );
-        })}
+            return (
+              <TooltipRow
+                activeIndex={-1}
+                color={color}
+                index={groupIndex}
+                isHidden={isHidden}
+                key={`row-${groupIndex}`}
+                label={name}
+                renderSeriesIcon={() => renderSeriesIcon(color, styleOverride)}
+                shape="Line"
+                value={formatters.valueFormatter(item.value ?? 0)}
+              />
+            );
+          },
+        )}
       </Fragment>
     );
   });
