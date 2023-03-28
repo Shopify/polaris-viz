@@ -8,7 +8,7 @@ import {
   formatLinearXAxisLabel,
   formatLinearYAxisLabel,
 } from '../../../storybook/utilities';
-import {renderRelationalTooltipContent} from '../../../utilities';
+import {renderLinearTooltipContent} from '../../../utilities';
 
 export const TOOLTIP_CONTENT = {
   empty: undefined,
@@ -49,7 +49,7 @@ export const DEFAULT_PROPS: Partial<LineChartProps> = {
     titleFormatter: (value) => new Date(value!).toLocaleDateString(),
     valueFormatter: formatLinearYAxisLabel,
     renderTooltipContent: (tooltipData) => {
-      return renderRelationalTooltipContent(tooltipData, {
+      return renderLinearTooltipContent(tooltipData, {
         title: tooltipData.title,
         groups: [
           {title: 'Your store', indexes: [0]},
