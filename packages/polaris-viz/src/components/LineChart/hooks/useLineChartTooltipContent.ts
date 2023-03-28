@@ -38,10 +38,6 @@ export function useLineChartTooltipContent({
         : '';
 
       data.forEach(({name, data: seriesData, color, isComparison}, index) => {
-        if (hiddenIndexes.includes(index)) {
-          return null;
-        }
-
         if (!seriesData[activeIndex]) {
           return;
         }
@@ -52,6 +48,7 @@ export function useLineChartTooltipContent({
           value,
           color: color!,
           isComparison,
+          isHidden: hiddenIndexes.includes(index),
         });
       });
 

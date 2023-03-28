@@ -20,6 +20,7 @@ interface Props {
   value: string;
   color?: Color;
   isComparison?: boolean;
+  isHidden?: boolean;
   renderSeriesIcon?: () => React.ReactNode;
 }
 
@@ -28,12 +29,17 @@ export function TooltipRow({
   color,
   index,
   isComparison = false,
+  isHidden = false,
   label,
   renderSeriesIcon,
   shape,
   value,
 }: Props) {
   const selectedTheme = useTheme();
+
+  if (isHidden) {
+    return null;
+  }
 
   return (
     <div

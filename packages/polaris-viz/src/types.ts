@@ -72,6 +72,7 @@ export interface RenderTooltipDataPoint {
   isComparison?: boolean;
   key: number | string;
   value: number | string | null;
+  isHidden?: boolean;
 }
 
 export interface TooltipFormatters {
@@ -100,6 +101,7 @@ export interface TooltipData {
     value: string;
     color?: Color;
     isComparison?: boolean;
+    isHidden?: boolean;
   }[];
   name?: string;
 }
