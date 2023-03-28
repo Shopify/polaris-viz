@@ -64,62 +64,74 @@ export function renderLinearTooltipContent(
     );
   }
 
-  const content = groups.map(({title: seriesName, indexes}) => {
-    const dataSeries = indexes
-      .map((groupIndex) => {
-        if (tooltipData.data[0].data[groupIndex] == null) {
-          return;
-        }
+  function renderContent({
+    activeColorVisionIndex,
+  }: {
+    activeColorVisionIndex: number;
+  }) {
+    return groups.map(({title: seriesName, indexes}) => {
+      const dataSeries = indexes
+        .map((groupIndex) => {
+          if (tooltipData.data[0].data[groupIndex] == null) {
+            return;
+          }
 
-        const rawDataSeries = tooltipData.data[0].data[groupIndex];
+          const rawDataSeries = tooltipData.data[0].data[groupIndex];
 
-        return {
-          ...tooltipData.dataSeries[groupIndex],
-          color: rawDataSeries.color,
-          groupIndex,
-          isHidden: rawDataSeries.isHidden,
-        };
-      })
-      .filter((series): series is TooltipDataSeries => Boolean(series));
+          return {
+            ...tooltipData.dataSeries[groupIndex],
+            color: rawDataSeries.color,
+            groupIndex,
+            isHidden: rawDataSeries.isHidden,
+          };
+        })
+        .filter((series): series is TooltipDataSeries => Boolean(series));
 
-    const hasTitle = dataSeries.some(({isHidden}) => isHidden !== true);
+      const hasTitle = dataSeries.some(({isHidden}) => isHidden !== true);
 
-    return (
-      <Fragment key={seriesName}>
-        {hasTitle && (
-          <TooltipSeriesName theme={theme}>{seriesName}</TooltipSeriesName>
-        )}
-        {dataSeries.map(
-          ({name, data, color, groupIndex, styleOverride, isHidden}) => {
-            const item = data[tooltipData.activeIndex];
+      return (
+        <Fragment key={seriesName}>
+          {hasTitle && (
+            <TooltipSeriesName theme={theme}>{seriesName}</TooltipSeriesName>
+          )}
+          {dataSeries.map(
+            ({name, data, color, groupIndex, styleOverride, isHidden}) => {
+              const item = data[tooltipData.activeIndex];
 
-            return (
-              <TooltipRow
-                activeIndex={-1}
-                color={color}
-                index={groupIndex}
-                isHidden={isHidden}
-                key={`row-${groupIndex}`}
-                label={name}
-                renderSeriesIcon={() => renderSeriesIcon(color, styleOverride)}
-                shape="Line"
-                value={formatters.valueFormatter(item.value ?? 0)}
-              />
-            );
-          },
-        )}
-      </Fragment>
-    );
-  });
+              return (
+                <TooltipRow
+                  activeIndex={activeColorVisionIndex}
+                  color={color}
+                  index={groupIndex}
+                  isHidden={isHidden}
+                  key={`row-${groupIndex}`}
+                  label={name}
+                  renderSeriesIcon={() =>
+                    renderSeriesIcon(color, styleOverride)
+                  }
+                  shape="Line"
+                  value={formatters.valueFormatter(item.value ?? 0)}
+                />
+              );
+            },
+          )}
+        </Fragment>
+      );
+    });
+  }
 
   return (
     <TooltipContentContainer maxWidth={300} theme={theme}>
-      {title != null && (
-        <TooltipTitle theme={theme}>
-          {formatters.titleFormatter(title)}
-        </TooltipTitle>
+      {({activeColorVisionIndex}) => (
+        <Fragment>
+          {title != null && (
+            <TooltipTitle theme={theme}>
+              {formatters.titleFormatter(title)}
+            </TooltipTitle>
+          )}
+          {renderContent({activeColorVisionIndex})}
+        </Fragment>
       )}
-      {content}
     </TooltipContentContainer>
   );
 }
