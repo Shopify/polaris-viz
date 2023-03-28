@@ -75,10 +75,6 @@ export type {
   ChartState,
 } from '@shopify/polaris-viz-core';
 
-export {
-  renderLinearComparisonTooltip,
-  renderRelationalTooltipContent,
-  setSingleSeriesActive,
-} from './utilities';
+export {renderLinearTooltipContent, setSingleSeriesActive} from './utilities';
 
 export {useWatchActiveSeries, setHiddenItems} from './hooks';
