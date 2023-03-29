@@ -106,6 +106,7 @@ export function useLabels({
     onHeightChange(containerHeight);
   }, [containerHeight, onHeightChange]);
 
+  console.log('inside useLabels', {lines});
   return {lines, containerHeight};
 }
 

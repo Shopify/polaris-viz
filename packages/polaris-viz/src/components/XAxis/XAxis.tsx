@@ -37,6 +37,8 @@ export function XAxis({
     allowLineWrap,
   });
 
+  const hideYAxis = true;
+
   return (
     <g aria-hidden>
       {lines.map((line, index) => {

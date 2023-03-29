@@ -71,6 +71,7 @@ export interface ChartProps {
   annotationsLookupTable: AnnotationLookupTable;
   data: LineChartDataSeriesWithDefaults[];
   showLegend: boolean;
+  showAxes: boolean;
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
   dimensions?: Dimensions;
@@ -92,6 +93,7 @@ export function Chart({
   renderLegendContent,
   renderTooltipContent,
   showLegend = true,
+  showAxes = true,
   theme = DEFAULT_THEME_NAME,
   xAxisOptions,
   yAxisOptions,
@@ -152,8 +154,10 @@ export function Chart({
   const {reversedSeries, longestSeriesLength, longestSeriesIndex} =
     useFormatData(data);
 
-  const hideXAxis = xAxisOptions.hide || selectedTheme.xAxis.hide;
-  const hideYAxis = yAxisOptions.hide || selectedTheme.yAxis.hide;
+
+  const hideXAxis = !showAxes || xAxisOptions.hide || selectedTheme.xAxis.hide;
+  const hideYAxis = !showAxes;
+  console.log({hideYAxis})
 
   const {
     drawableWidth,
@@ -178,6 +182,8 @@ export function Chart({
     labels: formattedLabels,
     longestSeriesLength,
   });
+  console.log({xAxisDetails});
+  console.log({labels});
 
   const {ticks, yScale} = useYScale({
     ...yScaleOptions,

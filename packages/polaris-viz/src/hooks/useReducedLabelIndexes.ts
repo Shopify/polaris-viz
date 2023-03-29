@@ -17,7 +17,7 @@ export function useReducedLabelIndexes({
     return Array(dataLength)
       .fill(null)
       .map((_, index) => index)
-      .filter((_, index) => index % skipEveryNthLabel === 0);
+      .filter((_, index) => (index - 1) % skipEveryNthLabel === 0);
   }, [dataLength, skipEveryNthLabel]);
 
   return visibleIndexesForWideCharts;

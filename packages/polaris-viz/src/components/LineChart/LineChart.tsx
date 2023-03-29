@@ -37,6 +37,7 @@ export type LineChartProps = {
   emptyStateText?: string;
   renderLegendContent?: RenderLegendContent;
   showLegend?: boolean;
+  showAxes?: boolean;
   skipLinkText?: string;
   tooltipOptions?: TooltipOptions;
   xAxisOptions?: Partial<XAxisOptions>;
@@ -52,6 +53,7 @@ export function LineChart(props: LineChartProps) {
     isAnimated,
     renderLegendContent,
     showLegend = true,
+    showAxes=true,
     skipLinkText,
     state,
     theme,
@@ -99,6 +101,7 @@ export function LineChart(props: LineChartProps) {
             renderLegendContent={renderLegendContent}
             renderTooltipContent={renderTooltip}
             showLegend={showLegend}
+            showAxes={showAxes}
             theme={theme}
             xAxisOptions={xAxisOptionsWithDefaults}
             yAxisOptions={yAxisOptionsWithDefaults}
