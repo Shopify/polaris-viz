@@ -49,3 +49,27 @@ Annotations.args = {
     },
   ],
 };
+
+export const NegativeAreas: Story<LineChartProps> = Template.bind({});
+
+NegativeAreas.args = {
+  ...DEFAULT_PROPS,
+  data: [
+    {
+      name: 'Apr 1 – Apr 14, 2020',
+      data: [
+        {value: 0, key: '2020-04-01T12:00:00'},
+        {value: 0, key: '2020-04-02T12:00:00'},
+        {value: 0, key: '2020-04-03T12:00:00'},
+        {value: 0, key: '2020-04-04T12:00:00'},
+        {value: 100, key: '2020-04-05T12:00:00'},
+        {value: 0, key: '2020-04-06T12:00:00'},
+        {value: 0, key: '2020-04-07T12:00:00'},
+        {value: -100, key: '2020-04-08T12:00:00'},
+        {value: 0, key: '2020-04-09T12:00:00'},
+      ],
+      color: 'red',
+    },
+  ],
+  theme: 'Light',
+};

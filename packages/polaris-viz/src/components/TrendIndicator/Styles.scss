@@ -1,0 +1,90 @@
+.Container {
+  // background: purple;
+  pointer-events: none;
+  position: relative;
+
+  &:focus-within,
+  &:hover {
+    .Content {
+      transform: translateX(0);
+      transition-timing-function: cubic-bezier(0.32, -0.01, 0.46, 1.35);
+      transition-duration: 180ms;
+    }
+
+    .Icon {
+      color: #2c6ecb;
+    }
+
+    .Button {
+      opacity: 1;
+    }
+
+    .Shadow {
+      opacity: 1;
+      transform: scale3d(1, 1, 1);
+    }
+  }
+}
+
+.Mask {
+  overflow: hidden;
+  // border-radius: 20px;
+}
+
+.Content {
+  height: 28px;
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  transform: translateX(calc(100% - 32px));
+  position: relative;
+  border-radius: 20px;
+  padding: 0 2px 0 6px;
+
+  transition: transform 110ms ease-in-out;
+}
+
+.Icon {
+  height: 20px;
+  width: 20px;
+  color: #81868b;
+  transition: color 180ms ease-in-out;
+  pointer-events: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+}
+
+.Button {
+  opacity: 0;
+  transition: opacity 180ms ease-in-out;
+  appearance: none;
+  background: none;
+  border: 0;
+  cursor: pointer;
+
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+
+  color: #2c6ecb;
+  padding-left: 26px;
+}
+
+.Shadow {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  border-radius: 20px;
+  pointer-events: none;
+  box-shadow: 0 3px 6px -3px rgba(23, 24, 24, 0.08),
+    0 8px 20px -4px rgba(23, 24, 24, 0.12);
+  top: 0;
+  opacity: 0;
+  transition: transform 180ms cubic-bezier(0.32, -0.01, 0.46, 1.35);
+  transform: scale3d(0, 0.5, 1);
+  transform-origin: center right;
+}
