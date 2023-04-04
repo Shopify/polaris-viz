@@ -107,6 +107,11 @@ export const DEFAULT_DATA: DataSeries[] = [
       relatedIndex: 2,
       areaColor: 'rgba(103, 197, 228, 0.1)',
     },
+    styleOverride: {
+      line: {
+        hasArea: false,
+      },
+    },
   },
   {
     name: 'Median',
@@ -133,6 +138,7 @@ export const DEFAULT_DATA: DataSeries[] = [
     },
     styleOverride: {
       line: {
+        hasArea: false,
         strokeDasharray: '3 6',
       },
     },
@@ -156,5 +162,10 @@ export const DEFAULT_DATA: DataSeries[] = [
       {value: 0, key: '2020-03-14T12:00:00'},
     ],
     color: 'rgba(103, 197, 228, 1)',
+    styleOverride: {
+      line: {
+        hasArea: false,
+      },
+    },
   },
 ];

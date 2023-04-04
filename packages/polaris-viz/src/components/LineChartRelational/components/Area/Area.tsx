@@ -55,7 +55,11 @@ export function Area({
       d={spring.pathD}
       fill={fill}
       style={{
-        ...getColorVisionStylesForActiveIndex({activeIndex, index}),
+        ...getColorVisionStylesForActiveIndex({
+          activeIndex,
+          index: -1,
+          fadedOpacity: 0.2,
+        }),
       }}
     />
   );

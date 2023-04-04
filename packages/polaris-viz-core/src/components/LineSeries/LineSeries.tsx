@@ -129,10 +129,12 @@ export function LineSeries({
     : data.width ?? selectedTheme.line.width;
   const strokeDasharray = data.strokeDasharray ?? 'none';
 
-  const PathHoverTargetSize = 40;
+  const PathHoverTargetSize = 15;
 
   const showPoint =
     -isSparkChart && !data.isComparison && lastLinePointCoordinates != null;
+  const showArea =
+    selectedTheme.line.hasArea && data?.styleOverride?.line?.hasArea !== false;
 
   const zeroLineY = yScale(0);
 
@@ -199,7 +201,7 @@ export function LineSeries({
           </Mask>
         </Defs>
 
-        {selectedTheme.line.hasArea &&
+        {showArea &&
           (dataIsValidForAnimation ? (
             <AnimatedArea
               areaGenerator={areaGenerator}

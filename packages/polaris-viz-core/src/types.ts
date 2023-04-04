@@ -19,6 +19,7 @@ export interface DataSeries {
 
 interface StyleOverride {
   line?: {
+    hasArea?: boolean;
     width?: number;
     strokeDasharray?: string;
   };
