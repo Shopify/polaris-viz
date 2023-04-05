@@ -1,5 +1,5 @@
-import {useState, useRef} from 'react';
-import * as React from 'react';
+import type {ReactNode} from 'react';
+import {useState, useRef, Fragment} from 'react';
 import {
   uniqueId,
   DataType,
@@ -20,6 +20,7 @@ import type {
   BoundingRect,
 } from '@shopify/polaris-viz-core';
 
+import {useExternalHideEvents} from '../../hooks/ExternalEvents';
 import {useIndexForLabels} from '../../hooks/useIndexForLabels';
 import {
   Annotations,
@@ -28,6 +29,7 @@ import {
 } from '../Annotations';
 import type {
   AnnotationLookupTable,
+  LineChartSlotProps,
   RenderLegendContent,
   RenderTooltipContentData,
 } from '../../types';
@@ -67,7 +69,7 @@ import {useFormatData} from './hooks';
 import {getAlteredLineChartPosition, yAxisMinMax} from './utilities';
 
 export interface ChartProps {
-  renderTooltipContent: (data: RenderTooltipContentData) => React.ReactNode;
+  renderTooltipContent: (data: RenderTooltipContentData) => ReactNode;
   annotationsLookupTable: AnnotationLookupTable;
   data: LineChartDataSeriesWithDefaults[];
   showLegend: boolean;
@@ -76,6 +78,9 @@ export interface ChartProps {
   dimensions?: Dimensions;
   emptyStateText?: string;
   renderLegendContent?: RenderLegendContent;
+  slots?: {
+    chart?: (props: LineChartSlotProps) => JSX.Element;
+  };
   theme?: string;
 }
 
@@ -92,6 +97,7 @@ export function Chart({
   renderLegendContent,
   renderTooltipContent,
   showLegend = true,
+  slots,
   theme = DEFAULT_THEME_NAME,
   xAxisOptions,
   yAxisOptions,
@@ -121,6 +127,8 @@ export function Chart({
     type: COLOR_VISION_SINGLE_ITEM,
     onIndexChange: ({detail}) => setActiveLineIndex(detail.index),
   });
+
+  const {hiddenIndexes: hiddenLineIndexes} = useExternalHideEvents();
 
   const indexForLabels = useIndexForLabels(data);
 
@@ -189,6 +197,7 @@ export function Chart({
     data,
     renderTooltipContent,
     indexForLabels,
+    hiddenIndexes: hiddenLineIndexes,
   });
 
   if (xScale == null || drawableWidth == null || yAxisLabelWidth == null) {
@@ -277,7 +286,7 @@ export function Chart({
   const halfXAxisLabelWidth = xAxisDetails.labelWidth / 2;
 
   return (
-    <React.Fragment>
+    <Fragment>
       <ChartElements.Svg
         emptyState={emptyState}
         emptyStateText={emptyStateText}
@@ -312,6 +321,7 @@ export function Chart({
             }
           />
         ) : null}
+
         <YAxis
           ticks={ticks}
           width={yAxisLabelWidth}
@@ -320,6 +330,7 @@ export function Chart({
           x={yAxisBounds.x}
           y={yAxisBounds.y}
         />
+
         {emptyState ? null : (
           <VisuallyHiddenRows
             data={data}
@@ -328,11 +339,19 @@ export function Chart({
           />
         )}
         <g transform={`translate(${chartXPosition},${chartYPosition})`}>
+          {slots?.chart?.({
+            yScale,
+            xScale,
+            drawableWidth,
+            drawableHeight,
+          })}
+
           {reversedSeries.map((singleSeries, index) => {
             return (
               <LineSeries
                 activeLineIndex={activeLineIndex}
                 data={singleSeries}
+                hiddenIndexes={hiddenLineIndexes}
                 index={reversedSeries.length - 1 - index}
                 key={`${name}-${index}`}
                 svgDimensions={{height: drawableHeight, width: drawableWidth}}
@@ -348,6 +367,7 @@ export function Chart({
             activeIndex={activeIndex}
             drawableHeight={drawableHeight}
             emptyState={emptyState}
+            hiddenIndexes={hiddenLineIndexes}
             longestSeriesIndex={longestSeriesIndex}
             reversedSeries={reversedSeries}
             theme={theme}
@@ -416,6 +436,6 @@ export function Chart({
           renderLegendContent={renderLegendContent}
         />
       )}
-    </React.Fragment>
+    </Fragment>
   );
 }

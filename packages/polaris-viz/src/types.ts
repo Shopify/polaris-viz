@@ -7,6 +7,7 @@ import type {
   LabelFormatter,
 } from '@shopify/polaris-viz-core';
 import type {Series, SeriesPoint} from 'd3-shape';
+import type {ScaleLinear} from 'd3-scale';
 
 export interface YAxisTick {
   value: number;
@@ -71,6 +72,7 @@ export interface RenderTooltipDataPoint {
   isComparison?: boolean;
   key: number | string;
   value: number | string | null;
+  isHidden?: boolean;
 }
 
 export interface TooltipFormatters {
@@ -99,6 +101,7 @@ export interface TooltipData {
     value: string;
     color?: Color;
     isComparison?: boolean;
+    isHidden?: boolean;
   }[];
   name?: string;
 }
@@ -215,3 +218,22 @@ export type RenderInnerValueContent = (values: InnerValueContents) => ReactNode;
 export type Trend = 'positive' | 'negative' | 'neutral';
 export type TrendSize = 'default' | 'small';
 export type TrendDirection = 'upward' | 'downward';
+
+export interface ColorVisionEventReturn extends CustomEvent {
+  detail: {
+    index: number;
+  };
+}
+
+export interface ExternalEventReturn extends CustomEvent {
+  detail: {
+    indexes: number[];
+  };
+}
+
+export interface LineChartSlotProps {
+  drawableHeight: number;
+  drawableWidth: number;
+  xScale: ScaleLinear<number, number>;
+  yScale: ScaleLinear<number, number>;
+}

@@ -13,6 +13,16 @@ export interface DataSeries {
   color?: Color;
   isComparison?: boolean;
   name?: string;
+  metadata?: {[key: string]: any};
+  styleOverride?: StyleOverride;
+}
+
+interface StyleOverride {
+  line?: {
+    hasArea?: boolean;
+    width?: number;
+    strokeDasharray?: string;
+  };
 }
 
 export interface DataGroup {
@@ -147,6 +157,10 @@ export interface TrendIndicatorTheme {
   background: string;
 }
 
+export interface MissingDataTheme {
+  lineColor: string;
+}
+
 export interface PartialTheme {
   arc?: Partial<ArcTheme>;
   chartContainer?: Partial<ChartContainerTheme>;
@@ -160,6 +174,7 @@ export interface PartialTheme {
   seriesColors?: Partial<SeriesColors>;
   tooltip?: Partial<TooltipTheme>;
   trendIndicator?: Partial<TrendIndicatorTheme>;
+  missingData?: Partial<MissingDataTheme>;
 }
 
 export interface Theme {
@@ -176,6 +191,7 @@ export interface Theme {
   seriesColors: SeriesColors;
   tooltip: TooltipTheme;
   trendIndicator: TrendIndicatorTheme;
+  missingData: MissingDataTheme;
 }
 
 export enum DataType {
@@ -244,7 +260,9 @@ export interface CharacterWidthOffsets {
 
 export type LineChartDataSeriesWithDefaults = DataSeries & {
   color: Color;
+  strokeDasharray?: string;
   areaColor?: string | null;
+  width?: number;
 };
 
 export interface BorderRadius {
@@ -263,6 +281,7 @@ export enum ChartState {
 export interface ChartProps<T = DataSeries[]> {
   data: T;
   theme?: string;
+  id?: string;
   isAnimated?: boolean;
   state?: ChartState;
   errorText?: string;
