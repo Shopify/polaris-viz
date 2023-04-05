@@ -5,4 +5,5 @@ export {
   TooltipTitle,
   TooltipSeriesName,
   TooltipRow,
+  TooltipSeries,
 } from './components';

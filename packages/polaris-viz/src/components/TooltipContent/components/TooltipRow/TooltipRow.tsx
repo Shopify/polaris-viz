@@ -6,9 +6,7 @@ import type {Shape, Color} from '@shopify/polaris-viz-core';
 
 import {PREVIEW_ICON_SIZE} from '../../../../constants';
 import {SeriesIcon} from '../../../shared/SeriesIcon';
-import {classNames} from '../../../../utilities';
 import {TITLE_MARGIN} from '../../constants';
-import tooltipContentStyles from '../../TooltipContent.scss';
 
 import styles from './TooltipRow.scss';
 
@@ -43,7 +41,7 @@ export function TooltipRow({
 
   return (
     <div
-      className={classNames(tooltipContentStyles.Row, styles.Row)}
+      className={styles.Row}
       style={getColorVisionStylesForActiveIndex({
         activeIndex,
         index,
@@ -61,7 +59,7 @@ export function TooltipRow({
         </div>
       )}
       <span
-        className={tooltipContentStyles.Truncate}
+        className={styles.Truncate}
         style={{
           color: selectedTheme.tooltip.textColor,
           marginRight: TITLE_MARGIN,
@@ -70,7 +68,7 @@ export function TooltipRow({
         {label}
       </span>
       <span
-        className={tooltipContentStyles.Value}
+        className={styles.Value}
         style={{
           color: selectedTheme.tooltip.textColor,
         }}

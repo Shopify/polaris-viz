@@ -90,6 +90,13 @@ const NO_SERIES_NO_TITLE_DATA: TooltipData[] = [
   },
 ];
 
+const EMPTY_SERIES: TooltipData[] = [
+  {
+    shape: 'Line',
+    data: [],
+  },
+];
+
 const SERIES_ICON_DATA: TooltipData[] = [
   {
     shape: 'Bar',
@@ -124,6 +131,7 @@ const combinations = renderCombinationSections([
           NO_SERIES_NAME_DATA,
           NO_SERIES_NO_TITLE_DATA,
           SERIES_ICON_DATA,
+          EMPTY_SERIES,
         ],
         title: ['Testing'],
       },

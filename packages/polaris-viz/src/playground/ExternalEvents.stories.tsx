@@ -6,6 +6,7 @@ import {LineChartRelational} from '../components/LineChartRelational';
 import {setSingleSeriesActive} from '../utilities';
 import {useWatchActiveSeries} from '../hooks';
 import {setHiddenItems} from '../hooks/ExternalEvents';
+import {DEFAULT_PROPS} from '../components/LineChartRelational/stories/data';
 
 export default {
   title: 'polaris-viz/Playground/ExternalEvents',
@@ -264,6 +265,7 @@ const HiddenTemplate: Story = () => {
         })}
       </div>
       <LineChartRelational
+        {...DEFAULT_PROPS}
         isAnimated={true}
         data={RELATIONAL_DATA}
         id={CHART_ID}

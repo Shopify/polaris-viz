@@ -66,7 +66,7 @@ export const DEFAULT_DATA: TooltipData[] = [
         color: DEFAULT_THEME.seriesColors.fromFiveToSeven[3],
       },
       {
-        key: 'Mobile',
+        key: 'Average',
         value: '16500',
         color: DEFAULT_THEME.seriesColors.fromFiveToSeven[4],
       },
