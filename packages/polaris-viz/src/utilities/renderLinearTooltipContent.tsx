@@ -3,6 +3,7 @@ import type {ReactNode} from 'react';
 import {Fragment} from 'react';
 
 import {
+  TooltipSeries,
   TooltipContentContainer,
   TooltipSeriesName,
   TooltipTitle,
@@ -15,7 +16,7 @@ interface Group {
   title: string;
   indexes: number[];
 }
-interface Options {
+export interface Options {
   title?: string;
   groups?: Group[];
   formatters?: TooltipFormatters;
@@ -90,7 +91,7 @@ export function renderLinearTooltipContent(
       const hasTitle = dataSeries.some(({isHidden}) => isHidden !== true);
 
       return (
-        <Fragment key={seriesName}>
+        <TooltipSeries isEmpty={!hasTitle} key={seriesName}>
           {hasTitle && (
             <TooltipSeriesName theme={theme}>{seriesName}</TooltipSeriesName>
           )}
@@ -115,7 +116,7 @@ export function renderLinearTooltipContent(
               );
             },
           )}
-        </Fragment>
+        </TooltipSeries>
       );
     });
   }

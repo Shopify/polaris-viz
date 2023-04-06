@@ -1,9 +1,19 @@
+@import '../../../../styles/common';
+
 .Row {
   line-height: 20px;
   font-size: 14px;
   gap: 8px;
+  display: flex;
+  align-items: center;
+}
 
-  &:not(:last-child) {
-    margin: 0 0 10px;
-  }
+.Value {
+  margin-left: auto;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.Truncate {
+  @include ellipsis-overflow;
 }

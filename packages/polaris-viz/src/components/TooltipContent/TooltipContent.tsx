@@ -4,11 +4,11 @@ import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 import type {TooltipData} from '../../types';
 
 import {useGetLongestLabelFromData} from './hooks/useGetLongestLabelFromData';
-import styles from './TooltipContent.scss';
 import {SPACE_BETWEEN_LABEL_AND_VALUE} from './constants';
 import {
   TooltipContentContainer,
   TooltipRow,
+  TooltipSeries,
   TooltipSeriesName,
   TooltipTitle,
 } from './components/';
@@ -44,9 +44,12 @@ export function TooltipContent({
           {title != null && <TooltipTitle theme={theme}>{title}</TooltipTitle>}
 
           {data.map(({data: series, name, shape}, dataIndex) => {
+            const hasName = name != null;
+            const isEmpty = !hasName && series.length === 0;
+
             return (
-              <div className={styles.Series} key={dataIndex}>
-                {name != null && (
+              <TooltipSeries isEmpty={isEmpty} key={dataIndex}>
+                {hasName && (
                   <TooltipSeriesName theme={theme}>{name}</TooltipSeriesName>
                 )}
                 {series.map(
@@ -73,7 +76,7 @@ export function TooltipContent({
                     );
                   },
                 )}
-              </div>
+              </TooltipSeries>
             );
           })}
         </Fragment>
