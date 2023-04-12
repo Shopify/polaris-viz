@@ -154,7 +154,6 @@ export interface TrendIndicatorTheme {
   positive: string;
   negative: string;
   neutral: string;
-  background: string;
 }
 
 export interface MissingDataTheme {

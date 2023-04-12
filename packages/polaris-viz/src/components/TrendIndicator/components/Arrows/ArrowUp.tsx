@@ -1,24 +1,17 @@
 export function ArrowUp() {
   return (
     <svg
-      width="12"
-      height="12"
-      viewBox="0 0 12 12"
-      fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      width="6"
+      height="6"
+      fill="none"
+      viewBox="0 0 6 6"
     >
       <path
-        d="M3 3H9V9"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M9 3L3.1875 8.8125"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
+        fill="currentColor"
+        fill-rule="evenodd"
+        d="M1 .25a.75.75 0 1 0 0 1.5h2.19L.594 4.345a.75.75 0 0 0 1.06 1.06L4.25 2.811V5a.75.75 0 0 0 1.5 0V1A.748.748 0 0 0 5 .25H1Z"
+        clip-rule="evenodd"
       />
     </svg>
   );
