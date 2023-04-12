@@ -10,13 +10,13 @@ $color-purple-dark: rgb(80, 36, 143);
 $color-dark-comparison: rgba(144, 176, 223, 0.8);
 $color-light-comparison: rgba(103, 147, 204, 1);
 
-$color-light-positive: #119d7f;
-$color-light-negative: #eb4c5e;
-$color-light-neutral: #8c9196;
+$color-light-positive: var(--p-icon-success, rgba(0, 127, 95, 1));
+$color-light-negative: var(--p-icon-critical, rgba(215, 44, 13, 1));
+$color-light-neutral: var(--p-icon-subdued, rgba(140, 145, 150, 1));
 
-$color-dark-positive: #039c86;
-$color-dark-negative: #f24f62;
-$color-dark-neutral: #8c9196;
+$color-dark-positive: var(--p-icon-success, #039c86);
+$color-dark-negative: var(--p-icon-critical, #f24f62);
+$color-dark-neutral: var(--p-icon-subdued, #8c9196);
 
 $color-gray-00: #ffffff;
 $color-gray-10: #f6f6f7;
