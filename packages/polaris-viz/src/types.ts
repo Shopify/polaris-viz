@@ -216,7 +216,6 @@ export interface InnerValueContents {
 export type RenderInnerValueContent = (values: InnerValueContents) => ReactNode;
 
 export type Trend = 'positive' | 'negative' | 'neutral';
-export type TrendSize = 'default' | 'small';
 export type TrendDirection = 'upward' | 'downward';
 
 export interface ColorVisionEventReturn extends CustomEvent {

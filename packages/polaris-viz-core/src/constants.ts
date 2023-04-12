@@ -243,7 +243,6 @@ export const DEFAULT_THEME: Theme = {
     positive: variables.colorDarkPositive,
     negative: variables.colorDarkNegative,
     neutral: variables.colorDarkNeutral,
-    background: variables.colorGray150,
   },
   missingData: {
     lineColor: variables.colorGray130,
@@ -354,7 +353,6 @@ export const LIGHT_THEME: Theme = {
     positive: variables.colorLightPositive,
     negative: variables.colorLightNegative,
     neutral: variables.colorLightNeutral,
-    background: variables.colorGray10,
   },
   missingData: {
     lineColor: variables.colorGray40,

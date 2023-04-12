@@ -42,7 +42,6 @@ export type {
   RenderInnerValueContent,
   TooltipData,
   Trend,
-  TrendSize,
   TrendDirection,
 } from './types';
 
