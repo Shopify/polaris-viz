@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Changed
+
+- Render line for all `0` values in `<SparkLineChart />` at the bottom of the container.
+
 ### Fixed
 
 - Bug in the `LineChart`. Render individual points for comparison data when surrounded by null values.

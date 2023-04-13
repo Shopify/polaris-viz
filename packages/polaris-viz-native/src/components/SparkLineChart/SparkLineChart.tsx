@@ -10,6 +10,7 @@ import {
   DEFAULT_THEME_NAME,
   DEFAULT_CHART_PROPS,
   STROKE_DOT_ARRAY_WIDTH,
+  useFilteredSparkLineData,
 } from '@shopify/polaris-viz-core';
 import type {ChartProps, Dimensions} from '@shopify/polaris-viz-core';
 
@@ -68,20 +69,21 @@ function Chart({
 }: InnerChartProps) {
   const {width, height} = dimensions;
   const selectedTheme = useTheme(theme);
-  const seriesColors = useThemeSeriesColors(data, selectedTheme);
+  const filteredData = useFilteredSparkLineData(data);
+  const seriesColors = useThemeSeriesColors(filteredData, selectedTheme);
   const {
     components: {Svg},
   } = usePolarisVizContext();
 
   const {minXDomain, maxXDomain, yScale} = useSparkLine({
-    data,
+    data: filteredData,
     height,
   });
 
   return (
     <View accessibilityRole="image" accessibilityLabel={accessibilityLabel}>
       <Svg width={width} height={height}>
-        {data.map((series, index) => {
+        {filteredData.map((series, index) => {
           const singleOffsetLeft = series.isComparison ? 0 : offsetLeft;
           const singleOffsetRight = series.isComparison ? 0 : offsetRight;
 
