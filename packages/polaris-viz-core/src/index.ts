@@ -108,6 +108,7 @@ export {
   usePrevious,
   useChartPositions,
   useSpringConfig,
+  useFilteredSparkLineData,
 } from './hooks';
 export {
   Bar,
