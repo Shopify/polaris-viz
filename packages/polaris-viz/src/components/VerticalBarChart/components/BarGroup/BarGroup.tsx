@@ -222,7 +222,6 @@ export function BarGroup({
             barSize: height,
             zeroPosition: yScale(0),
             max: drawableHeight,
-            isNegative,
             position: 'vertical',
           });
 
