@@ -110,7 +110,6 @@ export function HorizontalBars({
           zeroPosition: xScale(0),
           max: containerWidth - x,
           position: 'horizontal',
-          isNegative: value < 0,
         });
 
         return (

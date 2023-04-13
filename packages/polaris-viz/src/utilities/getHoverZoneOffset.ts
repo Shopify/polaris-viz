@@ -7,20 +7,17 @@ export interface Props {
   zeroPosition: number;
   max: number;
   position: 'vertical' | 'horizontal';
-  isNegative: boolean;
 }
 
 export function getHoverZoneOffset({
   barSize,
   zeroPosition,
   max,
-  isNegative,
   position,
 }: Props) {
   let offset = HOVER_TARGET_ZONE;
   const chartMaxSize = max - zeroPosition;
   const chartNegativeMaxSize = max - chartMaxSize;
-  let clampedSize;
 
   if (position === 'horizontal') {
     if (barSize + offset >= chartMaxSize) {
@@ -30,19 +27,11 @@ export function getHoverZoneOffset({
     offset = chartNegativeMaxSize - barSize;
   }
 
-  if (isNegative) {
-    clampedSize = clamp({
-      amount: barSize + offset,
-      min: barSize,
-      max,
-    });
-  } else {
-    clampedSize = clamp({
-      amount: barSize + offset,
-      min: barSize,
-      max: max - zeroPosition,
-    });
-  }
+  const clampedSize = clamp({
+    amount: barSize + offset,
+    min: barSize,
+    max,
+  });
 
   return {clampedSize, offset};
 }

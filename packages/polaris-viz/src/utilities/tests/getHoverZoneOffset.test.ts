@@ -6,7 +6,6 @@ const mockProps: Props = {
   zeroPosition: 0,
   max: 100,
   position: 'vertical',
-  isNegative: false,
 };
 
 const mockPropsHorizontal: Props = {
@@ -14,7 +13,6 @@ const mockPropsHorizontal: Props = {
   zeroPosition: 0,
   max: 125,
   position: 'horizontal',
-  isNegative: true,
 };
 
 describe('getHoverZoneOffset', () => {
