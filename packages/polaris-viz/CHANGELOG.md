@@ -40,6 +40,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Changed
 
 - Reduced `<LineChart />` hit area from `40px` to `15px`.
+- Renamed `renderLinearComparisonTooltip()` to `renderLinearTooltipContent()`.
 
 ### Fixed
 
