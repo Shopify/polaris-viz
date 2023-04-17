@@ -4,39 +4,46 @@ import {uniqueId, useTheme} from '@shopify/polaris-viz-core';
 
 import type {LineChartRelationalDataSeries} from '../../types';
 
+import {groupNumbersIntoRuns} from './utilities/groupNumbersIntoRuns';
+
 export interface Props extends LineChartSlotProps {
   data: LineChartRelationalDataSeries[];
 }
 
-function MissingDataAreaRaw({
-  data,
-  drawableHeight,
-  drawableWidth,
-  xScale,
-}: Props) {
+function MissingDataAreaRaw({data, drawableHeight, xScale}: Props) {
   const selectedTheme = useTheme();
   const patternID = useRef(uniqueId('missingDataPattern'));
 
-  let largestLength = 0;
-  let smallestLength = Infinity;
+  const nullIndexes: Set<number> = new Set([]);
 
-  data.forEach(({data}) => {
-    if (data.length > largestLength) {
-      largestLength = data.length;
-    }
+  data.forEach((series) => {
+    series.data.forEach(({value}, index) => {
+      if (value == null) {
+        nullIndexes.add(index);
+      }
 
-    if (data.length < smallestLength) {
-      smallestLength = data.length;
-    }
+      const nextSeries = series.data[index + 1];
+      const previousSeries = series.data[index - 1];
+
+      if (value == null && nextSeries && nextSeries.value != null) {
+        nullIndexes.add(index + 1);
+      }
+
+      if (value == null && previousSeries && previousSeries.value != null) {
+        nullIndexes.add(index - 1);
+      }
+    });
   });
 
-  const lengthDiff = largestLength - smallestLength;
-
-  if (lengthDiff === largestLength) {
+  if (nullIndexes.size === 0) {
     return null;
   }
 
-  const width = xScale(lengthDiff);
+  const sortedIndexes = [...nullIndexes].sort(
+    (current, next) => current - next,
+  );
+
+  const groups = groupNumbersIntoRuns(sortedIndexes);
 
   return (
     <Fragment>
@@ -59,13 +66,22 @@ function MissingDataAreaRaw({
           />
         </pattern>
       </defs>
-      <rect
-        x={drawableWidth - width}
-        y={0}
-        height={drawableHeight}
-        width={width}
-        fill={`url(#${patternID.current})`}
-      />
+      {groups.map((indexes, index) => {
+        const startIndex = Math.min(...indexes);
+        const endIndex = Math.max(...indexes);
+        const width = xScale(endIndex - startIndex);
+
+        return (
+          <rect
+            key={index}
+            x={xScale(startIndex)}
+            y={0}
+            height={drawableHeight}
+            width={width}
+            fill={`url(#${patternID.current})`}
+          />
+        );
+      })}
     </Fragment>
   );
 }

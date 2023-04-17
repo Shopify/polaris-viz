@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Changed
+
+- Allow `<MissingDataArea />` to render wherever values are `null` instead of at the end of the chart.
+
 ### Fixed
 
 - Fixed issue with `<BarChart />` hover zones being too short.

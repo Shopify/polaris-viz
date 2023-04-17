@@ -1,16 +1,6 @@
-import type {Story} from '@storybook/react';
-
-export {META as default} from './meta';
-
-import {DEFAULT_PROPS, Template} from './data';
-import type {LineChartProps} from 'components/LineChart/LineChart';
-import type {DataSeries} from '@shopify/polaris-viz-core';
-
-export const MissingData: Story<LineChartProps> = Template.bind({});
-
-const DATA: DataSeries[] = [
+export const MISSING_START_DATA = [
   {
-    name: 'Apr 1 – Apr 14, 2020',
+    name: 'Average',
     data: [
       {value: 333, key: '2020-04-01T12:00:00'},
       {value: 797, key: '2020-04-02T12:00:00'},
@@ -24,25 +14,20 @@ const DATA: DataSeries[] = [
       {value: 645, key: '2020-04-10T12:00:00'},
       {value: 543, key: '2020-04-11T12:00:00'},
       {value: 89, key: '2020-04-12T12:00:00'},
-      {value: 1000, key: '2020-04-13T12:00:00'},
+      {value: 849, key: '2020-04-13T12:00:00'},
       {value: 129, key: '2020-04-14T12:00:00'},
     ],
     color: [
-      {offset: 0, color: '#986BFF'},
-      {offset: 100, color: '#3AA4F6'},
+      {offset: 0, color: 'rgba(149, 101, 255, 1)'},
+      {offset: 100, color: 'rgba(75, 146, 229, 1)'},
     ],
-    styleOverride: {
-      line: {
-        width: 3,
-      },
-    },
   },
   {
     name: '75th Percentile',
     data: [
-      {value: 859, key: '2020-03-02T12:00:00'},
-      {value: 388, key: '2020-03-01T12:00:00'},
-      {value: 340, key: '2020-03-03T12:00:00'},
+      {value: null, key: '2020-03-02T12:00:00'},
+      {value: null, key: '2020-03-01T12:00:00'},
+      {value: null, key: '2020-03-03T12:00:00'},
       {value: 240, key: '2020-03-04T12:00:00'},
       {value: 387, key: '2020-03-05T12:00:00'},
       {value: 760, key: '2020-03-07T12:00:00'},
@@ -51,20 +36,27 @@ const DATA: DataSeries[] = [
       {value: 540, key: '2020-03-09T12:00:00'},
       {value: 193, key: '2020-03-10T12:00:00'},
       {value: 860, key: '2020-03-11T12:00:00'},
+      {value: 941, key: '2020-03-12T12:00:00'},
+      {value: 773, key: '2020-03-13T12:00:00'},
+      {value: 171, key: '2020-03-14T12:00:00'},
     ],
-    color: '#9EDAEF',
+    color: 'rgba(103, 197, 228, 1)',
     metadata: {
       relatedIndex: 2,
-      areaColor: '#C8E7F4',
-      shape: 'Bar',
+      areaColor: 'rgba(103, 197, 228, 0.1)',
+    },
+    styleOverride: {
+      line: {
+        hasArea: false,
+      },
     },
   },
   {
-    name: 'Similar stores median',
+    name: 'Median',
     data: [
-      {value: 759, key: '2020-03-02T12:00:00'},
-      {value: 238, key: '2020-03-01T12:00:00'},
-      {value: 190, key: '2020-03-03T12:00:00'},
+      {value: null, key: '2020-03-02T12:00:00'},
+      {value: null, key: '2020-03-01T12:00:00'},
+      {value: null, key: '2020-03-03T12:00:00'},
       {value: 90, key: '2020-03-04T12:00:00'},
       {value: 237, key: '2020-03-05T12:00:00'},
       {value: 580, key: '2020-03-07T12:00:00'},
@@ -73,25 +65,28 @@ const DATA: DataSeries[] = [
       {value: 390, key: '2020-03-09T12:00:00'},
       {value: 43, key: '2020-03-10T12:00:00'},
       {value: 710, key: '2020-03-11T12:00:00'},
+      {value: 791, key: '2020-03-12T12:00:00'},
+      {value: 623, key: '2020-03-13T12:00:00'},
+      {value: 21, key: '2020-03-14T12:00:00'},
     ],
-    color: '#286A7B',
+    color: 'rgba(40, 106, 123, 1)',
     metadata: {
       relatedIndex: 3,
-      areaColor: '#F0F8FB',
+      areaColor: 'rgba(47, 175, 218, 0.2)',
     },
     styleOverride: {
       line: {
+        hasArea: false,
         strokeDasharray: '3 6',
-        width: 3,
       },
     },
   },
   {
     name: '25th percentile',
     data: [
-      {value: 559, key: '2020-03-02T12:00:00'},
-      {value: 88, key: '2020-03-01T12:00:00'},
-      {value: 40, key: '2020-03-03T12:00:00'},
+      {value: null, key: '2020-03-02T12:00:00'},
+      {value: null, key: '2020-03-01T12:00:00'},
+      {value: null, key: '2020-03-03T12:00:00'},
       {value: 0, key: '2020-03-04T12:00:00'},
       {value: 87, key: '2020-03-05T12:00:00'},
       {value: 430, key: '2020-03-07T12:00:00'},
@@ -100,16 +95,15 @@ const DATA: DataSeries[] = [
       {value: 240, key: '2020-03-09T12:00:00'},
       {value: 0, key: '2020-03-10T12:00:00'},
       {value: 540, key: '2020-03-11T12:00:00'},
+      {value: 641, key: '2020-03-12T12:00:00'},
+      {value: 473, key: '2020-03-13T12:00:00'},
+      {value: 0, key: '2020-03-14T12:00:00'},
     ],
-    color: '#E0F1F8',
-    metadata: {
-      shape: 'Bar',
+    color: 'rgba(103, 197, 228, 1)',
+    styleOverride: {
+      line: {
+        hasArea: false,
+      },
     },
   },
 ];
-
-MissingData.args = {
-  ...DEFAULT_PROPS,
-  data: DATA,
-  isAnimated: false,
-};
