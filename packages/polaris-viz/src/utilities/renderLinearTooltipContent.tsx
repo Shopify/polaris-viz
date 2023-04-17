@@ -83,7 +83,7 @@ export function renderLinearTooltipContent(
             ...tooltipData.dataSeries[groupIndex],
             color: rawDataSeries.color,
             groupIndex,
-            isHidden: rawDataSeries.isHidden,
+            isHidden: rawDataSeries.value == null || rawDataSeries.isHidden,
           };
         })
         .filter((series): series is TooltipDataSeries => Boolean(series));
