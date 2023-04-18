@@ -13,7 +13,7 @@ jobs:
         cache: 'yarn'
     - name: 📀 Get yarn cache
       id: yarn-cache
-      run: echo "::set-output name=dir::$(yarn cache dir)"
+      run: echo "name=dir::$(yarn cache dir)" >> $GITHUB_OUTPUT
     - uses: actions/cache@v3
       with:
         path: ${{ steps.yarn-cache.outputs.dir }}
@@ -26,7 +26,7 @@ jobs:
       run: yarn build
     - name: 💅 Lint
       run: yarn lint
-    - name:  👩🏻‍🔬 Run tests
+    - name: 👩🏻‍🔬 Run tests
       run: yarn test
       env:
         CI: true
