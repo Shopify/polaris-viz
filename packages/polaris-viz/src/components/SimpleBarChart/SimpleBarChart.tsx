@@ -14,8 +14,10 @@ import {ChartSkeleton} from '../../components';
 import type {RenderLegendContent} from '../../types';
 
 import {Chart} from './Chart';
+import type {SimpleBarChartDataSeries} from './types';
 
 export type SimpleBarChartProps = {
+  data: SimpleBarChartDataSeries[];
   renderLegendContent?: RenderLegendContent;
   showLegend?: boolean;
   type?: ChartType;

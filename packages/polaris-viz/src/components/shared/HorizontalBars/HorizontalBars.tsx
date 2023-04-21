@@ -8,6 +8,7 @@ import {
   useChartContext,
 } from '@shopify/polaris-viz-core';
 
+import {TREND_INDICATOR_HEIGHT, TrendIndicator} from '../../TrendIndicator';
 import {getHoverZoneOffset} from '../../../utilities';
 import {
   HORIZONTAL_BAR_LABEL_OFFSET,
@@ -17,8 +18,9 @@ import {
 import {useTheme, useWatchColorVisionEvents} from '../../../hooks';
 import {getGradientDefId} from '../GradientDefs';
 
-import {Label, Bar} from './components';
+import {Label, Bar, LabelWrapper} from './components';
 import styles from './HorizontalBars.scss';
+import {getTrendIndicatorData} from './utilities/getTrendIndicatorData';
 
 const SERIES_DELAY = 150;
 
@@ -92,18 +94,36 @@ export function HorizontalBars({
           data[seriesIndex] ? data[seriesIndex].name : ''
         } ${value}`;
 
-        const labelWidth = estimateStringWidth(`${label}`, characterWidths);
+        const {trendIndicatorProps, trendIndicatorWidth} =
+          getTrendIndicatorData(
+            data[seriesIndex]?.metadata?.trends[groupIndex],
+          );
 
-        const leftLabelOffset = isSimple
-          ? labelWidth + HORIZONTAL_BAR_LABEL_OFFSET
-          : 0;
+        const labelWidth = estimateStringWidth(`${label}`, characterWidths);
         const width = Math.abs(xScale(value ?? 0) - xScale(0));
+
+        function getXPosition() {
+          if (isNegative) {
+            const itemSpacing =
+              trendIndicatorProps == null
+                ? HORIZONTAL_BAR_LABEL_OFFSET
+                : HORIZONTAL_BAR_LABEL_OFFSET * 2;
+
+            const leftLabelOffset = isSimple
+              ? labelWidth + itemSpacing + trendIndicatorWidth
+              : 0;
+
+            return (width + leftLabelOffset) * -1;
+          }
+
+          return width + HORIZONTAL_BAR_LABEL_OFFSET;
+        }
+
+        const x = getXPosition();
 
         const y =
           barHeight * seriesIndex +
           HORIZONTAL_SPACE_BETWEEN_SINGLE * seriesIndex;
-        const negativeX = (width + leftLabelOffset) * -1;
-        const x = isNegative ? negativeX : width + HORIZONTAL_BAR_LABEL_OFFSET;
 
         const {clampedSize} = getHoverZoneOffset({
           barSize: width,
@@ -111,6 +131,8 @@ export function HorizontalBars({
           max: containerWidth - x,
           position: 'horizontal',
         });
+
+        const trendYOffset = (barHeight - TREND_INDICATOR_HEIGHT) / 2;
 
         return (
           <Fragment key={`series-${seriesIndex}-${id}-${name}`}>
@@ -127,19 +149,28 @@ export function HorizontalBars({
               y={y}
             />
             {isSimple && (
-              <Label
-                animationDelay={seriesAnimationDelay}
-                barHeight={barHeight}
-                color={
-                  data[seriesIndex].isComparison
-                    ? selectedTheme.seriesColors.comparison
-                    : selectedTheme.xAxis.labelColor
-                }
-                label={label}
-                labelWidth={labelWidth}
-                x={x}
-                y={y}
-              />
+              <LabelWrapper animationDelay={seriesAnimationDelay} x={x}>
+                <Label
+                  barHeight={barHeight}
+                  color={
+                    data[seriesIndex].isComparison
+                      ? selectedTheme.seriesColors.comparison
+                      : selectedTheme.xAxis.labelColor
+                  }
+                  label={label}
+                  labelWidth={labelWidth}
+                  y={y}
+                />
+                {trendIndicatorProps != null && (
+                  <g
+                    transform={`translate(${
+                      labelWidth + HORIZONTAL_BAR_LABEL_OFFSET
+                    }, ${y + trendYOffset})`}
+                  >
+                    <TrendIndicator {...trendIndicatorProps} />
+                  </g>
+                )}
+              </LabelWrapper>
             )}
             <rect
               className={styles.Bar}
