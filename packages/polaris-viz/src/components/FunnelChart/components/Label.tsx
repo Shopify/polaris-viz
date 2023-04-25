@@ -50,6 +50,7 @@ export function Label({
         height={LABEL_HEIGHT}
         width={labelWidth}
         aria-hidden="true"
+        className={styles.YAxis}
       >
         <div
           className={styles.Label}
