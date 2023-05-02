@@ -25,7 +25,7 @@ export function ErrorText({errorText, width, height}: ErrorTextProps) {
   return (
     <g
       style={{
-        transform: `translateY(${height / 2 - FONT_SIZE * 2}px)`,
+        transform: `translateY(${Math.max(0, height / 2 - FONT_SIZE / 2)}px)`,
         filter: `
         drop-shadow( ${TEXT_DROP_SHADOW_SIZE}px 0px 1px ${backgroundColor})
         drop-shadow( -${TEXT_DROP_SHADOW_SIZE}px  0px 1px ${backgroundColor})
