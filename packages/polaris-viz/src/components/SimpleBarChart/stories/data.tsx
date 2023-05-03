@@ -46,6 +46,13 @@ export function buildSeries(
     return {
       name,
       data: data.filter(Boolean) as DataPoint[],
+      metadata: {
+        trends: {
+          0: {
+            value: '10%',
+          },
+        },
+      },
     };
   });
 }

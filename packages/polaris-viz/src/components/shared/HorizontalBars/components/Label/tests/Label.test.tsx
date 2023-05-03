@@ -12,7 +12,6 @@ const MOCK_PROPS: LabelProps = {
   color: 'red',
   label: 'Label Text',
   labelWidth: 100,
-  x: 10,
   y: 20,
 };
 

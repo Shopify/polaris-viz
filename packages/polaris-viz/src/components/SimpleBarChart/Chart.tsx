@@ -6,7 +6,6 @@ import {
 } from '@shopify/polaris-viz-core';
 import type {
   ChartType,
-  DataSeries,
   Dimensions,
   XAxisOptions,
   YAxisOptions,
@@ -28,8 +27,10 @@ import {
 } from '../../hooks';
 import type {RenderLegendContent} from '../../types';
 
+import type {SimpleBarChartDataSeries} from './types';
+
 export interface ChartProps {
-  data: DataSeries[];
+  data: SimpleBarChartDataSeries[];
   showLegend: boolean;
   type: ChartType;
   xAxisOptions: Required<XAxisOptions>;

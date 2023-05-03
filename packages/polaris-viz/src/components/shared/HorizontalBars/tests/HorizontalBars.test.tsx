@@ -5,7 +5,8 @@ import type {DataSeries} from '@shopify/polaris-viz-core';
 import type {HorizontalBarsProps} from '../HorizontalBars';
 import {HorizontalBars} from '../HorizontalBars';
 import {Bar} from '../../Bar';
-import {Label} from '../components';
+import {Label, LabelWrapper} from '../components';
+import {TrendIndicator} from '../../..';
 
 jest.mock('d3-scale', () => ({
   scaleLinear: jest.requireActual('d3-scale').scaleLinear,
@@ -29,6 +30,15 @@ const DATA: DataSeries[] = [
       {value: 10, key: 'Label 02'},
       {value: 12, key: 'Label 03'},
     ],
+    metadata: {
+      trends: {
+        0: {
+          value: '10%',
+          trend: 'positive',
+          direction: 'upwards',
+        },
+      },
+    },
   },
   {
     name: 'Group 2',
@@ -171,7 +181,7 @@ describe('<HorizontalBars />', () => {
         </svg>,
       );
 
-      const labels = chart.findAll(Label);
+      const labels = chart.findAll(LabelWrapper);
 
       expect(labels[0].props.x).toStrictEqual(15);
     });
@@ -187,9 +197,63 @@ describe('<HorizontalBars />', () => {
         </svg>,
       );
 
-      const labels = chart.findAll(Label);
+      const labels = chart.findAll(LabelWrapper);
 
       expect(labels[0].props.x).toStrictEqual(-115);
+    });
+  });
+
+  describe('<TrendIndicator />', () => {
+    it('renders when metadata is provided', () => {
+      const chart = mount(
+        <svg>
+          <HorizontalBars {...MOCK_PROPS} isSimple />
+        </svg>,
+      );
+
+      expect(chart).toContainReactComponent(TrendIndicator, {
+        value: '10%',
+        trend: 'positive',
+        direction: 'upwards',
+      });
+    });
+
+    it('does not render if isSimple=false', () => {
+      const chart = mount(
+        <svg>
+          <HorizontalBars {...MOCK_PROPS} />
+        </svg>,
+      );
+
+      expect(chart).not.toContainReactComponent(TrendIndicator);
+    });
+
+    it('does not render when metadata is empty', () => {
+      const chart = mount(
+        <svg>
+          <HorizontalBars
+            {...MOCK_PROPS}
+            isSimple
+            data={[{data: [{value: -5, key: 'Label 01'}]}]}
+          />
+        </svg>,
+      );
+
+      expect(chart).not.toContainReactComponent(TrendIndicator);
+    });
+
+    it('is positioned', () => {
+      const chart = mount(
+        <svg>
+          <HorizontalBars {...MOCK_PROPS} isSimple />
+        </svg>,
+      );
+
+      const wrapper = chart.find(LabelWrapper)?.findAll('g');
+
+      expect(wrapper && wrapper[1]?.prop('transform')).toStrictEqual(
+        'translate(110, 2)',
+      );
     });
   });
 });

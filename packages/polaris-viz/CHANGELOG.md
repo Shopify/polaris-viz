@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Added
+
+- Added `metadata.trends[]` to `SimpleBarChartProps` to allow `<TrendIndicator />`'s to render inline.
+
 ### Fixed
 
 - Fix ErrorText positioning in ChartSkeleton.
