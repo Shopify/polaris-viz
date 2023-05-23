@@ -2,6 +2,7 @@ import type {
   ChartType,
   XAxisOptions,
   ChartProps,
+  YAxisOptions,
 } from '@shopify/polaris-viz-core';
 import {DEFAULT_CHART_PROPS, ChartState} from '@shopify/polaris-viz-core';
 
@@ -22,6 +23,7 @@ export type SimpleBarChartProps = {
   showLegend?: boolean;
   type?: ChartType;
   xAxisOptions?: XAxisOptions;
+  yAxisOptions?: YAxisOptions;
 } & ChartProps;
 
 export function SimpleBarChart(props: SimpleBarChartProps) {
@@ -33,6 +35,7 @@ export function SimpleBarChart(props: SimpleBarChartProps) {
     theme,
     type = 'default',
     xAxisOptions,
+    yAxisOptions,
     state,
     errorText,
   }: SimpleBarChartProps = {
@@ -40,7 +43,7 @@ export function SimpleBarChart(props: SimpleBarChartProps) {
     ...props,
   };
   const xAxisOptionsWithDefaults = getXAxisOptionsWithDefaults(xAxisOptions);
-  const yAxisOptionsWithDefaults = getYAxisOptionsWithDefaults();
+  const yAxisOptionsWithDefaults = getYAxisOptionsWithDefaults(yAxisOptions);
 
   return (
     <ChartContainer data={data} theme={theme} isAnimated={isAnimated}>
