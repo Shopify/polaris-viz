@@ -27,7 +27,7 @@ export function useHorizontalTransitions({
   groupHeight,
   series,
 }: Props) {
-  const {shouldAnimate} = useChartContext();
+  const {shouldAnimate, id} = useChartContext();
   const seriesWithIndex = useMemo(() => {
     return series[0].data.map(({key}, index) => ({
       key: `${key}`,
@@ -44,7 +44,7 @@ export function useHorizontalTransitions({
 
   const transitions = useTransition(seriesWithIndex, {
     keys: (item) => {
-      return item.key ?? '';
+      return item.key === '' ? `${id}-${item.index}` : item.key;
     },
     initial: ({index}) => ({
       opacity: 1,
