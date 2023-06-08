@@ -192,7 +192,7 @@ describe('<HorizontalBars />', () => {
           <HorizontalBars
             {...MOCK_PROPS}
             isSimple
-            data={[{data: [{value: -5, key: 'Label 01'}]}]}
+            data={[{data: [{value: -115, key: 'Label 01'}]}]}
           />
         </svg>,
       );

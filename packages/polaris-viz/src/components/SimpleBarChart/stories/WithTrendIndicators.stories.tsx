@@ -4,7 +4,7 @@ export {META as default} from './meta';
 
 import type {SimpleBarChartProps} from '../../../components';
 
-import {SINGLE_SERIES, Template} from './data';
+import {Template} from './data';
 
 export const WithTrendIndicators: Story<SimpleBarChartProps> = Template.bind(
   {},
@@ -13,7 +13,32 @@ export const WithTrendIndicators: Story<SimpleBarChartProps> = Template.bind(
 WithTrendIndicators.args = {
   data: [
     {
-      ...SINGLE_SERIES[0],
+      data: [
+        {
+          key: 'Womens Leggings',
+          value: 3000,
+        },
+        {
+          key: 'Mens Bottoms',
+          value: 0,
+        },
+        {
+          key: 'Mens Shorts',
+          value: -4000,
+        },
+        {
+          key: 'Socks',
+          value: 800,
+        },
+        {
+          key: 'Hats',
+          value: 48,
+        },
+        {
+          key: 'Ties',
+          value: 1,
+        },
+      ],
       metadata: {
         trends: {
           2: {
