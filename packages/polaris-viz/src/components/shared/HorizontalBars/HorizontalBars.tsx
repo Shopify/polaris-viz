@@ -100,9 +100,10 @@ export function HorizontalBars({
           );
 
         const labelWidth = estimateStringWidth(`${label}`, characterWidths);
-        const width = Math.abs(xScale(value ?? 0) - xScale(0));
 
-        function getXPosition() {
+        function getWidthAndXPosition() {
+          const width = Math.abs(xScale(value ?? 0) - xScale(0));
+
           if (isNegative) {
             const itemSpacing =
               trendIndicatorProps == null
@@ -113,13 +114,19 @@ export function HorizontalBars({
               ? labelWidth + itemSpacing + trendIndicatorWidth
               : 0;
 
-            return (width + leftLabelOffset) * -1;
+            return {
+              x: width * -1,
+              width: width - leftLabelOffset,
+            };
           }
 
-          return width + HORIZONTAL_BAR_LABEL_OFFSET;
+          return {
+            x: width + HORIZONTAL_BAR_LABEL_OFFSET,
+            width,
+          };
         }
 
-        const x = getXPosition();
+        const {x, width} = getWidthAndXPosition();
 
         const y =
           barHeight * seriesIndex +
