@@ -407,6 +407,7 @@ export const COLOR_VISION_GROUP_ITEM = 'group';
 export const EXTERNAL_EVENTS_SET_HIDDEN_ITEMS = 'setHiddenItems';
 
 export const LEGENDS_TOP_MARGIN = 16;
+export const LEGENDS_BOTTOM_MARGIN = 16;
 export const Y_AXIS_CHART_SPACING = 20;
 export const LABEL_AREA_TOP_SPACING = 16;
 export const ELLIPSIS = '…';

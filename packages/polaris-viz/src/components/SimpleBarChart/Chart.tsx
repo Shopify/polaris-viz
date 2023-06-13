@@ -25,8 +25,10 @@ import {
   useHorizontalStackedValues,
   useColorVisionEvents,
 } from '../../hooks';
-import type {RenderLegendContent} from '../../types';
+import {getContainerAlignmentForLegend} from '../../utilities';
+import type {LegendPosition, RenderLegendContent} from '../../types';
 
+import styles from './SimpleBarChart.scss';
 import type {SimpleBarChartDataSeries} from './types';
 
 export interface ChartProps {
@@ -37,12 +39,14 @@ export interface ChartProps {
   yAxisOptions: Required<YAxisOptions>;
   dimensions?: Dimensions;
   renderLegendContent?: RenderLegendContent;
+  legendPosition?: LegendPosition;
 }
 
 export function Chart({
   data,
   dimensions,
   renderLegendContent,
+  legendPosition = 'bottom-right',
   showLegend,
   type,
   xAxisOptions,
@@ -110,55 +114,61 @@ export function Chart({
     xAxisLabelFormatter: labelFormatter,
   });
 
+  const containerStyle = {
+    ...getContainerAlignmentForLegend(legendPosition, true),
+  };
+
   return (
-    <ChartElements.Div height={height} width={width}>
-      <ChartElements.Svg height={height} width={width}>
-        <GradientDefs
-          direction="horizontal"
-          gradientUnits={isStacked ? 'objectBoundingBox' : 'userSpaceOnUse'}
-          id={id}
-          seriesColors={seriesColors}
-          size={isStacked ? '100%' : `${width}px`}
-        />
+    <div className={styles.SimpleBarChartWrapper} style={containerStyle}>
+      <div className={styles.BarChart}>
+        <ChartElements.Svg height={height} width={width}>
+          <GradientDefs
+            direction="horizontal"
+            gradientUnits={isStacked ? 'objectBoundingBox' : 'userSpaceOnUse'}
+            id={id}
+            seriesColors={seriesColors}
+            size={isStacked ? '100%' : `${width}px`}
+          />
 
-        {transitions((style, item, _transition, index) => {
-          const {opacity, transform} = style as HorizontalTransitionStyle;
-          const name = item.key ?? '';
-          const ariaLabel = getAriaLabel({
-            seriesIndex: item.index,
-            key: data[0].data[item.index]?.key,
-          });
+          {transitions((style, item, _transition, index) => {
+            const {opacity, transform} = style as HorizontalTransitionStyle;
+            const name = item.key ?? '';
+            const ariaLabel = getAriaLabel({
+              seriesIndex: item.index,
+              key: data[0].data[item.index]?.key,
+            });
 
-          return (
-            <animated.g
-              key={`group-${name}`}
-              style={{
-                opacity,
-                transform,
-              }}
-            >
-              <HorizontalGroup
-                areAllNegative={areAllNegative}
-                ariaLabel={ariaLabel}
-                barHeight={barHeight}
-                containerWidth={width}
-                data={data}
-                groupHeight={groupHeight}
-                id={id}
-                index={index}
-                isSimple
-                isStacked={isStacked}
-                name={name}
-                stackedValues={stackedValues}
-                xAxisOptions={xAxisOptions}
-                xScale={xScale}
-                yAxisOptions={yAxisOptions}
-                zeroPosition={zeroPosition}
-              />
-            </animated.g>
-          );
-        })}
-      </ChartElements.Svg>
+            return (
+              <animated.g
+                key={`group-${name}`}
+                style={{
+                  opacity,
+                  transform,
+                }}
+              >
+                <HorizontalGroup
+                  areAllNegative={areAllNegative}
+                  ariaLabel={ariaLabel}
+                  barHeight={barHeight}
+                  containerWidth={width}
+                  data={data}
+                  groupHeight={groupHeight}
+                  id={id}
+                  index={index}
+                  isSimple
+                  isStacked={isStacked}
+                  name={name}
+                  stackedValues={stackedValues}
+                  xAxisOptions={xAxisOptions}
+                  xScale={xScale}
+                  yAxisOptions={yAxisOptions}
+                  zeroPosition={zeroPosition}
+                />
+              </animated.g>
+            );
+          })}
+        </ChartElements.Svg>
+      </div>
 
       {showLegend && (
         <LegendContainer
@@ -166,8 +176,9 @@ export function Chart({
           data={legend}
           onDimensionChange={setLegendDimensions}
           renderLegendContent={renderLegendContent}
+          position={legendPosition}
         />
       )}
-    </ChartElements.Div>
+    </div>
   );
 }

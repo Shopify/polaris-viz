@@ -11,6 +11,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 - Set tab-index to `-1` to stop `<TrendIndicator />` from allowing it to be tabbed into.
 
+### Added
+
+- Added `legendPosition` to `SimpleBarChartProps`.
+
 ## [9.3.4] - 2023-06-13
 
 ### Fixed

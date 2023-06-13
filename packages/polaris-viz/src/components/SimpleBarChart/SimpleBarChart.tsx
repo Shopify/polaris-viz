@@ -12,7 +12,7 @@ import {
 } from '../../utilities';
 import {ChartContainer} from '../../components/ChartContainer';
 import {ChartSkeleton} from '../../components';
-import type {RenderLegendContent} from '../../types';
+import type {LegendPosition, RenderLegendContent} from '../../types';
 
 import {Chart} from './Chart';
 import type {SimpleBarChartDataSeries} from './types';
@@ -20,6 +20,7 @@ import type {SimpleBarChartDataSeries} from './types';
 export type SimpleBarChartProps = {
   data: SimpleBarChartDataSeries[];
   renderLegendContent?: RenderLegendContent;
+  legendPosition?: LegendPosition;
   showLegend?: boolean;
   type?: ChartType;
   xAxisOptions?: XAxisOptions;
@@ -31,6 +32,7 @@ export function SimpleBarChart(props: SimpleBarChartProps) {
     isAnimated,
     data,
     renderLegendContent,
+    legendPosition = 'bottom-right',
     showLegend = true,
     theme,
     type = 'default',
@@ -58,6 +60,7 @@ export function SimpleBarChart(props: SimpleBarChartProps) {
         <Chart
           data={data}
           renderLegendContent={renderLegendContent}
+          legendPosition={legendPosition}
           showLegend={showLegend}
           type={type}
           xAxisOptions={xAxisOptionsWithDefaults}

@@ -4,6 +4,7 @@ import isEqual from 'fast-deep-equal';
 import {
   getColorVisionEventAttrs,
   getColorVisionStylesForActiveIndex,
+  LEGENDS_BOTTOM_MARGIN,
   LEGENDS_TOP_MARGIN,
   useChartContext,
   useTheme,
@@ -50,11 +51,14 @@ export function LegendContainer({
   const previousHeight = useRef(DEFAULT_LEGEND_HEIGHT);
   const previousWidth = useRef(DEFAULT_LEGEND_WIDTH);
   const [activeIndex, setActiveIndex] = useState(-1);
+  const isPositionTop = position.includes('top');
 
   const styleMap: {[key: string]: CSSProperties} = {
     horizontal: {
       justifyContent: 'flex-end',
-      margin: `${LEGENDS_TOP_MARGIN}px ${selectedTheme.grid.horizontalMargin}px 0`,
+      margin: isPositionTop
+        ? `0 ${selectedTheme.grid.horizontalMargin}px ${LEGENDS_BOTTOM_MARGIN}px`
+        : `${LEGENDS_TOP_MARGIN}px ${selectedTheme.grid.horizontalMargin}px 0`,
       flexDirection: 'row',
     },
     vertical: {
