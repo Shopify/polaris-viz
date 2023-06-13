@@ -6,6 +6,7 @@ import {
   estimateStringWidth,
   COLOR_VISION_SINGLE_ITEM,
   useChartContext,
+  clamp,
 } from '@shopify/polaris-viz-core';
 
 import {TREND_INDICATOR_HEIGHT, TrendIndicator} from '../../TrendIndicator';
@@ -104,25 +105,37 @@ export function HorizontalBars({
         function getWidthAndXPosition() {
           const width = Math.abs(xScale(value ?? 0) - xScale(0));
 
-          if (isNegative) {
-            const itemSpacing =
-              trendIndicatorProps == null
-                ? HORIZONTAL_BAR_LABEL_OFFSET
-                : HORIZONTAL_BAR_LABEL_OFFSET * 2;
+          const itemSpacing =
+            trendIndicatorProps == null
+              ? HORIZONTAL_BAR_LABEL_OFFSET
+              : HORIZONTAL_BAR_LABEL_OFFSET * 2;
 
-            const leftLabelOffset = isSimple
-              ? labelWidth + itemSpacing + trendIndicatorWidth
-              : 0;
+          const leftLabelOffset = isSimple
+            ? labelWidth + itemSpacing + trendIndicatorWidth
+            : 0;
+
+          if (isNegative) {
+            const clampedWidth = clamp({
+              amount: width - leftLabelOffset,
+              min: 1,
+              max: Infinity,
+            });
 
             return {
-              x: width * -1,
-              width: width - leftLabelOffset,
+              x: -(clampedWidth + leftLabelOffset),
+              width: clampedWidth,
             };
           }
 
+          const clampedWidth = clamp({
+            amount: width - leftLabelOffset,
+            min: 1,
+            max: Infinity,
+          });
+
           return {
-            x: width + HORIZONTAL_BAR_LABEL_OFFSET,
-            width,
+            x: clampedWidth + HORIZONTAL_BAR_LABEL_OFFSET,
+            width: clampedWidth,
           };
         }
 

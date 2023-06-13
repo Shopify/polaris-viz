@@ -183,7 +183,7 @@ describe('<HorizontalBars />', () => {
 
       const labels = chart.findAll(LabelWrapper);
 
-      expect(labels[0].props.x).toStrictEqual(15);
+      expect(labels[0].props.x).toStrictEqual(11);
     });
 
     it('is positioned for negative values', () => {
