@@ -7,9 +7,16 @@ interface Props {
   height: number;
   width: number;
   accessibilityLabel?: string;
+  tabIndex?: number;
 }
 
-export function Svg({accessibilityLabel, children, height, width}: Props) {
+export function Svg({
+  accessibilityLabel,
+  children,
+  height,
+  width,
+  tabIndex = 0,
+}: Props) {
   const hasLabel = accessibilityLabel != null;
 
   return (
@@ -19,7 +26,7 @@ export function Svg({accessibilityLabel, children, height, width}: Props) {
       width={width}
       role={hasLabel ? 'img' : undefined}
       className={styles.SVG}
-      tabIndex={0}
+      tabIndex={tabIndex}
     >
       {hasLabel && <title>{accessibilityLabel}</title>}
       {children}

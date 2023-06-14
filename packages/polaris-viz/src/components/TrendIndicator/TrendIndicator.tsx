@@ -17,6 +17,7 @@ import {
 export interface TrendIndicatorProps {
   accessibilityLabel?: string;
   direction?: TrendDirection;
+  tabIndex?: number;
   theme?: string;
   trend?: Trend;
   value?: string;
@@ -25,6 +26,7 @@ export interface TrendIndicatorProps {
 export function TrendIndicator({
   accessibilityLabel,
   direction = 'upward',
+  tabIndex = -1,
   theme = 'Light',
   trend = 'neutral',
   value,
@@ -37,6 +39,7 @@ export function TrendIndicator({
         accessibilityLabel={accessibilityLabel}
         height={HEIGHT}
         width={NO_VALUE_WIDTH}
+        tabIndex={tabIndex}
       >
         <path
           d="M0.519531 1.79395H12.0039V0.249023H0.519531V1.79395Z"
