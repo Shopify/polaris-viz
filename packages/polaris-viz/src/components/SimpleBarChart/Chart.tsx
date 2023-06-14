@@ -116,7 +116,7 @@ export function Chart({
 
   const containerStyle = getContainerAlignmentForLegend(legendPosition, true);
   return (
-    <div className={styles.SimpleBarChartWrapper} style={containerStyle}>
+    <ChartElements.Div style={containerStyle}>
       <ChartElements.Svg height={height} width={width}>
         <GradientDefs
           direction="horizontal"
@@ -174,6 +174,6 @@ export function Chart({
           position={legendPosition}
         />
       )}
-    </div>
+    </ChartElements.Div>
   );
 }
