@@ -33,14 +33,15 @@ export function TrendIndicator({
 }: TrendIndicatorProps) {
   const selectedTheme = useTheme(theme);
 
+  const svgProps = {
+    accessibilityLabel,
+    height: HEIGHT,
+    tabIndex,
+  };
+
   if (value == null) {
     return (
-      <Svg
-        accessibilityLabel={accessibilityLabel}
-        height={HEIGHT}
-        width={NO_VALUE_WIDTH}
-        tabIndex={tabIndex}
-      >
+      <Svg {...svgProps} width={NO_VALUE_WIDTH}>
         <path
           d="M0.519531 1.79395H12.0039V0.249023H0.519531V1.79395Z"
           fill={selectedTheme.trendIndicator.neutral}
@@ -55,11 +56,7 @@ export function TrendIndicator({
   const {textWidth, totalWidth} = estimateTrendIndicatorWidth(value);
 
   return (
-    <Svg
-      accessibilityLabel={accessibilityLabel}
-      height={HEIGHT}
-      width={totalWidth}
-    >
+    <Svg {...svgProps} width={totalWidth}>
       <g color={selectedTheme.trendIndicator[trend]}>
         <g transform={`translate(0, ${(HEIGHT - ICON_SIZE) / 2})`}>
           {direction === 'upward' ? <ArrowUp /> : <ArrowDown />}
