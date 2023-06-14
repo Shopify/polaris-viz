@@ -28,7 +28,6 @@ import {
 import {getContainerAlignmentForLegend} from '../../utilities';
 import type {LegendPosition, RenderLegendContent} from '../../types';
 
-import styles from './SimpleBarChart.scss';
 import type {SimpleBarChartDataSeries} from './types';
 
 export interface ChartProps {
