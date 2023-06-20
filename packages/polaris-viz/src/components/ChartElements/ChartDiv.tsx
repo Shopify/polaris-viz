@@ -3,8 +3,8 @@ import type {CSSProperties, ReactNode} from 'react';
 import styles from './ChartElements.scss';
 
 interface ChartDivProps {
-  height?: number;
-  width?: number;
+  height: number | string;
+  width: number | string;
   style?: CSSProperties;
   children: ReactNode;
 }

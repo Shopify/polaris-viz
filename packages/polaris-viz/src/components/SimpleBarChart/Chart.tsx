@@ -115,7 +115,7 @@ export function Chart({
 
   const containerStyle = getContainerAlignmentForLegend(legendPosition, true);
   return (
-    <ChartElements.Div style={containerStyle}>
+    <ChartElements.Div style={containerStyle} width="auto" height="auto">
       <ChartElements.Svg height={height} width={width}>
         <GradientDefs
           direction="horizontal"
