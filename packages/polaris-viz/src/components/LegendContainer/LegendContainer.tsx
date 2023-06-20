@@ -40,7 +40,7 @@ export function LegendContainer({
   onDimensionChange,
   direction = 'horizontal',
   fullWidth = false,
-  position = 'top-left',
+  position = 'bottom-right',
   maxWidth,
   renderLegendContent,
 }: LegendContainerProps) {
