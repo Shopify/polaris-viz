@@ -25,7 +25,8 @@ import {
   useHorizontalStackedValues,
   useColorVisionEvents,
 } from '../../hooks';
-import type {RenderLegendContent} from '../../types';
+import {getContainerAlignmentForLegend} from '../../utilities';
+import type {LegendPosition, RenderLegendContent} from '../../types';
 
 import type {SimpleBarChartDataSeries} from './types';
 
@@ -37,12 +38,14 @@ export interface ChartProps {
   yAxisOptions: Required<YAxisOptions>;
   dimensions?: Dimensions;
   renderLegendContent?: RenderLegendContent;
+  legendPosition?: LegendPosition;
 }
 
 export function Chart({
   data,
   dimensions,
   renderLegendContent,
+  legendPosition = 'bottom-right',
   showLegend,
   type,
   xAxisOptions,
@@ -110,8 +113,9 @@ export function Chart({
     xAxisLabelFormatter: labelFormatter,
   });
 
+  const containerStyle = getContainerAlignmentForLegend(legendPosition, true);
   return (
-    <ChartElements.Div height={height} width={width}>
+    <ChartElements.Div style={containerStyle} width="auto" height="auto">
       <ChartElements.Svg height={height} width={width}>
         <GradientDefs
           direction="horizontal"
@@ -166,6 +170,7 @@ export function Chart({
           data={legend}
           onDimensionChange={setLegendDimensions}
           renderLegendContent={renderLegendContent}
+          position={legendPosition}
         />
       )}
     </ChartElements.Div>

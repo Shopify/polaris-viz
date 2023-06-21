@@ -71,6 +71,9 @@ export const LEGEND_POSITION_ARGS = {
     'bottom',
     'left',
   ],
+  control: {
+    type: 'select',
+  },
 };
 
 export const X_AXIS_OPTIONS_ARGS = {

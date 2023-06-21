@@ -4,6 +4,7 @@ import isEqual from 'fast-deep-equal';
 import {
   getColorVisionEventAttrs,
   getColorVisionStylesForActiveIndex,
+  LEGENDS_BOTTOM_MARGIN,
   LEGENDS_TOP_MARGIN,
   useChartContext,
   useTheme,
@@ -39,7 +40,7 @@ export function LegendContainer({
   onDimensionChange,
   direction = 'horizontal',
   fullWidth = false,
-  position = 'top-left',
+  position = 'bottom-right',
   maxWidth,
   renderLegendContent,
 }: LegendContainerProps) {
@@ -50,16 +51,23 @@ export function LegendContainer({
   const previousHeight = useRef(DEFAULT_LEGEND_HEIGHT);
   const previousWidth = useRef(DEFAULT_LEGEND_WIDTH);
   const [activeIndex, setActiveIndex] = useState(-1);
+  const isPositionTop = position.includes('top');
+  const isPositionLeft = position.includes('left');
+
+  const {horizontalMargin} = selectedTheme.grid;
+  const leftMargin = isPositionLeft ? 0 : horizontalMargin;
 
   const styleMap: {[key: string]: CSSProperties} = {
     horizontal: {
       justifyContent: 'flex-end',
-      margin: `${LEGENDS_TOP_MARGIN}px ${selectedTheme.grid.horizontalMargin}px 0`,
+      margin: isPositionTop
+        ? `0 ${horizontalMargin}px ${LEGENDS_BOTTOM_MARGIN}px ${leftMargin}px`
+        : `${LEGENDS_TOP_MARGIN}px ${horizontalMargin}px 0 ${leftMargin}px`,
       flexDirection: 'row',
     },
     vertical: {
       alignItems: 'flex-start',
-      margin: `0 ${selectedTheme.grid.horizontalMargin}px 0`,
+      margin: `0 ${horizontalMargin}px 0 ${leftMargin}px`,
       flexDirection: 'column',
       maxWidth: fullWidth ? 'none' : maxWidth,
       flex: fullWidth ? 1 : 'initial',

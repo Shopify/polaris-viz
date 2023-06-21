@@ -1,4 +1,3 @@
-import type {CSSProperties} from 'react';
 import {Fragment, useState} from 'react';
 import {pie} from 'd3-shape';
 import {
@@ -17,6 +16,7 @@ import type {
   Direction,
 } from '@shopify/polaris-viz-core';
 
+import {getContainerAlignmentForLegend} from '../../utilities';
 import {estimateLegendItemWidth} from '../Legend';
 import type {ComparisonMetricProps} from '../ComparisonMetric';
 import {LegendContainer, useLegend} from '../../components/LegendContainer';
@@ -131,37 +131,6 @@ export function Chart({
     },
   });
 
-  const styleMap: {[key: string]: CSSProperties} = {
-    top: {
-      flexDirection: 'column-reverse',
-    },
-    bottom: {
-      flexDirection: 'column',
-    },
-    right: {
-      flexDirection: 'row',
-    },
-    left: {
-      flexDirection: 'row-reverse',
-    },
-    'top-left': {
-      flexDirection: 'row-reverse',
-      alignItems: 'start',
-    },
-    'top-right': {
-      flexDirection: 'row',
-      alignItems: 'start',
-    },
-    'bottom-right': {
-      flexDirection: 'row',
-      alignItems: 'end',
-    },
-    'bottom-left': {
-      flexDirection: 'row-reverse',
-      alignItems: 'end',
-    },
-  };
-
   if (!width || !height) return null;
   const diameter = Math.min(height, width);
   const radius = diameter / 2;
@@ -189,8 +158,11 @@ export function Chart({
     width: diameter + RADIUS_PADDING - minX,
   };
 
+  const containerAlignmentStyle =
+    getContainerAlignmentForLegend(legendPosition);
+
   return (
-    <div className={styles.DonutWrapper} style={styleMap[legendPosition]}>
+    <div className={styles.DonutWrapper} style={containerAlignmentStyle}>
       <div className={styles.Donut}>
         {state === ChartState.Success ? (
           <Fragment>

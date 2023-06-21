@@ -17,6 +17,7 @@ export {
   getXAxisOptionsWithDefaults,
 } from './getAxisOptions';
 export {getHoverZoneOffset} from './getHoverZoneOffset';
+export {getContainerAlignmentForLegend} from './getContainerAlignmentForLegend';
 export {estimateStringWidthWithOffset} from './estimateStringWidthWithOffset';
 export {setSingleSeriesActive} from './setSingleSeriesActive';
 export {renderLinearTooltipContent} from './renderLinearTooltipContent';
