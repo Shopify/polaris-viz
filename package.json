@@ -152,7 +152,7 @@
     "react-native-web": "0.17.1",
     "rimraf": "^3.0.0",
     "sass-loader": "^10.1.1",
-    "semver": "^6.3.0",
+    "semver": "^7.5.2",
     "shelljs": "^0.8.5",
     "shx": "^0.3.2",
     "size-limit": "^5.0.1",
