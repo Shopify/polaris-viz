@@ -70,3 +70,8 @@ export const SINGLE_SERIES = buildSeries(
   [[3], [0], [4], [8], [48], [1]],
   [LABELS[0]],
 );
+
+export const LONG_LABEL_SERIES = buildSeries(
+  [[1000], [6000]],
+  ['Series label'],
+);

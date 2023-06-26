@@ -88,7 +88,7 @@ export function Chart({
     allNumbers,
     isStacked,
     labelFormatter,
-    maxWidth: width - longestLabel.negative - longestLabel.positive,
+    maxWidth: width,
     stackedMax,
     stackedMin,
   });
@@ -108,7 +108,7 @@ export function Chart({
     chartXPosition: 0,
   });
 
-  const zeroPosition = longestLabel.negative + xScale(0);
+  const zeroPosition = xScale(0) - 0.5 * longestLabel.negative;
   const getAriaLabel = useAriaLabel(data, {
     xAxisLabelFormatter: labelFormatter,
   });
