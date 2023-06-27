@@ -158,7 +158,7 @@ export const decorators = [
             xAxis: {hide: true},
           },
           NoOverflow: {
-            grid: {horizontalOverflow: false},
+            grid: {horizontalOverflow: false, verticalOverflow: false},
             chartContainer: {
               padding: '20px',
             },

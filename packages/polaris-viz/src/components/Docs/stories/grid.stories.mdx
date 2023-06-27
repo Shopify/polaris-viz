@@ -43,6 +43,12 @@ import {
     chartsAffected={['BarChart', 'LineChart', 'MultiSeriesBarChart']}
   />
   <PropertyTable.Row
+    property="grid.verticalOverflow"
+    type="boolean"
+    description="determines whether or not to allow vertical overflow (the top most horizontal grid line is hidden). Even if enabled, there will only be horizontal overflow in certain scenarios."
+    chartsAffected={['BarChart', 'LineChart', 'StackedAreaChart']}
+  />
+  <PropertyTable.Row
     property="grid.color"
     type="string"
     description="a CSS color string that gets applied to the grid lines"
@@ -140,6 +146,7 @@ import {
           grid: {
             showHorizontalLines: true,
             horizontalOverflow: false,
+            verticalOverflow: false,
             color: 'lime',
             horizontalMargin: 50,
           },
@@ -150,7 +157,6 @@ import {
     </PolarisVizProvider>
     `}
   center
-  theme="Light"
   chart={
     <div style={{width: '350px', height: '140px'}}>
       <PolarisVizProvider
@@ -159,6 +165,7 @@ import {
             grid: {
               showHorizontalLines: true,
               horizontalOverflow: false,
+              verticalOverflow: false,
               color: 'lime',
               horizontalMargin: 50,
             },
@@ -179,6 +186,7 @@ import {
           grid: {
             showHorizontalLines: true,
             horizontalOverflow: true,
+            verticalOverflow: true,
             color: 'lime',
             horizontalMargin: 50,
           },
@@ -189,7 +197,6 @@ import {
     </PolarisVizProvider>
     `}
   center
-  theme="Light"
   chart={
     <div style={{width: '350px', height: '140px'}}>
       <PolarisVizProvider
@@ -198,6 +205,7 @@ import {
             grid: {
               showHorizontalLines: true,
               horizontalOverflow: true,
+              verticalOverflow: true,
               color: 'lime',
               horizontalMargin: 50,
             },

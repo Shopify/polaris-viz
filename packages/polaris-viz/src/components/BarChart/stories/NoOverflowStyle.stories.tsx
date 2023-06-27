@@ -17,6 +17,7 @@ const NoOverflowStyleTemplate: Story<BarChartProps> = (args: BarChartProps) => {
           },
           grid: {
             horizontalOverflow: false,
+            verticalOverflow: false,
             horizontalMargin: 0,
           },
         },

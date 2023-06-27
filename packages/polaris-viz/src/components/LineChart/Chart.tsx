@@ -155,6 +155,7 @@ export function Chart({
   const {yAxisLabelWidth} = useYScale({
     ...yScaleOptions,
     drawableHeight: height,
+    verticalOverflow: selectedTheme.grid.verticalOverflow,
   });
 
   const {reversedSeries, longestSeriesLength, longestSeriesIndex} =
@@ -188,6 +189,7 @@ export function Chart({
   const {ticks, yScale} = useYScale({
     ...yScaleOptions,
     drawableHeight,
+    verticalOverflow: selectedTheme.grid.verticalOverflow,
   });
 
   const annotationsDrawableHeight =

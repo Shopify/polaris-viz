@@ -78,6 +78,7 @@ export interface GridTheme {
   horizontalOverflow: boolean;
   color: string;
   horizontalMargin: number;
+  verticalOverflow: boolean;
 }
 
 export interface ArcTheme {

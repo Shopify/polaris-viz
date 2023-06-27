@@ -1,5 +1,9 @@
 import type {ScaleLinear} from 'd3-scale';
 
+/**
+ *
+ * Returns true when the max value is more than halfway past the second last tick and the last tick.
+ */
 export function shouldRoundScaleUp({
   yScale,
   maxTicks,
