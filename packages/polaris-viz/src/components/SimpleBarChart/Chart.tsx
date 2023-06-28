@@ -72,7 +72,7 @@ export function Chart({
     showLegend,
   });
 
-  const {allNumbers, longestLabel, areAllNegative} = useDataForHorizontalChart({
+  const {allNumbers, areAllNegative} = useDataForHorizontalChart({
     data,
     isSimple: true,
     isStacked,
@@ -108,7 +108,7 @@ export function Chart({
     chartXPosition: 0,
   });
 
-  const zeroPosition = xScale(0) - 0.5 * longestLabel.negative;
+  const zeroPosition = xScale(0);
   const getAriaLabel = useAriaLabel(data, {
     xAxisLabelFormatter: labelFormatter,
   });
