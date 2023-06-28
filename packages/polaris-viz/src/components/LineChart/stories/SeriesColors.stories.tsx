@@ -7,24 +7,14 @@ import type {LineChartProps} from '../LineChart';
 
 import {Template} from './data';
 
-export const SeriesColorsUpToFour: Story<LineChartProps> = Template.bind({});
+export const SeriesColorsUpToEight: Story<LineChartProps> = Template.bind({});
 
-SeriesColorsUpToFour.args = {
+SeriesColorsUpToEight.args = {
   data: generateMultipleSeries(4, 'dates'),
 };
 
-export const SeriesColorsFromFiveToSeven: Story<LineChartProps> = Template.bind(
-  {},
-);
+export const SeriesColorsUpToSixteen: Story<LineChartProps> = Template.bind({});
 
-SeriesColorsFromFiveToSeven.args = {
-  data: generateMultipleSeries(7, 'dates'),
-};
-
-export const SeriesColorsUpToFourteen: Story<LineChartProps> = Template.bind(
-  {},
-);
-
-SeriesColorsUpToFourteen.args = {
+SeriesColorsUpToSixteen.args = {
   data: generateMultipleSeries(14, 'dates'),
 };

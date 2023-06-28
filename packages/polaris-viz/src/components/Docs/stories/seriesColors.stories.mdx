@@ -52,7 +52,7 @@ export interface GradientStop {
     }
   />
   <PropertyTable.Row
-    property={`seriesColors.upToFour`}
+    property={`seriesColors.upToEight`}
     type={'Color[]'}
     description={
       <>
@@ -62,7 +62,7 @@ export interface GradientStop {
     }
   />
   <PropertyTable.Row
-    property={`seriesColors.fromFiveToSeven`}
+    property={`seriesColors.all`}
     type={'Color[]'}
     description={
       <>
@@ -129,7 +129,7 @@ export interface GradientStop {
       themes={{
         Default: {
           seriesColors: {
-            upToFour: [
+            upToEight: [
               'yellow',
               'lime',
               'aqua',
@@ -149,7 +149,7 @@ export interface GradientStop {
         themes={{
           Default: {
             seriesColors: {
-              upToFour: ['yellow', 'lime', 'aqua', 'Teal'],
+              upToEight: ['yellow', 'lime', 'aqua', 'Teal'],
             },
           },
         }}
@@ -164,8 +164,8 @@ export interface GradientStop {
     <PolarisVizProvider
       themes={{
         Default: {
-          fromFiveToSeven: {
-            fromFiveToSeven: [
+          all: {
+            all: [
               'magenta',
               'orange',
               'DarkOrchid',
@@ -188,7 +188,7 @@ export interface GradientStop {
         themes={{
           Default: {
             seriesColors: {
-              fromFiveToSeven: [
+              all: [
                 'magenta',
                 'orange',
                 'DarkOrchid',
@@ -212,7 +212,7 @@ export interface GradientStop {
     <PolarisVizProvider
       themes={{
         Default: {
-          fromFiveToSeven: {
+          all: {
             all: [
               'GreenYellow',
               'ForestGreen',

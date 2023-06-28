@@ -1,8 +1,6 @@
 import {useMemo} from 'react';
-import {useTheme} from '@shopify/polaris-viz-core';
+import {getSeriesColors, useTheme} from '@shopify/polaris-viz-core';
 import type {DataSeries} from '@shopify/polaris-viz-core';
-
-import {getSeriesColors} from './useThemeSeriesColors';
 
 export function useHorizontalSeriesColors(data: DataSeries[]) {
   const selectedTheme = useTheme();

@@ -183,6 +183,5 @@ interface Props {
 }
 
 function Component({tooltipData, options}: Props) {
-  console.log({tooltipData});
   return <>{renderLinearTooltipContent(tooltipData, options)}</>;
 }

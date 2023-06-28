@@ -17,9 +17,6 @@ const WithoutRoundedCornersTemplate: Story<BarChartProps> = (
           bar: {
             borderRadius: 0,
           },
-          chartContainer: {
-            padding: '20px',
-          },
         },
       }}
     >

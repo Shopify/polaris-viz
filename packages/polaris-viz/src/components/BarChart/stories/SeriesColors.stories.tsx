@@ -7,20 +7,14 @@ import type {BarChartProps} from '../BarChart';
 
 import {Template} from './data';
 
-export const SeriesColorsUpToFour: Story<BarChartProps> = Template.bind({});
+export const SeriesColorsUpToEight: Story<BarChartProps> = Template.bind({});
 
-SeriesColorsUpToFour.args = {
-  data: generateMultipleSeries(4),
+SeriesColorsUpToEight.args = {
+  data: generateMultipleSeries(8),
 };
 
-export const SeriesColorsFromFiveToSeven = Template.bind({});
+export const SeriesColorsUpToSixteen = Template.bind({});
 
-SeriesColorsFromFiveToSeven.args = {
-  data: generateMultipleSeries(7),
-};
-
-export const SeriesColorsUpToFourteen = Template.bind({});
-
-SeriesColorsUpToFourteen.args = {
-  data: generateMultipleSeries(7),
+SeriesColorsUpToSixteen.args = {
+  data: generateMultipleSeries(16),
 };

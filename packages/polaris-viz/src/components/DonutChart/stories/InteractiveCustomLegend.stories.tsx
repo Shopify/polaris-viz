@@ -17,7 +17,9 @@ const liStyles = {
   listStyleType: 'none',
 };
 
-export const InteractiveCustomLegend: Story<DonutChartProps> = Template.bind({});
+export const InteractiveCustomLegend: Story<DonutChartProps> = Template.bind(
+  {},
+);
 
 InteractiveCustomLegend.args = {
   ...DEFAULT_PROPS,
@@ -34,7 +36,7 @@ InteractiveCustomLegend.args = {
           {...getColorVisionEventAttrs(index)}
         >
           <SquareColorPreview
-            color={DEFAULT_THEME.seriesColors.upToFour[index]}
+            color={DEFAULT_THEME.seriesColors.upToEight[index]}
           />
           {name}
         </li>

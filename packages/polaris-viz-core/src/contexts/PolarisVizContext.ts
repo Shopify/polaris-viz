@@ -5,6 +5,7 @@ import type {SvgComponents, Theme} from '../types';
 import {
   DEFAULT_THEME as Default,
   LIGHT_THEME as Light,
+  UPLIFT_THEME as Uplift,
   DEFAULT_COMPONENTS as DefaultComponents,
 } from '../constants';
 
@@ -21,6 +22,7 @@ export const PolarisVizContext = createContext<{
   themes: {
     Default,
     Light,
+    Uplift,
   },
   components: {
     ...DefaultComponents,

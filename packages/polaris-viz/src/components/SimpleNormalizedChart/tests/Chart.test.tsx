@@ -352,7 +352,7 @@ describe('<Chart />', () => {
           themes: {
             Default: {
               seriesColors: {
-                upToFour: ['#00A', '#00B', '#00C', '#00D'],
+                upToEight: ['#00A', '#00B', '#00C', '#00D'],
               },
             },
           },
