@@ -114,24 +114,18 @@ export function HorizontalBars({
             ? labelWidth + itemSpacing + trendIndicatorWidth
             : 0;
 
-          if (isNegative) {
-            const clampedWidth = clamp({
-              amount: width - leftLabelOffset,
-              min: 1,
-              max: Infinity,
-            });
+          const clampedWidth = clamp({
+            amount: width,
+            min: 1,
+            max: Infinity,
+          });
 
+          if (isNegative) {
             return {
               x: -(clampedWidth + leftLabelOffset),
               width: clampedWidth,
             };
           }
-
-          const clampedWidth = clamp({
-            amount: width - leftLabelOffset,
-            min: 1,
-            max: Infinity,
-          });
 
           return {
             x: clampedWidth + HORIZONTAL_BAR_LABEL_OFFSET,

@@ -91,7 +91,7 @@ describe('useDataForHorizontalChart()', () => {
     expect(data).toStrictEqual({
       allNumbers: [-5, -10, -12, -1, -2, -3],
       areAllNegative: true,
-      highestPositive: -1,
+      highestPositive: 0,
       longestLabel: {negative: 0, positive: 0},
       lowestNegative: -12,
     });

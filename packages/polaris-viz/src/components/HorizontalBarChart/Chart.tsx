@@ -143,6 +143,7 @@ export function Chart({
       isStacked,
       maxWidth: width - longestLabel.negative - longestLabel.positive,
       labelFormatter: xAxisOptions.labelFormatter,
+      longestLabel,
     });
 
   const {barHeight, chartHeight, groupBarsAreaHeight, groupHeight} =
