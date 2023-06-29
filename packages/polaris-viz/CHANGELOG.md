@@ -10,6 +10,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Fixed
 
 - Fixed an issue where the label width was getting subtracted from the available space twice in `<SimpleBarChart>`.
+- Fixed an issue where horizontal bars with trend indicators would not be rendered to scale in `<SimpleBarChart>`.
 
 ## [9.4.0] - 2023-06-21
 
