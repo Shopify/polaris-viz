@@ -32,7 +32,10 @@ export function useDataForHorizontalChart({
     () => Math.min(0, ...allNumbers),
     [allNumbers],
   );
-  const highestPositive = useMemo(() => Math.max(...allNumbers), [allNumbers]);
+  const highestPositive = useMemo(
+    () => Math.max(0, ...allNumbers),
+    [allNumbers],
+  );
 
   const longestLabel = useMemo(() => {
     if (!isSimple || isStacked) {
