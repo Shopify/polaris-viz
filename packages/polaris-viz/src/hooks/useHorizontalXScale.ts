@@ -17,6 +17,7 @@ interface Props {
   stackedMax: number;
   stackedMin: number;
   labelFormatter: LabelFormatter;
+  longestLabel: {positive: number; negative: number};
 }
 
 export function useHorizontalXScale({
@@ -26,6 +27,7 @@ export function useHorizontalXScale({
   maxWidth,
   stackedMax = 0,
   stackedMin = 0,
+  longestLabel,
 }: Props) {
   const {characterWidths} = useChartContext();
 
@@ -41,26 +43,36 @@ export function useHorizontalXScale({
     stackedMax,
   });
 
-  const labelWidth = useMemo(() => {
-    const longestLabelWidth = initialTicksFormatted.reduce((prev, cur) => {
-      const width = estimateStringWidth(cur, characterWidths);
+  // const labelWidth =
+  //   useMemo(() => {
+  //     const longestLabelWidth = initialTicksFormatted.reduce((prev, cur) => {
+  //       const width = estimateStringWidth(cur, characterWidths);
 
-      if (width > prev) {
-        return width;
-      }
+  //       if (width > prev) {
+  //         return width;
+  //       }
 
-      return prev;
-    }, HORIZONTAL_LABEL_MIN_WIDTH);
+  //       return prev;
+  //     }, HORIZONTAL_LABEL_MIN_WIDTH);
 
-    return clamp({
-      amount: Math.min(
-        maxWidth / initialTicksFormatted.length,
-        longestLabelWidth,
-      ),
-      min: 0,
-      max: maxWidth,
-    });
-  }, [maxWidth, characterWidths, initialTicksFormatted]);
+  //     console.log('useHorizontalXScale longestLabelWidth:', longestLabelWidth);
+  //     console.log(
+  //       'useHorizontalXScale initialTicksFormatted:',
+  //       initialTicksFormatted,
+  //     );
+
+  //     return clamp({
+  //       amount: Math.min(
+  //         maxWidth / initialTicksFormatted.length,
+  //         longestLabelWidth,
+  //       ),
+  //       min: 0,
+  //       max: maxWidth,
+  //     });
+  //   }, [maxWidth, characterWidths, initialTicksFormatted]) * 2;
+
+  const labelWidth = longestLabel.positive + longestLabel.negative;
+  console.log('useHorizontalXScale labelWidth:', labelWidth);
 
   drawableWidth -= labelWidth;
   chartXPosition += labelWidth / 2;

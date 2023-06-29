@@ -28,7 +28,10 @@ export function useDataForHorizontalChart({
     }, []);
   }, [data]);
 
-  const lowestNegative = useMemo(() => Math.min(...allNumbers), [allNumbers]);
+  const lowestNegative = useMemo(
+    () => Math.min(0, ...allNumbers),
+    [allNumbers],
+  );
   const highestPositive = useMemo(() => Math.max(...allNumbers), [allNumbers]);
 
   const longestLabel = useMemo(() => {

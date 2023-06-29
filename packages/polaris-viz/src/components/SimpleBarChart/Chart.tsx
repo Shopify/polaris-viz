@@ -12,6 +12,7 @@ import type {
 } from '@shopify/polaris-viz-core';
 import {animated} from '@react-spring/web';
 
+import {estimateTrendIndicatorWidth} from '../TrendIndicator';
 import {ChartElements} from '../ChartElements';
 import {LegendContainer, useLegend} from '../../components/LegendContainer';
 import {GradientDefs, HorizontalGroup} from '../shared';
@@ -72,7 +73,13 @@ export function Chart({
     showLegend,
   });
 
-  const {allNumbers, areAllNegative} = useDataForHorizontalChart({
+  const {
+    allNumbers,
+    longestLabel,
+    highestPositive,
+    lowestNegative,
+    areAllNegative,
+  } = useDataForHorizontalChart({
     data,
     isSimple: true,
     isStacked,
@@ -84,13 +91,70 @@ export function Chart({
     data,
   });
 
+  // find the longest positive and negative data points
+  // if they have a trend indicator, subtract its width (both positive and negative)
+
+  console.log('highestPositive: ', highestPositive);
+  console.log('lowestNegative: ', lowestNegative);
+
+  const longestTrendIndicator = {
+    positive: 0,
+    negative: 0,
+  };
+  data.forEach((series) => {
+    const {data: seriesData, metadata} = series;
+    const {trends} = metadata ?? {};
+    seriesData.forEach((dataPoint, index) => {
+      const trendForDataPoint = trends?.[index];
+      if (trendForDataPoint) {
+        console.log('dataPoint: ', dataPoint.value);
+        console.log('trendForDataPoint: ', trendForDataPoint);
+
+        if (
+          dataPoint.value === highestPositive &&
+          !longestTrendIndicator.positive
+        ) {
+          longestTrendIndicator.positive = estimateTrendIndicatorWidth(
+            trendForDataPoint.value,
+          ).totalWidth;
+        } else if (
+          dataPoint.value === lowestNegative &&
+          !longestTrendIndicator.negative
+        ) {
+          longestTrendIndicator.negative = estimateTrendIndicatorWidth(
+            trendForDataPoint.value,
+          ).totalWidth;
+        }
+      }
+    });
+  });
+
+  console.log('longestTrendIndicator: ', longestTrendIndicator);
+  console.log('longestLabel: ', longestLabel);
+
+  const trendIndicatorOffset =
+    longestTrendIndicator.positive + longestTrendIndicator.negative;
+
+  const trendIndicatorWidths = data.flatMap((value) => {
+    const trends = value.metadata?.trends ?? {};
+    const trendValues = Object.values(trends);
+    return trendValues.map(({value}) => {
+      return estimateTrendIndicatorWidth(value).totalWidth;
+    });
+  });
+
+  console.log('trendIndicatorWidths', trendIndicatorWidths);
+
+  // const longestTrendIndicator = Math.max(0, ...trendIndicatorWidths);
+
   const {xScale} = useHorizontalXScale({
     allNumbers,
     isStacked,
     labelFormatter,
-    maxWidth: width,
+    maxWidth: width - trendIndicatorOffset,
     stackedMax,
     stackedMin,
+    longestLabel,
   });
 
   const {barHeight, groupHeight} = useHorizontalBarSizes({
@@ -108,7 +172,11 @@ export function Chart({
     chartXPosition: 0,
   });
 
-  const zeroPosition = xScale(0);
+  const xScaleOffset = longestLabel.negative + longestTrendIndicator.negative;
+  console.log('xScaleOffset: ', xScaleOffset);
+
+  const zeroPosition = xScale(0) + xScaleOffset;
+
   const getAriaLabel = useAriaLabel(data, {
     xAxisLabelFormatter: labelFormatter,
   });
