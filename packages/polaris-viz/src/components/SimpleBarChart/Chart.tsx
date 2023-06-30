@@ -91,12 +91,6 @@ export function Chart({
     data,
   });
 
-  // find the longest positive and negative data points
-  // if they have a trend indicator, subtract its width (both positive and negative)
-
-  console.log('highestPositive: ', highestPositive);
-  console.log('lowestNegative: ', lowestNegative);
-
   const longestTrendIndicator = {
     positive: 0,
     negative: 0,
@@ -107,9 +101,6 @@ export function Chart({
     seriesData.forEach((dataPoint, index) => {
       const trendForDataPoint = trends?.[index];
       if (trendForDataPoint) {
-        console.log('dataPoint: ', dataPoint.value);
-        console.log('trendForDataPoint: ', trendForDataPoint);
-
         if (
           dataPoint.value === highestPositive &&
           !longestTrendIndicator.positive
@@ -129,23 +120,8 @@ export function Chart({
     });
   });
 
-  console.log('longestTrendIndicator: ', longestTrendIndicator);
-  console.log('longestLabel: ', longestLabel);
-
   const trendIndicatorOffset =
     longestTrendIndicator.positive + longestTrendIndicator.negative;
-
-  const trendIndicatorWidths = data.flatMap((value) => {
-    const trends = value.metadata?.trends ?? {};
-    const trendValues = Object.values(trends);
-    return trendValues.map(({value}) => {
-      return estimateTrendIndicatorWidth(value).totalWidth;
-    });
-  });
-
-  console.log('trendIndicatorWidths', trendIndicatorWidths);
-
-  // const longestTrendIndicator = Math.max(0, ...trendIndicatorWidths);
 
   const {xScale} = useHorizontalXScale({
     allNumbers,
@@ -173,8 +149,6 @@ export function Chart({
   });
 
   const xScaleOffset = longestLabel.negative + longestTrendIndicator.negative;
-  console.log('xScaleOffset: ', xScaleOffset);
-
   const zeroPosition = xScale(0) + xScaleOffset;
 
   const getAriaLabel = useAriaLabel(data, {
