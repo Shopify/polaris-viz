@@ -1,3 +1,5 @@
+import {HORIZONTAL_BAR_LABEL_OFFSET} from '@shopify/polaris-viz-core';
+
 import {estimateTrendIndicatorWidth} from '../TrendIndicator';
 
 import type {SimpleBarChartDataSeries} from './types';
@@ -33,5 +35,14 @@ export function getLongestTrendIndicator(
     },
     {positive: 0, negative: 0},
   );
+
+  if (longestTrendIndicator.positive > 0) {
+    longestTrendIndicator.positive += HORIZONTAL_BAR_LABEL_OFFSET;
+  }
+
+  if (longestTrendIndicator.negative > 0) {
+    longestTrendIndicator.negative += HORIZONTAL_BAR_LABEL_OFFSET;
+  }
+
   return longestTrendIndicator;
 }
