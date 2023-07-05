@@ -5,14 +5,9 @@ import {SquareColorPreview} from '../../SquareColorPreview';
 import type {RenderTooltipContentData} from '../../../types';
 import type {BarChartProps} from '../BarChart';
 import {BarChart} from '../BarChart';
-import {PolarisVizProvider} from '../../PolarisVizProvider';
 
 export const Template: Story<BarChartProps> = (args: BarChartProps) => {
-  return (
-    <PolarisVizProvider>
-      <BarChart {...args} />
-    </PolarisVizProvider>
-  );
+  return <BarChart {...args} />;
 };
 
 export const TOOLTIP_CONTENT = {

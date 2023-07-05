@@ -4,12 +4,12 @@ import {
   ChartState,
   DEFAULT_CHART_PROPS,
   InternalChartType,
+  usePolarisVizContext,
 } from '@shopify/polaris-viz-core';
 import type {
   Direction,
   XAxisOptions,
   YAxisOptions,
-  WithRequired,
   ChartType,
   ChartProps,
 } from '@shopify/polaris-viz-core';
@@ -47,6 +47,8 @@ export type BarChartProps = {
 } & ChartProps;
 
 export function BarChart(props: BarChartProps) {
+  const {defaultTheme} = usePolarisVizContext();
+
   const {
     annotations = [],
     data,
@@ -59,11 +61,11 @@ export function BarChart(props: BarChartProps) {
     renderLegendContent,
     showLegend = true,
     skipLinkText,
-    theme,
+    theme = defaultTheme,
     type = 'default',
     xAxisOptions,
     yAxisOptions,
-  }: WithRequired<BarChartProps, 'theme'> = {
+  } = {
     ...DEFAULT_CHART_PROPS,
     ...props,
   };

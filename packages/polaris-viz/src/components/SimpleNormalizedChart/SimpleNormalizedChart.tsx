@@ -1,6 +1,9 @@
-import {ChartState, DEFAULT_CHART_PROPS} from '@shopify/polaris-viz-core';
+import {
+  ChartState,
+  DEFAULT_CHART_PROPS,
+  usePolarisVizContext,
+} from '@shopify/polaris-viz-core';
 import type {
-  WithRequired,
   ChartProps,
   Direction,
   LabelFormatter,
@@ -25,6 +28,8 @@ export type SimpleNormalizedChartProps = {
 } & ChartProps;
 
 export function SimpleNormalizedChart(props: SimpleNormalizedChartProps) {
+  const {defaultTheme} = usePolarisVizContext();
+
   const {
     comparisonMetrics = [],
     data,
@@ -33,12 +38,12 @@ export function SimpleNormalizedChart(props: SimpleNormalizedChartProps) {
     direction = 'horizontal',
     size = 'small',
     showLegend = true,
-    theme,
+    theme = defaultTheme,
     isAnimated,
     state,
     errorText,
     renderLegendContent,
-  }: WithRequired<SimpleNormalizedChartProps, 'theme'> = {
+  } = {
     ...DEFAULT_CHART_PROPS,
     ...props,
   };

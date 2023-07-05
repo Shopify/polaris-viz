@@ -1,4 +1,8 @@
-import {DEFAULT_CHART_PROPS, ChartState} from '@shopify/polaris-viz-core';
+import {
+  DEFAULT_CHART_PROPS,
+  ChartState,
+  usePolarisVizContext,
+} from '@shopify/polaris-viz-core';
 import type {
   Dimensions,
   ChartProps,
@@ -17,12 +21,14 @@ export type SparkBarChartProps = {
 } & ChartProps;
 
 export function SparkBarChart(props: SparkBarChartProps) {
+  const {defaultTheme} = usePolarisVizContext();
+
   const {
     data,
     accessibilityLabel,
     isAnimated,
     targetLine,
-    theme,
+    theme = defaultTheme,
     state,
     errorText,
   } = {

@@ -1,11 +1,11 @@
 import {
   DEFAULT_CHART_PROPS,
   InternalChartType,
+  usePolarisVizContext,
 } from '@shopify/polaris-viz-core';
 import type {
   DataGroup,
   ChartProps,
-  WithRequired,
   XAxisOptions,
 } from '@shopify/polaris-viz-core';
 import type {ReactNode} from 'react';
@@ -33,16 +33,18 @@ export type ComboChartProps = {
 } & ChartProps<DataGroup[]>;
 
 export function ComboChart(props: ComboChartProps) {
+  const {defaultTheme} = usePolarisVizContext();
+
   const {
     data,
     annotations = [],
     isAnimated,
     renderTooltipContent,
     showLegend = true,
-    theme,
+    theme = defaultTheme,
     xAxisOptions,
     renderLegendContent,
-  }: WithRequired<ComboChartProps, 'theme'> = {
+  } = {
     ...DEFAULT_CHART_PROPS,
     ...props,
   };

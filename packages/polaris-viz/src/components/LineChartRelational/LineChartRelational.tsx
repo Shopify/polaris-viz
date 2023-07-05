@@ -1,4 +1,3 @@
-import type {WithRequired} from '@shopify/polaris-viz-core';
 import {DEFAULT_CHART_PROPS} from '@shopify/polaris-viz-core';
 import {Fragment} from 'react';
 
@@ -23,7 +22,7 @@ export function LineChartRelational(props: LineChartProps) {
     tooltipOptions,
     xAxisOptions,
     yAxisOptions,
-  }: WithRequired<LineChartProps, 'theme'> = {
+  } = {
     ...DEFAULT_CHART_PROPS,
     ...props,
   };

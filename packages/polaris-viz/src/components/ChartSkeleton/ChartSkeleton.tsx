@@ -1,9 +1,5 @@
 import type {Dimensions} from '@shopify/polaris-viz-core';
-import {
-  ChartState,
-  useTheme,
-  DEFAULT_THEME_NAME,
-} from '@shopify/polaris-viz-core';
+import {ChartState, useTheme} from '@shopify/polaris-viz-core';
 
 import type {Size} from '../SimpleNormalizedChart';
 
@@ -72,7 +68,7 @@ export function ChartSkeleton(props: Props) {
     dimensions,
     errorText = 'Could not load the chart',
     state = ChartState.Loading,
-    theme = DEFAULT_THEME_NAME,
+    theme,
     type,
   } = props;
 

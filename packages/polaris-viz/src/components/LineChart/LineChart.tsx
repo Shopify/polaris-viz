@@ -3,13 +3,13 @@ import type {
   XAxisOptions,
   YAxisOptions,
   ChartProps,
-  WithRequired,
 } from '@shopify/polaris-viz-core';
 import {
   InternalChartType,
   uniqueId,
   ChartState,
   DEFAULT_CHART_PROPS,
+  usePolarisVizContext,
 } from '@shopify/polaris-viz-core';
 
 import {getLineChartDataWithDefaults} from '../../utilities/getLineChartDataWithDefaults';
@@ -48,6 +48,8 @@ export type LineChartProps = {
 } & ChartProps;
 
 export function LineChart(props: LineChartProps) {
+  const {defaultTheme} = usePolarisVizContext();
+
   const {
     annotations = [],
     data,
@@ -59,11 +61,11 @@ export function LineChart(props: LineChartProps) {
     showLegend = true,
     skipLinkText,
     state,
-    theme,
+    theme = defaultTheme,
     tooltipOptions,
     xAxisOptions,
     yAxisOptions,
-  }: WithRequired<LineChartProps, 'theme'> = {
+  } = {
     ...DEFAULT_CHART_PROPS,
     ...props,
   };

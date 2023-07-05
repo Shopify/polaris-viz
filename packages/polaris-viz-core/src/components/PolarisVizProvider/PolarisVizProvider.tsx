@@ -8,6 +8,7 @@ import {
   PRINT_THEME as Print,
   UPLIFT_THEME as Uplift,
   DEFAULT_COMPONENTS as DefaultComponents,
+  DEFAULT_THEME_NAME,
 } from '../../constants';
 import {createThemes} from '../../utilities';
 import {PolarisVizContext} from '../../contexts';
@@ -16,11 +17,13 @@ export interface PolarisVizProviderProps {
   children: ReactNode;
   themes?: {[key: string]: PartialTheme};
   components?: SvgComponents;
+  defaultTheme?: string;
   animated: <T>(Component: any) => ForwardRefExoticComponent<T>;
 }
 
 export function PolarisVizProvider({
   children,
+  defaultTheme = DEFAULT_THEME_NAME,
   themes,
   components,
   animated,
@@ -39,8 +42,9 @@ export function PolarisVizProvider({
         ...themes,
       }),
       animated,
+      defaultTheme,
     };
-  }, [themes, components, animated]);
+  }, [themes, components, animated, defaultTheme]);
 
   return (
     <PolarisVizContext.Provider value={value}>
