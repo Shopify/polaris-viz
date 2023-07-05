@@ -1,12 +1,4 @@
 import type {LabelFormatter} from '@shopify/polaris-viz-core';
-import {
-  clamp,
-  estimateStringWidth,
-  useChartContext,
-} from '@shopify/polaris-viz-core';
-import {useMemo} from 'react';
-
-import {HORIZONTAL_LABEL_MIN_WIDTH} from '../constants';
 
 import {useHorizontalTicksAndScale} from './useHorizontalTicksAndScale';
 
@@ -17,6 +9,7 @@ interface Props {
   stackedMax: number;
   stackedMin: number;
   labelFormatter: LabelFormatter;
+  longestLabel: {positive: number; negative: number};
 }
 
 export function useHorizontalXScale({
@@ -26,41 +19,12 @@ export function useHorizontalXScale({
   maxWidth,
   stackedMax = 0,
   stackedMin = 0,
+  longestLabel,
 }: Props) {
-  const {characterWidths} = useChartContext();
-
   let drawableWidth = maxWidth;
   let chartXPosition = 0;
 
-  const {ticksFormatted: initialTicksFormatted} = useHorizontalTicksAndScale({
-    maxWidth,
-    allNumbers,
-    labelFormatter,
-    isStacked,
-    stackedMin,
-    stackedMax,
-  });
-
-  const labelWidth = useMemo(() => {
-    const longestLabelWidth = initialTicksFormatted.reduce((prev, cur) => {
-      const width = estimateStringWidth(cur, characterWidths);
-
-      if (width > prev) {
-        return width;
-      }
-
-      return prev;
-    }, HORIZONTAL_LABEL_MIN_WIDTH);
-
-    return clamp({
-      amount: Math.min(
-        maxWidth / initialTicksFormatted.length,
-        longestLabelWidth,
-      ),
-      min: 0,
-      max: maxWidth,
-    });
-  }, [maxWidth, characterWidths, initialTicksFormatted]);
+  const labelWidth = longestLabel.positive + longestLabel.negative;
 
   drawableWidth -= labelWidth;
   chartXPosition += labelWidth / 2;

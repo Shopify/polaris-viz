@@ -207,10 +207,6 @@ describe('<Chart />', () => {
 
       expect(chart).not.toContainReactComponent(HorizontalBarChartXAnnotations);
       expect(chart).not.toContainReactComponent(HorizontalBarChartYAnnotations);
-
-      expect(group?.props.transform).toStrictEqual(
-        'translate(23.076923076923077, 5)',
-      );
     });
 
     it('renders <HorizontalBarChartXAnnotations /> when provided', () => {
@@ -235,10 +231,6 @@ describe('<Chart />', () => {
 
       expect(chart).toContainReactComponent(HorizontalBarChartXAnnotations);
       expect(chart).not.toContainReactComponent(HorizontalBarChartYAnnotations);
-
-      expect(group?.props.transform).toStrictEqual(
-        'translate(23.076923076923077, 33)',
-      );
     });
 
     it('renders <HorizontalBarChartYAnnotations /> when provided', () => {

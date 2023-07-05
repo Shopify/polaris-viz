@@ -28,8 +28,14 @@ export function useDataForHorizontalChart({
     }, []);
   }, [data]);
 
-  const lowestNegative = useMemo(() => Math.min(...allNumbers), [allNumbers]);
-  const highestPositive = useMemo(() => Math.max(...allNumbers), [allNumbers]);
+  const lowestNegative = useMemo(
+    () => Math.min(0, ...allNumbers),
+    [allNumbers],
+  );
+  const highestPositive = useMemo(
+    () => Math.max(0, ...allNumbers),
+    [allNumbers],
+  );
 
   const longestLabel = useMemo(() => {
     if (!isSimple || isStacked) {
@@ -37,7 +43,7 @@ export function useDataForHorizontalChart({
     }
 
     const negativeTextSize =
-      lowestNegative >= 0
+      lowestNegative === 0
         ? 0
         : estimateStringWidth(
             `${labelFormatter(lowestNegative)}`,
@@ -45,7 +51,7 @@ export function useDataForHorizontalChart({
           ) + HORIZONTAL_BAR_LABEL_OFFSET;
 
     const positiveTextSize =
-      highestPositive < 0
+      highestPositive === 0
         ? 0
         : estimateStringWidth(
             `${labelFormatter(highestPositive)}`,

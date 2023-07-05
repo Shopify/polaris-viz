@@ -5,7 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-<!-- ## Unreleased -->
+## Unreleased
+
+### Fixed
+
+- Fixed an issue where the label width was getting subtracted from the available space twice in `<SimpleBarChart>`.
+- Fixed an issue where horizontal bars with trend indicators would not be rendered to scale in `<SimpleBarChart>`.
 
 ## [9.4.0] - 2023-06-21
 

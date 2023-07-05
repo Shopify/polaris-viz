@@ -29,6 +29,7 @@ import {getContainerAlignmentForLegend} from '../../utilities';
 import type {LegendPosition, RenderLegendContent} from '../../types';
 
 import type {SimpleBarChartDataSeries} from './types';
+import {getLongestTrendIndicator} from './utilities';
 
 export interface ChartProps {
   data: SimpleBarChartDataSeries[];
@@ -72,7 +73,13 @@ export function Chart({
     showLegend,
   });
 
-  const {allNumbers, longestLabel, areAllNegative} = useDataForHorizontalChart({
+  const {
+    allNumbers,
+    longestLabel,
+    highestPositive,
+    lowestNegative,
+    areAllNegative,
+  } = useDataForHorizontalChart({
     data,
     isSimple: true,
     isStacked,
@@ -84,13 +91,23 @@ export function Chart({
     data,
   });
 
+  const longestTrendIndicator = getLongestTrendIndicator(
+    data,
+    highestPositive,
+    lowestNegative,
+  );
+
+  const trendIndicatorOffset =
+    longestTrendIndicator.positive + longestTrendIndicator.negative;
+
   const {xScale} = useHorizontalXScale({
     allNumbers,
     isStacked,
     labelFormatter,
-    maxWidth: width - longestLabel.negative - longestLabel.positive,
+    maxWidth: width - trendIndicatorOffset,
     stackedMax,
     stackedMin,
+    longestLabel,
   });
 
   const {barHeight, groupHeight} = useHorizontalBarSizes({
@@ -108,7 +125,9 @@ export function Chart({
     chartXPosition: 0,
   });
 
-  const zeroPosition = longestLabel.negative + xScale(0);
+  const zeroPosition =
+    xScale(0) + longestLabel.negative + longestTrendIndicator.negative;
+
   const getAriaLabel = useAriaLabel(data, {
     xAxisLabelFormatter: labelFormatter,
   });
