@@ -3,6 +3,7 @@ import {PolarisVizProvider} from '@shopify/polaris-viz';
 import {
   DEFAULT_THEME,
   LIGHT_THEME,
+  UPLIFT_THEME,
 } from '../packages/polaris-viz/src/constants';
 import {useTheme} from '../packages/polaris-viz/src/hooks';
 
@@ -148,6 +149,13 @@ export const decorators = [
             ...LIGHT_THEME,
             chartContainer: {
               ...LIGHT_THEME.chartContainer,
+              padding: '20px',
+            },
+          },
+          Uplift: {
+            ...UPLIFT_THEME,
+            chartContainer: {
+              ...UPLIFT_THEME.chartContainer,
               padding: '20px',
             },
           },

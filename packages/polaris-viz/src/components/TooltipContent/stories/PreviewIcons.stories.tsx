@@ -17,7 +17,7 @@ PreviewIcons.args = {
         {
           key: 'This row has a preview icon',
           value: '650',
-          color: DEFAULT_THEME.seriesColors.fromFiveToSeven[0],
+          color: DEFAULT_THEME.seriesColors.upToEight[0],
         },
         {
           key: 'This row has a transparent icon',

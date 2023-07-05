@@ -36,7 +36,7 @@ InteractiveCustomLegend.args = {
         >
           <LinePreview
             lineStyle="solid"
-            color={DEFAULT_THEME.seriesColors.upToFour[index]}
+            color={DEFAULT_THEME.seriesColors.upToEight[index]}
           />
           {name}
         </li>

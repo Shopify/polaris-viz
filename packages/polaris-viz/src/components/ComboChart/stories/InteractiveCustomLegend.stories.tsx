@@ -12,7 +12,7 @@ const LEGEND_ITEMS_DATA = [
   {
     name: 'POS',
     preview: (
-      <SquareColorPreview color={DEFAULT_THEME.seriesColors.upToFour[0]} />
+      <SquareColorPreview color={DEFAULT_THEME.seriesColors.upToEight[0]} />
     ),
   },
   {
@@ -22,7 +22,7 @@ const LEGEND_ITEMS_DATA = [
   {
     name: 'Mobile',
     preview: (
-      <SquareColorPreview color={DEFAULT_THEME.seriesColors.upToFour[1]} />
+      <SquareColorPreview color={DEFAULT_THEME.seriesColors.upToEight[1]} />
     ),
   },
   {
@@ -30,7 +30,7 @@ const LEGEND_ITEMS_DATA = [
     preview: (
       <LinePreview
         lineStyle="solid"
-        color={DEFAULT_THEME.seriesColors.upToFour[2]}
+        color={DEFAULT_THEME.seriesColors.upToEight[2]}
       />
     ),
   },
@@ -54,7 +54,9 @@ const liStyles = {
   listStyleType: 'none',
 };
 
-export const InteractiveCustomLegend: Story<ComboChartProps> = Template.bind({});
+export const InteractiveCustomLegend: Story<ComboChartProps> = Template.bind(
+  {},
+);
 
 InteractiveCustomLegend.args = {
   data: DEFAULT_DATA,

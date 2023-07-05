@@ -139,8 +139,7 @@ export interface SeriesColors {
   comparison: string;
   empty: Color;
   single: Color;
-  upToFour: Color[];
-  fromFiveToSeven: Color[];
+  upToEight: Color[];
   all: Color[];
 }
 export interface LegendTheme {

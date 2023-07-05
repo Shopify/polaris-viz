@@ -34,7 +34,7 @@ InteractiveCustomLegend.args = {
           {...getColorVisionEventAttrs(index)}
         >
           <SquareColorPreview
-            color={DEFAULT_THEME.seriesColors.upToFour[index]}
+            color={DEFAULT_THEME.seriesColors.upToEight[index]}
           />
           {name}
         </li>

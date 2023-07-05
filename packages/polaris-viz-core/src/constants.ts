@@ -144,18 +144,12 @@ export const DEFAULT_THEME: Theme = {
     empty: variables.colorGray140,
     comparison: variables.colorDarkComparison,
     single: NEUTRAL_SINGLE_GRADIENT,
-    upToFour: [
+    upToEight: [
       createGradient(variables.colorIndigo70, variables.colorIndigo90),
       createGradient(variables.colorBlue70, variables.colorBlue90),
       createGradient(variables.colorMagenta70, variables.colorMagenta90),
       createGradient(variables.colorTeal70, variables.colorTeal90),
-    ],
-    fromFiveToSeven: [
-      createGradient(variables.colorTeal70, variables.colorTeal90),
-      createGradient(variables.colorBlue70, variables.colorBlue90),
-      createGradient(variables.colorIndigo70, variables.colorIndigo90),
       createGradient(variables.colorPurple50, variables.colorPurple70),
-      createGradient(variables.colorMagenta70, variables.colorMagenta90),
       createGradient(variables.colorOrange60, variables.colorOrange80),
       createGradient(variables.colorYellow20, variables.colorYellow40),
     ],
@@ -182,11 +176,11 @@ export const DEFAULT_THEME: Theme = {
     titleColor: variables.colorGray50,
   },
   chartContainer: {
-    borderRadius: DEFAULT_CHART_BORDER_RADIUS,
-    padding: DEFAULT_CHART_PADDING,
     backgroundColor: variables.colorGray160,
-    sparkChartMinHeight: DEFAULT_SPARK_CHART_MIN_HEIGHT,
+    borderRadius: DEFAULT_CHART_BORDER_RADIUS,
     minHeight: DEFAULT_CHART_MIN_HEIGHT,
+    padding: DEFAULT_CHART_PADDING,
+    sparkChartMinHeight: DEFAULT_SPARK_CHART_MIN_HEIGHT,
   },
   line: {
     hasArea: DEFAULT_LINE_HAS_AREA,
@@ -254,18 +248,12 @@ export const LIGHT_THEME: Theme = {
     empty: variables.colorGray20,
     comparison: variables.colorLightComparison,
     single: NEUTRAL_SINGLE_GRADIENT,
-    upToFour: [
+    upToEight: [
       createGradient(variables.colorIndigo70, variables.colorIndigo90),
       createGradient(variables.colorBlue70, variables.colorBlue90),
       createGradient(variables.colorMagenta70, variables.colorMagenta90),
       createGradient(variables.colorTeal70, variables.colorTeal90),
-    ],
-    fromFiveToSeven: [
-      createGradient(variables.colorTeal70, variables.colorTeal90),
-      createGradient(variables.colorBlue70, variables.colorBlue90),
-      createGradient(variables.colorIndigo70, variables.colorIndigo90),
       createGradient(variables.colorPurple70, variables.colorPurple90),
-      createGradient(variables.colorMagenta70, variables.colorMagenta90),
       createGradient(variables.colorOrange70, variables.colorOrange90),
       createGradient(variables.colorYellow70, variables.colorYellow90),
     ],
@@ -292,11 +280,11 @@ export const LIGHT_THEME: Theme = {
     titleColor: variables.colorGray100,
   },
   chartContainer: {
-    sparkChartMinHeight: DEFAULT_SPARK_CHART_MIN_HEIGHT,
-    padding: DEFAULT_CHART_PADDING,
-    minHeight: DEFAULT_CHART_MIN_HEIGHT,
-    borderRadius: DEFAULT_CHART_BORDER_RADIUS,
     backgroundColor: variables.colorGray00,
+    borderRadius: DEFAULT_CHART_BORDER_RADIUS,
+    minHeight: DEFAULT_CHART_MIN_HEIGHT,
+    padding: DEFAULT_CHART_PADDING,
+    sparkChartMinHeight: DEFAULT_SPARK_CHART_MIN_HEIGHT,
   },
   line: {
     hasArea: DEFAULT_LINE_HAS_AREA,
@@ -365,18 +353,12 @@ export const PRINT_THEME = {
     empty: variables.colorGray20,
     comparison: variables.colorLightComparison,
     single: variables.colorIndigo90,
-    upToFour: [
+    upToEight: [
       variables.colorIndigo70,
       variables.colorBlue70,
       variables.colorMagenta70,
       variables.colorTeal70,
-    ],
-    fromFiveToSeven: [
-      variables.colorTeal70,
-      variables.colorBlue70,
-      variables.colorIndigo70,
       variables.colorPurple70,
-      variables.colorMagenta70,
       variables.colorOrange70,
       variables.colorYellow70,
     ],
@@ -395,6 +377,94 @@ export const PRINT_THEME = {
       variables.colorMagenta70,
       variables.colorOrange110,
       variables.colorYellow70,
+    ],
+  },
+};
+
+const LIGHT_BLUE = [
+  {offset: 0, color: '#079EE1'},
+  {offset: 100, color: '#2EB9F5'},
+];
+
+const INDIGO = [
+  {offset: 0, color: '#6A42E9'},
+  {offset: 100, color: '#8F71EF'},
+];
+
+const BLUE = [
+  {offset: 0, color: '#3E69EA'},
+  {offset: 100, color: '#7594F0'},
+];
+
+const MAGENTA = [
+  {offset: 0, color: '#D147AC'},
+  {offset: 100, color: '#DD76C1'},
+];
+
+const TEAL = [
+  {offset: 0, color: '#1D9595'},
+  {offset: 100, color: '#2CD2D2'},
+];
+
+const PURPLE = [
+  {offset: 0, color: '#A249DF'},
+  {offset: 100, color: '#BD7DE8'},
+];
+
+const OLIVE = [
+  {offset: 0, color: '#6F8405'},
+  {offset: 100, color: '#9DBB08'},
+];
+
+const ORANGE = [
+  {offset: 0, color: '#D77114'},
+  {offset: 100, color: '#EC882D'},
+];
+
+const LIGHT_BLUE_09_SOLID = 'rgba(19, 172, 240, 1)';
+const INDIGO_10_SOLID = 'rgba(86, 42, 228, 1)';
+const BLUE_07_SOLID = 'rgba(89, 126, 237, 1)';
+const MAGENTA_12_SOLID = 'rgba(155, 39, 124, 1)';
+const TEAL_11_SOLID = 'rgba(35, 186, 186, 1)';
+const PURPLE_11_SOLID = 'rgba(126, 33, 190, 1)';
+const OLIVE_13_SOLID = 'rgba(134, 159, 7, 1)';
+const ORANGE_14_SOLID = 'rgba(139, 68, 3, 1)';
+const INDIGIO_06_SOLID = 'rgba(158, 132, 242, 1)';
+const LIGHT_BLUE_12_SOLID = 'rgba(18, 138, 192, 1)';
+const MAGENTA_08_SOLID = 'rgba(215, 94, 183, 1)';
+const BLUE_13_SOLID = 'rgba(16, 50, 149, 1)';
+const PURPLE_07_SOLID = 'rgba(175, 99, 228, 1)';
+const TEAL_14_SOLID = 'rgba(21, 117, 117, 1)';
+const ORANGE_10_SOLID = 'rgba(228, 124, 29, 1)';
+const OLIVE_16_SOLID = 'rgba(64, 76, 3, 1)';
+
+export const UPLIFT_THEME = {
+  ...LIGHT_THEME,
+  seriesColors: {
+    empty: variables.colorGray20,
+    comparison: '#0A97D5',
+    single: [
+      {offset: 0, color: '#0A97D5'},
+      {offset: 100, color: '#50C3F7'},
+    ],
+    upToEight: [LIGHT_BLUE, INDIGO, BLUE, MAGENTA, TEAL, PURPLE, OLIVE, ORANGE],
+    all: [
+      LIGHT_BLUE_09_SOLID,
+      INDIGO_10_SOLID,
+      BLUE_07_SOLID,
+      MAGENTA_12_SOLID,
+      TEAL_11_SOLID,
+      PURPLE_11_SOLID,
+      OLIVE_13_SOLID,
+      ORANGE_14_SOLID,
+      INDIGIO_06_SOLID,
+      LIGHT_BLUE_12_SOLID,
+      MAGENTA_08_SOLID,
+      BLUE_13_SOLID,
+      PURPLE_07_SOLID,
+      TEAL_14_SOLID,
+      ORANGE_10_SOLID,
+      OLIVE_16_SOLID,
     ],
   },
 };

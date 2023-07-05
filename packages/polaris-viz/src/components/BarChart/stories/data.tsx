@@ -9,15 +9,7 @@ import {PolarisVizProvider} from '../../PolarisVizProvider';
 
 export const Template: Story<BarChartProps> = (args: BarChartProps) => {
   return (
-    <PolarisVizProvider
-      themes={{
-        Default: {
-          chartContainer: {
-            padding: '20px',
-          },
-        },
-      }}
-    >
+    <PolarisVizProvider>
       <BarChart {...args} />
     </PolarisVizProvider>
   );

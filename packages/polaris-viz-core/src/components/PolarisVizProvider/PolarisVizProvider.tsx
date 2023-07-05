@@ -6,6 +6,7 @@ import {
   DEFAULT_THEME as Default,
   LIGHT_THEME as Light,
   PRINT_THEME as Print,
+  UPLIFT_THEME as Uplift,
   DEFAULT_COMPONENTS as DefaultComponents,
 } from '../../constants';
 import {createThemes} from '../../utilities';
@@ -34,6 +35,7 @@ export function PolarisVizProvider({
         Default,
         Light,
         Print,
+        Uplift,
         ...themes,
       }),
       animated,
