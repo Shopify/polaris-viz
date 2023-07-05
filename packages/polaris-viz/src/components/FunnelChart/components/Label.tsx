@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 import {animated} from '@react-spring/web';
 import type {SpringValue} from '@react-spring/web';
 
@@ -21,6 +23,7 @@ const FONT_SIZES = {
 export interface LabelProps {
   label: string;
   labelWidth: number;
+  labelInfo?: ReactNode;
   size: Size;
   color?: string;
   backgroundColor?: string;
@@ -30,6 +33,7 @@ export interface LabelProps {
 export function Label({
   label,
   labelWidth,
+  labelInfo,
   size,
   color,
   backgroundColor,
@@ -68,6 +72,7 @@ export function Label({
           >
             {label}
           </span>
+          {labelInfo}
         </div>
       </foreignObject>
     </animated.g>

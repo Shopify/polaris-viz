@@ -27,6 +27,7 @@ export function FunnelSegment({
   portalTo,
   percentLabel,
   formattedYValue,
+  labelInfo,
 }) {
   const selectedTheme = useTheme();
   const mounted = useRef(false);
@@ -104,6 +105,7 @@ export function FunnelSegment({
         backgroundColor={backgroundColor}
         label={percentLabel}
         labelWidth={barWidth}
+        labelInfo={labelInfo}
         transform={animatedNextY.to(
           (value: number) =>
             `translate(${Number(x) + Number(barWidth)}px, ${

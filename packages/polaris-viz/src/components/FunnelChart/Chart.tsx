@@ -1,4 +1,4 @@
-import {Fragment, useMemo, useState, useCallback} from 'react';
+import {Fragment, useMemo, useState, useCallback, ReactNode} from 'react';
 import {scaleBand, scaleLinear} from 'd3-scale';
 import type {
   DataSeries,
@@ -35,6 +35,10 @@ export interface ChartProps {
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
   dimensions?: Dimensions;
+  labelHelpers?: {
+    key: number | string;
+    value: ReactNode | null;
+  }[];
 }
 
 export function Chart({
@@ -42,6 +46,7 @@ export function Chart({
   dimensions,
   xAxisOptions,
   yAxisOptions,
+  labelHelpers,
 }: ChartProps) {
   const {theme} = useChartContext();
   const selectedTheme = useTheme();
@@ -155,12 +160,15 @@ export function Chart({
         const percentLabel = handlePercentLabelFormatter(percentCalculation);
         const formattedYValue = yAxisOptions.labelFormatter(yAxisValue);
 
+        const labelHelper = labelHelpers?.find(helper => helper.key === dataPoint.key);
+
         return (
           <Fragment key={dataPoint.key}>
             {maskRef && (
               <g key={dataPoint.key} role="listitem">
                 <FunnelSegment
                   percentLabel={percentLabel}
+                  labelInfo={labelHelper && labelHelper.value}
                   formattedYValue={formattedYValue}
                   isLast={index === dataSeries.length - 1}
                   connector={{

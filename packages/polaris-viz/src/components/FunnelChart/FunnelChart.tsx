@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import type {
   XAxisOptions,
   YAxisOptions,
@@ -22,6 +23,10 @@ import {Chart} from './Chart';
 export type FunnelChartProps = {
   xAxisOptions?: Omit<XAxisOptions, 'hide'>;
   yAxisOptions?: Omit<XAxisOptions, 'integersOnly'>;
+  labelHelpers?: {
+    key: number | string;
+    value: ReactNode | null;
+  }[];
 } & ChartProps;
 
 export function FunnelChart(props: FunnelChartProps) {
@@ -33,6 +38,7 @@ export function FunnelChart(props: FunnelChartProps) {
     isAnimated,
     state,
     errorText,
+    labelHelpers,
   } = {
     ...DEFAULT_CHART_PROPS,
     ...props,
@@ -63,6 +69,7 @@ export function FunnelChart(props: FunnelChartProps) {
       ) : (
         <Chart
           data={seriesWithDefaults}
+          labelHelpers={labelHelpers}
           xAxisOptions={xAxisOptionsForChart}
           yAxisOptions={yAxisOptionsForChart}
         />
