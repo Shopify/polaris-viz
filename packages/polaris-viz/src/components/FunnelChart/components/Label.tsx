@@ -1,3 +1,4 @@
+import type {ReactNode} from 'react';
 import {animated} from '@react-spring/web';
 import type {SpringValue} from '@react-spring/web';
 
@@ -21,6 +22,7 @@ const FONT_SIZES = {
 export interface LabelProps {
   label: string;
   labelWidth: number;
+  labelHelper?: ReactNode;
   size: Size;
   color?: string;
   backgroundColor?: string;
@@ -30,6 +32,7 @@ export interface LabelProps {
 export function Label({
   label,
   labelWidth,
+  labelHelper,
   size,
   color,
   backgroundColor,
@@ -58,16 +61,18 @@ export function Label({
             fontSize: `${fontSize}px`,
             color,
             lineHeight: `${HORIZONTAL_BAR_LABEL_HEIGHT}px`,
-            height: HORIZONTAL_BAR_LABEL_HEIGHT,
           }}
         >
           <span
             style={{
               backgroundColor,
+              height: HORIZONTAL_BAR_LABEL_HEIGHT,
+              userSelect: 'none',
             }}
           >
             {label}
           </span>
+          {labelHelper}
         </div>
       </foreignObject>
     </animated.g>
