@@ -1,5 +1,4 @@
-import type { ReactNode } from 'react';
-
+import type {ReactNode} from 'react';
 import {animated} from '@react-spring/web';
 import type {SpringValue} from '@react-spring/web';
 

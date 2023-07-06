@@ -1,4 +1,5 @@
-import {Fragment, useMemo, useState, useCallback, ReactNode} from 'react';
+import {Fragment, useMemo, useState, useCallback} from 'react';
+import type {ReactNode} from 'react';
 import {scaleBand, scaleLinear} from 'd3-scale';
 import type {
   DataSeries,
@@ -160,7 +161,9 @@ export function Chart({
         const percentLabel = handlePercentLabelFormatter(percentCalculation);
         const formattedYValue = yAxisOptions.labelFormatter(yAxisValue);
 
-        const labelHelper = labelHelpers?.find(helper => helper.key === dataPoint.key);
+        const labelHelper = labelHelpers?.find(
+          (helper) => helper.key === dataPoint.key,
+        );
 
         return (
           <Fragment key={dataPoint.key}>
