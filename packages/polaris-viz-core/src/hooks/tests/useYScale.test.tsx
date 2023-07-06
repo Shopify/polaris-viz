@@ -266,6 +266,46 @@ describe('useYScale()', () => {
       // Check that it's called with the first tick and max data the second time
       expect(domainSpy).toHaveBeenNthCalledWith(2, [0, 10]);
     });
+
+    it('updates the domain when true and verticalOverflow is true', () => {
+      let domainSpy = jest.fn();
+      const firstTick = 50;
+
+      (scaleLinear as jest.Mock).mockImplementation(() => {
+        const scale = (value: any) => value;
+        scale.ticks = () => [firstTick];
+        scale.range = (range: any) => (range ? scale : range);
+        domainSpy = jest.fn((domain: any) => (domain ? scale : domain));
+        scale.domain = domainSpy;
+        scale.nice = () => scale;
+        scale.copy = () => scale;
+        return scale;
+      });
+
+      (shouldRoundScaleUp as jest.Mock).mockImplementation(
+        jest.fn(() => false),
+      );
+
+      function TestComponent() {
+        useYScale({
+          ...MOCK_PROPS,
+          min: 0,
+          max: 10,
+          shouldRoundUp: false,
+          verticalOverflow: true,
+        });
+
+        return null;
+      }
+
+      mount(<TestComponent />);
+
+      // Check that it's called with the min and max data
+      expect(domainSpy).toHaveBeenNthCalledWith(1, [0, 10]);
+
+      // Check that it's called with the first tick and max data the second time
+      expect(domainSpy).toHaveBeenNthCalledWith(2, [0, 10]);
+    });
   });
 
   describe('integersOnly', () => {

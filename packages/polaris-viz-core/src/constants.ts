@@ -133,6 +133,7 @@ const DEFAULT_ARC_CORNER_THICKNESS = 18;
 
 const DEFAULT_GRID_SHOW_HORIZONTAL_LINES = true;
 const DEFAULT_GRID_HORIZONTAL_OVERFLOW = true;
+const DEFAULT_GRID_VERTICAL_OVERFLOW = true;
 const DEFAULT_GRID_HORIZONTAL_MARGIN = 16;
 
 const DEFAULT_X_AXIS_HIDE = false;
@@ -201,6 +202,7 @@ export const DEFAULT_THEME: Theme = {
     color: variables.colorGray140,
     horizontalOverflow: DEFAULT_GRID_HORIZONTAL_OVERFLOW,
     horizontalMargin: DEFAULT_GRID_HORIZONTAL_MARGIN,
+    verticalOverflow: DEFAULT_GRID_VERTICAL_OVERFLOW,
   },
   xAxis: {
     labelColor: variables.colorGray30,
@@ -305,6 +307,7 @@ export const LIGHT_THEME: Theme = {
     color: variables.colorGray20,
     horizontalOverflow: DEFAULT_GRID_HORIZONTAL_OVERFLOW,
     horizontalMargin: DEFAULT_GRID_HORIZONTAL_MARGIN,
+    verticalOverflow: DEFAULT_GRID_VERTICAL_OVERFLOW,
   },
   xAxis: {
     labelColor: variables.colorGray100,

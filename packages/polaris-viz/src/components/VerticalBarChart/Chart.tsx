@@ -143,6 +143,7 @@ export function Chart({
   const {ticks: initialTicks} = useYScale({
     ...yScaleOptions,
     drawableHeight: height,
+    verticalOverflow: selectedTheme.grid.verticalOverflow,
   });
 
   const yAxisLabelWidth = useMemo(() => {
@@ -191,6 +192,7 @@ export function Chart({
   const {ticks, yScale} = useYScale({
     ...yScaleOptions,
     drawableHeight,
+    verticalOverflow: selectedTheme.grid.verticalOverflow,
   });
 
   const barColors = data.map(({color}) => color!);

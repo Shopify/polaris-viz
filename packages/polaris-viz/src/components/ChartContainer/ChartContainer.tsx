@@ -63,7 +63,13 @@ export const ChartContainer = (props: Props) => {
     dataTooBigToAnimate,
   ]);
 
-  const {chartContainer} = useTheme(value.theme);
+  const {chartContainer, grid} = useTheme(value.theme);
+
+  // If there is no vertical overflow and a custom padding is not defined, add padding so that the top y-axis label is not cut off
+  const padding =
+    !grid.verticalOverflow && chartContainer.padding == null
+      ? '3px 0 0 0'
+      : chartContainer.padding;
 
   return (
     <ChartContext.Provider value={value}>
@@ -71,7 +77,7 @@ export const ChartContainer = (props: Props) => {
         className={styles.ChartContainer}
         style={{
           background: chartContainer.backgroundColor,
-          padding: chartContainer.padding,
+          padding,
           borderRadius: chartContainer.borderRadius,
         }}
         id={getChartId(value.id)}

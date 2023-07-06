@@ -17,6 +17,7 @@ export interface Props {
   min: number;
   integersOnly?: boolean;
   shouldRoundUp?: boolean;
+  verticalOverflow?: boolean;
 }
 
 export function useYScale({
@@ -26,6 +27,7 @@ export function useYScale({
   max,
   min,
   shouldRoundUp = true,
+  verticalOverflow = true,
 }: Props) {
   const {characterWidths} = useChartContext();
 
@@ -50,9 +52,11 @@ export function useYScale({
       .range([drawableHeight, 0])
       .domain([Math.min(0, minY), Math.max(0, maxY)]);
 
+    // if verticalOverflow is false, always round up
+    // if verticalOverflow is true, only round up if both shouldRoundUp and shouldRoundScaleUp is true
     if (
-      shouldRoundUp &&
-      shouldRoundScaleUp({yScale, maxValue: maxY, maxTicks})
+      !verticalOverflow ||
+      (shouldRoundUp && shouldRoundScaleUp({yScale, maxValue: maxY, maxTicks}))
     ) {
       yScale.nice(maxTicks);
     } else {
@@ -85,6 +89,7 @@ export function useYScale({
 
     return {yScale, ticks, yAxisLabelWidth};
   }, [
+    verticalOverflow,
     shouldRoundUp,
     characterWidths,
     drawableHeight,

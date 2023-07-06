@@ -56,7 +56,7 @@ export const DEFAULT_DATA: DataSeries[] = [
       {key: 'February', value: 7349},
       {key: 'March', value: 9795},
       {key: 'April', value: 7396},
-      {key: 'May', value: 14000},
+      {key: 'May', value: 22000},
       {key: 'June', value: 12484},
       {key: 'July', value: 4878},
     ],
