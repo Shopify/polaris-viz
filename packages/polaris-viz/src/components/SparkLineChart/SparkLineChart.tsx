@@ -1,5 +1,9 @@
 import type {ChartProps} from '@shopify/polaris-viz-core';
-import {DEFAULT_CHART_PROPS, ChartState} from '@shopify/polaris-viz-core';
+import {
+  DEFAULT_CHART_PROPS,
+  ChartState,
+  usePolarisVizContext,
+} from '@shopify/polaris-viz-core';
 
 import {ChartContainer} from '../ChartContainer';
 import {ChartSkeleton} from '../ChartSkeleton';
@@ -13,13 +17,15 @@ export type SparkLineChartProps = {
 } & ChartProps;
 
 export function SparkLineChart(props: SparkLineChartProps) {
+  const {defaultTheme} = usePolarisVizContext();
+
   const {
     data,
     accessibilityLabel,
     isAnimated,
     offsetLeft = 0,
     offsetRight = 0,
-    theme,
+    theme = defaultTheme,
     state,
     errorText,
   } = {

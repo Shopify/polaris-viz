@@ -6,12 +6,18 @@ import type {ReactNode} from 'react';
 export const PolarisVizProvider = ({
   themes,
   children,
+  defaultTheme,
 }: {
   children: ReactNode;
   themes?: {[key: string]: PartialTheme};
+  defaultTheme?: string;
 }) => {
   return (
-    <OriginalPolarisVizProvider themes={themes} animated={animated}>
+    <OriginalPolarisVizProvider
+      themes={themes}
+      animated={animated}
+      defaultTheme={defaultTheme}
+    >
       {children}
     </OriginalPolarisVizProvider>
   );

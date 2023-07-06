@@ -3,6 +3,7 @@ import {
   uniqueId,
   ChartState,
   DEFAULT_CHART_PROPS,
+  usePolarisVizContext,
 } from '@shopify/polaris-viz-core';
 import type {
   XAxisOptions,
@@ -41,6 +42,8 @@ export type StackedAreaChartProps = {
 } & ChartProps;
 
 export function StackedAreaChart(props: StackedAreaChartProps) {
+  const {defaultTheme} = usePolarisVizContext();
+
   const {
     annotations = [],
     xAxisOptions,
@@ -53,7 +56,7 @@ export function StackedAreaChart(props: StackedAreaChartProps) {
     renderLegendContent,
     showLegend = true,
     skipLinkText,
-    theme,
+    theme = defaultTheme,
   } = {
     ...DEFAULT_CHART_PROPS,
     ...props,

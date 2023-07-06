@@ -533,7 +533,6 @@ export const COLOR_VISION_EVENT = {
 
 export const DEFAULT_CHART_PROPS = {
   isAnimated: true,
-  theme: DEFAULT_THEME_NAME,
   state: ChartState.Success,
   errorText: 'Could not load the chart',
 };

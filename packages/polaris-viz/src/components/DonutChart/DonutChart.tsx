@@ -1,9 +1,8 @@
-import type {
-  LabelFormatter,
-  ChartProps,
-  WithRequired,
+import type {LabelFormatter, ChartProps} from '@shopify/polaris-viz-core';
+import {
+  DEFAULT_CHART_PROPS,
+  usePolarisVizContext,
 } from '@shopify/polaris-viz-core';
-import {DEFAULT_CHART_PROPS} from '@shopify/polaris-viz-core';
 
 import {ChartContainer} from '../ChartContainer';
 import type {ComparisonMetricProps} from '../ComparisonMetric';
@@ -26,24 +25,23 @@ export type DonutChartProps = {
 } & ChartProps;
 
 export function DonutChart(props: DonutChartProps) {
+  const {defaultTheme} = usePolarisVizContext();
+
   const {
     data,
-    theme,
+    theme = defaultTheme,
     comparisonMetric,
-    showLegend,
-    labelFormatter,
+    showLegend = true,
+    labelFormatter = (value) => `${value}`,
     legendFullWidth,
-    legendPosition,
+    legendPosition = 'left',
     isAnimated,
     state,
     errorText,
     renderInnerValueContent,
     renderLegendContent,
-  }: WithRequired<DonutChartProps, 'theme'> = {
+  } = {
     ...DEFAULT_CHART_PROPS,
-    labelFormatter: (value) => `${value}`,
-    showLegend: true,
-    legendPosition: 'left',
     ...props,
   };
 

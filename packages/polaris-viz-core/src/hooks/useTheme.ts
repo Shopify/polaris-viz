@@ -7,10 +7,10 @@ import {PolarisVizContext} from '../contexts/PolarisVizContext';
 import {useChartContext} from './useChartContext';
 
 export function useTheme(passedTheme?: string): Theme {
-  const {themes} = useContext(PolarisVizContext);
+  const {themes, defaultTheme} = useContext(PolarisVizContext);
   const {theme} = useChartContext();
 
-  const themeName = passedTheme ?? theme ?? DEFAULT_THEME_NAME;
+  const themeName = passedTheme ?? theme ?? defaultTheme ?? DEFAULT_THEME_NAME;
 
   if (Object.prototype.hasOwnProperty.call(themes, themeName)) {
     return themes[themeName];

@@ -7,6 +7,7 @@ import {
   LIGHT_THEME as Light,
   UPLIFT_THEME as Uplift,
   DEFAULT_COMPONENTS as DefaultComponents,
+  DEFAULT_THEME_NAME,
 } from '../constants';
 
 const host = createHost({
@@ -18,6 +19,7 @@ export const PolarisVizContext = createContext<{
   themes: {[key: string]: Theme};
   components: SvgComponents;
   animated: typeof host.animated;
+  defaultTheme: string;
 }>({
   themes: {
     Default,
@@ -28,4 +30,5 @@ export const PolarisVizContext = createContext<{
     ...DefaultComponents,
   },
   animated: host.animated,
+  defaultTheme: DEFAULT_THEME_NAME,
 });

@@ -8,6 +8,7 @@ import {
   useTheme,
   useThemeSeriesColors,
   ChartState,
+  usePolarisVizContext,
 } from '@shopify/polaris-viz-core';
 
 import {ChartContainer} from '../../components/ChartContainer';
@@ -25,9 +26,11 @@ export type FunnelChartProps = {
 } & ChartProps;
 
 export function FunnelChart(props: FunnelChartProps) {
+  const {defaultTheme} = usePolarisVizContext();
+
   const {
     data,
-    theme,
+    theme = defaultTheme,
     xAxisOptions,
     yAxisOptions,
     isAnimated,

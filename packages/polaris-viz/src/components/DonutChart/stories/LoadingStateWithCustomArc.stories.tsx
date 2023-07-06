@@ -9,7 +9,9 @@ import {DonutChart} from '../DonutChart';
 
 import {DEFAULT_PROPS, DEFAULT_DATA} from './data';
 
-const LoadingStateWithCustomArcTemplate: StoryFn<DonutChartProps> = (args: DonutChartProps) => {
+const LoadingStateWithCustomArcTemplate: StoryFn<DonutChartProps> = (
+  args: DonutChartProps,
+) => {
   return (
     <div style={{width: 550, height: 400}}>
       <PolarisVizProvider
@@ -18,7 +20,7 @@ const LoadingStateWithCustomArcTemplate: StoryFn<DonutChartProps> = (args: Donut
             arc: {
               cornerRadius: 5,
               thickness: 25,
-            }
+            },
           },
         }}
       >
@@ -28,7 +30,8 @@ const LoadingStateWithCustomArcTemplate: StoryFn<DonutChartProps> = (args: Donut
   );
 };
 
-export const LoadingStateWithCustomArc: Story<DonutChartProps> = LoadingStateWithCustomArcTemplate.bind({});
+export const LoadingStateWithCustomArc: Story<DonutChartProps> =
+  LoadingStateWithCustomArcTemplate.bind({});
 
 LoadingStateWithCustomArc.args = {
   ...DEFAULT_PROPS,

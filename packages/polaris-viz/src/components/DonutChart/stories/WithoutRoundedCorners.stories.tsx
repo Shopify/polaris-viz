@@ -8,7 +8,9 @@ import type {DonutChartProps} from '../DonutChart';
 
 import {DEFAULT_DATA, DEFAULT_PROPS} from './data';
 
-const WithoutRoundedCornersTemplate: StoryFn<DonutChartProps> = (args: DonutChartProps) => {
+const WithoutRoundedCornersTemplate: StoryFn<DonutChartProps> = (
+  args: DonutChartProps,
+) => {
   return (
     <div style={{width: 550, height: 400}}>
       <PolarisVizProvider
@@ -16,7 +18,7 @@ const WithoutRoundedCornersTemplate: StoryFn<DonutChartProps> = (args: DonutChar
           Default: {
             arc: {
               cornerRadius: 0,
-            }
+            },
           },
         }}
       >
@@ -26,7 +28,8 @@ const WithoutRoundedCornersTemplate: StoryFn<DonutChartProps> = (args: DonutChar
   );
 };
 
-export const WithoutRoundedCorners: Story<DonutChartProps> = WithoutRoundedCornersTemplate.bind({});
+export const WithoutRoundedCorners: Story<DonutChartProps> =
+  WithoutRoundedCornersTemplate.bind({});
 
 WithoutRoundedCorners.args = {
   ...DEFAULT_PROPS,
