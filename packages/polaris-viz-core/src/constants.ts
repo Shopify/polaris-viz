@@ -438,6 +438,10 @@ const TEAL_14_SOLID = 'rgba(21, 117, 117, 1)';
 const ORANGE_10_SOLID = 'rgba(228, 124, 29, 1)';
 const OLIVE_16_SOLID = 'rgba(64, 76, 3, 1)';
 
+const UPLIFT_POSITIVE = '#29845A';
+const UPLIFT_NEGATIVE = '#E51C00';
+const UPLIFT_NEUTRAL = '#8A8A8A';
+
 export const UPLIFT_THEME = {
   ...LIGHT_THEME,
   seriesColors: {
@@ -466,6 +470,19 @@ export const UPLIFT_THEME = {
       ORANGE_10_SOLID,
       OLIVE_16_SOLID,
     ],
+  },
+  legend: {
+    ...LIGHT_THEME.legend,
+    trendIndicator: {
+      positive: UPLIFT_POSITIVE,
+      negative: UPLIFT_NEGATIVE,
+      neutral: UPLIFT_NEUTRAL,
+    },
+  },
+  trendIndicator: {
+    positive: UPLIFT_POSITIVE,
+    negative: UPLIFT_NEGATIVE,
+    neutral: UPLIFT_NEUTRAL,
   },
 };
 
