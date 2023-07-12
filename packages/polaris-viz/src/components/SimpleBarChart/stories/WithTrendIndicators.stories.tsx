@@ -54,6 +54,10 @@ WithTrendIndicators.args = {
             direction: 'upward',
             trend: 'positive',
           },
+          3: {
+            direction: 'upward',
+            trend: 'positive',
+          },
         },
       },
     },
