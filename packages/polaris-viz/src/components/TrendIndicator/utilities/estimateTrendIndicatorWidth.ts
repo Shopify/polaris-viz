@@ -6,7 +6,7 @@ import {
   TEXT_ICON_SPACING,
 } from '../constants';
 
-export function estimateTrendIndicatorWidth(value) {
+export function estimateTrendIndicatorWidth(value: string) {
   const textWidth = estimateStringWidthWithOffset(
     value,
     FONT_SIZE,

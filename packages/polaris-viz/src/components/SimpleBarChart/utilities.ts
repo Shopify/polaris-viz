@@ -20,6 +20,11 @@ export function getLongestTrendIndicator(
       const trendEntries = Object.entries(trends);
       for (const [index, trend] of trendEntries) {
         const dataPoint = seriesData[index];
+
+        if (trend.value == null) {
+          continue;
+        }
+
         if (dataPoint?.value === highestPositive) {
           longestTrendIndicator.positive = estimateTrendIndicatorWidth(
             trend.value,
