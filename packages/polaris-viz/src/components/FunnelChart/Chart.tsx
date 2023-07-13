@@ -26,6 +26,7 @@ import {
 } from '../../constants';
 
 import {FunnelChartXAxisLabels, FunnelSegment} from './components/';
+import type {LabelHelpers} from './FunnelChart';
 
 const X_LABEL_OFFSET = 16;
 const NEGATIVE_LABEL_OFFSET = -4;
@@ -35,6 +36,7 @@ export interface ChartProps {
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
   dimensions?: Dimensions;
+  labelHelpers?: LabelHelpers[];
 }
 
 export function Chart({
@@ -42,6 +44,7 @@ export function Chart({
   dimensions,
   xAxisOptions,
   yAxisOptions,
+  labelHelpers,
 }: ChartProps) {
   const {theme} = useChartContext();
   const selectedTheme = useTheme();
@@ -155,12 +158,17 @@ export function Chart({
         const percentLabel = handlePercentLabelFormatter(percentCalculation);
         const formattedYValue = yAxisOptions.labelFormatter(yAxisValue);
 
+        const labelHelper = labelHelpers?.find(
+          (helper) => helper.key === dataPoint.key,
+        );
+
         return (
           <Fragment key={dataPoint.key}>
             {maskRef && (
               <g key={dataPoint.key} role="listitem">
                 <FunnelSegment
                   percentLabel={percentLabel}
+                  labelHelper={labelHelper && labelHelper.value}
                   formattedYValue={formattedYValue}
                   isLast={index === dataSeries.length - 1}
                   connector={{
@@ -209,6 +217,9 @@ export function Chart({
         width={width}
         height={drawableHeight}
         fill={`url(#${gradientId})`}
+        style={{
+          pointerEvents: 'none',
+        }}
       />
     </ChartElements.Svg>
   );

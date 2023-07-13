@@ -1,14 +1,17 @@
 .Label {
   text-align: center;
   padding-top: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-  span {
+  > span {
     padding: 0 4px;
     border-radius: '4px';
     border-radius: 4px;
   }
 
-  span:empty {
+  > span:empty {
     display: none;
   }
 }
