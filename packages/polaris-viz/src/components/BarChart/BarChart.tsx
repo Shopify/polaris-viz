@@ -65,6 +65,7 @@ export function BarChart(props: BarChartProps) {
     type = 'default',
     xAxisOptions,
     yAxisOptions,
+    onError,
   } = {
     ...DEFAULT_CHART_PROPS,
     ...props,
@@ -116,6 +117,7 @@ export function BarChart(props: BarChartProps) {
       <ChartContainer
         isAnimated={isAnimated}
         data={data}
+        onError={onError}
         theme={theme}
         type={InternalChartType.Bar}
       >

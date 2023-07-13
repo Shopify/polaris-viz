@@ -44,6 +44,7 @@ export function FunnelChart(props: FunnelChartProps) {
     state,
     errorText,
     labelHelpers,
+    onError,
   } = {
     ...DEFAULT_CHART_PROPS,
     ...props,
@@ -63,7 +64,12 @@ export function FunnelChart(props: FunnelChartProps) {
     getYAxisOptionsWithDefaults(yAxisOptions);
 
   return (
-    <ChartContainer data={data} isAnimated={isAnimated} theme={theme}>
+    <ChartContainer
+      data={data}
+      isAnimated={isAnimated}
+      onError={onError}
+      theme={theme}
+    >
       {state !== ChartState.Success ? (
         <ChartSkeleton
           type="Funnel"

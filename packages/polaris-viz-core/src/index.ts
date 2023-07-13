@@ -149,4 +149,5 @@ export type {
   StackedValues,
   DataGroup,
   TargetLine,
+  ErrorBoundaryResponse,
 } from './types';

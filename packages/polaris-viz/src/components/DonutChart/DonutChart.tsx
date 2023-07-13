@@ -35,6 +35,7 @@ export function DonutChart(props: DonutChartProps) {
     labelFormatter = (value) => `${value}`,
     legendFullWidth,
     legendPosition = 'left',
+    onError,
     isAnimated,
     state,
     errorText,
@@ -49,6 +50,7 @@ export function DonutChart(props: DonutChartProps) {
     <ChartContainer
       skeletonType="Donut"
       data={data}
+      onError={onError}
       theme={theme}
       isAnimated={isAnimated}
     >

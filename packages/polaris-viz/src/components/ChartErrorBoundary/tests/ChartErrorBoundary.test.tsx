@@ -4,6 +4,7 @@ import type {DataGroup, DataSeries} from '@shopify/polaris-viz-core';
 import {ChartSkeleton} from '../../ChartSkeleton';
 import {ChartErrorBoundary} from '../ChartErrorBoundary';
 import {mountWithProvider} from '../../../test-utilities/mountWithProvider';
+import {BarChart} from '../../BarChart';
 
 const MOCK_PROPS = {
   data: [],
@@ -128,6 +129,19 @@ describe('<ChartErrorBoundary />', () => {
       expect(warnMock.mock.calls[0][0]).toStrictEqual(
         'The DataGroup[] provided does not have equal series values.',
       );
+    });
+  });
+
+  describe('onError', () => {
+    it('calls onError when provided', () => {
+      const onErrorSpy = jest.fn();
+
+      mountWithProvider(
+        <ChartErrorBoundary type="Default" {...MOCK_PROPS} onError={onErrorSpy}>
+          <Child />
+        </ChartErrorBoundary>,
+      );
+      expect(onErrorSpy).toHaveBeenCalled();
     });
   });
 });

@@ -4,8 +4,13 @@ import type {
   DataGroup,
   DataSeries,
   Dimensions,
+  ErrorBoundaryResponse,
 } from '@shopify/polaris-viz-core';
-import {usePrevious, useTheme} from '@shopify/polaris-viz-core';
+import {
+  usePolarisVizContext,
+  usePrevious,
+  useTheme,
+} from '@shopify/polaris-viz-core';
 import {useDebouncedCallback} from 'use-debounce';
 import type {SkeletonType} from 'components/ChartSkeleton';
 
@@ -20,6 +25,7 @@ interface ChartDimensionsProps {
   onIsPrintingChange: Dispatch<SetStateAction<boolean>>;
   sparkChart?: boolean;
   skeletonType?: SkeletonType;
+  onError?: ErrorBoundaryResponse;
 }
 
 export function ChartDimensions({
@@ -28,8 +34,10 @@ export function ChartDimensions({
   onIsPrintingChange,
   sparkChart = false,
   skeletonType = 'Default',
+  onError,
 }: ChartDimensionsProps) {
   const {chartContainer} = useTheme();
+  const {onError: onErrorProvider} = usePolarisVizContext();
 
   const [chartDimensions, setChartDimensions] =
     useState<Dimensions | null>(null);
@@ -109,6 +117,7 @@ export function ChartDimensions({
           type={skeletonType ?? 'Default'}
           dimensions={chartDimensions!}
           data={data}
+          onError={onError ?? onErrorProvider}
         >
           <div
             className={styles.Chart}

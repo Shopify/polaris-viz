@@ -51,6 +51,7 @@ export function StackedAreaChart(props: StackedAreaChartProps) {
     data,
     state,
     errorText,
+    onError,
     tooltipOptions,
     isAnimated,
     renderLegendContent,
@@ -78,7 +79,12 @@ export function StackedAreaChart(props: StackedAreaChartProps) {
       {skipLinkText == null || skipLinkText.length === 0 ? null : (
         <SkipLink anchorId={skipLinkAnchorId.current}>{skipLinkText}</SkipLink>
       )}
-      <ChartContainer data={data} theme={theme} isAnimated={isAnimated}>
+      <ChartContainer
+        data={data}
+        theme={theme}
+        isAnimated={isAnimated}
+        onError={onError}
+      >
         {state !== ChartState.Success ? (
           <ChartSkeleton state={state} errorText={errorText} theme={theme} />
         ) : (

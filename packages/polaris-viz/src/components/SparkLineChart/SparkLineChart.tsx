@@ -25,6 +25,7 @@ export function SparkLineChart(props: SparkLineChartProps) {
     isAnimated,
     offsetLeft = 0,
     offsetRight = 0,
+    onError,
     theme = defaultTheme,
     state,
     errorText,
@@ -39,6 +40,7 @@ export function SparkLineChart(props: SparkLineChartProps) {
       data={data}
       theme={theme}
       sparkChart
+      onError={onError}
     >
       {state !== ChartState.Success ? (
         <ChartSkeleton
