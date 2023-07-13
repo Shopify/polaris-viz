@@ -27,6 +27,7 @@ export function SparkBarChart(props: SparkBarChartProps) {
     data,
     accessibilityLabel,
     isAnimated,
+    onError,
     targetLine,
     theme = defaultTheme,
     state,
@@ -41,6 +42,7 @@ export function SparkBarChart(props: SparkBarChartProps) {
       theme={theme}
       sparkChart
       isAnimated={isAnimated}
+      onError={onError}
     >
       {state !== ChartState.Success ? (
         <ChartSkeleton

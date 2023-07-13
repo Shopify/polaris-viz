@@ -10,4 +10,7 @@ export const Default: Story<BarChartProps> = Template.bind({});
 
 Default.args = {
   data: DEFAULT_DATA,
+  onError: (a, b) => {
+    console.log({a, b});
+  },
 };

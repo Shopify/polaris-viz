@@ -1,7 +1,11 @@
 import type {ForwardRefExoticComponent, ReactNode} from 'react';
 import {useMemo} from 'react';
 
-import type {PartialTheme, SvgComponents} from '../../types';
+import type {
+  ErrorBoundaryResponse,
+  PartialTheme,
+  SvgComponents,
+} from '../../types';
 import {
   DEFAULT_THEME as Default,
   LIGHT_THEME as Light,
@@ -19,6 +23,7 @@ export interface PolarisVizProviderProps {
   components?: SvgComponents;
   defaultTheme?: string;
   animated: <T>(Component: any) => ForwardRefExoticComponent<T>;
+  onError?: ErrorBoundaryResponse;
 }
 
 export function PolarisVizProvider({
@@ -27,6 +32,7 @@ export function PolarisVizProvider({
   themes,
   components,
   animated,
+  onError,
 }: PolarisVizProviderProps) {
   const value = useMemo(() => {
     return {
@@ -43,8 +49,9 @@ export function PolarisVizProvider({
       }),
       animated,
       defaultTheme,
+      onError,
     };
-  }, [themes, components, animated, defaultTheme]);
+  }, [themes, components, animated, defaultTheme, onError]);
 
   return (
     <PolarisVizContext.Provider value={value}>

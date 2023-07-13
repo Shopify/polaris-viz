@@ -38,6 +38,7 @@ export function ComboChart(props: ComboChartProps) {
   const {
     data,
     annotations = [],
+    onError,
     isAnimated,
     renderTooltipContent,
     showLegend = true,
@@ -72,6 +73,7 @@ export function ComboChart(props: ComboChartProps) {
   return (
     <ChartContainer
       data={data}
+      onError={onError}
       isAnimated={isAnimated}
       theme={theme}
       type={InternalChartType.Combo}

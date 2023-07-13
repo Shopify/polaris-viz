@@ -39,6 +39,7 @@ export function SimpleBarChart(props: SimpleBarChartProps) {
     data,
     renderLegendContent,
     legendPosition = 'bottom-right',
+    onError,
     showLegend = true,
     theme = defaultTheme,
     type = 'default',
@@ -54,7 +55,12 @@ export function SimpleBarChart(props: SimpleBarChartProps) {
   const yAxisOptionsWithDefaults = getYAxisOptionsWithDefaults(yAxisOptions);
 
   return (
-    <ChartContainer data={data} theme={theme} isAnimated={isAnimated}>
+    <ChartContainer
+      data={data}
+      theme={theme}
+      isAnimated={isAnimated}
+      onError={onError}
+    >
       {state !== ChartState.Success ? (
         <ChartSkeleton
           type="SimpleBar"

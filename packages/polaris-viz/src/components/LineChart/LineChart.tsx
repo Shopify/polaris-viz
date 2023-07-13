@@ -57,6 +57,7 @@ export function LineChart(props: LineChartProps) {
     errorText,
     id,
     isAnimated,
+    onError,
     renderLegendContent,
     showLegend = true,
     skipLinkText,
@@ -96,6 +97,7 @@ export function LineChart(props: LineChartProps) {
         theme={theme}
         isAnimated={isAnimated}
         type={InternalChartType.Line}
+        onError={onError}
       >
         {state !== ChartState.Success ? (
           <ChartSkeleton state={state} errorText={errorText} theme={theme} />

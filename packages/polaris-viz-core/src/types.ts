@@ -1,5 +1,5 @@
 import type {Series, SeriesPoint} from 'd3-shape';
-import type {SVGProps} from 'react';
+import type {ErrorInfo, SVGProps} from 'react';
 
 export type LabelFormatter = (value: string | number | null) => string;
 
@@ -284,6 +284,7 @@ export interface ChartProps<T = DataSeries[]> {
   isAnimated?: boolean;
   state?: ChartState;
   errorText?: string;
+  onError?: ErrorBoundaryResponse;
 }
 
 export type WithRequired<T, K extends keyof T> = T & {[P in K]-?: T[P]};
@@ -316,3 +317,8 @@ export interface TargetLine {
   offsetRight?: number;
   offsetLeft?: number;
 }
+
+export type ErrorBoundaryResponse = (
+  error: Error,
+  errorInfo: ErrorInfo,
+) => void;

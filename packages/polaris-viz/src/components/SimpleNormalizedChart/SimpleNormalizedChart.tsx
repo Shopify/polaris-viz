@@ -43,13 +43,19 @@ export function SimpleNormalizedChart(props: SimpleNormalizedChartProps) {
     state,
     errorText,
     renderLegendContent,
+    onError,
   } = {
     ...DEFAULT_CHART_PROPS,
     ...props,
   };
 
   return (
-    <ChartContainer data={data} theme={theme} isAnimated={isAnimated}>
+    <ChartContainer
+      data={data}
+      theme={theme}
+      isAnimated={isAnimated}
+      onError={onError}
+    >
       {state !== ChartState.Success ? (
         <ChartSkeleton
           type="SimpleNormalized"

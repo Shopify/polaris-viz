@@ -14,6 +14,10 @@ export function checkForMismatchedData(data: DataSeries[] | DataGroup[]) {
 }
 
 function checkDataSeries(data: DataSeries[], type = 'DataSeries') {
+  if (data[0].data == null) {
+    return false;
+  }
+
   const firstSetLength = data[0].data.length;
 
   const hasMismatchedData = data.some(

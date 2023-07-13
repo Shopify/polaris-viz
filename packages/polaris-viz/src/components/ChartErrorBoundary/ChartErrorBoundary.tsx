@@ -2,6 +2,7 @@ import type {
   DataGroup,
   DataSeries,
   Dimensions,
+  ErrorBoundaryResponse,
 } from '@shopify/polaris-viz-core';
 import {ChartState} from '@shopify/polaris-viz-core';
 import type {ErrorInfo, ReactNode} from 'react';
@@ -17,7 +18,7 @@ interface ErrorBoundaryProps {
   dimensions: Dimensions;
   type: SkeletonType;
   children?: ReactNode;
-  onError?: (error: Error, errorInfo: ErrorInfo) => void;
+  onError?: ErrorBoundaryResponse;
 }
 
 interface ErrorBoundaryState {

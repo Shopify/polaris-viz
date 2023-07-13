@@ -4,6 +4,7 @@ import type {
   DataGroup,
   DataSeries,
   InternalChartType,
+  ErrorBoundaryResponse,
 } from '@shopify/polaris-viz-core';
 import {
   uniqueId,
@@ -26,6 +27,7 @@ interface Props {
   isAnimated: boolean;
   theme: string;
   id?: string;
+  onError?: ErrorBoundaryResponse;
   sparkChart?: boolean;
   skeletonType?: SkeletonType;
   type?: InternalChartType;
@@ -84,6 +86,7 @@ export const ChartContainer = (props: Props) => {
       >
         <ChartDimensions
           data={props.data}
+          onError={props.onError}
           onIsPrintingChange={setIsPrinting}
           skeletonType={props.skeletonType}
           sparkChart={props.sparkChart}
