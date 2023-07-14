@@ -11,6 +11,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 - Added support to hide overflowing LegendItems in vertical legends
 
+### Fixed
+
+- Fixed issue where trend indicators could extend past the chart bounds in `<SimpleBarChart />` when passing a value of `undefined` to `TrendIndicator.value`.
+
 ## [10.4.2] - 2024-02-12
 
 ### Fixed
