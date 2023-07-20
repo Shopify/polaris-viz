@@ -1,4 +1,7 @@
+@import '../../../../styles/common';
+
 .SVG {
   display: block;
   font-feature-settings: normal;
+  @include no-outline;
 }
