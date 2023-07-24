@@ -41,7 +41,6 @@ WithTrendIndicators.args = {
       ],
       metadata: {
         trends: {
-          0: {},
           2: {
             value: '10%',
           },

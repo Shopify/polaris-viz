@@ -171,3 +171,45 @@ export const TrendWithSimilarValues = () => {
     </Wrapper>
   );
 };
+
+export const TrendWithUndefinedValue = () => {
+  return (
+    <Wrapper>
+      <SimpleBarChart
+        showLegend={false}
+        data={[
+          {
+            data: [
+              {
+                key: 'Unknown',
+                value: 314.15,
+              },
+              {
+                key: 'Social',
+                value: -256.45,
+              },
+              {
+                key: 'Direct',
+                value: -400.96,
+              },
+            ],
+            name: 'Sales by traffic source',
+            metadata: {
+              trends: {
+                '0': {
+                  trend: 'positive',
+                  direction: 'upward',
+                },
+                '2': {
+                  value: '1%',
+                  trend: 'negative',
+                  direction: 'downward',
+                },
+              },
+            },
+          },
+        ]}
+      />
+    </Wrapper>
+  );
+};
