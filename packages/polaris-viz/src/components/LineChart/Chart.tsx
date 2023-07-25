@@ -148,6 +148,7 @@ export function Chart({
   const yScaleOptions = {
     formatYAxisLabel: yAxisOptions.labelFormatter,
     integersOnly: yAxisOptions.integersOnly,
+    fixedWidth: yAxisOptions.fixedWidth,
     max: maxY,
     min: minY,
   };

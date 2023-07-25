@@ -1,6 +1,6 @@
 {
   "name": "sandbox",
-  "version": "9.8.1",
+  "version": "9.8.2-yaxis-fixed-width-beta.2",
   "private": true,
   "main": "index.js",
   "dependencies": {
