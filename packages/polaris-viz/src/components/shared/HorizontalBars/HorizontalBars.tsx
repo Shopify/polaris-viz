@@ -102,7 +102,7 @@ export function HorizontalBars({
 
         const labelWidth = estimateStringWidth(`${label}`, characterWidths);
 
-        function getWidthAndXPosition() {
+        function getBarWidthAndLabelX() {
           const width = Math.abs(xScale(value ?? 0) - xScale(0));
 
           const itemSpacing =
@@ -122,27 +122,27 @@ export function HorizontalBars({
 
           if (isNegative) {
             return {
-              x: -(clampedWidth + leftLabelOffset),
-              width: clampedWidth,
+              labelX: -(clampedWidth + leftLabelOffset),
+              barWidth: clampedWidth,
             };
           }
 
           return {
-            x: clampedWidth + HORIZONTAL_BAR_LABEL_OFFSET,
-            width: clampedWidth,
+            labelX: clampedWidth + HORIZONTAL_BAR_LABEL_OFFSET,
+            barWidth: clampedWidth,
           };
         }
 
-        const {x, width} = getWidthAndXPosition();
+        const {labelX, barWidth} = getBarWidthAndLabelX();
 
         const y =
           barHeight * seriesIndex +
           HORIZONTAL_SPACE_BETWEEN_SINGLE * seriesIndex;
 
         const {clampedSize} = getHoverZoneOffset({
-          barSize: width,
+          barSize: barWidth,
           zeroPosition: xScale(0),
-          max: containerWidth - x,
+          max: containerWidth,
           position: 'horizontal',
         });
 
@@ -158,12 +158,12 @@ export function HorizontalBars({
               index={groupIndex}
               isActive={activeBarIndex === -1 || activeBarIndex === seriesIndex}
               transform={isNegative ? 'scaleX(-1)' : ''}
-              width={width}
+              width={barWidth}
               x={0}
               y={y}
             />
             {isSimple && (
-              <LabelWrapper animationDelay={seriesAnimationDelay} x={x}>
+              <LabelWrapper animationDelay={seriesAnimationDelay} x={labelX}>
                 <Label
                   barHeight={barHeight}
                   color={
