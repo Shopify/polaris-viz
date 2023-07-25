@@ -69,7 +69,7 @@ export interface XAxisOptions {
 export interface YAxisOptions {
   labelFormatter?: LabelFormatter;
   integersOnly?: boolean;
-  fixedWidth?: number;
+  fixedWidth?: number | false;
 }
 
 // === Theme types === //

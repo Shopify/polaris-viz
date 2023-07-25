@@ -18,7 +18,7 @@ export interface Props {
   integersOnly?: boolean;
   shouldRoundUp?: boolean;
   verticalOverflow?: boolean;
-  fixedWidth?: number;
+  fixedWidth?: number | false;
 }
 
 export function useYScale({
@@ -32,6 +32,7 @@ export function useYScale({
   fixedWidth,
 }: Props) {
   const {characterWidths} = useChartContext();
+  const hasFixedWidth = fixedWidth !== false || fixedWidth != null;
 
   const [minY, maxY] = useMemo(() => {
     const minY = min;
@@ -101,5 +102,9 @@ export function useYScale({
     minY,
   ]);
 
-  return {yScale, ticks, yAxisLabelWidth: fixedWidth ?? yAxisLabelWidth};
+  return {
+    yScale,
+    ticks,
+    yAxisLabelWidth: hasFixedWidth ? (fixedWidth as number) : yAxisLabelWidth,
+  };
 }
