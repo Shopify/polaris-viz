@@ -11,6 +11,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 - Fixed issue where hover effects would not be triggered for the entire bar in `<BarChart />` and `<SimpleBarChart />`.
 
+### Added
+
+- Added ability to set a fixed width for `<LineChart />` `<YAxis />` labels.
+
 ## [9.8.1] - 2023-07-20
 
 ### Removed

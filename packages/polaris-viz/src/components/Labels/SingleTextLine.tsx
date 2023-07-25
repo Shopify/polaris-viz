@@ -12,13 +12,17 @@ interface SingleTextLineProps {
   x: number;
   y: number;
   ariaHidden?: boolean;
+  dominantBaseline?: 'middle' | 'hanging';
+  textAnchor?: 'left' | 'center' | 'right';
 }
 
 export function SingleTextLine({
   ariaHidden = false,
   color,
+  dominantBaseline = 'hanging',
   targetWidth,
   text,
+  textAnchor = 'center',
   y,
   x,
 }: SingleTextLineProps) {
@@ -35,8 +39,8 @@ export function SingleTextLine({
     <Fragment>
       <text
         aria-hidden={ariaHidden}
-        textAnchor="center"
-        dominantBaseline="hanging"
+        textAnchor={textAnchor}
+        dominantBaseline={dominantBaseline}
         height={LINE_HEIGHT}
         width={targetWidth}
         fill={color}
