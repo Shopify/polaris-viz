@@ -1,5 +1,5 @@
 {
-  "version": "9.8.2-yaxis-fixed-width-beta.0",
+  "version": "9.8.2-yaxis-fixed-width-beta.1",
   "npmClient": "yarn",
   "useWorkspaces": true,
   "ignoreChanges": [
