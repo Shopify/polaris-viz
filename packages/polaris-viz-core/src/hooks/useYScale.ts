@@ -18,6 +18,7 @@ export interface Props {
   integersOnly?: boolean;
   shouldRoundUp?: boolean;
   verticalOverflow?: boolean;
+  fixedWidth?: number | false;
 }
 
 export function useYScale({
@@ -28,6 +29,7 @@ export function useYScale({
   min,
   shouldRoundUp = true,
   verticalOverflow = true,
+  fixedWidth,
 }: Props) {
   const {characterWidths} = useChartContext();
 
@@ -99,5 +101,20 @@ export function useYScale({
     minY,
   ]);
 
-  return {yScale, ticks, yAxisLabelWidth};
+  return {
+    yScale,
+    ticks,
+    yAxisLabelWidth: getLabelWidth(yAxisLabelWidth, fixedWidth),
+  };
+}
+
+export function getLabelWidth(
+  yAxisLabelWidth: number,
+  fixedWidth?: number | false,
+): number {
+  if (fixedWidth === false || fixedWidth == null) {
+    return yAxisLabelWidth;
+  }
+
+  return fixedWidth;
 }

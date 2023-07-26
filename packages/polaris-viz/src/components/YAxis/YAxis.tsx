@@ -1,7 +1,12 @@
-import {estimateStringWidth, useChartContext} from '@shopify/polaris-viz-core';
+import {
+  clamp,
+  estimateStringWidth,
+  useChartContext,
+} from '@shopify/polaris-viz-core';
 
+import {SingleTextLine} from '../Labels';
 import {useTheme} from '../../hooks';
-import {LINE_HEIGHT, FONT_SIZE} from '../../constants';
+import {LINE_HEIGHT} from '../../constants';
 import type {YAxisTick} from '../../types';
 
 interface Props {
@@ -34,30 +39,33 @@ export function YAxis({
           characterWidths,
         );
 
-        const x = textAlign === 'right' ? width - stringWidth : 0;
+        const clampedWidth = clamp({
+          amount: width,
+          min: width + PADDING_SIZE,
+          max: stringWidth,
+        });
+
+        const x = textAlign === 'right' ? width - clampedWidth : 0;
 
         return (
           <g key={value} transform={`translate(${x},${yOffset})`}>
             <rect
               height={LINE_HEIGHT}
-              width={stringWidth + PADDING_SIZE * 2}
+              width={clampedWidth + PADDING_SIZE}
               fill={selectedTheme.chartContainer.backgroundColor}
               y={-LINE_HEIGHT / 2}
               x={-PADDING_SIZE}
             />
-            <text
-              aria-hidden={ariaHidden}
-              width={width + PADDING_SIZE * 4}
-              height={LINE_HEIGHT}
-              fill={selectedTheme.yAxis.labelColor}
-              fontSize={FONT_SIZE}
+            <SingleTextLine
+              x={0}
+              y={0}
+              ariaHidden={ariaHidden}
+              color={selectedTheme.yAxis.labelColor}
+              targetWidth={clampedWidth}
+              text={formattedValue}
+              textAnchor="left"
               dominantBaseline="middle"
-              style={{
-                fontFeatureSettings: 'tnum',
-              }}
-            >
-              {formattedValue}
-            </text>
+            />
           </g>
         );
       })}

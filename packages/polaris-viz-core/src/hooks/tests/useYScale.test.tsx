@@ -4,7 +4,7 @@ import {scaleLinear} from 'd3-scale';
 import {DEFAULT_MAX_Y} from '../../constants';
 import type {DataSeries} from '../../types';
 import type {Props} from '../useYScale';
-import {useYScale} from '../useYScale';
+import {getLabelWidth, useYScale} from '../useYScale';
 import {shouldRoundScaleUp} from '../../utilities/shouldRoundScaleUp';
 
 jest.mock('d3-scale', () => ({
@@ -362,5 +362,21 @@ describe('useYScale()', () => {
 
       expect(domainSpy).toHaveBeenCalledWith([0, 1]);
     });
+  });
+
+  describe('getLabelWidth()', () => {
+    it.each([
+      {fixedWidth: undefined, yAxisLabelWidth: 100, expected: 100},
+      {fixedWidth: null, yAxisLabelWidth: 100, expected: 100},
+      {fixedWidth: false, yAxisLabelWidth: 100, expected: 100},
+      {fixedWidth: 200, yAxisLabelWidth: 100, expected: 200},
+    ])(
+      'returns $expected when fixedWidth: $fixedWidth',
+      ({fixedWidth, yAxisLabelWidth, expected}) => {
+        expect(getLabelWidth(yAxisLabelWidth, fixedWidth as any)).toBe(
+          expected,
+        );
+      },
+    );
   });
 });
