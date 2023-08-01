@@ -1,7 +1,9 @@
 import type {ReactNode} from 'react';
 import {useEffect, useRef, useState, useMemo, useCallback} from 'react';
 import type {DataType, BoundingRect} from '@shopify/polaris-viz-core';
+import {createPortal} from 'react-dom';
 
+import {useRootContainer} from '../../hooks/useRootContainer';
 import type {Margin} from '../../types';
 import {SwallowErrors} from '../SwallowErrors';
 
@@ -11,7 +13,9 @@ import {DEFAULT_TOOLTIP_POSITION} from './constants';
 import {TooltipAnimatedContainer} from './components/TooltipAnimatedContainer';
 import type {AlteredPosition} from './utilities';
 
-interface TooltipWrapperProps {
+const TOOLTIP_ID = 'polaris_viz_tooltip_root';
+
+interface BaseProps {
   chartBounds: BoundingRect;
   getMarkup: (index: number) => ReactNode;
   getPosition: (data: TooltipPositionParams) => TooltipPosition;
@@ -25,7 +29,7 @@ interface TooltipWrapperProps {
   onIndexChange?: (index: number | null) => void;
 }
 
-function TooltipWrapperRaw(props: TooltipWrapperProps) {
+function TooltipWrapperRaw(props: BaseProps) {
   const {
     alwaysUpdatePosition = false,
     bandwidth = 0,
@@ -181,10 +185,31 @@ function TooltipWrapperRaw(props: TooltipWrapperProps) {
   );
 }
 
-export function TooltipWrapper(props) {
+interface TooltipWrapperProps extends BaseProps {
+  usePortal?: boolean;
+}
+
+export function TooltipWrapper({
+  usePortal = false,
+  ...props
+}: TooltipWrapperProps) {
+  if (usePortal) {
+    return <TooltipWithPortal {...props} />;
+  }
+
+  return <TooltipWithErrors {...props} />;
+}
+
+function TooltipWithErrors(props: BaseProps) {
   return (
     <SwallowErrors>
       <TooltipWrapperRaw {...props} />
     </SwallowErrors>
   );
+}
+
+function TooltipWithPortal(props: BaseProps) {
+  const container = useRootContainer(TOOLTIP_ID);
+
+  return createPortal(<TooltipWithErrors {...props} />, container);
 }

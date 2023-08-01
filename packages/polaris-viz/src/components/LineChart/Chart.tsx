@@ -41,8 +41,6 @@ import type {
   TooltipPositionParams,
 } from '../../components/TooltipWrapper';
 import {
-  TooltipHorizontalOffset,
-  TooltipVerticalOffset,
   TooltipWrapper,
   TOOLTIP_POSITION_DEFAULT_RETURN,
 } from '../../components/TooltipWrapper';
@@ -83,11 +81,6 @@ export interface ChartProps {
   };
   theme?: string;
 }
-
-const TOOLTIP_POSITION = {
-  horizontal: TooltipHorizontalOffset.Left,
-  vertical: TooltipVerticalOffset.Center,
-};
 
 export function Chart({
   annotationsLookupTable,
@@ -223,7 +216,7 @@ export function Chart({
         return TOOLTIP_POSITION_DEFAULT_RETURN;
       }
 
-      const {svgX, svgY} = point;
+      const {svgX} = point;
 
       const closestIndex = Math.round(xScale.invert(svgX - chartXPosition));
 
@@ -234,12 +227,8 @@ export function Chart({
       });
 
       return {
-        x:
-          xScale(activeIndex) +
-          chartXPosition +
-          parseInt(selectedTheme.chartContainer.padding, 10),
-        y: svgY,
-        position: TOOLTIP_POSITION,
+        x: (event as MouseEvent).pageX,
+        y: (event as MouseEvent).pageY,
         activeIndex,
       };
     } else {
@@ -248,7 +237,6 @@ export function Chart({
       return {
         x: xScale?.(activeIndex) ?? 0,
         y: 0,
-        position: TOOLTIP_POSITION,
         activeIndex,
       };
     }
@@ -428,6 +416,7 @@ export function Chart({
             }
           }}
           parentRef={svgRef}
+          usePortal
         />
       )}
 

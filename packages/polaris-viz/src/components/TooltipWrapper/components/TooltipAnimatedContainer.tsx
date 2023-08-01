@@ -98,9 +98,7 @@ export function TooltipAnimatedContainer({
         left: 0,
         opacity,
         transform: `translate3d(${Math.round(x)}px, ${Math.round(y)}px, 0px)`,
-        transition: immediate
-          ? 'none'
-          : 'opacity 300ms ease, transform 300ms ease',
+        transition: immediate ? 'none' : 'opacity 300ms ease, transform 150ms',
       }}
       ref={tooltipRef}
       aria-hidden="true"
