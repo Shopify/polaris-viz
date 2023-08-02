@@ -7,7 +7,8 @@ import type {Margin} from '../../types';
 import {TooltipHorizontalOffset, TooltipVerticalOffset} from './types';
 
 // The space between the cursor and the tooltip
-export const TOOLTIP_MARGIN = 10;
+export const TOOLTIP_MARGIN = 20;
+export const SCROLLBAR_WIDTH = 20;
 
 export interface AlteredPositionProps {
   bandwidth: number;
@@ -36,7 +37,7 @@ export type AlteredPosition = (
 export function getAlteredVerticalBarPosition(
   props: AlteredPositionProps,
 ): AlteredPositionReturn {
-  const {currentX, currentY, position, chartBounds} = props;
+  const {currentX, currentY, position} = props;
 
   const newPosition = {...position};
 
@@ -108,10 +109,22 @@ export function getAlteredVerticalBarPosition(
   return {
     x: clamp({
       amount: x,
-      min: chartBounds.x ?? 0,
-      max: chartBounds.width,
+      min: TOOLTIP_MARGIN,
+      max:
+        window.innerWidth -
+        props.tooltipDimensions.width -
+        TOOLTIP_MARGIN -
+        SCROLLBAR_WIDTH,
     }),
-    y,
+    y: clamp({
+      amount: y,
+      min: window.scrollY + TOOLTIP_MARGIN,
+      max:
+        window.scrollY +
+        window.innerHeight -
+        props.tooltipDimensions.height -
+        TOOLTIP_MARGIN,
+    }),
   };
 }
 
@@ -125,17 +138,18 @@ function isOutsideBounds(data: IsOutsideBoundsData): boolean {
   const {current, direction, alteredPosition} = data;
 
   if (direction === 'x') {
-    const isLeft = current < alteredPosition.margin.Left;
+    const isLeft = current < 0;
     const isRight =
-      current + alteredPosition.tooltipDimensions.width >
-      alteredPosition.chartBounds.width - alteredPosition.margin.Right;
+      current + alteredPosition.tooltipDimensions.width > window.innerWidth;
 
     return isLeft || isRight;
   } else {
-    const isAbove = current < 0;
+    const isAbove = current < window.scrollY;
     const isBelow =
       current + alteredPosition.tooltipDimensions.height >
-      alteredPosition.chartBounds.height - alteredPosition.margin.Bottom;
+      window.scrollY +
+        window.innerHeight -
+        alteredPosition.tooltipDimensions.height;
 
     return isAbove || isBelow;
   }

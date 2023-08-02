@@ -21,131 +21,155 @@ const BASE_PROPS: AlteredPositionProps = {
     horizontal: 0,
     vertical: 0,
   },
+  isPerformanceImpacted: false,
 };
 
-describe('getInlinePosition()', () => {
-  it('returns altered values', () => {
-    expect(getInlinePosition(0, BASE_PROPS)).toStrictEqual({
-      value: 0,
-      wasOutsideBounds: false,
-    });
+let windowSpy;
 
-    expect(getInlinePosition(90, BASE_PROPS)).toStrictEqual({
-      value: 80,
-      wasOutsideBounds: true,
+function mockWindow({scrollY = 0, innerHeight = 1000, innerWidth = 500}) {
+  windowSpy.mockImplementation(() => ({
+    scrollY,
+    innerHeight,
+    innerWidth,
+  }));
+}
+
+describe('utilities', () => {
+  beforeEach(() => {
+    windowSpy = jest.spyOn(window, 'window', 'get');
+    mockWindow({});
+  });
+
+  afterEach(() => {
+    windowSpy.mockRestore();
+  });
+
+  describe('getInlinePosition()', () => {
+    it('returns altered values', () => {
+      expect(getInlinePosition(30, BASE_PROPS)).toStrictEqual({
+        value: 30,
+        wasOutsideBounds: false,
+      });
+
+      expect(getInlinePosition(1000, BASE_PROPS)).toStrictEqual({
+        value: 80,
+        wasOutsideBounds: true,
+      });
     });
   });
-});
 
-describe('getVerticalCenterPosition()', () => {
-  it('returns altered values', () => {
-    expect(
-      getVerticalCenterPosition(0, {...BASE_PROPS, currentY: 0}),
-    ).toStrictEqual({
-      value: 0,
-      wasOutsideBounds: true,
-    });
+  describe('getVerticalCenterPosition()', () => {
+    it('returns altered values', () => {
+      expect(
+        getVerticalCenterPosition(0, {...BASE_PROPS, currentY: 0}),
+      ).toStrictEqual({
+        value: 0,
+        wasOutsideBounds: true,
+      });
 
-    expect(
-      getVerticalCenterPosition(40, {...BASE_PROPS, currentY: 40}),
-    ).toStrictEqual({
-      value: 30,
-      wasOutsideBounds: false,
-    });
-  });
-});
-
-describe('getAbovePosition()', () => {
-  it('returns altered values', () => {
-    expect(getAbovePosition(0, {...BASE_PROPS, currentY: 0})).toStrictEqual({
-      value: 0,
-      wasOutsideBounds: true,
-    });
-
-    expect(getAbovePosition(40, {...BASE_PROPS, currentY: 40})).toStrictEqual({
-      value: 10,
-      wasOutsideBounds: false,
+      expect(
+        getVerticalCenterPosition(40, {...BASE_PROPS, currentY: 40}),
+      ).toStrictEqual({
+        value: 30,
+        wasOutsideBounds: false,
+      });
     });
   });
-});
 
-describe('getBelowPosition()', () => {
-  it('returns altered values', () => {
-    expect(getBelowPosition(0, BASE_PROPS)).toStrictEqual({
-      value: 20,
-      wasOutsideBounds: false,
-    });
+  describe('getAbovePosition()', () => {
+    it('returns altered values', () => {
+      expect(getAbovePosition(0, {...BASE_PROPS, currentY: 0})).toStrictEqual({
+        value: 0,
+        wasOutsideBounds: true,
+      });
 
-    expect(getBelowPosition(40, BASE_PROPS)).toStrictEqual({
-      value: 60,
-      wasOutsideBounds: false,
-    });
-
-    expect(getBelowPosition(90, BASE_PROPS)).toStrictEqual({
-      value: 80,
-      wasOutsideBounds: true,
+      expect(getAbovePosition(50, {...BASE_PROPS, currentY: 50})).toStrictEqual(
+        {
+          value: 10,
+          wasOutsideBounds: false,
+        },
+      );
     });
   });
-});
 
-describe('getLeftPosition()', () => {
-  it('returns altered values', () => {
-    expect(getLeftPosition(0, {...BASE_PROPS, currentX: 0})).toStrictEqual({
-      value: 50,
-      wasOutsideBounds: true,
-    });
+  describe('getBelowPosition()', () => {
+    it('returns altered values', () => {
+      expect(getBelowPosition(0, BASE_PROPS)).toStrictEqual({
+        value: 40,
+        wasOutsideBounds: false,
+      });
 
-    expect(getLeftPosition(40, {...BASE_PROPS, currentX: 40})).toStrictEqual({
-      value: 10,
-      wasOutsideBounds: false,
-    });
+      expect(getBelowPosition(40, BASE_PROPS)).toStrictEqual({
+        value: 80,
+        wasOutsideBounds: false,
+      });
 
-    expect(getLeftPosition(90, {...BASE_PROPS, currentX: 90})).toStrictEqual({
-      value: 60,
-      wasOutsideBounds: false,
-    });
-  });
-});
-
-describe('getRightPosition()', () => {
-  it('returns altered values', () => {
-    expect(getRightPosition(0, BASE_PROPS)).toStrictEqual({
-      value: 50,
-      wasOutsideBounds: false,
-    });
-
-    expect(getRightPosition(40, BASE_PROPS)).toStrictEqual({
-      value: 90,
-      wasOutsideBounds: false,
-    });
-
-    expect(getRightPosition(90, BASE_PROPS)).toStrictEqual({
-      value: 60,
-      wasOutsideBounds: true,
+      expect(getBelowPosition(1090, BASE_PROPS)).toStrictEqual({
+        value: 1090,
+        wasOutsideBounds: true,
+      });
     });
   });
-});
 
-describe('getCenterPosition()', () => {
-  it('returns altered values', () => {
-    expect(getCenterPosition(-10, BASE_PROPS)).toStrictEqual({
-      value: 0,
-      wasOutsideBounds: false,
+  describe('getLeftPosition()', () => {
+    it('returns altered values', () => {
+      expect(getLeftPosition(0, {...BASE_PROPS, currentX: 0})).toStrictEqual({
+        value: 60,
+        wasOutsideBounds: true,
+      });
+
+      expect(getLeftPosition(40, {...BASE_PROPS, currentX: 40})).toStrictEqual({
+        value: 0,
+        wasOutsideBounds: false,
+      });
+
+      expect(getLeftPosition(90, {...BASE_PROPS, currentX: 90})).toStrictEqual({
+        value: 50,
+        wasOutsideBounds: false,
+      });
     });
+  });
 
-    expect(getCenterPosition(0, BASE_PROPS)).toStrictEqual({
-      value: 10,
-      wasOutsideBounds: false,
+  describe('getRightPosition()', () => {
+    it('returns altered values', () => {
+      expect(getRightPosition(0, BASE_PROPS)).toStrictEqual({
+        value: 60,
+        wasOutsideBounds: false,
+      });
+
+      expect(getRightPosition(40, BASE_PROPS)).toStrictEqual({
+        value: 100,
+        wasOutsideBounds: false,
+      });
+
+      expect(getRightPosition(690, BASE_PROPS)).toStrictEqual({
+        value: 650,
+        wasOutsideBounds: true,
+      });
     });
+  });
 
-    expect(getCenterPosition(40, BASE_PROPS)).toStrictEqual({
-      value: 50,
-      wasOutsideBounds: false,
-    });
+  describe('getCenterPosition()', () => {
+    it('returns altered values', () => {
+      expect(getCenterPosition(-10, BASE_PROPS)).toStrictEqual({
+        value: 0,
+        wasOutsideBounds: false,
+      });
 
-    expect(getCenterPosition(90, BASE_PROPS)).toStrictEqual({
-      value: 60,
-      wasOutsideBounds: true,
+      expect(getCenterPosition(0, BASE_PROPS)).toStrictEqual({
+        value: 10,
+        wasOutsideBounds: false,
+      });
+
+      expect(getCenterPosition(40, BASE_PROPS)).toStrictEqual({
+        value: 50,
+        wasOutsideBounds: false,
+      });
+
+      expect(getCenterPosition(690, BASE_PROPS)).toStrictEqual({
+        value: 40,
+        wasOutsideBounds: true,
+      });
     });
   });
 });

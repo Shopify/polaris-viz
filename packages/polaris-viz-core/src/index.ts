@@ -150,4 +150,5 @@ export type {
   DataGroup,
   TargetLine,
   ErrorBoundaryResponse,
+  Position,
 } from './types';

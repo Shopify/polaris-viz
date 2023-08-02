@@ -13,7 +13,6 @@ import {
 import type {
   DataSeries,
   ChartType,
-  Dimensions,
   XAxisOptions,
   YAxisOptions,
   BoundingRect,
@@ -66,7 +65,7 @@ export interface Props {
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
   annotationsLookupTable?: AnnotationLookupTable;
-  dimensions?: Dimensions;
+  dimensions?: BoundingRect;
   emptyStateText?: string;
   renderLegendContent?: RenderLegendContent;
 }
@@ -319,6 +318,7 @@ export function Chart({
           getPosition={getTooltipPosition}
           margin={{...ChartMargin, Top: chartYPosition}}
           parentRef={svgRef}
+          usePortal
         />
       )}
 
@@ -352,8 +352,8 @@ export function Chart({
     const y = yScale(highestValuePos!) + chartYPosition;
 
     return {
-      x,
-      y: Math.abs(y),
+      x: x + (dimensions?.x ?? 0),
+      y: Math.abs(y) + (dimensions?.y ?? 0),
       position: {
         horizontal: TooltipHorizontalOffset.Center,
         vertical: areAllNegative

@@ -5,6 +5,7 @@ import type {
   DataSeries,
   Dimensions,
   ErrorBoundaryResponse,
+  BoundingRect,
 } from '@shopify/polaris-viz-core';
 import {
   usePolarisVizContext,
@@ -40,7 +41,7 @@ export function ChartDimensions({
   const {onError: onErrorProvider} = usePolarisVizContext();
 
   const [chartDimensions, setChartDimensions] =
-    useState<Dimensions | null>(null);
+    useState<BoundingRect | null>(null);
 
   const {ref, setRef, entry} = useResizeObserver();
 
@@ -61,8 +62,9 @@ export function ChartDimensions({
     }
 
     const {width, height} = entry.contentRect;
+    const {x, y} = entry.target.getBoundingClientRect();
 
-    setChartDimensions({width, height});
+    setChartDimensions({width, height, x, y: y + window.scrollY});
   }, [entry, previousEntry?.contentRect.width]);
 
   const debouncedUpdateDimensions = useDebouncedCallback(() => {
@@ -78,6 +80,8 @@ export function ChartDimensions({
         height: sparkChart
           ? chartContainer.sparkChartMinHeight
           : chartContainer.minHeight,
+        x: 0,
+        y: 0,
       });
     }
 
