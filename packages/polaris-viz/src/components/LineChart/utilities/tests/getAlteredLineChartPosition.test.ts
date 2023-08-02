@@ -52,7 +52,7 @@ describe('getAlteredLineChartPosition', () => {
           currentX: 0,
           currentY: 0,
         }),
-      ).toStrictEqual({x: 20, y: 80});
+      ).toStrictEqual({x: 60, y: 80});
     });
 
     it('clamps to the bottom of a window', () => {
@@ -66,7 +66,7 @@ describe('getAlteredLineChartPosition', () => {
           currentX: 0,
           currentY: 2000,
         }),
-      ).toStrictEqual({x: 20, y: 1340});
+      ).toStrictEqual({x: 60, y: 1340});
     });
   });
 
