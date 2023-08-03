@@ -11,7 +11,6 @@ import {
 import type {
   DataSeries,
   ChartType,
-  Dimensions,
   XAxisOptions,
   YAxisOptions,
   BoundingRect,
@@ -46,6 +45,8 @@ import {eventPointNative, formatDataIntoGroups} from '../../utilities';
 import type {TooltipPosition, TooltipPositionParams} from '../TooltipWrapper';
 import {
   TOOLTIP_POSITION_DEFAULT_RETURN,
+  TooltipHorizontalOffset,
+  TooltipVerticalOffset,
   TooltipWrapper,
 } from '../TooltipWrapper';
 
@@ -64,7 +65,7 @@ export interface ChartProps {
   type: ChartType;
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
-  dimensions?: Dimensions;
+  dimensions?: BoundingRect;
   renderLegendContent?: RenderLegendContent;
 }
 
@@ -177,8 +178,8 @@ export function Chart({
   const chartBounds: BoundingRect = {
     width,
     height,
-    x: chartXPosition,
-    y: 0,
+    x: dimensions?.x ?? 0,
+    y: dimensions?.y ?? 0,
   };
 
   const {hasXAxisAnnotations, hasYAxisAnnotations} = checkAvailableAnnotations(
@@ -298,6 +299,7 @@ export function Chart({
           getPosition={getTooltipPosition}
           margin={ChartMargin}
           parentRef={svgRef}
+          usePortal
         />
       )}
 
@@ -333,10 +335,21 @@ export function Chart({
 
     const highestValue = highestValueForSeries[index];
     const x = chartXPosition + xScale(highestValue);
+    const flippedX = highestValue < 0 ? -x : x;
+
+    const barWidth = Math.abs(xScale(highestValue ?? 0) - xScale(0));
+    const negativeX = xScale(0) - barWidth;
 
     return {
-      x: highestValue < 0 ? -x : x,
+      x: flippedX < 0 ? negativeX : flippedX,
       y: groupHeight * index,
+      position: {
+        horizontal:
+          flippedX < 0
+            ? TooltipHorizontalOffset.Left
+            : TooltipHorizontalOffset.Right,
+        vertical: TooltipVerticalOffset.Center,
+      },
       activeIndex: index,
     };
   }

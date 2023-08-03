@@ -5,118 +5,121 @@ import type {
   AlteredPositionProps,
   AlteredPositionReturn,
 } from '../../../components/TooltipWrapper';
-import {TOOLTIP_MARGIN} from '../../../components/TooltipWrapper';
+import {
+  TOOLTIP_MARGIN,
+  TooltipHorizontalOffset,
+} from '../../../components/TooltipWrapper';
 
 export function getAlteredHorizontalBarPosition(
   props: AlteredPositionProps,
 ): AlteredPositionReturn {
-  if (props.currentX < 0) {
+  if (props.position.horizontal === TooltipHorizontalOffset.Left) {
     return getNegativeOffset(props);
   }
+
   return getPositiveOffset(props);
 }
 
 function getNegativeOffset(props: AlteredPositionProps): AlteredPositionReturn {
-  const {bandwidth, currentX, currentY, tooltipDimensions} = props;
+  const {bandwidth, currentX, currentY, tooltipDimensions, chartBounds} = props;
 
-  const flippedX = currentX * -1;
+  const x = currentX + chartBounds.x;
+  const y = currentY + chartBounds.y;
+
+  const xOffset = x - tooltipDimensions.width - TOOLTIP_MARGIN;
   const yOffset = (bandwidth - tooltipDimensions.height) / 2;
 
-  const y = currentY - tooltipDimensions.height;
-  if (flippedX - tooltipDimensions.width < 0) {
-    return {x: flippedX, y: y < 0 ? 0 : y};
+  if (xOffset < 0) {
+    const outsideY =
+      y - tooltipDimensions.height + HORIZONTAL_GROUP_LABEL_HEIGHT + yOffset;
+
+    return {
+      x,
+      y: outsideY,
+    };
   }
 
   return {
-    x: flippedX - tooltipDimensions.width - TOOLTIP_MARGIN,
-    y: currentY + HORIZONTAL_GROUP_LABEL_HEIGHT + yOffset,
+    x: xOffset,
+    y,
   };
 }
 
 function getPositiveOffset(props: AlteredPositionProps): AlteredPositionReturn {
   const {bandwidth, currentX, currentY, tooltipDimensions, chartBounds} = props;
 
+  const x = currentX + chartBounds.x + TOOLTIP_MARGIN;
+  const y = currentY + chartBounds.y;
+
   const isOutside = isOutsideBounds({
-    x: currentX,
-    y: currentY,
+    x,
+    y,
     tooltipDimensions,
     chartBounds,
   });
 
   if (isOutside.top && isOutside.right) {
     return {
-      x: chartBounds.width - tooltipDimensions.width,
-      y: 0,
+      x: x - tooltipDimensions.width,
+      y: window.scrollY + bandwidth,
     };
   }
 
   if (isOutside.top && !isOutside.right) {
     return {
-      x: currentX + TOOLTIP_MARGIN,
+      x,
       y: 0,
     };
   }
 
-  if (!isOutside.right && !isOutside.bottom) {
-    const yOffset = (bandwidth - tooltipDimensions.height) / 2;
-    return {
-      x: currentX + TOOLTIP_MARGIN,
-      y: currentY + HORIZONTAL_GROUP_LABEL_HEIGHT + yOffset,
-    };
-  }
-
   if (isOutside.right) {
-    const x = currentX - tooltipDimensions.width;
-    const y =
-      currentY -
-      tooltipDimensions.height +
-      HORIZONTAL_GROUP_LABEL_HEIGHT -
-      TOOLTIP_MARGIN;
+    const outsideX = x - tooltipDimensions.width - TOOLTIP_MARGIN;
+    const outsideY = y - tooltipDimensions.height;
 
-    if (y < 0) {
+    if (outsideY < window.scrollY) {
       return {
-        x,
-        y: bandwidth + HORIZONTAL_GROUP_LABEL_HEIGHT + TOOLTIP_MARGIN,
+        x: outsideX,
+        y: currentY + bandwidth + HORIZONTAL_GROUP_LABEL_HEIGHT,
       };
     }
 
     return {
-      x,
-      y,
+      x: outsideX,
+      y: outsideY,
     };
   }
 
   if (isOutside.bottom) {
     return {
-      x: currentX + TOOLTIP_MARGIN,
+      x,
       y:
-        chartBounds.height -
+        window.scrollY +
+        window.innerHeight -
         tooltipDimensions.height -
         HORIZONTAL_GROUP_LABEL_HEIGHT,
     };
   }
 
-  return {x: currentX, y: currentY};
+  return {x, y};
 }
 
 function isOutsideBounds({
   x,
   y,
   tooltipDimensions,
-  chartBounds,
 }: {
   x: number;
   y: number;
   tooltipDimensions: Dimensions;
   chartBounds: BoundingRect;
 }) {
-  const right = x + TOOLTIP_MARGIN + tooltipDimensions.width;
+  const right = x + tooltipDimensions.width + TOOLTIP_MARGIN;
   const bottom = y + tooltipDimensions.height;
 
   return {
     left: x <= 0,
-    right: right > chartBounds.width,
-    bottom: bottom > chartBounds.height,
-    top: y <= 0,
+    right: right > window.innerWidth,
+    bottom: bottom > window.scrollY + window.innerHeight,
+    top: y <= window.scrollY,
   };
 }
