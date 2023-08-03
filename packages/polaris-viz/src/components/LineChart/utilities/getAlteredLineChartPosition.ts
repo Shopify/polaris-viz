@@ -3,10 +3,10 @@ import {clamp} from '@shopify/polaris-viz-core';
 
 import type {TooltipPositionOffset} from '../../TooltipWrapper';
 import type {Margin} from '../../../types';
-import {TooltipHorizontalOffset} from '../../TooltipWrapper';
 
 // The space between the cursor and the tooltip
 export const TOOLTIP_MARGIN = 20;
+export const SCROLLBAR_WIDTH = 20;
 
 export interface AlteredPositionProps {
   bandwidth: number;
@@ -31,9 +31,7 @@ export type AlteredPosition = (
 export function getAlteredLineChartPosition(
   props: AlteredPositionProps,
 ): AlteredPositionReturn {
-  const {currentX, currentY, position, chartBounds} = props;
-
-  const newPosition = {...position};
+  const {currentX, currentY} = props;
 
   let x = currentX;
   let y = currentY;
@@ -50,29 +48,34 @@ export function getAlteredLineChartPosition(
   // X POSITIONING
   //
 
-  const left = getLeftPosition(x, props);
+  const right = getRightPosition(x, props);
 
-  if (left.wasOutsideBounds) {
-    newPosition.horizontal = TooltipHorizontalOffset.Right;
-  } else {
+  x = right.value;
+
+  if (right.wasOutsideBounds) {
+    const left = getLeftPosition(x, props);
+
     x = left.value;
-  }
-
-  if (newPosition.horizontal === TooltipHorizontalOffset.Right) {
-    const right = getRightPosition(x, props);
-    x = right.value;
   }
 
   return {
     x: clamp({
       amount: x,
-      min: chartBounds.x ?? 0,
-      max: chartBounds.width,
+      min: TOOLTIP_MARGIN,
+      max:
+        window.innerWidth -
+        props.tooltipDimensions.width -
+        TOOLTIP_MARGIN -
+        SCROLLBAR_WIDTH,
     }),
     y: clamp({
       amount: y,
-      min: chartBounds.y ?? 0,
-      max: chartBounds.height - props.tooltipDimensions.height,
+      min: window.scrollY + TOOLTIP_MARGIN,
+      max:
+        window.scrollY +
+        window.innerHeight -
+        props.tooltipDimensions.height -
+        TOOLTIP_MARGIN,
     }),
   };
 }
@@ -85,12 +88,11 @@ interface IsOutsideBoundsData {
 function isOutsideBounds(data: IsOutsideBoundsData) {
   const {current, alteredPosition} = data;
 
-  const isLeft =
-    current <
-    alteredPosition.margin.Left + alteredPosition.tooltipDimensions.width;
-  const isRight =
-    current + alteredPosition.tooltipDimensions.width >
-    alteredPosition.chartBounds.width - alteredPosition.margin.Right;
+  const min = TOOLTIP_MARGIN;
+  const max = window.innerWidth - TOOLTIP_MARGIN - SCROLLBAR_WIDTH;
+
+  const isLeft = current < min;
+  const isRight = current + alteredPosition.tooltipDimensions.width > max;
 
   return {left: isLeft, right: isRight};
 }
@@ -103,21 +105,9 @@ type getFunction = (
 function getLeftPosition(
   ...args: Parameters<getFunction>
 ): ReturnType<getFunction> {
-  const [value, props] = args;
+  const [value] = args;
 
-  let x = value - props.tooltipDimensions.width;
-  const wasOutsideBounds = isOutsideBounds({
-    current: x,
-    alteredPosition: props,
-  });
-
-  if (wasOutsideBounds.left) {
-    x = props.currentX + props.margin.Left + props.bandwidth + TOOLTIP_MARGIN;
-  } else {
-    x -= TOOLTIP_MARGIN;
-  }
-
-  return {value: x, wasOutsideBounds: wasOutsideBounds.left};
+  return {value: value - TOOLTIP_MARGIN, wasOutsideBounds: false};
 }
 
 function getRightPosition(

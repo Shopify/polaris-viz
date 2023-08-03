@@ -21,26 +21,82 @@ const BASE_PROPS: AlteredPositionProps = {
   },
 };
 
-describe('getAlteredLineChartPosition', () => {
-  it.each([
-    ['y: 0', {x: 0, y: 0}, {x: 60, y: 0}],
-    ['y: 50', {x: 0, y: 50}, {x: 60, y: 50}],
-    ['y: 100', {x: 0, y: 100}, {x: 60, y: 60}],
+let windowSpy;
 
-    ['x: 0', {x: 0, y: 0}, {x: 60, y: 0}],
-    ['x: 40', {x: 40, y: 0}, {x: 100, y: 0}],
-    ['x: 80', {x: 80, y: 0}, {x: 140, y: 0}],
-    ['x: 100', {x: 100, y: 0}, {x: 160, y: 0}],
-    ['x: 120', {x: 120, y: 0}, {x: 40, y: 0}],
-    ['x: 160', {x: 160, y: 0}, {x: 80, y: 0}],
-    ['x: 200', {x: 200, y: 0}, {x: 120, y: 0}],
-  ])(`alters position when cursor is %s`, (_, {x, y}, result) => {
-    expect(
-      getAlteredLineChartPosition({
-        ...BASE_PROPS,
-        currentX: x,
-        currentY: y,
-      }),
-    ).toStrictEqual(result);
+function mockWindow({scrollY = 0, innerHeight = 1000, innerWidth = 500}) {
+  windowSpy.mockImplementation(() => ({
+    scrollY,
+    innerHeight,
+    innerWidth,
+  }));
+}
+
+describe('getAlteredLineChartPosition', () => {
+  beforeEach(() => {
+    windowSpy = jest.spyOn(window, 'window', 'get');
+  });
+
+  afterEach(() => {
+    windowSpy.mockRestore();
+  });
+
+  describe('y', () => {
+    it('applies scrollY to clamped value', () => {
+      mockWindow({
+        scrollY: 60,
+      });
+
+      expect(
+        getAlteredLineChartPosition({
+          ...BASE_PROPS,
+          currentX: 0,
+          currentY: 0,
+        }),
+      ).toStrictEqual({x: 60, y: 80});
+    });
+
+    it('clamps to the bottom of a window', () => {
+      mockWindow({
+        scrollY: 400,
+      });
+
+      expect(
+        getAlteredLineChartPosition({
+          ...BASE_PROPS,
+          currentX: 0,
+          currentY: 2000,
+        }),
+      ).toStrictEqual({x: 60, y: 1340});
+    });
+  });
+
+  describe('x', () => {
+    it('clamps to the left of a window', () => {
+      mockWindow({
+        scrollY: 0,
+      });
+
+      expect(
+        getAlteredLineChartPosition({
+          ...BASE_PROPS,
+          currentX: -1000,
+          currentY: 0,
+        }),
+      ).toStrictEqual({x: 20, y: 20});
+    });
+
+    it('clamps to the right of a window', () => {
+      mockWindow({
+        scrollY: 0,
+      });
+
+      expect(
+        getAlteredLineChartPosition({
+          ...BASE_PROPS,
+          currentX: 1000,
+          currentY: 0,
+        }),
+      ).toStrictEqual({x: 400, y: 20});
+    });
   });
 });

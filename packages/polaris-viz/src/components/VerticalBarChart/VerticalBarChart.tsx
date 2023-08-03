@@ -3,7 +3,7 @@ import type {
   DataSeries,
   XAxisOptions,
   YAxisOptions,
-  Dimensions,
+  BoundingRect,
 } from '@shopify/polaris-viz-core';
 import type {ReactNode} from 'react';
 
@@ -24,7 +24,7 @@ export interface VerticalBarChartProps {
   yAxisOptions: Required<YAxisOptions>;
   annotationsLookupTable?: AnnotationLookupTable;
   barOptions?: {isStacked: boolean};
-  dimensions?: Dimensions;
+  dimensions?: BoundingRect;
   emptyStateText?: string;
   renderLegendContent?: RenderLegendContent;
   type?: ChartType;
