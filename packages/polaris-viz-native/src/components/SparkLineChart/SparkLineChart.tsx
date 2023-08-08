@@ -37,7 +37,12 @@ export function SparkLineChart(props: SparkLineChartProps) {
   };
 
   return (
-    <ChartContainer data={data} sparkChart isAnimated={isAnimated}>
+    <ChartContainer
+      data={data}
+      sparkChart
+      isAnimated={isAnimated}
+      theme={theme}
+    >
       <Chart
         data={data}
         accessibilityLabel={accessibilityLabel}
