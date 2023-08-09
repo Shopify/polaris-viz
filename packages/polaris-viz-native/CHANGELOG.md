@@ -7,6 +7,12 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- ## Unreleased -->
 
+## Unreleased
+
+### Fixed
+
+- Fixed an issue where components wouldn't be correctly rendered in React 18.
+
 ## [9.10.2] - 2023-08-09
 
 - No updates. Transitive dependency bump.

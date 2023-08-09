@@ -6,6 +6,8 @@ import {createPackage, createProjectPlugin} from '@shopify/loom';
 // Needed so TS realises what configuration hooks are provided by Jest (in `jestAdjustments` below)
 import type {} from '@shopify/loom-plugin-jest';
 
+import {setupReact18} from '../../loom.config';
+
 // eslint-disable-next-line import/no-default-export
 export default createPackage((pkg) => {
   pkg.entry({root: './src/index.ts'});
@@ -18,6 +20,7 @@ export default createPackage((pkg) => {
       rootEntrypoints: false,
       jestTestEnvironment: 'jsdom',
     }),
+    setupReact18(),
     jestAdjustments(),
   );
 });
