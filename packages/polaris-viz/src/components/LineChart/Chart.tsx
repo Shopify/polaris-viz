@@ -13,7 +13,6 @@ import {
   LINE_HEIGHT,
 } from '@shopify/polaris-viz-core';
 import type {
-  Dimensions,
   XAxisOptions,
   YAxisOptions,
   LineChartDataSeriesWithDefaults,
@@ -73,7 +72,7 @@ export interface ChartProps {
   showLegend: boolean;
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
-  dimensions?: Dimensions;
+  dimensions?: BoundingRect;
   emptyStateText?: string;
   renderLegendContent?: RenderLegendContent;
   slots?: {
@@ -234,9 +233,11 @@ export function Chart({
     } else {
       const activeIndex = index ?? 0;
 
+      const x = xScale?.(activeIndex) ?? 0;
+
       return {
-        x: xScale?.(activeIndex) ?? 0,
-        y: 0,
+        x: x + (dimensions?.x ?? 0),
+        y: dimensions?.y ?? 0,
         activeIndex,
       };
     }
