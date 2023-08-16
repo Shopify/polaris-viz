@@ -11,13 +11,15 @@
 
 .TextContainer {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
   text-align: left;
   gap: 3px;
   line-height: 16px;
   margin: -2px 0;
   font-size: 12px;
   font-family: $font-stack-base;
+  width: 100%;
 }
 
 .IconContainer {

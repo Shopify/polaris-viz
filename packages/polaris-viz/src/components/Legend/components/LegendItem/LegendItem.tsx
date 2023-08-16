@@ -55,6 +55,7 @@ export function LegendItem({
         paddingLeft: LEGEND_ITEM_LEFT_PADDING,
         paddingRight: LEGEND_ITEM_RIGHT_PADDING,
         gap: LEGEND_ITEM_GAP,
+        width: value ? '100%' : 'auto',
       }}
       className={style.Legend}
     >
@@ -67,7 +68,11 @@ export function LegendItem({
       <span className={style.TextContainer}>
         <span style={{color: selectedTheme.legend.labelColor}}>{name}</span>
         {value == null ? null : (
-          <span style={{color: selectedTheme.legend.valueColor}}>{value}</span>
+          <span
+            style={{color: selectedTheme.legend.valueColor, marginLeft: 'auto'}}
+          >
+            {value}
+          </span>
         )}
       </span>
     </button>

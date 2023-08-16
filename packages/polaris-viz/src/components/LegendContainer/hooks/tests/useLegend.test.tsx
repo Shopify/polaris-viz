@@ -21,6 +21,36 @@ const DATA: DataSeries[] = [
   },
 ];
 
+const MOCK_SERIES_DATA_WITH_VALUES: DataSeries[] = [
+  {
+    name: 'Mobile',
+    data: [
+      {
+        key: 'Mobile',
+        value: 477,
+      },
+    ],
+  },
+  {
+    name: 'Desktop',
+    data: [
+      {
+        key: 'Desktop',
+        value: 222,
+      },
+    ],
+  },
+  {
+    name: 'Tablet',
+    data: [
+      {
+        key: 'Tablet',
+        value: 80,
+      },
+    ],
+  },
+];
+
 const DATAGROUP: DataGroup[] = [
   {
     shape: 'Line',
@@ -113,6 +143,58 @@ describe('useLegend()', () => {
             isLegendMounted: true,
           });
         });
+      });
+    });
+  });
+
+  describe('showLegendValues', () => {
+    it('returns data with values when true', () => {
+      function TestComponent() {
+        const data = useLegend({
+          ...MOCK_PROPS,
+          showLegendValues: true,
+          data: [
+            {
+              shape: 'Donut',
+              series: MOCK_SERIES_DATA_WITH_VALUES,
+            },
+          ],
+        });
+
+        return <span data-data={`${JSON.stringify(data)}`} />;
+      }
+
+      const result = mount(<TestComponent />);
+
+      const data = parseData(result);
+
+      data.legend.forEach((legendItem) => {
+        expect(legendItem.value).toBeDefined();
+      });
+    });
+
+    it('returns data with undefined values when false', () => {
+      function TestComponent() {
+        const data = useLegend({
+          ...MOCK_PROPS,
+          showLegendValues: false,
+          data: [
+            {
+              shape: 'Donut',
+              series: MOCK_SERIES_DATA_WITH_VALUES,
+            },
+          ],
+        });
+
+        return <span data-data={`${JSON.stringify(data)}`} />;
+      }
+
+      const result = mount(<TestComponent />);
+
+      const data = parseData(result);
+
+      data.legend.forEach((legendItem) => {
+        expect(legendItem.value).toBeUndefined();
       });
     });
   });

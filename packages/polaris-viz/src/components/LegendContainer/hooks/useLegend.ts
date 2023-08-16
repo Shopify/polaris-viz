@@ -26,8 +26,9 @@ function getAlteredDimensions(
 }
 
 export interface Props {
-  showLegend: boolean;
   data: DataGroup[];
+  showLegend: boolean;
+  showLegendValues?: boolean;
   colors?: Color[];
   dimensions?: Dimensions;
   direction?: Direction;
@@ -39,6 +40,7 @@ export function useLegend({
   data,
   dimensions = {height: 0, width: 0},
   showLegend,
+  showLegendValues,
   direction = 'horizontal',
   maxWidth = 0,
 }: Props) {
@@ -55,9 +57,10 @@ export function useLegend({
     }
 
     const legends = data.map(({series, shape}) => {
-      return series.map(({name, color, isComparison}) => {
+      return series.map(({name, data, color, isComparison}) => {
         return {
           name: name ?? '',
+          value: showLegendValues ? data[0]?.value?.toString() : undefined,
           color,
           shape,
           isComparison,
@@ -71,7 +74,7 @@ export function useLegend({
         color: color ?? colors[index],
       };
     });
-  }, [colors, data, showLegend]);
+  }, [colors, data, showLegend, showLegendValues]);
 
   const {height, width} = useMemo(() => {
     if (showLegend === false) {

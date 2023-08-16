@@ -46,6 +46,7 @@ export interface ChartProps {
   labelFormatter: LabelFormatter;
   legendPosition: LegendPosition;
   showLegend: boolean;
+  showLegendValues: boolean;
   state: ChartState;
   theme: string;
   accessibilityLabel?: string;
@@ -63,6 +64,7 @@ export function Chart({
   labelFormatter,
   legendPosition = 'right',
   showLegend,
+  showLegendValues,
   state,
   theme,
   accessibilityLabel = '',
@@ -88,10 +90,11 @@ export function Chart({
       : 'horizontal';
 
   const longestLegendWidth = data.reduce((previous, current) => {
-    const estimatedLegendWidth = estimateLegendItemWidth(
-      current.name ?? '',
-      characterWidths,
-    );
+    const text = showLegendValues
+      ? `${current.name} ${current.data[0]?.value}` ?? ''
+      : current.name ?? '';
+
+    const estimatedLegendWidth = estimateLegendItemWidth(text, characterWidths);
 
     if (estimatedLegendWidth > previous) {
       return estimatedLegendWidth;
@@ -113,6 +116,7 @@ export function Chart({
       data: [{series: data, shape: 'Bar'}],
       dimensions,
       showLegend,
+      showLegendValues,
       direction: legendDirection,
       colors: seriesColor,
       maxWidth: maxLegendWidth,

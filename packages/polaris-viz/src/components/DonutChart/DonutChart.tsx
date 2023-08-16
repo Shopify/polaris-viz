@@ -17,6 +17,7 @@ import {Chart} from './Chart';
 export type DonutChartProps = {
   comparisonMetric?: ComparisonMetricProps;
   showLegend?: boolean;
+  showLegendValues?: boolean;
   labelFormatter?: LabelFormatter;
   legendFullWidth?: boolean;
   legendPosition?: LegendPosition;
@@ -32,6 +33,7 @@ export function DonutChart(props: DonutChartProps) {
     theme = defaultTheme,
     comparisonMetric,
     showLegend = true,
+    showLegendValues = false,
     labelFormatter = (value) => `${value}`,
     legendFullWidth,
     legendPosition = 'left',
@@ -61,6 +63,7 @@ export function DonutChart(props: DonutChartProps) {
         labelFormatter={labelFormatter}
         comparisonMetric={comparisonMetric}
         showLegend={showLegend}
+        showLegendValues={showLegendValues}
         legendFullWidth={legendFullWidth}
         legendPosition={legendPosition}
         renderInnerValueContent={renderInnerValueContent}
