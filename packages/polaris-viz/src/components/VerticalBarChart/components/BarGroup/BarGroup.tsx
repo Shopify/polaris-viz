@@ -1,4 +1,4 @@
-import {Fragment, useCallback, useMemo} from 'react';
+import React, {Fragment, useCallback, useMemo} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {
   uniqueId,
@@ -11,9 +11,16 @@ import {
   useTheme,
   useChartContext,
   BAR_SPACING,
+  FONT_SIZE,
 } from '@shopify/polaris-viz-core';
 import type {Color} from '@shopify/polaris-viz-core';
 
+import type {TrendIndicatorData} from '../../../TrendIndicator';
+import {
+  TREND_INDICATOR_HEIGHT,
+  TrendIndicator,
+  getTrendIndicatorData,
+} from '../../../TrendIndicator';
 import {getChartId} from '../../../../utilities/getChartId';
 import {getHoverZoneOffset} from '../../../../utilities';
 import {
@@ -45,6 +52,7 @@ export interface BarGroupProps {
   gapWidth: number;
   areAllNegative?: boolean;
   theme?: string;
+  trendIndicatorData?: TrendIndicatorData[];
 }
 
 export function BarGroup({
@@ -62,6 +70,7 @@ export function BarGroup({
   gapWidth,
   theme,
   areAllNegative,
+  trendIndicatorData,
 }: BarGroupProps) {
   const groupAriaLabel = formatAriaLabel(accessibilityData[barGroupIndex]);
   const {id, isPerformanceImpacted} = useChartContext();
@@ -225,24 +234,41 @@ export function BarGroup({
             position: 'vertical',
           });
 
+          const trendData = trendIndicatorData?.[index];
+
+          console.log('data[index]', data[index]);
+          console.log('trendIndicatorProps', trendData);
+
           return (
-            <rect
-              key={index}
-              height={clampedSize}
-              x={x + barWidth * index}
-              y={isNegative || areAllNegative ? y : y - offset}
-              width={barWidth}
-              fill="transparent"
-              aria-label={ariaLabel}
-              role="listitem"
-              {...getColorVisionEventAttrs({
-                type: COLOR_VISION_SINGLE_ITEM,
-                index: index + indexOffset,
-                watch: !isPerformanceImpacted,
-              })}
-              className={styles.Bar}
-              tabIndex={-1}
-            />
+            <React.Fragment key={index}>
+              {trendData != null && (
+                <foreignObject
+                  height={FONT_SIZE}
+                  width={trendData.trendIndicatorWidth}
+                  y={y}
+                  x={x + barWidth * index}
+                >
+                  <TrendIndicator {...trendData.trendIndicatorProps} />
+                </foreignObject>
+              )}
+              <rect
+                key={index}
+                height={clampedSize}
+                x={x + barWidth * index}
+                y={isNegative || areAllNegative ? y : y - offset}
+                width={barWidth}
+                fill="transparent"
+                aria-label={ariaLabel}
+                role="listitem"
+                {...getColorVisionEventAttrs({
+                  type: COLOR_VISION_SINGLE_ITEM,
+                  index: index + indexOffset,
+                  watch: !isPerformanceImpacted,
+                })}
+                className={styles.Bar}
+                tabIndex={-1}
+              />
+            </React.Fragment>
           );
         })}
       </g>

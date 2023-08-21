@@ -10,7 +10,8 @@ import type {
   DataSeries,
 } from '@shopify/polaris-viz-core';
 import type {ScaleBand, ScaleLinear} from 'd3-scale';
-import {Fragment, useMemo, useState} from 'react';
+import React, {Fragment, useMemo, useState} from 'react';
+import type {TrendIndicatorData} from 'components/TrendIndicator';
 
 import {getLoadAnimationDelay} from '../../../../utilities/getLoadAnimationDelay';
 import {getChartId} from '../../../../utilities/getChartId';
@@ -34,6 +35,7 @@ interface VerticalBarGroupProps {
   yScale: ScaleLinear<number, number>;
   indexOffset?: number;
   areAllNegative?: boolean;
+  trendData?: TrendIndicatorData[][];
 }
 
 export function VerticalBarGroup({
@@ -50,6 +52,7 @@ export function VerticalBarGroup({
   yScale,
   yAxisOptions,
   areAllNegative,
+  trendData,
 }: VerticalBarGroupProps) {
   const {id: chartId, isPerformanceImpacted} = useChartContext();
 
@@ -123,22 +126,25 @@ export function VerticalBarGroup({
         const animationDelay = getLoadAnimationDelay(index, sortedData.length);
 
         return (
-          <BarGroup
-            accessibilityData={accessibilityData}
-            activeBarGroup={activeBarGroup}
-            animationDelay={animationDelay}
-            barGroupIndex={index}
-            colors={colors}
-            data={item}
-            gapWidth={gapWidth}
-            drawableHeight={drawableHeight}
-            indexOffset={indexOffset}
-            key={index}
-            width={xScale.bandwidth()}
-            x={xPosition == null ? 0 : xPosition}
-            yScale={yScale}
-            areAllNegative={areAllNegative}
-          />
+          <React.Fragment key={index}>
+            <BarGroup
+              accessibilityData={accessibilityData}
+              activeBarGroup={activeBarGroup}
+              animationDelay={animationDelay}
+              barGroupIndex={index}
+              colors={colors}
+              data={item}
+              gapWidth={gapWidth}
+              drawableHeight={drawableHeight}
+              indexOffset={indexOffset}
+              key={index}
+              width={xScale.bandwidth()}
+              x={xPosition == null ? 0 : xPosition}
+              yScale={yScale}
+              areAllNegative={areAllNegative}
+              trendIndicatorData={trendData?.[index]}
+            />
+          </React.Fragment>
         );
       })}
     </Fragment>

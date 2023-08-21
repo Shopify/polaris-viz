@@ -9,7 +9,11 @@ import {
   clamp,
 } from '@shopify/polaris-viz-core';
 
-import {TREND_INDICATOR_HEIGHT, TrendIndicator} from '../../TrendIndicator';
+import {
+  TREND_INDICATOR_HEIGHT,
+  TrendIndicator,
+  getTrendIndicatorData,
+} from '../../TrendIndicator';
 import {getHoverZoneOffset} from '../../../utilities';
 import {
   HORIZONTAL_BAR_LABEL_OFFSET,
@@ -21,7 +25,6 @@ import {getGradientDefId} from '../GradientDefs';
 
 import {Label, Bar, LabelWrapper} from './components';
 import styles from './HorizontalBars.scss';
-import {getTrendIndicatorData} from './utilities/getTrendIndicatorData';
 
 const SERIES_DELAY = 150;
 

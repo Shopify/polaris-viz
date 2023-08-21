@@ -1,6 +1,7 @@
 import type {DataSeries} from '@shopify/polaris-viz-core';
 import {useMemo} from 'react';
 
+import {getTrendIndicatorData} from '../../TrendIndicator';
 import {sortBarChartData} from '../../../utilities/sortBarChartData';
 
 import {useXScale} from './useXScale';
@@ -28,5 +29,11 @@ export function useVerticalBarChart({data, drawableWidth, labels}: Props) {
     labels,
   });
 
-  return {sortedData, areAllNegative, xScale, gapWidth};
+  const trendData = labels.map((_, index) => {
+    return data.map((series) => {
+      return getTrendIndicatorData(series?.metadata?.trends?.[index]);
+    });
+  });
+
+  return {sortedData, areAllNegative, xScale, gapWidth, trendData};
 }

@@ -58,6 +58,20 @@ export const DEFAULT_DATA: DataSeries[] = [
       {key: 'Saturday', value: 0},
       {key: 'Sunday', value: 0.1},
     ],
+    metadata: {
+      trends: {
+        '0': {
+          value: '77%',
+          trend: 'positive',
+          direction: 'upward',
+        },
+        '2': {
+          value: '907%',
+          trend: 'negative',
+          direction: 'downward',
+        },
+      },
+    },
   },
   {
     name: 'Lunch',

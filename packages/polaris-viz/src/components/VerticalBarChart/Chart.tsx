@@ -182,11 +182,12 @@ export function Chart({
 
   const hideXAxis = xAxisOptions.hide || selectedTheme.xAxis.hide;
 
-  const {sortedData, areAllNegative, xScale, gapWidth} = useVerticalBarChart({
-    data,
-    drawableWidth,
-    labels: formattedLabels,
-  });
+  const {sortedData, areAllNegative, xScale, gapWidth, trendData} =
+    useVerticalBarChart({
+      data,
+      drawableWidth,
+      labels: formattedLabels,
+    });
 
   const {ticks, yScale} = useYScale({
     ...yScaleOptions,
@@ -268,6 +269,7 @@ export function Chart({
             id={id}
             labels={formattedLabels}
             sortedData={sortedData}
+            trendData={trendData}
             stackedValues={stackedValues}
             xScale={xScale}
             yAxisOptions={yAxisOptions}
