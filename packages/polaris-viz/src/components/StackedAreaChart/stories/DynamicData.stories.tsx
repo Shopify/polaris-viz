@@ -8,24 +8,26 @@ export const DynamicData = () => {
   const [data, setData] = useState({
     name: 'Sales',
     data: [
-      {value: 100, key: '2020-04-01T12:00:00'},
-      {value: 99, key: '2020-04-02T12:00:00'},
-      {value: 1000, key: '2020-04-03T12:00:00'},
-      {value: 2, key: '2020-04-04T12:00:00'},
-      {value: 22, key: '2020-04-05T12:00:00'},
-      {value: 6, key: '2020-04-06T12:00:00'},
-      {value: 5, key: '2020-04-07T12:00:00'},
+      {value: 100, key: '0'},
+      {value: 99, key: '1'},
+      {value: 1000, key: '2'},
+      {value: 2, key: '3'},
+      {value: 22, key: '4'},
+      {value: 6, key: '5'},
+      {value: 5, key: '6'},
     ],
   });
 
   const onClick = () => {
-    const newData = data.data.map(({key}) => {
+    const dataLength = Math.floor(Math.random() * 10) + 2;
+    const newData = [...Array(dataLength)].map((_, index) => {
       const newValue = Math.floor(Math.random() * 200);
       return {
-        key,
+        key: String(index),
         value: newValue,
       };
     });
+
     setData({
       name: data.name,
       data: newData,

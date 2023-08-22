@@ -6,6 +6,7 @@ import {
   curveStepRounded,
   uniqueId,
   COLOR_VISION_SINGLE_ITEM,
+  usePrevious,
 } from '@shopify/polaris-viz-core';
 
 import {
@@ -16,7 +17,7 @@ import {
 } from '../../../../constants';
 import type {StackedSeries} from '../../../../types';
 import {useTheme, useWatchColorVisionEvents} from '../../../../hooks';
-import {Area} from '..';
+import {AnimatedArea, Area} from '../Area';
 
 interface Props {
   colors: Color[];
@@ -36,6 +37,7 @@ export function StackedAreas({
   zeroLineValues,
 }: Props) {
   const [activeLineIndex, setActiveLineIndex] = useState(-1);
+  const previousStackedValues = usePrevious(stackedValues);
 
   useWatchColorVisionEvents({
     type: COLOR_VISION_SINGLE_ITEM,
@@ -84,8 +86,14 @@ export function StackedAreas({
   return (
     <Fragment>
       {stackedValues.map((data, index) => {
+        const dataIsValidForAnimation =
+          !previousStackedValues ||
+          data.length === previousStackedValues[index].length;
+
+        const AreaComponent = dataIsValidForAnimation ? AnimatedArea : Area;
+
         return (
-          <Area
+          <AreaComponent
             activeLineIndex={activeLineIndex}
             animationIndex={stackedValues.length - 1 - index}
             areaGenerator={areaGenerator}
