@@ -2,6 +2,7 @@ import type {Story} from '@storybook/react';
 
 import {LineChart, LineChartProps} from '../../LineChart';
 import {META} from '../meta';
+import {randomNumber} from '../../../Docs/utilities';
 
 export default {
   ...META,
@@ -25,13 +26,27 @@ function Card(args: LineChartProps) {
   );
 }
 
+const HOURLY_DATA = [
+  {
+    name: 'Hourly Data',
+    data: Array(743)
+      .fill(null)
+      .map((_, index) => {
+        return {
+          key: new Date(2021, 1, 1, index).toISOString(),
+          value: randomNumber(0, 400),
+        };
+      }),
+  },
+];
+
 const Template: Story<LineChartProps> = (args: LineChartProps) => {
   return (
     <div style={{overflow: 'auto'}}>
       <Card {...args} />
       <div style={{height: 700, width: 10}} />
       <div style={{display: 'flex', justifyContent: 'space-between'}}>
-        <Card {...args} />
+        <Card {...args} data={HOURLY_DATA} />
         <Card {...args} />
         <Card {...args} />
       </div>

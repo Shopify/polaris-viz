@@ -31,7 +31,7 @@ export type AlteredPosition = (
 export function getAlteredLineChartPosition(
   props: AlteredPositionProps,
 ): AlteredPositionReturn {
-  const {currentX, currentY} = props;
+  const {currentX, currentY, chartBounds} = props;
 
   let x = currentX;
   let y = currentY;
@@ -41,7 +41,7 @@ export function getAlteredLineChartPosition(
   //
 
   if (props.isPerformanceImpacted) {
-    y = 0;
+    y = chartBounds.y ?? 0;
   }
 
   //

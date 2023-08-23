@@ -9,7 +9,11 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
--  Changed `<DonutChart />` to show value of hovered item in the center.
+- Changed `<DonutChart />` to show value of hovered item in the center.
+
+### Fixed
+
+- Fixed issue in `<LineChart />` where tooltip would be rendered in the wrong position when performance was impacted.
 
 ## [9.10.4] - 2023-08-09
 
