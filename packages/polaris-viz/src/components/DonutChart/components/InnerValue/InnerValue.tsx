@@ -47,6 +47,8 @@ export function InnerValue({
     </animated.span>
   );
 
+  const valueToDisplay = activeValue || animatedTotalValue;
+
   const innerContent = renderInnerValueContent?.({
     activeValue,
     animatedTotalValue,
@@ -57,9 +59,9 @@ export function InnerValue({
         className={classNames(styles.ContentValue)}
         style={{color: selectedTheme.xAxis.labelColor}}
       >
-        {animatedTotalValue}
+        {valueToDisplay}
       </animated.p>
-      {comparisonMetric != null && (
+      {comparisonMetric != null && !activeValue && (
         <div className={styles.ComparisonMetric}>
           <ComparisonMetric
             metric={comparisonMetric.metric}
