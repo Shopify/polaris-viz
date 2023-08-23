@@ -267,8 +267,8 @@ export function Chart({
   const chartBounds: BoundingRect = {
     width,
     height,
-    x: chartXPosition,
-    y: chartYPosition,
+    x: dimensions?.x ?? chartXPosition,
+    y: dimensions?.y ?? chartYPosition,
   };
 
   const {hasXAxisAnnotations, hasYAxisAnnotations} = checkAvailableAnnotations(
