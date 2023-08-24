@@ -1,8 +1,9 @@
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
+import React from 'react';
 
 import {StackedAreas} from '../StackedAreas';
-import {Area} from '../../Area';
+import {AnimatedArea, Area} from '../../Area';
 import type {StackedSeries} from '../../../../../types';
 
 jest.mock('d3-scale', () => ({
@@ -29,16 +30,17 @@ describe('<StackedAreas />', () => {
     isAnimated: true,
     stackedValues: mockStackedValues,
     zeroLineValues: mockStackedValues,
+    theme: `Default`,
   };
 
-  it('renders a <Area /> for each stacked series', () => {
+  it('renders a <AnimatedArea /> for each stacked series', () => {
     const stackedArea = mount(
       <svg>
         <StackedAreas {...mockProps} />
       </svg>,
     );
 
-    expect(stackedArea).toContainReactComponentTimes(Area, 2);
+    expect(stackedArea).toContainReactComponentTimes(AnimatedArea, 2);
   });
 
   it('passes index and animationIndex to <Area />', () => {
@@ -48,7 +50,7 @@ describe('<StackedAreas />', () => {
       </svg>,
     );
 
-    const stacks = stackedArea.findAll(Area);
+    const stacks = stackedArea.findAll(AnimatedArea);
 
     expect(stacks[0]).toHaveReactProps({
       animationIndex: 1,
@@ -62,21 +64,21 @@ describe('<StackedAreas />', () => {
   });
 
   describe('stackedValues', () => {
-    it('passes SLOW_DURATION to <Area /> .length is less than 10', () => {
+    it('passes SLOW_DURATION to <AnimatedArea /> .length is less than 10', () => {
       const stackedArea = mount(
         <svg>
           <StackedAreas {...mockProps} />
         </svg>,
       );
 
-      const stacks = stackedArea.findAll(Area);
+      const stacks = stackedArea.findAll(AnimatedArea);
 
       expect(stacks[0]).toHaveReactProps({
         duration: 275,
       });
     });
 
-    it('passes FAST_DURATION to <Area /> .length is greater than 10', () => {
+    it('passes FAST_DURATION to <AnimatedArea /> .length is greater than 10', () => {
       const mockValues = new Array(11).fill([
         [163, 269],
         [0, 0],
@@ -91,7 +93,7 @@ describe('<StackedAreas />', () => {
         </svg>,
       );
 
-      const stacks = stackedArea.findAll(Area);
+      const stacks = stackedArea.findAll(AnimatedArea);
 
       expect(stacks[0]).toHaveReactProps({
         duration: 100,

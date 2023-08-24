@@ -16,6 +16,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Fixed
 
 - Fixed issue in `<LineChart />` where tooltip would be rendered in the wrong position when performance was impacted.
+- Fixed issue in `<StackedArea />` where changing data to new data with different length would cause the chart to throw
 
 ## [9.10.4] - 2023-08-09
 

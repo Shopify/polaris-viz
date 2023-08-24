@@ -1,19 +1,20 @@
 import {mount} from '@shopify/react-testing';
 import {area, line} from 'd3-shape';
 import {scaleLinear} from 'd3-scale';
+import React from 'react';
 
 import {mountWithProvider} from '../../../../../test-utilities';
 import {mockDefaultTheme} from '../../../../../test-utilities/mountWithProvider';
-import type {AreaProps} from '../Area';
-import {Area} from '../Area';
 import {DEFAULT_THEME} from '../../../../../constants';
 import type {StackedSeries, Theme} from '../../../../../types';
+import type {AreaProps} from '../types';
+import {AnimatedArea} from '../AnimatedArea';
 
 jest.mock('d3-scale', () => ({
   scaleLinear: jest.requireActual('d3-scale').scaleLinear,
 }));
 
-describe('<Area />', () => {
+describe('<AnimatedArea />', () => {
   const xScale = scaleLinear();
   const yScale = scaleLinear();
 
@@ -54,7 +55,7 @@ describe('<Area />', () => {
   it('renders a path for each series', () => {
     const stackedArea = mount(
       <svg>
-        <Area {...mockProps} />
+        <AnimatedArea {...mockProps} />
       </svg>,
     );
 
@@ -65,7 +66,7 @@ describe('<Area />', () => {
     const {themes} = mockDefaultTheme({line: {width: 10}});
     const stackedArea = mountWithProvider(
       <svg>
-        <Area {...mockProps} selectedTheme={themes.Default as Theme} />
+        <AnimatedArea {...mockProps} selectedTheme={themes.Default as Theme} />
       </svg>,
     );
 
@@ -79,7 +80,7 @@ describe('<Area />', () => {
   it('renders correctly when line.hasSpline is false', () => {
     const stackedArea = mountWithProvider(
       <svg>
-        <Area {...mockProps} />
+        <AnimatedArea {...mockProps} />
       </svg>,
 
       mockDefaultTheme({line: {hasSpline: false}}),
@@ -98,7 +99,7 @@ describe('<Area />', () => {
 
     const stackedArea = mount(
       <svg>
-        <Area {...mockProps} />
+        <AnimatedArea {...mockProps} />
       </svg>,
     );
 
