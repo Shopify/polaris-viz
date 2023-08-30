@@ -73,6 +73,63 @@ describe('<DonutChart />', () => {
       });
     });
 
+    it('truncates data to only show a maximum of 5 points', () => {
+      const chart = mount(
+        <DonutChart
+          {...mockProps}
+          data={[
+            ...mockProps.data,
+            {
+              name: 'Extra Data 1',
+              data: [{key: 'april - march', value: 100}],
+            },
+            {
+              name: 'Extra Data 2 ',
+              data: [{key: 'april - march', value: 10}],
+            },
+            {
+              name: 'Extra Data 3',
+              data: [{key: 'april - march', value: 10}],
+            },
+          ]}
+        />,
+      );
+
+      chart.act(() => {
+        requestAnimationFrame(() => {
+          expect(chart).toContainReactComponentTimes(Arc, 5);
+        });
+      });
+    });
+
+    it('filters out data with 0 or negative values', () => {
+      const chart = mount(
+        <DonutChart
+          {...mockProps}
+          data={[
+            ...mockProps.data,
+            {
+              name: 'Zero Value',
+              data: [{key: 'april - march', value: 0}],
+            },
+            {
+              name: 'Negative Value',
+              data: [{key: 'april - march', value: -100}],
+            },
+          ]}
+        />,
+      );
+
+      chart.act(() => {
+        requestAnimationFrame(() => {
+          expect(chart).toContainReactComponentTimes(
+            Arc,
+            mockProps.data.length,
+          );
+        });
+      });
+    });
+
     describe('<ComparisonMetric />', () => {
       it('does not render if comparisonMetric is not provided', () => {
         const chart = mount(

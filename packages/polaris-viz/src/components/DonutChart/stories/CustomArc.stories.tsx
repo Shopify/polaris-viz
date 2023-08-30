@@ -16,8 +16,8 @@ const CustomArcTemplate: StoryFn<DonutChartProps> = (args: DonutChartProps) => {
           Default: {
             arc: {
               cornerRadius: 5,
-              thickness: 50,
-            }
+              thickness: 18,
+            },
           },
         }}
       >
