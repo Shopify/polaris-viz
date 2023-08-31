@@ -16,6 +16,7 @@ import type {
   Direction,
 } from '@shopify/polaris-viz-core';
 
+import {DONUT_CHART_MAX_SERIES_COUNT} from '../../constants';
 import {getContainerAlignmentForLegend} from '../../utilities';
 import {estimateLegendItemWidth} from '../Legend';
 import type {ComparisonMetricProps} from '../ComparisonMetric';
@@ -79,7 +80,20 @@ export function Chart({
   const [activeIndex, setActiveIndex] = useState<number>(-1);
   const selectedTheme = useTheme();
 
-  const seriesCount = clamp({amount: data.length, min: 1, max: Infinity});
+  const seriesCount = clamp({
+    amount: data.length,
+    min: 1,
+    max: DONUT_CHART_MAX_SERIES_COUNT,
+  });
+
+  const seriesData = data
+    .filter(({data}) => Number(data[0]?.value) > 0)
+    .sort(
+      (current, next) =>
+        Number(next.data[0].value) - Number(current.data[0].value),
+    )
+    .slice(0, seriesCount);
+
   const seriesColor = getSeriesColors(seriesCount, selectedTheme);
 
   const legendDirection: Direction =
@@ -87,7 +101,7 @@ export function Chart({
       ? 'vertical'
       : 'horizontal';
 
-  const longestLegendWidth = data.reduce((previous, current) => {
+  const longestLegendWidth = seriesData.reduce((previous, current) => {
     const estimatedLegendWidth = estimateLegendItemWidth(
       current.name ?? '',
       characterWidths,
@@ -110,7 +124,7 @@ export function Chart({
 
   const {height, width, legend, setLegendDimensions, isLegendMounted} =
     useLegend({
-      data: [{series: data, shape: 'Bar'}],
+      data: [{series: seriesData, shape: 'Bar'}],
       dimensions,
       showLegend,
       direction: legendDirection,
@@ -135,7 +149,7 @@ export function Chart({
   const diameter = Math.min(height, width);
   const radius = diameter / 2;
 
-  const points: DataPoint[] = data.reduce(
+  const points: DataPoint[] = seriesData.reduce(
     (prev: DataPoint[], {data}) => prev.concat(data),
     [],
   );
@@ -144,6 +158,7 @@ export function Chart({
     .value(({value}) => value!)
     .sort(null);
   const pieChartData = createPie(points);
+
   const emptyState = pieChartData.length === 0;
 
   const totalValue =
@@ -191,8 +206,9 @@ export function Chart({
                   ) : (
                     pieChartData.map(
                       ({data: pieData, startAngle, endAngle}, index) => {
-                        const color = data[index]?.color ?? seriesColor[index];
-                        const name = data[index].name;
+                        const color =
+                          seriesData[index]?.color ?? seriesColor[index];
+                        const name = seriesData[index].name;
                         const accessibilityLabel = `${name}: ${pieData.key} - ${pieData.value}`;
 
                         return (
