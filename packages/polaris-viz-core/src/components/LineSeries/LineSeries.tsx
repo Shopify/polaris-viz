@@ -19,7 +19,6 @@ import {
 import {
   COLOR_VISION_SINGLE_ITEM,
   SHAPE_ANIMATION_HEIGHT_BUFFER,
-  LINE_SERIES_POINT_RADIUS,
 } from '../../constants';
 
 import {Area, AnimatedLine, AnimatedArea} from './components';
@@ -52,7 +51,7 @@ export function LineSeries({
 }: LineSeriesProps) {
   const {
     // eslint-disable-next-line id-length
-    components: {Defs, Mask, G, Rect, Path, Circle},
+    components: {Defs, Mask, G, Rect, Path},
     animated,
   } = usePolarisVizContext();
 
@@ -113,7 +112,7 @@ export function LineSeries({
     !hasNulls(previousData) &&
     data.data.length === previousData?.data.length;
 
-  const {x: lastX = 0, y: lastY = 0} = lastLinePointCoordinates ?? {};
+  const {y: lastY = 0} = lastLinePointCoordinates ?? {};
 
   const zeroLineData = data.data.map((dataPoint) => ({
     ...dataPoint,
@@ -131,8 +130,6 @@ export function LineSeries({
 
   const PathHoverTargetSize = 15;
 
-  const showPoint =
-    -isSparkChart && !data.isComparison && lastLinePointCoordinates != null;
   const showArea =
     selectedTheme.line.hasArea && data?.styleOverride?.line?.hasArea !== false;
 
@@ -156,9 +153,7 @@ export function LineSeries({
           <Mask id={`mask-${id}`}>
             {dataIsValidForAnimation ? (
               <AnimatedLine
-                lastX={lastX}
                 lastY={lastY}
-                showPoint={showPoint}
                 delay={delay}
                 lineGenerator={lineGenerator}
                 strokeWidth={strokeWidth}
@@ -188,14 +183,6 @@ export function LineSeries({
                     strokeLinecap: 'round',
                   }}
                 />
-                {showPoint && (
-                  <Circle
-                    cx={lastX}
-                    cy={lastY}
-                    r={LINE_SERIES_POINT_RADIUS}
-                    fill="white"
-                  />
-                )}
               </Fragment>
             )}
           </Mask>

@@ -4,7 +4,6 @@ import {useSpring} from '@react-spring/core';
 import {
   usePolarisVizContext,
   LINES_LOAD_ANIMATION_CONFIG,
-  LINE_SERIES_POINT_RADIUS,
   getColorVisionStylesForActiveIndex,
 } from '../../../../';
 import {useSpringConfig} from '../../../../hooks/useSpringConfig';
@@ -21,17 +20,14 @@ export function AnimatedLine({
   index,
   strokeWidth,
   strokeDasharray,
-  showPoint,
-  lastX,
   lastY,
   zeroLineY,
 }) {
   const {
-    components: {Path, Circle},
+    components: {Path},
     animated,
   } = usePolarisVizContext();
   const AnimatedPath = animated(Path);
-  const AnimatedCircle = animated(Circle);
 
   const springConfig = useSpringConfig({
     shouldAnimate: !immediate,
@@ -42,7 +38,7 @@ export function AnimatedLine({
 
   const mounted = useRef(false);
 
-  const {animatedLineShape, cy} = useSpring({
+  const {animatedLineShape} = useSpring({
     from: {
       cy: mounted.current ? lastY : zeroLineY,
       animatedLineShape: lineGenerator(
@@ -72,14 +68,6 @@ export function AnimatedLine({
           strokeDasharray,
         }}
       />
-      {showPoint && (
-        <AnimatedCircle
-          cx={lastX}
-          cy={cy}
-          r={LINE_SERIES_POINT_RADIUS}
-          fill="white"
-        />
-      )}
     </Fragment>
   );
 }
