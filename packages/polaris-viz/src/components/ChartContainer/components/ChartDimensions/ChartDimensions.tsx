@@ -55,7 +55,8 @@ export function ChartDimensions({
 
   const updateDimensions = useCallback(() => {
     if (
-      previousEntry?.contentRect.width === entry?.contentRect.width ||
+      (previousEntry?.contentRect.width === entry?.contentRect.width &&
+        previousEntry?.contentRect.height === entry?.contentRect.height) ||
       entry == null
     ) {
       return;
@@ -65,7 +66,7 @@ export function ChartDimensions({
     const {x, y} = entry.target.getBoundingClientRect();
 
     setChartDimensions({width, height, x, y: y + window.scrollY});
-  }, [entry, previousEntry?.contentRect.width]);
+  }, [entry, previousEntry?.contentRect]);
 
   const debouncedUpdateDimensions = useDebouncedCallback(() => {
     updateDimensions();
