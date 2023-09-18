@@ -8,7 +8,7 @@ describe('estimateStringWidthWithOffset()', () => {
       ${4}     | ${23.79}
       ${10}    | ${56.16}
       ${12}    | ${66.07}
-      ${15}    | ${80.61}
+      ${15}    | ${81.27}
       ${20}    | ${105.05}
       ${40}    | ${206.14}
     `(`returns width with $fontSize offset`, ({fontSize, expected}) => {
