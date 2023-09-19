@@ -4,6 +4,7 @@ import {
   usePolarisVizContext,
 } from '@shopify/polaris-viz-core';
 
+import {getTooltipContentRenderer} from '../../utilities/getTooltipContentRenderer';
 import {ChartContainer} from '../ChartContainer';
 import type {ComparisonMetricProps} from '../ComparisonMetric';
 import type {
@@ -11,6 +12,7 @@ import type {
   RenderHiddenLegendLabel,
   RenderInnerValueContent,
   RenderLegendContent,
+  TooltipOptions,
 } from '../../types';
 import {bucketDataSeries} from '../../utilities/bucketDataSeries';
 
@@ -26,6 +28,7 @@ export type DonutChartProps = {
   labelFormatter?: LabelFormatter;
   legendFullWidth?: boolean;
   legendPosition?: LegendPosition;
+  tooltipOptions?: TooltipOptions;
   renderInnerValueContent?: RenderInnerValueContent;
   renderLegendContent?: RenderLegendContent;
   renderHiddenLegendLabel?: RenderHiddenLegendLabel;
@@ -51,6 +54,7 @@ export function DonutChart(props: DonutChartProps) {
     isAnimated,
     state,
     errorText,
+    tooltipOptions,
     renderInnerValueContent,
     renderLegendContent,
     renderHiddenLegendLabel,
@@ -64,6 +68,13 @@ export function DonutChart(props: DonutChartProps) {
   const data = maxSeries
     ? bucketDataSeries({dataSeries, maxSeries, renderBucketLegendLabel})
     : dataSeries;
+
+  const renderTooltip = getTooltipContentRenderer({
+    tooltipOptions,
+    theme,
+    data,
+    ignoreColorVisionEvents: true,
+  });
 
   return (
     <ChartContainer
@@ -88,6 +99,7 @@ export function DonutChart(props: DonutChartProps) {
         renderLegendContent={renderLegendContent}
         renderHiddenLegendLabel={renderHiddenLegendLabel}
         seriesNameFormatter={seriesNameFormatter}
+        renderTooltipContent={renderTooltip}
         theme={theme}
       />
     </ChartContainer>

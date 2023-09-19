@@ -9,6 +9,7 @@ import {
   getColorVisionStylesForActiveIndex,
   COLOR_VISION_SINGLE_ITEM,
   useSpringConfig,
+  DataType,
 } from '@shopify/polaris-viz-core';
 import type {Color} from '@shopify/polaris-viz-core';
 import {useSpring, animated, to} from '@react-spring/web';
@@ -80,6 +81,7 @@ export function Arc({
     animatedPadAngle: ARC_PAD_ANGLE,
     from: {
       animatedOuterRadius: radius - thickness,
+      animatedInnerRadius: radius - thickness,
     },
     ...springConfig,
   });
@@ -133,6 +135,11 @@ export function Arc({
           index,
         })}
         clipPath={`url(#${gradientId})`}
+        data-type={DataType.Arc}
+        data-index={index}
+        aria-hidden={false}
+        data-start-angle={startAngle}
+        data-end-angle={endAngle}
       >
         <ConicGradientWithStops
           x={width / -2 - ANIMATION_SIZE_BUFFER}

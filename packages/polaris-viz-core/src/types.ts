@@ -39,7 +39,7 @@ export interface DataGroup {
   yAxisOptions?: YAxisOptions;
 }
 
-export type Shape = 'Line' | 'Bar';
+export type Shape = 'Line' | 'Bar' | 'Donut';
 
 export type LineStyle = 'solid' | 'dotted' | 'dashed';
 
@@ -212,6 +212,7 @@ export enum DataType {
   Point = 'Point',
   BarGroup = 'BarGroup',
   Bar = 'Bar',
+  Arc = 'Arc',
 }
 
 export type ChartType = 'default' | 'stacked';
@@ -316,6 +317,7 @@ export enum InternalChartType {
   HorizontalBar = 'HorizontalBar',
   Combo = 'Combo',
   Line = 'Line',
+  Donut = 'Donut',
 }
 
 export enum Hue {

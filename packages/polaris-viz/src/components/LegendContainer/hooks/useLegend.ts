@@ -109,6 +109,5 @@ export function useLegend({
     height,
     width,
     setLegendDimensions,
-    isLegendMounted: showLegend === false || hasValidDimensions,
   };
 }
