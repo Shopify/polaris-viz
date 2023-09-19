@@ -103,3 +103,11 @@ export const EMPTY_STATE_TEXT_ARGS = {
   description:
     'Used to indicate to screen readers that a chart with no series data has been rendered, in the case that an empty array is passed as the data. If the series prop could be an empty array, it is strongly recommended to include this prop.',
 };
+
+export const DONUT_CHART_TOOLTIP_OPTIONS_ARGS = {
+  description:
+    'An object that when passed in, enables the tooltip and defines its options in the donut chart.',
+  control: {
+    type: 'object',
+  },
+};

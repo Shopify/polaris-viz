@@ -1,4 +1,5 @@
-import {Fragment, useState} from 'react';
+import type {ReactNode} from 'react';
+import {Fragment, useRef, useState} from 'react';
 import {pie} from 'd3-shape';
 import {
   clamp,
@@ -7,6 +8,8 @@ import {
   useUniqueId,
   ChartState,
   useChartContext,
+  DataType,
+  ChartMargin,
 } from '@shopify/polaris-viz-core';
 import type {
   DataPoint,
@@ -14,10 +17,23 @@ import type {
   Dimensions,
   LabelFormatter,
   Direction,
+  BoundingRect,
 } from '@shopify/polaris-viz-core';
 
+import {useDonutChartTooltipContents} from '../../hooks/useDonutChartTooltipContents';
+import type {
+  TooltipPosition,
+  TooltipPositionParams,
+} from '../../components/TooltipWrapper';
+import {
+  TooltipWrapper,
+  TOOLTIP_POSITION_DEFAULT_RETURN,
+} from '../../components/TooltipWrapper';
 import {DONUT_CHART_MAX_SERIES_COUNT} from '../../constants';
-import {getContainerAlignmentForLegend} from '../../utilities';
+import {
+  eventPointNative,
+  getContainerAlignmentForLegend,
+} from '../../utilities';
 import {estimateLegendItemWidth} from '../Legend';
 import type {ComparisonMetricProps} from '../ComparisonMetric';
 import {LegendContainer, useLegend} from '../../components/LegendContainer';
@@ -31,6 +47,7 @@ import type {
   LegendPosition,
   RenderInnerValueContent,
   RenderLegendContent,
+  RenderTooltipContentData,
 } from '../../types';
 import {ChartSkeleton} from '../../components/ChartSkeleton';
 
@@ -56,6 +73,7 @@ export interface ChartProps {
   legendFullWidth?: boolean;
   renderInnerValueContent?: RenderInnerValueContent;
   renderLegendContent?: RenderLegendContent;
+  renderTooltipContent?: (data: RenderTooltipContentData) => ReactNode;
   total?: number;
 }
 
@@ -73,18 +91,63 @@ export function Chart({
   legendFullWidth = false,
   renderInnerValueContent,
   renderLegendContent,
+  renderTooltipContent,
   total,
 }: ChartProps) {
   const {shouldAnimate, characterWidths} = useChartContext();
   const chartId = useUniqueId('Donut');
   const [activeIndex, setActiveIndex] = useState<number>(-1);
   const selectedTheme = useTheme();
+  const svgRef = useRef<SVGSVGElement>(null);
 
   const seriesCount = clamp({
     amount: data.length,
     min: 1,
     max: DONUT_CHART_MAX_SERIES_COUNT,
   });
+
+  const seriesColor = getSeriesColors(seriesCount, selectedTheme);
+
+  const chartBounds: BoundingRect = {
+    width: dimensions.width,
+    height: dimensions.height,
+    x: 0,
+    y: 0,
+  };
+
+  const getTooltipMarkup = useDonutChartTooltipContents({
+    renderTooltipContent,
+    data,
+    seriesColors: seriesColor,
+  });
+
+  function getTooltipPosition({
+    event,
+    index,
+    eventType,
+  }: TooltipPositionParams): TooltipPosition {
+    if (eventType === 'mouse') {
+      const point = eventPointNative(event!);
+
+      if (point == null) {
+        return TOOLTIP_POSITION_DEFAULT_RETURN;
+      }
+
+      return {
+        x: (event as MouseEvent).pageX,
+        y: (event as MouseEvent).pageY,
+        activeIndex,
+      };
+    } else {
+      const activeIndex = index ?? 0;
+
+      return {
+        x: dimensions?.width ?? 0,
+        y: dimensions?.height ?? 0,
+        activeIndex,
+      };
+    }
+  }
 
   const seriesData = data
     .filter(({data}) => Number(data[0]?.value) > 0)
@@ -93,8 +156,6 @@ export function Chart({
         Number(next.data[0].value) - Number(current.data[0].value),
     )
     .slice(0, seriesCount);
-
-  const seriesColor = getSeriesColors(seriesCount, selectedTheme);
 
   const legendDirection: Direction =
     legendPosition === 'right' || legendPosition === 'left'
@@ -186,6 +247,7 @@ export function Chart({
               viewBox={`${minX} ${minY} ${viewBoxDimensions.width} ${viewBoxDimensions.height}`}
               height={diameter}
               width={diameter}
+              ref={svgRef}
             >
               {isLegendMounted && (
                 <g className={styles.DonutChart}>
@@ -270,6 +332,16 @@ export function Chart({
           renderLegendContent={renderLegendContent}
         />
       )}
+      <TooltipWrapper
+        alwaysUpdatePosition
+        chartBounds={chartBounds}
+        focusElementDataType={DataType.Point}
+        getMarkup={getTooltipMarkup}
+        getPosition={getTooltipPosition}
+        margin={ChartMargin}
+        parentRef={svgRef.current}
+        usePortal
+      />
     </div>
   );
 }
