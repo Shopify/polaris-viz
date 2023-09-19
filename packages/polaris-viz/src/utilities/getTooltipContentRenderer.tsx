@@ -8,10 +8,12 @@ export function getTooltipContentRenderer({
   tooltipOptions = {},
   theme,
   data,
+  ignoreColorVisionEvents = false,
 }: {
   tooltipOptions?: TooltipOptions;
   theme: string;
   data: DataSeries[];
+  ignoreColorVisionEvents?: boolean;
 }) {
   return function renderTooltipContent(tooltipData: RenderTooltipContentData) {
     if (tooltipOptions?.renderTooltipContent != null) {
@@ -34,7 +36,12 @@ export function getTooltipContentRenderer({
       return null;
     } else {
       return (
-        <TooltipContent data={formattedData} theme={theme} title={title} />
+        <TooltipContent
+          data={formattedData}
+          theme={theme}
+          title={title}
+          ignoreColorVisionEvents={ignoreColorVisionEvents}
+        />
       );
     }
   };

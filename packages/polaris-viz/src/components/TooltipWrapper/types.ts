@@ -39,7 +39,7 @@ export interface TooltipPositionParams {
   eventType: 'mouse' | 'focus';
   longestSeriesIndex: number;
   xScale: ScaleBand<string> | ScaleLinear<number, number>;
-  event?: MouseEvent | TouchEvent;
+  event?: MouseEvent | TouchEvent | FocusEvent;
   index?: number;
   type?: ChartType;
   yScale?: ScaleLinear<number, number>;

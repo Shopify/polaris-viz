@@ -22,23 +22,25 @@ import {shouldBlockTooltipEvents} from './utilities/shouldBlockTooltipEvents';
 import type {TooltipPosition} from './types';
 import {DEFAULT_TOOLTIP_POSITION} from './constants';
 import {TooltipAnimatedContainer} from './components/TooltipAnimatedContainer';
+import {getDonutChartTooltipPosition} from './utilities/getDonutChartTooltipPosition';
 
 const TOUCH_START_DELAY = 300;
 
 interface BaseProps {
   chartBounds: BoundingRect;
   chartType: InternalChartType;
-  data: DataSeries[];
   focusElementDataType: DataType;
   getMarkup: (index: number) => ReactNode;
-  longestSeriesIndex: number;
   margin: Margin;
   parentElement: SVGSVGElement | null;
-  xScale: ScaleLinear<number, number> | ScaleBand<string>;
   bandwidth?: number;
+  data?: DataSeries[];
+  forceActiveIndex?: number | null;
   onIndexChange?: (index: number | null) => void;
   id?: string;
+  longestSeriesIndex?: number;
   type?: ChartType;
+  xScale?: ScaleLinear<number, number> | ScaleBand<string>;
   yScale?: ScaleLinear<number, number>;
 }
 
@@ -48,6 +50,7 @@ function TooltipWrapperRaw(props: BaseProps) {
     chartBounds,
     chartType,
     data,
+    forceActiveIndex,
     focusElementDataType,
     id,
     longestSeriesIndex,
@@ -80,7 +83,8 @@ function TooltipWrapperRaw(props: BaseProps) {
   }, [position.activeIndex]);
 
   const alwaysUpdatePosition =
-    chartType === InternalChartType.Line && !isTouchDevice;
+    [InternalChartType.Line, InternalChartType.Donut].includes(chartType) &&
+    !isTouchDevice;
 
   const getPosition = useCallback(
     ({
@@ -89,7 +93,7 @@ function TooltipWrapperRaw(props: BaseProps) {
       index,
     }: {
       eventType: 'mouse' | 'focus';
-      event?: MouseEvent | TouchEvent;
+      event?: MouseEvent | TouchEvent | FocusEvent;
       index?: number;
     }) => {
       const scrollY = scrollContainer == null ? 0 : scrollContainer.scrollTop;
@@ -100,35 +104,43 @@ function TooltipWrapperRaw(props: BaseProps) {
             chartBounds,
             containerBounds,
             scrollY,
-            data,
+            data: data ?? [],
             event,
             eventType,
             index,
             isTouchDevice,
-            longestSeriesIndex,
+            longestSeriesIndex: longestSeriesIndex ?? 0,
             xScale: xScale as ScaleLinear<number, number>,
           });
         case InternalChartType.HorizontalBar:
           return getHorizontalBarChartTooltipPosition({
             chartBounds,
-            data,
+            data: data ?? [],
             event,
             eventType,
             index,
-            longestSeriesIndex,
+            longestSeriesIndex: longestSeriesIndex ?? 0,
             type,
             xScale: xScale as ScaleLinear<number, number>,
+          });
+        case InternalChartType.Donut:
+          return getDonutChartTooltipPosition({
+            containerBounds,
+            event,
+            eventType,
+            index: index ?? forceActiveIndex ?? undefined,
+            parentElement,
           });
         case InternalChartType.Bar:
         default:
           return getVerticalBarChartTooltipPosition({
             chartBounds,
             containerBounds,
-            data,
+            data: data ?? [],
             event,
             eventType,
             index,
-            longestSeriesIndex,
+            longestSeriesIndex: longestSeriesIndex ?? 0,
             type,
             xScale: xScale as ScaleBand<string>,
             yScale: yScale as ScaleLinear<number, number>,
@@ -140,12 +152,14 @@ function TooltipWrapperRaw(props: BaseProps) {
       containerBounds,
       chartType,
       data,
+      forceActiveIndex,
       longestSeriesIndex,
       isTouchDevice,
       type,
       xScale,
       yScale,
       scrollContainer,
+      parentElement,
     ],
   );
 
@@ -235,7 +249,7 @@ function TooltipWrapperRaw(props: BaseProps) {
       }
 
       const index = Number(target.dataset.index);
-      const newPosition = getPosition({index, eventType: 'focus'});
+      const newPosition = getPosition({event, index, eventType: 'focus'});
 
       setPosition(newPosition);
       onIndexChange?.(newPosition.activeIndex);
