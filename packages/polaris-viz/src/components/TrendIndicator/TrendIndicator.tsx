@@ -12,6 +12,7 @@ import {
   FONT_SIZE,
   HEIGHT,
   Y_OFFSET,
+  FONT_WEIGHT,
 } from './constants';
 
 export interface TrendIndicatorProps {
@@ -67,7 +68,7 @@ export function TrendIndicator({
           y={(HEIGHT + Y_OFFSET) / 2}
           fontSize={FONT_SIZE}
           fill="currentColor"
-          fontWeight="600"
+          fontWeight={FONT_WEIGHT}
           dominantBaseline="middle"
           fontFamily="-apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif"
           textRendering="geometricPrecision"

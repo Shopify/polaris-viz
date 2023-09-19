@@ -42,6 +42,12 @@
         );
       });
 
+      // we will need to add the Uplift font weights eventually
+      // for now I'm just adding 450 manually
+      characters.fontWeight[450] = getWidthWithBaseline(
+        getWidth(null, FONT_SIZE, 450),
+      );
+
       let string = JSON.stringify(characters);
       string = string.replace('&nbsp;', ' ');
 

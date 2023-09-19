@@ -20,6 +20,8 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 -  Changed `<DonutChart />` to not show 0 or negative values.
 -  Changed `<DonutChart />` to only show a maximum of 5 data points.
 -  Updated `<DonutChart />` default styles.
+-  Changed `<TrendIndicator />` font-size to 11px from 12px.
+-  Changed `<TrendIndicator />` font-weight to 450 from 600.
 
 ## [9.10.6] - 2023-08-24
 
