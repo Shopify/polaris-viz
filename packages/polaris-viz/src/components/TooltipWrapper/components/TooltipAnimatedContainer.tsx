@@ -52,6 +52,7 @@ export function TooltipAnimatedContainer({
   const getAlteredPositionFunction = useMemo(() => {
     switch (chartType) {
       case InternalChartType.Line:
+      case InternalChartType.Donut:
         return getAlteredLineChartPosition;
       case InternalChartType.HorizontalBar:
         return getAlteredHorizontalBarPosition;

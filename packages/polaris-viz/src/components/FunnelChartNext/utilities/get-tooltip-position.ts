@@ -24,7 +24,10 @@ export function getTooltipPosition({
 }: Props): TooltipPosition {
   const {event, index, eventType} = tooltipPosition;
 
-  if (eventType === 'mouse' && event) {
+  if (
+    eventType === 'mouse' &&
+    (event instanceof MouseEvent || event instanceof TouchEvent)
+  ) {
     const point = eventPointNative(event);
 
     if (point == null) {

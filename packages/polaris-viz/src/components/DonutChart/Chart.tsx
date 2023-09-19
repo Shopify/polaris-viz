@@ -1,3 +1,4 @@
+import type {ReactNode} from 'react';
 import {Fragment, useState} from 'react';
 import {pie} from 'd3-shape';
 import {
@@ -9,16 +10,22 @@ import {
   useChartContext,
   THIN_ARC_CORNER_THICKNESS,
   isInfinity,
+  DataType,
+  ChartMargin,
+  InternalChartType,
 } from '@shopify/polaris-viz-core';
 import type {
   DataPoint,
   DataSeries,
   LabelFormatter,
   Direction,
+  BoundingRect,
 } from '@shopify/polaris-viz-core';
 
 import {getAnimationDelayForItems} from '../../utilities/getAnimationDelayForItems';
 import {getContainerAlignmentForLegend} from '../../utilities';
+import {useDonutChartTooltipContents} from '../../hooks/useDonutChartTooltipContents';
+import {TooltipWrapper} from '../../components/TooltipWrapper';
 import type {ComparisonMetricProps} from '../ComparisonMetric';
 import {LegendContainer, useLegend} from '../../components/LegendContainer';
 import {
@@ -33,6 +40,7 @@ import type {
   RenderHiddenLegendLabel,
   RenderInnerValueContent,
   RenderLegendContent,
+  RenderTooltipContentData,
 } from '../../types';
 import {ChartSkeleton} from '../../components/ChartSkeleton';
 
@@ -59,6 +67,7 @@ export interface ChartProps {
   renderInnerValueContent?: RenderInnerValueContent;
   renderLegendContent?: RenderLegendContent;
   renderHiddenLegendLabel?: RenderHiddenLegendLabel;
+  renderTooltipContent?: (data: RenderTooltipContentData) => ReactNode;
   total?: number;
 }
 
@@ -78,12 +87,14 @@ export function Chart({
   renderLegendContent,
   renderHiddenLegendLabel,
   seriesNameFormatter,
+  renderTooltipContent,
   total,
 }: ChartProps) {
   const {shouldAnimate, containerBounds} = useChartContext();
   const chartId = useUniqueId('Donut');
   const [activeIndex, setActiveIndex] = useState<number>(-1);
   const selectedTheme = useTheme();
+  const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
 
   const seriesCount = clamp({
     amount: data.length,
@@ -91,6 +102,19 @@ export function Chart({
   });
 
   const seriesColor = getSeriesColors(seriesCount, selectedTheme);
+
+  const chartBounds: BoundingRect = {
+    width: containerBounds.width,
+    height: containerBounds.height,
+    x: 0,
+    y: 0,
+  };
+
+  const getTooltipMarkup = useDonutChartTooltipContents({
+    renderTooltipContent,
+    data,
+    seriesColors: seriesColor,
+  });
 
   const legendDirection: Direction =
     legendPosition === 'right' || legendPosition === 'left'
@@ -100,19 +124,16 @@ export function Chart({
   const maxLegendWidth =
     legendDirection === 'vertical' ? containerBounds.width / 2 : 0;
 
-  const {height, width, legend, setLegendDimensions, isLegendMounted} =
-    useLegend({
-      data: [{series: data, shape: 'Bar'}],
-      showLegend,
-      direction: legendDirection,
-      colors: seriesColor,
-      maxWidth: maxLegendWidth,
-      seriesNameFormatter,
-    });
+  const {height, width, legend, setLegendDimensions} = useLegend({
+    data: [{series: data, shape: 'Bar'}],
+    showLegend,
+    direction: legendDirection,
+    colors: seriesColor,
+    maxWidth: maxLegendWidth,
+    seriesNameFormatter,
+  });
 
-  const shouldUseColorVisionEvents = Boolean(
-    width && height && isLegendMounted,
-  );
+  const shouldUseColorVisionEvents = Boolean(width && height);
 
   useColorVisionEvents({
     enabled: shouldUseColorVisionEvents,
@@ -208,60 +229,59 @@ export function Chart({
               viewBox={`${minX} ${minY} ${viewBoxDimensions.width} ${viewBoxDimensions.height}`}
               height={diameter}
               width={diameter}
+              ref={setSvgRef}
             >
-              {isLegendMounted && (
-                <g className={styles.DonutChart}>
-                  {emptyState ? (
-                    <g aria-hidden>
-                      <Arc
-                        isAnimated={shouldAnimate}
-                        width={diameter}
-                        height={diameter}
-                        radius={radius}
-                        startAngle={0}
-                        endAngle={FULL_CIRCLE}
-                        color={selectedTheme.grid.color}
-                        cornerRadius={selectedTheme.arc.cornerRadius}
-                        thickness={thickness}
-                      />
-                    </g>
-                  ) : (
-                    pieChartData.map(
-                      ({data: pieData, startAngle, endAngle}, index) => {
-                        const color = data[index]?.color ?? seriesColor[index];
-                        const name = data[index].name;
-                        const accessibilityLabel = `${name}: ${pieData.key} - ${pieData.value}`;
+              <g className={styles.DonutChart}>
+                {emptyState ? (
+                  <g aria-hidden>
+                    <Arc
+                      isAnimated={shouldAnimate}
+                      width={diameter}
+                      height={diameter}
+                      radius={radius}
+                      startAngle={0}
+                      endAngle={FULL_CIRCLE}
+                      color={selectedTheme.grid.color}
+                      cornerRadius={selectedTheme.arc.cornerRadius}
+                      thickness={thickness}
+                    />
+                  </g>
+                ) : (
+                  pieChartData.map(
+                    ({data: pieData, startAngle, endAngle}, index) => {
+                      const color = data[index]?.color ?? seriesColor[index];
+                      const name = data[index].name;
+                      const accessibilityLabel = `${name}: ${pieData.key} - ${pieData.value}`;
 
-                        return (
-                          <g
-                            key={`${chartId}-arc-${index}`}
-                            className={styles.DonutChart}
-                            aria-label={accessibilityLabel}
-                            role="img"
-                          >
-                            <Arc
-                              isAnimated={shouldAnimate}
-                              animationDelay={getAnimationDelayForItems(
-                                pieChartData.length,
-                              )}
-                              index={index}
-                              activeIndex={activeIndex}
-                              width={diameter}
-                              height={diameter}
-                              radius={radius}
-                              startAngle={startAngle}
-                              endAngle={endAngle}
-                              color={color}
-                              cornerRadius={selectedTheme.arc.cornerRadius}
-                              thickness={thickness}
-                            />
-                          </g>
-                        );
-                      },
-                    )
-                  )}
-                </g>
-              )}
+                      return (
+                        <g
+                          key={`${chartId}-arc-${index}`}
+                          className={styles.DonutChart}
+                          aria-label={accessibilityLabel}
+                          role="img"
+                        >
+                          <Arc
+                            isAnimated={shouldAnimate}
+                            animationDelay={getAnimationDelayForItems(
+                              pieChartData.length,
+                            )}
+                            index={index}
+                            activeIndex={activeIndex}
+                            width={diameter}
+                            height={diameter}
+                            radius={radius}
+                            startAngle={startAngle}
+                            endAngle={endAngle}
+                            color={color}
+                            cornerRadius={selectedTheme.arc.cornerRadius}
+                            thickness={thickness}
+                          />
+                        </g>
+                      );
+                    },
+                  )
+                )}
+              </g>
             </svg>
             <InnerValue
               activeValue={activeValue}
@@ -300,6 +320,16 @@ export function Chart({
           }
         />
       )}
+      <TooltipWrapper
+        chartBounds={chartBounds}
+        chartType={InternalChartType.Donut}
+        focusElementDataType={DataType.Arc}
+        forceActiveIndex={activeIndex}
+        getMarkup={getTooltipMarkup}
+        margin={ChartMargin}
+        parentElement={svgRef}
+        usePortal
+      />
     </div>
   );
 }

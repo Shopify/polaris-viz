@@ -17,6 +17,7 @@ export interface TooltipContentProps {
   data: TooltipData[];
   title?: string;
   theme?: string;
+  ignoreColorVisionEvents?: boolean;
 }
 
 const FONT_SIZE_OFFSET = 1.061;
@@ -26,6 +27,7 @@ export function TooltipContent({
   data,
   theme = DEFAULT_THEME_NAME,
   title,
+  ignoreColorVisionEvents = false,
 }: TooltipContentProps) {
   const {keyWidth, valueWidth} = useGetLongestLabelFromData(data);
 
@@ -38,6 +40,7 @@ export function TooltipContent({
         PREVIEW_WIDTH + leftWidth + SPACE_BETWEEN_LABEL_AND_VALUE + rightWidth
       }
       theme={theme}
+      ignoreColorVisionEvents={ignoreColorVisionEvents}
     >
       {({activeColorVisionIndex}) => (
         <Fragment>

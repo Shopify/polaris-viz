@@ -65,7 +65,6 @@ describe('useLegend()', () => {
         ],
         height: 60,
         width: 100,
-        isLegendMounted: false,
       });
     });
 
@@ -78,7 +77,6 @@ describe('useLegend()', () => {
         legend: [],
         height: 100,
         width: 100,
-        isLegendMounted: true,
       });
     });
 
@@ -99,7 +97,6 @@ describe('useLegend()', () => {
             ],
             height: 100,
             width: 100,
-            isLegendMounted: true,
           });
         });
       });
@@ -170,16 +167,6 @@ describe('useLegend()', () => {
       const data = parseData(result);
 
       expect(data.legend[0].color).toStrictEqual('blue');
-    });
-  });
-
-  describe('isLegendMounted', () => {
-    it('returns true when showLegend=false', () => {
-      const result = mount(<TestComponent showLegend={false} />);
-
-      const data = parseData(result);
-
-      expect(data.isLegendMounted).toStrictEqual(true);
     });
   });
 
