@@ -5,7 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-<!-- ## Unreleased -->
+## Unreleased
+
+### Fixed
+
+- Fixed issue where `<BarChart />` bar width would be 1px when data changes from all 0 values to data with non-zero values.
 
 ## [9.12.0] - 2023-09-19
 
