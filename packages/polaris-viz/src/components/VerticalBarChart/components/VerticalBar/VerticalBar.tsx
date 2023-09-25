@@ -40,7 +40,7 @@ export const VerticalBar = memo(function Bar({
 }: VerticalBarProps) {
   const selectedTheme = useTheme();
   const borderRadius = selectedTheme.bar.borderRadius;
-  const treatAsNegative = rawValue < 0 || rawValue === 0;
+  const treatAsNegative = rawValue < 0;
   const zeroValue = rawValue === 0;
 
   const yPosition = useMemo(() => {
@@ -67,7 +67,7 @@ export const VerticalBar = memo(function Bar({
   );
 
   const springConfig = useBarSpringConfig({animationDelay});
-  const rotate = `${treatAsNegative ? 'rotate(180)' : ''}`;
+  const rotate = `${treatAsNegative ? 'rotate(180)' : 'rotate(0)'}`;
 
   const {pathD, transform} = useSpring({
     from: {

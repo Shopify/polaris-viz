@@ -3,7 +3,7 @@ on: push
 jobs:
   chromatic:
     runs-on: ubuntu-latest
-    if: ${{ github.actor != 'dependabot[bot]' }}
+    if: github.ref == 'refs/heads/main'
     continue-on-error: true
     steps:
       - name: Checkout 🛎️
@@ -19,7 +19,6 @@ jobs:
       - name: Install and Build 🔧
         run: yarn
       - name: Publish to Chromatic and auto accept changes
-        if: github.ref == 'refs/heads/main'
         uses: chromaui/action@v1
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
