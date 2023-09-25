@@ -208,7 +208,7 @@ export type RenderLegendContent = (
 export type SortedBarChartData = (number | null)[][];
 
 export interface InnerValueContents {
-  activeValue: number | null;
+  activeValue: number | null | undefined;
   animatedTotalValue: ReactNode;
   totalValue: number;
 }
