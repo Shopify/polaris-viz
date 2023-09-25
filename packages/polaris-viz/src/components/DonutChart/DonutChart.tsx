@@ -4,12 +4,14 @@ import {
   usePolarisVizContext,
 } from '@shopify/polaris-viz-core';
 
+import {useRenderTooltipContent} from '../../hooks';
 import {ChartContainer} from '../ChartContainer';
 import type {ComparisonMetricProps} from '../ComparisonMetric';
 import type {
   LegendPosition,
   RenderInnerValueContent,
   RenderLegendContent,
+  TooltipOptions,
 } from '../../types';
 
 import {Chart} from './Chart';
@@ -20,6 +22,7 @@ export type DonutChartProps = {
   labelFormatter?: LabelFormatter;
   legendFullWidth?: boolean;
   legendPosition?: LegendPosition;
+  tooltipOptions?: TooltipOptions;
   renderInnerValueContent?: RenderInnerValueContent;
   renderLegendContent?: RenderLegendContent;
 } & ChartProps;
@@ -39,12 +42,15 @@ export function DonutChart(props: DonutChartProps) {
     isAnimated,
     state,
     errorText,
+    tooltipOptions,
     renderInnerValueContent,
     renderLegendContent,
   } = {
     ...DEFAULT_CHART_PROPS,
     ...props,
   };
+
+  const renderTooltip = useRenderTooltipContent({tooltipOptions, theme, data});
 
   return (
     <ChartContainer
@@ -65,6 +71,7 @@ export function DonutChart(props: DonutChartProps) {
         legendPosition={legendPosition}
         renderInnerValueContent={renderInnerValueContent}
         renderLegendContent={renderLegendContent}
+        renderTooltipContent={tooltipOptions ? renderTooltip : undefined}
         theme={theme}
       />
     </ChartContainer>

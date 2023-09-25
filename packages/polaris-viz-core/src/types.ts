@@ -32,7 +32,7 @@ export interface DataGroup {
   yAxisOptions?: YAxisOptions;
 }
 
-export type Shape = 'Line' | 'Bar';
+export type Shape = 'Line' | 'Bar' | 'Donut';
 
 export type LineStyle = 'solid' | 'dotted';
 
