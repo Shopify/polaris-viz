@@ -11,6 +11,12 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 - Fixed issue where `<BarChart />` bar width would be 1px when data changes from all 0 values to data with non-zero values.
 
+### Changed
+
+-  Changed `<DonutChart />` to include 0 or negative values in data.
+-  Changed `<DonutChart />` to show any number of data points.
+-  Updated `<DonutChart />` wrapper to take full height of container and center contents.
+
 ## [9.12.0] - 2023-09-19
 
 - No updates. Transitive dependency bump.

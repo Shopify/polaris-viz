@@ -10,7 +10,7 @@ import {ComparisonMetric} from '../../../ComparisonMetric';
 import styles from '../../DonutChart.scss';
 
 interface Props {
-  activeValue: number | null;
+  activeValue: number | null | undefined;
   labelFormatter: LabelFormatter;
   isAnimated: boolean;
   totalValue: number;
@@ -47,7 +47,8 @@ export function InnerValue({
     </animated.span>
   );
 
-  const valueToDisplay = activeValue || animatedTotalValue;
+  const activeValueExists = activeValue !== null && activeValue !== undefined;
+  const valueToDisplay = activeValueExists ? activeValue : animatedTotalValue;
 
   const innerContent = renderInnerValueContent?.({
     activeValue,
@@ -61,7 +62,7 @@ export function InnerValue({
       >
         {valueToDisplay}
       </animated.p>
-      {comparisonMetric != null && !activeValue && (
+      {comparisonMetric != null && !activeValueExists && (
         <div className={styles.ComparisonMetric}>
           <ComparisonMetric
             metric={comparisonMetric.metric}
