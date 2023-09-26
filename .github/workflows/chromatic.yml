@@ -1,5 +1,5 @@
 name: Chromatic
-on: pull_request
+on: push
 jobs:
   chromatic:
     runs-on: ubuntu-latest
