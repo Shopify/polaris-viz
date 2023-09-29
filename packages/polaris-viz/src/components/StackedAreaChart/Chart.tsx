@@ -62,6 +62,7 @@ import {useStackedData} from './hooks';
 import {StackedAreas, Points} from './components';
 import {useStackedChartTooltipContent} from './hooks/useStackedChartTooltipContent';
 import {yAxisMinMax} from './utilities/yAxisMinMax';
+import {getAlteredStackedAreaChartPosition} from './utilities/getAlteredStackedAreaChartPosition';
 import styles from './Chart.scss';
 
 const TOOLTIP_POSITION: TooltipPositionOffset = {
@@ -382,6 +383,7 @@ export function Chart({
           focusElementDataType={DataType.Point}
           getMarkup={getTooltipMarkup}
           getPosition={getTooltipPosition}
+          getAlteredPosition={getAlteredStackedAreaChartPosition}
           id={tooltipId}
           margin={ChartMargin}
           onIndexChange={(index) => setActivePointIndex(index)}
