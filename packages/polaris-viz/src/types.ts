@@ -209,6 +209,7 @@ export type SortedBarChartData = (number | null)[][];
 
 export interface InnerValueContents {
   activeValue: number | null | undefined;
+  activeIndex: number;
   animatedTotalValue: ReactNode;
   totalValue: number;
 }

@@ -11,6 +11,7 @@ import styles from '../../DonutChart.scss';
 
 interface Props {
   activeValue: number | null | undefined;
+  activeIndex: number;
   labelFormatter: LabelFormatter;
   isAnimated: boolean;
   totalValue: number;
@@ -20,6 +21,7 @@ interface Props {
 
 export function InnerValue({
   activeValue,
+  activeIndex,
   comparisonMetric,
   labelFormatter,
   isAnimated,
@@ -52,6 +54,7 @@ export function InnerValue({
 
   const innerContent = renderInnerValueContent?.({
     activeValue,
+    activeIndex,
     animatedTotalValue,
     totalValue,
   }) ?? (

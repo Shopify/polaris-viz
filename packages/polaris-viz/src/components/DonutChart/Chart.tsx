@@ -231,6 +231,7 @@ export function Chart({
             </svg>
             <InnerValue
               activeValue={activeValue}
+              activeIndex={activeIndex}
               isAnimated={shouldAnimate}
               totalValue={totalValue}
               comparisonMetric={comparisonMetric}
