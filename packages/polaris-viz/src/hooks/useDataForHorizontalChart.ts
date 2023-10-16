@@ -71,9 +71,17 @@ export function useDataForHorizontalChart({
     characterWidths,
   ]);
 
-  const areAllNegative = useMemo(() => {
-    return !allNumbers.some((num) => num !== null && num > 0);
+  const areAllZero = useMemo(() => {
+    return !allNumbers.some((num) => num !== null && num !== 0);
   }, [allNumbers]);
+
+  const areAllNegative = useMemo(() => {
+    if (areAllZero) {
+      return false;
+    }
+
+    return !allNumbers.some((num) => num !== null && num > 0);
+  }, [areAllZero, allNumbers]);
 
   return {
     allNumbers,

@@ -21,9 +21,17 @@ export function useHorizontalTicksAndScale({
   stackedMax,
 }: Props) {
   const xScale = useMemo(() => {
+    const areAllZero = !allNumbers.some((num) => num != null && num !== 0);
+
+    const domainValues = [0, ...allNumbers];
+
+    if (areAllZero) {
+      domainValues.push(1);
+    }
+
     return scaleLinear()
       .range([0, maxWidth])
-      .domain(extent([0, ...allNumbers], (num) => num) as [number, number])
+      .domain(extent(domainValues, (num) => num) as [number, number])
       .nice();
   }, [maxWidth, allNumbers]);
 
