@@ -156,29 +156,57 @@ describe('useDataForHorizontalChart()', () => {
     expect(data.allNumbers).toStrictEqual([0, 0, 0]);
   });
 
-  it('areAllNegative returns true when all numbers are 0', () => {
-    function TestComponent() {
-      const data = useDataForHorizontalChart({
-        ...MOCK_PROPS,
-        data: [
-          {
-            name: 'Group 1',
-            data: [
-              {value: 0, key: 'Label 01'},
-              {value: 0, key: 'Label 02'},
-              {value: 0, key: 'Label 03'},
-            ],
-          },
-        ],
-      });
+  describe('areAllNegative', () => {
+    it('returns false when all numbers are 0', () => {
+      function TestComponent() {
+        const data = useDataForHorizontalChart({
+          ...MOCK_PROPS,
+          data: [
+            {
+              name: 'Group 1',
+              data: [
+                {value: 0, key: 'Label 01'},
+                {value: 0, key: 'Label 02'},
+                {value: 0, key: 'Label 03'},
+              ],
+            },
+          ],
+        });
 
-      return <span data-data={`${JSON.stringify(data)}`} />;
-    }
+        return <span data-data={`${JSON.stringify(data)}`} />;
+      }
 
-    const result = mount(<TestComponent />);
+      const result = mount(<TestComponent />);
 
-    const data = JSON.parse(result.domNode?.dataset.data ?? '');
+      const data = JSON.parse(result.domNode?.dataset.data ?? '');
 
-    expect(data.areAllNegative).toStrictEqual(true);
+      expect(data.areAllNegative).toStrictEqual(false);
+    });
+
+    it('areAllNegative returns true when all numbers are negative and not all 0', () => {
+      function TestComponent() {
+        const data = useDataForHorizontalChart({
+          ...MOCK_PROPS,
+          data: [
+            {
+              name: 'Group 1',
+              data: [
+                {value: 0, key: 'Label 01'},
+                {value: -1, key: 'Label 02'},
+                {value: 0, key: 'Label 03'},
+              ],
+            },
+          ],
+        });
+
+        return <span data-data={`${JSON.stringify(data)}`} />;
+      }
+
+      const result = mount(<TestComponent />);
+
+      const data = JSON.parse(result.domNode?.dataset.data ?? '');
+
+      expect(data.areAllNegative).toStrictEqual(true);
+    });
   });
 });
