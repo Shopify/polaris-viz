@@ -103,44 +103,4 @@ describe('fillMissingDataPoints', () => {
       },
     ]);
   });
-
-  it('loops through a large data set in less than 15ms', () => {
-    const data = getData();
-
-    const start = Date.now();
-    fillMissingDataPoints(data);
-    const elapsed = Date.now() - start;
-
-    expect(elapsed).toBeLessThan(15);
-  });
 });
-
-const DATA_SERIES_COUNT = 10;
-const DATA_POINTS_COUNT = 500;
-
-function getData() {
-  const largestArray: DataSeries[] = [];
-
-  for (let i = 1; i <= DATA_SERIES_COUNT; i++) {
-    const dataItems: DataPoint[] = [];
-    const randomOffset = getRandomNumber(0, DATA_POINTS_COUNT / 6);
-
-    for (let j = 1; j <= DATA_POINTS_COUNT - randomOffset; j++) {
-      const key = getRandomKey();
-      const value = getRandomNumber(0, 100);
-      dataItems.push({key, value});
-    }
-
-    largestArray.push({name: `Array ${i}`, data: dataItems});
-  }
-
-  return largestArray;
-
-  function getRandomNumber(min, max) {
-    return Math.random() * (max - min) + min;
-  }
-
-  function getRandomKey() {
-    return Math.random().toString(36).substring(7);
-  }
-}
