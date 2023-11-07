@@ -53,6 +53,7 @@ import {
 import {
   ChartMargin,
   ANNOTATIONS_LABELS_OFFSET,
+  Y_AXIS_LABEL_OFFSET,
   CROSSHAIR_ID,
 } from '../../constants';
 import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
@@ -316,7 +317,7 @@ export function Chart({
 
         <YAxis
           ticks={ticks}
-          width={yAxisLabelWidth}
+          width={yAxisLabelWidth + Y_AXIS_LABEL_OFFSET}
           textAlign="right"
           ariaHidden
           x={yAxisBounds.x}

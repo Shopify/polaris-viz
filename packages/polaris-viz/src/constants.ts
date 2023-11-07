@@ -48,6 +48,7 @@ export const DEFAULT_LEGEND_HEIGHT = 24;
 export const DEFAULT_LEGEND_WIDTH = 29;
 export const BAR_CONTAINER_TEXT_HEIGHT = 48;
 export const ANNOTATIONS_LABELS_OFFSET = 10;
+export const Y_AXIS_LABEL_OFFSET = 2;
 export const TOOLTIP_BG_OPACITY = 0.8;
 export const COLLAPSED_ANNOTATIONS_COUNT = 3;
 export const PREVIEW_ICON_SIZE = 12;
