@@ -30,6 +30,7 @@ import {useRenderTooltipContent} from '../../hooks';
 import {HorizontalBarChart} from '../HorizontalBarChart';
 import {VerticalBarChart} from '../VerticalBarChart';
 import {ChartSkeleton} from '../../components/ChartSkeleton';
+import {fillMissingDataPoints} from '../../utilities/fillMissingDataPoints';
 
 export type BarChartProps = {
   errorText?: string;
@@ -51,7 +52,7 @@ export function BarChart(props: BarChartProps) {
 
   const {
     annotations = [],
-    data,
+    data: dataSeries,
     state,
     errorText,
     direction = 'vertical',
@@ -70,6 +71,8 @@ export function BarChart(props: BarChartProps) {
     ...DEFAULT_CHART_PROPS,
     ...props,
   };
+
+  const data = fillMissingDataPoints(dataSeries);
 
   const skipLinkAnchorId = useRef(uniqueId('BarChart'));
 
