@@ -20,12 +20,14 @@
   "exports": {
     ".": {
       "types": "./build/ts/index.d.ts",
+      "esnext": "./build/esm/index.esnext",
       "module": "./build/esm/index.js",
       "import": "./build/esm/index.js",
       "default": "./build/cjs/index.js"
     },
     "./PolarisVizProvider": {
       "types": "./build/ts/index.d.ts",
+      "esnext": "./build/esm/components/PolarisVizProvider/PolarisVizProvider.esnext",
       "module": "./build/esm/components/PolarisVizProvider/PolarisVizProvider.js",
       "import": "./build/esm/components/PolarisVizProvider/PolarisVizProvider.js",
       "default": "./build/cjs/components/PolarisVizProvider/PolarisVizProvider.js"
