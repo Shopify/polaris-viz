@@ -17,6 +17,21 @@
       ]
     }
   },
+  "exports": {
+    ".": {
+      "types": "./build/ts/index.d.ts",
+      "module": "./build/esm/index.js",
+      "import": "./build/esm/index.js",
+      "default": "./build/cjs/index.js"
+    },
+    "./PolarisVizProvider": {
+      "types": "./build/ts/index.d.ts",
+      "module": "./build/esm/components/PolarisVizProvider/PolarisVizProvider.js",
+      "import": "./build/esm/components/PolarisVizProvider/PolarisVizProvider.js",
+      "default": "./build/cjs/components/PolarisVizProvider/PolarisVizProvider.js"
+    },
+    "./*": "./*"
+  },
   "scripts": {
     "build": "loom build",
     "storybook": "STORYBOOK_SHOW=dev start-storybook -p 6006 -s public",
