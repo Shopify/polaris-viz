@@ -16,10 +16,12 @@ export function useSpringConfig({
 }: Props) {
   const isMounted = useRef(false);
 
+  const delay = shouldAnimate ? animationDelay : 0;
+
   return {
     config: isMounted.current ? mountedSpringConfig : unmountedSpringConfig,
     default: {immediate: !shouldAnimate},
-    delay: isMounted.current ? 0 : animationDelay,
+    delay: isMounted.current ? 0 : delay,
     onRest: () => (isMounted.current = true),
   };
 }
