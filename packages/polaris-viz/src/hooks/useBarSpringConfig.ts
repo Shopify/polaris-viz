@@ -13,7 +13,7 @@ export function useBarSpringConfig({animationDelay = 0}: Props) {
   const {shouldAnimate} = useChartContext();
 
   return useSpringConfig({
-    animationDelay,
+    animationDelay: shouldAnimate ? animationDelay : 0,
     shouldAnimate,
     unmountedSpringConfig: BARS_LOAD_ANIMATION_CONFIG,
     mountedSpringConfig: BARS_TRANSITION_CONFIG,
