@@ -31,7 +31,7 @@ export function AnimatedLine({
 
   const springConfig = useSpringConfig({
     shouldAnimate: !immediate,
-    animationDelay: delay,
+    animationDelay: immediate ? 0 : delay,
     mountedSpringConfig: LINES_TRANSITION_CONFIG,
     unmountedSpringConfig: LINES_LOAD_ANIMATION_CONFIG,
   });

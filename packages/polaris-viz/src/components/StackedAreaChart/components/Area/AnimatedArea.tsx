@@ -37,7 +37,7 @@ export function AnimatedArea({
 
   const springConfig = useSpringConfig({
     shouldAnimate,
-    animationDelay: delay,
+    animationDelay: shouldAnimate ? delay : 0,
     mountedSpringConfig: AREAS_TRANSITION_CONFIG,
     unmountedSpringConfig: AREAS_LOAD_ANIMATION_CONFIG,
   });
