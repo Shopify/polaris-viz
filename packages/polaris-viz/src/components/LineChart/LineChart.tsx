@@ -12,6 +12,7 @@ import {
   usePolarisVizContext,
 } from '@shopify/polaris-viz-core';
 
+import {fillMissingDataPoints} from '../../utilities/fillMissingDataPoints';
 import {getLineChartDataWithDefaults} from '../../utilities/getLineChartDataWithDefaults';
 import {ChartContainer} from '../../components/ChartContainer';
 import {ChartSkeleton} from '../../components/ChartSkeleton';
@@ -52,7 +53,7 @@ export function LineChart(props: LineChartProps) {
 
   const {
     annotations = [],
-    data,
+    data: dataSeries,
     emptyStateText,
     errorText,
     id,
@@ -70,6 +71,8 @@ export function LineChart(props: LineChartProps) {
     ...DEFAULT_CHART_PROPS,
     ...props,
   };
+
+  const data = fillMissingDataPoints(dataSeries);
 
   const selectedTheme = useTheme(theme);
   const seriesColors = useThemeSeriesColors(data, selectedTheme);

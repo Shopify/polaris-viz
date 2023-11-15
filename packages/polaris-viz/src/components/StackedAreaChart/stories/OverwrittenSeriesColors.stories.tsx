@@ -9,31 +9,29 @@ import {DEFAULT_PROPS, Template} from './data';
 export const OverwrittenSeriesColors: Story<StackedAreaChartProps> =
   Template.bind({});
 
+const ITEMS = Array(5).fill(null);
+
 OverwrittenSeriesColors.args = {
   ...DEFAULT_PROPS,
   data: [
     {
       name: 'One',
-      data: Array(5)
-        .fill(null)
-        .map(() => {
-          return {
-            value: Math.random() * Math.random() * 100,
-            key: Math.random().toString(),
-          };
-        }),
+      data: ITEMS.map((_, index) => {
+        return {
+          value: Math.random() * Math.random() * 100,
+          key: `${index}`,
+        };
+      }),
       color: 'lime',
     },
     {
       name: 'Two',
-      data: Array(5)
-        .fill(null)
-        .map(() => {
-          return {
-            value: Math.random() * Math.random() * 100,
-            key: Math.random().toString(),
-          };
-        }),
+      data: ITEMS.map((_, index) => {
+        return {
+          value: Math.random() * Math.random() * 100,
+          key: `${index}`,
+        };
+      }),
     },
   ],
 };

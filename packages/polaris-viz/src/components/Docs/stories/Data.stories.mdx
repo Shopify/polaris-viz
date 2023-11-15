@@ -1,4 +1,4 @@
-import {Meta, Story, Canvas} from '@storybook/addon-docs';
+import {Meta, Story, Canvas, Source} from '@storybook/addon-docs';
 import LinkTo from '@storybook/addon-links/react';
 import {SHARK_SPECIES_GROWTH} from '../utilities';
 import {PolarisVizProvider} from '@shopify/polaris-viz';
@@ -357,5 +357,151 @@ If we use the same data set used above but set `isComparison: true` to the first
 />
 
 </ExamplesGrid>
+
+<Title type="h2">Filling Data</Title>
+
+When providing multiple `DataSeries` objects, we will fill all the `Series` so that all arrays contain the same keys. The filled `Series` will contain `null` as a value.
+
+<Title type="h4">Example</Title>
+
+Suppose we have the following data arrays, we will fill the data arrays to ensure all keys are present in each `DataSeries` object
+
+<ExamplesGrid>
+
+<div>
+
+**Input**
+
+<Source
+  dark
+  language="jsx"
+  code={`
+[
+  {
+    name: 'Canada',
+    data: [
+      {key: 'Dogs', value: 23.43},
+      {key: 'Cats', value: 6.64},
+    ],
+  },
+  {
+    name: 'United States',
+    data: [
+      {key: 'Lizards', value: 350.13},
+      {key: 'Turtles', value: 223.43},
+    ],
+  },
+  {
+    name: 'China',
+    data: [
+      {key: 'Snakes', value: 0},
+      {key: 'Eagles', value: 0},
+    ],
+  },
+]
+`}
+/>
+
 </div>
+
+<div>
+
+**Output**
+
+<Source
+  dark
+  language="jsx"
+  code={`
+[
+  {
+    name: 'Canada',
+    data: [
+      {key: 'Dogs', value: 23.43},
+      {key: 'Cats', value: 6.64},
+      {key: 'Lizards', value: null},
+      {key: 'Turtles', value: null},
+      {key: 'Snakes', value: null},
+      {key: 'Eagles', value: null},
+    ],
+  },
+  {
+    name: 'United States',
+    data: [
+      {key: 'Dogs', value: null},
+      {key: 'Cats', value: null},
+      {key: 'Lizards', value: 350.13},
+      {key: 'Turtles', value: 223.43},
+      {key: 'Snakes', value: null},
+      {key: 'Eagles', value: null},
+    ],
+  },
+  {
+    name: 'China',
+    data: [
+      {key: 'Dogs', value: null},
+      {key: 'Cats', value: null},
+      {key: 'Lizards', value: null},
+      {key: 'Turtles', value: null},
+      {key: 'Snakes', value: 0},
+      {key: 'Eagles', value: 0},
+    ],
+  },
+]
+`}
+/>
+
+</div>
+
+</ExamplesGrid>
+
+<Title type="h3">Linear Data</Title>
+
+This approach assumes that linear charts (`<LineChart />`, `<LineChartRelational />` & `<StackedAreaChart />`) will have matching keys for each `DataSeries`.
+
+When creating the chart labels, we use the keys from the longest `DataSeries`. The keys from other `DataSeries` objects are ignored.
+
+If a user provides different keys, the `DataSeries` will be combined, resulting in a longer set of data.
+
+The exception to this rule is when a `DataSeries` is provided with `isComparison: true`. In that case, we will not fill the data because comparison data can have different dates for each key and can also include data of different sizes.
+
+<Source
+  dark
+  language="jsx"
+  code={`
+[
+  {
+    name: 'This Year',
+    data: [
+      {key: 'January', value: 10},
+      {key: 'February', value: 20},
+      {key: 'March', value: 30},
+      {key: 'April', value: 10},
+      {key: 'May', value: 20},
+      {key: 'June', value: 30},
+    ],
+  },
+  {
+    name: 'Last Year',
+    data: [
+      {key: 'January', value: 0},
+      {key: 'February', value: 5},
+      {key: 'March', value: 10},
+      {key: 'April', value: 0},
+      {key: 'May', value: 5},
+      {key: 'June', value: 10},
+      {key: 'July', value: 10},
+      {key: 'August', value: 10},
+      {key: 'September', value: 10},
+      {key: 'October', value: 10},
+      {key: 'November', value: 10},
+      {key: 'December', value: 10},
+    ],
+    isComparison: true
+  }
+]
+`}
+/>
+
+</div>
+
 </PolarisVizProvider>

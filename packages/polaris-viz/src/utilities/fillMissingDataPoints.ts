@@ -1,6 +1,14 @@
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
 export function fillMissingDataPoints(dataSeries: DataSeries[]) {
+  const areAnyComparrison = dataSeries.some(
+    ({isComparison}) => isComparison === true,
+  );
+
+  if (areAnyComparrison) {
+    return dataSeries;
+  }
+
   const allKeys = new Set<string>();
   const dataValueMap: {[key: number]: {[key: string]: number | null}} = {};
 
@@ -16,13 +24,13 @@ export function fillMissingDataPoints(dataSeries: DataSeries[]) {
     }
   }
 
-  return dataSeries.map(({name}, index) => {
+  return dataSeries.map((series, index) => {
     const newData = [...allKeys].map((key) => {
       return {
         key,
         value: dataValueMap[index][key] ?? null,
       };
     });
-    return {name, data: newData};
+    return {...series, data: newData};
   });
 }

@@ -11,6 +11,7 @@ import type {
   ChartProps,
 } from '@shopify/polaris-viz-core';
 
+import {fillMissingDataPoints} from '../../utilities/fillMissingDataPoints';
 import {
   getXAxisOptionsWithDefaults,
   getYAxisOptionsWithDefaults,
@@ -48,7 +49,7 @@ export function StackedAreaChart(props: StackedAreaChartProps) {
     annotations = [],
     xAxisOptions,
     yAxisOptions,
-    data,
+    data: dataSeries,
     state,
     errorText,
     onError,
@@ -62,6 +63,9 @@ export function StackedAreaChart(props: StackedAreaChartProps) {
     ...DEFAULT_CHART_PROPS,
     ...props,
   };
+
+  const data = fillMissingDataPoints(dataSeries);
+
   const skipLinkAnchorId = useRef(uniqueId('stackedAreaChart'));
   const renderTooltip = useRenderTooltipContent({tooltipOptions, theme, data});
 
