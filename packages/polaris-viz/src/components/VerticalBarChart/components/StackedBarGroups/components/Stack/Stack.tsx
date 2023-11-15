@@ -73,7 +73,7 @@ export function Stack({
       transform: `scale(1, 1)`,
     },
     config: BARS_TRANSITION_CONFIG,
-    delay: animationDelay,
+    delay: shouldAnimate ? animationDelay : 0,
     default: {immediate: !shouldAnimate},
   });
 
