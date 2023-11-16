@@ -26,9 +26,11 @@ export function fillMissingDataPoints(dataSeries: DataSeries[]) {
 
   return dataSeries.map((series, index) => {
     const newData = [...allKeys].map((key) => {
+      const dataValue = dataValueMap[index];
+
       return {
         key,
-        value: dataValueMap[index][key] ?? null,
+        value: dataValue == null ? null : dataValue[key] ?? null,
       };
     });
     return {...series, data: newData};
