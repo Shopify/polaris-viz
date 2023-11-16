@@ -1,5 +1,3 @@
-import type {DataPoint, DataSeries} from '@shopify/polaris-viz-core';
-
 import {fillMissingDataPoints} from '../fillMissingDataPoints';
 
 describe('fillMissingDataPoints', () => {
@@ -99,6 +97,170 @@ describe('fillMissingDataPoints', () => {
           {key: 'Lizards', value: null},
           {key: 'Turtles', value: null},
           {key: 'Snakes', value: 0},
+        ],
+      },
+    ]);
+  });
+
+  it('returns the original data series if any are comparison', () => {
+    const mockData = [
+      {
+        name: 'Canada',
+        data: [
+          {key: 'Mice', value: 13.28},
+          {key: 'Dogs', value: 23.43},
+          {key: 'Cats', value: 6.64},
+          {key: 'Birds', value: 54.47},
+        ],
+      },
+      {
+        name: 'United States',
+        data: [
+          {key: 'Lizards', value: 350.13},
+          {key: 'Turtles', value: 223.43},
+          {key: 'Mice', value: 15.38},
+          {key: 'Snakes', value: 122.68},
+          {key: 'Dogs', value: 31.54},
+          {key: 'Birds', value: 94.84},
+        ],
+        isComparison: true,
+      },
+      {
+        name: 'China',
+        data: [
+          {key: 'Snakes', value: 0},
+          {key: 'Dogs', value: 0},
+        ],
+      },
+    ];
+
+    const result = fillMissingDataPoints(mockData);
+
+    expect(result).toMatchObject(mockData);
+  });
+
+  it('fills empty series with null when no data is available', () => {
+    const mockData = [
+      {
+        data: [
+          {
+            value: 357.75,
+            key: '2023-10-17T00:00:00-04:00',
+          },
+          {
+            value: 1780,
+            key: '2023-10-18T00:00:00-04:00',
+          },
+          {
+            value: 2937.813,
+            key: '2023-10-19T00:00:00-04:00',
+          },
+          {
+            value: 0,
+            key: '2023-10-20T00:00:00-04:00',
+          },
+        ],
+        name: 'Average',
+      },
+      {
+        name: '25th percentile',
+        data: [],
+      },
+      {
+        name: 'Median',
+        data: [],
+      },
+      {
+        name: '75th percentile',
+        data: [],
+      },
+    ];
+
+    const result = fillMissingDataPoints(mockData);
+
+    expect(result).toMatchObject([
+      {
+        data: [
+          {
+            value: 357.75,
+            key: '2023-10-17T00:00:00-04:00',
+          },
+          {
+            value: 1780,
+            key: '2023-10-18T00:00:00-04:00',
+          },
+          {
+            value: 2937.813,
+            key: '2023-10-19T00:00:00-04:00',
+          },
+          {
+            value: 0,
+            key: '2023-10-20T00:00:00-04:00',
+          },
+        ],
+        name: 'Average',
+      },
+      {
+        name: '25th percentile',
+        data: [
+          {
+            value: null,
+            key: '2023-10-17T00:00:00-04:00',
+          },
+          {
+            value: null,
+            key: '2023-10-18T00:00:00-04:00',
+          },
+          {
+            value: null,
+            key: '2023-10-19T00:00:00-04:00',
+          },
+          {
+            value: null,
+            key: '2023-10-20T00:00:00-04:00',
+          },
+        ],
+      },
+      {
+        name: 'Median',
+        data: [
+          {
+            value: null,
+            key: '2023-10-17T00:00:00-04:00',
+          },
+          {
+            value: null,
+            key: '2023-10-18T00:00:00-04:00',
+          },
+          {
+            value: null,
+            key: '2023-10-19T00:00:00-04:00',
+          },
+          {
+            value: null,
+            key: '2023-10-20T00:00:00-04:00',
+          },
+        ],
+      },
+      {
+        name: '75th percentile',
+        data: [
+          {
+            value: null,
+            key: '2023-10-17T00:00:00-04:00',
+          },
+          {
+            value: null,
+            key: '2023-10-18T00:00:00-04:00',
+          },
+          {
+            value: null,
+            key: '2023-10-19T00:00:00-04:00',
+          },
+          {
+            value: null,
+            key: '2023-10-20T00:00:00-04:00',
+          },
         ],
       },
     ]);
