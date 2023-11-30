@@ -7,7 +7,9 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
-- Added experimental feature to define a `fillValue` for a `DataSeries` which Polaris Viz will use to backfill missing data points
+### Added
+
+- Experimental feature to define a `fillValue` for a `DataSeries` which Polaris Viz will use to backfill missing data points
 
 ## [10.0.1] - 2023-11-16
 
