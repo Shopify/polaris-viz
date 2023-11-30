@@ -15,6 +15,7 @@ export interface DataSeries {
   name?: string;
   metadata?: {[key: string]: any};
   styleOverride?: StyleOverride;
+  fillValue?: DataPoint['value'];
 }
 
 interface StyleOverride {
