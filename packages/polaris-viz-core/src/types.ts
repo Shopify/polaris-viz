@@ -15,6 +15,10 @@ export interface DataSeries {
   name?: string;
   metadata?: {[key: string]: any};
   styleOverride?: StyleOverride;
+  /**
+   * Value that gets used to fill in missing data points. Defaults to `null`.
+   */
+  fillValue?: DataPoint['value'];
 }
 
 interface StyleOverride {

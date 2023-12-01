@@ -102,6 +102,126 @@ describe('fillMissingDataPoints', () => {
     ]);
   });
 
+  it('fills data with null by default', () => {
+    const mockData = [
+      {
+        name: 'Canada',
+        data: [
+          {key: 'Mice', value: 13.28},
+          {key: 'Dogs', value: 23.43},
+          {key: 'Cats', value: 6.64},
+          {key: 'Birds', value: 54.47},
+        ],
+      },
+      {
+        name: 'China',
+        data: [
+          {key: 'Snakes', value: 0},
+          {key: 'Dogs', value: 0},
+        ],
+      },
+    ];
+
+    const result = fillMissingDataPoints(mockData);
+
+    expect(result).toMatchObject(
+      expect.arrayContaining([
+        expect.objectContaining({
+          data: expect.arrayContaining([
+            expect.objectContaining({
+              value: null,
+            }),
+          ]),
+        }),
+      ]),
+    );
+  });
+
+  it('fills data with provided fill value when defined on series', () => {
+    const mockData = [
+      {
+        name: 'Canada',
+        data: [
+          {key: 'Mice', value: 13.28},
+          {key: 'Dogs', value: 23.43},
+          {key: 'Cats', value: 6.64},
+          {key: 'Birds', value: 54.47},
+        ],
+      },
+      {
+        name: 'China',
+        data: [
+          {key: 'Snakes', value: 10},
+          {key: 'Dogs', value: 10},
+        ],
+        fillValue: 0,
+      },
+    ];
+
+    const result = fillMissingDataPoints(mockData);
+
+    expect(result).toMatchObject(
+      expect.arrayContaining([
+        expect.objectContaining({
+          data: expect.arrayContaining([
+            expect.objectContaining({
+              value: 0,
+            }),
+          ]),
+        }),
+      ]),
+    );
+  });
+
+  it('fills data with fill value for provided series only', () => {
+    const mockData = [
+      {
+        name: 'Canada',
+        data: [
+          {key: 'Mice', value: 13.28},
+          {key: 'Dogs', value: 23.43},
+          {key: 'Cats', value: 6.64},
+          {key: 'Birds', value: 54.47},
+        ],
+        fillValue: null,
+      },
+      {
+        name: 'China',
+        data: [
+          {key: 'Snakes', value: 10},
+          {key: 'Dogs', value: 10},
+        ],
+        fillValue: 0,
+      },
+    ];
+
+    const result = fillMissingDataPoints(mockData);
+
+    expect(result).toMatchObject(
+      expect.arrayContaining([
+        expect.objectContaining({
+          data: expect.arrayContaining([
+            expect.objectContaining({
+              value: 0,
+            }),
+          ]),
+        }),
+      ]),
+    );
+
+    expect(result).toMatchObject(
+      expect.arrayContaining([
+        expect.objectContaining({
+          data: expect.arrayContaining([
+            expect.objectContaining({
+              value: null,
+            }),
+          ]),
+        }),
+      ]),
+    );
+  });
+
   it('returns the original data series if any are comparison', () => {
     const mockData = [
       {
