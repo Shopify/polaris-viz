@@ -8,6 +8,7 @@ import type {
 } from '@shopify/polaris-viz-core';
 import type {Series, SeriesPoint} from 'd3-shape';
 import type {ScaleLinear} from 'd3-scale';
+import type {TrendIndicatorProps} from 'components/TrendIndicator';
 
 export interface YAxisTick {
   value: number;
@@ -193,6 +194,8 @@ export type LegendPosition =
   | 'right'
   | 'bottom'
   | 'left';
+
+export type MetaDataTrendIndicator = Omit<TrendIndicatorProps, 'theme'>;
 
 export interface ColorVisionInteractionMethods {
   getColorVisionEventAttrs: (

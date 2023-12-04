@@ -27,6 +27,7 @@ import {
 } from '../../hooks';
 import {Arc} from '../Arc';
 import type {
+  ColorVisionInteractionMethods,
   LegendPosition,
   RenderInnerValueContent,
   RenderLegendContent,
@@ -34,7 +35,7 @@ import type {
 import {ChartSkeleton} from '../../components/ChartSkeleton';
 
 import styles from './DonutChart.scss';
-import {InnerValue} from './components';
+import {InnerValue, LegendValues} from './components';
 
 const ERROR_ANIMATION_PADDING = 40;
 const FULL_CIRCLE = Math.PI * 2;
@@ -46,6 +47,7 @@ export interface ChartProps {
   labelFormatter: LabelFormatter;
   legendPosition: LegendPosition;
   showLegend: boolean;
+  showLegendValues: boolean;
   state: ChartState;
   theme: string;
   accessibilityLabel?: string;
@@ -63,6 +65,7 @@ export function Chart({
   labelFormatter,
   legendPosition = 'right',
   showLegend,
+  showLegendValues,
   state,
   theme,
   accessibilityLabel = '',
@@ -94,7 +97,9 @@ export function Chart({
 
   const longestLegendWidth = data.reduce((previous, current) => {
     const estimatedLegendWidth = estimateLegendItemWidth(
-      current.name ?? '',
+      showLegendValues === true
+        ? `${current.name ?? ''} ${current.data[0].value}`
+        : `${current.name ?? ''}`,
       characterWidths,
     );
 
@@ -107,7 +112,7 @@ export function Chart({
 
   const maxLegendWidth =
     legendDirection === 'vertical'
-      ? Math.min(
+      ? Math.max(
           longestLegendWidth,
           dimensions.width * MAX_LEGEND_WIDTH_PERCENTAGE,
         )
@@ -166,6 +171,25 @@ export function Chart({
 
   const containerAlignmentStyle =
     getContainerAlignmentForLegend(legendPosition);
+
+  const renderLegendContentWithValues = ({
+    getColorVisionStyles,
+    getColorVisionEventAttrs,
+  }: ColorVisionInteractionMethods) => {
+    return (
+      <LegendValues
+        data={data}
+        labelFormatter={labelFormatter}
+        getColorVisionStyles={getColorVisionStyles}
+        getColorVisionEventAttrs={getColorVisionEventAttrs}
+      />
+    );
+  };
+
+  const shouldRenderLegendContentWithValues =
+    !renderLegendContent &&
+    showLegendValues &&
+    (legendPosition === 'right' || legendPosition === 'left');
 
   return (
     <div className={styles.DonutWrapper} style={containerAlignmentStyle}>
@@ -258,7 +282,11 @@ export function Chart({
           direction={legendDirection}
           position={legendPosition}
           maxWidth={maxLegendWidth}
-          renderLegendContent={renderLegendContent}
+          renderLegendContent={
+            shouldRenderLegendContentWithValues
+              ? renderLegendContentWithValues
+              : renderLegendContent
+          }
         />
       )}
     </div>

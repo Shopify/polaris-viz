@@ -1,0 +1,26 @@
+.Table {
+  min-width: 200px;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+
+  .ColorPreview {
+    width: 12px;
+  }
+
+  .Name {
+    padding-left: 4px;
+  }
+
+  .TableSpacer {
+    padding-left: 30px;
+  }
+
+  .alignLeft {
+    text-align: left;
+  }
+
+  .alignRight {
+    text-align: right;
+  }
+}

@@ -2,13 +2,15 @@ import {mount} from '@shopify/react-testing';
 import {animated, config} from '@react-spring/web';
 import {min} from 'd3-array';
 
+import type {InnerValueProps} from '../InnerValue';
 import {InnerValue} from '../InnerValue';
 import {ComparisonMetric} from '../../../../ComparisonMetric';
 
-const mockProps = {
+const mockProps: InnerValueProps = {
   activeValue: 100,
+  activeIndex: 1,
   totalValue: 1000,
-  labelFormatter: jest.fn(),
+  labelFormatter: (value) => value,
   isAnimated: true,
 };
 
