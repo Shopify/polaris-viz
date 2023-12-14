@@ -9,7 +9,7 @@ import type {ComparisonMetricProps} from '../../../ComparisonMetric';
 import {ComparisonMetric} from '../../../ComparisonMetric';
 import styles from '../../DonutChart.scss';
 
-interface Props {
+export interface InnerValueProps {
   activeValue: number | null | undefined;
   activeIndex: number;
   labelFormatter: LabelFormatter;
@@ -27,7 +27,7 @@ export function InnerValue({
   isAnimated,
   renderInnerValueContent,
   totalValue,
-}: Props) {
+}: InnerValueProps) {
   const selectedTheme = useTheme();
 
   const {animatedValue} = useSpring({
@@ -50,7 +50,9 @@ export function InnerValue({
   );
 
   const activeValueExists = activeValue !== null && activeValue !== undefined;
-  const valueToDisplay = activeValueExists ? activeValue : animatedTotalValue;
+  const valueToDisplay = activeValueExists
+    ? labelFormatter(activeValue)
+    : animatedTotalValue;
 
   const innerContent = renderInnerValueContent?.({
     activeValue,

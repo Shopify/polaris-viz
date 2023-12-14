@@ -42,6 +42,21 @@ export const LEGEND_FULL_WIDTH_ARGS = {
   },
 };
 
+export const SHOW_LEGEND_ARGS = {
+  description: 'Whether to show the legend or not.',
+  control: {
+    type: 'boolean',
+  },
+};
+
+export const SHOW_LEGEND_VALUES_ARGS = {
+  description:
+    'Whether to show the values in the legend or not. If `showLegend` is false, or `legendPosition` is not `left`/`right`, this prop will have no effect.',
+  control: {
+    type: 'boolean',
+  },
+};
+
 export const RENDER_LEGEND_CONTENT_ARGS = {
   description:
     'This accepts a function that is called to render the legend content instead of the given legend. If `showLegend` is false, this prop will have no effect.',
