@@ -239,4 +239,5 @@ export interface LineChartSlotProps {
   drawableWidth: number;
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
+  theme: string;
 }
