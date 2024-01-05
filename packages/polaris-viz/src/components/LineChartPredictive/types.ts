@@ -12,6 +12,7 @@ export interface LineChartPredictiveDataSeries extends DataSeries {
   metadata?: MetaData;
 }
 
-export interface LineChartPredictiveProps extends Omit<LineChartProps, 'data'> {
+export interface LineChartPredictiveProps
+  extends Omit<LineChartProps, 'data' | 'renderLegendContent'> {
   data: LineChartPredictiveDataSeries[];
 }

@@ -1,5 +1,6 @@
 import {
   DEFAULT_CHART_PROPS,
+  DEFAULT_THEME_NAME,
   useTheme,
   useThemeSeriesColors,
 } from '@shopify/polaris-viz-core';
@@ -7,7 +8,7 @@ import {
 import {LineChart} from '../LineChart';
 
 import type {LineChartPredictiveProps} from './types';
-import {PredictiveLineSeries} from './components';
+import {CustomLegend, PredictiveLineSeries} from './components';
 
 export function LineChartPredictive(props: LineChartPredictiveProps) {
   const {
@@ -17,7 +18,6 @@ export function LineChartPredictive(props: LineChartPredictiveProps) {
     emptyStateText,
     id,
     isAnimated,
-    renderLegendContent,
     showLegend = true,
     skipLinkText,
     state,
@@ -41,6 +41,12 @@ export function LineChartPredictive(props: LineChartPredictiveProps) {
     }
   }
 
+  const predictiveSeriesNames = predictiveData
+    .map(({metadata}) => {
+      return data[metadata?.relatedIndex ?? -1].name;
+    })
+    .filter((value) => value != null) as string[];
+
   const selectedTheme = useTheme(theme);
   const seriesColors = useThemeSeriesColors(nonPredictiveData, selectedTheme);
 
@@ -52,7 +58,6 @@ export function LineChartPredictive(props: LineChartPredictiveProps) {
       errorText={errorText}
       id={id}
       isAnimated={isAnimated}
-      renderLegendContent={renderLegendContent}
       showLegend={showLegend}
       skipLinkText={skipLinkText}
       slots={{
@@ -75,6 +80,21 @@ export function LineChartPredictive(props: LineChartPredictiveProps) {
       tooltipOptions={tooltipOptions}
       xAxisOptions={xAxisOptions}
       yAxisOptions={yAxisOptions}
+      renderLegendContent={({
+        getColorVisionStyles,
+        getColorVisionEventAttrs,
+      }) => {
+        return (
+          <CustomLegend
+            getColorVisionStyles={getColorVisionStyles}
+            getColorVisionEventAttrs={getColorVisionEventAttrs}
+            predictiveSeriesNames={predictiveSeriesNames}
+            data={nonPredictiveData}
+            seriesColors={seriesColors}
+            theme={theme ?? DEFAULT_THEME_NAME}
+          />
+        );
+      }}
     />
   );
 }

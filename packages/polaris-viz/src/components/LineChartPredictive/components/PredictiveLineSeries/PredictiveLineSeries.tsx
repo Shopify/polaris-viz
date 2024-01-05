@@ -85,7 +85,7 @@ export function PredictiveLineSeries({
               color={pointColor}
               cx={xScale(predictiveStartIndex)}
               cy={yScale(series.data[predictiveStartIndex]?.value ?? -1)}
-              active
+              active={activeLineIndex === -1 || activeLineIndex === index}
               index={index}
               isAnimated={false}
               ariaHidden
