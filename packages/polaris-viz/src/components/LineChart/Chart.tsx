@@ -337,6 +337,7 @@ export function Chart({
             xScale,
             drawableWidth,
             drawableHeight,
+            theme,
           })}
 
           {reversedSeries.map((singleSeries, index) => {

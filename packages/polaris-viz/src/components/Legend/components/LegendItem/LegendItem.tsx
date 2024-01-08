@@ -2,6 +2,7 @@ import {
   getColorVisionEventAttrs,
   getColorVisionStylesForActiveIndex,
 } from '@shopify/polaris-viz-core';
+import type {ReactNode} from 'react';
 
 import {
   LEGEND_ITEM_LEFT_PADDING,
@@ -19,6 +20,7 @@ export interface LegendItemProps extends LegendData {
   index: number;
   activeIndex?: number;
   colorVisionType?: string;
+  renderSeriesIcon?: () => ReactNode;
   theme?: string;
 }
 
@@ -29,6 +31,7 @@ export function LegendItem({
   index,
   isComparison,
   name,
+  renderSeriesIcon,
   shape,
   theme,
   value,
@@ -58,12 +61,16 @@ export function LegendItem({
       }}
       className={style.Legend}
     >
-      <span
-        style={{height: PREVIEW_ICON_SIZE, width: PREVIEW_ICON_SIZE}}
-        className={style.IconContainer}
-      >
-        <SeriesIcon shape={shape} color={color} isComparison={isComparison} />
-      </span>
+      {renderSeriesIcon == null ? (
+        <span
+          style={{height: PREVIEW_ICON_SIZE, width: PREVIEW_ICON_SIZE}}
+          className={style.IconContainer}
+        >
+          <SeriesIcon shape={shape} color={color} isComparison={isComparison} />
+        </span>
+      ) : (
+        renderSeriesIcon()
+      )}
       <span className={style.TextContainer}>
         <span style={{color: selectedTheme.legend.labelColor}}>{name}</span>
         {value == null ? null : (
