@@ -49,3 +49,5 @@ export type {ComboChartProps} from './ComboChart';
 export {XAxis} from './XAxis';
 export {TrendIndicator, estimateTrendIndicatorWidth} from './TrendIndicator';
 export {LineChartRelational} from './LineChartRelational';
+export {LineChartPredictive} from './LineChartPredictive';
+export type {LineChartPredictiveProps} from './LineChartPredictive';
