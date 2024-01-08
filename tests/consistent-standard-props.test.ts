@@ -38,6 +38,7 @@ const ignoredFiles = [
   'LinePreview',
   'SimpleNormalizedChart',
   'LineChartRelational',
+  'LineChartPredictive',
 ];
 
 const componentsPerPackage = readFiles().map(({indexSrc, packageDir}) => {

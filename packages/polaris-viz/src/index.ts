@@ -17,6 +17,7 @@ export {
   DonutChart,
   TrendIndicator,
   LineChartRelational,
+  LineChartPredictive,
 } from './components';
 
 export type {
@@ -28,6 +29,7 @@ export type {
   SimpleBarChartProps,
   TooltipContentProps,
   ComboChartProps,
+  LineChartPredictiveProps,
 } from './components';
 
 export {
