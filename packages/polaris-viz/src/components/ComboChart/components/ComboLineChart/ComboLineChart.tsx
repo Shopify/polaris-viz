@@ -39,7 +39,7 @@ export function ComboLineChart({
 
   const dataWithDefaults = getLineChartDataWithDefaults(data.series, colors);
 
-  const {reversedSeries, longestSeriesIndex} = useFormatData(dataWithDefaults);
+  const {longestSeriesIndex} = useFormatData(dataWithDefaults);
 
   return (
     <Fragment>
@@ -60,10 +60,10 @@ export function ComboLineChart({
       })}
       <PointsAndCrosshair
         activeIndex={activeIndex}
+        data={dataWithDefaults}
         drawableHeight={drawableHeight}
         emptyState={false}
         longestSeriesIndex={longestSeriesIndex}
-        reversedSeries={reversedSeries}
         theme={theme}
         tooltipId="none"
         xScale={xScale}

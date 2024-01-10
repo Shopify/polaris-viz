@@ -21,7 +21,7 @@ export function randomNumber(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function generateDayRange(numDays: number) {
+export function generateDayRange(numDays: number) {
   const currentDate = new Date('April 1, 2020');
   const dayRange: string[] = [];
 

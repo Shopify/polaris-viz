@@ -19,24 +19,24 @@ import {Points} from '../Points';
 
 interface PointsAndCrosshairProps {
   activeIndex: number | null;
+  data: LineChartDataSeriesWithDefaults[];
   drawableHeight: number;
   emptyState: boolean;
+  hiddenIndexes?: number[];
   longestSeriesIndex: number;
-  reversedSeries: LineChartDataSeriesWithDefaults[];
   theme: string;
   tooltipId: string;
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
-  hiddenIndexes?: number[];
 }
 
 export function PointsAndCrosshair({
   activeIndex,
+  data,
   drawableHeight,
   emptyState,
   hiddenIndexes = [],
   longestSeriesIndex,
-  reversedSeries,
   theme,
   tooltipId,
   xScale,
@@ -59,7 +59,7 @@ export function PointsAndCrosshair({
   }, [selectedTheme.line.hasSpline, xScale, yScale]);
 
   const {animatedCoordinates} = useLinearChartAnimations({
-    data: reversedSeries,
+    data,
     lineGenerator,
     activeIndex,
   });
@@ -97,7 +97,7 @@ export function PointsAndCrosshair({
         <Points
           activeIndex={emptyState ? null : activeIndex}
           animatedCoordinates={animatedCoordinates}
-          data={reversedSeries}
+          data={data}
           getXPosition={getXPosition}
           gradientId={gradientId.current}
           hiddenIndexes={hiddenIndexes}

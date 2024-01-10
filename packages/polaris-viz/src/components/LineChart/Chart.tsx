@@ -152,8 +152,7 @@ export function Chart({
     verticalOverflow: selectedTheme.grid.verticalOverflow,
   });
 
-  const {reversedSeries, longestSeriesLength, longestSeriesIndex} =
-    useFormatData(data);
+  const {longestSeriesLength, longestSeriesIndex} = useFormatData(data);
 
   const {
     drawableWidth,
@@ -208,11 +207,7 @@ export function Chart({
     if (eventType === 'mouse') {
       const point = eventPointNative(event!);
 
-      if (
-        point == null ||
-        xScale == null ||
-        reversedSeries[longestSeriesIndex] == null
-      ) {
+      if (point == null || xScale == null || data[longestSeriesIndex] == null) {
         return TOOLTIP_POSITION_DEFAULT_RETURN;
       }
 
@@ -223,7 +218,7 @@ export function Chart({
       const activeIndex = clamp({
         amount: closestIndex,
         min: 0,
-        max: reversedSeries[longestSeriesIndex].data.length - 1,
+        max: data[longestSeriesIndex].data.length - 1,
       });
 
       return {
@@ -340,13 +335,13 @@ export function Chart({
             theme,
           })}
 
-          {reversedSeries.map((singleSeries, index) => {
+          {data.map((singleSeries, index) => {
             return (
               <LineSeries
                 activeLineIndex={activeLineIndex}
                 data={singleSeries}
                 hiddenIndexes={hiddenLineIndexes}
-                index={reversedSeries.length - 1 - index}
+                index={index}
                 key={`${name}-${index}`}
                 svgDimensions={{height: drawableHeight, width: drawableWidth}}
                 theme={theme}
@@ -359,11 +354,11 @@ export function Chart({
 
           <PointsAndCrosshair
             activeIndex={activeIndex}
+            data={data}
             drawableHeight={drawableHeight}
             emptyState={emptyState}
             hiddenIndexes={hiddenLineIndexes}
             longestSeriesIndex={longestSeriesIndex}
-            reversedSeries={reversedSeries}
             theme={theme}
             tooltipId={tooltipId.current}
             xScale={xScale}
