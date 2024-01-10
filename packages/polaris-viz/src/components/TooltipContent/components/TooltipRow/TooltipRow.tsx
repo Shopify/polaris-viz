@@ -48,7 +48,7 @@ export function TooltipRow({
       })}
     >
       {color != null && (
-        <div className={styles.SeriesIcon} style={{width: PREVIEW_ICON_SIZE}}>
+        <div style={{width: PREVIEW_ICON_SIZE}}>
           {renderSeriesIcon?.() ?? (
             <SeriesIcon
               color={color!}

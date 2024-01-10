@@ -1,0 +1,1 @@
+export {SeriesIcon} from './SeriesIcon';

@@ -177,7 +177,7 @@ export function LineSeries({
                   style={{
                     ...getColorVisionStylesForActiveIndex({
                       activeIndex: activeLineIndex,
-                      index,
+                      index: data?.metadata?.relatedIndex ?? index,
                     }),
                     strokeDasharray,
                     strokeLinecap: 'round',
@@ -228,7 +228,7 @@ export function LineSeries({
           fill="none"
           {...getColorVisionEventAttrs({
             type: COLOR_VISION_SINGLE_ITEM,
-            index,
+            index: data?.metadata?.relatedIndex ?? index,
           })}
         />
       </AnimatedGroup>
