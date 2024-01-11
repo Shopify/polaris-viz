@@ -1,5 +1,3 @@
-import {useState} from 'react';
-
 import {LineChartPredictive} from '../../LineChartPredictive';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 

@@ -1,6 +1,3 @@
-import {uniqueId} from '@shopify/polaris-viz-core';
-import {useMemo} from 'react';
-
 import type {LineChartPredictiveDataSeries} from '../../../../components/LineChartPredictive/types';
 import type {ColorVisionInteractionMethods} from '../../../../types';
 import {LegendItem} from '../../../../components/Legend';

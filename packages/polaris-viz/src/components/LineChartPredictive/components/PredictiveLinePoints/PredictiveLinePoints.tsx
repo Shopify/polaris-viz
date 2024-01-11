@@ -1,4 +1,3 @@
-import type {Color} from '@shopify/polaris-viz-core';
 import {
   COLOR_VISION_SINGLE_ITEM,
   LinearGradientWithStops,
