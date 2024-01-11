@@ -160,5 +160,6 @@
   },
   "dependencies": {
     "concurrently": "^7.0.0"
-  }
+  },
+  "version": "1.0.0-line-chart-predictive-beta.1"
 }
