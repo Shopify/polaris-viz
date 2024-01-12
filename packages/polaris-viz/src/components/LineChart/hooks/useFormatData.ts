@@ -2,21 +2,19 @@ import {useMemo} from 'react';
 import type {LineChartDataSeriesWithDefaults} from '@shopify/polaris-viz-core';
 
 export function useFormatData(data: LineChartDataSeriesWithDefaults[]) {
-  const reversedSeries = useMemo(() => data.slice().reverse(), [data]);
-
   const longestSeriesIndex = useMemo(
     () =>
-      reversedSeries.reduce((maxIndex, currentSeries, currentIndex) => {
-        return reversedSeries[maxIndex].data.length < currentSeries.data.length
+      data.reduce((maxIndex, currentSeries, currentIndex) => {
+        return data[maxIndex].data.length < currentSeries.data.length
           ? currentIndex
           : maxIndex;
       }, 0),
-    [reversedSeries],
+    [data],
   );
 
-  const longestSeriesLength = reversedSeries[longestSeriesIndex]
-    ? reversedSeries[longestSeriesIndex].data.length - 1
+  const longestSeriesLength = data[longestSeriesIndex]
+    ? data[longestSeriesIndex].data.length - 1
     : 0;
 
-  return {reversedSeries, longestSeriesLength, longestSeriesIndex};
+  return {longestSeriesLength, longestSeriesIndex};
 }

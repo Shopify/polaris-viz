@@ -42,13 +42,15 @@ export function LineSeries({
   activeLineIndex = -1,
   data,
   hiddenIndexes = [],
-  index = 0,
+  index: lineSeriesIndex = 0,
   svgDimensions,
   theme,
   type = 'default',
   xScale,
   yScale,
 }: LineSeriesProps) {
+  const index = data?.metadata?.relatedIndex ?? lineSeriesIndex;
+
   const {
     // eslint-disable-next-line id-length
     components: {Defs, Mask, G, Rect, Path},

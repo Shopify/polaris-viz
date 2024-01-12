@@ -1,14 +1,18 @@
+import type {DataSeries} from '@shopify/polaris-viz-core';
 import {
   DEFAULT_CHART_PROPS,
   DEFAULT_THEME_NAME,
   useTheme,
   useThemeSeriesColors,
 } from '@shopify/polaris-viz-core';
+import {useMemo} from 'react';
+import type {RenderTooltipContentData} from 'types';
 
 import {LineChart} from '../LineChart';
 
 import type {LineChartPredictiveProps} from './types';
-import {CustomLegend, PredictiveLineSeries} from './components';
+import {CustomLegend, PredictiveLinePoints} from './components';
+import {renderLinearPredictiveTooltipContent} from './utilities/renderLinearPredictiveTooltipContent';
 
 export function LineChartPredictive(props: LineChartPredictiveProps) {
   const {
@@ -22,7 +26,7 @@ export function LineChartPredictive(props: LineChartPredictiveProps) {
     skipLinkText,
     state,
     theme,
-    tooltipOptions,
+    tooltipOptions: initialTooltipOptions,
     xAxisOptions,
     yAxisOptions,
   } = {
@@ -41,19 +45,44 @@ export function LineChartPredictive(props: LineChartPredictiveProps) {
     }
   }
 
+  const selectedTheme = useTheme(theme);
+  const seriesColors = useThemeSeriesColors(nonPredictiveData, selectedTheme);
+
   const predictiveSeriesNames = predictiveData
     .map(({metadata}) => {
       return data[metadata?.relatedIndex ?? -1].name;
     })
     .filter((value) => value != null) as string[];
 
-  const selectedTheme = useTheme(theme);
-  const seriesColors = useThemeSeriesColors(nonPredictiveData, selectedTheme);
+  const dataWithColors: DataSeries[] = [];
+  let index = -1;
+
+  for (const series of data) {
+    if (series.metadata?.relatedIndex == null) {
+      index += 1;
+    }
+
+    dataWithColors.push({
+      ...series,
+      color: seriesColors[index],
+    });
+  }
+
+  const tooltipOptions = useMemo(() => {
+    function renderTooltipContent(tooltipData: RenderTooltipContentData) {
+      return renderLinearPredictiveTooltipContent(tooltipData);
+    }
+
+    return {
+      ...initialTooltipOptions,
+      renderTooltipContent,
+    };
+  }, [initialTooltipOptions]);
 
   return (
     <LineChart
       annotations={annotations}
-      data={nonPredictiveData}
+      data={dataWithColors}
       emptyStateText={emptyStateText}
       errorText={errorText}
       id={id}
@@ -63,11 +92,10 @@ export function LineChartPredictive(props: LineChartPredictiveProps) {
       slots={{
         chart: ({xScale, yScale, drawableHeight, drawableWidth, theme}) => {
           return (
-            <PredictiveLineSeries
-              data={predictiveData}
+            <PredictiveLinePoints
+              data={dataWithColors}
               drawableHeight={drawableHeight}
               drawableWidth={drawableWidth}
-              seriesColors={seriesColors}
               theme={theme}
               xScale={xScale}
               yScale={yScale}
@@ -89,8 +117,7 @@ export function LineChartPredictive(props: LineChartPredictiveProps) {
             getColorVisionStyles={getColorVisionStyles}
             getColorVisionEventAttrs={getColorVisionEventAttrs}
             predictiveSeriesNames={predictiveSeriesNames}
-            data={nonPredictiveData}
-            seriesColors={seriesColors}
+            data={dataWithColors}
             theme={theme ?? DEFAULT_THEME_NAME}
           />
         );

@@ -95,7 +95,7 @@ export function StackedAreas({
         return (
           <AreaComponent
             activeLineIndex={activeLineIndex}
-            animationIndex={stackedValues.length - 1 - index}
+            animationIndex={index}
             areaGenerator={areaGenerator}
             colors={colors}
             data={data}

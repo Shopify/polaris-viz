@@ -64,10 +64,10 @@ export function Points({
 
   return (
     <Fragment>
-      {data.map((singleSeries, index) => {
-        const unreversedIndex = data.length - 1 - index;
+      {data.map((singleSeries, seriesIndex) => {
+        const index = singleSeries.metadata?.relatedIndex ?? seriesIndex;
 
-        if (hiddenIndexes.includes(unreversedIndex)) {
+        if (hiddenIndexes.includes(index)) {
           return null;
         }
 
@@ -85,10 +85,12 @@ export function Points({
             : singleData[activeIndex ?? -1]?.value != null;
 
         const isLineActive =
-          activeLineIndex !== -1 && activeLineIndex !== unreversedIndex;
+          activeLineIndex !== -1 && activeLineIndex !== index;
 
-        const hidePoint =
+        const isPointVisuallyHidden =
           !hasValidData || animatedCoordinates == null || isLineActive;
+
+        const isPointActive = hasValidData && activeIndex != null;
 
         const pointColor = isGradientType(color)
           ? `url(#${pointGradientId})`
@@ -112,11 +114,11 @@ export function Points({
                 color={pointColor}
                 cx={getXPosition({isCrosshair: false})}
                 cy={animatedYPosition}
-                active={hasValidData && activeIndex != null}
+                active={isPointActive}
                 index={index}
                 tabIndex={-1}
                 isAnimated={shouldAnimate}
-                visuallyHidden={hidePoint}
+                visuallyHidden={isPointVisuallyHidden}
                 ariaHidden
               />
             ) : null}
@@ -131,7 +133,7 @@ export function Points({
                   key={`${name}-${index}-${dataIndex}`}
                   style={getColorVisionStylesForActiveIndex({
                     activeIndex: activeLineIndex,
-                    index: data.length - 1 - index,
+                    index,
                     fadedOpacity: 0,
                   })}
                 >

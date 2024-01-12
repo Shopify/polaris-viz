@@ -53,12 +53,12 @@ describe('<StackedAreas />', () => {
     const stacks = stackedArea.findAll(AnimatedArea);
 
     expect(stacks[0]).toHaveReactProps({
-      animationIndex: 1,
+      animationIndex: 0,
       index: 0,
     });
 
     expect(stacks[1]).toHaveReactProps({
-      animationIndex: 0,
+      animationIndex: 1,
       index: 1,
     });
   });
