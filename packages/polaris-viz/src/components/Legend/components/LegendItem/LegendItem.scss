@@ -18,6 +18,13 @@
   margin: -2px 0;
   font-size: 12px;
   font-family: $font-stack-base;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.Text {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .IconContainer {

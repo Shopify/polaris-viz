@@ -1,16 +1,22 @@
 import {Fragment} from 'react';
+import type {RefObject} from 'react';
 import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 import {useExternalHideEvents} from '../../hooks';
 import type {LegendData} from '../../types';
 
-import {LegendItem} from './components/';
+import {LegendItem} from './components';
+import type {LegendItemDimension} from './components';
 
 export interface LegendProps {
   data: LegendData[];
   activeIndex?: number;
   colorVisionType?: string;
   theme?: string;
+  itemDimensions?: RefObject<LegendItemDimension[]>;
+  backgroundColor?: string;
+  indexOffset?: number;
+  truncate?: boolean;
 }
 
 export function Legend({
@@ -18,6 +24,10 @@ export function Legend({
   colorVisionType,
   data,
   theme = DEFAULT_THEME_NAME,
+  itemDimensions,
+  indexOffset = 0,
+  backgroundColor,
+  truncate = false,
 }: LegendProps) {
   const {hiddenIndexes} = useExternalHideEvents();
 
@@ -32,8 +42,15 @@ export function Legend({
         {...legend}
         activeIndex={activeIndex}
         colorVisionType={colorVisionType}
-        index={index}
+        index={index + indexOffset}
         theme={theme}
+        backgroundColor={backgroundColor}
+        onDimensionChange={(dimensions) => {
+          if (itemDimensions?.current) {
+            itemDimensions.current[index + indexOffset] = dimensions;
+          }
+        }}
+        truncate={truncate}
       />
     );
   });

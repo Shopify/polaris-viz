@@ -38,6 +38,7 @@ export type LineChartProps = {
   errorText?: string;
   emptyStateText?: string;
   renderLegendContent?: RenderLegendContent;
+  renderHiddenLegendLabel?: (count: number) => string;
   showLegend?: boolean;
   skipLinkText?: string;
   tooltipOptions?: TooltipOptions;
@@ -60,6 +61,7 @@ export function LineChart(props: LineChartProps) {
     isAnimated,
     onError,
     renderLegendContent,
+    renderHiddenLegendLabel,
     showLegend = true,
     skipLinkText,
     state,
@@ -111,6 +113,7 @@ export function LineChart(props: LineChartProps) {
             emptyStateText={emptyStateText}
             renderLegendContent={renderLegendContent}
             renderTooltipContent={renderTooltip}
+            renderHiddenLegendLabel={renderHiddenLegendLabel}
             showLegend={showLegend}
             theme={theme}
             xAxisOptions={xAxisOptionsWithDefaults}
