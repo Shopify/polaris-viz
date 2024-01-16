@@ -1,11 +1,19 @@
 import {useEffect} from 'react';
 import {COLOR_VISION_EVENT, useChartContext} from '@shopify/polaris-viz-core';
+import type {BoundingRect} from '@shopify/polaris-viz-core';
 
 import {useExternalHideEvents} from '../ExternalEvents';
 
 import {getDataSetItem, getEventName} from './utilities';
 
-export function useColorVisionEvents(enabled = true) {
+export interface Props {
+  enabled?: boolean;
+  dimensions?: BoundingRect;
+}
+
+export function useColorVisionEvents(props?: Partial<Props>) {
+  const {enabled = true, dimensions} = props || {};
+
   const {id} = useChartContext();
   const {hiddenIndexes} = useExternalHideEvents();
 
@@ -70,5 +78,5 @@ export function useColorVisionEvents(enabled = true) {
         item.removeEventListener('blur', onMouseLeave);
       });
     };
-  }, [id, enabled, hiddenIndexes]);
+  }, [id, enabled, hiddenIndexes, dimensions]);
 }

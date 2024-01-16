@@ -10,11 +10,11 @@ import {Template} from './data';
 export const SeriesColorsUpToEight: Story<LineChartProps> = Template.bind({});
 
 SeriesColorsUpToEight.args = {
-  data: generateMultipleSeries(4, 'dates'),
+  data: generateMultipleSeries(8, 'dates'),
 };
 
 export const SeriesColorsUpToSixteen: Story<LineChartProps> = Template.bind({});
 
 SeriesColorsUpToSixteen.args = {
-  data: generateMultipleSeries(14, 'dates'),
+  data: generateMultipleSeries(16, 'dates'),
 };

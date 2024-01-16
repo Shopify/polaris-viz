@@ -29,6 +29,7 @@ import {
 import type {
   AnnotationLookupTable,
   LineChartSlotProps,
+  RenderHiddenLegendLabel,
   RenderLegendContent,
   RenderTooltipContentData,
 } from '../../types';
@@ -76,6 +77,7 @@ export interface ChartProps {
   dimensions?: BoundingRect;
   emptyStateText?: string;
   renderLegendContent?: RenderLegendContent;
+  renderHiddenLegendLabel?: RenderHiddenLegendLabel;
   slots?: {
     chart?: (props: LineChartSlotProps) => JSX.Element;
   };
@@ -89,13 +91,14 @@ export function Chart({
   dimensions,
   renderLegendContent,
   renderTooltipContent,
+  renderHiddenLegendLabel,
   showLegend = true,
   slots,
   theme = DEFAULT_THEME_NAME,
   xAxisOptions,
   yAxisOptions,
 }: ChartProps) {
-  useColorVisionEvents(data.length > 1);
+  useColorVisionEvents({enabled: data.length > 1, dimensions});
 
   const selectedTheme = useTheme(theme);
   const {isPerformanceImpacted} = useChartContext();
@@ -424,6 +427,9 @@ export function Chart({
           data={legend}
           onDimensionChange={setLegendDimensions}
           renderLegendContent={renderLegendContent}
+          renderHiddenLegendLabel={renderHiddenLegendLabel}
+          width={width}
+          enableHideOverflow
         />
       )}
     </Fragment>

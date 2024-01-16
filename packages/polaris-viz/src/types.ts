@@ -208,6 +208,8 @@ export type RenderLegendContent = (
   colorVisionInteractionMethods: ColorVisionInteractionMethods,
 ) => ReactNode;
 
+export type RenderHiddenLegendLabel = (hiddenItemsCount: number) => ReactNode;
+
 export type SortedBarChartData = (number | null)[][];
 
 export interface InnerValueContents {
