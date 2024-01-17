@@ -64,7 +64,7 @@ export function StackedAreaChart(props: StackedAreaChartProps) {
     ...props,
   };
 
-  const data = fillMissingDataPoints(dataSeries);
+  const data = fillMissingDataPoints(dataSeries, true);
 
   const skipLinkAnchorId = useRef(uniqueId('stackedAreaChart'));
   const renderTooltip = useRenderTooltipContent({tooltipOptions, theme, data});

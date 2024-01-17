@@ -1,12 +1,17 @@
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
-export function fillMissingDataPoints(dataSeries: DataSeries[]) {
-  const areAnyComparison = dataSeries.some(
-    ({isComparison}) => isComparison === true,
-  );
+export function fillMissingDataPoints(
+  dataSeries: DataSeries[],
+  isLinearData: boolean,
+) {
+  if (isLinearData) {
+    const areAnyComparison = dataSeries.some(
+      ({isComparison}) => isComparison === true,
+    );
 
-  if (areAnyComparison) {
-    return dataSeries;
+    if (areAnyComparison) {
+      return dataSeries;
+    }
   }
 
   const allKeys = new Set<string>();

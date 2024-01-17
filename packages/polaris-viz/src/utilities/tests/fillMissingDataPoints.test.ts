@@ -222,43 +222,6 @@ describe('fillMissingDataPoints', () => {
     );
   });
 
-  it('returns the original data series if any are comparison', () => {
-    const mockData = [
-      {
-        name: 'Canada',
-        data: [
-          {key: 'Mice', value: 13.28},
-          {key: 'Dogs', value: 23.43},
-          {key: 'Cats', value: 6.64},
-          {key: 'Birds', value: 54.47},
-        ],
-      },
-      {
-        name: 'United States',
-        data: [
-          {key: 'Lizards', value: 350.13},
-          {key: 'Turtles', value: 223.43},
-          {key: 'Mice', value: 15.38},
-          {key: 'Snakes', value: 122.68},
-          {key: 'Dogs', value: 31.54},
-          {key: 'Birds', value: 94.84},
-        ],
-        isComparison: true,
-      },
-      {
-        name: 'China',
-        data: [
-          {key: 'Snakes', value: 0},
-          {key: 'Dogs', value: 0},
-        ],
-      },
-    ];
-
-    const result = fillMissingDataPoints(mockData);
-
-    expect(result).toMatchObject(mockData);
-  });
-
   it('fills empty series with null when no data is available', () => {
     const mockData = [
       {
@@ -384,5 +347,182 @@ describe('fillMissingDataPoints', () => {
         ],
       },
     ]);
+  });
+
+  describe('isLinearData', () => {
+    it('does not fill when isLinearData: true and series contains isComparison', () => {
+      const mockData = [
+        {
+          name: 'Canada',
+          data: [
+            {key: 'Mice', value: 13.28},
+            {key: 'Dogs', value: 23.43},
+            {key: 'Cats', value: 6.64},
+            {key: 'Birds', value: 54.47},
+          ],
+        },
+        {
+          name: 'United States',
+          data: [
+            {key: 'Lizards', value: 350.13},
+            {key: 'Turtles', value: 223.43},
+            {key: 'Mice', value: 15.38},
+            {key: 'Snakes', value: 122.68},
+            {key: 'Dogs', value: 31.54},
+            {key: 'Birds', value: 94.84},
+          ],
+          isComparison: true,
+        },
+        {
+          name: 'China',
+          data: [
+            {key: 'Snakes', value: 0},
+            {key: 'Dogs', value: 0},
+          ],
+        },
+      ];
+
+      const result = fillMissingDataPoints(mockData, true);
+
+      expect(result).toMatchObject(mockData);
+    });
+
+    it('fills all missing data when isLinearData: false', () => {
+      const mockData = [
+        {
+          name: 'Canada',
+          data: [
+            {key: 'Mice', value: 13.28},
+            {key: 'Dogs', value: 23.43},
+            {key: 'Cats', value: 6.64},
+            {key: 'Birds', value: 54.47},
+          ],
+        },
+        {
+          name: 'United States',
+          data: [
+            {key: 'Lizards', value: 350.13},
+            {key: 'Turtles', value: 223.43},
+            {key: 'Mice', value: 15.38},
+            {key: 'Snakes', value: 122.68},
+            {key: 'Dogs', value: 31.54},
+            {key: 'Birds', value: 94.84},
+          ],
+          isComparison: true,
+        },
+        {
+          name: 'China',
+          data: [
+            {key: 'Snakes', value: 0},
+            {key: 'Dogs', value: 0},
+          ],
+        },
+      ];
+
+      const result = fillMissingDataPoints(mockData, false);
+
+      expect(result).toMatchObject([
+        {
+          name: 'Canada',
+          data: [
+            {
+              key: 'Mice',
+              value: 13.28,
+            },
+            {
+              key: 'Dogs',
+              value: 23.43,
+            },
+            {
+              key: 'Cats',
+              value: 6.64,
+            },
+            {
+              key: 'Birds',
+              value: 54.47,
+            },
+            {
+              key: 'Lizards',
+              value: null,
+            },
+            {
+              key: 'Turtles',
+              value: null,
+            },
+            {
+              key: 'Snakes',
+              value: null,
+            },
+          ],
+        },
+        {
+          name: 'United States',
+          data: [
+            {
+              key: 'Mice',
+              value: 15.38,
+            },
+            {
+              key: 'Dogs',
+              value: 31.54,
+            },
+            {
+              key: 'Cats',
+              value: null,
+            },
+            {
+              key: 'Birds',
+              value: 94.84,
+            },
+            {
+              key: 'Lizards',
+              value: 350.13,
+            },
+            {
+              key: 'Turtles',
+              value: 223.43,
+            },
+            {
+              key: 'Snakes',
+              value: 122.68,
+            },
+          ],
+          isComparison: true,
+        },
+        {
+          name: 'China',
+          data: [
+            {
+              key: 'Mice',
+              value: null,
+            },
+            {
+              key: 'Dogs',
+              value: 0,
+            },
+            {
+              key: 'Cats',
+              value: null,
+            },
+            {
+              key: 'Birds',
+              value: null,
+            },
+            {
+              key: 'Lizards',
+              value: null,
+            },
+            {
+              key: 'Turtles',
+              value: null,
+            },
+            {
+              key: 'Snakes',
+              value: 0,
+            },
+          ],
+        },
+      ]);
+    });
   });
 });
