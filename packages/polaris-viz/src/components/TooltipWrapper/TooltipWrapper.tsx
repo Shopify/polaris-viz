@@ -34,6 +34,7 @@ function TooltipWrapperRaw(props: BaseProps) {
     alwaysUpdatePosition = false,
     bandwidth = 0,
     chartBounds,
+    chartDimensions,
     focusElementDataType,
     getAlteredPosition,
     getPosition,
@@ -173,6 +174,7 @@ function TooltipWrapperRaw(props: BaseProps) {
       activePointIndex={position.activeIndex}
       bandwidth={bandwidth}
       chartBounds={chartBounds}
+      chartDimensions={chartDimensions}
       currentX={position.x}
       currentY={position.y}
       id={id}

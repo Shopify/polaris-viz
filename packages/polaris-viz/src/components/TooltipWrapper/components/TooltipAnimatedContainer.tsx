@@ -28,6 +28,7 @@ export function TooltipAnimatedContainer({
   activePointIndex,
   bandwidth = 0,
   chartBounds,
+  chartDimensions,
   children,
   currentX,
   currentY,
@@ -54,6 +55,7 @@ export function TooltipAnimatedContainer({
       position,
       tooltipDimensions,
       chartBounds,
+      chartDimensions,
       margin,
       bandwidth,
       isPerformanceImpacted,
@@ -71,6 +73,7 @@ export function TooltipAnimatedContainer({
   }, [
     bandwidth,
     chartBounds,
+    chartDimensions,
     currentX,
     currentY,
     getAlteredPosition,

@@ -13,6 +13,7 @@ export const SCROLLBAR_WIDTH = 20;
 export interface AlteredPositionProps {
   bandwidth: number;
   chartBounds: BoundingRect;
+  chartDimension: BoundingRect;
   currentX: number;
   currentY: number;
   isPerformanceImpacted: boolean;
@@ -79,7 +80,15 @@ export function getAlteredVerticalBarPosition(
       }
     }
   } else {
-    y = 0;
+    y = clamp({
+      amount: (props.chartDimensions.y ?? 0) - props.tooltipDimensions.height,
+      min: 0,
+      max:
+        window.scrollY +
+        window.innerHeight -
+        props.tooltipDimensions.height -
+        TOOLTIP_MARGIN,
+    });
   }
 
   //

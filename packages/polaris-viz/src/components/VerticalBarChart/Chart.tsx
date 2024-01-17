@@ -312,6 +312,7 @@ export function Chart({
       {sortedData.length > 0 && (
         <TooltipWrapper
           bandwidth={xScale.bandwidth()}
+          chartDimensions={dimensions}
           chartBounds={chartBounds}
           focusElementDataType={DataType.BarGroup}
           getMarkup={getTooltipMarkup}
