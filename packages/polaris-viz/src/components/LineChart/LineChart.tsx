@@ -72,7 +72,7 @@ export function LineChart(props: LineChartProps) {
     ...props,
   };
 
-  const data = fillMissingDataPoints(dataSeries);
+  const data = fillMissingDataPoints(dataSeries, true);
 
   const selectedTheme = useTheme(theme);
   const seriesColors = useThemeSeriesColors(data, selectedTheme);

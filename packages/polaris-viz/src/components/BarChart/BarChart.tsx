@@ -72,7 +72,10 @@ export function BarChart(props: BarChartProps) {
     ...props,
   };
 
-  const data = fillMissingDataPoints(dataSeries);
+  const data = fillMissingDataPoints(
+    dataSeries,
+    isValidDate(dataSeries[0]?.data[0]?.key),
+  );
 
   const skipLinkAnchorId = useRef(uniqueId('BarChart'));
 
@@ -134,4 +137,13 @@ export function BarChart(props: BarChartProps) {
       {hideSkipLink ? null : <SkipLink.Anchor id={skipLinkAnchorId.current} />}
     </Fragment>
   );
+}
+
+function isValidDate(dateString: string | number | null) {
+  if (dateString == null) {
+    return false;
+  }
+
+  const parsedDate = Date.parse(dateString.toString());
+  return !isNaN(parsedDate);
 }
