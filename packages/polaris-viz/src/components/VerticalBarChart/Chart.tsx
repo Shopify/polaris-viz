@@ -318,6 +318,7 @@ export function Chart({
           getPosition={getTooltipPosition}
           margin={{...ChartMargin, Top: chartYPosition}}
           parentRef={svgRef}
+          chartDimensions={dimensions}
           usePortal
         />
       )}

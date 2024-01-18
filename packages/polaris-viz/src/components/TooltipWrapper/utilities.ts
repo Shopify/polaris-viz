@@ -19,6 +19,7 @@ export interface AlteredPositionProps {
   margin: Margin;
   position: TooltipPositionOffset;
   tooltipDimensions: Dimensions;
+  chartDimensions?: BoundingRect;
 }
 
 export interface AlteredPositionReturn {
@@ -47,7 +48,6 @@ export function getAlteredVerticalBarPosition(
   //
   // Y POSITIONING
   //
-
   if (!props.isPerformanceImpacted) {
     if (newPosition.vertical === TooltipVerticalOffset.Inline) {
       newPosition.horizontal = TooltipHorizontalOffset.Left;
@@ -79,7 +79,15 @@ export function getAlteredVerticalBarPosition(
       }
     }
   } else {
-    y = 0;
+    y = clamp({
+      amount: (props.chartDimensions?.y ?? 0) - props.tooltipDimensions.height,
+      min: 0,
+      max:
+        window.scrollY +
+        window.innerHeight -
+        props.tooltipDimensions.height -
+        TOOLTIP_MARGIN,
+    });
   }
 
   //
