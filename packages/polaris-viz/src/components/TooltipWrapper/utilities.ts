@@ -82,7 +82,6 @@ export function getAlteredVerticalBarPosition(
     y = props.dimensions?.y ?? 0;
   }
 
-
   //
   // X POSITIONING
   //
