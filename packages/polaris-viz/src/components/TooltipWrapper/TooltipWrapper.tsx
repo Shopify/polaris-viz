@@ -181,7 +181,7 @@ function TooltipWrapperRaw(props: BaseProps) {
       getAlteredPosition={getAlteredPosition}
       margin={props.margin}
       position={position.position}
-      dimensions= {dimensions}
+      dimensions={dimensions}
     >
       {props.getMarkup(position.activeIndex)}
     </TooltipAnimatedContainer>

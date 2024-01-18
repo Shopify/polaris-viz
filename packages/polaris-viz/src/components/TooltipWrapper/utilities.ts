@@ -79,7 +79,7 @@ export function getAlteredVerticalBarPosition(
       }
     }
   } else {
-    y = props.dimensions?.y ?? 0 ;
+    y = props.dimensions?.y ?? 0;
   }
 
 

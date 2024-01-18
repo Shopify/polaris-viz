@@ -59,7 +59,7 @@ export function TooltipAnimatedContainer({
       margin,
       bandwidth,
       isPerformanceImpacted,
-      dimensions
+      dimensions,
     });
 
     const shouldRenderImmediate = firstRender.current;
@@ -81,6 +81,7 @@ export function TooltipAnimatedContainer({
     position,
     isPerformanceImpacted,
     tooltipDimensions,
+    dimensions,
   ]);
 
   useEffect(() => {
