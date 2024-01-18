@@ -19,7 +19,7 @@ export interface AlteredPositionProps {
   margin: Margin;
   position: TooltipPositionOffset;
   tooltipDimensions: Dimensions;
-  dimensions?: BoundingRect;
+  chartDimensions?: BoundingRect;
 }
 
 export interface AlteredPositionReturn {
@@ -79,9 +79,16 @@ export function getAlteredVerticalBarPosition(
       }
     }
   } else {
-    y = props.dimensions?.y ?? 0;
+    y = clamp({
+      amount: (props.chartDimensions?.y ?? 0) - props.tooltipDimensions.height,
+      min: 0,
+      max:
+        window.scrollY +
+        window.innerHeight -
+        props.tooltipDimensions.height -
+        TOOLTIP_MARGIN,
+    });
   }
-
   //
   // X POSITIONING
   //

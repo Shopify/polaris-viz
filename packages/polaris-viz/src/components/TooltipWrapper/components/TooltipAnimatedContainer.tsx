@@ -22,7 +22,7 @@ export interface TooltipAnimatedContainerProps {
   position?: TooltipPositionOffset;
   id?: string;
   bandwidth?: number;
-  dimensions?: BoundingRect;
+  chartDimensions?: BoundingRect;
 }
 
 export function TooltipAnimatedContainer({
@@ -36,7 +36,7 @@ export function TooltipAnimatedContainer({
   getAlteredPosition = getAlteredVerticalBarPosition,
   margin,
   position = DEFAULT_TOOLTIP_POSITION,
-  dimensions,
+  chartDimensions,
 }: TooltipAnimatedContainerProps) {
   const {isPerformanceImpacted} = useChartContext();
 
@@ -59,7 +59,7 @@ export function TooltipAnimatedContainer({
       margin,
       bandwidth,
       isPerformanceImpacted,
-      dimensions,
+      chartDimensions,
     });
 
     const shouldRenderImmediate = firstRender.current;
@@ -81,7 +81,7 @@ export function TooltipAnimatedContainer({
     position,
     isPerformanceImpacted,
     tooltipDimensions,
-    dimensions,
+    chartDimensions,
   ]);
 
   useEffect(() => {
