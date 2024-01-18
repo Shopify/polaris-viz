@@ -89,6 +89,7 @@ export function getAlteredVerticalBarPosition(
         TOOLTIP_MARGIN,
     });
   }
+
   //
   // X POSITIONING
   //
