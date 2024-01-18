@@ -19,6 +19,7 @@ export interface AlteredPositionProps {
   margin: Margin;
   position: TooltipPositionOffset;
   tooltipDimensions: Dimensions;
+  dimensions?: BoundingRect;
 }
 
 export interface AlteredPositionReturn {
@@ -47,7 +48,6 @@ export function getAlteredVerticalBarPosition(
   //
   // Y POSITIONING
   //
-
   if (!props.isPerformanceImpacted) {
     if (newPosition.vertical === TooltipVerticalOffset.Inline) {
       newPosition.horizontal = TooltipHorizontalOffset.Left;
@@ -79,8 +79,9 @@ export function getAlteredVerticalBarPosition(
       }
     }
   } else {
-    y = 0;
+    y = props.dimensions?.y ?? 0 ;
   }
+
 
   //
   // X POSITIONING
