@@ -9,7 +9,11 @@ import {
   useChartContext,
   useTheme,
 } from '@shopify/polaris-viz-core';
-import type {Direction, Dimensions} from '@shopify/polaris-viz-core';
+import type {
+  Direction,
+  Dimensions,
+  BoundingRect,
+} from '@shopify/polaris-viz-core';
 
 import {DEFAULT_LEGEND_HEIGHT, DEFAULT_LEGEND_WIDTH} from '../../constants';
 import {useResizeObserver, useWatchColorVisionEvents} from '../../hooks';
@@ -41,6 +45,7 @@ export interface LegendContainerProps {
   /* Width is required if enableHideOverflow is true */
   width?: number;
   renderHiddenLegendLabel?: RenderHiddenLegendLabel;
+  dimensions?: BoundingRect;
 }
 
 export function LegendContainer({
@@ -55,6 +60,7 @@ export function LegendContainer({
   width = 0,
   enableHideOverflow = false,
   renderHiddenLegendLabel = (count) => `+${count} more`,
+  dimensions,
 }: LegendContainerProps) {
   const selectedTheme = useTheme();
   const {setRef, entry} = useResizeObserver();
@@ -195,6 +201,7 @@ export function LegendContainer({
               )}
               lastVisibleIndex={allData.length - hiddenData.length}
               setActivatorWidth={setActivatorWidth}
+              dimensions={dimensions}
             />
           )}
         </Fragment>

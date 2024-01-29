@@ -8,12 +8,18 @@ import {
 } from 'react';
 import type {ReactNode} from 'react';
 import {createPortal} from 'react-dom';
-import {changeColorOpacity, useTheme} from '@shopify/polaris-viz-core';
+import {
+  changeColorOpacity,
+  useChartContext,
+  useTheme,
+} from '@shopify/polaris-viz-core';
+import type {BoundingRect} from '@shopify/polaris-viz-core';
 
 import type {LegendData} from '../../../types';
 import {TOOLTIP_BG_OPACITY} from '../../../constants';
 import {useBrowserCheck} from '../../../hooks/useBrowserCheck';
 import {useRootContainer} from '../../../hooks/useRootContainer';
+import {useColorVisionEvents} from '../../../hooks/ColorVisionA11y';
 import {TOOLTIP_MARGIN} from '../../TooltipWrapper';
 import {Legend} from '../../Legend';
 
@@ -27,9 +33,10 @@ interface Props {
   setActivatorWidth: (width: number) => void;
   theme?: string;
   lastVisibleIndex?: number;
+  dimensions?: BoundingRect;
 }
 
-export const HIDDEN_LEGEND_TOOLTIP_ID = 'hidden-legend-toolip';
+export const LEGEND_TOOLTIP_ID = 'legend-toolip';
 
 export function HiddenLegendTooltip({
   activeIndex,
@@ -39,12 +46,16 @@ export function HiddenLegendTooltip({
   label,
   lastVisibleIndex = 0,
   setActivatorWidth,
+  dimensions,
 }: Props) {
   const selectedTheme = useTheme();
   const {isFirefox} = useBrowserCheck();
-  const container = useRootContainer(HIDDEN_LEGEND_TOOLTIP_ID);
+  const {id} = useChartContext();
+  const tooltipId = `${LEGEND_TOOLTIP_ID}_${id}`;
+  const container = useRootContainer(tooltipId);
   const tooltipRef = useRef<HTMLDivElement>(null);
   const activatorRef = useRef<HTMLButtonElement>(null);
+  useColorVisionEvents({enabled: true, root: LEGEND_TOOLTIP_ID, dimensions});
 
   const defaultPosition = useMemo(
     () => ({
@@ -106,10 +117,15 @@ export function HiddenLegendTooltip({
     });
   }, [setPosition]);
 
-  const handleMouseLeave = useCallback(() => {
-    setActive(false);
-    setPosition(defaultPosition);
-  }, [setActive, setPosition, defaultPosition]);
+  const handleMouseLeave = useCallback(
+    (event) => {
+      if (event?.relatedTarget.id !== tooltipId) {
+        setActive(false);
+        setPosition(defaultPosition);
+      }
+    },
+    [setActive, setPosition, defaultPosition, tooltipId],
+  );
 
   return (
     <Fragment>
@@ -128,6 +144,9 @@ export function HiddenLegendTooltip({
         <div
           className={style.Tooltip}
           ref={tooltipRef}
+          onMouseLeave={handleMouseLeave}
+          onBlur={handleMouseLeave}
+          id={tooltipId}
           style={{
             visibility: active ? 'visible' : 'hidden',
             zIndex: active ? 1 : -100000,

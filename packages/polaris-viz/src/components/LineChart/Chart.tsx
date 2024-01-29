@@ -98,7 +98,10 @@ export function Chart({
   xAxisOptions,
   yAxisOptions,
 }: ChartProps) {
-  useColorVisionEvents({enabled: data.length > 1, dimensions});
+  useColorVisionEvents({
+    enabled: data.length > 1,
+    dimensions,
+  });
 
   const selectedTheme = useTheme(theme);
   const {isPerformanceImpacted} = useChartContext();
@@ -429,6 +432,7 @@ export function Chart({
           renderLegendContent={renderLegendContent}
           renderHiddenLegendLabel={renderHiddenLegendLabel}
           width={width}
+          dimensions={dimensions}
           enableHideOverflow
         />
       )}

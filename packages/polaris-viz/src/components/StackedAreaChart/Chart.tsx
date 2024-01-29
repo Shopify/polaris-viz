@@ -399,6 +399,7 @@ export function Chart({
           renderLegendContent={renderLegendContent}
           width={width}
           enableHideOverflow
+          dimensions={chartBounds}
         />
       )}
     </ChartElements.Div>

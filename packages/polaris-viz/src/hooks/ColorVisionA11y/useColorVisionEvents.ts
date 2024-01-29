@@ -9,10 +9,11 @@ import {getDataSetItem, getEventName} from './utilities';
 export interface Props {
   enabled?: boolean;
   dimensions?: BoundingRect;
+  root?: string;
 }
 
 export function useColorVisionEvents(props?: Partial<Props>) {
-  const {enabled = true, dimensions} = props || {};
+  const {enabled = true, dimensions, root = 'chart'} = props || {};
 
   const {id} = useChartContext();
   const {hiddenIndexes} = useExternalHideEvents();
@@ -23,7 +24,7 @@ export function useColorVisionEvents(props?: Partial<Props>) {
     }
 
     const items = document.querySelectorAll(
-      `#chart_${id} [${COLOR_VISION_EVENT.dataAttribute}-watch="true"]`,
+      `#${root}_${id} [${COLOR_VISION_EVENT.dataAttribute}-watch="true"]`,
     );
 
     function onMouseEnter(event: MouseEvent) {
@@ -78,5 +79,5 @@ export function useColorVisionEvents(props?: Partial<Props>) {
         item.removeEventListener('blur', onMouseLeave);
       });
     };
-  }, [id, enabled, hiddenIndexes, dimensions]);
+  }, [id, enabled, hiddenIndexes, dimensions, root]);
 }
