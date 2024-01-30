@@ -2,16 +2,22 @@ import {mount} from '@shopify/react-testing';
 
 import type {LegendContainerProps} from '../LegendContainer';
 import {LegendContainer} from '../LegendContainer';
-import {Legend} from '../../Legend';
+import {Legend, LegendItem} from '../../Legend';
+import {HiddenLegendTooltip} from '../components/HiddenLegendTooltip';
+
+const WIDTH_WITH_OVERFLOW = 0;
+const WIDTH_WITHOUT_OVERFLOW = 100;
 
 const mockProps: LegendContainerProps = {
   colorVisionType: 'someType',
   data: [
     {name: 'Legend One', color: 'red'},
     {name: 'Legend Two', color: 'blue'},
+    {name: 'Legend Three', color: 'yellow'},
   ],
   onDimensionChange: jest.fn(),
   theme: 'Default',
+  width: WIDTH_WITHOUT_OVERFLOW,
 };
 
 jest.mock('../../../hooks/useResizeObserver', () => {
@@ -33,10 +39,6 @@ describe('<LegendContainer />', () => {
       <li>Group 3</li>
     </ul>
   );
-
-  beforeEach(() => {
-    jest.resetAllMocks();
-  });
 
   it('renders <Legend /> by default', () => {
     const component = mount(<LegendContainer {...mockProps} />);
@@ -66,5 +68,102 @@ describe('<LegendContainer />', () => {
     );
 
     expect(mockRenderLegendContent).toHaveBeenCalledTimes(1);
+  });
+
+  describe('enableHideOverflow', () => {
+    it('does not hide items if false', () => {
+      const component = mount(
+        <LegendContainer
+          {...mockProps}
+          width={WIDTH_WITH_OVERFLOW}
+          enableHideOverflow={false}
+        />,
+      );
+
+      expect(component).not.toContainReactComponent(HiddenLegendTooltip);
+    });
+
+    it('sets flexWrap to nowrap if true', () => {
+      const component = mount(
+        <LegendContainer
+          {...mockProps}
+          width={WIDTH_WITH_OVERFLOW}
+          enableHideOverflow
+        />,
+      );
+
+      expect(component.find('div', {role: 'list'})).toHaveReactProps({
+        style: expect.objectContaining({
+          flexWrap: 'nowrap',
+        }),
+      });
+    });
+
+    it('sets flexWrap to nowrap if false', () => {
+      const component = mount(
+        <LegendContainer {...mockProps} width={0} enableHideOverflow={false} />,
+      );
+
+      expect(component.find('div', {role: 'list'})).toHaveReactProps({
+        style: expect.objectContaining({
+          flexWrap: 'wrap',
+        }),
+      });
+    });
+
+    it('renders HiddenLegendTooltip if there is hidden data', () => {
+      const component = mount(
+        <LegendContainer
+          {...mockProps}
+          width={WIDTH_WITH_OVERFLOW}
+          enableHideOverflow
+        />,
+      );
+
+      expect(component).toContainReactComponent(HiddenLegendTooltip);
+    });
+
+    it('does not render HiddenLegendTooltip if there is no hidden data', () => {
+      const component = mount(
+        <LegendContainer
+          {...mockProps}
+          width={WIDTH_WITHOUT_OVERFLOW}
+          enableHideOverflow
+        />,
+      );
+
+      expect(component).not.toContainReactComponent(HiddenLegendTooltip);
+    });
+  });
+
+  describe('renderHiddenLegendLabel', () => {
+    it('renders the default label if not provided', () => {
+      const component = mount(
+        <LegendContainer
+          {...mockProps}
+          width={WIDTH_WITH_OVERFLOW}
+          enableHideOverflow
+        />,
+      );
+
+      expect(component).toContainReactComponent(HiddenLegendTooltip, {
+        label: `+${mockProps.data.length - 1} more`,
+      });
+    });
+
+    it('renders a custom label if provided', () => {
+      const component = mount(
+        <LegendContainer
+          {...mockProps}
+          width={WIDTH_WITH_OVERFLOW}
+          enableHideOverflow
+          renderHiddenLegendLabel={(x) => `Custom legend label ${x}`}
+        />,
+      );
+
+      expect(component).toContainReactComponent(HiddenLegendTooltip, {
+        label: `Custom legend label ${mockProps.data.length - 1}`,
+      });
+    });
   });
 });

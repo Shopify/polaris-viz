@@ -1,7 +1,7 @@
 import type {Story} from '@storybook/react';
 
 import {LineChart, LineChartProps} from '../../LineChart';
-import {randomNumber} from '../../../Docs/utilities';
+import {generateDataSet, randomNumber} from '../../../Docs/utilities';
 import {
   formatLinearXAxisLabel,
   formatLinearYAxisLabel,
@@ -1020,6 +1020,50 @@ LinearComparisonTooltip.args = {
           value: 1956721.98,
         },
       ],
+    },
+  ],
+};
+
+export const LongLegend: Story<LineChartProps> = Template.bind({});
+
+LongLegend.args = {
+  data: [
+    {
+      name: 'Garlic & Herb Biltong Slab - Family Size Super Pack',
+      data: generateDataSet(10, 'dates'),
+    },
+    {
+      name: 'Chili Biltong Slab 8oz',
+      data: generateDataSet(10, 'dates'),
+    },
+    {
+      name: 'Sale',
+      data: generateDataSet(10, 'dates'),
+    },
+    {
+      name: '1',
+      data: generateDataSet(10, 'dates'),
+    },
+    {
+      name: 'Smokehouse Biltong',
+      data: generateDataSet(10, 'dates'),
+    },
+    {
+      name: 'Traditional Biltong Slab 8oz',
+      data: generateDataSet(10, 'dates'),
+    },
+    {
+      name: '2',
+      data: generateDataSet(10, 'dates'),
+    },
+    {
+      name: 'A Very Very Very Very Very Long Titled Biltong',
+      data: generateDataSet(10, 'dates'),
+    },
+
+    {
+      name: '3',
+      data: generateDataSet(10, 'dates'),
     },
   ],
 };

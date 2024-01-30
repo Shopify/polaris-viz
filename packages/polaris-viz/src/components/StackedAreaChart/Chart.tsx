@@ -93,7 +93,7 @@ export function Chart({
   theme,
   yAxisOptions,
 }: Props) {
-  useColorVisionEvents(data.length > 1);
+  useColorVisionEvents({enabled: data.length > 1});
 
   const selectedTheme = useTheme(theme);
   const seriesColors = useThemeSeriesColors(data, selectedTheme);
@@ -397,6 +397,9 @@ export function Chart({
           data={legend}
           onDimensionChange={setLegendDimensions}
           renderLegendContent={renderLegendContent}
+          width={width}
+          enableHideOverflow
+          dimensions={chartBounds}
         />
       )}
     </ChartElements.Div>

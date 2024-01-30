@@ -132,7 +132,7 @@ export function Chart({
     width && height && isLegendMounted,
   );
 
-  useColorVisionEvents(shouldUseColorVisionEvents);
+  useColorVisionEvents({enabled: shouldUseColorVisionEvents});
 
   useWatchColorVisionEvents({
     type: COLOR_VISION_SINGLE_ITEM,
