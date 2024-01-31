@@ -82,7 +82,6 @@ export interface ChartProps {
     chart?: (props: LineChartSlotProps) => JSX.Element;
   };
   theme?: string;
-  enableHideLegendOverflow?: boolean;
 }
 
 export function Chart({
@@ -98,7 +97,6 @@ export function Chart({
   theme = DEFAULT_THEME_NAME,
   xAxisOptions,
   yAxisOptions,
-  enableHideLegendOverflow = false,
 }: ChartProps) {
   useColorVisionEvents({
     enabled: data.length > 1,
@@ -435,7 +433,7 @@ export function Chart({
           renderHiddenLegendLabel={renderHiddenLegendLabel}
           width={width}
           dimensions={dimensions}
-          enableHideOverflow={enableHideLegendOverflow}
+          enableHideOverflow
         />
       )}
     </Fragment>

@@ -68,7 +68,6 @@ export interface Props {
   dimensions?: BoundingRect;
   emptyStateText?: string;
   renderLegendContent?: RenderLegendContent;
-  enableHideLegendOverflow?: boolean;
   renderHiddenLegendLabel?: (count: number) => string;
 }
 
@@ -83,7 +82,6 @@ export function Chart({
   type,
   xAxisOptions,
   yAxisOptions,
-  enableHideLegendOverflow = false,
   renderHiddenLegendLabel,
 }: Props) {
   useColorVisionEvents({enabled: data.length > 1, dimensions});
@@ -334,7 +332,7 @@ export function Chart({
           onDimensionChange={setLegendDimensions}
           renderLegendContent={renderLegendContent}
           width={width}
-          enableHideOverflow={enableHideLegendOverflow}
+          enableHideOverflow
           dimensions={dimensions}
           renderHiddenLegendLabel={renderHiddenLegendLabel}
         />
