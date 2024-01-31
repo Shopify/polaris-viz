@@ -45,7 +45,6 @@ export type BarChartProps = {
   type?: ChartType;
   xAxisOptions?: Partial<XAxisOptions>;
   yAxisOptions?: Partial<YAxisOptions>;
-  enableHideLegendOverflow?: boolean;
   renderHiddenLegendLabel?: (count: number) => string;
 } & ChartProps;
 
@@ -69,7 +68,6 @@ export function BarChart(props: BarChartProps) {
     xAxisOptions,
     yAxisOptions,
     onError,
-    enableHideLegendOverflow,
     renderHiddenLegendLabel,
   } = {
     ...DEFAULT_CHART_PROPS,
@@ -106,7 +104,6 @@ export function BarChart(props: BarChartProps) {
         type={type}
         xAxisOptions={xAxisOptionsWithDefaults}
         yAxisOptions={yAxisOptionsWithDefaults}
-        enableHideLegendOverflow={enableHideLegendOverflow}
         renderHiddenLegendLabel={renderHiddenLegendLabel}
       />
     ) : (

@@ -40,7 +40,6 @@ export type StackedAreaChartProps = {
   theme?: string;
   xAxisOptions?: Partial<XAxisOptions>;
   yAxisOptions?: Partial<YAxisOptions>;
-  enableHideLegendOverflow?: boolean;
   renderHiddenLegendLabel?: (count: number) => string;
 } & ChartProps;
 
@@ -61,7 +60,6 @@ export function StackedAreaChart(props: StackedAreaChartProps) {
     showLegend = true,
     skipLinkText,
     theme = defaultTheme,
-    enableHideLegendOverflow = false,
     renderHiddenLegendLabel,
   } = {
     ...DEFAULT_CHART_PROPS,
@@ -105,7 +103,6 @@ export function StackedAreaChart(props: StackedAreaChartProps) {
             theme={theme}
             xAxisOptions={xAxisOptionsWithDefaults}
             yAxisOptions={yAxisOptionsWithDefaults}
-            enableHideLegendOverflow={enableHideLegendOverflow}
             renderHiddenLegendLabel={renderHiddenLegendLabel}
           />
         )}

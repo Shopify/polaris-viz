@@ -11,7 +11,6 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 - Hide overflowing LegendItems in LineChart, VerticalBarChart, and StackedAreaChart legends.
 - Update useColorVisionEvents to accept a root prop
-- Add enableHideLegendOverflow props to LineChart, BarChart, and StackedAreaChart
 
 
 ### Fixed

@@ -47,7 +47,6 @@ export type LineChartProps = {
   slots?: {
     chart?: (props: LineChartSlotProps) => JSX.Element;
   };
-  enableHideLegendOverflow?: boolean;
 } & ChartProps;
 
 export function LineChart(props: LineChartProps) {
@@ -70,7 +69,6 @@ export function LineChart(props: LineChartProps) {
     tooltipOptions,
     xAxisOptions,
     yAxisOptions,
-    enableHideLegendOverflow = false,
   } = {
     ...DEFAULT_CHART_PROPS,
     ...props,
@@ -121,7 +119,6 @@ export function LineChart(props: LineChartProps) {
             xAxisOptions={xAxisOptionsWithDefaults}
             yAxisOptions={yAxisOptionsWithDefaults}
             slots={props.slots}
-            enableHideLegendOverflow={enableHideLegendOverflow}
           />
         )}
       </ChartContainer>

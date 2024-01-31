@@ -28,7 +28,6 @@ export interface VerticalBarChartProps {
   emptyStateText?: string;
   renderLegendContent?: RenderLegendContent;
   type?: ChartType;
-  enableHideLegendOverflow?: boolean;
   renderHiddenLegendLabel?: (count: number) => string;
 }
 
@@ -43,7 +42,6 @@ export function VerticalBarChart({
   type = 'default',
   xAxisOptions,
   yAxisOptions,
-  enableHideLegendOverflow = false,
   renderHiddenLegendLabel,
 }: VerticalBarChartProps) {
   const selectedTheme = useTheme();
@@ -66,7 +64,6 @@ export function VerticalBarChart({
       type={type}
       xAxisOptions={xAxisOptions}
       yAxisOptions={yAxisOptions}
-      enableHideLegendOverflow={enableHideLegendOverflow}
       renderHiddenLegendLabel={renderHiddenLegendLabel}
     />
   );
