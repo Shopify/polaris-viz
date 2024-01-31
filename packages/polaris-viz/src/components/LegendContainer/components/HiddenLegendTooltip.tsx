@@ -37,7 +37,7 @@ interface Props {
 }
 
 export const LEGEND_TOOLTIP_ID = 'legend-toolip';
-const P_Z_INDEX_12 = 520;
+export const P_Z_INDEX_12 = 520;
 
 export function HiddenLegendTooltip({
   activeIndex,
