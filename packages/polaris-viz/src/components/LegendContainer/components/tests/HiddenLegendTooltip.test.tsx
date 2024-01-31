@@ -1,6 +1,9 @@
 import {mount} from '@shopify/react-testing';
 
-import {HiddenLegendTooltip} from '../HiddenLegendTooltip';
+import {
+  HiddenLegendTooltip,
+  LEGEND_TOOLIP_Z_INDEX,
+} from '../HiddenLegendTooltip';
 import {Legend} from '../../../Legend';
 
 const mockProps = {
@@ -51,7 +54,7 @@ describe('<HiddenLegendTooltip />', () => {
     expect(component.find('div')).toHaveReactProps({
       style: expect.objectContaining({
         visibility: 'visible',
-        zIndex: 1,
+        zIndex: LEGEND_TOOLIP_Z_INDEX,
       }),
     });
   });
@@ -64,7 +67,7 @@ describe('<HiddenLegendTooltip />', () => {
     expect(component.find('div')).toHaveReactProps({
       style: expect.objectContaining({
         visibility: 'visible',
-        zIndex: 1,
+        zIndex: LEGEND_TOOLIP_Z_INDEX,
       }),
     });
 
