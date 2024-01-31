@@ -37,6 +37,7 @@ interface Props {
 }
 
 export const LEGEND_TOOLTIP_ID = 'legend-toolip';
+const P_Z_INDEX_12 = 520;
 
 export function HiddenLegendTooltip({
   activeIndex,
@@ -152,7 +153,7 @@ export function HiddenLegendTooltip({
           id={tooltipId}
           style={{
             visibility: active ? 'visible' : 'hidden',
-            zIndex: active ? 1 : -100000,
+            zIndex: active ? P_Z_INDEX_12 : -100000,
             background: changeColorOpacity(
               selectedTheme.tooltip.backgroundColor,
               isFirefox ? 1 : TOOLTIP_BG_OPACITY,
