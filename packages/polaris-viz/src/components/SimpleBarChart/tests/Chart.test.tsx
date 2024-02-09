@@ -144,9 +144,15 @@ describe('<Chart />', () => {
           />,
         );
 
-        const labels = chart.findAll(Label);
+        const expectedValues = SERIES.flatMap((group) =>
+          group.data.map((item) => item.value),
+        );
 
-        expect(labels[0]).toContainReactText('5 pickles');
+        expectedValues.forEach((expectedValue) => {
+          expect(chart).toContainReactComponent(Label, {
+            label: `${expectedValue} pickles`,
+          });
+        });
       });
     });
   });
