@@ -2,6 +2,7 @@ import {mount} from '@shopify/react-testing';
 
 import {Label} from '../Label';
 import type {LabelProps} from '../Label';
+import {HORIZONTAL_BAR_LABEL_HEIGHT} from '../../../../../../constants';
 
 jest.mock('@shopify/polaris-viz-core/src/utilities', () => ({
   estimateStringWidth: jest.fn(() => 100),
@@ -16,22 +17,15 @@ const MOCK_PROPS: LabelProps = {
 };
 
 describe('<Label />', () => {
-  it('renders <foreignObject />', () => {
+  it('renders <text> element with label', () => {
     const label = mount(
       <svg>
         <Label {...MOCK_PROPS} />
       </svg>,
     );
-    expect(label).toContainReactComponent('foreignObject');
-  });
-
-  it('renders a text string', () => {
-    const label = mount(
-      <svg>
-        <Label {...MOCK_PROPS} />
-      </svg>,
-    );
-    expect(label).toContainReactText('Label Text');
+    expect(label).toContainReactComponent('text', {
+      children: 'Label Text',
+    });
   });
 
   it('is positioned', () => {
@@ -41,8 +35,16 @@ describe('<Label />', () => {
       </svg>,
     );
 
-    const object = label.find('foreignObject');
+    const object = label.find('text');
 
-    expect(object?.props.y).toStrictEqual(21.5);
+    expect(object?.props).toStrictEqual(
+      expect.objectContaining({
+        y: MOCK_PROPS.y + MOCK_PROPS.barHeight / 2,
+        width: MOCK_PROPS.labelWidth,
+        height: HORIZONTAL_BAR_LABEL_HEIGHT,
+        fontSize: '12px',
+        dominantBaseline: 'central',
+      }),
+    );
   });
 });
