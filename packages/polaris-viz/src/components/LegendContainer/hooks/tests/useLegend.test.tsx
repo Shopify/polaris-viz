@@ -56,12 +56,12 @@ describe('useLegend()', () => {
 
       expect(data).toStrictEqual({
         legend: [
-          {name: 'Breakfast', shape: 'Line'},
-          {name: 'Lunch', shape: 'Line'},
-          {name: 'Dinner', shape: 'Line'},
-          {name: 'Breakfast', shape: 'Bar'},
-          {name: 'Lunch', shape: 'Bar'},
-          {name: 'Dinner', shape: 'Bar'},
+          {name: 'Breakfast', shape: 'Line', value: '0'},
+          {name: 'Lunch', shape: 'Line', value: '0'},
+          {name: 'Dinner', shape: 'Line', value: '0'},
+          {name: 'Breakfast', shape: 'Bar', value: '0'},
+          {name: 'Lunch', shape: 'Bar', value: '0'},
+          {name: 'Dinner', shape: 'Bar', value: '0'},
         ],
         height: 60,
         width: 100,

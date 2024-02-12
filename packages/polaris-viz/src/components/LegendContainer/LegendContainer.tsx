@@ -1,5 +1,5 @@
 import type {CSSProperties, Dispatch, SetStateAction} from 'react';
-import {Fragment, useEffect, useMemo, useRef, useState} from 'react';
+import {Fragment, useEffect, useRef, useState} from 'react';
 import isEqual from 'fast-deep-equal';
 import {
   getColorVisionEventAttrs,
@@ -28,8 +28,8 @@ import {classNames} from '../../utilities';
 
 import style from './LegendContainer.scss';
 import {HiddenLegendTooltip} from './components/HiddenLegendTooltip';
-
-const LEGEND_GAP = 10;
+import type {UseOverflowLegendProps} from './hooks/useOverflowLegend';
+import {useOverflowLegend} from './hooks/useOverflowLegend';
 
 export interface LegendContainerProps {
   colorVisionType: string;
@@ -42,8 +42,6 @@ export interface LegendContainerProps {
   renderLegendContent?: RenderLegendContent;
   /* If enabled, hides overflowing legend items with "+ n more" */
   enableHideOverflow?: boolean;
-  /* Width is required if enableHideOverflow is true */
-  width?: number;
   renderHiddenLegendLabel?: RenderHiddenLegendLabel;
   dimensions?: BoundingRect;
 }
@@ -57,7 +55,6 @@ export function LegendContainer({
   position = 'bottom-right',
   maxWidth,
   renderLegendContent,
-  width = 0,
   enableHideOverflow = false,
   renderHiddenLegendLabel = (count) => `+${count} more`,
   dimensions,
@@ -78,36 +75,27 @@ export function LegendContainer({
   const legendItemDimensions = useRef([{width: 0, height: 0}]);
   const [activatorWidth, setActivatorWidth] = useState(0);
 
-  const {displayedData, hiddenData} = useMemo(() => {
-    if (!enableHideOverflow || direction === 'vertical') {
-      return {displayedData: allData, hiddenData: []};
-    }
+  const overflowLegendProps =
+    direction === 'horizontal'
+      ? {
+          direction: 'horizontal' as const,
+          data: allData,
+          enableHideOverflow,
+          legendItemDimensions,
+          width: dimensions?.width || 0,
+          activatorWidth,
+          leftMargin,
+          horizontalMargin,
+        }
+      : ({
+          direction: 'vertical' as const,
+          data: allData,
+          height: dimensions?.height,
+          enableHideOverflow,
+          legendItemDimensions,
+        } as UseOverflowLegendProps);
 
-    let lastVisibleIndex = allData.length;
-    const containerWidth =
-      width - leftMargin - horizontalMargin - activatorWidth;
-
-    legendItemDimensions.current.reduce((totalWidth, card, index) => {
-      if (totalWidth + card.width + index * LEGEND_GAP > containerWidth) {
-        lastVisibleIndex = index;
-      } else {
-        return totalWidth + card.width;
-      }
-    }, lastVisibleIndex);
-
-    return {
-      displayedData: allData.slice(0, lastVisibleIndex || 1),
-      hiddenData: allData.slice(lastVisibleIndex || 1, allData.length),
-    };
-  }, [
-    allData,
-    width,
-    leftMargin,
-    horizontalMargin,
-    activatorWidth,
-    enableHideOverflow,
-    direction,
-  ]);
+  const {displayedData, hiddenData} = useOverflowLegend(overflowLegendProps);
 
   const hasHiddenData =
     enableHideOverflow && displayedData.length < allData.length;

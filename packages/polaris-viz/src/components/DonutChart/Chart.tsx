@@ -29,6 +29,7 @@ import {Arc} from '../Arc';
 import type {
   ColorVisionInteractionMethods,
   LegendPosition,
+  RenderHiddenLegendLabel,
   RenderInnerValueContent,
   RenderLegendContent,
 } from '../../types';
@@ -57,6 +58,7 @@ export interface ChartProps {
   legendFullWidth?: boolean;
   renderInnerValueContent?: RenderInnerValueContent;
   renderLegendContent?: RenderLegendContent;
+  renderHiddenLegendLabel?: RenderHiddenLegendLabel;
   total?: number;
 }
 
@@ -75,6 +77,7 @@ export function Chart({
   legendFullWidth = false,
   renderInnerValueContent,
   renderLegendContent,
+  renderHiddenLegendLabel,
   total,
 }: ChartProps) {
   const {shouldAnimate, characterWidths} = useChartContext();
@@ -132,7 +135,10 @@ export function Chart({
     width && height && isLegendMounted,
   );
 
-  useColorVisionEvents({enabled: shouldUseColorVisionEvents});
+  useColorVisionEvents({
+    enabled: shouldUseColorVisionEvents,
+    dimensions: {...dimensions, x: 0, y: 0},
+  });
 
   useWatchColorVisionEvents({
     type: COLOR_VISION_SINGLE_ITEM,
@@ -179,9 +185,12 @@ export function Chart({
     return (
       <LegendValues
         data={data}
+        activeIndex={activeIndex}
         labelFormatter={labelFormatter}
         getColorVisionStyles={getColorVisionStyles}
         getColorVisionEventAttrs={getColorVisionEventAttrs}
+        dimensions={{...dimensions, x: 0, y: 0}}
+        renderHiddenLegendLabel={renderHiddenLegendLabel}
       />
     );
   };
@@ -190,6 +199,8 @@ export function Chart({
     !renderLegendContent &&
     showLegendValues &&
     (legendPosition === 'right' || legendPosition === 'left');
+
+  const isCornerPosition = legendPosition.includes('-');
 
   return (
     <div className={styles.DonutWrapper} style={containerAlignmentStyle}>
@@ -282,6 +293,8 @@ export function Chart({
           direction={legendDirection}
           position={legendPosition}
           maxWidth={maxLegendWidth}
+          enableHideOverflow={!isCornerPosition}
+          dimensions={{...dimensions, x: 0, y: 0}}
           renderLegendContent={
             shouldRenderLegendContentWithValues
               ? renderLegendContentWithValues

@@ -55,9 +55,15 @@ export function useLegend({
     }
 
     const legends = data.map(({series, shape}) => {
-      return series.map(({name, color, isComparison}) => {
+      return series.map(({name, color, isComparison, data, metadata}) => {
         return {
           name: name ?? '',
+          ...(data && {
+            value: data
+              .reduce((totalSum, current) => totalSum + (current.value || 0), 0)
+              .toString(),
+          }),
+          ...(metadata && {trend: metadata.trend}),
           color,
           shape,
           isComparison,

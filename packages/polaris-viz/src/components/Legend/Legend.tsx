@@ -17,6 +17,7 @@ export interface LegendProps {
   backgroundColor?: string;
   indexOffset?: number;
   truncate?: boolean;
+  showLegendValues?: boolean;
 }
 
 export function Legend({
@@ -28,6 +29,7 @@ export function Legend({
   indexOffset = 0,
   backgroundColor,
   truncate = false,
+  showLegendValues = false,
 }: LegendProps) {
   const {hiddenIndexes} = useExternalHideEvents();
 
@@ -51,6 +53,7 @@ export function Legend({
           }
         }}
         truncate={truncate}
+        showLegendValues={showLegendValues}
       />
     );
   });

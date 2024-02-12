@@ -137,6 +137,7 @@ export interface LegendData {
   isComparison?: boolean;
   shape?: Shape;
   value?: string;
+  trend?: MetaDataTrendIndicator;
 }
 
 export interface Annotation {

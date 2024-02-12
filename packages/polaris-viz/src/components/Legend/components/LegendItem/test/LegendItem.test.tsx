@@ -34,6 +34,7 @@ describe('<LegendItem />', () => {
         name="Legend Name"
         color="red"
         value="LegendValue"
+        showLegendValues
       />,
     );
 
