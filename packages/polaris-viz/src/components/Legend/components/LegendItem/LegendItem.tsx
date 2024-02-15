@@ -34,6 +34,7 @@ export interface LegendItemProps extends LegendData {
   onDimensionChange?: ({width, height}: LegendItemDimension) => void;
   backgroundColor?: string;
   truncate?: boolean;
+  showLegendValues?: boolean;
 }
 
 export function LegendItem({
@@ -50,6 +51,7 @@ export function LegendItem({
   onDimensionChange,
   backgroundColor,
   truncate = false,
+  showLegendValues = false,
 }: LegendItemProps) {
   const selectedTheme = useTheme(theme);
   const ref = useRef<HTMLButtonElement | null>(null);
@@ -117,7 +119,7 @@ export function LegendItem({
         >
           {name}
         </span>
-        {value == null ? null : (
+        {!showLegendValues || value == null ? null : (
           <span
             className={style.Text}
             style={{color: selectedTheme.legend.valueColor}}

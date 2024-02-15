@@ -431,7 +431,6 @@ export function Chart({
           onDimensionChange={setLegendDimensions}
           renderLegendContent={renderLegendContent}
           renderHiddenLegendLabel={renderHiddenLegendLabel}
-          width={width}
           dimensions={dimensions}
           enableHideOverflow
         />

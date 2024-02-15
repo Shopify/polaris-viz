@@ -1,29 +1,74 @@
+/* eslint-disable @shopify/strict-component-boundaries */
 import type {ColorVisionInteractionMethods, DataSeries} from 'index';
-import type {LabelFormatter} from '@shopify/polaris-viz-core';
-import {useTheme} from '@shopify/polaris-viz-core';
+import type {BoundingRect, LabelFormatter} from '@shopify/polaris-viz-core';
+import {
+  COLOR_VISION_SINGLE_ITEM,
+  clamp,
+  getSeriesColors,
+  useChartContext,
+  useTheme,
+} from '@shopify/polaris-viz-core';
+import React, {useRef} from 'react';
 
-import {TrendIndicator} from '../../../TrendIndicator';
+import {useOverflowLegend} from '../../../LegendContainer/hooks/useOverflowLegend';
 import {getTrendIndicatorData} from '../../../../utilities/getTrendIndicatorData';
-import {SquareColorPreview} from '../../../../components/SquareColorPreview';
+import {HiddenLegendTooltip} from '../../../LegendContainer/components/HiddenLegendTooltip';
+import {useLegend} from '../../../LegendContainer/hooks/useLegend';
+import type {RenderHiddenLegendLabel} from '../../../../types';
 
 import styles from './LegendValues.scss';
+import {LegendValueItem} from './components/LegendValueItem/LegendValueItem';
 
 interface LegendContentProps {
   data: DataSeries[];
+  activeIndex: number;
+  dimensions: BoundingRect;
   labelFormatter: LabelFormatter;
+  renderHiddenLegendLabel?: RenderHiddenLegendLabel;
   getColorVisionStyles: ColorVisionInteractionMethods['getColorVisionStyles'];
   getColorVisionEventAttrs: ColorVisionInteractionMethods['getColorVisionEventAttrs'];
 }
 
 export function LegendValues({
-  data,
+  data: allData,
+  activeIndex,
   labelFormatter,
+  renderHiddenLegendLabel = (count) => `+${count} more`,
   getColorVisionStyles,
   getColorVisionEventAttrs,
+  dimensions,
 }: LegendContentProps) {
   const selectedTheme = useTheme();
+  const {theme} = useChartContext();
 
-  const maxTrendIndicatorWidth = data.reduce((maxWidth, {metadata}) => {
+  const legendItemDimensions = useRef([{width: 0, height: 0}]);
+
+  const seriesCount = clamp({
+    amount: allData.length,
+    min: 1,
+    max: Infinity,
+  });
+
+  const seriesColors = getSeriesColors(seriesCount, selectedTheme);
+
+  const {legend: legendData, height} = useLegend({
+    showLegend: true,
+    data: [{series: allData, shape: 'Bar'}],
+    colors: seriesColors,
+    dimensions,
+  });
+
+  const {displayedData, hiddenData} = useOverflowLegend({
+    direction: 'vertical',
+    data: legendData,
+    height,
+    legendItemDimensions,
+    enableHideOverflow: true,
+  });
+
+  const hasHiddenData = displayedData.length < allData.length;
+
+  const maxTrendIndicatorWidth = allData.reduce((maxWidth, {metadata}) => {
     if (!metadata?.trend) {
       return maxWidth;
     }
@@ -34,60 +79,45 @@ export function LegendValues({
   }, 0);
 
   return (
-    <table className={styles.Table}>
-      {data.map(({name, data, metadata}, index) => {
-        const value = data[0].value;
-        const valueExists = value !== null && value !== undefined;
-
-        return (
-          <tr
-            key={name}
-            style={{
-              ...getColorVisionStyles(index),
-            }}
-            {...getColorVisionEventAttrs(index)}
-          >
-            <td className={styles.ColorPreview}>
-              <SquareColorPreview
-                color={selectedTheme.seriesColors.upToEight[index]}
+    <React.Fragment>
+      <table className={styles.Table}>
+        <tbody>
+          {displayedData.map(({name, value, trend}, index) => {
+            return (
+              <LegendValueItem
+                key={index}
+                name={name}
+                value={value}
+                trend={trend}
+                index={index}
+                maxTrendIndicatorWidth={maxTrendIndicatorWidth}
+                seriesColors={seriesColors}
+                onDimensionChange={(dimensions) => {
+                  if (legendItemDimensions.current) {
+                    legendItemDimensions.current[index] = dimensions;
+                  }
+                }}
+                getColorVisionEventAttrs={getColorVisionEventAttrs}
+                getColorVisionStyles={getColorVisionStyles}
+                labelFormatter={labelFormatter}
               />
-            </td>
+            );
+          })}
+        </tbody>
+      </table>
 
-            <td className={styles.Name}>
-              <span
-                style={{
-                  color: selectedTheme.legend.labelColor,
-                }}
-              >
-                {name}
-              </span>
-            </td>
-
-            <td className={styles.TableSpacer} />
-
-            <td className={styles.alignRight}>
-              <span
-                style={{
-                  color: selectedTheme.legend.labelColor,
-                }}
-              >
-                {valueExists ? labelFormatter(value) : '-'}
-              </span>
-            </td>
-
-            <td
-              className={styles.alignLeft}
-              style={{minWidth: maxTrendIndicatorWidth, paddingLeft: '4px'}}
-            >
-              <span>
-                {metadata?.trend && valueExists && (
-                  <TrendIndicator {...metadata.trend} />
-                )}
-              </span>
-            </td>
-          </tr>
-        );
-      })}
-    </table>
+      {hasHiddenData && (
+        <HiddenLegendTooltip
+          activeIndex={activeIndex}
+          colorVisionType={COLOR_VISION_SINGLE_ITEM}
+          data={hiddenData}
+          theme={theme}
+          label={renderHiddenLegendLabel(allData.length - displayedData.length)}
+          lastVisibleIndex={allData.length - hiddenData.length}
+          setActivatorWidth={() => null}
+          dimensions={dimensions}
+        />
+      )}
+    </React.Fragment>
   );
 }

@@ -8,6 +8,7 @@ import {ChartContainer} from '../ChartContainer';
 import type {ComparisonMetricProps} from '../ComparisonMetric';
 import type {
   LegendPosition,
+  RenderHiddenLegendLabel,
   RenderInnerValueContent,
   RenderLegendContent,
 } from '../../types';
@@ -25,6 +26,7 @@ export type DonutChartProps = {
   legendPosition?: LegendPosition;
   renderInnerValueContent?: RenderInnerValueContent;
   renderLegendContent?: RenderLegendContent;
+  renderHiddenLegendLabel?: RenderHiddenLegendLabel;
 } & ChartProps;
 
 export function DonutChart(props: DonutChartProps) {
@@ -45,6 +47,7 @@ export function DonutChart(props: DonutChartProps) {
     errorText,
     renderInnerValueContent,
     renderLegendContent,
+    renderHiddenLegendLabel,
   } = {
     ...DEFAULT_CHART_PROPS,
     ...props,
@@ -70,6 +73,7 @@ export function DonutChart(props: DonutChartProps) {
         legendPosition={legendPosition}
         renderInnerValueContent={renderInnerValueContent}
         renderLegendContent={renderLegendContent}
+        renderHiddenLegendLabel={renderHiddenLegendLabel}
         theme={theme}
       />
     </ChartContainer>

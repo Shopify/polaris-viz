@@ -62,6 +62,11 @@ export const RENDER_LEGEND_CONTENT_ARGS = {
     'This accepts a function that is called to render the legend content instead of the given legend. If `showLegend` is false, this prop will have no effect.',
 };
 
+export const RENDER_HIDDEN_LEGEND_LABEL_ARGS = {
+  description:
+    'This accepts a function that is called to render the hidden legend label shown when legend items are overflowed.',
+};
+
 export const RENDER_TOOLTIP_DESCRIPTION =
   'This accepts a function that is called to render the tooltip content. When necessary it calls `formatXAxisLabel` and/or `formatYAxisLabel` to format the `DataSeries[]` values and passes them to `<TooltipContent />`. [RenderTooltipContentData type definition.](https://polaris-viz.shopify.com/?path=/docs/polaris-viz-subcomponents-tooltipcontent-rendertooltipcontent--page)';
 
