@@ -40,6 +40,7 @@ export function FunnelChart(props: FunnelChartProps) {
     theme = defaultTheme,
     xAxisOptions,
     yAxisOptions,
+    id,
     isAnimated,
     state,
     errorText,
@@ -66,6 +67,7 @@ export function FunnelChart(props: FunnelChartProps) {
   return (
     <ChartContainer
       data={data}
+      id={id}
       isAnimated={isAnimated}
       onError={onError}
       theme={theme}

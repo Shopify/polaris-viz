@@ -55,6 +55,7 @@ export function StackedAreaChart(props: StackedAreaChartProps) {
     errorText,
     onError,
     tooltipOptions,
+    id,
     isAnimated,
     renderLegendContent,
     showLegend = true,
@@ -88,6 +89,7 @@ export function StackedAreaChart(props: StackedAreaChartProps) {
       <ChartContainer
         data={data}
         theme={theme}
+        id={id}
         isAnimated={isAnimated}
         onError={onError}
       >

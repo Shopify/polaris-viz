@@ -25,7 +25,7 @@ export function Playground() {
   // Without the id, useColorVisionEvents() won't
   // find any elements to attach the mouse events to.
   return (
-    <ChartContainer theme="Default" data={[]} isAnimated>
+    <ChartContainer id="playground_chart" theme="Default" data={[]} isAnimated>
       <Chart />
     </ChartContainer>
   );
