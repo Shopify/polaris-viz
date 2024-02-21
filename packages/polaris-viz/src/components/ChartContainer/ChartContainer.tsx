@@ -24,9 +24,9 @@ import {ChartDimensions} from './components/';
 interface Props {
   children: ReactElement;
   data: DataSeries[] | DataGroup[];
+  id: string | undefined;
   isAnimated: boolean;
   theme: string;
-  id?: string;
   onError?: ErrorBoundaryResponse;
   sparkChart?: boolean;
   skeletonType?: SkeletonType;

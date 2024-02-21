@@ -35,6 +35,7 @@ export function SimpleBarChart(props: SimpleBarChartProps) {
   const {defaultTheme} = usePolarisVizContext();
 
   const {
+    id,
     isAnimated,
     data,
     renderLegendContent,
@@ -58,6 +59,7 @@ export function SimpleBarChart(props: SimpleBarChartProps) {
     <ChartContainer
       data={data}
       theme={theme}
+      id={id}
       isAnimated={isAnimated}
       onError={onError}
     >

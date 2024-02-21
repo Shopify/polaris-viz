@@ -42,6 +42,7 @@ export function DonutChart(props: DonutChartProps) {
     legendFullWidth,
     legendPosition = 'left',
     onError,
+    id,
     isAnimated,
     state,
     errorText,
@@ -60,6 +61,7 @@ export function DonutChart(props: DonutChartProps) {
       onError={onError}
       theme={theme}
       isAnimated={isAnimated}
+      id={id}
     >
       <Chart
         errorText={errorText}

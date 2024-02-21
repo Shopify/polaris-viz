@@ -26,6 +26,7 @@ export function SparkBarChart(props: SparkBarChartProps) {
   const {
     data,
     accessibilityLabel,
+    id,
     isAnimated,
     onError,
     targetLine,
@@ -41,6 +42,7 @@ export function SparkBarChart(props: SparkBarChartProps) {
       data={data}
       theme={theme}
       sparkChart
+      id={id}
       isAnimated={isAnimated}
       onError={onError}
     >

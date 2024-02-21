@@ -39,6 +39,7 @@ export function SimpleNormalizedChart(props: SimpleNormalizedChartProps) {
     size = 'small',
     showLegend = true,
     theme = defaultTheme,
+    id,
     isAnimated,
     state,
     errorText,
@@ -53,6 +54,7 @@ export function SimpleNormalizedChart(props: SimpleNormalizedChartProps) {
     <ChartContainer
       data={data}
       theme={theme}
+      id={id}
       isAnimated={isAnimated}
       onError={onError}
     >
