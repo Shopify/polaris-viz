@@ -30,6 +30,9 @@ export type {
   TooltipContentProps,
   ComboChartProps,
   LineChartPredictiveProps,
+  TrendIndicatorProps,
+  DonutChartProps,
+  ComparisonMetricProps,
 } from './components';
 
 export {
@@ -45,6 +48,9 @@ export type {
   TooltipData,
   Trend,
   TrendDirection,
+  RenderTooltipContentData,
+  RenderLegendContent,
+  TooltipOptions,
 } from './types';
 
 export {
@@ -78,4 +84,8 @@ export type {
 
 export {renderLinearTooltipContent, setSingleSeriesActive} from './utilities';
 
-export {useWatchActiveSeries, setHiddenItems} from './hooks';
+export {
+  useWatchActiveSeries,
+  setHiddenItems,
+  useRenderTooltipContent,
+} from './hooks';
