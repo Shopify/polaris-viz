@@ -8,7 +8,10 @@ import {
 
 import {useWatchColorVisionEvents} from '../../../hooks';
 import {getBarId} from '../../../utilities';
-import {HORIZONTAL_GROUP_LABEL_HEIGHT} from '../../../constants';
+import {
+  HORIZONTAL_GROUP_LABEL_HEIGHT,
+  NEGATIVE_ZERO_LINE_OFFSET,
+} from '../../../constants';
 import type {FormattedStackedSeries} from '../../../types';
 import {getGradientDefId} from '..';
 import {ZeroValueLine} from '../ZeroValueLine';
@@ -120,7 +123,11 @@ export function HorizontalStackedBars({
         return (
           <Fragment key={`stackedBar ${barId}`}>
             {areAllValuesZero ? (
-              <ZeroValueLine x={x} y={barHeight / 2} direction="horizontal" />
+              <ZeroValueLine
+                x={x - NEGATIVE_ZERO_LINE_OFFSET}
+                y={barHeight / 2}
+                direction="horizontal"
+              />
             ) : (
               <StackedBar
                 animationDelay={animationDelay}
