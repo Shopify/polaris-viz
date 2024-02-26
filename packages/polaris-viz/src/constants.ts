@@ -54,6 +54,7 @@ export const COLLAPSED_ANNOTATIONS_COUNT = 3;
 export const PREVIEW_ICON_SIZE = 12;
 export const ARC_PAD_ANGLE = 0.02;
 export const ZERO_VALUE_LINE_HEIGHT = 6;
+export const NEGATIVE_ZERO_LINE_OFFSET = 10;
 export const IS_DEVELOPMENT = process.env.NODE_ENV === 'development';
 export const IS_TEST = process.env.NODE_ENV === 'test';
 export const WARN_FOR_DEVELOPMENT = IS_DEVELOPMENT && !IS_TEST;
