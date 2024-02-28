@@ -86,6 +86,7 @@ export {renderLinearTooltipContent, setSingleSeriesActive} from './utilities';
 
 export {
   useWatchActiveSeries,
+  setActiveSeriesListener,
   setHiddenItems,
   useRenderTooltipContent,
 } from './hooks';
