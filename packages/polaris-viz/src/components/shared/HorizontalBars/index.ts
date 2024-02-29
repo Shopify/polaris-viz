@@ -1,2 +1,3 @@
 export {HorizontalBars} from './HorizontalBars';
-export {Label} from './components';
+export {Label} from '../Label';
+export {LabelWrapper} from '../LabelWrapper';

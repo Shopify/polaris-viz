@@ -5,7 +5,8 @@ import type {DataSeries} from '@shopify/polaris-viz-core';
 import type {HorizontalBarsProps} from '../HorizontalBars';
 import {HorizontalBars} from '../HorizontalBars';
 import {Bar} from '../../Bar';
-import {Label, LabelWrapper} from '../components';
+import {Label} from '../../Label';
+import {LabelWrapper} from '../../LabelWrapper';
 import {TrendIndicator} from '../../..';
 
 jest.mock('d3-scale', () => ({

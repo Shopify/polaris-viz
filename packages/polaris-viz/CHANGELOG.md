@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Added
+
+- Added the group sum labels for the Horizontal Stacked Bar Chart.
+
 ### Fixed
 
 - Fixed the positioning of the `<ZeroLine />` for the Stacked Horizontal Chart when all values are negative.

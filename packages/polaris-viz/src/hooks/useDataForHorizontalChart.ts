@@ -38,7 +38,7 @@ export function useDataForHorizontalChart({
   );
 
   const longestLabel = useMemo(() => {
-    if (!isSimple || isStacked) {
+    if (!isSimple && !isStacked) {
       return {positive: 0, negative: 0};
     }
 

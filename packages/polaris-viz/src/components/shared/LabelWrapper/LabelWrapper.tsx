@@ -1,7 +1,7 @@
 import {animated, useSpring} from '@react-spring/web';
 import type {ReactNode} from 'react';
 
-import {useBarSpringConfig} from '../../../../../hooks/useBarSpringConfig';
+import {useBarSpringConfig} from '../../../hooks/useBarSpringConfig';
 
 interface Props {
   animationDelay: number;
