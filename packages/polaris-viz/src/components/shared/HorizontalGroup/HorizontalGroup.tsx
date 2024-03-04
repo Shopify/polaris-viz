@@ -131,6 +131,9 @@ export function HorizontalGroup({
           name={name}
           stackedValues={stackedValues}
           xScale={xScale}
+          areAllNegative={areAllNegative}
+          labelFormatter={xAxisOptions.labelFormatter}
+          isSimple={isSimple}
         />
       ) : (
         <HorizontalBars

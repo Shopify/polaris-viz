@@ -5,8 +5,25 @@ export {META as default} from './meta';
 import type {BarChartProps} from '../../../components';
 
 import {Template} from './data';
+import {PolarisVizProvider} from '../../PolarisVizProvider';
 
-export const HorizontalStacked: Story<BarChartProps> = Template.bind({});
+export const HorizontalStacked: Story<BarChartProps> = (
+  args: BarChartProps,
+) => {
+  return (
+    <PolarisVizProvider
+      themes={{
+        Default: {
+          groupLabel: {
+            hide: true,
+          },
+        },
+      }}
+    >
+      <Template {...args} />
+    </PolarisVizProvider>
+  );
+};
 
 HorizontalStacked.args = {
   data: [
@@ -48,5 +65,5 @@ HorizontalStacked.args = {
     },
   ],
   type: 'stacked',
-  direction: 'horizontal'
+  direction: 'horizontal',
 };

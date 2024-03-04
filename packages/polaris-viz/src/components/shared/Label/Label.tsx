@@ -1,4 +1,4 @@
-import {HORIZONTAL_BAR_LABEL_HEIGHT, FONT_SIZE} from '../../../../../constants';
+import {HORIZONTAL_BAR_LABEL_HEIGHT, FONT_SIZE} from '../../../constants';
 
 export interface LabelProps {
   barHeight: number;

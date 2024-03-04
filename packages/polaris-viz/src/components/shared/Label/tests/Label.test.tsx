@@ -2,7 +2,7 @@ import {mount} from '@shopify/react-testing';
 
 import {Label} from '../Label';
 import type {LabelProps} from '../Label';
-import {HORIZONTAL_BAR_LABEL_HEIGHT} from '../../../../../../constants';
+import {HORIZONTAL_BAR_LABEL_HEIGHT} from '../../../../constants';
 
 jest.mock('@shopify/polaris-viz-core/src/utilities', () => ({
   estimateStringWidth: jest.fn(() => 100),

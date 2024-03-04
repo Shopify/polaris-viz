@@ -126,7 +126,7 @@ describe('useDataForHorizontalChart()', () => {
 
       const data = JSON.parse(result.domNode?.dataset.data ?? '');
 
-      expect(data.longestLabel).toStrictEqual({negative: 0, positive: 0});
+      expect(data.longestLabel).toStrictEqual({negative: 110, positive: 110});
     });
   });
 

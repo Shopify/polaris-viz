@@ -19,8 +19,10 @@ import {
 } from '../../../constants';
 import {useTheme, useWatchColorVisionEvents} from '../../../hooks';
 import {getGradientDefId} from '../GradientDefs';
+import {Label} from '../Label';
+import {LabelWrapper} from '../LabelWrapper';
+import {Bar} from '../Bar';
 
-import {Label, Bar, LabelWrapper} from './components';
 import styles from './HorizontalBars.scss';
 
 const SERIES_DELAY = 150;

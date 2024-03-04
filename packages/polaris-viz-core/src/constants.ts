@@ -137,6 +137,7 @@ const DEFAULT_GRID_VERTICAL_OVERFLOW = true;
 const DEFAULT_GRID_HORIZONTAL_MARGIN = 16;
 
 const DEFAULT_X_AXIS_HIDE = false;
+const DEFAULT_GROUP_LABEL_HIDE = false;
 
 const DEFAULT_CROSSHAIR_WIDTH = 1;
 
@@ -211,6 +212,9 @@ export const DEFAULT_THEME: Theme = {
   yAxis: {
     backgroundColor: variables.colorGray160,
     labelColor: variables.colorGray30,
+  },
+  groupLabel: {
+    hide: DEFAULT_GROUP_LABEL_HIDE,
   },
   crossHair: {
     color: variables.colorGray70,
@@ -316,6 +320,9 @@ export const LIGHT_THEME: Theme = {
   yAxis: {
     backgroundColor: variables.colorGray00,
     labelColor: variables.colorGray100,
+  },
+  groupLabel: {
+    hide: DEFAULT_GROUP_LABEL_HIDE,
   },
   crossHair: {
     color: variables.colorGray40,

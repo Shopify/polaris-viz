@@ -2,14 +2,29 @@ import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
 import {BORDER_RADIUS} from '@shopify/polaris-viz-core';
 
+import {
+  mountWithProvider,
+  mockDefaultTheme,
+} from '../../../../test-utilities/mountWithProvider';
 import type {HorizontalStackedBarsProps} from '../HorizontalStackedBars';
 import {HorizontalStackedBars} from '../HorizontalStackedBars';
 import {StackedBar} from '../components';
+import {Label} from '../../Label';
 import type {FormattedStackedSeries} from '../../../../types';
 
 jest.mock('d3-scale', () => ({
   scaleLinear: jest.requireActual('d3-scale').scaleLinear,
 }));
+
+jest.mock(
+  '@shopify/polaris-viz-core/src/utilities/estimateStringWidth',
+  () => ({
+    ...jest.requireActual(
+      '@shopify/polaris-viz-core/src/utilities/estimateStringWidth',
+    ),
+    estimateStringWidth: () => 100,
+  }),
+);
 
 const STACKED_VALUES = [
   [
@@ -40,6 +55,8 @@ const MOCK_PROPS: HorizontalStackedBarsProps = {
   name: 'stacked',
   stackedValues: STACKED_VALUES as FormattedStackedSeries[],
   xScale: scaleLinear(),
+  isSimple: false,
+  labelFormatter: (value) => `${value}`,
 };
 
 describe('<HorizontalStackedBars />', () => {
@@ -130,5 +147,57 @@ describe('Zero Value', () => {
       </svg>,
     );
     expect(chart).not.toContainReactComponent('line');
+  });
+
+  describe('Label', () => {
+    it('renders <Label /> when isSimple is false and hideGroupLabel is false', () => {
+      const chart = mountWithProvider(
+        <svg>
+          <HorizontalStackedBars {...MOCK_PROPS} />
+        </svg>,
+        mockDefaultTheme({groupLabel: {hide: false}}),
+      );
+
+      expect(chart).toContainReactComponent(Label);
+    });
+
+    it('does not render <Label /> when isSimple and hideGroup is true', () => {
+      const chart = mountWithProvider(
+        <svg>
+          <HorizontalStackedBars {...MOCK_PROPS} isSimple />
+        </svg>,
+        mockDefaultTheme({groupLabel: {hide: true}}),
+      );
+
+      expect(chart).not.toContainReactComponent(Label);
+    });
+
+    it('does not render <Label /> when isSimple and hideGroup is false', () => {
+      const chart = mountWithProvider(
+        <svg>
+          <HorizontalStackedBars {...MOCK_PROPS} isSimple />
+        </svg>,
+        mockDefaultTheme({groupLabel: {hide: false}}),
+      );
+
+      expect(chart).not.toContainReactComponent(Label);
+    });
+  });
+
+  describe('labelFormatter', () => {
+    it('renders a formatted label', () => {
+      const chart = mount(
+        <svg>
+          <HorizontalStackedBars
+            {...MOCK_PROPS}
+            labelFormatter={(value) => `${value}%`}
+          />
+        </svg>,
+      );
+
+      const labels = chart.findAll(Label);
+
+      expect(labels[0].props.label).toStrictEqual('0%');
+    });
   });
 });

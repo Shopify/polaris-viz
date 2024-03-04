@@ -111,6 +111,10 @@ export interface YAxisTheme {
   backgroundColor: string;
 }
 
+export interface GroupLabelTheme {
+  hide: boolean;
+}
+
 export interface AnnotationsTheme {
   backgroundColor: string;
   textColor: string;
@@ -173,6 +177,7 @@ export interface PartialTheme {
   grid?: Partial<GridTheme>;
   xAxis?: Partial<XAxisTheme>;
   yAxis?: Partial<YAxisTheme>;
+  groupLabel?: Partial<GroupLabelTheme>;
   crossHair?: Partial<CrossHairTheme>;
   legend?: Partial<LegendTheme>;
   seriesColors?: Partial<SeriesColors>;
@@ -189,6 +194,7 @@ export interface Theme {
   grid: GridTheme;
   xAxis: XAxisTheme;
   yAxis: YAxisTheme;
+  groupLabel: GroupLabelTheme;
   line: LineTheme;
   crossHair: CrossHairTheme;
   legend: LegendTheme;
