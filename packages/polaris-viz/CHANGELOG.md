@@ -17,6 +17,14 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 - Fixed the positioning of the `<ZeroLine />` for the Stacked Horizontal Chart when all values are negative.
 
+### Changed
+
+- Allow `useWatchActiveSeries` to accept `null` as an `id` to disable attaching events.
+
+### Added
+
+- Export `setActiveSeriesListener()`.
+
 ## [10.5.2] - 2024-02-22
 
 ### Added
