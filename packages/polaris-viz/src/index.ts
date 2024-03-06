@@ -18,6 +18,7 @@ export {
   TrendIndicator,
   LineChartRelational,
   LineChartPredictive,
+  MissingDataArea,
 } from './components';
 
 export type {
@@ -51,6 +52,9 @@ export type {
   RenderTooltipContentData,
   RenderLegendContent,
   TooltipOptions,
+  ColorVisionEventReturn,
+  Annotation,
+  LineChartSlotProps,
 } from './types';
 
 export {
