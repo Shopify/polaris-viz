@@ -39,6 +39,7 @@ const ignoredFiles = [
   'SimpleNormalizedChart',
   'LineChartRelational',
   'LineChartPredictive',
+  'MissingDataArea',
 ];
 
 const componentsPerPackage = readFiles().map(({indexSrc, packageDir}) => {
