@@ -11,6 +11,7 @@ import type {
   ChartProps,
 } from '@shopify/polaris-viz-core';
 
+import {getTooltipContentRenderer} from '../../utilities/getTooltipContentRenderer';
 import {fillMissingDataPoints} from '../../utilities/fillMissingDataPoints';
 import {
   getXAxisOptionsWithDefaults,
@@ -25,7 +26,6 @@ import type {
   RenderLegendContent,
   TooltipOptions,
 } from '../../types';
-import {useRenderTooltipContent} from '../../hooks';
 
 import {Chart} from './Chart';
 
@@ -70,7 +70,11 @@ export function StackedAreaChart(props: StackedAreaChartProps) {
   const data = fillMissingDataPoints(dataSeries, true);
 
   const skipLinkAnchorId = useRef(uniqueId('stackedAreaChart'));
-  const renderTooltip = useRenderTooltipContent({tooltipOptions, theme, data});
+  const renderTooltip = getTooltipContentRenderer({
+    tooltipOptions,
+    theme,
+    data,
+  });
 
   if (data.length === 0) {
     return null;

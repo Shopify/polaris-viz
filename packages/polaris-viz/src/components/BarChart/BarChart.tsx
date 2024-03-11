@@ -14,6 +14,7 @@ import type {
   ChartProps,
 } from '@shopify/polaris-viz-core';
 
+import {getTooltipContentRenderer} from '../../utilities/getTooltipContentRenderer';
 import {ChartContainer} from '../../components/ChartContainer';
 import type {
   Annotation,
@@ -26,7 +27,6 @@ import {
   getYAxisOptionsWithDefaults,
   normalizeData,
 } from '../../utilities';
-import {useRenderTooltipContent} from '../../hooks';
 import {HorizontalBarChart} from '../HorizontalBarChart';
 import {VerticalBarChart} from '../VerticalBarChart';
 import {ChartSkeleton} from '../../components/ChartSkeleton';
@@ -91,7 +91,11 @@ export function BarChart(props: BarChartProps) {
 
   const annotationsLookupTable = normalizeData(annotations, 'startKey');
 
-  const renderTooltip = useRenderTooltipContent({tooltipOptions, theme, data});
+  const renderTooltip = getTooltipContentRenderer({
+    tooltipOptions,
+    theme,
+    data,
+  });
 
   const ChartByDirection =
     direction === 'vertical' ? (

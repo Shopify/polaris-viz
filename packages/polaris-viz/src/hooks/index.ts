@@ -20,7 +20,6 @@ export {
 } from './ColorVisionA11y';
 export {useCallbackRef} from './useCallbackRef';
 export {useLinearLabelsAndDimensions} from './useLinearLabelsAndDimensions';
-export {useRenderTooltipContent} from './useRenderTooltipContent';
 
 export {
   useTheme,

@@ -4,7 +4,7 @@ import type {TooltipOptions, RenderTooltipContentData} from '../types';
 import {formatDataForTooltip} from '../utilities';
 import {TooltipContent} from '../components';
 
-export function useRenderTooltipContent({
+export function getTooltipContentRenderer({
   tooltipOptions = {},
   theme,
   data,

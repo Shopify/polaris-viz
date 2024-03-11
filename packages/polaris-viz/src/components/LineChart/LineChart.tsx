@@ -12,6 +12,7 @@ import {
   usePolarisVizContext,
 } from '@shopify/polaris-viz-core';
 
+import {getTooltipContentRenderer} from '../../utilities/getTooltipContentRenderer';
 import {fillMissingDataPoints} from '../../utilities/fillMissingDataPoints';
 import {getLineChartDataWithDefaults} from '../../utilities/getLineChartDataWithDefaults';
 import {ChartContainer} from '../../components/ChartContainer';
@@ -23,7 +24,7 @@ import {
   normalizeData,
 } from '../../utilities';
 import {SkipLink} from '../SkipLink';
-import {useRenderTooltipContent, useTheme} from '../../hooks';
+import {useTheme} from '../../hooks';
 import type {
   Annotation,
   LineChartSlotProps,
@@ -84,7 +85,11 @@ export function LineChart(props: LineChartProps) {
   const xAxisOptionsWithDefaults = getXAxisOptionsWithDefaults(xAxisOptions);
   const yAxisOptionsWithDefaults = getYAxisOptionsWithDefaults(yAxisOptions);
 
-  const renderTooltip = useRenderTooltipContent({tooltipOptions, theme, data});
+  const renderTooltip = getTooltipContentRenderer({
+    tooltipOptions,
+    theme,
+    data,
+  });
   const annotationsLookupTable = normalizeData(annotations, 'startKey');
 
   const dataWithDefaults = getLineChartDataWithDefaults(data, seriesColors);
