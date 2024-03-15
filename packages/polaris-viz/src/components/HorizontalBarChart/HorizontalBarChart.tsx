@@ -4,7 +4,7 @@ import type {
   ChartType,
   XAxisOptions,
   YAxisOptions,
-  Dimensions,
+  BoundingRect,
 } from '@shopify/polaris-viz-core';
 
 import type {
@@ -22,7 +22,7 @@ export interface HorizontalBarChartProps {
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
   annotationsLookupTable?: AnnotationLookupTable;
-  dimensions?: Dimensions;
+  dimensions?: BoundingRect;
   renderLegendContent?: RenderLegendContent;
   type?: ChartType;
 }
