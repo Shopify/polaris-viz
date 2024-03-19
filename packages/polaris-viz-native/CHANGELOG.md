@@ -7,6 +7,8 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- ## Unreleased -->
 
+Upgrade `react-native-svg` dependency to latest v15.1.0.
+
 ## [11.0.0] - 2024-03-12
 
 - No updates. Transitive dependency bump.
