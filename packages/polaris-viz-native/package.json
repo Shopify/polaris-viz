@@ -20,7 +20,7 @@
     "@shopify/polaris-viz-core": "^11.0.0",
     "d3-scale": "^4.0.2",
     "d3-shape": "^3.1.0",
-    "react-native-svg": "12.1.1"
+    "react-native-svg": "15.1.0"
   },
   "devDependencies": {
     "@quilted/react-testing": "^0.5.25",
