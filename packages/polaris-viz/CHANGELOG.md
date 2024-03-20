@@ -7,6 +7,12 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- ## Unreleased -->
 
+## [11.1.0] - 2024-03-19
+
+### Changed
+
+- Added `PolarisUpliftTheme` to better support extending the Uplift theme.
+
 ## [11.0.0] - 2024-03-12
 
 ### Changed
