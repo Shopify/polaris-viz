@@ -1,12 +1,17 @@
-import {DEFAULT_CHART_PROPS} from '@shopify/polaris-viz-core';
+import {
+  DEFAULT_CHART_PROPS,
+  DEFAULT_THEME_NAME,
+} from '@shopify/polaris-viz-core';
 import {Fragment} from 'react';
 
 import type {LineChartProps} from '../LineChart';
 import {LineChart} from '../LineChart';
 
-import {RelatedAreas, MissingDataArea} from './components';
+import {RelatedAreas, MissingDataArea, CustomLegend} from './components';
 
-export function LineChartRelational(props: LineChartProps) {
+export function LineChartRelational(
+  props: Omit<LineChartProps, 'renderLegendContent'>,
+) {
   const {
     annotations = [],
     data,
@@ -14,7 +19,6 @@ export function LineChartRelational(props: LineChartProps) {
     emptyStateText,
     id,
     isAnimated,
-    renderLegendContent,
     showLegend = true,
     skipLinkText,
     state,
@@ -27,15 +31,37 @@ export function LineChartRelational(props: LineChartProps) {
     ...props,
   };
 
+  const dataWithHiddenRelational = data.map((series) => {
+    return {
+      ...series,
+      metadata: {
+        ...series.metadata,
+        isVisuallyHidden: series.metadata?.relatedIndex != null,
+      },
+    };
+  });
+
   return (
     <LineChart
       annotations={annotations}
-      data={data}
+      data={dataWithHiddenRelational}
       emptyStateText={emptyStateText}
       errorText={errorText}
       id={id}
       isAnimated={isAnimated}
-      renderLegendContent={renderLegendContent}
+      renderLegendContent={({
+        getColorVisionStyles,
+        getColorVisionEventAttrs,
+      }) => {
+        return (
+          <CustomLegend
+            getColorVisionStyles={getColorVisionStyles}
+            getColorVisionEventAttrs={getColorVisionEventAttrs}
+            data={data}
+            theme={theme ?? DEFAULT_THEME_NAME}
+          />
+        );
+      }}
       showLegend={showLegend}
       skipLinkText={skipLinkText}
       slots={{

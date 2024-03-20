@@ -342,6 +342,10 @@ export function Chart({
           })}
 
           {data.map((singleSeries, index) => {
+            if (singleSeries.metadata?.isVisuallyHidden === true) {
+              return null;
+            }
+
             return (
               <LineSeries
                 activeLineIndex={activeLineIndex}

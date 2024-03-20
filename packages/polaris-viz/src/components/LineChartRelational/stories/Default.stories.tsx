@@ -11,4 +11,6 @@ Default.args = {
   ...DEFAULT_PROPS,
   data: DEFAULT_DATA,
   isAnimated: false,
+  showLegend: true,
+  theme: 'Uplift',
 };

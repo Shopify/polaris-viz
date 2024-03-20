@@ -65,6 +65,10 @@ export function Points({
   return (
     <Fragment>
       {data.map((singleSeries, seriesIndex) => {
+        if (singleSeries?.metadata?.isVisuallyHidden === true) {
+          return null;
+        }
+
         const index = singleSeries.metadata?.relatedIndex ?? seriesIndex;
 
         if (hiddenIndexes.includes(index)) {

@@ -1,6 +1,7 @@
 import type {Story} from '@storybook/react';
 import type {RenderTooltipContentData} from 'types';
 import type {DataSeries} from '@shopify/polaris-viz-core';
+import {UPLIFT_THEME} from '@shopify/polaris-viz-core';
 import type {LineChartProps} from 'components/LineChart/LineChart';
 
 import {LineChartRelational} from '../LineChartRelational';
@@ -80,10 +81,7 @@ export const DEFAULT_DATA: DataSeries[] = [
       {value: 849, key: '2020-03-13T12:00:00'},
       {value: 129, key: '2020-03-14T12:00:00'},
     ],
-    color: [
-      {offset: 0, color: 'rgba(149, 101, 255, 1)'},
-      {offset: 100, color: 'rgba(75, 146, 229, 1)'},
-    ],
+    color: UPLIFT_THEME.seriesColors.upToEight[0],
   },
   {
     name: '75th Percentile',
@@ -103,14 +101,15 @@ export const DEFAULT_DATA: DataSeries[] = [
       {value: 773, key: '2020-03-13T12:00:00'},
       {value: 171, key: '2020-03-14T12:00:00'},
     ],
-    color: 'rgba(103, 197, 228, 1)',
+    color: 'rgba(218, 182, 242, 1)',
     metadata: {
       relatedIndex: 2,
-      areaColor: 'rgba(103, 197, 228, 0.1)',
+      areaColor: 'rgba(218, 182, 242, 0.2)',
+      legendLabel: '75th - 25th percentile',
     },
     styleOverride: {
-      line: {
-        hasArea: false,
+      tooltip: {
+        shape: 'Bar',
       },
     },
   },
@@ -132,11 +131,7 @@ export const DEFAULT_DATA: DataSeries[] = [
       {value: 623, key: '2020-03-13T12:00:00'},
       {value: 21, key: '2020-03-14T12:00:00'},
     ],
-    color: 'rgba(40, 106, 123, 1)',
-    metadata: {
-      relatedIndex: 3,
-      areaColor: 'rgba(47, 175, 218, 0.2)',
-    },
+    color: UPLIFT_THEME.seriesColors.upToEight[5],
     styleOverride: {
       line: {
         hasArea: false,
@@ -162,10 +157,15 @@ export const DEFAULT_DATA: DataSeries[] = [
       {value: 473, key: '2020-03-13T12:00:00'},
       {value: 0, key: '2020-03-14T12:00:00'},
     ],
-    color: 'rgba(103, 197, 228, 1)',
+    color: 'rgba(218, 182, 242, 1)',
+    metadata: {
+      relatedIndex: 2,
+      areaColor: 'rgba(218, 182, 242, 0.2)',
+      legendLabel: '75th - 25th percentile',
+    },
     styleOverride: {
-      line: {
-        hasArea: false,
+      tooltip: {
+        shape: 'Bar',
       },
     },
   },

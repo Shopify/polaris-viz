@@ -51,7 +51,7 @@ export function renderLinearTooltipContent(
   };
 
   function renderSeriesIcon(color, styleOverride): ReactNode {
-    if (styleOverride == null) {
+    if (styleOverride?.line == null) {
       return null;
     }
 
@@ -110,7 +110,7 @@ export function renderLinearTooltipContent(
                   renderSeriesIcon={() =>
                     renderSeriesIcon(color, styleOverride)
                   }
-                  shape="Line"
+                  shape={styleOverride?.tooltip?.shape ?? 'Line'}
                   value={formatters.valueFormatter(item.value ?? 0)}
                 />
               );

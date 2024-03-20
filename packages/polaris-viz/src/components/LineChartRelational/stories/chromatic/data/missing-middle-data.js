@@ -40,15 +40,9 @@ export const MISSING_MIDDLE_DATA = [
       {value: 773, key: '2020-03-13T12:00:00'},
       {value: 171, key: '2020-03-14T12:00:00'},
     ],
-    color: 'rgba(103, 197, 228, 1)',
     metadata: {
       relatedIndex: 2,
       areaColor: 'rgba(103, 197, 228, 0.1)',
-    },
-    styleOverride: {
-      line: {
-        hasArea: false,
-      },
     },
   },
   {
@@ -70,10 +64,6 @@ export const MISSING_MIDDLE_DATA = [
       {value: 21, key: '2020-03-14T12:00:00'},
     ],
     color: 'rgba(40, 106, 123, 1)',
-    metadata: {
-      relatedIndex: 3,
-      areaColor: 'rgba(47, 175, 218, 0.2)',
-    },
     styleOverride: {
       line: {
         hasArea: false,
@@ -99,11 +89,9 @@ export const MISSING_MIDDLE_DATA = [
       {value: 473, key: '2020-03-13T12:00:00'},
       {value: 0, key: '2020-03-14T12:00:00'},
     ],
-    color: 'rgba(103, 197, 228, 1)',
-    styleOverride: {
-      line: {
-        hasArea: false,
-      },
+    metadata: {
+      relatedIndex: 2,
+      areaColor: 'rgba(103, 197, 228, 0.1)',
     },
   },
 ];
