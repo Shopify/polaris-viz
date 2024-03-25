@@ -5,7 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-<!-- ## Unreleased -->
+## Unreleased
+
+### Added
+
+- Added `tooltip.shape` override value to `DataSeries.styleOverride`.
+- **Breaking change** Added custom legend to `<LineChartRelational />`.
+
+
+### Changed
+
+- **Breaking change** `<LineChartRelational />` no longer renders all lines in the `DataSeries[]`. Any `DataSeries` with `metadata.relatedIndex` will only render the area in the chart.
+- **Breaking change** `metadata.relatedIndex` should now refer to the single "median" index and not the next index to draw the area to.
 
 ## [11.1.0] - 2024-03-19
 

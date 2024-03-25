@@ -27,6 +27,9 @@ interface StyleOverride {
     width?: number;
     strokeDasharray?: string;
   };
+  tooltip?: {
+    shape?: Shape;
+  };
 }
 
 export interface DataGroup {

@@ -57,7 +57,7 @@ export function Area({
       style={{
         ...getColorVisionStylesForActiveIndex({
           activeIndex,
-          index: -1,
+          index,
           fadedOpacity: 0.2,
         }),
       }}
