@@ -11,7 +11,6 @@ import {
 import type {
   DataSeries,
   ChartType,
-  Dimensions,
   XAxisOptions,
   YAxisOptions,
   BoundingRect,
@@ -64,7 +63,8 @@ export interface ChartProps {
   type: ChartType;
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
-  dimensions?: Dimensions;
+  dimensions?: BoundingRect;
+  renderHiddenLegendLabel?: (count: number) => string;
   renderLegendContent?: RenderLegendContent;
 }
 
@@ -72,6 +72,7 @@ export function Chart({
   annotationsLookupTable,
   data,
   dimensions,
+  renderHiddenLegendLabel,
   renderLegendContent,
   renderTooltipContent,
   showLegend,
@@ -305,8 +306,11 @@ export function Chart({
         <LegendContainer
           colorVisionType={COLOR_VISION_SINGLE_ITEM}
           data={legend}
+          dimensions={dimensions}
+          enableHideOverflow
           onDimensionChange={setLegendDimensions}
           renderLegendContent={renderLegendContent}
+          renderHiddenLegendLabel={renderHiddenLegendLabel}
         />
       )}
     </ChartElements.Div>
