@@ -21,6 +21,7 @@ interface Props {
   value?: string;
   trend?: MetaDataTrendIndicator;
   labelFormatter: LabelFormatter;
+  longestLegendValueWidth: number;
   seriesColors: Color[];
   maxTrendIndicatorWidth: number;
   onDimensionChange: (dimensions: Dimensions) => void;
@@ -33,6 +34,7 @@ export function LegendValueItem({
   value,
   index,
   labelFormatter,
+  longestLegendValueWidth,
   trend,
   seriesColors,
   maxTrendIndicatorWidth,
@@ -73,13 +75,12 @@ export function LegendValueItem({
         style={{
           color: selectedTheme.legend.labelColor,
         }}
+        title={name}
       >
         <span>{name}</span>
       </td>
 
-      <td className={styles.TableSpacer} />
-
-      <td className={styles.alignRight}>
+      <td className={styles.alignRight} width={longestLegendValueWidth}>
         <span
           style={{
             color: selectedTheme.legend.labelColor,
@@ -89,12 +90,17 @@ export function LegendValueItem({
         </span>
       </td>
 
-      <td
-        className={styles.alignLeft}
-        style={{minWidth: maxTrendIndicatorWidth, paddingLeft: '4px'}}
-      >
-        <span>{trend && valueExists && <TrendIndicator {...trend} />}</span>
-      </td>
+      {trend && valueExists && (
+        <td
+          className={styles.alignLeft}
+          width={maxTrendIndicatorWidth}
+          style={{minWidth: maxTrendIndicatorWidth, paddingLeft: '4px'}}
+        >
+          <span>
+            <TrendIndicator {...trend} />
+          </span>
+        </td>
+      )}
     </tr>
   );
 }

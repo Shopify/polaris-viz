@@ -93,12 +93,13 @@ export function LegendItem({
         paddingRight: LEGEND_ITEM_RIGHT_PADDING,
         gap: LEGEND_ITEM_GAP,
         // if there is overflow, add a max width and truncate with ellipsis
-        maxWidth: truncate ? minWidth : undefined,
+        maxWidth: truncate ? minWidth : '100%',
         // if the item width is less than the minWidth, don't set a min width
         minWidth: width < minWidth ? undefined : minWidth,
       }}
       className={style.Legend}
       ref={ref}
+      title={name}
     >
       {renderSeriesIcon == null ? (
         <span
