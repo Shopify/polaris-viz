@@ -115,6 +115,7 @@ export function BarChart(props: BarChartProps) {
       <HorizontalBarChart
         annotationsLookupTable={annotationsLookupTable}
         data={data}
+        renderHiddenLegendLabel={renderHiddenLegendLabel}
         renderLegendContent={renderLegendContent}
         renderTooltipContent={renderTooltip}
         showLegend={showLegend}
