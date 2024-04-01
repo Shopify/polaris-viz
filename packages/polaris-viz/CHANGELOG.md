@@ -5,7 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-<!-- ## Unreleased -->
+## Unreleased
+
+### Added
+
+- Added `seriesNameFormatter` prop to `<SimpleNormalizedChart />` to allow consumers to format the series name.
 
 ## [12.1.0] - 2024-04-01
 
