@@ -29,8 +29,9 @@ import styles from './SimpleNormalizedChart.scss';
 
 export interface ChartProps {
   data: DataSeries[];
+  labelFormatter: LabelFormatter;
+  seriesNameFormatter: LabelFormatter;
   comparisonMetrics?: Omit<ComparisonMetricProps, 'theme'>[];
-  labelFormatter?: LabelFormatter;
   legendPosition?: LegendPosition;
   direction?: Direction;
   size?: Size;
@@ -41,8 +42,9 @@ export interface ChartProps {
 export function Chart({
   comparisonMetrics = [],
   data,
-  labelFormatter = (value) => `${value}`,
+  labelFormatter,
   legendPosition = 'top-left',
+  seriesNameFormatter,
   direction = 'horizontal',
   size = 'small',
   showLegend = true,
@@ -146,12 +148,16 @@ export function Chart({
           );
 
           const formattedValue = labelFormatter(value);
+          const formattedName = seriesNameFormatter(
+            data[index].name?.toString() ?? '',
+          );
+
           return (
             <BarLabel
               activeIndex={activeIndex}
               index={index}
               key={`${key}-${formattedValue}-${index}`}
-              label={`${data[index].name}`}
+              label={formattedName}
               value={formattedValue}
               color={colors[index]}
               comparisonMetric={comparisonMetric}

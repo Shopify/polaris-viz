@@ -21,6 +21,7 @@ export type SimpleNormalizedChartProps = {
   comparisonMetrics?: ComparisonMetricProps[];
   labelFormatter?: LabelFormatter;
   legendPosition?: LegendPosition;
+  seriesNameFormatter?: LabelFormatter;
   direction?: Direction;
   size?: Size;
   showLegend?: boolean;
@@ -35,6 +36,7 @@ export function SimpleNormalizedChart(props: SimpleNormalizedChartProps) {
     data,
     labelFormatter = (value) => `${value}`,
     legendPosition = 'top-left',
+    seriesNameFormatter = (value) => `${value}`,
     direction = 'horizontal',
     size = 'small',
     showLegend = true,
@@ -73,6 +75,7 @@ export function SimpleNormalizedChart(props: SimpleNormalizedChartProps) {
           data={data}
           labelFormatter={labelFormatter}
           legendPosition={legendPosition}
+          seriesNameFormatter={seriesNameFormatter}
           showLegend={showLegend}
           direction={direction}
           size={size}
