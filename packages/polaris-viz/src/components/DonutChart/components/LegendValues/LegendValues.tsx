@@ -24,6 +24,7 @@ interface LegendContentProps {
   activeIndex: number;
   dimensions: BoundingRect;
   labelFormatter: LabelFormatter;
+  longestLegendValueWidth: number;
   renderHiddenLegendLabel?: RenderHiddenLegendLabel;
   getColorVisionStyles: ColorVisionInteractionMethods['getColorVisionStyles'];
   getColorVisionEventAttrs: ColorVisionInteractionMethods['getColorVisionEventAttrs'];
@@ -33,6 +34,7 @@ export function LegendValues({
   data: allData,
   activeIndex,
   labelFormatter,
+  longestLegendValueWidth,
   renderHiddenLegendLabel = (count) => `+${count} more`,
   getColorVisionStyles,
   getColorVisionEventAttrs,
@@ -90,6 +92,7 @@ export function LegendValues({
                 value={value}
                 trend={trend}
                 index={index}
+                longestLegendValueWidth={longestLegendValueWidth}
                 maxTrendIndicatorWidth={maxTrendIndicatorWidth}
                 seriesColors={seriesColors}
                 onDimensionChange={(dimensions) => {

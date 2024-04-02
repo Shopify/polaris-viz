@@ -4,13 +4,10 @@
 
 .Name {
   overflow: hidden;
-  text-wrap: nowrap;
+  white-space: nowrap;
   text-overflow: ellipsis;
   padding-left: 4px;
-}
-
-.TableSpacer {
-  padding-left: 30px;
+  padding-right: 20px;
 }
 
 .alignLeft {

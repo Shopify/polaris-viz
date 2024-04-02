@@ -7,6 +7,7 @@ import {
   useUniqueId,
   ChartState,
   useChartContext,
+  estimateStringWidth,
 } from '@shopify/polaris-viz-core';
 import type {
   DataPoint,
@@ -17,7 +18,6 @@ import type {
 } from '@shopify/polaris-viz-core';
 
 import {getContainerAlignmentForLegend} from '../../utilities';
-import {estimateLegendItemWidth} from '../Legend';
 import type {ComparisonMetricProps} from '../ComparisonMetric';
 import {LegendContainer, useLegend} from '../../components/LegendContainer';
 import {
@@ -40,7 +40,6 @@ import {InnerValue, LegendValues} from './components';
 
 const ERROR_ANIMATION_PADDING = 40;
 const FULL_CIRCLE = Math.PI * 2;
-const MAX_LEGEND_WIDTH_PERCENTAGE = 0.35;
 const RADIUS_PADDING = 20;
 
 export interface ChartProps {
@@ -98,28 +97,8 @@ export function Chart({
       ? 'vertical'
       : 'horizontal';
 
-  const longestLegendWidth = data.reduce((previous, current) => {
-    const estimatedLegendWidth = estimateLegendItemWidth(
-      showLegendValues === true
-        ? `${current.name ?? ''} ${current.data[0].value}`
-        : `${current.name ?? ''}`,
-      characterWidths,
-    );
-
-    if (estimatedLegendWidth > previous) {
-      return estimatedLegendWidth;
-    }
-
-    return previous;
-  }, 0);
-
   const maxLegendWidth =
-    legendDirection === 'vertical'
-      ? Math.max(
-          longestLegendWidth,
-          dimensions.width * MAX_LEGEND_WIDTH_PERCENTAGE,
-        )
-      : 0;
+    legendDirection === 'vertical' ? dimensions.width / 2 : 0;
 
   const {height, width, legend, setLegendDimensions, isLegendMounted} =
     useLegend({
@@ -130,6 +109,19 @@ export function Chart({
       colors: seriesColor,
       maxWidth: maxLegendWidth,
     });
+
+  const longestLegendValueWidth = legend.reduce((previous, current) => {
+    const estimatedLegendWidth = estimateStringWidth(
+      `${labelFormatter(`${current.value || ''}`)}`,
+      characterWidths,
+    );
+
+    if (estimatedLegendWidth > previous) {
+      return estimatedLegendWidth;
+    }
+
+    return previous;
+  }, 0);
 
   const shouldUseColorVisionEvents = Boolean(
     width && height && isLegendMounted,
@@ -147,7 +139,10 @@ export function Chart({
     },
   });
 
-  if (!width || !height) return null;
+  if (!width || !height) {
+    return null;
+  }
+
   const diameter = Math.min(height, width);
   const radius = diameter / 2;
 
@@ -187,6 +182,7 @@ export function Chart({
         data={data}
         activeIndex={activeIndex}
         labelFormatter={labelFormatter}
+        longestLegendValueWidth={longestLegendValueWidth}
         getColorVisionStyles={getColorVisionStyles}
         getColorVisionEventAttrs={getColorVisionEventAttrs}
         dimensions={{...dimensions, x: 0, y: 0}}
