@@ -7,6 +7,7 @@ import {
 
 import {ChartContainer} from '../ChartContainer';
 import {ChartSkeleton} from '../ChartSkeleton';
+import {fillMissingDataPoints} from '../../utilities/fillMissingDataPoints';
 
 import {Chart} from './Chart';
 
@@ -20,7 +21,7 @@ export function SparkLineChart(props: SparkLineChartProps) {
   const {defaultTheme} = usePolarisVizContext();
 
   const {
-    data,
+    data: dataSeries,
     accessibilityLabel,
     id,
     isAnimated,
@@ -34,6 +35,8 @@ export function SparkLineChart(props: SparkLineChartProps) {
     ...DEFAULT_CHART_PROPS,
     ...props,
   };
+
+  const data = fillMissingDataPoints(dataSeries, true);
 
   return (
     <ChartContainer
