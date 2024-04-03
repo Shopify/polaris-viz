@@ -28,6 +28,7 @@ interface LegendContentProps {
   renderHiddenLegendLabel?: RenderHiddenLegendLabel;
   getColorVisionStyles: ColorVisionInteractionMethods['getColorVisionStyles'];
   getColorVisionEventAttrs: ColorVisionInteractionMethods['getColorVisionEventAttrs'];
+  seriesNameFormatter: LabelFormatter;
 }
 
 export function LegendValues({
@@ -39,6 +40,7 @@ export function LegendValues({
   getColorVisionStyles,
   getColorVisionEventAttrs,
   dimensions,
+  seriesNameFormatter,
 }: LegendContentProps) {
   const selectedTheme = useTheme();
   const {theme} = useChartContext();
@@ -95,6 +97,7 @@ export function LegendValues({
                 longestLegendValueWidth={longestLegendValueWidth}
                 maxTrendIndicatorWidth={maxTrendIndicatorWidth}
                 seriesColors={seriesColors}
+                seriesNameFormatter={seriesNameFormatter}
                 onDimensionChange={(dimensions) => {
                   if (legendItemDimensions.current) {
                     legendItemDimensions.current[index] = dimensions;

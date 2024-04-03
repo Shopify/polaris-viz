@@ -23,6 +23,7 @@ interface Props {
   labelFormatter: LabelFormatter;
   longestLegendValueWidth: number;
   seriesColors: Color[];
+  seriesNameFormatter: LabelFormatter;
   maxTrendIndicatorWidth: number;
   onDimensionChange: (dimensions: Dimensions) => void;
   getColorVisionStyles: ColorVisionInteractionMethods['getColorVisionStyles'];
@@ -37,6 +38,7 @@ export function LegendValueItem({
   longestLegendValueWidth,
   trend,
   seriesColors,
+  seriesNameFormatter,
   maxTrendIndicatorWidth,
   onDimensionChange,
   getColorVisionStyles,
@@ -77,7 +79,7 @@ export function LegendValueItem({
         }}
         title={name}
       >
-        <span>{name}</span>
+        <span>{seriesNameFormatter(name)}</span>
       </td>
 
       <td className={styles.alignRight} width={longestLegendValueWidth}>

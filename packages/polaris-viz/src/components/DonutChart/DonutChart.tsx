@@ -27,6 +27,7 @@ export type DonutChartProps = {
   renderInnerValueContent?: RenderInnerValueContent;
   renderLegendContent?: RenderLegendContent;
   renderHiddenLegendLabel?: RenderHiddenLegendLabel;
+  seriesNameFormatter?: LabelFormatter;
 } & ChartProps;
 
 export function DonutChart(props: DonutChartProps) {
@@ -49,6 +50,7 @@ export function DonutChart(props: DonutChartProps) {
     renderInnerValueContent,
     renderLegendContent,
     renderHiddenLegendLabel,
+    seriesNameFormatter = (value) => `${value}`,
   } = {
     ...DEFAULT_CHART_PROPS,
     ...props,
@@ -76,6 +78,7 @@ export function DonutChart(props: DonutChartProps) {
         renderInnerValueContent={renderInnerValueContent}
         renderLegendContent={renderLegendContent}
         renderHiddenLegendLabel={renderHiddenLegendLabel}
+        seriesNameFormatter={seriesNameFormatter}
         theme={theme}
       />
     </ChartContainer>
