@@ -17,6 +17,7 @@ import type {
   Direction,
 } from '@shopify/polaris-viz-core';
 
+import {getAnimationDelayForItems} from '../../utilities/getAnimationDelayForItems';
 import {getContainerAlignmentForLegend} from '../../utilities';
 import type {ComparisonMetricProps} from '../ComparisonMetric';
 import {LegendContainer, useLegend} from '../../components/LegendContainer';
@@ -245,6 +246,9 @@ export function Chart({
                           >
                             <Arc
                               isAnimated={shouldAnimate}
+                              animationDelay={getAnimationDelayForItems(
+                                pieChartData.length,
+                              )}
                               index={index}
                               activeIndex={activeIndex}
                               width={diameter}

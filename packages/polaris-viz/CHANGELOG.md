@@ -10,6 +10,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Changed
 
 - Fill missing values for SparkLine charts
+- Made `<DonutChart />` animation delay based on slice count, not a set `index * 100ms`.
 
 ## [12.4.1] - 2024-04-03
 

@@ -29,12 +29,14 @@ export interface ArcProps {
   color: Color;
   cornerRadius: number;
   thickness: number;
+  animationDelay?: number;
   index?: number;
   isAnimated: boolean;
   activeIndex?: number;
 }
 
 export function Arc({
+  animationDelay = 100,
   radius,
   width,
   height,
@@ -52,7 +54,7 @@ export function Arc({
   const gradient = getGradientFromColor(color);
 
   const springConfig = useSpringConfig({
-    animationDelay: index * 100,
+    animationDelay: index * animationDelay,
     shouldAnimate: isAnimated,
     mountedSpringConfig: ARC_DATA_CHANGE_ANIMATION_CONFIG,
     unmountedSpringConfig: ARC_LOAD_ANIMATION_CONFIG,
