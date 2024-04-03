@@ -13,7 +13,7 @@ import {
   useChartContext,
   useTheme,
 } from '@shopify/polaris-viz-core';
-import type {BoundingRect} from '@shopify/polaris-viz-core';
+import type {BoundingRect, LabelFormatter} from '@shopify/polaris-viz-core';
 
 import type {LegendData} from '../../../types';
 import {TOOLTIP_BG_OPACITY} from '../../../constants';
@@ -34,6 +34,7 @@ interface Props {
   theme?: string;
   lastVisibleIndex?: number;
   dimensions?: BoundingRect;
+  seriesNameFormatter?: LabelFormatter;
 }
 
 export const LEGEND_TOOLTIP_ID = 'legend-toolip';
@@ -48,6 +49,7 @@ export function HiddenLegendTooltip({
   lastVisibleIndex = 0,
   setActivatorWidth,
   dimensions,
+  seriesNameFormatter,
 }: Props) {
   const selectedTheme = useTheme();
   const {isFirefox} = useBrowserCheck();
@@ -168,6 +170,7 @@ export function HiddenLegendTooltip({
             theme={theme}
             indexOffset={lastVisibleIndex}
             backgroundColor="transparent"
+            seriesNameFormatter={seriesNameFormatter}
           />
         </div>,
         container,

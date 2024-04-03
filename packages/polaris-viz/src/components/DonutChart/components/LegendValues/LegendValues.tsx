@@ -122,6 +122,7 @@ export function LegendValues({
           lastVisibleIndex={allData.length - hiddenData.length}
           setActivatorWidth={() => null}
           dimensions={dimensions}
+          seriesNameFormatter={seriesNameFormatter}
         />
       )}
     </React.Fragment>

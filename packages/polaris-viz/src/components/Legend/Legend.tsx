@@ -1,5 +1,6 @@
 import {Fragment} from 'react';
 import type {RefObject} from 'react';
+import type {LabelFormatter} from '@shopify/polaris-viz-core';
 import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 import {useExternalHideEvents} from '../../hooks';
@@ -18,6 +19,7 @@ export interface LegendProps {
   indexOffset?: number;
   truncate?: boolean;
   showLegendValues?: boolean;
+  seriesNameFormatter?: LabelFormatter;
 }
 
 export function Legend({
@@ -30,6 +32,7 @@ export function Legend({
   backgroundColor,
   truncate = false,
   showLegendValues = false,
+  seriesNameFormatter,
 }: LegendProps) {
   const {hiddenIndexes} = useExternalHideEvents();
 
@@ -54,6 +57,7 @@ export function Legend({
         }}
         truncate={truncate}
         showLegendValues={showLegendValues}
+        seriesNameFormatter={seriesNameFormatter}
       />
     );
   });
