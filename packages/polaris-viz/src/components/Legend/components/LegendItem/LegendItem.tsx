@@ -1,3 +1,4 @@
+import type {LabelFormatter} from '@shopify/polaris-viz-core';
 import {
   getColorVisionEventAttrs,
   getColorVisionStylesForActiveIndex,
@@ -35,6 +36,7 @@ export interface LegendItemProps extends LegendData {
   backgroundColor?: string;
   truncate?: boolean;
   showLegendValues?: boolean;
+  seriesNameFormatter?: LabelFormatter;
 }
 
 export function LegendItem({
@@ -52,6 +54,7 @@ export function LegendItem({
   backgroundColor,
   truncate = false,
   showLegendValues = false,
+  seriesNameFormatter = (value) => `${value}`,
 }: LegendItemProps) {
   const selectedTheme = useTheme(theme);
   const ref = useRef<HTMLButtonElement | null>(null);
@@ -118,7 +121,7 @@ export function LegendItem({
             color: selectedTheme.legend.labelColor,
           }}
         >
-          {name}
+          {seriesNameFormatter(name)}
         </span>
         {!showLegendValues || value == null ? null : (
           <span
