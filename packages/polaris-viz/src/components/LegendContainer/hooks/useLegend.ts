@@ -4,6 +4,7 @@ import type {
   Dimensions,
   DataGroup,
   Direction,
+  LabelFormatter,
 } from '@shopify/polaris-viz-core';
 import {LEGENDS_TOP_MARGIN} from '@shopify/polaris-viz-core';
 
@@ -32,6 +33,7 @@ export interface Props {
   dimensions?: Dimensions;
   direction?: Direction;
   maxWidth?: number;
+  seriesNameFormatter?: LabelFormatter;
 }
 
 export function useLegend({
@@ -41,6 +43,7 @@ export function useLegend({
   showLegend,
   direction = 'horizontal',
   maxWidth = 0,
+  seriesNameFormatter = (value) => `${value}`,
 }: Props) {
   const defaultHeight = showLegend ? DEFAULT_LEGEND_HEIGHT : 0;
 
@@ -57,7 +60,7 @@ export function useLegend({
     const legends = data.map(({series, shape}) => {
       return series.map(({name, color, isComparison, data, metadata}) => {
         return {
-          name: name ?? '',
+          name: seriesNameFormatter(name ?? ''),
           ...(data && {
             value: data
               .reduce((totalSum, current) => totalSum + (current.value || 0), 0)
@@ -77,7 +80,7 @@ export function useLegend({
         color: color ?? colors[index],
       };
     });
-  }, [colors, data, showLegend]);
+  }, [colors, data, seriesNameFormatter, showLegend]);
 
   const {height, width} = useMemo(() => {
     if (showLegend === false) {

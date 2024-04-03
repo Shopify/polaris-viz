@@ -46,6 +46,7 @@ export interface ChartProps {
   data: DataSeries[];
   labelFormatter: LabelFormatter;
   legendPosition: LegendPosition;
+  seriesNameFormatter: LabelFormatter;
   showLegend: boolean;
   showLegendValues: boolean;
   state: ChartState;
@@ -77,6 +78,7 @@ export function Chart({
   renderInnerValueContent,
   renderLegendContent,
   renderHiddenLegendLabel,
+  seriesNameFormatter,
   total,
 }: ChartProps) {
   const {shouldAnimate, characterWidths} = useChartContext();
@@ -108,6 +110,7 @@ export function Chart({
       direction: legendDirection,
       colors: seriesColor,
       maxWidth: maxLegendWidth,
+      seriesNameFormatter,
     });
 
   const longestLegendValueWidth = legend.reduce((previous, current) => {
@@ -187,6 +190,7 @@ export function Chart({
         getColorVisionEventAttrs={getColorVisionEventAttrs}
         dimensions={{...dimensions, x: 0, y: 0}}
         renderHiddenLegendLabel={renderHiddenLegendLabel}
+        seriesNameFormatter={seriesNameFormatter}
       />
     );
   };
