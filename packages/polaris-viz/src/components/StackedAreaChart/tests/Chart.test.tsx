@@ -71,6 +71,7 @@ const MOCK_PROPS: Props = {
     labelFormatter: (value) => `Day ${value}`,
   },
   yAxisOptions: {
+    fixedWidth: false,
     labelFormatter: (value) => `${value}`,
     integersOnly: false,
   },
@@ -78,6 +79,7 @@ const MOCK_PROPS: Props = {
   renderTooltipContent: jest.fn(() => <p>Mock Tooltip Content</p>),
   showLegend: false,
   theme: 'Default',
+  seriesNameFormatter: (value) => `${value}`,
 };
 
 describe('<Chart />', () => {

@@ -3,6 +3,7 @@ import type {
   XAxisOptions,
   ChartProps,
   YAxisOptions,
+  LabelFormatter,
 } from '@shopify/polaris-viz-core';
 import {
   DEFAULT_CHART_PROPS,
@@ -25,6 +26,7 @@ export type SimpleBarChartProps = {
   data: SimpleBarChartDataSeries[];
   renderLegendContent?: RenderLegendContent;
   legendPosition?: LegendPosition;
+  seriesNameFormatter?: LabelFormatter;
   showLegend?: boolean;
   type?: ChartType;
   xAxisOptions?: XAxisOptions;
@@ -41,6 +43,7 @@ export function SimpleBarChart(props: SimpleBarChartProps) {
     renderLegendContent,
     legendPosition = 'bottom-right',
     onError,
+    seriesNameFormatter = (value) => `${value}`,
     showLegend = true,
     theme = defaultTheme,
     type = 'default',
@@ -74,6 +77,7 @@ export function SimpleBarChart(props: SimpleBarChartProps) {
         <Chart
           data={data}
           renderLegendContent={renderLegendContent}
+          seriesNameFormatter={seriesNameFormatter}
           legendPosition={legendPosition}
           showLegend={showLegend}
           type={type}

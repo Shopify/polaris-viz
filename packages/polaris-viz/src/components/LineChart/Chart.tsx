@@ -17,6 +17,7 @@ import type {
   YAxisOptions,
   LineChartDataSeriesWithDefaults,
   BoundingRect,
+  LabelFormatter,
 } from '@shopify/polaris-viz-core';
 
 import {useExternalHideEvents} from '../../hooks/ExternalEvents';
@@ -71,6 +72,7 @@ export interface ChartProps {
   renderTooltipContent: (data: RenderTooltipContentData) => ReactNode;
   annotationsLookupTable: AnnotationLookupTable;
   data: LineChartDataSeriesWithDefaults[];
+  seriesNameFormatter: LabelFormatter;
   showLegend: boolean;
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
@@ -92,6 +94,7 @@ export function Chart({
   renderLegendContent,
   renderTooltipContent,
   renderHiddenLegendLabel,
+  seriesNameFormatter,
   showLegend = true,
   slots,
   theme = DEFAULT_THEME_NAME,
@@ -120,6 +123,7 @@ export function Chart({
     ],
     dimensions,
     showLegend,
+    seriesNameFormatter,
   });
 
   useWatchColorVisionEvents({
@@ -199,6 +203,7 @@ export function Chart({
     renderTooltipContent,
     indexForLabels,
     hiddenIndexes: hiddenLineIndexes,
+    seriesNameFormatter,
   });
 
   if (xScale == null || drawableWidth == null || yAxisLabelWidth == null) {

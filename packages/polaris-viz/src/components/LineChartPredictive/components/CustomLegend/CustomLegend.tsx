@@ -1,3 +1,5 @@
+import type {LabelFormatter} from '@shopify/polaris-viz-core';
+
 import type {LineChartPredictiveDataSeries} from '../../../../components/LineChartPredictive/types';
 import type {ColorVisionInteractionMethods} from '../../../../types';
 import {LegendItem} from '../../../../components/Legend';
@@ -5,9 +7,10 @@ import {SeriesIcon} from '../SeriesIcon';
 
 import styles from './CustomLegend.scss';
 
-interface Props extends ColorVisionInteractionMethods {
+export interface Props extends ColorVisionInteractionMethods {
   data: LineChartPredictiveDataSeries[];
   predictiveSeriesNames: string[];
+  seriesNameFormatter: LabelFormatter;
   theme: string;
 }
 
@@ -16,6 +19,7 @@ export function CustomLegend({
   predictiveSeriesNames,
   getColorVisionEventAttrs,
   getColorVisionStyles,
+  seriesNameFormatter,
   theme,
 }: Props) {
   return (
@@ -46,7 +50,7 @@ export function CustomLegend({
                   : undefined
               }
               isComparison={isComparison}
-              name={name!}
+              name={seriesNameFormatter(name ?? '')}
               shape="Line"
               theme={theme}
             />

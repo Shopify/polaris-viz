@@ -8,6 +8,7 @@ import type {
   YAxisOptions,
   Dimensions,
   BoundingRect,
+  LabelFormatter,
 } from '@shopify/polaris-viz-core';
 import {
   useUniqueId,
@@ -74,6 +75,7 @@ export interface Props {
   annotationsLookupTable: AnnotationLookupTable;
   data: DataSeries[];
   renderTooltipContent(data: RenderTooltipContentData): ReactNode;
+  seriesNameFormatter: LabelFormatter;
   showLegend: boolean;
   theme: string;
   xAxisOptions: Required<XAxisOptions>;
@@ -94,6 +96,7 @@ export function Chart({
   theme,
   yAxisOptions,
   renderHiddenLegendLabel,
+  seriesNameFormatter,
 }: Props) {
   useColorVisionEvents({enabled: data.length > 1});
 
@@ -115,6 +118,7 @@ export function Chart({
     ],
     dimensions,
     showLegend,
+    seriesNameFormatter,
   });
 
   const tooltipId = useUniqueId('stackedAreaChart');
@@ -191,6 +195,7 @@ export function Chart({
     data,
     renderTooltipContent,
     seriesColors,
+    seriesNameFormatter,
   });
 
   const lineGenerator = useMemo(() => {

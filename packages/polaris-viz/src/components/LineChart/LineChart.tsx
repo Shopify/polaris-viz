@@ -3,6 +3,7 @@ import type {
   XAxisOptions,
   YAxisOptions,
   ChartProps,
+  LabelFormatter,
 } from '@shopify/polaris-viz-core';
 import {
   InternalChartType,
@@ -40,6 +41,7 @@ export type LineChartProps = {
   emptyStateText?: string;
   renderLegendContent?: RenderLegendContent;
   renderHiddenLegendLabel?: (count: number) => string;
+  seriesNameFormatter?: LabelFormatter;
   showLegend?: boolean;
   skipLinkText?: string;
   tooltipOptions?: TooltipOptions;
@@ -63,6 +65,7 @@ export function LineChart(props: LineChartProps) {
     onError,
     renderLegendContent,
     renderHiddenLegendLabel,
+    seriesNameFormatter = (value) => `${value}`,
     showLegend = true,
     skipLinkText,
     state,
@@ -119,6 +122,7 @@ export function LineChart(props: LineChartProps) {
             renderLegendContent={renderLegendContent}
             renderTooltipContent={renderTooltip}
             renderHiddenLegendLabel={renderHiddenLegendLabel}
+            seriesNameFormatter={seriesNameFormatter}
             showLegend={showLegend}
             theme={theme}
             xAxisOptions={xAxisOptionsWithDefaults}

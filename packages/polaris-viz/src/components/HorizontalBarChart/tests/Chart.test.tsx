@@ -57,21 +57,24 @@ const MOCK_PROPS: ChartProps = {
   dimensions: {
     height: 300,
     width: 600,
+    x: 0,
+    y: 0,
   },
-  isAnimated: false,
   renderTooltipContent: (value) => `${value}`,
   data: DATA,
   xAxisOptions: {
+    allowLineWrap: false,
     labelFormatter: (value) => `${value}`,
     hide: false,
   },
   yAxisOptions: {
+    fixedWidth: false,
     labelFormatter: (value) => `${value}`,
     integersOnly: false,
   },
   showLegend: false,
   type: 'default',
-  theme: 'Default',
+  seriesNameFormatter: (value) => `${value}`,
 };
 
 describe('<Chart />', () => {

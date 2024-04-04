@@ -1,12 +1,13 @@
-import type {DataSeries} from '@shopify/polaris-viz-core';
+import type {DataSeries, LabelFormatter} from '@shopify/polaris-viz-core';
 
 import type {ColorVisionInteractionMethods} from '../../../../types';
 import {LegendItem} from '../../../../components/Legend';
 
 import styles from './CustomLegend.scss';
 
-interface Props extends ColorVisionInteractionMethods {
+export interface Props extends ColorVisionInteractionMethods {
   data: DataSeries[];
+  seriesNameFormatter: LabelFormatter;
   theme: string;
 }
 
@@ -14,6 +15,7 @@ export function CustomLegend({
   data,
   getColorVisionEventAttrs,
   getColorVisionStyles,
+  seriesNameFormatter,
   theme,
 }: Props) {
   const lineSeries = data.filter(
@@ -47,7 +49,7 @@ export function CustomLegend({
               color={color!}
               index={index}
               isComparison={isComparison}
-              name={name!}
+              name={seriesNameFormatter(name ?? '')}
               shape="Line"
               theme={theme}
             />
@@ -66,7 +68,7 @@ export function CustomLegend({
             percentileItems[0].color ?? percentileItems[0]?.metadata?.areaColor
           }
           index={percentileIndex}
-          name={percentileItems[0]?.metadata?.legendLabel}
+          name={seriesNameFormatter(percentileItems[0]?.metadata?.legendLabel)}
           shape="Bar"
           theme={theme}
         />

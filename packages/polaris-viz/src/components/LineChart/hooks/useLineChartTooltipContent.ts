@@ -1,14 +1,18 @@
-import type {LineChartDataSeriesWithDefaults} from '@shopify/polaris-viz-core';
+import type {
+  LabelFormatter,
+  LineChartDataSeriesWithDefaults,
+} from '@shopify/polaris-viz-core';
 import {useChartContext} from '@shopify/polaris-viz-core';
 import type {ReactNode} from 'react';
 import {useCallback} from 'react';
 
 import type {RenderTooltipContentData} from '../../../types';
 
-interface Props {
+export interface Props {
   data: LineChartDataSeriesWithDefaults[];
   indexForLabels: number;
   renderTooltipContent: (data: RenderTooltipContentData) => ReactNode;
+  seriesNameFormatter: LabelFormatter;
   hiddenIndexes?: number[];
 }
 
@@ -17,6 +21,7 @@ export function useLineChartTooltipContent({
   hiddenIndexes = [],
   indexForLabels,
   renderTooltipContent,
+  seriesNameFormatter,
 }: Props) {
   const {theme} = useChartContext();
 
@@ -44,7 +49,7 @@ export function useLineChartTooltipContent({
         const {value} = seriesData[activeIndex];
 
         tooltipData[0].data.push({
-          key: `${name}`,
+          key: `${seriesNameFormatter(name ?? '')}`,
           value,
           color: color!,
           isComparison,
@@ -60,6 +65,13 @@ export function useLineChartTooltipContent({
         theme,
       });
     },
-    [data, renderTooltipContent, theme, hiddenIndexes, indexForLabels],
+    [
+      data,
+      renderTooltipContent,
+      theme,
+      hiddenIndexes,
+      indexForLabels,
+      seriesNameFormatter,
+    ],
   );
 }

@@ -9,6 +9,7 @@ import type {
   XAxisOptions,
   YAxisOptions,
   ChartProps,
+  LabelFormatter,
 } from '@shopify/polaris-viz-core';
 
 import {getTooltipContentRenderer} from '../../utilities/getTooltipContentRenderer';
@@ -41,6 +42,7 @@ export type StackedAreaChartProps = {
   xAxisOptions?: Partial<XAxisOptions>;
   yAxisOptions?: Partial<YAxisOptions>;
   renderHiddenLegendLabel?: (count: number) => string;
+  seriesNameFormatter?: LabelFormatter;
 } & ChartProps;
 
 export function StackedAreaChart(props: StackedAreaChartProps) {
@@ -58,6 +60,7 @@ export function StackedAreaChart(props: StackedAreaChartProps) {
     id,
     isAnimated,
     renderLegendContent,
+    seriesNameFormatter = (value) => `${value}`,
     showLegend = true,
     skipLinkText,
     theme = defaultTheme,
@@ -105,6 +108,7 @@ export function StackedAreaChart(props: StackedAreaChartProps) {
             data={data}
             renderLegendContent={renderLegendContent}
             renderTooltipContent={renderTooltip}
+            seriesNameFormatter={seriesNameFormatter}
             showLegend={showLegend}
             theme={theme}
             xAxisOptions={xAxisOptionsWithDefaults}

@@ -54,19 +54,21 @@ const MOCK_PROPS: Props = {
       name: 'LABEL2',
     },
   ],
-  dimensions: {width: 500, height: 250},
+  dimensions: {width: 500, height: 250, x: 0, y: 0},
   renderTooltipContent,
   xAxisOptions: {
+    allowLineWrap: false,
     labelFormatter: jest.fn((value) => `${value}`),
     hide: false,
   },
   yAxisOptions: {
+    fixedWidth: false,
     labelFormatter: (value) => `${value}`,
     integersOnly: false,
   },
   type: 'default',
   showLegend: false,
-  theme: 'Default',
+  seriesNameFormatter: (value) => `${value}`,
 };
 
 describe('Chart />', () => {

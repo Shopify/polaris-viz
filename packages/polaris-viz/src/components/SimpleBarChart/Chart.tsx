@@ -7,6 +7,7 @@ import {
 import type {
   ChartType,
   Dimensions,
+  LabelFormatter,
   XAxisOptions,
   YAxisOptions,
 } from '@shopify/polaris-viz-core';
@@ -33,6 +34,7 @@ import {getLongestTrendIndicator} from './utilities';
 
 export interface ChartProps {
   data: SimpleBarChartDataSeries[];
+  seriesNameFormatter: LabelFormatter;
   showLegend: boolean;
   type: ChartType;
   xAxisOptions: Required<XAxisOptions>;
@@ -47,6 +49,7 @@ export function Chart({
   dimensions,
   renderLegendContent,
   legendPosition = 'bottom-right',
+  seriesNameFormatter,
   showLegend,
   type,
   xAxisOptions,
@@ -71,6 +74,7 @@ export function Chart({
     dimensions,
     colors: seriesColors,
     showLegend,
+    seriesNameFormatter,
   });
 
   const {

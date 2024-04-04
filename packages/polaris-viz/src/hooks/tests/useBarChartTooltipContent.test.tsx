@@ -43,6 +43,7 @@ describe('useBarChartTooltipContent()', () => {
         data: DATA,
         renderTooltipContent: (value) => value,
         seriesColors: ['red', 'green', 'blue'],
+        seriesNameFormatter: (value) => `Name: ${value}`,
       };
 
       const data = useBarChartTooltipContent(props);
@@ -59,17 +60,17 @@ describe('useBarChartTooltipContent()', () => {
         data: [
           {
             color: 'red',
-            key: 'Breakfast',
+            key: 'Name: Breakfast',
             value: 3,
           },
           {
             color: 'green',
-            key: 'Lunch',
+            key: 'Name: Lunch',
             value: 4,
           },
           {
             color: 'blue',
-            key: 'Dinner',
+            key: 'Name: Dinner',
             value: 7,
           },
         ],

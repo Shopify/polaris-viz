@@ -3,9 +3,9 @@ import type {Story} from '@storybook/react';
 export {META as default} from './meta';
 
 import {DEFAULT_DATA, DEFAULT_PROPS, Template} from './data';
-import type {LineChartProps} from 'components/LineChart/LineChart';
+import type {LineChartRelationalProps} from '../LineChartRelational';
 
-export const Default: Story<LineChartProps> = Template.bind({});
+export const Default: Story<LineChartRelationalProps> = Template.bind({});
 
 Default.args = {
   ...DEFAULT_PROPS,

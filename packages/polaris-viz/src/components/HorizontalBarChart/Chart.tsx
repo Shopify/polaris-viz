@@ -14,6 +14,7 @@ import type {
   XAxisOptions,
   YAxisOptions,
   BoundingRect,
+  LabelFormatter,
 } from '@shopify/polaris-viz-core';
 import {animated} from '@react-spring/web';
 
@@ -59,6 +60,7 @@ export interface ChartProps {
   annotationsLookupTable: AnnotationLookupTable;
   data: DataSeries[];
   renderTooltipContent: (data: RenderTooltipContentData) => ReactNode;
+  seriesNameFormatter: LabelFormatter;
   showLegend: boolean;
   type: ChartType;
   xAxisOptions: Required<XAxisOptions>;
@@ -75,6 +77,7 @@ export function Chart({
   renderHiddenLegendLabel,
   renderLegendContent,
   renderTooltipContent,
+  seriesNameFormatter,
   showLegend,
   type,
   xAxisOptions,
@@ -103,6 +106,7 @@ export function Chart({
     dimensions,
     showLegend,
     colors: seriesColors,
+    seriesNameFormatter,
   });
 
   const {allNumbers, longestLabel, areAllNegative} = useDataForHorizontalChart({
@@ -164,6 +168,7 @@ export function Chart({
     data,
     seriesColors,
     renderTooltipContent,
+    seriesNameFormatter,
   });
 
   const {transitions} = useHorizontalTransitions({

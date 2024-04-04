@@ -16,6 +16,7 @@ import type {
   XAxisOptions,
   YAxisOptions,
   BoundingRect,
+  LabelFormatter,
 } from '@shopify/polaris-viz-core';
 import {stackOffsetDiverging, stackOrderNone} from 'd3-shape';
 
@@ -61,6 +62,7 @@ export interface Props {
   data: DataSeries[];
   renderTooltipContent(data: RenderTooltipContentData): ReactNode;
   showLegend: boolean;
+  seriesNameFormatter: LabelFormatter;
   type: ChartType;
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
@@ -83,6 +85,7 @@ export function Chart({
   xAxisOptions,
   yAxisOptions,
   renderHiddenLegendLabel,
+  seriesNameFormatter,
 }: Props) {
   useColorVisionEvents({enabled: data.length > 1, dimensions});
 
@@ -103,6 +106,7 @@ export function Chart({
     ],
     dimensions,
     showLegend,
+    seriesNameFormatter,
   });
 
   const emptyState = data.length === 0;
@@ -202,6 +206,7 @@ export function Chart({
     renderTooltipContent,
     data,
     seriesColors: barColors,
+    seriesNameFormatter,
   });
 
   const {hasXAxisAnnotations, hasYAxisAnnotations} = checkAvailableAnnotations(

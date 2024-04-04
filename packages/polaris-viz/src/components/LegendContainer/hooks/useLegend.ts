@@ -29,11 +29,11 @@ function getAlteredDimensions(
 export interface Props {
   showLegend: boolean;
   data: DataGroup[];
+  seriesNameFormatter: LabelFormatter;
   colors?: Color[];
   dimensions?: Dimensions;
   direction?: Direction;
   maxWidth?: number;
-  seriesNameFormatter?: LabelFormatter;
 }
 
 export function useLegend({
@@ -43,7 +43,7 @@ export function useLegend({
   showLegend,
   direction = 'horizontal',
   maxWidth = 0,
-  seriesNameFormatter = (value) => `${value}`,
+  seriesNameFormatter,
 }: Props) {
   const defaultHeight = showLegend ? DEFAULT_LEGEND_HEIGHT : 0;
 

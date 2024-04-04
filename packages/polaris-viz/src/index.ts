@@ -34,6 +34,7 @@ export type {
   TrendIndicatorProps,
   DonutChartProps,
   ComparisonMetricProps,
+  LineChartRelationalProps,
 } from './components';
 
 export {

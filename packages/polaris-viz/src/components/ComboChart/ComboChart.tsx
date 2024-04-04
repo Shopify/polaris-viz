@@ -7,6 +7,7 @@ import type {
   DataGroup,
   ChartProps,
   XAxisOptions,
+  LabelFormatter,
 } from '@shopify/polaris-viz-core';
 import type {ReactNode} from 'react';
 
@@ -27,6 +28,7 @@ export type ComboChartProps = {
   data: DataGroup[];
   annotations?: ComboAnnotation[];
   renderTooltipContent?(data: RenderTooltipContentData): ReactNode;
+  seriesNameFormatter?: LabelFormatter;
   showLegend?: boolean;
   xAxisOptions?: Partial<XAxisOptions>;
   renderLegendContent?: RenderLegendContent;
@@ -42,6 +44,7 @@ export function ComboChart(props: ComboChartProps) {
     id,
     isAnimated,
     renderTooltipContent,
+    seriesNameFormatter = (value) => `${value}`,
     showLegend = true,
     theme = defaultTheme,
     xAxisOptions,
@@ -84,6 +87,7 @@ export function ComboChart(props: ComboChartProps) {
         annotationsLookupTable={annotationsLookupTable}
         data={data}
         renderTooltipContent={renderTooltip}
+        seriesNameFormatter={seriesNameFormatter}
         showLegend={showLegend}
         theme={theme}
         xAxisOptions={xAxisOptionsWithDefaults}

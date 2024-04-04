@@ -72,6 +72,7 @@ const PROPS: ChartProps = {
   showLegend: false,
   theme: 'Default',
   xAxisOptions: getXAxisOptionsWithDefaults(),
+  seriesNameFormatter: (value) => `${value}`,
 };
 
 describe('<Chart />', () => {

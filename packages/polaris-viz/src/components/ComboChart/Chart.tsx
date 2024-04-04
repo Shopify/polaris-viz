@@ -13,6 +13,7 @@ import type {
   DataGroup,
   BoundingRect,
   XAxisOptions,
+  LabelFormatter,
 } from '@shopify/polaris-viz-core';
 
 import {ChartElements} from '../ChartElements';
@@ -56,6 +57,7 @@ export interface ChartProps {
   annotationsLookupTable: AnnotationLookupTable;
   data: DataGroup[];
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
+  seriesNameFormatter: LabelFormatter;
   showLegend: boolean;
   theme: string;
   xAxisOptions: Required<XAxisOptions>;
@@ -72,6 +74,7 @@ export function Chart({
   theme,
   xAxisOptions,
   renderLegendContent,
+  seriesNameFormatter,
 }: ChartProps) {
   const selectedTheme = useTheme(theme);
 
@@ -89,6 +92,7 @@ export function Chart({
     data,
     dimensions,
     showLegend,
+    seriesNameFormatter,
   });
 
   const {drawableHeight, chartYPosition, xAxisBounds, yAxisBounds} =
@@ -173,6 +177,7 @@ export function Chart({
     renderTooltipContent,
     data,
     seriesColors: colors,
+    seriesNameFormatter,
   });
 
   const {hasXAxisAnnotations, hasYAxisAnnotations} = checkAvailableAnnotations(

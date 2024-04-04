@@ -51,6 +51,7 @@ export {XAxis} from './XAxis';
 export {TrendIndicator, estimateTrendIndicatorWidth} from './TrendIndicator';
 export type {TrendIndicatorProps} from './TrendIndicator';
 export {LineChartRelational, MissingDataArea} from './LineChartRelational';
+export type {LineChartRelationalProps} from './LineChartRelational';
 export {LineChartPredictive} from './LineChartPredictive';
 export type {LineChartPredictiveProps} from './LineChartPredictive';
 export type {ComparisonMetricProps} from './ComparisonMetric';
