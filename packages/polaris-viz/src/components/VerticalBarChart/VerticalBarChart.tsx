@@ -4,6 +4,7 @@ import type {
   XAxisOptions,
   YAxisOptions,
   BoundingRect,
+  LabelFormatter,
 } from '@shopify/polaris-viz-core';
 import type {ReactNode} from 'react';
 
@@ -22,6 +23,7 @@ export interface VerticalBarChartProps {
   showLegend: boolean;
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
+  seriesNameFormatter: LabelFormatter;
   annotationsLookupTable?: AnnotationLookupTable;
   barOptions?: {isStacked: boolean};
   dimensions?: BoundingRect;
@@ -43,6 +45,7 @@ export function VerticalBarChart({
   xAxisOptions,
   yAxisOptions,
   renderHiddenLegendLabel,
+  seriesNameFormatter,
 }: VerticalBarChartProps) {
   const selectedTheme = useTheme();
   const seriesColors = useThemeSeriesColors(data, selectedTheme);
@@ -60,6 +63,7 @@ export function VerticalBarChart({
       emptyStateText={emptyStateText}
       renderLegendContent={renderLegendContent}
       renderTooltipContent={renderTooltipContent}
+      seriesNameFormatter={seriesNameFormatter}
       showLegend={showLegend}
       type={type}
       xAxisOptions={xAxisOptions}

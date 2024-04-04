@@ -60,6 +60,7 @@ export function LegendValues({
     data: [{series: allData, shape: 'Bar'}],
     colors: seriesColors,
     dimensions,
+    seriesNameFormatter,
   });
 
   const {displayedData, hiddenData} = useOverflowLegend({

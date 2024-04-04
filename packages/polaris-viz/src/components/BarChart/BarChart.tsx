@@ -12,6 +12,7 @@ import type {
   YAxisOptions,
   ChartType,
   ChartProps,
+  LabelFormatter,
 } from '@shopify/polaris-viz-core';
 
 import {getTooltipContentRenderer} from '../../utilities/getTooltipContentRenderer';
@@ -39,6 +40,7 @@ export type BarChartProps = {
   direction?: Direction;
   emptyStateText?: string;
   renderLegendContent?: RenderLegendContent;
+  seriesNameFormatter?: LabelFormatter;
   showLegend?: boolean;
   skipLinkText?: string;
   theme?: string;
@@ -70,6 +72,7 @@ export function BarChart(props: BarChartProps) {
     yAxisOptions,
     onError,
     renderHiddenLegendLabel,
+    seriesNameFormatter = (value) => `${value}`,
   } = {
     ...DEFAULT_CHART_PROPS,
     ...props,
@@ -105,6 +108,7 @@ export function BarChart(props: BarChartProps) {
         emptyStateText={emptyStateText}
         renderLegendContent={renderLegendContent}
         renderTooltipContent={renderTooltip}
+        seriesNameFormatter={seriesNameFormatter}
         showLegend={showLegend}
         type={type}
         xAxisOptions={xAxisOptionsWithDefaults}
@@ -118,6 +122,7 @@ export function BarChart(props: BarChartProps) {
         renderHiddenLegendLabel={renderHiddenLegendLabel}
         renderLegendContent={renderLegendContent}
         renderTooltipContent={renderTooltip}
+        seriesNameFormatter={seriesNameFormatter}
         showLegend={showLegend}
         type={type}
         xAxisOptions={xAxisOptionsWithDefaults}

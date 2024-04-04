@@ -1,6 +1,11 @@
 import type {ReactNode} from 'react';
 import {useCallback} from 'react';
-import type {Color, DataGroup, Shape} from '@shopify/polaris-viz-core';
+import type {
+  Color,
+  DataGroup,
+  LabelFormatter,
+  Shape,
+} from '@shopify/polaris-viz-core';
 import {useChartContext} from '@shopify/polaris-viz-core';
 
 import {flattenDataGroupToDataSeries} from '../../../utilities/flattenDataGroupToDataSeries';
@@ -14,12 +19,14 @@ export interface Props {
   data: DataGroup[];
   seriesColors: Color[];
   renderTooltipContent: (data: RenderTooltipContentData) => ReactNode;
+  seriesNameFormatter: LabelFormatter;
 }
 
 export function useComboChartTooltipContent({
   data,
   renderTooltipContent,
   seriesColors,
+  seriesNameFormatter,
 }: Props) {
   const {theme} = useChartContext();
 
@@ -51,7 +58,7 @@ export function useComboChartTooltipContent({
           const {value} = seriesData[activeIndex];
 
           data.data.push({
-            key: `${name}`,
+            key: `${seriesNameFormatter(name ?? '')}`,
             value: yAxisOptionsWithDefaults.labelFormatter(value),
             color: color ?? seriesColors[index],
             isComparison,
@@ -71,6 +78,6 @@ export function useComboChartTooltipContent({
         theme,
       });
     },
-    [data, seriesColors, renderTooltipContent, theme],
+    [data, seriesColors, renderTooltipContent, theme, seriesNameFormatter],
   );
 }

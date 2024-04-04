@@ -36,6 +36,7 @@ const MOCK_PROPS: Props = {
   dimensions: {height: 100, width: 100},
   showLegend: true,
   data: DATAGROUP,
+  seriesNameFormatter: (value) => `${value}`,
 };
 
 function parseData(result: Root<any>) {
@@ -218,6 +219,25 @@ describe('useLegend()', () => {
       const data = parseData(result);
 
       expect(data.isLegendMounted).toStrictEqual(true);
+    });
+  });
+
+  describe('seriesNameFormatter', () => {
+    it('returns true when showLegend=false', () => {
+      function TestComponent() {
+        const data = useLegend({
+          ...MOCK_PROPS,
+          seriesNameFormatter: (value) => `Name: ${value}`,
+        });
+
+        return <span data-data={`${JSON.stringify(data)}`} />;
+      }
+
+      const result = mount(<TestComponent />);
+
+      const data = parseData(result);
+
+      expect(data.legend[0].name).toStrictEqual('Name: Breakfast');
     });
   });
 });

@@ -50,6 +50,7 @@ const xAxisOptions: Required<XAxisOptions> = {
 };
 
 const yAxisOptions: Required<YAxisOptions> = {
+  fixedWidth: false,
   labelFormatter: jest.fn(),
   integersOnly: false,
 };
@@ -57,11 +58,12 @@ const yAxisOptions: Required<YAxisOptions> = {
 const MOCK_PROPS: ChartProps = {
   data: [MOCK_DATA],
   annotationsLookupTable: {},
-  dimensions: {width: 500, height: 250},
+  dimensions: {width: 500, height: 250, x: 0, y: 0},
   xAxisOptions,
   yAxisOptions,
   renderTooltipContent: jest.fn(() => <p>Mock Tooltip</p>),
   showLegend: false,
+  seriesNameFormatter: (value) => `${value}`,
 };
 
 jest.mock('@shopify/polaris-viz-core/src/utilities/estimateStringWidth', () => {

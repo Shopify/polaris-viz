@@ -9,9 +9,12 @@ import {LineChart} from '../LineChart';
 
 import {RelatedAreas, MissingDataArea, CustomLegend} from './components';
 
-export function LineChartRelational(
-  props: Omit<LineChartProps, 'renderLegendContent'>,
-) {
+export type LineChartRelationalProps = Omit<
+  LineChartProps,
+  'renderLegendContent'
+>;
+
+export function LineChartRelational(props: LineChartRelationalProps) {
   const {
     annotations = [],
     data,
@@ -19,6 +22,7 @@ export function LineChartRelational(
     emptyStateText,
     id,
     isAnimated,
+    seriesNameFormatter = (value) => `${value}`,
     showLegend = true,
     skipLinkText,
     state,
@@ -59,9 +63,11 @@ export function LineChartRelational(
             getColorVisionEventAttrs={getColorVisionEventAttrs}
             data={data}
             theme={theme ?? DEFAULT_THEME_NAME}
+            seriesNameFormatter={seriesNameFormatter}
           />
         );
       }}
+      seriesNameFormatter={seriesNameFormatter}
       showLegend={showLegend}
       skipLinkText={skipLinkText}
       slots={{

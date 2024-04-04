@@ -5,6 +5,7 @@ import type {
   XAxisOptions,
   YAxisOptions,
   BoundingRect,
+  LabelFormatter,
 } from '@shopify/polaris-viz-core';
 
 import type {
@@ -18,6 +19,7 @@ import {Chart} from './Chart';
 export interface HorizontalBarChartProps {
   data: DataSeries[];
   renderTooltipContent: (data: RenderTooltipContentData) => ReactNode;
+  seriesNameFormatter: LabelFormatter;
   showLegend: boolean;
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
@@ -35,6 +37,7 @@ export function HorizontalBarChart({
   renderHiddenLegendLabel,
   renderLegendContent,
   renderTooltipContent,
+  seriesNameFormatter,
   showLegend,
   type = 'default',
   xAxisOptions,
@@ -46,6 +49,7 @@ export function HorizontalBarChart({
       annotationsLookupTable={annotationsLookupTable}
       data={data}
       renderTooltipContent={renderTooltipContent}
+      seriesNameFormatter={seriesNameFormatter}
       showLegend={showLegend}
       type={type}
       xAxisOptions={xAxisOptions}

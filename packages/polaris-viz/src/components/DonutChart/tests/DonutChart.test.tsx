@@ -1,4 +1,5 @@
 import {mount} from '@shopify/react-testing';
+import {ChartState} from '@shopify/polaris-viz-core';
 
 import {Chart as DonutChart} from '../Chart';
 import type {ChartProps} from '../Chart';
@@ -19,7 +20,6 @@ jest.mock('@shopify/polaris-viz-core/src/utilities', () => ({
 describe('<DonutChart />', () => {
   describe('<Chart/>', () => {
     const mockProps: ChartProps = {
-      isAnimated: false,
       showLegend: true,
       theme: `Default`,
       labelFormatter: (value) => `${value}`,
@@ -47,6 +47,10 @@ describe('<DonutChart />', () => {
         trend: 'negative',
         accessibilityLabel: 'trending down 10%',
       },
+      seriesNameFormatter: (value) => `${value}`,
+      legendPosition: 'left',
+      showLegendValues: true,
+      state: ChartState.Success,
     };
 
     // the sum of the values in the data array

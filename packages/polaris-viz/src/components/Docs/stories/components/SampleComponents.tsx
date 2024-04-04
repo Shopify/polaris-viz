@@ -244,6 +244,7 @@ export const SampleLegendContainer = ({theme} = {theme: 'Default'}) => {
     showLegend: true,
     dimensions: {height: 0, width: 0},
     colors,
+    seriesNameFormatter: (value) => `${value}`,
   });
 
   return (

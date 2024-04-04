@@ -43,7 +43,6 @@ const MOCK_PROPS: ChartProps = {
     height: 300,
     width: 600,
   },
-  isAnimated: false,
   data: SERIES,
   xAxisOptions: {
     labelFormatter: (value) => `${value}`,
@@ -51,11 +50,13 @@ const MOCK_PROPS: ChartProps = {
     allowLineWrap: true,
   },
   yAxisOptions: {
+    fixedWidth: false,
     labelFormatter: (value) => `${value}`,
     integersOnly: false,
   },
   type: 'default',
   showLegend: true,
+  seriesNameFormatter: (value) => `${value}`,
 };
 
 describe('<Chart />', () => {

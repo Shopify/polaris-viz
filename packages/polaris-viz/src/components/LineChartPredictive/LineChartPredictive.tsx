@@ -22,6 +22,7 @@ export function LineChartPredictive(props: LineChartPredictiveProps) {
     emptyStateText,
     id,
     isAnimated,
+    seriesNameFormatter = (value) => `${value}`,
     showLegend = true,
     skipLinkText,
     state,
@@ -87,6 +88,7 @@ export function LineChartPredictive(props: LineChartPredictiveProps) {
       errorText={errorText}
       id={id}
       isAnimated={isAnimated}
+      seriesNameFormatter={seriesNameFormatter}
       showLegend={showLegend}
       skipLinkText={skipLinkText}
       slots={{
@@ -119,6 +121,7 @@ export function LineChartPredictive(props: LineChartPredictiveProps) {
             predictiveSeriesNames={predictiveSeriesNames}
             data={dataWithColors}
             theme={theme ?? DEFAULT_THEME_NAME}
+            seriesNameFormatter={seriesNameFormatter}
           />
         );
       }}

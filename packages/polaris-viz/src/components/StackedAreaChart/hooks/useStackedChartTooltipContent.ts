@@ -1,20 +1,26 @@
 import type {ReactNode} from 'react';
 import {useCallback} from 'react';
-import type {Color, DataSeries} from '@shopify/polaris-viz-core';
+import type {
+  Color,
+  DataSeries,
+  LabelFormatter,
+} from '@shopify/polaris-viz-core';
 import {useChartContext} from '@shopify/polaris-viz-core';
 
 import type {RenderTooltipContentData} from '../../../types';
 
-interface Props {
+export interface Props {
   data: DataSeries[];
   seriesColors: Color[];
   renderTooltipContent: (data: RenderTooltipContentData) => ReactNode;
+  seriesNameFormatter: LabelFormatter;
 }
 
 export function useStackedChartTooltipContent({
   data,
   renderTooltipContent,
   seriesColors,
+  seriesNameFormatter,
 }: Props) {
   const {theme} = useChartContext();
 
@@ -35,7 +41,7 @@ export function useStackedChartTooltipContent({
         const {value} = seriesData[activeIndex];
 
         tooltipData[0].data.push({
-          key: `${name}`,
+          key: `${seriesNameFormatter(name ?? '')}`,
           value,
           color: color ?? seriesColors[index],
         });
@@ -49,6 +55,6 @@ export function useStackedChartTooltipContent({
         theme,
       });
     },
-    [data, seriesColors, renderTooltipContent, theme],
+    [data, seriesColors, renderTooltipContent, theme, seriesNameFormatter],
   );
 }
