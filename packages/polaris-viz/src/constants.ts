@@ -60,3 +60,4 @@ export const IS_TEST = process.env.NODE_ENV === 'test';
 export const WARN_FOR_DEVELOPMENT = IS_DEVELOPMENT && !IS_TEST;
 export const HOVER_TARGET_ZONE = 48;
 export const CROSSHAIR_ID = 'Crosshair';
+export const DEFAULT_ANIMATION_DELAY = 100;
