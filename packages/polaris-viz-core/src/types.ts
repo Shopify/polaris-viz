@@ -69,12 +69,10 @@ export type BoundingRect = Position & Dimensions;
 export type Color = string | GradientStop[];
 
 export interface XAxisOptions {
-  labelFormatter?: LabelFormatter;
   hide?: boolean;
   allowLineWrap?: boolean;
 }
 export interface YAxisOptions {
-  labelFormatter?: LabelFormatter;
   integersOnly?: boolean;
   fixedWidth?: number | false;
 }

@@ -16,7 +16,6 @@ import type {
   XAxisOptions,
   YAxisOptions,
   BoundingRect,
-  LabelFormatter,
 } from '@shopify/polaris-viz-core';
 import {stackOffsetDiverging, stackOrderNone} from 'd3-shape';
 
@@ -29,6 +28,7 @@ import {
 } from '../Annotations';
 import type {
   AnnotationLookupTable,
+  Formatters,
   RenderLegendContent,
   RenderTooltipContentData,
 } from '../../types';
@@ -60,17 +60,17 @@ import {useVerticalBarChart} from './hooks/useVerticalBarChart';
 
 export interface Props {
   data: DataSeries[];
+  formatters: Formatters;
   renderTooltipContent(data: RenderTooltipContentData): ReactNode;
   showLegend: boolean;
-  seriesNameFormatter: LabelFormatter;
   type: ChartType;
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
   annotationsLookupTable?: AnnotationLookupTable;
   dimensions?: BoundingRect;
   emptyStateText?: string;
-  renderLegendContent?: RenderLegendContent;
   renderHiddenLegendLabel?: (count: number) => string;
+  renderLegendContent?: RenderLegendContent;
 }
 
 export function Chart({
@@ -78,14 +78,14 @@ export function Chart({
   data,
   dimensions,
   emptyStateText,
+  formatters,
+  renderHiddenLegendLabel,
   renderLegendContent,
   renderTooltipContent,
   showLegend,
   type,
   xAxisOptions,
   yAxisOptions,
-  renderHiddenLegendLabel,
-  seriesNameFormatter,
 }: Props) {
   useColorVisionEvents({enabled: data.length > 1, dimensions});
 
@@ -106,7 +106,7 @@ export function Chart({
     ],
     dimensions,
     showLegend,
-    seriesNameFormatter,
+    seriesNameFormatter: formatters.seriesNameFormatter,
   });
 
   const emptyState = data.length === 0;
@@ -115,7 +115,7 @@ export function Chart({
 
   const {formattedLabels, unformattedLabels} = useFormattedLabels({
     data: [data[indexForLabels]],
-    labelFormatter: xAxisOptions.labelFormatter,
+    labelFormatter: formatters.xAxisLabelFormatter,
   });
 
   const isStacked = type === 'stacked';
@@ -139,7 +139,7 @@ export function Chart({
   });
 
   const yScaleOptions = {
-    formatYAxisLabel: yAxisOptions.labelFormatter,
+    formatYAxisLabel: formatters.yAxisLabelFormatter,
     integersOnly: yAxisOptions.integersOnly,
     max,
     min,
@@ -206,7 +206,7 @@ export function Chart({
     renderTooltipContent,
     data,
     seriesColors: barColors,
-    seriesNameFormatter,
+    formatters,
   });
 
   const {hasXAxisAnnotations, hasYAxisAnnotations} = checkAvailableAnnotations(

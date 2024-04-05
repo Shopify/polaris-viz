@@ -1,26 +1,22 @@
 import type {ReactNode} from 'react';
 import {useCallback} from 'react';
-import type {
-  Color,
-  DataSeries,
-  LabelFormatter,
-} from '@shopify/polaris-viz-core';
+import type {Color, DataSeries} from '@shopify/polaris-viz-core';
 import {useChartContext} from '@shopify/polaris-viz-core';
 
-import type {RenderTooltipContentData} from '../types';
+import type {Formatters, RenderTooltipContentData} from '../types';
 
 export interface Props {
   data: DataSeries[];
-  seriesColors: Color[];
+  formatters: Formatters;
   renderTooltipContent: (data: RenderTooltipContentData) => ReactNode;
-  seriesNameFormatter: LabelFormatter;
+  seriesColors: Color[];
 }
 
 export function useBarChartTooltipContent({
   data,
+  formatters,
   renderTooltipContent,
   seriesColors,
-  seriesNameFormatter,
 }: Props) {
   const {theme} = useChartContext();
 
@@ -41,7 +37,7 @@ export function useBarChartTooltipContent({
         const {value} = seriesData[activeIndex];
 
         tooltipData[0].data.push({
-          key: `${seriesNameFormatter(name ?? '')}`,
+          key: `${formatters.seriesNameFormatter(name ?? '')}`,
           value,
           color: color ?? seriesColors[index],
         });
@@ -55,6 +51,6 @@ export function useBarChartTooltipContent({
         theme,
       });
     },
-    [data, seriesColors, theme, renderTooltipContent, seriesNameFormatter],
+    [data, seriesColors, theme, renderTooltipContent, formatters],
   );
 }

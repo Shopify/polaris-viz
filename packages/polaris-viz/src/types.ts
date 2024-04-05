@@ -76,23 +76,30 @@ export interface RenderTooltipDataPoint {
   isHidden?: boolean;
 }
 
+export interface Formatters {
+  seriesNameFormatter: LabelFormatter;
+  xAxisLabelFormatter: LabelFormatter;
+  yAxisLabelFormatter: LabelFormatter;
+  tooltip: TooltipFormatters;
+}
+
 export interface TooltipFormatters {
-  valueFormatter?: LabelFormatter;
-  keyFormatter?: LabelFormatter;
-  titleFormatter?: LabelFormatter;
+  valueFormatter: LabelFormatter;
+  keyFormatter: LabelFormatter;
+  titleFormatter: LabelFormatter;
 }
 
 export interface RenderTooltipContentData {
+  activeIndex: number;
   data: {
     shape: Shape;
     data: RenderTooltipDataPoint[];
     name?: string;
   }[];
-  activeIndex: number;
   dataSeries: DataSeries[];
+  formatters: Formatters;
   theme: string;
   title?: string;
-  formatters?: TooltipFormatters;
 }
 
 export interface TooltipData {
@@ -105,10 +112,6 @@ export interface TooltipData {
     isHidden?: boolean;
   }[];
   name?: string;
-}
-
-export interface TooltipOptions extends TooltipFormatters {
-  renderTooltipContent?: (data: RenderTooltipContentData) => React.ReactNode;
 }
 
 export interface PreparedLabels {
@@ -210,6 +213,10 @@ export type RenderLegendContent = (
 ) => ReactNode;
 
 export type RenderHiddenLegendLabel = (hiddenItemsCount: number) => ReactNode;
+
+export type RenderTooltipContent = (
+  data: RenderTooltipContentData,
+) => React.ReactNode;
 
 export type SortedBarChartData = (number | null)[][];
 

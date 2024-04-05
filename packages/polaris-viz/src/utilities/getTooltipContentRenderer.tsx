@@ -1,23 +1,27 @@
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
-import type {TooltipOptions, RenderTooltipContentData} from '../types';
+import type {
+  RenderTooltipContentData,
+  RenderTooltipContent,
+  Formatters,
+} from '../types';
 import {formatDataForTooltip} from '../utilities';
 import {TooltipContent} from '../components';
 
 export function getTooltipContentRenderer({
-  tooltipOptions = {},
-  theme,
   data,
+  formatters,
+  renderTooltipContent: renderTooltipContentCallback,
+  theme,
 }: {
-  tooltipOptions?: TooltipOptions;
-  theme: string;
   data: DataSeries[];
+  formatters: Formatters;
+  theme: string;
+  renderTooltipContent?: RenderTooltipContent;
 }) {
   return function renderTooltipContent(tooltipData: RenderTooltipContentData) {
-    if (tooltipOptions?.renderTooltipContent != null) {
-      const {renderTooltipContent, ...formatters} = tooltipOptions;
-
-      return renderTooltipContent({
+    if (renderTooltipContentCallback != null) {
+      return renderTooltipContentCallback({
         ...tooltipData,
         dataSeries: data,
         formatters,
@@ -27,7 +31,7 @@ export function getTooltipContentRenderer({
 
     const {title, formattedData} = formatDataForTooltip({
       data: tooltipData,
-      tooltipOptions,
+      formatters,
     });
 
     if (formattedData[0].data.length === 0) {

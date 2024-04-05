@@ -1,24 +1,15 @@
-import type {
-  TooltipData,
-  RenderTooltipContentData,
-  TooltipOptions,
-} from '../types';
+import type {TooltipData, RenderTooltipContentData, Formatters} from '../types';
 
 interface Props {
   data: RenderTooltipContentData;
-  tooltipOptions: TooltipOptions;
+  formatters: Formatters;
 }
 
-export function formatDataForTooltip({data, tooltipOptions}: Props): {
+export function formatDataForTooltip({data, formatters}: Props): {
   formattedData: TooltipData[];
   title: string | undefined;
 } {
-  const {keyFormatter, valueFormatter, titleFormatter} = {
-    keyFormatter: (key) => `${key}`,
-    valueFormatter: (value) => `${value}`,
-    titleFormatter: (title) => `${title}`,
-    ...tooltipOptions,
-  };
+  const {keyFormatter, valueFormatter, titleFormatter} = formatters.tooltip;
 
   const formattedData = data.data.map((data) => {
     const shape = data.shape;
@@ -36,6 +27,7 @@ export function formatDataForTooltip({data, tooltipOptions}: Props): {
       }),
     };
   });
+
   return {
     formattedData,
     title: data.title ? titleFormatter(data.title) : undefined,

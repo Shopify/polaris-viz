@@ -12,15 +12,16 @@ import type {
   YAxisOptions,
   ChartType,
   ChartProps,
-  LabelFormatter,
 } from '@shopify/polaris-viz-core';
 
+import {getFormattersWithDefaults} from '../../utilities/getFormattersWithDefaults';
 import {getTooltipContentRenderer} from '../../utilities/getTooltipContentRenderer';
 import {ChartContainer} from '../../components/ChartContainer';
 import type {
   Annotation,
+  Formatters,
   RenderLegendContent,
-  TooltipOptions,
+  RenderTooltipContent,
 } from '../../types';
 import {SkipLink} from '../SkipLink';
 import {
@@ -34,20 +35,20 @@ import {ChartSkeleton} from '../../components/ChartSkeleton';
 import {fillMissingDataPoints} from '../../utilities/fillMissingDataPoints';
 
 export type BarChartProps = {
-  errorText?: string;
-  tooltipOptions?: TooltipOptions;
   annotations?: Annotation[];
   direction?: Direction;
   emptyStateText?: string;
+  errorText?: string;
+  formatters?: Partial<Formatters>;
+  renderHiddenLegendLabel?: (count: number) => string;
   renderLegendContent?: RenderLegendContent;
-  seriesNameFormatter?: LabelFormatter;
+  renderTooltipContent?: RenderTooltipContent;
   showLegend?: boolean;
   skipLinkText?: string;
   theme?: string;
   type?: ChartType;
   xAxisOptions?: Partial<XAxisOptions>;
   yAxisOptions?: Partial<YAxisOptions>;
-  renderHiddenLegendLabel?: (count: number) => string;
 } & ChartProps;
 
 export function BarChart(props: BarChartProps) {
@@ -56,23 +57,23 @@ export function BarChart(props: BarChartProps) {
   const {
     annotations = [],
     data: dataSeries,
-    state,
-    errorText,
     direction = 'vertical',
     emptyStateText,
+    errorText,
+    formatters: partialFormatters,
     id,
     isAnimated,
-    tooltipOptions,
+    onError,
+    renderHiddenLegendLabel,
     renderLegendContent,
+    renderTooltipContent,
     showLegend = true,
     skipLinkText,
+    state,
     theme = defaultTheme,
     type = 'default',
     xAxisOptions,
     yAxisOptions,
-    onError,
-    renderHiddenLegendLabel,
-    seriesNameFormatter = (value) => `${value}`,
   } = {
     ...DEFAULT_CHART_PROPS,
     ...props,
@@ -82,6 +83,8 @@ export function BarChart(props: BarChartProps) {
     dataSeries,
     isValidDate(dataSeries[0]?.data[0]?.key),
   );
+
+  const formatters = getFormattersWithDefaults(partialFormatters);
 
   const skipLinkAnchorId = useRef(uniqueId('BarChart'));
 
@@ -95,9 +98,10 @@ export function BarChart(props: BarChartProps) {
   const annotationsLookupTable = normalizeData(annotations, 'startKey');
 
   const renderTooltip = getTooltipContentRenderer({
-    tooltipOptions,
-    theme,
     data,
+    formatters,
+    renderTooltipContent,
+    theme,
   });
 
   const ChartByDirection =
@@ -106,14 +110,14 @@ export function BarChart(props: BarChartProps) {
         annotationsLookupTable={annotationsLookupTable}
         data={data}
         emptyStateText={emptyStateText}
+        formatters={formatters}
+        renderHiddenLegendLabel={renderHiddenLegendLabel}
         renderLegendContent={renderLegendContent}
         renderTooltipContent={renderTooltip}
-        seriesNameFormatter={seriesNameFormatter}
         showLegend={showLegend}
         type={type}
         xAxisOptions={xAxisOptionsWithDefaults}
         yAxisOptions={yAxisOptionsWithDefaults}
-        renderHiddenLegendLabel={renderHiddenLegendLabel}
       />
     ) : (
       <HorizontalBarChart
@@ -122,7 +126,6 @@ export function BarChart(props: BarChartProps) {
         renderHiddenLegendLabel={renderHiddenLegendLabel}
         renderLegendContent={renderLegendContent}
         renderTooltipContent={renderTooltip}
-        seriesNameFormatter={seriesNameFormatter}
         showLegend={showLegend}
         type={type}
         xAxisOptions={xAxisOptionsWithDefaults}

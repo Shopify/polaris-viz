@@ -10,6 +10,7 @@ import type {ReactNode} from 'react';
 
 import type {
   AnnotationLookupTable,
+  Formatters,
   RenderLegendContent,
   RenderTooltipContentData,
 } from '../../types';
@@ -19,18 +20,18 @@ import {Chart} from './Chart';
 
 export interface VerticalBarChartProps {
   data: DataSeries[];
+  formatters: Formatters;
   renderTooltipContent(data: RenderTooltipContentData): ReactNode;
   showLegend: boolean;
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
-  seriesNameFormatter: LabelFormatter;
   annotationsLookupTable?: AnnotationLookupTable;
   barOptions?: {isStacked: boolean};
   dimensions?: BoundingRect;
   emptyStateText?: string;
+  renderHiddenLegendLabel?: (count: number) => string;
   renderLegendContent?: RenderLegendContent;
   type?: ChartType;
-  renderHiddenLegendLabel?: (count: number) => string;
 }
 
 export function VerticalBarChart({
@@ -38,14 +39,14 @@ export function VerticalBarChart({
   data,
   dimensions,
   emptyStateText,
+  formatters,
+  renderHiddenLegendLabel,
   renderLegendContent,
   renderTooltipContent,
   showLegend,
   type = 'default',
   xAxisOptions,
   yAxisOptions,
-  renderHiddenLegendLabel,
-  seriesNameFormatter,
 }: VerticalBarChartProps) {
   const selectedTheme = useTheme();
   const seriesColors = useThemeSeriesColors(data, selectedTheme);
@@ -57,18 +58,18 @@ export function VerticalBarChart({
 
   return (
     <Chart
-      dimensions={dimensions}
       annotationsLookupTable={annotationsLookupTable}
       data={seriesWithDefaults}
+      dimensions={dimensions}
       emptyStateText={emptyStateText}
+      formatters={formatters}
+      renderHiddenLegendLabel={renderHiddenLegendLabel}
       renderLegendContent={renderLegendContent}
       renderTooltipContent={renderTooltipContent}
-      seriesNameFormatter={seriesNameFormatter}
       showLegend={showLegend}
       type={type}
       xAxisOptions={xAxisOptions}
       yAxisOptions={yAxisOptions}
-      renderHiddenLegendLabel={renderHiddenLegendLabel}
     />
   );
 }
