@@ -88,11 +88,16 @@ export function renderLinearTooltipContent(
         })
         .filter((series): series is TooltipDataSeries => Boolean(series));
 
-      const hasTitle = dataSeries.some(({isHidden}) => isHidden !== true);
+      const visibleDataSeries = dataSeries.filter(
+        ({isHidden}) => isHidden === false,
+      );
 
       return (
-        <TooltipSeries isEmpty={!hasTitle} key={seriesName}>
-          {hasTitle && (
+        <TooltipSeries
+          isEmpty={visibleDataSeries.length === 0}
+          key={seriesName}
+        >
+          {visibleDataSeries.length > 1 && (
             <TooltipSeriesName theme={theme}>{seriesName}</TooltipSeriesName>
           )}
           {dataSeries.map(

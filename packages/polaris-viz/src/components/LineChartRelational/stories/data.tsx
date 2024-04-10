@@ -53,7 +53,7 @@ export const DEFAULT_PROPS: Partial<LineChartProps> = {
       return renderLinearTooltipContent(tooltipData, {
         title: tooltipData.title,
         groups: [
-          {title: 'Your store', indexes: [0]},
+          {title: 'Your store average', indexes: [0]},
           {title: 'Similar stores', indexes: [1, 2, 3]},
         ],
       });

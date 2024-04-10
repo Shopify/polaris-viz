@@ -244,3 +244,10 @@ export interface LineChartSlotProps {
   yScale: ScaleLinear<number, number>;
   theme: string;
 }
+
+export interface MissingData {
+  from: string;
+  to: string;
+  label: string;
+  description: string;
+}

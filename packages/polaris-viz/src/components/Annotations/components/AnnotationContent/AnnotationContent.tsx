@@ -1,7 +1,8 @@
-import {useEffect, useLayoutEffect, useState} from 'react';
+import {useLayoutEffect, useState} from 'react';
 import {createPortal} from 'react-dom';
 import {changeColorOpacity, clamp, useTheme} from '@shopify/polaris-viz-core';
 
+import {useHideTooltipWhenMounted} from '../../../../hooks/useHideTooltipWhenMounted';
 import {TOOLTIP_BG_OPACITY} from '../../../../constants';
 import {useBrowserCheck} from '../../../../hooks/useBrowserCheck';
 import type {Annotation} from '../../../../types';
@@ -43,19 +44,7 @@ export function AnnotationContent({
     setBounds(ref?.getBoundingClientRect());
   }, [ref]);
 
-  useEffect(() => {
-    const tooltip = document.querySelector<HTMLElement>('[data-tooltip]');
-
-    if (tooltip) {
-      tooltip.style.display = 'none';
-    }
-
-    return () => {
-      if (tooltip) {
-        tooltip.style.display = 'block';
-      }
-    };
-  }, []);
+  useHideTooltipWhenMounted();
 
   if (annotation.content == null) {
     return null;

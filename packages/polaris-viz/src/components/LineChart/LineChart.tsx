@@ -29,16 +29,19 @@ import {useTheme} from '../../hooks';
 import type {
   Annotation,
   LineChartSlotProps,
+  MissingData,
   RenderLegendContent,
   TooltipOptions,
 } from '../../types';
 
 import {Chart} from './Chart';
+import {MissingDataArea} from './components';
 
 export type LineChartProps = {
   annotations?: Annotation[];
   errorText?: string;
   emptyStateText?: string;
+  missingData?: MissingData;
   renderLegendContent?: RenderLegendContent;
   renderHiddenLegendLabel?: (count: number) => string;
   seriesNameFormatter?: LabelFormatter;
@@ -62,6 +65,7 @@ export function LineChart(props: LineChartProps) {
     errorText,
     id,
     isAnimated,
+    missingData,
     onError,
     renderLegendContent,
     renderHiddenLegendLabel,
@@ -127,7 +131,25 @@ export function LineChart(props: LineChartProps) {
             theme={theme}
             xAxisOptions={xAxisOptionsWithDefaults}
             yAxisOptions={yAxisOptionsWithDefaults}
-            slots={props.slots}
+            slots={
+              props.slots == null
+                ? {
+                    chart: (props) => {
+                      if (missingData == null) {
+                        return null;
+                      }
+
+                      return (
+                        <MissingDataArea
+                          {...props}
+                          data={data}
+                          missingData={missingData}
+                        />
+                      );
+                    },
+                  }
+                : props.slots
+            }
           />
         )}
       </ChartContainer>

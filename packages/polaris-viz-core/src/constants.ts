@@ -355,6 +355,10 @@ export const LIGHT_THEME: Theme = {
   missingData: {
     lineColor: variables.colorGray40,
   },
+  badge: {
+    backgroundColor: variables.colorGray60,
+    textColor: variables.colorGray150,
+  },
 };
 
 export const PRINT_THEME = {
