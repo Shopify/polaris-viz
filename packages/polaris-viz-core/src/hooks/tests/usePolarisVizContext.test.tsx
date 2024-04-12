@@ -39,14 +39,14 @@ describe('usePolarisVizContext', () => {
 
     expect(mockComponent.text()).toBe(
       JSON.stringify({
-        Dark: {
-          ...DARK_THEME,
+        Dark: DARK_THEME,
+        Light: {
+          ...LIGHT_THEME,
           chartContainer: {
-            ...DARK_THEME.chartContainer,
+            ...LIGHT_THEME.chartContainer,
             backgroundColor: 'purple',
           },
         },
-        Light: LIGHT_THEME,
         Print: PRINT_THEME,
       }),
     );
@@ -69,9 +69,9 @@ describe('usePolarisVizContext', () => {
         Light: LIGHT_THEME,
         Print: PRINT_THEME,
         SomeOtherTheme: {
-          ...DARK_THEME,
+          ...LIGHT_THEME,
           chartContainer: {
-            ...DARK_THEME.chartContainer,
+            ...LIGHT_THEME.chartContainer,
             backgroundColor: 'purple',
           },
         },

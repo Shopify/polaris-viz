@@ -8,12 +8,12 @@ describe('createTheme', () => {
         borderRadius: 5,
       },
     });
-    expect(result).not.toStrictEqual(DARK_THEME);
+    expect(result).not.toStrictEqual(LIGHT_THEME);
 
     expect(result).toStrictEqual(
       expect.objectContaining({
         bar: {
-          ...DARK_THEME.bar,
+          ...LIGHT_THEME.bar,
           borderRadius: 5,
         },
       }),

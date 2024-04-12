@@ -1,7 +1,7 @@
 import {mount} from '@shopify/react-testing';
 
 import {mountWithProvider, expectToThrow} from '../../test-utilities';
-import {DARK_THEME} from '../../../../polaris-viz-core/src';
+import {DARK_THEME, LIGHT_THEME} from '../../../../polaris-viz-core/src';
 import {useTheme} from '../useTheme';
 
 describe('useTheme', () => {
@@ -12,7 +12,7 @@ describe('useTheme', () => {
     }
 
     const mockComponent = mount(<TestComponent />);
-    expect(mockComponent.text()).toBe(JSON.stringify(DARK_THEME));
+    expect(mockComponent.text()).toBe(JSON.stringify(LIGHT_THEME));
   });
 
   it('returns the theme defined in PolarisVizContext with the provided theme name', () => {
@@ -32,9 +32,9 @@ describe('useTheme', () => {
     });
     expect(mockComponent.text()).toBe(
       JSON.stringify({
-        ...DARK_THEME,
+        ...LIGHT_THEME,
         chartContainer: {
-          ...DARK_THEME.chartContainer,
+          ...LIGHT_THEME.chartContainer,
           backgroundColor: 'Purple',
         },
       }),

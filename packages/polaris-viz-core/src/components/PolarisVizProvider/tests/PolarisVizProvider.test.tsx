@@ -6,9 +6,9 @@ import {usePolarisVizContext} from '../../../hooks';
 import {PolarisVizProvider} from '../PolarisVizProvider';
 import {PolarisVizContext} from '../../../contexts';
 import {
-  DARK_THEME,
   DEFAULT_COMPONENTS,
   DEFAULT_THEME_NAME,
+  LIGHT_THEME,
 } from '../../../constants';
 
 const MockChild = ({theme = DEFAULT_THEME_NAME}) => {
@@ -45,14 +45,14 @@ describe('<PolarisVizProvider />', () => {
         </PolarisVizProvider>,
       );
 
-      expect(vizProvider).toContainReactText(JSON.stringify(DARK_THEME));
+      expect(vizProvider).toContainReactText(JSON.stringify(LIGHT_THEME));
     });
 
     it('passes custom themes to children', () => {
       const vizProvider = mount(
         <PolarisVizProvider
           themes={{
-            Dark: {
+            Light: {
               bar: {
                 borderRadius: 3,
               },
@@ -60,15 +60,15 @@ describe('<PolarisVizProvider />', () => {
           }}
           animated={host.animated}
         >
-          <MockChild theme="Dark" />
+          <MockChild theme="Light" />
         </PolarisVizProvider>,
       );
 
       expect(vizProvider).toContainReactText(
         JSON.stringify({
-          ...DARK_THEME,
+          ...LIGHT_THEME,
           bar: {
-            ...DARK_THEME.bar,
+            ...LIGHT_THEME.bar,
             borderRadius: 3,
           },
         }),
