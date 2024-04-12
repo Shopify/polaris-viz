@@ -1,6 +1,6 @@
 {
   "name": "sandbox",
-  "version": "1.0.0-light-theme-default-beta.4",
+  "version": "1.0.0-light-theme-default-beta.5",
   "private": true,
   "main": "index.js",
   "dependencies": {
