@@ -1,5 +1,6 @@
 import {mount} from '@shopify/react-testing';
 import type {DataSeries} from '@shopify/polaris-viz-core';
+import {LIGHT_THEME} from '@shopify/polaris-viz-core';
 
 import type {ChartProps} from '../Chart';
 import {Chart} from '../Chart';
@@ -80,14 +81,8 @@ describe('<Chart />', () => {
         const defs = chart.find(GradientDefs);
 
         expect(defs?.props.seriesColors).toStrictEqual([
-          [
-            {color: '#7f4afa', offset: 0},
-            {color: '#997afc', offset: 100},
-          ],
-          [
-            {color: '#3672bb', offset: 0},
-            {color: '#4b92e5', offset: 100},
-          ],
+          LIGHT_THEME.seriesColors.upToEight[0],
+          LIGHT_THEME.seriesColors.upToEight[1],
         ]);
       });
 
@@ -118,10 +113,7 @@ describe('<Chart />', () => {
 
         expect(defs?.props.seriesColors).toStrictEqual([
           'red',
-          [
-            {color: '#7f4afa', offset: 0},
-            {color: '#997afc', offset: 100},
-          ],
+          LIGHT_THEME.seriesColors.upToEight[0],
         ]);
       });
     });

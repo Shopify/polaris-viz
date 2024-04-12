@@ -1,5 +1,6 @@
 import {createMount} from '@quilted/react-testing';
 import type {PartialTheme} from '@shopify/polaris-viz-core';
+import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 import {PolarisVizProvider} from '../components';
 
@@ -26,7 +27,7 @@ export const mountWithProvider = createMount<Options, Context>({
 export const mockDefaultTheme = (overrides: PartialTheme) => {
   return {
     themes: {
-      Default: overrides,
+      [DEFAULT_THEME_NAME]: overrides,
     },
   };
 };

@@ -1,21 +1,15 @@
 import type {Theme, PartialTheme} from '../types';
-import {
-  DEFAULT_THEME,
-  LIGHT_THEME,
-  PRINT_THEME,
-  UPLIFT_THEME,
-} from '../constants';
+import {DARK_THEME, LIGHT_THEME, PRINT_THEME} from '../constants';
 
 const BASE_THEMES: {[key: string]: Theme} = {
-  Default: DEFAULT_THEME,
+  Dark: DARK_THEME,
   Light: LIGHT_THEME,
-  Uplift: UPLIFT_THEME,
   Print: PRINT_THEME,
 };
 
 export const createTheme = (
   theme: PartialTheme,
-  baseTheme = DEFAULT_THEME,
+  baseTheme = DARK_THEME,
 ): Theme => {
   const themeKeys = Object.keys(baseTheme);
 

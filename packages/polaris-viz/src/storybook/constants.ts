@@ -8,7 +8,7 @@ export const CONTROLS_ARGS = {
 
 export const THEME_CONTROL_ARGS = {
   description: 'The theme that the chart will inherit its styles from',
-  options: ['Default', 'Light', 'Uplift'],
+  options: ['Dark', 'Light'],
   control: {
     type: 'select',
   },

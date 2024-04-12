@@ -111,7 +111,7 @@ export const MASK_HIGHLIGHT_COLOR = '#ffffff';
 
 export const COLOR_VARIABLES = variables;
 
-export const DEFAULT_THEME_NAME = 'Default';
+export const DEFAULT_THEME_NAME = 'Light';
 
 export const NEUTRAL_SINGLE_GRADIENT = [
   {offset: 0, color: variables.colorIndigo90},
@@ -141,7 +141,7 @@ const DEFAULT_GROUP_LABEL_HIDE = false;
 
 const DEFAULT_CROSSHAIR_WIDTH = 1;
 
-export const DEFAULT_THEME: Theme = {
+export const DARK_THEME: Theme = {
   seriesColors: {
     empty: variables.colorGray140,
     comparison: variables.colorDarkComparison,
@@ -249,148 +249,6 @@ export const DEFAULT_THEME: Theme = {
   },
 };
 
-export const LIGHT_THEME: Theme = {
-  seriesColors: {
-    empty: variables.colorGray20,
-    comparison: variables.colorLightComparison,
-    single: NEUTRAL_SINGLE_GRADIENT,
-    upToEight: [
-      createGradient(variables.colorIndigo70, variables.colorIndigo90),
-      createGradient(variables.colorBlue70, variables.colorBlue90),
-      createGradient(variables.colorMagenta70, variables.colorMagenta90),
-      createGradient(variables.colorTeal70, variables.colorTeal90),
-      createGradient(variables.colorPurple70, variables.colorPurple90),
-      createGradient(variables.colorOrange70, variables.colorOrange90),
-      createGradient(variables.colorYellow70, variables.colorYellow90),
-    ],
-    all: [
-      variables.colorTeal90,
-      variables.colorBlue70,
-      variables.colorIndigo90,
-      variables.colorPurple70,
-      variables.colorMagenta90,
-      variables.colorOrange80,
-      variables.colorYellow50,
-      variables.colorTeal70,
-      variables.colorBlue80,
-      variables.colorIndigo70,
-      variables.colorPurple90,
-      variables.colorMagenta70,
-      variables.colorOrange110,
-      variables.colorYellow70,
-    ],
-  },
-  tooltip: {
-    backgroundColor: variables.colorGray00,
-    textColor: variables.colorGray160,
-    titleColor: variables.colorGray100,
-  },
-  chartContainer: {
-    backgroundColor: variables.colorGray00,
-    borderRadius: DEFAULT_CHART_BORDER_RADIUS,
-    minHeight: DEFAULT_CHART_MIN_HEIGHT,
-    padding: DEFAULT_CHART_PADDING,
-    sparkChartMinHeight: DEFAULT_SPARK_CHART_MIN_HEIGHT,
-  },
-  line: {
-    hasArea: DEFAULT_LINE_HAS_AREA,
-    hasSpline: DEFAULT_LINE_HAS_SPLINE,
-    width: DEFAULT_LINE_WIDTH,
-    pointStroke: variables.colorGray00,
-  },
-  arc: {
-    cornerRadius: DEFAULT_ARC_CORNER_RADIUS,
-    thickness: DEFAULT_ARC_CORNER_THICKNESS,
-  },
-  bar: {
-    zeroValueColor: variables.colorGray70,
-    borderRadius: DEFAULT_BORDER_RADIUS,
-  },
-  grid: {
-    showHorizontalLines: DEFAULT_GRID_SHOW_HORIZONTAL_LINES,
-    color: variables.colorGray20,
-    horizontalOverflow: DEFAULT_GRID_HORIZONTAL_OVERFLOW,
-    horizontalMargin: DEFAULT_GRID_HORIZONTAL_MARGIN,
-    verticalOverflow: DEFAULT_GRID_VERTICAL_OVERFLOW,
-  },
-  xAxis: {
-    labelColor: variables.colorGray100,
-    hide: DEFAULT_X_AXIS_HIDE,
-  },
-  yAxis: {
-    backgroundColor: variables.colorGray00,
-    labelColor: variables.colorGray100,
-  },
-  groupLabel: {
-    hide: DEFAULT_GROUP_LABEL_HIDE,
-  },
-  crossHair: {
-    color: variables.colorGray40,
-    width: DEFAULT_CROSSHAIR_WIDTH,
-  },
-  legend: {
-    valueColor: variables.colorGray160,
-    labelColor: variables.colorGray100,
-    backgroundColor: variables.colorGray10,
-    trendIndicator: {
-      positive: variables.colorLightPositive,
-      negative: variables.colorLightNegative,
-      neutral: variables.colorLightNeutral,
-    },
-  },
-  annotations: {
-    backgroundColor: variables.colorGray100,
-    textColor: variables.colorWhite,
-    titleColor: variables.colorWhite,
-    linkColor: variables.colorBlue40,
-    axisLabelColor: variables.colorGray70,
-    lineColor: variables.colorGray70,
-    pillOpacity: 1,
-  },
-  trendIndicator: {
-    positive: variables.colorLightPositive,
-    negative: variables.colorLightNegative,
-    neutral: variables.colorLightNeutral,
-  },
-  missingData: {
-    lineColor: variables.colorGray40,
-  },
-};
-
-export const PRINT_THEME = {
-  ...LIGHT_THEME,
-  seriesColors: {
-    empty: variables.colorGray20,
-    comparison: variables.colorLightComparison,
-    single: variables.colorIndigo90,
-    upToEight: [
-      variables.colorIndigo70,
-      variables.colorBlue70,
-      variables.colorMagenta70,
-      variables.colorTeal70,
-      variables.colorPurple70,
-      variables.colorOrange70,
-      variables.colorYellow70,
-    ],
-    all: [
-      variables.colorTeal90,
-      variables.colorBlue70,
-      variables.colorIndigo90,
-      variables.colorPurple70,
-      variables.colorMagenta90,
-      variables.colorOrange80,
-      variables.colorYellow50,
-      variables.colorTeal70,
-      variables.colorBlue80,
-      variables.colorIndigo70,
-      variables.colorPurple90,
-      variables.colorMagenta70,
-      variables.colorOrange110,
-      variables.colorYellow70,
-    ],
-  },
-};
-
 const LIGHT_BLUE = [
   {offset: 0, color: '#079EE1'},
   {offset: 100, color: '#2EB9F5'},
@@ -448,12 +306,11 @@ const TEAL_14_SOLID = 'rgba(21, 117, 117, 1)';
 const ORANGE_10_SOLID = 'rgba(228, 124, 29, 1)';
 const OLIVE_16_SOLID = 'rgba(64, 76, 3, 1)';
 
-const UPLIFT_POSITIVE = '#29845A';
-const UPLIFT_NEGATIVE = '#E51C00';
-const UPLIFT_NEUTRAL = '#8A8A8A';
+const LIGHT_POSITIVE = '#29845A';
+const LIGHT_NEGATIVE = '#E51C00';
+const LIGHT_NEUTRAL = '#8A8A8A';
 
-export const UPLIFT_THEME = {
-  ...LIGHT_THEME,
+export const LIGHT_THEME: Theme = {
   seriesColors: {
     empty: variables.colorGray20,
     comparison: '#0A97D5',
@@ -481,18 +338,114 @@ export const UPLIFT_THEME = {
       OLIVE_16_SOLID,
     ],
   },
+  tooltip: {
+    backgroundColor: variables.colorGray00,
+    textColor: variables.colorGray160,
+    titleColor: variables.colorGray100,
+  },
+  chartContainer: {
+    backgroundColor: variables.colorGray00,
+    borderRadius: DEFAULT_CHART_BORDER_RADIUS,
+    minHeight: DEFAULT_CHART_MIN_HEIGHT,
+    padding: DEFAULT_CHART_PADDING,
+    sparkChartMinHeight: DEFAULT_SPARK_CHART_MIN_HEIGHT,
+  },
+  line: {
+    hasArea: DEFAULT_LINE_HAS_AREA,
+    hasSpline: DEFAULT_LINE_HAS_SPLINE,
+    width: DEFAULT_LINE_WIDTH,
+    pointStroke: variables.colorGray00,
+  },
+  arc: {
+    cornerRadius: DEFAULT_ARC_CORNER_RADIUS,
+    thickness: DEFAULT_ARC_CORNER_THICKNESS,
+  },
+  bar: {
+    zeroValueColor: variables.colorGray70,
+    borderRadius: DEFAULT_BORDER_RADIUS,
+  },
+  grid: {
+    showHorizontalLines: DEFAULT_GRID_SHOW_HORIZONTAL_LINES,
+    color: variables.colorGray20,
+    horizontalOverflow: DEFAULT_GRID_HORIZONTAL_OVERFLOW,
+    horizontalMargin: DEFAULT_GRID_HORIZONTAL_MARGIN,
+    verticalOverflow: DEFAULT_GRID_VERTICAL_OVERFLOW,
+  },
+  xAxis: {
+    labelColor: variables.colorGray100,
+    hide: DEFAULT_X_AXIS_HIDE,
+  },
+  yAxis: {
+    backgroundColor: variables.colorGray00,
+    labelColor: variables.colorGray100,
+  },
+  groupLabel: {
+    hide: DEFAULT_GROUP_LABEL_HIDE,
+  },
+  crossHair: {
+    color: variables.colorGray40,
+    width: DEFAULT_CROSSHAIR_WIDTH,
+  },
   legend: {
-    ...LIGHT_THEME.legend,
+    valueColor: variables.colorGray160,
+    labelColor: variables.colorGray100,
+    backgroundColor: variables.colorGray10,
     trendIndicator: {
-      positive: UPLIFT_POSITIVE,
-      negative: UPLIFT_NEGATIVE,
-      neutral: UPLIFT_NEUTRAL,
+      positive: LIGHT_POSITIVE,
+      negative: LIGHT_NEGATIVE,
+      neutral: LIGHT_NEUTRAL,
     },
   },
+  annotations: {
+    backgroundColor: variables.colorGray100,
+    textColor: variables.colorWhite,
+    titleColor: variables.colorWhite,
+    linkColor: variables.colorBlue40,
+    axisLabelColor: variables.colorGray70,
+    lineColor: variables.colorGray70,
+    pillOpacity: 1,
+  },
   trendIndicator: {
-    positive: UPLIFT_POSITIVE,
-    negative: UPLIFT_NEGATIVE,
-    neutral: UPLIFT_NEUTRAL,
+    positive: LIGHT_POSITIVE,
+    negative: LIGHT_NEGATIVE,
+    neutral: LIGHT_NEUTRAL,
+  },
+  missingData: {
+    lineColor: variables.colorGray40,
+  },
+};
+
+export const PRINT_THEME = {
+  ...LIGHT_THEME,
+  seriesColors: {
+    empty: variables.colorGray20,
+    comparison: variables.colorLightComparison,
+    single: variables.colorIndigo90,
+    upToEight: [
+      variables.colorIndigo70,
+      variables.colorBlue70,
+      variables.colorMagenta70,
+      variables.colorTeal70,
+      variables.colorPurple70,
+      variables.colorOrange70,
+      variables.colorYellow70,
+    ],
+    all: [
+      variables.colorTeal90,
+      variables.colorBlue70,
+      variables.colorIndigo90,
+      variables.colorPurple70,
+      variables.colorMagenta90,
+      variables.colorOrange80,
+      variables.colorYellow50,
+      variables.colorTeal70,
+      variables.colorBlue80,
+      variables.colorIndigo70,
+      variables.colorPurple90,
+      variables.colorMagenta70,
+      variables.colorOrange110,
+      variables.colorYellow70,
+    ],
   },
 };
 

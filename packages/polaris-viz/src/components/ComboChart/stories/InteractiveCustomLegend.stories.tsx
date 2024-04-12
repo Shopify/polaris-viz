@@ -1,6 +1,6 @@
 import type {Story} from '@storybook/react';
 
-import {DEFAULT_THEME} from '../../../constants';
+import {DARK_THEME} from '../../../constants';
 import type {ComboChartProps} from '../../ComboChart';
 import {LinePreview, SquareColorPreview} from '../..';
 
@@ -12,7 +12,7 @@ const LEGEND_ITEMS_DATA = [
   {
     name: 'POS',
     preview: (
-      <SquareColorPreview color={DEFAULT_THEME.seriesColors.upToEight[0]} />
+      <SquareColorPreview color={DARK_THEME.seriesColors.upToEight[0]} />
     ),
   },
   {
@@ -22,7 +22,7 @@ const LEGEND_ITEMS_DATA = [
   {
     name: 'Mobile',
     preview: (
-      <SquareColorPreview color={DEFAULT_THEME.seriesColors.upToEight[1]} />
+      <SquareColorPreview color={DARK_THEME.seriesColors.upToEight[1]} />
     ),
   },
   {
@@ -30,7 +30,7 @@ const LEGEND_ITEMS_DATA = [
     preview: (
       <LinePreview
         lineStyle="solid"
-        color={DEFAULT_THEME.seriesColors.upToEight[2]}
+        color={DARK_THEME.seriesColors.upToEight[2]}
       />
     ),
   },
@@ -39,7 +39,7 @@ const LEGEND_ITEMS_DATA = [
     preview: (
       <LinePreview
         lineStyle="dotted"
-        color={DEFAULT_THEME.seriesColors.comparison}
+        color={DARK_THEME.seriesColors.comparison}
       />
     ),
   },

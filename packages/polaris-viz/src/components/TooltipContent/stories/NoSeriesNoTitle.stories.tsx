@@ -1,4 +1,4 @@
-import {DEFAULT_THEME} from '@shopify/polaris-viz-core';
+import {DARK_THEME} from '@shopify/polaris-viz-core';
 import type {Story} from '@storybook/react';
 
 export {META as default} from './meta';
@@ -17,12 +17,12 @@ NoSeriesNoTitle.args = {
         {
           key: 'Sessions from Google ads',
           value: '5250',
-          color: DEFAULT_THEME.seriesColors.upToEight[0],
+          color: DARK_THEME.seriesColors.upToEight[0],
         },
         {
           key: 'Sessions from Facebook ads',
           value: '650',
-          color: DEFAULT_THEME.seriesColors.upToEight[1],
+          color: DARK_THEME.seriesColors.upToEight[1],
         },
       ],
     },

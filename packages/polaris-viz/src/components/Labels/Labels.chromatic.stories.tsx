@@ -1,7 +1,7 @@
 import {storiesOf} from '@storybook/react';
 
 import {XAxis} from '../XAxis';
-import {ChartContext} from '@shopify/polaris-viz-core';
+import {ChartContext, DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 import characterWidths from '../../data/character-widths.json';
 import characterWidthOffsets from '../../data/character-width-offsets.json';
@@ -100,7 +100,7 @@ function Wrapper({storyName, chartWidth, children}) {
             characterWidthOffsets,
             id: '',
             isPerformanceImpacted: false,
-            theme: 'Default',
+            theme: DEFAULT_THEME_NAME,
           }}
         >
           {children}

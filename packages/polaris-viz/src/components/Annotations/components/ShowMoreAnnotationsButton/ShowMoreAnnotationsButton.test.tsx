@@ -16,7 +16,6 @@ const MOCK_PROPS: Props = {
   isShowingAllAnnotations: false,
   onClick: jest.fn(),
   tabIndex: 0,
-  theme: 'Default',
   width: 200,
 };
 

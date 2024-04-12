@@ -15,7 +15,6 @@ const MOCK_PROPS: GroupLabelProps = {
   containerWidth: 300,
   label: 'Label Text',
   zeroPosition: 0,
-  theme: 'Default',
 };
 
 describe('<GroupLabel />', () => {

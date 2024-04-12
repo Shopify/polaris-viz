@@ -21,7 +21,7 @@ function Card(args: BarChartProps) {
         padding: 10,
       }}
     >
-      <BarChart {...args} theme="Uplift" />
+      <BarChart {...args} />
     </div>
   );
 }

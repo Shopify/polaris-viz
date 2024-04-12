@@ -10,7 +10,6 @@ jest.mock('@shopify/polaris-viz-core/src/utilities', () => ({
 
 const MOCK_PROPS: AnnotationLineProps = {
   size: 100,
-  theme: 'Default',
   x: 10,
   y: 20,
   direction: 'vertical',

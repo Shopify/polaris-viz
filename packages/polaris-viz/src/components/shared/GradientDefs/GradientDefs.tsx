@@ -2,6 +2,7 @@ import {
   LinearGradientWithStops,
   useChartContext,
   getGradientFromColor,
+  DEFAULT_THEME_NAME,
 } from '@shopify/polaris-viz-core';
 import type {Color, Direction} from '@shopify/polaris-viz-core';
 
@@ -71,6 +72,10 @@ function Gradient({
   );
 }
 
-export function getGradientDefId(theme = 'Default', index: number, id: string) {
+export function getGradientDefId(
+  theme = DEFAULT_THEME_NAME,
+  index: number,
+  id: string,
+) {
   return [id, theme, index, GRADIENT_ID].join('-');
 }

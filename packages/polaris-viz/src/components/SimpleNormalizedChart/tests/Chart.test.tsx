@@ -1,4 +1,5 @@
 import {mount} from '@shopify/react-testing';
+import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 import {SimpleNormalizedChart} from '../../../components/SimpleNormalizedChart';
 import {mountWithProvider} from '../../../test-utilities';
@@ -146,7 +147,7 @@ describe('<Chart />', () => {
         <SimpleNormalizedChart {...lowEdgeProps} />,
         {
           themes: {
-            Default: {
+            [DEFAULT_THEME_NAME]: {
               seriesColors: {
                 empty: '#00A',
               },
@@ -175,7 +176,7 @@ describe('<Chart />', () => {
         <SimpleNormalizedChart {...lowEdgeProps} />,
         {
           themes: {
-            Default: {
+            [DEFAULT_THEME_NAME]: {
               seriesColors: {
                 empty: '#00A',
               },
@@ -337,7 +338,7 @@ describe('<Chart />', () => {
       expect(barChart.findAll('li')).toHaveLength(0);
     });
 
-    it('defaults to BarLabels if no custom legend is provided', () => {
+    it('lights to BarLabels if no custom legend is provided', () => {
       const barChart = mount(<SimpleNormalizedChart {...mockProps} />);
 
       expect(barChart.findAll(BarLabel)).toHaveLength(4);
@@ -350,7 +351,7 @@ describe('<Chart />', () => {
         <SimpleNormalizedChart {...mockProps} />,
         {
           themes: {
-            Default: {
+            [DEFAULT_THEME_NAME]: {
               seriesColors: {
                 upToEight: ['#00A', '#00B', '#00C', '#00D'],
               },
@@ -364,7 +365,7 @@ describe('<Chart />', () => {
   });
 
   describe('direction', () => {
-    it('defaults to horizontal direction and passes it to BarSegment', () => {
+    it('lights to horizontal direction and passes it to BarSegment', () => {
       const barChart = mount(<SimpleNormalizedChart {...mockProps} />);
 
       expect(barChart.find(BarSegment)!.props.direction).toBe('horizontal');
@@ -380,7 +381,7 @@ describe('<Chart />', () => {
   });
 
   describe('Label Position', () => {
-    it('defaults to top-left label position and passes it to BarLabel', () => {
+    it('lights to top-left label position and passes it to BarLabel', () => {
       const barChart = mount(<SimpleNormalizedChart {...mockProps} />);
 
       expect(barChart.find(BarLabel)!.props.legendPosition).toBe('top-left');

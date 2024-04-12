@@ -70,7 +70,7 @@ const PROPS: ChartProps = {
   dimensions: {height: 400, width: 800},
   renderTooltipContent: () => null,
   showLegend: false,
-  theme: 'Default',
+  theme: 'Light',
   xAxisOptions: getXAxisOptionsWithDefaults(),
   seriesNameFormatter: (value) => `${value}`,
 };

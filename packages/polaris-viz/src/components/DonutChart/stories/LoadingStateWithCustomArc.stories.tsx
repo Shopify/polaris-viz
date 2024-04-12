@@ -1,4 +1,4 @@
-import {ChartState} from '@shopify/polaris-viz-core';
+import {ChartState, DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 import type {Story, StoryFn} from '@storybook/react';
 
 export {META as default} from './meta';
@@ -16,7 +16,7 @@ const LoadingStateWithCustomArcTemplate: StoryFn<DonutChartProps> = (
     <div style={{width: 550, height: 400}}>
       <PolarisVizProvider
         themes={{
-          Default: {
+          [DEFAULT_THEME_NAME]: {
             arc: {
               cornerRadius: 5,
               thickness: 25,

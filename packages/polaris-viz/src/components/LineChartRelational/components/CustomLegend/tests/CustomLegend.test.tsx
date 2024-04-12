@@ -1,5 +1,5 @@
 import {mount} from '@shopify/react-testing';
-import type {DataSeries} from '@shopify/polaris-viz-core';
+import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 import type {Props} from '../CustomLegend';
 import {CustomLegend} from '../CustomLegend';
@@ -48,7 +48,7 @@ const MOCK_PROPS: Props = {
     },
   ],
   seriesNameFormatter: (value) => `${value}`,
-  theme: 'Default',
+  theme: DEFAULT_THEME_NAME,
   getColorVisionEventAttrs: jest.fn(),
   getColorVisionStyles: jest.fn(),
 };

@@ -1,4 +1,5 @@
 import {Meta, Story, Canvas} from '@storybook/addon-docs';
+import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 import {PolarisVizProvider} from '../../../';
 import {
@@ -45,7 +46,7 @@ import {
   codeSample={`
     <PolarisVizProvider
       themes={{
-        Default: {
+        ${DEFAULT_THEME_NAME}: {
           chartContainer: {
             borderRadius: '0',
             padding: '0',
@@ -57,13 +58,13 @@ import {
       <SparkLineChart series={data} />
     </PolarisVizProvider>
     `}
-  theme="Light"
+  theme={DEFAULT_THEME_NAME}
   center
   chart={
     <div style={{width: '350px', height: '140px'}}>
       <PolarisVizProvider
         themes={{
-          Default: {
+          [DEFAULT_THEME_NAME]: {
             chartContainer: {
               borderRadius: '0',
               padding: '0',
@@ -82,7 +83,7 @@ import {
     codeSample={`
     <PolarisVizProvider
       themes={{
-        Default: {
+        ${DEFAULT_THEME_NAME}: {
           chartContainer: {
             borderRadius: '8px',
             padding: '20px',
@@ -94,12 +95,12 @@ import {
       <SparkLineChart series={data} />
     </PolarisVizProvider>
     `}
-    theme="Light"
+    theme={DEFAULT_THEME_NAME}
     center
     chart={
       <div style={{width: '350px', height: '140px'}}>
       <PolarisVizProvider themes={{
-        Default: {
+        [DEFAULT_THEME_NAME]: {
           chartContainer: {
             borderRadius: '8px',
             padding: '20px',

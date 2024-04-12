@@ -3,7 +3,7 @@ import type {Story} from '@storybook/react';
 export {META as default} from './meta';
 
 import {LinePreview} from '../../..';
-import {DEFAULT_THEME} from '../../../constants';
+import {DARK_THEME} from '../../../constants';
 import type {LineChartProps} from '../..';
 
 import {DEFAULT_DATA, DEFAULT_PROPS, Template} from './data';
@@ -36,7 +36,7 @@ InteractiveCustomLegend.args = {
           <LinePreview
             lineStyle={isComparison ? 'dotted' : 'solid'}
             color={
-              DEFAULT_THEME.seriesColors[isComparison ? 'comparison' : 'single']
+              DARK_THEME.seriesColors[isComparison ? 'comparison' : 'single']
             }
           />
           {name}

@@ -1,5 +1,6 @@
 import type {Story} from '@storybook/react';
 import type {DataSeries} from '@shopify/polaris-viz-core';
+import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 import {PolarisVizProvider} from '../../PolarisVizProvider';
 import type {SparkBarChartProps} from '../SparkBarChart';
@@ -11,7 +12,7 @@ export const Template: Story<SparkBarChartProps> = (
   return (
     <PolarisVizProvider
       themes={{
-        Default: {
+        [DEFAULT_THEME_NAME]: {
           bar: {
             borderRadius: 5,
           },

@@ -2,7 +2,7 @@ import {mount} from '@shopify/react-testing';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {useHorizontalSeriesColors} from '../useHorizontalSeriesColors';
-import {DEFAULT_THEME, LIGHT_THEME} from '../../constants';
+import {DARK_THEME, LIGHT_THEME} from '../../constants';
 
 const DATA: DataSeries[] = [
   {
@@ -41,7 +41,7 @@ describe('useHorizontalSeriesColors()', () => {
 
     expect(data).toStrictEqual({
       longestSeriesCount: 3,
-      seriesColors: [...DEFAULT_THEME.seriesColors.upToEight].splice(0, 2),
+      seriesColors: [...DARK_THEME.seriesColors.upToEight].splice(0, 2),
     });
   });
 
@@ -91,7 +91,7 @@ describe('useHorizontalSeriesColors()', () => {
 
     expect(data).toStrictEqual({
       longestSeriesCount: 2,
-      seriesColors: ['red', DEFAULT_THEME.seriesColors.upToEight[0]],
+      seriesColors: ['red', DARK_THEME.seriesColors.upToEight[0]],
     });
   });
 
@@ -127,7 +127,7 @@ describe('useHorizontalSeriesColors()', () => {
     expect(data).toStrictEqual({
       longestSeriesCount: 3,
       seriesColors: [
-        DEFAULT_THEME.seriesColors.single,
+        DARK_THEME.seriesColors.single,
         'rgba(144, 176, 223, 0.6)',
       ],
     });

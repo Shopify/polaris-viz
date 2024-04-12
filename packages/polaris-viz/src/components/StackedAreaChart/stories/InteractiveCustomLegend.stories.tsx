@@ -2,7 +2,7 @@ import type {Story} from '@storybook/react';
 
 export {META as default} from './meta';
 
-import {DEFAULT_THEME} from '../../../constants';
+import {DARK_THEME} from '../../../constants';
 import {LinePreview} from '../../LinePreview';
 import type {StackedAreaChartProps} from '../../StackedAreaChart';
 
@@ -36,7 +36,7 @@ InteractiveCustomLegend.args = {
         >
           <LinePreview
             lineStyle="solid"
-            color={DEFAULT_THEME.seriesColors.upToEight[index]}
+            color={DARK_THEME.seriesColors.upToEight[index]}
           />
           {name}
         </li>

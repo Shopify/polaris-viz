@@ -10,6 +10,7 @@ import {
   Options,
 } from '../../utilities/renderLinearTooltipContent';
 import type {RenderTooltipContentData} from 'types';
+import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 const stories = storiesOf('Chromatic/Utilities', module).addParameters({
   docs: {page: null},
@@ -97,7 +98,7 @@ const DEFAULT_TOOLTIP_DATA: RenderTooltipContentData = {
       ],
     },
   ],
-  theme: 'Default',
+  theme: DEFAULT_THEME_NAME,
   formatters: {},
 };
 

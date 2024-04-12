@@ -1,4 +1,5 @@
 import {Meta, Story, Canvas} from '@storybook/addon-docs';
+import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 import {PolarisVizProvider} from '../../../';
 import {
@@ -66,7 +67,7 @@ import {
   codeSample={`
     <PolarisVizProvider
         themes={{
-          Default: {
+          ${DEFAULT_THEME_NAME}: {
             legend: {
               labelColor: 'lime',
               valueColor: 'yellow',
@@ -82,7 +83,7 @@ import {
     <div style={{width: '320px', height: '250px'}}>
       <PolarisVizProvider
         themes={{
-          Default: {
+          [DEFAULT_THEME_NAME]: {
             chartContainer: {
               padding: '10px'
             },
@@ -102,7 +103,7 @@ import {
   codeSample={`
     <PolarisVizProvider
       themes={{
-        Default: {
+        ${DEFAULT_THEME_NAME}: {
           crossHair: {
             color: 'lime',
             width: 10,
@@ -121,7 +122,7 @@ import {
     <div style={{width: '350px', height: '140px'}}>
       <PolarisVizProvider
         themes={{
-          Default: {
+          [DEFAULT_THEME_NAME]: {
             crossHair: {
               color: 'lime',
               width: 10,

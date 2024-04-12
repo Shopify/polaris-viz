@@ -1,5 +1,6 @@
 import {Meta, Story, Canvas} from '@storybook/addon-docs';
 import LinkTo from '@storybook/addon-links/react';
+import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 import {
   Divider,
@@ -37,7 +38,7 @@ import {
 </p>
 
 ```tsx
-const seriesColors = getSeriesColors(1, 'Default');
+const seriesColors = getSeriesColors(1, DEFAULT_THEME_NAME);
 
 // [
 //   {

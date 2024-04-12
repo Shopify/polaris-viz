@@ -3,9 +3,8 @@ import {createHost} from '@react-spring/animated';
 
 import type {ErrorBoundaryResponse, SvgComponents, Theme} from '../types';
 import {
-  DEFAULT_THEME as Default,
+  DARK_THEME as Dark,
   LIGHT_THEME as Light,
-  UPLIFT_THEME as Uplift,
   DEFAULT_COMPONENTS as DefaultComponents,
   DEFAULT_THEME_NAME,
 } from '../constants';
@@ -23,9 +22,8 @@ export const PolarisVizContext = createContext<{
   onError?: ErrorBoundaryResponse;
 }>({
   themes: {
-    Default,
+    Dark,
     Light,
-    Uplift,
   },
   components: {
     ...DefaultComponents,

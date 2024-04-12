@@ -28,7 +28,7 @@ const MOCK_PROPS: Props = {
   ],
   predictiveSeriesNames: [],
   seriesNameFormatter: (value) => `${value}`,
-  theme: 'Default',
+  theme: 'Light',
   getColorVisionEventAttrs: jest.fn(),
   getColorVisionStyles: jest.fn(),
 };

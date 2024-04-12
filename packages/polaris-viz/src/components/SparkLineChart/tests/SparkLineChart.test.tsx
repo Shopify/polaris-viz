@@ -1,6 +1,6 @@
 import {mount} from '@shopify/react-testing';
 import type {DataSeries} from '@shopify/polaris-viz-core';
-import {LineSeries} from '@shopify/polaris-viz-core';
+import {DEFAULT_THEME_NAME, LineSeries} from '@shopify/polaris-viz-core';
 
 import {SparkLineChart} from '../SparkLineChart';
 import {Chart} from '../Chart';
@@ -97,11 +97,11 @@ describe('<SparkLineChart />', () => {
       });
     });
 
-    it('`Default` is used if no value is provided', () => {
+    it(`${DEFAULT_THEME_NAME} is used if no value is provided`, () => {
       const barChart = mount(<SparkLineChart data={mockData} />);
 
       expect(barChart).toContainReactComponent(Chart, {
-        theme: 'Default',
+        theme: DEFAULT_THEME_NAME,
       });
     });
   });

@@ -2,7 +2,7 @@ import type {Story} from '@storybook/react';
 
 export {META as default} from './meta';
 
-import {DEFAULT_THEME} from '../../../constants';
+import {DARK_THEME} from '../../../constants';
 import type {SimpleNormalizedChartProps} from '../../SimpleNormalizedChart';
 import {SquareColorPreview} from '../../SquareColorPreview';
 
@@ -38,7 +38,7 @@ InteractiveCustomLegend.args = {
           {...getColorVisionEventAttrs(index)}
         >
           <SquareColorPreview
-            color={DEFAULT_THEME.seriesColors.upToEight[index]}
+            color={DARK_THEME.seriesColors.upToEight[index]}
           />
           {name}
         </li>

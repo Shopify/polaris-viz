@@ -10,7 +10,6 @@ const MOCK_PROPS: Props = {
   ticks: [],
   transform: {x: 10, y: 20},
   width: 100,
-  theme: 'Default',
 };
 
 describe('<HorizontalGridLines />', () => {
@@ -47,7 +46,7 @@ describe('<HorizontalGridLines />', () => {
       expect(actual).toContainReactComponent('line', {
         x2: 100,
         transform: `translate(10,20)`,
-        stroke: '#43434e',
+        stroke: '#eeeeef',
       });
     });
 

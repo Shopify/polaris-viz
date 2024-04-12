@@ -17,12 +17,7 @@ describe('<YAxis />', () => {
   it('displays a formatted value with each tick', () => {
     const yAxis = mount(
       <svg>
-        <YAxis
-          ticks={testTicks}
-          width={100}
-          textAlign="right"
-          theme="Default"
-        />
+        <YAxis ticks={testTicks} width={100} textAlign="right" />
       </svg>,
     );
 

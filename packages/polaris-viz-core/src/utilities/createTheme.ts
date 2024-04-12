@@ -1,9 +1,9 @@
 import type {Theme, PartialTheme} from '../types';
-import {DEFAULT_THEME} from '../constants';
+import {LIGHT_THEME} from '../constants';
 
 export const createTheme = (
   theme: PartialTheme,
-  baseTheme = DEFAULT_THEME,
+  baseTheme = LIGHT_THEME,
 ): Theme => {
   const themeKeys = Object.keys(baseTheme);
 

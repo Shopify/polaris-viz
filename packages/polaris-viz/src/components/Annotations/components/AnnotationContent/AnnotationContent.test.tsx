@@ -1,6 +1,7 @@
 import {mount} from '@shopify/react-testing';
 
 import {useBrowserCheck} from '../../../../hooks/useBrowserCheck';
+import type {Annotation} from '../../../../types';
 
 import type {AnnotationContentProps} from './AnnotationContent';
 import {AnnotationContent} from './AnnotationContent';
@@ -27,7 +28,8 @@ jest.mock('@shopify/polaris-viz-core/src/hooks', () => ({
   }),
 }));
 
-const ANNOTATION = {
+const ANNOTATION: Annotation = {
+  axis: 'x',
   label: '',
   startKey: 0,
   endKey: 0,
@@ -54,7 +56,6 @@ const MOCK_PROPS: AnnotationContentProps = {
     y: 0,
   },
   tabIndex: 1,
-  theme: 'Default',
   x: 0,
   y: 0,
 };

@@ -21,7 +21,7 @@ import {SPARKLINE_SERIES} from '../utilities';
 
 <PolarisVizProvider
     themes={{
-      Default: {
+      Dark: {
         chartContainer: {
           padding: '20px',
         }
@@ -60,13 +60,14 @@ The <code>PolarisVizProvider</code> allows you to:
 - Define multiple themes that can be used by each instance of your charts
 
 <Divider />
-<Title type="h3">Overwriting the Default theme</Title>
+<Title type="h3">Overwriting the theme</Title>
 
-<p>If you only have one style for all charts, overwrite the <code>
-Default
-
-</code> theme and those changes will be applied to all charts that are children
-of <code>PolarisVizProvider</code>, even if you don't explicitly pass anything to the <code>theme</code> prop</p>
+<p>
+  If you only have one style for all charts, overwrite the <code>Light</code>{' '}
+  theme and those changes will be applied to all charts that are children of{' '}
+  <code>PolarisVizProvider</code>, even if you don't explicitly pass anything to
+  the <code>theme</code> prop
+</p>
 
 ```js
 import {PolarisVizProvider, BarChart} from '@shopify/polaris-viz';
@@ -75,14 +76,14 @@ export const YourTopLevelComponent = () => {
   return (
     <PolarisVizProvider
       themes={{
-        Default: {
+        Light: {
           chartContainer: {
             backgroundColor: 'darkblue',
           },
         },
       }}
     >
-      {/* 👇 Because the "Default" theme's backgroundColor is
+      {/* 👇 Because the "Light" theme's backgroundColor is
       overwritten; all charts inside <App /> will have a
       darkblue background color */}
       <App />
@@ -114,7 +115,7 @@ export const App = () => {
 >
   <PolarisVizProvider
     themes={{
-      Default: {
+      Light: {
         chartContainer: {
           backgroundColor: 'darkblue',
         },

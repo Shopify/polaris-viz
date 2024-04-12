@@ -5,9 +5,13 @@ import {createHost} from '@react-spring/animated';
 import {usePolarisVizContext} from '../../../hooks';
 import {PolarisVizProvider} from '../PolarisVizProvider';
 import {PolarisVizContext} from '../../../contexts';
-import {DEFAULT_THEME, DEFAULT_COMPONENTS} from '../../../constants';
+import {
+  DARK_THEME,
+  DEFAULT_COMPONENTS,
+  DEFAULT_THEME_NAME,
+} from '../../../constants';
 
-const MockChild = ({theme = 'Default'}) => {
+const MockChild = ({theme = DEFAULT_THEME_NAME}) => {
   const {themes} = usePolarisVizContext();
   return <div>{JSON.stringify(themes[theme])}</div>;
 };
@@ -41,7 +45,7 @@ describe('<PolarisVizProvider />', () => {
         </PolarisVizProvider>,
       );
 
-      expect(vizProvider).toContainReactText(JSON.stringify(DEFAULT_THEME));
+      expect(vizProvider).toContainReactText(JSON.stringify(DARK_THEME));
     });
 
     it('passes custom themes to children', () => {
@@ -62,9 +66,9 @@ describe('<PolarisVizProvider />', () => {
 
       expect(vizProvider).toContainReactText(
         JSON.stringify({
-          ...DEFAULT_THEME,
+          ...DARK_THEME,
           bar: {
-            ...DEFAULT_THEME.bar,
+            ...DARK_THEME.bar,
             borderRadius: 3,
           },
         }),

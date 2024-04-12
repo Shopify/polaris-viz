@@ -38,10 +38,9 @@ export type {
 } from './components';
 
 export {
-  DEFAULT_THEME as PolarisVizDefaultTheme,
+  DARK_THEME as PolarisVizDarkTheme,
   LIGHT_THEME as PolarisVizLightTheme,
   PRINT_THEME as PolarisVizPrintTheme,
-  UPLIFT_THEME as PolarisUpliftTheme,
 } from './constants';
 
 export type {

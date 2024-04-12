@@ -7,6 +7,7 @@ import {DonutChart} from '../DonutChart';
 import type {DonutChartProps} from '../DonutChart';
 
 import {DEFAULT_DATA, DEFAULT_PROPS} from './data';
+import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 const WithoutRoundedCornersTemplate: StoryFn<DonutChartProps> = (
   args: DonutChartProps,
@@ -15,7 +16,7 @@ const WithoutRoundedCornersTemplate: StoryFn<DonutChartProps> = (
     <div style={{width: 550, height: 400}}>
       <PolarisVizProvider
         themes={{
-          Default: {
+          [DEFAULT_THEME_NAME]: {
             arc: {
               cornerRadius: 0,
             },

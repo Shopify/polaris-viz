@@ -1,6 +1,7 @@
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
 import React from 'react';
+import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 import {StackedAreas} from '../StackedAreas';
 import {AnimatedArea, Area} from '../../Area';
@@ -30,7 +31,7 @@ describe('<StackedAreas />', () => {
     isAnimated: true,
     stackedValues: mockStackedValues,
     zeroLineValues: mockStackedValues,
-    theme: `Default`,
+    theme: DEFAULT_THEME_NAME,
   };
 
   it('renders a <AnimatedArea /> for each stacked series', () => {

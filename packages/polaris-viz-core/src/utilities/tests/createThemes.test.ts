@@ -1,5 +1,5 @@
 import {createTheme, createThemes} from '../';
-import {DEFAULT_THEME} from '../../constants';
+import {DARK_THEME, DEFAULT_THEME_NAME, LIGHT_THEME} from '../../constants';
 
 describe('createTheme', () => {
   it('generates a theme with default values, from the partial theme provided', () => {
@@ -8,12 +8,12 @@ describe('createTheme', () => {
         borderRadius: 5,
       },
     });
-    expect(result).not.toStrictEqual(DEFAULT_THEME);
+    expect(result).not.toStrictEqual(DARK_THEME);
 
     expect(result).toStrictEqual(
       expect.objectContaining({
         bar: {
-          ...DEFAULT_THEME.bar,
+          ...DARK_THEME.bar,
           borderRadius: 5,
         },
       }),
@@ -24,20 +24,20 @@ describe('createTheme', () => {
 describe('createThemes', () => {
   it('generates a record of themes with default values, from the partial themes provided', () => {
     const result = createThemes({
-      Default: {
+      [DEFAULT_THEME_NAME]: {
         bar: {
           borderRadius: 5,
         },
       },
     });
-    expect(result).not.toStrictEqual({Default: DEFAULT_THEME});
+    expect(result).not.toStrictEqual({[DEFAULT_THEME_NAME]: LIGHT_THEME});
 
     expect(result).toStrictEqual(
       expect.objectContaining({
-        Default: {
-          ...DEFAULT_THEME,
+        [DEFAULT_THEME_NAME]: {
+          ...LIGHT_THEME,
           bar: {
-            ...DEFAULT_THEME.bar,
+            ...LIGHT_THEME.bar,
             borderRadius: 5,
           },
         },
@@ -47,7 +47,7 @@ describe('createThemes', () => {
 
   it('generates a record with multiple custom themes', () => {
     const result = createThemes({
-      Default: DEFAULT_THEME,
+      [DEFAULT_THEME_NAME]: LIGHT_THEME,
       SomeTheme: {
         bar: {
           borderRadius: 0,
@@ -57,11 +57,11 @@ describe('createThemes', () => {
 
     expect(result).toStrictEqual(
       expect.objectContaining({
-        Default: DEFAULT_THEME,
+        [DEFAULT_THEME_NAME]: LIGHT_THEME,
         SomeTheme: {
-          ...DEFAULT_THEME,
+          ...LIGHT_THEME,
           bar: {
-            ...DEFAULT_THEME.bar,
+            ...LIGHT_THEME.bar,
             borderRadius: 0,
           },
         },
