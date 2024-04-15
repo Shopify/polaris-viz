@@ -160,5 +160,6 @@
   },
   "dependencies": {
     "concurrently": "^7.0.0"
-  }
+  },
+  "version": "1.0.0-light-theme-default-beta.1"
 }

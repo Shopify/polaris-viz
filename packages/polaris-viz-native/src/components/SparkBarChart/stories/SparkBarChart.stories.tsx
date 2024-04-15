@@ -4,7 +4,7 @@ import {SparkBarChart} from '../SparkBarChart';
 
 const THEME_CONTROL_ARGS = {
   description: 'The theme that the chart will inherit its styles from',
-  control: {type: 'select', options: ['Default', 'Light']},
+  control: {type: 'select', options: ['Dark', 'Light']},
 };
 
 export default {

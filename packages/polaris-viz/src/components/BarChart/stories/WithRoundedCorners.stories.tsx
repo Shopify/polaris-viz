@@ -6,6 +6,7 @@ import {BarChart, BarChartProps} from '../../../components';
 import {PolarisVizProvider} from '../../PolarisVizProvider';
 
 import {DEFAULT_DATA} from './data';
+import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 const WithoutRoundedCornersTemplate: Story<BarChartProps> = (
   args: BarChartProps,
@@ -13,7 +14,7 @@ const WithoutRoundedCornersTemplate: Story<BarChartProps> = (
   return (
     <PolarisVizProvider
       themes={{
-        Default: {
+        [DEFAULT_THEME_NAME]: {
           bar: {
             borderRadius: 0,
           },

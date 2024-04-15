@@ -7,10 +7,9 @@ import type {
   SvgComponents,
 } from '../../types';
 import {
-  DEFAULT_THEME as Default,
+  DARK_THEME as Dark,
   LIGHT_THEME as Light,
   PRINT_THEME as Print,
-  UPLIFT_THEME as Uplift,
   DEFAULT_COMPONENTS as DefaultComponents,
   DEFAULT_THEME_NAME,
 } from '../../constants';
@@ -41,10 +40,9 @@ export function PolarisVizProvider({
         ...components,
       },
       themes: createThemes({
-        Default,
+        Dark,
         Light,
         Print,
-        Uplift,
         ...themes,
       }),
       animated,

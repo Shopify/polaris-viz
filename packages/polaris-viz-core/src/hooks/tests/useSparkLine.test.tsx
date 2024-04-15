@@ -1,11 +1,6 @@
 import {mount} from '@shopify/react-testing';
 
-import {
-  mountWithProvider,
-  expectToThrow,
-  randomNumber,
-} from '../../test-utilities';
-import {DEFAULT_THEME} from '../../../../polaris-viz-core/src';
+import {randomNumber} from '../../test-utilities';
 import {useSparkLine} from '../useSparkLine';
 
 const generateSampleData = ({minValue, maxValue, length}) => {

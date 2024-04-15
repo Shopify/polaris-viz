@@ -21,7 +21,7 @@ describe('<DonutChart />', () => {
   describe('<Chart/>', () => {
     const mockProps: ChartProps = {
       showLegend: true,
-      theme: `Default`,
+      theme: `Light`,
       labelFormatter: (value) => `${value}`,
       dimensions: {width: 500, height: 500},
       data: [

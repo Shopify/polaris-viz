@@ -21,7 +21,7 @@ function Card(args: LineChartProps) {
         padding: 10,
       }}
     >
-      <LineChart {...args} theme="Uplift" />
+      <LineChart {...args} />
     </div>
   );
 }

@@ -1,10 +1,6 @@
 import {themes} from '@storybook/theming';
 import {PolarisVizProvider} from '@shopify/polaris-viz';
-import {
-  DEFAULT_THEME,
-  LIGHT_THEME,
-  UPLIFT_THEME,
-} from '../packages/polaris-viz/src/constants';
+import {DARK_THEME, LIGHT_THEME} from '../packages/polaris-viz/src/constants';
 import {useTheme} from '../packages/polaris-viz/src/hooks';
 
 // https://github.com/storybookjs/storybook/issues/548
@@ -26,7 +22,7 @@ const storiesOrder = {
     Hooks: null,
     Utilities: null,
     Themes: {
-      'Default Themes': null,
+      'Available Themes': null,
       Customizing: null,
       'createTheme Utility': null,
       'Theme Definition': {
@@ -134,23 +130,18 @@ export const decorators = [
     return (
       <PolarisVizProvider
         themes={{
-          Default: {
+          Dark: {
             chartContainer: {
               padding: '20px',
             },
             grid: {
               horizontalMargin:
                 context.parameters.horizontalMargin ??
-                DEFAULT_THEME.grid.horizontalMargin,
+                DARK_THEME.grid.horizontalMargin,
               horizontalOverflow: true,
             },
           },
           Light: {
-            chartContainer: {
-              padding: '20px',
-            },
-          },
-          Uplift: {
             chartContainer: {
               padding: '20px',
             },

@@ -1,4 +1,5 @@
 import {Meta, Story, Canvas} from '@storybook/addon-docs';
+import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 import {PolarisVizProvider} from '../../../';
 import {
@@ -80,7 +81,7 @@ import {
   codeSample={`
     <PolarisVizProvider
       themes={{
-        Default: {
+        ${DEFAULT_THEME_NAME}: {
           grid: {
             showHorizontalLines: false,
           }
@@ -95,7 +96,7 @@ import {
     <div style={{width: '350px', height: '140px'}}>
       <PolarisVizProvider
         themes={{
-          Default: {
+          [DEFAULT_THEME_NAME]: {
             grid: {
               showHorizontalLines: false,
             },
@@ -112,7 +113,7 @@ import {
   codeSample={`
     <PolarisVizProvider
       themes={{
-        Default: {
+        ${DEFAULT_THEME_NAME}: {
           grid: {
             showHorizontalLines: true,
           },
@@ -127,7 +128,7 @@ import {
     <div style={{width: '350px', height: '140px'}}>
       <PolarisVizProvider
         themes={{
-          Default: {
+          [DEFAULT_THEME_NAME]: {
             grid: {},
           },
         }}
@@ -142,7 +143,7 @@ import {
   codeSample={`
     <PolarisVizProvider
       themes={{
-        Default: {
+        ${DEFAULT_THEME_NAME}: {
           grid: {
             showHorizontalLines: true,
             horizontalOverflow: false,
@@ -161,7 +162,7 @@ import {
     <div style={{width: '350px', height: '140px'}}>
       <PolarisVizProvider
         themes={{
-          Default: {
+          [DEFAULT_THEME_NAME]: {
             grid: {
               showHorizontalLines: true,
               horizontalOverflow: false,
@@ -182,7 +183,7 @@ import {
   codeSample={`
     <PolarisVizProvider
       themes={{
-        Default: {
+        ${DEFAULT_THEME_NAME}: {
           grid: {
             showHorizontalLines: true,
             horizontalOverflow: true,
@@ -201,7 +202,7 @@ import {
     <div style={{width: '350px', height: '140px'}}>
       <PolarisVizProvider
         themes={{
-          Default: {
+          [DEFAULT_THEME_NAME]: {
             grid: {
               showHorizontalLines: true,
               horizontalOverflow: true,

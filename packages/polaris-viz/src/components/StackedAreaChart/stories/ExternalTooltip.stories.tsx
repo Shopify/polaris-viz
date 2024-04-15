@@ -16,7 +16,7 @@ function Card(args: StackedAreaChartProps) {
         padding: 10,
       }}
     >
-      <StackedAreaChart {...args} theme="Uplift" />
+      <StackedAreaChart {...args} />
     </div>
   );
 }

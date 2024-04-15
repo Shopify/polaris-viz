@@ -10,6 +10,7 @@ import {SparkBarChart} from '../../SparkBarChart';
 import {SparkLineChart} from '../../SparkLineChart';
 import {StackedAreaChart} from '../../StackedAreaChart';
 import {PolarisVizProvider} from '../PolarisVizProvider';
+import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 export default {
   title: `chromatic/PolarisVizProvider/Chromatic`,
@@ -133,18 +134,18 @@ DefaultTheme.args = {};
 export const OverideDefaultTheme: Story = Template.bind({});
 
 OverideDefaultTheme.args = {
-  theme: 'Uplift',
+  theme: 'Dark',
 };
 
 export const DefaultThemeWithSingle: Story = Template.bind({});
 
 DefaultThemeWithSingle.args = {
-  singleTheme: 'Light',
+  singleTheme: DEFAULT_THEME_NAME,
 };
 
 export const OverideDefaultThemeWithSingle: Story = Template.bind({});
 
 OverideDefaultThemeWithSingle.args = {
-  theme: 'Uplift',
-  singleTheme: 'Default',
+  theme: 'Dark',
+  singleTheme: DEFAULT_THEME_NAME,
 };

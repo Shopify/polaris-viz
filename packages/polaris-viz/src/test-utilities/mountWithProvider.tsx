@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {mount} from '@shopify/react-testing';
 import type {PartialTheme} from '@shopify/polaris-viz-core';
+import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 import {PolarisVizProvider} from '../';
 
@@ -22,7 +23,7 @@ export const mountWithProvider = (
 export const mockDefaultTheme = (overrides: PartialTheme) => {
   return {
     themes: {
-      Default: overrides,
+      [DEFAULT_THEME_NAME]: overrides,
     },
   };
 };

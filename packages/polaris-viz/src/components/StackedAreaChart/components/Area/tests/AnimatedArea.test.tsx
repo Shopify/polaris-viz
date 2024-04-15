@@ -5,7 +5,7 @@ import React from 'react';
 
 import {mountWithProvider} from '../../../../../test-utilities';
 import {mockDefaultTheme} from '../../../../../test-utilities/mountWithProvider';
-import {DEFAULT_THEME} from '../../../../../constants';
+import {DARK_THEME} from '../../../../../constants';
 import type {StackedSeries, Theme} from '../../../../../types';
 import type {AreaProps} from '../types';
 import {AnimatedArea} from '../AnimatedArea';
@@ -49,7 +49,7 @@ describe('<AnimatedArea />', () => {
     index: 0,
     isImmediate: false,
     lineGenerator,
-    selectedTheme: DEFAULT_THEME,
+    selectedTheme: DARK_THEME,
   };
 
   it('renders a path for each series', () => {
@@ -66,7 +66,7 @@ describe('<AnimatedArea />', () => {
     const {themes} = mockDefaultTheme({line: {width: 10}});
     const stackedArea = mountWithProvider(
       <svg>
-        <AnimatedArea {...mockProps} selectedTheme={themes.Default as Theme} />
+        <AnimatedArea {...mockProps} selectedTheme={themes.Light as Theme} />
       </svg>,
     );
 

@@ -1,4 +1,5 @@
 import {Fragment} from 'react';
+import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 import {mountWithProvider} from '../../test-utilities/mountWithProvider';
 import {TooltipContent} from '../../components';
@@ -8,7 +9,7 @@ import {getTooltipContentRenderer} from '../getTooltipContentRenderer';
 describe('getTooltipContentRenderer()', () => {
   it('returns <TooltipContent />', () => {
     const renderTooltipContent = getTooltipContentRenderer({
-      theme: 'Default',
+      theme: DEFAULT_THEME_NAME,
       data: [],
     });
 
@@ -21,7 +22,7 @@ describe('getTooltipContentRenderer()', () => {
 
   it('returns null when no data is provided', () => {
     const renderTooltipContent = getTooltipContentRenderer({
-      theme: 'Default',
+      theme: DEFAULT_THEME_NAME,
       data: [],
     });
 
@@ -43,7 +44,7 @@ describe('getTooltipContentRenderer()', () => {
     const customRenderer = jest.fn();
 
     const renderTooltipContent = getTooltipContentRenderer({
-      theme: 'Default',
+      theme: DEFAULT_THEME_NAME,
       data: [],
       tooltipOptions: {
         renderTooltipContent: customRenderer,
@@ -73,6 +74,6 @@ const MOCK_TOOLTIP_DATA: RenderTooltipContentData = {
   ],
   activeIndex: 0,
   dataSeries: [],
-  theme: 'Default',
+  theme: DEFAULT_THEME_NAME,
   title: '',
 };

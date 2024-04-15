@@ -1,4 +1,4 @@
-import {DEFAULT_THEME} from '@shopify/polaris-viz-core';
+import {DARK_THEME} from '@shopify/polaris-viz-core';
 import type {Story} from '@storybook/react';
 
 export {META as default} from './meta';
@@ -17,7 +17,7 @@ PreviewIcons.args = {
         {
           key: 'This row has a preview icon',
           value: '650',
-          color: DEFAULT_THEME.seriesColors.upToEight[0],
+          color: DARK_THEME.seriesColors.upToEight[0],
         },
         {
           key: 'This row has a transparent icon',

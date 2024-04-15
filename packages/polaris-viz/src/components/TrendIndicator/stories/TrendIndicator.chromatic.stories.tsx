@@ -32,7 +32,7 @@ const combinations = renderCombinationSections([
     addWithPropsCombinations(TrendIndicator, {
       value: [null, undefined],
       trend: ['positive'],
-      theme: ['Default', 'Light'],
+      theme: ['Dark', 'Light'],
     }),
   ],
 ]);

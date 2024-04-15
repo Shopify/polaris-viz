@@ -1,4 +1,5 @@
 import {Meta, Story, Canvas} from '@storybook/addon-docs';
+import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 import {PolarisVizProvider} from '../../../';
 import {
@@ -31,7 +32,7 @@ import {
 
 `seriesColors` allows you to customize what colors the charts will use depending on how many data series are being displayed.
 
-The `Default` and `Light` themes that come with the library out of the box use gradients for charts with up to 7 data series, but use
+The `Dark` and `${DEFAULT_THEME_NAME}` themes that come with the library out of the box use gradients for charts with up to 7 data series, but use
 solid colors for charts with more. The `Color` type accepts a gradient definition or any valid CSS string color:
 
 ```ts
@@ -96,7 +97,7 @@ export interface GradientStop {
   codeSample={`
     <PolarisVizProvider
       themes={{
-        Default: {
+        ${DEFAULT_THEME_NAME}: {
           seriesColors: {
             single: 'lime',
           },
@@ -111,7 +112,7 @@ export interface GradientStop {
     <div style={{width: '350px', height: '140px'}}>
       <PolarisVizProvider
         themes={{
-          Default: {
+          [DEFAULT_THEME_NAME]: {
             seriesColors: {
               single: 'lime',
             },
@@ -127,7 +128,7 @@ export interface GradientStop {
   codeSample={`
     <PolarisVizProvider
       themes={{
-        Default: {
+        ${DEFAULT_THEME_NAME}: {
           seriesColors: {
             upToEight: [
               'yellow',
@@ -147,7 +148,7 @@ export interface GradientStop {
     <div style={{width: '350px', height: '140px'}}>
       <PolarisVizProvider
         themes={{
-          Default: {
+          [DEFAULT_THEME_NAME]: {
             seriesColors: {
               upToEight: ['yellow', 'lime', 'aqua', 'Teal'],
             },
@@ -163,7 +164,7 @@ export interface GradientStop {
   codeSample={`
     <PolarisVizProvider
       themes={{
-        Default: {
+        ${DEFAULT_THEME_NAME}: {
           all: {
             all: [
               'magenta',
@@ -186,7 +187,7 @@ export interface GradientStop {
     <div style={{width: '350px', height: '140px'}}>
       <PolarisVizProvider
         themes={{
-          Default: {
+          [DEFAULT_THEME_NAME]: {
             seriesColors: {
               all: [
                 'magenta',
@@ -211,7 +212,7 @@ export interface GradientStop {
   codeSample={`
     <PolarisVizProvider
       themes={{
-        Default: {
+        ${DEFAULT_THEME_NAME}: {
           all: {
             all: [
               'GreenYellow',
@@ -238,7 +239,7 @@ export interface GradientStop {
     <div style={{width: '350px', height: '140px'}}>
       <PolarisVizProvider
         themes={{
-          Default: {
+          [DEFAULT_THEME_NAME]: {
             seriesColors: {
               all: [
                 'GreenYellow',
@@ -267,7 +268,7 @@ export interface GradientStop {
   codeSample={`
     <PolarisVizProvider
       themes={{
-        Default: {
+        ${DEFAULT_THEME_NAME}: {
           seriesColors: {
             comparison: 'lime',
           },
@@ -282,7 +283,7 @@ export interface GradientStop {
     <div style={{width: '350px', height: '140px'}}>
       <PolarisVizProvider
         themes={{
-          Default: {
+          [DEFAULT_THEME_NAME]: {
             seriesColors: {
               comparison: 'lime',
             },

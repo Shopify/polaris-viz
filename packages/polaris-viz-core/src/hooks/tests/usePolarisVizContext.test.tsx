@@ -2,10 +2,10 @@ import {mount} from '@shopify/react-testing';
 
 import {mountWithProvider} from '../../test-utilities';
 import {
-  DEFAULT_THEME,
+  DARK_THEME,
+  DEFAULT_THEME_NAME,
   LIGHT_THEME,
   PRINT_THEME,
-  UPLIFT_THEME,
 } from '../../constants';
 import {usePolarisVizContext} from '../usePolarisVizContext';
 
@@ -20,9 +20,8 @@ describe('usePolarisVizContext', () => {
 
     expect(mockComponent.text()).toBe(
       JSON.stringify({
-        Default: DEFAULT_THEME,
+        Dark: DARK_THEME,
         Light: LIGHT_THEME,
-        Uplift: UPLIFT_THEME,
       }),
     );
   });
@@ -30,7 +29,7 @@ describe('usePolarisVizContext', () => {
   it('exposes the default values overwritten by PolarisVizProvider', () => {
     const mockComponent = mountWithProvider(<TestComponent />, {
       themes: {
-        Default: {
+        [DEFAULT_THEME_NAME]: {
           chartContainer: {
             backgroundColor: 'purple',
           },
@@ -40,16 +39,15 @@ describe('usePolarisVizContext', () => {
 
     expect(mockComponent.text()).toBe(
       JSON.stringify({
-        Default: {
-          ...DEFAULT_THEME,
+        Dark: DARK_THEME,
+        Light: {
+          ...LIGHT_THEME,
           chartContainer: {
-            ...DEFAULT_THEME.chartContainer,
+            ...LIGHT_THEME.chartContainer,
             backgroundColor: 'purple',
           },
         },
-        Light: LIGHT_THEME,
         Print: PRINT_THEME,
-        Uplift: UPLIFT_THEME,
       }),
     );
   });
@@ -67,14 +65,13 @@ describe('usePolarisVizContext', () => {
 
     expect(mockComponent.text()).toBe(
       JSON.stringify({
-        Default: DEFAULT_THEME,
+        Dark: DARK_THEME,
         Light: LIGHT_THEME,
         Print: PRINT_THEME,
-        Uplift: UPLIFT_THEME,
         SomeOtherTheme: {
-          ...DEFAULT_THEME,
+          ...LIGHT_THEME,
           chartContainer: {
-            ...DEFAULT_THEME.chartContainer,
+            ...LIGHT_THEME.chartContainer,
             backgroundColor: 'purple',
           },
         },

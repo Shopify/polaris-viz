@@ -6,12 +6,13 @@ import {BarChart, BarChartProps} from '../../../components';
 import {PolarisVizProvider} from '../../PolarisVizProvider';
 
 import {DEFAULT_DATA} from './data';
+import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 const NoOverflowStyleTemplate: Story<BarChartProps> = (args: BarChartProps) => {
   return (
     <PolarisVizProvider
       themes={{
-        Default: {
+        [DEFAULT_THEME_NAME]: {
           grid: {
             horizontalOverflow: false,
             verticalOverflow: false,

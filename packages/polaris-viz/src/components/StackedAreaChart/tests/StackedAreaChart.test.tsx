@@ -1,5 +1,6 @@
 import {mount} from '@shopify/react-testing';
 import type {DataSeries} from '@shopify/polaris-viz-core';
+import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 import {StackedAreaChart} from '../StackedAreaChart';
 import {Chart} from '../Chart';
@@ -84,11 +85,11 @@ describe('<AreaChart />', () => {
       });
     });
 
-    it('`Default` is used if no value is provided', () => {
+    it(`${DEFAULT_THEME_NAME} is used if no value is provided`, () => {
       const areaChart = mount(<StackedAreaChart data={mockData} />);
 
       expect(areaChart).toContainReactComponent(Chart, {
-        theme: 'Default',
+        theme: DEFAULT_THEME_NAME,
       });
     });
   });

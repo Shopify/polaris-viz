@@ -38,7 +38,7 @@ describe('ColorScale', () => {
   it('returns light textColor for light hues', () => {
     const scale = ColorScale({hue: Hue.Blue, max: 16});
 
-    expect(scale(8).textColor).toStrictEqual('#ffffff');
-    expect(scale(11).textColor).toStrictEqual('#ffffff');
+    expect(scale(8).textColor).toStrictEqual('rgb(255, 255, 255)');
+    expect(scale(11).textColor).toStrictEqual('rgb(255, 255, 255)');
   });
 });

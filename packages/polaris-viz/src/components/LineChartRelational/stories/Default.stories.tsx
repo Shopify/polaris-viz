@@ -12,5 +12,4 @@ Default.args = {
   data: DEFAULT_DATA,
   isAnimated: false,
   showLegend: true,
-  theme: 'Uplift',
 };

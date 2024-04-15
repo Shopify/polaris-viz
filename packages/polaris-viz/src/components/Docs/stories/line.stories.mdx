@@ -1,4 +1,5 @@
 import {Meta, Story, Canvas} from '@storybook/addon-docs';
+import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 import {PolarisVizProvider} from '../../../';
 import {
@@ -62,7 +63,7 @@ import {
   codeSample={`
     <PolarisVizProvider
       themes={{
-        Default: {
+        ${DEFAULT_THEME_NAME}: {
           line: {
             hasSpline: false,
             style: 'dotted'
@@ -80,7 +81,7 @@ import {
     <div style={{width: '350px', height: '140px'}}>
       <PolarisVizProvider
         themes={{
-          Default: {
+          [DEFAULT_THEME_NAME]: {
             line: {
               hasSpline: false,
               style: 'dotted',

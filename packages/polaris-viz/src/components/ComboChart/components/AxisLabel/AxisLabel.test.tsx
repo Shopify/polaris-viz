@@ -1,4 +1,5 @@
 import {mount} from '@shopify/react-testing';
+import {LIGHT_THEME} from '@shopify/polaris-viz-core';
 
 import {SingleTextLine} from '../../../Labels';
 
@@ -11,7 +12,6 @@ jest.mock('../../../../hooks/useEstimateStringWidth', () => ({
 }));
 
 const MOCK_PROPS: AxisLabelProps = {
-  containerWidth: 100,
   height: 100,
   name: 'Primary Axis',
   axis: 'primary',
@@ -56,11 +56,11 @@ describe('<AxisLabel />', () => {
     expect(component).toContainReactComponent('rect', {
       width: 100,
       height: 14,
-      fill: '#1f1f25',
+      fill: LIGHT_THEME.chartContainer.backgroundColor,
     });
 
     expect(component).toContainReactComponent(SingleTextLine, {
-      color: '#dadadd',
+      color: LIGHT_THEME.yAxis.labelColor,
       targetWidth: 100,
       text: 'Primary Axis',
       x: 0,

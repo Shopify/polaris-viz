@@ -7,7 +7,7 @@ import {
   SparkLineChart,
   StackedAreaChart,
 } from '../../components';
-import {DEFAULT_THEME, LIGHT_THEME} from '@shopify/polaris-viz-core';
+import {DARK_THEME, LIGHT_THEME} from '@shopify/polaris-viz-core';
 
 const STORIES = [
   'Shared',
@@ -36,8 +36,8 @@ const COMPONENTS = {
   SparkBarChart: SparkBarChart,
 };
 
-const DEFAULT_THEMES = {
-  Default: DEFAULT_THEME,
+const THEMES = {
+  Dark: DARK_THEME,
   Light: LIGHT_THEME,
 };
 
@@ -108,7 +108,7 @@ const DATA = [
 STORIES.forEach((chart) => {
   VALUES_FOR_CHARTS[chart].forEach((themeProperty) => {
     Object.keys(THEME[themeProperty]).forEach((themeValue) => {
-      ['Default', 'Light'].forEach((themeName) => {
+      ['Dark', 'Light'].forEach((themeName) => {
         const stories = storiesOf(
           `Chromatic/Themes/${chart}/${themeName}/${themeProperty}`,
           module,
@@ -117,7 +117,7 @@ STORIES.forEach((chart) => {
         ['default', ...THEME[themeProperty][themeValue]].forEach((option) => {
           const value =
             option === 'default'
-              ? DEFAULT_THEMES[themeName][themeProperty][themeValue]
+              ? THEMES[themeName][themeProperty][themeValue]
               : option;
 
           stories.add(`${themeValue}: ${value}`, () => {

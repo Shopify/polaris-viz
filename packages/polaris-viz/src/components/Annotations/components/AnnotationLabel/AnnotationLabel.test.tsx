@@ -29,7 +29,6 @@ const MOCK_PROPS: AnnotationLabelProps = {
   },
   setActiveIndex: jest.fn(),
   tabIndex: 0,
-  theme: 'Default',
 };
 
 describe('<AnnotationLabel />', () => {

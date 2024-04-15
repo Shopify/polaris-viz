@@ -1,4 +1,5 @@
 import {mount} from '@shopify/react-testing';
+import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 import {LegendContainer} from '../../LegendContainer';
 import {mockDefaultTheme} from '../../../test-utilities/mountWithProvider';
@@ -78,7 +79,7 @@ const MOCK_PROPS: Props = {
   dimensions: {width: 500, height: 250},
   renderTooltipContent: jest.fn(() => <p>Mock Tooltip Content</p>),
   showLegend: false,
-  theme: 'Default',
+  theme: DEFAULT_THEME_NAME,
   seriesNameFormatter: (value) => `${value}`,
 };
 

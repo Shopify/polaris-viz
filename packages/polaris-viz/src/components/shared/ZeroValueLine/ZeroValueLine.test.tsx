@@ -1,4 +1,5 @@
 import {mount} from '@shopify/react-testing';
+import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 import {ZERO_VALUE_LINE_HEIGHT} from '../../../constants';
 
@@ -9,7 +10,7 @@ const MOCK_PROPS: ZeroValueLineProps = {
   x: 10,
   y: 20,
   direction: 'vertical',
-  theme: 'Default',
+  theme: DEFAULT_THEME_NAME,
 };
 
 describe('<ZeroValueLine />', () => {

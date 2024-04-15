@@ -1,4 +1,5 @@
 import {Meta, Story, Canvas} from '@storybook/addon-docs';
+import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 import {PolarisVizProvider} from '../../../';
 import {
@@ -84,7 +85,7 @@ export interface Theme {
   codeSample={`
     <PolarisVizProvider
       themes={{
-        Default: {
+        ${DEFAULT_THEME_NAME}: {
           yAxis: {
             labelColor: 'lime',
             backgroundColor: 'black'
@@ -100,7 +101,7 @@ export interface Theme {
     <div style={{width: '350px', height: '140px'}}>
       <PolarisVizProvider
         themes={{
-          Default: {
+          [DEFAULT_THEME_NAME]: {
             yAxis: {
               labelColor: 'lime',
               backgroundColor: 'black',

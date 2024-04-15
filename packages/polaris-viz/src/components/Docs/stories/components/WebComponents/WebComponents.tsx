@@ -28,7 +28,7 @@ export function WebComponents() {
     >
       <PolarisVizProvider
         themes={{
-          Default: {
+          [DEFAULT_THEME_NAME]: {
             chartContainer: {
               padding: '20px',
             },

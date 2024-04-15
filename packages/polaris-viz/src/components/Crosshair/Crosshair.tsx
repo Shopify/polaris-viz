@@ -15,6 +15,7 @@ interface Props {
 
 export function Crosshair({x, height, opacity = 1, theme, id}: Props) {
   const selectedTheme = useTheme(theme);
+
   return (
     <animated.rect
       className={style.Crosshair}

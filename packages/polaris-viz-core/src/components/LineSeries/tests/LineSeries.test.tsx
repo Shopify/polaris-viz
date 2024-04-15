@@ -8,7 +8,10 @@ import '@shopify/react-testing/matchers';
 import type {LineSeriesProps} from '../LineSeries';
 import {LineSeries} from '../LineSeries';
 import {Area} from '../components';
-import {SHAPE_ANIMATION_HEIGHT_BUFFER} from '../../../constants';
+import {
+  DEFAULT_THEME_NAME,
+  SHAPE_ANIMATION_HEIGHT_BUFFER,
+} from '../../../constants';
 
 const someScale = scaleLinear().domain([0, 100]).range([0, 100]);
 
@@ -30,7 +33,7 @@ const defaultProps: LineSeriesProps = {
   data: mockData,
   svgDimensions: {width: 100, height: 100},
   index: 0,
-  theme: 'Default',
+  theme: DEFAULT_THEME_NAME,
 };
 
 describe('<LineSeries />', () => {
@@ -52,7 +55,7 @@ describe('<LineSeries />', () => {
         </svg>,
         {
           themes: {
-            Default: {
+            [DEFAULT_THEME_NAME]: {
               line: {
                 width: 10,
               },
@@ -105,7 +108,7 @@ describe('<LineSeries />', () => {
           </svg>,
           {
             themes: {
-              Default: {
+              [DEFAULT_THEME_NAME]: {
                 seriesColors: {
                   comparison: 'red',
                 },
@@ -140,7 +143,7 @@ describe('<LineSeries />', () => {
           </svg>,
           {
             themes: {
-              Default: {
+              [DEFAULT_THEME_NAME]: {
                 line: {
                   hasSpline: false,
                 },

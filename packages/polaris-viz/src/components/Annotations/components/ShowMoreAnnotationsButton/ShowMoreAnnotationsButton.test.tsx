@@ -1,4 +1,5 @@
 import {mount} from '@shopify/react-testing';
+import {LIGHT_THEME} from '@shopify/polaris-viz-core';
 
 import {SingleTextLine} from '../../../Labels';
 
@@ -16,7 +17,6 @@ const MOCK_PROPS: Props = {
   isShowingAllAnnotations: false,
   onClick: jest.fn(),
   tabIndex: 0,
-  theme: 'Default',
   width: 200,
 };
 
@@ -63,7 +63,7 @@ describe('<ShowMoreAnnotationsButton />', () => {
       );
 
       expect(chart).toContainReactComponent(SingleTextLine, {
-        color: '#dadadd',
+        color: LIGHT_THEME.annotations.textColor,
         text: 'Expand annotations (1)',
         targetWidth: 190,
         y: 6,
@@ -151,7 +151,9 @@ describe('<ShowMoreAnnotationsButton />', () => {
         const path = chart.find('rect');
 
         expect(path?.props.fill).toStrictEqual('transparent');
-        expect(path?.props.stroke).toStrictEqual('#43434e');
+        expect(path?.props.stroke).toStrictEqual(
+          LIGHT_THEME.annotations.backgroundColor,
+        );
       });
 
       it('renders filled when false', () => {
@@ -166,8 +168,12 @@ describe('<ShowMoreAnnotationsButton />', () => {
 
         const path = chart.findAll('rect');
 
-        expect(path[1]?.props.fill).toStrictEqual('#43434e');
-        expect(path[1]?.props.stroke).toStrictEqual('#1f1f25');
+        expect(path[1]?.props.fill).toStrictEqual(
+          LIGHT_THEME.annotations.backgroundColor,
+        );
+        expect(path[1]?.props.stroke).toStrictEqual(
+          LIGHT_THEME.chartContainer.backgroundColor,
+        );
       });
     });
   });

@@ -17,7 +17,7 @@ import {generateMultipleSeries} from '../../../Docs/utilities';
 
 import {SimpleContainer} from './SimpleContainer';
 
-export const SampleSparkLineChart = ({theme} = {theme: 'Default'}) => {
+export const SampleSparkLineChart = ({theme} = {theme: 'Light'}) => {
   return (
     <SparkLineChart
       theme={theme}
@@ -59,7 +59,7 @@ export const SampleSparkLineChart = ({theme} = {theme: 'Default'}) => {
 };
 
 export const SampleLineChart = (
-  {theme, showLegend = true} = {theme: 'Default'},
+  {theme, showLegend = true} = {theme: 'Light'},
 ) => {
   return (
     <LineChart
@@ -83,7 +83,7 @@ export const SampleLineChart = (
 };
 
 export const SampleBarChart = (
-  {theme, seriesLength = 3, showLegend = true} = {theme: 'Default'},
+  {theme, seriesLength = 3, showLegend = true} = {theme: 'Light'},
 ) => {
   return (
     <BarChart
@@ -95,7 +95,7 @@ export const SampleBarChart = (
 };
 
 export const SampleStackedAreaChart = (
-  {theme, seriesLength = 3, showLegend = true} = {theme: 'Default'},
+  {theme, seriesLength = 3, showLegend = true} = {theme: 'Light'},
 ) => {
   return (
     <StackedAreaChart
@@ -106,7 +106,7 @@ export const SampleStackedAreaChart = (
   );
 };
 
-export const SampleSimpleNormalizedChart = ({theme} = {theme: 'Default'}) => {
+export const SampleSimpleNormalizedChart = ({theme} = {theme: 'Light'}) => {
   return (
     <SimpleNormalizedChart
       direction="vertical"
@@ -154,7 +154,7 @@ export const SampleSimpleNormalizedChart = ({theme} = {theme: 'Default'}) => {
   );
 };
 
-export const SampleLegendChart = ({theme} = {theme: 'Default'}) => {
+export const SampleLegendChart = ({theme} = {theme: 'Light'}) => {
   const data: DataSeries[] = [
     {
       name: 'Breakfast',
@@ -201,7 +201,7 @@ export const SampleLegendChart = ({theme} = {theme: 'Default'}) => {
   );
 };
 
-export const SampleLegendContainer = ({theme} = {theme: 'Default'}) => {
+export const SampleLegendContainer = ({theme} = {theme: 'Light'}) => {
   const selectedTheme = useTheme(theme);
   const colors = getSeriesColors(6, selectedTheme);
   const {legend} = useLegend({
@@ -279,7 +279,7 @@ export const SampleLabelsBarChart = ({width = 760}: {width: number}) => {
   );
 };
 
-export const SampleDonutChart = ({theme} = {theme: 'Default'}) => {
+export const SampleDonutChart = ({theme} = {theme: 'Light'}) => {
   return (
     <DonutChart
       theme={theme}

@@ -6,6 +6,7 @@ import type {BarChartProps} from '../../../components';
 
 import {Template} from './data';
 import {PolarisVizProvider} from '../../PolarisVizProvider';
+import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 export const HorizontalStacked: Story<BarChartProps> = (
   args: BarChartProps,
@@ -13,7 +14,7 @@ export const HorizontalStacked: Story<BarChartProps> = (
   return (
     <PolarisVizProvider
       themes={{
-        Default: {
+        [DEFAULT_THEME_NAME]: {
           groupLabel: {
             hide: true,
           },

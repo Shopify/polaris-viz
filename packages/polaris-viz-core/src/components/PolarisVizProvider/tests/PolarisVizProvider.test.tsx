@@ -5,9 +5,13 @@ import {createHost} from '@react-spring/animated';
 import {usePolarisVizContext} from '../../../hooks';
 import {PolarisVizProvider} from '../PolarisVizProvider';
 import {PolarisVizContext} from '../../../contexts';
-import {DEFAULT_THEME, DEFAULT_COMPONENTS} from '../../../constants';
+import {
+  DEFAULT_COMPONENTS,
+  DEFAULT_THEME_NAME,
+  LIGHT_THEME,
+} from '../../../constants';
 
-const MockChild = ({theme = 'Default'}) => {
+const MockChild = ({theme = DEFAULT_THEME_NAME}) => {
   const {themes} = usePolarisVizContext();
   return <div>{JSON.stringify(themes[theme])}</div>;
 };
@@ -41,14 +45,14 @@ describe('<PolarisVizProvider />', () => {
         </PolarisVizProvider>,
       );
 
-      expect(vizProvider).toContainReactText(JSON.stringify(DEFAULT_THEME));
+      expect(vizProvider).toContainReactText(JSON.stringify(LIGHT_THEME));
     });
 
     it('passes custom themes to children', () => {
       const vizProvider = mount(
         <PolarisVizProvider
           themes={{
-            Dark: {
+            Light: {
               bar: {
                 borderRadius: 3,
               },
@@ -56,15 +60,15 @@ describe('<PolarisVizProvider />', () => {
           }}
           animated={host.animated}
         >
-          <MockChild theme="Dark" />
+          <MockChild theme="Light" />
         </PolarisVizProvider>,
       );
 
       expect(vizProvider).toContainReactText(
         JSON.stringify({
-          ...DEFAULT_THEME,
+          ...LIGHT_THEME,
           bar: {
-            ...DEFAULT_THEME.bar,
+            ...LIGHT_THEME.bar,
             borderRadius: 3,
           },
         }),
