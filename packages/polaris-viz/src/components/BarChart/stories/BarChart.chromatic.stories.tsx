@@ -55,3 +55,23 @@ UniqueStackedValues.args = {
     },
   ],
 };
+
+export const BadTheme: Story<BarChartProps> = Template.bind({});
+
+BadTheme.args = {
+  data: [
+    {
+      name: 'Breakfast',
+      data: [{key: 'Monday', value: 3}],
+    },
+    {
+      name: 'Breakfast',
+      data: [{key: 'Monday', value: 4}],
+    },
+    {
+      name: 'Breakfast',
+      data: [{key: 'Monday', value: 7}],
+    },
+  ],
+  theme: 'BadThemeName',
+};

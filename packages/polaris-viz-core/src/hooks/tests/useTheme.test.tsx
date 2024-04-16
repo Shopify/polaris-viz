@@ -41,14 +41,13 @@ describe('useTheme', () => {
     );
   });
 
-  it('throws an error if a theme with the given name cannot be found', () => {
+  it('falls back to default theme if a theme with the given name cannot be found', () => {
     function TestComponent() {
       const theme = useTheme('SomeOtherTheme');
       return <div>{JSON.stringify(theme)}</div>;
     }
 
-    expectToThrow(() => {
-      mount(<TestComponent />);
-    }, `SomeOtherTheme theme not found. Did you forget to define it in the PolarisVizProvider?`);
+    const mockComponent = mount(<TestComponent />);
+    expect(mockComponent.text()).toBe(JSON.stringify(LIGHT_THEME));
   });
 });
