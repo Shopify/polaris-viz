@@ -5,7 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-<!-- ## Unreleased -->
+## Unreleased
+
+### Removed
+
+- Removed different gradient origins when data set is all positive, all negative or mixed. Origin is now always from the line down.
 
 ## [13.0.1] - 2024-04-16
 
