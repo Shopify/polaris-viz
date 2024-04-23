@@ -6,18 +6,16 @@ import {uniqueId} from '../../../../utilities';
 import {LinearGradientWithStops} from '../../../../components';
 import {usePolarisVizContext} from '../../../../hooks';
 
-import {getGradientDetails} from './utilities/getGradientDetails';
+const GRADIENT_ALPHA = 0.25;
 
 export interface Props {
   series: LineChartDataSeriesWithDefaults;
   areaPath: SpringValue<string | null> | string;
 }
 
-export function DefaultArea({series, areaPath}: Props) {
+export function DefaultArea({series: {areaColor}, areaPath}: Props) {
   const gradientId = useMemo(() => uniqueId('default-area-gradient'), []);
   const maskId = useMemo(() => uniqueId('default-area-mask'), []);
-  const {data, areaColor} = series;
-
   const {
     components: {Path, Defs, Mask},
     animated,
@@ -25,14 +23,7 @@ export function DefaultArea({series, areaPath}: Props) {
 
   const AnimatedPath = animated(Path);
 
-  const gradientStops = useMemo(() => {
-    return getGradientDetails(data).map((gradientStop) => ({
-      ...gradientStop,
-      color: areaColor as string,
-    }));
-  }, [areaColor, data]);
-
-  if (areaPath == null || areaColor == null || gradientStops == null) {
+  if (areaPath == null || areaColor == null) {
     return null;
   }
 
@@ -73,7 +64,10 @@ export function DefaultArea({series, areaPath}: Props) {
           x2="0%"
           y1="0%"
           y2="100%"
-          gradient={gradientStops}
+          gradient={[
+            {offset: 0, stopOpacity: GRADIENT_ALPHA, color: areaColor},
+            {offset: 100, stopOpacity: 0, color: areaColor},
+          ]}
         />
       </Defs>
 
