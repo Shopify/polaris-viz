@@ -87,7 +87,11 @@ export type {
   ChartState,
 } from '@shopify/polaris-viz-core';
 
-export {renderLinearTooltipContent, setSingleSeriesActive} from './utilities';
+export {
+  renderLinearTooltipContent,
+  setSingleSeriesActive,
+  fillMissingDataPoints,
+} from './utilities';
 
 export {getTooltipContentRenderer} from './utilities/getTooltipContentRenderer';
 
