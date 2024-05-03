@@ -8,6 +8,7 @@ export {classNames} from './classnames';
 export {getBarId} from './getBarId';
 export {formatDataIntoGroups} from './formatDataIntoGroups';
 export {formatDataForTooltip} from './formatDataForTooltip';
+export {fillMissingDataPoints} from './fillMissingDataPoints';
 export {getStackedMinMax} from './getStackedMinMax';
 export {getStackedValues} from './getStackedValues';
 export {pushGapToArray} from './pushGapToArray';
