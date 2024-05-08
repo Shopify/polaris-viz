@@ -15,6 +15,7 @@ import type {
   LabelFormatter,
 } from '@shopify/polaris-viz-core';
 
+import {bucketDataSeries} from '../../utilities/bucketDataSeries';
 import {getTooltipContentRenderer} from '../../utilities/getTooltipContentRenderer';
 import {ChartContainer} from '../../components/ChartContainer';
 import type {
@@ -42,12 +43,14 @@ export type BarChartProps = {
   renderLegendContent?: RenderLegendContent;
   seriesNameFormatter?: LabelFormatter;
   showLegend?: boolean;
+  maxSeries?: number;
   skipLinkText?: string;
   theme?: string;
   type?: ChartType;
   xAxisOptions?: Partial<XAxisOptions>;
   yAxisOptions?: Partial<YAxisOptions>;
   renderHiddenLegendLabel?: (count: number) => string;
+  renderBucketLegendLabel?: () => string;
 } & ChartProps;
 
 export function BarChart(props: BarChartProps) {
@@ -65,6 +68,7 @@ export function BarChart(props: BarChartProps) {
     tooltipOptions,
     renderLegendContent,
     showLegend = true,
+    maxSeries,
     skipLinkText,
     theme = defaultTheme,
     type = 'default',
@@ -72,16 +76,25 @@ export function BarChart(props: BarChartProps) {
     yAxisOptions,
     onError,
     renderHiddenLegendLabel,
+    renderBucketLegendLabel,
     seriesNameFormatter = (value) => `${value}`,
   } = {
     ...DEFAULT_CHART_PROPS,
     ...props,
   };
 
-  const data = fillMissingDataPoints(
+  const filledData = fillMissingDataPoints(
     dataSeries,
     isValidDate(dataSeries[0]?.data[0]?.key),
   );
+
+  const data = maxSeries
+    ? bucketDataSeries({
+        dataSeries: filledData,
+        maxSeries,
+        renderBucketLegendLabel,
+      })
+    : filledData;
 
   const skipLinkAnchorId = useRef(uniqueId('BarChart'));
 

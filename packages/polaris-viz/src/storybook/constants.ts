@@ -67,6 +67,11 @@ export const RENDER_HIDDEN_LEGEND_LABEL_ARGS = {
     'This accepts a function that is called to render the hidden legend label shown when legend items are overflowed.',
 };
 
+export const RENDER_BUCKET_LEGEND_LABEL_ARGS = {
+  description:
+    'This accepts a function that is called to render the bucket legend label shown when series are bucketed. Defaults to "Other".',
+};
+
 export const RENDER_TOOLTIP_DESCRIPTION =
   'This accepts a function that is called to render the tooltip content. When necessary it calls `formatXAxisLabel` and/or `formatYAxisLabel` to format the `DataSeries[]` values and passes them to `<TooltipContent />`. [RenderTooltipContentData type definition.](https://polaris-viz.shopify.com/?path=/docs/polaris-viz-subcomponents-tooltipcontent-rendertooltipcontent--page)';
 
@@ -122,4 +127,12 @@ export const DATA_SERIES_ARGS = {
 export const EMPTY_STATE_TEXT_ARGS = {
   description:
     'Used to indicate to screen readers that a chart with no series data has been rendered, in the case that an empty array is passed as the data. If the series prop could be an empty array, it is strongly recommended to include this prop.',
+};
+
+export const MAX_SERIES_ARGS = {
+  description:
+    'The maximum number of series to show in the chart. If there are more series than this number, the rest will be bucketed into an "Other" series.',
+  control: {
+    type: 'number',
+  },
 };

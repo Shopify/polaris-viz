@@ -10,6 +10,8 @@ import {
   EMPTY_STATE_TEXT_ARGS,
   IS_ANIMATED_ARGS,
   LEGEND_CONTROL_ARGS,
+  MAX_SERIES_ARGS,
+  RENDER_BUCKET_LEGEND_LABEL_ARGS,
   RENDER_LEGEND_CONTENT_ARGS,
   RENDER_TOOLTIP_DESCRIPTION,
   SKIP_LINK_ARGS,
@@ -42,6 +44,7 @@ export const META: Meta = {
     emptyStateText: EMPTY_STATE_TEXT_ARGS,
     isAnimated: IS_ANIMATED_ARGS,
     renderLegendContent: RENDER_LEGEND_CONTENT_ARGS,
+    renderBucketLegendLabel: RENDER_BUCKET_LEGEND_LABEL_ARGS,
     skipLinkText: SKIP_LINK_ARGS,
     xAxisOptions: X_AXIS_OPTIONS_ARGS,
     yAxisOptions: Y_AXIS_OPTIONS_ARGS,
@@ -62,5 +65,6 @@ export const META: Meta = {
     state: CHART_STATE_CONTROL_ARGS,
     type: TYPE_CONTROL_ARGS,
     showLegend: LEGEND_CONTROL_ARGS,
+    maxSeries: MAX_SERIES_ARGS,
   },
 };

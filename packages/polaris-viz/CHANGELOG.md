@@ -5,7 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-<!-- ## Unreleased -->
+## Unreleased
+
+### Added
+
+- Added support for bucketing data into a "Other" group for Bar chart and Donut charts
+- Added `maxSeries` prop to Bar chart and Donut chart
+- Added `renderBucketLegendLabel` prop to Bar chart and Donut chart
 
 ## [13.1.2] - 2024-05-03
 
