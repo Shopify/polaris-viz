@@ -12,6 +12,7 @@ import type {
   RenderInnerValueContent,
   RenderLegendContent,
 } from '../../types';
+import {bucketDataSeries} from '../../utilities/bucketDataSeries';
 
 import {Chart} from './Chart';
 import type {DonutChartDataSeries} from './types';
@@ -20,6 +21,7 @@ export type DonutChartProps = {
   data: DonutChartDataSeries[];
   comparisonMetric?: ComparisonMetricProps;
   showLegend?: boolean;
+  maxSeries?: number;
   showLegendValues?: boolean;
   labelFormatter?: LabelFormatter;
   legendFullWidth?: boolean;
@@ -27,6 +29,7 @@ export type DonutChartProps = {
   renderInnerValueContent?: RenderInnerValueContent;
   renderLegendContent?: RenderLegendContent;
   renderHiddenLegendLabel?: RenderHiddenLegendLabel;
+  renderBucketLegendLabel?: () => string;
   seriesNameFormatter?: LabelFormatter;
 } & ChartProps;
 
@@ -34,10 +37,11 @@ export function DonutChart(props: DonutChartProps) {
   const {defaultTheme} = usePolarisVizContext();
 
   const {
-    data,
+    data: dataSeries,
     theme = defaultTheme,
     comparisonMetric,
     showLegend = true,
+    maxSeries,
     showLegendValues = false,
     labelFormatter = (value) => `${value}`,
     legendFullWidth,
@@ -50,11 +54,16 @@ export function DonutChart(props: DonutChartProps) {
     renderInnerValueContent,
     renderLegendContent,
     renderHiddenLegendLabel,
+    renderBucketLegendLabel,
     seriesNameFormatter = (value) => `${value}`,
   } = {
     ...DEFAULT_CHART_PROPS,
     ...props,
   };
+
+  const data = maxSeries
+    ? bucketDataSeries({dataSeries, maxSeries, renderBucketLegendLabel})
+    : dataSeries;
 
   return (
     <ChartContainer
