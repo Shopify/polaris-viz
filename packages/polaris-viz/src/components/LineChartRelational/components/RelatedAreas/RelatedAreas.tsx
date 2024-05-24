@@ -1,13 +1,7 @@
 import {useState} from 'react';
 import type {DataPoint} from '@shopify/polaris-viz-core';
-import {
-  BASE_ANIMATION_DURATION,
-  useSpringConfig,
-  useChartContext,
-  curveStepRounded,
-} from '@shopify/polaris-viz-core';
+import {useChartContext, curveStepRounded} from '@shopify/polaris-viz-core';
 import {area as areaShape} from 'd3-shape';
-import {animated, useSpring} from '@react-spring/web';
 import type {LineChartSlotProps} from 'types';
 
 import {useExternalHideEvents, useWatchActiveSeries} from '../../../../hooks';
@@ -28,24 +22,7 @@ export function RelatedAreas({yScale, xScale, data}: RelatedAreaProps) {
   const percentileIndex = lineSeries.length + 1;
 
   const {hiddenIndexes} = useExternalHideEvents();
-  const {shouldAnimate, id} = useChartContext();
-
-  const springConfig = useSpringConfig({
-    animationDelay: shouldAnimate
-      ? BASE_ANIMATION_DURATION * (data.length + 1)
-      : 0,
-  });
-
-  const {opacity} = useSpring({
-    from: {
-      opacity: 0,
-    },
-    to: {
-      opacity: 1,
-    },
-    immediate: !shouldAnimate,
-    ...springConfig,
-  });
+  const {id} = useChartContext();
 
   useWatchActiveSeries(id ?? '', ({detail: {index}}) => {
     setActiveIndex(index);
@@ -75,7 +52,7 @@ export function RelatedAreas({yScale, xScale, data}: RelatedAreaProps) {
   }
 
   return (
-    <animated.g style={{opacity}}>
+    <g>
       {data.map((series, index) => {
         if (
           series.metadata?.relatedIndex == null ||
@@ -93,10 +70,10 @@ export function RelatedAreas({yScale, xScale, data}: RelatedAreaProps) {
             index={percentileIndex}
             key={index}
             series={series}
-            shouldAnimate={shouldAnimate}
+            shouldAnimate={false}
           />
         );
       })}
-    </animated.g>
+    </g>
   );
 }

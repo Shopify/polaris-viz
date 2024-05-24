@@ -1,3 +1,4 @@
+import type {DataSeries} from '@shopify/polaris-viz-core';
 import {
   DEFAULT_CHART_PROPS,
   DEFAULT_THEME_NAME,
@@ -45,6 +46,8 @@ export function LineChartRelational(props: LineChartRelationalProps) {
     };
   });
 
+  const relatedAreasKey = buildRelatedAreasKey(dataWithHiddenRelational);
+
   return (
     <LineChart
       annotations={annotations}
@@ -75,7 +78,13 @@ export function LineChartRelational(props: LineChartRelationalProps) {
           return (
             <Fragment>
               <MissingDataArea {...props} data={data} />
-              <RelatedAreas {...props} data={data} />
+              <RelatedAreas
+                data={data}
+                // remount the area otherwise it can't animate
+                // between areas that are differently sized
+                key={relatedAreasKey}
+                {...props}
+              />
             </Fragment>
           );
         },
@@ -87,4 +96,16 @@ export function LineChartRelational(props: LineChartRelationalProps) {
       yAxisOptions={yAxisOptions}
     />
   );
+}
+
+function buildRelatedAreasKey(data: DataSeries[]) {
+  const relatedSeries = data.find((series) => {
+    return series?.metadata?.relatedIndex != null;
+  });
+
+  if (relatedSeries == null) {
+    return '';
+  }
+
+  return relatedSeries.data.map(({value}) => value?.toString()).join(':');
 }
