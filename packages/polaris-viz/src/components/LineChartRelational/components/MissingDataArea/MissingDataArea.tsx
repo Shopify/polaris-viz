@@ -13,33 +13,33 @@ export interface Props extends LineChartSlotProps {
 function MissingDataAreaRaw({data, drawableHeight, xScale}: Props) {
   const selectedTheme = useTheme();
   const patternID = useRef(uniqueId('missingDataPattern'));
+  const dataSeriesHasNulls = useRef(false);
 
-  const nullIndexes: Set<number> = new Set([]);
+  const dataLength = data[0].data.length - 1;
 
-  data.forEach((series) => {
-    series.data.forEach(({value}, index) => {
-      if (value == null) {
-        nullIndexes.add(index);
+  const indexesWithData: Set<number> = new Set([]);
+
+  for (const series of data) {
+    const hasAnyNulls = series.data.some(({value}) => value == null);
+
+    if (!hasAnyNulls) {
+      continue;
+    }
+
+    for (const [index, {value}] of series.data.entries()) {
+      if (value != null) {
+        indexesWithData.add(index);
+      } else {
+        dataSeriesHasNulls.current = true;
       }
+    }
+  }
 
-      const nextSeries = series.data[index + 1];
-      const previousSeries = series.data[index - 1];
-
-      if (value == null && nextSeries && nextSeries.value != null) {
-        nullIndexes.add(index + 1);
-      }
-
-      if (value == null && previousSeries && previousSeries.value != null) {
-        nullIndexes.add(index - 1);
-      }
-    });
-  });
-
-  if (nullIndexes.size === 0) {
+  if (indexesWithData.size === 0 || dataSeriesHasNulls.current === false) {
     return null;
   }
 
-  const sortedIndexes = [...nullIndexes].sort(
+  const sortedIndexes = [...indexesWithData].sort(
     (current, next) => current - next,
   );
 
@@ -65,23 +65,40 @@ function MissingDataAreaRaw({data, drawableHeight, xScale}: Props) {
             opacity="0.2"
           />
         </pattern>
-      </defs>
-      {groups.map((indexes, index) => {
-        const startIndex = Math.min(...indexes);
-        const endIndex = Math.max(...indexes);
-        const width = xScale(endIndex - startIndex);
-
-        return (
+        <mask id={`${patternID.current}-clip`}>
           <rect
-            key={index}
-            x={xScale(startIndex)}
+            x={xScale(0)}
             y={0}
             height={drawableHeight}
-            width={width}
-            fill={`url(#${patternID.current})`}
+            width={xScale(dataLength)}
+            fill="white"
           />
-        );
-      })}
+          {groups.map((indexes, index) => {
+            const startIndex = Math.min(...indexes);
+            const endIndex = Math.max(...indexes);
+            const width = xScale(endIndex - startIndex);
+
+            return (
+              <rect
+                key={index}
+                x={xScale(startIndex)}
+                y={0}
+                height={drawableHeight}
+                width={width}
+                fill="black"
+              />
+            );
+          })}
+        </mask>
+      </defs>
+      <rect
+        x={xScale(0)}
+        y={0}
+        height={drawableHeight}
+        width={xScale(dataLength)}
+        fill={`url(#${patternID.current})`}
+        mask={`url(#${patternID.current}-clip)`}
+      />
     </Fragment>
   );
 }

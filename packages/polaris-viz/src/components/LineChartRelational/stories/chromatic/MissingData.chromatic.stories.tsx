@@ -17,6 +17,7 @@ import {MISSING_END_DATA} from './data/missing-end-data';
 import {MISSING_START_DATA} from './data/missing-start-data';
 import {MISSING_MIDDLE_DATA} from './data/missing-middle-data';
 import {MISSING_RANDOM_DATA} from './data/missing-random-data';
+import {MISSING_RANDOM_SINGLE_DATA} from './data/missing-random-single-data';
 
 const PROPS = {
   ...DEFAULT_PROPS,
@@ -49,4 +50,11 @@ export const MissingRandomData: Story<LineChartProps> = Template.bind({});
 MissingRandomData.args = {
   ...PROPS,
   data: MISSING_RANDOM_DATA,
+};
+
+export const MissingRandomSingleData: Story<LineChartProps> = Template.bind({});
+
+MissingRandomSingleData.args = {
+  ...PROPS,
+  data: MISSING_RANDOM_SINGLE_DATA,
 };

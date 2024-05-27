@@ -10,6 +10,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Changed
 
 - Fixed issue where `<RelatedAreas />` would crash when the incoming data change had a different shape.
+- Changed `<MissingDataArea />` to mask out areas with data instead of rendering separate `rect` elements for each area of missing data.
 
 ### Removed
 
