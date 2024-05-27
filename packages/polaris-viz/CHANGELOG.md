@@ -7,6 +7,14 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Changed
+
+- Fixed issue where `<RelatedAreas />` would crash when the incoming data change had a different shape.
+
+### Removed
+
+- Removed animation from `<RelatedAreas />`.
+
 ### Added
 
 - Added support for bucketing data into a "Other" group for Bar chart and Donut charts
