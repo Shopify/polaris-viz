@@ -26,26 +26,6 @@ const MOCK_PROPS: Props = {
         {value: null, key: '2020-04-04T12:00:00'},
       ],
     },
-    {
-      name: 'Similar stores median',
-      data: [
-        {value: 333, key: '2020-04-01T12:00:00'},
-        {value: 333, key: '2020-04-02T12:00:00'},
-        {value: 333, key: '2020-04-03T12:00:00'},
-        {value: null, key: '2020-04-04T12:00:00'},
-        {value: null, key: '2020-04-04T12:00:00'},
-      ],
-    },
-    {
-      name: '25th percentile',
-      data: [
-        {value: 333, key: '2020-04-01T12:00:00'},
-        {value: 333, key: '2020-04-02T12:00:00'},
-        {value: 333, key: '2020-04-03T12:00:00'},
-        {value: null, key: '2020-04-04T12:00:00'},
-        {value: null, key: '2020-04-04T12:00:00'},
-      ],
-    },
   ],
   drawableHeight: 200,
   xScale: scaleLinear(),
@@ -60,8 +40,10 @@ describe('<MissingDataArea />', () => {
     );
 
     expect(chart).toContainReactComponent('rect', {
-      x: 2,
-      width: 2,
+      height: 200,
+      width: 4,
+      fill: expect.stringContaining('missingDataPattern'),
+      mask: expect.stringContaining('-clip'),
     });
   });
 
@@ -80,20 +62,6 @@ describe('<MissingDataArea />', () => {
             },
             {
               name: '75th Percentile',
-              data: [
-                {value: 333, key: '2020-04-01T12:00:00'},
-                {value: 333, key: '2020-04-02T12:00:00'},
-              ],
-            },
-            {
-              name: 'Similar stores median',
-              data: [
-                {value: 333, key: '2020-04-01T12:00:00'},
-                {value: 333, key: '2020-04-02T12:00:00'},
-              ],
-            },
-            {
-              name: '25th percentile',
               data: [
                 {value: 333, key: '2020-04-01T12:00:00'},
                 {value: 333, key: '2020-04-02T12:00:00'},
@@ -139,8 +107,9 @@ describe('<MissingDataArea />', () => {
     );
 
     expect(chart).toContainReactComponent('rect', {
-      x: 0,
-      width: 3,
+      x: 3,
+      width: 1,
+      fill: 'black',
     });
   });
 
@@ -184,8 +153,9 @@ describe('<MissingDataArea />', () => {
     );
 
     expect(chart).toContainReactComponent('rect', {
-      x: 2,
-      width: 4,
+      x: 0,
+      width: 2,
+      fill: 'black',
     });
   });
 
@@ -213,13 +183,13 @@ describe('<MissingDataArea />', () => {
               name: '75th Percentile',
               data: [
                 {value: 333, key: '2020-04-01T12:00:00'},
-                {value: null, key: '2020-04-02T12:00:00'},
+                {value: 333, key: '2020-04-02T12:00:00'},
                 {value: null, key: '2020-04-03T12:00:00'},
-                {value: 333, key: '2020-04-04T12:00:00'},
+                {value: null, key: '2020-04-04T12:00:00'},
                 {value: 333, key: '2020-04-05T12:00:00'},
                 {value: 333, key: '2020-04-06T12:00:00'},
                 {value: null, key: '2020-04-07T12:00:00'},
-                {value: null, key: '2020-04-08T12:00:00'},
+                {value: 333, key: '2020-04-08T12:00:00'},
                 {value: 333, key: '2020-04-09T12:00:00'},
               ],
             },
@@ -228,6 +198,22 @@ describe('<MissingDataArea />', () => {
       </svg>,
     );
 
-    expect(chart).toContainReactComponentTimes('rect', 2);
+    expect(chart).toContainReactComponent('rect', {
+      x: 0,
+      width: 1,
+      fill: 'black',
+    });
+
+    expect(chart).toContainReactComponent('rect', {
+      x: 4,
+      width: 1,
+      fill: 'black',
+    });
+
+    expect(chart).toContainReactComponent('rect', {
+      x: 7,
+      width: 1,
+      fill: 'black',
+    });
   });
 });

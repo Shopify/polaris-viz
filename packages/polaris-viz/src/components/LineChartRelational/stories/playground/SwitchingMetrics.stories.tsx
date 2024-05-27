@@ -3,10 +3,6 @@ import {META} from '../meta';
 export default {
   ...META,
   title: 'polaris-viz/Charts/LineChartRelational/Playground',
-  parameters: {
-    ...META.parameters,
-    chromatic: {disableSnapshot: false},
-  },
 };
 
 import {useState} from 'react';
