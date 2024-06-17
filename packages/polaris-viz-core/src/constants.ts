@@ -141,6 +141,10 @@ const DEFAULT_GROUP_LABEL_HIDE = false;
 
 const DEFAULT_CROSSHAIR_WIDTH = 1;
 
+const TREND_POSITIVE = '#078d4e';
+const TREND_NEGATIVE = '#616161';
+const TREND_NEUTRAL = '#8a8a8a';
+
 export const DARK_THEME: Theme = {
   seriesColors: {
     empty: variables.colorGray140,
@@ -225,9 +229,9 @@ export const DARK_THEME: Theme = {
     labelColor: variables.colorGray30,
     backgroundColor: variables.colorGray150,
     trendIndicator: {
-      positive: variables.colorDarkPositive,
-      negative: variables.colorDarkNegative,
-      neutral: variables.colorDarkNeutral,
+      positive: TREND_POSITIVE,
+      negative: TREND_NEGATIVE,
+      neutral: TREND_NEUTRAL,
     },
   },
   annotations: {
@@ -240,9 +244,9 @@ export const DARK_THEME: Theme = {
     pillOpacity: 0.6,
   },
   trendIndicator: {
-    positive: variables.colorDarkPositive,
-    negative: variables.colorDarkNegative,
-    neutral: variables.colorDarkNeutral,
+    positive: TREND_POSITIVE,
+    negative: TREND_NEGATIVE,
+    neutral: TREND_NEUTRAL,
   },
   missingData: {
     lineColor: variables.colorGray130,
@@ -305,10 +309,6 @@ const PURPLE_07_SOLID = 'rgba(175, 99, 228, 1)';
 const TEAL_14_SOLID = 'rgba(21, 117, 117, 1)';
 const ORANGE_10_SOLID = 'rgba(228, 124, 29, 1)';
 const OLIVE_16_SOLID = 'rgba(64, 76, 3, 1)';
-
-const LIGHT_POSITIVE = '#29845A';
-const LIGHT_NEGATIVE = '#E51C00';
-const LIGHT_NEUTRAL = '#8A8A8A';
 
 export const LIGHT_THEME: Theme = {
   seriesColors: {
@@ -391,9 +391,9 @@ export const LIGHT_THEME: Theme = {
     labelColor: variables.colorGray100,
     backgroundColor: variables.colorGray10,
     trendIndicator: {
-      positive: LIGHT_POSITIVE,
-      negative: LIGHT_NEGATIVE,
-      neutral: LIGHT_NEUTRAL,
+      positive: TREND_POSITIVE,
+      negative: TREND_NEGATIVE,
+      neutral: TREND_NEUTRAL,
     },
   },
   annotations: {
@@ -406,9 +406,9 @@ export const LIGHT_THEME: Theme = {
     pillOpacity: 1,
   },
   trendIndicator: {
-    positive: LIGHT_POSITIVE,
-    negative: LIGHT_NEGATIVE,
-    neutral: LIGHT_NEUTRAL,
+    positive: TREND_POSITIVE,
+    negative: TREND_NEGATIVE,
+    neutral: TREND_NEUTRAL,
   },
   missingData: {
     lineColor: variables.colorGray40,
