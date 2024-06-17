@@ -64,6 +64,7 @@ export {
   AREAS_TRANSITION_CONFIG,
   STROKE_DOT_ARRAY_WIDTH,
   EXTERNAL_EVENTS_SET_HIDDEN_ITEMS,
+  FONT_FAMILY,
 } from './constants';
 export {
   clamp,

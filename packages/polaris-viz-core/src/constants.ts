@@ -8,6 +8,8 @@ import {InternalChartType, ChartState, Hue} from './types';
 
 export const LINE_HEIGHT = 14;
 export const FONT_SIZE = 12;
+export const FONT_FAMILY =
+  'Inter, -apple-system, "system-ui", "San Francisco", "Segoe UI", Roboto, "Helvetica Neue", sans-serif';
 
 export const XMLNS = 'http://www.w3.org/2000/svg';
 

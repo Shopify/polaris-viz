@@ -1,4 +1,5 @@
 import {Fragment} from 'react';
+import {FONT_FAMILY} from '@shopify/polaris-viz-core';
 
 import {useTheme} from '../../hooks';
 import {FONT_SIZE} from '../../constants';
@@ -42,6 +43,7 @@ export function TextLine({index, line}: TextLineProps) {
                 y={y}
                 fill={selectedTheme.xAxis.labelColor}
                 fontSize={FONT_SIZE}
+                fontFamily={FONT_FAMILY}
                 transform={transform}
               >
                 {truncatedText}
