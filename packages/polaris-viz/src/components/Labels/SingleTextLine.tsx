@@ -1,5 +1,9 @@
 import {Fragment} from 'react';
-import {LINE_HEIGHT, useChartContext} from '@shopify/polaris-viz-core';
+import {
+  FONT_FAMILY,
+  LINE_HEIGHT,
+  useChartContext,
+} from '@shopify/polaris-viz-core';
 
 import {FONT_SIZE} from '../../constants';
 
@@ -45,6 +49,7 @@ export function SingleTextLine({
         width={targetWidth}
         fill={color}
         fontSize={FONT_SIZE}
+        fontFamily={FONT_FAMILY}
         y={y}
         x={x}
       >

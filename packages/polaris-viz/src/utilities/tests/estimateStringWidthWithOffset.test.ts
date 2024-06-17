@@ -25,10 +25,10 @@ describe('estimateStringWidthWithOffset()', () => {
   describe('fontWeight', () => {
     it.each`
       fontWeight | expected
-      ${100}     | ${63.43}
+      ${100}     | ${64.09}
       ${300}     | ${65.41}
       ${600}     | ${70.03}
-      ${900}     | ${78.62}
+      ${900}     | ${76.64}
     `('returns width with $fontWeight offset', ({fontWeight, expected}) => {
       const actual = estimateStringWidthWithOffset(
         'Hello World',
@@ -43,10 +43,10 @@ describe('estimateStringWidthWithOffset()', () => {
   describe('fontSize & fontWeight', () => {
     it.each`
       fontSize | fontWeight | expected
-      ${4}     | ${100}     | ${22.83}
+      ${4}     | ${100}     | ${23.07}
       ${10}    | ${300}     | ${55.6}
       ${16}    | ${600}     | ${91.04}
-      ${20}    | ${900}     | ${125.01}
+      ${20}    | ${900}     | ${121.86}
     `(
       'returns width with $fontWeight offset',
       ({fontSize, fontWeight, expected}) => {

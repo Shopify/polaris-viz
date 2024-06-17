@@ -1,4 +1,4 @@
-import {useTheme} from '@shopify/polaris-viz-core';
+import {useTheme, FONT_FAMILY} from '@shopify/polaris-viz-core';
 
 import type {Trend, TrendDirection} from '../../types';
 
@@ -70,7 +70,7 @@ export function TrendIndicator({
           fill="currentColor"
           fontWeight={FONT_WEIGHT}
           dominantBaseline="middle"
-          fontFamily="-apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif"
+          fontFamily={FONT_FAMILY}
           textRendering="geometricPrecision"
           width={textWidth}
         >

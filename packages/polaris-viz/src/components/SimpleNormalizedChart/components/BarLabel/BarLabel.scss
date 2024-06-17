@@ -29,7 +29,6 @@
 }
 
 .FormattedVerticalLabel {
-  font-weight: 700;
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 5;
@@ -38,7 +37,6 @@
 }
 
 .FormattedHorizontalLabel {
-  font-weight: 700;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -58,4 +56,5 @@
 
 .Value {
   margin-right: 8px;
+  font-weight: 650;
 }

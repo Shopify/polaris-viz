@@ -1,3 +1,5 @@
+import {FONT_FAMILY} from '@shopify/polaris-viz-core';
+
 import {HORIZONTAL_BAR_LABEL_HEIGHT, FONT_SIZE} from '../../../constants';
 
 export interface LabelProps {
@@ -18,6 +20,7 @@ export function Label({barHeight, color, label, labelWidth, y}: LabelProps) {
       aria-hidden="true"
       y={y + labelYOffset}
       fontSize={`${FONT_SIZE}px`}
+      fontFamily={FONT_FAMILY}
       fill={color}
       dominantBaseline="central"
     >
