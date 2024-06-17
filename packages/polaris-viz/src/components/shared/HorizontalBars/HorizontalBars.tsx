@@ -168,11 +168,7 @@ export function HorizontalBars({
               <LabelWrapper animationDelay={seriesAnimationDelay} x={labelX}>
                 <Label
                   barHeight={barHeight}
-                  color={
-                    data[seriesIndex].isComparison
-                      ? selectedTheme.seriesColors.comparison
-                      : selectedTheme.xAxis.labelColor
-                  }
+                  color={selectedTheme.xAxis.labelColor}
                   label={label}
                   labelWidth={labelWidth}
                   y={y}

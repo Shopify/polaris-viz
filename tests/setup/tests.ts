@@ -30,14 +30,6 @@ jest.mock(
       colorDarkComparison: 'rgba(144, 176, 223, 0.8)',
       colorLightComparison: 'rgba(103, 147, 204, 1)',
 
-      colorLightPositive: 'var(--p-icon-success, rgba(0, 127, 95, 1))',
-      colorLightNegative: 'var(--p-icon-critical, rgba(215, 44, 13, 1))',
-      colorLightnNeutral: 'var(--p-icon-subdued, rgba(140, 145, 150, 1))',
-
-      colorDarkPositive: 'var(--p-icon-success, #039c86)',
-      colorDarkNegative: 'var(--p-icon-critical, #f24f62)',
-      colorDarkNeutral: 'var(--p-icon-subdued, #8c9196)',
-
       colorGray00: '#ffffff',
       colorGray10: '#f6f6f7',
       colorGray20: '#eeeeef',

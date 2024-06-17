@@ -9,7 +9,7 @@ export function StorySection({
 }) {
   return (
     <div>
-      <p>
+      <p style={{color: 'black'}}>
         <strong>{title}</strong>
       </p>
       <div style={{display: 'grid', gap: '10px'}}>{children}</div>
