@@ -1,10 +1,13 @@
 import type {Dimensions} from '@shopify/polaris-viz-core';
+import {clamp} from '@shopify/polaris-viz-core';
 
+import {getRightPosition} from '../../../components/TooltipWrapper';
 import type {TooltipPositionOffset} from '../../TooltipWrapper';
 import type {Margin} from '../../../types';
 
 // The space between the cursor and the tooltip
 const TOOLTIP_MARGIN = 20;
+const SCROLLBAR_WIDTH = 20;
 
 export interface AlteredPositionProps {
   bandwidth: number;
@@ -26,23 +29,18 @@ export type AlteredPosition = (
   props: AlteredPositionProps,
 ) => AlteredPositionReturn;
 
-export function getAlteredStackedAreaChartPosition({
-  currentX,
-  currentY,
-  chartBounds,
-  margin,
-  tooltipDimensions,
-}: AlteredPositionProps): AlteredPositionReturn {
-  const x = Math.min(
-    Math.max(currentX, TOOLTIP_MARGIN),
-    chartBounds.width - tooltipDimensions.width - TOOLTIP_MARGIN,
-  );
+export function getAlteredStackedAreaChartPosition(
+  props: AlteredPositionProps,
+): AlteredPositionReturn {
+  const {currentX, currentY, chartBounds, margin, tooltipDimensions} = props;
+
+  let x = currentX;
+  let y = currentY;
 
   // Y POSITIONING
   // If y is below the chart, adjust the tooltip position to the bottom of the chart
   //
-
-  const y =
+  y =
     currentY >= chartBounds.y + chartBounds.height
       ? chartBounds.height -
         tooltipDimensions.height -
@@ -50,5 +48,40 @@ export function getAlteredStackedAreaChartPosition({
         margin.Bottom
       : currentY;
 
-  return {x, y};
+  // X POSITIONING
+  const right = getRightPosition(x, props);
+  x = right.value;
+
+  if (right.wasOutsideBounds) {
+    const left = getLeftPosition(x);
+    x = left.value;
+  }
+
+  return {
+    x: clamp({
+      amount: x,
+      min: TOOLTIP_MARGIN,
+      max:
+        window.innerWidth -
+        props.tooltipDimensions.width -
+        TOOLTIP_MARGIN -
+        SCROLLBAR_WIDTH,
+    }),
+    y: clamp({
+      amount: y,
+      min: window.scrollY + TOOLTIP_MARGIN,
+      max:
+        window.scrollY +
+        window.innerHeight -
+        props.tooltipDimensions.height -
+        TOOLTIP_MARGIN,
+    }),
+  };
+}
+
+function getLeftPosition(value: number): {
+  value: number;
+  wasOutsideBounds: boolean;
+} {
+  return {value: value - TOOLTIP_MARGIN, wasOutsideBounds: false};
 }
