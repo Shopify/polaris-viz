@@ -30,5 +30,20 @@ export function useStackedData({data, xAxisOptions}: Props) {
     return Math.max(...stackedValues.map((stack) => stack.length)) - 1;
   }, [stackedValues]);
 
-  return {labels: formattedLabels, longestSeriesLength, stackedValues};
+  const longestSeriesIndex = useMemo(
+    () =>
+      data.reduce((maxIndex, currentSeries, currentIndex) => {
+        return data[maxIndex].data.length < currentSeries.data.length
+          ? currentIndex
+          : maxIndex;
+      }, 0),
+    [data],
+  );
+
+  return {
+    labels: formattedLabels,
+    longestSeriesIndex,
+    longestSeriesLength,
+    stackedValues,
+  };
 }

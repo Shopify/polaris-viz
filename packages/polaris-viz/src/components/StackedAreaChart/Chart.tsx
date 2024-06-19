@@ -6,7 +6,6 @@ import type {
   DataPoint,
   XAxisOptions,
   YAxisOptions,
-  Dimensions,
   BoundingRect,
   LabelFormatter,
 } from '@shopify/polaris-viz-core';
@@ -18,6 +17,7 @@ import {
   COLOR_VISION_SINGLE_ITEM,
   useChartPositions,
   LINE_HEIGHT,
+  clamp,
 } from '@shopify/polaris-viz-core';
 
 import {ChartElements} from '../ChartElements';
@@ -80,7 +80,7 @@ export interface Props {
   theme: string;
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
-  dimensions?: Dimensions;
+  dimensions?: BoundingRect;
   renderLegendContent?: RenderLegendContent;
   renderHiddenLegendLabel?: (count: number) => string;
 }
@@ -127,6 +127,7 @@ export function Chart({
 
   const {
     stackedValues,
+    longestSeriesIndex,
     longestSeriesLength,
     labels: formattedLabels,
   } = useStackedData({
@@ -256,8 +257,8 @@ export function Chart({
   const chartBounds: BoundingRect = {
     width,
     height,
-    x: chartXPosition,
-    y: chartYPosition,
+    x: dimensions?.x ?? chartXPosition,
+    y: dimensions?.y ?? chartYPosition,
   };
 
   const {hasXAxisAnnotations, hasYAxisAnnotations} = checkAvailableAnnotations(
@@ -395,6 +396,7 @@ export function Chart({
           margin={ChartMargin}
           onIndexChange={(index) => setActivePointIndex(index)}
           parentRef={svgRef}
+          usePortal
         />
       )}
 
@@ -424,20 +426,29 @@ export function Chart({
         return TOOLTIP_POSITION_DEFAULT_RETURN;
       }
 
-      const {svgX, svgY} = point;
+      const {svgX} = point;
 
       const closestIndex = Math.round(xScale.invert(svgX - chartXPosition));
 
+      const activeIndex = clamp({
+        amount: closestIndex,
+        min: 0,
+        max: data[longestSeriesIndex].data.length - 1,
+      });
+
       return {
-        x: svgX,
-        y: svgY,
+        x: (event as MouseEvent).pageX,
+        y: (event as MouseEvent).pageY,
         position: TOOLTIP_POSITION,
-        activeIndex: Math.min(longestSeriesLength, closestIndex),
+        activeIndex,
       };
     } else if (index != null) {
+      const activeIndex = index ?? 0;
+      const x = xScale?.(activeIndex) ?? 0;
+
       return {
-        x: xScale?.(index) ?? 0,
-        y: 0,
+        x: x + (dimensions?.x ?? 0),
+        y: dimensions?.y ?? 0,
         position: TOOLTIP_POSITION,
         activeIndex: index,
       };

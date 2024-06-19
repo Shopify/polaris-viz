@@ -22,7 +22,25 @@ const BASE_PROPS: AlteredPositionProps = {
   },
 };
 
+let windowSpy;
+
+function mockWindow({scrollY = 0, innerHeight = 1000, innerWidth = 500}) {
+  windowSpy.mockImplementation(() => ({
+    scrollY,
+    innerHeight,
+    innerWidth,
+  }));
+}
+
 describe('getAlteredStackedAreaChartPosition', () => {
+  beforeEach(() => {
+    windowSpy = jest.spyOn(window, 'window', 'get');
+  });
+
+  afterEach(() => {
+    windowSpy.mockRestore();
+  });
+
   it('returns the original position of y when currentY is within the chart bounds', () => {
     const props = {
       ...BASE_PROPS,
@@ -32,7 +50,6 @@ describe('getAlteredStackedAreaChartPosition', () => {
 
     const result = getAlteredStackedAreaChartPosition(props);
 
-    expect(result.x).toBe(50);
     expect(result.y).toBe(50);
   });
 
@@ -46,8 +63,6 @@ describe('getAlteredStackedAreaChartPosition', () => {
     const tooltipDimensions = props.tooltipDimensions;
     const margin = props.margin;
     const result = getAlteredStackedAreaChartPosition(props);
-
-    expect(result.x).toBe(20);
 
     expect(result.y).toBe(
       chartBounds.height -
@@ -68,13 +83,41 @@ describe('getAlteredStackedAreaChartPosition', () => {
     const margin = props.margin;
     const result = getAlteredStackedAreaChartPosition(props);
 
-    expect(result.x).toBe(20);
-
     expect(result.y).toBe(
       chartBounds.height -
         tooltipDimensions.height -
         TOOLTIP_MARGIN -
         margin.Bottom,
     );
+  });
+
+  describe('x', () => {
+    it('clamps to the left of a window', () => {
+      mockWindow({
+        scrollY: 0,
+      });
+
+      expect(
+        getAlteredStackedAreaChartPosition({
+          ...BASE_PROPS,
+          currentX: -1000,
+          currentY: 0,
+        }),
+      ).toStrictEqual({x: 20, y: 20});
+    });
+
+    it('clamps to the right of a window', () => {
+      mockWindow({
+        scrollY: 0,
+      });
+
+      expect(
+        getAlteredStackedAreaChartPosition({
+          ...BASE_PROPS,
+          currentX: 1000,
+          currentY: 0,
+        }),
+      ).toStrictEqual({x: 400, y: 20});
+    });
   });
 });

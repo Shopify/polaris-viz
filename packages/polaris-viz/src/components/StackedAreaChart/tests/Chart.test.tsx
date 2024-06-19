@@ -184,7 +184,7 @@ describe('<Chart />', () => {
 
     triggerSVGMouseMove(chart);
 
-    const tooltipWrapper = chart.find(TooltipWrapper)!;
+    const tooltipWrapper = chart.find(TooltipAnimatedContainer)!;
     expect(tooltipWrapper).toContainReactText('Mock Tooltip Content');
   });
 
