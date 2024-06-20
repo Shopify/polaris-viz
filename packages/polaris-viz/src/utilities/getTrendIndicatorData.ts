@@ -6,9 +6,7 @@ export function getTrendIndicatorData(
   trendMetadata: MetaDataTrendIndicator | undefined,
 ) {
   if (trendMetadata != null) {
-    const {totalWidth} = estimateTrendIndicatorWidth(
-      `${trendMetadata.value || ''}`,
-    );
+    const {totalWidth} = estimateTrendIndicatorWidth(trendMetadata.value ?? '');
 
     return {
       trendIndicatorProps: trendMetadata,

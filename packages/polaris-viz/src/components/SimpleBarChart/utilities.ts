@@ -23,11 +23,11 @@ export function getLongestTrendIndicator(
 
         if (dataPoint?.value === highestPositive) {
           longestTrendIndicator.positive = estimateTrendIndicatorWidth(
-            trend.value,
+            trend.value ?? '',
           ).totalWidth;
         } else if (dataPoint?.value === lowestNegative) {
           longestTrendIndicator.negative = estimateTrendIndicatorWidth(
-            trend.value,
+            trend.value ?? '',
           ).totalWidth;
         }
       }
