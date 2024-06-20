@@ -4,6 +4,7 @@ import {
   LineSeries,
   STROKE_DOT_ARRAY_WIDTH,
   useChartContext,
+  useFilteredSparkLineData,
   useSparkLine,
 } from '@shopify/polaris-viz-core';
 import type {Dimensions} from '@shopify/polaris-viz-core';
@@ -30,12 +31,14 @@ export function Chart({
 }: Props) {
   const {theme} = useChartContext();
   const selectedTheme = useTheme();
-  const seriesColors = useThemeSeriesColors(data, selectedTheme);
+
+  const filteredData = useFilteredSparkLineData(data);
+  const seriesColors = useThemeSeriesColors(filteredData, selectedTheme);
 
   const {width, height} = dimensions ?? {height: 0, width: 0};
 
   const {minXDomain, maxXDomain, yScale} = useSparkLine({
-    data,
+    data: filteredData,
     height,
   });
 
@@ -46,7 +49,7 @@ export function Chart({
       ) : null}
 
       <svg xmlns={XMLNS} aria-hidden width={width} height={height}>
-        {data.map((series, index) => {
+        {filteredData.map((series, index) => {
           const singleOffsetLeft = series.isComparison ? 0 : offsetLeft;
           const singleOffsetRight = series.isComparison ? 0 : offsetRight;
 

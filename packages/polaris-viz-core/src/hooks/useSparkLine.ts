@@ -20,9 +20,19 @@ export function useSparkLine({
     data.map(({data}) => data.map(({value}) => value)),
   );
 
+  const minYValues = Math.min(...yValues);
+  const maxYValues = Math.max(...yValues);
+
+  const rangeStart = height - svgMargin;
+  let rangeEnd = svgMargin;
+
+  if (minYValues === 0 && maxYValues === 0) {
+    rangeEnd = rangeStart;
+  }
+
   const yScale = scaleLinear()
-    .range([height - svgMargin, svgMargin])
-    .domain([Math.min(...yValues), Math.max(...yValues)]);
+    .range([rangeStart, rangeEnd])
+    .domain([minYValues, maxYValues]);
 
   return {
     minXDomain: 0,
