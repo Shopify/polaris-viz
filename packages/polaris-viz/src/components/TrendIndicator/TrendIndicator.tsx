@@ -12,8 +12,9 @@ import {
   FONT_SIZE,
   HEIGHT,
   Y_OFFSET,
-  FONT_WEIGHT,
 } from './constants';
+
+const TREND_FONT_WEIGHT = 650;
 
 export interface TrendIndicatorProps {
   accessibilityLabel?: string;
@@ -54,7 +55,10 @@ export function TrendIndicator({
     );
   }
 
-  const {textWidth, totalWidth} = estimateTrendIndicatorWidth(value);
+  const {textWidth, totalWidth} = estimateTrendIndicatorWidth(
+    value,
+    TREND_FONT_WEIGHT,
+  );
 
   return (
     <Svg {...svgProps} width={totalWidth}>
@@ -68,7 +72,7 @@ export function TrendIndicator({
           y={(HEIGHT + Y_OFFSET) / 2}
           fontSize={FONT_SIZE}
           fill="currentColor"
-          fontWeight={FONT_WEIGHT}
+          fontWeight={TREND_FONT_WEIGHT}
           dominantBaseline="middle"
           fontFamily={FONT_FAMILY}
           textRendering="geometricPrecision"

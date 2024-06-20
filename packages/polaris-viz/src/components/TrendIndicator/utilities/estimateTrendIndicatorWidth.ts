@@ -7,9 +7,12 @@ import {
   TEXT_ICON_SPACING,
 } from '../constants';
 
-export function estimateTrendIndicatorWidth(value?: string) {
+export function estimateTrendIndicatorWidth(
+  value,
+  fontWeight: number = FONT_WEIGHT,
+) {
   const textWidth = value
-    ? estimateStringWidthWithOffset(value, FONT_SIZE, FONT_WEIGHT)
+    ? estimateStringWidthWithOffset(value, FONT_SIZE, fontWeight)
     : NO_VALUE_WIDTH;
   const totalWidth = Math.round(ICON_SIZE + TEXT_ICON_SPACING + textWidth);
 
