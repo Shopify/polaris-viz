@@ -41,12 +41,12 @@ export const DEFAULT_DATA: TooltipData[] = [
       {
         key: 'Sessions from Google ads',
         value: '5250',
-        color: DARK_THEME.seriesColors.upToEight[0],
+        color: DARK_THEME.seriesColors.limited[0],
       },
       {
         key: 'Sessions from Facebook ads',
         value: '650',
-        color: DARK_THEME.seriesColors.upToEight[1],
+        color: DARK_THEME.seriesColors.limited[1],
         isComparison: true,
       },
     ],
@@ -58,17 +58,17 @@ export const DEFAULT_DATA: TooltipData[] = [
       {
         key: 'POS',
         value: '4999',
-        color: DARK_THEME.seriesColors.upToEight[2],
+        color: DARK_THEME.seriesColors.limited[2],
       },
       {
         key: 'Online',
         value: '10000',
-        color: DARK_THEME.seriesColors.upToEight[3],
+        color: DARK_THEME.seriesColors.limited[3],
       },
       {
         key: 'Average',
         value: '16500',
-        color: DARK_THEME.seriesColors.upToEight[4],
+        color: DARK_THEME.seriesColors.limited[4],
       },
     ],
   },

@@ -152,7 +152,7 @@ export const DARK_THEME: Theme = {
     empty: variables.colorGray140,
     comparison: variables.colorDarkComparison,
     single: NEUTRAL_SINGLE_GRADIENT,
-    upToEight: [
+    limited: [
       createGradient(variables.colorIndigo70, variables.colorIndigo90),
       createGradient(variables.colorBlue70, variables.colorBlue90),
       createGradient(variables.colorMagenta70, variables.colorMagenta90),
@@ -285,32 +285,18 @@ const PURPLE = [
   {offset: 100, color: '#BD7DE8'},
 ];
 
-const OLIVE = [
-  {offset: 0, color: '#6F8405'},
-  {offset: 100, color: '#9DBB08'},
-];
-
-const ORANGE = [
-  {offset: 0, color: '#D77114'},
-  {offset: 100, color: '#EC882D'},
-];
-
 const LIGHT_BLUE_09_SOLID = 'rgba(19, 172, 240, 1)';
-const INDIGO_10_SOLID = 'rgba(86, 42, 228, 1)';
-const BLUE_07_SOLID = 'rgba(89, 126, 237, 1)';
-const MAGENTA_12_SOLID = 'rgba(155, 39, 124, 1)';
-const TEAL_11_SOLID = 'rgba(35, 186, 186, 1)';
-const PURPLE_11_SOLID = 'rgba(126, 33, 190, 1)';
-const OLIVE_13_SOLID = 'rgba(134, 159, 7, 1)';
-const ORANGE_14_SOLID = 'rgba(139, 68, 3, 1)';
-const INDIGIO_06_SOLID = 'rgba(158, 132, 242, 1)';
-const LIGHT_BLUE_12_SOLID = 'rgba(18, 138, 192, 1)';
-const MAGENTA_08_SOLID = 'rgba(215, 94, 183, 1)';
-const BLUE_13_SOLID = 'rgba(16, 50, 149, 1)';
-const PURPLE_07_SOLID = 'rgba(175, 99, 228, 1)';
-const TEAL_14_SOLID = 'rgba(21, 117, 117, 1)';
-const ORANGE_10_SOLID = 'rgba(228, 124, 29, 1)';
-const OLIVE_16_SOLID = 'rgba(64, 76, 3, 1)';
+const INDIGO_10_SOLID = 'rgba(106, 66, 233, 1)';
+const BLUE_08_SOLID = 'rgba(89, 126, 237, 1)';
+const MAGENTA_10_SOLID = 'rgba(209, 71, 172, 1)';
+const TEAL_12_SOLID = 'rgba(35, 186, 186, 1)';
+const PURPLE_10_SOLID = 'rgba(155, 60, 221, 1)';
+const INDIGIO_07_SOLID = 'rgba(158, 132, 242, 1)';
+const LIGHT_BLUE_13_SOLID = 'rgba(18, 138, 192, 1)';
+const MAGENTA_09_SOLID = 'rgba(215, 94, 183, 1)';
+const BLUE_10_SOLID = 'rgba(48, 94, 232, 1)';
+const PURPLE_08_SOLID = 'rgba(175, 99, 228, 1)';
+const TEAL_10_SOLID = 'rgba(51, 219, 219, 1)';
 
 export const LIGHT_THEME: Theme = {
   seriesColors: {
@@ -320,24 +306,20 @@ export const LIGHT_THEME: Theme = {
       {offset: 0, color: '#0A97D5'},
       {offset: 100, color: '#50C3F7'},
     ],
-    upToEight: [LIGHT_BLUE, INDIGO, BLUE, MAGENTA, TEAL, PURPLE, OLIVE, ORANGE],
+    limited: [LIGHT_BLUE, INDIGO, BLUE, MAGENTA, TEAL, PURPLE],
     all: [
       LIGHT_BLUE_09_SOLID,
       INDIGO_10_SOLID,
-      BLUE_07_SOLID,
-      MAGENTA_12_SOLID,
-      TEAL_11_SOLID,
-      PURPLE_11_SOLID,
-      OLIVE_13_SOLID,
-      ORANGE_14_SOLID,
-      INDIGIO_06_SOLID,
-      LIGHT_BLUE_12_SOLID,
-      MAGENTA_08_SOLID,
-      BLUE_13_SOLID,
-      PURPLE_07_SOLID,
-      TEAL_14_SOLID,
-      ORANGE_10_SOLID,
-      OLIVE_16_SOLID,
+      BLUE_08_SOLID,
+      MAGENTA_10_SOLID,
+      TEAL_12_SOLID,
+      PURPLE_10_SOLID,
+      INDIGIO_07_SOLID,
+      LIGHT_BLUE_13_SOLID,
+      MAGENTA_09_SOLID,
+      BLUE_10_SOLID,
+      PURPLE_08_SOLID,
+      TEAL_10_SOLID,
     ],
   },
   tooltip: {
@@ -423,7 +405,7 @@ export const PRINT_THEME = {
     empty: variables.colorGray20,
     comparison: variables.colorLightComparison,
     single: variables.colorIndigo90,
-    upToEight: [
+    limited: [
       variables.colorIndigo70,
       variables.colorBlue70,
       variables.colorMagenta70,

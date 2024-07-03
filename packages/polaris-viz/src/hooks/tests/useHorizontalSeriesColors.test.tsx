@@ -41,7 +41,7 @@ describe('useHorizontalSeriesColors()', () => {
 
     expect(data).toStrictEqual({
       longestSeriesCount: 3,
-      seriesColors: [...LIGHT_THEME.seriesColors.upToEight].splice(0, 2),
+      seriesColors: [...LIGHT_THEME.seriesColors.limited].splice(0, 2),
     });
   });
 
@@ -58,7 +58,7 @@ describe('useHorizontalSeriesColors()', () => {
 
     expect(data).toStrictEqual({
       longestSeriesCount: 3,
-      seriesColors: LIGHT_THEME.seriesColors.upToEight.splice(0, 2),
+      seriesColors: LIGHT_THEME.seriesColors.limited.splice(0, 2),
     });
   });
 
@@ -91,7 +91,7 @@ describe('useHorizontalSeriesColors()', () => {
 
     expect(data).toStrictEqual({
       longestSeriesCount: 2,
-      seriesColors: ['red', LIGHT_THEME.seriesColors.upToEight[0]],
+      seriesColors: ['red', LIGHT_THEME.seriesColors.limited[0]],
     });
   });
 

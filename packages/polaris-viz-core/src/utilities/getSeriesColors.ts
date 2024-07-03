@@ -5,8 +5,8 @@ export function getSeriesColors(count: number, selectedTheme: Theme): Color[] {
     return [selectedTheme.seriesColors.single];
   }
 
-  if (count <= selectedTheme.seriesColors.upToEight.length) {
-    return [...selectedTheme.seriesColors.upToEight];
+  if (count <= selectedTheme.seriesColors.limited.length) {
+    return [...selectedTheme.seriesColors.limited];
   }
 
   const allColors = [...selectedTheme.seriesColors.all];

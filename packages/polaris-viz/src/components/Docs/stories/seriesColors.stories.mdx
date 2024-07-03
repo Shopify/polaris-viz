@@ -53,7 +53,7 @@ export interface GradientStop {
     }
   />
   <PropertyTable.Row
-    property={`seriesColors.upToEight`}
+    property={`seriesColors.limited`}
     type={'Color[]'}
     description={
       <>
@@ -130,7 +130,7 @@ export interface GradientStop {
       themes={{
         ${DEFAULT_THEME_NAME}: {
           seriesColors: {
-            upToEight: [
+            limited: [
               'yellow',
               'lime',
               'aqua',
@@ -150,7 +150,7 @@ export interface GradientStop {
         themes={{
           [DEFAULT_THEME_NAME]: {
             seriesColors: {
-              upToEight: ['yellow', 'lime', 'aqua', 'Teal'],
+              limited: ['yellow', 'lime', 'aqua', 'Teal'],
             },
           },
         }}

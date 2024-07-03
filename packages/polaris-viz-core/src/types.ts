@@ -152,7 +152,7 @@ export interface SeriesColors {
   comparison: string;
   empty: Color;
   single: Color;
-  upToEight: Color[];
+  limited: Color[];
   all: Color[];
 }
 export interface LegendTheme {

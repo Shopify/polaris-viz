@@ -1,5 +1,6 @@
 import {
   COLOR_VISION_SINGLE_ITEM,
+  FONT_FAMILY,
   changeColorOpacity,
   useTheme,
 } from '@shopify/polaris-viz-core';
@@ -43,6 +44,7 @@ export function TooltipContentContainer({children, maxWidth, theme}: Props) {
           isFirefox ? 1 : TOOLTIP_BG_OPACITY,
         ),
         maxWidth,
+        fontFamily: FONT_FAMILY,
       }}
     >
       {children({activeColorVisionIndex})}

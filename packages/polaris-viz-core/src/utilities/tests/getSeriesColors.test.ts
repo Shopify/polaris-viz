@@ -3,7 +3,7 @@ import {getSeriesColors} from '../getSeriesColors';
 
 const SELECTED_THEME = {
   seriesColors: {
-    upToEight: ['#9479F7', '#578FE1', '#CF68C1', '#5B97AD'],
+    limited: ['#9479F7', '#578FE1', '#CF68C1', '#5B97AD'],
     all: [
       '#41778B',
       '#8DAEEF',
@@ -30,15 +30,15 @@ describe('getSeriesColors', () => {
     spy.mockReset();
   });
 
-  it('returns upToEight', () => {
+  it('returns limited', () => {
     expect(getSeriesColors(0, SELECTED_THEME)).toStrictEqual(
-      SELECTED_THEME.seriesColors.upToEight,
+      SELECTED_THEME.seriesColors.limited,
     );
     expect(getSeriesColors(2, SELECTED_THEME)).toStrictEqual(
-      SELECTED_THEME.seriesColors.upToEight,
+      SELECTED_THEME.seriesColors.limited,
     );
     expect(getSeriesColors(4, SELECTED_THEME)).toStrictEqual(
-      SELECTED_THEME.seriesColors.upToEight,
+      SELECTED_THEME.seriesColors.limited,
     );
   });
 

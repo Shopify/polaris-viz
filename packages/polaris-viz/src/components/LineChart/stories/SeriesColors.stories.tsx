@@ -7,9 +7,9 @@ import type {LineChartProps} from '../LineChart';
 
 import {Template} from './data';
 
-export const SeriesColorsUpToEight: Story<LineChartProps> = Template.bind({});
+export const SeriesColorslimited: Story<LineChartProps> = Template.bind({});
 
-SeriesColorsUpToEight.args = {
+SeriesColorslimited.args = {
   data: generateMultipleSeries(8, 'dates'),
 };
 

@@ -7,10 +7,11 @@ import {generateMultipleSeries} from '../../Docs/utilities';
 
 import {DEFAULT_PROPS, Template} from './data';
 
-export const SeriesColorsUpToEight: Story<StackedAreaChartProps> =
-  Template.bind({});
+export const SeriesColorslimited: Story<StackedAreaChartProps> = Template.bind(
+  {},
+);
 
-SeriesColorsUpToEight.args = {
+SeriesColorslimited.args = {
   ...DEFAULT_PROPS,
   data: generateMultipleSeries(4, 'dates'),
 };

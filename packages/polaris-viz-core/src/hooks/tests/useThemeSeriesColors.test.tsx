@@ -6,7 +6,7 @@ import {useThemeSeriesColors} from '../useThemeSeriesColors';
 
 const SELECTED_THEME = {
   seriesColors: {
-    upToEight: [
+    limited: [
       '#5B97AD',
       '#578FE1',
       '#9479F7',

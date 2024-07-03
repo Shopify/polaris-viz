@@ -81,8 +81,8 @@ describe('<Chart />', () => {
         const defs = chart.find(GradientDefs);
 
         expect(defs?.props.seriesColors).toStrictEqual([
-          LIGHT_THEME.seriesColors.upToEight[0],
-          LIGHT_THEME.seriesColors.upToEight[1],
+          LIGHT_THEME.seriesColors.limited[0],
+          LIGHT_THEME.seriesColors.limited[1],
         ]);
       });
 
@@ -113,7 +113,7 @@ describe('<Chart />', () => {
 
         expect(defs?.props.seriesColors).toStrictEqual([
           'red',
-          LIGHT_THEME.seriesColors.upToEight[0],
+          LIGHT_THEME.seriesColors.limited[0],
         ]);
       });
     });
