@@ -11,9 +11,7 @@ export {META as default} from './meta';
 const LEGEND_ITEMS_DATA = [
   {
     name: 'POS',
-    preview: (
-      <SquareColorPreview color={DARK_THEME.seriesColors.upToEight[0]} />
-    ),
+    preview: <SquareColorPreview color={DARK_THEME.seriesColors.limited[0]} />,
   },
   {
     name: 'Online',
@@ -21,16 +19,14 @@ const LEGEND_ITEMS_DATA = [
   },
   {
     name: 'Mobile',
-    preview: (
-      <SquareColorPreview color={DARK_THEME.seriesColors.upToEight[1]} />
-    ),
+    preview: <SquareColorPreview color={DARK_THEME.seriesColors.limited[1]} />,
   },
   {
     name: 'Sessions from Google ads',
     preview: (
       <LinePreview
         lineStyle="solid"
-        color={DARK_THEME.seriesColors.upToEight[2]}
+        color={DARK_THEME.seriesColors.limited[2]}
       />
     ),
   },

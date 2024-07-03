@@ -81,7 +81,7 @@ export const DEFAULT_DATA: DataSeries[] = [
       {value: 849, key: '2020-03-13T12:00:00'},
       {value: 129, key: '2020-03-14T12:00:00'},
     ],
-    color: LIGHT_THEME.seriesColors.upToEight[0],
+    color: LIGHT_THEME.seriesColors.limited[0],
   },
   {
     name: '75th Percentile',
@@ -131,7 +131,7 @@ export const DEFAULT_DATA: DataSeries[] = [
       {value: 623, key: '2020-03-13T12:00:00'},
       {value: 21, key: '2020-03-14T12:00:00'},
     ],
-    color: LIGHT_THEME.seriesColors.upToEight[5],
+    color: LIGHT_THEME.seriesColors.limited[5],
     styleOverride: {
       line: {
         hasArea: false,

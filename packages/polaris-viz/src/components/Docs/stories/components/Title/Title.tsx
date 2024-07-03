@@ -1,6 +1,6 @@
 import type {CSSProperties, ReactNode} from 'react';
 import {useMemo} from 'react';
-import {uniqueId} from '@shopify/polaris-viz-core';
+import {FONT_FAMILY, uniqueId} from '@shopify/polaris-viz-core';
 
 import {copyTextToClipboard} from '../../../utilities';
 
@@ -46,7 +46,7 @@ export function Title({
       id={id}
       href={`#${id}`}
       onClick={handleInteraction}
-      style={style}
+      style={{...style, fontFamily: FONT_FAMILY}}
     >
       {markup}
     </a>

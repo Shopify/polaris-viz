@@ -7,9 +7,9 @@ import type {BarChartProps} from '../BarChart';
 
 import {Template} from './data';
 
-export const SeriesColorsUpToEight: Story<BarChartProps> = Template.bind({});
+export const SeriesColorslimited: Story<BarChartProps> = Template.bind({});
 
-SeriesColorsUpToEight.args = {
+SeriesColorslimited.args = {
   data: generateMultipleSeries(8),
 };
 
