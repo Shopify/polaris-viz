@@ -12,6 +12,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 - Renamed `seriesColors.upToEight` to `seriesColors.limited`.
 - Removed `Olive` & `Orange` colors from `Light` theme.
 
+### Fixed
+
+- Fixed issue where `<TrendIndicator />` `svg` would render very wide when a font-weight was used that wasn't included in `character-width-offsets.json`.
+
 ## [13.4.1] - 2024-06-20
 
 ### Changed

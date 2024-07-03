@@ -11,7 +11,7 @@ export function estimateStringWidthWithOffset(
   const width = estimateStringWidth(string, characterWidths);
 
   const fontSizeOffset = characterWidthOffsets.fontSize[fontSize] ?? 1;
-  const fontWeightOffset = characterWidthOffsets.fontWeight[fontWeight] ?? 100;
+  const fontWeightOffset = characterWidthOffsets.fontWeight[fontWeight] ?? 1;
 
   const adjustedWidth = width * fontSizeOffset * fontWeightOffset;
 

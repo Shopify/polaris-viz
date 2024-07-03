@@ -2,13 +2,13 @@
 import {create} from '@storybook/theming';
 
 import logo from './polaris-viz-logo.svg';
-import {FONT_FAMILY} from '@shopify/polaris-viz-core/src/constants';
 
 export default create({
   base: 'dark',
   brandTitle: 'Polaris-Viz',
   brandUrl: 'https://github.com/Shopify/polaris-viz',
   brandImage: logo,
-  fontBase: FONT_FAMILY,
+  fontBase:
+    "Inter, -apple-system, 'system-ui', 'San Francisco', 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
   fontCode: "Monaco, Consolas, 'Lucida Console', monospace",
 });
