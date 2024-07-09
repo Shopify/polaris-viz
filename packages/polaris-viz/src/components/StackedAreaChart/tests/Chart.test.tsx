@@ -75,6 +75,7 @@ const MOCK_PROPS: Props = {
     fixedWidth: false,
     labelFormatter: (value) => `${value}`,
     integersOnly: false,
+    maxYOverride: 10,
   },
   dimensions: {width: 500, height: 250},
   renderTooltipContent: jest.fn(() => <p>Mock Tooltip Content</p>),
@@ -114,6 +115,17 @@ describe('<Chart />', () => {
       colors: ['purple', 'teal'],
       stackedValues: expect.any(Object),
     });
+  });
+
+  it('passes maxYOverride as a prop', () => {
+    const chart = mount(
+      <Chart
+        {...MOCK_PROPS}
+        yAxisOptions={{...MOCK_PROPS.yAxisOptions, maxYOverride: 1}}
+      />,
+    );
+
+    expect(chart.prop('yAxisOptions').maxYOverride).toStrictEqual(1);
   });
 
   it('passes calculated values to StackedAreas', () => {

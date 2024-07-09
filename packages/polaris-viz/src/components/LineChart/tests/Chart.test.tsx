@@ -53,6 +53,7 @@ const yAxisOptions: Required<YAxisOptions> = {
   fixedWidth: false,
   labelFormatter: jest.fn(),
   integersOnly: false,
+  maxYOverride: 1,
 };
 
 const MOCK_PROPS: ChartProps = {
@@ -198,6 +199,17 @@ describe('<Chart />', () => {
       index: 0,
       tabIndex: 0,
     });
+  });
+
+  it('passes maxYOverride as a prop', () => {
+    const chart = mount(
+      <Chart
+        {...MOCK_PROPS}
+        yAxisOptions={{...MOCK_PROPS.yAxisOptions, maxYOverride: 10}}
+      />,
+    );
+
+    expect(chart.prop('yAxisOptions').maxYOverride).toStrictEqual(10);
   });
 
   it('renders tooltip content inside a <TooltipContainer /> if there is an active point', () => {

@@ -19,6 +19,7 @@ export interface Props {
   shouldRoundUp?: boolean;
   verticalOverflow?: boolean;
   fixedWidth?: number | false;
+  maxYOverride?: number | null;
 }
 
 export function useYScale({
@@ -30,19 +31,30 @@ export function useYScale({
   shouldRoundUp = true,
   verticalOverflow = true,
   fixedWidth,
+  maxYOverride,
 }: Props) {
   const {characterWidths} = useChartContext();
 
+  if (maxYOverride != null && maxYOverride < 0) {
+    throw new Error('maxYOverride must be a non-negative number.');
+  }
+
   const [minY, maxY] = useMemo(() => {
+    const isDataEmpty = min === 0 && max === 0;
     const minY = min;
-    const maxY = max === 0 && min === 0 ? DEFAULT_MAX_Y : max;
+
+    let maxY = isDataEmpty ? DEFAULT_MAX_Y : max;
+
+    if (maxYOverride != null && isDataEmpty) {
+      maxY = maxYOverride;
+    }
 
     if (integersOnly) {
       return [Math.floor(minY), Math.ceil(maxY)];
     }
 
     return [minY, maxY];
-  }, [min, max, integersOnly]);
+  }, [min, max, integersOnly, maxYOverride]);
 
   const {yScale, ticks, yAxisLabelWidth} = useMemo(() => {
     const maxTicks = Math.max(

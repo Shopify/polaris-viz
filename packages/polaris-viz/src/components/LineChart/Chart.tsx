@@ -152,6 +152,7 @@ export function Chart({
     formatYAxisLabel: yAxisOptions.labelFormatter,
     integersOnly: yAxisOptions.integersOnly,
     fixedWidth: yAxisOptions.fixedWidth,
+    maxYOverride: yAxisOptions.maxYOverride,
     max: maxY,
     min: minY,
   };

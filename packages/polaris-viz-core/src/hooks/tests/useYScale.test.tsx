@@ -379,4 +379,36 @@ describe('useYScale()', () => {
       },
     );
   });
+
+  describe('maxYOverride', () => {
+    it('creates a y scale with the domain maximum set to maxYOverride when both min and max are zero', () => {
+      let domainSpy = jest.fn();
+      const maxYOverride = 1;
+      (scaleLinear as jest.Mock).mockImplementation(() => {
+        const scale = (value: any) => value;
+        scale.ticks = (numTicks: number) => Array.from(Array(numTicks));
+        scale.range = (range: any) => (range ? scale : range);
+        domainSpy = jest.fn((domain: any) => (domain ? scale : domain));
+        scale.domain = domainSpy;
+        scale.nice = () => scale;
+        scale.copy = () => scale;
+        return scale;
+      });
+
+      function TestComponent() {
+        useYScale({
+          ...MOCK_PROPS,
+          min: 0,
+          max: 0,
+          maxYOverride,
+        });
+
+        return null;
+      }
+
+      mount(<TestComponent />);
+
+      expect(domainSpy).toHaveBeenCalledWith([0, maxYOverride]);
+    });
+  });
 });
