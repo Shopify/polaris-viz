@@ -99,7 +99,7 @@
     "@shopify/loom": "^1.0.2",
     "@shopify/loom-cli": "^1.0.0",
     "@shopify/loom-plugin-build-library": "^1.0.3",
-    "@shopify/loom-plugin-build-library-extended": "^2.1.2",
+    "@shopify/loom-plugin-build-library-extended": "^2.2.0",
     "@shopify/loom-plugin-eslint": "^1.0.0",
     "@shopify/loom-plugin-jest": "^1.0.2",
     "@shopify/loom-plugin-prettier": "^1.0.0",
@@ -160,6 +160,9 @@
   },
   "dependencies": {
     "concurrently": "^7.0.0"
+  },
+  "resolutions": {
+    "@apollo/federation": "0.38.1"
   },
   "version": "1.0.0-light-theme-default-beta.1"
 }
