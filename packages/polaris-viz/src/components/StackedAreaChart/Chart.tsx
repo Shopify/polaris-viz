@@ -406,8 +406,8 @@ export function Chart({
           data={legend}
           onDimensionChange={setLegendDimensions}
           renderLegendContent={renderLegendContent}
-          enableHideOverflow
-          dimensions={chartBounds}
+          // enableHideOverflow
+          // dimensions={chartBounds}
           renderHiddenLegendLabel={renderHiddenLegendLabel}
         />
       )}

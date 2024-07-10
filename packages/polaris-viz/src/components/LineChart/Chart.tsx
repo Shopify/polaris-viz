@@ -440,8 +440,8 @@ export function Chart({
           onDimensionChange={setLegendDimensions}
           renderLegendContent={renderLegendContent}
           renderHiddenLegendLabel={renderHiddenLegendLabel}
-          dimensions={dimensions}
-          enableHideOverflow
+          // dimensions={dimensions}
+          // enableHideOverflow
         />
       )}
     </Fragment>
