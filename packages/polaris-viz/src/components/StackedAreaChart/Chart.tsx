@@ -150,6 +150,7 @@ export function Chart({
   const yScaleOptions = {
     formatYAxisLabel: yAxisOptions.labelFormatter,
     integersOnly: yAxisOptions.integersOnly,
+    maxYOverride: yAxisOptions.maxYOverride,
     max: maxY,
     min: minY,
   };

@@ -35,6 +35,21 @@ describe('get-axis-options', () => {
       expect(yAxisOptions.integersOnly).toStrictEqual(true);
       expect(yAxisOptions.labelFormatter('foo')).toBe('foo bar');
     });
+
+    it('sets default maxYOverride when not provided', () => {
+      const yAxisOptions = getYAxisOptionsWithDefaults();
+
+      expect(yAxisOptions.maxYOverride).toBeNull();
+    });
+
+    it('overrides maxYOverride when provided', () => {
+      const maxYOverridden = 1;
+      const yAxisOptions = getYAxisOptionsWithDefaults({
+        maxYOverride: maxYOverridden,
+      });
+
+      expect(yAxisOptions.maxYOverride).toBe(maxYOverridden);
+    });
   });
 
   describe('getXAxisOptionsWithDefaults()', () => {

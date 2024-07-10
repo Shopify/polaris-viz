@@ -138,10 +138,23 @@ export function Chart({
     integersOnly: yAxisOptions.integersOnly,
   });
 
+  let yScaleMax;
+
+  if (yAxisOptions.maxYOverride === null) {
+    yScaleMax = max;
+  } else {
+    const allValuesAreZero = data.every((series) =>
+      series.data.every((point) => point.value === 0),
+    );
+
+    yScaleMax = allValuesAreZero ? 0 : max;
+  }
+
   const yScaleOptions = {
     formatYAxisLabel: yAxisOptions.labelFormatter,
     integersOnly: yAxisOptions.integersOnly,
-    max,
+    maxYOverride: yAxisOptions.maxYOverride,
+    max: yScaleMax,
     min,
   };
 

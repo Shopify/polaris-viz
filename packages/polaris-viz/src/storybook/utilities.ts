@@ -25,3 +25,10 @@ export function formatLinearYAxisLabel(value: number) {
     currencyDisplay: 'symbol',
   }).format(value);
 }
+
+export function formatPercentageYAxisLabel(value: number) {
+  return new Intl.NumberFormat('en', {
+    style: 'percent',
+    maximumFractionDigits: 2,
+  }).format(value);
+}

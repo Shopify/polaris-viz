@@ -10,6 +10,7 @@ export function getYAxisOptionsWithDefaults(
     labelFormatter: (value: number) => `${value}`,
     integersOnly: false,
     fixedWidth: false,
+    maxYOverride: null,
     ...yAxisOptionsFiltered,
   };
 }

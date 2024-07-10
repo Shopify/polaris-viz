@@ -77,6 +77,7 @@ export interface YAxisOptions {
   labelFormatter?: LabelFormatter;
   integersOnly?: boolean;
   fixedWidth?: number | false;
+  maxYOverride?: number | null;
 }
 
 // === Theme types === //
