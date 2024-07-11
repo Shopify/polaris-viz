@@ -43,6 +43,7 @@ export type LineChartProps = {
   renderHiddenLegendLabel?: (count: number) => string;
   seriesNameFormatter?: LabelFormatter;
   showLegend?: boolean;
+  hideLegendOverflow?: boolean;
   skipLinkText?: string;
   tooltipOptions?: TooltipOptions;
   xAxisOptions?: Partial<XAxisOptions>;
@@ -67,6 +68,7 @@ export function LineChart(props: LineChartProps) {
     renderHiddenLegendLabel,
     seriesNameFormatter = (value) => `${value}`,
     showLegend = true,
+    hideLegendOverflow = true,
     skipLinkText,
     state,
     theme = defaultTheme,
@@ -124,6 +126,7 @@ export function LineChart(props: LineChartProps) {
             renderHiddenLegendLabel={renderHiddenLegendLabel}
             seriesNameFormatter={seriesNameFormatter}
             showLegend={showLegend}
+            hideLegendOverflow={hideLegendOverflow}
             theme={theme}
             xAxisOptions={xAxisOptionsWithDefaults}
             yAxisOptions={yAxisOptionsWithDefaults}

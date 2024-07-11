@@ -7,7 +7,6 @@ import {
   useUniqueId,
   ChartState,
   useChartContext,
-  estimateStringWidth,
 } from '@shopify/polaris-viz-core';
 import type {
   DataPoint,
@@ -82,7 +81,7 @@ export function Chart({
   seriesNameFormatter,
   total,
 }: ChartProps) {
-  const {shouldAnimate, characterWidths} = useChartContext();
+  const {shouldAnimate} = useChartContext();
   const chartId = useUniqueId('Donut');
   const [activeIndex, setActiveIndex] = useState<number>(-1);
   const selectedTheme = useTheme();
@@ -113,19 +112,6 @@ export function Chart({
       maxWidth: maxLegendWidth,
       seriesNameFormatter,
     });
-
-  const longestLegendValueWidth = legend.reduce((previous, current) => {
-    const estimatedLegendWidth = estimateStringWidth(
-      `${labelFormatter(`${current.value || ''}`)}`,
-      characterWidths,
-    );
-
-    if (estimatedLegendWidth > previous) {
-      return estimatedLegendWidth;
-    }
-
-    return previous;
-  }, 0);
 
   const shouldUseColorVisionEvents = Boolean(
     width && height && isLegendMounted,
@@ -185,11 +171,11 @@ export function Chart({
       <LegendValues
         data={data}
         activeIndex={activeIndex}
+        dimensions={{...dimensions, x: 0, y: 0}}
+        legendFullWidth={legendFullWidth}
         labelFormatter={labelFormatter}
-        longestLegendValueWidth={longestLegendValueWidth}
         getColorVisionStyles={getColorVisionStyles}
         getColorVisionEventAttrs={getColorVisionEventAttrs}
-        dimensions={{...dimensions, x: 0, y: 0}}
         renderHiddenLegendLabel={renderHiddenLegendLabel}
         seriesNameFormatter={seriesNameFormatter}
       />

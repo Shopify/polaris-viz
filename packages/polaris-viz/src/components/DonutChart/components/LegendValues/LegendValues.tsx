@@ -4,11 +4,12 @@ import type {BoundingRect, LabelFormatter} from '@shopify/polaris-viz-core';
 import {
   COLOR_VISION_SINGLE_ITEM,
   clamp,
+  estimateStringWidth,
   getSeriesColors,
   useChartContext,
   useTheme,
 } from '@shopify/polaris-viz-core';
-import React, {useRef} from 'react';
+import React, {useMemo, useRef} from 'react';
 
 import {useOverflowLegend} from '../../../LegendContainer/hooks/useOverflowLegend';
 import {getTrendIndicatorData} from '../../../../utilities/getTrendIndicatorData';
@@ -19,12 +20,14 @@ import type {RenderHiddenLegendLabel} from '../../../../types';
 import styles from './LegendValues.scss';
 import {LegendValueItem} from './components/LegendValueItem/LegendValueItem';
 
+const TABLE_LEGEND_PADDING = 50;
+
 interface LegendContentProps {
   data: DataSeries[];
   activeIndex: number;
   dimensions: BoundingRect;
+  legendFullWidth: boolean;
   labelFormatter: LabelFormatter;
-  longestLegendValueWidth: number;
   renderHiddenLegendLabel?: RenderHiddenLegendLabel;
   getColorVisionStyles: ColorVisionInteractionMethods['getColorVisionStyles'];
   getColorVisionEventAttrs: ColorVisionInteractionMethods['getColorVisionEventAttrs'];
@@ -34,16 +37,16 @@ interface LegendContentProps {
 export function LegendValues({
   data: allData,
   activeIndex,
+  dimensions,
+  legendFullWidth,
   labelFormatter,
-  longestLegendValueWidth,
   renderHiddenLegendLabel = (count) => `+${count} more`,
   getColorVisionStyles,
   getColorVisionEventAttrs,
-  dimensions,
   seriesNameFormatter,
 }: LegendContentProps) {
   const selectedTheme = useTheme();
-  const {theme} = useChartContext();
+  const {theme, characterWidths} = useChartContext();
 
   const legendItemDimensions = useRef([{width: 0, height: 0}]);
 
@@ -83,9 +86,54 @@ export function LegendValues({
     return Math.max(maxWidth, trendIndicatorWidth);
   }, 0);
 
+  const longestLegendNameWidth = useMemo(() => {
+    return legendData.reduce((previous, current) => {
+      const estimatedLegendNameWidth = estimateStringWidth(
+        `${seriesNameFormatter(`${current.name || ''}`)}`,
+        characterWidths,
+      );
+
+      if (estimatedLegendNameWidth > previous) {
+        return estimatedLegendNameWidth;
+      }
+
+      return previous;
+    }, 0);
+  }, [legendData, seriesNameFormatter, characterWidths]);
+
+  const longestLegendValueWidth = useMemo(() => {
+    return legendData.reduce((previous, current) => {
+      const estimatedLegendValueWidth = estimateStringWidth(
+        `${labelFormatter(`${current.value || ''}`)}`,
+        characterWidths,
+      );
+
+      if (estimatedLegendValueWidth > previous) {
+        return estimatedLegendValueWidth;
+      }
+
+      return previous;
+    }, 0);
+  }, [legendData, labelFormatter, characterWidths]);
+
+  const legendTableMaxWidth = useMemo(
+    () =>
+      longestLegendNameWidth +
+      longestLegendValueWidth +
+      maxTrendIndicatorWidth +
+      TABLE_LEGEND_PADDING,
+    [longestLegendNameWidth, longestLegendValueWidth, maxTrendIndicatorWidth],
+  );
+
   return (
     <React.Fragment>
-      <table className={styles.Table}>
+      <table
+        className={styles.Table}
+        style={{
+          maxWidth: legendTableMaxWidth,
+          width: legendFullWidth ? 'auto' : '100%',
+        }}
+      >
         <tbody>
           {displayedData.map(({name, value, trend}, index) => {
             return (
