@@ -74,6 +74,7 @@ export interface ChartProps {
   data: LineChartDataSeriesWithDefaults[];
   seriesNameFormatter: LabelFormatter;
   showLegend: boolean;
+  hideLegendOverflow: boolean;
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
   dimensions?: BoundingRect;
@@ -96,6 +97,7 @@ export function Chart({
   renderHiddenLegendLabel,
   seriesNameFormatter,
   showLegend = true,
+  hideLegendOverflow = true,
   slots,
   theme = DEFAULT_THEME_NAME,
   xAxisOptions,
@@ -442,7 +444,7 @@ export function Chart({
           renderLegendContent={renderLegendContent}
           renderHiddenLegendLabel={renderHiddenLegendLabel}
           dimensions={dimensions}
-          enableHideOverflow
+          enableHideOverflow={hideLegendOverflow}
         />
       )}
     </Fragment>

@@ -175,7 +175,9 @@ export function LegendContainer({
             colorVisionType={colorVisionType}
             data={hasHiddenData ? displayedData : allData}
             theme={theme}
-            itemDimensions={legendItemDimensions}
+            itemDimensions={
+              enableHideOverflow ? legendItemDimensions : undefined
+            }
             truncate={hasHiddenData}
           />
           {hasHiddenData && (
