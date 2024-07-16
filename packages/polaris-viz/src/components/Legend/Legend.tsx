@@ -1,4 +1,4 @@
-import {Fragment} from 'react';
+import {Fragment, useCallback} from 'react';
 import type {RefObject} from 'react';
 import type {LabelFormatter} from '@shopify/polaris-viz-core';
 import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
@@ -36,6 +36,15 @@ export function Legend({
 }: LegendProps) {
   const {hiddenIndexes} = useExternalHideEvents();
 
+  const onDimensionChange = useCallback(
+    (index, dimensions: LegendItemDimension) => {
+      if (itemDimensions?.current) {
+        itemDimensions.current[index] = dimensions;
+      }
+    },
+    [itemDimensions],
+  );
+
   const items = data.map((legend, index) => {
     if (hiddenIndexes.includes(index)) {
       return null;
@@ -50,11 +59,7 @@ export function Legend({
         index={index + indexOffset}
         theme={theme}
         backgroundColor={backgroundColor}
-        onDimensionChange={(dimensions) => {
-          if (itemDimensions?.current) {
-            itemDimensions.current[index + indexOffset] = dimensions;
-          }
-        }}
+        onDimensionChange={onDimensionChange}
         truncate={truncate}
         showLegendValues={showLegendValues}
         seriesNameFormatter={seriesNameFormatter}

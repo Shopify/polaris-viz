@@ -24,7 +24,6 @@ export interface LegendItemDimension {
 }
 
 export const MINIMUM_LEGEND_ITEM_WIDTH = 100;
-export const MINIMUM_LEGEND_ITEM_WITH_VALUE_WIDTH = 200;
 
 export interface LegendItemProps extends LegendData {
   index: number;
@@ -32,7 +31,10 @@ export interface LegendItemProps extends LegendData {
   colorVisionType?: string;
   renderSeriesIcon?: () => ReactNode;
   theme?: string;
-  onDimensionChange?: ({width, height}: LegendItemDimension) => void;
+  onDimensionChange?: (
+    index: number,
+    {width, height}: LegendItemDimension,
+  ) => void;
   backgroundColor?: string;
   truncate?: boolean;
   showLegendValues?: boolean;
@@ -60,18 +62,18 @@ export function LegendItem({
   const ref = useRef<HTMLButtonElement | null>(null);
   const [width, setWidth] = useState(0);
 
-  const minWidth =
-    value != null
-      ? MINIMUM_LEGEND_ITEM_WITH_VALUE_WIDTH
-      : MINIMUM_LEGEND_ITEM_WIDTH;
+  const renderLegendValues = showLegendValues && value != null;
 
   useEffect(() => {
     if (onDimensionChange && ref.current != null) {
       const {width, height} = ref.current.getBoundingClientRect();
       setWidth(width);
-      onDimensionChange({width: Math.min(minWidth, Math.round(width)), height});
+      onDimensionChange(index, {
+        width: Math.min(MINIMUM_LEGEND_ITEM_WIDTH, Math.round(width)),
+        height,
+      });
     }
-  }, [onDimensionChange, ref, minWidth]);
+  }, [onDimensionChange, ref, index]);
 
   const colorBlindAttrs =
     colorVisionType == null
@@ -87,18 +89,24 @@ export function LegendItem({
     <button
       {...colorBlindAttrs}
       style={{
-        background,
+        background: background ?? 'none',
         ...getColorVisionStylesForActiveIndex({
           activeIndex,
           index,
         }),
-        paddingLeft: LEGEND_ITEM_LEFT_PADDING,
-        paddingRight: LEGEND_ITEM_RIGHT_PADDING,
+        paddingLeft: background ? LEGEND_ITEM_LEFT_PADDING : 0,
+        paddingRight: background
+          ? LEGEND_ITEM_RIGHT_PADDING
+          : LEGEND_ITEM_LEFT_PADDING,
+
         gap: LEGEND_ITEM_GAP,
         // if there is overflow, add a max width and truncate with ellipsis
-        maxWidth: truncate ? minWidth : '100%',
-        // if the item width is less than the minWidth, don't set a min width
-        minWidth: width < minWidth ? undefined : minWidth,
+        maxWidth: truncate ? MINIMUM_LEGEND_ITEM_WIDTH : '100%',
+        // if the item width is already less than MINIMUM_LEGEND_ITEM_WIDTH, don't set a minWidth
+        minWidth:
+          width < MINIMUM_LEGEND_ITEM_WIDTH
+            ? undefined
+            : MINIMUM_LEGEND_ITEM_WIDTH,
       }}
       className={style.Legend}
       ref={ref}
@@ -123,14 +131,14 @@ export function LegendItem({
         >
           {seriesNameFormatter(name)}
         </span>
-        {!showLegendValues || value == null ? null : (
+        {renderLegendValues ? (
           <span
             className={style.Text}
             style={{color: selectedTheme.legend.valueColor}}
           >
             {value}
           </span>
-        )}
+        ) : null}
       </span>
     </button>
   );

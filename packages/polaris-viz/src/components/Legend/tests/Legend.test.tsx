@@ -38,7 +38,7 @@ describe('<Legend />', () => {
     const component = mount(<Legend {...mockProps} itemDimensions={ref} />);
     const newDimensions = {width: 50, height: 50};
 
-    component.find(LegendItem)?.trigger('onDimensionChange', newDimensions);
+    component.find(LegendItem)?.trigger('onDimensionChange', 0, newDimensions);
     expect(ref.current[0]).toStrictEqual(newDimensions);
   });
 });

@@ -1,11 +1,7 @@
 import {mount} from '@shopify/react-testing';
 
 import type {LegendItemProps} from '../LegendItem';
-import {
-  LegendItem,
-  MINIMUM_LEGEND_ITEM_WIDTH,
-  MINIMUM_LEGEND_ITEM_WITH_VALUE_WIDTH,
-} from '../LegendItem';
+import {LegendItem, MINIMUM_LEGEND_ITEM_WIDTH} from '../LegendItem';
 
 const mockProps: LegendItemProps = {
   activeIndex: 2,
@@ -94,7 +90,7 @@ describe('<LegendItem />', () => {
         <LegendItem {...mockProps} onDimensionChange={onDimensionChangeSpy} />,
       );
 
-      expect(onDimensionChangeSpy).toHaveBeenCalledWith({
+      expect(onDimensionChangeSpy).toHaveBeenCalledWith(0, {
         width: 50,
         height: 50,
       });
@@ -108,18 +104,6 @@ describe('<LegendItem />', () => {
       expect(item.find('button')).toHaveReactProps({
         style: expect.objectContaining({
           maxWidth: MINIMUM_LEGEND_ITEM_WIDTH,
-        }),
-      });
-    });
-
-    it('sets a maxWidth for items with values if truncate is true', () => {
-      const item = mount(
-        <LegendItem {...mockProps} truncate value="$100.00" />,
-      );
-
-      expect(item.find('button')).toHaveReactProps({
-        style: expect.objectContaining({
-          maxWidth: MINIMUM_LEGEND_ITEM_WITH_VALUE_WIDTH,
         }),
       });
     });
