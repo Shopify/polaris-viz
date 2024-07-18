@@ -52,7 +52,7 @@ export function LegendContainer({
   onDimensionChange,
   direction = 'horizontal',
   fullWidth = false,
-  position = 'bottom-right',
+  position = 'bottom',
   maxWidth,
   renderLegendContent,
   enableHideOverflow = false,

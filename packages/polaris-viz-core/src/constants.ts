@@ -373,7 +373,7 @@ export const LIGHT_THEME: Theme = {
   legend: {
     valueColor: variables.colorGray160,
     labelColor: variables.colorGray100,
-    backgroundColor: variables.colorGray10,
+    backgroundColor: null,
     trendIndicator: {
       positive: TREND_POSITIVE,
       negative: TREND_NEGATIVE,

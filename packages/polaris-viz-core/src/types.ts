@@ -159,7 +159,7 @@ export interface SeriesColors {
 export interface LegendTheme {
   labelColor: string;
   valueColor: string;
-  backgroundColor: string;
+  backgroundColor: string | null;
   trendIndicator: {positive: string; negative: string; neutral: string};
 }
 

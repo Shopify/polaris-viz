@@ -5,7 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-<!-- ## Unreleased -->
+## Unreleased
+
+### Fixed
+
+- Bug in LegendItem that affected calculations in useLegendOverflow. Correct min-width is now used.
+
+### Changed
+
+- Default position of `<LegendContainer />` changed from `'bottom-right'` to bottom
 
 ## [14.2.0] - 2024-07-12
 
