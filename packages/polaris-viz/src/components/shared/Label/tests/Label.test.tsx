@@ -42,7 +42,7 @@ describe('<Label />', () => {
         y: MOCK_PROPS.y + MOCK_PROPS.barHeight / 2,
         width: MOCK_PROPS.labelWidth,
         height: HORIZONTAL_BAR_LABEL_HEIGHT,
-        fontSize: '12px',
+        fontSize: '11px',
         dominantBaseline: 'central',
       }),
     );
