@@ -7,7 +7,7 @@ import type {SvgComponents, Theme} from './types';
 import {InternalChartType, ChartState, Hue} from './types';
 
 export const LINE_HEIGHT = 14;
-export const FONT_SIZE = 12;
+export const FONT_SIZE = 11;
 export const FONT_FAMILY =
   'Inter, -apple-system, "system-ui", "San Francisco", "Segoe UI", Roboto, "Helvetica Neue", sans-serif';
 
