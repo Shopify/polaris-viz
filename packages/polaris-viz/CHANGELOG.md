@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Fixed
+
+- Bug in the `LineChart`. Render individual points for comparison data when surrounded by null values.
+
 ### Changed
 
 - Changed `<DonutChart />` arc thickness to be smaller when container height is small
