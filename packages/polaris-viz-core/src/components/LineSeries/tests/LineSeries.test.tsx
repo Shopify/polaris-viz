@@ -27,6 +27,19 @@ const mockData = {
   ],
 };
 
+const mockDataWithIsolatedPoints = {
+  color: 'red',
+  data: [
+    {key: '2020-01-01', value: null},
+    {key: '2020-01-02', value: 50},
+    {key: '2020-01-03', value: null},
+    {key: '2020-01-04', value: 100},
+    {key: '2020-01-05', value: 200},
+    {key: '2020-01-06', value: null},
+  ],
+  isComparison: true,
+};
+
 const defaultProps: LineSeriesProps = {
   xScale: someScale,
   yScale: someScale,
@@ -45,6 +58,37 @@ describe('<LineSeries />', () => {
     );
 
     expect(lineSeries).toContainReactComponent('svg');
+  });
+
+  it('renders isolated points as circles for comparsion data', () => {
+    const lineSeries = mountWithProvider(
+      <svg>
+        <LineSeries {...defaultProps} data={mockDataWithIsolatedPoints} />
+      </svg>,
+    );
+
+    const circles = lineSeries.findAll('circle');
+
+    expect(circles).toHaveLength(1);
+
+    expect(circles[0]).toHaveReactProps({
+      cx: expect.any(Number),
+      cy: expect.any(Number),
+      fill: 'red',
+    });
+  });
+
+  it('does not render isolated points as circles for non-comparison data', () => {
+    const lineSeries = mountWithProvider(
+      <svg>
+        <LineSeries
+          {...defaultProps}
+          data={{...mockDataWithIsolatedPoints, isComparison: false}}
+        />
+      </svg>,
+    );
+
+    expect(lineSeries).not.toContainReactComponent('circle');
   });
 
   describe('svgDimensions', () => {

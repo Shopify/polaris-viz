@@ -137,6 +137,34 @@ export function LineSeries({
 
   const zeroLineY = yScale(0);
 
+  /* Renders visual points for isolated data points in a comparison dataset.
+  The dash stroke is too small to render these points effectively. */
+  const renderIsolatedPoints = (
+    data: LineChartDataSeriesWithDefaults,
+  ): JSX.Element[] => {
+    const points: JSX.Element[] = [];
+    data.data.forEach((point, index) => {
+      const prev = data.data[index - 1];
+      const next = data.data[index + 1];
+      if (
+        point.value !== null &&
+        (!prev || prev.value === null) &&
+        (!next || next.value === null)
+      ) {
+        points.push(
+          <circle
+            cx={xScale(index)}
+            cy={yScale(point.value)}
+            r={1}
+            fill={String(color)}
+            key={index}
+          />,
+        );
+      }
+    });
+    return points;
+  };
+
   return (
     <Fragment>
       <AnimatedGroup
@@ -222,7 +250,7 @@ export function LineSeries({
           mask={`url(#mask-${`${id}`})`}
           style={{pointerEvents: 'none'}}
         />
-
+        {data.isComparison && renderIsolatedPoints(data)}
         <Path
           d={lineShape}
           strokeWidth={PathHoverTargetSize}
