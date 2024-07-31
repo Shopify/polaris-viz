@@ -1,11 +1,10 @@
-import {useTheme} from '@shopify/polaris-viz-core';
+import type {Trend} from 'types';
 
-import styles from './ComparisonMetric.scss';
-import {UpChevron, DownChevron} from './components';
+import {TrendIndicator} from '../TrendIndicator';
 
 export interface ComparisonMetricProps {
-  metric: string;
-  trend: 'positive' | 'negative' | 'neutral';
+  metric?: string;
+  trend: Trend;
   accessibilityLabel: string;
   dataIndex?: number;
 }
@@ -15,41 +14,26 @@ export function ComparisonMetric({
   trend,
   accessibilityLabel,
 }: Omit<ComparisonMetricProps, 'dataIndex'>) {
-  const selectedTheme = useTheme();
-
+  let direction;
   switch (trend) {
-    case 'neutral':
-      return (
-        <span className={styles.NeutralIcon}>
-          <span className={styles.VisuallyHidden}>{accessibilityLabel}</span>
-          <span style={{color: selectedTheme.legend.trendIndicator.neutral}}>
-            -
-          </span>
-        </span>
-      );
     case 'positive':
-      return (
-        <span className={styles.PositiveIcon}>
-          <UpChevron
-            accessibilityLabel={accessibilityLabel}
-            fill={selectedTheme.legend.trendIndicator.positive}
-          />
-          <span style={{color: selectedTheme.legend.trendIndicator.positive}}>
-            {metric}
-          </span>
-        </span>
-      );
+      direction = 'upward';
+      break;
     case 'negative':
-      return (
-        <span className={styles.NegativeIcon}>
-          <DownChevron
-            accessibilityLabel={accessibilityLabel}
-            fill={selectedTheme.legend.trendIndicator.negative}
-          />
-          <span style={{color: selectedTheme.legend.trendIndicator.negative}}>
-            {metric}
-          </span>
-        </span>
-      );
+      direction = 'downward';
+      break;
+    case 'neutral':
+    default:
+      direction = undefined;
+      break;
   }
+
+  return (
+    <TrendIndicator
+      trend={trend}
+      accessibilityLabel={accessibilityLabel}
+      direction={direction}
+      value={metric}
+    />
+  );
 }

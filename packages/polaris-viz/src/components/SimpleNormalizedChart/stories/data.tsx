@@ -34,10 +34,22 @@ export const DEFAULT_PROPS: Partial<SimpleNormalizedChartProps> = {
   labelFormatter: (value) => `$${value}`,
   comparisonMetrics: [
     {
+      dataIndex: 1,
+      metric: '25%',
+      trend: 'negative',
+      accessibilityLabel: 'Decrease of 25%',
+    },
+    {
       dataIndex: 2,
-      metric: 'Going Up',
+      metric: '45%',
       trend: 'positive',
-      accessibilityLabel: 'Going Up',
+      accessibilityLabel: 'Increase of 45%',
+    },
+    {
+      dataIndex: 3,
+      metric: undefined,
+      trend: 'neutral',
+      accessibilityLabel: 'No change',
     },
   ],
 };
