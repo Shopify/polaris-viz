@@ -1,4 +1,4 @@
-import {Fragment, useEffect, useState} from 'react';
+import {Fragment} from 'react';
 import {useSpring, animated, config} from '@react-spring/web';
 import type {LabelFormatter} from '@shopify/polaris-viz-core';
 import {useTheme} from '@shopify/polaris-viz-core';
@@ -33,7 +33,6 @@ export function InnerValue({
   diameter,
 }: InnerValueProps) {
   const selectedTheme = useTheme();
-  const [fontSize, setFontSize] = useState(0);
 
   const {animatedValue} = useSpring({
     animatedValue: totalValue,
@@ -44,9 +43,7 @@ export function InnerValue({
     },
   });
 
-  useEffect(() => {
-    setFontSize(diameter * SCALING_FACTOR);
-  }, [diameter]);
+  const fontSize = diameter * SCALING_FACTOR;
 
   const animatedTotalValue = (
     <animated.span>
