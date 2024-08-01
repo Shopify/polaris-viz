@@ -9,6 +9,8 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Dynamically calculate the inner value content font size of the `DonutChart` based on the diameter to improve responsiveness and scaling across different screen sizes.
+
 - Replaced `UpChevron` and `DownChevron` components with `TrendIndicator` in the `ComparisonMetric` component. This change applies to the `DonutChart` and the `SimpleNormalizedChart`, standardizing the display of trend directions across these visualizations.
 
 ## [14.4.0] - 2024-07-25

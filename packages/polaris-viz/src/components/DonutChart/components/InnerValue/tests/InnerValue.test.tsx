@@ -12,6 +12,7 @@ const mockProps: InnerValueProps = {
   totalValue: 1000,
   labelFormatter: (value) => value,
   isAnimated: true,
+  diameter: 200,
 };
 
 jest.mock('@react-spring/web', () => ({
@@ -49,6 +50,17 @@ describe('<InnerValue />', () => {
     expect(innerValue).toContainReactComponent('span', {
       children: mockProps.totalValue,
     });
+  });
+
+  it('calculates and applies font size based on diameter', () => {
+    const scalingFactor = 0.07;
+    const expectedFontSize = mockProps.diameter * scalingFactor;
+    const innerValue = mount(<InnerValue {...mockProps} />);
+
+    const contentValue = innerValue.find('p');
+    const fontSize = contentValue?.prop('style')?.fontSize;
+
+    expect(fontSize).toBe(expectedFontSize);
   });
 
   describe('<ComparisonMetric />', () => {

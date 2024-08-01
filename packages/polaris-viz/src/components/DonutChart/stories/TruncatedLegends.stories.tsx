@@ -1,12 +1,23 @@
-import type {Story} from '@storybook/react';
+import type {Story, StoryFn} from '@storybook/react';
 
 export {META as default} from './meta';
-
+import {PolarisVizProvider} from '../../PolarisVizProvider';
+import {DonutChart} from '../DonutChart';
 import type {DonutChartProps} from '../../DonutChart';
 
-import {DEFAULT_PROPS, Template} from './data';
+import {DEFAULT_PROPS} from './data';
 
-export const TruncatedLegends: Story<DonutChartProps> = Template.bind({});
+const TruncatedLegendsTemplate: StoryFn<DonutChartProps> = (args: DonutChartProps) => {
+  return (
+    <div style={{width: 550, height: 200}}>
+      <PolarisVizProvider>
+        <DonutChart {...args} />
+      </PolarisVizProvider>
+    </div>
+  );
+};
+
+export const TruncatedLegends: Story<DonutChartProps> = TruncatedLegendsTemplate.bind({});
 
 TruncatedLegends.args = {
   ...DEFAULT_PROPS,
