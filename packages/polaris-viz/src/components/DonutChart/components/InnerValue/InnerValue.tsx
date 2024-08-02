@@ -9,12 +9,15 @@ import type {ComparisonMetricProps} from '../../../ComparisonMetric';
 import {ComparisonMetric} from '../../../ComparisonMetric';
 import styles from '../../DonutChart.scss';
 
+const SCALING_FACTOR = 0.07;
+
 export interface InnerValueProps {
   activeValue: number | null | undefined;
   activeIndex: number;
   labelFormatter: LabelFormatter;
   isAnimated: boolean;
   totalValue: number;
+  diameter: number;
   comparisonMetric?: ComparisonMetricProps;
   renderInnerValueContent?: RenderInnerValueContent;
 }
@@ -27,6 +30,7 @@ export function InnerValue({
   isAnimated,
   renderInnerValueContent,
   totalValue,
+  diameter,
 }: InnerValueProps) {
   const selectedTheme = useTheme();
 
@@ -38,6 +42,8 @@ export function InnerValue({
       immediate: !isAnimated,
     },
   });
+
+  const fontSize = diameter * SCALING_FACTOR;
 
   const animatedTotalValue = (
     <animated.span>
@@ -63,7 +69,7 @@ export function InnerValue({
     <Fragment>
       <animated.p
         className={classNames(styles.ContentValue)}
-        style={{color: selectedTheme.xAxis.labelColor}}
+        style={{color: selectedTheme.xAxis.labelColor, fontSize}}
       >
         {valueToDisplay}
       </animated.p>

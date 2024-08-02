@@ -262,6 +262,7 @@ export function Chart({
               comparisonMetric={comparisonMetric}
               labelFormatter={labelFormatter}
               renderInnerValueContent={renderInnerValueContent}
+              diameter={diameter}
             />
           </Fragment>
         ) : (
