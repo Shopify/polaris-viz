@@ -7,6 +7,7 @@ import {
   useUniqueId,
   ChartState,
   useChartContext,
+  THIN_ARC_CORNER_THICKNESS,
 } from '@shopify/polaris-viz-core';
 import type {
   DataPoint,
@@ -38,9 +39,9 @@ import {ChartSkeleton} from '../../components/ChartSkeleton';
 import styles from './DonutChart.scss';
 import {InnerValue, LegendValues} from './components';
 
-const ERROR_ANIMATION_PADDING = 40;
 const FULL_CIRCLE = Math.PI * 2;
 const RADIUS_PADDING = 20;
+const SMALL_CHART_HEIGHT_THRESHOLD = 250;
 
 export interface ChartProps {
   data: DataSeries[];
@@ -135,6 +136,10 @@ export function Chart({
 
   const diameter = Math.min(height, width);
   const radius = diameter / 2;
+  const thickness =
+    height > SMALL_CHART_HEIGHT_THRESHOLD
+      ? selectedTheme.arc.thickness
+      : THIN_ARC_CORNER_THICKNESS;
 
   const points: DataPoint[] = data.reduce(
     (prev: DataPoint[], {data}) => prev.concat(data),
@@ -153,11 +158,11 @@ export function Chart({
 
   const activeValue = points[activeIndex]?.value;
 
-  const minX = -(40 + ERROR_ANIMATION_PADDING);
+  const minX = -40;
   const minY = -40;
   const viewBoxDimensions = {
     height: diameter + RADIUS_PADDING,
-    width: diameter + RADIUS_PADDING - minX,
+    width: diameter + RADIUS_PADDING,
   };
 
   const containerAlignmentStyle =
@@ -213,7 +218,7 @@ export function Chart({
                         endAngle={FULL_CIRCLE}
                         color={selectedTheme.grid.color}
                         cornerRadius={selectedTheme.arc.cornerRadius}
-                        thickness={selectedTheme.arc.thickness}
+                        thickness={thickness}
                       />
                     </g>
                   ) : (
@@ -244,7 +249,7 @@ export function Chart({
                               endAngle={endAngle}
                               color={color}
                               cornerRadius={selectedTheme.arc.cornerRadius}
-                              thickness={selectedTheme.arc.thickness}
+                              thickness={thickness}
                             />
                           </g>
                         );
