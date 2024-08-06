@@ -1,5 +1,8 @@
 import {mount} from '@shopify/react-testing';
-import {ChartState} from '@shopify/polaris-viz-core';
+import {
+  ChartState,
+  SMALL_CHART_HEIGHT_THRESHOLD,
+} from '@shopify/polaris-viz-core';
 
 import {Chart as DonutChart} from '../Chart';
 import type {ChartProps} from '../Chart';
@@ -72,6 +75,20 @@ describe('<DonutChart />', () => {
         requestAnimationFrame(() => {
           expect(chart).toContainReactComponent(InnerValue, {
             totalValue: valueSum,
+          });
+        });
+      });
+    });
+
+    it('renders a thinner <Arc /> when container height is small', () => {
+      const chart = mount(
+        <DonutChart {...mockProps} dimensions={{width: 500, height: 200}} />,
+      );
+
+      chart.act(() => {
+        requestAnimationFrame(() => {
+          expect(chart).toContainReactComponent(Arc, {
+            thickness: SMALL_CHART_HEIGHT_THRESHOLD,
           });
         });
       });

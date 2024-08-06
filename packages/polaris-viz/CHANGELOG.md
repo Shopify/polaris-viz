@@ -5,7 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-<!-- ## Unreleased -->
+## Unreleased
+
+### Changed
+
+- Changed `<DonutChart />` arc thickness to be smaller when container height is small
+- Changed `<DonutChart />` svg positioning to take up more space
+- Changed `<DonutChart />` table legend spacing
 
 ## [14.5.0] - 2024-08-02
 
