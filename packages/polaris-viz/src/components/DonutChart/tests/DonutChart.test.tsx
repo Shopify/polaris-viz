@@ -1,8 +1,5 @@
 import {mount} from '@shopify/react-testing';
-import {
-  ChartState,
-  SMALL_CHART_HEIGHT_THRESHOLD,
-} from '@shopify/polaris-viz-core';
+import {ChartState, THIN_ARC_CORNER_THICKNESS} from '@shopify/polaris-viz-core';
 
 import {Chart as DonutChart} from '../Chart';
 import type {ChartProps} from '../Chart';
@@ -82,13 +79,13 @@ describe('<DonutChart />', () => {
 
     it('renders a thinner <Arc /> when container height is small', () => {
       const chart = mount(
-        <DonutChart {...mockProps} dimensions={{width: 500, height: 200}} />,
+        <DonutChart {...mockProps} dimensions={{width: 500, height: 150}} />,
       );
 
       chart.act(() => {
         requestAnimationFrame(() => {
           expect(chart).toContainReactComponent(Arc, {
-            thickness: SMALL_CHART_HEIGHT_THRESHOLD,
+            thickness: THIN_ARC_CORNER_THICKNESS,
           });
         });
       });

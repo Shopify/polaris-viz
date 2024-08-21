@@ -41,7 +41,7 @@ import {InnerValue, LegendValues} from './components';
 
 const FULL_CIRCLE = Math.PI * 2;
 const RADIUS_PADDING = 20;
-const SMALL_CHART_HEIGHT_THRESHOLD = 250;
+const SMALL_CHART_HEIGHT_THRESHOLD = 150;
 
 export interface ChartProps {
   data: DataSeries[];
@@ -136,9 +136,11 @@ export function Chart({
 
   const diameter = Math.min(height, width);
   const radius = diameter / 2;
+  const dynamicThickness = height / 10;
+  const maxThickness = selectedTheme.arc.thickness;
   const thickness =
     height > SMALL_CHART_HEIGHT_THRESHOLD
-      ? selectedTheme.arc.thickness
+      ? Math.min(dynamicThickness, maxThickness)
       : THIN_ARC_CORNER_THICKNESS;
 
   const points: DataPoint[] = data.reduce(
@@ -168,6 +170,11 @@ export function Chart({
   const containerAlignmentStyle =
     getContainerAlignmentForLegend(legendPosition);
 
+  const dynamicStyles = {
+    ...containerAlignmentStyle,
+    gap: legendDirection === 'vertical' ? '16px' : undefined,
+  };
+
   const renderLegendContentWithValues = ({
     getColorVisionStyles,
     getColorVisionEventAttrs,
@@ -188,14 +195,12 @@ export function Chart({
   };
 
   const shouldRenderLegendContentWithValues =
-    !renderLegendContent &&
-    showLegendValues &&
-    (legendPosition === 'right' || legendPosition === 'left');
+    !renderLegendContent && showLegendValues && legendDirection === 'vertical';
 
   const isCornerPosition = legendPosition.includes('-');
 
   return (
-    <div className={styles.DonutWrapper} style={containerAlignmentStyle}>
+    <div className={styles.DonutWrapper} style={dynamicStyles}>
       <div className={styles.Donut}>
         {state === ChartState.Success ? (
           <Fragment>
