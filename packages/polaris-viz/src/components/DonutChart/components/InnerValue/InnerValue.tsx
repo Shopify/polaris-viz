@@ -1,6 +1,6 @@
 import {Fragment} from 'react';
 import {useSpring, animated, config} from '@react-spring/web';
-import type {LabelFormatter} from '@shopify/polaris-viz-core';
+import type {LabelFormatter, Dimensions} from '@shopify/polaris-viz-core';
 import {useTheme} from '@shopify/polaris-viz-core';
 
 import type {RenderInnerValueContent} from '../../../../types';
@@ -14,11 +14,12 @@ const SCALING_FACTOR = 0.07;
 export interface InnerValueProps {
   activeValue: number | null | undefined;
   activeIndex: number;
-  labelFormatter: LabelFormatter;
   isAnimated: boolean;
   totalValue: number;
-  diameter: number;
   comparisonMetric?: ComparisonMetricProps;
+  diameter: number;
+  dimensions: Dimensions;
+  labelFormatter: LabelFormatter;
   renderInnerValueContent?: RenderInnerValueContent;
 }
 
@@ -31,6 +32,7 @@ export function InnerValue({
   renderInnerValueContent,
   totalValue,
   diameter,
+  dimensions,
 }: InnerValueProps) {
   const selectedTheme = useTheme();
 
@@ -65,6 +67,7 @@ export function InnerValue({
     activeIndex,
     animatedTotalValue,
     totalValue,
+    dimensions,
   }) ?? (
     <Fragment>
       <animated.p

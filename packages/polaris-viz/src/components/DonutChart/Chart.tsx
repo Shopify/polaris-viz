@@ -152,8 +152,8 @@ export function Chart({
     .value(({value}) => value!)
     .sort(null);
   const pieChartData = createPie(points);
-
-  const emptyState = pieChartData.length === 0;
+  const isEveryValueZero = points.every(({value}) => value === 0);
+  const emptyState = pieChartData.length === 0 || isEveryValueZero;
 
   const totalValue =
     total || points.reduce((acc, {value}) => (value ?? 0) + acc, 0);
@@ -273,6 +273,7 @@ export function Chart({
               labelFormatter={labelFormatter}
               renderInnerValueContent={renderInnerValueContent}
               diameter={diameter}
+              dimensions={dimensions}
             />
           </Fragment>
         ) : (

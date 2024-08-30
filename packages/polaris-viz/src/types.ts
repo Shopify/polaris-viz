@@ -218,6 +218,10 @@ export interface InnerValueContents {
   activeIndex: number;
   animatedTotalValue: ReactNode;
   totalValue: number;
+  dimensions: {
+    width: number;
+    height: number;
+  };
 }
 
 export type RenderInnerValueContent = (values: InnerValueContents) => ReactNode;

@@ -157,6 +157,30 @@ describe('<DonutChart />', () => {
         });
       });
 
+      it('renders the empty state if all data values are 0', () => {
+        const chart = mount(
+          <DonutChart
+            {...mockProps}
+            data={[
+              {
+                name: 'Shopify Payments',
+                data: [{key: 'april - march', value: 0}],
+              },
+              {
+                name: 'Other',
+                data: [{key: 'april - march', value: 0}],
+              },
+            ]}
+          />,
+        );
+
+        chart.act(() => {
+          requestAnimationFrame(() => {
+            expect(chart).toContainReactComponentTimes(Arc, 1);
+          });
+        });
+      });
+
       it('renders multiple <Arc /> when false', () => {
         const chart = mount(<DonutChart {...mockProps} />);
         chart.act(() => {
