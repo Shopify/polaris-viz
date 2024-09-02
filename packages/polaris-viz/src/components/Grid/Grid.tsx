@@ -278,26 +278,23 @@ export function Grid(props: GridProps) {
         let placement;
         if (leftSpace >= TOOLTIP_WIDTH) {
           // Position on the left
-          x = rect.left - TOOLTIP_WIDTH - yAxisLabelWidth;
+          x = rect.left - containerRect.left - TOOLTIP_WIDTH;
           y = rect.top - containerRect.top;
           placement = 'left';
-        } else if (rightSpace >= TOOLTIP_WIDTH) {
-          // Position on the right
-          x = rect.right - containerRect.left;
-          y = rect.top - containerRect.top;
-          placement = 'right';
         } else if (bottomSpace >= TOOLTIP_HEIGHT) {
           // Position at the bottom
-          x = rect.left - containerRect.left;
+          x =
+            rect.left - containerRect.left + rect.width / 2 - TOOLTIP_WIDTH / 2;
           y = rect.bottom - containerRect.top;
           placement = 'bottom';
         } else {
           // Position at the top
-          x = rect.left - containerRect.left;
+          x =
+            rect.left - containerRect.left + rect.width / 2 - TOOLTIP_WIDTH / 2;
           y = rect.top - containerRect.top - TOOLTIP_HEIGHT;
           placement = 'top';
         }
-
+        console.log(placement);
         setTooltipInfo({
           x,
           y,
@@ -736,13 +733,13 @@ export function Grid(props: GridProps) {
     let transform;
     switch (placement) {
       case 'left':
-        transform = `translate(${x - TOOLTIP_WIDTH} ${y})`;
+        transform = `translate(${x} ${y})`;
         break;
       case 'bottom':
         transform = `translate(${x} ${y})`;
         break;
       case 'top':
-        transform = `translate(${x} ${y - TOOLTIP_HEIGHT})`;
+        transform = `translate(${x} ${y})`;
         break;
       default:
         transform = `translate(${x} ${y})`;
