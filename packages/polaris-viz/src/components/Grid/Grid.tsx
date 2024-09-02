@@ -39,7 +39,7 @@ const cellGroups: CellGroup[] = [
     end: {row: 0, col: 1},
     secondaryValue: '(10%)',
     value: '8,000',
-    color: '#3E69EB',
+    color: '#194BE3',
     name: 'Previously loyal',
     onHoverActiveGroups: ['Loyal'],
     description: 'lorem ipsum dolor sit amet lorem ipsum dolor sit amet',
@@ -50,7 +50,7 @@ const cellGroups: CellGroup[] = [
     end: {row: 2, col: 1},
     secondaryValue: '(20%)',
     value: '200',
-    color: '#3E69EB',
+    color: '#3E69EA',
     name: 'At risk',
     onHoverActiveGroups: ['Needs attention', 'Loyal'],
     description: 'lorem ipsum dolor sit amet lorem ipsum dolor sit amet',
@@ -61,7 +61,7 @@ const cellGroups: CellGroup[] = [
     end: {row: 4, col: 1},
     secondaryValue: '(30%)',
     value: '2,000',
-    color: '#7594EF',
+    color: '#3E69EA',
     name: 'Dormant',
     onHoverActiveGroups: ['Almost lost'],
     description: 'lorem ipsum dolor sit amet lorem ipsum dolor sit amet',
@@ -94,7 +94,7 @@ const cellGroups: CellGroup[] = [
     end: {row: 4, col: 2},
     secondaryValue: '(10%)',
     value: '8,000',
-    color: '#3E69EB',
+    color: '#3E69EA',
     name: 'Almost lost',
     onHoverActiveGroups: ['Active', 'Promising'],
     description: 'lorem ipsum dolor sit amet lorem ipsum dolor sit amet',
@@ -138,7 +138,7 @@ const cellGroups: CellGroup[] = [
     end: {row: 1, col: 4},
     secondaryValue: '(20%)',
     value: '500',
-    color: '#0E287C',
+    color: '#0D297C',
     name: 'Champions',
     description: 'lorem ipsum dolor sit amet lorem ipsum dolor sit amet',
     goal: 'Move customers to Champions or Loyal',
@@ -294,7 +294,7 @@ export function Grid(props: GridProps) {
           y = rect.top - containerRect.top - TOOLTIP_HEIGHT;
           placement = 'top';
         }
-        console.log(placement);
+
         setTooltipInfo({
           x,
           y,
@@ -309,7 +309,7 @@ export function Grid(props: GridProps) {
         setTooltipInfo(null);
       }
     },
-    [entry, yAxisLabelWidth],
+    [entry],
   );
 
   const handleGroupClick = useCallback(
@@ -561,14 +561,29 @@ export function Grid(props: GridProps) {
       const groupSecondaryValue = group.secondaryValue;
       const isHovered = hoveredGroups.has(group.name);
       let opacity = 1;
+      let cellOpacity = 0.9;
 
-      if (hoveredGroups.size > 0 && !isHovered) {
-        opacity = 0.3;
+      const isMainActive = hoveredGroup?.name === group.name;
+      const isActiveGroup = hoveredGroups.has(group.name);
+
+      if (hoveredGroups.size > 0) {
+        if (isMainActive || isActiveGroup) {
+          opacity = 1;
+          cellOpacity = 0.9;
+        } else {
+          opacity = 0.3;
+          cellOpacity = 0.3;
+        }
       }
 
-      const mainFontSize = Math.min(cellWidth, cellHeight) / 4;
-      const secondaryFontSize = mainFontSize * 0.8;
       const groupNameOffset = 10;
+
+      const showNameAndSecondaryValue = dimensions.width >= 460;
+      const mainFontSize = showNameAndSecondaryValue
+        ? Math.min(groupWidth / 1.5, cellHeight) / 4
+        : Math.min(groupWidth, cellHeight) / 4;
+      const secondaryFontSize = mainFontSize * 0.6;
+
       return (
         <g
           key={`group-${index}`}
@@ -587,8 +602,11 @@ export function Grid(props: GridProps) {
             width={groupWidth}
             height={groupHeight}
             fill={getColor(group)}
-            opacity={opacity}
+            opacity={cellOpacity}
+            stroke="white"
+            strokeWidth="1"
           />
+
           <text
             x={xScale(group.start.col) + groupWidth / 2}
             y={group.start.row * cellHeight + groupHeight / 2}
@@ -597,24 +615,29 @@ export function Grid(props: GridProps) {
             fill="white"
             opacity={opacity}
           >
-            <tspan fontSize={`${mainFontSize}px`}>
+            <tspan fontWeight={600} fontSize={`${mainFontSize}px`}>
               {labelFormatter(groupValue)}
             </tspan>
-            <tspan dx="0.5em" fontSize={`${secondaryFontSize}px`}>
-              {groupSecondaryValue}
-            </tspan>
+            {showNameAndSecondaryValue && (
+              <tspan dx="0.5em" fontSize={`${secondaryFontSize}px`}>
+                {groupSecondaryValue}
+              </tspan>
+            )}
           </text>
-          <text
-            x={xScale(group.start.col) + groupNameOffset}
-            y={group.start.row * cellHeight + groupNameOffset}
-            textAnchor="start"
-            dominantBaseline="hanging"
-            fontSize={`${Math.min(cellWidth, cellHeight) / 6}px`}
-            fill="white"
-            opacity={opacity}
-          >
-            {group.name}
-          </text>
+
+          {showNameAndSecondaryValue && (
+            <text
+              x={xScale(group.start.col) + groupNameOffset}
+              y={group.start.row * cellHeight + groupNameOffset}
+              textAnchor="start"
+              dominantBaseline="hanging"
+              fontSize={11}
+              fill="white"
+              opacity={opacity}
+            >
+              {group.name}
+            </text>
+          )}
         </g>
       );
     });
@@ -631,9 +654,9 @@ export function Grid(props: GridProps) {
         y1={0}
         x2={xScale(index)}
         y2={chartHeight}
-        stroke="black"
+        stroke="#081848"
         strokeWidth="1"
-        opacity={0.1}
+        opacity={1}
       />
     ));
 
@@ -645,9 +668,9 @@ export function Grid(props: GridProps) {
         y1={0}
         x2={chartWidth}
         y2={chartHeight}
-        stroke="black"
+        stroke="#081848"
         strokeWidth="1"
-        opacity={0.1}
+        opacity={1}
       />,
     );
 
@@ -658,9 +681,9 @@ export function Grid(props: GridProps) {
         y1={index * cellHeight}
         x2={chartWidth}
         y2={index * cellHeight}
-        stroke="black"
+        stroke="#081848"
         strokeWidth="1"
-        opacity={0.1}
+        opacity={1}
       />
     ));
 
@@ -672,9 +695,9 @@ export function Grid(props: GridProps) {
         y1={chartHeight}
         x2={chartWidth}
         y2={chartHeight}
-        stroke="black"
+        stroke="#081848"
         strokeWidth="1"
-        opacity={0.1}
+        opacity={0.3}
       />,
     );
 
@@ -882,8 +905,8 @@ export function Grid(props: GridProps) {
           <g
             transform={`translate(${yAxisLabelWidth + Y_AXIS_LABEL_OFFSET}, 0)`}
           >
-            {renderHeatmap()}
             {renderGridLines()}
+            {renderHeatmap()}
             {renderArrows()}
           </g>
           <XAxis
