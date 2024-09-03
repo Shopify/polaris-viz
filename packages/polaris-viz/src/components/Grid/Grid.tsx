@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import type {ChartProps, LabelFormatter} from '@shopify/polaris-viz-core';
 import {
   usePolarisVizContext,
@@ -33,179 +33,6 @@ interface CellGroup {
   value: string;
 }
 
-const cellGroups: CellGroup[] = [
-  {
-    start: {row: 0, col: 0},
-    end: {row: 0, col: 1},
-    secondaryValue: '(10%)',
-    value: '8,000',
-    color: '#194BE3',
-    name: 'Previously loyal',
-    onHoverActiveGroups: ['Loyal'],
-    description: 'lorem ipsum dolor sit amet lorem ipsum dolor sit amet',
-    goal: 'Move customers to Champions or Loyal',
-  },
-  {
-    start: {row: 1, col: 0},
-    end: {row: 2, col: 1},
-    secondaryValue: '(20%)',
-    value: '200',
-    color: '#3E69EA',
-    name: 'At risk',
-    onHoverActiveGroups: ['Needs attention', 'Loyal'],
-    description: 'lorem ipsum dolor sit amet lorem ipsum dolor sit amet',
-    goal: 'Move customers to Champions or Loyal',
-  },
-  {
-    start: {row: 3, col: 0},
-    end: {row: 4, col: 1},
-    secondaryValue: '(30%)',
-    value: '2,000',
-    color: '#3E69EA',
-    name: 'Dormant',
-    onHoverActiveGroups: ['Almost lost'],
-    description: 'lorem ipsum dolor sit amet lorem ipsum dolor sit amet',
-    goal: 'Move customers to Champions or Loyal',
-  },
-  {
-    start: {row: 0, col: 2},
-    end: {row: 1, col: 3},
-    secondaryValue: '(40%)',
-    value: '80',
-    color: '#133AAF',
-    name: 'Loyal',
-    onHoverActiveGroups: ['Champions'],
-    description: 'lorem ipsum dolor sit amet lorem ipsum dolor sit amet',
-    goal: 'Move customers to Champions or Loyal',
-  },
-  {
-    start: {row: 2, col: 2},
-    end: {row: 2, col: 2},
-    secondaryValue: '(20%)',
-    value: '500',
-    color: '#3E69EB',
-    name: 'Needs attention',
-    onHoverActiveGroups: ['Loyal', 'Active'],
-    description: 'lorem ipsum dolor sit amet lorem ipsum dolor sit amet',
-    goal: 'Move customers to Champions or Loyal',
-  },
-  {
-    start: {row: 3, col: 2},
-    end: {row: 4, col: 2},
-    secondaryValue: '(10%)',
-    value: '8,000',
-    color: '#3E69EA',
-    name: 'Almost lost',
-    onHoverActiveGroups: ['Active', 'Promising'],
-    description: 'lorem ipsum dolor sit amet lorem ipsum dolor sit amet',
-    goal: 'Move customers to Champions or Loyal',
-  },
-  {
-    start: {row: 4, col: 3},
-    end: {row: 4, col: 3},
-    secondaryValue: '(20%)',
-    value: '200',
-    color: '#194AE5',
-    name: 'Promising',
-    onHoverActiveGroups: ['Active'],
-    description: 'lorem ipsum dolor sit amet lorem ipsum dolor sit amet',
-    goal: 'Move customers to Champions or Loyal',
-  },
-  {
-    start: {row: 2, col: 3},
-    end: {row: 3, col: 4},
-    secondaryValue: '(30%)',
-    value: '2,000',
-    color: '#133AAF',
-    name: 'Active',
-    onHoverActiveGroups: ['Loyal', 'Champions'],
-    description: 'lorem ipsum dolor sit amet lorem ipsum dolor sit amet',
-    goal: 'Move customers to Champions or Loyal',
-  },
-  {
-    start: {row: 4, col: 4},
-    end: {row: 4, col: 4},
-    secondaryValue: '(40%)',
-    value: '80',
-    color: '#194AE5',
-    name: 'New',
-    onHoverActiveGroups: ['Active'],
-    description: 'lorem ipsum dolor sit amet lorem ipsum dolor sit amet',
-    goal: 'Move customers to Champions or Loyal',
-  },
-  {
-    start: {row: 0, col: 4},
-    end: {row: 1, col: 4},
-    secondaryValue: '(20%)',
-    value: '500',
-    color: '#0D297C',
-    name: 'Champions',
-    description: 'lorem ipsum dolor sit amet lorem ipsum dolor sit amet',
-    goal: 'Move customers to Champions or Loyal',
-  },
-];
-
-const mockRFMData = {
-  data: [
-    {
-      name: '5',
-      data: [
-        {key: '1', value: 100},
-        {key: '2', value: 90},
-        {key: '3', value: 80},
-        {key: '4', value: 100},
-        {key: '5', value: 100},
-      ],
-    },
-    {
-      name: '4',
-      data: [
-        {key: '1', value: 90},
-        {key: '2', value: 80},
-        {key: '3', value: 70},
-        {key: '4', value: 100},
-        {key: '5', value: 100},
-      ],
-    },
-    {
-      name: '3',
-      data: [
-        {key: '1', value: 80},
-        {key: '2', value: 70},
-        {key: '3', value: 60},
-        {key: '4', value: 50},
-        {key: '5', value: 40},
-      ],
-    },
-    {
-      name: '2',
-      data: [
-        {key: '1', value: 70},
-        {key: '2', value: 60},
-        {key: '3', value: 50},
-        {key: '4', value: 40},
-        {key: '5', value: 30},
-      ],
-    },
-    {
-      name: '1',
-      data: [
-        {key: '1', value: 60},
-        {key: '2', value: 50},
-        {key: '3', value: 40},
-        {key: '4', value: 30},
-        {key: '5', value: 20},
-      ],
-    },
-  ],
-  xAxisOptions: {
-    labelFormatter: (value) => `F${value + 1}`,
-  },
-  yAxisOptions: {
-    labelFormatter: (value) => `R${value + 1}`,
-  },
-};
-
 interface TooltipInfo {
   x: number;
   y: number;
@@ -220,20 +47,40 @@ interface Point {
   y: number;
 }
 
-const data = mockRFMData.data;
+interface ChartPositions {
+  chartXPosition: number;
+  chartYPosition: number;
+  drawableHeight: number;
+  drawableWidth: number;
+  xAxisBounds: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  };
+  yAxisBounds: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  };
+}
+
 const TOOLTIP_HEIGHT = 120;
 const TOOLTIP_WIDTH = 250;
+const Y_AXIS_WIDTH = 50;
 
-export function Grid(props: GridProps) {
+export function Grid({data, cellGroups, ...rest}: GridProps) {
   const {defaultTheme} = usePolarisVizContext();
   const [xAxisHeight, setXAxisHeight] = useState(40);
-  const [yAxisWidth, setYAxisWidth] = useState(50);
 
   const [hoveredGroups, setHoveredGroups] = useState<Set<string>>(new Set());
   const [hoveredGroup, setHoveredGroup] = useState<CellGroup | null>(null);
   const {ref: containerRef, setRef, entry} = useResizeObserver();
   const [tooltipInfo, setTooltipInfo] = useState<TooltipInfo | null>(null);
   const [isTooltipVisible, setIsTooltipVisible] = useState(false);
+  const [selectedGroup, setSelectedGroup] = useState<CellGroup | null>(null);
+  const [isTooltipLocked, setIsTooltipLocked] = useState(false);
 
   const dimensions = useMemo(
     () => ({
@@ -247,10 +94,15 @@ export function Grid(props: GridProps) {
     if (!data || data.length === 0) return 50;
     const maxLabelLength = Math.max(...data.map((row) => row.name.length));
     return Math.min(Math.max(maxLabelLength * 8, 50), dimensions.width * 0.2);
-  }, [dimensions.width]);
+  }, [data, dimensions.width]);
 
   const handleGroupHover = useCallback(
     (group: CellGroup | null, event: React.MouseEvent) => {
+      if (isTooltipLocked) {
+        // If tooltip is locked, don't change it on hover
+        return;
+      }
+
       if (group) {
         const activeGroups = new Set([
           group.name,
@@ -258,6 +110,68 @@ export function Grid(props: GridProps) {
         ]);
         setHoveredGroups(activeGroups);
         setHoveredGroup(group);
+        const rect = event.currentTarget.getBoundingClientRect();
+        const containerRect = entry.target?.getBoundingClientRect();
+
+        if (!containerRect) return;
+
+        const leftSpace = rect.left - containerRect.left;
+        const bottomSpace = containerRect.bottom - rect.bottom;
+
+        let x;
+        let y;
+        let placement;
+        if (leftSpace >= TOOLTIP_WIDTH) {
+          // Position on the left
+          x = rect.left - containerRect.left - TOOLTIP_WIDTH;
+          y = rect.top - containerRect.top;
+          placement = 'left';
+        } else if (bottomSpace >= TOOLTIP_HEIGHT) {
+          // Position at the bottom
+          x =
+            rect.left - containerRect.left + rect.width / 2 - TOOLTIP_WIDTH / 2;
+          y = rect.bottom - containerRect.top;
+          placement = 'bottom';
+        } else {
+          // Position at the top
+          x =
+            rect.left - containerRect.left + rect.width / 2 - TOOLTIP_WIDTH / 2;
+          y = rect.top - containerRect.top - TOOLTIP_HEIGHT;
+          placement = 'top';
+        }
+
+        setTooltipInfo({
+          x,
+          y,
+          placement,
+          groupName: group.name,
+          groupDescription: group.description || 'No description available',
+          groupGoal: group.goal || 'No goal available',
+        });
+        setIsTooltipVisible(true);
+      } else {
+        setHoveredGroups(new Set());
+        setHoveredGroup(null);
+        setTooltipInfo(null);
+        setIsTooltipVisible(false);
+      }
+    },
+    [entry, isTooltipLocked],
+  );
+
+  const handleGroupClick = useCallback(
+    (group: CellGroup, event: React.MouseEvent) => {
+      event.stopPropagation();
+      if (selectedGroup && selectedGroup.name === group.name) {
+        // If clicking the same group, unlock the tooltip
+        setIsTooltipLocked(false);
+        setSelectedGroup(null);
+      } else {
+        // Select the new group and lock its tooltip
+        setSelectedGroup(group);
+        setIsTooltipLocked(true);
+
+        // Set tooltip info for the clicked group
         const rect = event.currentTarget.getBoundingClientRect();
         const containerRect = entry.target?.getBoundingClientRect();
 
@@ -303,31 +217,20 @@ export function Grid(props: GridProps) {
           groupDescription: group.description || 'No description available',
           groupGoal: group.goal || 'No goal available',
         });
-      } else {
-        setHoveredGroups(new Set());
-        setHoveredGroup(null);
-        setTooltipInfo(null);
+        setIsTooltipVisible(true);
       }
     },
-    [entry],
-  );
-
-  const handleGroupClick = useCallback(
-    (group: CellGroup | null, event: React.MouseEvent) => {
-      setIsTooltipVisible((isTooltipVisible) => !isTooltipVisible);
-    },
-    [],
+    [selectedGroup, entry],
   );
 
   const handleClickOutside = useCallback(
     (event: MouseEvent) => {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(event.target as Node)
-      ) {
+      if (containerRef && !containerRef.contains(event.target as Node)) {
         setIsTooltipVisible(false);
         setHoveredGroups(new Set());
         setTooltipInfo(null);
+        setSelectedGroup(null);
+        setIsTooltipLocked(false);
       }
     },
     [containerRef],
@@ -511,47 +414,59 @@ export function Grid(props: GridProps) {
     id,
     isAnimated,
     theme = defaultTheme,
-    labelFormatter = (value) => `${value}`,
+    xAxisOptions,
+    yAxisOptions,
   } = {
     ...DEFAULT_CHART_PROPS,
-    ...props,
+    ...rest,
   };
 
-  const chartWidth = dimensions.width - yAxisLabelWidth - Y_AXIS_LABEL_OFFSET;
-  const chartHeight = dimensions.height - xAxisHeight;
+  // Calculate the full chart dimensions, regardless of axis visibility
+  const fullChartWidth =
+    dimensions.width - yAxisLabelWidth - Y_AXIS_LABEL_OFFSET;
+  const fullChartHeight = dimensions.height - xAxisHeight;
+
+  // Use these dimensions for the actual chart area
+  const chartWidth = fullChartWidth;
+  const chartHeight = fullChartHeight;
 
   const cellWidth = chartWidth / data[0].data.length;
   const cellHeight = chartHeight / data.length;
 
   const rawChartPositions = useChartPositions({
-    height: Math.max(chartHeight, 1),
-    width: Math.max(chartWidth, 1),
+    height: Math.max(fullChartHeight, 1),
+    width: Math.max(fullChartWidth, 1),
     xAxisHeight: Math.max(xAxisHeight, 0),
     yAxisWidth: yAxisLabelWidth + Y_AXIS_LABEL_OFFSET,
   });
 
-  const chartPositions = useMemo(() => {
-    const yAxisTotalWidth = yAxisWidth + Y_AXIS_LABEL_OFFSET + 120;
+  const chartPositions: ChartPositions = useMemo(() => {
+    const yAxisTotalWidth = Y_AXIS_WIDTH + Y_AXIS_LABEL_OFFSET + 120;
     return {
       chartXPosition: rawChartPositions.chartXPosition ?? yAxisTotalWidth,
       chartYPosition: 0,
-      drawableHeight: dimensions.height - xAxisHeight,
-      drawableWidth:
-        rawChartPositions.drawableWidth ?? dimensions.width - yAxisTotalWidth,
+      drawableHeight: fullChartHeight,
+      drawableWidth: fullChartWidth,
       xAxisBounds: {
         x: rawChartPositions.xAxisBounds?.x ?? yAxisTotalWidth,
         y: dimensions.height - xAxisHeight,
-        width: dimensions.width - yAxisTotalWidth,
+        width: fullChartWidth,
         height: xAxisHeight,
       },
       yAxisBounds: {
         x: 120,
         y: 0,
-        width: yAxisWidth,
-        height: dimensions.height - xAxisHeight,
+        width: Y_AXIS_WIDTH,
+        height: fullChartHeight,
       },
     };
-  }, [rawChartPositions, dimensions, xAxisHeight, yAxisWidth]);
+  }, [
+    rawChartPositions,
+    dimensions,
+    xAxisHeight,
+    fullChartWidth,
+    fullChartHeight,
+  ]);
 
   const renderHeatmap = () => {
     return cellGroups.map((group, index) => {
@@ -566,7 +481,17 @@ export function Grid(props: GridProps) {
       const isMainActive = hoveredGroup?.name === group.name;
       const isActiveGroup = hoveredGroups.has(group.name);
 
-      if (hoveredGroups.size > 0) {
+      const isSelected = selectedGroup?.name === group.name;
+
+      if (selectedGroup) {
+        if (isSelected) {
+          opacity = 1;
+          cellOpacity = 0.9;
+        } else {
+          opacity = 0.3;
+          cellOpacity = 0.3;
+        }
+      } else if (hoveredGroups.size > 0) {
         if (isMainActive || isActiveGroup) {
           opacity = 1;
           cellOpacity = 0.9;
@@ -589,12 +514,13 @@ export function Grid(props: GridProps) {
           key={`group-${index}`}
           onMouseEnter={(event) => handleGroupHover(group, event)}
           onMouseLeave={(event) => {
-            if (!isTooltipVisible && !isMouseInCell(event, group)) {
-              handleGroupHover(null, null);
+            if (!isTooltipLocked) {
+              handleGroupHover(null, event);
             }
           }}
           onClick={(event) => handleGroupClick(group, event)}
           className={styles.animatedArrow}
+          style={{cursor: 'pointer'}}
         >
           <rect
             x={xScale(group.start.col)}
@@ -616,7 +542,7 @@ export function Grid(props: GridProps) {
             opacity={opacity}
           >
             <tspan fontWeight={600} fontSize={`${mainFontSize}px`}>
-              {labelFormatter(groupValue)}
+              {groupValue}
             </tspan>
             {showNameAndSecondaryValue && (
               <tspan dx="0.5em" fontSize={`${secondaryFontSize}px`}>
@@ -800,11 +726,11 @@ export function Grid(props: GridProps) {
             <div
               style={{
                 fontWeight: 'bold',
-                fontSize: '14px',
-                marginBottom: '5px',
+                fontSize: '12px',
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
+                marginBottom: '8px',
               }}
             >
               {groupName}
@@ -816,6 +742,7 @@ export function Grid(props: GridProps) {
                 WebkitBoxOrient: 'vertical',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
+                color: '#333333',
               }}
             >
               {groupDescription}
@@ -828,7 +755,7 @@ export function Grid(props: GridProps) {
                 gap: '5px',
                 padding: '4px',
                 alignItems: 'center',
-                background: 'lightgray',
+                background: '#F1F1F1',
                 marginTop: '12px',
                 borderRadius: '4px',
               }}
@@ -839,7 +766,7 @@ export function Grid(props: GridProps) {
                 viewBox="0 0 24 24"
                 stroke-width="2.5"
                 stroke="currentColor"
-                style={{height: '10px', width: '14px'}}
+                style={{height: '13px', width: '20px'}}
               >
                 <path
                   stroke-linecap="round"
@@ -851,9 +778,9 @@ export function Grid(props: GridProps) {
               <p
                 style={{
                   margin: '0',
-                  fontSize: '12px',
+                  fontSize: '11px',
                   lineHeight: '1.2',
-                  color: '#27272a',
+                  color: '#303030',
                 }}
               >
                 Goal: {groupGoal}
@@ -865,7 +792,8 @@ export function Grid(props: GridProps) {
     );
   };
 
-  const yAxisLabelWidth2 = 230;
+  const yAxisLabelMinWidth = 230;
+  const xAxisLabelMinWidth = 97;
 
   return (
     <ChartContainer id={id} isAnimated={isAnimated} data={data} theme={theme}>
@@ -875,33 +803,38 @@ export function Grid(props: GridProps) {
           height="100%"
           viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
         >
-          <text
-            x={
-              chartPositions.yAxisBounds.y -
-              chartPositions.yAxisBounds.height / 2
-            }
-            y={
-              chartPositions.yAxisBounds.y +
-              chartPositions.yAxisBounds.height / 2
-            }
-            textAnchor="start"
-            dominantBaseline="middle"
-            fontSize="14"
-            fill="#6b7177"
-            transform={`rotate(-90, 20, ${dimensions.height / 2}) translate(${
-              yAxisLabelWidth2 / 2
-            }, 0) `}
-          >
-            Frequency + Monetary value score
-          </text>
-          <YAxis
-            ticks={yTicks}
-            width={yAxisLabelWidth}
-            textAlign="right"
-            ariaHidden
-            x={0}
-            y={0}
-          />
+          {/* Y-Axis */}
+          <g opacity={yAxisOptions?.hide ? 0 : 1}>
+            <text
+              x={
+                chartPositions.yAxisBounds.y -
+                chartPositions.yAxisBounds.height / 2
+              }
+              y={
+                chartPositions.yAxisBounds.y +
+                chartPositions.yAxisBounds.height / 2
+              }
+              textAnchor="start"
+              dominantBaseline="middle"
+              fontSize="14"
+              fill="#6b7177"
+              transform={`rotate(-90, 20, ${dimensions.height / 2}) translate(${
+                yAxisLabelMinWidth / 2
+              }, 0) `}
+            >
+              Frequency + Monetary value score
+            </text>
+            <YAxis
+              ticks={yTicks}
+              width={yAxisLabelWidth}
+              textAlign="right"
+              ariaHidden
+              x={0}
+              y={0}
+            />
+          </g>
+
+          {/* Main chart content */}
           <g
             transform={`translate(${yAxisLabelWidth + Y_AXIS_LABEL_OFFSET}, 0)`}
           >
@@ -909,32 +842,56 @@ export function Grid(props: GridProps) {
             {renderHeatmap()}
             {renderArrows()}
           </g>
-          <XAxis
-            allowLineWrap={false}
-            labels={xLabels}
-            labelWidth={xAxisLabelWidth}
-            onHeightChange={setXAxisHeight}
-            x={yAxisLabelWidth + Y_AXIS_LABEL_OFFSET}
-            y={chartPositions.xAxisBounds.y + Y_AXIS_LABEL_OFFSET}
-            xScale={xScale}
-            ariaHidden
-          />
 
-          <text
-            x={
-              chartPositions.xAxisBounds.x +
-              chartPositions.xAxisBounds.width / 2
-            }
-            y={dimensions.height + 30}
-            textAnchor="middle"
-            dominantBaseline="bottom"
-            fontSize="14"
-            fill="#6b7177"
-          >
-            Recency score
-          </text>
+          {/* X-Axis */}
+          <g opacity={xAxisOptions?.hide ? 0 : 1}>
+            <XAxis
+              allowLineWrap={false}
+              labels={xLabels}
+              labelWidth={xAxisLabelWidth}
+              onHeightChange={setXAxisHeight}
+              x={yAxisLabelWidth + Y_AXIS_LABEL_OFFSET}
+              y={chartPositions.xAxisBounds.y + Y_AXIS_LABEL_OFFSET}
+              xScale={xScale}
+              ariaHidden
+            />
+            <text
+              x={yAxisLabelWidth + Y_AXIS_LABEL_OFFSET}
+              y={dimensions.height + xAxisHeight / 2}
+              textAnchor="start"
+              dominantBaseline="bottom"
+              fontSize="12"
+              fill="#6b7177"
+            >
+              Low
+            </text>
+            <text
+              x={dimensions.width}
+              y={dimensions.height + xAxisHeight / 2}
+              textAnchor="end"
+              dominantBaseline="bottom"
+              fontSize="12"
+              fill="#6b7177"
+            >
+              High
+            </text>
+            <text
+              x={
+                chartPositions.xAxisBounds.x +
+                chartPositions.xAxisBounds.width / 2 -
+                xAxisLabelMinWidth / 2
+              }
+              y={dimensions.height + 30}
+              textAnchor="middle"
+              dominantBaseline="bottom"
+              fontSize="14"
+              fill="#6b7177"
+            >
+              Recency score
+            </text>
+          </g>
 
-          {renderTooltip()}
+          {(isTooltipVisible || isTooltipLocked) && renderTooltip()}
         </svg>
       </div>
     </ChartContainer>
