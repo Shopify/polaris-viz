@@ -30,13 +30,8 @@ export const META: Meta = {
   argTypes: {
     data: DATA_SERIES_ARGS,
     emptyStateText: EMPTY_STATE_TEXT_ARGS,
-    isAnimated: IS_ANIMATED_ARGS,
-    renderLegendContent: RENDER_LEGEND_CONTENT_ARGS,
-    renderBucketLegendLabel: RENDER_BUCKET_LEGEND_LABEL_ARGS,
     xAxisOptions: X_AXIS_OPTIONS_ARGS,
     yAxisOptions: Y_AXIS_OPTIONS_ARGS,
     theme: THEME_CONTROL_ARGS,
-    state: CHART_STATE_CONTROL_ARGS,
-    type: TYPE_CONTROL_ARGS,
   },
 };

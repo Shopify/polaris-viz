@@ -1,5 +1,10 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import type {ChartProps, LabelFormatter} from '@shopify/polaris-viz-core';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import type {
+  ChartProps,
+  LabelFormatter,
+  XAxisOptions,
+  YAxisOptions,
+} from '@shopify/polaris-viz-core';
 import {
   usePolarisVizContext,
   DEFAULT_CHART_PROPS,
@@ -7,6 +12,10 @@ import {
 } from '@shopify/polaris-viz-core';
 import {scaleLinear} from 'd3-scale';
 
+import {
+  getXAxisOptionsWithDefaults,
+  getYAxisOptionsWithDefaults,
+} from '../../utilities';
 import {XAxis} from '../XAxis';
 import {YAxis} from '../YAxis';
 import {useResizeObserver} from '../../hooks/useResizeObserver';
@@ -15,11 +24,12 @@ import {ChartContainer} from '../ChartContainer';
 import styles from './Grid.scss';
 
 export type GridProps = {
-  colorScale?: string[];
   labelFormatter?: LabelFormatter;
+  cellGroups: CellGroup[];
+  xAxisOptions?: Partial<XAxisOptions>;
+  yAxisOptions?: Partial<YAxisOptions>;
+  showGrid?: boolean;
 } & ChartProps;
-
-const Y_AXIS_LABEL_OFFSET = 10;
 
 interface CellGroup {
   start: {row: number; col: number};
@@ -28,7 +38,7 @@ interface CellGroup {
   name: string;
   description: string;
   goal: string;
-  onHoverActiveGroups?: string[];
+  connectedGroups?: string[];
   secondaryValue: string;
   value: string;
 }
@@ -68,12 +78,15 @@ interface ChartPositions {
 
 const TOOLTIP_HEIGHT = 120;
 const TOOLTIP_WIDTH = 250;
-const Y_AXIS_WIDTH = 50;
+// offset for the y axis label so that is not together with the y axis numbers
+const Y_LABEL_OFFSET = 20;
+// offset for the x axis label so that is not together with the x axis numbers
+const X_LABEL_OFFSET = 40;
 
-export function Grid({data, cellGroups, ...rest}: GridProps) {
+export function Grid(props: GridProps) {
   const {defaultTheme} = usePolarisVizContext();
-  const [xAxisHeight, setXAxisHeight] = useState(40);
 
+  const [xAxisHeight, setXAxisHeight] = useState(40);
   const [hoveredGroups, setHoveredGroups] = useState<Set<string>>(new Set());
   const [hoveredGroup, setHoveredGroup] = useState<CellGroup | null>(null);
   const {ref: containerRef, setRef, entry} = useResizeObserver();
@@ -81,6 +94,25 @@ export function Grid({data, cellGroups, ...rest}: GridProps) {
   const [isTooltipVisible, setIsTooltipVisible] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState<CellGroup | null>(null);
   const [isTooltipLocked, setIsTooltipLocked] = useState(false);
+  const [yAxisLabelMinWidth, setYAxisLabelWidth] = useState(0);
+  const [xAxisLabelMinWidth, setXAxisLabelWdith] = useState(0);
+
+  const {
+    data,
+    cellGroups = [],
+    id,
+    isAnimated,
+    theme = defaultTheme,
+    xAxisOptions = {},
+    yAxisOptions = {},
+    showGrid = true,
+  } = {
+    ...DEFAULT_CHART_PROPS,
+    ...props,
+  };
+
+  const xAxisOptionsWithDefaults = getXAxisOptionsWithDefaults(xAxisOptions);
+  const yAxisOptionsWithDefaults = getYAxisOptionsWithDefaults(yAxisOptions);
 
   const dimensions = useMemo(
     () => ({
@@ -92,7 +124,9 @@ export function Grid({data, cellGroups, ...rest}: GridProps) {
 
   const yAxisLabelWidth = useMemo(() => {
     if (!data || data.length === 0) return 50;
-    const maxLabelLength = Math.max(...data.map((row) => row.name.length));
+    const maxLabelLength = Math.max(
+      ...data.map((row) => row.name?.length ?? 0),
+    );
     return Math.min(Math.max(maxLabelLength * 8, 50), dimensions.width * 0.2);
   }, [data, dimensions.width]);
 
@@ -106,12 +140,12 @@ export function Grid({data, cellGroups, ...rest}: GridProps) {
       if (group) {
         const activeGroups = new Set([
           group.name,
-          ...(group.onHoverActiveGroups ?? []),
+          ...(group.connectedGroups ?? []),
         ]);
         setHoveredGroups(activeGroups);
         setHoveredGroup(group);
         const rect = event.currentTarget.getBoundingClientRect();
-        const containerRect = entry.target?.getBoundingClientRect();
+        const containerRect = entry?.target?.getBoundingClientRect();
 
         if (!containerRect) return;
 
@@ -145,8 +179,8 @@ export function Grid({data, cellGroups, ...rest}: GridProps) {
           y,
           placement,
           groupName: group.name,
-          groupDescription: group.description || 'No description available',
-          groupGoal: group.goal || 'No goal available',
+          groupDescription: group.description || '',
+          groupGoal: group.goal || '',
         });
         setIsTooltipVisible(true);
       } else {
@@ -173,19 +207,12 @@ export function Grid({data, cellGroups, ...rest}: GridProps) {
 
         // Set tooltip info for the clicked group
         const rect = event.currentTarget.getBoundingClientRect();
-        const containerRect = entry.target?.getBoundingClientRect();
+        const containerRect = entry?.target?.getBoundingClientRect();
 
         if (!containerRect) return;
 
         const leftSpace = rect.left - containerRect.left;
-        const rightSpace = containerRect.right - rect.right;
         const bottomSpace = containerRect.bottom - rect.bottom;
-        const topSpace = rect.top - containerRect.top;
-
-        // Assuming tooltip width of 200px and height of 100px
-        const leftOffset = 10;
-        const topOffset = 10;
-        const bottomOffset = 35;
 
         let x;
         let y;
@@ -214,8 +241,8 @@ export function Grid({data, cellGroups, ...rest}: GridProps) {
           y,
           placement,
           groupName: group.name,
-          groupDescription: group.description || 'No description available',
-          groupGoal: group.goal || 'No goal available',
+          groupDescription: group.description || '',
+          groupGoal: group.goal || '',
         });
         setIsTooltipVisible(true);
       }
@@ -249,7 +276,7 @@ export function Grid({data, cellGroups, ...rest}: GridProps) {
     const sourceGroup = cellGroups.find(
       (group) => group.name === hoveredGroup.name,
     );
-    if (!sourceGroup || !sourceGroup.onHoverActiveGroups) return null;
+    if (!sourceGroup || !sourceGroup.connectedGroups) return null;
 
     const getSharedEdgeCenter = (group1: CellGroup, group2: CellGroup) => {
       if (group1.end.row < group2.start.row) {
@@ -264,7 +291,7 @@ export function Grid({data, cellGroups, ...rest}: GridProps) {
         );
         return {
           x: (startX + endX) / 2,
-          y: group1.end.row * cellHeight,
+          y: (group1.end.row + 1) * cellHeight,
           sourceEdge: 'bottom',
           targetEdge: 'top',
         };
@@ -323,7 +350,7 @@ export function Grid({data, cellGroups, ...rest}: GridProps) {
       return null;
     };
 
-    return sourceGroup.onHoverActiveGroups.map((targetGroupName) => {
+    return sourceGroup.connectedGroups.map((targetGroupName) => {
       const targetGroup = cellGroups.find(
         (group) => group.name === targetGroupName,
       );
@@ -410,20 +437,8 @@ export function Grid({data, cellGroups, ...rest}: GridProps) {
     });
   };
 
-  const {
-    id,
-    isAnimated,
-    theme = defaultTheme,
-    xAxisOptions,
-    yAxisOptions,
-  } = {
-    ...DEFAULT_CHART_PROPS,
-    ...rest,
-  };
-
   // Calculate the full chart dimensions, regardless of axis visibility
-  const fullChartWidth =
-    dimensions.width - yAxisLabelWidth - Y_AXIS_LABEL_OFFSET;
+  const fullChartWidth = dimensions.width - yAxisLabelWidth - Y_LABEL_OFFSET;
   const fullChartHeight = dimensions.height - xAxisHeight;
 
   // Use these dimensions for the actual chart area
@@ -437,11 +452,12 @@ export function Grid({data, cellGroups, ...rest}: GridProps) {
     height: Math.max(fullChartHeight, 1),
     width: Math.max(fullChartWidth, 1),
     xAxisHeight: Math.max(xAxisHeight, 0),
-    yAxisWidth: yAxisLabelWidth + Y_AXIS_LABEL_OFFSET,
+    yAxisWidth: yAxisLabelWidth,
+    annotationsHeight: 0,
   });
 
   const chartPositions: ChartPositions = useMemo(() => {
-    const yAxisTotalWidth = Y_AXIS_WIDTH + Y_AXIS_LABEL_OFFSET + 120;
+    const yAxisTotalWidth = yAxisLabelWidth + Y_LABEL_OFFSET + 120;
     return {
       chartXPosition: rawChartPositions.chartXPosition ?? yAxisTotalWidth,
       chartYPosition: 0,
@@ -456,12 +472,13 @@ export function Grid({data, cellGroups, ...rest}: GridProps) {
       yAxisBounds: {
         x: 120,
         y: 0,
-        width: Y_AXIS_WIDTH,
+        width: yAxisLabelWidth,
         height: fullChartHeight,
       },
     };
   }, [
     rawChartPositions,
+    yAxisLabelWidth,
     dimensions,
     xAxisHeight,
     fullChartWidth,
@@ -474,7 +491,6 @@ export function Grid({data, cellGroups, ...rest}: GridProps) {
       const groupHeight = (group.end.row - group.start.row + 1) * cellHeight;
       const groupValue = group.value;
       const groupSecondaryValue = group.secondaryValue;
-      const isHovered = hoveredGroups.has(group.name);
       let opacity = 1;
       let cellOpacity = 0.9;
 
@@ -505,7 +521,7 @@ export function Grid({data, cellGroups, ...rest}: GridProps) {
 
       const showNameAndSecondaryValue = dimensions.width >= 460;
       const mainFontSize = showNameAndSecondaryValue
-        ? Math.min(groupWidth / 1.5, cellHeight) / 4
+        ? 20
         : Math.min(groupWidth, cellHeight) / 4;
       const secondaryFontSize = mainFontSize * 0.6;
 
@@ -570,7 +586,7 @@ export function Grid({data, cellGroups, ...rest}: GridProps) {
   };
 
   const renderGridLines = () => {
-    if (tooltipInfo) {
+    if (tooltipInfo || !showGrid) {
       return null;
     }
     const verticalLines = xLabels.map((_, index) => (
@@ -640,14 +656,17 @@ export function Grid({data, cellGroups, ...rest}: GridProps) {
   const yTicks = useMemo(() => {
     return data.map((row, index) => ({
       value: index,
-      label: row.name,
-      formattedValue: row.name,
+      label: row.name || '',
+      formattedValue: row.name || '',
       // Center the label vertically in the cell
       yOffset: index * cellHeight + cellHeight / 2,
     }));
-  }, [cellHeight]);
+  }, [cellHeight, data]);
 
-  const xLabels = useMemo(() => data[0].data.map((cell) => cell.key), []);
+  const xLabels = useMemo(
+    () => data[0].data.map((cell) => String(cell.key)),
+    [data],
+  );
 
   const xAxisLabelWidth = chartWidth / xLabels.length;
 
@@ -656,43 +675,13 @@ export function Grid({data, cellGroups, ...rest}: GridProps) {
     [xLabels.length, chartWidth],
   );
 
-  const isMouseInCell = useCallback(
-    (event: React.MouseEvent, group: CellGroup) => {
-      const rect = event.currentTarget.getBoundingClientRect();
-      const x = event.clientX - rect.left;
-      const y = event.clientY - rect.top;
-
-      const cellLeft = xScale(group.start.col);
-      const cellTop = group.start.row * cellHeight;
-      const cellRight = xScale(group.end.col + 1);
-      const cellBottom = (group.end.row + 1) * cellHeight;
-
-      return x >= cellLeft && x <= cellRight && y >= cellTop && y <= cellBottom;
-    },
-    [xScale, cellHeight],
-  );
-
   const renderTooltip = () => {
     if (!tooltipInfo) return null;
 
-    const {x, y, placement, groupName, groupDescription, groupGoal} =
-      tooltipInfo;
+    const {x, y, groupName, groupDescription, groupGoal} = tooltipInfo;
     const padding = 10;
 
-    let transform;
-    switch (placement) {
-      case 'left':
-        transform = `translate(${x} ${y})`;
-        break;
-      case 'bottom':
-        transform = `translate(${x} ${y})`;
-        break;
-      case 'top':
-        transform = `translate(${x} ${y})`;
-        break;
-      default:
-        transform = `translate(${x} ${y})`;
-    }
+    const transform = `translate(${x}, ${y})`;
 
     return (
       <g transform={transform}>
@@ -713,7 +702,6 @@ export function Grid({data, cellGroups, ...rest}: GridProps) {
           height={TOOLTIP_HEIGHT - 2 * padding}
         >
           <div
-            xmlns="http://www.w3.org/1999/xhtml"
             style={{
               fontFamily: 'Arial, sans-serif',
               fontSize: '12px',
@@ -792,9 +780,6 @@ export function Grid({data, cellGroups, ...rest}: GridProps) {
     );
   };
 
-  const yAxisLabelMinWidth = 230;
-  const xAxisLabelMinWidth = 97;
-
   return (
     <ChartContainer id={id} isAnimated={isAnimated} data={data} theme={theme}>
       <div id="container" ref={setRef} style={{width: '100%', height: '90%'}}>
@@ -804,26 +789,28 @@ export function Grid({data, cellGroups, ...rest}: GridProps) {
           viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
         >
           {/* Y-Axis */}
-          <g opacity={yAxisOptions?.hide ? 0 : 1}>
-            <text
-              x={
-                chartPositions.yAxisBounds.y -
-                chartPositions.yAxisBounds.height / 2
-              }
-              y={
-                chartPositions.yAxisBounds.y +
-                chartPositions.yAxisBounds.height / 2
-              }
-              textAnchor="start"
-              dominantBaseline="middle"
-              fontSize="14"
-              fill="#6b7177"
-              transform={`rotate(-90, 20, ${dimensions.height / 2}) translate(${
-                yAxisLabelMinWidth / 2
-              }, 0) `}
-            >
-              Frequency + Monetary value score
-            </text>
+          <g opacity={yAxisOptionsWithDefaults?.hide ? 0 : 1}>
+            {yAxisOptionsWithDefaults.label && (
+              <text
+                ref={(node) => {
+                  if (!yAxisLabelMinWidth && node?.getBBox()?.width) {
+                    setYAxisLabelWidth(node?.getBBox()?.width);
+                  }
+                }}
+                x={chartPositions.yAxisBounds.x}
+                y={chartPositions.yAxisBounds.x - Y_LABEL_OFFSET}
+                textAnchor="middle"
+                dominantBaseline="middle"
+                fontSize="14"
+                fill="#6b7177"
+                transform={`rotate(-90, ${chartPositions.yAxisBounds.x}, ${
+                  chartPositions.yAxisBounds.y +
+                  chartPositions.yAxisBounds.height / 2
+                })`}
+              >
+                {yAxisOptionsWithDefaults.label}
+              </text>
+            )}
             <YAxis
               ticks={yTicks}
               width={yAxisLabelWidth}
@@ -835,28 +822,26 @@ export function Grid({data, cellGroups, ...rest}: GridProps) {
           </g>
 
           {/* Main chart content */}
-          <g
-            transform={`translate(${yAxisLabelWidth + Y_AXIS_LABEL_OFFSET}, 0)`}
-          >
+          <g transform={`translate(${yAxisLabelWidth + Y_LABEL_OFFSET}, 0)`}>
             {renderGridLines()}
             {renderHeatmap()}
             {renderArrows()}
           </g>
 
           {/* X-Axis */}
-          <g opacity={xAxisOptions?.hide ? 0 : 1}>
+          <g opacity={xAxisOptionsWithDefaults?.hide ? 0 : 1}>
             <XAxis
               allowLineWrap={false}
               labels={xLabels}
               labelWidth={xAxisLabelWidth}
               onHeightChange={setXAxisHeight}
-              x={yAxisLabelWidth + Y_AXIS_LABEL_OFFSET}
-              y={chartPositions.xAxisBounds.y + Y_AXIS_LABEL_OFFSET}
+              x={yAxisLabelWidth + Y_LABEL_OFFSET}
+              y={chartPositions.xAxisBounds.y + Y_LABEL_OFFSET}
               xScale={xScale}
               ariaHidden
             />
             <text
-              x={yAxisLabelWidth + Y_AXIS_LABEL_OFFSET}
+              x={yAxisLabelWidth + Y_LABEL_OFFSET}
               y={dimensions.height + xAxisHeight / 2}
               textAnchor="start"
               dominantBaseline="bottom"
@@ -875,20 +860,26 @@ export function Grid({data, cellGroups, ...rest}: GridProps) {
             >
               High
             </text>
-            <text
-              x={
-                chartPositions.xAxisBounds.x +
-                chartPositions.xAxisBounds.width / 2 -
-                xAxisLabelMinWidth / 2
-              }
-              y={dimensions.height + 30}
-              textAnchor="middle"
-              dominantBaseline="bottom"
-              fontSize="14"
-              fill="#6b7177"
-            >
-              Recency score
-            </text>
+            {xAxisOptionsWithDefaults.label && (
+              <text
+                ref={(node) => {
+                  if (!xAxisLabelMinWidth && node?.getBBox()?.width) {
+                    setXAxisLabelWdith(node?.getBBox()?.width);
+                  }
+                }}
+                x={
+                  (chartPositions.xAxisBounds.x +
+                    chartPositions.xAxisBounds.width) /
+                  2
+                }
+                y={dimensions.height + X_LABEL_OFFSET}
+                fontSize="14"
+                fill="#6b7177"
+                textAnchor="middle"
+              >
+                {xAxisOptionsWithDefaults.label}
+              </text>
+            )}
           </g>
 
           {(isTooltipVisible || isTooltipLocked) && renderTooltip()}
