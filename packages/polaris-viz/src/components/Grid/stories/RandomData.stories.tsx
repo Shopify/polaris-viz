@@ -10,4 +10,6 @@ export const RandomData: Story<GridProps> = Template.bind({});
 RandomData.args = {
   data: RANDOM_DATA,
   cellGroups: RANDOM_CELL_GROUPS,
+  xAxisOptions: {label: 'Sales volume'},
+  yAxisOptions: {label: 'Profit margin'},
 };
