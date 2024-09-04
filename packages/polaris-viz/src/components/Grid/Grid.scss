@@ -1,4 +1,8 @@
+@import '../../styles/common';
+
 .animatedArrow {
+  cursor: pointer;
+
   .arrowShaft {
     stroke-dasharray: 25;
     stroke-dashoffset: 25;
@@ -24,8 +28,12 @@
 }
 
 .Tooltip {
-  color: black;
-  background: white;
-  border-radius: 8px;
-  padding: 10px;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  line-height: 1.2;
+  padding: 12px;
+  background: $color-white;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid lightgray;
 }
