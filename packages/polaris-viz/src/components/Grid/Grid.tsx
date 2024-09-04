@@ -692,16 +692,7 @@ export function Grid(props: GridProps) {
                 setTooltipHeight(height + padding * 2);
               }
             }}
-            style={{
-              fontFamily: 'Arial, sans-serif',
-              fontSize: '12px',
-              lineHeight: '1.2',
-              padding: `${padding}px`,
-              background: 'white',
-              borderRadius: '12px',
-              boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-              border: '1px solid lightgray',
-            }}
+            className={styles.Tooltip}
           >
             <div
               style={{
