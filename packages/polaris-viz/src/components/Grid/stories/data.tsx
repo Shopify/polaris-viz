@@ -17,7 +17,8 @@ export const CELL_GROUPS = [
     color: '#194BE3',
     name: 'Previously loyal',
     connectedGroups: ['Loyal'],
-    description: 'lorem ipsum dolor sit amet lorem ipsum dolor sit amet',
+    description:
+      'lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet',
     goal: 'move customers to Champions or Loyal',
   },
   {
@@ -61,7 +62,8 @@ export const CELL_GROUPS = [
     color: '#3E69EB',
     name: 'Needs attention',
     connectedGroups: ['Loyal', 'Active'],
-    description: 'lorem ipsum dolor sit amet lorem ipsum dolor sit amet',
+    description:
+      'lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet',
     goal: 'move customers to Champions or Loyal',
   },
   {

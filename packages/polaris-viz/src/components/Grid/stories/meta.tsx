@@ -2,14 +2,9 @@ import type {Meta} from '@storybook/react';
 
 import {Grid} from '../Grid';
 import {
-  CHART_STATE_CONTROL_ARGS,
   DATA_SERIES_ARGS,
   EMPTY_STATE_TEXT_ARGS,
-  IS_ANIMATED_ARGS,
-  RENDER_BUCKET_LEGEND_LABEL_ARGS,
-  RENDER_LEGEND_CONTENT_ARGS,
   THEME_CONTROL_ARGS,
-  TYPE_CONTROL_ARGS,
   X_AXIS_OPTIONS_ARGS,
   Y_AXIS_OPTIONS_ARGS,
 } from '../../../storybook/constants';
@@ -22,7 +17,8 @@ export const META: Meta = {
     docs: {
       page: PageWithSizingInfo,
       description: {
-        component: 'Used to show RFM analysis',
+        component:
+          'Used to quantitatively rank and group entities based on different metrics',
       },
     },
   },

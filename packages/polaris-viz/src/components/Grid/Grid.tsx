@@ -76,7 +76,6 @@ interface ChartPositions {
   };
 }
 
-const TOOLTIP_HEIGHT = 120;
 const TOOLTIP_WIDTH = 250;
 // offset for the y axis label so that is not together with the y axis numbers
 const Y_LABEL_OFFSET = 20;
@@ -96,6 +95,7 @@ export function Grid(props: GridProps) {
   const [isTooltipLocked, setIsTooltipLocked] = useState(false);
   const [yAxisLabelMinWidth, setYAxisLabelWidth] = useState(0);
   const [xAxisLabelMinWidth, setXAxisLabelWdith] = useState(0);
+  const [tooltipHeight, setTooltipHeight] = useState(0);
 
   const {
     data,
@@ -160,7 +160,7 @@ export function Grid(props: GridProps) {
           x = rect.left - containerRect.left - TOOLTIP_WIDTH;
           y = rect.top - containerRect.top;
           placement = 'left';
-        } else if (bottomSpace >= TOOLTIP_HEIGHT) {
+        } else if (bottomSpace >= tooltipHeight) {
           // Position at the bottom
           x =
             rect.left - containerRect.left + rect.width / 2 - TOOLTIP_WIDTH / 2;
@@ -170,7 +170,7 @@ export function Grid(props: GridProps) {
           // Position at the top
           x =
             rect.left - containerRect.left + rect.width / 2 - TOOLTIP_WIDTH / 2;
-          y = rect.top - containerRect.top - TOOLTIP_HEIGHT;
+          y = rect.top - containerRect.top - tooltipHeight;
           placement = 'top';
         }
 
@@ -190,7 +190,7 @@ export function Grid(props: GridProps) {
         setIsTooltipVisible(false);
       }
     },
-    [entry, isTooltipLocked],
+    [entry, isTooltipLocked, tooltipHeight],
   );
 
   const handleGroupClick = useCallback(
@@ -222,7 +222,7 @@ export function Grid(props: GridProps) {
           x = rect.left - containerRect.left - TOOLTIP_WIDTH;
           y = rect.top - containerRect.top;
           placement = 'left';
-        } else if (bottomSpace >= TOOLTIP_HEIGHT) {
+        } else if (bottomSpace >= 1000) {
           // Position at the bottom
           x =
             rect.left - containerRect.left + rect.width / 2 - TOOLTIP_WIDTH / 2;
@@ -232,7 +232,7 @@ export function Grid(props: GridProps) {
           // Position at the top
           x =
             rect.left - containerRect.left + rect.width / 2 - TOOLTIP_WIDTH / 2;
-          y = rect.top - containerRect.top - TOOLTIP_HEIGHT;
+          y = rect.top - containerRect.top - 1000;
           placement = 'top';
         }
 
@@ -680,35 +680,27 @@ export function Grid(props: GridProps) {
 
     const {x, y, groupName, groupDescription, groupGoal} = tooltipInfo;
     const padding = 10;
-
     const transform = `translate(${x}, ${y})`;
 
     return (
       <g transform={transform}>
-        <rect
-          width={TOOLTIP_WIDTH}
-          height={TOOLTIP_HEIGHT}
-          rx={12}
-          ry={12}
-          fill="white"
-          stroke="lightgray"
-          strokeWidth={1}
-        />
-
-        <foreignObject
-          x={padding}
-          y={padding}
-          width={TOOLTIP_WIDTH - 2 * padding}
-          height={TOOLTIP_HEIGHT - 2 * padding}
-        >
+        <foreignObject x={0} y={0} width={TOOLTIP_WIDTH} height={tooltipHeight}>
           <div
+            ref={(node) => {
+              if (node) {
+                const {height} = node.getBoundingClientRect();
+                setTooltipHeight(height + padding * 2);
+              }
+            }}
             style={{
               fontFamily: 'Arial, sans-serif',
               fontSize: '12px',
               lineHeight: '1.2',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              wordWrap: 'break-word',
+              padding: `${padding}px`,
+              background: 'white',
+              borderRadius: '12px',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+              border: '1px solid lightgray',
             }}
           >
             <div
@@ -738,7 +730,6 @@ export function Grid(props: GridProps) {
 
             <div
               style={{
-                zIndex: 9999,
                 display: 'flex',
                 gap: '5px',
                 padding: '4px',
@@ -752,13 +743,13 @@ export function Grid(props: GridProps) {
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke-width="2.5"
+                strokeWidth="2.5"
                 stroke="currentColor"
                 style={{height: '13px', width: '20px'}}
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
                 />
               </svg>
