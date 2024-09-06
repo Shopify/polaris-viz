@@ -10,3 +10,4 @@ export {useChartContext} from './useChartContext';
 export {usePrevious} from './usePrevious';
 export {useChartPositions} from './useChartPositions';
 export {useSpringConfig} from './useSpringConfig';
+export {useFilteredSparkLineData} from './useFilteredSparkLineData';
