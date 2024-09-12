@@ -39,12 +39,18 @@ export type AlteredPosition = (
 export function getAlteredVerticalBarPosition(
   props: AlteredPositionProps,
 ): AlteredPositionReturn {
-  const {currentX, currentY, position} = props;
+  const {currentX, currentY, position, scrollElement} = props;
 
   const newPosition = {...position};
 
   let x = currentX;
   let y = currentY;
+
+  const scrollY =
+    scrollElement == null ? window.scrollY : scrollElement.scrollTop;
+
+  // eslint-disable-next-line no-console
+  console.log({scrollY});
 
   //
   // Y POSITIONING
@@ -84,7 +90,7 @@ export function getAlteredVerticalBarPosition(
       amount: (props.chartDimensions?.y ?? 0) - props.tooltipDimensions.height,
       min: 0,
       max:
-        window.scrollY +
+        scrollY +
         window.innerHeight -
         props.tooltipDimensions.height -
         TOOLTIP_MARGIN,
@@ -127,9 +133,9 @@ export function getAlteredVerticalBarPosition(
     }),
     y: clamp({
       amount: y,
-      min: window.scrollY + TOOLTIP_MARGIN,
+      min: scrollY + TOOLTIP_MARGIN,
       max:
-        window.scrollY +
+        scrollY +
         window.innerHeight -
         props.tooltipDimensions.height -
         TOOLTIP_MARGIN,
@@ -153,12 +159,10 @@ function isOutsideBounds(data: IsOutsideBoundsData): boolean {
 
     return isLeft || isRight;
   } else {
-    const isAbove = current < window.scrollY;
+    const isAbove = current < scrollY;
     const isBelow =
       current + alteredPosition.tooltipDimensions.height >
-      window.scrollY +
-        window.innerHeight -
-        alteredPosition.tooltipDimensions.height;
+      scrollY + window.innerHeight - alteredPosition.tooltipDimensions.height;
 
     return isAbove || isBelow;
   }
