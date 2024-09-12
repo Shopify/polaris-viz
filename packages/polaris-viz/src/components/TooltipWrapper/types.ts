@@ -27,4 +27,5 @@ export interface TooltipPositionParams {
   event?: MouseEvent | TouchEvent;
   index?: number;
   eventType?: 'mouse' | 'focus';
+  scrollElement?: HTMLElement;
 }

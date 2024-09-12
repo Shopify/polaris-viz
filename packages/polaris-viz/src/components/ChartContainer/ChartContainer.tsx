@@ -28,6 +28,7 @@ interface Props {
   isAnimated: boolean;
   theme: string;
   onError?: ErrorBoundaryResponse;
+  scrollElement?: HTMLElement;
   sparkChart?: boolean;
   skeletonType?: SkeletonType;
   type?: InternalChartType;
@@ -55,6 +56,7 @@ export const ChartContainer = (props: Props) => {
       characterWidthOffsets,
       theme: printFriendlyTheme,
       isPerformanceImpacted: dataTooBigToAnimate,
+      scrollElement: props.scrollElement,
     };
   }, [
     id,
@@ -63,6 +65,7 @@ export const ChartContainer = (props: Props) => {
     props.isAnimated,
     props.theme,
     dataTooBigToAnimate,
+    props.scrollElement,
   ]);
 
   const {chartContainer, grid} = useTheme(value.theme);

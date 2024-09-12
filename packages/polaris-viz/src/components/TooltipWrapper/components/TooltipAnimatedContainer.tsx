@@ -38,7 +38,7 @@ export function TooltipAnimatedContainer({
   position = DEFAULT_TOOLTIP_POSITION,
   chartDimensions,
 }: TooltipAnimatedContainerProps) {
-  const {isPerformanceImpacted} = useChartContext();
+  const {isPerformanceImpacted, scrollElement} = useChartContext();
 
   const tooltipRef = useRef<HTMLDivElement | null>(null);
   const [tooltipDimensions, setTooltipDimensions] =
@@ -60,6 +60,7 @@ export function TooltipAnimatedContainer({
       bandwidth,
       isPerformanceImpacted,
       chartDimensions,
+      scrollElement,
     });
 
     const shouldRenderImmediate = firstRender.current;
@@ -82,6 +83,7 @@ export function TooltipAnimatedContainer({
     isPerformanceImpacted,
     tooltipDimensions,
     chartDimensions,
+    scrollElement,
   ]);
 
   useEffect(() => {
