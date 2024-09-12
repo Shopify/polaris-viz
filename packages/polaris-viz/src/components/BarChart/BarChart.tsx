@@ -44,6 +44,7 @@ export type BarChartProps = {
   seriesNameFormatter?: LabelFormatter;
   showLegend?: boolean;
   maxSeries?: number;
+  scrollElement?: HTMLElement;
   skipLinkText?: string;
   theme?: string;
   type?: ChartType;
@@ -152,6 +153,7 @@ export function BarChart(props: BarChartProps) {
         isAnimated={isAnimated}
         data={data}
         onError={onError}
+        scrollElement={props.scrollElement}
         theme={theme}
         type={InternalChartType.Bar}
       >
