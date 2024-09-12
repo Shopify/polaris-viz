@@ -44,6 +44,7 @@ export type LineChartProps = {
   seriesNameFormatter?: LabelFormatter;
   showLegend?: boolean;
   hideLegendOverflow?: boolean;
+  scrollElement?: HTMLElement;
   skipLinkText?: string;
   tooltipOptions?: TooltipOptions;
   xAxisOptions?: Partial<XAxisOptions>;
@@ -111,6 +112,7 @@ export function LineChart(props: LineChartProps) {
         data={data}
         theme={theme}
         isAnimated={isAnimated}
+        scrollElement={props.scrollElement}
         type={InternalChartType.Line}
         onError={onError}
       >

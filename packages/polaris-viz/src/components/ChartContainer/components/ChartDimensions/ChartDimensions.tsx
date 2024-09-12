@@ -8,6 +8,7 @@ import type {
   BoundingRect,
 } from '@shopify/polaris-viz-core';
 import {
+  useChartContext,
   usePolarisVizContext,
   usePrevious,
   useTheme,
@@ -39,6 +40,7 @@ export function ChartDimensions({
 }: ChartDimensionsProps) {
   const {chartContainer} = useTheme();
   const {onError: onErrorProvider} = usePolarisVizContext();
+  const {scrollElement} = useChartContext();
 
   const [chartDimensions, setChartDimensions] =
     useState<BoundingRect | null>(null);
@@ -65,8 +67,11 @@ export function ChartDimensions({
     const {width, height} = entry.contentRect;
     const {x, y} = entry.target.getBoundingClientRect();
 
-    setChartDimensions({width, height, x, y: y + window.scrollY});
-  }, [entry, previousEntry?.contentRect]);
+    const scrollY =
+      scrollElement == null ? window.scrollY : scrollElement.scrollTop;
+
+    setChartDimensions({width, height, x, y: y + scrollY});
+  }, [entry, previousEntry?.contentRect, scrollElement]);
 
   const debouncedUpdateDimensions = useDebouncedCallback(() => {
     updateDimensions();
