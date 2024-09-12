@@ -62,6 +62,7 @@ export function getAlteredLineChartPosition(
   const scrollY =
     scrollElement == null ? window.scrollY : scrollElement.scrollTop;
 
+  // eslint-disable-next-line no-console
   console.log({scrollY});
 
   return {
