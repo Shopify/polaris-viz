@@ -51,7 +51,7 @@ export type BarChartProps = {
   yAxisOptions?: Partial<YAxisOptions>;
   renderHiddenLegendLabel?: (count: number) => string;
   renderBucketLegendLabel?: () => string;
-  scrollContainer?: HTMLElement | null;
+  scrollContainer?: Element | null;
 } & ChartProps;
 
 export function BarChart(props: BarChartProps) {

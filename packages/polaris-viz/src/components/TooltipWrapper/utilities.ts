@@ -20,7 +20,7 @@ export interface AlteredPositionProps {
   position: TooltipPositionOffset;
   tooltipDimensions: Dimensions;
   chartDimensions?: BoundingRect;
-  scrollContainer?: HTMLElement | null;
+  scrollContainer?: Element | null;
 }
 
 export interface AlteredPositionReturn {

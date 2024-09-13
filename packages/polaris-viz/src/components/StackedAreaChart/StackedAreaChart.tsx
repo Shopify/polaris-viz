@@ -43,7 +43,7 @@ export type StackedAreaChartProps = {
   yAxisOptions?: Partial<YAxisOptions>;
   renderHiddenLegendLabel?: (count: number) => string;
   seriesNameFormatter?: LabelFormatter;
-  scrollContainer?: HTMLElement | null;
+  scrollContainer?: Element | null;
 } & ChartProps;
 
 export function StackedAreaChart(props: StackedAreaChartProps) {

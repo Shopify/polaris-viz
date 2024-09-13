@@ -24,7 +24,7 @@ interface ChartDimensionsProps {
   children: ReactElement;
   data: DataSeries[] | DataGroup[];
   onIsPrintingChange: Dispatch<SetStateAction<boolean>>;
-  scrollContainer?: HTMLElement | null;
+  scrollContainer?: Element | null;
   sparkChart?: boolean;
   skeletonType?: SkeletonType;
   onError?: ErrorBoundaryResponse;
