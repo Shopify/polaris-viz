@@ -90,6 +90,9 @@ export function StackedAreaChart(props: StackedAreaChartProps) {
 
   const annotationsLookupTable = normalizeData(annotations, 'startKey');
 
+  // eslint-disable-next-line no-console
+  console.log('change');
+
   return (
     <Fragment>
       {skipLinkText == null || skipLinkText.length === 0 ? null : (
