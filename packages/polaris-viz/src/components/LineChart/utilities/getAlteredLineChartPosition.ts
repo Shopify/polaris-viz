@@ -17,7 +17,7 @@ export interface AlteredPositionProps {
   margin: Margin;
   position: TooltipPositionOffset;
   tooltipDimensions: Dimensions;
-  scrollContainer?: HTMLElement | null;
+  scrollContainer?: Element | null;
 }
 
 export interface AlteredPositionReturn {

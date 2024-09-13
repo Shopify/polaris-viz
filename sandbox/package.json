@@ -1,6 +1,6 @@
 {
   "name": "sandbox",
-  "version": "14.8.0",
+  "version": "1.0.0-scroll-container-beta.1",
   "private": true,
   "main": "index.js",
   "dependencies": {

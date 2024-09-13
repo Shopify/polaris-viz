@@ -28,7 +28,7 @@ interface Props {
   isAnimated: boolean;
   theme: string;
   onError?: ErrorBoundaryResponse;
-  scrollContainer?: HTMLElement | null;
+  scrollContainer?: Element | null;
   sparkChart?: boolean;
   skeletonType?: SkeletonType;
   type?: InternalChartType;

@@ -51,7 +51,7 @@ export type LineChartProps = {
   slots?: {
     chart?: (props: LineChartSlotProps) => JSX.Element;
   };
-  scrollContainer?: HTMLElement | null;
+  scrollContainer?: Element | null;
 } & ChartProps;
 
 export function LineChart(props: LineChartProps) {
