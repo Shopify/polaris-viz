@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0-scroll-container-beta.1",
+  "version": "1.0.0-scroll-container-beta.2",
   "npmClient": "yarn",
   "useWorkspaces": true,
   "ignoreChanges": [
