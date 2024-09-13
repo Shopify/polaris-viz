@@ -34,6 +34,9 @@ export function getAlteredLineChartPosition(
 ): AlteredPositionReturn {
   const {currentX, currentY, chartBounds, scrollElement} = props;
 
+  // eslint-disable-next-line no-console
+  console.log({currentX, currentY, chartBounds, scrollElement});
+
   let x = currentX;
   let y = currentY;
 

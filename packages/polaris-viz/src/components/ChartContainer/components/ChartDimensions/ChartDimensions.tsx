@@ -70,6 +70,9 @@ export function ChartDimensions({
     const scrollY =
       scrollElement == null ? window.scrollY : scrollElement.scrollTop;
 
+    // eslint-disable-next-line no-console
+    console.log({width, height, x, y: y + scrollY});
+
     setChartDimensions({width, height, x, y: y + scrollY});
   }, [entry, previousEntry?.contentRect, scrollElement]);
 
