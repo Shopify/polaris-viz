@@ -43,6 +43,7 @@ export type StackedAreaChartProps = {
   yAxisOptions?: Partial<YAxisOptions>;
   renderHiddenLegendLabel?: (count: number) => string;
   seriesNameFormatter?: LabelFormatter;
+  scrollContainer?: HTMLElement | null;
 } & ChartProps;
 
 export function StackedAreaChart(props: StackedAreaChartProps) {
@@ -65,6 +66,7 @@ export function StackedAreaChart(props: StackedAreaChartProps) {
     skipLinkText,
     theme = defaultTheme,
     renderHiddenLegendLabel,
+    scrollContainer,
   } = {
     ...DEFAULT_CHART_PROPS,
     ...props,
@@ -99,6 +101,7 @@ export function StackedAreaChart(props: StackedAreaChartProps) {
         id={id}
         isAnimated={isAnimated}
         onError={onError}
+        scrollContainer={scrollContainer}
       >
         {state !== ChartState.Success ? (
           <ChartSkeleton state={state} errorText={errorText} theme={theme} />

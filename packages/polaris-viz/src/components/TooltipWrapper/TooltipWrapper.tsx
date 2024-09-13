@@ -1,5 +1,6 @@
 import type {ReactNode} from 'react';
 import {useEffect, useRef, useState, useMemo, useCallback} from 'react';
+import {useChartContext} from '@shopify/polaris-viz-core';
 import type {DataType, BoundingRect} from '@shopify/polaris-viz-core';
 import {createPortal} from 'react-dom';
 
@@ -43,6 +44,7 @@ function TooltipWrapperRaw(props: BaseProps) {
     parentRef,
     chartDimensions,
   } = props;
+  const {scrollContainer} = useChartContext();
   const [position, setPosition] = useState<TooltipPosition>({
     x: 0,
     y: 0,
@@ -65,9 +67,12 @@ function TooltipWrapperRaw(props: BaseProps) {
     (event: MouseEvent | TouchEvent) => {
       const newPosition = getPosition({event, eventType: 'mouse'});
 
+      const scrollContainerTop = Number(scrollContainer?.scrollTop ?? 0);
+      const y = newPosition.y + scrollContainerTop;
+
       if (
         alwaysUpdatePosition &&
-        (newPosition.x < chartBounds.x || newPosition.y < chartBounds.y)
+        (newPosition.x < chartBounds.x || y < chartBounds.y)
       ) {
         return;
       }
@@ -86,7 +91,13 @@ function TooltipWrapperRaw(props: BaseProps) {
       setPosition(newPosition);
       onIndexChange?.(newPosition.activeIndex);
     },
-    [alwaysUpdatePosition, chartBounds, getPosition, onIndexChange],
+    [
+      alwaysUpdatePosition,
+      chartBounds,
+      getPosition,
+      onIndexChange,
+      scrollContainer,
+    ],
   );
 
   const onMouseLeave = useCallback(() => {

@@ -24,6 +24,7 @@ interface ChartDimensionsProps {
   children: ReactElement;
   data: DataSeries[] | DataGroup[];
   onIsPrintingChange: Dispatch<SetStateAction<boolean>>;
+  scrollContainer?: HTMLElement | null;
   sparkChart?: boolean;
   skeletonType?: SkeletonType;
   onError?: ErrorBoundaryResponse;
@@ -33,6 +34,7 @@ export function ChartDimensions({
   children,
   data,
   onIsPrintingChange,
+  scrollContainer,
   sparkChart = false,
   skeletonType = 'Default',
   onError,
@@ -65,8 +67,11 @@ export function ChartDimensions({
     const {width, height} = entry.contentRect;
     const {x, y} = entry.target.getBoundingClientRect();
 
-    setChartDimensions({width, height, x, y: y + window.scrollY});
-  }, [entry, previousEntry?.contentRect]);
+    const scrollY =
+      scrollContainer == null ? window.scrollY : scrollContainer.scrollTop;
+
+    setChartDimensions({width, height, x, y: y + scrollY});
+  }, [entry, previousEntry?.contentRect, scrollContainer]);
 
   const debouncedUpdateDimensions = useDebouncedCallback(() => {
     updateDimensions();

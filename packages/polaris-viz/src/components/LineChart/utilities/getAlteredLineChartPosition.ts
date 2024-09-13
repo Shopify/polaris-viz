@@ -17,6 +17,7 @@ export interface AlteredPositionProps {
   margin: Margin;
   position: TooltipPositionOffset;
   tooltipDimensions: Dimensions;
+  scrollContainer?: HTMLElement | null;
 }
 
 export interface AlteredPositionReturn {
@@ -31,7 +32,7 @@ export type AlteredPosition = (
 export function getAlteredLineChartPosition(
   props: AlteredPositionProps,
 ): AlteredPositionReturn {
-  const {currentX, currentY, chartBounds} = props;
+  const {currentX, currentY, chartBounds, scrollContainer} = props;
 
   let x = currentX;
   let y = currentY;
@@ -41,7 +42,7 @@ export function getAlteredLineChartPosition(
   //
 
   if (props.isPerformanceImpacted) {
-    y = chartBounds.y ?? 0;
+    y = chartBounds.y - (scrollContainer?.scrollTop ?? 0) ?? 0;
   }
 
   //
