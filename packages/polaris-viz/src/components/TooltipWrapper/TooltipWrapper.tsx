@@ -69,6 +69,8 @@ function TooltipWrapperRaw(props: BaseProps) {
         alwaysUpdatePosition &&
         (newPosition.x < chartBounds.x || newPosition.y < chartBounds.y)
       ) {
+        // eslint-disable-next-line no-console
+        console.log('bail', {newPosition, chartBounds});
         return;
       }
 

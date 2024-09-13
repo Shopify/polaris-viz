@@ -41,7 +41,7 @@ export function getAlteredLineChartPosition(
     scrollElement == null ? window.scrollY : scrollElement.scrollTop;
 
   let x = currentX;
-  let y = currentY + scrollY;
+  let y = currentY;
 
   //
   // Y POSITIONING
@@ -66,7 +66,15 @@ export function getAlteredLineChartPosition(
   }
 
   // eslint-disable-next-line no-console
-  console.log({scrollY});
+  console.log({
+    amount: y,
+    min: scrollY + TOOLTIP_MARGIN,
+    max:
+      scrollY +
+      window.innerHeight -
+      props.tooltipDimensions.height -
+      TOOLTIP_MARGIN,
+  });
 
   return {
     x: clamp({
