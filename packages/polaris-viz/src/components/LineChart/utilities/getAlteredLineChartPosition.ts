@@ -37,8 +37,11 @@ export function getAlteredLineChartPosition(
   // eslint-disable-next-line no-console
   console.log({currentX, currentY, chartBounds, scrollElement});
 
+  const scrollY =
+    scrollElement == null ? window.scrollY : scrollElement.scrollTop;
+
   let x = currentX;
-  let y = currentY;
+  let y = currentY + scrollY;
 
   //
   // Y POSITIONING
@@ -61,9 +64,6 @@ export function getAlteredLineChartPosition(
 
     x = left.value;
   }
-
-  const scrollY =
-    scrollElement == null ? window.scrollY : scrollElement.scrollTop;
 
   // eslint-disable-next-line no-console
   console.log({scrollY});
