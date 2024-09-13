@@ -5,7 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-<!-- ## Unreleased -->
+## Unreleased
+
+### Changed
+
+- **Breaking change** The keys used to display `<Annotiatons />` are now formatted with the `xAxisOptions.labelFormatter` method.
 
 ## [14.9.1] - 2024-09-13
 

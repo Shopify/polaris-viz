@@ -363,6 +363,7 @@ export function Chart({
               drawableHeight={annotationsDrawableHeight}
               drawableWidth={drawableWidth}
               labels={labels}
+              labelFormatter={xAxisOptions.labelFormatter}
               onHeightChange={setAnnotationsHeight}
               xScale={xScale}
             />
