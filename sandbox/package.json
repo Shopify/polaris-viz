@@ -1,6 +1,6 @@
 {
   "name": "sandbox",
-  "version": "14.9.0",
+  "version": "1.0.0-formatted-annotations-beta.1",
   "private": true,
   "main": "index.js",
   "dependencies": {

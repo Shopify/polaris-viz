@@ -32,6 +32,7 @@ const MOCK_PROPS: Props = {
   isShowingAllAnnotations: false,
   onHeightChange: jest.fn(),
   xScale: scaleBand(),
+  labelFormatter: (value) => `${value}`,
 };
 
 describe('useAnnotationPositions', () => {
