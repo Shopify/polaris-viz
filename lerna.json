@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0-scroll-element-beta.11",
+  "version": "1.0.0-scroll-element-beta.12",
   "npmClient": "yarn",
   "useWorkspaces": true,
   "ignoreChanges": [
