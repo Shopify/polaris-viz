@@ -36,6 +36,7 @@ export type StackedAreaChartProps = {
   state?: ChartState;
   errorText?: string;
   renderLegendContent?: RenderLegendContent;
+  scrollElement?: HTMLElement;
   showLegend?: boolean;
   skipLinkText?: string;
   theme?: string;
@@ -60,6 +61,7 @@ export function StackedAreaChart(props: StackedAreaChartProps) {
     id,
     isAnimated,
     renderLegendContent,
+    scrollElement,
     seriesNameFormatter = (value) => `${value}`,
     showLegend = true,
     skipLinkText,
@@ -99,6 +101,7 @@ export function StackedAreaChart(props: StackedAreaChartProps) {
         id={id}
         isAnimated={isAnimated}
         onError={onError}
+        scrollElement={scrollElement}
       >
         {state !== ChartState.Success ? (
           <ChartSkeleton state={state} errorText={errorText} theme={theme} />
