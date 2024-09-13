@@ -3,6 +3,7 @@ import type {Story} from '@storybook/react';
 import {LineChart, LineChartProps} from '../../LineChart';
 import {META} from '../meta';
 import {randomNumber} from '../../../Docs/utilities';
+import {useState} from 'react';
 
 export default {
   ...META,
@@ -54,7 +55,30 @@ const Template: Story<LineChartProps> = (args: LineChartProps) => {
   );
 };
 
+const TemplateWithFrame: Story<LineChartProps> = (args: LineChartProps) => {
+  const [ref, setRef] = useState<HTMLDivElement | null>(null);
+
+  const props = {...args, scrollContainer: ref};
+
+  return (
+    <div style={{overflow: 'hidden', position: 'fixed', inset: 0}}>
+      <div style={{height: 100, background: 'black', width: '100%'}}></div>
+      <div style={{overflow: 'auto', height: '100vh'}} ref={setRef}>
+        <Card {...props} />
+        <div style={{height: 700, width: 10}} />
+        <div style={{display: 'flex', justifyContent: 'space-between'}}>
+          <Card {...props} data={HOURLY_DATA} />
+          <Card {...props} />
+          <Card {...props} />
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export const ExternalTooltip: Story<LineChartProps> = Template.bind({});
+export const ExternalTooltipWithFrame: Story<LineChartProps> =
+  TemplateWithFrame.bind({});
 
 ExternalTooltip.args = {
   data: [
@@ -92,3 +116,5 @@ ExternalTooltip.args = {
     },
   ],
 };
+
+ExternalTooltipWithFrame.args = ExternalTooltip.args;

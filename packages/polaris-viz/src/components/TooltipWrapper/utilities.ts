@@ -20,6 +20,7 @@ export interface AlteredPositionProps {
   position: TooltipPositionOffset;
   tooltipDimensions: Dimensions;
   chartDimensions?: BoundingRect;
+  scrollContainer?: HTMLElement | null;
 }
 
 export interface AlteredPositionReturn {
@@ -38,12 +39,12 @@ export type AlteredPosition = (
 export function getAlteredVerticalBarPosition(
   props: AlteredPositionProps,
 ): AlteredPositionReturn {
-  const {currentX, currentY, position} = props;
+  const {currentX, currentY, position, scrollContainer} = props;
 
   const newPosition = {...position};
 
   let x = currentX;
-  let y = currentY;
+  let y = currentY - (scrollContainer?.scrollTop ?? 0);
 
   //
   // Y POSITIONING
@@ -80,7 +81,10 @@ export function getAlteredVerticalBarPosition(
     }
   } else {
     y = clamp({
-      amount: (props.chartDimensions?.y ?? 0) - props.tooltipDimensions.height,
+      amount:
+        (props.chartDimensions?.y ?? 0) -
+        props.tooltipDimensions.height -
+        (scrollContainer?.scrollTop ?? 0),
       min: 0,
       max:
         window.scrollY +

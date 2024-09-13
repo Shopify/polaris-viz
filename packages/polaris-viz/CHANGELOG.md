@@ -5,7 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-<!-- ## Unreleased -->
+## Unreleased
+
+### Added
+
+- Added `scrollContainer` prop to charts that use a portal (`BarChart`, `LineChart`, `StackedAreaChart`) for their tooltips. This allows consumers to render charts in a scrollable container and still position the tooltips in the correct position.
 
 ## [14.8.0] - 2024-09-06
 

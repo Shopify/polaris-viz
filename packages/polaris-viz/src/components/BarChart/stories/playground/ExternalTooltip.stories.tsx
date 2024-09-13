@@ -3,6 +3,7 @@ import type {Story} from '@storybook/react';
 import type {BarChartProps} from '../../BarChart';
 import {BarChart} from '../../BarChart';
 import {META} from '../meta';
+import {useState} from 'react';
 
 export default {
   ...META,
@@ -40,7 +41,30 @@ const Template: Story<BarChartProps> = (args: BarChartProps) => {
   );
 };
 
+const TemplateWithFrame: Story<BarChartProps> = (args: BarChartProps) => {
+  const [ref, setRef] = useState<HTMLDivElement | null>(null);
+
+  const props = {...args, scrollContainer: ref};
+
+  return (
+    <div style={{overflow: 'hidden', position: 'fixed', inset: 0}}>
+      <div style={{height: 100, background: 'black', width: '100%'}}></div>
+      <div style={{overflow: 'auto', height: '100vh'}} ref={setRef}>
+        <Card {...props} />
+        <div style={{height: 700, width: 10}} />
+        <div style={{display: 'flex', justifyContent: 'space-between'}}>
+          <Card {...props} />
+          <Card {...props} />
+          <Card {...props} />
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export const ExternalTooltip: Story<BarChartProps> = Template.bind({});
+export const ExternalTooltipWithFrame: Story<BarChartProps> =
+  TemplateWithFrame.bind({});
 
 ExternalTooltip.args = {
   data: [
@@ -71,3 +95,5 @@ ExternalTooltip.args = {
     },
   ],
 };
+
+ExternalTooltipWithFrame.args = ExternalTooltip.args;

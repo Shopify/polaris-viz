@@ -51,6 +51,7 @@ export type LineChartProps = {
   slots?: {
     chart?: (props: LineChartSlotProps) => JSX.Element;
   };
+  scrollContainer?: HTMLElement | null;
 } & ChartProps;
 
 export function LineChart(props: LineChartProps) {
@@ -75,6 +76,7 @@ export function LineChart(props: LineChartProps) {
     tooltipOptions,
     xAxisOptions,
     yAxisOptions,
+    scrollContainer,
   } = {
     ...DEFAULT_CHART_PROPS,
     ...props,
@@ -113,6 +115,7 @@ export function LineChart(props: LineChartProps) {
         isAnimated={isAnimated}
         type={InternalChartType.Line}
         onError={onError}
+        scrollContainer={scrollContainer}
       >
         {state !== ChartState.Success ? (
           <ChartSkeleton state={state} errorText={errorText} theme={theme} />

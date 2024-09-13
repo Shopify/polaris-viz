@@ -51,6 +51,7 @@ export type BarChartProps = {
   yAxisOptions?: Partial<YAxisOptions>;
   renderHiddenLegendLabel?: (count: number) => string;
   renderBucketLegendLabel?: () => string;
+  scrollContainer?: HTMLElement | null;
 } & ChartProps;
 
 export function BarChart(props: BarChartProps) {
@@ -78,6 +79,7 @@ export function BarChart(props: BarChartProps) {
     renderHiddenLegendLabel,
     renderBucketLegendLabel,
     seriesNameFormatter = (value) => `${value}`,
+    scrollContainer,
   } = {
     ...DEFAULT_CHART_PROPS,
     ...props,
@@ -154,6 +156,7 @@ export function BarChart(props: BarChartProps) {
         onError={onError}
         theme={theme}
         type={InternalChartType.Bar}
+        scrollContainer={scrollContainer}
       >
         {state !== ChartState.Success ? (
           <ChartSkeleton state={state} errorText={errorText} theme={theme} />

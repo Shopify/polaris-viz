@@ -4,6 +4,7 @@ import type {StackedAreaChartProps} from '../../StackedAreaChart';
 import {StackedAreaChart} from '../../StackedAreaChart';
 import {META} from '../meta';
 import {DEFAULT_DATA, DEFAULT_PROPS} from '../data';
+import {useState} from 'react';
 
 export default {
   ...META,
@@ -43,10 +44,37 @@ const Template: Story<StackedAreaChartProps> = (
   );
 };
 
+const TemplateWithFrame: Story<StackedAreaChartProps> = (
+  args: StackedAreaChartProps,
+) => {
+  const [ref, setRef] = useState<HTMLDivElement | null>(null);
+
+  const props = {...args, scrollContainer: ref};
+
+  return (
+    <div style={{overflow: 'hidden', position: 'fixed', inset: 0}}>
+      <div style={{height: 100, background: 'black', width: '100%'}}></div>
+      <div style={{overflow: 'auto', height: '100vh'}} ref={setRef}>
+        <Card {...props} />
+        <div style={{height: 700, width: 10}} />
+        <div style={{display: 'flex', justifyContent: 'space-between'}}>
+          <Card {...props} />
+          <Card {...props} />
+          <Card {...props} />
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export const ExternalTooltipPortal: Story<StackedAreaChartProps> =
   Template.bind({});
+export const ExternalTooltipWithFrame: Story<StackedAreaChartProps> =
+  TemplateWithFrame.bind({});
 
 ExternalTooltipPortal.args = {
   ...DEFAULT_PROPS,
   data: DEFAULT_DATA,
 };
+
+ExternalTooltipWithFrame.args = ExternalTooltipPortal.args;
