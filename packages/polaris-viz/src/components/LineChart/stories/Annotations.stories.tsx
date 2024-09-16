@@ -40,4 +40,12 @@ Annotations.args = {
       },
     },
   ],
+  xAxisOptions: {
+    labelFormatter: (value) =>
+      new Intl.DateTimeFormat('en-US', {
+        month: 'short',
+        day: 'numeric',
+        timeZone: 'UTC',
+      }).format(new Date(value as string)),
+  },
 };

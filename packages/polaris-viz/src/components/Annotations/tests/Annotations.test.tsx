@@ -82,6 +82,7 @@ const MOCK_PROPS: AnnotationsProps = {
   ],
   onHeightChange: jest.fn(),
   xScale: scaleBand(),
+  labelFormatter: (value) => `${value}`,
 };
 
 describe('<Annotations />', () => {

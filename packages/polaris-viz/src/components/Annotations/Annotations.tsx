@@ -1,5 +1,6 @@
 import {Fragment, useMemo, useState} from 'react';
 import type {ScaleBand, ScaleLinear} from 'd3-scale';
+import type {LabelFormatter} from '@shopify/polaris-viz-core';
 
 import type {Annotation, AnnotationLookupTable} from '../../types';
 import {useSVGBlurEvent} from '../../hooks/useSVGBlurEvent';
@@ -21,6 +22,7 @@ export interface AnnotationsProps {
   axisLabelWidth: number;
   drawableHeight: number;
   drawableWidth: number;
+  labelFormatter: LabelFormatter;
   labels: string[];
   onHeightChange: (height: number) => void;
   xScale: ScaleLinear<number, number> | ScaleBand<string>;
@@ -34,10 +36,16 @@ export function Annotations({
   labels,
   onHeightChange,
   xScale,
+  labelFormatter,
 }: AnnotationsProps) {
   const [activeIndex, setActiveIndex] = useState(-1);
   const [isShowingAllAnnotations, setIsShowingAllAnnotations] = useState(false);
   const [ref, setRef] = useState<SVGGElement | null>(null);
+
+  const formattedLabels = useMemo(
+    () => labels.map(labelFormatter),
+    [labels, labelFormatter],
+  );
 
   const {annotations, dataIndexes} = useMemo(() => {
     const dataIndexes = {};
@@ -45,23 +53,24 @@ export function Annotations({
     const annotations = Object.keys(annotationsLookupTable)
       .map((key) => {
         const annotation = annotationsLookupTable[key];
+        const formattedKey = labelFormatter(key);
 
         if (
-          !labels.includes(key) ||
+          !formattedLabels.includes(formattedKey) ||
           annotation == null ||
           annotation.axis === 'y'
         ) {
           return null;
         }
 
-        dataIndexes[key] = labels.indexOf(key);
+        dataIndexes[formattedKey] = formattedLabels.indexOf(formattedKey);
 
         return annotation;
       })
       .filter(Boolean) as Annotation[];
 
     return {annotations, dataIndexes};
-  }, [annotationsLookupTable, labels]);
+  }, [annotationsLookupTable, formattedLabels, labelFormatter]);
 
   const {hiddenAnnotationsCount, positions, rowCount} = useAnnotationPositions({
     annotations,
@@ -71,6 +80,7 @@ export function Annotations({
     isShowingAllAnnotations,
     onHeightChange,
     xScale,
+    labelFormatter,
   });
 
   const handleToggleAllAnnotations = () => {
