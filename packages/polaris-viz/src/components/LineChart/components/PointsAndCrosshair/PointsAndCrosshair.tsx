@@ -70,6 +70,13 @@ export function PointsAndCrosshair({
     }
     const offset = isCrosshair ? selectedTheme.crossHair.width / 2 : 0;
 
+    const allSingleDataPoints = data.some((series) => series.data.length !== 1);
+
+    // Bypass animation if there's only one data point
+    if (!allSingleDataPoints) {
+      return xScale(activeIndex == null ? 0 : activeIndex) - offset;
+    }
+
     if (
       animatedCoordinates != null &&
       animatedCoordinates[longestSeriesIndex] != null &&
