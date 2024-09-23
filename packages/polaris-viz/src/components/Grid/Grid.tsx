@@ -34,6 +34,7 @@ export type GridProps = {
 interface CellGroup {
   start: {row: number; col: number};
   end: {row: number; col: number};
+  bgColor: string;
   color: string;
   name: string;
   description: string;
@@ -81,6 +82,9 @@ const TOOLTIP_WIDTH = 250;
 const Y_LABEL_OFFSET = 20;
 // offset for the x axis label so that is not together with the x axis numbers
 const X_LABEL_OFFSET = 40;
+// offset for the arrows so that they overlap with the cells. We want the arrow to start 5px before the cell starts
+const ARROW_OFFSET = 5;
+const Y_AXIS_LABEL_WIDTH = 50;
 
 export function Grid(props: GridProps) {
   const {defaultTheme} = usePolarisVizContext();
@@ -105,7 +109,6 @@ export function Grid(props: GridProps) {
     theme = defaultTheme,
     xAxisOptions = {},
     yAxisOptions = {},
-    showGrid = true,
   } = {
     ...DEFAULT_CHART_PROPS,
     ...props,
@@ -122,13 +125,58 @@ export function Grid(props: GridProps) {
     [entry],
   );
 
-  const yAxisLabelWidth = useMemo(() => {
-    if (!data || data.length === 0) return 50;
-    const maxLabelLength = Math.max(
-      ...data.map((row) => row.name?.length ?? 0),
-    );
-    return Math.min(Math.max(maxLabelLength * 8, 50), dimensions.width * 0.2);
-  }, [data, dimensions.width]);
+  const fullChartWidth = dimensions.width - Y_AXIS_LABEL_WIDTH;
+  const fullChartHeight = dimensions.height - xAxisHeight;
+
+  const cellWidth = fullChartWidth / data[0].data.length;
+  const cellHeight = fullChartHeight / data.length;
+
+  const getActiveGroups = (group: CellGroup | null) => {
+    if (!group) return new Set<string>();
+    return new Set([group.name, ...(group.connectedGroups ?? [])]);
+  };
+
+  const getTooltipInfo = useCallback(
+    (group: CellGroup, event: React.MouseEvent): TooltipInfo | null => {
+      const rect = event.currentTarget.getBoundingClientRect();
+      const containerRect = entry?.target?.getBoundingClientRect();
+
+      if (!containerRect) return null;
+
+      const leftSpace = rect.left - containerRect.left;
+      const bottomSpace = containerRect.bottom - rect.bottom;
+
+      let x;
+      let y;
+      let placement;
+      if (leftSpace >= TOOLTIP_WIDTH) {
+        // Position on the left
+        x = rect.left - containerRect.left - TOOLTIP_WIDTH;
+        y = rect.top - containerRect.top;
+        placement = 'left';
+      } else if (bottomSpace >= tooltipHeight) {
+        // Position at the bottom
+        x = rect.left - containerRect.left + rect.width / 2 - TOOLTIP_WIDTH / 2;
+        y = rect.bottom - containerRect.top;
+        placement = 'bottom';
+      } else {
+        // Position at the top
+        x = rect.left - containerRect.left + rect.width / 2 - TOOLTIP_WIDTH / 2;
+        y = rect.top - containerRect.top - tooltipHeight;
+        placement = 'top';
+      }
+
+      return {
+        x,
+        y,
+        placement,
+        groupName: group.name,
+        groupDescription: group.description || '',
+        groupGoal: group.goal || '',
+      };
+    },
+    [entry, tooltipHeight],
+  );
 
   const handleGroupHover = useCallback(
     (group: CellGroup | null, event: React.MouseEvent) => {
@@ -138,51 +186,13 @@ export function Grid(props: GridProps) {
       }
 
       if (group) {
-        const activeGroups = new Set([
-          group.name,
-          ...(group.connectedGroups ?? []),
-        ]);
-        setHoveredGroups(activeGroups);
+        setHoveredGroups(getActiveGroups(group));
         setHoveredGroup(group);
-        const rect = event.currentTarget.getBoundingClientRect();
-        const containerRect = entry?.target?.getBoundingClientRect();
-
-        if (!containerRect) return;
-
-        const leftSpace = rect.left - containerRect.left;
-        const bottomSpace = containerRect.bottom - rect.bottom;
-
-        let x;
-        let y;
-        let placement;
-        if (leftSpace >= TOOLTIP_WIDTH) {
-          // Position on the left
-          x = rect.left - containerRect.left - TOOLTIP_WIDTH;
-          y = rect.top - containerRect.top;
-          placement = 'left';
-        } else if (bottomSpace >= tooltipHeight) {
-          // Position at the bottom
-          x =
-            rect.left - containerRect.left + rect.width / 2 - TOOLTIP_WIDTH / 2;
-          y = rect.bottom - containerRect.top;
-          placement = 'bottom';
-        } else {
-          // Position at the top
-          x =
-            rect.left - containerRect.left + rect.width / 2 - TOOLTIP_WIDTH / 2;
-          y = rect.top - containerRect.top - tooltipHeight;
-          placement = 'top';
+        const tooltipInfo = getTooltipInfo(group, event);
+        if (tooltipInfo) {
+          setTooltipInfo(tooltipInfo);
+          setIsTooltipVisible(true);
         }
-
-        setTooltipInfo({
-          x,
-          y,
-          placement,
-          groupName: group.name,
-          groupDescription: group.description || '',
-          groupGoal: group.goal || '',
-        });
-        setIsTooltipVisible(true);
       } else {
         setHoveredGroups(new Set());
         setHoveredGroup(null);
@@ -190,7 +200,7 @@ export function Grid(props: GridProps) {
         setIsTooltipVisible(false);
       }
     },
-    [entry, isTooltipLocked, tooltipHeight],
+    [isTooltipLocked, getTooltipInfo],
   );
 
   const handleGroupClick = useCallback(
@@ -206,48 +216,12 @@ export function Grid(props: GridProps) {
         setIsTooltipLocked(true);
 
         // Set tooltip info for the clicked group
-        const rect = event.currentTarget.getBoundingClientRect();
-        const containerRect = entry?.target?.getBoundingClientRect();
-
-        if (!containerRect) return;
-
-        const leftSpace = rect.left - containerRect.left;
-        const bottomSpace = containerRect.bottom - rect.bottom;
-
-        let x;
-        let y;
-        let placement;
-        if (leftSpace >= TOOLTIP_WIDTH) {
-          // Position on the left
-          x = rect.left - containerRect.left - TOOLTIP_WIDTH;
-          y = rect.top - containerRect.top;
-          placement = 'left';
-        } else if (bottomSpace >= 1000) {
-          // Position at the bottom
-          x =
-            rect.left - containerRect.left + rect.width / 2 - TOOLTIP_WIDTH / 2;
-          y = rect.bottom - containerRect.top;
-          placement = 'bottom';
-        } else {
-          // Position at the top
-          x =
-            rect.left - containerRect.left + rect.width / 2 - TOOLTIP_WIDTH / 2;
-          y = rect.top - containerRect.top - 1000;
-          placement = 'top';
-        }
-
-        setTooltipInfo({
-          x,
-          y,
-          placement,
-          groupName: group.name,
-          groupDescription: group.description || '',
-          groupGoal: group.goal || '',
-        });
+        const tooltipInfo = getTooltipInfo(group, event);
+        setTooltipInfo(tooltipInfo);
         setIsTooltipVisible(true);
       }
     },
-    [selectedGroup, entry],
+    [selectedGroup, getTooltipInfo],
   );
 
   const handleClickOutside = useCallback(
@@ -276,6 +250,7 @@ export function Grid(props: GridProps) {
     const sourceGroup = cellGroups.find(
       (group) => group.name === hoveredGroup.name,
     );
+
     if (!sourceGroup || !sourceGroup.connectedGroups) return null;
 
     const getSharedEdgeCenter = (group1: CellGroup, group2: CellGroup) => {
@@ -308,7 +283,7 @@ export function Grid(props: GridProps) {
         );
         return {
           x: (startX + endX) / 2,
-          y: group1.start.row * cellHeight,
+          y: group1.start.row * cellHeight + ARROW_OFFSET,
           sourceEdge: 'top',
           targetEdge: 'bottom',
         };
@@ -324,7 +299,7 @@ export function Grid(props: GridProps) {
           (group2.end.row + 1) * cellHeight,
         );
         return {
-          x: xScale(group1.end.col + 1),
+          x: xScale(group1.end.col + 1) - ARROW_OFFSET,
           y: (startY + endY) / 2,
           sourceEdge: 'right',
           targetEdge: 'left',
@@ -356,6 +331,7 @@ export function Grid(props: GridProps) {
       );
       if (!targetGroup) return null;
 
+      // get the shared edge center between the source and target group
       const sharedEdgeInfo = getSharedEdgeCenter(sourceGroup, targetGroup);
       if (!sharedEdgeInfo) return null;
 
@@ -427,7 +403,11 @@ export function Grid(props: GridProps) {
 
           <path
             className={styles.arrowHead}
-            d={`M ${targetPoint.x} ${targetPoint.y} L ${arrowPoint1.x} ${arrowPoint1.y} M ${targetPoint.x} ${targetPoint.y} L ${arrowPoint2.x} ${arrowPoint2.y}`}
+            d={`M ${targetPoint.x} ${targetPoint.y + 0.5} L ${arrowPoint1.x} ${
+              arrowPoint1.y
+            } M ${targetPoint.x - 0.5} ${targetPoint.y} L ${arrowPoint2.x} ${
+              arrowPoint2.y
+            }`}
             stroke="white"
             strokeWidth="2"
             fill="none"
@@ -437,27 +417,16 @@ export function Grid(props: GridProps) {
     });
   };
 
-  // Calculate the full chart dimensions, regardless of axis visibility
-  const fullChartWidth = dimensions.width - yAxisLabelWidth - Y_LABEL_OFFSET;
-  const fullChartHeight = dimensions.height - xAxisHeight;
-
-  // Use these dimensions for the actual chart area
-  const chartWidth = fullChartWidth;
-  const chartHeight = fullChartHeight;
-
-  const cellWidth = chartWidth / data[0].data.length;
-  const cellHeight = chartHeight / data.length;
-
   const rawChartPositions = useChartPositions({
     height: Math.max(fullChartHeight, 1),
     width: Math.max(fullChartWidth, 1),
     xAxisHeight: Math.max(xAxisHeight, 0),
-    yAxisWidth: yAxisLabelWidth,
+    yAxisWidth: Y_AXIS_LABEL_WIDTH,
     annotationsHeight: 0,
   });
 
   const chartPositions: ChartPositions = useMemo(() => {
-    const yAxisTotalWidth = yAxisLabelWidth + Y_LABEL_OFFSET + 120;
+    const yAxisTotalWidth = Y_AXIS_LABEL_WIDTH + Y_LABEL_OFFSET + 120;
     return {
       chartXPosition: rawChartPositions.chartXPosition ?? yAxisTotalWidth,
       chartYPosition: 0,
@@ -472,13 +441,12 @@ export function Grid(props: GridProps) {
       yAxisBounds: {
         x: 120,
         y: 0,
-        width: yAxisLabelWidth,
+        width: Y_AXIS_LABEL_WIDTH,
         height: fullChartHeight,
       },
     };
   }, [
     rawChartPositions,
-    yAxisLabelWidth,
     dimensions,
     xAxisHeight,
     fullChartWidth,
@@ -492,33 +460,20 @@ export function Grid(props: GridProps) {
       const groupValue = group.value;
       const groupSecondaryValue = group.secondaryValue;
       let opacity = 1;
-      let cellOpacity = 0.9;
+      let cellOpacity = 1;
 
       const isMainActive = hoveredGroup?.name === group.name;
       const isActiveGroup = hoveredGroups.has(group.name);
 
       const isSelected = selectedGroup?.name === group.name;
+      const isActive = selectedGroup
+        ? isSelected
+        : hoveredGroups.size > 0 && (isMainActive || isActiveGroup);
 
-      if (selectedGroup) {
-        if (isSelected) {
-          opacity = 1;
-          cellOpacity = 0.9;
-        } else {
-          opacity = 0.3;
-          cellOpacity = 0.3;
-        }
-      } else if (hoveredGroups.size > 0) {
-        if (isMainActive || isActiveGroup) {
-          opacity = 1;
-          cellOpacity = 0.9;
-        } else {
-          opacity = 0.3;
-          cellOpacity = 0.3;
-        }
-      }
+      opacity = isActive || hoveredGroups.size === 0 ? 1 : 0.3;
+      cellOpacity = isActive || hoveredGroups.size === 0 ? 1 : 0.3;
 
       const groupNameOffset = 10;
-
       const showNameAndSecondaryValue = dimensions.width >= 460;
       const mainFontSize = showNameAndSecondaryValue
         ? 20
@@ -543,10 +498,12 @@ export function Grid(props: GridProps) {
             y={group.start.row * cellHeight}
             width={groupWidth}
             height={groupHeight}
-            fill={getColor(group)}
+            fill={getColors(group).bgColor}
             opacity={cellOpacity}
             stroke="white"
-            strokeWidth="1"
+            strokeWidth="4"
+            rx="4"
+            ry="4"
           />
 
           <text
@@ -554,7 +511,7 @@ export function Grid(props: GridProps) {
             y={group.start.row * cellHeight + groupHeight / 2}
             textAnchor="middle"
             dominantBaseline="middle"
-            fill="white"
+            fill={getColors(group).textColor}
             opacity={opacity}
           >
             <tspan fontWeight={600} fontSize={`${mainFontSize}px`}>
@@ -574,7 +531,7 @@ export function Grid(props: GridProps) {
               textAnchor="start"
               dominantBaseline="hanging"
               fontSize={11}
-              fill="white"
+              fill={getColors(group).textColor}
               opacity={opacity}
             >
               {group.name}
@@ -585,72 +542,17 @@ export function Grid(props: GridProps) {
     });
   };
 
-  const renderGridLines = () => {
-    if (tooltipInfo || !showGrid) {
-      return null;
-    }
-    const verticalLines = xLabels.map((_, index) => (
-      <line
-        key={`vline-${index}`}
-        x1={xScale(index)}
-        y1={0}
-        x2={xScale(index)}
-        y2={chartHeight}
-        stroke="#081848"
-        strokeWidth="1"
-        opacity={1}
-      />
-    ));
-
-    // Add the last vertical line
-    verticalLines.push(
-      <line
-        key={`vline-${xLabels.length}`}
-        x1={chartWidth}
-        y1={0}
-        x2={chartWidth}
-        y2={chartHeight}
-        stroke="#081848"
-        strokeWidth="1"
-        opacity={1}
-      />,
-    );
-
-    const horizontalLines = data.map((_, index) => (
-      <line
-        key={`hline-${index}`}
-        x1={0}
-        y1={index * cellHeight}
-        x2={chartWidth}
-        y2={index * cellHeight}
-        stroke="#081848"
-        strokeWidth="1"
-        opacity={1}
-      />
-    ));
-
-    // Add an extra horizontal line at the bottom
-    horizontalLines.push(
-      <line
-        key="hline-bottom"
-        x1={0}
-        y1={chartHeight}
-        x2={chartWidth}
-        y2={chartHeight}
-        stroke="#081848"
-        strokeWidth="1"
-        opacity={0.3}
-      />,
-    );
-
-    return [...verticalLines, ...horizontalLines];
-  };
-
-  const getColor = (group: CellGroup | null) => {
+  const getColors = (group: CellGroup | null) => {
     if (group) {
-      return group.color;
+      return {
+        bgColor: group.bgColor,
+        textColor: group.color,
+      };
     }
-    return 'blue';
+    return {
+      bgColor: 'blue',
+      textColor: '#000000',
+    };
   };
 
   const yTicks = useMemo(() => {
@@ -668,11 +570,11 @@ export function Grid(props: GridProps) {
     [data],
   );
 
-  const xAxisLabelWidth = chartWidth / xLabels.length;
+  const xAxisLabelWidth = fullChartWidth / xLabels.length;
 
   const xScale = useMemo(
-    () => scaleLinear().domain([0, xLabels.length]).range([0, chartWidth]),
-    [xLabels.length, chartWidth],
+    () => scaleLinear().domain([0, xLabels.length]).range([0, fullChartWidth]),
+    [xLabels.length, fullChartWidth],
   );
 
   const renderTooltip = () => {
@@ -795,7 +697,7 @@ export function Grid(props: GridProps) {
             )}
             <YAxis
               ticks={yTicks}
-              width={yAxisLabelWidth}
+              width={Y_AXIS_LABEL_WIDTH}
               textAlign="right"
               ariaHidden
               x={0}
@@ -804,8 +706,8 @@ export function Grid(props: GridProps) {
           </g>
 
           {/* Main chart content */}
-          <g transform={`translate(${yAxisLabelWidth + Y_LABEL_OFFSET}, 0)`}>
-            {renderGridLines()}
+          <g transform={`translate(${Y_AXIS_LABEL_WIDTH + Y_LABEL_OFFSET}, 0)`}>
+            {/* {renderGridLines()} */}
             {renderHeatmap()}
             {renderArrows()}
           </g>
@@ -817,13 +719,13 @@ export function Grid(props: GridProps) {
               labels={xLabels}
               labelWidth={xAxisLabelWidth}
               onHeightChange={setXAxisHeight}
-              x={yAxisLabelWidth + Y_LABEL_OFFSET}
+              x={Y_AXIS_LABEL_WIDTH + Y_LABEL_OFFSET}
               y={chartPositions.xAxisBounds.y + Y_LABEL_OFFSET}
               xScale={xScale}
               ariaHidden
             />
             <text
-              x={yAxisLabelWidth + Y_LABEL_OFFSET}
+              x={Y_AXIS_LABEL_WIDTH + Y_LABEL_OFFSET}
               y={dimensions.height + xAxisHeight / 2}
               textAnchor="start"
               dominantBaseline="bottom"
