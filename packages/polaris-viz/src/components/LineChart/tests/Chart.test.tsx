@@ -134,20 +134,6 @@ describe('<Chart />', () => {
     expect(chart).toContainReactComponent(YAxis);
   });
 
-  it('renders a <Crosshair /> at full opacity if there is an active point', () => {
-    const chart = mount(<Chart {...MOCK_PROPS} />);
-
-    triggerSVGMouseMove(chart);
-
-    expect(chart.find(Crosshair)).toHaveReactProps({opacity: 1});
-  });
-
-  it('renders a <Crosshair /> at 0 opacity if there is no active point', () => {
-    const chart = mount(<Chart {...MOCK_PROPS} />);
-
-    expect(chart.find(Crosshair)).toHaveReactProps({opacity: 0});
-  });
-
   it('renders a <LineSeries /> for each data-point', () => {
     const chart = mount(
       <Chart
@@ -232,6 +218,42 @@ describe('<Chart />', () => {
     expect(chart).toContainReactComponent(VisuallyHiddenRows, {
       data: MOCK_PROPS.data,
       xAxisLabels: MOCK_DATA.data.map(({key}) => `${key}`),
+    });
+  });
+
+  describe('<Crosshair />', () => {
+    it('renders a <Crosshair /> at full opacity if there is an active point', () => {
+      const chart = mount(<Chart {...MOCK_PROPS} />);
+
+      triggerSVGMouseMove(chart);
+
+      expect(chart.find(Crosshair)).toHaveReactProps({opacity: 1});
+    });
+
+    it('renders a <Crosshair /> at 0 opacity if there is no active point', () => {
+      const chart = mount(<Chart {...MOCK_PROPS} />);
+
+      expect(chart.find(Crosshair)).toHaveReactProps({opacity: 0});
+    });
+
+    it('correctly positions <Crosshair /> for single data point', () => {
+      const mockSingleDataPoint: Required<LineChartDataSeriesWithDefaults> = {
+        ...MOCK_DATA,
+        data: [{key: 'Apr 1', value: 1500}],
+      };
+
+      const chart = mount(
+        <Chart {...MOCK_PROPS} data={[mockSingleDataPoint]} />,
+      );
+
+      triggerSVGMouseMove(chart);
+
+      const crosshair = chart.find(Crosshair);
+
+      expect(crosshair).toHaveReactProps({
+        opacity: 1,
+        x: 173.5,
+      });
     });
   });
 
