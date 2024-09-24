@@ -10,9 +10,13 @@ export const Default: Story<GridProps> = Template.bind({});
 Default.args = {
   cellGroups: CELL_GROUPS,
   xAxisOptions: {
-    label:  'Recency score'
+    label: 'Recency score',
+    lowLabel: 'Low',
+    highLabel: 'High'
   },
   yAxisOptions: {
-    label: 'Frequency + Monetary value score'
+    label: 'Frequency + Monetary value score',
+    lowLabel: 'Low',
+    highLabel: 'High'
   }
 };

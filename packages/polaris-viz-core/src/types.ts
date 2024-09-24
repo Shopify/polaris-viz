@@ -73,7 +73,10 @@ export interface XAxisOptions {
   hide?: boolean;
   allowLineWrap?: boolean;
   label?: string;
+  lowLabel?: string;
+  highLabel?: string;
 }
+
 export interface YAxisOptions {
   labelFormatter?: LabelFormatter;
   hide?: boolean;
@@ -81,6 +84,8 @@ export interface YAxisOptions {
   fixedWidth?: number | false;
   maxYOverride?: number | null;
   label?: string;
+  lowLabel?: string;
+  highLabel?: string;
 }
 
 // === Theme types === //
