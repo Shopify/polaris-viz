@@ -10,6 +10,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Fixed
 
 - Fixed an issue in the `LineChart` where the crosshair and tooltip were incorrectly positioned for single data points. The animation logic now correctly bypasses for single data points, ensuring accurate positioning.
+- Fixed an issue where `DataSeries` with different lengths would crash the `StackedAreaChart`.
 
 ## [15.0.0] - 2024-09-16
 

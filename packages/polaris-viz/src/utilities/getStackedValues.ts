@@ -22,7 +22,7 @@ export function getStackedValues({series, labels, order, offset}: Options) {
     series.reduce((acc, {name, data}, index) => {
       const indexData = data[labelIndex];
       const namedData = {
-        [getKey(index, name)]: indexData.value == null ? 0 : indexData.value,
+        [getKey(index, name)]: indexData?.value == null ? 0 : indexData.value,
       };
 
       return Object.assign(acc, namedData);
