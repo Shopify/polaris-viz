@@ -53,13 +53,14 @@ export function Annotations({
     const annotations = Object.keys(annotationsLookupTable)
       .map((key) => {
         const annotation = annotationsLookupTable[key];
+
+        if (annotation == null || annotation.axis === 'y') {
+          return null;
+        }
+
         const formattedKey = labelFormatter(key);
 
-        if (
-          !formattedLabels.includes(formattedKey) ||
-          annotation == null ||
-          annotation.axis === 'y'
-        ) {
+        if (!formattedLabels.includes(formattedKey)) {
           return null;
         }
 
