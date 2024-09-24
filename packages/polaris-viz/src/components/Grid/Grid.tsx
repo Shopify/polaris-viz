@@ -1,5 +1,3 @@
-import {Y_AXIS_LABEL_OFFSET} from 'constants';
-
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import type {
   LabelFormatter,
@@ -101,6 +99,7 @@ export function Grid(props: GridProps) {
   const [xAxisLabelMinWidth, setXAxisLabelWidth] = useState(0);
   const [tooltipHeight, setTooltipHeight] = useState(0);
   const [animationStarted, setAnimationStarted] = useState(false);
+  const [isSmallContainer, setIsSmallContainer] = useState(false);
 
   const {
     cellGroups = [],
@@ -185,22 +184,24 @@ export function Grid(props: GridProps) {
 
   const handleGroupHover = useCallback(
     (group: CellGroup | null, event: React.MouseEvent) => {
-      if (group) {
-        setHoveredGroups(getActiveGroups(group));
-        setHoveredGroup(group);
-        const tooltipInfo = getTooltipInfo(group, event);
-        if (tooltipInfo) {
-          setTooltipInfo(tooltipInfo);
-          setIsTooltipVisible(true);
+      if (!isSmallContainer) {
+        if (group) {
+          setHoveredGroups(getActiveGroups(group));
+          setHoveredGroup(group);
+          const tooltipInfo = getTooltipInfo(group, event);
+          if (tooltipInfo) {
+            setTooltipInfo(tooltipInfo);
+            setIsTooltipVisible(true);
+          }
+        } else {
+          setHoveredGroups(new Set());
+          setHoveredGroup(null);
+          setTooltipInfo(null);
+          setIsTooltipVisible(false);
         }
-      } else {
-        setHoveredGroups(new Set());
-        setHoveredGroup(null);
-        setTooltipInfo(null);
-        setIsTooltipVisible(false);
       }
     },
-    [getTooltipInfo],
+    [getTooltipInfo, isSmallContainer],
   );
 
   const renderArrows = () => {
@@ -595,6 +596,12 @@ export function Grid(props: GridProps) {
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    if (entry?.contentRect) {
+      setIsSmallContainer(entry.contentRect.width <= 400);
+    }
+  }, [entry]);
+
   const renderXAxisLabels = () => {
     const animationDelay = animationStarted ? '0.5s' : '0s';
 
@@ -610,19 +617,22 @@ export function Grid(props: GridProps) {
           xScale={xScale}
           ariaHidden
         />
-
-        <text
-          x={dimensions.width + Y_LABEL_OFFSET}
-          y={dimensions.height + xAxisHeight / 2}
-          textAnchor="end"
-          dominantBaseline="bottom"
-          fontSize="12"
-          fill="#B5B5B5"
-          className={styles.fadeInLabel}
-          style={{animationDelay}}
-        >
-          High
-        </text>
+        {!isSmallContainer && (
+          <React.Fragment>
+            <text
+              x={dimensions.width + Y_LABEL_OFFSET}
+              y={dimensions.height + xAxisHeight / 2}
+              textAnchor="end"
+              dominantBaseline="bottom"
+              fontSize="12"
+              fill="#B5B5B5"
+              className={styles.fadeInLabel}
+              style={{animationDelay}}
+            >
+              {xAxisOptionsWithDefaults.highLabel}
+            </text>
+          </React.Fragment>
+        )}
         {xAxisOptionsWithDefaults.label && (
           <text
             ref={(node) => {
@@ -685,31 +695,34 @@ export function Grid(props: GridProps) {
           x={0}
           y={0}
         />
-        <text
-          x={LOW_HIGH_LABEL_OFFSET}
-          y={0}
-          textAnchor="end"
-          dominantBaseline="hanging"
-          fontSize="12"
-          fill="#B5B5B5"
-          className={styles.fadeInLabel}
-          style={{animationDelay}}
-        >
-          High
-        </text>
-
-        <text
-          x={LOW_HIGH_LABEL_OFFSET}
-          y={dimensions.height + xAxisHeight / 2}
-          textAnchor="end"
-          dominantBaseline="bottom"
-          fontSize="12"
-          fill="#B5B5B5"
-          className={styles.fadeInLabel}
-          style={{animationDelay}}
-        >
-          Low
-        </text>
+        {!isSmallContainer && (
+          <React.Fragment>
+            <text
+              x={LOW_HIGH_LABEL_OFFSET}
+              y={0}
+              textAnchor="end"
+              dominantBaseline="hanging"
+              fontSize="12"
+              fill="#B5B5B5"
+              className={styles.fadeInLabel}
+              style={{animationDelay}}
+            >
+              {xAxisOptionsWithDefaults.highLabel}
+            </text>
+            <text
+              x={LOW_HIGH_LABEL_OFFSET}
+              y={dimensions.height + xAxisHeight / 2}
+              textAnchor="end"
+              dominantBaseline="bottom"
+              fontSize="12"
+              fill="#B5B5B5"
+              className={styles.fadeInLabel}
+              style={{animationDelay}}
+            >
+              {xAxisOptionsWithDefaults.lowLabel}
+            </text>
+          </React.Fragment>
+        )}
       </React.Fragment>
     );
   };
@@ -730,7 +743,7 @@ export function Grid(props: GridProps) {
           {/* Main chart content */}
           <g transform={`translate(${Y_AXIS_LABEL_WIDTH + Y_LABEL_OFFSET}, 0)`}>
             {renderHeatmap()}
-            {renderArrows()}
+            {!isSmallContainer && renderArrows()}
           </g>
 
           {/* X-Axis */}
@@ -738,7 +751,7 @@ export function Grid(props: GridProps) {
             {renderXAxisLabels()}
           </g>
 
-          {isTooltipVisible && renderTooltip()}
+          {!isSmallContainer && isTooltipVisible && renderTooltip()}
         </svg>
       </div>
     </ChartContainer>

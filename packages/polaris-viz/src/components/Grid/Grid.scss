@@ -6,7 +6,6 @@
 }
 
 .groupCell {
-  cursor: pointer;
   opacity: var(--animation-opacity, 0);
   transform: scale(var(--animation-scale, 0.5));
   transition: opacity 0.3s ease-out var(--animation-delay, 0ms),
@@ -14,8 +13,6 @@
 }
 
 .animatedArrow {
-  cursor: pointer;
-
   .arrowShaft {
     stroke-dasharray: 25;
     stroke-dashoffset: 25;

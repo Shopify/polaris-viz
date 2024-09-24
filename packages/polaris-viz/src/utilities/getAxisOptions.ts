@@ -13,6 +13,8 @@ export function getYAxisOptionsWithDefaults(
     maxYOverride: null,
     label: '',
     hide: false,
+    lowLabel: '',
+    highLabel: '',
     ...yAxisOptionsFiltered,
   };
 }
@@ -27,6 +29,8 @@ export function getXAxisOptionsWithDefaults(
     hide: false,
     allowLineWrap: true,
     label: '',
+    lowLabel: '',
+    highLabel: '',
     ...xAxisOptionsFiltered,
   };
 }
