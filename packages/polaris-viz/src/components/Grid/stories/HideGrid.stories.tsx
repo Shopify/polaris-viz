@@ -2,7 +2,7 @@ import type {Story} from '@storybook/react';
 
 export {META as default} from './meta';
 
-import {CELL_GROUPS, DEFAULT_DATA, Template} from './data';
+import {CELL_GROUPS, Template} from './data';
 import {GridProps} from '../Grid';
 
 export const HideGrid: Story<GridProps> = Template.bind({});
