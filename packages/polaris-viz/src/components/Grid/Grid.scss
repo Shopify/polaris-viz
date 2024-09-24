@@ -1,5 +1,18 @@
 @import '../../styles/common';
 
+.container {
+  width: 100%;
+  height: 90%;
+}
+
+.groupCell {
+  cursor: pointer;
+  opacity: var(--animation-opacity, 0);
+  transform: scale(var(--animation-scale, 0.5));
+  transition: opacity 0.3s ease-out var(--animation-delay, 0ms),
+    transform 0.3s ease-out var(--animation-delay, 0ms);
+}
+
 .animatedArrow {
   cursor: pointer;
 
@@ -22,9 +35,16 @@
 }
 
 @keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
   to {
     opacity: 1;
   }
+}
+
+.fadeIn {
+  animation: fadeIn 0.3s ease-in-out;
 }
 
 .Tooltip {
@@ -36,4 +56,45 @@
   border-radius: 12px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border: 1px solid lightgray;
+}
+
+.fadeInLabel {
+  opacity: 0;
+  animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+.TooltipTitle {
+  font-weight: 700;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 8px;
+}
+
+.TooltipDescription {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #333333;
+  margin-bottom: 8px;
+}
+
+.TooltipGoal {
+  display: flex;
+  gap: 5px;
+  padding: 4px;
+  align-items: center;
+  background: #f1f1f1;
+  margin-top: 12px;
+  border-radius: 4px;
+}
+
+.GroupGoal {
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.2;
+  color: #303030;
 }

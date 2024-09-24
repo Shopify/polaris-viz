@@ -1,6 +1,7 @@
+import {Y_AXIS_LABEL_OFFSET} from 'constants';
+
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import type {
-  ChartProps,
   LabelFormatter,
   XAxisOptions,
   YAxisOptions,
@@ -23,13 +24,13 @@ import {ChartContainer} from '../ChartContainer';
 
 import styles from './Grid.scss';
 
-export type GridProps = {
+export interface GridProps {
   labelFormatter?: LabelFormatter;
   cellGroups: CellGroup[];
   xAxisOptions?: Partial<XAxisOptions>;
   yAxisOptions?: Partial<YAxisOptions>;
   showGrid?: boolean;
-} & ChartProps;
+}
 
 interface CellGroup {
   start: {row: number; col: number};
@@ -38,7 +39,7 @@ interface CellGroup {
   color: string;
   name: string;
   description: string;
-  goal: string;
+  goal: string | null;
   connectedGroups?: string[];
   secondaryValue: string;
   value: string;
@@ -85,6 +86,7 @@ const X_LABEL_OFFSET = 40;
 // offset for the arrows so that they overlap with the cells. We want the arrow to start 5px before the cell starts
 const ARROW_OFFSET = 5;
 const Y_AXIS_LABEL_WIDTH = 50;
+const LOW_HIGH_LABEL_OFFSET = 60;
 
 export function Grid(props: GridProps) {
   const {defaultTheme} = usePolarisVizContext();
@@ -92,19 +94,16 @@ export function Grid(props: GridProps) {
   const [xAxisHeight, setXAxisHeight] = useState(40);
   const [hoveredGroups, setHoveredGroups] = useState<Set<string>>(new Set());
   const [hoveredGroup, setHoveredGroup] = useState<CellGroup | null>(null);
-  const {ref: containerRef, setRef, entry} = useResizeObserver();
+  const {setRef, entry} = useResizeObserver();
   const [tooltipInfo, setTooltipInfo] = useState<TooltipInfo | null>(null);
   const [isTooltipVisible, setIsTooltipVisible] = useState(false);
-  const [selectedGroup, setSelectedGroup] = useState<CellGroup | null>(null);
-  const [isTooltipLocked, setIsTooltipLocked] = useState(false);
   const [yAxisLabelMinWidth, setYAxisLabelWidth] = useState(0);
-  const [xAxisLabelMinWidth, setXAxisLabelWdith] = useState(0);
+  const [xAxisLabelMinWidth, setXAxisLabelWidth] = useState(0);
   const [tooltipHeight, setTooltipHeight] = useState(0);
+  const [animationStarted, setAnimationStarted] = useState(false);
 
   const {
-    data,
     cellGroups = [],
-    id,
     isAnimated,
     theme = defaultTheme,
     xAxisOptions = {},
@@ -125,11 +124,17 @@ export function Grid(props: GridProps) {
     [entry],
   );
 
+  const gridDimensions = useMemo(() => {
+    const maxRow = Math.max(...cellGroups.map((group) => group.end.row)) + 1;
+    const maxCol = Math.max(...cellGroups.map((group) => group.end.col)) + 1;
+    return {rows: maxRow, cols: maxCol};
+  }, [cellGroups]);
+
   const fullChartWidth = dimensions.width - Y_AXIS_LABEL_WIDTH;
   const fullChartHeight = dimensions.height - xAxisHeight;
 
-  const cellWidth = fullChartWidth / data[0].data.length;
-  const cellHeight = fullChartHeight / data.length;
+  const cellWidth = fullChartWidth / gridDimensions.cols;
+  const cellHeight = fullChartHeight / gridDimensions.rows;
 
   const getActiveGroups = (group: CellGroup | null) => {
     if (!group) return new Set<string>();
@@ -162,7 +167,7 @@ export function Grid(props: GridProps) {
       } else {
         // Position at the top
         x = rect.left - containerRect.left + rect.width / 2 - TOOLTIP_WIDTH / 2;
-        y = rect.top - containerRect.top - tooltipHeight;
+        y = rect.top - containerRect.top - tooltipHeight + 30;
         placement = 'top';
       }
 
@@ -180,11 +185,6 @@ export function Grid(props: GridProps) {
 
   const handleGroupHover = useCallback(
     (group: CellGroup | null, event: React.MouseEvent) => {
-      if (isTooltipLocked) {
-        // If tooltip is locked, don't change it on hover
-        return;
-      }
-
       if (group) {
         setHoveredGroups(getActiveGroups(group));
         setHoveredGroup(group);
@@ -200,49 +200,8 @@ export function Grid(props: GridProps) {
         setIsTooltipVisible(false);
       }
     },
-    [isTooltipLocked, getTooltipInfo],
+    [getTooltipInfo],
   );
-
-  const handleGroupClick = useCallback(
-    (group: CellGroup, event: React.MouseEvent) => {
-      event.stopPropagation();
-      if (selectedGroup && selectedGroup.name === group.name) {
-        // If clicking the same group, unlock the tooltip
-        setIsTooltipLocked(false);
-        setSelectedGroup(null);
-      } else {
-        // Select the new group and lock its tooltip
-        setSelectedGroup(group);
-        setIsTooltipLocked(true);
-
-        // Set tooltip info for the clicked group
-        const tooltipInfo = getTooltipInfo(group, event);
-        setTooltipInfo(tooltipInfo);
-        setIsTooltipVisible(true);
-      }
-    },
-    [selectedGroup, getTooltipInfo],
-  );
-
-  const handleClickOutside = useCallback(
-    (event: MouseEvent) => {
-      if (containerRef && !containerRef.contains(event.target as Node)) {
-        setIsTooltipVisible(false);
-        setHoveredGroups(new Set());
-        setTooltipInfo(null);
-        setSelectedGroup(null);
-        setIsTooltipLocked(false);
-      }
-    },
-    [containerRef],
-  );
-
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [handleClickOutside]);
 
   const renderArrows = () => {
     if (!hoveredGroup) return null;
@@ -465,10 +424,8 @@ export function Grid(props: GridProps) {
       const isMainActive = hoveredGroup?.name === group.name;
       const isActiveGroup = hoveredGroups.has(group.name);
 
-      const isSelected = selectedGroup?.name === group.name;
-      const isActive = selectedGroup
-        ? isSelected
-        : hoveredGroups.size > 0 && (isMainActive || isActiveGroup);
+      const isActive =
+        hoveredGroups.size > 0 && (isMainActive || isActiveGroup);
 
       opacity = isActive || hoveredGroups.size === 0 ? 1 : 0.3;
       cellOpacity = isActive || hoveredGroups.size === 0 ? 1 : 0.3;
@@ -480,18 +437,21 @@ export function Grid(props: GridProps) {
         : Math.min(groupWidth, cellHeight) / 4;
       const secondaryFontSize = mainFontSize * 0.6;
 
+      const animationDelay = animationStarted ? `${index * 50}ms` : '0ms';
+
       return (
         <g
           key={`group-${index}`}
           onMouseEnter={(event) => handleGroupHover(group, event)}
-          onMouseLeave={(event) => {
-            if (!isTooltipLocked) {
-              handleGroupHover(null, event);
-            }
-          }}
-          onClick={(event) => handleGroupClick(group, event)}
-          className={styles.animatedArrow}
-          style={{cursor: 'pointer'}}
+          onMouseLeave={(event) => handleGroupHover(null, event)}
+          className={`${styles.animatedArrow} ${styles.groupCell}`}
+          style={
+            {
+              '--animation-delay': animationDelay,
+              '--animation-scale': animationStarted ? 1 : 0.5,
+              '--animation-opacity': animationStarted ? 1 : 0,
+            } as React.CSSProperties
+          }
         >
           <rect
             x={xScale(group.start.col)}
@@ -530,7 +490,7 @@ export function Grid(props: GridProps) {
               y={group.start.row * cellHeight + groupNameOffset}
               textAnchor="start"
               dominantBaseline="hanging"
-              fontSize={11}
+              fontSize="11"
               fill={getColors(group).textColor}
               opacity={opacity}
             >
@@ -556,25 +516,26 @@ export function Grid(props: GridProps) {
   };
 
   const yTicks = useMemo(() => {
-    return data.map((row, index) => ({
+    return Array.from({length: gridDimensions.rows}, (_, index) => ({
       value: index,
-      label: row.name || '',
-      formattedValue: row.name || '',
-      // Center the label vertically in the cell
+      label: `${index + 1}`,
+      formattedValue: `${index + 1}`,
       yOffset: index * cellHeight + cellHeight / 2,
     }));
-  }, [cellHeight, data]);
+  }, [cellHeight, gridDimensions.rows]);
 
   const xLabels = useMemo(
-    () => data[0].data.map((cell) => String(cell.key)),
-    [data],
+    () =>
+      Array.from({length: gridDimensions.cols}, (_, index) => `${index + 1}`),
+    [gridDimensions.cols],
   );
 
   const xAxisLabelWidth = fullChartWidth / xLabels.length;
 
   const xScale = useMemo(
-    () => scaleLinear().domain([0, xLabels.length]).range([0, fullChartWidth]),
-    [xLabels.length, fullChartWidth],
+    () =>
+      scaleLinear().domain([0, gridDimensions.cols]).range([0, fullChartWidth]),
+    [gridDimensions.cols, fullChartWidth],
   );
 
   const renderTooltip = () => {
@@ -596,77 +557,166 @@ export function Grid(props: GridProps) {
             }}
             className={styles.Tooltip}
           >
-            <div
-              style={{
-                fontWeight: 'bold',
-                fontSize: '12px',
-                whiteSpace: 'nowrap',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                marginBottom: '8px',
-              }}
-            >
-              {groupName}
-            </div>
-            <div
-              style={{
-                display: '-webkit-box',
-                WebkitLineClamp: 3,
-                WebkitBoxOrient: 'vertical',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                color: '#333333',
-              }}
-            >
-              {groupDescription}
-            </div>
+            <div className={styles.TooltipTitle}>{groupName}</div>
+            <div className={styles.TooltipDescription}>{groupDescription}</div>
 
-            <div
-              style={{
-                display: 'flex',
-                gap: '5px',
-                padding: '4px',
-                alignItems: 'center',
-                background: '#F1F1F1',
-                marginTop: '12px',
-                borderRadius: '4px',
-              }}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="2.5"
-                stroke="currentColor"
-                style={{height: '13px', width: '20px'}}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
-                />
-              </svg>
+            {groupGoal && (
+              <div className={styles.TooltipGoal}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="2.5"
+                  stroke="currentColor"
+                  style={{height: '13px', width: '20px'}}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+                  />
+                </svg>
 
-              <p
-                style={{
-                  margin: '0',
-                  fontSize: '11px',
-                  lineHeight: '1.2',
-                  color: '#303030',
-                }}
-              >
-                Goal: {groupGoal}
-              </p>
-            </div>
+                <p className={styles.GroupGoal}>{groupGoal}</p>
+              </div>
+            )}
           </div>
         </foreignObject>
       </g>
     );
   };
 
+  useEffect(() => {
+    // Trigger animation after a short delay to ensure DOM is ready
+    const timer = setTimeout(() => {
+      setAnimationStarted(true);
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const renderXAxisLabels = () => {
+    const animationDelay = animationStarted ? '0.5s' : '0s';
+
+    return (
+      <React.Fragment>
+        <XAxis
+          allowLineWrap={false}
+          labels={xLabels}
+          labelWidth={xAxisLabelWidth}
+          onHeightChange={setXAxisHeight}
+          x={Y_AXIS_LABEL_WIDTH + Y_LABEL_OFFSET}
+          y={chartPositions.xAxisBounds.y + Y_LABEL_OFFSET}
+          xScale={xScale}
+          ariaHidden
+        />
+
+        <text
+          x={dimensions.width + Y_LABEL_OFFSET}
+          y={dimensions.height + xAxisHeight / 2}
+          textAnchor="end"
+          dominantBaseline="bottom"
+          fontSize="12"
+          fill="#B5B5B5"
+          className={styles.fadeInLabel}
+          style={{animationDelay}}
+        >
+          High
+        </text>
+        {xAxisOptionsWithDefaults.label && (
+          <text
+            ref={(node) => {
+              if (!xAxisLabelMinWidth && node?.getBBox()?.width) {
+                setXAxisLabelWidth(node?.getBBox()?.width);
+              }
+            }}
+            x={
+              (chartPositions.xAxisBounds.x +
+                chartPositions.xAxisBounds.width) /
+              2
+            }
+            y={dimensions.height + X_LABEL_OFFSET}
+            fontSize="14"
+            fill="#6b7177"
+            textAnchor="middle"
+            className={styles.fadeInLabel}
+            style={{animationDelay}}
+          >
+            {xAxisOptionsWithDefaults.label}
+          </text>
+        )}
+      </React.Fragment>
+    );
+  };
+
+  const renderYAxisLabels = () => {
+    const animationDelay = animationStarted ? '0.5s' : '0s';
+
+    return (
+      <React.Fragment>
+        {yAxisOptionsWithDefaults.label && (
+          <text
+            ref={(node) => {
+              if (!yAxisLabelMinWidth && node?.getBBox()?.width) {
+                setYAxisLabelWidth(node?.getBBox()?.width);
+              }
+            }}
+            x={chartPositions.yAxisBounds.x}
+            y={chartPositions.yAxisBounds.x - Y_LABEL_OFFSET}
+            textAnchor="middle"
+            dominantBaseline="middle"
+            fontSize="14"
+            fill="#6b7177"
+            transform={`rotate(-90, ${chartPositions.yAxisBounds.x}, ${
+              chartPositions.yAxisBounds.y +
+              chartPositions.yAxisBounds.height / 2
+            })`}
+            className={styles.fadeInLabel}
+            style={{animationDelay}}
+          >
+            {yAxisOptionsWithDefaults.label}
+          </text>
+        )}
+        <YAxis
+          ticks={yTicks}
+          width={Y_AXIS_LABEL_WIDTH}
+          textAlign="right"
+          ariaHidden
+          x={0}
+          y={0}
+        />
+        <text
+          x={LOW_HIGH_LABEL_OFFSET}
+          y={0}
+          textAnchor="end"
+          dominantBaseline="hanging"
+          fontSize="12"
+          fill="#B5B5B5"
+          className={styles.fadeInLabel}
+          style={{animationDelay}}
+        >
+          High
+        </text>
+
+        <text
+          x={LOW_HIGH_LABEL_OFFSET}
+          y={dimensions.height + xAxisHeight / 2}
+          textAnchor="end"
+          dominantBaseline="bottom"
+          fontSize="12"
+          fill="#B5B5B5"
+          className={styles.fadeInLabel}
+          style={{animationDelay}}
+        >
+          Low
+        </text>
+      </React.Fragment>
+    );
+  };
+
   return (
-    <ChartContainer id={id} isAnimated={isAnimated} data={data} theme={theme}>
-      <div id="container" ref={setRef} style={{width: '100%', height: '90%'}}>
+    <ChartContainer id="grid" isAnimated={isAnimated} theme={theme}>
+      <div id="container" ref={setRef} className={styles.container}>
         <svg
           width="100%"
           height="100%"
@@ -674,99 +724,21 @@ export function Grid(props: GridProps) {
         >
           {/* Y-Axis */}
           <g opacity={yAxisOptionsWithDefaults?.hide ? 0 : 1}>
-            {yAxisOptionsWithDefaults.label && (
-              <text
-                ref={(node) => {
-                  if (!yAxisLabelMinWidth && node?.getBBox()?.width) {
-                    setYAxisLabelWidth(node?.getBBox()?.width);
-                  }
-                }}
-                x={chartPositions.yAxisBounds.x}
-                y={chartPositions.yAxisBounds.x - Y_LABEL_OFFSET}
-                textAnchor="middle"
-                dominantBaseline="middle"
-                fontSize="14"
-                fill="#6b7177"
-                transform={`rotate(-90, ${chartPositions.yAxisBounds.x}, ${
-                  chartPositions.yAxisBounds.y +
-                  chartPositions.yAxisBounds.height / 2
-                })`}
-              >
-                {yAxisOptionsWithDefaults.label}
-              </text>
-            )}
-            <YAxis
-              ticks={yTicks}
-              width={Y_AXIS_LABEL_WIDTH}
-              textAlign="right"
-              ariaHidden
-              x={0}
-              y={0}
-            />
+            {renderYAxisLabels()}
           </g>
 
           {/* Main chart content */}
           <g transform={`translate(${Y_AXIS_LABEL_WIDTH + Y_LABEL_OFFSET}, 0)`}>
-            {/* {renderGridLines()} */}
             {renderHeatmap()}
             {renderArrows()}
           </g>
 
           {/* X-Axis */}
           <g opacity={xAxisOptionsWithDefaults?.hide ? 0 : 1}>
-            <XAxis
-              allowLineWrap={false}
-              labels={xLabels}
-              labelWidth={xAxisLabelWidth}
-              onHeightChange={setXAxisHeight}
-              x={Y_AXIS_LABEL_WIDTH + Y_LABEL_OFFSET}
-              y={chartPositions.xAxisBounds.y + Y_LABEL_OFFSET}
-              xScale={xScale}
-              ariaHidden
-            />
-            <text
-              x={Y_AXIS_LABEL_WIDTH + Y_LABEL_OFFSET}
-              y={dimensions.height + xAxisHeight / 2}
-              textAnchor="start"
-              dominantBaseline="bottom"
-              fontSize="12"
-              fill="#6b7177"
-            >
-              Low
-            </text>
-            <text
-              x={dimensions.width}
-              y={dimensions.height + xAxisHeight / 2}
-              textAnchor="end"
-              dominantBaseline="bottom"
-              fontSize="12"
-              fill="#6b7177"
-            >
-              High
-            </text>
-            {xAxisOptionsWithDefaults.label && (
-              <text
-                ref={(node) => {
-                  if (!xAxisLabelMinWidth && node?.getBBox()?.width) {
-                    setXAxisLabelWdith(node?.getBBox()?.width);
-                  }
-                }}
-                x={
-                  (chartPositions.xAxisBounds.x +
-                    chartPositions.xAxisBounds.width) /
-                  2
-                }
-                y={dimensions.height + X_LABEL_OFFSET}
-                fontSize="14"
-                fill="#6b7177"
-                textAnchor="middle"
-              >
-                {xAxisOptionsWithDefaults.label}
-              </text>
-            )}
+            {renderXAxisLabels()}
           </g>
 
-          {(isTooltipVisible || isTooltipLocked) && renderTooltip()}
+          {isTooltipVisible && renderTooltip()}
         </svg>
       </div>
     </ChartContainer>

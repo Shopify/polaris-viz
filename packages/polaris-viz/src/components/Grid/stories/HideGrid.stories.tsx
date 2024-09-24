@@ -8,7 +8,6 @@ import {GridProps} from '../Grid';
 export const HideGrid: Story<GridProps> = Template.bind({});
 
 HideGrid.args = {
-  data: DEFAULT_DATA,
   cellGroups: CELL_GROUPS,
   showGrid: false,
 };

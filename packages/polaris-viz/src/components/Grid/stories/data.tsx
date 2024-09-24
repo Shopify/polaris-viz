@@ -1,11 +1,14 @@
-import type {DataSeries} from '@shopify/polaris-viz-core';
 import type {Story} from '@storybook/react';
 
 import type {GridProps} from '../Grid';
 import {Grid} from '../Grid';
 
 export const Template: Story<GridProps> = (args: GridProps) => {
-  return <Grid {...args} />;
+  return (
+    <div style={{width: '406px', height: '344px'}}>
+      <Grid {...args} />
+    </div>
+  );
 };
 
 export const CELL_GROUPS = [
@@ -19,8 +22,8 @@ export const CELL_GROUPS = [
     name: 'Previously loyal',
     connectedGroups: ['Loyal'],
     description:
-      'lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet',
-    goal: 'move customers to Champions or Loyal',
+      'Customers without recent purchases, but with a very strong history of orders and spend',
+    goal: 'Goal: move customers to Loyal',
   },
   {
     start: {row: 1, col: 0},
@@ -31,8 +34,9 @@ export const CELL_GROUPS = [
     color: '#000000',
     name: 'At risk',
     connectedGroups: ['Needs attention', 'Loyal'],
-    description: 'lorem ipsum dolor sit amet lorem ipsum dolor sit amet',
-    goal: 'move customers to Champions or Loyal',
+    description:
+      'Customers without recent purchases, but with a strong history of orders and spend.',
+    goal: 'Goal: move customers to Loyal or Needs Attention',
   },
   {
     start: {row: 3, col: 0},
@@ -43,8 +47,9 @@ export const CELL_GROUPS = [
     color: '#000000',
     name: 'Dormant',
     connectedGroups: ['Almost lost'],
-    description: 'lorem ipsum dolor sit amet lorem ipsum dolor sit amet',
-    goal: 'move customers to Champions or Loyal',
+    description:
+      'Customers without recent orders, with infrequent orders, and with low spend.',
+    goal: 'Goal: move customers to Almost lost.',
   },
   {
     start: {row: 0, col: 2},
@@ -55,8 +60,9 @@ export const CELL_GROUPS = [
     color: '#FFFFFF',
     name: 'Loyal',
     connectedGroups: ['Champions'],
-    description: 'lorem ipsum dolor sit amet lorem ipsum dolor sit amet',
-    goal: 'move customers to Champions or Loyal',
+    description:
+      'Customers without recent purchases, but with a very strong history of orders and spend.',
+    goal: 'Goal: move customers to Loyal.',
   },
   {
     start: {row: 2, col: 2},
@@ -68,8 +74,8 @@ export const CELL_GROUPS = [
     name: 'Needs attention',
     connectedGroups: ['Loyal', 'Active'],
     description:
-      'lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet',
-    goal: 'move customers to Champions or Loyal',
+      'Customers who buy less recently, order sometimes and spend moderately with your store.',
+    goal: 'Goal: move customers to Loyal or Potential.',
   },
   {
     start: {row: 3, col: 2},
@@ -80,8 +86,9 @@ export const CELL_GROUPS = [
     color: '#000000',
     name: 'Almost lost',
     connectedGroups: ['Active', 'Promising'],
-    description: 'lorem ipsum dolor sit amet lorem ipsum dolor sit amet',
-    goal: 'move customers to Champions or Loyal',
+    description:
+      'Customers without recent purchases, fewer orders, and with lower spend.',
+    goal: 'Goal: move customers to Active or Promising.',
   },
   {
     start: {row: 4, col: 3},
@@ -92,8 +99,8 @@ export const CELL_GROUPS = [
     color: '#FFFFFF',
     name: 'Promising',
     connectedGroups: ['Active'],
-    description: 'lorem ipsum dolor sit amet lorem ipsum dolor sit amet',
-    goal: 'move customers to Champions or Loyal',
+    description: 'Customers with recent purchases, few orders, and low spend.',
+    goal: 'Goal: move customers to Active.',
   },
   {
     start: {row: 2, col: 3},
@@ -104,8 +111,9 @@ export const CELL_GROUPS = [
     color: '#FFFFFF',
     name: 'Active',
     connectedGroups: ['Loyal', 'Champions'],
-    description: 'lorem ipsum dolor sit amet lorem ipsum dolor sit amet',
-    goal: 'move customers to Champions or Loyal',
+    description:
+      'Customers with recent purchases, some orders, and moderate spend.',
+    goal: 'Goal: move customers to Champions or Loyal.',
   },
   {
     start: {row: 4, col: 4},
@@ -116,8 +124,9 @@ export const CELL_GROUPS = [
     color: '#FFFFFF',
     name: 'New',
     connectedGroups: ['Active'],
-    description: 'lorem ipsum dolor sit amet lorem ipsum dolor sit amet',
-    goal: 'move customers to Champions or Loyal',
+    description:
+      'Customers with very recent purchases, few orders, and low spend.',
+    goal: 'Goal: move customers to Active.',
   },
   {
     start: {row: 0, col: 4},
@@ -127,8 +136,9 @@ export const CELL_GROUPS = [
     bgColor: '#081848',
     color: '#FFFFFF',
     name: 'Champions',
-    description: 'lorem ipsum dolor sit amet lorem ipsum dolor sit amet',
-    goal: 'move customers to Champions or Loyal',
+    description:
+      'Customers with very recent purchases, many orders, and the most spend.',
+    goal: null,
   },
 ];
 
@@ -324,137 +334,5 @@ export const RANDOM_CELL_GROUPS = [
     connectedGroups: ['Beta Products'],
     description: 'Products developed based on customer suggestions',
     goal: 'Improve customer satisfaction and loyalty',
-  },
-];
-
-export const RANDOM_DATA = [
-  {
-    name: '8',
-    data: [
-      {key: '1'},
-      {key: '2'},
-      {key: '3'},
-      {key: '4'},
-      {key: '5'},
-      {key: '6'},
-      {key: '7'},
-      {key: '8'},
-    ],
-  },
-
-  {
-    name: '7',
-    data: [
-      {key: '1'},
-      {key: '2'},
-      {key: '3'},
-      {key: '4'},
-      {key: '5'},
-      {key: '6'},
-      {key: '7'},
-      {key: '8'},
-    ],
-  },
-
-  {
-    name: '6',
-    data: [
-      {key: '1'},
-      {key: '2'},
-      {key: '3'},
-      {key: '4'},
-      {key: '5'},
-      {key: '6'},
-      {key: '7'},
-      {key: '8'},
-    ],
-  },
-  {
-    name: '5',
-    data: [
-      {key: '1'},
-      {key: '2'},
-      {key: '3'},
-      {key: '4'},
-      {key: '5'},
-      {key: '6'},
-      {key: '7'},
-      {key: '8'},
-    ],
-  },
-  {
-    name: '4',
-    data: [
-      {key: '1'},
-      {key: '2'},
-      {key: '3'},
-      {key: '4'},
-      {key: '5'},
-      {key: '6'},
-      {key: '7'},
-      {key: '8'},
-    ],
-  },
-  {
-    name: '3',
-    data: [
-      {key: '1'},
-      {key: '2'},
-      {key: '3'},
-      {key: '4'},
-      {key: '5'},
-      {key: '6'},
-      {key: '7'},
-      {key: '8'},
-    ],
-  },
-  {
-    name: '2',
-    data: [
-      {key: '1'},
-      {key: '2'},
-      {key: '3'},
-      {key: '4'},
-      {key: '5'},
-      {key: '6'},
-      {key: '7'},
-      {key: '8'},
-    ],
-  },
-  {
-    name: '1',
-    data: [
-      {key: '1'},
-      {key: '2'},
-      {key: '3'},
-      {key: '4'},
-      {key: '5'},
-      {key: '6'},
-      {key: '7'},
-      {key: '8'},
-    ],
-  },
-];
-
-export const DEFAULT_DATA = [
-  {
-    name: '5',
-    data: [{key: '1'}, {key: '2'}, {key: '3'}, {key: '4'}, {key: '5'}],
-  },
-  {
-    name: '4',
-    data: [{key: '1'}, {key: '2'}, {key: '3'}, {key: '4'}, {key: '5'}],
-  },
-  {
-    name: '3',
-    data: [{key: '1'}, {key: '2'}, {key: '3'}, {key: '4'}, {key: '5'}],
-  },
-  {
-    name: '2',
-    data: [{key: '1'}, {key: '2'}, {key: '3'}, {key: '4'}, {key: '5'}],
-  },
-  {
-    name: '1',
-    data: [{key: '1'}, {key: '2'}, {key: '3'}, {key: '4'}, {key: '5'}],
   },
 ];
