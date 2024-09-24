@@ -38,6 +38,10 @@ export function useStackedChartTooltipContent({
       ];
 
       data.forEach(({name, data: seriesData, color}, index) => {
+        if (seriesData == null || seriesData[activeIndex] == null) {
+          return;
+        }
+
         const {value} = seriesData[activeIndex];
 
         tooltipData[0].data.push({
@@ -46,6 +50,10 @@ export function useStackedChartTooltipContent({
           color: color ?? seriesColors[index],
         });
       });
+
+      if (data[0] == null || data[0].data[activeIndex] == null) {
+        return null;
+      }
 
       return renderTooltipContent({
         data: tooltipData,
