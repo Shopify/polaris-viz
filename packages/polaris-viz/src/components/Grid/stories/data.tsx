@@ -4,11 +4,7 @@ import type {GridProps} from '../Grid';
 import {Grid} from '../Grid';
 
 export const Template: Story<GridProps> = (args: GridProps) => {
-  return (
-    <div style={{width: '406px', height: '344px'}}>
-      <Grid {...args} />
-    </div>
-  );
+  return <Grid {...args} />;
 };
 
 export const CELL_GROUPS = [
