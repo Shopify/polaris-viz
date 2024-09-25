@@ -18,7 +18,7 @@ export const CELL_GROUPS = [
     name: 'Previously loyal',
     connectedGroups: ['Loyal'],
     description:
-      'Customers without recent purchases, but with a very strong history of orders and spend',
+      'Customers without recent purchases, but with a very strong history of orders and spend.',
     goal: 'Goal: move customers to Loyal',
   },
   {
@@ -45,7 +45,7 @@ export const CELL_GROUPS = [
     connectedGroups: ['Almost lost'],
     description:
       'Customers without recent orders, with infrequent orders, and with low spend.',
-    goal: 'Goal: move customers to Almost lost.',
+    goal: 'Goal: move customers to Almost lost',
   },
   {
     start: {row: 0, col: 2},
@@ -58,7 +58,7 @@ export const CELL_GROUPS = [
     connectedGroups: ['Champions'],
     description:
       'Customers without recent purchases, but with a very strong history of orders and spend.',
-    goal: 'Goal: move customers to Loyal.',
+    goal: 'Goal: move customers to Loyal',
   },
   {
     start: {row: 2, col: 2},
@@ -71,7 +71,7 @@ export const CELL_GROUPS = [
     connectedGroups: ['Loyal', 'Active'],
     description:
       'Customers who buy less recently, order sometimes and spend moderately with your store.',
-    goal: 'Goal: move customers to Loyal or Potential.',
+    goal: 'Goal: move customers to Loyal or Potential',
   },
   {
     start: {row: 3, col: 2},
@@ -84,7 +84,7 @@ export const CELL_GROUPS = [
     connectedGroups: ['Active', 'Promising'],
     description:
       'Customers without recent purchases, fewer orders, and with lower spend.',
-    goal: 'Goal: move customers to Active or Promising.',
+    goal: 'Goal: move customers to Active or Promising',
   },
   {
     start: {row: 4, col: 3},
@@ -109,7 +109,7 @@ export const CELL_GROUPS = [
     connectedGroups: ['Loyal', 'Champions'],
     description:
       'Customers with recent purchases, some orders, and moderate spend.',
-    goal: 'Goal: move customers to Champions or Loyal.',
+    goal: 'Goal: move customers to Champions or Loyal',
   },
   {
     start: {row: 4, col: 4},
@@ -122,7 +122,7 @@ export const CELL_GROUPS = [
     connectedGroups: ['Active'],
     description:
       'Customers with very recent purchases, few orders, and low spend.',
-    goal: 'Goal: move customers to Active.',
+    goal: 'Goal: move customers to Active',
   },
   {
     start: {row: 0, col: 4},
@@ -149,7 +149,7 @@ export const RANDOM_CELL_GROUPS = [
     name: 'New Releases',
     connectedGroups: ['Trending'],
     description: 'Recently launched products with high potential',
-    goal: 'Increase market penetration',
+    goal: 'Increase market penetration.',
   },
   {
     start: {row: 0, col: 2},
@@ -161,7 +161,7 @@ export const RANDOM_CELL_GROUPS = [
     name: 'Emerging Bestsellers',
     connectedGroups: [],
     description: 'Products showing early signs of popularity',
-    goal: 'Boost sales and visibility',
+    goal: 'Boost sales and visibility.',
   },
   {
     start: {row: 0, col: 4},
@@ -173,7 +173,7 @@ export const RANDOM_CELL_GROUPS = [
     name: 'Trending Items',
     connectedGroups: [],
     description: 'Rapidly gaining popularity in the market',
-    goal: 'Capitalize on current trends',
+    goal: 'Capitalize on current trends.',
   },
   {
     start: {row: 0, col: 6},
@@ -185,7 +185,7 @@ export const RANDOM_CELL_GROUPS = [
     name: 'Limited Editions',
     connectedGroups: ['Flagship Products'],
     description: 'Exclusive products with high demand',
-    goal: 'Create scarcity and boost brand value',
+    goal: 'Create scarcity and boost brand value.',
   },
   {
     start: {row: 2, col: 0},
@@ -197,7 +197,7 @@ export const RANDOM_CELL_GROUPS = [
     name: 'Staple Products',
     connectedGroups: ['Seasonal Items', 'New Releases'],
     description: 'Consistent sellers with steady demand',
-    goal: 'Maintain market share and improve margins',
+    goal: 'Maintain market share and improve margins.',
   },
   {
     start: {row: 2, col: 2},
@@ -209,7 +209,7 @@ export const RANDOM_CELL_GROUPS = [
     name: 'Seasonal Items',
     connectedGroups: ['Premium Line'],
     description: 'Products with peak demand during specific seasons',
-    goal: 'Optimize inventory and extend selling period',
+    goal: 'Optimize inventory and extend selling period.',
   },
   {
     start: {row: 2, col: 4},
@@ -221,7 +221,7 @@ export const RANDOM_CELL_GROUPS = [
     name: 'Premium Line',
     connectedGroups: ['Trending Items', 'Flagship Products'],
     description: 'High-end products with superior margins',
-    goal: 'Enhance brand prestige and increase market share',
+    goal: 'Enhance brand prestige and increase market share.',
   },
   {
     start: {row: 2, col: 6},
@@ -233,7 +233,7 @@ export const RANDOM_CELL_GROUPS = [
     name: 'Flagship Products',
     connectedGroups: ['Limited Editions'],
     description: 'Signature items representing the brand',
-    goal: 'Maintain product excellence and brand loyalty',
+    goal: 'Maintain product excellence and brand loyalty.',
   },
   {
     start: {row: 4, col: 0},
@@ -245,7 +245,7 @@ export const RANDOM_CELL_GROUPS = [
     name: 'Declining Products',
     connectedGroups: ['Seasonal Items', 'Discontinued Items'],
     description: 'Products showing decreased sales',
-    goal: 'Revitalize or phase out strategically',
+    goal: 'Revitalize or phase out strategically.',
   },
   {
     start: {row: 4, col: 2},
@@ -257,7 +257,7 @@ export const RANDOM_CELL_GROUPS = [
     name: 'Discontinued Items',
     connectedGroups: ['Declining Products', 'Clearance Items'],
     description: 'Products being phased out of the catalog',
-    goal: 'Maximize remaining inventory value',
+    goal: 'Maximize remaining inventory value.',
   },
   {
     start: {row: 4, col: 4},
@@ -269,7 +269,7 @@ export const RANDOM_CELL_GROUPS = [
     name: 'Clearance Items',
     connectedGroups: ['Premium Line', 'Bestsellers'],
     description: 'Products on sale to clear inventory',
-    goal: 'Quickly convert inventory to cash',
+    goal: 'Quickly convert inventory to cash.',
   },
   {
     start: {row: 4, col: 6},
@@ -281,7 +281,7 @@ export const RANDOM_CELL_GROUPS = [
     name: 'Bestsellers',
     connectedGroups: ['Flagship Products'],
     description: 'Top-selling products across categories',
-    goal: 'Maintain popularity and expand product line',
+    goal: 'Maintain popularity and expand product line.',
   },
   {
     start: {row: 6, col: 0},
@@ -293,7 +293,7 @@ export const RANDOM_CELL_GROUPS = [
     name: 'Rising Stars',
     connectedGroups: [],
     description: 'Products showing potential for high sales',
-    goal: 'Accelerate growth and increase visibility',
+    goal: 'Accelerate growth and increase visibility.',
   },
   {
     start: {row: 6, col: 2},
@@ -305,7 +305,7 @@ export const RANDOM_CELL_GROUPS = [
     name: 'Influencer Favorites',
     connectedGroups: ['Discontinued Items'],
     description: 'Products popular among social media influencers',
-    goal: 'Leverage for brand promotion and increased sales',
+    goal: 'Leverage for brand promotion and increased sales.',
   },
   {
     start: {row: 6, col: 4},
@@ -317,7 +317,7 @@ export const RANDOM_CELL_GROUPS = [
     name: 'Beta Products',
     connectedGroups: ['Customer Feedback Items'],
     description: 'Products in testing phase before full launch',
-    goal: 'Gather feedback and refine product features',
+    goal: 'Gather feedback and refine product features.',
   },
   {
     start: {row: 6, col: 6},
@@ -329,6 +329,6 @@ export const RANDOM_CELL_GROUPS = [
     name: 'Customer Feedback Items',
     connectedGroups: ['Beta Products'],
     description: 'Products developed based on customer suggestions',
-    goal: 'Improve customer satisfaction and loyalty',
+    goal: 'Improve customer satisfaction and loyalty.',
   },
 ];

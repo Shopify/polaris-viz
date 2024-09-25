@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 
 import styles from './Grid.scss';
@@ -42,6 +42,8 @@ export const GroupCell: React.FC<GroupCellProps> = ({
   containerWidth,
   isAnimated,
 }) => {
+  const [isFadingIn, setIsFadingIn] = useState(true);
+
   const groupWidth = (group.end.col - group.start.col + 1) * cellWidth;
   const groupHeight = (group.end.row - group.start.row + 1) * cellHeight;
   const groupValue = group.value;
@@ -61,18 +63,34 @@ export const GroupCell: React.FC<GroupCellProps> = ({
   const secondaryFontSize = mainFontSize * 0.6;
 
   const animationDelay =
-    isAnimated && animationStarted ? `${index * 50}ms` : '0ms';
+    isAnimated && animationStarted && isFadingIn ? `${index * 50}ms` : '0ms';
+
+  const groupX = xScale(group.start.col);
+  const groupY = group.start.row * cellHeight;
 
   const cellStyle = isAnimated
     ? {
         '--animation-delay': animationDelay,
-        '--animation-scale': animationStarted ? 1 : 0.5,
+        '--animation-scale': animationStarted ? 1 : 0,
         '--animation-opacity': animationStarted ? 1 : 0,
+        transformOrigin: `${groupX + groupWidth / 2}px ${
+          groupY + groupHeight / 2
+        }px`,
       }
     : {
         opacity: 1,
         transform: 'scale(1)',
       };
+
+  useEffect(() => {
+    if (isAnimated && animationStarted) {
+      const timer = setTimeout(() => {
+        setIsFadingIn(false);
+      }, parseInt(animationDelay, 10) + 500);
+
+      return () => clearTimeout(timer);
+    }
+  }, [isAnimated, animationStarted, animationDelay]);
 
   return (
     <g
@@ -84,13 +102,17 @@ export const GroupCell: React.FC<GroupCellProps> = ({
         }
       }}
       className={
-        isAnimated ? `${styles.animatedArrow} ${styles.groupCell}` : undefined
+        isAnimated
+          ? `${styles.AnimatedArrow} ${styles.GroupCell} ${
+              isFadingIn ? styles.FadeIn : ''
+            }`
+          : undefined
       }
-      style={cellStyle}
+      style={{...cellStyle, opacity: cellOpacity}}
     >
       <Background
-        x={xScale(group.start.col)}
-        y={group.start.row * cellHeight}
+        x={groupX}
+        y={groupY}
         width={groupWidth}
         height={groupHeight}
         fill={getColors(group).bgColor}
@@ -99,10 +121,10 @@ export const GroupCell: React.FC<GroupCellProps> = ({
 
       <GroupInfo
         {...{
-          xScale,
+          groupX,
+          groupY,
           group,
           groupWidth,
-          cellHeight,
           groupHeight,
           getColors,
           opacity,
@@ -139,22 +161,21 @@ export const Background = ({
     width={width}
     height={height}
     fill={fill}
-    opacity={opacity}
     stroke="white"
     strokeWidth="4"
     rx="4"
     ry="4"
+    opacity={opacity}
   />
 );
 
 interface GroupInfoProps {
-  xScale: (value: number) => number;
+  groupX: number;
+  groupY: number;
   group: {
-    start: {col: number; row: number};
     name: string;
   };
   groupWidth: number;
-  cellHeight: number;
   groupHeight: number;
   getColors: (group: any) => {textColor: string};
   opacity: number;
@@ -167,10 +188,10 @@ interface GroupInfoProps {
 }
 
 export const GroupInfo: React.FC<GroupInfoProps> = ({
-  xScale,
+  groupX,
+  groupY,
   group,
   groupWidth,
-  cellHeight,
   groupHeight,
   getColors,
   opacity,
@@ -184,8 +205,8 @@ export const GroupInfo: React.FC<GroupInfoProps> = ({
   return (
     <React.Fragment>
       <text
-        x={xScale(group.start.col) + groupWidth / 2}
-        y={group.start.row * cellHeight + groupHeight / 2}
+        x={groupX + groupWidth / 2}
+        y={groupY + groupHeight / 2}
         textAnchor="middle"
         dominantBaseline="middle"
         fill={getColors(group).textColor}
@@ -203,8 +224,8 @@ export const GroupInfo: React.FC<GroupInfoProps> = ({
 
       {showNameAndSecondaryValue && (
         <text
-          x={xScale(group.start.col) + groupNameOffset}
-          y={group.start.row * cellHeight + groupNameOffset}
+          x={groupX + groupNameOffset}
+          y={groupY + groupNameOffset}
           textAnchor="start"
           dominantBaseline="hanging"
           fontSize="11"

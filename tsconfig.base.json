@@ -4,7 +4,7 @@
     "composite": true,
     "emitDeclarationOnly": true,
     "incremental": true,
-    // "importsNotUsedAsValues": "error",
+    "importsNotUsedAsValues": "error",
     "strictFunctionTypes": false,
     "noImplicitAny": false
   }

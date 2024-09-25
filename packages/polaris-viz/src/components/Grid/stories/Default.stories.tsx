@@ -2,7 +2,7 @@ import type {Story} from '@storybook/react';
 
 export {META as default} from './meta';
 
-import {type GridProps} from '../Grid';
+import type {GridProps} from '../Grid';
 import {CELL_GROUPS, Template} from './data';
 
 export const Default: Story<GridProps> = Template.bind({});
@@ -12,11 +12,11 @@ Default.args = {
   xAxisOptions: {
     label: 'Recency score',
     lowLabel: 'Low',
-    highLabel: 'High'
+    highLabel: 'High',
   },
   yAxisOptions: {
-    label: 'Frequency + Monetary value score',
+    label: 'Frequency + Monetary score',
     lowLabel: 'Low',
-    highLabel: 'High'
-  }
+    highLabel: 'High',
+  },
 };
