@@ -1,5 +1,4 @@
 import {useEffect, useMemo} from 'react';
-import type {LabelFormatter} from '@shopify/polaris-viz-core';
 import {
   clamp,
   estimateStringWidth,
@@ -27,7 +26,6 @@ export interface Props {
   dataIndexes: {[key: string]: string};
   drawableWidth: number;
   isShowingAllAnnotations: boolean;
-  labelFormatter: LabelFormatter;
   onHeightChange: (height: number) => void;
   xScale: ScaleLinear<number, number> | ScaleBand<string>;
 }
@@ -40,7 +38,6 @@ export function useAnnotationPositions({
   isShowingAllAnnotations,
   onHeightChange,
   xScale,
-  labelFormatter,
 }: Props): {
   hiddenAnnotationsCount: number;
   positions: AnnotationPosition[];
@@ -56,10 +53,9 @@ export function useAnnotationPositions({
 
   const {positions, hiddenAnnotationsCount} = useMemo(() => {
     let positions = annotations.map((annotation, dataIndex) => {
-      const xPosition = getValueFromXScale(
-        dataIndexes[labelFormatter(annotation.startKey)],
-        xScale,
-      );
+      const startIndex = annotation.startKey ?? annotation.startAxisLabel ?? 0;
+
+      const xPosition = getValueFromXScale(dataIndexes[startIndex], xScale);
 
       const textWidth = textWidths[dataIndex];
 
@@ -121,7 +117,6 @@ export function useAnnotationPositions({
     axisLabelWidth,
     xScale,
     drawableWidth,
-    labelFormatter,
   ]);
 
   const {totalRowHeight, rowCount} = useShowMoreAnnotationsButton({

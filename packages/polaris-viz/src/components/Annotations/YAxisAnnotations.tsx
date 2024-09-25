@@ -43,15 +43,16 @@ export function YAxisAnnotations({
         const annotation = annotationsLookupTable[key];
 
         if (
-          !isValueWithinDomain(Number(annotation.startKey), yScale.domain())
+          annotation == null ||
+          annotation.axis == null ||
+          annotation.axis !== axis ||
+          annotation.startKey == null
         ) {
           return null;
         }
 
         if (
-          annotation == null ||
-          annotation.axis == null ||
-          annotation.axis !== axis
+          !isValueWithinDomain(Number(annotation.startKey), yScale.domain())
         ) {
           return null;
         }
@@ -110,7 +111,7 @@ export function YAxisAnnotations({
                 axis={axis}
                 y={line.y}
                 x={axisLabelX}
-                label={annotation.startKey}
+                label={annotation.startKey ?? ''}
               />
             )}
             <AnnotationLine

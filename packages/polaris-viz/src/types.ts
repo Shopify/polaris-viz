@@ -143,8 +143,11 @@ export interface LegendData {
 export interface Annotation {
   axis: 'x' | 'y';
   label: string;
-  startKey: string | number;
-  endKey?: string | number;
+  // Matching DataPoint key value as passed in DataSeries
+  startKey?: string | number;
+  // Matching DataPoint key value passed through xAxisOptions.labelFormatter.
+  // This value is the visual formatted text rendered on the axis.
+  startAxisLabel?: string;
   collapseButtonText?: string;
   expandButtonText?: string;
   content?: {

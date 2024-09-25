@@ -41,7 +41,9 @@ export function useHorizontalBarChartYAnnotationsPositions({
   const {positions} = useMemo(() => {
     const positions = annotations.map((annotation, dataIndex) => {
       const rawY: number =
-        dataIndexes[annotation.startKey] * groupHeight + Y_OFFSET;
+        annotation.startKey == null
+          ? 0
+          : dataIndexes[annotation.startKey] * groupHeight + Y_OFFSET;
 
       const textWidth = textWidths[dataIndex];
       const labelWidth = estimateStringWidth(

@@ -32,7 +32,6 @@ const ANNOTATION: Annotation = {
   axis: 'x',
   label: '',
   startKey: 0,
-  endKey: 0,
   content: {
     content: 'Some annotation content',
   },

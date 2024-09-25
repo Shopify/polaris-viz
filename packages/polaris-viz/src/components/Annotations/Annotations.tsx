@@ -52,26 +52,46 @@ export function Annotations({
 
     const annotations = Object.keys(annotationsLookupTable)
       .map((key) => {
-        const annotation = annotationsLookupTable[key];
+        const annotation: Annotation | null = annotationsLookupTable[key];
 
         if (annotation == null || annotation.axis === 'y') {
           return null;
         }
 
-        const formattedKey = labelFormatter(key);
-
-        if (!formattedLabels.includes(formattedKey)) {
+        if (annotation.startAxisLabel == null && annotation.startKey == null) {
+          // eslint-disable-next-line no-console
+          console.warn(
+            'Annotation provided with no startAxisLabel or startKey property',
+            {annotation},
+          );
           return null;
         }
 
-        dataIndexes[formattedKey] = formattedLabels.indexOf(formattedKey);
+        const keyIndex = labels.indexOf(key);
+
+        if (keyIndex !== -1) {
+          dataIndexes[key] = keyIndex;
+        }
+
+        const axisLabelIndex =
+          annotation.startAxisLabel == null
+            ? -1
+            : formattedLabels.indexOf(annotation.startAxisLabel);
+
+        if (annotation.startAxisLabel != null && axisLabelIndex !== -1) {
+          dataIndexes[annotation.startAxisLabel] = axisLabelIndex;
+        }
+
+        if (keyIndex === -1 && axisLabelIndex === -1) {
+          return null;
+        }
 
         return annotation;
       })
       .filter(Boolean) as Annotation[];
 
     return {annotations, dataIndexes};
-  }, [annotationsLookupTable, formattedLabels, labelFormatter]);
+  }, [annotationsLookupTable, formattedLabels, labels]);
 
   const {hiddenAnnotationsCount, positions, rowCount} = useAnnotationPositions({
     annotations,
@@ -81,7 +101,6 @@ export function Annotations({
     isShowingAllAnnotations,
     onHeightChange,
     xScale,
-    labelFormatter,
   });
 
   const handleToggleAllAnnotations = () => {

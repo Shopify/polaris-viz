@@ -5,7 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-<!-- ## Unreleased -->
+## Unreleased
+
+### Added
+
+- **Breaking change** Added `startAxisLabel` value to `Annotation` that uses the `DataPoint.key` value passed through `xAxisOptions.labelFormatter`.
+
+### Changed
+
+- **Breaking change** Reverted changed added in `15.0.0` that would run `startKey` through `xAxisOptions.labelFormatter`. We now use the unformatted value from `startKey` when matching an annotation with a `DataPoint.key`.
+
+If you need to target the formatted axis value, please use `Annotation.startAxisLabel`.
+
 
 ## [15.0.3] - 2024-09-25
 
