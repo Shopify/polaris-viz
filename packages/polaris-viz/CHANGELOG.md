@@ -5,7 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-<!-- ## Unreleased -->
+## Unreleased
+
+### Changed
+
+- Changed logic around how we determine the longest trend width. We now measure the longest trend width for each positive and negative side without associating with the longest date series value.
+
 
 ## [15.0.2] - 2024-09-24
 

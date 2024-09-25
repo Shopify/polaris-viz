@@ -5,13 +5,10 @@ import {estimateTrendIndicatorWidth} from '../TrendIndicator';
 import type {SimpleBarChartDataSeries} from './types';
 
 /**
- * Returns the widths of the trend indicators associated with the highest positive value and the lowest negative value in the dataset, or 0 if the value doesn't have a trend indicator.
+ * Returns the widths of the trend indicators por positive or negative values,
+ * or 0 if the value doesn't have a trend indicator.
  */
-export function getLongestTrendIndicator(
-  data: SimpleBarChartDataSeries[],
-  highestPositive: number,
-  lowestNegative: number,
-) {
+export function getLongestTrendIndicator(data: SimpleBarChartDataSeries[]) {
   const longestTrendIndicator = data.reduce(
     (longestTrendIndicator, series) => {
       const {data: seriesData, metadata} = series;
@@ -21,14 +18,24 @@ export function getLongestTrendIndicator(
       for (const [index, trend] of trendEntries) {
         const dataPoint = seriesData[index];
 
-        if (dataPoint?.value === highestPositive) {
-          longestTrendIndicator.positive = estimateTrendIndicatorWidth(
-            trend.value ?? '',
-          ).totalWidth;
-        } else if (dataPoint?.value === lowestNegative) {
-          longestTrendIndicator.negative = estimateTrendIndicatorWidth(
-            trend.value ?? '',
-          ).totalWidth;
+        if (trend == null || dataPoint?.value == null) {
+          return longestTrendIndicator;
+        }
+
+        const trendStringWidth = estimateTrendIndicatorWidth(
+          trend.value,
+        ).totalWidth;
+
+        // Positive value
+        if (dataPoint.value > 0) {
+          if (trendStringWidth > longestTrendIndicator.positive) {
+            longestTrendIndicator.positive = trendStringWidth;
+          }
+        } else if (dataPoint.value < 0) {
+          // Negative value
+          if (trendStringWidth > longestTrendIndicator.negative) {
+            longestTrendIndicator.negative = trendStringWidth;
+          }
         }
       }
 

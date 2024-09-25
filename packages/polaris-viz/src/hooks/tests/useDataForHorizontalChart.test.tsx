@@ -1,6 +1,7 @@
 import {mount} from '@shopify/react-testing';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
+import type {Props} from '../useDataForHorizontalChart';
 import {useDataForHorizontalChart} from '../useDataForHorizontalChart';
 
 jest.mock('@shopify/polaris-viz-core/src/utilities', () => {
@@ -29,11 +30,11 @@ const DATA: DataSeries[] = [
   },
 ];
 
-const MOCK_PROPS = {
+const MOCK_PROPS: Props = {
   data: DATA,
   isSimple: false,
   isStacked: false,
-  labelFormatter: (value: string | number) => `${value}`,
+  labelFormatter: (value) => `${value}`,
 };
 
 describe('useDataForHorizontalChart()', () => {
@@ -51,9 +52,7 @@ describe('useDataForHorizontalChart()', () => {
     expect(data).toStrictEqual({
       allNumbers: [5, -10, 12, 1, -2, 3],
       areAllNegative: false,
-      highestPositive: 12,
       longestLabel: {negative: 0, positive: 0},
-      lowestNegative: -10,
     });
   });
 
@@ -91,9 +90,7 @@ describe('useDataForHorizontalChart()', () => {
     expect(data).toStrictEqual({
       allNumbers: [-5, -10, -12, -1, -2, -3],
       areAllNegative: true,
-      highestPositive: 0,
       longestLabel: {negative: 0, positive: 0},
-      lowestNegative: -12,
     });
   });
 
