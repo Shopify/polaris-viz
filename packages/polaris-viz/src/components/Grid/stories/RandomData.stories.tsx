@@ -3,7 +3,7 @@ import type {Story} from '@storybook/react';
 export {META as default} from './meta';
 
 import {RANDOM_CELL_GROUPS, Template} from './data';
-import {GridProps} from '../Grid';
+import type {GridProps} from '../Grid';
 
 export const RandomData: Story<GridProps> = Template.bind({});
 
