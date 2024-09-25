@@ -4,7 +4,7 @@ import {useChartContext, estimateStringWidth} from '@shopify/polaris-viz-core';
 
 import {HORIZONTAL_BAR_LABEL_OFFSET} from '../constants';
 
-interface Props {
+export interface Props {
   data: DataSeries[];
   isSimple: boolean;
   isStacked: boolean;
@@ -86,8 +86,6 @@ export function useDataForHorizontalChart({
   return {
     allNumbers,
     areAllNegative,
-    highestPositive,
     longestLabel,
-    lowestNegative,
   };
 }

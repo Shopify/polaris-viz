@@ -77,13 +77,7 @@ export function Chart({
     seriesNameFormatter,
   });
 
-  const {
-    allNumbers,
-    longestLabel,
-    highestPositive,
-    lowestNegative,
-    areAllNegative,
-  } = useDataForHorizontalChart({
+  const {allNumbers, longestLabel, areAllNegative} = useDataForHorizontalChart({
     data,
     isSimple: true,
     isStacked,
@@ -95,11 +89,7 @@ export function Chart({
     data,
   });
 
-  const longestTrendIndicator = getLongestTrendIndicator(
-    data,
-    highestPositive,
-    lowestNegative,
-  );
+  const longestTrendIndicator = getLongestTrendIndicator(data);
 
   const trendIndicatorOffset =
     longestTrendIndicator.positive + longestTrendIndicator.negative;
