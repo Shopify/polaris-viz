@@ -7,55 +7,6 @@ import {YAxis} from '../../YAxis';
 import {GroupCell} from '../GroupCell';
 import {AxisLabel} from '../AxisLabel';
 
-const MOCK_CELL_GROUPS = [
-  {
-    start: {row: 0, col: 0},
-    end: {row: 1, col: 1},
-    bgColor: 'red',
-    color: 'white',
-    name: 'Group 1',
-    description: 'Description 1',
-    goal: 'Goal 1',
-    secondaryValue: '10',
-    value: '100',
-  },
-  {
-    start: {row: 1, col: 1},
-    end: {row: 2, col: 2},
-    bgColor: 'blue',
-    color: 'white',
-    name: 'Group 2',
-    description: 'Description 2',
-    goal: 'Goal 2',
-    secondaryValue: '20',
-    value: '200',
-  },
-  {
-    start: {row: 2, col: 2},
-    end: {row: 3, col: 3},
-    bgColor: 'green',
-    color: 'white',
-    name: 'Group 3',
-    description: 'Description 3',
-    goal: 'Goal 3',
-    secondaryValue: '30',
-    value: '300',
-  },
-];
-
-const MOCK_PROPS = {
-  cellGroups: MOCK_CELL_GROUPS,
-  xAxisOptions: {
-    lowLabel: 'Low',
-    highLabel: 'High',
-  },
-  yAxisOptions: {
-    lowLabel: 'Low',
-    highLabel: 'High',
-  },
-  isAnimated: false,
-};
-
 describe('<Grid />', () => {
   it('renders a <ChartContainer />', () => {
     const grid = mount(<Grid {...MOCK_PROPS} />);
@@ -122,3 +73,52 @@ describe('<Grid />', () => {
     });
   });
 });
+
+const MOCK_CELL_GROUPS = [
+  {
+    start: {row: 0, col: 0},
+    end: {row: 1, col: 1},
+    bgColor: 'red',
+    color: 'white',
+    name: 'Group 1',
+    description: 'Description 1',
+    goal: 'Goal 1',
+    secondaryValue: '10',
+    value: '100',
+  },
+  {
+    start: {row: 1, col: 1},
+    end: {row: 2, col: 2},
+    bgColor: 'blue',
+    color: 'white',
+    name: 'Group 2',
+    description: 'Description 2',
+    goal: 'Goal 2',
+    secondaryValue: '20',
+    value: '200',
+  },
+  {
+    start: {row: 2, col: 2},
+    end: {row: 3, col: 3},
+    bgColor: 'green',
+    color: 'white',
+    name: 'Group 3',
+    description: 'Description 3',
+    goal: 'Goal 3',
+    secondaryValue: '30',
+    value: '300',
+  },
+];
+
+const MOCK_PROPS = {
+  cellGroups: MOCK_CELL_GROUPS,
+  xAxisOptions: {
+    lowLabel: 'Low',
+    highLabel: 'High',
+  },
+  yAxisOptions: {
+    lowLabel: 'Low',
+    highLabel: 'High',
+  },
+  isAnimated: false,
+};

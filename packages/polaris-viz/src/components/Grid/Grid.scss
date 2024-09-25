@@ -1,48 +1,33 @@
 @import '../../styles/common';
 
-.container {
+.Container {
   width: 100%;
   height: 90%;
 }
 
-.groupCell {
+.GroupCell {
   opacity: var(--animation-opacity, 0);
-  transform: scale(var(--animation-scale, 0.5));
+  transform: scale(var(--animation-scale));
   transition: opacity 0.3s ease-out var(--animation-delay, 0ms),
     transform 0.3s ease-out var(--animation-delay, 0ms);
 }
 
-.animatedArrow {
-  .arrowShaft {
+.AnimatedArrow {
+  .ArrowShaft {
     stroke-dasharray: 25;
     stroke-dashoffset: 25;
-    animation: draw 0.2s ease-in-out forwards;
+    animation: Draw 0.2s ease-in-out forwards;
   }
 
-  .arrowHead {
+  .ArrowHead {
     opacity: 0;
-    animation: fadeIn 0.2s ease-in-out 0.2s forwards;
+    animation: FadeIn 0.2s ease-in-out 0.2s forwards;
   }
 }
 
-@keyframes draw {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.fadeIn {
-  opacity: 0;
-  animation: fadeIn 0.5s ease-in-out forwards;
+.FadeIn {
+  animation: FadeInOpacity 0.5s ease-in-out forwards;
+  animation-delay: var(--animation-delay, 0ms);
 }
 
 .Tooltip {
@@ -56,9 +41,9 @@
   border: 1px solid lightgray;
 }
 
-.fadeInLabel {
+.FadeInLabel {
   opacity: 0;
-  animation: fadeIn 0.5s ease-in-out forwards;
+  animation: FadeIn 0.5s ease-in-out forwards;
 }
 
 .TooltipTitle {
@@ -71,12 +56,10 @@
 }
 
 .TooltipDescription {
-  display: -webkit-box;
   -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: #333333;
+  color: var(--p-color-bg-surface-inverse);
   margin-bottom: 8px;
 }
 
@@ -85,7 +68,7 @@
   gap: 5px;
   padding: 4px;
   align-items: center;
-  background: #f1f1f1;
+  background: rgba(241, 241, 241, 1);
   margin-top: 12px;
   border-radius: 4px;
 }
@@ -94,5 +77,30 @@
   margin: 0;
   font-size: 11px;
   line-height: 1.2;
-  color: #303030;
+  color: var(--p-color-bg-surface-inverse);
+  padding-right: 5px;
+}
+
+@keyframes FadeInOpacity {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes Draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes FadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

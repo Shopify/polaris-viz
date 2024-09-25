@@ -358,11 +358,11 @@ export function Grid(props: GridProps) {
 
       return (
         <g
-          className={styles.animatedArrow}
+          className={styles.AnimatedArrow}
           key={`arrow-${hoveredGroup?.name}-${sourceGroup.name}-${targetGroupName}`}
         >
           <path
-            className={styles.arrowShaft}
+            className={styles.ArrowShaft}
             d={`M ${sourcePoint.x} ${sourcePoint.y} L ${targetPoint.x} ${targetPoint.y}`}
             stroke="white"
             strokeWidth="2"
@@ -370,7 +370,7 @@ export function Grid(props: GridProps) {
           />
 
           <path
-            className={styles.arrowHead}
+            className={styles.ArrowHead}
             d={`M ${targetPoint.x} ${targetPoint.y + 0.5} L ${arrowPoint1.x} ${
               arrowPoint1.y
             } M ${targetPoint.x - 0.5} ${targetPoint.y} L ${arrowPoint2.x} ${
@@ -490,7 +490,8 @@ export function Grid(props: GridProps) {
             ref={(node) => {
               if (node) {
                 const {height} = node.getBoundingClientRect();
-                setTooltipHeight(height + TOOLTIP_PADDING * 2);
+                const tooltipHeight = height + TOOLTIP_PADDING * 2;
+                setTooltipHeight(tooltipHeight);
               }
             }}
             className={styles.Tooltip}
@@ -585,7 +586,7 @@ export function Grid(props: GridProps) {
             fontSize="14"
             fill="#6b7177"
             textAnchor="middle"
-            className={styles.fadeInLabel}
+            className={styles.FadeInLabel}
             style={{animationDelay}}
           >
             {xAxisOptionsWithDefaults.label}
@@ -617,7 +618,7 @@ export function Grid(props: GridProps) {
               chartPositions.yAxisBounds.y +
               chartPositions.yAxisBounds.height / 2
             })`}
-            className={styles.fadeInLabel}
+            className={styles.FadeInLabel}
             style={{animationDelay}}
           >
             {yAxisOptionsWithDefaults.label}
@@ -634,7 +635,7 @@ export function Grid(props: GridProps) {
             y={0}
           />
         )}
-        {!isSmallContainer && (
+        {!isSmallContainer && animationStarted && (
           <React.Fragment>
             <AxisLabel
               x={LOW_HIGH_LABEL_OFFSET}
@@ -662,7 +663,7 @@ export function Grid(props: GridProps) {
 
   return (
     <ChartContainer data={[]} id="grid" isAnimated={isAnimated} theme={theme}>
-      <div id="container" ref={setRef} className={styles.container}>
+      <div id="container" ref={setRef} className={styles.Container}>
         <svg
           width="100%"
           height="100%"
