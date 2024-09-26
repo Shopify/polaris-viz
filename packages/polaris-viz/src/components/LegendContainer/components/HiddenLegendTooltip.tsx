@@ -122,7 +122,7 @@ export function HiddenLegendTooltip({
 
   const handleMouseLeave = useCallback(
     (event) => {
-      if (event?.relatedTarget.id !== tooltipId) {
+      if (event?.relatedTarget?.id !== tooltipId) {
         setActive(false);
         setPosition(defaultPosition);
       }
