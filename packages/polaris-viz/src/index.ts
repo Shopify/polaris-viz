@@ -20,6 +20,7 @@ export {
   LineChartPredictive,
   MissingDataArea,
   Grid,
+  FunnelChartNext,
 } from './components';
 
 export type {
@@ -37,6 +38,7 @@ export type {
   ComparisonMetricProps,
   LineChartRelationalProps,
   GridProps,
+  FunnelChartNextProps,
 } from './components';
 
 export {

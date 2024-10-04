@@ -1,6 +1,6 @@
 import type {Dispatch, SetStateAction} from 'react';
 import {useEffect, useMemo} from 'react';
-import {useChartContext} from '@shopify/polaris-viz-core';
+import {useChartContext, FONT_SIZE} from '@shopify/polaris-viz-core';
 
 import {getFontSize} from '../../../utilities/getFontSize';
 import {estimateStringWidthWithOffset} from '../../../utilities';
@@ -20,10 +20,14 @@ interface Props {
   labels: string[];
   targetWidth: number;
   onHeightChange?: Dispatch<SetStateAction<number>> | (() => void);
+  align?: 'center' | 'left';
+  fontSize?: number;
 }
 
 export function useLabels({
   allowLineWrap,
+  align = 'center',
+  fontSize = FONT_SIZE,
   labels,
   onHeightChange = () => {},
   targetWidth,
@@ -69,6 +73,8 @@ export function useLabels({
     switch (true) {
       case shouldDrawHorizontal: {
         return getHorizontalLabels({
+          align,
+          fontSize,
           labels: preparedLabels,
           targetWidth,
           targetHeight: HORIZONTAL_LABEL_TARGET_HEIGHT,
@@ -100,7 +106,9 @@ export function useLabels({
       }
     }
   }, [
+    align,
     allowLineWrap,
+    fontSize,
     targetWidth,
     characterWidths,
     preparedLabels,
