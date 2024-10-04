@@ -13,22 +13,28 @@ interface SingleTextLineProps {
   color: string;
   targetWidth: number;
   text: string;
-  x: number;
-  y: number;
   ariaHidden?: boolean;
   dominantBaseline?: 'middle' | 'hanging';
+  fontSize?: number;
+  fontWeight?: number;
   textAnchor?: 'left' | 'center' | 'right';
+  willTruncate?: boolean;
+  x?: number;
+  y?: number;
 }
 
 export function SingleTextLine({
   ariaHidden = false,
   color,
   dominantBaseline = 'hanging',
+  fontSize = FONT_SIZE,
+  fontWeight = 300,
   targetWidth,
   text,
   textAnchor = 'center',
-  y,
-  x,
+  y = 0,
+  x = 0,
+  willTruncate = true,
 }: SingleTextLineProps) {
   const {characterWidths} = useChartContext();
 
@@ -48,14 +54,15 @@ export function SingleTextLine({
         height={LINE_HEIGHT}
         width={targetWidth}
         fill={color}
-        fontSize={FONT_SIZE}
+        fontSize={fontSize}
+        fontWeight={fontWeight}
         fontFamily={FONT_FAMILY}
         y={y}
         x={x}
       >
         {truncated}
       </text>
-      <title>{text}</title>
+      {willTruncate && <title>{text}</title>}
     </Fragment>
   );
 }
