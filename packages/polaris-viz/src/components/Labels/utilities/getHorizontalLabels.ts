@@ -1,6 +1,6 @@
 import type {CharacterWidths} from '@shopify/polaris-viz-core';
-import {estimateStringWidth} from '@shopify/polaris-viz-core';
 
+import {estimateStringWidthWithOffset} from '../../../utilities';
 import {LINE_HEIGHT} from '../../../constants';
 import type {FormattedLine, PreparedLabels} from '../../../types';
 
@@ -10,6 +10,8 @@ import {truncateLabels} from './truncateLabels';
 const NEXT_INDEX = 1;
 
 interface Props {
+  align: 'center' | 'left';
+  fontSize: number;
   labels: PreparedLabels[];
   targetHeight: number;
   targetWidth: number;
@@ -17,6 +19,8 @@ interface Props {
 }
 
 export function getHorizontalLabels({
+  align,
+  fontSize,
   labels,
   targetHeight,
   targetWidth,
@@ -61,9 +65,9 @@ export function getHorizontalLabels({
 
       while (
         words[wordIndex + 1] != null &&
-        estimateStringWidth(
+        estimateStringWidthWithOffset(
           `${line} ${words[wordIndex + NEXT_INDEX]}`,
-          characterWidths,
+          fontSize,
         ) < targetWidth
       ) {
         line += ` ${words[wordIndex + NEXT_INDEX]}`;
@@ -73,12 +77,12 @@ export function getHorizontalLabels({
       lines[index].push({
         truncatedText: line,
         fullText: truncatedLabels[index].text,
-        x: targetWidth / 2,
+        x: align === 'left' ? 0 : targetWidth / 2,
         y: lineNumber * LINE_HEIGHT,
         fontSize: label.fontSize,
         width: targetWidth,
         height: LINE_HEIGHT,
-        textAnchor: 'middle',
+        textAnchor: align === 'left' ? 'start' : 'middle',
         dominantBaseline: 'hanging',
       });
 

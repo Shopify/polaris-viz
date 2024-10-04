@@ -20,6 +20,8 @@ export {
   LineChartPredictive,
   MissingDataArea,
   Grid,
+  FunnelChartNext,
+  SparkFunnelChart,
 } from './components';
 
 export type {
@@ -37,6 +39,8 @@ export type {
   ComparisonMetricProps,
   LineChartRelationalProps,
   GridProps,
+  FunnelChartNextProps,
+  SparkFunnelChartProps,
 } from './components';
 
 export {
