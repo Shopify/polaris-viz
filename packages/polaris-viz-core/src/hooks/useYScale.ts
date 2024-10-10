@@ -56,10 +56,6 @@ export function useYScale({
     return [minY, maxY];
   }, [min, max, integersOnly, maxYOverride]);
 
-  if (!isFinite(minY) || !isFinite(maxY)) {
-    throw new Error('min and max must be finite numbers.');
-  }
-
   const {yScale, ticks, yAxisLabelWidth} = useMemo(() => {
     const maxTicks = Math.max(
       1,
