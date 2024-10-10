@@ -554,3 +554,43 @@ export const BadData: Story<BarChartProps> = (args: BarChartProps) => {
 BadData.args = {
   data: [{name: 'Empty', data: []}],
 };
+
+export const InfinityData: Story<BarChartProps> = (args: BarChartProps) => {
+  return (
+    <div style={{width: 500, height: 100}}>
+      <BarChart {...args} />
+    </div>
+  );
+};
+
+InfinityData.args = {
+  data: [
+    {
+      name: 'Oct 7–Oct 13, 2024',
+      data: [
+        {
+          key: '0',
+          value: 0,
+        },
+        {
+          key: '1',
+          value: 0,
+        },
+      ],
+    },
+    {
+      isComparison: true,
+      name: 'Sep 30–Oct 6, 2024',
+      data: [
+        {
+          key: '9',
+          value: Infinity,
+        },
+        {
+          key: '10',
+          value: 0,
+        },
+      ],
+    },
+  ],
+};
