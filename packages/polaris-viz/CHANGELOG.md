@@ -7,7 +7,9 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- ## Unreleased -->
 
-## Unreleased
+<!-- ## Unreleased -->
+
+## [15.0.5] - 2024-10-11
 
 - Fixed an issue where the bar chart collapsed if a value of Infinity was passed to it.
 
