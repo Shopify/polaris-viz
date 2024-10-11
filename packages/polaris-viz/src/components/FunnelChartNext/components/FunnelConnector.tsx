@@ -1,8 +1,8 @@
 import {Fragment, useState} from 'react';
-import {useSpring, animated, to} from '@react-spring/web';
-import type {DataPoint} from '@shopify/polaris-viz-core';
+import {useSpring, animated} from '@react-spring/web';
 import {FONT_SIZE} from '@shopify/polaris-viz-core';
 
+import {FunnelChartConnector} from '../../shared';
 import {estimateStringWidthWithOffset} from '../../../utilities';
 import {SingleTextLine} from '../../Labels';
 import {useBarSpringConfig} from '../../../hooks/useBarSpringConfig';
@@ -12,26 +12,25 @@ const ANIMATION_DELAY = 150;
 const TEXT_HEIGHT = 10;
 const TEXT_PADDING = 4;
 
-export interface Connector {
-  fill: string;
+interface ConnectorProps {
+  drawableHeight: number;
   height: number;
-  nextPoint: DataPoint;
+  index: number;
   nextX: number;
   nextY: number;
+  percentCalculation: string;
   startX: number;
   startY: number;
   width: number;
 }
 
-interface ConnectorProps {
-  connector: Connector;
-  drawableHeight: number;
-  index: number;
-  percentCalculation: string;
-}
-
 export function FunnelConnector({
-  connector,
+  height,
+  nextX,
+  nextY,
+  startX,
+  startY,
+  width,
   drawableHeight,
   index,
   percentCalculation,
@@ -42,31 +41,18 @@ export function FunnelConnector({
     animationDelay: index * ANIMATION_DELAY,
   });
 
-  const {animatedStartY, animatedNextY} = useSpring({
-    from: {
-      animatedStartY: drawableHeight,
-      animatedNextY: drawableHeight,
-    },
-    to: {
-      animatedStartY: connector.startY,
-      animatedNextY: connector.nextY,
-    },
-    ...springConfig,
-  });
-
   const textWidth = estimateStringWidthWithOffset(
     percentCalculation,
     FONT_SIZE,
     300,
   );
 
-  const pillX =
-    connector.startX + connector.width / 2 - textWidth / 2 - TEXT_PADDING;
+  const pillX = startX + width / 2 - textWidth / 2 - TEXT_PADDING;
 
   const yOffset = isHovering ? FUNNEL_CONNECTOR_Y_OFFSET : 0;
 
   const {pillTransform, pillOpacity} = useSpring({
-    pillTransform: `translate(${pillX}px, ${connector.startY - yOffset}px)`,
+    pillTransform: `translate(${pillX}px, ${startY - yOffset}px)`,
     pillOpacity: isHovering ? 1 : 0,
     ...springConfig,
   });
@@ -96,21 +82,21 @@ export function FunnelConnector({
         />
       </animated.g>
 
-      <animated.path
-        d={to(
-          [animatedStartY, animatedNextY],
-          (startY, nextY) =>
-            `M${connector.startX} ${startY}
-         L ${connector.nextX} ${nextY}
-         V ${connector.height} H ${connector.startX} Z`,
-        )}
-        fill={connector.fill}
+      <FunnelChartConnector
+        drawableHeight={drawableHeight}
+        height={height}
+        index={index}
+        nextX={nextX}
+        nextY={nextY}
+        startX={startX}
+        startY={startY}
       />
+
       <rect
-        height={connector.height + FUNNEL_CONNECTOR_Y_OFFSET}
-        width={connector.width}
-        x={connector.startX}
-        y={connector.startY - FUNNEL_CONNECTOR_Y_OFFSET}
+        height={height + FUNNEL_CONNECTOR_Y_OFFSET}
+        width={width}
+        x={startX}
+        y={startY - FUNNEL_CONNECTOR_Y_OFFSET}
         fill="transparent"
         onMouseOver={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
