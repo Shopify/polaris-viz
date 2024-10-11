@@ -17,34 +17,11 @@ const yAxisOptions = {
   },
 };
 
-const tooltipLabels = {
-  reached: 'Reached this step',
-  dropped: 'Dropped off',
-};
-
 Default.args = {
   data: DEFAULT_DATA,
   yAxisOptions: yAxisOptions,
-  tooltipLabels: tooltipLabels,
-};
-
-export const HideSummary: Story<FunnelChartNextProps> = Template.bind({});
-
-HideSummary.args = {
-  data: DEFAULT_DATA,
-  yAxisOptions: yAxisOptions,
-  tooltipLabels: tooltipLabels,
-  showSummary: false,
-};
-
-export const HideXAxisLabels: Story<FunnelChartNextProps> = Template.bind({});
-
-HideXAxisLabels.args = {
-  data: DEFAULT_DATA,
-  xAxisOptions: {
-    hide: true,
+  tooltipLabels: {
+    reached: 'Reached this step',
+    dropped: 'Dropped off',
   },
-  yAxisOptions: yAxisOptions,
-  tooltipLabels: tooltipLabels,
-  showSummary: false,
 };

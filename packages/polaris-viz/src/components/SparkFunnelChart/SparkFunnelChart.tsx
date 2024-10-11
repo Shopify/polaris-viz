@@ -18,7 +18,7 @@ import {ChartSkeleton} from '../';
 
 import {Chart} from './Chart';
 
-export type FunnelChartNextProps = {
+export type SparkFunnelChartProps = {
   tooltipLabels: {
     reached: string;
     dropped: string;
@@ -27,7 +27,7 @@ export type FunnelChartNextProps = {
   yAxisOptions?: Pick<YAxisOptions, 'labelFormatter'>;
 } & ChartProps;
 
-export function FunnelChartNext(props: FunnelChartNextProps) {
+export function SparkFunnelChart(props: SparkFunnelChartProps) {
   const {defaultTheme} = usePolarisVizContext();
 
   const {
@@ -58,6 +58,7 @@ export function FunnelChartNext(props: FunnelChartNextProps) {
       id={id}
       isAnimated={isAnimated}
       onError={onError}
+      sparkChart
       theme={theme}
     >
       {state !== ChartState.Success ? (

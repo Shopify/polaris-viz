@@ -1,10 +1,11 @@
 import {Fragment} from 'react';
 import type {Color, DataPoint, YAxisOptions} from '@shopify/polaris-viz-core';
 import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
-import type {FunnelChartNextProps} from 'components/FunnelChartNext/FunnelChartNext';
 
+import {FUNNEL_CHART_CONNECTOR_GRADIENT} from '../../../shared/FunnelChartConnector';
+import {FUNNEL_CHART_SEGMENT_FILL} from '../../../shared/FunnelChartSegment';
+import type {FunnelChartNextProps} from '../../FunnelChartNext';
 import {SeriesIcon} from '../../../shared/SeriesIcon';
-import {BLUE_09, CONNECTOR_GRADIENT} from '../../constants';
 import {calculateDropOff} from '../../utilities/calculate-dropoff';
 import {TooltipContentContainer, TooltipTitle} from '../../../TooltipContent';
 
@@ -45,7 +46,7 @@ export function Tooltip({
     {
       key: tooltipLabels.reached,
       value: yAxisOptions.labelFormatter(point.value),
-      color: BLUE_09,
+      color: FUNNEL_CHART_SEGMENT_FILL,
       percent: 100 - dropOffPercentage,
     },
   ];
@@ -57,7 +58,7 @@ export function Tooltip({
         nextPoint?.value ?? 0 * dropOffPercentage,
       ),
       percent: dropOffPercentage,
-      color: CONNECTOR_GRADIENT,
+      color: FUNNEL_CHART_CONNECTOR_GRADIENT,
     });
   }
 
