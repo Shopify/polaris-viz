@@ -150,6 +150,10 @@ export function Chart({
     yScaleMax = allValuesAreZero ? 0 : max;
   }
 
+  if (!isFinite(yScaleMax) || !isFinite(min)) {
+    throw new Error('min and max must be finite numbers.');
+  }
+
   const yScaleOptions = {
     formatYAxisLabel: yAxisOptions.labelFormatter,
     integersOnly: yAxisOptions.integersOnly,
