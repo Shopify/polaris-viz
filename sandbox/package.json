@@ -1,6 +1,10 @@
 {
   "name": "sandbox",
+<<<<<<< HEAD
   "version": "15.3.5",
+=======
+  "version": "1.0.0-funnel-chart-next-beta.1",
+>>>>>>> 718c96bf (v1.0.0-funnel-chart-next-beta.1)
   "private": true,
   "main": "index.js",
   "dependencies": {

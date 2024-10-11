@@ -1,11 +1,11 @@
+import type {ReactNode} from 'react';
 import {Fragment, useRef} from 'react';
 import {useSpring, animated} from '@react-spring/web';
 import {getRoundedRectPath} from '@shopify/polaris-viz-core';
 
 import {useBarSpringConfig} from '../../../hooks/useBarSpringConfig';
 
-import type {Connector} from './FunnelConnector';
-import {FunnelConnector} from './FunnelConnector';
+import {FUNNEL_CHART_SEGMENT_FILL} from './constants';
 
 const BORDER_RADIUS = 6;
 
@@ -13,25 +13,21 @@ export interface Props {
   ariaLabel: string;
   barHeight: number;
   barWidth: number;
-  color: string;
-  connector: Connector;
+  children: ReactNode;
   drawableHeight: number;
   index: number;
   isLast: boolean;
-  percentCalculation: string;
   x: number;
 }
 
-export function FunnelSegment({
+export function FunnelChartSegment({
   ariaLabel,
   barHeight,
   barWidth,
-  color,
-  connector,
+  children,
   drawableHeight,
   index = 0,
   isLast,
-  percentCalculation,
   x,
 }: Props) {
   const mounted = useRef(false);
@@ -53,7 +49,7 @@ export function FunnelSegment({
     <Fragment>
       <animated.path
         aria-label={ariaLabel}
-        fill={color}
+        fill={FUNNEL_CHART_SEGMENT_FILL}
         width={barWidth}
         d={animatedHeight.to((value: number) =>
           getRoundedRectPath({
@@ -70,14 +66,7 @@ export function FunnelSegment({
           ),
         }}
       />
-      {!isLast && (
-        <FunnelConnector
-          connector={connector}
-          drawableHeight={drawableHeight}
-          index={index}
-          percentCalculation={percentCalculation}
-        />
-      )}
+      {children}
     </Fragment>
   );
 }
