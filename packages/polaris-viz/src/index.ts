@@ -21,6 +21,7 @@ export {
   MissingDataArea,
   Grid,
   FunnelChartNext,
+  SparkFunnelChart,
 } from './components';
 
 export type {
@@ -39,6 +40,7 @@ export type {
   LineChartRelationalProps,
   GridProps,
   FunnelChartNextProps,
+  SparkFunnelChartProps,
 } from './components';
 
 export {
