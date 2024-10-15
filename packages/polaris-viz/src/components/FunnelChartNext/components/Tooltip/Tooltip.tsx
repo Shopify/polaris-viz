@@ -93,6 +93,6 @@ export function Tooltip({
   );
 
   function formatPercentage(value: number) {
-    return `${yAxisOptions.labelFormatter(value)}%`;
+    return `${yAxisOptions.labelFormatter(isNaN(value) ? 0 : value)}%`;
   }
 }
