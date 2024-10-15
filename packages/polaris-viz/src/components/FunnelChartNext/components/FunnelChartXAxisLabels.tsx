@@ -1,9 +1,9 @@
 import {Fragment} from 'react';
 import type {ScaleBand} from 'd3-scale';
 
+import {LINE_HEIGHT} from '../../../constants';
 import {estimateStringWidthWithOffset} from '../../../utilities';
-import {SingleTextLine, useLabels} from '../../Labels';
-import {TextLine} from '../../TextLine';
+import {SingleTextLine} from '../../Labels';
 
 const LINE_GAP = 5;
 const LINE_PADDING = 10;
@@ -25,23 +25,17 @@ export function FunnelChartXAxisLabels({
   percentages,
   xScale,
 }: FunnelChartXAxisLabelsProps) {
-  const {lines} = useLabels({
-    allowLineWrap: true,
-    align: 'left',
-    fontSize: LABEL_FONT_SIZE,
-    labels,
-    targetWidth: labelWidth - GROUP_OFFSET * 2,
-  });
+  const targetWidth = labelWidth - GROUP_OFFSET * 3;
 
   return (
     <Fragment>
-      {lines.map((line, index) => {
+      {labels.map((label, index) => {
         const x = xScale(index.toString()) ?? 0;
 
-        const firstLabelHeight = line.reduce(
-          (acc, {height}) => acc + height,
-          0,
-        );
+        // const firstLabelHeight = line.reduce(
+        //   (acc, {height}) => acc + height,
+        //   0,
+        // );
 
         const percentWidth = estimateStringWidthWithOffset(
           percentages[index],
@@ -56,18 +50,19 @@ export function FunnelChartXAxisLabels({
             },${GROUP_OFFSET})`}
             key={index}
           >
-            <TextLine
+            <SingleTextLine
               color="rgba(31, 33, 36, 1)"
-              line={line}
-              index={index}
+              text={label}
+              targetWidth={targetWidth}
+              textAnchor="left"
               fontSize={LABEL_FONT_SIZE}
             />
 
-            <g transform={`translate(0,${firstLabelHeight + LINE_GAP})`}>
+            <g transform={`translate(0,${LINE_HEIGHT + LINE_GAP})`}>
               <SingleTextLine
                 color="rgba(31, 33, 36, 1)"
                 text={percentages[index]}
-                targetWidth={labelWidth}
+                targetWidth={targetWidth}
                 textAnchor="left"
                 fontSize={14}
                 fontWeight={650}
@@ -75,7 +70,7 @@ export function FunnelChartXAxisLabels({
               <SingleTextLine
                 color="rgba(97, 97, 97, 1)"
                 text={formattedValues[index]}
-                targetWidth={labelWidth}
+                targetWidth={targetWidth}
                 x={percentWidth + LINE_PADDING}
                 // Fix visual centering
                 y={1}

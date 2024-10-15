@@ -132,6 +132,10 @@ export function Chart({
     return yAxisOptions.labelFormatter(dataPoint.value);
   });
 
+  const mainPercentage = formatPercentage(
+    ((lastPoint?.value ?? 0) / (firstPoint?.value ?? 0)) * 100,
+  );
+
   return (
     <ChartElements.Svg
       height={drawableHeight}
@@ -154,9 +158,7 @@ export function Chart({
         fontWeight={600}
         targetWidth={drawableWidth}
         fontSize={24}
-        text={formatPercentage(
-          ((lastPoint?.value ?? 0) / (firstPoint?.value ?? 0)) * 100,
-        )}
+        text={mainPercentage}
         willTruncate={false}
       />
       {xAxisOptions.hide === false && (
@@ -255,7 +257,7 @@ export function Chart({
   }
 
   function formatPercentage(value: number) {
-    return `${yAxisOptions.labelFormatter(value)}%`;
+    return `${yAxisOptions.labelFormatter(isNaN(value) ? 0 : value)}%`;
   }
 
   function formatPositionForTooltip(index: number | null): TooltipPosition {
