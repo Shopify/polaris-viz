@@ -28,7 +28,7 @@ export function SingleTextLine({
   color,
   dominantBaseline = 'hanging',
   fontSize = FONT_SIZE,
-  fontWeight = 300,
+  fontWeight = 400,
   targetWidth,
   text,
   textAnchor = 'center',
