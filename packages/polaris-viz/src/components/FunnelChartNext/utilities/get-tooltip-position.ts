@@ -32,6 +32,10 @@ export function getTooltipPosition({
 
     const {svgX, svgY} = point;
 
+    console.log({svgX});
+
+    console.log({step});
+
     const activeIndex = Math.floor(svgX / step);
 
     if (activeIndex < 0 || activeIndex > maxIndex || svgY <= 0 || svgY > yMax) {

@@ -27,5 +27,12 @@ export const META: Meta = {
     yAxisOptions: Y_AXIS_OPTIONS_ARGS,
     theme: THEME_CONTROL_ARGS,
     state: CHART_STATE_CONTROL_ARGS,
+    showConnectionPercentage: {
+      description:
+        'Show the percentage change between each segment in the funnel.',
+      control: {
+        type: 'boolean',
+      },
+    },
   },
 };

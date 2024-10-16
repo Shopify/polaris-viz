@@ -2,6 +2,7 @@ import {Fragment} from 'react';
 import type {Color, DataPoint, YAxisOptions} from '@shopify/polaris-viz-core';
 import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
+import {TOOLTIP_WIDTH} from '../../constants';
 import {FUNNEL_CHART_CONNECTOR_GRADIENT} from '../../../shared/FunnelChartConnector';
 import {FUNNEL_CHART_SEGMENT_FILL} from '../../../shared/FunnelChartSegment';
 import type {FunnelChartNextProps} from '../../FunnelChartNext';
@@ -18,8 +19,6 @@ export interface TooltipContentProps {
   tooltipLabels: FunnelChartNextProps['tooltipLabels'];
   yAxisOptions: Required<YAxisOptions>;
 }
-
-const MAX_WIDTH = 300;
 
 interface Data {
   key: string;
@@ -63,7 +62,10 @@ export function Tooltip({
   }
 
   return (
-    <TooltipContentContainer maxWidth={MAX_WIDTH} theme={DEFAULT_THEME_NAME}>
+    <TooltipContentContainer
+      maxWidth={TOOLTIP_WIDTH}
+      theme={DEFAULT_THEME_NAME}
+    >
       {() => (
         <Fragment>
           <TooltipTitle theme={DEFAULT_THEME_NAME}>{point.key}</TooltipTitle>

@@ -9,6 +9,12 @@ const LINE_GAP = 5;
 const LINE_PADDING = 10;
 const GROUP_OFFSET = 10;
 const LABEL_FONT_SIZE = 12;
+const PERCENT_FONT_SIZE = 14;
+const PERCENT_FONT_WEIGHT = 650;
+const VALUE_FONT_SIZE = 11;
+
+const TEXT_COLOR = 'rgba(31, 33, 36, 1)';
+const VALUE_COLOR = 'rgba(97, 97, 97, 1)';
 
 export interface FunnelChartXAxisLabelsProps {
   formattedValues: string[];
@@ -32,15 +38,10 @@ export function FunnelChartXAxisLabels({
       {labels.map((label, index) => {
         const x = xScale(index.toString()) ?? 0;
 
-        // const firstLabelHeight = line.reduce(
-        //   (acc, {height}) => acc + height,
-        //   0,
-        // );
-
         const percentWidth = estimateStringWidthWithOffset(
           percentages[index],
-          14,
-          650,
+          PERCENT_FONT_SIZE,
+          PERCENT_FONT_WEIGHT,
         );
 
         return (
@@ -51,7 +52,7 @@ export function FunnelChartXAxisLabels({
             key={index}
           >
             <SingleTextLine
-              color="rgba(31, 33, 36, 1)"
+              color={TEXT_COLOR}
               text={label}
               targetWidth={targetWidth}
               textAnchor="left"
@@ -60,22 +61,22 @@ export function FunnelChartXAxisLabels({
 
             <g transform={`translate(0,${LINE_HEIGHT + LINE_GAP})`}>
               <SingleTextLine
-                color="rgba(31, 33, 36, 1)"
+                color={TEXT_COLOR}
                 text={percentages[index]}
                 targetWidth={targetWidth}
                 textAnchor="left"
-                fontSize={14}
-                fontWeight={650}
+                fontSize={PERCENT_FONT_SIZE}
+                fontWeight={PERCENT_FONT_WEIGHT}
               />
               <SingleTextLine
-                color="rgba(97, 97, 97, 1)"
+                color={VALUE_COLOR}
                 text={formattedValues[index]}
                 targetWidth={targetWidth}
                 x={percentWidth + LINE_PADDING}
                 // Fix visual centering
                 y={1}
                 textAnchor="left"
-                fontSize={11}
+                fontSize={VALUE_FONT_SIZE}
               />
             </g>
           </g>

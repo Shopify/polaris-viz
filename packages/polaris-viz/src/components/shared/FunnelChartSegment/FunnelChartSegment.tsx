@@ -17,6 +17,9 @@ export interface Props {
   drawableHeight: number;
   index: number;
   isLast: boolean;
+  onMouseEnter: (index: number) => void;
+  onMouseLeave: () => void;
+  tallestBarHeight: number;
   x: number;
 }
 
@@ -28,6 +31,9 @@ export function FunnelChartSegment({
   drawableHeight,
   index = 0,
   isLast,
+  onMouseEnter,
+  onMouseLeave,
+  tallestBarHeight,
   x,
 }: Props) {
   const mounted = useRef(false);
@@ -66,6 +72,17 @@ export function FunnelChartSegment({
           ),
         }}
       />
+
+      <rect
+        x={x}
+        y={drawableHeight - tallestBarHeight}
+        width={barWidth}
+        height={tallestBarHeight}
+        fill="transparent"
+        onMouseEnter={() => onMouseEnter(index)}
+        onMouseLeave={onMouseLeave}
+      />
+
       {children}
     </Fragment>
   );
