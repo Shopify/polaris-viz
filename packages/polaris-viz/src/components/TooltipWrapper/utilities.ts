@@ -1,5 +1,5 @@
 import type {BoundingRect, Dimensions} from '@shopify/polaris-viz-core';
-import {clamp} from '@shopify/polaris-viz-core';
+import {clamp, useChartContext} from '@shopify/polaris-viz-core';
 
 import type {TooltipPositionOffset} from '../TooltipWrapper';
 import type {Margin} from '../../types';
@@ -67,6 +67,7 @@ export function getAlteredVerticalBarPosition(
       y = above.value;
 
       if (above.wasOutsideBounds) {
+        console.log('test')
         newPosition.horizontal = TooltipHorizontalOffset.Left;
       }
     }
@@ -221,6 +222,8 @@ export function getAbovePosition(
   ...args: Parameters<getFunction>
 ): ReturnType<getFunction> {
   const [value, props] = args;
+  const {scrollContainer} = useChartContext();
+
 
   let y = value - props.tooltipDimensions.height - TOOLTIP_MARGIN;
   const wasOutsideBounds = isOutsideBounds({
@@ -230,7 +233,8 @@ export function getAbovePosition(
   });
 
   if (wasOutsideBounds) {
-    y = props.currentY;
+    console.log('test 2')
+    y = props.currentY + (scrollContainer?.scrollTop ?? 0);
   }
 
   return {value: y, wasOutsideBounds};
