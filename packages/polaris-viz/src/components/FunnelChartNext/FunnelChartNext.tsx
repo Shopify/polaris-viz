@@ -19,6 +19,7 @@ import {ChartSkeleton} from '../';
 import {Chart} from './Chart';
 
 export type FunnelChartNextProps = {
+  showConnectionPercentage?: boolean;
   tooltipLabels: {
     reached: string;
     dropped: string;
@@ -40,6 +41,7 @@ export function FunnelChartNext(props: FunnelChartNextProps) {
     state,
     errorText,
     onError,
+    showConnectionPercentage = false,
     tooltipLabels,
   } = {
     ...DEFAULT_CHART_PROPS,
@@ -70,9 +72,10 @@ export function FunnelChartNext(props: FunnelChartNextProps) {
       ) : (
         <Chart
           data={data}
+          showConnectionPercentage={showConnectionPercentage}
+          tooltipLabels={tooltipLabels}
           xAxisOptions={xAxisOptionsForChart}
           yAxisOptions={yAxisOptionsForChart}
-          tooltipLabels={tooltipLabels}
         />
       )}
     </ChartContainer>
