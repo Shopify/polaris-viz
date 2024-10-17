@@ -53,7 +53,6 @@ export function LegendValues({
   const seriesCount = clamp({
     amount: allData.length,
     min: 1,
-    max: Infinity,
   });
 
   const seriesColors = getSeriesColors(seriesCount, selectedTheme);

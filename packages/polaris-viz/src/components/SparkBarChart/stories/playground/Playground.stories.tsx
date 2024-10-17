@@ -8,6 +8,7 @@ export default {
   ...META,
   title: `${META.title}/Playground`,
 };
+
 export const InfinityState: Story<SparkBarChartProps> = Template.bind({});
 
 InfinityState.args = {
@@ -44,4 +45,15 @@ InfinityTargetState.args = {
   targetLine: {
     value: Infinity,
   },
+};
+
+export const EmptyDataSeries: Story<SparkBarChartProps> = Template.bind({});
+
+EmptyDataSeries.args = {
+  ...DEFAULT_PROPS,
+  data: [
+    {
+      data: [],
+    },
+  ],
 };

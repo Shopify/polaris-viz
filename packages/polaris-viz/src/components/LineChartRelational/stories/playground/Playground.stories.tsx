@@ -53,3 +53,38 @@ InfinityState.args = {
     },
   ],
 };
+
+export const EmptyDataSeries: Story<LineChartRelationalProps> = Template.bind(
+  {},
+);
+
+EmptyDataSeries.args = {
+  data: [
+    {
+      name: 'Average',
+      data: [],
+      color: 'orange',
+    },
+    {
+      name: '75th Percentile',
+      data: [],
+      color: 'blue',
+      metadata: {
+        relatedIndex: 2,
+      },
+    },
+    {
+      name: 'Median',
+      data: [],
+      color: 'green',
+    },
+    {
+      name: '25th percentile',
+      data: [],
+      color: 'red',
+      metadata: {
+        relatedIndex: 2,
+      },
+    },
+  ],
+};

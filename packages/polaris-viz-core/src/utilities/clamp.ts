@@ -5,7 +5,15 @@ export function clamp({
 }: {
   amount: number;
   min: number;
-  max: number;
+  max?: number;
 }) {
-  return Math.min(Math.max(amount, min), max);
+  if (amount < min) {
+    return min;
+  }
+
+  if (max != null && amount > max) {
+    return max;
+  }
+
+  return amount;
 }

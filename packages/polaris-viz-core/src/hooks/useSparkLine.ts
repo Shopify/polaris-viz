@@ -23,10 +23,6 @@ export function useSparkLine({
   const minYValues = Math.min(...yValues);
   const maxYValues = Math.max(...yValues);
 
-  if (!isFinite(minYValues) || !isFinite(maxYValues)) {
-    throw new Error('Values must be finite');
-  }
-
   const rangeStart = height - svgMargin;
   let rangeEnd = svgMargin;
 

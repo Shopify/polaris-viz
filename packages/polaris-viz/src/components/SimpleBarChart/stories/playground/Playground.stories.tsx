@@ -11,17 +11,28 @@ export const InfinityState = Template.bind({});
 InfinityState.args = {
   data: [
     {
+      name: 'BCFM 2019',
       data: [
         {
-          value: 126,
-          key: 'Opens',
+          key: 'Womens Leggings',
+          value: 3,
         },
         {
+          key: 'Mens Bottoms',
           value: Infinity,
-          key: 'Added to carts',
         },
       ],
-      name: 'Conversion',
+    },
+  ],
+};
+
+export const EmptyDataSeries = Template.bind({});
+
+EmptyDataSeries.args = {
+  data: [
+    {
+      name: 'BCFM 2019',
+      data: [],
     },
   ],
 };

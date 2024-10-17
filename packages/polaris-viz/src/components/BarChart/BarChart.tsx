@@ -150,7 +150,6 @@ export function BarChart(props: BarChartProps) {
         <SkipLink anchorId={skipLinkAnchorId.current}>{skipLinkText}</SkipLink>
       )}
       <ChartContainer
-        skeletonType="SimpleBar"
         id={id}
         isAnimated={isAnimated}
         data={data}

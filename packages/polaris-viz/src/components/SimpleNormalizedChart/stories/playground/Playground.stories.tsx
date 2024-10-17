@@ -37,3 +37,21 @@ InfinityState.args = {
     },
   ],
 };
+
+export const EmptyDataSeries: Story<SimpleNormalizedChartProps> = Template.bind(
+  {},
+);
+
+EmptyDataSeries.args = {
+  ...DEFAULT_PROPS,
+  data: [
+    {
+      name: 'Instagram',
+      data: [],
+    },
+    {
+      name: 'Facebook',
+      data: [],
+    },
+  ],
+};

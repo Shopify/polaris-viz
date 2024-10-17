@@ -90,7 +90,6 @@ export function Chart({
   const seriesCount = clamp({
     amount: data.length,
     min: 1,
-    max: Infinity,
   });
 
   const seriesColor = getSeriesColors(seriesCount, selectedTheme);
