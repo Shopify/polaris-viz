@@ -53,7 +53,6 @@ export function useHorizontalBarSizes({
     const barHeight = clamp({
       amount: groupBarsAreaHeight / (isStacked ? 1 : singleBarCount),
       min: MIN_BAR_HEIGHT,
-      max: Infinity,
     });
 
     if (WARN_FOR_DEVELOPMENT && groupBarsAreaHeight < 0) {

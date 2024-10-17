@@ -78,7 +78,6 @@ export function useAnnotationPositions({
       let x = clamp({
         amount: rawX - width / 2,
         min: PILL_X_MIN,
-        max: Infinity,
       });
 
       const right = x + width;

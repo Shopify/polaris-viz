@@ -7,8 +7,8 @@ export function yAxisMinMax(series: DataSeries[]) {
     return {minY: EMPTY_STATE_CHART_MIN, maxY: EMPTY_STATE_CHART_MAX};
   }
 
-  let minY = Infinity;
-  let maxY = -Infinity;
+  let minY = Number.MAX_SAFE_INTEGER;
+  let maxY = -Number.MAX_SAFE_INTEGER;
 
   series.forEach(({data}) => {
     data.forEach(({value}) => {
@@ -21,7 +21,7 @@ export function yAxisMinMax(series: DataSeries[]) {
     });
   });
 
-  if (minY === Infinity || maxY === -Infinity) {
+  if (minY === Number.MAX_SAFE_INTEGER || maxY === -Number.MAX_SAFE_INTEGER) {
     return {
       minY: Math.min(minY, EMPTY_STATE_CHART_MIN),
       maxY: Math.max(maxY, EMPTY_STATE_CHART_MAX),

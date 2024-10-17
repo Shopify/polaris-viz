@@ -71,6 +71,7 @@ export function FunnelChart(props: FunnelChartProps) {
       isAnimated={isAnimated}
       onError={onError}
       theme={theme}
+      skeletonType="Funnel"
     >
       {state !== ChartState.Success ? (
         <ChartSkeleton

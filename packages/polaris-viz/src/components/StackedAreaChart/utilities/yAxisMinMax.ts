@@ -1,3 +1,4 @@
+import {EMPTY_STATE_CHART_MIN, EMPTY_STATE_CHART_MAX} from '../../../constants';
 import type {StackedSeries} from '../../../types';
 
 export function yAxisMinMax(stackedValues: StackedSeries[]) {
@@ -20,6 +21,13 @@ export function yAxisMinMax(stackedValues: StackedSeries[]) {
       ),
     ),
   );
+
+  if (minY === Infinity || maxY === -Infinity) {
+    return {
+      minY: Math.min(minY, EMPTY_STATE_CHART_MIN),
+      maxY: Math.max(maxY, EMPTY_STATE_CHART_MAX),
+    };
+  }
 
   return {minY, maxY};
 }

@@ -1,11 +1,15 @@
 import type {Story} from '@storybook/react';
 
-export {META as default} from '../meta';
-
 import {DEFAULT_PROPS, Template} from '../data';
 import type {LineChartProps} from '../../../LineChart/LineChart';
 import {generateDayRange, randomNumber} from '../../../Docs/utilities';
 import type {DataSeries} from '@shopify/polaris-viz-core';
+import {META} from '../meta';
+
+export default {
+  ...META,
+  title: `${META.title}/Playground`,
+};
 
 export const SeriesColors: Story<LineChartProps> = Template.bind({});
 

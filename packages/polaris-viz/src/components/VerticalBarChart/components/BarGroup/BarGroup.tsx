@@ -102,7 +102,10 @@ export function BarGroup({
     },
   });
 
-  const dataLength = clamp({amount: data.length, min: 1, max: Infinity});
+  const dataLength = clamp({
+    amount: data.length,
+    min: 1,
+  });
   const barWidth = width / dataLength;
 
   const getBarHeight = useCallback(
@@ -213,7 +216,6 @@ export function BarGroup({
           const height = clamp({
             amount: Math.abs(yScale(rawValue) - yScale(0)),
             min: 1,
-            max: Infinity,
           });
           const isNegative = rawValue < 0;
           const y = isNegative ? yScale(0) : yScale(0) - height;

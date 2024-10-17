@@ -46,6 +46,7 @@ export function SparkLineChart(props: SparkLineChartProps) {
       theme={theme}
       sparkChart
       onError={onError}
+      skeletonType="Spark"
     >
       {state !== ChartState.Success ? (
         <ChartSkeleton

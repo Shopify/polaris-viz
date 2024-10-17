@@ -119,7 +119,6 @@ export function HorizontalBars({
           const clampedWidth = clamp({
             amount: width,
             min: 1,
-            max: Infinity,
           });
 
           if (isNegative) {

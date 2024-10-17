@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useState} from 'react';
 import type {Story} from '@storybook/react';
 
 import {ComboChart, ComboChartProps} from '../../ComboChart';
@@ -585,6 +585,33 @@ WebVitals.args = {
         },
       ],
       shape: 'Bar',
+    },
+  ],
+};
+
+export const EmptyDataSeries = BasicTemplate.bind({});
+
+EmptyDataSeries.args = {
+  data: [
+    {
+      shape: 'Bar',
+      name: 'Total Sales',
+      series: [
+        {
+          name: 'POS',
+          data: [],
+        },
+      ],
+    },
+    {
+      shape: 'Line',
+      name: 'Total Sessions',
+      series: [
+        {
+          name: 'Sessions from Google ads',
+          data: [],
+        },
+      ],
     },
   ],
 };
