@@ -155,8 +155,13 @@ export function Chart({
   const isEveryValueZero = points.every(({value}) => value === 0);
   const emptyState = pieChartData.length === 0 || isEveryValueZero;
 
-  const totalValue =
-    total || points.reduce((acc, {value}) => (value ?? 0) + acc, 0);
+  const dataSum = points.reduce((acc, {value}) => (value ?? 0) + acc, 0);
+
+  if (!isFinite(dataSum)) {
+    throw new Error('Data must be finite');
+  }
+
+  const totalValue = total || dataSum;
 
   const activeValue = points[activeIndex]?.value;
 
