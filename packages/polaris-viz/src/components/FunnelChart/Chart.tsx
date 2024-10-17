@@ -57,6 +57,10 @@ export function Chart({
   const xValues = dataSeries.map(({key}) => key) as string[];
   const yValues = dataSeries.map(({value}) => value) as [number, number];
 
+  if (!isFinite(Math.max(...yValues))) {
+    throw new Error('Data must be finite');
+  }
+
   const {width, height} = dimensions || {width: 0, height: 0};
 
   const labels = useMemo(
