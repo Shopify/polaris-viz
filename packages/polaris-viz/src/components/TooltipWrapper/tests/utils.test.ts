@@ -78,8 +78,17 @@ describe('utilities', () => {
 
   describe('getAbovePosition()', () => {
     it('returns altered values', () => {
-      expect(getAbovePosition(0, {...BASE_PROPS, currentY: 0})).toStrictEqual({
-        value: 0,
+      const currentY = 0;
+      const scrollTop = 15;
+
+      expect(
+        getAbovePosition(0, {
+          ...BASE_PROPS,
+          currentY,
+          scrollContainer: {scrollTop} as Element,
+        }),
+      ).toStrictEqual({
+        value: currentY - scrollTop,
         wasOutsideBounds: true,
       });
 
@@ -167,7 +176,7 @@ describe('utilities', () => {
       });
 
       expect(getCenterPosition(690, BASE_PROPS)).toStrictEqual({
-        value: 40,
+        value: 440,
         wasOutsideBounds: true,
       });
     });

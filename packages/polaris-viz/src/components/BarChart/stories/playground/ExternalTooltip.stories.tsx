@@ -50,7 +50,9 @@ const TemplateWithFrame: Story<BarChartProps> = (args: BarChartProps) => {
     <div style={{overflow: 'hidden', position: 'fixed', inset: 0}}>
       <div style={{height: 100, background: 'black', width: '100%'}}></div>
       <div style={{overflow: 'auto', height: '100vh'}} ref={setRef}>
-        <Card {...props} />
+        <div style={{marginLeft: '300px'}}>
+          <Card {...props} />
+        </div>
         <div style={{height: 700, width: 10}} />
         <div style={{display: 'flex', justifyContent: 'space-between'}}>
           <Card {...props} />
