@@ -19,6 +19,8 @@ export {
   LineChartRelational,
   LineChartPredictive,
   MissingDataArea,
+  FunnelChartNext,
+  SparkFunnelChart,
 } from './components';
 
 export type {
@@ -35,6 +37,8 @@ export type {
   DonutChartProps,
   ComparisonMetricProps,
   LineChartRelationalProps,
+  FunnelChartNextProps,
+  SparkFunnelChartProps,
 } from './components';
 
 export {

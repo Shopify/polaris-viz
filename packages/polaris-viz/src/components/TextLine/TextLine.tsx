@@ -8,9 +8,16 @@ import type {FormattedLine} from '../../types';
 interface TextLineProps {
   index: number;
   line: FormattedLine[];
+  color?: string;
+  fontSize?: number;
 }
 
-export function TextLine({index, line}: TextLineProps) {
+export function TextLine({
+  color,
+  index,
+  line,
+  fontSize = FONT_SIZE,
+}: TextLineProps) {
   const selectedTheme = useTheme();
 
   return (
@@ -41,8 +48,8 @@ export function TextLine({index, line}: TextLineProps) {
                 width={width}
                 x={x}
                 y={y}
-                fill={selectedTheme.xAxis.labelColor}
-                fontSize={FONT_SIZE}
+                fill={color ?? selectedTheme.xAxis.labelColor}
+                fontSize={fontSize}
                 fontFamily={FONT_FAMILY}
                 transform={transform}
               >

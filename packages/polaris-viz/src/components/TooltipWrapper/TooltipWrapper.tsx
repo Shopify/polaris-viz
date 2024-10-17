@@ -10,11 +10,9 @@ import {SwallowErrors} from '../SwallowErrors';
 
 import {shouldBlockTooltipEvents} from './utilities/shouldBlockTooltipEvents';
 import type {TooltipPosition, TooltipPositionParams} from './types';
-import {DEFAULT_TOOLTIP_POSITION} from './constants';
+import {DEFAULT_TOOLTIP_POSITION, TOOLTIP_ROOT_ID} from './constants';
 import {TooltipAnimatedContainer} from './components/TooltipAnimatedContainer';
 import type {AlteredPosition} from './utilities';
-
-const TOOLTIP_ID = 'polaris_viz_tooltip_root';
 
 interface BaseProps {
   chartBounds: BoundingRect;
@@ -223,7 +221,7 @@ function TooltipWithErrors(props: BaseProps) {
 }
 
 function TooltipWithPortal(props: BaseProps) {
-  const container = useRootContainer(TOOLTIP_ID);
+  const container = useRootContainer(TOOLTIP_ROOT_ID);
 
   return createPortal(<TooltipWithErrors {...props} />, container);
 }

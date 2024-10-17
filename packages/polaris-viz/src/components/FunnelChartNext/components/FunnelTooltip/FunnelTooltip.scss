@@ -1,0 +1,10 @@
+.Tooltip {
+  top: 0;
+  left: 0;
+  position: absolute;
+  pointer-events: none;
+  // Matches --p-z-index-12
+  // https://polaris.shopify.com/tokens/z-index
+  z-index: 520;
+  max-width: 70%;
+}

@@ -12,3 +12,5 @@ export const TOOLTIP_POSITION_DEFAULT_RETURN: TooltipPosition = {
   position: DEFAULT_TOOLTIP_POSITION,
   activeIndex: null,
 };
+
+export const TOOLTIP_ROOT_ID = 'polaris_viz_tooltip_root';
