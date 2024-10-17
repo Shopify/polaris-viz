@@ -55,9 +55,9 @@ export function Chart({
   const [maskRef, setMaskRef] = useState<SVGMaskElement | null>(null);
 
   const xValues = dataSeries.map(({key}) => key) as string[];
-  const yValues = dataSeries.map(({value}) => value) as [number, number];
+  const yValues = dataSeries.map(({value}) => value) as number[];
 
-  const maxValue = Math.max(...yValues);
+  const maxValue = yValues.length === 0 ? 0 : Math.max(...yValues);
 
   if (!isFinite(maxValue)) {
     throw new Error('Data must be finite');
