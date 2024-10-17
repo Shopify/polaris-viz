@@ -210,7 +210,7 @@ export function getVerticalCenterPosition(
     if (y <= 0) {
       y = 0;
     } else {
-      y = props.chartBounds.height - props.tooltipDimensions.height;
+      y = window.scrollY + window.innerHeight - props.tooltipDimensions.height;
     }
   }
 
@@ -228,9 +228,8 @@ export function getAbovePosition(
     direction: 'y',
     alteredPosition: props,
   });
-
   if (wasOutsideBounds) {
-    y = props.currentY;
+    y = props.currentY - (props.scrollContainer?.scrollTop ?? 0);
   }
 
   return {value: y, wasOutsideBounds};
@@ -315,10 +314,7 @@ export function getCenterPosition(
   });
 
   if (wasOutsideBounds) {
-    x =
-      props.chartBounds.width -
-      props.tooltipDimensions.width -
-      TOOLTIP_MARGIN * 2;
+    x = window.innerWidth - props.tooltipDimensions.width - TOOLTIP_MARGIN * 2;
   }
 
   return {value: x, wasOutsideBounds};
