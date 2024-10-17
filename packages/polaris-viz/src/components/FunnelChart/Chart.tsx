@@ -57,7 +57,9 @@ export function Chart({
   const xValues = dataSeries.map(({key}) => key) as string[];
   const yValues = dataSeries.map(({value}) => value) as [number, number];
 
-  if (!isFinite(Math.max(...yValues))) {
+  const maxValue = Math.max(...yValues);
+
+  if (!isFinite(maxValue)) {
     throw new Error('Data must be finite');
   }
 
@@ -83,7 +85,7 @@ export function Chart({
 
   const yScale = scaleLinear()
     .range([0, drawableHeight - BAR_CONTAINER_TEXT_HEIGHT])
-    .domain([0, Math.max(...yValues)]);
+    .domain([0, maxValue]);
 
   const barWidth = xScale.bandwidth();
 
