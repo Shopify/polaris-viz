@@ -1,4 +1,4 @@
-import type {Dispatch, ErrorInfo, ReactElement, SetStateAction} from 'react';
+import type {Dispatch, ReactElement, SetStateAction} from 'react';
 import {cloneElement, useCallback, useLayoutEffect, useState} from 'react';
 import type {
   DataGroup,
@@ -44,7 +44,6 @@ export function ChartDimensions({
 
   const [chartDimensions, setChartDimensions] =
     useState<BoundingRect | null>(null);
-  const [hasError, setHasError] = useState(false);
 
   const {ref, setRef, entry} = useResizeObserver();
 
@@ -56,22 +55,7 @@ export function ChartDimensions({
     onIsPrintingChange,
   });
 
-  function handleError(error: Error, errorInfo: ErrorInfo) {
-    setHasError(true);
-
-    if (onError == null) {
-      onErrorProvider?.(error, errorInfo);
-      return;
-    }
-
-    onError(error, errorInfo);
-  }
-
   const updateDimensions = useCallback(() => {
-    if (hasError) {
-      return;
-    }
-
     if (
       (previousEntry?.contentRect.width === entry?.contentRect.width &&
         previousEntry?.contentRect.height === entry?.contentRect.height) ||
@@ -87,7 +71,7 @@ export function ChartDimensions({
       scrollContainer == null ? window.scrollY : scrollContainer.scrollTop;
 
     setChartDimensions({width, height, x, y: y + scrollY});
-  }, [entry, previousEntry?.contentRect, scrollContainer, hasError]);
+  }, [entry, previousEntry?.contentRect, scrollContainer]);
 
   const debouncedUpdateDimensions = useDebouncedCallback(() => {
     updateDimensions();
@@ -143,7 +127,7 @@ export function ChartDimensions({
           type={skeletonType ?? 'Default'}
           dimensions={chartDimensions!}
           data={data}
-          onError={handleError}
+          onError={onError ?? onErrorProvider}
         >
           <div
             className={styles.Chart}
