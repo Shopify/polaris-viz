@@ -285,3 +285,28 @@ AllZerosComparison.args = {
   ...DEFAULT_PROPS,
   data: [DATA[1]],
 };
+
+export const InfinityData: Story<SparkLineChartProps> = Template.bind({});
+
+InfinityData.args = {
+  ...DEFAULT_PROPS,
+  data: [
+    {
+      data: [
+        {key: 0, value: 100},
+        {key: 1, value: Infinity},
+      ],
+    },
+  ],
+};
+
+export const EmptyDataSeries: Story<SparkLineChartProps> = Template.bind({});
+
+EmptyDataSeries.args = {
+  ...DEFAULT_PROPS,
+  data: [
+    {
+      data: [],
+    },
+  ],
+};

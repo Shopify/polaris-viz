@@ -59,6 +59,7 @@ export function SimpleNormalizedChart(props: SimpleNormalizedChartProps) {
       id={id}
       isAnimated={isAnimated}
       onError={onError}
+      skeletonType="SimpleNormalized"
     >
       {state !== ChartState.Success ? (
         <ChartSkeleton

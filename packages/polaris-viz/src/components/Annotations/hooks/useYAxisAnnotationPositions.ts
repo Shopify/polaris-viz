@@ -56,7 +56,6 @@ export function useYAxisAnnotationPositions({
       const y = clamp({
         amount: rawY - PILL_HEIGHT / 2,
         min: 0,
-        max: Infinity,
       });
 
       const x = axis === 'y2' ? 0 : drawableWidth - width;

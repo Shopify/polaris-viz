@@ -45,6 +45,7 @@ export function SparkBarChart(props: SparkBarChartProps) {
       id={id}
       isAnimated={isAnimated}
       onError={onError}
+      skeletonType="Spark"
     >
       {state !== ChartState.Success ? (
         <ChartSkeleton

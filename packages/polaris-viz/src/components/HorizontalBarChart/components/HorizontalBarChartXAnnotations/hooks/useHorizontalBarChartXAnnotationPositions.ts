@@ -60,7 +60,6 @@ export function useHorizontalBarChartXAnnotationPositions({
       let x = clamp({
         amount: xPosition - width / 2,
         min: PILL_X_MIN,
-        max: Infinity,
       });
 
       const right = x + width;
