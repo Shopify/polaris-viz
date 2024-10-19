@@ -133,6 +133,7 @@ export const decorators = [
           Dark: {
             chartContainer: {
               padding: '20px',
+              minHeight: 0,
             },
             grid: {
               horizontalMargin:
@@ -144,6 +145,7 @@ export const decorators = [
           Light: {
             chartContainer: {
               padding: '20px',
+              minHeight: 0,
             },
           },
           NoSpline: {

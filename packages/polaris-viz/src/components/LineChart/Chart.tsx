@@ -68,6 +68,8 @@ import {PointsAndCrosshair} from './components';
 import {useFormatData} from './hooks';
 import {getAlteredLineChartPosition, yAxisMinMax} from './utilities';
 
+const VERY_SMALL_CHART_HEIGHT = 200;
+
 export interface ChartProps {
   renderTooltipContent: (data: RenderTooltipContentData) => ReactNode;
   annotationsLookupTable: AnnotationLookupTable;
@@ -113,8 +115,17 @@ export function Chart({
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [activeLineIndex, setActiveLineIndex] = useState(-1);
-  const [xAxisHeight, setXAxisHeight] = useState(LINE_HEIGHT);
+
+  const hideXAxis =
+    xAxisOptions.hide ||
+    selectedTheme.xAxis.hide ||
+    dimensions?.height < VERY_SMALL_CHART_HEIGHT;
+
+  const [xAxisHeight, setXAxisHeight] = useState(hideXAxis ? 0 : LINE_HEIGHT);
   const [annotationsHeight, setAnnotationsHeight] = useState(0);
+
+  const shouldReallyShowLegend =
+    showLegend && dimensions?.height > VERY_SMALL_CHART_HEIGHT;
 
   const {legend, setLegendDimensions, height, width} = useLegend({
     data: [
@@ -124,7 +135,7 @@ export function Chart({
       },
     ],
     dimensions,
-    showLegend,
+    showLegend: shouldReallyShowLegend,
     seriesNameFormatter,
   });
 
@@ -181,8 +192,6 @@ export function Chart({
     xAxisHeight,
     yAxisWidth: yAxisLabelWidth,
   });
-
-  const hideXAxis = xAxisOptions.hide || selectedTheme.xAxis.hide;
 
   const {xAxisDetails, xScale, labels} = useLinearLabelsAndDimensions({
     data,
@@ -437,7 +446,7 @@ export function Chart({
         />
       )}
 
-      {showLegend && (
+      {shouldReallyShowLegend && (
         <LegendContainer
           colorVisionType={COLOR_VISION_SINGLE_ITEM}
           data={legend}

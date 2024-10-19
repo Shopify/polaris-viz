@@ -10,10 +10,9 @@ export const ResizeableChart: Story<LineChartProps> = (
   return (
     <div
       style={{
-        resize: 'both',
         overflow: 'hidden',
-        maxHeight: '100%',
-        maxWidth: '100%',
+        height: '100px',
+        maxWidth: '200px',
       }}
     >
       <LineChart {...args} />
