@@ -123,12 +123,12 @@ export function HorizontalStackedBars({
   const minGroupStartPoint = stackedValues[groupIndex].reduce((min, item) => {
     const start = item[0];
     return start < min ? start : min;
-  }, Infinity);
+  }, Number.MAX_SAFE_INTEGER);
 
   const maxGroupEndPoint = stackedValues[groupIndex].reduce((max, item) => {
     const end = item[1];
     return end > max ? end : max;
-  }, -Infinity);
+  }, -Number.MAX_SAFE_INTEGER);
 
   const groupLabelX = isNegative
     ? xScale(minGroupStartPoint) - labelWidth - HORIZONTAL_BAR_LABEL_OFFSET

@@ -6,13 +6,18 @@ describe('clamp', () => {
     expect(actual).toBe(101);
   });
 
-  it('returns the the min when it is greater than the amount', () => {
+  it('returns the min when it is greater than the amount', () => {
     const actual = clamp({amount: -101, min: 10, max: 200});
     expect(actual).toBe(10);
   });
 
-  it('returns the the max when it is less than the amount', () => {
+  it('returns the max when it is less than the amount', () => {
     const actual = clamp({amount: 1010, min: 10, max: 200});
     expect(actual).toBe(200);
+  });
+
+  it('returns amount when max is not provided and amount is greater than min', () => {
+    const actual = clamp({amount: 1010, min: 10});
+    expect(actual).toBe(1010);
   });
 });

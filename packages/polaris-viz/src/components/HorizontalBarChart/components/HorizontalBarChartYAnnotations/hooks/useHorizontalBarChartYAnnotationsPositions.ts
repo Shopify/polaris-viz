@@ -58,7 +58,6 @@ export function useHorizontalBarChartYAnnotationsPositions({
       const y = clamp({
         amount: rawY - PILL_HEIGHT / 2,
         min: 0,
-        max: Infinity,
       });
 
       return {

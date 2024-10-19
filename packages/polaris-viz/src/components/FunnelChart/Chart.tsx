@@ -55,7 +55,13 @@ export function Chart({
   const [maskRef, setMaskRef] = useState<SVGMaskElement | null>(null);
 
   const xValues = dataSeries.map(({key}) => key) as string[];
-  const yValues = dataSeries.map(({value}) => value) as [number, number];
+  const yValues = dataSeries.map(({value}) => value) as number[];
+
+  const maxValue = yValues.length === 0 ? 0 : Math.max(...yValues);
+
+  if (!isFinite(maxValue)) {
+    throw new Error('Data must be finite');
+  }
 
   const {width, height} = dimensions || {width: 0, height: 0};
 
@@ -79,7 +85,7 @@ export function Chart({
 
   const yScale = scaleLinear()
     .range([0, drawableHeight - BAR_CONTAINER_TEXT_HEIGHT])
-    .domain([0, Math.max(...yValues)]);
+    .domain([0, maxValue]);
 
   const barWidth = xScale.bandwidth();
 
