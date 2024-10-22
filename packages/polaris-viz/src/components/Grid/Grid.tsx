@@ -84,12 +84,14 @@ interface ChartPositions {
 const TOOLTIP_WIDTH = 250;
 // offsets for the tooltip from the edges of the group cells
 const TOOLTIP_OFFSET = 10;
+// offset for the tooltip from the bottom of the group cell
+const TOOLTIP_VERITCAL_OFFSET = 125;
 // offset for the y axis label so that is not together with the y axis numbers
 const Y_LABEL_OFFSET = 20;
 // offset for the x axis label so that is not together with the x axis numbers
 const X_LABEL_OFFSET = 40;
 // offset for the arrows so that they overlap with the cells. We want the arrow to start 5px before the cell starts
-const ARROW_OFFSET = 5;
+const ARROW_OFFSET = 10;
 // width of the y axis label
 const Y_AXIS_LABEL_WIDTH = 50;
 // offset for the low and high labels so that they are not together with the y axis numbers
@@ -111,7 +113,7 @@ export function Grid(props: GridProps) {
   const [tooltipInfo, setTooltipInfo] = useState<TooltipInfo | null>(null);
   const [yAxisLabelMinWidth, setYAxisLabelWidth] = useState(0);
   const [xAxisLabelMinWidth, setXAxisLabelWidth] = useState(0);
-  const [tooltipHeight, setTooltipHeight] = useState(0);
+  const [tooltipHeight, setTooltipHeight] = useState(120);
   const [animationStarted, setAnimationStarted] = useState(false);
   const [isSmallContainer, setIsSmallContainer] = useState(false);
 
@@ -164,6 +166,7 @@ export function Grid(props: GridProps) {
       let x;
       let y;
       let placement;
+
       if (leftSpace >= TOOLTIP_WIDTH) {
         // Position on the left
         x = rect.left - containerRect.left - TOOLTIP_WIDTH - TOOLTIP_OFFSET;
@@ -171,13 +174,13 @@ export function Grid(props: GridProps) {
         placement = 'left';
       } else if (bottomSpace >= tooltipHeight) {
         // Position at the bottom
-        x = rect.left - containerRect.left + rect.width / 2 - TOOLTIP_WIDTH / 2;
+        x = rect.left - containerRect.left + TOOLTIP_OFFSET;
         y = rect.bottom - containerRect.top + TOOLTIP_OFFSET;
         placement = 'bottom';
       } else {
         // Position at the top
-        x = rect.left - containerRect.left + rect.width / 2 - TOOLTIP_WIDTH / 2;
-        y = rect.top - containerRect.top - tooltipHeight + 20;
+        x = rect.left - containerRect.left + TOOLTIP_OFFSET;
+        y = rect.top - containerRect.top - TOOLTIP_VERITCAL_OFFSET;
         placement = 'top';
       }
 
@@ -363,22 +366,28 @@ export function Grid(props: GridProps) {
         >
           <path
             className={styles.ArrowShaft}
-            d={`M ${sourcePoint.x} ${sourcePoint.y} L ${targetPoint.x} ${targetPoint.y}`}
+            d={`M ${sourcePoint.x} ${sourcePoint.y} Q ${
+              (sourcePoint.x + targetPoint.x) / 2
+            } ${(sourcePoint.y + targetPoint.y) / 2} ${targetPoint.x} ${
+              targetPoint.y
+            }`}
             stroke="white"
             strokeWidth="2"
             fill="none"
+            strokeLinecap="round"
           />
 
           <path
             className={styles.ArrowHead}
-            d={`M ${targetPoint.x} ${targetPoint.y + 0.5} L ${arrowPoint1.x} ${
+            d={`M ${targetPoint.x} ${targetPoint.y - 0} L ${arrowPoint1.x} ${
               arrowPoint1.y
-            } M ${targetPoint.x - 0.5} ${targetPoint.y} L ${arrowPoint2.x} ${
+            } M ${targetPoint.x} ${targetPoint.y - 0} L ${arrowPoint2.x} ${
               arrowPoint2.y
             }`}
             stroke="white"
             strokeWidth="2"
             fill="none"
+            strokeLinecap="round"
           />
         </g>
       );
@@ -456,9 +465,9 @@ export function Grid(props: GridProps) {
 
   const yTicks = useMemo(() => {
     return Array.from({length: gridDimensions.rows}, (_, index) => ({
-      value: index,
-      label: `${index + 1}`,
-      formattedValue: `${index + 1}`,
+      value: gridDimensions.rows - 1 - index,
+      label: `${gridDimensions.rows - index}`,
+      formattedValue: `${gridDimensions.rows - index}`,
       yOffset: index * cellHeight + cellHeight / 2,
     }));
   }, [cellHeight, gridDimensions.rows]);
@@ -490,7 +499,9 @@ export function Grid(props: GridProps) {
             ref={(node) => {
               if (node) {
                 const {height} = node.getBoundingClientRect();
-                const tooltipHeight = height + TOOLTIP_PADDING * 2;
+                const tooltipOffset = 10;
+                const tooltipHeight =
+                  height + TOOLTIP_PADDING * 2 - tooltipOffset;
                 setTooltipHeight(tooltipHeight);
               }
             }}
@@ -597,7 +608,6 @@ export function Grid(props: GridProps) {
 
   const renderYAxisLabels = () => {
     const animationDelay = isAnimated && animationStarted ? '0.5s' : '0s';
-
     return (
       <React.Fragment>
         {yAxisOptions.label && (
