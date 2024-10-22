@@ -369,6 +369,13 @@ describe('<Chart />', () => {
 
       expect(svg?.props.height).toStrictEqual(250);
     });
+
+    it('does not render <LegendContainer /> when the chart has a height of less than 200', () => {
+      const chart = mount(
+        <Chart {...MOCK_PROPS} dimensions={{width: 100, height: 100}} />,
+      );
+      expect(chart).not.toContainReactComponent(LegendContainer);
+    });
   });
 
   describe('<TooltipWrapper />', () => {

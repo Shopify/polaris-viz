@@ -7,6 +7,7 @@ import type {SvgComponents, Theme} from './types';
 import {InternalChartType, ChartState, Hue} from './types';
 
 export const LINE_HEIGHT = 14;
+export const SMALL_CHART_HEIGHT = 200;
 export const FONT_SIZE = 11;
 export const FONT_FAMILY =
   'Inter, -apple-system, "system-ui", "San Francisco", "Segoe UI", Roboto, "Helvetica Neue", sans-serif';
@@ -445,6 +446,7 @@ export const LEGENDS_TOP_MARGIN = 16;
 export const LEGENDS_BOTTOM_MARGIN = 16;
 export const Y_AXIS_CHART_SPACING = 20;
 export const LABEL_AREA_TOP_SPACING = 16;
+export const Y_AXIS_BOTTOM_SPACING = 5;
 export const ELLIPSIS = '…';
 export const HORIZONTAL_LABEL_MIN_WIDTH = 46;
 export const HORIZONTAL_LABEL_TARGET_HEIGHT = 80;

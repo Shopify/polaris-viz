@@ -11,6 +11,7 @@ import {
   useChartPositions,
   useChartContext,
   LINE_HEIGHT,
+  SMALL_CHART_HEIGHT,
 } from '@shopify/polaris-viz-core';
 import type {
   XAxisOptions,
@@ -113,7 +114,16 @@ export function Chart({
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [activeLineIndex, setActiveLineIndex] = useState(-1);
-  const [xAxisHeight, setXAxisHeight] = useState(LINE_HEIGHT);
+
+  const isSmallChart = Boolean(
+    dimensions && dimensions?.height < SMALL_CHART_HEIGHT,
+  );
+
+  const hideXAxis =
+    xAxisOptions.hide || selectedTheme.xAxis.hide || isSmallChart;
+
+  const [xAxisHeight, setXAxisHeight] = useState(hideXAxis ? 0 : LINE_HEIGHT);
+
   const [annotationsHeight, setAnnotationsHeight] = useState(0);
 
   const {legend, setLegendDimensions, height, width} = useLegend({
@@ -124,7 +134,7 @@ export function Chart({
       },
     ],
     dimensions,
-    showLegend,
+    showLegend: showLegend && !isSmallChart,
     seriesNameFormatter,
   });
 
@@ -181,8 +191,6 @@ export function Chart({
     xAxisHeight,
     yAxisWidth: yAxisLabelWidth,
   });
-
-  const hideXAxis = xAxisOptions.hide || selectedTheme.xAxis.hide;
 
   const {xAxisDetails, xScale, labels} = useLinearLabelsAndDimensions({
     data,
@@ -437,7 +445,7 @@ export function Chart({
         />
       )}
 
-      {showLegend && (
+      {showLegend && !isSmallChart && (
         <LegendContainer
           colorVisionType={COLOR_VISION_SINGLE_ITEM}
           data={legend}

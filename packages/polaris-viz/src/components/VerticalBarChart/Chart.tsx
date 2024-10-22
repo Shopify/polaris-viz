@@ -9,6 +9,7 @@ import {
   useChartContext,
   useChartPositions,
   LINE_HEIGHT,
+  SMALL_CHART_HEIGHT,
 } from '@shopify/polaris-viz-core';
 import type {
   DataSeries,
@@ -94,8 +95,10 @@ export function Chart({
 
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
   const id = useMemo(() => uniqueId('VerticalBarChart'), []);
-  const [xAxisHeight, setXAxisHeight] = useState(LINE_HEIGHT);
-  const [annotationsHeight, setAnnotationsHeight] = useState(0);
+
+  const isSmallChart = Boolean(
+    dimensions && dimensions?.height < SMALL_CHART_HEIGHT,
+  );
 
   const {legend, setLegendDimensions, height, width} = useLegend({
     data: [
@@ -105,10 +108,16 @@ export function Chart({
       },
     ],
     dimensions,
-    showLegend,
+    showLegend: showLegend && !isSmallChart,
     seriesNameFormatter,
   });
 
+  const hideXAxis =
+    isSmallChart || xAxisOptions.hide || selectedTheme.xAxis.hide;
+
+  const [xAxisHeight, setXAxisHeight] = useState(hideXAxis ? 0 : LINE_HEIGHT);
+
+  const [annotationsHeight, setAnnotationsHeight] = useState(0);
   const emptyState = data.length === 0;
 
   const indexForLabels = useIndexForLabels(data);
@@ -202,8 +211,6 @@ export function Chart({
     x: chartXPosition,
     y: chartYPosition,
   };
-
-  const hideXAxis = xAxisOptions.hide || selectedTheme.xAxis.hide;
 
   const {sortedData, areAllNegative, xScale, gapWidth} = useVerticalBarChart({
     data,
@@ -348,7 +355,7 @@ export function Chart({
         />
       )}
 
-      {showLegend && (
+      {showLegend && !isSmallChart && (
         <LegendContainer
           colorVisionType={COLOR_VISION_SINGLE_ITEM}
           data={legend}
