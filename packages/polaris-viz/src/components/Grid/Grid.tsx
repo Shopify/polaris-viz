@@ -11,10 +11,6 @@ import {
 } from '@shopify/polaris-viz-core';
 import {scaleLinear} from 'd3-scale';
 
-import {
-  getXAxisOptionsWithDefaults,
-  getYAxisOptionsWithDefaults,
-} from '../../utilities';
 import {XAxis} from '../XAxis';
 import {YAxis} from '../YAxis';
 import {useResizeObserver} from '../../hooks/useResizeObserver';
@@ -24,11 +20,18 @@ import {GroupCell} from './GroupCell';
 import {AxisLabel} from './AxisLabel';
 import styles from './Grid.scss';
 
+type GridAxisOptions = {
+  label?: string;
+  lowLabel?: string;
+  highLabel?: string;
+} & Partial<XAxisOptions> &
+  Partial<YAxisOptions>;
+
 export interface GridProps {
   labelFormatter?: LabelFormatter;
   cellGroups: CellGroup[];
-  xAxisOptions?: Partial<XAxisOptions>;
-  yAxisOptions?: Partial<YAxisOptions>;
+  xAxisOptions?: GridAxisOptions;
+  yAxisOptions?: GridAxisOptions;
   showGrid?: boolean;
 }
 
@@ -93,6 +96,10 @@ const Y_AXIS_LABEL_WIDTH = 50;
 const LOW_HIGH_LABEL_OFFSET = 60;
 // padding for the tooltip
 const TOOLTIP_PADDING = 10;
+// default group color
+const DEFAULT_GROUP_COLOR = '#B1C3F7';
+// default text color
+const DEFAULT_TEXT_COLOR = '#FFFFFF';
 
 export function Grid(props: GridProps) {
   const {defaultTheme} = usePolarisVizContext();
@@ -102,7 +109,6 @@ export function Grid(props: GridProps) {
   const [hoveredGroup, setHoveredGroup] = useState<CellGroup | null>(null);
   const {setRef, entry} = useResizeObserver();
   const [tooltipInfo, setTooltipInfo] = useState<TooltipInfo | null>(null);
-  const [isTooltipVisible, setIsTooltipVisible] = useState(false);
   const [yAxisLabelMinWidth, setYAxisLabelWidth] = useState(0);
   const [xAxisLabelMinWidth, setXAxisLabelWidth] = useState(0);
   const [tooltipHeight, setTooltipHeight] = useState(0);
@@ -119,9 +125,6 @@ export function Grid(props: GridProps) {
     ...DEFAULT_CHART_PROPS,
     ...props,
   };
-
-  const xAxisOptionsWithDefaults = getXAxisOptionsWithDefaults(xAxisOptions);
-  const yAxisOptionsWithDefaults = getYAxisOptionsWithDefaults(yAxisOptions);
 
   const dimensions = useMemo(
     () => ({
@@ -199,13 +202,11 @@ export function Grid(props: GridProps) {
           const tooltipInfo = getTooltipInfo(group, event);
           if (tooltipInfo) {
             setTooltipInfo(tooltipInfo);
-            setIsTooltipVisible(true);
           }
         } else {
           setHoveredGroups(new Set());
           setHoveredGroup(null);
           setTooltipInfo(null);
-          setIsTooltipVisible(false);
         }
       }
     },
@@ -358,7 +359,6 @@ export function Grid(props: GridProps) {
 
       return (
         <g
-          className={styles.AnimatedArrow}
           key={`arrow-${hoveredGroup?.name}-${sourceGroup.name}-${targetGroupName}`}
         >
           <path
@@ -444,13 +444,13 @@ export function Grid(props: GridProps) {
   const getColors = (group: CellGroup | null) => {
     if (group) {
       return {
-        bgColor: group.bgColor,
-        textColor: group.color,
+        bgColor: group.bgColor || DEFAULT_GROUP_COLOR,
+        textColor: group.color || DEFAULT_TEXT_COLOR,
       };
     }
     return {
-      bgColor: 'blue',
-      textColor: '#000000',
+      bgColor: DEFAULT_GROUP_COLOR,
+      textColor: DEFAULT_TEXT_COLOR,
     };
   };
 
@@ -484,7 +484,7 @@ export function Grid(props: GridProps) {
     const transform = `translate(${x}, ${y})`;
 
     return (
-      <g transform={transform}>
+      <g className={styles.TooltipContainer} transform={transform}>
         <foreignObject x={0} y={0} width={TOOLTIP_WIDTH} height={tooltipHeight}>
           <div
             ref={(node) => {
@@ -557,20 +557,19 @@ export function Grid(props: GridProps) {
           ariaHidden
         />
 
-        {!isSmallContainer && (
-          <React.Fragment>
-            <AxisLabel
-              x={dimensions.width + Y_LABEL_OFFSET}
-              y={dimensions.height + xAxisHeight / 2}
-              textAnchor="end"
-              dominantBaseline="bottom"
-              label={xAxisOptionsWithDefaults.highLabel}
-              animationDelay={animationDelay}
-              isAnimated={isAnimated}
-            />
-          </React.Fragment>
-        )}
-        {xAxisOptionsWithDefaults.label && (
+        <React.Fragment>
+          <AxisLabel
+            x={dimensions.width + Y_LABEL_OFFSET}
+            y={dimensions.height + xAxisHeight / 2}
+            textAnchor="end"
+            dominantBaseline="bottom"
+            label={xAxisOptions.highLabel ?? ''}
+            animationDelay={animationDelay}
+            isAnimated={isAnimated}
+          />
+        </React.Fragment>
+
+        {xAxisOptions.label && (
           <text
             ref={(node) => {
               if (!xAxisLabelMinWidth && node?.getBBox()?.width) {
@@ -589,7 +588,7 @@ export function Grid(props: GridProps) {
             className={styles.FadeInLabel}
             style={{animationDelay}}
           >
-            {xAxisOptionsWithDefaults.label}
+            {xAxisOptions.label}
           </text>
         )}
       </React.Fragment>
@@ -601,7 +600,7 @@ export function Grid(props: GridProps) {
 
     return (
       <React.Fragment>
-        {yAxisOptionsWithDefaults.label && (
+        {yAxisOptions.label && (
           <text
             ref={(node) => {
               if (!yAxisLabelMinWidth && node?.getBBox()?.width) {
@@ -621,7 +620,7 @@ export function Grid(props: GridProps) {
             className={styles.FadeInLabel}
             style={{animationDelay}}
           >
-            {yAxisOptionsWithDefaults.label}
+            {yAxisOptions.label}
           </text>
         )}
 
@@ -635,14 +634,14 @@ export function Grid(props: GridProps) {
             y={0}
           />
         )}
-        {!isSmallContainer && animationStarted && (
+        {animationStarted && (
           <React.Fragment>
             <AxisLabel
               x={LOW_HIGH_LABEL_OFFSET}
               y={0}
               textAnchor="end"
               dominantBaseline="hanging"
-              label={yAxisOptionsWithDefaults.highLabel}
+              label={yAxisOptions.highLabel ?? ''}
               animationDelay={animationDelay}
               isAnimated={isAnimated}
             />
@@ -651,7 +650,7 @@ export function Grid(props: GridProps) {
               y={dimensions.height + xAxisHeight / 2}
               textAnchor="end"
               dominantBaseline="bottom"
-              label={yAxisOptionsWithDefaults.lowLabel}
+              label={yAxisOptions.lowLabel ?? ''}
               animationDelay={animationDelay}
               isAnimated={isAnimated}
             />
@@ -670,9 +669,7 @@ export function Grid(props: GridProps) {
           viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
         >
           {/* Y-Axis */}
-          <g opacity={yAxisOptionsWithDefaults?.hide ? 0 : 1}>
-            {renderYAxisLabels()}
-          </g>
+          <g opacity={yAxisOptions?.hide ? 0 : 1}>{renderYAxisLabels()}</g>
 
           {/* Main chart content */}
           <g
@@ -680,16 +677,14 @@ export function Grid(props: GridProps) {
             transform={`translate(${Y_AXIS_LABEL_WIDTH + Y_LABEL_OFFSET}, 0)`}
           >
             {renderHeatmap()}
-            {!isSmallContainer && renderArrows()}
+            {renderArrows()}
           </g>
 
           {/* X-Axis */}
-          <g opacity={xAxisOptionsWithDefaults?.hide ? 0 : 1}>
-            {renderXAxisLabels()}
-          </g>
+          <g opacity={xAxisOptions?.hide ? 0 : 1}>{renderXAxisLabels()}</g>
 
           {/* Tooltip */}
-          {!isSmallContainer && isTooltipVisible && renderTooltip()}
+          {renderTooltip()}
         </svg>
       </div>
     </ChartContainer>
