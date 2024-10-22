@@ -150,7 +150,7 @@ export function Chart({
     yScaleMax = allValuesAreZero ? 0 : max;
   }
 
-  if (!isFinite(yScaleMax) || !isFinite(min)) {
+  if (!Number.isFinite(yScaleMax) || !Number.isFinite(min)) {
     throw new Error('min and max must be finite numbers.');
   }
 

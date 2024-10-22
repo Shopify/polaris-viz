@@ -65,13 +65,13 @@ export function useSparkBar({
   const filteredData = removeNullValues(data[0]);
   const [defaultData] = data;
 
-  const hasInfiniteData = filteredData.some((value) => !isFinite(value));
+  const hasInfiniteData = filteredData.some((value) => !Number.isFinite(value));
 
   if (hasInfiniteData) {
     throw new Error('Data must be finite');
   }
 
-  if (!isFinite(targetValue)) {
+  if (!Number.isFinite(targetValue)) {
     throw new Error('Target value must be finite');
   }
 

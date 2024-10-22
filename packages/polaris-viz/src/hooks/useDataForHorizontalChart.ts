@@ -37,7 +37,7 @@ export function useDataForHorizontalChart({
     [allNumbers],
   );
 
-  if (!isFinite(lowestNegative) || !isFinite(highestPositive)) {
+  if (!Number.isFinite(lowestNegative) || !Number.isFinite(highestPositive)) {
     throw new Error('Data must be finite');
   }
 

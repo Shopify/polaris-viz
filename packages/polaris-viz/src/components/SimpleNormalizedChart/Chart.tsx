@@ -84,7 +84,7 @@ export function Chart({
   const slicedData = flattenedData.slice(0, 4);
   const totalValue = sum(slicedData, ({value}) => value);
 
-  if (!isFinite(totalValue)) {
+  if (!Number.isFinite(totalValue)) {
     throw new Error('Data must be finite');
   }
 

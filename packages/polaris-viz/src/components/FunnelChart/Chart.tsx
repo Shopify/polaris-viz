@@ -59,7 +59,7 @@ export function Chart({
 
   const maxValue = yValues.length === 0 ? 0 : Math.max(...yValues);
 
-  if (!isFinite(maxValue)) {
+  if (!Number.isFinite(maxValue)) {
     throw new Error('Data must be finite');
   }
 

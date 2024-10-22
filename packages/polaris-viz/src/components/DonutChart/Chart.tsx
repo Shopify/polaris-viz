@@ -156,7 +156,7 @@ export function Chart({
 
   const dataSum = points.reduce((acc, {value}) => (value ?? 0) + acc, 0);
 
-  if (!isFinite(dataSum)) {
+  if (!Number.isFinite(dataSum)) {
     throw new Error('Data must be finite');
   }
 

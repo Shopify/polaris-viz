@@ -56,7 +56,7 @@ export function useYScale({
     return [minY, maxY];
   }, [min, max, integersOnly, maxYOverride]);
 
-  if (!isFinite(maxY) || !isFinite(minY)) {
+  if (!Number.isFinite(maxY) || !Number.isFinite(minY)) {
     throw new Error('Data must be finite.');
   }
 

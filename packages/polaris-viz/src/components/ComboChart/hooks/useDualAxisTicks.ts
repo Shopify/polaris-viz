@@ -37,7 +37,10 @@ export function useDualAxisTicks({data, drawableHeight}: Props) {
   const primaryAxis = axes[sourceOfTruthIndex === 0 ? 0 : 1];
   const secondaryAxis = axes[sourceOfTruthIndex === 0 ? 1 : 0];
 
-  if (!isFinite(primaryAxis.max) || !isFinite(secondaryAxis.max)) {
+  if (
+    !Number.isFinite(primaryAxis.max) ||
+    !Number.isFinite(secondaryAxis.max)
+  ) {
     throw new Error('Data must be finite');
   }
 

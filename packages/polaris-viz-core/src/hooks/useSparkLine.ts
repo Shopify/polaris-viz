@@ -20,23 +20,23 @@ export function useSparkLine({
     data.map(({data}) => data.map(({value}) => value)),
   );
 
-  const minYValues = yValues.length ? Math.min(...yValues) : 0;
-  const maxYValues = yValues.length ? Math.max(...yValues) : 0;
+  const minYValue = yValues.length ? Math.min(...yValues) : 0;
+  const maxYValue = yValues.length ? Math.max(...yValues) : 0;
 
-  if (!Number.isFinite(minYValues) || !Number.isFinite(maxYValues)) {
+  if (!Number.isFinite(minYValue) || !Number.isFinite(maxYValue)) {
     throw new Error('Data must be finite');
   }
 
   const rangeStart = height - svgMargin;
   let rangeEnd = svgMargin;
 
-  if (minYValues === 0 && maxYValues === 0) {
+  if (minYValue === 0 && maxYValue === 0) {
     rangeEnd = rangeStart;
   }
 
   const yScale = scaleLinear()
     .range([rangeStart, rangeEnd])
-    .domain([minYValues, maxYValues]);
+    .domain([minYValue, maxYValue]);
 
   return {
     minXDomain: 0,
