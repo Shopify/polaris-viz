@@ -73,7 +73,6 @@ export interface XAxisOptions {
   hide?: boolean;
   allowLineWrap?: boolean;
 }
-
 export interface YAxisOptions {
   labelFormatter?: LabelFormatter;
   integersOnly?: boolean;
