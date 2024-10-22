@@ -1,4 +1,5 @@
 import {mount} from '@shopify/react-testing';
+import {act} from 'react-dom/test-utils';
 
 import {Grid} from '../Grid';
 import {ChartContainer} from '../../ChartContainer';
@@ -61,8 +62,16 @@ describe('<Grid />', () => {
     });
   });
 
-  it('renders the expected number of AxisLabel components', () => {
+  it('renders the expected number of AxisLabel components', async () => {
+    jest.useFakeTimers();
     const grid = mount(<Grid {...MOCK_PROPS} />);
+
+    // Wait for the useEffect to run
+    await act(async () => {
+      jest.advanceTimersByTime(100);
+    });
+
+    grid.update();
 
     expect(grid).toContainReactComponentTimes(AxisLabel, 2, {
       label: 'High',
@@ -71,6 +80,8 @@ describe('<Grid />', () => {
     expect(grid).toContainReactComponentTimes(AxisLabel, 1, {
       label: 'Low',
     });
+
+    jest.useRealTimers();
   });
 });
 
