@@ -1,27 +1,32 @@
+/* stylelint-disable at-rule-no-unknown, property-no-unknown */
 @import '../../styles/common';
 
 .Container {
   width: 100%;
   height: 90%;
+  container-type: inline-size;
 }
 
 .GroupCell {
   opacity: var(--animation-opacity, 0);
   transform: scale(var(--animation-scale));
-  transition: opacity 0.3s ease-out var(--animation-delay, 0ms),
-    transform 0.3s ease-out var(--animation-delay, 0ms);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
 }
 
-.AnimatedArrow {
-  .ArrowShaft {
-    stroke-dasharray: 25;
-    stroke-dashoffset: 25;
-    animation: Draw 0.2s ease-in-out forwards;
+.ArrowShaft {
+  stroke-dasharray: 25;
+  stroke-dashoffset: 25;
+  animation: Draw 0.2s ease-in-out forwards;
+  @container (max-width: 399px) {
+    display: none;
   }
+}
 
-  .ArrowHead {
-    opacity: 0;
-    animation: FadeIn 0.2s ease-in-out 0.2s forwards;
+.ArrowHead {
+  opacity: 0;
+  animation: FadeIn 0.2s ease-in-out 0.2s forwards;
+  @container (max-width: 399px) {
+    display: none;
   }
 }
 
@@ -41,9 +46,21 @@
   border: 1px solid lightgray;
 }
 
+.TooltipContainer {
+  @container (max-width: 399px) {
+    display: none;
+  }
+}
+
 .FadeInLabel {
   opacity: 0;
   animation: FadeIn 0.5s ease-in-out forwards;
+}
+
+.Label {
+  @container (max-width: 399px) {
+    display: none;
+  }
 }
 
 .TooltipTitle {

@@ -72,20 +72,13 @@ export interface XAxisOptions {
   labelFormatter?: LabelFormatter;
   hide?: boolean;
   allowLineWrap?: boolean;
-  label?: string;
-  lowLabel?: string;
-  highLabel?: string;
 }
 
 export interface YAxisOptions {
   labelFormatter?: LabelFormatter;
-  hide?: boolean;
   integersOnly?: boolean;
   fixedWidth?: number | false;
   maxYOverride?: number | null;
-  label?: string;
-  lowLabel?: string;
-  highLabel?: string;
 }
 
 // === Theme types === //

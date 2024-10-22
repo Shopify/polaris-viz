@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import type {ScaleLinear} from 'd3-scale';
 
 import styles from './Grid.scss';
@@ -30,7 +30,6 @@ interface CellGroup {
 
 export const GroupCell: React.FC<GroupCellProps> = ({
   group,
-  index,
   xScale,
   cellHeight,
   cellWidth,
@@ -42,18 +41,13 @@ export const GroupCell: React.FC<GroupCellProps> = ({
   containerWidth,
   isAnimated,
 }) => {
-  const [isFadingIn, setIsFadingIn] = useState(true);
-
   const groupWidth = (group.end.col - group.start.col + 1) * cellWidth;
   const groupHeight = (group.end.row - group.start.row + 1) * cellHeight;
   const groupValue = group.value;
   const groupSecondaryValue = group.secondaryValue;
 
-  const isMainActive = hoveredGroups.has(group.name);
-  const isActive = hoveredGroups.size > 0 && isMainActive;
-
-  const opacity = isActive || hoveredGroups.size === 0 ? 1 : 0.3;
-  const cellOpacity = isActive || hoveredGroups.size === 0 ? 1 : 0.3;
+  const isActive = hoveredGroups.size === 0 || hoveredGroups.has(group.name);
+  const opacity = isActive ? 1 : 0.3;
 
   const groupNameOffset = 10;
   const showNameAndSecondaryValue = containerWidth > 500;
@@ -62,15 +56,11 @@ export const GroupCell: React.FC<GroupCellProps> = ({
     : Math.min(groupWidth, cellHeight) / 4;
   const secondaryFontSize = mainFontSize * 0.6;
 
-  const animationDelay =
-    isAnimated && animationStarted && isFadingIn ? `${index * 50}ms` : '0ms';
-
   const groupX = xScale(group.start.col);
   const groupY = group.start.row * cellHeight;
 
   const cellStyle = isAnimated
     ? {
-        '--animation-delay': animationDelay,
         '--animation-scale': animationStarted ? 1 : 0,
         '--animation-opacity': animationStarted ? 1 : 0,
         transformOrigin: `${groupX + groupWidth / 2}px ${
@@ -82,16 +72,6 @@ export const GroupCell: React.FC<GroupCellProps> = ({
         transform: 'scale(1)',
       };
 
-  useEffect(() => {
-    if (isAnimated && animationStarted) {
-      const timer = setTimeout(() => {
-        setIsFadingIn(false);
-      }, parseInt(animationDelay, 10) + 500);
-
-      return () => clearTimeout(timer);
-    }
-  }, [isAnimated, animationStarted, animationDelay]);
-
   return (
     <g
       data-testid="group-cell"
@@ -101,14 +81,8 @@ export const GroupCell: React.FC<GroupCellProps> = ({
           handleGroupHover(null, event);
         }
       }}
-      className={
-        isAnimated
-          ? `${styles.AnimatedArrow} ${styles.GroupCell} ${
-              isFadingIn ? styles.FadeIn : ''
-            }`
-          : undefined
-      }
-      style={{...cellStyle, opacity: cellOpacity}}
+      className={isAnimated ? `${styles.GroupCell}` : undefined}
+      style={{...cellStyle, opacity}}
     >
       <Background
         x={groupX}
@@ -116,7 +90,7 @@ export const GroupCell: React.FC<GroupCellProps> = ({
         width={groupWidth}
         height={groupHeight}
         fill={getColors(group).bgColor}
-        opacity={cellOpacity}
+        opacity={opacity}
       />
 
       <GroupInfo

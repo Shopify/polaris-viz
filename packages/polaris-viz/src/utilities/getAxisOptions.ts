@@ -11,10 +11,6 @@ export function getYAxisOptionsWithDefaults(
     integersOnly: false,
     fixedWidth: false,
     maxYOverride: null,
-    label: '',
-    hide: false,
-    lowLabel: '',
-    highLabel: '',
     ...yAxisOptionsFiltered,
   };
 }
@@ -28,9 +24,6 @@ export function getXAxisOptionsWithDefaults(
     labelFormatter: (value: number) => `${value}`,
     hide: false,
     allowLineWrap: true,
-    label: '',
-    lowLabel: '',
-    highLabel: '',
     ...xAxisOptionsFiltered,
   };
 }
