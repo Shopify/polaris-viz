@@ -10,7 +10,7 @@
 .GroupCell {
   opacity: var(--animation-opacity, 0);
   transform: scale(var(--animation-scale));
-  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 }
 
 .ArrowShaft {
