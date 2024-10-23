@@ -112,6 +112,30 @@ export function ChartDimensions({
     chartContainer.sparkChartMinHeight,
   ]);
 
+  const onMouseEnter = useCallback(() => {
+    if (ref == null) {
+      return;
+    }
+
+    const scrollY =
+      scrollContainer == null ? window.scrollY : scrollContainer.scrollTop;
+
+    const bounds = ref.getBoundingClientRect();
+
+    setChartDimensions((prev) => {
+      if (bounds.y === prev?.y && bounds.x === prev?.x) {
+        return prev;
+      }
+
+      return {
+        width: bounds.width,
+        height: bounds.height,
+        x: bounds.x,
+        y: bounds.y + scrollY,
+      };
+    });
+  }, [ref, scrollContainer]);
+
   return (
     <div
       className={styles.ChartDimensions}
@@ -121,6 +145,8 @@ export function ChartDimensions({
           ? chartContainer.sparkChartMinHeight
           : chartContainer.minHeight,
       }}
+      onMouseEnter={onMouseEnter}
+      onFocus={onMouseEnter}
     >
       {!hasValidDimensions(chartDimensions) ? null : (
         <ChartErrorBoundary
