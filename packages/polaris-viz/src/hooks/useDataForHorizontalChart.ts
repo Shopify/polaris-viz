@@ -37,6 +37,10 @@ export function useDataForHorizontalChart({
     [allNumbers],
   );
 
+  if (!Number.isFinite(lowestNegative) || !Number.isFinite(highestPositive)) {
+    throw new Error('Data must be finite');
+  }
+
   const longestLabel = useMemo(() => {
     if (!isSimple && !isStacked) {
       return {positive: 0, negative: 0};

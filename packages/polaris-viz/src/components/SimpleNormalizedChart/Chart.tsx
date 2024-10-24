@@ -84,6 +84,10 @@ export function Chart({
   const slicedData = flattenedData.slice(0, 4);
   const totalValue = sum(slicedData, ({value}) => value);
 
+  if (!Number.isFinite(totalValue)) {
+    throw new Error('Data must be finite');
+  }
+
   const xScale = scaleLinear().range([0, 100]).domain([0, totalValue]);
 
   const isVertical = direction === 'vertical';

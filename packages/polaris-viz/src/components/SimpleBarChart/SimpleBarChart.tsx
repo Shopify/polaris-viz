@@ -65,6 +65,7 @@ export function SimpleBarChart(props: SimpleBarChartProps) {
       id={id}
       isAnimated={isAnimated}
       onError={onError}
+      skeletonType="SimpleBar"
     >
       {state !== ChartState.Success ? (
         <ChartSkeleton

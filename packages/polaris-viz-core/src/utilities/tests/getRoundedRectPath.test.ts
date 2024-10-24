@@ -7,8 +7,8 @@ describe('keepValuePositive()', () => {
     [10, 10],
     [-100, 0],
     [-0, 0],
-    [Infinity, Infinity],
-    [-Infinity, 0],
+    [Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER],
+    [-Number.MAX_SAFE_INTEGER, 0],
   ])('converts %d to %d', (test, expected) => {
     expect(keepValuePositive(test)).toBe(expected);
   });

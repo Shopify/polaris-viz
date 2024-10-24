@@ -2,7 +2,7 @@ import {borderRadiusStringToObject} from './borderRadiusStringToObject';
 import {clamp} from './clamp';
 
 export function keepValuePositive(amount: number): number {
-  return clamp({amount, min: 0, max: Infinity});
+  return Math.abs(clamp({amount, min: 0}));
 }
 
 interface Props {

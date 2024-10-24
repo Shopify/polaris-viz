@@ -39,7 +39,12 @@ export function SimpleNormalizedSkeleton({
   const id = useUniqueId('simple-bar-skeleton');
 
   return (
-    <div style={{padding}}>
+    <div
+      className={styles.Container}
+      style={{
+        padding,
+      }}
+    >
       {state === ChartState.Loading && (
         <Fragment>
           {showLegend && (
