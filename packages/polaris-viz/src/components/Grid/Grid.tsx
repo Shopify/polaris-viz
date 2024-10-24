@@ -33,6 +33,7 @@ export interface GridProps {
   xAxisOptions?: GridAxisOptions;
   yAxisOptions?: GridAxisOptions;
   showGrid?: boolean;
+  theme?: string;
 }
 
 interface CellGroup {
