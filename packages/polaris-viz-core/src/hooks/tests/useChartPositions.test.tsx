@@ -19,7 +19,7 @@ const MOCK_PROPS: Props = {
   annotationsHeight: 0,
   height: 100,
   width: 200,
-  xAxisHeight: 0,
+  xAxisHeight: 10,
   yAxisWidth: 0,
 };
 
@@ -41,9 +41,9 @@ describe('useChartPositions()', () => {
     expect(result).toStrictEqual({
       chartXPosition: 36,
       chartYPosition: 5,
-      drawableHeight: 79,
+      drawableHeight: 69,
       drawableWidth: 148,
-      xAxisBounds: {x: 36, y: 100},
+      xAxisBounds: {x: 36, y: 90},
       yAxisBounds: {x: 16, y: 5},
     });
   });
@@ -82,9 +82,9 @@ describe('useChartPositions()', () => {
       expect(result).toStrictEqual({
         chartXPosition: 36,
         chartYPosition: 55,
-        drawableHeight: 29,
+        drawableHeight: 19,
         drawableWidth: 148,
-        xAxisBounds: {x: 36, y: 100},
+        xAxisBounds: {x: 36, y: 90},
         yAxisBounds: {x: 16, y: 55},
       });
     });
@@ -120,9 +120,9 @@ describe('useChartPositions()', () => {
       expect(result).toStrictEqual({
         chartXPosition: 76,
         chartYPosition: 5,
-        drawableHeight: 79,
+        drawableHeight: 69,
         drawableWidth: 108,
-        xAxisBounds: {x: 76, y: 100},
+        xAxisBounds: {x: 76, y: 90},
         yAxisBounds: {x: 16, y: 5},
       });
     });
@@ -141,9 +141,45 @@ describe('useChartPositions()', () => {
       expect(result).toStrictEqual({
         chartXPosition: 20,
         chartYPosition: 5,
-        drawableHeight: 79,
+        drawableHeight: 69,
+        drawableWidth: 180,
+        xAxisBounds: {x: 20, y: 90},
+        yAxisBounds: {x: 0, y: 5},
+      });
+    });
+  });
+
+  describe('xAxis', () => {
+    it('returns positions when the xAxis height is 0', () => {
+      const mockComponent = mount(
+        <TestComponent {...MOCK_PROPS} xAxisHeight={0} />,
+      );
+
+      const result = parseResult(mockComponent);
+
+      expect(result).toStrictEqual({
+        chartXPosition: 20,
+        chartYPosition: 5,
+        drawableHeight: 90,
         drawableWidth: 180,
         xAxisBounds: {x: 20, y: 100},
+        yAxisBounds: {x: 0, y: 5},
+      });
+    });
+
+    it('returns positions when the xAxis height is not 0', () => {
+      const mockComponent = mount(
+        <TestComponent {...MOCK_PROPS} xAxisHeight={20} />,
+      );
+
+      const result = parseResult(mockComponent);
+
+      expect(result).toStrictEqual({
+        chartXPosition: 20,
+        chartYPosition: 5,
+        drawableHeight: 59,
+        drawableWidth: 180,
+        xAxisBounds: {x: 20, y: 80},
         yAxisBounds: {x: 0, y: 5},
       });
     });

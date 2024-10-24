@@ -17,6 +17,7 @@ import {
   COLOR_VISION_SINGLE_ITEM,
   useChartPositions,
   LINE_HEIGHT,
+  SMALL_CHART_HEIGHT,
   clamp,
 } from '@shopify/polaris-viz-core';
 
@@ -105,7 +106,15 @@ export function Chart({
 
   const [activePointIndex, setActivePointIndex] = useState<number | null>(null);
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
-  const [xAxisHeight, setXAxisHeight] = useState(LINE_HEIGHT);
+
+  const isSmallChart = Boolean(
+    dimensions && dimensions?.height < SMALL_CHART_HEIGHT,
+  );
+
+  const hideXAxis =
+    xAxisOptions.hide || selectedTheme.xAxis.hide || isSmallChart;
+
+  const [xAxisHeight, setXAxisHeight] = useState(hideXAxis ? 0 : LINE_HEIGHT);
   const [annotationsHeight, setAnnotationsHeight] = useState(0);
 
   const {legend, setLegendDimensions, height, width} = useLegend({
@@ -117,13 +126,11 @@ export function Chart({
       },
     ],
     dimensions,
-    showLegend,
+    showLegend: showLegend && !isSmallChart,
     seriesNameFormatter,
   });
 
   const tooltipId = useUniqueId('stackedAreaChart');
-
-  const hideXAxis = xAxisOptions.hide || selectedTheme.xAxis.hide;
 
   const {
     stackedValues,
@@ -402,7 +409,7 @@ export function Chart({
         />
       )}
 
-      {showLegend && (
+      {showLegend && !isSmallChart && (
         <LegendContainer
           colorVisionType={COLOR_VISION_SINGLE_ITEM}
           data={legend}
