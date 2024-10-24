@@ -33,6 +33,7 @@ export interface GridProps {
   xAxisOptions?: GridAxisOptions;
   yAxisOptions?: GridAxisOptions;
   showGrid?: boolean;
+  theme?: string;
 }
 
 interface CellGroup {
@@ -86,18 +87,18 @@ const TOOLTIP_WIDTH = 250;
 const TOOLTIP_OFFSET = 10;
 // offset for the tooltip from the bottom of the group cell
 const TOOLTIP_VERITCAL_OFFSET = 125;
+// padding for the tooltip
+const TOOLTIP_PADDING = 10;
 // offset for the y axis label so that is not together with the y axis numbers
 const Y_LABEL_OFFSET = 20;
+// width of the y axis label
+const Y_AXIS_LABEL_WIDTH = 50;
 // offset for the x axis label so that is not together with the x axis numbers
 const X_LABEL_OFFSET = 40;
 // offset for the arrows so that they overlap with the cells. We want the arrow to start 5px before the cell starts
 const ARROW_OFFSET = 10;
-// width of the y axis label
-const Y_AXIS_LABEL_WIDTH = 50;
 // offset for the low and high labels so that they are not together with the y axis numbers
 const LOW_HIGH_LABEL_OFFSET = 60;
-// padding for the tooltip
-const TOOLTIP_PADDING = 10;
 // default group color
 const DEFAULT_GROUP_COLOR = '#B1C3F7';
 // default text color
@@ -163,9 +164,9 @@ export function Grid(props: GridProps) {
       const leftSpace = rect.left - containerRect.left;
       const bottomSpace = containerRect.bottom - rect.bottom;
 
-      let x;
-      let y;
-      let placement;
+      let x: number;
+      let y: number;
+      let placement: 'left' | 'bottom' | 'top';
 
       if (leftSpace >= TOOLTIP_WIDTH) {
         // Position on the left
@@ -223,9 +224,18 @@ export function Grid(props: GridProps) {
       (group) => group.name === hoveredGroup.name,
     );
 
+    // if there are no connected groups, don't render arrows
     if (!sourceGroup || !sourceGroup.connectedGroups) return null;
 
-    const getSharedEdgeCenter = (group1: CellGroup, group2: CellGroup) => {
+    const getSharedEdgeCenter = (
+      group1: CellGroup,
+      group2: CellGroup,
+    ): {
+      x: number;
+      y: number;
+      sourceEdge: 'left' | 'bottom' | 'top' | 'right';
+      targetEdge: 'left' | 'bottom' | 'top' | 'right';
+    } | null => {
       if (group1.end.row < group2.start.row) {
         // group1 is above group2
         const startX = Math.max(
@@ -333,8 +343,8 @@ export function Grid(props: GridProps) {
       }
 
       const arrowHeadSize = Math.min(cellWidth, cellHeight) / 10;
-      let arrowPoint1;
-      let arrowPoint2;
+      let arrowPoint1: {x: number; y: number};
+      let arrowPoint2: {x: number; y: number};
       if (
         sharedEdgeInfo.sourceEdge === 'top' ||
         sharedEdgeInfo.sourceEdge === 'bottom'
@@ -430,7 +440,7 @@ export function Grid(props: GridProps) {
     fullChartHeight,
   ]);
 
-  const renderHeatmap = () => {
+  const renderGrid = () => {
     return cellGroups.map((group, index) => (
       <GroupCell
         key={`group-${index}`}
@@ -548,6 +558,7 @@ export function Grid(props: GridProps) {
 
   useEffect(() => {
     if (entry?.contentRect) {
+      // we want to make sure the container is not too small to allow hover interactions
       setIsSmallContainer(entry.contentRect.width <= 400);
     }
   }, [entry]);
@@ -686,14 +697,13 @@ export function Grid(props: GridProps) {
             id="grid-content"
             transform={`translate(${Y_AXIS_LABEL_WIDTH + Y_LABEL_OFFSET}, 0)`}
           >
-            {renderHeatmap()}
+            {renderGrid()}
             {renderArrows()}
           </g>
 
           {/* X-Axis */}
           <g opacity={xAxisOptions?.hide ? 0 : 1}>{renderXAxisLabels()}</g>
 
-          {/* Tooltip */}
           {renderTooltip()}
         </svg>
       </div>
