@@ -93,6 +93,7 @@ export const ChartContainer = (props: Props) => {
           onIsPrintingChange={setIsPrinting}
           skeletonType={props.skeletonType}
           sparkChart={props.sparkChart}
+          scrollContainer={props.scrollContainer}
         >
           {props.children}
         </ChartDimensions>

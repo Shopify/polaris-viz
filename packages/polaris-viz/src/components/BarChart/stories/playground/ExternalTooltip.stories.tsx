@@ -43,14 +43,22 @@ const Template: Story<BarChartProps> = (args: BarChartProps) => {
 
 const TemplateWithFrame: Story<BarChartProps> = (args: BarChartProps) => {
   const [ref, setRef] = useState<HTMLDivElement | null>(null);
+  const [height, setHeight] = useState(0);
+  const [marginLeft, setMarginLeft] = useState(0);
 
   const props = {...args, scrollContainer: ref};
 
   return (
     <div style={{overflow: 'hidden', position: 'fixed', inset: 0}}>
-      <div style={{height: 100, background: 'black', width: '100%'}}></div>
+      <div style={{height, background: 'black', width: '100%'}}></div>
       <div style={{overflow: 'auto', height: '100vh'}} ref={setRef}>
-        <div style={{marginLeft: '300px'}}>
+        <button onClick={() => setHeight(height === 0 ? 300 : 0)}>
+          Toggle bar height
+        </button>
+        <button onClick={() => setMarginLeft(marginLeft === 0 ? 300 : 0)}>
+          Toggle left margin
+        </button>
+        <div style={{marginLeft}}>
           <Card {...props} />
         </div>
         <div style={{height: 700, width: 10}} />
