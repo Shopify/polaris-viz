@@ -55,3 +55,5 @@ export type {LineChartRelationalProps} from './LineChartRelational';
 export {LineChartPredictive} from './LineChartPredictive';
 export type {LineChartPredictiveProps} from './LineChartPredictive';
 export type {ComparisonMetricProps} from './ComparisonMetric';
+export {Grid} from './Grid';
+export type {GridProps} from './Grid';
