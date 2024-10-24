@@ -2,7 +2,7 @@ import {
   ChartMargin,
   LABEL_AREA_TOP_SPACING,
   Y_AXIS_CHART_SPACING,
-  Y_AXIS_BOTTOM_SPACING,
+  LABEL_AREA_MIN_SPACING,
 } from '../constants';
 
 import {useTheme} from './useTheme';
@@ -29,11 +29,11 @@ export function useChartPositions({
   const chartXPosition = horizontalMargin + yAxisWidth + Y_AXIS_CHART_SPACING;
   const chartYPosition = (ChartMargin.Top as number) + annotationsHeight;
 
-  const topLabelSpacing =
-    xAxisHeight === 0 ? Y_AXIS_BOTTOM_SPACING : LABEL_AREA_TOP_SPACING;
+  const xAxisLabelSpacing =
+    xAxisHeight === 0 ? LABEL_AREA_MIN_SPACING : LABEL_AREA_TOP_SPACING;
 
   const drawableHeight =
-    height - chartYPosition - xAxisHeight - topLabelSpacing;
+    height - chartYPosition - xAxisHeight - xAxisLabelSpacing;
 
   const drawableWidth = width - chartXPosition - horizontalMargin;
 
@@ -44,7 +44,7 @@ export function useChartPositions({
     drawableWidth,
     xAxisBounds: {
       x: chartXPosition,
-      y: drawableHeight + topLabelSpacing + chartYPosition,
+      y: drawableHeight + xAxisLabelSpacing + chartYPosition,
     },
     yAxisBounds: {
       x: horizontalMargin,

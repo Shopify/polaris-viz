@@ -9,7 +9,8 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
-- Fixed issueS in charts when non-finite numbers were passed to them.
+- How the line chart, area chart and vertical bar chart are rendered when their height is less than 200px.
+- Fixed issues in charts when non-finite numbers were passed to them.
 
 ## [15.0.7] - 2024-10-18
 
