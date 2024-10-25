@@ -11,14 +11,15 @@ import {
 } from '@shopify/polaris-viz-core';
 import {scaleLinear} from 'd3-scale';
 
-import {XAxis} from '../XAxis';
-import {YAxis} from '../YAxis';
 import {useResizeObserver} from '../../hooks/useResizeObserver';
 import {ChartContainer} from '../ChartContainer';
 
-import {GroupCell} from './GroupCell';
-import {AxisLabel} from './AxisLabel';
+import {GroupCell} from './components/GroupCell';
 import styles from './Grid.scss';
+import {Tooltip} from './components/Tooltip';
+import {Arrows} from './components/Arrows';
+import {XAxisLabels} from './components/XAxisLabels';
+import {YAxisLabels} from './components/YAxisLabels';
 
 type GridAxisOptions = {
   label?: string;
@@ -52,16 +53,13 @@ interface CellGroup {
 interface TooltipInfo {
   x: number;
   y: number;
-  placement: 'left' | 'bottom' | 'top';
+  placement: Placement;
   groupName: string;
   groupDescription: string;
   groupGoal: string;
 }
 
-interface Point {
-  x: number;
-  y: number;
-}
+type Placement = 'left' | 'bottom' | 'top' | 'right';
 
 interface ChartPositions {
   chartXPosition: number;
@@ -95,8 +93,6 @@ const Y_LABEL_OFFSET = 20;
 const Y_AXIS_LABEL_WIDTH = 50;
 // offset for the x axis label so that is not together with the x axis numbers
 const X_LABEL_OFFSET = 40;
-// offset for the arrows so that they overlap with the cells. We want the arrow to start 5px before the cell starts
-const ARROW_OFFSET = 10;
 // offset for the low and high labels so that they are not together with the y axis numbers
 const LOW_HIGH_LABEL_OFFSET = 60;
 // default group color
@@ -112,10 +108,7 @@ export function Grid(props: GridProps) {
   const [hoveredGroup, setHoveredGroup] = useState<CellGroup | null>(null);
   const {setRef, entry} = useResizeObserver();
   const [tooltipInfo, setTooltipInfo] = useState<TooltipInfo | null>(null);
-  const [yAxisLabelMinWidth, setYAxisLabelWidth] = useState(0);
-  const [xAxisLabelMinWidth, setXAxisLabelWidth] = useState(0);
   const [tooltipHeight, setTooltipHeight] = useState(120);
-  const [animationStarted, setAnimationStarted] = useState(false);
   const [isSmallContainer, setIsSmallContainer] = useState(false);
 
   const {
@@ -166,7 +159,7 @@ export function Grid(props: GridProps) {
 
       let x: number;
       let y: number;
-      let placement: 'left' | 'bottom' | 'top';
+      let placement: Placement;
 
       if (leftSpace >= TOOLTIP_WIDTH) {
         // Position on the left
@@ -217,193 +210,6 @@ export function Grid(props: GridProps) {
     [getTooltipInfo, isSmallContainer],
   );
 
-  const renderArrows = () => {
-    if (!hoveredGroup) return null;
-
-    const sourceGroup = cellGroups.find(
-      (group) => group.name === hoveredGroup.name,
-    );
-
-    // if there are no connected groups, don't render arrows
-    if (!sourceGroup || !sourceGroup.connectedGroups) return null;
-
-    const getSharedEdgeCenter = (
-      group1: CellGroup,
-      group2: CellGroup,
-    ): {
-      x: number;
-      y: number;
-      sourceEdge: 'left' | 'bottom' | 'top' | 'right';
-      targetEdge: 'left' | 'bottom' | 'top' | 'right';
-    } | null => {
-      if (group1.end.row < group2.start.row) {
-        // group1 is above group2
-        const startX = Math.max(
-          xScale(group1.start.col),
-          xScale(group2.start.col),
-        );
-        const endX = Math.min(
-          xScale(group1.end.col + 1),
-          xScale(group2.end.col + 1),
-        );
-        return {
-          x: (startX + endX) / 2,
-          y: (group1.end.row + 1) * cellHeight,
-          sourceEdge: 'bottom',
-          targetEdge: 'top',
-        };
-      }
-      if (group1.start.row > group2.end.row) {
-        // group1 is below group2
-        const startX = Math.max(
-          xScale(group1.start.col),
-          xScale(group2.start.col),
-        );
-        const endX = Math.min(
-          xScale(group1.end.col + 1),
-          xScale(group2.end.col + 1),
-        );
-        return {
-          x: (startX + endX) / 2,
-          y: group1.start.row * cellHeight + ARROW_OFFSET,
-          sourceEdge: 'top',
-          targetEdge: 'bottom',
-        };
-      }
-      if (group1.end.col < group2.start.col) {
-        // group1 is to the left of group2
-        const startY = Math.max(
-          group1.start.row * cellHeight,
-          group2.start.row * cellHeight,
-        );
-        const endY = Math.min(
-          (group1.end.row + 1) * cellHeight,
-          (group2.end.row + 1) * cellHeight,
-        );
-        return {
-          x: xScale(group1.end.col + 1) - ARROW_OFFSET,
-          y: (startY + endY) / 2,
-          sourceEdge: 'right',
-          targetEdge: 'left',
-        };
-      }
-      if (group1.start.col > group2.end.col) {
-        // group1 is to the right of group2
-        const startY = Math.max(
-          group1.start.row * cellHeight,
-          group2.start.row * cellHeight,
-        );
-        const endY = Math.min(
-          (group1.end.row + 1) * cellHeight,
-          (group2.end.row + 1) * cellHeight,
-        );
-        return {
-          x: xScale(group1.start.col),
-          y: (startY + endY) / 2,
-          sourceEdge: 'left',
-          targetEdge: 'right',
-        };
-      }
-      return null;
-    };
-
-    return sourceGroup.connectedGroups.map((targetGroupName) => {
-      const targetGroup = cellGroups.find(
-        (group) => group.name === targetGroupName,
-      );
-      if (!targetGroup) return null;
-
-      // get the shared edge center between the source and target group
-      const sharedEdgeInfo = getSharedEdgeCenter(sourceGroup, targetGroup);
-      if (!sharedEdgeInfo) return null;
-
-      const sourcePoint = {x: sharedEdgeInfo.x, y: sharedEdgeInfo.y};
-      const arrowOffset = 25;
-
-      let targetPoint: Point;
-      if (
-        sharedEdgeInfo.sourceEdge === 'top' ||
-        sharedEdgeInfo.sourceEdge === 'bottom'
-      ) {
-        targetPoint = {
-          x: sourcePoint.x,
-          y:
-            sharedEdgeInfo.sourceEdge === 'bottom'
-              ? sourcePoint.y + arrowOffset
-              : sourcePoint.y - arrowOffset,
-        };
-      } else {
-        targetPoint = {
-          x:
-            sharedEdgeInfo.sourceEdge === 'right'
-              ? sourcePoint.x + arrowOffset
-              : sourcePoint.x - arrowOffset,
-          y: sourcePoint.y,
-        };
-      }
-
-      const arrowHeadSize = Math.min(cellWidth, cellHeight) / 10;
-      let arrowPoint1: {x: number; y: number};
-      let arrowPoint2: {x: number; y: number};
-      if (
-        sharedEdgeInfo.sourceEdge === 'top' ||
-        sharedEdgeInfo.sourceEdge === 'bottom'
-      ) {
-        const direction = sharedEdgeInfo.sourceEdge === 'bottom' ? 1 : -1;
-        arrowPoint1 = {
-          x: targetPoint.x - arrowHeadSize,
-          y: targetPoint.y - direction * arrowHeadSize,
-        };
-        arrowPoint2 = {
-          x: targetPoint.x + arrowHeadSize,
-          y: targetPoint.y - direction * arrowHeadSize,
-        };
-      } else {
-        const direction = sharedEdgeInfo.sourceEdge === 'right' ? 1 : -1;
-        arrowPoint1 = {
-          x: targetPoint.x - direction * arrowHeadSize,
-          y: targetPoint.y - arrowHeadSize,
-        };
-        arrowPoint2 = {
-          x: targetPoint.x - direction * arrowHeadSize,
-          y: targetPoint.y + arrowHeadSize,
-        };
-      }
-
-      return (
-        <g
-          key={`arrow-${hoveredGroup?.name}-${sourceGroup.name}-${targetGroupName}`}
-        >
-          <path
-            className={styles.ArrowShaft}
-            d={`M ${sourcePoint.x} ${sourcePoint.y} Q ${
-              (sourcePoint.x + targetPoint.x) / 2
-            } ${(sourcePoint.y + targetPoint.y) / 2} ${targetPoint.x} ${
-              targetPoint.y
-            }`}
-            stroke="white"
-            strokeWidth="2"
-            fill="none"
-            strokeLinecap="round"
-          />
-
-          <path
-            className={styles.ArrowHead}
-            d={`M ${targetPoint.x} ${targetPoint.y - 0} L ${arrowPoint1.x} ${
-              arrowPoint1.y
-            } M ${targetPoint.x} ${targetPoint.y - 0} L ${arrowPoint2.x} ${
-              arrowPoint2.y
-            }`}
-            stroke="white"
-            strokeWidth="2"
-            fill="none"
-            strokeLinecap="round"
-          />
-        </g>
-      );
-    });
-  };
-
   const rawChartPositions = useChartPositions({
     height: Math.max(fullChartHeight, 1),
     width: Math.max(fullChartWidth, 1),
@@ -413,7 +219,7 @@ export function Grid(props: GridProps) {
   });
 
   const chartPositions: ChartPositions = useMemo(() => {
-    const yAxisTotalWidth = Y_AXIS_LABEL_WIDTH + Y_LABEL_OFFSET + 120;
+    const yAxisTotalWidth = Y_AXIS_LABEL_WIDTH + Y_LABEL_OFFSET;
     return {
       chartXPosition: rawChartPositions.chartXPosition ?? yAxisTotalWidth,
       chartYPosition: 0,
@@ -450,7 +256,6 @@ export function Grid(props: GridProps) {
         cellHeight={cellHeight}
         cellWidth={cellWidth}
         isSmallContainer={isSmallContainer}
-        animationStarted={animationStarted}
         hoveredGroups={hoveredGroups}
         handleGroupHover={handleGroupHover}
         getColors={getColors}
@@ -515,32 +320,12 @@ export function Grid(props: GridProps) {
                 setTooltipHeight(tooltipHeight);
               }
             }}
-            className={styles.Tooltip}
-            data-testid="tooltip"
           >
-            <div className={styles.TooltipTitle}>{groupName}</div>
-            <div className={styles.TooltipDescription}>{groupDescription}</div>
-
-            {groupGoal && (
-              <div className={styles.TooltipGoal}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="2.5"
-                  stroke="currentColor"
-                  style={{height: '13px', width: '20px'}}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
-                  />
-                </svg>
-
-                <p className={styles.GroupGoal}>{groupGoal}</p>
-              </div>
-            )}
+            <Tooltip
+              groupName={groupName}
+              groupDescription={groupDescription}
+              groupGoal={groupGoal}
+            />
           </div>
         </foreignObject>
       </g>
@@ -548,138 +333,11 @@ export function Grid(props: GridProps) {
   };
 
   useEffect(() => {
-    // trigger animation after a short delay to ensure DOM is ready
-    const timer = setTimeout(() => {
-      setAnimationStarted(true);
-    }, 100);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
     if (entry?.contentRect) {
       // we want to make sure the container is not too small to allow hover interactions
       setIsSmallContainer(entry.contentRect.width <= 400);
     }
   }, [entry]);
-
-  const renderXAxisLabels = () => {
-    const animationDelay = isAnimated && animationStarted ? '0.5s' : '0s';
-
-    return (
-      <React.Fragment>
-        <XAxis
-          allowLineWrap={false}
-          labels={xLabels}
-          labelWidth={xAxisLabelWidth}
-          onHeightChange={setXAxisHeight}
-          x={Y_AXIS_LABEL_WIDTH + Y_LABEL_OFFSET}
-          y={chartPositions.xAxisBounds.y + Y_LABEL_OFFSET}
-          xScale={xScale}
-          ariaHidden
-        />
-
-        <React.Fragment>
-          <AxisLabel
-            x={dimensions.width + Y_LABEL_OFFSET}
-            y={dimensions.height + xAxisHeight / 2}
-            textAnchor="end"
-            dominantBaseline="bottom"
-            label={xAxisOptions.highLabel ?? ''}
-            animationDelay={animationDelay}
-            isAnimated={isAnimated}
-          />
-        </React.Fragment>
-
-        {xAxisOptions.label && (
-          <text
-            ref={(node) => {
-              if (!xAxisLabelMinWidth && node?.getBBox()?.width) {
-                setXAxisLabelWidth(node?.getBBox()?.width);
-              }
-            }}
-            x={
-              (chartPositions.xAxisBounds.x +
-                chartPositions.xAxisBounds.width) /
-              2
-            }
-            y={dimensions.height + X_LABEL_OFFSET}
-            fontSize="14"
-            fill="#6b7177"
-            textAnchor="middle"
-            className={styles.FadeInLabel}
-            style={{animationDelay}}
-          >
-            {xAxisOptions.label}
-          </text>
-        )}
-      </React.Fragment>
-    );
-  };
-
-  const renderYAxisLabels = () => {
-    const animationDelay = isAnimated && animationStarted ? '0.5s' : '0s';
-    return (
-      <React.Fragment>
-        {yAxisOptions.label && (
-          <text
-            ref={(node) => {
-              if (!yAxisLabelMinWidth && node?.getBBox()?.width) {
-                setYAxisLabelWidth(node?.getBBox()?.width);
-              }
-            }}
-            x={chartPositions.yAxisBounds.x}
-            y={chartPositions.yAxisBounds.x - Y_LABEL_OFFSET}
-            textAnchor="middle"
-            dominantBaseline="middle"
-            fontSize="14"
-            fill="#6b7177"
-            transform={`rotate(-90, ${chartPositions.yAxisBounds.x}, ${
-              chartPositions.yAxisBounds.y +
-              chartPositions.yAxisBounds.height / 2
-            })`}
-            className={styles.FadeInLabel}
-            style={{animationDelay}}
-          >
-            {yAxisOptions.label}
-          </text>
-        )}
-
-        {(!isAnimated || animationStarted) && (
-          <YAxis
-            ticks={yTicks}
-            width={Y_AXIS_LABEL_WIDTH}
-            textAlign="right"
-            ariaHidden
-            x={0}
-            y={0}
-          />
-        )}
-        {animationStarted && (
-          <React.Fragment>
-            <AxisLabel
-              x={LOW_HIGH_LABEL_OFFSET}
-              y={0}
-              textAnchor="end"
-              dominantBaseline="hanging"
-              label={yAxisOptions.highLabel ?? ''}
-              animationDelay={animationDelay}
-              isAnimated={isAnimated}
-            />
-            <AxisLabel
-              x={LOW_HIGH_LABEL_OFFSET}
-              y={dimensions.height + xAxisHeight / 2}
-              textAnchor="end"
-              dominantBaseline="bottom"
-              label={yAxisOptions.lowLabel ?? ''}
-              animationDelay={animationDelay}
-              isAnimated={isAnimated}
-            />
-          </React.Fragment>
-        )}
-      </React.Fragment>
-    );
-  };
 
   return (
     <ChartContainer data={[]} id="grid" isAnimated={isAnimated} theme={theme}>
@@ -690,7 +348,17 @@ export function Grid(props: GridProps) {
           viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
         >
           {/* Y-Axis */}
-          <g opacity={yAxisOptions?.hide ? 0 : 1}>{renderYAxisLabels()}</g>
+          <YAxisLabels
+            yTicks={yTicks}
+            chartPositions={chartPositions}
+            dimensions={dimensions}
+            yAxisOptions={yAxisOptions}
+            Y_AXIS_LABEL_WIDTH={Y_AXIS_LABEL_WIDTH}
+            Y_LABEL_OFFSET={Y_LABEL_OFFSET}
+            LOW_HIGH_LABEL_OFFSET={LOW_HIGH_LABEL_OFFSET}
+            xAxisHeight={xAxisHeight}
+            isAnimated={isAnimated}
+          />
 
           {/* Main chart content */}
           <g
@@ -698,11 +366,30 @@ export function Grid(props: GridProps) {
             transform={`translate(${Y_AXIS_LABEL_WIDTH + Y_LABEL_OFFSET}, 0)`}
           >
             {renderGrid()}
-            {renderArrows()}
+
+            <Arrows
+              hoveredGroup={hoveredGroup}
+              cellGroups={cellGroups}
+              xScale={xScale}
+              cellHeight={cellHeight}
+            />
           </g>
 
           {/* X-Axis */}
-          <g opacity={xAxisOptions?.hide ? 0 : 1}>{renderXAxisLabels()}</g>
+          <XAxisLabels
+            xLabels={xLabels}
+            xAxisLabelWidth={xAxisLabelWidth}
+            xAxisHeight={xAxisHeight}
+            chartPositions={chartPositions}
+            dimensions={dimensions}
+            xScale={xScale}
+            xAxisOptions={xAxisOptions}
+            Y_AXIS_LABEL_WIDTH={Y_AXIS_LABEL_WIDTH}
+            Y_LABEL_OFFSET={Y_LABEL_OFFSET}
+            X_LABEL_OFFSET={X_LABEL_OFFSET}
+            setXAxisHeight={setXAxisHeight}
+            isAnimated={isAnimated}
+          />
 
           {renderTooltip()}
         </svg>

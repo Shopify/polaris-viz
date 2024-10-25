@@ -2,7 +2,8 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
 
-import {Background, GroupCell, GroupInfo} from '../GroupCell';
+import {GroupCell, GroupInfo} from '../components/GroupCell';
+import {Background} from '../components/Background';
 
 describe('<GroupCell />', () => {
   it('renders a Background element with the expected color', () => {
