@@ -110,6 +110,8 @@ export function Grid(props: GridProps) {
   const [tooltipInfo, setTooltipInfo] = useState<TooltipInfo | null>(null);
   const [tooltipHeight, setTooltipHeight] = useState(120);
   const [isSmallContainer, setIsSmallContainer] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [ariaLiveMessage, setAriaLiveMessage] = useState('');
 
   const {
     cellGroups = [],
@@ -148,8 +150,12 @@ export function Grid(props: GridProps) {
   };
 
   const getTooltipInfo = useCallback(
-    (group: CellGroup, event: React.MouseEvent): TooltipInfo | null => {
-      const rect = event.currentTarget.getBoundingClientRect();
+    (
+      group: CellGroup,
+      event: React.MouseEvent | React.KeyboardEvent | React.FocusEvent,
+    ): TooltipInfo | null => {
+      const target = event.currentTarget as HTMLElement;
+      const rect = target.getBoundingClientRect();
       const containerRect = entry?.target?.getBoundingClientRect();
 
       if (!containerRect) return null;
@@ -191,19 +197,29 @@ export function Grid(props: GridProps) {
   );
 
   const handleGroupHover = useCallback(
-    (group: CellGroup | null, event: React.MouseEvent) => {
+    (
+      group: CellGroup | null,
+      event: React.MouseEvent | React.KeyboardEvent | React.FocusEvent,
+    ) => {
       if (!isSmallContainer) {
         if (group) {
           setHoveredGroups(getActiveGroups(group));
           setHoveredGroup(group);
-          const tooltipInfo = getTooltipInfo(group, event);
+          const tooltipInfo = getTooltipInfo(group, event as React.MouseEvent);
           if (tooltipInfo) {
             setTooltipInfo(tooltipInfo);
+            // Set the ARIA live message when a tooltip is shown
+            setAriaLiveMessage(
+              `${group.name}: ${group.description || ''}${
+                group.goal ? `, ${group.goal}` : ''
+              }`,
+            );
           }
         } else {
           setHoveredGroups(new Set());
           setHoveredGroup(null);
           setTooltipInfo(null);
+          setAriaLiveMessage('');
         }
       }
     },
@@ -251,7 +267,6 @@ export function Grid(props: GridProps) {
       <GroupCell
         key={`group-${index}`}
         group={group}
-        index={index}
         xScale={xScale}
         cellHeight={cellHeight}
         cellWidth={cellWidth}
@@ -339,8 +354,23 @@ export function Grid(props: GridProps) {
     }
   }, [entry]);
 
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mediaQuery.matches);
+
+    const handleChange = () => setPrefersReducedMotion(mediaQuery.matches);
+    mediaQuery.addEventListener('change', handleChange);
+
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
   return (
-    <ChartContainer data={[]} id="grid" isAnimated={isAnimated} theme={theme}>
+    <ChartContainer
+      data={[]}
+      id="grid"
+      isAnimated={isAnimated && !prefersReducedMotion}
+      theme={theme}
+    >
       <div id="container" ref={setRef} className={styles.Container}>
         <svg
           width="100%"
@@ -357,7 +387,7 @@ export function Grid(props: GridProps) {
             Y_LABEL_OFFSET={Y_LABEL_OFFSET}
             LOW_HIGH_LABEL_OFFSET={LOW_HIGH_LABEL_OFFSET}
             xAxisHeight={xAxisHeight}
-            isAnimated={isAnimated}
+            isAnimated={isAnimated && !prefersReducedMotion}
           />
 
           {/* Main chart content */}
@@ -388,11 +418,14 @@ export function Grid(props: GridProps) {
             Y_LABEL_OFFSET={Y_LABEL_OFFSET}
             X_LABEL_OFFSET={X_LABEL_OFFSET}
             setXAxisHeight={setXAxisHeight}
-            isAnimated={isAnimated}
+            isAnimated={isAnimated && !prefersReducedMotion}
           />
 
           {renderTooltip()}
         </svg>
+        <div aria-live="polite" className={styles.ScreenReaderOnly}>
+          {ariaLiveMessage}
+        </div>
       </div>
     </ChartContainer>
   );

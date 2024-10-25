@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 
 import {XAxis} from '../../XAxis';
@@ -46,7 +46,19 @@ export function XAxisLabels({
   setXAxisHeight,
   isAnimated,
 }: XAxisLabelsProps) {
-  const animationDelay = isAnimated ? '0.5s' : '0s';
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mediaQuery.matches);
+
+    const handleChange = () => setPrefersReducedMotion(mediaQuery.matches);
+    mediaQuery.addEventListener('change', handleChange);
+
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
+  const animationDelay = isAnimated && !prefersReducedMotion ? '0.5s' : '0s';
 
   return (
     <g className={styles.FadeInLabel} opacity={xAxisOptions?.hide ? 0 : 1}>

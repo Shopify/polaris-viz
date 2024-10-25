@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 
 import styles from '../Grid.scss';
@@ -13,7 +13,10 @@ interface GroupCellProps {
   cellWidth: number;
   isSmallContainer: boolean;
   hoveredGroups: Set<string>;
-  handleGroupHover: (group: CellGroup | null, event: React.MouseEvent) => void;
+  handleGroupHover: (
+    group: CellGroup | null,
+    event: React.MouseEvent | React.KeyboardEvent | React.FocusEvent,
+  ) => void;
   getColors: (group: CellGroup | null) => {bgColor: string; textColor: string};
   containerWidth: number;
   isAnimated: boolean;
@@ -41,6 +44,18 @@ export const GroupCell: React.FC<GroupCellProps> = ({
   containerWidth,
   isAnimated,
 }) => {
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mediaQuery.matches);
+
+    const handleChange = () => setPrefersReducedMotion(mediaQuery.matches);
+    mediaQuery.addEventListener('change', handleChange);
+
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
   const groupWidth = (group.end.col - group.start.col + 1) * cellWidth;
   const groupHeight = (group.end.row - group.start.row + 1) * cellHeight;
   const groupValue = group.value;
@@ -59,30 +74,53 @@ export const GroupCell: React.FC<GroupCellProps> = ({
   const groupX = xScale(group.start.col);
   const groupY = group.start.row * cellHeight;
 
-  const cellStyle = isAnimated
-    ? {
-        transformOrigin: `${groupX + groupWidth / 2}px ${
-          groupY + groupHeight / 2
-        }px`,
+  const cellStyle =
+    isAnimated && !prefersReducedMotion
+      ? {
+          transformOrigin: `${groupX + groupWidth / 2}px ${
+            groupY + groupHeight / 2
+          }px`,
+        }
+      : {
+          opacity: 1,
+          transform: 'scale(1)',
+        };
+
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        handleGroupHover(group, event);
       }
-    : {
-        opacity: 1,
-        transform: 'scale(1)',
-      };
+    },
+    [group, handleGroupHover],
+  );
+
+  const handleMouseLeave = useCallback(
+    (event: React.MouseEvent) => {
+      if (!isSmallContainer) {
+        handleGroupHover(null, event);
+      }
+    },
+    [isSmallContainer, handleGroupHover],
+  );
+  const ariaLabel = `Group: ${group.name}, Value: ${group.value}, Secondary Value: ${group.secondaryValue}`;
 
   return (
     <g
       data-testid="group-cell"
       onMouseEnter={(event) => handleGroupHover(group, event)}
-      onMouseLeave={(event) => {
-        if (!isSmallContainer) {
-          handleGroupHover(null, event);
-        }
-      }}
-      className={isAnimated ? `${styles.GroupCell}` : undefined}
+      onMouseLeave={handleMouseLeave}
+      onFocus={(event) => handleGroupHover(group, event)}
+      onBlur={(event) => handleGroupHover(null, event)}
+      onKeyDown={handleKeyDown}
+      className={
+        isAnimated && !prefersReducedMotion ? `${styles.GroupCell}` : undefined
+      }
       style={{...cellStyle, opacity}}
-      aria-label={group.name}
-      role="group"
+      aria-label={ariaLabel}
+      role="button"
+      tabIndex={0}
     >
       <Background
         x={groupX}
