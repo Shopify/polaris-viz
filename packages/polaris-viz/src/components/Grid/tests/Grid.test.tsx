@@ -5,8 +5,8 @@ import {Grid} from '../Grid';
 import {ChartContainer} from '../../ChartContainer';
 import {XAxis} from '../../XAxis';
 import {YAxis} from '../../YAxis';
-import {GroupCell} from '../GroupCell';
-import {AxisLabel} from '../AxisLabel';
+import {GroupCell} from '../components/GroupCell';
+import {AxisLabel} from '../components/AxisLabel';
 
 describe('<Grid />', () => {
   it('renders a <ChartContainer />', () => {

@@ -1,6 +1,5 @@
-import {classNames} from '../../utilities';
-
-import styles from './Grid.scss';
+import {classNames} from '../../../utilities';
+import styles from '../Grid.scss';
 
 interface AxisLabelProps {
   x: number;
