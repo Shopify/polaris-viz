@@ -2,6 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 
 import styles from '../Grid.scss';
+import type {CellGroup} from '../Grid';
 
 import {Background} from './Background';
 import {GroupInfo} from './GroupInfo';
@@ -17,19 +18,9 @@ interface GroupCellProps {
     group: CellGroup | null,
     event: React.MouseEvent | React.KeyboardEvent | React.FocusEvent,
   ) => void;
-  getColors: (group: CellGroup | null) => {bgColor: string; textColor: string};
+  getColors: (group: CellGroup) => {bgColor: string; textColor: string};
   containerWidth: number;
   isAnimated: boolean;
-}
-
-interface CellGroup {
-  start: {row: number; col: number};
-  end: {row: number; col: number};
-  bgColor: string;
-  color: string;
-  name: string;
-  value: string;
-  secondaryValue: string;
 }
 
 export const GroupCell: React.FC<GroupCellProps> = ({
@@ -61,8 +52,8 @@ export const GroupCell: React.FC<GroupCellProps> = ({
   const groupValue = group.value;
   const groupSecondaryValue = group.secondaryValue;
 
-  const isActive = hoveredGroups.size === 0 || hoveredGroups.has(group.name);
-  const opacity = isActive ? 1 : 0.3;
+  const isHovered = hoveredGroups.size === 0 || hoveredGroups.has(group.name);
+  const opacity = isHovered ? 1 : 0.3;
 
   const groupNameOffset = 10;
   const showNameAndSecondaryValue = containerWidth > 500;
@@ -86,15 +77,11 @@ export const GroupCell: React.FC<GroupCellProps> = ({
           transform: 'scale(1)',
         };
 
-  const handleKeyDown = useCallback(
-    (event: React.KeyboardEvent) => {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        handleGroupHover(group, event);
-      }
-    },
-    [group, handleGroupHover],
-  );
+  const handleKeyDown = useCallback((event: React.KeyboardEvent) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+    }
+  }, []);
 
   const handleMouseLeave = useCallback(
     (event: React.MouseEvent) => {
@@ -104,10 +91,16 @@ export const GroupCell: React.FC<GroupCellProps> = ({
     },
     [isSmallContainer, handleGroupHover],
   );
-  const ariaLabel = `Group: ${group.name}, Value: ${group.value}, Secondary Value: ${group.secondaryValue}`;
+
+  const ariaLabel = `Group: ${group.name}, Value: ${
+    group.value
+  }, Secondary Value: ${group.secondaryValue}${`, ${group.description || ''}${
+    group.goal ? `, ${group.goal}` : ''
+  }`}`;
 
   return (
     <g
+      role="button"
       data-testid="group-cell"
       onMouseEnter={(event) => handleGroupHover(group, event)}
       onMouseLeave={handleMouseLeave}
@@ -119,7 +112,6 @@ export const GroupCell: React.FC<GroupCellProps> = ({
       }
       style={{...cellStyle, opacity}}
       aria-label={ariaLabel}
-      role="button"
       tabIndex={0}
     >
       <Background
