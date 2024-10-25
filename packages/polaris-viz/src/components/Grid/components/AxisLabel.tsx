@@ -1,4 +1,3 @@
-import {classNames} from '../../../utilities';
 import styles from '../Grid.scss';
 
 interface AxisLabelProps {
@@ -7,8 +6,6 @@ interface AxisLabelProps {
   textAnchor: 'start' | 'end';
   dominantBaseline: 'hanging' | 'bottom';
   label: string;
-  animationDelay: string;
-  isAnimated: boolean;
 }
 
 export const AxisLabel: React.FC<AxisLabelProps> = ({
@@ -17,8 +14,6 @@ export const AxisLabel: React.FC<AxisLabelProps> = ({
   textAnchor,
   dominantBaseline,
   label,
-  animationDelay,
-  isAnimated,
 }) => (
   <text
     x={x}
@@ -27,8 +22,7 @@ export const AxisLabel: React.FC<AxisLabelProps> = ({
     dominantBaseline={dominantBaseline}
     fontSize="12"
     fill="#B5B5B5"
-    className={classNames(styles.Label, isAnimated && styles.FadeInLabel)}
-    style={isAnimated ? {animationDelay} : undefined}
+    className={styles.Label}
   >
     {label}
   </text>

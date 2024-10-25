@@ -1,4 +1,4 @@
-import {Fragment} from 'react';
+import React from 'react';
 
 interface GroupInfoProps {
   groupX: number;
@@ -18,7 +18,7 @@ interface GroupInfoProps {
   groupNameOffset: number;
 }
 
-export const GroupInfo = ({
+export const GroupInfo: React.FC<GroupInfoProps> = ({
   groupX,
   groupY,
   group,
@@ -32,9 +32,9 @@ export const GroupInfo = ({
   secondaryFontSize,
   groupSecondaryValue,
   groupNameOffset,
-}: GroupInfoProps) => {
+}) => {
   return (
-    <Fragment>
+    <React.Fragment>
       <text
         x={groupX + groupWidth / 2}
         y={groupY + groupHeight / 2}
@@ -66,6 +66,6 @@ export const GroupInfo = ({
           {group.name}
         </text>
       )}
-    </Fragment>
+    </React.Fragment>
   );
 };
