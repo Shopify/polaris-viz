@@ -7,14 +7,14 @@ interface BackgroundProps {
   opacity: number;
 }
 
-export const Background = ({
+export const Background: React.FC<BackgroundProps> = ({
   x,
   y,
   width,
   height,
   fill,
   opacity,
-}: BackgroundProps) => (
+}) => (
   <rect
     x={x}
     y={y}

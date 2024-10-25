@@ -1,8 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import type {ScaleLinear} from 'd3-scale';
 
 import {XAxis} from '../../XAxis';
-import styles from '../Grid.scss';
 
 import {AxisLabel} from './AxisLabel';
 
@@ -29,7 +28,6 @@ interface XAxisLabelsProps {
   Y_LABEL_OFFSET: number;
   X_LABEL_OFFSET: number;
   setXAxisHeight: (height: number) => void;
-  isAnimated: boolean;
 }
 
 export function XAxisLabels({
@@ -44,24 +42,9 @@ export function XAxisLabels({
   Y_LABEL_OFFSET,
   X_LABEL_OFFSET,
   setXAxisHeight,
-  isAnimated,
 }: XAxisLabelsProps) {
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    setPrefersReducedMotion(mediaQuery.matches);
-
-    const handleChange = () => setPrefersReducedMotion(mediaQuery.matches);
-    mediaQuery.addEventListener('change', handleChange);
-
-    return () => mediaQuery.removeEventListener('change', handleChange);
-  }, []);
-
-  const animationDelay = isAnimated && !prefersReducedMotion ? '0.5s' : '0s';
-
   return (
-    <g className={styles.FadeInLabel} opacity={xAxisOptions?.hide ? 0 : 1}>
+    <g opacity={xAxisOptions?.hide ? 0 : 1}>
       <XAxis
         allowLineWrap={false}
         labels={xLabels}
@@ -80,8 +63,6 @@ export function XAxisLabels({
           textAnchor="end"
           dominantBaseline="bottom"
           label={xAxisOptions.highLabel ?? ''}
-          animationDelay={animationDelay}
-          isAnimated={isAnimated}
         />
       </React.Fragment>
 
@@ -95,7 +76,6 @@ export function XAxisLabels({
           fontSize="14"
           fill="#6b7177"
           textAnchor="middle"
-          style={{animationDelay}}
         >
           {xAxisOptions.label}
         </text>

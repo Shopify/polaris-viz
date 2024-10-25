@@ -1,7 +1,4 @@
-import React from 'react';
-
 import {YAxis} from '../../YAxis';
-import styles from '../Grid.scss';
 
 import {AxisLabel} from './AxisLabel';
 
@@ -31,7 +28,6 @@ interface YAxisLabelsProps {
   Y_LABEL_OFFSET: number;
   LOW_HIGH_LABEL_OFFSET: number;
   xAxisHeight: number;
-  isAnimated: boolean;
 }
 
 export function YAxisLabels({
@@ -43,12 +39,9 @@ export function YAxisLabels({
   Y_LABEL_OFFSET,
   LOW_HIGH_LABEL_OFFSET,
   xAxisHeight,
-  isAnimated,
 }: YAxisLabelsProps) {
-  const animationDelay = isAnimated ? '0.5s' : '0s';
-
   return (
-    <g className={styles.FadeInLabel} opacity={yAxisOptions?.hide ? 0 : 1}>
+    <g opacity={yAxisOptions?.hide ? 0 : 1}>
       {yAxisOptions.label && (
         <text
           x={chartPositions.yAxisBounds.x}
@@ -60,7 +53,6 @@ export function YAxisLabels({
           transform={`rotate(-90, ${chartPositions.yAxisBounds.x}, ${
             chartPositions.yAxisBounds.y + chartPositions.yAxisBounds.height / 2
           })`}
-          style={{animationDelay}}
         >
           {yAxisOptions.label}
         </text>
@@ -75,26 +67,20 @@ export function YAxisLabels({
         y={0}
       />
 
-      <React.Fragment>
-        <AxisLabel
-          x={LOW_HIGH_LABEL_OFFSET}
-          y={0}
-          textAnchor="end"
-          dominantBaseline="hanging"
-          label={yAxisOptions.highLabel ?? ''}
-          animationDelay={animationDelay}
-          isAnimated={isAnimated}
-        />
-        <AxisLabel
-          x={LOW_HIGH_LABEL_OFFSET}
-          y={dimensions.height + xAxisHeight / 2}
-          textAnchor="end"
-          dominantBaseline="bottom"
-          label={yAxisOptions.lowLabel ?? ''}
-          animationDelay={animationDelay}
-          isAnimated={isAnimated}
-        />
-      </React.Fragment>
+      <AxisLabel
+        x={LOW_HIGH_LABEL_OFFSET}
+        y={0}
+        textAnchor="end"
+        dominantBaseline="hanging"
+        label={yAxisOptions.highLabel ?? ''}
+      />
+      <AxisLabel
+        x={LOW_HIGH_LABEL_OFFSET}
+        y={dimensions.height + xAxisHeight / 2}
+        textAnchor="end"
+        dominantBaseline="bottom"
+        label={yAxisOptions.lowLabel ?? ''}
+      />
     </g>
   );
 }

@@ -37,7 +37,7 @@ export interface GridProps {
   theme?: string;
 }
 
-interface CellGroup {
+export interface CellGroup {
   start: {row: number; col: number};
   end: {row: number; col: number};
   bgColor: string;
@@ -111,7 +111,6 @@ export function Grid(props: GridProps) {
   const [tooltipHeight, setTooltipHeight] = useState(120);
   const [isSmallContainer, setIsSmallContainer] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-  const [ariaLiveMessage, setAriaLiveMessage] = useState('');
 
   const {
     cellGroups = [],
@@ -150,12 +149,8 @@ export function Grid(props: GridProps) {
   };
 
   const getTooltipInfo = useCallback(
-    (
-      group: CellGroup,
-      event: React.MouseEvent | React.KeyboardEvent | React.FocusEvent,
-    ): TooltipInfo | null => {
-      const target = event.currentTarget as HTMLElement;
-      const rect = target.getBoundingClientRect();
+    (group: CellGroup, event: React.MouseEvent): TooltipInfo | null => {
+      const rect = event.currentTarget.getBoundingClientRect();
       const containerRect = entry?.target?.getBoundingClientRect();
 
       if (!containerRect) return null;
@@ -197,29 +192,19 @@ export function Grid(props: GridProps) {
   );
 
   const handleGroupHover = useCallback(
-    (
-      group: CellGroup | null,
-      event: React.MouseEvent | React.KeyboardEvent | React.FocusEvent,
-    ) => {
+    (group: CellGroup | null, event: React.MouseEvent) => {
       if (!isSmallContainer) {
         if (group) {
           setHoveredGroups(getActiveGroups(group));
           setHoveredGroup(group);
-          const tooltipInfo = getTooltipInfo(group, event as React.MouseEvent);
+          const tooltipInfo = getTooltipInfo(group, event);
           if (tooltipInfo) {
             setTooltipInfo(tooltipInfo);
-            // Set the ARIA live message when a tooltip is shown
-            setAriaLiveMessage(
-              `${group.name}: ${group.description || ''}${
-                group.goal ? `, ${group.goal}` : ''
-              }`,
-            );
           }
         } else {
           setHoveredGroups(new Set());
           setHoveredGroup(null);
           setTooltipInfo(null);
-          setAriaLiveMessage('');
         }
       }
     },
@@ -387,7 +372,6 @@ export function Grid(props: GridProps) {
             Y_LABEL_OFFSET={Y_LABEL_OFFSET}
             LOW_HIGH_LABEL_OFFSET={LOW_HIGH_LABEL_OFFSET}
             xAxisHeight={xAxisHeight}
-            isAnimated={isAnimated && !prefersReducedMotion}
           />
 
           {/* Main chart content */}
@@ -418,14 +402,10 @@ export function Grid(props: GridProps) {
             Y_LABEL_OFFSET={Y_LABEL_OFFSET}
             X_LABEL_OFFSET={X_LABEL_OFFSET}
             setXAxisHeight={setXAxisHeight}
-            isAnimated={isAnimated && !prefersReducedMotion}
           />
 
           {renderTooltip()}
         </svg>
-        <div aria-live="polite" className={styles.ScreenReaderOnly}>
-          {ariaLiveMessage}
-        </div>
       </div>
     </ChartContainer>
   );
