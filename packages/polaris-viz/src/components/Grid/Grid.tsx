@@ -23,8 +23,6 @@ import {YAxisLabels} from './components/YAxisLabels';
 
 type GridAxisOptions = {
   label?: string;
-  lowLabel?: string;
-  highLabel?: string;
 } & Partial<XAxisOptions> &
   Partial<YAxisOptions>;
 
@@ -89,7 +87,6 @@ const TOOLTIP_PADDING = 10;
 const Y_LABEL_OFFSET = 20;
 const Y_AXIS_LABEL_WIDTH = 50;
 const X_AXIS_HEIGHT = 40;
-const LOW_HIGH_LABEL_OFFSET = 60;
 
 const DEFAULT_GROUP_COLOR = '#B1C3F7';
 const DEFAULT_TEXT_COLOR = '#FFFFFF';
@@ -368,7 +365,6 @@ export function Grid(props: GridProps) {
             chartPositions={chartPositions}
             yAxisOptions={yAxisOptions}
             Y_AXIS_LABEL_WIDTH={Y_AXIS_LABEL_WIDTH}
-            LOW_HIGH_LABEL_OFFSET={LOW_HIGH_LABEL_OFFSET}
           />
 
           {/* Main chart content */}
