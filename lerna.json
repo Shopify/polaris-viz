@@ -1,5 +1,5 @@
 {
-  "version": "15.1.0-tooltip-positioning-beta.1",
+  "version": "15.1.1",
   "npmClient": "yarn",
   "useWorkspaces": true,
   "ignoreChanges": [
