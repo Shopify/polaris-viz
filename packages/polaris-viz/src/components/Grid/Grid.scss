@@ -11,21 +11,24 @@ $x-axis-label-height: 30px;
 }
 
 .GroupCell {
-  opacity: 0;
+  opacity: var(--animation-opacity, 0);
   transform: scale(0);
-  animation-delay: 100ms;
-  animation-name: FadeInAndScale;
-  animation-duration: 1s;
+  animation-name: FadeInScale;
+  animation-duration: 300ms;
   animation-fill-mode: forwards;
-  transition: opacity 1s ease-out;
+  animation-timing-function: ease-out;
 }
 
-@keyframes FadeInAndScale {
-  from {
+@keyframes FadeInScale {
+  0% {
     opacity: 0;
     transform: scale(0);
   }
-  to {
+  50% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
     opacity: 1;
     transform: scale(1);
   }

@@ -88,7 +88,6 @@ const TOOLTIP_PADDING = 10;
 
 const Y_LABEL_OFFSET = 20;
 const Y_AXIS_LABEL_WIDTH = 50;
-const X_LABEL_OFFSET = 40;
 const X_AXIS_HEIGHT = 40;
 const LOW_HIGH_LABEL_OFFSET = 60;
 
@@ -250,6 +249,7 @@ export function Grid(props: GridProps) {
   const renderGrid = () => {
     return cellGroups.map((group, index) => (
       <GroupCell
+        index={index}
         key={`group-${index}`}
         group={group}
         xScale={xScale}
@@ -366,12 +366,9 @@ export function Grid(props: GridProps) {
           <YAxisLabels
             yTicks={yTicks}
             chartPositions={chartPositions}
-            dimensions={dimensions}
             yAxisOptions={yAxisOptions}
             Y_AXIS_LABEL_WIDTH={Y_AXIS_LABEL_WIDTH}
-            Y_LABEL_OFFSET={Y_LABEL_OFFSET}
             LOW_HIGH_LABEL_OFFSET={LOW_HIGH_LABEL_OFFSET}
-            xAxisHeight={xAxisHeight}
           />
 
           {/* Main chart content */}
@@ -393,14 +390,12 @@ export function Grid(props: GridProps) {
           <XAxisLabels
             xLabels={xLabels}
             xAxisLabelWidth={xAxisLabelWidth}
-            xAxisHeight={xAxisHeight}
             chartPositions={chartPositions}
             dimensions={dimensions}
             xScale={xScale}
             xAxisOptions={xAxisOptions}
             Y_AXIS_LABEL_WIDTH={Y_AXIS_LABEL_WIDTH}
             Y_LABEL_OFFSET={Y_LABEL_OFFSET}
-            X_LABEL_OFFSET={X_LABEL_OFFSET}
             setXAxisHeight={setXAxisHeight}
           />
 
