@@ -2,11 +2,10 @@
 @import '../../styles/common';
 
 $grid-small-breakpoint: 399px;
-$x-axis-label-height: 30px;
 
 .Container {
   width: 100%;
-  height: calc(100% - $x-axis-label-height);
+  height: 100%;
   container-type: inline-size;
 }
 

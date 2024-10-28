@@ -9,6 +9,7 @@ interface GroupInfoProps {
   groupWidth: number;
   groupHeight: number;
   getColors: (group: any) => {textColor: string};
+  opacity: number;
   mainFontSize: number;
   groupValue: string;
   showNameAndSecondaryValue: boolean;
@@ -24,6 +25,7 @@ export const GroupInfo: React.FC<GroupInfoProps> = ({
   groupWidth,
   groupHeight,
   getColors,
+  opacity,
   mainFontSize,
   groupValue,
   showNameAndSecondaryValue,
@@ -39,6 +41,7 @@ export const GroupInfo: React.FC<GroupInfoProps> = ({
         textAnchor="middle"
         dominantBaseline="middle"
         fill={getColors(group).textColor}
+        opacity={opacity}
       >
         <tspan fontWeight={600} fontSize={`${mainFontSize}px`}>
           {groupValue}
@@ -58,6 +61,7 @@ export const GroupInfo: React.FC<GroupInfoProps> = ({
           dominantBaseline="hanging"
           fontSize="11"
           fill={getColors(group).textColor}
+          opacity={opacity}
         >
           {group.name}
         </text>
