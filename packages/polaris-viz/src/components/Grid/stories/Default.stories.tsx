@@ -11,12 +11,8 @@ Default.args = {
   cellGroups: CELL_GROUPS,
   xAxisOptions: {
     label: 'Recency score',
-    lowLabel: 'Low',
-    highLabel: 'High',
   },
   yAxisOptions: {
     label: 'Frequency + Monetary score',
-    lowLabel: 'Low',
-    highLabel: 'High',
   },
 };
