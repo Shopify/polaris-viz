@@ -55,7 +55,7 @@ export const GroupCell: React.FC<GroupCellProps> = ({
   const groupSecondaryValue = group.secondaryValue;
 
   const isHovered = hoveredGroups.size === 0 || hoveredGroups.has(group.name);
-  const opacity = isHovered ? 'var(--animation-opacity)' : 0.3;
+  const opacity = isHovered ? 1 : 0.3;
 
   const groupNameOffset = 10;
   const showNameAndSecondaryValue = containerWidth > 500;
@@ -121,6 +121,7 @@ export const GroupCell: React.FC<GroupCellProps> = ({
         width={groupWidth}
         height={groupHeight}
         fill={getColors(group).bgColor}
+        opacity={opacity}
       />
 
       <GroupInfo
@@ -136,6 +137,7 @@ export const GroupCell: React.FC<GroupCellProps> = ({
         secondaryFontSize={secondaryFontSize}
         groupSecondaryValue={groupSecondaryValue}
         groupNameOffset={groupNameOffset}
+        opacity={opacity}
       />
     </g>
   );

@@ -28,8 +28,8 @@ interface XAxisLabelsProps {
   setXAxisHeight: (height: number) => void;
 }
 
-const X_AXIS_LABEL_OFFSET = 10;
-export const X_AXIS_HIGH_LABEL_OFFSET = 18;
+const X_AXIS_LABEL_OFFSET = 20;
+export const X_AXIS_HIGH_LABEL_OFFSET = 13;
 export function XAxisLabels({
   xLabels,
   xAxisLabelWidth,
@@ -49,7 +49,7 @@ export function XAxisLabels({
         labelWidth={xAxisLabelWidth}
         onHeightChange={setXAxisHeight}
         x={Y_AXIS_LABEL_WIDTH + Y_LABEL_OFFSET}
-        y={chartPositions.xAxisBounds.y + X_AXIS_LABEL_OFFSET}
+        y={chartPositions.xAxisBounds.y - X_AXIS_LABEL_OFFSET}
         xScale={xScale}
         ariaHidden
       />
@@ -57,7 +57,7 @@ export function XAxisLabels({
       <React.Fragment>
         <AxisLabel
           x={dimensions.width}
-          y={chartPositions.xAxisBounds.y + X_AXIS_HIGH_LABEL_OFFSET}
+          y={chartPositions.xAxisBounds.y - X_AXIS_HIGH_LABEL_OFFSET}
           textAnchor="end"
           dominantBaseline="bottom"
           label={xAxisOptions.highLabel ?? ''}
@@ -71,11 +71,7 @@ export function XAxisLabels({
               2 +
             Y_AXIS_LABEL_WIDTH / 2
           }
-          y={
-            dimensions.height +
-            X_AXIS_LABEL_OFFSET +
-            chartPositions.xAxisBounds.height
-          }
+          y={dimensions.height}
           fontSize="14"
           fill="#6b7177"
           textAnchor="middle"

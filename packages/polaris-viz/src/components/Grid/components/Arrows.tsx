@@ -19,7 +19,7 @@ interface CellGroup {
 
 type Placement = 'left' | 'bottom' | 'top' | 'right';
 
-const ARROW_OFFSET = 10;
+const ARROW_X_POSITION_OFFSET = 10;
 
 export function Arrows({
   hoveredGroup,
@@ -73,7 +73,7 @@ export function Arrows({
       );
       return {
         x: (startX + endX) / 2,
-        y: group1.start.row * cellHeight + ARROW_OFFSET,
+        y: group1.start.row * cellHeight + ARROW_X_POSITION_OFFSET,
         sourceEdge: 'top',
         targetEdge: 'bottom',
       };
@@ -89,7 +89,7 @@ export function Arrows({
         (group2.end.row + 1) * cellHeight,
       );
       return {
-        x: xScale(group1.end.col + 1) - ARROW_OFFSET,
+        x: xScale(group1.end.col + 1) - ARROW_X_POSITION_OFFSET,
         y: (startY + endY) / 2,
         sourceEdge: 'right',
         targetEdge: 'left',
