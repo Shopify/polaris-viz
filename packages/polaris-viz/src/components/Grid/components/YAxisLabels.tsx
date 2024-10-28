@@ -77,7 +77,7 @@ export function YAxisLabels({
       />
       <AxisLabel
         x={LOW_HIGH_LABEL_OFFSET}
-        y={chartPositions.xAxisBounds.y + X_AXIS_HIGH_LABEL_OFFSET}
+        y={chartPositions.xAxisBounds.y - X_AXIS_HIGH_LABEL_OFFSET}
         textAnchor="end"
         dominantBaseline="bottom"
         label={yAxisOptions.lowLabel ?? ''}

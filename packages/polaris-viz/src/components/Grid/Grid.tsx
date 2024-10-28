@@ -83,7 +83,7 @@ interface ChartPositions {
 const TOOLTIP_WIDTH = 250;
 const TOOLTIP_HEIGHT = 120;
 const TOOLTIP_HORIZONTAL_OFFSET = 10;
-const TOOLTIP_VERITCAL_OFFSET = 125;
+const TOOLTIP_VERITCAL_OFFSET = 135;
 const TOOLTIP_PADDING = 10;
 
 const Y_LABEL_OFFSET = 20;
@@ -133,7 +133,7 @@ export function Grid(props: GridProps) {
 
   const fullChartWidth =
     dimensions.width - (Y_AXIS_LABEL_WIDTH + Y_LABEL_OFFSET);
-  const fullChartHeight = dimensions.height - xAxisHeight;
+  const fullChartHeight = dimensions.height - X_AXIS_HEIGHT;
 
   const cellWidth = fullChartWidth / gridDimensions.cols;
   const cellHeight = fullChartHeight / gridDimensions.rows;
