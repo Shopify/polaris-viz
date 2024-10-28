@@ -1,6 +1,6 @@
 {
   "name": "sandbox",
-  "version": "15.1.0-tooltip-positioning-beta.1",
+  "version": "15.1.1",
   "private": true,
   "main": "index.js",
   "dependencies": {
