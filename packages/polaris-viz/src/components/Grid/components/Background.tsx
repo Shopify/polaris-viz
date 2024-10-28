@@ -4,7 +4,6 @@ interface BackgroundProps {
   width: number;
   height: number;
   fill: string;
-  opacity: number;
 }
 
 export const Background: React.FC<BackgroundProps> = ({
@@ -13,7 +12,6 @@ export const Background: React.FC<BackgroundProps> = ({
   width,
   height,
   fill,
-  opacity,
 }) => (
   <rect
     x={x}
@@ -25,6 +23,5 @@ export const Background: React.FC<BackgroundProps> = ({
     strokeWidth="4"
     rx="4"
     ry="4"
-    opacity={opacity}
   />
 );

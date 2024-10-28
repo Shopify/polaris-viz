@@ -21,6 +21,7 @@ interface GroupCellProps {
   getColors: (group: CellGroup) => {bgColor: string; textColor: string};
   containerWidth: number;
   isAnimated: boolean;
+  index: number;
 }
 
 export const GroupCell: React.FC<GroupCellProps> = ({
@@ -34,6 +35,7 @@ export const GroupCell: React.FC<GroupCellProps> = ({
   getColors,
   containerWidth,
   isAnimated,
+  index,
 }) => {
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
@@ -53,7 +55,7 @@ export const GroupCell: React.FC<GroupCellProps> = ({
   const groupSecondaryValue = group.secondaryValue;
 
   const isHovered = hoveredGroups.size === 0 || hoveredGroups.has(group.name);
-  const opacity = isHovered ? 1 : 0.3;
+  const opacity = isHovered ? 'var(--animation-opacity)' : 0.3;
 
   const groupNameOffset = 10;
   const showNameAndSecondaryValue = containerWidth > 500;
@@ -65,17 +67,16 @@ export const GroupCell: React.FC<GroupCellProps> = ({
   const groupX = xScale(group.start.col);
   const groupY = group.start.row * cellHeight;
 
+  const staggerDelay = 40;
   const cellStyle =
     isAnimated && !prefersReducedMotion
       ? {
           transformOrigin: `${groupX + groupWidth / 2}px ${
             groupY + groupHeight / 2
           }px`,
+          animationDelay: `${index * staggerDelay}ms`,
         }
-      : {
-          opacity: 1,
-          transform: 'scale(1)',
-        };
+      : null;
 
   const handleKeyDown = useCallback((event: React.KeyboardEvent) => {
     if (event.key === 'Enter' || event.key === ' ') {
@@ -120,7 +121,6 @@ export const GroupCell: React.FC<GroupCellProps> = ({
         width={groupWidth}
         height={groupHeight}
         fill={getColors(group).bgColor}
-        opacity={opacity}
       />
 
       <GroupInfo
@@ -130,7 +130,6 @@ export const GroupCell: React.FC<GroupCellProps> = ({
         groupWidth={groupWidth}
         groupHeight={groupHeight}
         getColors={getColors}
-        opacity={opacity}
         mainFontSize={mainFontSize}
         groupValue={groupValue}
         showNameAndSecondaryValue={showNameAndSecondaryValue}
