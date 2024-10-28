@@ -58,7 +58,7 @@ export function XAxisLabels({
 
       <React.Fragment>
         <AxisLabel
-          x={dimensions.width + Y_LABEL_OFFSET}
+          x={dimensions.width}
           y={dimensions.height + xAxisHeight / 2}
           textAnchor="end"
           dominantBaseline="bottom"

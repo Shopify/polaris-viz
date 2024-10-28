@@ -81,34 +81,29 @@ interface ChartPositions {
 }
 
 const TOOLTIP_WIDTH = 250;
-// offsets for the tooltip from the edges of the group cells
-const TOOLTIP_OFFSET = 10;
-// offset for the tooltip from the bottom of the group cell
+const TOOLTIP_HEIGHT = 120;
+const TOOLTIP_HORIZONTAL_OFFSET = 10;
 const TOOLTIP_VERITCAL_OFFSET = 125;
-// padding for the tooltip
 const TOOLTIP_PADDING = 10;
-// offset for the y axis label so that is not together with the y axis numbers
+
 const Y_LABEL_OFFSET = 20;
-// width of the y axis label
 const Y_AXIS_LABEL_WIDTH = 50;
-// offset for the x axis label so that is not together with the x axis numbers
 const X_LABEL_OFFSET = 40;
-// offset for the low and high labels so that they are not together with the y axis numbers
+const X_AXIS_HEIGHT = 40;
 const LOW_HIGH_LABEL_OFFSET = 60;
-// default group color
+
 const DEFAULT_GROUP_COLOR = '#B1C3F7';
-// default text color
 const DEFAULT_TEXT_COLOR = '#FFFFFF';
 
 export function Grid(props: GridProps) {
   const {defaultTheme} = usePolarisVizContext();
 
-  const [xAxisHeight, setXAxisHeight] = useState(40);
+  const [xAxisHeight, setXAxisHeight] = useState(X_AXIS_HEIGHT);
   const [hoveredGroups, setHoveredGroups] = useState<Set<string>>(new Set());
   const [hoveredGroup, setHoveredGroup] = useState<CellGroup | null>(null);
   const {setRef, entry} = useResizeObserver();
   const [tooltipInfo, setTooltipInfo] = useState<TooltipInfo | null>(null);
-  const [tooltipHeight, setTooltipHeight] = useState(120);
+  const [tooltipHeight, setTooltipHeight] = useState(TOOLTIP_HEIGHT);
   const [isSmallContainer, setIsSmallContainer] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
@@ -125,8 +120,8 @@ export function Grid(props: GridProps) {
 
   const dimensions = useMemo(
     () => ({
-      width: entry?.contentRect.width ?? 300,
-      height: entry?.contentRect.height ?? 200,
+      width: entry?.contentRect.width ?? 0,
+      height: entry?.contentRect.height ?? 0,
     }),
     [entry],
   );
@@ -137,7 +132,8 @@ export function Grid(props: GridProps) {
     return {rows: maxRow, cols: maxCol};
   }, [cellGroups]);
 
-  const fullChartWidth = dimensions.width - Y_AXIS_LABEL_WIDTH;
+  const fullChartWidth =
+    dimensions.width - (Y_AXIS_LABEL_WIDTH + Y_LABEL_OFFSET);
   const fullChartHeight = dimensions.height - xAxisHeight;
 
   const cellWidth = fullChartWidth / gridDimensions.cols;
@@ -164,17 +160,21 @@ export function Grid(props: GridProps) {
 
       if (leftSpace >= TOOLTIP_WIDTH) {
         // Position on the left
-        x = rect.left - containerRect.left - TOOLTIP_WIDTH - TOOLTIP_OFFSET;
+        x =
+          rect.left -
+          containerRect.left -
+          TOOLTIP_WIDTH -
+          TOOLTIP_HORIZONTAL_OFFSET;
         y = rect.top - containerRect.top;
         placement = 'left';
       } else if (bottomSpace >= tooltipHeight) {
         // Position at the bottom
-        x = rect.left - containerRect.left + TOOLTIP_OFFSET;
-        y = rect.bottom - containerRect.top + TOOLTIP_OFFSET;
+        x = rect.left - containerRect.left + TOOLTIP_HORIZONTAL_OFFSET;
+        y = rect.bottom - containerRect.top + TOOLTIP_HORIZONTAL_OFFSET;
         placement = 'bottom';
       } else {
         // Position at the top
-        x = rect.left - containerRect.left + TOOLTIP_OFFSET;
+        x = rect.left - containerRect.left + TOOLTIP_HORIZONTAL_OFFSET;
         y = rect.top - containerRect.top - TOOLTIP_VERITCAL_OFFSET;
         placement = 'top';
       }
