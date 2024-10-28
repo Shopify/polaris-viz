@@ -1,8 +1,5 @@
 import {YAxis} from '../../YAxis';
 
-import {AxisLabel} from './AxisLabel';
-import {X_AXIS_HIGH_LABEL_OFFSET} from './XAxisLabels';
-
 interface YAxisLabelsProps {
   yTicks: {
     value: number;
@@ -27,11 +24,8 @@ interface YAxisLabelsProps {
   yAxisOptions: {
     hide?: boolean;
     label?: string;
-    highLabel?: string;
-    lowLabel?: string;
   };
   Y_AXIS_LABEL_WIDTH: number;
-  LOW_HIGH_LABEL_OFFSET: number;
 }
 
 export function YAxisLabels({
@@ -39,7 +33,6 @@ export function YAxisLabels({
   chartPositions,
   yAxisOptions,
   Y_AXIS_LABEL_WIDTH,
-  LOW_HIGH_LABEL_OFFSET,
 }: YAxisLabelsProps) {
   return (
     <g opacity={yAxisOptions?.hide ? 0 : 1}>
@@ -66,21 +59,6 @@ export function YAxisLabels({
         ariaHidden
         x={10}
         y={0}
-      />
-
-      <AxisLabel
-        x={LOW_HIGH_LABEL_OFFSET}
-        y={0}
-        textAnchor="end"
-        dominantBaseline="hanging"
-        label={yAxisOptions.highLabel ?? ''}
-      />
-      <AxisLabel
-        x={LOW_HIGH_LABEL_OFFSET}
-        y={chartPositions.xAxisBounds.y - X_AXIS_HIGH_LABEL_OFFSET}
-        textAnchor="end"
-        dominantBaseline="bottom"
-        label={yAxisOptions.lowLabel ?? ''}
       />
     </g>
   );
