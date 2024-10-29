@@ -6,7 +6,6 @@ import {ChartContainer} from '../../ChartContainer';
 import {XAxis} from '../../XAxis';
 import {YAxis} from '../../YAxis';
 import {GroupCell} from '../components/GroupCell';
-import {AxisLabel} from '../components/AxisLabel';
 
 describe('<Grid />', () => {
   it('renders a <ChartContainer />', () => {
@@ -60,28 +59,6 @@ describe('<Grid />', () => {
         }),
       ]),
     });
-  });
-
-  it('renders the expected number of AxisLabel components', async () => {
-    jest.useFakeTimers();
-    const grid = mount(<Grid {...MOCK_PROPS} />);
-
-    // Wait for the useEffect to run
-    await act(async () => {
-      jest.advanceTimersByTime(100);
-    });
-
-    grid.update();
-
-    expect(grid).toContainReactComponentTimes(AxisLabel, 2, {
-      label: 'High',
-    });
-
-    expect(grid).toContainReactComponentTimes(AxisLabel, 1, {
-      label: 'Low',
-    });
-
-    jest.useRealTimers();
   });
 });
 

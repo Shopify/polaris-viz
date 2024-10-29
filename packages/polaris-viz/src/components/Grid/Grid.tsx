@@ -20,6 +20,7 @@ import {Tooltip} from './components/Tooltip';
 import {Arrows} from './components/Arrows';
 import {XAxisLabels} from './components/XAxisLabels';
 import {YAxisLabels} from './components/YAxisLabels';
+import {GridBackground} from './components/GridBackground';
 
 type GridAxisOptions = {
   label?: string;
@@ -372,8 +373,15 @@ export function Grid(props: GridProps) {
             id="grid-content"
             transform={`translate(${Y_AXIS_LABEL_WIDTH + Y_LABEL_OFFSET}, 0)`}
           >
+            {/* Add GridBackground before the cells */}
+            <GridBackground
+              rows={gridDimensions.rows}
+              cols={gridDimensions.cols}
+              cellWidth={cellWidth}
+              cellHeight={cellHeight}
+              xScale={xScale}
+            />
             {renderGrid()}
-
             <Arrows
               hoveredGroup={hoveredGroup}
               cellGroups={cellGroups}
