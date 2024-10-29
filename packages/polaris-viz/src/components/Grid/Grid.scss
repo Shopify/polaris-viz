@@ -34,8 +34,8 @@ $grid-small-breakpoint: 399px;
 }
 
 .ArrowShaft {
-  stroke-dasharray: 25;
-  stroke-dashoffset: 25;
+  stroke-dasharray: 35;
+  stroke-dashoffset: 35;
   animation: Draw 0.2s ease-in-out forwards;
   @container (max-width: #{$grid-small-breakpoint}) {
     display: none;
@@ -44,7 +44,8 @@ $grid-small-breakpoint: 399px;
 
 .ArrowHead {
   opacity: 0;
-  animation: FadeIn 0.2s ease-in-out 0.2s forwards;
+  animation: FadeIn 0.2s ease-in-out forwards;
+  animation-delay: 0.2s;
   @container (max-width: #{$grid-small-breakpoint}) {
     display: none;
   }
