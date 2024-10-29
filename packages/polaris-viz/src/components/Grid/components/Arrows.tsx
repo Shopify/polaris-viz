@@ -19,7 +19,9 @@ interface CellGroup {
 
 type Placement = 'left' | 'bottom' | 'top' | 'right';
 
-const ARROW_X_POSITION_OFFSET = 10;
+const ARROW_X_POSITION_OFFSET = 18;
+const ARROW_LENGTH = 35;
+const ARROW_HEAD_SIZE_RATIO = 17;
 
 export function Arrows({
   hoveredGroup,
@@ -127,7 +129,6 @@ export function Arrows({
         if (!sharedEdgeInfo) return null;
 
         const sourcePoint = {x: sharedEdgeInfo.x, y: sharedEdgeInfo.y};
-        const arrowOffset = 25;
 
         let targetPoint: {x: number; y: number};
         if (
@@ -138,20 +139,21 @@ export function Arrows({
             x: sourcePoint.x,
             y:
               sharedEdgeInfo.sourceEdge === 'bottom'
-                ? sourcePoint.y + arrowOffset
-                : sourcePoint.y - arrowOffset,
+                ? sourcePoint.y + ARROW_LENGTH
+                : sourcePoint.y - ARROW_LENGTH,
           };
         } else {
           targetPoint = {
             x:
               sharedEdgeInfo.sourceEdge === 'right'
-                ? sourcePoint.x + arrowOffset
-                : sourcePoint.x - arrowOffset,
+                ? sourcePoint.x + ARROW_LENGTH
+                : sourcePoint.x - ARROW_LENGTH,
             y: sourcePoint.y,
           };
         }
 
-        const arrowHeadSize = Math.min(xScale(1) - xScale(0), cellHeight) / 10;
+        const arrowHeadSize =
+          Math.min(xScale(1) - xScale(0), cellHeight) / ARROW_HEAD_SIZE_RATIO;
         let arrowPoint1: {x: number; y: number};
         let arrowPoint2: {x: number; y: number};
         if (
@@ -171,11 +173,11 @@ export function Arrows({
           const direction = sharedEdgeInfo.sourceEdge === 'right' ? 1 : -1;
           arrowPoint1 = {
             x: targetPoint.x - direction * arrowHeadSize,
-            y: targetPoint.y - arrowHeadSize,
+            y: targetPoint.y + arrowHeadSize,
           };
           arrowPoint2 = {
             x: targetPoint.x - direction * arrowHeadSize,
-            y: targetPoint.y + arrowHeadSize,
+            y: targetPoint.y - arrowHeadSize,
           };
         }
 
@@ -198,11 +200,7 @@ export function Arrows({
 
             <path
               className={styles.ArrowHead}
-              d={`M ${targetPoint.x} ${targetPoint.y - 0} L ${arrowPoint1.x} ${
-                arrowPoint1.y
-              } M ${targetPoint.x} ${targetPoint.y - 0} L ${arrowPoint2.x} ${
-                arrowPoint2.y
-              }`}
+              d={`M ${targetPoint.x} ${targetPoint.y} L ${arrowPoint1.x} ${arrowPoint1.y} M ${targetPoint.x} ${targetPoint.y} L ${arrowPoint2.x} ${arrowPoint2.y}`}
               stroke="white"
               strokeWidth="2"
               fill="none"
