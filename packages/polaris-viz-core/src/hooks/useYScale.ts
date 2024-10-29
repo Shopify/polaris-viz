@@ -4,7 +4,11 @@ import {maxIndex} from 'd3-array';
 import type {LabelFormatter} from 'types';
 
 import {DEFAULT_MAX_Y} from '../constants';
-import {estimateStringWidth, shouldRoundScaleUp} from '../utilities';
+import {
+  estimateStringWidth,
+  shouldRoundScaleUp,
+  isInfinity,
+} from '../utilities';
 
 import {useChartContext} from './useChartContext';
 
@@ -56,7 +60,7 @@ export function useYScale({
     return [minY, maxY];
   }, [min, max, integersOnly, maxYOverride]);
 
-  if (!Number.isFinite(maxY) || !Number.isFinite(minY)) {
+  if (isInfinity(maxY) || isInfinity(minY)) {
     throw new Error('Data must be finite.');
   }
 

@@ -99,6 +99,7 @@ export {
   isDataGroupArray,
   getGradientFromColor,
   OpacityScale,
+  isInfinity,
 } from './utilities';
 export {
   useSparkBar,

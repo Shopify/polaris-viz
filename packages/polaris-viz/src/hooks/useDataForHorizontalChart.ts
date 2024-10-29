@@ -1,6 +1,10 @@
 import {useMemo} from 'react';
 import type {DataSeries, LabelFormatter} from '@shopify/polaris-viz-core';
-import {useChartContext, estimateStringWidth} from '@shopify/polaris-viz-core';
+import {
+  useChartContext,
+  estimateStringWidth,
+  isInfinity,
+} from '@shopify/polaris-viz-core';
 
 import {HORIZONTAL_BAR_LABEL_OFFSET} from '../constants';
 
@@ -37,7 +41,7 @@ export function useDataForHorizontalChart({
     [allNumbers],
   );
 
-  if (!Number.isFinite(lowestNegative) || !Number.isFinite(highestPositive)) {
+  if (isInfinity(lowestNegative) || isInfinity(highestPositive)) {
     throw new Error('Data must be finite');
   }
 
