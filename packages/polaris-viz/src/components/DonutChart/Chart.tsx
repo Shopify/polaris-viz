@@ -8,6 +8,7 @@ import {
   ChartState,
   useChartContext,
   THIN_ARC_CORNER_THICKNESS,
+  isInfinity,
 } from '@shopify/polaris-viz-core';
 import type {
   DataPoint,
@@ -156,7 +157,7 @@ export function Chart({
 
   const dataSum = points.reduce((acc, {value}) => (value ?? 0) + acc, 0);
 
-  if (!Number.isFinite(dataSum)) {
+  if (isInfinity(dataSum)) {
     throw new Error('Data must be finite');
   }
 

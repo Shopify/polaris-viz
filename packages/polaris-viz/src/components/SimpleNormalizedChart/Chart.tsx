@@ -5,6 +5,7 @@ import {
   COLOR_VISION_SINGLE_ITEM,
   getColorVisionEventAttrs,
   getColorVisionStylesForActiveIndex,
+  isInfinity,
 } from '@shopify/polaris-viz-core';
 import type {
   Direction,
@@ -84,7 +85,7 @@ export function Chart({
   const slicedData = flattenedData.slice(0, 4);
   const totalValue = sum(slicedData, ({value}) => value);
 
-  if (!Number.isFinite(totalValue)) {
+  if (isInfinity(totalValue)) {
     throw new Error('Data must be finite');
   }
 

@@ -15,6 +15,7 @@ import {
   useChartContext,
   LINE_HEIGHT,
   getGradientFromColor,
+  isInfinity,
 } from '@shopify/polaris-viz-core';
 
 import {ChartElements} from '../ChartElements';
@@ -59,7 +60,7 @@ export function Chart({
 
   const maxValue = yValues.length === 0 ? 0 : Math.max(...yValues);
 
-  if (!Number.isFinite(maxValue)) {
+  if (isInfinity(maxValue)) {
     throw new Error('Data must be finite');
   }
 

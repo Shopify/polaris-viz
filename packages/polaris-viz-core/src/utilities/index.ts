@@ -19,6 +19,7 @@ export {changeColorOpacity, changeGradientOpacity} from './changeColorOpacity';
 export {getAverageColor} from './getAverageColor';
 export {getValueFromXScale} from './getValueFromXScale';
 export {isValueWithinDomain} from './isValueWithinDomain';
+export {isInfinity} from './isInfinity';
 export {getClosestDivisibleNumber} from './getClosestDivisibleNumber';
 export {roundToDecimals} from './roundToDecimals';
 export {isLargeDataSet} from './isLargeDataSet';
