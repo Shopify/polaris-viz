@@ -2,6 +2,7 @@ import {
   getClosestDivisibleNumber,
   roundToDecimals,
   useYScale,
+  isInfinity,
 } from '@shopify/polaris-viz-core';
 import type {DataGroup} from '@shopify/polaris-viz-core';
 
@@ -37,10 +38,7 @@ export function useDualAxisTicks({data, drawableHeight}: Props) {
   const primaryAxis = axes[sourceOfTruthIndex === 0 ? 0 : 1];
   const secondaryAxis = axes[sourceOfTruthIndex === 0 ? 1 : 0];
 
-  if (
-    !Number.isFinite(primaryAxis.max) ||
-    !Number.isFinite(secondaryAxis.max)
-  ) {
+  if (isInfinity(primaryAxis.max) || isInfinity(secondaryAxis.max)) {
     throw new Error('Data must be finite');
   }
 

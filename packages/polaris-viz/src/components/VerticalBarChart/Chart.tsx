@@ -10,6 +10,7 @@ import {
   useChartPositions,
   LINE_HEIGHT,
   SMALL_CHART_HEIGHT,
+  isInfinity,
 } from '@shopify/polaris-viz-core';
 import type {
   DataSeries,
@@ -159,7 +160,7 @@ export function Chart({
     yScaleMax = allValuesAreZero ? 0 : max;
   }
 
-  if (!Number.isFinite(yScaleMax) || !Number.isFinite(min)) {
+  if (isInfinity(yScaleMax) || isInfinity(min)) {
     throw new Error('min and max must be finite numbers.');
   }
 

@@ -1,7 +1,7 @@
 import {scaleBand, scaleLinear} from 'd3-scale';
 import {useCallback, useMemo} from 'react';
 
-import {getGradientFromColor} from '../utilities';
+import {getGradientFromColor, isInfinity} from '../utilities';
 import type {Color, DataPoint, DataSeries, TargetLine} from '../types';
 
 const STROKE_WIDTH = 1.5;
@@ -65,13 +65,13 @@ export function useSparkBar({
   const filteredData = removeNullValues(data[0]);
   const [defaultData] = data;
 
-  const hasInfiniteData = filteredData.some((value) => !Number.isFinite(value));
+  const hasInfiniteData = filteredData.some((value) => isInfinity(value));
 
   if (hasInfiniteData) {
     throw new Error('Data must be finite');
   }
 
-  if (!Number.isFinite(targetValue)) {
+  if (isInfinity(targetValue)) {
     throw new Error('Target value must be finite');
   }
 

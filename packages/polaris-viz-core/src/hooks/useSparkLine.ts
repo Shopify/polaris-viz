@@ -1,5 +1,6 @@
 import {scaleLinear} from 'd3-scale';
 
+import {isInfinity} from '../utilities';
 import type {DataSeries} from '../types';
 
 export function useSparkLine({
@@ -23,7 +24,7 @@ export function useSparkLine({
   const minYValue = yValues.length ? Math.min(...yValues) : 0;
   const maxYValue = yValues.length ? Math.max(...yValues) : 0;
 
-  if (!Number.isFinite(minYValue) || !Number.isFinite(maxYValue)) {
+  if (isInfinity(minYValue) || isInfinity(maxYValue)) {
     throw new Error('Data must be finite');
   }
 
