@@ -5,14 +5,12 @@ import type {
   YAxisOptions,
 } from '@shopify/polaris-viz-core';
 import {
-  usePolarisVizContext,
   DEFAULT_CHART_PROPS,
   useChartPositions,
 } from '@shopify/polaris-viz-core';
 import {scaleLinear} from 'd3-scale';
 
 import {useResizeObserver} from '../../hooks/useResizeObserver';
-import {ChartContainer} from '../ChartContainer';
 
 import {GroupCell} from './components/GroupCell';
 import styles from './Grid.scss';
@@ -31,6 +29,8 @@ import {
   X_AXIS_HEIGHT,
   DEFAULT_GROUP_COLOR,
   DEFAULT_TEXT_COLOR,
+  SVG_OFFSET,
+  SMALL_CONTAINER_WIDTH,
 } from './utilities/constants';
 
 type GridAxisOptions = {
@@ -91,8 +91,6 @@ interface ChartPositions {
 }
 
 export function Grid(props: GridProps) {
-  const {defaultTheme} = usePolarisVizContext();
-
   const [xAxisHeight, setXAxisHeight] = useState(X_AXIS_HEIGHT);
   const [hoveredGroups, setHoveredGroups] = useState<Set<string>>(new Set());
   const [hoveredGroup, setHoveredGroup] = useState<CellGroup | null>(null);
@@ -100,11 +98,9 @@ export function Grid(props: GridProps) {
   const [tooltipInfo, setTooltipInfo] = useState<TooltipInfo | null>(null);
   const [tooltipHeight, setTooltipHeight] = useState(TOOLTIP_HEIGHT);
   const [isSmallContainer, setIsSmallContainer] = useState(false);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   const {
     cellGroups = [],
-    theme = defaultTheme,
     xAxisOptions = {},
     yAxisOptions = {},
     isAnimated = DEFAULT_CHART_PROPS.isAnimated,
@@ -240,25 +236,6 @@ export function Grid(props: GridProps) {
     fullChartHeight,
   ]);
 
-  const renderGrid = () => {
-    return cellGroups.map((group, index) => (
-      <GroupCell
-        index={index}
-        key={`group-${index}`}
-        group={group}
-        xScale={xScale}
-        cellHeight={cellHeight}
-        cellWidth={cellWidth}
-        isSmallContainer={isSmallContainer}
-        hoveredGroups={hoveredGroups}
-        handleGroupHover={handleGroupHover}
-        getColors={getColors}
-        containerWidth={dimensions.width}
-        isAnimated={isAnimated}
-      />
-    ));
-  };
-
   const getColors = (group: CellGroup | null) => {
     if (group) {
       return {
@@ -329,75 +306,77 @@ export function Grid(props: GridProps) {
   useEffect(() => {
     if (entry?.contentRect) {
       // we want to make sure the container is not too small to allow hover interactions
-      setIsSmallContainer(entry.contentRect.width <= 400);
+      setIsSmallContainer(entry.contentRect.width <= SMALL_CONTAINER_WIDTH);
     }
   }, [entry]);
 
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    setPrefersReducedMotion(mediaQuery.matches);
-
-    const handleChange = () => setPrefersReducedMotion(mediaQuery.matches);
-    mediaQuery.addEventListener('change', handleChange);
-
-    return () => mediaQuery.removeEventListener('change', handleChange);
-  }, []);
+  const containerStyle = useMemo(
+    () => ({
+      height: dimensions.height ? `${dimensions.height}px` : '100%',
+    }),
+    [dimensions.height],
+  );
 
   return (
-    <ChartContainer
-      data={[]}
-      id="grid"
-      isAnimated={isAnimated && !prefersReducedMotion}
-      theme={theme}
-    >
-      <div id="container" ref={setRef} className={styles.Container}>
-        <svg
-          width="100%"
-          height="100%"
-          viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
-        >
-          <YAxisLabels
-            yTicks={yTicks}
-            chartPositions={chartPositions}
-            yAxisOptions={yAxisOptions}
-            Y_AXIS_LABEL_WIDTH={Y_AXIS_LABEL_WIDTH}
-          />
+    <div ref={setRef} className={styles.Container} style={containerStyle}>
+      <svg
+        width="100%"
+        height="100%"
+        viewBox={`0 0 ${dimensions.width} ${dimensions.height + SVG_OFFSET}`}
+      >
+        <YAxisLabels
+          yTicks={yTicks}
+          chartPositions={chartPositions}
+          yAxisOptions={yAxisOptions}
+          Y_AXIS_LABEL_WIDTH={Y_AXIS_LABEL_WIDTH}
+        />
 
-          <g
-            id="grid-content"
-            transform={`translate(${Y_AXIS_LABEL_WIDTH}, 0)`}
-          >
-            <GridBackground
-              rows={gridDimensions.rows}
-              cols={gridDimensions.cols}
-              cellWidth={cellWidth}
-              cellHeight={cellHeight}
-              xScale={xScale}
-            />
-            {renderGrid()}
-            <Arrows
-              hoveredGroup={hoveredGroup}
-              cellGroups={cellGroups}
-              xScale={xScale}
-              cellHeight={cellHeight}
-            />
-          </g>
-
-          <XAxisLabels
-            xLabels={xLabels}
-            xAxisLabelWidth={xAxisLabelWidth}
-            chartPositions={chartPositions}
-            dimensions={dimensions}
+        <g id="grid-content" transform={`translate(${Y_AXIS_LABEL_WIDTH}, 0)`}>
+          <GridBackground
+            rows={gridDimensions.rows}
+            cols={gridDimensions.cols}
+            cellWidth={cellWidth}
+            cellHeight={cellHeight}
             xScale={xScale}
-            xAxisOptions={xAxisOptions}
-            Y_AXIS_LABEL_WIDTH={Y_AXIS_LABEL_WIDTH}
-            setXAxisHeight={setXAxisHeight}
           />
+          {cellGroups.map((group, index) => (
+            <GroupCell
+              index={index}
+              key={`group-${index}`}
+              group={group}
+              xScale={xScale}
+              cellHeight={cellHeight}
+              cellWidth={cellWidth}
+              isSmallContainer={isSmallContainer}
+              hoveredGroups={hoveredGroups}
+              handleGroupHover={handleGroupHover}
+              getColors={getColors}
+              containerWidth={dimensions.width}
+              isAnimated={isAnimated}
+            />
+          ))}
+          <Arrows
+            hoveredGroup={hoveredGroup}
+            cellGroups={cellGroups}
+            xScale={xScale}
+            cellHeight={cellHeight}
+          />
+        </g>
 
-          {renderTooltip()}
-        </svg>
-      </div>
-    </ChartContainer>
+        <XAxisLabels
+          xLabels={xLabels}
+          xAxisLabelWidth={xAxisLabelWidth}
+          chartPositions={chartPositions}
+          dimensions={dimensions}
+          xScale={xScale}
+          xAxisOptions={xAxisOptions}
+          Y_AXIS_LABEL_WIDTH={Y_AXIS_LABEL_WIDTH}
+          setXAxisHeight={setXAxisHeight}
+        />
+
+        {renderTooltip()}
+      </svg>
+    </div>
   );
 }
 

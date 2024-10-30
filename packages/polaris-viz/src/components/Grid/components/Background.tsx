@@ -1,3 +1,5 @@
+import {BACKGROUND_GAP} from '../utilities/constants';
+
 interface BackgroundProps {
   x: number;
   y: number;
@@ -16,10 +18,10 @@ export const Background = ({
   opacity,
 }: BackgroundProps) => (
   <rect
-    x={x + 4.5}
-    y={y + 4.5}
-    width={width - 9}
-    height={height - 9}
+    x={x + BACKGROUND_GAP / 2}
+    y={y + BACKGROUND_GAP / 2}
+    width={width - BACKGROUND_GAP}
+    height={height - BACKGROUND_GAP}
     fill={fill}
     strokeWidth="4"
     rx="4"

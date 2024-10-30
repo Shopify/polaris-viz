@@ -1,7 +1,13 @@
 import React from 'react';
 import type {ScaleLinear} from 'd3-scale';
 
-import styles from '../Grid.scss';
+import {
+  ARROW_X_POSITION_OFFSET,
+  ARROW_LENGTH,
+  ARROW_HEAD_SIZE_RATIO,
+} from '../utilities/constants';
+
+import styles from './Arrows.scss';
 
 interface ArrowsProps {
   hoveredGroup: CellGroup | null;
@@ -18,10 +24,6 @@ interface CellGroup {
 }
 
 type Placement = 'left' | 'bottom' | 'top' | 'right';
-
-const ARROW_X_POSITION_OFFSET = 18;
-const ARROW_LENGTH = 35;
-const ARROW_HEAD_SIZE_RATIO = 17;
 
 export function Arrows({
   hoveredGroup,
