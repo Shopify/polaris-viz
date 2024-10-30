@@ -1,0 +1,10 @@
+@import '../../../styles/common';
+
+.YAxisLabel {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+  color: $color-gray-110;
+  text-align: center;
+}

@@ -1,4 +1,6 @@
-@import '../_constants';
+/* stylelint-disable at-rule-no-unknown */
+
+@import '../utilities/constants';
 
 .ArrowShaft {
   stroke-dasharray: 35;
