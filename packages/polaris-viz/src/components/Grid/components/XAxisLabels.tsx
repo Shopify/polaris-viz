@@ -20,7 +20,6 @@ interface XAxisLabelsProps {
     label?: string;
   };
   Y_AXIS_LABEL_WIDTH: number;
-  Y_LABEL_OFFSET: number;
   setXAxisHeight: (height: number) => void;
 }
 
@@ -33,7 +32,6 @@ export function XAxisLabels({
   xScale,
   xAxisOptions,
   Y_AXIS_LABEL_WIDTH,
-  Y_LABEL_OFFSET,
   setXAxisHeight,
 }: XAxisLabelsProps) {
   return (
@@ -43,7 +41,7 @@ export function XAxisLabels({
         labels={xLabels}
         labelWidth={xAxisLabelWidth}
         onHeightChange={setXAxisHeight}
-        x={Y_AXIS_LABEL_WIDTH + Y_LABEL_OFFSET}
+        x={Y_AXIS_LABEL_WIDTH}
         y={chartPositions.xAxisBounds.y - X_AXIS_LABEL_OFFSET}
         xScale={xScale}
         ariaHidden
@@ -53,8 +51,7 @@ export function XAxisLabels({
         <text
           x={
             (chartPositions.xAxisBounds.x + chartPositions.xAxisBounds.width) /
-              2 +
-            Y_AXIS_LABEL_WIDTH / 2
+            2
           }
           y={dimensions.height}
           fontSize="14"

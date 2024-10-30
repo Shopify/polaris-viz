@@ -1,4 +1,5 @@
 import {YAxis} from '../../YAxis';
+import {Y_LABEL_OFFSET} from '../utilities/constants';
 
 interface YAxisLabelsProps {
   yTicks: {
@@ -14,15 +15,8 @@ interface YAxisLabelsProps {
       width: number;
       height: number;
     };
-    xAxisBounds: {
-      x: number;
-      y: number;
-      width: number;
-      height: number;
-    };
   };
   yAxisOptions: {
-    hide?: boolean;
     label?: string;
   };
   Y_AXIS_LABEL_WIDTH: number;
@@ -35,18 +29,15 @@ export function YAxisLabels({
   Y_AXIS_LABEL_WIDTH,
 }: YAxisLabelsProps) {
   return (
-    <g opacity={yAxisOptions?.hide ? 0 : 1}>
+    <g>
       {yAxisOptions.label && (
         <text
-          x={chartPositions.yAxisBounds.x}
-          y={chartPositions.yAxisBounds.x}
+          x={-chartPositions.yAxisBounds.height / 2}
+          y={Y_AXIS_LABEL_WIDTH / 2 - Y_LABEL_OFFSET}
           textAnchor="middle"
-          dominantBaseline="middle"
+          transform="rotate(-90)"
           fontSize="14"
           fill="#6b7177"
-          transform={`rotate(-90, ${chartPositions.yAxisBounds.x}, ${
-            chartPositions.yAxisBounds.y + chartPositions.yAxisBounds.height / 2
-          })`}
         >
           {yAxisOptions.label}
         </text>
@@ -57,7 +48,7 @@ export function YAxisLabels({
         width={Y_AXIS_LABEL_WIDTH}
         textAlign="right"
         ariaHidden
-        x={10}
+        x={-10}
         y={0}
       />
     </g>
