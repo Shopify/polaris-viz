@@ -1,7 +1,8 @@
 import type {Story} from '@storybook/react';
 
-import type {GridProps, CellGroup} from '../Grid';
+import type {GridProps} from '../Grid';
 import {Grid} from '../Grid';
+import type {CellGroup} from '../types';
 
 export const Template: Story<GridProps> = (args: GridProps) => {
   return <Grid {...args} />;

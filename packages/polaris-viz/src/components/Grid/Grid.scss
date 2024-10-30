@@ -1,10 +1,10 @@
 /* stylelint-disable at-rule-no-unknown, property-no-unknown */
 @import '../../styles/common';
-@import './_constants';
+@import './utilities/constants';
 
 .Container {
   container-type: inline-size;
-  font-family: Inter, -apple-system, 'system-ui', 'San Francisco', 'Segoe UI',
+  font-family: Inter, -apple-system, system-ui, 'San Francisco', 'Segoe UI',
     Roboto, 'Helvetica Neue', sans-serif;
   font-size: 12px;
   display: flex;
@@ -19,27 +19,9 @@
   animation-fill-mode: forwards;
 }
 
-@keyframes FadeInOpacity {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
 .Label {
   @container (max-width: #{$grid-small-breakpoint}) {
     display: none;
-  }
-}
-
-@keyframes FadeInOpacity {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
   }
 }
 
@@ -71,4 +53,13 @@
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+@keyframes FadeInOpacity {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

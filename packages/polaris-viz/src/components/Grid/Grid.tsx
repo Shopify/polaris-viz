@@ -1,9 +1,5 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import type {
-  LabelFormatter,
-  XAxisOptions,
-  YAxisOptions,
-} from '@shopify/polaris-viz-core';
+import type {LabelFormatter} from '@shopify/polaris-viz-core';
 import {
   DEFAULT_CHART_PROPS,
   useChartPositions,
@@ -24,7 +20,6 @@ import {
   TOOLTIP_HEIGHT,
   TOOLTIP_HORIZONTAL_OFFSET,
   TOOLTIP_VERTICAL_OFFSET,
-  TOOLTIP_PADDING,
   Y_AXIS_LABEL_WIDTH,
   X_AXIS_HEIGHT,
   DEFAULT_GROUP_COLOR,
@@ -32,11 +27,13 @@ import {
   SVG_OFFSET,
   SMALL_CONTAINER_WIDTH,
 } from './utilities/constants';
-
-type GridAxisOptions = {
-  label?: string;
-} & Partial<XAxisOptions> &
-  Partial<YAxisOptions>;
+import type {
+  CellGroup,
+  TooltipInfo,
+  Placement,
+  ChartPositions,
+  GridAxisOptions,
+} from './types';
 
 export interface GridProps {
   labelFormatter?: LabelFormatter;
@@ -45,49 +42,6 @@ export interface GridProps {
   yAxisOptions?: GridAxisOptions;
   showGrid?: boolean;
   theme?: string;
-}
-
-export interface CellGroup {
-  start: {row: number; col: number};
-  end: {row: number; col: number};
-  bgColor: string;
-  color: string;
-  name: string;
-  description: string;
-  goal: string | null;
-  connectedGroups?: string[];
-  secondaryValue: string;
-  value: string;
-}
-
-interface TooltipInfo {
-  x: number;
-  y: number;
-  placement: Placement;
-  groupName: string;
-  groupDescription: string;
-  groupGoal: string;
-}
-
-type Placement = 'left' | 'bottom' | 'top' | 'right';
-
-interface ChartPositions {
-  chartXPosition: number;
-  chartYPosition: number;
-  drawableHeight: number;
-  drawableWidth: number;
-  xAxisBounds: {
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-  };
-  yAxisBounds: {
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-  };
 }
 
 export function Grid(props: GridProps) {
@@ -272,37 +226,6 @@ export function Grid(props: GridProps) {
     [gridDimensions.cols, fullChartWidth],
   );
 
-  const renderTooltip = () => {
-    if (!tooltipInfo) return null;
-
-    const {x, y, groupName, groupDescription, groupGoal} = tooltipInfo;
-    const transform = `translate(${x}, ${y})`;
-
-    return (
-      <g className={styles.TooltipContainer} transform={transform}>
-        <foreignObject x={0} y={0} width={TOOLTIP_WIDTH} height={tooltipHeight}>
-          <div
-            ref={(node) => {
-              if (node) {
-                const {height} = node.getBoundingClientRect();
-                const tooltipOffset = 10;
-                const tooltipHeight =
-                  height + TOOLTIP_PADDING * 2 - tooltipOffset;
-                setTooltipHeight(tooltipHeight);
-              }
-            }}
-          >
-            <Tooltip
-              groupName={groupName}
-              groupDescription={groupDescription}
-              groupGoal={groupGoal}
-            />
-          </div>
-        </foreignObject>
-      </g>
-    );
-  };
-
   useEffect(() => {
     if (entry?.contentRect) {
       // we want to make sure the container is not too small to allow hover interactions
@@ -374,7 +297,17 @@ export function Grid(props: GridProps) {
           setXAxisHeight={setXAxisHeight}
         />
 
-        {renderTooltip()}
+        {tooltipInfo && (
+          <Tooltip
+            groupName={tooltipInfo.groupName}
+            groupDescription={tooltipInfo.groupDescription}
+            groupGoal={tooltipInfo.groupGoal}
+            x={tooltipInfo.x}
+            y={tooltipInfo.y}
+            tooltipHeight={tooltipHeight}
+            setTooltipHeight={setTooltipHeight}
+          />
+        )}
       </svg>
     </div>
   );

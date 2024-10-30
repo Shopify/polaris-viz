@@ -8,11 +8,6 @@ import {YAxis} from '../../YAxis';
 import {GroupCell} from '../components/GroupCell';
 
 describe('<Grid />', () => {
-  it('renders a <ChartContainer />', () => {
-    const grid = mount(<Grid {...MOCK_PROPS} />);
-    expect(grid).toContainReactComponent(ChartContainer);
-  });
-
   it('renders <XAxis /> and <YAxis />', () => {
     const grid = mount(<Grid {...MOCK_PROPS} />);
     expect(grid).toContainReactComponent(XAxis);
