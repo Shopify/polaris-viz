@@ -1,4 +1,4 @@
-import styles from '../Grid.scss';
+import styles from './Tooltip.scss';
 
 interface TooltipProps {
   groupName: string;
