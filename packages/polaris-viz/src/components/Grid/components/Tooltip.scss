@@ -1,0 +1,54 @@
+@import '../../../styles/common';
+
+$grid-small-breakpoint: 399px;
+
+.GroupGoal {
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.2;
+  color: var(--p-color-bg-surface-inverse);
+  padding-right: 5px;
+}
+
+.TooltipTitle {
+  font-weight: 700;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 8px;
+}
+
+.TooltipDescription {
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--p-color-bg-surface-inverse);
+  margin-bottom: 8px;
+}
+
+.TooltipGoal {
+  display: flex;
+  gap: 5px;
+  padding: 4px;
+  align-items: center;
+  background: $color-gray-20;
+  margin-top: 12px;
+  border-radius: 4px;
+}
+
+.Tooltip {
+  font-size: 12px;
+  line-height: 1.2;
+  padding: 12px;
+  background: $color-white;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid lightgray;
+}
+
+.TooltipContainer {
+  @container (max-width: #{$grid-small-breakpoint}) {
+    display: none;
+  }
+}

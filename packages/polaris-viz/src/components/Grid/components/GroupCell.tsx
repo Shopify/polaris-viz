@@ -1,9 +1,10 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 
-import styles from '../Grid.scss';
 import type {CellGroup} from '../Grid';
+import {HIDE_NAME_AND_SECONDARY_VALUE_WIDTH_THRESHOLD} from '../utilities/constants';
 
+import styles from './GroupCell.scss';
 import {Background} from './Background';
 import {GroupInfo} from './GroupInfo';
 
@@ -58,7 +59,8 @@ export const GroupCell: React.FC<GroupCellProps> = ({
   const opacity = isHovered ? 1 : 0.3;
 
   const groupNameOffset = 10;
-  const showNameAndSecondaryValue = containerWidth > 500;
+  const showNameAndSecondaryValue =
+    containerWidth > HIDE_NAME_AND_SECONDARY_VALUE_WIDTH_THRESHOLD;
   const mainFontSize = showNameAndSecondaryValue
     ? 20
     : Math.min(groupWidth, cellHeight) / 4;
@@ -93,11 +95,9 @@ export const GroupCell: React.FC<GroupCellProps> = ({
     [isSmallContainer, handleGroupHover],
   );
 
-  const ariaLabel = `Group: ${group.name}, Value: ${
-    group.value
-  }, Secondary Value: ${group.secondaryValue}${`, ${group.description || ''}${
-    group.goal ? `, ${group.goal}` : ''
-  }`}`;
+  const ariaLabel = `${group.name}, ${group.value}, ${
+    group.secondaryValue
+  }${`, ${group.description || ''}${group.goal ? `, ${group.goal}` : ''}`}`;
 
   return (
     <g
