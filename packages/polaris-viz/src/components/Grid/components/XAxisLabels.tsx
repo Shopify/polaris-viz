@@ -1,6 +1,10 @@
+import React from 'react';
 import type {ScaleLinear} from 'd3-scale';
 
 import {XAxis} from '../../XAxis';
+import {X_AXIS_LABEL_OFFSET} from '../utilities/constants';
+
+import styles from './XAxisLabel.scss';
 
 interface XAxisLabelsProps {
   xLabels: string[];
@@ -23,7 +27,6 @@ interface XAxisLabelsProps {
   setXAxisHeight: (height: number) => void;
 }
 
-const X_AXIS_LABEL_OFFSET = 20;
 export function XAxisLabels({
   xLabels,
   xAxisLabelWidth,
@@ -35,7 +38,7 @@ export function XAxisLabels({
   setXAxisHeight,
 }: XAxisLabelsProps) {
   return (
-    <g opacity={xAxisOptions?.hide ? 0 : 1}>
+    <React.Fragment>
       <XAxis
         allowLineWrap={false}
         labels={xLabels}
@@ -48,19 +51,17 @@ export function XAxisLabels({
       />
 
       {xAxisOptions.label && (
-        <text
-          x={
-            (chartPositions.xAxisBounds.x + chartPositions.xAxisBounds.width) /
-            2
-          }
-          y={dimensions.height}
-          fontSize="14"
-          fill="#6b7177"
-          textAnchor="middle"
+        <foreignObject
+          x={Y_AXIS_LABEL_WIDTH}
+          y={dimensions.height - 10}
+          width={chartPositions.xAxisBounds.width}
+          height={30}
         >
-          {xAxisOptions.label}
-        </text>
+          <div className={styles.XAxisLabel} title={xAxisOptions.label}>
+            {xAxisOptions.label}
+          </div>
+        </foreignObject>
       )}
-    </g>
+    </React.Fragment>
   );
 }

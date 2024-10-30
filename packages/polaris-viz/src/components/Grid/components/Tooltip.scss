@@ -1,6 +1,7 @@
-@import '../../../styles/common';
+/* stylelint-disable at-rule-no-unknown */
 
-$grid-small-breakpoint: 399px;
+@import '../../../styles/common';
+@import '../utilities/constants';
 
 .GroupGoal {
   margin: 0;

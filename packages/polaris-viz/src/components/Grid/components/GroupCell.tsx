@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 
-import type {CellGroup} from '../Grid';
+import type {CellGroup} from '../types';
 import {HIDE_NAME_AND_SECONDARY_VALUE_WIDTH_THRESHOLD} from '../utilities/constants';
 
 import styles from './GroupCell.scss';

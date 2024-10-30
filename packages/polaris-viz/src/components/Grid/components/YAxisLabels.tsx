@@ -1,5 +1,9 @@
+import React from 'react';
+
 import {YAxis} from '../../YAxis';
 import {Y_LABEL_OFFSET} from '../utilities/constants';
+
+import styles from './YAxisLabels.scss';
 
 interface YAxisLabelsProps {
   yTicks: {
@@ -29,18 +33,17 @@ export function YAxisLabels({
   Y_AXIS_LABEL_WIDTH,
 }: YAxisLabelsProps) {
   return (
-    <g>
+    <React.Fragment>
       {yAxisOptions.label && (
-        <text
-          x={-chartPositions.yAxisBounds.height / 2}
+        <foreignObject
+          x={-chartPositions.yAxisBounds.height}
           y={Y_AXIS_LABEL_WIDTH / 2 - Y_LABEL_OFFSET}
-          textAnchor="middle"
+          width={chartPositions.yAxisBounds.height}
+          height={Y_AXIS_LABEL_WIDTH}
           transform="rotate(-90)"
-          fontSize="14"
-          fill="#6b7177"
         >
-          {yAxisOptions.label}
-        </text>
+          <div className={styles.YAxisLabel}>{yAxisOptions.label}</div>
+        </foreignObject>
       )}
 
       <YAxis
@@ -51,6 +54,6 @@ export function YAxisLabels({
         x={-10}
         y={0}
       />
-    </g>
+    </React.Fragment>
   );
 }
