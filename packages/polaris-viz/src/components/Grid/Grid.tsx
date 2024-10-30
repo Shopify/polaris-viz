@@ -21,6 +21,17 @@ import {Arrows} from './components/Arrows';
 import {XAxisLabels} from './components/XAxisLabels';
 import {YAxisLabels} from './components/YAxisLabels';
 import {GridBackground} from './components/GridBackground';
+import {
+  TOOLTIP_WIDTH,
+  TOOLTIP_HEIGHT,
+  TOOLTIP_HORIZONTAL_OFFSET,
+  TOOLTIP_VERTICAL_OFFSET,
+  TOOLTIP_PADDING,
+  Y_AXIS_LABEL_WIDTH,
+  X_AXIS_HEIGHT,
+  DEFAULT_GROUP_COLOR,
+  DEFAULT_TEXT_COLOR,
+} from './utilities/constants';
 
 type GridAxisOptions = {
   label?: string;
@@ -79,19 +90,6 @@ interface ChartPositions {
   };
 }
 
-const TOOLTIP_WIDTH = 250;
-const TOOLTIP_HEIGHT = 120;
-const TOOLTIP_HORIZONTAL_OFFSET = 10;
-const TOOLTIP_VERITCAL_OFFSET = 135;
-const TOOLTIP_PADDING = 10;
-
-const Y_LABEL_OFFSET = 20;
-const Y_AXIS_LABEL_WIDTH = 50;
-const X_AXIS_HEIGHT = 40;
-
-const DEFAULT_GROUP_COLOR = '#B1C3F7';
-const DEFAULT_TEXT_COLOR = '#FFFFFF';
-
 export function Grid(props: GridProps) {
   const {defaultTheme} = usePolarisVizContext();
 
@@ -129,8 +127,7 @@ export function Grid(props: GridProps) {
     return {rows: maxRow, cols: maxCol};
   }, [cellGroups]);
 
-  const fullChartWidth =
-    dimensions.width - (Y_AXIS_LABEL_WIDTH + Y_LABEL_OFFSET);
+  const fullChartWidth = dimensions.width - Y_AXIS_LABEL_WIDTH;
   const fullChartHeight = dimensions.height - X_AXIS_HEIGHT;
 
   const cellWidth = fullChartWidth / gridDimensions.cols;
@@ -156,7 +153,6 @@ export function Grid(props: GridProps) {
       let placement: Placement;
 
       if (leftSpace >= TOOLTIP_WIDTH) {
-        // Position on the left
         x =
           rect.left -
           containerRect.left -
@@ -165,14 +161,12 @@ export function Grid(props: GridProps) {
         y = rect.top - containerRect.top;
         placement = 'left';
       } else if (bottomSpace >= tooltipHeight) {
-        // Position at the bottom
         x = rect.left - containerRect.left + TOOLTIP_HORIZONTAL_OFFSET;
         y = rect.bottom - containerRect.top + TOOLTIP_HORIZONTAL_OFFSET;
         placement = 'bottom';
       } else {
-        // Position at the top
         x = rect.left - containerRect.left + TOOLTIP_HORIZONTAL_OFFSET;
-        y = rect.top - containerRect.top - TOOLTIP_VERITCAL_OFFSET;
+        y = rect.top - containerRect.top - TOOLTIP_VERTICAL_OFFSET;
         placement = 'top';
       }
 
@@ -190,19 +184,21 @@ export function Grid(props: GridProps) {
 
   const handleGroupHover = useCallback(
     (group: CellGroup | null, event: React.MouseEvent) => {
-      if (!isSmallContainer) {
-        if (group) {
-          setHoveredGroups(getActiveGroups(group));
-          setHoveredGroup(group);
-          const tooltipInfo = getTooltipInfo(group, event);
-          if (tooltipInfo) {
-            setTooltipInfo(tooltipInfo);
-          }
-        } else {
-          setHoveredGroups(new Set());
-          setHoveredGroup(null);
-          setTooltipInfo(null);
+      if (isSmallContainer) {
+        return;
+      }
+
+      if (group) {
+        setHoveredGroups(getActiveGroups(group));
+        setHoveredGroup(group);
+        const tooltipInfo = getTooltipInfo(group, event);
+        if (tooltipInfo) {
+          setTooltipInfo(tooltipInfo);
         }
+      } else {
+        setHoveredGroups(new Set());
+        setHoveredGroup(null);
+        setTooltipInfo(null);
       }
     },
     [getTooltipInfo, isSmallContainer],
@@ -217,7 +213,7 @@ export function Grid(props: GridProps) {
   });
 
   const chartPositions: ChartPositions = useMemo(() => {
-    const yAxisTotalWidth = Y_AXIS_LABEL_WIDTH + Y_LABEL_OFFSET;
+    const yAxisTotalWidth = Y_AXIS_LABEL_WIDTH;
     return {
       chartXPosition: rawChartPositions.chartXPosition ?? yAxisTotalWidth,
       chartYPosition: 0,
@@ -230,7 +226,7 @@ export function Grid(props: GridProps) {
         height: xAxisHeight,
       },
       yAxisBounds: {
-        x: 120,
+        x: 0,
         y: 0,
         width: Y_AXIS_LABEL_WIDTH,
         height: fullChartHeight,
@@ -360,7 +356,6 @@ export function Grid(props: GridProps) {
           height="100%"
           viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
         >
-          {/* Y-Axis */}
           <YAxisLabels
             yTicks={yTicks}
             chartPositions={chartPositions}
@@ -368,12 +363,10 @@ export function Grid(props: GridProps) {
             Y_AXIS_LABEL_WIDTH={Y_AXIS_LABEL_WIDTH}
           />
 
-          {/* Main chart content */}
           <g
             id="grid-content"
-            transform={`translate(${Y_AXIS_LABEL_WIDTH + Y_LABEL_OFFSET}, 0)`}
+            transform={`translate(${Y_AXIS_LABEL_WIDTH}, 0)`}
           >
-            {/* Add GridBackground before the cells */}
             <GridBackground
               rows={gridDimensions.rows}
               cols={gridDimensions.cols}
@@ -390,7 +383,6 @@ export function Grid(props: GridProps) {
             />
           </g>
 
-          {/* X-Axis */}
           <XAxisLabels
             xLabels={xLabels}
             xAxisLabelWidth={xAxisLabelWidth}
@@ -399,7 +391,6 @@ export function Grid(props: GridProps) {
             xScale={xScale}
             xAxisOptions={xAxisOptions}
             Y_AXIS_LABEL_WIDTH={Y_AXIS_LABEL_WIDTH}
-            Y_LABEL_OFFSET={Y_LABEL_OFFSET}
             setXAxisHeight={setXAxisHeight}
           />
 
