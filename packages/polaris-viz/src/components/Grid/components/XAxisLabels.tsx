@@ -2,7 +2,12 @@ import React from 'react';
 import type {ScaleLinear} from 'd3-scale';
 
 import {XAxis} from '../../XAxis';
-import {X_AXIS_HEIGHT, X_AXIS_LABEL_OFFSET} from '../utilities/constants';
+import {
+  X_AXIS_HEIGHT,
+  X_AXIS_LABEL_OFFSET,
+  X_AXIS_LABEL_BOTTOM_OFFSET,
+  Y_AXIS_LABEL_WIDTH,
+} from '../utilities/constants';
 
 import styles from './XAxisLabel.scss';
 
@@ -23,7 +28,6 @@ interface XAxisLabelsProps {
     hide?: boolean;
     label?: string;
   };
-  Y_AXIS_LABEL_WIDTH: number;
   setXAxisHeight: (height: number) => void;
 }
 
@@ -34,9 +38,12 @@ export function XAxisLabels({
   dimensions,
   xScale,
   xAxisOptions,
-  Y_AXIS_LABEL_WIDTH,
   setXAxisHeight,
 }: XAxisLabelsProps) {
+  if (xAxisOptions.hide) {
+    return null;
+  }
+
   return (
     <React.Fragment>
       <XAxis
@@ -53,7 +60,11 @@ export function XAxisLabels({
       {xAxisOptions.label && (
         <foreignObject
           x={Y_AXIS_LABEL_WIDTH}
-          y={dimensions.height ? dimensions.height - 10 : 0}
+          y={
+            dimensions.height
+              ? dimensions.height - X_AXIS_LABEL_BOTTOM_OFFSET
+              : 0
+          }
           width={Math.max(0, chartPositions.xAxisBounds.width)}
           height={X_AXIS_HEIGHT}
         >

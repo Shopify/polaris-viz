@@ -22,3 +22,5 @@ export const ARROW_START_OFFSET = 4;
 
 export const BACKGROUND_GAP = 9;
 export const HIDE_NAME_AND_SECONDARY_VALUE_WIDTH_THRESHOLD = 500;
+
+export const X_AXIS_LABEL_BOTTOM_OFFSET = 10;

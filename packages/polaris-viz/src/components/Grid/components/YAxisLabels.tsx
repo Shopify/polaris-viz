@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {YAxis} from '../../YAxis';
-import {Y_LABEL_OFFSET} from '../utilities/constants';
+import {Y_AXIS_LABEL_WIDTH, Y_LABEL_OFFSET} from '../utilities/constants';
 
 import styles from './YAxisLabels.scss';
 
@@ -22,16 +22,19 @@ interface YAxisLabelsProps {
   };
   yAxisOptions: {
     label?: string;
+    hide?: boolean;
   };
-  Y_AXIS_LABEL_WIDTH: number;
 }
 
 export function YAxisLabels({
   yTicks,
   chartPositions,
   yAxisOptions,
-  Y_AXIS_LABEL_WIDTH,
 }: YAxisLabelsProps) {
+  if (yAxisOptions.hide) {
+    return null;
+  }
+
   return (
     <React.Fragment>
       {yAxisOptions.label && (
@@ -49,10 +52,10 @@ export function YAxisLabels({
 
       <YAxis
         ticks={yTicks}
-        width={Y_AXIS_LABEL_WIDTH}
-        textAlign="right"
+        width={10}
+        textAlign="left"
         ariaHidden
-        x={-10}
+        x={30}
         y={0}
       />
     </React.Fragment>

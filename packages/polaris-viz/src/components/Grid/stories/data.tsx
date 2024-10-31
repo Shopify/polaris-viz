@@ -10,6 +10,7 @@ export const Template: Story<GridProps> = (args: GridProps) => {
 
 export const CELL_GROUPS: CellGroup[] = [
   {
+    id: 'previously_loyal',
     start: {row: 0, col: 0},
     end: {row: 0, col: 1},
     secondaryValue: '(10%)',
@@ -17,12 +18,13 @@ export const CELL_GROUPS: CellGroup[] = [
     bgColor: '#B1C3F7',
     color: '#000000',
     name: 'Previously loyal',
-    connectedGroups: ['Loyal'],
+    connectedGroups: ['loyal'],
     description:
       'Customers without recent purchases, but with a very strong history of orders and spend.',
     goal: 'Goal: move customers to Loyal',
   },
   {
+    id: 'at_risk',
     start: {row: 1, col: 0},
     end: {row: 2, col: 1},
     secondaryValue: '(20%)',
@@ -30,12 +32,13 @@ export const CELL_GROUPS: CellGroup[] = [
     bgColor: '#CBD7F9',
     color: '#000000',
     name: 'At risk',
-    connectedGroups: ['Needs attention', 'Loyal'],
+    connectedGroups: ['needs_attention', 'loyal'],
     description:
       'Customers without recent purchases, but with a strong history of orders and spend.',
     goal: 'Goal: move customers to Loyal or Needs Attention',
   },
   {
+    id: 'dormant',
     start: {row: 3, col: 0},
     end: {row: 4, col: 1},
     secondaryValue: '(30%)',
@@ -43,12 +46,13 @@ export const CELL_GROUPS: CellGroup[] = [
     bgColor: '#E5EBFC',
     color: '#000000',
     name: 'Dormant',
-    connectedGroups: ['Almost lost'],
+    connectedGroups: ['almost_lost'],
     description:
       'Customers without recent orders, with infrequent orders, and with low spend.',
     goal: 'Goal: move customers to Almost lost',
   },
   {
+    id: 'loyal',
     start: {row: 0, col: 2},
     end: {row: 1, col: 3},
     secondaryValue: '(40%)',
@@ -56,12 +60,13 @@ export const CELL_GROUPS: CellGroup[] = [
     bgColor: '#0B2062',
     color: '#FFFFFF',
     name: 'Loyal',
-    connectedGroups: ['Champions'],
+    connectedGroups: ['champions'],
     description:
       'Customers without recent purchases, but with a very strong history of orders and spend.',
     goal: 'Goal: move customers to Loyal',
   },
   {
+    id: 'needs_attention',
     start: {row: 2, col: 2},
     end: {row: 2, col: 2},
     secondaryValue: '(20%)',
@@ -69,12 +74,13 @@ export const CELL_GROUPS: CellGroup[] = [
     bgColor: '#3E69EA',
     color: '#FFFFFF',
     name: 'Needs attention',
-    connectedGroups: ['Loyal', 'Active'],
+    connectedGroups: ['loyal', 'active'],
     description:
       'Customers who buy less recently, order sometimes and spend moderately with your store.',
     goal: 'Goal: move customers to Loyal or Potential',
   },
   {
+    id: 'almost_lost',
     start: {row: 3, col: 2},
     end: {row: 4, col: 2},
     secondaryValue: '(10%)',
@@ -82,12 +88,13 @@ export const CELL_GROUPS: CellGroup[] = [
     bgColor: '#7594F0',
     color: '#000000',
     name: 'Almost lost',
-    connectedGroups: ['Active', 'Promising'],
+    connectedGroups: ['active', 'promising'],
     description:
       'Customers without recent purchases, fewer orders, and with lower spend.',
     goal: 'Goal: move customers to Active or Promising',
   },
   {
+    id: 'promising',
     start: {row: 4, col: 3},
     end: {row: 4, col: 3},
     secondaryValue: '(20%)',
@@ -95,11 +102,12 @@ export const CELL_GROUPS: CellGroup[] = [
     bgColor: '#194BE3',
     color: '#FFFFFF',
     name: 'Promising',
-    connectedGroups: ['Active'],
+    connectedGroups: ['active'],
     description: 'Customers with recent purchases, few orders, and low spend.',
     goal: 'Goal: move customers to Active.',
   },
   {
+    id: 'active',
     start: {row: 2, col: 3},
     end: {row: 3, col: 4},
     secondaryValue: '(30%)',
@@ -107,12 +115,13 @@ export const CELL_GROUPS: CellGroup[] = [
     bgColor: '#0D297C',
     color: '#FFFFFF',
     name: 'Active',
-    connectedGroups: ['Loyal', 'Champions'],
+    connectedGroups: ['loyal', 'champions'],
     description:
       'Customers with recent purchases, some orders, and moderate spend.',
     goal: 'Goal: move customers to Champions or Loyal',
   },
   {
+    id: 'new',
     start: {row: 4, col: 4},
     end: {row: 4, col: 4},
     secondaryValue: '(40%)',
@@ -120,12 +129,13 @@ export const CELL_GROUPS: CellGroup[] = [
     bgColor: '#133AAF',
     color: '#FFFFFF',
     name: 'New',
-    connectedGroups: ['Active'],
+    connectedGroups: ['active'],
     description:
       'Customers with very recent purchases, few orders, and low spend.',
     goal: 'Goal: move customers to Active',
   },
   {
+    id: 'champions',
     start: {row: 0, col: 4},
     end: {row: 1, col: 4},
     secondaryValue: '(20%)',
@@ -141,6 +151,7 @@ export const CELL_GROUPS: CellGroup[] = [
 
 export const RANDOM_CELL_GROUPS: CellGroup[] = [
   {
+    id: 'revenue',
     start: {row: 0, col: 0},
     end: {row: 0, col: 1},
     bgColor: '#4c1d95',
@@ -150,9 +161,10 @@ export const RANDOM_CELL_GROUPS: CellGroup[] = [
     secondaryValue: '+15%',
     description: 'Total revenue for the period',
     goal: 'Increase by 20%',
-    connectedGroups: ['Orders'],
+    connectedGroups: ['orders'],
   },
   {
+    id: 'orders',
     start: {row: 1, col: 0},
     end: {row: 1, col: 1},
     bgColor: '#6d28d9',
@@ -162,9 +174,10 @@ export const RANDOM_CELL_GROUPS: CellGroup[] = [
     secondaryValue: '↑ 8%',
     description: 'Total number of orders',
     goal: 'Maintain growth rate',
-    connectedGroups: ['Revenue'],
+    connectedGroups: ['revenue', 'conversion'],
   },
   {
+    id: 'conversion',
     start: {row: 2, col: 0},
     end: {row: 2, col: 1},
     bgColor: '#8b5cf6',
@@ -174,9 +187,10 @@ export const RANDOM_CELL_GROUPS: CellGroup[] = [
     secondaryValue: '↓ 0.5%',
     description: 'Conversion rate from visits to orders',
     goal: 'Increase to 3%',
-    connectedGroups: ['Orders'],
+    connectedGroups: ['orders'],
   },
   {
+    id: 'average-order',
     start: {row: 0, col: 2},
     end: {row: 0, col: 3},
     bgColor: '#701a75',
@@ -186,9 +200,10 @@ export const RANDOM_CELL_GROUPS: CellGroup[] = [
     secondaryValue: '+$12.30',
     description: 'Average order value',
     goal: 'Increase to $100',
-    connectedGroups: ['Return Rate'],
+    connectedGroups: ['return-rate'],
   },
   {
+    id: 'customer-satisfaction',
     start: {row: 1, col: 2},
     end: {row: 2, col: 3},
     bgColor: '#a21caf',
@@ -198,9 +213,10 @@ export const RANDOM_CELL_GROUPS: CellGroup[] = [
     secondaryValue: '+0.2',
     description: 'Average customer satisfaction rating',
     goal: 'Maintain above 4.5',
-    connectedGroups: ['Return Rate'],
+    connectedGroups: ['return-rate'],
   },
   {
+    id: 'return-rate',
     start: {row: 0, col: 4},
     end: {row: 2, col: 4},
     bgColor: '#d946ef',
@@ -213,6 +229,7 @@ export const RANDOM_CELL_GROUPS: CellGroup[] = [
     connectedGroups: [],
   },
   {
+    id: 'new-users',
     start: {row: 3, col: 0},
     end: {row: 3, col: 1},
     bgColor: '#c4b5fd',
@@ -222,9 +239,10 @@ export const RANDOM_CELL_GROUPS: CellGroup[] = [
     secondaryValue: '+25%',
     description: 'New user registrations',
     goal: 'Increase by 30%',
-    connectedGroups: ['Conversion'],
+    connectedGroups: ['conversion'],
   },
   {
+    id: 'session-duration',
     start: {row: 4, col: 0},
     end: {row: 4, col: 1},
     bgColor: '#831843',
@@ -234,9 +252,10 @@ export const RANDOM_CELL_GROUPS: CellGroup[] = [
     secondaryValue: '+2:30',
     description: 'Average time spent on site',
     goal: 'Increase to 15 minutes',
-    connectedGroups: ['Conversion'],
+    connectedGroups: ['conversion'],
   },
   {
+    id: 'cart-abandonment',
     start: {row: 3, col: 2},
     end: {row: 3, col: 3},
     bgColor: '#be185d',
@@ -246,9 +265,10 @@ export const RANDOM_CELL_GROUPS: CellGroup[] = [
     secondaryValue: '↓ 2%',
     description: 'Rate of abandoned shopping carts',
     goal: 'Reduce to 20%',
-    connectedGroups: ['Page Load Time'],
+    connectedGroups: ['page-load-time'],
   },
   {
+    id: 'mobile-users',
     start: {row: 4, col: 2},
     end: {row: 4, col: 3},
     bgColor: '#ec4899',
@@ -258,9 +278,10 @@ export const RANDOM_CELL_GROUPS: CellGroup[] = [
     secondaryValue: '+5%',
     description: 'Percentage of mobile visitors',
     goal: 'Maintain above 65%',
-    connectedGroups: ['Page Load Time'],
+    connectedGroups: ['page-load-time'],
   },
   {
+    id: 'page-load-time',
     start: {row: 3, col: 4},
     end: {row: 4, col: 4},
     bgColor: '#f9a8d4',
@@ -270,6 +291,6 @@ export const RANDOM_CELL_GROUPS: CellGroup[] = [
     secondaryValue: '-0.3s',
     description: 'Average page load time',
     goal: 'Keep under 1.5s',
-    connectedGroups: ['Return Rate'],
+    connectedGroups: ['return-rate'],
   },
 ];

@@ -6,6 +6,7 @@ export type GridAxisOptions = {
   Partial<YAxisOptions>;
 
 export interface CellGroup {
+  id: string;
   start: {row: number; col: number};
   end: {row: number; col: number};
   bgColor: string;
