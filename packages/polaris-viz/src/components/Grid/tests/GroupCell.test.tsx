@@ -2,7 +2,7 @@ import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
 
-import {GroupCell, GroupInfo} from '../components/GroupCell';
+import {GroupCell} from '../components/GroupCell';
 import {Background} from '../components/Background';
 
 describe('<GroupCell />', () => {
@@ -81,4 +81,6 @@ const MOCK_PROPS = {
   getColors: jest.fn(() => ({bgColor: 'red', textColor: 'white'})),
   containerWidth: 600,
   isAnimated: true,
+  description: '',
+  goal: '',
 };
