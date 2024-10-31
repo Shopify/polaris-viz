@@ -54,7 +54,7 @@ export function Tooltip({
                   viewBox="0 0 24 24"
                   strokeWidth="2.5"
                   stroke="currentColor"
-                  style={{height: '13px', width: '20px'}}
+                  className={styles.TooltipIcon}
                 >
                   <path
                     strokeLinecap="round"

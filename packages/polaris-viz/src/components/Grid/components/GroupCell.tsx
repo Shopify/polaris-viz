@@ -55,7 +55,7 @@ export const GroupCell: React.FC<GroupCellProps> = ({
   const groupValue = group.value;
   const groupSecondaryValue = group.secondaryValue;
 
-  const isHovered = hoveredGroups.size === 0 || hoveredGroups.has(group.name);
+  const isHovered = hoveredGroups.size === 0 || hoveredGroups.has(group.id);
   const opacity = isHovered ? 1 : 0.3;
 
   const groupNameOffset = 10;

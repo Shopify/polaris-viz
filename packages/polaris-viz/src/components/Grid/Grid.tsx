@@ -85,11 +85,14 @@ export function Grid(props: GridProps) {
 
   const getActiveGroups = (group: CellGroup | null) => {
     if (!group) return new Set<string>();
-    return new Set([group.name, ...(group.connectedGroups ?? [])]);
+    return new Set([group.id, ...(group.connectedGroups ?? [])]);
   };
 
   const getTooltipInfo = useCallback(
-    (group: CellGroup, event: React.MouseEvent): TooltipInfo | null => {
+    (
+      group: CellGroup,
+      event: React.MouseEvent | React.KeyboardEvent | React.FocusEvent,
+    ): TooltipInfo | null => {
       const rect = event.currentTarget.getBoundingClientRect();
       const containerRect = entry?.target?.getBoundingClientRect();
 
@@ -133,22 +136,24 @@ export function Grid(props: GridProps) {
   );
 
   const handleGroupHover = useCallback(
-    (group: CellGroup | null, event: React.MouseEvent) => {
-      if (isSmallContainer) {
-        return;
-      }
-
-      if (group) {
-        setHoveredGroups(getActiveGroups(group));
-        setHoveredGroup(group);
-        const tooltipInfo = getTooltipInfo(group, event);
-        if (tooltipInfo) {
-          setTooltipInfo(tooltipInfo);
+    (
+      group: CellGroup | null,
+      event: React.MouseEvent | React.KeyboardEvent | React.FocusEvent,
+    ) => {
+      if (!isSmallContainer) {
+        if (group) {
+          const activeGroups = getActiveGroups(group);
+          setHoveredGroups(activeGroups);
+          setHoveredGroup(group);
+          const tooltipInfo = getTooltipInfo(group, event);
+          if (tooltipInfo) {
+            setTooltipInfo(tooltipInfo);
+          }
+        } else {
+          setHoveredGroups(new Set());
+          setHoveredGroup(null);
+          setTooltipInfo(null);
         }
-      } else {
-        setHoveredGroups(new Set());
-        setHoveredGroup(null);
-        setTooltipInfo(null);
       }
     },
     [getTooltipInfo, isSmallContainer],
@@ -251,7 +256,6 @@ export function Grid(props: GridProps) {
           yTicks={yTicks}
           chartPositions={chartPositions}
           yAxisOptions={yAxisOptions}
-          Y_AXIS_LABEL_WIDTH={Y_AXIS_LABEL_WIDTH}
         />
 
         <g id="grid-content" transform={`translate(${Y_AXIS_LABEL_WIDTH}, 0)`}>
@@ -293,7 +297,6 @@ export function Grid(props: GridProps) {
           dimensions={dimensions}
           xScale={xScale}
           xAxisOptions={xAxisOptions}
-          Y_AXIS_LABEL_WIDTH={Y_AXIS_LABEL_WIDTH}
           setXAxisHeight={setXAxisHeight}
         />
 

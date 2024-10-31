@@ -17,7 +17,7 @@ interface ArrowsProps {
 }
 
 interface CellGroup {
-  name: string;
+  id: string;
   start: {row: number; col: number};
   end: {row: number; col: number};
   connectedGroups?: string[];
@@ -33,9 +33,7 @@ export function Arrows({
 }: ArrowsProps) {
   if (!hoveredGroup) return null;
 
-  const sourceGroup = cellGroups.find(
-    (group) => group.name === hoveredGroup.name,
-  );
+  const sourceGroup = cellGroups.find((group) => group.id === hoveredGroup.id);
 
   if (!sourceGroup || !sourceGroup.connectedGroups) return null;
 
@@ -121,9 +119,9 @@ export function Arrows({
 
   return (
     <React.Fragment>
-      {sourceGroup.connectedGroups.map((targetGroupName) => {
+      {sourceGroup.connectedGroups.map((targetGroupId) => {
         const targetGroup = cellGroups.find(
-          (group) => group.name === targetGroupName,
+          (group) => group.id === targetGroupId,
         );
         if (!targetGroup) return null;
 
@@ -185,7 +183,7 @@ export function Arrows({
 
         return (
           <g
-            key={`arrow-${hoveredGroup?.name}-${sourceGroup.name}-${targetGroupName}`}
+            key={`arrow-${hoveredGroup?.id}-${sourceGroup.id}-${targetGroupId}`}
           >
             <path
               className={styles.ArrowShaft}
