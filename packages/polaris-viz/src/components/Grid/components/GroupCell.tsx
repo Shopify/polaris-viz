@@ -101,6 +101,8 @@ export const GroupCell: React.FC<GroupCellProps> = ({
 
   return (
     <g
+      className={styles.GroupCellContainer}
+      style={{opacity}}
       role="button"
       data-testid="group-cell"
       onMouseEnter={(event) => handleGroupHover(group, event)}
@@ -108,37 +110,42 @@ export const GroupCell: React.FC<GroupCellProps> = ({
       onFocus={(event) => handleGroupHover(group, event)}
       onBlur={(event) => handleGroupHover(null, event)}
       onKeyDown={handleKeyDown}
-      className={
-        isAnimated && !prefersReducedMotion ? `${styles.GroupCell}` : undefined
-      }
-      style={{...cellStyle, opacity}}
       aria-label={ariaLabel}
       tabIndex={0}
     >
-      <Background
-        x={groupX}
-        y={groupY}
-        width={groupWidth}
-        height={groupHeight}
-        fill={getColors(group).bgColor}
-        opacity={opacity}
-      />
+      <g
+        className={
+          isAnimated && !prefersReducedMotion
+            ? `${styles.GroupCell}`
+            : undefined
+        }
+        style={{...cellStyle, opacity}}
+      >
+        <Background
+          x={groupX}
+          y={groupY}
+          width={groupWidth}
+          height={groupHeight}
+          fill={getColors(group).bgColor}
+          opacity={opacity}
+        />
 
-      <GroupInfo
-        groupX={groupX}
-        groupY={groupY}
-        group={group}
-        groupWidth={groupWidth}
-        groupHeight={groupHeight}
-        getColors={getColors}
-        mainFontSize={mainFontSize}
-        groupValue={groupValue}
-        showNameAndSecondaryValue={showNameAndSecondaryValue}
-        secondaryFontSize={secondaryFontSize}
-        groupSecondaryValue={groupSecondaryValue}
-        groupNameOffset={groupNameOffset}
-        opacity={opacity}
-      />
+        <GroupInfo
+          groupX={groupX}
+          groupY={groupY}
+          group={group}
+          groupWidth={groupWidth}
+          groupHeight={groupHeight}
+          getColors={getColors}
+          mainFontSize={mainFontSize}
+          groupValue={groupValue}
+          showNameAndSecondaryValue={showNameAndSecondaryValue}
+          secondaryFontSize={secondaryFontSize}
+          groupSecondaryValue={groupSecondaryValue}
+          groupNameOffset={groupNameOffset}
+          opacity={opacity}
+        />
+      </g>
     </g>
   );
 };

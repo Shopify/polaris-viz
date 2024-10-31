@@ -10,6 +10,10 @@
   animation-timing-function: ease-out;
 }
 
+.GroupCellContainer {
+  transition: opacity 200ms ease-in-out;
+}
+
 @keyframes FadeInScale {
   0% {
     opacity: 0;

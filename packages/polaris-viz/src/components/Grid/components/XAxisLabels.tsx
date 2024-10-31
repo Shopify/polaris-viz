@@ -2,7 +2,7 @@ import React from 'react';
 import type {ScaleLinear} from 'd3-scale';
 
 import {XAxis} from '../../XAxis';
-import {X_AXIS_LABEL_OFFSET} from '../utilities/constants';
+import {X_AXIS_HEIGHT, X_AXIS_LABEL_OFFSET} from '../utilities/constants';
 
 import styles from './XAxisLabel.scss';
 
@@ -53,9 +53,9 @@ export function XAxisLabels({
       {xAxisOptions.label && (
         <foreignObject
           x={Y_AXIS_LABEL_WIDTH}
-          y={dimensions.height - 10}
-          width={chartPositions.xAxisBounds.width}
-          height={30}
+          y={dimensions.height ? dimensions.height - 10 : 0}
+          width={Math.max(0, chartPositions.xAxisBounds.width)}
+          height={X_AXIS_HEIGHT}
         >
           <div className={styles.XAxisLabel} title={xAxisOptions.label}>
             {xAxisOptions.label}
