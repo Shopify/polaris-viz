@@ -1,0 +1,36 @@
+/* stylelint-disable at-rule-no-unknown */
+
+@import '../utilities/constants';
+
+.ArrowShaft {
+  stroke-dasharray: 35;
+  stroke-dashoffset: 35;
+  animation: Draw 0.2s ease-in-out forwards;
+  @container (max-width: #{$grid-small-breakpoint}) {
+    display: none;
+  }
+}
+
+.ArrowHead {
+  opacity: 0;
+  animation: FadeIn 0.2s ease-in-out forwards;
+  animation-delay: 0.2s;
+  @container (max-width: #{$grid-small-breakpoint}) {
+    display: none;
+  }
+}
+
+@keyframes Draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes FadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

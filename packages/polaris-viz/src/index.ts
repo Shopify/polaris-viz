@@ -19,6 +19,7 @@ export {
   LineChartRelational,
   LineChartPredictive,
   MissingDataArea,
+  Grid,
 } from './components';
 
 export type {
@@ -35,6 +36,7 @@ export type {
   DonutChartProps,
   ComparisonMetricProps,
   LineChartRelationalProps,
+  GridProps,
 } from './components';
 
 export {

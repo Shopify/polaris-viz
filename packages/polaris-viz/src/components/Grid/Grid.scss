@@ -1,0 +1,65 @@
+/* stylelint-disable at-rule-no-unknown, property-no-unknown */
+@import '../../styles/common';
+@import './utilities/constants';
+
+.Container {
+  container-type: inline-size;
+  font-family: Inter, -apple-system, system-ui, 'San Francisco', 'Segoe UI',
+    Roboto, 'Helvetica Neue', sans-serif;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.FadeIn {
+  animation: FadeInOpacity 0.5s ease-in-out forwards;
+  animation-delay: 2s;
+  animation-name: FadeInOpacity;
+  animation-duration: 1.5s;
+  animation-fill-mode: forwards;
+}
+
+.Label {
+  @container (max-width: #{$grid-small-breakpoint}) {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .GroupCell,
+  .ArrowShaft,
+  .ArrowHead,
+  .FadeIn,
+  .FadeInLabel {
+    animation: none;
+    transition: none;
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .ArrowShaft {
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+  }
+}
+
+.ScreenReaderOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@keyframes FadeInOpacity {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

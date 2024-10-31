@@ -1,0 +1,30 @@
+@import '../../../styles/common';
+@import '../utilities/constants';
+
+.GroupCell {
+  opacity: var(--animation-opacity, 0);
+  transform: scale(0);
+  animation-name: FadeInScale;
+  animation-duration: 300ms;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-out;
+}
+
+.GroupCellContainer {
+  transition: opacity 200ms ease-in-out;
+}
+
+@keyframes FadeInScale {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
