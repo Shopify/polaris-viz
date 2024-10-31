@@ -36,11 +36,12 @@ export function YAxisLabels({
     <React.Fragment>
       {yAxisOptions.label && (
         <foreignObject
-          x={-chartPositions.yAxisBounds.height}
+          x={0}
           y={Y_AXIS_LABEL_WIDTH / 2 - Y_LABEL_OFFSET}
-          width={chartPositions.yAxisBounds.height}
+          width={Math.max(0, chartPositions.yAxisBounds.height)}
           height={Y_AXIS_LABEL_WIDTH}
-          transform="rotate(-90)"
+          transform={`rotate(-90) translate(${-chartPositions.yAxisBounds
+            .height}, 0)`}
         >
           <div className={styles.YAxisLabel}>{yAxisOptions.label}</div>
         </foreignObject>
