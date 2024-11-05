@@ -24,8 +24,8 @@ import {
   X_AXIS_HEIGHT,
   DEFAULT_GROUP_COLOR,
   DEFAULT_TEXT_COLOR,
-  SVG_OFFSET,
   SMALL_CONTAINER_WIDTH,
+  SMALL_CONTAINER_HEIGHT,
 } from './utilities/constants';
 import type {
   CellGroup,
@@ -234,24 +234,16 @@ export function Grid(props: GridProps) {
   useEffect(() => {
     if (entry?.contentRect) {
       // we want to make sure the container is not too small to allow hover interactions
-      setIsSmallContainer(entry.contentRect.width <= SMALL_CONTAINER_WIDTH);
+      setIsSmallContainer(
+        entry.contentRect.width <= SMALL_CONTAINER_WIDTH ||
+          entry.contentRect.height <= SMALL_CONTAINER_HEIGHT,
+      );
     }
   }, [entry]);
 
-  const containerStyle = useMemo(
-    () => ({
-      height: dimensions.height ? `${dimensions.height}px` : '100%',
-    }),
-    [dimensions.height],
-  );
-
   return (
-    <div ref={setRef} className={styles.Container} style={containerStyle}>
-      <svg
-        width="100%"
-        height="100%"
-        viewBox={`0 0 ${dimensions.width} ${dimensions.height + SVG_OFFSET}`}
-      >
+    <div ref={setRef} className={styles.Container}>
+      <svg width="100%" height="100%">
         <YAxisLabels
           yTicks={yTicks}
           chartPositions={chartPositions}
@@ -279,6 +271,7 @@ export function Grid(props: GridProps) {
               handleGroupHover={handleGroupHover}
               getColors={getColors}
               containerWidth={dimensions.width}
+              containerHeight={dimensions.height}
               isAnimated={isAnimated}
             />
           ))}
