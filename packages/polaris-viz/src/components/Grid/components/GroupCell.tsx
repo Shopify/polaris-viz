@@ -2,7 +2,10 @@ import React, {useCallback, useEffect, useState} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 
 import type {CellGroup} from '../types';
-import {HIDE_NAME_AND_SECONDARY_VALUE_WIDTH_THRESHOLD} from '../utilities/constants';
+import {
+  HIDE_NAME_AND_SECONDARY_VALUE_HEIGHT_THRESHOLD,
+  HIDE_NAME_AND_SECONDARY_VALUE_WIDTH_THRESHOLD,
+} from '../utilities/constants';
 
 import styles from './GroupCell.scss';
 import {Background} from './Background';
@@ -21,6 +24,7 @@ interface GroupCellProps {
   ) => void;
   getColors: (group: CellGroup) => {bgColor: string; textColor: string};
   containerWidth: number;
+  containerHeight: number;
   isAnimated: boolean;
   index: number;
 }
@@ -35,6 +39,7 @@ export const GroupCell: React.FC<GroupCellProps> = ({
   handleGroupHover,
   getColors,
   containerWidth,
+  containerHeight,
   isAnimated,
   index,
 }) => {
@@ -60,7 +65,8 @@ export const GroupCell: React.FC<GroupCellProps> = ({
 
   const groupNameOffset = 10;
   const showNameAndSecondaryValue =
-    containerWidth > HIDE_NAME_AND_SECONDARY_VALUE_WIDTH_THRESHOLD;
+    containerWidth > HIDE_NAME_AND_SECONDARY_VALUE_WIDTH_THRESHOLD &&
+    containerHeight > HIDE_NAME_AND_SECONDARY_VALUE_HEIGHT_THRESHOLD;
   const mainFontSize = showNameAndSecondaryValue
     ? 20
     : Math.min(groupWidth, cellHeight) / 4;

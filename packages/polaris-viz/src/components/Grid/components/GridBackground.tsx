@@ -34,7 +34,7 @@ export function GridBackground({
   }
 
   // Horizontal lines
-  for (let i = 1; i <= rows + 1; i++) {
+  for (let i = 1; i <= rows; i++) {
     const y = i * cellHeight;
     lines.push(
       <line
