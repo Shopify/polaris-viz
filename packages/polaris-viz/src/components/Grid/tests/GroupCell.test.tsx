@@ -80,6 +80,7 @@ const MOCK_PROPS = {
   handleGroupHover: () => {},
   getColors: jest.fn(() => ({bgColor: 'red', textColor: 'white'})),
   containerWidth: 600,
+  containerHeight: 600,
   isAnimated: true,
   description: '',
   goal: '',
