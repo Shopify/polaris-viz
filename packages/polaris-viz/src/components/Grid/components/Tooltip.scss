@@ -59,9 +59,9 @@
 .TooltipContainer {
   position: absolute;
   z-index: 1;
-  width: 250px;
   top: 0;
   left: 0;
+  width: 250px;
   outline: none;
   @container (max-width: #{$grid-small-breakpoint}) {
     display: none;
