@@ -68,6 +68,7 @@ export {
   STROKE_DOT_ARRAY_WIDTH,
   EXTERNAL_EVENTS_SET_HIDDEN_ITEMS,
   FONT_FAMILY,
+  TOUCH_FONT_SIZE,
 } from './constants';
 export {
   clamp,

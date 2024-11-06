@@ -1,13 +1,10 @@
 import {useMemo} from 'react';
 import type {DataSeries} from '@shopify/polaris-viz-core';
-import {
-  LINEAR_LABELS_INNER_PADDING,
-  estimateStringWidth,
-  clamp,
-  useChartContext,
-} from '@shopify/polaris-viz-core';
+import {LINEAR_LABELS_INNER_PADDING, clamp} from '@shopify/polaris-viz-core';
 
+import {estimateStringWidthWithOffset} from '../utilities';
 import {HORIZONTAL_LABEL_MIN_WIDTH} from '../constants';
+import {getFontSize} from '../utilities/getFontSize';
 
 import {useLinearXScale} from './useLinearXScale';
 import {useReducedLabelIndexes} from './useReducedLabelIndexes';
@@ -29,7 +26,7 @@ export function useLinearLabelsAndDimensions({
   labels,
   longestSeriesLength,
 }: Props) {
-  const {characterWidths} = useChartContext();
+  const fontSize = getFontSize();
 
   const longestSeriesLastIndex = useMemo(
     () =>
@@ -43,7 +40,7 @@ export function useLinearLabelsAndDimensions({
   const longestLabelWidth = useMemo(() => {
     const longestLabelWidth =
       labels.reduce((prev, cur) => {
-        const width = estimateStringWidth(cur, characterWidths);
+        const width = estimateStringWidthWithOffset(cur, fontSize);
 
         if (width > prev) {
           return width;
@@ -57,7 +54,7 @@ export function useLinearLabelsAndDimensions({
       min: 0,
       max: MAX_LINEAR_LABEL_WIDTH,
     });
-  }, [labels, characterWidths]);
+  }, [labels, fontSize]);
 
   const numberOfLabelsThatFit = Math.floor(
     initialDrawableWidth / longestLabelWidth,

@@ -75,6 +75,7 @@ export function getHorizontalLabels({
         fullText: truncatedLabels[index].text,
         x: targetWidth / 2,
         y: lineNumber * LINE_HEIGHT,
+        fontSize: label.fontSize,
         width: targetWidth,
         height: LINE_HEIGHT,
         textAnchor: 'middle',

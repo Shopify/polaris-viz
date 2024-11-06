@@ -112,6 +112,7 @@ export interface TooltipOptions extends TooltipFormatters {
 }
 
 export interface PreparedLabels {
+  fontSize: number;
   text: string;
   words: {word: string; wordWidth: number}[];
   truncatedWords: string[];
@@ -122,6 +123,7 @@ export interface PreparedLabels {
 export interface FormattedLine {
   height: number;
   truncatedText: string;
+  fontSize: number;
   fullText: string;
   textAnchor: string;
   width: number;

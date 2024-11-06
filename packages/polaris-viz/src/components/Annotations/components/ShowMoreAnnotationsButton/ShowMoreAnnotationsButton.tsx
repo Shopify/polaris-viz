@@ -1,5 +1,6 @@
 import {
   estimateStringWidth,
+  FONT_SIZE,
   LINE_HEIGHT,
   useChartContext,
   useTheme,
@@ -84,6 +85,7 @@ export function ShowMoreAnnotationsButton({
 
       <SingleTextLine
         color={selectedTheme.annotations.textColor}
+        fontSize={FONT_SIZE}
         text={label}
         targetWidth={pillWidth - PILL_PADDING * 2}
         y={PILL_HEIGHT - LINE_HEIGHT}

@@ -5,11 +5,11 @@ import {
   COLOR_VISION_SINGLE_ITEM,
   BORDER_RADIUS,
   useChartContext,
-  estimateStringWidth,
 } from '@shopify/polaris-viz-core';
 
+import {getFontSize} from '../../../utilities/getFontSize';
 import {useWatchColorVisionEvents, useTheme} from '../../../hooks';
-import {getBarId} from '../../../utilities';
+import {estimateStringWidthWithOffset, getBarId} from '../../../utilities';
 import {
   HORIZONTAL_GROUP_LABEL_HEIGHT,
   HORIZONTAL_BAR_LABEL_OFFSET,
@@ -76,9 +76,11 @@ export function HorizontalStackedBars({
   labelFormatter,
 }: HorizontalStackedBarsProps) {
   const selectedTheme = useTheme();
-  const {theme, characterWidths} = useChartContext();
+  const {theme} = useChartContext();
   const [activeBarIndex, setActiveBarIndex] = useState(-1);
   const hideGroupLabel = selectedTheme.groupLabel.hide;
+
+  const fontSize = getFontSize();
 
   useWatchColorVisionEvents({
     type: COLOR_VISION_SINGLE_ITEM,
@@ -118,7 +120,7 @@ export function HorizontalStackedBars({
   const isNegative = groupSum && groupSum < 0;
   const label = labelFormatter(groupSum);
 
-  const labelWidth = estimateStringWidth(`${label}`, characterWidths);
+  const labelWidth = estimateStringWidthWithOffset(`${label}`, fontSize);
 
   const minGroupStartPoint = stackedValues[groupIndex].reduce((min, item) => {
     const start = item[0];
@@ -191,6 +193,7 @@ export function HorizontalStackedBars({
           <Label
             barHeight={barHeight}
             color={selectedTheme.xAxis.labelColor}
+            fontSize={fontSize}
             label={label}
             labelWidth={labelWidth}
             y={0}

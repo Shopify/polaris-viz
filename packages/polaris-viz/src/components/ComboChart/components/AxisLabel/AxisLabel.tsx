@@ -1,5 +1,6 @@
 import {LINE_HEIGHT, useTheme} from '@shopify/polaris-viz-core';
 
+import {getFontSize} from '../../../../utilities/getFontSize';
 import {useEstimateStringWidth} from '../../../../hooks/useEstimateStringWidth';
 import {SingleTextLine} from '../../../Labels';
 
@@ -12,7 +13,9 @@ export interface AxisLabelProps {
 }
 
 export function AxisLabel({height, name, axis, x, y}: AxisLabelProps) {
-  const stringWidth = useEstimateStringWidth(name);
+  const fontSize = getFontSize();
+
+  const stringWidth = useEstimateStringWidth(name, fontSize);
   const selectedTheme = useTheme();
 
   const rotate = axis === 'primary' ? -90 : 90;
@@ -36,6 +39,7 @@ export function AxisLabel({height, name, axis, x, y}: AxisLabelProps) {
       />
       <SingleTextLine
         color={selectedTheme.yAxis.labelColor}
+        fontSize={fontSize}
         targetWidth={Math.max(stringWidth, height)}
         text={name}
         x={0}

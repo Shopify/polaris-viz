@@ -5,12 +5,11 @@ import {
   useChartContext,
 } from '@shopify/polaris-viz-core';
 
-import {FONT_SIZE} from '../../constants';
-
 import {endLineTruncate} from './utilities/endLineTruncate';
 
 interface SingleTextLineProps {
   color: string;
+  fontSize: number;
   targetWidth: number;
   text: string;
   x: number;
@@ -24,6 +23,7 @@ export function SingleTextLine({
   ariaHidden = false,
   color,
   dominantBaseline = 'hanging',
+  fontSize,
   targetWidth,
   text,
   textAnchor = 'center',
@@ -48,7 +48,7 @@ export function SingleTextLine({
         height={LINE_HEIGHT}
         width={targetWidth}
         fill={color}
-        fontSize={FONT_SIZE}
+        fontSize={fontSize}
         fontFamily={FONT_FAMILY}
         y={y}
         x={x}
