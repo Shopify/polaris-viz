@@ -6,6 +6,7 @@ import {
 import type {ReactNode} from 'react';
 import {useEffect, useRef, useState} from 'react';
 
+import {getFontSize} from '../../../../utilities/getFontSize';
 import {
   LEGEND_ITEM_LEFT_PADDING,
   LEGEND_ITEM_RIGHT_PADDING,
@@ -61,6 +62,8 @@ export function LegendItem({
   const selectedTheme = useTheme(theme);
   const ref = useRef<HTMLButtonElement | null>(null);
   const [width, setWidth] = useState(0);
+
+  const fontSize = getFontSize();
 
   const renderLegendValues = showLegendValues && value != null;
 
@@ -122,7 +125,12 @@ export function LegendItem({
       ) : (
         renderSeriesIcon()
       )}
-      <span className={style.TextContainer}>
+      <span
+        className={style.TextContainer}
+        style={{
+          fontSize: `${fontSize}px`,
+        }}
+      >
         <span
           className={style.Text}
           style={{

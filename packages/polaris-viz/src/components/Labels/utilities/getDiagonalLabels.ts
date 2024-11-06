@@ -48,6 +48,7 @@ export function getDiagonalLabels({
     lines[i].push({
       truncatedText: truncatedLabels[i].truncatedName,
       fullText: truncatedLabels[i].text,
+      fontSize: labels[i].fontSize,
       y: centerPoint,
       x: centerPoint,
       dominantBaseline: 'hanging',

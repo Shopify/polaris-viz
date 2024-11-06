@@ -1,6 +1,6 @@
 import type {CharacterWidths} from '@shopify/polaris-viz-core';
-import {estimateStringWidth} from '@shopify/polaris-viz-core';
 
+import {estimateStringWidthWithOffset} from '../../../utilities';
 import type {PreparedLabels} from '../../../types';
 
 import {endLineTruncate} from './endLineTruncate';
@@ -23,7 +23,7 @@ export function truncateLabels({
 }: Props) {
   const truncatedLabels = [...labels];
 
-  labels.forEach((_, index) => {
+  labels.forEach(({fontSize}, index) => {
     truncatedLabels[index].truncatedWords = [];
     truncatedLabels[index].words = [];
 
@@ -35,7 +35,7 @@ export function truncateLabels({
       truncatedLabels[index].truncatedWords.push(truncatedLabels[index].text);
     } else {
       words.forEach((word) => {
-        const wordWidth = estimateStringWidth(word, characterWidths);
+        const wordWidth = estimateStringWidthWithOffset(word, fontSize);
 
         truncatedLabels[index].words.push({
           word,
@@ -66,9 +66,9 @@ export function truncateLabels({
       characterWidths,
     });
 
-    truncatedLabels[index].truncatedWidth = estimateStringWidth(
+    truncatedLabels[index].truncatedWidth = estimateStringWidthWithOffset(
       truncatedLabels[index].truncatedName,
-      characterWidths,
+      truncatedLabels[index].fontSize,
     );
 
     truncatedLabels[index].truncatedWords =

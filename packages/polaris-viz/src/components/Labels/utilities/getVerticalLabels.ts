@@ -41,6 +41,7 @@ export function getVerticalLabels({
     lines[i] = [];
     lines[i].push({
       truncatedText: truncatedLabels[i].truncatedName,
+      fontSize: labels[i].fontSize,
       fullText: truncatedLabels[i].text,
       y: LINE_HEIGHT / QUARTER,
       x: 0,

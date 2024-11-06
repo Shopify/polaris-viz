@@ -1,13 +1,11 @@
-import {
-  clamp,
-  estimateStringWidth,
-  useChartContext,
-} from '@shopify/polaris-viz-core';
+import {clamp} from '@shopify/polaris-viz-core';
 
+import {estimateStringWidthWithOffset} from '../../utilities';
 import {SingleTextLine} from '../Labels';
 import {useTheme} from '../../hooks';
 import {LINE_HEIGHT} from '../../constants';
 import type {YAxisTick} from '../../types';
+import {getFontSize} from '../../utilities/getFontSize';
 
 interface Props {
   ticks: YAxisTick[];
@@ -29,14 +27,14 @@ export function YAxis({
   y,
 }: Props) {
   const selectedTheme = useTheme();
-  const {characterWidths} = useChartContext();
+  const fontSize = getFontSize();
 
   return (
     <g transform={`translate(${x},${y})`} aria-hidden="true">
       {ticks.map(({value, formattedValue, yOffset}) => {
-        const stringWidth = estimateStringWidth(
+        const stringWidth = estimateStringWidthWithOffset(
           formattedValue,
-          characterWidths,
+          fontSize,
         );
 
         const clampedWidth = clamp({
@@ -61,6 +59,7 @@ export function YAxis({
               y={0}
               ariaHidden={ariaHidden}
               color={selectedTheme.yAxis.labelColor}
+              fontSize={fontSize}
               targetWidth={clampedWidth}
               text={formattedValue}
               textAnchor="left"

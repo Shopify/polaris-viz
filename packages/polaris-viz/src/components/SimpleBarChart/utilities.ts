@@ -1,6 +1,9 @@
 import {HORIZONTAL_BAR_LABEL_OFFSET} from '@shopify/polaris-viz-core';
 
-import {estimateTrendIndicatorWidth} from '../TrendIndicator';
+import {
+  estimateTrendIndicatorWidth,
+  TREND_INDICATOR_FONT_WEIGHT,
+} from '../TrendIndicator';
 
 import type {SimpleBarChartDataSeries} from './types';
 
@@ -8,7 +11,10 @@ import type {SimpleBarChartDataSeries} from './types';
  * Returns the widths of the trend indicators por positive or negative values,
  * or 0 if the value doesn't have a trend indicator.
  */
-export function getLongestTrendIndicator(data: SimpleBarChartDataSeries[]) {
+export function getLongestTrendIndicator(
+  data: SimpleBarChartDataSeries[],
+  fontSize: number,
+) {
   const longestTrendIndicator = data.reduce(
     (longestTrendIndicator, series) => {
       const {data: seriesData, metadata} = series;
@@ -18,12 +24,14 @@ export function getLongestTrendIndicator(data: SimpleBarChartDataSeries[]) {
       for (const [index, trend] of trendEntries) {
         const dataPoint = seriesData[index];
 
-        if (trend == null || dataPoint?.value == null) {
+        if (trend == null || trend.value == null || dataPoint?.value == null) {
           return longestTrendIndicator;
         }
 
         const trendStringWidth = estimateTrendIndicatorWidth(
           trend.value,
+          fontSize,
+          TREND_INDICATOR_FONT_WEIGHT,
         ).totalWidth;
 
         // Positive value

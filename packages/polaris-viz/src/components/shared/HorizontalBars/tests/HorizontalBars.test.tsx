@@ -200,7 +200,7 @@ describe('<HorizontalBars />', () => {
 
       const labels = chart.findAll(LabelWrapper);
 
-      expect(labels[0].props.x).toStrictEqual(-225);
+      expect(labels[0].props.x).toStrictEqual(-217);
     });
   });
 
@@ -253,7 +253,7 @@ describe('<HorizontalBars />', () => {
       const wrapper = chart.find(LabelWrapper)?.findAll('g');
 
       expect(wrapper && wrapper[1]?.prop('transform')).toStrictEqual(
-        'translate(110, 2)',
+        'translate(102, 2)',
       );
     });
   });

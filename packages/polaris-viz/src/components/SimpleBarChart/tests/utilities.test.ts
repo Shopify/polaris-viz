@@ -13,9 +13,6 @@ const negativeValues = [
   {value: -3, key: 'Label 03'},
 ];
 
-const highestPositive = 3;
-const lowestNegative = -3;
-
 const trends = {
   '0': {
     value: '77%',
@@ -46,7 +43,7 @@ describe('getLongestTrendIndicator()', () => {
   it('returns a value for positive when positive values have a trend indicator', () => {
     const {positive, negative} = getLongestTrendIndicator([positiveSeries]);
 
-    expect(positive).toStrictEqual(51);
+    expect(positive).toStrictEqual(53);
     expect(negative).toBe(0);
   });
 
@@ -54,7 +51,7 @@ describe('getLongestTrendIndicator()', () => {
     const {positive, negative} = getLongestTrendIndicator([negativeSeries]);
 
     expect(positive).toBe(0);
-    expect(negative).toStrictEqual(51);
+    expect(negative).toStrictEqual(53);
   });
 
   it('returns values for both positive and negative when positive and negative values have trend indicators', () => {
@@ -63,8 +60,8 @@ describe('getLongestTrendIndicator()', () => {
       negativeSeries,
     ]);
 
-    expect(positive).toStrictEqual(51);
-    expect(negative).toStrictEqual(51);
+    expect(positive).toStrictEqual(53);
+    expect(negative).toStrictEqual(53);
   });
 
   it('returns 0 for both values if there are no trend indicators', () => {

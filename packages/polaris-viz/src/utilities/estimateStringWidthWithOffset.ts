@@ -6,7 +6,7 @@ import characterWidthOffsets from '../data/character-width-offsets.json';
 export function estimateStringWidthWithOffset(
   string: string,
   fontSize: number,
-  fontWeight: number,
+  fontWeight = 400,
 ) {
   const width = estimateStringWidth(string, characterWidths);
 

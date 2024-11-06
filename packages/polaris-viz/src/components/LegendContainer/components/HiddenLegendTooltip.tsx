@@ -15,6 +15,7 @@ import {
 } from '@shopify/polaris-viz-core';
 import type {BoundingRect, LabelFormatter} from '@shopify/polaris-viz-core';
 
+import {getFontSize} from '../../../utilities/getFontSize';
 import type {LegendData} from '../../../types';
 import {TOOLTIP_BG_OPACITY} from '../../../constants';
 import {useBrowserCheck} from '../../../hooks/useBrowserCheck';
@@ -141,6 +142,7 @@ export function HiddenLegendTooltip({
         onBlur={handleMouseLeave}
         style={{
           color: selectedTheme.legend.labelColor,
+          fontSize: getFontSize(),
         }}
       >
         {label}

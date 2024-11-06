@@ -1,6 +1,6 @@
 import type {Dispatch, SetStateAction} from 'react';
 import {Fragment} from 'react';
-import {LINE_HEIGHT, useTheme} from '@shopify/polaris-viz-core';
+import {FONT_SIZE, LINE_HEIGHT, useTheme} from '@shopify/polaris-viz-core';
 
 import {useBrowserCheck} from '../../../../hooks/useBrowserCheck';
 import {SingleTextLine} from '../../../Labels';
@@ -65,6 +65,7 @@ export function AnnotationLabel({
       <SingleTextLine
         ariaHidden
         color={selectedTheme.annotations.textColor}
+        fontSize={FONT_SIZE}
         text={label}
         targetWidth={width - PILL_PADDING * 2 + PX_OFFSET}
         y={PILL_HEIGHT - LINE_HEIGHT - PX_OFFSET}

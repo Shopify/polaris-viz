@@ -2,7 +2,6 @@ import {Fragment} from 'react';
 import {FONT_FAMILY} from '@shopify/polaris-viz-core';
 
 import {useTheme} from '../../hooks';
-import {FONT_SIZE} from '../../constants';
 import type {FormattedLine} from '../../types';
 
 interface TextLineProps {
@@ -20,6 +19,7 @@ export function TextLine({index, line}: TextLineProps) {
           {
             dominantBaseline,
             height,
+            fontSize,
             fullText,
             truncatedText,
             textAnchor,
@@ -42,7 +42,7 @@ export function TextLine({index, line}: TextLineProps) {
                 x={x}
                 y={y}
                 fill={selectedTheme.xAxis.labelColor}
-                fontSize={FONT_SIZE}
+                fontSize={fontSize}
                 fontFamily={FONT_FAMILY}
                 transform={transform}
               >

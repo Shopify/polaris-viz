@@ -3,15 +3,18 @@ import type {ScaleLinear} from 'd3-scale';
 import type {DataSeries, LabelFormatter} from '@shopify/polaris-viz-core';
 import {
   getColorVisionEventAttrs,
-  estimateStringWidth,
   COLOR_VISION_SINGLE_ITEM,
   useChartContext,
   clamp,
 } from '@shopify/polaris-viz-core';
 
+import {getFontSize} from '../../../utilities/getFontSize';
 import {getTrendIndicatorData} from '../../../utilities/getTrendIndicatorData';
 import {TREND_INDICATOR_HEIGHT, TrendIndicator} from '../../TrendIndicator';
-import {getHoverZoneOffset} from '../../../utilities';
+import {
+  estimateStringWidthWithOffset,
+  getHoverZoneOffset,
+} from '../../../utilities';
 import {
   HORIZONTAL_BAR_LABEL_OFFSET,
   HORIZONTAL_GROUP_LABEL_HEIGHT,
@@ -59,7 +62,9 @@ export function HorizontalBars({
   areAllNegative,
 }: HorizontalBarsProps) {
   const selectedTheme = useTheme();
-  const {characterWidths, theme} = useChartContext();
+  const {theme} = useChartContext();
+
+  const fontSize = getFontSize();
 
   const [activeBarIndex, setActiveBarIndex] = useState(-1);
 
@@ -102,7 +107,7 @@ export function HorizontalBars({
             data[seriesIndex]?.metadata?.trends[groupIndex],
           );
 
-        const labelWidth = estimateStringWidth(`${label}`, characterWidths);
+        const labelWidth = estimateStringWidthWithOffset(`${label}`, fontSize);
 
         function getBarWidthAndLabelX() {
           const width = Math.abs(xScale(value ?? 0) - xScale(0));
@@ -168,6 +173,7 @@ export function HorizontalBars({
                 <Label
                   barHeight={barHeight}
                   color={selectedTheme.xAxis.labelColor}
+                  fontSize={fontSize}
                   label={label}
                   labelWidth={labelWidth}
                   y={y}
