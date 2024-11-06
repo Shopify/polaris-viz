@@ -1,9 +1,10 @@
 import {forwardRef} from 'react';
 import {createPortal} from 'react-dom';
+
 import type {CellGroup} from '../types';
+import {useRootContainer} from '../../../hooks/useRootContainer';
 
 import styles from './Tooltip.scss';
-import {useRootContainer} from '../../../hooks/useRootContainer';
 
 const TOOLTIP_ID = 'polaris_viz_tooltip_root';
 

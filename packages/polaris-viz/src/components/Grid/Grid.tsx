@@ -52,8 +52,6 @@ export interface GridProps {
   theme?: string;
 }
 
-const OFFSCREEN_POSITION = -10000;
-
 export function Grid(props: GridProps) {
   const [xAxisHeight, setXAxisHeight] = useState(X_AXIS_HEIGHT);
   const [hoveredGroups, setHoveredGroups] = useState<Set<string>>(new Set());
@@ -111,7 +109,7 @@ export function Grid(props: GridProps) {
       const {width, height} = tooltipRef.current.getBoundingClientRect();
       setTooltipDimensions({width, height});
     }
-  }, [hoveredGroup, groupSelected, tooltipRef.current]);
+  }, [hoveredGroup, groupSelected]);
 
   const getTooltipInfo = useCallback(
     (group: CellGroup): TooltipInfo | null => {
@@ -171,7 +169,7 @@ export function Grid(props: GridProps) {
         }
       }
     },
-    [getTooltipInfo, isSmallContainer, tooltipDimensions],
+    [getTooltipInfo, isSmallContainer],
   );
 
   const handleSelectGroup = useCallback(
