@@ -7,28 +7,9 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
-### Fixed
-
-- Tooltip positioning when the grid is inside a container with overflow: hidden.
-- Tooltip positioning when the grid has multiple instances.
-
-### Removed
-
-- Reverted `TOUCH_FONT_SIZE` constant to 11px.
-
-## [15.3.1] - 2024-11-18
-
-- No updates. Transitive dependency bump.
-
-## [15.3.0] - 2024-11-18
-
 ### Added
 
 - Increase font size of labels and legends when viewing charts on a touch device.
-
-## [15.2.2] - 2024-11-11
-
-- No updates. Transitive dependency bump.
 
 ## [15.2.1] - 2024-11-05
 
