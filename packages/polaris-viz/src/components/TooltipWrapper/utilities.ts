@@ -16,6 +16,7 @@ export interface AlteredPositionProps {
   currentX: number;
   currentY: number;
   isPerformanceImpacted: boolean;
+  isTouchDevice: boolean;
   margin: Margin;
   position: TooltipPositionOffset;
   tooltipDimensions: Dimensions;

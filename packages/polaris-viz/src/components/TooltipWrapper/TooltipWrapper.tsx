@@ -16,6 +16,8 @@ import type {AlteredPosition} from './utilities';
 
 const TOOLTIP_ID = 'polaris_viz_tooltip_root';
 
+const TOUCH_START_DELAY = 300;
+
 interface BaseProps {
   chartBounds: BoundingRect;
   getMarkup: (index: number) => ReactNode;
@@ -53,6 +55,9 @@ function TooltipWrapperRaw(props: BaseProps) {
   });
 
   const activeIndexRef = useRef<number | null>(null);
+  const touchStartTimer = useRef<number>(0);
+  const isLongTouch = useRef(false);
+
   const focusElements = useMemo<NodeListOf<SVGPathElement> | undefined>(() => {
     return parentRef?.querySelectorAll(
       `[data-type="${focusElementDataType}"][aria-hidden="false"]`,
@@ -63,7 +68,7 @@ function TooltipWrapperRaw(props: BaseProps) {
     activeIndexRef.current = position.activeIndex;
   }, [position.activeIndex]);
 
-  const onMouseMove = useCallback(
+  const showAndPositionTooltip = useCallback(
     (event: MouseEvent | TouchEvent) => {
       const newPosition = getPosition({event, eventType: 'mouse'});
 
@@ -100,7 +105,39 @@ function TooltipWrapperRaw(props: BaseProps) {
     ],
   );
 
+  const onTouchStart = useCallback(
+    (event: TouchEvent) => {
+      touchStartTimer.current = window.setTimeout(() => {
+        event.preventDefault();
+
+        isLongTouch.current = true;
+
+        showAndPositionTooltip(event);
+      }, TOUCH_START_DELAY);
+    },
+    [showAndPositionTooltip],
+  );
+
+  const onMouseMove = useCallback(
+    (event: MouseEvent | TouchEvent) => {
+      window.clearTimeout(touchStartTimer.current);
+
+      if (event instanceof TouchEvent) {
+        if (isLongTouch.current === true) {
+          event?.preventDefault();
+        } else {
+          return;
+        }
+      }
+
+      showAndPositionTooltip(event);
+    },
+    [showAndPositionTooltip],
+  );
+
   const onMouseLeave = useCallback(() => {
+    isLongTouch.current = false;
+    window.clearTimeout(touchStartTimer.current);
     onIndexChange?.(null);
     setPosition((prevState) => {
       return {...prevState, activeIndex: -1};
@@ -154,6 +191,7 @@ function TooltipWrapperRaw(props: BaseProps) {
 
     parentRef.addEventListener('mousemove', onMouseMove);
     parentRef.addEventListener('mouseleave', onMouseLeave);
+    parentRef.addEventListener('touchstart', onTouchStart);
     parentRef.addEventListener('touchmove', onMouseMove);
     parentRef.addEventListener('touchend', onMouseLeave);
 
@@ -162,12 +200,20 @@ function TooltipWrapperRaw(props: BaseProps) {
     return () => {
       parentRef.removeEventListener('mousemove', onMouseMove);
       parentRef.removeEventListener('mouseleave', onMouseLeave);
+      parentRef.removeEventListener('touchstart', onTouchStart);
       parentRef.removeEventListener('touchmove', onMouseMove);
       parentRef.removeEventListener('touchend', onMouseLeave);
 
       setFocusListeners(false);
     };
-  }, [parentRef, onMouseMove, onMouseLeave, onFocus, setFocusListeners]);
+  }, [
+    parentRef,
+    onMouseMove,
+    onMouseLeave,
+    onFocus,
+    setFocusListeners,
+    onTouchStart,
+  ]);
 
   useEffect(() => {
     document.addEventListener('focusin', onFocusIn);

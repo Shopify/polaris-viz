@@ -47,9 +47,9 @@ const Template: Story<LineChartProps> = (args: LineChartProps) => {
       <Card {...args} />
       <div style={{height: 700, width: 10}} />
       <div style={{display: 'flex', justifyContent: 'space-between'}}>
-        <Card {...args} data={HOURLY_DATA} />
         <Card {...args} />
-        <Card {...args} />
+        {/* <Card {...args} />
+        <Card {...args} /> */}
       </div>
     </div>
   );

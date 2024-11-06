@@ -3,6 +3,7 @@ import {useEffect, useRef, useState, useMemo} from 'react';
 import type {BoundingRect, Dimensions} from '@shopify/polaris-viz-core';
 import {useChartContext} from '@shopify/polaris-viz-core';
 
+import {isTouchDevice} from '../../../utilities/isTouchDevice';
 import type {Margin} from '../../../types';
 import type {TooltipPositionOffset} from '../types';
 import {getAlteredVerticalBarPosition} from '../utilities';
@@ -49,6 +50,7 @@ export function TooltipAnimatedContainer({
     if (tooltipDimensions == null) {
       return {x: 0, y: 0, opacity: 0};
     }
+    const touchDevice = isTouchDevice();
 
     const {x, y} = getAlteredPosition({
       currentX,
@@ -59,6 +61,7 @@ export function TooltipAnimatedContainer({
       margin,
       bandwidth,
       isPerformanceImpacted,
+      isTouchDevice: touchDevice,
       chartDimensions,
       scrollContainer,
     });
@@ -70,7 +73,7 @@ export function TooltipAnimatedContainer({
       x,
       y,
       opacity: 1,
-      immediate: isPerformanceImpacted || shouldRenderImmediate,
+      immediate: isPerformanceImpacted || shouldRenderImmediate || touchDevice,
     };
   }, [
     bandwidth,

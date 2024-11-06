@@ -14,6 +14,7 @@ export interface AlteredPositionProps {
   currentX: number;
   currentY: number;
   isPerformanceImpacted: boolean;
+  isTouchDevice: boolean;
   margin: Margin;
   position: TooltipPositionOffset;
   tooltipDimensions: Dimensions;
@@ -41,8 +42,12 @@ export function getAlteredLineChartPosition(
   // Y POSITIONING
   //
 
-  if (props.isPerformanceImpacted) {
+  if (props.isPerformanceImpacted || props.isTouchDevice) {
     y = chartBounds.y - (scrollContainer?.scrollTop ?? 0) ?? 0;
+
+    if (props.isTouchDevice) {
+      y -= props.tooltipDimensions.height;
+    }
   }
 
   //

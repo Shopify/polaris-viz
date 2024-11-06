@@ -1,4 +1,5 @@
 import type React from 'react';
+import type {Position} from '@shopify/polaris-viz-core';
 
 import {isMouseEvent} from './isMouseEvent';
 import {isTouchEvent} from './isTouchEvent';
@@ -39,7 +40,7 @@ export function eventPoint(
 }
 
 export function eventPointNative(event: MouseEvent | TouchEvent) {
-  const svgNode = event.currentTarget as SVGSVGElement;
+  const svgNode = getSVGNodeFromTarget(event);
 
   if (svgNode == null) {
     return;
@@ -69,4 +70,18 @@ export function eventPointNative(event: MouseEvent | TouchEvent) {
     svgX: transformedSVGPoint.x,
     svgY: transformedSVGPoint.y,
   };
+
+  function getSVGNodeFromTarget(event: MouseEvent | TouchEvent) {
+    if (event.currentTarget == null) {
+      return (event.target as SVGElement)?.closest('svg');
+    }
+
+    return event.currentTarget as SVGSVGElement;
+  }
+}
+
+export function getXYFromEventType(event: MouseEvent | TouchEvent): Position {
+  return event instanceof TouchEvent
+    ? {x: event.touches[0].pageX, y: event.touches[0].pageY}
+    : {x: event.pageX, y: event.pageY};
 }

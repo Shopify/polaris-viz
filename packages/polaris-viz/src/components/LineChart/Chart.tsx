@@ -21,6 +21,7 @@ import type {
   LabelFormatter,
 } from '@shopify/polaris-viz-core';
 
+import {getXYFromEventType} from '../../utilities/eventPoint';
 import {useExternalHideEvents} from '../../hooks/ExternalEvents';
 import {useIndexForLabels} from '../../hooks/useIndexForLabels';
 import {
@@ -227,7 +228,11 @@ export function Chart({
     eventType,
   }: TooltipPositionParams): TooltipPosition {
     if (eventType === 'mouse') {
-      const point = eventPointNative(event!);
+      if (event == null) {
+        return TOOLTIP_POSITION_DEFAULT_RETURN;
+      }
+
+      const point = eventPointNative(event);
 
       if (point == null || xScale == null || data[longestSeriesIndex] == null) {
         return TOOLTIP_POSITION_DEFAULT_RETURN;
@@ -243,9 +248,11 @@ export function Chart({
         max: data[longestSeriesIndex].data.length - 1,
       });
 
+      const {x, y} = getXYFromEventType(event);
+
       return {
-        x: (event as MouseEvent).pageX,
-        y: (event as MouseEvent).pageY,
+        x,
+        y,
         activeIndex,
       };
     } else {
