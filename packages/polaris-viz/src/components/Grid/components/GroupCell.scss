@@ -12,6 +12,7 @@
 
 .GroupCellContainer {
   transition: opacity 200ms ease-in-out;
+  outline: none;
 }
 
 @keyframes FadeInScale {

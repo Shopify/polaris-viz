@@ -1,4 +1,15 @@
-import React from 'react';
+import React, {useCallback} from 'react';
+import {useChartContext} from '@shopify/polaris-viz-core';
+
+import {truncateText} from '../utilities/truncate-text';
+import {
+  LABEL_FONT_SIZE,
+  PRIMARY_VALUE_WIDTH_RATIO,
+  PRIMARY_VALUE_WIDTH_RATIO_SOLO,
+  SECONDARY_VALUE_WIDTH_RATIO,
+  GROUP_NAME_WIDTH_MULTIPLIER,
+  TEXT_Y_OFFSET_WITH_SECONDARY,
+} from '../utilities/constants';
 
 interface GroupInfoProps {
   groupX: number;
@@ -33,22 +44,50 @@ export const GroupInfo: React.FC<GroupInfoProps> = ({
   groupSecondaryValue,
   groupNameOffset,
 }) => {
+  const {characterWidths} = useChartContext();
+
+  const getTruncatedText = useCallback(
+    (text: string, availableWidth: number) => {
+      return truncateText(text, availableWidth, characterWidths);
+    },
+    [characterWidths],
+  );
+
+  const divider = showNameAndSecondaryValue
+    ? PRIMARY_VALUE_WIDTH_RATIO
+    : PRIMARY_VALUE_WIDTH_RATIO_SOLO;
+
+  const truncatedValue = getTruncatedText(groupValue, groupWidth / divider);
+  const truncatedSecondaryValue = showNameAndSecondaryValue
+    ? getTruncatedText(
+        groupSecondaryValue,
+        groupWidth / SECONDARY_VALUE_WIDTH_RATIO,
+      )
+    : '';
+  const truncatedGroupName = showNameAndSecondaryValue
+    ? getTruncatedText(group.name, groupWidth * GROUP_NAME_WIDTH_MULTIPLIER)
+    : '';
+
+  const textYOffset = showNameAndSecondaryValue
+    ? TEXT_Y_OFFSET_WITH_SECONDARY
+    : 0;
+
   return (
     <React.Fragment>
       <text
         x={groupX + groupWidth / 2}
-        y={groupY + groupHeight / 2}
+        y={groupY + groupHeight / 2 + textYOffset}
         textAnchor="middle"
         dominantBaseline="middle"
         fill={getColors(group).textColor}
         opacity={opacity}
       >
         <tspan fontWeight={600} fontSize={`${mainFontSize}px`}>
-          {groupValue}
+          {truncatedValue}
         </tspan>
         {showNameAndSecondaryValue && (
           <tspan dx="0.5em" fontSize={`${secondaryFontSize}px`}>
-            {groupSecondaryValue}
+            {truncatedSecondaryValue}
           </tspan>
         )}
       </text>
@@ -59,11 +98,11 @@ export const GroupInfo: React.FC<GroupInfoProps> = ({
           y={groupY + groupNameOffset}
           textAnchor="start"
           dominantBaseline="hanging"
-          fontSize="11"
+          fontSize={LABEL_FONT_SIZE}
           fill={getColors(group).textColor}
           opacity={opacity}
         >
-          {group.name}
+          {truncatedGroupName}
         </text>
       )}
     </React.Fragment>
