@@ -2,7 +2,6 @@ import {mount} from '@shopify/react-testing';
 import {act} from 'react-dom/test-utils';
 
 import {Grid} from '../Grid';
-import {ChartContainer} from '../../ChartContainer';
 import {XAxis} from '../../XAxis';
 import {YAxis} from '../../YAxis';
 import {GroupCell} from '../components/GroupCell';
