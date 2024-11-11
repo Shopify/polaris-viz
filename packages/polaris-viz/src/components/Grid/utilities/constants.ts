@@ -4,7 +4,7 @@ export const TOOLTIP_HORIZONTAL_OFFSET = 10;
 export const TOOLTIP_VERTICAL_OFFSET = 135;
 export const TOOLTIP_PADDING = 10;
 
-export const Y_LABEL_OFFSET = 20;
+export const Y_LABEL_OFFSET = 25;
 export const Y_AXIS_LABEL_WIDTH = 50;
 export const X_AXIS_HEIGHT = 40;
 export const X_AXIS_LABEL_OFFSET = 20;
@@ -24,3 +24,10 @@ export const BACKGROUND_GAP = 9;
 export const HIDE_NAME_AND_SECONDARY_VALUE_WIDTH_THRESHOLD = 500;
 export const HIDE_NAME_AND_SECONDARY_VALUE_HEIGHT_THRESHOLD = 350;
 export const X_AXIS_LABEL_BOTTOM_OFFSET = 20;
+
+export const LABEL_FONT_SIZE = 11;
+export const PRIMARY_VALUE_WIDTH_RATIO = 2;
+export const PRIMARY_VALUE_WIDTH_RATIO_SOLO = 1;
+export const SECONDARY_VALUE_WIDTH_RATIO = 2;
+export const GROUP_NAME_WIDTH_MULTIPLIER = 1.5;
+export const TEXT_Y_OFFSET_WITH_SECONDARY = 2;
