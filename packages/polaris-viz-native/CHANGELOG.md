@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- ## Unreleased -->
 
+## [15.2.2] - 2024-11-11
+
+- No updates. Transitive dependency bump.
+
 ## [15.2.1] - 2024-11-05
 
 - No updates. Transitive dependency bump.
