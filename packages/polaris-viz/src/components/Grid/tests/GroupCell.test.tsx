@@ -51,10 +51,7 @@ describe('<GroupCell />', () => {
 
     wrapper.find('g')?.trigger('onMouseEnter');
 
-    expect(handleGroupHoverMock).toHaveBeenCalledWith(
-      MOCK_PROPS.group,
-      undefined,
-    );
+    expect(handleGroupHoverMock).toHaveBeenCalledWith(MOCK_PROPS.group);
   });
 });
 

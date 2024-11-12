@@ -12,7 +12,15 @@
 
 .GroupCellContainer {
   transition: opacity 200ms ease-in-out;
-  outline: none;
+  outline: 0;
+}
+
+.GroupCellContainerSelected {
+  // stylelint-disable declaration-no-important
+  outline: 2px solid $color-blue-100 !important;
+  outline-offset: -1px;
+  border-radius: 4px;
+  // stylelint-enable declaration-no-important
 }
 
 @keyframes FadeInScale {

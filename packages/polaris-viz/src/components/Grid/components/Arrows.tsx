@@ -5,6 +5,7 @@ import {
   ARROW_X_POSITION_OFFSET,
   ARROW_LENGTH,
   ARROW_HEAD_SIZE_RATIO,
+  ARROW_Y_OFFSET,
 } from '../utilities/constants';
 
 import styles from './Arrows.scss';
@@ -58,7 +59,7 @@ export function Arrows({
       );
       return {
         x: (startX + endX) / 2,
-        y: (group1.end.row + 1) * cellHeight,
+        y: (group1.end.row + 1) * cellHeight + ARROW_Y_OFFSET,
         sourceEdge: 'bottom',
         targetEdge: 'top',
       };
@@ -75,7 +76,10 @@ export function Arrows({
       );
       return {
         x: (startX + endX) / 2,
-        y: group1.start.row * cellHeight + ARROW_X_POSITION_OFFSET,
+        y:
+          group1.start.row * cellHeight +
+          ARROW_X_POSITION_OFFSET -
+          ARROW_Y_OFFSET,
         sourceEdge: 'top',
         targetEdge: 'bottom',
       };
@@ -128,7 +132,12 @@ export function Arrows({
         const sharedEdgeInfo = getSharedEdgeCenter(sourceGroup, targetGroup);
         if (!sharedEdgeInfo) return null;
 
-        const sourcePoint = {x: sharedEdgeInfo.x, y: sharedEdgeInfo.y};
+        const sourceXOffset = sharedEdgeInfo.sourceEdge === 'right' ? 10 : 0;
+
+        const sourcePoint = {
+          x: sharedEdgeInfo.x + sourceXOffset,
+          y: sharedEdgeInfo.y,
+        };
 
         let targetPoint: {x: number; y: number};
         if (

@@ -26,6 +26,7 @@ import {
   DEFAULT_TEXT_COLOR,
   SMALL_CONTAINER_WIDTH,
   SMALL_CONTAINER_HEIGHT,
+  DEFAULT_BOUNDS,
 } from './utilities/constants';
 import type {
   CellGroup,
@@ -50,8 +51,8 @@ export function Grid(props: GridProps) {
   const [hoveredGroup, setHoveredGroup] = useState<CellGroup | null>(null);
   const {setRef, entry} = useResizeObserver();
   const [tooltipInfo, setTooltipInfo] = useState<TooltipInfo | null>(null);
-  const [tooltipHeight, setTooltipHeight] = useState(TOOLTIP_HEIGHT);
   const [isSmallContainer, setIsSmallContainer] = useState(false);
+  const [groupSelected, setGroupSelected] = useState<CellGroup | null>(null);
 
   const {
     cellGroups = [],
@@ -89,11 +90,10 @@ export function Grid(props: GridProps) {
   };
 
   const getTooltipInfo = useCallback(
-    (
-      group: CellGroup,
-      event: React.MouseEvent | React.KeyboardEvent | React.FocusEvent,
-    ): TooltipInfo | null => {
-      const rect = event.currentTarget.getBoundingClientRect();
+    (group: CellGroup): TooltipInfo | null => {
+      const rect =
+        document.getElementById(group.id)?.getBoundingClientRect() ||
+        DEFAULT_BOUNDS;
       const containerRect = entry?.target?.getBoundingClientRect();
 
       if (!containerRect) return null;
@@ -113,12 +113,12 @@ export function Grid(props: GridProps) {
           TOOLTIP_HORIZONTAL_OFFSET;
         y = rect.top - containerRect.top;
         placement = 'left';
-      } else if (bottomSpace >= tooltipHeight) {
-        x = rect.left - containerRect.left + TOOLTIP_HORIZONTAL_OFFSET;
+      } else if (bottomSpace >= TOOLTIP_HEIGHT) {
+        x = rect.left - containerRect.left;
         y = rect.bottom - containerRect.top + TOOLTIP_HORIZONTAL_OFFSET;
         placement = 'bottom';
       } else {
-        x = rect.left - containerRect.left + TOOLTIP_HORIZONTAL_OFFSET;
+        x = rect.left - containerRect.left;
         y = rect.top - containerRect.top - TOOLTIP_VERTICAL_OFFSET;
         placement = 'top';
       }
@@ -127,25 +127,20 @@ export function Grid(props: GridProps) {
         x,
         y,
         placement,
-        groupName: group.name,
-        groupDescription: group.description || '',
-        groupGoal: group.goal || '',
+        group,
       };
     },
-    [entry, tooltipHeight],
+    [entry],
   );
 
   const handleGroupHover = useCallback(
-    (
-      group: CellGroup | null,
-      event: React.MouseEvent | React.KeyboardEvent | React.FocusEvent,
-    ) => {
+    (group: CellGroup | null) => {
       if (!isSmallContainer) {
         if (group) {
           const activeGroups = getActiveGroups(group);
           setHoveredGroups(activeGroups);
           setHoveredGroup(group);
-          const tooltipInfo = getTooltipInfo(group, event);
+          const tooltipInfo = getTooltipInfo(group);
           if (tooltipInfo) {
             setTooltipInfo(tooltipInfo);
           }
@@ -157,6 +152,18 @@ export function Grid(props: GridProps) {
       }
     },
     [getTooltipInfo, isSmallContainer],
+  );
+
+  const handleSelectGroup = useCallback(
+    (group: CellGroup | null) => {
+      if (!isSmallContainer) {
+        const actualGroupSelected =
+          groupSelected?.id === group?.id ? null : group;
+        setGroupSelected(actualGroupSelected);
+        handleGroupHover(actualGroupSelected);
+      }
+    },
+    [handleGroupHover, groupSelected?.id, isSmallContainer],
   );
 
   const rawChartPositions = useChartPositions({
@@ -241,8 +248,28 @@ export function Grid(props: GridProps) {
     }
   }, [entry]);
 
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent) => {
+      if (event.key === 'Tab') {
+        event.preventDefault();
+        const currentIndex = cellGroups.findIndex(
+          (group) => group.id === groupSelected?.id,
+        );
+        const nextIndex =
+          currentIndex === -1 ? 0 : (currentIndex + 1) % cellGroups.length;
+        const nextGroup = cellGroups[nextIndex];
+        setGroupSelected(nextGroup);
+        handleGroupHover(nextGroup);
+      } else if (event.key === 'Escape') {
+        setGroupSelected(null);
+        handleGroupHover(null);
+      }
+    },
+    [cellGroups, groupSelected, handleGroupHover],
+  );
+
   return (
-    <div ref={setRef} className={styles.Container}>
+    <div ref={setRef} className={styles.Container} onKeyDown={handleKeyDown}>
       <svg width="100%" height="100%">
         <YAxisLabels
           yTicks={yTicks}
@@ -273,6 +300,9 @@ export function Grid(props: GridProps) {
               containerWidth={dimensions.width}
               containerHeight={dimensions.height}
               isAnimated={isAnimated}
+              groupSelected={groupSelected}
+              dimensions={dimensions}
+              handleSelectGroup={handleSelectGroup}
             />
           ))}
           <Arrows
@@ -292,19 +322,14 @@ export function Grid(props: GridProps) {
           xAxisOptions={xAxisOptions}
           setXAxisHeight={setXAxisHeight}
         />
-
-        {tooltipInfo && (
-          <Tooltip
-            groupName={tooltipInfo.groupName}
-            groupDescription={tooltipInfo.groupDescription}
-            groupGoal={tooltipInfo.groupGoal}
-            x={tooltipInfo.x}
-            y={tooltipInfo.y}
-            tooltipHeight={tooltipHeight}
-            setTooltipHeight={setTooltipHeight}
-          />
-        )}
       </svg>
+      {tooltipInfo && (
+        <Tooltip
+          x={tooltipInfo.x}
+          y={tooltipInfo.y}
+          group={groupSelected || hoveredGroup}
+        />
+      )}
     </div>
   );
 }

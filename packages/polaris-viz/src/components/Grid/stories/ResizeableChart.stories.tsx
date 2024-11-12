@@ -12,7 +12,7 @@ export const ResizeableChart: Story<GridProps> = (args: GridProps) => {
         overflow: 'hidden',
         maxHeight: '100%',
         maxWidth: '100%',
-        height: '450px',
+        height: '394px',
       }}
     >
       <Grid {...args} />
