@@ -6,6 +6,7 @@ import {
   HIDE_NAME_AND_SECONDARY_VALUE_HEIGHT_THRESHOLD,
   HIDE_NAME_AND_SECONDARY_VALUE_WIDTH_THRESHOLD,
 } from '../utilities/constants';
+import {classNames} from '../../../utilities';
 
 import styles from './GroupCell.scss';
 import {Background} from './Background';
@@ -18,15 +19,15 @@ interface GroupCellProps {
   cellWidth: number;
   isSmallContainer: boolean;
   hoveredGroups: Set<string>;
-  handleGroupHover: (
-    group: CellGroup | null,
-    event: React.MouseEvent | React.KeyboardEvent | React.FocusEvent,
-  ) => void;
+  handleGroupHover: (group: CellGroup | null) => void;
+  groupSelected: CellGroup | null;
+  handleSelectGroup: (group: CellGroup | null) => void;
   getColors: (group: CellGroup) => {bgColor: string; textColor: string};
   containerWidth: number;
   containerHeight: number;
   isAnimated: boolean;
   index: number;
+  dimensions: {width: number; height: number};
 }
 
 export const GroupCell: React.FC<GroupCellProps> = ({
@@ -37,11 +38,14 @@ export const GroupCell: React.FC<GroupCellProps> = ({
   isSmallContainer,
   hoveredGroups,
   handleGroupHover,
+  groupSelected,
+  handleSelectGroup,
   getColors,
   containerWidth,
   containerHeight,
   isAnimated,
   index,
+  dimensions,
 }) => {
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
@@ -67,9 +71,7 @@ export const GroupCell: React.FC<GroupCellProps> = ({
   const showNameAndSecondaryValue =
     containerWidth > HIDE_NAME_AND_SECONDARY_VALUE_WIDTH_THRESHOLD &&
     containerHeight > HIDE_NAME_AND_SECONDARY_VALUE_HEIGHT_THRESHOLD;
-  const mainFontSize = showNameAndSecondaryValue
-    ? 20
-    : Math.min(groupWidth, cellHeight) / 4;
+  const mainFontSize = showNameAndSecondaryValue ? 20 : 16;
   const secondaryFontSize = mainFontSize * 0.6;
 
   const groupX = xScale(group.start.col);
@@ -86,20 +88,11 @@ export const GroupCell: React.FC<GroupCellProps> = ({
         }
       : null;
 
-  const handleKeyDown = useCallback((event: React.KeyboardEvent) => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
+  const handleMouseLeave = useCallback(() => {
+    if (!isSmallContainer) {
+      handleGroupHover(null);
     }
-  }, []);
-
-  const handleMouseLeave = useCallback(
-    (event: React.MouseEvent) => {
-      if (!isSmallContainer) {
-        handleGroupHover(null, event);
-      }
-    },
-    [isSmallContainer, handleGroupHover],
-  );
+  }, [isSmallContainer, handleGroupHover]);
 
   const ariaLabel = `${group.name}, ${group.value}, ${
     group.secondaryValue
@@ -107,15 +100,27 @@ export const GroupCell: React.FC<GroupCellProps> = ({
 
   return (
     <g
-      className={styles.GroupCellContainer}
+      className={classNames(
+        styles.GroupCellContainer,
+        groupSelected?.id === group.id && styles.GroupCellContainerSelected,
+      )}
+      id={group.id}
       style={{opacity}}
       role="button"
       data-testid="group-cell"
-      onMouseEnter={(event) => handleGroupHover(group, event)}
-      onMouseLeave={handleMouseLeave}
-      onFocus={(event) => handleGroupHover(group, event)}
-      onBlur={(event) => handleGroupHover(null, event)}
-      onKeyDown={handleKeyDown}
+      onClick={() => {
+        handleSelectGroup(group);
+      }}
+      onMouseEnter={() => {
+        if (!groupSelected) {
+          handleGroupHover(group);
+        }
+      }}
+      onMouseLeave={() => {
+        if (!groupSelected) {
+          handleMouseLeave();
+        }
+      }}
       aria-label={ariaLabel}
       tabIndex={0}
     >
@@ -150,6 +155,7 @@ export const GroupCell: React.FC<GroupCellProps> = ({
           groupSecondaryValue={groupSecondaryValue}
           groupNameOffset={groupNameOffset}
           opacity={opacity}
+          dimensions={dimensions}
         />
       </g>
     </g>

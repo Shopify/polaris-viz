@@ -4,11 +4,10 @@ import {useChartContext} from '@shopify/polaris-viz-core';
 import {truncateText} from '../utilities/truncate-text';
 import {
   LABEL_FONT_SIZE,
-  PRIMARY_VALUE_WIDTH_RATIO,
-  PRIMARY_VALUE_WIDTH_RATIO_SOLO,
-  SECONDARY_VALUE_WIDTH_RATIO,
   GROUP_NAME_WIDTH_MULTIPLIER,
   TEXT_Y_OFFSET_WITH_SECONDARY,
+  VALUES_DIVIDER,
+  TRUNCATE_WIDTH_MULTIPLIER,
 } from '../utilities/constants';
 
 interface GroupInfoProps {
@@ -27,6 +26,7 @@ interface GroupInfoProps {
   secondaryFontSize: number;
   groupSecondaryValue: string;
   groupNameOffset: number;
+  dimensions: {width: number; height: number};
 }
 
 export const GroupInfo: React.FC<GroupInfoProps> = ({
@@ -43,27 +43,33 @@ export const GroupInfo: React.FC<GroupInfoProps> = ({
   secondaryFontSize,
   groupSecondaryValue,
   groupNameOffset,
+  dimensions,
 }) => {
   const {characterWidths} = useChartContext();
 
   const getTruncatedText = useCallback(
     (text: string, availableWidth: number) => {
-      return truncateText(text, availableWidth, characterWidths);
+      let fullWidth = availableWidth;
+      if (dimensions?.width < 800) {
+        fullWidth = availableWidth / TRUNCATE_WIDTH_MULTIPLIER;
+      }
+      return truncateText(text, fullWidth, characterWidths);
     },
-    [characterWidths],
+    [characterWidths, dimensions],
   );
 
-  const divider = showNameAndSecondaryValue
-    ? PRIMARY_VALUE_WIDTH_RATIO
-    : PRIMARY_VALUE_WIDTH_RATIO_SOLO;
+  const valueAndSecondaryValue = showNameAndSecondaryValue
+    ? `${groupValue}${VALUES_DIVIDER}${groupSecondaryValue}`
+    : groupValue;
+  const truncatedValueAndSecondaryValue = getTruncatedText(
+    valueAndSecondaryValue,
+    groupWidth,
+  );
+  const truncatedValue =
+    truncatedValueAndSecondaryValue.split(VALUES_DIVIDER)[0];
+  const truncatedSecondaryValue =
+    truncatedValueAndSecondaryValue.split(VALUES_DIVIDER)[1];
 
-  const truncatedValue = getTruncatedText(groupValue, groupWidth / divider);
-  const truncatedSecondaryValue = showNameAndSecondaryValue
-    ? getTruncatedText(
-        groupSecondaryValue,
-        groupWidth / SECONDARY_VALUE_WIDTH_RATIO,
-      )
-    : '';
   const truncatedGroupName = showNameAndSecondaryValue
     ? getTruncatedText(group.name, groupWidth * GROUP_NAME_WIDTH_MULTIPLIER)
     : '';
