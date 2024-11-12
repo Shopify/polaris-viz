@@ -1,5 +1,6 @@
 import {useTheme, FONT_FAMILY} from '@shopify/polaris-viz-core';
 
+import {getFontSize} from '../../utilities/getFontSize';
 import type {Trend, TrendDirection} from '../../types';
 
 import {ArrowDown, ArrowUp, Svg} from './components/';
@@ -9,7 +10,6 @@ import {
   NO_VALUE_ICON_HEIGHT,
   TEXT_ICON_SPACING,
   ICON_SIZE,
-  FONT_SIZE,
   HEIGHT,
   Y_OFFSET,
 } from './constants';
@@ -34,6 +34,7 @@ export function TrendIndicator({
   value,
 }: TrendIndicatorProps) {
   const selectedTheme = useTheme(theme);
+  const fontSize = getFontSize();
 
   const svgProps = {
     accessibilityLabel,
@@ -57,6 +58,7 @@ export function TrendIndicator({
 
   const {textWidth, totalWidth} = estimateTrendIndicatorWidth(
     value,
+    fontSize,
     TREND_FONT_WEIGHT,
   );
 
@@ -70,7 +72,7 @@ export function TrendIndicator({
         <text
           x={ICON_SIZE + TEXT_ICON_SPACING}
           y={(HEIGHT + Y_OFFSET) / 2}
-          fontSize={FONT_SIZE}
+          fontSize={fontSize}
           fill="currentColor"
           fontWeight={TREND_FONT_WEIGHT}
           dominantBaseline="middle"

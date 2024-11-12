@@ -11,6 +11,7 @@ jest.mock('@shopify/polaris-viz-core/src/utilities', () => ({
 const MOCK_PROPS: LabelProps = {
   barHeight: 15,
   color: 'red',
+  fontSize: 11,
   label: 'Label Text',
   labelWidth: 100,
   y: 20,

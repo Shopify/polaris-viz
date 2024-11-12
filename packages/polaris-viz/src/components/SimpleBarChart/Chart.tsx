@@ -13,6 +13,7 @@ import type {
 } from '@shopify/polaris-viz-core';
 import {animated} from '@react-spring/web';
 
+import {getFontSize} from '../../utilities/getFontSize';
 import {ChartElements} from '../ChartElements';
 import {LegendContainer, useLegend} from '../../components/LegendContainer';
 import {GradientDefs, HorizontalGroup} from '../shared';
@@ -57,6 +58,7 @@ export function Chart({
 }: ChartProps) {
   useColorVisionEvents({enabled: data.length > 1});
 
+  const fontSize = getFontSize();
   const id = useMemo(() => uniqueId('SimpleBarChart'), []);
 
   const {labelFormatter} = xAxisOptions;
@@ -89,7 +91,7 @@ export function Chart({
     data,
   });
 
-  const longestTrendIndicator = getLongestTrendIndicator(data);
+  const longestTrendIndicator = getLongestTrendIndicator(data, fontSize);
 
   const trendIndicatorOffset =
     longestTrendIndicator.positive + longestTrendIndicator.negative;

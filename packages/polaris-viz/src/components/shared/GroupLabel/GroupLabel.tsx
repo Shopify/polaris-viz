@@ -1,7 +1,7 @@
-import {estimateStringWidth, useChartContext} from '@shopify/polaris-viz-core';
-
+import {estimateStringWidthWithOffset} from '../../../utilities';
+import {getFontSize} from '../../../utilities/getFontSize';
 import {useTheme} from '../../../hooks';
-import {FONT_SIZE, HORIZONTAL_GROUP_LABEL_HEIGHT} from '../../../constants';
+import {HORIZONTAL_GROUP_LABEL_HEIGHT} from '../../../constants';
 
 import styles from './GroupLabel.scss';
 
@@ -20,12 +20,14 @@ export function GroupLabel({
   label,
   zeroPosition,
 }: GroupLabelProps) {
-  const {characterWidths} = useChartContext();
+  const fontSize = getFontSize();
 
-  const labelWidth = estimateStringWidth(label, characterWidths);
+  const labelWidth = estimateStringWidthWithOffset(label, fontSize);
   const selectedTheme = useTheme();
 
-  const maxWidth = areAllNegative ? labelWidth : containerWidth - zeroPosition;
+  const maxWidth = areAllNegative
+    ? labelWidth + LABEL_RIGHT_PADDING
+    : containerWidth - zeroPosition;
 
   return (
     <foreignObject
@@ -38,7 +40,7 @@ export function GroupLabel({
         className={styles.Label}
         style={{
           background: selectedTheme.chartContainer.backgroundColor,
-          fontSize: `${FONT_SIZE}px`,
+          fontSize: `${fontSize}px`,
           color: selectedTheme.yAxis.labelColor,
           maxWidth,
           height: HORIZONTAL_GROUP_LABEL_HEIGHT,

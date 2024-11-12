@@ -1,7 +1,9 @@
 import type {Dispatch, SetStateAction} from 'react';
 import {useEffect, useMemo} from 'react';
-import {estimateStringWidth, useChartContext} from '@shopify/polaris-viz-core';
+import {useChartContext} from '@shopify/polaris-viz-core';
 
+import {getFontSize} from '../../../utilities/getFontSize';
+import {estimateStringWidthWithOffset} from '../../../utilities';
 import {
   LINE_HEIGHT,
   DIAGONAL_LABEL_MIN_WIDTH,
@@ -28,21 +30,24 @@ export function useLabels({
 }: Props) {
   const {characterWidths} = useChartContext();
 
+  const fontSize = getFontSize();
+
   const preparedLabels = useMemo(() => {
     return labels.map((label) => {
       return {
         text: label,
+        fontSize,
         words: [],
         truncatedWords: [],
         truncatedName: '',
         truncatedWidth: 0,
       };
     });
-  }, [labels]);
+  }, [labels, fontSize]);
 
   const longestLabelWidth = useMemo(() => {
     return labels.reduce((prev, string) => {
-      const newWidth = estimateStringWidth(string, characterWidths);
+      const newWidth = estimateStringWidthWithOffset(string, fontSize);
 
       if (newWidth > prev) {
         return newWidth;
@@ -50,7 +55,7 @@ export function useLabels({
 
       return prev;
     }, 0);
-  }, [labels, characterWidths]);
+  }, [labels, fontSize]);
 
   const {lines, containerHeight} = useMemo(() => {
     const shouldDrawHorizontal = checkIfShouldDrawHorizontal({

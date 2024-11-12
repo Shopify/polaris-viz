@@ -6,6 +6,7 @@ import {
 } from '@shopify/polaris-viz-core';
 import type {Color, Direction} from '@shopify/polaris-viz-core';
 
+import {getFontSize} from '../../../../utilities/getFontSize';
 import {getCSSBackgroundFromColor} from '../../../../utilities/getCSSBackgroundFromColor';
 import {classNames} from '../../../../utilities';
 import type {ComparisonMetricProps} from '../../../ComparisonMetric';
@@ -36,6 +37,8 @@ export function BarLabel({
   legendPosition,
 }: Props) {
   const selectedTheme = useTheme();
+
+  const fontSize = getFontSize();
   const {labelColor, valueColor} = selectedTheme.legend;
 
   const comparisonIndicator = comparisonMetric ? (
@@ -66,7 +69,7 @@ export function BarLabel({
       />
       <div className={styles.Label}>
         <div
-          style={{color: labelColor}}
+          style={{color: labelColor, fontSize: `${fontSize}px`}}
           className={
             direction === 'horizontal'
               ? styles.FormattedHorizontalLabel
@@ -76,7 +79,7 @@ export function BarLabel({
           {label}
         </div>
         <div
-          style={{color: valueColor}}
+          style={{color: valueColor, fontSize: `${fontSize}px`}}
           className={
             direction === 'horizontal'
               ? styles.ValueHorizontalContainer

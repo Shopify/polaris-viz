@@ -3,6 +3,7 @@
   position: relative;
   display: flex;
   align-items: baseline;
+  width: 100%;
 }
 
 .ContainerDefaultLabel {
@@ -52,6 +53,7 @@
   top: 16px;
   margin-top: 4px;
   display: flex;
+  align-items: center;
 }
 
 .Value {

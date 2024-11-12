@@ -46,7 +46,7 @@ describe('<GroupLabel />', () => {
 
       const object = label.find('foreignObject');
 
-      expect(object?.props.x).toStrictEqual(-100);
+      expect(object?.props.x).toStrictEqual(-92);
     });
 
     it('positions label at 0 when false', () => {
@@ -70,7 +70,7 @@ describe('<GroupLabel />', () => {
 
       const object = label.find('foreignObject');
 
-      expect(object?.props.x).toStrictEqual(-80);
+      expect(object?.props.x).toStrictEqual(-72);
     });
 
     it('renders max-width when true', () => {
@@ -82,7 +82,7 @@ describe('<GroupLabel />', () => {
 
       const div = label.find('div');
 
-      expect(div?.props?.style?.maxWidth).toStrictEqual(100);
+      expect(div?.props?.style?.maxWidth).toStrictEqual(107);
     });
 
     it('renders max-width when false', () => {
