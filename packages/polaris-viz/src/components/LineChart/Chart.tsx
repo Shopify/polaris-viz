@@ -6,12 +6,12 @@ import {
   useYScale,
   LineSeries,
   COLOR_VISION_SINGLE_ITEM,
-  clamp,
   DEFAULT_THEME_NAME,
   useChartPositions,
   useChartContext,
   LINE_HEIGHT,
   SMALL_CHART_HEIGHT,
+  InternalChartType,
 } from '@shopify/polaris-viz-core';
 import type {
   XAxisOptions,
@@ -21,7 +21,6 @@ import type {
   LabelFormatter,
 } from '@shopify/polaris-viz-core';
 
-import {getXYFromEventType} from '../../utilities/eventPoint';
 import {useExternalHideEvents} from '../../hooks/ExternalEvents';
 import {useIndexForLabels} from '../../hooks/useIndexForLabels';
 import {
@@ -39,15 +38,7 @@ import type {
 import {useFormattedLabels} from '../../hooks/useFormattedLabels';
 import {XAxis} from '../XAxis';
 import {useLegend, LegendContainer} from '../LegendContainer';
-import type {
-  TooltipPosition,
-  TooltipPositionParams,
-} from '../../components/TooltipWrapper';
-import {
-  TooltipWrapper,
-  TOOLTIP_POSITION_DEFAULT_RETURN,
-} from '../../components/TooltipWrapper';
-import {eventPointNative} from '../../utilities';
+import {TooltipWrapper} from '../../components/TooltipWrapper';
 import {
   useTheme,
   useColorVisionEvents,
@@ -68,7 +59,7 @@ import {ChartElements} from '../ChartElements';
 import {useLineChartTooltipContent} from './hooks/useLineChartTooltipContent';
 import {PointsAndCrosshair} from './components';
 import {useFormatData} from './hooks';
-import {getAlteredLineChartPosition, yAxisMinMax} from './utilities';
+import {yAxisMinMax} from './utilities';
 
 export interface ChartProps {
   renderTooltipContent: (data: RenderTooltipContentData) => ReactNode;
@@ -220,52 +211,6 @@ export function Chart({
 
   if (xScale == null || drawableWidth == null || yAxisLabelWidth == null) {
     return null;
-  }
-
-  function getTooltipPosition({
-    event,
-    index,
-    eventType,
-  }: TooltipPositionParams): TooltipPosition {
-    if (eventType === 'mouse') {
-      if (event == null) {
-        return TOOLTIP_POSITION_DEFAULT_RETURN;
-      }
-
-      const point = eventPointNative(event);
-
-      if (point == null || xScale == null || data[longestSeriesIndex] == null) {
-        return TOOLTIP_POSITION_DEFAULT_RETURN;
-      }
-
-      const {svgX} = point;
-
-      const closestIndex = Math.round(xScale.invert(svgX - chartXPosition));
-
-      const activeIndex = clamp({
-        amount: closestIndex,
-        min: 0,
-        max: data[longestSeriesIndex].data.length - 1,
-      });
-
-      const {x, y} = getXYFromEventType(event);
-
-      return {
-        x,
-        y,
-        activeIndex,
-      };
-    } else {
-      const activeIndex = index ?? 0;
-
-      const x = xScale?.(activeIndex) ?? 0;
-
-      return {
-        x: x + (dimensions?.x ?? 0),
-        y: dimensions?.y ?? 0,
-        activeIndex,
-      };
-    }
   }
 
   function moveCrosshair(index: number | null) {
@@ -432,12 +377,12 @@ export function Chart({
 
       {longestSeriesLength !== -1 && (
         <TooltipWrapper
-          alwaysUpdatePosition
           chartBounds={chartBounds}
+          chartType={InternalChartType.Line}
           focusElementDataType={DataType.Point}
-          getAlteredPosition={getAlteredLineChartPosition}
           getMarkup={getTooltipMarkup}
-          getPosition={getTooltipPosition}
+          data={data}
+          longestSeriesIndex={longestSeriesIndex}
           id={tooltipId.current}
           margin={ChartMargin}
           onIndexChange={(index) => {
@@ -449,6 +394,8 @@ export function Chart({
           }}
           parentRef={svgRef}
           usePortal
+          xScale={xScale}
+          yScale={yScale}
         />
       )}
 

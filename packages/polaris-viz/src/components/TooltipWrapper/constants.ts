@@ -12,3 +12,7 @@ export const TOOLTIP_POSITION_DEFAULT_RETURN: TooltipPosition = {
   position: DEFAULT_TOOLTIP_POSITION,
   activeIndex: null,
 };
+
+// The space between the cursor and the tooltip0
+export const TOOLTIP_MARGIN = 20;
+export const SCROLLBAR_WIDTH = 20;

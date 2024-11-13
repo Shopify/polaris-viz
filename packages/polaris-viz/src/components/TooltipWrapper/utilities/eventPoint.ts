@@ -1,9 +1,6 @@
 import type React from 'react';
 import type {Position} from '@shopify/polaris-viz-core';
 
-import {isMouseEvent} from './isMouseEvent';
-import {isTouchEvent} from './isTouchEvent';
-
 export function eventPoint(
   event: React.MouseEvent<SVGSVGElement> | React.TouchEvent<SVGSVGElement>,
 ) {
@@ -84,4 +81,16 @@ export function getXYFromEventType(event: MouseEvent | TouchEvent): Position {
   return event instanceof TouchEvent
     ? {x: event.touches[0].pageX, y: event.touches[0].pageY}
     : {x: event.pageX, y: event.pageY};
+}
+
+export function isMouseEvent(
+  event: React.SyntheticEvent,
+): event is React.MouseEvent {
+  return event.nativeEvent instanceof MouseEvent;
+}
+
+export function isTouchEvent(
+  event: React.SyntheticEvent,
+): event is React.TouchEvent {
+  return event.nativeEvent instanceof TouchEvent;
 }

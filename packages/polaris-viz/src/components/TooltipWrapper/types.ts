@@ -1,3 +1,13 @@
+import type {
+  BoundingRect,
+  ChartType,
+  DataSeries,
+  Dimensions,
+} from '@shopify/polaris-viz-core';
+import type {ScaleBand, ScaleLinear} from 'd3-scale';
+
+import type {Margin} from '../../types';
+
 export enum TooltipHorizontalOffset {
   Left,
   Right,
@@ -24,7 +34,35 @@ export interface TooltipPosition {
 }
 
 export interface TooltipPositionParams {
+  chartBounds: Required<BoundingRect>;
+  data: DataSeries[];
+  eventType: 'mouse' | 'focus';
+  longestSeriesIndex: number;
+  xScale: ScaleBand<string> | ScaleLinear<number, number>;
   event?: MouseEvent | TouchEvent;
   index?: number;
-  eventType?: 'mouse' | 'focus';
+  type?: ChartType;
+  yScale?: ScaleLinear<number, number>;
 }
+
+export interface AlteredPositionProps {
+  bandwidth: number;
+  chartBounds: BoundingRect;
+  currentX: number;
+  currentY: number;
+  isPerformanceImpacted: boolean;
+  isTouchDevice: boolean;
+  margin: Margin;
+  position: TooltipPositionOffset;
+  tooltipDimensions: Dimensions;
+  scrollContainer?: Element | null;
+}
+
+export interface AlteredPositionReturn {
+  x: number;
+  y: number;
+}
+
+export type AlteredPosition = (
+  props: AlteredPositionProps,
+) => AlteredPositionReturn;

@@ -7,6 +7,7 @@ import {
   HORIZONTAL_SPACE_BETWEEN_CHART_AND_AXIS,
   useAriaLabel,
   LINE_HEIGHT,
+  InternalChartType,
 } from '@shopify/polaris-viz-core';
 import type {
   DataSeries,
@@ -42,19 +43,14 @@ import {
   useTheme,
 } from '../../hooks';
 import {ChartMargin, ANNOTATIONS_LABELS_OFFSET} from '../../constants';
-import {eventPointNative, formatDataIntoGroups} from '../../utilities';
-import type {TooltipPosition, TooltipPositionParams} from '../TooltipWrapper';
-import {
-  TOOLTIP_POSITION_DEFAULT_RETURN,
-  TooltipWrapper,
-} from '../TooltipWrapper';
+import {formatDataIntoGroups} from '../../utilities';
+import {TooltipWrapper} from '../TooltipWrapper';
 
 import {
   VerticalGridLines,
   HorizontalBarChartYAnnotations,
   HorizontalBarChartXAnnotations,
 } from './components';
-import {getAlteredHorizontalBarPosition} from './utilities';
 
 export interface ChartProps {
   annotationsLookupTable: AnnotationLookupTable;
@@ -94,7 +90,8 @@ export function Chart({
   const [xAxisHeight, setXAxisHeight] = useState(LINE_HEIGHT);
   const [annotationsHeight, setAnnotationsHeight] = useState(0);
 
-  const {longestSeriesCount, seriesColors} = useHorizontalSeriesColors(data);
+  const {longestSeriesCount, seriesColors, longestSeriesIndex} =
+    useHorizontalSeriesColors(data);
 
   const {legend, setLegendDimensions, height, width} = useLegend({
     data: [
@@ -298,12 +295,15 @@ export function Chart({
         <TooltipWrapper
           bandwidth={groupBarsAreaHeight}
           chartBounds={chartBounds}
+          chartType={InternalChartType.HorizontalBar}
+          data={data}
           focusElementDataType={DataType.BarGroup}
-          getAlteredPosition={getAlteredHorizontalBarPosition}
           getMarkup={getTooltipMarkup}
-          getPosition={getTooltipPosition}
           margin={ChartMargin}
           parentRef={svgRef}
+          longestSeriesIndex={longestSeriesIndex}
+          xScale={xScale}
+          type={type}
         />
       )}
 
@@ -320,62 +320,4 @@ export function Chart({
       )}
     </ChartElements.Div>
   );
-
-  function formatPositionForTooltip(index: number): TooltipPosition {
-    if (isStacked) {
-      const x = stackedValues[index].reduce((prev, cur) => {
-        const [start, end] = cur;
-
-        if (start < 0) {
-          return prev;
-        }
-
-        return prev + (xScale(end) - xScale(start));
-      }, xScale(0));
-
-      return {
-        x,
-        y: groupHeight * index,
-        activeIndex: index,
-      };
-    }
-
-    const highestValue = highestValueForSeries[index];
-    const x = chartXPosition + xScale(highestValue);
-
-    return {
-      x: highestValue < 0 ? -x : x,
-      y: groupHeight * index,
-      activeIndex: index,
-    };
-  }
-
-  function getTooltipPosition({
-    event,
-    index,
-    eventType,
-  }: TooltipPositionParams): TooltipPosition {
-    if (eventType === 'mouse' && event) {
-      const point = eventPointNative(event);
-
-      if (point == null) {
-        return TOOLTIP_POSITION_DEFAULT_RETURN;
-      }
-
-      const {svgY} = point;
-
-      const currentPoint = svgY - 0;
-      const currentIndex = Math.floor(currentPoint / groupHeight);
-
-      if (currentIndex < 0 || currentIndex > longestSeriesCount - 1) {
-        return TOOLTIP_POSITION_DEFAULT_RETURN;
-      }
-
-      return formatPositionForTooltip(currentIndex);
-    } else if (index != null) {
-      return formatPositionForTooltip(index);
-    }
-
-    return TOOLTIP_POSITION_DEFAULT_RETURN;
-  }
 }

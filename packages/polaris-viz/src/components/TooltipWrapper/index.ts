@@ -1,22 +1,4 @@
 export {TooltipWrapper} from './TooltipWrapper';
 export {TooltipAnimatedContainer} from './components/TooltipAnimatedContainer';
-export type {
-  TooltipPositionParams,
-  TooltipPosition,
-  TooltipPositionOffset,
-} from './types';
-export {TooltipHorizontalOffset, TooltipVerticalOffset} from './types';
-export {
-  getAlteredVerticalBarPosition,
-  getRightPosition,
-  TOOLTIP_MARGIN,
-} from './utilities';
-export type {
-  AlteredPositionProps,
-  AlteredPositionReturn,
-  AlteredPosition,
-} from './utilities';
-export {
-  TOOLTIP_POSITION_DEFAULT_RETURN,
-  DEFAULT_TOOLTIP_POSITION,
-} from './constants';
+export {TOOLTIP_MARGIN} from './constants';
+export type {TooltipPosition} from './types';

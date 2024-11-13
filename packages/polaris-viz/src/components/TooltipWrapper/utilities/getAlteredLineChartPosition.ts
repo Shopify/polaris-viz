@@ -1,25 +1,10 @@
-import type {BoundingRect, Dimensions} from '@shopify/polaris-viz-core';
 import {clamp} from '@shopify/polaris-viz-core';
 
-import type {TooltipPositionOffset} from '../../TooltipWrapper';
-import type {Margin} from '../../../types';
+import type {AlteredPositionProps} from '../types';
 
 // The space between the cursor and the tooltip
 export const TOOLTIP_MARGIN = 20;
 export const SCROLLBAR_WIDTH = 20;
-
-export interface AlteredPositionProps {
-  bandwidth: number;
-  chartBounds: BoundingRect;
-  currentX: number;
-  currentY: number;
-  isPerformanceImpacted: boolean;
-  isTouchDevice: boolean;
-  margin: Margin;
-  position: TooltipPositionOffset;
-  tooltipDimensions: Dimensions;
-  scrollContainer?: Element | null;
-}
 
 export interface AlteredPositionReturn {
   x: number;
