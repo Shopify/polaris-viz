@@ -62,7 +62,7 @@ module.exports = {
           },
           {
             loader: 'css-loader',
-            query: {
+            options: {
               sourceMap: false,
               importLoaders: 1,
               modules: {
@@ -89,7 +89,7 @@ module.exports = {
         test: /\.tsx?$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
-        query: {
+        options: {
           presets: ['babel-preset-expo'],
         },
       },
@@ -98,7 +98,7 @@ module.exports = {
     config.module.rules = [
       // Strip out existing rules that apply to md files
       ...config.module.rules.filter(
-        (rule) => rule.test.toString() !== '/\\.md$/',
+        (rule) => rule?.test?.toString() !== '/\\.md$/',
       ),
       ...extraRules,
     ];
