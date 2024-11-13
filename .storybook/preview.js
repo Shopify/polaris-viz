@@ -201,3 +201,4 @@ const Container = ({children, theme}: ContainerProps) => {
     </div>
   );
 };
+export const tags = ['autodocs'];

@@ -1,3 +1,4 @@
+import { dirname, join } from "path";
 // Inspired by shopify/polaris-react storybook config
 // https://github.com/Shopify/polaris-react/blob/main/.storybook/main.js
 
@@ -9,9 +10,10 @@ const getStories = require('./getStories');
 
 module.exports = {
   stories: getStories(),
+
   addons: [
-    '@storybook/addon-a11y',
-    '@storybook/addon-links',
+    getAbsolutePath("@storybook/addon-a11y"),
+    getAbsolutePath("@storybook/addon-links"),
     {
       name: '@storybook/addon-essentials',
       options: {docs: true, backgrounds: false},
@@ -25,8 +27,14 @@ module.exports = {
         transcludeMarkdown: true,
       },
     },
+    getAbsolutePath("@storybook/addon-webpack5-compiler-babel")
   ],
-  framework: '@storybook/react',
+
+  framework: {
+    name: getAbsolutePath("@storybook/react-webpack5"),
+    options: {}
+  },
+
   typescript: {
     reactDocgen: 'react-docgen-typescript',
     reactDocgenTypescriptOptions: {
@@ -37,6 +45,7 @@ module.exports = {
       },
     },
   },
+
   webpackFinal: (config) => {
     const isProduction = config.mode === 'production';
 
@@ -118,4 +127,10 @@ module.exports = {
     };
     return config;
   },
+
+  docs: {}
 };
+
+function getAbsolutePath(value) {
+  return dirname(require.resolve(join(value, "package.json")));
+}
