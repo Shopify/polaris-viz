@@ -4373,6 +4373,15 @@
     "@storybook/icons" "^1.2.12"
     ts-dedent "^2.0.0"
 
+"@storybook/blocks@^8.4.3":
+  version "8.4.4"
+  resolved "https://registry.yarnpkg.com/@storybook/blocks/-/blocks-8.4.4.tgz#5cfffd04bf4e417e19e2948a94133e36bf5e4d0e"
+  integrity sha512-LwM3guL7uWpYR1a/SY0KZjCUskTKEaS22eF7GK8iXAV5BY4KpKr6ArW4O9orK29KtFwKhDZQLcMcECsOJBVk/A==
+  dependencies:
+    "@storybook/csf" "^0.1.11"
+    "@storybook/icons" "^1.2.12"
+    ts-dedent "^2.0.0"
+
 "@storybook/builder-webpack5@8.4.3":
   version "8.4.3"
   resolved "https://registry.yarnpkg.com/@storybook/builder-webpack5/-/builder-webpack5-8.4.3.tgz#12e083e8023421ec3b7fe4d7c9a964ff608a8e09"

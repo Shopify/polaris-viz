@@ -8,15 +8,17 @@ const postcssShopify = require('@shopify/postcss-plugin');
 
 const getStories = require('./getStories');
 
-module.exports = {
+const getAbsolutePath = (value) => dirname(require.resolve(join(value, 'package.json')));
+
+export default {
   stories: getStories(),
 
   addons: [
-    getAbsolutePath("@storybook/addon-a11y"),
-    getAbsolutePath("@storybook/addon-links"),
+    getAbsolutePath('@storybook/addon-a11y'),
+    getAbsolutePath('@storybook/addon-links'),
     {
       name: '@storybook/addon-essentials',
-      options: {docs: true, backgrounds: false},
+      options: { docs: true, backgrounds: false },
     },
     {
       name: '@storybook/addon-docs',
@@ -27,12 +29,12 @@ module.exports = {
         transcludeMarkdown: true,
       },
     },
-    getAbsolutePath("@storybook/addon-webpack5-compiler-babel")
+    getAbsolutePath('@storybook/addon-webpack5-compiler-babel'),
   ],
 
   framework: {
-    name: getAbsolutePath("@storybook/react-webpack5"),
-    options: {}
+    name: getAbsolutePath('@storybook/react-webpack5'),
+    options: {},
   },
 
   typescript: {
@@ -41,16 +43,14 @@ module.exports = {
       compilerOptions: {
         allowSyntheticDefaultImports: false,
         esModuleInterop: false,
-        transcludeMarkdown: true,
       },
     },
   },
 
-  webpackFinal: (config) => {
+  async webpackFinal(config) {
     const isProduction = config.mode === 'production';
 
-    // Shrink ray only strips hashes when comparing filenames with this format.
-    // Without this there will be lots of "add 1 file and removed 1 file" notices.
+    // Customize output filename format for better cache handling
     config.output.filename = '[name]-[hash].js';
 
     const extraRules = [
@@ -73,7 +73,9 @@ module.exports = {
           {
             loader: 'postcss-loader',
             options: {
-              plugins: () => postcssShopify(),
+              postcssOptions: {
+                plugins: () => postcssShopify(),
+              },
               sourceMap: false,
             },
           },
@@ -95,42 +97,25 @@ module.exports = {
       },
     ];
 
+    // Remove existing rules that apply to md files
     config.module.rules = [
-      // Strip out existing rules that apply to md files
-      ...config.module.rules.filter(
-        (rule) => rule?.test?.toString() !== '/\\.md$/',
-      ),
+      ...config.module.rules.filter((rule) => rule?.test?.toString() !== '/\\.md$/'),
       ...extraRules,
     ];
 
-    // This is to make react-native-svg work
-    // ¯\_(ツ)_/¯
+    // Adjust for react-native-svg support
     config.resolve.extensions.unshift('.web.js');
 
+    // Configure aliases for module resolution
     config.resolve.alias = {
       ...config.resolve.alias,
       'react-native$': 'react-native-web',
-      '@shopify/polaris-viz': path.resolve(
-        __dirname,
-        '..',
-        'packages/polaris-viz/src',
-      ),
+      '@shopify/polaris-viz': path.resolve(__dirname, '..', 'packages/polaris-viz/src'),
+      '@shopify/polaris-viz-core': path.resolve(__dirname, '..', 'packages/polaris-viz-core/src'),
     };
 
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      '@shopify/polaris-viz-core': path.resolve(
-        __dirname,
-        '..',
-        'packages/polaris-viz-core/src',
-      ),
-    };
     return config;
   },
 
-  docs: {}
+  docs: {},
 };
-
-function getAbsolutePath(value) {
-  return dirname(require.resolve(join(value, "package.json")));
-}

@@ -116,6 +116,7 @@
     "@storybook/addon-essentials": "^8.4.3",
     "@storybook/addon-links": "^8.4.3",
     "@storybook/addon-webpack5-compiler-babel": "^3.0.3",
+    "@storybook/blocks": "^8.4.3",
     "@storybook/react": "^8.4.3",
     "@storybook/react-webpack5": "^8.4.3",
     "@storybook/theming": "^8.4.3",
