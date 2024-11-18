@@ -20,12 +20,18 @@
   margin-bottom: 8px;
 }
 
-.TooltipDescription {
+.TooltipDescription,
+.TooltipMetricInformation {
   -webkit-line-clamp: 3;
   overflow: hidden;
   text-overflow: ellipsis;
   color: var(--p-color-bg-surface-inverse);
   margin-bottom: 8px;
+}
+
+.TooltipMetricInformation {
+  color: $color-gray-150;
+  font-weight: 600;
 }
 
 .TooltipGoal {
@@ -49,6 +55,10 @@
 }
 
 .TooltipContainer {
+  position: absolute;
+  z-index: 1;
+  width: 250px;
+  outline: none;
   @container (max-width: #{$grid-small-breakpoint}) {
     display: none;
   }

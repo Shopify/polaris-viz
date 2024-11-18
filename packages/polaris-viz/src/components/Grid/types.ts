@@ -17,15 +17,14 @@ export interface CellGroup {
   connectedGroups?: string[];
   secondaryValue: string;
   value: string;
+  metricInformation?: string;
 }
 
 export interface TooltipInfo {
   x: number;
   y: number;
   placement: Placement;
-  groupName: string;
-  groupDescription: string;
-  groupGoal: string;
+  group: CellGroup;
 }
 
 export type Placement = 'left' | 'bottom' | 'top' | 'right';
