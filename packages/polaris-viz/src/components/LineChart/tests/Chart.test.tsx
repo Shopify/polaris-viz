@@ -41,6 +41,11 @@ const MOCK_DATA: Required<LineChartDataSeriesWithDefaults> = {
     {key: 'Jan 3', value: 800},
     {key: 'Jan 4', value: 1300},
   ],
+  metadata: {},
+  styleOverride: {},
+  fillValue: 0,
+  strokeDasharray: '',
+  width: 1,
 };
 
 const xAxisOptions: Required<XAxisOptions> = {
@@ -59,12 +64,13 @@ const yAxisOptions: Required<YAxisOptions> = {
 const MOCK_PROPS: ChartProps = {
   data: [MOCK_DATA],
   annotationsLookupTable: {},
-  dimensions: {width: 500, height: 250, x: 0, y: 0},
+  containerBounds: {width: 500, height: 250, x: 0, y: 0},
   xAxisOptions,
   yAxisOptions,
   renderTooltipContent: jest.fn(() => <p>Mock Tooltip</p>),
   showLegend: false,
   seriesNameFormatter: (value) => `${value}`,
+  hideLegendOverflow: false,
 };
 
 jest.mock('@shopify/polaris-viz-core/src/utilities/estimateStringWidth', () => {
@@ -551,7 +557,10 @@ describe('<Chart />', () => {
 
     it('does not render <LegendContainer /> when the chart has a height of less than 125', () => {
       const chart = mount(
-        <Chart {...MOCK_PROPS} dimensions={{width: 100, height: 100}} />,
+        <Chart
+          {...MOCK_PROPS}
+          containerDimensions={{width: 100, height: 100}}
+        />,
       );
       expect(chart).not.toContainReactComponent(LegendContainer);
     });

@@ -12,12 +12,12 @@ import {DEFAULT_LEGEND_HEIGHT} from '../../../constants';
 import type {LegendData} from '../../../types';
 
 function getAlteredDimensions(
-  dimensions: Dimensions | undefined,
+  containerDimensions: Dimensions,
   legendsHeight: number,
   legendsWidth: number,
   direction: Direction,
 ) {
-  const {width, height} = dimensions ?? {width: 0, height: 0};
+  const {width, height} = containerDimensions;
   const isHorizontal = direction === 'horizontal';
 
   return {
@@ -29,17 +29,17 @@ function getAlteredDimensions(
 export interface Props {
   showLegend: boolean;
   data: DataGroup[];
+  containerDimensions: Dimensions;
   seriesNameFormatter: LabelFormatter;
   colors?: Color[];
-  dimensions?: Dimensions;
   direction?: Direction;
   maxWidth?: number;
 }
 
 export function useLegend({
   colors = [],
+  containerDimensions,
   data,
-  dimensions = {height: 0, width: 0},
   showLegend,
   direction = 'horizontal',
   maxWidth = 0,
@@ -84,18 +84,18 @@ export function useLegend({
 
   const {height, width} = useMemo(() => {
     if (showLegend === false) {
-      return dimensions;
+      return containerDimensions;
     }
 
     return getAlteredDimensions(
-      dimensions,
+      containerDimensions,
       legendDimensions.height,
       legendDimensions.width,
       direction,
     );
   }, [
     showLegend,
-    dimensions,
+    containerDimensions,
     legendDimensions.height,
     legendDimensions.width,
     direction,

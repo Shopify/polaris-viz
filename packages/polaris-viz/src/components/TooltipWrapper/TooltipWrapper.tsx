@@ -28,7 +28,7 @@ interface BaseProps {
   getAlteredPosition?: AlteredPosition;
   id?: string;
   onIndexChange?: (index: number | null) => void;
-  chartDimensions?: BoundingRect;
+  containerBounds?: BoundingRect;
 }
 
 function TooltipWrapperRaw(props: BaseProps) {
@@ -42,7 +42,7 @@ function TooltipWrapperRaw(props: BaseProps) {
     id,
     onIndexChange,
     parentRef,
-    chartDimensions,
+    containerBounds,
   } = props;
   const {scrollContainer} = useChartContext();
   const [position, setPosition] = useState<TooltipPosition>({
@@ -192,7 +192,7 @@ function TooltipWrapperRaw(props: BaseProps) {
       getAlteredPosition={getAlteredPosition}
       margin={props.margin}
       position={position.position}
-      chartDimensions={chartDimensions}
+      containerBounds={containerBounds}
     >
       {props.getMarkup(position.activeIndex)}
     </TooltipAnimatedContainer>

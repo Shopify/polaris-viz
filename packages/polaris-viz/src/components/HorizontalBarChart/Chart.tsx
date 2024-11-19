@@ -65,15 +65,15 @@ export interface ChartProps {
   type: ChartType;
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
-  dimensions?: BoundingRect;
+  containerBounds?: BoundingRect;
   renderHiddenLegendLabel?: (count: number) => string;
   renderLegendContent?: RenderLegendContent;
 }
 
 export function Chart({
   annotationsLookupTable,
+  containerBounds,
   data,
-  dimensions,
   renderHiddenLegendLabel,
   renderLegendContent,
   renderTooltipContent,
@@ -96,6 +96,11 @@ export function Chart({
 
   const {longestSeriesCount, seriesColors} = useHorizontalSeriesColors(data);
 
+  const containerDimensions = {
+    height: containerBounds?.height ?? 0,
+    width: containerBounds?.width ?? 0,
+  };
+
   const {legend, setLegendDimensions, height, width} = useLegend({
     data: [
       {
@@ -103,7 +108,7 @@ export function Chart({
         series: data,
       },
     ],
-    dimensions,
+    containerDimensions,
     showLegend,
     colors: seriesColors,
     seriesNameFormatter,
@@ -310,8 +315,8 @@ export function Chart({
       {showLegend && (
         <LegendContainer
           colorVisionType={COLOR_VISION_SINGLE_ITEM}
+          containerDimensions={containerDimensions}
           data={legend}
-          dimensions={dimensions}
           enableHideOverflow
           onDimensionChange={setLegendDimensions}
           renderLegendContent={renderLegendContent}

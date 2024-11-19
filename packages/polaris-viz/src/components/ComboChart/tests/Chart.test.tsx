@@ -67,7 +67,7 @@ const DATA: DataGroup[] = [
 const PROPS: ChartProps = {
   annotationsLookupTable: {},
   data: DATA,
-  dimensions: {height: 400, width: 800},
+  containerBounds: {height: 400, width: 800, x: 0, y: 0},
   renderTooltipContent: () => null,
   showLegend: false,
   theme: 'Light',

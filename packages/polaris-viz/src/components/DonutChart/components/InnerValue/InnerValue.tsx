@@ -18,7 +18,7 @@ export interface InnerValueProps {
   totalValue: number;
   comparisonMetric?: ComparisonMetricProps;
   diameter: number;
-  dimensions: Dimensions;
+  containerDimensions: Dimensions;
   labelFormatter: LabelFormatter;
   renderInnerValueContent?: RenderInnerValueContent;
 }
@@ -32,7 +32,7 @@ export function InnerValue({
   renderInnerValueContent,
   totalValue,
   diameter,
-  dimensions,
+  containerDimensions,
 }: InnerValueProps) {
   const selectedTheme = useTheme();
 
@@ -67,7 +67,7 @@ export function InnerValue({
     activeIndex,
     animatedTotalValue,
     totalValue,
-    dimensions,
+    dimensions: containerDimensions,
   }) ?? (
     <Fragment>
       <animated.p

@@ -16,7 +16,7 @@ const mockProps: LegendContainerProps = {
     {name: 'Legend Three', color: 'yellow'},
   ],
   onDimensionChange: jest.fn(),
-  dimensions: {
+  containerDimensions: {
     width: 0,
     height: 0,
   },
@@ -77,7 +77,10 @@ describe('<LegendContainer />', () => {
       const component = mount(
         <LegendContainer
           {...mockProps}
-          dimensions={{...mockProps.dimensions, width: WIDTH_WITH_OVERFLOW}}
+          containerDimensions={{
+            ...mockProps.containerDimensions,
+            width: WIDTH_WITH_OVERFLOW,
+          }}
           enableHideOverflow={false}
         />,
       );
@@ -89,7 +92,10 @@ describe('<LegendContainer />', () => {
       const component = mount(
         <LegendContainer
           {...mockProps}
-          dimensions={{...mockProps.dimensions, width: WIDTH_WITH_OVERFLOW}}
+          containerDimensions={{
+            ...mockProps.containerDimensions,
+            width: WIDTH_WITH_OVERFLOW,
+          }}
           enableHideOverflow
         />,
       );
@@ -117,7 +123,10 @@ describe('<LegendContainer />', () => {
       const component = mount(
         <LegendContainer
           {...mockProps}
-          dimensions={{...mockProps.dimensions, width: WIDTH_WITH_OVERFLOW}}
+          containerDimensions={{
+            ...mockProps.containerDimensions,
+            width: WIDTH_WITH_OVERFLOW,
+          }}
           enableHideOverflow
         />,
       );
@@ -129,7 +138,10 @@ describe('<LegendContainer />', () => {
       const component = mount(
         <LegendContainer
           {...mockProps}
-          dimensions={{...mockProps.dimensions, width: WIDTH_WITHOUT_OVERFLOW}}
+          containerDimensions={{
+            ...mockProps.containerDimensions,
+            width: WIDTH_WITHOUT_OVERFLOW,
+          }}
           enableHideOverflow
         />,
       );
@@ -143,7 +155,10 @@ describe('<LegendContainer />', () => {
       const component = mount(
         <LegendContainer
           {...mockProps}
-          dimensions={{...mockProps.dimensions, width: WIDTH_WITH_OVERFLOW}}
+          containerDimensions={{
+            ...mockProps.containerDimensions,
+            width: WIDTH_WITH_OVERFLOW,
+          }}
           enableHideOverflow
         />,
       );
@@ -157,7 +172,10 @@ describe('<LegendContainer />', () => {
       const component = mount(
         <LegendContainer
           {...mockProps}
-          dimensions={{...mockProps.dimensions, width: WIDTH_WITH_OVERFLOW}}
+          containerDimensions={{
+            ...mockProps.containerDimensions,
+            width: WIDTH_WITH_OVERFLOW,
+          }}
           enableHideOverflow
           renderHiddenLegendLabel={(x) => `Custom legend label ${x}`}
         />,

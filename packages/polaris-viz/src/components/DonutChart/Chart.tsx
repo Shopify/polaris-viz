@@ -13,9 +13,9 @@ import {
 import type {
   DataPoint,
   DataSeries,
-  Dimensions,
   LabelFormatter,
   Direction,
+  BoundingRect,
 } from '@shopify/polaris-viz-core';
 
 import {getAnimationDelayForItems} from '../../utilities/getAnimationDelayForItems';
@@ -55,7 +55,7 @@ export interface ChartProps {
   theme: string;
   accessibilityLabel?: string;
   comparisonMetric?: ComparisonMetricProps;
-  dimensions?: Dimensions;
+  containerBounds?: BoundingRect;
   errorText?: string;
   legendFullWidth?: boolean;
   renderInnerValueContent?: RenderInnerValueContent;
@@ -74,7 +74,7 @@ export function Chart({
   theme,
   accessibilityLabel = '',
   comparisonMetric,
-  dimensions = {height: 0, width: 0},
+  containerBounds,
   errorText,
   legendFullWidth = false,
   renderInnerValueContent,
@@ -100,13 +100,18 @@ export function Chart({
       ? 'vertical'
       : 'horizontal';
 
+  const containerDimensions = {
+    height: containerBounds?.height ?? 0,
+    width: containerBounds?.width ?? 0,
+  };
+
   const maxLegendWidth =
-    legendDirection === 'vertical' ? dimensions.width / 2 : 0;
+    legendDirection === 'vertical' ? containerDimensions.width / 2 : 0;
 
   const {height, width, legend, setLegendDimensions, isLegendMounted} =
     useLegend({
       data: [{series: data, shape: 'Bar'}],
-      dimensions,
+      containerDimensions,
       showLegend,
       direction: legendDirection,
       colors: seriesColor,
@@ -120,7 +125,7 @@ export function Chart({
 
   useColorVisionEvents({
     enabled: shouldUseColorVisionEvents,
-    dimensions: {...dimensions, x: 0, y: 0},
+    containerDimensions,
   });
 
   useWatchColorVisionEvents({
@@ -188,7 +193,7 @@ export function Chart({
       <LegendValues
         data={data}
         activeIndex={activeIndex}
-        dimensions={{...dimensions, x: 0, y: 0}}
+        containerDimensions={containerDimensions}
         legendFullWidth={legendFullWidth}
         labelFormatter={labelFormatter}
         getColorVisionStyles={getColorVisionStyles}
@@ -278,12 +283,12 @@ export function Chart({
               labelFormatter={labelFormatter}
               renderInnerValueContent={renderInnerValueContent}
               diameter={diameter}
-              dimensions={dimensions}
+              containerDimensions={containerDimensions}
             />
           </Fragment>
         ) : (
           <ChartSkeleton
-            dimensions={{width: diameter, height: diameter}}
+            containerBounds={{width: diameter, height: diameter, x: 0, y: 0}}
             state={state}
             type="Donut"
             errorText={errorText}
@@ -301,7 +306,7 @@ export function Chart({
           position={legendPosition}
           maxWidth={maxLegendWidth}
           enableHideOverflow={!isCornerPosition}
-          dimensions={{...dimensions, x: 0, y: 0}}
+          containerDimensions={containerDimensions}
           renderLegendContent={
             shouldRenderLegendContentWithValues
               ? renderLegendContentWithValues

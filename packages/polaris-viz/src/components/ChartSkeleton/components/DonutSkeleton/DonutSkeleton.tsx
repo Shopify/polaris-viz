@@ -16,13 +16,13 @@ const RADIUS_PADDING = 20;
 const SECONDARY_DELAY = 200;
 
 interface Props {
-  dimensions: Dimensions;
+  containerDimensions: Dimensions;
   state: ChartState;
   errorText: string;
 }
 
 export function DonutSkeleton({
-  dimensions: {height, width},
+  containerDimensions: {height, width},
   state,
   errorText,
 }: Props) {

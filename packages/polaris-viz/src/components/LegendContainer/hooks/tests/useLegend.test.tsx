@@ -33,7 +33,7 @@ const DATAGROUP: DataGroup[] = [
 ];
 
 const MOCK_PROPS: Props = {
-  dimensions: {height: 100, width: 100},
+  containerDimensions: {height: 100, width: 100},
   showLegend: true,
   data: DATAGROUP,
   seriesNameFormatter: (value) => `${value}`,

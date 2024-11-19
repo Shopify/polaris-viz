@@ -54,7 +54,7 @@ const MOCK_PROPS: Props = {
       name: 'LABEL2',
     },
   ],
-  dimensions: {width: 500, height: 250, x: 0, y: 0},
+  containerBounds: {width: 500, height: 250, x: 0, y: 0},
   renderTooltipContent,
   xAxisOptions: {
     allowLineWrap: false,
@@ -339,7 +339,10 @@ describe('Chart />', () => {
 
     it('does not render <LegendContainer /> when the chart has a height of less than 125', () => {
       const chart = mount(
-        <Chart {...MOCK_PROPS} dimensions={{width: 100, height: 100}} />,
+        <Chart
+          {...MOCK_PROPS}
+          containerDimensions={{width: 100, height: 100}}
+        />,
       );
       expect(chart).not.toContainReactComponent(LegendContainer);
     });

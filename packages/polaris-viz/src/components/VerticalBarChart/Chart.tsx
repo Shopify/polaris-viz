@@ -69,7 +69,7 @@ export interface Props {
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
   annotationsLookupTable?: AnnotationLookupTable;
-  dimensions?: BoundingRect;
+  containerBounds?: BoundingRect;
   emptyStateText?: string;
   renderLegendContent?: RenderLegendContent;
   renderHiddenLegendLabel?: (count: number) => string;
@@ -77,8 +77,8 @@ export interface Props {
 
 export function Chart({
   annotationsLookupTable = {},
+  containerBounds,
   data,
-  dimensions,
   emptyStateText,
   renderLegendContent,
   renderTooltipContent,
@@ -89,16 +89,24 @@ export function Chart({
   renderHiddenLegendLabel,
   seriesNameFormatter,
 }: Props) {
-  useColorVisionEvents({enabled: data.length > 1, dimensions});
-
   const selectedTheme = useTheme();
   const {characterWidths} = useChartContext();
 
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
   const id = useMemo(() => uniqueId('VerticalBarChart'), []);
 
+  const containerDimensions = {
+    height: containerBounds?.height ?? 0,
+    width: containerBounds?.width ?? 0,
+  };
+
+  useColorVisionEvents({
+    enabled: data.length > 1,
+    containerDimensions,
+  });
+
   const isSmallChart = Boolean(
-    dimensions && dimensions?.height < SMALL_CHART_HEIGHT,
+    containerBounds != null && containerBounds?.height < SMALL_CHART_HEIGHT,
   );
 
   const {legend, setLegendDimensions, height, width} = useLegend({
@@ -108,7 +116,7 @@ export function Chart({
         series: data,
       },
     ],
-    dimensions,
+    containerDimensions,
     showLegend: showLegend && !isSmallChart,
     seriesNameFormatter,
   });
@@ -346,12 +354,12 @@ export function Chart({
         <TooltipWrapper
           bandwidth={xScale.bandwidth()}
           chartBounds={chartBounds}
+          containerBounds={containerBounds}
           focusElementDataType={DataType.BarGroup}
           getMarkup={getTooltipMarkup}
           getPosition={getTooltipPosition}
           margin={{...ChartMargin, Top: chartYPosition}}
           parentRef={svgRef}
-          chartDimensions={dimensions}
           usePortal
         />
       )}
@@ -359,11 +367,11 @@ export function Chart({
       {showLegend && !isSmallChart && (
         <LegendContainer
           colorVisionType={COLOR_VISION_SINGLE_ITEM}
+          containerDimensions={containerDimensions}
           data={legend}
           onDimensionChange={setLegendDimensions}
           renderLegendContent={renderLegendContent}
           enableHideOverflow
-          dimensions={dimensions}
           renderHiddenLegendLabel={renderHiddenLegendLabel}
         />
       )}
@@ -389,8 +397,8 @@ export function Chart({
     const y = yScale(highestValuePos!) + chartYPosition;
 
     return {
-      x: x + (dimensions?.x ?? 0),
-      y: Math.abs(y) + (dimensions?.y ?? 0),
+      x: x + (containerBounds?.x ?? 0),
+      y: Math.abs(y) + (containerBounds?.y ?? 0),
       position: {
         horizontal: TooltipHorizontalOffset.Center,
         vertical: areAllNegative

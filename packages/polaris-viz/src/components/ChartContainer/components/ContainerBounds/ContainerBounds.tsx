@@ -3,7 +3,6 @@ import {cloneElement, useCallback, useLayoutEffect, useState} from 'react';
 import type {
   DataGroup,
   DataSeries,
-  Dimensions,
   ErrorBoundaryResponse,
   BoundingRect,
 } from '@shopify/polaris-viz-core';
@@ -18,9 +17,9 @@ import type {SkeletonType} from 'components/ChartSkeleton';
 import {ChartErrorBoundary} from '../../../ChartErrorBoundary';
 import {usePrintResizing, useResizeObserver} from '../../../../hooks';
 
-import styles from './ChartDimensions.scss';
+import styles from './ContainerBounds.scss';
 
-interface ChartDimensionsProps {
+interface ContainerBoundsProps {
   children: ReactElement;
   data: DataSeries[] | DataGroup[];
   onIsPrintingChange: Dispatch<SetStateAction<boolean>>;
@@ -30,7 +29,7 @@ interface ChartDimensionsProps {
   onError?: ErrorBoundaryResponse;
 }
 
-export function ChartDimensions({
+export function ContainerBounds({
   children,
   data,
   onIsPrintingChange,
@@ -38,11 +37,11 @@ export function ChartDimensions({
   sparkChart = false,
   skeletonType = 'Default',
   onError,
-}: ChartDimensionsProps) {
+}: ContainerBoundsProps) {
   const {chartContainer} = useTheme();
   const {onError: onErrorProvider} = usePolarisVizContext();
 
-  const [chartDimensions, setChartDimensions] =
+  const [containerBounds, setContainerBounds] =
     useState<BoundingRect | null>(null);
 
   const {ref, setRef, entry} = useResizeObserver();
@@ -51,7 +50,7 @@ export function ChartDimensions({
 
   usePrintResizing({
     ref,
-    setChartDimensions,
+    setContainerBounds,
     onIsPrintingChange,
   });
 
@@ -70,7 +69,7 @@ export function ChartDimensions({
     const scrollY =
       scrollContainer == null ? window.scrollY : scrollContainer.scrollTop;
 
-    setChartDimensions({width, height, x, y: y + scrollY});
+    setContainerBounds({width, height, x, y: y + scrollY});
   }, [entry, previousEntry?.contentRect, scrollContainer]);
 
   const debouncedUpdateDimensions = useDebouncedCallback(() => {
@@ -80,8 +79,8 @@ export function ChartDimensions({
   useLayoutEffect(() => {
     updateDimensions();
 
-    if (chartDimensions === null) {
-      setChartDimensions({
+    if (containerBounds === null) {
+      setContainerBounds({
         width: 0,
         height: sparkChart
           ? chartContainer.sparkChartMinHeight
@@ -106,7 +105,7 @@ export function ChartDimensions({
     entry,
     updateDimensions,
     debouncedUpdateDimensions,
-    chartDimensions,
+    containerBounds,
     chartContainer.minHeight,
     sparkChart,
     chartContainer.sparkChartMinHeight,
@@ -122,7 +121,7 @@ export function ChartDimensions({
 
     const bounds = ref.getBoundingClientRect();
 
-    setChartDimensions((prev) => {
+    setContainerBounds((prev) => {
       if (bounds.y === prev?.y && bounds.x === prev?.x) {
         return prev;
       }
@@ -138,7 +137,7 @@ export function ChartDimensions({
 
   return (
     <div
-      className={styles.ChartDimensions}
+      className={styles.ContainerBounds}
       ref={setRef}
       style={{
         minHeight: sparkChart
@@ -148,24 +147,24 @@ export function ChartDimensions({
       onMouseEnter={onMouseEnter}
       onFocus={onMouseEnter}
     >
-      {!hasValidDimensions(chartDimensions) ? null : (
+      {containerBounds == null || !hasValidBounds(containerBounds) ? null : (
         <ChartErrorBoundary
           type={skeletonType ?? 'Default'}
-          dimensions={chartDimensions!}
+          containerBounds={containerBounds}
           data={data}
           onError={onError ?? onErrorProvider}
         >
           <div
             className={styles.Chart}
             style={{
-              height: chartDimensions!.height,
-              width: chartDimensions!.width,
+              height: containerBounds.height,
+              width: containerBounds.width,
             }}
           >
             {cloneElement<{
-              dimensions: Dimensions;
+              containerBounds: BoundingRect;
             }>(children, {
-              dimensions: chartDimensions!,
+              containerBounds,
             })}
           </div>
         </ChartErrorBoundary>
@@ -174,10 +173,6 @@ export function ChartDimensions({
   );
 }
 
-function hasValidDimensions(chartDimensions: Dimensions | null) {
-  if (chartDimensions == null) {
-    return false;
-  }
-
-  return chartDimensions.width > 0 && chartDimensions.height > 0;
+function hasValidBounds(containerBounds: BoundingRect) {
+  return containerBounds.width > 0 && containerBounds.height > 0;
 }

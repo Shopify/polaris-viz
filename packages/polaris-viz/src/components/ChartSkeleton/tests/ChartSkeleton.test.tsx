@@ -1,5 +1,6 @@
 import {ChartState} from '@shopify/polaris-viz-core';
 
+import type {Props} from '../ChartSkeleton';
 import {ChartSkeleton} from '../ChartSkeleton';
 import {
   mountWithProvider,
@@ -7,10 +8,12 @@ import {
 } from '../../../test-utilities/mountWithProvider';
 import {Shimmer} from '../components';
 
-const MOCK_PROPS = {
-  dimensions: {
+const MOCK_PROPS: Props = {
+  containerBounds: {
     width: 900,
     height: 400,
+    x: 0,
+    y: 0,
   },
 };
 
