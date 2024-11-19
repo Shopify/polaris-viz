@@ -1,4 +1,11 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import type {LabelFormatter} from '@shopify/polaris-viz-core';
 import {
   DEFAULT_CHART_PROPS,
@@ -45,6 +52,8 @@ export interface GridProps {
   theme?: string;
 }
 
+const OFFSCREEN_POSITION = -10000;
+
 export function Grid(props: GridProps) {
   const [xAxisHeight, setXAxisHeight] = useState(X_AXIS_HEIGHT);
   const [hoveredGroups, setHoveredGroups] = useState<Set<string>>(new Set());
@@ -53,6 +62,14 @@ export function Grid(props: GridProps) {
   const [tooltipInfo, setTooltipInfo] = useState<TooltipInfo | null>(null);
   const [isSmallContainer, setIsSmallContainer] = useState(false);
   const [groupSelected, setGroupSelected] = useState<CellGroup | null>(null);
+  const tooltipRef = useRef<HTMLDivElement>(null);
+  const [tooltipDimensions, setTooltipDimensions] = useState<{
+    width: number;
+    height: number;
+  }>({
+    width: TOOLTIP_WIDTH,
+    height: TOOLTIP_HEIGHT,
+  });
 
   const {
     cellGroups = [],
@@ -89,6 +106,13 @@ export function Grid(props: GridProps) {
     return new Set([group.id, ...(group.connectedGroups ?? [])]);
   };
 
+  useLayoutEffect(() => {
+    if (tooltipRef.current && (hoveredGroup || groupSelected)) {
+      const {width, height} = tooltipRef.current.getBoundingClientRect();
+      setTooltipDimensions({width, height});
+    }
+  }, [hoveredGroup, groupSelected, tooltipRef.current]);
+
   const getTooltipInfo = useCallback(
     (group: CellGroup): TooltipInfo | null => {
       const rect =
@@ -105,21 +129,17 @@ export function Grid(props: GridProps) {
       let y: number;
       let placement: Placement;
 
-      if (leftSpace >= TOOLTIP_WIDTH) {
-        x =
-          rect.left -
-          containerRect.left -
-          TOOLTIP_WIDTH -
-          TOOLTIP_HORIZONTAL_OFFSET;
-        y = rect.top - containerRect.top;
+      if (leftSpace >= tooltipDimensions.width) {
+        x = rect.left - tooltipDimensions.width - TOOLTIP_HORIZONTAL_OFFSET;
+        y = rect.top;
         placement = 'left';
-      } else if (bottomSpace >= TOOLTIP_HEIGHT) {
-        x = rect.left - containerRect.left;
-        y = rect.bottom - containerRect.top + TOOLTIP_HORIZONTAL_OFFSET;
+      } else if (bottomSpace >= tooltipDimensions.height) {
+        x = rect.left;
+        y = rect.bottom + TOOLTIP_HORIZONTAL_OFFSET;
         placement = 'bottom';
       } else {
-        x = rect.left - containerRect.left;
-        y = rect.top - containerRect.top - TOOLTIP_VERTICAL_OFFSET;
+        x = rect.left;
+        y = rect.top - TOOLTIP_VERTICAL_OFFSET;
         placement = 'top';
       }
 
@@ -130,7 +150,7 @@ export function Grid(props: GridProps) {
         group,
       };
     },
-    [entry],
+    [entry, tooltipDimensions],
   );
 
   const handleGroupHover = useCallback(
@@ -151,7 +171,7 @@ export function Grid(props: GridProps) {
         }
       }
     },
-    [getTooltipInfo, isSmallContainer],
+    [getTooltipInfo, isSmallContainer, tooltipDimensions],
   );
 
   const handleSelectGroup = useCallback(
@@ -323,13 +343,21 @@ export function Grid(props: GridProps) {
           setXAxisHeight={setXAxisHeight}
         />
       </svg>
-      {tooltipInfo && (
+      {/* {(hoveredGroup || groupSelected) && !tooltipInfo && (
         <Tooltip
-          x={tooltipInfo.x}
-          y={tooltipInfo.y}
+          ref={tooltipRef}
+          x={OFFSCREEN_POSITION}
+          y={OFFSCREEN_POSITION}
           group={groupSelected || hoveredGroup}
         />
-      )}
+      )} */}
+
+      <Tooltip
+        ref={tooltipRef}
+        x={tooltipInfo?.x ?? 0}
+        y={tooltipInfo?.y ?? 0}
+        group={groupSelected || hoveredGroup}
+      />
     </div>
   );
 }
