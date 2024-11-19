@@ -7,6 +7,16 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Removed
+
+- Reverted `TOUCH_FONT_SIZE` constant to 11px.
+
+## [15.3.1] - 2024-11-18
+
+- No updates. Transitive dependency bump.
+
+## [15.3.0] - 2024-11-18
+
 ### Added
 
 - Increase font size of labels and legends when viewing charts on a touch device.
