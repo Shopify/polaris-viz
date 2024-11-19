@@ -1,47 +1,61 @@
 import type {ReactNode} from 'react';
 import {useEffect, useRef, useState, useMemo, useCallback} from 'react';
-import {useChartContext} from '@shopify/polaris-viz-core';
-import type {DataType, BoundingRect} from '@shopify/polaris-viz-core';
+import {InternalChartType, useChartContext} from '@shopify/polaris-viz-core';
+import type {
+  DataType,
+  BoundingRect,
+  DataSeries,
+  ChartType,
+} from '@shopify/polaris-viz-core';
 import {createPortal} from 'react-dom';
+import type {ScaleBand, ScaleLinear} from 'd3-scale';
 
 import {useRootContainer} from '../../hooks/useRootContainer';
 import type {Margin} from '../../types';
 import {SwallowErrors} from '../SwallowErrors';
 import {TOOLTIP_ID} from '../../constants';
 
+import {getHorizontalBarChartTooltipPosition} from './utilities/getHorizontalBarChartTooltipPosition';
+import {getLineChartTooltipPosition} from './utilities/getLineChartTooltipPosition';
+import {getVerticalBarChartTooltipPosition} from './utilities/getVerticalBarChartTooltipPosition';
 import {shouldBlockTooltipEvents} from './utilities/shouldBlockTooltipEvents';
-import type {TooltipPosition, TooltipPositionParams} from './types';
+import type {TooltipPosition} from './types';
 import {DEFAULT_TOOLTIP_POSITION} from './constants';
 import {TooltipAnimatedContainer} from './components/TooltipAnimatedContainer';
-import type {AlteredPosition} from './utilities';
 
 interface BaseProps {
   chartBounds: BoundingRect;
+  chartType: InternalChartType;
+  containerBounds: BoundingRect;
+  data: DataSeries[];
+  focusElementDataType: DataType;
   getMarkup: (index: number) => ReactNode;
-  getPosition: (data: TooltipPositionParams) => TooltipPosition;
+  longestSeriesIndex: number;
   margin: Margin;
   parentRef: SVGSVGElement | null;
-  focusElementDataType: DataType;
-  alwaysUpdatePosition?: boolean;
+  xScale: ScaleLinear<number, number> | ScaleBand<string>;
   bandwidth?: number;
-  getAlteredPosition?: AlteredPosition;
-  id?: string;
   onIndexChange?: (index: number | null) => void;
-  containerBounds?: BoundingRect;
+  id?: string;
+  type?: ChartType;
+  yScale?: ScaleLinear<number, number>;
 }
 
 function TooltipWrapperRaw(props: BaseProps) {
   const {
-    alwaysUpdatePosition = false,
     bandwidth = 0,
     chartBounds,
+    chartType,
+    containerBounds,
+    data,
     focusElementDataType,
-    getAlteredPosition,
-    getPosition,
     id,
+    longestSeriesIndex,
     onIndexChange,
     parentRef,
-    containerBounds,
+    type,
+    xScale,
+    yScale,
   } = props;
   const {scrollContainer} = useChartContext();
   const [position, setPosition] = useState<TooltipPosition>({
@@ -52,6 +66,7 @@ function TooltipWrapperRaw(props: BaseProps) {
   });
 
   const activeIndexRef = useRef<number | null>(null);
+
   const focusElements = useMemo<NodeListOf<SVGPathElement> | undefined>(() => {
     return parentRef?.querySelectorAll(
       `[data-type="${focusElementDataType}"][aria-hidden="false"]`,
@@ -61,6 +76,68 @@ function TooltipWrapperRaw(props: BaseProps) {
   useEffect(() => {
     activeIndexRef.current = position.activeIndex;
   }, [position.activeIndex]);
+
+  const alwaysUpdatePosition = chartType === InternalChartType.Line;
+
+  const getPosition = useCallback(
+    ({
+      event,
+      eventType,
+      index,
+    }: {
+      eventType: 'mouse' | 'focus';
+      event?: MouseEvent | TouchEvent;
+      index?: number;
+    }) => {
+      switch (chartType) {
+        case InternalChartType.Line:
+          return getLineChartTooltipPosition({
+            chartBounds,
+            data,
+            event,
+            eventType,
+            index,
+            longestSeriesIndex,
+            xScale: xScale as ScaleLinear<number, number>,
+          });
+        case InternalChartType.HorizontalBar:
+          return getHorizontalBarChartTooltipPosition({
+            chartBounds,
+            data,
+            event,
+            eventType,
+            index,
+            longestSeriesIndex,
+            type,
+            xScale: xScale as ScaleLinear<number, number>,
+          });
+        case InternalChartType.Bar:
+        default:
+          return getVerticalBarChartTooltipPosition({
+            chartBounds,
+            containerBounds,
+            data,
+            event,
+            eventType,
+            index,
+            longestSeriesIndex,
+            type,
+            xScale: xScale as ScaleBand<string>,
+            yScale: yScale as ScaleLinear<number, number>,
+          });
+      }
+    },
+    [
+      chartBounds,
+      containerBounds,
+      chartType,
+      data,
+      longestSeriesIndex,
+      type,
+      xScale,
+      yScale,
+    ],
+  );
 
   const onMouseMove = useCallback(
     (event: MouseEvent | TouchEvent) => {
@@ -185,13 +262,13 @@ function TooltipWrapperRaw(props: BaseProps) {
       activePointIndex={position.activeIndex}
       bandwidth={bandwidth}
       chartBounds={chartBounds}
+      containerBounds={containerBounds}
+      chartType={chartType}
       currentX={position.x}
       currentY={position.y}
       id={id}
-      getAlteredPosition={getAlteredPosition}
       margin={props.margin}
       position={position.position}
-      containerBounds={containerBounds}
     >
       {props.getMarkup(position.activeIndex)}
     </TooltipAnimatedContainer>

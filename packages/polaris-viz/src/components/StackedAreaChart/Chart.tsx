@@ -18,7 +18,7 @@ import {
   useChartPositions,
   LINE_HEIGHT,
   SMALL_CHART_HEIGHT,
-  clamp,
+  InternalChartType,
 } from '@shopify/polaris-viz-core';
 
 import {ChartElements} from '../ChartElements';
@@ -35,17 +35,7 @@ import type {
 } from '../../types';
 import {XAxis} from '../XAxis';
 import {LegendContainer, useLegend} from '../LegendContainer';
-import type {
-  TooltipPosition,
-  TooltipPositionOffset,
-  TooltipPositionParams,
-} from '../TooltipWrapper';
-import {
-  TooltipHorizontalOffset,
-  TooltipVerticalOffset,
-  TooltipWrapper,
-  TOOLTIP_POSITION_DEFAULT_RETURN,
-} from '../TooltipWrapper';
+import {TooltipWrapper} from '../TooltipWrapper';
 import {
   useLinearChartAnimations,
   useTheme,
@@ -53,8 +43,11 @@ import {
   useColorVisionEvents,
   useLinearLabelsAndDimensions,
 } from '../../hooks';
-import {ChartMargin, ANNOTATIONS_LABELS_OFFSET} from '../../constants';
-import {eventPointNative} from '../../utilities';
+import {
+  ChartMargin,
+  ANNOTATIONS_LABELS_OFFSET,
+  EMPTY_BOUNDS,
+} from '../../constants';
 import {YAxis} from '../YAxis';
 import {Crosshair} from '../Crosshair';
 import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
@@ -64,13 +57,7 @@ import {useStackedData} from './hooks';
 import {StackedAreas, Points} from './components';
 import {useStackedChartTooltipContent} from './hooks/useStackedChartTooltipContent';
 import {yAxisMinMax} from './utilities/yAxisMinMax';
-import {getAlteredStackedAreaChartPosition} from './utilities/getAlteredStackedAreaChartPosition';
 import styles from './Chart.scss';
-
-const TOOLTIP_POSITION: TooltipPositionOffset = {
-  horizontal: TooltipHorizontalOffset.Left,
-  vertical: TooltipVerticalOffset.Center,
-};
 
 export interface Props {
   annotationsLookupTable: AnnotationLookupTable;
@@ -90,7 +77,7 @@ export function Chart({
   annotationsLookupTable,
   xAxisOptions,
   data,
-  containerBounds,
+  containerBounds = EMPTY_BOUNDS,
   renderLegendContent,
   renderTooltipContent,
   showLegend,
@@ -270,8 +257,8 @@ export function Chart({
   const chartBounds = {
     width,
     height,
-    x: containerBounds?.x ?? chartXPosition,
-    y: containerBounds?.y ?? chartYPosition,
+    x: chartXPosition,
+    y: chartYPosition,
   };
 
   const {hasXAxisAnnotations, hasYAxisAnnotations} = checkAvailableAnnotations(
@@ -400,17 +387,19 @@ export function Chart({
 
       {longestSeriesLength !== -1 && (
         <TooltipWrapper
-          alwaysUpdatePosition
           chartBounds={chartBounds}
+          chartType={InternalChartType.Line}
+          containerBounds={containerBounds}
+          data={data}
           focusElementDataType={DataType.Point}
           getMarkup={getTooltipMarkup}
-          getPosition={getTooltipPosition}
-          getAlteredPosition={getAlteredStackedAreaChartPosition}
           id={tooltipId}
+          longestSeriesIndex={longestSeriesIndex}
           margin={ChartMargin}
           onIndexChange={(index) => setActivePointIndex(index)}
           parentRef={svgRef}
           usePortal
+          xScale={xScale}
         />
       )}
 
@@ -427,47 +416,4 @@ export function Chart({
       )}
     </ChartElements.Div>
   );
-
-  function getTooltipPosition({
-    event,
-    index,
-    eventType,
-  }: TooltipPositionParams): TooltipPosition {
-    if (eventType === 'mouse' && event) {
-      const point = eventPointNative(event!);
-
-      if (point == null || xScale == null) {
-        return TOOLTIP_POSITION_DEFAULT_RETURN;
-      }
-
-      const {svgX} = point;
-
-      const closestIndex = Math.round(xScale.invert(svgX - chartXPosition));
-
-      const activeIndex = clamp({
-        amount: closestIndex,
-        min: 0,
-        max: data[longestSeriesIndex].data.length - 1,
-      });
-
-      return {
-        x: (event as MouseEvent).pageX,
-        y: (event as MouseEvent).pageY,
-        position: TOOLTIP_POSITION,
-        activeIndex,
-      };
-    } else if (index != null) {
-      const activeIndex = index ?? 0;
-      const x = xScale?.(activeIndex) ?? 0;
-
-      return {
-        x: x + (containerBounds?.x ?? 0),
-        y: containerBounds?.y ?? 0,
-        position: TOOLTIP_POSITION,
-        activeIndex: index,
-      };
-    }
-
-    return TOOLTIP_POSITION_DEFAULT_RETURN;
-  }
 }

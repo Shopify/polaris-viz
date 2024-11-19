@@ -6,12 +6,12 @@ import {
   useYScale,
   LineSeries,
   COLOR_VISION_SINGLE_ITEM,
-  clamp,
   DEFAULT_THEME_NAME,
   useChartPositions,
   useChartContext,
   LINE_HEIGHT,
   SMALL_CHART_HEIGHT,
+  InternalChartType,
 } from '@shopify/polaris-viz-core';
 import type {
   XAxisOptions,
@@ -38,15 +38,7 @@ import type {
 import {useFormattedLabels} from '../../hooks/useFormattedLabels';
 import {XAxis} from '../XAxis';
 import {useLegend, LegendContainer} from '../LegendContainer';
-import type {
-  TooltipPosition,
-  TooltipPositionParams,
-} from '../../components/TooltipWrapper';
-import {
-  TooltipWrapper,
-  TOOLTIP_POSITION_DEFAULT_RETURN,
-} from '../../components/TooltipWrapper';
-import {eventPointNative} from '../../utilities';
+import {TooltipWrapper} from '../../components/TooltipWrapper';
 import {
   useTheme,
   useColorVisionEvents,
@@ -58,6 +50,7 @@ import {
   ANNOTATIONS_LABELS_OFFSET,
   Y_AXIS_LABEL_OFFSET,
   CROSSHAIR_ID,
+  EMPTY_BOUNDS,
 } from '../../constants';
 import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
 import {YAxis} from '../YAxis';
@@ -67,7 +60,7 @@ import {ChartElements} from '../ChartElements';
 import {useLineChartTooltipContent} from './hooks/useLineChartTooltipContent';
 import {PointsAndCrosshair} from './components';
 import {useFormatData} from './hooks';
-import {getAlteredLineChartPosition, yAxisMinMax} from './utilities';
+import {yAxisMinMax} from './utilities';
 
 export interface ChartProps {
   renderTooltipContent: (data: RenderTooltipContentData) => ReactNode;
@@ -92,7 +85,7 @@ export function Chart({
   annotationsLookupTable,
   emptyStateText,
   data,
-  containerBounds,
+  containerBounds = EMPTY_BOUNDS,
   renderLegendContent,
   renderTooltipContent,
   renderHiddenLegendLabel,
@@ -226,46 +219,6 @@ export function Chart({
     return null;
   }
 
-  function getTooltipPosition({
-    event,
-    index,
-    eventType,
-  }: TooltipPositionParams): TooltipPosition {
-    if (eventType === 'mouse') {
-      const point = eventPointNative(event!);
-
-      if (point == null || xScale == null || data[longestSeriesIndex] == null) {
-        return TOOLTIP_POSITION_DEFAULT_RETURN;
-      }
-
-      const {svgX} = point;
-
-      const closestIndex = Math.round(xScale.invert(svgX - chartXPosition));
-
-      const activeIndex = clamp({
-        amount: closestIndex,
-        min: 0,
-        max: data[longestSeriesIndex].data.length - 1,
-      });
-
-      return {
-        x: (event as MouseEvent).pageX,
-        y: (event as MouseEvent).pageY,
-        activeIndex,
-      };
-    } else {
-      const activeIndex = index ?? 0;
-
-      const x = xScale?.(activeIndex) ?? 0;
-
-      return {
-        x: x + (containerBounds?.x ?? 0),
-        y: containerBounds?.y ?? 0,
-        activeIndex,
-      };
-    }
-  }
-
   function moveCrosshair(index: number | null) {
     setActiveIndex(0);
 
@@ -290,8 +243,8 @@ export function Chart({
   const chartBounds: BoundingRect = {
     width,
     height,
-    x: containerBounds?.x ?? chartXPosition,
-    y: containerBounds?.y ?? chartYPosition,
+    x: chartXPosition,
+    y: chartYPosition,
   };
 
   const {hasXAxisAnnotations, hasYAxisAnnotations} = checkAvailableAnnotations(
@@ -430,12 +383,13 @@ export function Chart({
 
       {longestSeriesLength !== -1 && (
         <TooltipWrapper
-          alwaysUpdatePosition
           chartBounds={chartBounds}
+          containerBounds={containerBounds}
+          chartType={InternalChartType.Line}
           focusElementDataType={DataType.Point}
-          getAlteredPosition={getAlteredLineChartPosition}
           getMarkup={getTooltipMarkup}
-          getPosition={getTooltipPosition}
+          data={data}
+          longestSeriesIndex={longestSeriesIndex}
           id={tooltipId.current}
           margin={ChartMargin}
           onIndexChange={(index) => {
@@ -447,6 +401,8 @@ export function Chart({
           }}
           parentRef={svgRef}
           usePortal
+          xScale={xScale}
+          yScale={yScale}
         />
       )}
 

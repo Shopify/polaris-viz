@@ -1,7 +1,7 @@
 import type {DataSeries} from '@shopify/polaris-viz-core';
 import {useMemo} from 'react';
 
-import {sortBarChartData} from '../../../utilities/sortBarChartData';
+import {sortBarChartData} from '../utilities/sortBarChartData';
 
 import {useXScale} from './useXScale';
 
@@ -12,7 +12,7 @@ interface Props {
 }
 
 export function useVerticalBarChart({data, drawableWidth, labels}: Props) {
-  const sortedData = sortBarChartData(labels, data);
+  const sortedData = sortBarChartData(data);
 
   const areAllNegative = useMemo(() => {
     return ![...sortedData]

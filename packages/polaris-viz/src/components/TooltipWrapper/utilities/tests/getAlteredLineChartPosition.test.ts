@@ -1,8 +1,5 @@
-import type {AlteredPositionProps} from '../../../TooltipWrapper';
-import {
-  TooltipVerticalOffset,
-  TooltipHorizontalOffset,
-} from '../../../TooltipWrapper';
+import type {AlteredPositionProps} from '../../types';
+import {TooltipVerticalOffset, TooltipHorizontalOffset} from '../../types';
 import {getAlteredLineChartPosition} from '../getAlteredLineChartPosition';
 
 const MARGIN = {Top: 0, Left: 0, Right: 0, Bottom: 0};

@@ -91,8 +91,9 @@ jest.mock('../../../utilities/getPointAtLength', () => {
   };
 });
 
-jest.mock('../../../utilities/eventPoint', () => {
+jest.mock('../../TooltipWrapper/utilities/eventPoint', () => {
   return {
+    ...jest.requireActual('../../TooltipWrapper/utilities/eventPoint'),
     eventPointNative: () => {
       return {clientX: 200, clientY: 200, svgX: 200, svgY: 200};
     },
