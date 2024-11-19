@@ -69,6 +69,15 @@ export function Grid(props: GridProps) {
     height: TOOLTIP_HEIGHT,
   });
 
+  const tooltipRef = useRef<HTMLDivElement>(null);
+  const [tooltipDimensions, setTooltipDimensions] = useState<{
+    width: number;
+    height: number;
+  }>({
+    width: TOOLTIP_WIDTH,
+    height: TOOLTIP_HEIGHT,
+  });
+
   const {
     cellGroups = [],
     xAxisOptions = {},
@@ -341,15 +350,6 @@ export function Grid(props: GridProps) {
           setXAxisHeight={setXAxisHeight}
         />
       </svg>
-      {/* {(hoveredGroup || groupSelected) && !tooltipInfo && (
-        <Tooltip
-          ref={tooltipRef}
-          x={OFFSCREEN_POSITION}
-          y={OFFSCREEN_POSITION}
-          group={groupSelected || hoveredGroup}
-        />
-      )} */}
-
       <Tooltip
         ref={tooltipRef}
         x={tooltipInfo?.x ?? 0}

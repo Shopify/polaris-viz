@@ -3,6 +3,7 @@ import {createPortal} from 'react-dom';
 
 import type {CellGroup} from '../types';
 import {useRootContainer} from '../../../hooks/useRootContainer';
+import {TOOLTIP_ID} from '../../../constants';
 
 import styles from './Tooltip.scss';
 
