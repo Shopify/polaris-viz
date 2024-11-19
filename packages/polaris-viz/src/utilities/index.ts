@@ -1,4 +1,3 @@
-export {eventPoint, eventPointNative} from './eventPoint';
 export {getPathLength} from './getPathLength';
 export {getPointAtLength} from './getPointAtLength';
 export {normalizeData} from './normalizeData';

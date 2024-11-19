@@ -5,13 +5,19 @@ import type {DataSeries} from '@shopify/polaris-viz-core';
 export function useHorizontalSeriesColors(data: DataSeries[]) {
   const selectedTheme = useTheme();
 
-  const longestSeriesCount = useMemo(() => {
-    return data.reduce((prev, cur) => {
-      const count = cur.data.length;
+  const longestSeriesIndex = useMemo(
+    () =>
+      data.reduce((maxIndex, currentSeries, currentIndex) => {
+        return data[maxIndex].data.length < currentSeries.data.length
+          ? currentIndex
+          : maxIndex;
+      }, 0),
+    [data],
+  );
 
-      return count > prev ? count : prev;
-    }, 0);
-  }, [data]);
+  const longestSeriesCount = useMemo(() => {
+    return data[longestSeriesIndex].data.length;
+  }, [data, longestSeriesIndex]);
 
   const seriesColors = useMemo(() => {
     const nonComparison = data.filter(
@@ -37,5 +43,5 @@ export function useHorizontalSeriesColors(data: DataSeries[]) {
     return seriesColors.slice(0, data.length);
   }, [data, selectedTheme]);
 
-  return {longestSeriesCount, seriesColors};
+  return {longestSeriesCount, seriesColors, longestSeriesIndex};
 }

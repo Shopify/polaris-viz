@@ -1,3 +1,5 @@
+import type {BoundingRect} from '@shopify/polaris-viz-core';
+
 export {
   BASE_ANIMATION_DURATION,
   XMLNS,
@@ -63,3 +65,9 @@ export const HOVER_TARGET_ZONE = 48;
 export const CROSSHAIR_ID = 'Crosshair';
 export const DEFAULT_ANIMATION_DELAY = 100;
 export const TOOLTIP_ID = 'polaris_viz_tooltip_root';
+export const EMPTY_BOUNDS: BoundingRect = {
+  width: 0,
+  height: 0,
+  x: 0,
+  y: 0,
+};

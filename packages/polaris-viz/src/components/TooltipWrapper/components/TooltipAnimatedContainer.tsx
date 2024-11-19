@@ -1,13 +1,14 @@
 import type {ReactNode} from 'react';
 import {useEffect, useRef, useState, useMemo} from 'react';
 import type {BoundingRect, Dimensions} from '@shopify/polaris-viz-core';
-import {useChartContext} from '@shopify/polaris-viz-core';
+import {useChartContext, InternalChartType} from '@shopify/polaris-viz-core';
 
 import type {Margin} from '../../../types';
 import type {TooltipPositionOffset} from '../types';
-import {getAlteredVerticalBarPosition} from '../utilities';
-import type {AlteredPosition} from '../utilities';
 import {DEFAULT_TOOLTIP_POSITION} from '../constants';
+import {getAlteredLineChartPosition} from '../utilities/getAlteredLineChartPosition';
+import {getAlteredHorizontalBarPosition} from '../utilities/getAlteredHorizontalBarPosition';
+import {getAlteredVerticalBarPosition} from '../utilities/getAlteredVerticalBarPosition';
 
 import styles from './TooltipAnimatedContainer.scss';
 
@@ -18,25 +19,25 @@ export interface TooltipAnimatedContainerProps {
   currentX: number;
   currentY: number;
   chartBounds: BoundingRect;
-  getAlteredPosition?: AlteredPosition;
+  chartType: InternalChartType;
+  containerBounds: BoundingRect;
   position?: TooltipPositionOffset;
   id?: string;
   bandwidth?: number;
-  containerBounds?: BoundingRect;
 }
 
 export function TooltipAnimatedContainer({
   activePointIndex,
   bandwidth = 0,
   chartBounds,
+  chartType,
+  containerBounds,
   children,
   currentX,
   currentY,
   id = '',
-  getAlteredPosition = getAlteredVerticalBarPosition,
   margin,
   position = DEFAULT_TOOLTIP_POSITION,
-  containerBounds,
 }: TooltipAnimatedContainerProps) {
   const {isPerformanceImpacted, scrollContainer} = useChartContext();
 
@@ -45,12 +46,24 @@ export function TooltipAnimatedContainer({
     useState<Dimensions | null>(null);
   const firstRender = useRef(true);
 
+  const getAlteredPositionFunction = useMemo(() => {
+    switch (chartType) {
+      case InternalChartType.Line:
+        return getAlteredLineChartPosition;
+      case InternalChartType.HorizontalBar:
+        return getAlteredHorizontalBarPosition;
+      case InternalChartType.Bar:
+      default:
+        return getAlteredVerticalBarPosition;
+    }
+  }, [chartType]);
+
   const {x, y, opacity, immediate} = useMemo(() => {
     if (tooltipDimensions == null) {
       return {x: 0, y: 0, opacity: 0};
     }
 
-    const {x, y} = getAlteredPosition({
+    const {x, y} = getAlteredPositionFunction({
       currentX,
       currentY,
       position,
@@ -77,7 +90,7 @@ export function TooltipAnimatedContainer({
     chartBounds,
     currentX,
     currentY,
-    getAlteredPosition,
+    getAlteredPositionFunction,
     margin,
     position,
     isPerformanceImpacted,

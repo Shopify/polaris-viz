@@ -23,7 +23,7 @@ jest.mock('@shopify/polaris-viz-core/src/utilities', () => {
   };
 });
 
-jest.mock('../../../utilities/eventPoint', () => {
+jest.mock('../../TooltipWrapper/utilities/eventPoint', () => {
   return {
     eventPointNative: () => {
       return {clientX: 0, clientY: 0, svgX: 150, svgY: 150};

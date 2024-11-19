@@ -313,6 +313,7 @@ export type StackedValues = Series<
 
 export enum InternalChartType {
   Bar = 'Bar',
+  HorizontalBar = 'HorizontalBar',
   Combo = 'Combo',
   Line = 'Line',
 }

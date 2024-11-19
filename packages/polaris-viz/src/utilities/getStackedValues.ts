@@ -1,6 +1,8 @@
 import {stack} from 'd3-shape';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
+import type {StackedSeries} from '../types';
+
 function getKey(index: number, name?: string) {
   return `${name ?? 'stack'}-${index}`;
 }
@@ -12,7 +14,12 @@ interface Options {
   offset;
 }
 
-export function getStackedValues({series, labels, order, offset}: Options) {
+export function getStackedValues({
+  series,
+  labels,
+  order,
+  offset,
+}: Options): StackedSeries[] {
   const stackedValues = stack()
     .offset(offset)
     .order(order)
