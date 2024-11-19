@@ -1,4 +1,11 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import type {LabelFormatter} from '@shopify/polaris-viz-core';
 import {
   DEFAULT_CHART_PROPS,
@@ -54,6 +61,15 @@ export function Grid(props: GridProps) {
   const [isSmallContainer, setIsSmallContainer] = useState(false);
   const [groupSelected, setGroupSelected] = useState<CellGroup | null>(null);
 
+  const tooltipRef = useRef<HTMLDivElement>(null);
+  const [tooltipDimensions, setTooltipDimensions] = useState<{
+    width: number;
+    height: number;
+  }>({
+    width: TOOLTIP_WIDTH,
+    height: TOOLTIP_HEIGHT,
+  });
+
   const {
     cellGroups = [],
     xAxisOptions = {},
@@ -101,6 +117,13 @@ export function Grid(props: GridProps) {
     return new Set([group.id, ...(group.connectedGroups ?? [])]);
   };
 
+  useLayoutEffect(() => {
+    if (tooltipRef.current && (hoveredGroup || groupSelected)) {
+      const {width, height} = tooltipRef.current.getBoundingClientRect();
+      setTooltipDimensions({width, height});
+    }
+  }, [hoveredGroup, groupSelected]);
+
   const getTooltipInfo = useCallback(
     (group: CellGroup): TooltipInfo | null => {
       const rect =
@@ -117,11 +140,11 @@ export function Grid(props: GridProps) {
       let y: number;
       let placement: Placement;
 
-      if (leftSpace >= TOOLTIP_WIDTH) {
-        x = rect.left - TOOLTIP_WIDTH - TOOLTIP_HORIZONTAL_OFFSET;
+      if (leftSpace >= tooltipDimensions.width) {
+        x = rect.left - tooltipDimensions.width - TOOLTIP_HORIZONTAL_OFFSET;
         y = rect.top;
         placement = 'left';
-      } else if (bottomSpace >= TOOLTIP_HEIGHT) {
+      } else if (bottomSpace >= tooltipDimensions.height) {
         x = rect.left;
         y = rect.bottom + TOOLTIP_HORIZONTAL_OFFSET;
         placement = 'bottom';
@@ -138,7 +161,7 @@ export function Grid(props: GridProps) {
         group,
       };
     },
-    [entry],
+    [entry, tooltipDimensions],
   );
 
   const handleGroupHover = useCallback(
@@ -331,14 +354,12 @@ export function Grid(props: GridProps) {
           setXAxisHeight={setXAxisHeight}
         />
       </svg>
-
-      {tooltipInfo && (
-        <Tooltip
-          x={tooltipInfo.x}
-          y={tooltipInfo.y}
-          group={groupSelected || hoveredGroup}
-        />
-      )}
+      <Tooltip
+        ref={tooltipRef}
+        x={tooltipInfo?.x ?? 0}
+        y={tooltipInfo?.y ?? 0}
+        group={groupSelected || hoveredGroup}
+      />
     </div>
   );
 }
