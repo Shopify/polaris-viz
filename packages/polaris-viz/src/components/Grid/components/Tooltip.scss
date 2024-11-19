@@ -46,6 +46,8 @@
 
 .Tooltip {
   font-size: 12px;
+  font-family: Inter, -apple-system, system-ui, 'San Francisco', 'Segoe UI',
+    Roboto, 'Helvetica Neue', sans-serif;
   line-height: 1.2;
   padding: 12px;
   background: $color-white;
@@ -57,6 +59,8 @@
 .TooltipContainer {
   position: absolute;
   z-index: 1;
+  top: 0;
+  left: 0;
   width: 250px;
   outline: none;
   @container (max-width: #{$grid-small-breakpoint}) {
