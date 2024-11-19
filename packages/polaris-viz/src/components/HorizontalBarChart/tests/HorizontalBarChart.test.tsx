@@ -31,7 +31,7 @@ const mockProps: HorizontalBarChartProps = {
   },
   renderTooltipContent: (value) => `${value}`,
   showLegend: false,
-  dimensions: {
+  containerDimensions: {
     height: 400,
     width: 400,
   },

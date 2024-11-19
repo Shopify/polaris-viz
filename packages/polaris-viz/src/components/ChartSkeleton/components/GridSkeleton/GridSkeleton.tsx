@@ -16,13 +16,13 @@ const INITIAL_DELAY = 200;
 const NUMBER_OF_BRICKS = 5;
 
 interface Props {
-  dimensions: Dimensions;
+  containerDimensions: Dimensions;
   state: ChartState;
   errorText: string;
 }
 
-export function GridSkeleton({dimensions, state, errorText}: Props) {
-  const {width, height} = dimensions;
+export function GridSkeleton({containerDimensions, state, errorText}: Props) {
+  const {width, height} = containerDimensions;
 
   const {
     chartContainer: {padding},

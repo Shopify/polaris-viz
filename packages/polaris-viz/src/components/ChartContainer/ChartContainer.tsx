@@ -19,7 +19,7 @@ import {useTheme, usePrefersReducedMotion} from '../../hooks';
 import type {SkeletonType} from '../ChartSkeleton';
 
 import styles from './ChartContainer.scss';
-import {ChartDimensions} from './components/';
+import {ContainerBounds} from './components/';
 
 interface Props {
   children: ReactElement;
@@ -87,7 +87,7 @@ export const ChartContainer = (props: Props) => {
         }}
         id={getChartId(value.id)}
       >
-        <ChartDimensions
+        <ContainerBounds
           data={props.data}
           onError={props.onError}
           onIsPrintingChange={setIsPrinting}
@@ -96,7 +96,7 @@ export const ChartContainer = (props: Props) => {
           scrollContainer={props.scrollContainer}
         >
           {props.children}
-        </ChartDimensions>
+        </ContainerBounds>
       </div>
     </ChartContext.Provider>
   );

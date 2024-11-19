@@ -24,7 +24,7 @@ export interface HorizontalBarChartProps {
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
   annotationsLookupTable?: AnnotationLookupTable;
-  dimensions?: BoundingRect;
+  containerBounds?: BoundingRect;
   renderHiddenLegendLabel?: (count: number) => string;
   renderLegendContent?: RenderLegendContent;
   type?: ChartType;
@@ -33,7 +33,7 @@ export interface HorizontalBarChartProps {
 export function HorizontalBarChart({
   annotationsLookupTable = {},
   data,
-  dimensions,
+  containerBounds,
   renderHiddenLegendLabel,
   renderLegendContent,
   renderTooltipContent,
@@ -45,7 +45,7 @@ export function HorizontalBarChart({
 }: HorizontalBarChartProps) {
   return (
     <Chart
-      dimensions={dimensions}
+      containerBounds={containerBounds}
       annotationsLookupTable={annotationsLookupTable}
       data={data}
       renderTooltipContent={renderTooltipContent}

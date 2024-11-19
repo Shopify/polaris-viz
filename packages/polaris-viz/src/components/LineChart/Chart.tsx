@@ -78,7 +78,7 @@ export interface ChartProps {
   hideLegendOverflow: boolean;
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
-  dimensions?: BoundingRect;
+  containerBounds?: BoundingRect;
   emptyStateText?: string;
   renderLegendContent?: RenderLegendContent;
   renderHiddenLegendLabel?: RenderHiddenLegendLabel;
@@ -92,7 +92,7 @@ export function Chart({
   annotationsLookupTable,
   emptyStateText,
   data,
-  dimensions,
+  containerBounds,
   renderLegendContent,
   renderTooltipContent,
   renderHiddenLegendLabel,
@@ -104,19 +104,24 @@ export function Chart({
   xAxisOptions,
   yAxisOptions,
 }: ChartProps) {
-  useColorVisionEvents({
-    enabled: data.length > 1,
-    dimensions,
-  });
-
   const selectedTheme = useTheme(theme);
   const {isPerformanceImpacted} = useChartContext();
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [activeLineIndex, setActiveLineIndex] = useState(-1);
 
+  const containerDimensions = {
+    height: containerBounds?.height ?? 0,
+    width: containerBounds?.width ?? 0,
+  };
+
+  useColorVisionEvents({
+    enabled: data.length > 1,
+    containerDimensions,
+  });
+
   const isSmallChart = Boolean(
-    dimensions && dimensions?.height < SMALL_CHART_HEIGHT,
+    containerBounds != null && containerBounds.height < SMALL_CHART_HEIGHT,
   );
 
   const hideXAxis =
@@ -133,7 +138,7 @@ export function Chart({
         series: data,
       },
     ],
-    dimensions,
+    containerDimensions,
     showLegend: showLegend && !isSmallChart,
     seriesNameFormatter,
   });
@@ -254,8 +259,8 @@ export function Chart({
       const x = xScale?.(activeIndex) ?? 0;
 
       return {
-        x: x + (dimensions?.x ?? 0),
-        y: dimensions?.y ?? 0,
+        x: x + (containerBounds?.x ?? 0),
+        y: containerBounds?.y ?? 0,
         activeIndex,
       };
     }
@@ -285,8 +290,8 @@ export function Chart({
   const chartBounds: BoundingRect = {
     width,
     height,
-    x: dimensions?.x ?? chartXPosition,
-    y: dimensions?.y ?? chartYPosition,
+    x: containerBounds?.x ?? chartXPosition,
+    y: containerBounds?.y ?? chartYPosition,
   };
 
   const {hasXAxisAnnotations, hasYAxisAnnotations} = checkAvailableAnnotations(
@@ -448,11 +453,11 @@ export function Chart({
       {showLegend && !isSmallChart && (
         <LegendContainer
           colorVisionType={COLOR_VISION_SINGLE_ITEM}
+          containerDimensions={containerDimensions}
           data={legend}
           onDimensionChange={setLegendDimensions}
           renderLegendContent={renderLegendContent}
           renderHiddenLegendLabel={renderHiddenLegendLabel}
-          dimensions={dimensions}
           enableHideOverflow={hideLegendOverflow}
         />
       )}

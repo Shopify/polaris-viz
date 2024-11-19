@@ -6,13 +6,13 @@ import {useBrowserCheck} from './useBrowserCheck';
 
 interface Props {
   ref: HTMLElement | null;
-  setChartDimensions: (value: React.SetStateAction<Dimensions | null>) => void;
+  setContainerBounds: (value: React.SetStateAction<Dimensions | null>) => void;
   onIsPrintingChange: Dispatch<React.SetStateAction<boolean>>;
 }
 
 export function usePrintResizing({
   ref,
-  setChartDimensions,
+  setContainerBounds,
   onIsPrintingChange,
 }: Props) {
   const [isPrinting, setIsPrinting] = useState(false);
@@ -33,7 +33,7 @@ export function usePrintResizing({
           ref.clientHeight -
           parseInt(paddingTop, 10) -
           parseInt(paddingBottom, 10);
-        setChartDimensions({width, height});
+        setContainerBounds({width, height});
 
         setIsPrinting((isPrinting) => {
           const newIsPrinting = !isPrinting;
@@ -100,7 +100,7 @@ export function usePrintResizing({
         }
       }
     };
-  }, [onIsPrintingChange, setChartDimensions, ref, isFirefox, isSafari]);
+  }, [onIsPrintingChange, setContainerBounds, ref, isFirefox, isSafari]);
 
   return {isPrinting};
 }

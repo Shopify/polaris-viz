@@ -8,7 +8,7 @@ import {BarChart} from '../../BarChart';
 
 const MOCK_PROPS = {
   data: [],
-  dimensions: {
+  containerDimensions: {
     width: 900,
     height: 400,
   },

@@ -9,11 +9,7 @@ import {
   useChartContext,
   useTheme,
 } from '@shopify/polaris-viz-core';
-import type {
-  Direction,
-  Dimensions,
-  BoundingRect,
-} from '@shopify/polaris-viz-core';
+import type {Direction, Dimensions} from '@shopify/polaris-viz-core';
 
 import {DEFAULT_LEGEND_HEIGHT, DEFAULT_LEGEND_WIDTH} from '../../constants';
 import {useResizeObserver, useWatchColorVisionEvents} from '../../hooks';
@@ -33,6 +29,7 @@ import {useOverflowLegend} from './hooks/useOverflowLegend';
 
 export interface LegendContainerProps {
   colorVisionType: string;
+  containerDimensions: Dimensions;
   data: LegendData[];
   onDimensionChange: Dispatch<SetStateAction<Dimensions>>;
   direction?: Direction;
@@ -43,7 +40,6 @@ export interface LegendContainerProps {
   /* If enabled, hides overflowing legend items with "+ n more" */
   enableHideOverflow?: boolean;
   renderHiddenLegendLabel?: RenderHiddenLegendLabel;
-  dimensions?: BoundingRect;
 }
 
 export function LegendContainer({
@@ -57,7 +53,7 @@ export function LegendContainer({
   renderLegendContent,
   enableHideOverflow = false,
   renderHiddenLegendLabel = (count) => `+${count} more`,
-  dimensions,
+  containerDimensions,
 }: LegendContainerProps) {
   const selectedTheme = useTheme();
   const {setRef, entry} = useResizeObserver();
@@ -82,7 +78,7 @@ export function LegendContainer({
           data: allData,
           enableHideOverflow,
           legendItemDimensions,
-          width: dimensions?.width || 0,
+          width: containerDimensions?.width || 0,
           activatorWidth,
           leftMargin,
           horizontalMargin,
@@ -90,7 +86,7 @@ export function LegendContainer({
       : ({
           direction: 'vertical' as const,
           data: allData,
-          height: dimensions?.height,
+          height: containerDimensions?.height,
           enableHideOverflow,
           legendItemDimensions,
         } as UseOverflowLegendProps);
@@ -184,6 +180,7 @@ export function LegendContainer({
             <HiddenLegendTooltip
               activeIndex={activeIndex}
               colorVisionType={colorVisionType}
+              containerDimensions={containerDimensions}
               data={hiddenData}
               theme={theme}
               label={renderHiddenLegendLabel(
@@ -191,7 +188,6 @@ export function LegendContainer({
               )}
               lastVisibleIndex={allData.length - hiddenData.length}
               setActivatorWidth={setActivatorWidth}
-              dimensions={dimensions}
             />
           )}
         </Fragment>

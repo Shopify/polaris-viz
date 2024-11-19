@@ -7,7 +7,7 @@ import {
   useFilteredSparkLineData,
   useSparkLine,
 } from '@shopify/polaris-viz-core';
-import type {Dimensions} from '@shopify/polaris-viz-core';
+import type {BoundingRect} from '@shopify/polaris-viz-core';
 
 import {useThemeSeriesColors} from '../../hooks/useThemeSeriesColors';
 import {useTheme} from '../../hooks';
@@ -19,12 +19,12 @@ import type {SparkLineChartProps} from './SparkLineChart';
 const SVG_MARGIN = 2;
 
 interface Props extends SparkLineChartProps {
-  dimensions?: Dimensions;
+  containerBounds?: BoundingRect;
 }
 
 export function Chart({
   data,
-  dimensions,
+  containerBounds,
   accessibilityLabel,
   offsetLeft = 0,
   offsetRight = 0,
@@ -35,7 +35,7 @@ export function Chart({
   const filteredData = useFilteredSparkLineData(data);
   const seriesColors = useThemeSeriesColors(filteredData, selectedTheme);
 
-  const {width, height} = dimensions ?? {height: 0, width: 0};
+  const {width, height} = containerBounds ?? {height: 0, width: 0};
 
   const {minXDomain, maxXDomain, yScale} = useSparkLine({
     data: filteredData,

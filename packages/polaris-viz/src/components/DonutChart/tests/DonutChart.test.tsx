@@ -23,7 +23,7 @@ describe('<DonutChart />', () => {
       showLegend: true,
       theme: `Light`,
       labelFormatter: (value) => `${value}`,
-      dimensions: {width: 500, height: 500},
+      containerDimensions: {width: 500, height: 500},
       data: [
         {
           name: 'Shopify Payments',
