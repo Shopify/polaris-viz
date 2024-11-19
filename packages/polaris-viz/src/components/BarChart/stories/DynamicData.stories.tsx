@@ -78,4 +78,7 @@ export const DynamicData = () => {
   );
 };
 
-export default {...META, title: 'polaris-viz/Charts/BarChart/DynamicData'} as any;
+export default {
+  ...META,
+  title: 'polaris-viz/Charts/BarChart/DynamicData',
+} as any;

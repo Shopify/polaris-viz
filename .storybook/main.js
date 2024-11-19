@@ -11,6 +11,9 @@ const getStories = require('./getStories');
 const getAbsolutePath = (value) => dirname(require.resolve(join(value, 'package.json')));
 
 export default {
+  core: {
+    disableTelemetry: true,
+  },
   stories: getStories(),
 
   addons: [
@@ -116,6 +119,4 @@ export default {
 
     return config;
   },
-
-  docs: {},
 };

@@ -190,4 +190,4 @@ const Container = ({children, theme}: ContainerProps) => {
     </div>
   );
 };
-export const tags = ['autodocs'];
+export const tags = ['!autodocs'];
