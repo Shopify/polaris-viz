@@ -7,14 +7,13 @@ import {createPortal} from 'react-dom';
 import {useRootContainer} from '../../hooks/useRootContainer';
 import type {Margin} from '../../types';
 import {SwallowErrors} from '../SwallowErrors';
+import {TOOLTIP_ID} from '../../constants';
 
 import {shouldBlockTooltipEvents} from './utilities/shouldBlockTooltipEvents';
 import type {TooltipPosition, TooltipPositionParams} from './types';
 import {DEFAULT_TOOLTIP_POSITION} from './constants';
 import {TooltipAnimatedContainer} from './components/TooltipAnimatedContainer';
 import type {AlteredPosition} from './utilities';
-
-const TOOLTIP_ID = 'polaris_viz_tooltip_root';
 
 interface BaseProps {
   chartBounds: BoundingRect;
