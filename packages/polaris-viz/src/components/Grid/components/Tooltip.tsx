@@ -1,4 +1,8 @@
+import {createPortal} from 'react-dom';
+
 import type {CellGroup} from '../types';
+import {useRootContainer} from '../../../hooks/useRootContainer';
+import {TOOLTIP_ID} from '../../../constants';
 
 import styles from './Tooltip.scss';
 
@@ -9,9 +13,13 @@ interface TooltipProps {
 }
 
 export function Tooltip({x, y, group}: TooltipProps) {
-  if (!group) return null;
+  const container = useRootContainer(TOOLTIP_ID);
 
-  return (
+  if (!group) {
+    return null;
+  }
+
+  return createPortal(
     <div
       className={styles.TooltipContainer}
       style={{
@@ -49,6 +57,7 @@ export function Tooltip({x, y, group}: TooltipProps) {
           </div>
         )}
       </div>
-    </div>
+    </div>,
+    container,
   );
 }

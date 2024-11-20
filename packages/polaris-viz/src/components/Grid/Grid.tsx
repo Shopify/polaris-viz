@@ -3,6 +3,7 @@ import type {LabelFormatter} from '@shopify/polaris-viz-core';
 import {
   DEFAULT_CHART_PROPS,
   useChartPositions,
+  useUniqueId,
 } from '@shopify/polaris-viz-core';
 import {scaleLinear} from 'd3-scale';
 
@@ -19,7 +20,6 @@ import {
   TOOLTIP_WIDTH,
   TOOLTIP_HEIGHT,
   TOOLTIP_HORIZONTAL_OFFSET,
-  TOOLTIP_VERTICAL_OFFSET,
   Y_AXIS_LABEL_WIDTH,
   X_AXIS_HEIGHT,
   DEFAULT_GROUP_COLOR,
@@ -72,11 +72,23 @@ export function Grid(props: GridProps) {
     [entry],
   );
 
+  const gridId = useUniqueId('grid');
+
+  const uniqueGroups = useMemo(() => {
+    return cellGroups.map((group) => ({
+      ...group,
+      id: `${group.id}-${gridId}`,
+      connectedGroups: group.connectedGroups?.map(
+        (connectedId) => `${connectedId}-${gridId}`,
+      ),
+    }));
+  }, [cellGroups, gridId]);
+
   const gridDimensions = useMemo(() => {
-    const maxRow = Math.max(...cellGroups.map((group) => group.end.row)) + 1;
-    const maxCol = Math.max(...cellGroups.map((group) => group.end.col)) + 1;
+    const maxRow = Math.max(...uniqueGroups.map((group) => group.end.row)) + 1;
+    const maxCol = Math.max(...uniqueGroups.map((group) => group.end.col)) + 1;
     return {rows: maxRow, cols: maxCol};
-  }, [cellGroups]);
+  }, [uniqueGroups]);
 
   const fullChartWidth = dimensions.width - Y_AXIS_LABEL_WIDTH;
   const fullChartHeight = dimensions.height - X_AXIS_HEIGHT;
@@ -106,20 +118,16 @@ export function Grid(props: GridProps) {
       let placement: Placement;
 
       if (leftSpace >= TOOLTIP_WIDTH) {
-        x =
-          rect.left -
-          containerRect.left -
-          TOOLTIP_WIDTH -
-          TOOLTIP_HORIZONTAL_OFFSET;
-        y = rect.top - containerRect.top;
+        x = rect.left - TOOLTIP_WIDTH - TOOLTIP_HORIZONTAL_OFFSET;
+        y = rect.top;
         placement = 'left';
       } else if (bottomSpace >= TOOLTIP_HEIGHT) {
-        x = rect.left - containerRect.left;
-        y = rect.bottom - containerRect.top + TOOLTIP_HORIZONTAL_OFFSET;
+        x = rect.left;
+        y = rect.bottom + TOOLTIP_HORIZONTAL_OFFSET;
         placement = 'bottom';
       } else {
-        x = rect.left - containerRect.left;
-        y = rect.top - containerRect.top - TOOLTIP_VERTICAL_OFFSET;
+        x = rect.left;
+        y = rect.top - TOOLTIP_HEIGHT;
         placement = 'top';
       }
 
@@ -252,12 +260,12 @@ export function Grid(props: GridProps) {
     (event: React.KeyboardEvent) => {
       if (event.key === 'Tab') {
         event.preventDefault();
-        const currentIndex = cellGroups.findIndex(
+        const currentIndex = uniqueGroups.findIndex(
           (group) => group.id === groupSelected?.id,
         );
         const nextIndex =
-          currentIndex === -1 ? 0 : (currentIndex + 1) % cellGroups.length;
-        const nextGroup = cellGroups[nextIndex];
+          currentIndex === -1 ? 0 : (currentIndex + 1) % uniqueGroups.length;
+        const nextGroup = uniqueGroups[nextIndex];
         setGroupSelected(nextGroup);
         handleGroupHover(nextGroup);
       } else if (event.key === 'Escape') {
@@ -265,7 +273,7 @@ export function Grid(props: GridProps) {
         handleGroupHover(null);
       }
     },
-    [cellGroups, groupSelected, handleGroupHover],
+    [uniqueGroups, groupSelected, handleGroupHover],
   );
 
   return (
@@ -285,10 +293,10 @@ export function Grid(props: GridProps) {
             cellHeight={cellHeight}
             xScale={xScale}
           />
-          {cellGroups.map((group, index) => (
+          {uniqueGroups.map((group, index) => (
             <GroupCell
               index={index}
-              key={`group-${index}`}
+              key={group.id}
               group={group}
               xScale={xScale}
               cellHeight={cellHeight}
@@ -307,7 +315,7 @@ export function Grid(props: GridProps) {
           ))}
           <Arrows
             hoveredGroup={hoveredGroup}
-            cellGroups={cellGroups}
+            cellGroups={uniqueGroups}
             xScale={xScale}
             cellHeight={cellHeight}
           />
@@ -323,6 +331,7 @@ export function Grid(props: GridProps) {
           setXAxisHeight={setXAxisHeight}
         />
       </svg>
+
       {tooltipInfo && (
         <Tooltip
           x={tooltipInfo.x}
