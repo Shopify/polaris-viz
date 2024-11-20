@@ -7,9 +7,9 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
-### Removed
+### Changed
 
-- Reverted `TOUCH_FONT_SIZE` constant to 11px.
+- Changed `TOUCH_FONT_SIZE` constant to `12px`.
 
 ## [15.3.1] - 2024-11-18
 
