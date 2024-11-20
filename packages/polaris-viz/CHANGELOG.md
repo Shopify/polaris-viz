@@ -7,6 +7,11 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Fixed
+
+- Tooltip positioning when the grid is inside a container with overflow: hidden.
+- Tooltip positioning when the grid has multiple instances.
+
 ### Removed
 
 - Reverted `TOUCH_FONT_SIZE` constant to 11px.

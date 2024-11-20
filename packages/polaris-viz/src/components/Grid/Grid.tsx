@@ -1,15 +1,9 @@
-import React, {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import type {LabelFormatter} from '@shopify/polaris-viz-core';
 import {
   DEFAULT_CHART_PROPS,
   useChartPositions,
+  useUniqueId,
 } from '@shopify/polaris-viz-core';
 import {scaleLinear} from 'd3-scale';
 
@@ -26,7 +20,6 @@ import {
   TOOLTIP_WIDTH,
   TOOLTIP_HEIGHT,
   TOOLTIP_HORIZONTAL_OFFSET,
-  TOOLTIP_VERTICAL_OFFSET,
   Y_AXIS_LABEL_WIDTH,
   X_AXIS_HEIGHT,
   DEFAULT_GROUP_COLOR,
@@ -69,15 +62,6 @@ export function Grid(props: GridProps) {
     height: TOOLTIP_HEIGHT,
   });
 
-  const tooltipRef = useRef<HTMLDivElement>(null);
-  const [tooltipDimensions, setTooltipDimensions] = useState<{
-    width: number;
-    height: number;
-  }>({
-    width: TOOLTIP_WIDTH,
-    height: TOOLTIP_HEIGHT,
-  });
-
   const {
     cellGroups = [],
     xAxisOptions = {},
@@ -96,11 +80,23 @@ export function Grid(props: GridProps) {
     [entry],
   );
 
+  const gridId = useUniqueId('grid');
+
+  const uniqueGroups = useMemo(() => {
+    return cellGroups.map((group) => ({
+      ...group,
+      id: `${group.id}-${gridId}`,
+      connectedGroups: group.connectedGroups?.map(
+        (connectedId) => `${connectedId}-${gridId}`,
+      ),
+    }));
+  }, [cellGroups, gridId]);
+
   const gridDimensions = useMemo(() => {
-    const maxRow = Math.max(...cellGroups.map((group) => group.end.row)) + 1;
-    const maxCol = Math.max(...cellGroups.map((group) => group.end.col)) + 1;
+    const maxRow = Math.max(...uniqueGroups.map((group) => group.end.row)) + 1;
+    const maxCol = Math.max(...uniqueGroups.map((group) => group.end.col)) + 1;
     return {rows: maxRow, cols: maxCol};
-  }, [cellGroups]);
+  }, [uniqueGroups]);
 
   const fullChartWidth = dimensions.width - Y_AXIS_LABEL_WIDTH;
   const fullChartHeight = dimensions.height - X_AXIS_HEIGHT;
@@ -112,13 +108,6 @@ export function Grid(props: GridProps) {
     if (!group) return new Set<string>();
     return new Set([group.id, ...(group.connectedGroups ?? [])]);
   };
-
-  useLayoutEffect(() => {
-    if (tooltipRef.current && (hoveredGroup || groupSelected)) {
-      const {width, height} = tooltipRef.current.getBoundingClientRect();
-      setTooltipDimensions({width, height});
-    }
-  }, [hoveredGroup, groupSelected]);
 
   const getTooltipInfo = useCallback(
     (group: CellGroup): TooltipInfo | null => {
@@ -136,17 +125,17 @@ export function Grid(props: GridProps) {
       let y: number;
       let placement: Placement;
 
-      if (leftSpace >= tooltipDimensions.width) {
-        x = rect.left - tooltipDimensions.width - TOOLTIP_HORIZONTAL_OFFSET;
+      if (leftSpace >= TOOLTIP_WIDTH) {
+        x = rect.left - TOOLTIP_WIDTH - TOOLTIP_HORIZONTAL_OFFSET;
         y = rect.top;
         placement = 'left';
-      } else if (bottomSpace >= tooltipDimensions.height) {
+      } else if (bottomSpace >= TOOLTIP_HEIGHT) {
         x = rect.left;
         y = rect.bottom + TOOLTIP_HORIZONTAL_OFFSET;
         placement = 'bottom';
       } else {
         x = rect.left;
-        y = rect.top - TOOLTIP_VERTICAL_OFFSET;
+        y = rect.top - TOOLTIP_HEIGHT;
         placement = 'top';
       }
 
@@ -157,7 +146,7 @@ export function Grid(props: GridProps) {
         group,
       };
     },
-    [entry, tooltipDimensions],
+    [entry],
   );
 
   const handleGroupHover = useCallback(
@@ -279,12 +268,12 @@ export function Grid(props: GridProps) {
     (event: React.KeyboardEvent) => {
       if (event.key === 'Tab') {
         event.preventDefault();
-        const currentIndex = cellGroups.findIndex(
+        const currentIndex = uniqueGroups.findIndex(
           (group) => group.id === groupSelected?.id,
         );
         const nextIndex =
-          currentIndex === -1 ? 0 : (currentIndex + 1) % cellGroups.length;
-        const nextGroup = cellGroups[nextIndex];
+          currentIndex === -1 ? 0 : (currentIndex + 1) % uniqueGroups.length;
+        const nextGroup = uniqueGroups[nextIndex];
         setGroupSelected(nextGroup);
         handleGroupHover(nextGroup);
       } else if (event.key === 'Escape') {
@@ -292,7 +281,7 @@ export function Grid(props: GridProps) {
         handleGroupHover(null);
       }
     },
-    [cellGroups, groupSelected, handleGroupHover],
+    [uniqueGroups, groupSelected, handleGroupHover],
   );
 
   return (
@@ -312,10 +301,10 @@ export function Grid(props: GridProps) {
             cellHeight={cellHeight}
             xScale={xScale}
           />
-          {cellGroups.map((group, index) => (
+          {uniqueGroups.map((group, index) => (
             <GroupCell
               index={index}
-              key={`group-${index}`}
+              key={group.id}
               group={group}
               xScale={xScale}
               cellHeight={cellHeight}
@@ -334,7 +323,7 @@ export function Grid(props: GridProps) {
           ))}
           <Arrows
             hoveredGroup={hoveredGroup}
-            cellGroups={cellGroups}
+            cellGroups={uniqueGroups}
             xScale={xScale}
             cellHeight={cellHeight}
           />
@@ -350,12 +339,14 @@ export function Grid(props: GridProps) {
           setXAxisHeight={setXAxisHeight}
         />
       </svg>
-      <Tooltip
-        ref={tooltipRef}
-        x={tooltipInfo?.x ?? 0}
-        y={tooltipInfo?.y ?? 0}
-        group={groupSelected || hoveredGroup}
-      />
+
+      {tooltipInfo && (
+        <Tooltip
+          x={tooltipInfo.x}
+          y={tooltipInfo.y}
+          group={groupSelected || hoveredGroup}
+        />
+      )}
     </div>
   );
 }
