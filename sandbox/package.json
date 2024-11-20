@@ -1,6 +1,6 @@
 {
   "name": "sandbox",
-  "version": "15.3.2-tooltip-positioning-grid-beta.2",
+  "version": "15.3.2-tooltips-fix-grid-beta.2",
   "private": true,
   "main": "index.js",
   "dependencies": {
