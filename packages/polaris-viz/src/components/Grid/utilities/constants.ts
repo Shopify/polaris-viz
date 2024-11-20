@@ -1,7 +1,6 @@
 export const TOOLTIP_WIDTH = 250;
-export const TOOLTIP_HEIGHT = 120;
+export const TOOLTIP_HEIGHT = 155;
 export const TOOLTIP_HORIZONTAL_OFFSET = 10;
-export const TOOLTIP_VERTICAL_OFFSET = 155;
 
 export const Y_LABEL_OFFSET = 25;
 export const Y_AXIS_LABEL_WIDTH = 50;
