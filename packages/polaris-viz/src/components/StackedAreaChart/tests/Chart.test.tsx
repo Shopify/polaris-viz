@@ -19,6 +19,7 @@ import {Chart} from '../Chart';
 import {Annotations, YAxisAnnotations} from '../../Annotations';
 import {normalizeData} from '../../../utilities';
 import {TextLine} from '../../TextLine';
+import {DEFAULT_CHART_CONTEXT as MOCK_DEFAULT_CHART_CONTEXT} from '../../../storybook/constants';
 
 jest.mock('@shopify/polaris-viz-core/src/utilities/estimateStringWidth', () => {
   return {
@@ -46,6 +47,13 @@ jest.mock('../../TooltipWrapper/utilities/eventPoint', () => {
     },
   };
 });
+
+jest.mock('@shopify/polaris-viz-core/src/hooks/useChartContext', () => ({
+  useChartContext: jest.fn(() => ({
+    ...MOCK_DEFAULT_CHART_CONTEXT,
+    containerBounds: {width: 500, height: 250, x: 0, y: 0},
+  })),
+}));
 
 const MOCK_PROPS: Props = {
   annotationsLookupTable: {},
@@ -78,7 +86,6 @@ const MOCK_PROPS: Props = {
     integersOnly: false,
     maxYOverride: 10,
   },
-  containerBounds: {width: 500, height: 250, x: 0, y: 0},
   renderTooltipContent: jest.fn(() => <p>Mock Tooltip Content</p>),
   showLegend: false,
   theme: DEFAULT_THEME_NAME,

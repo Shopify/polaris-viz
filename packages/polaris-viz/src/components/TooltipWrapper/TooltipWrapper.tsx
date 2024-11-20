@@ -26,7 +26,6 @@ import {TooltipAnimatedContainer} from './components/TooltipAnimatedContainer';
 interface BaseProps {
   chartBounds: BoundingRect;
   chartType: InternalChartType;
-  containerBounds: BoundingRect;
   data: DataSeries[];
   focusElementDataType: DataType;
   getMarkup: (index: number) => ReactNode;
@@ -46,7 +45,6 @@ function TooltipWrapperRaw(props: BaseProps) {
     bandwidth = 0,
     chartBounds,
     chartType,
-    containerBounds,
     data,
     focusElementDataType,
     id,
@@ -57,7 +55,7 @@ function TooltipWrapperRaw(props: BaseProps) {
     xScale,
     yScale,
   } = props;
-  const {scrollContainer} = useChartContext();
+  const {scrollContainer, ref} = useChartContext();
   const [position, setPosition] = useState<TooltipPosition>({
     x: 0,
     y: 0,
@@ -89,6 +87,14 @@ function TooltipWrapperRaw(props: BaseProps) {
       event?: MouseEvent | TouchEvent;
       index?: number;
     }) => {
+      const containerBounds = {
+        x: ref?.getBoundingClientRect().x ?? 0,
+        y:
+          Number(ref?.getBoundingClientRect().y ?? 0) +
+          Number(scrollContainer?.scrollTop ?? 0),
+        width: ref?.getBoundingClientRect().width ?? 0,
+        height: ref?.getBoundingClientRect().height ?? 0,
+      };
       switch (chartType) {
         case InternalChartType.Line:
           return getLineChartTooltipPosition({
@@ -129,10 +135,11 @@ function TooltipWrapperRaw(props: BaseProps) {
     },
     [
       chartBounds,
-      containerBounds,
       chartType,
       data,
       longestSeriesIndex,
+      ref,
+      scrollContainer?.scrollTop,
       type,
       xScale,
       yScale,
@@ -262,7 +269,6 @@ function TooltipWrapperRaw(props: BaseProps) {
       activePointIndex={position.activeIndex}
       bandwidth={bandwidth}
       chartBounds={chartBounds}
-      containerBounds={containerBounds}
       chartType={chartType}
       currentX={position.x}
       currentY={position.y}

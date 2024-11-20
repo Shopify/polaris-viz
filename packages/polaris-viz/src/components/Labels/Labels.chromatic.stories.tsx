@@ -1,10 +1,9 @@
 import {storiesOf} from '@storybook/react';
 
 import {XAxis} from '../XAxis';
-import {ChartContext, DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
+import {ChartContext} from '@shopify/polaris-viz-core';
 
-import characterWidths from '../../data/character-widths.json';
-import characterWidthOffsets from '../../data/character-width-offsets.json';
+import {DEFAULT_CHART_CONTEXT} from '../../storybook/constants';
 
 const LABELS = [
   'Jan 12, 2020',
@@ -93,16 +92,7 @@ function Wrapper({storyName, chartWidth, children}) {
           marginLeft: 20,
         }}
       >
-        <ChartContext.Provider
-          value={{
-            shouldAnimate: false,
-            characterWidths,
-            characterWidthOffsets,
-            id: '',
-            isPerformanceImpacted: false,
-            theme: DEFAULT_THEME_NAME,
-          }}
-        >
+        <ChartContext.Provider value={DEFAULT_CHART_CONTEXT}>
           {children}
         </ChartContext.Provider>
       </svg>

@@ -1,4 +1,5 @@
 import {mount} from '@shopify/react-testing';
+import {useChartContext} from '@shopify/polaris-viz-core';
 
 import type {LegendContainerProps} from '../LegendContainer';
 import {LegendContainer} from '../LegendContainer';
@@ -16,10 +17,6 @@ const mockProps: LegendContainerProps = {
     {name: 'Legend Three', color: 'yellow'},
   ],
   onDimensionChange: jest.fn(),
-  containerDimensions: {
-    width: 0,
-    height: 0,
-  },
 };
 
 jest.mock('../../../hooks/useResizeObserver', () => {
@@ -32,6 +29,14 @@ jest.mock('../../../hooks/useResizeObserver', () => {
     },
   };
 });
+
+jest.mock('@shopify/polaris-viz-core/src/hooks/useChartContext', () => ({
+  useChartContext: jest.fn(() => ({
+    containerBounds: {height: 300, width: 100},
+  })),
+}));
+
+const mockUseChartContext = useChartContext as jest.Mock;
 
 describe('<LegendContainer />', () => {
   const renderLegendContent = () => (
@@ -120,30 +125,24 @@ describe('<LegendContainer />', () => {
     });
 
     it('renders HiddenLegendTooltip if there is hidden data', () => {
+      mockUseChartContext.mockReturnValue({
+        containerBounds: {height: 300, width: WIDTH_WITH_OVERFLOW},
+      });
+
       const component = mount(
-        <LegendContainer
-          {...mockProps}
-          containerDimensions={{
-            ...mockProps.containerDimensions,
-            width: WIDTH_WITH_OVERFLOW,
-          }}
-          enableHideOverflow
-        />,
+        <LegendContainer {...mockProps} enableHideOverflow />,
       );
 
       expect(component).toContainReactComponent(HiddenLegendTooltip);
     });
 
     it('does not render HiddenLegendTooltip if there is no hidden data', () => {
+      mockUseChartContext.mockReturnValue({
+        containerBounds: {height: 300, width: WIDTH_WITHOUT_OVERFLOW},
+      });
+
       const component = mount(
-        <LegendContainer
-          {...mockProps}
-          containerDimensions={{
-            ...mockProps.containerDimensions,
-            width: WIDTH_WITHOUT_OVERFLOW,
-          }}
-          enableHideOverflow
-        />,
+        <LegendContainer {...mockProps} enableHideOverflow />,
       );
 
       expect(component).not.toContainReactComponent(HiddenLegendTooltip);
@@ -152,15 +151,12 @@ describe('<LegendContainer />', () => {
 
   describe('renderHiddenLegendLabel', () => {
     it('renders the default label if not provided', () => {
+      mockUseChartContext.mockReturnValue({
+        containerBounds: {height: 300, width: WIDTH_WITH_OVERFLOW},
+      });
+
       const component = mount(
-        <LegendContainer
-          {...mockProps}
-          containerDimensions={{
-            ...mockProps.containerDimensions,
-            width: WIDTH_WITH_OVERFLOW,
-          }}
-          enableHideOverflow
-        />,
+        <LegendContainer {...mockProps} enableHideOverflow />,
       );
 
       expect(component).toContainReactComponent(HiddenLegendTooltip, {
@@ -169,13 +165,13 @@ describe('<LegendContainer />', () => {
     });
 
     it('renders a custom label if provided', () => {
+      mockUseChartContext.mockReturnValue({
+        containerBounds: {height: 300, width: WIDTH_WITH_OVERFLOW},
+      });
+
       const component = mount(
         <LegendContainer
           {...mockProps}
-          containerDimensions={{
-            ...mockProps.containerDimensions,
-            width: WIDTH_WITH_OVERFLOW,
-          }}
           enableHideOverflow
           renderHiddenLegendLabel={(x) => `Custom legend label ${x}`}
         />,

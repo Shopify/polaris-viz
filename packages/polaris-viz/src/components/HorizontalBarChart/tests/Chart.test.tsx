@@ -19,6 +19,7 @@ import {
 } from '../components';
 import {normalizeData} from '../../../utilities';
 import {TooltipWrapper} from '../../TooltipWrapper';
+import {DEFAULT_CHART_CONTEXT as MOCK_DEFAULT_CHART_CONTEXT} from '../../../storybook/constants';
 
 jest.mock('../../Labels/utilities/getWidestLabel', () => {
   return {
@@ -32,6 +33,13 @@ jest.mock('@shopify/polaris-viz-core/src/utilities', () => ({
   ...jest.requireActual('@shopify/polaris-viz-core/src/utilities'),
   estimateStringWidth: jest.fn(() => 100),
   isLargeDataSet: jest.fn(() => true),
+}));
+
+jest.mock('@shopify/polaris-viz-core/src/hooks/useChartContext', () => ({
+  useChartContext: jest.fn(() => ({
+    ...MOCK_DEFAULT_CHART_CONTEXT,
+    containerBounds: {height: 300, width: 100},
+  })),
 }));
 
 const DATA: DataSeries[] = [
@@ -55,12 +63,6 @@ const DATA: DataSeries[] = [
 
 const MOCK_PROPS: ChartProps = {
   annotationsLookupTable: {},
-  containerBounds: {
-    height: 300,
-    width: 600,
-    x: 0,
-    y: 0,
-  },
   renderTooltipContent: (value) => `${value}`,
   data: DATA,
   xAxisOptions: {

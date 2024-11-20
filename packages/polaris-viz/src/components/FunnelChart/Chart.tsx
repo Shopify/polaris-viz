@@ -1,7 +1,6 @@
 import {Fragment, useMemo, useState, useCallback} from 'react';
 import {scaleBand, scaleLinear} from 'd3-scale';
 import type {
-  BoundingRect,
   DataSeries,
   XAxisOptions,
   YAxisOptions,
@@ -36,18 +35,16 @@ export interface ChartProps {
   data: DataSeries[];
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
-  containerBounds?: BoundingRect;
   labelHelpers?: LabelHelpers[];
 }
 
 export function Chart({
   data,
-  containerBounds,
   xAxisOptions,
   yAxisOptions,
   labelHelpers,
 }: ChartProps) {
-  const {theme} = useChartContext();
+  const {theme, containerBounds} = useChartContext();
   const selectedTheme = useTheme();
 
   const [xAxisHeight, setXAxisHeight] = useState(LINE_HEIGHT);
@@ -64,7 +61,7 @@ export function Chart({
     throw new Error('Data must be finite');
   }
 
-  const {width, height} = containerBounds ?? {width: 0, height: 0};
+  const {width, height} = containerBounds;
 
   const labels = useMemo(
     () => dataSeries.map(({key}) => xAxisOptions.labelFormatter(key)),

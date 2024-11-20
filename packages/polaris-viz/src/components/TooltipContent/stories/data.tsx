@@ -1,29 +1,17 @@
 import {useMemo} from 'react';
 import type {Story} from '@storybook/react';
-import {
-  ChartContext,
-  DEFAULT_THEME_NAME,
-  DARK_THEME,
-} from '@shopify/polaris-viz-core';
+import {ChartContext, DARK_THEME} from '@shopify/polaris-viz-core';
 
+import {DEFAULT_CHART_CONTEXT} from '../../../storybook/constants';
 import type {TooltipContentProps} from '../TooltipContent';
 import {TooltipContent} from '../TooltipContent';
-import characterWidths from '../../../data/character-widths.json';
-import characterWidthOffsets from '../../../data/character-width-offsets.json';
 import type {TooltipData} from '../../../types';
 
 export const Template: Story<TooltipContentProps> = (
   args: TooltipContentProps,
 ) => {
   const value = useMemo(() => {
-    return {
-      characterWidths,
-      id: 'none',
-      characterWidthOffsets,
-      shouldAnimate: true,
-      theme: DEFAULT_THEME_NAME,
-      isPerformanceImpacted: false,
-    };
+    return DEFAULT_CHART_CONTEXT;
   }, []);
 
   return (

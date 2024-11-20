@@ -7,3 +7,20 @@
     @include focus-outline;
   }
 }
+
+.ContainerBounds {
+  height: 100%;
+  width: 100%;
+}
+
+.Chart {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+
+  svg {
+    overflow: visible;
+    max-width: 100%;
+  }
+}

@@ -54,14 +54,12 @@ export interface ChartProps {
   showLegend: boolean;
   theme: string;
   xAxisOptions: Required<XAxisOptions>;
-  containerBounds?: BoundingRect;
   renderLegendContent?: RenderLegendContent;
 }
 
 export function Chart({
   annotationsLookupTable,
   data,
-  containerBounds = EMPTY_BOUNDS,
   renderTooltipContent,
   showLegend,
   theme,
@@ -80,15 +78,9 @@ export function Chart({
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [annotationsHeight, setAnnotationsHeight] = useState(0);
 
-  const containerDimensions = {
-    height: containerBounds?.height ?? 0,
-    width: containerBounds?.width ?? 0,
-  };
-
   const {legend, setLegendDimensions, height, width} = useLegend({
     colors,
     data,
-    containerDimensions,
     showLegend,
     seriesNameFormatter,
   });
@@ -328,7 +320,6 @@ export function Chart({
       <TooltipWrapper
         bandwidth={labelWidth}
         chartBounds={chartBounds}
-        containerBounds={containerBounds}
         chartType={InternalChartType.Bar}
         data={barChartData.series}
         focusElementDataType={DataType.BarGroup}
@@ -344,7 +335,6 @@ export function Chart({
       {showLegend && (
         <LegendContainer
           colorVisionType={COLOR_VISION_SINGLE_ITEM}
-          containerDimensions={containerDimensions}
           data={legend}
           onDimensionChange={setLegendDimensions}
           renderLegendContent={renderLegendContent}

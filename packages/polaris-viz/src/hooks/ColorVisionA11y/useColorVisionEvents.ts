@@ -1,5 +1,4 @@
 import {useEffect} from 'react';
-import type {Dimensions} from '@shopify/polaris-viz-core';
 import {COLOR_VISION_EVENT, useChartContext} from '@shopify/polaris-viz-core';
 
 import {useExternalHideEvents} from '../ExternalEvents';
@@ -7,13 +6,14 @@ import {useExternalHideEvents} from '../ExternalEvents';
 import {getDataSetItem, getEventName} from './utilities';
 
 export interface Props {
-  containerDimensions?: Dimensions;
   enabled?: boolean;
   root?: string;
 }
 
 export function useColorVisionEvents(props?: Partial<Props>) {
-  const {enabled = true, root = 'chart', containerDimensions} = props || {};
+  const {containerBounds} = useChartContext();
+
+  const {enabled = true, root = 'chart'} = props || {};
 
   const {id} = useChartContext();
   const {hiddenIndexes} = useExternalHideEvents();
@@ -81,5 +81,5 @@ export function useColorVisionEvents(props?: Partial<Props>) {
     };
     // Re-attach the listeners when containerDimensions changes so that
     // any new items get listeners as well.
-  }, [id, enabled, hiddenIndexes, root, containerDimensions]);
+  }, [id, enabled, hiddenIndexes, root, containerBounds]);
 }

@@ -1,23 +1,24 @@
 import {Fragment} from 'react';
-import type {Dimensions} from '@shopify/polaris-viz-core';
-import {useTheme, useUniqueId, ChartState} from '@shopify/polaris-viz-core';
+import {
+  useTheme,
+  useUniqueId,
+  ChartState,
+  useChartContext,
+} from '@shopify/polaris-viz-core';
 
 import {ErrorText} from '../ErrorText';
 
 import styles from './SimpleBarSkeleton.scss';
 
 interface Props {
-  containerDimensions: Dimensions;
   state: ChartState;
   errorText: string;
 }
 
-export function SimpleBarSkeleton({
-  containerDimensions,
-  state,
-  errorText,
-}: Props) {
-  const {width, height} = containerDimensions;
+export function SimpleBarSkeleton({state, errorText}: Props) {
+  const {
+    containerBounds: {height, width},
+  } = useChartContext();
 
   const {
     grid: {color: gridColor},

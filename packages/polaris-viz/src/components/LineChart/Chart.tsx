@@ -71,7 +71,6 @@ export interface ChartProps {
   hideLegendOverflow: boolean;
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
-  containerBounds?: BoundingRect;
   emptyStateText?: string;
   renderLegendContent?: RenderLegendContent;
   renderHiddenLegendLabel?: RenderHiddenLegendLabel;
@@ -85,7 +84,6 @@ export function Chart({
   annotationsLookupTable,
   emptyStateText,
   data,
-  containerBounds = EMPTY_BOUNDS,
   renderLegendContent,
   renderTooltipContent,
   renderHiddenLegendLabel,
@@ -98,24 +96,16 @@ export function Chart({
   yAxisOptions,
 }: ChartProps) {
   const selectedTheme = useTheme(theme);
-  const {isPerformanceImpacted} = useChartContext();
+  const {isPerformanceImpacted, containerBounds} = useChartContext();
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [activeLineIndex, setActiveLineIndex] = useState(-1);
 
-  const containerDimensions = {
-    height: containerBounds?.height ?? 0,
-    width: containerBounds?.width ?? 0,
-  };
-
   useColorVisionEvents({
     enabled: data.length > 1,
-    containerDimensions,
   });
 
-  const isSmallChart = Boolean(
-    containerBounds != null && containerBounds.height < SMALL_CHART_HEIGHT,
-  );
+  const isSmallChart = containerBounds.height < SMALL_CHART_HEIGHT;
 
   const hideXAxis =
     xAxisOptions.hide || selectedTheme.xAxis.hide || isSmallChart;
@@ -131,7 +121,6 @@ export function Chart({
         series: data,
       },
     ],
-    containerDimensions,
     showLegend: showLegend && !isSmallChart,
     seriesNameFormatter,
   });
@@ -384,7 +373,6 @@ export function Chart({
       {longestSeriesLength !== -1 && (
         <TooltipWrapper
           chartBounds={chartBounds}
-          containerBounds={containerBounds}
           chartType={InternalChartType.Line}
           focusElementDataType={DataType.Point}
           getMarkup={getTooltipMarkup}
@@ -409,7 +397,6 @@ export function Chart({
       {showLegend && !isSmallChart && (
         <LegendContainer
           colorVisionType={COLOR_VISION_SINGLE_ITEM}
-          containerDimensions={containerDimensions}
           data={legend}
           onDimensionChange={setLegendDimensions}
           renderLegendContent={renderLegendContent}

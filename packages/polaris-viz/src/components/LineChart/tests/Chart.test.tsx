@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-constructed-context-values */
 import {mount} from '@shopify/react-testing';
 import type {
   LineChartDataSeriesWithDefaults,
@@ -8,7 +7,7 @@ import type {
 import {
   LinearGradientWithStops,
   LineSeries,
-  ChartContext,
+  useChartContext,
 } from '@shopify/polaris-viz-core';
 
 import {LegendContainer} from '../../LegendContainer';
@@ -27,8 +26,7 @@ import {Chart} from '../Chart';
 import {YAxis} from '../../YAxis';
 import {Annotations, YAxisAnnotations} from '../../Annotations';
 import {normalizeData} from '../../../utilities';
-import characterWidths from '../../../data/character-widths.json';
-import characterWidthOffsets from '../../../data/character-width-offsets.json';
+import {DEFAULT_CHART_CONTEXT as MOCK_DEFAULT_CHART_CONTEXT} from '../../../storybook/constants';
 
 const MOCK_DATA: Required<LineChartDataSeriesWithDefaults> = {
   name: 'Primary',
@@ -64,7 +62,6 @@ const yAxisOptions: Required<YAxisOptions> = {
 const MOCK_PROPS: ChartProps = {
   data: [MOCK_DATA],
   annotationsLookupTable: {},
-  containerBounds: {width: 500, height: 250, x: 0, y: 0},
   xAxisOptions,
   yAxisOptions,
   renderTooltipContent: jest.fn(() => <p>Mock Tooltip</p>),
@@ -112,6 +109,15 @@ jest.mock('d3-shape', () => ({
   }),
 }));
 
+jest.mock('@shopify/polaris-viz-core/src/hooks/useChartContext', () => ({
+  useChartContext: jest.fn(() => ({
+    ...MOCK_DEFAULT_CHART_CONTEXT,
+    containerBounds: {width: 500, height: 250, x: 0, y: 0},
+  })),
+}));
+
+const useChartContextMock = useChartContext as jest.Mock;
+
 describe('<Chart />', () => {
   beforeEach(() => {
     jest.useFakeTimers();
@@ -119,6 +125,10 @@ describe('<Chart />', () => {
 
   afterEach(() => {
     jest.useRealTimers();
+    useChartContextMock.mockReturnValue({
+      ...MOCK_DEFAULT_CHART_CONTEXT,
+      containerBounds: {width: 500, height: 250, x: 0, y: 0},
+    });
   });
 
   it('renders an svg element', () => {
@@ -153,23 +163,23 @@ describe('<Chart />', () => {
   });
 
   it('renders a <Point /> for each data item in each data-point', () => {
+    useChartContextMock.mockReturnValue({
+      ...MOCK_DEFAULT_CHART_CONTEXT,
+      shouldAnimate: false,
+    });
+
     const data = [MOCK_DATA, {...MOCK_DATA, name: 'A second data-point'}];
-    const chart = mount(
-      <ChartContext.Provider
-        value={{
-          shouldAnimate: false,
-          characterWidths,
-          characterWidthOffsets,
-        }}
-      >
-        <Chart {...MOCK_PROPS} data={data} />
-      </ChartContext.Provider>,
-    );
+    const chart = mount(<Chart {...MOCK_PROPS} data={data} />);
 
     expect(chart).toContainReactComponentTimes(Point, 8);
   });
 
   it('renders an additional <Point /> for each data-point if isAnimated is true', () => {
+    useChartContextMock.mockReturnValue({
+      ...MOCK_DEFAULT_CHART_CONTEXT,
+      shouldAnimate: true,
+    });
+
     const data = [MOCK_DATA, {...MOCK_DATA, name: 'A second data-point'}];
     const chart = mount(<Chart {...MOCK_PROPS} data={data} />);
 
@@ -557,12 +567,12 @@ describe('<Chart />', () => {
     });
 
     it('does not render <LegendContainer /> when the chart has a height of less than 125', () => {
-      const chart = mount(
-        <Chart
-          {...MOCK_PROPS}
-          containerDimensions={{width: 100, height: 100}}
-        />,
-      );
+      useChartContextMock.mockReturnValue({
+        ...MOCK_DEFAULT_CHART_CONTEXT,
+        containerBounds: {width: 100, height: 100, x: 0, y: 0},
+      });
+
+      const chart = mount(<Chart {...MOCK_PROPS} />);
       expect(chart).not.toContainReactComponent(LegendContainer);
     });
   });

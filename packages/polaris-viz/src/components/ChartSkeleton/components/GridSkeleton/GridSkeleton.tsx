@@ -1,10 +1,10 @@
 /* eslint-disable node/callback-return */
 import {Fragment, useEffect} from 'react';
-import type {Dimensions} from '@shopify/polaris-viz-core';
 import {
   paddingStringToObject,
   useTheme,
   ChartState,
+  useChartContext,
 } from '@shopify/polaris-viz-core';
 import {useSprings, animated} from '@react-spring/web';
 
@@ -16,13 +16,14 @@ const INITIAL_DELAY = 200;
 const NUMBER_OF_BRICKS = 5;
 
 interface Props {
-  containerDimensions: Dimensions;
   state: ChartState;
   errorText: string;
 }
 
-export function GridSkeleton({containerDimensions, state, errorText}: Props) {
-  const {width, height} = containerDimensions;
+export function GridSkeleton({state, errorText}: Props) {
+  const {
+    containerBounds: {height, width},
+  } = useChartContext();
 
   const {
     chartContainer: {padding},

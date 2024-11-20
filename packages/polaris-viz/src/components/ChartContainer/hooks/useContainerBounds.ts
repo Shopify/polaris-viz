@@ -1,52 +1,32 @@
-import type {Dispatch, ReactElement, SetStateAction} from 'react';
-import {cloneElement, useCallback, useLayoutEffect, useState} from 'react';
-import type {
-  DataGroup,
-  DataSeries,
-  ErrorBoundaryResponse,
-  BoundingRect,
-} from '@shopify/polaris-viz-core';
-import {
-  usePolarisVizContext,
-  usePrevious,
-  useTheme,
-} from '@shopify/polaris-viz-core';
+import type {BoundingRect} from '@shopify/polaris-viz-core';
+import type {Dispatch, SetStateAction} from 'react';
+import {useCallback, useLayoutEffect, useState} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
-import type {SkeletonType} from 'components/ChartSkeleton';
 
-import {ChartErrorBoundary} from '../../../ChartErrorBoundary';
-import {usePrintResizing, useResizeObserver} from '../../../../hooks';
+import {
+  usePrevious,
+  usePrintResizing,
+  useResizeObserver,
+  useTheme,
+} from '../../../hooks';
 
-import styles from './ContainerBounds.scss';
-
-interface ContainerBoundsProps {
-  children: ReactElement;
-  data: DataSeries[] | DataGroup[];
+export function useContainerBounds({
+  onIsPrintingChange,
+  scrollContainer,
+  sparkChart,
+}: {
   onIsPrintingChange: Dispatch<SetStateAction<boolean>>;
   scrollContainer?: Element | null;
   sparkChart?: boolean;
-  skeletonType?: SkeletonType;
-  onError?: ErrorBoundaryResponse;
-}
-
-export function ContainerBounds({
-  children,
-  data,
-  onIsPrintingChange,
-  scrollContainer,
-  sparkChart = false,
-  skeletonType = 'Default',
-  onError,
-}: ContainerBoundsProps) {
+}) {
   const {chartContainer} = useTheme();
-  const {onError: onErrorProvider} = usePolarisVizContext();
-
-  const [containerBounds, setContainerBounds] =
-    useState<BoundingRect | null>(null);
 
   const {ref, setRef, entry} = useResizeObserver();
 
   const previousEntry = usePrevious(entry);
+
+  const [containerBounds, setContainerBounds] =
+    useState<BoundingRect | null>(null);
 
   usePrintResizing({
     ref,
@@ -135,44 +115,5 @@ export function ContainerBounds({
     });
   }, [ref, scrollContainer]);
 
-  return (
-    <div
-      className={styles.ContainerBounds}
-      ref={setRef}
-      style={{
-        minHeight: sparkChart
-          ? chartContainer.sparkChartMinHeight
-          : chartContainer.minHeight,
-      }}
-      onMouseEnter={onMouseEnter}
-      onFocus={onMouseEnter}
-    >
-      {containerBounds == null || !hasValidBounds(containerBounds) ? null : (
-        <ChartErrorBoundary
-          type={skeletonType ?? 'Default'}
-          containerBounds={containerBounds}
-          data={data}
-          onError={onError ?? onErrorProvider}
-        >
-          <div
-            className={styles.Chart}
-            style={{
-              height: containerBounds.height,
-              width: containerBounds.width,
-            }}
-          >
-            {cloneElement<{
-              containerBounds: BoundingRect;
-            }>(children, {
-              containerBounds,
-            })}
-          </div>
-        </ChartErrorBoundary>
-      )}
-    </div>
-  );
-}
-
-function hasValidBounds(containerBounds: BoundingRect) {
-  return containerBounds.width > 0 && containerBounds.height > 0;
+  return {containerBounds, setContainerBounds, onMouseEnter, setRef, ref};
 }

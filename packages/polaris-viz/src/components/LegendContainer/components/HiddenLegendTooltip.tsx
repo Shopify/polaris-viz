@@ -13,7 +13,7 @@ import {
   useChartContext,
   useTheme,
 } from '@shopify/polaris-viz-core';
-import type {Dimensions, LabelFormatter} from '@shopify/polaris-viz-core';
+import type {LabelFormatter} from '@shopify/polaris-viz-core';
 
 import {getFontSize} from '../../../utilities/getFontSize';
 import type {LegendData} from '../../../types';
@@ -29,7 +29,6 @@ import style from './HiddenLegendTooltip.scss';
 interface Props {
   activeIndex: number;
   colorVisionType: string;
-  containerDimensions: Dimensions;
   data: LegendData[];
   label: ReactNode;
   setActivatorWidth: (width: number) => void;
@@ -44,7 +43,6 @@ export const LEGEND_TOOLIP_Z_INDEX = 520;
 export function HiddenLegendTooltip({
   activeIndex,
   colorVisionType,
-  containerDimensions,
   data,
   theme,
   label,
@@ -62,7 +60,6 @@ export function HiddenLegendTooltip({
   useColorVisionEvents({
     enabled: true,
     root: LEGEND_TOOLTIP_ID,
-    containerDimensions,
   });
 
   const defaultPosition = useMemo(
