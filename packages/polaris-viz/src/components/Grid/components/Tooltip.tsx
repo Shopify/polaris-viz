@@ -6,8 +6,6 @@ import {TOOLTIP_ID} from '../../../constants';
 
 import styles from './Tooltip.scss';
 
-const TOOLTIP_ID = 'polaris_viz_tooltip_root';
-
 interface TooltipProps {
   x: number;
   y: number;

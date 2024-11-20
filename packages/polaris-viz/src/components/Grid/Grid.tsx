@@ -53,14 +53,6 @@ export function Grid(props: GridProps) {
   const [tooltipInfo, setTooltipInfo] = useState<TooltipInfo | null>(null);
   const [isSmallContainer, setIsSmallContainer] = useState(false);
   const [groupSelected, setGroupSelected] = useState<CellGroup | null>(null);
-  const tooltipRef = useRef<HTMLDivElement>(null);
-  const [tooltipDimensions, setTooltipDimensions] = useState<{
-    width: number;
-    height: number;
-  }>({
-    width: TOOLTIP_WIDTH,
-    height: TOOLTIP_HEIGHT,
-  });
 
   const {
     cellGroups = [],
