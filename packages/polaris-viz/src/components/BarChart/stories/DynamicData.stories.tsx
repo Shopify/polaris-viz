@@ -2,7 +2,7 @@ import {useState} from 'react';
 
 import {BarChart} from '../BarChart';
 
-export {META as default} from './meta';
+import {META} from './meta';
 
 export const DynamicData = () => {
   const [data, setData] = useState([
@@ -77,3 +77,8 @@ export const DynamicData = () => {
     </>
   );
 };
+
+export default {
+  ...META,
+  title: 'polaris-viz/Charts/BarChart/DynamicData',
+} as any;

@@ -61,10 +61,10 @@ export const META: Meta = {
       description: RENDER_TOOLTIP_DESCRIPTION,
     },
     direction: DIRECTION_CONTROL_ARGS,
-    theme: THEME_CONTROL_ARGS,
+    theme: THEME_CONTROL_ARGS as any,
     state: CHART_STATE_CONTROL_ARGS,
     type: TYPE_CONTROL_ARGS,
     showLegend: LEGEND_CONTROL_ARGS,
-    maxSeries: MAX_SERIES_ARGS,
+    maxSeries: MAX_SERIES_ARGS as any,
   },
 };

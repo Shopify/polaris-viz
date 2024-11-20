@@ -1,18 +1,9 @@
-import type {Story} from '@storybook/react';
-
+import type {StoryFn} from '@storybook/react';
 import type {BarChartProps} from '../../../../components';
-
 import {DEFAULT_DATA, Template} from '../data';
 import {META} from '../meta';
-
-export default {
-  ...META,
-  title: 'polaris-viz/Charts/BarChart/Annotations',
-};
-
-export const HorizontalBarChart: Story<BarChartProps> = Template.bind({});
-
-HorizontalBarChart.args = {
+export const Default: StoryFn<BarChartProps> = Template.bind({});
+Default.args = {
   data: DEFAULT_DATA,
   annotations: [
     {
@@ -47,3 +38,5 @@ HorizontalBarChart.args = {
   ],
   direction: 'horizontal',
 };
+
+export default {...META, title: 'polaris-viz/Charts/BarChart/Annotations'} as any;

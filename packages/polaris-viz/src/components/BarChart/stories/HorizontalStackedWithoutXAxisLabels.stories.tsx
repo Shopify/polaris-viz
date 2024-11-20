@@ -1,12 +1,12 @@
-import type {Story} from '@storybook/react';
+import type {StoryFn} from '@storybook/react';
 
 import type {BarChartProps} from '../../../components';
 
 import {Template} from './data';
 
-export {META as default} from './meta';
+import {META} from './meta';
 
-export const HorizontalStackedWithoutXAxisLabels: Story<BarChartProps> =
+export const HorizontalStackedWithoutXAxisLabels: StoryFn<BarChartProps> =
   Template.bind({});
 
 HorizontalStackedWithoutXAxisLabels.args = {
@@ -52,3 +52,5 @@ HorizontalStackedWithoutXAxisLabels.args = {
   direction: 'horizontal',
   xAxisOptions: {hide: true}
 };
+
+export default {...META, title: 'polaris-viz/Charts/BarChart/HorizontalStackedWithoutXAxisLabels'} as any;

@@ -1,12 +1,14 @@
-import type {Story} from '@storybook/react';
+import type {StoryFn} from '@storybook/react';
 
-export {META as default} from './meta';
+import {META} from './meta';
 
 import type {BarChartProps} from '../../../components';
 
 import {DEFAULT_DATA, Template} from './data';
 
-export const Default: Story<BarChartProps> = Template.bind({});
+
+
+export const Default: StoryFn<BarChartProps> = Template.bind({});
 
 Default.args = {
   data: DEFAULT_DATA,
@@ -14,3 +16,5 @@ Default.args = {
     console.log({a, b});
   },
 };
+
+export default {...META, title: 'polaris-viz/Charts/BarChart/Default'} as any;

@@ -111,17 +111,6 @@ export const parameters = {
   docs: {
     theme: themes.dark,
   },
-  options: {
-    storySort: (a, b) => {
-      const [story1Id, story1] = a;
-      const [story2Id, story2] = b;
-
-      const story1Path = [...story1.kind.split('/'), story1.name];
-      const story2Path = [...story2.kind.split('/'), story2.name];
-
-      return compareStoryPaths(storiesOrder, story1Path, story2Path);
-    },
-  },
   chromatic: {disableSnapshot: true, delay: 300},
 };
 
@@ -201,3 +190,4 @@ const Container = ({children, theme}: ContainerProps) => {
     </div>
   );
 };
+export const tags = ['!autodocs'];

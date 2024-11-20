@@ -1,6 +1,6 @@
-import type {Story} from '@storybook/react';
+import type {StoryFn} from '@storybook/react';
 
-export {META as default} from './meta';
+import {META} from './meta';
 
 import type {BarChartProps} from '../../../components';
 
@@ -8,7 +8,7 @@ import {Template} from './data';
 import {PolarisVizProvider} from '../../PolarisVizProvider';
 import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
-export const HorizontalStacked: Story<BarChartProps> = (
+export const HorizontalStacked: StoryFn<BarChartProps> = (
   args: BarChartProps,
 ) => {
   return (
@@ -68,3 +68,5 @@ HorizontalStacked.args = {
   type: 'stacked',
   direction: 'horizontal',
 };
+
+export default {...META, title: 'polaris-viz/Charts/BarChart/HorizontalStacked'} as any;

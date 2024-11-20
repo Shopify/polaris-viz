@@ -6,6 +6,7 @@ const getStories = () => {
 
   const SRC_PATH = `${appDirectory}/**/src/**/`;
 
+  // const ALL_STORIES = `${SRC_PATH}/*.doc.@(mdx|tsx)`;
   const ALL_STORIES = `${SRC_PATH}/*.stories.@(mdx|tsx)`;
   const PLAYGROUND_STORIES = `${SRC_PATH}/playground/*.stories.@(mdx|tsx)`;
   const CHROMATIC_STORIES = `${SRC_PATH}/*.chromatic.stories.@(mdx|tsx)`;
