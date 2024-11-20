@@ -9,7 +9,6 @@ import {
   LINE_HEIGHT,
 } from '@shopify/polaris-viz-core';
 import type {
-  Dimensions,
   DataGroup,
   BoundingRect,
   XAxisOptions,
@@ -61,14 +60,14 @@ export interface ChartProps {
   showLegend: boolean;
   theme: string;
   xAxisOptions: Required<XAxisOptions>;
-  dimensions?: Dimensions;
+  containerBounds?: BoundingRect;
   renderLegendContent?: RenderLegendContent;
 }
 
 export function Chart({
   annotationsLookupTable,
   data,
-  dimensions,
+  containerBounds,
   renderTooltipContent,
   showLegend,
   theme,
@@ -87,10 +86,15 @@ export function Chart({
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [annotationsHeight, setAnnotationsHeight] = useState(0);
 
+  const containerDimensions = {
+    height: containerBounds?.height ?? 0,
+    width: containerBounds?.width ?? 0,
+  };
+
   const {legend, setLegendDimensions, height, width} = useLegend({
     colors,
     data,
-    dimensions,
+    containerDimensions,
     showLegend,
     seriesNameFormatter,
   });
@@ -335,6 +339,7 @@ export function Chart({
       {showLegend && (
         <LegendContainer
           colorVisionType={COLOR_VISION_SINGLE_ITEM}
+          containerDimensions={containerDimensions}
           data={legend}
           onDimensionChange={setLegendDimensions}
           renderLegendContent={renderLegendContent}

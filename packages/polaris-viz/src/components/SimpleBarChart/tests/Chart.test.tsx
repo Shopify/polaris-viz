@@ -40,9 +40,11 @@ const SERIES: DataSeries[] = [
 ];
 
 const MOCK_PROPS: ChartProps = {
-  dimensions: {
+  containerBounds: {
     height: 300,
     width: 600,
+    x: 0,
+    y: 0,
   },
   data: SERIES,
   xAxisOptions: {
@@ -54,6 +56,7 @@ const MOCK_PROPS: ChartProps = {
     fixedWidth: false,
     labelFormatter: (value) => `${value}`,
     integersOnly: false,
+    maxYOverride: 100,
   },
   type: 'default',
   showLegend: true,

@@ -1,6 +1,6 @@
 import {Fragment} from 'react';
 import {useTransition} from '@react-spring/web';
-import type {Dimensions} from '@shopify/polaris-viz-core';
+import type {BoundingRect} from '@shopify/polaris-viz-core';
 import {
   ANIMATION_MARGIN,
   SparkBarSeries,
@@ -13,17 +13,17 @@ import styles from './SparkBarChart.scss';
 import type {SparkBarChartProps} from './SparkBarChart';
 
 interface Props extends SparkBarChartProps {
-  dimensions?: Dimensions;
+  containerBounds?: BoundingRect;
 }
 
 export function Chart({
   data,
-  dimensions,
+  containerBounds,
   targetLine,
   accessibilityLabel,
 }: Props) {
   const {shouldAnimate} = useChartContext();
-  const {width, height} = dimensions ?? {width: 0, height: 0};
+  const {width, height} = containerBounds ?? {width: 0, height: 0};
 
   const viewboxHeight = height + ANIMATION_MARGIN * 2;
 

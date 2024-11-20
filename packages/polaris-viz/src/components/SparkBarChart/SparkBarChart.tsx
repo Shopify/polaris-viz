@@ -3,11 +3,7 @@ import {
   ChartState,
   usePolarisVizContext,
 } from '@shopify/polaris-viz-core';
-import type {
-  Dimensions,
-  ChartProps,
-  TargetLine,
-} from '@shopify/polaris-viz-core';
+import type {ChartProps, TargetLine} from '@shopify/polaris-viz-core';
 
 import {ChartContainer} from '../ChartContainer';
 import {ChartSkeleton} from '../';
@@ -17,7 +13,6 @@ import {Chart} from './Chart';
 export type SparkBarChartProps = {
   targetLine?: TargetLine;
   accessibilityLabel?: string;
-  dimensions?: Dimensions;
 } & ChartProps;
 
 export function SparkBarChart(props: SparkBarChartProps) {

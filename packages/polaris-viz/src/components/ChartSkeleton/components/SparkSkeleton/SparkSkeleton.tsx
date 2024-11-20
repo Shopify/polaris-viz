@@ -8,13 +8,13 @@ import {
 import {ErrorText} from '../ErrorText';
 
 interface Props {
-  dimensions: Dimensions;
+  containerDimensions: Dimensions;
   state: ChartState;
   errorText: string;
 }
 
-export function SparkSkeleton({dimensions, state, errorText}: Props) {
-  const {width, height} = dimensions;
+export function SparkSkeleton({containerDimensions, state, errorText}: Props) {
+  const {width, height} = containerDimensions;
 
   const {
     grid: {color: gridColor},

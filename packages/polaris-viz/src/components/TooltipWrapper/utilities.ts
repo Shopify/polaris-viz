@@ -19,7 +19,7 @@ export interface AlteredPositionProps {
   margin: Margin;
   position: TooltipPositionOffset;
   tooltipDimensions: Dimensions;
-  chartDimensions?: BoundingRect;
+  containerBounds?: BoundingRect;
   scrollContainer?: Element | null;
 }
 
@@ -82,7 +82,7 @@ export function getAlteredVerticalBarPosition(
   } else {
     y = clamp({
       amount:
-        (props.chartDimensions?.y ?? 0) -
+        (props.containerBounds?.y ?? 0) -
         props.tooltipDimensions.height -
         (scrollContainer?.scrollTop ?? 0),
       min: 0,

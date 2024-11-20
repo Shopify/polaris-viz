@@ -55,7 +55,7 @@ const DATA: DataSeries[] = [
 
 const MOCK_PROPS: ChartProps = {
   annotationsLookupTable: {},
-  dimensions: {
+  containerBounds: {
     height: 300,
     width: 600,
     x: 0,
@@ -72,6 +72,7 @@ const MOCK_PROPS: ChartProps = {
     fixedWidth: false,
     labelFormatter: (value) => `${value}`,
     integersOnly: false,
+    maxYOverride: 100,
   },
   showLegend: false,
   type: 'default',

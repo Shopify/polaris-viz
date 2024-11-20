@@ -1,8 +1,8 @@
 import {Fragment, useMemo, useState, useCallback} from 'react';
 import {scaleBand, scaleLinear} from 'd3-scale';
 import type {
+  BoundingRect,
   DataSeries,
-  Dimensions,
   XAxisOptions,
   YAxisOptions,
 } from '@shopify/polaris-viz-core';
@@ -36,13 +36,13 @@ export interface ChartProps {
   data: DataSeries[];
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
-  dimensions?: Dimensions;
+  containerBounds?: BoundingRect;
   labelHelpers?: LabelHelpers[];
 }
 
 export function Chart({
   data,
-  dimensions,
+  containerBounds,
   xAxisOptions,
   yAxisOptions,
   labelHelpers,
@@ -64,7 +64,7 @@ export function Chart({
     throw new Error('Data must be finite');
   }
 
-  const {width, height} = dimensions || {width: 0, height: 0};
+  const {width, height} = containerBounds ?? {width: 0, height: 0};
 
   const labels = useMemo(
     () => dataSeries.map(({key}) => xAxisOptions.labelFormatter(key)),

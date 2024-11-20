@@ -11,13 +11,13 @@ import {Bar} from '../../../shared';
 import {ErrorText} from '../ErrorText';
 
 interface Props {
-  dimensions: Dimensions;
+  containerDimensions: Dimensions;
   state: ChartState;
   errorText: string;
 }
 
-export function FunnelSkeleton({dimensions, state, errorText}: Props) {
-  const {width, height} = dimensions;
+export function FunnelSkeleton({containerDimensions, state, errorText}: Props) {
+  const {width, height} = containerDimensions;
 
   const {
     grid: {color: gridColor},

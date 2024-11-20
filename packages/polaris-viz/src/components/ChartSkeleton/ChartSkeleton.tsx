@@ -1,4 +1,4 @@
-import type {Dimensions} from '@shopify/polaris-viz-core';
+import type {BoundingRect} from '@shopify/polaris-viz-core';
 import {ChartState, useTheme} from '@shopify/polaris-viz-core';
 
 import type {Size} from '../SimpleNormalizedChart';
@@ -23,7 +23,9 @@ export type SkeletonType =
   | 'SimpleNormalized';
 
 interface ChartSkeletonProps {
-  dimensions?: Dimensions;
+  // containerBounds is optional because it's passed down
+  // from ContainerBounds with cloneElement.
+  containerBounds?: BoundingRect;
   errorText?: string;
   state?: ChartState;
   theme?: string;
@@ -55,7 +57,7 @@ export interface SimpleNormalizedSkeletonProps extends ChartSkeletonProps {
   size?: Size;
 }
 
-type Props =
+export type Props =
   | DefaultSkeletonProps
   | DonutSkeletonProps
   | FunnelSkeletonProps
@@ -65,7 +67,7 @@ type Props =
 
 export function ChartSkeleton(props: Props) {
   const {
-    dimensions,
+    containerBounds,
     errorText = 'Could not load the chart',
     state = ChartState.Loading,
     theme,
@@ -76,17 +78,17 @@ export function ChartSkeleton(props: Props) {
     chartContainer: {backgroundColor},
   } = useTheme(theme);
 
-  const {width, height} = dimensions || {width: 0, height: 0};
+  const containerDimensions = {
+    height: containerBounds?.height ?? 0,
+    width: containerBounds?.width ?? 0,
+  };
 
   const SkeletonMarkup = () => {
     switch (type) {
       case 'Donut':
         return (
           <DonutSkeleton
-            dimensions={{
-              width,
-              height,
-            }}
+            containerDimensions={containerDimensions}
             state={state}
             errorText={errorText}
           />
@@ -94,10 +96,7 @@ export function ChartSkeleton(props: Props) {
       case 'Funnel':
         return (
           <FunnelSkeleton
-            dimensions={{
-              width,
-              height,
-            }}
+            containerDimensions={containerDimensions}
             state={state}
             errorText={errorText}
           />
@@ -105,10 +104,7 @@ export function ChartSkeleton(props: Props) {
       case 'SimpleBar':
         return (
           <SimpleBarSkeleton
-            dimensions={{
-              width,
-              height,
-            }}
+            containerDimensions={containerDimensions}
             state={state}
             errorText={errorText}
           />
@@ -117,10 +113,7 @@ export function ChartSkeleton(props: Props) {
         const {showLegend = true, size = 'small'} = props;
         return (
           <SimpleNormalizedSkeleton
-            dimensions={{
-              width,
-              height,
-            }}
+            containerDimensions={containerDimensions}
             state={state}
             errorText={errorText}
             showLegend={showLegend}
@@ -131,10 +124,7 @@ export function ChartSkeleton(props: Props) {
       case 'Spark':
         return (
           <SparkSkeleton
-            dimensions={{
-              width,
-              height,
-            }}
+            containerDimensions={containerDimensions}
             state={state}
             errorText={errorText}
           />
@@ -143,10 +133,7 @@ export function ChartSkeleton(props: Props) {
       default:
         return (
           <GridSkeleton
-            dimensions={{
-              width,
-              height,
-            }}
+            containerDimensions={containerDimensions}
             state={state}
             errorText={errorText}
           />
@@ -154,7 +141,7 @@ export function ChartSkeleton(props: Props) {
     }
   };
 
-  if (width === 0) return null;
+  if (containerDimensions.width === 0) return null;
 
   return (
     <div className={styles.Container}>
@@ -162,8 +149,8 @@ export function ChartSkeleton(props: Props) {
       {state === ChartState.Loading && (
         <Shimmer
           backgroundColor={backgroundColor}
-          width={width}
-          height={height}
+          width={containerDimensions.width}
+          height={containerDimensions.height}
         />
       )}
     </div>

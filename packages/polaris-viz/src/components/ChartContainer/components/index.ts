@@ -1,1 +1,1 @@
-export {ChartDimensions} from './ChartDimensions/';
+export {ContainerBounds} from './ContainerBounds/';

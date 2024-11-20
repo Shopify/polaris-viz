@@ -26,7 +26,7 @@ export interface VerticalBarChartProps {
   seriesNameFormatter: LabelFormatter;
   annotationsLookupTable?: AnnotationLookupTable;
   barOptions?: {isStacked: boolean};
-  dimensions?: BoundingRect;
+  containerBounds?: BoundingRect;
   emptyStateText?: string;
   renderLegendContent?: RenderLegendContent;
   type?: ChartType;
@@ -36,7 +36,7 @@ export interface VerticalBarChartProps {
 export function VerticalBarChart({
   annotationsLookupTable = {},
   data,
-  dimensions,
+  containerBounds,
   emptyStateText,
   renderLegendContent,
   renderTooltipContent,
@@ -57,7 +57,7 @@ export function VerticalBarChart({
 
   return (
     <Chart
-      dimensions={dimensions}
+      containerBounds={containerBounds}
       annotationsLookupTable={annotationsLookupTable}
       data={seriesWithDefaults}
       emptyStateText={emptyStateText}

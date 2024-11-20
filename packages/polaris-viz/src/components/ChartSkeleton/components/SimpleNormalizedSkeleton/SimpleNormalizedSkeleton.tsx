@@ -14,7 +14,7 @@ const SIZE_TO_PX = {
 };
 
 interface Props {
-  dimensions: Dimensions;
+  containerDimensions: Dimensions;
   errorText: string;
   showLegend: boolean;
   size: Size;
@@ -22,13 +22,13 @@ interface Props {
 }
 
 export function SimpleNormalizedSkeleton({
-  dimensions,
+  containerDimensions,
   errorText,
   showLegend,
   size,
   state,
 }: Props) {
-  const {width, height} = dimensions;
+  const {width, height} = containerDimensions;
 
   const {
     grid: {color: gridColor},
