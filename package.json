@@ -126,7 +126,7 @@
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "babel-loader": "^8.2.3",
-    "babel-preset-expo": "^9.0.2",
+    "babel-preset-expo": "9.0.2",
     "chalk": "4",
     "copyfiles": "^2.1.1",
     "eslint": "^7.32.0",
@@ -154,19 +154,22 @@
     "react-native-svg": "^12.1.1",
     "react-native-web": "0.17.1",
     "rimraf": "^3.0.0",
-    "sass-loader": "^10.1.1",
     "semver": "^6.3.0",
     "shelljs": "^0.8.5",
     "shx": "^0.3.2",
     "size-limit": "^5.0.1",
     "storybook": "^8.4.3",
-    "typescript": "^4.6.4"
+    "typescript": "^4.6.4",
+    "webpack": "5.39.1"
   },
   "dependencies": {
-    "concurrently": "^7.0.0"
+    "concurrently": "^7.0.0",
+    "css-loader": "^7.1.2",
+    "style-loader": "^4.0.0"
   },
   "resolutions": {
-    "@apollo/federation": "0.38.1"
+    "@apollo/federation": "0.38.1",
+    "babel-preset-expo": "9.0.2"
   },
   "version": "1.0.0-light-theme-default-beta.1"
 }
