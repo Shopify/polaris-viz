@@ -7,6 +7,7 @@ import {
   useTheme,
   useChartPositions,
   LINE_HEIGHT,
+  InternalChartType,
 } from '@shopify/polaris-viz-core';
 import type {
   DataGroup,
@@ -15,21 +16,14 @@ import type {
   LabelFormatter,
 } from '@shopify/polaris-viz-core';
 
+import {useVerticalBarChart} from '../VerticalBarChart';
 import {ChartElements} from '../ChartElements';
 import {
   Annotations,
   checkAvailableAnnotations,
   YAxisAnnotations,
 } from '../Annotations';
-import {sortBarChartData} from '../../utilities/sortBarChartData';
-import {getVerticalBarChartTooltipPosition} from '../../utilities/getVerticalBarChartTooltipPosition';
-import type {TooltipPosition, TooltipPositionParams} from '../TooltipWrapper';
-import {
-  TooltipHorizontalOffset,
-  TooltipVerticalOffset,
-  TooltipWrapper,
-  TOOLTIP_POSITION_DEFAULT_RETURN,
-} from '../TooltipWrapper';
+import {TooltipWrapper} from '../TooltipWrapper';
 import type {
   AnnotationLookupTable,
   RenderLegendContent,
@@ -41,7 +35,7 @@ import {useColorVisionEvents, useReducedLabelIndexes} from '../../hooks';
 import {HorizontalGridLines} from '../HorizontalGridLines';
 import {YAxis} from '../YAxis';
 import {LegendContainer, useLegend} from '../LegendContainer';
-import {ANNOTATIONS_LABELS_OFFSET} from '../../constants';
+import {ANNOTATIONS_LABELS_OFFSET, EMPTY_BOUNDS} from '../../constants';
 
 import {useDualAxisTicks} from './hooks/useDualAxisTicks';
 import {useDualAxisTicksWidth} from './hooks/useDualAxisTickWidths';
@@ -67,7 +61,7 @@ export interface ChartProps {
 export function Chart({
   annotationsLookupTable,
   data,
-  containerBounds,
+  containerBounds = EMPTY_BOUNDS,
   renderTooltipContent,
   showLegend,
   theme,
@@ -187,6 +181,12 @@ export function Chart({
   const {hasXAxisAnnotations, hasYAxisAnnotations} = checkAvailableAnnotations(
     annotationsLookupTable,
   );
+
+  const {xScale: barXScale} = useVerticalBarChart({
+    data: barChartData.series,
+    drawableWidth,
+    labels,
+  });
 
   return (
     <ChartElements.Div height={height} width={width}>
@@ -328,12 +328,17 @@ export function Chart({
       <TooltipWrapper
         bandwidth={labelWidth}
         chartBounds={chartBounds}
+        containerBounds={containerBounds}
+        chartType={InternalChartType.Bar}
+        data={barChartData.series}
         focusElementDataType={DataType.BarGroup}
         getMarkup={getTooltipMarkup}
-        getPosition={getTooltipPosition}
+        longestSeriesIndex={0}
         margin={ChartMargin}
         onIndexChange={(index) => setActiveIndex(index)}
         parentRef={svgRef}
+        xScale={barXScale}
+        yScale={barYScale}
       />
 
       {showLegend && (
@@ -347,46 +352,4 @@ export function Chart({
       )}
     </ChartElements.Div>
   );
-
-  function formatPositionForTooltip(index: number | null): TooltipPosition {
-    if (index == null) {
-      return TOOLTIP_POSITION_DEFAULT_RETURN;
-    }
-
-    const sortedData = sortBarChartData(labels, barChartData.series);
-
-    const xPosition = xScale(index) ?? 0;
-    const sortedDataPos = sortedData[index].map((num) => Math.abs(num ?? 0));
-
-    const highestValuePos = Math.max(...sortedDataPos);
-
-    const x = xPosition + chartXPosition;
-    const y = barYScale(highestValuePos) + (ChartMargin.Top as number);
-
-    return {
-      x,
-      y: Math.abs(y),
-      position: {
-        horizontal: TooltipHorizontalOffset.Left,
-        vertical: TooltipVerticalOffset.Above,
-      },
-      activeIndex: index,
-    };
-  }
-
-  function getTooltipPosition({
-    event,
-    index,
-    eventType,
-  }: TooltipPositionParams): TooltipPosition {
-    return getVerticalBarChartTooltipPosition({
-      tooltipPosition: {event, index, eventType},
-      chartXPosition,
-      formatPositionForTooltip,
-      maxIndex: labels.length - 1,
-      step: labelWidth,
-      yMin: ChartMargin.Top,
-      yMax: drawableHeight + Number(ChartMargin.Bottom) + xAxisHeight,
-    });
-  }
 }

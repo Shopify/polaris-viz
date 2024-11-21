@@ -18,6 +18,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 - Changed `TOUCH_FONT_SIZE` constant to `12px`.
 
+### Changed
+
+- Refactored tooltip logic to move individual chart logic into `<TooltipWrapper />`.
+
 ## [15.3.1] - 2024-11-18
 
 - No updates. Transitive dependency bump.

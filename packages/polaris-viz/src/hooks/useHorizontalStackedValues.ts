@@ -1,8 +1,8 @@
 import {useMemo} from 'react';
 import type {DataSeries} from '@shopify/polaris-viz-core';
-import {stackOffsetDiverging, stackOrderNone} from 'd3-shape';
 
-import {getStackedMinMax, getStackedValues} from '../utilities';
+import {getStackedMinMax} from '../utilities';
+import {getStackedValuesFromDataSeries} from '../utilities/getStackedValuesFromDataSeries';
 
 interface Props {
   data: DataSeries[];
@@ -12,23 +12,11 @@ interface Props {
 export function useHorizontalStackedValues({data, isStacked}: Props) {
   const {stackedValues, stackedMin, stackedMax} = useMemo(() => {
     if (!isStacked || data.length === 0) {
-      return {stackedMin: 0, stackedMax: 0, labels: [], stackedValues: []};
+      return {stackedMin: 0, stackedMax: 0, stackedValues: []};
     }
 
-    const longestSeries = data.reduce((prev, cur) => {
-      if (cur.data.length > prev.data.length) {
-        return cur;
-      }
-      return prev;
-    }, data[0]);
-
-    const labels = longestSeries.data.map(({key}) => `${key}`);
-    const stackedValues = getStackedValues({
-      series: data,
-      labels,
-      order: stackOrderNone,
-      offset: stackOffsetDiverging,
-    });
+    const {stackedValues, formattedStackedValues} =
+      getStackedValuesFromDataSeries(data);
 
     const {min, max} = getStackedMinMax({
       stackedValues,
@@ -36,16 +24,9 @@ export function useHorizontalStackedValues({data, isStacked}: Props) {
       integersOnly: false,
     });
 
-    const formattedStackedValues = labels.map((_, labelIndex) => {
-      return stackedValues.map((data) => {
-        return data[labelIndex];
-      });
-    });
-
     return {
       stackedMin: min,
       stackedMax: max,
-      labels,
       stackedValues: formattedStackedValues,
     };
   }, [isStacked, data]);

@@ -11,6 +11,7 @@ import {
   LINE_HEIGHT,
   SMALL_CHART_HEIGHT,
   isInfinity,
+  InternalChartType,
 } from '@shopify/polaris-viz-core';
 import type {
   DataSeries,
@@ -35,18 +36,15 @@ import type {
   RenderTooltipContentData,
 } from '../../types';
 import {useFormattedLabels} from '../../hooks/useFormattedLabels';
-import {getVerticalBarChartTooltipPosition} from '../../utilities/getVerticalBarChartTooltipPosition';
 import {XAxis} from '../XAxis';
 import {LegendContainer, useLegend} from '../LegendContainer';
 import {GradientDefs} from '../shared';
-import {ANNOTATIONS_LABELS_OFFSET, ChartMargin} from '../../constants';
-import type {TooltipPosition, TooltipPositionParams} from '../TooltipWrapper';
 import {
-  TooltipHorizontalOffset,
-  TooltipVerticalOffset,
-  TooltipWrapper,
-  TOOLTIP_POSITION_DEFAULT_RETURN,
-} from '../TooltipWrapper';
+  ANNOTATIONS_LABELS_OFFSET,
+  ChartMargin,
+  EMPTY_BOUNDS,
+} from '../../constants';
+import {TooltipWrapper} from '../TooltipWrapper';
 import {getStackedValues, getStackedMinMax} from '../../utilities';
 import {YAxis} from '../YAxis';
 import {HorizontalGridLines} from '../HorizontalGridLines';
@@ -77,7 +75,7 @@ export interface Props {
 
 export function Chart({
   annotationsLookupTable = {},
-  containerBounds,
+  containerBounds = EMPTY_BOUNDS,
   data,
   emptyStateText,
   renderLegendContent,
@@ -354,13 +352,18 @@ export function Chart({
         <TooltipWrapper
           bandwidth={xScale.bandwidth()}
           chartBounds={chartBounds}
+          chartType={InternalChartType.Bar}
           containerBounds={containerBounds}
+          data={data}
           focusElementDataType={DataType.BarGroup}
           getMarkup={getTooltipMarkup}
-          getPosition={getTooltipPosition}
+          longestSeriesIndex={indexForLabels}
           margin={{...ChartMargin, Top: chartYPosition}}
           parentRef={svgRef}
+          type={type}
           usePortal
+          xScale={xScale}
+          yScale={yScale}
         />
       )}
 
@@ -377,55 +380,4 @@ export function Chart({
       )}
     </ChartElements.Div>
   );
-
-  function formatPositionForTooltip(index: number | null): TooltipPosition {
-    if (index == null) {
-      return TOOLTIP_POSITION_DEFAULT_RETURN;
-    }
-
-    const xPosition = xScale(`${index}`) ?? 0;
-    const sortedDataPos = sortedData[index].map((num) =>
-      Math.abs(num ?? 0),
-    ) as number[];
-
-    const highestValuePos =
-      type === 'stacked'
-        ? sortedData[index].reduce(sumPositiveData, 0)
-        : Math.max(...sortedDataPos);
-
-    const x = xPosition + chartXPosition;
-    const y = yScale(highestValuePos!) + chartYPosition;
-
-    return {
-      x: x + (containerBounds?.x ?? 0),
-      y: Math.abs(y) + (containerBounds?.y ?? 0),
-      position: {
-        horizontal: TooltipHorizontalOffset.Center,
-        vertical: areAllNegative
-          ? TooltipVerticalOffset.Below
-          : TooltipVerticalOffset.Above,
-      },
-      activeIndex: index,
-    };
-  }
-
-  function getTooltipPosition({
-    event,
-    index,
-    eventType,
-  }: TooltipPositionParams): TooltipPosition {
-    return getVerticalBarChartTooltipPosition({
-      tooltipPosition: {event, index, eventType},
-      chartXPosition,
-      formatPositionForTooltip,
-      maxIndex: sortedData.length - 1,
-      step: xScale.step(),
-      yMin: ChartMargin.Top,
-      yMax: drawableHeight + Number(ChartMargin.Bottom) + xAxisHeight,
-    });
-  }
-}
-
-function sumPositiveData(prevValue: number, currValue: number) {
-  return currValue < 0 ? prevValue : prevValue + currValue;
 }
