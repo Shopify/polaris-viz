@@ -27,6 +27,8 @@ import {
   SMALL_CONTAINER_WIDTH,
   SMALL_CONTAINER_HEIGHT,
   DEFAULT_BOUNDS,
+  DISABLED_GROUP_COLOR,
+  DISABLED_TEXT_COLOR,
 } from './utilities/constants';
 import type {
   CellGroup,
@@ -143,7 +145,7 @@ export function Grid(props: GridProps) {
 
   const handleGroupHover = useCallback(
     (group: CellGroup | null) => {
-      if (!isSmallContainer) {
+      if (!isSmallContainer && group?.value !== null) {
         if (group) {
           const activeGroups = getActiveGroups(group);
           setHoveredGroups(activeGroups);
@@ -211,6 +213,12 @@ export function Grid(props: GridProps) {
   ]);
 
   const getColors = (group: CellGroup | null) => {
+    if (group?.value === null) {
+      return {
+        bgColor: DISABLED_GROUP_COLOR,
+        textColor: DISABLED_TEXT_COLOR,
+      };
+    }
     if (group) {
       return {
         bgColor: group.bgColor || DEFAULT_GROUP_COLOR,

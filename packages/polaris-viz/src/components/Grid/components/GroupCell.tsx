@@ -108,8 +108,11 @@ export const GroupCell: React.FC<GroupCellProps> = ({
       style={{opacity}}
       role="button"
       data-testid="group-cell"
+      data-disabled={group.value === null}
       onClick={() => {
-        handleSelectGroup(group);
+        if (group.value !== null) {
+          handleSelectGroup(group);
+        }
       }}
       onMouseEnter={() => {
         if (!groupSelected) {
@@ -139,6 +142,7 @@ export const GroupCell: React.FC<GroupCellProps> = ({
           height={groupHeight}
           fill={getColors(group).bgColor}
           opacity={opacity}
+          isDisabled={group.value === null}
         />
 
         <GroupInfo

@@ -9,6 +9,8 @@ export const X_AXIS_LABEL_OFFSET = 20;
 
 export const DEFAULT_GROUP_COLOR = '#B1C3F7';
 export const DEFAULT_TEXT_COLOR = '#FFFFFF';
+export const DISABLED_GROUP_COLOR = 'rgba(0, 0, 0, 0.05)';
+export const DISABLED_TEXT_COLOR = '#B5B5B5';
 
 export const SVG_OFFSET = 10;
 export const SMALL_CONTAINER_WIDTH = 400;

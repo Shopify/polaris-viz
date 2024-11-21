@@ -16,11 +16,11 @@
 }
 
 .GroupCellContainerSelected {
-  // stylelint-disable declaration-no-important
-  outline: 2px solid $color-blue-100 !important;
-  outline-offset: -1px;
-  border-radius: 4px;
-  // stylelint-enable declaration-no-important
+  &:not([data-disabled='true']) {
+    outline: 2px solid $color-blue-100;
+    outline-offset: -1px;
+    border-radius: 4px;
+  }
 }
 
 @keyframes FadeInScale {
