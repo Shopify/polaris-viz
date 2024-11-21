@@ -169,8 +169,7 @@
     "concurrently": "^7.0.0"
   },
   "resolutions": {
-    "@apollo/federation": "0.38.1",
-    "babel-preset-expo": "9.0.2"
+    "@apollo/federation": "0.38.1"
   },
   "version": "1.0.0-light-theme-default-beta.1"
 }
