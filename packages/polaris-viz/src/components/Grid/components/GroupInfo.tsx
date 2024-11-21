@@ -21,7 +21,7 @@ interface GroupInfoProps {
   getColors: (group: any) => {textColor: string};
   opacity: number;
   mainFontSize: number;
-  groupValue: string;
+  groupValue: string | null;
   showNameAndSecondaryValue: boolean;
   secondaryFontSize: number;
   groupSecondaryValue: string;
@@ -58,6 +58,26 @@ export const GroupInfo: React.FC<GroupInfoProps> = ({
     [characterWidths, dimensions],
   );
 
+  const truncatedGroupName = showNameAndSecondaryValue
+    ? getTruncatedText(group.name, groupWidth * GROUP_NAME_WIDTH_MULTIPLIER)
+    : '';
+
+  if (groupValue === null) {
+    return (
+      <text
+        x={groupX + groupNameOffset}
+        y={groupY + groupNameOffset}
+        textAnchor="start"
+        dominantBaseline="hanging"
+        fontSize={LABEL_FONT_SIZE}
+        fill={getColors(group).textColor}
+        opacity={opacity}
+      >
+        {truncatedGroupName}
+      </text>
+    );
+  }
+
   const valueAndSecondaryValue = showNameAndSecondaryValue
     ? `${groupValue}${VALUES_DIVIDER}${groupSecondaryValue}`
     : groupValue;
@@ -69,10 +89,6 @@ export const GroupInfo: React.FC<GroupInfoProps> = ({
     truncatedValueAndSecondaryValue.split(VALUES_DIVIDER)[0];
   const truncatedSecondaryValue =
     truncatedValueAndSecondaryValue.split(VALUES_DIVIDER)[1];
-
-  const truncatedGroupName = showNameAndSecondaryValue
-    ? getTruncatedText(group.name, groupWidth * GROUP_NAME_WIDTH_MULTIPLIER)
-    : '';
 
   const textYOffset = showNameAndSecondaryValue
     ? TEXT_Y_OFFSET_WITH_SECONDARY
