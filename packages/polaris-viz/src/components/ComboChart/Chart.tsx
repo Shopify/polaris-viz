@@ -35,7 +35,7 @@ import {useColorVisionEvents, useReducedLabelIndexes} from '../../hooks';
 import {HorizontalGridLines} from '../HorizontalGridLines';
 import {YAxis} from '../YAxis';
 import {LegendContainer, useLegend} from '../LegendContainer';
-import {ANNOTATIONS_LABELS_OFFSET, EMPTY_BOUNDS} from '../../constants';
+import {ANNOTATIONS_LABELS_OFFSET} from '../../constants';
 
 import {useDualAxisTicks} from './hooks/useDualAxisTicks';
 import {useDualAxisTicksWidth} from './hooks/useDualAxisTickWidths';

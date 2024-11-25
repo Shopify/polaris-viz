@@ -50,7 +50,6 @@ import {
   ANNOTATIONS_LABELS_OFFSET,
   Y_AXIS_LABEL_OFFSET,
   CROSSHAIR_ID,
-  EMPTY_BOUNDS,
 } from '../../constants';
 import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
 import {YAxis} from '../YAxis';

@@ -8,7 +8,6 @@ import {LegendContainer} from '../../LegendContainer';
 import {Annotations, YAxisAnnotations} from '../../Annotations';
 import {AxisLabel} from '../components';
 import {YAxis} from '../../YAxis';
-import {DEFAULT_CHART_CONTEXT as MOCK_DEFAULT_CHART_CONTEXT} from '../../../storybook/constants';
 
 jest.mock('../../../hooks/useEstimateStringWidth', () => ({
   useEstimateStringWidth: () => 100,

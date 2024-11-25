@@ -12,7 +12,6 @@ export interface ChartContextValues {
   theme: string;
   isPerformanceImpacted: boolean;
   scrollContainer?: Element | null;
-  ref: HTMLElement | null;
 }
 
 export const ChartContext = createContext<ChartContextValues>({
@@ -26,5 +25,4 @@ export const ChartContext = createContext<ChartContextValues>({
   shouldAnimate: true,
   theme: DEFAULT_THEME_NAME,
   isPerformanceImpacted: false,
-  ref: null,
 });

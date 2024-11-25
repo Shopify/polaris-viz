@@ -115,5 +115,5 @@ export function useContainerBounds({
     });
   }, [ref, scrollContainer]);
 
-  return {containerBounds, setContainerBounds, onMouseEnter, setRef, ref};
+  return {containerBounds, setContainerBounds, onMouseEnter, setRef};
 }

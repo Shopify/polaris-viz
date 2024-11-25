@@ -49,7 +49,7 @@ export const ChartContainer = (props: Props) => {
     return isLargeDataSet(props.data, props.type);
   }, [props.data, props.type]);
 
-  const {containerBounds, onMouseEnter, setRef, ref} = useContainerBounds({
+  const {containerBounds, onMouseEnter, setRef} = useContainerBounds({
     onIsPrintingChange: setIsPrinting,
     scrollContainer: props.scrollContainer,
     sparkChart: props.sparkChart,
@@ -80,7 +80,6 @@ export const ChartContainer = (props: Props) => {
     dataTooBigToAnimate,
     props.scrollContainer,
     containerBounds,
-    ref,
   ]);
 
   const {chartContainer, grid} = useTheme(value.theme);

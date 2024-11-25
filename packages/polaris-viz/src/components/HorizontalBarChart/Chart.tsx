@@ -42,11 +42,7 @@ import {
   useHorizontalXScale,
   useTheme,
 } from '../../hooks';
-import {
-  ChartMargin,
-  ANNOTATIONS_LABELS_OFFSET,
-  EMPTY_BOUNDS,
-} from '../../constants';
+import {ChartMargin, ANNOTATIONS_LABELS_OFFSET} from '../../constants';
 import {formatDataIntoGroups} from '../../utilities';
 import {TooltipWrapper} from '../TooltipWrapper';
 
