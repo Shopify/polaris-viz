@@ -231,6 +231,23 @@ export function Grid(props: GridProps) {
     };
   };
 
+  const handleBodyClick = useCallback(() => {
+    setGroupSelected(null);
+    handleGroupHover(null);
+  }, [handleGroupHover]);
+
+  useEffect(() => {
+    if (groupSelected) {
+      setTimeout(() => {
+        document.body.addEventListener('click', handleBodyClick);
+      }, 0);
+
+      return () => {
+        document.body.removeEventListener('click', handleBodyClick);
+      };
+    }
+  }, [groupSelected, handleBodyClick]);
+
   const yTicks = useMemo(() => {
     return Array.from({length: gridDimensions.rows}, (_, index) => ({
       value: gridDimensions.rows - 1 - index,
