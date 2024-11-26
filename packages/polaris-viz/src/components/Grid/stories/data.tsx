@@ -33,6 +33,18 @@ export const CELL_GROUPS: CellGroup[] = [
       'Customers without recent purchases, but with a very strong history of orders and spend.',
     goal: 'Goal: move customers to Loyal',
     metricInformation: '1,424 (10.9% of customer base)',
+    actions: [
+      {
+        children: 'Preview segment',
+        url: '#',
+        target: '_blank',
+      },
+      {
+        children: 'View report',
+        url: '#',
+        target: '_blank',
+      },
+    ],
   },
   {
     id: 'at_risk',
@@ -48,6 +60,18 @@ export const CELL_GROUPS: CellGroup[] = [
     description:
       'Customers without recent purchases, but with a strong history of orders and spend.',
     goal: 'Goal: move customers to Loyal or Needs Attention',
+    actions: [
+      {
+        children: 'Preview segment',
+        url: '#',
+        target: '_blank',
+      },
+      {
+        children: 'View report',
+        url: '#',
+        target: '_blank',
+      },
+    ],
   },
   {
     id: 'dormant',
@@ -63,6 +87,18 @@ export const CELL_GROUPS: CellGroup[] = [
       'Customers without recent orders, with infrequent orders, and with low spend.',
     goal: 'Goal: move customers to Almost lost',
     metricInformation: '1,424 (10.9% of customer base)',
+    actions: [
+      {
+        children: 'Preview segment',
+        url: '#',
+        target: '_blank',
+      },
+      {
+        children: 'View report',
+        url: '#',
+        target: '_blank',
+      },
+    ],
   },
   {
     id: 'loyal',
@@ -78,6 +114,18 @@ export const CELL_GROUPS: CellGroup[] = [
       'Customers without recent purchases, but with a very strong history of orders and spend.',
     goal: 'Goal: move customers to Loyal',
     metricInformation: '1,424 (10.9% of customer base)',
+    actions: [
+      {
+        children: 'Preview segment',
+        url: '#',
+        target: '_blank',
+      },
+      {
+        children: 'View report',
+        url: '#',
+        target: '_blank',
+      },
+    ],
   },
   {
     id: 'needs_attention',
@@ -93,6 +141,18 @@ export const CELL_GROUPS: CellGroup[] = [
       'Customers who buy less recently, order sometimes and spend moderately with your store.',
     goal: 'Goal: move customers to Loyal or Potential',
     metricInformation: '1,424 (10.9% of customer base)',
+    actions: [
+      {
+        children: 'Preview segment',
+        url: '#',
+        target: '_blank',
+      },
+      {
+        children: 'View report long text',
+        url: '#',
+        target: '_blank',
+      },
+    ],
   },
   {
     id: 'almost_lost',
@@ -108,6 +168,18 @@ export const CELL_GROUPS: CellGroup[] = [
       'Customers without recent purchases, fewer orders, and with lower spend.',
     goal: 'Goal: move customers to Active or Promising',
     metricInformation: '1,424 (10.9% of customer base)',
+    actions: [
+      {
+        children: 'Preview segment',
+        url: '#',
+        target: '_blank',
+      },
+      {
+        children: 'View report',
+        url: '#',
+        target: '_blank',
+      },
+    ],
   },
   {
     id: 'promising',
@@ -122,6 +194,18 @@ export const CELL_GROUPS: CellGroup[] = [
     description: 'Customers with recent purchases, few orders, and low spend.',
     goal: 'Goal: move customers to Active.',
     metricInformation: '1,424 (10.9% of customer base)',
+    actions: [
+      {
+        children: 'Preview segment',
+        url: '#',
+        target: '_blank',
+      },
+      {
+        children: 'View report',
+        url: '#',
+        target: '_blank',
+      },
+    ],
   },
   {
     id: 'active',
@@ -137,6 +221,18 @@ export const CELL_GROUPS: CellGroup[] = [
       'Customers with recent purchases, some orders, and moderate spend.',
     goal: 'Goal: move customers to Champions or Loyal',
     metricInformation: '1,424 (10.9% of customer base)',
+    actions: [
+      {
+        children: 'Preview segment',
+        url: '#',
+        target: '_blank',
+      },
+      {
+        children: 'View report',
+        url: '#',
+        target: '_blank',
+      },
+    ],
   },
   {
     id: 'new',
@@ -152,6 +248,18 @@ export const CELL_GROUPS: CellGroup[] = [
       'Clients ayant effectué des achats très récemment, ayant passé peu de commandes et ayant dépensé peu dargent.',
     goal: 'Goal: move customers to Active',
     metricInformation: '1,424 (10.9% of customer base)',
+    actions: [
+      {
+        children: 'Preview segment',
+        url: '#',
+        target: '_blank',
+      },
+      {
+        children: 'View report',
+        url: '#',
+        target: '_blank',
+      },
+    ],
   },
   {
     id: 'champions',
@@ -166,6 +274,18 @@ export const CELL_GROUPS: CellGroup[] = [
       'Customers with very recent purchases, many orders, and the most spend.',
     goal: null,
     metricInformation: '1,424 (10.9% of customer base)',
+    actions: [
+      {
+        children: 'Preview segment',
+        url: '#',
+        target: '_blank',
+      },
+      {
+        children: 'View report',
+        url: '#',
+        target: '_blank',
+      },
+    ],
   },
 ];
 

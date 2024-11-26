@@ -18,6 +18,13 @@ export interface CellGroup {
   secondaryValue: string;
   value: string;
   metricInformation?: string;
+  actions?: GroupAction[];
+}
+
+export interface GroupAction {
+  children: string;
+  url?: string;
+  target?: '_blank' | '_self' | '_parent' | '_top';
 }
 
 export interface TooltipInfo {
