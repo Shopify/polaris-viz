@@ -100,5 +100,47 @@ describe('<StackedAreas />', () => {
         duration: 100,
       });
     });
+
+    it('renders and animates when series length changes', () => {
+      const singleSeriesValues = [
+        [
+          [163, 269],
+          [0, 0],
+        ],
+      ] as StackedSeries[];
+
+      const stackedArea = mount(
+        <svg>
+          <StackedAreas
+            {...mockProps}
+            stackedValues={singleSeriesValues}
+            zeroLineValues={singleSeriesValues}
+          />
+        </svg>,
+      );
+
+      expect(stackedArea).toContainReactComponentTimes(AnimatedArea, 1);
+
+      // Update with two series
+      stackedArea.setProps({
+        children: (
+          <StackedAreas
+            {...mockProps}
+            stackedValues={mockStackedValues}
+            zeroLineValues={mockStackedValues}
+          />
+        ),
+      });
+
+      const stacks = stackedArea.findAll(AnimatedArea);
+
+      expect(stackedArea).toContainReactComponentTimes(AnimatedArea, 2);
+      expect(stacks[0]).toHaveReactProps({
+        duration: 275,
+      });
+      expect(stacks[1]).toHaveReactProps({
+        duration: 275,
+      });
+    });
   });
 });
