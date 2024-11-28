@@ -26,6 +26,7 @@ export function CombinationRenderer<T extends Attributes>({
     return {
       ...DEFAULT_CHART_CONTEXT,
       theme: theme ?? DEFAULT_THEME_NAME,
+      isTouchDevice: false,
     };
   }, [theme]);
 

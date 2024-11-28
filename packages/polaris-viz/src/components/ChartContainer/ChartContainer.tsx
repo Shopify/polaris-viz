@@ -12,7 +12,9 @@ import {
   ChartContext,
   isLargeDataSet,
   usePolarisVizContext,
+  isTouchDevice,
 } from '@shopify/polaris-viz-core';
+import type {ChartContextValues} from '@shopify/polaris-viz-core/src/contexts';
 
 import {EMPTY_BOUNDS} from '../../constants';
 import {ChartErrorBoundary} from '../ChartErrorBoundary';
@@ -49,13 +51,13 @@ export const ChartContainer = (props: Props) => {
     return isLargeDataSet(props.data, props.type);
   }, [props.data, props.type]);
 
-  const {containerBounds, onMouseEnter, setRef} = useContainerBounds({
+  const {containerBounds, updateContainerBounds, setRef} = useContainerBounds({
     onIsPrintingChange: setIsPrinting,
     scrollContainer: props.scrollContainer,
     sparkChart: props.sparkChart,
   });
 
-  const value = useMemo(() => {
+  const value: ChartContextValues = useMemo(() => {
     const shouldAnimate =
       props.isAnimated && !prefersReducedMotion && !dataTooBigToAnimate;
     const printFriendlyTheme = isPrinting ? 'Print' : props.theme;
@@ -66,6 +68,7 @@ export const ChartContainer = (props: Props) => {
       characterWidths,
       characterWidthOffsets,
       theme: printFriendlyTheme,
+      isTouchDevice: isTouchDevice(),
       isPerformanceImpacted: dataTooBigToAnimate,
       scrollContainer: props.scrollContainer,
       containerBounds: containerBounds ?? EMPTY_BOUNDS,
@@ -109,8 +112,9 @@ export const ChartContainer = (props: Props) => {
               ? chartContainer.sparkChartMinHeight
               : chartContainer.minHeight,
           }}
-          onMouseEnter={onMouseEnter}
-          onFocus={onMouseEnter}
+          onMouseEnter={updateContainerBounds}
+          onFocus={updateContainerBounds}
+          onTouchStart={updateContainerBounds}
         >
           {!hasValidBounds(value.containerBounds) ? null : (
             <ChartErrorBoundary

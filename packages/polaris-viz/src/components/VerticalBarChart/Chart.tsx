@@ -343,7 +343,7 @@ export function Chart({
           getMarkup={getTooltipMarkup}
           longestSeriesIndex={indexForLabels}
           margin={{...ChartMargin, Top: chartYPosition}}
-          parentRef={svgRef}
+          parentElement={svgRef}
           type={type}
           usePortal
           xScale={xScale}

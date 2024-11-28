@@ -148,5 +148,6 @@ export const DEFAULT_CHART_CONTEXT: ChartContextValues = {
   containerBounds: {width: 400, height: 200, x: 0, y: 0},
   id: '',
   isPerformanceImpacted: false,
+  isTouchDevice: false,
   theme: DEFAULT_THEME_NAME,
 };

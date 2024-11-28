@@ -3,6 +3,7 @@ import {
   uniqueId,
   COLOR_VISION_SINGLE_ITEM,
   useAriaLabel,
+  useChartContext,
 } from '@shopify/polaris-viz-core';
 import type {
   ChartType,
@@ -53,7 +54,8 @@ export function Chart({
   xAxisOptions,
   yAxisOptions,
 }: ChartProps) {
-  useColorVisionEvents({enabled: data.length > 1});
+  const {isTouchDevice} = useChartContext();
+  useColorVisionEvents({enabled: data.length > 1 && !isTouchDevice});
 
   const fontSize = getFontSize();
   const id = useMemo(() => uniqueId('SimpleBarChart'), []);

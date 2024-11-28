@@ -91,7 +91,7 @@ export function useContainerBounds({
     chartContainer.sparkChartMinHeight,
   ]);
 
-  const onMouseEnter = useCallback(() => {
+  const updateContainerBounds = useCallback(() => {
     if (ref == null) {
       return;
     }
@@ -115,5 +115,9 @@ export function useContainerBounds({
     });
   }, [ref, scrollContainer]);
 
-  return {containerBounds, setContainerBounds, onMouseEnter, setRef};
+  return {
+    containerBounds,
+    updateContainerBounds,
+    setRef,
+  };
 }

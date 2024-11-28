@@ -101,6 +101,7 @@ export {
   getGradientFromColor,
   OpacityScale,
   isInfinity,
+  isTouchDevice,
 } from './utilities';
 export {
   useSparkBar,
