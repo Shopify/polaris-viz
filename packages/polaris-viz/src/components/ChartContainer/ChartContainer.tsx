@@ -68,7 +68,6 @@ export const ChartContainer = (props: Props) => {
       theme: printFriendlyTheme,
       isPerformanceImpacted: dataTooBigToAnimate,
       scrollContainer: props.scrollContainer,
-      ref,
       containerBounds: containerBounds ?? EMPTY_BOUNDS,
     };
   }, [
