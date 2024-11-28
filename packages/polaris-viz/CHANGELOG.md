@@ -14,6 +14,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Changed
 
 - Refactored containers bounds into a hook and moved to chart context. `<ChartContainer />` now uses the new `useContainerBounds` hook.
+- Tooltips on touch devices now only show after a short delay.
 
 ## [15.3.2] - 2024-11-20
 

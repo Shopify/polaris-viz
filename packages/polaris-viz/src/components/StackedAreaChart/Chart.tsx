@@ -82,12 +82,12 @@ export function Chart({
 }: Props) {
   const selectedTheme = useTheme(theme);
   const seriesColors = useThemeSeriesColors(data, selectedTheme);
-  const {containerBounds} = useChartContext();
+  const {containerBounds, isTouchDevice} = useChartContext();
 
   const [activePointIndex, setActivePointIndex] = useState<number | null>(null);
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
 
-  useColorVisionEvents({enabled: data.length > 1});
+  useColorVisionEvents({enabled: data.length > 1 && !isTouchDevice});
 
   const isSmallChart = containerBounds.height < SMALL_CHART_HEIGHT;
 
@@ -383,7 +383,7 @@ export function Chart({
           longestSeriesIndex={longestSeriesIndex}
           margin={ChartMargin}
           onIndexChange={(index) => setActivePointIndex(index)}
-          parentRef={svgRef}
+          parentElement={svgRef}
           usePortal
           xScale={xScale}
         />

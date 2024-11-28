@@ -71,6 +71,7 @@ export function ChartContainer({
       id,
       shouldAnimate,
       theme,
+      isTouchDevice: true,
       isPerformanceImpacted: dataTooBigToAnimate,
       containerBounds: {
         width: chartDimensions?.width ?? 0,
