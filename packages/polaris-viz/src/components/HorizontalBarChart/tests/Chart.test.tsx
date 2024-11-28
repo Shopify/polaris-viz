@@ -19,7 +19,8 @@ import {
 } from '../components';
 import {normalizeData} from '../../../utilities';
 import {TooltipWrapper} from '../../TooltipWrapper';
-import {DEFAULT_CHART_CONTEXT} from '../../../storybook/constants';
+// jest will not allow access to out of scope constants if they are not named `MOCK_`
+import {DEFAULT_CHART_CONTEXT as MOCK_DEFAULT_CHART_CONTEXT} from '../../../storybook/constants';
 
 jest.mock('../../Labels/utilities/getWidestLabel', () => {
   return {
@@ -37,7 +38,7 @@ jest.mock('@shopify/polaris-viz-core/src/utilities', () => ({
 
 jest.mock('@shopify/polaris-viz-core/src/hooks/useChartContext', () => ({
   useChartContext: jest.fn(() => ({
-    ...DEFAULT_CHART_CONTEXT,
+    ...MOCK_DEFAULT_CHART_CONTEXT,
     containerBounds: {height: 300, width: 100},
   })),
 }));

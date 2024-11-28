@@ -6,11 +6,11 @@ import {
   mockDefaultTheme,
 } from '../../../test-utilities/mountWithProvider';
 import {Shimmer} from '../components';
-import {DEFAULT_CHART_CONTEXT} from '../../../storybook/constants';
+import {DEFAULT_CHART_CONTEXT as MOCK_DEFAULT_CHART_CONTEXT} from '../../../storybook/constants';
 
 jest.mock('@shopify/polaris-viz-core/src/hooks/useChartContext', () => ({
   useChartContext: jest.fn(() => ({
-    ...DEFAULT_CHART_CONTEXT,
+    ...MOCK_DEFAULT_CHART_CONTEXT,
     containerBounds: {height: 400, width: 800, x: 0, y: 0},
   })),
 }));
