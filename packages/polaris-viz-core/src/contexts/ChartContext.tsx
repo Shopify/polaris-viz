@@ -10,6 +10,7 @@ export interface ChartContextValues {
   containerBounds: BoundingRect;
   shouldAnimate: boolean;
   theme: string;
+  isTouchDevice: boolean;
   isPerformanceImpacted: boolean;
   scrollContainer?: Element | null;
 }
@@ -24,5 +25,6 @@ export const ChartContext = createContext<ChartContextValues>({
   containerBounds: {height: 0, width: 0, x: 0, y: 0},
   shouldAnimate: true,
   theme: DEFAULT_THEME_NAME,
+  isTouchDevice: false,
   isPerformanceImpacted: false,
 });

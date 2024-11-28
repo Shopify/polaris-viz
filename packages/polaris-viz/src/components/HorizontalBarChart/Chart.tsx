@@ -8,6 +8,7 @@ import {
   useAriaLabel,
   LINE_HEIGHT,
   InternalChartType,
+  useChartContext,
 } from '@shopify/polaris-viz-core';
 import type {
   DataSeries,
@@ -77,7 +78,9 @@ export function Chart({
   xAxisOptions,
   yAxisOptions,
 }: ChartProps) {
-  useColorVisionEvents({enabled: data.length > 1});
+  const {isTouchDevice} = useChartContext();
+
+  useColorVisionEvents({enabled: data.length > 1 && !isTouchDevice});
 
   const selectedTheme = useTheme();
   const id = useMemo(() => uniqueId('HorizontalBarChart'), []);
@@ -297,7 +300,7 @@ export function Chart({
           focusElementDataType={DataType.BarGroup}
           getMarkup={getTooltipMarkup}
           margin={ChartMargin}
-          parentRef={svgRef}
+          parentElement={svgRef}
           longestSeriesIndex={longestSeriesIndex}
           xScale={xScale}
           type={type}

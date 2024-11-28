@@ -327,7 +327,7 @@ export function Chart({
         longestSeriesIndex={0}
         margin={ChartMargin}
         onIndexChange={(index) => setActiveIndex(index)}
-        parentRef={svgRef}
+        parentElement={svgRef}
         xScale={barXScale}
         yScale={barYScale}
       />

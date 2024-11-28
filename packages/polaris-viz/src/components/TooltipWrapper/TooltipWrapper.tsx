@@ -23,6 +23,8 @@ import type {TooltipPosition} from './types';
 import {DEFAULT_TOOLTIP_POSITION} from './constants';
 import {TooltipAnimatedContainer} from './components/TooltipAnimatedContainer';
 
+const TOUCH_START_DELAY = 300;
+
 interface BaseProps {
   chartBounds: BoundingRect;
   chartType: InternalChartType;
@@ -31,7 +33,7 @@ interface BaseProps {
   getMarkup: (index: number) => ReactNode;
   longestSeriesIndex: number;
   margin: Margin;
-  parentRef: SVGSVGElement | null;
+  parentElement: SVGSVGElement | null;
   xScale: ScaleLinear<number, number> | ScaleBand<string>;
   bandwidth?: number;
   onIndexChange?: (index: number | null) => void;
@@ -50,12 +52,12 @@ function TooltipWrapperRaw(props: BaseProps) {
     id,
     longestSeriesIndex,
     onIndexChange,
-    parentRef,
+    parentElement,
     type,
     xScale,
     yScale,
   } = props;
-  const {scrollContainer} = useChartContext();
+  const {scrollContainer, isTouchDevice} = useChartContext();
   const [position, setPosition] = useState<TooltipPosition>({
     x: 0,
     y: 0,
@@ -64,18 +66,21 @@ function TooltipWrapperRaw(props: BaseProps) {
   });
 
   const activeIndexRef = useRef<number | null>(null);
+  const touchStartTimer = useRef<number>(0);
+  const isLongTouch = useRef(false);
 
   const focusElements = useMemo<NodeListOf<SVGPathElement> | undefined>(() => {
-    return parentRef?.querySelectorAll(
+    return parentElement?.querySelectorAll(
       `[data-type="${focusElementDataType}"][aria-hidden="false"]`,
     );
-  }, [focusElementDataType, parentRef]);
+  }, [focusElementDataType, parentElement]);
 
   useEffect(() => {
     activeIndexRef.current = position.activeIndex;
   }, [position.activeIndex]);
 
-  const alwaysUpdatePosition = chartType === InternalChartType.Line;
+  const alwaysUpdatePosition =
+    chartType === InternalChartType.Line && !isTouchDevice;
 
   const getPosition = useCallback(
     ({
@@ -88,12 +93,12 @@ function TooltipWrapperRaw(props: BaseProps) {
       index?: number;
     }) => {
       const containerBounds = {
-        x: parentRef?.getBoundingClientRect().x ?? 0,
+        x: parentElement?.getBoundingClientRect().x ?? 0,
         y:
-          Number(parentRef?.getBoundingClientRect().y ?? 0) +
+          Number(parentElement?.getBoundingClientRect().y ?? 0) +
           Number(scrollContainer?.scrollTop ?? 0),
-        width: parentRef?.getBoundingClientRect().width ?? 0,
-        height: parentRef?.getBoundingClientRect().height ?? 0,
+        width: parentElement?.getBoundingClientRect().width ?? 0,
+        height: parentElement?.getBoundingClientRect().height ?? 0,
       };
       switch (chartType) {
         case InternalChartType.Line:
@@ -138,7 +143,7 @@ function TooltipWrapperRaw(props: BaseProps) {
       chartType,
       data,
       longestSeriesIndex,
-      parentRef,
+      parentElement,
       scrollContainer?.scrollTop,
       type,
       xScale,
@@ -146,7 +151,7 @@ function TooltipWrapperRaw(props: BaseProps) {
     ],
   );
 
-  const onMouseMove = useCallback(
+  const showAndPositionTooltip = useCallback(
     (event: MouseEvent | TouchEvent) => {
       const newPosition = getPosition({event, eventType: 'mouse'});
 
@@ -183,12 +188,45 @@ function TooltipWrapperRaw(props: BaseProps) {
     ],
   );
 
+  const onMouseMove = useCallback(
+    (event: MouseEvent | TouchEvent) => {
+      window.clearTimeout(touchStartTimer.current);
+
+      if (event instanceof TouchEvent) {
+        if (isLongTouch.current === true) {
+          // prevents scrolling after long touch (since it is supposed to move the tooltip/datapoint vs scroll)
+          event?.preventDefault();
+        } else {
+          return;
+        }
+      }
+
+      showAndPositionTooltip(event);
+    },
+    [showAndPositionTooltip],
+  );
+
   const onMouseLeave = useCallback(() => {
+    isLongTouch.current = false;
+    window.clearTimeout(touchStartTimer.current);
     onIndexChange?.(null);
     setPosition((prevState) => {
       return {...prevState, activeIndex: -1};
     });
   }, [onIndexChange]);
+
+  const onTouchStart = useCallback(
+    (event: TouchEvent) => {
+      touchStartTimer.current = window.setTimeout(() => {
+        event.preventDefault();
+
+        isLongTouch.current = true;
+
+        showAndPositionTooltip(event);
+      }, TOUCH_START_DELAY);
+    },
+    [showAndPositionTooltip],
+  );
 
   const onFocus = useCallback(
     (event: FocusEvent) => {
@@ -208,10 +246,10 @@ function TooltipWrapperRaw(props: BaseProps) {
   );
 
   const onFocusIn = useCallback(() => {
-    if (!parentRef?.contains(document.activeElement)) {
+    if (!parentElement?.contains(document.activeElement)) {
       onMouseLeave();
     }
-  }, [parentRef, onMouseLeave]);
+  }, [parentElement, onMouseLeave]);
 
   const setFocusListeners = useCallback(
     (attach: boolean) => {
@@ -231,26 +269,34 @@ function TooltipWrapperRaw(props: BaseProps) {
   );
 
   useEffect(() => {
-    if (!parentRef) {
+    if (!parentElement) {
       return;
     }
 
-    parentRef.addEventListener('mousemove', onMouseMove);
-    parentRef.addEventListener('mouseleave', onMouseLeave);
-    parentRef.addEventListener('touchmove', onMouseMove);
-    parentRef.addEventListener('touchend', onMouseLeave);
+    parentElement.addEventListener('mousemove', onMouseMove);
+    parentElement.addEventListener('mouseleave', onMouseLeave);
+    parentElement.addEventListener('touchstart', onTouchStart);
+    parentElement.addEventListener('touchmove', onMouseMove);
+    parentElement.addEventListener('touchend', onMouseLeave);
 
     setFocusListeners(true);
 
     return () => {
-      parentRef.removeEventListener('mousemove', onMouseMove);
-      parentRef.removeEventListener('mouseleave', onMouseLeave);
-      parentRef.removeEventListener('touchmove', onMouseMove);
-      parentRef.removeEventListener('touchend', onMouseLeave);
+      parentElement.removeEventListener('mousemove', onMouseMove);
+      parentElement.removeEventListener('mouseleave', onMouseLeave);
+      parentElement.removeEventListener('touchstart', onTouchStart);
+      parentElement.removeEventListener('touchmove', onMouseMove);
+      parentElement.removeEventListener('touchend', onMouseLeave);
 
       setFocusListeners(false);
     };
-  }, [parentRef, onMouseMove, onMouseLeave, onFocus, setFocusListeners]);
+  }, [
+    parentElement,
+    onMouseLeave,
+    onTouchStart,
+    setFocusListeners,
+    onMouseMove,
+  ]);
 
   useEffect(() => {
     document.addEventListener('focusin', onFocusIn);
@@ -258,7 +304,7 @@ function TooltipWrapperRaw(props: BaseProps) {
     return () => {
       document.removeEventListener('focusin', onFocusIn);
     };
-  }, [parentRef, onFocusIn]);
+  }, [parentElement, onFocusIn]);
 
   if (position.activeIndex == null || position.activeIndex < 0) {
     return null;

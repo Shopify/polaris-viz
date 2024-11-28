@@ -95,13 +95,14 @@ export function Chart({
   yAxisOptions,
 }: ChartProps) {
   const selectedTheme = useTheme(theme);
-  const {isPerformanceImpacted, containerBounds} = useChartContext();
+  const {isPerformanceImpacted, containerBounds, isTouchDevice} =
+    useChartContext();
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [activeLineIndex, setActiveLineIndex] = useState(-1);
 
   useColorVisionEvents({
-    enabled: data.length > 1,
+    enabled: data.length > 1 && !isTouchDevice,
   });
 
   const isSmallChart = containerBounds.height < SMALL_CHART_HEIGHT;
@@ -386,7 +387,7 @@ export function Chart({
               setActiveIndex(index);
             }
           }}
-          parentRef={svgRef}
+          parentElement={svgRef}
           usePortal
           xScale={xScale}
           yScale={yScale}
