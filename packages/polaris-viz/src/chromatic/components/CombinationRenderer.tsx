@@ -2,8 +2,7 @@ import {ChartContext, DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 import type {Attributes, FC} from 'react';
 import {createElement, useMemo} from 'react';
 
-import characterWidths from '../../data/character-widths.json';
-import characterWidthOffsets from '../../data/character-width-offsets.json';
+import {DEFAULT_CHART_CONTEXT} from '../../storybook/constants';
 import type {UserOptions} from '../types';
 
 export interface CombinationRendererProps<T> {
@@ -25,12 +24,8 @@ export function CombinationRenderer<T extends Attributes>({
 
   const values = useMemo(() => {
     return {
+      ...DEFAULT_CHART_CONTEXT,
       theme: theme ?? DEFAULT_THEME_NAME,
-      shouldAnimate: false,
-      id: 'chart',
-      characterWidths,
-      characterWidthOffsets,
-      isPerformanceImpacted: false,
     };
   }, [theme]);
 

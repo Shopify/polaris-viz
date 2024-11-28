@@ -20,6 +20,12 @@ jest.mock('@shopify/polaris-viz-core/src/utilities', () => {
   };
 });
 
+jest.mock('@shopify/polaris-viz-core/src/hooks/useChartContext', () => ({
+  useChartContext: jest.fn(() => ({
+    containerBounds: {height: 300, width: 100},
+  })),
+}));
+
 const SERIES: DataSeries[] = [
   {
     name: 'Group 1',
@@ -40,12 +46,6 @@ const SERIES: DataSeries[] = [
 ];
 
 const MOCK_PROPS: ChartProps = {
-  containerBounds: {
-    height: 300,
-    width: 600,
-    x: 0,
-    y: 0,
-  },
   data: SERIES,
   xAxisOptions: {
     labelFormatter: (value) => `${value}`,

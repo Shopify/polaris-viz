@@ -5,7 +5,6 @@ import {
   useAriaLabel,
 } from '@shopify/polaris-viz-core';
 import type {
-  BoundingRect,
   ChartType,
   LabelFormatter,
   XAxisOptions,
@@ -40,14 +39,12 @@ export interface ChartProps {
   type: ChartType;
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
-  containerBounds?: BoundingRect;
   renderLegendContent?: RenderLegendContent;
   legendPosition?: LegendPosition;
 }
 
 export function Chart({
   data,
-  containerBounds,
   renderLegendContent,
   legendPosition = 'bottom-right',
   seriesNameFormatter,
@@ -66,11 +63,6 @@ export function Chart({
 
   const {longestSeriesCount, seriesColors} = useHorizontalSeriesColors(data);
 
-  const containerDimensions = {
-    width: containerBounds?.width ?? 0,
-    height: containerBounds?.height ?? 0,
-  };
-
   const {legend, setLegendDimensions, height, width} = useLegend({
     data: [
       {
@@ -78,7 +70,6 @@ export function Chart({
         series: data,
       },
     ],
-    containerDimensions,
     colors: seriesColors,
     showLegend,
     seriesNameFormatter,
@@ -187,7 +178,6 @@ export function Chart({
       {showLegend && (
         <LegendContainer
           colorVisionType={COLOR_VISION_SINGLE_ITEM}
-          containerDimensions={containerDimensions}
           data={legend}
           onDimensionChange={setLegendDimensions}
           renderLegendContent={renderLegendContent}

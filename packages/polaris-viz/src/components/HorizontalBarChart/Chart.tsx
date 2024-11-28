@@ -42,11 +42,7 @@ import {
   useHorizontalXScale,
   useTheme,
 } from '../../hooks';
-import {
-  ChartMargin,
-  ANNOTATIONS_LABELS_OFFSET,
-  EMPTY_BOUNDS,
-} from '../../constants';
+import {ChartMargin, ANNOTATIONS_LABELS_OFFSET} from '../../constants';
 import {formatDataIntoGroups} from '../../utilities';
 import {TooltipWrapper} from '../TooltipWrapper';
 
@@ -65,14 +61,12 @@ export interface ChartProps {
   type: ChartType;
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
-  containerBounds?: BoundingRect;
   renderHiddenLegendLabel?: (count: number) => string;
   renderLegendContent?: RenderLegendContent;
 }
 
 export function Chart({
   annotationsLookupTable,
-  containerBounds = EMPTY_BOUNDS,
   data,
   renderHiddenLegendLabel,
   renderLegendContent,
@@ -97,11 +91,6 @@ export function Chart({
   const {longestSeriesCount, seriesColors, longestSeriesIndex} =
     useHorizontalSeriesColors(data);
 
-  const containerDimensions = {
-    height: containerBounds?.height ?? 0,
-    width: containerBounds?.width ?? 0,
-  };
-
   const {legend, setLegendDimensions, height, width} = useLegend({
     data: [
       {
@@ -109,7 +98,6 @@ export function Chart({
         series: data,
       },
     ],
-    containerDimensions,
     showLegend,
     colors: seriesColors,
     seriesNameFormatter,
@@ -304,7 +292,6 @@ export function Chart({
         <TooltipWrapper
           bandwidth={groupBarsAreaHeight}
           chartBounds={chartBounds}
-          containerBounds={containerBounds}
           chartType={InternalChartType.HorizontalBar}
           data={data}
           focusElementDataType={DataType.BarGroup}
@@ -320,7 +307,6 @@ export function Chart({
       {showLegend && (
         <LegendContainer
           colorVisionType={COLOR_VISION_SINGLE_ITEM}
-          containerDimensions={containerDimensions}
           data={legend}
           enableHideOverflow
           onDimensionChange={setLegendDimensions}

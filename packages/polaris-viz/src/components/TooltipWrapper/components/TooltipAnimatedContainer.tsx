@@ -20,7 +20,6 @@ export interface TooltipAnimatedContainerProps {
   currentY: number;
   chartBounds: BoundingRect;
   chartType: InternalChartType;
-  containerBounds: BoundingRect;
   position?: TooltipPositionOffset;
   id?: string;
   bandwidth?: number;
@@ -31,7 +30,6 @@ export function TooltipAnimatedContainer({
   bandwidth = 0,
   chartBounds,
   chartType,
-  containerBounds,
   children,
   currentX,
   currentY,
@@ -39,7 +37,8 @@ export function TooltipAnimatedContainer({
   margin,
   position = DEFAULT_TOOLTIP_POSITION,
 }: TooltipAnimatedContainerProps) {
-  const {isPerformanceImpacted, scrollContainer} = useChartContext();
+  const {isPerformanceImpacted, scrollContainer, containerBounds} =
+    useChartContext();
 
   const tooltipRef = useRef<HTMLDivElement | null>(null);
   const [tooltipDimensions, setTooltipDimensions] =

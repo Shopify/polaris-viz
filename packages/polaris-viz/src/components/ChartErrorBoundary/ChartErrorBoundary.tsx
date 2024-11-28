@@ -14,10 +14,10 @@ import type {SkeletonType} from '../ChartSkeleton';
 import {checkForMismatchedData} from './utilities/checkForMismatchedData';
 
 interface ErrorBoundaryProps {
+  containerBounds: BoundingRect;
   data: DataSeries[] | DataGroup[];
   type: SkeletonType;
   children?: ReactNode;
-  containerBounds?: BoundingRect;
   onError?: ErrorBoundaryResponse;
 }
 
@@ -56,13 +56,7 @@ export class ChartErrorBoundary extends Component<
 
   render() {
     if (this.state.hasError) {
-      return (
-        <ChartSkeleton
-          type={this.props.type}
-          state={ChartState.Error}
-          containerBounds={this.props.containerBounds}
-        />
-      );
+      return <ChartSkeleton type={this.props.type} state={ChartState.Error} />;
     }
 
     return this.props.children;

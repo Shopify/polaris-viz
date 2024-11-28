@@ -1,6 +1,6 @@
 /* eslint-disable @shopify/strict-component-boundaries */
 import type {ColorVisionInteractionMethods, DataSeries} from 'index';
-import type {Dimensions, LabelFormatter} from '@shopify/polaris-viz-core';
+import type {LabelFormatter} from '@shopify/polaris-viz-core';
 import {
   COLOR_VISION_SINGLE_ITEM,
   clamp,
@@ -25,7 +25,6 @@ const TABLE_LEGEND_PADDING = 50;
 interface LegendContentProps {
   data: DataSeries[];
   activeIndex: number;
-  containerDimensions: Dimensions;
   legendFullWidth: boolean;
   labelFormatter: LabelFormatter;
   renderHiddenLegendLabel?: RenderHiddenLegendLabel;
@@ -37,7 +36,6 @@ interface LegendContentProps {
 export function LegendValues({
   data: allData,
   activeIndex,
-  containerDimensions,
   legendFullWidth,
   labelFormatter,
   renderHiddenLegendLabel = (count) => `+${count} more`,
@@ -61,7 +59,6 @@ export function LegendValues({
     showLegend: true,
     data: [{series: allData, shape: 'Bar'}],
     colors: seriesColors,
-    containerDimensions,
     seriesNameFormatter,
   });
 
@@ -165,7 +162,6 @@ export function LegendValues({
           activeIndex={activeIndex}
           colorVisionType={COLOR_VISION_SINGLE_ITEM}
           data={hiddenData}
-          containerDimensions={containerDimensions}
           theme={theme}
           label={renderHiddenLegendLabel(allData.length - displayedData.length)}
           lastVisibleIndex={allData.length - hiddenData.length}

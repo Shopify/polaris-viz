@@ -5,13 +5,17 @@ import type {
   DataSeries,
   InternalChartType,
   ErrorBoundaryResponse,
+  BoundingRect,
 } from '@shopify/polaris-viz-core';
 import {
   uniqueId,
   ChartContext,
   isLargeDataSet,
+  usePolarisVizContext,
 } from '@shopify/polaris-viz-core';
 
+import {EMPTY_BOUNDS} from '../../constants';
+import {ChartErrorBoundary} from '../ChartErrorBoundary';
 import {getChartId} from '../../utilities/getChartId';
 import characterWidths from '../../data/character-widths.json';
 import characterWidthOffsets from '../../data/character-width-offsets.json';
@@ -19,9 +23,9 @@ import {useTheme, usePrefersReducedMotion} from '../../hooks';
 import type {SkeletonType} from '../ChartSkeleton';
 
 import styles from './ChartContainer.scss';
-import {ContainerBounds} from './components/';
+import {useContainerBounds} from './hooks/useContainerBounds';
 
-interface Props {
+export interface Props {
   children: ReactElement;
   data: DataSeries[] | DataGroup[];
   id: string | undefined;
@@ -39,10 +43,17 @@ export const ChartContainer = (props: Props) => {
 
   const {prefersReducedMotion} = usePrefersReducedMotion();
   const [isPrinting, setIsPrinting] = useState(false);
+  const {onError: onErrorProvider} = usePolarisVizContext();
 
   const dataTooBigToAnimate = useMemo(() => {
     return isLargeDataSet(props.data, props.type);
   }, [props.data, props.type]);
+
+  const {containerBounds, onMouseEnter, setRef} = useContainerBounds({
+    onIsPrintingChange: setIsPrinting,
+    scrollContainer: props.scrollContainer,
+    sparkChart: props.sparkChart,
+  });
 
   const value = useMemo(() => {
     const shouldAnimate =
@@ -57,6 +68,7 @@ export const ChartContainer = (props: Props) => {
       theme: printFriendlyTheme,
       isPerformanceImpacted: dataTooBigToAnimate,
       scrollContainer: props.scrollContainer,
+      containerBounds: containerBounds ?? EMPTY_BOUNDS,
     };
   }, [
     id,
@@ -66,11 +78,13 @@ export const ChartContainer = (props: Props) => {
     props.theme,
     dataTooBigToAnimate,
     props.scrollContainer,
+    containerBounds,
   ]);
 
   const {chartContainer, grid} = useTheme(value.theme);
 
-  // If there is no vertical overflow and a custom padding is not defined, add padding so that the top y-axis label is not cut off
+  // If there is no vertical overflow and a custom padding is not defined,
+  // add padding so that the top y-axis label is not cut off
   const padding =
     !grid.verticalOverflow && chartContainer.padding == null
       ? '3px 0 0 0'
@@ -87,17 +101,41 @@ export const ChartContainer = (props: Props) => {
         }}
         id={getChartId(value.id)}
       >
-        <ContainerBounds
-          data={props.data}
-          onError={props.onError}
-          onIsPrintingChange={setIsPrinting}
-          skeletonType={props.skeletonType}
-          sparkChart={props.sparkChart}
-          scrollContainer={props.scrollContainer}
+        <div
+          className={styles.ContainerBounds}
+          ref={setRef}
+          style={{
+            minHeight: props.sparkChart
+              ? chartContainer.sparkChartMinHeight
+              : chartContainer.minHeight,
+          }}
+          onMouseEnter={onMouseEnter}
+          onFocus={onMouseEnter}
         >
-          {props.children}
-        </ContainerBounds>
+          {!hasValidBounds(value.containerBounds) ? null : (
+            <ChartErrorBoundary
+              type={props.skeletonType ?? 'Default'}
+              containerBounds={value.containerBounds}
+              data={props.data}
+              onError={props.onError ?? onErrorProvider}
+            >
+              <div
+                className={styles.Chart}
+                style={{
+                  height: value.containerBounds.height,
+                  width: value.containerBounds.width,
+                }}
+              >
+                {props.children}
+              </div>
+            </ChartErrorBoundary>
+          )}
+        </div>
       </div>
     </ChartContext.Provider>
   );
 };
+
+function hasValidBounds(containerBounds: BoundingRect) {
+  return containerBounds.width > 0 && containerBounds.height > 0;
+}

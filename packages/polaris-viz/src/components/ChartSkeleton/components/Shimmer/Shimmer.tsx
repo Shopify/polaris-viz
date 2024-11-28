@@ -1,19 +1,13 @@
 import {useEffect, useRef} from 'react';
-import {changeColorOpacity} from '@shopify/polaris-viz-core';
+import {changeColorOpacity, useChartContext} from '@shopify/polaris-viz-core';
 
 import styles from './Shimmer.scss';
 
-export function Shimmer({
-  backgroundColor,
-  width,
-  height,
-}: {
-  backgroundColor: string;
-  width: number;
-  height: number;
-}) {
+export function Shimmer({backgroundColor}: {backgroundColor: string}) {
   const semiTransparentBackground = changeColorOpacity(backgroundColor, 0);
-
+  const {
+    containerBounds: {height, width},
+  } = useChartContext();
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

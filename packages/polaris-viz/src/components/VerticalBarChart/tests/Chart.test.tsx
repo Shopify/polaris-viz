@@ -15,6 +15,7 @@ import {LegendContainer} from '../../LegendContainer';
 import {Annotations, YAxisAnnotations} from '../../Annotations';
 import {normalizeData} from '../../../utilities';
 import {TextLine} from '../../TextLine';
+import {DEFAULT_CHART_CONTEXT as MOCK_DEFAULT_CHART_CONTEXT} from '../../../storybook/constants';
 
 jest.mock('@shopify/polaris-viz-core/src/utilities', () => {
   return {
@@ -30,6 +31,13 @@ jest.mock('../../TooltipWrapper/utilities/eventPoint', () => {
     },
   };
 });
+
+jest.mock('@shopify/polaris-viz-core/src/hooks/useChartContext', () => ({
+  useChartContext: jest.fn(() => ({
+    ...MOCK_DEFAULT_CHART_CONTEXT,
+    containerBounds: {width: 500, height: 250, x: 0, y: 0},
+  })),
+}));
 
 const renderTooltipContent = () => <p>Mock Tooltip</p>;
 
@@ -54,7 +62,6 @@ const MOCK_PROPS: Props = {
       name: 'LABEL2',
     },
   ],
-  containerBounds: {width: 500, height: 250, x: 0, y: 0},
   renderTooltipContent,
   xAxisOptions: {
     allowLineWrap: false,

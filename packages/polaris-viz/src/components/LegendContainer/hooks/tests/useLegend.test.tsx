@@ -1,10 +1,15 @@
 import type {Root} from '@shopify/react-testing';
 import {mount} from '@shopify/react-testing';
 import type {DataSeries, DataGroup} from '@shopify/polaris-viz-core';
-import {LEGENDS_TOP_MARGIN} from '@shopify/polaris-viz-core';
 
 import type {Props} from '../useLegend';
 import {useLegend} from '../useLegend';
+
+jest.mock('@shopify/polaris-viz-core/src/hooks/useChartContext', () => ({
+  useChartContext: jest.fn(() => ({
+    containerBounds: {height: 100, width: 100},
+  })),
+}));
 
 const DATA: DataSeries[] = [
   {
@@ -33,24 +38,18 @@ const DATAGROUP: DataGroup[] = [
 ];
 
 const MOCK_PROPS: Props = {
-  containerDimensions: {height: 100, width: 100},
   showLegend: true,
   data: DATAGROUP,
   seriesNameFormatter: (value) => `${value}`,
 };
 
 function parseData(result: Root<any>) {
-  return JSON.parse(result.domNode?.dataset.data ?? '');
+  return JSON.parse(result.find('span')!.domNode!.dataset.data!);
 }
 
 describe('useLegend()', () => {
   describe('showLegend', () => {
     it('returns data', () => {
-      function TestComponent() {
-        const data = useLegend(MOCK_PROPS);
-        return <span data-data={`${JSON.stringify(data)}`} />;
-      }
-
       const result = mount(<TestComponent />);
 
       const data = parseData(result);
@@ -71,13 +70,7 @@ describe('useLegend()', () => {
     });
 
     it('returns empty data when false', () => {
-      function TestComponent() {
-        const data = useLegend({...MOCK_PROPS, showLegend: false});
-
-        return <span data-data={`${JSON.stringify(data)}`} />;
-      }
-
-      const result = mount(<TestComponent />);
+      const result = mount(<TestComponent showLegend={false} />);
 
       const data = parseData(result);
 
@@ -90,11 +83,6 @@ describe('useLegend()', () => {
     });
 
     it('mounts after initializing', () => {
-      function TestComponent() {
-        const data = useLegend(MOCK_PROPS);
-        return <span data-data={`${JSON.stringify(data)}`} />;
-      }
-
       const result = mount(<TestComponent />);
 
       result.act(() => {
@@ -120,12 +108,6 @@ describe('useLegend()', () => {
 
   describe('type', () => {
     it('adds type `Line` to legend', () => {
-      function TestComponent() {
-        const data = useLegend(MOCK_PROPS);
-
-        return <span data-data={`${JSON.stringify(data)}`} />;
-      }
-
       const result = mount(<TestComponent />);
 
       const data = parseData(result);
@@ -134,11 +116,6 @@ describe('useLegend()', () => {
     });
 
     it('adds type `Bar` to legend', () => {
-      function TestComponent() {
-        const data = useLegend(MOCK_PROPS);
-        return <span data-data={`${JSON.stringify(data)}`} />;
-      }
-
       const result = mount(<TestComponent />);
 
       const data = parseData(result);
@@ -149,11 +126,10 @@ describe('useLegend()', () => {
 
   describe('colors', () => {
     it('uses color when no data.color is available', () => {
-      function TestComponent() {
-        const data = useLegend({
-          ...MOCK_PROPS,
-          colors: ['red'],
-          data: [
+      const result = mount(
+        <TestComponent
+          colors={['red']}
+          data={[
             {
               shape: 'Bar',
               series: [
@@ -163,13 +139,9 @@ describe('useLegend()', () => {
                 },
               ],
             },
-          ],
-        });
-
-        return <span data-data={`${JSON.stringify(data)}`} />;
-      }
-
-      const result = mount(<TestComponent />);
+          ]}
+        />,
+      );
 
       const data = parseData(result);
 
@@ -177,11 +149,10 @@ describe('useLegend()', () => {
     });
 
     it('uses data.color when available', () => {
-      function TestComponent() {
-        const data = useLegend({
-          ...MOCK_PROPS,
-          colors: ['red'],
-          data: [
+      const result = mount(
+        <TestComponent
+          colors={['red']}
+          data={[
             {
               shape: 'Bar',
               series: [
@@ -192,13 +163,9 @@ describe('useLegend()', () => {
                 },
               ],
             },
-          ],
-        });
-
-        return <span data-data={`${JSON.stringify(data)}`} />;
-      }
-
-      const result = mount(<TestComponent />);
+          ]}
+        />,
+      );
 
       const data = parseData(result);
 
@@ -208,13 +175,7 @@ describe('useLegend()', () => {
 
   describe('isLegendMounted', () => {
     it('returns true when showLegend=false', () => {
-      function TestComponent() {
-        const data = useLegend({...MOCK_PROPS, showLegend: false});
-
-        return <span data-data={`${JSON.stringify(data)}`} />;
-      }
-
-      const result = mount(<TestComponent />);
+      const result = mount(<TestComponent showLegend={false} />);
 
       const data = parseData(result);
 
@@ -224,20 +185,18 @@ describe('useLegend()', () => {
 
   describe('seriesNameFormatter', () => {
     it('returns true when showLegend=false', () => {
-      function TestComponent() {
-        const data = useLegend({
-          ...MOCK_PROPS,
-          seriesNameFormatter: (value) => `Name: ${value}`,
-        });
-
-        return <span data-data={`${JSON.stringify(data)}`} />;
-      }
-
-      const result = mount(<TestComponent />);
+      const result = mount(
+        <TestComponent seriesNameFormatter={(value) => `Name: ${value}`} />,
+      );
 
       const data = parseData(result);
 
       expect(data.legend[0].name).toStrictEqual('Name: Breakfast');
     });
   });
+
+  function TestComponent(props: Partial<Props>) {
+    const data = useLegend({...MOCK_PROPS, ...props});
+    return <span data-data={`${JSON.stringify(data)}`} />;
+  }
 });

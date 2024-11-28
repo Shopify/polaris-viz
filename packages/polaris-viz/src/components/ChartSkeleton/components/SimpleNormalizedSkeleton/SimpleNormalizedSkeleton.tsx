@@ -1,6 +1,10 @@
 import {Fragment} from 'react';
-import {useTheme, useUniqueId, ChartState} from '@shopify/polaris-viz-core';
-import type {Dimensions} from '@shopify/polaris-viz-core';
+import {
+  useTheme,
+  useUniqueId,
+  ChartState,
+  useChartContext,
+} from '@shopify/polaris-viz-core';
 
 import type {Size} from '../../../SimpleNormalizedChart';
 import {ErrorText} from '../ErrorText';
@@ -14,7 +18,6 @@ const SIZE_TO_PX = {
 };
 
 interface Props {
-  containerDimensions: Dimensions;
   errorText: string;
   showLegend: boolean;
   size: Size;
@@ -22,13 +25,14 @@ interface Props {
 }
 
 export function SimpleNormalizedSkeleton({
-  containerDimensions,
   errorText,
   showLegend,
   size,
   state,
 }: Props) {
-  const {width, height} = containerDimensions;
+  const {
+    containerBounds: {height, width},
+  } = useChartContext();
 
   const {
     grid: {color: gridColor},

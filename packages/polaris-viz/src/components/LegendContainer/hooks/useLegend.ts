@@ -1,23 +1,23 @@
 import {useMemo, useState} from 'react';
 import type {
   Color,
-  Dimensions,
   DataGroup,
   Direction,
   LabelFormatter,
+  BoundingRect,
 } from '@shopify/polaris-viz-core';
-import {LEGENDS_TOP_MARGIN} from '@shopify/polaris-viz-core';
+import {LEGENDS_TOP_MARGIN, useChartContext} from '@shopify/polaris-viz-core';
 
 import {DEFAULT_LEGEND_HEIGHT} from '../../../constants';
 import type {LegendData} from '../../../types';
 
 function getAlteredDimensions(
-  containerDimensions: Dimensions,
+  containerBounds: BoundingRect,
   legendsHeight: number,
   legendsWidth: number,
   direction: Direction,
 ) {
-  const {width, height} = containerDimensions;
+  const {width, height} = containerBounds;
   const isHorizontal = direction === 'horizontal';
 
   return {
@@ -29,7 +29,6 @@ function getAlteredDimensions(
 export interface Props {
   showLegend: boolean;
   data: DataGroup[];
-  containerDimensions: Dimensions;
   seriesNameFormatter: LabelFormatter;
   colors?: Color[];
   direction?: Direction;
@@ -38,13 +37,13 @@ export interface Props {
 
 export function useLegend({
   colors = [],
-  containerDimensions,
   data,
   showLegend,
   direction = 'horizontal',
   maxWidth = 0,
   seriesNameFormatter,
 }: Props) {
+  const {containerBounds} = useChartContext();
   const defaultHeight = showLegend ? DEFAULT_LEGEND_HEIGHT : 0;
 
   const [legendDimensions, setLegendDimensions] = useState({
@@ -84,18 +83,18 @@ export function useLegend({
 
   const {height, width} = useMemo(() => {
     if (showLegend === false) {
-      return containerDimensions;
+      return containerBounds;
     }
 
     return getAlteredDimensions(
-      containerDimensions,
+      containerBounds,
       legendDimensions.height,
       legendDimensions.width,
       direction,
     );
   }, [
     showLegend,
-    containerDimensions,
+    containerBounds,
     legendDimensions.height,
     legendDimensions.width,
     direction,

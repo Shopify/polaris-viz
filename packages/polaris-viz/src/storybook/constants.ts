@@ -1,5 +1,9 @@
-import {ChartState} from '@shopify/polaris-viz-core';
+import {ChartState, DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 import type {ArgType} from '@storybook/components';
+import type {ChartContextValues} from '@shopify/polaris-viz-core/src/contexts';
+
+import characterWidths from '../data/character-widths.json';
+import characterWidthOffsets from '../data/character-width-offsets.json';
 
 export const CONTROLS_ARGS = {
   sort: 'requiredFirst',
@@ -135,4 +139,14 @@ export const MAX_SERIES_ARGS = {
   control: {
     type: 'number',
   },
+};
+
+export const DEFAULT_CHART_CONTEXT: ChartContextValues = {
+  shouldAnimate: false,
+  characterWidths,
+  characterWidthOffsets,
+  containerBounds: {width: 400, height: 200, x: 0, y: 0},
+  id: '',
+  isPerformanceImpacted: false,
+  theme: DEFAULT_THEME_NAME,
 };
