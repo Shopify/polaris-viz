@@ -1,27 +1,25 @@
 import {ChartState} from '@shopify/polaris-viz-core';
 
-import type {Props} from '../ChartSkeleton';
 import {ChartSkeleton} from '../ChartSkeleton';
 import {
   mountWithProvider,
   mockDefaultTheme,
 } from '../../../test-utilities/mountWithProvider';
 import {Shimmer} from '../components';
+import {DEFAULT_CHART_CONTEXT as MOCK_DEFAULT_CHART_CONTEXT} from '../../../storybook/constants';
 
-const MOCK_PROPS: Props = {
-  containerBounds: {
-    width: 900,
-    height: 400,
-    x: 0,
-    y: 0,
-  },
-};
+jest.mock('@shopify/polaris-viz-core/src/hooks/useChartContext', () => ({
+  useChartContext: jest.fn(() => ({
+    ...MOCK_DEFAULT_CHART_CONTEXT,
+    containerBounds: {height: 400, width: 800, x: 0, y: 0},
+  })),
+}));
 
 describe('<ChartSkeleton />', () => {
   describe('<Shimmer/>', () => {
     it('is visible when state is set to loading', () => {
       const wrapper = mountWithProvider(
-        <ChartSkeleton {...MOCK_PROPS} state={ChartState.Loading} />,
+        <ChartSkeleton state={ChartState.Loading} />,
         mockDefaultTheme({chartContainer: {backgroundColor: 'red'}}),
       );
       expect(wrapper).toContainReactComponent(Shimmer);
@@ -29,7 +27,7 @@ describe('<ChartSkeleton />', () => {
 
     it('is NOT visible when state is set to error', () => {
       const wrapper = mountWithProvider(
-        <ChartSkeleton {...MOCK_PROPS} state={ChartState.Error} />,
+        <ChartSkeleton state={ChartState.Error} />,
         mockDefaultTheme({chartContainer: {backgroundColor: 'red'}}),
       );
       expect(wrapper).not.toContainReactComponent(Shimmer);
@@ -39,11 +37,7 @@ describe('<ChartSkeleton />', () => {
   describe('errorText', () => {
     it('is visible when state is set to error', () => {
       const wrapper = mountWithProvider(
-        <ChartSkeleton
-          {...MOCK_PROPS}
-          state={ChartState.Error}
-          errorText="some error msg"
-        />,
+        <ChartSkeleton state={ChartState.Error} errorText="some error msg" />,
         mockDefaultTheme({chartContainer: {backgroundColor: 'red'}}),
       );
       expect(wrapper).toContainReactText('some error msg');
@@ -51,11 +45,7 @@ describe('<ChartSkeleton />', () => {
 
     it('is NOT visible when state is set to loading', () => {
       const wrapper = mountWithProvider(
-        <ChartSkeleton
-          {...MOCK_PROPS}
-          state={ChartState.Success}
-          errorText="some error msg"
-        />,
+        <ChartSkeleton state={ChartState.Success} errorText="some error msg" />,
         mockDefaultTheme({chartContainer: {backgroundColor: 'red'}}),
       );
       expect(wrapper).not.toContainReactText('some error msg');

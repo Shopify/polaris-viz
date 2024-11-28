@@ -1,23 +1,24 @@
 import {Fragment} from 'react';
-import type {Dimensions} from '@shopify/polaris-viz-core';
 import {
   useTheme,
   useUniqueId,
   changeColorOpacity,
   ChartState,
+  useChartContext,
 } from '@shopify/polaris-viz-core';
 
 import {Bar} from '../../../shared';
 import {ErrorText} from '../ErrorText';
 
 interface Props {
-  containerDimensions: Dimensions;
   state: ChartState;
   errorText: string;
 }
 
-export function FunnelSkeleton({containerDimensions, state, errorText}: Props) {
-  const {width, height} = containerDimensions;
+export function FunnelSkeleton({state, errorText}: Props) {
+  const {
+    containerBounds: {height, width},
+  } = useChartContext();
 
   const {
     grid: {color: gridColor},

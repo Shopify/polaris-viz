@@ -4,7 +4,6 @@ import type {DataGroup, DataSeries} from '@shopify/polaris-viz-core';
 import {ChartSkeleton} from '../../ChartSkeleton';
 import {ChartErrorBoundary} from '../ChartErrorBoundary';
 import {mountWithProvider} from '../../../test-utilities/mountWithProvider';
-import {BarChart} from '../../BarChart';
 
 const MOCK_PROPS = {
   data: [],

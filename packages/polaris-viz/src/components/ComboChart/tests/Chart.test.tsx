@@ -29,6 +29,12 @@ jest.mock('@shopify/polaris-viz-core/src/utilities', () => ({
   getAverageColor: jest.fn(() => 'red'),
 }));
 
+jest.mock('@shopify/polaris-viz-core/src/hooks/useChartContext', () => ({
+  useChartContext: jest.fn(() => ({
+    containerBounds: {height: 400, width: 800, x: 0, y: 0},
+  })),
+}));
+
 const DATA: DataGroup[] = [
   {
     shape: 'Bar',
@@ -67,7 +73,6 @@ const DATA: DataGroup[] = [
 const PROPS: ChartProps = {
   annotationsLookupTable: {},
   data: DATA,
-  containerBounds: {height: 400, width: 800, x: 0, y: 0},
   renderTooltipContent: () => null,
   showLegend: false,
   theme: 'Light',

@@ -242,7 +242,6 @@ export const SampleLegendContainer = ({theme} = {theme: 'Light'}) => {
       },
     ],
     showLegend: true,
-    containerDimensions: {height: 0, width: 0},
     colors,
     seriesNameFormatter: (value) => `${value}`,
   });
@@ -254,7 +253,6 @@ export const SampleLegendContainer = ({theme} = {theme: 'Light'}) => {
           colorVisionType=""
           data={legend}
           onDimensionChange={() => {}}
-          containerDimensions={{height: 0, width: 0}}
         />
       </div>
     </SimpleContainer>

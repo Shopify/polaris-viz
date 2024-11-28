@@ -72,8 +72,14 @@ export function ChartContainer({
       shouldAnimate,
       theme,
       isPerformanceImpacted: dataTooBigToAnimate,
+      containerBounds: {
+        width: chartDimensions?.width ?? 0,
+        height: chartDimensions?.height ?? 0,
+        x: 0,
+        y: 0,
+      },
     };
-  }, [prefersReducedMotion, data, isAnimated, theme, type]);
+  }, [prefersReducedMotion, data, isAnimated, theme, type, chartDimensions]);
 
   return (
     <ChartContext.Provider value={value}>

@@ -29,7 +29,6 @@ import {useOverflowLegend} from './hooks/useOverflowLegend';
 
 export interface LegendContainerProps {
   colorVisionType: string;
-  containerDimensions: Dimensions;
   data: LegendData[];
   onDimensionChange: Dispatch<SetStateAction<Dimensions>>;
   direction?: Direction;
@@ -53,11 +52,10 @@ export function LegendContainer({
   renderLegendContent,
   enableHideOverflow = false,
   renderHiddenLegendLabel = (count) => `+${count} more`,
-  containerDimensions,
 }: LegendContainerProps) {
   const selectedTheme = useTheme();
   const {setRef, entry} = useResizeObserver();
-  const {theme} = useChartContext();
+  const {theme, containerBounds} = useChartContext();
 
   const previousHeight = useRef(DEFAULT_LEGEND_HEIGHT);
   const previousWidth = useRef(DEFAULT_LEGEND_WIDTH);
@@ -78,7 +76,7 @@ export function LegendContainer({
           data: allData,
           enableHideOverflow,
           legendItemDimensions,
-          width: containerDimensions?.width || 0,
+          width: containerBounds.width,
           activatorWidth,
           leftMargin,
           horizontalMargin,
@@ -86,7 +84,7 @@ export function LegendContainer({
       : ({
           direction: 'vertical' as const,
           data: allData,
-          height: containerDimensions?.height,
+          height: containerBounds.height,
           enableHideOverflow,
           legendItemDimensions,
         } as UseOverflowLegendProps);
@@ -180,7 +178,6 @@ export function LegendContainer({
             <HiddenLegendTooltip
               activeIndex={activeIndex}
               colorVisionType={colorVisionType}
-              containerDimensions={containerDimensions}
               data={hiddenData}
               theme={theme}
               label={renderHiddenLegendLabel(

@@ -1,5 +1,4 @@
-import type {BoundingRect} from '@shopify/polaris-viz-core';
-import {ChartState, useTheme} from '@shopify/polaris-viz-core';
+import {ChartState, useChartContext, useTheme} from '@shopify/polaris-viz-core';
 
 import type {Size} from '../SimpleNormalizedChart';
 
@@ -23,9 +22,6 @@ export type SkeletonType =
   | 'SimpleNormalized';
 
 interface ChartSkeletonProps {
-  // containerBounds is optional because it's passed down
-  // from ContainerBounds with cloneElement.
-  containerBounds?: BoundingRect;
   errorText?: string;
   state?: ChartState;
   theme?: string;
@@ -66,8 +62,9 @@ export type Props =
   | SparkSkeletonProps;
 
 export function ChartSkeleton(props: Props) {
+  const {containerBounds} = useChartContext();
+
   const {
-    containerBounds,
     errorText = 'Could not load the chart',
     state = ChartState.Loading,
     theme,
@@ -78,42 +75,18 @@ export function ChartSkeleton(props: Props) {
     chartContainer: {backgroundColor},
   } = useTheme(theme);
 
-  const containerDimensions = {
-    height: containerBounds?.height ?? 0,
-    width: containerBounds?.width ?? 0,
-  };
-
   const SkeletonMarkup = () => {
     switch (type) {
       case 'Donut':
-        return (
-          <DonutSkeleton
-            containerDimensions={containerDimensions}
-            state={state}
-            errorText={errorText}
-          />
-        );
+        return <DonutSkeleton state={state} errorText={errorText} />;
       case 'Funnel':
-        return (
-          <FunnelSkeleton
-            containerDimensions={containerDimensions}
-            state={state}
-            errorText={errorText}
-          />
-        );
+        return <FunnelSkeleton state={state} errorText={errorText} />;
       case 'SimpleBar':
-        return (
-          <SimpleBarSkeleton
-            containerDimensions={containerDimensions}
-            state={state}
-            errorText={errorText}
-          />
-        );
+        return <SimpleBarSkeleton state={state} errorText={errorText} />;
       case 'SimpleNormalized': {
         const {showLegend = true, size = 'small'} = props;
         return (
           <SimpleNormalizedSkeleton
-            containerDimensions={containerDimensions}
             state={state}
             errorText={errorText}
             showLegend={showLegend}
@@ -122,36 +95,20 @@ export function ChartSkeleton(props: Props) {
         );
       }
       case 'Spark':
-        return (
-          <SparkSkeleton
-            containerDimensions={containerDimensions}
-            state={state}
-            errorText={errorText}
-          />
-        );
+        return <SparkSkeleton state={state} errorText={errorText} />;
 
       default:
-        return (
-          <GridSkeleton
-            containerDimensions={containerDimensions}
-            state={state}
-            errorText={errorText}
-          />
-        );
+        return <GridSkeleton state={state} errorText={errorText} />;
     }
   };
 
-  if (containerDimensions.width === 0) return null;
+  if (containerBounds.width === 0) return null;
 
   return (
     <div className={styles.Container}>
       <SkeletonMarkup />
       {state === ChartState.Loading && (
-        <Shimmer
-          backgroundColor={backgroundColor}
-          width={containerDimensions.width}
-          height={containerDimensions.height}
-        />
+        <Shimmer backgroundColor={backgroundColor} />
       )}
     </div>
   );

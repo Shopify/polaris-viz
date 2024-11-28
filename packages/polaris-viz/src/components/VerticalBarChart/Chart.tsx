@@ -39,11 +39,7 @@ import {useFormattedLabels} from '../../hooks/useFormattedLabels';
 import {XAxis} from '../XAxis';
 import {LegendContainer, useLegend} from '../LegendContainer';
 import {GradientDefs} from '../shared';
-import {
-  ANNOTATIONS_LABELS_OFFSET,
-  ChartMargin,
-  EMPTY_BOUNDS,
-} from '../../constants';
+import {ANNOTATIONS_LABELS_OFFSET, ChartMargin} from '../../constants';
 import {TooltipWrapper} from '../TooltipWrapper';
 import {getStackedValues, getStackedMinMax} from '../../utilities';
 import {YAxis} from '../YAxis';
@@ -67,7 +63,6 @@ export interface Props {
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
   annotationsLookupTable?: AnnotationLookupTable;
-  containerBounds?: BoundingRect;
   emptyStateText?: string;
   renderLegendContent?: RenderLegendContent;
   renderHiddenLegendLabel?: (count: number) => string;
@@ -75,7 +70,6 @@ export interface Props {
 
 export function Chart({
   annotationsLookupTable = {},
-  containerBounds = EMPTY_BOUNDS,
   data,
   emptyStateText,
   renderLegendContent,
@@ -88,24 +82,16 @@ export function Chart({
   seriesNameFormatter,
 }: Props) {
   const selectedTheme = useTheme();
-  const {characterWidths} = useChartContext();
+  const {characterWidths, containerBounds} = useChartContext();
 
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
   const id = useMemo(() => uniqueId('VerticalBarChart'), []);
 
-  const containerDimensions = {
-    height: containerBounds?.height ?? 0,
-    width: containerBounds?.width ?? 0,
-  };
-
   useColorVisionEvents({
     enabled: data.length > 1,
-    containerDimensions,
   });
 
-  const isSmallChart = Boolean(
-    containerBounds != null && containerBounds?.height < SMALL_CHART_HEIGHT,
-  );
+  const isSmallChart = containerBounds.height < SMALL_CHART_HEIGHT;
 
   const {legend, setLegendDimensions, height, width} = useLegend({
     data: [
@@ -114,7 +100,6 @@ export function Chart({
         series: data,
       },
     ],
-    containerDimensions,
     showLegend: showLegend && !isSmallChart,
     seriesNameFormatter,
   });
@@ -353,7 +338,6 @@ export function Chart({
           bandwidth={xScale.bandwidth()}
           chartBounds={chartBounds}
           chartType={InternalChartType.Bar}
-          containerBounds={containerBounds}
           data={data}
           focusElementDataType={DataType.BarGroup}
           getMarkup={getTooltipMarkup}
@@ -370,7 +354,6 @@ export function Chart({
       {showLegend && !isSmallChart && (
         <LegendContainer
           colorVisionType={COLOR_VISION_SINGLE_ITEM}
-          containerDimensions={containerDimensions}
           data={legend}
           onDimensionChange={setLegendDimensions}
           renderLegendContent={renderLegendContent}

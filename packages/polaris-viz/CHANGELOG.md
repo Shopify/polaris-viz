@@ -11,6 +11,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 - Fixed an issue with the `<StackedAreaChart />` that would cause the chart to break when series length increases
 
+### Changed
+
+- Refactored containers bounds into a hook and moved to chart context. `<ChartContainer />` now uses the new `useContainerBounds` hook.
+
 ## [15.3.2] - 2024-11-20
 
 ### Fixed

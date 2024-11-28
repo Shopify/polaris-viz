@@ -1,7 +1,6 @@
 /* eslint-disable node/callback-return */
 import {useEffect} from 'react';
-import type {Dimensions} from '@shopify/polaris-viz-core';
-import {ChartState} from '@shopify/polaris-viz-core';
+import {ChartState, useChartContext} from '@shopify/polaris-viz-core';
 import {useSprings, animated, config, easings} from '@react-spring/web';
 
 import {Arc} from '../../../Arc/';
@@ -16,16 +15,15 @@ const RADIUS_PADDING = 20;
 const SECONDARY_DELAY = 200;
 
 interface Props {
-  containerDimensions: Dimensions;
   state: ChartState;
   errorText: string;
 }
 
-export function DonutSkeleton({
-  containerDimensions: {height, width},
-  state,
-  errorText,
-}: Props) {
+export function DonutSkeleton({state, errorText}: Props) {
+  const {
+    containerBounds: {height, width},
+  } = useChartContext();
+
   const diameter = Math.min(width, height);
   const radius = diameter / 2;
 

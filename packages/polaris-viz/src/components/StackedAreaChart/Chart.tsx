@@ -6,7 +6,6 @@ import type {
   DataPoint,
   XAxisOptions,
   YAxisOptions,
-  BoundingRect,
   LabelFormatter,
 } from '@shopify/polaris-viz-core';
 import {
@@ -19,6 +18,7 @@ import {
   LINE_HEIGHT,
   SMALL_CHART_HEIGHT,
   InternalChartType,
+  useChartContext,
 } from '@shopify/polaris-viz-core';
 
 import {ChartElements} from '../ChartElements';
@@ -43,11 +43,7 @@ import {
   useColorVisionEvents,
   useLinearLabelsAndDimensions,
 } from '../../hooks';
-import {
-  ChartMargin,
-  ANNOTATIONS_LABELS_OFFSET,
-  EMPTY_BOUNDS,
-} from '../../constants';
+import {ChartMargin, ANNOTATIONS_LABELS_OFFSET} from '../../constants';
 import {YAxis} from '../YAxis';
 import {Crosshair} from '../Crosshair';
 import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
@@ -68,7 +64,6 @@ export interface Props {
   theme: string;
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
-  containerBounds?: BoundingRect;
   renderLegendContent?: RenderLegendContent;
   renderHiddenLegendLabel?: (count: number) => string;
 }
@@ -77,7 +72,6 @@ export function Chart({
   annotationsLookupTable,
   xAxisOptions,
   data,
-  containerBounds = EMPTY_BOUNDS,
   renderLegendContent,
   renderTooltipContent,
   showLegend,
@@ -88,20 +82,14 @@ export function Chart({
 }: Props) {
   const selectedTheme = useTheme(theme);
   const seriesColors = useThemeSeriesColors(data, selectedTheme);
+  const {containerBounds} = useChartContext();
 
   const [activePointIndex, setActivePointIndex] = useState<number | null>(null);
   const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
 
-  const containerDimensions = {
-    height: containerBounds?.height ?? 0,
-    width: containerBounds?.width ?? 0,
-  };
-
   useColorVisionEvents({enabled: data.length > 1});
 
-  const isSmallChart = Boolean(
-    containerBounds != null && containerBounds.height < SMALL_CHART_HEIGHT,
-  );
+  const isSmallChart = containerBounds.height < SMALL_CHART_HEIGHT;
 
   const hideXAxis =
     xAxisOptions.hide || selectedTheme.xAxis.hide || isSmallChart;
@@ -117,7 +105,6 @@ export function Chart({
         series: data,
       },
     ],
-    containerDimensions,
     showLegend: showLegend && !isSmallChart,
     seriesNameFormatter,
   });
@@ -389,7 +376,6 @@ export function Chart({
         <TooltipWrapper
           chartBounds={chartBounds}
           chartType={InternalChartType.Line}
-          containerBounds={containerBounds}
           data={data}
           focusElementDataType={DataType.Point}
           getMarkup={getTooltipMarkup}
@@ -410,7 +396,6 @@ export function Chart({
           onDimensionChange={setLegendDimensions}
           renderLegendContent={renderLegendContent}
           enableHideOverflow
-          containerDimensions={containerDimensions}
           renderHiddenLegendLabel={renderHiddenLegendLabel}
         />
       )}

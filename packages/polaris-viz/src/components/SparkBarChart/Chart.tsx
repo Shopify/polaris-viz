@@ -1,6 +1,5 @@
 import {Fragment} from 'react';
 import {useTransition} from '@react-spring/web';
-import type {BoundingRect} from '@shopify/polaris-viz-core';
 import {
   ANIMATION_MARGIN,
   SparkBarSeries,
@@ -12,18 +11,13 @@ import {XMLNS} from '../../constants';
 import styles from './SparkBarChart.scss';
 import type {SparkBarChartProps} from './SparkBarChart';
 
-interface Props extends SparkBarChartProps {
-  containerBounds?: BoundingRect;
-}
-
 export function Chart({
   data,
-  containerBounds,
   targetLine,
   accessibilityLabel,
-}: Props) {
-  const {shouldAnimate} = useChartContext();
-  const {width, height} = containerBounds ?? {width: 0, height: 0};
+}: SparkBarChartProps) {
+  const {shouldAnimate, containerBounds} = useChartContext();
+  const {width, height} = containerBounds;
 
   const viewboxHeight = height + ANIMATION_MARGIN * 2;
 

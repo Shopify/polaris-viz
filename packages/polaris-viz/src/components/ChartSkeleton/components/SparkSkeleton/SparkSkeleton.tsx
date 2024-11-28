@@ -1,20 +1,21 @@
-import type {Dimensions} from '@shopify/polaris-viz-core';
 import {
   useTheme,
   ChartState,
   DEFAULT_BORDER_RADIUS,
+  useChartContext,
 } from '@shopify/polaris-viz-core';
 
 import {ErrorText} from '../ErrorText';
 
 interface Props {
-  containerDimensions: Dimensions;
   state: ChartState;
   errorText: string;
 }
 
-export function SparkSkeleton({containerDimensions, state, errorText}: Props) {
-  const {width, height} = containerDimensions;
+export function SparkSkeleton({state, errorText}: Props) {
+  const {
+    containerBounds: {height, width},
+  } = useChartContext();
 
   const {
     grid: {color: gridColor},
