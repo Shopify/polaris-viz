@@ -86,9 +86,14 @@ export function StackedAreas({
   return (
     <Fragment>
       {stackedValues.map((data, index) => {
+        const isSeriesLengthIncreasing =
+          previousStackedValues &&
+          previousStackedValues.length < stackedValues.length;
+
         const dataIsValidForAnimation =
           !previousStackedValues ||
-          data.length === previousStackedValues[index].length;
+          isSeriesLengthIncreasing ||
+          data.length === previousStackedValues[index]?.length;
 
         const AreaComponent = dataIsValidForAnimation ? AnimatedArea : Area;
 
