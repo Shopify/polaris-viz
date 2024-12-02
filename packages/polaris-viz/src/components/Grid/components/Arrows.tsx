@@ -193,6 +193,7 @@ export function Arrows({
         return (
           <g
             key={`arrow-${hoveredGroup?.id}-${sourceGroup.id}-${targetGroupId}`}
+            className={styles.Arrow}
           >
             <path
               className={styles.ArrowShaft}
