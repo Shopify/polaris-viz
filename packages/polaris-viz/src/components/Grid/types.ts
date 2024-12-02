@@ -16,7 +16,7 @@ export interface CellGroup {
   goal: string | null;
   connectedGroups?: string[];
   secondaryValue: string;
-  value: string;
+  value: string | null;
   metricInformation?: string;
 }
 
