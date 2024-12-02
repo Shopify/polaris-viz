@@ -13,15 +13,17 @@ export const SPRING_CONFIG = {
   tension: 190,
 };
 
+export interface Props {
+  activeIndex: number | null;
+  lineGenerator: Line<DataPoint>;
+  data: DataSeries[];
+}
+
 export function useLinearChartAnimations({
   activeIndex,
   lineGenerator,
   data,
-}: {
-  activeIndex: number | null;
-  lineGenerator: Line<DataPoint>;
-  data: DataSeries[];
-}) {
+}: Props) {
   const {shouldAnimate} = useChartContext();
 
   const currentIndex = activeIndex == null ? 0 : activeIndex;

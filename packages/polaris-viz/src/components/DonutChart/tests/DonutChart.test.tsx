@@ -1,11 +1,16 @@
 import {mount} from '@shopify/react-testing';
-import {ChartState, THIN_ARC_CORNER_THICKNESS} from '@shopify/polaris-viz-core';
+import {
+  ChartState,
+  THIN_ARC_CORNER_THICKNESS,
+  useChartContext,
+} from '@shopify/polaris-viz-core';
 
-import {Chart as DonutChart} from '../Chart';
+import {DonutChart} from '../DonutChart';
 import type {ChartProps} from '../Chart';
-import {Arc, InnerValue} from '../components';
+import {InnerValue} from '../components';
 import {ComparisonMetric} from '../../ComparisonMetric';
 import {LegendContainer} from '../../LegendContainer';
+import {Arc} from '../../Arc';
 
 jest.mock('../components', () => ({
   ...jest.requireActual('../components'),
@@ -17,13 +22,14 @@ jest.mock('@shopify/polaris-viz-core/src/utilities', () => ({
   changeColorOpacity: jest.fn(() => 'black'),
 }));
 
+const mockUseChartContext = useChartContext as jest.Mock;
+
 describe('<DonutChart />', () => {
   describe('<Chart/>', () => {
     const mockProps: ChartProps = {
       showLegend: true,
       theme: `Light`,
       labelFormatter: (value) => `${value}`,
-      containerDimensions: {width: 500, height: 500},
       data: [
         {
           name: 'Shopify Payments',
@@ -58,36 +64,31 @@ describe('<DonutChart />', () => {
 
     it('renders an SVG element', () => {
       const chart = mount(<DonutChart {...mockProps} />);
-      chart.act(() => {
-        requestAnimationFrame(() => {
-          expect(chart).toContainReactComponent('svg');
-        });
-      });
+
+      expect(chart).toContainReactComponent('svg');
     });
 
     it('renders total value', () => {
       const chart = mount(<DonutChart {...mockProps} />);
 
-      chart.act(() => {
-        requestAnimationFrame(() => {
-          expect(chart).toContainReactComponent(InnerValue, {
-            totalValue: valueSum,
-          });
-        });
+      expect(chart).toContainReactComponent(InnerValue, {
+        totalValue: valueSum,
       });
     });
 
     it('renders a thinner <Arc /> when container height is small', () => {
-      const chart = mount(
-        <DonutChart {...mockProps} dimensions={{width: 500, height: 150}} />,
-      );
+      mockUseChartContext.mockReturnValue({
+        ...mockUseChartContext(),
+        containerBounds: {
+          width: 600,
+          height: 100,
+        },
+      });
 
-      chart.act(() => {
-        requestAnimationFrame(() => {
-          expect(chart).toContainReactComponent(Arc, {
-            thickness: THIN_ARC_CORNER_THICKNESS,
-          });
-        });
+      const chart = mount(<DonutChart {...mockProps} />);
+
+      expect(chart).toContainReactComponent(Arc, {
+        thickness: THIN_ARC_CORNER_THICKNESS,
       });
     });
 
@@ -97,24 +98,16 @@ describe('<DonutChart />', () => {
           <DonutChart {...mockProps} comparisonMetric={undefined} />,
         );
 
-        chart.act(() => {
-          requestAnimationFrame(() => {
-            expect(chart).not.toContainReactComponent(ComparisonMetric);
-          });
-        });
+        expect(chart).not.toContainReactComponent(ComparisonMetric);
       });
 
       it('renders if comparisonMetric is provided', () => {
         const chart = mount(<DonutChart {...mockProps} />);
 
-        chart.act(() => {
-          requestAnimationFrame(() => {
-            expect(chart).toContainReactComponent(
-              ComparisonMetric,
-              mockProps.comparisonMetric,
-            );
-          });
-        });
+        expect(chart).toContainReactComponent(
+          ComparisonMetric,
+          mockProps.comparisonMetric,
+        );
       });
     });
 
@@ -141,7 +134,7 @@ describe('<DonutChart />', () => {
           />,
         );
 
-        expect(chart).not.toContainReactComponent(LegendContainer, {
+        expect(chart).toContainReactComponent(LegendContainer, {
           renderLegendContent,
         });
       });
@@ -150,11 +143,8 @@ describe('<DonutChart />', () => {
     describe('empty state', () => {
       it('renders single <Arc /> when true', () => {
         const chart = mount(<DonutChart {...mockProps} data={[]} />);
-        chart.act(() => {
-          requestAnimationFrame(() => {
-            expect(chart).toContainReactComponentTimes(Arc, 1);
-          });
-        });
+
+        expect(chart).toContainReactComponentTimes(Arc, 1);
       });
 
       it('renders the empty state if all data values are 0', () => {
@@ -174,20 +164,39 @@ describe('<DonutChart />', () => {
           />,
         );
 
-        chart.act(() => {
-          requestAnimationFrame(() => {
-            expect(chart).toContainReactComponentTimes(Arc, 1);
-          });
-        });
+        expect(chart).toContainReactComponentTimes(Arc, 1);
       });
 
       it('renders multiple <Arc /> when false', () => {
         const chart = mount(<DonutChart {...mockProps} />);
-        chart.act(() => {
-          requestAnimationFrame(() => {
-            expect(chart).toContainReactComponentTimes(Arc, 4);
-          });
-        });
+
+        expect(chart).toContainReactComponentTimes(Arc, 4);
+      });
+    });
+
+    describe('seriesNameFormatter', () => {
+      it('formats series name', () => {
+        const chart = mount(
+          <DonutChart
+            {...mockProps}
+            seriesNameFormatter={(name) => `series: ${name}`}
+          />,
+        );
+
+        expect(chart).toContainReactText('series: Shopify Payments');
+      });
+
+      it('does not format the series name twice', () => {
+        const chart = mount(
+          <DonutChart
+            {...mockProps}
+            seriesNameFormatter={(name) => `series: ${name}`}
+          />,
+        );
+
+        expect(chart).not.toContainReactText(
+          'series: series: Shopify Payments',
+        );
       });
     });
   });
