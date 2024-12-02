@@ -1,5 +1,9 @@
+import {mount} from '@shopify/react-testing';
+import {useChartContext} from '@shopify/polaris-viz-core';
+
 import {useWatchColorVisionEvents} from '../useWatchColorVisionEvents';
-import {mountWithChartContext} from '../../../test-utilities/mountWithChartContext';
+
+const mockUseChartContext = useChartContext as jest.Mock;
 
 describe('useWatchColorVisionEvents', () => {
   let events: {[key: string]: any} = {};
@@ -35,12 +39,17 @@ describe('useWatchColorVisionEvents', () => {
       return null;
     }
 
-    mountWithChartContext(<TestComponent />, {id: null});
+    mount(<TestComponent />);
 
     expect(Object.keys(events)).toHaveLength(0);
   });
 
   it('attaches events to the window', () => {
+    mockUseChartContext.mockReturnValue({
+      ...mockUseChartContext(),
+      id: '123',
+    });
+
     function TestComponent() {
       useWatchColorVisionEvents({
         type: 'someType',
@@ -50,9 +59,7 @@ describe('useWatchColorVisionEvents', () => {
       return null;
     }
 
-    mountWithChartContext(<TestComponent />, {
-      id: '123',
-    });
+    mount(<TestComponent />);
 
     expect(Object.keys(events)).toHaveLength(1);
     expect(Object.keys(events)[0]).toStrictEqual(
@@ -61,6 +68,11 @@ describe('useWatchColorVisionEvents', () => {
   });
 
   it('responds to event', () => {
+    mockUseChartContext.mockReturnValue({
+      ...mockUseChartContext(),
+      id: '123',
+    });
+
     const spy = jest.fn();
 
     function TestComponent() {
@@ -72,9 +84,7 @@ describe('useWatchColorVisionEvents', () => {
       return null;
     }
 
-    mountWithChartContext(<TestComponent />, {
-      id: '123',
-    });
+    mount(<TestComponent />);
 
     events['123:color-vision-event:someType']();
 

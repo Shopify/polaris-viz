@@ -19,6 +19,29 @@ jest.mock('../../packages/polaris-viz/src/components/ChartContainer', () => {
   };
 });
 
+jest.mock('../../packages/polaris-viz-core/src/hooks/useChartContext', () => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const characterWidths = require('../../packages/polaris-viz/src/data/character-widths.json');
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const characterWidthOffsets = require('../../packages/polaris-viz/src/data/character-width-offsets.json');
+
+  return {
+    useChartContext: jest.fn().mockReturnValue({
+      shouldAnimate: false,
+      id: null,
+      characterWidths,
+      characterWidthOffsets,
+      theme: 'Light',
+      isTouchDevice: false,
+      isPerformanceImpacted: false,
+      containerBounds: {
+        width: 600,
+        height: 400,
+      },
+    }),
+  };
+});
+
 jest.mock(
   '../../packages/polaris-viz-core/src/styles/shared/_variables.scss',
   () => {
