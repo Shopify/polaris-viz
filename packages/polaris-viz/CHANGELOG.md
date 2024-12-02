@@ -9,6 +9,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- Do not show ellipsis if only one character is truncated 
 - Fixed an issue with the `<StackedAreaChart />` that would cause the chart to break when series length increases
 
 ### Changed
