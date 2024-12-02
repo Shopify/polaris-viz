@@ -594,3 +594,55 @@ InfinityData.args = {
     },
   ],
 };
+
+export const VerticalTruncate: Story<BarChartProps> = (args: BarChartProps) => {
+  return (
+    <div style={{width: '100%', height: 100}}>
+      <BarChart {...args} xAxisOptions={{labelFormatter: (x) => `Oct. ${x}`}}/>
+    </div>
+  );
+};
+
+VerticalTruncate.args = {
+  data: DATA,
+};
+
+export const DiagonalTruncate: Story<BarChartProps> = (args: BarChartProps) => {
+  return (
+    <div style={{width: '100%', height: 100}}>
+      <BarChart {...args} xAxisOptions={{labelFormatter: (x) => `October ${x}, 2024`}}/>
+    </div>
+  );
+};
+
+DiagonalTruncate.args = {
+  data: [
+    {
+      name: 'Oct 7–Oct 13, 2024',
+      data: [
+        {
+          key: '0',
+          value: 0,
+        },
+        {
+          key: '1',
+          value: 0,
+        },
+      ],
+    },
+    {
+      isComparison: true,
+      name: 'Sep 30–Oct 6, 2024',
+      data: [
+        {
+          key: '9',
+          value: 0,
+        },
+        {
+          key: '10',
+          value: 0,
+        },
+      ],
+    },
+  ],
+}
