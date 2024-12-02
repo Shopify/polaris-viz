@@ -6,8 +6,8 @@ describe('endWordTruncate()', () => {
     word           | targetWidth | expected
     ${'Wednesday'} | ${40}       | ${'Wed…'}
     ${'Wednesday'} | ${60}       | ${'Wedne…'}
-    ${'Wednesday'} | ${68}       | ${'Wednesd…'}
-    ${'Wednesday'} | ${100}      | ${'Wednesday'}
+    ${'Wednesday'} | ${65}       | ${'Wednes…'}
+    ${'Wednesday'} | ${70}       | ${'Wednesday'}
   `(
     'truncates word at target width of $targetWidth',
     ({word, targetWidth, expected}) => {

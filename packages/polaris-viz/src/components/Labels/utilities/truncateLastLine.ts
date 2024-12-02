@@ -58,5 +58,9 @@ export function truncateLastLine({
     counter += STEP;
   }
 
-  return newLabel;
+  if (newLabel.length === label.length - 1) {
+    return label;
+  } else {
+    return newLabel;
+  }
 }
