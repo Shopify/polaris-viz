@@ -25,7 +25,7 @@ Will type check all packages
 Will start the jest test runner
 
 - **`yarn dev`:**
-Builds all libraries and automatically rebuilds on code change. This can be combined with the [Sandbox](http://polaris-viz.shopify.com/?path=/docs/contributing-sandbox--page) to get near live updates.
+Builds all libraries and automatically rebuilds on code change. This can be combined with the [Sandbox](http://polaris-viz.shopify.dev/?path=/docs/contributing-sandbox--page) to get near live updates.
 
 - **`yarn storybook`:**
 Runs storybook locally
@@ -48,7 +48,7 @@ The root `package.json` merely contains `devDependencies` that are needed to bui
 
 ### Developing in React Native
 
-To test `@shopify/polaris-viz-native` code please use our [Sandbox](http://polaris-viz.shopify.com/?path=/docs/contributing-sandbox--page).
+To test `@shopify/polaris-viz-native` code please use our [Sandbox](http://polaris-viz.shopify.dev/?path=/docs/contributing-sandbox--page).
 
 <br>
 
@@ -66,7 +66,7 @@ In the packages folder you'll find the source code of the libraries that get pub
 
 `@shopify/polaris-viz-core` contains platform agnostic code shared by both `@shopify/polaris-viz` and `@shopify/polaris-viz-native`
 
-This monorepo is managed with Shopify's [Loom](https://www.npmjs.com/package/@shopify/loom) for building and testing and [Lerna](https://github.com/lerna/lerna) for the publishing workflow. To learn more about how to create releases please see our [Creating Releases page](http://polaris-viz.shopify.com/?path=/docs/contributing-creating-releases--page).
+This monorepo is managed with Shopify's [Loom](https://www.npmjs.com/package/@shopify/loom) for building and testing and [Lerna](https://github.com/lerna/lerna) for the publishing workflow. To learn more about how to create releases please see our [Creating Releases page](http://polaris-viz.shopify.dev/?path=/docs/contributing-creating-releases--page).
 
 
 <br>
@@ -84,4 +84,4 @@ For complex props, like callback functions, consider adding a select to stories 
 
 ### `/sandbox`
 
-The sandbox folder contains an [Expo](https://docs.expo.dev/) app pre-configured so you can test the build of each library in a web browser, an iOS simulator or an Android simulator. Read more about how to use it on the [Sandbox page](http://polaris-viz.shopify.com/?path=/docs/contributing-sandbox--page).
+The sandbox folder contains an [Expo](https://docs.expo.dev/) app pre-configured so you can test the build of each library in a web browser, an iOS simulator or an Android simulator. Read more about how to use it on the [Sandbox page](http://polaris-viz.shopify.dev/?path=/docs/contributing-sandbox--page).

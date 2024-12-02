@@ -7,7 +7,7 @@
 
 ## Code of conduct
 
-We expect all participants to read our [code of conduct](https://polaris-viz.shopify.com/?path=/docs/contributing-code-of-conduct--page) to understand which actions are and aren’t tolerated.
+We expect all participants to read our [code of conduct](https://polaris-viz.shopify.dev/?path=/docs/contributing-code-of-conduct--page) to understand which actions are and aren’t tolerated.
 
 <br/>
 <hr/>
@@ -16,7 +16,7 @@ We expect all participants to read our [code of conduct](https://polaris-viz.sho
 ## Development
 <!-- TODO UPDATE LINK -->
 
-👩🏾‍💻 For local development instructions, head to the [Contributing/Local Development](http://polaris-viz.shopify.com/?path=/story/contributing-local-development--page) section
+👩🏾‍💻 For local development instructions, head to the [Contributing/Local Development](http://polaris-viz.shopify.dev/?path=/story/contributing-local-development--page) section
 
 <br/>
 <hr/>
@@ -34,7 +34,7 @@ Every significant change is documented in the [CHANGELOG](/CHANGELOG.md).
 
 ## Contributor License Agreement (CLA)
 
-Each contributor is required to [sign a CLA](https://cla.shopify.com/). This process is automated as part of your first pull request and is only required once. If any contributor has not signed or does not have an associated GitHub account, the CLA check will fail and the pull request is unable to be merged.
+Each contributor is required to [sign a CLA](https://cla.shopify.dev/). This process is automated as part of your first pull request and is only required once. If any contributor has not signed or does not have an associated GitHub account, the CLA check will fail and the pull request is unable to be merged.
 
 <br/>
 <hr/>

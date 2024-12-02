@@ -1,6 +1,6 @@
 # 📏 Character Widths
 
-To speed up the truncation logic for [Labels](https://polaris-viz.shopify.com/?path=/docs/shared-labels--page) we use a pre-built `json` file that includes the width of each available character the browser provides. This includes multiple languages.
+To speed up the truncation logic for [Labels](https://polaris-viz.shopify.dev/?path=/docs/shared-labels--page) we use a pre-built `json` file that includes the width of each available character the browser provides. This includes multiple languages.
 
 Currently this process is manual, but it only needs to be re-ran if the font size, or family changes.
 

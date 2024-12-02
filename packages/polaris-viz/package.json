@@ -5,7 +5,7 @@
   "private": false,
   "license": "SEE LICENSE IN LICENSE.md",
   "author": "Shopify <dev@shopify.com>",
-  "homepage": "https://polaris-viz.shopify.com/",
+  "homepage": "https://polaris-viz.shopify.dev/",
   "repository": "https://github.com/Shopify/polaris-viz",
   "publishConfig": {
     "access": "public",

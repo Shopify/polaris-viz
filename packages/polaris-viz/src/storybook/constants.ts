@@ -77,7 +77,7 @@ export const RENDER_BUCKET_LEGEND_LABEL_ARGS = {
 };
 
 export const RENDER_TOOLTIP_DESCRIPTION =
-  'This accepts a function that is called to render the tooltip content. When necessary it calls `formatXAxisLabel` and/or `formatYAxisLabel` to format the `DataSeries[]` values and passes them to `<TooltipContent />`. [RenderTooltipContentData type definition.](https://polaris-viz.shopify.com/?path=/docs/polaris-viz-subcomponents-tooltipcontent-rendertooltipcontent--page)';
+  'This accepts a function that is called to render the tooltip content. When necessary it calls `formatXAxisLabel` and/or `formatYAxisLabel` to format the `DataSeries[]` values and passes them to `<TooltipContent />`. [RenderTooltipContentData type definition.](https://polaris-viz.shopify.dev/?path=/docs/polaris-viz-subcomponents-tooltipcontent-rendertooltipcontent--page)';
 
 export const DATA_ARGS = {
   description:

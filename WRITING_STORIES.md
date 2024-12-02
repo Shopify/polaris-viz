@@ -37,7 +37,7 @@ Visit the Storybook docs for more information on [how default exports provide ad
 ## Story guidelines
 
 - Stories should use data that is as close to real-world data as possible.
-- Stories should only include examples that are useful to consumers. If you have a story that handles a certain edge-case, or it would be useful to developers, each chart has a `Playground` folder that is not included in the [consumer facing docs site](https://polaris-viz.shopify.com/), where you can test your story.
+- Stories should only include examples that are useful to consumers. If you have a story that handles a certain edge-case, or it would be useful to developers, each chart has a `Playground` folder that is not included in the [consumer facing docs site](https://polaris-viz.shopify.dev/), where you can test your story.
 
 ## Chromatic stories
 
