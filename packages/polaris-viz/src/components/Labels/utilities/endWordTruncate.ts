@@ -30,5 +30,9 @@ export function endWordTruncate({word, targetWidth, characterWidths}: Props) {
     newWord = `${newWord}${ELLIPSIS}`;
   }
 
+  if (newWord.length === word.length - 1) {
+    return word;
+  }
+
   return newWord;
 }

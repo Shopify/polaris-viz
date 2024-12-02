@@ -35,5 +35,9 @@ export function truncateSingleLine({
     index++;
   }
 
+  if (newLabel.length === label.length - 1) {
+    return label;
+  }
+
   return formatAndAddEllipsis(newLabel);
 }
