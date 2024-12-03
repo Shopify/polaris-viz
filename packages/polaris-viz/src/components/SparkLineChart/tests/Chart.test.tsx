@@ -26,7 +26,7 @@ describe('<Chart />', () => {
     const offsetLeft = 100;
     const offsetRight = 50;
     const margin = 2;
-    const mockWidth = 0;
+    const mockWidth = 600;
 
     mount(
       <Chart

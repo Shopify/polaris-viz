@@ -142,7 +142,6 @@ export function LegendValues({
                 longestLegendValueWidth={longestLegendValueWidth}
                 maxTrendIndicatorWidth={maxTrendIndicatorWidth}
                 seriesColors={seriesColors}
-                seriesNameFormatter={seriesNameFormatter}
                 onDimensionChange={(dimensions) => {
                   if (legendItemDimensions.current) {
                     legendItemDimensions.current[index] = dimensions;
@@ -166,7 +165,6 @@ export function LegendValues({
           label={renderHiddenLegendLabel(allData.length - displayedData.length)}
           lastVisibleIndex={allData.length - hiddenData.length}
           setActivatorWidth={() => null}
-          seriesNameFormatter={seriesNameFormatter}
         />
       )}
     </React.Fragment>

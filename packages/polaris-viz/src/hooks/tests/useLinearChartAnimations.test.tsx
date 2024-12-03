@@ -1,12 +1,10 @@
-/* eslint-disable react/jsx-no-constructed-context-values */
 import {mount} from '@shopify/react-testing';
 import {line} from 'd3-shape';
 import type {LineChartDataSeriesWithDefaults} from '@shopify/polaris-viz-core';
-import {ChartContext} from '@shopify/polaris-viz-core';
+import {useChartContext} from '@shopify/polaris-viz-core';
 
+import type {Props} from '../useLinearChartAnimations';
 import {useLinearChartAnimations} from '../useLinearChartAnimations';
-import characterWidths from '../../data/character-widths.json';
-import characterWidthOffsets from '../../data/character-width-offsets.json';
 
 jest.mock('../../utilities/getPathLength', () => {
   return {
@@ -26,6 +24,8 @@ const lineGeneratorMock = jest.fn(
     .y(({value}) => value),
 ) as any;
 
+const mockUseChartContext = useChartContext as jest.Mock;
+
 const data: LineChartDataSeriesWithDefaults[] = [
   {
     name: 'Primary',
@@ -43,14 +43,20 @@ const data: LineChartDataSeriesWithDefaults[] = [
   },
 ];
 
-const mockProps = {
+const mockProps: Props = {
   activeIndex: 0,
   lineGenerator: lineGeneratorMock,
   data,
-  isAnimated: true,
 };
 
 describe('useLinearChartAnimations', () => {
+  beforeEach(() => {
+    mockUseChartContext.mockReturnValue({
+      ...mockUseChartContext(),
+      shouldAnimate: true,
+    });
+  });
+
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -111,17 +117,12 @@ describe('useLinearChartAnimations', () => {
       return null;
     }
 
-    mount(
-      <ChartContext.Provider
-        value={{
-          characterWidths,
-          characterWidthOffsets,
-          shouldAnimate: false,
-        }}
-      >
-        <TestComponent />
-      </ChartContext.Provider>,
-    );
+    mockUseChartContext.mockReturnValue({
+      ...mockUseChartContext(),
+      shouldAnimate: false,
+    });
+
+    mount(<TestComponent />);
 
     expect(lineGeneratorMock).not.toHaveBeenCalled();
   });

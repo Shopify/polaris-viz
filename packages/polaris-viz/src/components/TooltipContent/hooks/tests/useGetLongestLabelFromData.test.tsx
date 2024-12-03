@@ -4,22 +4,6 @@ import {mount} from '@shopify/react-testing';
 import {useGetLongestLabelFromData} from '../useGetLongestLabelFromData';
 import type {TooltipData} from '../../../../types';
 
-jest.mock('react', () => {
-  return {
-    ...jest.requireActual('react'),
-    useContext: () => ({
-      characterWidths: {
-        // eslint-disable-next-line id-length
-        a: 1,
-        // eslint-disable-next-line id-length
-        b: 1,
-        1: 1,
-        0: 1,
-      },
-    }),
-  };
-});
-
 function parseData(result: Root<any>) {
   return JSON.parse(result.domNode?.dataset.data ?? '');
 }
@@ -54,7 +38,7 @@ describe('useGetLongestLabelFromData()', () => {
 
     const data = parseData(result);
 
-    expect(data).toStrictEqual({keyWidth: 1, valueWidth: 4});
+    expect(data).toStrictEqual({keyWidth: 6.63, valueWidth: 22.32});
   });
 
   it('does not throw error when data is missing', () => {

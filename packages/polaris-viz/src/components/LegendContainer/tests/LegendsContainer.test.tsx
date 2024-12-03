@@ -3,10 +3,10 @@ import {useChartContext} from '@shopify/polaris-viz-core';
 
 import type {LegendContainerProps} from '../LegendContainer';
 import {LegendContainer} from '../LegendContainer';
-import {Legend, LegendItem} from '../../Legend';
+import {Legend} from '../../Legend';
 import {HiddenLegendTooltip} from '../components/HiddenLegendTooltip';
 
-const WIDTH_WITH_OVERFLOW = 0;
+const WIDTH_WITH_OVERFLOW = 10;
 const WIDTH_WITHOUT_OVERFLOW = 100;
 
 const mockProps: LegendContainerProps = {
@@ -29,12 +29,6 @@ jest.mock('../../../hooks/useResizeObserver', () => {
     },
   };
 });
-
-jest.mock('@shopify/polaris-viz-core/src/hooks/useChartContext', () => ({
-  useChartContext: jest.fn(() => ({
-    containerBounds: {height: 300, width: 100},
-  })),
-}));
 
 const mockUseChartContext = useChartContext as jest.Mock;
 
@@ -166,6 +160,7 @@ describe('<LegendContainer />', () => {
 
     it('renders a custom label if provided', () => {
       mockUseChartContext.mockReturnValue({
+        ...mockUseChartContext(),
         containerBounds: {height: 300, width: WIDTH_WITH_OVERFLOW},
       });
 
