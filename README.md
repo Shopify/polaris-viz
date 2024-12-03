@@ -22,12 +22,12 @@ It is composed of two consumer-facing libraries:
 
 <br/>
 
-Both libraries use the same [Data Structure](https://polaris-viz.shopify.com/?path=/docs/shared-data-structure--page), [Utility functions](https://polaris-viz.shopify.com/?path=/docs/shared-utilities-accessibility-color-vision-events--page), [Themes](https://polaris-viz.shopify.com/?path=/docs/shared-themes-default-themes--page) and SubComponents. _All things shared_ between `@shopify/polaris-viz` and `@shopify/polaris-viz-native` are documented in the Storybook's `Shared` folder
+Both libraries use the same [Data Structure](https://polaris-viz.shopify.dev/?path=/docs/shared-data-structure--page), [Utility functions](https://polaris-viz.shopify.dev/?path=/docs/shared-utilities-accessibility-color-vision-events--page), [Themes](https://polaris-viz.shopify.dev/?path=/docs/shared-themes-default-themes--page) and SubComponents. _All things shared_ between `@shopify/polaris-viz` and `@shopify/polaris-viz-native` are documented in the Storybook's `Shared` folder
 
 
-- [📓 Docs & Examples](https://polaris-viz.shopify.com/)
-- [🖥 Getting Started with Polaris Viz](https://polaris-viz.shopify.com/?path=/docs/polaris-viz-getting-started--page)
-- [📱 Getting Started with Polaris Viz **Native**](https://polaris-viz.shopify.com/?path=/docs/polaris-viz-native-getting-started--page)
+- [📓 Docs & Examples](https://polaris-viz.shopify.dev/)
+- [🖥 Getting Started with Polaris Viz](https://polaris-viz.shopify.dev/?path=/docs/polaris-viz-getting-started--page)
+- [📱 Getting Started with Polaris Viz **Native**](https://polaris-viz.shopify.dev/?path=/docs/polaris-viz-native-getting-started--page)
 
 
 <br/>
