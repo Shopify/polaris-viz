@@ -38,6 +38,7 @@ CustomInnerValueContent.args = {
             style={{
               fontSize: 36,
               margin: 0,
+              color: 'black',
               ...numberStyles,
             }}
           >
@@ -50,6 +51,7 @@ CustomInnerValueContent.args = {
             alignItems: 'center',
             gap: 4,
             margin: '8px 0',
+            color: 'black',
           }}
         >
           Total:
@@ -57,6 +59,7 @@ CustomInnerValueContent.args = {
             style={{
               fontSize: 20,
               ...numberStyles,
+              color: 'black',
             }}
           >
             {animatedTotalValue}

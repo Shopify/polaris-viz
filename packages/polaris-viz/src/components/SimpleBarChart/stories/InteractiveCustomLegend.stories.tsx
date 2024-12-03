@@ -10,7 +10,7 @@ import {SERIES, Template} from './data';
 
 const liStyles = {
   alignItems: 'center',
-  color: 'white',
+  color: 'black',
   display: 'flex',
   fontWeight: 'bold',
   gap: 4,

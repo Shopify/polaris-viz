@@ -1,5 +1,6 @@
 import type {Meta} from '@storybook/react';
 
+import type {BarChartProps} from '../../../components';
 import {BarChart} from '../../../components';
 import {
   ANNOTATIONS_ARGS,
@@ -13,7 +14,6 @@ import {
   MAX_SERIES_ARGS,
   RENDER_BUCKET_LEGEND_LABEL_ARGS,
   RENDER_LEGEND_CONTENT_ARGS,
-  RENDER_TOOLTIP_DESCRIPTION,
   SKIP_LINK_ARGS,
   THEME_CONTROL_ARGS,
   TYPE_CONTROL_ARGS,
@@ -22,9 +22,7 @@ import {
 } from '../../../storybook/constants';
 import {PageWithSizingInfo} from '../../Docs/stories';
 
-import {TOOLTIP_CONTENT} from './data';
-
-export const META: Meta = {
+export const META: Meta<BarChartProps> = {
   title: 'polaris-viz/Charts/BarChart',
   component: BarChart,
   parameters: {
@@ -48,18 +46,6 @@ export const META: Meta = {
     skipLinkText: SKIP_LINK_ARGS,
     xAxisOptions: X_AXIS_OPTIONS_ARGS,
     yAxisOptions: Y_AXIS_OPTIONS_ARGS,
-    renderTooltipContent: {
-      options: Object.keys(TOOLTIP_CONTENT),
-      mapping: TOOLTIP_CONTENT,
-      control: {
-        type: 'select',
-        labels: {
-          empty: 'Default',
-          Annotation: 'Custom',
-        },
-      },
-      description: RENDER_TOOLTIP_DESCRIPTION,
-    },
     direction: DIRECTION_CONTROL_ARGS,
     theme: THEME_CONTROL_ARGS,
     state: CHART_STATE_CONTROL_ARGS,

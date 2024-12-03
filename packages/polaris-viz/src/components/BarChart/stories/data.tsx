@@ -1,49 +1,11 @@
 import type {DataSeries} from '@shopify/polaris-viz-core';
 import type {Story} from '@storybook/react';
 
-import {SquareColorPreview} from '../../SquareColorPreview';
-import type {RenderTooltipContentData} from '../../../types';
 import type {BarChartProps} from '../BarChart';
 import {BarChart} from '../BarChart';
 
 export const Template: Story<BarChartProps> = (args: BarChartProps) => {
   return <BarChart {...args} />;
-};
-
-export const TOOLTIP_CONTENT = {
-  empty: undefined,
-  Custom: (tooltipData: RenderTooltipContentData) => {
-    return (
-      <div
-        style={{
-          background: 'black',
-          padding: '8px',
-          borderRadius: '4px',
-          color: 'white',
-        }}
-      >
-        {tooltipData.title}
-        <div>
-          {tooltipData.data[0].data.map(({key, value, color}) => (
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: '12px 1fr 1fr',
-                gridGap: '5px',
-                fontSize: '12px',
-                marginTop: '4px',
-              }}
-              key={key}
-            >
-              <SquareColorPreview color={color!} />
-              <div>{key}</div>
-              <div style={{textAlign: 'right'}}>{value}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  },
 };
 
 export const DEFAULT_DATA: DataSeries[] = [
