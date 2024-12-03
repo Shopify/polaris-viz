@@ -9,7 +9,6 @@ import {
   IS_ANIMATED_ARGS,
   LEGEND_CONTROL_ARGS,
   RENDER_LEGEND_CONTENT_ARGS,
-  RENDER_TOOLTIP_DESCRIPTION,
   SKIP_LINK_ARGS,
   THEME_CONTROL_ARGS,
   X_AXIS_OPTIONS_ARGS,
@@ -17,8 +16,6 @@ import {
 } from '../../../storybook/constants';
 import {PageWithSizingInfo} from '../../Docs/stories';
 import {LineChart} from '../LineChart';
-
-import {TOOLTIP_CONTENT} from './data';
 
 export const META: Meta = {
   title: 'polaris-viz/Charts/LineChart',
@@ -40,11 +37,6 @@ export const META: Meta = {
     emptyStateText: EMPTY_STATE_TEXT_ARGS,
     isAnimated: IS_ANIMATED_ARGS,
     renderLegendContent: RENDER_LEGEND_CONTENT_ARGS,
-    renderTooltipContent: {
-      options: Object.keys(TOOLTIP_CONTENT),
-      mapping: TOOLTIP_CONTENT,
-      description: RENDER_TOOLTIP_DESCRIPTION,
-    },
     skipLinkText: SKIP_LINK_ARGS,
     yAxisOptions: Y_AXIS_OPTIONS_ARGS,
     theme: THEME_CONTROL_ARGS,

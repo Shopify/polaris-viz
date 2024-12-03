@@ -12,7 +12,7 @@ const LABELS = ['Apple', 'Facebook', 'Netflix', 'Google'];
 
 const liStyles = {
   alignItems: 'center',
-  color: 'white',
+  color: 'black',
   display: 'flex',
   fontWeight: 'bold',
   gap: 4,
