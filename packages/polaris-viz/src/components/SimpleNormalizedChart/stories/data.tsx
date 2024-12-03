@@ -2,7 +2,7 @@ import type {Story} from '@storybook/react';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
-import {PolarisVizProvider} from '../../PolarisVizProvider';
+import {PolarisVizProvider} from '../../PolarisVizProvider/PolarisVizProvider';
 import type {SimpleNormalizedChartProps} from '../SimpleNormalizedChart';
 import {SimpleNormalizedChart} from '../SimpleNormalizedChart';
 

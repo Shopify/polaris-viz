@@ -2,11 +2,10 @@ import {DARK_THEME} from '@shopify/polaris-viz-core';
 import {storiesOf} from '@storybook/react';
 
 import type {TooltipData} from '../../../types';
-import {TooltipContent} from '../../TooltipContent';
-import {
-  addWithPropsCombinations,
-  renderCombinationSections,
-} from '../../../chromatic';
+import {TooltipContent} from '../TooltipContent';
+
+import {addWithPropsCombinations} from '../../../chromatic/components/AddWithPropsCombinations';
+import {renderCombinationSections} from '../../../chromatic/utilities/renderCombinationSections';
 
 const stories = storiesOf('Chromatic/Components', module).addParameters({
   docs: {page: null},

@@ -2,7 +2,7 @@ import {LINE_HEIGHT, useTheme} from '@shopify/polaris-viz-core';
 
 import {getFontSize} from '../../../../utilities/getFontSize';
 import {useEstimateStringWidth} from '../../../../hooks/useEstimateStringWidth';
-import {SingleTextLine} from '../../../Labels';
+import {SingleTextLine} from '../../../Labels/SingleTextLine';
 
 export interface AxisLabelProps {
   axis: 'primary' | 'secondary';

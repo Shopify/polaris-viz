@@ -2,8 +2,10 @@ import type {Story} from '@storybook/react';
 
 export {META as default} from './meta';
 
-import {BarChart, BarChartProps} from '../../../components';
-import {PolarisVizProvider} from '../../PolarisVizProvider';
+import {BarChart} from '../BarChart';
+import type {BarChartProps} from '../BarChart';
+
+import {PolarisVizProvider} from '../../PolarisVizProvider/PolarisVizProvider';
 
 import {DEFAULT_DATA} from './data';
 import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';

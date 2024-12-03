@@ -2,8 +2,8 @@ import type {Dispatch, SetStateAction} from 'react';
 import {Fragment} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 
-import {useLabels} from '../Labels';
-import {TextLine} from '../TextLine';
+import {useLabels} from '../Labels/hooks/useLabels';
+import {TextLine} from '../TextLine/TextLine';
 
 interface HorizontalBarChartXAxisLabelsProps {
   allowLineWrap: boolean;

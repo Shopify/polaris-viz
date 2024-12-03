@@ -3,11 +3,11 @@ import type {RefObject} from 'react';
 import type {LabelFormatter} from '@shopify/polaris-viz-core';
 import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
-import {useExternalHideEvents} from '../../hooks';
+import {useExternalHideEvents} from '../../hooks/ExternalEvents/useExternalHideEvents';
 import type {LegendData} from '../../types';
 
-import {LegendItem} from './components';
-import type {LegendItemDimension} from './components';
+import {LegendItem} from './components/LegendItem/LegendItem';
+import type {LegendItemDimension} from './components/LegendItem/LegendItem';
 
 export interface LegendProps {
   data: LegendData[];

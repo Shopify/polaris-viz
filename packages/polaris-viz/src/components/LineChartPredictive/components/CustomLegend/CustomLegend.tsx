@@ -2,8 +2,8 @@ import type {LabelFormatter} from '@shopify/polaris-viz-core';
 
 import type {LineChartPredictiveDataSeries} from '../../../../components/LineChartPredictive/types';
 import type {ColorVisionInteractionMethods} from '../../../../types';
-import {LegendItem} from '../../../../components/Legend';
-import {SeriesIcon} from '../SeriesIcon';
+import {LegendItem} from '../../../Legend/components/LegendItem/LegendItem';
+import {SeriesIcon} from '../SeriesIcon/SeriesIcon';
 
 import styles from './CustomLegend.scss';
 

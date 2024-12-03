@@ -1,6 +1,6 @@
 import type {Story} from '@storybook/react';
 
-import type {LineChartProps} from '../../../../components';
+import type {LineChartProps} from '../../LineChart';
 import {META} from '../meta';
 import {DEFAULT_PROPS, Template} from '../data';
 

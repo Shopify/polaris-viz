@@ -3,8 +3,8 @@ import type {Story} from '@storybook/react';
 export {META as default} from './meta';
 
 import {DARK_THEME} from '../../../constants';
-import type {DonutChartProps} from '../../DonutChart';
-import {SquareColorPreview} from '../../SquareColorPreview';
+import type {DonutChartProps} from '../DonutChart';
+import {SquareColorPreview} from '../../SquareColorPreview/SquareColorPreview';
 
 import {DEFAULT_DATA, DEFAULT_PROPS, Template} from './data';
 

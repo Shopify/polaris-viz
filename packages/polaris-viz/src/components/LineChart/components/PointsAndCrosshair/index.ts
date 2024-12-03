@@ -1,1 +1,0 @@
-export {PointsAndCrosshair} from './PointsAndCrosshair';

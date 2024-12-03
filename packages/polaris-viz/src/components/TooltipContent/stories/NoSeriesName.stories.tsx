@@ -3,7 +3,7 @@ import type {Story} from '@storybook/react';
 
 export {META as default} from './meta';
 
-import type {TooltipContentProps} from '../../../components';
+import type {TooltipContentProps} from '../TooltipContent';
 
 import {Template} from './data';
 

@@ -1,21 +1,17 @@
 import type {DataSeries} from '@shopify/polaris-viz-core';
+import {useTheme, getSeriesColors} from '@shopify/polaris-viz-core';
 
-import {useTheme, getSeriesColors} from '../../../../hooks';
-import {
-  LegendContainer,
-  useLegend,
-} from '../../../../components/LegendContainer';
-import {
-  SparkLineChart,
-  LineChart,
-  BarChart,
-  StackedAreaChart,
-  SimpleNormalizedChart,
-  DonutChart,
-} from '../../../../components';
-import {generateMultipleSeries} from '../../../Docs/utilities';
+import {LegendContainer} from '../../../LegendContainer/LegendContainer';
+import {useLegend} from '../../../LegendContainer/hooks/useLegend';
+import {SparkLineChart} from '../../../SparkLineChart/SparkLineChart';
+import {LineChart} from '../../../LineChart/LineChart';
+import {BarChart} from '../../../BarChart/BarChart';
+import {StackedAreaChart} from '../../../StackedAreaChart/StackedAreaChart';
+import {SimpleNormalizedChart} from '../../../SimpleNormalizedChart/SimpleNormalizedChart';
+import {DonutChart} from '../../../DonutChart/DonutChart';
+import {generateMultipleSeries} from '../../utilities';
 
-import {SimpleContainer} from './SimpleContainer';
+import {SimpleContainer} from './SimpleContainer/SimpleContainer';
 
 export const SampleSparkLineChart = ({theme} = {theme: 'Light'}) => {
   return (

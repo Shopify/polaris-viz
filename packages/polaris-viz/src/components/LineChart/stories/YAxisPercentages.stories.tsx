@@ -2,7 +2,7 @@ import type {Story} from '@storybook/react';
 
 export {META as default} from './meta';
 
-import type {LineChartProps} from '../..';
+import type {LineChartProps} from '../LineChart';
 import {formatPercentageYAxisLabel} from '../../../storybook/utilities';
 
 import {DEFAULT_PROPS, Template} from './data';

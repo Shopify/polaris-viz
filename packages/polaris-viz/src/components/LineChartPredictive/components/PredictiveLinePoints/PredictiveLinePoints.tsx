@@ -9,8 +9,8 @@ import {
 import {Fragment, useMemo, useState} from 'react';
 import type {LineChartSlotProps} from 'types';
 
-import {Point} from '../../../Point';
-import {useWatchColorVisionEvents} from '../../../../hooks';
+import {Point} from '../../../Point/Point';
+import {useWatchColorVisionEvents} from '../../../../hooks/ColorVisionA11y/useWatchColorVisionEvents';
 import type {LineChartPredictiveProps} from '../../types';
 
 interface PredictiveLinePointsProps extends LineChartSlotProps {

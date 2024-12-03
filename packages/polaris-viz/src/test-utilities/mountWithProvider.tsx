@@ -3,7 +3,7 @@ import {mount} from '@shopify/react-testing';
 import type {PartialTheme} from '@shopify/polaris-viz-core';
 import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
-import {PolarisVizProvider} from '../';
+import {PolarisVizProvider} from '../components/PolarisVizProvider/PolarisVizProvider';
 
 export const mountWithProvider = (
   child: React.ReactElement<any, any>,

@@ -1,6 +1,6 @@
 import {mount} from '@shopify/react-testing';
 
-import {ChartContainer} from '../../ChartContainer';
+import {ChartContainer} from '../../ChartContainer/ChartContainer';
 import type {SimpleNormalizedChartProps} from '../SimpleNormalizedChart';
 import {SimpleNormalizedChart} from '../SimpleNormalizedChart';
 import {Chart} from '../Chart';

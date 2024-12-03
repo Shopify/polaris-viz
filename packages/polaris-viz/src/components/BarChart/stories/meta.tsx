@@ -1,7 +1,7 @@
 import type {Meta} from '@storybook/react';
 
-import type {BarChartProps} from '../../../components';
-import {BarChart} from '../../../components';
+import type {BarChartProps} from '../BarChart';
+import {BarChart} from '../BarChart';
 import {
   ANNOTATIONS_ARGS,
   CHART_STATE_CONTROL_ARGS,
@@ -20,7 +20,7 @@ import {
   X_AXIS_OPTIONS_ARGS,
   Y_AXIS_OPTIONS_ARGS,
 } from '../../../storybook/constants';
-import {PageWithSizingInfo} from '../../Docs/stories';
+import {PageWithSizingInfo} from '../../Docs/stories/components/PageWithSizingInfo/PageWithSizingInfo';
 
 export const META: Meta<BarChartProps> = {
   title: 'polaris-viz/Charts/BarChart',

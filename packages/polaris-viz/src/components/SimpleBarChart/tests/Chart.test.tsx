@@ -4,14 +4,12 @@ import {LIGHT_THEME} from '@shopify/polaris-viz-core';
 
 import type {ChartProps} from '../Chart';
 import {Chart} from '../Chart';
-import {LegendContainer} from '../../LegendContainer';
-import {
-  GroupLabel,
-  GradientDefs,
-  HorizontalStackedBars,
-  HorizontalBars,
-  Label,
-} from '../../shared';
+import {LegendContainer} from '../../LegendContainer/LegendContainer';
+import {GroupLabel} from '../../shared/GroupLabel/GroupLabel';
+import {GradientDefs} from '../../shared/GradientDefs/GradientDefs';
+import {HorizontalStackedBars} from '../../shared/HorizontalStackedBars/HorizontalStackedBars';
+import {HorizontalBars} from '../../shared/HorizontalBars/HorizontalBars';
+import {Label} from '../../shared/Label/Label';
 
 jest.mock('@shopify/polaris-viz-core/src/utilities', () => {
   return {

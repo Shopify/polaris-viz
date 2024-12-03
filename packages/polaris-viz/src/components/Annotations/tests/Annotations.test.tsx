@@ -5,12 +5,10 @@ import type {Annotation} from '../../../types';
 import {normalizeData} from '../../../utilities/normalizeData';
 import type {AnnotationsProps} from '../Annotations';
 import {Annotations} from '../Annotations';
-import {
-  AnnotationContent,
-  AnnotationLabel,
-  AnnotationLine,
-  ShowMoreAnnotationsButton,
-} from '../components';
+import {AnnotationContent} from '../components/AnnotationContent/AnnotationContent';
+import {AnnotationLabel} from '../components/AnnotationLabel/AnnotationLabel';
+import {AnnotationLine} from '../components/AnnotationLine/AnnotationLine';
+import {ShowMoreAnnotationsButton} from '../components/ShowMoreAnnotationsButton/ShowMoreAnnotationsButton';
 
 jest.mock('@shopify/polaris-viz-core/src/utilities', () => ({
   ...jest.requireActual('@shopify/polaris-viz-core/src/utilities'),

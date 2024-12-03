@@ -9,7 +9,7 @@ import type {
 import {useChartContext} from '@shopify/polaris-viz-core';
 
 import {flattenDataGroupToDataSeries} from '../../../utilities/flattenDataGroupToDataSeries';
-import {getYAxisOptionsWithDefaults} from '../../../utilities';
+import {getYAxisOptionsWithDefaults} from '../../../utilities/getAxisOptions';
 import type {
   RenderTooltipContentData,
   RenderTooltipDataPoint,

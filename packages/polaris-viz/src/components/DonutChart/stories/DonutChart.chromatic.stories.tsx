@@ -1,11 +1,10 @@
 import {storiesOf} from '@storybook/react';
 import type {PropCombinations} from '../../../chromatic/types';
 
-import {
-  addWithPropsCombinations,
-  renderCombinationSections,
-} from '../../../chromatic';
-import {DonutChart} from '../';
+import {addWithPropsCombinations} from '../../../chromatic/components/AddWithPropsCombinations';
+import {renderCombinationSections} from '../../../chromatic/utilities/renderCombinationSections';
+
+import {DonutChart} from '../DonutChart';
 import type {DonutChartProps} from '../DonutChart';
 import {DEFAULT_DATA} from './data';
 

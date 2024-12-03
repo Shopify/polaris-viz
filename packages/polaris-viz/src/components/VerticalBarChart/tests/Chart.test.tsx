@@ -1,20 +1,23 @@
 import {mount} from '@shopify/react-testing';
 
-import {YAxis, XAxis} from '../../../components';
-import {mountWithProvider, triggerSVGMouseMove} from '../../../test-utilities';
-import {HorizontalGridLines} from '../../../components/HorizontalGridLines';
-import {mockDefaultTheme} from '../../../test-utilities/mountWithProvider';
+import {YAxis} from '../../YAxis/YAxis';
+import {XAxis} from '../../XAxis/XAxis';
 import {
-  TooltipAnimatedContainer,
-  TooltipWrapper,
-} from '../../../components/TooltipWrapper';
+  mountWithProvider,
+  mockDefaultTheme,
+} from '../../../test-utilities/mountWithProvider';
+import {triggerSVGMouseMove} from '../../../test-utilities/triggerSvgMouseMove';
+import {HorizontalGridLines} from '../../HorizontalGridLines/HorizontalGridLines';
+import {TooltipAnimatedContainer} from '../../TooltipWrapper/components/TooltipAnimatedContainer';
+import {TooltipWrapper} from '../../TooltipWrapper/TooltipWrapper';
 import type {Props} from '../Chart';
 import {Chart} from '../Chart';
-import {StackedBarGroups} from '../components';
-import {LegendContainer} from '../../LegendContainer';
-import {Annotations, YAxisAnnotations} from '../../Annotations';
-import {normalizeData} from '../../../utilities';
-import {TextLine} from '../../TextLine';
+import {StackedBarGroups} from '../components/StackedBarGroups/StackedBarGroups';
+import {LegendContainer} from '../../LegendContainer/LegendContainer';
+import {Annotations} from '../../Annotations/Annotations';
+import {YAxisAnnotations} from '../../Annotations/YAxisAnnotations';
+import {normalizeData} from '../../../utilities/normalizeData';
+import {TextLine} from '../../TextLine/TextLine';
 import {DEFAULT_CHART_CONTEXT as MOCK_DEFAULT_CHART_CONTEXT} from '../../../storybook/constants';
 
 jest.mock('@shopify/polaris-viz-core/src/utilities', () => {

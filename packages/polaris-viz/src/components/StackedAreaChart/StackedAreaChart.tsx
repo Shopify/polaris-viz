@@ -17,11 +17,11 @@ import {fillMissingDataPoints} from '../../utilities/fillMissingDataPoints';
 import {
   getXAxisOptionsWithDefaults,
   getYAxisOptionsWithDefaults,
-  normalizeData,
-} from '../../utilities';
-import {ChartContainer} from '../ChartContainer';
-import {ChartSkeleton} from '../ChartSkeleton';
-import {SkipLink} from '../SkipLink';
+} from '../../utilities/getAxisOptions';
+import {normalizeData} from '../../utilities/normalizeData';
+import {ChartContainer} from '../ChartContainer/ChartContainer';
+import {ChartSkeleton} from '../ChartSkeleton/ChartSkeleton';
+import {SkipLink} from '../SkipLink/SkipLink';
 import type {
   Annotation,
   RenderLegendContent,

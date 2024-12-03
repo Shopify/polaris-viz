@@ -8,10 +8,11 @@ import {
 import {useMemo} from 'react';
 import type {RenderTooltipContentData} from 'types';
 
-import {LineChart} from '../LineChart';
+import {LineChart} from '../LineChart/LineChart';
 
 import type {LineChartPredictiveProps} from './types';
-import {CustomLegend, PredictiveLinePoints} from './components';
+import {CustomLegend} from './components/CustomLegend/CustomLegend';
+import {PredictiveLinePoints} from './components/PredictiveLinePoints/PredictiveLinePoints';
 import {renderLinearPredictiveTooltipContent} from './utilities/renderLinearPredictiveTooltipContent';
 
 export function LineChartPredictive(props: LineChartPredictiveProps) {

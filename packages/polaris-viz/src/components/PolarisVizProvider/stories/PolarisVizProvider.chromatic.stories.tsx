@@ -1,14 +1,14 @@
 import type {Story} from '@storybook/react';
-import {BarChart} from '../../BarChart';
-import {DonutChart} from '../../DonutChart';
-import {FunnelChart} from '../../FunnelChart';
-import {LineChart} from '../../LineChart';
-import {LineChartRelational} from '../../LineChartRelational';
-import {SimpleBarChart} from '../../SimpleBarChart';
-import {SimpleNormalizedChart} from '../../SimpleNormalizedChart';
-import {SparkBarChart} from '../../SparkBarChart';
-import {SparkLineChart} from '../../SparkLineChart';
-import {StackedAreaChart} from '../../StackedAreaChart';
+import {BarChart} from '../../BarChart/BarChart';
+import {DonutChart} from '../../DonutChart/DonutChart';
+import {FunnelChart} from '../../FunnelChart/FunnelChart';
+import {LineChart} from '../../LineChart/LineChart';
+import {LineChartRelational} from '../../LineChartRelational/LineChartRelational';
+import {SimpleBarChart} from '../../SimpleBarChart/SimpleBarChart';
+import {SimpleNormalizedChart} from '../../SimpleNormalizedChart/SimpleNormalizedChart';
+import {SparkBarChart} from '../../SparkBarChart/SparkBarChart';
+import {SparkLineChart} from '../../SparkLineChart/SparkLineChart';
+import {StackedAreaChart} from '../../StackedAreaChart/StackedAreaChart';
 import {PolarisVizProvider} from '../PolarisVizProvider';
 import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 

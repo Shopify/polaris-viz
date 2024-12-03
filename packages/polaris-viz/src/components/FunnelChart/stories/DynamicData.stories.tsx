@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 export {META as default} from './meta';
 
-import {FunnelChart} from '../../../components';
+import {FunnelChart} from '../FunnelChart';
 
 export const DynamicData = () => {
   const [data, setData] = useState({

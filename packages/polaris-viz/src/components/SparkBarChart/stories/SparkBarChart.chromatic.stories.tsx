@@ -1,11 +1,10 @@
 import {storiesOf} from '@storybook/react';
 import type {PropCombinations} from '../../../chromatic/types';
 
-import {
-  addWithPropsCombinations,
-  renderCombinationSections,
-} from '../../../chromatic';
-import {SparkBarChart} from '../';
+import {addWithPropsCombinations} from '../../../chromatic/components/AddWithPropsCombinations';
+import {renderCombinationSections} from '../../../chromatic/utilities/renderCombinationSections';
+
+import {SparkBarChart} from '../SparkBarChart';
 import type {SparkBarChartProps} from '../SparkBarChart';
 
 const stories = storiesOf('Chromatic/Components', module).addParameters({

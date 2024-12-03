@@ -3,8 +3,9 @@ import {useMemo} from 'react';
 import {uniqueId} from '@shopify/polaris-viz-core';
 import type {Color, DataGroup} from '@shopify/polaris-viz-core';
 
-import {getYAxisOptionsWithDefaults} from '../../../../utilities';
-import {useVerticalBarChart, VerticalBarGroup} from '../../../VerticalBarChart';
+import {getYAxisOptionsWithDefaults} from '../../../../utilities/getAxisOptions';
+import {useVerticalBarChart} from '../../../VerticalBarChart/hooks/useVerticalBarChart';
+import {VerticalBarGroup} from '../../../VerticalBarChart/components/VerticalBarGroup/VerticalBarGroup';
 
 interface ComboBarChartProps {
   colors: Color[];

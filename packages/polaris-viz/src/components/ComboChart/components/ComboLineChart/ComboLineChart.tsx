@@ -2,9 +2,9 @@ import {Fragment, useState} from 'react';
 import type {Color, DataGroup} from '@shopify/polaris-viz-core';
 import {COLOR_VISION_SINGLE_ITEM, LineSeries} from '@shopify/polaris-viz-core';
 
-import {useWatchColorVisionEvents} from '../../../../hooks';
-import {PointsAndCrosshair} from '../../../LineChart';
-import {useFormatData} from '../../../LineChart/hooks';
+import {useWatchColorVisionEvents} from '../../../../hooks/ColorVisionA11y/useWatchColorVisionEvents';
+import {PointsAndCrosshair} from '../../../LineChart/components/PointsAndCrosshair/PointsAndCrosshair';
+import {useFormatData} from '../../../LineChart/hooks/useFormatData';
 import {getLineChartDataWithDefaults} from '../../../../utilities/getLineChartDataWithDefaults';
 
 interface ComboLineChartProps {

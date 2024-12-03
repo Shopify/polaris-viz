@@ -2,6 +2,7 @@ import type {LabelFormatter} from '@shopify/polaris-viz-core';
 import {
   getColorVisionEventAttrs,
   getColorVisionStylesForActiveIndex,
+  useTheme,
 } from '@shopify/polaris-viz-core';
 import type {ReactNode} from 'react';
 import {useEffect, useRef, useState} from 'react';
@@ -13,9 +14,8 @@ import {
   LEGEND_ITEM_GAP,
 } from '../../constants';
 import {PREVIEW_ICON_SIZE} from '../../../../constants';
-import {SeriesIcon} from '../../../shared/SeriesIcon';
+import {SeriesIcon} from '../../../shared/SeriesIcon/SeriesIcon';
 import type {LegendData} from '../../../../types';
-import {useTheme} from '../../../../hooks';
 
 import style from './LegendItem.scss';
 

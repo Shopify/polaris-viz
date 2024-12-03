@@ -12,7 +12,7 @@ import {
   X_AXIS_OPTIONS_ARGS,
   Y_AXIS_OPTIONS_ARGS,
 } from '../../../storybook/constants';
-import {PageWithSizingInfo} from '../../Docs/stories';
+import {PageWithSizingInfo} from '../../Docs/stories/components/PageWithSizingInfo/PageWithSizingInfo';
 import {SimpleBarChart} from '../SimpleBarChart';
 
 export const META: Meta = {

@@ -12,6 +12,7 @@ import {
   SMALL_CHART_HEIGHT,
   isInfinity,
   InternalChartType,
+  useTheme,
 } from '@shopify/polaris-viz-core';
 import type {
   DataSeries,
@@ -24,34 +25,32 @@ import type {
 import {stackOffsetDiverging, stackOrderNone} from 'd3-shape';
 
 import {useIndexForLabels} from '../../hooks/useIndexForLabels';
-import {ChartElements} from '../ChartElements';
-import {
-  YAxisAnnotations,
-  Annotations,
-  checkAvailableAnnotations,
-} from '../Annotations';
+import {ChartSVG} from '../ChartElements/ChartSVG';
+import {ChartDiv} from '../ChartElements/ChartDiv';
+import {YAxisAnnotations} from '../Annotations/YAxisAnnotations';
+import {Annotations} from '../Annotations/Annotations';
+import {checkAvailableAnnotations} from '../Annotations/utilities/checkAvailableAnnotations';
 import type {
   AnnotationLookupTable,
   RenderLegendContent,
   RenderTooltipContentData,
 } from '../../types';
 import {useFormattedLabels} from '../../hooks/useFormattedLabels';
-import {XAxis} from '../XAxis';
-import {LegendContainer, useLegend} from '../LegendContainer';
-import {GradientDefs} from '../shared';
+import {XAxis} from '../XAxis/XAxis';
+import {LegendContainer} from '../LegendContainer/LegendContainer';
+import {useLegend} from '../LegendContainer/hooks/useLegend';
+import {GradientDefs} from '../shared/GradientDefs/GradientDefs';
 import {ANNOTATIONS_LABELS_OFFSET, ChartMargin} from '../../constants';
-import {TooltipWrapper} from '../TooltipWrapper';
-import {getStackedValues, getStackedMinMax} from '../../utilities';
-import {YAxis} from '../YAxis';
-import {HorizontalGridLines} from '../HorizontalGridLines';
-import {
-  useBarChartTooltipContent,
-  useColorVisionEvents,
-  useTheme,
-  useReducedLabelIndexes,
-} from '../../hooks';
+import {TooltipWrapper} from '../TooltipWrapper/TooltipWrapper';
+import {getStackedValues} from '../../utilities/getStackedValues';
+import {getStackedMinMax} from '../../utilities/getStackedMinMax';
+import {YAxis} from '../YAxis/YAxis';
+import {HorizontalGridLines} from '../HorizontalGridLines/HorizontalGridLines';
+import {useBarChartTooltipContent} from '../../hooks/useBarChartTooltipContent';
+import {useColorVisionEvents} from '../../hooks/ColorVisionA11y/useColorVisionEvents';
+import {useReducedLabelIndexes} from '../../hooks/useReducedLabelIndexes';
 
-import {VerticalBarGroup} from './components';
+import {VerticalBarGroup} from './components/VerticalBarGroup/VerticalBarGroup';
 import {useVerticalBarChart} from './hooks/useVerticalBarChart';
 
 export interface Props {
@@ -232,8 +231,8 @@ export function Chart({
   const xAxisLabelHalf = xScale.bandwidth() / 2;
 
   return (
-    <ChartElements.Div height={height} width={width}>
-      <ChartElements.Svg
+    <ChartDiv height={height} width={width}>
+      <ChartSVG
         height={height}
         width={width}
         emptyStateText={emptyStateText}
@@ -331,7 +330,7 @@ export function Chart({
             />
           </g>
         )}
-      </ChartElements.Svg>
+      </ChartSVG>
 
       {sortedData.length > 0 && (
         <TooltipWrapper
@@ -361,6 +360,6 @@ export function Chart({
           renderHiddenLegendLabel={renderHiddenLegendLabel}
         />
       )}
-    </ChartElements.Div>
+    </ChartDiv>
   );
 }

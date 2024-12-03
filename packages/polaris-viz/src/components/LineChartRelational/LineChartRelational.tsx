@@ -5,10 +5,12 @@ import {
 } from '@shopify/polaris-viz-core';
 import {Fragment} from 'react';
 
-import type {LineChartProps} from '../LineChart';
-import {LineChart} from '../LineChart';
+import type {LineChartProps} from '../LineChart/LineChart';
+import {LineChart} from '../LineChart/LineChart';
 
-import {RelatedAreas, MissingDataArea, CustomLegend} from './components';
+import {RelatedAreas} from './components/RelatedAreas/RelatedAreas';
+import {MissingDataArea} from './components/MissingDataArea/MissingDataArea';
+import {CustomLegend} from './components/CustomLegend/CustomLegend';
 
 export type LineChartRelationalProps = Omit<
   LineChartProps,

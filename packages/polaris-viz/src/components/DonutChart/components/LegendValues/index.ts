@@ -1,1 +1,0 @@
-export {LegendValues} from './LegendValues';

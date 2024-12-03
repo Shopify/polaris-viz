@@ -1,6 +1,6 @@
 import type {CharacterWidths} from '@shopify/polaris-viz-core';
 
-import {estimateStringWidthWithOffset} from '../../../utilities';
+import {estimateStringWidthWithOffset} from '../../../utilities/estimateStringWidthWithOffset';
 import type {PreparedLabels} from '../../../types';
 
 import {endLineTruncate} from './endLineTruncate';

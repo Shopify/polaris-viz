@@ -1,6 +1,6 @@
 import {mount} from '@shopify/react-testing';
 
-import {SingleTextLine} from '../../../Labels';
+import {SingleTextLine} from '../../../Labels/SingleTextLine';
 
 import type {AnnotationLabelProps} from './AnnotationLabel';
 import {AnnotationLabel} from './AnnotationLabel';

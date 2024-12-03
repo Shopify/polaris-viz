@@ -1,12 +1,12 @@
 import {storiesOf} from '@storybook/react';
-import {
-  BarChart,
-  LineChart,
-  PolarisVizProvider,
-  SparkBarChart,
-  SparkLineChart,
-  StackedAreaChart,
-} from '../../components';
+
+import {BarChart} from '../../components/BarChart/BarChart';
+import {LineChart} from '../../components/LineChart/LineChart';
+import {PolarisVizProvider} from '../../components/PolarisVizProvider/PolarisVizProvider';
+import {SparkBarChart} from '../../components/SparkBarChart/SparkBarChart';
+import {SparkLineChart} from '../../components/SparkLineChart/SparkLineChart';
+import {StackedAreaChart} from '../../components/StackedAreaChart/StackedAreaChart';
+
 import {DARK_THEME, LIGHT_THEME} from '@shopify/polaris-viz-core';
 
 const STORIES = [

@@ -1,6 +1,8 @@
 import type {Story} from '@storybook/react';
 
-import {DonutChart, DonutChartProps} from '../../../../components';
+import {DonutChart} from '../../DonutChart';
+import type {DonutChartProps} from '../../DonutChart';
+
 import {META} from '../meta';
 
 export default {

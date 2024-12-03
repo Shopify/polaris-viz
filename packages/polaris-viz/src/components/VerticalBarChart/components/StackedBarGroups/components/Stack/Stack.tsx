@@ -14,12 +14,10 @@ import type {
   FormattedStackedSeries,
   StackedBarGapDirections,
 } from '../../../../../../types';
-import {
-  getBorderRadiusForStackedValues,
-  getYPosition,
-} from '../../../../utilities';
-import {getGradientDefId} from '../../../../../../components/shared';
-import {useWatchColorVisionEvents} from '../../../../../../hooks';
+import {getBorderRadiusForStackedValues} from '../../../../utilities/getBorderRadiusForStackedValues';
+import {getYPosition} from '../../../../utilities/getYPosition';
+import {getGradientDefId} from '../../../../../shared/GradientDefs/GradientDefs';
+import {useWatchColorVisionEvents} from '../../../../../../hooks/ColorVisionA11y/useWatchColorVisionEvents';
 import {STACKED_BAR_GAP} from '../../../../../../constants';
 
 import styles from './Stack.scss';

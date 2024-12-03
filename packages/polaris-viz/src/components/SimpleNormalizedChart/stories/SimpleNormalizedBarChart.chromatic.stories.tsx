@@ -2,11 +2,10 @@ import {storiesOf} from '@storybook/react';
 
 import {DEFAULT_DATA} from './data';
 
-import {
-  addWithPropsCombinations,
-  renderCombinationSections,
-} from '../../../chromatic';
-import {SimpleNormalizedChart} from '../';
+import {addWithPropsCombinations} from '../../../chromatic/components/AddWithPropsCombinations';
+import {renderCombinationSections} from '../../../chromatic/utilities/renderCombinationSections';
+
+import {SimpleNormalizedChart} from '../SimpleNormalizedChart';
 import type {SimpleNormalizedChartProps} from '../SimpleNormalizedChart';
 
 const stories = storiesOf('Chromatic/Components', module).addParameters({

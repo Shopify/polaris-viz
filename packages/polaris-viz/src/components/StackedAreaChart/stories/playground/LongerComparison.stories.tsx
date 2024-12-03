@@ -1,6 +1,8 @@
 import type {Story} from '@storybook/react';
 
-import {StackedAreaChart, StackedAreaChartProps} from '../../../../components';
+import {StackedAreaChart} from '../../StackedAreaChart';
+import type {StackedAreaChartProps} from '../../StackedAreaChart';
+
 import {META} from '../meta';
 
 export default {

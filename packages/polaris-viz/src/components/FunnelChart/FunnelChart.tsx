@@ -12,12 +12,12 @@ import {
   usePolarisVizContext,
 } from '@shopify/polaris-viz-core';
 
-import {ChartContainer} from '../../components/ChartContainer';
+import {ChartContainer} from '../ChartContainer/ChartContainer';
 import {
   getYAxisOptionsWithDefaults,
   getXAxisOptionsWithDefaults,
-} from '../../utilities';
-import {ChartSkeleton} from '../';
+} from '../../utilities/getAxisOptions';
+import {ChartSkeleton} from '../ChartSkeleton/ChartSkeleton';
 
 import {Chart} from './Chart';
 

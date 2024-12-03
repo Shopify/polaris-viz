@@ -2,7 +2,7 @@ import type {Story} from '@storybook/react';
 
 import {META} from './meta';
 
-import type {StackedAreaChartProps} from '../../../components';
+import type {StackedAreaChartProps} from '../StackedAreaChart';
 
 import {DEFAULT_DATA, Template} from './data';
 

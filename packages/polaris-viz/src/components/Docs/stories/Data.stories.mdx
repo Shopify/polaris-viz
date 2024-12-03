@@ -1,21 +1,13 @@
-import {Meta, Story, Canvas, Source} from '@storybook/addon-docs';
+import {Meta, Source} from '@storybook/addon-docs';
 import LinkTo from '@storybook/addon-links/react';
 import {SHARK_SPECIES_GROWTH} from '../utilities';
 import {PolarisVizProvider} from '@shopify/polaris-viz';
-import {BarChart, LineChart} from '../../';
-import {
-  Divider,
-  ComponentContainer,
-  Title,
-  ExamplesGrid,
-  SampleSparkbar,
-  SampleSparkLineChart,
-  SampleBarChart,
-  PropertyTable,
-  SampleLineChart,
-  SampleStackedAreaChart,
-  SampleSimpleNormalizedChart,
-} from './components';
+import {BarChart} from '../../BarChart/BarChart';
+import {LineChart} from '../../LineChart/LineChart';
+import {Title} from './components/Title/Title';
+import {ExamplesGrid} from './components/ExamplesGrid/ExamplesGrid';
+import {SampleBarChart} from './components/SampleComponents';
+import {Divider} from './components/Divider';
 
 <Meta
   title="Shared/Data Structure"
@@ -24,6 +16,7 @@ import {
     docsOnly: true,
   }}
 />
+;
 
 <PolarisVizProvider>
 

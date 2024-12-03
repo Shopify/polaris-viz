@@ -7,7 +7,7 @@ import {
   IS_ANIMATED_ARGS,
   THEME_CONTROL_ARGS,
 } from '../../../storybook/constants';
-import {PageWithSizingInfo} from '../../Docs/stories';
+import {PageWithSizingInfo} from '../../Docs/stories/components/PageWithSizingInfo/PageWithSizingInfo';
 import {SparkBarChart} from '../SparkBarChart';
 
 export const META: Meta = {

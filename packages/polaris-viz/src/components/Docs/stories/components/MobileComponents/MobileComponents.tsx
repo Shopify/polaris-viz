@@ -1,8 +1,10 @@
 import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
-import {PolarisVizProvider} from '../../../../../';
-import {SparkLineChart, SparkBarChart} from '../../../../';
-import {ComponentContainer, Title} from '../';
+import {PolarisVizProvider} from '../../../../PolarisVizProvider/PolarisVizProvider';
+import {SparkLineChart} from '../../../../SparkLineChart/SparkLineChart';
+import {SparkBarChart} from '../../../../SparkBarChart/SparkBarChart';
+import {ComponentContainer} from '../ComponentContainer/ComponentContainer';
+import {Title} from '../Title/Title';
 
 const KIND = 'polaris-viz/Charts/';
 

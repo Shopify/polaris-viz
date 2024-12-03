@@ -2,10 +2,9 @@ import {Fragment} from 'react';
 import {Source} from '@storybook/addon-docs';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import {linkTo} from '@storybook/addon-links';
-import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
+import {DEFAULT_THEME_NAME, useTheme} from '@shopify/polaris-viz-core';
 
-import {classNames} from '../../../../../utilities';
-import {useTheme} from '../../../../../hooks';
+import {classNames} from '../../../../../utilities/classnames';
 
 import styles from './ComponentContainer.scss';
 

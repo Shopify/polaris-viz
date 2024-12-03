@@ -2,7 +2,7 @@ import {useState} from 'react';
 
 export {META as default} from './meta';
 
-import {StackedAreaChart} from '../../../components';
+import {StackedAreaChart} from '../StackedAreaChart';
 
 export const DynamicData = () => {
   const [data, setData] = useState({

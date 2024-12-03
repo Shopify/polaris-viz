@@ -9,12 +9,10 @@ import type {Annotation, AnnotationLookupTable, YAxisTick} from '../../types';
 import {useSVGBlurEvent} from '../../hooks/useSVGBlurEvent';
 
 import {useYAxisAnnotationPositions} from './hooks/useYAxisAnnotationPositions';
-import {
-  AnnotationContent,
-  AnnotationLabel,
-  AnnotationLine,
-  AnnotationYAxisLabel,
-} from './components';
+import {AnnotationContent} from './components/AnnotationContent/AnnotationContent';
+import {AnnotationLabel} from './components/AnnotationLabel/AnnotationLabel';
+import {AnnotationLine} from './components/AnnotationLine/AnnotationLine';
+import {AnnotationYAxisLabel} from './components/AnnotationYAxisLabel/AnnotationYAxisLabel';
 import type {OptionalDualAxisYAxis} from './types';
 import styles from './Annotations.scss';
 

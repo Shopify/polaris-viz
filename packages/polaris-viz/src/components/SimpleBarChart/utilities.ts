@@ -1,9 +1,7 @@
 import {HORIZONTAL_BAR_LABEL_OFFSET} from '@shopify/polaris-viz-core';
 
-import {
-  estimateTrendIndicatorWidth,
-  TREND_INDICATOR_FONT_WEIGHT,
-} from '../TrendIndicator';
+import {estimateTrendIndicatorWidth} from '../TrendIndicator/utilities/estimateTrendIndicatorWidth';
+import {FONT_WEIGHT as TREND_INDICATOR_FONT_WEIGHT} from '../TrendIndicator/constants';
 
 import type {SimpleBarChartDataSeries} from './types';
 

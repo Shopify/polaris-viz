@@ -1,7 +1,7 @@
 import {mount} from '@shopify/react-testing';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
-import {ChartContainer} from '../../ChartContainer';
+import {ChartContainer} from '../../ChartContainer/ChartContainer';
 import type {SimpleBarChartProps} from '../SimpleBarChart';
 import {SimpleBarChart} from '../SimpleBarChart';
 import {Chart} from '../Chart';

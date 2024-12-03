@@ -6,6 +6,7 @@ import {
   getColorVisionEventAttrs,
   getColorVisionStylesForActiveIndex,
   isInfinity,
+  useTheme,
 } from '@shopify/polaris-viz-core';
 import type {
   Direction,
@@ -13,18 +14,16 @@ import type {
   DataSeries,
 } from '@shopify/polaris-viz-core';
 
-import type {ComparisonMetricProps} from '../ComparisonMetric';
+import type {ComparisonMetricProps} from '../ComparisonMetric/ComparisonMetric';
 import {useThemeSeriesColors} from '../../hooks/useThemeSeriesColors';
-import {
-  useColorVisionEvents,
-  useTheme,
-  useWatchColorVisionEvents,
-} from '../../hooks';
-import {classNames} from '../../utilities';
+import {useColorVisionEvents} from '../../hooks/ColorVisionA11y/useColorVisionEvents';
+import {useWatchColorVisionEvents} from '../../hooks/ColorVisionA11y/useWatchColorVisionEvents';
+import {classNames} from '../../utilities/classnames';
 import type {LegendPosition, RenderLegendContent} from '../../types';
 import {WARN_FOR_DEVELOPMENT} from '../../constants';
 
-import {BarSegment, BarLabel} from './components';
+import {BarSegment} from './components/BarSegment/BarSegment';
+import {BarLabel} from './components/BarLabel/BarLabel';
 import type {Size} from './types';
 import styles from './SimpleNormalizedChart.scss';
 

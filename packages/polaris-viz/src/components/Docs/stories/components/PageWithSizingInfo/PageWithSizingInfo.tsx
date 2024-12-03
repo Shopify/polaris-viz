@@ -9,7 +9,7 @@ import {
   PRIMARY_STORY,
 } from '@storybook/addon-docs';
 
-import {Banner} from '../Banner';
+import {Banner} from '../Banner/Banner';
 
 export function PageWithSizingInfo() {
   return (

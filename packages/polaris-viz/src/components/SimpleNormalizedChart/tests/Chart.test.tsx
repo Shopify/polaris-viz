@@ -1,9 +1,10 @@
 import {mount} from '@shopify/react-testing';
 import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
-import {SimpleNormalizedChart} from '../../../components/SimpleNormalizedChart';
-import {mountWithProvider} from '../../../test-utilities';
-import {BarSegment, BarLabel} from '../components';
+import {SimpleNormalizedChart} from '../SimpleNormalizedChart';
+import {mountWithProvider} from '../../../test-utilities/mountWithProvider';
+import {BarSegment} from '../components/BarSegment/BarSegment';
+import {BarLabel} from '../components/BarLabel/BarLabel';
 import type {SimpleNormalizedChartProps} from '../SimpleNormalizedChart';
 
 describe('<Chart />', () => {

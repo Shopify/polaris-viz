@@ -7,7 +7,7 @@ import {
   formatLinearYAxisLabel,
 } from '../../../../storybook/utilities';
 import {META} from '../meta';
-import {renderLinearTooltipContent} from '../../../../utilities';
+import {renderLinearTooltipContent} from '../../../../utilities/renderLinearTooltipContent';
 
 export default {
   ...META,

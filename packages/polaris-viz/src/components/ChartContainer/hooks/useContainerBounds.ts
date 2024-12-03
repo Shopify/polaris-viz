@@ -2,13 +2,10 @@ import type {BoundingRect} from '@shopify/polaris-viz-core';
 import type {Dispatch, SetStateAction} from 'react';
 import {useCallback, useLayoutEffect, useState} from 'react';
 import {useDebouncedCallback} from 'use-debounce';
+import {usePrevious, useTheme} from '@shopify/polaris-viz-core';
 
-import {
-  usePrevious,
-  usePrintResizing,
-  useResizeObserver,
-  useTheme,
-} from '../../../hooks';
+import {usePrintResizing} from '../../../hooks/usePrintResizing';
+import {useResizeObserver} from '../../../hooks/useResizeObserver';
 
 export function useContainerBounds({
   onIsPrintingChange,

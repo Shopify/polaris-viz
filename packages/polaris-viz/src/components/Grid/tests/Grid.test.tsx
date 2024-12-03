@@ -2,8 +2,8 @@ import {mount} from '@shopify/react-testing';
 import {act} from 'react-dom/test-utils';
 
 import {Grid} from '../Grid';
-import {XAxis} from '../../XAxis';
-import {YAxis} from '../../YAxis';
+import {XAxis} from '../../XAxis/XAxis';
+import {YAxis} from '../../YAxis/YAxis';
 import {GroupCell} from '../components/GroupCell';
 
 describe('<Grid />', () => {

@@ -1,16 +1,14 @@
 import {ChartState, useChartContext, useTheme} from '@shopify/polaris-viz-core';
 
-import type {Size} from '../SimpleNormalizedChart';
+import type {Size} from '../SimpleNormalizedChart/types';
 
-import {
-  GridSkeleton,
-  DonutSkeleton,
-  FunnelSkeleton,
-  Shimmer,
-  SimpleBarSkeleton,
-  SimpleNormalizedSkeleton,
-  SparkSkeleton,
-} from './components';
+import {GridSkeleton} from './components/GridSkeleton/GridSkeleton';
+import {DonutSkeleton} from './components/DonutSkeleton/DonutSkeleton';
+import {FunnelSkeleton} from './components/FunnelSkeleton/FunnelSkeleton';
+import {Shimmer} from './components/Shimmer/Shimmer';
+import {SimpleBarSkeleton} from './components/SimpleBarSkeleton/SimpleBarSkeleton';
+import {SimpleNormalizedSkeleton} from './components/SimpleNormalizedSkeleton/SimpleNormalizedSkeleton';
+import {SparkSkeleton} from './components/SparkSkeleton/SparkSkeleton';
 import styles from './ChartSkeleton.scss';
 
 export type SkeletonType =

@@ -1,1 +1,0 @@
-export {BarGroup} from './BarGroup';

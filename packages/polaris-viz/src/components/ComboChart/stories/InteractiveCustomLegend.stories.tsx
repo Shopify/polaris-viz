@@ -1,8 +1,10 @@
 import type {Story} from '@storybook/react';
 
 import {DARK_THEME} from '../../../constants';
-import type {ComboChartProps} from '../../ComboChart';
-import {LinePreview, SquareColorPreview} from '../..';
+import type {ComboChartProps} from '../ComboChart';
+
+import {LinePreview} from '../../LinePreview/LinePreview';
+import {SquareColorPreview} from '../../SquareColorPreview/SquareColorPreview';
 
 import {DEFAULT_DATA, Template} from './data';
 

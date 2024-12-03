@@ -2,7 +2,7 @@ import type {Story} from '@storybook/react';
 
 export {META as default} from './meta';
 
-import type {TrendIndicatorProps} from '..';
+import type {TrendIndicatorProps} from '../TrendIndicator';
 
 import {Template} from './data';
 

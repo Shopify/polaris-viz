@@ -5,13 +5,11 @@ import type {TooltipData} from '../../types';
 
 import {useGetLongestLabelFromData} from './hooks/useGetLongestLabelFromData';
 import {SPACE_BETWEEN_LABEL_AND_VALUE} from './constants';
-import {
-  TooltipContentContainer,
-  TooltipRow,
-  TooltipSeries,
-  TooltipSeriesName,
-  TooltipTitle,
-} from './components/';
+import {TooltipContentContainer} from './components/TooltipContentContainer/TooltipContentContainer';
+import {TooltipRow} from './components/TooltipRow/TooltipRow';
+import {TooltipSeries} from './components/TooltipSeries/TooltipSeries';
+import {TooltipSeriesName} from './components/TooltipSeriesName/TooltipSeriesName';
+import {TooltipTitle} from './components/TooltipTitle/TooltipTitle';
 
 export interface TooltipContentProps {
   data: TooltipData[];

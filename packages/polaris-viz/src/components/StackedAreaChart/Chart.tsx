@@ -19,38 +19,37 @@ import {
   SMALL_CHART_HEIGHT,
   InternalChartType,
   useChartContext,
+  useTheme,
+  useThemeSeriesColors,
 } from '@shopify/polaris-viz-core';
 
-import {ChartElements} from '../ChartElements';
-import {
-  Annotations,
-  checkAvailableAnnotations,
-  YAxisAnnotations,
-} from '../Annotations';
+import {ChartSVG} from '../ChartElements/ChartSVG';
+import {ChartDiv} from '../ChartElements/ChartDiv';
+import {Annotations} from '../Annotations/Annotations';
+import {checkAvailableAnnotations} from '../Annotations/utilities/checkAvailableAnnotations';
+import {YAxisAnnotations} from '../Annotations/YAxisAnnotations';
 import type {
   AnnotationLookupTable,
   GetXPosition,
   RenderLegendContent,
   RenderTooltipContentData,
 } from '../../types';
-import {XAxis} from '../XAxis';
-import {LegendContainer, useLegend} from '../LegendContainer';
-import {TooltipWrapper} from '../TooltipWrapper';
-import {
-  useLinearChartAnimations,
-  useTheme,
-  useThemeSeriesColors,
-  useColorVisionEvents,
-  useLinearLabelsAndDimensions,
-} from '../../hooks';
+import {XAxis} from '../XAxis/XAxis';
+import {LegendContainer} from '../LegendContainer/LegendContainer';
+import {useLegend} from '../LegendContainer/hooks/useLegend';
+import {TooltipWrapper} from '../TooltipWrapper/TooltipWrapper';
+import {useLinearChartAnimations} from '../../hooks/useLinearChartAnimations';
+import {useColorVisionEvents} from '../../hooks/ColorVisionA11y/useColorVisionEvents';
+import {useLinearLabelsAndDimensions} from '../../hooks/useLinearLabelsAndDimensions';
 import {ChartMargin, ANNOTATIONS_LABELS_OFFSET} from '../../constants';
-import {YAxis} from '../YAxis';
-import {Crosshair} from '../Crosshair';
-import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
-import {HorizontalGridLines} from '../HorizontalGridLines';
+import {YAxis} from '../YAxis/YAxis';
+import {Crosshair} from '../Crosshair/Crosshair';
+import {VisuallyHiddenRows} from '../VisuallyHiddenRows/VisuallyHiddenRows';
+import {HorizontalGridLines} from '../HorizontalGridLines/HorizontalGridLines';
 
-import {useStackedData} from './hooks';
-import {StackedAreas, Points} from './components';
+import {useStackedData} from './hooks/useStackedData';
+import {StackedAreas} from './components/StackedAreas/StackedAreas';
+import {Points} from './components/Points/Points';
 import {useStackedChartTooltipContent} from './hooks/useStackedChartTooltipContent';
 import {yAxisMinMax} from './utilities/yAxisMinMax';
 import styles from './Chart.scss';
@@ -255,13 +254,8 @@ export function Chart({
   const halfXAxisLabelWidth = xAxisDetails.labelWidth / 2;
 
   return (
-    <ChartElements.Div height={height} width={width}>
-      <ChartElements.Svg
-        width={width}
-        setRef={setSvgRef}
-        role="table"
-        height={height}
-      >
+    <ChartDiv height={height} width={width}>
+      <ChartSVG width={width} setRef={setSvgRef} role="table" height={height}>
         {hideXAxis ? null : (
           <XAxis
             allowLineWrap={xAxisOptions.allowLineWrap}
@@ -370,7 +364,7 @@ export function Chart({
             />
           </g>
         )}
-      </ChartElements.Svg>
+      </ChartSVG>
 
       {longestSeriesLength !== -1 && (
         <TooltipWrapper
@@ -399,6 +393,6 @@ export function Chart({
           renderHiddenLegendLabel={renderHiddenLegendLabel}
         />
       )}
-    </ChartElements.Div>
+    </ChartDiv>
   );
 }

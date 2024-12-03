@@ -1,11 +1,10 @@
 import {mount} from '@shopify/react-testing';
 import {LIGHT_THEME} from '@shopify/polaris-viz-core';
 
-import {SingleTextLine} from '../../../Labels';
+import {SingleTextLine} from '../../../Labels/SingleTextLine';
 
 import type {AxisLabelProps} from './AxisLabel';
-
-import {AxisLabel} from './';
+import {AxisLabel} from './AxisLabel';
 
 jest.mock('../../../../hooks/useEstimateStringWidth', () => ({
   useEstimateStringWidth: () => 100,

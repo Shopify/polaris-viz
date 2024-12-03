@@ -1,4 +1,4 @@
-import {estimateStringWidthWithOffset} from '../../../utilities';
+import {estimateStringWidthWithOffset} from '../../../utilities/estimateStringWidthWithOffset';
 import {ICON_SIZE, NO_VALUE_WIDTH, TEXT_ICON_SPACING} from '../constants';
 
 export function estimateTrendIndicatorWidth(

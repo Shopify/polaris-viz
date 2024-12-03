@@ -2,7 +2,7 @@ import type {Story} from '@storybook/react';
 
 import {META} from './meta';
 
-import type {LineChartRelationalProps} from '../../LineChartRelational';
+import type {LineChartRelationalProps} from '../LineChartRelational';
 
 import {DEFAULT_DATA, Template} from './data';
 

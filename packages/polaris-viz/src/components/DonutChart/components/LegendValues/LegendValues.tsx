@@ -1,4 +1,3 @@
-/* eslint-disable @shopify/strict-component-boundaries */
 import type {ColorVisionInteractionMethods, DataSeries} from 'index';
 import type {LabelFormatter} from '@shopify/polaris-viz-core';
 import {

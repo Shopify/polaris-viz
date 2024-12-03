@@ -6,8 +6,8 @@ import {
   useChartContext,
 } from '@shopify/polaris-viz-core';
 
-import type {AnnotationPosition} from '../../../../Annotations';
-import {PILL_HEIGHT, PILL_PADDING} from '../../../../Annotations';
+import type {AnnotationPosition} from '../../../../Annotations/types';
+import {PILL_HEIGHT, PILL_PADDING} from '../../../../Annotations/constants';
 import type {Annotation} from '../../../../../types';
 
 export interface Props {

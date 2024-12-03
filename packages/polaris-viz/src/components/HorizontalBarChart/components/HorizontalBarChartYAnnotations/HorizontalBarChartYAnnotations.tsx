@@ -1,10 +1,8 @@
 import {Fragment, useMemo, useState} from 'react';
 
-import {
-  AnnotationContent,
-  AnnotationLabel,
-  AnnotationLine,
-} from '../../../Annotations';
+import {AnnotationContent} from '../../../Annotations/components/AnnotationContent/AnnotationContent';
+import {AnnotationLabel} from '../../../Annotations/components/AnnotationLabel/AnnotationLabel';
+import {AnnotationLine} from '../../../Annotations/components/AnnotationLine/AnnotationLine';
 import type {Annotation, AnnotationLookupTable} from '../../../../types';
 import {useSVGBlurEvent} from '../../../../hooks/useSVGBlurEvent';
 

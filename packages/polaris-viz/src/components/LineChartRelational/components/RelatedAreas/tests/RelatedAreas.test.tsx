@@ -3,7 +3,7 @@ import {scaleLinear} from 'd3-scale';
 
 import type {RelatedAreaProps} from '../RelatedAreas';
 import {RelatedAreas} from '../RelatedAreas';
-import {Area} from '../../Area';
+import {Area} from '../../Area/Area';
 
 const MOCK_PROPS: RelatedAreaProps = {
   data: [

@@ -10,8 +10,8 @@ import type {
   MetaDataTrendIndicator,
 } from 'types';
 
-import {TrendIndicator} from '../../../../../TrendIndicator';
-import {SquareColorPreview} from '../../../../../SquareColorPreview';
+import {TrendIndicator} from '../../../../../TrendIndicator/TrendIndicator';
+import {SquareColorPreview} from '../../../../../SquareColorPreview/SquareColorPreview';
 
 import styles from './LegendValueItem.scss';
 

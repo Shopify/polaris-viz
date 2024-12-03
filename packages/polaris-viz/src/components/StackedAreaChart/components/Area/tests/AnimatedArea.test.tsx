@@ -3,8 +3,10 @@ import {area, line} from 'd3-shape';
 import {scaleLinear} from 'd3-scale';
 import React from 'react';
 
-import {mountWithProvider} from '../../../../../test-utilities';
-import {mockDefaultTheme} from '../../../../../test-utilities/mountWithProvider';
+import {
+  mountWithProvider,
+  mockDefaultTheme,
+} from '../../../../../test-utilities/mountWithProvider';
 import {DARK_THEME} from '../../../../../constants';
 import type {StackedSeries, Theme} from '../../../../../types';
 import type {AreaProps} from '../types';

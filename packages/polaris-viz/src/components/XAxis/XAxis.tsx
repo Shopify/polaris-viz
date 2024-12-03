@@ -2,8 +2,9 @@ import type {Dispatch, SetStateAction} from 'react';
 import type {ScaleBand, ScaleLinear} from 'd3-scale';
 import {scaleLinear} from 'd3-scale';
 
-import {useLabels, shouldSkipLabel} from '../Labels';
-import {TextLine} from '../TextLine';
+import {useLabels} from '../Labels/hooks/useLabels';
+import {shouldSkipLabel} from '../Labels/utilities/shouldSkipLabel';
+import {TextLine} from '../TextLine/TextLine';
 
 interface XAxisProps {
   allowLineWrap: boolean;

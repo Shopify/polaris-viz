@@ -1,1 +1,0 @@
-export {yAxisMinMax} from './yAxisMinMax';

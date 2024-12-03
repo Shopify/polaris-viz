@@ -1,24 +1,26 @@
 import {mount} from '@shopify/react-testing';
 import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
-import {LegendContainer} from '../../LegendContainer';
-import {mockDefaultTheme} from '../../../test-utilities/mountWithProvider';
-import {YAxis} from '../../../components/YAxis';
-import {HorizontalGridLines} from '../../../components/HorizontalGridLines';
-import {VisuallyHiddenRows} from '../../../components/VisuallyHiddenRows';
-import {Point} from '../../../components/Point';
-import {Crosshair} from '../../../components/Crosshair';
+import {LegendContainer} from '../../LegendContainer/LegendContainer';
 import {
-  TooltipWrapper,
-  TooltipAnimatedContainer,
-} from '../../../components/TooltipWrapper';
-import {mountWithProvider, triggerSVGMouseMove} from '../../../test-utilities';
-import {StackedAreas} from '../components';
+  mockDefaultTheme,
+  mountWithProvider,
+} from '../../../test-utilities/mountWithProvider';
+import {YAxis} from '../../YAxis/YAxis';
+import {HorizontalGridLines} from '../../HorizontalGridLines/HorizontalGridLines';
+import {VisuallyHiddenRows} from '../../VisuallyHiddenRows/VisuallyHiddenRows';
+import {Point} from '../../Point/Point';
+import {Crosshair} from '../../Crosshair/Crosshair';
+import {TooltipWrapper} from '../../TooltipWrapper/TooltipWrapper';
+import {TooltipAnimatedContainer} from '../../TooltipWrapper/components/TooltipAnimatedContainer';
+import {triggerSVGMouseMove} from '../../../test-utilities/triggerSvgMouseMove';
+import {StackedAreas} from '../components/StackedAreas/StackedAreas';
 import type {Props} from '../Chart';
 import {Chart} from '../Chart';
-import {Annotations, YAxisAnnotations} from '../../Annotations';
-import {normalizeData} from '../../../utilities';
-import {TextLine} from '../../TextLine';
+import {Annotations} from '../../Annotations/Annotations';
+import {YAxisAnnotations} from '../../Annotations/YAxisAnnotations';
+import {normalizeData} from '../../../utilities/normalizeData';
+import {TextLine} from '../../TextLine/TextLine';
 import {DEFAULT_CHART_CONTEXT as MOCK_DEFAULT_CHART_CONTEXT} from '../../../storybook/constants';
 
 jest.mock('@shopify/polaris-viz-core/src/utilities/estimateStringWidth', () => {

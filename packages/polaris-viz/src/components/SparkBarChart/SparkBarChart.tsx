@@ -5,8 +5,8 @@ import {
 } from '@shopify/polaris-viz-core';
 import type {ChartProps, TargetLine} from '@shopify/polaris-viz-core';
 
-import {ChartContainer} from '../ChartContainer';
-import {ChartSkeleton} from '../';
+import {ChartContainer} from '../ChartContainer/ChartContainer';
+import {ChartSkeleton} from '../ChartSkeleton/ChartSkeleton';
 
 import {Chart} from './Chart';
 

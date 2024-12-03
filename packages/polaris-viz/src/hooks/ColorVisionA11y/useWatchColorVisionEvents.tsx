@@ -2,7 +2,7 @@ import {useEffect} from 'react';
 import {useChartContext} from '@shopify/polaris-viz-core';
 import type {ColorVisionEventReturn} from 'types';
 
-import {useCallbackRef} from '..';
+import {useCallbackRef} from '../useCallbackRef';
 
 import {getEventName} from './utilities';
 

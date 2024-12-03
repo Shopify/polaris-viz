@@ -5,7 +5,7 @@ import {
 import type {Shape, Color} from '@shopify/polaris-viz-core';
 
 import {PREVIEW_ICON_SIZE} from '../../../../constants';
-import {SeriesIcon} from '../../../shared/SeriesIcon';
+import {SeriesIcon} from '../../../shared/SeriesIcon/SeriesIcon';
 import {TITLE_MARGIN} from '../../constants';
 
 import styles from './TooltipRow.scss';

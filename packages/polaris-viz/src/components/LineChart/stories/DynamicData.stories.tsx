@@ -2,7 +2,7 @@ import {useState} from 'react';
 
 export {META as default} from './meta';
 
-import {LineChart} from '../../../components';
+import {LineChart} from '../LineChart';
 
 export const DynamicData = () => {
   const [data, setData] = useState({

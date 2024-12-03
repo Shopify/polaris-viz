@@ -1,9 +1,9 @@
 import type {Meta} from '@storybook/react';
 
-import type {TrendIndicatorProps} from '../';
-import {TrendIndicator} from '../';
+import type {TrendIndicatorProps} from '../TrendIndicator';
+import {TrendIndicator} from '../TrendIndicator';
 import {CONTROLS_ARGS, THEME_CONTROL_ARGS} from '../../../storybook/constants';
-import {PageWithSizingInfo} from '../../Docs/stories';
+import {PageWithSizingInfo} from '../../Docs/stories/components/PageWithSizingInfo/PageWithSizingInfo';
 
 export const META: Meta<TrendIndicatorProps> = {
   title: 'polaris-viz/Subcomponents/TrendIndicator',

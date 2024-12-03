@@ -2,7 +2,7 @@ import type {Story} from '@storybook/react';
 
 export {META as default} from './meta';
 
-import type {SparkBarChartProps} from '../../../components';
+import type {SparkBarChartProps} from '../SparkBarChart';
 
 import {
   DEFAULT_DATA,

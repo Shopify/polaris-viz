@@ -4,7 +4,7 @@ import {useTheme} from '@shopify/polaris-viz-core';
 import type {Interpolation} from '@react-spring/web';
 import {useSpring, animated} from '@react-spring/web';
 
-import {classNames} from '../../utilities';
+import {classNames} from '../../utilities/classnames';
 import {BASE_ANIMATION_DURATION} from '../../constants';
 
 import styles from './Point.scss';

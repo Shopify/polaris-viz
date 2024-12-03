@@ -4,7 +4,8 @@ import {useSprings} from '@react-spring/web';
 import type {DataSeries, DataPoint} from '@shopify/polaris-viz-core';
 import {useChartContext} from '@shopify/polaris-viz-core';
 
-import {getPathLength, getPointAtLength} from '../utilities';
+import {getPathLength} from '../utilities/getPathLength';
+import {getPointAtLength} from '../utilities/getPointAtLength';
 
 export const SPRING_CONFIG = {
   friction: 5,

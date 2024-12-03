@@ -1,19 +1,18 @@
 import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
-import {PolarisVizProvider} from '../../../../PolarisVizProvider';
-import {
-  BarChart,
-  LineChart,
-  StackedAreaChart,
-  SimpleNormalizedChart,
-  SparkLineChart,
-  SparkBarChart,
-  SimpleBarChart,
-  DonutChart,
-  FunnelChart,
-  ComboChart,
-} from '../../../../';
-import {ComponentContainer, Title} from '../';
+import {PolarisVizProvider} from '../../../../PolarisVizProvider/PolarisVizProvider';
+import {BarChart} from '../../../../BarChart/BarChart';
+import {LineChart} from '../../../../LineChart/LineChart';
+import {StackedAreaChart} from '../../../../StackedAreaChart/StackedAreaChart';
+import {SimpleNormalizedChart} from '../../../../SimpleNormalizedChart/SimpleNormalizedChart';
+import {SparkLineChart} from '../../../../SparkLineChart/SparkLineChart';
+import {SparkBarChart} from '../../../../SparkBarChart/SparkBarChart';
+import {SimpleBarChart} from '../../../../SimpleBarChart/SimpleBarChart';
+import {DonutChart} from '../../../../DonutChart/DonutChart';
+import {FunnelChart} from '../../../../FunnelChart/FunnelChart';
+import {ComboChart} from '../../../../ComboChart/ComboChart';
+import {ComponentContainer} from '../ComponentContainer/ComponentContainer';
+import {Title} from '../Title/Title';
 
 const KIND = 'polaris-viz/Charts/';
 

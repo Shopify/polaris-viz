@@ -5,7 +5,7 @@ import {
   mountWithProvider,
   mockDefaultTheme,
 } from '../../../test-utilities/mountWithProvider';
-import {Shimmer} from '../components';
+import {Shimmer} from '../components/Shimmer/Shimmer';
 import {DEFAULT_CHART_CONTEXT as MOCK_DEFAULT_CHART_CONTEXT} from '../../../storybook/constants';
 
 jest.mock('@shopify/polaris-viz-core/src/hooks/useChartContext', () => ({

@@ -8,7 +8,8 @@ import type {
 } from '@shopify/polaris-viz-core';
 import type {Series, SeriesPoint} from 'd3-shape';
 import type {ScaleLinear} from 'd3-scale';
-import type {TrendIndicatorProps} from 'components/TrendIndicator';
+
+import type {TrendIndicatorProps} from './components/TrendIndicator/TrendIndicator';
 
 export interface YAxisTick {
   value: number;

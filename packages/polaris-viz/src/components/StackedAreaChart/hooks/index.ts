@@ -1,1 +1,0 @@
-export {useStackedData} from './useStackedData';

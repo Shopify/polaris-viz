@@ -6,13 +6,13 @@ import type {
   LabelFormatter,
 } from '@shopify/polaris-viz-core';
 import type {ReactNode} from 'react';
+import {useTheme, useThemeSeriesColors} from '@shopify/polaris-viz-core';
 
 import type {
   AnnotationLookupTable,
   RenderLegendContent,
   RenderTooltipContentData,
 } from '../../types';
-import {useTheme, useThemeSeriesColors} from '../../hooks';
 
 import {Chart} from './Chart';
 

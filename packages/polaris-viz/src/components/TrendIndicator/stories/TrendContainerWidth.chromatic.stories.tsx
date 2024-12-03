@@ -9,16 +9,22 @@ export default {
   },
 };
 
-import {TrendIndicator, type TrendIndicatorProps} from '..';
+import {TrendIndicator} from '../TrendIndicator';
+import type {TrendIndicatorProps} from '../TrendIndicator';
 
 import {META} from './meta';
 
 export const Template: Story<TrendIndicatorProps> = (
   args: TrendIndicatorProps,
 ) => {
-  return <div style={{display: 'flex'}}><div style={{background: 'red'}}><TrendIndicator {...args} /></div></div>;
+  return (
+    <div style={{display: 'flex'}}>
+      <div style={{background: 'red'}}>
+        <TrendIndicator {...args} />
+      </div>
+    </div>
+  );
 };
-
 
 export const Default: Story<TrendIndicatorProps> = Template.bind({});
 

@@ -2,7 +2,7 @@ import type {Story} from '@storybook/react';
 
 import {META} from './meta';
 
-import type {ComboChartProps} from '../../../components';
+import type {ComboChartProps} from '../ComboChart';
 
 import {DEFAULT_DATA, Template} from './data';
 

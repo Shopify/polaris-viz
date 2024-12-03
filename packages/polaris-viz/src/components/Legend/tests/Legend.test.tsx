@@ -3,8 +3,8 @@ import {mount} from '@shopify/react-testing';
 
 import type {LegendProps} from '../Legend';
 import {Legend} from '../Legend';
-import {LegendItem} from '../../Legend/components';
-import type {LegendItemDimension} from '../../Legend/components';
+import {LegendItem} from '../components/LegendItem/LegendItem';
+import type {LegendItemDimension} from '../components/LegendItem/LegendItem';
 
 const mockProps: LegendProps = {
   data: [

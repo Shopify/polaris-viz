@@ -13,9 +13,9 @@ import {
 } from '@shopify/polaris-viz-core';
 import type {ScaleLinear} from 'd3-scale';
 
-import {Point} from '../../../';
+import {Point} from '../../../Point/Point';
 import type {AnimatedCoordinate, GetXPosition} from '../../../../types';
-import {useWatchColorVisionEvents} from '../../../../hooks';
+import {useWatchColorVisionEvents} from '../../../../hooks/ColorVisionA11y/useWatchColorVisionEvents';
 
 interface PointsProps {
   activePointIndex: number | null;

@@ -2,7 +2,7 @@ import {mount} from '@shopify/react-testing';
 
 import {Arc} from '../Arc';
 import type {ArcProps} from '../Arc';
-import {ConicGradientWithStops} from '../../ConicGradientWithStops';
+import {ConicGradientWithStops} from '../../ConicGradientWithStops/ConicGradientWithStops';
 
 describe('<Arc />', () => {
   const mockProps: ArcProps = {

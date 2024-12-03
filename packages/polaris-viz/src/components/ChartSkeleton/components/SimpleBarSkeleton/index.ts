@@ -1,1 +1,0 @@
-export {SimpleBarSkeleton} from './SimpleBarSkeleton';

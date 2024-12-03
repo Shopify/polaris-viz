@@ -3,7 +3,7 @@ import {Fragment} from 'react';
 import {FONT_SIZE, LINE_HEIGHT, useTheme} from '@shopify/polaris-viz-core';
 
 import {useBrowserCheck} from '../../../../hooks/useBrowserCheck';
-import {SingleTextLine} from '../../../Labels';
+import {SingleTextLine} from '../../../Labels/SingleTextLine';
 import {PILL_HEIGHT, PILL_PADDING} from '../../constants';
 import type {AnnotationPosition} from '../../types';
 

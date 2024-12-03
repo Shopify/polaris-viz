@@ -6,25 +6,25 @@ import {
   COLOR_VISION_SINGLE_ITEM,
   useChartContext,
   clamp,
+  useTheme,
 } from '@shopify/polaris-viz-core';
 
 import {getFontSize} from '../../../utilities/getFontSize';
 import {getTrendIndicatorData} from '../../../utilities/getTrendIndicatorData';
-import {TREND_INDICATOR_HEIGHT, TrendIndicator} from '../../TrendIndicator';
-import {
-  estimateStringWidthWithOffset,
-  getHoverZoneOffset,
-} from '../../../utilities';
+import {HEIGHT as TREND_INDICATOR_HEIGHT} from '../../TrendIndicator/constants';
+import {TrendIndicator} from '../../TrendIndicator/TrendIndicator';
+import {estimateStringWidthWithOffset} from '../../../utilities/estimateStringWidthWithOffset';
+import {getHoverZoneOffset} from '../../../utilities/getHoverZoneOffset';
 import {
   HORIZONTAL_BAR_LABEL_OFFSET,
   HORIZONTAL_GROUP_LABEL_HEIGHT,
   HORIZONTAL_SPACE_BETWEEN_SINGLE,
 } from '../../../constants';
-import {useTheme, useWatchColorVisionEvents} from '../../../hooks';
-import {getGradientDefId} from '../GradientDefs';
-import {Label} from '../Label';
-import {LabelWrapper} from '../LabelWrapper';
-import {Bar} from '../Bar';
+import {useWatchColorVisionEvents} from '../../../hooks/ColorVisionA11y/useWatchColorVisionEvents';
+import {getGradientDefId} from '../GradientDefs/GradientDefs';
+import {Label} from '../Label/Label';
+import {LabelWrapper} from '../LabelWrapper/LabelWrapper';
+import {Bar} from '../Bar/Bar';
 
 import styles from './HorizontalBars.scss';
 

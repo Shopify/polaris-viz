@@ -1,6 +1,6 @@
 import {storiesOf} from '@storybook/react';
 
-import {XAxis} from '../XAxis';
+import {XAxis} from '../XAxis/XAxis';
 import {ChartContext} from '@shopify/polaris-viz-core';
 
 import {DEFAULT_CHART_CONTEXT} from '../../storybook/constants';

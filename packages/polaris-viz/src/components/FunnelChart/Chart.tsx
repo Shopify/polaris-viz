@@ -17,15 +17,16 @@ import {
   isInfinity,
 } from '@shopify/polaris-viz-core';
 
-import {ChartElements} from '../ChartElements';
-import {useReducedLabelIndexes} from '../../hooks';
+import {ChartSVG} from '../ChartElements/ChartSVG';
+import {useReducedLabelIndexes} from '../../hooks/useReducedLabelIndexes';
 import {
   BAR_CONTAINER_TEXT_HEIGHT,
   MASK_HIGHLIGHT_COLOR,
   MIN_BAR_HEIGHT,
 } from '../../constants';
 
-import {FunnelChartXAxisLabels, FunnelSegment} from './components/';
+import {FunnelChartXAxisLabels} from './components/FunnelChartXAxisLabels';
+import {FunnelSegment} from './components/FunnelSegment';
 import type {LabelHelpers} from './FunnelChart';
 
 const X_LABEL_OFFSET = 16;
@@ -134,7 +135,7 @@ export function Chart({
   };
 
   return (
-    <ChartElements.Svg height={height} width={width}>
+    <ChartSVG height={height} width={width}>
       <LinearGradientWithStops
         gradient={connectorGradient}
         id={connectorGradientId}
@@ -225,6 +226,6 @@ export function Chart({
           pointerEvents: 'none',
         }}
       />
-    </ChartElements.Svg>
+    </ChartSVG>
   );
 }

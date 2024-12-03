@@ -4,9 +4,10 @@ import {useChartContext, curveStepRounded} from '@shopify/polaris-viz-core';
 import {area as areaShape} from 'd3-shape';
 import type {LineChartSlotProps} from 'types';
 
-import {useExternalHideEvents, useWatchActiveSeries} from '../../../../hooks';
+import {useExternalHideEvents} from '../../../../hooks/ExternalEvents/useExternalHideEvents';
+import {useWatchActiveSeries} from '../../../../hooks/useWatchActiveSeries';
 import type {LineChartRelationalDataSeries} from '../../types';
-import {Area} from '../Area';
+import {Area} from '../Area/Area';
 
 export interface RelatedAreaProps extends LineChartSlotProps {
   data: LineChartRelationalDataSeries[];

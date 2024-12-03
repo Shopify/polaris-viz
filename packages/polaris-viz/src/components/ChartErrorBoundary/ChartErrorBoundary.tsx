@@ -8,8 +8,8 @@ import {ChartState} from '@shopify/polaris-viz-core';
 import type {ErrorInfo, ReactNode} from 'react';
 import {Component} from 'react';
 
-import {ChartSkeleton} from '../ChartSkeleton';
-import type {SkeletonType} from '../ChartSkeleton';
+import {ChartSkeleton} from '../ChartSkeleton/ChartSkeleton';
+import type {SkeletonType} from '../ChartSkeleton/ChartSkeleton';
 
 import {checkForMismatchedData} from './utilities/checkForMismatchedData';
 

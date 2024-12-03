@@ -4,8 +4,8 @@ import {
   usePolarisVizContext,
 } from '@shopify/polaris-viz-core';
 
-import {ChartContainer} from '../ChartContainer';
-import type {ComparisonMetricProps} from '../ComparisonMetric';
+import {ChartContainer} from '../ChartContainer/ChartContainer';
+import type {ComparisonMetricProps} from '../ComparisonMetric/ComparisonMetric';
 import type {
   LegendPosition,
   RenderHiddenLegendLabel,

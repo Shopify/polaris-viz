@@ -2,8 +2,9 @@ import type {Dispatch, SetStateAction} from 'react';
 import {Fragment} from 'react';
 import type {ScaleBand} from 'd3-scale';
 
-import {useLabels, shouldSkipLabel} from '../../Labels';
-import {TextLine} from '../../TextLine';
+import {useLabels} from '../../Labels/hooks/useLabels';
+import {shouldSkipLabel} from '../../Labels/utilities/shouldSkipLabel';
+import {TextLine} from '../../TextLine/TextLine';
 
 import {FunnelChartXAxisArrows} from './FunnelChartXAxisArrows';
 

@@ -1,11 +1,10 @@
 import {storiesOf} from '@storybook/react';
 import type {PropCombinations} from '../../../chromatic/types';
 
-import {
-  addWithPropsCombinations,
-  renderCombinationSections,
-} from '../../../chromatic';
-import {LegendItem} from '../components';
+import {addWithPropsCombinations} from '../../../chromatic/components/AddWithPropsCombinations';
+import {renderCombinationSections} from '../../../chromatic/utilities/renderCombinationSections';
+
+import {LegendItem} from '../components/LegendItem/LegendItem';
 import type {LegendItemProps} from '../components/LegendItem/LegendItem';
 
 const stories = storiesOf('Chromatic/Components', module).addParameters({

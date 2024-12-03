@@ -3,8 +3,8 @@ import type {Story} from '@storybook/react';
 export {META as default} from './meta';
 
 import {DARK_THEME} from '../../../constants';
-import type {SimpleBarChartProps} from '..';
-import {SquareColorPreview} from '../../SquareColorPreview';
+import type {SimpleBarChartProps} from '../SimpleBarChart';
+import {SquareColorPreview} from '../../SquareColorPreview/SquareColorPreview';
 
 import {SERIES, Template} from './data';
 

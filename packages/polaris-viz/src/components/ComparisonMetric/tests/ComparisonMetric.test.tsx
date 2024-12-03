@@ -1,7 +1,7 @@
 import {mount} from '@shopify/react-testing';
 
 import {ComparisonMetric} from '../ComparisonMetric';
-import {TrendIndicator} from '../../TrendIndicator';
+import {TrendIndicator} from '../../TrendIndicator/TrendIndicator';
 
 describe('<ComparisonMetric />', () => {
   describe('<TrendIndicator />', () => {

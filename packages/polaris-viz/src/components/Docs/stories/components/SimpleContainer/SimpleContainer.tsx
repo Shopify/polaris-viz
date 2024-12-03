@@ -1,7 +1,5 @@
-import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
+import {DEFAULT_THEME_NAME, useTheme} from '@shopify/polaris-viz-core';
 import type {ReactNode} from 'react';
-
-import {useTheme} from '../../../../../hooks';
 
 export const SimpleContainer = ({
   children,

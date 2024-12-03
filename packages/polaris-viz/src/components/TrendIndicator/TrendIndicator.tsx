@@ -3,7 +3,9 @@ import {useTheme, FONT_FAMILY} from '@shopify/polaris-viz-core';
 import {getFontSize} from '../../utilities/getFontSize';
 import type {Trend, TrendDirection} from '../../types';
 
-import {ArrowDown, ArrowUp, Svg} from './components/';
+import {ArrowDown} from './components/Arrows/ArrowDown';
+import {ArrowUp} from './components/Arrows/ArrowUp';
+import {Svg} from './components/Svg/Svg';
 import {estimateTrendIndicatorWidth} from './utilities/estimateTrendIndicatorWidth';
 import {
   NO_VALUE_WIDTH,

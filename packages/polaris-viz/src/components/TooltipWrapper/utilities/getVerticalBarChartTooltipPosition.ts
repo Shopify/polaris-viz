@@ -1,7 +1,7 @@
 import type {ScaleBand, ScaleLinear} from 'd3-scale';
 import type {BoundingRect, DataSeries} from '@shopify/polaris-viz-core';
 
-import {sortBarChartData} from '../../VerticalBarChart';
+import {sortBarChartData} from '../../VerticalBarChart/utilities/sortBarChartData';
 import type {TooltipPosition, TooltipPositionParams} from '../types';
 import {TooltipHorizontalOffset, TooltipVerticalOffset} from '../types';
 import {TOOLTIP_POSITION_DEFAULT_RETURN} from '../constants';

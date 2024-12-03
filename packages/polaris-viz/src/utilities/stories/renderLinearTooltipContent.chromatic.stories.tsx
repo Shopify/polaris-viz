@@ -1,9 +1,7 @@
 import {storiesOf} from '@storybook/react';
 
-import {
-  addWithPropsCombinations,
-  renderCombinationSections,
-} from '../../chromatic';
+import {addWithPropsCombinations} from '../../chromatic/components/AddWithPropsCombinations';
+import {renderCombinationSections} from '../../chromatic/utilities/renderCombinationSections';
 
 import {
   renderLinearTooltipContent,

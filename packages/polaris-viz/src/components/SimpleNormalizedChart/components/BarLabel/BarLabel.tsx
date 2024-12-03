@@ -8,9 +8,9 @@ import type {Color, Direction} from '@shopify/polaris-viz-core';
 
 import {getFontSize} from '../../../../utilities/getFontSize';
 import {getCSSBackgroundFromColor} from '../../../../utilities/getCSSBackgroundFromColor';
-import {classNames} from '../../../../utilities';
-import type {ComparisonMetricProps} from '../../../ComparisonMetric';
-import {ComparisonMetric} from '../../../ComparisonMetric';
+import {classNames} from '../../../../utilities/classnames';
+import type {ComparisonMetricProps} from '../../../ComparisonMetric/ComparisonMetric';
+import {ComparisonMetric} from '../../../ComparisonMetric/ComparisonMetric';
 import type {LegendPosition} from '../../../../types';
 
 import styles from './BarLabel.scss';

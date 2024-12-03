@@ -1,10 +1,8 @@
 import {storiesOf} from '@storybook/react';
-import {
-  BarChart,
-  LineChart,
-  PolarisVizProvider,
-  StackedAreaChart,
-} from '../../components';
+import {BarChart} from '../../components/BarChart/BarChart';
+import {LineChart} from '../../components/LineChart/LineChart';
+import {PolarisVizProvider} from '../../components/PolarisVizProvider/PolarisVizProvider';
+import {StackedAreaChart} from '../../components/StackedAreaChart/StackedAreaChart';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
 const NUMBERS = [

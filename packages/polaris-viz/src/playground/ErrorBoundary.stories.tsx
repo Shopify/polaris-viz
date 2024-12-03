@@ -1,5 +1,6 @@
 import type {Story} from '@storybook/react';
-import {BarChart, PolarisVizProvider} from '../components';
+import {BarChart} from '../components/BarChart/BarChart';
+import {PolarisVizProvider} from '../components/PolarisVizProvider/PolarisVizProvider';
 
 export default {
   title: 'polaris-viz/Playground/ErrorBoundary',

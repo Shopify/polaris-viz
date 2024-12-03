@@ -8,7 +8,7 @@ import {
   formatLinearXAxisLabel,
   formatLinearYAxisLabel,
 } from '../../../storybook/utilities';
-import {renderLinearTooltipContent} from '../../../utilities';
+import {renderLinearTooltipContent} from '../../../utilities/renderLinearTooltipContent';
 
 export const Template: Story<LineChartProps> = (args: LineChartProps) => {
   return <LineChartRelational {...args} />;

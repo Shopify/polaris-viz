@@ -7,12 +7,10 @@ import {useSVGBlurEvent} from '../../hooks/useSVGBlurEvent';
 import {shouldHideAnnotation} from '../../utilities/shouldHideAnnotation';
 import {isShowMoreAnnotationsButtonVisible} from '../../utilities/isShowMoreAnnotationsButtonVisible';
 
-import {
-  AnnotationLabel,
-  AnnotationLine,
-  AnnotationContent,
-  ShowMoreAnnotationsButton,
-} from './components';
+import {AnnotationLabel} from './components/AnnotationLabel/AnnotationLabel';
+import {AnnotationLine} from './components/AnnotationLine/AnnotationLine';
+import {AnnotationContent} from './components/AnnotationContent/AnnotationContent';
+import {ShowMoreAnnotationsButton} from './components/ShowMoreAnnotationsButton/ShowMoreAnnotationsButton';
 import {useAnnotationPositions} from './hooks/useAnnotationPositions';
 import {PILL_HEIGHT, SHOW_MORE_BUTTON_OFFSET} from './constants';
 import styles from './Annotations.scss';

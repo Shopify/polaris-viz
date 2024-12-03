@@ -2,23 +2,19 @@ import {mount} from '@shopify/react-testing';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 import {LIGHT_THEME} from '@shopify/polaris-viz-core';
 
-import {HorizontalBarChartXAxisLabels} from '../../../components/HorizontalBarChartXAxisLabels';
-import {LegendContainer} from '../../LegendContainer';
-import {
-  GradientDefs,
-  GroupLabel,
-  HorizontalBars,
-  HorizontalStackedBars,
-} from '../../shared';
+import {HorizontalBarChartXAxisLabels} from '../../HorizontalBarChartXAxisLabels/HorizontalBarChartXAxisLabels';
+import {LegendContainer} from '../../LegendContainer/LegendContainer';
+import {GradientDefs} from '../../shared/GradientDefs/GradientDefs';
+import {GroupLabel} from '../../shared/GroupLabel/GroupLabel';
+import {HorizontalBars} from '../../shared/HorizontalBars/HorizontalBars';
+import {HorizontalStackedBars} from '../../shared/HorizontalStackedBars/HorizontalStackedBars';
 import type {ChartProps} from '../Chart';
 import {Chart} from '../Chart';
-import {
-  HorizontalBarChartXAnnotations,
-  HorizontalBarChartYAnnotations,
-  VerticalGridLines,
-} from '../components';
-import {normalizeData} from '../../../utilities';
-import {TooltipWrapper} from '../../TooltipWrapper';
+import {HorizontalBarChartXAnnotations} from '../components/HorizontalBarChartXAnnotations/HorizontalBarChartXAnnotations';
+import {HorizontalBarChartYAnnotations} from '../components/HorizontalBarChartYAnnotations/HorizontalBarChartYAnnotations';
+import {VerticalGridLines} from '../components/VerticalGridLines/VerticalGridLines';
+import {normalizeData} from '../../../utilities/normalizeData';
+import {TooltipWrapper} from '../../TooltipWrapper/TooltipWrapper';
 // jest will not allow access to out of scope constants if they are not named `MOCK_`
 import {DEFAULT_CHART_CONTEXT as MOCK_DEFAULT_CHART_CONTEXT} from '../../../storybook/constants';
 

@@ -1,6 +1,6 @@
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
-import type {LineChartProps} from '../../components/LineChart';
+import type {LineChartProps} from '../LineChart/LineChart';
 
 export interface MetaData {
   isPredictive?: boolean;

@@ -7,7 +7,7 @@ import {
 import type {ReactNode} from 'react';
 import {useState} from 'react';
 
-import {useWatchColorVisionEvents} from '../../../../hooks';
+import {useWatchColorVisionEvents} from '../../../../hooks/ColorVisionA11y/useWatchColorVisionEvents';
 import {TOOLTIP_BG_OPACITY} from '../../../../constants';
 import {useBrowserCheck} from '../../../../hooks/useBrowserCheck';
 

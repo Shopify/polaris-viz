@@ -1,7 +1,7 @@
 import type {Dispatch, SetStateAction} from 'react';
 
-import {useLabels} from '../../Labels';
-import {TextLine} from '../../TextLine';
+import {useLabels} from '../../Labels/hooks/useLabels';
+import {TextLine} from '../../TextLine/TextLine';
 
 const ARROW_WIDTH = 11;
 const ARROW_HEIGHT = 9;

@@ -8,7 +8,7 @@ import {
 import type {Color, Direction} from '@shopify/polaris-viz-core';
 
 import {getCSSBackgroundFromColor} from '../../../../utilities/getCSSBackgroundFromColor';
-import {classNames} from '../../../../utilities';
+import {classNames} from '../../../../utilities/classnames';
 import {useBarSpringConfig} from '../../../../hooks/useBarSpringConfig';
 import type {Size} from '../../types';
 

@@ -4,7 +4,7 @@ import {LinearGradientWithStops, BAR_SPACING} from '@shopify/polaris-viz-core';
 
 import type {BarGroupProps} from '../BarGroup';
 import {BarGroup} from '../BarGroup';
-import {VerticalBar} from '../../VerticalBar';
+import {VerticalBar} from '../../VerticalBar/VerticalBar';
 
 jest.mock('d3-scale', () => ({
   scaleLinear: jest.requireActual('d3-scale').scaleLinear,

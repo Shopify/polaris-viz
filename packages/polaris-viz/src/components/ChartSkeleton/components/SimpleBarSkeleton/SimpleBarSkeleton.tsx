@@ -6,7 +6,7 @@ import {
   useChartContext,
 } from '@shopify/polaris-viz-core';
 
-import {ErrorText} from '../ErrorText';
+import {ErrorText} from '../ErrorText/ErrorText';
 
 import styles from './SimpleBarSkeleton.scss';
 

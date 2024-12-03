@@ -13,16 +13,17 @@ import {
   isLargeDataSet,
   usePolarisVizContext,
   isTouchDevice,
+  useTheme,
 } from '@shopify/polaris-viz-core';
 import type {ChartContextValues} from '@shopify/polaris-viz-core/src/contexts';
 
 import {EMPTY_BOUNDS} from '../../constants';
-import {ChartErrorBoundary} from '../ChartErrorBoundary';
+import {ChartErrorBoundary} from '../ChartErrorBoundary/ChartErrorBoundary';
 import {getChartId} from '../../utilities/getChartId';
 import characterWidths from '../../data/character-widths.json';
 import characterWidthOffsets from '../../data/character-width-offsets.json';
-import {useTheme, usePrefersReducedMotion} from '../../hooks';
-import type {SkeletonType} from '../ChartSkeleton';
+import {usePrefersReducedMotion} from '../../hooks/usePrefersReducedMotion';
+import type {SkeletonType} from '../ChartSkeleton/ChartSkeleton';
 
 import styles from './ChartContainer.scss';
 import {useContainerBounds} from './hooks/useContainerBounds';

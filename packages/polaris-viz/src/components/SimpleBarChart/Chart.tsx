@@ -14,20 +14,21 @@ import type {
 import {animated} from '@react-spring/web';
 
 import {getFontSize} from '../../utilities/getFontSize';
-import {ChartElements} from '../ChartElements';
-import {LegendContainer, useLegend} from '../../components/LegendContainer';
-import {GradientDefs, HorizontalGroup} from '../shared';
-import type {HorizontalTransitionStyle} from '../../hooks';
-import {
-  useHorizontalBarSizes,
-  useDataForHorizontalChart,
-  useHorizontalXScale,
-  useHorizontalTransitions,
-  useHorizontalSeriesColors,
-  useHorizontalStackedValues,
-  useColorVisionEvents,
-} from '../../hooks';
-import {getContainerAlignmentForLegend} from '../../utilities';
+import {ChartSVG} from '../ChartElements/ChartSVG';
+import {ChartDiv} from '../ChartElements/ChartDiv';
+import {LegendContainer} from '../LegendContainer/LegendContainer';
+import {useLegend} from '../LegendContainer/hooks/useLegend';
+import {GradientDefs} from '../shared/GradientDefs/GradientDefs';
+import {HorizontalGroup} from '../shared/HorizontalGroup/HorizontalGroup';
+import type {HorizontalTransitionStyle} from '../../hooks/useHorizontalTransitions';
+import {useHorizontalBarSizes} from '../../hooks/useHorizontalBarSizes';
+import {useDataForHorizontalChart} from '../../hooks/useDataForHorizontalChart';
+import {useHorizontalXScale} from '../../hooks/useHorizontalXScale';
+import {useHorizontalTransitions} from '../../hooks/useHorizontalTransitions';
+import {useHorizontalSeriesColors} from '../../hooks/useHorizontalSeriesColors';
+import {useHorizontalStackedValues} from '../../hooks/useHorizontalStackedValues';
+import {useColorVisionEvents} from '../../hooks/ColorVisionA11y/useColorVisionEvents';
+import {getContainerAlignmentForLegend} from '../../utilities/getContainerAlignmentForLegend';
 import type {LegendPosition, RenderLegendContent} from '../../types';
 
 import type {SimpleBarChartDataSeries} from './types';
@@ -128,8 +129,8 @@ export function Chart({
 
   const containerStyle = getContainerAlignmentForLegend(legendPosition, true);
   return (
-    <ChartElements.Div style={containerStyle} width="auto" height="auto">
-      <ChartElements.Svg height={height} width={width}>
+    <ChartDiv style={containerStyle} width="auto" height="auto">
+      <ChartSVG height={height} width={width}>
         <GradientDefs
           direction="horizontal"
           gradientUnits={isStacked ? 'objectBoundingBox' : 'userSpaceOnUse'}
@@ -175,7 +176,7 @@ export function Chart({
             </animated.g>
           );
         })}
-      </ChartElements.Svg>
+      </ChartSVG>
 
       {showLegend && (
         <LegendContainer
@@ -186,6 +187,6 @@ export function Chart({
           position={legendPosition}
         />
       )}
-    </ChartElements.Div>
+    </ChartDiv>
   );
 }

@@ -17,11 +17,11 @@ import {
   HORIZONTAL_GROUP_LABEL_HEIGHT,
   HORIZONTAL_SPACE_BETWEEN_SINGLE,
 } from '../../../constants';
-import {useWatchColorVisionEvents} from '../../../hooks';
+import {useWatchColorVisionEvents} from '../../../hooks/ColorVisionA11y/useWatchColorVisionEvents';
 import type {FormattedStackedSeries} from '../../../types';
-import {GroupLabel} from '../GroupLabel';
-import {HorizontalStackedBars} from '../HorizontalStackedBars';
-import {HorizontalBars} from '../HorizontalBars';
+import {GroupLabel} from '../GroupLabel/GroupLabel';
+import {HorizontalStackedBars} from '../HorizontalStackedBars/HorizontalStackedBars';
+import {HorizontalBars} from '../HorizontalBars/HorizontalBars';
 
 import style from './HorizontalGroup.scss';
 

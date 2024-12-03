@@ -1,10 +1,9 @@
 /* eslint-disable node/callback-return */
 import {useEffect} from 'react';
-import {ChartState, useChartContext} from '@shopify/polaris-viz-core';
+import {ChartState, useChartContext, useTheme} from '@shopify/polaris-viz-core';
 import {useSprings, animated, config, easings} from '@react-spring/web';
 
-import {Arc} from '../../../Arc/';
-import {useTheme} from '../../../../hooks';
+import {Arc} from '../../../Arc/Arc';
 
 import styles from './DonutSkeleton.scss';
 

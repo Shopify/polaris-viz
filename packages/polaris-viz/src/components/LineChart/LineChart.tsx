@@ -11,21 +11,21 @@ import {
   ChartState,
   DEFAULT_CHART_PROPS,
   usePolarisVizContext,
+  useTheme,
 } from '@shopify/polaris-viz-core';
 
 import {getTooltipContentRenderer} from '../../utilities/getTooltipContentRenderer';
 import {fillMissingDataPoints} from '../../utilities/fillMissingDataPoints';
 import {getLineChartDataWithDefaults} from '../../utilities/getLineChartDataWithDefaults';
-import {ChartContainer} from '../../components/ChartContainer';
-import {ChartSkeleton} from '../../components/ChartSkeleton';
+import {ChartContainer} from '../ChartContainer/ChartContainer';
+import {ChartSkeleton} from '../ChartSkeleton/ChartSkeleton';
 import {useThemeSeriesColors} from '../../hooks/useThemeSeriesColors';
 import {
   getXAxisOptionsWithDefaults,
   getYAxisOptionsWithDefaults,
-  normalizeData,
-} from '../../utilities';
-import {SkipLink} from '../SkipLink';
-import {useTheme} from '../../hooks';
+} from '../../utilities/getAxisOptions';
+import {normalizeData} from '../../utilities/normalizeData';
+import {SkipLink} from '../SkipLink/SkipLink';
 import type {
   Annotation,
   LineChartSlotProps,

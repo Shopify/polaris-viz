@@ -8,7 +8,7 @@ import {
 } from '@shopify/polaris-viz-core';
 import {useSprings, animated} from '@react-spring/web';
 
-import {ErrorText} from '../ErrorText';
+import {ErrorText} from '../ErrorText/ErrorText';
 
 const BRICK_HEIGHT = 12;
 const BRICK_WIDTH = 32;

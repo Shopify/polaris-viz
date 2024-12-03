@@ -10,12 +10,12 @@ import {
 } from '@shopify/polaris-viz-core';
 
 import {getLoadAnimationDelay} from '../../../../utilities/getLoadAnimationDelay';
-import {formatAriaLabel} from '../../../VerticalBarChart/utilities';
+import {formatAriaLabel} from '../../utilities/formatAriaLabel';
 import type {AccessibilitySeries} from '../../../VerticalBarChart/types';
 import type {StackedSeries} from '../../../../types';
-import {useStackedGapsForVerticalChart} from '../../hooks';
+import {useStackedGapsForVerticalChart} from '../../hooks/useStackedGapsForVerticalChart';
 
-import {Stack} from './components';
+import {Stack} from './components/Stack/Stack';
 import styles from './StackedBarGroups.scss';
 
 interface StackedBarGroupsProps {

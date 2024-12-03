@@ -12,8 +12,8 @@ import type {ScaleBand, ScaleLinear} from 'd3-scale';
 
 import {useRootContainer} from '../../hooks/useRootContainer';
 import type {Margin} from '../../types';
-import {SwallowErrors} from '../SwallowErrors';
 import {TOOLTIP_ID} from '../../constants';
+import {SwallowErrors} from '../SwallowErrors/SwallowErrors';
 
 import {getHorizontalBarChartTooltipPosition} from './utilities/getHorizontalBarChartTooltipPosition';
 import {getLineChartTooltipPosition} from './utilities/getLineChartTooltipPosition';

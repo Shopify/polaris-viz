@@ -1,4 +1,7 @@
-import {getYAxisOptionsWithDefaults, getXAxisOptionsWithDefaults} from '../';
+import {
+  getYAxisOptionsWithDefaults,
+  getXAxisOptionsWithDefaults,
+} from '../getAxisOptions';
 
 describe('get-axis-options', () => {
   describe('getYAxisOptionsWithDefaults()', () => {

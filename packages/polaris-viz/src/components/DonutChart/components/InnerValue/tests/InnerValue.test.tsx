@@ -4,7 +4,7 @@ import {min} from 'd3-array';
 
 import type {InnerValueProps} from '../InnerValue';
 import {InnerValue} from '../InnerValue';
-import {ComparisonMetric} from '../../../../ComparisonMetric';
+import {ComparisonMetric} from '../../../../ComparisonMetric/ComparisonMetric';
 
 const mockProps: InnerValueProps = {
   activeValue: 100,

@@ -81,7 +81,8 @@
           "UNSTABLE_telemetry"
         ]
       }
-    ]
+    ],
+    "@shopify/strict-component-boundaries": "off"
   },
   "overrides": [
     {
@@ -149,6 +150,13 @@
       "rules": {
         "react/no-unused-prop-types": "off",
         "@shopify/strict-component-boundaries": "off"
+      }
+    },
+    {
+      "files": ["codemods/**/*.js"],
+      "rules": {
+        "no-console": "off",
+        "import/no-extraneous-dependencies": "off"
       }
     }
   ]

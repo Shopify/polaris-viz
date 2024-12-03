@@ -9,9 +9,9 @@ import type {
   LabelFormatter,
 } from '@shopify/polaris-viz-core';
 
-import type {ComparisonMetricProps} from '../ComparisonMetric';
-import {ChartContainer} from '../ChartContainer';
-import {ChartSkeleton} from '../ChartSkeleton';
+import type {ComparisonMetricProps} from '../ComparisonMetric/ComparisonMetric';
+import {ChartContainer} from '../ChartContainer/ChartContainer';
+import {ChartSkeleton} from '../ChartSkeleton/ChartSkeleton';
 import type {LegendPosition, RenderLegendContent} from '../../types';
 
 import {Chart} from './Chart';

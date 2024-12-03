@@ -2,10 +2,10 @@ import type {Story} from '@storybook/react';
 
 export {META as default} from './meta';
 
-import type {BarChartProps} from '../../../components';
+import type {BarChartProps} from '../BarChart';
 
 import {Template} from './data';
-import {PolarisVizProvider} from '../../PolarisVizProvider';
+import {PolarisVizProvider} from '../../PolarisVizProvider/PolarisVizProvider';
 import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 export const HorizontalStacked: Story<BarChartProps> = (

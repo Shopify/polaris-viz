@@ -1,1 +1,0 @@
-export {AnnotationLabel} from './AnnotationLabel';
