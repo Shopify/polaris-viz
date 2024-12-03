@@ -1,5 +1,4 @@
 import type {Story} from '@storybook/react';
-import type {RenderTooltipContentData} from 'types';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 import {LIGHT_THEME} from '@shopify/polaris-viz-core';
 import type {LineChartProps} from 'components/LineChart/LineChart';
@@ -10,32 +9,6 @@ import {
   formatLinearYAxisLabel,
 } from '../../../storybook/utilities';
 import {renderLinearTooltipContent} from '../../../utilities';
-
-export const TOOLTIP_CONTENT = {
-  empty: undefined,
-  Custom: ({data}: RenderTooltipContentData) => {
-    return (
-      <div
-        style={{
-          background: 'black',
-          color: 'white',
-          padding: '10px',
-          borderRadius: '10px',
-          display: 'flex',
-          flexDirection: 'column',
-          fontSize: 12,
-        }}
-      >
-        {data[0].data.map(({key, value}) => (
-          // eslint-disable-next-line @shopify/jsx-no-hardcoded-content
-          <div key={key}>{`${key}: ${formatLinearYAxisLabel(
-            Number(value!),
-          )}`}</div>
-        ))}
-      </div>
-    );
-  },
-};
 
 export const Template: Story<LineChartProps> = (args: LineChartProps) => {
   return <LineChartRelational {...args} />;

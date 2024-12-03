@@ -76,9 +76,6 @@ export const RENDER_BUCKET_LEGEND_LABEL_ARGS = {
     'This accepts a function that is called to render the bucket legend label shown when series are bucketed. Defaults to "Other".',
 };
 
-export const RENDER_TOOLTIP_DESCRIPTION =
-  'This accepts a function that is called to render the tooltip content. When necessary it calls `formatXAxisLabel` and/or `formatYAxisLabel` to format the `DataSeries[]` values and passes them to `<TooltipContent />`. [RenderTooltipContentData type definition.](https://polaris-viz.shopify.com/?path=/docs/polaris-viz-subcomponents-tooltipcontent-rendertooltipcontent--page)';
-
 export const DATA_ARGS = {
   description:
     'A collection of named data sets to be rendered in the chart. An optional color can be provided for each series, to overwrite the theme `seriesColors` defined in `PolarisVizProvider`',

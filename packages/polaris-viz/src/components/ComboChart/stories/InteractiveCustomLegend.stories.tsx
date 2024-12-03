@@ -43,7 +43,7 @@ const LEGEND_ITEMS_DATA = [
 
 const liStyles = {
   alignItems: 'center',
-  color: 'white',
+  color: 'black',
   display: 'flex',
   fontWeight: 'bold',
   gap: 4,
