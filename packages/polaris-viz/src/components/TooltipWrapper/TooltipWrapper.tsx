@@ -57,7 +57,7 @@ function TooltipWrapperRaw(props: BaseProps) {
     xScale,
     yScale,
   } = props;
-  const {scrollContainer, isTouchDevice} = useChartContext();
+  const {scrollContainer, isTouchDevice, containerBounds} = useChartContext();
   const [position, setPosition] = useState<TooltipPosition>({
     x: 0,
     y: 0,
@@ -92,18 +92,14 @@ function TooltipWrapperRaw(props: BaseProps) {
       event?: MouseEvent | TouchEvent;
       index?: number;
     }) => {
-      const containerBounds = {
-        x: parentElement?.getBoundingClientRect().x ?? 0,
-        y:
-          Number(parentElement?.getBoundingClientRect().y ?? 0) +
-          Number(scrollContainer?.scrollTop ?? 0),
-        width: parentElement?.getBoundingClientRect().width ?? 0,
-        height: parentElement?.getBoundingClientRect().height ?? 0,
-      };
+      const scrollY = scrollContainer == null ? 0 : scrollContainer.scrollTop;
+
       switch (chartType) {
         case InternalChartType.Line:
           return getLineChartTooltipPosition({
             chartBounds,
+            containerBounds,
+            scrollY,
             data,
             event,
             eventType,
@@ -140,14 +136,14 @@ function TooltipWrapperRaw(props: BaseProps) {
     },
     [
       chartBounds,
+      containerBounds,
       chartType,
       data,
       longestSeriesIndex,
-      parentElement,
-      scrollContainer?.scrollTop,
       type,
       xScale,
       yScale,
+      scrollContainer,
     ],
   );
 

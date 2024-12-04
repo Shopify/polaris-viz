@@ -1,3 +1,4 @@
+import type {BoundingRect} from '@shopify/polaris-viz-core';
 import {clamp} from '@shopify/polaris-viz-core';
 import type {ScaleLinear} from 'd3-scale';
 
@@ -7,16 +8,20 @@ import {TOOLTIP_POSITION_DEFAULT_RETURN} from '../constants';
 import {getXYFromEventType, eventPointNative} from './eventPoint';
 
 interface Props extends Omit<TooltipPositionParams, 'xScale'> {
+  containerBounds: BoundingRect;
+  scrollY: number;
   xScale: ScaleLinear<number, number>;
 }
 
 export function getLineChartTooltipPosition({
+  containerBounds,
   chartBounds,
   data,
   event,
   eventType,
   index,
   longestSeriesIndex,
+  scrollY,
   xScale,
 }: Props) {
   if (eventType === 'mouse') {
@@ -53,8 +58,8 @@ export function getLineChartTooltipPosition({
     const x = xScale?.(activeIndex) ?? 0;
 
     return {
-      x: x + chartBounds.x,
-      y: chartBounds.y,
+      x: x + containerBounds.x,
+      y: containerBounds.y - scrollY,
       activeIndex,
     };
   }

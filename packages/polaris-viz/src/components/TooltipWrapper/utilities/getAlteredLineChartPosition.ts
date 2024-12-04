@@ -18,7 +18,7 @@ export type AlteredPosition = (
 export function getAlteredLineChartPosition(
   props: AlteredPositionProps,
 ): AlteredPositionReturn {
-  const {currentX, currentY, chartBounds, scrollContainer} = props;
+  const {currentX, currentY, containerBounds, scrollContainer} = props;
 
   let x = currentX;
   let y = currentY;
@@ -28,7 +28,7 @@ export function getAlteredLineChartPosition(
   //
 
   if (props.isPerformanceImpacted) {
-    y = chartBounds.y - (scrollContainer?.scrollTop ?? 0);
+    y = containerBounds.y - (scrollContainer?.scrollTop ?? 0);
   }
 
   //
