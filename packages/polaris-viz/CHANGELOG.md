@@ -11,6 +11,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 - Added dashed `lineStyle` support for custom legends in `<LineChartRelational />`
 
+### Fixed
+
+- Fixed issue where tooltips were not positioned correctly when tabbing through points in `<LineChart />`.
+
 ## [15.3.4] - 2024-12-03
 
 
