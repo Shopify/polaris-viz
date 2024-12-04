@@ -2,6 +2,7 @@ import {mount} from '@shopify/react-testing';
 
 import type {LegendItemProps} from '../LegendItem';
 import {LegendItem, MINIMUM_LEGEND_ITEM_WIDTH} from '../LegendItem';
+import {SeriesIcon} from '../../../../shared/SeriesIcon';
 
 const mockProps: LegendItemProps = {
   activeIndex: 2,
@@ -142,6 +143,14 @@ describe('<LegendItem />', () => {
           minWidth: MINIMUM_LEGEND_ITEM_WIDTH,
         }),
       });
+    });
+  });
+
+  describe('lineStyle', () => {
+    it('renders a dotted line when isComparison prop is true', () => {
+      const item = mount(<LegendItem {...mockProps} isComparison />);
+
+      expect(item.find(SeriesIcon)).toHaveReactProps({lineStyle: 'dotted'});
     });
   });
 });

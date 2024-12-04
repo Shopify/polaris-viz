@@ -6,7 +6,11 @@ import {
   uniqueId,
 } from '@shopify/polaris-viz-core';
 
-import {PREVIEW_ICON_SIZE, XMLNS} from '../../constants';
+import {
+  DASHED_LINE_PREVIEW_STROKE_DASHARRAY,
+  PREVIEW_ICON_SIZE,
+  XMLNS,
+} from '../../constants';
 
 import {
   DOTTED_LINE_PREVIEW_CY,
@@ -110,7 +114,7 @@ function getLinePreview({
           strokeLinejoin="round"
           strokeLinecap="round"
           strokeWidth={width}
-          strokeDasharray="1.5 3"
+          strokeDasharray={DASHED_LINE_PREVIEW_STROKE_DASHARRAY}
         />
       );
     default:
