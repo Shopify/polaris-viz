@@ -62,7 +62,7 @@ export function YAxis({
               fontSize={fontSize}
               targetWidth={clampedWidth}
               text={formattedValue}
-              textAnchor="left"
+              textAnchor="start"
               dominantBaseline="middle"
             />
           </g>

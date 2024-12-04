@@ -16,7 +16,7 @@ interface SingleTextLineProps {
   y: number;
   ariaHidden?: boolean;
   dominantBaseline?: 'middle' | 'hanging';
-  textAnchor?: 'left' | 'center' | 'right';
+  textAnchor?: 'start' | 'middle' | 'end';
 }
 
 export function SingleTextLine({
@@ -26,7 +26,7 @@ export function SingleTextLine({
   fontSize,
   targetWidth,
   text,
-  textAnchor = 'center',
+  textAnchor = 'middle',
   y,
   x,
 }: SingleTextLineProps) {
