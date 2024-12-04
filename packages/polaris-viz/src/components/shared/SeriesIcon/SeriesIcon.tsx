@@ -1,4 +1,4 @@
-import type {Shape, Color} from '@shopify/polaris-viz-core';
+import type {Shape, Color, LineStyle} from '@shopify/polaris-viz-core';
 import {useTheme} from '@shopify/polaris-viz-core';
 
 import {LinePreview} from '../../LinePreview';
@@ -8,18 +8,20 @@ interface Props {
   color: Color;
   isComparison?: boolean;
   shape?: Shape;
+  lineStyle?: LineStyle;
 }
 
 export function SeriesIcon({
   color,
   isComparison = false,
+  lineStyle,
   shape = 'Bar',
 }: Props) {
   const selectedTheme = useTheme();
 
   switch (shape) {
     case 'Line': {
-      const style = isComparison ? 'dotted' : 'solid';
+      const style = isComparison ? 'dotted' : lineStyle ?? 'solid';
       const lineColor = isComparison
         ? selectedTheme.seriesColors.comparison
         : color;

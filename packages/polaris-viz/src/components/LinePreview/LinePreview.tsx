@@ -102,6 +102,17 @@ function getLinePreview({
           })}
         </g>
       );
+    case 'dashed':
+      return (
+        <path
+          d={`M1 1 H${PREVIEW_ICON_SIZE}`}
+          stroke={color}
+          strokeLinejoin="round"
+          strokeLinecap="round"
+          strokeWidth={width}
+          strokeDasharray="1.5 3"
+        />
+      );
     default:
       return (
         <path

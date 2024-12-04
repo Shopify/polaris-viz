@@ -1,4 +1,4 @@
-import type {LabelFormatter} from '@shopify/polaris-viz-core';
+import type {LabelFormatter, LineStyle} from '@shopify/polaris-viz-core';
 import {
   getColorVisionEventAttrs,
   getColorVisionStylesForActiveIndex,
@@ -40,6 +40,7 @@ export interface LegendItemProps extends LegendData {
   truncate?: boolean;
   showLegendValues?: boolean;
   seriesNameFormatter?: LabelFormatter;
+  lineStyle?: LineStyle;
 }
 
 export function LegendItem({
@@ -58,6 +59,7 @@ export function LegendItem({
   truncate = false,
   showLegendValues = false,
   seriesNameFormatter = (value) => `${value}`,
+  lineStyle,
 }: LegendItemProps) {
   const selectedTheme = useTheme(theme);
   const ref = useRef<HTMLButtonElement | null>(null);
@@ -120,7 +122,12 @@ export function LegendItem({
           style={{height: PREVIEW_ICON_SIZE, width: PREVIEW_ICON_SIZE}}
           className={style.IconContainer}
         >
-          <SeriesIcon shape={shape} color={color} isComparison={isComparison} />
+          <SeriesIcon
+            lineStyle={lineStyle}
+            shape={shape}
+            color={color}
+            isComparison={isComparison}
+          />
         </span>
       ) : (
         renderSeriesIcon()

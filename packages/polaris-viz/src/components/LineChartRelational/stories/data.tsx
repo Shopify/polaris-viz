@@ -105,6 +105,10 @@ export const DEFAULT_DATA: DataSeries[] = [
       {value: 21, key: '2020-03-14T12:00:00'},
     ],
     color: LIGHT_THEME.seriesColors.limited[5],
+    metadata: {
+      lineStyle: 'dashed',
+    },
+
     styleOverride: {
       line: {
         hasArea: false,
