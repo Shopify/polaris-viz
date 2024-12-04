@@ -49,7 +49,31 @@ describe('<AnnotationLabel />', () => {
       text: 'Label',
       targetWidth: 81,
       y: 5,
-      x: 10,
+      x: 50,
+    });
+  });
+
+  it('renders a text line with textAnchor="middle" starting at the center of the pill', () => {
+    const chart = mount(
+      <svg>
+        <AnnotationLabel {...MOCK_PROPS} />
+      </svg>,
+    );
+
+    expect(chart).toContainReactComponent('rect', {
+      height: 20,
+      width: 100,
+      ry: 10,
+    });
+    expect(chart).toContainReactComponent(SingleTextLine, {
+      ariaHidden: true,
+      text: 'Label',
+      targetWidth: 81,
+      y: 5,
+      x: MOCK_PROPS.position.width / 2,
+    });
+    expect(chart).toContainReactComponentTimes('text', 1, {
+      textAnchor: 'middle',
     });
   });
 

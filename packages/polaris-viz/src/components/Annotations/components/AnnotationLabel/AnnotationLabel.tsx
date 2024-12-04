@@ -40,6 +40,8 @@ export function AnnotationLabel({
 
   const formattedAriaLabel = `${ariaLabel}: ${label}`;
 
+  const centerX = width / 2;
+
   return (
     <g
       transform={`translate(${x},${y})`}
@@ -69,7 +71,7 @@ export function AnnotationLabel({
         text={label}
         targetWidth={width - PILL_PADDING * 2 + PX_OFFSET}
         y={PILL_HEIGHT - LINE_HEIGHT - PX_OFFSET}
-        x={PILL_PADDING}
+        x={centerX}
       />
 
       <Fragment>
