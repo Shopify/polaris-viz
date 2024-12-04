@@ -36,24 +36,16 @@ describe('color', () => {
   });
 });
 
-describe('isComparison', () => {
-  it('renders a comparison line when true', () => {
+describe('lineStyle', () => {
+  it('renders a dotted line when lineStyle prop is set to dotted', () => {
     const component = mount(
-      <SeriesIcon shape="Line" color="red" isComparison="true" />,
+      <SeriesIcon shape="Line" color="red" lineStyle="dotted" />,
     );
 
     expect(component.find(LinePreview)).toHaveReactProps({lineStyle: 'dotted'});
   });
 
-  it('does not render a comparison line when isComparison prop is not passed', () => {
-    const component = mount(<SeriesIcon shape="Line" color="red" />);
-
-    expect(component.find(LinePreview)).not.toHaveReactProps({
-      lineStyle: 'dotted',
-    });
-  });
-
-  it('renders LinePreview as dashed when lineStyle prop is set to dashed', () => {
+  it('renders a dashed line when lineStyle prop is set to dashed', () => {
     const component = mount(
       <SeriesIcon shape="Line" color="red" lineStyle="dashed" />,
     );

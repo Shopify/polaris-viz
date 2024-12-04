@@ -123,10 +123,9 @@ export function LegendItem({
           className={style.IconContainer}
         >
           <SeriesIcon
-            lineStyle={lineStyle}
+            lineStyle={isComparison ? 'dotted' : lineStyle}
             shape={shape}
-            color={color}
-            isComparison={isComparison}
+            color={isComparison ? selectedTheme.seriesColors.comparison : color}
           />
         </span>
       ) : (

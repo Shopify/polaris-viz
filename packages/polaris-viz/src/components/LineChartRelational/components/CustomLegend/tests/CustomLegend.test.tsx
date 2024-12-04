@@ -3,6 +3,7 @@ import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 import type {Props} from '../CustomLegend';
 import {CustomLegend} from '../CustomLegend';
+import {LegendItem} from '../../../../Legend';
 
 describe('<CustomLegend />', () => {
   describe('seriesNameFormatter', () => {
@@ -18,6 +19,16 @@ describe('<CustomLegend />', () => {
       expect(component).toContainReactText('Name: 75th - 25th percentile');
     });
   });
+
+  describe('lineStyle', () => {
+    it('renders a LegendItem with the lineStyle from metadata.lineStyle', () => {
+      const component = mount(<CustomLegend {...MOCK_PROPS} />);
+
+      expect(component).toContainReactComponent(LegendItem, {
+        lineStyle: 'dashed',
+      });
+    });
+  });
 });
 
 const MOCK_PROPS: Props = {
@@ -25,6 +36,9 @@ const MOCK_PROPS: Props = {
     {
       name: 'Average',
       data: [{value: 333, key: '2020-03-01T12:00:00'}],
+      metadata: {
+        lineStyle: 'dashed',
+      },
     },
     {
       name: '75th Percentile',
