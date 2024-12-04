@@ -36,7 +36,6 @@ export function CustomLegend({
         }
 
         const index = data.findIndex((series) => series.name === name);
-
         return (
           <li
             key={index}
@@ -51,6 +50,7 @@ export function CustomLegend({
               isComparison={isComparison}
               name={seriesNameFormatter(name ?? '')}
               shape="Line"
+              lineStyle={metadata?.lineStyle}
               theme={theme}
             />
           </li>
