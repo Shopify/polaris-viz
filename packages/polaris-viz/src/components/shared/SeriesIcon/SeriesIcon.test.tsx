@@ -52,4 +52,12 @@ describe('isComparison', () => {
       lineStyle: 'dotted',
     });
   });
+
+  it('renders LinePreview as dashed when lineStyle prop is set to dashed', () => {
+    const component = mount(
+      <SeriesIcon shape="Line" color="red" lineStyle="dashed" />,
+    );
+
+    expect(component.find(LinePreview)).toHaveReactProps({lineStyle: 'dashed'});
+  });
 });

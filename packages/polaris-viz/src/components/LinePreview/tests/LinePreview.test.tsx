@@ -20,4 +20,12 @@ describe('<LinePreview />', () => {
 
     expect(linePreview).toContainReactComponentTimes('circle', 3);
   });
+
+  it('renders a dashed path if lineStyle is dashed', () => {
+    const linePreview = mount(<LinePreview color="red" lineStyle="dashed" />);
+
+    expect(linePreview).toContainReactComponent('path', {
+      strokeDasharray: '1.5 3',
+    });
+  });
 });

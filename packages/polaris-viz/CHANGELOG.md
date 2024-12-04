@@ -9,6 +9,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [15.3.4] - 2024-12-03
 
+### Added
+
+- Added dashed `lineStyle` support for custom legends in `<LineChartRelational />`
+
 ### Fixed
 
 - Fixed issue where `<DonutChart />` would run the `seriesNameFormatter` for multiple times on a `<Legend />`.
