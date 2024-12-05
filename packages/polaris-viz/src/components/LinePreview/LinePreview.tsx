@@ -6,7 +6,11 @@ import {
   uniqueId,
 } from '@shopify/polaris-viz-core';
 
-import {PREVIEW_ICON_SIZE, XMLNS} from '../../constants';
+import {
+  DASHED_LINE_PREVIEW_STROKE_DASHARRAY,
+  PREVIEW_ICON_SIZE,
+  XMLNS,
+} from '../../constants';
 
 import {
   DOTTED_LINE_PREVIEW_CY,
@@ -101,6 +105,17 @@ function getLinePreview({
             );
           })}
         </g>
+      );
+    case 'dashed':
+      return (
+        <path
+          d={`M1 1 H${PREVIEW_ICON_SIZE}`}
+          stroke={color}
+          strokeLinejoin="round"
+          strokeLinecap="round"
+          strokeWidth={width}
+          strokeDasharray={DASHED_LINE_PREVIEW_STROKE_DASHARRAY}
+        />
       );
     default:
       return (

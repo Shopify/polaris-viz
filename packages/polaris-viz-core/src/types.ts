@@ -41,7 +41,7 @@ export interface DataGroup {
 
 export type Shape = 'Line' | 'Bar';
 
-export type LineStyle = 'solid' | 'dotted';
+export type LineStyle = 'solid' | 'dotted' | 'dashed';
 
 export interface GradientStop {
   offset: number;
