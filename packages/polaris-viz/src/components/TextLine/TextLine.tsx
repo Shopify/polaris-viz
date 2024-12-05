@@ -8,15 +8,9 @@ interface TextLineProps {
   index: number;
   line: FormattedLine[];
   color?: string;
-  fontSize?: number;
 }
 
-export function TextLine({
-  color,
-  index,
-  line,
-  fontSize = FONT_SIZE,
-}: TextLineProps) {
+export function TextLine({color, index, line}: TextLineProps) {
   const selectedTheme = useTheme();
 
   return (
