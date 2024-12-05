@@ -1,11 +1,9 @@
 import {useMemo} from 'react';
 import type {DataGroup} from '@shopify/polaris-viz-core';
 
-import {yAxisMinMax} from '../../LineChart/utilities';
-import {
-  getStackedMinMax,
-  getYAxisOptionsWithDefaults,
-} from '../../../utilities';
+import {yAxisMinMax} from '../../LineChart/utilities/yAxisMinMax';
+import {getStackedMinMax} from '../../../utilities/getStackedMinMax';
+import {getYAxisOptionsWithDefaults} from '../../../utilities/getAxisOptions';
 import type {Axis} from '../types';
 import {AxisValueRange} from '../types';
 

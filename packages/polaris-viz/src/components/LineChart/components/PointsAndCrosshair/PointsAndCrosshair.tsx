@@ -13,9 +13,9 @@ import {line} from 'd3-shape';
 import type {ScaleLinear} from 'd3-scale';
 
 import {CROSSHAIR_ID} from '../../../../constants';
-import {useLinearChartAnimations} from '../../../../hooks';
-import {Crosshair} from '../../../Crosshair';
-import {Points} from '../Points';
+import {useLinearChartAnimations} from '../../../../hooks/useLinearChartAnimations';
+import {Crosshair} from '../../../Crosshair/Crosshair';
+import {Points} from '../Points/Points';
 
 interface PointsAndCrosshairProps {
   activeIndex: number | null;

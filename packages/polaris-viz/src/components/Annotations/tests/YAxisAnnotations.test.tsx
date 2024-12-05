@@ -5,11 +5,9 @@ import type {Annotation} from '../../../types';
 import {normalizeData} from '../../../utilities/normalizeData';
 import type {YAxisAnnotationsProps} from '../YAxisAnnotations';
 import {YAxisAnnotations} from '../YAxisAnnotations';
-import {
-  AnnotationContent,
-  AnnotationLabel,
-  AnnotationLine,
-} from '../components';
+import {AnnotationContent} from '../components/AnnotationContent/AnnotationContent';
+import {AnnotationLabel} from '../components/AnnotationLabel/AnnotationLabel';
+import {AnnotationLine} from '../components/AnnotationLine/AnnotationLine';
 
 jest.mock('@shopify/polaris-viz-core/src/utilities', () => ({
   ...jest.requireActual('@shopify/polaris-viz-core/src/utilities'),

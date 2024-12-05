@@ -7,7 +7,7 @@ import {
 } from '@shopify/polaris-viz-core';
 
 import {useBarSpringConfig} from '../../../../hooks/useBarSpringConfig';
-import {ZeroValueLine} from '../../../shared/ZeroValueLine';
+import {ZeroValueLine} from '../../../shared/ZeroValueLine/ZeroValueLine';
 
 import styles from './VerticalBar.scss';
 

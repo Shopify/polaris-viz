@@ -14,9 +14,9 @@ import {
 import {
   getXAxisOptionsWithDefaults,
   getYAxisOptionsWithDefaults,
-} from '../../utilities';
-import {ChartContainer} from '../../components/ChartContainer';
-import {ChartSkeleton} from '../../components';
+} from '../../utilities/getAxisOptions';
+import {ChartContainer} from '../ChartContainer/ChartContainer';
+import {ChartSkeleton} from '../ChartSkeleton/ChartSkeleton';
 import type {LegendPosition, RenderLegendContent} from '../../types';
 
 import {Chart} from './Chart';

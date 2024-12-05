@@ -12,9 +12,10 @@ import type {
 import type {ReactNode} from 'react';
 
 import {flattenDataGroupToDataSeries} from '../../utilities/flattenDataGroupToDataSeries';
-import {TooltipContent} from '../TooltipContent';
-import {getXAxisOptionsWithDefaults, normalizeData} from '../../utilities';
-import {ChartContainer} from '../ChartContainer';
+import {TooltipContent} from '../TooltipContent/TooltipContent';
+import {getXAxisOptionsWithDefaults} from '../../utilities/getAxisOptions';
+import {normalizeData} from '../../utilities/normalizeData';
+import {ChartContainer} from '../ChartContainer/ChartContainer';
 import type {
   ComboAnnotation,
   RenderLegendContent,

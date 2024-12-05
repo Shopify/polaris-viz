@@ -2,7 +2,7 @@ import type {Story} from '@storybook/react';
 
 export {META as default} from './meta';
 
-import type {LegendProps} from '../../../components';
+import type {LegendProps} from '../Legend';
 
 import {Template} from './data';
 

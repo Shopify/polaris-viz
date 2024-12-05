@@ -1,7 +1,6 @@
 import {Fragment} from 'react';
-import {FONT_FAMILY} from '@shopify/polaris-viz-core';
+import {FONT_FAMILY, useTheme} from '@shopify/polaris-viz-core';
 
-import {useTheme} from '../../hooks';
 import type {FormattedLine} from '../../types';
 
 interface TextLineProps {

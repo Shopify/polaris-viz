@@ -1,6 +1,8 @@
 export {META as default} from './meta';
 
-import {LineChart, LineChartProps} from '../../../components';
+import {LineChart} from '../LineChart';
+import type {LineChartProps} from '../LineChart';
+
 import type {Story} from '@storybook/react';
 import {DEFAULT_DATA, DEFAULT_PROPS} from './data';
 

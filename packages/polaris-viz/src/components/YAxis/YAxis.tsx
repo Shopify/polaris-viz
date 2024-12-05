@@ -1,8 +1,7 @@
-import {clamp} from '@shopify/polaris-viz-core';
+import {clamp, useTheme} from '@shopify/polaris-viz-core';
 
-import {estimateStringWidthWithOffset} from '../../utilities';
-import {SingleTextLine} from '../Labels';
-import {useTheme} from '../../hooks';
+import {estimateStringWidthWithOffset} from '../../utilities/estimateStringWidthWithOffset';
+import {SingleTextLine} from '../Labels/SingleTextLine';
 import {LINE_HEIGHT} from '../../constants';
 import type {YAxisTick} from '../../types';
 import {getFontSize} from '../../utilities/getFontSize';

@@ -1,1 +1,0 @@
-export {LogoHeader} from './LogoHeader';

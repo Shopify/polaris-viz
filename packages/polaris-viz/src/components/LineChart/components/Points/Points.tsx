@@ -13,8 +13,8 @@ import {
 } from '@shopify/polaris-viz-core';
 import type {LineChartDataSeriesWithDefaults} from '@shopify/polaris-viz-core';
 
-import {useWatchColorVisionEvents} from '../../../../hooks';
-import {Point} from '../../../Point';
+import {useWatchColorVisionEvents} from '../../../../hooks/ColorVisionA11y/useWatchColorVisionEvents';
+import {Point} from '../../../Point/Point';
 import type {AnimatedCoordinate} from '../../../../types';
 
 interface PointsProps {

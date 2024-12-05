@@ -11,7 +11,7 @@ export default {
   },
 };
 
-import type {SimpleBarChartProps} from '../../../../components';
+import type {SimpleBarChartProps} from '../../SimpleBarChart';
 
 import {Template} from '../data';
 

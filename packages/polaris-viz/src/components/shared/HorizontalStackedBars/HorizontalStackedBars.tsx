@@ -5,25 +5,27 @@ import {
   COLOR_VISION_SINGLE_ITEM,
   BORDER_RADIUS,
   useChartContext,
+  useTheme,
 } from '@shopify/polaris-viz-core';
 
 import {getFontSize} from '../../../utilities/getFontSize';
-import {useWatchColorVisionEvents, useTheme} from '../../../hooks';
-import {estimateStringWidthWithOffset, getBarId} from '../../../utilities';
+import {useWatchColorVisionEvents} from '../../../hooks/ColorVisionA11y/useWatchColorVisionEvents';
+import {estimateStringWidthWithOffset} from '../../../utilities/estimateStringWidthWithOffset';
+import {getBarId} from '../../../utilities/getBarId';
 import {
   HORIZONTAL_GROUP_LABEL_HEIGHT,
   HORIZONTAL_BAR_LABEL_OFFSET,
   NEGATIVE_ZERO_LINE_OFFSET,
 } from '../../../constants';
 import type {FormattedStackedSeries} from '../../../types';
-import {getGradientDefId} from '..';
-import {ZeroValueLine} from '../ZeroValueLine';
-import {Label} from '../Label';
-import {LabelWrapper} from '../LabelWrapper';
+import {getGradientDefId} from '../GradientDefs/GradientDefs';
+import {ZeroValueLine} from '../ZeroValueLine/ZeroValueLine';
+import {Label} from '../Label/Label';
+import {LabelWrapper} from '../LabelWrapper/LabelWrapper';
 
-import {StackedBar} from './components';
-import {useStackedGaps} from './hooks';
-import {getXPosition} from './utilities';
+import {StackedBar} from './components/StackedBar/StackedBar';
+import {useStackedGaps} from './hooks/useStackedGaps';
+import {getXPosition} from './utilities/getXPosition';
 
 export interface HorizontalStackedBarsProps {
   activeGroupIndex: number;

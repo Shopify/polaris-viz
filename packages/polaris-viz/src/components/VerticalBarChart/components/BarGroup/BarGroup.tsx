@@ -15,16 +15,16 @@ import {
 import type {Color} from '@shopify/polaris-viz-core';
 
 import {getChartId} from '../../../../utilities/getChartId';
-import {getHoverZoneOffset} from '../../../../utilities';
+import {getHoverZoneOffset} from '../../../../utilities/getHoverZoneOffset';
 import {
   MASK_HIGHLIGHT_COLOR,
   SHAPE_ANIMATION_HEIGHT_BUFFER,
 } from '../../../../constants';
 import type {AccessibilitySeries} from '../../../VerticalBarChart/types';
-import {formatAriaLabel} from '../../utilities';
+import {formatAriaLabel} from '../../utilities/formatAriaLabel';
 import {applyColorVisionToDomElement} from '../../../../utilities/applyColorVisionToDomElement';
-import {useWatchColorVisionEvents} from '../../../../hooks';
-import {VerticalBar} from '../VerticalBar';
+import {useWatchColorVisionEvents} from '../../../../hooks/ColorVisionA11y/useWatchColorVisionEvents';
+import {VerticalBar} from '../VerticalBar/VerticalBar';
 
 import styles from './BarGroup.scss';
 

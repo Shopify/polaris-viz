@@ -7,17 +7,20 @@ import {Globals} from '@react-spring/web';
 const mockCloneElement = (element: React.ReactElement, props) =>
   cloneElement(element, props);
 
-jest.mock('../../packages/polaris-viz/src/components/ChartContainer', () => {
-  return {
-    ChartContainer: ({children}) =>
-      mockCloneElement(children, {
-        dimensions: {
-          width: 600,
-          height: 400,
-        },
-      }),
-  };
-});
+jest.mock(
+  '../../packages/polaris-viz/src/components/ChartContainer/ChartContainer',
+  () => {
+    return {
+      ChartContainer: ({children}) =>
+        mockCloneElement(children, {
+          dimensions: {
+            width: 600,
+            height: 400,
+          },
+        }),
+    };
+  },
+);
 
 jest.mock('../../packages/polaris-viz-core/src/hooks/useChartContext', () => {
   // eslint-disable-next-line @typescript-eslint/no-var-requires

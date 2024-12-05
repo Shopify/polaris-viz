@@ -1,10 +1,10 @@
 import {mount} from '@shopify/react-testing';
 
-import {SkipLink} from '../../../components/SkipLink';
+import {SkipLink} from '../../SkipLink/SkipLink';
 import type {BarChartProps} from '../BarChart';
 import {BarChart} from '../BarChart';
-import {VerticalBarChart} from '../../VerticalBarChart';
-import {HorizontalBarChart} from '../../HorizontalBarChart';
+import {VerticalBarChart} from '../../VerticalBarChart/VerticalBarChart';
+import {HorizontalBarChart} from '../../HorizontalBarChart/HorizontalBarChart';
 
 describe('<BarChart />', () => {
   const mockProps: BarChartProps = {

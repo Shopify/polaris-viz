@@ -4,9 +4,9 @@ import type {LabelFormatter} from '@shopify/polaris-viz-core';
 import {useChartContext, useTheme} from '@shopify/polaris-viz-core';
 
 import type {RenderInnerValueContent} from '../../../../types';
-import {classNames} from '../../../../utilities';
-import type {ComparisonMetricProps} from '../../../ComparisonMetric';
-import {ComparisonMetric} from '../../../ComparisonMetric';
+import {classNames} from '../../../../utilities/classnames';
+import type {ComparisonMetricProps} from '../../../ComparisonMetric/ComparisonMetric';
+import {ComparisonMetric} from '../../../ComparisonMetric/ComparisonMetric';
 import styles from '../../DonutChart.scss';
 
 const SCALING_FACTOR = 0.07;

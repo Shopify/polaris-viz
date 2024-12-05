@@ -2,7 +2,7 @@ import type {Story} from '@storybook/react';
 
 import {META} from './meta';
 
-import type {BarChartProps} from '../../../components';
+import type {BarChartProps} from '../BarChart';
 
 import {Template} from './data';
 

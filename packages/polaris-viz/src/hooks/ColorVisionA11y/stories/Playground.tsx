@@ -4,8 +4,7 @@ import {
   getColorVisionStylesForActiveIndex,
 } from '@shopify/polaris-viz-core';
 
-// eslint-disable-next-line @shopify/strict-component-boundaries
-import {ChartContainer} from '../../../components/ChartContainer';
+import {ChartContainer} from '../../../components/ChartContainer/ChartContainer';
 import {useColorVisionEvents} from '../useColorVisionEvents';
 import {useWatchColorVisionEvents} from '../useWatchColorVisionEvents';
 

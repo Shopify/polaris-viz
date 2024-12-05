@@ -6,10 +6,10 @@ import {
   useChartContext,
   useFilteredSparkLineData,
   useSparkLine,
+  useTheme,
 } from '@shopify/polaris-viz-core';
 
 import {useThemeSeriesColors} from '../../hooks/useThemeSeriesColors';
-import {useTheme} from '../../hooks';
 import {XMLNS} from '../../constants';
 
 import styles from './SparkLineChart.scss';

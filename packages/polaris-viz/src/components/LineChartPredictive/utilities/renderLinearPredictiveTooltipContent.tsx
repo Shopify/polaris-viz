@@ -2,14 +2,12 @@ import type {ReactNode} from 'react';
 import {Fragment} from 'react';
 
 import {PREVIEW_ICON_SIZE} from '../../../constants';
-import {
-  TooltipContentContainer,
-  TooltipTitle,
-  TooltipRow,
-  LinePreview,
-} from '../../';
+import {TooltipContentContainer} from '../../TooltipContent/components/TooltipContentContainer/TooltipContentContainer';
+import {TooltipTitle} from '../../TooltipContent/components/TooltipTitle/TooltipTitle';
+import {TooltipRow} from '../../TooltipContent/components/TooltipRow/TooltipRow';
+import {LinePreview} from '../../LinePreview/LinePreview';
 import type {RenderTooltipContentData} from '../../../types';
-import {SeriesIcon} from '../components';
+import {SeriesIcon} from '../components/SeriesIcon/SeriesIcon';
 
 import styles from './Styles.scss';
 

@@ -16,9 +16,9 @@ import {getLoadAnimationDelay} from '../../../../utilities/getLoadAnimationDelay
 import {getChartId} from '../../../../utilities/getChartId';
 import {applyColorVisionToDomElement} from '../../../../utilities/applyColorVisionToDomElement';
 import type {SortedBarChartData} from '../../../../types';
-import {useWatchColorVisionEvents} from '../../../../hooks';
-import {BarGroup} from '../BarGroup';
-import {StackedBarGroups} from '../StackedBarGroups';
+import {useWatchColorVisionEvents} from '../../../../hooks/ColorVisionA11y/useWatchColorVisionEvents';
+import {BarGroup} from '../BarGroup/BarGroup';
+import {StackedBarGroups} from '../StackedBarGroups/StackedBarGroups';
 
 interface VerticalBarGroupProps {
   colors: Color[];

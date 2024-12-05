@@ -4,7 +4,7 @@ import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 import {StackedAreaChart} from '../StackedAreaChart';
 import {Chart} from '../Chart';
-import {SkipLink} from '../../SkipLink';
+import {SkipLink} from '../../SkipLink/SkipLink';
 
 const mockData: DataSeries[] = [
   {

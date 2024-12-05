@@ -2,10 +2,10 @@ import React, {useState} from 'react';
 import type {Story} from '@storybook/react';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
-import {LineChartRelational} from '../components/LineChartRelational';
-import {setSingleSeriesActive} from '../utilities';
-import {useWatchActiveSeries} from '../hooks';
-import {setHiddenItems} from '../hooks/ExternalEvents';
+import {LineChartRelational} from '../components/LineChartRelational/LineChartRelational';
+import {setSingleSeriesActive} from '../utilities/setSingleSeriesActive';
+import {useWatchActiveSeries} from '../hooks/useWatchActiveSeries';
+import {setHiddenItems} from '../hooks/ExternalEvents/utilities/setHiddenItems';
 import {DEFAULT_PROPS} from '../components/LineChartRelational/stories/data';
 
 export default {

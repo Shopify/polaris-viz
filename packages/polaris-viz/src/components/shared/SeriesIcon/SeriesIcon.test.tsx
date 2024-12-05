@@ -1,8 +1,9 @@
 import {mount} from '@shopify/react-testing';
 
-import {SeriesIcon} from '../SeriesIcon';
-import {SquareColorPreview} from '../../SquareColorPreview';
-import {LinePreview} from '../../LinePreview';
+import {SquareColorPreview} from '../../SquareColorPreview/SquareColorPreview';
+import {LinePreview} from '../../LinePreview/LinePreview';
+
+import {SeriesIcon} from './SeriesIcon';
 
 describe('<SeriesIcon />', () => {
   it('renders a <SquareColorPreview />', () => {

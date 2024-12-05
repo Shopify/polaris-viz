@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {YAxis} from '../../YAxis';
+import {YAxis} from '../../YAxis/YAxis';
 import {Y_AXIS_LABEL_WIDTH, Y_LABEL_OFFSET} from '../utilities/constants';
 
 import styles from './YAxisLabels.scss';

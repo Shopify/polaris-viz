@@ -4,7 +4,7 @@ import type {
   StackedSeries,
 } from '../../../types';
 import {STACKED_BAR_GAP} from '../../../constants';
-import {pushGapToArray} from '../../../utilities';
+import {pushGapToArray} from '../../../utilities/pushGapToArray';
 
 // Note: Because horizontal and vertical bar charts render the bars
 // differently, we need two different methods until we can refactor

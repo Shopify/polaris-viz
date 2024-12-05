@@ -1,4 +1,5 @@
-import {PolarisVizLogo} from './images';
+// eslint-disable-next-line @shopify/images-no-direct-imports
+import PolarisVizLogo from './images/polarisviz-logo.svg';
 import styles from './LogoHeader.scss';
 
 export function LogoHeader() {

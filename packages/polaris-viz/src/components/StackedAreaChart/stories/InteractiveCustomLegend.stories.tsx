@@ -3,8 +3,8 @@ import type {Story} from '@storybook/react';
 export {META as default} from './meta';
 
 import {DARK_THEME} from '../../../constants';
-import {LinePreview} from '../../LinePreview';
-import type {StackedAreaChartProps} from '../../StackedAreaChart';
+import {LinePreview} from '../../LinePreview/LinePreview';
+import type {StackedAreaChartProps} from '../StackedAreaChart';
 
 import {DEFAULT_DATA, DEFAULT_PROPS, Template} from './data';
 

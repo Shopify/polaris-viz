@@ -1,6 +1,6 @@
 import type {Trend} from 'types';
 
-import {TrendIndicator} from '../TrendIndicator';
+import {TrendIndicator} from '../TrendIndicator/TrendIndicator';
 
 export interface ComparisonMetricProps {
   metric?: string;

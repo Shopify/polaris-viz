@@ -1,7 +1,7 @@
 import React from 'react';
 import type {ScaleLinear} from 'd3-scale';
 
-import {XAxis} from '../../XAxis';
+import {XAxis} from '../../XAxis/XAxis';
 import {
   X_AXIS_HEIGHT,
   X_AXIS_LABEL_OFFSET,

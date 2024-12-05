@@ -9,6 +9,7 @@ import {
   LINE_HEIGHT,
   InternalChartType,
   useChartContext,
+  useTheme,
 } from '@shopify/polaris-viz-core';
 import type {
   DataSeries,
@@ -20,38 +21,36 @@ import type {
 } from '@shopify/polaris-viz-core';
 import {animated} from '@react-spring/web';
 
-import {ChartElements} from '../ChartElements';
-import {checkAvailableAnnotations} from '../../components/Annotations';
+import {ChartSVG} from '../ChartElements/ChartSVG';
+import {ChartDiv} from '../ChartElements/ChartDiv';
+import {checkAvailableAnnotations} from '../Annotations/utilities/checkAvailableAnnotations';
 import {useFormattedLabels} from '../../hooks/useFormattedLabels';
 import type {
   AnnotationLookupTable,
   RenderLegendContent,
   RenderTooltipContentData,
 } from '../../types';
-import {HorizontalBarChartXAxisLabels} from '../HorizontalBarChartXAxisLabels';
-import {useLegend, LegendContainer} from '../LegendContainer';
+import {HorizontalBarChartXAxisLabels} from '../HorizontalBarChartXAxisLabels/HorizontalBarChartXAxisLabels';
+import {useLegend} from '../LegendContainer/hooks/useLegend';
+import {LegendContainer} from '../LegendContainer/LegendContainer';
 import type {HorizontalTransitionStyle} from '../../hooks/useHorizontalTransitions';
-import {GradientDefs, HorizontalGroup} from '../shared';
-import {
-  useBarChartTooltipContent,
-  useColorVisionEvents,
-  useDataForHorizontalChart,
-  useHorizontalBarSizes,
-  useHorizontalSeriesColors,
-  useHorizontalStackedValues,
-  useHorizontalTransitions,
-  useHorizontalXScale,
-  useTheme,
-} from '../../hooks';
+import {GradientDefs} from '../shared/GradientDefs/GradientDefs';
+import {HorizontalGroup} from '../shared/HorizontalGroup/HorizontalGroup';
+import {useBarChartTooltipContent} from '../../hooks/useBarChartTooltipContent';
+import {useColorVisionEvents} from '../../hooks/ColorVisionA11y/useColorVisionEvents';
+import {useDataForHorizontalChart} from '../../hooks/useDataForHorizontalChart';
+import {useHorizontalBarSizes} from '../../hooks/useHorizontalBarSizes';
+import {useHorizontalSeriesColors} from '../../hooks/useHorizontalSeriesColors';
+import {useHorizontalStackedValues} from '../../hooks/useHorizontalStackedValues';
+import {useHorizontalTransitions} from '../../hooks/useHorizontalTransitions';
+import {useHorizontalXScale} from '../../hooks/useHorizontalXScale';
 import {ChartMargin, ANNOTATIONS_LABELS_OFFSET} from '../../constants';
-import {formatDataIntoGroups} from '../../utilities';
-import {TooltipWrapper} from '../TooltipWrapper';
+import {formatDataIntoGroups} from '../../utilities/formatDataIntoGroups';
+import {TooltipWrapper} from '../TooltipWrapper/TooltipWrapper';
 
-import {
-  VerticalGridLines,
-  HorizontalBarChartYAnnotations,
-  HorizontalBarChartXAnnotations,
-} from './components';
+import {VerticalGridLines} from './components/VerticalGridLines/VerticalGridLines';
+import {HorizontalBarChartYAnnotations} from './components/HorizontalBarChartYAnnotations/HorizontalBarChartYAnnotations';
+import {HorizontalBarChartXAnnotations} from './components/HorizontalBarChartXAnnotations/HorizontalBarChartXAnnotations';
 
 export interface ChartProps {
   annotationsLookupTable: AnnotationLookupTable;
@@ -199,8 +198,8 @@ export function Chart({
   });
 
   return (
-    <ChartElements.Div height={height} width={width}>
-      <ChartElements.Svg setRef={setSvgRef} width={width} height={height}>
+    <ChartDiv height={height} width={width}>
+      <ChartSVG setRef={setSvgRef} width={width} height={height}>
         {xAxisOptions.hide === true ? null : (
           <g transform={`translate(${chartXPosition}, ${chartYPosition})`}>
             <VerticalGridLines
@@ -289,7 +288,7 @@ export function Chart({
             />
           </g>
         )}
-      </ChartElements.Svg>
+      </ChartSVG>
 
       {highestValueForSeries.length !== 0 && (
         <TooltipWrapper
@@ -317,6 +316,6 @@ export function Chart({
           renderHiddenLegendLabel={renderHiddenLegendLabel}
         />
       )}
-    </ChartElements.Div>
+    </ChartDiv>
   );
 }

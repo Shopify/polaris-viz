@@ -5,8 +5,8 @@ import {
   usePolarisVizContext,
 } from '@shopify/polaris-viz-core';
 
-import {ChartContainer} from '../ChartContainer';
-import {ChartSkeleton} from '../ChartSkeleton';
+import {ChartContainer} from '../ChartContainer/ChartContainer';
+import {ChartSkeleton} from '../ChartSkeleton/ChartSkeleton';
 import {fillMissingDataPoints} from '../../utilities/fillMissingDataPoints';
 
 import {Chart} from './Chart';

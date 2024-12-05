@@ -3,7 +3,7 @@ import {useEffect} from 'react';
 
 import type {ColorVisionEventReturn} from '../types';
 
-import {getEventName} from './ColorVisionA11y';
+import {getEventName} from './ColorVisionA11y/utilities';
 import {useCallbackRef} from './useCallbackRef';
 
 export function useWatchActiveSeries(

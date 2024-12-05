@@ -7,13 +7,12 @@ import {
 
 import {DonutChart} from '../DonutChart';
 import type {ChartProps} from '../Chart';
-import {InnerValue} from '../components';
-import {ComparisonMetric} from '../../ComparisonMetric';
-import {LegendContainer} from '../../LegendContainer';
-import {Arc} from '../../Arc';
+import {InnerValue} from '../components/InnerValue/InnerValue';
+import {Arc} from '../../../components/Arc/Arc';
+import {ComparisonMetric} from '../../ComparisonMetric/ComparisonMetric';
+import {LegendContainer} from '../../LegendContainer/LegendContainer';
 
-jest.mock('../components', () => ({
-  ...jest.requireActual('../components'),
+jest.mock('../../ComparisonMetric/ComparisonMetric', () => ({
   ComparisonMetric: () => null,
 }));
 

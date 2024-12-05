@@ -16,32 +16,35 @@ import type {
   LabelFormatter,
 } from '@shopify/polaris-viz-core';
 
-import {useVerticalBarChart} from '../VerticalBarChart';
-import {ChartElements} from '../ChartElements';
-import {
-  Annotations,
-  checkAvailableAnnotations,
-  YAxisAnnotations,
-} from '../Annotations';
-import {TooltipWrapper} from '../TooltipWrapper';
+import {ChartSVG} from '../ChartElements/ChartSVG';
+import {ChartDiv} from '../ChartElements/ChartDiv';
+import {Annotations} from '../Annotations/Annotations';
+import {checkAvailableAnnotations} from '../Annotations/utilities/checkAvailableAnnotations';
+import {YAxisAnnotations} from '../Annotations/YAxisAnnotations';
+import {TooltipWrapper} from '../TooltipWrapper/TooltipWrapper';
 import type {
   AnnotationLookupTable,
   RenderLegendContent,
   RenderTooltipContentData,
 } from '../../types';
-import {XAxis} from '../XAxis';
+import {XAxis} from '../XAxis/XAxis';
 import {useThemeSeriesColorsForDataGroup} from '../../hooks/useThemeSeriesColorsForDataGroup';
-import {useColorVisionEvents, useReducedLabelIndexes} from '../../hooks';
-import {HorizontalGridLines} from '../HorizontalGridLines';
-import {YAxis} from '../YAxis';
-import {LegendContainer, useLegend} from '../LegendContainer';
+import {useColorVisionEvents} from '../../hooks/ColorVisionA11y/useColorVisionEvents';
+import {useReducedLabelIndexes} from '../../hooks/useReducedLabelIndexes';
+import {HorizontalGridLines} from '../HorizontalGridLines/HorizontalGridLines';
+import {YAxis} from '../YAxis/YAxis';
+import {LegendContainer} from '../LegendContainer/LegendContainer';
+import {useLegend} from '../LegendContainer/hooks/useLegend';
 import {ANNOTATIONS_LABELS_OFFSET} from '../../constants';
+import {useVerticalBarChart} from '../VerticalBarChart/hooks/useVerticalBarChart';
 
 import {useDualAxisTicks} from './hooks/useDualAxisTicks';
 import {useDualAxisTicksWidth} from './hooks/useDualAxisTickWidths';
 import {useDualAxisScale} from './hooks/useDualAxisScale';
 import {useXScale} from './hooks/useXScale';
-import {ComboBarChart, ComboLineChart, AxisLabel} from './components';
+import {ComboBarChart} from './components/ComboBarChart/ComboBarChart';
+import {ComboLineChart} from './components/ComboLineChart/ComboLineChart';
+import {AxisLabel} from './components/AxisLabel/AxisLabel';
 import {useSplitDataForCharts} from './hooks/useSplitDataForCharts';
 import {useComboChartTooltipContent} from './hooks/useComboChartTooltipContent';
 import {useComboChartPositions} from './hooks/useComboChartPositions';
@@ -181,8 +184,8 @@ export function Chart({
   });
 
   return (
-    <ChartElements.Div height={height} width={width}>
-      <ChartElements.Svg width={width} setRef={setSvgRef} height={height}>
+    <ChartDiv height={height} width={width}>
+      <ChartSVG width={width} setRef={setSvgRef} height={height}>
         {selectedTheme.grid.showHorizontalLines ? (
           <HorizontalGridLines
             ticks={primaryTicks}
@@ -315,7 +318,7 @@ export function Chart({
             y={yAxisBounds.y}
           />
         )}
-      </ChartElements.Svg>
+      </ChartSVG>
 
       <TooltipWrapper
         bandwidth={labelWidth}
@@ -340,6 +343,6 @@ export function Chart({
           renderLegendContent={renderLegendContent}
         />
       )}
-    </ChartElements.Div>
+    </ChartDiv>
   );
 }

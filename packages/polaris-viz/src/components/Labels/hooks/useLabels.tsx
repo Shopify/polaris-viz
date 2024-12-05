@@ -3,7 +3,7 @@ import {useEffect, useMemo} from 'react';
 import {useChartContext} from '@shopify/polaris-viz-core';
 
 import {getFontSize} from '../../../utilities/getFontSize';
-import {estimateStringWidthWithOffset} from '../../../utilities';
+import {estimateStringWidthWithOffset} from '../../../utilities/estimateStringWidthWithOffset';
 import {
   LINE_HEIGHT,
   DIAGONAL_LABEL_MIN_WIDTH,

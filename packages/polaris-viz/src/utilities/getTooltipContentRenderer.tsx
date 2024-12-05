@@ -1,8 +1,9 @@
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import type {TooltipOptions, RenderTooltipContentData} from '../types';
-import {formatDataForTooltip} from '../utilities';
-import {TooltipContent} from '../components';
+import {TooltipContent} from '../components/TooltipContent/TooltipContent';
+
+import {formatDataForTooltip} from './formatDataForTooltip';
 
 export function getTooltipContentRenderer({
   tooltipOptions = {},

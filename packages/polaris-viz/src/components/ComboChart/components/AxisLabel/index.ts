@@ -1,1 +1,0 @@
-export {AxisLabel} from './AxisLabel';

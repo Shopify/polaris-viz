@@ -2,7 +2,7 @@ import type {RefObject} from 'react';
 import {useMemo} from 'react';
 
 import type {LegendData} from '../../../types';
-import type {LegendItemDimension} from '../../Legend';
+import type {LegendItemDimension} from '../../Legend/components/LegendItem/LegendItem';
 
 export interface HorizontalOverflowLegendProps {
   direction: 'horizontal';

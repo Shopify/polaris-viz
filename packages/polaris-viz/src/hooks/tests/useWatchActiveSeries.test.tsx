@@ -5,7 +5,7 @@ import {
   useWatchActiveSeries,
   setActiveSeriesListener,
 } from '../useWatchActiveSeries';
-import {getEventName} from '../ColorVisionA11y';
+import {getEventName} from '../ColorVisionA11y/utilities';
 import {useCallbackRef} from '../useCallbackRef';
 
 jest.mock('../useCallbackRef');

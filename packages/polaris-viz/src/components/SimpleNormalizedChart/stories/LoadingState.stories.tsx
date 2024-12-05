@@ -3,7 +3,7 @@ import type {Story} from '@storybook/react';
 
 export {META as default} from './meta';
 
-import type {SimpleNormalizedChartProps} from '../..';
+import type {SimpleNormalizedChartProps} from '../SimpleNormalizedChart';
 
 import {DEFAULT_PROPS, DEFAULT_DATA, Template} from './data';
 

@@ -2,7 +2,7 @@ import type {Story} from '@storybook/react';
 
 export {META as default} from './meta';
 
-import type {LineChartProps} from '../../../components';
+import type {LineChartProps} from '../LineChart';
 import {formatLinearXAxisLabel} from '../../../storybook/utilities';
 
 import {DEFAULT_PROPS, Template} from './data';

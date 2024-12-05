@@ -2,7 +2,8 @@ import type {Story} from '@storybook/react';
 
 export {META as default} from './meta';
 
-import {StackedAreaChart, type StackedAreaChartProps} from '../../../components';
+import {StackedAreaChart} from '../StackedAreaChart';
+import type {StackedAreaChartProps} from '../StackedAreaChart';
 
 import {DEFAULT_DATA, DEFAULT_PROPS} from './data';
 
@@ -21,16 +22,16 @@ function Card(args: StackedAreaChartProps) {
   );
 }
 
-const Template: Story<StackedAreaChartProps> = (args: StackedAreaChartProps) => {
+const Template: Story<StackedAreaChartProps> = (
+  args: StackedAreaChartProps,
+) => {
   return (
-    <div style={{overflowY: 'scroll', height:500}}>
+    <div style={{overflowY: 'scroll', height: 500}}>
       <Card {...args} />
       <div style={{height: 1500, width: 10}} />
     </div>
   );
-}
-
-
+};
 
 export const ExternalTooltip: Story<StackedAreaChartProps> = Template.bind({});
 

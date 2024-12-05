@@ -1,8 +1,10 @@
 import {mount} from '@shopify/react-testing';
 import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
-import {mountWithProvider} from '../../../test-utilities';
-import {mockDefaultTheme} from '../../../test-utilities/mountWithProvider';
+import {
+  mountWithProvider,
+  mockDefaultTheme,
+} from '../../../test-utilities/mountWithProvider';
 import {Crosshair} from '../Crosshair';
 
 describe('<Crosshair />', () => {

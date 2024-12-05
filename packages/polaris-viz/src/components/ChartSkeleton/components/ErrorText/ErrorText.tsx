@@ -1,7 +1,7 @@
 import {FONT_SIZE, useTheme} from '@shopify/polaris-viz-core';
 
-import {useLabels} from '../../../Labels/hooks';
-import {TextLine} from '../../../TextLine';
+import {useLabels} from '../../../Labels/hooks/useLabels';
+import {TextLine} from '../../../TextLine/TextLine';
 
 const TEXT_DROP_SHADOW_SIZE = 3;
 

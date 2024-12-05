@@ -14,14 +14,14 @@ import {
   useTheme,
 } from '@shopify/polaris-viz-core';
 
+import {TOOLTIP_MARGIN} from '../../TooltipWrapper/constants';
 import {getFontSize} from '../../../utilities/getFontSize';
 import type {LegendData} from '../../../types';
 import {TOOLTIP_BG_OPACITY} from '../../../constants';
 import {useBrowserCheck} from '../../../hooks/useBrowserCheck';
 import {useRootContainer} from '../../../hooks/useRootContainer';
-import {useColorVisionEvents} from '../../../hooks/ColorVisionA11y';
-import {TOOLTIP_MARGIN} from '../../TooltipWrapper';
-import {Legend} from '../../Legend';
+import {useColorVisionEvents} from '../../../hooks/ColorVisionA11y/useColorVisionEvents';
+import {Legend} from '../../Legend/Legend';
 
 import style from './HiddenLegendTooltip.scss';
 

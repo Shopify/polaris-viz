@@ -2,7 +2,7 @@ import type {Story} from '@storybook/react';
 
 export {META as default} from './meta';
 
-import type {DonutChartProps} from '..';
+import type {DonutChartProps} from '../DonutChart';
 
 import {DEFAULT_DATA, DEFAULT_PROPS, Template} from './data';
 

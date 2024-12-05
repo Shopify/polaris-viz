@@ -4,7 +4,8 @@ import React from 'react';
 import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 import {StackedAreas} from '../StackedAreas';
-import {AnimatedArea, Area} from '../../Area';
+import {AnimatedArea} from '../../Area/AnimatedArea';
+import {Area} from '../../Area/Area';
 import type {StackedSeries} from '../../../../../types';
 
 jest.mock('d3-scale', () => ({

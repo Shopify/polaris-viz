@@ -1,7 +1,7 @@
 import type {DataSeries} from '@shopify/polaris-viz-core';
 import {stackOrderNone, stackOffsetDiverging} from 'd3-shape';
 
-import {getStackedValues} from './';
+import {getStackedValues} from './getStackedValues';
 
 export function getStackedValuesFromDataSeries(data: DataSeries[]) {
   const longestSeries = data.reduce((prev, cur) => {

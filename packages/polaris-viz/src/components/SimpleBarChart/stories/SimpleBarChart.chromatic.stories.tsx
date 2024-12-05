@@ -11,7 +11,7 @@ export default {
   },
 };
 
-import {SimpleBarChart} from '../../../components';
+import {SimpleBarChart} from '../SimpleBarChart';
 import {SINGLE_SERIES} from './data';
 
 const METADATA: MetaData = {

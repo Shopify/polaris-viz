@@ -1,1 +1,0 @@
-export {CustomLegend} from './CustomLegend';

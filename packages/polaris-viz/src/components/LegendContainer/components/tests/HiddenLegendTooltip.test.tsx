@@ -4,7 +4,7 @@ import {
   HiddenLegendTooltip,
   LEGEND_TOOLIP_Z_INDEX,
 } from '../HiddenLegendTooltip';
-import {Legend} from '../../../Legend';
+import {Legend} from '../../../Legend/Legend';
 
 const mockProps = {
   activeIndex: 0,

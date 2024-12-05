@@ -9,6 +9,7 @@ import {
   useChartContext,
   THIN_ARC_CORNER_THICKNESS,
   isInfinity,
+  getSeriesColors,
 } from '@shopify/polaris-viz-core';
 import type {
   DataPoint,
@@ -18,15 +19,13 @@ import type {
 } from '@shopify/polaris-viz-core';
 
 import {getAnimationDelayForItems} from '../../utilities/getAnimationDelayForItems';
-import {getContainerAlignmentForLegend} from '../../utilities';
-import type {ComparisonMetricProps} from '../ComparisonMetric';
-import {LegendContainer, useLegend} from '../../components/LegendContainer';
-import {
-  getSeriesColors,
-  useColorVisionEvents,
-  useWatchColorVisionEvents,
-} from '../../hooks';
-import {Arc} from '../Arc';
+import {getContainerAlignmentForLegend} from '../../utilities/getContainerAlignmentForLegend';
+import type {ComparisonMetricProps} from '../ComparisonMetric/ComparisonMetric';
+import {LegendContainer} from '../LegendContainer/LegendContainer';
+import {useLegend} from '../LegendContainer/hooks/useLegend';
+import {useColorVisionEvents} from '../../hooks/ColorVisionA11y/useColorVisionEvents';
+import {useWatchColorVisionEvents} from '../../hooks/ColorVisionA11y/useWatchColorVisionEvents';
+import {Arc} from '../Arc/Arc';
 import type {
   ColorVisionInteractionMethods,
   LegendPosition,
@@ -34,10 +33,11 @@ import type {
   RenderInnerValueContent,
   RenderLegendContent,
 } from '../../types';
-import {ChartSkeleton} from '../../components/ChartSkeleton';
+import {ChartSkeleton} from '../ChartSkeleton/ChartSkeleton';
 
 import styles from './DonutChart.scss';
-import {InnerValue, LegendValues} from './components';
+import {InnerValue} from './components/InnerValue/InnerValue';
+import {LegendValues} from './components/LegendValues/LegendValues';
 
 const FULL_CIRCLE = Math.PI * 2;
 const RADIUS_PADDING = 20;

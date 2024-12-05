@@ -1,6 +1,6 @@
 import type {Meta} from '@storybook/react';
 
-import {PageWithSizingInfo} from '../../Docs/stories';
+import {PageWithSizingInfo} from '../../Docs/stories/components/PageWithSizingInfo/PageWithSizingInfo';
 import {
   CHART_STATE_CONTROL_ARGS,
   CONTROLS_ARGS,

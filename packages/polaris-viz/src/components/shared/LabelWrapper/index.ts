@@ -1,1 +1,0 @@
-export {LabelWrapper} from './LabelWrapper';

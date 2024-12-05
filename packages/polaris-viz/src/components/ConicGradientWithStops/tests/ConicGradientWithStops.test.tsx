@@ -1,6 +1,6 @@
 import {mount} from '@shopify/react-testing';
 
-import {ConicGradientWithStops} from '..';
+import {ConicGradientWithStops} from '../ConicGradientWithStops';
 import type {ConicGradientWithStopsProps} from '../ConicGradientWithStops';
 
 const mockProps1 = {

@@ -3,7 +3,7 @@ import type {Story, StoryFn} from '@storybook/react';
 
 export {META as default} from './meta';
 
-import {PolarisVizProvider} from '../../PolarisVizProvider';
+import {PolarisVizProvider} from '../../PolarisVizProvider/PolarisVizProvider';
 import type {DonutChartProps} from '../DonutChart';
 import {DonutChart} from '../DonutChart';
 

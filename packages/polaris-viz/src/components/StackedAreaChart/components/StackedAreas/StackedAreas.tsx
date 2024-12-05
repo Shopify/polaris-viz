@@ -7,6 +7,7 @@ import {
   uniqueId,
   COLOR_VISION_SINGLE_ITEM,
   usePrevious,
+  useTheme,
 } from '@shopify/polaris-viz-core';
 
 import {
@@ -16,8 +17,9 @@ import {
   LINE_ANIMATION_DURATION_STEP,
 } from '../../../../constants';
 import type {StackedSeries} from '../../../../types';
-import {useTheme, useWatchColorVisionEvents} from '../../../../hooks';
-import {AnimatedArea, Area} from '../Area';
+import {useWatchColorVisionEvents} from '../../../../hooks/ColorVisionA11y/useWatchColorVisionEvents';
+import {AnimatedArea} from '../Area/AnimatedArea';
+import {Area} from '../Area/Area';
 
 interface Props {
   colors: Color[];

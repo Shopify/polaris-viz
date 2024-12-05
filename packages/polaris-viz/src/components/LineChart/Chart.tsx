@@ -12,6 +12,7 @@ import {
   LINE_HEIGHT,
   SMALL_CHART_HEIGHT,
   InternalChartType,
+  useTheme,
 } from '@shopify/polaris-viz-core';
 import type {
   XAxisOptions,
@@ -21,13 +22,11 @@ import type {
   LabelFormatter,
 } from '@shopify/polaris-viz-core';
 
-import {useExternalHideEvents} from '../../hooks/ExternalEvents';
+import {useExternalHideEvents} from '../../hooks/ExternalEvents/useExternalHideEvents';
 import {useIndexForLabels} from '../../hooks/useIndexForLabels';
-import {
-  Annotations,
-  checkAvailableAnnotations,
-  YAxisAnnotations,
-} from '../Annotations';
+import {Annotations} from '../Annotations/Annotations';
+import {checkAvailableAnnotations} from '../Annotations/utilities/checkAvailableAnnotations';
+import {YAxisAnnotations} from '../Annotations/YAxisAnnotations';
 import type {
   AnnotationLookupTable,
   LineChartSlotProps,
@@ -36,30 +35,28 @@ import type {
   RenderTooltipContentData,
 } from '../../types';
 import {useFormattedLabels} from '../../hooks/useFormattedLabels';
-import {XAxis} from '../XAxis';
-import {useLegend, LegendContainer} from '../LegendContainer';
-import {TooltipWrapper} from '../../components/TooltipWrapper';
-import {
-  useTheme,
-  useColorVisionEvents,
-  useWatchColorVisionEvents,
-  useLinearLabelsAndDimensions,
-} from '../../hooks';
+import {XAxis} from '../XAxis/XAxis';
+import {useLegend} from '../LegendContainer/hooks/useLegend';
+import {LegendContainer} from '../LegendContainer/LegendContainer';
+import {TooltipWrapper} from '../TooltipWrapper/TooltipWrapper';
+import {useColorVisionEvents} from '../../hooks/ColorVisionA11y/useColorVisionEvents';
+import {useWatchColorVisionEvents} from '../../hooks/ColorVisionA11y/useWatchColorVisionEvents';
+import {useLinearLabelsAndDimensions} from '../../hooks/useLinearLabelsAndDimensions';
 import {
   ChartMargin,
   ANNOTATIONS_LABELS_OFFSET,
   Y_AXIS_LABEL_OFFSET,
   CROSSHAIR_ID,
 } from '../../constants';
-import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
-import {YAxis} from '../YAxis';
-import {HorizontalGridLines} from '../HorizontalGridLines';
-import {ChartElements} from '../ChartElements';
+import {VisuallyHiddenRows} from '../VisuallyHiddenRows/VisuallyHiddenRows';
+import {YAxis} from '../YAxis/YAxis';
+import {HorizontalGridLines} from '../HorizontalGridLines/HorizontalGridLines';
+import {ChartSVG} from '../ChartElements/ChartSVG';
 
 import {useLineChartTooltipContent} from './hooks/useLineChartTooltipContent';
-import {PointsAndCrosshair} from './components';
-import {useFormatData} from './hooks';
-import {yAxisMinMax} from './utilities';
+import {PointsAndCrosshair} from './components/PointsAndCrosshair/PointsAndCrosshair';
+import {useFormatData} from './hooks/useFormatData';
+import {yAxisMinMax} from './utilities/yAxisMinMax';
 
 export interface ChartProps {
   renderTooltipContent: (data: RenderTooltipContentData) => ReactNode;
@@ -244,7 +241,7 @@ export function Chart({
 
   return (
     <Fragment>
-      <ChartElements.Svg
+      <ChartSVG
         emptyState={emptyState}
         emptyStateText={emptyStateText}
         height={height}
@@ -368,7 +365,7 @@ export function Chart({
             />
           </g>
         )}
-      </ChartElements.Svg>
+      </ChartSVG>
 
       {longestSeriesLength !== -1 && (
         <TooltipWrapper

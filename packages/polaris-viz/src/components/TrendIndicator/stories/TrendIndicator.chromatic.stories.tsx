@@ -1,11 +1,10 @@
 import {storiesOf} from '@storybook/react';
 
-import {
-  addWithPropsCombinations,
-  renderCombinationSections,
-} from '../../../chromatic';
-import {TrendIndicator} from '../';
-import type {TrendIndicatorProps} from '../';
+import {addWithPropsCombinations} from '../../../chromatic/components/AddWithPropsCombinations';
+import {renderCombinationSections} from '../../../chromatic/utilities/renderCombinationSections';
+
+import {TrendIndicator} from '../TrendIndicator';
+import type {TrendIndicatorProps} from '../TrendIndicator';
 
 const stories = storiesOf('Chromatic/Components', module).addParameters({
   docs: {page: null},

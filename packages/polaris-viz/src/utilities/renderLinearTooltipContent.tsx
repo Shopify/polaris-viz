@@ -2,14 +2,12 @@ import type {DataSeries} from '@shopify/polaris-viz-core';
 import type {ReactNode} from 'react';
 import {Fragment} from 'react';
 
-import {
-  TooltipSeries,
-  TooltipContentContainer,
-  TooltipSeriesName,
-  TooltipTitle,
-  TooltipRow,
-  LinePreview,
-} from '../components';
+import {TooltipSeries} from '../components/TooltipContent/components/TooltipSeries/TooltipSeries';
+import {TooltipContentContainer} from '../components/TooltipContent/components/TooltipContentContainer/TooltipContentContainer';
+import {TooltipSeriesName} from '../components/TooltipContent/components/TooltipSeriesName/TooltipSeriesName';
+import {TooltipTitle} from '../components/TooltipContent/components/TooltipTitle/TooltipTitle';
+import {TooltipRow} from '../components/TooltipContent/components/TooltipRow/TooltipRow';
+import {LinePreview} from '../components/LinePreview/LinePreview';
 import type {RenderTooltipContentData, TooltipFormatters} from '../types';
 
 interface Group {

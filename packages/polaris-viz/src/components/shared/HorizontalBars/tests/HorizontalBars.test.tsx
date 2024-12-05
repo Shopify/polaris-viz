@@ -4,10 +4,10 @@ import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import type {HorizontalBarsProps} from '../HorizontalBars';
 import {HorizontalBars} from '../HorizontalBars';
-import {Bar} from '../../Bar';
-import {Label} from '../../Label';
-import {LabelWrapper} from '../../LabelWrapper';
-import {TrendIndicator} from '../../..';
+import {Bar} from '../../Bar/Bar';
+import {Label} from '../../Label/Label';
+import {LabelWrapper} from '../../LabelWrapper/LabelWrapper';
+import {TrendIndicator} from '../../../TrendIndicator/TrendIndicator';
 
 jest.mock('d3-scale', () => ({
   scaleLinear: jest.requireActual('d3-scale').scaleLinear,

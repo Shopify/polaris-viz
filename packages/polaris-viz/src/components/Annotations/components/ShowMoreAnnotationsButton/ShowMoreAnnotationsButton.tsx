@@ -7,10 +7,11 @@ import {
 } from '@shopify/polaris-viz-core';
 
 import {PILL_HEIGHT, PILL_PADDING, PILL_X_MIN} from '../../constants';
-import {SingleTextLine} from '../../../Labels';
+import {SingleTextLine} from '../../../Labels/SingleTextLine';
 
 import styles from './ShowMoreAnnotationsButton.scss';
-import {Icon, Shadow} from './components';
+import {Icon} from './components/Icon';
+import {Shadow} from './components/Shadow';
 
 const STROKE = 2;
 

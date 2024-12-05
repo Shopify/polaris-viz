@@ -3,7 +3,7 @@ import {COLOR_VARIABLES} from '@shopify/polaris-viz-core';
 
 export {META as default} from './meta';
 
-import type {SquareColorPreviewProps} from '../../../components';
+import type {SquareColorPreviewProps} from '../SquareColorPreview';
 
 import {Template} from './data';
 

@@ -3,7 +3,7 @@ import {useChartContext} from '@shopify/polaris-viz-core';
 
 import type {LegendContainerProps} from '../LegendContainer';
 import {LegendContainer} from '../LegendContainer';
-import {Legend} from '../../Legend';
+import {Legend} from '../../Legend/Legend';
 import {HiddenLegendTooltip} from '../components/HiddenLegendTooltip';
 
 const WIDTH_WITH_OVERFLOW = 10;

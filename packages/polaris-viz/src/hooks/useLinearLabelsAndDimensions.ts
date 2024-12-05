@@ -2,7 +2,7 @@ import {useMemo} from 'react';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 import {LINEAR_LABELS_INNER_PADDING, clamp} from '@shopify/polaris-viz-core';
 
-import {estimateStringWidthWithOffset} from '../utilities';
+import {estimateStringWidthWithOffset} from '../utilities/estimateStringWidthWithOffset';
 import {HORIZONTAL_LABEL_MIN_WIDTH} from '../constants';
 import {getFontSize} from '../utilities/getFontSize';
 

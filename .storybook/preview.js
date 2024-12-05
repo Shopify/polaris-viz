@@ -1,7 +1,7 @@
 import {themes} from '@storybook/theming';
 import {PolarisVizProvider} from '@shopify/polaris-viz';
-import {DARK_THEME, LIGHT_THEME} from '../packages/polaris-viz/src/constants';
-import {useTheme} from '../packages/polaris-viz/src/hooks';
+import {DARK_THEME} from '../packages/polaris-viz/src/constants';
+import {useTheme} from '@shopify/polaris-viz-core';
 
 // https://github.com/storybookjs/storybook/issues/548
 const storiesOrder = {

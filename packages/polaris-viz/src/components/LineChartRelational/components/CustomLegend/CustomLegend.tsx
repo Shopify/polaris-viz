@@ -1,7 +1,7 @@
 import type {DataSeries, LabelFormatter} from '@shopify/polaris-viz-core';
 
 import type {ColorVisionInteractionMethods} from '../../../../types';
-import {LegendItem} from '../../../../components/Legend';
+import {LegendItem} from '../../../Legend/components/LegendItem/LegendItem';
 
 import styles from './CustomLegend.scss';
 

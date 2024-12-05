@@ -3,7 +3,7 @@ import type {Story} from '@storybook/react';
 
 export {META as default} from './meta';
 
-import type {LinePreviewProps} from '../../../components';
+import type {LinePreviewProps} from '../LinePreview';
 
 import {Template} from './data';
 

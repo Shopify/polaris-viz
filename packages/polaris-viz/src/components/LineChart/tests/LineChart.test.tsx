@@ -2,7 +2,7 @@ import {mount} from '@shopify/react-testing';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {LineChart} from '../LineChart';
-import {SkipLink} from '../../SkipLink';
+import {SkipLink} from '../../SkipLink/SkipLink';
 import {Chart} from '../Chart';
 
 const primarySeries: DataSeries = {

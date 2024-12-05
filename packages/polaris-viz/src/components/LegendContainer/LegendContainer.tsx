@@ -12,15 +12,16 @@ import {
 import type {Direction, Dimensions} from '@shopify/polaris-viz-core';
 
 import {DEFAULT_LEGEND_HEIGHT, DEFAULT_LEGEND_WIDTH} from '../../constants';
-import {useResizeObserver, useWatchColorVisionEvents} from '../../hooks';
-import {Legend} from '../Legend';
+import {useResizeObserver} from '../../hooks/useResizeObserver';
+import {useWatchColorVisionEvents} from '../../hooks/ColorVisionA11y/useWatchColorVisionEvents';
+import {Legend} from '../Legend/Legend';
 import type {
   LegendData,
   LegendPosition,
   RenderHiddenLegendLabel,
   RenderLegendContent,
 } from '../../types';
-import {classNames} from '../../utilities';
+import {classNames} from '../../utilities/classnames';
 
 import style from './LegendContainer.scss';
 import {HiddenLegendTooltip} from './components/HiddenLegendTooltip';

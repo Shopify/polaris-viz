@@ -4,14 +4,14 @@ import {isValueWithinDomain} from '@shopify/polaris-viz-core';
 
 import type {Annotation, AnnotationLookupTable} from '../../../../types';
 import {useSVGBlurEvent} from '../../../../hooks/useSVGBlurEvent';
+import {AnnotationLabel} from '../../../Annotations/components/AnnotationLabel/AnnotationLabel';
+import {AnnotationLine} from '../../../Annotations/components/AnnotationLine/AnnotationLine';
+import {AnnotationContent} from '../../../Annotations/components/AnnotationContent/AnnotationContent';
+import {ShowMoreAnnotationsButton} from '../../../Annotations/components/ShowMoreAnnotationsButton/ShowMoreAnnotationsButton';
 import {
-  AnnotationLabel,
-  AnnotationLine,
-  AnnotationContent,
-  ShowMoreAnnotationsButton,
   PILL_HEIGHT,
   SHOW_MORE_BUTTON_OFFSET,
-} from '../../../Annotations';
+} from '../../../Annotations/constants';
 import {isShowMoreAnnotationsButtonVisible} from '../../../../utilities/isShowMoreAnnotationsButtonVisible';
 import {shouldHideAnnotation} from '../../../../utilities/shouldHideAnnotation';
 

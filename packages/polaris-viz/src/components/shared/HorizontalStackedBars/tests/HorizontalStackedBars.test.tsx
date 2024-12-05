@@ -8,8 +8,8 @@ import {
 } from '../../../../test-utilities/mountWithProvider';
 import type {HorizontalStackedBarsProps} from '../HorizontalStackedBars';
 import {HorizontalStackedBars} from '../HorizontalStackedBars';
-import {StackedBar} from '../components';
-import {Label} from '../../Label';
+import {StackedBar} from '../components/StackedBar/StackedBar';
+import {Label} from '../../Label/Label';
 import type {FormattedStackedSeries} from '../../../../types';
 
 jest.mock('d3-scale', () => ({

@@ -1,6 +1,8 @@
 import type {Story} from '@storybook/react';
 
-import {BarChart, BarChartProps} from '../../../../components';
+import {BarChart} from '../../BarChart';
+import type {BarChartProps} from '../../BarChart';
+
 import {META} from '../meta';
 import {useState} from 'react';
 

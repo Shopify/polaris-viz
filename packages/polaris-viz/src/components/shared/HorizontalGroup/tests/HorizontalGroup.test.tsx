@@ -4,8 +4,8 @@ import type {FormattedStackedSeries} from '@shopify/polaris-viz-core';
 
 import type {HorizontalGroupProps} from '../HorizontalGroup';
 import {HorizontalGroup} from '../HorizontalGroup';
-import {HorizontalStackedBars} from '../..';
-import {HorizontalBars} from '../../HorizontalBars';
+import {HorizontalStackedBars} from '../../HorizontalStackedBars/HorizontalStackedBars';
+import {HorizontalBars} from '../../HorizontalBars/HorizontalBars';
 
 jest.mock('d3-scale', () => ({
   scaleLinear: jest.requireActual('d3-scale').scaleLinear,

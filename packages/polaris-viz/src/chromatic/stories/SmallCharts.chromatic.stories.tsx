@@ -1,13 +1,11 @@
 import {storiesOf} from '@storybook/react';
-import {
-  BarChart,
-  StackedAreaChart,
-  LineChart,
-  LineChartPredictive,
-  LineChartRelational,
-  PolarisVizProvider,
-  LineChartProps
-} from '../../components';
+import {BarChart} from '../../components/BarChart/BarChart';
+import {StackedAreaChart} from '../../components/StackedAreaChart/StackedAreaChart';
+import {LineChart} from '../../components/LineChart/LineChart';
+import {LineChartPredictive} from '../../components/LineChartPredictive/LineChartPredictive';
+import {LineChartRelational} from '../../components/LineChartRelational/LineChartRelational';
+import {PolarisVizProvider} from '../../components/PolarisVizProvider/PolarisVizProvider';
+import type {LineChartProps} from '../../components/LineChart/LineChart';
 
 const CHARTS = {
   StackedAreaChart: StackedAreaChart,
@@ -106,8 +104,6 @@ export const DEFAULT_DATA = [
   },
 ];
 
-
-
 const stories = storiesOf(`Chromatic/Small charts`, module).addParameters({
   chromatic: {disableSnapshot: false},
 });
@@ -115,14 +111,14 @@ const stories = storiesOf(`Chromatic/Small charts`, module).addParameters({
 stories.add('Default', () => {
   return (
     <div style={{display: 'grid', gap: '20px'}}>
-      <PolarisVizProvider themes={{'Name': {chartContainer: {minHeight: 0}}}}>
+      <PolarisVizProvider themes={{Name: {chartContainer: {minHeight: 0}}}}>
         {Object.keys(CHARTS).map((key) => {
           const Chart = CHARTS[key];
 
           return (
-              <div style={{width: 200, height: 100}}>
+            <div style={{width: 200, height: 100}}>
               <Chart theme="Name" data={DEFAULT_DATA} {...DEFAULT_PROPS} />
-              </div>
+            </div>
           );
         })}
       </PolarisVizProvider>

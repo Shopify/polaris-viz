@@ -7,8 +7,8 @@ import {
   useChartContext,
 } from '@shopify/polaris-viz-core';
 
-import {Bar} from '../../../shared';
-import {ErrorText} from '../ErrorText';
+import {Bar} from '../../../shared/Bar/Bar';
+import {ErrorText} from '../ErrorText/ErrorText';
 
 interface Props {
   state: ChartState;

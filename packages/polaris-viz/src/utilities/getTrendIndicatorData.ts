@@ -1,9 +1,8 @@
 import type {MetaDataTrendIndicator} from 'types';
 
-// eslint-disable-next-line @shopify/strict-component-boundaries
-import {TREND_INDICATOR_FONT_WEIGHT} from '../components/TrendIndicator';
+import {FONT_WEIGHT as TREND_INDICATOR_FONT_WEIGHT} from '../components/TrendIndicator/constants';
 import {FONT_SIZE} from '../constants';
-import {estimateTrendIndicatorWidth} from '../components';
+import {estimateTrendIndicatorWidth} from '../components/TrendIndicator/utilities/estimateTrendIndicatorWidth';
 
 export function getTrendIndicatorData(
   trendMetadata: MetaDataTrendIndicator | undefined,

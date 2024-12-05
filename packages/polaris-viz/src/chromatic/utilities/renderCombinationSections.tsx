@@ -1,7 +1,7 @@
 import type {FC} from 'react';
 
 import {StorySection} from '../components/StorySection';
-import {PolarisVizProvider} from '../../components';
+import {PolarisVizProvider} from '../../components/PolarisVizProvider/PolarisVizProvider';
 
 type CombinationSection = [string, FC];
 

@@ -1,6 +1,6 @@
 import {COLOR_VISION_SINGLE_ITEM} from '@shopify/polaris-viz-core';
 
-import {getEventName} from '../hooks/ColorVisionA11y';
+import {getEventName} from '../hooks/ColorVisionA11y/utilities';
 
 export function setSingleSeriesActive(id: string, index: number) {
   const custom = new CustomEvent(getEventName(id, COLOR_VISION_SINGLE_ITEM), {

@@ -6,7 +6,7 @@ import {
   HIDE_NAME_AND_SECONDARY_VALUE_HEIGHT_THRESHOLD,
   HIDE_NAME_AND_SECONDARY_VALUE_WIDTH_THRESHOLD,
 } from '../utilities/constants';
-import {classNames} from '../../../utilities';
+import {classNames} from '../../../utilities/classnames';
 
 import styles from './GroupCell.scss';
 import {Background} from './Background';

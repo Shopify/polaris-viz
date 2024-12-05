@@ -1,7 +1,7 @@
 import {useEffect} from 'react';
 import {COLOR_VISION_EVENT, useChartContext} from '@shopify/polaris-viz-core';
 
-import {useExternalHideEvents} from '../ExternalEvents';
+import {useExternalHideEvents} from '../ExternalEvents/useExternalHideEvents';
 
 import {getDataSetItem, getEventName} from './utilities';
 

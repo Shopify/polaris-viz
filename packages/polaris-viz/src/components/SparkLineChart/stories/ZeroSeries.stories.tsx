@@ -2,7 +2,7 @@ import type {Story} from '@storybook/react';
 
 export {META as default} from './meta';
 
-import type {SparkLineChartProps} from '../../../components';
+import type {SparkLineChartProps} from '../SparkLineChart';
 
 import {DEFAULT_PROPS, Template} from './data';
 

@@ -2,27 +2,18 @@ import {Meta, Story, Canvas} from '@storybook/addon-docs';
 import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 import {PolarisVizProvider} from '../../../';
-import {
-  Divider,
-  ComponentContainer,
-  Title,
-  ExamplesGrid,
-  SampleSparkbar,
-  SampleSparkLineChart,
-  SampleBarChart,
-  PropertyTable,
-  SampleLineChart,
-  SampleStackedAreaChart,
-  SampleSimpleNormalizedChart,
-} from './components';
-
+import {ComponentContainer} from './components/ComponentContainer/ComponentContainer';
+import {Title} from './components/Title/Title';
+import {ExamplesGrid} from './components/ExamplesGrid/ExamplesGrid';
+import {PropertyTable} from './components/PropertyTable/PropertyTable';
+import {SampleLineChart} from './components/SampleComponents';
 <Meta
   title="Shared/Themes/Theme Definition/Chart Specific Properties/line"
   parameters={{
     viewMode: 'docs',
     docsOnly: true,
   }}
-/>
+/>;
 
 <Title type="h3">
   <code>line</code>

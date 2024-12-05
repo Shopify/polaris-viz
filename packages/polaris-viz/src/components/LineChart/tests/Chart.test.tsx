@@ -10,22 +10,24 @@ import {
   useChartContext,
 } from '@shopify/polaris-viz-core';
 
-import {LegendContainer} from '../../LegendContainer';
-import {Crosshair} from '../../../components/Crosshair';
-import {VisuallyHiddenRows} from '../../../components/VisuallyHiddenRows';
-import {Point} from '../../../components/Point';
-import {mountWithProvider, triggerSVGMouseMove} from '../../../test-utilities';
-import {HorizontalGridLines} from '../../../components/HorizontalGridLines';
-import {mockDefaultTheme} from '../../../test-utilities/mountWithProvider';
+import {LegendContainer} from '../../LegendContainer/LegendContainer';
+import {Crosshair} from '../../Crosshair/Crosshair';
+import {VisuallyHiddenRows} from '../../VisuallyHiddenRows/VisuallyHiddenRows';
+import {Point} from '../../Point/Point';
 import {
-  TooltipAnimatedContainer,
-  TooltipWrapper,
-} from '../../../components/TooltipWrapper';
+  mountWithProvider,
+  mockDefaultTheme,
+} from '../../../test-utilities/mountWithProvider';
+import {triggerSVGMouseMove} from '../../../test-utilities/triggerSvgMouseMove';
+import {HorizontalGridLines} from '../../HorizontalGridLines/HorizontalGridLines';
+import {TooltipAnimatedContainer} from '../../TooltipWrapper/components/TooltipAnimatedContainer';
+import {TooltipWrapper} from '../../TooltipWrapper/TooltipWrapper';
 import type {ChartProps} from '../Chart';
 import {Chart} from '../Chart';
-import {YAxis} from '../../YAxis';
-import {Annotations, YAxisAnnotations} from '../../Annotations';
-import {normalizeData} from '../../../utilities';
+import {YAxis} from '../../YAxis/YAxis';
+import {Annotations} from '../../Annotations/Annotations';
+import {YAxisAnnotations} from '../../Annotations/YAxisAnnotations';
+import {normalizeData} from '../../../utilities/normalizeData';
 import {DEFAULT_CHART_CONTEXT as MOCK_DEFAULT_CHART_CONTEXT} from '../../../storybook/constants';
 
 const MOCK_DATA: Required<LineChartDataSeriesWithDefaults> = {

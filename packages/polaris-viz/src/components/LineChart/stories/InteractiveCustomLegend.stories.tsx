@@ -2,9 +2,9 @@ import type {Story} from '@storybook/react';
 
 export {META as default} from './meta';
 
-import {LinePreview} from '../../..';
+import {LinePreview} from '../../LinePreview/LinePreview';
 import {DARK_THEME} from '../../../constants';
-import type {LineChartProps} from '../..';
+import type {LineChartProps} from '../LineChart';
 
 import {DEFAULT_DATA, DEFAULT_PROPS, Template} from './data';
 

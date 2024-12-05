@@ -1,6 +1,7 @@
-import {estimateStringWidthWithOffset} from '../../../utilities';
+import {useTheme} from '@shopify/polaris-viz-core';
+
+import {estimateStringWidthWithOffset} from '../../../utilities/estimateStringWidthWithOffset';
 import {getFontSize} from '../../../utilities/getFontSize';
-import {useTheme} from '../../../hooks';
 import {HORIZONTAL_GROUP_LABEL_HEIGHT} from '../../../constants';
 
 import styles from './GroupLabel.scss';

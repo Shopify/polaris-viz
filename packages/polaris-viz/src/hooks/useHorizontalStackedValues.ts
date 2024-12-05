@@ -1,7 +1,7 @@
 import {useMemo} from 'react';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
-import {getStackedMinMax} from '../utilities';
+import {getStackedMinMax} from '../utilities/getStackedMinMax';
 import {getStackedValuesFromDataSeries} from '../utilities/getStackedValuesFromDataSeries';
 
 interface Props {

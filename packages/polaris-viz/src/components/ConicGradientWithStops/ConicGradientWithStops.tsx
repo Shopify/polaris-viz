@@ -1,6 +1,6 @@
 import type {GradientStop} from '@shopify/polaris-viz-core';
 
-import {createCSSConicGradient} from '../../utilities';
+import {createCSSConicGradient} from '../../utilities/createCssConicGradient';
 
 export interface ConicGradientWithStopsProps {
   gradient: GradientStop[];

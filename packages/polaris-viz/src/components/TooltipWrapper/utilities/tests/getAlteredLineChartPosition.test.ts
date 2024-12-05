@@ -16,6 +16,7 @@ const BASE_PROPS: AlteredPositionProps = {
     horizontal: TooltipHorizontalOffset.Left,
     vertical: TooltipVerticalOffset.Center,
   },
+  containerBounds: {height: 100, width: 200, x: 0, y: 0},
 };
 
 let windowSpy;

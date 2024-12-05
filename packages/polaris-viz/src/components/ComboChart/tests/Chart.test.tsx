@@ -3,11 +3,13 @@ import type {DataGroup} from '@shopify/polaris-viz-core';
 
 import type {ChartProps} from '../Chart';
 import {Chart} from '../Chart';
-import {getXAxisOptionsWithDefaults, normalizeData} from '../../../utilities';
-import {LegendContainer} from '../../LegendContainer';
-import {Annotations, YAxisAnnotations} from '../../Annotations';
-import {AxisLabel} from '../components';
-import {YAxis} from '../../YAxis';
+import {getXAxisOptionsWithDefaults} from '../../../utilities/getAxisOptions';
+import {normalizeData} from '../../../utilities/normalizeData';
+import {LegendContainer} from '../../LegendContainer/LegendContainer';
+import {Annotations} from '../../Annotations/Annotations';
+import {YAxisAnnotations} from '../../Annotations/YAxisAnnotations';
+import {AxisLabel} from '../components/AxisLabel/AxisLabel';
+import {YAxis} from '../../YAxis/YAxis';
 
 jest.mock('../../../hooks/useEstimateStringWidth', () => ({
   useEstimateStringWidth: () => 100,

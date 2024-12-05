@@ -17,21 +17,21 @@ import type {
 
 import {bucketDataSeries} from '../../utilities/bucketDataSeries';
 import {getTooltipContentRenderer} from '../../utilities/getTooltipContentRenderer';
-import {ChartContainer} from '../../components/ChartContainer';
+import {ChartContainer} from '../ChartContainer/ChartContainer';
 import type {
   Annotation,
   RenderLegendContent,
   TooltipOptions,
 } from '../../types';
-import {SkipLink} from '../SkipLink';
+import {SkipLink} from '../SkipLink/SkipLink';
 import {
   getXAxisOptionsWithDefaults,
   getYAxisOptionsWithDefaults,
-  normalizeData,
-} from '../../utilities';
-import {HorizontalBarChart} from '../HorizontalBarChart';
-import {VerticalBarChart} from '../VerticalBarChart';
-import {ChartSkeleton} from '../../components/ChartSkeleton';
+} from '../../utilities/getAxisOptions';
+import {normalizeData} from '../../utilities/normalizeData';
+import {HorizontalBarChart} from '../HorizontalBarChart/HorizontalBarChart';
+import {VerticalBarChart} from '../VerticalBarChart/VerticalBarChart';
+import {ChartSkeleton} from '../ChartSkeleton/ChartSkeleton';
 import {fillMissingDataPoints} from '../../utilities/fillMissingDataPoints';
 
 export type BarChartProps = {

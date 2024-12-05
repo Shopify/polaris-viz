@@ -1,7 +1,7 @@
 import type {Shape, Color, LineStyle} from '@shopify/polaris-viz-core';
 
-import {LinePreview} from '../../LinePreview';
-import {SquareColorPreview} from '../../SquareColorPreview';
+import {LinePreview} from '../../LinePreview/LinePreview';
+import {SquareColorPreview} from '../../SquareColorPreview/SquareColorPreview';
 
 interface Props {
   color: Color;

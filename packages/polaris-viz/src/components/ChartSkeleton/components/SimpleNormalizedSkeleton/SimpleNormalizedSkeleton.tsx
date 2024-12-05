@@ -6,8 +6,8 @@ import {
   useChartContext,
 } from '@shopify/polaris-viz-core';
 
-import type {Size} from '../../../SimpleNormalizedChart';
-import {ErrorText} from '../ErrorText';
+import type {Size} from '../../../SimpleNormalizedChart/types';
+import {ErrorText} from '../ErrorText/ErrorText';
 
 import styles from './SimpleNormalizedSkeleton.scss';
 

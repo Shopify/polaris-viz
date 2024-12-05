@@ -1,11 +1,12 @@
 import {mount} from '@shopify/react-testing';
 import {LIGHT_THEME} from '@shopify/polaris-viz-core';
 
-import {SingleTextLine} from '../../../Labels';
+import {SingleTextLine} from '../../../Labels/SingleTextLine';
 
 import type {Props} from './ShowMoreAnnotationsButton';
 import {ShowMoreAnnotationsButton} from './ShowMoreAnnotationsButton';
-import {Icon, Shadow} from './components';
+import {Icon} from './components/Icon';
+import {Shadow} from './components/Shadow';
 
 jest.mock('@shopify/polaris-viz-core/src/utilities', () => ({
   ...jest.requireActual('@shopify/polaris-viz-core/src/utilities'),

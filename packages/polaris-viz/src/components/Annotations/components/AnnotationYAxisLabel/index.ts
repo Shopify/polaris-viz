@@ -1,1 +1,0 @@
-export {AnnotationYAxisLabel} from './AnnotationYAxisLabel';

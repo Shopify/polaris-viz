@@ -2,7 +2,7 @@ import {Fragment} from 'react';
 import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 import {mountWithProvider} from '../../test-utilities/mountWithProvider';
-import {TooltipContent} from '../../components';
+import {TooltipContent} from '../../components/TooltipContent/TooltipContent';
 import type {RenderTooltipContentData} from '../../types';
 import {getTooltipContentRenderer} from '../getTooltipContentRenderer';
 

@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import type {DataGroup, DataSeries} from '@shopify/polaris-viz-core';
 
-import {ChartSkeleton} from '../../ChartSkeleton';
+import {ChartSkeleton} from '../../ChartSkeleton/ChartSkeleton';
 import {ChartErrorBoundary} from '../ChartErrorBoundary';
 import {mountWithProvider} from '../../../test-utilities/mountWithProvider';
 

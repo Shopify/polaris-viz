@@ -1,6 +1,8 @@
 import type {Story} from '@storybook/react';
 
-import {SimpleBarChart, SimpleBarChartProps} from '../../../../components';
+import {SimpleBarChart} from '../../SimpleBarChart';
+import type {SimpleBarChartProps} from '../../SimpleBarChart';
+
 import {META} from '../meta';
 
 export default {

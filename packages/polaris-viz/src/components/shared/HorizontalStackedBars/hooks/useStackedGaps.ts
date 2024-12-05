@@ -1,7 +1,7 @@
 import {useMemo} from 'react';
 
 import {STACKED_BAR_GAP} from '../../../../constants';
-import {pushGapToArray} from '../../../../utilities';
+import {pushGapToArray} from '../../../../utilities/pushGapToArray';
 import type {
   FormattedStackedSeries,
   StackedBarGapDirections,
