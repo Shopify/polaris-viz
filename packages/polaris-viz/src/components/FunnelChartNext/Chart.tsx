@@ -2,12 +2,15 @@ import type {ReactNode} from 'react';
 import {Fragment, useMemo, useCallback, useState} from 'react';
 import {scaleBand, scaleLinear} from 'd3-scale';
 import type {
-  BoundingRect,
   DataSeries,
   XAxisOptions,
   YAxisOptions,
 } from '@shopify/polaris-viz-core';
-import {uniqueId, LinearGradientWithStops} from '@shopify/polaris-viz-core';
+import {
+  uniqueId,
+  LinearGradientWithStops,
+  useChartContext,
+} from '@shopify/polaris-viz-core';
 import {createPortal} from 'react-dom';
 
 import {TOOLTIP_ROOT_ID} from '../TooltipWrapper/constants';
@@ -30,7 +33,6 @@ export interface ChartProps {
   tooltipLabels: FunnelChartNextProps['tooltipLabels'];
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
-  dimensions?: BoundingRect;
 }
 
 const LINE_OFFSET = 3;
@@ -56,13 +58,13 @@ const PERCENTAGE_SUMMARY_HEIGHT = 30;
 
 export function Chart({
   data,
-  dimensions,
   showConnectionPercentage,
   tooltipLabels,
   xAxisOptions,
   yAxisOptions,
 }: ChartProps) {
   const [tooltipIndex, setTooltipIndex] = useState<number | null>(null);
+  const {containerBounds} = useChartContext();
 
   const dataSeries = data[0].data;
 
@@ -74,7 +76,7 @@ export function Chart({
     height: drawableHeight,
     x: chartX,
     y: chartY,
-  } = dimensions ?? {
+  } = containerBounds ?? {
     width: 0,
     height: 0,
     x: 0,
