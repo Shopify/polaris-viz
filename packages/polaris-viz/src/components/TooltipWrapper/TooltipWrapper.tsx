@@ -20,11 +20,7 @@ import {getLineChartTooltipPosition} from './utilities/getLineChartTooltipPositi
 import {getVerticalBarChartTooltipPosition} from './utilities/getVerticalBarChartTooltipPosition';
 import {shouldBlockTooltipEvents} from './utilities/shouldBlockTooltipEvents';
 import type {TooltipPosition, TooltipPositionParams} from './types';
-import {
-  DEFAULT_TOOLTIP_POSITION,
-  DEFAULT_TOOLTIP_POSITION,
-  TOOLTIP_ROOT_ID,
-} from './constants';
+import {DEFAULT_TOOLTIP_POSITION} from './constants';
 import {TooltipAnimatedContainer} from './components/TooltipAnimatedContainer';
 
 const TOUCH_START_DELAY = 300;
@@ -353,7 +349,7 @@ function TooltipWithErrors(props: BaseProps) {
 }
 
 function TooltipWithPortal(props: BaseProps) {
-  const container = useRootContainer(TOOLTIP_ROOT_ID);
+  const container = useRootContainer(TOOLTIP_ID);
 
   return createPortal(<TooltipWithErrors {...props} />, container);
 }

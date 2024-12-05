@@ -6,7 +6,7 @@ import type {
 import {
   DEFAULT_CHART_PROPS,
   ChartState,
-  usePolarisVizContext,
+  useChartContext,
 } from '@shopify/polaris-viz-core';
 
 import {ChartContainer} from '../../components/ChartContainer';
@@ -19,7 +19,6 @@ import {ChartSkeleton} from '../';
 import {Chart} from './Chart';
 
 export type FunnelChartNextProps = {
-  showConnectionPercentage?: boolean;
   tooltipLabels: {
     reached: string;
     dropped: string;
@@ -29,7 +28,7 @@ export type FunnelChartNextProps = {
 } & ChartProps;
 
 export function FunnelChartNext(props: FunnelChartNextProps) {
-  const {defaultTheme} = usePolarisVizContext();
+  const {theme: defaultTheme} = useChartContext();
 
   const {
     data,
