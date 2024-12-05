@@ -16,4 +16,3 @@ export const TOOLTIP_POSITION_DEFAULT_RETURN: TooltipPosition = {
 // The space between the cursor and the tooltip
 export const TOOLTIP_MARGIN = 20;
 export const SCROLLBAR_WIDTH = 20;
-export const TOOLTIP_ROOT_ID = 'polaris_viz_tooltip_root';

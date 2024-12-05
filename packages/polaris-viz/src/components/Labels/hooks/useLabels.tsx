@@ -1,6 +1,6 @@
 import type {Dispatch, SetStateAction} from 'react';
 import {useEffect, useMemo} from 'react';
-import {useChartContext, FONT_SIZE} from '@shopify/polaris-viz-core';
+import {useChartContext} from '@shopify/polaris-viz-core';
 
 import {getFontSize} from '../../../utilities/getFontSize';
 import {estimateStringWidthWithOffset} from '../../../utilities';
@@ -21,13 +21,11 @@ interface Props {
   targetWidth: number;
   onHeightChange?: Dispatch<SetStateAction<number>> | (() => void);
   align?: 'center' | 'left';
-  fontSize?: number;
 }
 
 export function useLabels({
   allowLineWrap,
   align = 'center',
-  fontSize = FONT_SIZE,
   labels,
   onHeightChange = () => {},
   targetWidth,
