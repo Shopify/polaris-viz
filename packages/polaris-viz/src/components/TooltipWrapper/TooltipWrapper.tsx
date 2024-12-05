@@ -188,7 +188,7 @@ function TooltipWrapperRaw(props: BaseProps) {
     (event: MouseEvent | TouchEvent) => {
       window.clearTimeout(touchStartTimer.current);
 
-      if (event instanceof TouchEvent) {
+      if (typeof TouchEvent !== 'undefined' && event instanceof TouchEvent) {
         if (isLongTouch.current === true) {
           // prevents scrolling after long touch (since it is supposed to move the tooltip/datapoint vs scroll)
           event?.preventDefault();
