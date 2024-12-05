@@ -72,7 +72,7 @@ export function eventPointNative(event: MouseEvent | TouchEvent) {
 }
 
 export function getXYFromEventType(event: MouseEvent | TouchEvent): Position {
-  return event instanceof TouchEvent
+  return 'touches' in event
     ? {x: event.touches[0].pageX, y: event.touches[0].pageY}
     : {x: event.pageX, y: event.pageY};
 }
@@ -86,5 +86,7 @@ export function isMouseEvent(
 export function isTouchEvent(
   event: React.SyntheticEvent,
 ): event is React.TouchEvent {
-  return event.nativeEvent instanceof TouchEvent;
+  return (
+    typeof TouchEvent !== 'undefined' && event.nativeEvent instanceof TouchEvent
+  );
 }
