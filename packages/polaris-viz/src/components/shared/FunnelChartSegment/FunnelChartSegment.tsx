@@ -75,12 +75,17 @@ export function FunnelChartSegment({
 
       <rect
         x={x}
-        y={drawableHeight - tallestBarHeight}
+        y={drawableHeight - barHeight}
         width={barWidth}
-        height={tallestBarHeight}
+        height={barHeight}
         fill="transparent"
+        style={{
+          outline: 'none',
+        }}
         onMouseEnter={() => onMouseEnter(index)}
         onMouseLeave={onMouseLeave}
+        onFocus={() => onMouseEnter(index)}
+        tabIndex={0}
       />
 
       {children}

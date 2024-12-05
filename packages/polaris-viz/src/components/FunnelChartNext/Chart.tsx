@@ -143,104 +143,115 @@ export function Chart({
     ((lastPoint?.value ?? 0) / (firstPoint?.value ?? 0)) * 100,
   );
 
+  const handleChartBlur = (event: React.FocusEvent) => {
+    const currentTarget = event.currentTarget;
+    const relatedTarget = event.relatedTarget as Node;
+
+    if (!currentTarget.contains(relatedTarget)) {
+      setTooltipIndex(null);
+    }
+  };
+
   return (
     <ChartElements.Svg height={drawableHeight} width={drawableWidth}>
-      <FunnelChartConnectorGradient />
+      <g onBlur={handleChartBlur}>
+        <FunnelChartConnectorGradient />
 
-      <LinearGradientWithStops
-        gradient={LINE_GRADIENT}
-        id={lineGradientId}
-        x1="0%"
-        x2="0%"
-        y1="0%"
-        y2="100%"
-      />
+        <LinearGradientWithStops
+          gradient={LINE_GRADIENT}
+          id={lineGradientId}
+          x1="0%"
+          x2="0%"
+          y1="0%"
+          y2="100%"
+        />
 
-      <SingleTextLine
-        color={PERCENTAGE_COLOR}
-        fontWeight={600}
-        targetWidth={drawableWidth}
-        fontSize={24}
-        text={mainPercentage}
-        willTruncate={false}
-      />
+        <SingleTextLine
+          color={PERCENTAGE_COLOR}
+          fontWeight={600}
+          targetWidth={drawableWidth}
+          fontSize={24}
+          text={mainPercentage}
+          willTruncate={false}
+        />
 
-      {xAxisOptions.hide === false && (
-        <g transform={`translate(0,${PERCENTAGE_SUMMARY_HEIGHT})`}>
-          <FunnelChartXAxisLabels
-            formattedValues={formattedValues}
-            labels={labels}
-            labelWidth={sectionWidth}
-            percentages={percentages}
-            xScale={labelXScale}
-          />
-        </g>
-      )}
+        {xAxisOptions.hide === false && (
+          <g transform={`translate(0,${PERCENTAGE_SUMMARY_HEIGHT})`}>
+            <FunnelChartXAxisLabels
+              formattedValues={formattedValues}
+              labels={labels}
+              labelWidth={sectionWidth}
+              percentages={percentages}
+              xScale={labelXScale}
+            />
+          </g>
+        )}
 
-      {dataSeries.map((dataPoint, index: number) => {
-        const nextPoint = dataSeries[index + 1];
-        const xPosition = xScale(dataPoint.key.toString());
-        const x = xPosition == null ? 0 : xPosition;
-        const nextBarHeight = getBarHeight(nextPoint?.value || 0);
+        {dataSeries.map((dataPoint, index: number) => {
+          const nextPoint = dataSeries[index + 1];
+          const xPosition = xScale(dataPoint.key.toString());
+          const x = xPosition == null ? 0 : xPosition;
+          const nextBarHeight = getBarHeight(nextPoint?.value || 0);
 
-        const percentCalculation = calculateDropOff(
-          dataPoint?.value ?? 0,
-          nextPoint?.value ?? 0,
-        );
+          const percentCalculation = calculateDropOff(
+            dataPoint?.value ?? 0,
+            nextPoint?.value ?? 0,
+          );
 
-        const barHeight = getBarHeight(dataPoint.value || 0);
-        const formattedPercent = formatPercentage(percentCalculation);
-        const isLast = index === dataSeries.length - 1;
+          const barHeight = getBarHeight(dataPoint.value || 0);
+          const formattedPercent = formatPercentage(percentCalculation);
+          const isLast = index === dataSeries.length - 1;
 
-        return (
-          <Fragment key={dataPoint.key}>
-            <g key={dataPoint.key} role="listitem">
-              <FunnelChartSegment
-                ariaLabel={`${xAxisOptions.labelFormatter(
-                  dataPoint.key,
-                )}: ${yAxisOptions.labelFormatter(dataPoint.value)}`}
-                barHeight={barHeight}
-                barWidth={barWidth}
-                drawableHeight={drawableHeight}
-                index={index}
-                isLast={isLast}
-                onMouseEnter={(index) => setTooltipIndex(index)}
-                onMouseLeave={() => setTooltipIndex(null)}
-                tallestBarHeight={tallestBarHeight}
-                x={x}
-              >
-                {!isLast && (
-                  <FunnelConnector
-                    drawableHeight={drawableHeight}
-                    height={drawableHeight}
-                    index={index}
-                    nextX={
-                      (xScale(nextPoint?.key as string) ?? 0) - LINE_OFFSET
-                    }
-                    nextY={drawableHeight - nextBarHeight}
-                    percentCalculation={formattedPercent}
-                    showConnectionPercentage={showConnectionPercentage}
-                    startX={x + barWidth + GAP}
-                    startY={drawableHeight - barHeight}
-                    width={sectionWidth - barWidth}
+          return (
+            <Fragment key={dataPoint.key}>
+              <g key={dataPoint.key} role="listitem">
+                <FunnelChartSegment
+                  ariaLabel={`${xAxisOptions.labelFormatter(
+                    dataPoint.key,
+                  )}: ${yAxisOptions.labelFormatter(dataPoint.value)}`}
+                  barHeight={barHeight}
+                  barWidth={barWidth}
+                  drawableHeight={drawableHeight}
+                  index={index}
+                  isLast={isLast}
+                  onMouseEnter={(index) => setTooltipIndex(index)}
+                  onMouseLeave={() => setTooltipIndex(null)}
+                  tallestBarHeight={tallestBarHeight}
+                  x={x}
+                >
+                  {!isLast && (
+                    <FunnelConnector
+                      drawableHeight={drawableHeight}
+                      height={drawableHeight}
+                      index={index}
+                      nextX={
+                        (xScale(nextPoint?.key as string) ?? 0) - LINE_OFFSET
+                      }
+                      nextY={drawableHeight - nextBarHeight}
+                      percentCalculation={formattedPercent}
+                      showConnectionPercentage={showConnectionPercentage}
+                      startX={x + barWidth + GAP}
+                      startY={drawableHeight - barHeight}
+                      width={sectionWidth - barWidth}
+                    />
+                  )}
+                </FunnelChartSegment>
+                {index > 0 && (
+                  <rect
+                    y={PERCENTAGE_SUMMARY_HEIGHT}
+                    x={x - (LINE_OFFSET - LINE_WIDTH)}
+                    width={LINE_WIDTH}
+                    height={drawableHeight - PERCENTAGE_SUMMARY_HEIGHT}
+                    fill={`url(#${lineGradientId})`}
                   />
                 )}
-              </FunnelChartSegment>
-              {index > 0 && (
-                <rect
-                  y={PERCENTAGE_SUMMARY_HEIGHT}
-                  x={x - (LINE_OFFSET - LINE_WIDTH)}
-                  width={LINE_WIDTH}
-                  height={drawableHeight - PERCENTAGE_SUMMARY_HEIGHT}
-                  fill={`url(#${lineGradientId})`}
-                />
-              )}
-            </g>
-          </Fragment>
-        );
-      })}
+              </g>
+            </Fragment>
+          );
+        })}
 
-      <TooltipWithPortal>{getTooltipMarkup()}</TooltipWithPortal>
+        <TooltipWithPortal>{getTooltipMarkup()}</TooltipWithPortal>
+      </g>
     </ChartElements.Svg>
   );
 
