@@ -19,7 +19,7 @@ import {getHorizontalBarChartTooltipPosition} from './utilities/getHorizontalBar
 import {getLineChartTooltipPosition} from './utilities/getLineChartTooltipPosition';
 import {getVerticalBarChartTooltipPosition} from './utilities/getVerticalBarChartTooltipPosition';
 import {shouldBlockTooltipEvents} from './utilities/shouldBlockTooltipEvents';
-import type {TooltipPosition, TooltipPositionParams} from './types';
+import type {TooltipPosition} from './types';
 import {DEFAULT_TOOLTIP_POSITION} from './constants';
 import {TooltipAnimatedContainer} from './components/TooltipAnimatedContainer';
 

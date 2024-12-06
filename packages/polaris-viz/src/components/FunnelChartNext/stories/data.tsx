@@ -32,7 +32,7 @@ export const Template: Story<FunnelChartNextProps> = (
   args: FunnelChartNextProps,
 ) => {
   return (
-    <div style={{height: 400}}>
+    <div style={{height: 400, marginTop: 20}}>
       <FunnelChartNext {...args} />
     </div>
   );

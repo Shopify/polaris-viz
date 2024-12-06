@@ -11,6 +11,7 @@ export {useHorizontalXScale} from './useHorizontalXScale';
 export {useHorizontalTicksAndScale} from './useHorizontalTicksAndScale';
 export {useHorizontalTransitions} from './useHorizontalTransitions';
 export {useHorizontalSeriesColors} from './useHorizontalSeriesColors';
+export {useFunnelBarScaling} from './useFunnelBarScaling';
 export type {HorizontalTransitionStyle} from './useHorizontalTransitions';
 export {useBarChartTooltipContent} from './useBarChartTooltipContent';
 export {useHorizontalStackedValues} from './useHorizontalStackedValues';

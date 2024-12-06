@@ -1,19 +1,12 @@
-import type {
-  XAxisOptions,
-  YAxisOptions,
-  ChartProps,
-} from '@shopify/polaris-viz-core';
+import type {ChartProps, LabelFormatter} from '@shopify/polaris-viz-core';
 import {
   DEFAULT_CHART_PROPS,
   ChartState,
   useChartContext,
 } from '@shopify/polaris-viz-core';
+import type {ReactNode} from 'react';
 
 import {ChartContainer} from '../../components/ChartContainer';
-import {
-  getYAxisOptionsWithDefaults,
-  getXAxisOptionsWithDefaults,
-} from '../../utilities';
 import {ChartSkeleton} from '../';
 
 import {Chart} from './Chart';
@@ -23,9 +16,13 @@ export type FunnelChartNextProps = {
     reached: string;
     dropped: string;
   };
-  xAxisOptions?: Pick<XAxisOptions, 'hide'>;
-  yAxisOptions?: Pick<YAxisOptions, 'labelFormatter'>;
+  seriesNameFormatter?: LabelFormatter;
+  labelFormatter?: LabelFormatter;
+  renderScaleIconTooltipContent?: () => ReactNode;
+  percentageFormatter?: (value: number) => string;
 } & ChartProps;
+
+const DEFAULT_LABEL_FORMATTER: LabelFormatter = (value) => `${value}`;
 
 export function FunnelChartNext(props: FunnelChartNextProps) {
   const {theme: defaultTheme} = useChartContext();
@@ -33,25 +30,20 @@ export function FunnelChartNext(props: FunnelChartNextProps) {
   const {
     data,
     theme = defaultTheme,
-    xAxisOptions,
-    yAxisOptions,
     id,
     isAnimated,
     state,
     errorText,
-    onError,
-    showConnectionPercentage = false,
     tooltipLabels,
+    seriesNameFormatter = DEFAULT_LABEL_FORMATTER,
+    labelFormatter = DEFAULT_LABEL_FORMATTER,
+    percentageFormatter,
+    onError,
+    renderScaleIconTooltipContent,
   } = {
     ...DEFAULT_CHART_PROPS,
     ...props,
   };
-
-  const xAxisOptionsForChart: Required<XAxisOptions> =
-    getXAxisOptionsWithDefaults(xAxisOptions);
-
-  const yAxisOptionsForChart: Required<YAxisOptions> =
-    getYAxisOptionsWithDefaults(yAxisOptions);
 
   return (
     <ChartContainer
@@ -71,10 +63,11 @@ export function FunnelChartNext(props: FunnelChartNextProps) {
       ) : (
         <Chart
           data={data}
-          showConnectionPercentage={showConnectionPercentage}
           tooltipLabels={tooltipLabels}
-          xAxisOptions={xAxisOptionsForChart}
-          yAxisOptions={yAxisOptionsForChart}
+          seriesNameFormatter={seriesNameFormatter}
+          labelFormatter={labelFormatter}
+          percentageFormatter={percentageFormatter}
+          renderScaleIconTooltipContent={renderScaleIconTooltipContent}
         />
       )}
     </ChartContainer>
