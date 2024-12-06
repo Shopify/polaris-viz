@@ -1,0 +1,4 @@
+export const FUNNEL_CHART_SEGMENT_FILL = 'rgba(48, 94, 232, 1)';
+export const FUNNEL_CHART_SEGMENT_SCALE_LIGHT = '#597EED';
+export const FUNNEL_CHART_SEGMENT_SCALE_SHADOW = '#133AAF';
+export const BORDER_RADIUS = 6;
