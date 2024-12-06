@@ -6,7 +6,7 @@ import type {
 import {
   DEFAULT_CHART_PROPS,
   ChartState,
-  usePolarisVizContext,
+  useChartContext,
 } from '@shopify/polaris-viz-core';
 
 import {ChartContainer} from '../../components/ChartContainer';
@@ -28,7 +28,7 @@ export type SparkFunnelChartProps = {
 } & ChartProps;
 
 export function SparkFunnelChart(props: SparkFunnelChartProps) {
-  const {defaultTheme} = usePolarisVizContext();
+  const {theme: defaultTheme} = useChartContext();
 
   const {
     data,

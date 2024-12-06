@@ -1,5 +1,5 @@
 import type {ReactNode} from 'react';
-import {Fragment, useMemo, useCallback, useState} from 'react';
+import {Fragment, useMemo, useState} from 'react';
 import {scaleBand, scaleLinear} from 'd3-scale';
 import type {
   DataSeries,
@@ -13,52 +13,43 @@ import {
 } from '@shopify/polaris-viz-core';
 import {createPortal} from 'react-dom';
 
+import {useFunnelBarScaling} from '../../hooks';
 import {TOOLTIP_ROOT_ID} from '../TooltipWrapper/constants';
 import {useRootContainer} from '../../hooks/useRootContainer';
-import {FunnelChartConnectorGradient} from '../shared/FunnelChartConnector';
+import {
+  FunnelChartConnector,
+  FunnelChartConnectorGradient,
+} from '../shared/FunnelChartConnector';
 import {FunnelChartSegment} from '../shared';
 import {SingleTextLine} from '../Labels';
 import {ChartElements} from '../ChartElements';
 
-import {FunnelChartXAxisLabels, Tooltip, FunnelConnector} from './components/';
+import {FunnelChartXAxisLabels, Tooltip} from './components/';
 import {calculateDropOff} from './utilities/calculate-dropoff';
 import type {FunnelChartNextProps} from './FunnelChartNext';
-import {getFunnelBarHeight} from './utilities/get-funnel-bar-height';
 import {FunnelTooltip} from './components/FunnelTooltip/FunnelTooltip';
-import {FUNNEL_CONNECTOR_Y_OFFSET, TOOLTIP_WIDTH} from './constants';
+import {
+  TOOLTIP_WIDTH,
+  LABELS_HEIGHT,
+  PERCENTAGE_SUMMARY_HEIGHT,
+  LINE_GRADIENT,
+  PERCENTAGE_COLOR,
+  LINE_OFFSET,
+  LINE_WIDTH,
+  GAP,
+  SHORT_TOOLTIP_HEIGHT,
+  TOOLTIP_HEIGHT,
+} from './constants';
 
 export interface ChartProps {
   data: DataSeries[];
-  showConnectionPercentage: boolean;
   tooltipLabels: FunnelChartNextProps['tooltipLabels'];
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
 }
 
-const LINE_OFFSET = 3;
-const LINE_WIDTH = 1;
-const TOOLTIP_HEIGHT = 90;
-const SHORT_TOOLTIP_HEIGHT = 65;
-const GAP = 1;
-
-const PERCENTAGE_COLOR = 'rgba(48, 48, 48, 1)';
-const LINE_GRADIENT = [
-  {
-    color: 'rgba(227, 227, 227, 1)',
-    offset: 0,
-  },
-  {
-    color: 'rgba(227, 227, 227, 0)',
-    offset: 100,
-  },
-];
-
-const LABELS_HEIGHT = 80;
-const PERCENTAGE_SUMMARY_HEIGHT = 30;
-
 export function Chart({
   data,
-  showConnectionPercentage,
   tooltipLabels,
   xAxisOptions,
   yAxisOptions,
@@ -67,7 +58,6 @@ export function Chart({
   const {containerBounds} = useChartContext();
 
   const dataSeries = data[0].data;
-
   const xValues = dataSeries.map(({key}) => key) as string[];
   const yValues = dataSeries.map(({value}) => value) as [number, number];
 
@@ -83,6 +73,16 @@ export function Chart({
     y: 0,
   };
 
+  const highestYValue = Math.max(...yValues);
+  const yScale = scaleLinear()
+    .range([0, drawableHeight - LABELS_HEIGHT - PERCENTAGE_SUMMARY_HEIGHT])
+    .domain([0, highestYValue]);
+
+  const {getBarHeight, shouldApplyScaling} = useFunnelBarScaling({
+    yScale,
+    values: yValues,
+  });
+
   const labels = useMemo(
     () => dataSeries.map(({key}) => xAxisOptions.labelFormatter(key)),
     [dataSeries, xAxisOptions],
@@ -94,31 +94,8 @@ export function Chart({
     .range([0, drawableWidth])
     .domain(labels.map((_, index) => index.toString()));
 
-  const highestYValue = Math.max(...yValues);
-  const connectionPercentageHeight = showConnectionPercentage
-    ? FUNNEL_CONNECTOR_Y_OFFSET / 2
-    : 0;
-
-  const yScale = scaleLinear()
-    .range([
-      0,
-      drawableHeight -
-        LABELS_HEIGHT -
-        PERCENTAGE_SUMMARY_HEIGHT -
-        connectionPercentageHeight,
-    ])
-    .domain([0, highestYValue]);
-
-  const tallestBarHeight = yScale(highestYValue);
-
   const sectionWidth = xScale.bandwidth();
   const barWidth = sectionWidth * 0.75;
-
-  const getBarHeight = useCallback(
-    (rawValue: number) => getFunnelBarHeight(rawValue, yScale),
-    [yScale],
-  );
-
   const lineGradientId = useMemo(() => uniqueId('line-gradient'), []);
 
   const lastPoint = dataSeries.at(-1);
@@ -172,7 +149,7 @@ export function Chart({
           targetWidth={drawableWidth}
           fontSize={24}
           text={mainPercentage}
-          willTruncate={false}
+          textAnchor="start"
         />
 
         {xAxisOptions.hide === false && (
@@ -183,6 +160,7 @@ export function Chart({
               labelWidth={sectionWidth}
               percentages={percentages}
               xScale={labelXScale}
+              shouldApplyScaling={shouldApplyScaling}
             />
           </g>
         )}
@@ -191,16 +169,9 @@ export function Chart({
           const nextPoint = dataSeries[index + 1];
           const xPosition = xScale(dataPoint.key.toString());
           const x = xPosition == null ? 0 : xPosition;
-          const nextBarHeight = getBarHeight(nextPoint?.value || 0);
-
-          const percentCalculation = calculateDropOff(
-            dataPoint?.value ?? 0,
-            nextPoint?.value ?? 0,
-          );
-
-          const barHeight = getBarHeight(dataPoint.value || 0);
-          const formattedPercent = formatPercentage(percentCalculation);
           const isLast = index === dataSeries.length - 1;
+          const barHeight = getBarHeight(dataPoint.value || 0);
+          const nextBarHeight = getBarHeight(nextPoint?.value || 0);
 
           return (
             <Fragment key={dataPoint.key}>
@@ -216,11 +187,11 @@ export function Chart({
                   isLast={isLast}
                   onMouseEnter={(index) => setTooltipIndex(index)}
                   onMouseLeave={() => setTooltipIndex(null)}
-                  tallestBarHeight={tallestBarHeight}
+                  shouldApplyScaling={shouldApplyScaling}
                   x={x}
                 >
                   {!isLast && (
-                    <FunnelConnector
+                    <FunnelChartConnector
                       drawableHeight={drawableHeight}
                       height={drawableHeight}
                       index={index}
@@ -228,11 +199,8 @@ export function Chart({
                         (xScale(nextPoint?.key as string) ?? 0) - LINE_OFFSET
                       }
                       nextY={drawableHeight - nextBarHeight}
-                      percentCalculation={formattedPercent}
-                      showConnectionPercentage={showConnectionPercentage}
                       startX={x + barWidth + GAP}
                       startY={drawableHeight - barHeight}
-                      width={sectionWidth - barWidth}
                     />
                   )}
                 </FunnelChartSegment>
@@ -298,8 +266,8 @@ export function Chart({
     }
 
     function getYPosition() {
-      const yPosition =
-        chartY + drawableHeight - yScale(activeDataSeries.value ?? 0);
+      const barHeight = getBarHeight(activeDataSeries.value ?? 0);
+      const yPosition = chartY + drawableHeight - barHeight;
 
       if (tooltipIndex === 0) {
         return yPosition;

@@ -70,9 +70,9 @@ export function Tooltip({
         <Fragment>
           <TooltipTitle theme={DEFAULT_THEME_NAME}>{point.key}</TooltipTitle>
           <div className={styles.Rows}>
-            {data.map(({key, value, color, percent}) => {
+            {data.map(({key, value, color, percent}, index) => {
               return (
-                <div className={styles.Row} key={key}>
+                <div className={styles.Row} key={`row-${index}-${key}`}>
                   <div className={styles.Keys}>
                     <SeriesIcon color={color!} shape="Bar" />
                     <span>{key}</span>

@@ -1,12 +1,13 @@
 import {Fragment, useCallback} from 'react';
 import {scaleBand, scaleLinear} from 'd3-scale';
 import type {
-  BoundingRect,
   DataSeries,
   XAxisOptions,
   YAxisOptions,
 } from '@shopify/polaris-viz-core';
+import {useChartContext} from '@shopify/polaris-viz-core';
 
+import {useFunnelBarScaling} from '../../hooks';
 import {getFunnelBarHeight} from '../FunnelChartNext';
 import {FunnelChartConnectorGradient} from '../shared/FunnelChartConnector';
 import {FunnelChartConnector, FunnelChartSegment} from '../shared';
@@ -19,19 +20,19 @@ export interface ChartProps {
   tooltipLabels: SparkFunnelChartProps['tooltipLabels'];
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
-  dimensions?: BoundingRect;
 }
 
 const LINE_OFFSET = 1;
 const GAP = 1;
 
-export function Chart({data, dimensions}: ChartProps) {
-  const dataSeries = data[0].data;
+export function Chart({data}: ChartProps) {
+  const {containerBounds} = useChartContext();
 
+  const dataSeries = data[0].data;
   const xValues = dataSeries.map(({key}) => key) as string[];
   const yValues = dataSeries.map(({value}) => value) as [number, number];
 
-  const {width: drawableWidth, height: drawableHeight} = dimensions ?? {
+  const {width: drawableWidth, height: drawableHeight} = containerBounds ?? {
     width: 0,
     height: 0,
   };
@@ -42,13 +43,13 @@ export function Chart({data, dimensions}: ChartProps) {
     .range([0, drawableHeight])
     .domain([0, Math.max(...yValues)]);
 
+  const {getBarHeight, shouldApplyScaling} = useFunnelBarScaling({
+    yScale,
+    values: yValues,
+  });
+
   const sectionWidth = xScale.bandwidth();
   const barWidth = sectionWidth * 0.75;
-
-  const getBarHeight = useCallback(
-    (rawValue: number) => getFunnelBarHeight(rawValue, yScale),
-    [yScale],
-  );
 
   return (
     <ChartElements.Svg height={drawableHeight} width={drawableWidth}>
@@ -74,6 +75,7 @@ export function Chart({data, dimensions}: ChartProps) {
                 index={index}
                 isLast={isLast}
                 x={x}
+                shouldApplyScaling={shouldApplyScaling}
               >
                 {!isLast && (
                   <FunnelChartConnector

@@ -40,7 +40,6 @@ export function FunnelChartNext(props: FunnelChartNextProps) {
     state,
     errorText,
     onError,
-    showConnectionPercentage = false,
     tooltipLabels,
   } = {
     ...DEFAULT_CHART_PROPS,
@@ -71,7 +70,6 @@ export function FunnelChartNext(props: FunnelChartNextProps) {
       ) : (
         <Chart
           data={data}
-          showConnectionPercentage={showConnectionPercentage}
           tooltipLabels={tooltipLabels}
           xAxisOptions={xAxisOptionsForChart}
           yAxisOptions={yAxisOptionsForChart}
