@@ -1,11 +1,11 @@
 import {Fragment, useCallback} from 'react';
 import {scaleBand, scaleLinear} from 'd3-scale';
 import type {
-  BoundingRect,
   DataSeries,
   XAxisOptions,
   YAxisOptions,
 } from '@shopify/polaris-viz-core';
+import {useChartContext} from '@shopify/polaris-viz-core';
 
 import {getFunnelBarHeight} from '../FunnelChartNext';
 import {FunnelChartConnectorGradient} from '../shared/FunnelChartConnector';
@@ -19,19 +19,19 @@ export interface ChartProps {
   tooltipLabels: SparkFunnelChartProps['tooltipLabels'];
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
-  dimensions?: BoundingRect;
 }
 
 const LINE_OFFSET = 1;
 const GAP = 1;
 
-export function Chart({data, dimensions}: ChartProps) {
-  const dataSeries = data[0].data;
+export function Chart({data}: ChartProps) {
+  const {containerBounds} = useChartContext();
 
+  const dataSeries = data[0].data;
   const xValues = dataSeries.map(({key}) => key) as string[];
   const yValues = dataSeries.map(({value}) => value) as [number, number];
 
-  const {width: drawableWidth, height: drawableHeight} = dimensions ?? {
+  const {width: drawableWidth, height: drawableHeight} = containerBounds ?? {
     width: 0,
     height: 0,
   };

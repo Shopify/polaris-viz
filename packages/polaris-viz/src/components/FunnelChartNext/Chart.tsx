@@ -25,7 +25,20 @@ import {calculateDropOff} from './utilities/calculate-dropoff';
 import type {FunnelChartNextProps} from './FunnelChartNext';
 import {getFunnelBarHeight} from './utilities/get-funnel-bar-height';
 import {FunnelTooltip} from './components/FunnelTooltip/FunnelTooltip';
-import {FUNNEL_CONNECTOR_Y_OFFSET, TOOLTIP_WIDTH} from './constants';
+import {
+  FUNNEL_CONNECTOR_Y_OFFSET,
+  TOOLTIP_WIDTH,
+  LABELS_HEIGHT,
+  PERCENTAGE_SUMMARY_HEIGHT,
+  SCALING_RATIO_THRESHOLD,
+  LINE_GRADIENT,
+  PERCENTAGE_COLOR,
+  LINE_OFFSET,
+  LINE_WIDTH,
+  GAP,
+  SHORT_TOOLTIP_HEIGHT,
+  TOOLTIP_HEIGHT,
+} from './constants';
 
 export interface ChartProps {
   data: DataSeries[];
@@ -34,27 +47,6 @@ export interface ChartProps {
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
 }
-
-const LINE_OFFSET = 3;
-const LINE_WIDTH = 1;
-const TOOLTIP_HEIGHT = 90;
-const SHORT_TOOLTIP_HEIGHT = 65;
-const GAP = 1;
-
-const PERCENTAGE_COLOR = 'rgba(48, 48, 48, 1)';
-const LINE_GRADIENT = [
-  {
-    color: 'rgba(227, 227, 227, 1)',
-    offset: 0,
-  },
-  {
-    color: 'rgba(227, 227, 227, 0)',
-    offset: 100,
-  },
-];
-
-const LABELS_HEIGHT = 80;
-const PERCENTAGE_SUMMARY_HEIGHT = 30;
 
 export function Chart({
   data,
@@ -95,6 +87,7 @@ export function Chart({
     .domain(labels.map((_, index) => index.toString()));
 
   const highestYValue = Math.max(...yValues);
+  const lowestYValue = Math.min(...yValues);
   const connectionPercentageHeight = showConnectionPercentage
     ? FUNNEL_CONNECTOR_Y_OFFSET / 2
     : 0;
@@ -110,13 +103,31 @@ export function Chart({
     .domain([0, highestYValue]);
 
   const tallestBarHeight = yScale(highestYValue);
+  const smallestBarHeight = yScale(lowestYValue);
+
+  const heightRatio = smallestBarHeight / tallestBarHeight;
+  const shouldApplyScaling = heightRatio <= SCALING_RATIO_THRESHOLD;
 
   const sectionWidth = xScale.bandwidth();
   const barWidth = sectionWidth * 0.75;
 
   const getBarHeight = useCallback(
-    (rawValue: number) => getFunnelBarHeight(rawValue, yScale),
-    [yScale],
+    (rawValue: number) => {
+      const barHeight = getFunnelBarHeight(rawValue, yScale);
+
+      if (!shouldApplyScaling || barHeight === tallestBarHeight) {
+        return barHeight;
+      }
+
+      // Scale up segments to ensure smallest is at least 25% of tallest
+      const minHeightRatio = 0.25;
+      const currentRatio = smallestBarHeight / tallestBarHeight;
+      const scaleFactor = minHeightRatio / currentRatio;
+
+      // Ensure we don't scale larger than the first segment
+      return Math.min(barHeight * scaleFactor, tallestBarHeight * 0.9);
+    },
+    [yScale, shouldApplyScaling, smallestBarHeight, tallestBarHeight],
   );
 
   const lineGradientId = useMemo(() => uniqueId('line-gradient'), []);
@@ -191,16 +202,14 @@ export function Chart({
           const nextPoint = dataSeries[index + 1];
           const xPosition = xScale(dataPoint.key.toString());
           const x = xPosition == null ? 0 : xPosition;
+          const isLast = index === dataSeries.length - 1;
+          const barHeight = getBarHeight(dataPoint.value || 0);
           const nextBarHeight = getBarHeight(nextPoint?.value || 0);
-
           const percentCalculation = calculateDropOff(
             dataPoint?.value ?? 0,
             nextPoint?.value ?? 0,
           );
-
-          const barHeight = getBarHeight(dataPoint.value || 0);
           const formattedPercent = formatPercentage(percentCalculation);
-          const isLast = index === dataSeries.length - 1;
 
           return (
             <Fragment key={dataPoint.key}>
@@ -216,7 +225,7 @@ export function Chart({
                   isLast={isLast}
                   onMouseEnter={(index) => setTooltipIndex(index)}
                   onMouseLeave={() => setTooltipIndex(null)}
-                  tallestBarHeight={tallestBarHeight}
+                  shouldApplyScaling={shouldApplyScaling}
                   x={x}
                 >
                   {!isLast && (
@@ -298,8 +307,8 @@ export function Chart({
     }
 
     function getYPosition() {
-      const yPosition =
-        chartY + drawableHeight - yScale(activeDataSeries.value ?? 0);
+      const barHeight = getBarHeight(activeDataSeries.value ?? 0);
+      const yPosition = chartY + drawableHeight - barHeight;
 
       if (tooltipIndex === 0) {
         return yPosition;
