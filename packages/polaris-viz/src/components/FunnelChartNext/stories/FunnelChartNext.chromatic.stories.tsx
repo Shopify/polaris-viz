@@ -15,18 +15,16 @@ import type {FunnelChartNextProps} from '../FunnelChartNext';
 
 export const Default: Story<FunnelChartNextProps> = Template.bind({});
 
-const yAxisOptions = {
-  labelFormatter: (value) => {
-    return new Intl.NumberFormat('en', {
-      style: 'decimal',
-      maximumFractionDigits: 2,
-    }).format(Number(value));
-  },
+const labelFormatter = (value) => {
+  return new Intl.NumberFormat('en', {
+    style: 'decimal',
+    maximumFractionDigits: 2,
+  }).format(Number(value));
 };
 
 Default.args = {
   data: DEFAULT_DATA,
-  yAxisOptions: yAxisOptions,
+  labelFormatter,
   tooltipLabels: {
     reached: 'Reached this step',
     dropped: 'Dropped off',

@@ -12,13 +12,11 @@ import {META} from './meta';
 
 export const ZeroValues: Story<FunnelChartNextProps> = Template.bind({});
 
-const yAxisOptions = {
-  labelFormatter: (value) => {
-    return new Intl.NumberFormat('en', {
-      style: 'decimal',
-      maximumFractionDigits: 2,
-    }).format(Number(value));
-  },
+const labelFormatter = (value) => {
+  return new Intl.NumberFormat('en', {
+    style: 'decimal',
+    maximumFractionDigits: 2,
+  }).format(Number(value));
 };
 
 ZeroValues.args = {
@@ -45,7 +43,7 @@ ZeroValues.args = {
       name: 'Conversion rates',
     },
   ],
-  yAxisOptions: yAxisOptions,
+  labelFormatter,
   tooltipLabels: {
     reached: 'Reached this step',
     dropped: 'Dropped off',

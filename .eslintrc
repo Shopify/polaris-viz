@@ -81,8 +81,7 @@
           "UNSTABLE_telemetry"
         ]
       }
-    ],
-    "@shopify/strict-component-boundaries": "warn"
+    ]
   },
   "overrides": [
     {

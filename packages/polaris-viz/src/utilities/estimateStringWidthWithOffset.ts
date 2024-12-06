@@ -1,16 +1,12 @@
-import {
-  estimateStringWidth,
-  FONT_SIZE,
-  FONT_WEIGHT,
-} from '@shopify/polaris-viz-core';
+import {estimateStringWidth} from '@shopify/polaris-viz-core';
 
 import characterWidths from '../data/character-widths.json';
 import characterWidthOffsets from '../data/character-width-offsets.json';
 
 export function estimateStringWidthWithOffset(
   string: string,
-  fontSize: number = FONT_SIZE,
-  fontWeight: number = FONT_WEIGHT,
+  fontSize: number,
+  fontWeight = 400,
 ) {
   const width = estimateStringWidth(string, characterWidths);
 

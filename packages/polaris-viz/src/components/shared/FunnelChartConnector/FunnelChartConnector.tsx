@@ -26,7 +26,7 @@ export function FunnelChartConnector({
   startY,
 }: ConnectorProps) {
   const springConfig = useBarSpringConfig({
-    animationDelay: index * ANIMATION_DELAY,
+    animationDelay: (index || 1) * ANIMATION_DELAY,
   });
 
   const {animatedStartY, animatedNextY} = useSpring({

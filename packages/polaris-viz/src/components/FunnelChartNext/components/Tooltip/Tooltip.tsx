@@ -1,5 +1,5 @@
 import {Fragment} from 'react';
-import type {Color, DataPoint, YAxisOptions} from '@shopify/polaris-viz-core';
+import type {Color, DataPoint, LabelFormatter} from '@shopify/polaris-viz-core';
 import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 import {TOOLTIP_WIDTH} from '../../constants';
@@ -17,7 +17,8 @@ export interface TooltipContentProps {
   dataSeries: DataPoint[];
   isLast: boolean;
   tooltipLabels: FunnelChartNextProps['tooltipLabels'];
-  yAxisOptions: Required<YAxisOptions>;
+  labelFormatter: LabelFormatter;
+  percentageFormatter: (value: number) => string;
 }
 
 interface Data {
@@ -31,8 +32,9 @@ export function Tooltip({
   activeIndex,
   dataSeries,
   isLast,
-  yAxisOptions,
   tooltipLabels,
+  labelFormatter,
+  percentageFormatter,
 }: TooltipContentProps) {
   const point = dataSeries[activeIndex];
   const nextPoint = dataSeries[activeIndex + 1];
@@ -44,7 +46,7 @@ export function Tooltip({
   const data: Data[] = [
     {
       key: tooltipLabels.reached,
-      value: yAxisOptions.labelFormatter(point.value),
+      value: labelFormatter(point.value),
       color: FUNNEL_CHART_SEGMENT_FILL,
       percent: 100 - dropOffPercentage,
     },
@@ -53,9 +55,7 @@ export function Tooltip({
   if (!isLast) {
     data.push({
       key: tooltipLabels.dropped,
-      value: yAxisOptions.labelFormatter(
-        nextPoint?.value ?? 0 * dropOffPercentage,
-      ),
+      value: labelFormatter(nextPoint?.value ?? 0 * dropOffPercentage),
       percent: dropOffPercentage,
       color: FUNNEL_CHART_CONNECTOR_GRADIENT,
     });
@@ -70,9 +70,9 @@ export function Tooltip({
         <Fragment>
           <TooltipTitle theme={DEFAULT_THEME_NAME}>{point.key}</TooltipTitle>
           <div className={styles.Rows}>
-            {data.map(({key, value, color, percent}) => {
+            {data.map(({key, value, color, percent}, index) => {
               return (
-                <div className={styles.Row} key={key}>
+                <div className={styles.Row} key={`row-${index}-${key}`}>
                   <div className={styles.Keys}>
                     <SeriesIcon color={color!} shape="Bar" />
                     <span>{key}</span>
@@ -81,7 +81,7 @@ export function Tooltip({
                     <span>{value}</span>
                     {!isLast && (
                       <span>
-                        <strong>{formatPercentage(percent)}</strong>
+                        <strong>{percentageFormatter(percent)}</strong>
                       </span>
                     )}
                   </div>
@@ -93,8 +93,4 @@ export function Tooltip({
       )}
     </TooltipContentContainer>
   );
-
-  function formatPercentage(value: number) {
-    return `${yAxisOptions.labelFormatter(isNaN(value) ? 0 : value)}%`;
-  }
 }

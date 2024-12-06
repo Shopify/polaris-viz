@@ -21,9 +21,15 @@ interface Props {
   }) => ReactNode;
   maxWidth: number;
   theme: string;
+  color?: string;
 }
 
-export function TooltipContentContainer({children, maxWidth, theme}: Props) {
+export function TooltipContentContainer({
+  children,
+  maxWidth,
+  theme,
+  color,
+}: Props) {
   const {isFirefox} = useBrowserCheck();
 
   const selectedTheme = useTheme(theme);
@@ -39,10 +45,12 @@ export function TooltipContentContainer({children, maxWidth, theme}: Props) {
     <div
       className={styles.Container}
       style={{
-        background: changeColorOpacity(
-          selectedTheme.tooltip.backgroundColor,
-          isFirefox ? 1 : TOOLTIP_BG_OPACITY,
-        ),
+        background: color
+          ? color
+          : changeColorOpacity(
+              selectedTheme.tooltip.backgroundColor,
+              isFirefox ? 1 : TOOLTIP_BG_OPACITY,
+            ),
         maxWidth,
         fontFamily: FONT_FAMILY,
       }}
