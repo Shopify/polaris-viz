@@ -25,7 +25,6 @@ import {SingleTextLine} from '../Labels';
 import {ChartElements} from '../ChartElements';
 
 import {FunnelChartXAxisLabels, Tooltip} from './components/';
-import {calculateDropOff} from './utilities/calculate-dropoff';
 import type {FunnelChartNextProps} from './FunnelChartNext';
 import {FunnelTooltip} from './components/FunnelTooltip/FunnelTooltip';
 import {
