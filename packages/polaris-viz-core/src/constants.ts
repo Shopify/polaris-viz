@@ -11,6 +11,7 @@ export const SMALL_CHART_HEIGHT = 125;
 export const FONT_SIZE = 11;
 export const TOUCH_FONT_SIZE = 12;
 
+export const FONT_WEIGHT = 300;
 export const FONT_FAMILY =
   'Inter, -apple-system, "system-ui", "San Francisco", "Segoe UI", Roboto, "Helvetica Neue", sans-serif';
 
