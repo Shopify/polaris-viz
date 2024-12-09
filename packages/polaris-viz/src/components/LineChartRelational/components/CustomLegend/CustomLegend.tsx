@@ -8,7 +8,10 @@ import {useCallback, useState} from 'react';
 
 import {useOverflowLegend} from '../../../../components/LegendContainer/hooks/useOverflowLegend';
 import {HiddenLegendTooltip} from '../../../../components/LegendContainer/components/HiddenLegendTooltip';
-import type {ColorVisionInteractionMethods} from '../../../../types';
+import type {
+  ColorVisionInteractionMethods,
+  RenderHiddenLegendLabel,
+} from '../../../../types';
 import type {LegendItemDimension} from '../../../../components/Legend';
 import {LegendItem} from '../../../../components/Legend';
 
@@ -18,11 +21,13 @@ export interface Props extends ColorVisionInteractionMethods {
   data: DataSeries[];
   seriesNameFormatter: LabelFormatter;
   theme: string;
-  hideLegends?: boolean;
   activeIndex: number;
   legendItemDimensions: React.RefObject<LegendItemDimension[]>;
+  renderHiddenLegendLabel?: RenderHiddenLegendLabel;
 }
 
+const HORIZONTAL_MARGIN = 16;
+const LEFT_MARGIN = 12;
 export function CustomLegend({
   data,
   getColorVisionEventAttrs,
@@ -31,6 +36,7 @@ export function CustomLegend({
   theme,
   activeIndex,
   legendItemDimensions,
+  renderHiddenLegendLabel = (count) => `+${count} more`,
 }: Props) {
   const {containerBounds} = useChartContext();
   const deduplicatedData = deduplicateByRelatedIndex(data);
@@ -43,8 +49,8 @@ export function CustomLegend({
     legendItemDimensions,
     width: containerBounds.width,
     activatorWidth,
-    leftMargin: 16,
-    horizontalMargin: 16,
+    leftMargin: LEFT_MARGIN,
+    horizontalMargin: HORIZONTAL_MARGIN,
   };
 
   const {displayedData, hiddenData} = useOverflowLegend(overflowLegendProps);
@@ -59,7 +65,14 @@ export function CustomLegend({
 
   const percentileIndex = lineSeries.length + 1;
 
-  const hasHiddenItems = hiddenData.length > 0;
+  const hasHiddenData = displayedData.length < deduplicatedData.length;
+  const visibleSeries = hasHiddenData ? displayedData : lineSeries;
+  const formattedHiddenData = hiddenData.map((series) => ({
+    color: series.color!,
+    name: seriesNameFormatter(series?.metadata?.legendLabel ?? series.name),
+    shape: series.styleOverride?.tooltip?.shape ?? 'Line',
+    lineStyle: series.metadata?.lineStyle,
+  }));
 
   const onDimensionChange = useCallback(
     (index, dimensions: LegendItemDimension) => {
@@ -69,16 +82,6 @@ export function CustomLegend({
     },
     [legendItemDimensions],
   );
-
-  const hasHiddenData = displayedData.length < deduplicatedData.length;
-  const visibleSeries = hasHiddenData ? displayedData : lineSeries;
-
-  const formattedHiddenData = hiddenData.map((series) => ({
-    color: series.color!,
-    name: seriesNameFormatter(series?.metadata?.legendLabel ?? series.name),
-    shape: series.styleOverride?.tooltip?.shape ?? 'Line',
-    lineStyle: series.metadata?.lineStyle,
-  }));
 
   return (
     <ul className={styles.Container}>
@@ -137,13 +140,13 @@ export function CustomLegend({
         </li>
       )}
 
-      {hasHiddenItems && (
+      {hasHiddenData && (
         <HiddenLegendTooltip
           activeIndex={activeIndex}
           colorVisionType={COLOR_VISION_SINGLE_ITEM}
           data={formattedHiddenData}
           theme={theme}
-          label={`+${hiddenData.length} more`}
+          label={renderHiddenLegendLabel(hiddenData.length)}
           lastVisibleIndex={deduplicatedData.length - hiddenData.length}
           setActivatorWidth={setActivatorWidth}
         />
