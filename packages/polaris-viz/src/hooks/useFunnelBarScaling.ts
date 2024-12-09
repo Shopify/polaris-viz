@@ -10,11 +10,13 @@ export const MINIMUM_SEGMENT_HEIGHT_RATIO = 0.25;
 interface UseFunnelBarScalingProps {
   yScale: ScaleLinear<number, number>;
   values: number[];
+  enableScaling: boolean;
 }
 
 export function useFunnelBarScaling({
   yScale,
   values,
+  enableScaling,
 }: UseFunnelBarScalingProps) {
   const tallestBarHeight = useMemo(
     () => yScale(Math.max(...values)),
@@ -31,8 +33,8 @@ export function useFunnelBarScaling({
   );
 
   const shouldApplyScaling = useMemo(
-    () => smallestToTallestBarRatio <= SCALING_RATIO_THRESHOLD,
-    [smallestToTallestBarRatio],
+    () => smallestToTallestBarRatio <= SCALING_RATIO_THRESHOLD && enableScaling,
+    [smallestToTallestBarRatio, enableScaling],
   );
 
   const getBarHeight = useCallback(

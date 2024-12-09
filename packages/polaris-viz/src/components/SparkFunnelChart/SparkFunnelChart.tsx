@@ -25,6 +25,7 @@ export type SparkFunnelChartProps = {
   };
   xAxisOptions?: Pick<XAxisOptions, 'hide'>;
   yAxisOptions?: Pick<YAxisOptions, 'labelFormatter'>;
+  enableScaling?: boolean;
 } & ChartProps;
 
 export function SparkFunnelChart(props: SparkFunnelChartProps) {
@@ -41,6 +42,7 @@ export function SparkFunnelChart(props: SparkFunnelChartProps) {
     errorText,
     onError,
     tooltipLabels,
+    enableScaling = true,
   } = {
     ...DEFAULT_CHART_PROPS,
     ...props,
@@ -74,6 +76,7 @@ export function SparkFunnelChart(props: SparkFunnelChartProps) {
           xAxisOptions={xAxisOptionsForChart}
           yAxisOptions={yAxisOptionsForChart}
           tooltipLabels={tooltipLabels}
+          enableScaling={enableScaling}
         />
       )}
     </ChartContainer>

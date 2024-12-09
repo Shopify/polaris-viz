@@ -3,6 +3,7 @@ import type {Meta} from '@storybook/react';
 import {
   CHART_STATE_CONTROL_ARGS,
   CONTROLS_ARGS,
+  SCALE_CONTROL_ARGS,
 } from '../../../storybook/constants';
 import {PageWithSizingInfo} from '../../Docs/stories';
 import {SparkFunnelChart} from '../SparkFunnelChart';
@@ -21,5 +22,6 @@ export const META: Meta = {
   },
   argTypes: {
     state: CHART_STATE_CONTROL_ARGS,
+    enableScaling: SCALE_CONTROL_ARGS,
   },
 };

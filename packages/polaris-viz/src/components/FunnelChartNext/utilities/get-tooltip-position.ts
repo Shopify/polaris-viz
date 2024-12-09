@@ -1,10 +1,11 @@
 import type {
   TooltipPosition,
   TooltipPositionParams,
-} from 'components/TooltipWrapper';
-
-import {TOOLTIP_POSITION_DEFAULT_RETURN} from '../../TooltipWrapper';
-import {eventPointNative} from '../../../utilities';
+} from '../../TooltipWrapper';
+import {
+  TOOLTIP_POSITION_DEFAULT_RETURN,
+  eventPointNative,
+} from '../../TooltipWrapper';
 
 interface Props {
   tooltipPosition: TooltipPositionParams;
@@ -31,10 +32,6 @@ export function getTooltipPosition({
     }
 
     const {svgX, svgY} = point;
-
-    console.log({svgX});
-
-    console.log({step});
 
     const activeIndex = Math.floor(svgX / step);
 

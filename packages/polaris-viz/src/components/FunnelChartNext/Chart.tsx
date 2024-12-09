@@ -13,8 +13,8 @@ import {
 } from '@shopify/polaris-viz-core';
 import {createPortal} from 'react-dom';
 
+import {TOOLTIP_ID} from '../../constants';
 import {useFunnelBarScaling} from '../../hooks';
-import {TOOLTIP_ROOT_ID} from '../TooltipWrapper/constants';
 import {useRootContainer} from '../../hooks/useRootContainer';
 import {
   FunnelChartConnector,
@@ -24,9 +24,8 @@ import {FunnelChartSegment} from '../shared';
 import {SingleTextLine} from '../Labels';
 import {ChartElements} from '../ChartElements';
 
-import {FunnelChartXAxisLabels, Tooltip} from './components/';
+import {FunnelChartXAxisLabels, Tooltip, FunnelTooltip} from './components';
 import type {FunnelChartNextProps} from './FunnelChartNext';
-import {FunnelTooltip} from './components/FunnelTooltip/FunnelTooltip';
 import {
   TOOLTIP_WIDTH,
   LABELS_HEIGHT,
@@ -45,6 +44,7 @@ export interface ChartProps {
   tooltipLabels: FunnelChartNextProps['tooltipLabels'];
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
+  enableScaling: boolean;
 }
 
 export function Chart({
@@ -52,6 +52,7 @@ export function Chart({
   tooltipLabels,
   xAxisOptions,
   yAxisOptions,
+  enableScaling,
 }: ChartProps) {
   const [tooltipIndex, setTooltipIndex] = useState<number | null>(null);
   const {containerBounds} = useChartContext();
@@ -80,6 +81,7 @@ export function Chart({
   const {getBarHeight, shouldApplyScaling} = useFunnelBarScaling({
     yScale,
     values: yValues,
+    enableScaling,
   });
 
   const labels = useMemo(
@@ -282,7 +284,7 @@ export function Chart({
 }
 
 function TooltipWithPortal({children}: {children: ReactNode}) {
-  const container = useRootContainer(TOOLTIP_ROOT_ID);
+  const container = useRootContainer(TOOLTIP_ID);
 
   return createPortal(children, container);
 }

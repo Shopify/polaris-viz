@@ -10,4 +10,5 @@ export const Default: Story<SparkFunnelChartProps> = Template.bind({});
 
 Default.args = {
   data: DEFAULT_DATA,
+  enableScaling: true,
 };

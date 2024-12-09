@@ -3,6 +3,7 @@ import type {Meta} from '@storybook/react';
 import {
   CHART_STATE_CONTROL_ARGS,
   CONTROLS_ARGS,
+  SCALE_CONTROL_ARGS,
   THEME_CONTROL_ARGS,
   X_AXIS_OPTIONS_ARGS,
   Y_AXIS_OPTIONS_ARGS,
@@ -27,5 +28,6 @@ export const META: Meta = {
     yAxisOptions: Y_AXIS_OPTIONS_ARGS,
     theme: THEME_CONTROL_ARGS,
     state: CHART_STATE_CONTROL_ARGS,
+    enableScaling: SCALE_CONTROL_ARGS,
   },
 };

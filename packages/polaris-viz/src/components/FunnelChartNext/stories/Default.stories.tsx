@@ -24,4 +24,5 @@ Default.args = {
     reached: 'Reached this step',
     dropped: 'Dropped off',
   },
+  enableScaling: true,
 };

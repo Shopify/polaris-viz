@@ -1,6 +1,7 @@
 import {Fragment} from 'react';
 import {
   FONT_FAMILY,
+  FONT_WEIGHT,
   LINE_HEIGHT,
   useChartContext,
 } from '@shopify/polaris-viz-core';
@@ -25,7 +26,7 @@ export function SingleTextLine({
   color,
   dominantBaseline = 'hanging',
   fontSize,
-  fontWeight = 400,
+  fontWeight = FONT_WEIGHT,
   targetWidth,
   text,
   textAnchor = 'middle',

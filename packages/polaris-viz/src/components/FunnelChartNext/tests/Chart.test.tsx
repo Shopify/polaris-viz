@@ -5,7 +5,7 @@ import React from 'react';
 
 import {Chart} from '../Chart';
 import {FunnelChartConnector, FunnelChartSegment} from '../../shared';
-import {FunnelTooltip} from '../components/FunnelTooltip/FunnelTooltip';
+import {FunnelTooltip} from '../components';
 import {SingleTextLine} from '../../Labels';
 
 const mockData: DataSeries[] = [
@@ -108,6 +108,6 @@ describe('<Chart />', () => {
     firstSegment?.trigger('onMouseEnter', 0);
     firstSegment?.trigger('onMouseLeave');
 
-    expect(chart).not.toContainReactComponent(FunnelTooltip); // Tooltip container
+    expect(chart).not.toContainReactComponent(FunnelTooltip);
   });
 });

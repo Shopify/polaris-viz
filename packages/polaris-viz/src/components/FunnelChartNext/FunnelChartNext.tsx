@@ -25,6 +25,7 @@ export type FunnelChartNextProps = {
   };
   xAxisOptions?: Pick<XAxisOptions, 'hide'>;
   yAxisOptions?: Pick<YAxisOptions, 'labelFormatter'>;
+  enableScaling?: boolean;
 } & ChartProps;
 
 export function FunnelChartNext(props: FunnelChartNextProps) {
@@ -35,6 +36,7 @@ export function FunnelChartNext(props: FunnelChartNextProps) {
     theme = defaultTheme,
     xAxisOptions,
     yAxisOptions,
+    enableScaling = true,
     id,
     isAnimated,
     state,
@@ -73,6 +75,7 @@ export function FunnelChartNext(props: FunnelChartNextProps) {
           tooltipLabels={tooltipLabels}
           xAxisOptions={xAxisOptionsForChart}
           yAxisOptions={yAxisOptionsForChart}
+          enableScaling={enableScaling}
         />
       )}
     </ChartContainer>

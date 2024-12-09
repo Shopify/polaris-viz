@@ -1,4 +1,4 @@
-import {Fragment, useCallback} from 'react';
+import {Fragment} from 'react';
 import {scaleBand, scaleLinear} from 'd3-scale';
 import type {
   DataSeries,
@@ -8,7 +8,6 @@ import type {
 import {useChartContext} from '@shopify/polaris-viz-core';
 
 import {useFunnelBarScaling} from '../../hooks';
-import {getFunnelBarHeight} from '../FunnelChartNext';
 import {FunnelChartConnectorGradient} from '../shared/FunnelChartConnector';
 import {FunnelChartConnector, FunnelChartSegment} from '../shared';
 import {ChartElements} from '../ChartElements';
@@ -20,12 +19,13 @@ export interface ChartProps {
   tooltipLabels: SparkFunnelChartProps['tooltipLabels'];
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
+  enableScaling: boolean;
 }
 
 const LINE_OFFSET = 1;
 const GAP = 1;
 
-export function Chart({data}: ChartProps) {
+export function Chart({data, enableScaling}: ChartProps) {
   const {containerBounds} = useChartContext();
 
   const dataSeries = data[0].data;
@@ -46,6 +46,7 @@ export function Chart({data}: ChartProps) {
   const {getBarHeight, shouldApplyScaling} = useFunnelBarScaling({
     yScale,
     values: yValues,
+    enableScaling,
   });
 
   const sectionWidth = xScale.bandwidth();

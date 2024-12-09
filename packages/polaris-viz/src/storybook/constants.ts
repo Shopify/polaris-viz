@@ -138,6 +138,14 @@ export const MAX_SERIES_ARGS = {
   },
 };
 
+export const SCALE_CONTROL_ARGS = {
+  description:
+    'When enabled, small segments will be scaled up to be more visible relative to the largest segment while maintaining proportions.',
+  control: {
+    type: 'boolean',
+  },
+};
+
 export const DEFAULT_CHART_CONTEXT: ChartContextValues = {
   shouldAnimate: false,
   characterWidths,

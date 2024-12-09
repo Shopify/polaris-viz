@@ -21,6 +21,7 @@ describe('useFunnelBarScaling', () => {
       const data = useFunnelBarScaling({
         yScale: mockYScale,
         values: [90, 100],
+        enableScaling: true,
       });
 
       return <span data-data={`${JSON.stringify(data)}`} />;
@@ -37,6 +38,7 @@ describe('useFunnelBarScaling', () => {
       const data = useFunnelBarScaling({
         yScale: mockYScale,
         values: [5, 100],
+        enableScaling: true,
       });
 
       return <span data-data={`${JSON.stringify(data)}`} />;
@@ -49,11 +51,12 @@ describe('useFunnelBarScaling', () => {
   });
 
   describe('getBarHeight', () => {
-    it('returns original height when scaling not needed', () => {
+    it('returns original bar height when ratio is above scaling threshold', () => {
       function TestComponent() {
         const data = useFunnelBarScaling({
           yScale: mockYScale,
           values: [90, 100],
+          enableScaling: true,
         });
 
         const height = data.getBarHeight(90);
@@ -66,11 +69,30 @@ describe('useFunnelBarScaling', () => {
       expect(data.height).toBe(mockYScale(90));
     });
 
+    it('returns original height when scaling not enabled', () => {
+      function TestComponent() {
+        const data = useFunnelBarScaling({
+          yScale: mockYScale,
+          values: [5, 100],
+          enableScaling: false,
+        });
+
+        const height = data.getBarHeight(5);
+        return <span data-data={`${JSON.stringify({height})}`} />;
+      }
+
+      const result = mount(<TestComponent />);
+      const data = parseData(result);
+
+      expect(data.height).toBe(mockYScale(5));
+    });
+
     it('returns scaled height when scaling needed', () => {
       function TestComponent() {
         const data = useFunnelBarScaling({
           yScale: mockYScale,
           values: [5, 100],
+          enableScaling: true,
         });
 
         const scaledHeight = data.getBarHeight(5);
@@ -103,6 +125,7 @@ describe('useFunnelBarScaling', () => {
         const data = useFunnelBarScaling({
           yScale: mockYScale,
           values: [5, 100],
+          enableScaling: true,
         });
 
         const height = data.getBarHeight(100);
