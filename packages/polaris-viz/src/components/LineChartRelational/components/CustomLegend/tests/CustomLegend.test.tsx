@@ -65,4 +65,6 @@ const MOCK_PROPS: Props = {
   theme: DEFAULT_THEME_NAME,
   getColorVisionEventAttrs: jest.fn(),
   getColorVisionStyles: jest.fn(),
+  activeIndex: 0,
+  legendItemDimensions: {current: []},
 };
