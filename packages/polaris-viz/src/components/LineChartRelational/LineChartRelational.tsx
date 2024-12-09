@@ -5,10 +5,14 @@ import {
 } from '@shopify/polaris-viz-core';
 import {Fragment} from 'react';
 
+import {useResizeObserver} from '../../hooks';
 import type {LineChartProps} from '../LineChart';
 import {LineChart} from '../LineChart';
 
 import {RelatedAreas, MissingDataArea, CustomLegend} from './components';
+import styles from './LineChartRelational.scss';
+
+const SMALL_SCREEN_WIDTH = 400;
 
 export type LineChartRelationalProps = Omit<
   LineChartProps,
@@ -36,6 +40,8 @@ export function LineChartRelational(props: LineChartRelationalProps) {
     ...props,
   };
 
+  const {setRef, entry} = useResizeObserver();
+
   const dataWithHiddenRelational = data.map((series) => {
     return {
       ...series,
@@ -47,54 +53,57 @@ export function LineChartRelational(props: LineChartRelationalProps) {
   });
 
   const relatedAreasKey = buildRelatedAreasKey(dataWithHiddenRelational);
+  const hideLegends = entry?.contentRect.width
+    ? entry.contentRect.width < SMALL_SCREEN_WIDTH
+    : false;
 
   return (
-    <LineChart
-      annotations={annotations}
-      data={dataWithHiddenRelational}
-      emptyStateText={emptyStateText}
-      errorText={errorText}
-      id={id}
-      isAnimated={isAnimated}
-      renderLegendContent={({
-        getColorVisionStyles,
-        getColorVisionEventAttrs,
-      }) => {
-        return (
-          <CustomLegend
-            getColorVisionStyles={getColorVisionStyles}
-            getColorVisionEventAttrs={getColorVisionEventAttrs}
-            data={data}
-            theme={theme ?? DEFAULT_THEME_NAME}
-            seriesNameFormatter={seriesNameFormatter}
-          />
-        );
-      }}
-      seriesNameFormatter={seriesNameFormatter}
-      showLegend={showLegend}
-      skipLinkText={skipLinkText}
-      slots={{
-        chart: (props) => {
+    <div ref={setRef} className={styles.Container}>
+      <LineChart
+        annotations={annotations}
+        data={dataWithHiddenRelational}
+        emptyStateText={emptyStateText}
+        errorText={errorText}
+        id={id}
+        isAnimated={isAnimated}
+        renderLegendContent={(
+          {getColorVisionStyles, getColorVisionEventAttrs},
+          activeIndex,
+          legendItemDimensions,
+        ) => {
           return (
-            <Fragment>
-              <MissingDataArea {...props} data={data} />
-              <RelatedAreas
-                data={data}
-                // remount the area otherwise it can't animate
-                // between areas that are differently sized
-                key={relatedAreasKey}
-                {...props}
-              />
-            </Fragment>
+            <CustomLegend
+              getColorVisionStyles={getColorVisionStyles}
+              getColorVisionEventAttrs={getColorVisionEventAttrs}
+              data={data}
+              theme={theme ?? DEFAULT_THEME_NAME}
+              seriesNameFormatter={seriesNameFormatter}
+              hideLegends={hideLegends}
+              activeIndex={activeIndex ?? 0}
+              legendItemDimensions={legendItemDimensions ?? {current: []}}
+            />
           );
-        },
-      }}
-      state={state}
-      theme={theme}
-      tooltipOptions={tooltipOptions}
-      xAxisOptions={xAxisOptions}
-      yAxisOptions={yAxisOptions}
-    />
+        }}
+        seriesNameFormatter={seriesNameFormatter}
+        showLegend={showLegend}
+        skipLinkText={skipLinkText}
+        slots={{
+          chart: (props) => {
+            return (
+              <Fragment>
+                <MissingDataArea {...props} data={data} />
+                <RelatedAreas data={data} key={relatedAreasKey} {...props} />
+              </Fragment>
+            );
+          },
+        }}
+        state={state}
+        theme={theme}
+        tooltipOptions={tooltipOptions}
+        xAxisOptions={xAxisOptions}
+        yAxisOptions={yAxisOptions}
+      />
+    </div>
   );
 }
 

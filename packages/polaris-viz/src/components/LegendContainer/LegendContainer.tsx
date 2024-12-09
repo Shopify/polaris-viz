@@ -162,7 +162,11 @@ export function LegendContainer({
       role="list"
       style={{...styleMap[direction], ...shouldCenterTiles(position)}}
     >
-      {renderLegendContent?.(colorVisionInteractionMethods) ?? (
+      {renderLegendContent?.(
+        colorVisionInteractionMethods,
+        activeIndex,
+        legendItemDimensions,
+      ) ?? (
         <Fragment>
           <Legend
             activeIndex={activeIndex}
