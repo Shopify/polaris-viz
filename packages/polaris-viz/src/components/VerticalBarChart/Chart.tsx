@@ -48,7 +48,7 @@ import {
   useBarChartTooltipContent,
   useColorVisionEvents,
   useTheme,
-  useReducedLabelIndexes,
+  useLinearLabelsAndDimensions,
 } from '../../hooks';
 
 import {VerticalBarGroup} from './components';
@@ -129,10 +129,6 @@ export function Chart({
       })
     : null;
 
-  const reducedLabelIndexes = useReducedLabelIndexes({
-    dataLength: data[0] ? data[0].data.length : 0,
-  });
-
   const {min, max} = getStackedMinMax({
     stackedValues,
     data,
@@ -210,6 +206,16 @@ export function Chart({
     labels: formattedLabels,
   });
 
+  const {
+    xAxisDetails: {reducedLabelIndexes, labelWidth},
+  } = useLinearLabelsAndDimensions({
+    data,
+    hideXAxis,
+    drawableWidth,
+    labels: formattedLabels,
+    longestSeriesLength: yAxisLabelWidth,
+  });
+
   const {ticks, yScale} = useYScale({
     ...yScaleOptions,
     drawableHeight,
@@ -244,7 +250,7 @@ export function Chart({
           <XAxis
             allowLineWrap={xAxisOptions.allowLineWrap}
             labels={formattedLabels}
-            labelWidth={xScale.bandwidth()}
+            labelWidth={labelWidth}
             onHeightChange={setXAxisHeight}
             reducedLabelIndexes={reducedLabelIndexes}
             x={xAxisBounds.x}
