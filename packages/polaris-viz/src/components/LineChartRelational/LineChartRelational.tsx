@@ -31,6 +31,7 @@ export function LineChartRelational(props: LineChartRelationalProps) {
     tooltipOptions,
     xAxisOptions,
     yAxisOptions,
+    renderHiddenLegendLabel,
   } = {
     ...DEFAULT_CHART_PROPS,
     ...props,
@@ -56,10 +57,11 @@ export function LineChartRelational(props: LineChartRelationalProps) {
       errorText={errorText}
       id={id}
       isAnimated={isAnimated}
-      renderLegendContent={({
-        getColorVisionStyles,
-        getColorVisionEventAttrs,
-      }) => {
+      renderLegendContent={(
+        {getColorVisionStyles, getColorVisionEventAttrs},
+        activeIndex,
+        legendItemDimensions,
+      ) => {
         return (
           <CustomLegend
             getColorVisionStyles={getColorVisionStyles}
@@ -67,6 +69,9 @@ export function LineChartRelational(props: LineChartRelationalProps) {
             data={data}
             theme={theme ?? DEFAULT_THEME_NAME}
             seriesNameFormatter={seriesNameFormatter}
+            activeIndex={activeIndex ?? 0}
+            legendItemDimensions={legendItemDimensions ?? {current: []}}
+            renderHiddenLegendLabel={renderHiddenLegendLabel}
           />
         );
       }}

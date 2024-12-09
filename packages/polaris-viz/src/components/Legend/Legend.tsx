@@ -63,6 +63,7 @@ export function Legend({
         truncate={truncate}
         showLegendValues={showLegendValues}
         seriesNameFormatter={seriesNameFormatter}
+        lineStyle={legend?.lineStyle}
       />
     );
   });

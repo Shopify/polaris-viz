@@ -76,7 +76,7 @@ export function HiddenLegendTooltip({
       return;
     }
     const activator = activatorRef.current.getBoundingClientRect();
-    setActivatorWidth(activator.width);
+    setActivatorWidth?.(activator.width);
   }, [setActivatorWidth]);
 
   const getTooltipPosition = useCallback(() => {

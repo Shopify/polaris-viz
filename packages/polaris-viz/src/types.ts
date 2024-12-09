@@ -5,10 +5,12 @@ import type {
   DataSeries,
   Shape,
   LabelFormatter,
+  LineStyle,
 } from '@shopify/polaris-viz-core';
 import type {Series, SeriesPoint} from 'd3-shape';
 import type {ScaleLinear} from 'd3-scale';
 import type {TrendIndicatorProps} from 'components/TrendIndicator';
+import type {LegendItemDimension} from 'components/Legend';
 
 export interface YAxisTick {
   value: number;
@@ -140,6 +142,16 @@ export interface LegendData {
   shape?: Shape;
   value?: string;
   trend?: MetaDataTrendIndicator;
+  lineStyle?: LineStyle;
+  metadata?: {
+    legendLabel?: string;
+    lineStyle?: LineStyle;
+  };
+  styleOverride?: {
+    tooltip?: {
+      shape?: Shape;
+    };
+  };
 }
 
 export interface Annotation {
@@ -209,6 +221,8 @@ export interface ColorVisionInteractionMethods {
 
 export type RenderLegendContent = (
   colorVisionInteractionMethods: ColorVisionInteractionMethods,
+  activeIndex?: number,
+  legendItemDimensions?: React.RefObject<LegendItemDimension[]>,
 ) => ReactNode;
 
 export type RenderHiddenLegendLabel = (hiddenItemsCount: number) => ReactNode;
