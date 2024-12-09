@@ -235,7 +235,7 @@ export function Chart({
     annotationsLookupTable,
   );
 
-  const xAxisLabelHalf = xScale.bandwidth() / 2;
+  const xAxisLabelHalf = labelWidth / 2;
 
   return (
     <ChartElements.Div height={height} width={width}>
@@ -312,7 +312,7 @@ export function Chart({
           >
             <Annotations
               annotationsLookupTable={annotationsLookupTable}
-              axisLabelWidth={xScale.bandwidth()}
+              axisLabelWidth={labelWidth}
               drawableHeight={annotationsDrawableHeight}
               drawableWidth={drawableWidth}
               labels={unformattedLabels}
