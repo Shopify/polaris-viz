@@ -8,6 +8,29 @@ export const Template: Story<BarChartProps> = (args: BarChartProps) => {
   return <BarChart {...args} />;
 };
 
+const generateDataSeries = (length = 30) =>
+  Array(length)
+    .fill(0)
+    .map((value: number, index) => {
+      const date = new Date();
+      date.setDate(date.getDate() + value + index);
+
+      return {
+        key: date.toLocaleDateString(undefined, {
+          month: 'short',
+          day: 'numeric',
+        }),
+        value: Math.floor(Math.random() * 1000),
+      };
+    });
+
+export const MONTHLY_REPORT_DATA: DataSeries[] = [
+  {
+    name: 'Current month',
+    data: generateDataSeries(),
+  },
+];
+
 export const DEFAULT_DATA: DataSeries[] = [
   {
     name: 'Breakfast',
