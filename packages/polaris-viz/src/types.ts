@@ -10,7 +10,6 @@ import type {
 import type {Series, SeriesPoint} from 'd3-shape';
 import type {ScaleLinear} from 'd3-scale';
 import type {TrendIndicatorProps} from 'components/TrendIndicator';
-import type {LegendItemDimension} from 'components/Legend';
 
 export interface YAxisTick {
   value: number;
@@ -222,7 +221,6 @@ export interface ColorVisionInteractionMethods {
 export type RenderLegendContent = (
   colorVisionInteractionMethods: ColorVisionInteractionMethods,
   activeIndex?: number,
-  legendItemDimensions?: React.RefObject<LegendItemDimension[]>,
 ) => ReactNode;
 
 export type RenderHiddenLegendLabel = (hiddenItemsCount: number) => ReactNode;

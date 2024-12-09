@@ -4,25 +4,30 @@ import {
   COLOR_VISION_SINGLE_ITEM,
   useChartContext,
 } from '@shopify/polaris-viz-core';
-import {useCallback, useState} from 'react';
+import {useCallback, useRef, useState} from 'react';
 
 import {useOverflowLegend} from '../../../../components/LegendContainer/hooks/useOverflowLegend';
 import {HiddenLegendTooltip} from '../../../../components/LegendContainer/components/HiddenLegendTooltip';
-import type {ColorVisionInteractionMethods} from '../../../../types';
+import type {
+  ColorVisionInteractionMethods,
+  RenderHiddenLegendLabel,
+} from '../../../../types';
 import type {LegendItemDimension} from '../../../../components/Legend';
 import {LegendItem} from '../../../../components/Legend';
 
+import {deduplicateByRelatedIndex} from './utilities/deduplicateByRelatedIndex';
 import styles from './CustomLegend.scss';
 
 export interface Props extends ColorVisionInteractionMethods {
   data: DataSeries[];
   seriesNameFormatter: LabelFormatter;
   theme: string;
-  hideLegends?: boolean;
   activeIndex: number;
-  legendItemDimensions: React.RefObject<LegendItemDimension[]>;
+  renderHiddenLegendLabel?: RenderHiddenLegendLabel;
 }
 
+const HORIZONTAL_MARGIN = 16;
+const LEFT_MARGIN = 12;
 export function CustomLegend({
   data,
   getColorVisionEventAttrs,
@@ -30,11 +35,12 @@ export function CustomLegend({
   seriesNameFormatter,
   theme,
   activeIndex,
-  legendItemDimensions,
+  renderHiddenLegendLabel = (count) => `+${count} more`,
 }: Props) {
   const {containerBounds} = useChartContext();
   const deduplicatedData = deduplicateByRelatedIndex(data);
   const [activatorWidth, setActivatorWidth] = useState(0);
+  const legendItemDimensions = useRef([{width: 0, height: 0}]);
 
   const overflowLegendProps = {
     direction: 'horizontal' as const,
@@ -43,8 +49,8 @@ export function CustomLegend({
     legendItemDimensions,
     width: containerBounds.width,
     activatorWidth,
-    leftMargin: 16,
-    horizontalMargin: 16,
+    leftMargin: LEFT_MARGIN,
+    horizontalMargin: HORIZONTAL_MARGIN,
   };
 
   const {displayedData, hiddenData} = useOverflowLegend(overflowLegendProps);
@@ -57,9 +63,18 @@ export function CustomLegend({
     (series) => series?.metadata?.relatedIndex != null,
   );
 
-  const percentileIndex = lineSeries.length + 1;
+  const percentileIndex = data.findIndex(
+    (series) => series.metadata?.relatedIndex != null,
+  );
 
-  const hasHiddenItems = hiddenData.length > 0;
+  const hasHiddenData = displayedData.length < deduplicatedData.length;
+  const visibleSeries = hasHiddenData ? displayedData : lineSeries;
+  const formattedHiddenData = hiddenData.map((series) => ({
+    color: series.color!,
+    name: seriesNameFormatter(series?.metadata?.legendLabel ?? series.name),
+    shape: series.styleOverride?.tooltip?.shape ?? 'Line',
+    lineStyle: series.metadata?.lineStyle,
+  }));
 
   const onDimensionChange = useCallback(
     (index, dimensions: LegendItemDimension) => {
@@ -69,16 +84,6 @@ export function CustomLegend({
     },
     [legendItemDimensions],
   );
-
-  const hasHiddenData = displayedData.length < deduplicatedData.length;
-  const visibleSeries = hasHiddenData ? displayedData : lineSeries;
-
-  const formattedHiddenData = hiddenData.map((series) => ({
-    color: series.color!,
-    name: seriesNameFormatter(series?.metadata?.legendLabel ?? series.name),
-    shape: series.styleOverride?.tooltip?.shape ?? 'Line',
-    lineStyle: series.metadata?.lineStyle,
-  }));
 
   return (
     <ul className={styles.Container}>
@@ -137,13 +142,13 @@ export function CustomLegend({
         </li>
       )}
 
-      {hasHiddenItems && (
+      {hasHiddenData && (
         <HiddenLegendTooltip
           activeIndex={activeIndex}
           colorVisionType={COLOR_VISION_SINGLE_ITEM}
           data={formattedHiddenData}
           theme={theme}
-          label={`+${hiddenData.length} more`}
+          label={renderHiddenLegendLabel(hiddenData.length)}
           lastVisibleIndex={deduplicatedData.length - hiddenData.length}
           setActivatorWidth={setActivatorWidth}
         />
@@ -151,14 +156,3 @@ export function CustomLegend({
     </ul>
   );
 }
-
-const deduplicateByRelatedIndex = (data: any[]) => {
-  const existingRelatedIndex = new Set();
-  return data.filter((item) => {
-    const relatedIndex = item.metadata?.relatedIndex;
-    if (!relatedIndex) return true;
-    if (existingRelatedIndex.has(relatedIndex)) return false;
-    existingRelatedIndex.add(relatedIndex);
-    return true;
-  });
-};

@@ -1,8 +1,6 @@
 .Container {
   display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
+  flex-wrap: nowrap;
+  gap: 10px;
   list-style: none;
-  margin: 0;
-  padding: 0;
 }

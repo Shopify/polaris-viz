@@ -70,8 +70,9 @@ export function useOverflowLegend(props: UseOverflowLegendProps) {
     let lastVisibleIndex = allData.length;
     const containerWidth =
       width - leftMargin - horizontalMargin - activatorWidth;
+
     legendItemDimensions.current
-      .filter((val) => Boolean(val))
+      .filter((dimension) => Boolean(dimension))
       .reduce((totalWidth, card, index) => {
         if (totalWidth + card.width + index * LEGEND_GAP > containerWidth) {
           lastVisibleIndex = index;
