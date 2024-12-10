@@ -27,8 +27,12 @@ export function getAlteredLineChartPosition(
   // Y POSITIONING
   //
 
-  if (props.isPerformanceImpacted) {
-    y = containerBounds.y - (scrollContainer?.scrollTop ?? 0);
+  if (props.isPerformanceImpacted || props.isTouchDevice) {
+    y = containerBounds.y - (scrollContainer?.scrollTop ?? 0) ?? 0;
+
+    if (props.isTouchDevice) {
+      y -= props.tooltipDimensions.height;
+    }
   }
 
   //
@@ -102,14 +106,29 @@ function getRightPosition(
 ): ReturnType<getFunction> {
   const [value, props] = args;
 
-  let x = value + props.bandwidth;
+  let x = value;
+
+  if (props.isTouchDevice) {
+    x += props.chartBounds.x + props.containerBounds.x;
+    x -= props.tooltipDimensions.width / 2;
+  } else {
+    x += props.bandwidth;
+  }
+
   const wasOutsideBounds = isOutsideBounds({
     current: x,
     alteredPosition: props,
   });
 
   if (wasOutsideBounds.right) {
-    x -= props.tooltipDimensions.width + props.bandwidth + TOOLTIP_MARGIN;
+    if (props.isTouchDevice) {
+      x =
+        props.containerBounds.x +
+        props.containerBounds.width -
+        props.tooltipDimensions.width;
+    } else {
+      x -= props.tooltipDimensions.width + props.bandwidth + TOOLTIP_MARGIN;
+    }
   } else {
     x += TOOLTIP_MARGIN;
   }
