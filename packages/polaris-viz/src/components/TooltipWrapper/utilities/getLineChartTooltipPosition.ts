@@ -9,6 +9,7 @@ import {getXYFromEventType, eventPointNative} from './eventPoint';
 
 interface Props extends Omit<TooltipPositionParams, 'xScale'> {
   containerBounds: BoundingRect;
+  isTouchDevice: boolean;
   scrollY: number;
   xScale: ScaleLinear<number, number>;
 }
@@ -20,6 +21,7 @@ export function getLineChartTooltipPosition({
   event,
   eventType,
   index,
+  isTouchDevice,
   longestSeriesIndex,
   scrollY,
   xScale,
@@ -48,7 +50,7 @@ export function getLineChartTooltipPosition({
     const {x, y} = getXYFromEventType(event);
 
     return {
-      x,
+      x: isTouchDevice ? xScale(activeIndex) : x,
       y,
       activeIndex,
     };

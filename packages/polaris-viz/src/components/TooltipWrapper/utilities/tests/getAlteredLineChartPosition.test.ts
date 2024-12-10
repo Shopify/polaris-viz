@@ -6,6 +6,7 @@ const MARGIN = {Top: 0, Left: 0, Right: 0, Bottom: 0};
 
 const BASE_PROPS: AlteredPositionProps = {
   isPerformanceImpacted: false,
+  isTouchDevice: false,
   chartBounds: {height: 100, width: 200, x: 0, y: 100},
   tooltipDimensions: {height: 40, width: 60},
   margin: MARGIN,
@@ -67,7 +68,18 @@ describe('getAlteredLineChartPosition', () => {
       ).toStrictEqual({x: 60, y: 1340});
     });
 
-    it('uses chartBounds whe performance is impacted', () => {
+    it('sets y to container top when performance is impacted', () => {
+      expect(
+        getAlteredLineChartPosition({
+          ...BASE_PROPS,
+          isPerformanceImpacted: true,
+          currentX: 0,
+          currentY: 2000,
+        }),
+      ).toStrictEqual({x: 60, y: 100});
+    });
+
+    it('sets y to container top when touch device', () => {
       expect(
         getAlteredLineChartPosition({
           ...BASE_PROPS,
