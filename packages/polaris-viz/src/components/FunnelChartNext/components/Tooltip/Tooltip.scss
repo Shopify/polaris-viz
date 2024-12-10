@@ -1,0 +1,33 @@
+.Rows {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.Row {
+  font-size: 12px;
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+  color: rgba(97, 97, 97, 1);
+  align-items: center;
+}
+
+.Keys {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.Values {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  font-weight: 600;
+
+  strong {
+    font-weight: 600;
+    color: rgba(31, 33, 36, 1);
+  }
+}

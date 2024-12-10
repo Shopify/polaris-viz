@@ -20,10 +20,12 @@ interface Props {
   labels: string[];
   targetWidth: number;
   onHeightChange?: Dispatch<SetStateAction<number>> | (() => void);
+  align?: 'center' | 'left';
 }
 
 export function useLabels({
   allowLineWrap,
+  align = 'center',
   labels,
   onHeightChange = () => {},
   targetWidth,
@@ -69,6 +71,8 @@ export function useLabels({
     switch (true) {
       case shouldDrawHorizontal: {
         return getHorizontalLabels({
+          align,
+          fontSize,
           labels: preparedLabels,
           targetWidth,
           targetHeight: HORIZONTAL_LABEL_TARGET_HEIGHT,
@@ -100,7 +104,9 @@ export function useLabels({
       }
     }
   }, [
+    align,
     allowLineWrap,
+    fontSize,
     targetWidth,
     characterWidths,
     preparedLabels,
