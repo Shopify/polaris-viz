@@ -104,6 +104,7 @@ function TooltipWrapperRaw(props: BaseProps) {
             event,
             eventType,
             index,
+            isTouchDevice,
             longestSeriesIndex,
             xScale: xScale as ScaleLinear<number, number>,
           });
@@ -140,6 +141,7 @@ function TooltipWrapperRaw(props: BaseProps) {
       chartType,
       data,
       longestSeriesIndex,
+      isTouchDevice,
       type,
       xScale,
       yScale,

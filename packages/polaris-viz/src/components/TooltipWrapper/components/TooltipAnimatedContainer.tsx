@@ -37,8 +37,12 @@ export function TooltipAnimatedContainer({
   margin,
   position = DEFAULT_TOOLTIP_POSITION,
 }: TooltipAnimatedContainerProps) {
-  const {isPerformanceImpacted, scrollContainer, containerBounds} =
-    useChartContext();
+  const {
+    isPerformanceImpacted,
+    scrollContainer,
+    containerBounds,
+    isTouchDevice,
+  } = useChartContext();
 
   const tooltipRef = useRef<HTMLDivElement | null>(null);
   const [tooltipDimensions, setTooltipDimensions] =
@@ -71,6 +75,7 @@ export function TooltipAnimatedContainer({
       margin,
       bandwidth,
       isPerformanceImpacted,
+      isTouchDevice,
       containerBounds,
       scrollContainer,
     });
@@ -96,6 +101,7 @@ export function TooltipAnimatedContainer({
     tooltipDimensions,
     containerBounds,
     scrollContainer,
+    isTouchDevice,
   ]);
 
   useEffect(() => {
