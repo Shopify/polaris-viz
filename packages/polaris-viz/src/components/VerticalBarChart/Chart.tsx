@@ -48,7 +48,7 @@ import {
   useBarChartTooltipContent,
   useColorVisionEvents,
   useTheme,
-  useLinearLabelsAndDimensions,
+  useReducedLabelIndexes,
 } from '../../hooks';
 
 import {VerticalBarGroup} from './components';
@@ -190,6 +190,26 @@ export function Chart({
     yAxisWidth: yAxisLabelWidth,
   });
 
+  const longestLabelWidth = useMemo(() => {
+    const longest = Math.max(
+      ...formattedLabels.map((formattedLabel) =>
+        estimateStringWidth(formattedLabel, characterWidths),
+      ),
+    );
+
+    return longest;
+  }, [characterWidths, formattedLabels]);
+
+  const numberOfLabelsThatFit = Math.floor(drawableWidth / longestLabelWidth);
+  const skipEveryNthLabel = Math.ceil(
+    formattedLabels.length / numberOfLabelsThatFit,
+  );
+
+  const reducedLabelIndexes = useReducedLabelIndexes({
+    dataLength: data[0] ? data[0].data.length : 0,
+    skipEveryNthLabel,
+  });
+
   const annotationsDrawableHeight =
     chartYPosition + drawableHeight + ANNOTATIONS_LABELS_OFFSET;
 
@@ -204,16 +224,6 @@ export function Chart({
     data,
     drawableWidth,
     labels: formattedLabels,
-  });
-
-  const {
-    xAxisDetails: {reducedLabelIndexes, labelWidth},
-  } = useLinearLabelsAndDimensions({
-    data,
-    hideXAxis,
-    drawableWidth,
-    labels: formattedLabels,
-    longestSeriesLength: yAxisLabelWidth,
   });
 
   const {ticks, yScale} = useYScale({
@@ -235,7 +245,10 @@ export function Chart({
     annotationsLookupTable,
   );
 
-  const xAxisLabelHalf = labelWidth / 2;
+  const scaleStep = xScale.step();
+  const scaleStepHalf = xScale.step() / 2;
+  const labelWidth = xScale.bandwidth() + scaleStep;
+  const xAxisLabelHalf = xScale.bandwidth() / 2;
 
   return (
     <ChartElements.Div height={height} width={width}>
@@ -253,7 +266,7 @@ export function Chart({
             labelWidth={labelWidth}
             onHeightChange={setXAxisHeight}
             reducedLabelIndexes={reducedLabelIndexes}
-            x={xAxisBounds.x}
+            x={xAxisBounds.x - scaleStepHalf}
             xScale={xScale}
             y={xAxisBounds.y}
           />
@@ -312,7 +325,7 @@ export function Chart({
           >
             <Annotations
               annotationsLookupTable={annotationsLookupTable}
-              axisLabelWidth={labelWidth}
+              axisLabelWidth={xScale.bandwidth()}
               drawableHeight={annotationsDrawableHeight}
               drawableWidth={drawableWidth}
               labels={unformattedLabels}
