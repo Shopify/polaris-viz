@@ -1,21 +1,19 @@
 import type {ReactNode} from 'react';
 import {Fragment, useRef} from 'react';
-import type {SpringValue} from '@react-spring/web';
-import {useSpring, animated} from '@react-spring/web';
-import {getRoundedRectPath} from '@shopify/polaris-viz-core';
+import {useSpring} from '@react-spring/web';
+import {useChartContext} from '@shopify/polaris-viz-core';
 
 import {useBarSpringConfig} from '../../../hooks/useBarSpringConfig';
 
 import {InteractiveOverlay} from './components/InteractiveOverlay';
 import {ScaledSegment} from './components/ScaledSegment';
-import {FUNNEL_CHART_SEGMENT_FILL, BORDER_RADIUS} from './constants';
+import {AnimatedSegment} from './components/AnimatedSegment';
 
 interface Props {
   ariaLabel: string;
   barHeight: number;
   barWidth: number;
   children: ReactNode;
-  drawableHeight: number;
   index: number;
   isLast: boolean;
   onMouseEnter?: (index: number) => void;
@@ -29,7 +27,6 @@ export function FunnelChartSegment({
   barHeight,
   barWidth,
   children,
-  drawableHeight,
   index = 0,
   isLast,
   onMouseEnter,
@@ -38,7 +35,11 @@ export function FunnelChartSegment({
   x,
 }: Props) {
   const mounted = useRef(false);
+  const {containerBounds} = useChartContext();
   const isFirst = index === 0;
+  const {height: drawableHeight} = containerBounds ?? {
+    height: 0,
+  };
 
   const springConfig = useBarSpringConfig({
     animationDelay: index * 150,
@@ -59,7 +60,6 @@ export function FunnelChartSegment({
       <ScaledSegment
         barHeight={barHeight}
         barWidth={barWidth}
-        drawableHeight={drawableHeight}
         index={index}
         isLast={isLast}
         onMouseEnter={onMouseEnter}
@@ -77,7 +77,6 @@ export function FunnelChartSegment({
         animatedHeight={animatedHeight}
         ariaLabel={ariaLabel}
         barWidth={barWidth}
-        drawableHeight={drawableHeight}
         isFirst={isFirst}
         isLast={isLast}
         x={x}
@@ -93,49 +92,5 @@ export function FunnelChartSegment({
       />
       {children}
     </Fragment>
-  );
-}
-
-interface AnimatedSegmentProps {
-  animatedHeight: SpringValue<number>;
-  ariaLabel: string;
-  barWidth: number;
-  drawableHeight: number;
-  isFirst: boolean;
-  isLast: boolean;
-  x: number;
-}
-
-function AnimatedSegment({
-  animatedHeight,
-  ariaLabel,
-  barWidth,
-  drawableHeight,
-  isFirst,
-  isLast,
-  x,
-}: AnimatedSegmentProps) {
-  const borderRadius = `${isFirst ? BORDER_RADIUS : 0} ${
-    isLast ? BORDER_RADIUS : 0
-  } 0 0`;
-
-  return (
-    <animated.path
-      aria-label={ariaLabel}
-      d={animatedHeight.to((value: number) =>
-        getRoundedRectPath({
-          height: value,
-          width: barWidth,
-          borderRadius,
-        }),
-      )}
-      fill={FUNNEL_CHART_SEGMENT_FILL}
-      style={{
-        transform: animatedHeight.to(
-          (value: number) => `translate(${x}px, ${drawableHeight - value}px)`,
-        ),
-      }}
-      width={barWidth}
-    />
   );
 }

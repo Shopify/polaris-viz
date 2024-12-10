@@ -72,7 +72,6 @@ export function Chart({data, enableScaling}: ChartProps) {
                 ariaLabel={`${dataPoint.key}: ${dataPoint.value}`}
                 barHeight={barHeight}
                 barWidth={barWidth}
-                drawableHeight={drawableHeight}
                 index={index}
                 isLast={isLast}
                 x={x}

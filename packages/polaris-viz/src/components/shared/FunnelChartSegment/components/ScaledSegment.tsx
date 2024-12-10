@@ -1,6 +1,6 @@
 import type {ReactNode} from 'react';
 import {Fragment} from 'react';
-import {getRoundedRectPath} from '@shopify/polaris-viz-core';
+import {getRoundedRectPath, useChartContext} from '@shopify/polaris-viz-core';
 
 import {InteractiveOverlay} from '../components/InteractiveOverlay';
 import {
@@ -40,7 +40,6 @@ interface Props extends InteractionHandlers {
   index: number;
   isLast: boolean;
   x: number;
-  drawableHeight: number;
   children: ReactNode;
 }
 
@@ -50,11 +49,15 @@ export function ScaledSegment({
   index,
   isLast,
   x,
-  drawableHeight,
   onMouseEnter,
   onMouseLeave,
   children,
 }: Props) {
+  const {containerBounds} = useChartContext();
+  const {width: drawableWidth, height: drawableHeight} = containerBounds ?? {
+    height: 0,
+    width: 0,
+  };
   const topSegmentHeight = calculateTopSegmentHeight(barHeight);
   const isFirst = index === 0;
   const dimensions: Dimensions = {
@@ -77,7 +80,7 @@ export function ScaledSegment({
     />
   );
 
-  const scaleSize = calculateResponsiveScale(drawableHeight);
+  const scaleSize = calculateResponsiveScale(drawableHeight, drawableWidth);
   const calculateScaleHeight = () =>
     scaleSize * FUNNEL_SEGMENT.scaleHeightMultiplier;
 
@@ -149,8 +152,12 @@ export function ScaledSegment({
 const calculateTopSegmentHeight = (height: number) =>
   Math.floor(height * FUNNEL_SEGMENT.topSegmentHeightRatio);
 
-const calculateResponsiveScale = (drawableHeight: number) => {
-  // Scale will be 1.5% of the drawable height, with a minimum of 2px
-  const scale = Math.max(drawableHeight * 0.015, 2);
+const calculateResponsiveScale = (
+  drawableHeight: number,
+  drawableWidth: number,
+) => {
+  const heightScale = drawableHeight * 0.015;
+  const widthScale = drawableWidth * 0.005;
+  const scale = Math.max((heightScale + widthScale) / 2, 2);
   return scale;
 };

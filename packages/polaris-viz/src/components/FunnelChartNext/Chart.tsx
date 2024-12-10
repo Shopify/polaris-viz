@@ -183,7 +183,6 @@ export function Chart({
                   )}: ${yAxisOptions.labelFormatter(dataPoint.value)}`}
                   barHeight={barHeight}
                   barWidth={barWidth}
-                  drawableHeight={drawableHeight}
                   index={index}
                   isLast={isLast}
                   onMouseEnter={(index) => setTooltipIndex(index)}
