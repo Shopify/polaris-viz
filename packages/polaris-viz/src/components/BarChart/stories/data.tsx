@@ -1,3 +1,4 @@
+import React, {useState} from 'react';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 import type {Story} from '@storybook/react';
 
@@ -5,7 +6,28 @@ import type {BarChartProps} from '../BarChart';
 import {BarChart} from '../BarChart';
 
 export const Template: Story<BarChartProps> = (args: BarChartProps) => {
-  return <BarChart {...args} />;
+  const [firstValNegative, setFirstValNegative] = useState(false);
+  const data = [
+    {
+      name: 'Breakfast',
+      data: [
+        {key: 'Monday', value: firstValNegative ? -20 : 3},
+        {key: 'Tuesday', value: firstValNegative ? -100 : 50},
+        {key: 'Wednesday', value: firstValNegative ? 100 : 3},
+        {key: 'Thursday', value: 8},
+        {key: 'Friday', value: 50},
+        {key: 'Saturday', value: 0},
+        {key: 'Sunday', value: 0.1},
+      ],
+    },
+  ];
+
+  return (
+    <React.Fragment>
+      <button onClick={() => setFirstValNegative(!firstValNegative)}>change data</button>
+      <BarChart {...args} data={data} />
+    </React.Fragment>
+  );
 };
 
 export const DEFAULT_DATA: DataSeries[] = [

@@ -4,6 +4,7 @@ import {
   DataType,
   getRoundedRectPath,
   useTheme,
+  usePrevious,
 } from '@shopify/polaris-viz-core';
 
 import {useBarSpringConfig} from '../../../../hooks/useBarSpringConfig';
@@ -69,15 +70,31 @@ export const VerticalBar = memo(function Bar({
   const springConfig = useBarSpringConfig({animationDelay});
   const rotate = `${treatAsNegative ? 'rotate(180)' : 'rotate(0)'}`;
 
+  const prevValue = usePrevious(rawValue);
+  const signIsChanging =
+    prevValue == null ? false : Math.sign(prevValue) !== Math.sign(rawValue);
+
   const {pathD, transform} = useSpring({
     from: {
       pathD: getPath(1, width),
       transform: `translate(0 ${zeroPosition}) ${rotate}`,
     },
-    to: {
-      pathD: getPath(height, width),
-      transform: `translate(0 ${yPosition}) ${rotate}`,
-    },
+    to: signIsChanging
+      ? [
+          {
+            pathD: getPath(0, width),
+            transform: `translate(0 ${zeroPosition}) ${rotate}`,
+            immediate: true,
+          },
+          {
+            pathD: getPath(height, width),
+            transform: `translate(0 ${yPosition}) ${rotate}`,
+          },
+        ]
+      : {
+          pathD: getPath(height, width),
+          transform: `translate(0 ${yPosition}) ${rotate}`,
+        },
     ...springConfig,
   });
 
