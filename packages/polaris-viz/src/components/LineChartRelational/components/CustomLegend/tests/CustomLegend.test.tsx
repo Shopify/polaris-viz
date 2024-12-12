@@ -1,11 +1,20 @@
+/* eslint-disable @shopify/strict-component-boundaries */
 import {mount} from '@shopify/react-testing';
 import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
+import {useChartContext} from '@shopify/polaris-viz-core/src/hooks/useChartContext';
 
 import type {Props} from '../CustomLegend';
 import {CustomLegend} from '../CustomLegend';
 import {LegendItem} from '../../../../Legend';
+import {HiddenLegendTooltip} from '../../../../LegendContainer/components/HiddenLegendTooltip';
+
+jest.mock('@shopify/polaris-viz-core/src/hooks/useChartContext');
 
 describe('<CustomLegend />', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   describe('seriesNameFormatter', () => {
     it('renders formatted series name', () => {
       const component = mount(
@@ -29,6 +38,29 @@ describe('<CustomLegend />', () => {
       });
     });
   });
+
+  describe('HiddenLegendTooltip', () => {
+    it('shows HiddenLegendTooltip when container does not fit all legend items', () => {
+      (useChartContext as jest.Mock).mockImplementation(() => ({
+        containerBounds: {width: 20, height: 250, x: 0, y: 0},
+      }));
+
+      const component = mount(<CustomLegend {...MOCK_PROPS} />);
+
+      expect(component).toContainReactComponent(HiddenLegendTooltip);
+      expect(component).toContainReactText('+1 more');
+    });
+
+    it('does not show HiddenLegendTooltip when container fits all legend items', () => {
+      (useChartContext as jest.Mock).mockImplementation(() => ({
+        containerBounds: {width: 1200, height: 250, x: 0, y: 0},
+      }));
+
+      const component = mount(<CustomLegend {...MOCK_PROPS} />);
+
+      expect(component).not.toContainReactComponent(HiddenLegendTooltip);
+    });
+  });
 });
 
 const MOCK_PROPS: Props = {
@@ -49,10 +81,6 @@ const MOCK_PROPS: Props = {
       },
     },
     {
-      name: 'Median',
-      data: [{value: 238, key: '2020-03-01T12:00:00'}],
-    },
-    {
       name: '25th percentile',
       data: [{value: 88, key: '2020-03-01T12:00:00'}],
       metadata: {
@@ -65,4 +93,21 @@ const MOCK_PROPS: Props = {
   theme: DEFAULT_THEME_NAME,
   getColorVisionEventAttrs: jest.fn(),
   getColorVisionStyles: jest.fn(),
+  activeIndex: 0,
+  legendItemDimensions: {
+    current: [
+      {
+        width: 71,
+        height: 24,
+      },
+      {
+        width: 66,
+        height: 24,
+      },
+      {
+        width: 100,
+        height: 24,
+      },
+    ],
+  },
 };

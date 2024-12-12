@@ -125,7 +125,7 @@ export function Chart({
               styles.LabelContainerEndJustify,
           )}
         >
-          {renderLegendContent(colorVisionInteractionMethods)}
+          {renderLegendContent(colorVisionInteractionMethods, activeIndex)}
         </div>
       );
     }

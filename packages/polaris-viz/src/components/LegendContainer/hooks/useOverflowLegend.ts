@@ -71,13 +71,15 @@ export function useOverflowLegend(props: UseOverflowLegendProps) {
     const containerWidth =
       width - leftMargin - horizontalMargin - activatorWidth;
 
-    legendItemDimensions.current.reduce((totalWidth, card, index) => {
-      if (totalWidth + card.width + index * LEGEND_GAP > containerWidth) {
-        lastVisibleIndex = index;
-      } else {
-        return totalWidth + card.width;
-      }
-    }, lastVisibleIndex);
+    legendItemDimensions.current
+      .filter((dimension) => Boolean(dimension))
+      .reduce((totalWidth, card, index) => {
+        if (totalWidth + card.width + index * LEGEND_GAP > containerWidth) {
+          lastVisibleIndex = index;
+        } else {
+          return totalWidth + card.width;
+        }
+      }, lastVisibleIndex);
 
     return {
       displayedData: allData.slice(0, lastVisibleIndex || 1),
