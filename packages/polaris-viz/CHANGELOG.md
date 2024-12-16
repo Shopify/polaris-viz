@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Fixed
+
+- Bar chart animation when value goes from positive to negative or vice versa
+
 ### Added
 
 - Added support for responsive legends in `<LineChartRelational />`
