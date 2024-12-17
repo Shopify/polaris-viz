@@ -30,7 +30,20 @@ export function getAlteredVerticalBarPosition(
   //
   // Y POSITIONING
   //
-  if (!props.isPerformanceImpacted) {
+  if (props.isPerformanceImpacted || props.isTouchDevice) {
+    y = clamp({
+      amount:
+        props.containerBounds.y -
+        props.tooltipDimensions.height -
+        (scrollContainer?.scrollTop ?? 0),
+      min: 0,
+      max:
+        window.scrollY +
+        window.innerHeight -
+        props.tooltipDimensions.height -
+        TOOLTIP_MARGIN,
+    });
+  } else {
     if (newPosition.vertical === TooltipVerticalOffset.Inline) {
       newPosition.horizontal = TooltipHorizontalOffset.Left;
 
@@ -60,19 +73,6 @@ export function getAlteredVerticalBarPosition(
         newPosition.horizontal = TooltipHorizontalOffset.Left;
       }
     }
-  } else {
-    y = clamp({
-      amount:
-        (props.chartBounds.y ?? 0) -
-        props.tooltipDimensions.height -
-        (scrollContainer?.scrollTop ?? 0),
-      min: 0,
-      max:
-        window.scrollY +
-        window.innerHeight -
-        props.tooltipDimensions.height -
-        TOOLTIP_MARGIN,
-    });
   }
 
   //

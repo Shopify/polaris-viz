@@ -20,6 +20,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Changed
 
 - Changed `<LineChart />` tooltip positioning to align with the crosshair when on a touch device.
+- Changed `<BarChart />` tooltip positioning to align with the top of the chart on a touch device.
 
 ## [15.3.5] - 2024-12-05
 
