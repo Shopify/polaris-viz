@@ -44,8 +44,4 @@ ZeroValues.args = {
     },
   ],
   labelFormatter,
-  tooltipLabels: {
-    reached: 'Reached this step',
-    dropped: 'Dropped off',
-  },
 };
