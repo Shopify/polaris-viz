@@ -22,10 +22,6 @@ Default.args = {
   data: DEFAULT_DATA,
   labelFormatter,
   percentageFormatter,
-  tooltipLabels: {
-    reached: 'Reached this step',
-    dropped: 'Dropped off',
-  },
   renderScaleIconTooltipContent: () => (
     <Fragment>
       <div>Truncated Sessions</div>{' '}

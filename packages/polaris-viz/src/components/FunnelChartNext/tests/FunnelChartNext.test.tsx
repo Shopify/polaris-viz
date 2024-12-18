@@ -1,17 +1,10 @@
 import React from 'react';
 import {mount} from '@shopify/react-testing';
-import {
-  ChartState,
-  ChartContext,
-  DEFAULT_THEME_NAME,
-} from '@shopify/polaris-viz-core';
-import {act} from 'react-dom/test-utils';
+import {ChartState, DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 import {FunnelChartNext} from '../FunnelChartNext';
 import {Chart} from '../Chart';
 import {ChartSkeleton} from '../../ChartSkeleton';
-import {FunnelChartSegment} from '../../shared';
-import {FunnelConnector} from '../components';
 
 const mockData = [
   {

@@ -25,8 +25,4 @@ const labelFormatter = (value) => {
 Default.args = {
   data: DEFAULT_DATA,
   labelFormatter,
-  tooltipLabels: {
-    reached: 'Reached this step',
-    dropped: 'Dropped off',
-  },
 };

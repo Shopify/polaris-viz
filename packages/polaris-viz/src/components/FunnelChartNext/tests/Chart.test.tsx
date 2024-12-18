@@ -5,7 +5,6 @@ import React from 'react';
 
 import {Chart} from '../Chart';
 import {FunnelChartConnector, FunnelChartSegment} from '../../shared';
-import {FunnelTooltip} from '../components';
 import {SingleTextLine} from '../../Labels';
 
 const mockData: DataSeries[] = [
@@ -30,10 +29,6 @@ const mockContext = {
 
 const defaultProps = {
   data: mockData,
-  tooltipLabels: {
-    dropoff: 'Dropoff',
-    total: 'Total',
-  },
   seriesNameFormatter: (value: string) => `$${value}`,
   labelFormatter: (value: string) => `$${value}`,
 };
@@ -74,32 +69,5 @@ describe('<Chart />', () => {
     expect(chart).toContainReactComponent(SingleTextLine, {
       text: 'Custom Step 1',
     });
-  });
-
-  it('shows tooltip when hovering over a segment', () => {
-    const chart = mount(
-      <ChartContext.Provider value={mockContext}>
-        <Chart {...defaultProps} />
-      </ChartContext.Provider>,
-    );
-
-    const firstSegment = chart.find(FunnelChartSegment);
-    firstSegment?.trigger('onMouseEnter', 0);
-
-    expect(chart).toContainReactComponent(FunnelTooltip);
-  });
-
-  it('hides tooltip when mouse leaves a segment', () => {
-    const chart = mount(
-      <ChartContext.Provider value={mockContext}>
-        <Chart {...defaultProps} />
-      </ChartContext.Provider>,
-    );
-
-    const firstSegment = chart.find(FunnelChartSegment);
-    firstSegment?.trigger('onMouseEnter', 0);
-    firstSegment?.trigger('onMouseLeave');
-
-    expect(chart).not.toContainReactComponent(FunnelTooltip);
   });
 });
