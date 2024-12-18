@@ -129,10 +129,6 @@ export function Chart({
       })
     : null;
 
-  const reducedLabelIndexes = useReducedLabelIndexes({
-    dataLength: data[0] ? data[0].data.length : 0,
-  });
-
   const {min, max} = getStackedMinMax({
     stackedValues,
     data,
@@ -194,6 +190,26 @@ export function Chart({
     yAxisWidth: yAxisLabelWidth,
   });
 
+  const longestLabelWidth = useMemo(() => {
+    const longest = Math.max(
+      ...formattedLabels.map((formattedLabel) =>
+        estimateStringWidth(formattedLabel, characterWidths),
+      ),
+    );
+
+    return longest;
+  }, [characterWidths, formattedLabels]);
+
+  const numberOfLabelsThatFit = Math.floor(drawableWidth / longestLabelWidth);
+  const skipEveryNthLabel = Math.ceil(
+    formattedLabels.length / numberOfLabelsThatFit,
+  );
+
+  const reducedLabelIndexes = useReducedLabelIndexes({
+    dataLength: data[0] ? data[0].data.length : 0,
+    skipEveryNthLabel,
+  });
+
   const annotationsDrawableHeight =
     chartYPosition + drawableHeight + ANNOTATIONS_LABELS_OFFSET;
 
@@ -229,6 +245,9 @@ export function Chart({
     annotationsLookupTable,
   );
 
+  const scaleStep = xScale.step();
+  const scaleStepHalf = xScale.step() / 2;
+  const labelWidth = xScale.bandwidth() + scaleStep;
   const xAxisLabelHalf = xScale.bandwidth() / 2;
 
   return (
@@ -244,10 +263,10 @@ export function Chart({
           <XAxis
             allowLineWrap={xAxisOptions.allowLineWrap}
             labels={formattedLabels}
-            labelWidth={xScale.bandwidth()}
+            labelWidth={labelWidth}
             onHeightChange={setXAxisHeight}
             reducedLabelIndexes={reducedLabelIndexes}
-            x={xAxisBounds.x}
+            x={xAxisBounds.x - scaleStepHalf}
             xScale={xScale}
             y={xAxisBounds.y}
           />
